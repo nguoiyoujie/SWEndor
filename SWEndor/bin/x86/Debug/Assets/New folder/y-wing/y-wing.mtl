@@ -1,0 +1,394 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 24.12.2015 08:57:22
+
+newmtl YW_MAIN_DARK
+	Ns 12.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0431 0.0039 0.0039
+	Kd 0.1294 0.1294 0.1373
+	Ks 0.2224 0.2224 0.2224
+	Ke 0.0000 0.0000 0.0000
+
+newmtl YW_MAIN_STUFF
+	Ns 12.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0431 0.0039 0.0039
+	Kd 0.7490 0.7490 0.7569
+	Ks 0.2224 0.2224 0.2224
+	Ke 0.0000 0.0000 0.0000
+
+newmtl Default
+	Ns 50.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.7000 0.7000 0.7000
+	Kd 0.7000 0.7000 0.7000
+	Ks 0.7070 0.7070 0.7070
+	Ke 0.0000 0.0000 0.0000
+
+newmtl YW_MAIN
+	Ns 12.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0431 0.0039 0.0039
+	Kd 0.7490 0.7490 0.7569
+	Ks 0.2224 0.2224 0.2224
+	Ke 0.0000 0.0000 0.0000
+
+newmtl YW_CANOPY_TOP
+	Ns 12.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0431 0.0039 0.0039
+	Kd 0.7490 0.7490 0.7569
+	Ks 0.2224 0.2224 0.2224
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Documents and Settings\glenn\Desktop\YW_CAB_T.JPG
+	map_Kd C:\Documents and Settings\glenn\Desktop\YW_CAB_T.JPG
+
+newmtl YW_GLASS
+	Ns 77.0000
+	Ni 1.5000
+	d 0.4000
+	Tr 0.6000
+	Tf 0.4000 0.4000 0.4000 
+	illum 2
+	Ka 0.0118 0.0118 0.0118
+	Kd 0.1725 0.2157 0.2902
+	Ks 1.0000 1.0000 1.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl YW_COCK_BLUE
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0118 0.0118 0.0118
+	Kd 1.0000 0.6706 0.0510
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl YW_ENG_COCK
+	Ns 12.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0431 0.0039 0.0039
+	Kd 0.7490 0.7490 0.7569
+	Ks 0.2224 0.2224 0.2224
+	Ke 0.0000 0.0000 0.0000
+
+newmtl YW_RUB3
+	Ns 12.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0431 0.0039 0.0039
+	Kd 0.7490 0.7490 0.7569
+	Ks 0.2224 0.2224 0.2224
+	Ke 0.0000 0.0000 0.0000
+
+newmtl YW_ENG_DECO
+	Ns 12.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0431 0.0039 0.0039
+	Kd 0.7490 0.7490 0.7569
+	Ks 0.2224 0.2224 0.2224
+	Ke 0.0000 0.0000 0.0000
+	map_bump C:\Documents and Settings\glenn\Desktop\YW_ENG_D.JPG
+	bump C:\Documents and Settings\glenn\Desktop\YW_ENG_D.JPG
+
+newmtl YW_ENGINE
+	Ns 12.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0431 0.0039 0.0039
+	Kd 0.7490 0.7490 0.7569
+	Ks 0.2224 0.2224 0.2224
+	Ke 0.0000 0.0000 0.0000
+	map_bump C:\Documents and Settings\glenn\Desktop\YW_ENGIN.JPG
+	bump C:\Documents and Settings\glenn\Desktop\YW_ENGIN.JPG
+
+newmtl YW_ENG_GLOW
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0118 0.0118 0.0118
+	Kd 1.0000 0.0000 0.2588
+	Ks 0.0000 0.0000 0.0000
+	Ke 1.0000 0.0000 0.2588
+
+newmtl YW_ENG_DARK
+	Ns 25.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0118 0.0118 0.0118
+	Kd 0.1098 0.1098 0.1098
+	Ks 0.0412 0.0412 0.0412
+	Ke 0.0000 0.0000 0.0000
+
+newmtl YW_RUB
+	Ns 12.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0431 0.0039 0.0039
+	Kd 0.7490 0.7490 0.7569
+	Ks 0.2224 0.2224 0.2224
+	Ke 0.0000 0.0000 0.0000
+
+newmtl YW_EXHAUST_IN
+	Ns 2.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0118 0.0118 0.0118
+	Kd 1.0000 0.0000 0.0000
+	Ks 0.1153 0.1153 0.1153
+	Ke 0.8000 0.0000 0.0000
+
+newmtl YW_EXHAUST
+	Ns 12.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0431 0.0039 0.0039
+	Kd 0.2902 0.2824 0.3216
+	Ks 0.1235 0.1235 0.1235
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Documents and Settings\glenn\Desktop\YW_EXHAU.JPG
+	map_Kd C:\Documents and Settings\glenn\Desktop\YW_EXHAU.JPG
+	map_bump C:\Documents and Settings\glenn\Desktop\YW_EXHAU.JPG
+	bump C:\Documents and Settings\glenn\Desktop\YW_EXHAU.JPG
+
+newmtl A_SHIP_WHITE
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl WHITE_GENERAL
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl BLACK_THRONE
+	Ns 51.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.0000 0.0000 0.0000
+	Ks 0.5298 0.4049 0.1203
+	Ke 0.0000 0.0000 0.0000
+
+newmtl R2D2_M_LIGHT
+	Ns 72.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.7608 0.7608 0.7608
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl BROWN_RAILING
+	Ns 34.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0980 0.0275 0.0039
+	Kd 0.0980 0.0275 0.0039
+	Ks 0.8980 0.6863 0.2039
+	Ke 0.0000 0.0000 0.0000
+
+newmtl R2D2_Blue
+	Ns 41.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.1412
+	Kd 0.0196 0.0078 0.1843
+	Ks 1.0000 1.0000 1.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl GREY_ALUMINUM
+	Ns 41.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.1373 0.1294 0.1725
+	Kd 0.7255 0.7255 0.7255
+	Ks 1.0000 1.0000 1.0000
+	Ke 0.0000 0.0000 0.0000
+
+newmtl WHITE_GLOW
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0000 0.0000 0.0000
+	Ke 1.0000 1.0000 1.0000
+
+newmtl BLACK_LENS
+	Ns 16.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.0000 0.0000 0.0000
+	Ks 1.0000 0.6471 0.0941
+	Ke 0.0000 0.0000 0.0000
+
+newmtl YW_CAB_TOP
+	Ns 12.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0431 0.0039 0.0039
+	Kd 0.5137 0.5059 0.5725
+	Ks 0.2224 0.2224 0.2224
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Documents and Settings\glenn\Desktop\YW_CAB_T.JPG
+	map_Kd C:\Documents and Settings\glenn\Desktop\YW_CAB_T.JPG
+	map_bump C:\Documents and Settings\glenn\Desktop\YW_CAB_B.JPG
+	bump C:\Documents and Settings\glenn\Desktop\YW_CAB_B.JPG
+
+newmtl YW_CAB_SIDE
+	Ns 11.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0118 0.0118 0.0118
+	Kd 0.7137 0.6980 0.7569
+	Ks 0.1894 0.1894 0.1894
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Documents and Settings\glenn\Desktop\YW_CAB_S.JPG
+	map_Kd C:\Documents and Settings\glenn\Desktop\YW_CAB_S.JPG
+	map_bump C:\Documents and Settings\glenn\Desktop\YW_CAB_S.JPG
+	bump C:\Documents and Settings\glenn\Desktop\YW_CAB_S.JPG
+
+newmtl YW_CAB_BOTTOM
+	Ns 25.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0118 0.0118 0.0118
+	Kd 0.3020 0.2824 0.4902
+	Ks 0.0412 0.0412 0.0412
+	Ke 0.0000 0.0000 0.0000
+
+newmtl YW_BACK_RING
+	Ns 12.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0431 0.0039 0.0039
+	Kd 0.7490 0.7490 0.7569
+	Ks 0.2224 0.2224 0.2224
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Documents and Settings\glenn\Desktop\YW_BACK_.JPG
+	map_Kd C:\Documents and Settings\glenn\Desktop\YW_BACK_.JPG
+
+newmtl YW_MAIN_DECO
+	Ns 12.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0431 0.0039 0.0039
+	Kd 0.7490 0.7490 0.7569
+	Ks 0.2224 0.2224 0.2224
+	Ke 0.0000 0.0000 0.0000
+
+newmtl YW_RUB2
+	Ns 12.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0431 0.0039 0.0039
+	Kd 0.7490 0.7490 0.7569
+	Ks 0.2224 0.2224 0.2224
+	Ke 0.0000 0.0000 0.0000

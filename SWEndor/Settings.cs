@@ -1,0 +1,143 @@
+﻿using MTV3D65;
+using System.IO;
+using System.Windows.Forms;
+
+namespace SWEndor
+{
+  public enum ResolutionSettings
+  {
+    FillScreen, R_640x480, R_800x600, R_1024x768, R_1152x864, R_1280x800, R_1360x768, R_1280x1024, R_1600x900, R_1600x1200, R_1920x1080
+  }
+
+  public static class Settings
+  {
+    public static ResolutionSettings ResolutionMode = ResolutionSettings.FillScreen;
+    public static int ResolutionX { get; private set; }
+    public static int ResolutionY { get; private set; }
+    public static bool FullScreenMode = false;
+    public static bool ShowPerformance = false;
+
+    public static TV_2DVECTOR GetResolution
+    {
+      get
+      {
+        switch (ResolutionMode)
+        {
+          case ResolutionSettings.R_640x480:
+            return new TV_2DVECTOR(640, 480);
+
+          case ResolutionSettings.R_800x600:
+            return new TV_2DVECTOR(800, 600);
+
+          case ResolutionSettings.R_1024x768:
+            return new TV_2DVECTOR(1024, 768);
+
+          case ResolutionSettings.R_1152x864:
+            return new TV_2DVECTOR(1152, 864);
+
+          case ResolutionSettings.R_1280x800:
+            return new TV_2DVECTOR(1280, 800);
+
+          case ResolutionSettings.R_1280x1024:
+            return new TV_2DVECTOR(1280, 1024);
+
+          case ResolutionSettings.R_1360x768:
+            return new TV_2DVECTOR(1360, 768);
+
+          case ResolutionSettings.R_1600x900:
+            return new TV_2DVECTOR(1600, 900);
+
+          case ResolutionSettings.R_1600x1200:
+            return new TV_2DVECTOR(1600, 1200);
+
+          case ResolutionSettings.R_1920x1080:
+            return new TV_2DVECTOR(1920, 1080);
+
+          case ResolutionSettings.FillScreen:
+          default:
+            return new TV_2DVECTOR(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+        }
+      }
+    }
+
+
+    public static void LoadSettings()
+    {
+      if (File.Exists(Path.Combine(Globals.SettingsPath, "settings.ini")))
+      {
+        using (StreamReader sr = new StreamReader(Path.Combine(Globals.SettingsPath, "settings.ini")))
+        {
+          while (!sr.EndOfStream)
+          {
+            ProcessLine(sr.ReadLine());
+          }
+        }
+      }
+
+      ResolutionX = (int)GetResolution.x;
+      ResolutionY = (int)GetResolution.y;
+    }
+
+    public static void SaveSettings()
+    {
+      using (StreamWriter sr = new StreamWriter(Path.Combine(Globals.SettingsPath, "settings.ini"), false))
+      {
+        sr.WriteLine(string.Format("ResolutionMode={0}", (int)ResolutionMode));
+        sr.WriteLine(string.Format("FullScreen={0}", FullScreenMode));
+        sr.WriteLine(string.Format("ShowPerformance={0}", ShowPerformance));
+
+        foreach (string s in InputManager.FunctionKeyMap.GetKeys())
+        {
+          sr.WriteLine(string.Format("FuncKey:{0}={1}", s, InputManager.FunctionKeyMap.GetItem(s)));
+        }
+        sr.Flush();
+      }
+    }
+
+    private static void ProcessLine(string line)
+    {
+      int seperator_pos = line.IndexOf('=');
+      if (seperator_pos != -1 && seperator_pos < line.Length)
+      {
+        string key = line.Substring(0, seperator_pos).Trim().ToLower();
+        string value = line.Substring(seperator_pos + 1).Trim();
+
+        switch (key)
+        {
+          case ("resolutionmode"):
+            int resM = 0;
+            ResolutionMode = (ResolutionSettings)((int.TryParse(value, out resM)) ? resM : 0);
+            break;
+          /*
+          case ("resolutionx"):
+            int resX = 600;
+            ResolutionX = (int.TryParse(value, out resX)) ? resX : 600;
+            break;
+          case ("resolutiony"):
+            int resY = 600;
+            ResolutionY = (int.TryParse(value, out resY)) ? resY : 600;
+            break;
+          */
+          case ("fullscreen"):
+            bool fullscr = false;
+            FullScreenMode = (bool.TryParse(value, out fullscr)) ? fullscr : false;
+            break;
+          case ("showperformance"):
+            bool showperf = false;
+            ShowPerformance = (bool.TryParse(value, out showperf)) ? showperf : false;
+            break;
+          default:
+            if (key.StartsWith("funckey:"))
+            {
+              string keytype = key.Substring(8); // funckey:
+              int funckey = 0;
+              funckey = (int.TryParse(value, out funckey)) ? funckey : 0;
+              InputManager.FunctionKeyMap.AddorUpdateItem(keytype, funckey);
+            }
+
+            break;
+        }
+      }
+    }
+  }
+}

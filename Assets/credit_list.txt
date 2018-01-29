@@ -1,0 +1,64 @@
+CREDIT LIST
+---------------------------------------------------------------------------
+This credit serves to acknowledge the various sources and contributors in the making of this project.
+
+I am primarily a programmer. You may assume most visual/audio assets to be the work of these great contributors.
+
+
+CONTRIBUTORS
+---------------------------------------------------------------------------
+Original Game Design: Bruno R. Marcos
+
+Original Game Assets
+Image - Planet Yavin
+Image - Planet Yavin 4
+Image - Death Star
+Image - Death Star 2
+Image - Various Explosion Effects
+Model - Executor
+Model - Various Turbolaser Towers
+Model - Red / Green / Yellow Laser
+Model - Torpedo Missile
+-----------------------
+Derivatives by Author
+Model - Small Ion Laser:	Modified Torpedo Missile
+
+---------------------------------------------------------------------------
+Master_Syrus' STARWARS Graphic Update (February 6, 2007)
+Other contributors: Hory, Trousers, Yo-da-man, Lurker 
+
+Image - Planet Endor
+Image - Electro
+Model - X-Wing
+Model - Y-Wing
+Model - A-Wing
+Model - B-Wing
+Model - Millennium Falcon
+Model - CR90 Corellian Corvette
+Model - Rebel Transport
+Model - Nebulon B Frigate
+Model - 'Home One' Mon Calamari Cruiser
+Model - TIE/LN Fighter
+Model - TIE/IN Interceptor
+Model - TIE/X1 Advanced X1
+Model - Imperial-I Star Destroyer
+-----------------------
+Derivatives by Author
+Model - TIE/D  Defender:	Modified TIE/IN Interceptor
+Model - TIE/sa Bomber:		Modified TIE/X1 Advanced X1
+Model - Nebulon B2 Frigate:	Modified Nebulon B Frigate
+
+---------------------------------------------------------------------------
+OTHER
+---------------------------------------------------------------------------
+Image - Planet Hoth:		http://starwars.wikia.com/wiki/Hoth
+Model - Acclamator: 		https://3dwarehouse.sketchup.com/model/6551e357c6b770b93f217b945a063dd2/Acclamator-I-class-assault-ship
+Model - Arquitens:		https://3dwarehouse.sketchup.com/model/b6e0c4cc2a9576393f217b945a063dd2/Republic-Light-Cruiser
+
+Converted by http://www.meshconvert.com/
+
+
+
+
+
+

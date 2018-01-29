@@ -1,0 +1,813 @@
+01-21-2018 17:05:48 | --------------------------------------------
+01-21-2018 17:05:48 | Truevision3D Debug/Log File
+01-21-2018 17:05:48 | --------------------------------------------
+01-21-2018 17:05:48 | Engine Version : 6.5
+01-21-2018 17:05:48 | ENGINE INFO : DLL Compilation time Sep 24 2007 12:45:04
+01-21-2018 17:05:48 | DEVICE INIT : Initialize Depth
+01-21-2018 17:05:48 | DEVICE INIT : Initializing the device in windowed mode, with a render surface size of 1600x900, format 22, depthbuffer 75
+01-21-2018 17:05:48 | VIEWPORT MANAGER : Main viewport initialization
+01-21-2018 17:05:48 | VIEWPORT MANAGER : Main viewport initialized (1600x900)
+01-21-2018 17:05:48 | DEVICE INIT : Initialization successful !
+01-21-2018 17:05:48 | DEVICE INFO :  3D Card : Intel(R) HD Graphics 620  | Card ID : 22806 | Driver ID : 1053203
+01-21-2018 17:05:48 | DEVICE INFO : Available texture memory : -11 MB
+01-21-2018 17:05:48 | DEVICE INFO : Vertex Shaders 3.0 supported in hardware.
+01-21-2018 17:05:48 | Debug info : vs fffe0300  ps ffff0300 
+01-21-2018 17:05:48 | DEVICE INFO : Pixel Shaders 3.0 supported in hardware.
+01-21-2018 17:05:48 | DEVICE INFO : Driver used is a DirectX9-level driver 'igdumdim32.dll'. Excellent
+01-21-2018 17:05:48 | DEVICE INFO : Card Type Geforce6xxx/7xxx/8xxx/ATIRadeonX1xxx  Level card, third generation of programmable card
+01-21-2018 17:05:54 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\images\stars_big.bmp' successful 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\images\stars_big.bmp' on index 13 
+01-21-2018 17:05:54 | GLOBAL CLASS : GetMesh : Mesh 'Scene Room_FAR' not found in the mesh collection.
+01-21-2018 17:05:54 | GLOBAL CLASS : GetMesh : Mesh 'Endor 2' not found in the mesh collection.
+01-21-2018 17:05:54 | TEXTURE MANAGER : Couldn't find the texture 'endor.jpg' in the texture list.
+01-21-2018 17:05:54 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\images\endor.jpg' successful 'endor.jpg' on index 14 
+01-21-2018 17:05:54 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\endor.x' succeeded in 31 ms ( 32 faces, 33 vertices ) ID 2
+01-21-2018 17:05:54 | GLOBAL CLASS : GetMesh : Mesh 'Endor_FAR' not found in the mesh collection.
+01-21-2018 17:05:54 | GLOBAL CLASS : GetMesh : Mesh 'Yavin 3' not found in the mesh collection.
+01-21-2018 17:05:54 | TEXTURE MANAGER : Couldn't find the texture 'yavin.bmp' in the texture list.
+01-21-2018 17:05:54 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\images\yavin.bmp' successful 'yavin.bmp' on index 15 
+01-21-2018 17:05:54 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\endor.x' succeeded in 0 ms ( 32 faces, 33 vertices ) ID 4
+01-21-2018 17:05:54 | GLOBAL CLASS : GetMesh : Mesh 'Yavin_FAR' not found in the mesh collection.
+01-21-2018 17:05:54 | GLOBAL CLASS : GetMesh : Mesh 'Yavin4 4' not found in the mesh collection.
+01-21-2018 17:05:54 | TEXTURE MANAGER : Couldn't find the texture 'yavin4.bmp' in the texture list.
+01-21-2018 17:05:55 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\images\yavin4.bmp' successful 'NONAME' on index 16 
+01-21-2018 17:05:55 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:55 | GLOBAL CLASS : GetMesh : Mesh 'Yavin4_FAR' not found in the mesh collection.
+01-21-2018 17:05:55 | GLOBAL CLASS : GetMesh : Mesh 'Hoth 5' not found in the mesh collection.
+01-21-2018 17:05:55 | TEXTURE MANAGER : Couldn't find the texture 'hoth.bmp' in the texture list.
+01-21-2018 17:05:55 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\images\hoth.bmp' successful 'hoth.bmp' on index 18 
+01-21-2018 17:05:55 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\endor.x' succeeded in 0 ms ( 32 faces, 33 vertices ) ID 8
+01-21-2018 17:05:55 | GLOBAL CLASS : GetMesh : Mesh 'Hoth_FAR' not found in the mesh collection.
+01-21-2018 17:05:55 | GLOBAL CLASS : GetMesh : Mesh 'Sun 6' not found in the mesh collection.
+01-21-2018 17:05:55 | TEXTURE MANAGER : Couldn't find the texture 'sun.jpg' in the texture list.
+01-21-2018 17:05:55 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\images\sun.jpg' successful 'NONAME' on index 19 
+01-21-2018 17:05:55 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:55 | GLOBAL CLASS : GetMesh : Mesh 'Sun_FAR' not found in the mesh collection.
+01-21-2018 17:05:55 | GLOBAL CLASS : GetMesh : Mesh 'DeathStar 7' not found in the mesh collection.
+01-21-2018 17:05:55 | TEXTURE MANAGER : Couldn't find the texture 'deathstar.bmp' in the texture list.
+01-21-2018 17:05:55 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\images\deathstar.bmp' successful 'NONAME' on index 21 
+01-21-2018 17:05:55 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:55 | GLOBAL CLASS : GetMesh : Mesh 'DeathStar_FAR' not found in the mesh collection.
+01-21-2018 17:05:55 | GLOBAL CLASS : GetMesh : Mesh 'DeathStar2 8' not found in the mesh collection.
+01-21-2018 17:05:55 | TEXTURE MANAGER : Couldn't find the texture 'deathstar2.bmp' in the texture list.
+01-21-2018 17:05:56 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\images\deathstar2.bmp' successful 'NONAME' on index 23 
+01-21-2018 17:05:56 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:56 | GLOBAL CLASS : GetMesh : Mesh 'DeathStar2_FAR' not found in the mesh collection.
+01-21-2018 17:05:56 | GLOBAL CLASS : GetMesh : Mesh 'Invisible Camera 9' not found in the mesh collection.
+01-21-2018 17:05:56 | GLOBAL CLASS : GetMesh : Mesh 'Invisible Camera_FAR' not found in the mesh collection.
+01-21-2018 17:05:56 | GLOBAL CLASS : GetMesh : Mesh 'Death Camera 10' not found in the mesh collection.
+01-21-2018 17:05:56 | GLOBAL CLASS : GetMesh : Mesh 'Death Camera_FAR' not found in the mesh collection.
+01-21-2018 17:05:56 | GLOBAL CLASS : GetMesh : Mesh 'Imperial-I Static' not found in the mesh collection.
+01-21-2018 17:05:56 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00099.bmp' successful 'stardestroyer\TEX00099.bmp' on index 25 
+01-21-2018 17:05:56 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00100.bmp' successful 'stardestroyer\TEX00100.bmp' on index 26 
+01-21-2018 17:05:56 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\star_destroyer_static.x' succeeded in 579 ms ( 748 faces, 2105 vertices ) ID 20
+01-21-2018 17:05:56 | GLOBAL CLASS : GetMesh : Mesh 'Imperial-I Static_FAR' not found in the mesh collection.
+01-21-2018 17:05:56 | GLOBAL CLASS : GetMesh : Mesh 'Executor Static' not found in the mesh collection.
+01-21-2018 17:05:56 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\executor\executor_bridge_window.bmp' successful 'executor_bridge_window.bmp' on index 27 
+01-21-2018 17:05:56 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\executor\executor_engine_tube.bmp' successful 'executor_engine_tube.bmp' on index 28 
+01-21-2018 17:05:56 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\executor\executor_lights.bmp' successful 'executor_lights.bmp' on index 29 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\executor\executor_plating.bmp' successful 'executor_plating.bmp' on index 30 
+01-21-2018 17:05:57 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\executor\executor_static.x' succeeded in 125 ms ( 1060 faces, 2630 vertices ) ID 22
+01-21-2018 17:05:57 | GLOBAL CLASS : GetMesh : Mesh 'Executor Static_FAR' not found in the mesh collection.
+01-21-2018 17:05:57 | GLOBAL CLASS : GetMesh : Mesh 'Explosion 13' not found in the mesh collection.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl1.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl1.jpg' successful 'NONAME' on index 31 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl2.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl2.jpg' successful 'NONAME' on index 33 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl3.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl3.jpg' successful 'NONAME' on index 35 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl4.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl4.jpg' successful 'NONAME' on index 37 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl5.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl5.jpg' successful 'NONAME' on index 39 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl6.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl6.jpg' successful 'NONAME' on index 41 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl7.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl7.jpg' successful 'NONAME' on index 43 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl8.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl8.jpg' successful 'NONAME' on index 45 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | GLOBAL CLASS : GetMesh : Mesh 'Explosion_FAR' not found in the mesh collection.
+01-21-2018 17:05:57 | GLOBAL CLASS : GetMesh : Mesh 'Explosion2 14' not found in the mesh collection.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl00.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl00.jpg' successful 'NONAME' on index 47 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl01.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl01.jpg' successful 'NONAME' on index 49 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl02.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl02.jpg' successful 'NONAME' on index 51 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl03.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl03.jpg' successful 'NONAME' on index 53 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl04.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl04.jpg' successful 'NONAME' on index 55 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl05.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl05.jpg' successful 'NONAME' on index 57 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl06.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl06.jpg' successful 'NONAME' on index 59 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl07.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl07.jpg' successful 'NONAME' on index 61 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl08.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl08.jpg' successful 'NONAME' on index 63 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl09.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl09.jpg' successful 'NONAME' on index 65 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl10.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl10.jpg' successful 'NONAME' on index 67 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl11.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl11.jpg' successful 'NONAME' on index 69 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl12.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl12.jpg' successful 'NONAME' on index 71 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl13.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl13.jpg' successful 'NONAME' on index 73 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl14.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl14.jpg' successful 'NONAME' on index 75 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'expl15.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\expl15.jpg' successful 'NONAME' on index 77 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | GLOBAL CLASS : GetMesh : Mesh 'Explosion2_FAR' not found in the mesh collection.
+01-21-2018 17:05:57 | GLOBAL CLASS : GetMesh : Mesh 'ExplosionSm 15' not found in the mesh collection.
+01-21-2018 17:05:57 | GLOBAL CLASS : GetMesh : Mesh 'ExplosionSm_FAR' not found in the mesh collection.
+01-21-2018 17:05:57 | GLOBAL CLASS : GetMesh : Mesh 'ExplosionLg 16' not found in the mesh collection.
+01-21-2018 17:05:57 | GLOBAL CLASS : GetMesh : Mesh 'ExplosionLg_FAR' not found in the mesh collection.
+01-21-2018 17:05:57 | GLOBAL CLASS : GetMesh : Mesh 'Explosion Wave 17' not found in the mesh collection.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'wave.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\wave.jpg' successful 'NONAME' on index 79 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | GLOBAL CLASS : GetMesh : Mesh 'Explosion Wave_FAR' not found in the mesh collection.
+01-21-2018 17:05:57 | GLOBAL CLASS : GetMesh : Mesh 'Electro 18' not found in the mesh collection.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'elk1.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\elk1.jpg' successful 'NONAME' on index 81 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'elk2.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\elk2.jpg' successful 'NONAME' on index 83 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'elk3.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\elk3.jpg' successful 'NONAME' on index 85 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Couldn't find the texture 'elk4.jpg' in the texture list.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\shaders\elk4.jpg' successful 'NONAME' on index 87 
+01-21-2018 17:05:57 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+01-21-2018 17:05:57 | GLOBAL CLASS : GetMesh : Mesh 'Electro_FAR' not found in the mesh collection.
+01-21-2018 17:05:57 | GLOBAL CLASS : GetMesh : Mesh 'X-Wing' not found in the mesh collection.
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0006.bmp' successful 'TEX0006.bmp' on index 89 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0008.bmp' successful 'TEX0008.bmp' on index 90 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0009.bmp' successful 'TEX0009.bmp' on index 91 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0004.bmp' successful 'TEX0004.bmp' on index 92 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0003.bmp' successful 'TEX0003.bmp' on index 93 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0002.bmp' successful 'TEX0002.bmp' on index 94 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0001.bmp' successful 'TEX0001.bmp' on index 95 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0000.bmp' successful 'TEX0000.bmp' on index 96 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0011.bmp' successful 'TEX0011.bmp' on index 97 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0010.bmp' successful 'TEX0010.bmp' on index 98 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0005.bmp' successful 'TEX0005.bmp' on index 99 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0007.bmp' successful 'TEX0007.bmp' on index 100 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0012.bmp' successful 'TEX0012.bmp' on index 101 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0013.bmp' successful 'TEX0013.bmp' on index 102 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0014.bmp' successful 'TEX0014.bmp' on index 103 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0015.bmp' successful 'TEX0015.bmp' on index 104 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0016.bmp' successful 'TEX0016.bmp' on index 105 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0017.bmp' successful 'TEX0017.bmp' on index 106 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0018.bmp' successful 'TEX0018.bmp' on index 107 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0019.bmp' successful 'TEX0019.bmp' on index 108 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0021.bmp' successful 'TEX0021.bmp' on index 109 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0022.bmp' successful 'TEX0022.bmp' on index 110 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0023.bmp' successful 'TEX0023.bmp' on index 111 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0024.bmp' successful 'TEX0024.bmp' on index 112 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0025.bmp' successful 'TEX0025.bmp' on index 113 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0026.bmp' successful 'TEX0026.bmp' on index 114 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0027.bmp' successful 'TEX0027.bmp' on index 115 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0020.bmp' successful 'TEX0020.bmp' on index 116 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0029.bmp' successful 'TEX0029.bmp' on index 117 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0028.bmp' successful 'TEX0028.bmp' on index 118 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0030.bmp' successful 'TEX0030.bmp' on index 119 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0031.bmp' successful 'TEX0031.bmp' on index 120 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0034.bmp' successful 'TEX0034.bmp' on index 121 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0035.bmp' successful 'TEX0035.bmp' on index 122 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0036.bmp' successful 'TEX0036.bmp' on index 123 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0037.bmp' successful 'TEX0037.bmp' on index 124 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0033.bmp' successful 'TEX0033.bmp' on index 125 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0032.bmp' successful 'TEX0032.bmp' on index 126 
+01-21-2018 17:05:57 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\TEX0038.bmp' successful 'TEX0038.bmp' on index 127 
+01-21-2018 17:05:57 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\xwing.x' succeeded in 438 ms ( 2741 faces, 6627 vertices ) ID 36
+01-21-2018 17:05:57 | GLOBAL CLASS : GetMesh : Mesh 'X-Wing_FAR' not found in the mesh collection.
+01-21-2018 17:05:57 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\xwing_far.x' succeeded in 62 ms ( 2741 faces, 6627 vertices ) ID 37
+01-21-2018 17:05:57 | GLOBAL CLASS : GetMesh : Mesh 'Y-Wing' not found in the mesh collection.
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0021.bmp' successful 'TEX0021.bmp' on index 128 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0016.bmp' successful 'TEX0016.bmp' on index 129 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0033.bmp' successful 'TEX0033.bmp' on index 130 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0032.bmp' successful 'TEX0032.bmp' on index 131 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0031.bmp' successful 'TEX0031.bmp' on index 132 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0002.bmp' successful 'TEX0002.bmp' on index 133 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0024.bmp' successful 'TEX0024.bmp' on index 134 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0035.bmp' successful 'TEX0035.bmp' on index 135 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0034.bmp' successful 'TEX0034.bmp' on index 136 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0036.bmp' successful 'TEX0036.bmp' on index 137 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0007.bmp' successful 'TEX0007.bmp' on index 138 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0008.bmp' successful 'TEX0008.bmp' on index 139 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0000.bmp' successful 'TEX0000.bmp' on index 140 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0001.bmp' successful 'TEX0001.bmp' on index 141 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0006.bmp' successful 'TEX0006.bmp' on index 142 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0004.bmp' successful 'TEX0004.bmp' on index 143 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0003.bmp' successful 'TEX0003.bmp' on index 144 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0005.bmp' successful 'TEX0005.bmp' on index 145 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0009.bmp' successful 'TEX0009.bmp' on index 146 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0014.bmp' successful 'TEX0014.bmp' on index 147 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0013.bmp' successful 'TEX0013.bmp' on index 148 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0012.bmp' successful 'TEX0012.bmp' on index 149 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0010.bmp' successful 'TEX0010.bmp' on index 150 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0011.bmp' successful 'TEX0011.bmp' on index 151 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0015.bmp' successful 'TEX0015.bmp' on index 152 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0017.bmp' successful 'TEX0017.bmp' on index 153 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0019.bmp' successful 'TEX0019.bmp' on index 154 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0018.bmp' successful 'TEX0018.bmp' on index 155 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0025.bmp' successful 'TEX0025.bmp' on index 156 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0023.bmp' successful 'TEX0023.bmp' on index 157 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0022.bmp' successful 'TEX0022.bmp' on index 158 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0020.bmp' successful 'TEX0020.bmp' on index 159 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0026.bmp' successful 'TEX0026.bmp' on index 160 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0028.bmp' successful 'TEX0028.bmp' on index 161 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0029.bmp' successful 'TEX0029.bmp' on index 162 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0027.bmp' successful 'TEX0027.bmp' on index 163 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\TEX0030.bmp' successful 'TEX0030.bmp' on index 164 
+01-21-2018 17:05:58 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\ywing.x' succeeded in 235 ms ( 1646 faces, 3750 vertices ) ID 38
+01-21-2018 17:05:58 | GLOBAL CLASS : GetMesh : Mesh 'Y-Wing_FAR' not found in the mesh collection.
+01-21-2018 17:05:58 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\ywing_far.x' succeeded in 31 ms ( 1646 faces, 3750 vertices ) ID 39
+01-21-2018 17:05:58 | GLOBAL CLASS : GetMesh : Mesh 'A-Wing' not found in the mesh collection.
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0026.BMP' successful 'TEX0026.BMP' on index 165 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0022.BMP' successful 'TEX0022.BMP' on index 166 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0023.BMP' successful 'TEX0023.BMP' on index 167 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0024.BMP' successful 'TEX0024.BMP' on index 168 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0025.BMP' successful 'TEX0025.BMP' on index 169 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0027.BMP' successful 'TEX0027.BMP' on index 170 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0020.BMP' successful 'TEX0020.BMP' on index 171 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0003.BMP' successful 'TEX0003.BMP' on index 172 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0001.BMP' successful 'TEX0001.BMP' on index 173 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0000.BMP' successful 'TEX0000.BMP' on index 174 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0008.BMP' successful 'TEX0008.BMP' on index 175 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0007.BMP' successful 'TEX0007.BMP' on index 176 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0006.BMP' successful 'TEX0006.BMP' on index 177 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0005.BMP' successful 'TEX0005.BMP' on index 178 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0002.BMP' successful 'TEX0002.BMP' on index 179 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0009.BMP' successful 'TEX0009.BMP' on index 180 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0010.BMP' successful 'TEX0010.BMP' on index 181 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0012.BMP' successful 'TEX0012.BMP' on index 182 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0011.BMP' successful 'TEX0011.BMP' on index 183 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0013.BMP' successful 'TEX0013.BMP' on index 184 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0014.BMP' successful 'TEX0014.BMP' on index 185 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0015.BMP' successful 'TEX0015.BMP' on index 186 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0016.BMP' successful 'TEX0016.BMP' on index 187 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0017.BMP' successful 'TEX0017.BMP' on index 188 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0018.BMP' successful 'TEX0018.BMP' on index 189 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0019.BMP' successful 'TEX0019.BMP' on index 190 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\TEX0021.BMP' successful 'TEX0021.BMP' on index 191 
+01-21-2018 17:05:58 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\awing\awing.x' succeeded in 172 ms ( 2426 faces, 5569 vertices ) ID 40
+01-21-2018 17:05:58 | GLOBAL CLASS : GetMesh : Mesh 'A-Wing_FAR' not found in the mesh collection.
+01-21-2018 17:05:58 | GLOBAL CLASS : GetMesh : Mesh 'B-Wing' not found in the mesh collection.
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0018.BMP' successful 'TEX0018.BMP' on index 192 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0026.BMP' successful 'TEX0026.BMP' on index 193 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0019.BMP' successful 'TEX0019.BMP' on index 194 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0021.BMP' successful 'TEX0021.BMP' on index 195 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0022.BMP' successful 'TEX0022.BMP' on index 196 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0023.BMP' successful 'TEX0023.BMP' on index 197 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0027.BMP' successful 'TEX0027.BMP' on index 198 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0028.BMP' successful 'TEX0028.BMP' on index 199 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0001.BMP' successful 'TEX0001.BMP' on index 200 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0030.BMP' successful 'TEX0030.BMP' on index 201 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0029.BMP' successful 'TEX0029.BMP' on index 202 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0020.BMP' successful 'TEX0020.BMP' on index 203 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0031.BMP' successful 'TEX0031.BMP' on index 204 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0032.BMP' successful 'TEX0032.BMP' on index 205 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0033.BMP' successful 'TEX0033.BMP' on index 206 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0034.BMP' successful 'TEX0034.BMP' on index 207 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0036.BMP' successful 'TEX0036.BMP' on index 208 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0035.BMP' successful 'TEX0035.BMP' on index 209 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0038.BMP' successful 'TEX0038.BMP' on index 210 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0037.BMP' successful 'TEX0037.BMP' on index 211 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0000.BMP' successful 'TEX0000.BMP' on index 212 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0002.BMP' successful 'TEX0002.BMP' on index 213 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0006.BMP' successful 'TEX0006.BMP' on index 214 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0005.BMP' successful 'TEX0005.BMP' on index 215 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0003.BMP' successful 'TEX0003.BMP' on index 216 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0004.BMP' successful 'TEX0004.BMP' on index 217 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0013.BMP' successful 'TEX0013.BMP' on index 218 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0012.BMP' successful 'TEX0012.BMP' on index 219 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0011.BMP' successful 'TEX0011.BMP' on index 220 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0009.BMP' successful 'TEX0009.BMP' on index 221 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0007.BMP' successful 'TEX0007.BMP' on index 222 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0008.BMP' successful 'TEX0008.BMP' on index 223 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0014.BMP' successful 'TEX0014.BMP' on index 224 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0016.BMP' successful 'TEX0016.BMP' on index 225 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0017.BMP' successful 'TEX0017.BMP' on index 226 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0015.BMP' successful 'TEX0015.BMP' on index 227 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0024.BMP' successful 'TEX0024.BMP' on index 228 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\TEX0025.BMP' successful 'TEX0025.BMP' on index 229 
+01-21-2018 17:05:58 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\bwing.x' succeeded in 235 ms ( 1817 faces, 4344 vertices ) ID 42
+01-21-2018 17:05:58 | GLOBAL CLASS : GetMesh : Mesh 'B-Wing_FAR' not found in the mesh collection.
+01-21-2018 17:05:58 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\bwing_far.x' succeeded in 47 ms ( 1817 faces, 4344 vertices ) ID 43
+01-21-2018 17:05:58 | GLOBAL CLASS : GetMesh : Mesh 'Millennium Falcon' not found in the mesh collection.
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0012.BMP' successful 'TEX0012.BMP' on index 230 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0015.BMP' successful 'TEX0015.BMP' on index 231 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0029.BMP' successful 'TEX0029.BMP' on index 232 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0032.BMP' successful 'TEX0032.BMP' on index 233 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0034.BMP' successful 'TEX0034.BMP' on index 234 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0009.BMP' successful 'TEX0009.BMP' on index 235 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0033.BMP' successful 'TEX0033.BMP' on index 236 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0019.BMP' successful 'TEX0019.BMP' on index 237 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0013.BMP' successful 'TEX0013.BMP' on index 238 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0035.BMP' successful 'TEX0035.BMP' on index 239 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0038.BMP' successful 'TEX0038.BMP' on index 240 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0039.BMP' successful 'TEX0039.BMP' on index 241 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0024.BMP' successful 'TEX0024.BMP' on index 242 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0040.BMP' successful 'TEX0040.BMP' on index 243 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0036.BMP' successful 'TEX0036.BMP' on index 244 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0041.BMP' successful 'TEX0041.BMP' on index 245 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0037.BMP' successful 'TEX0037.BMP' on index 246 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0000.BMP' successful 'TEX0000.BMP' on index 247 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0042.BMP' successful 'TEX0042.BMP' on index 248 
+01-21-2018 17:05:58 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0007.BMP' successful 'TEX0007.BMP' on index 249 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0006.BMP' successful 'TEX0006.BMP' on index 250 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0005.BMP' successful 'TEX0005.BMP' on index 251 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0004.BMP' successful 'TEX0004.BMP' on index 252 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0003.BMP' successful 'TEX0003.BMP' on index 253 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0001.BMP' successful 'TEX0001.BMP' on index 254 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0002.BMP' successful 'TEX0002.BMP' on index 255 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0008.BMP' successful 'TEX0008.BMP' on index 256 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0023.BMP' successful 'TEX0023.BMP' on index 257 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0022.BMP' successful 'TEX0022.BMP' on index 258 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0011.BMP' successful 'TEX0011.BMP' on index 259 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0010.BMP' successful 'TEX0010.BMP' on index 260 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0014.BMP' successful 'TEX0014.BMP' on index 261 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0018.BMP' successful 'TEX0018.BMP' on index 262 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0017.BMP' successful 'TEX0017.BMP' on index 263 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0016.BMP' successful 'TEX0016.BMP' on index 264 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0020.BMP' successful 'TEX0020.BMP' on index 265 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0021.BMP' successful 'TEX0021.BMP' on index 266 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0025.BMP' successful 'TEX0025.BMP' on index 267 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0027.BMP' successful 'TEX0027.BMP' on index 268 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0028.BMP' successful 'TEX0028.BMP' on index 269 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0026.BMP' successful 'TEX0026.BMP' on index 270 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0030.BMP' successful 'TEX0030.BMP' on index 271 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\TEX0031.BMP' successful 'TEX0031.BMP' on index 272 
+01-21-2018 17:05:59 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\falcon.x' succeeded in 468 ms ( 3447 faces, 8578 vertices ) ID 44
+01-21-2018 17:05:59 | GLOBAL CLASS : GetMesh : Mesh 'Millennium Falcon_FAR' not found in the mesh collection.
+01-21-2018 17:05:59 | GLOBAL CLASS : GetMesh : Mesh 'Millennium Falcon (Lando)' not found in the mesh collection.
+01-21-2018 17:05:59 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\falcon\falcon.x' succeeded in 63 ms ( 3447 faces, 8578 vertices ) ID 46
+01-21-2018 17:05:59 | GLOBAL CLASS : GetMesh : Mesh 'Millennium Falcon (Lando)_FAR' not found in the mesh collection.
+01-21-2018 17:05:59 | GLOBAL CLASS : GetMesh : Mesh 'X-Wing (Wedge)' not found in the mesh collection.
+01-21-2018 17:05:59 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\xwing.x' succeeded in 31 ms ( 2741 faces, 6627 vertices ) ID 48
+01-21-2018 17:05:59 | GLOBAL CLASS : GetMesh : Mesh 'X-Wing (Wedge)_FAR' not found in the mesh collection.
+01-21-2018 17:05:59 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\xwing_far.x' succeeded in 47 ms ( 2741 faces, 6627 vertices ) ID 49
+01-21-2018 17:05:59 | GLOBAL CLASS : GetMesh : Mesh 'TIE' not found in the mesh collection.
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\tie\TEX000.BMP' successful 'TEX000.BMP' on index 273 
+01-21-2018 17:05:59 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\tie\tie.x' succeeded in 32 ms ( 574 faces, 1388 vertices ) ID 50
+01-21-2018 17:05:59 | GLOBAL CLASS : GetMesh : Mesh 'TIE_FAR' not found in the mesh collection.
+01-21-2018 17:05:59 | GLOBAL CLASS : GetMesh : Mesh 'TIE Interceptor' not found in the mesh collection.
+01-21-2018 17:05:59 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\tie\tie_interceptor.x' succeeded in 156 ms ( 658 faces, 1554 vertices ) ID 52
+01-21-2018 17:05:59 | GLOBAL CLASS : GetMesh : Mesh 'TIE Interceptor_FAR' not found in the mesh collection.
+01-21-2018 17:05:59 | GLOBAL CLASS : GetMesh : Mesh 'TIE Defender' not found in the mesh collection.
+01-21-2018 17:05:59 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\tie\tie_defender.x' succeeded in 32 ms ( 870 faces, 2043 vertices ) ID 54
+01-21-2018 17:05:59 | GLOBAL CLASS : GetMesh : Mesh 'TIE Defender_FAR' not found in the mesh collection.
+01-21-2018 17:05:59 | GLOBAL CLASS : GetMesh : Mesh 'TIE Advanced X1' not found in the mesh collection.
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\tie_vader\TEX0000.BMP' successful 'TEX0000.BMP' on index 274 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\tie_vader\TEX0002.png' successful 'TEX0002.png' on index 275 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\tie_vader\TEX0001.png' successful 'TEX0001.png' on index 276 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\tie_vader\TEX0003.BMP' successful 'TEX0003.BMP' on index 277 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\tie_vader\TEX0004.BMP' successful 'TEX0004.BMP' on index 278 
+01-21-2018 17:05:59 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\tie_vader\TEX0005.BMP' successful 'TEX0005.BMP' on index 279 
+01-21-2018 17:05:59 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\tie_vader\tie_vader.x' succeeded in 281 ms ( 14528 faces, 13688 vertices ) ID 56
+01-21-2018 17:05:59 | GLOBAL CLASS : GetMesh : Mesh 'TIE Advanced X1_FAR' not found in the mesh collection.
+01-21-2018 17:05:59 | GLOBAL CLASS : GetMesh : Mesh 'TIE Bomber' not found in the mesh collection.
+01-21-2018 17:06:00 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\tie_vader\tie_bomber.x' succeeded in 172 ms ( 13051 faces, 10852 vertices ) ID 58
+01-21-2018 17:06:00 | GLOBAL CLASS : GetMesh : Mesh 'TIE Bomber_FAR' not found in the mesh collection.
+01-21-2018 17:06:00 | GLOBAL CLASS : GetMesh : Mesh 'Corellian Corvette' not found in the mesh collection.
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0027.BMP' successful 'TEX0027.BMP' on index 280 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0031.BMP' successful 'TEX0031.BMP' on index 281 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0032.BMP' successful 'TEX0032.BMP' on index 282 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0033.BMP' successful 'TEX0033.BMP' on index 283 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0034.BMP' successful 'TEX0034.BMP' on index 284 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0035.BMP' successful 'TEX0035.BMP' on index 285 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0030.BMP' successful 'TEX0030.BMP' on index 286 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0036.BMP' successful 'TEX0036.BMP' on index 287 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0000.BMP' successful 'TEX0000.BMP' on index 288 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0037.BMP' successful 'TEX0037.BMP' on index 289 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0038.BMP' successful 'TEX0038.BMP' on index 290 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0005.BMP' successful 'TEX0005.BMP' on index 291 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0006.BMP' successful 'TEX0006.BMP' on index 292 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0004.BMP' successful 'TEX0004.BMP' on index 293 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0003.BMP' successful 'TEX0003.BMP' on index 294 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0001.BMP' successful 'TEX0001.BMP' on index 295 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0002.BMP' successful 'TEX0002.BMP' on index 296 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0007.BMP' successful 'TEX0007.BMP' on index 297 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0039.BMP' successful 'TEX0039.BMP' on index 298 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0044.BMP' successful 'TEX0044.BMP' on index 299 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0043.BMP' successful 'TEX0043.BMP' on index 300 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0042.BMP' successful 'TEX0042.BMP' on index 301 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0041.BMP' successful 'TEX0041.BMP' on index 302 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0040.BMP' successful 'TEX0040.BMP' on index 303 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0045.BMP' successful 'TEX0045.BMP' on index 304 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0046.BMP' successful 'TEX0046.BMP' on index 305 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0047.BMP' successful 'TEX0047.BMP' on index 306 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0048.BMP' successful 'TEX0048.BMP' on index 307 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0049.BMP' successful 'TEX0049.BMP' on index 308 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0050.BMP' successful 'TEX0050.BMP' on index 309 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0051.BMP' successful 'TEX0051.BMP' on index 310 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0008.BMP' successful 'TEX0008.BMP' on index 311 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0010.BMP' successful 'TEX0010.BMP' on index 312 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0009.BMP' successful 'TEX0009.BMP' on index 313 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0054.BMP' successful 'TEX0054.BMP' on index 314 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0053.BMP' successful 'TEX0053.BMP' on index 315 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0052.BMP' successful 'TEX0052.BMP' on index 316 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0055.BMP' successful 'TEX0055.BMP' on index 317 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0012.BMP' successful 'TEX0012.BMP' on index 318 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0016.BMP' successful 'TEX0016.BMP' on index 319 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0017.BMP' successful 'TEX0017.BMP' on index 320 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0018.BMP' successful 'TEX0018.BMP' on index 321 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0019.BMP' successful 'TEX0019.BMP' on index 322 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0013.BMP' successful 'TEX0013.BMP' on index 323 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0011.BMP' successful 'TEX0011.BMP' on index 324 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0014.BMP' successful 'TEX0014.BMP' on index 325 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0015.BMP' successful 'TEX0015.BMP' on index 326 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0020.BMP' successful 'TEX0020.BMP' on index 327 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0022.BMP' successful 'TEX0022.BMP' on index 328 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0021.BMP' successful 'TEX0021.BMP' on index 329 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0023.BMP' successful 'TEX0023.BMP' on index 330 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0024.BMP' successful 'TEX0024.BMP' on index 331 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0026.BMP' successful 'TEX0026.BMP' on index 332 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0025.BMP' successful 'TEX0025.BMP' on index 333 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0028.BMP' successful 'TEX0028.BMP' on index 334 
+01-21-2018 17:06:00 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\TEX0029.BMP' successful 'TEX0029.BMP' on index 335 
+01-21-2018 17:06:00 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\corellian\corellian.x' succeeded in 594 ms ( 2665 faces, 6311 vertices ) ID 60
+01-21-2018 17:06:00 | GLOBAL CLASS : GetMesh : Mesh 'Corellian Corvette_FAR' not found in the mesh collection.
+01-21-2018 17:06:00 | GLOBAL CLASS : GetMesh : Mesh 'Nebulon-B Frigate' not found in the mesh collection.
+01-21-2018 17:06:01 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\TEX0000.bmp' successful 'TEX0000.bmp' on index 336 
+01-21-2018 17:06:01 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\TEX0001.bmp' successful 'TEX0001.bmp' on index 337 
+01-21-2018 17:06:01 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\TEX0002.bmp' successful 'TEX0002.bmp' on index 338 
+01-21-2018 17:06:01 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\TEX0003.bmp' successful 'TEX0003.bmp' on index 339 
+01-21-2018 17:06:01 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\TEX0004.bmp' successful 'TEX0004.bmp' on index 340 
+01-21-2018 17:06:01 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\TEX0005.bmp' successful 'TEX0005.bmp' on index 341 
+01-21-2018 17:06:01 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\TEX0006.bmp' successful 'TEX0006.bmp' on index 342 
+01-21-2018 17:06:01 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\TEX0007.bmp' successful 'TEX0007.bmp' on index 343 
+01-21-2018 17:06:01 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\TEX0008.bmp' successful 'TEX0008.bmp' on index 344 
+01-21-2018 17:06:01 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\TEX0009.bmp' successful 'TEX0009.bmp' on index 345 
+01-21-2018 17:06:01 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\TEX0010.bmp' successful 'TEX0010.bmp' on index 346 
+01-21-2018 17:06:01 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\TEX0011.bmp' successful 'TEX0011.bmp' on index 347 
+01-21-2018 17:06:01 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\TEX0012.bmp' successful 'TEX0012.bmp' on index 348 
+01-21-2018 17:06:01 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\TEX0013.bmp' successful 'TEX0013.bmp' on index 349 
+01-21-2018 17:06:01 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\TEX0014.bmp' successful 'TEX0014.bmp' on index 350 
+01-21-2018 17:06:01 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\nebulonb.x' succeeded in 1109 ms ( 25652 faces, 49663 vertices ) ID 62
+01-21-2018 17:06:01 | GLOBAL CLASS : GetMesh : Mesh 'Nebulon-B Frigate_FAR' not found in the mesh collection.
+01-21-2018 17:06:01 | GLOBAL CLASS : GetMesh : Mesh 'Nebulon-B2 Frigate' not found in the mesh collection.
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\TEX0001B2.png' successful 'TEX0001B2.png' on index 351 
+01-21-2018 17:06:02 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\nebulonb\nebulonb2.x' succeeded in 516 ms ( 34756 faces, 40632 vertices ) ID 64
+01-21-2018 17:06:02 | GLOBAL CLASS : GetMesh : Mesh 'Nebulon-B2 Frigate_FAR' not found in the mesh collection.
+01-21-2018 17:06:02 | GLOBAL CLASS : GetMesh : Mesh 'Mon Calamari Capital Ship' not found in the mesh collection.
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0019.bmp' successful 'mc90\TEX0019.bmp' on index 352 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0027.bmp' successful 'mc90\TEX0027.bmp' on index 353 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0025.bmp' successful 'mc90\TEX0025.bmp' on index 354 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0026.bmp' successful 'mc90\TEX0026.bmp' on index 355 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0011.bmp' successful 'mc90\TEX0011.bmp' on index 356 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0029.bmp' successful 'mc90\TEX0029.bmp' on index 357 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0000.bmp' successful 'mc90\TEX0000.bmp' on index 358 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0028.bmp' successful 'mc90\TEX0028.bmp' on index 359 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0030.bmp' successful 'mc90\TEX0030.bmp' on index 360 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0001.bmp' successful 'mc90\TEX0001.bmp' on index 361 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0032.bmp' successful 'mc90\TEX0032.bmp' on index 362 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0031.bmp' successful 'mc90\TEX0031.bmp' on index 363 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0033.bmp' successful 'mc90\TEX0033.bmp' on index 364 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0035.bmp' successful 'mc90\TEX0035.bmp' on index 365 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0034.bmp' successful 'mc90\TEX0034.bmp' on index 366 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0036.bmp' successful 'mc90\TEX0036.bmp' on index 367 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0037.bmp' successful 'mc90\TEX0037.bmp' on index 368 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0003.bmp' successful 'mc90\TEX0003.bmp' on index 369 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0038.bmp' successful 'mc90\TEX0038.bmp' on index 370 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0002.bmp' successful 'mc90\TEX0002.bmp' on index 371 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0039.bmp' successful 'mc90\TEX0039.bmp' on index 372 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0040.bmp' successful 'mc90\TEX0040.bmp' on index 373 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0041.bmp' successful 'mc90\TEX0041.bmp' on index 374 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0004.bmp' successful 'mc90\TEX0004.bmp' on index 375 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0007.bmp' successful 'mc90\TEX0007.bmp' on index 376 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0008.bmp' successful 'mc90\TEX0008.bmp' on index 377 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0009.bmp' successful 'mc90\TEX0009.bmp' on index 378 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0012.bmp' successful 'mc90\TEX0012.bmp' on index 379 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0013.bmp' successful 'mc90\TEX0013.bmp' on index 380 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0014.bmp' successful 'mc90\TEX0014.bmp' on index 381 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0015.bmp' successful 'mc90\TEX0015.bmp' on index 382 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0016.bmp' successful 'mc90\TEX0016.bmp' on index 383 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0017.bmp' successful 'mc90\TEX0017.bmp' on index 384 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0006.bmp' successful 'mc90\TEX0006.bmp' on index 385 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0005.bmp' successful 'mc90\TEX0005.bmp' on index 386 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0010.bmp' successful 'mc90\TEX0010.bmp' on index 387 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0018.bmp' successful 'mc90\TEX0018.bmp' on index 388 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0020.bmp' successful 'mc90\TEX0020.bmp' on index 389 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0021.bmp' successful 'mc90\TEX0021.bmp' on index 390 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0022.bmp' successful 'mc90\TEX0022.bmp' on index 391 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0023.bmp' successful 'mc90\TEX0023.bmp' on index 392 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\TEX0024.bmp' successful 'mc90\TEX0024.bmp' on index 393 
+01-21-2018 17:06:02 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\mc90\mc90.x' succeeded in 406 ms ( 5374 faces, 14617 vertices ) ID 66
+01-21-2018 17:06:02 | GLOBAL CLASS : GetMesh : Mesh 'Mon Calamari Capital Ship_FAR' not found in the mesh collection.
+01-21-2018 17:06:02 | GLOBAL CLASS : GetMesh : Mesh 'Transport' not found in the mesh collection.
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0004.bmp' successful 'TEX0004.bmp' on index 394 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0000.bmp' successful 'TEX0000.bmp' on index 395 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0005.bmp' successful 'TEX0005.bmp' on index 396 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0001.bmp' successful 'TEX0001.bmp' on index 397 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0003.bmp' successful 'TEX0003.bmp' on index 398 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0029.bmp' successful 'TEX0029.bmp' on index 399 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0028.bmp' successful 'TEX0028.bmp' on index 400 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0026.bmp' successful 'TEX0026.bmp' on index 401 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0027.bmp' successful 'TEX0027.bmp' on index 402 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0030.bmp' successful 'TEX0030.bmp' on index 403 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0031.bmp' successful 'TEX0031.bmp' on index 404 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0032.bmp' successful 'TEX0032.bmp' on index 405 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0033.bmp' successful 'TEX0033.bmp' on index 406 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0034.bmp' successful 'TEX0034.bmp' on index 407 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0002.bmp' successful 'TEX0002.bmp' on index 408 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0035.bmp' successful 'TEX0035.bmp' on index 409 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0038.bmp' successful 'TEX0038.bmp' on index 410 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0037.bmp' successful 'TEX0037.bmp' on index 411 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0036.bmp' successful 'TEX0036.bmp' on index 412 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0039.bmp' successful 'TEX0039.bmp' on index 413 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0040.bmp' successful 'TEX0040.bmp' on index 414 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0058.bmp' successful 'TEX0058.bmp' on index 415 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0044.bmp' successful 'TEX0044.bmp' on index 416 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0061.bmp' successful 'TEX0061.bmp' on index 417 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0060.bmp' successful 'TEX0060.bmp' on index 418 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0043.bmp' successful 'TEX0043.bmp' on index 419 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0042.bmp' successful 'TEX0042.bmp' on index 420 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0041.bmp' successful 'TEX0041.bmp' on index 421 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0050.bmp' successful 'TEX0050.bmp' on index 422 
+01-21-2018 17:06:02 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0049.bmp' successful 'TEX0049.bmp' on index 423 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0048.bmp' successful 'TEX0048.bmp' on index 424 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0047.bmp' successful 'TEX0047.bmp' on index 425 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0045.bmp' successful 'TEX0045.bmp' on index 426 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0046.bmp' successful 'TEX0046.bmp' on index 427 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0051.bmp' successful 'TEX0051.bmp' on index 428 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0052.bmp' successful 'TEX0052.bmp' on index 429 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0053.bmp' successful 'TEX0053.bmp' on index 430 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0054.bmp' successful 'TEX0054.bmp' on index 431 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0055.bmp' successful 'TEX0055.bmp' on index 432 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0056.bmp' successful 'TEX0056.bmp' on index 433 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0057.bmp' successful 'TEX0057.bmp' on index 434 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0059.bmp' successful 'TEX0059.bmp' on index 435 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0006.bmp' successful 'TEX0006.bmp' on index 436 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0007.bmp' successful 'TEX0007.bmp' on index 437 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0009.bmp' successful 'TEX0009.bmp' on index 438 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0008.bmp' successful 'TEX0008.bmp' on index 439 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0010.bmp' successful 'TEX0010.bmp' on index 440 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0011.bmp' successful 'TEX0011.bmp' on index 441 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0012.bmp' successful 'TEX0012.bmp' on index 442 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0013.bmp' successful 'TEX0013.bmp' on index 443 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0025.bmp' successful 'TEX0025.bmp' on index 444 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0024.bmp' successful 'TEX0024.bmp' on index 445 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0023.bmp' successful 'TEX0023.bmp' on index 446 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0022.bmp' successful 'TEX0022.bmp' on index 447 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0021.bmp' successful 'TEX0021.bmp' on index 448 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0020.bmp' successful 'TEX0020.bmp' on index 449 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0019.bmp' successful 'TEX0019.bmp' on index 450 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0018.bmp' successful 'TEX0018.bmp' on index 451 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0017.bmp' successful 'TEX0017.bmp' on index 452 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0016.bmp' successful 'TEX0016.bmp' on index 453 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0014.bmp' successful 'TEX0014.bmp' on index 454 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\TEX0015.bmp' successful 'TEX0015.bmp' on index 455 
+01-21-2018 17:06:03 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\transport.x' succeeded in 594 ms ( 4836 faces, 12459 vertices ) ID 68
+01-21-2018 17:06:03 | GLOBAL CLASS : GetMesh : Mesh 'Transport_FAR' not found in the mesh collection.
+01-21-2018 17:06:03 | GLOBAL CLASS : GetMesh : Mesh 'Imperial-I Star Destroyer' not found in the mesh collection.
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00048.bmp' successful 'TEX00048.bmp' on index 456 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00047.bmp' successful 'TEX00047.bmp' on index 457 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00046.bmp' successful 'TEX00046.bmp' on index 458 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00045.bmp' successful 'TEX00045.bmp' on index 459 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00044.bmp' successful 'TEX00044.bmp' on index 460 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00015.bmp' successful 'TEX00015.bmp' on index 461 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00055.bmp' successful 'TEX00055.bmp' on index 462 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00007.bmp' successful 'TEX00007.bmp' on index 463 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00006.bmp' successful 'TEX00006.bmp' on index 464 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00005.bmp' successful 'TEX00005.bmp' on index 465 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00003.bmp' successful 'TEX00003.bmp' on index 466 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00004.bmp' successful 'TEX00004.bmp' on index 467 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00008.bmp' successful 'TEX00008.bmp' on index 468 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00065.bmp' successful 'TEX00065.bmp' on index 469 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00064.bmp' successful 'TEX00064.bmp' on index 470 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00066.bmp' successful 'TEX00066.bmp' on index 471 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00067.bmp' successful 'TEX00067.bmp' on index 472 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00068.bmp' successful 'TEX00068.bmp' on index 473 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00069.bmp' successful 'TEX00069.bmp' on index 474 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00070.bmp' successful 'TEX00070.bmp' on index 475 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00073.bmp' successful 'TEX00073.bmp' on index 476 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00072.bmp' successful 'TEX00072.bmp' on index 477 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00071.bmp' successful 'TEX00071.bmp' on index 478 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00076.bmp' successful 'TEX00076.bmp' on index 479 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00074.bmp' successful 'TEX00074.bmp' on index 480 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00082.bmp' successful 'TEX00082.bmp' on index 481 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00083.bmp' successful 'TEX00083.bmp' on index 482 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00084.bmp' successful 'TEX00084.bmp' on index 483 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00085.bmp' successful 'TEX00085.bmp' on index 484 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00086.bmp' successful 'TEX00086.bmp' on index 485 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00087.bmp' successful 'TEX00087.bmp' on index 486 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00088.bmp' successful 'TEX00088.bmp' on index 487 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00089.bmp' successful 'TEX00089.bmp' on index 488 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00081.bmp' successful 'TEX00081.bmp' on index 489 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00080.bmp' successful 'TEX00080.bmp' on index 490 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00078.bmp' successful 'TEX00078.bmp' on index 491 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00077.bmp' successful 'TEX00077.bmp' on index 492 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00079.bmp' successful 'TEX00079.bmp' on index 493 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00020.bmp' successful 'TEX00020.bmp' on index 494 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00019.bmp' successful 'TEX00019.bmp' on index 495 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00018.bmp' successful 'TEX00018.bmp' on index 496 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00017.bmp' successful 'TEX00017.bmp' on index 497 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00016.bmp' successful 'TEX00016.bmp' on index 498 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00014.bmp' successful 'TEX00014.bmp' on index 499 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00013.bmp' successful 'TEX00013.bmp' on index 500 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00012.bmp' successful 'TEX00012.bmp' on index 501 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00011.bmp' successful 'TEX00011.bmp' on index 502 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00009.bmp' successful 'TEX00009.bmp' on index 503 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00091.bmp' successful 'TEX00091.bmp' on index 504 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00093.bmp' successful 'TEX00093.bmp' on index 505 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00094.bmp' successful 'TEX00094.bmp' on index 506 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00095.bmp' successful 'TEX00095.bmp' on index 507 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00096.bmp' successful 'TEX00096.bmp' on index 508 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00097.bmp' successful 'TEX00097.bmp' on index 509 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00098.bmp' successful 'TEX00098.bmp' on index 510 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00092.bmp' successful 'TEX00092.bmp' on index 511 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00031.bmp' successful 'TEX00031.bmp' on index 512 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00036.bmp' successful 'TEX00036.bmp' on index 513 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00035.bmp' successful 'TEX00035.bmp' on index 514 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00034.bmp' successful 'TEX00034.bmp' on index 515 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00033.bmp' successful 'TEX00033.bmp' on index 516 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00032.bmp' successful 'TEX00032.bmp' on index 517 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00000.bmp' successful 'TEX00000.bmp' on index 518 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00021.bmp' successful 'TEX00021.bmp' on index 519 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00023.bmp' successful 'TEX00023.bmp' on index 520 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00056.bmp' successful 'TEX00056.bmp' on index 521 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00057.bmp' successful 'TEX00057.bmp' on index 522 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00058.bmp' successful 'TEX00058.bmp' on index 523 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00059.bmp' successful 'TEX00059.bmp' on index 524 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00060.bmp' successful 'TEX00060.bmp' on index 525 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00062.bmp' successful 'TEX00062.bmp' on index 526 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00061.bmp' successful 'TEX00061.bmp' on index 527 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00063.bmp' successful 'TEX00063.bmp' on index 528 
+01-21-2018 17:06:03 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00001.bmp' successful 'TEX00001.bmp' on index 529 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00039.bmp' successful 'TEX00039.bmp' on index 530 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00038.bmp' successful 'TEX00038.bmp' on index 531 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00037.bmp' successful 'TEX00037.bmp' on index 532 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00040.bmp' successful 'TEX00040.bmp' on index 533 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00041.bmp' successful 'TEX00041.bmp' on index 534 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00042.bmp' successful 'TEX00042.bmp' on index 535 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00043.bmp' successful 'TEX00043.bmp' on index 536 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00049.bmp' successful 'TEX00049.bmp' on index 537 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00050.bmp' successful 'TEX00050.bmp' on index 538 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00027.bmp' successful 'TEX00027.bmp' on index 539 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00028.bmp' successful 'TEX00028.bmp' on index 540 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00075.bmp' successful 'TEX00075.bmp' on index 541 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00090.BMP' successful 'TEX00090.BMP' on index 542 
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\star_destroyer.x' succeeded in 797 ms ( 3280 faces, 4620 vertices ) ID 70
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Imperial-I Star Destroyer_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Devastator Imperial-I Star Destroyer' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\star_destroyer.x' succeeded in 47 ms ( 3280 faces, 4620 vertices ) ID 72
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Devastator Imperial-I Star Destroyer_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Acclamator Assault Ship' not found in the mesh collection.
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\acclamator\TEX00000.PNG' successful 'TEX00000.PNG' on index 543 
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\acclamator\acclamator.x' succeeded in 46 ms ( 338 faces, 368 vertices ) ID 74
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Acclamator Assault Ship_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Arquitens Light Cruiser' not found in the mesh collection.
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\arquitens\TEX00001.PNG' successful 'TEX00001.PNG' on index 544 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\arquitens\TEX00000.BMP' successful 'TEX00000.BMP' on index 545 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\arquitens\TEX00002.PNG' successful 'TEX00002.PNG' on index 546 
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\arquitens\arquitens.x' succeeded in 188 ms ( 3677 faces, 4091 vertices ) ID 76
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Arquitens Light Cruiser_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Executor Super Star Destroyer' not found in the mesh collection.
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\executor\executor_buildings_walls.bmp' successful 'executor_buildings_walls.bmp' on index 547 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\executor\executor_engine_main.bmp' successful 'executor_engine_main.bmp' on index 548 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\executor\executor_buildings_top.bmp' successful 'executor_buildings_top.bmp' on index 549 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\executor\executor_engine_flame.bmp' successful 'executor_engine_flame.bmp' on index 550 
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\executor\executor.x' succeeded in 62 ms ( 5705 faces, 7417 vertices ) ID 78
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Executor Super Star Destroyer_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Red Laser' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\projectiles\red_laser.x' succeeded in 0 ms ( 28 faces, 39 vertices ) ID 80
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Red Laser_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Green Laser' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\projectiles\green_laser.x' succeeded in 0 ms ( 28 faces, 48 vertices ) ID 82
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Green Laser_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Green Double Laser' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\projectiles\green2_laser.x' succeeded in 0 ms ( 56 faces, 128 vertices ) ID 84
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Green Double Laser_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Green Anti-Ship Laser' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\projectiles\green3_laser.x' succeeded in 16 ms ( 84 faces, 192 vertices ) ID 86
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Green Anti-Ship Laser_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Green Laser Advanced' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\projectiles\green_laser.x' succeeded in 0 ms ( 28 faces, 48 vertices ) ID 88
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Green Laser Advanced_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Yellow Laser' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\projectiles\yellow_laser.x' succeeded in 0 ms ( 28 faces, 48 vertices ) ID 90
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Yellow Laser_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Ion Cannon Laser' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\projectiles\ion_sm_laser.x' succeeded in 15 ms ( 216 faces, 564 vertices ) ID 92
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Ion Cannon Laser_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Death Star Laser 47' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Death Star Laser_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Missile' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\projectiles\torpedo.x' succeeded in 0 ms ( 216 faces, 568 vertices ) ID 96
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Missile_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'MC90 Turbolaser Tower' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\turbotowers\mc90_turbolaser.x' succeeded in 0 ms ( 58 faces, 64 vertices ) ID 98
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'MC90 Turbolaser Tower_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Corellian Turbolaser Tower' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\turbotowers\corellian_turbolaser.x' succeeded in 16 ms ( 78 faces, 79 vertices ) ID 100
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Corellian Turbolaser Tower_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Transport Turbolaser Tower' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\turbotowers\transport_turbolaser.x' succeeded in 0 ms ( 78 faces, 79 vertices ) ID 102
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Transport Turbolaser Tower_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Nebulon B Turbolaser Tower' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\turbotowers\nebulonb_turbolaser.x' succeeded in 0 ms ( 58 faces, 52 vertices ) ID 104
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Nebulon B Turbolaser Tower_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Acclamator Turbolaser Tower' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\turbotowers\acclamator_turbolaser.x' succeeded in 0 ms ( 58 faces, 64 vertices ) ID 106
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Acclamator Turbolaser Tower_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Arquitens Turbolaser Tower' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\turbotowers\acclamator_turbolaser.x' succeeded in 16 ms ( 58 faces, 64 vertices ) ID 108
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Arquitens Turbolaser Tower_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Star Destroyer Heavy Turbolaser Tower' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\turbotowers\star_destroyer_anti-ship_turbolaser.x' succeeded in 0 ms ( 58 faces, 64 vertices ) ID 110
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Star Destroyer Heavy Turbolaser Tower_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Star Destroyer Turbolaser Tower' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\turbotowers\star_destroyer_turbolaser.x' succeeded in 0 ms ( 58 faces, 64 vertices ) ID 112
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Star Destroyer Turbolaser Tower_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Star Destroyer Shield Generator' not found in the mesh collection.
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00030.BMP' successful 'TEX00030.BMP' on index 551 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\TEX00029.BMP' successful 'TEX00029.BMP' on index 552 
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\star_destroyer_energy_pod.x' succeeded in 15 ms ( 110 faces, 330 vertices ) ID 114
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Star Destroyer Shield Generator_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Star Destroyer Lower Shield Generator' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\stardestroyer\star_destroyer_lower_energy_pod.x' succeeded in 0 ms ( 177 faces, 111 vertices ) ID 116
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Star Destroyer Lower Shield Generator_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Executor Super Star Destroyer Turbolaser Tower' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\turbotowers\executor_turbolaser.x' succeeded in 0 ms ( 12 faces, 24 vertices ) ID 118
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Executor Super Star Destroyer Turbolaser Tower_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Executor Super Star Destroyer Shield Generator' not found in the mesh collection.
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\executor\executor_pod_mid.bmp' successful 'executor_pod_mid.bmp' on index 553 
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\executor\executor_pod_top.bmp' successful 'executor_pod_top.bmp' on index 554 
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\executor\executor_energy_pod.x' succeeded in 0 ms ( 110 faces, 330 vertices ) ID 120
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Executor Super Star Destroyer Shield Generator_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Executor Super Star Destroyer Bridge' not found in the mesh collection.
+01-21-2018 17:06:04 | TEXTURE MANAGER : Loading of 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\executor\executor_bridge.bmp' successful 'executor_bridge.bmp' on index 555 
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\executor\executor_bridge.x' succeeded in 0 ms ( 16 faces, 27 vertices ) ID 122
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Executor Super Star Destroyer Bridge_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Invisible Rebel Turbo Laser' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Invisible Rebel Turbo Laser_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Death Star Laser Source' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Death Star Laser Source_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'XWing_RD_LU_WingATI' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\xwing_rightdown_leftup_wing.x' succeeded in 15 ms ( 503 faces, 1180 vertices ) ID 128
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'XWing_RD_LU_WingATI_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'XWing_RU_LD_WingATI' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\xwing\xwing_rightup_leftdown_wing.x' succeeded in 16 ms ( 503 faces, 1180 vertices ) ID 130
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'XWing_RU_LD_WingATI_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'TIE_WingATI' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\tie\tie_right_left_wing.x' succeeded in 0 ms ( 109 faces, 265 vertices ) ID 132
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'TIE_WingATI_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'TIE_InterceptorWingATI' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\tie\tie_interceptor_right_left_wing.x' succeeded in 16 ms ( 146 faces, 339 vertices ) ID 134
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'TIE_InterceptorWingATI_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'YWing_WingATI' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\ywing\ywing_right_left_wing.x' succeeded in 0 ms ( 384 faces, 864 vertices ) ID 136
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'YWing_WingATI_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'BWing_Top_WingATI' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\bwing_top_wing.x' succeeded in 15 ms ( 959 faces, 2325 vertices ) ID 138
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'BWing_Top_WingATI_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'BWing_Bottom_WingATI' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\bwing_bottom_wing.x' succeeded in 16 ms ( 326 faces, 837 vertices ) ID 140
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'BWing_Bottom_WingATI_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'BWing_WingATI' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\bwing\bwing_wing.x' succeeded in 0 ms ( 132 faces, 290 vertices ) ID 142
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'BWing_WingATI_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Transport Box 1' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\transport_box1.x' succeeded in 0 ms ( 12 faces, 24 vertices ) ID 144
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Transport Box 1_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Transport Box 2' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\transport_box2.x' succeeded in 16 ms ( 12 faces, 24 vertices ) ID 146
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Transport Box 2_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Transport Box 3' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\transport_box3.x' succeeded in 0 ms ( 12 faces, 24 vertices ) ID 148
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Transport Box 3_FAR' not found in the mesh collection.
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Transport Box 4' not found in the mesh collection.
+01-21-2018 17:06:04 | MESH MANAGER : Loading of mesh file 'C:\1-Own Projects\SWEndor\SWEndor\SWEndor\bin\x86\Debug\Assets\models\transport\transport_box4.x' succeeded in 0 ms ( 12 faces, 24 vertices ) ID 150
+01-21-2018 17:06:04 | GLOBAL CLASS : GetMesh : Mesh 'Transport Box 4_FAR' not found in the mesh collection.
+01-21-2018 17:31:32 | START UNLOAD
+01-21-2018 17:31:34 | RESSOURCE MANAGER : Engine successfully unloaded

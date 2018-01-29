@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{38B23038-2CB8-4D0B-B97F-BD9AF261DC02}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SWEndor</RootNamespace>
+    <AssemblyName>SWEndor</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>none</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualC" />
+    <Reference Include="MTV3D65, Version=6.5.3244.34206, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MTV3D65.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActorTypes\General\ActorDistanceInfo.cs" />
+    <Compile Include="ActorTypes\General\ActorParser.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\ArqTurboLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\ACTurboLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\SDLowerShieldGeneratorATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\SDAntiShipTurboLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\TransportTurboLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\ExecutorBridgeATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\InvisibleRebelTurboLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\DSLaserSourceATI.cs" />
+    <Compile Include="ActorTypes\Groups\Debris\Tower03_RuinsATI.cs" />
+    <Compile Include="ActorTypes\Groups\Debris\Tower02_RuinsATI.cs" />
+    <Compile Include="ActorTypes\Groups\Debris\Tower01_RuinsATI.cs" />
+    <Compile Include="ActorTypes\Groups\Debris\Tower00_RuinsATI.cs" />
+    <Compile Include="ActorTypes\Groups\Debris\Transport_Box3ATI.cs" />
+    <Compile Include="ActorTypes\Groups\Debris\Transport_Box4ATI.cs" />
+    <Compile Include="ActorTypes\Groups\Debris\Transport_Box2ATI.cs" />
+    <Compile Include="ActorTypes\Groups\Debris\Transport_Box1ATI.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\ExplosionWaveATI.cs" />
+    <Compile Include="ActorTypes\Groups\Fighters\FalconATI.cs" />
+    <Compile Include="ActorTypes\Groups\Projectiles\Yellow2LaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\Projectiles\GreenAntiShipLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\Projectiles\Green2LaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\SurfaceTowerGroup.cs" />
+    <Compile Include="ActorTypes\Groups\StarDestroyers\ArquitensATI.cs" />
+    <Compile Include="ActorTypes\Groups\StarDestroyers\AcclamatorATI.cs" />
+    <Compile Include="ActorTypes\Groups\StarDestroyers\DevastatorATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticSceneGroup.cs" />
+    <Compile Include="ActorTypes\Groups\Debris\BWing_WingATI.cs" />
+    <Compile Include="ActorTypes\Groups\Debris\BWing_Bottom_WingATI.cs" />
+    <Compile Include="ActorTypes\Groups\Debris\TIE_InterceptorWingATI.cs" />
+    <Compile Include="ActorTypes\Groups\Debris\BWing_Top_WingATI.cs" />
+    <Compile Include="ActorTypes\Groups\Debris\YWing_WingATI.cs" />
+    <Compile Include="ActorTypes\Groups\Debris\TIE_WingATI.cs" />
+    <Compile Include="ActorTypes\Groups\Debris\XWing_RD_LU_WingATI.cs" />
+    <Compile Include="ActorTypes\Groups\Debris\XWing_RU_LD_WingATI.cs" />
+    <Compile Include="ActorTypes\Groups\Fighters\WedgeXWingATI.cs" />
+    <Compile Include="ActorTypes\Groups\Projectiles\GreenLaserAdvancedATI.cs" />
+    <Compile Include="ActorTypes\Groups\Projectiles\DeathStarLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\Projectiles\MissileATI.cs" />
+    <Compile Include="ActorTypes\Groups\Projectiles\SmallIonLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\ExecutorStaticATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Surface003_00ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Surface002_99ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Surface002_11ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Surface002_12ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Surface002_10ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Surface002_01ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Surface002_02ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Surface002_03ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Surface002_04ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Surface002_05ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Surface002_06ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Surface002_07ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Surface002_08ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Surface002_09ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Surface002_00ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Surface001_01ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Surface001_00ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\ImperialIStaticATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\SunATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Yavin4ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\HothATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\YavinATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\DeathStarATI.cs" />
+    <Compile Include="ActorTypes\Groups\SurfaceTowers\SurfaceVentATI.cs" />
+    <Compile Include="ActorTypes\Groups\SurfaceTowers\Tower03ATI.cs" />
+    <Compile Include="ActorTypes\Groups\SurfaceTowers\Tower02ATI.cs" />
+    <Compile Include="ActorTypes\Groups\SurfaceTowers\Tower01ATI.cs" />
+    <Compile Include="ActorTypes\Groups\SurfaceTowers\TowerGunAdvATI.cs" />
+    <Compile Include="ActorTypes\Groups\SurfaceTowers\TowerGunATI.cs" />
+    <Compile Include="ActorTypes\Groups\SurfaceTowers\Tower00ATI.cs" />
+    <Compile Include="ActorTypes\Groups\TIEs\TIE_sa_ATI.cs" />
+    <Compile Include="ActorTypes\Groups\TIEs\TIE_X1_ATI.cs" />
+    <Compile Include="ActorTypes\DeathCameraATI.cs" />
+    <Compile Include="ActorTypes\Groups\TIEs\TIE_D_ATI.cs" />
+    <Compile Include="ActorTypes\Groups\Warships\NebulonB2ATI.cs" />
+    <Compile Include="ActorTypes\InvisibleCameraATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\NebulonBTurboLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\ExecutorTurboLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\ExecutorShieldGeneratorATI.cs" />
+    <Compile Include="ActorTypes\Groups\DebrisGroup.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\CorellianTurboLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\SDShieldGeneratorATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\SDTurboLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\ExplosionLgATI.cs" />
+    <Compile Include="ActorTypes\General\ActorTypeFactory.cs" />
+    <Compile Include="ActorTypes\General\ActorFactory.cs" />
+    <Compile Include="ActorTypes\General\ActorInfo.cs" />
+    <Compile Include="ActorTypes\General\ActorTypeInfo.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\ElectroATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOnGroup.cs" />
+    <Compile Include="ActorTypes\Groups\ExpolsionGroup.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\MC90TurboLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\Projectiles\YellowLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\StarDestroyers\ExecutorATI.cs" />
+    <Compile Include="ActorTypes\Groups\StarDestroyers\ImperialIATI.cs" />
+    <Compile Include="ActorTypes\Groups\TIEGroup.cs" />
+    <Compile Include="ActorTypes\Groups\ProjectileGroup.cs" />
+    <Compile Include="ActorTypes\Groups\StarDestroyerGroup.cs" />
+    <Compile Include="ActorTypes\Groups\TIEs\TIE_IN_ATI.cs" />
+    <Compile Include="ActorTypes\Groups\TIEs\TIE_LN_ATI.cs" />
+    <Compile Include="ActorTypes\Groups\WarshipGroup.cs" />
+    <Compile Include="ActorTypes\Groups\FighterGroup.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\DeathStar2ATI.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\ExplosionSmATI.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\Explosion2ATI.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\ExplosionATI.cs" />
+    <Compile Include="ActorTypes\Groups\Warships\TransportATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\SceneRoomATI.cs" />
+    <Compile Include="ActorTypes\Groups\Projectiles\GreenLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\Projectiles\RedLaserATI.cs" />
+    <Compile Include="AI\Actions\AttackActor.cs" />
+    <Compile Include="AI\Actions\ForcedMove.cs" />
+    <Compile Include="AI\Actions\AvoidCollisionRotate.cs" />
+    <Compile Include="AI\Actions\Evade.cs" />
+    <Compile Include="AI\Actions\Wait.cs" />
+    <Compile Include="AI\Actions\SelfDestruct.cs" />
+    <Compile Include="AI\Actions\HyperspaceOut.cs" />
+    <Compile Include="AI\Actions\Hunt.cs" />
+    <Compile Include="AI\Actions\Delete.cs" />
+    <Compile Include="AI\Actions\Lock.cs" />
+    <Compile Include="AI\Actions\Idle.cs" />
+    <Compile Include="AI\Actions\FollowActor.cs" />
+    <Compile Include="AI\Actions\HyperspaceIn.cs" />
+    <Compile Include="AI\Actions\Rotate.cs" />
+    <Compile Include="AI\Actions\Move.cs" />
+    <Compile Include="AI\ActionManager.cs" />
+    <Compile Include="AI\ActionInfo.cs" />
+    <Compile Include="AI\AI.cs" />
+    <Compile Include="Menu\UIPage_GameWon.cs" />
+    <Compile Include="Menu\UIPage_GameOver.cs" />
+    <Compile Include="Menu\UIPage_ConfirmExitScenario.cs" />
+    <Compile Include="Menu\UIPage_KeyboardControls.cs" />
+    <Compile Include="Menu\UIPage_Credits.cs" />
+    <Compile Include="Menu\UIPage_ConfigSettingsMenu.cs" />
+    <Compile Include="Menu\UIPage_OptionsMenu.cs" />
+    <Compile Include="Menu\UIPage_PauseMenu.cs" />
+    <Compile Include="Menu\UIPage_PlayScenario.cs" />
+    <Compile Include="Menu\UIPage_MainMenu.cs" />
+    <Compile Include="Menu\UIPage_ConfirmExit.cs" />
+    <Compile Include="Menu\UIPage.cs" />
+    <Compile Include="Parser\GameSaver.cs" />
+    <Compile Include="Primitives\ThreadSafeDictionary.cs" />
+    <Compile Include="Primitives\ThreadSafeList.cs" />
+    <Compile Include="Scenarios\GameEvent.cs" />
+    <Compile Include="Scenarios\GameScenarioBase.cs" />
+    <Compile Include="Scenarios\Scenarios\GSTIEAdvanced.cs" />
+    <Compile Include="Scenarios\Scenarios\GSMainMenu.cs" />
+    <Compile Include="Scenarios\Scenarios\GSHoth.cs" />
+    <Compile Include="Scenarios\Scenarios\GSTestZone.cs" />
+    <Compile Include="Scenarios\Scenarios\GSYavin.cs" />
+    <Compile Include="Scenarios\Scenarios\GSEndor.cs" />
+    <Compile Include="ScoreInfo.cs" />
+    <Compile Include="FactionInfo.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="Primitives\TV_3DVectorRay.cs" />
+    <Compile Include="AssemblyLoader.cs" />
+    <Compile Include="ActorTypes\Groups\Warships\NebulonBATI.cs" />
+    <Compile Include="ActorTypes\Groups\Warships\MC90ATI.cs" />
+    <Compile Include="ActorTypes\Groups\Warships\CorellianATI.cs" />
+    <Compile Include="ActorTypes\Groups\Fighters\LandoFalconATI.cs" />
+    <Compile Include="ActorTypes\Groups\Fighters\BWingATI.cs" />
+    <Compile Include="ActorTypes\Groups\Fighters\AWingATI.cs" />
+    <Compile Include="ActorTypes\Groups\Fighters\YWingATI.cs" />
+    <Compile Include="ActorTypes\Groups\Fighters\XWingATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\EndorATI.cs" />
+    <Compile Include="Engine.cs" />
+    <Compile Include="GameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameForm.Designer.cs">
+      <DependentUpon>GameForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scenarios\GameScenarioManager.cs" />
+    <Compile Include="Globals.cs" />
+    <Compile Include="InputManager.cs" />
+    <Compile Include="PlayerInfo.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Screen2D.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="SoundManager.cs" />
+    <Compile Include="Sound\fmod.cs" />
+    <Compile Include="Sound\fmod_dsp.cs" />
+    <Compile Include="Sound\fmod_errors.cs" />
+    <Compile Include="PerfManager.cs" />
+    <Compile Include="TimeManager.cs" />
+    <Compile Include="Menu\UISelectionElement.cs" />
+    <Compile Include="Utilities\Utilities.cs" />
+    <Compile Include="Weapons\Arquitens\ArquitensTurboLaserWeapon.cs" />
+    <Compile Include="Weapons\DeathStar\DeathStarLaserWeapon.cs" />
+    <Compile Include="Weapons\Executor\ExecutorTurboLaserWeapon.cs" />
+    <Compile Include="Weapons\Falcon\FalconGunPortLaserWeapon.cs" />
+    <Compile Include="Weapons\Imperial\ImperialAntiShipTorpWeapon.cs" />
+    <Compile Include="Weapons\Imperial\ImperialAntiShipTurboLaserWeapon.cs" />
+    <Compile Include="Weapons\Imperial\ImperialTurboLaserWeapon.cs" />
+    <Compile Include="Weapons\Acclamator\AcclamatorTurboLaserWeapon.cs" />
+    <Compile Include="Weapons\TIE-IN\TIE_IN_DblLaserWeapon.cs" />
+    <Compile Include="Weapons\TIE-LN\TIE_LN_DblLaserWeapon.cs" />
+    <Compile Include="Weapons\Towers\Tower_LaserWeapon.cs" />
+    <Compile Include="Weapons\Towers\Tower_DblLaserWeapon.cs" />
+    <Compile Include="Weapons\Transport\TransportTurboLaserWeapon - Copy.cs" />
+    <Compile Include="Weapons\TrackerDummyWeapon.cs" />
+    <Compile Include="Weapons\MC90\MC90TurboLaserWeapon.cs" />
+    <Compile Include="Weapons\NebulonB\NebulonBTurboLaserWeapon.cs" />
+    <Compile Include="Weapons\TIE-X1\TIE_X1_LaserWeapon.cs" />
+    <Compile Include="Weapons\TIE-D\TIE_D_LaserWeapon.cs" />
+    <Compile Include="Weapons\TIE-IN\TIE_IN_LaserWeapon.cs" />
+    <Compile Include="Weapons\TIE-sa\TIE_sa_LaserWeapon.cs" />
+    <Compile Include="Weapons\TIE-LN\TIE_LN_LaserWeapon.cs" />
+    <Compile Include="Weapons\Falcon\FalconLaserWeapon.cs" />
+    <Compile Include="Weapons\AWing\AWingTorpWeapon.cs" />
+    <Compile Include="Weapons\BWing\BWingIonWeapon.cs" />
+    <Compile Include="Weapons\BWing\BWingTorpWeapon.cs" />
+    <Compile Include="Weapons\TIE-sa\TIE_sa_IonWeapon.cs" />
+    <Compile Include="Weapons\TIE-X1\TIE_X1_TorpWeapon.cs" />
+    <Compile Include="Weapons\Corellian\CorellianTurboLaserWeapon.cs" />
+    <Compile Include="Weapons\YWing\YWingIonWeapon.cs" />
+    <Compile Include="Weapons\TIE-sa\TIE_sa_TorpWeapon.cs" />
+    <Compile Include="Weapons\YWing\YWingTorpWeapon.cs" />
+    <Compile Include="Weapons\XWing\XWingTorpWeapon.cs" />
+    <Compile Include="Weapons\YWing\YWingLaserWeapon.cs" />
+    <Compile Include="Weapons\BWing\BWingLaserWeapon.cs" />
+    <Compile Include="Weapons\AWing\AWingLaserWeapon.cs" />
+    <Compile Include="Weapons\XWing\XWingLaserWeapon.cs" />
+    <Compile Include="Weapons\WeaponInfo.cs" />
+    <EmbeddedResource Include="GameForm.resx">
+      <DependentUpon>GameForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

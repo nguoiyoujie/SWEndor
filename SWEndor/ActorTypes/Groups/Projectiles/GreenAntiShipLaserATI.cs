@@ -1,0 +1,53 @@
+﻿using MTV3D65;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+
+namespace SWEndor
+{
+  public class GreenAntiShipLaserATI : ProjectileGroup
+  {
+    private static GreenAntiShipLaserATI _instance;
+    public static GreenAntiShipLaserATI Instance()
+    {
+      if (_instance == null) { _instance = new GreenAntiShipLaserATI(); }
+      return _instance;
+    }
+
+    private GreenAntiShipLaserATI() : base("Green Anti-Ship Laser")
+    {
+      // Combat
+      OnTimedLife = true;
+      TimedLife = 5; // 6 seconds
+      IsCombatObject = false;
+      IsSelectable = false;
+      IsDamage = true;
+      ImpactDamage = 3;
+      MaxSpeed = Globals.LaserSpeed;
+      MinSpeed = Globals.LaserSpeed;
+
+      NoAI = true;
+
+      // Projectile
+      ImpactCloseEnoughDistance = 30;
+
+      SourceMeshPath = Path.Combine(Globals.ModelPath, @"projectiles\green3_laser.x");
+    }
+
+    public override void ProcessNewState(ActorInfo ainfo)
+    {
+      if (ainfo.ActorState == ActorState.DYING)
+      {
+        if (ainfo.TimedLife > 0)
+        {
+          ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("ExplosionSm"));
+          acinfo.Position = ainfo.GetPosition();
+          ActorInfo.Create(acinfo);
+        }
+        ainfo.ActorState = ActorState.DEAD;
+      }
+    }
+  }
+}
+
