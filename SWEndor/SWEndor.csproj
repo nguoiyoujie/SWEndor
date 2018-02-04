@@ -55,6 +55,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>SWEndor.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualC" />
     <Reference Include="MTV3D65, Version=6.5.3244.34206, Culture=neutral">
@@ -86,6 +89,7 @@
     <Compile Include="ActorTypes\Groups\Debris\Transport_Box1ATI.cs" />
     <Compile Include="ActorTypes\Groups\Explosions\ExplosionWaveATI.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\FalconATI.cs" />
+    <Compile Include="ActorTypes\Groups\Projectiles\SmallIonLaserATI - Copy.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\Yellow2LaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\GreenAntiShipLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\Green2LaserATI.cs" />
@@ -106,7 +110,7 @@
     <Compile Include="ActorTypes\Groups\Projectiles\GreenLaserAdvancedATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\DeathStarLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\MissileATI.cs" />
-    <Compile Include="ActorTypes\Groups\Projectiles\SmallIonLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\Projectiles\BigIonLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene\ExecutorStaticATI.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene\Surface003_00ATI.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene\Surface002_99ATI.cs" />

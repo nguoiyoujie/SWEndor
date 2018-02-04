@@ -412,7 +412,7 @@ namespace SWEndor
     {
       if (Actor.TypeInfo is FighterGroup)
       {
-        SoundManager.Instance().SetSound("hit");//, true, 1, false, 1000);
+        SoundManager.Instance().SetSound("hit");
         Engine.Instance().TVGraphicEffect.Flash(color.r, color.g, color.b, 200);
 
         double r = Engine.Instance().Random.NextDouble();

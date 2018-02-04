@@ -28,6 +28,8 @@ namespace SWEndor
       RadarSize = 20;
       AnimationCyclePeriod = 1;
 
+      EnableDistanceCull = false;
+
       SourceMesh = Engine.Instance().TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
@@ -51,7 +53,7 @@ namespace SWEndor
         }
         SourceMesh.CreateBox(1000, 1000, 0.01f);
         SourceMesh.SetTexture(texanimframes[0]);
-        SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA);
+        SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
 
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);

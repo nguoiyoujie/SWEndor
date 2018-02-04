@@ -13,6 +13,7 @@ namespace SWEndor.Scenarios
 
     private ActorInfo m_AScene = null;
     private ActorInfo m_APlanet = null;
+    private int sceneid = Engine.Instance().Random.Next(0, 7);
 
     public override void Load(ActorTypeInfo wing, string difficulty)
     {
@@ -40,39 +41,46 @@ namespace SWEndor.Scenarios
       PlayerInfo.Instance().ScoreForNextLife = 9999999;
       PlayerInfo.Instance().Score = new ScoreInfo();
 
-      SoundManager.Instance().SetMusic("battle_1_1", false, 18600);
+      //SoundManager.Instance().SetMusic("battle_1_1", false, 18600);
       //SoundManager.Instance().SetMusic("battle_1_1", false, 71250);
       //SoundManager.Instance().SetMusic("battle_1_1", false, 191000);
       //SoundManager.Instance().SetMusicLoop("battle_3_4");
 
-      /*
-      double d = Engine.Instance().Random.NextDouble();
-      if (d < 0.2f)
+      switch (sceneid)
       {
-        SoundManager.Instance().SetMusic("credits_3_1");
-        SoundManager.Instance().SetMusicLoop("battle_3_4");
-      }
-      else if (d < 0.4f)
-      {
-        SoundManager.Instance().SetMusic("credits_3_1");
-        SoundManager.Instance().SetMusicLoop("battle_3_3");
-      }
-      else if (d < 0.6f)
-      {
-        SoundManager.Instance().SetMusic("credits_1_1");
-        SoundManager.Instance().SetMusicLoop("battle_1_1");
-      }
-      else if (d < 0.8f)
-      {
-        SoundManager.Instance().SetMusic("credits_1_1");
-        SoundManager.Instance().SetMusicLoop("battle_1_4");
-      }
-      else
-      {
-        SoundManager.Instance().SetMusic("credits_3_1");
-        SoundManager.Instance().SetMusicLoop("battle_3_4");
-      }
-      */
+        // Endor reportorie
+        case 0:
+        default:
+          SoundManager.Instance().SetMusic("credits_3_1");
+          SoundManager.Instance().SetMusicLoop("battle_3_4");
+          break;
+        case 1:
+          SoundManager.Instance().SetMusic("credits_3_1");
+          SoundManager.Instance().SetMusicLoop("battle_3_3");
+          break;
+        case 2:
+          SoundManager.Instance().SetMusic("credits_3_1");
+          SoundManager.Instance().SetMusicLoop("battle_3_4");
+          break;
+        // Yavin reportorie
+        case 3:
+          SoundManager.Instance().SetMusic("credits_1_1");
+          SoundManager.Instance().SetMusicLoop("battle_1_1", 18600);
+          break;
+        case 4:
+          SoundManager.Instance().SetMusic("credits_1_1");
+          SoundManager.Instance().SetMusicLoop("battle_1_4");
+          break;
+        // Hoth reportorie
+        case 5:
+          SoundManager.Instance().SetMusic("credits_2_1");
+          SoundManager.Instance().SetMusicLoop("battle_2_1");
+          break;
+        case 6:
+          SoundManager.Instance().SetMusic("credits_2_1");
+          SoundManager.Instance().SetMusicLoop("battle_2_2");
+          break;
+      }    
       GameScenarioManager.Instance().IsCutsceneMode = true;
     }
 
@@ -102,18 +110,17 @@ namespace SWEndor.Scenarios
       // Create Endor
       if (m_APlanet == null)
       {
-        double d = Engine.Instance().Random.NextDouble();
-        if (d < 0.4f)
+        if (sceneid <= 2)
         {
           acinfo = new ActorCreationInfo(EndorATI.Instance());
         }
-        else if (d < 0.75f)
+        else if (sceneid <= 4)
         {
-          acinfo = new ActorCreationInfo(HothATI.Instance());
+          acinfo = new ActorCreationInfo(YavinATI.Instance());
         }
         else
         {
-          acinfo = new ActorCreationInfo(YavinATI.Instance());
+          acinfo = new ActorCreationInfo(HothATI.Instance());
         }
 
         acinfo.InitialState = ActorState.FIXED;

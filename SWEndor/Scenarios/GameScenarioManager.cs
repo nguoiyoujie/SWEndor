@@ -23,6 +23,7 @@ namespace SWEndor
 
       ScenarioList.Add(new Scenarios.GSEndor());
       ScenarioList.Add(new Scenarios.GSYavin());
+      ScenarioList.Add(new Scenarios.GSHoth());
       ScenarioList.Add(new Scenarios.GSTIEAdvanced());
       ScenarioList.Add(new Scenarios.GSTestZone());
     }

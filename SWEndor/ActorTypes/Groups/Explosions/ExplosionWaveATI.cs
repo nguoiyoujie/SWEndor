@@ -26,6 +26,9 @@ namespace SWEndor
       CollisionEnabled = false;
       RadarSize = 0;
 
+      EnableDistanceCull = false;
+
+
       SourceMesh = Engine.Instance().TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
@@ -47,7 +50,7 @@ namespace SWEndor
 
         SourceMesh.CreateBox(100, 0.001f, 100f);
         SourceMesh.SetTexture(tex);
-        SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA);
+        SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
 
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);

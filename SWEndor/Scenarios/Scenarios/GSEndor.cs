@@ -87,8 +87,8 @@ namespace SWEndor.Scenarios
       //if (wing is FighterGroup)
       //{
       PlayerInfo.Instance().Lives = 4;
-        PlayerInfo.Instance().ScorePerLife = 500000;
-        PlayerInfo.Instance().ScoreForNextLife = 500000;
+        PlayerInfo.Instance().ScorePerLife = 1000000;
+        PlayerInfo.Instance().ScoreForNextLife = 1000000;
       /*}
       else
       {
@@ -1227,6 +1227,9 @@ namespace SWEndor.Scenarios
         return;
 
       if (GameScenarioManager.Instance().GetGameStateB("GameWon"))
+        return;
+
+      if (GameScenarioManager.Instance().GetGameStateB("GameOver"))
         return;
 
       ActorInfo ainfo = (ActorInfo)param[0];

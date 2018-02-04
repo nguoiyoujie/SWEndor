@@ -113,6 +113,7 @@ namespace SWEndor
       Register(GreenLaserAdvancedATI.Instance());
       Register(YellowLaserATI.Instance());
       Register(SmallIonLaserATI.Instance());
+      Register(BigIonLaserATI.Instance());
       Register(DeathStarLaserATI.Instance());
 
       // torps

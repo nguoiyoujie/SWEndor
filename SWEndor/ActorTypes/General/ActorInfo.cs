@@ -202,8 +202,8 @@ namespace SWEndor
       //FarMesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 8);
       Mesh.Enable(true);
 
-      Update();
       CreationState = CreationState.PREACTIVE;
+      Update();
       OnCreatedEvent( new object[] { this });
     }
 
@@ -340,11 +340,6 @@ namespace SWEndor
 
     private void Update()
     {
-      if (TypeInfo is TowerGunATI)
-      {
-
-      }
-
       PrevPosition = Position;
       PrevRotation = Rotation;
 

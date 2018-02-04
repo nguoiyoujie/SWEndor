@@ -14,6 +14,7 @@ namespace SWEndor
       if (info.Exists)
       {
         Assembly ass = Assembly.LoadFrom(info.FullName);
+        ass.EntryPoint.Invoke(null, null);
         return true;
       }
       return false;

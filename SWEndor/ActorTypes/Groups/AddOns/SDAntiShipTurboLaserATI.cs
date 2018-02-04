@@ -23,7 +23,7 @@ namespace SWEndor
       IsDamage = false;
       CollisionEnabled = true;
 
-      MaxStrength = 65;
+      MaxStrength = 20;
       ImpactDamage = 16;
 
       Score_perStrength = 250;

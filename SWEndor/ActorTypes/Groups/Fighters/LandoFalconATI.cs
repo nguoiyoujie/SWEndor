@@ -28,7 +28,7 @@ namespace SWEndor
       MaxSpeed = 500;
       MinSpeed = 250;
       MaxSpeedChangeRate = 250;
-      MaxTurnRate = 35;
+      MaxTurnRate = 55;
 
       AggressiveTracker = true;
       Score_perStrength = 750;

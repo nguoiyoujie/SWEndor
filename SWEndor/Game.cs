@@ -61,6 +61,7 @@ namespace SWEndor
     public int CurrentFPS { get; private set; }
 
     private bool isProcessingPerf = false;
+    private bool isProcessingAI = false;
 
     /// <summary>
     /// Checks if the current FPS is below the LowFPSLimit
@@ -78,7 +79,7 @@ namespace SWEndor
     {
       get
       {
-        return (CurrentFPS < RenderLowFPSLimit) ? CurrentFPS / RenderLowFPSLimit : 1;
+        return (CurrentFPS < RenderLowFPSLimit) ? (CurrentFPS / RenderLowFPSLimit < 0.5f) ? 0.5f : CurrentFPS / RenderLowFPSLimit : 1;
       }
     }
 
@@ -113,7 +114,7 @@ namespace SWEndor
       while (th_load.ThreadState == System.Threading.ThreadState.Running)
       {
         Engine.Instance().PreRender();
-        Thread.Sleep(200);
+        Thread.Sleep(50);
       }
 
       // Initialize other threads/timers
@@ -191,7 +192,12 @@ namespace SWEndor
 
     private void TimerAI(object sender, ElapsedEventArgs e)
     {
-      TickAI();
+      if (!isProcessingAI)
+      {
+        isProcessingAI = true;
+        TickAI();
+        isProcessingAI = false;
+      }
       if (!IsRunning)
       {
         tm_ai.Stop();

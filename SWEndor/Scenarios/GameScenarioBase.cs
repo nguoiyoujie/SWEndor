@@ -106,6 +106,7 @@ namespace SWEndor
       PlayerInfo.Instance().enginetevol = 0;
       SoundManager.Instance().SetSoundStopAll();
       Screen2D.Instance().OverrideTargetingRadar = false;
+      Screen2D.Instance().Box3D_Enable = false;
     }
 
     public void FadeOut(object[] param = null)
@@ -203,7 +204,16 @@ namespace SWEndor
       }
     }
 
-    public ActorInfo SpawnActor(ActorTypeInfo type, string unit_name, string register_name, string sidebar_name, float spawntime, FactionInfo faction, TV_3DVECTOR position, TV_3DVECTOR rotation, ActionInfo[] actions, Dictionary<string, ActorInfo>[] registries)
+    public ActorInfo SpawnActor(ActorTypeInfo type
+                              , string unit_name
+                              , string register_name
+                              , string sidebar_name
+                              , float spawntime
+                              , FactionInfo faction
+                              , TV_3DVECTOR position
+                              , TV_3DVECTOR rotation
+                              , ActionInfo[] actions
+                              , Dictionary<string, ActorInfo>[] registries)
     {
       ActorCreationInfo acinfo;
       ActorInfo ainfo;
@@ -247,48 +257,33 @@ namespace SWEndor
     public void SpawnActor(object[] param)
     {
       // Format: Object[]
-      //  [0]: ActorType to spawn
-      //  [1]: Spawn name
-      //  [2]: Faction
-      //  [3]: Spawn position
-      //  [4]: Spawn rotation
-      //  [5]: ActionInfo[]
 
       if (param == null 
-        || param.GetLength(0) < 7 
+        || param.GetLength(0) < 8
         || !(param[0] is ActorTypeInfo)
         || !(param[1] is string)
-        || !(param[2] is float)
-        || !(param[3] is FactionInfo)
-        || !(param[4] is TV_3DVECTOR)
-        || !(param[5] is TV_3DVECTOR)
-        || !(param[6] is ActionInfo[])
+        || !(param[2] is string)
+        || !(param[3] is string)
+        || !(param[4] is float)
+        || !(param[5] is FactionInfo)
+        || !(param[6] is TV_3DVECTOR)
+        || !(param[7] is TV_3DVECTOR)
+        || !(param[8] is ActionInfo[])
+        || !(param[9] is Dictionary<string, ActorInfo>[])
         )
         return;
 
-      ActorCreationInfo acinfo;
-      ActorInfo ainfo;
-      ActorTypeInfo type = (ActorTypeInfo)param[0];
-      string name = (string)param[1];
-      float spawntime = (float)param[2];
-      FactionInfo faction = (FactionInfo)param[3];
-      TV_3DVECTOR position = (TV_3DVECTOR)param[4];
-      TV_3DVECTOR rotation = (TV_3DVECTOR)param[5];
-      ActionInfo[] actions = (ActionInfo[])param[6];
-
-      acinfo = new ActorCreationInfo(type);
-      acinfo.Name = name;
-      acinfo.Faction = faction;
-      acinfo.InitialState = ActorState.NORMAL;
-      acinfo.CreationTime = spawntime;
-      acinfo.Position = position;
-      acinfo.Rotation = new TV_3DVECTOR();
-      ainfo = ActorInfo.Create(acinfo);
-
-      foreach (ActionInfo act in actions)
-      {
-        ActionManager.QueueLast(ainfo, act);
-      }
+      SpawnActor((ActorTypeInfo)param[0]
+               , (string)param[1]
+               , (string)param[2]
+               , (string)param[3]
+               , (float)param[4]
+               , (FactionInfo)param[5]
+               , (TV_3DVECTOR)param[6]
+               , (TV_3DVECTOR)param[7]
+               , (ActionInfo[])param[8]
+               , (Dictionary<string, ActorInfo>[])param[9]
+               );
     }
 
     public void RegisterEvents(ActorInfo actor)
@@ -346,27 +341,10 @@ namespace SWEndor
 
     public void ProcessTick(object[] param)
     {
-
-
     }
 
     public void ProcessStateChange(object[] param)
     {
-      /*
-      if (param.GetLength(0) < 2 || param[0] == null || param[1] == null)
-        return;
-
-      ActorInfo av = (ActorInfo)param[0];
-      ActorState st = (ActorState)param[1];
-
-      if (PlayerInfo.Instance().Actor == av)
-      {
-        if (st != ActorState.DYING && (av.ActorState == ActorState.DYING || av.ActorState == ActorState.DEAD))
-        {
-
-        }
-      }
-      */
     }
 
     public void ProcessHit(object[] param)

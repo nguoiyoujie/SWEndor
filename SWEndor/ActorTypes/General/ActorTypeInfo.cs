@@ -485,12 +485,20 @@ namespace SWEndor
 
     public virtual void ProcessHit(ActorInfo ainfo, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
+      if (hitby.TypeInfo.ImpactDamage * ainfo.DamageModifier == 0)
+        return;
+
       if (hitby.TypeInfo.IsDamage)
       {
+        float str0 = ainfo.Strength;
         ainfo.Strength -= hitby.TypeInfo.ImpactDamage * ainfo.DamageModifier;
+        float str1 = ainfo.Strength;
         if (ainfo.IsPlayer())
         {
-          PlayerInfo.Instance().FlashHit(PlayerInfo.Instance().HealthColor);
+          if (str1 < (int)str0)
+          {
+            PlayerInfo.Instance().FlashHit(PlayerInfo.Instance().HealthColor);
+          }
           PlayerInfo.Instance().Score.DamageTaken += hitby.TypeInfo.ImpactDamage * ainfo.DamageModifier;
         }
 

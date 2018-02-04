@@ -22,8 +22,6 @@ namespace SWEndor.Scenarios
     private ActorInfo m_AScene = null;
 
     private ActorInfo m_Player = null;
-    private string m_Player_PrimaryWeapon = "";
-    private string m_Player_SecondaryWeapon = "";
 
     public override void Load(ActorTypeInfo wing, string difficulty)
     {

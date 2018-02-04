@@ -23,7 +23,6 @@ namespace SWEndor
       float x = 75;
       float y = 120;
 
-
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
       Cover.HighlightBoxWidth = Engine.Instance().ScreenWidth;
       Cover.HighlightBoxHeight = Engine.Instance().ScreenHeight;
@@ -44,7 +43,7 @@ namespace SWEndor
       ButtonMusicVol.ToggleButtonsValues = new List<string> { "0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1" };
       ButtonMusicVol.ToggleButtonsCurrentNumber = 0;
       while (ButtonMusicVol.ToggleButtonsCurrentNumber < ButtonMusicVol.ToggleButtonsValues.Count 
-        && float.Parse(ButtonMusicVol.ToggleButtonsValues[ButtonMusicVol.ToggleButtonsCurrentNumber]) < SoundManager.Instance().MasterMusicVolume)
+        && float.Parse(ButtonMusicVol.ToggleButtonsValues[ButtonMusicVol.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture) < SoundManager.Instance().MasterMusicVolume)
       {
         ButtonMusicVol.ToggleButtonsCurrentNumber++;
       }
@@ -62,7 +61,7 @@ namespace SWEndor
       ButtonSFXVol.ToggleButtonsValues = new List<string> { "0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1" };
       ButtonSFXVol.ToggleButtonsCurrentNumber = 0;
       while (ButtonSFXVol.ToggleButtonsCurrentNumber < ButtonSFXVol.ToggleButtonsValues.Count
-        && float.Parse(ButtonSFXVol.ToggleButtonsValues[ButtonSFXVol.ToggleButtonsCurrentNumber]) <= SoundManager.Instance().MasterSFXVolume)
+        && float.Parse(ButtonSFXVol.ToggleButtonsValues[ButtonSFXVol.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture) <= SoundManager.Instance().MasterSFXVolume)
       {
         ButtonSFXVol.ToggleButtonsCurrentNumber++;
       }
@@ -80,7 +79,7 @@ namespace SWEndor
       ButtonSteeringSensitivity.ToggleButtonsValues = new List<string> { "0.25", "0.33", "0.5", "0.75", "1", "1.25", "1.5", "2", "2.5", "3", "4" };
       ButtonSteeringSensitivity.ToggleButtonsCurrentNumber = 0;
       while (ButtonSteeringSensitivity.ToggleButtonsCurrentNumber < ButtonSteeringSensitivity.ToggleButtonsValues.Count
-        && float.Parse(ButtonSteeringSensitivity.ToggleButtonsValues[ButtonSteeringSensitivity.ToggleButtonsCurrentNumber]) < PlayerInfo.Instance().SteeringSensitivity)
+        && float.Parse(ButtonSteeringSensitivity.ToggleButtonsValues[ButtonSteeringSensitivity.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture) < PlayerInfo.Instance().SteeringSensitivity)
       {
         ButtonSteeringSensitivity.ToggleButtonsCurrentNumber++;
       }
@@ -128,7 +127,7 @@ namespace SWEndor
       if (key == CONST_TV_KEY.TV_KEY_LEFT || key == CONST_TV_KEY.TV_KEY_RIGHT)
       {
         //ButtonMusicVol.SecondaryText = ButtonMusicVol.ToggleButtonsCurrentNumber.ToString();
-        SoundManager.Instance().MasterMusicVolume = float.Parse(ButtonMusicVol.ToggleButtonsValues[ButtonMusicVol.ToggleButtonsCurrentNumber]);
+        SoundManager.Instance().MasterMusicVolume = float.Parse(ButtonMusicVol.ToggleButtonsValues[ButtonMusicVol.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
       }
       return false;
     }
@@ -137,7 +136,7 @@ namespace SWEndor
     {
       if (key == CONST_TV_KEY.TV_KEY_LEFT || key == CONST_TV_KEY.TV_KEY_RIGHT)
       {
-        SoundManager.Instance().MasterSFXVolume = float.Parse(ButtonSFXVol.ToggleButtonsValues[ButtonSFXVol.ToggleButtonsCurrentNumber]);
+        SoundManager.Instance().MasterSFXVolume = float.Parse(ButtonSFXVol.ToggleButtonsValues[ButtonSFXVol.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
         SoundManager.Instance().SetSound("shieldlow");
       }
       return false;
@@ -147,7 +146,7 @@ namespace SWEndor
     {
       if (key == CONST_TV_KEY.TV_KEY_LEFT || key == CONST_TV_KEY.TV_KEY_RIGHT)
       {
-        PlayerInfo.Instance().SteeringSensitivity = float.Parse(ButtonSteeringSensitivity.ToggleButtonsValues[ButtonSteeringSensitivity.ToggleButtonsCurrentNumber]);
+        PlayerInfo.Instance().SteeringSensitivity = float.Parse(ButtonSteeringSensitivity.ToggleButtonsValues[ButtonSteeringSensitivity.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
       }
       return false;
     }

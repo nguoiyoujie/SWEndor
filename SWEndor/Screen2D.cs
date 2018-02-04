@@ -82,10 +82,15 @@ namespace SWEndor
     private float prevstrengthfrac = 0;
 
     // Steering 
-    TV_2DVECTOR steering_position = new TV_2DVECTOR(10, 110);
-    float steering_height = 60;
-    float steering_width = 60;
+    private TV_2DVECTOR steering_position = new TV_2DVECTOR(10, 110);
+    private float steering_height = 60;
+    private float steering_width = 60;
 
+    // Draw 3D Box info
+    public bool Box3D_Enable = false;
+    public TV_3DVECTOR Box3D_min = new TV_3DVECTOR();
+    public TV_3DVECTOR Box3D_max = new TV_3DVECTOR();
+    public TV_COLOR Box3D_color = new TV_COLOR(1, 1, 1, 1); 
 
     private Screen2D()
     {
@@ -146,6 +151,12 @@ namespace SWEndor
               DrawCrossHair();
             using (new PerfElement("render_2D_drawtarget"))
               DrawTarget();
+
+            if (Box3D_Enable)
+            {
+              using (new PerfElement("render_2D_drawbox3D"))
+                DrawBox3D();
+            }
           }
         }
         if (PlayerInfo.Instance().ShowUI)
@@ -209,6 +220,13 @@ namespace SWEndor
                                                             , CenterTextColor.GetIntColor()
                                                             , FontID12);
       Engine.Instance().TVScreen2DText.Action_EndText();
+    }
+
+    private void DrawBox3D()
+    {
+      Engine.Instance().TVScreen2DImmediate.Action_Begin2D();
+      Engine.Instance().TVScreen2DImmediate.Draw_Box3D(Box3D_min, Box3D_max, Box3D_color.GetIntColor());
+      Engine.Instance().TVScreen2DImmediate.Action_End2D();
     }
 
     private void DrawMouseLocation()

@@ -52,7 +52,7 @@ namespace SWEndor
         }
         SourceMesh.CreateBox(40, 40, 0.01f);
         SourceMesh.SetTexture(texanimframes[0]);
-        SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA);
+        SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
 
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);

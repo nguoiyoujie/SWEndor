@@ -8,7 +8,7 @@ namespace SWEndor.Scenarios
   {
     public GSYavin()
     {
-      Name = "Battle of Yavin";
+      Name = "Battle of Yavin (WIP)";
       AllowedWings = new List<ActorTypeInfo> { XWingATI.Instance() };
 
       AllowedDifficulties = new List<string> { "easy"
@@ -33,6 +33,7 @@ namespace SWEndor.Scenarios
     private float vader_distX = 91000;
     private float vaderend_distX = 107000;
     private float last_target_distX = 0;
+    private float last_sound_distX = 0;
     List<string> names = new List<string>();
 
     private ActorInfo m_Player = null;
@@ -118,9 +119,9 @@ namespace SWEndor.Scenarios
       if (expiretime - Game.Instance().GameTime > 1800)
         GameScenarioManager.Instance().AddEvent(expiretime - 1800, "Message.130");
 
-      PlayerInfo.Instance().Lives = 2;
-      PlayerInfo.Instance().ScorePerLife = 500000;
-      PlayerInfo.Instance().ScoreForNextLife = 500000;
+      PlayerInfo.Instance().Lives = 4;
+      PlayerInfo.Instance().ScorePerLife = 1000000;
+      PlayerInfo.Instance().ScoreForNextLife = 1000000;
       PlayerInfo.Instance().Score = new ScoreInfo();
 
       MakePlayer = Rebel_MakePlayer;
@@ -175,7 +176,7 @@ namespace SWEndor.Scenarios
       FactionInfo.AddFaction("Rebels", new TV_COLOR(0.8f, 0, 0, 1)).AutoAI = true;
       FactionInfo.AddFaction("Rebels_Gold", new TV_COLOR(0.8f, 0.3f, 0, 1)).AutoAI = true;
       FactionInfo.AddFaction("Empire", new TV_COLOR(0, 0.8f, 0, 1)).AutoAI = true;
-      FactionInfo.AddFaction("Empire_DeathStarDefenses", new TV_COLOR(0.2f, 0.8f, 0, 1)).AutoAI = true;
+      FactionInfo.AddFaction("Empire_DeathStarDefenses", new TV_COLOR(0.1f, 0.8f, 0, 1)).AutoAI = true;
 
       FactionInfo.Get("Rebels").Allies.Add(FactionInfo.Get("Rebels_Gold"));
       FactionInfo.Get("Rebels_Gold").Allies.Add(FactionInfo.Get("Rebels"));
@@ -333,6 +334,11 @@ namespace SWEndor.Scenarios
               PlayerInfo.Instance().Score.Score += (m_Player.GetPosition().x - last_target_distX) * 10;
               last_target_distX = m_Player.GetPosition().x;
             }
+            if (last_sound_distX < m_Player.GetPosition().x && !GameScenarioManager.Instance().IsCutsceneMode)
+            {
+              SoundManager.Instance().SetSound("Button_3");
+              last_sound_distX = m_Player.GetPosition().x + 250;
+            }
             Screen2D.Instance().TargetingRadar_text = string.Format("{0:00000000}", (target_distX - m_Player.GetPosition().x) * 30);
             Scene_Stage05b_ContinuouslySpawnRoute(null);
 
@@ -362,6 +368,11 @@ namespace SWEndor.Scenarios
             {
               PlayerInfo.Instance().Score.Score += (m_Player.GetPosition().x - last_target_distX) * 10;
               last_target_distX = m_Player.GetPosition().x;
+            }
+            if (last_sound_distX < m_Player.GetPosition().x && !GameScenarioManager.Instance().IsCutsceneMode)
+            {
+              SoundManager.Instance().SetSound("Button_3");
+              last_sound_distX = m_Player.GetPosition().x + 250;
             }
             Screen2D.Instance().TargetingRadar_text = string.Format("{0:00000000}", (target_distX - m_Player.GetPosition().x) * 30);
             Scene_Stage05b_ContinuouslySpawnRoute(null);
@@ -1153,7 +1164,7 @@ namespace SWEndor.Scenarios
 
     #endregion
 
-      #region Scene
+    #region Scene
 
     public void Scene_EnterCutscene(object[] param)
     {
@@ -1216,7 +1227,7 @@ namespace SWEndor.Scenarios
 
       GameScenarioManager.Instance().MaxBounds = new TV_3DVECTOR(10000, 400, 8000);
       GameScenarioManager.Instance().MinBounds = new TV_3DVECTOR(-10000, -175, -12000);
-      GameScenarioManager.Instance().MaxAIBounds = new TV_3DVECTOR(8000, 300, 8000);
+      GameScenarioManager.Instance().MaxAIBounds = new TV_3DVECTOR(8000, 400, 8000);
       GameScenarioManager.Instance().MinAIBounds = new TV_3DVECTOR(-8000, -160, -10000);
     }
 
@@ -1331,7 +1342,7 @@ namespace SWEndor.Scenarios
       //GameScenarioManager.Instance().CriticalEnemies.Add(ainfo.Name.ToUpper() + "    " + ainfo.ID, ainfo);
       RegisterEvents(ainfo);
       ainfo.TickEvents.Add("Empire_SDSpawner");
-      ainfo.SetStateF("TIEspawnRemaining", 24);
+      //ainfo.SetStateF("TIEspawnRemaining", 24);
       
       GameScenarioManager.Instance().StageNumber = 4;
       GameScenarioManager.Instance().SceneCamera.SetLocalPosition(1000, 30, -2000);
@@ -1352,18 +1363,18 @@ namespace SWEndor.Scenarios
           ainfo.SetStateF("TIEspawnRemaining", 12);
           break;
         case "mental":
-          Empire_TIEWave(new object[] { 4 });
-          ainfo.SetStateF("TIEspawnRemaining", 24);
+          //Empire_TIEWave(new object[] { 4 });
+          ainfo.SetStateF("TIEspawnRemaining", 20);
           //GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 73f, "Empire_TIEWave");
           //GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 75f, "Message.06");
           break;
         case "hard":
-          Empire_TIEWave(new object[] { 2 });
-          ainfo.SetStateF("TIEspawnRemaining", 20);
+          //Empire_TIEWave(new object[] { 2 });
+          ainfo.SetStateF("TIEspawnRemaining", 16);
           break;
         case "normal":
         default:
-          ainfo.SetStateF("TIEspawnRemaining", 18);
+          ainfo.SetStateF("TIEspawnRemaining", 14);
           break;
       }
       Empire_Towers03(null);
@@ -1430,7 +1441,7 @@ namespace SWEndor.Scenarios
         if (!a.IsPlayer())
         {
           a.ActorState = ActorState.FIXED;
-          a.Destroy();
+          //a.Destroy();
         }
       }
       //m_Player.SetLocalPosition(7050, m_Player.GetLocalPosition())
@@ -1467,6 +1478,24 @@ namespace SWEndor.Scenarios
       SpawnActor(SurfaceVentATI.Instance(), "", "", ""
          , 0, FactionInfo.Get("Empire_DeathStarDefenses"), new TV_3DVECTOR(target_distX + 500, -385 + 47, 0), new TV_3DVECTOR(0, 180, 0), new ActionInfo[0], new Dictionary<string, ActorInfo>[0]);
 
+      switch (GameScenarioManager.Instance().Difficulty.ToLower())
+      {
+        case "mental":
+           Trenches = new int[] { 13, 13, 13, 13, 13, -11, -11, 0, 0, 0
+                                       , -11, 0, 0, -11, -11, 0, 0, -11, 0, 0
+                                       , -11, -11, 0, -11, 0, -11, -11, 0, -11, -11
+                                       , -11, 0, -11, -11, -11, -11, -11, -11, 0, -11
+                                       , -11, -11, -11, -11, -11, 0, -11, -11, 0, -11
+                                       , -11, 0, 0, 0, -11, -11, -11, -11, 0, -11
+                                       , -11, 0, -11, -11, -11, 0, -11, -11, 0, 0
+                                       , -11, 0, -11, -11, -11, 0, 0, -11, -11, 11
+                                       , 11, 13, 13, 13, 13, 13, 13, 13, 13, 13
+                                       , 13, 13, 13, 13, 13, 13, 13, 13, 13
+                                       , 13, 13, 13, 13, 13, 13, 13, 13, 13
+                                       , 13, 13, 13, 13, 12
+                                       };
+          break;
+      }
     }
 
     ActorTypeInfo[] TrenchTypes = new ActorTypeInfo[] { Surface002_00ATI.Instance()
@@ -1484,7 +1513,7 @@ namespace SWEndor.Scenarios
                                                         , Surface002_12ATI.Instance()
                                                         , Surface002_99ATI.Instance()
                                                         };
-
+    
     private int[] Trenches = new int[] { 13, 13, 13, 13, 13, 0, 0, 0, 0, 0
                                        , 1, 0, 0, 2, 1, 0, 0, 2, 0, 0
                                        , 3, 1, 0, 4, 0, 3, 5, 0, 4, 1
@@ -1498,6 +1527,7 @@ namespace SWEndor.Scenarios
                                        , 13, 13, 13, 13, 13, 13, 13, 13, 13
                                        , 13, 13, 13, 13, 12
                                        };
+    
     public void Scene_Stage05b_ContinuouslySpawnRoute(object[] param)
     {
       // x_position = 7000 + counter * 1000
@@ -1511,9 +1541,24 @@ namespace SWEndor.Scenarios
       if (lasttravelledcounter < 0)
         lasttravelledcounter = 0;
 
-      for (int i = counter - 2; i < counter + 20; i++)
+      for (int i = counter - 4; i < counter + 20; i++)
       {
         ActorInfo a = m_ADS_TrenchParts.GetItem(i);
+        if (a != null)
+        {
+          if (i < lasttravelledcounter && GameScenarioManager.Instance().StageNumber == 5)
+          {
+            if (!(m_ADS_TrenchParts.GetItem(i).TypeInfo is Surface002_00ATI) || i < counter)
+            {
+              m_ADS_TrenchParts.GetItem(i).Destroy();
+              m_ADS_TrenchParts.AddorUpdateItem(i, null);
+              //m_ADS_TrenchParts.AddorUpdateItem(i, SpawnActor(TrenchTypes[Trenches[0]], "", "", ""
+              //     , 0, FactionInfo.Neutral, new TV_3DVECTOR(7000 + i * 1000, -173, 0), new TV_3DVECTOR(0, 180, 0), new ActionInfo[0], new Dictionary<string, ActorInfo>[0]));
+            }
+          }
+        }
+
+        a = m_ADS_TrenchParts.GetItem(i);
         if (a == null)
         {
           if (i < lasttravelledcounter)
@@ -1523,7 +1568,11 @@ namespace SWEndor.Scenarios
           }
           else if (i < Trenches.Length)
           {
-            m_ADS_TrenchParts.AddorUpdateItem(i, SpawnActor(TrenchTypes[Trenches[i]], "", "", ""
+            int trench = Trenches[i];
+            if (trench < 0)
+              trench = Engine.Instance().Random.Next(0, -trench + 1);
+
+            m_ADS_TrenchParts.AddorUpdateItem(i, SpawnActor(TrenchTypes[trench], "", "", ""
                                , 0, FactionInfo.Neutral, new TV_3DVECTOR(7000 + i * 1000, -173, 0), new TV_3DVECTOR(0, 180, 0), new ActionInfo[0], new Dictionary<string, ActorInfo>[0]));
 
             if (i < 100 && i > 0 && i % 35 == 0)
@@ -1553,6 +1602,7 @@ namespace SWEndor.Scenarios
 
             switch (GameScenarioManager.Instance().Difficulty.ToLower())
             {
+              case "hard":
               case "mental":
                 if (Trenches[i] == 1)
                 {
@@ -1591,25 +1641,11 @@ namespace SWEndor.Scenarios
                   }
                 }
                 break;
-              case "hard":
-
-                break;
               case "normal":
               case "easy":
               default:
 
                 break;
-            }
-          }
-        }
-        else
-        {
-          if (i < lasttravelledcounter && GameScenarioManager.Instance().StageNumber == 5)
-          {
-            if (!(m_ADS_TrenchParts.GetItem(i).TypeInfo is Surface002_00ATI) || i < counter)
-            {
-              m_ADS_TrenchParts.GetItem(i).Destroy();
-              m_ADS_TrenchParts.AddorUpdateItem(i, null);
             }
           }
         }
@@ -1626,7 +1662,7 @@ namespace SWEndor.Scenarios
 
     public void Scene_Stage06_Vader(object[] param)
     {
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Scene_EnterCutscene");
+      Scene_EnterCutscene(null);
       GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 7.9f, "Scene_Stage06_SetPlayer");
       GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 8f, "Scene_ExitCutscene");
       GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 8f, "Scene_Stage06_VaderAttack");
@@ -1634,19 +1670,20 @@ namespace SWEndor.Scenarios
       GameScenarioManager.Instance().StageNumber = 6;
       GameScenarioManager.Instance().SceneCamera.SetLocalPosition(vader_distX - 2750, -225, 0);
       SoundManager.Instance().SetMusic("battle_1_3", true);
-      //m_Player.ActorState = ActorState.FIXED;
       m_Player.SetLocalPosition(vader_distX, -220, 0);
       m_Player.SetRotation(0, 90, 0);
       m_Player.XTurnAngle = 0;
       m_Player.YTurnAngle = 0;
       ActionManager.ForceClearQueue(m_Player);
-      ActionManager.QueueNext(m_Player, new Actions.Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
       ActionManager.QueueNext(m_Player, new Actions.Lock());
 
       Scene_ClearGroundObjects(null);
 
       if (m_Vader != null)
       { m_Vader.Destroy(); }
+
+      if (m_Falcon != null)
+      { m_Falcon.Destroy(); }
 
       if (m_VaderEscort1 != null)
       { m_VaderEscort1.Destroy(); }
@@ -1704,6 +1741,9 @@ namespace SWEndor.Scenarios
     {
       GameScenarioManager.Instance().SetGameStateB("Stage6VaderAttacking", true);
 
+      if (m_Falcon != null)
+      { m_Falcon.Destroy(); }
+
       if (m_Vader != null)
       {
         ActionManager.ForceClearQueue(m_Vader);
@@ -1740,8 +1780,7 @@ namespace SWEndor.Scenarios
 
       GameScenarioManager.Instance().StageNumber = 6;
       GameScenarioManager.Instance().SceneCamera.SetLocalPosition(vaderend_distX + 900, -365, 0);
-      SoundManager.Instance().SetMusic("dsend_1_1", true);
-      //m_Player.ActorState = ActorState.FIXED;
+      SoundManager.Instance().SetMusic("ds_end_1_1", true);
       m_Player.SetLocalPosition(vaderend_distX, -220, 0);
       m_Player.SetRotation(0, 90, 0);
       m_Player.XTurnAngle = 0;
@@ -1752,105 +1791,12 @@ namespace SWEndor.Scenarios
       ActionManager.QueueNext(m_Player, new Actions.Lock());
 
 
-      ActorInfo falcon = SpawnActor(FalconATI.Instance(), "", "", ""
-                    , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(vaderend_distX + 2500, 185, 0), new TV_3DVECTOR(0, -90, 0)
-                    , new ActionInfo[] { new Actions.Move(new TV_3DVECTOR(vaderend_distX + 1300, 5, 0), 500, -1, false)
-                                       , new Actions.AttackActor(m_VaderEscort1, -1, -1, false, 9999)
-                                       , new Actions.AttackActor(m_VaderEscort2, -1, -1, false, 9999)
-                                       //, new Actions.Rotate(new TV_3DVECTOR(vaderend_distX - 5300, 185, 50), 500, 0.1f, false)
-                                       //, new Actions.Rotate(new TV_3DVECTOR(vaderend_distX - 5300, 135, 250), 500, 0.1f, false)
-                                       , new Actions.Move(new TV_3DVECTOR(vaderend_distX - 5300, 315, 0), 500, -1, false)
-                                       //, new Actions.AttackActor(m_Vader, -1, -1, false, 9999)
-                                       , new Actions.Delete()
-                                       }
-                    , new Dictionary<string, ActorInfo>[0]);
-      falcon.CanEvade = false;
-      falcon.CanRetaliate = false;
-
-      if (m_Vader != null)
-      {
-        ActionManager.ForceClearQueue(m_Vader);
-        ActionManager.QueueNext(m_Vader, new Actions.Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
-        ActionManager.QueueNext(m_Vader, new Actions.Lock());
-      }
-
-      if (m_VaderEscort1 != null)
-      {
-        ActionManager.ForceClearQueue(m_VaderEscort1);
-        ActionManager.QueueNext(m_VaderEscort1, new Actions.Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
-        ActionManager.QueueNext(m_VaderEscort1, new Actions.Lock());
-      }
-
-      if (m_VaderEscort2 != null)
-      {
-        ActionManager.ForceClearQueue(m_VaderEscort2);
-        ActionManager.QueueNext(m_VaderEscort2, new Actions.Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
-        ActionManager.QueueNext(m_VaderEscort2, new Actions.Lock());
-      }
-
-      m_VaderEscort1.HitEvents.Add("Scene_Stage06_VaderFlee");
-
-      GameScenarioManager.Instance().SceneCamera.MaxSpeed = 25;
-      GameScenarioManager.Instance().SceneCamera.Speed = 25;
-      GameScenarioManager.Instance().CameraTargetActor = falcon;
-    }
-
-    public void Scene_Stage06_VaderFlee(object[] param)
-    {
-      if (GameScenarioManager.Instance().GetGameStateB("Stage6VaderAttacking"))
-      {
-        GameScenarioManager.Instance().SetGameStateB("Stage6VaderAttacking", false);
-
-        ActionManager.ForceClearQueue(m_Vader);
-        m_Vader.ApplyZBalance = false;
-        m_Vader.SetRotation(-30, 85, 5);
-        //m_Vader.MaxSpeed = 800;
-        m_Vader.TimedLife = 999;
-        m_Vader.ActorState = ActorState.DYING;
-        m_VaderEscort2.SetRotation(-5, 93, 0);
-        m_VaderEscort2.ActorState = ActorState.DYING;
-        m_VaderEscort1.ActorState = ActorState.DYING;
-        //ActionManager.QueueNext(m_Vader, new Actions.Rotate(new TV_3DVECTOR(vaderend_distX + 7500, 750, 1), 200, 1, true));
-        //ActionManager.QueueNext(m_Vader, new Actions.Wait(2.5f));
-        //ActionManager.QueueNext(m_Vader, new Actions.Move(new TV_3DVECTOR(vaderend_distX - 6500, 500, 100), 400, -1, false));
-        //ActionManager.QueueNext(m_Vader, new Actions.Lock());
-        //ActionManager.QueueNext(m_Vader, new Actions.Wait(2));
-        //ActionManager.QueueNext(m_Vader, new Actions.SelfDestruct());
-      }
-    }
-
-    public void Scene_Stage06_End(object[] param)
-    {
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Scene_EnterCutscene");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 8f, "Scene_ExitCutscene");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 7.9f, "Scene_Stage06_SetPlayer");
-
-      GameScenarioManager.Instance().StageNumber = 6;
-      GameScenarioManager.Instance().SceneCamera.SetLocalPosition(vaderend_distX + 900, -365, 0);
-      SoundManager.Instance().SetMusic("dsend_1_1", true);
-      //m_Player.ActorState = ActorState.FIXED;
-      m_Player.SetLocalPosition(vaderend_distX, -220, 0);
-      m_Player.SetRotation(0, 90, 0);
-      m_Player.XTurnAngle = 0;
-      m_Player.YTurnAngle = 0;
-      m_Vader.SetRotation(0, 90, 0);
-      ActionManager.ForceClearQueue(m_Player);
-      ActionManager.QueueNext(m_Player, new Actions.Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
-      ActionManager.QueueNext(m_Player, new Actions.Lock());
-
-      if (m_Falcon != null)
-      {
-        m_Falcon.Destroy();
-      }
       m_Falcon = SpawnActor(FalconATI.Instance(), "", "", ""
                     , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(vaderend_distX + 2500, 185, 0), new TV_3DVECTOR(0, -90, 0)
                     , new ActionInfo[] { new Actions.Move(new TV_3DVECTOR(vaderend_distX + 1300, 5, 0), 500, -1, false)
                                        , new Actions.AttackActor(m_VaderEscort1, -1, -1, false, 9999)
                                        , new Actions.AttackActor(m_VaderEscort2, -1, -1, false, 9999)
-                                       //, new Actions.Rotate(new TV_3DVECTOR(vaderend_distX - 5300, 185, 50), 500, 0.1f, false)
-                                       //, new Actions.Rotate(new TV_3DVECTOR(vaderend_distX - 5300, 135, 250), 500, 0.1f, false)
                                        , new Actions.Move(new TV_3DVECTOR(vaderend_distX - 5300, 315, 0), 500, -1, false)
-                                       //, new Actions.AttackActor(m_Vader, -1, -1, false, 9999)
                                        , new Actions.Delete()
                                        }
                     , new Dictionary<string, ActorInfo>[0]);
@@ -1883,6 +1829,30 @@ namespace SWEndor.Scenarios
       GameScenarioManager.Instance().SceneCamera.MaxSpeed = 25;
       GameScenarioManager.Instance().SceneCamera.Speed = 25;
       GameScenarioManager.Instance().CameraTargetActor = m_Falcon;
+    }
+
+    public void Scene_Stage06_VaderFlee(object[] param)
+    {
+      if (GameScenarioManager.Instance().GetGameStateB("Stage6VaderAttacking"))
+      {
+        GameScenarioManager.Instance().SetGameStateB("Stage6VaderAttacking", false);
+
+        ActionManager.ForceClearQueue(m_Vader);
+        m_Vader.ApplyZBalance = false;
+        m_Vader.SetRotation(-30, 85, 5);
+        //m_Vader.MaxSpeed = 800;
+        m_Vader.TimedLife = 999;
+        m_Vader.ActorState = ActorState.DYING;
+        m_VaderEscort2.SetRotation(-5, 93, 0);
+        m_VaderEscort2.ActorState = ActorState.DYING;
+        m_VaderEscort1.ActorState = ActorState.DYING;
+        //ActionManager.QueueNext(m_Vader, new Actions.Rotate(new TV_3DVECTOR(vaderend_distX + 7500, 750, 1), 200, 1, true));
+        //ActionManager.QueueNext(m_Vader, new Actions.Wait(2.5f));
+        //ActionManager.QueueNext(m_Vader, new Actions.Move(new TV_3DVECTOR(vaderend_distX - 6500, 500, 100), 400, -1, false));
+        //ActionManager.QueueNext(m_Vader, new Actions.Lock());
+        //ActionManager.QueueNext(m_Vader, new Actions.Wait(2));
+        //ActionManager.QueueNext(m_Vader, new Actions.SelfDestruct());
+      }
     }
 
     #endregion
