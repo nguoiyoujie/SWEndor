@@ -23,14 +23,14 @@ namespace SWEndor
       IsDamage = false;
       CollisionEnabled = true;
 
-      MaxStrength = 3000.0f;
+      MaxStrength = 3200.0f;
       ImpactDamage = 60.0f;
       MaxSpeed = 30.0f;
       MinSpeed = 0.0f;
       MaxSpeedChangeRate = 5.0f;
       MaxTurnRate = 3f;
       ZNormFrac = 0.006f;
-      ZTilt = 5f;
+      ZTilt = 1.8f; // low number so fighters come out properly when mothership is rotating
 
       Score_perStrength = 20;
       Score_DestroyBonus = 20000;
@@ -48,7 +48,7 @@ namespace SWEndor
 
       ainfo.SetStateS("AddOn_0", "MC90 Turbolaser Tower, 100, 75, 500, -90, 0, 0, true");
       ainfo.SetStateS("AddOn_1", "MC90 Turbolaser Tower, -100, 75, 500, -90, 0, 0, true");
-      ainfo.SetStateS("AddOn_2", "MC90 Turbolaser Tower, 0, 135, 0, 0, -90, 0, true");
+      ainfo.SetStateS("AddOn_2", "MC90 Turbolaser Tower, 0, 135, 0, -90, 0, 0, true");
       //bottom
       ainfo.SetStateS("AddOn_3", "MC90 Turbolaser Tower, 0, -40, 700, 90, 0, 0, true");
       ainfo.SetStateS("AddOn_4", "MC90 Turbolaser Tower, 0, 40, 700, -90, 0, 0, true");

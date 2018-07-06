@@ -25,7 +25,7 @@ namespace SWEndor.Scenarios
     private ActorInfo m_ADS_Surface = null;
     private List<ActorInfo> m_ADS_SurfaceParts = new List<ActorInfo>();
     private ThreadSafeDictionary<int, ActorInfo> m_ADS_TrenchParts = new ThreadSafeDictionary<int, ActorInfo>();
-    private ActorInfo m_AStar = null;
+    //private ActorInfo m_AStar = null;
     private List<object[]> m_pendingSDspawnlist = new List<object[]>();
     private Dictionary<string, ActorInfo> m_GroundObjects = new Dictionary<string, ActorInfo>();
     private float expiretime = 1800;
@@ -122,7 +122,7 @@ namespace SWEndor.Scenarios
       PlayerInfo.Instance().Lives = 4;
       PlayerInfo.Instance().ScorePerLife = 1000000;
       PlayerInfo.Instance().ScoreForNextLife = 1000000;
-      PlayerInfo.Instance().Score = new ScoreInfo();
+      PlayerInfo.Instance().Score.Reset();
 
       MakePlayer = Rebel_MakePlayer;
 
@@ -593,7 +593,7 @@ namespace SWEndor.Scenarios
                                                       , ainfo.MaxSpeed));
 
         GameScenarioManager.Instance().AllyFighters.Add(names[i], ainfo);
-        GameScenarioManager.Instance().CriticalAllies.Add(names[i], ainfo);
+        //GameScenarioManager.Instance().CriticalAllies.Add(names[i], ainfo);
         RegisterEvents(ainfo);
       }
       RebelFighterLimit = GameScenarioManager.Instance().AllyFighters.Count;
@@ -964,9 +964,9 @@ namespace SWEndor.Scenarios
 
     public void Empire_TIEWave(object[] param)
     {
-      int sets = 10;
+      int sets = 15;
       if (param != null && param.GetLength(0) >= 1 && !int.TryParse(param[0].ToString(), out sets))
-        sets = 10;
+        sets = 15;
 
       // TIE Fighters only
       ActorCreationInfo aci;
@@ -1291,19 +1291,21 @@ namespace SWEndor.Scenarios
       switch (GameScenarioManager.Instance().Difficulty.ToLower())
       {
         case "easy":
-          Empire_TIEWave(new object[] { 4 });
+          Empire_TIEWave(new object[] { 8 });
           break;
         case "mental":
-          Empire_TIEWave(new object[] { 8 });
+          Empire_TIEWave(new object[] { 12 });
           GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 43f, "Empire_TIEWave");
           GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 45f, "Message.06");
           break;
         case "hard":
           Empire_TIEWave(new object[] { 8 });
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 43f, "Empire_TIEWave");
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 45f, "Message.06");
           break;
         case "normal":
         default:
-          Empire_TIEWave(new object[] { 6 });
+          Empire_TIEWave(new object[] { 12 });
           break;
       }
       Empire_Towers02(null);
@@ -1360,21 +1362,21 @@ namespace SWEndor.Scenarios
       switch (GameScenarioManager.Instance().Difficulty.ToLower())
       {
         case "easy":
-          ainfo.SetStateF("TIEspawnRemaining", 12);
+          ainfo.SetStateF("TIEspawnRemaining", 20);
           break;
         case "mental":
           //Empire_TIEWave(new object[] { 4 });
-          ainfo.SetStateF("TIEspawnRemaining", 20);
+          ainfo.SetStateF("TIEspawnRemaining", 24);
           //GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 73f, "Empire_TIEWave");
           //GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 75f, "Message.06");
           break;
         case "hard":
           //Empire_TIEWave(new object[] { 2 });
-          ainfo.SetStateF("TIEspawnRemaining", 16);
+          ainfo.SetStateF("TIEspawnRemaining", 22);
           break;
         case "normal":
         default:
-          ainfo.SetStateF("TIEspawnRemaining", 14);
+          ainfo.SetStateF("TIEspawnRemaining", 22);
           break;
       }
       Empire_Towers03(null);

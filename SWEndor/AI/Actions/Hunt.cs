@@ -53,13 +53,13 @@ namespace SWEndor.Actions
 
             if (weap != null)//dist < currdist)
             {
-              for (int i = 0; i < a.TypeInfo.HuntWeight; i++)
+              for (int i = 0; i < a.HuntWeight; i++)
                 targets.Add(a);
             }
           }
           else
           {
-            for (int i = 0; i < a.TypeInfo.HuntWeight; i++)
+            for (int i = 0; i < a.HuntWeight; i++)
               targets.Add(a);
           }
         }

@@ -10,14 +10,16 @@ namespace SWEndor
     UISelectionElement Cover = new UISelectionElement();
     UISelectionElement MainText = new UISelectionElement();
     UISelectionElement ButtonResume = new UISelectionElement();
-    UISelectionElement ButtonSave = new UISelectionElement();
-    UISelectionElement ButtonLoad = new UISelectionElement();
+    //UISelectionElement ButtonSave = new UISelectionElement();
+    //UISelectionElement ButtonLoad = new UISelectionElement();
     UISelectionElement ButtonOptions = new UISelectionElement();
     UISelectionElement ButtonQuit = new UISelectionElement();
 
 
     public UIPage_PauseMenu()
     {
+      SoundManager.Instance().SetMusicPause();
+
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
       Cover.HighlightBoxWidth = Engine.Instance().ScreenWidth;
       Cover.HighlightBoxHeight = Engine.Instance().ScreenHeight;
@@ -34,6 +36,7 @@ namespace SWEndor
       ButtonResume.Selectable = true;
       ButtonResume.OnKeyPress += SelectResume;
 
+      /*
       ButtonSave.Text = "Save Scenario";
       ButtonSave.TextPosition = new TV_2DVECTOR(200, 240);
       ButtonSave.HighlightBoxPosition = ButtonSave.TextPosition - new TV_2DVECTOR(5, 5);
@@ -49,6 +52,7 @@ namespace SWEndor
       ButtonLoad.HighlightBoxHeight = 30;
       ButtonLoad.Selectable = true;
       ButtonLoad.OnKeyPress += SelectLoad;
+      */
 
       ButtonOptions.Text = "Options";
       ButtonOptions.TextPosition = new TV_2DVECTOR(200, 320);
@@ -69,8 +73,8 @@ namespace SWEndor
       Elements.Add(Cover);
       Elements.Add(MainText);
       Elements.Add(ButtonResume);
-      Elements.Add(ButtonSave);
-      Elements.Add(ButtonLoad);
+      //Elements.Add(ButtonSave);
+      //Elements.Add(ButtonLoad);
       Elements.Add(ButtonOptions);
       Elements.Add(ButtonQuit);
       SelectedElementID = Elements.IndexOf(ButtonResume);
@@ -88,6 +92,7 @@ namespace SWEndor
 
     private void ResumeGame()
     {
+      SoundManager.Instance().SetMusicResume();
       Game.Instance().IsPaused = false;
       Screen2D.Instance().CurrentPage = null;
       Screen2D.Instance().ShowPage = false;

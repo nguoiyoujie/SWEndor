@@ -11,27 +11,13 @@ namespace SWEndor.Scenarios
     public GSEndor()
     {
       Name = "Battle of Endor";
+      Description = "The Rebel fleet, amassed on Sullust, prepares to move to Endor \n"
+                  + "where the Emperor is overseeing the construction of the second \n"
+                  + "Death Star.";
       AllowedWings = new List<ActorTypeInfo> { XWingATI.Instance()
                                                , YWingATI.Instance()
                                                , AWingATI.Instance()
                                                , BWingATI.Instance()
-                                               /*
-                                               , FalconATI.Instance()
-                                               , CorellianATI.Instance()
-                                               , MC90ATI.Instance()
-                                               , NebulonBATI.Instance()
-                                               , NebulonB2ATI.Instance()
-                                               , TIE_D_ATI.Instance()
-                                               , TIE_IN_ATI.Instance()
-                                               , TIE_X1_ATI.Instance()
-                                               , TIE_sa_ATI.Instance()
-                                               , TIE_LN_ATI.Instance()
-                                               , ImperialIATI.Instance()
-                                               , DevastatorATI.Instance()
-                                               , ExecutorATI.Instance()
-                                               , ArquitensATI.Instance()
-                                               , AcclamatorATI.Instance()
-                                               */
                                               };
 
       AllowedDifficulties = new List<string> { "easy"
@@ -50,13 +36,16 @@ namespace SWEndor.Scenarios
     private List<object[]> m_pendingSDspawnlist = new List<object[]>();
     private int m_SDLeftForShieldDown = 0;
 
+    private float m_Enemy_pull = 0;
+    private float m_Enemy_pullrate = 5;
+
     private ActorInfo m_ADS_target = null;
 
     private ActorInfo m_Falcon = null;
-    private TV_3DVECTOR m_Falcon_pos = new TV_3DVECTOR();
+    //private TV_3DVECTOR m_Falcon_pos = new TV_3DVECTOR();
 
     private ActorInfo m_Wedge = null;
-    private TV_3DVECTOR m_Wedge_pos = new TV_3DVECTOR();
+    //private TV_3DVECTOR m_Wedge_pos = new TV_3DVECTOR();
 
     private ActorInfo m_Player = null;
     private TV_3DVECTOR m_Player_pos = new TV_3DVECTOR();
@@ -64,7 +53,7 @@ namespace SWEndor.Scenarios
     private string m_Player_SecondaryWeapon = "";
 
     private ActorInfo m_HomeOne = null;
-    private float m_HomeOne_Strength = 5000;
+    //private float m_HomeOne_Strength = 5000;
 
 
     public override void Load(ActorTypeInfo wing, string difficulty)
@@ -98,7 +87,7 @@ namespace SWEndor.Scenarios
       }*/
 
 
-      PlayerInfo.Instance().Score = new ScoreInfo();
+      PlayerInfo.Instance().Score.Reset();
 
       switch (GameScenarioManager.Instance().Difficulty.ToLower())
       {
@@ -149,20 +138,24 @@ namespace SWEndor.Scenarios
       GameScenarioManager.Instance().Line2Color = new TV_COLOR(1f, 1f, 0.3f, 1);
       GameScenarioManager.Instance().Line3Color = new TV_COLOR(0.7f, 1f, 0.3f, 1);
 
+      /*
       switch (GameScenarioManager.Instance().Difficulty.ToLower())
       {
         case "hard":
         case "mental":
-          RebelFighterLimit = 150;
+          RebelFighterLimit = 140;
           break;
         case "easy":
-          RebelFighterLimit = 200;
+          RebelFighterLimit = 160;
           break;
         case "normal":
         default:
-          RebelFighterLimit = 175;
+          RebelFighterLimit = 150;
           break;
       }
+      */
+        RebelFighterLimit = 150;
+
 
       GameScenarioManager.Instance().IsCutsceneMode = false;
     }
@@ -228,7 +221,6 @@ namespace SWEndor.Scenarios
       }
     }
 
-
     public override void RegisterEvents()
     {
       base.RegisterEvents();
@@ -251,15 +243,18 @@ namespace SWEndor.Scenarios
       GameEvent.RegisterEvent("Empire_DeathStarAttack_02", Empire_DeathStarAttack_02);
       GameEvent.RegisterEvent("Empire_DeathStarAttack_03", Empire_DeathStarAttack_03);
       GameEvent.RegisterEvent("Empire_FirstTIEWave", Empire_FirstTIEWave);
+      GameEvent.RegisterEvent("Empire_SecondTIEWave", Empire_SecondTIEWave);
       GameEvent.RegisterEvent("Empire_TIEWave_01", Empire_TIEWave_01);
       GameEvent.RegisterEvent("Empire_TIEWave_02", Empire_TIEWave_02);
       GameEvent.RegisterEvent("Empire_TIEWave_03", Empire_TIEWave_03);
+      GameEvent.RegisterEvent("Empire_TIEWave_0D", Empire_TIEWave_0D);
       GameEvent.RegisterEvent("Empire_TIEWave_TIEsvsFalcon", Empire_TIEWave_TIEsvsFalcon);
       GameEvent.RegisterEvent("Empire_TIEWave_InterceptorsvsFalcon", Empire_TIEWave_InterceptorsvsFalcon);
       GameEvent.RegisterEvent("Empire_TIEWave_TIEsvsWedge", Empire_TIEWave_TIEsvsWedge);
       GameEvent.RegisterEvent("Empire_TIEWave_InterceptorsvsWedge", Empire_TIEWave_InterceptorsvsWedge);
       GameEvent.RegisterEvent("Empire_TIEWave_TIEsvsPlayer", Empire_TIEWave_TIEsvsPlayer);
       GameEvent.RegisterEvent("Empire_TIEWave_InterceptorsvsPlayer", Empire_TIEWave_InterceptorsvsPlayer);
+      GameEvent.RegisterEvent("Empire_TIEWave_TIEsvsShips", Empire_TIEWave_TIEsvsShips);
       GameEvent.RegisterEvent("Empire_StarDestroyer_01", Empire_StarDestroyer_01);
       GameEvent.RegisterEvent("Empire_StarDestroyer_02", Empire_StarDestroyer_02);
       GameEvent.RegisterEvent("Empire_TIEBombers", Empire_TIEBombers);
@@ -310,14 +305,13 @@ namespace SWEndor.Scenarios
     {
       base.GameTick();
       CalibrateSceneObjects();
-      if (GameScenarioManager.Instance().GetGameStateB("in_battle"))
+      if (PlayerInfo.Instance().Actor != null && PlayerInfo.Instance().IsMovementControlsEnabled && GameScenarioManager.Instance().GetGameStateB("in_battle"))
       {
         if (GameScenarioManager.Instance().StageNumber == 0)
         {
           GameScenarioManager.Instance().StageNumber = 1;
         }
         else if (GameScenarioManager.Instance().TIEWaves > 7 && GameScenarioManager.Instance().StageNumber == 1)
-        //else if (GameScenarioManager.Instance().TIEWaves > 1 && GameScenarioManager.Instance().StageNumber == 1)
         {
           GameScenarioManager.Instance().StageNumber = 2;
         }
@@ -327,7 +321,6 @@ namespace SWEndor.Scenarios
           GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5.5f, "Message.14");
         }
         else if (GameScenarioManager.Instance().TIEWaves > 13 && GameScenarioManager.Instance().StageNumber == 3)
-        //else if (GameScenarioManager.Instance().TIEWaves > 2 && GameScenarioManager.Instance().StageNumber == 3)
         {
           GameScenarioManager.Instance().StageNumber = 4;
         }
@@ -339,15 +332,14 @@ namespace SWEndor.Scenarios
           GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5.5f, "Message.15");
         }
         else if (GameScenarioManager.Instance().TIEWaves > 18 && GameScenarioManager.Instance().StageNumber == 5)
-        //else if (GameScenarioManager.Instance().TIEWaves > 3 && GameScenarioManager.Instance().StageNumber == 5)
         {
           GameScenarioManager.Instance().StageNumber = 6;
         }
 
         // Wedge and Falcon
         if (!GameScenarioManager.Instance().GetGameStateB("deathstar_noshield")
-          && GameScenarioManager.Instance().StageNumber == 4 
-          && GameScenarioManager.Instance().SDWaves >= 2 
+          && GameScenarioManager.Instance().StageNumber == 4
+          && GameScenarioManager.Instance().SDWaves >= 2
           && (m_pendingSDspawnlist.Count + GameScenarioManager.Instance().EnemyShips.Count) <= m_SDLeftForShieldDown)
         {
           GameScenarioManager.Instance().SetGameStateB("deathstar_noshield", true);
@@ -363,7 +355,9 @@ namespace SWEndor.Scenarios
         // TIE spawn
         if (TIESpawnTime < Game.Instance().GameTime)
         {
-          if ((GameScenarioManager.Instance().EnemyFighters.Count < 40 && GameScenarioManager.Instance().EnemyShips.Count == 0)
+          if ((GameScenarioManager.Instance().EnemyFighters.Count < 52 && GameScenarioManager.Instance().EnemyShips.Count == 0 && GameScenarioManager.Instance().StageNumber == 1)
+            || (GameScenarioManager.Instance().EnemyFighters.Count < 48 && GameScenarioManager.Instance().EnemyShips.Count == 0 && GameScenarioManager.Instance().StageNumber == 3)
+            || (GameScenarioManager.Instance().EnemyFighters.Count < 40 && GameScenarioManager.Instance().EnemyShips.Count == 0)
             || (GameScenarioManager.Instance().EnemyFighters.Count < 20 && GameScenarioManager.Instance().EnemyShips.Count > 0))
           {
             TIESpawnTime = Game.Instance().GameTime + 10f;
@@ -383,26 +377,30 @@ namespace SWEndor.Scenarios
                 case "hard":
                   if (GameScenarioManager.Instance().TIEWaves % 3 == 1)
                   {
-                    Empire_TIEWave_01(new object[] { 5 });
+                    Empire_TIEWave_01(new object[] { 4 });
                     Empire_TIEWave_TIEsvsWedge(new object[] { 4 });
                     Empire_TIEWave_TIEsvsFalcon(new object[] { 4 });
+                    Empire_TIEWave_TIEsvsShips(new object[] { 2 });
                   }
                   else
                   {
                     Empire_TIEWave_01(new object[] { 7 });
+                    Empire_TIEWave_TIEsvsShips(new object[] { 2 });
                   }
                   break;
                 case "mental":
                   if (GameScenarioManager.Instance().TIEWaves % 2 == 1)
                   {
-                    Empire_TIEWave_01(new object[] { 6 });
+                    Empire_TIEWave_01(new object[] { 5 });
                     Empire_TIEWave_TIEsvsWedge(new object[] { 6 });
                     Empire_TIEWave_TIEsvsFalcon(new object[] { 6 });
                     Empire_TIEWave_TIEsvsPlayer(new object[] { 4 });
+                    Empire_TIEWave_TIEsvsShips(new object[] { 3 });
                   }
                   else
                   {
                     Empire_TIEWave_01(new object[] { 9 });
+                    Empire_TIEWave_TIEsvsShips(new object[] { 3 });
                   }
                   break;
                 case "normal":
@@ -424,10 +422,12 @@ namespace SWEndor.Scenarios
                     Empire_TIEWave_02(new object[] { 6 });
                     Empire_TIEWave_InterceptorsvsWedge(new object[] { 2 });
                     Empire_TIEWave_InterceptorsvsFalcon(new object[] { 2 });
+                    Empire_TIEWave_TIEsvsShips(new object[] { 2 });
                   }
                   else
                   {
                     Empire_TIEWave_02(new object[] { 7 });
+                    Empire_TIEWave_TIEsvsShips(new object[] { 2 });
                   }
 
                   break;
@@ -438,10 +438,12 @@ namespace SWEndor.Scenarios
                     Empire_TIEWave_InterceptorsvsWedge(new object[] { 4 });
                     Empire_TIEWave_InterceptorsvsFalcon(new object[] { 4 });
                     Empire_TIEWave_InterceptorsvsPlayer(new object[] { 4 });
+                    Empire_TIEWave_TIEsvsShips(new object[] { 3 });
                   }
                   else
                   {
                     Empire_TIEWave_02(new object[] { 8 });
+                    Empire_TIEWave_TIEsvsShips(new object[] { 3 });
                   }
                   break;
                 case "normal":
@@ -464,28 +466,32 @@ namespace SWEndor.Scenarios
                   {
                     Empire_TIEWave_02(new object[] { 3 });
                     Empire_TIEWave_03(new object[] { 4 });
-                    Empire_TIEBombers(new object[] { 3 });
+                    Empire_TIEBombers(new object[] { 2 });
                     Empire_TIEWave_TIEsvsPlayer(new object[] { 2 });
-                    Empire_TIEWave_InterceptorsvsPlayer(new object[] { 2 });
+                    Empire_TIEWave_InterceptorsvsPlayer(new object[] { 1 });
+                    Empire_TIEWave_TIEsvsShips(new object[] { 2 });
                   }
                   else
                   {
                     Empire_TIEWave_02(new object[] { 3 });
                     Empire_TIEWave_03(new object[] { 5 });
-                    Empire_TIEBombers(new object[] { 3 });
+                    Empire_TIEBombers(new object[] { 2 });
+                    Empire_TIEWave_TIEsvsShips(new object[] { 2 });
                   }
                   break;
                 case "mental":
                   if (GameScenarioManager.Instance().TIEWaves % 2 == 1)
                   {
                     Empire_TIEWave_03(new object[] { 8 });
-                    Empire_TIEBombers(new object[] { 4 });
-                    Empire_TIEWave_InterceptorsvsPlayer(new object[] { 4 });
+                    Empire_TIEBombers(new object[] { 2 });
+                    Empire_TIEWave_InterceptorsvsPlayer(new object[] { 3 });
+                    Empire_TIEWave_TIEsvsShips(new object[] { 3 });
                   }
                   else
                   {
                     Empire_TIEWave_03(new object[] { 9 });
-                    Empire_TIEBombers(new object[] { 4 });
+                    Empire_TIEBombers(new object[] { 2 });
+                    Empire_TIEWave_TIEsvsShips(new object[] { 3 });
                   }
                   break;
                 case "normal":
@@ -501,8 +507,8 @@ namespace SWEndor.Scenarios
 
         if (m_pendingSDspawnlist.Count > 0 && GameScenarioManager.Instance().EnemyShips.Count < 8)
         {
-          if (m_pendingSDspawnlist[0].Length > 0 
-            && (!(m_pendingSDspawnlist[0][0] is ImperialIATI) || GameScenarioManager.Instance().EnemyShips.Count < ((GameScenarioManager.Instance().StageNumber == 6) ? 3 : 2)) 
+          if (m_pendingSDspawnlist[0].Length > 0
+            && (!(m_pendingSDspawnlist[0][0] is ImperialIATI) || GameScenarioManager.Instance().EnemyShips.Count < ((GameScenarioManager.Instance().StageNumber == 6) ? 3 : 2))
             && (!(m_pendingSDspawnlist[0][0] is DevastatorATI) || GameScenarioManager.Instance().EnemyShips.Count < 2))
           {
             Empire_StarDestroyer_Spawn(m_pendingSDspawnlist[0]);
@@ -510,11 +516,19 @@ namespace SWEndor.Scenarios
           }
         }
 
+        if (m_Enemy_pull > 0)
+        {
+          m_Enemy_pull -= Game.Instance().TimeSinceRender * m_Enemy_pullrate;
+          foreach (ActorInfo enemyships in GameScenarioManager.Instance().EnemyShips.Values)
+          {
+            enemyships.MoveAbsolute(0, 0, Game.Instance().TimeSinceRender * m_Enemy_pullrate);
+          }
+        }
+
         //Rebel_ForceAwayFromBounds(null);
 
         if (GameScenarioManager.Instance().StageNumber == 2 && GameScenarioManager.Instance().prevStageNumber < 2)
         {
-          //RebelFighterLimit += 5;
           GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime, "Empire_DeathStarAttack_01");
           GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 8f, "Message.20");
           GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15f, "Empire_StarDestroyer_01");
@@ -527,7 +541,6 @@ namespace SWEndor.Scenarios
         }
         else if (GameScenarioManager.Instance().StageNumber == 4 && GameScenarioManager.Instance().prevStageNumber < 4)
         {
-          //RebelFighterLimit += 5;
           GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime, "Empire_DeathStarAttack_02");
           GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 16f, "Rebel_ShipsForward");
           GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 13f, "Message.22");
@@ -543,7 +556,6 @@ namespace SWEndor.Scenarios
           GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime, "Empire_DeathStarAttack_03");
           GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 8f, "Empire_Executor");
           GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 13f, "Message.40");
-          //RebelFighterLimit += 5;
           GameScenarioManager.Instance().MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
           GameScenarioManager.Instance().MinBounds = new TV_3DVECTOR(-20000, -1500, -25000);
           GameScenarioManager.Instance().MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
@@ -694,7 +706,7 @@ namespace SWEndor.Scenarios
       }
       else if (PlayerInfo.Instance().ActorType == AWingATI.Instance())
       {
-        position = new TV_3DVECTOR(100, 20, -850);
+        position = new TV_3DVECTOR(100, 70, -720);
       }
       else if (PlayerInfo.Instance().ActorType == BWingATI.Instance())
       {
@@ -743,7 +755,6 @@ namespace SWEndor.Scenarios
       type = MC90ATI.Instance();
       name = "Mon Calamari (Home One)";
       sidebar_name = "HOME ONE";
-      //creationTime += creationDelay;
       faction = FactionInfo.Get("Rebels");
       position = new TV_3DVECTOR(1000, -300, 1000);
       TV_3DVECTOR nv = new TV_3DVECTOR(position.x + ((position.x > 0) ? 5 : -5), position.y, -position.z - 3000);
@@ -775,6 +786,7 @@ namespace SWEndor.Scenarios
                        , actions
                        , registries);
 
+      ainfo.HuntWeight = 15;
       ainfo.ActorStateChangeEvents.Add("Rebel_CriticalUnitLost");
       ainfo.TickEvents.Add("Rebel_MC80Spawner");
       m_HomeOne = ainfo;
@@ -825,7 +837,7 @@ namespace SWEndor.Scenarios
 
       // Mon Calamari x2 (not including HomeOne)
       spawns.Add(new object[] { new TV_3DVECTOR(-2000, 350, -1500), MC90ATI.Instance(), 7200 });
-      spawns.Add(new object[] { new TV_3DVECTOR(4500, -120, -500), MC90ATI.Instance(), 7200 });
+      spawns.Add(new object[] { new TV_3DVECTOR(4500, -120, -500), MC80BATI.Instance(), 7200 });
 
       // Nebulon B x3
       spawns.Add(new object[] { new TV_3DVECTOR(-2700, 250, -1850), NebulonBATI.Instance(), 8000 });
@@ -848,6 +860,7 @@ namespace SWEndor.Scenarios
         type = (ActorTypeInfo)spawn[1];
         name = type.Name;
         float regi = 0;
+        int huntw = 5;
         while (GameScenarioManager.Instance().AllyFighters.ContainsKey(name + " " + regi) 
             || GameScenarioManager.Instance().AllyShips.ContainsKey(name + " " + regi))
         {
@@ -888,6 +901,7 @@ namespace SWEndor.Scenarios
                                  , new Actions.Lock()
                                  };
 
+          huntw = 25;
           registries = new Dictionary<string, ActorInfo>[] { GameScenarioManager.Instance().AllyShips };
         }
 
@@ -901,6 +915,8 @@ namespace SWEndor.Scenarios
                          , rotation
                          , actions
                          , registries);
+
+        ainfo.HuntWeight = huntw;
 
         if (ainfo.TypeInfo is MC90ATI)
         {
@@ -1072,6 +1088,7 @@ namespace SWEndor.Scenarios
       GameScenarioManager.Instance().SetGameStateB("in_battle", true);
       GameScenarioManager.Instance().SetGameStateB("TIEs", true);
       GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 10f, "Empire_FirstTIEWave");
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 45f, "Empire_SecondTIEWave");
       Rebel_RemoveTorps(null);
     }
 
@@ -1097,8 +1114,8 @@ namespace SWEndor.Scenarios
           {
             if (kvp.Key.Contains("torp") || kvp.Key.Contains("ion"))
             {
-              kvp.Value.Ammo = 3;
-              kvp.Value.MaxAmmo = 3;
+              kvp.Value.Ammo = 2;
+              kvp.Value.MaxAmmo = 2;
             }
           }
         }
@@ -1118,8 +1135,8 @@ namespace SWEndor.Scenarios
         {
           if (kvp.Key.Contains("torp") || kvp.Key.Contains("ion"))
           {
-            kvp.Value.Ammo = 3;
-            kvp.Value.MaxAmmo = 3;
+            kvp.Value.Ammo = 2;
+            kvp.Value.MaxAmmo = 2;
           }
         }
       }
@@ -1342,6 +1359,53 @@ namespace SWEndor.Scenarios
       }
     }
 
+    public void Empire_SecondTIEWave(object[] param)
+    {
+      // TIEs
+      ActorCreationInfo aci;
+      float t = 0;
+      for (int k = 1; k < 5; k++)
+      {
+        float fx = Engine.Instance().Random.Next(-4500, 4500);
+        float fy = Engine.Instance().Random.Next(-500, 500);
+        float fz = Engine.Instance().Random.Next(-500, 500);
+
+        for (int x = 0; x <= 1; x++)
+        {
+          for (int y = 0; y <= 1; y++)
+          {
+            aci = new ActorCreationInfo(TIE_LN_ATI.Instance());
+            aci.CreationTime = Game.Instance().GameTime + t;
+            aci.Faction = FactionInfo.Get("Empire");
+            aci.InitialState = ActorState.NORMAL;
+            aci.Position = new TV_3DVECTOR(fx + x * 100, fy + y * 100, fz - 8000);
+            aci.Rotation = new TV_3DVECTOR();
+
+            ActorInfo a = ActorInfo.Create(aci);
+
+            switch (GameScenarioManager.Instance().Difficulty.ToLower())
+            {
+              case "mental":
+              case "hard":
+                if (GameScenarioManager.Instance().AllyFighters.Count > 0)
+                {
+                  string[] rskeys = new string[GameScenarioManager.Instance().AllyFighters.Count];
+                  GameScenarioManager.Instance().AllyFighters.Keys.CopyTo(rskeys, 0);
+                  ActorInfo rs = GameScenarioManager.Instance().AllyFighters[rskeys[Engine.Instance().Random.Next(0, rskeys.Length)]];
+
+                  ActionManager.QueueLast(a, new Actions.AttackActor(rs, -1, -1, false));
+                }
+                break;
+            }
+
+            GameScenarioManager.Instance().EnemyFighters.Add(a.Key, a);
+            RegisterEvents(a);
+          }
+        }
+        t += 0.5f;
+      }
+    }
+
     public void Empire_TIEWave_01(object[] param)
     {
       int sets = 15;
@@ -1490,6 +1554,51 @@ namespace SWEndor.Scenarios
             RegisterEvents(a);
           }
         }
+        t += 1.5f;
+      }
+    }
+
+    public void Empire_TIEWave_0D(object[] param)
+    {
+      int sets = 3;
+      if (param != null && param.GetLength(0) >= 1 && !int.TryParse(param[0].ToString(), out sets))
+        sets = 3;
+
+      // TIE Defenders!
+      ActorCreationInfo aci;
+      float t = 0;
+      for (int k = 1; k < sets; k++)
+      {
+        float fx = Engine.Instance().Random.Next(-2500, 2500);
+        float fy = Engine.Instance().Random.Next(-500, 500);
+
+        aci = new ActorCreationInfo(TIE_D_ATI.Instance());
+        aci.CreationTime = Game.Instance().GameTime + t;
+        aci.Faction = FactionInfo.Get("Empire");
+        aci.InitialState = ActorState.NORMAL;
+        aci.Position = new TV_3DVECTOR(fx, fy, GameScenarioManager.Instance().MinBounds.z - 6000);
+        aci.Rotation = new TV_3DVECTOR();
+
+        ActorInfo a = ActorInfo.Create(aci);
+
+        ActionManager.QueueLast(a, new Actions.Wait(8));
+        switch (GameScenarioManager.Instance().Difficulty.ToLower())
+        {
+          case "mental":
+            if (GameScenarioManager.Instance().AllyFighters.Count > 0)
+            {
+              string[] rskeys = new string[GameScenarioManager.Instance().AllyFighters.Count];
+              GameScenarioManager.Instance().AllyFighters.Keys.CopyTo(rskeys, 0);
+              ActorInfo rs = GameScenarioManager.Instance().AllyFighters[rskeys[Engine.Instance().Random.Next(0, rskeys.Length)]];
+
+              ActionManager.QueueLast(a, new Actions.AttackActor(rs, -1, -1, false));
+            }
+            break;
+        }
+
+        GameScenarioManager.Instance().EnemyFighters.Add(a.Key, a);
+        RegisterEvents(a);
+
         t += 1.5f;
       }
     }
@@ -1674,6 +1783,59 @@ namespace SWEndor.Scenarios
       }
     }
 
+    public void Empire_TIEWave_TIEsvsShips(object[] param)
+    {
+      int sets = 3;
+      if (param != null && param.GetLength(0) >= 1 && !int.TryParse(param[0].ToString(), out sets))
+        sets = 3;
+
+      // TIE only
+      float t = 0;
+      for (int k = 1; k < sets; k++)
+      {
+        float fx = Engine.Instance().Random.Next(-2500, 2500);
+        float fy = Engine.Instance().Random.Next(-500, 500);
+
+        for (int x = 0; x <= 1; x++)
+        {
+          for (int y = 0; y <= 1; y++)
+          {
+            ActorTypeInfo type = TIE_LN_ATI.Instance();
+            string name = TIE_LN_ATI.Instance().Name;
+            float spawntime = Game.Instance().GameTime + t;
+            FactionInfo faction = FactionInfo.Get("Empire");
+            TV_3DVECTOR position = new TV_3DVECTOR(fx + x * 100, fy + y * 100, GameScenarioManager.Instance().MinBounds.z - 2500);
+            TV_3DVECTOR rotation = new TV_3DVECTOR();
+            ActionInfo[] actions = new ActionInfo[] { };
+            Dictionary<string, ActorInfo>[] registries = new Dictionary<string, ActorInfo>[] { GameScenarioManager.Instance().EnemyFighters };
+
+            if (GameScenarioManager.Instance().AllyShips.Count > 0)
+            {
+              string[] rskeys = new string[GameScenarioManager.Instance().AllyShips.Count];
+              GameScenarioManager.Instance().AllyShips.Keys.CopyTo(rskeys, 0);
+              ActorInfo rs = GameScenarioManager.Instance().AllyShips[rskeys[Engine.Instance().Random.Next(0, rskeys.Length)]];
+
+              actions = new ActionInfo[] { new Actions.Wait(18)
+                                         , new Actions.AttackActor(rs, -1, -1, false)
+                                         };
+            }
+
+            ActorInfo ainfo = SpawnActor(type
+                 , name
+                 , ""
+                 , ""
+                 , spawntime
+                 , faction
+                 , position
+                 , rotation
+                 , actions
+                 , registries);
+          }
+        }
+        t += 1.5f;
+      }
+    }
+
     public void Empire_TIEWave_InterceptorsvsPlayer(object[] param)
     {
       int sets = 15;
@@ -1762,6 +1924,7 @@ namespace SWEndor.Scenarios
         t += 1.5f;
       }
     }
+
     public void Empire_SpawnStatics(object[] param)
     {
       ActorInfo ainfo;
@@ -1823,37 +1986,69 @@ namespace SWEndor.Scenarios
       if (param == null || param.GetLength(0) < 3 || !(param[0] is ActorTypeInfo) || !(param[1] is TV_3DVECTOR || !(param[2] is TV_3DVECTOR)))
         return;
 
-      ActorCreationInfo acinfo;
-      ActorInfo ainfo;
+      //ActorCreationInfo acinfo;
+      //ActorInfo ainfo;
       ActorTypeInfo type = (ActorTypeInfo)param[0];
       TV_3DVECTOR position = (TV_3DVECTOR)param[1];
       TV_3DVECTOR targetposition = (TV_3DVECTOR)param[2];
       TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(0, 0, -25000);
 
-      acinfo = new ActorCreationInfo(type);
-      acinfo.Faction = FactionInfo.Get("Empire");
-      acinfo.InitialState = ActorState.NORMAL;
-      acinfo.CreationTime = Game.Instance().GameTime;
-      acinfo.Position = position + hyperspaceInOffset;
-      acinfo.Rotation = new TV_3DVECTOR();
-      ainfo = ActorInfo.Create(acinfo);
+      //acinfo = new ActorCreationInfo(type);
+      //acinfo.Faction = FactionInfo.Get("Empire");
+      //acinfo.InitialState = ActorState.NORMAL;
+      //acinfo.CreationTime = Game.Instance().GameTime;
+      //acinfo.Position = position + hyperspaceInOffset;
+      //acinfo.Rotation = new TV_3DVECTOR();
+      //ainfo = ActorInfo.Create(acinfo);
+      //ainfo.HuntWeight = 3;
 
-      ActionManager.QueueLast(ainfo, new Actions.HyperspaceIn(position));
-      ActionManager.QueueLast(ainfo, new Actions.Move(targetposition, ainfo.MaxSpeed));
-      ActionManager.QueueLast(ainfo, new Actions.Rotate(targetposition + new TV_3DVECTOR(0, 0, 25000), ainfo.MinSpeed));
-      ActionManager.QueueLast(ainfo, new Actions.Lock());
+      //ActionManager.QueueLast(ainfo, new Actions.HyperspaceIn(position));
+      //ActionManager.QueueLast(ainfo, new Actions.Move(targetposition, ainfo.MaxSpeed));
+      //ActionManager.QueueLast(ainfo, new Actions.Rotate(targetposition + new TV_3DVECTOR(0, 0, 25000), ainfo.MinSpeed));
+      //ActionManager.QueueLast(ainfo, new Actions.Lock());
 
-      GameScenarioManager.Instance().EnemyShips.Add(ainfo.Key, ainfo);
-      GameScenarioManager.Instance().CriticalEnemies.Add(ainfo.Name.ToUpper() + "    " + ainfo.ID, ainfo);
+      ActorInfo ainfo = SpawnActor(type
+                                 , ""
+                                 , ""
+                                 , type.Name.Substring(0, type.Name.IndexOf(' ')).ToUpper()
+                                 , Game.Instance().GameTime
+                                 , FactionInfo.Get("Empire")
+                                 , position + hyperspaceInOffset
+                                 , new TV_3DVECTOR()
+                                 , new ActionInfo[]
+                                 {
+                                   new Actions.HyperspaceIn(position)
+                                   , new Actions.Move(targetposition, type.MaxSpeed)
+                                   , new Actions.Rotate(targetposition + new TV_3DVECTOR(0, 0, 25000), type.MinSpeed)
+                                   , new Actions.Lock()
+                                 }
+                                 , new Dictionary<string, ActorInfo>[]
+                                 {
+                                   GameScenarioManager.Instance().EnemyShips
+                                   , GameScenarioManager.Instance().CriticalEnemies
+                                 }
+                                 );
+
+      ainfo.HuntWeight = 3;
+
+      //GameScenarioManager.Instance().EnemyShips.Add(ainfo.Key, ainfo);
+      //GameScenarioManager.Instance().CriticalEnemies.Add(ainfo.Name.ToUpper() + "    " + ainfo.ID, ainfo);
       RegisterEvents(ainfo);
+
+      
+
       if (ainfo.GetStateF("TIEspawnRemaining") > 0)
         ainfo.TickEvents.Add("Empire_SDSpawner");
+
+      if (type is DevastatorATI)
+        Empire_TIEWave_0D(new object[] { 2 });
     }
 
     public void Empire_StarDestroyer_01(object[] param)
     {
       GameScenarioManager.Instance().SDWaves++;
 
+      m_Enemy_pull = 8000;
       switch (GameScenarioManager.Instance().Difficulty.ToLower())
       {
         case "easy":
@@ -1867,13 +2062,7 @@ namespace SWEndor.Scenarios
           m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-1500, 150, -18500), new TV_3DVECTOR(-1000, 210, -7500) });
           m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(1500, 150, -18500), new TV_3DVECTOR(1000, 210, -7500) });
 
-          //m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2500, -250, -19500), new TV_3DVECTOR(-2000, 110, -9500) });
-          //m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-3500, 150, -18500), new TV_3DVECTOR(-3000, 210, -7000) });
-          //m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(-3250, -150, -19000), new TV_3DVECTOR(-2250, -150, -6500) });
           m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(-2250, -50, -19000), new TV_3DVECTOR(-1250, -50, -6500) });
-          //m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(2500, -250, -19500), new TV_3DVECTOR(2000, 110, -9500) });
-          //m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(3500, 150, -18500), new TV_3DVECTOR(3000, 210, -7000) });
-          //m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(3250, -150, -19000), new TV_3DVECTOR(2250, -150, -6500) });
           m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(2250, -50, -19000), new TV_3DVECTOR(1250, -50, -6500) });
           
           break;
@@ -1894,6 +2083,7 @@ namespace SWEndor.Scenarios
     {
       GameScenarioManager.Instance().SDWaves++;
 
+      m_Enemy_pull = 12000;
       switch (GameScenarioManager.Instance().Difficulty.ToLower())
       {
         case "easy":
@@ -1913,7 +2103,7 @@ namespace SWEndor.Scenarios
           m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(4500, 150, -26500), new TV_3DVECTOR(3000, 100, -10500) });
 
           m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-10000, -300, -23500), new TV_3DVECTOR(-1250, -300, -10500) });
-          m_pendingSDspawnlist.Add(new object[] { DevastatorATI.Instance(), new TV_3DVECTOR(0, 120, -26500), new TV_3DVECTOR(0, 120, -11500) });
+          m_pendingSDspawnlist.Add(new object[] { DevastatorATI.Instance(), new TV_3DVECTOR(0, 120, -24500), new TV_3DVECTOR(0, 120, -11500) });
           m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(-2500, 150, -24500), new TV_3DVECTOR(-2000, 150, -10500) });
           m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(-6500, 100, -25500), new TV_3DVECTOR(-3200, 50, -12000) });
           m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(10000, -300, -23500), new TV_3DVECTOR(1250, -300, -10500) });
@@ -1959,74 +2149,58 @@ namespace SWEndor.Scenarios
 
     public void Empire_Executor(object[] param)
     {
+      //m_Enemy_pull = 4000;
       GameScenarioManager.Instance().SDWaves++;
       if (m_ExecutorStatic != null)
       {
         m_ExecutorStatic.Destroy();
       }
 
-      ActorCreationInfo acinfo;
-      ActorInfo ainfo;
       TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(0, 0, -10000);
       float creationTime = Game.Instance().GameTime;
 
-      List<TV_3DVECTOR> positions = new List<TV_3DVECTOR>();
-      positions.Add(new TV_3DVECTOR(0, -750, -20000));
+      TV_3DVECTOR position = new TV_3DVECTOR(0, -750, -20000);
+      ActorTypeInfo atinfo = ExecutorATI.Instance();
 
-      for (int i = 0; i < positions.Count; i++)
-      {
-        TV_3DVECTOR v = positions[i];
-        acinfo = new ActorCreationInfo(ExecutorATI.Instance());
-        acinfo.Faction = FactionInfo.Get("Empire");
-        acinfo.InitialState = ActorState.NORMAL;
-        acinfo.CreationTime = creationTime;
-        acinfo.Position = v + hyperspaceInOffset;
-        acinfo.Rotation = new TV_3DVECTOR();
-        ainfo = ActorInfo.Create(acinfo);
+      ActorInfo ainfo = SpawnActor(atinfo
+                         , ""
+                         , ""
+                         , "EXECUTOR"
+                         , Game.Instance().GameTime
+                         , FactionInfo.Get("Empire")
+                         , position + hyperspaceInOffset
+                         , new TV_3DVECTOR()
+                         , new ActionInfo[]
+                         {
+                           new Actions.HyperspaceIn(position)
+                           , new Actions.Move(new TV_3DVECTOR(position.x, position.y, -4000), atinfo.MaxSpeed)
+                           , new Actions.Rotate(position + new TV_3DVECTOR(0, 0, 22500), atinfo.MinSpeed)
+                           , new Actions.Lock()
+                         }
+                         , new Dictionary<string, ActorInfo>[]
+                         {
+                           GameScenarioManager.Instance().EnemyShips
+                           , GameScenarioManager.Instance().CriticalEnemies
+                         }
+                            );
 
-        ActionManager.QueueLast(ainfo, new Actions.HyperspaceIn(v));
-        ActionManager.QueueLast(ainfo, new Actions.Move(new TV_3DVECTOR(v.x, v.y, -4000), ainfo.MaxSpeed));
-        ActionManager.QueueLast(ainfo, new Actions.Rotate(v + new TV_3DVECTOR(0, 0, 22500), ainfo.MinSpeed));
-        ActionManager.QueueLast(ainfo, new Actions.Lock());
-
-        /*
-        ainfo.AI.Orders.Enqueue(new AIElement
-        {
-          AIType = AIType.HYPERSPACE_IN,
-          TargetPosition = v
-        });
-        ainfo.AI.Orders.Enqueue(new AIElement
-        {
-          AIType = AIType.MOVE,
-          TargetPosition = new TV_3DVECTOR(v.x, v.y, -4000)
-        });
-        ainfo.AI.Orders.Enqueue(new AIElement
-        {
-          AIType = AIType.ROTATE,
-          TargetPosition = v + new TV_3DVECTOR(0, 0, 22500)
-        });
-        ainfo.AI.Orders.Enqueue(new AIElement { AIType = AIType.LOCK });
-        */
-
-        GameScenarioManager.Instance().EnemyShips.Add(ainfo.Key, ainfo);
-        GameScenarioManager.Instance().CriticalEnemies.Add("EXECUTOR      " + ainfo.ID, ainfo);
+        ainfo.HuntWeight = 5;
         RegisterEvents(ainfo);
         ainfo.ActorStateChangeEvents.Add("Empire_ExecutorDestroyed");
-      }
 
       // SD
-
 
       switch (GameScenarioManager.Instance().Difficulty.ToLower())
       {
         case "easy":
+          Empire_TIEWave_TIEsvsShips(new object[] { 10 });
           break;
         case "mental":
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000) });
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(2500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-3500, 120, -20500), new TV_3DVECTOR(-2500, 120, -6500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(3500, 120, -20500), new TV_3DVECTOR(2500, 120, -6500) });
-
+          Empire_TIEWave_0D (new object[] { 2 });
+          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2500, -80, -21000), new TV_3DVECTOR(-550, 80, -7000) });
+          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(2500, -80, -21000), new TV_3DVECTOR(550, -160, -7000) });
+          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-3500, 120, -20500), new TV_3DVECTOR(-1500, 90, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(3500, 120, -20500), new TV_3DVECTOR(1500, 90, -6500) });
 
           m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2000, -80, -24000), new TV_3DVECTOR(-2000, -80, -7000) });
           m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-4500, 120, -20500), new TV_3DVECTOR(-3500, 120, -6500) });
@@ -2038,6 +2212,8 @@ namespace SWEndor.Scenarios
 
           break;
         case "hard":
+          Empire_TIEWave_0D(new object[] { 1 });
+          Empire_TIEWave_TIEsvsShips(new object[] { 5 });
           m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000) });
           m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-4500, 120, -20500), new TV_3DVECTOR(-3500, 120, -6500) });
           m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-500, 120, -20500), new TV_3DVECTOR(-500, 120, -6500) });
@@ -2051,6 +2227,7 @@ namespace SWEndor.Scenarios
           break;
         case "normal":
         default:
+          Empire_TIEWave_TIEsvsShips(new object[] { 10 });
           m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000) });
           m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-500, 120, -20500), new TV_3DVECTOR(-500, 120, -6500) });
           m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(4500, 120, -20500), new TV_3DVECTOR(3500, 120, -6500) });
@@ -2204,6 +2381,7 @@ namespace SWEndor.Scenarios
           ActionManager.QueueNext(m_ADSLaserSource, new Actions.AttackActor(m_ADS_target));
           ActionManager.QueueNext(m_ADSLaserSource, new Actions.Lock());
 
+          m_ADS_target.DestroyedEvents.Add("Scene_DeathStarKill_Effect");
           GameScenarioManager.Instance().AddEvent(0.1f, "Scene_DeathStarCam");
         }
       }
@@ -2390,16 +2568,18 @@ namespace SWEndor.Scenarios
     {
       if (m_Falcon != null)
       {
-        m_Falcon_pos = m_Falcon.Position;
-        m_Falcon.ActorState = ActorState.FIXED;
-        m_Falcon.Position = new TV_3DVECTOR(10, 0, -100000);
+        //m_Falcon_pos = m_Falcon.Position;
+        //m_Falcon.ActorState = ActorState.FIXED;
+        //m_Falcon.Position = new TV_3DVECTOR(10, 0, -100000);
+        m_Falcon.DamageModifier = 0;
       }
 
       if (m_Wedge != null)
       {
-        m_Wedge_pos = m_Wedge.Position;
-        m_Wedge.ActorState = ActorState.FIXED;
-        m_Wedge.Position = new TV_3DVECTOR(20, 0, -100000);
+        //m_Wedge_pos = m_Wedge.Position;
+        //m_Wedge.ActorState = ActorState.FIXED;
+        //m_Wedge.Position = new TV_3DVECTOR(20, 0, -100000);
+        m_Wedge.DamageModifier = 0;
       }
 
       if (m_Player != null)
@@ -2410,12 +2590,14 @@ namespace SWEndor.Scenarios
         //PlayerInfo.Instance().Actor = null;
         m_Player_PrimaryWeapon = PlayerInfo.Instance().PrimaryWeapon;
         m_Player_SecondaryWeapon = PlayerInfo.Instance().SecondaryWeapon;
+        m_Player.DamageModifier = 0;
       }
 
       if (m_HomeOne != null)
       {
-        m_HomeOne_Strength = m_HomeOne.Strength;
-        m_HomeOne.Strength += 2000;
+        //m_HomeOne_Strength = m_HomeOne.Strength;
+        //m_HomeOne.Strength += 2000;
+        m_HomeOne.DamageModifier = 0;
       }
 
       PlayerInfo.Instance().Actor = GameScenarioManager.Instance().SceneCamera;
@@ -2426,14 +2608,16 @@ namespace SWEndor.Scenarios
     {
       if (m_Falcon != null)
       {
-        m_Falcon.ActorState = ActorState.NORMAL;
-        m_Falcon.Position = m_Falcon_pos;
+        //m_Falcon.ActorState = ActorState.NORMAL;
+        //m_Falcon.Position = m_Falcon_pos;
+        m_Falcon.DamageModifier = 0;
       }
 
       if (m_Wedge != null)
       {
-        m_Wedge.ActorState = ActorState.NORMAL;
-        m_Wedge.Position = m_Wedge_pos;
+        //m_Wedge.ActorState = ActorState.NORMAL;
+        //m_Wedge.Position = m_Wedge_pos;
+        m_Wedge.DamageModifier = 0;
       }
 
       if (m_Player != null)
@@ -2443,11 +2627,13 @@ namespace SWEndor.Scenarios
         PlayerInfo.Instance().Actor = m_Player;
         PlayerInfo.Instance().PrimaryWeapon = m_Player_PrimaryWeapon;
         PlayerInfo.Instance().SecondaryWeapon = m_Player_SecondaryWeapon;
+        m_Player.DamageModifier = 1;
       }
 
       if (m_HomeOne != null)
       {
-        m_HomeOne.Strength = m_HomeOne_Strength;
+        //m_HomeOne.Strength = m_HomeOne_Strength;
+        m_HomeOne.DamageModifier = 1;
       }
 
       GameScenarioManager.Instance().IsCutsceneMode = false;

@@ -9,7 +9,7 @@ namespace SWEndor
   {
     UISelectionElement MainMenuText = new UISelectionElement();
     UISelectionElement ButtonPlay = new UISelectionElement();
-    UISelectionElement ButtonLoad = new UISelectionElement();
+    //UISelectionElement ButtonLoad = new UISelectionElement();
     UISelectionElement ButtonOptions = new UISelectionElement();
     UISelectionElement ButtonCredits = new UISelectionElement();
     UISelectionElement ButtonExit = new UISelectionElement();
@@ -29,6 +29,7 @@ namespace SWEndor
       ButtonPlay.Selectable = true;
       ButtonPlay.OnKeyPress += SelectPlay;
 
+      /*
       ButtonLoad.Text = "Load Scenario";
       ButtonLoad.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth - 200, Engine.Instance().ScreenHeight - 260);
       ButtonLoad.HighlightBoxPosition = ButtonLoad.TextPosition - new TV_2DVECTOR(5, 5);
@@ -36,6 +37,7 @@ namespace SWEndor
       ButtonLoad.HighlightBoxHeight = 30;
       ButtonLoad.Selectable = true;
       ButtonLoad.OnKeyPress += SelectLoad;
+      */
 
       ButtonOptions.Text = "Options";
       ButtonOptions.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth - 200, Engine.Instance().ScreenHeight - 220);
@@ -63,7 +65,7 @@ namespace SWEndor
 
       Elements.Add(MainMenuText);
       Elements.Add(ButtonPlay);
-      Elements.Add(ButtonLoad);
+      //Elements.Add(ButtonLoad);
       Elements.Add(ButtonOptions);
       Elements.Add(ButtonCredits);
       Elements.Add(ButtonExit);

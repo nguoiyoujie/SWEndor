@@ -23,7 +23,7 @@ namespace SWEndor
       IsDamage = false;
       CollisionEnabled = true;
 
-      MaxStrength = 550.0f;
+      MaxStrength = 850.0f;
       ImpactDamage = 60.0f;
       MaxSpeed = 75.0f;
       MinSpeed = 0.0f;
@@ -102,10 +102,10 @@ namespace SWEndor
 
         if (!ainfo.IsPlayer())
         {
-          if (dist < 500)
+          if (dist < 1500)
           {
-            if (PlayerInfo.Instance().enginelgvol < 1 - dist / 500.0f)
-              PlayerInfo.Instance().enginelgvol = 1 - dist / 500.0f;
+            if (PlayerInfo.Instance().enginelgvol < 1 - dist / 1500.0f)
+              PlayerInfo.Instance().enginelgvol = 1 - dist / 1500.0f;
           }
         }
 
@@ -168,7 +168,6 @@ namespace SWEndor
           ainfo.SetStateF("TIEspawnRemaining", ainfo.GetStateF("TIEspawnRemaining")-1);
 
           List<TV_3DVECTOR> spawnloc = new List<TV_3DVECTOR>();
-          //spawnloc.Add(new TV_3DVECTOR(0, -210, 250));
           spawnloc.Add(new TV_3DVECTOR(25, -80, 175));
           spawnloc.Add(new TV_3DVECTOR(25, -80, 225));
           spawnloc.Add(new TV_3DVECTOR(-25, -80, 175));

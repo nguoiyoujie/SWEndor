@@ -15,6 +15,46 @@ namespace SWEndor
     private bool _dirty = true;
     public bool ExplicitUpdateOnly = false;
 
+    public int Count
+    {
+      get
+      {
+        Update();
+        return _list.Count;
+      }
+    }
+
+    public bool Contains(T item)
+    {
+      Update();
+      return _list.Contains(item);
+    }
+
+    public int IndexOf(T item)
+    {
+      Update();
+      return _list.IndexOf(item);
+    }
+
+    public T this[int id]
+    {
+      get
+      {
+        Update();
+        if (id >= 0 && id < _list.Count)
+          return _list[id];
+        return default(T);
+      }
+      set
+      {
+        mu_pending_list.WaitOne();
+        _pending_list[id] = value;
+        mu_pending_list.ReleaseMutex();
+        if (!ExplicitUpdateOnly)
+          _dirty = true;
+      }
+    }
+
     /// <summary>
     /// Obtains last updated collection
     /// </summary>
@@ -26,7 +66,7 @@ namespace SWEndor
       return ret;
     }
 
-    public void Update()
+    private void Update()
     {
       if (_dirty)
       {
@@ -41,7 +81,7 @@ namespace SWEndor
     /// <summary>
     /// Explicity triggers the list for update
     /// </summary>
-    private void SetDirty()
+    public void SetDirty()
     {
       _dirty = true;
     }
@@ -59,7 +99,32 @@ namespace SWEndor
     }
 
     /// <summary>
-    /// Removes an item from the collection
+    /// Adds an item to the collection only if this item is not already in the collection
+    /// </summary>
+    public bool AddUniqueItem(T item)
+    {
+      if (!Contains(item))
+      {
+        AddItem(item);
+        return true;
+      }
+      return false;
+    }
+
+    /// <summary>
+    /// Clears the collection
+    /// </summary>
+    public void ClearList()
+    {
+      mu_pending_list.WaitOne();
+      _pending_list = new List<T>();
+      mu_pending_list.ReleaseMutex();
+      if (!ExplicitUpdateOnly)
+        _dirty = true;
+    }
+
+    /// <summary>
+    /// Removes the first instance of an item from the collection
     /// </summary>
     public bool RemoveItem(T item)
     {
@@ -70,6 +135,31 @@ namespace SWEndor
         _dirty = true;
 
       return ret;
+    }
+
+    /// <summary>
+    /// Removes all instances of an item from the collection
+    /// </summary>
+    public bool RemoveAllItem(T item)
+    {
+      bool ret = false;
+      while (RemoveItem(item))
+      {
+        ret = true;
+      }
+      return ret;
+    }
+
+    /// <summary>
+    /// Sorts the list using a comparer
+    /// </summary>
+    public void Sort(IComparer<T> comparer)
+    {
+      mu_pending_list.WaitOne();
+      _pending_list.Sort(comparer);
+      mu_pending_list.ReleaseMutex();
+      if (!ExplicitUpdateOnly)
+        _dirty = true;
     }
   }
 }

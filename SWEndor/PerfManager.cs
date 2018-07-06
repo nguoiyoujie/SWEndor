@@ -53,17 +53,6 @@ namespace SWEndor
       Elements.ClearList();
     }
 
-    public void PrintPerf(double waittime_s)
-    {
-      if ((DateTime.Now - m_last_refresh_time).TotalSeconds > waittime_s)
-      {
-        using (new PerfElement("perf"))
-        {
-          PrintPerf();
-        }
-      }
-    }
-
     public void ClearPerf()
     {
       string filepath = Path.Combine(Globals.LogPath, @"perf.log");
@@ -75,6 +64,9 @@ namespace SWEndor
 
     public void PrintPerf()
     {
+      if (!Settings.ShowPerformance)
+        return;
+
       if (!Directory.Exists(Globals.LogPath))
         Directory.CreateDirectory(Globals.LogPath);
 
@@ -132,7 +124,8 @@ namespace SWEndor
 
     public void Dispose()
     {
-      PerfManager.Instance().UpdatePerfElement(Name, Math.Max(0.0, Stopwatch.GetTimestamp() - m_timestamp) / Stopwatch.Frequency);
+      if (Settings.ShowPerformance)
+        PerfManager.Instance().UpdatePerfElement(Name, Math.Max(0.0, Stopwatch.GetTimestamp() - m_timestamp) / Stopwatch.Frequency);
     }
   }
 }

@@ -16,6 +16,46 @@ namespace SWEndor
     private bool _dirty = true;
     public bool ExplicitUpdateOnly = false;
 
+    public int Count
+    {
+      get
+      {
+        Update();
+        return _list.Count;
+      }
+    }
+
+    public bool ContainsKey(T key)
+    {
+      Update();
+      return _list.ContainsKey(key);
+    }
+
+    public bool ContainsValue(U value)
+    {
+      Update();
+      return _list.ContainsValue(value);
+    }
+
+    public U this[T key]
+    {
+      get
+      {
+        Update();
+        if (_list.ContainsKey(key))
+          return _list[key];
+        return default(U);
+      }
+      set
+      {
+        mu_pending_list.WaitOne();
+        _pending_list[key] = value;
+        mu_pending_list.ReleaseMutex();
+        if (!ExplicitUpdateOnly)
+          _dirty = true;
+      }
+    }
+
     /// <summary>
     /// Obtains last updated collection
     /// </summary>
@@ -129,7 +169,7 @@ namespace SWEndor
       if (_pending_list.ContainsKey(key))
         ret = _pending_list.Remove(key);
       mu_pending_list.ReleaseMutex();
-      if (ExplicitUpdateOnly)
+      if (!ExplicitUpdateOnly)
         _dirty = true;
 
       return ret;

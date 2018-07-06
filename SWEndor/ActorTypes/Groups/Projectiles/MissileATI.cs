@@ -23,7 +23,7 @@ namespace SWEndor
       IsCombatObject = false;
       IsSelectable = false;
       IsDamage = true;
-      ImpactDamage = 15;
+      ImpactDamage = 12;
       MaxSpeed = 1500;
       MinSpeed = 1500;
       AlwaysAccurateRotation = true;
@@ -68,6 +68,9 @@ namespace SWEndor
     public override void ProcessState(ActorInfo ainfo)
     {
       base.ProcessState(ainfo);
+      if (ainfo.CurrentAction == null || ainfo.CurrentAction is Actions.Idle)
+        ainfo.ActorState = ActorState.DEAD;
+
       /*
       if (ainfo.ActorState == ActorState.NORMAL)
       {

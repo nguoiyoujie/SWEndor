@@ -23,9 +23,9 @@ namespace SWEndor
       IsDamage = false;
       CollisionEnabled = true;
 
-      MaxStrength = 950.0f;
+      MaxStrength = 1075.0f;
       ImpactDamage = 60.0f;
-      MaxSpeed = 65.0f;
+      MaxSpeed = 70.0f;
       MinSpeed = 0.0f;
       MaxSpeedChangeRate = 5.0f;
       MaxTurnRate = 1.2f;

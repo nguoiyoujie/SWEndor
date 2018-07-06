@@ -58,6 +58,24 @@
   <PropertyGroup>
     <StartupObject>SWEndor.Program</StartupObject>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>..\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualC" />
     <Reference Include="MTV3D65, Version=6.5.3244.34206, Culture=neutral">
@@ -79,6 +97,9 @@
     <Compile Include="ActorTypes\Groups\AddOns\ExecutorBridgeATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\InvisibleRebelTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\DSLaserSourceATI.cs" />
+    <Compile Include="ActorTypes\Groups\AsteroidGroup.cs" />
+    <Compile Include="ActorTypes\Groups\Asteroids\Asteroid02ATI.cs" />
+    <Compile Include="ActorTypes\Groups\Asteroids\Asteroid01ATI.cs" />
     <Compile Include="ActorTypes\Groups\Debris\Tower03_RuinsATI.cs" />
     <Compile Include="ActorTypes\Groups\Debris\Tower02_RuinsATI.cs" />
     <Compile Include="ActorTypes\Groups\Debris\Tower01_RuinsATI.cs" />
@@ -89,7 +110,7 @@
     <Compile Include="ActorTypes\Groups\Debris\Transport_Box1ATI.cs" />
     <Compile Include="ActorTypes\Groups\Explosions\ExplosionWaveATI.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\FalconATI.cs" />
-    <Compile Include="ActorTypes\Groups\Projectiles\SmallIonLaserATI - Copy.cs" />
+    <Compile Include="ActorTypes\Groups\Projectiles\SmallIonLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\Yellow2LaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\GreenAntiShipLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\Green2LaserATI.cs" />
@@ -146,6 +167,7 @@
     <Compile Include="ActorTypes\Groups\TIEs\TIE_X1_ATI.cs" />
     <Compile Include="ActorTypes\DeathCameraATI.cs" />
     <Compile Include="ActorTypes\Groups\TIEs\TIE_D_ATI.cs" />
+    <Compile Include="ActorTypes\Groups\Warships\MC80BATI.cs" />
     <Compile Include="ActorTypes\Groups\Warships\NebulonB2ATI.cs" />
     <Compile Include="ActorTypes\InvisibleCameraATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\NebulonBTurboLaserATI.cs" />
@@ -257,7 +279,6 @@
     <Compile Include="Sound\fmod_dsp.cs" />
     <Compile Include="Sound\fmod_errors.cs" />
     <Compile Include="PerfManager.cs" />
-    <Compile Include="TimeManager.cs" />
     <Compile Include="Menu\UISelectionElement.cs" />
     <Compile Include="Utilities\Utilities.cs" />
     <Compile Include="Weapons\Arquitens\ArquitensTurboLaserWeapon.cs" />

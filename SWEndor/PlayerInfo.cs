@@ -23,9 +23,11 @@ namespace SWEndor
       Camera.SetViewFrustum(90, 65000);
       Position = new TV_3DVECTOR();
       Direction = new TV_3DVECTOR(0, 0, 1);
+      Name = "Luke";
+      Score = new ScoreInfo("(Player)");
     }
 
-    public string Name = "Luke";
+    public string Name;
     public ActorTypeInfo ActorType = XWingATI.Instance();
 
     private ActorInfo prevActor;
@@ -35,7 +37,11 @@ namespace SWEndor
       get { return _actor; }
       set
       {
+        if (_actor != null)
+          _actor.Score = new ScoreInfo(_actor.Key);
         _actor = value;
+        if (_actor != null)
+          _actor.Score = Score;
         if (prevActor != _actor)
         {
           PrimaryWeapon = "";
@@ -452,7 +458,7 @@ namespace SWEndor
 
     public TV_3DVECTOR Position = new TV_3DVECTOR();
     public TV_3DVECTOR Direction = new TV_3DVECTOR();
-    public ScoreInfo Score = new ScoreInfo();
+    public ScoreInfo Score;
 
     public bool IsMovementControlsEnabled = true;
     public bool IsTorpedoMode = false;

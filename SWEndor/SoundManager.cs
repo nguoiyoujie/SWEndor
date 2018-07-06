@@ -196,6 +196,14 @@ namespace SWEndor
       {
         StopMusic();
       }
+      else if (sound != null && sound.Name == "pause")
+      {
+        PauseMusic();
+      }
+      else if (sound != null && sound.Name == "resume")
+      {
+        ResumeMusic();
+      }
       else if (sound != null && music.ContainsKey(sound.Name))
       {
         StopMusic();
@@ -233,6 +241,42 @@ namespace SWEndor
       musicgrp.getChannel(0, out fmodchannel);
       fmodchannel.setCallback(null);
       fmodchannel.stop();
+      return true;
+    }
+
+    public bool SetMusicPause()
+    {
+      mu_queuedMusic.WaitOne();
+      m_queuedMusic.Enqueue(new SoundInfo { Name = "pause" });
+      mu_queuedMusic.ReleaseMutex();
+
+      //Update();
+      return true;
+    }
+
+    private bool PauseMusic()
+    {
+      Channel fmodchannel;
+      musicgrp.getChannel(0, out fmodchannel);
+      fmodchannel.setPaused(true);
+      return true;
+    }
+
+    public bool SetMusicResume()
+    {
+      mu_queuedMusic.WaitOne();
+      m_queuedMusic.Enqueue(new SoundInfo { Name = "resume" });
+      mu_queuedMusic.ReleaseMutex();
+
+      //Update();
+      return true;
+    }
+
+    private bool ResumeMusic()
+    {
+      Channel fmodchannel;
+      musicgrp.getChannel(0, out fmodchannel);
+      fmodchannel.setPaused(false);
       return true;
     }
 

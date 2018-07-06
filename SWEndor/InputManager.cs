@@ -201,10 +201,10 @@ namespace SWEndor
             {
               GameSaver.Save(@"save.txt");
             }
-            else if (KEY_BUFFER[n].Key == (int)CONST_TV_KEY.TV_KEY_P)
-            {
-              Game.Instance().IsPaused = !Game.Instance().IsPaused;
-            }
+            //else if (KEY_BUFFER[n].Key == (int)CONST_TV_KEY.TV_KEY_P)
+            //{
+            //  Game.Instance().IsPaused = !Game.Instance().IsPaused;
+            //}
           }
         }
       }

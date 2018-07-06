@@ -1,0 +1,9 @@
+C:\1-Own Projects\SWEndor\SWEndor\Source\SWEndor\obj\x64\Release\SWEndor.csprojResolveAssemblyReference.cache
+C:\1-Own Projects\SWEndor\SWEndor\Source\SWEndor\obj\x64\Release\SWEndor.GameForm.resources
+C:\1-Own Projects\SWEndor\SWEndor\Source\SWEndor\obj\x64\Release\SWEndor.Properties.Resources.resources
+C:\1-Own Projects\SWEndor\SWEndor\Source\SWEndor\obj\x64\Release\SWEndor.csproj.GenerateResource.Cache
+C:\1-Own Projects\SWEndor\SWEndor\Source\SWEndor.exe.config
+C:\1-Own Projects\SWEndor\SWEndor\Source\SWEndor\obj\x64\Release\SWEndor.exe
+C:\1-Own Projects\SWEndor\SWEndor\Source\SWEndor\obj\x64\Release\SWEndor.pdb
+C:\1-Own Projects\SWEndor\SWEndor\Source\SWEndor.exe
+C:\1-Own Projects\SWEndor\SWEndor\Source\SWEndor.pdb

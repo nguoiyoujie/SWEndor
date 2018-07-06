@@ -214,7 +214,7 @@ namespace SWEndor
         a.AddParent(owner);
 
         ActionManager.QueueLast(a, new Actions.AttackActor(target, 0, 0, false, 9999));
-        ActionManager.QueueLast(a, new Actions.Idle());
+        ActionManager.QueueLast(a, new Actions.Lock());
 
         return true;
       }

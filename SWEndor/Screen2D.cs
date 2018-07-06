@@ -86,6 +86,11 @@ namespace SWEndor
     private float steering_height = 60;
     private float steering_width = 60;
 
+    // Score
+    private TV_2DVECTOR score_position = new TV_2DVECTOR(Engine.Instance().ScreenWidth * 0.76f, 325);
+    private float score_height = Engine.Instance().ScreenHeight - 325;
+    private float score_width = Engine.Instance().ScreenWidth * 0.24f;
+
     // Draw 3D Box info
     public bool Box3D_Enable = false;
     public TV_3DVECTOR Box3D_min = new TV_3DVECTOR();
@@ -134,7 +139,7 @@ namespace SWEndor
             }
             if (PlayerInfo.Instance().ShowScore)
             {
-              //DrawScore();
+              DrawScore();
             }
             if (PlayerInfo.Instance().PlayerAIEnabled)
             {
@@ -1771,73 +1776,6 @@ namespace SWEndor
             , FontID12
             );
 
-          /*
-          // Wings
-          int count = 0;
-
-          if (GameScenarioManager.Instance().Scenario.TimeSinceLostWing < Game.Instance().Time || Game.Instance().Time % 0.4f > 0.2f)
-          {
-            foreach (ActorInfo a in GameScenarioManager.Instance().AllyFighters.Values)
-            {
-              if (a.CreationState == CreationState.ACTIVE)
-              {
-                count++;
-              }
-            }
-
-            Engine.Instance().TVScreen2DText.TextureFont_DrawText(string.Format("WINGS: {0} / {1}"
-                , count
-                , GameScenarioManager.Instance().Scenario.RebelFighterLimit
-                )
-                , Engine.Instance().ScreenWidth / 2 + infomiddlegap
-                , infotop + infoheight
-                , new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor()
-                , FontID12
-                );
-          }
-
-          // Ships
-          count = 0;
-          if (GameScenarioManager.Instance().Scenario.TimeSinceLostShip < Game.Instance().Time || Game.Instance().Time % 0.4f > 0.2f)
-          {
-            foreach (ActorInfo a in GameScenarioManager.Instance().AllyShips.Values)
-            {
-              if (a.CreationState == CreationState.ACTIVE)
-              {
-                count++;
-              }
-            }
-
-            Engine.Instance().TVScreen2DText.TextureFont_DrawText(string.Format("SHIPS: {0}"
-                , count
-                )
-                , Engine.Instance().ScreenWidth / 2 + infomiddlegap
-                , infotop + infoheight * 2
-                , new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor()
-                , FontID12
-                );
-          }
-
-          // TIEs
-          count = 0;
-          foreach (ActorInfo a in GameScenarioManager.Instance().EnemyFighters.Values)
-          {
-            if (a.CreationState == CreationState.ACTIVE)
-            {
-              count++;
-            }
-          }
-
-          Engine.Instance().TVScreen2DText.TextureFont_DrawText(string.Format("TIE:   {0}"
-              , count
-              )
-              , Engine.Instance().ScreenWidth / 2 + infomiddlegap
-              , infotop + infoheight * 3
-              , new TV_COLOR(0.7f, 1f, 0.3f, 1).GetIntColor()
-              , FontID12
-              );
-          */
-
           Engine.Instance().TVScreen2DText.Action_EndText();
         }
       }
@@ -1846,39 +1784,34 @@ namespace SWEndor
     private void DrawScore()
     {
       Engine.Instance().TVScreen2DImmediate.Action_Begin2D();
-      Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(radar_center.x - 150
-                                    , radar_center.y + radar_radius + 10 + bar_height * 4.8f
-                                    , radar_center.x + 150
-                                    , radar_center.y + radar_radius + 600
+      Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(score_position.x
+                                    , score_position.y
+                                    , score_position.x + score_width
+                                    , score_position.y + score_height
                                     , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
       Engine.Instance().TVScreen2DImmediate.Action_End2D();
 
-      SortedDictionary<float, ActorInfo> HighScorers = new SortedDictionary<float, ActorInfo>();
-      foreach (ActorInfo a in ActorFactory.Instance().GetActorList())
-      {
-        if (a.CreationState == CreationState.ACTIVE && a.Score.Score > 0)
-        {
-          if (!HighScorers.ContainsKey(a.Score.Score + (float)a.ID / 100000))
-            HighScorers.Add(a.Score.Score + (float)a.ID / 100000, a);
-        }
-      }
+      List<ScoreInfo> HighScorers = new List<ScoreInfo>(ScoreInfo.Scores.GetList());
+      HighScorers.RemoveAll(x => x.Score == 0);
+      HighScorers.Sort(new ScoreInfo.ScoreComparer());
+
       string hiscoretext = "LEADERS         | SCORE    | KILL | HIT";
-      int count = (HighScorers.Count > 20) ? 20 : HighScorers.Count;
+      int count = (HighScorers.Count > 25) ? 25 : HighScorers.Count;
       int hi = HighScorers.Count - 1;
-      ActorInfo[] hilist = new ActorInfo[HighScorers.Count];
-      HighScorers.Values.CopyTo(hilist, 0);
+      ScoreInfo[] hilist = new ScoreInfo[HighScorers.Count];
+      HighScorers.CopyTo(hilist, 0);
       while (count > 0 && hi >= 0)
       {
-        hiscoretext += string.Format("\n{0,15}   {1,8:0}   {2,4:0}   {3,4:0}", (hilist[hi].Name.Length > 15) ? hilist[hi].Name.Remove(15): hilist[hi].Name.PadRight(15), hilist[hi].Score.Score, hilist[hi].Score.Kills, hilist[hi].Score.Hits);
+        hiscoretext += string.Format("\n{0,15}   {1,8:0}   {2,4:0}   {3,4:0}", (hilist[hi].Name.Length > 15) ? hilist[hi].Name.Remove(15): hilist[hi].Name.PadRight(15), hilist[hi].Score, hilist[hi].Kills, hilist[hi].Hits);
         count--;
         hi--;
       }
 
       Engine.Instance().TVScreen2DText.TextureFont_DrawText(hiscoretext
-      , radar_center.x - 150
-      , radar_center.y + radar_radius + 10 + bar_height * 3.8f
+      , score_position.x + 5
+      , score_position.y + 5
       , new TV_COLOR(0.7f, 1f, 0.3f, 1).GetIntColor()
-      , FontID12
+      , FontID10
       );
 
     }

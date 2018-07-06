@@ -9,6 +9,7 @@ namespace SWEndor
   public class UIPage_PlayScenario : UIPage
   {
     UISelectionElement MainText = new UISelectionElement();
+    UISelectionElement DescText = new UISelectionElement();
     UISelectionElement ButtonScenario = new UISelectionElement();
     UISelectionElement ButtonWing = new UISelectionElement();
     UISelectionElement ButtonDifficulty = new UISelectionElement();
@@ -81,6 +82,13 @@ namespace SWEndor
         SelectedDifficultyID = 0;
       }
 
+      DescText.Text = SelectedScenario.Description;
+      DescText.TextPosition = new TV_2DVECTOR(x, y);
+      y += 120 +  height_gap;
+      DescText.HighlightBoxPosition = DescText.TextPosition - new TV_2DVECTOR(5, 5);
+      DescText.HighlightBoxWidth = 800;
+      DescText.HighlightBoxHeight = 150;
+
       ButtonPlay.Text = "Launch!";
       ButtonPlay.TextPosition = new TV_2DVECTOR(x, y);
       y += height_gap;
@@ -102,6 +110,7 @@ namespace SWEndor
       Elements.Add(ButtonScenario);
       Elements.Add(ButtonWing);
       Elements.Add(ButtonDifficulty);
+      Elements.Add(DescText);
       Elements.Add(ButtonPlay);
       Elements.Add(ButtonBack);
       SelectedElementID = Elements.IndexOf(ButtonScenario);
@@ -135,6 +144,8 @@ namespace SWEndor
           SelectedDifficultyID = 1;
           SelectDifficulty(CONST_TV_KEY.TV_KEY_LEFT);
 
+          DescText.Text = SelectedScenario.Description;
+
           return true;
         }
         else if (key == CONST_TV_KEY.TV_KEY_RIGHT)
@@ -154,6 +165,8 @@ namespace SWEndor
 
           SelectedDifficultyID = 1;
           SelectDifficulty(CONST_TV_KEY.TV_KEY_LEFT);
+
+          DescText.Text = SelectedScenario.Description;
 
           return true;
         }

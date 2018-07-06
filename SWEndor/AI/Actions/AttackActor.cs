@@ -113,7 +113,7 @@ namespace SWEndor.Actions
             float evadeduration = 2000 / (Target_Actor.GetTrueSpeed() + 500);
             ActionManager.QueueFirst(owner, new Evade(evadeduration));
           }
-          else
+          else if (!(Target_Actor.TypeInfo is ProjectileGroup))
           {
             ActionManager.QueueFirst(owner, new Move(MakeAltPosition(owner), owner.MaxSpeed));
           }

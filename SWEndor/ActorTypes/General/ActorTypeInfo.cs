@@ -496,18 +496,14 @@ namespace SWEndor
         if (ainfo.IsPlayer())
         {
           if (str1 < (int)str0)
-          {
             PlayerInfo.Instance().FlashHit(PlayerInfo.Instance().HealthColor);
-          }
           PlayerInfo.Instance().Score.DamageTaken += hitby.TypeInfo.ImpactDamage * ainfo.DamageModifier;
         }
 
         if (ainfo.ActorState != ActorState.DEAD && ainfo.ActorState != ActorState.DEAD && ainfo.Strength <= 0)
         {
           if (ainfo.IsPlayer())
-          {
             PlayerInfo.Instance().Score.Deaths++;
-          }
         }
 
         List<ActorInfo> attackerfamily = hitby.GetAllParents();
@@ -515,18 +511,18 @@ namespace SWEndor
         {
           if (a.Faction != null && !a.Faction.IsAlliedWith(ainfo.Faction))
           {
-            AddScore(a.Score, a, ainfo);
-            if (a.IsPlayer())
-            {
-              AddScore(PlayerInfo.Instance().Score, a, ainfo);
-            }
+            if (!(a.TypeInfo is AddOnGroup))
+              AddScore(a.Score, a, ainfo);
+            else
+            { }
+            //if (a.IsPlayer())
+            //  AddScore(PlayerInfo.Instance().Score, a, ainfo);
           }
         }
 
         hitby.SetLocalPosition(impact.x, impact.y, impact.z);
         hitby.ActorState = ActorState.DYING;
 
-        //ainfo.AI.ProcessHit(ainfo, hitby);
         if ((ainfo.TypeInfo is FighterGroup || ainfo.TypeInfo is TIEGroup))
         {
           List<ActorInfo> hparents = hitby.GetAllParents();
@@ -550,38 +546,34 @@ namespace SWEndor
       else
       {
         // Collision
-        if (ainfo.ActorState != ActorState.FIXED && ainfo.TypeInfo.IsFighter)
+        ainfo.Strength -= hitby.TypeInfo.ImpactDamage * ainfo.DamageModifier;
+        if (ainfo.Strength > 0 && ainfo.ActorState != ActorState.FIXED && ainfo.TypeInfo.IsFighter)
         {
-          float repel = -ainfo.Speed * 0.25f; //* hitby.Weight / (ainfo.Weight + hitby.Weight);
-                                              //TV_3DVECTOR disp = new TV_3DVECTOR();
-                                              //Engine.Instance().TVMathLibrary.TVVec3Normalize(ref disp, hitby.Position - ainfo.Position);
-                                              //ainfo.Mesh.SetPosition(
-                                              //  ainfo.Position.x + repel * disp.x,
-                                              //  ainfo.Position.y + repel * disp.y,
-                                              //  ainfo.Position.z + repel * disp.z);
+          float repel = -ainfo.Speed * 0.25f;
           ainfo.MoveRelative(repel, 0, 0);
         }
-        ainfo.Strength -= hitby.TypeInfo.ImpactDamage * ainfo.DamageModifier;
-        if (ainfo.Strength < 0 && !(ainfo.TypeInfo is StarDestroyerGroup || ainfo.TypeInfo is WarshipGroup))
-        {
-          ainfo.ActorState = ActorState.DEAD;
-        }
+
         if (ainfo.IsPlayer())
-        {
           PlayerInfo.Instance().FlashHit(PlayerInfo.Instance().HealthColor);
-        }
 
         List<ActorInfo> attackerfamily = hitby.GetAllParents();
+        attackerfamily.Add(hitby);
         foreach (ActorInfo a in attackerfamily)
         {
           if (a.Faction != null && !a.Faction.IsAlliedWith(ainfo.Faction))
           {
-            AddScore(a.Score, a, ainfo);
-            if (a.IsPlayer())
-            {
-              AddScore(PlayerInfo.Instance().Score, a, ainfo);
-            }
+            if (!(a.TypeInfo is AddOnGroup))
+              AddScore(a.Score, a, ainfo);
+            //if (a.IsPlayer())
+            //  AddScore(PlayerInfo.Instance().Score, a, ainfo);
           }
+        }
+
+        if (ainfo.Strength < 0 && !(ainfo.TypeInfo is StarDestroyerGroup || ainfo.TypeInfo is WarshipGroup))
+        {
+          ainfo.ActorState = ActorState.DEAD;
+          if (ainfo.IsPlayer())
+            PlayerInfo.Instance().Score.Deaths++;
         }
       }
 

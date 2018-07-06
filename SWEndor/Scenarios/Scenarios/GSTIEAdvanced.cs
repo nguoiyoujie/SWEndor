@@ -40,7 +40,7 @@ namespace SWEndor.Scenarios
       PlayerInfo.Instance().Lives = 4;
       PlayerInfo.Instance().ScorePerLife = 200000;
       PlayerInfo.Instance().ScoreForNextLife = 200000;
-      PlayerInfo.Instance().Score = new ScoreInfo();
+      PlayerInfo.Instance().Score.Reset();
 
       MakePlayer = Rebel_MakePlayer;
 

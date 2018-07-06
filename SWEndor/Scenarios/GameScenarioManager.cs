@@ -187,6 +187,9 @@ namespace SWEndor
       if (Scenario != null)
         Scenario.Unload();
 
+      PlayerInfo.Instance().Score.Reset();
+      ScoreInfo.Scores.ClearList();
+
       _instance = new GameScenarioManager();
       _instance.LoadInitial();
     }

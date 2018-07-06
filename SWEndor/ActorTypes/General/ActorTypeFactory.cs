@@ -65,6 +65,7 @@ namespace SWEndor
       Register(NebulonBATI.Instance());
       Register(NebulonB2ATI.Instance());
       Register(MC90ATI.Instance());
+      Register(MC80BATI.Instance());
       Register(TransportATI.Instance());
 
       // Star Destroyers
@@ -135,6 +136,9 @@ namespace SWEndor
       Register(ExecutorBridgeATI.Instance());
       Register(InvisibleRebelTurboLaserATI.Instance());
       Register(DSLaserSourceATI.Instance());
+
+      // asteroids
+      Register(Asteroid01ATI.Instance());
 
       // debris
       Register(XWing_RD_LU_WingATI.Instance());

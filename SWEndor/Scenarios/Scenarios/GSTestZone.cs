@@ -46,7 +46,7 @@ namespace SWEndor.Scenarios
       PlayerInfo.Instance().Lives = 2;
       PlayerInfo.Instance().ScorePerLife = 1000000;
       PlayerInfo.Instance().ScoreForNextLife = 1000000;
-      PlayerInfo.Instance().Score = new ScoreInfo();
+      PlayerInfo.Instance().Score.Reset();
 
       MakePlayer = Test_SpawnPlayer;
       

@@ -18,7 +18,9 @@ This project is created and maintained with Visual Studio 2015.
 
 The game requires Microsoft .NET Framework v1.1 and v2.0. Note that higher .NET versions up to v3.5 can also support v2.0.
 
-The game uses [TrueVision3D 6.5](http://www.truevision3d.com/) to perform 3D rendering and calculations. TV3D requires at least DirectX 8.1 and a 32-bit 3D graphics card to run properly.
+The game uses [TrueVision3D 6.5](http://www.truevision3d.com/) to perform 3D rendering and calculations. 
+TV3D requires at least DirectX 8.1 and a 32-bit 3D graphics card to run properly.
+TV3D can only be run on 32-bit Windows.
 
 While the resource specifications may change with the project, it is recommended to have at least 2 GHz and at least 2 CPU cores for a minimum performance. If you have difficulty running the Main Menu at 55 - 60 FPS, your machine may be not have sufficient capacity to play the game.
 

@@ -65,11 +65,11 @@ namespace SWEndor
       base.Initialize(ainfo);
       if (!ainfo.IsPlayer() && PlayerInfo.Instance().Actor != null && !GameScenarioManager.Instance().IsCutsceneMode)
       {
-        float dist = ActorDistanceInfo.GetDistance(PlayerInfo.Instance().Actor, ainfo, 1501);
-        if (dist < 1500)
+        float dist = ActorDistanceInfo.GetDistance(PlayerInfo.Instance().Actor, ainfo, 3001);
+        if (dist < 3000)
         {
-          if (PlayerInfo.Instance().exp_navevol < 1 - dist / 1500)
-            PlayerInfo.Instance().exp_navevol = 1 - dist / 1500;
+          if (PlayerInfo.Instance().exp_navevol < 1 - dist / 3000)
+            PlayerInfo.Instance().exp_navevol = 1 - dist / 3000;
         }
       }
     }

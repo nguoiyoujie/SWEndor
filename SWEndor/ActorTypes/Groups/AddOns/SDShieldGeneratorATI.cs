@@ -23,7 +23,7 @@ namespace SWEndor
       IsDamage = false;
       CollisionEnabled = true;
 
-      MaxStrength = 75.0f;
+      MaxStrength = 105;
       ImpactDamage = 300.0f;
       RadarSize = 2;
 
@@ -47,12 +47,12 @@ namespace SWEndor
 
     public override void ProcessHit(ActorInfo ainfo, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      base.ProcessHit(ainfo, hitby, impact, normal);
       if (!hitby.TypeInfo.IsDamage)
       {
-        ainfo.ActorState = ActorState.DEAD;
+        ainfo.Strength = 0;
       }
-      else
+      base.ProcessHit(ainfo, hitby, impact, normal);
+      if (hitby.TypeInfo.IsDamage)
       {
         foreach (ActorInfo child in ainfo.GetAllChildren(1))
         {

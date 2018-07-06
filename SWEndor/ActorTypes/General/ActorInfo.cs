@@ -29,7 +29,7 @@ namespace SWEndor
     public FactionInfo Faction { get { if (_faction == null) _faction = FactionInfo.Neutral; return _faction; } set { _faction = value; } }
 
     // Scoring
-    public ScoreInfo Score = new ScoreInfo();
+    public ScoreInfo Score;
 
     // Combat
     public bool IsCombatObject = false;
@@ -107,6 +107,7 @@ namespace SWEndor
 
     // AI
     public ActionInfo CurrentAction = null;
+    public int HuntWeight = 1;
 
     // Collision
     public bool IsTestingCollision = false;
@@ -155,6 +156,8 @@ namespace SWEndor
       TypeInfo = acinfo.ActorTypeInfo;
       if (acinfo.Name.Length > 0) { _name = acinfo.Name; }
 
+      Score = new ScoreInfo(_name);
+
       IsCombatObject = acinfo.ActorTypeInfo.IsCombatObject;
       OnTimedLife = acinfo.ActorTypeInfo.OnTimedLife;
       TimedLife = acinfo.ActorTypeInfo.TimedLife;
@@ -174,6 +177,8 @@ namespace SWEndor
       PrevRotation = Rotation;
       prevScale = acinfo.InitialScale;
       PrevPosition = Position;
+
+      HuntWeight = acinfo.ActorTypeInfo.HuntWeight;
 
       TypeInfo.Initialize(this);
       TypeInfo.GenerateAddOns(this);
@@ -342,6 +347,9 @@ namespace SWEndor
     {
       PrevPosition = Position;
       PrevRotation = Rotation;
+
+      if (Mesh == null)
+        return;
 
       //if (!IsAggregateMode())
       //{
@@ -1046,7 +1054,7 @@ namespace SWEndor
       List<ActorInfo> ps = new List<ActorInfo>(Parent);
       //m_parentlist.ReleaseMutex();
 
-      if (searchlevel < 1)
+      if (searchlevel > 1)
       {
         foreach (ActorInfo p in ps)
         {
@@ -1090,7 +1098,7 @@ namespace SWEndor
       List<ActorInfo> cs = new List<ActorInfo>(Children);
       //m_childlist.ReleaseMutex();
 
-      if (searchlevel < 1)
+      if (searchlevel > 1)
       {
         foreach (ActorInfo p in cs)
         {
@@ -1156,7 +1164,7 @@ namespace SWEndor
       List<ActorInfo> cs = new List<ActorInfo>(Children);
       //m_childlist.ReleaseMutex();
 
-      if (searchlevel < 1)
+      if (searchlevel > 1)
       {
         foreach (ActorInfo p in ps)
         {
@@ -1349,7 +1357,8 @@ namespace SWEndor
             && delta_angle > -weap.AngularRange)
             && (delta_distance < weap.Range
             && delta_distance > -weap.Range)
-            && weap.CanTarget(this, target))
+            && weap.CanTarget(this, target)
+            && (weap.MaxAmmo == -1 || weap.Ammo > 0))
           {
             weapon = weap;
             return true;

@@ -28,7 +28,7 @@ namespace SWEndor
       MaxSpeed = 300;
       MinSpeed = 150;
       MaxSpeedChangeRate = 150;
-      MaxTurnRate = 25;
+      MaxTurnRate = 32;
 
       Score_perStrength = 400;
       Score_DestroyBonus = 2000;

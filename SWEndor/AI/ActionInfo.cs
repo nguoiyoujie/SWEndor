@@ -45,6 +45,8 @@ namespace SWEndor
         float z = Engine.Instance().Random.Next((int)(GameScenarioManager.Instance().MinAIBounds.z * 0.65f), (int)(GameScenarioManager.Instance().MaxAIBounds.z * 0.65f));
 
         //ActionManager.QueueFirst(owner, new Actions.Rotate(new TV_3DVECTOR(), owner.MaxSpeed, 5, false));
+        if (owner.CurrentAction is Actions.Move)
+          owner.CurrentAction.Complete = true;
         ActionManager.QueueFirst(owner, new Actions.ForcedMove(new TV_3DVECTOR(x, y, z), owner.MaxSpeed, -1, 360 / (owner.MaxTurnRate + 72)));
         //owner.EnteredCombatZone = false;
         return false;
@@ -63,13 +65,13 @@ namespace SWEndor
     //float prevYTurnAngle = 0;
     protected float AdjustRotation(ActorInfo owner, TV_3DVECTOR target_Position, bool isAttacking = false)
     {
-      if (owner.TypeInfo.MaxTurnRate == 0) // Cannot turn
-      {
-        return 0;
-      }
       if (owner.TypeInfo.AlwaysAccurateRotation)
       {
         owner.LookAtPoint(target_Position);
+        return 0;
+      }
+      if (owner.TypeInfo.MaxTurnRate == 0) // Cannot turn
+      {
         return 0;
       }
       else

@@ -39,7 +39,7 @@ namespace SWEndor.Scenarios
       PlayerInfo.Instance().Lives = 2;
       PlayerInfo.Instance().ScorePerLife = 9999999;
       PlayerInfo.Instance().ScoreForNextLife = 9999999;
-      PlayerInfo.Instance().Score = new ScoreInfo();
+      PlayerInfo.Instance().Score.Reset();
 
       //SoundManager.Instance().SetMusic("battle_1_1", false, 18600);
       //SoundManager.Instance().SetMusic("battle_1_1", false, 71250);

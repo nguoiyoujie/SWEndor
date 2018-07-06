@@ -23,7 +23,7 @@ namespace SWEndor
       IsDamage = false;
       CollisionEnabled = true;
 
-      MaxStrength = 1500.0f;
+      MaxStrength = 3500.0f;
       ImpactDamage = 120.0f;
       MaxSpeed = 30;
       MinSpeed = 0.0f;
@@ -129,10 +129,10 @@ namespace SWEndor
 
         if (PlayerInfo.Instance().Actor != ainfo)
         {
-          if (dist < 500)
+          if (dist < 2500)
           {
-            if (PlayerInfo.Instance().enginelgvol < 1 - dist / 500.0f)
-              PlayerInfo.Instance().enginelgvol = 1 - dist / 500.0f;
+            if (PlayerInfo.Instance().enginelgvol < 1 - dist / 2500.0f)
+              PlayerInfo.Instance().enginelgvol = 1 - dist / 2500.0f;
           }
         }
       }

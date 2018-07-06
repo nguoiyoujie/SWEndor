@@ -116,10 +116,9 @@ namespace SWEndor
         for (int shock = 3; shock > 0; shock--)
         {
           ActorInfo child = children[Engine.Instance().Random.Next(0, children.Count)];
-          //child.Strength -= child.TypeInfo.MaxStrength * 0.001f * Engine.Instance().Random.Next(25, 100);
           child.Strength -= 0.1f * Engine.Instance().Random.Next(25, 50);
 
-          float empduration = 12f;
+          float empduration = 12;
           
           foreach (WeaponInfo w in child.Weapons.Values)
           {

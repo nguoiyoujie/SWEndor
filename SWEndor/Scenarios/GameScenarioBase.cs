@@ -8,6 +8,7 @@ namespace SWEndor
   public class GameScenarioBase
   {
     public string Name = "Untitled Scenario";
+    public string Description = "";
     public List<ActorTypeInfo> AllowedWings = new List<ActorTypeInfo> { XWingATI.Instance() };
     public List<string> AllowedDifficulties = new List<string> { "normal" };
 
@@ -200,7 +201,7 @@ namespace SWEndor
     {
       if (!GameScenarioManager.Instance().IsCutsceneMode)
       {
-        SoundManager.Instance().SetSound("shieldlow", true);
+        SoundManager.Instance().SetSound("beep-22", true);
       }
     }
 

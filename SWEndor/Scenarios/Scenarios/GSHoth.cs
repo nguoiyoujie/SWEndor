@@ -78,7 +78,7 @@ namespace SWEndor.Scenarios
       PlayerInfo.Instance().Lives = 4;
       PlayerInfo.Instance().ScorePerLife = 1000000;
       PlayerInfo.Instance().ScoreForNextLife = 1000000;
-      PlayerInfo.Instance().Score = new ScoreInfo();
+      PlayerInfo.Instance().Score.Reset();
 
       MakePlayer = Rebel_MakePlayer;
 
@@ -474,10 +474,18 @@ namespace SWEndor.Scenarios
               placi.Position = new TV_3DVECTOR(0, 300, GameScenarioManager.Instance().MaxBounds.z - 550);
             }
           }
-          else
+          else if (GameScenarioManager.Instance().StageNumber == 2)
           {
-            placi.Position = new TV_3DVECTOR(3500, -400, 0);
-            placi.Rotation = new TV_3DVECTOR(0, -90, 0);
+            TV_3DVECTOR pos = new TV_3DVECTOR();
+            foreach (ActorInfo en in GameScenarioManager.Instance().EnemyShips.Values)
+            {
+              pos += en.Position;
+            }
+            pos /= GameScenarioManager.Instance().EnemyShips.Count;
+
+            placi.Position = pos;
+            //placi.Position = new TV_3DVECTOR(3500, -400, 0);
+            //placi.Rotation = new TV_3DVECTOR(0, -90, 0);
           }
 
 
@@ -666,6 +674,8 @@ namespace SWEndor.Scenarios
           ainfo.SetStateF("TIEspawnRemaining", (int)param[3]);
         }
       }
+
+      ainfo.DamageModifier = 0.1f;
     }
 
     public void Empire_FirstWave(object[] param)
@@ -1008,7 +1018,7 @@ namespace SWEndor.Scenarios
         {
           ainfo.SetLocalPosition(0, -300, 2500);
           ainfo.SetRotation(0, 180, 0);
-          ainfo.Speed = ainfo.MaxSpeed;
+          ainfo.Speed = ainfo.MaxSpeed * 0.25f;
           ActionManager.ForceClearQueue(ainfo);
           ActionManager.QueueNext(ainfo, new Actions.Wait(60));
           ActionManager.QueueNext(ainfo, new Actions.Rotate(new TV_3DVECTOR(-2000, -300, 2000), 0, -1, false));
@@ -1018,7 +1028,7 @@ namespace SWEndor.Scenarios
         {
           ainfo.SetLocalPosition(3300, 150, 5500);
           ainfo.LookAtPoint(new TV_3DVECTOR(1400, 150, 1000));
-          ainfo.Speed = ainfo.MaxSpeed;
+          ainfo.Speed = ainfo.MaxSpeed * 0.25f;
           ActionManager.ForceClearQueue(ainfo);
           ActionManager.QueueNext(ainfo, new Actions.Wait(30));
           ActionManager.QueueNext(ainfo, new Actions.Rotate(new TV_3DVECTOR(-32000, 150, 2000), 0, -1, false));
@@ -1031,33 +1041,49 @@ namespace SWEndor.Scenarios
         en_ship++;
       }
 
-      SpawnActor(ImperialIATI.Instance()
-               , ""
-               , ""
-               , ""
-               , Game.Instance().GameTime + 10
-               , FactionInfo.Get("Empire")
-               , new TV_3DVECTOR(20000, -2000, -22000)
-               , new TV_3DVECTOR()
-               , new ActionInfo[] { new Actions.HyperspaceIn(new TV_3DVECTOR(2000, 100, -8000))
-                                  , new Actions.Move(new TV_3DVECTOR(-2000, 100, 2000), ImperialIATI.Instance().MaxSpeed, -1, false)
-                                  , new Actions.Rotate(new TV_3DVECTOR(2000, 100, -9000), 0, -1, false)
-                                  , new Actions.Lock() }
-               , new Dictionary<string, ActorInfo>[] { GameScenarioManager.Instance().EnemyShips });
+      ActorInfo newDest = SpawnActor(ImperialIATI.Instance()
+                         , ""
+                         , ""
+                         , ""
+                         , Game.Instance().GameTime + 9
+                         , FactionInfo.Get("Empire")
+                         , new TV_3DVECTOR(20000, -2000, -22000)
+                         , new TV_3DVECTOR()
+                         , new ActionInfo[] { new Actions.HyperspaceIn(new TV_3DVECTOR(2000, 100, -8000))
+                                            , new Actions.Move(new TV_3DVECTOR(1000, 100, 2000), ImperialIATI.Instance().MaxSpeed * 0.25f, -1, false)
+                                            , new Actions.Rotate(new TV_3DVECTOR(2000, 100, -9000), 0, -1, false)
+                                            , new Actions.Lock() }
+                         , new Dictionary<string, ActorInfo>[] { GameScenarioManager.Instance().EnemyShips });
 
-      SpawnActor(ImperialIATI.Instance()
-               , ""
-               , ""
-               , ""
-               , Game.Instance().GameTime + 10.5f
-               , FactionInfo.Get("Empire")
-               , new TV_3DVECTOR(20000, -2000, -25000)
-               , new TV_3DVECTOR()
-               , new ActionInfo[] { new Actions.HyperspaceIn(new TV_3DVECTOR(1500, -100, -10200))
-                                  , new Actions.Move(new TV_3DVECTOR(-4500, -100, 4000), ImperialIATI.Instance().MaxSpeed, -1, false)
-                                  , new Actions.Rotate(new TV_3DVECTOR(2000, -100, -10200), 0, -1, false)
-                                  , new Actions.Lock() }
-               , new Dictionary<string, ActorInfo>[] { GameScenarioManager.Instance().EnemyShips });
+      if (newDest.GetStateF("TIEspawnRemaining") > 0)
+      {
+        newDest.TickEvents.Add("Empire_SDSpawner");
+        newDest.SetStateF("TIEspawnRemaining", 99);
+      }
+      newDest.DamageModifier = 0.1f;
+
+
+      newDest = SpawnActor(ImperialIATI.Instance()
+                         , ""
+                         , ""
+                         , ""
+                         , Game.Instance().GameTime + 9.25f
+                         , FactionInfo.Get("Empire")
+                         , new TV_3DVECTOR(20000, -2000, -25000)
+                         , new TV_3DVECTOR()
+                         , new ActionInfo[] { new Actions.HyperspaceIn(new TV_3DVECTOR(1500, -100, -10200))
+                                            , new Actions.Move(new TV_3DVECTOR(-6500, -100, 4000), ImperialIATI.Instance().MaxSpeed * 0.25f, -1, false)
+                                            , new Actions.Rotate(new TV_3DVECTOR(2000, -100, -10200), 0, -1, false)
+                                            , new Actions.Lock() }
+                         , new Dictionary<string, ActorInfo>[] { GameScenarioManager.Instance().EnemyShips });
+
+      if (newDest.GetStateF("TIEspawnRemaining") > 0)
+      {
+        newDest.TickEvents.Add("Empire_SDSpawner");
+        newDest.SetStateF("TIEspawnRemaining", 99);
+      }
+      newDest.DamageModifier = 0.1f;
+
     }
 
     public void Scene_02b_LightspeedFail(object[] param)

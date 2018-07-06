@@ -61,6 +61,8 @@ namespace SWEndor
       {
         GameScenarioManager.Instance().Reset();
         GameScenarioManager.Instance().LoadMainMenu();
+        SoundManager.Instance().SetMusicResume();
+
         return true;
       }
       return false;

@@ -54,8 +54,19 @@ OTHER
 Image - Planet Hoth:		http://starwars.wikia.com/wiki/Hoth
 Model - Acclamator: 		https://3dwarehouse.sketchup.com/model/6551e357c6b770b93f217b945a063dd2/Acclamator-I-class-assault-ship
 Model - Arquitens:		https://3dwarehouse.sketchup.com/model/b6e0c4cc2a9576393f217b945a063dd2/Republic-Light-Cruiser
+Model - Asteroid01:		https://space.frieger.com/asteroids/asteroids/29075-1950-DA
+Model - Asteroid02:		https://space.frieger.com/asteroids/asteroids/15677-1980-TZ5
+Model - Asteroid03:		https://space.frieger.com/asteroids/asteroids/13002-1982-BJ13
+Model - Asteroid04:		https://space.frieger.com/asteroids/asteroids/5776-1989-UT2
+Model - Asteroid05:		https://space.frieger.com/asteroids/asteroids/8359-1989-WD
+Model - Asteroid06:		https://space.frieger.com/asteroids/asteroids/22298-1990-EJ
+Model - Asteroid07:		https://space.frieger.com/asteroids/asteroids/16468-1990-HW1
+Model - Asteroid08:		https://space.frieger.com/asteroids/asteroids/5587-1990-SB
 
-Converted by http://www.meshconvert.com/
+Sound - beep24			https://www.soundjay.com/beep-sounds-3.html
+Sound - beep22			https://www.soundjay.com/beep-sounds-3.html
+
+Some models are converted by http://www.meshconvert.com/
 
 
 
