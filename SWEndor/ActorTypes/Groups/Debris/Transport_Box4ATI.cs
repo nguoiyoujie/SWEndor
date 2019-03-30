@@ -1,10 +1,6 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class Transport_Box4ATI : DebrisGroup
   {
@@ -35,7 +31,7 @@ namespace SWEndor
     {
       base.ProcessState(ainfo);
 
-      ainfo.ApplyZBalance = false;
+      ainfo.MovementInfo.ApplyZBalance = false;
 
       if (!ainfo.IsStateFDefined("RotateAngle"))
       {
@@ -43,8 +39,7 @@ namespace SWEndor
       }
       float rotZ = ainfo.GetStateF("RotateAngle") * Game.Instance().TimeSinceRender;
       ainfo.Rotate(0, 0, rotZ);
-      ainfo.XTurnAngle = 0;
-      ainfo.YTurnAngle = 0;
+      ainfo.MovementInfo.ResetTurn();
     }
   }
 }

@@ -1,10 +1,11 @@
 ﻿using MTV3D65;
-using System;
+using SWEndor.AI;
+using SWEndor.AI.Actions;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using SWEndor.Weapons;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class BigIonLaserATI : ProjectileGroup
   {
@@ -63,7 +64,7 @@ namespace SWEndor
       foreach (ActorInfo c in children)
       {
         if (c.CreationState != CreationState.ACTIVE
-          || !c.TypeInfo.IsHardPointAddon)
+          || !c.TypeInfo.TargetType.HasFlag(TargetType.ADDON))
           rm.Add(c);
       }
 
@@ -76,7 +77,7 @@ namespace SWEndor
       {
         foreach (ActorInfo child in children)
         {
-          child.Strength -= 0.5f * child.MaxStrength;
+          child.CombatInfo.Strength -= 0.5f * child.CombatInfo.MaxStrength;
 
           float empduration = 10000;
           
@@ -92,7 +93,7 @@ namespace SWEndor
           {
             if (child2.TypeInfo is ElectroATI)
             {
-              child2.SetStateF("CyclesRemaining", empduration / child2.TypeInfo.TimedLife);
+              child2.CycleInfo.CyclesRemaining = empduration / child2.TypeInfo.TimedLife;
               return;
             }
           }
@@ -100,19 +101,16 @@ namespace SWEndor
           acinfo.Position = child.GetPosition();
           ActorInfo electro = ActorInfo.Create(acinfo);
           electro.AddParent(child);
-          electro.SetStateF("CyclesRemaining", empduration / electro.TypeInfo.TimedLife);
+          electro.CycleInfo.CyclesRemaining = empduration / electro.TypeInfo.TimedLife;
         }
       }
 
-      if (hitby.TypeInfo.IsShip)
+      if (hitby.TypeInfo.TargetType.HasFlag(TargetType.SHIP))
       {
         ActionManager.ForceClearQueue(hitby);
-        ActionManager.QueueNext(hitby, new Actions.Rotate(hitby.GetRelativePositionFUR(1000, -800, -200), hitby.MaxSpeed, 0.1f, false));
-        ActionManager.QueueNext(hitby, new Actions.Lock());
+        ActionManager.QueueNext(hitby, new Rotate(hitby.GetRelativePositionFUR(1000, -800, -200), hitby.MovementInfo.MaxSpeed, 0.1f, false));
+        ActionManager.QueueNext(hitby, new Lock());
       }
-
-      if (hitby.GetStateF("TIEspawnRemaining") > 0)
-        hitby.SetStateF("TIEspawnRemaining", 0);
     }
   }
 }

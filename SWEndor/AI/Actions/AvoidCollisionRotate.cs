@@ -1,9 +1,7 @@
 ﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SWEndor.Actors;
 
-namespace SWEndor.Actions
+namespace SWEndor.AI.Actions
 {
   public class AvoidCollisionRotate : ActionInfo
   {
@@ -19,6 +17,8 @@ namespace SWEndor.Actions
     public TV_3DVECTOR Impact_Position = new TV_3DVECTOR();
     public TV_3DVECTOR Target_Position = new TV_3DVECTOR();
     public TV_3DVECTOR Normal = new TV_3DVECTOR();
+    private bool calcAvoidAngle = false;
+    public float AvoidanceAngle = 90;
     public float CloseEnoughAngle = 0.1f;
 
     public override string ToString()
@@ -34,7 +34,7 @@ namespace SWEndor.Actions
 
     public override void Process(ActorInfo owner)
     {
-      if (owner.MaxTurnRate == 0)
+      if (owner.MovementInfo.MaxTurnRate == 0)
       {
         Complete = true;
         return;
@@ -42,29 +42,53 @@ namespace SWEndor.Actions
 
       if (CheckBounds(owner))
       {
-        Target_Position = Impact_Position + Normal * 1000;
-        //Target_Position = owner.ProspectiveCollisionGoodLocation; //Impact_Position + Normal * 1000;
-        float dist = Engine.Instance().TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Target_Position);
-        float Target_Speed = dist / 10;
+        if (owner.ProspectiveCollisionLevel > 0 && owner.ProspectiveCollisionLevel < 5)
+          Target_Position = owner.ProspectiveCollisionSafe;
+        else
+          Target_Position = Impact_Position + Normal * 10000;
+        float dist = Engine.Instance().TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Impact_Position);
+        float Target_Speed = owner.MovementInfo.MinSpeed; //dist / 25;
 
         float delta_angle = AdjustRotation(owner, Target_Position);
         float delta_speed = AdjustSpeed(owner, Target_Speed);
 
-        Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle && delta_speed == 0);
+        Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle); //&& delta_speed == 0);
       }
 
-      TV_3DVECTOR vNormal = new TV_3DVECTOR();
-      TV_3DVECTOR vImpact = new TV_3DVECTOR();
-      if (CheckImminentCollision(owner, owner.Speed * 10, out vImpact , out vNormal))
+      if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
       {
-        Impact_Position = vImpact;
-        Normal = vNormal;
+        float newavoid = GetAvoidanceAngle(owner.GetDirection(), Normal);
+        float concavecheck = 60;
+        if (!calcAvoidAngle || (AvoidanceAngle - newavoid > -concavecheck && AvoidanceAngle - newavoid < concavecheck))
+        {
+          AvoidanceAngle = newavoid;
+          Impact_Position = owner.ProspectiveCollisionImpact;
+          Normal = owner.ProspectiveCollisionNormal;
+          calcAvoidAngle = true;
+        }
+        else
+        { }
+        owner.IsAvoidingCollision = true;
         Complete = false;
       }
       else
       {
+        owner.IsAvoidingCollision = false;
+        ActionManager.QueueNext(owner, new Wait(2.5f));
         Complete = true;
       }
+    }
+
+    private float GetAvoidanceAngle(TV_3DVECTOR travelling_vec, TV_3DVECTOR impact_normal)
+    {
+      //get an orthogonal direction to travelling_vec on the xz plane
+      TV_3DVECTOR xzdir = new TV_3DVECTOR();
+      Engine.Instance().TVMathLibrary.TVVec3Normalize(ref xzdir, new TV_3DVECTOR(travelling_vec.z, 0, -travelling_vec.x));
+
+      TV_3DVECTOR avoidvec = new TV_3DVECTOR();
+      Engine.Instance().TVMathLibrary.TVVec3Normalize(ref avoidvec, impact_normal - Engine.Instance().TVMathLibrary.VDotProduct(impact_normal, travelling_vec) * travelling_vec);
+      float val = Engine.Instance().TVMathLibrary.VDotProduct(avoidvec, xzdir);
+      return Engine.Instance().TVMathLibrary.ACos(val);
     }
   }
 }

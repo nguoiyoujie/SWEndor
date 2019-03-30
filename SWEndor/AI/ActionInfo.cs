@@ -1,9 +1,10 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
+using SWEndor.Actors.Types;
+using SWEndor.Scenarios;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.AI.Actions
 {
   public class ActionInfo
   {
@@ -17,6 +18,7 @@ namespace SWEndor
     public bool Complete = false;
     public bool CanInterrupt = true;
     public ActionInfo NextAction = null;
+    public int Retries = 3;
 
     // collision avoidance
     private float m_collisioncheck_time = 0;
@@ -44,11 +46,9 @@ namespace SWEndor
         float y = Engine.Instance().Random.Next(-200, 200);
         float z = Engine.Instance().Random.Next((int)(GameScenarioManager.Instance().MinAIBounds.z * 0.65f), (int)(GameScenarioManager.Instance().MaxAIBounds.z * 0.65f));
 
-        //ActionManager.QueueFirst(owner, new Actions.Rotate(new TV_3DVECTOR(), owner.MaxSpeed, 5, false));
-        if (owner.CurrentAction is Actions.Move)
+        if (owner.CurrentAction is Move)
           owner.CurrentAction.Complete = true;
-        ActionManager.QueueFirst(owner, new Actions.ForcedMove(new TV_3DVECTOR(x, y, z), owner.MaxSpeed, -1, 360 / (owner.MaxTurnRate + 72)));
-        //owner.EnteredCombatZone = false;
+        ActionManager.QueueFirst(owner, new ForcedMove(new TV_3DVECTOR(x, y, z), owner.MovementInfo.MaxSpeed, -1, 360 / (owner.MovementInfo.MaxTurnRate + 72)));
         return false;
       }
       else
@@ -61,8 +61,6 @@ namespace SWEndor
       return true;
     }
 
-    //float prevXTurnAngle = 0;
-    //float prevYTurnAngle = 0;
     protected float AdjustRotation(ActorInfo owner, TV_3DVECTOR target_Position, bool isAttacking = false)
     {
       if (owner.TypeInfo.AlwaysAccurateRotation)
@@ -76,72 +74,55 @@ namespace SWEndor
       }
       else
       {
-        TV_3DVECTOR rot = owner.GetRotation();
-        TV_3DVECTOR tgtrot = Utilities.GetRotation(target_Position - owner.GetPosition());
+        TV_3DVECTOR tgtdir = target_Position - owner.GetPosition();
 
-        float chgx = tgtrot.x - rot.x;
-        float chgy = tgtrot.y - rot.y;
+        TV_3DVECTOR chgrot = Utilities.GetRotation(tgtdir) - owner.GetRotation();
 
-        while (chgx < -180)
-          chgx += 360;
+        Utilities.Modulus(ref chgrot.x, -180, 180);
+        Utilities.Modulus(ref chgrot.y, -180, 180);
 
-        while (chgx > 180)
-          chgx -= 360;
+        TV_3DVECTOR truechg = new TV_3DVECTOR(chgrot.x, chgrot.y, chgrot.z);
 
-        while (chgy < -180)
-          chgy += 360;
+        // increased responsiveness
+        if (this is AvoidCollisionRotate)
+          chgrot *= 9999;
+        else
+          chgrot *= 10;
 
-        while (chgy > 180)
-          chgy -= 360;
-
-        chgx *= 10; ///= Game.Instance().TimeSinceRender;
-        chgy *= 10; ///= Game.Instance().TimeSinceRender;
-        float truechgx = chgx;
-        float truechgy = chgy;
-
-        if (chgx > owner.TypeInfo.MaxTurnRate)
-        {
-          chgx = owner.TypeInfo.MaxTurnRate;
-        }
-        else if (chgx < -owner.TypeInfo.MaxTurnRate)
-        {
-          chgx = -owner.TypeInfo.MaxTurnRate;
-        }
-
-        if (chgy > owner.TypeInfo.MaxTurnRate)
-        {
-          chgy = owner.TypeInfo.MaxTurnRate;
-        }
-        else if (chgy < -owner.TypeInfo.MaxTurnRate)
-        {
-          chgy = -owner.TypeInfo.MaxTurnRate;
-        }
+        Utilities.Clamp(ref chgrot.x, -owner.TypeInfo.MaxTurnRate, owner.TypeInfo.MaxTurnRate);
+        Utilities.Clamp(ref chgrot.y, -owner.TypeInfo.MaxTurnRate, owner.TypeInfo.MaxTurnRate);
 
         // limit abrupt changes
         float limit = owner.TypeInfo.MaxTurnRate * owner.TypeInfo.MaxSecondOrderTurnRateFrac;
-        if (Math.Abs(owner.XTurnAngle - chgx) > limit)
-        {
-          owner.XTurnAngle += limit * ((owner.XTurnAngle > chgx) ? -1 : 1);
-        }
+        if (Math.Abs(owner.MovementInfo.XTurnAngle - chgrot.x) > limit)
+          owner.MovementInfo.XTurnAngle += limit * ((owner.MovementInfo.XTurnAngle > chgrot.x) ? -1 : 1);
         else
-        {
-          owner.XTurnAngle = chgx;
-        }
+          owner.MovementInfo.XTurnAngle = chgrot.x;
 
-        if (Math.Abs(owner.YTurnAngle - chgy) > limit)
-        {
-          owner.YTurnAngle += limit * ((owner.YTurnAngle > chgy) ? -1 : 1);
-        }
+        if (Math.Abs(owner.MovementInfo.YTurnAngle - chgrot.y) > limit)
+          owner.MovementInfo.YTurnAngle += limit * ((owner.MovementInfo.YTurnAngle > chgrot.y) ? -1 : 1);
         else
-        {
-          owner.YTurnAngle = chgy;
-        }
+          owner.MovementInfo.YTurnAngle = chgrot.y;
 
+        
+
+        TV_3DVECTOR vec = new TV_3DVECTOR();
+        TV_3DVECTOR dir = owner.GetDirection();
+        Engine.Instance().TVMathLibrary.TVVec3Normalize(ref vec, tgtdir);
+        float delta = Engine.Instance().TVMathLibrary.ACos(Engine.Instance().TVMathLibrary.TVVec3Dot(dir, vec));
+
+        if (owner.IsPlayer())
+          Screen2D.Instance().MessageSecondaryText(string.Format("DELTA: {0:0.000}", delta), 1.5f, new TV_COLOR(0.5f, 0.5f, 1, 1), 0);
+        return delta;
+
+        /*
         if (isAttacking)
+        {
           return (Math.Abs(truechgx - owner.XTurnAngle) + Math.Abs(truechgy - owner.YTurnAngle));
+        }
         else
           return Math.Abs(owner.XTurnAngle) + Math.Abs(owner.YTurnAngle);
-        //return (Math.Abs(owner.XTurnAngle) > Math.Abs(owner.YTurnAngle)) ? Math.Abs(owner.XTurnAngle) : Math.Abs(owner.YTurnAngle);
+        */
       }
     }
 
@@ -149,34 +130,28 @@ namespace SWEndor
     {
       if (owner.ActorState != ActorState.FREE && owner.ActorState != ActorState.HYPERSPACE)
       {
-        if (target_Speed > owner.MaxSpeed)
-          target_Speed = owner.MaxSpeed;
-        else if (target_Speed < owner.MinSpeed)
-          target_Speed = owner.MinSpeed;
+        Utilities.Clamp(ref target_Speed, owner.MovementInfo.MinSpeed, owner.MovementInfo.MaxSpeed);
       }
 
-      if (owner.Speed > target_Speed)
+      if (owner.MovementInfo.Speed > target_Speed)
       {
-        owner.Speed -= owner.TypeInfo.MaxSpeedChangeRate * Game.Instance().TimeSinceRender;
-        if (owner.Speed < target_Speed)
-          owner.Speed = target_Speed;
+        owner.MovementInfo.Speed -= owner.MovementInfo.MaxSpeedChangeRate * Game.Instance().TimeSinceRender;
+        if (owner.MovementInfo.Speed < target_Speed)
+          owner.MovementInfo.Speed = target_Speed;
       }
       else
       {
-        owner.Speed += owner.TypeInfo.MaxSpeedChangeRate * Game.Instance().TimeSinceRender;
-        if (owner.Speed > target_Speed)
-          owner.Speed = target_Speed;
+        owner.MovementInfo.Speed += owner.MovementInfo.MaxSpeedChangeRate * Game.Instance().TimeSinceRender;
+        if (owner.MovementInfo.Speed > target_Speed)
+          owner.MovementInfo.Speed = target_Speed;
       }
 
-      return (owner.Speed - target_Speed);
+      return (owner.MovementInfo.Speed - target_Speed);
     }
 
-    protected bool CheckImminentCollision(ActorInfo owner, float scandistance, out TV_3DVECTOR vImpact, out TV_3DVECTOR vNormal)
+    protected bool CheckImminentCollision(ActorInfo owner, float scandistance)
     {
-      TV_3DVECTOR start = new TV_3DVECTOR();
-      TV_3DVECTOR end = new TV_3DVECTOR();
-      vImpact = new TV_3DVECTOR();
-      vNormal = new TV_3DVECTOR();
+      return false; // disable for now
 
       if (!owner.TypeInfo.CanCheckCollisionAhead)
         return false;
@@ -187,24 +162,15 @@ namespace SWEndor
       if (scandistance <= 0)
         return false;
 
-      start = owner.GetRelativePositionXYZ(0, 0, owner.TypeInfo.max_dimensions.z + 10);
-      end = owner.GetRelativePositionXYZ(0, 0, owner.TypeInfo.max_dimensions.z + 10 + scandistance); //To revise hardcode
-
-      if (owner.IsInProspectiveCollision)
-      {
-        vImpact = owner.ProspectiveCollisionImpact;
-        vNormal = owner.ProspectiveCollisionNormal;
-      }
-
       if (m_collisioncheck_time < Game.Instance().GameTime)
       {
         if (owner.IsInProspectiveCollision)
         {
-          m_collisioncheck_time = Game.Instance().GameTime + 1.5f; // delay should be adjusted with FPS / CPU load, ideally every ~0.5s, but not more than 2.5s. Can be slightly longer since it is already performing evasion.
+          m_collisioncheck_time = Game.Instance().GameTime + 0.25f; // delay should be adjusted with FPS / CPU load, ideally every ~0.5s, but not more than 2.5s. Can be slightly longer since it is already performing evasion.
         }
         else
         {
-          m_collisioncheck_time = Game.Instance().GameTime + 1; // delay should be adjusted with FPS / CPU load, ideally every run (~0.1s), but not more than 2s.
+          m_collisioncheck_time = Game.Instance().GameTime + 0.1f; // delay should be adjusted with FPS / CPU load, ideally every run (~0.1s), but not more than 2s.
         }
         owner.ProspectiveCollisionScanDistance = scandistance;
         owner.IsTestingProspectiveCollision = true;

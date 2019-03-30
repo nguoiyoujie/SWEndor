@@ -1,9 +1,7 @@
 ﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SWEndor.Actors;
 
-namespace SWEndor.Actions
+namespace SWEndor.AI.Actions
 {
   public class HyperspaceOut : ActionInfo
   {
@@ -32,7 +30,7 @@ namespace SWEndor.Actions
     public void ApplyMove(ActorInfo owner)
     {
       //AdjustSpeed(owner, Target_Speed);
-      owner.Speed += Target_Speed;
+      owner.MovementInfo.Speed += Target_Speed;
 
       float dist = Engine.Instance().TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Origin_Position);
       if (dist >= FarEnoughDistance)

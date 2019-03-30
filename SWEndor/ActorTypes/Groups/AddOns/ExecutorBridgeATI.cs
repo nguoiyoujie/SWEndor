@@ -1,10 +1,8 @@
 ﻿using MTV3D65;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class ExecutorBridgeATI : AddOnGroup
   {
@@ -27,10 +25,12 @@ namespace SWEndor
       ImpactDamage = 200.0f;
       RadarSize = -1;
 
-      CullDistance = 20000;
+      CullDistance = 30000;
 
       Score_perStrength = 75;
       Score_DestroyBonus = 100000;
+
+      TargetType = TargetType.ADDON;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"executor\executor_bridge.x");
     }
@@ -38,13 +38,8 @@ namespace SWEndor
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-
-      ainfo.EnableDeathExplosion = true;
-      ainfo.DeathExplosionType = "Explosion";
-      ainfo.DeathExplosionSize = 7;
-      ainfo.ExplosionRate = 0.5f;
-      ainfo.ExplosionSize = 5;
-      ainfo.ExplosionType = "Explosion";
+      ainfo.ExplosionInfo.ExplosionRate = 0.5f;
+      ainfo.ExplosionInfo.ExplosionSize = 5;
     }
 
     public override void ProcessState(ActorInfo ainfo)
@@ -53,15 +48,15 @@ namespace SWEndor
 
       if (ainfo.CreationState == CreationState.ACTIVE)
       {
-        List<ActorInfo> parents = ainfo.GetAllParents(1);
-        if (parents.Count > 0)
+        ActorInfo parent = ainfo.GetTopParent();
+        if (parent != null)
         {
-          List<ActorInfo> cs = new List<ActorInfo>(parents[0].GetAllChildren(1));
+          List<ActorInfo> cs = new List<ActorInfo>(parent.GetAllChildren(1));
           foreach (ActorInfo pn in cs)
           {
             if (pn.TypeInfo is ExecutorShieldGeneratorATI)
             {
-              ainfo.Strength = ainfo.TypeInfo.MaxStrength;
+              ainfo.CombatInfo.Strength = ainfo.TypeInfo.MaxStrength;
             }
           }
         }
@@ -69,10 +64,10 @@ namespace SWEndor
 
       if (ainfo.ActorState == ActorState.DYING)
       {
-        List<ActorInfo> parents = ainfo.GetAllParents(1);
-        if (parents.Count > 0)
+        ActorInfo parent = ainfo.GetTopParent();
+        if (parent != null)
         {
-          parents[0].Strength *= 0.75f;
+          parent.CombatInfo.Strength *= 0.75f;
         }
       }
     }
@@ -83,9 +78,9 @@ namespace SWEndor
 
       if (ainfo.ActorState == ActorState.DYING)
       {
-        ainfo.OnTimedLife = true;
-        ainfo.TimedLife = 2000f;
-        ainfo.IsCombatObject = false;
+        ainfo.CombatInfo.OnTimedLife = true;
+        ainfo.CombatInfo.TimedLife = 2000f;
+        ainfo.CombatInfo.IsCombatObject = false;
       }
     }
 
@@ -96,32 +91,28 @@ namespace SWEndor
       {
         if (ainfo.StrengthFrac < 0.5f)
         {
-          ainfo.Strength = 0;
+          ainfo.CombatInfo.Strength = 0;
           hitby.DestroyedEvents.Clear();
         }
         else
         {
-          ainfo.Strength -= hitby.TypeInfo.ImpactDamage * 4;
+          ainfo.CombatInfo.Strength -= hitby.TypeInfo.ImpactDamage * 4;
         }
       }
 
-      bool hasshield = false;
-      List<ActorInfo> parents = ainfo.GetAllParents(1);
-      if (parents.Count > 0)
+      //bool hasshield = false;
+      ActorInfo parent = ainfo.GetTopParent();
+      if (parent != null)
       {
-        foreach (ActorInfo pn in parents[0].GetAllChildren(1))
-        {
-          if (pn.TypeInfo is ExecutorShieldGeneratorATI)
-          {
+        /*
+        foreach (ActorInfo pn in parent.GetAllChildren(1))
+          if (pn.TypeInfo.TargetType.HasFlag(TargetType.SHIELDGENERATOR))
             hasshield = true;
-          }
-        }
+            */
 
-        if (!hasshield)
-        {
-          if (parents[0].StrengthFrac > ainfo.StrengthFrac)
-            parents[0].Strength = ainfo.StrengthFrac * parents[0].TypeInfo.MaxStrength;
-        }
+        //if (!hasshield)
+          if (parent.StrengthFrac > ainfo.StrengthFrac)
+            parent.CombatInfo.Strength = ainfo.StrengthFrac * parent.TypeInfo.MaxStrength;
       }
     }
   }

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SWEndor.Actors;
+using SWEndor.AI.Actions;
 
-namespace SWEndor
+namespace SWEndor.AI
 {
   public static class ActionManager
   {
@@ -11,7 +10,7 @@ namespace SWEndor
       ActionInfo action = actor.CurrentAction;
       while (action != null)
       {
-        if (action is Actions.Lock)
+        if (action is Lock)
         {
           action.Complete = true;
           return;
@@ -110,7 +109,7 @@ namespace SWEndor
     {
       if (action == null)
       {
-        actor.CurrentAction = new Actions.Idle();
+        actor.CurrentAction = new Idle();
       }
       else
       {
@@ -120,7 +119,7 @@ namespace SWEndor
           {
             if (action.NextAction == null)
             {
-              actor.CurrentAction = new Actions.Idle();
+              actor.CurrentAction = new Idle();
             }
             else
             {

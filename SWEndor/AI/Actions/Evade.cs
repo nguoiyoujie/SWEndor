@@ -1,9 +1,7 @@
 ﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SWEndor.Actors;
 
-namespace SWEndor.Actions
+namespace SWEndor.AI.Actions
 {
   public class Evade : ActionInfo
   {
@@ -33,7 +31,7 @@ namespace SWEndor.Actions
 
     public override void Process(ActorInfo owner)
     {
-      if (owner.MaxTurnRate == 0)
+      if (owner.MovementInfo.MaxTurnRate == 0)
       {
         Complete = true;
         return;
@@ -52,11 +50,11 @@ namespace SWEndor.Actions
           if (owner.IsNearlyOutOfBounds())
             Target_Position = new TV_3DVECTOR();
           else
-            Target_Position = new TV_3DVECTOR(100, Engine.Instance().Random.Next(-50, 50), Engine.Instance().Random.Next(-50, 50));
+            Target_Position = owner.GetRelativePositionXYZ(1000, Engine.Instance().Random.Next(-500, 500), Engine.Instance().Random.Next(-500, 500));
         }
 
-        float delta_angle = AdjustRotation(owner, owner.GetRelativePositionFUR(Target_Position.x, Target_Position.y, Target_Position.z));
-        float delta_speed = AdjustSpeed(owner, owner.Speed);
+        float delta_angle = AdjustRotation(owner, Target_Position);
+        float delta_speed = AdjustSpeed(owner, owner.MovementInfo.Speed);
 
         Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle && delta_speed == 0);
         Complete |= (ResumeTime < Game.Instance().GameTime);
@@ -64,9 +62,9 @@ namespace SWEndor.Actions
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
-      if (CheckImminentCollision(owner, owner.Speed * 3, out vImpact, out vNormal))
+      if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
       {
-        ActionManager.QueueFirst(owner, new AvoidCollisionRotate(vImpact, vNormal));
+        ActionManager.QueueFirst(owner, new AvoidCollisionRotate(owner.ProspectiveCollisionImpact, owner.ProspectiveCollisionNormal));
       }
     }
   }

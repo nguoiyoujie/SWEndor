@@ -1,10 +1,4 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-
-namespace SWEndor
+﻿namespace SWEndor.Actors.Types
 {
   public class InvisibleCameraATI : ActorTypeInfo
   {
@@ -32,16 +26,6 @@ namespace SWEndor
         SourceMesh.SetCollisionEnable(false);
       }
     }
-
-    /*
-    public override void ChaseCamera(ActorInfo ainfo)
-    {
-      TVCamera cam = PlayerInfo.Instance().Camera;
-      TVMesh mesh = ainfo.Mesh;
-
-      cam.ChaseCamera(mesh, new TV_3DVECTOR(0, 0, 0), new TV_3DVECTOR(0, 0, 2000), 100, true);
-    }
-    */
   }
 }
 

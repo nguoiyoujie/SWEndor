@@ -1,11 +1,11 @@
 ﻿using MTV3D65;
+using SWEndor.Scenarios;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
+  public enum DeathCamMode { CIRCLE, FOLLOW };
+
   public class DeathCameraATI : ActorTypeInfo
   {
     private static DeathCameraATI _instance;
@@ -35,20 +35,36 @@ namespace SWEndor
 
     public override void ChaseCamera(ActorInfo ainfo)
     {
-      TVCamera cam = PlayerInfo.Instance().Camera;
+      TVCamera cam = PlayerCameraInfo.Instance().Camera;
 
       float circleperiod = ainfo.CamDeathCirclePeriod;
       float angularphase = (Game.Instance().GameTime % circleperiod) * (2 * Globals.PI / circleperiod);
       float radius = ainfo.CamDeathCircleRadius;
       float height = ainfo.CamDeathCircleHeight;
 
-      cam.SetPosition(ainfo.GetPosition().x + radius * (float)Math.Cos(angularphase)
-                    , ainfo.GetPosition().y + height
-                    , ainfo.GetPosition().z + radius * (float)Math.Sin(angularphase));
+      TV_3DVECTOR pos = ainfo.GetPosition();
+      switch (GameScenarioManager.Instance().Scenario.DeathCamMode)
+      {
+        case DeathCamMode.CIRCLE:
+          cam.SetPosition(pos.x + radius * (float)Math.Cos(angularphase)
+                        , pos.y + height
+                        , pos.z + radius * (float)Math.Sin(angularphase));
 
-      cam.SetLookAt(ainfo.GetPosition().x
-                    , ainfo.GetPosition().y
-                    , ainfo.GetPosition().z);
+          cam.SetLookAt(pos.x
+                        , pos.y
+                        , pos.z);
+          break;
+        case DeathCamMode.FOLLOW:
+          TV_3DVECTOR pos2 = ainfo.GetRelativePositionFUR(0, ainfo.CamDeathCircleHeight, -ainfo.CamDeathCircleRadius, true);
+          cam.SetPosition(pos2.x
+                        , pos2.y
+                        , pos2.z);
+
+          cam.SetLookAt(pos.x
+                        , pos.y
+                        , pos.z);
+          break;
+      }
     }
   }
 }

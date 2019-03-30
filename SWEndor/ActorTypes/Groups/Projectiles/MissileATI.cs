@@ -1,10 +1,11 @@
 ﻿using MTV3D65;
-using System;
+using SWEndor.AI.Actions;
+using SWEndor.Weapons;
+using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class MissileATI : ProjectileGroup
   {
@@ -19,20 +20,26 @@ namespace SWEndor
     {
       // Combat
       OnTimedLife = true;
-      TimedLife = 10;
+      TimedLife = 25;
       IsCombatObject = false;
       IsSelectable = false;
       IsDamage = true;
-      ImpactDamage = 12;
-      MaxSpeed = 1500;
-      MinSpeed = 1500;
-      AlwaysAccurateRotation = true;
+      ImpactDamage = 7.5f;
+      MaxSpeed = 800;
+      MinSpeed = 800;
+      MaxTurnRate = 120;
+
+      CullDistance = 30000;
+      //AlwaysAccurateRotation = true;
 
       // Projectile
-      ImpactCloseEnoughDistance = 60;
+      ImpactCloseEnoughDistance = 100;
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"projectiles\torpedo.x");
+      SourceMeshPath = Path.Combine(Globals.ModelPath, @"projectiles\missile.x");
+      m_particletex = Engine.Instance().TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, @"particle.dds"));
     }
+
+    private int m_particletex;
 
     public override void ProcessNewState(ActorInfo ainfo)
     {
@@ -42,14 +49,6 @@ namespace SWEndor
         acinfo.Position = ainfo.GetPosition();
         ActorInfo.Create(acinfo);
 
-        /*
-        TVParticleSystem psys = Engine.Instance().TVGlobals.GetParticleSystem(ainfo.Key);
-        foreach (TVParticleSystem p in ainfo.ParticleSystems)
-        {
-          p.Destroy();
-        }
-        ainfo.ParticleSystems.Clear();
-        */
         ainfo.ActorState = ActorState.DEAD;
       }
     }
@@ -60,51 +59,46 @@ namespace SWEndor
 
       ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"dummy", new TrackerDummyWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new List<string> { "1:dummy" };
-      ainfo.SecondaryWeapons = new List<string> { "none" };
-      ainfo.AIWeapons = new List<string> { "1:dummy" };
+      ainfo.PrimaryWeapons = new string[] { "1:dummy" };
+      ainfo.SecondaryWeapons = new string[] { "none" };
+      ainfo.AIWeapons = new string[] { "1:dummy" };
+      ainfo.Scale *= 2.5f;
     }
 
     public override void ProcessState(ActorInfo ainfo)
     {
       base.ProcessState(ainfo);
-      if (ainfo.CurrentAction == null || ainfo.CurrentAction is Actions.Idle)
+      if (ainfo.CurrentAction == null || ainfo.CurrentAction is Idle)
         ainfo.ActorState = ActorState.DEAD;
 
-      /*
+
       if (ainfo.ActorState == ActorState.NORMAL)
       {
-        TVParticleSystem psys;
-        if (ainfo.ParticleSystems.Count == 0)
+        if (ainfo.ParticleSystem == null)
         {
-          psys = Engine.Instance().TVScene.CreateParticleSystem(ainfo.Key);
-          ainfo.SetStateF("ParticleEmitterID", psys.CreateEmitter(CONST_TV_EMITTERTYPE.TV_EMITTER_BILLBOARD, 250));
+          ainfo.ParticleSystem = Engine.Instance().TVScene.CreateParticleSystem();
+          int emitter = ainfo.ParticleSystem.CreateEmitter(CONST_TV_EMITTERTYPE.TV_EMITTER_BILLBOARD, 250);
+          ainfo.SetStateF("ParticleEmitterID", emitter);
 
-          psys.Enable(true);
-          psys.SetEmitterSphereRadius((int)ainfo.GetStateF("ParticleEmitterID"), 8);
-          psys.SetEmitterShape((int)ainfo.GetStateF("ParticleEmitterID"), CONST_TV_EMITTERSHAPE.TV_EMITTERSHAPE_SPHEREVOLUME);
-          psys.SetEmitterPower((int)ainfo.GetStateF("ParticleEmitterID"), 50, 0.2f);
-          psys.SetEmitterDirection((int)ainfo.GetStateF("ParticleEmitterID"), false, new TV_3DVECTOR(0, 1, 0), new TV_3DVECTOR(0.5f, 0, 0.5f));
-          psys.SetParticleDefaultColor((int)ainfo.GetStateF("ParticleEmitterID"), new TV_COLOR(1f, 0.75f, 0, 1));
-          psys.SetEmitterSpeed((int)ainfo.GetStateF("ParticleEmitterID"), 5);
-
-          ainfo.ParticleSystems.Add(psys);
-        }
-        else
-        {
-          psys = ainfo.ParticleSystems[0];
+          ainfo.ParticleSystem.Enable(true);
+          ainfo.ParticleSystem.SetBillboard(emitter, m_particletex);
+          ainfo.ParticleSystem.SetEmitterSphereRadius(emitter, 50);
+          ainfo.ParticleSystem.SetEmitterShape(emitter, CONST_TV_EMITTERSHAPE.TV_EMITTERSHAPE_SPHERESURFACE);
+          ainfo.ParticleSystem.SetEmitterPower(emitter, 80, 0.2f);
+          ainfo.ParticleSystem.SetEmitterDirection(emitter, true, new TV_3DVECTOR(0, 1, 0), new TV_3DVECTOR(0.01f, 0, 0.01f));
+          ainfo.ParticleSystem.SetParticleDefaultColor(emitter, new TV_COLOR(1f, 0.75f, 0, 1));
+          ainfo.ParticleSystem.SetEmitterSpeed(emitter, 1.5f);
         }
 
-        if (psys != null)
+        if (ainfo.ParticleSystem != null)
         {
           if (ainfo.IsStateFDefined("ParticleEmitterID"))
           {
-            psys.SetEmitterPosition((int)ainfo.GetStateF("ParticleEmitterID"), ainfo.GetPosition());
+            ainfo.ParticleSystem.SetEmitterPosition((int)ainfo.GetStateF("ParticleEmitterID"), ainfo.GetPosition());
           }
-          psys.Update();
         }
       }
-    */
+
     }
   }
 }

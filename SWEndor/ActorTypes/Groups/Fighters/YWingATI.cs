@@ -1,10 +1,10 @@
 ﻿using MTV3D65;
-using System;
+using SWEndor.Weapons;
+using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class YWingATI : FighterGroup
   {
@@ -49,23 +49,29 @@ namespace SWEndor
       ainfo.CamLocations.Add(new TV_3DVECTOR(0, 40, 250));
       ainfo.CamTargets.Add(new TV_3DVECTOR(0, 0, -2000));
 
-      ainfo.EnableDeathExplosion = true;
-      ainfo.DeathExplosionType = "ExplosionSm";
-      ainfo.ExplosionRate = 0.75f;
-      ainfo.ExplosionSize = 1;
-      ainfo.ExplosionType = "Explosion";
+      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
+      ainfo.ExplosionInfo.ExplosionRate = 0.75f;
+      ainfo.ExplosionInfo.ExplosionSize = 1;
+      ainfo.ExplosionInfo.ExplosionType = "Explosion";
 
-      ainfo.SelfRegenRate = 0.08f;
+      ainfo.RegenerationInfo.SelfRegenRate = 0.08f;
 
       ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", new YWingTorpWeapon() }
                                                         , {"ion", new YWingIonWeapon() }
                                                         , {"laser", new YWingLaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new List<string> { "1:laser" };
-      ainfo.SecondaryWeapons = new List<string> { "none", "1:ion", "1:torp" };
-      ainfo.AIWeapons = new List<string> { "1:torp", "1:ion", "1:laser" };
+      ainfo.PrimaryWeapons = new string[] { "1:laser" };
+      ainfo.SecondaryWeapons = new string[] { "none", "1:ion", "1:torp" };
+      ainfo.AIWeapons = new string[] { "1:torp", "1:ion", "1:laser" };
+
+      Debris = new DebrisSpawnerInfo[] {
+        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("YWing_WingATI"), new TV_3DVECTOR(-30, 0, 0), -1000, 1000, 0, 3000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("YWing_WingATI"), new TV_3DVECTOR(30, 0, 0), -1000, 1000, -3000, 0, -2500, 2500, 0.5f),
+        };
     }
 
+    /*
     public override void ProcessNewState(ActorInfo ainfo)
     {
       base.ProcessNewState(ainfo);
@@ -105,7 +111,7 @@ namespace SWEndor
         }
       }
     }
-
+    */
   }
 }
 

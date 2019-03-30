@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 using MTV3D65;
 using System.IO;
+using SWEndor.Actors;
+using SWEndor.Scenarios;
+using SWEndor.Input;
+using SWEndor.Sound;
+using SWEndor.UI;
+using SWEndor.Weapons;
 
 namespace SWEndor
 {
@@ -21,7 +26,7 @@ namespace SWEndor
       Random = new Random();
     }
 
-    private Form fm_parent;
+    private IntPtr Handle;
     public float ScreenWidth { get; private set;}
     public float ScreenHeight { get; private set; }
     public Random Random { get; private set; }
@@ -58,7 +63,7 @@ namespace SWEndor
 
     public void Initialize()
     {
-      if (fm_parent == null)
+      if (Handle == null)
         throw new Exception("Engine is not attached to a window form!");
       tv_engine = new TVEngine();
       tv_globals = new TVGlobals();
@@ -102,6 +107,7 @@ namespace SWEndor
     public void InitializeComponents()
     {
       InitEngine();
+      InitWindow();
       InitFonts();
       InitScene();
       InitShaders();
@@ -112,8 +118,12 @@ namespace SWEndor
 
     public void Load()
     {
-      Screen2D.Instance().LoadingTextLines.Add(Globals.LoadingFlavourTexts[Engine.Instance().Random.Next(0, Globals.LoadingFlavourTexts.Count)]);
+      Screen2D.Instance().LoadingTextLines.Add(Globals.LoadingFlavourTexts[Random.Next(0, Globals.LoadingFlavourTexts.Count)]);
       ActorTypeFactory.Instance().Initialise();
+      Screen2D.Instance().LoadingTextLines.Add("Loading other actortypes...");
+      ActorTypeFactory.Instance().LoadFromINI(Globals.ActorTypeINIPath);
+      Screen2D.Instance().LoadingTextLines.Add("Loading weapons...");
+      WeaponFactory.LoadFromINI(Globals.WeaponStatINIPath);
       Screen2D.Instance().LoadingTextLines.Add("Loading scenario engine...");
       GameScenarioManager.Instance().LoadInitial();
       Screen2D.Instance().LoadingTextLines.Add("Loading main menu...");
@@ -127,7 +137,10 @@ namespace SWEndor
         Queue<ActorInfo> q = new Queue<ActorInfo>(ActorFactory.Instance().GetActorList());
         while (q.Count > 0)
         {
-          q.Dequeue().Process();
+          ActorInfo a = q.Dequeue();
+          a.Process();
+          //if (a.IsPlayer())
+          //  ProcessPlayerCamera();
         }
       }
     }
@@ -136,7 +149,7 @@ namespace SWEndor
     {
       if (!Game.Instance().IsPaused)
       {
-        Queue<ActorInfo> q = new Queue<ActorInfo>(ActorFactory.Instance().GetActorList());
+        Queue<ActorInfo> q = new Queue<ActorInfo>(ActorFactory.Instance().GetHoldingList());
         while (q.Count > 0)
         {
           q.Dequeue().ProcessAI();
@@ -148,7 +161,7 @@ namespace SWEndor
     {
       if (!Game.Instance().IsPaused)
       {
-        Queue<ActorInfo> q = new Queue<ActorInfo>(ActorFactory.Instance().GetActorList());
+        Queue<ActorInfo> q = new Queue<ActorInfo>(ActorFactory.Instance().GetHoldingList());
         while (q.Count > 0)
         {
           q.Dequeue().ProcessCollision();
@@ -160,15 +173,19 @@ namespace SWEndor
     {
       if (!Game.Instance().IsPaused)
       {
-        //process player last
-        if (PlayerInfo.Instance().Actor != null)
-        {
-          //PlayerInfo.Instance().Actor.Process();
-          //process player camera
-          PlayerInfo.Instance().Actor.TypeInfo.ChaseCamera(PlayerInfo.Instance().Actor);
-        }
-
         PlayerInfo.Instance().Update();
+      }
+    }
+
+    public void ProcessPlayerCamera()
+    {
+      if (!Game.Instance().IsPaused)
+      {
+        //process player camera
+        if (PlayerInfo.Instance().Actor != null)
+          PlayerInfo.Instance().Actor.TypeInfo.ChaseCamera(PlayerInfo.Instance().Actor);
+
+        PlayerCameraInfo.Instance().Update();
       }
     }
 
@@ -191,7 +208,7 @@ namespace SWEndor
         i++;
       }
 
-      TVScreen2DText.TextureFont_DrawText(text, 40, 40, new TV_COLOR(1,1,1,1).GetIntColor(), Screen2D.Instance().FontID12);
+      TVScreen2DText.TextureFont_DrawText(text, 40, 40, new TV_COLOR(1,1,1,1).GetIntColor(), Font.GetFont("Text_12").ID);
       TVScreen2DText.Action_EndText();
 
       Screen2D.Instance().Draw();
@@ -200,32 +217,29 @@ namespace SWEndor
 
     public void Render()
     {
-      using (new PerfElement("render_clear"))
-      {
-        tv_engine.Clear();
-        tv_scene.FinalizeShadows();
-      }
+      tv_engine.Clear();
 
-      ActorInfo[] ainfo = ActorFactory.Instance().GetActorList();
+      AtmosphereInfo.Instance().Render();
+      tv_scene.FinalizeShadows();
+
+      LandInfo.Instance().Render();
+
+      //tv_scene.RenderAllMeshes();
+      ActorInfo[] ainfo = ActorFactory.Instance().GetHoldingList();
       foreach (ActorInfo a in ainfo)
-      {
         if (a != null)
           a.Render();
-      }
+
       using (new PerfElement("render_2D_draw"))
-      {
         Screen2D.Instance().Draw();
-      }
 
       using (new PerfElement("render_drawtoscreen"))
-      {
         tv_engine.RenderToScreen();
-      }
     }
 
-    public void LinkForm(Form f)
+    public void LinkHandle(IntPtr handle)
     {
-      fm_parent = f;
+      Handle = handle;
     }
 
     private void InitEngine()
@@ -233,42 +247,61 @@ namespace SWEndor
       tv_engine.AllowMultithreading(true);
       //tv_engine.SetDebugMode(true, true);
       tv_engine.SetDebugFile(Path.Combine(Globals.DebugPath, @"truevision_debug.txt"));
-      //tv_engine.Init3DFullscreen(800, 600);
-      if (Settings.FullScreenMode)
-      {
-        tv_engine.Init3DFullscreen(Settings.ResolutionX, Settings.ResolutionY, 32, true, true, CONST_TV_DEPTHBUFFERFORMAT.TV_DEPTHBUFFER_BESTBUFFER, 1.0f, fm_parent.Handle);
-      }
-      else
-      {
-        tv_engine.Init3DWindowed(fm_parent.Handle, true);
-      }
 
       tv_engine.DisplayFPS(true);
       //tv_engine.EnableProfiler(true);
       tv_engine.EnableSmoothTime(true);
-      ScreenWidth = tv_engine.GetViewport().GetWidth();
-      ScreenHeight = tv_engine.GetViewport().GetHeight();
-      tv_engine.SetAngleSystem(CONST_TV_ANGLE.TV_ANGLE_DEGREE);
-      tv_engine.GetViewport().SetAutoResize(true);
+      tv_engine.SetVSync(true);
 
+      tv_engine.SetAngleSystem(CONST_TV_ANGLE.TV_ANGLE_DEGREE);
+    }
+
+    private void InitWindow()
+    {
+      if (Settings.FullScreenMode)
+        tv_engine.Init3DFullscreen(Settings.ResolutionX, Settings.ResolutionY, 32, true, true, CONST_TV_DEPTHBUFFERFORMAT.TV_DEPTHBUFFER_BESTBUFFER, 1.0f, Handle);
+      else
+        tv_engine.Init3DWindowed(Handle, true);
+
+      //tv_engine.SwitchWindowed();
+
+      TVViewport port = tv_engine.GetViewport();
+      ScreenWidth = port.GetWidth();
+      ScreenHeight = port.GetHeight();
+      //tv_engine.GetViewport().SetAutoResize(true);
+    }
+
+    public void SetSize()
+    {
+      TVViewport port = tv_engine?.GetViewport();
+      if (port != null)
+      {
+        port.Resize();
+        ScreenWidth = port.GetWidth();
+        ScreenHeight = port.GetHeight();
+      }
     }
 
     private void InitFonts()
     {
-      Screen2D.Instance().FontID08 = TVScreen2DText.TextureFont_Create("Consolas08", "Consolas", 8, false, false, false, true);
-      Screen2D.Instance().FontID10 = TVScreen2DText.TextureFont_Create("Consolas12", "Consolas", 10, true, false, false, true);
-      Screen2D.Instance().FontID12 = TVScreen2DText.TextureFont_Create("Consolas12", "Consolas", 12, true, false, false, true);
-      Screen2D.Instance().FontID14 = TVScreen2DText.TextureFont_Create("Consolas14", "Consolas", 14, true, false, false, true);
-      Screen2D.Instance().FontID16 = TVScreen2DText.TextureFont_Create("Consolas16", "Consolas", 16, true, false, false, true);
-      Screen2D.Instance().FontID24 = TVScreen2DText.TextureFont_Create("Consolas24", "Consolas", 24, true, false, false, true);
-      Screen2D.Instance().FontID36 = TVScreen2DText.TextureFont_Create("Impact36", "Impact", 36, false, false, false, true);
-      Screen2D.Instance().FontID48 = TVScreen2DText.TextureFont_Create("Impact48", "Impact", 48, false, false, false, true);
+      Font.CreateFont("Text_08", "Consolas", 8, false, false, false, true);
+      Font.CreateFont("Text_10", "Consolas", 10, true, false, false, true);
+      Font.CreateFont("Text_12", "Consolas", 12, true, false, false, true);
+      Font.CreateFont("Text_14", "Consolas", 14, true, false, false, true);
+      Font.CreateFont("Text_16", "Consolas", 16, true, false, false, true);
+      Font.CreateFont("Text_24", "Consolas", 24, true, false, false, true);
+      Font.CreateFont("Title_36", "Impact", 36, false, false, false, true);
+      Font.CreateFont("Title_48", "Impact", 48, false, false, false, true);
     }
 
     private void InitScene()
     {
+      tv_scene.SetShadeMode(CONST_TV_SHADEMODE.TV_SHADEMODE_GOURAUD);
       tv_scene.SetRenderMode(CONST_TV_RENDERMODE.TV_SOLID);
       tv_scene.SetBackgroundColor(0f, 0f, 0f);
+
+      AtmosphereInfo.Instance().LoadDefaults(true, true);
+      LandInfo.Instance().LoadDefaults();
     }
 
     private void InitShaders()
@@ -279,14 +312,12 @@ namespace SWEndor
 
     private void InitPhysics()
     {
-      /*
-      tv_physics.Initialize();
-      tv_physics.SetSolverModel(CONST_TV_PHYSICS_SOLVER.TV_SOLVER_ADAPTIVE);
-      tv_physics.SetFrictionModel(CONST_TV_PHYSICS_FRICTION.TV_FRICTION_ADAPTIVE);
-      tv_physics.SetGlobalGravity(new TV_3DVECTOR(0, 0, 0));
+      //tv_physics.Initialize();
+      //tv_physics.SetSolverModel(CONST_TV_PHYSICS_SOLVER.TV_SOLVER_ADAPTIVE);
+      //tv_physics.SetFrictionModel(CONST_TV_PHYSICS_FRICTION.TV_FRICTION_ADAPTIVE);
+      //tv_physics.SetGlobalGravity(new TV_3DVECTOR(0, 0, 0));
       //tv_physics.SetGlobalGravity(new TV_3DVECTOR(0, -9.800908285f, 0));
-      tv_physics.EnableCPUOptimizations(true);
-      */
+      //tv_physics.EnableCPUOptimizations(true); 
     }
 
     private void InitLights()
@@ -304,7 +335,7 @@ namespace SWEndor
 
     private void InitSounds()
     {
-      SoundManager.Instance().Initialize((int)fm_parent.Handle);
+      SoundManager.Instance().Initialize();
       SoundManager.Instance().Load();
     }
 

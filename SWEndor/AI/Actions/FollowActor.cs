@@ -1,9 +1,7 @@
 ﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SWEndor.Actors;
 
-namespace SWEndor.Actions
+namespace SWEndor.AI.Actions
 {
   public class FollowActor : ActionInfo
   {
@@ -33,7 +31,7 @@ namespace SWEndor.Actions
 
     public override void Process(ActorInfo owner)
     {
-      if (owner.MaxSpeed == 0)
+      if (owner.MovementInfo.MaxSpeed == 0)
       {
         Complete = true;
         return;
@@ -44,22 +42,22 @@ namespace SWEndor.Actions
         AdjustRotation(owner, Target_Actor.GetPosition());
         float dist = ActorDistanceInfo.GetDistance(owner, Target_Actor, FollowDistance + 1);
 
-        float addspd = (owner.MaxSpeed > Target_Actor.Speed) ? owner.MaxSpeed - Target_Actor.Speed : 0;
-        float subspd = (owner.MinSpeed < Target_Actor.Speed) ? Target_Actor.Speed - owner.MinSpeed : 0;
+        float addspd = (owner.MovementInfo.MaxSpeed > Target_Actor.MovementInfo.Speed) ? owner.MovementInfo.MaxSpeed - Target_Actor.MovementInfo.Speed : 0;
+        float subspd = (owner.MovementInfo.MinSpeed < Target_Actor.MovementInfo.Speed) ? Target_Actor.MovementInfo.Speed - owner.MovementInfo.MinSpeed : 0;
 
         if (dist > FollowDistance)
-          AdjustSpeed(owner, Target_Actor.Speed + (dist - FollowDistance) / SpeedAdjustmentDistanceRange * addspd);
+          AdjustSpeed(owner, Target_Actor.MovementInfo.Speed + (dist - FollowDistance) / SpeedAdjustmentDistanceRange * addspd);
         else
-          AdjustSpeed(owner, Target_Actor.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
+          AdjustSpeed(owner, Target_Actor.MovementInfo.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
 
         Complete |= (Target_Actor.CreationState != CreationState.ACTIVE);
       }
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
-      if (CheckImminentCollision(owner, FollowDistance, out vImpact, out vNormal))
+      if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
       {
-        ActionManager.QueueFirst(owner, new AvoidCollisionRotate(vImpact, vNormal));
+        ActionManager.QueueFirst(owner, new AvoidCollisionRotate(owner.ProspectiveCollisionImpact, owner.ProspectiveCollisionNormal));
       }
     }
   }

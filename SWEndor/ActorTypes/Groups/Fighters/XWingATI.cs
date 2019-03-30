@@ -1,10 +1,10 @@
 ﻿using MTV3D65;
-using System;
+using SWEndor.Weapons;
+using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class XWingATI : FighterGroup
   {
@@ -35,6 +35,13 @@ namespace SWEndor
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"xwing\xwing.x");
       SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"xwing\xwing_far.x");
+
+      Debris = new DebrisSpawnerInfo[] {
+        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("XWing_RU_LD_WingATI"), new TV_3DVECTOR(-30, -30, 0), 0, 2000, 0, 3000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("XWing_RU_LD_WingATI"), new TV_3DVECTOR(30, 30, 0), -2000, 0, -3000, 0, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("XWing_RD_LU_WingATI"), new TV_3DVECTOR(30, -30, 0), 0, 2000, -3000, 0, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("XWing_RD_LU_WingATI"), new TV_3DVECTOR(-30, 30, 0), -2000, 0, 0, 3000, -2500, 2500, 0.5f)
+        };
     }
 
     public override void Initialize(ActorInfo ainfo)
@@ -49,26 +56,26 @@ namespace SWEndor
       ainfo.CamLocations.Add(new TV_3DVECTOR(0, 40, 250));
       ainfo.CamTargets.Add(new TV_3DVECTOR(0, 0, -2000));
 
-      ainfo.EnableDeathExplosion = true;
-      ainfo.DeathExplosionType = "ExplosionSm";
-      ainfo.ExplosionRate = 0.75f;
-      ainfo.ExplosionSize = 1;
-      ainfo.ExplosionType = "Explosion";
+      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
+      ainfo.ExplosionInfo.ExplosionRate = 0.75f;
+      ainfo.ExplosionInfo.ExplosionSize = 1;
+      ainfo.ExplosionInfo.ExplosionType = "Explosion";
 
-      ainfo.SelfRegenRate = 0.08f;
+      ainfo.RegenerationInfo.SelfRegenRate = 0.08f;
 
       ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", new XWingTorpWeapon() }
                                                         , {"laser", new XWingLaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new List<string> { "1:laser", "2:laser", "4:laser" };
-      ainfo.SecondaryWeapons = new List<string> { "4:laser", "1:torp" };
-      ainfo.AIWeapons = new List<string> { "1:torp", "1:laser" };
+      ainfo.PrimaryWeapons = new string[] { "1:laser", "2:laser", "4:laser" };
+      ainfo.SecondaryWeapons = new string[] { "4:laser", "1:torp" };
+      ainfo.AIWeapons = new string[] { "1:torp", "1:laser" };
     }
 
     public override void ProcessNewState(ActorInfo ainfo)
     {
       base.ProcessNewState(ainfo);
-
+      /*
       if (ainfo.ActorState == ActorState.DEAD)
       {
         if (!ainfo.IsAggregateMode() && !Game.Instance().IsLowFPS())
@@ -134,6 +141,7 @@ namespace SWEndor
           }
         }
       }
+      */
     }
   }
 }

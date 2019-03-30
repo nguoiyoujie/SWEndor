@@ -1,9 +1,7 @@
 ﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SWEndor.Actors.Types;
 
-namespace SWEndor
+namespace SWEndor.Weapons.Types
 {
   public class TIE_X1_LaserWeapon : WeaponInfo
   {
@@ -25,15 +23,6 @@ namespace SWEndor
 
       // Player Config
       RequirePlayerTargetLock = false;
-
-      // AI Config
-      AIAttackFighters = true;
-      AIAttackShips = true;
-      AIAttackAddons = true;
-      AIAttackNull = true;
-
-      // 
-      FireSound = "Laser_sf";
 
       AngularRange = 20;
     }

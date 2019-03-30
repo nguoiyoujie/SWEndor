@@ -1,10 +1,6 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SWEndor
+﻿namespace SWEndor.Weapons.Types
 {
+  /*
   public class ArquitensTurboLaserWeapon : WeaponInfo
   {
     public ArquitensTurboLaserWeapon() : base("Arquitens Laser")
@@ -30,16 +26,8 @@ namespace SWEndor
       // Player Config
       RequirePlayerTargetLock = false;
 
-      // AI Config
-      AIAttackFighters = true;
-      AIAttackShips = true;
-      AIAttackAddons = true;
-      AIAttackNull = true;
-
-      // 
-      FireSound = "Laser_sf";
-
       AngularRange = 270;
     }
   }
+  */
 }

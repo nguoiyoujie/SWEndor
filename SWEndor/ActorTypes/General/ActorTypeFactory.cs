@@ -1,9 +1,10 @@
-﻿using MTV3D65;
+﻿using SWEndor.Actors.Types;
+using SWEndor.FileFormat.INI;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
 
-namespace SWEndor
+namespace SWEndor.Actors
 {
 
   public class ActorTypeFactory
@@ -23,12 +24,10 @@ namespace SWEndor
 
     public void Initialise()
     {
-      Register(SceneRoomATI.Instance());
       Register(EndorATI.Instance());
       Register(YavinATI.Instance());
       Register(Yavin4ATI.Instance());
       Register(HothATI.Instance());
-      Register(SunATI.Instance());
       Register(DeathStarATI.Instance());
       Register(DeathStar2ATI.Instance());
       Register(InvisibleCameraATI.Instance());
@@ -36,12 +35,28 @@ namespace SWEndor
       Register(ImperialIStaticATI.Instance());
       Register(ExecutorStaticATI.Instance());
 
+      // debris (load before their parents)
+      Register(XWing_RD_LU_WingATI.Instance());
+      Register(XWing_RU_LD_WingATI.Instance());
+      Register(TIE_WingATI.Instance());
+      Register(TIE_InterceptorWingATI.Instance());
+      Register(YWing_WingATI.Instance());
+      Register(BWing_Top_WingATI.Instance());
+      Register(BWing_Bottom_WingATI.Instance());
+      Register(BWing_WingATI.Instance());
+      Register(Transport_Box1ATI.Instance());
+      Register(Transport_Box2ATI.Instance());
+      Register(Transport_Box3ATI.Instance());
+      Register(Transport_Box4ATI.Instance());
+
       // explosions
       Register(ExplosionATI.Instance());
       Register(Explosion2ATI.Instance());
       Register(ExplosionSmATI.Instance());
       Register(ExplosionLgATI.Instance());
+      Register(ExplosionMegaATI.Instance());
       Register(ExplosionWaveATI.Instance());
+      Register(ExplosionWaveMegaATI.Instance());
       Register(ElectroATI.Instance());
 
       // fighters
@@ -99,12 +114,14 @@ namespace SWEndor
       Register(Tower01ATI.Instance());
       Register(Tower02ATI.Instance());
       Register(Tower03ATI.Instance());
+      Register(Tower04ATI.Instance());
       Register(Tower00_RuinsATI.Instance());
       Register(Tower01_RuinsATI.Instance());
       Register(Tower02_RuinsATI.Instance());
       Register(Tower03_RuinsATI.Instance());
       Register(TowerGunATI.Instance());
       Register(TowerGunAdvATI.Instance());
+      Register(TowerGunSuperATI.Instance());
 
       // lasers
       Register(RedLaserATI.Instance());
@@ -119,16 +136,19 @@ namespace SWEndor
 
       // torps
       Register(MissileATI.Instance());
+      Register(TorpedoATI.Instance());
 
       // add ons
       Register(mc90TurbolaserATI.Instance());
       Register(CorellianTurboLaserATI.Instance());
       Register(TransportTurboLaserATI.Instance());
       Register(NebulonBTurboLaserATI.Instance());
+      Register(NebulonBMissilePodATI.Instance());
       Register(ACTurboLaserATI.Instance());
       Register(ArqTurboLaserATI.Instance());
       Register(SDAntiShipTurboLaserATI.Instance());
       Register(SDTurboLaserATI.Instance());
+      Register(SDMissilePodATI.Instance());
       Register(SDShieldGeneratorATI.Instance());
       Register(SDLowerShieldGeneratorATI.Instance());
       Register(ExecutorTurboLaserATI.Instance());
@@ -136,24 +156,17 @@ namespace SWEndor
       Register(ExecutorBridgeATI.Instance());
       Register(InvisibleRebelTurboLaserATI.Instance());
       Register(DSLaserSourceATI.Instance());
+      Register(HangarBayATI.Instance());
 
       // asteroids
       Register(Asteroid01ATI.Instance());
-
-      // debris
-      Register(XWing_RD_LU_WingATI.Instance());
-      Register(XWing_RU_LD_WingATI.Instance());
-      Register(TIE_WingATI.Instance());
-      Register(TIE_InterceptorWingATI.Instance());
-      Register(YWing_WingATI.Instance());
-      Register(BWing_Top_WingATI.Instance());
-      Register(BWing_Bottom_WingATI.Instance());
-      Register(BWing_WingATI.Instance());
-      Register(Transport_Box1ATI.Instance());
-      Register(Transport_Box2ATI.Instance());
-      Register(Transport_Box3ATI.Instance());
-      Register(Transport_Box4ATI.Instance());
-
+      Register(Asteroid02ATI.Instance());
+      Register(Asteroid03ATI.Instance());
+      Register(Asteroid04ATI.Instance());
+      Register(Asteroid05ATI.Instance());
+      Register(Asteroid06ATI.Instance());
+      Register(Asteroid07ATI.Instance());
+      Register(Asteroid08ATI.Instance());
     }
 
     public void Register(ActorTypeInfo atype)
@@ -188,6 +201,19 @@ namespace SWEndor
     {
       if (list.ContainsKey(name))
         list.Remove(name);
+    }
+
+    public void LoadFromINI(string filepath)
+    {
+      if (File.Exists(filepath))
+      {
+        INIFile f = new INIFile(filepath);
+        foreach (string s in f.Sections.Keys)
+        {
+          if (s != INIFile.PreHeaderSectionName)
+            Register(ActorTypeParser.Parse(f, s));
+        }
+      }
     }
   }
 }

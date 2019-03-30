@@ -1,10 +1,4 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-
-namespace SWEndor
+﻿namespace SWEndor.Actors.Types
 {
   public class DebrisGroup : ActorTypeInfo
   {
@@ -22,10 +16,9 @@ namespace SWEndor
     {
       base.Initialize(ainfo);
 
-      ainfo.DamageModifier = 0;
-      ainfo.EnableExplosions = true;
-      ainfo.EnableDeathExplosion = true;
-      ainfo.DeathExplosionType = "Explosion";
+      ainfo.CombatInfo.DamageModifier = 0;
+      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
     }
   }
 }

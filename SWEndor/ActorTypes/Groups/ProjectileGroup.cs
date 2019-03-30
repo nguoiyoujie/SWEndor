@@ -1,10 +1,7 @@
 ﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+using SWEndor.AI.Actions;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class ProjectileGroup : ActorTypeInfo
   {
@@ -31,9 +28,9 @@ namespace SWEndor
       base.ProcessState(ainfo);
       if (ainfo.ActorState == ActorState.NORMAL)
       {
-        if (ImpactCloseEnoughDistance > 0 && ainfo.CurrentAction != null && ainfo.CurrentAction is Actions.AttackActor)
+        if (ImpactCloseEnoughDistance > 0 && ainfo.CurrentAction != null && ainfo.CurrentAction is AttackActor)
         {
-          Actions.AttackActor action = (Actions.AttackActor)ainfo.CurrentAction;
+          AttackActor action = (AttackActor)ainfo.CurrentAction;
           if (action.Target_Actor != null)
           {
             // Anticipate

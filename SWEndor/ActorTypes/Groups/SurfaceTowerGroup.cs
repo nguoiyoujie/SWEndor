@@ -1,10 +1,4 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-
-namespace SWEndor
+﻿namespace SWEndor.Actors.Types
 {
   public class SurfaceTowerGroup : ActorTypeInfo
   {
@@ -14,21 +8,19 @@ namespace SWEndor
       IsCombatObject = true;
       IsSelectable = true;
       IsDamage = false;
+      CollisionEnabled = true;
       CullDistance = 10000;
 
       RadarSize = 1.5f;
 
-      IsTargetable = true;
-      //IsFighter = true;
-      //IsShip = true;
-      IsHardPointAddon = true;
+      TargetType = TargetType.ADDON | TargetType.STRUCTURE;
     }
 
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
 
-      ainfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.EnableDeathExplosion = true;
     }
   }
 }

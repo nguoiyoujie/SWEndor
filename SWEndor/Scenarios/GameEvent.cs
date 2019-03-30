@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using MTV3D65;
 
-namespace SWEndor
+namespace SWEndor.Scenarios
 {
   //public enum EventType { ACTOR_EVENT, SCENARIO_EVENT, MESSAGE_EVENT }
 

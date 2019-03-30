@@ -1,10 +1,9 @@
 ﻿using MTV3D65;
-using System;
+using SWEndor.Weapons;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class SmallIonLaserATI : ProjectileGroup
   {
@@ -102,7 +101,7 @@ namespace SWEndor
       foreach (ActorInfo c in children)
       {
         if (c.CreationState != CreationState.ACTIVE
-          || !c.TypeInfo.IsHardPointAddon)
+          || !c.TypeInfo.TargetType.HasFlag(TargetType.ADDON))
           rm.Add(c);
       }
 
@@ -116,7 +115,7 @@ namespace SWEndor
         for (int shock = 3; shock > 0; shock--)
         {
           ActorInfo child = children[Engine.Instance().Random.Next(0, children.Count)];
-          child.Strength -= 0.1f * Engine.Instance().Random.Next(25, 50);
+          child.CombatInfo.Strength -= 0.1f * Engine.Instance().Random.Next(25, 50);
 
           float empduration = 12;
           
@@ -132,7 +131,7 @@ namespace SWEndor
           {
             if (child2.TypeInfo is ElectroATI)
             {
-              child2.SetStateF("CyclesRemaining", empduration / child2.TypeInfo.TimedLife);
+              child2.CycleInfo.CyclesRemaining = empduration / child2.CycleInfo.CyclePeriod;
               return;
             }
           }
@@ -140,7 +139,7 @@ namespace SWEndor
           acinfo.Position = child.GetPosition();
           ActorInfo electro = ActorInfo.Create(acinfo);
           electro.AddParent(child);
-          electro.SetStateF("CyclesRemaining", empduration / electro.TypeInfo.TimedLife);
+          electro.CycleInfo.CyclesRemaining = empduration / electro.CycleInfo.CyclePeriod;
         }
       }
     }

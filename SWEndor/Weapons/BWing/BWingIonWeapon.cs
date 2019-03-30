@@ -1,10 +1,6 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SWEndor
+﻿namespace SWEndor.Weapons.Types
 {
+  /*
   public class BWingIonWeapon : WeaponInfo
   {
     public BWingIonWeapon() : base("B-Wing Ion")
@@ -30,15 +26,11 @@ namespace SWEndor
       RequirePlayerTargetLock = false;
 
       // AI Config
-      AIAttackFighters = false;
-      AIAttackShips = true;
-      AIAttackAddons = true;
+      AIAttackTargets = TargetType.SHIP | TargetType.ADDON;
       AIAttackNull = false;
-
-      // 
-      FireSound = "Laser_sf";
 
       Range = 3000;
     }
   }
+  */
 }

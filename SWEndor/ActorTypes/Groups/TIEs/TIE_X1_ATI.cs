@@ -1,10 +1,10 @@
 ﻿using MTV3D65;
-using System;
+using SWEndor.Weapons;
+using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class TIE_X1_ATI : TIEGroup
   {
@@ -17,12 +17,6 @@ namespace SWEndor
 
     private TIE_X1_ATI() : base("TIE Advanced X1")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 275;
       ImpactDamage = 100;
       MaxSpeed = 900;
@@ -58,21 +52,21 @@ namespace SWEndor
       ainfo.CamLocations.Add(new TV_3DVECTOR(0, 40, 250));
       ainfo.CamTargets.Add(new TV_3DVECTOR(0, 0, -2000));
 
-      ainfo.EnableDeathExplosion = true;
-      ainfo.DeathExplosionType = "ExplosionSm";
-      ainfo.DeathExplosionSize = 1;
-      ainfo.ExplosionRate = 0.5f;
-      ainfo.ExplosionSize = 1;
-      ainfo.ExplosionType = "Explosion";
+      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
+      ainfo.ExplosionInfo.DeathExplosionSize = 1;
+      ainfo.ExplosionInfo.ExplosionRate = 0.5f;
+      ainfo.ExplosionInfo.ExplosionSize = 1;
+      ainfo.ExplosionInfo.ExplosionType = "Explosion";
 
-      ainfo.SelfRegenRate = 0.075f;
+      ainfo.RegenerationInfo.SelfRegenRate = 0.075f;
 
       ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", new TIE_X1_TorpWeapon() }
                                                         , {"laser", new TIE_X1_LaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new List<string> { "1:laser", "2:laser", "3:laser" };
-      ainfo.SecondaryWeapons = new List<string> { "none", "1:torp" };
-      ainfo.AIWeapons = new List<string> { "1:torp", "2:laser" };
+      ainfo.PrimaryWeapons = new string[] { "1:laser", "2:laser", "3:laser" };
+      ainfo.SecondaryWeapons = new string[] { "none", "1:torp" };
+      ainfo.AIWeapons = new string[] { "1:torp", "2:laser" };
 
       ainfo.SetStateB("No2ndKill", true);
     }

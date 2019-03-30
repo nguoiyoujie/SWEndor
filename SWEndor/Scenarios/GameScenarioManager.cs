@@ -1,11 +1,11 @@
 ﻿using MTV3D65;
-using System;
+using SWEndor.Actors;
+using SWEndor.Actors.Types;
+using SWEndor.UI;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using System.Threading;
+using System.IO;
 
-namespace SWEndor
+namespace SWEndor.Scenarios
 {
   public class GameScenarioManager
   {
@@ -18,28 +18,19 @@ namespace SWEndor
 
     private GameScenarioManager()
     {
-      StageNumber = 0;
-      prevStageNumber = 0;
-
       ScenarioList.Add(new Scenarios.GSEndor());
       ScenarioList.Add(new Scenarios.GSYavin());
       ScenarioList.Add(new Scenarios.GSHoth());
       ScenarioList.Add(new Scenarios.GSTIEAdvanced());
       ScenarioList.Add(new Scenarios.GSTestZone());
+
+      // Add scripted scenarios?
+      if (Directory.Exists(Globals.CustomScenarioPath))
+        foreach (string path in Directory.GetFiles(Globals.CustomScenarioPath, "*.scen"))
+          ScenarioList.Add(new Scenarios.GSCustomScenario(path));
     }
 
-    // To remove
-    //public int EndorKey { get; private set; }
-    //public int DeathStarKey { get; private set; }
-    //public int SceneRoomKey { get; private set; }
-
-
     public List<GameScenarioBase> ScenarioList = new List<GameScenarioBase>();
-
-
-    public string Difficulty { get; set; }
-    public int StageNumber { get; set; }
-    public int prevStageNumber { get; private set; }
 
     private Dictionary<string, float> GameStatesF = new Dictionary<string, float>();
     private Dictionary<string, string> GameStatesS = new Dictionary<string, string>();
@@ -56,14 +47,13 @@ namespace SWEndor
     public TV_3DVECTOR MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
     public TV_3DVECTOR MinAIBounds = new TV_3DVECTOR(-20000, -1500, -20000);
 
-    public int TIEWaves = 0;
-    public int SDWaves = 0;
-
-    public Dictionary<string, ActorInfo> AllyFighters = new Dictionary<string, ActorInfo>();
-    public Dictionary<string, ActorInfo> AllyShips = new Dictionary<string, ActorInfo>();
-    public Dictionary<string, ActorInfo> EnemyFighters = new Dictionary<string, ActorInfo>();
-    public Dictionary<string, ActorInfo> EnemyShips = new Dictionary<string, ActorInfo>();
-
+    // Actor Registers
+    //public Dictionary<string, ActorInfo> AllyFighters = new Dictionary<string, ActorInfo>();
+    //public Dictionary<string, ActorInfo> AllyShips = new Dictionary<string, ActorInfo>();
+    //public Dictionary<string, ActorInfo> AllyStructures = new Dictionary<string, ActorInfo>();
+    //public Dictionary<string, ActorInfo> EnemyFighters = new Dictionary<string, ActorInfo>();
+    //public Dictionary<string, ActorInfo> EnemyShips = new Dictionary<string, ActorInfo>();
+    public Dictionary<string, ActorInfo> EnemyStructures = new Dictionary<string, ActorInfo>();
     public Dictionary<string, ActorInfo> CriticalAllies = new Dictionary<string, ActorInfo>();
     public Dictionary<string, ActorInfo> CriticalEnemies = new Dictionary<string, ActorInfo>();
 
@@ -84,12 +74,11 @@ namespace SWEndor
       Screen2D.Instance().CurrentPage = new UIPage_MainMenu();
       Scenario = new Scenarios.GSMainMenu();
       Scenario.Load(null, "");
+      Scenario.Launch();
     }
 
     public void LoadInitial()
     {
-      //LoadFactions();
-      //LoadScene();
       LoadInvisibleCam();
       PlayerInfo.Instance().Actor = SceneCamera;
       PlayerInfo.Instance().IsMovementControlsEnabled = false;
@@ -104,6 +93,10 @@ namespace SWEndor
         if (kvp.Value.CreationState == CreationState.DISPOSED)
         {
           rm.Add(kvp.Key);
+
+          if (Scenario != null && Scenario.ActiveActor == kvp.Value)
+            Scenario.ActiveActor = null;
+
           if (kvp.Value != PlayerInfo.Instance().Actor)
           {
             ret++;
@@ -132,8 +125,8 @@ namespace SWEndor
         }
       }
 
-      UpdateActorLists(EnemyFighters);
-      UpdateActorLists(EnemyShips);
+      //UpdateActorLists(EnemyFighters);
+      //UpdateActorLists(EnemyShips);
       UpdateActorLists(CriticalAllies);
       UpdateActorLists(CriticalEnemies);
 
@@ -160,10 +153,8 @@ namespace SWEndor
 
       foreach (float f in remove)
       {
-        GameScenarioManager.Instance().GameEvents.Remove(f);
+        GameEvents.Remove(f);
       }
-
-      prevStageNumber = StageNumber;
     }
 
     public void LoadInvisibleCam()
@@ -188,7 +179,7 @@ namespace SWEndor
         Scenario.Unload();
 
       PlayerInfo.Instance().Score.Reset();
-      ScoreInfo.Scores.ClearList();
+      ScoreInfo.Scores.Clear();
 
       _instance = new GameScenarioManager();
       _instance.LoadInitial();

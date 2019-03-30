@@ -1,10 +1,10 @@
 ﻿using MTV3D65;
-using System;
+using SWEndor.Weapons;
+using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class TIE_LN_ATI : TIEGroup
   {
@@ -17,13 +17,7 @@ namespace SWEndor
 
     private TIE_LN_ATI() : base("TIE")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
-      MaxStrength = 2;
+      MaxStrength = 4;
       ImpactDamage = 16;
       MaxSpeed = 350;
       MinSpeed = 175;
@@ -34,6 +28,8 @@ namespace SWEndor
       Score_DestroyBonus = 400;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"tie\tie.x");
+      SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"tie\tie_far.x");
+
     }
 
     public override void Initialize(ActorInfo ainfo)
@@ -48,58 +44,23 @@ namespace SWEndor
       ainfo.CamLocations.Add(new TV_3DVECTOR(0, 40, 250));
       ainfo.CamTargets.Add(new TV_3DVECTOR(0, 0, -2000));
 
-      ainfo.EnableDeathExplosion = true;
-      ainfo.DeathExplosionType = "ExplosionSm";
-      ainfo.ExplosionRate = 0.75f;
-      ainfo.ExplosionSize = 1;
-      ainfo.ExplosionType = "Explosion";
+      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
+      ainfo.ExplosionInfo.ExplosionRate = 0.75f;
+      ainfo.ExplosionInfo.ExplosionSize = 1;
+      ainfo.ExplosionInfo.ExplosionType = "Explosion";
 
       ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", new TIE_LN_LaserWeapon() }
                                                         , {"2xlsr", new TIE_LN_DblLaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new List<string> { "1:laser", "2:laser" };
-      ainfo.SecondaryWeapons = new List<string> { "none" };
-      ainfo.AIWeapons = new List<string> { "1:2xlsr" };
-    }
+      ainfo.PrimaryWeapons = new string[] { "1:laser", "2:laser" };
+      ainfo.SecondaryWeapons = new string[] { "none" };
+      ainfo.AIWeapons = new string[] { "1:2xlsr" };
 
-    public override void ProcessNewState(ActorInfo ainfo)
-    {
-      base.ProcessNewState(ainfo);
-      
-      if (ainfo.ActorState == ActorState.DEAD)
-      {
-        if (!ainfo.IsAggregateMode() && !Game.Instance().IsLowFPS())
-        {
-          double d = Engine.Instance().Random.NextDouble();
-
-          float x = Engine.Instance().Random.Next(-1000, 1000) / 100f;
-          float y = Engine.Instance().Random.Next(0, 3000) / 100f;
-          float z = Engine.Instance().Random.Next(-2500, 2500) / 100f;
-          float x2 = Engine.Instance().Random.Next(-1000, 1000) / 100f;
-          float y2 = Engine.Instance().Random.Next(-3000, 0) / 100f;
-          float z2 = Engine.Instance().Random.Next(-2500, 2500) / 100f;
-
-          if (d > 0.5f)
-          {
-            ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("TIE_WingATI"));
-            acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(-30, 0, 0);
-            acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x, ainfo.Rotation.y + y, ainfo.Rotation.z + z);
-            acinfo.InitialSpeed = ainfo.Speed;
-            ActorInfo a = ActorInfo.Create(acinfo);
-          }
-
-          d = Engine.Instance().Random.NextDouble();
-          if (d > 0.5f)
-          {
-            ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("TIE_WingATI"));
-            acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(30, 0, 0);
-            acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x2, ainfo.Rotation.y + y2, ainfo.Rotation.z + z2);
-
-            acinfo.InitialSpeed = ainfo.Speed;
-            ActorInfo a = ActorInfo.Create(acinfo);
-          }
-        }
-      }
+      Debris = new DebrisSpawnerInfo[] {
+        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("TIE_WingATI"), new TV_3DVECTOR(-30, 0, 0), -1000, 1000, 0, 3000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("TIE_WingATI"), new TV_3DVECTOR(30, 0, 0), -1000, 1000, -3000, 0, -2500, 2500, 0.5f),
+        };
     }
   }
 }

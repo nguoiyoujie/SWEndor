@@ -1,9 +1,7 @@
 ﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SWEndor.Actors;
 
-namespace SWEndor.Actions
+namespace SWEndor.AI.Actions
 {
   public class HyperspaceIn : ActionInfo 
   {
@@ -52,7 +50,7 @@ namespace SWEndor.Actions
       if (dist <= CloseEnoughDistance || prevdist < dist)
       {
         owner.ActorState = prevState;
-        owner.Speed = owner.MaxSpeed;
+        owner.MovementInfo.Speed = owner.MovementInfo.MaxSpeed;
         //owner.SetLocalPosition(Target_Position.x, Target_Position.y, Target_Position.z);
         Complete = true;
       }
@@ -65,11 +63,11 @@ namespace SWEndor.Actions
           owner.LookAtPoint(Target_Position);
         }
 
-        owner.Speed = Min_Speed + dist * SpeedDistanceFactor;
-        if (owner.Speed > Max_Speed)
-          owner.Speed = Max_Speed;
+        owner.MovementInfo.Speed = Min_Speed + dist * SpeedDistanceFactor;
+        if (owner.MovementInfo.Speed > Max_Speed)
+          owner.MovementInfo.Speed = Max_Speed;
 
-        //AdjustSpeed(owner, owner.Speed);
+        //AdjustSpeed(owner, owner.MovementInfo.Speed);
 
         Complete = false;
       }

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using System.IO;
 using MTV3D65;
-using System.Threading;
+using SWEndor.Actors;
+using SWEndor.UI;
 
 namespace SWEndor
 {
@@ -66,7 +65,7 @@ namespace SWEndor
                                                           , Engine.Instance().ScreenWidth / 2 - 60
                                                           , Engine.Instance().ScreenWidth / 2 - 10
                                                           , new TV_COLOR(0.5f, 0.5f, 0.5f, 1f).GetIntColor()
-                                                          , Screen2D.Instance().FontID14
+                                                          , Font.GetFont("Text_14").ID
       );
       Engine.Instance().TVScreen2DText.Action_EndText();
 

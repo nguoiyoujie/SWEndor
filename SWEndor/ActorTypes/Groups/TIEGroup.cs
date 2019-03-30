@@ -1,10 +1,6 @@
 ﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class TIEGroup : ActorTypeInfo
   {
@@ -14,6 +10,7 @@ namespace SWEndor
       IsCombatObject = true;
       IsSelectable = true;
       IsDamage = false;
+      CollisionEnabled = true;
 
       ZTilt = 2.5f;
       ZNormFrac = 0.01f;
@@ -21,13 +18,23 @@ namespace SWEndor
 
       CullDistance = 7200;
 
-      IsTargetable = true;
-      IsFighter = true;
+      TargetType = TargetType.FIGHTER;
+
       CanEvade = true;
       CanRetaliate = true;
       CanCheckCollisionAhead = true;
 
       HuntWeight = 5;
+
+      SoundSources = new SoundSourceInfo[]{ new SoundSourceInfo("engine_tie", new TV_3DVECTOR(0, 0, -30), 200, true) };
+    }
+
+    public override void Initialize(ActorInfo ainfo)
+    {
+      base.Initialize(ainfo);
+      ainfo.MovementInfo.DyingMovement = Components.DyingMovement.SPIN;
+      ainfo.MovementInfo.D_spin_min_rate = 180;
+      ainfo.MovementInfo.D_spin_max_rate = 270;
     }
 
     public override void ProcessNewState(ActorInfo ainfo)
@@ -36,63 +43,23 @@ namespace SWEndor
       if (ainfo.ActorState == ActorState.DYING)
       {
 
-        ainfo.ApplyZBalance = false;
-        ainfo.OnTimedLife = true;
+        ainfo.MovementInfo.ApplyZBalance = false;
+        ainfo.CombatInfo.OnTimedLife = true;
 
         if (ainfo.GetAllParents(1).Count > 0 || (!ainfo.GetStateB("No2ndKill") && Engine.Instance().Random.NextDouble() < 0.3f))
         {
-          ainfo.TimedLife = 0.1f;
+          ainfo.CombatInfo.TimedLife = 0.1f;
         }
         else
         {
-          ainfo.TimedLife = 5f;
+          ainfo.CombatInfo.TimedLife = 5f;
         }
 
-        ainfo.IsCombatObject = false;
+        ainfo.CombatInfo.IsCombatObject = false;
 
         ActorCreationInfo acinfo = new ActorCreationInfo(ElectroATI.Instance());
         acinfo.Position = ainfo.GetPosition();
         ActorInfo.Create(acinfo).AddParent(ainfo);
-      }
-    }
-
-    public override void ProcessState(ActorInfo ainfo)
-    {
-      base.ProcessState(ainfo);
-      if (ainfo.ActorState == ActorState.DYING)
-      {
-        if (!ainfo.IsStateFDefined("RotateAngle"))
-        {
-          double d = Engine.Instance().Random.NextDouble();
-
-          if (d > 0.5f)
-          {
-            ainfo.SetStateF("RotateAngle", Engine.Instance().Random.Next(180, 270));
-          }
-          else
-          {
-            ainfo.SetStateF("RotateAngle", Engine.Instance().Random.Next(-270, -180));
-          }
-        }
-        float rotZ = ainfo.GetStateF("RotateAngle") * Game.Instance().TimeSinceRender;
-        ainfo.Rotate(0, 0, rotZ);
-        ainfo.XTurnAngle = 0;
-        ainfo.YTurnAngle = 0;
-      }
-
-      if (ainfo.CreationState == CreationState.ACTIVE && (!GameScenarioManager.Instance().IsCutsceneMode || !ainfo.IsPlayer()))
-      {
-        TV_3DVECTOR engineloc = ainfo.GetRelativePositionXYZ(0, 0, -30);
-        float dist = Engine.Instance().TVMathLibrary.GetDistanceVec3D(PlayerInfo.Instance().Position, engineloc);
-
-        if (!ainfo.IsPlayer())
-        {
-          if (dist < 200)
-          {
-            if (PlayerInfo.Instance().enginetevol < 1 - dist / 200.0f)
-              PlayerInfo.Instance().enginetevol = 1 - dist / 200.0f;
-          }
-        }
       }
     }
 

@@ -1,74 +1,78 @@
-﻿using MTV3D65;
-using System;
+﻿using SWEndor.Actors;
+using SWEndor.Scenarios;
+using SWEndor.Weapons;
 using System.Collections.Generic;
-using System.Text;
 
-namespace SWEndor.Actions
+namespace SWEndor.AI.Actions
 {
   public class Hunt : ActionInfo
   {
-    public Hunt() : base("Hunt")
+    public Hunt(TargetType targetType = TargetType.ANY) : base("Hunt")
     {
+      m_TargetType = targetType;
+    }
+
+    private TargetType m_TargetType;
+
+    public override string ToString()
+    {
+      return string.Format("{0},{1},{2}"
+                          , Name
+                          , m_TargetType
+                          , Complete
+                          );
     }
 
     public override void Process(ActorInfo owner)
     {
-      // excludes
-      /*
-      if (!(owner.TypeInfo is FighterGroup 
-         || owner.TypeInfo is TIEGroup 
-         || owner.TypeInfo is AddOnGroup 
-         || owner.TypeInfo is ProjectileGroup))
-         //|| !(!owner.IsPlayer() || PlayerInfo.Instance().PlayerAIEnabled))
-      {
-        return;
-      }
-      */
-
-      //target
-      //float currdist = (owner.TypeInfo is AddOnGroup) ? owner.Attack_DistanceDelta : 7500;
-      //float currdist  = 7500;
       ActorInfo currtarget = null;
-      List<ActorInfo> closetargets = new List<ActorInfo>();
       List<ActorInfo> targets = new List<ActorInfo>();
-      foreach (ActorInfo a in ActorFactory.Instance().GetActorList())
+      int weight = 0;
+
+      foreach (ActorInfo a in ActorFactory.Instance().GetHoldingList())
       {
         if (a != null
           && owner != a
           && a.CreationState == CreationState.ACTIVE
           && a.ActorState != ActorState.DYING
           && a.ActorState != ActorState.DEAD
-          && a.IsCombatObject
+          && a.CombatInfo.IsCombatObject
+          && (a.TypeInfo.TargetType & m_TargetType) != 0
           && !a.IsOutOfBounds(GameScenarioManager.Instance().MinAIBounds, GameScenarioManager.Instance().MaxAIBounds)
-          //&& owner.CanTarget(a)
           && !owner.Faction.IsAlliedWith(a.Faction) // enemy
           )
         {
-          if (owner.MaxSpeed == 0)
+          if (owner.MovementInfo.MaxSpeed == 0) // stationary, can only target those in range
           {
             WeaponInfo weap = null;
             int dummy = 0;
             float dist = ActorDistanceInfo.GetDistance(owner, a, owner.GetWeaponRange());
             owner.SelectWeapon(a, 0, dist, out weap, out dummy);
 
-            if (weap != null)//dist < currdist)
+            if (weap != null)
             {
-              for (int i = 0; i < a.HuntWeight; i++)
-                targets.Add(a);
+              targets.Add(a);
+              weight += a.HuntWeight;
             }
           }
           else
           {
-            for (int i = 0; i < a.HuntWeight; i++)
-              targets.Add(a);
+            targets.Add(a);
+            weight += a.HuntWeight;
           }
         }
       }
 
       if (targets.Count > 0)
       {
-        int i = Engine.Instance().Random.Next(0, targets.Count);
-        currtarget = targets[i];
+        int w = Engine.Instance().Random.Next(0, weight);
+        for (int i = 0; i < targets.Count; i++)
+        {
+          w -= targets[i].HuntWeight;
+          currtarget = targets[i];
+          if (w < 0)
+            break;
+        }
       }
 
       if (currtarget != null)
@@ -77,7 +81,7 @@ namespace SWEndor.Actions
       }
       else
       {
-        ActionManager.QueueLast(owner, new Wait(2.5f));
+        ActionManager.QueueLast(owner, new Wait(1));
       }
 
       Complete = true;

@@ -1,10 +1,7 @@
 ﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class Tower02ATI : SurfaceTowerGroup
   {
@@ -17,12 +14,6 @@ namespace SWEndor
 
     private Tower02ATI() : base("Gun Tower")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 25;
       ImpactDamage = 120;
 
@@ -33,18 +24,16 @@ namespace SWEndor
       NoAI = true;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"towers\tower_02.x");
+      AddOns = new AddOnInfo[] { new AddOnInfo("Turbolaser Turret", new TV_3DVECTOR(0, 50, 0), new TV_3DVECTOR(0, 0, 0), true) };
     }
 
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
 
-      // Tower Gun
-      ainfo.SetStateS("AddOn_0", "Turbolaser Turret, 0, 50, 0, 0, 0, 0, true");
-
-      ainfo.EnableDeathExplosion = true;
-      ainfo.DeathExplosionType = "ExplosionSm";
-      ainfo.DeathExplosionSize = 5;
+      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
+      ainfo.ExplosionInfo.DeathExplosionSize = 5;
     }
 
     public override void ProcessNewState(ActorInfo ainfo)

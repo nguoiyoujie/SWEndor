@@ -1,9 +1,13 @@
 ﻿using MTV3D65;
-using System;
+using SWEndor.Actors;
+using SWEndor.Actors.Types;
+using SWEndor.AI;
+using SWEndor.AI.Actions;
+using SWEndor.Sound;
+using SWEndor.UI;
 using System.Collections.Generic;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Scenarios
 {
   public class GameScenarioBase
   {
@@ -12,29 +16,90 @@ namespace SWEndor
     public List<ActorTypeInfo> AllowedWings = new List<ActorTypeInfo> { XWingATI.Instance() };
     public List<string> AllowedDifficulties = new List<string> { "normal" };
 
+    public string Difficulty { get; set; }
+    public int StageNumber { get; set; }
+
+    public DeathCamMode DeathCamMode = DeathCamMode.CIRCLE;
+    private CameraMode[] m_PlayerCameraModes = new CameraMode[] { CameraMode.FIRSTPERSON };
+    private int m_PlayerModeNum = 0;
+    public CameraMode[] PlayerCameraModes
+    {
+      get { return m_PlayerCameraModes; }
+      set
+      {
+        m_PlayerCameraModes = value;
+        if (m_PlayerCameraModes == null || m_PlayerCameraModes.Length == 0)
+          PlayerCameraInfo.Instance().CameraMode = CameraMode.FIRSTPERSON;
+        else
+        {
+          for (int i = 0; i < m_PlayerCameraModes.Length; i++)
+            if (m_PlayerCameraModes[i] == PlayerCameraInfo.Instance().CameraMode)
+            {
+              m_PlayerModeNum = i;
+              return;
+            }
+          PlayerCameraInfo.Instance().CameraMode = m_PlayerCameraModes[0];
+        }
+      }
+    }
+
+    public CameraMode NextCameraMode()
+    {
+      if (m_PlayerCameraModes == null || m_PlayerCameraModes.Length == 0)
+        return CameraMode.FIRSTPERSON;
+
+      m_PlayerModeNum++;
+      if (m_PlayerModeNum >= m_PlayerCameraModes.Length)
+        m_PlayerModeNum = 0;
+
+      return m_PlayerCameraModes[m_PlayerModeNum];
+    }
+
+    public CameraMode PrevCameraMode()
+    {
+      if (m_PlayerCameraModes == null || m_PlayerCameraModes.Length == 0)
+        return CameraMode.FIRSTPERSON;
+
+      m_PlayerModeNum--;
+      if (m_PlayerModeNum < 0)
+        m_PlayerModeNum = m_PlayerCameraModes.Length - 1;
+
+      return m_PlayerCameraModes[m_PlayerModeNum];
+    }
+
+    public ActorInfo ActiveActor { get; set; }
+
     public float RebelSpawnTime = 0;
     public float TIESpawnTime = 0;
     public ScenarioEvent MakePlayer;
     public float TimeSinceLostWing = -100;
     public float TimeSinceLostShip = -100;
+    public float TimeSinceLostStructure = -100;
 
-    public int RebelFighterLimit = 60;
-    public int RebelFighersLost = 0; // do we need those?
-    public int RebelShipsLost = 0; // do we need those?
+    public FactionInfo MainAllyFaction = FactionInfo.Neutral;
+    public FactionInfo MainEnemyFaction = FactionInfo.Neutral;
 
     public virtual void Load(ActorTypeInfo wing, string difficulty)
     {
-      GameScenarioManager.Instance().Scenario = this;
-      GameScenarioManager.Instance().Difficulty = difficulty;
+      Difficulty = difficulty;
+      StageNumber = 0;
       PlayerInfo.Instance().ActorType = wing;
+      //LandInfo.Instance().Enabled = false;
+    }
 
+    public virtual void Launch()
+    {
+      GameScenarioManager.Instance().Scenario = this;
       LoadFactions();
       LoadScene();
+      RegisterEvents();
     }
 
     public virtual void LoadFactions()
     {
       FactionInfo.Reset();
+      MainAllyFaction = FactionInfo.Neutral;
+      MainEnemyFaction = FactionInfo.Neutral;
     }
 
     public virtual void LoadScene()
@@ -64,23 +129,6 @@ namespace SWEndor
 
     public virtual void GameTick()
     {
-      int lostwings = GameScenarioManager.Instance().UpdateActorLists(GameScenarioManager.Instance().AllyFighters);
-      if (lostwings > 0)
-      {
-        RebelFighterLimit -= lostwings;
-        RebelFighersLost+= lostwings;
-        LostWing();
-      }
-
-      int lostships = GameScenarioManager.Instance().UpdateActorLists(GameScenarioManager.Instance().AllyShips);
-      if (lostships > 0)
-      {
-        RebelShipsLost += lostships;
-        LostShip();
-      }
-
-      if (RebelFighterLimit < GameScenarioManager.Instance().AllyFighters.Count)
-        RebelFighterLimit = GameScenarioManager.Instance().AllyFighters.Count;
     }
 
     public virtual void Unload()
@@ -98,16 +146,12 @@ namespace SWEndor
       Screen2D.Instance().ClearText();
 
       // clear sounds
-      PlayerInfo.Instance().exp_cazavol = 0;
-      PlayerInfo.Instance().exp_navevol = 0;
-      PlayerInfo.Instance().exp_restvol = 0;
-      PlayerInfo.Instance().enginefcvol = 0;
-      PlayerInfo.Instance().enginesmvol = 0;
-      PlayerInfo.Instance().enginelgvol = 0;
-      PlayerInfo.Instance().enginetevol = 0;
       SoundManager.Instance().SetSoundStopAll();
+
       Screen2D.Instance().OverrideTargetingRadar = false;
       Screen2D.Instance().Box3D_Enable = false;
+
+      LandInfo.Instance().Enabled = false;
     }
 
     public void FadeOut(object[] param = null)
@@ -129,17 +173,23 @@ namespace SWEndor
           GameOver();
           return;
         }
+        else if (GameScenarioManager.Instance().GetGameStateF("PlayCutsceneSequence", -1) != -1)
+        {
+          PlayCutsceneSequence(new object[] { GameScenarioManager.Instance().GetGameStateF("PlayCutsceneSequence", -1) });
+          return;
+        }
         else if (GameScenarioManager.Instance().GetGameStateB("GameWon"))
         {
-          GameWonSequence(null);
+          GameWonSequence();
           return;
         }
 
         if (MakePlayer != null)
         {
           MakePlayer(null);
-          GameScenarioManager.Instance().SetGameStateB("PendingPlayerSpawn", false);
+          //GameScenarioManager.Instance().SetGameStateB("PendingPlayerSpawn", false);
         }
+
         FadeIn();
         GameScenarioManager.Instance().IsCutsceneMode = false;
       }
@@ -157,6 +207,9 @@ namespace SWEndor
     public void GameOver(object[] param = null)
     {
       Engine.Instance().TVGraphicEffect.FadeIn(2.5f);
+
+      SoundManager.Instance().SetSoundStopAll();
+
       Screen2D.Instance().CurrentPage = new UIPage_GameOver();
       Screen2D.Instance().ShowPage = true;
       Game.Instance().IsPaused = true;
@@ -171,6 +224,9 @@ namespace SWEndor
 
       if (TimeSinceLostShip > Game.Instance().GameTime)
         t = TimeSinceLostShip;
+
+      if (TimeSinceLostStructure > Game.Instance().GameTime)
+        t = TimeSinceLostStructure;
 
       while (t < Game.Instance().GameTime + 3f)
       {
@@ -188,6 +244,29 @@ namespace SWEndor
 
       if (TimeSinceLostShip > Game.Instance().GameTime)
         t = TimeSinceLostShip;
+
+      if (TimeSinceLostStructure > Game.Instance().GameTime)
+        t = TimeSinceLostStructure;
+
+      while (t < Game.Instance().GameTime + 3f)
+      {
+        GameScenarioManager.Instance().AddEvent(t, "Common_LostSound");
+        t += 0.2f;
+      }
+      TimeSinceLostShip = Game.Instance().GameTime + 3f;
+    }
+
+    public void LostStructure()
+    {
+      float t = Game.Instance().GameTime;
+      if (TimeSinceLostWing > Game.Instance().GameTime)
+        t = TimeSinceLostWing;
+
+      if (TimeSinceLostShip > Game.Instance().GameTime)
+        t = TimeSinceLostShip;
+
+      if (TimeSinceLostStructure > Game.Instance().GameTime)
+        t = TimeSinceLostStructure;
 
       while (t < Game.Instance().GameTime + 3f)
       {
@@ -213,8 +292,8 @@ namespace SWEndor
                               , FactionInfo faction
                               , TV_3DVECTOR position
                               , TV_3DVECTOR rotation
-                              , ActionInfo[] actions
-                              , Dictionary<string, ActorInfo>[] registries)
+                              , ActionInfo[] actions = null
+                              , string[] registries = null)
     {
       ActorCreationInfo acinfo;
       ActorInfo ainfo;
@@ -240,12 +319,16 @@ namespace SWEndor
 
       if (registries != null)
       {
-        foreach (Dictionary<string, ActorInfo> reg in registries)
+        foreach (string s in registries)
         {
-          if (register_name != "")
-            reg.Add(register_name, ainfo);
-          else
-            reg.Add(ainfo.Key, ainfo);
+          Dictionary<string, ActorInfo> reg = GetRegister(s);
+          if (reg != null)
+          {
+            if (register_name != "")
+              reg.Add(register_name, ainfo);
+            else
+              reg.Add(ainfo.Key, ainfo);
+          }
         }
       }
 
@@ -254,13 +337,38 @@ namespace SWEndor
       return ainfo;
     }
 
+    public Dictionary<string, ActorInfo> GetRegister(string key)
+    {
+      switch (key.ToLower())
+      {
+        //case "enemystructures":
+        //  return GameScenarioManager.Instance().EnemyStructures;
+        //case "allyfighters":
+        //  return GameScenarioManager.Instance().AllyFighters;
+        //case "allyships":
+        //  return GameScenarioManager.Instance().AllyShips;
+        //case "allystructures":
+        //  return GameScenarioManager.Instance().AllyStructures;
+        //case "enemyfighters":
+        //  return GameScenarioManager.Instance().EnemyFighters;
+        //case "enemyships":
+        //  return GameScenarioManager.Instance().EnemyShips;
+
+        case "criticalallies":
+          return GameScenarioManager.Instance().CriticalAllies;
+        case "criticalenemies":
+          return GameScenarioManager.Instance().CriticalEnemies;
+        default:
+          return null;
+      }
+    }
 
     public void SpawnActor(object[] param)
     {
       // Format: Object[]
 
       if (param == null 
-        || param.GetLength(0) < 8
+        || param.GetLength(0) < 10
         || !(param[0] is ActorTypeInfo)
         || !(param[1] is string)
         || !(param[2] is string)
@@ -270,7 +378,7 @@ namespace SWEndor
         || !(param[6] is TV_3DVECTOR)
         || !(param[7] is TV_3DVECTOR)
         || !(param[8] is ActionInfo[])
-        || !(param[9] is Dictionary<string, ActorInfo>[])
+        || !(param[9] is string[])
         )
         return;
 
@@ -283,7 +391,7 @@ namespace SWEndor
                , (TV_3DVECTOR)param[6]
                , (TV_3DVECTOR)param[7]
                , (ActionInfo[])param[8]
-               , (Dictionary<string, ActorInfo>[])param[9]
+               , (string[])param[9]
                );
     }
 
@@ -296,30 +404,21 @@ namespace SWEndor
       actor.TickEvents.Add("Common_ProcessTick");
     }
 
-    public void ProcessCreated(object[] param)
+    public virtual void ProcessCreated(object[] param)
     {
     }
 
-    public void ProcessKilled(object[] param)
+    public virtual void ProcessKilled(object[] param)
     {
-      //if (param.GetLength(0) < 1 || param[0] == null)
-        //return;
-
-      //ActorInfo av = (ActorInfo)param[0];
-
-      //if (PlayerInfo.Instance().Actor == av)
-      //{
-      //  GameScenarioManager.Instance().AddEvent(Game.Instance().Time + 3f, "Common_FadeOut");
-      //}
     }
 
-
-    public void ProcessPlayerDying(object[] param)
+    public virtual void ProcessPlayerDying(object[] param)
     {
       if (param.GetLength(0) < 1 || param[0] == null)
         return;
 
       ActorInfo ainfo = (ActorInfo)param[0];
+      PlayerInfo.Instance().TempActor = ainfo;
 
       if (PlayerInfo.Instance().Actor.TypeInfo is DeathCameraATI)
       {
@@ -330,25 +429,23 @@ namespace SWEndor
       }
     }
 
-    public void ProcessPlayerKilled(object[] param)
+    public virtual void ProcessPlayerKilled(object[] param)
     {
       GameScenarioManager.Instance().IsCutsceneMode = true;
-
-      GameScenarioManager.Instance().SetGameStateB("PendingPlayerSpawn", true);
       GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 3f, "Common_FadeOut");
       if (PlayerInfo.Instance().Lives == 0)
         GameScenarioManager.Instance().SetGameStateB("GameOver", true);
     }
 
-    public void ProcessTick(object[] param)
+    public virtual void ProcessTick(object[] param)
     {
     }
 
-    public void ProcessStateChange(object[] param)
+    public virtual void ProcessStateChange(object[] param)
     {
     }
 
-    public void ProcessHit(object[] param)
+    public virtual void ProcessHit(object[] param)
     {
       if (param.GetLength(0) < 2 || param[0] == null || param[1] == null)
         return;
@@ -365,17 +462,31 @@ namespace SWEndor
         {
           if (PlayerInfo.Instance().Actor == a)
           {
-            Screen2D.Instance().UpdateText(string.Format("{0}: {1}, watch your fire!", av.Name, PlayerInfo.Instance().Name)
-                                                        , Game.Instance().GameTime + 5f
-                                                        , av.Faction.Color);
+            Screen2D.Instance().MessageText(string.Format("{0}: {1}, watch your fire!", av.Name, PlayerInfo.Instance().Name)
+                                                        , 5
+                                                        , av.Faction.Color
+                                                        , -1);
           }
         }
       }
     }
 
-    public virtual void GameWonSequence(object[] param)
+    public virtual void PlayCutsceneSequence(object[] param = null)
     {
 
+    }
+
+    public virtual void GameWonSequence(object[] param = null)
+    {
+      Engine.Instance().TVGraphicEffect.FadeIn(2.5f);
+
+      SoundManager.Instance().SetSoundStopAll();
+
+      Screen2D.Instance().CurrentPage = new UIPage_GameWon();
+      Screen2D.Instance().ShowPage = true;
+      Game.Instance().IsPaused = true;
+      SoundManager.Instance().SetMusic("finale_3_1");
+      SoundManager.Instance().SetMusicLoop("credits_3_1");
     }
   }
 }

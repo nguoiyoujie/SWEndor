@@ -1,10 +1,8 @@
 ﻿using MTV3D65;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class TransportATI : WarshipGroup
   {
@@ -17,12 +15,6 @@ namespace SWEndor
 
     private TransportATI() : base("Transport")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 250.0f;
       ImpactDamage = 60.0f;
       MaxSpeed = 40.0f;
@@ -34,43 +26,20 @@ namespace SWEndor
       Score_DestroyBonus = 3000;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"transport\transport.x");
+
+      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", new TV_3DVECTOR(0, 0, -150), 500.0f, true) };
+      AddOns = new AddOnInfo[]
+      {
+        new AddOnInfo("Transport Turbolaser Tower", new TV_3DVECTOR(0, 70, 200), new TV_3DVECTOR(-90, 0, 0), true)
+      };
     }
 
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
 
-      ainfo.SetStateS("AddOn_0", "Transport Turbolaser Tower, 0, 70, 200, -90, 0, 0, true");
-
-      ainfo.EnableDeathExplosion = true;
-      ainfo.DeathExplosionType = "ExplosionLg";
-      ainfo.DeathExplosionSize = 2;
-      ainfo.ExplosionRate = 0.5f;
-      ainfo.ExplosionSize = 1;
-      ainfo.ExplosionType = "ExplosionSm";
-
       ainfo.CamLocations.Add(new TV_3DVECTOR(0, 86, -150));
       ainfo.CamTargets.Add(new TV_3DVECTOR(0, 86, 2000));
-    }
-
-    public override void ProcessState(ActorInfo ainfo)
-    {
-      base.ProcessState(ainfo);
-
-      if (ainfo.CreationState == CreationState.ACTIVE)
-      {
-        TV_3DVECTOR engineloc = ainfo.GetRelativePositionXYZ(0, 0, -150 - z_displacement);
-        float dist = Engine.Instance().TVMathLibrary.GetDistanceVec3D(PlayerInfo.Instance().Position, engineloc);
-
-        if (PlayerInfo.Instance().Actor != ainfo)
-        {
-          if (dist < 500)
-          {
-            if (PlayerInfo.Instance().enginelgvol < 1 - dist / 500.0f)
-              PlayerInfo.Instance().enginelgvol = 1 - dist / 500.0f;
-          }
-        }
-      }
     }
 
     public override void ProcessNewState(ActorInfo ainfo)
@@ -79,6 +48,7 @@ namespace SWEndor
 
       if (ainfo.ActorState == ActorState.DEAD)
       {
+        // special debris
         if (!ainfo.IsAggregateMode() && !Game.Instance().IsLowFPS())
         {
           float px = 0;
@@ -108,7 +78,7 @@ namespace SWEndor
             acinfo.Position = ainfo.GetRelativePositionFUR(px, py, pz);
             acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + dx, ainfo.Rotation.y + dy, ainfo.Rotation.z + dz);
 
-            acinfo.InitialSpeed = ainfo.Speed;
+            acinfo.InitialSpeed = ainfo.MovementInfo.Speed;
             ActorInfo a = ActorInfo.Create(acinfo);
 
           }

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SWEndor.Input;
+using System;
 using System.Windows.Forms;
-using MTV3D65;
 
 namespace SWEndor
 {
@@ -15,28 +14,31 @@ namespace SWEndor
     {
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
+      Init();
+    }
 
-      Globals.CheckDirectories();
-
+    static void Init()
+    { 
       try
       {
-        InputManager.GenerateKeyMap();
+        Globals.Initialize();
+        InputKeyMap.GenerateDefaultFnKeys();
         Settings.LoadSettings();
         Settings.SaveSettings();
 
-        Game.Instance().StartLoad();
-        Engine.Instance().LinkForm(GameForm.Instance());
-        Engine.Instance().Initialize();
-        Engine.Instance().InitializeComponents();
+        Application.Run(GameForm.Instance());
       }
       catch (Exception ex)
       {
-        MessageBox.Show(string.Format("Error initializing Game: \n{0}\n\n{1}", ex.Message, ex.StackTrace));
+        string errorfilename = @"initerror.txt";
+        Globals.GenerateErrLog(ex, errorfilename);
+        MessageBox.Show(string.Format("Fatal Error occurred during initialization. Please see " + errorfilename + " in the /Log folder for the error message."
+                      , Application.ProductName + " - Error Encountered!"
+                      , MessageBoxButtons.OK));
         return;
       }
 
-      Game.Instance().Run();
-      GameForm.Instance().Show();
+      Globals.UnloadDlls();
     }
   }
 }

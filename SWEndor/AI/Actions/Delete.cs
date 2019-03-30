@@ -1,9 +1,6 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SWEndor.Actors;
 
-namespace SWEndor.Actions
+namespace SWEndor.AI.Actions
 {
   public class Delete : ActionInfo
   {

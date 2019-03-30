@@ -1,10 +1,6 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SWEndor
+﻿namespace SWEndor.Weapons.Types
 {
+  /*
   public class AWingTorpWeapon : WeaponInfo
   {
     public AWingTorpWeapon() : base("A-Wing Torpedo")
@@ -30,9 +26,7 @@ namespace SWEndor
       RequirePlayerTargetLock = true;
 
       // AI Config
-      AIAttackFighters = true;
-      AIAttackShips = true;
-      AIAttackAddons = true;
+      AIAttackTargets = TargetType.ANY;
       AIAttackNull = false;
 
       // 
@@ -41,4 +35,5 @@ namespace SWEndor
       AngularRange = 5;
     }
   }
+  */
 }

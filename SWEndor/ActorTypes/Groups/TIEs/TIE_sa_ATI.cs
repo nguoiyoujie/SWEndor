@@ -1,10 +1,10 @@
 ﻿using MTV3D65;
-using System;
+using SWEndor.Weapons;
+using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class TIE_sa_ATI : TIEGroup
   {
@@ -17,13 +17,7 @@ namespace SWEndor
 
     private TIE_sa_ATI() : base("TIE Bomber")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
-      MaxStrength = 5;
+      MaxStrength = 6;
       ImpactDamage = 16;
       MaxSpeed = 300;
       MinSpeed = 150;
@@ -48,19 +42,19 @@ namespace SWEndor
       ainfo.CamLocations.Add(new TV_3DVECTOR(0, 40, 250));
       ainfo.CamTargets.Add(new TV_3DVECTOR(0, 0, -2000));
 
-      ainfo.EnableDeathExplosion = true;
-      ainfo.DeathExplosionType = "ExplosionSm";
-      ainfo.ExplosionRate = 0.75f;
-      ainfo.ExplosionSize = 1;
-      ainfo.ExplosionType = "Explosion";
+      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
+      ainfo.ExplosionInfo.ExplosionRate = 0.75f;
+      ainfo.ExplosionInfo.ExplosionSize = 1;
+      ainfo.ExplosionInfo.ExplosionType = "Explosion";
 
       ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", new TIE_sa_TorpWeapon() }
                                                         , {"ion", new TIE_sa_IonWeapon() }
                                                         , {"laser", new TIE_sa_LaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new List<string> { "1:laser", "2:laser" };
-      ainfo.SecondaryWeapons = new List<string> { "none", "1:ion", "1:torp" };
-      ainfo.AIWeapons = new List<string> { "1:torp", "1:ion", "1:laser" };
+      ainfo.PrimaryWeapons = new string[] { "1:laser", "2:laser" };
+      ainfo.SecondaryWeapons = new string[] { "none", "1:ion", "1:torp" };
+      ainfo.AIWeapons = new string[] { "1:torp", "1:ion", "1:laser" };
     }
   }
 }

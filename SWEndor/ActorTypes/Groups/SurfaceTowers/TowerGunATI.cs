@@ -1,10 +1,9 @@
-﻿using MTV3D65;
-using System;
+﻿using SWEndor.Weapons;
+using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class TowerGunATI : SurfaceTowerGroup
   {
@@ -17,22 +16,18 @@ namespace SWEndor
 
     private TowerGunATI() : base("Turbolaser Turret")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 16;
       ImpactDamage = 60;
       MaxTurnRate = 36;
       ZTilt = 0;
       XLimit = 35;
 
-      RadarSize = 1;
+      RadarSize = 0;
 
       Score_perStrength = 25;
       Score_DestroyBonus = 1500;
+
+      TargetType = TargetType.ADDON;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"towers\tower_turbolaser.x");
     }
@@ -42,15 +37,15 @@ namespace SWEndor
       base.Initialize(ainfo);
 
       // Tower Gun
-      ainfo.EnableDeathExplosion = true;
-      ainfo.DeathExplosionType = "ExplosionSm";
-      ainfo.DeathExplosionSize = 3;
+      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
+      ainfo.ExplosionInfo.DeathExplosionSize = 3;
 
       ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", new Tower_DblLaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new List<string> { "1:laser" };
-      ainfo.SecondaryWeapons = new List<string> { "none" };
-      ainfo.AIWeapons = new List<string> { "1:laser" };
+      ainfo.PrimaryWeapons = new string[] { "1:laser" };
+      ainfo.SecondaryWeapons = new string[] { "none" };
+      ainfo.AIWeapons = new string[] { "1:laser" };
     }
   }
 }

@@ -1,10 +1,7 @@
 ﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class Surface001_00ATI : StaticSceneGroup
   {

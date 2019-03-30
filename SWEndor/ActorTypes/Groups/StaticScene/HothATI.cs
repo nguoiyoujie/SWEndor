@@ -1,10 +1,6 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class HothATI : StaticSceneGroup
   {
@@ -23,14 +19,12 @@ namespace SWEndor
         SourceMesh = Engine.Instance().TVScene.CreateMeshBuilder(Key);
 
         // 1 texture
-        string texname = @"hoth.bmp";
+        string texname = Path.Combine("planets", @"hoth.bmp");
         string texpath = Path.Combine(Globals.ImagePath, texname);
-        if (Engine.Instance().TVGlobals.GetTex(texname) == 0)
-        {
-          Engine.Instance().TVTextureFactory.LoadTexture(texpath, texname);
-        }
+        int itex = LoadTexture(texname, texpath);
+
         SourceMesh.LoadXFile(Path.Combine(Globals.ModelPath, @"endor.x"), true);
-        SourceMesh.SetTexture(Engine.Instance().TVGlobals.GetTex(texname));
+        SourceMesh.SetTexture(itex);
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);
       }

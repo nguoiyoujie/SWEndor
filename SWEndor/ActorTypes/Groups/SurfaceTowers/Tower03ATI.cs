@@ -1,10 +1,6 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class Tower03ATI : SurfaceTowerGroup
   {
@@ -17,12 +13,6 @@ namespace SWEndor
 
     private Tower03ATI() : base("Radar Tower")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 75;
       ImpactDamage = 120;
 
@@ -44,9 +34,9 @@ namespace SWEndor
       base.Initialize(ainfo);
 
       // Tower Gun
-      ainfo.EnableDeathExplosion = true;
-      ainfo.DeathExplosionType = "ExplosionSm";
-      ainfo.DeathExplosionSize = 5;
+      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
+      ainfo.ExplosionInfo.DeathExplosionSize = 5;
     }
 
     public override void ProcessNewState(ActorInfo ainfo)

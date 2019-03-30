@@ -1,9 +1,8 @@
 ﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SWEndor.Actors;
+using SWEndor.Actors.Types;
 
-namespace SWEndor
+namespace SWEndor.Weapons.Types
 {
   public class ImperialAntiShipTurboLaserWeapon : WeaponInfo
   {
@@ -31,13 +30,8 @@ namespace SWEndor
       RequirePlayerTargetLock = false;
 
       // AI Config
-      AIAttackFighters = false;
-      AIAttackShips = true;
-      AIAttackAddons = false;
+      AIAttackTargets = TargetType.SHIP | TargetType.ADDON;
       AIAttackNull = false;
-
-      // 
-      FireSound = "Laser_sf";
 
       AngularRange = 270;
       Range = 12500;

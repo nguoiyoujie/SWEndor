@@ -1,10 +1,8 @@
 ﻿using MTV3D65;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class NebulonB2ATI : WarshipGroup
   {
@@ -17,12 +15,6 @@ namespace SWEndor
 
     private NebulonB2ATI() : base("Nebulon-B2 Frigate")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 1350.0f;
       ImpactDamage = 60.0f;
       MaxSpeed = 36.0f;
@@ -34,58 +26,31 @@ namespace SWEndor
       Score_DestroyBonus = 10000;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"nebulonb\nebulonb2.x");
-      /*
-      SourceMesh = Engine.Instance().TVGlobals.GetMesh(Name);
-      if (SourceMesh == null)
+
+      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", new TV_3DVECTOR(0, 100, -300), 1500.0f, true) };
+      AddOns = new AddOnInfo[]
       {
-        SourceMesh = Engine.Instance().TVScene.CreateMeshBuilder(Name);
-        SourceMesh.LoadXFile(Path.Combine(Globals.ModelPath, @"nebulonb\nebulonb.x"), true);
-        SourceMesh.Enable(false);
-      }
-      */
+        new AddOnInfo("Nebulon B Turbolaser Tower", new TV_3DVECTOR(0, 40, 220), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnInfo("Nebulon B Turbolaser Tower", new TV_3DVECTOR(0, 95, -520), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnInfo("Nebulon B Turbolaser Tower", new TV_3DVECTOR(0, -145, -550), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnInfo("Nebulon B Missile Pod", new TV_3DVECTOR(-80, -45, -485), new TV_3DVECTOR(0, 0, 0), true)
+        , new AddOnInfo("Nebulon B Missile Pod", new TV_3DVECTOR(80, -45, -485), new TV_3DVECTOR(0, 0, 0), true)
+      };
     }
 
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
 
-      ainfo.SetStateS("AddOn_0", "Nebulon B Turbolaser Tower, 0, 40, 220, -90, 0, 0, true");
-      ainfo.SetStateS("AddOn_1", "Nebulon B Turbolaser Tower, 0, 95, -500, -90, 0, 0, true");
-      ainfo.SetStateS("AddOn_2", "Nebulon B Turbolaser Tower, 0, -145, -400, 90, 0, 0, true");
+      ainfo.MovementInfo.DyingMovement = Components.DyingMovement.SINK;
+      ainfo.MovementInfo.D_sink_pitch_rate = 0.02f;
+      ainfo.MovementInfo.D_sink_down_rate = 5f;
+      ainfo.MovementInfo.D_sink_forward_rate = 0.8f;
 
-      ainfo.EnableDeathExplosion = true;
-      ainfo.DeathExplosionType = "ExplosionLg";
-      ainfo.DeathExplosionSize = 2;
-      ainfo.ExplosionRate = 0.5f;
-      ainfo.ExplosionSize = 1;
-      ainfo.ExplosionType = "ExplosionSm";
-
-      ainfo.SelfRegenRate = 0.1f;
+      ainfo.RegenerationInfo.SelfRegenRate = 0.1f;
 
       ainfo.CamLocations.Add(new TV_3DVECTOR(0, 120, -300));
       ainfo.CamTargets.Add(new TV_3DVECTOR(0, 120, 2000));
-
-      //ainfo.Scale *= 1.5f;
-    }
-
-    public override void ProcessState(ActorInfo ainfo)
-    {
-      base.ProcessState(ainfo);
-
-      if (ainfo.CreationState == CreationState.ACTIVE)
-      {
-        TV_3DVECTOR engineloc = ainfo.GetRelativePositionXYZ(0, 100, -300 - z_displacement);
-        float dist = Engine.Instance().TVMathLibrary.GetDistanceVec3D(PlayerInfo.Instance().Position, engineloc);
-
-        if (PlayerInfo.Instance().Actor != ainfo)
-        {
-          if (dist < 1000)
-          {
-            if (PlayerInfo.Instance().enginelgvol < 1 - dist / 1500.0f)
-              PlayerInfo.Instance().enginelgvol = 1 - dist / 1500.0f;
-          }
-        }
-      }
     }
   }
 }

@@ -1,4 +1,6 @@
 ﻿using MTV3D65;
+using SWEndor.Input;
+using SWEndor.Sound;
 using System.IO;
 using System.Windows.Forms;
 
@@ -14,8 +16,10 @@ namespace SWEndor
     public static ResolutionSettings ResolutionMode = ResolutionSettings.FillScreen;
     public static int ResolutionX { get; private set; }
     public static int ResolutionY { get; private set; }
+    public static bool GameDebug = false;
     public static bool FullScreenMode = false;
     public static bool ShowPerformance = false;
+    public static float SteeringSensitivity = 1.5f;
 
     public static TV_2DVECTOR GetResolution
     {
@@ -85,10 +89,14 @@ namespace SWEndor
         sr.WriteLine(string.Format("ResolutionMode={0}", (int)ResolutionMode));
         sr.WriteLine(string.Format("FullScreen={0}", FullScreenMode));
         sr.WriteLine(string.Format("ShowPerformance={0}", ShowPerformance));
+        sr.WriteLine(string.Format("GameDebug={0}", GameDebug));
+        sr.WriteLine(string.Format("MasterMusicVolume={0}", SoundManager.Instance().MasterMusicVolume));
+        sr.WriteLine(string.Format("MasterSFXVolume={0}", SoundManager.Instance().MasterSFXVolume));
+        sr.WriteLine(string.Format("SteeringSensitivity={0}", SteeringSensitivity));
 
-        foreach (string s in InputManager.FunctionKeyMap.GetKeys())
+        foreach (string s in InputKeyMap.GetFnKeys())
         {
-          sr.WriteLine(string.Format("FuncKey:{0}={1}", s, InputManager.FunctionKeyMap.GetItem(s)));
+          sr.WriteLine(string.Format("FuncKey:{0}={1}", s, InputKeyMap.GetFnKey(s)));
         }
         sr.Flush();
       }
@@ -104,27 +112,33 @@ namespace SWEndor
 
         switch (key)
         {
-          case ("resolutionmode"):
+          case "resolutionmode":
             int resM = 0;
             ResolutionMode = (ResolutionSettings)((int.TryParse(value, out resM)) ? resM : 0);
             break;
-          /*
-          case ("resolutionx"):
-            int resX = 600;
-            ResolutionX = (int.TryParse(value, out resX)) ? resX : 600;
+          case "gamedebug":
+            bool gamedebug = false;
+            GameDebug = (bool.TryParse(value, out gamedebug)) ? gamedebug : false;
             break;
-          case ("resolutiony"):
-            int resY = 600;
-            ResolutionY = (int.TryParse(value, out resY)) ? resY : 600;
-            break;
-          */
-          case ("fullscreen"):
+          case "fullscreen":
             bool fullscr = false;
             FullScreenMode = (bool.TryParse(value, out fullscr)) ? fullscr : false;
             break;
-          case ("showperformance"):
+          case "showperformance":
             bool showperf = false;
             ShowPerformance = (bool.TryParse(value, out showperf)) ? showperf : false;
+            break;
+          case "mastermusicvolume":
+            float mastermusicvol = 1.0f;
+            SoundManager.Instance().MasterMusicVolume = (float.TryParse(value, out mastermusicvol)) ? mastermusicvol : 1.0f;
+            break;
+          case "mastersfxvolume":
+            float mastersfxvol = 1.0f;
+            SoundManager.Instance().MasterSFXVolume = (float.TryParse(value, out mastersfxvol)) ? mastersfxvol : 1.0f;
+            break;
+          case "steeringsensitivity":
+            float steer = 1.5f;
+            SteeringSensitivity = (float.TryParse(value, out steer)) ? steer : 1.5f;
             break;
           default:
             if (key.StartsWith("funckey:"))
@@ -132,7 +146,7 @@ namespace SWEndor
               string keytype = key.Substring(8); // funckey:
               int funckey = 0;
               funckey = (int.TryParse(value, out funckey)) ? funckey : 0;
-              InputManager.FunctionKeyMap.AddorUpdateItem(keytype, funckey);
+              InputKeyMap.SetFnKey(keytype, funckey);
             }
 
             break;

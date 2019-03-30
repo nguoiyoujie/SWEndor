@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SWEndor
 {
@@ -10,11 +10,19 @@ namespace SWEndor
   /// <typeparam name="U">The item type to be stored as values in this list</typeparam>
   public class ThreadSafeDictionary<T, U>
   {
-    private Mutex mu_pending_list = new Mutex();
+    private object locker = new object();
+
+    //private Mutex mu_pending_list = new Mutex();
     private Dictionary<T, U> _list = new Dictionary<T, U>();
     private Dictionary<T, U> _pending_list = new Dictionary<T, U>();
     private bool _dirty = true;
+
+    /// <summary>
+    /// Defines whether updates should be triggered explicitly. If true, call SetDirty() to update.
+    /// </summary>
     public bool ExplicitUpdateOnly = false;
+
+    public ThreadSafeDictionary(IDictionary<T, U> dict = null) { if (dict != null) _pending_list = new Dictionary<T, U>(dict); }
 
     public int Count
     {
@@ -39,21 +47,8 @@ namespace SWEndor
 
     public U this[T key]
     {
-      get
-      {
-        Update();
-        if (_list.ContainsKey(key))
-          return _list[key];
-        return default(U);
-      }
-      set
-      {
-        mu_pending_list.WaitOne();
-        _pending_list[key] = value;
-        mu_pending_list.ReleaseMutex();
-        if (!ExplicitUpdateOnly)
-          _dirty = true;
-      }
+      get { return Get(key); }
+      set { Set(key, value); }
     }
 
     /// <summary>
@@ -63,7 +58,7 @@ namespace SWEndor
     public Dictionary<T, U> GetList()
     {
       Update();
-      Dictionary<T, U> ret = _list;
+      Dictionary<T, U> ret = new Dictionary<T, U>(_list);
       return ret;
     }
 
@@ -92,7 +87,7 @@ namespace SWEndor
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    public U GetItem(T key)
+    public U Get(T key)
     {
       Update();
       U ret = default(U);
@@ -104,10 +99,7 @@ namespace SWEndor
     {
       if (_dirty)
       {
-        mu_pending_list.WaitOne();
-        _list = _pending_list;
-        _pending_list = new Dictionary<T, U>(_pending_list);
-        mu_pending_list.ReleaseMutex();
+        Refresh();
       }
       _dirty = false;
     }
@@ -121,28 +113,80 @@ namespace SWEndor
     }
 
     /// <summary>
+    /// Forces a refresh
+    /// </summary>
+    public void Refresh()
+    {
+      lock (locker)
+      {
+        _list = new Dictionary<T, U>(_pending_list);
+      }
+    }
+
+    /// <summary>
     /// Adds an item to the collection
     /// </summary>
-    public void AddItem(T key, U value)
+    public void Add(T key, U value)
     {
-      mu_pending_list.WaitOne();
-      _pending_list.Add(key, value);
-      mu_pending_list.ReleaseMutex();
+      try
+      {
+        lock (locker)
+          _pending_list.Add(key, value);
+      }
+      catch (ArgumentNullException ex)
+      {
+        throw new ArgumentNullException("Attempted to add a null key to a ThreadSafeDictionary", ex);
+      }
+      catch (ArgumentException ex)
+      {
+        throw new ArgumentException("Attempted to add an existing key to a ThreadSafeDictionary", ex);
+      }
+
       if (!ExplicitUpdateOnly)
         _dirty = true;
     }
 
     /// <summary>
-    /// Adds or Updates an item to the collection
+    /// Sets an item to the collection
     /// </summary>
-    public void AddorUpdateItem(T key, U value)
+    public void Set(T key, U value)
     {
-      mu_pending_list.WaitOne();
-      if (_pending_list.ContainsKey(key))
-        _pending_list[key] = value;
-      else
-        _pending_list.Add(key, value);
-      mu_pending_list.ReleaseMutex();
+      try
+      {
+        lock (locker)
+          _pending_list[key] = value;
+      }
+      catch (ArgumentNullException ex)
+      {
+        throw new ArgumentNullException("Attempted to set value of a null key in a ThreadSafeDictionary", ex);
+      }
+      catch (KeyNotFoundException ex)
+      {
+        throw new ArgumentException("Attempted to set value to an non-existend key in a ThreadSafeDictionary", ex);
+      }
+
+      if (!ExplicitUpdateOnly)
+        _dirty = true;
+    }
+
+    /// <summary>
+    /// Adds or Sets an item to the collection
+    /// </summary>
+    public void Put(T key, U value)
+    {
+      try
+      {
+        lock (locker)
+          if (_pending_list.ContainsKey(key))
+            _pending_list[key] = value;
+          else
+            _pending_list.Add(key, value);
+      }
+      catch (ArgumentNullException ex)
+      {
+        throw new ArgumentNullException("Attempted to put value of a null key in a ThreadSafeDictionary", ex);
+      }
+
       if (!ExplicitUpdateOnly)
         _dirty = true;
     }
@@ -150,11 +194,11 @@ namespace SWEndor
     /// <summary>
     /// Clears the collection
     /// </summary>
-    public void ClearList()
+    public void Clear()
     {
-      mu_pending_list.WaitOne();
-      _pending_list = new Dictionary<T, U>();
-      mu_pending_list.ReleaseMutex();
+      lock (locker)
+        _pending_list = new Dictionary<T, U>();
+
       if (!ExplicitUpdateOnly)
         _dirty = true;
     }
@@ -162,13 +206,13 @@ namespace SWEndor
     /// <summary>
     /// Removes an item from the collection
     /// </summary>
-    public bool RemoveItem(T key)
+    public bool Remove(T key)
     {
       bool ret = false;
-      mu_pending_list.WaitOne();
-      if (_pending_list.ContainsKey(key))
-        ret = _pending_list.Remove(key);
-      mu_pending_list.ReleaseMutex();
+      lock (locker)
+        if (_pending_list.ContainsKey(key))
+          ret = _pending_list.Remove(key);
+
       if (!ExplicitUpdateOnly)
         _dirty = true;
 

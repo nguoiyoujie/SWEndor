@@ -1,10 +1,10 @@
 ﻿using MTV3D65;
-using System;
+using SWEndor.Weapons;
+using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class LandoFalconATI : FighterGroup
   {
@@ -37,6 +37,9 @@ namespace SWEndor
       AlwaysShowInRadar = true;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"falcon\falcon.x");
+
+      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("falcon_engine", new TV_3DVECTOR(0, 0, -30), 200, true) };
+      AddOns = new AddOnInfo[] { new AddOnInfo("Invisible Rebel Turbo Laser", new TV_3DVECTOR(0, 7, 20), new TV_3DVECTOR(90, 0, 0), true) };
     }
 
     public override void Initialize(ActorInfo ainfo)
@@ -55,22 +58,19 @@ namespace SWEndor
       ainfo.CamLocations.Add(new TV_3DVECTOR(0, 40, 250));
       ainfo.CamTargets.Add(new TV_3DVECTOR(0, 0, -2000));
 
-      ainfo.EnableDeathExplosion = true;
-      ainfo.DeathExplosionType = "ExplosionSm";
-      ainfo.ExplosionRate = 1;
-      ainfo.ExplosionSize = 1;
-      ainfo.ExplosionType = "Explosion";
+      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
+      ainfo.ExplosionInfo.ExplosionRate = 1;
+      ainfo.ExplosionInfo.ExplosionSize = 1;
+      ainfo.ExplosionInfo.ExplosionType = "Explosion";
 
-      ainfo.SelfRegenRate = 0.5f;
+      ainfo.RegenerationInfo.SelfRegenRate = 0.1f;
       
-      ainfo.SetStateS("AddOn_0", "Invisible Rebel Turbo Laser, 0, 7, 20, 0, 0, 0, true");
-      //ainfo.SetCustomStateS("AddOn_1", "Invisible Rebel Turbo Laser, 0, -2, 10, 0, 0, 0, true");
-
       ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", new FalconLaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new List<string> { "1:laser" };
-      ainfo.SecondaryWeapons = new List<string> { "none" };
-      ainfo.AIWeapons = new List<string> { "1:laser" };
+      ainfo.PrimaryWeapons = new string[] { "1:laser" };
+      ainfo.SecondaryWeapons = new string[] { "none" };
+      ainfo.AIWeapons = new string[] { "1:laser" };
 
       ainfo.SetStateB("No2ndKill", true);
     }

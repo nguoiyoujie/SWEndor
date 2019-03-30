@@ -1,10 +1,9 @@
 ﻿using MTV3D65;
-using System;
+using SWEndor.Scenarios;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class ExplosionSmATI : ExplosionGroup
   {
@@ -15,8 +14,6 @@ namespace SWEndor
       return _instance;
     }
 
-    List<int> texanimframes = new List<int>();
-
     private ExplosionSmATI() : base("ExplosionSm")
     {
       // Combat
@@ -26,7 +23,6 @@ namespace SWEndor
       IsSelectable = false;
       IsDamage = false;
       RadarSize = 5;
-      AnimationCyclePeriod = 1;
 
       EnableDistanceCull = false;
 
@@ -34,58 +30,16 @@ namespace SWEndor
       SourceMesh = Engine.Instance().TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Engine.Instance().TVScene.CreateMeshBuilder(Key);
-
-        // 16 textures (including 00).
-        for (int i = 0; i <= 15; i++)
-        {
-          string texname = string.Format(@"expl{0:00}.jpg", i);
-          string texpath = Path.Combine(Globals.ShaderPath, texname);
-          if (Engine.Instance().TVGlobals.GetTex(texname) == 0)
-          {
-            int texS = Engine.Instance().TVTextureFactory.LoadTexture(texpath);
-            int texA = Engine.Instance().TVTextureFactory.LoadAlphaTexture(texpath);
-            texanimframes.Add(Engine.Instance().TVTextureFactory.AddAlphaChannel(texS, texA, texname));
-          }
-          else
-          {
-            texanimframes.Add(Engine.Instance().TVGlobals.GetTex(texname));
-          }
-        }
-        SourceMesh.CreateBox(100, 100, 0.01f);
-        SourceMesh.SetTexture(texanimframes[0]);
+        LoadAlphaTextureFromFolder(Globals.ImagePath, "explosion/large");
+        SourceMesh = Engine.Instance().TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 100, 100, Key, true);
         SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
+        SourceMesh.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
 
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);
       }
-    }
 
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-      if (!ainfo.IsPlayer() && PlayerInfo.Instance().Actor != null && !GameScenarioManager.Instance().IsCutsceneMode)
-      {
-        float dist = ActorDistanceInfo.GetDistance(PlayerInfo.Instance().Actor, ainfo, 401);
-        if (dist < 400)
-        {
-          if (PlayerInfo.Instance().exp_restvol < 1 - dist / 400)
-            PlayerInfo.Instance().exp_restvol = 1 - dist / 400;
-        }
-      }
-    }
-
-    public override void ProcessState(ActorInfo ainfo)
-    {
-      if (ainfo.ActorState == ActorState.NORMAL)
-      {
-        TV_3DVECTOR pos = PlayerInfo.Instance().Camera.GetWorldPosition(new TV_3DVECTOR(0,0,-1000));
-        ainfo.LookAtPoint(pos);
-
-        int k = texanimframes.Count - 1 - (int)(ainfo.TimedLife / AnimationCyclePeriod * texanimframes.Count);
-        if (k >= 0 && k < texanimframes.Count)
-          ainfo.SetTexture(texanimframes[k]);
-      }
+      InitialSoundSources = new SoundSourceInfo[] { new SoundSourceInfo("exp_resto", 500) };
     }
   }
 }

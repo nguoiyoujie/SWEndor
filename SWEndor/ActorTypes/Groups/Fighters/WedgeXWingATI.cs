@@ -1,10 +1,10 @@
 ﻿using MTV3D65;
-using System;
+using SWEndor.Weapons;
+using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class WedgeXWingATI : FighterGroup
   {
@@ -52,20 +52,20 @@ namespace SWEndor
       ainfo.CamLocations.Add(new TV_3DVECTOR(0, 40, 250));
       ainfo.CamTargets.Add(new TV_3DVECTOR(0, 0, -2000));
 
-      ainfo.EnableDeathExplosion = true;
-      ainfo.DeathExplosionType = "ExplosionSm";
-      ainfo.ExplosionRate = 0.75f;
-      ainfo.ExplosionSize = 1;
-      ainfo.ExplosionType = "Explosion";
+      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
+      ainfo.ExplosionInfo.ExplosionRate = 0.75f;
+      ainfo.ExplosionInfo.ExplosionSize = 1;
+      ainfo.ExplosionInfo.ExplosionType = "Explosion";
 
-      ainfo.SelfRegenRate = 0.6f;
+      ainfo.RegenerationInfo.SelfRegenRate = 0.1f;
 
       ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", new XWingTorpWeapon() }
                                                         , {"laser", new XWingLaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new List<string> { "1:laser", "2:laser", "4:laser" };
-      ainfo.SecondaryWeapons = new List<string> { "4:laser", "1:torp" };
-      ainfo.AIWeapons = new List<string> { "1:torp", "1:laser" };
+      ainfo.PrimaryWeapons = new string[] { "1:laser", "2:laser", "4:laser" };
+      ainfo.SecondaryWeapons = new string[] { "4:laser", "1:torp" };
+      ainfo.AIWeapons = new string[] { "1:torp", "1:laser" };
 
       ainfo.SetStateB("No2ndKill", true);
     }

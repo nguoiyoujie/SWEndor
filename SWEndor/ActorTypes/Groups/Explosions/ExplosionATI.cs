@@ -2,9 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class ExplosionATI : ExplosionGroup
   {
@@ -14,8 +13,6 @@ namespace SWEndor
       if (_instance == null) { _instance = new ExplosionATI(); }
       return _instance;
     }
-
-    List<int> texanimframes = new List<int>();
 
     private ExplosionATI() : base("Explosion")
     {
@@ -27,49 +24,24 @@ namespace SWEndor
       IsDamage = false;
       CollisionEnabled = false;
       RadarSize = 2;
-      AnimationCyclePeriod = 0.5f;
 
       SourceMesh = Engine.Instance().TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Engine.Instance().TVScene.CreateMeshBuilder(Key);
-
-        // 8 textures (not including 0).
-        for (int i = 1; i <= 8; i++)
-        {
-          string texname = string.Format(@"expl{0:0}.jpg", i);
-          string texpath = Path.Combine(Globals.ShaderPath, texname);
-          if (Engine.Instance().TVGlobals.GetTex(texname) == 0)
-          {
-            int texS = Engine.Instance().TVTextureFactory.LoadTexture(texpath);
-            int texA = Engine.Instance().TVTextureFactory.LoadAlphaTexture(texpath);
-            texanimframes.Add(Engine.Instance().TVTextureFactory.AddAlphaChannel(texS, texA, texname));
-          }
-          else
-          {
-            texanimframes.Add(Engine.Instance().TVGlobals.GetTex(texname));
-          }
-        }
-        SourceMesh.CreateBox(10, 10, 0.001f);
-        SourceMesh.SetTexture(texanimframes[0]);
+        LoadAlphaTextureFromFolder(Globals.ImagePath, "explosion/small");
+        SourceMesh = Engine.Instance().TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 10, 10, Key, true);
         SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
+        SourceMesh.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
 
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);
       }
     }
 
-    public override void ProcessState(ActorInfo ainfo)
+    public override void Initialize(ActorInfo ainfo)
     {
-      if (ainfo.ActorState == ActorState.NORMAL)
-      {
-        TV_3DVECTOR pos = PlayerInfo.Instance().Camera.GetWorldPosition(new TV_3DVECTOR(0, 0, -1000));
-        ainfo.LookAtPoint(pos);
-
-        int k = texanimframes.Count - 1 - (int)(ainfo.TimedLife / AnimationCyclePeriod * texanimframes.Count);
-        if (k >= 0 && k < texanimframes.Count)
-          ainfo.SetTexture(texanimframes[k]);
-      }
+      base.Initialize(ainfo);
+      ainfo.CycleInfo.CyclePeriod = 0.5f;
     }
   }
 }

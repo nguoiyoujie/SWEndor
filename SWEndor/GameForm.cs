@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using MTV3D65;
+using System;
 using System.Drawing;
-using System.Text;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -20,38 +19,56 @@ namespace SWEndor
     private GameForm()
     {
       InitializeComponent();
-      this.Width = Settings.ResolutionX;
-      this.Height = Settings.ResolutionY;
     }
 
     private void GameForm_Load(object sender, EventArgs e)
     {
-      Cursor.Hide();
-      this.Show();
-      this.DesktopLocation = new Point(0, 0);
-      this.Width = Settings.ResolutionX;
-      this.Height = Settings.ResolutionY;
-      while (Game.Instance().IsRunning)
-      {
-        Application.DoEvents();
-        Thread.Sleep(1000);
-      }
+      DesktopLocation = new Point(0, 0);
+      Width = Settings.ResolutionX;
+      Height = Settings.ResolutionY;
+
+      // game
+      Game.Instance().StartLoad();
+      Engine.Instance().LinkHandle(pbGame.Handle);
+      Engine.Instance().Initialize();
+      Engine.Instance().InitializeComponents();
+      Game.Instance().Run();
+    }
+
+    public TV_2DVECTOR GetDisplaySize()
+    {
+      return new TV_2DVECTOR(pbGame.Width, pbGame.Height);
+    }
+
+    public void SetDisplaySize()
+    {
+      Engine.Instance().SetSize();
+    }
+
+    public void Exit()
+    {
       Cursor.Show();
-      Close();
+      Invoke(new Action(Close));
     }
 
     private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
     {
+      Game.Instance().Close();
     }
 
-    private void GameForm_MouseEnter(object sender, EventArgs e)
+    private void pbGame_MouseLeave(object sender, EventArgs e)
     {
-      //Cursor.Hide();
+      Cursor.Show();
     }
 
-    private void GameForm_MouseLeave(object sender, EventArgs e)
+    private void pbGame_SizeChanged(object sender, EventArgs e)
     {
-      //Cursor.Show();
+      SetDisplaySize(); // new TV_2DVECTOR(pbGame.Width, pbGame.Height));
+    }
+
+    private void pbGame_MouseEnter(object sender, EventArgs e)
+    {
+      Cursor.Hide();
     }
   }
 }

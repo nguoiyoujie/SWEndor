@@ -1,9 +1,6 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SWEndor.Actors;
 
-namespace SWEndor.Actions
+namespace SWEndor.AI.Actions
 {
   public class Wait : ActionInfo
   {
@@ -29,6 +26,12 @@ namespace SWEndor.Actions
       if (ResumeTime == 0)
       {
         ResumeTime = Game.Instance().GameTime + WaitTime;
+      }
+
+      AdjustRotation(owner, owner.GetRelativePositionXYZ(0, 0, 1000), false);
+      if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
+      {
+        ActionManager.QueueFirst(owner, new AvoidCollisionRotate(owner.ProspectiveCollisionImpact, owner.ProspectiveCollisionNormal));
       }
       Complete |= (ResumeTime < Game.Instance().GameTime);
     }

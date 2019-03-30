@@ -1,10 +1,6 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class Tower01_RuinsATI : DebrisGroup
   {
@@ -19,14 +15,6 @@ namespace SWEndor
     {
       CullDistance = 10000;
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"towers\tower_01_destroyed.x");
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.EnableDeathExplosion = false;
-      ainfo.EnableExplosions = false;
     }
   }
 }

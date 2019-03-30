@@ -1,10 +1,6 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class GreenAntiShipLaserATI : ProjectileGroup
   {
@@ -23,14 +19,14 @@ namespace SWEndor
       IsCombatObject = false;
       IsSelectable = false;
       IsDamage = true;
-      ImpactDamage = 3;
+      ImpactDamage = 5;
       MaxSpeed = Globals.LaserSpeed;
       MinSpeed = Globals.LaserSpeed;
 
       NoAI = true;
 
       // Projectile
-      ImpactCloseEnoughDistance = 30;
+      ImpactCloseEnoughDistance = 100;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"projectiles\green3_laser.x");
     }
@@ -39,7 +35,7 @@ namespace SWEndor
     {
       if (ainfo.ActorState == ActorState.DYING)
       {
-        if (ainfo.TimedLife > 0)
+        if (ainfo.CombatInfo.TimedLife > 0)
         {
           ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("ExplosionSm"));
           acinfo.Position = ainfo.GetPosition();

@@ -1,15 +1,14 @@
 ﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SWEndor.Actors;
+using SWEndor.Actors.Types;
 
-namespace SWEndor
+namespace SWEndor.Weapons.Types
 {
   public class YWingTorpWeapon : WeaponInfo
   {
     public YWingTorpWeapon() : base("Y-Wing Torpedo")
     {
-      WeaponProjectile = MissileATI.Instance();
+      WeaponProjectile = TorpedoATI.Instance();
       WeaponCooldownRate = 0.15f;
       WeaponCooldownRateRandom = 0;
 
@@ -34,9 +33,7 @@ namespace SWEndor
       RequirePlayerTargetLock = true;
 
       // AI Config
-      AIAttackFighters = false;
-      AIAttackShips = true;
-      AIAttackAddons = true;
+      AIAttackTargets = TargetType.SHIP | TargetType.ADDON;
       AIAttackNull = false;
 
       // 

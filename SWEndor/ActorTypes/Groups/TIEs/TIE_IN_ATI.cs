@@ -1,10 +1,10 @@
 ﻿using MTV3D65;
-using System;
+using SWEndor.Weapons;
+using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class TIE_IN_ATI : TIEGroup
   {
@@ -17,13 +17,7 @@ namespace SWEndor
 
     private TIE_IN_ATI() : base("TIE Interceptor")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
-      MaxStrength = 4;
+      MaxStrength = 8;
       ImpactDamage = 16;
       MaxSpeed = 500;
       MinSpeed = 250;
@@ -34,6 +28,7 @@ namespace SWEndor
       Score_DestroyBonus = 1000;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"tie\tie_interceptor.x");
+      SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"tie\tie_interceptor_far.x");
     }
 
     public override void Initialize(ActorInfo ainfo)
@@ -48,18 +43,18 @@ namespace SWEndor
       ainfo.CamLocations.Add(new TV_3DVECTOR(0, 40, 250));
       ainfo.CamTargets.Add(new TV_3DVECTOR(0, 0, -2000));
 
-      ainfo.EnableDeathExplosion = true;
-      ainfo.DeathExplosionType = "ExplosionSm";
-      ainfo.ExplosionRate = 0.75f;
-      ainfo.ExplosionSize = 1;
-      ainfo.ExplosionType = "Explosion";
+      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
+      ainfo.ExplosionInfo.ExplosionRate = 0.75f;
+      ainfo.ExplosionInfo.ExplosionSize = 1;
+      ainfo.ExplosionInfo.ExplosionType = "Explosion";
 
       ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", new TIE_IN_LaserWeapon() }
                                                         , {"2xlsr", new TIE_IN_DblLaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new List<string> { "1:laser", "2:laser" };
-      ainfo.SecondaryWeapons = new List<string> { "none" };
-      ainfo.AIWeapons = new List<string> { "1:2xlsr" };
+      ainfo.PrimaryWeapons = new string[] { "1:laser", "2:laser" };
+      ainfo.SecondaryWeapons = new string[] { "none" };
+      ainfo.AIWeapons = new string[] { "1:2xlsr" };
 
     }
 
@@ -85,7 +80,7 @@ namespace SWEndor
             ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("TIE_InterceptorWingATI"));
             acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(-30, 0, 0);
             acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x, ainfo.Rotation.y + y, ainfo.Rotation.z + z);
-            acinfo.InitialSpeed = ainfo.Speed;
+            acinfo.InitialSpeed = ainfo.MovementInfo.Speed;
             ActorInfo a = ActorInfo.Create(acinfo);
           }
 
@@ -96,7 +91,7 @@ namespace SWEndor
             acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(30, 0, 0);
             acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x2, ainfo.Rotation.y + y2, ainfo.Rotation.z + z2);
 
-            acinfo.InitialSpeed = ainfo.Speed;
+            acinfo.InitialSpeed = ainfo.MovementInfo.Speed;
             ActorInfo a = ActorInfo.Create(acinfo);
           }
         }

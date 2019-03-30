@@ -1,10 +1,4 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-
-namespace SWEndor
+﻿namespace SWEndor.Actors.Types
 {
   public class StaticSceneGroup : ActorTypeInfo
   {
@@ -14,7 +8,7 @@ namespace SWEndor
       IsCombatObject = false;
       IsSelectable = false;
       IsDamage = false;
-      MaxStrength = 1.0f;
+      MaxStrength = 100000.0f;
       MaxSpeed = 0.0f;
       MinSpeed = 0.0f;
       MaxSpeedChangeRate = 0.0f;
@@ -29,7 +23,7 @@ namespace SWEndor
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-      ainfo.DamageModifier = 0;
+      ainfo.CombatInfo.DamageModifier = 0.00001f; // check why not 0.
     }
   }
 }

@@ -1,9 +1,7 @@
 ﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SWEndor.Actors;
 
-namespace SWEndor.Actions
+namespace SWEndor.AI.Actions
 {
   public class Idle : ActionInfo
   {
@@ -16,7 +14,7 @@ namespace SWEndor.Actions
       if (CheckBounds(owner))
       {
         AdjustRotation(owner, owner.GetPosition());
-        AdjustSpeed(owner, owner.MinSpeed);
+        AdjustSpeed(owner, owner.MovementInfo.MinSpeed);
 
         if (NextAction == null)
         {
@@ -27,9 +25,9 @@ namespace SWEndor.Actions
 
         TV_3DVECTOR vNormal = new TV_3DVECTOR();
         TV_3DVECTOR vImpact = new TV_3DVECTOR();
-        if (CheckImminentCollision(owner, owner.Speed * 3, out vImpact, out vNormal))
+        if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
         {
-          ActionManager.QueueFirst(owner, new AvoidCollisionRotate(vImpact, vNormal));
+          ActionManager.QueueFirst(owner, new AvoidCollisionRotate(owner.ProspectiveCollisionImpact, owner.ProspectiveCollisionNormal));
         }
       }
     }

@@ -1,9 +1,8 @@
 ﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SWEndor.Actors;
+using SWEndor.Actors.Types;
 
-namespace SWEndor
+namespace SWEndor.Weapons.Types
 {
   public class YWingIonWeapon : WeaponInfo
   {
@@ -30,13 +29,8 @@ namespace SWEndor
       RequirePlayerTargetLock = false;
 
       // AI Config
-      AIAttackFighters = false;
-      AIAttackShips = true;
-      AIAttackAddons = true;
+      AIAttackTargets = TargetType.SHIP | TargetType.ADDON;
       AIAttackNull = false;
-
-      // 
-      FireSound = "Laser_sf";
 
       Range = 3000;
     }

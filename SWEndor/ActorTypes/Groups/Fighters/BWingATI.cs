@@ -1,10 +1,10 @@
 ﻿using MTV3D65;
-using System;
+using SWEndor.Weapons;
+using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class BWingATI : FighterGroup
   {
@@ -35,6 +35,13 @@ namespace SWEndor
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"bwing\bwing.x");
       SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"bwing\bwing_far.x");
+
+      Debris = new DebrisSpawnerInfo[] {
+        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("BWing_WingATI"), new TV_3DVECTOR(-30, -30, 0), -1000, 1000, 0, 3000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("BWing_WingATI"), new TV_3DVECTOR(30, -30, 0), -1000, 1000, -3000, 0, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("BWing_Top_WingATI"), new TV_3DVECTOR(0, 0, 0), -1000, 1000, -1000, 1000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("BWing_Bottom_WingATI"), new TV_3DVECTOR(0, -70, 0), -1000, 1000, -1000, 1000, -2500, 2500, 0.5f)
+        };
     }
 
     public override void Initialize(ActorInfo ainfo)
@@ -49,92 +56,21 @@ namespace SWEndor
       ainfo.CamLocations.Add(new TV_3DVECTOR(0, 40, 250));
       ainfo.CamTargets.Add(new TV_3DVECTOR(0, 0, -2000));
 
-      ainfo.EnableDeathExplosion = true;
-      ainfo.DeathExplosionType = "ExplosionSm";
-      ainfo.ExplosionRate = 0.75f;
-      ainfo.ExplosionSize = 1;
-      ainfo.ExplosionType = "Explosion";
+      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
+      ainfo.ExplosionInfo.ExplosionRate = 0.75f;
+      ainfo.ExplosionInfo.ExplosionSize = 1;
+      ainfo.ExplosionInfo.ExplosionType = "Explosion";
 
-      ainfo.SelfRegenRate = 0.08f;
+      ainfo.RegenerationInfo.SelfRegenRate = 0.08f;
 
       ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", new BWingTorpWeapon() }
-                                                        , {"ion", new BWingIonWeapon() }
+                                                        , {"ion", WeaponFactory.Get("B-Wing Ion")} //new BWingIonWeapon() }
                                                         , {"laser", new BWingLaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new List<string> { "1:laser", "2:laser", "4:laser" };
-      ainfo.SecondaryWeapons = new List<string> { "4:laser", "1:ion", "1:torp" };
-      ainfo.AIWeapons = new List<string> { "1:ion", "1:torp", "1:laser" };
-    }
-
-    public override void ProcessNewState(ActorInfo ainfo)
-    {
-      base.ProcessNewState(ainfo);
-
-      if (ainfo.ActorState == ActorState.DEAD)
-      {
-        if (!ainfo.IsAggregateMode() && !Game.Instance().IsLowFPS())
-        {
-          double d = Engine.Instance().Random.NextDouble();
-
-          if (d > 0.5f)
-          {
-            float x = Engine.Instance().Random.Next(-1000, 1000) / 100f;
-            float y = Engine.Instance().Random.Next(0, 3000) / 100f;
-            float z = Engine.Instance().Random.Next(-2500, 2500) / 100f;
-
-            ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("BWing_WingATI"));
-            acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(-30, -30, 0);
-            acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x, ainfo.Rotation.y + y, ainfo.Rotation.z + z);
-            acinfo.InitialSpeed = ainfo.Speed;
-            ActorInfo a = ActorInfo.Create(acinfo);
-          }
-
-          d = Engine.Instance().Random.NextDouble();
-          if (d > 0.5f)
-          {
-            float x = Engine.Instance().Random.Next(-1000, 1000) / 100f;
-            float y = Engine.Instance().Random.Next(-3000, 0) / 100f;
-            float z = Engine.Instance().Random.Next(-2500, 2500) / 100f;
-
-            ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("BWing_WingATI"));
-            acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(30, -30, 0);
-            acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x, ainfo.Rotation.y + y, ainfo.Rotation.z + z);
-
-            acinfo.InitialSpeed = ainfo.Speed;
-            ActorInfo a = ActorInfo.Create(acinfo);
-          }
-
-          d = Engine.Instance().Random.NextDouble();
-          if (d > 0.5f)
-          {
-            float x = Engine.Instance().Random.Next(-1000, 1000) / 100f;
-            float y = Engine.Instance().Random.Next(-1000, 1000) / 100f;
-            float z = Engine.Instance().Random.Next(-2500, 2500) / 100f;
-
-            ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("BWing_Top_WingATI"));
-            acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(0, 0, 0);
-            acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x, ainfo.Rotation.y + y, ainfo.Rotation.z + z);
-
-            acinfo.InitialSpeed = ainfo.Speed;
-            ActorInfo a = ActorInfo.Create(acinfo);
-          }
-
-          d = Engine.Instance().Random.NextDouble();
-          if (d > 0.5f)
-          {
-            float x = Engine.Instance().Random.Next(-1000, 1000) / 100f;
-            float y = Engine.Instance().Random.Next(-1000, 1000) / 100f;
-            float z = Engine.Instance().Random.Next(-2500, 2500) / 100f;
-
-            ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("BWing_Bottom_WingATI"));
-            acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(0, -70, 0);
-            acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x, ainfo.Rotation.y + y, ainfo.Rotation.z + z);
-
-            acinfo.InitialSpeed = ainfo.Speed;
-            ActorInfo a = ActorInfo.Create(acinfo);
-          }
-        }
-      }
+      ainfo.PrimaryWeapons = new string[] { "1:laser", "2:laser", "4:laser" };
+      ainfo.SecondaryWeapons = new string[] { "4:laser", "1:ion", "1:torp" };
+      ainfo.AIWeapons = new string[] { "1:ion", "1:torp", "1:laser" };
     }
   }
 }

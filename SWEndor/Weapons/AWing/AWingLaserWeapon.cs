@@ -1,10 +1,6 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SWEndor
+﻿namespace SWEndor.Weapons.Types
 {
+  /*
   public class AWingLaserWeapon : WeaponInfo
   {
     public AWingLaserWeapon() : base("A-Wing Laser")
@@ -33,15 +29,7 @@ namespace SWEndor
 
       // Player Config
       RequirePlayerTargetLock = false;
-
-      // AI Config
-      AIAttackFighters = true;
-      AIAttackShips = true;
-      AIAttackAddons = true;
-      AIAttackNull = true;
-
-      // 
-      FireSound = "Laser_sf";
     }
   }
+  */
 }

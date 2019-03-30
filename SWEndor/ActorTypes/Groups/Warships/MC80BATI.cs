@@ -1,10 +1,8 @@
 ﻿using MTV3D65;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class MC80BATI : WarshipGroup
   {
@@ -17,12 +15,6 @@ namespace SWEndor
 
     private MC80BATI() : base("Mon Calamari 80B Capital Ship")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 2800.0f;
       ImpactDamage = 60.0f;
       MaxSpeed = 30.0f;
@@ -36,6 +28,25 @@ namespace SWEndor
       Score_DestroyBonus = 20000;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"mc90\mc80b.x");
+
+      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", new TV_3DVECTOR(0, 0, -750), 1500.0f, true) };
+      AddOns = new AddOnInfo[]
+      {
+        new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(0, 45, 1200), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(-120, 42, 950), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(120, 42, 950), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(-180, 48, 520), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(180, 48, 520), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(-180, -65, 410), new TV_3DVECTOR(90, 0, 0), true)
+        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(180, -65, 410), new TV_3DVECTOR(90, 0, 0), true)
+
+        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(-220, 52, 300), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(220, 52, 300), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(-210, -75, 150), new TV_3DVECTOR(90, 0, 0), true)
+        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(210, -75, 150), new TV_3DVECTOR(90, 0, 0), true)
+
+        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(0, 120, -225), new TV_3DVECTOR(-90, 0, 0), true)
+      };
     }
 
     public override void Initialize(ActorInfo ainfo)
@@ -46,56 +57,19 @@ namespace SWEndor
       ainfo.CamDeathCircleHeight = 250;
       ainfo.CamDeathCirclePeriod = 30;
 
-      ainfo.SetStateS("AddOn_0", "MC90 Turbolaser Tower, 0, 45, 1200, -90, 0, 0, true");
-      ainfo.SetStateS("AddOn_1", "MC90 Turbolaser Tower, -120, 42, 950, -90, 0, 0, true");
-      ainfo.SetStateS("AddOn_2", "MC90 Turbolaser Tower, 120, 42, 950, -90, 0, 0, true");
-      ainfo.SetStateS("AddOn_3", "MC90 Turbolaser Tower, 180, 48, 520, -90, 0, 0, true");
-      ainfo.SetStateS("AddOn_4", "MC90 Turbolaser Tower, -180, 48, 520, -90, 0, 0, true");
-      ainfo.SetStateS("AddOn_5", "MC90 Turbolaser Tower, 180, -65, 410, 90, 0, 0, true");
-      ainfo.SetStateS("AddOn_6", "MC90 Turbolaser Tower, -180, -65, 410, 90, 0, 0, true");
-
-      ainfo.SetStateS("AddOn_7", "MC90 Turbolaser Tower, 220, 52, 300, -90, 0, 0, true");
-      ainfo.SetStateS("AddOn_8", "MC90 Turbolaser Tower, -220, 52, 300, -90, 0, 0, true");
-      ainfo.SetStateS("AddOn_9", "MC90 Turbolaser Tower, 210, -75, 150, 90, 0, 0, true");
-      ainfo.SetStateS("AddOn_10", "MC90 Turbolaser Tower, -210, -75, 150, 90, 0, 0, true");
-
-
-      ainfo.SetStateS("AddOn_11", "MC90 Turbolaser Tower, 0, 120, -225, -90, 0, 0, true");
-
       ainfo.CamLocations.Add(new TV_3DVECTOR(0, 45, 660));
       ainfo.CamTargets.Add(new TV_3DVECTOR(0, 45, 2000));
 
-      // Generate States
-      ainfo.EnableDeathExplosion = true;
-      ainfo.DeathExplosionType = "ExplosionLg";
-      ainfo.DeathExplosionSize = 3.5f;
-      ainfo.ExplosionRate = 0.5f;
-      ainfo.ExplosionSize = 1;
-      ainfo.ExplosionType = "ExplosionSm";
+      ainfo.ExplosionInfo.DeathExplosionSize = 3.5f;
 
-      ainfo.SelfRegenRate = 0.2f;
+      ainfo.MovementInfo.DyingMovement = Components.DyingMovement.SINK;
+      ainfo.MovementInfo.D_sink_pitch_rate = 0.01f;
+      ainfo.MovementInfo.D_sink_down_rate = 2.5f;
+      ainfo.MovementInfo.D_sink_forward_rate = 0.4f;
+
+      ainfo.RegenerationInfo.SelfRegenRate = 0.2f;
 
       ainfo.Scale *= 1.1f;
-    }
-
-    public override void ProcessState(ActorInfo ainfo)
-    {
-      base.ProcessState(ainfo);
-
-      if (ainfo.CreationState == CreationState.ACTIVE)
-      {
-        TV_3DVECTOR engineloc = ainfo.GetRelativePositionXYZ(0, 0, -750 - z_displacement);
-        float dist = Engine.Instance().TVMathLibrary.GetDistanceVec3D(PlayerInfo.Instance().Position, engineloc);
-
-        if (!ainfo.IsPlayer())
-        {
-          if (dist < 1500)
-          {
-            if (PlayerInfo.Instance().enginelgvol < 1 - dist / 1500.0f)
-              PlayerInfo.Instance().enginelgvol = 1 - dist / 1500.0f;
-          }
-        }
-      }
     }
   }
 }

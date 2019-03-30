@@ -1,6 +1,9 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
+using SWEndor.Actors.Types;
+using SWEndor.AI.Actions;
+using SWEndor.Sound;
 using System.Collections.Generic;
-using System;
 
 namespace SWEndor.Scenarios
 {
@@ -13,31 +16,32 @@ namespace SWEndor.Scenarios
                                              , Tower01ATI.Instance()
                                              , Tower02ATI.Instance()
                                              , Tower03ATI.Instance()
+                                             , Tower04ATI.Instance()
+                                             , TowerGunSuperATI.Instance()
                                              };
 
       AllowedDifficulties = new List<string> { "normal"
                                               };
     }
 
-    private ActorInfo m_AScene = null;
-
     private ActorInfo m_Player = null;
 
     public override void Load(ActorTypeInfo wing, string difficulty)
     {
       base.Load(wing, difficulty);
-      if (GameScenarioManager.Instance().GetGameStateB("in_game"))
-        return;
+    }
 
-      GameScenarioManager.Instance().SetGameStateB("in_game", true);
-      RegisterEvents();
+    public override void Launch()
+    {
+      base.Launch();
+
       GameScenarioManager.Instance().SceneCamera.SetLocalPosition(0, 0, 0);
       GameScenarioManager.Instance().MaxBounds = new TV_3DVECTOR(2500, 200, 2500);
       GameScenarioManager.Instance().MinBounds = new TV_3DVECTOR(-2500, -200, -2500);
       GameScenarioManager.Instance().MaxAIBounds = new TV_3DVECTOR(2500, 200, 2500);
       GameScenarioManager.Instance().MinAIBounds = new TV_3DVECTOR(-2500, -200, -2500);
 
-      PlayerInfo.Instance().CameraMode = CameraMode.THIRDPERSON;
+      PlayerCameraInfo.Instance().CameraMode = CameraMode.THIRDPERSON;
 
       GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Test_SpawnPlayer");
       GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Test_Towers01");
@@ -64,43 +68,35 @@ namespace SWEndor.Scenarios
 
       FactionInfo.AddFaction("Rebels", new TV_COLOR(0.8f, 0, 0, 1)).AutoAI = true;
       FactionInfo.AddFaction("Empire", new TV_COLOR(0, 0.8f, 0, 1)).AutoAI = true;
+
+      MainAllyFaction = FactionInfo.Get("Rebels");
+      MainEnemyFaction = FactionInfo.Get("Empire");
     }
 
     public override void LoadScene()
     {
       base.LoadScene();
-
-      ActorCreationInfo acinfo = null;
-
-      // Create Room
-      if (m_AScene == null)
-      {
-        acinfo = new ActorCreationInfo(SceneRoomATI.Instance());
-        acinfo.InitialState = ActorState.FIXED;
-        acinfo.CreationTime = -1;
-        m_AScene = ActorInfo.Create(acinfo);
-      }
     }
 
     public override void GameTick()
     {
       base.GameTick();
       CalibrateSceneObjects();
-      if (GameScenarioManager.Instance().GetGameStateB("in_battle"))
-      {
-        if (GameScenarioManager.Instance().StageNumber == 0)
+      //if (GameScenarioManager.Instance().GetGameStateB("in_battle"))
+      //{
+        if (StageNumber == 0)
         {
-          GameScenarioManager.Instance().StageNumber = 1;
+          StageNumber = 1;
         }
-      }
+
+        if (MainEnemyFaction.Wings.Count < 10)
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime, "Empire_TIEWave_02");
+
+      //}
     }
 
     private void CalibrateSceneObjects()
     {
-      if (m_AScene != null && m_AScene.CreationState == CreationState.ACTIVE)
-      {
-        m_AScene.SetLocalPosition(PlayerInfo.Instance().Position.x, PlayerInfo.Instance().Position.y, PlayerInfo.Instance().Position.z);
-      }
     }
 
     public override void RegisterEvents()
@@ -116,68 +112,78 @@ namespace SWEndor.Scenarios
     
     public void Test_SpawnPlayer(object[] param)
     {
-      if (GameScenarioManager.Instance().AllyFighters.ContainsKey("(Player)"))
-      {
-        PlayerInfo.Instance().Actor = GameScenarioManager.Instance().AllyFighters["(Player)"];
-      }
-      else
-      {
+      PlayerInfo.Instance().Actor = PlayerInfo.Instance().TempActor;
+
+      if (PlayerInfo.Instance().Actor == null || PlayerInfo.Instance().Actor.CreationState == CreationState.DISPOSED)
+      { 
         if (PlayerInfo.Instance().Lives > 0)
         {
           PlayerInfo.Instance().Lives--;
 
-          ActorCreationInfo placi = new ActorCreationInfo(PlayerInfo.Instance().ActorType);
-          placi.Name = "(Player)";
-          placi.CreationTime = Game.Instance().GameTime;
-          placi.Faction = FactionInfo.Get("Rebels");
-          placi.InitialState = ActorState.NORMAL;
-          placi.Position = new TV_3DVECTOR(0, 0, -200);
-          placi.Rotation = new TV_3DVECTOR(0, 0, 0);
+          ActorInfo ainfo = SpawnActor(PlayerInfo.Instance().ActorType
+                                      , "(Player)"
+                                      , ""
+                                      , ""
+                                      , Game.Instance().GameTime
+                                      , MainAllyFaction
+                                      , new TV_3DVECTOR(125, 0, 125)
+                                      , new TV_3DVECTOR()
+                                      , new ActionInfo[] { new Wait(5) }
+                                      );
 
-          ActorInfo ainfo = ActorInfo.Create(placi);
           PlayerInfo.Instance().Actor = ainfo;
-          GameScenarioManager.Instance().AllyFighters.Add("(Player)", PlayerInfo.Instance().Actor);
-          RegisterEvents(ainfo);
         }
       }
       m_Player = PlayerInfo.Instance().Actor;
+      PlayerInfo.Instance().IsMovementControlsEnabled = true;
     }
 
     public void Test_GiveControl(object[] param)
     {
       PlayerInfo.Instance().IsMovementControlsEnabled = true;
-      //PlayerInfo.Instance().PlayerAIEnabled = true;
       GameScenarioManager.Instance().SetGameStateB("in_battle", true);
     }
 
     public void Test_Towers01(object[] param)
     {
-      SpawnActor(Tower03ATI.Instance(), "", "", ""
-               , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(100, 0, 500), new TV_3DVECTOR(), new ActionInfo[0], new Dictionary<string, ActorInfo>[0]);
+      List<ActorTypeInfo> towers = new List<ActorTypeInfo> { Tower00ATI.Instance()
+                                             , Tower01ATI.Instance()
+                                             , Tower02ATI.Instance()
+                                             , Tower03ATI.Instance()
+                                             , Tower04ATI.Instance()
+                                             };
 
+      for (int x = -5; x <= 5; x++)
+        for (int y = -5; y <= 5; y++)
+          SpawnActor(towers[Engine.Instance().Random.Next(0, towers.Count)], "", "", ""
+               , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(x * 500, 0, y * 500), new TV_3DVECTOR());
+      /*
+      SpawnActor(Tower03ATI.Instance(), "", "", ""
+               , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(100, 0, 500), new TV_3DVECTOR());
+               
       SpawnActor(Tower02ATI.Instance(), "", "", ""
-               , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(100 + 1000, 0, 500), new TV_3DVECTOR(), new ActionInfo[0], new Dictionary<string, ActorInfo>[0]);
+               , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(100 + 1000, 0, 500), new TV_3DVECTOR());
 
       SpawnActor(Tower00ATI.Instance(), "", "", ""
-               , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(100 - 1000, 0, 500), new TV_3DVECTOR(), new ActionInfo[0], new Dictionary<string, ActorInfo>[0]);
+               , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(100 - 1000, 0, 500), new TV_3DVECTOR());
 
       SpawnActor(Tower02ATI.Instance(), "", "", ""
-               , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(100, 0, 500 + 1000), new TV_3DVECTOR(), new ActionInfo[0], new Dictionary<string, ActorInfo>[0]);
+               , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(100, 0, 500 + 1000), new TV_3DVECTOR());
 
       SpawnActor(Tower01ATI.Instance(), "", "", ""
-               , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(100, 0, 500 - 1000), new TV_3DVECTOR(), new ActionInfo[0], new Dictionary<string, ActorInfo>[0]);
+               , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(100, 0, 500 - 1000), new TV_3DVECTOR());
+      */
     }
     #endregion
 
     public void Empire_TIEWave_02(object[] param)
     {
-      int sets = 5;
+      int sets = 3;
       if (param != null && param.GetLength(0) >= 1 && !int.TryParse(param[0].ToString(), out sets))
-        sets = 5;
+        sets = 3;
 
       // TIEs
-      ActorCreationInfo aci;
-      ActorTypeInfo[] tietypes = new ActorTypeInfo[] { TIE_LN_ATI.Instance(), TIE_IN_ATI.Instance() };
+      ActorTypeInfo[] tietypes = new ActorTypeInfo[] { XWingATI.Instance(), AWingATI.Instance() };
       float t = 0;
       for (int k = 1; k < sets; k++)
       {
@@ -185,24 +191,24 @@ namespace SWEndor.Scenarios
         float fy = Engine.Instance().Random.Next(-500, 500);
 
         int n = Engine.Instance().Random.Next(0, tietypes.Length);
-        aci = new ActorCreationInfo(tietypes[n]);
         for (int x = 0; x <= 1; x++)
         {
           for (int y = 0; y <= 1; y++)
           {
-            aci.CreationTime = Game.Instance().GameTime + t;
-            aci.Faction = FactionInfo.Get("Empire");
-            aci.InitialState = ActorState.NORMAL;
-            aci.Position = new TV_3DVECTOR(fx + x * 100, fy + y * 100, GameScenarioManager.Instance().MaxBounds.z + 1500);
-            aci.Rotation = new TV_3DVECTOR(0, 180, 0);
-
-            ActorInfo a = ActorInfo.Create(aci);
-            GameScenarioManager.Instance().EnemyFighters.Add(a.Key, a);
-            RegisterEvents(a);
+            ActorInfo ainfo = SpawnActor(tietypes[n]
+                            , ""
+                            , ""
+                            , ""
+                            , Game.Instance().GameTime + t
+                            , MainEnemyFaction
+                            , new TV_3DVECTOR(fx + x * 100, fy + y * 100, GameScenarioManager.Instance().MaxBounds.z + 1500)
+                            , new TV_3DVECTOR(0, 180, 0)
+                            );
           }
         }
         t += 1.5f;
       }
+      //GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 30f, "Empire_TIEWave_02");
     }
   }
 }

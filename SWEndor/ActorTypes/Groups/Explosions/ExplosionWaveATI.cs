@@ -1,10 +1,7 @@
 ﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class ExplosionWaveATI : ExplosionGroup
   {
@@ -34,19 +31,9 @@ namespace SWEndor
       {
         SourceMesh = Engine.Instance().TVScene.CreateMeshBuilder(Key);
 
-          string texname = @"wave.jpg";
-          string texpath = Path.Combine(Globals.ShaderPath, texname);
-        int tex = -1;
-        if (Engine.Instance().TVGlobals.GetTex(texname) == 0)
-        {
-          int texS = Engine.Instance().TVTextureFactory.LoadTexture(texpath);
-          int texA = Engine.Instance().TVTextureFactory.LoadAlphaTexture(texpath);
-          tex = Engine.Instance().TVTextureFactory.AddAlphaChannel(texS, texA, texname);
-        }
-        else
-        {
-          tex = Engine.Instance().TVGlobals.GetTex(texname);
-        }
+        string texname = Path.Combine("explosion", "wave", @"tex0000.jpg");
+        string texpath = Path.Combine(Globals.ImagePath, texname);
+        int tex = LoadAlphaTexture(texname, texpath);
 
         SourceMesh.CreateBox(100, 0.001f, 100f);
         SourceMesh.SetTexture(tex);
@@ -60,9 +47,7 @@ namespace SWEndor
     public override void ProcessState(ActorInfo ainfo)
     {
       if (ainfo.ActorState == ActorState.NORMAL)
-      {
         ainfo.Scale += new TV_3DVECTOR(100, 0, 100) * Game.Instance().TimeSinceRender;
-      }
     }
   }
 }

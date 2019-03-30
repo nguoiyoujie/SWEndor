@@ -1,10 +1,4 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-
-namespace SWEndor
+﻿namespace SWEndor.Actors.Types
 {
   public class AddOnGroup : ActorTypeInfo
   {
@@ -14,15 +8,14 @@ namespace SWEndor
       IsCombatObject = true;
       IsSelectable = false;
       IsDamage = false;
-      CullDistance = 3500f;
+      CullDistance = 3500;
 
       RadarSize = 1;
 
       Attack_AngularDelta = 360f;
       Attack_HighAccuracyAngularDelta = 360f;
 
-      IsTargetable = true;
-      IsHardPointAddon = true;
+      TargetType = TargetType.ADDON;
 
       NoMove = true;
     }
@@ -31,7 +24,7 @@ namespace SWEndor
     {
       base.Initialize(ainfo);
 
-      ainfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.EnableDeathExplosion = true;
     }
   }
 }

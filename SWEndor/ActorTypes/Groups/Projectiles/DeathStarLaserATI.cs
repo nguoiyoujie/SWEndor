@@ -1,10 +1,6 @@
 ﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class DeathStarLaserATI : ProjectileGroup
   {
@@ -84,14 +80,14 @@ namespace SWEndor
     public override void ProcessHit(ActorInfo ainfo, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
       base.ProcessHit(ainfo, hitby, impact, normal);
-      if (hitby.TimedLife > 0.5f)
+      if (hitby.CombatInfo.TimedLife > 0.5f)
       {
-        hitby.TimedLife = 0.5f;
+        hitby.CombatInfo.TimedLife = 0.5f;
       }
 
-      if (ainfo.TimedLife > 0)
+      if (ainfo.CombatInfo.TimedLife > 0)
       {
-        ainfo.TimedLife = 0;
+        ainfo.CombatInfo.TimedLife = 0;
       }
     }
   }

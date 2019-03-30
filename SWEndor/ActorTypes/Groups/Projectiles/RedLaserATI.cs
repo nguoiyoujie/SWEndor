@@ -1,10 +1,6 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class RedLaserATI : ProjectileGroup
   {
@@ -30,7 +26,7 @@ namespace SWEndor
       NoAI = true;
 
       // Projectile
-      ImpactCloseEnoughDistance = 35;
+      ImpactCloseEnoughDistance = 25;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"projectiles\red_laser.x");
     }
@@ -39,7 +35,7 @@ namespace SWEndor
     {
       if (ainfo.ActorState == ActorState.DYING)
       {
-        if (ainfo.TimedLife > 0)
+        if (ainfo.CombatInfo.TimedLife > 0)
         {
           ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("Explosion"));
           acinfo.Position = ainfo.GetPosition();

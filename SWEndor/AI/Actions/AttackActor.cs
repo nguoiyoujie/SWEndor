@@ -1,9 +1,11 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
+using SWEndor.Actors.Types;
+using SWEndor.Scenarios;
+using SWEndor.Weapons;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace SWEndor.Actions
+namespace SWEndor.AI.Actions
 {
   public class AttackActor : ActionInfo
   {
@@ -41,40 +43,43 @@ namespace SWEndor.Actions
 
     public override void Process(ActorInfo owner)
     {
+      if (Target_Actor == null)
+      {
+        Complete = true;
+        return;
+      }
+
       if (CheckBounds(owner))
       {
         if (FollowDistance < 0)
           FollowDistance = owner.TypeInfo.Move_CloseEnough;
 
         if (TooCloseDistance < 0)
-          TooCloseDistance = 0.5f * owner.Speed;
+          TooCloseDistance = 0.75f * owner.MovementInfo.Speed;
 
         float dist = ActorDistanceInfo.GetDistance(owner, Target_Actor);
         if (dist > TooCloseDistance)
         {
           float d = dist / Globals.LaserSpeed;
-          ActorInfo a2 = ActorFactory.Instance().GetActor(Target_Actor.AttachToMesh);
+          ActorInfo a2 = Target_Actor.AttachToMesh > 0 ? Target_Actor.Parent : null;
           if (a2 == null)
           {
-            Target_Position = Target_Actor.GetRelativePositionXYZ(0, 0, Target_Actor.Speed * d);
+            Target_Position = Target_Actor.GetRelativePositionXYZ(0, 0, Target_Actor.MovementInfo.Speed * d);
           }
           else
           {
-            //Target_Position = Target_Actor.GetPosition() - owner.GetPosition();
-            Target_Position = a2.GetRelativePositionXYZ(Target_Actor.GetLocalPosition().x, Target_Actor.GetLocalPosition().y, Target_Actor.GetLocalPosition().z + a2.Speed * d);
+            Target_Position = a2.GetRelativePositionXYZ(Target_Actor.GetLocalPosition().x, Target_Actor.GetLocalPosition().y, Target_Actor.GetLocalPosition().z + a2.MovementInfo.Speed * d);
           }
-
-          //Target_Position = Target_Actor.GetRelativePositionXYZ(0, 0, Target_Actor.GetTrueSpeed() * (d + Game.Instance().TimeSinceRender));
 
           float delta_angle = AdjustRotation(owner, Target_Position, true);
 
-          float addspd = (owner.MaxSpeed > Target_Actor.Speed) ? owner.MaxSpeed - Target_Actor.Speed : 0;
-          float subspd = (owner.MinSpeed < Target_Actor.Speed) ? Target_Actor.Speed - owner.MinSpeed : 0;
+          float addspd = (owner.MovementInfo.MaxSpeed > Target_Actor.MovementInfo.Speed) ? owner.MovementInfo.MaxSpeed - Target_Actor.MovementInfo.Speed : 0;
+          float subspd = (owner.MovementInfo.MinSpeed < Target_Actor.MovementInfo.Speed) ? Target_Actor.MovementInfo.Speed - owner.MovementInfo.MinSpeed : 0;
 
           if (dist > FollowDistance)
-            AdjustSpeed(owner, Target_Actor.Speed + (dist - FollowDistance) / SpeedAdjustmentDistanceRange * addspd);
+            AdjustSpeed(owner, Target_Actor.MovementInfo.Speed + (dist - FollowDistance) / SpeedAdjustmentDistanceRange * addspd);
           else
-            AdjustSpeed(owner, Target_Actor.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
+            AdjustSpeed(owner, Target_Actor.MovementInfo.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
 
           WeaponInfo weapon = null;
           int burst = 0;
@@ -108,91 +113,67 @@ namespace SWEndor.Actions
         }
         else
         {
-          if (Target_Actor.TypeInfo is FighterGroup || Target_Actor.TypeInfo is TIEGroup)
+          if (Target_Actor.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER))
           {
             float evadeduration = 2000 / (Target_Actor.GetTrueSpeed() + 500);
             ActionManager.QueueFirst(owner, new Evade(evadeduration));
           }
           else if (!(Target_Actor.TypeInfo is ProjectileGroup))
           {
-            ActionManager.QueueFirst(owner, new Move(MakeAltPosition(owner), owner.MaxSpeed));
+            ActionManager.QueueFirst(owner, new Move(MakeAltPosition(owner, Target_Actor.GetTopParent()), owner.MovementInfo.MaxSpeed));
           }
           return;
         }
 
-        TV_3DVECTOR vNormal = new TV_3DVECTOR();
-        TV_3DVECTOR vImpact = new TV_3DVECTOR();
-        if (CheckImminentCollision(owner, FollowDistance, out vImpact, out vNormal))
+        if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
         {
-          ActionManager.QueueFirst(owner, new AvoidCollisionRotate(vImpact, vNormal));
+          ActionManager.QueueFirst(owner, new AvoidCollisionRotate(owner.ProspectiveCollisionImpact, owner.ProspectiveCollisionNormal));
+          //if (owner.ProspectiveCollisionActor != null && owner.ProspectiveCollisionActor.GetTopParent() == Target_Actor.GetTopParent())
+          //  ActionManager.QueueNext(owner, new Rotate(owner.ProspectiveCollisionImpact + owner.ProspectiveCollisionNormal * 10000, owner.MovementInfo.MinSpeed, 45));
         }
       }
     }
 
-    private TV_3DVECTOR MakeAltPosition(ActorInfo owner)
+    private TV_3DVECTOR MakeAltPosition(ActorInfo owner, ActorInfo target)
     {
-      float x = owner.GetPosition().x + Engine.Instance().Random.Next((int)(-4 * owner.TypeInfo.MaxSpeed), (int)(4 * owner.TypeInfo.MaxSpeed));
-      if ((int)(4 * owner.TypeInfo.MaxSpeed) + owner.GetPosition().x > GameScenarioManager.Instance().MaxBounds.x * 0.75f)
-      {
-        x -= (int)(4 * owner.TypeInfo.MaxSpeed) + owner.GetPosition().x - GameScenarioManager.Instance().MaxBounds.x * 0.75f;
-      }
-      else if ((int)(-4 * owner.TypeInfo.MaxSpeed) + owner.GetPosition().x < GameScenarioManager.Instance().MinBounds.x * 0.75f)
-      {
-        x += (int)(-4 * owner.TypeInfo.MaxSpeed) + owner.GetPosition().x - GameScenarioManager.Instance().MinBounds.x * 0.75f;
-      }
+      float radius = 0;
+      TV_3DVECTOR center = new TV_3DVECTOR();
+      target.GetBoundingSphere(ref center, ref radius);
+      center += target.GetPosition();
+      radius += Engine.Instance().Random.Next((int)(-4 * owner.TypeInfo.MaxSpeed), (int)(4 * owner.TypeInfo.MaxSpeed));
 
-      float y = Engine.Instance().Random.Next(-200, 200);
+      float xzAngle = Engine.Instance().Random.Next(0, 360);
 
-      float z = owner.GetPosition().z + Engine.Instance().Random.Next((int)(-4f * owner.TypeInfo.MaxSpeed), (int)(4f * owner.TypeInfo.MaxSpeed));
-      if ((int)(4f * owner.TypeInfo.MaxSpeed) + owner.GetPosition().z > GameScenarioManager.Instance().MaxBounds.z * 0.75f)
-      {
-        z -= (int)(4f * owner.TypeInfo.MaxSpeed) + owner.GetPosition().z - GameScenarioManager.Instance().MaxBounds.z * 0.75f;
-      }
-      else if ((int)(-4f * owner.TypeInfo.MaxSpeed) + owner.GetPosition().z < GameScenarioManager.Instance().MinBounds.z * 0.75f)
-      {
-        z += (int)(-4f * owner.TypeInfo.MaxSpeed) + owner.GetPosition().z - GameScenarioManager.Instance().MinBounds.z * 0.75f;
-      }
+      center.x += (float)Math.Cos(xzAngle) * radius;
+      center.y += Engine.Instance().Random.Next(-200, 200);
+      center.x += (float)Math.Sin(xzAngle) * radius;
 
-      return new TV_3DVECTOR(x, y, z);
+      Utilities.Clamp(ref center, GameScenarioManager.Instance().MinAIBounds * 0.75f, GameScenarioManager.Instance().MaxAIBounds * 0.75f);
+      
+      return center;
     }
 
     private void AggressiveTracking(ActorInfo owner)
     {
       float dist = 0;
-      float angle_x = 0;
-      float angle_y = 0;
       float delta_angle = 0;
 
-      foreach (ActorInfo a in ActorFactory.Instance().GetActorList())
+      foreach (ActorInfo a in ActorFactory.Instance().GetHoldingList())
       {
         if (a != null
             && owner != a
             && a.CreationState == CreationState.ACTIVE
             && a.ActorState != ActorState.DYING
             && a.ActorState != ActorState.DEAD
-            && a.IsCombatObject
+            && a.CombatInfo.IsCombatObject
             && !owner.Faction.IsAlliedWith(a.Faction))
         {
           dist = ActorDistanceInfo.GetDistance(a, owner, owner.GetWeaponRange());
-          TV_3DVECTOR rot = owner.GetRotation();
-          TV_3DVECTOR tgtrot = Utilities.GetRotation(a.GetPosition() - owner.GetPosition());
 
-          angle_x = tgtrot.x - rot.x;
-          angle_y = tgtrot.y - rot.y;
-
-          while (angle_x < -180)
-            angle_x += 360;
-
-          while (angle_x > 180)
-            angle_x -= 360;
-
-          while (angle_y < -180)
-            angle_y += 360;
-
-          while (angle_y > 180)
-            angle_y -= 360;
-
-          delta_angle = angle_x + angle_y;
+          TV_3DVECTOR vec = new TV_3DVECTOR();
+          TV_3DVECTOR dir = owner.GetDirection();
+          Engine.Instance().TVMathLibrary.TVVec3Normalize(ref vec, a.GetPosition() - owner.GetPosition());
+          delta_angle = Engine.Instance().TVMathLibrary.ACos(Engine.Instance().TVMathLibrary.TVVec3Dot(dir, vec));
 
           WeaponInfo weapon = null;
           int burst = 0;

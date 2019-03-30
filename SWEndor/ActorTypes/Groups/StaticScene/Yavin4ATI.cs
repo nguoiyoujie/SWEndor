@@ -1,10 +1,6 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 
-namespace SWEndor
+namespace SWEndor.Actors.Types
 {
   public class Yavin4ATI : StaticSceneGroup
   {
@@ -24,11 +20,13 @@ namespace SWEndor
 
         // 1 texture
         string texname = @"yavin4.bmp";
-        string texpath = Path.Combine(Globals.ImagePath, texname);
+        string alphatexname = @"yavin4alpha.bmp";
+        string texpath = Path.Combine(Globals.ImagePath, "planets", texname);
+        string alphatexpath = Path.Combine(Globals.ImagePath, "planets", alphatexname);
         if (Engine.Instance().TVGlobals.GetTex(texname) == 0)
         {
           int texS = Engine.Instance().TVTextureFactory.LoadTexture(texpath);
-          int texA = Engine.Instance().TVTextureFactory.LoadAlphaTexture(texpath);
+          int texA = Engine.Instance().TVTextureFactory.LoadTexture(alphatexpath);
           Engine.Instance().TVTextureFactory.AddAlphaChannel(texS, texA, texname);
         }
         SourceMesh.CreateBox(50000, 50000, 0.001f);

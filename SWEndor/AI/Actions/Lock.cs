@@ -1,9 +1,6 @@
-﻿using MTV3D65;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SWEndor.Actors;
 
-namespace SWEndor.Actions
+namespace SWEndor.AI.Actions
 {
   public class Lock : ActionInfo
   {
@@ -14,9 +11,7 @@ namespace SWEndor.Actions
 
     public override void Process(ActorInfo owner)
     {
-      owner.XTurnAngle = 0;
-      owner.YTurnAngle = 0;
-
+      owner.MovementInfo.ResetTurn();
     }
   }
 }
