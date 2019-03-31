@@ -58,47 +58,11 @@ namespace SWEndor.Actors.Types
       ainfo.PrimaryWeapons = new string[] { "1:laser", "2:laser" };
       ainfo.SecondaryWeapons = new string[] { "none" };
       ainfo.AIWeapons = new string[] { "1:laser" };
-      
-    }
 
-    public override void ProcessNewState(ActorInfo ainfo)
-    {
-      base.ProcessNewState(ainfo);
-      
-      if (ainfo.ActorState == ActorState.DEAD)
-      {
-        if (!ainfo.IsAggregateMode() && !Game.Instance().IsLowFPS())
-        {
-          double d = Engine.Instance().Random.NextDouble();
-
-          float x = Engine.Instance().Random.Next(-1000, 1000) / 100f;
-          float y = Engine.Instance().Random.Next(0, 3000) / 100f;
-          float z = Engine.Instance().Random.Next(-2500, 2500) / 100f;
-          float x2 = Engine.Instance().Random.Next(-1000, 1000) / 100f;
-          float y2 = Engine.Instance().Random.Next(-3000, 0) / 100f;
-          float z2 = Engine.Instance().Random.Next(-2500, 2500) / 100f;
-
-          if (d > 0.5f)
-          {
-            ActorCreationInfo acinfo = new ActorCreationInfo(TIE_InterceptorWingATI.Instance());
-            acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(-30, 0, 0);
-            acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x, ainfo.Rotation.y + y, ainfo.Rotation.z + z);
-            acinfo.InitialSpeed = ainfo.MovementInfo.Speed;
-            ActorInfo a = ActorInfo.Create(acinfo);
-          }
-
-          d = Engine.Instance().Random.NextDouble();
-          if (d > 0.5f)
-          {
-            ActorCreationInfo acinfo = new ActorCreationInfo(TIE_InterceptorWingATI.Instance());
-            acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(30, 0, 0);
-            acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x2, ainfo.Rotation.y + y2, ainfo.Rotation.z + z2);
-
-            acinfo.InitialSpeed = ainfo.MovementInfo.Speed;
-            ActorInfo a = ActorInfo.Create(acinfo);
-          }
-        }
-      }
+      Debris = new DebrisSpawnerInfo[] {
+        new DebrisSpawnerInfo("TIE_InterceptorWingATI", new TV_3DVECTOR(-30, 0, 0), -1000, 1000, 0, 3000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo("TIE_InterceptorWingATI", new TV_3DVECTOR(30, 0, 0), -1000, 1000, -3000, 0, -2500, 2500, 0.5f),
+        };
     }
   }
 }
