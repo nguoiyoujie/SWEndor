@@ -6,7 +6,7 @@ using System.IO;
 
 namespace SWEndor.Actors.Types
 {
-  public class FalconATI : FighterGroup
+  public class FalconATI : RebelWingGroup
   {
     private static FalconATI _instance;
     public static FalconATI Instance()

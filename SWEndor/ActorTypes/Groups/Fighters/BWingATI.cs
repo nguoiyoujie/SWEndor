@@ -6,7 +6,7 @@ using System.IO;
 
 namespace SWEndor.Actors.Types
 {
-  public class BWingATI : FighterGroup
+  public class BWingATI : RebelWingGroup
   {
     private static BWingATI _instance;
     public static BWingATI Instance()

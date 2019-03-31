@@ -10,8 +10,8 @@ namespace SWEndor.Actors.Types
       IsCombatObject = true;
       IsSelectable = true;
       IsDamage = false;
+      CollisionEnabled = true;
 
-      MinSpeed = 100.0f;
       ZTilt = 2.5f;
       ZNormFrac = 0.01f;
       RadarSize = 2;
@@ -25,15 +25,13 @@ namespace SWEndor.Actors.Types
       CanCheckCollisionAhead = true;
 
       HuntWeight = 5;
-
-      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("xwing_engine", new TV_3DVECTOR(0, 0, -30), 200, true) };
     }
 
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
       ainfo.MovementInfo.DyingMovement = Components.DyingMovement.SPIN;
-      ainfo.MovementInfo.D_spin_min_rate = 120;
+      ainfo.MovementInfo.D_spin_min_rate = 180;
       ainfo.MovementInfo.D_spin_max_rate = 270;
     }
 

@@ -432,7 +432,7 @@ namespace SWEndor.Actors
         hitby.SetLocalPosition(impact.x, impact.y, impact.z);
         hitby.ActorState = ActorState.DYING;
 
-        if ((ainfo.TypeInfo is FighterGroup || ainfo.TypeInfo is TIEGroup))
+        if ((ainfo.TypeInfo is FighterGroup))
         {
           List<ActorInfo> hparents = hitby.GetAllParents();
           if (hitby.TypeInfo.IsDamage && hparents.Count > 0)
@@ -506,7 +506,7 @@ namespace SWEndor.Actors
         }
       }
 
-      if (victim.TypeInfo is FighterGroup || victim.TypeInfo is TIEGroup)
+      if (victim.TypeInfo is FighterGroup)
       {
         score.HitsOnFighters++;
       }

@@ -6,7 +6,7 @@ using System.IO;
 
 namespace SWEndor.Actors.Types
 {
-  public class LandoFalconATI : FighterGroup
+  public class LandoFalconATI : RebelWingGroup
   {
     private static LandoFalconATI _instance;
     public static LandoFalconATI Instance()

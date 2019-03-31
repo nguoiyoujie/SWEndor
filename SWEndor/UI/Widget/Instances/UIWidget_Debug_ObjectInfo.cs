@@ -40,7 +40,7 @@ namespace SWEndor.UI
           else
             wingcount["Projectiles"]++;
         }
-        if (a != null && (a.TypeInfo is FighterGroup || a.TypeInfo is TIEGroup) && a.CreationState == CreationState.ACTIVE && a.Faction != null)
+        if (a != null && (a.TypeInfo is FighterGroup) && a.CreationState == CreationState.ACTIVE && a.Faction != null)
         {
           if (!wingcount.ContainsKey(a.Faction.Name + " Wings"))
             wingcount.Add(a.Faction.Name + " Wings", 1);

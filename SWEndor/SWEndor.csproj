@@ -127,6 +127,7 @@
     <Compile Include="ActorTypes\Groups\Asteroids\Asteroid03ATI.cs" />
     <Compile Include="ActorTypes\Groups\Asteroids\Asteroid02ATI.cs" />
     <Compile Include="ActorTypes\Groups\Asteroids\Asteroid01ATI.cs" />
+    <Compile Include="ActorTypes\Groups\RebelWingGroup.cs" />
     <Compile Include="ActorTypes\Groups\SpinningDebrisGroup.cs" />
     <Compile Include="ActorTypes\Groups\Debris\Tower03_RuinsATI.cs" />
     <Compile Include="ActorTypes\Groups\Debris\Tower02_RuinsATI.cs" />

@@ -51,16 +51,6 @@
         ActorInfo.Create(acinfo).AddParent(ainfo);
       }
     }
-
-    public override void ProcessState(ActorInfo ainfo)
-    {
-      base.ProcessState(ainfo);
-      //if (ainfo.ActorState == ActorState.DYING)
-      //{
-        //ainfo.MovementInfo.XTurnAngle += 0.06f * Game.Instance().TimeSinceRender;
-        //ainfo.MoveAbsolute(2.5f * Game.Instance().TimeSinceRender, -25f * Game.Instance().TimeSinceRender, 0);
-      //}
-    }
   }
 }
 

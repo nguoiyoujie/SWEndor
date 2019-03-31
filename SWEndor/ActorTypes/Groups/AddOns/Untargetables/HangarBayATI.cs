@@ -73,7 +73,7 @@ namespace SWEndor.Actors.Types
 
       foreach (ActorInfo a in ainfo.GetAllChildren(1))
       {
-        if (a.TypeInfo is FighterGroup || a.TypeInfo is TIEGroup)
+        if (a.TypeInfo is FighterGroup)
         {
           if (p.SpawnerInfo.SpawnSpeed == -1)
             a.MovementInfo.Speed = p.MovementInfo.Speed;
