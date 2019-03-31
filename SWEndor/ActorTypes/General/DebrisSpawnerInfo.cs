@@ -4,7 +4,8 @@ namespace SWEndor.Actors
 {
   public class DebrisSpawnerInfo
   {
-    public ActorTypeInfo SpawnType;
+    public string Type;
+    private ActorTypeInfo _cache;
     public TV_3DVECTOR SpawnPosition;
     public int RotationXMax;
     public int RotationXMin;
@@ -14,14 +15,14 @@ namespace SWEndor.Actors
     public int RotationZMin;
     public float Chance = 1;
 
-    public DebrisSpawnerInfo(ActorTypeInfo type)
+    public DebrisSpawnerInfo(string type)
     {
-      SpawnType = type;
+      Type = type;
     }
 
-    public DebrisSpawnerInfo(ActorTypeInfo type, TV_3DVECTOR position, int xMin, int xMax, int yMin, int yMax, int zMin, int zMax, float chance)
+    public DebrisSpawnerInfo(string type, TV_3DVECTOR position, int xMin, int xMax, int yMin, int yMax, int zMin, int zMax, float chance)
     {
-      SpawnType = type;
+      Type = type;
       SpawnPosition = position;
       RotationXMax = xMax;
       RotationXMin = xMin;
@@ -34,6 +35,9 @@ namespace SWEndor.Actors
 
     public void Process(ActorInfo actor)
     {
+      if (_cache == null)
+        _cache = ActorTypeFactory.Instance().GetActorType(Type);
+
       double d = Engine.Instance().Random.NextDouble();
       if (d < Chance)
       {
@@ -41,7 +45,7 @@ namespace SWEndor.Actors
         float y = Engine.Instance().Random.Next(RotationYMin, RotationYMax) / 100f;
         float z = Engine.Instance().Random.Next(RotationZMin, RotationZMax) / 100f;
 
-        ActorCreationInfo acinfo = new ActorCreationInfo(SpawnType);
+        ActorCreationInfo acinfo = new ActorCreationInfo(_cache);
         acinfo.Position = actor.GetPosition() + SpawnPosition;
         acinfo.Rotation = new TV_3DVECTOR(actor.Rotation.x + x, actor.Rotation.y + y, actor.Rotation.z + z);
         acinfo.InitialSpeed = actor.MovementInfo.Speed;

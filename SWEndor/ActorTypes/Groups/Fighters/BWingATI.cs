@@ -37,10 +37,10 @@ namespace SWEndor.Actors.Types
       SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"bwing\bwing_far.x");
 
       Debris = new DebrisSpawnerInfo[] {
-        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("BWing_WingATI"), new TV_3DVECTOR(-30, -30, 0), -1000, 1000, 0, 3000, -2500, 2500, 0.5f),
-        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("BWing_WingATI"), new TV_3DVECTOR(30, -30, 0), -1000, 1000, -3000, 0, -2500, 2500, 0.5f),
-        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("BWing_Top_WingATI"), new TV_3DVECTOR(0, 0, 0), -1000, 1000, -1000, 1000, -2500, 2500, 0.5f),
-        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("BWing_Bottom_WingATI"), new TV_3DVECTOR(0, -70, 0), -1000, 1000, -1000, 1000, -2500, 2500, 0.5f)
+        new DebrisSpawnerInfo("BWing_WingATI", new TV_3DVECTOR(-30, -30, 0), -1000, 1000, 0, 3000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo("BWing_WingATI", new TV_3DVECTOR(30, -30, 0), -1000, 1000, -3000, 0, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo("BWing_Top_WingATI", new TV_3DVECTOR(0, 0, 0), -1000, 1000, -1000, 1000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo("BWing_Bottom_WingATI", new TV_3DVECTOR(0, -70, 0), -1000, 1000, -1000, 1000, -2500, 2500, 0.5f)
         };
     }
 

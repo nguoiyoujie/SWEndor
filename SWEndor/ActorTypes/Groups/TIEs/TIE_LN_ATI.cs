@@ -58,8 +58,8 @@ namespace SWEndor.Actors.Types
       ainfo.AIWeapons = new string[] { "1:2xlsr" };
 
       Debris = new DebrisSpawnerInfo[] {
-        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("TIE_WingATI"), new TV_3DVECTOR(-30, 0, 0), -1000, 1000, 0, 3000, -2500, 2500, 0.5f),
-        new DebrisSpawnerInfo(ActorTypeFactory.Instance().GetActorType("TIE_WingATI"), new TV_3DVECTOR(30, 0, 0), -1000, 1000, -3000, 0, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo("TIE_WingATI", new TV_3DVECTOR(-30, 0, 0), -1000, 1000, 0, 3000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo("TIE_WingATI", new TV_3DVECTOR(30, 0, 0), -1000, 1000, -3000, 0, -2500, 2500, 0.5f),
         };
     }
   }
