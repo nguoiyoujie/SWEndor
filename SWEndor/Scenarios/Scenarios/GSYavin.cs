@@ -194,7 +194,22 @@ namespace SWEndor.Scenarios
       MainAllyFaction = FactionInfo.Get("Rebels");
       MainEnemyFaction = FactionInfo.Get("Empire");
 
-      MainEnemyFaction.WingSpawnLimit = 60;
+      switch (Difficulty.ToLower())
+      {
+        case "mental":
+          MainEnemyFaction.WingSpawnLimit = 28;
+          break;
+        case "hard":
+          MainEnemyFaction.WingSpawnLimit = 24;
+          break;
+        case "normal":
+          MainEnemyFaction.WingSpawnLimit = 20;
+          break;
+        case "easy":
+        default:
+          MainEnemyFaction.WingSpawnLimit = 16;
+          break;
+      }
     }
 
     public override void LoadScene()
@@ -868,19 +883,19 @@ namespace SWEndor.Scenarios
       switch (Difficulty.ToLower())
       {
         case "mental":
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2000, -150, -2000), new TV_3DVECTOR(-5000, -150, 6000), 12 });
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(1500, 100, -4000), new TV_3DVECTOR(3000, 150, 5500), 12 });
+          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2000, -150, -2000), new TV_3DVECTOR(-5000, -150, 6000), 9 });
+          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(1500, 100, -4000), new TV_3DVECTOR(3000, 150, 5500), 9 });
           break;
         case "hard":
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2000, -150, -2000), new TV_3DVECTOR(-6000, -150, 7000), 10 });
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(1500, 100, -4000), new TV_3DVECTOR(4000, 100, 5000), 10 });
+          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2000, -150, -2000), new TV_3DVECTOR(-6000, -150, 7000), 6 });
+          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(1500, 100, -4000), new TV_3DVECTOR(4000, 100, 5000), 6 });
           break;
         case "normal":
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2000, -150, -2000), new TV_3DVECTOR(-2500, -150, 7000), 10 });
+          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2000, -150, -2000), new TV_3DVECTOR(-2500, -150, 7000), 9 });
           break;
         case "easy":
         default:
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2000, -150, -2000), new TV_3DVECTOR(-2500, -150, 7000), 15 });
+          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2000, -150, -2000), new TV_3DVECTOR(-2500, -150, 7000), 6 });
           break;
       }
     }
@@ -891,17 +906,17 @@ namespace SWEndor.Scenarios
       {
         case "mental":
         case "hard":
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(1500, 0, -12000), new TV_3DVECTOR(1500, 0, 2000), 15 });
-          Empire_TIEWave(new object[] { 6 });
+          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(1500, 0, -12000), new TV_3DVECTOR(1500, 0, 2000), 12 });
+          Empire_TIEWave(new object[] { 4 });
           break;
         case "easy":
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(1500, 0, -12000), new TV_3DVECTOR(1500, 0, 2000), 10 });
-          Empire_TIEWave(new object[] { 4 });
+          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(1500, 0, -12000), new TV_3DVECTOR(1500, 0, 2000), 8 });
+          Empire_TIEWave(new object[] { 2 });
           break;
         case "normal":
         default:
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(1500, 0, -12000), new TV_3DVECTOR(1500, 0, 2000), 12 });
-          Empire_TIEWave(new object[] { 4 });
+          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(1500, 0, -12000), new TV_3DVECTOR(1500, 0, 2000), 10 });
+          Empire_TIEWave(new object[] { 3 });
           break;
       }
       GameScenarioManager.Instance().SetGameStateB("Stage1BBegin", true);
@@ -913,17 +928,17 @@ namespace SWEndor.Scenarios
       switch (Difficulty.ToLower())
       {
         case "mental":
-          count = 8;
+          count = 5;
           break;
         case "hard":
-          count = 6;
+          count = 4;
           break;
         case "normal":
-          count = 5;
+          count = 3;
           break;
         case "easy":
         default:
-          count = 4;
+          count = 2;
           break;
       }
 
@@ -1254,21 +1269,21 @@ namespace SWEndor.Scenarios
       switch (Difficulty.ToLower())
       {
         case "easy":
-          Empire_TIEWave(new object[] { 8 });
+          Empire_TIEWave(new object[] { 5 });
           break;
         case "mental":
-          Empire_TIEWave(new object[] { 12 });
+          Empire_TIEWave(new object[] { 8 });
           GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 43f, "Empire_TIEWave");
           GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 45f, "Message.06");
           break;
         case "hard":
-          Empire_TIEWave(new object[] { 8 });
+          Empire_TIEWave(new object[] { 7 });
           GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 43f, "Empire_TIEWave");
           GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 45f, "Message.06");
           break;
         case "normal":
         default:
-          Empire_TIEWave(new object[] { 12 });
+          Empire_TIEWave(new object[] { 6 });
           break;
       }
       Empire_Towers02(null);
