@@ -59,14 +59,14 @@ namespace SWEndor
 
     private Thread th_load { get; set; }
     private Thread th_tick { get; set; }
-    
+
     private System.Timers.Timer tm_sound { get; set; }
     private System.Timers.Timer tm_perf { get; set; }
     private System.Timers.Timer tm_ai { get; set; }
     private System.Timers.Timer tm_collision { get; set; }
     private System.Timers.Timer tm_render { get; set; }
     private System.Timers.Timer tm_process { get; set; }
-    
+
     public float CurrentFPS { get { return TimeControl.FPS; } } //{ get; private set; }
 
     private bool septhread_sound = true;
@@ -80,6 +80,11 @@ namespace SWEndor
     private bool isProcessingCollision = false;
     private bool isProcessingRender = false;
     private bool isProcessingProcess = false;
+
+    public bool EnableSound = false;
+    public bool EnablePerf = false;
+    public bool EnableAI = false;
+    public bool EnableCollision = false;
 
     /// <summary>
     /// Checks if the current FPS is below the LowFPSLimit
@@ -155,7 +160,7 @@ namespace SWEndor
       // Initialize other threads/timers
       if (septhread_sound)
         tm_sound.Start();
-        //Task.Factory.StartNew(new Action(TaskSound)).ContinueWith(new Action<Task>(t => GenerateFatalError(t.Exception.InnerException)), TaskContinuationOptions.OnlyOnFaulted);
+      //Task.Factory.StartNew(new Action(TaskSound)).ContinueWith(new Action<Task>(t => GenerateFatalError(t.Exception.InnerException)), TaskContinuationOptions.OnlyOnFaulted);
 
       if (septhread_ai)
         tm_ai.Start();
@@ -287,92 +292,136 @@ namespace SWEndor
 
     private void TickRender()
     {
-      if (!isProcessingRender)
+      try
       {
-        isProcessingRender = true;
-        //using (new PerfElement("tick_render_playercamera"))
-        //  Engine.Instance().ProcessPlayerCamera();
+        if (!isProcessingRender)
+        {
+          isProcessingRender = true;
+          //using (new PerfElement("tick_render_playercamera"))
+          //  Engine.Instance().ProcessPlayerCamera();
 
-        using (new PerfElement("tick_render"))
-          Engine.Instance().Render();
+          using (new PerfElement("tick_render"))
+            Engine.Instance().Render();
 
-        isProcessingRender = false;
+          isProcessingRender = false;
+        }
+      }
+      catch (Exception ex)
+      {
+        GenerateFatalError(ex);
       }
     }
 
     private void TickProcess()
     {
-      if (!isProcessingProcess)
+      try
       {
-        isProcessingProcess = true;
-        
-        using (new PerfElement("tick_process_input"))
-          InputManager.Instance().ProcessInput();
-
-        using (new PerfElement("tick_process_actors"))
-          Engine.Instance().Process();
-
-        using (new PerfElement("tick_process_player"))
-          Engine.Instance().ProcessPlayer();
-
-        using (new PerfElement("tick_page"))
-          Screen2D.Instance().CurrentPage?.Tick();
-
-        if (!IsPaused)
+        if (!isProcessingProcess)
         {
-          using (new PerfElement("tick_process_plannedactors"))
-            ActorFactory.Instance().ActivatePlanned();
+          isProcessingProcess = true;
 
-          using (new PerfElement("tick_process_scenario"))
-            GameScenarioManager.Instance().Update();
+          using (new PerfElement("tick_process_input"))
+            InputManager.Instance().ProcessInput();
+
+          if (!IsPaused)
+            using (new PerfElement("tick_process_actors"))
+              Engine.Instance().Process();
+
+          if (!IsPaused)
+            using (new PerfElement("tick_process_player"))
+              PlayerInfo.Instance().Update();
+
+          using (new PerfElement("tick_page"))
+            Screen2D.Instance().CurrentPage?.Tick();
+
+          if (!IsPaused)
+            using (new PerfElement("tick_process_plannedactors"))
+              ActorFactory.Instance().ActivatePlanned();
+
+          if (!IsPaused)
+            using (new PerfElement("tick_process_scenario"))
+              GameScenarioManager.Instance().Update();
+
+          using (new PerfElement("tick_render_playercamera"))
+            Engine.Instance().ProcessPlayerCamera();
+
+          isProcessingProcess = false;
         }
-
-        using (new PerfElement("tick_render_playercamera"))
-          Engine.Instance().ProcessPlayerCamera();
-
+      }
+      catch (Exception ex)
+      {
+        GenerateFatalError(ex);
         isProcessingProcess = false;
       }
     }
 
     private void TickAI()
     {
-      if (!isProcessingAI)
+      try
       {
-        isProcessingAI = true;
-        using (new PerfElement("tick_ai"))
-          Engine.Instance().ProcessAI();
-        isProcessingAI = false;
+        if (EnableAI)
+          if (!isProcessingAI && !IsPaused)
+          {
+            isProcessingAI = true;
+            using (new PerfElement("tick_ai"))
+              Engine.Instance().ProcessAI();
+            isProcessingAI = false;
+          }
+      }
+      catch (Exception ex)
+      {
+        GenerateFatalError(ex);
+        EnableAI = false;
       }
     }
 
     private void TickSound()
     {
-      if (SoundManager.Instance().PendingUpdate)
-        using (new PerfElement("tick_sound"))
-          SoundManager.Instance().Update();
+      try
+      {
+        if (EnableSound)
+          if (SoundManager.Instance().PendingUpdate)
+            using (new PerfElement("tick_sound"))
+              SoundManager.Instance().Update();
+      }
+      catch (Exception ex)
+      {
+        GenerateFatalError(ex);
+        EnableSound = false;
+      }
     }
 
     private void TickCollision()
     {
-      if (!isProcessingCollision)
+      try
       {
-        isProcessingCollision = true;
-        using (new PerfElement("tick_collision"))
-          Engine.Instance().ProcessCollision();
-        isProcessingCollision = false;
+        if (EnableCollision)
+          if (!isProcessingCollision && !IsPaused)
+          {
+            isProcessingCollision = true;
+            using (new PerfElement("tick_collision"))
+              Engine.Instance().ProcessCollision();
+            isProcessingCollision = false;
+          }
+      }
+      catch (Exception ex)
+      {
+        GenerateFatalError(ex);
+        EnableCollision = false;
       }
     }
 
     private void TickPerf()
     {
-      if (!isProcessingPerf)
-      {
-        isProcessingPerf = true;
-        using (new PerfElement("perf"))
-          PerfManager.Instance().PrintPerf();
-        Thread.Sleep(1000);
-        isProcessingPerf = false;
-      }
+      if (EnablePerf)
+        if (!isProcessingPerf)
+        {
+          isProcessingPerf = true;
+          using (new PerfElement("perf"))
+            PerfManager.Instance().PrintPerf();
+          Thread.Sleep(1000);
+          isProcessingPerf = false;
+        }
     }
     #endregion
   }

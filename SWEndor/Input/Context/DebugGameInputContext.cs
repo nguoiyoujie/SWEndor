@@ -25,6 +25,22 @@ namespace SWEndor.Input.Context
                 ainfo.ActorState = ActorState.DEAD;
             break;
 
+          case (int)CONST_TV_KEY.TV_KEY_7: // Toggle AI
+            Game.Instance().EnableAI = !Game.Instance().EnableAI;
+            break;
+
+          case (int)CONST_TV_KEY.TV_KEY_8: // Toggle Collisioj
+            Game.Instance().EnableCollision = !Game.Instance().EnableCollision;
+            break;
+
+          case (int)CONST_TV_KEY.TV_KEY_9: // Toggle Perf
+            Game.Instance().EnablePerf = !Game.Instance().EnablePerf;
+            break;
+
+          case (int)CONST_TV_KEY.TV_KEY_0: // Toggle Sound
+            Game.Instance().EnableSound = !Game.Instance().EnableSound;
+            break;
+
           case (int)CONST_TV_KEY.TV_KEY_N: // Test movement control lock
             PlayerInfo.Instance().IsMovementControlsEnabled = !PlayerInfo.Instance().IsMovementControlsEnabled;
             break;

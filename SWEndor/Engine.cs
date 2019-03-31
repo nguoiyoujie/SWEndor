@@ -132,61 +132,42 @@ namespace SWEndor
 
     public void Process()
     {
-      if (!Game.Instance().IsPaused)
+      Queue<ActorInfo> q = new Queue<ActorInfo>(ActorFactory.Instance().GetActorList());
+      while (q.Count > 0)
       {
-        Queue<ActorInfo> q = new Queue<ActorInfo>(ActorFactory.Instance().GetActorList());
-        while (q.Count > 0)
-        {
-          ActorInfo a = q.Dequeue();
-          a.Process();
-          //if (a.IsPlayer())
-          //  ProcessPlayerCamera();
-        }
+        ActorInfo a = q.Dequeue();
+        a.Process();
+        //if (a.IsPlayer())
+        //  ProcessPlayerCamera();
       }
     }
 
     public void ProcessAI()
     {
-      if (!Game.Instance().IsPaused)
+      Queue<ActorInfo> q = new Queue<ActorInfo>(ActorFactory.Instance().GetHoldingList());
+      while (q.Count > 0)
       {
-        Queue<ActorInfo> q = new Queue<ActorInfo>(ActorFactory.Instance().GetHoldingList());
-        while (q.Count > 0)
-        {
-          q.Dequeue().ProcessAI();
-        }
+        q.Dequeue().ProcessAI();
       }
     }
 
     public void ProcessCollision()
     {
-      if (!Game.Instance().IsPaused)
+      Queue<ActorInfo> q = new Queue<ActorInfo>(ActorFactory.Instance().GetHoldingList());
+      while (q.Count > 0)
       {
-        Queue<ActorInfo> q = new Queue<ActorInfo>(ActorFactory.Instance().GetHoldingList());
-        while (q.Count > 0)
-        {
-          q.Dequeue().ProcessCollision();
-        }
-      }
-    }
-
-    public void ProcessPlayer()
-    {
-      if (!Game.Instance().IsPaused)
-      {
-        PlayerInfo.Instance().Update();
+        q.Dequeue().ProcessCollision();
       }
     }
 
     public void ProcessPlayerCamera()
     {
-      if (!Game.Instance().IsPaused)
-      {
-        //process player camera
-        if (PlayerInfo.Instance().Actor != null)
-          PlayerInfo.Instance().Actor.TypeInfo.ChaseCamera(PlayerInfo.Instance().Actor);
 
-        PlayerCameraInfo.Instance().Update();
-      }
+      //process player camera
+      if (PlayerInfo.Instance().Actor != null)
+        PlayerInfo.Instance().Actor.TypeInfo.ChaseCamera(PlayerInfo.Instance().Actor);
+
+      PlayerCameraInfo.Instance().Update();
     }
 
     public void PreRender()
