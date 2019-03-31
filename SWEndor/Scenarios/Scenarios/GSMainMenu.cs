@@ -24,10 +24,10 @@ namespace SWEndor.Scenarios
 
       LandInfo.Instance().Enabled = false;
       AtmosphereInfo.Instance().LoadDefaults(true, true);
+      AtmosphereInfo.Instance().SetPos_Sun(new TV_3DVECTOR(-1000, 250, 0));
       AtmosphereInfo.Instance().Enabled = true;
       AtmosphereInfo.Instance().ShowSun = true;
       AtmosphereInfo.Instance().ShowFlare = true;
-      AtmosphereInfo.Instance().SetPos_Sun(new TV_3DVECTOR(-1000, 270, 0));
     }
 
     public override void Launch()

@@ -217,7 +217,7 @@ namespace SWEndor
       {
         string pathSun = Path.Combine(Globals.AtmospherePath, @"sun.jpg");
         SetTex_Sun(pathSun);
-        SetPos_Sun(new TV_3DVECTOR(-1000, 270, 0));
+        SetPos_Sun(new TV_3DVECTOR(1000, 250, 0));
         if (m_enabled)
           LoadSun();
 
