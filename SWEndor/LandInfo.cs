@@ -84,7 +84,7 @@ namespace SWEndor
 
         m_land.Enable(true);
 
-        m_land.SaveTerrainData(Path.Combine(Globals.LandscapePath, @"land.txt"), CONST_TV_LANDSAVE.TV_LANDSAVE_HEIGHT);
+        //m_land.SaveTerrainData(Path.Combine(Globals.LandscapePath, @"land.txt"), CONST_TV_LANDSAVE.TV_LANDSAVE_HEIGHT);
       }
     }
 
