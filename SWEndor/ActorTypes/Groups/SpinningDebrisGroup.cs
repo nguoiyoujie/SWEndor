@@ -23,6 +23,10 @@ namespace SWEndor.Actors.Types
       ainfo.MovementInfo.DyingMovement = DyingMovement.SPIN;
       ainfo.MovementInfo.D_spin_min_rate = 120;
       ainfo.MovementInfo.D_spin_max_rate = 270;
+
+      ainfo.ExplosionInfo.Active = true;
+      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
     }
   }
 }

@@ -5,7 +5,7 @@ namespace SWEndor.Actors.Components
   public class ExplosionInfo
   {
     private ActorInfo Actor;
-    private bool Active = false;
+    public bool Active = false;
     public float ExplosionCooldown = Game.Instance().GameTime;
     public float ExplosionRate = 0.5f;
     public float ExplosionSize = 1;

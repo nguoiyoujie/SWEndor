@@ -15,10 +15,7 @@
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-
       ainfo.CombatInfo.DamageModifier = 0;
-      ainfo.ExplosionInfo.EnableDeathExplosion = true;
-      ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
     }
   }
 }
