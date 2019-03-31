@@ -72,7 +72,7 @@ namespace SWEndor.Actors
         throw new Exception("The list of ActorInfo has exceeded capacity!");
 
       int i = counter;
-      emptycounter++;
+      emptycounter = i + 1;
       actor = ActorInfo.FactoryCreate(i, amake);
 
       list[i] = actor;

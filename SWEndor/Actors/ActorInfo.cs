@@ -195,7 +195,6 @@ namespace SWEndor.Actors
       HuntWeight = acinfo.ActorTypeInfo.HuntWeight;
 
       TypeInfo.Initialize(this);
-      TypeInfo.GenerateAddOns(this);
     }
 
     public void Generate()
@@ -226,6 +225,7 @@ namespace SWEndor.Actors
       Update();
       OnCreatedEvent(new object[] { this });
 
+      TypeInfo.GenerateAddOns(this);
       //SpawnerInfo = new SpawnerInfo(this);
     }
 
