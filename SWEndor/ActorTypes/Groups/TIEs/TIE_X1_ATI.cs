@@ -68,7 +68,7 @@ namespace SWEndor.Actors.Types
       ainfo.SecondaryWeapons = new string[] { "none", "1:torp" };
       ainfo.AIWeapons = new string[] { "1:torp", "2:laser" };
 
-      ainfo.SetStateB("No2ndKill", true);
+      ainfo.CombatInfo.HitWhileDyingLeadsToDeath = false;
     }
   }
 }

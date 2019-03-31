@@ -10,6 +10,8 @@
     public float MaxStrength = 1;
     public float DamageModifier = 1;
 
+    public bool HitWhileDyingLeadsToDeath = true;
+
     public CombatInfo(ActorInfo actor)
     {
       Actor = actor;
