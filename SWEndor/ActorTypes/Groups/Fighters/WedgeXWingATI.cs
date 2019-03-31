@@ -64,7 +64,7 @@ namespace SWEndor.Actors.Types
                                                         , {"laser", new XWingLaserWeapon() }
                                                         };
       ainfo.PrimaryWeapons = new string[] { "1:laser", "2:laser", "4:laser" };
-      ainfo.SecondaryWeapons = new string[] { "4:laser", "1:torp" };
+      ainfo.SecondaryWeapons = new string[] { "none", "1:torp" };
       ainfo.AIWeapons = new string[] { "1:torp", "1:laser" };
 
       ainfo.SetStateB("No2ndKill", true);
