@@ -23,7 +23,7 @@ namespace SWEndor.Actors.Types
         string texpath = Path.Combine(Globals.ImagePath, texname);
         int itex = LoadTexture(texname, texpath);
 
-        SourceMesh.LoadXFile(Path.Combine(Globals.ModelPath, @"planet\endor.x"), true);
+        SourceMesh.LoadXFile(Path.Combine(Globals.ModelPath, "planet", "endor.x"), true);
         SourceMesh.SetTexture(itex);
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);
