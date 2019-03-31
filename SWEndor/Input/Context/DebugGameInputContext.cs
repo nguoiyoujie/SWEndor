@@ -87,6 +87,7 @@ namespace SWEndor.Input.Context
                                                         , 1.5f
                                                         , new TV_COLOR(0.5f, 0.5f, 1, 1)
                                                         , 99);
+        Utilities.Clamp(ref Game.Instance().TimeControl.SpeedModifier, 0.01f, 100);
       }
       if (keyPressedStates[(int)CONST_TV_KEY.TV_KEY_EQUALS] != 0)
       {
@@ -95,6 +96,7 @@ namespace SWEndor.Input.Context
                                                 , 1.5f
                                                 , new TV_COLOR(0.5f, 0.5f, 1, 1)
                                                 , 99);
+        Utilities.Clamp(ref Game.Instance().TimeControl.SpeedModifier, 0.01f, 100);
       }
       if (keyPressedStates[(int)CONST_TV_KEY.TV_KEY_BACKSPACE] != 0)
       {
@@ -104,7 +106,6 @@ namespace SWEndor.Input.Context
                                                 , new TV_COLOR(0.5f, 0.5f, 1, 1)
                                                 , 99);
       }
-      Utilities.Clamp(ref Game.Instance().TimeControl.SpeedModifier, 0.01f, 100);
     }
 
     public override void HandleMouse(int mouseX, int mouseY, bool button1, bool button2, bool button3, bool button4, int mouseScroll)
