@@ -81,10 +81,10 @@ namespace SWEndor
     private bool isProcessingRender = false;
     private bool isProcessingProcess = false;
 
-    public bool EnableSound = false;
-    public bool EnablePerf = false;
-    public bool EnableAI = false;
-    public bool EnableCollision = false;
+    public bool EnableSound = true;
+    public bool EnablePerf = true;
+    public bool EnableAI = true;
+    public bool EnableCollision = true;
 
     /// <summary>
     /// Checks if the current FPS is below the LowFPSLimit
