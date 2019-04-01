@@ -1,5 +1,7 @@
 ﻿using MTV3D65;
+using SWEndor.Scenarios;
 using SWEndor.Sound;
+using System;
 
 namespace SWEndor.Actors
 {
@@ -9,6 +11,7 @@ namespace SWEndor.Actors
     public TV_3DVECTOR RelativeLocation;
     public float Distance;
     public bool Loop;
+    public bool PlayInCutscene;
 
     public SoundSourceInfo(string sound, float dist)
     {
@@ -16,18 +19,22 @@ namespace SWEndor.Actors
       Distance = dist;
     }
 
-    public SoundSourceInfo(string sound, TV_3DVECTOR position, float dist, bool loop)
+    public SoundSourceInfo(string sound, TV_3DVECTOR position, float dist, bool loop, bool playInCutscene = false)
     {
       Sound = sound;
       RelativeLocation = position;
       Distance = dist;
       Loop = loop;
+      PlayInCutscene = playInCutscene;
     }
 
     public void Process(ActorInfo actor)
     {
-      TV_3DVECTOR engineloc = actor.GetRelativePositionXYZ(RelativeLocation.x, RelativeLocation.y, RelativeLocation.z);
-      Play(Engine.Instance().TVMathLibrary.GetDistanceVec3D(PlayerInfo.Instance().Position, engineloc));
+      if (!PlayInCutscene || !GameScenarioManager.Instance().IsCutsceneMode)
+      {
+        TV_3DVECTOR engineloc = actor.GetRelativePositionXYZ(RelativeLocation.x, RelativeLocation.y, RelativeLocation.z);
+        Play(Engine.Instance().TVMathLibrary.GetDistanceVec3D(PlayerInfo.Instance().Position, engineloc));
+      }
     }
 
     public void Play(float dist)
