@@ -11,6 +11,7 @@ namespace SWEndor.Actors.Components
     public float ExplosionRate = 0.5f;
     public float ExplosionSize = 1;
     public string ExplosionType = "Explosion";
+    private ActorTypeInfo _cache;
     public bool EnableDeathExplosion = false;
     public string DeathExplosionType = "ExplosionSm";
     public float DeathExplosionSize = 1;
@@ -57,17 +58,20 @@ namespace SWEndor.Actors.Components
 
     private void MakeExplosion(TV_3DVECTOR vert)
     {
-      MakeExplosion(ExplosionType, Actor.GetRelativePositionXYZ(vert.x * Actor.Scale.x, vert.y * Actor.Scale.y, vert.z * Actor.Scale.z), ExplosionSize);
+      if (_cache == null)
+        _cache = ActorTypeInfo.Factory.Get(ExplosionType);
+      MakeExplosion(_cache, Actor.GetRelativePositionXYZ(vert.x * Actor.Scale.x, vert.y * Actor.Scale.y, vert.z * Actor.Scale.z), ExplosionSize);
     }
 
     private void MakeDeathExplosion()
     {
-      MakeExplosion(DeathExplosionType, Actor.GetPosition(), DeathExplosionSize);
+      // Death explosion is one count, no cache needed
+      MakeExplosion(ActorTypeInfo.Factory.Get(DeathExplosionType), Actor.GetPosition(), DeathExplosionSize);
     }
 
-    private void MakeExplosion(string sActorType, TV_3DVECTOR globalPosition, float explSize)
+    private void MakeExplosion(ActorTypeInfo type, TV_3DVECTOR globalPosition, float explSize)
     {
-      ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get(sActorType));
+      ActorCreationInfo acinfo = new ActorCreationInfo(type);
       acinfo.Position = globalPosition;
       acinfo.InitialScale = new TV_3DVECTOR(explSize * (Actor.Scale.x + Actor.Scale.y + Actor.Scale.z) / 3, explSize * (Actor.Scale.x + Actor.Scale.y + Actor.Scale.z) / 3, 1);
       ActorInfo.Create(acinfo);
