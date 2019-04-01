@@ -830,17 +830,20 @@ namespace SWEndor.Evaluator
 
     private static object SetMusicStop(object[] ps)
     {
-      return SoundManager.Instance().SetMusicStop();
+      SoundManager.Instance().SetMusicStop();
+      return null;
     }
 
     private static object SetMusicPause(object[] ps)
     {
-      return SoundManager.Instance().SetMusicPause();
+      SoundManager.Instance().SetMusicPause();
+      return null;
     }
 
     private static object SetMusicResume(object[] ps)
     {
-      return SoundManager.Instance().SetMusicResume();
+      SoundManager.Instance().SetMusicResume();
+      return null;
     }
 
     #endregion

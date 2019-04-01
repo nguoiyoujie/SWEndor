@@ -2,22 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using FMOD;
-using System.ComponentModel;
-using System.Threading;
+using System.Collections.Concurrent;
 
 namespace SWEndor.Sound
 {
-  public class SoundInfo
-  {
-    public string Name;
-    public bool Interrupt;
-    public bool Loop;
-    public float Volume;
-    public uint Position_ms;
-  }
-
-
-  public class SoundManager
+  public partial class SoundManager
   {
     private static SoundManager _instance;
     public static SoundManager Instance()
@@ -26,18 +15,13 @@ namespace SWEndor.Sound
       return _instance;
     }
 
-    private SoundManager()
-    {
-      //m_musicLoopWorker.DoWork += MusicLoop;
-    }
+    private SoundManager() { }
 
-    public void Dispose()
-    {
-    }
+    public void Dispose() { }
 
 
     private FMOD.System fmodsystem = null;
-    private int channels = 32; // 0 = music. 1-31 = sounds.
+    private int channels = 32; // 0 = music. 1-31 = sounds. ?
     private ChannelGroup musicgrp;
     private Dictionary<string, ChannelGroup> soundgrps = new Dictionary<string, ChannelGroup>();
 
@@ -45,7 +29,6 @@ namespace SWEndor.Sound
     private Dictionary<string, FMOD.Sound> sounds = new Dictionary<string, FMOD.Sound>();
 
     private CHANNEL_CALLBACK m_cb;
-    private BackgroundWorker m_musicLoopWorker = new BackgroundWorker();
     private string m_musicLoopName = "";
     private uint m_musicLoopPosition = 0;
 
@@ -53,10 +36,7 @@ namespace SWEndor.Sound
     private float m_MasterSFXVolume = 1;
     private float m_MasterSFXVolumeScenario = 1;
 
-    private Mutex mu_queuedMusic = new Mutex();
-    private Queue<SoundInfo> m_queuedMusic = new Queue<SoundInfo>();
-    private Mutex mu_queuedSounds = new Mutex();
-    private Queue<SoundInfo> m_queuedSounds = new Queue<SoundInfo>();
+    private ConcurrentQueue<InstBase> m_queuedInstructions = new ConcurrentQueue<InstBase>();
 
     public float MasterMusicVolume
     {
@@ -119,7 +99,6 @@ namespace SWEndor.Sound
       }
 
       m_cb = new CHANNEL_CALLBACK(SoundEndCallback);
-      //m_musicLoopWorker.RunWorkerAsync();
     }
 
     public void Load()
@@ -137,7 +116,7 @@ namespace SWEndor.Sound
           //rpt = true;
         }
         FMOD.Sound sd = null;
-        fmodsystem.createStream(sdfl, FMOD.MODE.CREATESAMPLE, out sd); // accurate time not needed 
+        fmodsystem.createStream(sdfl, FMOD.MODE.CREATESAMPLE | FMOD.MODE.ACCURATETIME, out sd);
         sounds.Add(sdname, sd);
 
         Channel ch;
@@ -163,14 +142,10 @@ namespace SWEndor.Sound
 
     public bool SetMusic(string name, bool loop = false, uint position_ms = 0)
     {
-      mu_queuedMusic.WaitOne();
-      m_queuedMusic.Enqueue(new SoundInfo { Name = name, Loop = loop, Interrupt = true, Position_ms = position_ms });
-      mu_queuedMusic.ReleaseMutex();
-
+      m_queuedInstructions.Enqueue(new InstPlayMusic { Name = name, Loop = loop, Interrupt = true, Position_ms = position_ms });
       if (loop)
         m_musicLoopName = name;
 
-      //Update();
       return true;
     }
 
@@ -180,123 +155,27 @@ namespace SWEndor.Sound
       m_musicLoopPosition = position_ms;
     }
 
-    public bool ProcessMusic() //, uint position = 0)
+    public void Process() //, uint position = 0)
     {
-      SoundInfo sound = null;
-      mu_queuedMusic.WaitOne();
-      if (m_queuedMusic.Count > 0)
-      {
-        sound = m_queuedMusic.Dequeue();
-        //if (m_queuedMusic.Count == 0)
-        //  m_queuedMusic.Enqueue(name);
-      }
-      mu_queuedMusic.ReleaseMutex();
-
-      if (sound != null && sound.Name == "stop")
-      {
-        StopMusic();
-      }
-      else if (sound != null && sound.Name == "pause")
-      {
-        PauseMusic();
-      }
-      else if (sound != null && sound.Name == "resume")
-      {
-        ResumeMusic();
-      }
-      else if (sound != null && music.ContainsKey(sound.Name))
-      {
-        StopMusic();
-
-        Channel fmodchannel;
-        musicgrp.getChannel(0, out fmodchannel);
-        musicgrp.setVolume(MasterMusicVolume);
-
-        fmodsystem.playSound(music[sound.Name], musicgrp, false, out fmodchannel);
-
-        if (sound.Position_ms > 0)
-        {
-          fmodchannel.setPosition(sound.Position_ms, TIMEUNIT.MS);
-        }
-        fmodchannel.setCallback(m_cb);
-
-        return true;
-      }
-      return false;
+      InstBase instr;
+      if (m_queuedInstructions.TryDequeue(out instr))
+        instr.Process(this);
     }
 
-    public bool SetMusicStop()
+    public void SetMusicStop()
     {
-      mu_queuedMusic.WaitOne();
-      m_queuedMusic.Enqueue(new SoundInfo { Name = "stop" });
-      mu_queuedMusic.ReleaseMutex();
-
-      //Update();
-      return true;
+      m_queuedInstructions.Enqueue(new InstStopMusic());
     }
 
-    private bool StopMusic()
+    public void SetMusicPause()
     {
-      Channel fmodchannel;
-      musicgrp.getChannel(0, out fmodchannel);
-      fmodchannel.setCallback(null);
-      fmodchannel.stop();
-      return true;
+      m_queuedInstructions.Enqueue(new InstPauseMusic());
     }
 
-    public bool SetMusicPause()
+    public void SetMusicResume()
     {
-      mu_queuedMusic.WaitOne();
-      m_queuedMusic.Enqueue(new SoundInfo { Name = "pause" });
-      mu_queuedMusic.ReleaseMutex();
-
-      //Update();
-      return true;
+      m_queuedInstructions.Enqueue(new InstResumeMusic());
     }
-
-    private bool PauseMusic()
-    {
-      Channel fmodchannel;
-      musicgrp.getChannel(0, out fmodchannel);
-      fmodchannel.setPaused(true);
-      return true;
-    }
-
-    public bool SetMusicResume()
-    {
-      mu_queuedMusic.WaitOne();
-      m_queuedMusic.Enqueue(new SoundInfo { Name = "resume" });
-      mu_queuedMusic.ReleaseMutex();
-
-      //Update();
-      return true;
-    }
-
-    private bool ResumeMusic()
-    {
-      Channel fmodchannel;
-      musicgrp.getChannel(0, out fmodchannel);
-      fmodchannel.setPaused(false);
-      return true;
-    }
-
-    /*
-    public void MusicLoop(object sender, DoWorkEventArgs e)
-    {
-      Channel fmodchannel;
-      musicgrp.getChannel(0, out fmodchannel);
-
-      while (Game.Instance().IsLoading || Game.Instance().IsRunning)
-      {
-        bool bp;
-        fmodchannel.isPlaying(out bp);
-        if (!bp && m_musicLoopName.Length > 0)
-          SetMusic(m_musicLoopName); //, false, m_musicLoopPosition);
-
-        Thread.Sleep(100);
-      }
-    }
-    */
 
     private RESULT SoundEndCallback(IntPtr channelraw, CHANNELCONTROL_TYPE controltype, CHANNELCONTROL_CALLBACK_TYPE type, IntPtr commanddata1, IntPtr commanddata2)
     {
@@ -308,95 +187,35 @@ namespace SWEndor.Sound
       return FMOD.RESULT.OK;
     }
 
-
-
     public bool SetSound(string name, bool interrupt = true, float volume = 1.0f, bool loop = true)//, uint position = 0)
     {
-      mu_queuedSounds.WaitOne();
-      m_queuedSounds.Enqueue(new SoundInfo { Name = name, Loop = loop, Interrupt = interrupt, Volume = volume });
-      mu_queuedSounds.ReleaseMutex();
-
-      //Update();
+      m_queuedInstructions.Enqueue(new InstPlaySound { Name = name, Loop = loop, Interrupt = interrupt, Volume = volume });
       return true;
     }
 
-    private void ProcessSounds()
-    {
-      mu_queuedSounds.WaitOne();
-      //Queue<SoundInfo> nextsi = new Queue<SoundInfo>();
-      while (m_queuedSounds.Count > 0)
-      {
-        SoundInfo sound = m_queuedSounds.Dequeue();
-
-        if (sound != null && sound.Name.StartsWith("stop_") && sounds.ContainsKey(sound.Name.Substring(4)))
-        {
-          ChannelGroup soundgrp = soundgrps[sound.Name.Substring(4)];
-
-          Channel fmodchannel;
-          soundgrp.getChannel(0, out fmodchannel);
-          fmodchannel.stop();
-        }
-        else if (sound != null && sound.Name == "stopall")
-        {
-          foreach (string name in sounds.Keys)
-          {
-            ChannelGroup soundgrp = soundgrps[name];
-
-            Channel fmodchannel;
-            soundgrp.getChannel(0, out fmodchannel);
-            fmodchannel.stop();
-          }
-        }
-        /*
-        else if (sound != null && sound.Name.StartsWith("update_vol_") && sounds.ContainsKey(sound.Name.Substring(10)))
-        {
-          ChannelGroup soundgrp = soundgrps[sound.Name.Substring(10)];
-          soundgrp.setVolume(sound.Volume * MasterSFXVolume);
-        }
-        else if (sound != null && sound.Name.StartsWith("update_vol+_") && sounds.ContainsKey(sound.Name.Substring(11)))
-        {
-          ChannelGroup soundgrp = soundgrps[sound.Name.Substring(11)];
-          float vol = 0;
-          soundgrp.getVolume(out vol);
-          if (vol > sound.Volume * MasterSFXVolume)
-            soundgrp.setVolume(sound.Volume * MasterSFXVolume);
-        }
-        else if (sound != null && sound.Name.StartsWith("update_vol-_") && sounds.ContainsKey(sound.Name.Substring(11)))
-        {
-          ChannelGroup soundgrp = soundgrps[sound.Name.Substring(11)];
-          float vol = 0;
-          soundgrp.getVolume(out vol);
-          if (vol < sound.Volume * MasterSFXVolume)
-            soundgrp.setVolume(sound.Volume * MasterSFXVolume);
-        }
-        */
-        else if (sound != null && sounds.ContainsKey(sound.Name))
-        {
-          ChannelGroup soundgrp = soundgrps[sound.Name];
-
-          Channel fmodchannel;
-          soundgrp.getChannel(0, out fmodchannel);
-          soundgrp.setVolume(sound.Volume * MasterSFXVolume);
-          fmodchannel.setLoopCount((sound.Loop) ? -1 : 0);
-          //fmodchannel.setMode((sound.Loop) ? MODE.LOOP_NORMAL : MODE.LOOP_OFF);
-
-          bool bp;
-          soundgrp.isPlaying(out bp);
-          if (!bp || sound.Interrupt)
-          {
-            fmodchannel.stop();
-            fmodsystem.playSound(sounds[sound.Name], soundgrp, false, out fmodchannel);
-          }
-        }
-      }
-
-      //while (nextsi.Count > 0)
-      //{
-      //  m_queuedMusic.Enqueue(nextsi.Dequeue());
-      //}
-      mu_queuedSounds.ReleaseMutex();
-    }
-
+        
+        //else if (sound.name.startswith("update_vol_") && sounds.containskey(sound.name.substring(10)))
+        //{
+        //  channelgroup soundgrp = soundgrps[sound.name.substring(10)];
+        //  soundgrp.setvolume(sound.volume * mastersfxvolume);
+        //}
+        //else if (sound.name.startswith("update_vol+_") && sounds.containskey(sound.name.substring(11)))
+        //{
+        //  channelgroup soundgrp = soundgrps[sound.name.substring(11)];
+        //  float vol = 0;
+        //  soundgrp.getvolume(out vol);
+        //  if (vol > sound.volume * mastersfxvolume)
+        //    soundgrp.setvolume(sound.volume * mastersfxvolume);
+        //}
+        //else if (sound.name.startswith("update_vol-_") && sounds.containskey(sound.name.substring(11)))
+        //{
+        //  channelgroup soundgrp = soundgrps[sound.name.substring(11)];
+        //  float vol = 0;
+        //  soundgrp.getvolume(out vol);
+        //  if (vol < sound.volume * mastersfxvolume)
+        //    soundgrp.setvolume(sound.volume * mastersfxvolume);
+        //}
+  
     /*
     public void SetSoundUpdateVolume(string name, float volume)
     {
@@ -428,28 +247,18 @@ namespace SWEndor.Sound
 
     public void SetSoundStop(string name)
     {
-      mu_queuedSounds.WaitOne();
-      m_queuedSounds.Enqueue(new SoundInfo { Name = "stop_" + name });
-      mu_queuedSounds.ReleaseMutex();
-
-      //Update();
+      m_queuedInstructions.Enqueue(new InstStopOneSound { Name = name });
     }
-
 
     public void SetSoundStopAll()
     {
-      mu_queuedSounds.WaitOne();
-      m_queuedSounds.Enqueue(new SoundInfo { Name = "stopall" });
-      mu_queuedSounds.ReleaseMutex();
-
-      //Update();
+      m_queuedInstructions.Enqueue(new InstStopAllSound());
     }
 
 
     public void Update()
     {
-      ProcessMusic();
-      ProcessSounds();
+      Process();
     }
 
     public bool PendingUpdate
@@ -457,7 +266,7 @@ namespace SWEndor.Sound
       get
       {
         fmodsystem.update();
-        return (m_queuedMusic.Count > 0 || m_queuedSounds.Count > 0);
+        return (m_queuedInstructions.Count > 0);
       }
     }
   }
