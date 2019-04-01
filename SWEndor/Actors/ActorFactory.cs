@@ -63,8 +63,8 @@ namespace SWEndor.Actors
         throw new Exception("Attempted to register actor with null ActorTypeInfo!");
 
       mu_counter.WaitOne();
-      //if (counter >= 10000)
-        counter = emptycounter;
+
+      counter = emptycounter;
       while (counter < list.Length && list[counter] != null)
         counter++;
 
@@ -77,8 +77,6 @@ namespace SWEndor.Actors
 
       list[i] = actor;
       count++; 
-      //list.Add(i, actor);
-      //list.Refresh();
 
       mu_counter.ReleaseMutex();
 
@@ -88,20 +86,17 @@ namespace SWEndor.Actors
     // Why query the list again?
     public void ActivatePlanned()
     {
-      foreach (ActorInfo a in list)//.GetValues())
+      foreach (ActorInfo a in list)
       {
         if (a != null)
           if (a.CreationState == CreationState.PLANNED && a.CreationTime < Game.Instance().GameTime)
-          {
             a.Generate();
-          }
       }
     }
 
     public int GetActorCount()
     {
       return count;
-      //return list.Count;
     }
 
     public ActorInfo[] GetActorList()
@@ -110,11 +105,8 @@ namespace SWEndor.Actors
       {
         if (listtime < Game.Instance().GameTime)
         {
-          //list.Refresh();
-          //holdinglist = list.GetValues();
-
           List<ActorInfo> hl = new List<ActorInfo>();
-          foreach (ActorInfo a in list)//.GetValues())
+          foreach (ActorInfo a in list)
           {
             if (a != null)
               hl.Add(a);
@@ -136,7 +128,6 @@ namespace SWEndor.Actors
       if (id < 0)
         return null;
       return list[id];
-      //return list.Get(id);
     }
 
     public void RemoveActor(int id)
@@ -145,7 +136,6 @@ namespace SWEndor.Actors
       count--;
       if (id < emptycounter)
         emptycounter = id;
-      //list.Remove(id);
     }
 
   }
