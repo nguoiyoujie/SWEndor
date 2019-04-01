@@ -16,8 +16,7 @@ namespace SWEndor.Sound //.Instructions
       {
         if (s.music.ContainsKey(Name))
         {
-          new InstStopMusic().Process(s);
-          //s.StopMusic();
+          new InstStopMusic().Process(s); //s.StopMusic();
 
           Channel fmodchannel;
           s.musicgrp.getChannel(0, out fmodchannel);
