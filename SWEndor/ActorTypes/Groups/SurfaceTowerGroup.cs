@@ -1,4 +1,6 @@
-﻿namespace SWEndor.Actors.Types
+﻿using SWEndor.Actors;
+
+namespace SWEndor.ActorTypes
 {
   public class SurfaceTowerGroup : ActorTypeInfo
   {
@@ -19,7 +21,6 @@
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-
       ainfo.ExplosionInfo.EnableDeathExplosion = true;
     }
   }

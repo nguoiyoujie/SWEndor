@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 
-namespace SWEndor.Actors
+namespace SWEndor.ActorTypes
 {
   public class DebrisSpawnerInfo
   {
@@ -36,7 +37,7 @@ namespace SWEndor.Actors
     public void Process(ActorInfo actor)
     {
       if (_cache == null)
-        _cache = ActorTypeFactory.Instance().GetActorType(Type);
+        _cache = ActorTypeInfo.Factory.Get(Type);
 
       double d = Engine.Instance().Random.NextDouble();
       if (d < Chance)

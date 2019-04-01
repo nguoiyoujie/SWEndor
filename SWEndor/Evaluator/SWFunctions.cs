@@ -7,6 +7,7 @@ using SWEndor.AI.Actions;
 using SWEndor.AI;
 using SWEndor.Scenarios;
 using SWEndor.Sound;
+using SWEndor.ActorTypes;
 
 namespace SWEndor.Evaluator
 {
@@ -192,12 +193,12 @@ namespace SWEndor.Evaluator
       if (gscenario == null)
         return "-1";
 
-      ActorTypeInfo atype = ActorTypeFactory.Instance().GetActorType(ps[0].ToString());
+      ActorTypeInfo atype = ActorTypeInfo.Factory.Get(ps[0].ToString());
       string unitname = ps[1].ToString();
       string regname = ps[2].ToString();
       string sidebarname = ps[3].ToString();
       float spawntime = Convert.ToSingle(ps[4]);
-      FactionInfo faction = FactionInfo.Get(ps[5].ToString());
+      FactionInfo faction = FactionInfo.Factory.Get(ps[5].ToString());
       TV_3DVECTOR position = new TV_3DVECTOR(Convert.ToSingle(ps[6]), Convert.ToSingle(ps[7]), Convert.ToSingle(ps[8]));
       TV_3DVECTOR rotation = new TV_3DVECTOR(Convert.ToSingle(ps[9]), Convert.ToSingle(ps[10]), Convert.ToSingle(ps[11]));
       List<string> registries = new List<string>();
@@ -220,7 +221,7 @@ namespace SWEndor.Evaluator
         return false;
 
       int id = Convert.ToInt32(ps[0].ToString());
-      GameScenarioManager.Instance().Scenario.ActiveActor = ActorFactory.Instance().GetActor(id);
+      GameScenarioManager.Instance().Scenario.ActiveActor = ActorInfo.Factory.GetActor(id);
       return true;
     }
 
@@ -539,7 +540,7 @@ namespace SWEndor.Evaluator
         return false;
       }
 
-      ActorInfo a = ActorFactory.Instance().GetActor(id);
+      ActorInfo a = ActorInfo.Factory.GetActor(id);
       if (a == null)
         return false;
 
@@ -592,13 +593,13 @@ namespace SWEndor.Evaluator
     private static object AddFaction(object[] ps)
     {
       TV_COLOR color = new TV_COLOR(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()), 1);
-      FactionInfo.AddFaction(ps[0].ToString(), color);
+      FactionInfo.Factory.Add(ps[0].ToString(), color);
       return true;
     }
 
     private static object Faction_SetAsMainAllyFaction(object[] ps)
     {
-      FactionInfo f = FactionInfo.Get(ps[0].ToString());
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].ToString());
       if (f != null && GameScenarioManager.Instance().Scenario != null)
       {
         GameScenarioManager.Instance().Scenario.MainAllyFaction = f;
@@ -609,7 +610,7 @@ namespace SWEndor.Evaluator
 
     private static object Faction_SetAsMainEnemyFaction(object[] ps)
     {
-      FactionInfo f = FactionInfo.Get(ps[0].ToString());
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].ToString());
       if (f != null && GameScenarioManager.Instance().Scenario != null)
       {
         GameScenarioManager.Instance().Scenario.MainEnemyFaction = f;
@@ -620,8 +621,8 @@ namespace SWEndor.Evaluator
 
     private static object Faction_MakeAlly(object[] ps)
     {
-      FactionInfo f1 = FactionInfo.Get(ps[0].ToString());
-      FactionInfo f2 = FactionInfo.Get(ps[1].ToString());
+      FactionInfo f1 = FactionInfo.Factory.Get(ps[0].ToString());
+      FactionInfo f2 = FactionInfo.Factory.Get(ps[1].ToString());
       if (f1 != null && f2 != null)
       {
         if (!f1.Allies.Contains(f2))
@@ -636,8 +637,8 @@ namespace SWEndor.Evaluator
 
     private static object Faction_MakeEnemy(object[] ps)
     {
-      FactionInfo f1 = FactionInfo.Get(ps[0].ToString());
-      FactionInfo f2 = FactionInfo.Get(ps[1].ToString());
+      FactionInfo f1 = FactionInfo.Factory.Get(ps[0].ToString());
+      FactionInfo f2 = FactionInfo.Factory.Get(ps[1].ToString());
       if (f1 != null && f2 != null)
       {
         if (f1.Allies.Contains(f2))
@@ -652,37 +653,37 @@ namespace SWEndor.Evaluator
 
     private static object Faction_GetWingCount(object[] ps)
     {
-      FactionInfo f = FactionInfo.Get(ps[0].ToString());
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].ToString());
       return (f != null) ? f.GetWings().Count : 0;
     }
 
     private static object Faction_GetShipCount(object[] ps)
     {
-      FactionInfo f = FactionInfo.Get(ps[0].ToString());
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].ToString());
       return (f != null) ? f.GetShips().Count : 0;
     }
 
     private static object Faction_GetStructureCount(object[] ps)
     {
-      FactionInfo f = FactionInfo.Get(ps[0].ToString());
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].ToString());
       return (f != null) ? f.GetStructures().Count : 0;
     }
 
     private static object Faction_GetWingLimit(object[] ps)
     {
-      FactionInfo f = FactionInfo.Get(ps[0].ToString());
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].ToString());
       return (f != null) ? f.WingLimit : 0;
     }
 
     private static object Faction_GetShipLimit(object[] ps)
     {
-      FactionInfo f = FactionInfo.Get(ps[0].ToString());
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].ToString());
       return (f != null) ? f.ShipLimit : 0;
     }
 
     private static object Faction_GetStructureLimit(object[] ps)
     {
-      FactionInfo f = FactionInfo.Get(ps[0].ToString());
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].ToString());
       return (f != null) ? f.StructureLimit : 0;
     }
 
@@ -1048,7 +1049,7 @@ namespace SWEndor.Evaluator
         case "attackactor":
           if (ps.Length >= 2)
           {
-            tgt = ActorFactory.Instance().GetActor(Convert.ToInt32(ps[1].ToString()));
+            tgt = ActorInfo.Factory.GetActor(Convert.ToInt32(ps[1].ToString()));
             if (tgt == null)
               throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[0].ToString().ToLower(), ps[1].ToString().ToLower()));
 
@@ -1079,7 +1080,7 @@ namespace SWEndor.Evaluator
         case "followactor":
           if (ps.Length >= 2)
           {
-            tgt = ActorFactory.Instance().GetActor(Convert.ToInt32(ps[1].ToString()));
+            tgt = ActorInfo.Factory.GetActor(Convert.ToInt32(ps[1].ToString()));
             if (tgt == null)
               throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[0].ToString().ToLower(), ps[1].ToString().ToLower()));
 

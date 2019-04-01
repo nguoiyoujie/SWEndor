@@ -1,8 +1,9 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class ArquitensATI : StarDestroyerGroup
   {

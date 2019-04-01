@@ -5,7 +5,6 @@ using SWEndor.Scenarios;
 using SWEndor.Sound;
 using SWEndor.UI;
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
@@ -26,7 +25,6 @@ namespace SWEndor
     {
       TimeSinceRender = 1;
       th_load = new Thread(new ThreadStart(Engine.Instance().Load));
-
 
       tm_sound = new System.Timers.Timer(30);
       tm_sound.Elapsed += TimerSound;
@@ -51,8 +49,9 @@ namespace SWEndor
 
     public float GameTime { get; private set; }
 
-    public bool IsLoading { get; private set; }
-    public bool IsRunning { get; private set; }
+    private enum RunState { STOPPED, LOADING, RUNNING }
+    private RunState State { get; set; } = RunState.STOPPED;
+
     public float TimeSinceRender { get; set; }
     public float AddTime { get; set; }
     public bool IsPaused { get; set; }
@@ -108,29 +107,21 @@ namespace SWEndor
 
     public void StartLoad()
     {
-      IsLoading = true;
+      State = RunState.LOADING;
     }
 
     public void Run()
     {
-      IsRunning = true;
-      IsLoading = false;
-      ////th_tick.Start();
+      State = RunState.RUNNING;
       tm_perf.Start();
-      //Task.Factory.StartNew(new Action(TaskPerf)).ContinueWith(new Action<Task>(t => GenerateFatalError(t.Exception.InnerException)), TaskContinuationOptions.OnlyOnFaulted);
-
       Task.Factory.StartNew(new Action(Tick)).ContinueWith(new Action<Task>(t => GenerateFatalError(t.Exception.InnerException)), TaskContinuationOptions.OnlyOnFaulted);
-
-      //GameForm.Instance().Show();
-      //Tick();
     }
 
     public void Close()
     {
-      if (IsRunning)
+      if (State == RunState.RUNNING) // TO DO: Check if this condition is needed
       {
-        IsRunning = false;
-        IsLoading = false;
+        State = RunState.STOPPED;
         GameForm.Instance().Exit();
       }
     }
@@ -141,9 +132,6 @@ namespace SWEndor
       Thread.Sleep(1000);
 
       PerfManager.Instance().ClearPerf();
-
-      //float lastelapsed = 0;
-      //float elapsed = 0;
 
       // Pre-load
       th_load.Start();
@@ -160,34 +148,28 @@ namespace SWEndor
       // Initialize other threads/timers
       if (septhread_sound)
         tm_sound.Start();
-      //Task.Factory.StartNew(new Action(TaskSound)).ContinueWith(new Action<Task>(t => GenerateFatalError(t.Exception.InnerException)), TaskContinuationOptions.OnlyOnFaulted);
 
       if (septhread_ai)
         tm_ai.Start();
-      //Task.Factory.StartNew(new Action(TaskAI)).ContinueWith(new Action<Task>(t => GenerateFatalError(t.Exception.InnerException)), TaskContinuationOptions.OnlyOnFaulted);
 
       if (septhread_collision)
         tm_collision.Start();
-      //Task.Factory.StartNew(new Action(TaskCollision)).ContinueWith(new Action<Task>(t => GenerateFatalError(t.Exception.InnerException)), TaskContinuationOptions.OnlyOnFaulted);
 
       if (septhread_render)
         tm_render.Start();
-      //Task.Factory.StartNew(new Action(TaskRender)).ContinueWith(new Action<Task>(t => GenerateFatalError(t.Exception.InnerException)), TaskContinuationOptions.OnlyOnFaulted);
 
       if (septhread_process)
         tm_process.Start();
-      //Task.Factory.StartNew(new Action(TaskProcess)).ContinueWith(new Action<Task>(t => GenerateFatalError(t.Exception.InnerException)), TaskContinuationOptions.OnlyOnFaulted);
 
       try
       {
-        while (IsRunning)
+        while (State == RunState.RUNNING)
         {
           try
           {
             using (new PerfElement("tick"))
             {
               TimeControl.Update();
-              //lastelapsed = elapsed;
               TimeSinceRender = (1f / TimeControl.TargetFPS) * TimeControl.SpeedModifier; //TimeControl.WorldInterval;
               TimeControl.AddTime(AddTime);
               TimeSinceRender += AddTime;
@@ -210,9 +192,6 @@ namespace SWEndor
 
               if (!IsPaused)
                 GameTime += TimeSinceRender;
-
-              //CurrentFPS = Engine.Instance().TVEngine.GetFPS();
-              //TimeControl.Wait();
             }
           }
           catch (Exception ex)
@@ -238,7 +217,7 @@ namespace SWEndor
     private void GenerateFatalError(Exception ex)
     {
       // Replace this block to print this on file!
-      if (IsRunning)
+      if (State == RunState.RUNNING)
       {
         Screen2D.Instance().CurrentPage = new UIPage_FatalError(ex);
         Screen2D.Instance().ShowPage = true;
@@ -249,42 +228,42 @@ namespace SWEndor
     private void TimerSound(object sender, ElapsedEventArgs e)
     {
       TickSound();
-      if (!IsRunning)
+      if (State != RunState.RUNNING)
         tm_sound.Stop();
     }
 
     private void TimerAI(object sender, ElapsedEventArgs e)
     {
       TickAI();
-      if (!IsRunning)
+      if (State != RunState.RUNNING)
         tm_ai.Stop();
     }
 
     private void TimerCollision(object sender, ElapsedEventArgs e)
     {
       TickCollision();
-      if (!IsRunning)
+      if (State != RunState.RUNNING)
         tm_collision.Stop();
     }
 
     private void TimerRender(object sender, ElapsedEventArgs e)
     {
       TickRender();
-      if (!IsRunning)
+      if (State != RunState.RUNNING)
         tm_render.Stop();
     }
 
     private void TimerProcess(object sender, ElapsedEventArgs e)
     {
       TickProcess();
-      if (!IsRunning)
+      if (State != RunState.RUNNING)
         tm_process.Stop();
     }
 
     private void TimerPerf(object sender, ElapsedEventArgs e)
     {
       TickPerf();
-      if (!IsRunning)
+      if (State != RunState.RUNNING)
         tm_perf.Stop();
     }
 
@@ -297,12 +276,8 @@ namespace SWEndor
         if (!isProcessingRender)
         {
           isProcessingRender = true;
-          //using (new PerfElement("tick_render_playercamera"))
-          //  Engine.Instance().ProcessPlayerCamera();
-
           using (new PerfElement("tick_render"))
             Engine.Instance().Render();
-
           isProcessingRender = false;
         }
       }
@@ -336,14 +311,15 @@ namespace SWEndor
 
           if (!IsPaused)
             using (new PerfElement("tick_process_plannedactors"))
-              ActorFactory.Instance().ActivatePlanned();
+              ActorInfo.Factory.ActivatePlanned();
 
           if (!IsPaused)
             using (new PerfElement("tick_process_scenario"))
               GameScenarioManager.Instance().Update();
 
-          using (new PerfElement("tick_render_playercamera"))
-            Engine.Instance().ProcessPlayerCamera();
+          if (!IsPaused)
+            using (new PerfElement("tick_render_playercamera"))
+              PlayerCameraInfo.Instance().Update();
 
           isProcessingProcess = false;
         }

@@ -1,9 +1,10 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using System.Collections.Generic;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class HangarBayATI : AddOnGroup
   {

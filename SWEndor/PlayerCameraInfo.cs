@@ -33,6 +33,10 @@ namespace SWEndor
     public void Update()
     {
       UpdateMode();
+
+      if (PlayerInfo.Instance().Actor != null)
+        PlayerInfo.Instance().Actor.TypeInfo.ChaseCamera(PlayerInfo.Instance().Actor);
+
       ShakeCam();
       ShakeDecay();
     }

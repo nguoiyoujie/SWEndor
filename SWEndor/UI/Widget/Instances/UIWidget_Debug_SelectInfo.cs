@@ -25,7 +25,7 @@ namespace SWEndor.UI
         int n = 0;
         if (int.TryParse(tvcres.GetCollisionMesh().GetMeshName(), out n))
         {
-          ActorInfo a = ActorFactory.Instance().GetActor(n);
+          ActorInfo a = ActorInfo.Factory.GetActor(n);
 
           if (a != null) //&& a.TypeInfo.CollisionEnabled)
           {

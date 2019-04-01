@@ -1,5 +1,5 @@
 ﻿using MTV3D65;
-using SWEndor.Actors;
+using SWEndor.ActorTypes;
 using SWEndor.Scenarios;
 
 namespace SWEndor.UI

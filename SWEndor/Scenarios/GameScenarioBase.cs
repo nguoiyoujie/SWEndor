@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Types;
+using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Sound;
@@ -67,6 +67,7 @@ namespace SWEndor.Scenarios
       return m_PlayerCameraModes[m_PlayerModeNum];
     }
 
+    // scripting
     public ActorInfo ActiveActor { get; set; }
 
     public float RebelSpawnTime = 0;
@@ -97,7 +98,7 @@ namespace SWEndor.Scenarios
 
     public virtual void LoadFactions()
     {
-      FactionInfo.Reset();
+      FactionInfo.Factory.Clear();
       MainAllyFaction = FactionInfo.Neutral;
       MainEnemyFaction = FactionInfo.Neutral;
     }
@@ -136,7 +137,7 @@ namespace SWEndor.Scenarios
       GameScenarioManager.Instance().Scenario = null;
 
       // Full reset
-      foreach (ActorInfo a in ActorFactory.Instance().GetActorList())
+      foreach (ActorInfo a in ActorInfo.Factory.GetActorList())
       {
         if (a != null)
           a.Destroy();
@@ -184,11 +185,8 @@ namespace SWEndor.Scenarios
           return;
         }
 
-        if (MakePlayer != null)
-        {
-          MakePlayer(null);
-          //GameScenarioManager.Instance().SetGameStateB("PendingPlayerSpawn", false);
-        }
+        MakePlayer?.Invoke(null);
+        //GameScenarioManager.Instance().SetGameStateB("PendingPlayerSpawn", false);
 
         FadeIn();
         GameScenarioManager.Instance().IsCutsceneMode = false;

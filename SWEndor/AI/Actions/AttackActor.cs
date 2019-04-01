@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Types;
+using SWEndor.ActorTypes;
 using SWEndor.Scenarios;
 using SWEndor.Weapons;
 using System;
@@ -158,7 +158,7 @@ namespace SWEndor.AI.Actions
       float dist = 0;
       float delta_angle = 0;
 
-      foreach (ActorInfo a in ActorFactory.Instance().GetHoldingList())
+      foreach (ActorInfo a in ActorInfo.Factory.GetHoldingList())
       {
         if (a != null
             && owner != a

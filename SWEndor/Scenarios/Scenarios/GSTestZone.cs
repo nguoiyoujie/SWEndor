@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Types;
+using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
 using SWEndor.Sound;
 using System.Collections.Generic;
@@ -66,11 +66,11 @@ namespace SWEndor.Scenarios
     {
       base.LoadFactions();
 
-      FactionInfo.AddFaction("Rebels", new TV_COLOR(0.8f, 0, 0, 1)).AutoAI = true;
-      FactionInfo.AddFaction("Empire", new TV_COLOR(0, 0.8f, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels", new TV_COLOR(0.8f, 0, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Empire", new TV_COLOR(0, 0.8f, 0, 1)).AutoAI = true;
 
-      MainAllyFaction = FactionInfo.Get("Rebels");
-      MainEnemyFaction = FactionInfo.Get("Empire");
+      MainAllyFaction = FactionInfo.Factory.Get("Rebels");
+      MainEnemyFaction = FactionInfo.Factory.Get("Empire");
     }
 
     public override void LoadScene()
@@ -156,22 +156,22 @@ namespace SWEndor.Scenarios
       for (int x = -5; x <= 5; x++)
         for (int y = -5; y <= 5; y++)
           SpawnActor(towers[Engine.Instance().Random.Next(0, towers.Count)], "", "", ""
-               , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(x * 500, 0, y * 500), new TV_3DVECTOR());
+               , 0, FactionInfo.Factory.Get("Rebels"), new TV_3DVECTOR(x * 500, 0, y * 500), new TV_3DVECTOR());
       /*
       SpawnActor(Tower03ATI.Instance(), "", "", ""
-               , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(100, 0, 500), new TV_3DVECTOR());
+               , 0, FactionInfo.Factory.Get("Rebels"), new TV_3DVECTOR(100, 0, 500), new TV_3DVECTOR());
                
       SpawnActor(Tower02ATI.Instance(), "", "", ""
-               , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(100 + 1000, 0, 500), new TV_3DVECTOR());
+               , 0, FactionInfo.Factory.Get("Rebels"), new TV_3DVECTOR(100 + 1000, 0, 500), new TV_3DVECTOR());
 
       SpawnActor(Tower00ATI.Instance(), "", "", ""
-               , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(100 - 1000, 0, 500), new TV_3DVECTOR());
+               , 0, FactionInfo.Factory.Get("Rebels"), new TV_3DVECTOR(100 - 1000, 0, 500), new TV_3DVECTOR());
 
       SpawnActor(Tower02ATI.Instance(), "", "", ""
-               , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(100, 0, 500 + 1000), new TV_3DVECTOR());
+               , 0, FactionInfo.Factory.Get("Rebels"), new TV_3DVECTOR(100, 0, 500 + 1000), new TV_3DVECTOR());
 
       SpawnActor(Tower01ATI.Instance(), "", "", ""
-               , 0, FactionInfo.Get("Rebels"), new TV_3DVECTOR(100, 0, 500 - 1000), new TV_3DVECTOR());
+               , 0, FactionInfo.Factory.Get("Rebels"), new TV_3DVECTOR(100, 0, 500 - 1000), new TV_3DVECTOR());
       */
     }
     #endregion

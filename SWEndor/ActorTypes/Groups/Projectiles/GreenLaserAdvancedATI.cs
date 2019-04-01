@@ -1,6 +1,7 @@
-﻿using System.IO;
+﻿using SWEndor.Actors;
+using System.IO;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class GreenLaserAdvancedATI : ProjectileGroup
   {
@@ -46,7 +47,7 @@ namespace SWEndor.Actors.Types
       {
         if (ainfo.CombatInfo.TimedLife > 0)
         {
-          ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("Explosion"));
+          ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("Explosion"));
           acinfo.Position = ainfo.GetPosition();
           ActorInfo.Create(acinfo);
         }

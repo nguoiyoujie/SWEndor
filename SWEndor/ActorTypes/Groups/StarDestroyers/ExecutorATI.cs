@@ -1,8 +1,9 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class ExecutorATI : StarDestroyerGroup
   {
@@ -94,7 +95,7 @@ namespace SWEndor.Actors.Types
 
       ainfo.ExplosionInfo.DeathExplosionSize = 5;
 
-      ainfo.MovementInfo.DyingMovement = Components.DyingMovement.SINK;
+      ainfo.MovementInfo.DyingMovement = Actors.Components.DyingMovement.SINK;
       ainfo.MovementInfo.D_sink_pitch_rate = 0.00025f;
       ainfo.MovementInfo.D_sink_down_rate = 1.3f;
       ainfo.MovementInfo.D_sink_forward_rate = 0.2f;

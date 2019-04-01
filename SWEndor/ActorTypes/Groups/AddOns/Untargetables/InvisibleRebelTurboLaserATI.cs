@@ -1,8 +1,9 @@
-﻿using SWEndor.Weapons;
+﻿using SWEndor.Actors;
+using SWEndor.Weapons;
 using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class InvisibleRebelTurboLaserATI : AddOnGroup
   {

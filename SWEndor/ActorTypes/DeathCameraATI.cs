@@ -1,8 +1,9 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.Scenarios;
 using System;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public enum DeathCamMode { CIRCLE, FOLLOW };
 

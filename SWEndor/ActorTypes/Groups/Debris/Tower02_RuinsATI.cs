@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class Tower02_RuinsATI : DebrisGroup
   {

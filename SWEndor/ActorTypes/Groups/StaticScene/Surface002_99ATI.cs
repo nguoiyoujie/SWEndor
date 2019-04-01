@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class Surface002_99ATI : StaticSceneGroup
   {

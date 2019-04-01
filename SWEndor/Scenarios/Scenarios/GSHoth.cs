@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Types;
+using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Sound;
@@ -99,15 +99,15 @@ namespace SWEndor.Scenarios
     {
       base.LoadFactions();
 
-      FactionInfo.AddFaction("Rebels", new TV_COLOR(0.8f, 0, 0, 1)).AutoAI = true;
-      FactionInfo.AddFaction("Rebels_Falcon", new TV_COLOR(0.8f, 0.8f, 0.8f, 1)).AutoAI = true;
-      FactionInfo.AddFaction("Empire", new TV_COLOR(0, 0.8f, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels", new TV_COLOR(0.8f, 0, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels_Falcon", new TV_COLOR(0.8f, 0.8f, 0.8f, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Empire", new TV_COLOR(0, 0.8f, 0, 1)).AutoAI = true;
 
-      FactionInfo.Get("Rebels").Allies.Add(FactionInfo.Get("Rebels_Falcon"));
-      FactionInfo.Get("Rebels_Falcon").Allies.Add(FactionInfo.Get("Rebels"));
+      FactionInfo.Factory.Get("Rebels").Allies.Add(FactionInfo.Factory.Get("Rebels_Falcon"));
+      FactionInfo.Factory.Get("Rebels_Falcon").Allies.Add(FactionInfo.Factory.Get("Rebels"));
 
-      MainAllyFaction = FactionInfo.Get("Rebels");
-      MainEnemyFaction = FactionInfo.Get("Empire");
+      MainAllyFaction = FactionInfo.Factory.Get("Rebels");
+      MainEnemyFaction = FactionInfo.Factory.Get("Empire");
 
       MainAllyFaction.WingLimitIncludesAllies = true;
     }
@@ -311,7 +311,7 @@ namespace SWEndor.Scenarios
                , ""
                , ""
                , Game.Instance().GameTime
-               , FactionInfo.Get("Rebels_Falcon")
+               , FactionInfo.Factory.Get("Rebels_Falcon")
                , new TV_3DVECTOR(0, 200, GameScenarioManager.Instance().MaxBounds.z - 450)
                , new TV_3DVECTOR(0, 180, 0)
                , new ActionInfo[] { new Lock() }
@@ -347,7 +347,7 @@ namespace SWEndor.Scenarios
                          , ""
                          , ""
                          , Game.Instance().GameTime
-                         , FactionInfo.Get("Rebels")
+                         , FactionInfo.Factory.Get("Rebels")
                          , v
                          , new TV_3DVECTOR(0, 180, 0)
                          , new ActionInfo[] { new Lock(), new Wait(3) }
@@ -370,7 +370,7 @@ namespace SWEndor.Scenarios
                          , ""
                          , "TRANSPORT"
                          , Game.Instance().GameTime
-                         , FactionInfo.Get("Rebels")
+                         , FactionInfo.Factory.Get("Rebels")
                          , v
                          , new TV_3DVECTOR(0, 180, 0)
                          , new ActionInfo[] { new Lock() }
@@ -426,7 +426,7 @@ namespace SWEndor.Scenarios
                                  , ""
                                  , ""
                                  , Game.Instance().GameTime
-                                 , FactionInfo.Get("Rebels")
+                                 , FactionInfo.Factory.Get("Rebels")
                                  , position
                                  , rotation
                                  , new ActionInfo[] { new Lock() }
@@ -466,7 +466,7 @@ namespace SWEndor.Scenarios
                                      , ""
                                      , ""
                                      , Game.Instance().GameTime
-                                     , FactionInfo.Get("Rebels_Falcon")
+                                     , FactionInfo.Factory.Get("Rebels_Falcon")
                                      , position
                                      , new TV_3DVECTOR(0, 180, 0)
                                      );
@@ -1005,7 +1005,7 @@ namespace SWEndor.Scenarios
                          , ""
                          , ""
                          , Game.Instance().GameTime + 9
-                         , FactionInfo.Get("Empire")
+                         , FactionInfo.Factory.Get("Empire")
                          , new TV_3DVECTOR(20000, -2000, -22000)
                          , new TV_3DVECTOR()
                          , new ActionInfo[] { new HyperspaceIn(new TV_3DVECTOR(2000, 100, -8000))
@@ -1022,7 +1022,7 @@ namespace SWEndor.Scenarios
                          , ""
                          , ""
                          , Game.Instance().GameTime + 9.25f
-                         , FactionInfo.Get("Empire")
+                         , FactionInfo.Factory.Get("Empire")
                          , new TV_3DVECTOR(20000, -2000, -25000)
                          , new TV_3DVECTOR()
                          , new ActionInfo[] { new HyperspaceIn(new TV_3DVECTOR(1500, -100, -10200))

@@ -4,8 +4,9 @@ using SWEndor.AI.Actions;
 using System.Collections.Generic;
 using System.IO;
 using SWEndor.Weapons;
+using SWEndor.Actors;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class BigIonLaserATI : ProjectileGroup
   {
@@ -47,7 +48,7 @@ namespace SWEndor.Actors.Types
     {
       if (ainfo.ActorState == ActorState.DYING || ainfo.ActorState == ActorState.DEAD)
       {
-        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("ExplosionSm"));
+        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("ExplosionSm"));
         acinfo.Position = ainfo.GetPosition();
         ActorInfo expl = ActorInfo.Create(acinfo);
         expl.Scale *= 10;

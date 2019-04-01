@@ -106,7 +106,7 @@ namespace SWEndor
         sb.AppendLine();
         sb.AppendLine(string.Format("{0,30} : [{1,4:0}ms] {2:s}", "Sampling Time", refresh_ms, m_last_refresh_time));
         sb.AppendLine(string.Format("{0,30} : {1}", "FPS", Game.Instance().CurrentFPS));
-        sb.AppendLine(string.Format("{0,30} : {1}", "Actors", ActorFactory.Instance().GetActorCount()));
+        sb.AppendLine(string.Format("{0,30} : {1}", "Actors", ActorInfo.Factory.GetActorCount()));
 
         List<PerfToken> newElements = new List<PerfToken>(Elements.GetValues());
 

@@ -1,6 +1,7 @@
-﻿using System.IO;
+﻿using SWEndor.Actors;
+using System.IO;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class Tower03ATI : SurfaceTowerGroup
   {

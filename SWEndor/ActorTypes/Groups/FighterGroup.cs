@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class FighterGroup : ActorTypeInfo
   {
@@ -30,7 +31,7 @@ namespace SWEndor.Actors.Types
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-      ainfo.MovementInfo.DyingMovement = Components.DyingMovement.SPIN;
+      ainfo.MovementInfo.DyingMovement = Actors.Components.DyingMovement.SPIN;
       ainfo.MovementInfo.D_spin_min_rate = 180;
       ainfo.MovementInfo.D_spin_max_rate = 270;
     }

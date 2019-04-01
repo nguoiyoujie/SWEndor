@@ -1,7 +1,7 @@
 ﻿using SWEndor.Actors.Components;
 using System.IO;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class YWing_WingATI : SpinningDebrisGroup
   {

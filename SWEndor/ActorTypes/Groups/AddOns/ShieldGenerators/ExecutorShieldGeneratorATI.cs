@@ -1,7 +1,8 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 using System.IO;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class ExecutorShieldGeneratorATI : AddOnGroup
   {
@@ -59,7 +60,7 @@ namespace SWEndor.Actors.Types
             return;
           }
         }
-        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("Electro"));
+        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("Electro"));
         acinfo.Position = ainfo.GetPosition();
         ActorInfo electro = ActorInfo.Create(acinfo);
         electro.AddParent(ainfo);

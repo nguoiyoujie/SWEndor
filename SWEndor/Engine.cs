@@ -9,6 +9,7 @@ using SWEndor.Input;
 using SWEndor.Sound;
 using SWEndor.UI;
 using SWEndor.Weapons;
+using SWEndor.ActorTypes;
 
 namespace SWEndor
 {
@@ -119,9 +120,9 @@ namespace SWEndor
     public void Load()
     {
       Screen2D.Instance().LoadingTextLines.Add(Globals.LoadingFlavourTexts[Random.Next(0, Globals.LoadingFlavourTexts.Count)]);
-      ActorTypeFactory.Instance().Initialise();
+      ActorTypeInfo.Factory.Initialise();
       Screen2D.Instance().LoadingTextLines.Add("Loading other actortypes...");
-      ActorTypeFactory.Instance().LoadFromINI(Globals.ActorTypeINIPath);
+      ActorTypeInfo.Factory.LoadFromINI(Globals.ActorTypeINIPath);
       Screen2D.Instance().LoadingTextLines.Add("Loading weapons...");
       WeaponFactory.LoadFromINI(Globals.WeaponStatINIPath);
       Screen2D.Instance().LoadingTextLines.Add("Loading scenario engine...");
@@ -132,7 +133,7 @@ namespace SWEndor
 
     public void Process()
     {
-      Queue<ActorInfo> q = new Queue<ActorInfo>(ActorFactory.Instance().GetActorList());
+      Queue<ActorInfo> q = new Queue<ActorInfo>(ActorInfo.Factory.GetActorList());
       while (q.Count > 0)
       {
         ActorInfo a = q.Dequeue();
@@ -144,7 +145,7 @@ namespace SWEndor
 
     public void ProcessAI()
     {
-      Queue<ActorInfo> q = new Queue<ActorInfo>(ActorFactory.Instance().GetHoldingList());
+      Queue<ActorInfo> q = new Queue<ActorInfo>(ActorInfo.Factory.GetHoldingList());
       while (q.Count > 0)
       {
         q.Dequeue().ProcessAI();
@@ -153,21 +154,11 @@ namespace SWEndor
 
     public void ProcessCollision()
     {
-      Queue<ActorInfo> q = new Queue<ActorInfo>(ActorFactory.Instance().GetHoldingList());
+      Queue<ActorInfo> q = new Queue<ActorInfo>(ActorInfo.Factory.GetHoldingList());
       while (q.Count > 0)
       {
         q.Dequeue().ProcessCollision();
       }
-    }
-
-    public void ProcessPlayerCamera()
-    {
-
-      //process player camera
-      if (PlayerInfo.Instance().Actor != null)
-        PlayerInfo.Instance().Actor.TypeInfo.ChaseCamera(PlayerInfo.Instance().Actor);
-
-      PlayerCameraInfo.Instance().Update();
     }
 
     public void PreRender()
@@ -206,7 +197,7 @@ namespace SWEndor
       LandInfo.Instance().Render();
 
       //tv_scene.RenderAllMeshes();
-      ActorInfo[] ainfo = ActorFactory.Instance().GetHoldingList();
+      ActorInfo[] ainfo = ActorInfo.Factory.GetHoldingList();
       foreach (ActorInfo a in ainfo)
         if (a != null)
           a.Render();

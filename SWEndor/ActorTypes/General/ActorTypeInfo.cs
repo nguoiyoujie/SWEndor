@@ -1,5 +1,5 @@
 ﻿using MTV3D65;
-using SWEndor.Actors.Types;
+using SWEndor.Actors;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Scenarios;
@@ -7,9 +7,9 @@ using SWEndor.Weapons;
 using System;
 using System.Collections.Generic;
 
-namespace SWEndor.Actors
+namespace SWEndor.ActorTypes
 {
-  public class ActorTypeInfo : IDisposable
+  public partial class ActorTypeInfo : IDisposable
   {
     public ActorTypeInfo(string name = "")
     {

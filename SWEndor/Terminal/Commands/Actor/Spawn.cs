@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.ActorTypes;
 using SWEndor.Scenarios;
 using System;
 using System.Collections.Generic;
@@ -36,12 +37,12 @@ namespace SWEndor.Terminal.Commands.Actor
       if (gscenario == null)
         return new TCommandFeedback(TCommandFeedbackType.ERROR, "GameScenario is null!");
 
-      ActorTypeInfo atype = ActorTypeFactory.Instance().GetActorType(param[0].ToString());
+      ActorTypeInfo atype = ActorTypeInfo.Factory.Get(param[0].ToString());
       string unitname = param[1];
       string regname = param[2];
       string sidebarname = param[3];
       float spawntime = Convert.ToSingle(param[4]);
-      FactionInfo faction = FactionInfo.Get(param[5]);
+      FactionInfo faction = FactionInfo.Factory.Get(param[5]);
       TV_3DVECTOR position = new TV_3DVECTOR(Convert.ToSingle(param[6]), Convert.ToSingle(param[7]), Convert.ToSingle(param[8]));
       TV_3DVECTOR rotation = new TV_3DVECTOR(Convert.ToSingle(param[9]), Convert.ToSingle(param[10]), Convert.ToSingle(param[11]));
       List<string> registries = new List<string>();

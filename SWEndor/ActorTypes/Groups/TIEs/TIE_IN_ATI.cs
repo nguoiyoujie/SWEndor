@@ -1,10 +1,11 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.Weapons;
 using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class TIE_IN_ATI : TIEGroup
   {

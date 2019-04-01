@@ -1,4 +1,5 @@
 ﻿using SWEndor.Actors;
+using SWEndor.ActorTypes;
 using SWEndor.Scenarios;
 using SWEndor.Weapons;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace SWEndor.AI.Actions
       List<ActorInfo> targets = new List<ActorInfo>();
       int weight = 0;
 
-      foreach (ActorInfo a in ActorFactory.Instance().GetHoldingList())
+      foreach (ActorInfo a in ActorInfo.Factory.GetHoldingList())
       {
         if (a != null
           && owner != a

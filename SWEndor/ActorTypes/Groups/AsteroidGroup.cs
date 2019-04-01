@@ -1,4 +1,6 @@
-﻿namespace SWEndor.Actors.Types
+﻿using SWEndor.Actors;
+
+namespace SWEndor.ActorTypes
 {
   public class AsteroidGroup : ActorTypeInfo
   {

@@ -1,9 +1,10 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.Scenarios;
 using SWEndor.Sound;
 using System;
 
-namespace SWEndor.Actors
+namespace SWEndor.ActorTypes
 {
   public class SoundSourceInfo
   {

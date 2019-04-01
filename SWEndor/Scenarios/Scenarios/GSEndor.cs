@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Types;
+using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Sound;
@@ -152,24 +152,24 @@ namespace SWEndor.Scenarios
     {
       base.LoadFactions();
 
-      FactionInfo.AddFaction("Rebels", new TV_COLOR(0.8f, 0, 0, 1)).AutoAI = true;
-      FactionInfo.AddFaction("Rebels_Wedge", new TV_COLOR(0.8f, 0.4f, 0.4f, 1)).AutoAI = true;
-      FactionInfo.AddFaction("Rebels_Falcon", new TV_COLOR(0.8f, 0.8f, 0.8f, 1)).AutoAI = true;
-      FactionInfo.AddFaction("Empire", new TV_COLOR(0, 0.8f, 0, 1)).AutoAI = true;
-      FactionInfo.AddFaction("Empire_Advanced", new TV_COLOR(0.4f, 0.8f, 0.4f, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels", new TV_COLOR(0.8f, 0, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels_Wedge", new TV_COLOR(0.8f, 0.4f, 0.4f, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels_Falcon", new TV_COLOR(0.8f, 0.8f, 0.8f, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Empire", new TV_COLOR(0, 0.8f, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Empire_Advanced", new TV_COLOR(0.4f, 0.8f, 0.4f, 1)).AutoAI = true;
 
-      FactionInfo.Get("Rebels").Allies.Add(FactionInfo.Get("Rebels_Wedge"));
-      FactionInfo.Get("Rebels").Allies.Add(FactionInfo.Get("Rebels_Falcon"));
-      FactionInfo.Get("Rebels_Wedge").Allies.Add(FactionInfo.Get("Rebels"));
-      FactionInfo.Get("Rebels_Wedge").Allies.Add(FactionInfo.Get("Rebels_Falcon"));
-      FactionInfo.Get("Rebels_Falcon").Allies.Add(FactionInfo.Get("Rebels"));
-      FactionInfo.Get("Rebels_Falcon").Allies.Add(FactionInfo.Get("Rebels_Wedge"));
+      FactionInfo.Factory.Get("Rebels").Allies.Add(FactionInfo.Factory.Get("Rebels_Wedge"));
+      FactionInfo.Factory.Get("Rebels").Allies.Add(FactionInfo.Factory.Get("Rebels_Falcon"));
+      FactionInfo.Factory.Get("Rebels_Wedge").Allies.Add(FactionInfo.Factory.Get("Rebels"));
+      FactionInfo.Factory.Get("Rebels_Wedge").Allies.Add(FactionInfo.Factory.Get("Rebels_Falcon"));
+      FactionInfo.Factory.Get("Rebels_Falcon").Allies.Add(FactionInfo.Factory.Get("Rebels"));
+      FactionInfo.Factory.Get("Rebels_Falcon").Allies.Add(FactionInfo.Factory.Get("Rebels_Wedge"));
 
-      FactionInfo.Get("Empire").Allies.Add(FactionInfo.Get("Empire_Advanced"));
-      FactionInfo.Get("Empire_Advanced").Allies.Add(FactionInfo.Get("Empire"));
+      FactionInfo.Factory.Get("Empire").Allies.Add(FactionInfo.Factory.Get("Empire_Advanced"));
+      FactionInfo.Factory.Get("Empire_Advanced").Allies.Add(FactionInfo.Factory.Get("Empire"));
 
-      MainAllyFaction = FactionInfo.Get("Rebels");
-      MainEnemyFaction = FactionInfo.Get("Empire");
+      MainAllyFaction = FactionInfo.Factory.Get("Rebels");
+      MainEnemyFaction = FactionInfo.Factory.Get("Empire");
 
       MainAllyFaction.WingLimitIncludesAllies = true;
       MainAllyFaction.WingSpawnLimit = 22;
@@ -615,7 +615,7 @@ namespace SWEndor.Scenarios
       name = "Millennium Falcon (Lando)";
       sidebar_name = "FALCON";
       creationTime += creationDelay;
-      faction = FactionInfo.Get("Rebels_Falcon");
+      faction = FactionInfo.Factory.Get("Rebels_Falcon");
       position = new TV_3DVECTOR(0, -10, 350);
       actions = new ActionInfo[] { new HyperspaceIn(position)
                                  , new Lock()
@@ -648,7 +648,7 @@ namespace SWEndor.Scenarios
       name = "X-Wing (Wedge)";
       sidebar_name = "WEDGE";
       creationTime += creationDelay;
-      faction = FactionInfo.Get("Rebels_Wedge");
+      faction = FactionInfo.Factory.Get("Rebels_Wedge");
       position = new TV_3DVECTOR(70, 20, 250);
       actions = new ActionInfo[] { new HyperspaceIn(position)
                                  , new Lock()

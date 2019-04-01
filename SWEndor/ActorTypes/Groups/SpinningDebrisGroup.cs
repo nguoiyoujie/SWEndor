@@ -1,6 +1,7 @@
-﻿using SWEndor.Actors.Components;
+﻿using SWEndor.Actors;
+using SWEndor.Actors.Components;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class SpinningDebrisGroup : DebrisGroup
   {

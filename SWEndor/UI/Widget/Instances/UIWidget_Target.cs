@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Types;
+using SWEndor.ActorTypes;
 using SWEndor.Sound;
 using SWEndor.Weapons;
 using System;
@@ -141,7 +141,7 @@ namespace SWEndor.UI
       {
         // Attempt close enough
         float bestlimit = 9999;
-        foreach (ActorInfo a in ActorFactory.Instance().GetHoldingList())
+        foreach (ActorInfo a in ActorInfo.Factory.GetHoldingList())
         {
           if (a != null
             && p != a

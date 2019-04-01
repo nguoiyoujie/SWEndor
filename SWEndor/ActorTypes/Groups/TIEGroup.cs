@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class TIEGroup : FighterGroup
   {

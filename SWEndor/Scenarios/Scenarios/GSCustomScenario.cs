@@ -1,4 +1,5 @@
 ﻿using SWEndor.Actors;
+using SWEndor.ActorTypes;
 using SWEndor.FileFormat.INI;
 using SWEndor.FileFormat.Scripting;
 using SWEndor.Scenarios.Scripting;
@@ -21,7 +22,7 @@ namespace SWEndor.Scenarios
 
       AllowedWings = new List<ActorTypeInfo>();
       foreach (string wing in f.GetStringList("General", "Wings", new string[0]))
-        AllowedWings.Add(ActorTypeFactory.Instance().GetActorType(wing.Trim()));
+        AllowedWings.Add(ActorTypeInfo.Factory.Get(wing.Trim()));
 
       AllowedDifficulties = new List<string>(f.GetStringList("General", "Difficulties", new string[] { "Normal" }));
 

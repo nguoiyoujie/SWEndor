@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Types;
+using SWEndor.ActorTypes;
 using System.Collections.Generic;
 
 namespace SWEndor.UI
@@ -24,7 +24,7 @@ namespace SWEndor.UI
       TV_2DVECTOR loc = new TV_2DVECTOR(30, 375);
       string swingcount = "";
       Dictionary<string, int> wingcount = new Dictionary<string, int>();
-      foreach (ActorInfo a in ActorFactory.Instance().GetHoldingList())
+      foreach (ActorInfo a in ActorInfo.Factory.GetHoldingList())
       {
         if (a != null && a.CreationState == CreationState.ACTIVE)
         {

@@ -90,23 +90,26 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actors\ActorCreationInfo.cs" />
     <Compile Include="Actors\Components\CycleInfo.cs" />
     <Compile Include="Actors\Components\ExplosionInfo.cs" />
     <Compile Include="Actors\Components\RegenerationInfo.cs" />
     <Compile Include="Actors\Components\MovementInfo.cs" />
     <Compile Include="Actors\Components\CombatInfo.cs" />
+    <Compile Include="Actors\Enums\ActorState.cs" />
+    <Compile Include="Actors\Enums\CreationState.cs" />
     <Compile Include="Actors\States\ActorDistanceInfo.cs" />
-    <Compile Include="Actors\States\ActorEnums.cs" />
-    <Compile Include="ActorTypes\General\AddOnInfo.cs" />
-    <Compile Include="ActorTypes\General\SoundSourceInfo.cs" />
-    <Compile Include="ActorTypes\General\DebrisSpawnerInfo.cs" />
+    <Compile Include="ActorTypes\General\Enums\TargetType.cs" />
+    <Compile Include="ActorTypes\Components\AddOnInfo.cs" />
+    <Compile Include="ActorTypes\Components\SoundSourceInfo.cs" />
+    <Compile Include="ActorTypes\Components\DebrisSpawnerInfo.cs" />
     <Compile Include="Actors\States\ActorStates.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\MC90Spawner.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\SDSpawnerII.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\SDSpawner.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\SpawnerInfo.cs" />
     <Compile Include="Actors\ActorParser.cs" />
-    <Compile Include="ActorTypes\General\ActorTypeParser.cs" />
+    <Compile Include="ActorTypes\General\Factory\Parser.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\MissilePods\NebulonBMissilePodATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\MissilePods\SDMissilePodATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\ArqTurboLaserATI.cs" />
@@ -211,8 +214,8 @@
     <Compile Include="ActorTypes\Groups\AddOns\ShieldGenerators\SDShieldGeneratorATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\SDTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Explosions\ExplosionLgATI.cs" />
-    <Compile Include="ActorTypes\General\ActorTypeFactory.cs" />
-    <Compile Include="Actors\ActorFactory.cs" />
+    <Compile Include="ActorTypes\General\Factory\Factory.cs" />
+    <Compile Include="Actors\Factory\Factory.cs" />
     <Compile Include="Actors\ActorInfo.cs" />
     <Compile Include="ActorTypes\General\ActorTypeInfo.cs" />
     <Compile Include="ActorTypes\Groups\Explosions\ElectroATI.cs" />
@@ -280,6 +283,14 @@
     <Compile Include="Primitives\Cached3DVector.cs" />
     <Compile Include="Primitives\CachedFloat.cs" />
     <Compile Include="Primitives\TimeControl.cs" />
+    <Compile Include="Sound\Instructions\InstPauseMusic.cs" />
+    <Compile Include="Sound\Instructions\InstPlaySound.cs" />
+    <Compile Include="Sound\Instructions\InstResumeMusic.cs" />
+    <Compile Include="Sound\Instructions\InstStopAllSound .cs" />
+    <Compile Include="Sound\Instructions\InstStopOneSound.cs" />
+    <Compile Include="Sound\Instructions\InstStopMusic.cs" />
+    <Compile Include="Sound\Instructions\InstPlayMusic.cs" />
+    <Compile Include="Sound\Instructions\InstBase.cs" />
     <Compile Include="UI\Font\Font.cs" />
     <Compile Include="UI\Menu\Instances\UIPage_FatalError.cs" />
     <Compile Include="UI\Menu\Instances\UIPage_GameWon.cs" />

@@ -1,5 +1,5 @@
 ﻿using SWEndor.Actors;
-using SWEndor.Actors.Types;
+using SWEndor.ActorTypes;
 
 namespace SWEndor.UI
 {

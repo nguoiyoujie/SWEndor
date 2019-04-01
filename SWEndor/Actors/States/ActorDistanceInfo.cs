@@ -47,7 +47,6 @@ namespace SWEndor.Actors
 
     public static float GetDistance(ActorInfo a1, ActorInfo a2, float limit)
     {
-
       float d = GetRoughDistance(a1, a2);
       if (d > limit)
         return limit;

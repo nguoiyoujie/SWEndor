@@ -1,4 +1,4 @@
-﻿namespace SWEndor.Actors.Types
+﻿namespace SWEndor.ActorTypes
 {
   public class InvisibleCameraATI : ActorTypeInfo
   {

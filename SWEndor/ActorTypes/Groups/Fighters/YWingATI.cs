@@ -1,10 +1,11 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.Weapons;
 using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class YWingATI : RebelWingGroup
   {
@@ -91,7 +92,7 @@ namespace SWEndor.Actors.Types
 
           if (d > 0.5f)
           {
-            ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("YWing_WingATI"));
+            ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("YWing_WingATI"));
             acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(-30, 0, 0);
             acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x, ainfo.Rotation.y + y, ainfo.Rotation.z + z);
             acinfo.InitialSpeed = ainfo.Speed;
@@ -101,7 +102,7 @@ namespace SWEndor.Actors.Types
           d = Engine.Instance().Random.NextDouble();
           if (d > 0.5f)
           {
-            ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("YWing_WingATI"));
+            ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("YWing_WingATI"));
             acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(30, 0, 0);
             acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x2, ainfo.Rotation.y + y2, ainfo.Rotation.z + z2);
 

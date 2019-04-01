@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Types;
+using SWEndor.ActorTypes;
 using System;
 using System.Collections.Generic;
 
@@ -96,7 +96,7 @@ namespace SWEndor.UI
       Engine.Instance().TVScreen2DImmediate.Draw_Circle(radar_center.x, radar_center.y, radar_radius + 2, 300, pcolor.GetIntColor());
       Engine.Instance().TVScreen2DImmediate.Draw_Circle(radar_center.x, radar_center.y, radar_radius - 2, 300, pcolor.GetIntColor());
 
-      foreach (ActorInfo a in ActorFactory.Instance().GetHoldingList())
+      foreach (ActorInfo a in ActorInfo.Factory.GetHoldingList())
       {
         TV_3DVECTOR ppos = p.GetPosition();
         TV_3DVECTOR apos = a.GetPosition();

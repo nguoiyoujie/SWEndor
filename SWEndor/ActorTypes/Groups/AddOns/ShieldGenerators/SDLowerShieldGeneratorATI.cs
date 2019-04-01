@@ -1,7 +1,8 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 using System.IO;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class SDLowerShieldGeneratorATI : AddOnGroup
   {
@@ -53,7 +54,7 @@ namespace SWEndor.Actors.Types
       base.ProcessHit(ainfo, hitby, impact, normal);
       if (hitby.TypeInfo.IsDamage)
       {
-        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("Electro"));
+        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("Electro"));
         acinfo.Position = ainfo.GetPosition();
         ActorInfo electro = ActorInfo.Create(acinfo);
         electro.AddParent(ainfo);

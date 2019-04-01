@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Types;
+using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Sound;
@@ -105,11 +105,11 @@ namespace SWEndor.Scenarios
     {
       base.LoadFactions();
 
-      FactionInfo.AddFaction("Rebels", new TV_COLOR(0.8f, 0, 0, 1)).AutoAI = true;
-      FactionInfo.AddFaction("Empire", new TV_COLOR(0, 0.8f, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels", new TV_COLOR(0.8f, 0, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Empire", new TV_COLOR(0, 0.8f, 0, 1)).AutoAI = true;
 
-      MainAllyFaction = FactionInfo.Get("Rebels");
-      MainEnemyFaction = FactionInfo.Get("Empire");
+      MainAllyFaction = FactionInfo.Factory.Get("Rebels");
+      MainEnemyFaction = FactionInfo.Factory.Get("Empire");
 
       MainAllyFaction.WingSpawnLimit = 12;
       MainEnemyFaction.WingSpawnLimit = 28;
@@ -366,7 +366,7 @@ namespace SWEndor.Scenarios
       TV_3DVECTOR position;
       TV_3DVECTOR rotation = new TV_3DVECTOR();
       ActionInfo[] actions;
-      FactionInfo faction = FactionInfo.Get("Rebels");
+      FactionInfo faction = FactionInfo.Factory.Get("Rebels");
       TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(10000, 0, 10000);
       TV_3DVECTOR movedisp = new TV_3DVECTOR(3000, 0, 3000);
       ActorTypeInfo type;
@@ -503,19 +503,19 @@ namespace SWEndor.Scenarios
         for (int z = -2; z <= 2; z++)
         {
           SpawnActor(Tower04ATI.Instance(), "", "", ""
-                   , 0, FactionInfo.Get("Empire_DeathStarDefenses"), new TV_3DVECTOR(x * dist, 90 + LandInfo.Instance().GetLandHeight(x * dist, z * dist), z * dist), new TV_3DVECTOR());
+                   , 0, FactionInfo.Factory.Get("Empire_DeathStarDefenses"), new TV_3DVECTOR(x * dist, 90 + LandInfo.Instance().GetLandHeight(x * dist, z * dist), z * dist), new TV_3DVECTOR());
 
           SpawnActor(Tower02ATI.Instance(), "", "", ""
-                   , 0, FactionInfo.Get("Empire_DeathStarDefenses"), new TV_3DVECTOR(x * dist + 300, 30 + LandInfo.Instance().GetLandHeight(x * dist, z * dist), z * dist), new TV_3DVECTOR());
+                   , 0, FactionInfo.Factory.Get("Empire_DeathStarDefenses"), new TV_3DVECTOR(x * dist + 300, 30 + LandInfo.Instance().GetLandHeight(x * dist, z * dist), z * dist), new TV_3DVECTOR());
 
           SpawnActor(Tower02ATI.Instance(), "", "", ""
-                   , 0, FactionInfo.Get("Empire_DeathStarDefenses"), new TV_3DVECTOR(x * dist - 300, 30 + LandInfo.Instance().GetLandHeight(x * dist, z * dist), z * dist), new TV_3DVECTOR());
+                   , 0, FactionInfo.Factory.Get("Empire_DeathStarDefenses"), new TV_3DVECTOR(x * dist - 300, 30 + LandInfo.Instance().GetLandHeight(x * dist, z * dist), z * dist), new TV_3DVECTOR());
 
           SpawnActor(Tower02ATI.Instance(), "", "", ""
-                   , 0, FactionInfo.Get("Empire_DeathStarDefenses"), new TV_3DVECTOR(x * dist, 30 + LandInfo.Instance().GetLandHeight(x * dist, z * dist), z * dist + 300), new TV_3DVECTOR());
+                   , 0, FactionInfo.Factory.Get("Empire_DeathStarDefenses"), new TV_3DVECTOR(x * dist, 30 + LandInfo.Instance().GetLandHeight(x * dist, z * dist), z * dist + 300), new TV_3DVECTOR());
 
           SpawnActor(Tower02ATI.Instance(), "", "", ""
-                   , 0, FactionInfo.Get("Empire_DeathStarDefenses"), new TV_3DVECTOR(x * dist, 30 + LandInfo.Instance().GetLandHeight(x * dist, z * dist), z * dist - 300), new TV_3DVECTOR());
+                   , 0, FactionInfo.Factory.Get("Empire_DeathStarDefenses"), new TV_3DVECTOR(x * dist, 30 + LandInfo.Instance().GetLandHeight(x * dist, z * dist), z * dist - 300), new TV_3DVECTOR());
         }
       }
     }

@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 
-namespace SWEndor.Actors
+namespace SWEndor.ActorTypes
 {
   public class AddOnInfo
   {
@@ -22,7 +23,7 @@ namespace SWEndor.Actors
     {
       // cache
       if (_cache == null)
-        _cache = ActorTypeFactory.Instance().GetActorType(Type);
+        _cache = ActorTypeInfo.Factory.Get(Type);
 
       ActorCreationInfo acinfo = new ActorCreationInfo(_cache);
       acinfo.InitialState = ActorState.NORMAL;

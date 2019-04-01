@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors.Components;
-using SWEndor.Actors.Types;
+using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Primitives;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace SWEndor.Actors
 {
-  public class ActorInfo
+  public partial class ActorInfo
   {
     public ActorTypeInfo TypeInfo { get; private set; }
     public SpawnerInfo SpawnerInfo { get; set; }
@@ -232,15 +232,9 @@ namespace SWEndor.Actors
     public static ActorInfo Create(ActorCreationInfo acinfo)
     {
       ActorInfo a;
-      int ret = ActorFactory.Instance().Register(acinfo, out a);
+      int ret = Factory.Register(acinfo, out a);
       return a;
     }
-
-    internal static ActorInfo FactoryCreate(int id, ActorCreationInfo acinfo)
-    {
-      return new ActorInfo(id, acinfo);
-    }
-
     #endregion
 
     public void Process()
@@ -556,7 +550,7 @@ namespace SWEndor.Actors
                  int n = 0;
                 if (int.TryParse(tvm.GetTag(), out n))
                 {
-                  actor = ActorFactory.Instance().GetActor(n);
+                  actor = Factory.GetActor(n);
                   return (actor != null 
                        && actor != this 
                        && !HasRelative(actor) 
@@ -580,7 +574,7 @@ namespace SWEndor.Actors
                 int n = 0;
                 if (int.TryParse(tvm.GetTag(), out n))
                 {
-                  actor = ActorFactory.Instance().GetActor(n);
+                  actor = Factory.GetActor(n);
                   return true;
                 }
               }
@@ -1361,7 +1355,7 @@ namespace SWEndor.Actors
         // Final dispose
         CreationState = CreationState.DISPOSED;
         Faction.UnregisterActor(this);
-        ActorFactory.Instance().RemoveActor(ID);
+        Factory.RemoveActor(ID);
       }
     }
   }

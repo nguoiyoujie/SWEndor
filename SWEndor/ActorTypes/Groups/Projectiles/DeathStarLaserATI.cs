@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class DeathStarLaserATI : ProjectileGroup
   {
@@ -63,7 +64,7 @@ namespace SWEndor.Actors.Types
       {
         if (ainfo.TimedLife > 0)
         {
-          ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("Explosion"));
+          ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("Explosion"));
           acinfo.Position = ainfo.Position;
           ActorInfo.Create(acinfo);
         }

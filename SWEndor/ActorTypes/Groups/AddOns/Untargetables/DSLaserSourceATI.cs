@@ -1,10 +1,11 @@
-﻿using SWEndor.AI;
+﻿using SWEndor.Actors;
+using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Weapons;
 using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class DSLaserSourceATI : ActorTypeInfo //: AddOnGroup
   {

@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Types;
+using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Sound;
@@ -22,7 +22,7 @@ namespace SWEndor.Weapons
     {
       Name = stat.Name;
 
-      WeaponProjectile = (ProjectileGroup) ActorTypeFactory.Instance().GetActorType(stat.WeaponProjectile);
+      WeaponProjectile = (ProjectileGroup) ActorTypeInfo.Factory.Get(stat.WeaponProjectile);
       WeaponCooldown = stat.WeaponCooldown;
       WeaponCooldownRate = stat.WeaponCooldownRate;
       WeaponCooldownRateRandom = stat.WeaponCooldownRateRandom;

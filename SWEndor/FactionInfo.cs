@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.ActorTypes;
 using SWEndor.Scenarios;
 using System.Collections.Generic;
 
@@ -7,27 +8,31 @@ namespace SWEndor
 {
   public class FactionInfo
   {
-    private static Dictionary<string, FactionInfo> list = new Dictionary<string, FactionInfo>();
-    public static Dictionary<string, FactionInfo> GetList() { return list; }
-    public static FactionInfo Get(string key) { return list.ContainsKey(key) ? list[key] : null; }
+    public static class Factory
+    {
+      private static Dictionary<string, FactionInfo> list = new Dictionary<string, FactionInfo>();
+      public static Dictionary<string, FactionInfo> GetList() { return list; }
+      public static FactionInfo Get(string key) { return list.ContainsKey(key) ? list[key] : null; }
+
+      public static void Clear()
+      {
+        list = new Dictionary<string, FactionInfo>();
+      }
+
+      public static FactionInfo Add(string name, TV_COLOR color)
+      {
+        if (!list.ContainsKey(name))
+          list.Add(name, new FactionInfo(name, color));
+        return list[name];
+      }
+    }
+
     public static FactionInfo Neutral = new FactionInfo("Neutral", new TV_COLOR(1, 1, 1, 1));
 
     private FactionInfo(string name, TV_COLOR color)
     {
       Name = name;
       Color = color;
-    }
-
-    public static void Reset()
-    {
-      list = new Dictionary<string, FactionInfo>();
-    }
-
-    public static FactionInfo AddFaction(string name, TV_COLOR color)
-    {
-      if (!list.ContainsKey(name))
-        list.Add(name, new FactionInfo(name, color));
-      return list[name];
     }
 
     public bool IsAlliedWith(FactionInfo faction)

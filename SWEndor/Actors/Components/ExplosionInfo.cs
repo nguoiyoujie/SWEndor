@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.ActorTypes;
 
 namespace SWEndor.Actors.Components
 {
@@ -66,7 +67,7 @@ namespace SWEndor.Actors.Components
 
     private void MakeExplosion(string sActorType, TV_3DVECTOR globalPosition, float explSize)
     {
-      ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType(sActorType));
+      ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get(sActorType));
       acinfo.Position = globalPosition;
       acinfo.InitialScale = new TV_3DVECTOR(explSize * (Actor.Scale.x + Actor.Scale.y + Actor.Scale.z) / 3, explSize * (Actor.Scale.x + Actor.Scale.y + Actor.Scale.z) / 3, 1);
       ActorInfo.Create(acinfo);

@@ -3,7 +3,7 @@ using SWEndor.Scenarios;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class ExplosionLgATI : ExplosionGroup
   {

@@ -1,9 +1,10 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.Weapons;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.Actors.Types
+namespace SWEndor.ActorTypes
 {
   public class SmallIonLaserATI : ProjectileGroup
   {
@@ -38,7 +39,7 @@ namespace SWEndor.Actors.Types
     {
       if (ainfo.ActorState == ActorState.DYING || ainfo.ActorState == ActorState.DEAD)
       {
-        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Instance().GetActorType("ExplosionSm"));
+        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("ExplosionSm"));
         acinfo.Position = ainfo.GetPosition();
         ActorInfo.Create(acinfo);
 
