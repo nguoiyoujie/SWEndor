@@ -4,7 +4,7 @@ using SWEndor.Scenarios;
 using SWEndor.Sound;
 using System;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Components
 {
   public class SoundSourceInfo
   {

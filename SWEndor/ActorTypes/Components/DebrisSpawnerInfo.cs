@@ -1,7 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Components
 {
   public class DebrisSpawnerInfo
   {
