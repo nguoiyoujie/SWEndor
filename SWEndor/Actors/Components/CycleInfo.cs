@@ -5,7 +5,6 @@ namespace SWEndor.Actors.Components
   public class CycleInfo
   {
     private ActorInfo Actor;
-    public bool IsCombatObject = false;
     public float CyclesRemaining = 1;
     public float CyclePeriod = 1;
     public float CycleTime = 0;
