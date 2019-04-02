@@ -4,7 +4,7 @@ namespace SWEndor.Sound
 {
   public partial class SoundManager
   {
-    public class InstResumeMusic : InstBase
+    private class InstResumeMusic : InstBase
     {
       public override void Process(SoundManager s)
       {

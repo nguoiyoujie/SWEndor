@@ -1,10 +1,10 @@
 ﻿using FMOD;
 
-namespace SWEndor.Sound //.Instructions
+namespace SWEndor.Sound
 {
   public partial class SoundManager
   {
-    public class InstPlayMusic : InstBase
+    private class InstPlayMusic : InstBase
     {
       public string Name;
       public bool Interrupt;

@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace SWEndor.Sound //.Instructions
+﻿namespace SWEndor.Sound
 {
   public partial class SoundManager
   {
-    public abstract class InstBase
+    private abstract class InstBase
     {
       public abstract void Process(SoundManager s);
     }

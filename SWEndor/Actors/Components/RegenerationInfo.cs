@@ -4,7 +4,7 @@ namespace SWEndor.Actors.Components
 {
   public class RegenerationInfo
   {
-    private ActorInfo Actor;
+    private readonly ActorInfo Actor;
     public bool AllowRegen = true;
     public float SelfRegenRate = 0;
     public float ParentRegenRate = 0;

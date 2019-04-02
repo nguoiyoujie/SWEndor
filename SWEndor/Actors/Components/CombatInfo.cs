@@ -2,7 +2,7 @@
 {
   public class CombatInfo
   {
-    private ActorInfo Actor;
+    private readonly ActorInfo Actor;
     public bool IsCombatObject = false;
     public bool OnTimedLife = false;
     public float TimedLife = 100;

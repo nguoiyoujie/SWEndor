@@ -4,7 +4,7 @@ namespace SWEndor.Sound
 {
   public partial class SoundManager
   {
-    public class InstStopAllSound : InstBase
+    private class InstStopAllSound : InstBase
     {
       public override void Process(SoundManager s)
       {

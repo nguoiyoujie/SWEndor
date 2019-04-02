@@ -4,7 +4,7 @@ namespace SWEndor.Sound
 {
   public partial class SoundManager
   {
-    public class InstStopOneSound : InstBase
+    private class InstStopOneSound : InstBase
     {
       public string Name;
 

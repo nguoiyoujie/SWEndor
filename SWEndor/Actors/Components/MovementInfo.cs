@@ -8,7 +8,7 @@ namespace SWEndor.Actors.Components
 
   public class MovementInfo
   {
-    private ActorInfo Actor;
+    private readonly ActorInfo Actor;
 
     // General
     public float Speed = 0;
