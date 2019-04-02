@@ -5,16 +5,16 @@ namespace SWEndor.ActorTypes.Components
 {
   public class DebrisSpawnerInfo
   {
-    public string Type;
+    public readonly string Type;
     private ActorTypeInfo _cache;
-    public TV_3DVECTOR SpawnPosition;
-    public int RotationXMax;
-    public int RotationXMin;
-    public int RotationYMax;
-    public int RotationYMin;
-    public int RotationZMax;
-    public int RotationZMin;
-    public float Chance = 1;
+    public readonly TV_3DVECTOR SpawnPosition;
+    public readonly int RotationXMax;
+    public readonly int RotationXMin;
+    public readonly int RotationYMax;
+    public readonly int RotationYMin;
+    public readonly int RotationZMax;
+    public readonly int RotationZMin;
+    public readonly float Chance;
 
     public DebrisSpawnerInfo(string type)
     {

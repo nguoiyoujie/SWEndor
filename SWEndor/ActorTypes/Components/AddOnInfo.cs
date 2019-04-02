@@ -5,11 +5,11 @@ namespace SWEndor.ActorTypes.Components
 {
   public class AddOnInfo
   {
-    public string Type;
+    public readonly string Type;
     private ActorTypeInfo _cache;
-    public TV_3DVECTOR Position;
-    public TV_3DVECTOR Rotation;
-    public bool AttachToParent;
+    public readonly TV_3DVECTOR Position;
+    public readonly TV_3DVECTOR Rotation;
+    public readonly bool AttachToParent;
 
     public AddOnInfo(string type, TV_3DVECTOR position, TV_3DVECTOR rotation, bool attachToParent)
     {

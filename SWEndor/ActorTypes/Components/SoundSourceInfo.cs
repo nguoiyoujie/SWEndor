@@ -8,11 +8,11 @@ namespace SWEndor.ActorTypes.Components
 {
   public class SoundSourceInfo
   {
-    public string Sound;
-    public TV_3DVECTOR RelativeLocation;
-    public float Distance;
-    public bool Loop;
-    public bool PlayInCutscene;
+    public readonly string Sound;
+    public readonly TV_3DVECTOR RelativeLocation;
+    public readonly float Distance;
+    public readonly bool Loop;
+    public readonly bool PlayInCutscene;
 
     public SoundSourceInfo(string sound, float dist)
     {
