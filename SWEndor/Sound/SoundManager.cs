@@ -158,7 +158,7 @@ namespace SWEndor.Sound
     public void Process() //, uint position = 0)
     {
       InstBase instr;
-      if (m_queuedInstructions.TryDequeue(out instr))
+      while (m_queuedInstructions.TryDequeue(out instr))
         instr.Process(this);
     }
 
