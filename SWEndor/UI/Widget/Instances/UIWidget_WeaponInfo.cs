@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.Input;
+using SWEndor.Player;
 
 namespace SWEndor.UI
 {
@@ -59,6 +60,7 @@ namespace SWEndor.UI
 
       Engine.Instance().TVScreen2DText.Action_BeginText();
 
+      /*
       Engine.Instance().TVScreen2DText.TextureFont_DrawText(string.Format("SWITCH: {0} {1}"
         , ((CONST_TV_KEY)InputKeyMap.GetFnKey("g_weap1mode+")).ToString().Replace("TV_KEY_", "").Replace("-1", "").PadLeft(1)
         , ((CONST_TV_KEY)InputKeyMap.GetFnKey("g_weap1mode-")).ToString().Replace("TV_KEY_", "").Replace("-1", "").PadLeft(1)
@@ -68,6 +70,7 @@ namespace SWEndor.UI
       , pcolor.GetIntColor()
       , Font.GetFont("Text_08").ID
       );
+      */
 
       Engine.Instance().TVScreen2DText.TextureFont_DrawText(PlayerInfo.Instance().PrimaryWeapon.ToUpper() //.Replace("A", "").Replace("E", "").Replace("I", "").Replace("O", "").Replace("U", "")
       , leftinfo_left
@@ -76,6 +79,7 @@ namespace SWEndor.UI
       , Font.GetFont("Text_16").ID
       );
 
+      /*
       Engine.Instance().TVScreen2DText.TextureFont_DrawText(string.Format("SWITCH: {0} {1}"
         , ((CONST_TV_KEY)InputKeyMap.GetFnKey("g_weap2mode+")).ToString().Replace("TV_KEY_", "").Replace("-1", "").PadLeft(1)
         , ((CONST_TV_KEY)InputKeyMap.GetFnKey("g_weap2mode-")).ToString().Replace("TV_KEY_", "").Replace("-1", "").PadLeft(1)
@@ -85,6 +89,7 @@ namespace SWEndor.UI
       , pcolor.GetIntColor()
       , Font.GetFont("Text_08").ID
       );
+      */
 
       Engine.Instance().TVScreen2DText.TextureFont_DrawText(PlayerInfo.Instance().SecondaryWeapon.ToUpper() //.Replace("A", "").Replace("E", "").Replace("I", "").Replace("O", "").Replace("U", "")
       , leftinfo_left + leftinfo_weaponwidth + 5

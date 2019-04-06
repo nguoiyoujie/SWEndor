@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
+using SWEndor.Player;
 using SWEndor.Sound;
 using System.Collections.Generic;
 
@@ -547,6 +548,7 @@ namespace SWEndor.Scenarios
         }
         else
         {
+
           PlayerCameraInfo.Instance().Shake = 2 * attacker.TypeInfo.ImpactDamage;
         }
       }

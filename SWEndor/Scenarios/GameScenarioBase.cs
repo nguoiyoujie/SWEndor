@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
+using SWEndor.Player;
 using SWEndor.Sound;
 using SWEndor.UI;
 using System.Collections.Generic;

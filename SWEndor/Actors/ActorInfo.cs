@@ -3,9 +3,11 @@ using SWEndor.Actors.Components;
 using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
+using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using SWEndor.Weapons;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace SWEndor.Actors
@@ -1115,12 +1117,12 @@ namespace SWEndor.Actors
 
       List<ActorInfo> ret = new List<ActorInfo>();
       //m_childlist.WaitOne();
-      List<ActorInfo> cs = new List<ActorInfo>(Children);
+      ThreadSafeList<ActorInfo> cs = new ThreadSafeList<ActorInfo>(Children);
       //m_childlist.ReleaseMutex();
 
       if (searchlevel > 1)
       {
-        foreach (ActorInfo p in cs)
+        foreach (ActorInfo p in cs.GetList())
         {
           if (!ret.Contains(p))
           {
@@ -1131,7 +1133,7 @@ namespace SWEndor.Actors
       }
       else
       {
-        ret.AddRange(cs);
+        ret.AddRange(cs.GetList());
       }
       return ret;
     }

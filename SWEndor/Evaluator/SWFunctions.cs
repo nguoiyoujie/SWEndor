@@ -8,6 +8,7 @@ using SWEndor.AI;
 using SWEndor.Scenarios;
 using SWEndor.Sound;
 using SWEndor.ActorTypes;
+using SWEndor.Player;
 
 namespace SWEndor.Evaluator
 {

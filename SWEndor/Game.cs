@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Input;
+using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using SWEndor.Sound;

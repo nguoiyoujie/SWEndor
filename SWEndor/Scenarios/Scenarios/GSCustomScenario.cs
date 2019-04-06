@@ -2,6 +2,7 @@
 using SWEndor.ActorTypes;
 using SWEndor.FileFormat.INI;
 using SWEndor.FileFormat.Scripting;
+using SWEndor.Player;
 using SWEndor.Scenarios.Scripting;
 using System.Collections.Generic;
 

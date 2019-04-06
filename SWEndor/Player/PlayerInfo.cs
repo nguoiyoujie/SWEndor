@@ -6,7 +6,7 @@ using SWEndor.Sound;
 using System;
 using System.Collections.Generic;
 
-namespace SWEndor
+namespace SWEndor.Player
 {
   public class PlayerInfo
   {

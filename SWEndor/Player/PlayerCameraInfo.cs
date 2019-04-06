@@ -2,7 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Scenarios;
 
-namespace SWEndor
+namespace SWEndor.Player
 {
   public enum CameraMode { FIRSTPERSON, THIRDPERSON, THIRDREAR, FREEROTATION, FREEMODE }
 

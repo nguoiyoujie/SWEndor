@@ -8,6 +8,7 @@ using SWEndor.Weapons;
 using SWEndor.AI;
 using SWEndor.Weapons.Types;
 using SWEndor.Sound;
+using SWEndor.Player;
 
 namespace SWEndor.Scenarios
 {
