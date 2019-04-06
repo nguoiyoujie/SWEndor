@@ -1,5 +1,9 @@
 ﻿using MTV3D65;
-using SWEndor.Input;
+using SWEndor.Input.Functions;
+using SWEndor.Input.Functions.Gameplay.Camera;
+using SWEndor.Input.Functions.Gameplay.Speed;
+using SWEndor.Input.Functions.Gameplay.UI;
+using SWEndor.Input.Functions.Gameplay.Weapon;
 
 namespace SWEndor.UI
 {
@@ -413,34 +417,38 @@ namespace SWEndor.UI
 
     private void SaveBindings()
     {
-      InputKeyMap.SetFnKey("g_ui_toggle", (int)KeyToggleUI);
-      InputKeyMap.SetFnKey("g_ui_radar_toggle", (int)KeyToggleRadar);
-      InputKeyMap.SetFnKey("g_ui_status_toggle", (int)KeyToggleScenarioInfo);
-      InputKeyMap.SetFnKey("g_ui_score_toggle", (int)KeyToggleScoreboard);
-      InputKeyMap.SetFnKey("g_cammode+", (int)KeyToggleCameraMode);
-      InputKeyMap.SetFnKey("g_weap1mode+", (int)KeyToggleNextPrimaryWeaponMode);
-      InputKeyMap.SetFnKey("g_weap1mode-", (int)KeyTogglePrevPrimaryWeaponMode);
-      InputKeyMap.SetFnKey("g_weap2mode+", (int)KeyToggleNextSecondaryWeaponMode);
-      InputKeyMap.SetFnKey("g_weap2mode-", (int)KeyTogglePrevSecondaryWeaponMode);
-      InputKeyMap.SetFnKey("g_speed+", (int)KeyToggleIncreaseSpeed);
-      InputKeyMap.SetFnKey("g_speed-", (int)KeyToggleDecreaseSpeed);
+      InputFunction.Registry.Get(ToggleUIVisibility.InternalName).Key = (int)KeyToggleUI;
+      InputFunction.Registry.Get(ToggleRadarVisibility.InternalName).Key = (int)KeyToggleRadar;
+      InputFunction.Registry.Get(ToggleStatusVisibility.InternalName).Key = (int)KeyToggleScenarioInfo;
+      InputFunction.Registry.Get(ToggleScoreVisibility.InternalName).Key = (int)KeyToggleScoreboard;
+
+      InputFunction.Registry.Get(NextCameraMode.InternalName).Key = (int)KeyToggleCameraMode;
+      InputFunction.Registry.Get(NextPrimary.InternalName).Key = (int)KeyToggleNextPrimaryWeaponMode;
+      InputFunction.Registry.Get(PrevPrimary.InternalName).Key = (int)KeyTogglePrevPrimaryWeaponMode;
+      InputFunction.Registry.Get(NextSecondary.InternalName).Key = (int)KeyToggleNextSecondaryWeaponMode;
+      InputFunction.Registry.Get(PrevSecondary.InternalName).Key = (int)KeyTogglePrevSecondaryWeaponMode;
+
+      InputFunction.Registry.Get(Up.InternalName).Key = (int)KeyToggleIncreaseSpeed;
+      InputFunction.Registry.Get(Down.InternalName).Key = (int)KeyToggleDecreaseSpeed;
 
       LoadBindings();
     }
 
     private void LoadBindings()
     {
-      KeyToggleUI = (CONST_TV_KEY)InputKeyMap.GetFnKey("g_ui_toggle");
-      KeyToggleRadar = (CONST_TV_KEY)InputKeyMap.GetFnKey("g_ui_radar_toggle");
-      KeyToggleScenarioInfo = (CONST_TV_KEY)InputKeyMap.GetFnKey("g_ui_status_toggle");
-      KeyToggleScoreboard = (CONST_TV_KEY)InputKeyMap.GetFnKey("g_ui_score_toggle");
-      KeyToggleCameraMode = (CONST_TV_KEY)InputKeyMap.GetFnKey("g_cammode+");
-      KeyToggleNextPrimaryWeaponMode = (CONST_TV_KEY)InputKeyMap.GetFnKey("g_weap1mode+");
-      KeyTogglePrevPrimaryWeaponMode = (CONST_TV_KEY)InputKeyMap.GetFnKey("g_weap1mode-");
-      KeyToggleNextSecondaryWeaponMode = (CONST_TV_KEY)InputKeyMap.GetFnKey("g_weap2mode+");
-      KeyTogglePrevSecondaryWeaponMode = (CONST_TV_KEY)InputKeyMap.GetFnKey("g_weap2mode-");
-      KeyToggleIncreaseSpeed = (CONST_TV_KEY)InputKeyMap.GetFnKey("g_speed+");
-      KeyToggleDecreaseSpeed = (CONST_TV_KEY)InputKeyMap.GetFnKey("g_speed-");
+      KeyToggleUI = (CONST_TV_KEY)InputFunction.Registry.Get(ToggleUIVisibility.InternalName).Key;
+      KeyToggleRadar = (CONST_TV_KEY)InputFunction.Registry.Get(ToggleRadarVisibility.InternalName).Key;
+      KeyToggleScenarioInfo = (CONST_TV_KEY)InputFunction.Registry.Get(ToggleStatusVisibility.InternalName).Key;
+      KeyToggleScoreboard = (CONST_TV_KEY)InputFunction.Registry.Get(ToggleScoreVisibility.InternalName).Key;
+
+      KeyToggleCameraMode = (CONST_TV_KEY)InputFunction.Registry.Get(NextCameraMode.InternalName).Key;
+      KeyToggleNextPrimaryWeaponMode = (CONST_TV_KEY)InputFunction.Registry.Get(NextPrimary.InternalName).Key;
+      KeyTogglePrevPrimaryWeaponMode = (CONST_TV_KEY)InputFunction.Registry.Get(PrevPrimary.InternalName).Key;
+      KeyToggleNextSecondaryWeaponMode = (CONST_TV_KEY)InputFunction.Registry.Get(NextSecondary.InternalName).Key;
+      KeyTogglePrevSecondaryWeaponMode = (CONST_TV_KEY)InputFunction.Registry.Get(PrevSecondary.InternalName).Key;
+
+      KeyToggleIncreaseSpeed = (CONST_TV_KEY)InputFunction.Registry.Get(Up.InternalName).Key;
+      KeyToggleDecreaseSpeed = (CONST_TV_KEY)InputFunction.Registry.Get(Down.InternalName).Key;
 
       ButtonToggleUI.SecondaryText = KeyToggleUI.ToString().Replace("TV_KEY_", "").Replace("-1", "");
       ButtonToggleRadar.SecondaryText = KeyToggleRadar.ToString().Replace("TV_KEY_", "").Replace("-1", "");

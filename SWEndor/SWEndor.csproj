@@ -257,12 +257,42 @@
     <Compile Include="AI\Actions\Move.cs" />
     <Compile Include="AI\ActionManager.cs" />
     <Compile Include="AI\ActionInfo.cs" />
+    <Compile Include="AI\AI\AIInfo.cs" />
     <Compile Include="Input\Context\DebugGameInputContext.cs" />
     <Compile Include="Input\Context\TerminalGameInputContext.cs" />
     <Compile Include="Input\Context\GameInputContext.cs" />
     <Compile Include="Input\Context\MenuInputContext.cs" />
-    <Compile Include="Input\Context\IInputContext.cs" />
-    <Compile Include="Input\InputKeyMap.cs" />
+    <Compile Include="Input\Context\AInputContext.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\MoveCameraUpward.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\MoveCameraDownward.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\MoveCameraLeftward.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\MoveCameraRightward.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\MoveCameraBackward.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\MoveCameraForward.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\PrevCameraMode.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\NextCameraMode.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\TimeReset.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\TimeSlow.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\TimeFast.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\TimeJump.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\ToggleCameraStates.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\TogglePlayerAI.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\ToggleMovementLock.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\AllEnemiesDying.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\AllEnemiesDead.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\AddLife.cs" />
+    <Compile Include="Input\Functions\Gameplay\Weapon\NextSecondary.cs" />
+    <Compile Include="Input\Functions\Gameplay\Weapon\PrevSecondary.cs" />
+    <Compile Include="Input\Functions\Gameplay\Weapon\PrevPrimary.cs" />
+    <Compile Include="Input\Functions\Gameplay\Weapon\NextPrimary.cs" />
+    <Compile Include="Input\Functions\Gameplay\Speed\Down.cs" />
+    <Compile Include="Input\Functions\Gameplay\Speed\Up.cs" />
+    <Compile Include="Input\Functions\Gameplay\UI\PauseToMenu.cs" />
+    <Compile Include="Input\Functions\Gameplay\UI\ToggleScoreVisibility.cs" />
+    <Compile Include="Input\Functions\Gameplay\UI\ToggleRadarVisibility.cs" />
+    <Compile Include="Input\Functions\Gameplay\UI\ToggleStatusVisibility.cs" />
+    <Compile Include="Input\Functions\Gameplay\UI\ToggleUIVisibility.cs" />
+    <Compile Include="Input\Functions\InputFunction.cs" />
     <Compile Include="LandInfo.cs" />
     <Compile Include="Evaluator\SWContext.cs" />
     <Compile Include="Evaluator\Expression.cs" />
@@ -279,7 +309,7 @@
     <Compile Include="FileFormat\INI\INILine.cs" />
     <Compile Include="FileFormat\INI\INISection.cs" />
     <Compile Include="FileFormat\Scripting\ScriptFile.cs" />
-    <Compile Include="PlayerCameraInfo.cs" />
+    <Compile Include="Player\PlayerCameraInfo.cs" />
     <Compile Include="Primitives\Cached3DVector.cs" />
     <Compile Include="Primitives\CachedFloat.cs" />
     <Compile Include="Primitives\TimeControl.cs" />
@@ -343,7 +373,7 @@
     <Compile Include="Scenarios\GameScenarioManager.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Input\InputManager.cs" />
-    <Compile Include="PlayerInfo.cs" />
+    <Compile Include="Player\PlayerInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Widget\Instances\UIWidget_Page.cs" />
@@ -456,7 +486,9 @@
   <ItemGroup>
     <Content Include="SWEndor.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="AI\Actions\Idle\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(TargetDir)dll\"

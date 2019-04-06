@@ -7,7 +7,7 @@ namespace SWEndor.Input.Context
   {
     public override void HandleKeyBuffer(TV_KEYDATA keydata)
     {
-      // base.HandleKeyBuffer(keydata);
+      // base.HandleKeyBuffer(keydata); // disable
       if (keydata.Key == (int)CONST_TV_KEY.TV_KEY_ESCAPE)
       {
         TConsole.Visible = false;
@@ -31,12 +31,7 @@ namespace SWEndor.Input.Context
 
     public override void HandleKeyState(byte[] keyPressedStates)
     {
-      //base.HandleKeyState(keyPressedStates);
-    }
-
-    public override void HandleMouse(int mouseX, int mouseY, bool button1, bool button2, bool button3, bool button4, int mouseScroll)
-    {
-      base.HandleMouse(mouseX, mouseY, button1, button2, button3, button4, mouseScroll);
+      //base.HandleKeyState(keyPressedStates); // disable
     }
   }
 }

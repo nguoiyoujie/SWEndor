@@ -4,9 +4,9 @@ using SWEndor.Terminal;
 
 namespace SWEndor.Input.Context
 {
-  public class MenuInputContext : IInputContext
+  public class MenuInputContext : AInputContext
   {
-    public virtual void HandleKeyBuffer(TV_KEYDATA keydata)
+    public override void HandleKeyBuffer(TV_KEYDATA keydata)
     {
       if (keydata.Pressed > 0)
       {
@@ -15,20 +15,8 @@ namespace SWEndor.Input.Context
 
         // Terminal
         if (InputManager.Instance().CTRL && keydata.Key.Equals((int)CONST_TV_KEY.TV_KEY_T))
-        {
           TConsole.Visible = true;
-        }
       }
-    }
-
-    public virtual void HandleKeyState(byte[] keyPressedStates)
-    {
-      // null
-    }
-
-    public virtual void HandleMouse(int mouseX, int mouseY, bool button1, bool button2, bool button3, bool button4, int mouseScroll)
-    {
-      
     }
   }
 }

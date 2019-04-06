@@ -1,4 +1,5 @@
 ﻿using SWEndor.Input;
+using SWEndor.Input.Functions;
 using System;
 using System.Windows.Forms;
 
@@ -22,7 +23,7 @@ namespace SWEndor
       try
       {
         Globals.Initialize();
-        InputKeyMap.GenerateDefaultFnKeys();
+        InputFunction.Registry.GenerateDefault();
         Settings.LoadSettings();
         Settings.SaveSettings();
 

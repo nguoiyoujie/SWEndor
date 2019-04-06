@@ -26,7 +26,7 @@ namespace SWEndor.Input
     private bool MOUSE_B3;
     private bool MOUSE_B4;
     private int MOUSE_SCROLL_NEW;
-    private IInputContext Context;
+    private AInputContext Context;
 
     private InputManager()
     {
@@ -88,6 +88,8 @@ namespace SWEndor.Input
       SHIFT = (KEY_PRESSED[(int)CONST_TV_KEY.TV_KEY_LEFTSHIFT] != 0 || KEY_PRESSED[(int)CONST_TV_KEY.TV_KEY_RIGHTSHIFT] != 0);
       CTRL = (KEY_PRESSED[(int)CONST_TV_KEY.TV_KEY_LEFTCONTROL] != 0 || KEY_PRESSED[(int)CONST_TV_KEY.TV_KEY_RIGHTCONTROL] != 0);
       ALT = (KEY_PRESSED[(int)CONST_TV_KEY.TV_KEY_ALT_LEFT] != 0 || KEY_PRESSED[(int)CONST_TV_KEY.TV_KEY_ALT_RIGHT] != 0);
+
+      Context.Set();
 
       for (int n = 0; n < numkeybuffer; n++)
         Context.HandleKeyBuffer(KEY_BUFFER[n]);

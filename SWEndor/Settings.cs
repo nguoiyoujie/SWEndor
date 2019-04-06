@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Input;
+using SWEndor.Input.Functions;
 using SWEndor.Sound;
 using System.IO;
 using System.Windows.Forms;
@@ -94,10 +95,9 @@ namespace SWEndor
         sr.WriteLine(string.Format("MasterSFXVolume={0}", SoundManager.Instance().MasterSFXVolume));
         sr.WriteLine(string.Format("SteeringSensitivity={0}", SteeringSensitivity));
 
-        foreach (string s in InputKeyMap.GetFnKeys())
-        {
-          sr.WriteLine(string.Format("FuncKey:{0}={1}", s, InputKeyMap.GetFnKey(s)));
-        }
+        foreach (InputFunction fn in InputFunction.Registry.GetList())
+          if (fn.Name != null && fn.Name.Length > 0)
+           sr.WriteLine(string.Format("FuncKey:{0}={1}", fn.Name, fn.Key));
         sr.Flush();
       }
     }
@@ -141,12 +141,15 @@ namespace SWEndor
             SteeringSensitivity = (float.TryParse(value, out steer)) ? steer : 1.5f;
             break;
           default:
-            if (key.StartsWith("funckey:"))
+            if (key.StartsWith("funckey:") && key.Length > 8)
             {
               string keytype = key.Substring(8); // funckey:
               int funckey = 0;
               funckey = (int.TryParse(value, out funckey)) ? funckey : 0;
-              InputKeyMap.SetFnKey(keytype, funckey);
+
+              InputFunction fn = InputFunction.Registry.Get(keytype);
+              if (fn != null)
+                fn.Key = funckey;
             }
 
             break;
