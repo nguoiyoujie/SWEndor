@@ -10,7 +10,6 @@ namespace SWEndor.Sound
       public bool Interrupt;
       public bool Loop;
       public float Volume;
-      public uint Position_ms;
 
       public override void Process(SoundManager s)
       {
