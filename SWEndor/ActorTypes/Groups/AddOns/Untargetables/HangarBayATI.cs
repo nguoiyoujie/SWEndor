@@ -59,9 +59,7 @@ namespace SWEndor.ActorTypes
           }
 
           foreach (ActorInfo a in rm)
-          {
-            ainfo.RemoveChild(a);
-          }
+            a.RemoveParent();
         }
 
         if (p.ActorState != ActorState.DYING)

@@ -180,7 +180,7 @@ namespace SWEndor.Scenarios
         Scenario.Unload();
 
       PlayerInfo.Instance().Score.Reset();
-      ScoreInfo.Scores.Clear();
+      //ScoreInfo.Scores.Clear();
 
       _instance = new GameScenarioManager();
       _instance.LoadInitial();

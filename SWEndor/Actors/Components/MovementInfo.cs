@@ -5,47 +5,67 @@ namespace SWEndor.Actors.Components
 {
   public enum DyingMovement { NONE, SPIN, SINK }
 
-
-  public class MovementInfo
+  public struct MovementInfo
   {
     private readonly ActorInfo Actor;
 
     // General
-    public float Speed = 0;
-    public float XTurnAngle = 0; // Pitch
-    public float YTurnAngle = 0; // Yaw
-    public float ZRoll = 0; // Roll
+    public float Speed;
+    public float XTurnAngle; // Pitch
+    public float YTurnAngle; // Yaw
+    public float ZRoll; // Roll
 
     // speed settings
-    public float MaxSpeed = 0;
-    public float MinSpeed = 0;
-    public float MaxSpeedChangeRate = 0;
+    public float MaxSpeed;
+    public float MinSpeed;
+    public float MaxSpeedChangeRate;
 
     // yaw settings
-    public float MaxTurnRate = 0;
-    public float MaxSecondOrderTurnRateFrac = 0;
+    public float MaxTurnRate;
+    public float MaxSecondOrderTurnRateFrac;
 
     // roll settings
-    public float ZTilt = 0;
-    public float ZNormFrac = 0;
-    public bool ApplyZBalance = true;
+    public float ZTilt;
+    public float ZNormFrac;
+    public bool ApplyZBalance;
 
     // iterates Z rotation decay, uses a while loop... the algorithm should be replaced
-    private float Zdiv = 0;
+    private float Zdiv;
 
-    public DyingMovement DyingMovement = DyingMovement.NONE;
+    public DyingMovement DyingMovement;
     // Death Spin
-    public int D_spin_min_rate = 0;
-    public int D_spin_max_rate = 0;
-    private float D_spin_r = 0;
+    public int D_spin_min_rate;
+    public int D_spin_max_rate;
+    private float D_spin_r;
 
-    public float D_sink_pitch_rate = 0;
-    public float D_sink_forward_rate = 0;
-    public float D_sink_down_rate = 0;
+    public float D_sink_pitch_rate;
+    public float D_sink_forward_rate;
+    public float D_sink_down_rate;
 
     public MovementInfo(ActorInfo actor)
     {
       Actor = actor;
+
+      Speed = 0;
+      XTurnAngle = 0;
+      YTurnAngle = 0;
+      ZRoll = 0;
+      MaxSpeed = 0;
+      MinSpeed = 0;
+      MaxSpeedChangeRate = 0;
+      MaxTurnRate = 0;
+      MaxSecondOrderTurnRateFrac = 0;
+      ZTilt = 0;
+      ZNormFrac = 0;
+      ApplyZBalance = true;
+      Zdiv = 0;
+      DyingMovement = DyingMovement.NONE;
+      D_spin_min_rate = 0;
+      D_spin_max_rate = 0;
+      D_spin_r = 0;
+      D_sink_pitch_rate = 0;
+      D_sink_forward_rate = 0;
+      D_sink_down_rate = 0;
     }
 
     public void ResetTurn()

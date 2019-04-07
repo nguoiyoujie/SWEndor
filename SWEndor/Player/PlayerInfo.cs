@@ -20,7 +20,7 @@ namespace SWEndor.Player
     private PlayerInfo()
     {
       Name = "Luke";
-      Score = new ScoreInfo("(Player)");
+      Score = ScoreInfo.Player;
     }
 
     public string Name;
@@ -36,8 +36,8 @@ namespace SWEndor.Player
       {
         if (_actor != value)
         {
-          if (_actor != null)
-            _actor.Score = new ScoreInfo(_actor.Key);
+          //if (_actor != null)
+            //_actor.Score = new ScoreInfo(_actor.Key);
           _actor = value;
           if (_actor != null)
             _actor.Score = Score;

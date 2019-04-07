@@ -1,23 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using SWEndor.Actors;
+using System.Collections.Generic;
 
 namespace SWEndor
 {
-  public class ScoreInfo
+  public struct ScoreInfo
   {
     public class ScoreComparer : IComparer<ScoreInfo>
     {
       public int Compare(ScoreInfo x, ScoreInfo y)
       {
         return x.Score.CompareTo(y.Score);
-       }
+      }
     }
 
-    public static ThreadSafeList<ScoreInfo> Scores = new ThreadSafeList<ScoreInfo>();
+    public static readonly ScoreInfo Player = new ScoreInfo(null);
 
-    public ScoreInfo(string name)
+    private readonly ActorInfo Actor;
+    public float Score;
+    public int Hits;
+    public int HitsOnFighters;
+    public int Kills;
+    public int Deaths;
+    public float DamageTaken;
+    public Dictionary<string, int> KillsByType;
+
+    public ScoreInfo(ActorInfo actor)
     {
-      Name = name;
-      Scores.Add(this);
+      Actor = actor;
+      Score = 0;
+      Hits = 0;
+      HitsOnFighters = 0;
+      Kills = 0;
+      Deaths = 0;
+      DamageTaken = 0;
+      KillsByType = new Dictionary<string, int>();
     }
 
     public void Reset()
@@ -28,20 +44,7 @@ namespace SWEndor
       Kills = 0;
       Deaths = 0;
       DamageTaken = 0;
-      Dictionary<string, int> KillsByType = new Dictionary<string, int>();
-
-      if (!Scores.Contains(this))
-        Scores.Add(this);
+      KillsByType = new Dictionary<string, int>();
     }
-
-    public float Score = 0;
-    public readonly string Name;
-
-    public int Hits = 0;
-    public int HitsOnFighters = 0;
-    public int Kills = 0;
-    public int Deaths = 0;
-    public float DamageTaken = 0;
-    public Dictionary<string, int> KillsByType = new Dictionary<string, int>();
   }
 }

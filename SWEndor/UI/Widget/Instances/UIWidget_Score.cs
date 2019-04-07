@@ -39,6 +39,7 @@ namespace SWEndor.UI
                                     , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
       Engine.Instance().TVScreen2DImmediate.Action_End2D();
 
+      /*
       List<ScoreInfo> HighScorers = new List<ScoreInfo>(ScoreInfo.Scores.GetList());
       HighScorers.RemoveAll(x => x.Score == 0);
       HighScorers.Sort(new ScoreInfo.ScoreComparer());
@@ -61,7 +62,7 @@ namespace SWEndor.UI
       , new TV_COLOR(0.7f, 1f, 0.3f, 1).GetIntColor()
       , Font.Factory.Get("Text_10").ID
       );
-
+      */
     }
   }
 }

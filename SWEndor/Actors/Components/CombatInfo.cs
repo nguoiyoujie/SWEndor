@@ -1,20 +1,27 @@
 ﻿namespace SWEndor.Actors.Components
 {
-  public class CombatInfo
+  public struct CombatInfo
   {
     private readonly ActorInfo Actor;
-    public bool IsCombatObject = false;
-    public bool OnTimedLife = false;
-    public float TimedLife = 100;
-    public float Strength = 1;
-    public float MaxStrength = 1;
-    public float DamageModifier = 1;
-
-    public bool HitWhileDyingLeadsToDeath = true;
+    public bool IsCombatObject;
+    public bool OnTimedLife;
+    public float TimedLife;
+    public float Strength;
+    public float MaxStrength;
+    public float DamageModifier;
+    public bool HitWhileDyingLeadsToDeath;
 
     public CombatInfo(ActorInfo actor)
     {
       Actor = actor;
+
+      IsCombatObject = false;
+      OnTimedLife = false;
+      TimedLife = 100;
+      Strength = 1;
+      MaxStrength = 1;
+      DamageModifier = 1;
+      HitWhileDyingLeadsToDeath = true;
     }
 
     private void Dying()

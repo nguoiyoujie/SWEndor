@@ -2,12 +2,12 @@
 
 namespace SWEndor.Actors.Components
 {
-  public class CycleInfo
+  public struct CycleInfo
   {
     private readonly ActorInfo Actor;
-    public float CyclesRemaining = 1;
-    public float CyclePeriod = 1;
-    public float CycleTime = 0;
+    public float CyclesRemaining;
+    public float CyclePeriod;
+    public float CycleTime;
 
     public Action Action;
 
@@ -15,6 +15,10 @@ namespace SWEndor.Actors.Components
     {
       Actor = actor;
       Action = action;
+
+      CyclesRemaining = 1;
+      CyclePeriod = 1;
+      CycleTime = 0;
     }
 
     public void Process()

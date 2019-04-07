@@ -63,13 +63,13 @@ namespace SWEndor.Actors
     public ScoreInfo Score;
 
     // Combat
-    public readonly CombatInfo CombatInfo;
+    public CombatInfo CombatInfo;
 
     // Movement
-    public readonly MovementInfo MovementInfo;
+    public MovementInfo MovementInfo;
 
     // Cycles
-    public readonly CycleInfo CycleInfo;
+    public CycleInfo CycleInfo;
 
     // Checks
     public bool EnteredCombatZone = false;
@@ -92,10 +92,10 @@ namespace SWEndor.Actors
     public float CamDeathCirclePeriod = 15;
 
     // Regeneration
-    public readonly RegenerationInfo RegenerationInfo;
+    public RegenerationInfo RegenerationInfo;
 
     // Explosion Systems
-    public readonly ExplosionInfo ExplosionInfo;
+    public ExplosionInfo ExplosionInfo;
 
     // States
     private Dictionary<string, float> StatesF = new Dictionary<string, float>();
@@ -164,10 +164,10 @@ namespace SWEndor.Actors
       ID = id;
 
       TypeInfo = acinfo.ActorTypeInfo;
-      if (acinfo.Name.Length > 0) { _name = acinfo.Name; }
+      if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
 
       // Components
-      Score = new ScoreInfo(_name);
+      Score = new ScoreInfo(this);
       CombatInfo = new CombatInfo(this);
       MovementInfo = new MovementInfo(this);
       CycleInfo = new CycleInfo(this, null);
@@ -1034,22 +1034,6 @@ namespace SWEndor.Actors
       Parent = null;
     }
 
-    public void AddChild(ActorInfo actor)
-    {
-      //m_childlist.WaitOne();
-      Children.Add(actor);
-      //m_childlist.ReleaseMutex();
-      actor.AddParent(this);
-    }
-
-    public void RemoveChild(ActorInfo actor)
-    {
-      //m_childlist.WaitOne();
-      Children.Remove(actor);
-      //m_childlist.ReleaseMutex();
-      actor.RemoveParent();
-    }
-
     public bool HasParent(ActorInfo a, int searchlevel = 99)
     {
       if (searchlevel < 0)
@@ -1330,7 +1314,7 @@ namespace SWEndor.Actors
           if (Children[0].TypeInfo is AddOnGroup || Children[0].AttachToMesh == this.ID)
             Children[0].Destroy();
           else
-            RemoveChild(Children[0]);
+            Children[0].RemoveParent();
 
         // Mesh
         if (Mesh != null)

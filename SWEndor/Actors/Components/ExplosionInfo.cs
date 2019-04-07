@@ -3,22 +3,32 @@ using SWEndor.ActorTypes;
 
 namespace SWEndor.Actors.Components
 {
-  public class ExplosionInfo
+  public struct ExplosionInfo
   {
     private readonly ActorInfo Actor;
-    public bool Active = false;
-    public float ExplosionCooldown = Game.Instance().GameTime;
-    public float ExplosionRate = 0.5f;
-    public float ExplosionSize = 1;
-    public string ExplosionType = "Explosion";
+    public bool Active;
+    public float ExplosionCooldown;
+    public float ExplosionRate;
+    public float ExplosionSize;
+    public string ExplosionType;
     private ActorTypeInfo _cache;
-    public bool EnableDeathExplosion = false;
-    public string DeathExplosionType = "ExplosionSm";
-    public float DeathExplosionSize = 1;
+    public bool EnableDeathExplosion;
+    public string DeathExplosionType;
+    public float DeathExplosionSize;
 
     public ExplosionInfo(ActorInfo actor)
     {
       Actor = actor;
+
+      Active = false;
+      ExplosionCooldown = Game.Instance().GameTime;
+      ExplosionRate = 0.5f;
+      ExplosionSize = 1;
+      ExplosionType = "Explosion";
+      _cache = null;
+      EnableDeathExplosion = false;
+      DeathExplosionType = "ExplosionSm";
+      DeathExplosionSize = 1;
     }
 
     public void ProcessDying()
