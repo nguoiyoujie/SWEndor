@@ -5,6 +5,7 @@ using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using SWEndor.Sound;
 using SWEndor.UI;
+using SWEndor.UI.Menu.Pages;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -220,7 +221,7 @@ namespace SWEndor
       // Replace this block to print this on file!
       if (State == RunState.RUNNING)
       {
-        Screen2D.Instance().CurrentPage = new UIPage_FatalError(ex);
+        Screen2D.Instance().CurrentPage = new FatalError(ex);
         Screen2D.Instance().ShowPage = true;
         IsPaused = true;
       }

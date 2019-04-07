@@ -1,8 +1,8 @@
 ﻿namespace SWEndor.UI
 {
-  public class UIWidget
+  public class Widget
   {
-    public UIWidget(string name)
+    public Widget(string name)
     {
       Name = name;
     }

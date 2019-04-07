@@ -6,6 +6,7 @@ using SWEndor.AI.Actions;
 using SWEndor.Player;
 using SWEndor.Sound;
 using SWEndor.UI;
+using SWEndor.UI.Menu.Pages;
 using System.Collections.Generic;
 
 namespace SWEndor.Scenarios
@@ -210,7 +211,7 @@ namespace SWEndor.Scenarios
 
       SoundManager.Instance().SetSoundStopAll();
 
-      Screen2D.Instance().CurrentPage = new UIPage_GameOver();
+      Screen2D.Instance().CurrentPage = new GameOver();
       Screen2D.Instance().ShowPage = true;
       Game.Instance().IsPaused = true;
       SoundManager.Instance().SetMusic("battle_3_2");
@@ -431,7 +432,7 @@ namespace SWEndor.Scenarios
 
       SoundManager.Instance().SetSoundStopAll();
 
-      Screen2D.Instance().CurrentPage = new UIPage_GameWon();
+      Screen2D.Instance().CurrentPage = new GameWon();
       Screen2D.Instance().ShowPage = true;
       Game.Instance().IsPaused = true;
       SoundManager.Instance().SetMusic("finale_3_1");

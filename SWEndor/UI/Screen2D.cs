@@ -1,5 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.UI;
+using SWEndor.UI.Menu;
+using SWEndor.UI.Widgets;
 using System.Collections.Generic;
 
 namespace SWEndor
@@ -19,24 +21,12 @@ namespace SWEndor
     public bool ShowRadar = true;
     public bool ShowScore = true;
 
-    // fonts
-    /*
-    internal int FontID08 = -1;
-    internal int FontID10 = -1;
-    internal int FontID12 = -1;
-    internal int FontID14 = -1;
-    internal int FontID16 = -1;
-    internal int FontID24 = -1;
-    internal int FontID36 = -1;
-    internal int FontID48 = -1;
-    */
-
     // PreRender Text
     public List<string> LoadingTextLines = new List<string>(); 
 
     // Page
     public bool ShowPage = false;
-    public UIPage CurrentPage = null;
+    public Page CurrentPage = null;
 
     // Message Text
     public TextInfo PrimaryText = new TextInfo();
@@ -52,40 +42,40 @@ namespace SWEndor
     public TV_3DVECTOR Box3D_max = new TV_3DVECTOR();
     public TV_COLOR Box3D_color = new TV_COLOR(1, 1, 1, 1);
 
-    ThreadSafeList<UIWidget> m_Widgets = new ThreadSafeList<UIWidget>();
+    ThreadSafeList<Widget> m_Widgets = new ThreadSafeList<Widget>();
 
     private Screen2D()
     {
-      m_Widgets.Add(new UIWidget_SideBars());
-      m_Widgets.Add(new UIWidget_HitBar());
+      m_Widgets.Add(new SideBars());
+      m_Widgets.Add(new HitBar());
 
-      m_Widgets.Add(new UIWidget_Radar());
+      m_Widgets.Add(new Radar());
 
       //m_Widgets.Add(new UIWidget_Score()); // Disabled
-      m_Widgets.Add(new UIWidget_AIInfo());
-      m_Widgets.Add(new UIWidget_ScenarioInfo());
-      m_Widgets.Add(new UIWidget_WeaponInfo());
-      m_Widgets.Add(new UIWidget_Steering());
-      m_Widgets.Add(new UIWidget_CrossHair());
-      m_Widgets.Add(new UIWidget_Target());
+      m_Widgets.Add(new AIInfo());
+      m_Widgets.Add(new ScenarioInfo());
+      m_Widgets.Add(new WidgetWeaponInfo());
+      m_Widgets.Add(new Steering());
+      m_Widgets.Add(new CrossHair());
+      m_Widgets.Add(new Target());
 
-      m_Widgets.Add(new UIWidget_3DBox());
-      //m_Widgets.Add(new UIWidget_Debug_GeneralInfo());
-      //m_Widgets.Add(new UIWidget_Debug_ObjectInfo());
-      //m_Widgets.Add(new UIWidget_Debug_SelectInfo());
+      m_Widgets.Add(new Box3D());
+      //m_Widgets.Add(new Debug_GeneralInfo());
+      //m_Widgets.Add(new Debug_ObjectInfo());
+      //m_Widgets.Add(new Debug_SelectInfo());
 
-      m_Widgets.Add(new UIWidget_MessageText());
+      m_Widgets.Add(new MessageText());
 
-      m_Widgets.Add(new UIWidget_Page());
-      m_Widgets.Add(new UIWidget_PerfText());
-      m_Widgets.Add(new UIWidget_Terminal());
+      m_Widgets.Add(new WidgetPage());
+      m_Widgets.Add(new PerfText());
+      m_Widgets.Add(new WidgetTerminal());
 
-      m_Widgets.Add(new UIWidget_MouseLocation());
+      m_Widgets.Add(new MouseLocation());
     }
 
     public void Draw()
     {
-      foreach (UIWidget w in m_Widgets.GetList())
+      foreach (Widget w in m_Widgets.GetList())
       {
         if (w != null && w.Visible)
           using (new PerfElement("render_" + w.Name))

@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.Player;
 using SWEndor.UI;
+using SWEndor.UI.Menu.Pages;
 using System.Collections.Generic;
 using System.IO;
 
@@ -72,7 +73,7 @@ namespace SWEndor.Scenarios
     {
       Game.Instance().IsPaused = false;
       Screen2D.Instance().ShowPage = true;
-      Screen2D.Instance().CurrentPage = new UIPage_MainMenu();
+      Screen2D.Instance().CurrentPage = new MainMenu();
       Scenario = new Scenarios.GSMainMenu();
       Scenario.Load(null, "");
       Scenario.Launch();

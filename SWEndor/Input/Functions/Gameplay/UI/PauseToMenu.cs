@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.UI;
+using SWEndor.UI.Menu.Pages;
 
 namespace SWEndor.Input.Functions.Gameplay.UI
 {
@@ -15,7 +16,7 @@ namespace SWEndor.Input.Functions.Gameplay.UI
     {
       if (!Screen2D.Instance().ShowPage)
       {
-        Screen2D.Instance().CurrentPage = new UIPage_PauseMenu(); // configurable?
+        Screen2D.Instance().CurrentPage = new PauseMenu(); // configurable?
         Screen2D.Instance().ShowPage = true;
         Game.Instance().IsPaused = true;
       }

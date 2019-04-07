@@ -7,6 +7,7 @@ using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using SWEndor.Weapons;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
@@ -157,7 +158,24 @@ namespace SWEndor.Actors
 
     // Ownership
     public ActorInfo Parent { get; private set; }
-    private List<ActorInfo> Children = new List<ActorInfo>();
+    public event EventHandler<ActionEventArgs> NotifyChildEvent;
+    public event EventHandler<ActionEventArgs> NotifyParentEvent;
+    public class ActionEventArgs : EventArgs
+    {
+      public Action Action;
+      public ActionEventArgs(Action action) : base() { Action = action; }
+      public void Execute() { Action?.Invoke(); }
+    }
+
+    protected virtual void OnNotifyChildEvent(object sender, ActionEventArgs e)
+    {
+      NotifyChildEvent?.Invoke(this, e);
+    }
+
+    protected virtual void OnNotifyParentEvent(object sender, ActionEventArgs e)
+    {
+      NotifyParentEvent?.Invoke(this, e);
+    }
 
     #region Creation Methods
 
@@ -955,19 +973,36 @@ namespace SWEndor.Actors
 
     #region Parent, Child and Relatives
 
+    public void ChildExecute(object sender, ActionEventArgs args)
+    {
+      args.Action?.Invoke();
+    }
+
+    public void ParentExecute(object sender, ActionEventArgs args)
+    {
+      args.Action?.Invoke();
+    }
+
     public void AddParent(ActorInfo actor)
     {
-      if (Parent != null)
-        RemoveParent();
+      if (actor != null)
+      {
+        if (Parent != null)
+          RemoveParent();
 
-      Parent = actor;
-      actor.Children.Add(this);
+        Parent = actor;
+        NotifyChildEvent += Parent.ChildExecute;
+        NotifyParentEvent += ParentExecute;
+      }
     }
 
     public void RemoveParent()
     {
       if (Parent != null)
-        Parent.Children.Remove(this);
+      {
+        NotifyChildEvent -= Parent.ChildExecute;
+        NotifyParentEvent -= ParentExecute;
+      }
       Parent = null;
     }
 
@@ -1021,25 +1056,9 @@ namespace SWEndor.Actors
         return new List<ActorInfo>();
 
       List<ActorInfo> ret = new List<ActorInfo>();
-      //m_childlist.WaitOne();
-      ThreadSafeList<ActorInfo> cs = new ThreadSafeList<ActorInfo>(Children);
-      //m_childlist.ReleaseMutex();
-
-      if (searchlevel > 1)
-      {
-        foreach (ActorInfo p in cs.GetList())
-        {
-          if (!ret.Contains(p))
-          {
-            ret.Add(p);
-            ret.AddRange(p.GetAllChildren(searchlevel - 1));
-          }
-        }
-      }
-      else
-      {
-        ret.AddRange(cs.GetList());
-      }
+      foreach (ActorInfo p in Factory.GetActorList())
+        if (p != null && p.HasParent(this, searchlevel))
+          ret.Add(p);
       return ret;
     }
 
@@ -1051,25 +1070,7 @@ namespace SWEndor.Actors
       if (alreadysearched == null)
         alreadysearched = new List<ActorInfo>();
 
-      bool ret = false;
-      //m_childlist.WaitOne();
-      List<ActorInfo> cs = new List<ActorInfo>(Children);
-      //m_childlist.ReleaseMutex();
-
-      if (Parent != null && !alreadysearched.Contains(Parent))
-      {
-        alreadysearched.Add(Parent);
-        ret |= (Parent == a) || (Parent.HasRelative(a, searchlevel - 1, alreadysearched));
-      }
-      foreach (ActorInfo p in cs)
-      {
-        if (!alreadysearched.Contains(p))
-        {
-          alreadysearched.Add(p);
-          ret |= (p == a) || (p.HasRelative(a, searchlevel - 1, alreadysearched));
-        }
-      }
-      return ret;
+      return (a != null && a.GetTopParent() == GetTopParent());
     }
 
     public List<ActorInfo> GetAllRelatives(int searchlevel = 99)
@@ -1078,38 +1079,12 @@ namespace SWEndor.Actors
         return new List<ActorInfo>();
 
       List<ActorInfo> ret = new List<ActorInfo>();
-      //m_childlist.WaitOne();
-      List<ActorInfo> cs = new List<ActorInfo>(Children);
-      //m_childlist.ReleaseMutex();
-
-      if (searchlevel > 1)
+      foreach (ActorInfo p in Factory.GetActorList())
       {
-        if (Parent != null && !ret.Contains(Parent))
+        if (p != null && p.GetTopParent() == GetTopParent())
         {
-          ret.Add(Parent);
-          ret.AddRange(Parent.GetAllRelatives(searchlevel - 1));
+          ret.Add(p);
         }
-      }
-      else
-      {
-        if (Parent != null)
-          ret.Add(Parent);
-      }
-
-      if (searchlevel < 1)
-      {
-        foreach (ActorInfo p in cs)
-        {
-          if (!ret.Contains(p))
-          {
-            ret.Add(p);
-            ret.AddRange(p.GetAllRelatives(searchlevel - 1));
-          }
-        }
-      }
-      else
-      {
-        ret.AddRange(cs);
       }
       return ret;
     }
@@ -1231,11 +1206,11 @@ namespace SWEndor.Actors
         RemoveParent();
 
         // Destroy Children
-        while (Children.Count > 0)
-          if (Children[0].TypeInfo is AddOnGroup || Children[0].AttachToMesh == this.ID)
-            Children[0].Destroy();
+        foreach (ActorInfo child in GetAllChildren(1))
+          if (child.TypeInfo is AddOnGroup || child.AttachToMesh == ID)
+            child.Destroy();
           else
-            Children[0].RemoveParent();
+            child.RemoveParent();
 
         // Mesh
         if (Mesh != null)
