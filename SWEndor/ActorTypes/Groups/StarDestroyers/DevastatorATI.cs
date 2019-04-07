@@ -30,6 +30,8 @@ namespace SWEndor.ActorTypes
       MaxSpeedChangeRate = 5.0f;
       MaxTurnRate = 1.2f;
 
+      CullDistance = 40000;
+
       Score_perStrength = 70;
       Score_DestroyBonus = 20000;
 
@@ -71,12 +73,12 @@ namespace SWEndor.ActorTypes
         , new AddOnInfo("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(290, 16, -230), new TV_3DVECTOR(-90, 0, -15), true)
         , new AddOnInfo("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(290, 18, -283), new TV_3DVECTOR(-90, 0, -15), true)
         , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(290, 18, -336), new TV_3DVECTOR(-90, 0, -15), true)
-        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(290, 18, -336), new TV_3DVECTOR(-90, 0, -15), true)
+        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(290, 18, -389), new TV_3DVECTOR(-90, 0, -15), true)
 
         , new AddOnInfo("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(-290, 16, -230), new TV_3DVECTOR(-90, 0, 15), true)
         , new AddOnInfo("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(-290, 18, -283), new TV_3DVECTOR(-90, 0, 15), true)
         , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(-290, 18, -336), new TV_3DVECTOR(-90, 0, 15), true)
-        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(-290, 18, -336), new TV_3DVECTOR(-90, 0, 15), true)
+        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(-290, 18, -389), new TV_3DVECTOR(-90, 0, 15), true)
 
         // Bottom
         , new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-120, -105, 180), new TV_3DVECTOR(90, 0, -25), true)

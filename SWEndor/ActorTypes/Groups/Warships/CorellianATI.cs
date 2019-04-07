@@ -24,13 +24,16 @@ namespace SWEndor.ActorTypes
       MaxSpeedChangeRate = 50.0f;
       MaxTurnRate = 9f;
 
-      ZTilt = 17.5f;
-      ZNormFrac = 0.065f;
+      ZTilt = 8.5f;
+      ZNormFrac = 0.025f;
+
+      CullDistance = 20000;
 
       Score_perStrength = 10;
       Score_DestroyBonus = 5000;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"corellian\corellian.x");
+      SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"corellian\corellian_far.x");
 
       SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", new TV_3DVECTOR(0, 0, -200), 500.0f, true) };
       AddOns = new AddOnInfo[]

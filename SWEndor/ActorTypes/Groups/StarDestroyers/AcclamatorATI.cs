@@ -30,6 +30,8 @@ namespace SWEndor.ActorTypes
       MaxSpeedChangeRate = 8.0f;
       MaxTurnRate = 1.6f;
 
+      CullDistance = 30000;
+
       Score_perStrength = 50;
       Score_DestroyBonus = 5000;
 

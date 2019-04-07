@@ -26,6 +26,8 @@ namespace SWEndor.ActorTypes
       ZNormFrac = 0.006f;
       ZTilt = 3.5f;
 
+      CullDistance = 40000;
+
       Score_perStrength = 20;
       Score_DestroyBonus = 20000;
 

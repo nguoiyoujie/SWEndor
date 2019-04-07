@@ -27,7 +27,10 @@ namespace SWEndor.ActorTypes
       Score_perStrength = 15;
       Score_DestroyBonus = 10000;
 
+      CullDistance = 30000;
+
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"nebulonb\nebulonb.x");
+      SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"nebulonb\nebulonb_far.x");
 
       SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", new TV_3DVECTOR(0, 100, -300), 1500.0f, true) };
       AddOns = new AddOnInfo[]

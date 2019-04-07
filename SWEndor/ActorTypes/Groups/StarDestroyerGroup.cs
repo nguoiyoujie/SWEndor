@@ -12,7 +12,7 @@ namespace SWEndor.ActorTypes
       IsDamage = false;
       CollisionEnabled = true;
 
-      CullDistance = 40000;
+      CullDistance = 20000;
 
       ZTilt = 2.5f;
       ZNormFrac = 0.011f;

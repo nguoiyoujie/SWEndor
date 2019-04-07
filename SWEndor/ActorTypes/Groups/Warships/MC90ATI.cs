@@ -26,6 +26,8 @@ namespace SWEndor.ActorTypes
       ZNormFrac = 0.006f;
       ZTilt = 1.8f; // low number so fighters come out properly when mothership is rotating
 
+      CullDistance = 40000;
+
       Score_perStrength = 20;
       Score_DestroyBonus = 20000;
 

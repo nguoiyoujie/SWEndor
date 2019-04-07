@@ -24,6 +24,8 @@ namespace SWEndor.ActorTypes
       MaxSpeedChangeRate = 2.0f;
       MaxTurnRate = 2f;
 
+      CullDistance = 60000;
+
       Score_perStrength = 75;
       Score_DestroyBonus = 100000;
 
@@ -35,8 +37,8 @@ namespace SWEndor.ActorTypes
         new AddOnInfo("Executor Super Star Destroyer Turbolaser Tower", new TV_3DVECTOR(500, 55, -450), new TV_3DVECTOR(-90, 0, 0), true)
         , new AddOnInfo("Executor Super Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-500, 55, -450), new TV_3DVECTOR(-90, 0, 0), true)
 
-        , new AddOnInfo("Executor Super Star Destroyer Turbolaser Tower", new TV_3DVECTOR(570, 55, -700), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnInfo("Executor Super Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-570, 55, -700), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnInfo("Executor Super Star Destroyer Turbolaser Tower", new TV_3DVECTOR(500, 55, -700), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnInfo("Executor Super Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-500, 55, -700), new TV_3DVECTOR(-90, 0, 0), true)
 
         , new AddOnInfo("Executor Super Star Destroyer Turbolaser Tower", new TV_3DVECTOR(200, 125, -600), new TV_3DVECTOR(-90, 0, 0), true)
         , new AddOnInfo("Executor Super Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-200, 125, -600), new TV_3DVECTOR(-90, 0, 0), true)
