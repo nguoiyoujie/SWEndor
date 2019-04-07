@@ -258,6 +258,7 @@
     <Compile Include="AI\ActionManager.cs" />
     <Compile Include="AI\ActionInfo.cs" />
     <Compile Include="AI\AI\AIInfo.cs" />
+    <Compile Include="Build.cs" />
     <Compile Include="Input\Context\DebugGameInputContext.cs" />
     <Compile Include="Input\Context\TerminalGameInputContext.cs" />
     <Compile Include="Input\Context\GameInputContext.cs" />
@@ -455,6 +456,7 @@
     <Compile Include="Weapons\WeaponInfo.cs" />
     <EmbeddedResource Include="GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -496,6 +498,9 @@ xcopy /y "$(TargetDir)*.dll" "$(TargetDir)dll\*.dll"
 xcopy /y "$(TargetDir)*.xml" "$(TargetDir)dll\*.xml"
 del /Q "$(TargetDir)*.dll"
 del /Q "$(TargetDir)*.xml"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>echo namespace SWEndor { public static class Build { public static string Time = "%25DATE%25 %25TIME%25";}} &gt; "$(ProjectDir)\Build.cs"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

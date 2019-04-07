@@ -8,6 +8,20 @@ namespace SWEndor
 {
   public static class Globals
   {
+    public const int MajorVersion = 0;
+    public const int MinorVersion = 0;
+
+    public static string Version
+    {
+      get
+      {
+        return string.Format("{0}.{1}.{2}"
+        , MajorVersion
+        , MinorVersion
+        , DateTime.Parse(Build.Time).ToString("yyyyMMdd.hhmmss"));
+      }
+    }
+
     public const float PI = 3.1415f;
     public static float LaserSpeed = 3000f;
 

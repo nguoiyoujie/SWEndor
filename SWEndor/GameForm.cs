@@ -1,8 +1,5 @@
-﻿using MTV3D65;
-using System;
+﻿using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace SWEndor
@@ -19,13 +16,23 @@ namespace SWEndor
     private GameForm()
     {
       InitializeComponent();
+      lblVersion.Text = Globals.Version;
     }
 
     private void GameForm_Load(object sender, EventArgs e)
     {
       DesktopLocation = new Point(0, 0);
-      Width = Settings.ResolutionX;
-      Height = Settings.ResolutionY;
+      Width = Screen.PrimaryScreen.Bounds.Width;
+      Height = Screen.PrimaryScreen.Bounds.Height;
+
+      float w_m = Screen.PrimaryScreen.Bounds.Width * 1.0f / Settings.ResolutionX;
+      float h_m = Screen.PrimaryScreen.Bounds.Height * 1.0f / Settings.ResolutionY;
+
+      float m = (w_m > h_m) ? h_m : w_m;
+       
+      pbGame.Width = (int)(Settings.ResolutionX * m);
+      pbGame.Height = (int)(Settings.ResolutionY * m);
+      pbGame.Location = new Point((Width - pbGame.Width) / 2, (Height - pbGame.Height) / 2);
 
       // game
       Game.Instance().StartLoad();
@@ -33,16 +40,6 @@ namespace SWEndor
       Engine.Instance().Initialize();
       Engine.Instance().InitializeComponents();
       Game.Instance().Run();
-    }
-
-    public TV_2DVECTOR GetDisplaySize()
-    {
-      return new TV_2DVECTOR(pbGame.Width, pbGame.Height);
-    }
-
-    public void SetDisplaySize()
-    {
-      Engine.Instance().SetSize();
     }
 
     public void Exit()
@@ -59,11 +56,6 @@ namespace SWEndor
     private void pbGame_MouseLeave(object sender, EventArgs e)
     {
       Cursor.Show();
-    }
-
-    private void pbGame_SizeChanged(object sender, EventArgs e)
-    {
-      SetDisplaySize(); // new TV_2DVECTOR(pbGame.Width, pbGame.Height));
     }
 
     private void pbGame_MouseEnter(object sender, EventArgs e)
