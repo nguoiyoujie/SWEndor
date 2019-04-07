@@ -9,7 +9,7 @@ namespace SWEndor.Actors
   {
     public static class Factory
     {
-      private static ActorInfo[] list = new ActorInfo[10000]; // hard code limit to ActorInfo. We should not be exceeding 1000 normally.
+      private static ActorInfo[] list = new ActorInfo[2500]; // hard code limit to ActorInfo. We should not be exceeding 1000 normally.
       private static int count = 0;
       private static ActorInfo[] holdinglist = new ActorInfo[0];
       private static float listtime = 0;
