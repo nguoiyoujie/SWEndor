@@ -3,7 +3,7 @@ using SWEndor.Actors;
 
 namespace SWEndor.ActorTypes.Components
 {
-  public class DebrisSpawnerInfo
+  public struct DebrisSpawnerInfo
   {
     public readonly string Type;
     private ActorTypeInfo _cache;
@@ -16,14 +16,10 @@ namespace SWEndor.ActorTypes.Components
     public readonly int RotationZMin;
     public readonly float Chance;
 
-    public DebrisSpawnerInfo(string type)
-    {
-      Type = type;
-    }
-
     public DebrisSpawnerInfo(string type, TV_3DVECTOR position, int xMin, int xMax, int yMin, int yMax, int zMin, int zMax, float chance)
     {
       Type = type;
+      _cache = null;
       SpawnPosition = position;
       RotationXMax = xMax;
       RotationXMin = xMin;

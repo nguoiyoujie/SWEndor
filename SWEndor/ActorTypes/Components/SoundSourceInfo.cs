@@ -7,7 +7,7 @@ using System;
 
 namespace SWEndor.ActorTypes.Components
 {
-  public class SoundSourceInfo
+  public struct SoundSourceInfo
   {
     public readonly string Sound;
     public readonly TV_3DVECTOR RelativeLocation;
@@ -15,13 +15,7 @@ namespace SWEndor.ActorTypes.Components
     public readonly bool Loop;
     public readonly bool PlayInCutscene;
 
-    public SoundSourceInfo(string sound, float dist)
-    {
-      Sound = sound;
-      Distance = dist;
-    }
-
-    public SoundSourceInfo(string sound, TV_3DVECTOR position, float dist, bool loop, bool playInCutscene = false)
+    public SoundSourceInfo(string sound, float dist, TV_3DVECTOR position = default(TV_3DVECTOR), bool loop = false, bool playInCutscene = false)
     {
       Sound = sound;
       RelativeLocation = position;
