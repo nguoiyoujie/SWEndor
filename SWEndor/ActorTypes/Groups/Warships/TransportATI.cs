@@ -31,6 +31,21 @@ namespace SWEndor.ActorTypes
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"transport\transport.x");
 
+      Debris = new DebrisSpawnerInfo[] {
+        new DebrisSpawnerInfo("Transport Box 1", new TV_3DVECTOR(60, -30, 100), -1000, 1000, -2000, 2000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo("Transport Box 1", new TV_3DVECTOR(0, -30, 100), -1000, 1000, -2000, 2000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo("Transport Box 1", new TV_3DVECTOR(-60, -30, 100), -1000, 1000, -2000, 2000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo("Transport Box 2", new TV_3DVECTOR(60, -30, 100), -1000, 1000, -2000, 2000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo("Transport Box 2", new TV_3DVECTOR(0, -30, 100), -1000, 1000, -2000, 2000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo("Transport Box 2", new TV_3DVECTOR(-60, -30, 100), -1000, 1000, -2000, 2000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo("Transport Box 3", new TV_3DVECTOR(60, -30, 100), -1000, 1000, -2000, 2000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo("Transport Box 3", new TV_3DVECTOR(0, -30, 100), -1000, 1000, -2000, 2000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo("Transport Box 3", new TV_3DVECTOR(-60, -30, 100), -1000, 1000, -2000, 2000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo("Transport Box 4", new TV_3DVECTOR(60, -30, 100), -1000, 1000, -2000, 2000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo("Transport Box 4", new TV_3DVECTOR(0, -30, 100), -1000, 1000, -2000, 2000, -2500, 2500, 0.5f),
+        new DebrisSpawnerInfo("Transport Box 4", new TV_3DVECTOR(-60, -30, 100), -1000, 1000, -2000, 2000, -2500, 2500, 0.5f),
+      };
+
       SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 500.0f, new TV_3DVECTOR(0, 0, -150), true) };
       AddOns = new AddOnInfo[]
       {
@@ -46,6 +61,7 @@ namespace SWEndor.ActorTypes
       ainfo.CamTargets.Add(new TV_3DVECTOR(0, 86, 2000));
     }
 
+    /*
     public override void ProcessNewState(ActorInfo ainfo)
     {
       base.ProcessNewState(ainfo);
@@ -84,11 +100,11 @@ namespace SWEndor.ActorTypes
 
             acinfo.InitialSpeed = ainfo.MovementInfo.Speed;
             ActorInfo a = ActorInfo.Create(acinfo);
-
           }
         }
       }
     }
+    */
   }
 }
 
