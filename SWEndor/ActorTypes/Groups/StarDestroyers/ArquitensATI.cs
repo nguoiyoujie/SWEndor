@@ -41,10 +41,10 @@ namespace SWEndor.ActorTypes
       AddOns = new AddOnInfo[]
       {
         // Sides
-        new AddOnInfo("Arquitens Turbolaser Tower", new TV_3DVECTOR(85, 22, 16), new TV_3DVECTOR(0, -72, 0), true)
-        , new AddOnInfo("Arquitens Turbolaser Tower", new TV_3DVECTOR(40, 22, 170), new TV_3DVECTOR(0, -72, 0), true)
-        , new AddOnInfo("Arquitens Turbolaser Tower", new TV_3DVECTOR(-85, 22, 170), new TV_3DVECTOR(0, 72, 0), true)
-        , new AddOnInfo("Arquitens Turbolaser Tower", new TV_3DVECTOR(-40, 22, 170), new TV_3DVECTOR(0, 72, 0), true)
+        new AddOnInfo("Arquitens Turbolaser Tower", new TV_3DVECTOR(85, 22, 16), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnInfo("Arquitens Turbolaser Tower", new TV_3DVECTOR(40, 22, 170), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnInfo("Arquitens Turbolaser Tower", new TV_3DVECTOR(-85, 22, 16), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnInfo("Arquitens Turbolaser Tower", new TV_3DVECTOR(-40, 22, 170), new TV_3DVECTOR(0, -72, 0), true)
 
         // Top
         , new AddOnInfo("Arquitens Turbolaser Tower", new TV_3DVECTOR(38, 50, 16), new TV_3DVECTOR(-90, 0, -15), true)
