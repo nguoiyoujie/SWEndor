@@ -65,7 +65,7 @@ namespace SWEndor
                                                           , Engine.Instance().ScreenWidth / 2 - 60
                                                           , Engine.Instance().ScreenWidth / 2 - 10
                                                           , new TV_COLOR(0.5f, 0.5f, 0.5f, 1f).GetIntColor()
-                                                          , Font.GetFont("Text_14").ID
+                                                          , Font.Factory.Get("Text_14").ID
       );
       Engine.Instance().TVScreen2DText.Action_EndText();
 

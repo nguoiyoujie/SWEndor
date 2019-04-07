@@ -23,12 +23,12 @@ namespace SWEndor.UI
       Cover.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.6f);
 
       MainText.Text = "FATAL ERROR ENCOUNTERED";
-      MainText.TextFont = Font.GetFont("Text_24").ID;
+      MainText.TextFont = Font.Factory.Get("Text_24").ID;
       MainText.TextColor = new TV_COLOR(0.8f, 0.2f, 0.2f, 1);
       MainText.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth / 2 - 200, Engine.Instance().ScreenHeight / 2 - 180);
 
       Instructions.Text = "A fatal error has been encountered and the program needs to close.\nPlease see " + errorfilename + " in the /Log folder for the error message.\n\nError: " + exception.Message;
-      Instructions.TextFont = Font.GetFont("Text_12").ID;
+      Instructions.TextFont = Font.Factory.Get("Text_12").ID;
       Instructions.TextColor = new TV_COLOR(0.8f, 0.2f, 0.2f, 1);
       Instructions.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth / 2 - 250, Engine.Instance().ScreenHeight / 2 - 130);
 

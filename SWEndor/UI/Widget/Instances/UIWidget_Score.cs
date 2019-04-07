@@ -59,7 +59,7 @@ namespace SWEndor.UI
       , score_position.x + 5
       , score_position.y + 5
       , new TV_COLOR(0.7f, 1f, 0.3f, 1).GetIntColor()
-      , Font.GetFont("Text_10").ID
+      , Font.Factory.Get("Text_10").ID
       );
 
     }

@@ -60,7 +60,7 @@ namespace SWEndor.UI
             }*/
             
             Engine.Instance().TVScreen2DText.TextureFont_DrawText(text
-          , 900, 400, new TV_COLOR(0.8f, 0.8f, 0.2f, 1).GetIntColor(), Font.GetFont("Text_12").ID);
+          , 900, 400, new TV_COLOR(0.8f, 0.8f, 0.2f, 1).GetIntColor(), Font.Factory.Get("Text_12").ID);
           }
         }
       }

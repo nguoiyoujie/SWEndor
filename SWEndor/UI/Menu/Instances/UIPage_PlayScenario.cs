@@ -93,7 +93,7 @@ namespace SWEndor.UI
       }
 
       DescText.Text = SelectedScenario1.Description;
-      DescText.TextFont = Font.GetFont("Text_14").ID;
+      DescText.TextFont = Font.Factory.Get("Text_14").ID;
       DescText.TextPosition = new TV_2DVECTOR(x, y);
       y += 120 +  height_gap;
       DescText.HighlightBoxPosition = DescText.TextPosition - new TV_2DVECTOR(5, 5);

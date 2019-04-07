@@ -16,7 +16,7 @@ namespace SWEndor.UI
     {
       MainMenuText.Text = "Battle of Endor";
       MainMenuText.TextPosition = new TV_2DVECTOR(75, 60);
-      MainMenuText.TextFont = Font.GetFont("Title_48").ID;
+      MainMenuText.TextFont = Font.Factory.Get("Title_48").ID;
 
       ButtonPlay.Text = "Play Scenario";
       ButtonPlay.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth - 200, Engine.Instance().ScreenHeight - 300);

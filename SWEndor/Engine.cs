@@ -179,7 +179,7 @@ namespace SWEndor
         i++;
       }
 
-      TVScreen2DText.TextureFont_DrawText(text, 40, 40, new TV_COLOR(1,1,1,1).GetIntColor(), Font.GetFont("Text_12").ID);
+      TVScreen2DText.TextureFont_DrawText(text, 40, 40, new TV_COLOR(1,1,1,1).GetIntColor(), Font.Factory.Get("Text_12").ID);
       TVScreen2DText.Action_EndText();
 
       Screen2D.Instance().Draw();
@@ -243,14 +243,14 @@ namespace SWEndor
 
     private void InitFonts()
     {
-      Font.CreateFont("Text_08", "Consolas", 8, false, false, false, true);
-      Font.CreateFont("Text_10", "Consolas", 10, true, false, false, true);
-      Font.CreateFont("Text_12", "Consolas", 12, true, false, false, true);
-      Font.CreateFont("Text_14", "Consolas", 14, true, false, false, true);
-      Font.CreateFont("Text_16", "Consolas", 16, true, false, false, true);
-      Font.CreateFont("Text_24", "Consolas", 24, true, false, false, true);
-      Font.CreateFont("Title_36", "Impact", 36, false, false, false, true);
-      Font.CreateFont("Title_48", "Impact", 48, false, false, false, true);
+      Font.Factory.Create("Text_08", "Consolas", 8, false, false, false, true);
+      Font.Factory.Create("Text_10", "Consolas", 10, true, false, false, true);
+      Font.Factory.Create("Text_12", "Consolas", 12, true, false, false, true);
+      Font.Factory.Create("Text_14", "Consolas", 14, true, false, false, true);
+      Font.Factory.Create("Text_16", "Consolas", 16, true, false, false, true);
+      Font.Factory.Create("Text_24", "Consolas", 24, true, false, false, true);
+      Font.Factory.Create("Title_36", "Impact", 36, false, false, false, true);
+      Font.Factory.Create("Title_48", "Impact", 48, false, false, false, true);
     }
 
     private void InitScene()

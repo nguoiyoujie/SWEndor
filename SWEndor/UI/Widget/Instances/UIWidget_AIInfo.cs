@@ -113,13 +113,13 @@ namespace SWEndor.UI
 
       Engine.Instance().TVScreen2DText.Action_BeginText();
       Engine.Instance().TVScreen2DText.TextureFont_DrawText(actiontext
-        , loc.x, loc.y, new TV_COLOR(0.6f, 0.8f, 0.6f, 1).GetIntColor(), Font.GetFont("Text_08").ID);
+        , loc.x, loc.y, new TV_COLOR(0.6f, 0.8f, 0.6f, 1).GetIntColor(), Font.Factory.Get("Text_08").ID);
 
       Engine.Instance().TVScreen2DText.TextureFont_DrawText("AI"
-        , Engine.Instance().ScreenWidth / 2 - 75, Engine.Instance().ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), Font.GetFont("Text_14").ID);
+        , Engine.Instance().ScreenWidth / 2 - 75, Engine.Instance().ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), Font.Factory.Get("Text_14").ID);
 
       Engine.Instance().TVScreen2DText.TextureFont_DrawText(name
-        , Engine.Instance().ScreenWidth / 2 + 50, Engine.Instance().ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), Font.GetFont("Text_14").ID);
+        , Engine.Instance().ScreenWidth / 2 + 50, Engine.Instance().ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), Font.Factory.Get("Text_14").ID);
       Engine.Instance().TVScreen2DText.Action_EndText();
 
     }

@@ -68,7 +68,7 @@ namespace SWEndor.UI
       , leftinfo_left
       , leftinfo_weapontop
       , pcolor.GetIntColor()
-      , Font.GetFont("Text_08").ID
+      , Font.Factory.GetFont("Text_08").ID
       );
       */
 
@@ -76,7 +76,7 @@ namespace SWEndor.UI
       , leftinfo_left
       , leftinfo_weapontop + 20
       , pcolor.GetIntColor()
-      , Font.GetFont("Text_16").ID
+      , Font.Factory.Get("Text_16").ID
       );
 
       /*
@@ -87,7 +87,7 @@ namespace SWEndor.UI
       , leftinfo_left + leftinfo_weaponwidth + 5
       , leftinfo_weapontop
       , pcolor.GetIntColor()
-      , Font.GetFont("Text_08").ID
+      , Font.Factory.GetFont("Text_08").ID
       );
       */
 
@@ -95,7 +95,7 @@ namespace SWEndor.UI
       , leftinfo_left + leftinfo_weaponwidth + 5
       , leftinfo_weapontop + 20
       , pcolor.GetIntColor()
-      , Font.GetFont("Text_16").ID
+      , Font.Factory.Get("Text_16").ID
       );
       Engine.Instance().TVScreen2DText.Action_EndText();
     }

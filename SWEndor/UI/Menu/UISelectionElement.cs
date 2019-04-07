@@ -44,7 +44,7 @@ namespace SWEndor.UI
 
     public virtual void Show(bool ishighlighted)
     {
-      int font = (TextFont > -1) ? TextFont : Font.GetFont("Text_16").ID;
+      int font = (TextFont > -1) ? TextFont : Font.Factory.Get("Text_16").ID;
 
       Engine.Instance().TVScreen2DImmediate.Action_Begin2D();
       Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(HighlightBoxPosition.x

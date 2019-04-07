@@ -74,7 +74,7 @@ namespace SWEndor.UI
                                         , 65
                                         , Engine.Instance().ScreenHeight - 50
                                         , tcolor.GetIntColor()
-                                        , Font.GetFont("Text_12").ID);
+                                        , Font.Factory.Get("Text_12").ID);
       Engine.Instance().TVScreen2DText.Action_EndText();
     }
   }

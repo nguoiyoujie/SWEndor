@@ -84,7 +84,7 @@ namespace SWEndor.UI
 
       Engine.Instance().TVScreen2DText.Action_BeginText();
       float letter_size = 4.5f;
-      Engine.Instance().TVScreen2DText.TextureFont_DrawText(Screen2D.Instance().TargetingRadar_text, posX - letter_size * 8, top + 5, pcolor.GetIntColor(), Font.GetFont("Text_12").ID);
+      Engine.Instance().TVScreen2DText.TextureFont_DrawText(Screen2D.Instance().TargetingRadar_text, posX - letter_size * 8, top + 5, pcolor.GetIntColor(), Font.Factory.Get("Text_12").ID);
       Engine.Instance().TVScreen2DText.Action_EndText();
     }
 

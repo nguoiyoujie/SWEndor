@@ -14,7 +14,7 @@ namespace SWEndor.UI
     public UIPage_GameWon()
     {
       MainText.Text = "MISSION ACCOMPLISHED!";
-      MainText.TextFont = Font.GetFont("Title_36").ID;
+      MainText.TextFont = Font.Factory.Get("Title_36").ID;
       MainText.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth / 2 - 242, 60);
 
       Score.Text += string.Format("{0,42} {1,8:0}", "Score".PadRight(42), PlayerInfo.Instance().Score.Score);
@@ -27,7 +27,7 @@ namespace SWEndor.UI
       foreach (KeyValuePair<string, int> kvp in PlayerInfo.Instance().Score.KillsByType)
         Score.Text += string.Format("\n{0,42} {1,8:0}", (kvp.Key.Length > 42) ? kvp.Key.Remove(42) : kvp.Key.PadRight(42), kvp.Value);
 
-      Score.TextFont = Font.GetFont("Text_12").ID;
+      Score.TextFont = Font.Factory.Get("Text_12").ID;
       Score.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth / 2 - 242, 120);
       Score.HighlightBoxPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth / 2 - 255, 55);
       Score.HighlightBoxWidth = 255 * 2;

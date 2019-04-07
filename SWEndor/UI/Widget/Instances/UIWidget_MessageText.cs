@@ -21,7 +21,7 @@ namespace SWEndor.UI
     {
       TextInfo t1 = Screen2D.Instance().PrimaryText;
       TextInfo t2 = Screen2D.Instance().SecondaryText;
-      int fntID = Font.GetFont("Text_12").ID;
+      int fntID = Font.Factory.Get("Text_12").ID;
 
       float letter_width = 4.5f;
       float t1_opacity = t1.ExpireTime - Game.Instance().GameTime;

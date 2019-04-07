@@ -11,7 +11,7 @@ namespace SWEndor.UI
     public UIPage_GameOver()
     {
       MainText.Text = "GAME OVER";
-      MainText.TextFont = Font.GetFont("Title_36").ID;
+      MainText.TextFont = Font.Factory.Get("Title_36").ID;
       MainText.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth / 2 - 150, Engine.Instance().ScreenHeight / 2 - 80);
 
       ButtonReturn.Text = "Return to Menu";

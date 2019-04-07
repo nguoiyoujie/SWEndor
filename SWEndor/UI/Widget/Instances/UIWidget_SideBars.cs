@@ -132,7 +132,7 @@ namespace SWEndor.UI
         , bar_topleft.x - 115
         , bar_topleft.y + bar_height * h
         , color.GetIntColor()
-        , Font.GetFont("Text_12").ID
+        , Font.Factory.Get("Text_12").ID
         );
 
       Engine.Instance().TVScreen2DText.Action_EndText();

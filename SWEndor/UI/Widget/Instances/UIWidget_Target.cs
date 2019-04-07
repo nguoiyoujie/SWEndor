@@ -110,7 +110,7 @@ namespace SWEndor.UI
             , (int)(100 * (1 - m_target.StrengthFrac))
             )
             , x, y + m_targetSize + 10, acolor.GetIntColor()
-            , Font.GetFont("Text_10").ID
+            , Font.Factory.Get("Text_10").ID
             );
           Engine.Instance().TVScreen2DText.Action_EndText();
 

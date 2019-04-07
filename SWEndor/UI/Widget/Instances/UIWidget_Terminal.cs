@@ -31,11 +31,11 @@ namespace SWEndor.UI
       foreach (string t in text)
       {
         Engine.Instance().TVScreen2DText.TextureFont_DrawText(t
-          , loc.x, y, new TV_COLOR(1, 1, 1, 1).GetIntColor(), Font.GetFont("Text_08").ID);
+          , loc.x, y, new TV_COLOR(1, 1, 1, 1).GetIntColor(), Font.Factory.Get("Text_08").ID);
         y += 40f / 3f;
       }
       Engine.Instance().TVScreen2DText.TextureFont_DrawText(TConsole.InputLine
-        , loc.x, Engine.Instance().ScreenHeight - loc.y - 40f / 3f, new TV_COLOR(1, 1, 1, 1).GetIntColor(), Font.GetFont("Text_08").ID);
+        , loc.x, Engine.Instance().ScreenHeight - loc.y - 40f / 3f, new TV_COLOR(1, 1, 1, 1).GetIntColor(), Font.Factory.Get("Text_08").ID);
       Engine.Instance().TVScreen2DText.Action_EndText();
     }
   }
