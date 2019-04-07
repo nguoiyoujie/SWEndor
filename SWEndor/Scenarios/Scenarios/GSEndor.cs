@@ -92,7 +92,6 @@ namespace SWEndor.Scenarios
       PlayerInfo.Instance().Lives = 4;
       PlayerInfo.Instance().ScorePerLife = 1000000;
       PlayerInfo.Instance().ScoreForNextLife = 1000000;
-      PlayerInfo.Instance().Score.Reset();
 
       switch (Difficulty.ToLower())
       {
@@ -627,16 +626,19 @@ namespace SWEndor.Scenarios
 
       registries = new string[] { "CriticalAllies" };
 
-      ainfo = SpawnActor(type
-                       , name
-                       , ""
-                       , sidebar_name
-                       , creationTime
-                       , faction
-                       , position + hyperspaceInOffset
-                       , rotation
-                       , actions
-                       , registries);
+      ainfo = new ActorSpawnInfo
+      {
+        Type = type,
+        Name = name,
+        RegisterName = "",
+        SidebarName = sidebar_name,
+        SpawnTime = creationTime,
+        Faction = faction,
+        Position = position + hyperspaceInOffset,
+        Rotation = rotation,
+        Actions = actions,
+        Registries = registries
+      }.Spawn(this);
 
       m_rebelPosition.Add(ainfo, position);
       ainfo.HitEvents.Add("Rebel_CriticalUnitHit");
@@ -660,16 +662,19 @@ namespace SWEndor.Scenarios
 
       registries = new string[] { "CriticalAllies" };
 
-      ainfo = SpawnActor(type
-                       , name
-                       , ""
-                       , sidebar_name
-                       , creationTime
-                       , faction
-                       , position + hyperspaceInOffset
-                       , rotation
-                       , actions
-                       , registries);
+      ainfo = new ActorSpawnInfo
+      {
+        Type = type,
+        Name = name,
+        RegisterName = "",
+        SidebarName = sidebar_name,
+        SpawnTime = creationTime,
+        Faction = faction,
+        Position = position + hyperspaceInOffset,
+        Rotation = rotation,
+        Actions = actions,
+        Registries = registries
+      }.Spawn(this);
 
       m_rebelPosition.Add(ainfo, position);
       ainfo.HitEvents.Add("Rebel_CriticalUnitHit");
@@ -712,16 +717,19 @@ namespace SWEndor.Scenarios
                                                                   , type.Move_CloseEnough)
                                  };
 
-      ainfo = SpawnActor(type
-                       , name
-                       , ""
-                       , sidebar_name
-                       , creationTime
-                       , faction
-                       , position + hyperspaceInOffset
-                       , rotation
-                       , actions
-                       , null);
+      ainfo = new ActorSpawnInfo
+      {
+        Type = type,
+        Name = name,
+        RegisterName = "",
+        SidebarName = sidebar_name,
+        SpawnTime = creationTime,
+        Faction = faction,
+        Position = position + hyperspaceInOffset,
+        Rotation = rotation,
+        Actions = actions,
+        Registries = null
+      }.Spawn(this);
 
       m_rebelPosition.Add(ainfo, position);
       PlayerInfo.Instance().TempActor = ainfo;
@@ -749,16 +757,19 @@ namespace SWEndor.Scenarios
 
       registries = new string[] { "CriticalAllies" };
 
-      ainfo = SpawnActor(type
-                       , name
-                       , ""
-                       , sidebar_name
-                       , Game.Instance().GameTime + 1.15f
-                       , faction
-                       , position + hyperspaceInOffset
-                       , rotation
-                       , actions
-                       , registries);
+      ainfo = new ActorSpawnInfo
+      {
+        Type = type,
+        Name = name,
+        RegisterName = "",
+        SidebarName = sidebar_name,
+        SpawnTime = creationTime,
+        Faction = faction,
+        Position = position + hyperspaceInOffset,
+        Rotation = rotation,
+        Actions = actions,
+        Registries = registries
+      }.Spawn(this);
 
       ainfo.HuntWeight = 15;
       m_rebelPosition.Add(ainfo, position);
@@ -877,16 +888,18 @@ namespace SWEndor.Scenarios
             huntw = 25;
         }
 
-        ainfo = SpawnActor(type
-                         , ""
-                         , ""
-                         , ""
-                         , creationTime
-                         , faction
-                         , position + hyperspaceInOffset
-                         , rotation
-                         , actions
-                         );
+        ainfo = new ActorSpawnInfo
+        {
+          Type = type,
+          Name = "",
+          RegisterName = "",
+          SidebarName = "",
+          SpawnTime = creationTime,
+          Faction = faction,
+          Position = position + hyperspaceInOffset,
+          Rotation = rotation,
+          Actions = actions,
+        }.Spawn(this);
 
         ainfo.HuntWeight = huntw;
         m_rebelPosition.Add(ainfo, position);
@@ -1290,16 +1303,20 @@ namespace SWEndor.Scenarios
                 break;
             }
 
-            ActorInfo ainfo = SpawnActor(TIE_LN_ATI.Instance()
-                           , ""
-                           , ""
-                           , ""
-                           , Game.Instance().GameTime + t
-                           , MainEnemyFaction
-                           , new TV_3DVECTOR(fx + x * 100, fy + y * 100, fz - 8000)
-                           , new TV_3DVECTOR()
-                           , actions
-                           );
+            ActorSpawnInfo asi = new ActorSpawnInfo
+            {
+              Type = TIE_LN_ATI.Instance(),
+              Name = "",
+              RegisterName = "",
+              SidebarName = "",
+              SpawnTime = Game.Instance().GameTime + t,
+              Faction = MainEnemyFaction,
+              Position = new TV_3DVECTOR(fx + x * 100, fy + y * 100, fz - 8000),
+              Rotation = new TV_3DVECTOR(),
+              Actions = actions,
+            };
+
+            asi.Spawn(this);
           }
         }
         t += 0.5f;
@@ -1329,16 +1346,20 @@ namespace SWEndor.Scenarios
                 break;
             }
 
-            ActorInfo ainfo = SpawnActor(TIE_LN_ATI.Instance()
-                           , ""
-                           , ""
-                           , ""
-                           , Game.Instance().GameTime + t
-                           , MainEnemyFaction
-                           , new TV_3DVECTOR(fx + x * 100, fy + y * 100, fz - 8000)
-                           , new TV_3DVECTOR()
-                           , actions
-                           );
+            ActorSpawnInfo asi = new ActorSpawnInfo
+            {
+              Type = TIE_LN_ATI.Instance(),
+              Name = "",
+              RegisterName = "",
+              SidebarName = "",
+              SpawnTime = Game.Instance().GameTime + t,
+              Faction = MainEnemyFaction,
+              Position = new TV_3DVECTOR(fx + x * 100, fy + y * 100, fz - 8000),
+              Rotation = new TV_3DVECTOR(),
+              Actions = actions,
+            };
+
+            asi.Spawn(this);          
           }
         }
         t += 0.5f;
@@ -1370,16 +1391,20 @@ namespace SWEndor.Scenarios
                 break;
             }
 
-            ActorInfo ainfo = SpawnActor(TIE_LN_ATI.Instance()
-                           , ""
-                           , ""
-                           , ""
-                           , Game.Instance().GameTime + t
-                           , MainEnemyFaction
-                           , new TV_3DVECTOR(fx + x * 100, fy + y * 100, GameScenarioManager.Instance().MinBounds.z - 5000)
-                           , new TV_3DVECTOR()
-                           , actions
-                           );
+            ActorSpawnInfo asi = new ActorSpawnInfo
+            {
+              Type = TIE_LN_ATI.Instance(),
+              Name = "",
+              RegisterName = "",
+              SidebarName = "",
+              SpawnTime = Game.Instance().GameTime + t,
+              Faction = MainEnemyFaction,
+              Position = new TV_3DVECTOR(fx + x * 100, fy + y * 100, GameScenarioManager.Instance().MinBounds.z - 8000),
+              Rotation = new TV_3DVECTOR(),
+              Actions = actions,
+            };
+
+            asi.Spawn(this);
           }
         }
         t += 0.25f; // 1.5f
@@ -1413,16 +1438,20 @@ namespace SWEndor.Scenarios
                 break;
             }
 
-            ActorInfo ainfo = SpawnActor(tietypes[n]
-                           , ""
-                           , ""
-                           , ""
-                           , Game.Instance().GameTime + t
-                           , MainEnemyFaction
-                           , new TV_3DVECTOR(fx + x * 100, fy + y * 100, GameScenarioManager.Instance().MinBounds.z - 5000)
-                           , new TV_3DVECTOR()
-                           , actions
-                           );
+            ActorSpawnInfo asi = new ActorSpawnInfo
+            {
+              Type = tietypes[n],
+              Name = "",
+              RegisterName = "",
+              SidebarName = "",
+              SpawnTime = Game.Instance().GameTime + t,
+              Faction = MainEnemyFaction,
+              Position = new TV_3DVECTOR(fx + x * 100, fy + y * 100, GameScenarioManager.Instance().MinBounds.z - 8000),
+              Rotation = new TV_3DVECTOR(),
+              Actions = actions,
+            };
+
+            asi.Spawn(this);
           }
         }
         t += 1.5f;
@@ -1454,16 +1483,20 @@ namespace SWEndor.Scenarios
                 break;
             }
 
-            ActorInfo ainfo = SpawnActor(TIE_IN_ATI.Instance()
-                           , ""
-                           , ""
-                           , ""
-                           , Game.Instance().GameTime + t
-                           , MainEnemyFaction
-                           , new TV_3DVECTOR(fx + x * 100, fy + y * 100, GameScenarioManager.Instance().MinBounds.z - 5000)
-                           , new TV_3DVECTOR()
-                           , actions
-                           );
+            ActorSpawnInfo asi = new ActorSpawnInfo
+            {
+              Type = TIE_IN_ATI.Instance(),
+              Name = "",
+              RegisterName = "",
+              SidebarName = "",
+              SpawnTime = Game.Instance().GameTime + t,
+              Faction = MainEnemyFaction,
+              Position = new TV_3DVECTOR(fx + x * 100, fy + y * 100, GameScenarioManager.Instance().MinBounds.z - 5000),
+              Rotation = new TV_3DVECTOR(),
+              Actions = actions,
+            };
+
+            asi.Spawn(this);
           }
         }
         t += 1.5f;
@@ -1491,16 +1524,20 @@ namespace SWEndor.Scenarios
             break;
         }
 
-        ActorInfo ainfo = SpawnActor(TIE_D_ATI.Instance()
-                       , ""
-                       , ""
-                       , ""
-                       , Game.Instance().GameTime + t
-                       , MainEnemyFaction
-                       , new TV_3DVECTOR(fx, fy, GameScenarioManager.Instance().MinBounds.z - 6000)
-                       , new TV_3DVECTOR()
-                       , actions
-                       );
+        ActorSpawnInfo asi = new ActorSpawnInfo
+        {
+          Type = TIE_D_ATI.Instance(),
+          Name = "",
+          RegisterName = "",
+          SidebarName = "",
+          SpawnTime = Game.Instance().GameTime + t,
+          Faction = MainEnemyFaction,
+          Position = new TV_3DVECTOR(fx, fy, GameScenarioManager.Instance().MinBounds.z - 6000),
+          Rotation = new TV_3DVECTOR(),
+          Actions = actions,
+        };
+
+        asi.Spawn(this);
       }
     }
 
@@ -1517,17 +1554,21 @@ namespace SWEndor.Scenarios
         float fx = Engine.Instance().Random.Next(-2500, 2500);
         float fy = Engine.Instance().Random.Next(-500, 500);
 
-        ActorInfo ainfo = SpawnActor(TIE_LN_ATI.Instance()
-                       , ""
-                       , ""
-                       , ""
-                       , Game.Instance().GameTime + t
-                       , MainEnemyFaction
-                       , new TV_3DVECTOR(fx, fy, GameScenarioManager.Instance().MinBounds.z - 5000)
-                       , new TV_3DVECTOR()
-                       , new ActionInfo[] { new Wait(18)
-                                          , new AttackActor(m_Wedge, -1, -1, false) }
-                       );
+        ActorSpawnInfo asi = new ActorSpawnInfo
+        {
+          Type = TIE_LN_ATI.Instance(),
+          Name = "",
+          RegisterName = "",
+          SidebarName = "",
+          SpawnTime = Game.Instance().GameTime + t,
+          Faction = MainEnemyFaction,
+          Position = new TV_3DVECTOR(fx, fy, GameScenarioManager.Instance().MinBounds.z - 5000),
+          Rotation = new TV_3DVECTOR(),
+          Actions = new ActionInfo[] { new Wait(18)
+                                     , new AttackActor(m_Wedge, -1, -1, false) },
+        };
+
+        asi.Spawn(this);
       }
     }
 
@@ -1544,17 +1585,21 @@ namespace SWEndor.Scenarios
         float fx = Engine.Instance().Random.Next(-2500, 2500);
         float fy = Engine.Instance().Random.Next(-500, 500);
 
-        ActorInfo ainfo = SpawnActor(TIE_IN_ATI.Instance()
-                       , ""
-                       , ""
-                       , ""
-                       , Game.Instance().GameTime + t
-                       , MainEnemyFaction
-                       , new TV_3DVECTOR(fx, fy, GameScenarioManager.Instance().MinBounds.z - 5000)
-                       , new TV_3DVECTOR()
-                       , new ActionInfo[] { new Wait(18)
-                                          , new AttackActor(m_Wedge, -1, -1, false) }
-                       );
+        ActorSpawnInfo asi = new ActorSpawnInfo
+        {
+          Type = TIE_IN_ATI.Instance(),
+          Name = "",
+          RegisterName = "",
+          SidebarName = "",
+          SpawnTime = Game.Instance().GameTime + t,
+          Faction = MainEnemyFaction,
+          Position = new TV_3DVECTOR(fx, fy, GameScenarioManager.Instance().MinBounds.z - 5000),
+          Rotation = new TV_3DVECTOR(),
+          Actions = new ActionInfo[] { new Wait(18)
+                                     , new AttackActor(m_Wedge, -1, -1, false) },
+        };
+
+        asi.Spawn(this);
 
         t += 1.5f;
       }
@@ -1573,17 +1618,21 @@ namespace SWEndor.Scenarios
         float fx = Engine.Instance().Random.Next(-2500, 2500);
         float fy = Engine.Instance().Random.Next(-500, 500);
 
-        ActorInfo ainfo = SpawnActor(TIE_LN_ATI.Instance()
-                       , ""
-                       , ""
-                       , ""
-                       , Game.Instance().GameTime + t
-                       , MainEnemyFaction
-                       , new TV_3DVECTOR(fx, fy, GameScenarioManager.Instance().MinBounds.z - 5000)
-                       , new TV_3DVECTOR()
-                       , new ActionInfo[] { new Wait(18)
-                                          , new AttackActor(m_Falcon, -1, -1, false) }
-                       );
+        ActorSpawnInfo asi = new ActorSpawnInfo
+        {
+          Type = TIE_LN_ATI.Instance(),
+          Name = "",
+          RegisterName = "",
+          SidebarName = "",
+          SpawnTime = Game.Instance().GameTime + t,
+          Faction = MainEnemyFaction,
+          Position = new TV_3DVECTOR(fx, fy, GameScenarioManager.Instance().MinBounds.z - 5000),
+          Rotation = new TV_3DVECTOR(),
+          Actions = new ActionInfo[] { new Wait(18)
+                                     , new AttackActor(m_Falcon, -1, -1, false) },
+        };
+
+        asi.Spawn(this);
 
         t += 1.5f;
       }
@@ -1602,18 +1651,21 @@ namespace SWEndor.Scenarios
         float fx = Engine.Instance().Random.Next(-2500, 2500);
         float fy = Engine.Instance().Random.Next(-500, 500);
 
-        ActorInfo ainfo = SpawnActor(TIE_IN_ATI.Instance()
-                                   , ""
-                                   , ""
-                                   , ""
-                                   , Game.Instance().GameTime + t
-                                   , MainEnemyFaction
-                                   , new TV_3DVECTOR(fx, fy, GameScenarioManager.Instance().MinBounds.z - 5000)
-                                   , new TV_3DVECTOR()
-                                   , new ActionInfo[] { new Wait(18)
-                                                      , new AttackActor(m_Falcon, -1, -1, false)
-                                                      }
-                                   );
+        ActorSpawnInfo asi = new ActorSpawnInfo
+        {
+          Type = TIE_IN_ATI.Instance(),
+          Name = "",
+          RegisterName = "",
+          SidebarName = "",
+          SpawnTime = Game.Instance().GameTime + t,
+          Faction = MainEnemyFaction,
+          Position = new TV_3DVECTOR(fx, fy, GameScenarioManager.Instance().MinBounds.z - 5000),
+          Rotation = new TV_3DVECTOR(),
+          Actions = new ActionInfo[] { new Wait(18)
+                                     , new AttackActor(m_Falcon, -1, -1, false) },
+        };
+
+        asi.Spawn(this);
 
         t += 1.5f;
       }
@@ -1632,18 +1684,21 @@ namespace SWEndor.Scenarios
         float fx = Engine.Instance().Random.Next(-2500, 2500);
         float fy = Engine.Instance().Random.Next(-500, 500);
 
-        ActorInfo ainfo = SpawnActor(TIE_LN_ATI.Instance()
-                                   , ""
-                                   , ""
-                                   , ""
-                                   , Game.Instance().GameTime + t
-                                   , MainEnemyFaction
-                                   , new TV_3DVECTOR(fx, fy, GameScenarioManager.Instance().MinBounds.z - 5000)
-                                   , new TV_3DVECTOR()
-                                   , new ActionInfo[] { new Wait(18)
-                                                      , new AttackActor(PlayerInfo.Instance().Actor, -1, -1, false)
-                                                      }
-                                   );
+        ActorSpawnInfo asi = new ActorSpawnInfo
+        {
+          Type = TIE_LN_ATI.Instance(),
+          Name = "",
+          RegisterName = "",
+          SidebarName = "",
+          SpawnTime = Game.Instance().GameTime + t,
+          Faction = MainEnemyFaction,
+          Position = new TV_3DVECTOR(fx, fy, GameScenarioManager.Instance().MinBounds.z - 5000),
+          Rotation = new TV_3DVECTOR(),
+          Actions = new ActionInfo[] { new Wait(18)
+                                     , new AttackActor(PlayerInfo.Instance().Actor, -1, -1, false) },
+        };
+
+        asi.Spawn(this);
 
         t += 1.5f;
       }
@@ -1666,18 +1721,21 @@ namespace SWEndor.Scenarios
         {
           for (int y = 0; y <= 1; y++)
           {
-            ActorInfo ainfo = SpawnActor(TIE_LN_ATI.Instance()
-                           , ""
-                           , ""
-                           , ""
-                           , Game.Instance().GameTime + t
-                           , MainEnemyFaction
-                           , new TV_3DVECTOR(fx + x * 100, fy + y * 100, GameScenarioManager.Instance().MinBounds.z - 2500)
-                           , new TV_3DVECTOR()
-                           , new ActionInfo[] { new Wait(18)
-                                              , new Hunt(TargetType.SHIP)
-                                              }
-                           );
+            ActorSpawnInfo asi = new ActorSpawnInfo
+            {
+              Type = TIE_LN_ATI.Instance(),
+              Name = "",
+              RegisterName = "",
+              SidebarName = "",
+              SpawnTime = Game.Instance().GameTime + t,
+              Faction = MainEnemyFaction,
+              Position = new TV_3DVECTOR(fx + x * 100, fy + y * 100, GameScenarioManager.Instance().MinBounds.z - 2500),
+              Rotation = new TV_3DVECTOR(),
+              Actions = new ActionInfo[] { new Wait(18)
+                                     ,  new Hunt(TargetType.SHIP) },
+            };
+
+            asi.Spawn(this);
           }
         }
         t += 1.5f;
@@ -1697,18 +1755,22 @@ namespace SWEndor.Scenarios
         float fx = Engine.Instance().Random.Next(-2500, 2500);
         float fy = Engine.Instance().Random.Next(-500, 500);
 
-        ActorInfo ainfo = SpawnActor(TIE_IN_ATI.Instance()
-                                   , ""
-                                   , ""
-                                   , ""
-                                   , Game.Instance().GameTime + t
-                                   , MainEnemyFaction
-                                   , new TV_3DVECTOR(fx, fy, GameScenarioManager.Instance().MinBounds.z - 5000)
-                                   , new TV_3DVECTOR()
-                                   , new ActionInfo[] { new Wait(18)
-                                                      , new AttackActor(PlayerInfo.Instance().Actor, -1, -1, false)
-                                                      }
-                                   );
+        ActorSpawnInfo asi = new ActorSpawnInfo
+        {
+          Type = TIE_LN_ATI.Instance(),
+          Name = "",
+          RegisterName = "",
+          SidebarName = "",
+          SpawnTime = Game.Instance().GameTime + t,
+          Faction = MainEnemyFaction,
+          Position = new TV_3DVECTOR(fx, fy, GameScenarioManager.Instance().MinBounds.z - 5000),
+          Rotation = new TV_3DVECTOR(),
+          Actions = new ActionInfo[] { new Wait(18)
+                                     , new AttackActor(PlayerInfo.Instance().Actor, -1, -1, false) },
+        };
+
+        asi.Spawn(this);
+
         t += 1.5f;
       }
     }
@@ -1730,18 +1792,21 @@ namespace SWEndor.Scenarios
         {
           for (int y = 0; y <= 1; y++)
           {
-            ActorInfo ainfo = SpawnActor(TIE_sa_ATI.Instance()
-                                       , ""
-                                       , ""
-                                       , ""
-                                       , Game.Instance().GameTime + t
-                                       , MainEnemyFaction
-                                       , new TV_3DVECTOR(fx + x * 100, fy + y * 100, GameScenarioManager.Instance().MinBounds.z - 2500)
-                                       , new TV_3DVECTOR()
-                                       , new ActionInfo[] { new Wait(18)
-                                                          , new Hunt(TargetType.SHIP)
-                                                          }
-                                       );
+            ActorSpawnInfo asi = new ActorSpawnInfo
+            {
+              Type = TIE_sa_ATI.Instance(),
+              Name = "",
+              RegisterName = "",
+              SidebarName = "",
+              SpawnTime = Game.Instance().GameTime + t,
+              Faction = MainEnemyFaction,
+              Position = new TV_3DVECTOR(fx + x * 100, fy + y * 100, GameScenarioManager.Instance().MinBounds.z - 2500),
+              Rotation = new TV_3DVECTOR(),
+              Actions = new ActionInfo[] { new Wait(18)
+                                     ,  new Hunt(TargetType.SHIP) },
+            };
+
+            asi.Spawn(this);
           }
         }
         t += 1.5f;
@@ -1779,17 +1844,19 @@ namespace SWEndor.Scenarios
         name = type.Name;
         position = (TV_3DVECTOR)spawn[0];
 
-        ainfo = SpawnActor(type
-                         , name
-                         , ""
-                         , ""
-                         , creationTime
-                         , null
-                         , position
-                         , rotation
-                         , null
-                         , null);
+        ActorSpawnInfo asi = new ActorSpawnInfo
+        {
+          Type = type,
+          Name = name,
+          RegisterName = "",
+          SidebarName = "",
+          SpawnTime = creationTime,
+          Faction = null,
+          Position = position,
+          Rotation = rotation,
+        };
 
+        ainfo = asi.Spawn(this);
         ainfo.ActorState = ActorState.FIXED;
 
         if (ainfo.TypeInfo is ExecutorStaticATI)
@@ -1798,7 +1865,6 @@ namespace SWEndor.Scenarios
         }
       }
     }
-
 
     public void Empire_StarDestroyer_Spawn(object[] param)
     {
@@ -1810,23 +1876,27 @@ namespace SWEndor.Scenarios
       TV_3DVECTOR targetposition = (TV_3DVECTOR)param[2];
       TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(0, 0, -25000);
 
-      ActorInfo ainfo = SpawnActor(type
-                                 , ""
-                                 , ""
-                                 , type.Name.Substring(0, type.Name.IndexOf(' ')).ToUpper()
-                                 , Game.Instance().GameTime
-                                 , MainEnemyFaction
-                                 , position + hyperspaceInOffset
-                                 , new TV_3DVECTOR()
-                                 , new ActionInfo[]
+      ActorSpawnInfo asi = new ActorSpawnInfo
+      {
+        Type = type,
+        Name = "",
+        RegisterName = "",
+        SidebarName = type.Name.Substring(0, type.Name.IndexOf(' ')).ToUpper(),
+        SpawnTime = Game.Instance().GameTime,
+        Faction = MainEnemyFaction,
+        Position = position + hyperspaceInOffset,
+        Rotation = new TV_3DVECTOR(),
+        Actions = new ActionInfo[]
                                  {
                                    new HyperspaceIn(position)
                                    , new Move(targetposition, type.MaxSpeed)
                                    , new Rotate(targetposition + new TV_3DVECTOR(0, 0, 25000), type.MinSpeed)
                                    , new Lock()
-                                 }
-                                 , new string[] { "CriticalEnemies" }
-                                 );
+                                 },
+        Registries = new string[] { "CriticalEnemies" }
+      };
+
+      ActorInfo ainfo = ainfo = asi.Spawn(this);
 
       ainfo.SetSpawnerEnable(true);
       ainfo.HuntWeight = 3;
@@ -1953,26 +2023,29 @@ namespace SWEndor.Scenarios
       TV_3DVECTOR position = new TV_3DVECTOR(0, -950, -20000);
       ActorTypeInfo atinfo = ExecutorATI.Instance();
 
-      ActorInfo ainfo = SpawnActor(atinfo
-                         , ""
-                         , ""
-                         , "EXECUTOR"
-                         , Game.Instance().GameTime
-                         , MainEnemyFaction
-                         , position + hyperspaceInOffset
-                         , new TV_3DVECTOR()
-                         , new ActionInfo[]
-                         {
-                           new HyperspaceIn(position)
-                           , new Move(new TV_3DVECTOR(position.x, position.y, -4000), atinfo.MaxSpeed)
-                           , new Rotate(position + new TV_3DVECTOR(0, 0, 22500), atinfo.MinSpeed)
-                           , new Lock()
-                         }
-                         , new string[] { "CriticalEnemies" }
-                            );
+      ActorSpawnInfo asi = new ActorSpawnInfo
+      {
+        Type = atinfo,
+        Name = "",
+        RegisterName = "",
+        SidebarName = "EXECUTOR",
+        SpawnTime = Game.Instance().GameTime,
+        Faction = MainEnemyFaction,
+        Position = position + hyperspaceInOffset,
+        Rotation = new TV_3DVECTOR(),
+        Actions = new ActionInfo[]
+                           {
+                             new HyperspaceIn(position)
+                             , new Move(new TV_3DVECTOR(position.x, position.y, -4000), atinfo.MaxSpeed)
+                             , new Rotate(position + new TV_3DVECTOR(0, 0, 22500), atinfo.MinSpeed)
+                             , new Lock()
+                           },
+        Registries = new string[] { "CriticalEnemies" }
+      };
 
-        ainfo.HuntWeight = 5;
-        ainfo.ActorStateChangeEvents.Add("Empire_ExecutorDestroyed");
+      ActorInfo ainfo = ainfo = asi.Spawn(this);
+      ainfo.HuntWeight = 5;
+      ainfo.ActorStateChangeEvents.Add("Empire_ExecutorDestroyed");
 
       // SD
 

@@ -52,7 +52,19 @@ namespace SWEndor.Terminal.Commands.Actor
         registries.Add(param[i].ToString());
       }
 
-      ActorInfo res = gscenario.SpawnActor(atype, unitname, regname, sidebarname, spawntime, faction, position, rotation, null, registries.ToArray());
+      ActorInfo res = new ActorSpawnInfo
+      {
+        Type = atype,
+        Name = unitname,
+        RegisterName = regname,
+        SidebarName = sidebarname,
+        SpawnTime = spawntime,
+        Faction = faction,
+        Position = position,
+        Rotation = rotation,
+        Actions = null,
+        Registries = registries.ToArray()
+      }.Spawn(gscenario);
 
       if (res == null)
         return new TCommandFeedback(TCommandFeedbackType.ERROR, "SpawnActor failed!");

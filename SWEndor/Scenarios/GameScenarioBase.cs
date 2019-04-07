@@ -92,6 +92,7 @@ namespace SWEndor.Scenarios
     public virtual void Launch()
     {
       GameScenarioManager.Instance().Scenario = this;
+      PlayerInfo.Instance().Score.Reset();
       LoadFactions();
       LoadScene();
       RegisterEvents();
@@ -283,59 +284,6 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public ActorInfo SpawnActor(ActorTypeInfo type
-                              , string unit_name
-                              , string register_name
-                              , string sidebar_name
-                              , float spawntime
-                              , FactionInfo faction
-                              , TV_3DVECTOR position
-                              , TV_3DVECTOR rotation
-                              , ActionInfo[] actions = null
-                              , string[] registries = null)
-    {
-      ActorCreationInfo acinfo;
-      ActorInfo ainfo;
-
-      acinfo = new ActorCreationInfo(type);
-      if (unit_name != "")
-        acinfo.Name = unit_name;
-      acinfo.Faction = faction;
-      acinfo.InitialState = ActorState.NORMAL;
-      acinfo.CreationTime = spawntime;
-      acinfo.Position = position;
-      acinfo.Rotation = rotation;
-      ainfo = ActorInfo.Create(acinfo);
-      ainfo.SideBarName = sidebar_name;
-
-      if (actions != null)
-      {
-        foreach (ActionInfo act in actions)
-        {
-          ActionManager.QueueLast(ainfo, act);
-        }
-      }
-
-      if (registries != null)
-      {
-        foreach (string s in registries)
-        {
-          Dictionary<string, ActorInfo> reg = GetRegister(s);
-          if (reg != null)
-          {
-            if (register_name != "")
-              reg.Add(register_name, ainfo);
-            else
-              reg.Add(ainfo.Key, ainfo);
-          }
-        }
-      }
-
-      RegisterEvents(ainfo);
-
-      return ainfo;
-    }
-
     public Dictionary<string, ActorInfo> GetRegister(string key)
     {
       switch (key.ToLower())
@@ -381,17 +329,19 @@ namespace SWEndor.Scenarios
         )
         return;
 
-      SpawnActor((ActorTypeInfo)param[0]
-               , (string)param[1]
-               , (string)param[2]
-               , (string)param[3]
-               , (float)param[4]
-               , (FactionInfo)param[5]
-               , (TV_3DVECTOR)param[6]
-               , (TV_3DVECTOR)param[7]
-               , (ActionInfo[])param[8]
-               , (string[])param[9]
-               );
+      new ActorSpawnInfo
+      {
+        Type = (ActorTypeInfo)param[0],
+        Name = (string)param[1],
+        RegisterName = (string)param[2],
+        SidebarName = (string)param[3],
+        SpawnTime = (float)param[4],
+        Faction = (FactionInfo)param[5],
+        Position = (TV_3DVECTOR)param[6],
+        Rotation = (TV_3DVECTOR)param[7],
+        Actions = (ActionInfo[])param[8],
+        Registries = (string[])param[9]
+      }.Spawn(this);
     }
 
     public void RegisterEvents(ActorInfo actor)

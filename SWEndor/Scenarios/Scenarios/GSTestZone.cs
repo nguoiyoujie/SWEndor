@@ -51,7 +51,6 @@ namespace SWEndor.Scenarios
       PlayerInfo.Instance().Lives = 2;
       PlayerInfo.Instance().ScorePerLife = 1000000;
       PlayerInfo.Instance().ScoreForNextLife = 1000000;
-      PlayerInfo.Instance().Score.Reset();
 
       MakePlayer = Test_SpawnPlayer;
       
@@ -121,16 +120,19 @@ namespace SWEndor.Scenarios
         {
           PlayerInfo.Instance().Lives--;
 
-          ActorInfo ainfo = SpawnActor(PlayerInfo.Instance().ActorType
-                                      , "(Player)"
-                                      , ""
-                                      , ""
-                                      , Game.Instance().GameTime
-                                      , MainAllyFaction
-                                      , new TV_3DVECTOR(125, 0, 125)
-                                      , new TV_3DVECTOR()
-                                      , new ActionInfo[] { new Wait(5) }
-                                      );
+          ActorInfo ainfo = new ActorSpawnInfo
+          {
+            Type = PlayerInfo.Instance().ActorType,
+            Name = "(Player)",
+            RegisterName = "",
+            SidebarName = "",
+            SpawnTime = Game.Instance().GameTime,
+            Faction = MainAllyFaction,
+            Position = new TV_3DVECTOR(125, 0, 125),
+            Rotation = new TV_3DVECTOR(),
+            Actions = new ActionInfo[] { new Wait(5) },
+            Registries = null
+          }.Spawn(this);
 
           PlayerInfo.Instance().Actor = ainfo;
         }
@@ -156,24 +158,19 @@ namespace SWEndor.Scenarios
 
       for (int x = -5; x <= 5; x++)
         for (int y = -5; y <= 5; y++)
-          SpawnActor(towers[Engine.Instance().Random.Next(0, towers.Count)], "", "", ""
-               , 0, FactionInfo.Factory.Get("Rebels"), new TV_3DVECTOR(x * 500, 0, y * 500), new TV_3DVECTOR());
-      /*
-      SpawnActor(Tower03ATI.Instance(), "", "", ""
-               , 0, FactionInfo.Factory.Get("Rebels"), new TV_3DVECTOR(100, 0, 500), new TV_3DVECTOR());
-               
-      SpawnActor(Tower02ATI.Instance(), "", "", ""
-               , 0, FactionInfo.Factory.Get("Rebels"), new TV_3DVECTOR(100 + 1000, 0, 500), new TV_3DVECTOR());
-
-      SpawnActor(Tower00ATI.Instance(), "", "", ""
-               , 0, FactionInfo.Factory.Get("Rebels"), new TV_3DVECTOR(100 - 1000, 0, 500), new TV_3DVECTOR());
-
-      SpawnActor(Tower02ATI.Instance(), "", "", ""
-               , 0, FactionInfo.Factory.Get("Rebels"), new TV_3DVECTOR(100, 0, 500 + 1000), new TV_3DVECTOR());
-
-      SpawnActor(Tower01ATI.Instance(), "", "", ""
-               , 0, FactionInfo.Factory.Get("Rebels"), new TV_3DVECTOR(100, 0, 500 - 1000), new TV_3DVECTOR());
-      */
+        {
+          ActorInfo ainfo = new ActorSpawnInfo
+          {
+            Type = towers[Engine.Instance().Random.Next(0, towers.Count)],
+            Name = "",
+            RegisterName = "",
+            SidebarName = "",
+            SpawnTime = Game.Instance().GameTime,
+            Faction = MainAllyFaction,
+            Position = new TV_3DVECTOR(x * 500, 0, y * 500),
+            Rotation = new TV_3DVECTOR()
+          }.Spawn(this);
+        }
     }
     #endregion
 
@@ -196,15 +193,17 @@ namespace SWEndor.Scenarios
         {
           for (int y = 0; y <= 1; y++)
           {
-            ActorInfo ainfo = SpawnActor(tietypes[n]
-                            , ""
-                            , ""
-                            , ""
-                            , Game.Instance().GameTime + t
-                            , MainEnemyFaction
-                            , new TV_3DVECTOR(fx + x * 100, fy + y * 100, GameScenarioManager.Instance().MaxBounds.z + 1500)
-                            , new TV_3DVECTOR(0, 180, 0)
-                            );
+            ActorInfo ainfo = new ActorSpawnInfo
+            {
+              Type = tietypes[n],
+              Name = "",
+              RegisterName = "",
+              SidebarName = "",
+              SpawnTime = Game.Instance().GameTime + t,
+              Faction = MainEnemyFaction,
+              Position = new TV_3DVECTOR(fx + x * 100, fy + y * 100, GameScenarioManager.Instance().MaxBounds.z + 1500),
+              Rotation = new TV_3DVECTOR(0, 180, 0)
+            }.Spawn(this);
           }
         }
         t += 1.5f;
