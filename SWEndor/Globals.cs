@@ -15,10 +15,10 @@ namespace SWEndor
     {
       get
       {
-        return string.Format("{0}.{1}.{2}"
+        return string.Format("v{0}.{1}.{2}"
         , MajorVersion
         , MinorVersion
-        , DateTime.Parse(Build.Time).ToString("yyyyMMdd.hhmmss"));
+        , DateTime.Parse(Build.Time).ToString("yyyy.MMdd.hhmm"));
       }
     }
 

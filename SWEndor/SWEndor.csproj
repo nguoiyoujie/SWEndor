@@ -321,6 +321,7 @@
     <Compile Include="Sound\Instructions\InstStopMusic.cs" />
     <Compile Include="Sound\Instructions\InstPlayMusic.cs" />
     <Compile Include="Sound\Instructions\InstBase.cs" />
+    <Compile Include="UI\Font\Factory\Factory.cs" />
     <Compile Include="UI\Font\Font.cs" />
     <Compile Include="UI\Menu\Instances\UIPage_FatalError.cs" />
     <Compile Include="UI\Menu\Instances\UIPage_GameWon.cs" />

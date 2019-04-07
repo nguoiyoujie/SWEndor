@@ -28,11 +28,10 @@ namespace SWEndor
       float w_m = Screen.PrimaryScreen.Bounds.Width * 1.0f / Settings.ResolutionX;
       float h_m = Screen.PrimaryScreen.Bounds.Height * 1.0f / Settings.ResolutionY;
 
-      float m = (w_m > h_m) ? h_m : w_m;
-       
-      pbGame.Width = (int)(Settings.ResolutionX * m);
-      pbGame.Height = (int)(Settings.ResolutionY * m);
-      pbGame.Location = new Point((Width - pbGame.Width) / 2, (Height - pbGame.Height) / 2);
+      int m = (int)((w_m > h_m) ? h_m : w_m); // use integer for pixel doubling, if any
+
+      pbGame.Width = Settings.ResolutionX;
+      pbGame.Height = Settings.ResolutionY;
 
       // game
       Game.Instance().StartLoad();
@@ -40,6 +39,10 @@ namespace SWEndor
       Engine.Instance().Initialize();
       Engine.Instance().InitializeComponents();
       Game.Instance().Run();
+
+      pbGame.Width = (int)(Settings.ResolutionX * m);
+      pbGame.Height = (int)(Settings.ResolutionY * m);
+      pbGame.Location = new Point((Width - pbGame.Width) / 2, (Height - pbGame.Height) / 2);
     }
 
     public void Exit()
