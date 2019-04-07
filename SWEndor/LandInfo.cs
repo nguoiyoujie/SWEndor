@@ -17,10 +17,10 @@ namespace SWEndor
       m_land = Engine.Instance().TVScene.CreateLandscape("Land");
     }
 
-    ~LandInfo()
-    {
-      m_land = null;
-    }
+    //~LandInfo()
+    //{
+    //  m_land = null;
+    //}
 
     private TVLandscape m_land;
     public TVLandscape Land { get { return m_land; } }

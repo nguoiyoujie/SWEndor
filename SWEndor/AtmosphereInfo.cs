@@ -11,11 +11,11 @@ namespace SWEndor
       TexID = Engine.Instance().TVTextureFactory.LoadTexture(texpath, Path.GetFileNameWithoutExtension(texpath), -1, -1, CONST_TV_COLORKEY.TV_COLORKEY_NO, true);
     }
 
-    ~FlareInfo()
-    {
+    //~FlareInfo()
+    //{
       //if (Engine.Instance().TVTextureFactory != null)
       //  Engine.Instance().TVTextureFactory.DeleteTexture(TexID);
-    }
+    //}
 
     public int TexID = -1;
     public float Size = 10;
@@ -38,10 +38,10 @@ namespace SWEndor
       m_atmosphere = new TVAtmosphere();
     }
 
-    ~AtmosphereInfo()
-    {
-      m_atmosphere = null;
-    }
+    //~AtmosphereInfo()
+    //{
+    //  m_atmosphere = null;
+    //}
 
     private TVAtmosphere m_atmosphere;
     private int m_tex = -1;
