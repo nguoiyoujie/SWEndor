@@ -205,13 +205,24 @@ namespace SWEndor.Evaluator
       List<string> registries = new List<string>();
 
       for (int i = 12; i < ps.Length; i++)
-      {
         registries.Add(ps[i].ToString());
-      }
 
-      ActorInfo res = gscenario.SpawnActor(atype, unitname, regname, sidebarname, spawntime, faction, position, rotation, null, registries.ToArray());
+      ActorSpawnInfo asi = new ActorSpawnInfo
+      {
+        Type = atype,
+        Name = unitname,
+        RegisterName = regname,
+        SidebarName = sidebarname,
+        SpawnTime = spawntime,
+        Faction = faction,
+        Position = position,
+        Rotation = rotation,
+        Actions = null,
+        Registries = registries.ToArray()
+      };
 
-      if (gscenario == null)
+      ActorInfo res = asi.Spawn(gscenario);
+      if (res == null)
         return "-1";
       return res.ID;
     }
