@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Primitives;
-using System.Collections.Generic;
 
 namespace SWEndor.Actors
 {

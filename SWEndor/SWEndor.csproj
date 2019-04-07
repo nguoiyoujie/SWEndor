@@ -313,6 +313,7 @@
     <Compile Include="Primitives\Cached3DVector.cs" />
     <Compile Include="Primitives\CachedFloat.cs" />
     <Compile Include="Primitives\TimeControl.cs" />
+    <Compile Include="Scenarios\ActorSpawnInfo.cs" />
     <Compile Include="Sound\Instructions\InstPauseMusic.cs" />
     <Compile Include="Sound\Instructions\InstPlaySound.cs" />
     <Compile Include="Sound\Instructions\InstResumeMusic.cs" />
