@@ -3,7 +3,7 @@ using System.IO;
 
 namespace SWEndor.ActorTypes
 {
-  public class Transport_Box1ATI : DebrisGroup
+  public class Transport_Box1ATI : SpinningDebrisGroup
   {
     private static Transport_Box1ATI _instance;
     public static Transport_Box1ATI Instance()
@@ -31,16 +31,8 @@ namespace SWEndor.ActorTypes
     public override void ProcessState(ActorInfo ainfo)
     {
       base.ProcessState(ainfo);
-
-      ainfo.MovementInfo.ApplyZBalance = false;
-
-      if (!ainfo.IsStateFDefined("RotateAngle"))
-      {
-        ainfo.SetStateF("RotateAngle", Engine.Instance().Random.Next(-450, 450));
-      }
-      float rotZ = ainfo.GetStateF("RotateAngle") * Game.Instance().TimeSinceRender;
-      ainfo.Rotate(0, 0, rotZ);
-      ainfo.MovementInfo.ResetTurn();
+      ainfo.MovementInfo.D_spin_min_rate = 100;
+      ainfo.MovementInfo.D_spin_max_rate = 450;
     }
   }
 }
