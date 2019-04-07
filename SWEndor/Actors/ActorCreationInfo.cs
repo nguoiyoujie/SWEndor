@@ -3,24 +3,20 @@ using SWEndor.Actors;
 
 namespace SWEndor.ActorTypes
 {
-  public class ActorCreationInfo
+  public struct ActorCreationInfo
   {
-    public float CreationTime;
-
-    public FactionInfo Faction = FactionInfo.Neutral;
+    public FactionInfo Faction;
     public ActorTypeInfo ActorTypeInfo;
     public string Name;
-    public CreationState CreationState = CreationState.PLANNED;
-    public ActorState InitialState = ActorState.NORMAL;
-    public TV_3DVECTOR InitialScale = new TV_3DVECTOR(1, 1, 1);
-    public TV_3DVECTOR Position = new TV_3DVECTOR();
-    public TV_3DVECTOR Rotation = new TV_3DVECTOR();
+    public float CreationTime;
+    public CreationState CreationState;
+    public ActorState InitialState;
+    public TV_3DVECTOR InitialScale;
+    public TV_3DVECTOR Position;
+    public TV_3DVECTOR Rotation;
 
     public float InitialStrength;
     public float InitialSpeed;
-
-    private ActorCreationInfo()
-    { }
 
     public ActorCreationInfo(ActorTypeInfo at)
     {
@@ -29,6 +25,14 @@ namespace SWEndor.ActorTypes
       Name = at.Name;
       InitialStrength = at.MaxStrength;
       InitialSpeed = at.MaxSpeed;
+
+      Faction = FactionInfo.Neutral;
+      CreationState = CreationState.PLANNED;
+      CreationTime = 0;
+      InitialState = ActorState.NORMAL;
+      InitialScale = new TV_3DVECTOR(1, 1, 1);
+      Position = new TV_3DVECTOR();
+      Rotation = new TV_3DVECTOR();
     }
   }
 }

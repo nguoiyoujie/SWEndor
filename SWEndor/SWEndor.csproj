@@ -99,6 +99,7 @@
     <Compile Include="Actors\Enums\ActorState.cs" />
     <Compile Include="Actors\Enums\CreationState.cs" />
     <Compile Include="Actors\States\ActorDistanceInfo.cs" />
+    <Compile Include="Actors\TVFunctions.cs" />
     <Compile Include="ActorTypes\General\Enums\TargetType.cs" />
     <Compile Include="ActorTypes\Components\AddOnInfo.cs" />
     <Compile Include="ActorTypes\Components\SoundSourceInfo.cs" />

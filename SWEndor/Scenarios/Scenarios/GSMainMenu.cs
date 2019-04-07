@@ -118,7 +118,7 @@ namespace SWEndor.Scenarios
     {
       base.LoadScene();
 
-      ActorCreationInfo acinfo = null;
+      ActorCreationInfo acinfo;
 
       // Create Planet
       if (m_APlanet == null)

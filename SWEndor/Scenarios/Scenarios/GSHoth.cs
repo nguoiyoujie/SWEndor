@@ -116,18 +116,18 @@ namespace SWEndor.Scenarios
     {
       base.LoadScene();
 
-      ActorCreationInfo acinfo = null;
-
       // Create Hoth
       if (m_AHoth == null)
       {
-        acinfo = new ActorCreationInfo(HothATI.Instance());
-        acinfo.InitialState = ActorState.FIXED;
-        acinfo.CreationTime = -1;
-        acinfo.Position = new TV_3DVECTOR(0, 800, -18000);
-        acinfo.Rotation = new TV_3DVECTOR(-90, 0, 0);
-        acinfo.InitialScale = new TV_3DVECTOR(6, 6, 6);
-        m_AHoth = ActorInfo.Create(acinfo);
+        ActorCreationInfo aci_Hoth = new ActorCreationInfo(HothATI.Instance())
+        {
+          InitialState = ActorState.FIXED,
+          CreationTime = -1,
+          Position = new TV_3DVECTOR(0, 800, -18000),
+          Rotation = new TV_3DVECTOR(-90, 0, 0),
+          InitialScale = new TV_3DVECTOR(6, 6, 6)
+        };
+        m_AHoth = ActorInfo.Create(aci_Hoth);
       }
     }
 

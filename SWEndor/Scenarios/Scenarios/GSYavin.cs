@@ -216,41 +216,42 @@ namespace SWEndor.Scenarios
     {
       base.LoadScene();
 
-      ActorCreationInfo acinfo = null;
-
       // Create Yavin
       if (m_AYavin == null)
       {
-        acinfo = new ActorCreationInfo(YavinATI.Instance());
-        acinfo.InitialState = ActorState.FIXED;
-        acinfo.CreationTime = -1;
-        acinfo.Position = new TV_3DVECTOR(0, 0, 18000);
-        acinfo.Rotation = new TV_3DVECTOR(90, 90, 0);
-        acinfo.InitialScale = new TV_3DVECTOR(4, 4, 4);
-        m_AYavin = ActorInfo.Create(acinfo);
+        ActorCreationInfo aci_Yavin = new ActorCreationInfo(YavinATI.Instance())
+        {
+          InitialState = ActorState.FIXED,
+          Position = new TV_3DVECTOR(0, 0, 18000),
+          Rotation = new TV_3DVECTOR(90, 90, 0),
+          InitialScale = new TV_3DVECTOR(4, 4, 4)
+        };
+        m_AYavin = ActorInfo.Create(aci_Yavin);
       }
 
       // Create Yavin 4
       if (m_AYavin4 == null)
       {
-        acinfo = new ActorCreationInfo(Yavin4ATI.Instance());
-        acinfo.InitialState = ActorState.FIXED;
-        acinfo.CreationTime = -1;
-        acinfo.Position = new TV_3DVECTOR(0, 800, -18000);
-        acinfo.Rotation = new TV_3DVECTOR(0, 0, 0);
-        m_AYavin4 = ActorInfo.Create(acinfo);
+        ActorCreationInfo aci_Yavin4 = new ActorCreationInfo(Yavin4ATI.Instance())
+        {
+          InitialState = ActorState.FIXED,
+          Position = new TV_3DVECTOR(0, 800, -18000),
+          Rotation = new TV_3DVECTOR(0, 0, 0),
+        };
+        m_AYavin = ActorInfo.Create(aci_Yavin4);
       }
 
       // Create DeathStar
       if (m_ADS == null)
       {
-        acinfo = new ActorCreationInfo(DeathStarATI.Instance());
-        acinfo.InitialState = ActorState.FIXED;
-        acinfo.CreationTime = -1;
-        acinfo.Position = new TV_3DVECTOR(0, 800, 28000);
-        acinfo.Rotation = new TV_3DVECTOR(0, 180, 0);
-        m_ADS = ActorInfo.Create(acinfo);
-        m_ADS.Faction = FactionInfo.Factory.Get("Empire");
+        ActorCreationInfo aci_DS = new ActorCreationInfo(DeathStarATI.Instance())
+        {
+          InitialState = ActorState.FIXED,
+          Position = new TV_3DVECTOR(0, 800, 28000),
+          Rotation = new TV_3DVECTOR(0, 180, 0),
+          Faction = MainEnemyFaction
+        };
+        m_ADS = ActorInfo.Create(aci_DS);
       }
     }
 

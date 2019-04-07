@@ -29,6 +29,7 @@ namespace SWEndor.Scenarios
                                                , LandoFalconATI.Instance()
                                                , CorellianATI.Instance()
                                                , ImperialIATI.Instance()
+                                               , TIE_X1_ATI.Instance()
                                               };
 
       AllowedDifficulties = new List<string> { "easy"
@@ -180,30 +181,30 @@ namespace SWEndor.Scenarios
     {
       base.LoadScene();
 
-      ActorCreationInfo acinfo = null;
-
       // Create Endor
       if (m_AEndor == null)
       {
-        acinfo = new ActorCreationInfo(EndorATI.Instance());
-        acinfo.InitialState = ActorState.FIXED;
-        acinfo.CreationTime = -1;
-        acinfo.Position = new TV_3DVECTOR(0, -1200, 0);
-        acinfo.Rotation = new TV_3DVECTOR(0, 180, 0);
-        acinfo.InitialScale = new TV_3DVECTOR(6, 6, 6);
-        m_AEndor = ActorInfo.Create(acinfo);
+        ActorCreationInfo aci_Endor = new ActorCreationInfo(EndorATI.Instance())
+        {
+          InitialState = ActorState.FIXED,
+          Position = new TV_3DVECTOR(0, -1200, 0),
+          Rotation = new TV_3DVECTOR(0, 180, 0),
+          InitialScale = new TV_3DVECTOR(6, 6, 6)
+        };
+        m_AEndor = ActorInfo.Create(aci_Endor);
       }
 
       // Create DeathStar
       if (m_ADS == null)
       {
-        acinfo = new ActorCreationInfo(DeathStar2ATI.Instance());
-        acinfo.InitialState = ActorState.FIXED;
-        acinfo.CreationTime = -1;
-        acinfo.Position = new TV_3DVECTOR(0, 800, 18000);
-        acinfo.Rotation = new TV_3DVECTOR(0, 0, 5);
-        m_ADS = ActorInfo.Create(acinfo);
-        m_ADS.Faction = MainEnemyFaction;
+        ActorCreationInfo aci_DS = new ActorCreationInfo(DeathStar2ATI.Instance())
+        {
+          InitialState = ActorState.FIXED,
+          Position = new TV_3DVECTOR(0, 800, 18000),
+          Rotation = new TV_3DVECTOR(0, 0, 5),
+          Faction = MainEnemyFaction
+        };
+        m_ADS = ActorInfo.Create(aci_DS);
       }
     }
 
