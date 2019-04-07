@@ -3,7 +3,6 @@ using SWEndor.Actors;
 using SWEndor.Player;
 using SWEndor.Scenarios;
 using SWEndor.Sound;
-using System;
 
 namespace SWEndor.ActorTypes.Components
 {

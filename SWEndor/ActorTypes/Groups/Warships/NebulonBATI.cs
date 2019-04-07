@@ -32,7 +32,7 @@ namespace SWEndor.ActorTypes
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"nebulonb\nebulonb.x");
       SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"nebulonb\nebulonb_far.x");
 
-      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", new TV_3DVECTOR(0, 100, -300), 1500.0f, true) };
+      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 1500.0f, new TV_3DVECTOR(0, 100, -300), true) };
       AddOns = new AddOnInfo[]
       {
         new AddOnInfo("Nebulon B Turbolaser Tower", new TV_3DVECTOR(0, 40, 220), new TV_3DVECTOR(-90, 0, 0), true)

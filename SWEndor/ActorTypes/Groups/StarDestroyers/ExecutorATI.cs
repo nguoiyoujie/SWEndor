@@ -31,7 +31,7 @@ namespace SWEndor.ActorTypes
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"executor\executor.x");
 
-      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", new TV_3DVECTOR(0, 0, -800), 2500.0f, true) };
+      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 2500.0f, new TV_3DVECTOR(0, 0, -800), true) };
       AddOns = new AddOnInfo[]
       {
         new AddOnInfo("Executor Super Star Destroyer Turbolaser Tower", new TV_3DVECTOR(500, 55, -450), new TV_3DVECTOR(-90, 0, 0), true)

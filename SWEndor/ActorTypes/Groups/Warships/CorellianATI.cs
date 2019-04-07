@@ -24,8 +24,8 @@ namespace SWEndor.ActorTypes
       MaxSpeedChangeRate = 50.0f;
       MaxTurnRate = 9f;
 
-      ZTilt = 8.5f;
-      ZNormFrac = 0.025f;
+      ZTilt = 5.5f;
+      ZNormFrac = 0.015f;
 
       CullDistance = 20000;
 
@@ -35,7 +35,7 @@ namespace SWEndor.ActorTypes
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"corellian\corellian.x");
       SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"corellian\corellian_far.x");
 
-      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", new TV_3DVECTOR(0, 0, -200), 500.0f, true) };
+      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 500f, new TV_3DVECTOR(0, 0, -200), true) };
       AddOns = new AddOnInfo[]
       {
         new AddOnInfo("Corellian Turbolaser Tower", new TV_3DVECTOR(-35, 15, 110), new TV_3DVECTOR(-90, 0, 10), true)

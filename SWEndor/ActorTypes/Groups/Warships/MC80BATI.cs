@@ -33,7 +33,7 @@ namespace SWEndor.ActorTypes
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"mc90\mc80b.x");
 
-      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", new TV_3DVECTOR(0, 0, -750), 1500.0f, true) };
+      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 1500f, new TV_3DVECTOR(0, 0, -750), true) };
       AddOns = new AddOnInfo[]
       {
         new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(0, 45, 1200), new TV_3DVECTOR(-90, 0, 0), true)

@@ -37,7 +37,7 @@ namespace SWEndor.ActorTypes
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"acclamator\acclamator.x");
 
-      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", new TV_3DVECTOR(0, 0, -100), 500.0f, true) };
+      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 500.0f, new TV_3DVECTOR(0, 0, -100), true) };
       AddOns = new AddOnInfo[]
       {
         // Sides

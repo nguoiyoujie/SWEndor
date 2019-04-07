@@ -8,7 +8,7 @@ namespace SWEndor.ActorTypes
     internal TIEGroup(string name): base(name)
     {
       CullDistance = 7200;
-      SoundSources = new SoundSourceInfo[]{ new SoundSourceInfo("engine_tie", new TV_3DVECTOR(0, 0, -30), 200, true) };
+      SoundSources = new SoundSourceInfo[]{ new SoundSourceInfo("engine_tie", 200f, new TV_3DVECTOR(0, 0, -30), true) };
     }
   }
 }

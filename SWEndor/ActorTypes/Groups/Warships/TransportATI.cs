@@ -31,7 +31,7 @@ namespace SWEndor.ActorTypes
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"transport\transport.x");
 
-      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", new TV_3DVECTOR(0, 0, -150), 500.0f, true) };
+      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 500.0f, new TV_3DVECTOR(0, 0, -150), true) };
       AddOns = new AddOnInfo[]
       {
         new AddOnInfo("Transport Turbolaser Tower", new TV_3DVECTOR(0, 70, 200), new TV_3DVECTOR(-90, 0, 0), true)

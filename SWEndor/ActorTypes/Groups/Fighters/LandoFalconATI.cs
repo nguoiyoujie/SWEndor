@@ -40,7 +40,7 @@ namespace SWEndor.ActorTypes
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"falcon\falcon.x");
 
-      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("falcon_engine", new TV_3DVECTOR(0, 0, -30), 200, true) };
+      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("falcon_engine", 200f, new TV_3DVECTOR(0, 0, -30), true) };
       AddOns = new AddOnInfo[] { new AddOnInfo("Invisible Rebel Turbo Laser", new TV_3DVECTOR(0, 7, 20), new TV_3DVECTOR(90, 0, 0), true) };
     }
 
