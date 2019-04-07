@@ -257,7 +257,6 @@
     <Compile Include="AI\Actions\Move.cs" />
     <Compile Include="AI\ActionManager.cs" />
     <Compile Include="AI\ActionInfo.cs" />
-    <Compile Include="AI\AI\AIInfo.cs" />
     <Compile Include="Build.cs" />
     <Compile Include="Input\Context\DebugGameInputContext.cs" />
     <Compile Include="Input\Context\TerminalGameInputContext.cs" />
@@ -490,6 +489,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AI\Actions\Idle\" />
+    <Folder Include="AI\AI\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using MTV3D65;
 using System.IO;
 using SWEndor.Actors;
@@ -193,14 +192,13 @@ namespace SWEndor
 
       AtmosphereInfo.Instance().Render();
       tv_scene.FinalizeShadows();
-
       LandInfo.Instance().Render();
 
-      //tv_scene.RenderAllMeshes();
       ActorInfo[] ainfo = ActorInfo.Factory.GetHoldingList();
       foreach (ActorInfo a in ainfo)
         if (a != null)
           a.Render();
+
 
       using (new PerfElement("render_2D_draw"))
         Screen2D.Instance().Draw();
@@ -241,17 +239,6 @@ namespace SWEndor
       ScreenWidth = port.GetWidth();
       ScreenHeight = port.GetHeight();
       //tv_engine.GetViewport().SetAutoResize(true);
-    }
-
-    public void SetSize()
-    {
-      TVViewport port = tv_engine?.GetViewport();
-      if (port != null)
-      {
-        port.Resize();
-        ScreenWidth = port.GetWidth();
-        ScreenHeight = port.GetHeight();
-      }
     }
 
     private void InitFonts()
@@ -296,12 +283,14 @@ namespace SWEndor
     {
       tv_lights.SetGlobalAmbient(0.75f, 0.75f, 0.75f);
 
-      int tv_light0 = tv_lights.CreateDirectionalLight(new MTV3D65.TV_3DVECTOR(-1.0f, -0.5f, 0.2f), 1f, 1f, 1f, "GlobalLight0", 0.9f);
-      int tv_light1 = tv_lights.CreateDirectionalLight(new MTV3D65.TV_3DVECTOR(1.0f, 0.2f, 0f), 0.5f, 0.5f, 0.5f, "GlobalLight1", 0.9f);
-      int tv_light2 = tv_lights.CreateDirectionalLight(new MTV3D65.TV_3DVECTOR(-1.0f, 2.0f, -0.4f), 0.3f, 0.25f, 0.1f, "GlobalLight2", 0.9f);
+      int tv_light0 = tv_lights.CreateDirectionalLight(new TV_3DVECTOR(-1.0f, -0.5f, 0.2f), 1f, 1f, 1f, "GlobalLight0", 0.9f);
+      int tv_light1 = tv_lights.CreateDirectionalLight(new TV_3DVECTOR(1.0f, 0.2f, 0f), 0.5f, 0.5f, 0.5f, "GlobalLight1", 0.9f);
+      int tv_light2 = tv_lights.CreateDirectionalLight(new TV_3DVECTOR(-1.0f, 2.0f, -0.4f), 0.3f, 0.25f, 0.1f, "GlobalLight2", 0.9f);
+      
       tv_lights.EnableLight(tv_light0, true);
       tv_lights.EnableLight(tv_light1, true);
       tv_lights.EnableLight(tv_light2, true);
+      
       tv_lights.SetSpecularLighting(true);
     }
 
