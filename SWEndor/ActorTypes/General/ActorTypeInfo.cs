@@ -114,6 +114,8 @@ namespace SWEndor.ActorTypes
           if (SourceMeshPath.Length > 0)
             SourceMesh.LoadXFile(SourceMeshPath, true);
           SourceMesh.Enable(false);
+          SourceMesh.WeldVertices();
+          SourceMesh.ComputeBoundings();
         }
       }
 
@@ -127,6 +129,8 @@ namespace SWEndor.ActorTypes
             SourceFarMesh = Engine.Instance().TVScene.CreateMeshBuilder(_name + "_far");
             SourceFarMesh.LoadXFile(SourceFarMeshPath, true);
             SourceFarMesh.Enable(false);
+            SourceFarMesh.WeldVertices();
+            SourceFarMesh.ComputeBoundings();
           }
           else
             SourceFarMesh = SourceMesh.Duplicate();
@@ -146,7 +150,6 @@ namespace SWEndor.ActorTypes
       SourceMesh.SetCollisionEnable(false);
 
       TVMesh ret = SourceMesh.Duplicate();
-      ret.WeldVertices();
       SourceMesh.GetBoundingBox(ref min_dimensions, ref max_dimensions);
       return ret;
     }
