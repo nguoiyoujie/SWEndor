@@ -50,7 +50,7 @@ namespace SWEndor.ActorTypes
     public float ZTilt = 0.0f;
     public float ZNormFrac = 0.025f;
     public bool EnableDistanceCull = true;
-    public float CullDistance = 15000.0f;
+    public float CullDistance = 20000.0f;
 
     public float Attack_AngularDelta = 5f;
     public float Attack_HighAccuracyAngularDelta = 1f;
