@@ -79,7 +79,7 @@ namespace SWEndor.ActorTypes
         {
           ainfo.ParticleSystem = Engine.Instance().TVScene.CreateParticleSystem();
           int emitter = ainfo.ParticleSystem.CreateEmitter(CONST_TV_EMITTERTYPE.TV_EMITTER_BILLBOARD, 250);
-          ainfo.SetStateF("ParticleEmitterID", emitter);
+          ainfo.ParticleEmitterID = emitter;
 
           ainfo.ParticleSystem.Enable(true);
           ainfo.ParticleSystem.SetBillboard(emitter, m_particletex);
@@ -92,12 +92,8 @@ namespace SWEndor.ActorTypes
         }
 
         if (ainfo.ParticleSystem != null)
-        {
-          if (ainfo.IsStateFDefined("ParticleEmitterID"))
-          {
-            ainfo.ParticleSystem.SetEmitterPosition((int)ainfo.GetStateF("ParticleEmitterID"), ainfo.GetPosition());
-          }
-        }
+          if (ainfo.ParticleEmitterID >= 0)
+            ainfo.ParticleSystem.SetEmitterPosition(ainfo.ParticleEmitterID, ainfo.GetPosition());
       }
 
     }

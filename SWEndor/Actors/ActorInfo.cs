@@ -151,6 +151,8 @@ namespace SWEndor.Actors
     public TVMesh FarMesh { get; private set; }
     public int AttachToMesh = -1;
 
+    // Particle system
+    public int ParticleEmitterID = -1;
     public TVParticleSystem ParticleSystem = null;
 
     // Ownership
@@ -257,7 +259,7 @@ namespace SWEndor.Actors
           if (ActorState != ActorState.DEAD)
           {
             if (TypeInfo.CollisionEnabled || TypeInfo is ProjectileGroup)
-                CheckCollision();
+              CheckCollision();
             MovementInfo.Move();
           }
         }
@@ -419,88 +421,88 @@ namespace SWEndor.Actors
       {
         //using (new PerfElement("collision_combat_" + Name.PadRight(15).Substring(0, 13)))
         //{
-          TV_3DVECTOR vmin = GetRelativePositionXYZ(0, 0, TypeInfo.max_dimensions.z, false);
-          TV_3DVECTOR vmax = GetRelativePositionXYZ(0, 0, TypeInfo.min_dimensions.z, false) + PrevPosition - Position;
+        TV_3DVECTOR vmin = GetRelativePositionXYZ(0, 0, TypeInfo.max_dimensions.z, false);
+        TV_3DVECTOR vmax = GetRelativePositionXYZ(0, 0, TypeInfo.min_dimensions.z, false) + PrevPosition - Position;
 
-          IsInCollision = TestCollision(vmin, vmax, true, out CollisionImpact, out CollisionNormal, out CollisionActor);
-          IsTestingCollision = false;
+        IsInCollision = TestCollision(vmin, vmax, true, out CollisionImpact, out CollisionNormal, out CollisionActor);
+        IsTestingCollision = false;
         //}
       }
       if (IsTestingProspectiveCollision)
       {
         //using (new PerfElement("collision_prospect"))
         //{
-          ActorInfo dummy;
+        ActorInfo dummy;
 
-          TV_3DVECTOR prostart = GetRelativePositionXYZ(0, 0, TypeInfo.max_dimensions.z + 10);
-          TV_3DVECTOR proend0 = GetRelativePositionXYZ(0, 0, TypeInfo.max_dimensions.z + 10 + ProspectiveCollisionScanDistance);
+        TV_3DVECTOR prostart = GetRelativePositionXYZ(0, 0, TypeInfo.max_dimensions.z + 10);
+        TV_3DVECTOR proend0 = GetRelativePositionXYZ(0, 0, TypeInfo.max_dimensions.z + 10 + ProspectiveCollisionScanDistance);
 
-          TV_3DVECTOR proImpact = new TV_3DVECTOR();
-          TV_3DVECTOR proNormal = new TV_3DVECTOR();
+        TV_3DVECTOR proImpact = new TV_3DVECTOR();
+        TV_3DVECTOR proNormal = new TV_3DVECTOR();
 
-          TV_3DVECTOR _Impact = new TV_3DVECTOR();
-          TV_3DVECTOR _Normal = new TV_3DVECTOR();
-          int count = 0;
+        TV_3DVECTOR _Impact = new TV_3DVECTOR();
+        TV_3DVECTOR _Normal = new TV_3DVECTOR();
+        int count = 0;
 
-          IsInProspectiveCollision = false;
-          
-          if (TestCollision(prostart, proend0, false, out _Impact, out _Normal, out ProspectiveCollisionActor))
+        IsInProspectiveCollision = false;
+
+        if (TestCollision(prostart, proend0, false, out _Impact, out _Normal, out ProspectiveCollisionActor))
+        {
+          proImpact += _Impact;
+          proNormal += _Normal;
+          count++;
+          IsInProspectiveCollision = true;
+          ProspectiveCollisionSafe = _Impact + _Normal * 10000;
+        }
+
+        if (IsInProspectiveCollision || IsAvoidingCollision)
+          ProspectiveCollisionLevel = 0;
+        bool nextlevel = true;
+        float dist = 0;
+        while (nextlevel && ProspectiveCollisionLevel < 5)
+        {
+          ProspectiveCollisionLevel++;
+          nextlevel = true;
+          for (int i = -1; i <= 1; i++)
+            for (int j = -1; j <= 1; j++)
             {
-              proImpact += _Impact;
-              proNormal += _Normal;
-              count++;
-              IsInProspectiveCollision = true;
-              ProspectiveCollisionSafe = _Impact + _Normal * 10000;
-            }
+              if (i == 0 && j == 0)
+                continue;
 
-            if (IsInProspectiveCollision || IsAvoidingCollision)
-              ProspectiveCollisionLevel = 0;
-              bool nextlevel = true;
-              float dist = 0;
-          while (nextlevel && ProspectiveCollisionLevel < 5)
-          {
-            ProspectiveCollisionLevel++;
-            nextlevel = true;
-            for (int i = -1; i <= 1; i++)
-              for (int j = -1; j <= 1; j++)
+              proend0 = GetRelativePositionXYZ(i * ProspectiveCollisionScanDistance * 0.1f * ProspectiveCollisionLevel
+                                             , j * ProspectiveCollisionScanDistance * 0.1f * ProspectiveCollisionLevel
+                                             , TypeInfo.max_dimensions.z + 10 + ProspectiveCollisionScanDistance);
+              if (TestCollision(prostart, proend0, false, out _Impact, out _Normal, out dummy))
               {
-                if (i == 0 && j == 0)
-                  continue;
-
-                proend0 = GetRelativePositionXYZ(i * ProspectiveCollisionScanDistance * 0.1f * ProspectiveCollisionLevel
-                                               , j * ProspectiveCollisionScanDistance * 0.1f * ProspectiveCollisionLevel
-                                               , TypeInfo.max_dimensions.z + 10 + ProspectiveCollisionScanDistance);
-                if (TestCollision(prostart, proend0, false, out _Impact, out _Normal, out dummy))
+                proImpact += _Impact;
+                proNormal += _Normal;
+                count++;
+                float newdist = Engine.Instance().TVMathLibrary.GetDistanceVec3D(Position, _Impact);
+                if (dist < newdist)
                 {
-                  proImpact += _Impact;
-                  proNormal += _Normal;
-                  count++;
-                  float newdist = Engine.Instance().TVMathLibrary.GetDistanceVec3D(Position, _Impact);
-                  if (dist < newdist)
-                  {
-                    dist = newdist;
-                    ProspectiveCollisionSafe = Position + (proend0 - Position) * 1000;
-                    if (IsAvoidingCollision)
-                      nextlevel = false;
-                  }
-                }
-                else
-                {
-                  dist = float.MaxValue;
-                  if (!IsAvoidingCollision)
-                    nextlevel = false;
+                  dist = newdist;
                   ProspectiveCollisionSafe = Position + (proend0 - Position) * 1000;
+                  if (IsAvoidingCollision)
+                    nextlevel = false;
                 }
               }
-          }
-
-          if (count > 0)
-          {
-            ProspectiveCollisionImpact = proImpact / count;
-            ProspectiveCollisionNormal = proNormal / count;
-          }
-          IsTestingProspectiveCollision = false;
+              else
+              {
+                dist = float.MaxValue;
+                if (!IsAvoidingCollision)
+                  nextlevel = false;
+                ProspectiveCollisionSafe = Position + (proend0 - Position) * 1000;
+              }
+            }
         }
+
+        if (count > 0)
+        {
+          ProspectiveCollisionImpact = proImpact / count;
+          ProspectiveCollisionNormal = proNormal / count;
+        }
+        IsTestingProspectiveCollision = false;
+      }
       //}
     }
 
@@ -549,14 +551,14 @@ namespace SWEndor.Actors
               TVMesh tvm = Engine.Instance().TVGlobals.GetMeshFromID(tvcres.iMeshID);
               if (tvm != null) // && tvm.IsVisible())
               {
-                 int n = 0;
+                int n = 0;
                 if (int.TryParse(tvm.GetTag(), out n))
                 {
                   actor = Factory.GetActor(n);
-                  return (actor != null 
-                       && actor != this 
-                       && !HasRelative(actor) 
-                       && actor.TypeInfo.CollisionEnabled 
+                  return (actor != null
+                       && actor != this
+                       && !HasRelative(actor)
+                       && actor.TypeInfo.CollisionEnabled
                        && !actor.IsAggregateMode()
                        && actor.CreationState == CreationState.ACTIVE);
                 }
@@ -626,7 +628,7 @@ namespace SWEndor.Actors
       TV_3DVECTOR ret = Position;
       ActorInfo a = AttachToMesh > 0 ? Parent : null;
       if (a != null)
-          ret = a.GetRelativePositionXYZ(ret.x, ret.y, ret.z);
+        ret = a.GetRelativePositionXYZ(ret.x, ret.y, ret.z);
       WorldPosition.Value = ret;
       WorldPosition.Time = Game.Instance().GameTime;
       return ret;
@@ -855,69 +857,6 @@ namespace SWEndor.Actors
       return ret;
     }
 
-    public void GetBoundingBox(ref TV_3DVECTOR min, ref TV_3DVECTOR max)
-    {
-      if (Mesh == null)
-        return;
-
-      Mesh.GetBoundingBox(ref min, ref max);
-    }
-
-    public void GetBoundingBox(ref TV_3DVECTOR min, ref TV_3DVECTOR max, bool localmode)
-    {
-      if (Mesh == null)
-        return;
-
-      Mesh.GetBoundingBox(ref min, ref max, localmode);
-    }
-
-    public void GetBoundingSphere(ref TV_3DVECTOR retCenter, ref float radius)
-    {
-      if (Mesh == null)
-        return;
-
-      Mesh.GetBoundingSphere(ref retCenter, ref radius);
-    }
-
-    public void GetBoundingSphere(ref TV_3DVECTOR retCenter, ref float radius, bool localmode)
-    {
-      if (Mesh == null)
-        return;
-
-      Mesh.GetBoundingSphere(ref retCenter, ref radius, localmode);
-    }
-
-    public void SetTexture(int iTexture)
-    {
-      if (Mesh == null)
-        return;
-
-      Mesh.SetTexture(iTexture);
-    }
-
-    public int GetVertexCount()
-    {
-      if (Mesh == null)
-        return 0;
-      return Mesh.GetVertexCount();
-    }
-
-    public TV_3DVECTOR GetRandomVertex()
-    {
-      if (Mesh == null)
-        return new TV_3DVECTOR();
-
-      int r = Engine.Instance().Random.Next(0, Mesh.GetVertexCount());
-
-      float x = 0;
-      float y = 0;
-      float z = 0;
-      float dummy = 0;
-      int dumint = 0;
-      Mesh.GetVertex(r, ref x, ref y, ref z, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dumint);
-      return new TV_3DVECTOR(x, y, z);
-    }
-
     public void Rotate(float x, float y, float z)
     {
       TV_3DVECTOR vec = GetRotation();
@@ -1016,8 +955,6 @@ namespace SWEndor.Actors
 
     #region Parent, Child and Relatives
 
-    //private Mutex m_childlist = new Mutex();
-
     public void AddParent(ActorInfo actor)
     {
       if (Parent != null)
@@ -1064,33 +1001,17 @@ namespace SWEndor.Actors
       List<ActorInfo> ret = new List<ActorInfo>();
       if (searchlevel > 1)
       {
-          if (Parent != null && !ret.Contains(Parent))
-          {
-            ret.Add(Parent);
-            ret.AddRange(Parent.GetAllParents(searchlevel - 1));
-          }
+        if (Parent != null && !ret.Contains(Parent))
+        {
+          ret.Add(Parent);
+          ret.AddRange(Parent.GetAllParents(searchlevel - 1));
+        }
       }
       else
       {
         if (Parent != null)
           ret.Add(Parent);
       }
-      return ret;
-    }
-
-    public bool HasChild(ActorInfo a, int searchlevel = 99)
-    {
-      if (searchlevel < 0)
-        return false;
-
-      bool ret = false;
-      //m_childlist.WaitOne();
-      List<ActorInfo> cs = new List<ActorInfo>(Children);
-      //m_childlist.ReleaseMutex();
-
-      foreach (ActorInfo p in cs)
-        ret |= (p == a) || (p.HasChild(a, searchlevel - 1));
-
       return ret;
     }
 
