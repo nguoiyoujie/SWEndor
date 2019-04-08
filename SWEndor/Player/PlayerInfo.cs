@@ -202,8 +202,8 @@ namespace SWEndor.Player
 
       if (Actor != null) 
       {
-        PrimaryWeaponModes.AddRange(Actor.PrimaryWeapons);
-        SecondaryWeaponModes.AddRange(Actor.SecondaryWeapons);
+        PrimaryWeaponModes.AddRange(Actor.WeaponSystemInfo.PrimaryWeapons);
+        SecondaryWeaponModes.AddRange(Actor.WeaponSystemInfo.SecondaryWeapons);
 
         if (PrimaryWeapon == null || PrimaryWeapon.Length == 0)
           ResetPrimaryWeapon();

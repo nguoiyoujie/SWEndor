@@ -22,6 +22,15 @@ namespace SWEndor.Actors.Components
       RelativeRegenRate = 0;
     }
 
+    public void Reset()
+    {
+      AllowRegen = true;
+      SelfRegenRate = 0;
+      ParentRegenRate = 0;
+      ChildRegenRate = 0;
+      RelativeRegenRate = 0;
+    }
+
     public void Process()
     {
       // Regen

@@ -163,7 +163,7 @@ namespace SWEndor.Scenarios
     {
       if (SceneCamera != null)
       {
-        SceneCamera.Destroy();
+        SceneCamera.Kill();
       }
 
       ActorCreationInfo camaci = new ActorCreationInfo(InvisibleCameraATI.Instance());

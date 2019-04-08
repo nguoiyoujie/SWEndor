@@ -62,12 +62,12 @@ namespace SWEndor.ActorTypes
 
       ainfo.RegenerationInfo.SelfRegenRate = 0.075f;
 
-      ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", new TIE_X1_TorpWeapon() }
+      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", new TIE_X1_TorpWeapon() }
                                                         , {"laser", new TIE_X1_LaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new string[] { "1:laser", "2:laser", "3:laser" };
-      ainfo.SecondaryWeapons = new string[] { "none", "1:torp" };
-      ainfo.AIWeapons = new string[] { "1:torp", "2:laser" };
+      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser", "2:laser", "3:laser" };
+      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none", "1:torp" };
+      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:torp", "2:laser" };
 
       ainfo.CombatInfo.HitWhileDyingLeadsToDeath = false;
     }

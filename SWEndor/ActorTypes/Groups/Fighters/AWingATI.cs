@@ -54,12 +54,12 @@ namespace SWEndor.ActorTypes
 
       ainfo.RegenerationInfo.SelfRegenRate= 0.08f;
 
-      ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("A-Wing Torpedo")} //new AWingTorpWeapon() }
+      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("A-Wing Torpedo")} //new AWingTorpWeapon() }
                                                         , {"laser", WeaponFactory.Get("A-Wing Laser")} // new AWingLaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new string[] { "1:laser", "2:laser", "4:laser" };
-      ainfo.SecondaryWeapons = new string[] { "none", "1:torp" };
-      ainfo.AIWeapons = new string[] { "1:torp", "1:laser" };
+      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser", "2:laser", "4:laser" };
+      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none", "1:torp" };
+      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:torp", "1:laser" };
     }
   }
 }

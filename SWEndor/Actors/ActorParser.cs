@@ -58,20 +58,6 @@ namespace SWEndor.Actors
       }
       builder.AppendLine(string.Format("Children={0}", children));
 
-
-      foreach (string key in Actor.GetStateBKeys())
-      {
-        builder.AppendLine(string.Format("StateB.{0}={1}", key, Actor.GetStateB(key)));
-      }
-      foreach (string key in Actor.GetStateFKeys())
-      {
-        builder.AppendLine(string.Format("StateF.{0}={1}", key, Actor.GetStateF(key)));
-      }
-      foreach (string key in Actor.GetCustomStateSKeys())
-      {
-        builder.AppendLine(string.Format("StateS.{0}={1}", key, Actor.GetStateS(key)));
-      }
-
       //Event
       foreach (string ae in Actor.TickEvents)
       {

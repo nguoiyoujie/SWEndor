@@ -51,12 +51,12 @@ namespace SWEndor.ActorTypes
       ainfo.ExplosionInfo.ExplosionSize = 1;
       ainfo.ExplosionInfo.ExplosionType = "Explosion";
 
-      ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", new TIE_IN_LaserWeapon() }
+      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", new TIE_IN_LaserWeapon() }
                                                         , {"2xlsr", new TIE_IN_DblLaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new string[] { "1:laser", "2:laser" };
-      ainfo.SecondaryWeapons = new string[] { "none" };
-      ainfo.AIWeapons = new string[] { "1:2xlsr" };
+      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser", "2:laser" };
+      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
+      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:2xlsr" };
 
       Debris = new DebrisSpawnerInfo[] {
         new DebrisSpawnerInfo("TIE_InterceptorWingATI", new TV_3DVECTOR(-30, 0, 0), -1000, 1000, 0, 3000, -2500, 2500, 0.5f),

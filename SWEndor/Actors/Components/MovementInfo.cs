@@ -68,6 +68,30 @@ namespace SWEndor.Actors.Components
       D_sink_down_rate = 0;
     }
 
+    public void Reset()
+    {
+      Speed = 0;
+      XTurnAngle = 0;
+      YTurnAngle = 0;
+      ZRoll = 0;
+      MaxSpeed = 0;
+      MinSpeed = 0;
+      MaxSpeedChangeRate = 0;
+      MaxTurnRate = 0;
+      MaxSecondOrderTurnRateFrac = 0;
+      ZTilt = 0;
+      ZNormFrac = 0;
+      ApplyZBalance = true;
+      Zdiv = 0;
+      DyingMovement = DyingMovement.NONE;
+      D_spin_min_rate = 0;
+      D_spin_max_rate = 0;
+      D_spin_r = 0;
+      D_sink_pitch_rate = 0;
+      D_sink_forward_rate = 0;
+      D_sink_down_rate = 0;
+    }
+
     public void ResetTurn()
     {
       XTurnAngle = 0;

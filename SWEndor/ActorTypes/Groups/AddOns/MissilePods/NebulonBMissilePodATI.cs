@@ -40,11 +40,11 @@ namespace SWEndor.ActorTypes
       ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
       ainfo.ExplosionInfo.DeathExplosionSize = 5;
 
-      ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"missile", new NebulonBMissileWeapon() }
+      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"missile", new NebulonBMissileWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new string[] { "1:missile" };
-      ainfo.SecondaryWeapons = new string[] { "none" };
-      ainfo.AIWeapons = new string[] { "1:missile" };
+      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:missile" };
+      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
+      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:missile" };
     }
   }
 }

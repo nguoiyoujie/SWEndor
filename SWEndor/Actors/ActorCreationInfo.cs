@@ -9,7 +9,6 @@ namespace SWEndor.ActorTypes
     public ActorTypeInfo ActorTypeInfo;
     public string Name;
     public float CreationTime;
-    public CreationState CreationState;
     public ActorState InitialState;
     public TV_3DVECTOR InitialScale;
     public TV_3DVECTOR Position;
@@ -27,7 +26,6 @@ namespace SWEndor.ActorTypes
       InitialSpeed = at.MaxSpeed;
 
       Faction = FactionInfo.Neutral;
-      CreationState = CreationState.PLANNED;
       CreationTime = 0;
       InitialState = ActorState.NORMAL;
       InitialScale = new TV_3DVECTOR(1, 1, 1);

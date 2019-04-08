@@ -40,11 +40,11 @@ namespace SWEndor.ActorTypes
       ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
       ainfo.ExplosionInfo.DeathExplosionSize = 5;
 
-      ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"aship", new ImperialAntiShipTurboLaserWeapon() }
+      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"aship", new ImperialAntiShipTurboLaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new string[] { "1:aship" };
-      ainfo.SecondaryWeapons = new string[] { "none" };
-      ainfo.AIWeapons = new string[] { "1:aship" };
+      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:aship" };
+      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
+      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:aship" };
     }
   }
 }

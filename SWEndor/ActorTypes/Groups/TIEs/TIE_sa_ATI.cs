@@ -49,13 +49,13 @@ namespace SWEndor.ActorTypes
       ainfo.ExplosionInfo.ExplosionSize = 1;
       ainfo.ExplosionInfo.ExplosionType = "Explosion";
 
-      ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", new TIE_sa_TorpWeapon() }
+      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", new TIE_sa_TorpWeapon() }
                                                         , {"ion", new TIE_sa_IonWeapon() }
                                                         , {"laser", new TIE_sa_LaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new string[] { "1:laser", "2:laser" };
-      ainfo.SecondaryWeapons = new string[] { "none", "1:ion", "1:torp" };
-      ainfo.AIWeapons = new string[] { "1:torp", "1:ion", "1:laser" };
+      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser", "2:laser" };
+      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none", "1:ion", "1:torp" };
+      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:torp", "1:ion", "1:laser" };
     }
   }
 }

@@ -316,6 +316,10 @@ namespace SWEndor
               ActorInfo.Factory.ActivatePlanned();
 
           if (!IsPaused)
+            using (new PerfElement("tick_process_destroyactors"))
+              ActorInfo.Factory.DestroyDead();
+
+          if (!IsPaused)
             using (new PerfElement("tick_process_scenario"))
               GameScenarioManager.Instance().Update();
 

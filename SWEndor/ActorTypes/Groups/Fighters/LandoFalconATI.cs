@@ -48,10 +48,6 @@ namespace SWEndor.ActorTypes
     {
       base.Initialize(ainfo);
 
-      // Weapon selection
-      ainfo.SetStateS("PrimaryWeaponModes", "1laser");
-      ainfo.SetStateS("SecondaryWeaponModes", "none");
-
       // Camera System
       ainfo.CamLocations.Add(new TV_3DVECTOR(0, 0, 50));
       ainfo.CamTargets.Add(new TV_3DVECTOR(0, 5, 2000));
@@ -68,11 +64,11 @@ namespace SWEndor.ActorTypes
 
       ainfo.RegenerationInfo.SelfRegenRate = 0.1f;
       
-      ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", new FalconLaserWeapon() }
+      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", new FalconLaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new string[] { "1:laser" };
-      ainfo.SecondaryWeapons = new string[] { "none" };
-      ainfo.AIWeapons = new string[] { "1:laser" };
+      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser" };
+      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
+      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:laser" };
 
       ainfo.CombatInfo.HitWhileDyingLeadsToDeath = false;
     }

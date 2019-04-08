@@ -309,7 +309,7 @@ namespace SWEndor.ActorTypes
       {
         ainfo.LastProcessStateUpdateTime = Game.Instance().GameTime + 1;
         // weapons
-        foreach (WeaponInfo w in ainfo.Weapons.Values)
+        foreach (WeaponInfo w in ainfo.WeaponSystemInfo.Weapons.Values)
           w.Reload();
 
         // regeneration
@@ -390,7 +390,7 @@ namespace SWEndor.ActorTypes
         {
           if (GameScenarioManager.Instance().SceneCamera != null && GameScenarioManager.Instance().SceneCamera.TypeInfo is DeathCameraATI)
           {
-            GameScenarioManager.Instance().SceneCamera.Destroy();
+            GameScenarioManager.Instance().SceneCamera.Kill();
             GameScenarioManager.Instance().SceneCamera = null;
           }
         }
@@ -544,9 +544,9 @@ namespace SWEndor.ActorTypes
         s = sweapon.Trim();
       }
 
-      if (ainfo.Weapons.ContainsKey(s))
+      if (ainfo.WeaponSystemInfo.Weapons.ContainsKey(s))
       {
-        weapon = ainfo.Weapons[s];
+        weapon = ainfo.WeaponSystemInfo.Weapons[s];
       }
     }
 
@@ -558,7 +558,7 @@ namespace SWEndor.ActorTypes
       // AI Determination
       if (sweapon == "auto")
       {
-        foreach (string ws in ainfo.AIWeapons)
+        foreach (string ws in ainfo.WeaponSystemInfo.AIWeapons)
         {
           if (FireWeapon(ainfo, target, ws))
             return true;

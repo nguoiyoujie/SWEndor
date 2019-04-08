@@ -143,7 +143,7 @@ namespace SWEndor.Scenarios
       foreach (ActorInfo a in ActorInfo.Factory.GetActorList())
       {
         if (a != null)
-          a.Destroy();
+          a.Kill();
       }
       GameScenarioManager.Instance().ClearGameStates();
       GameScenarioManager.Instance().ClearEvents();

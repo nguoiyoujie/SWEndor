@@ -73,7 +73,7 @@ namespace SWEndor.ActorTypes
 
           float empduration = 12;
           
-          foreach (WeaponInfo w in child.Weapons.Values)
+          foreach (WeaponInfo w in child.WeaponSystemInfo.Weapons.Values)
           {
             if (w.WeaponCooldown < Game.Instance().GameTime + empduration + 2)
             {

@@ -41,6 +41,7 @@ namespace SWEndor.ActorTypes
       base.Initialize(ainfo);
       ainfo.ExplosionInfo.ExplosionRate = 0.5f;
       ainfo.ExplosionInfo.ExplosionSize = 5;
+      //ainfo.CombatInfo.HitWhileDyingLeadsToDeath = false;
     }
 
     public override void ProcessState(ActorInfo ainfo)

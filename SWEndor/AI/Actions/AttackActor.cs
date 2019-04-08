@@ -20,7 +20,7 @@ namespace SWEndor.AI.Actions
     }
 
     // parameters
-    public ActorInfo Target_Actor = null;
+    public readonly ActorInfo Target_Actor = null;
     public TV_3DVECTOR Target_Position = new TV_3DVECTOR();
     public float FollowDistance = -1;
     public float TooCloseDistance = -1;
@@ -127,9 +127,9 @@ namespace SWEndor.AI.Actions
 
         if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
         {
-          ActionManager.QueueFirst(owner, new AvoidCollisionRotate(owner.ProspectiveCollisionImpact, owner.ProspectiveCollisionNormal));
+          ActionManager.QueueFirst(owner, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
           //if (owner.ProspectiveCollisionActor != null && owner.ProspectiveCollisionActor.GetTopParent() == Target_Actor.GetTopParent())
-          //  ActionManager.QueueNext(owner, new Rotate(owner.ProspectiveCollisionImpact + owner.ProspectiveCollisionNormal * 10000, owner.MovementInfo.MinSpeed, 45));
+          //  ActionManager.QueueNext(owner, new Rotate(owner.ProspectiveCollisionImpact + owner.CollisionInfo.ProspectiveCollisionNormal * 10000, owner.MovementInfo.MinSpeed, 45));
         }
       }
     }

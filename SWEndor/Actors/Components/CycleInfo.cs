@@ -21,6 +21,14 @@ namespace SWEndor.Actors.Components
       CycleTime = 0;
     }
 
+    public void Reset()
+    {
+      Action = null;
+      CyclesRemaining = 1;
+      CyclePeriod = 1;
+      CycleTime = 0;
+    }
+
     public void Process()
     {
       CycleTime -= Game.Instance().TimeSinceRender;

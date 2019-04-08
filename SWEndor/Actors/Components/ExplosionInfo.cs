@@ -31,6 +31,19 @@ namespace SWEndor.Actors.Components
       DeathExplosionSize = 1;
     }
 
+    public void Reset()
+    {
+      Active = false;
+      ExplosionCooldown = Game.Instance().GameTime;
+      ExplosionRate = 0.5f;
+      ExplosionSize = 1;
+      ExplosionType = "Explosion";
+      _cache = null;
+      EnableDeathExplosion = false;
+      DeathExplosionType = "ExplosionSm";
+      DeathExplosionSize = 1;
+    }
+
     public void ProcessDying()
     {
       if (Actor.TypeInfo.IsExplosion) // don't let explosions create explosions.

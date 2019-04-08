@@ -308,8 +308,8 @@ namespace SWEndor.Scenarios
     {
       foreach (ActorInfo ainfo in MainAllyFaction.GetWings())
       {
-        ainfo.SecondaryWeapons = new string[] { "none" };
-        ainfo.AIWeapons = new string[] { "1:laser" };
+        ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
+        ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:laser" };
       }
       PlayerInfo.Instance().ResetPrimaryWeapon();
       PlayerInfo.Instance().ResetSecondaryWeapon();

@@ -320,7 +320,7 @@ namespace SWEndor.Scenarios
         Registries = null
       }.Spawn(this);
 
-      ainfo.SecondaryWeapons = new string[] { "front", "rear" };
+      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "front", "rear" };
       ainfo.CombatInfo.DamageModifier = 0.1f;
       ainfo.HitEvents.Add("Rebel_PlayerHit");
       GameScenarioManager.Instance().CameraTargetActor = ainfo;
@@ -488,7 +488,7 @@ namespace SWEndor.Scenarios
             Registries = null
           }.Spawn(this);
 
-          ainfo.SecondaryWeapons = new string[] { "front", "rear" };
+          ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "front", "rear" };
           ainfo.CombatInfo.DamageModifier = 0.1f;
           ainfo.HitEvents.Add("Rebel_PlayerHit");
 
@@ -517,7 +517,7 @@ namespace SWEndor.Scenarios
       {
         if (!a.IsPlayer())
         {
-          a.Destroy();
+          a.Kill();
         }
       }
 
@@ -525,7 +525,7 @@ namespace SWEndor.Scenarios
       {
         if (!a.IsPlayer())
         {
-          a.Destroy();
+          a.Kill();
         }
       }
     }
@@ -950,7 +950,7 @@ namespace SWEndor.Scenarios
       int z = -1400;
 
       foreach (ActorInfo ainfo in MainEnemyFaction.GetWings())
-        ainfo.Destroy();
+        ainfo.Kill();
 
       foreach (ActorInfo ainfo in MainAllyFaction.GetWings())
       {
@@ -1025,7 +1025,7 @@ namespace SWEndor.Scenarios
         }
         else
         {
-          ainfo.Destroy();
+          ainfo.Kill();
         }
         en_ship++;
       }

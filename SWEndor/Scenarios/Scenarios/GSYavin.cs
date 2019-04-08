@@ -503,7 +503,6 @@ namespace SWEndor.Scenarios
       GameEvent.RegisterEvent("Rebel_HyperspaceIn", Rebel_HyperspaceIn);
       GameEvent.RegisterEvent("Rebel_MakePlayer", Rebel_MakePlayer);
       GameEvent.RegisterEvent("Rebel_RemoveTorps", Rebel_RemoveTorps);
-      GameEvent.RegisterEvent("Rebel_StrongerWings", Rebel_StrongerWings);
       GameEvent.RegisterEvent("Rebel_YWingsAttackScan", Rebel_YWingsAttackScan);
       GameEvent.RegisterEvent("Rebel_GiveControl", Rebel_GiveControl);
       GameEvent.RegisterEvent("Rebel_Forward", Rebel_Forward);
@@ -619,6 +618,8 @@ namespace SWEndor.Scenarios
                                        , XWingATI.Instance().MaxSpeed)},
             Registries = null
           }.Spawn(this);
+
+          ainfo.CombatInfo.DamageModifier = 0.75f;
         }
         else
         {
@@ -638,7 +639,7 @@ namespace SWEndor.Scenarios
             Registries = null
           }.Spawn(this);
 
-          ainfo.CombatInfo.DamageModifier = 0.75f;
+          ainfo.CombatInfo.DamageModifier = 0.6f;
         }
       }
     }
@@ -649,7 +650,7 @@ namespace SWEndor.Scenarios
       {
         if (ainfo.TypeInfo is YWingATI)
         {
-          foreach (KeyValuePair<string, WeaponInfo> kvp in ainfo.Weapons)
+          foreach (KeyValuePair<string, WeaponInfo> kvp in ainfo.WeaponSystemInfo.Weapons)
           {
             if (kvp.Key.Contains("torp") || kvp.Key.Contains("ion"))
             {
@@ -660,7 +661,7 @@ namespace SWEndor.Scenarios
         }
         else
         {
-          foreach (KeyValuePair<string, WeaponInfo> kvp in ainfo.Weapons)
+          foreach (KeyValuePair<string, WeaponInfo> kvp in ainfo.WeaponSystemInfo.Weapons)
           {
             if (kvp.Key.Contains("torp") || kvp.Key.Contains("ion"))
             {
@@ -668,8 +669,8 @@ namespace SWEndor.Scenarios
               kvp.Value.MaxAmmo = 0;
             }
           }
-          ainfo.SecondaryWeapons = new string[] { "none" };
-          ainfo.AIWeapons = new string[] { "1:laser" };
+          ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
+          ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:laser" };
         }
       }
       if (m_Player != null)
@@ -679,12 +680,12 @@ namespace SWEndor.Scenarios
           m_Player.MovementInfo.MinSpeed = 400;
           m_Player.MovementInfo.MaxSpeed = 400;
           m_Player.CombatInfo.DamageModifier = 0.5f;
-          m_Player.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", new XWingTorpWeapon() }
+          m_Player.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", new XWingTorpWeapon() }
                                                         , {"laser", new XWingLaserWeapon() }
                                                         };
-          m_Player.PrimaryWeapons = new string[] { "1:laser", "2:laser", "4:laser" };
-          m_Player.SecondaryWeapons = new string[] { "4:laser", "1:torp" };
-          m_Player.AIWeapons = new string[] { "1:torp", "1:laser" };
+          m_Player.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser", "2:laser", "4:laser" };
+          m_Player.WeaponSystemInfo.SecondaryWeapons = new string[] { "4:laser", "1:torp" };
+          m_Player.WeaponSystemInfo.AIWeapons = new string[] { "1:torp", "1:laser" };
         }
         else if (GameScenarioManager.Instance().GetGameStateB("Stage5StartRun"))
         {
@@ -699,20 +700,6 @@ namespace SWEndor.Scenarios
       }
       PlayerInfo.Instance().ResetPrimaryWeapon();
       PlayerInfo.Instance().ResetSecondaryWeapon();
-    }
-
-    public void Rebel_StrongerWings(object[] param)
-    {
-      foreach (ActorInfo ainfo in MainAllyFaction.GetWings())
-      {
-        if (!ainfo.GetStateB("Stronger") && !ainfo.IsPlayer())
-        {
-          ainfo.SetStateB("Stronger", true);
-          ainfo.RegenerationInfo.SelfRegenRate *= 2.5f;
-          //ainfo.MaxStrength *= 5;
-          //ainfo.Strength *= 5;
-        }
-      }
     }
 
     public void Rebel_YWingsAttackScan(object[] param)
@@ -794,7 +781,6 @@ namespace SWEndor.Scenarios
       }
       m_Player = PlayerInfo.Instance().Actor;
       GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Rebel_RemoveTorps");
-      //GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Rebel_StrongerWings");
     }
 
     public void Rebel_GiveControl(object[] param)
@@ -1223,7 +1209,7 @@ namespace SWEndor.Scenarios
 
       foreach (ActorInfo ainfo in MainEnemyFaction.GetShips())
       {
-        ainfo.Destroy();
+        ainfo.Kill();
       }
 
       GameScenarioManager.Instance().MaxBounds = new TV_3DVECTOR(10000, 400, 8000);
@@ -1235,7 +1221,7 @@ namespace SWEndor.Scenarios
     public void Scene_ClearGroundObjects(object[] param)
     {
       foreach (ActorInfo ainfo in MainEnemyFaction.GetStructures())
-        ainfo.Destroy();
+        ainfo.Kill();
     }
 
     public void Scene_Stage02_Spawn(object[] param)
@@ -1277,9 +1263,9 @@ namespace SWEndor.Scenarios
           m_ADS_SurfaceParts.Add(asi.Spawn(this));
         }
 
-      m_ADS.Destroy();
+      m_ADS.Kill();
       m_AYavin.SetLocalRotation(0, 0, 180);
-      m_AYavin4.Destroy();
+      m_AYavin4.Kill();
       GameScenarioManager.Instance().SceneCamera.MovementInfo.MaxSpeed = 450;
       GameScenarioManager.Instance().SceneCamera.MovementInfo.Speed = 450;
       GameScenarioManager.Instance().CameraTargetActor = m_Player;
@@ -1380,26 +1366,6 @@ namespace SWEndor.Scenarios
       }
 
       Scene_ClearGroundObjects(null);
-      switch (Difficulty.ToLower())
-      {
-        case "easy":
-          ainfo.SetStateF("TIEspawnRemaining", 20);
-          break;
-        case "mental":
-          //Empire_TIEWave(new object[] { 4 });
-          ainfo.SetStateF("TIEspawnRemaining", 24);
-          //GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 73f, "Empire_TIEWave");
-          //GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 75f, "Message.06");
-          break;
-        case "hard":
-          //Empire_TIEWave(new object[] { 2 });
-          ainfo.SetStateF("TIEspawnRemaining", 22);
-          break;
-        case "normal":
-        default:
-          ainfo.SetStateF("TIEspawnRemaining", 22);
-          break;
-      }
       Empire_Towers03(null);
     }
 
@@ -1417,7 +1383,7 @@ namespace SWEndor.Scenarios
 
       foreach (ActorInfo a in m_ADS_SurfaceParts)
       {
-        a.Destroy();
+        a.Kill();
       }
       m_ADS_SurfaceParts.Clear();
 
@@ -1455,7 +1421,7 @@ namespace SWEndor.Scenarios
       GameScenarioManager.Instance().MaxAIBounds = new TV_3DVECTOR(7000, 300, 8000);
       GameScenarioManager.Instance().MinAIBounds = new TV_3DVECTOR(-7000, -160, -10000);
 
-      m_ADS_Surface.Destroy();
+      m_ADS_Surface.Kill();
       Scene_ClearGroundObjects(null);
 
       GameScenarioManager.Instance().SceneCamera.MovementInfo.MaxSpeed = 450;
@@ -1481,14 +1447,14 @@ namespace SWEndor.Scenarios
         {
           a.ActorState = ActorState.FIXED;
           a.Faction = FactionInfo.Neutral;
-          a.Destroy();
+          a.Kill();
         }
       }
       //m_Player.SetLocalPosition(7050, m_Player.GetLocalPosition())
 
       foreach (ActorInfo a in m_ADS_SurfaceParts)
       {
-        a.Destroy();
+        a.Kill();
       }
       m_ADS_SurfaceParts.Clear();
       Scene_ClearGroundObjects(null);
@@ -1607,9 +1573,9 @@ namespace SWEndor.Scenarios
             Type t = TrenchTypes[Trenches[0]].GetType();
             if (!(m_ADS_TrenchParts.Get(i).TypeInfo.GetType() == t) || i < counter)
             {
-              m_ADS_TrenchParts.Get(i).Destroy();
+              m_ADS_TrenchParts.Get(i).Kill();
               foreach (ActorInfo turret in TrenchTurrets[i])
-                turret.Destroy();
+                turret.Kill();
               TrenchTurrets[i].Clear();
 
               ActorSpawnInfo asi = new ActorSpawnInfo
@@ -1821,16 +1787,16 @@ namespace SWEndor.Scenarios
       Scene_ClearGroundObjects(null);
 
       if (m_Vader != null)
-      { m_Vader.Destroy(); }
+      { m_Vader.Kill(); }
 
       if (m_Falcon != null)
-      { m_Falcon.Destroy(); }
+      { m_Falcon.Kill(); }
 
       if (m_VaderEscort1 != null)
-      { m_VaderEscort1.Destroy(); }
+      { m_VaderEscort1.Kill(); }
 
       if (m_VaderEscort2 != null)
-      { m_VaderEscort2.Destroy(); }
+      { m_VaderEscort2.Kill(); }
 
       m_Vader = new ActorSpawnInfo
       {
@@ -1881,10 +1847,10 @@ namespace SWEndor.Scenarios
         Registries = null
       }.Spawn(this);
 
-      m_Vader.Weapons = new Dictionary<string, WeaponInfo>{ {"lsrb", new TIE_D_LaserWeapon() }
+      m_Vader.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"lsrb", new TIE_D_LaserWeapon() }
                                                         , {"laser", new TIE_D_LaserWeapon() }
                                                         };
-      m_Vader.AIWeapons = new string[] { "1:laser", "1:lsrb" };
+      m_Vader.WeaponSystemInfo.AIWeapons = new string[] { "1:laser", "1:lsrb" };
       m_Vader.MovementInfo.MaxSpeed = 400;
       m_Vader.MovementInfo.MinSpeed = 400;
       m_Vader.CanEvade = false;
@@ -1910,7 +1876,7 @@ namespace SWEndor.Scenarios
       GameScenarioManager.Instance().SetGameStateB("Stage6VaderAttacking", true);
 
       if (m_Falcon != null)
-      { m_Falcon.Destroy(); }
+      { m_Falcon.Kill(); }
 
       if (m_Vader != null)
       {

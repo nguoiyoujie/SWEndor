@@ -60,27 +60,19 @@ namespace SWEndor.Actors
       }
     }
 
-    // Scoring
+    // Components
     public ScoreInfo Score;
-
-    // Combat
     public CombatInfo CombatInfo;
-
-    // Movement
     public MovementInfo MovementInfo;
-
-    // Cycles
     public CycleInfo CycleInfo;
+    public WeaponSystemInfo WeaponSystemInfo;
+    public RegenerationInfo RegenerationInfo;
+    public ExplosionInfo ExplosionInfo;
+    public CollisionInfo CollisionInfo;
 
     // Checks
     public bool EnteredCombatZone = false;
     public float LastProcessStateUpdateTime = 0;
-
-    // Weapons System
-    public Dictionary<string, WeaponInfo> Weapons = new Dictionary<string, WeaponInfo>();
-    public string[] PrimaryWeapons = new string[0];
-    public string[] SecondaryWeapons = new string[0];
-    public string[] AIWeapons = new string[0];
 
     // Camera System
     public TV_3DVECTOR DefaultCamLocation = new TV_3DVECTOR();
@@ -92,18 +84,8 @@ namespace SWEndor.Actors
     public float CamDeathCircleHeight = 25;
     public float CamDeathCirclePeriod = 15;
 
-    // Regeneration
-    public RegenerationInfo RegenerationInfo;
-
-    // Explosion Systems
-    public ExplosionInfo ExplosionInfo;
-
-    // States
-    private Dictionary<string, float> StatesF = new Dictionary<string, float>();
-    private Dictionary<string, string> StatesS = new Dictionary<string, string>();
-    private Dictionary<string, bool> StatesB = new Dictionary<string, bool>();
-
     // Delegate Events
+    // plan to make them true delegates instead of string
     public List<string> TickEvents = new List<string>();
     public List<string> CreatedEvents = new List<string>();
     public List<string> DestroyedEvents = new List<string>();
@@ -115,22 +97,6 @@ namespace SWEndor.Actors
     public bool CanEvade = true;
     public bool CanRetaliate = true;
     public int HuntWeight = 1;
-
-    // Collision
-    public bool IsTestingCollision = false;
-    public bool IsInCollision = false;
-    public TV_3DVECTOR CollisionImpact = new TV_3DVECTOR();
-    public TV_3DVECTOR CollisionNormal = new TV_3DVECTOR();
-    public ActorInfo CollisionActor = null;
-    public bool IsTestingProspectiveCollision = false;
-    public bool IsInProspectiveCollision = false;
-    public ActorInfo ProspectiveCollisionActor = null;
-    public TV_3DVECTOR ProspectiveCollisionImpact = new TV_3DVECTOR();
-    public TV_3DVECTOR ProspectiveCollisionNormal = new TV_3DVECTOR();
-    public TV_3DVECTOR ProspectiveCollisionSafe = new TV_3DVECTOR();
-    public float ProspectiveCollisionScanDistance = 1000;
-    public float ProspectiveCollisionLevel = 0;
-    public bool IsAvoidingCollision = false;
 
     // Utility
     public ActorState ActorState { get; set; }
@@ -145,7 +111,6 @@ namespace SWEndor.Actors
 
     public TV_3DVECTOR Rotation { get; private set; }
     public Cached3DVector WorldRotation;
-
 
     // Render
     public TVMesh Mesh { get; private set; }
@@ -193,16 +158,17 @@ namespace SWEndor.Actors
       CycleInfo = new CycleInfo(this, null);
       RegenerationInfo = new RegenerationInfo(this);
       ExplosionInfo = new ExplosionInfo(this);
+      WeaponSystemInfo = new WeaponSystemInfo(this);
 
       // Creation
-      CreationState = acinfo.CreationState;
+      CreationState = CreationState.PLANNED;
       CreationTime = acinfo.CreationTime;
 
       // Combat
-      CombatInfo.IsCombatObject = acinfo.ActorTypeInfo.IsCombatObject;
-      CombatInfo.OnTimedLife = acinfo.ActorTypeInfo.OnTimedLife;
-      CombatInfo.TimedLife = acinfo.ActorTypeInfo.TimedLife;
-      CombatInfo.Strength = (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : acinfo.ActorTypeInfo.MaxStrength;
+      CombatInfo.IsCombatObject = TypeInfo.IsCombatObject;
+      CombatInfo.OnTimedLife = TypeInfo.OnTimedLife;
+      CombatInfo.TimedLife = TypeInfo.TimedLife;
+      CombatInfo.Strength = (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : TypeInfo.MaxStrength;
 
       Faction = acinfo.Faction;
       ActorState = acinfo.InitialState;
@@ -210,12 +176,44 @@ namespace SWEndor.Actors
       Rotation = acinfo.Rotation;
       Scale = acinfo.InitialScale;
 
-      MovementInfo.Speed = (acinfo.InitialSpeed > 0) ? acinfo.InitialSpeed : acinfo.ActorTypeInfo.MaxSpeed;
+      MovementInfo.Speed = (acinfo.InitialSpeed > 0) ? acinfo.InitialSpeed : TypeInfo.MaxSpeed;
       prevScale = acinfo.InitialScale;
       PrevPosition = Position;
 
-      HuntWeight = acinfo.ActorTypeInfo.HuntWeight;
+      HuntWeight = TypeInfo.HuntWeight;
 
+      TypeInfo.Initialize(this);
+    }
+
+    private void Rebuild(ActorCreationInfo acinfo)
+    {
+      // Clear past resources
+      Destroy();
+
+      TypeInfo = acinfo.ActorTypeInfo;
+      if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
+
+      // Creation
+      CreationState = CreationState.PLANNED;
+      CreationTime = acinfo.CreationTime;
+
+      // Combat
+      CombatInfo.IsCombatObject = TypeInfo.IsCombatObject;
+      CombatInfo.OnTimedLife = TypeInfo.OnTimedLife;
+      CombatInfo.TimedLife = TypeInfo.TimedLife;
+      CombatInfo.Strength = (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : TypeInfo.MaxStrength;
+
+      Faction = acinfo.Faction;
+      ActorState = acinfo.InitialState;
+      Position = acinfo.Position;
+      Rotation = acinfo.Rotation;
+      Scale = acinfo.InitialScale;
+
+      MovementInfo.Speed = (acinfo.InitialSpeed > 0) ? acinfo.InitialSpeed : TypeInfo.MaxSpeed;
+      prevScale = acinfo.InitialScale;
+      PrevPosition = Position;
+
+      HuntWeight = TypeInfo.HuntWeight;
       TypeInfo.Initialize(this);
     }
 
@@ -320,7 +318,7 @@ namespace SWEndor.Actors
       }
 
       if (ActorState == ActorState.DEAD)
-        Destroy();
+        Kill();
     }
 
     private void Update()
@@ -391,7 +389,7 @@ namespace SWEndor.Actors
 
     private void CheckCollision()
     {
-      IsTestingCollision = false;
+      CollisionInfo.IsTestingCollision = false;
       if (!PrevPosition.Equals(new TV_3DVECTOR()) && !GetPosition().Equals(new TV_3DVECTOR()))
       {
         // only check player and projectiles
@@ -399,23 +397,23 @@ namespace SWEndor.Actors
         //  if ((IsPlayer() && !PlayerInfo.Instance().PlayerAIEnabled) || TypeInfo is ProjectileGroup || (ActorState == ActorState.DYING && TypeInfo.TargetType.HasFlag(TargetType.FIGHTER)))
         //if (TypeInfo.IsDamage || TypeInfo.TargetType.HasFlag(TargetType.FIGHTER))
         {
-          if (IsInCollision)
+          if (CollisionInfo.IsInCollision)
           {
             if (IsPlayer() && PlayerInfo.Instance().PlayerAIEnabled)
             {
-              Screen2D.Instance().MessageSecondaryText(string.Format("DEV WARNING: PLAYER AI COLLIDED: {0}", CollisionActor), 1.5f, new TV_COLOR(1, 0.2f, 0.2f, 1), 99999);
-              IsInCollision = false;
-              IsTestingCollision = true;
+              Screen2D.Instance().MessageSecondaryText(string.Format("DEV WARNING: PLAYER AI COLLIDED: {0}", CollisionInfo.CollisionActor), 1.5f, new TV_COLOR(1, 0.2f, 0.2f, 1), 99999);
+              CollisionInfo.IsInCollision = false;
+              CollisionInfo.IsTestingCollision = true;
               return;
             }
-            if (CollisionActor != null)
+            if (CollisionInfo.CollisionActor != null)
             {
-              CollisionActor.TypeInfo.ProcessHit(CollisionActor, this, CollisionImpact, CollisionNormal);
-              TypeInfo.ProcessHit(this, CollisionActor, CollisionImpact, -1 * CollisionNormal);
+              CollisionInfo.CollisionActor.TypeInfo.ProcessHit(CollisionInfo.CollisionActor, this, CollisionInfo.CollisionImpact, CollisionInfo.CollisionNormal);
+              TypeInfo.ProcessHit(this, CollisionInfo.CollisionActor, CollisionInfo.CollisionImpact, -1 * CollisionInfo.CollisionNormal);
             }
-            IsInCollision = false;
+            CollisionInfo.IsInCollision = false;
           }
-          IsTestingCollision = true;
+          CollisionInfo.IsTestingCollision = true;
         }
       }
     }
@@ -435,25 +433,25 @@ namespace SWEndor.Actors
 
     private void TestCollision()
     {
-      if (IsTestingCollision)
+      if (CollisionInfo.IsTestingCollision)
       {
         //using (new PerfElement("collision_combat_" + Name.PadRight(15).Substring(0, 13)))
         //{
         TV_3DVECTOR vmin = GetRelativePositionXYZ(0, 0, TypeInfo.max_dimensions.z, false);
         TV_3DVECTOR vmax = GetRelativePositionXYZ(0, 0, TypeInfo.min_dimensions.z, false) + PrevPosition - Position;
 
-        IsInCollision = TestCollision(vmin, vmax, true, out CollisionImpact, out CollisionNormal, out CollisionActor);
-        IsTestingCollision = false;
+        CollisionInfo.IsInCollision = TestCollision(vmin, vmax, true, out CollisionInfo.CollisionImpact, out CollisionInfo.CollisionNormal, out CollisionInfo.CollisionActor);
+        CollisionInfo.IsTestingCollision = false;
         //}
       }
-      if (IsTestingProspectiveCollision)
+      if (CollisionInfo.IsTestingProspectiveCollision)
       {
         //using (new PerfElement("collision_prospect"))
         //{
         ActorInfo dummy;
 
         TV_3DVECTOR prostart = GetRelativePositionXYZ(0, 0, TypeInfo.max_dimensions.z + 10);
-        TV_3DVECTOR proend0 = GetRelativePositionXYZ(0, 0, TypeInfo.max_dimensions.z + 10 + ProspectiveCollisionScanDistance);
+        TV_3DVECTOR proend0 = GetRelativePositionXYZ(0, 0, TypeInfo.max_dimensions.z + 10 + CollisionInfo.ProspectiveCollisionScanDistance);
 
         TV_3DVECTOR proImpact = new TV_3DVECTOR();
         TV_3DVECTOR proNormal = new TV_3DVECTOR();
@@ -462,24 +460,24 @@ namespace SWEndor.Actors
         TV_3DVECTOR _Normal = new TV_3DVECTOR();
         int count = 0;
 
-        IsInProspectiveCollision = false;
+        CollisionInfo.IsInProspectiveCollision = false;
 
-        if (TestCollision(prostart, proend0, false, out _Impact, out _Normal, out ProspectiveCollisionActor))
+        if (TestCollision(prostart, proend0, false, out _Impact, out _Normal, out CollisionInfo.ProspectiveCollisionActor))
         {
           proImpact += _Impact;
           proNormal += _Normal;
           count++;
-          IsInProspectiveCollision = true;
-          ProspectiveCollisionSafe = _Impact + _Normal * 10000;
+          CollisionInfo.IsInProspectiveCollision = true;
+          CollisionInfo.ProspectiveCollisionSafe = _Impact + _Normal * 10000;
         }
 
-        if (IsInProspectiveCollision || IsAvoidingCollision)
-          ProspectiveCollisionLevel = 0;
+        if (CollisionInfo.IsInProspectiveCollision || CollisionInfo.IsAvoidingCollision)
+          CollisionInfo.ProspectiveCollisionLevel = 0;
         bool nextlevel = true;
         float dist = 0;
-        while (nextlevel && ProspectiveCollisionLevel < 5)
+        while (nextlevel && CollisionInfo.ProspectiveCollisionLevel < 5)
         {
-          ProspectiveCollisionLevel++;
+          CollisionInfo.ProspectiveCollisionLevel++;
           nextlevel = true;
           for (int i = -1; i <= 1; i++)
             for (int j = -1; j <= 1; j++)
@@ -487,9 +485,9 @@ namespace SWEndor.Actors
               if (i == 0 && j == 0)
                 continue;
 
-              proend0 = GetRelativePositionXYZ(i * ProspectiveCollisionScanDistance * 0.1f * ProspectiveCollisionLevel
-                                             , j * ProspectiveCollisionScanDistance * 0.1f * ProspectiveCollisionLevel
-                                             , TypeInfo.max_dimensions.z + 10 + ProspectiveCollisionScanDistance);
+              proend0 = GetRelativePositionXYZ(i * CollisionInfo.ProspectiveCollisionScanDistance * 0.1f * CollisionInfo.ProspectiveCollisionLevel
+                                             , j * CollisionInfo.ProspectiveCollisionScanDistance * 0.1f * CollisionInfo.ProspectiveCollisionLevel
+                                             , TypeInfo.max_dimensions.z + 10 + CollisionInfo.ProspectiveCollisionScanDistance);
               if (TestCollision(prostart, proend0, false, out _Impact, out _Normal, out dummy))
               {
                 proImpact += _Impact;
@@ -499,27 +497,27 @@ namespace SWEndor.Actors
                 if (dist < newdist)
                 {
                   dist = newdist;
-                  ProspectiveCollisionSafe = Position + (proend0 - Position) * 1000;
-                  if (IsAvoidingCollision)
+                  CollisionInfo.ProspectiveCollisionSafe = Position + (proend0 - Position) * 1000;
+                  if (CollisionInfo.IsAvoidingCollision)
                     nextlevel = false;
                 }
               }
               else
               {
                 dist = float.MaxValue;
-                if (!IsAvoidingCollision)
+                if (!CollisionInfo.IsAvoidingCollision)
                   nextlevel = false;
-                ProspectiveCollisionSafe = Position + (proend0 - Position) * 1000;
+                CollisionInfo.ProspectiveCollisionSafe = Position + (proend0 - Position) * 1000;
               }
             }
         }
 
         if (count > 0)
         {
-          ProspectiveCollisionImpact = proImpact / count;
-          ProspectiveCollisionNormal = proNormal / count;
+          CollisionInfo.ProspectiveCollisionImpact = proImpact / count;
+          CollisionInfo.ProspectiveCollisionNormal = proNormal / count;
         }
-        IsTestingProspectiveCollision = false;
+        CollisionInfo.IsTestingProspectiveCollision = false;
       }
       //}
     }
@@ -881,96 +879,6 @@ namespace SWEndor.Actors
       SetRotation(vec.x + x, vec.y + y, vec.z + z);
     }
 
-    #region CustomStates
-    public bool IsStateFDefined(string key)
-    {
-      return StatesF.ContainsKey(key);
-    }
-
-    public string[] GetStateFKeys()
-    {
-      string[] ret = new string[StatesF.Count];
-      StatesF.Keys.CopyTo(ret, 0);
-      return ret;
-    }
-
-    public void SetStateF(string key, float value)
-    {
-      if (StatesF.ContainsKey(key))
-      {
-        StatesF[key] = value;
-      }
-      else
-      {
-        StatesF.Add(key, value);
-      }
-    }
-
-    public float GetStateF(string key, float defaultvalue = 0)
-    {
-      return (StatesF.ContainsKey(key)) ? StatesF[key] : defaultvalue;
-    }
-
-    public bool IsStateBDefined(string key)
-    {
-      return StatesB.ContainsKey(key);
-    }
-
-    public string[] GetStateBKeys()
-    {
-      string[] ret = new string[StatesB.Count];
-      StatesB.Keys.CopyTo(ret, 0);
-      return ret;
-    }
-
-    public void SetStateB(string key, bool value)
-    {
-      if (StatesB.ContainsKey(key))
-      {
-        StatesB[key] = value;
-      }
-      else
-      {
-        StatesB.Add(key, value);
-      }
-    }
-
-    public bool GetStateB(string key, bool defaultvalue = false)
-    {
-      return (StatesB.ContainsKey(key)) ? StatesB[key] : defaultvalue;
-    }
-
-    public bool IsStateSDefined(string key)
-    {
-      return StatesS.ContainsKey(key);
-    }
-
-    public string[] GetCustomStateSKeys()
-    {
-      string[] ret = new string[StatesS.Count];
-      StatesS.Keys.CopyTo(ret, 0);
-      return ret;
-    }
-
-    public void SetStateS(string key, string value)
-    {
-      if (StatesS.ContainsKey(key))
-      {
-        StatesS[key] = value;
-      }
-      else
-      {
-        StatesS.Add(key, value);
-      }
-    }
-
-    public string GetStateS(string key, string defaultvalue = "")
-    {
-      return (StatesS.ContainsKey(key)) ? StatesS[key] : defaultvalue;
-    }
-
-    #endregion
-
     #region Parent, Child and Relatives
 
     public void ChildExecute(object sender, ActionEventArgs args)
@@ -1125,7 +1033,7 @@ namespace SWEndor.Actors
     public float GetWeaponRange()
     {
       float ret = 0;
-      foreach (WeaponInfo w in Weapons.Values)
+      foreach (WeaponInfo w in WeaponSystemInfo.Weapons.Values)
       {
         if (ret < w.Range)
           ret = w.Range;
@@ -1138,7 +1046,7 @@ namespace SWEndor.Actors
       weapon = null;
       burst = 0;
       WeaponInfo weap = null;
-      foreach (string ws in AIWeapons)
+      foreach (string ws in WeaponSystemInfo.AIWeapons)
       {
         TypeInfo.InterpretWeapon(this, ws, out weap, out burst);
 
@@ -1198,10 +1106,18 @@ namespace SWEndor.Actors
       }
     }
 
-    public void Destroy()
+    public void Kill()
+    {
+      Factory.MakeDead(this);
+    }
+
+    private void Destroy()
     {
       using (new PerfElement("actor_process_destroy"))
       {
+        if (CreationState == CreationState.DISPOSED)
+          return;
+
         // Parent
         RemoveParent();
 
@@ -1221,10 +1137,25 @@ namespace SWEndor.Actors
           FarMesh.Destroy();
         FarMesh = null;
 
+        AttachToMesh = 0;
+
         // Particle System
         if (ParticleSystem != null)
           ParticleSystem.Destroy();
         ParticleSystem = null;
+
+        // Actions
+        CurrentAction = null;
+
+        // Reset components
+        Score.Reset();
+        CombatInfo.Reset();
+        MovementInfo.Reset();
+        CycleInfo.Reset();
+        RegenerationInfo.Reset();
+        ExplosionInfo.Reset();
+        WeaponSystemInfo.Reset();
+        CollisionInfo.Reset();
 
         // Events
         OnDestroyedEvent(new object[] { this, ActorState });
@@ -1235,9 +1166,11 @@ namespace SWEndor.Actors
         ActorStateChangeEvents.Clear();
 
         // Final dispose
-        CreationState = CreationState.DISPOSED;
         Faction.UnregisterActor(this);
         Factory.RemoveActor(ID);
+
+        // Finally
+        CreationState = CreationState.DISPOSED;
       }
     }
   }

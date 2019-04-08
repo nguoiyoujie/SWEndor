@@ -62,11 +62,11 @@ namespace SWEndor.ActorTypes
 
       ainfo.RegenerationInfo.SelfRegenRate = 0.08f;
 
-      ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", new FalconLaserWeapon() }
+      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", new FalconLaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new string[] { "1:laser" };
-      ainfo.SecondaryWeapons = new string[] { "none" };
-      ainfo.AIWeapons = new string[] { "1:laser" };
+      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser" };
+      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
+      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:laser" };
 
       ainfo.CombatInfo.HitWhileDyingLeadsToDeath = false;
     }

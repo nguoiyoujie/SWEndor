@@ -24,6 +24,17 @@
       HitWhileDyingLeadsToDeath = true;
     }
 
+    public void Reset()
+    {
+      IsCombatObject = false;
+      OnTimedLife = false;
+      TimedLife = 100;
+      Strength = 1;
+      MaxStrength = 1;
+      DamageModifier = 1;
+      HitWhileDyingLeadsToDeath = true;
+    }
+
     private void Dying()
     {
       if (Actor.ActorState != ActorState.DYING && Actor.ActorState != ActorState.DEAD)

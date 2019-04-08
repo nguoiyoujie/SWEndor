@@ -164,7 +164,7 @@ namespace SWEndor.AI.Actions
 
       if (m_collisioncheck_time < Game.Instance().GameTime)
       {
-        if (owner.IsInProspectiveCollision)
+        if (owner.CollisionInfo.IsInProspectiveCollision)
         {
           m_collisioncheck_time = Game.Instance().GameTime + 0.25f; // delay should be adjusted with FPS / CPU load, ideally every ~0.5s, but not more than 2.5s. Can be slightly longer since it is already performing evasion.
         }
@@ -172,10 +172,10 @@ namespace SWEndor.AI.Actions
         {
           m_collisioncheck_time = Game.Instance().GameTime + 0.1f; // delay should be adjusted with FPS / CPU load, ideally every run (~0.1s), but not more than 2s.
         }
-        owner.ProspectiveCollisionScanDistance = scandistance;
-        owner.IsTestingProspectiveCollision = true;
+        owner.CollisionInfo.ProspectiveCollisionScanDistance = scandistance;
+        owner.CollisionInfo.IsTestingProspectiveCollision = true;
       }
-      return owner.IsInProspectiveCollision;
+      return owner.CollisionInfo.IsInProspectiveCollision;
     }
   }
 }

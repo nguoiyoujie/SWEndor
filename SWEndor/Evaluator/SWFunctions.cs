@@ -44,12 +44,12 @@ namespace SWEndor.Evaluator
       Add("Actor_SetRotation".ToLowerInvariant(), new StaticFunction("Actor_SetRotation", Actor_SetRotation, 3, 3));
       Add("Actor_GetDirection".ToLowerInvariant(), new StaticFunction("Actor_GetDirection", Actor_GetDirection, 0, 0));
       Add("Actor_SetDirection".ToLowerInvariant(), new StaticFunction("Actor_SetDirection", Actor_SetDirection, 3, 3));
-      Add("Actor_GetStateB".ToLowerInvariant(), new StaticFunction("Actor_GetStateB", Actor_GetStateB, 1, 2));
-      Add("Actor_SetStateB".ToLowerInvariant(), new StaticFunction("Actor_SetStateB", Actor_SetStateB, 2, 2));
-      Add("Actor_GetStateF".ToLowerInvariant(), new StaticFunction("Actor_GetStateF", Actor_GetStateF, 1, 2));
-      Add("Actor_SetStateF".ToLowerInvariant(), new StaticFunction("Actor_SetStateF", Actor_SetStateF, 2, 2));
-      Add("Actor_GetStateS".ToLowerInvariant(), new StaticFunction("Actor_GetStateS", Actor_GetStateS, 1, 2));
-      Add("Actor_SetStateS".ToLowerInvariant(), new StaticFunction("Actor_SetStateS", Actor_SetStateS, 2, 2));
+      //Add("Actor_GetStateB".ToLowerInvariant(), new StaticFunction("Actor_GetStateB", Actor_GetStateB, 1, 2));
+      //Add("Actor_SetStateB".ToLowerInvariant(), new StaticFunction("Actor_SetStateB", Actor_SetStateB, 2, 2));
+      //Add("Actor_GetStateF".ToLowerInvariant(), new StaticFunction("Actor_GetStateF", Actor_GetStateF, 1, 2));
+      //Add("Actor_SetStateF".ToLowerInvariant(), new StaticFunction("Actor_SetStateF", Actor_SetStateF, 2, 2));
+      //Add("Actor_GetStateS".ToLowerInvariant(), new StaticFunction("Actor_GetStateS", Actor_GetStateS, 1, 2));
+      //Add("Actor_SetStateS".ToLowerInvariant(), new StaticFunction("Actor_SetStateS", Actor_SetStateS, 2, 2));
       Add("Actor_LookAtPoint".ToLowerInvariant(), new StaticFunction("Actor_LookAtPoint", Actor_LookAtPoint, 3, 4));
       Add("Actor_GetProperty".ToLowerInvariant(), new StaticFunction("Actor_GetProperty", Actor_GetProperty, 1, 1));
       Add("Actor_SetProperty".ToLowerInvariant(), new StaticFunction("Actor_SetProperty", Actor_SetProperty, 2, 2));
@@ -352,7 +352,7 @@ namespace SWEndor.Evaluator
       GameScenarioManager.Instance().Scenario.ActiveActor.SetDirection(Convert.ToSingle(ps[0].ToString()), Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()));
       return true;
     }
-
+    /*
     private static object Actor_GetStateB(object[] ps)
     {
       if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
@@ -412,6 +412,7 @@ namespace SWEndor.Evaluator
       GameScenarioManager.Instance().Scenario.ActiveActor.SetStateS(ps[1].ToString(), ps[2].ToString());
       return true;
     }
+    */ 
 
     private static object Actor_LookAtPoint(object[] ps)
     {

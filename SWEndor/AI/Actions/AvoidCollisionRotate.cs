@@ -42,8 +42,8 @@ namespace SWEndor.AI.Actions
 
       if (CheckBounds(owner))
       {
-        if (owner.ProspectiveCollisionLevel > 0 && owner.ProspectiveCollisionLevel < 5)
-          Target_Position = owner.ProspectiveCollisionSafe;
+        if (owner.CollisionInfo.ProspectiveCollisionLevel > 0 && owner.CollisionInfo.ProspectiveCollisionLevel < 5)
+          Target_Position = owner.CollisionInfo.ProspectiveCollisionSafe;
         else
           Target_Position = Impact_Position + Normal * 10000;
         float dist = Engine.Instance().TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Impact_Position);
@@ -62,18 +62,18 @@ namespace SWEndor.AI.Actions
         if (!calcAvoidAngle || (AvoidanceAngle - newavoid > -concavecheck && AvoidanceAngle - newavoid < concavecheck))
         {
           AvoidanceAngle = newavoid;
-          Impact_Position = owner.ProspectiveCollisionImpact;
-          Normal = owner.ProspectiveCollisionNormal;
+          Impact_Position = owner.CollisionInfo.ProspectiveCollisionImpact;
+          Normal = owner.CollisionInfo.ProspectiveCollisionNormal;
           calcAvoidAngle = true;
         }
         else
         { }
-        owner.IsAvoidingCollision = true;
+        owner.CollisionInfo.IsAvoidingCollision = true;
         Complete = false;
       }
       else
       {
-        owner.IsAvoidingCollision = false;
+        owner.CollisionInfo.IsAvoidingCollision = false;
         ActionManager.QueueNext(owner, new Wait(2.5f));
         Complete = true;
       }

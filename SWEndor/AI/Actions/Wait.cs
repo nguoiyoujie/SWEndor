@@ -31,7 +31,7 @@ namespace SWEndor.AI.Actions
       AdjustRotation(owner, owner.GetRelativePositionXYZ(0, 0, 1000), false);
       if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
       {
-        ActionManager.QueueFirst(owner, new AvoidCollisionRotate(owner.ProspectiveCollisionImpact, owner.ProspectiveCollisionNormal));
+        ActionManager.QueueFirst(owner, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
       }
       Complete |= (ResumeTime < Game.Instance().GameTime);
     }

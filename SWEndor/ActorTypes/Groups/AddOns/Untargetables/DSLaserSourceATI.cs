@@ -37,11 +37,11 @@ namespace SWEndor.ActorTypes
     {
       base.Initialize(ainfo);
 
-      ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", new DeathStarLaserWeapon() }
+      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", new DeathStarLaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new string[] { "1:laser" };
-      ainfo.SecondaryWeapons = new string[] { "none" };
-      ainfo.AIWeapons = new string[] { "1:laser" };
+      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser" };
+      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
+      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:laser" };
 
       ActionManager.QueueNext(ainfo, new Lock());
     }

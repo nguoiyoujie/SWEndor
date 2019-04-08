@@ -22,36 +22,6 @@ namespace SWEndor.ActorTypes
       ainfo.ExplosionInfo.EnableDeathExplosion = true;
       ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
     }
-
-    public override void ProcessState(ActorInfo ainfo)
-    {
-      base.ProcessState(ainfo);
-
-      ainfo.MovementInfo.ApplyZBalance = false;
-
-      if (!ainfo.IsStateFDefined("RotateAngle"))
-      {
-        double d = Engine.Instance().Random.NextDouble();
-
-        if (d > 0.5f)
-        {
-          ainfo.SetStateF("RotateAngle", Engine.Instance().Random.Next(180, 270));
-        }
-        else
-        {
-          ainfo.SetStateF("RotateAngle", Engine.Instance().Random.Next(-270, -180));
-        }
-      }
-
-      if (!ainfo.IsStateFDefined("RotateAngleRate"))
-      {
-        double d = Engine.Instance().Random.NextDouble() * 2.5;
-        ainfo.SetStateF("RotateAngleRate", (float)d);
-      }
-      float rotZ = ainfo.GetStateF("RotateAngle") * Game.Instance().TimeSinceRender * ainfo.GetStateF("RotateAngleRate");
-      ainfo.Rotate(0, 0, rotZ);
-      ainfo.MovementInfo.ResetTurn();
-    }
   }
 }
 

@@ -87,8 +87,8 @@ namespace SWEndor.UI.Widgets
         {
           targetpos = ((AvoidCollisionRotate)p.CurrentAction).Target_Position;
           Engine.Instance().TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 0.2f, 0.6f, 1).GetIntColor());
-          targetpos = p.ProspectiveCollisionImpact + p.ProspectiveCollisionNormal * 250;
-          Engine.Instance().TVScreen2DImmediate.Draw_Line3D(p.ProspectiveCollisionImpact.x, p.ProspectiveCollisionImpact.y, p.ProspectiveCollisionImpact.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 1, 1, 1).GetIntColor());
+          targetpos = p.CollisionInfo.ProspectiveCollisionImpact + p.CollisionInfo.ProspectiveCollisionNormal * 250;
+          Engine.Instance().TVScreen2DImmediate.Draw_Line3D(p.CollisionInfo.ProspectiveCollisionImpact.x, p.CollisionInfo.ProspectiveCollisionImpact.y, p.CollisionInfo.ProspectiveCollisionImpact.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 1, 1, 1).GetIntColor());
         }
 
         /*

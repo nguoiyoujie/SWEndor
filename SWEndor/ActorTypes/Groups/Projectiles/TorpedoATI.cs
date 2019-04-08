@@ -57,11 +57,11 @@ namespace SWEndor.ActorTypes
     {
       base.Initialize(ainfo);
 
-      ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"dummy", new TrackerDummyWeapon() }
+      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"dummy", new TrackerDummyWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new string[] { "1:dummy" };
-      ainfo.SecondaryWeapons = new string[] { "none" };
-      ainfo.AIWeapons = new string[] { "1:dummy" };
+      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:dummy" };
+      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
+      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:dummy" };
     }
 
     public override void ProcessState(ActorInfo ainfo)

@@ -59,13 +59,13 @@ namespace SWEndor.ActorTypes
 
       ainfo.RegenerationInfo.SelfRegenRate = 0.08f;
 
-      ainfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", new YWingTorpWeapon() }
+      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", new YWingTorpWeapon() }
                                                         , {"ion", new YWingIonWeapon() }
                                                         , {"laser", new YWingLaserWeapon() }
                                                         };
-      ainfo.PrimaryWeapons = new string[] { "1:laser" };
-      ainfo.SecondaryWeapons = new string[] { "none", "1:ion", "1:torp" };
-      ainfo.AIWeapons = new string[] { "1:torp", "1:ion", "1:laser" };
+      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser" };
+      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none", "1:ion", "1:torp" };
+      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:torp", "1:ion", "1:laser" };
 
       Debris = new DebrisSpawnerInfo[] {
         new DebrisSpawnerInfo("YWing_WingATI", new TV_3DVECTOR(-30, 0, 0), -1000, 1000, 0, 3000, -2500, 2500, 0.5f),

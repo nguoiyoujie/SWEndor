@@ -1112,7 +1112,7 @@ namespace SWEndor.Scenarios
       {
         if (!ainfo.IsPlayer())
         { 
-          foreach (KeyValuePair<string, WeaponInfo> kvp in ainfo.Weapons)
+          foreach (KeyValuePair<string, WeaponInfo> kvp in ainfo.WeaponSystemInfo.Weapons)
           {
             if (kvp.Key.Contains("torp") || kvp.Key.Contains("ion"))
             {
@@ -1133,7 +1133,7 @@ namespace SWEndor.Scenarios
 
       if (!ainfo.IsPlayer())
       {
-        foreach (KeyValuePair<string, WeaponInfo> kvp in ainfo.Weapons)
+        foreach (KeyValuePair<string, WeaponInfo> kvp in ainfo.WeaponSystemInfo.Weapons)
         {
           if (kvp.Key.Contains("torp") || kvp.Key.Contains("ion"))
           {
@@ -1169,7 +1169,7 @@ namespace SWEndor.Scenarios
 
       ActorInfo av = (ActorInfo)param[0];
 
-      if (!av.GetStateB("IgnoreHit") && av.CombatInfo.Strength < av.TypeInfo.MaxStrength * 0.8f && MainAllyFaction.GetShips().Count > 0)
+      if (av.CombatInfo.Strength < av.TypeInfo.MaxStrength * 0.8f && MainAllyFaction.GetShips().Count > 0)
       {
         int shp = Engine.Instance().Random.Next(0, MainAllyFaction.GetShips().Count - 1);
         ActorInfo[] ais = new ActorInfo[MainAllyFaction.GetShips().Count];
@@ -2015,7 +2015,7 @@ namespace SWEndor.Scenarios
       SDWaves++;
       if (m_ExecutorStatic != null)
       {
-        m_ExecutorStatic.Destroy();
+        m_ExecutorStatic.Kill();
       }
 
       TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(0, 0, -10000);
