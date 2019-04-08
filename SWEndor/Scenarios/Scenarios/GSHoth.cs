@@ -602,9 +602,9 @@ namespace SWEndor.Scenarios
           PlayerInfo.Instance().Actor = a;
           PlayerInfo.Instance().Actor.CombatInfo.Strength = 0;
 
-          a.CamDeathCirclePeriod = ainfo.CamDeathCirclePeriod;
-          a.CamDeathCircleRadius = ainfo.CamDeathCircleRadius;
-          a.CamDeathCircleHeight = ainfo.CamDeathCircleHeight;
+          a.CameraSystemInfo.CamDeathCirclePeriod = ainfo.CameraSystemInfo.CamDeathCirclePeriod;
+          a.CameraSystemInfo.CamDeathCircleRadius = ainfo.CameraSystemInfo.CamDeathCircleRadius;
+          a.CameraSystemInfo.CamDeathCircleHeight = ainfo.CameraSystemInfo.CamDeathCircleHeight;
 
           if (ainfo.ActorState == ActorState.DYING)
           {

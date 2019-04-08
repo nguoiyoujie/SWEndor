@@ -40,19 +40,25 @@ namespace SWEndor.ActorTypes
     {
       base.Initialize(ainfo);
 
-      // Camera System
-      ainfo.CamLocations.Add(new TV_3DVECTOR(0, 2, 20));
-      ainfo.CamTargets.Add(new TV_3DVECTOR(0, 5, 2000));
-      ainfo.CamLocations.Add(new TV_3DVECTOR(0, 125, -200));
-      ainfo.CamTargets.Add(new TV_3DVECTOR(0, 0, 2000));
-      ainfo.CamLocations.Add(new TV_3DVECTOR(0, 40, 250));
-      ainfo.CamTargets.Add(new TV_3DVECTOR(0, 0, -2000));
+      ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[]
+      {
+        new TV_3DVECTOR(0, 2, 20),
+        new TV_3DVECTOR(0, 125, -200),
+        new TV_3DVECTOR(0, 40, 250)
+      };
+
+      ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[]
+      {
+        new TV_3DVECTOR(0, 5, 2000),
+        new TV_3DVECTOR(0, 0, 2000),
+        new TV_3DVECTOR(0, 0, -2000)
+      };
 
       ainfo.ExplosionInfo.EnableDeathExplosion = true;
       ainfo.ExplosionInfo.ExplosionRate = 0.75f;
       ainfo.ExplosionInfo.ExplosionSize = 1;
 
-      ainfo.RegenerationInfo.SelfRegenRate= 0.08f;
+      ainfo.RegenerationInfo.SelfRegenRate = 0.08f;
 
       ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("A-Wing Torpedo")} //new AWingTorpWeapon() }
                                                         , {"laser", WeaponFactory.Get("A-Wing Laser")} // new AWingLaserWeapon() }

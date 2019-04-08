@@ -51,13 +51,19 @@ namespace SWEndor.ActorTypes
     {
       base.Initialize(ainfo);
 
-      // Camera System
-      ainfo.CamLocations.Add(new TV_3DVECTOR(0, 55, -35));
-      ainfo.CamTargets.Add(new TV_3DVECTOR(0, 55, 2000));
-      ainfo.CamLocations.Add(new TV_3DVECTOR(0, 300, -800));
-      ainfo.CamTargets.Add(new TV_3DVECTOR(0, 0, 2000));
-      ainfo.CamLocations.Add(new TV_3DVECTOR(0, 40, 250));
-      ainfo.CamTargets.Add(new TV_3DVECTOR(0, 0, -2000));
+      ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[]
+      {
+        new TV_3DVECTOR(0, 55, -35),
+        new TV_3DVECTOR(0, 300, -800),
+        new TV_3DVECTOR(0, 40, 250)
+      };
+
+      ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[]
+      {
+        new TV_3DVECTOR(0, 55, 2000),
+        new TV_3DVECTOR(0, 0, 2000),
+        new TV_3DVECTOR(0, 0, -2000)
+      };
     }
   }
 }

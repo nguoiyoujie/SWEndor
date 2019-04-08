@@ -69,20 +69,14 @@ namespace SWEndor.Actors
     public RegenerationInfo RegenerationInfo;
     public ExplosionInfo ExplosionInfo;
     public CollisionInfo CollisionInfo;
+    public CameraSystemInfo CameraSystemInfo;
 
     // Checks
     public bool EnteredCombatZone = false;
     public float LastProcessStateUpdateTime = 0;
 
     // Camera System
-    public TV_3DVECTOR DefaultCamLocation = new TV_3DVECTOR();
-    public TV_3DVECTOR DefaultCamTarget = new TV_3DVECTOR(0, 0, 2000);
-    public List<TV_3DVECTOR> CamLocations = new List<TV_3DVECTOR>();
-    public List<TV_3DVECTOR> CamTargets = new List<TV_3DVECTOR>();
 
-    public float CamDeathCircleRadius = 350;
-    public float CamDeathCircleHeight = 25;
-    public float CamDeathCirclePeriod = 15;
 
     // Delegate Events
     // plan to make them true delegates instead of string

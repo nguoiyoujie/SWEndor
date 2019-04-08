@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="Actors\ActorCreationInfo.cs" />
     <Compile Include="Actors\Components\CollisionInfo.cs" />
+    <Compile Include="Actors\Components\CameraSystemInfo.cs" />
     <Compile Include="Actors\Components\WeaponSystemInfo.cs" />
     <Compile Include="Actors\Components\CycleInfo.cs" />
     <Compile Include="Actors\Components\ExplosionInfo.cs" />

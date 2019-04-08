@@ -1173,21 +1173,21 @@ namespace SWEndor.Evaluator
           return;
         case "CamDeathCircleHeight":
           if (setValue)
-            actor.CamDeathCircleHeight = Convert.ToSingle(newValue);
+            actor.CameraSystemInfo.CamDeathCircleHeight = Convert.ToSingle(newValue);
           else
-            newValue = actor.CamDeathCircleHeight;
+            newValue = actor.CameraSystemInfo.CamDeathCircleHeight;
           return;
         case "CamDeathCirclePeriod":
           if (setValue)
-            actor.CamDeathCirclePeriod = Convert.ToSingle(newValue);
+            actor.CameraSystemInfo.CamDeathCirclePeriod = Convert.ToSingle(newValue);
           else
-            newValue = actor.CamDeathCirclePeriod;
+            newValue = actor.CameraSystemInfo.CamDeathCirclePeriod;
           return;
         case "CamDeathCircleRadius":
           if (setValue)
-            actor.CamDeathCircleRadius = Convert.ToSingle(newValue);
+            actor.CameraSystemInfo.CamDeathCircleRadius = Convert.ToSingle(newValue);
           else
-            newValue = actor.CamDeathCircleRadius;
+            newValue = actor.CameraSystemInfo.CamDeathCircleRadius;
           return;
         case "CanEvade":
           if (setValue)

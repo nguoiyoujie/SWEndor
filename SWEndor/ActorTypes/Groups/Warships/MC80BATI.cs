@@ -57,12 +57,12 @@ namespace SWEndor.ActorTypes
     {
       base.Initialize(ainfo);
 
-      ainfo.CamDeathCircleRadius = 1500;
-      ainfo.CamDeathCircleHeight = 250;
-      ainfo.CamDeathCirclePeriod = 30;
+      ainfo.CameraSystemInfo.CamDeathCircleRadius = 1500;
+      ainfo.CameraSystemInfo.CamDeathCircleHeight = 250;
+      ainfo.CameraSystemInfo.CamDeathCirclePeriod = 30;
 
-      ainfo.CamLocations.Add(new TV_3DVECTOR(0, 45, 660));
-      ainfo.CamTargets.Add(new TV_3DVECTOR(0, 45, 2000));
+      ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 45, 660) };
+      ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 45, 2000)};
 
       ainfo.ExplosionInfo.DeathExplosionSize = 3.5f;
 

@@ -58,9 +58,8 @@ namespace SWEndor.ActorTypes
 
       List<float[]> ttowers = new List<float[]>();
 
-      // Camera System
-      ainfo.CamLocations.Add(new TV_3DVECTOR(0, 80, -45));
-      ainfo.CamTargets.Add(new TV_3DVECTOR(0, 80, 2000));
+      ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 80, -45) };
+      ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 80, 2000) };
 
       ainfo.ExplosionInfo.DeathExplosionSize = 1.5f;
     }

@@ -238,8 +238,8 @@ namespace SWEndor.ActorTypes
         TV_3DVECTOR location = new TV_3DVECTOR();
         TV_3DVECTOR target = new TV_3DVECTOR();
 
-        location = (cammode < ainfo.CamLocations.Count) ? ainfo.CamLocations[cammode] : defaultcam;
-        target = (cammode < ainfo.CamTargets.Count) ? ainfo.CamTargets[cammode] : defaulttgt;
+        location = (cammode < ainfo.CameraSystemInfo.CamLocations.Length) ? ainfo.CameraSystemInfo.CamLocations[cammode] : defaultcam;
+        target = (cammode < ainfo.CameraSystemInfo.CamTargets.Length) ? ainfo.CameraSystemInfo.CamTargets[cammode] : defaulttgt;
 
         TV_3DVECTOR campos = ainfo.GetRelativePositionXYZ(location.x, location.y, location.z);
         TV_3DVECTOR camview = ainfo.GetRelativePositionXYZ(target.x, target.y, target.z);
@@ -367,9 +367,9 @@ namespace SWEndor.ActorTypes
             PlayerInfo.Instance().Actor = a;
             PlayerInfo.Instance().Actor.CombatInfo.Strength = 0;
 
-            a.CamDeathCirclePeriod = ainfo.CamDeathCirclePeriod;
-            a.CamDeathCircleRadius = ainfo.CamDeathCircleRadius;
-            a.CamDeathCircleHeight = ainfo.CamDeathCircleHeight;
+            a.CameraSystemInfo.CamDeathCirclePeriod = ainfo.CameraSystemInfo.CamDeathCirclePeriod;
+            a.CameraSystemInfo.CamDeathCircleRadius = ainfo.CameraSystemInfo.CamDeathCircleRadius;
+            a.CameraSystemInfo.CamDeathCircleHeight = ainfo.CameraSystemInfo.CamDeathCircleHeight;
 
             if (ainfo.ActorState == ActorState.DYING)
             {

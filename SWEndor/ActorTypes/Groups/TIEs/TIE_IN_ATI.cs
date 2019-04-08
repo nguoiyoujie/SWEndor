@@ -37,13 +37,19 @@ namespace SWEndor.ActorTypes
     {
       base.Initialize(ainfo);
 
-      // Camera System
-      ainfo.CamLocations.Add(new TV_3DVECTOR(0, 0, 20));
-      ainfo.CamTargets.Add(new TV_3DVECTOR(0, 0, 2000));
-      ainfo.CamLocations.Add(new TV_3DVECTOR(0, 125, -200));
-      ainfo.CamTargets.Add(new TV_3DVECTOR(0, 0, 2000));
-      ainfo.CamLocations.Add(new TV_3DVECTOR(0, 40, 250));
-      ainfo.CamTargets.Add(new TV_3DVECTOR(0, 0, -2000));
+      ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[]
+      {
+        new TV_3DVECTOR(0, 0, 20),
+        new TV_3DVECTOR(0, 125, -200),
+        new TV_3DVECTOR(0, 40, 250)
+      };
+
+      ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[]
+      {
+        new TV_3DVECTOR(0, 0, 2000),
+        new TV_3DVECTOR(0, 0, 2000),
+        new TV_3DVECTOR(0, 0, -2000)
+      };
 
       ainfo.ExplosionInfo.EnableDeathExplosion = true;
       ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";

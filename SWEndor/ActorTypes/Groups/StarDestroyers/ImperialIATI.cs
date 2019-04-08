@@ -100,10 +100,9 @@ namespace SWEndor.ActorTypes
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-      
-      // Camera System
-      ainfo.CamLocations.Add(new TV_3DVECTOR(0, 300, -385));
-      ainfo.CamTargets.Add(new TV_3DVECTOR(0, 300, 2000));
+
+      ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 300, -385) };
+      ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 300, 2000) };
 
       ainfo.MovementInfo.DyingMovement = Actors.Components.DyingMovement.SINK;
       ainfo.MovementInfo.D_sink_pitch_rate = 0.005f;

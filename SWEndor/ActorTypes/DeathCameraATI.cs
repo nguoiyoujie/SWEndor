@@ -39,10 +39,10 @@ namespace SWEndor.ActorTypes
     {
       TVCamera cam = PlayerCameraInfo.Instance().Camera;
 
-      float circleperiod = ainfo.CamDeathCirclePeriod;
+      float circleperiod = ainfo.CameraSystemInfo.CamDeathCirclePeriod;
       float angularphase = (Game.Instance().GameTime % circleperiod) * (2 * Globals.PI / circleperiod);
-      float radius = ainfo.CamDeathCircleRadius;
-      float height = ainfo.CamDeathCircleHeight;
+      float radius = ainfo.CameraSystemInfo.CamDeathCircleRadius;
+      float height = ainfo.CameraSystemInfo.CamDeathCircleHeight;
 
       TV_3DVECTOR pos = ainfo.GetPosition();
       switch (GameScenarioManager.Instance().Scenario.DeathCamMode)
@@ -57,7 +57,7 @@ namespace SWEndor.ActorTypes
                         , pos.z);
           break;
         case DeathCamMode.FOLLOW:
-          TV_3DVECTOR pos2 = ainfo.GetRelativePositionFUR(0, ainfo.CamDeathCircleHeight, -ainfo.CamDeathCircleRadius, true);
+          TV_3DVECTOR pos2 = ainfo.GetRelativePositionFUR(0, ainfo.CameraSystemInfo.CamDeathCircleHeight, -ainfo.CameraSystemInfo.CamDeathCircleRadius, true);
           cam.SetPosition(pos2.x
                         , pos2.y
                         , pos2.z);

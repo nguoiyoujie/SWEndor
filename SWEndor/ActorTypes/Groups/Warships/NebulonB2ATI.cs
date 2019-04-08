@@ -53,8 +53,8 @@ namespace SWEndor.ActorTypes
 
       ainfo.RegenerationInfo.SelfRegenRate = 0.1f;
 
-      ainfo.CamLocations.Add(new TV_3DVECTOR(0, 120, -300));
-      ainfo.CamTargets.Add(new TV_3DVECTOR(0, 120, 2000));
+      ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 120, -300) };
+      ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 120, 2000) };
     }
   }
 }
