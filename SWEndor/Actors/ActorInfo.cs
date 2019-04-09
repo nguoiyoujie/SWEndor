@@ -8,7 +8,6 @@ using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using SWEndor.Weapons;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace SWEndor.Actors
@@ -80,11 +79,11 @@ namespace SWEndor.Actors
 
     // Delegate Events
     // plan to make them true delegates instead of string
-    public List<string> TickEvents = new List<string>();
-    public List<string> CreatedEvents = new List<string>();
-    public List<string> DestroyedEvents = new List<string>();
-    public List<string> ActorStateChangeEvents = new List<string>();
-    public List<string> HitEvents = new List<string>();
+    public GameEvent TickEvents;
+    public GameEvent CreatedEvents;
+    public GameEvent DestroyedEvents;
+    public GameEvent ActorStateChangeEvents;
+    public GameEvent HitEvents;
 
     // AI
     public ActionInfo CurrentAction = null;
@@ -150,9 +149,11 @@ namespace SWEndor.Actors
       CombatInfo = new CombatInfo(this);
       MovementInfo = new MovementInfo(this);
       CycleInfo = new CycleInfo(this, null);
+      WeaponSystemInfo = new WeaponSystemInfo(this);
       RegenerationInfo = new RegenerationInfo(this);
       ExplosionInfo = new ExplosionInfo(this);
-      WeaponSystemInfo = new WeaponSystemInfo(this);
+      CollisionInfo = new CollisionInfo(this);
+      CameraSystemInfo = new CameraSystemInfo(this);
 
       // Creation
       CreationState = CreationState.PLANNED;
@@ -994,11 +995,11 @@ namespace SWEndor.Actors
     #endregion
 
     #region Event Methods
-    public void OnTickEvent(object[] param) { foreach (string name in TickEvents) GameEvent.RunEvent(name, param); }
-    public void OnHitEvent(object[] param) { foreach (string name in HitEvents) GameEvent.RunEvent(name, param); }
-    public void OnStateChangeEvent(object[] param) { foreach (string name in ActorStateChangeEvents) GameEvent.RunEvent(name, param); }
-    public void OnCreatedEvent(object[] param) { foreach (string name in CreatedEvents) GameEvent.RunEvent(name, param); }
-    public void OnDestroyedEvent(object[] param) { foreach (string name in DestroyedEvents) GameEvent.RunEvent(name, param); }
+    public void OnTickEvent(object[] param) { TickEvents?.Invoke(this); }
+    public void OnHitEvent(ActorInfo victim) { HitEvents?.Invoke(this, victim); }
+    public void OnStateChangeEvent(object[] param) { ActorStateChangeEvents?.Invoke(this); }
+    public void OnCreatedEvent(object[] param) { CreatedEvents?.Invoke(this); }
+    public void OnDestroyedEvent(object[] param) { DestroyedEvents?.Invoke(this); }
 
     #endregion
 
@@ -1153,11 +1154,11 @@ namespace SWEndor.Actors
 
         // Events
         OnDestroyedEvent(new object[] { this, ActorState });
-        CreatedEvents.Clear();
-        DestroyedEvents.Clear();
-        TickEvents.Clear();
-        HitEvents.Clear();
-        ActorStateChangeEvents.Clear();
+        CreatedEvents = null;
+        DestroyedEvents = null;
+        TickEvents = null;
+        HitEvents = null;
+        ActorStateChangeEvents = null;
 
         // Final dispose
         Faction.UnregisterActor(this);

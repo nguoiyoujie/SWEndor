@@ -120,24 +120,24 @@ namespace SWEndor.Scenarios
         SoundManager.Instance().SetMusic("battle_3_1");
         SoundManager.Instance().SetMusicLoop("battle_3_3");
 
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Rebel_HyperspaceIn");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 8f, "Rebel_SetPositions");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 8f, "Rebel_MakePlayer");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 9f, "Message.01");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 12f, "Message.02");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 13.5f, "Message.03");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15f, "Message.04");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 16.5f, "Message.05");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 19f, "Message.06");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 24f, "Message.07");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 25.2f, "Message.08");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 26.5f, "Message.09");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 29.5f, "Message.10");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 30f, "Rebel_GiveControl");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 38f, "Message.11");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 42f, "Message.12");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 50f, "Message.13");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 45f, "Empire_SpawnStatics");
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Rebel_HyperspaceIn);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 8f, Rebel_SetPositions);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 8f, Rebel_MakePlayer);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 9f, Message_01_AllWingsReport);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 12f, Message_02_RedLeader);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 13.5f, Message_03_GoldLeader);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15f, Message_04_BlueLeader);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 16.5f, Message_05_GreenLeader);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 19f, Message_06_Force);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 24f, Message_07_Break);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 25.2f, Message_08_Break);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 26.5f, Message_09_Conf);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 29.5f, Message_10_Break);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 30f, Rebel_GiveControl);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 38f, Message_11_Evasive);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 42f, Message_12_Trap);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 50f, Message_13_Fighters);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 45f, Empire_SpawnStatics);
       }
 
       GameScenarioManager.Instance().Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1);
@@ -208,85 +208,6 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public override void RegisterEvents()
-    {
-      base.RegisterEvents();
-      GameEvent.RegisterEvent("Rebel_HyperspaceIn", Rebel_HyperspaceIn);
-      GameEvent.RegisterEvent("Rebel_SetPositions", Rebel_SetPositions);
-      GameEvent.RegisterEvent("Rebel_HyperspaceOut", Rebel_HyperspaceOut);
-      GameEvent.RegisterEvent("Rebel_MakePlayer", Rebel_MakePlayer);
-      GameEvent.RegisterEvent("Rebel_GiveControl", Rebel_GiveControl);
-      GameEvent.RegisterEvent("Rebel_DeathStarGo", Rebel_DeathStarGo);
-      GameEvent.RegisterEvent("Rebel_ShipsForward", Rebel_ShipsForward);
-      GameEvent.RegisterEvent("Rebel_ShipsForward_2", Rebel_ShipsForward_2);
-      GameEvent.RegisterEvent("Rebel_YWingsAttackScan", Rebel_YWingsAttackScan);
-      GameEvent.RegisterEvent("Rebel_CriticalUnitHit", Rebel_CriticalUnitHit);
-      GameEvent.RegisterEvent("Rebel_CriticalUnitDanger", Rebel_CriticalUnitDanger);
-      GameEvent.RegisterEvent("Rebel_CriticalUnitLost", Rebel_CriticalUnitLost);
-
-      GameEvent.RegisterEvent("Empire_SpawnStatics", Empire_SpawnStatics);
-      GameEvent.RegisterEvent("Empire_DeathStarAttack", Empire_DeathStarAttack);
-      GameEvent.RegisterEvent("Empire_DeathStarAttack_01", Empire_DeathStarAttack_01);
-      GameEvent.RegisterEvent("Empire_DeathStarAttack_02", Empire_DeathStarAttack_02);
-      GameEvent.RegisterEvent("Empire_DeathStarAttack_03", Empire_DeathStarAttack_03);
-      GameEvent.RegisterEvent("Empire_FirstTIEWave", Empire_FirstTIEWave);
-      GameEvent.RegisterEvent("Empire_SecondTIEWave", Empire_SecondTIEWave);
-      GameEvent.RegisterEvent("Empire_TIEWave_01", Empire_TIEWave_01);
-      GameEvent.RegisterEvent("Empire_TIEWave_02", Empire_TIEWave_02);
-      GameEvent.RegisterEvent("Empire_TIEWave_03", Empire_TIEWave_03);
-      GameEvent.RegisterEvent("Empire_TIEWave_0D", Empire_TIEWave_0D);
-      GameEvent.RegisterEvent("Empire_TIEWave_TIEsvsFalcon", Empire_TIEWave_TIEsvsFalcon);
-      GameEvent.RegisterEvent("Empire_TIEWave_InterceptorsvsFalcon", Empire_TIEWave_InterceptorsvsFalcon);
-      GameEvent.RegisterEvent("Empire_TIEWave_TIEsvsWedge", Empire_TIEWave_TIEsvsWedge);
-      GameEvent.RegisterEvent("Empire_TIEWave_InterceptorsvsWedge", Empire_TIEWave_InterceptorsvsWedge);
-      GameEvent.RegisterEvent("Empire_TIEWave_TIEsvsPlayer", Empire_TIEWave_TIEsvsPlayer);
-      GameEvent.RegisterEvent("Empire_TIEWave_InterceptorsvsPlayer", Empire_TIEWave_InterceptorsvsPlayer);
-      GameEvent.RegisterEvent("Empire_TIEWave_TIEsvsShips", Empire_TIEWave_TIEsvsShips);
-      GameEvent.RegisterEvent("Empire_StarDestroyer_01", Empire_StarDestroyer_01);
-      GameEvent.RegisterEvent("Empire_StarDestroyer_02", Empire_StarDestroyer_02);
-      GameEvent.RegisterEvent("Empire_TIEBombers", Empire_TIEBombers);
-      GameEvent.RegisterEvent("Empire_Executor", Empire_Executor);
-      GameEvent.RegisterEvent("Empire_ExecutorDestroyed", Empire_ExecutorDestroyed);
-
-      GameEvent.RegisterEvent("Scene_EnterCutscene", Scene_EnterCutscene);
-      GameEvent.RegisterEvent("Scene_ExitCutscene", Scene_ExitCutscene);
-      GameEvent.RegisterEvent("Scene_DeathStarCam", Scene_DeathStarCam);
-      GameEvent.RegisterEvent("Scene_DeathStarKill_Effect", Scene_DeathStarKill_Effect);
-
-      GameEvent.RegisterEvent("Message.01", Message_01_AllWingsReport);
-      GameEvent.RegisterEvent("Message.02", Message_02_RedLeader);
-      GameEvent.RegisterEvent("Message.03", Message_03_GoldLeader);
-      GameEvent.RegisterEvent("Message.04", Message_04_BlueLeader);
-      GameEvent.RegisterEvent("Message.05", Message_05_GreenLeader);
-      GameEvent.RegisterEvent("Message.06", Message_06_Force);
-      GameEvent.RegisterEvent("Message.07", Message_07_Break);
-      GameEvent.RegisterEvent("Message.08", Message_08_Break);
-      GameEvent.RegisterEvent("Message.09", Message_09_Conf);
-      GameEvent.RegisterEvent("Message.10", Message_10_Break);
-      GameEvent.RegisterEvent("Message.11", Message_11_Evasive);
-      GameEvent.RegisterEvent("Message.12", Message_12_Trap);
-      GameEvent.RegisterEvent("Message.13", Message_13_Fighters);
-      GameEvent.RegisterEvent("Message.14", Message_14_Interceptors);
-      GameEvent.RegisterEvent("Message.15", Message_15_Bombers);
-
-      GameEvent.RegisterEvent("Message.20", Message_20_DeathStar);
-      GameEvent.RegisterEvent("Message.21", Message_21_Close);
-      GameEvent.RegisterEvent("Message.22", Message_22_PointBlank);
-      GameEvent.RegisterEvent("Message.23", Message_23_Take);
-
-      GameEvent.RegisterEvent("Message.30", Message_30_ShieldDown);
-      GameEvent.RegisterEvent("Message.31", Message_31_ResumeAttack);
-      GameEvent.RegisterEvent("Message.32", Message_32_Han);
-      GameEvent.RegisterEvent("Message.33", Message_33_Han);
-      GameEvent.RegisterEvent("Message.34", Message_34_Han);
-
-      GameEvent.RegisterEvent("Message.40", Message_40_Focus);
-
-      GameEvent.RegisterEvent("Message.90", Message_90_LostWedge);
-      GameEvent.RegisterEvent("Message.91", Message_91_LostFalcon);
-      GameEvent.RegisterEvent("Message.92", Message_92_LostHomeOne);
-    }
-
     public override void GameTick()
     {
       base.GameTick();
@@ -304,7 +225,7 @@ namespace SWEndor.Scenarios
         else if (SDWaves >= 1 && MainEnemyFaction.GetShips().Count == 0 && m_pendingSDspawnlist.Count == 0 && StageNumber == 2)
         {
           StageNumber = 3;
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5.5f, "Message.14");
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5.5f, Message_14_Interceptors);
         }
         else if (TIEWaves > 11 && StageNumber == 3)
         {
@@ -315,7 +236,7 @@ namespace SWEndor.Scenarios
           StageNumber = 5;
           SoundManager.Instance().SetMusic("battle_3_4");
           SoundManager.Instance().SetMusicLoop("battle_3_4");
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5.5f, "Message.15");
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5.5f, Message_15_Bombers);
         }
         else if (TIEWaves > 17 && StageNumber == 5)
         {
@@ -329,13 +250,13 @@ namespace SWEndor.Scenarios
           && (m_pendingSDspawnlist.Count + MainEnemyFaction.GetShips().Count) <= m_SDLeftForShieldDown)
         {
           GameScenarioManager.Instance().SetGameStateB("deathstar_noshield", true);
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 3f, "Message.30");
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 7f, "Message.31");
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15f, "Rebel_DeathStarGo");
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 16f, "Rebel_ShipsForward_2");
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 12f, "Message.32");
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 17f, "Message.33");
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 20f, "Message.34");
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 3f, Message_30_ShieldDown);
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 7f, Message_31_ResumeAttack);
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15f, Rebel_DeathStarGo);
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 16f, Rebel_ShipsForward_2);
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 12f, Message_32_Han);
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 17f, Message_33_Han);
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 20f, Message_34_Han);
         }
 
         // TIE spawn
@@ -517,11 +438,11 @@ namespace SWEndor.Scenarios
         if (StageNumber == 2 && !GameScenarioManager.Instance().GetGameStateB("DS2"))
         {
           GameScenarioManager.Instance().SetGameStateB("DS2", true);
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime, "Empire_DeathStarAttack_01");
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 8f, "Message.20");
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15f, "Empire_StarDestroyer_01");
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 20f, "Message.21");
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 25f, "Rebel_YWingsAttackScan");
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime, Empire_DeathStarAttack_01);
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 8f, Message_20_DeathStar);
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15f, Empire_StarDestroyer_01);
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 20f, Message_21_Close);
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 25f, Rebel_YWingsAttackScan);
           GameScenarioManager.Instance().MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
           GameScenarioManager.Instance().MinBounds = new TV_3DVECTOR(-20000, -1500, -17500);
           GameScenarioManager.Instance().MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
@@ -530,11 +451,11 @@ namespace SWEndor.Scenarios
         else if (StageNumber == 4 && !GameScenarioManager.Instance().GetGameStateB("DS4"))
         {
           GameScenarioManager.Instance().SetGameStateB("DS4", true);
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime, "Empire_DeathStarAttack_02");
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 16f, "Rebel_ShipsForward");
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 13f, "Message.22");
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15f, "Empire_StarDestroyer_02");
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 18f, "Message.23");
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime, Empire_DeathStarAttack_02);
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 16f, Rebel_ShipsForward);
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 13f, Message_22_PointBlank);
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15f, Empire_StarDestroyer_02);
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 18f, Message_23_Take);
           GameScenarioManager.Instance().MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
           GameScenarioManager.Instance().MinBounds = new TV_3DVECTOR(-20000, -1500, -22500);
           GameScenarioManager.Instance().MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
@@ -543,9 +464,9 @@ namespace SWEndor.Scenarios
         else if (StageNumber == 6 && !GameScenarioManager.Instance().GetGameStateB("DS6"))
         {
           GameScenarioManager.Instance().SetGameStateB("DS6", true);
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime, "Empire_DeathStarAttack_03");
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 8f, "Empire_Executor");
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 13f, "Message.40");
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime, Empire_DeathStarAttack_03);
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 8f, Empire_Executor);
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 13f, Message_40_Focus);
           GameScenarioManager.Instance().MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
           GameScenarioManager.Instance().MinBounds = new TV_3DVECTOR(-20000, -1500, -25000);
           GameScenarioManager.Instance().MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
@@ -642,9 +563,9 @@ namespace SWEndor.Scenarios
       }.Spawn(this);
 
       m_rebelPosition.Add(ainfo, position);
-      ainfo.HitEvents.Add("Rebel_CriticalUnitHit");
-      ainfo.HitEvents.Add("Rebel_CriticalUnitDanger");
-      ainfo.ActorStateChangeEvents.Add("Rebel_CriticalUnitLost");
+      ainfo.HitEvents += Rebel_CriticalUnitHit;
+      ainfo.HitEvents += Rebel_CriticalUnitDanger;
+      ainfo.ActorStateChangeEvents += Rebel_CriticalUnitLost;
       m_Falcon = ainfo;
 
       // Wedge X-Wing
@@ -678,9 +599,9 @@ namespace SWEndor.Scenarios
       }.Spawn(this);
 
       m_rebelPosition.Add(ainfo, position);
-      ainfo.HitEvents.Add("Rebel_CriticalUnitHit");
-      ainfo.HitEvents.Add("Rebel_CriticalUnitDanger");
-      ainfo.ActorStateChangeEvents.Add("Rebel_CriticalUnitLost");
+      ainfo.HitEvents += Rebel_CriticalUnitHit;
+      ainfo.HitEvents += Rebel_CriticalUnitDanger;
+      ainfo.ActorStateChangeEvents += Rebel_CriticalUnitLost;
       m_Wedge = ainfo;
 
       // Player X-Wing
@@ -774,7 +695,7 @@ namespace SWEndor.Scenarios
 
       ainfo.HuntWeight = 15;
       m_rebelPosition.Add(ainfo, position);
-      ainfo.ActorStateChangeEvents.Add("Rebel_CriticalUnitLost");
+      ainfo.ActorStateChangeEvents += Rebel_CriticalUnitLost;
       m_HomeOne = ainfo;
 
 
@@ -1023,7 +944,7 @@ namespace SWEndor.Scenarios
         }
       }
 
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5f, "Rebel_YWingsAttackScan");
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5f, Rebel_YWingsAttackScan);
     }
 
     public void Rebel_DeathStarGo(object[] param)
@@ -1062,8 +983,8 @@ namespace SWEndor.Scenarios
 
       GameScenarioManager.Instance().SetGameStateB("in_battle", true);
       GameScenarioManager.Instance().SetGameStateB("TIEs", true);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 10f, "Empire_FirstTIEWave");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 45f, "Empire_SecondTIEWave");
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 10f, Empire_FirstTIEWave);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 45f, Empire_SecondTIEWave);
       Rebel_RemoveTorps(null);
     }
 
@@ -1244,27 +1165,27 @@ namespace SWEndor.Scenarios
 
           if (ainfo.ActorState == ActorState.DYING)
           {
-            ainfo.TickEvents.Add("Common_ProcessPlayerDying");
-            ainfo.DestroyedEvents.Add("Common_ProcessPlayerKilled");
+            ainfo.TickEvents += GameScenarioManager.Instance().Scenario.ProcessPlayerDying;
+            ainfo.DestroyedEvents += GameScenarioManager.Instance().Scenario.ProcessPlayerKilled;
           }
           else
           {
-            GameScenarioManager.Instance().Scenario.ProcessPlayerKilled(new object[] { ainfo });
+            ainfo.OnDestroyedEvent(null);
           }
 
           if (ainfo.TypeInfo is WedgeXWingATI)
           {
-            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime, "Message.90");
+            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime, Message_90_LostWedge);
           }
           else if (ainfo.TypeInfo is LandoFalconATI)
           {
-            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime, "Message.91");
+            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime, Message_91_LostFalcon);
           }
           else if (ainfo.TypeInfo is MC90ATI)
           {
-            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15, "Message.92");
+            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15, Message_92_LostHomeOne);
             ainfo.CombatInfo.TimedLife = 2000f;
-            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 25, "Common_FadeOut");
+            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 25, FadeOut);
           }
         }
         else
@@ -2046,7 +1967,7 @@ namespace SWEndor.Scenarios
 
       ActorInfo ainfo = ainfo = asi.Spawn(this);
       ainfo.HuntWeight = 5;
-      ainfo.ActorStateChangeEvents.Add("Empire_ExecutorDestroyed");
+      ainfo.ActorStateChangeEvents += Empire_ExecutorDestroyed;
 
       // SD
 
@@ -2130,12 +2051,12 @@ namespace SWEndor.Scenarios
 
           if (ainfo.ActorState == ActorState.DYING)
           {
-            ainfo.TickEvents.Add("Common_ProcessPlayerDying");
-            ainfo.DestroyedEvents.Add("Common_ProcessPlayerKilled");
+            ainfo.TickEvents += ProcessPlayerDying;
+            ainfo.DestroyedEvents += ProcessPlayerKilled;
           }
           else
           {
-            GameScenarioManager.Instance().Scenario.ProcessPlayerKilled(new object[] { ainfo });
+            ainfo.OnDestroyedEvent(null);
           }
 
           SoundManager.Instance().SetMusic("executorend");
@@ -2143,7 +2064,7 @@ namespace SWEndor.Scenarios
 
           if (m_HomeOne != null)
             m_HomeOne.CombatInfo.DamageModifier = 0;
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 55, "Common_FadeOut");
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 55, FadeOut);
         }
         else
         {
@@ -2167,8 +2088,8 @@ namespace SWEndor.Scenarios
           ActionManager.QueueNext(m_ADSLaserSource, new AttackActor(m_ADS_target));
           ActionManager.QueueNext(m_ADSLaserSource, new Lock());
 
-          m_ADS_target.DestroyedEvents.Add("Scene_DeathStarKill_Effect");
-          GameScenarioManager.Instance().AddEvent(0.1f, "Scene_DeathStarCam");
+          m_ADS_target.DestroyedEvents += DeathStarKill_Effect;
+          GameScenarioManager.Instance().AddEvent(0.1f, Scene_DeathStarCam);
         }
       }
     }
@@ -2190,8 +2111,8 @@ namespace SWEndor.Scenarios
             ActionManager.QueueNext(m_ADSLaserSource, new AttackActor(m_ADS_target));
             ActionManager.QueueNext(m_ADSLaserSource, new Lock());
 
-            m_ADS_target.DestroyedEvents.Add("Scene_DeathStarKill_Effect");
-            GameScenarioManager.Instance().AddEvent(0.1f, "Scene_DeathStarCam");
+            m_ADS_target.DestroyedEvents += DeathStarKill_Effect;
+            GameScenarioManager.Instance().AddEvent(0.1f, Scene_DeathStarCam);
             return;
           }
         }
@@ -2215,8 +2136,8 @@ namespace SWEndor.Scenarios
             ActionManager.QueueNext(m_ADSLaserSource, new AttackActor(m_ADS_target));
             ActionManager.QueueNext(m_ADSLaserSource, new Lock());
 
-            m_ADS_target.DestroyedEvents.Add("Scene_DeathStarKill_Effect");
-            GameScenarioManager.Instance().AddEvent(0.1f, "Scene_DeathStarCam");
+            m_ADS_target.DestroyedEvents += DeathStarKill_Effect;
+            GameScenarioManager.Instance().AddEvent(0.1f, Scene_DeathStarCam);
             return;
           }
         }
@@ -2240,8 +2161,8 @@ namespace SWEndor.Scenarios
             ActionManager.QueueNext(m_ADSLaserSource, new AttackActor(m_ADS_target));
             ActionManager.QueueNext(m_ADSLaserSource, new Lock());
 
-            m_ADS_target.DestroyedEvents.Add("Scene_DeathStarKill_Effect");
-            GameScenarioManager.Instance().AddEvent(0.1f, "Scene_DeathStarCam");
+            m_ADS_target.DestroyedEvents += DeathStarKill_Effect;
+            GameScenarioManager.Instance().AddEvent(0.1f, Scene_DeathStarCam);
             return;
           }
         }
@@ -2448,7 +2369,7 @@ namespace SWEndor.Scenarios
     {
       if (m_ADS_target.CreationState == CreationState.ACTIVE)
       {
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Scene_EnterCutscene");
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Scene_EnterCutscene);
         SoundManager.Instance().SetSound("ds_beam", false, 1, false);
 
         TV_3DVECTOR pos = m_ADS_target.GetPosition();
@@ -2466,11 +2387,11 @@ namespace SWEndor.Scenarios
         GameScenarioManager.Instance().SceneCamera.MovementInfo.Speed = 50;
         GameScenarioManager.Instance().SceneCamera.MovementInfo.MaxSpeed = 50;
         GameScenarioManager.Instance().CameraTargetActor = m_ADS_target;
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5f, "Scene_ExitCutscene");
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5f, Scene_ExitCutscene);
       }
     }
 
-    public void Scene_DeathStarKill_Effect(object[] param)
+    public void DeathStarKill_Effect(object[] param)
     {
       PlayerCameraInfo.Instance().Shake = 150;
       SoundManager.Instance().SetSoundStop("ds_beam");

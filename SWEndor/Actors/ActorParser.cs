@@ -58,28 +58,6 @@ namespace SWEndor.Actors
       }
       builder.AppendLine(string.Format("Children={0}", children));
 
-      //Event
-      foreach (string ae in Actor.TickEvents)
-      {
-        builder.AppendLine(string.Format("TickEvents={0}", ae));
-      }
-      foreach (string ae in Actor.CreatedEvents)
-      {
-        builder.AppendLine(string.Format("CreatedEvents={0}", ae));
-      }
-      foreach (string ae in Actor.DestroyedEvents)
-      {
-        builder.AppendLine(string.Format("DestroyedEvents={0}", ae));
-      }
-      foreach (string ae in Actor.HitEvents)
-      {
-        builder.AppendLine(string.Format("HitEvents={0}", ae));
-      }
-      foreach (string ae in Actor.ActorStateChangeEvents)
-      {
-        builder.AppendLine(string.Format("ActorStateChangeEvents={0}", ae));
-      }
-
       //Actions / AI
       ActionInfo action = Actor.CurrentAction;
       while (action != null)

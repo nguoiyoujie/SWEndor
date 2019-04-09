@@ -262,6 +262,7 @@
     <Compile Include="AI\ActionManager.cs" />
     <Compile Include="AI\ActionInfo.cs" />
     <Compile Include="Build.cs" />
+    <Compile Include="GameEvent\GameEvent.cs" />
     <Compile Include="Input\Context\DebugGameInputContext.cs" />
     <Compile Include="Input\Context\TerminalGameInputContext.cs" />
     <Compile Include="Input\Context\GameInputContext.cs" />
@@ -346,7 +347,6 @@
     <Compile Include="AtmosphereInfo.cs" />
     <Compile Include="Primitives\ThreadSafeDictionary.cs" />
     <Compile Include="Primitives\ThreadSafeList.cs" />
-    <Compile Include="Scenarios\GameEvent.cs" />
     <Compile Include="Scenarios\GameScenarioBase.cs" />
     <Compile Include="Scenarios\Scenarios\GSCustomScenario.cs" />
     <Compile Include="Scenarios\Scenarios\GSTIEAdvanced.cs" />
@@ -489,11 +489,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Scenarios\TestMessage.sw" />
+    <None Include="Scenarios\TestScenario.scen" />
+    <None Include="Scenarios\TestScript.sw" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SWEndor.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Actors\Events\" />
     <Folder Include="AI\Actions\Idle\" />
     <Folder Include="AI\AI\" />
   </ItemGroup>

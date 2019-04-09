@@ -38,7 +38,7 @@ namespace SWEndor.Scenarios
     private Dictionary<string, string> GameStatesS = new Dictionary<string, string>();
     private Dictionary<string, bool> GameStatesB = new Dictionary<string, bool>();
 
-    private Dictionary<float, string> GameEvents = new Dictionary<float, string>();
+    //private Dictionary<float, GameEvent> GameEvents = new Dictionary<float, GameEvent>();
     public GameScenarioBase Scenario = null;
     public ActorInfo SceneCamera = null;
     public ActorInfo CameraTargetActor = null;
@@ -127,36 +127,13 @@ namespace SWEndor.Scenarios
         }
       }
 
-      //UpdateActorLists(EnemyFighters);
-      //UpdateActorLists(EnemyShips);
       UpdateActorLists(CriticalAllies);
       UpdateActorLists(CriticalEnemies);
 
       if (Scenario != null)
         Scenario.GameTick();
 
-      List<float> remove = new List<float>();
-      float[] gekeys = new float[GameEvents.Count];
-      GameEvents.Keys.CopyTo(gekeys, 0);
-      for (int i = 0; i < gekeys.Length; i++)
-      {
-        float gekey = gekeys[i];
-        GameEvent ge = GameEvent.GetEvent(GameEvents[gekey]);
-        if (ge == null || ge.Method == null)
-        {
-          remove.Add(gekey);
-        }
-        else if (gekey < Game.Instance().GameTime)
-        {
-          remove.Add(gekey);
-          ge.Method(null);
-        }
-      }
-
-      foreach (float f in remove)
-      {
-        GameEvents.Remove(f);
-      }
+      GameEventQueue.Process();
     }
 
     public void LoadInvisibleCam()
@@ -181,24 +158,19 @@ namespace SWEndor.Scenarios
         Scenario.Unload();
 
       PlayerInfo.Instance().Score.Reset();
-      //ScoreInfo.Scores.Clear();
 
       _instance = new GameScenarioManager();
       _instance.LoadInitial();
     }
 
-    public void AddEvent(float time, string eventname)
+    public void AddEvent(float time, GameEvent gevent)
     {
-      while (GameEvents.ContainsKey(time))
-      {
-        time += 0.01f;
-      }
-      GameEvents.Add(time, eventname);
+      GameEventQueue.Add(time, gevent);
     }
 
     public void ClearEvents()
     {
-      GameEvents.Clear();
+      GameEventQueue.Clear();
     }
 
     #region GameStates
@@ -297,10 +269,5 @@ namespace SWEndor.Scenarios
     }
 
     #endregion
-
-    public Dictionary<float, string> GetGameEvents()
-    {
-      return GameEvents;
-    }
   }
 }

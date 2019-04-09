@@ -38,7 +38,6 @@ namespace SWEndor.Scenarios
         return;
 
       GameScenarioManager.Instance().SetGameStateB("in_menu", true);
-      RegisterEvents();
       GameScenarioManager.Instance().SceneCamera.SetLocalPosition(0, 0, 0);
       GameScenarioManager.Instance().MaxBounds = new TV_3DVECTOR(15000, 1500, 5000);
       GameScenarioManager.Instance().MinBounds = new TV_3DVECTOR(-15000, -1500, -5000);
@@ -47,10 +46,10 @@ namespace SWEndor.Scenarios
 
       PlayerCameraInfo.Instance().CameraMode = CameraMode.FIRSTPERSON;
 
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Rebel_HyperspaceIn");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.5f, "Rebel_BeginBattle");
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Rebel_HyperspaceIn);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.5f, Rebel_BeginBattle);
 
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 7f, "Empire_StarDestroyer_01");
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 7f, Empire_StarDestroyer_01);
 
       PlayerInfo.Instance().Lives = 2;
       PlayerInfo.Instance().ScorePerLife = 9999999;
@@ -192,7 +191,7 @@ namespace SWEndor.Scenarios
         if (MainAllyFaction.GetShips().Count < 3 && !GameScenarioManager.Instance().GetGameStateB("rebels_fled"))
         {
           GameScenarioManager.Instance().SetGameStateB("rebels_fled", true);
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15f, "Rebel_HyperspaceIn2");
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15f, Rebel_HyperspaceIn2);
           Rebel_HyperspaceOut(null);
         }
       }
@@ -207,19 +206,6 @@ namespace SWEndor.Scenarios
         float z_en = PlayerInfo.Instance().Position.z / 1.2f;
         m_APlanet.SetLocalPosition(x_en, y_en, z_en);
       }
-    }
-
-    public override void RegisterEvents()
-    {
-      base.RegisterEvents();
-      GameEvent.RegisterEvent("Rebel_HyperspaceIn", Rebel_HyperspaceIn);
-      GameEvent.RegisterEvent("Rebel_HyperspaceIn2", Rebel_HyperspaceIn2);
-      GameEvent.RegisterEvent("Rebel_HyperspaceOut", Rebel_HyperspaceOut);
-      GameEvent.RegisterEvent("Rebel_BeginBattle", Rebel_BeginBattle);
-      GameEvent.RegisterEvent("Rebel_Wave", Rebel_Wave);
-
-      GameEvent.RegisterEvent("Empire_TIEWave_02", Empire_TIEWave_02);
-      GameEvent.RegisterEvent("Empire_StarDestroyer_01", Empire_StarDestroyer_01);
     }
 
     public void Rebel_HyperspaceIn(object[] param)
@@ -468,7 +454,7 @@ namespace SWEndor.Scenarios
     public void Rebel_BeginBattle(object[] param)
     {
       GameScenarioManager.Instance().SetGameStateB("in_battle", true);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 10f, "Empire_TIEWave_02");
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 10f, Empire_TIEWave_02);
     }
 
     public void Empire_TIEWave_02(object[] param)

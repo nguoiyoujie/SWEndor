@@ -1,11 +1,9 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
-using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
 using SWEndor.Sound;
-using SWEndor.UI;
 using SWEndor.UI.Menu.Pages;
 using System.Collections.Generic;
 
@@ -74,7 +72,7 @@ namespace SWEndor.Scenarios
 
     public float RebelSpawnTime = 0;
     public float TIESpawnTime = 0;
-    public ScenarioEvent MakePlayer;
+    public GameEvent MakePlayer;
     public float TimeSinceLostWing = -100;
     public float TimeSinceLostShip = -100;
     public float TimeSinceLostStructure = -100;
@@ -96,7 +94,6 @@ namespace SWEndor.Scenarios
       PlayerInfo.Instance().Score.Reset();
       LoadFactions();
       LoadScene();
-      RegisterEvents();
     }
 
     public virtual void LoadFactions()
@@ -109,26 +106,6 @@ namespace SWEndor.Scenarios
     public virtual void LoadScene()
     {
       Engine.Instance().TVGraphicEffect.FadeIn();
-    }
-
-    public virtual void RegisterEvents()
-    {
-      GameEvent.ClearEvents();
-
-      GameEvent.RegisterEvent("Common_FadeIn", FadeIn);
-      GameEvent.RegisterEvent("Common_FadeInterim", FadeInterim);
-      GameEvent.RegisterEvent("Common_FadeOut", FadeOut);
-      GameEvent.RegisterEvent("Common_LostSound", LostSound);
-
-      GameEvent.RegisterEvent("Common_SpawnActor", SpawnActor);
-
-      GameEvent.RegisterEvent("Common_ProcessCreated", ProcessCreated);
-      GameEvent.RegisterEvent("Common_ProcessKilled", ProcessKilled);
-      GameEvent.RegisterEvent("Common_ProcessTick", ProcessTick);
-      GameEvent.RegisterEvent("Common_ProcessStateChange", ProcessStateChange);
-      GameEvent.RegisterEvent("Common_ProcessHit", ProcessHit);
-      GameEvent.RegisterEvent("Common_ProcessPlayerDying", ProcessPlayerDying);
-      GameEvent.RegisterEvent("Common_ProcessPlayerKilled", ProcessPlayerKilled);
     }
 
     public virtual void GameTick()
@@ -158,13 +135,13 @@ namespace SWEndor.Scenarios
       LandInfo.Instance().Enabled = false;
     }
 
-    public void FadeOut(object[] param = null)
+    public void FadeOut(params object[] param)
     {
       Engine.Instance().TVGraphicEffect.FadeOut();
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.01f, "Common_FadeInterim");
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.01f, FadeInterim);
     }
 
-    public void FadeInterim(object[] param = null)
+    public void FadeInterim(params object[] param)
     {
       if (Engine.Instance().TVGraphicEffect.IsFadeFinished())
       {
@@ -196,16 +173,16 @@ namespace SWEndor.Scenarios
       }
       else
       {
-         GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.01f, "Common_FadeInterim");
+         GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.01f, FadeInterim);
       }
     }
 
-    public void FadeIn(object[] param = null)
+    public void FadeIn(params object[] param)
     {
       Engine.Instance().TVGraphicEffect.FadeIn();
     }
 
-    public void GameOver(object[] param = null)
+    public void GameOver(params object[] param)
     {
       Engine.Instance().TVGraphicEffect.FadeIn(2.5f);
 
@@ -231,7 +208,7 @@ namespace SWEndor.Scenarios
 
       while (t < Game.Instance().GameTime + 3f)
       {
-          GameScenarioManager.Instance().AddEvent(t, "Common_LostSound");
+          GameScenarioManager.Instance().AddEvent(t, LostSound);
         t += 0.2f;
       }
       TimeSinceLostWing = Game.Instance().GameTime + 3f;
@@ -251,7 +228,7 @@ namespace SWEndor.Scenarios
 
       while (t < Game.Instance().GameTime + 3f)
       {
-        GameScenarioManager.Instance().AddEvent(t, "Common_LostSound");
+        GameScenarioManager.Instance().AddEvent(t, LostSound);
         t += 0.2f;
       }
       TimeSinceLostShip = Game.Instance().GameTime + 3f;
@@ -271,7 +248,7 @@ namespace SWEndor.Scenarios
 
       while (t < Game.Instance().GameTime + 3f)
       {
-        GameScenarioManager.Instance().AddEvent(t, "Common_LostSound");
+        GameScenarioManager.Instance().AddEvent(t, LostSound);
         t += 0.2f;
       }
       TimeSinceLostShip = Game.Instance().GameTime + 3f;
@@ -311,7 +288,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void SpawnActor(object[] param)
+    public void SpawnActor(params object[] param)
     {
       // Format: Object[]
 
@@ -347,59 +324,52 @@ namespace SWEndor.Scenarios
 
     public void RegisterEvents(ActorInfo actor)
     {
-      actor.CreatedEvents.Add("Common_ProcessCreated");
-      actor.DestroyedEvents.Add("Common_ProcessKilled");
-      actor.HitEvents.Add("Common_ProcessHit");
-      actor.ActorStateChangeEvents.Add("Common_ProcessStateChange");
-      actor.TickEvents.Add("Common_ProcessTick");
+      actor.CreatedEvents += ProcessCreated;
+      actor.DestroyedEvents += ProcessKilled;
+      actor.HitEvents += ProcessHit;
+      actor.ActorStateChangeEvents += ProcessStateChange;
+      actor.TickEvents += ProcessTick; 
     }
 
-    public virtual void ProcessCreated(object[] param)
+    public virtual void ProcessCreated(params object[] param)
     {
     }
 
-    public virtual void ProcessKilled(object[] param)
+    public virtual void ProcessKilled(params object[] param)
     {
     }
 
-    public virtual void ProcessPlayerDying(object[] param)
+    public virtual void ProcessPlayerDying(params object[] param)
     {
-      if (param.GetLength(0) < 1 || param[0] == null)
-        return;
-
       ActorInfo ainfo = (ActorInfo)param[0];
-      PlayerInfo.Instance().TempActor = ainfo;
-
-      if (PlayerInfo.Instance().Actor.TypeInfo is DeathCameraATI)
+      if (ainfo != null)
       {
-        if (PlayerInfo.Instance().Actor.CreationState == CreationState.ACTIVE)
-        {
-          PlayerInfo.Instance().Actor.SetLocalPosition(ainfo.GetLocalPosition().x, ainfo.GetLocalPosition().y, ainfo.GetLocalPosition().z);
-        }
+        PlayerInfo.Instance().TempActor = ainfo;
+
+        if (PlayerInfo.Instance().Actor.TypeInfo is DeathCameraATI)
+          if (PlayerInfo.Instance().Actor.CreationState == CreationState.ACTIVE)
+            PlayerInfo.Instance().Actor.SetLocalPosition(ainfo.GetLocalPosition().x, ainfo.GetLocalPosition().y, ainfo.GetLocalPosition().z);
       }
     }
 
-    public virtual void ProcessPlayerKilled(object[] param)
+    public virtual void ProcessPlayerKilled(params object[] param)
     {
       GameScenarioManager.Instance().IsCutsceneMode = true;
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 3f, "Common_FadeOut");
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 3f, FadeOut);
       if (PlayerInfo.Instance().Lives == 0)
         GameScenarioManager.Instance().SetGameStateB("GameOver", true);
     }
 
-    public virtual void ProcessTick(object[] param)
+    public virtual void ProcessTick(params object[] param)
     {
     }
 
-    public virtual void ProcessStateChange(object[] param)
+    public virtual void ProcessStateChange(params object[] param)
     {
     }
 
-    public virtual void ProcessHit(object[] param)
+    public virtual void ProcessHit(params object[] param)
     {
-      if (param.GetLength(0) < 2 || param[0] == null || param[1] == null)
-        return;
-
       ActorInfo av = (ActorInfo)param[0];
       ActorInfo aa = (ActorInfo)param[1];
 

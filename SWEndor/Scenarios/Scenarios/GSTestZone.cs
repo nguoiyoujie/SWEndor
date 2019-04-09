@@ -44,9 +44,9 @@ namespace SWEndor.Scenarios
 
       PlayerCameraInfo.Instance().CameraMode = CameraMode.THIRDPERSON;
 
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Test_SpawnPlayer");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Test_Towers01");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5f, "Empire_TIEWave_02");
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Test_SpawnPlayer);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Test_Towers01);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5f, Empire_TIEWave_02);
 
       PlayerInfo.Instance().Lives = 2;
       PlayerInfo.Instance().ScorePerLife = 1000000;
@@ -85,27 +85,16 @@ namespace SWEndor.Scenarios
       //if (GameScenarioManager.Instance().GetGameStateB("in_battle"))
       //{
         if (StageNumber == 0)
-        {
           StageNumber = 1;
-        }
 
         if (MainEnemyFaction.Wings.Count < 10)
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime, "Empire_TIEWave_02");
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime, Empire_TIEWave_02);
 
       //}
     }
 
     private void CalibrateSceneObjects()
     {
-    }
-
-    public override void RegisterEvents()
-    {
-      base.RegisterEvents();
-      GameEvent.RegisterEvent("Test_SpawnPlayer", Test_SpawnPlayer);
-      GameEvent.RegisterEvent("Test_GiveControl", Test_GiveControl);
-      GameEvent.RegisterEvent("Test_Towers01", Test_Towers01);
-      GameEvent.RegisterEvent("Empire_TIEWave_02", Empire_TIEWave_02);
     }
 
     #region Test events

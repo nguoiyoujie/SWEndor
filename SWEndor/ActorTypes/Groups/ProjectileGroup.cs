@@ -42,8 +42,8 @@ namespace SWEndor.ActorTypes
               action.Target_Actor.TypeInfo.ProcessHit(action.Target_Actor, ainfo, action.Target_Actor.GetPosition(), new TV_3DVECTOR());
               ainfo.TypeInfo.ProcessHit(ainfo, action.Target_Actor, action.Target_Actor.GetPosition(), new TV_3DVECTOR());
 
-              ainfo.OnHitEvent(new object[] { ainfo, action.Target_Actor });
-              action.Target_Actor.OnHitEvent(new object[] { action.Target_Actor, ainfo });
+              ainfo.OnHitEvent(action.Target_Actor);
+              action.Target_Actor.OnHitEvent(ainfo);
             }
           }
         }

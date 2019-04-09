@@ -815,10 +815,17 @@ namespace SWEndor.Evaluator
 
     private static object AddEvent(object[] ps)
     {
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + Convert.ToInt32(ps[0].ToString()), ps[1].ToString());
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + Convert.ToInt32(ps[0].ToString())
+        , (_) =>
+        {
+          Script s = ScriptFactory.GetScript(ps[1].ToString());
+          if (s == null)
+            throw new InvalidOperationException(string.Format("Script event '{0}' does not exist!", ps[1].ToString()));
+          s.Run();
+        }
+        );
       return true;
     }
-
     #endregion
 
     #region Sound and Music

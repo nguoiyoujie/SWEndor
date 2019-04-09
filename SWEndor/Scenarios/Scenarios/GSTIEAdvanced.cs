@@ -55,11 +55,11 @@ namespace SWEndor.Scenarios
         SoundManager.Instance().SetMusic("battle_1_1");
         SoundManager.Instance().SetMusicLoop("battle_3_3");
 
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Rebel_HyperspaceIn");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 2.5f, "Empire_Wave_2");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 3.5f, "Rebel_MakePlayer");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5f, "Rebel_RemoveTorps");
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 7.5f, "Rebel_GiveControl");
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Rebel_HyperspaceIn);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 2.5f, Empire_Wave_2);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 3.5f, Rebel_MakePlayer);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5f, Rebel_RemoveTorps);
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 7.5f, Rebel_GiveControl);
       }
 
       GameScenarioManager.Instance().Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1);
@@ -67,25 +67,6 @@ namespace SWEndor.Scenarios
       GameScenarioManager.Instance().Line3Color = new TV_COLOR(0.7f, 1f, 0.3f, 1);
 
       GameScenarioManager.Instance().IsCutsceneMode = false;
-    }
-
-    public override void RegisterEvents()
-    {
-      base.RegisterEvents();
-      GameEvent.RegisterEvent("Rebel_HyperspaceIn", Rebel_HyperspaceIn);
-      GameEvent.RegisterEvent("Rebel_MakePlayer", Rebel_MakePlayer);
-      GameEvent.RegisterEvent("Rebel_RemoveTorps", Rebel_RemoveTorps);
-      GameEvent.RegisterEvent("Rebel_GiveControl", Rebel_GiveControl);
-
-      GameEvent.RegisterEvent("Empire_TIEAdvanced", Empire_TIEAdvanced);
-      GameEvent.RegisterEvent("Empire_TIEAdvanced_Control_AttackFighter", Empire_TIEAdvanced_Control_AttackFighter);
-      GameEvent.RegisterEvent("Empire_TIEAdvanced_Control_AttackShip", Empire_TIEAdvanced_Control_AttackShip);
-      GameEvent.RegisterEvent("Empire_TIEAdv_Control_Master", Empire_TIEAdv_Control_Master);
-      GameEvent.RegisterEvent("Empire_TIEAdv_Control_TargetFighter", Empire_TIEAdv_Control_TargetFighter);
-      GameEvent.RegisterEvent("Empire_TIEAdv_Control_TargetShip", Empire_TIEAdv_Control_TargetShip);
-      GameEvent.RegisterEvent("Empire_TIEBombers", Empire_TIEBombers);
-      GameEvent.RegisterEvent("Empire_TIEWave_03", Empire_TIEDefender_Wave);
-      GameEvent.RegisterEvent("Empire_Wave_2", Empire_Wave_2);
     }
 
     public override void GameTick()
@@ -349,7 +330,7 @@ namespace SWEndor.Scenarios
           PlayerInfo.Instance().Actor = ainfo;
         }
       }
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Rebel_RemoveTorps");
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Rebel_RemoveTorps);
     }
 
     public void Rebel_GiveControl(object[] param)
@@ -398,8 +379,8 @@ namespace SWEndor.Scenarios
           Empire_TIEDefender_Wave(new object[] { 8 });
           break;
       }
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5f, "Empire_TIEAdv_Control_TargetFighter");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15f, "Empire_TIEAdv_Control_Master");
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5f, Empire_TIEAdv_Control_TargetFighter);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15f, Empire_TIEAdv_Control_Master);
     }
 
     public void Empire_TIEDefender_Wave(object[] param)
@@ -488,9 +469,9 @@ namespace SWEndor.Scenarios
       else
       {
         Empire_TIEAdvanced_Control_AttackShip(null);
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 125f, "Empire_TIEAdv_Control_TargetShip");
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 125f, Empire_TIEAdv_Control_TargetShip);
       }
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 30f, "Empire_TIEAdv_Control_Master");
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 30f, Empire_TIEAdv_Control_Master);
     }
 
     public void Empire_TIEAdvanced(object[] param)

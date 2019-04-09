@@ -132,18 +132,5 @@ namespace SWEndor.Scenarios
       if (scr != null)
         scr.Run();
     }
-
-    public override void RegisterEvents()
-    {
-      base.RegisterEvents();
-
-      foreach (string key in Events.Keys)
-        GameEvent.RegisterEvent(key, delegate (object[] ps)
-        {
-          Script sev = ScriptFactory.GetScript(Events[key]);
-          if (sev != null)
-            sev.Run();
-        });
-    }
   }
 }

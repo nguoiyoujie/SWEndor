@@ -373,12 +373,12 @@ namespace SWEndor.ActorTypes
 
             if (ainfo.ActorState == ActorState.DYING)
             {
-              ainfo.TickEvents.Add("Common_ProcessPlayerDying");
-              ainfo.DestroyedEvents.Add("Common_ProcessPlayerKilled");
+              ainfo.TickEvents += GameScenarioManager.Instance().Scenario.ProcessPlayerDying;
+              ainfo.DestroyedEvents += GameScenarioManager.Instance().Scenario.ProcessPlayerKilled;
             }
             else
             {
-              GameScenarioManager.Instance().Scenario.ProcessPlayerKilled(new object[] { ainfo });
+              ainfo.OnDestroyedEvent(null);
             }
           }
           else
@@ -489,7 +489,7 @@ namespace SWEndor.ActorTypes
         }
       }
 
-      ainfo.OnHitEvent(new object[] { ainfo, hitby });
+      hitby.OnHitEvent(ainfo);
     }
 
     private void AddScore(ScoreInfo score, ActorInfo scorer, ActorInfo victim)

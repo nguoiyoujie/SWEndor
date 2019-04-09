@@ -59,25 +59,25 @@ namespace SWEndor.Scenarios
       GameScenarioManager.Instance().MaxAIBounds = new TV_3DVECTOR(15000, 1500, 8000);
       GameScenarioManager.Instance().MinAIBounds = new TV_3DVECTOR(-15000, -1500, -20000);
 
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Rebel_HyperspaceIn");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Empire_FirstWave");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5.5f, "Rebel_MakePlayer");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5.5f, "Message.01");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 9.5f, "Rebel_GiveControl");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 10f, "Message.02");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 6.5f, "Empire_FirstTIEWave");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 18, "Message.03");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 23, "Message.04");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 28, "Message.05");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 45, "Message.06");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 49, "Message.07");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 52, "Rebel_IonCannonSpawn");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 56, "Message.08");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 61, "Message.09");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 66, "Message.10");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 71, "Message.11");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 97, "Message.12");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 100, "Empire_SecondWave");
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Rebel_HyperspaceIn);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Empire_FirstWave);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5.5f, Rebel_MakePlayer);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5.5f, Message_01_Leaving);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 9.5f, Rebel_GiveControl);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 10f, Message_02_Conditions);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 6.5f, Empire_FirstTIEWave);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 18, Message_03_Turbolasers);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 23, Message_04_TIEs);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 28, Message_05);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 45, Message_06);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 49, Message_07);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 52, Rebel_IonCannonSpawn);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 56, Message_08);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 61, Message_09);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 66, Message_10);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 71, Message_11);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 97, Message_12);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 100, Empire_SecondWave);
 
       PlayerInfo.Instance().Lives = 4;
       PlayerInfo.Instance().ScorePerLife = 1000000;
@@ -165,7 +165,7 @@ namespace SWEndor.Scenarios
           }
           if (m_Transport1.GetPosition().z < transport_hyperspaceZpos && m_Player.ActorState == ActorState.NORMAL && !GameScenarioManager.Instance().GetGameStateB("Stage1End") && !GameScenarioManager.Instance().GetGameStateB("GameOver"))
           {
-            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Scene_02");
+            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Scene_02);
             m_Transport1.CombatInfo.DamageModifier = 0;
             m_Transport2.CombatInfo.DamageModifier = 0;
             m_Transport3.CombatInfo.DamageModifier = 0;
@@ -195,7 +195,7 @@ namespace SWEndor.Scenarios
 
           if (TIEsLeft < 1 && !GameScenarioManager.Instance().GetGameStateB("Stage2End") && !m_Player.IsOutOfBounds(hyperspace_lane_min, hyperspace_lane_max))
           {
-            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Scene_02b_LightspeedFail");
+            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Scene_02b_LightspeedFail);
             GameScenarioManager.Instance().SetGameStateB("Stage2End", true);
             Screen2D.Instance().Box3D_Enable = false;
           }
@@ -247,57 +247,6 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public override void RegisterEvents()
-    {
-      base.RegisterEvents();
-      GameEvent.RegisterEvent("Rebel_HyperspaceIn", Rebel_HyperspaceIn);
-      GameEvent.RegisterEvent("Rebel_IonCannonSpawn", Rebel_IonCannonSpawn);
-      GameEvent.RegisterEvent("Rebel_MakePlayer", Rebel_MakePlayer);
-      GameEvent.RegisterEvent("Rebel_GiveControl", Rebel_GiveControl);
-      GameEvent.RegisterEvent("Rebel_CriticalUnitLost", Rebel_CriticalUnitLost);
-      GameEvent.RegisterEvent("Rebel_VulnerableTransport", Rebel_VulnerableTransport);
-      GameEvent.RegisterEvent("Rebel_Delete", Rebel_Delete);
-      GameEvent.RegisterEvent("Rebel_PlayerHit", Rebel_PlayerHit);
-      
-      GameEvent.RegisterEvent("Empire_FirstWave", Empire_FirstWave);
-      GameEvent.RegisterEvent("Empire_SecondWave", Empire_SecondWave);
-      GameEvent.RegisterEvent("Empire_StarDestroyer_Spawn", Empire_StarDestroyer_Spawn);
-      GameEvent.RegisterEvent("Empire_FirstTIEWave", Empire_FirstTIEWave);
-      GameEvent.RegisterEvent("Empire_TIEWave", Empire_TIEWave);
-      GameEvent.RegisterEvent("Empire_TIEWave_TIEsvsShips", Empire_TIEWave_TIEsvsShips);
-
-      GameEvent.RegisterEvent("Scene_02", Scene_02);
-      GameEvent.RegisterEvent("Scene_02_Switch", Scene_02_Switch);
-      GameEvent.RegisterEvent("Scene_02b_LightspeedFail", Scene_02b_LightspeedFail);
-      GameEvent.RegisterEvent("Scene_02_ViolentShake", Scene_02_ViolentShake);
-      GameEvent.RegisterEvent("Scene_EnterCutscene", Scene_EnterCutscene);
-      GameEvent.RegisterEvent("Scene_ExitCutscene", Scene_ExitCutscene);
-
-      GameEvent.RegisterEvent("Message.01", Message_01_Leaving);
-      GameEvent.RegisterEvent("Message.02", Message_02_Conditions);
-      GameEvent.RegisterEvent("Message.03", Message_03_Turbolasers);
-      GameEvent.RegisterEvent("Message.04", Message_04_TIEs);
-      GameEvent.RegisterEvent("Message.05", Message_05);
-      GameEvent.RegisterEvent("Message.06", Message_06);
-      GameEvent.RegisterEvent("Message.07", Message_07);
-      GameEvent.RegisterEvent("Message.08", Message_08);
-      GameEvent.RegisterEvent("Message.09", Message_09);
-      GameEvent.RegisterEvent("Message.10", Message_10);
-      GameEvent.RegisterEvent("Message.11", Message_11);
-      GameEvent.RegisterEvent("Message.12", Message_12);
-      GameEvent.RegisterEvent("Message.13", Message_13);
-      GameEvent.RegisterEvent("Message.14", Message_14);
-      GameEvent.RegisterEvent("Message.15", Message_15);
-      GameEvent.RegisterEvent("Message.16", Message_16);
-      GameEvent.RegisterEvent("Message.17", Message_17);
-      GameEvent.RegisterEvent("Message.18", Message_18);
-      GameEvent.RegisterEvent("Message.19", Message_19);
-      GameEvent.RegisterEvent("Message.20", Message_20);
-      GameEvent.RegisterEvent("Message.21", Message_21);
-      GameEvent.RegisterEvent("Message.22", Message_22);
-      GameEvent.RegisterEvent("Message.23", Message_23);
-    }
-
     #region Rebellion spawns
 
     public void Rebel_HyperspaceIn(object[] param)
@@ -322,7 +271,7 @@ namespace SWEndor.Scenarios
 
       ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "front", "rear" };
       ainfo.CombatInfo.DamageModifier = 0.1f;
-      ainfo.HitEvents.Add("Rebel_PlayerHit");
+      ainfo.HitEvents += Rebel_PlayerHit;
       GameScenarioManager.Instance().CameraTargetActor = ainfo;
       PlayerInfo.Instance().TempActor = ainfo;
 
@@ -401,8 +350,8 @@ namespace SWEndor.Scenarios
             break;
         }
 
-        ainfo.HitEvents.Add("Rebel_VulnerableTransport");
-        ainfo.ActorStateChangeEvents.Add("Rebel_CriticalUnitLost");
+        ainfo.HitEvents += Rebel_VulnerableTransport;
+        ainfo.ActorStateChangeEvents += Rebel_CriticalUnitLost;
       }
     }
 
@@ -490,7 +439,7 @@ namespace SWEndor.Scenarios
 
           ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "front", "rear" };
           ainfo.CombatInfo.DamageModifier = 0.1f;
-          ainfo.HitEvents.Add("Rebel_PlayerHit");
+          ainfo.HitEvents += Rebel_PlayerHit;
 
           PlayerInfo.Instance().Actor = ainfo;
         }
@@ -608,19 +557,19 @@ namespace SWEndor.Scenarios
 
           if (ainfo.ActorState == ActorState.DYING)
           {
-            ainfo.TickEvents.Add("Common_ProcessPlayerDying");
-            ainfo.DestroyedEvents.Add("Common_ProcessPlayerKilled");
+            ainfo.TickEvents += ProcessPlayerDying;
+            ainfo.DestroyedEvents += ProcessPlayerKilled;
           }
           else
           {
-            GameScenarioManager.Instance().Scenario.ProcessPlayerKilled(new object[] { ainfo });
+            ainfo.OnDestroyedEvent(null);
           }
 
           if (ainfo.TypeInfo is TransportATI)
           {
             //GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15, "Message.92");
             ainfo.CombatInfo.TimedLife = 2000f;
-            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 25, "Common_FadeOut");
+            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 25, FadeOut);
           }
         }
         else
@@ -927,14 +876,14 @@ namespace SWEndor.Scenarios
 
     public void Scene_02(object[] param)
     {
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, "Scene_EnterCutscene");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 7, "Scene_ExitCutscene");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 9, "Rebel_GiveControl");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 14, "Rebel_Delete");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 11, "Message.13");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 13, "Scene_02_Switch");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15, "Message.14");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 25, "Message.15");
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Scene_EnterCutscene);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 7, Scene_ExitCutscene);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 9, Rebel_GiveControl);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 14, Rebel_Delete);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 11, Message_13);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 13, Scene_02_Switch);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15, Message_14);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 25, Message_15);
 
       GameScenarioManager.Instance().SceneCamera.SetLocalPosition(400, 130, -1800);
 
@@ -1061,14 +1010,14 @@ namespace SWEndor.Scenarios
 
     public void Scene_02b_LightspeedFail(object[] param)
     {
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 1, "Message.16");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5, "Message.17");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 12, "Scene_02_ViolentShake");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15, "Message.18");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 18, "Message.19");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 23, "Message.20");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 28, "Message.21");
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 33, "Message.22");
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 1, Message_16);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5, Message_17);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 12, Scene_02_ViolentShake);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 15, Message_18);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 18, Message_19);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 23, Message_20);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 28, Message_21);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 33, Message_22);
       //GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 33, "Scene_03");
 
       GameScenarioManager.Instance().MinBounds = new TV_3DVECTOR(-15000, -1500, -30000);
