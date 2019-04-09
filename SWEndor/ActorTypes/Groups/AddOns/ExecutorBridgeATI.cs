@@ -94,7 +94,7 @@ namespace SWEndor.ActorTypes
         if (ainfo.StrengthFrac < 0.5f)
         {
           ainfo.CombatInfo.Strength = 0;
-          hitby.DestroyedEvents.Clear();
+          hitby.DestroyedEvents = null;
         }
         else
         {

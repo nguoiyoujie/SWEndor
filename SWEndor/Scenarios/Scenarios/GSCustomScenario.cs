@@ -36,20 +36,11 @@ namespace SWEndor.Scenarios
       Fn_makeplayer = f.GetStringValue("Script", "Fn_makeplayer", Fn_makeplayer);
       Fn_calibratescene = f.GetStringValue("Script", "Fn_calibratescene", Fn_calibratescene);
       Fns_gametick = new List<string>(f.GetStringList("Script", "Fns_gametick", new string[0]));
-
-      // [Events]
-      if (f.Sections.ContainsKey("Events"))
-        foreach (INILine ln in f.Sections["Events"].Lines)
-        {
-          if (ln.HasKey)
-            Events.Add(ln.Key, ln.Value);
-        }
     }
 
     public readonly string PlayerName = "Pilot";
     public readonly string FilePath;
     public readonly string[] ScriptPaths;
-    public readonly Dictionary<string, string> Events = new Dictionary<string, string>();
 
     // major functions
     public string Fn_load = "load";

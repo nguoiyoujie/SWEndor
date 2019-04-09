@@ -1,0 +1,13 @@
+[General]
+Name = Test Custom Scenario
+PlayerName = Leader
+Description = This is a test scenario.|This is a new line.
+Wings = Millennium Falcon
+Difficulties = Normal
+
+[Script]
+Paths = .\Scenarios\TestScript.sw,.\Scenarios\TestMessage.sw
+Fn_load = load
+Fn_loadfaction = loadfaction
+Fn_makeplayer = makeplayer
+Fns_gametick = gametick

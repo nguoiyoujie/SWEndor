@@ -489,9 +489,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Scenarios\TestMessage.sw" />
-    <None Include="Scenarios\TestScenario.scen" />
-    <None Include="Scenarios\TestScript.sw" />
+    <None Include="Scenarios\TestMessage.sw">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\TestScenario.scen">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\TestScript.sw">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="SWEndor.ico" />
