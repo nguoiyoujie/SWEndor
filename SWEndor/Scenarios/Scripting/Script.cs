@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SWEndor.Scenarios.Scripting
 {
-  public class Script
+  public partial class Script
   {
     private List<Expression> m_expr = new List<Expression>();
 
@@ -16,7 +16,7 @@ namespace SWEndor.Scenarios.Scripting
 
       Screen2D.Instance().LoadingTextLines.Add("loading script:" + scriptname);
       Screen2D.Instance().LoadingTextLines.RemoveAt(0);
-      ScriptFactory.AddScript(scriptname, this);
+      Script.Registry.Add(scriptname, this);
     }
 
     public void AddExpression(string line)

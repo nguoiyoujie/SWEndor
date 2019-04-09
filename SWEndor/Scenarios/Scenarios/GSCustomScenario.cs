@@ -52,7 +52,7 @@ namespace SWEndor.Scenarios
 
     public void LoadScripts()
     {
-      ScriptFactory.Unload();
+      Script.Registry.Clear();
       foreach (string scrfile in ScriptPaths)
       {
         ScriptFile f = new ScriptFile(scrfile);
@@ -74,13 +74,13 @@ namespace SWEndor.Scenarios
       base.Launch();
 
 
-      Script scr = ScriptFactory.GetScript(Fn_load);
+      Script scr = Script.Registry.Get(Fn_load);
       if (scr != null)
         scr.Run();
 
       MakePlayer = delegate (object[] ps)
       {
-        Script smk = ScriptFactory.GetScript(Fn_makeplayer);
+        Script smk = Script.Registry.Get(Fn_makeplayer);
         if (smk != null)
           smk.Run();
       };
@@ -90,7 +90,7 @@ namespace SWEndor.Scenarios
     {
       base.LoadFactions();
 
-      Script scr = ScriptFactory.GetScript(Fn_loadfaction);
+      Script scr = Script.Registry.Get(Fn_loadfaction);
       if (scr != null)
         scr.Run();
     }
@@ -99,7 +99,7 @@ namespace SWEndor.Scenarios
     {
       base.LoadScene();
 
-      Script scr = ScriptFactory.GetScript(Fn_loadscene);
+      Script scr = Script.Registry.Get(Fn_loadscene);
       if (scr != null)
         scr.Run();
     }
@@ -111,7 +111,7 @@ namespace SWEndor.Scenarios
 
       foreach (string s in Fns_gametick)
       {
-        Script scr = ScriptFactory.GetScript(s);
+        Script scr = Script.Registry.Get(s);
         if (scr != null)
           scr.Run();
       }
@@ -119,7 +119,7 @@ namespace SWEndor.Scenarios
 
     private void CalibrateSceneObjects()
     {
-      Script scr = ScriptFactory.GetScript(Fn_calibratescene);
+      Script scr = Script.Registry.Get(Fn_calibratescene);
       if (scr != null)
         scr.Run();
     }

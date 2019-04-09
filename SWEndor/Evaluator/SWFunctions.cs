@@ -818,7 +818,7 @@ namespace SWEndor.Evaluator
       GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + Convert.ToInt32(ps[0].ToString())
         , (_) =>
         {
-          Script s = ScriptFactory.GetScript(ps[1].ToString());
+          Script s = Script.Registry.Get(ps[1].ToString());
           if (s == null)
             throw new InvalidOperationException(string.Format("Script event '{0}' does not exist!", ps[1].ToString()));
           s.Run();
@@ -915,7 +915,7 @@ namespace SWEndor.Evaluator
 
     private static object CallScript(object[] ps)
     {
-      Script scr = ScriptFactory.GetScript(ps[0].ToString());
+      Script scr = Script.Registry.Get(ps[0].ToString());
       if (scr != null)
       {
         scr.Run();

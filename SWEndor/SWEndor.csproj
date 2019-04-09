@@ -355,7 +355,7 @@
     <Compile Include="Scenarios\Scenarios\GSTestZone.cs" />
     <Compile Include="Scenarios\Scenarios\GSYavin.cs" />
     <Compile Include="Scenarios\Scenarios\GSEndor.cs" />
-    <Compile Include="Scenarios\Scripting\ScriptFactory.cs" />
+    <Compile Include="Scenarios\Scripting\Registry\Registry.cs" />
     <Compile Include="Scenarios\Scripting\Script.cs" />
     <Compile Include="Actors\Components\ScoreInfo.cs" />
     <Compile Include="FactionInfo.cs" />
