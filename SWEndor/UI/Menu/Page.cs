@@ -121,7 +121,7 @@ namespace SWEndor.UI.Menu
           break;
       }
 
-      SelectedElement?.AfterKeyPress(key);
+      SelectedElement.AfterKeyPress?.Invoke(key);
 
       return ret;
     }
