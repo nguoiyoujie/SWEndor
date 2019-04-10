@@ -6,11 +6,6 @@
   public enum ActorState
   {
     /// <summary>
-    /// Actor is in a fixed position (Note: consider checking if TypeInfo.NoMove is sufficient?)
-    /// </summary>
-    FIXED,
-
-    /// <summary>
     /// Actor is in the free state: No speed limit (Note: consider a different setting to turn off Speed limits)
     /// </summary>
     FREE,

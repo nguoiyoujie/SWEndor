@@ -100,8 +100,7 @@ namespace SWEndor.Actors.Components
 
     public void Move()
     {
-      //Is fixed
-      if (Actor.ActorState == ActorState.FIXED || Actor.TypeInfo.NoMove)
+      if (Actor.TypeInfo.NoMove)
         return;
 
       // Hyperspace special: AI loop may not be in sync
