@@ -236,7 +236,7 @@ namespace SWEndor.Actors
       Mesh.Enable(true);
       FarMesh.Enable(true);
 
-      CreationState = CreationState.PREACTIVE;
+      CreationState = CreationState.GENERATED;
       Update();
       OnCreatedEvent(new object[] { this });
 
@@ -341,11 +341,8 @@ namespace SWEndor.Actors
         FarMesh.SetScale(Scale.x, Scale.y, Scale.z);
       }
 
-      if (CreationState == CreationState.PREACTIVE)
-      {
+      if (CreationState == CreationState.GENERATED)
         CreationState = CreationState.ACTIVE;
-        PrevPosition = Position;
-      }
 
       if (ParticleSystem != null)
         ParticleSystem.Update();
