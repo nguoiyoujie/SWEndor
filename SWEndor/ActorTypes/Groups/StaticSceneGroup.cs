@@ -20,6 +20,8 @@ namespace SWEndor.ActorTypes
 
       Score_perStrength = 0;
       Score_DestroyBonus = 0;
+
+      NoMove = true;
     }
 
     public override void Initialize(ActorInfo ainfo)

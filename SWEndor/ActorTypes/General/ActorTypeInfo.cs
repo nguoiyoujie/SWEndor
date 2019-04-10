@@ -461,7 +461,7 @@ namespace SWEndor.ActorTypes
       {
         // Collision
         ainfo.CombatInfo.Strength -= hitby.TypeInfo.ImpactDamage * ainfo.CombatInfo.DamageModifier;
-        if (ainfo.CombatInfo.Strength > 0 && ainfo.ActorState != ActorState.FIXED && ainfo.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER))
+        if (ainfo.CombatInfo.Strength > 0 && !ainfo.TypeInfo.NoMove && ainfo.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER))
         {
           float repel = -ainfo.MovementInfo.Speed * 0.25f;
           ainfo.MoveRelative(repel, 0, 0);

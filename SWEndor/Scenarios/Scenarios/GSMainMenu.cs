@@ -135,7 +135,6 @@ namespace SWEndor.Scenarios
           acinfo = new ActorCreationInfo(HothATI.Instance());
         }
 
-        acinfo.InitialState = ActorState.FIXED;
         acinfo.CreationTime = -1;
         acinfo.Position = new TV_3DVECTOR(0, -1200, 0);
         acinfo.Rotation = new TV_3DVECTOR(0, 180, 0);

@@ -223,7 +223,6 @@ namespace SWEndor.Scenarios
       {
         ActorCreationInfo aci_Yavin = new ActorCreationInfo(YavinATI.Instance())
         {
-          InitialState = ActorState.FIXED,
           Position = new TV_3DVECTOR(0, 0, 18000),
           Rotation = new TV_3DVECTOR(90, 90, 0),
           InitialScale = new TV_3DVECTOR(4, 4, 4)
@@ -236,7 +235,6 @@ namespace SWEndor.Scenarios
       {
         ActorCreationInfo aci_Yavin4 = new ActorCreationInfo(Yavin4ATI.Instance())
         {
-          InitialState = ActorState.FIXED,
           Position = new TV_3DVECTOR(0, 800, -18000),
           Rotation = new TV_3DVECTOR(0, 0, 0),
         };
@@ -248,7 +246,6 @@ namespace SWEndor.Scenarios
       {
         ActorCreationInfo aci_DS = new ActorCreationInfo(DeathStarATI.Instance())
         {
-          InitialState = ActorState.FIXED,
           Position = new TV_3DVECTOR(0, 800, 28000),
           Rotation = new TV_3DVECTOR(0, 180, 0),
           Faction = MainEnemyFaction
@@ -1386,7 +1383,6 @@ namespace SWEndor.Scenarios
       {
         if (!a.IsPlayer())
         {
-          a.ActorState = ActorState.FIXED;
           a.Faction = FactionInfo.Neutral;
           a.Kill();
         }

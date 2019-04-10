@@ -186,7 +186,6 @@ namespace SWEndor.Scenarios
       {
         ActorCreationInfo aci_Endor = new ActorCreationInfo(EndorATI.Instance())
         {
-          InitialState = ActorState.FIXED,
           Position = new TV_3DVECTOR(0, -1200, 0),
           Rotation = new TV_3DVECTOR(0, 180, 0),
           InitialScale = new TV_3DVECTOR(6, 6, 6)
@@ -199,7 +198,6 @@ namespace SWEndor.Scenarios
       {
         ActorCreationInfo aci_DS = new ActorCreationInfo(DeathStar2ATI.Instance())
         {
-          InitialState = ActorState.FIXED,
           Position = new TV_3DVECTOR(0, 800, 18000),
           Rotation = new TV_3DVECTOR(0, 0, 5),
           Faction = MainEnemyFaction
@@ -1779,7 +1777,6 @@ namespace SWEndor.Scenarios
         };
 
         ainfo = asi.Spawn(this);
-        ainfo.ActorState = ActorState.FIXED;
 
         if (ainfo.TypeInfo is ExecutorStaticATI)
         {
@@ -2327,7 +2324,6 @@ namespace SWEndor.Scenarios
       if (m_Player != null)
       {
         m_Player_pos = m_Player.Position;
-        m_Player.ActorState = ActorState.FIXED;
         m_Player.Position = new TV_3DVECTOR(30, 0, -100000);
         m_Player_PrimaryWeapon = PlayerInfo.Instance().PrimaryWeapon;
         m_Player_SecondaryWeapon = PlayerInfo.Instance().SecondaryWeapon;

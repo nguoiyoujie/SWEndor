@@ -121,7 +121,6 @@ namespace SWEndor.Scenarios
       {
         ActorCreationInfo aci_Hoth = new ActorCreationInfo(HothATI.Instance())
         {
-          InitialState = ActorState.FIXED,
           CreationTime = -1,
           Position = new TV_3DVECTOR(0, 800, -18000),
           Rotation = new TV_3DVECTOR(-90, 0, 0),
