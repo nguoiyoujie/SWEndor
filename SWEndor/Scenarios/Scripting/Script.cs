@@ -16,7 +16,7 @@ namespace SWEndor.Scenarios.Scripting
 
       Screen2D.Instance().LoadingTextLines.Add("loading script:" + scriptname);
       Screen2D.Instance().LoadingTextLines.RemoveAt(0);
-      Script.Registry.Add(scriptname, this);
+      Registry.Add(scriptname, this);
     }
 
     public void AddExpression(string line)

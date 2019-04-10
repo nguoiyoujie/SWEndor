@@ -815,15 +815,30 @@ namespace SWEndor.Evaluator
 
     private static object AddEvent(object[] ps)
     {
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + Convert.ToInt32(ps[0].ToString())
-        , (_) =>
+      Script s = Script.Registry.Get(ps[1].ToString());
+      if (s != null)
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + Convert.ToInt32(ps[0].ToString())
+        , (_) => s.Run());
+      else
+      {
+        // core events // implement this elsewhere
+        GameEvent g = null;
+        switch (ps[1].ToString().ToLower())
         {
-          Script s = Script.Registry.Get(ps[1].ToString());
-          if (s == null)
-            throw new InvalidOperationException(string.Format("Script event '{0}' does not exist!", ps[1].ToString()));
-          s.Run();
+          case "common_fadein":
+            g = GameScenarioManager.Instance().Scenario.FadeIn;
+            break;
+
+          case "common_fadeout":
+            g = GameScenarioManager.Instance().Scenario.FadeOut;
+            break;
         }
-        );
+        if (g != null)
+          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + Convert.ToInt32(ps[0].ToString()), g);
+        else
+          throw new InvalidOperationException(string.Format("Script event '{0}' does not exist!", ps[1].ToString()));
+      }
+
       return true;
     }
     #endregion
