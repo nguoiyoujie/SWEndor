@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SWEndor.Primitives;
+using System;
 using System.Text;
 
 namespace SWEndor.Terminal

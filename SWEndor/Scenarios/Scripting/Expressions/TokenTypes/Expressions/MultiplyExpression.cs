@@ -1,0 +1,57 @@
+﻿using SWEndor.Primitives;
+
+namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
+{
+  public class MultiplyExpression : CExpression
+  {
+    private CExpression _first;
+    private ThreadSafeDictionary<CExpression, TokenEnum> _set = new ThreadSafeDictionary<CExpression, TokenEnum>();
+
+    internal MultiplyExpression(Lexer lexer) : base(lexer)
+    {
+      // UNARYEXPR * UNARYEXPR ...
+      // UNARYEXPR / UNARYEXPR ...
+      // UNARYEXPR % UNARYEXPR ...
+
+      _first = new UnaryExpression(lexer).Get();
+
+      while (lexer.TokenType == TokenEnum.ASTERISK // *
+        || lexer.TokenType == TokenEnum.SLASH // /
+        || lexer.TokenType == TokenEnum.PERCENT // %
+        )
+      {
+        TokenEnum _type = lexer.TokenType;
+        lexer.Next();
+        _set.Add(new UnaryExpression(lexer).Get(), _type);
+      }
+    }
+
+    public override CExpression Get()
+    {
+      if (_set.Count == 0)
+        return _first;
+      return this;
+    }
+
+    public override object Evaluate(Context context)
+    {
+      dynamic result = _first.Evaluate(context);
+      foreach (CExpression _expr in _set.GetKeys())
+      {
+        switch (_set[_expr])
+        {
+          case TokenEnum.ASTERISK:
+            result *= (dynamic)_expr.Evaluate(context);
+            break;
+          case TokenEnum.SLASH:
+            result /=(dynamic)_expr.Evaluate(context);
+            break;
+          case TokenEnum.PERCENT:
+            result %= (dynamic)_expr.Evaluate(context);
+            break;
+        }
+      }
+      return result;
+    }
+  }
+}

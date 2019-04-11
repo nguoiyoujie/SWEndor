@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SWEndor
+namespace SWEndor.Primitives
 {
   /// <summary>
   /// Provides a basic thread-safe paired list interface for multithreaded updates  

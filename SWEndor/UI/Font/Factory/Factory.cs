@@ -1,4 +1,6 @@
-﻿namespace SWEndor.UI
+﻿using SWEndor.Primitives;
+
+namespace SWEndor.UI
 {
   public partial class Font
   {

@@ -1,4 +1,6 @@
-﻿namespace SWEndor.Scenarios.Scripting
+﻿using SWEndor.Primitives;
+
+namespace SWEndor.Scenarios.Scripting
 {
   public partial class Script
   {

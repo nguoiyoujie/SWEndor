@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SWEndor.Primitives;
+using System.Collections.Generic;
 
 namespace SWEndor
 {
