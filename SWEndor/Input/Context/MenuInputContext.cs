@@ -10,7 +10,7 @@ namespace SWEndor.Input.Context
     {
       if (keydata.Pressed > 0)
       {
-        if (Screen2D.Instance().CurrentPage.OnKeyPress((CONST_TV_KEY)keydata.Key))
+        if (Screen2D.Instance().CurrentPage?.OnKeyPress((CONST_TV_KEY)keydata.Key) ?? false)
           SoundManager.Instance().SetSound("button_1");
 
         // Terminal
