@@ -117,7 +117,7 @@ namespace SWEndor.Scenarios
       GameScenarioManager.Instance().Scenario = null;
 
       // Full reset
-      foreach (ActorInfo a in ActorInfo.Factory.GetActorList())
+      foreach (ActorInfo a in ActorInfo.Factory.GetList())
       {
         if (a != null)
           a.Kill();
@@ -377,9 +377,10 @@ namespace SWEndor.Scenarios
         && av.Faction != null
         && av.Faction.IsAlliedWith(PlayerInfo.Instance().Actor.Faction))
       {
-        List<ActorInfo> attackerfamily = aa.GetAllParents();
-        foreach (ActorInfo a in attackerfamily)
+        List<int> attackerfamily = aa.GetAllParents();
+        foreach (int i in attackerfamily)
         {
+          ActorInfo a = ActorInfo.Factory.GetExact(i);
           if (PlayerInfo.Instance().Actor == a)
           {
             Screen2D.Instance().MessageText(string.Format("{0}: {1}, watch your fire!", av.Name, PlayerInfo.Instance().Name)

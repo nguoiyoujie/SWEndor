@@ -45,16 +45,20 @@ namespace SWEndor.Actors
       */
 
       string parents = "";
-      foreach (ActorInfo p in Actor.GetAllParents(1))
+      foreach (int i in Actor.GetAllParents(1))
       {
-        parents += (parents.Length == 0) ? p.ID.ToString() : ("," + p.ID);
+        ActorInfo p = ActorInfo.Factory.GetExact(i);
+        if (p != null)
+          parents += (parents.Length == 0) ? p.ID.ToString() : ("," + p.ID);
       }
       builder.AppendLine(string.Format("Parent={0}", parents));
 
       string children = "";
-      foreach (ActorInfo c in Actor.GetAllChildren(1))
+      foreach (int i in Actor.GetAllChildren(1))
       {
-        children += (children.Length == 0) ? c.ID.ToString() : ("," + c.ID);
+        ActorInfo c = ActorInfo.Factory.GetExact(i);
+        if (c != null)
+          children += (children.Length == 0) ? c.ID.ToString() : ("," + c.ID);
       }
       builder.AppendLine(string.Format("Children={0}", children));
 

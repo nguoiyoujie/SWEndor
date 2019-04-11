@@ -10,8 +10,9 @@ namespace SWEndor.Actors
   {
     public static class Factory
     {
+      private const int Capacity = 2500; // hard code limit to ActorInfo. We should not be exceeding 1000 normally.
       private static ConcurrentQueue<ActorInfo> deadqueue = new ConcurrentQueue<ActorInfo>();
-      private static ActorInfo[] list = new ActorInfo[2500]; // hard code limit to ActorInfo. We should not be exceeding 1000 normally.
+      private static ActorInfo[] list = new ActorInfo[Capacity]; 
       private static int count = 0;
       private static ActorInfo[] holdinglist = new ActorInfo[0];
       private static float listtime = 0;
@@ -19,7 +20,7 @@ namespace SWEndor.Actors
       private static int emptycounter = 0;
       private static Mutex mu_counter = new Mutex();
 
-      public static int Register(ActorCreationInfo amake, out ActorInfo actor, string key = "")
+      public static void Register(ActorCreationInfo amake, out ActorInfo actor, string key = "")
       {
         if (amake.ActorTypeInfo == null)
           throw new Exception("Attempted to register actor with null ActorTypeInfo!");
@@ -27,7 +28,7 @@ namespace SWEndor.Actors
         mu_counter.WaitOne();
 
         counter = emptycounter;
-        while (counter < list.Length && (list[counter] != null)) //&& list[counter].CreationState != CreationState.DISPOSED))
+        while (counter < list.Length && (list[counter] != null && list[counter].CreationState != CreationState.DISPOSED))
           counter++;
 
         if (counter >= list.Length)
@@ -36,21 +37,20 @@ namespace SWEndor.Actors
         int i = counter;
         emptycounter = i + 1;
 
-        //if (list[i] == null)
-        //{
+        if (list[i] == null)
+        { 
           actor = new ActorInfo(i, amake);
           list[i] = actor;
-        //}
-        //else
-        //{
-        //  actor = list[i];
-        //  actor.Rebuild(amake);
-        //}
+        }
+        else
+        {
+          actor = list[i];
+          actor.ID += Capacity;
+          actor.Rebuild(amake);
+        }
         count++;
 
         mu_counter.ReleaseMutex();
-
-        return i;
       }
 
       public static void ActivatePlanned()
@@ -78,7 +78,7 @@ namespace SWEndor.Actors
         return count;
       }
 
-      public static ActorInfo[] GetActorList()
+      public static ActorInfo[] GetList()
       {
         using (new PerfElement("fn_getactorlist"))
         {
@@ -100,31 +100,41 @@ namespace SWEndor.Actors
         return holdinglist;
       }
 
-      public static ActorInfo GetActor(int id)
+      public static ActorInfo Get(int id)
       {
         if (id < 0)
           return null;
-        return list[id];
+        return list[id % Capacity];
       }
 
-      public static void RemoveActor(int id)
+      public static ActorInfo GetExact(int id)
       {
-        list[id] = null;
-        count--;
-        if (id < emptycounter)
-          emptycounter = id;
+        ActorInfo a = Get(id);
+        if (a != null && id == a.ID)
+          return a;
+        return null;
+      }
 
-        // don't remove, keep future reuse. But reduce counters
+      public static void Remove(int id)
+      {
+        int x = id % Capacity;
+        
         /*
-        if (list[id].CreationState != CreationState.DISPOSED)
+        list[x] = null;
+        count--;
+        if (x < emptycounter)
+          emptycounter = x;
+        */
+        
+        // don't remove, keep future reuse. But reduce counters
+        if (list[x].CreationState != CreationState.DISPOSED)
         {
           mu_counter.WaitOne();
           count--;
-          if (id < emptycounter)
-            emptycounter = id;
+          if (x < emptycounter)
+            emptycounter = x;
           mu_counter.ReleaseMutex();
         }
-        */
       }
     }
   }

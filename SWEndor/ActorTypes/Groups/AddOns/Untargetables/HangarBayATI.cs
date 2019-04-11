@@ -46,8 +46,10 @@ namespace SWEndor.ActorTypes
         if (p.SpawnerInfo.SpawnMoveTime < Game.Instance().GameTime)
         {
           List<ActorInfo> rm = new List<ActorInfo>();
-          foreach (ActorInfo a in ainfo.GetAllChildren(1))
+          foreach (int i in ainfo.GetAllChildren(1))
           {
+            ActorInfo a = ActorInfo.Factory.GetExact(i);
+
             a.ActorState = ActorState.NORMAL;
             ActionManager.Unlock(a);
             ActionManager.QueueLast(a, new Hunt());
@@ -69,11 +71,10 @@ namespace SWEndor.ActorTypes
         }
       }
 
-
-
-      foreach (ActorInfo a in ainfo.GetAllChildren(1))
+      foreach (int i in ainfo.GetAllChildren(1))
       {
-        if (a.TypeInfo is FighterGroup)
+        ActorInfo a = ActorInfo.Factory.GetExact(i);
+        if (a != null && a.TypeInfo is FighterGroup)
         {
           if (p.SpawnerInfo.SpawnSpeed == -1)
             a.MovementInfo.Speed = p.MovementInfo.Speed;

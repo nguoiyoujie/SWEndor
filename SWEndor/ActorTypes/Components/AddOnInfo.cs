@@ -40,9 +40,8 @@ namespace SWEndor.ActorTypes.Components
 
       ActorInfo a = ActorInfo.Create(acinfo);
       a.AddParent(actor);
-
-      if (AttachToParent)
-        a.AttachToMesh = actor.ID;
+      
+      a.AttachToParent = AttachToParent;
     }
   }
 }

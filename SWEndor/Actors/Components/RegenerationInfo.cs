@@ -37,16 +37,22 @@ namespace SWEndor.Actors.Components
       Regenerate(Actor, SelfRegenRate);
 
       if (ParentRegenRate != 0)
-        foreach (ActorInfo p in Actor.GetAllParents())
+        foreach (int p in Actor.GetAllParents())
           Regenerate(p, ParentRegenRate);
 
       if (ChildRegenRate != 0)
-        foreach (ActorInfo c in Actor.GetAllChildren())
+        foreach (int c in Actor.GetAllChildren())
           Regenerate(c, ChildRegenRate);
 
       if (RelativeRegenRate != 0)
-        foreach (ActorInfo r in Actor.GetAllRelatives())
+        foreach (int r in Actor.GetAllRelatives())
           Regenerate(r, RelativeRegenRate);
+    }
+
+    private void Regenerate(int i, float amount)
+    {
+      ActorInfo a = ActorInfo.Factory.GetExact(i);
+      Regenerate(a, amount);
     }
 
     private void Regenerate(ActorInfo a, float amount)

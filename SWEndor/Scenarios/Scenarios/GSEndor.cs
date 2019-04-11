@@ -929,8 +929,9 @@ namespace SWEndor.Scenarios
           {
             ActorInfo rs = MainEnemyFaction.GetShips()[Engine.Instance().Random.Next(0, MainEnemyFaction.GetShips().Count)];
 
-            foreach (ActorInfo rc in rs.GetAllChildren(1))
+            foreach (int i in rs.GetAllChildren(1))
             {
+              ActorInfo rc = ActorInfo.Factory.GetExact(i);
               if (rc.TypeInfo is SDShieldGeneratorATI)
                 if (Engine.Instance().Random.NextDouble() > 0.4f)
                   rs = rc;
@@ -1168,7 +1169,7 @@ namespace SWEndor.Scenarios
           }
           else
           {
-            ainfo.OnDestroyedEvent(null);
+            ainfo.DestroyedEvents += GameScenarioManager.Instance().Scenario.ProcessPlayerKilled;
           }
 
           if (ainfo.TypeInfo is WedgeXWingATI)
@@ -1199,8 +1200,9 @@ namespace SWEndor.Scenarios
     #region Empire spawns
     public void Empire_FirstTIEWave(object[] param)
     {
-      if (m_ADS.GetAllChildren(1).Count > 0)
-        m_ADSLaserSource = m_ADS.GetAllChildren(1)[0];
+      List<int> list = m_ADS.GetAllChildren(1);
+      if (list.Count > 0)
+        m_ADSLaserSource = ActorInfo.Factory.GetExact(list[0]);
 
       // TIEs
       float t = 0;
@@ -2053,7 +2055,7 @@ namespace SWEndor.Scenarios
           }
           else
           {
-            ainfo.OnDestroyedEvent(null);
+            ainfo.DestroyedEvents += ProcessPlayerKilled;
           }
 
           SoundManager.Instance().SetMusic("executorend");

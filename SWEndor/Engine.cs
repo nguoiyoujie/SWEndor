@@ -132,7 +132,7 @@ namespace SWEndor
 
     public void Process()
     {
-      Queue<ActorInfo> q = new Queue<ActorInfo>(ActorInfo.Factory.GetActorList());
+      Queue<ActorInfo> q = new Queue<ActorInfo>(ActorInfo.Factory.GetList());
       while (q.Count > 0)
       {
         ActorInfo a = q.Dequeue();

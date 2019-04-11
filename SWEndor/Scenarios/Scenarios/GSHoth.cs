@@ -561,7 +561,7 @@ namespace SWEndor.Scenarios
           }
           else
           {
-            ainfo.OnDestroyedEvent(null);
+            ainfo.DestroyedEvents += ProcessPlayerKilled;
           }
 
           if (ainfo.TypeInfo is TransportATI)

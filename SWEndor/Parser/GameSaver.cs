@@ -20,7 +20,7 @@ namespace SWEndor
       {
         StringBuilder sb = new StringBuilder();
 
-        foreach (ActorInfo ainfo in ActorInfo.Factory.GetActorList())
+        foreach (ActorInfo ainfo in ActorInfo.Factory.GetList())
         {
           new ActorParser(ainfo).Generate(sb);
         }

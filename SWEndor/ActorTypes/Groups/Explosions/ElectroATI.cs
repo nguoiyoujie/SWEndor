@@ -52,11 +52,12 @@ namespace SWEndor.ActorTypes
       base.ProcessState(ainfo);
       if (ainfo.ActorState == ActorState.NORMAL)
       {
-        if (ainfo.Parent != null)
+        ActorInfo p = ActorInfo.Factory.GetExact(ainfo.ParentID);
+        if (p != null)
         {
-          if (ainfo.Parent.CreationState != CreationState.DISPOSED)
+          if (p.CreationState != CreationState.DISPOSED)
           {
-            TV_3DVECTOR pos = ainfo.Parent.GetPosition();
+            TV_3DVECTOR pos = p.GetPosition();
             ainfo.SetLocalPosition(pos.x, pos.y, pos.z);
           }
           else

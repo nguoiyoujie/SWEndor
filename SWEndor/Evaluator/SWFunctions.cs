@@ -233,8 +233,8 @@ namespace SWEndor.Evaluator
         return false;
 
       int id = Convert.ToInt32(ps[0].ToString());
-      GameScenarioManager.Instance().Scenario.ActiveActor = ActorInfo.Factory.GetActor(id);
-      return true;
+      GameScenarioManager.Instance().Scenario.ActiveActor = ActorInfo.Factory.GetExact(id);
+      return GameScenarioManager.Instance().Scenario.ActiveActor != null;
     }
 
     private static object Actor_IsAlive(object[] ps)
@@ -553,7 +553,7 @@ namespace SWEndor.Evaluator
         return false;
       }
 
-      ActorInfo a = ActorInfo.Factory.GetActor(id);
+      ActorInfo a = ActorInfo.Factory.GetExact(id);
       if (a == null)
         return false;
 
@@ -1084,7 +1084,7 @@ namespace SWEndor.Evaluator
         case "attackactor":
           if (ps.Length >= 2)
           {
-            tgt = ActorInfo.Factory.GetActor(Convert.ToInt32(ps[1].ToString()));
+            tgt = ActorInfo.Factory.GetExact(Convert.ToInt32(ps[1].ToString()));
             if (tgt == null)
               throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[0].ToString().ToLower(), ps[1].ToString().ToLower()));
 
@@ -1115,7 +1115,7 @@ namespace SWEndor.Evaluator
         case "followactor":
           if (ps.Length >= 2)
           {
-            tgt = ActorInfo.Factory.GetActor(Convert.ToInt32(ps[1].ToString()));
+            tgt = ActorInfo.Factory.GetExact(Convert.ToInt32(ps[1].ToString()));
             if (tgt == null)
               throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[0].ToString().ToLower(), ps[1].ToString().ToLower()));
 

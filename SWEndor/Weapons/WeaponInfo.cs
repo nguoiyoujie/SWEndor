@@ -242,7 +242,7 @@ namespace SWEndor.Weapons
           }
 
           TV_3DVECTOR dir = new TV_3DVECTOR();
-          ActorInfo a2 = target.AttachToMesh > 0 ? target.Parent : null;
+          ActorInfo a2 = target.AttachToParent ? ActorInfo.Factory.Get(target.ParentID) : null;
           if (a2 == null)
           {
             dir = target.GetRelativePositionXYZ(0, 0, target.MovementInfo.Speed * d) - owner.GetPosition();

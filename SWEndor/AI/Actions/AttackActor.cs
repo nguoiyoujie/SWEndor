@@ -61,7 +61,7 @@ namespace SWEndor.AI.Actions
         if (dist > TooCloseDistance)
         {
           float d = dist / Globals.LaserSpeed;
-          ActorInfo a2 = Target_Actor.AttachToMesh > 0 ? Target_Actor.Parent : null;
+          ActorInfo a2 = Target_Actor.AttachToParent ? ActorInfo.Factory.Get(Target_Actor.ParentID) : null;
           if (a2 == null)
           {
             Target_Position = Target_Actor.GetRelativePositionXYZ(0, 0, Target_Actor.MovementInfo.Speed * d);

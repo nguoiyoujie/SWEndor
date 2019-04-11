@@ -378,7 +378,7 @@ namespace SWEndor.ActorTypes
             }
             else
             {
-              ainfo.OnDestroyedEvent(null);
+              ainfo.DestroyedEvents += GameScenarioManager.Instance().Scenario.ProcessPlayerKilled;
             }
           }
           else
@@ -420,10 +420,11 @@ namespace SWEndor.ActorTypes
             PlayerInfo.Instance().Score.Deaths++;
         }
 
-        List<ActorInfo> attackerfamily = hitby.GetAllParents();
-        foreach (ActorInfo a in attackerfamily)
+        List<int> attackerfamily = hitby.GetAllParents();
+        foreach (int i in attackerfamily)
         {
-          if (a.Faction != null && !a.Faction.IsAlliedWith(ainfo.Faction))
+          ActorInfo a = ActorInfo.Factory.GetExact(i);
+          if (a != null && a.Faction != null && !a.Faction.IsAlliedWith(ainfo.Faction))
           {
             if (!(a.TypeInfo is AddOnGroup))
               AddScore(a.Score, a, ainfo);
@@ -439,17 +440,21 @@ namespace SWEndor.ActorTypes
 
         if ((ainfo.TypeInfo is FighterGroup))
         {
-          List<ActorInfo> hparents = hitby.GetAllParents();
-          if (hitby.TypeInfo.IsDamage && hparents.Count > 0)
+          List<int> hparents = hitby.GetAllParents();
+          if (hparents.Count > 0)
           {
-            if (ainfo.CurrentAction != null && ainfo.CurrentAction.CanInterrupt && ainfo.Faction != null && !ainfo.Faction.IsAlliedWith(hparents[0].Faction) && ainfo.CanRetaliate)
+            ActorInfo h = ActorInfo.Factory.GetExact(hparents[0]);
+            if (h != null && hitby.TypeInfo.IsDamage && hparents.Count > 0)
             {
-              ActionManager.ClearQueue(ainfo);
-              ActionManager.QueueLast(ainfo, new AttackActor(hparents[0]));
-            }
-            else if (ainfo.CurrentAction != null && !(ainfo.CurrentAction is Evade) && ainfo.CanEvade)
-            {
-              ActionManager.QueueFirst(ainfo, new Evade());
+              if (ainfo.CurrentAction != null && ainfo.CurrentAction.CanInterrupt && ainfo.Faction != null && !ainfo.Faction.IsAlliedWith(h.Faction) && ainfo.CanRetaliate)
+              {
+                ActionManager.ClearQueue(ainfo);
+                ActionManager.QueueLast(ainfo, new AttackActor(h));
+              }
+              else if (ainfo.CurrentAction != null && !(ainfo.CurrentAction is Evade) && ainfo.CanEvade)
+              {
+                ActionManager.QueueFirst(ainfo, new Evade());
+              }
             }
           }
         }
@@ -470,11 +475,12 @@ namespace SWEndor.ActorTypes
         if (ainfo.IsPlayer())
           PlayerInfo.Instance().FlashHit(PlayerInfo.Instance().HealthColor);
 
-        List<ActorInfo> attackerfamily = hitby.GetAllParents();
-        attackerfamily.Add(hitby);
-        foreach (ActorInfo a in attackerfamily)
+        List<int> attackerfamily = hitby.GetAllParents();
+        attackerfamily.Add(hitby.ID);
+        foreach (int i in attackerfamily)
         {
-          if (a.Faction != null && !a.Faction.IsAlliedWith(ainfo.Faction))
+          ActorInfo a = ActorInfo.Factory.GetExact(i);
+          if (a != null && a.Faction != null && !a.Faction.IsAlliedWith(ainfo.Faction))
           {
             if (!(a.TypeInfo is AddOnGroup))
               AddScore(a.Score, a, ainfo);
@@ -498,9 +504,10 @@ namespace SWEndor.ActorTypes
       score.Score++;
 
       bool shielded = false;
-      foreach (ActorInfo shd in victim.GetAllChildren())
+      foreach (int i in victim.GetAllChildren())
       {
-        if (shd.RegenerationInfo.ParentRegenRate > 0 || shd.RegenerationInfo.RelativeRegenRate > 0)
+        ActorInfo shd = ActorInfo.Factory.GetExact(i);
+        if (shd != null && shd.RegenerationInfo.ParentRegenRate > 0 || shd.RegenerationInfo.RelativeRegenRate > 0)
           shielded = true;
       }
       if (!shielded)

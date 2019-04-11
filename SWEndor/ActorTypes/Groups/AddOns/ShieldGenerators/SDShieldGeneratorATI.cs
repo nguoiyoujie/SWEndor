@@ -54,9 +54,10 @@ namespace SWEndor.ActorTypes
       base.ProcessHit(ainfo, hitby, impact, normal);
       if (hitby.TypeInfo.IsDamage)
       {
-        foreach (ActorInfo child in ainfo.GetAllChildren(1))
+        foreach (int i in ainfo.GetAllChildren(1))
         {
-          if (child.TypeInfo is ElectroATI)
+          ActorInfo child = ActorInfo.Factory.GetExact(i);
+          if (child?.TypeInfo is ElectroATI)
           {
             child.CycleInfo.CyclesRemaining = 2.5f / child.CycleInfo.CyclePeriod;
             return;

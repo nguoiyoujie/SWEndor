@@ -37,7 +37,7 @@ namespace SWEndor.Player
         if (_actor != value)
         {
           //if (_actor != null)
-            //_actor.Score = new ScoreInfo(_actor.Key);
+          //  _actor.Score = new ScoreInfo(_actor.Key);
           _actor = value;
           if (_actor != null)
             _actor.Score = Score;

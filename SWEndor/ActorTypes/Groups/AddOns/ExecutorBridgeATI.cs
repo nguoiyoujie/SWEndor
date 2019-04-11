@@ -53,13 +53,12 @@ namespace SWEndor.ActorTypes
         ActorInfo parent = ainfo.GetTopParent();
         if (parent != null)
         {
-          List<ActorInfo> cs = new List<ActorInfo>(parent.GetAllChildren(1));
-          foreach (ActorInfo pn in cs)
+          List<int> cs = new List<int>(parent.GetAllChildren(1));
+          foreach (int i in cs)
           {
-            if (pn.TypeInfo is ExecutorShieldGeneratorATI)
-            {
+            ActorInfo pn = ActorInfo.Factory.GetExact(i);
+            if (pn?.TypeInfo is ExecutorShieldGeneratorATI)
               ainfo.CombatInfo.Strength = ainfo.TypeInfo.MaxStrength;
-            }
           }
         }
       }

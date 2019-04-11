@@ -238,7 +238,7 @@ namespace SWEndor.Scenarios
           Position = new TV_3DVECTOR(0, 800, -18000),
           Rotation = new TV_3DVECTOR(0, 0, 0),
         };
-        m_AYavin = ActorInfo.Create(aci_Yavin4);
+        m_AYavin4 = ActorInfo.Create(aci_Yavin4);
       }
 
       // Create DeathStar
@@ -650,9 +650,10 @@ namespace SWEndor.Scenarios
           {
             ActorInfo rs = MainEnemyFaction.GetShips()[Engine.Instance().Random.Next(0, MainEnemyFaction.GetShips().Count)];
 
-            foreach (ActorInfo rc in rs.GetAllChildren(1))
+            foreach (int i in rs.GetAllChildren(1))
             {
-              if (rc.TypeInfo is SDShieldGeneratorATI)
+              ActorInfo rc = ActorInfo.Factory.GetExact(i);
+              if (rc?.TypeInfo is SDShieldGeneratorATI)
                 if (Engine.Instance().Random.NextDouble() > 0.4f)
                   rs = rc;
             }

@@ -108,14 +108,15 @@ namespace SWEndor.Actors
     // Render
     public TVMesh Mesh { get; private set; }
     public TVMesh FarMesh { get; private set; }
-    public int AttachToMesh = -1;
+    public bool AttachToParent = false;
 
     // Particle system
     public int ParticleEmitterID = -1;
     public TVParticleSystem ParticleSystem = null;
 
     // Ownership
-    public ActorInfo Parent { get; private set; }
+    public int ParentID { get; private set; } = -1;
+    /*
     public event EventHandler<ActionEventArgs> NotifyChildEvent;
     public event EventHandler<ActionEventArgs> NotifyParentEvent;
     public class ActionEventArgs : EventArgs
@@ -134,7 +135,7 @@ namespace SWEndor.Actors
     {
       NotifyParentEvent?.Invoke(this, e);
     }
-
+    */
     #region Creation Methods
 
     private ActorInfo(int id, ActorCreationInfo acinfo)
@@ -247,7 +248,7 @@ namespace SWEndor.Actors
     public static ActorInfo Create(ActorCreationInfo acinfo)
     {
       ActorInfo a;
-      int ret = Factory.Register(acinfo, out a);
+      Factory.Register(acinfo, out a);
       return a;
     }
     #endregion
@@ -562,7 +563,7 @@ namespace SWEndor.Actors
                 int n = 0;
                 if (int.TryParse(tvm.GetTag(), out n))
                 {
-                  actor = Factory.GetActor(n);
+                  actor = Factory.GetExact(n);
                   return (actor != null
                        && actor != this
                        && !HasRelative(actor)
@@ -586,7 +587,7 @@ namespace SWEndor.Actors
                 int n = 0;
                 if (int.TryParse(tvm.GetTag(), out n))
                 {
-                  actor = Factory.GetActor(n);
+                  actor = Factory.GetExact(n);
                   return true;
                 }
               }
@@ -634,7 +635,7 @@ namespace SWEndor.Actors
       //  return WorldPosition.Value;
 
       TV_3DVECTOR ret = Position;
-      ActorInfo a = AttachToMesh > 0 ? Parent : null;
+      ActorInfo a = AttachToParent ? Factory.Get(ParentID) : null;
       if (a != null)
         ret = a.GetRelativePositionXYZ(ret.x, ret.y, ret.z);
       WorldPosition.Value = ret;
@@ -691,7 +692,7 @@ namespace SWEndor.Actors
       //if (WorldRotation.Time >= Game.Instance().GameTime)
       //  return WorldRotation.Value;
 
-      ActorInfo a = AttachToMesh > 0 ? Parent : null;
+      ActorInfo a = AttachToParent ? Factory.Get(ParentID) : null;
       if (a != null && a.Mesh != null)
       {
         //TV_3DVECTOR aret = a.GetRotation();
@@ -735,7 +736,7 @@ namespace SWEndor.Actors
 
     public void SetRotation(float x, float y, float z)
     {
-      ActorInfo a = AttachToMesh > 0 ? Parent : null;
+      ActorInfo a = AttachToParent ? Factory.Get(ParentID) : null;
       if (a != null)
       {
         //TV_3DVECTOR dir = new TV_3DVECTOR(x, y, z);
@@ -788,7 +789,7 @@ namespace SWEndor.Actors
     public TV_3DVECTOR GetDirection()
     {
       TV_3DVECTOR ret = Utilities.GetDirection(Rotation);
-      ActorInfo a = AttachToMesh > 0 ? Parent : null;
+      ActorInfo a = AttachToParent ? Factory.Get(ParentID) : null;
       if (a != null)
         ret += a.GetDirection();
 
@@ -800,7 +801,7 @@ namespace SWEndor.Actors
     public void SetDirection(float x, float y, float z)
     {
       TV_3DVECTOR dir = new TV_3DVECTOR(x, y, z);
-      ActorInfo a = AttachToMesh > 0 ? Parent : null;
+      ActorInfo a = AttachToParent ? Factory.Get(ParentID) : null;
       if (a != null)
         dir -= a.GetDirection();
 
@@ -858,7 +859,7 @@ namespace SWEndor.Actors
     public float GetTrueSpeed()
     {
       float ret = MovementInfo.Speed;
-      ActorInfo a = AttachToMesh > 0 ? Parent : null;
+      ActorInfo a = AttachToParent ? Factory.Get(ParentID) : null;
       if (a != null)
         ret += a.GetTrueSpeed();
 
@@ -872,7 +873,7 @@ namespace SWEndor.Actors
     }
 
     #region Parent, Child and Relatives
-
+    /*
     public void ChildExecute(object sender, ActionEventArgs args)
     {
       args.Action?.Invoke();
@@ -882,28 +883,30 @@ namespace SWEndor.Actors
     {
       args.Action?.Invoke();
     }
-
+    */
     public void AddParent(ActorInfo actor)
     {
       if (actor != null)
       {
-        if (Parent != null)
+        if (ParentID >= 0)
           RemoveParent();
 
-        Parent = actor;
-        NotifyChildEvent += Parent.ChildExecute;
-        NotifyParentEvent += ParentExecute;
+        ParentID = actor.ID;
+        //NotifyChildEvent += Parent.ChildExecute;
+        //NotifyParentEvent += ParentExecute;
       }
     }
 
     public void RemoveParent()
     {
-      if (Parent != null)
+      /*
+      if (ParentID >= 0)
       {
         NotifyChildEvent -= Parent.ChildExecute;
         NotifyParentEvent -= ParentExecute;
       }
-      Parent = null;
+      */
+      ParentID = -1;
     }
 
     public bool HasParent(ActorInfo a, int searchlevel = 99)
@@ -912,53 +915,53 @@ namespace SWEndor.Actors
         return false;
 
       bool ret = false;
-      if (Parent == null)
+      if (ParentID < 0)
         return false;
 
-      ret |= (Parent == a) || (Parent.HasParent(a, searchlevel - 1));
+      ret |= (ParentID == a.ID) || (Factory.Get(ParentID)?.HasParent(a, searchlevel - 1) ?? false);
 
       return ret;
     }
 
     public ActorInfo GetTopParent(int searchlevel = 99)
     {
-      if (Parent == null || searchlevel <= 1)
+      if (ParentID < 0 || searchlevel <= 1)
         return this;
       else
-        return Parent.GetTopParent(searchlevel - 1);
+        return Factory.Get(ParentID)?.GetTopParent(searchlevel - 1) ?? this;
     }
 
-    public List<ActorInfo> GetAllParents(int searchlevel = 99)
+    public List<int> GetAllParents(int searchlevel = 99)
     {
       if (searchlevel < 0)
-        return new List<ActorInfo>();
+        return new List<int>();
 
-      List<ActorInfo> ret = new List<ActorInfo>();
+      List<int> ret = new List<int>();
       if (searchlevel > 1)
       {
-        if (Parent != null && !ret.Contains(Parent))
+        if (ParentID >= 0 && !ret.Contains(ParentID))
         {
-          ret.Add(Parent);
-          ret.AddRange(Parent.GetAllParents(searchlevel - 1));
+          ret.Add(ParentID);
+          ret.AddRange(Factory.Get(ParentID)?.GetAllParents(searchlevel - 1));
         }
       }
       else
       {
-        if (Parent != null)
-          ret.Add(Parent);
+        if (ParentID >= 0)
+          ret.Add(ParentID);
       }
       return ret;
     }
 
-    public List<ActorInfo> GetAllChildren(int searchlevel = 99)
+    public List<int> GetAllChildren(int searchlevel = 99)
     {
       if (searchlevel < 0)
-        return new List<ActorInfo>();
+        return new List<int>();
 
-      List<ActorInfo> ret = new List<ActorInfo>();
-      foreach (ActorInfo p in Factory.GetActorList())
+      List<int> ret = new List<int>();
+      foreach (ActorInfo p in Factory.GetList())
         if (p != null && p.HasParent(this, searchlevel))
-          ret.Add(p);
+          ret.Add(p.ID);
       return ret;
     }
 
@@ -973,19 +976,15 @@ namespace SWEndor.Actors
       return (a != null && a.GetTopParent() == GetTopParent());
     }
 
-    public List<ActorInfo> GetAllRelatives(int searchlevel = 99)
+    public List<int> GetAllRelatives(int searchlevel = 99)
     {
       if (searchlevel < 0)
-        return new List<ActorInfo>();
+        return new List<int>();
 
-      List<ActorInfo> ret = new List<ActorInfo>();
-      foreach (ActorInfo p in Factory.GetActorList())
-      {
+      List<int> ret = new List<int>();
+      foreach (ActorInfo p in Factory.GetList())
         if (p != null && p.GetTopParent() == GetTopParent())
-        {
-          ret.Add(p);
-        }
-      }
+          ret.Add(p.ID);
       return ret;
     }
 
@@ -1107,19 +1106,23 @@ namespace SWEndor.Actors
     {
       using (new PerfElement("actor_process_destroy"))
       {
-        if (CreationState == CreationState.DISPOSED)
-          return;
+        //if (CreationState == CreationState.DISPOSED)
+        //  return;
 
         // Parent
         RemoveParent();
 
         // Destroy Children
-        foreach (ActorInfo child in GetAllChildren(1))
-          if (child.TypeInfo is AddOnGroup || child.AttachToMesh == ID)
+        foreach (int i in GetAllChildren(1))
+        {
+          ActorInfo child = ActorInfo.Factory.GetExact(i);
+
+          if (child.TypeInfo is AddOnGroup || child.AttachToParent)
             child.Destroy();
           else
             child.RemoveParent();
-
+        }
+        
         // Mesh
         if (Mesh != null)
           Mesh.Destroy();
@@ -1129,7 +1132,7 @@ namespace SWEndor.Actors
           FarMesh.Destroy();
         FarMesh = null;
 
-        AttachToMesh = 0;
+        AttachToParent = false;
 
         // Particle System
         if (ParticleSystem != null)
@@ -1138,6 +1141,7 @@ namespace SWEndor.Actors
 
         // Actions
         CurrentAction = null;
+        //ActionManager.ClearQueue(this);
 
         // Reset components
         Score.Reset();
@@ -1157,9 +1161,15 @@ namespace SWEndor.Actors
         HitEvents = null;
         ActorStateChangeEvents = null;
 
+        // Player
+        if (IsPlayer())
+          PlayerInfo.Instance().Actor = null;
+        else if (this == PlayerInfo.Instance().TempActor)
+          PlayerInfo.Instance().TempActor = null;
+
         // Final dispose
         Faction.UnregisterActor(this);
-        Factory.RemoveActor(ID);
+        Factory.Remove(ID);
 
         // Finally
         CreationState = CreationState.DISPOSED;

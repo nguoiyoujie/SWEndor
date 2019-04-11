@@ -50,39 +50,36 @@ namespace SWEndor.ActorTypes
     public override void ProcessHit(ActorInfo ainfo, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
       base.ProcessHit(ainfo, hitby, impact, normal);
-      List<ActorInfo> children = hitby.GetAllChildren(1);
-      List<ActorInfo> rm = new List<ActorInfo>();
-      foreach (ActorInfo c in children)
+      List<int> children = hitby.GetAllChildren(1);
+      List<int> rm = new List<int>();
+      foreach (int i in children)
       {
-        if (c.CreationState != CreationState.ACTIVE
+        ActorInfo c = ActorInfo.Factory.GetExact(i);
+        if (c == null
+          || c.CreationState != CreationState.ACTIVE
           || !c.TypeInfo.TargetType.HasFlag(TargetType.ADDON))
-          rm.Add(c);
+          rm.Add(c.ID);
       }
 
-      foreach (ActorInfo r in rm)
-      {
+      foreach (int r in rm)
         children.Remove(r);
-      }
 
       if (children.Count > 0)
       {
         for (int shock = 3; shock > 0; shock--)
         {
-          ActorInfo child = children[Engine.Instance().Random.Next(0, children.Count)];
+          ActorInfo child = ActorInfo.Factory.GetExact(children[Engine.Instance().Random.Next(0, children.Count)]);
           child.CombatInfo.Strength -= 0.1f * Engine.Instance().Random.Next(25, 50);
 
           float empduration = 12;
           
           foreach (WeaponInfo w in child.WeaponSystemInfo.Weapons.Values)
-          {
             if (w.WeaponCooldown < Game.Instance().GameTime + empduration + 2)
-            {
               w.WeaponCooldown = Game.Instance().GameTime + empduration + 2;
-            }
-          }
 
-          foreach (ActorInfo child2 in child.GetAllChildren(1))
+          foreach (int i in child.GetAllChildren(1))
           {
+            ActorInfo child2 = ActorInfo.Factory.GetExact(i);
             if (child2.TypeInfo is ElectroATI)
             {
               child2.CycleInfo.CyclesRemaining = empduration / child2.CycleInfo.CyclePeriod;
