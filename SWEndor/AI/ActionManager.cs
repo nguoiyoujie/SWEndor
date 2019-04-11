@@ -124,7 +124,7 @@ namespace SWEndor.AI
             else
             {
               actor.CurrentAction = action.NextAction;
-              //Run(actor, actor.CurrentAction); // ?
+              action.Dispose();
             }
           }
           else

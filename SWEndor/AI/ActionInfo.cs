@@ -18,7 +18,6 @@ namespace SWEndor.AI.Actions
     public bool Complete = false;
     public bool CanInterrupt = true;
     public ActionInfo NextAction = null;
-    public int Retries = 3;
 
     // collision avoidance
     private float m_collisioncheck_time = 0;
@@ -176,6 +175,12 @@ namespace SWEndor.AI.Actions
         owner.CollisionInfo.IsTestingProspectiveCollision = true;
       }
       return owner.CollisionInfo.IsInProspectiveCollision;
+    }
+
+    public void Dispose()
+    {
+      NextAction = null;
+      Complete = true;
     }
   }
 }
