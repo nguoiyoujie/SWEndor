@@ -1,4 +1,5 @@
 ﻿using SWEndor.Primitives;
+using System;
 
 namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 {
@@ -9,11 +10,11 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 
     internal LogicalAndExpression(Lexer lexer) : base(lexer)
     {
-      // EQUALEXPR || EQUALEXPR ...
+      // EQUALEXPR && EQUALEXPR ...
 
       _first = new EqualityExpression(lexer).Get();
 
-      while (lexer.TokenType == TokenEnum.AMPAMP // ||
+      while (lexer.TokenType == TokenEnum.AMPAMP // &&
         )
       {
         TokenEnum _type = lexer.TokenType;
@@ -31,10 +32,20 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 
     public override object Evaluate(Context context)
     {
+      if (_set.Count == 0)
+        return _first.Evaluate(context);
+
       dynamic result = _first.Evaluate(context);
-      foreach (CExpression _expr in _set.GetList())
+      try { result = (bool)(result as IConvertible); } catch (Exception ex) { throw new EvalException("bool cast", result, ex); }
+      if (result)
       {
-        result = result && (dynamic)_expr.Evaluate(context);
+        foreach (CExpression _expr in _set.GetList())
+        {
+          dynamic adden = (dynamic)_expr.Evaluate(context) ?? false;
+          try { result &= adden; } catch (Exception ex) { throw new EvalException("&&", result, adden, ex); }
+          if (!result)
+            break;
+        }
       }
       return result;
     }

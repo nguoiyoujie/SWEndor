@@ -4,6 +4,7 @@ using SWEndor.FileFormat.INI;
 using SWEndor.FileFormat.Scripting;
 using SWEndor.Player;
 using SWEndor.Scenarios.Scripting;
+using SWEndor.Scenarios.Scripting.Expressions;
 using System.Collections.Generic;
 
 namespace SWEndor.Scenarios
@@ -53,6 +54,7 @@ namespace SWEndor.Scenarios
     public void LoadScripts()
     {
       Script.Registry.Clear();
+      SWContext.Instance.Reset();
       foreach (string scrfile in ScriptPaths)
       {
         ScriptFile f = new ScriptFile(scrfile);
@@ -69,10 +71,17 @@ namespace SWEndor.Scenarios
       Screen2D.Instance().LoadingTextLines.RemoveAt(0);
     }
 
+    public override void Unload()
+    {
+      base.Unload();
+      Script.Registry.Clear();
+      SWContext.Instance.Reset();
+    }
+
     public override void Launch()
     {
+      // after scripts
       base.Launch();
-
 
       Script scr = Script.Registry.Get(Fn_load);
       if (scr != null)

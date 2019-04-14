@@ -1,4 +1,6 @@
-﻿namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
+﻿using System;
+
+namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 {
   public class UnaryExpression : CExpression
   {
@@ -38,16 +40,17 @@
 
     public override object Evaluate(Context context)
     {
+      dynamic result = _primary.Evaluate(context);
       switch (_type)
       {
         default:
         case TokenEnum.PLUS:
         case TokenEnum.NOTHING:
-          return _primary.Evaluate(context);
+          return result;
         case TokenEnum.MINUS:
-          return -(dynamic)_primary.Evaluate(context);
+          try { return -result; } catch (Exception ex) { throw new EvalException("-", result, ex); }
         case TokenEnum.NOT:
-          return !(dynamic)_primary.Evaluate(context);
+          try { return !result; } catch (Exception ex) { throw new EvalException("!", result, ex); }
       }
     }
   }

@@ -12,7 +12,7 @@ namespace SWEndor.Actors
     {
       private const int Capacity = 2500; // hard code limit to ActorInfo. We should not be exceeding 1000 normally.
       private static ConcurrentQueue<ActorInfo> deadqueue = new ConcurrentQueue<ActorInfo>();
-      private static ActorInfo[] list = new ActorInfo[Capacity]; 
+      private static ActorInfo[] list = new ActorInfo[Capacity];
       private static int count = 0;
       private static ActorInfo[] holdinglist = new ActorInfo[0];
       private static float listtime = 0;
@@ -38,7 +38,7 @@ namespace SWEndor.Actors
         emptycounter = i + 1;
 
         if (list[i] == null)
-        { 
+        {
           actor = new ActorInfo(i, amake);
           list[i] = actor;
         }
@@ -118,14 +118,14 @@ namespace SWEndor.Actors
       public static void Remove(int id)
       {
         int x = id % Capacity;
-        
+
         /*
         list[x] = null;
         count--;
         if (x < emptycounter)
           emptycounter = x;
         */
-        
+
         // don't remove, keep future reuse. But reduce counters
         if (list[x].CreationState != CreationState.DISPOSED)
         {
@@ -134,6 +134,16 @@ namespace SWEndor.Actors
           if (x < emptycounter)
             emptycounter = x;
           mu_counter.ReleaseMutex();
+        }
+      }
+
+      public static void Reset()
+      {
+
+        for (int i = 0; i < list.Length; i++)
+        {
+          list[i]?.Destroy();
+          list[i] = null;
         }
       }
     }

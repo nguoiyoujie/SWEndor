@@ -8,11 +8,17 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Statements
 
     internal Statement(Lexer lexer) : base(lexer)
     {
-      _statement = new AssignmentStatement(lexer).Get();
+      // IFTHENELSE
+      // dont grab semicolons here becuase IfThenElse is multiple statements
 
-      // comment
-      if (lexer.TokenType == TokenEnum.COMMENT)
-        lexer.Next();
+      if (lexer.TokenType != TokenEnum.NOTHING && lexer.TokenType != TokenEnum.COMMENT)
+      {
+        _statement = new IfThenElseStatement(lexer).Get();
+
+        // comment (eliminated by lexer)
+        //if (lexer.TokenType == TokenEnum.COMMENT)
+        //  lexer.Next();
+      }
     }
 
     public override void Evaluate(Context context)

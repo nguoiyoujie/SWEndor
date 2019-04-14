@@ -1,5 +1,4 @@
 ﻿using MTV3D65;
-using SWEndor.Evaluator;
 using System;
 using System.Collections.Generic;
 using System.IO;

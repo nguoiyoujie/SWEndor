@@ -1,4 +1,6 @@
-﻿namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
+﻿using System;
+
+namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 {
   public class TernaryExpression : CExpression
   {
@@ -38,7 +40,9 @@
 
     public override object Evaluate(Context context)
     {
-      if (_question.Evaluate(context).Equals(true))
+      dynamic result = false;
+      try { result = (bool)(_question.Evaluate(context) as IConvertible); } catch (Exception ex) { throw new EvalException("bool cast", result, ex); }
+      if (result)
         return _true?.Evaluate(context);
       else
         return _false?.Evaluate(context);

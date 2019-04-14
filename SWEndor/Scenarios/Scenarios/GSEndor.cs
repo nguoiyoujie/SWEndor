@@ -18,8 +18,8 @@ namespace SWEndor.Scenarios
     public GSEndor()
     {
       Name = "Battle of Endor";
-      Description = "The Rebel fleet, amassed on Sullust, prepares to move to Endor \n"
-                  + "where the Emperor is overseeing the construction of the second \n"
+      Description = "The Rebel fleet, amassed on Sullust, prepares to move to Endor "
+                  + "where the Emperor is overseeing the construction of the second "
                   + "Death Star.";
       AllowedWings = new List<ActorTypeInfo> { XWingATI.Instance()
                                                , YWingATI.Instance()

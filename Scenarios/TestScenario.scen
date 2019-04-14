@@ -1,7 +1,7 @@
 [General]
 Name = Test Custom Scenario
 PlayerName = Leader
-Description = This is a test scenario.|This is a new line.
+Description = We have a fleet of Transports to be escorted out to hyperspace. The Imperial fleet in this system will not let us through, but we hear that a rebel fleet is en route to break the blockade for their own purposes. We are taking this opportunity to break out to hyperspace.
 Wings = Millennium Falcon
 Difficulties = Normal
 

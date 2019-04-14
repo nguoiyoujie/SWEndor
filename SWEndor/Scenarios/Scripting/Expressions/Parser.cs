@@ -20,10 +20,10 @@ namespace SWEndor.Scenarios.Scripting.Expressions
         new TokenDefinition(@"else", TokenEnum.ELSE, RegexOption),
 
         // literals
+        new TokenDefinition(@"true|false", TokenEnum.BOOLEANLITERAL, RegexOption),
         new TokenDefinition(@"[a-zA-Z_][a-zA-Z0-9_]*(?=\s*\()", TokenEnum.FUNCTION, RegexOption),
         new TokenDefinition(@"[a-zA-Z_][a-zA-Z0-9_]*(?!\s*\()", TokenEnum.VARIABLE, RegexOption),
         new TokenDefinition(@"\""(\""\""|[^\""])*\""", TokenEnum.STRINGLITERAL, RegexOption),
-        new TokenDefinition(@"true|false", TokenEnum.BOOLEANLITERAL, RegexOption),
         new TokenDefinition(@"([0-9]+\.[0-9]+([eE][+-]?[0-9]+)?([fFdDMm]?)?)|(\.[0-9]+([eE][+-]?[0-9]+)?([fFdDMm]?)?)|([0-9]+([eE][+-]?[0-9]+)([fFdDMm]?)?)|([0-9]+([fFdDMm]?))", TokenEnum.REALLITERAL, RegexOption),
         new TokenDefinition(@"0(x|X)[0-9a-fA-F]+", TokenEnum.HEXINTEGERLITERAL, RegexOption),
         new TokenDefinition(@"[0-9]+(UL|Ul|uL|ul|LU|Lu|lU|lu|U|u|L|l)?", TokenEnum.DECIMALINTEGERLITERAL, RegexOption),

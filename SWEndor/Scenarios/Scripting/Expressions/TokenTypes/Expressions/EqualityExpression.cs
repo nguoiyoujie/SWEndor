@@ -1,4 +1,5 @@
 ﻿using SWEndor.Primitives;
+using System;
 
 namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 {
@@ -9,12 +10,12 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 
     internal EqualityExpression(Lexer lexer) : base(lexer)
     {
-      // RELATEEXPR || RELATEEXPR ...
+      // RELATEEXPR == RELATEEXPR ...
 
       _first = new RelationalExpression(lexer).Get();
 
       TokenEnum _type = lexer.TokenType;
-      while (_type == TokenEnum.EQUAL // ||
+      if (_type == TokenEnum.EQUAL // ==
         )
       {
         lexer.Next();
@@ -34,7 +35,8 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       dynamic result = _first.Evaluate(context);
       foreach (CExpression _expr in _set.GetList())
       {
-        result = (dynamic)_first.Evaluate(context) && (dynamic)_expr.Evaluate(context);
+        dynamic adden = _expr.Evaluate(context);
+        try { result = _first.Evaluate(context) == adden; } catch (Exception ex) { throw new EvalException("==", result, adden, ex); }
       }
       return result;
     }

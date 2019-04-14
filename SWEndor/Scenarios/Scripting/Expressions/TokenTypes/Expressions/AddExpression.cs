@@ -1,4 +1,5 @@
 ﻿using SWEndor.Primitives;
+using System;
 
 namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 {
@@ -36,13 +37,14 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       dynamic result = _first.Evaluate(context);
       foreach (CExpression _expr in _set.GetKeys())
       {
+        dynamic adden = _expr.Evaluate(context);
         switch (_set[_expr])
         {
           case TokenEnum.PLUS:
-            result += (dynamic)_expr.Evaluate(context);
+            try { result += adden; } catch (Exception ex) { throw new EvalException("+", result, adden, ex); }
             break;
           case TokenEnum.MINUS:
-            result -= (dynamic)_expr.Evaluate(context);
+            try { result -= adden; } catch (Exception ex) { throw new EvalException("-", result, adden, ex); }
             break;
         }
       }

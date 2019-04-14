@@ -11,25 +11,27 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
     {
       // FUNCNAME ( PARAM , PARAM , PARAM , ...)
       //  ^
+      // or FUNCNAME()
 
       _funcName = lexer.TokenContents;
-      lexer.Next();
+      lexer.Next(); //FUNCTION
 
       if (lexer.TokenType != TokenEnum.BRACKETOPEN)
         throw new ParseException(lexer, TokenEnum.BRACKETOPEN);
-      lexer.Next();
+      lexer.Next(); //BRACKETOPEN
 
-      _param.Add(new Expression(lexer).Get());
-
-      while (lexer.TokenType == TokenEnum.COMMA)
+      while (lexer.TokenType != TokenEnum.BRACKETCLOSE)
       {
-        lexer.Next();
         _param.Add(new Expression(lexer).Get());
+
+        while (lexer.TokenType == TokenEnum.COMMA)
+        {
+          lexer.Next(); //COMMA
+          _param.Add(new Expression(lexer).Get());
+        }
       }
 
-      if (lexer.TokenType != TokenEnum.BRACKETCLOSE)
-        throw new ParseException(lexer, TokenEnum.BRACKETCLOSE);
-      lexer.Next();
+      lexer.Next(); //BRACKETCLOSE
     }
 
     public override object Evaluate(Context context)
@@ -39,7 +41,10 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       {
         result.Add(expr.Evaluate(context));
       }
-      return context.Functions.Get(_funcName)?.Invoke(context, result.GetList());
+      FunctionDelegate fd = context.Functions.Get(_funcName.ToLower());
+      if (fd == null)
+        throw new EvalException("The function '" + _funcName + "' does not exist!");
+      return fd.Invoke(context, result.GetList());
     }
   }
 }

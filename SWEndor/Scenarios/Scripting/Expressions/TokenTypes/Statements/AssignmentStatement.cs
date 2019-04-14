@@ -57,6 +57,13 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       }
     }
 
+    //public override CStatement Get()
+    //{
+    //  if (_assigntype == TokenEnum.NOTHING)
+    //    return _value;
+    //  return this;
+    //}
+
     public override void Evaluate(Context context)
     {
       if (_assigntype != TokenEnum.NOTHING)//; _variable != null)

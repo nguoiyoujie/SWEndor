@@ -79,7 +79,7 @@ namespace SWEndor.UI.Menu.Pages
         SelectedDifficultyID = 0;
       }
 
-      DescText.Text = SelectedScenario.Description;
+      DescText.Text = Utilities.Multiline(SelectedScenario.Description, 64);
       DescText.TextFont = Font.Factory.Get("Text_14").ID;
       DescText.TextPosition = new TV_2DVECTOR(x, y);
       y += 120 +  height_gap;
@@ -142,7 +142,7 @@ namespace SWEndor.UI.Menu.Pages
           SelectedDifficultyID = 1;
           SelectDifficulty(CONST_TV_KEY.TV_KEY_LEFT);
 
-          DescText.Text = SelectedScenario.Description;
+          DescText.Text = Utilities.Multiline(SelectedScenario.Description, 64);
 
           return true;
         }
@@ -164,7 +164,7 @@ namespace SWEndor.UI.Menu.Pages
           SelectedDifficultyID = 1;
           SelectDifficulty(CONST_TV_KEY.TV_KEY_LEFT);
 
-          DescText.Text = SelectedScenario.Description;
+          DescText.Text = Utilities.Multiline(SelectedScenario.Description, 64);
 
           return true;
         }

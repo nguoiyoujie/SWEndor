@@ -78,6 +78,7 @@ namespace SWEndor.UI.Menu.Pages
       try
       {
         SelectedScenario.Load(SelectedActorTypeInfo, SelectedDifficulty);
+        Thread.Sleep(500);
         Loaded = true;
       }
       catch (Exception ex)
@@ -115,6 +116,7 @@ namespace SWEndor.UI.Menu.Pages
 
     private void ScenarioLoaded()
     {
+      Game.Instance().IsPaused = true;
       GameScenarioManager.Instance().Reset();
 
       SoundManager.Instance().SetSound("r23");

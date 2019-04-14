@@ -1,4 +1,6 @@
-﻿namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
+﻿using System;
+
+namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 {
   public class RelationalExpression : CExpression
   {
@@ -15,7 +17,7 @@
 
       _first = new AddExpression(lexer).Get();
 
-      TokenEnum _type = lexer.TokenType;
+      _type = lexer.TokenType;
       if (_type == TokenEnum.LESSTHAN // <
         || _type == TokenEnum.GREATERTHAN // >
         || _type == TokenEnum.LESSEQUAL // <=
@@ -40,18 +42,21 @@
 
     public override object Evaluate(Context context)
     {
+      dynamic v1 = _first.Evaluate(context);
+      dynamic v2 = _second.Evaluate(context);
+
       switch (_type)
       {
         case TokenEnum.LESSTHAN:
-          return (dynamic)_first.Evaluate(context) < (dynamic)_second.Evaluate(context);
+          try { return v1 < v2; } catch (Exception ex) { throw new EvalException("<", v1, v2, ex); }
         case TokenEnum.GREATERTHAN:
-          return (dynamic)_first.Evaluate(context) > (dynamic)_second.Evaluate(context);
+          try { return v1 > v2; } catch (Exception ex) { throw new EvalException(">", v1, v2, ex); }
         case TokenEnum.LESSEQUAL:
-          return (dynamic)_first.Evaluate(context) <= (dynamic)_second.Evaluate(context);
+          try { return v1 <= v2; } catch (Exception ex) { throw new EvalException("<=", v1, v2, ex); }
         case TokenEnum.GREATEREQUAL:
-          return (dynamic)_first.Evaluate(context) >= (dynamic)_second.Evaluate(context);
+          try { return v1 >= v2; } catch (Exception ex) { throw new EvalException(">=", v1, v2, ex); }
         default:
-          return (dynamic)_first.Evaluate(context);
+          return _first.Evaluate(context);
       }
     }
   }

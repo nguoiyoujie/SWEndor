@@ -1102,7 +1102,7 @@ namespace SWEndor.Actors
       Factory.MakeDead(this);
     }
 
-    private void Destroy()
+    public void Destroy()
     {
       using (new PerfElement("actor_process_destroy"))
       {

@@ -1,11 +1,51 @@
 ﻿using MTV3D65;
 using SWEndor.Input;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace SWEndor
 {
   public static class Utilities
   {
+    public static string Multiline(string input, int maxLineLength)
+    {
+      string[] lines = input.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+      for (int i = 0; i < lines.Length; i++)
+        lines[i] = string.Join("\n", SplitToLines(lines[i], maxLineLength));
+
+      return string.Join("\n", lines);
+    }
+
+    public static IEnumerable<string> SplitToLines(string stringToSplit, int maxLineLength)
+    {
+      string[] words = stringToSplit.Split(' ');
+      StringBuilder line = new StringBuilder();
+      foreach (string word in words)
+      {
+        if (word.Length + line.Length <= maxLineLength)
+        {
+          line.Append(word + " ");
+        }
+        else
+        {
+          if (line.Length > 0)
+          {
+            yield return line.ToString().Trim();
+            line.Clear();
+          }
+          string overflow = word;
+          while (overflow.Length > maxLineLength)
+          {
+            yield return overflow.Substring(0, maxLineLength);
+            overflow = overflow.Substring(maxLineLength);
+          }
+          line.Append(overflow + " ");
+        }
+      }
+      yield return line.ToString().Trim();
+    }
+
     public static TV_3DVECTOR GetRotation(TV_3DVECTOR direction)
     {
       float x = Engine.Instance().TVMathLibrary.Direction2Ang(-direction.y, Engine.Instance().TVMathLibrary.TVVec2Length(new TV_2DVECTOR(direction.z, direction.x)));

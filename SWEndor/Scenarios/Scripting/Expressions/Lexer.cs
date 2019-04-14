@@ -8,6 +8,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions
   {
     private readonly TextReader m_reader;
     private readonly TokenDefinition[] m_tokenDefinitions;
+    public string LineText { get; private set; }
 
     private string lineRemaining;
 
@@ -24,6 +25,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       do
       {
         lineRemaining = m_reader.ReadLine();
+        LineText = lineRemaining;
         ++LineNumber;
         Position = 0;
       } while (lineRemaining != null && lineRemaining.Length == 0);
@@ -62,6 +64,13 @@ namespace SWEndor.Scenarios.Scripting.Expressions
           if (content.Trim().Length == 0)
           {
             DoNext(matched, token, content, position);
+            return LookAhead(out token, out content, out position);
+          }
+
+          // comment elimination
+          if (token == TokenEnum.COMMENT)
+          {
+            nextLine();
             return LookAhead(out token, out content, out position);
           }
 

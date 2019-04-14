@@ -5,6 +5,7 @@ using SWEndor.AI.Actions;
 using SWEndor.Player;
 using SWEndor.Sound;
 using SWEndor.UI.Menu.Pages;
+using System;
 using System.Collections.Generic;
 
 namespace SWEndor.Scenarios
@@ -117,11 +118,8 @@ namespace SWEndor.Scenarios
       GameScenarioManager.Instance().Scenario = null;
 
       // Full reset
-      foreach (ActorInfo a in ActorInfo.Factory.GetList())
-      {
-        if (a != null)
-          a.Kill();
-      }
+      ActorInfo.Factory.Reset();
+
       GameScenarioManager.Instance().ClearGameStates();
       GameScenarioManager.Instance().ClearEvents();
       Screen2D.Instance().ClearText();
@@ -133,6 +131,9 @@ namespace SWEndor.Scenarios
       Screen2D.Instance().Box3D_Enable = false;
 
       LandInfo.Instance().Enabled = false;
+
+      // deleted many things, and this function is called when the game is not active. Probably safe to force GC
+      GC.Collect();
     }
 
     public void FadeOut(params object[] param)
