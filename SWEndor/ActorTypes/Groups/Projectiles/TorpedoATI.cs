@@ -30,7 +30,8 @@ namespace SWEndor.ActorTypes
       MinSpeed = 1500;
       AlwaysAccurateRotation = true;
 
-      EnableDistanceCull = false;
+      CullDistance = 12000;
+      //EnableDistanceCull = false;
 
       // Projectile
       ImpactCloseEnoughDistance = 100;
@@ -71,7 +72,7 @@ namespace SWEndor.ActorTypes
         ainfo.ActorState = ActorState.DEAD;
 
 
-      if (ainfo.ActorState == ActorState.NORMAL)
+      if (ainfo.ActorState == ActorState.NORMAL && !ainfo.IsFarMode())
       {
         if (ainfo.ParticleSystem == null)
         {

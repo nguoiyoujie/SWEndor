@@ -345,7 +345,7 @@ namespace SWEndor.Actors
       if (CreationState == CreationState.GENERATED)
         CreationState = CreationState.ACTIVE;
 
-      if (ParticleSystem != null)
+      if (ParticleSystem != null && !IsFarMode())
         ParticleSystem.Update();
     }
 
@@ -373,7 +373,7 @@ namespace SWEndor.Actors
                 FarMesh.Render();
           }
 
-          if (ParticleSystem != null)
+          if (ParticleSystem != null && !IsFarMode())
             using (new PerfElement("particlesys_render"))
               ParticleSystem.Render();
         }
