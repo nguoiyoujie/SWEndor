@@ -76,6 +76,7 @@ namespace SWEndor.ActorTypes
         // Star Destroyers
         Register(ImperialIATI.Instance());
         Register(DevastatorATI.Instance());
+        Register(VictoryIATI.Instance());
         Register(AcclamatorATI.Instance());
         Register(ArquitensATI.Instance());
         Register(ExecutorATI.Instance());
@@ -140,6 +141,7 @@ namespace SWEndor.ActorTypes
         Register(SDTurboLaserATI.Instance());
         Register(SDMissilePodATI.Instance());
         Register(SDShieldGeneratorATI.Instance());
+        Register(VSDShieldGeneratorATI.Instance());
         Register(SDLowerShieldGeneratorATI.Instance());
         Register(ExecutorTurboLaserATI.Instance());
         Register(ExecutorShieldGeneratorATI.Instance());

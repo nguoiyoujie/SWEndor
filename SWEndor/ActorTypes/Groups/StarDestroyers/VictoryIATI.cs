@@ -6,16 +6,16 @@ using System.IO;
 
 namespace SWEndor.ActorTypes
 {
-  public class ImperialIATI : StarDestroyerGroup
+  public class VictoryIATI : StarDestroyerGroup
   {
-    private static ImperialIATI _instance;
-    public static ImperialIATI Instance()
+    private static VictoryIATI _instance;
+    public static VictoryIATI Instance()
     {
-      if (_instance == null) { _instance = new ImperialIATI(); }
+      if (_instance == null) { _instance = new VictoryIATI(); }
       return _instance;
     }
 
-    private ImperialIATI() : base("Imperial-I Star Destroyer")
+    private VictoryIATI() : base("Victory-I Star Destroyer")
     {
       // Combat
       IsCombatObject = true;
@@ -23,9 +23,9 @@ namespace SWEndor.ActorTypes
       IsDamage = false;
       CollisionEnabled = true;
 
-      MaxStrength = 850.0f;
+      MaxStrength = 550.0f;
       ImpactDamage = 60.0f;
-      MaxSpeed = 75.0f;
+      MaxSpeed = 70.0f;
       MinSpeed = 0.0f;
       MaxSpeedChangeRate = 5.0f;
       MaxTurnRate = 1.2f;
@@ -35,7 +35,7 @@ namespace SWEndor.ActorTypes
       Score_perStrength = 60;
       Score_DestroyBonus = 10000;
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"stardestroyer\star_destroyer.x");
+      SourceMeshPath = Path.Combine(Globals.ModelPath, @"stardestroyer\victory_star_destroyer.x");
       SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"stardestroyer\star_destroyer_far.x");
 
       SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 1500f, new TV_3DVECTOR(0, -100, -400), true) };
@@ -45,40 +45,42 @@ namespace SWEndor.ActorTypes
         new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(0, -40, 1040), new TV_3DVECTOR(0, 0, 0), true)
 
         // Sides
-        , new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(360, -40, -100), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(460, -40, -400), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(425, -40, -280), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(390, -40, -160), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(355, -40, -40), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(320, -40, 80), new TV_3DVECTOR(0, 72, 0), true)
+
+        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(-460, -40, -400), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(-425, -40, -280), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(-390, -40, -160), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(-355, -40, -40), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(-320, -40, 80), new TV_3DVECTOR(0, -72, 0), true)
+
         , new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(240, -40, 320), new TV_3DVECTOR(0, 72, 0), true)
-        , new AddOnInfo("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(210, -40, 410), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(210, -40, 410), new TV_3DVECTOR(0, 72, 0), true)
         , new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(180, -40, 500), new TV_3DVECTOR(0, 72, 0), true)
 
-        , new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-360, -40, -100), new TV_3DVECTOR(0, -72, 0), true)
         , new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-240, -40, 320), new TV_3DVECTOR(0, -72, 0), true)
-        , new AddOnInfo("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(-210, -40, 410), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-210, -40, 410), new TV_3DVECTOR(0, -72, 0), true)
         , new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-180, -40, 500), new TV_3DVECTOR(0, -72, 0), true)
         
         // Top
-        , new AddOnInfo("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(100, 20, 320), new TV_3DVECTOR(-90, 0, -15), true)
-        , new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(72, 20, 420), new TV_3DVECTOR(-90, 0, -15), true)
+        , new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(100, 20, 320), new TV_3DVECTOR(-90, 0, -15), true)
 
-        , new AddOnInfo("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(-100, 20, 320), new TV_3DVECTOR(-90, 0, 15), true)
-        , new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-72, 20, 420), new TV_3DVECTOR(-90, 0, 15), true)
+        , new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-100, 20, 320), new TV_3DVECTOR(-90, 0, 15), true)
 
         // Top Middle
         , new AddOnInfo("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(72, 35, 75), new TV_3DVECTOR(-90, 0, -15), true)
-        , new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(70, 35, 170), new TV_3DVECTOR(-90, 0, -15), true)
 
         , new AddOnInfo("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(-72, 35, 75), new TV_3DVECTOR(-90, 0, 15), true)
-        , new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-70, 35, 170), new TV_3DVECTOR(-90, 0, 15), true)
 
         // Top Rear
         , new AddOnInfo("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(290, 16, -230), new TV_3DVECTOR(-90, 0, -15), true)
         , new AddOnInfo("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(290, 18, -283), new TV_3DVECTOR(-90, 0, -15), true)
-        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(290, 20, -336), new TV_3DVECTOR(-90, 0, -15), true)
-        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(290, 22, -389), new TV_3DVECTOR(-90, 0, -15), true)
 
         , new AddOnInfo("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(-290, 16, -230), new TV_3DVECTOR(-90, 0, 15), true)
         , new AddOnInfo("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(-290, 18, -283), new TV_3DVECTOR(-90, 0, 15), true)
-        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(-290, 20, -336), new TV_3DVECTOR(-90, 0, 15), true)
-        , new AddOnInfo("Star Destroyer Missile Pod", new TV_3DVECTOR(-290, 22, -389), new TV_3DVECTOR(-90, 0, 15), true)
 
         // Bottom
         , new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-120, -105, 180), new TV_3DVECTOR(90, 0, -25), true)
@@ -91,9 +93,8 @@ namespace SWEndor.ActorTypes
         , new AddOnInfo("Hangar Bay", new TV_3DVECTOR(0, -80, 205), new TV_3DVECTOR(0, 0, 0), true)
 
         //Shield Generators
-        , new AddOnInfo("Star Destroyer Shield Generator", new TV_3DVECTOR(-120, 360, -415), new TV_3DVECTOR(0, 0, 0), true)
-        , new AddOnInfo("Star Destroyer Shield Generator", new TV_3DVECTOR(120, 360, -415), new TV_3DVECTOR(0, 0, 0), true)
-        //, new AddOnInfo("Star Destroyer Lower Shield Generator", new TV_3DVECTOR(0, -180, -250), new TV_3DVECTOR(0, 0, 0), true)
+        , new AddOnInfo("Victory Star Destroyer Shield Generator", new TV_3DVECTOR(-120, 310, -415), new TV_3DVECTOR(0, 0, 0), true)
+        , new AddOnInfo("Victory Star Destroyer Shield Generator", new TV_3DVECTOR(120, 310, -415), new TV_3DVECTOR(0, 0, 0), true)
       };
     }
 
@@ -109,7 +110,7 @@ namespace SWEndor.ActorTypes
       ainfo.MovementInfo.D_sink_down_rate = 5f;
       ainfo.MovementInfo.D_sink_forward_rate = 0.8f;
 
-      ainfo.Scale *= 1.6f;
+      ainfo.Scale *= 0.9f;
 
       ainfo.SpawnerInfo = new SDSpawner(ainfo);
     }

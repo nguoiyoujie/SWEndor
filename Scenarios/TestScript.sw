@@ -262,7 +262,7 @@ stage2:
 	Actor_QueueLast("move", 1350, 100, 9500, 20);
 	Actor_QueueLast("hyperspaceout");
 	
-	Actor_SetActive(Actor_Spawn("Imperial-I Star Destroyer", "", "", "", 0, "Empire", -8750, -400, -45000, 0, 0, 0));
+	Actor_SetActive(Actor_Spawn("Victory-I Star Destroyer", "", "", "", 0, "Empire", -8750, -400, -45000, 0, 0, 0));
 	Actor_SetProperty("SetSpawnerEnable", true);
 	Actor_QueueLast("hyperspacein", -3750, -50, -4800);
 	Actor_QueueLast("move", 1750, 100, 9500, 12);

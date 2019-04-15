@@ -28,6 +28,7 @@ namespace SWEndor.Scenarios
                                                , WedgeXWingATI.Instance()
                                                , LandoFalconATI.Instance()
                                                , CorellianATI.Instance()
+                                               , VictoryIATI.Instance()
                                                , ImperialIATI.Instance()
                                                , TIE_X1_ATI.Instance()
                                               };
