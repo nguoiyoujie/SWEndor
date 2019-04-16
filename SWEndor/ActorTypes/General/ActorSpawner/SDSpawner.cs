@@ -12,7 +12,7 @@ namespace SWEndor
       SpawnTypes = new ActorTypeInfo[] { TIE_LN_ATI.Instance() };
       SpawnMoveDelay = 4;
       SpawnInterval = 5;
-      SpawnsRemaining = 30;
+      SpawnsRemaining = 60;
 
       SpawnLocations = new List<TV_3DVECTOR>() { new TV_3DVECTOR(25, 0, -25)
                                                , new TV_3DVECTOR(25, 0, 25)
