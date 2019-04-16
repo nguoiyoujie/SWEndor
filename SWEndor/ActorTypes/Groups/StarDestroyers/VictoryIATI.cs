@@ -23,7 +23,7 @@ namespace SWEndor.ActorTypes
       IsDamage = false;
       CollisionEnabled = true;
 
-      MaxStrength = 550.0f;
+      MaxStrength = 600.0f;
       ImpactDamage = 60.0f;
       MaxSpeed = 70.0f;
       MinSpeed = 0.0f;
@@ -93,8 +93,8 @@ namespace SWEndor.ActorTypes
         , new AddOnInfo("Hangar Bay", new TV_3DVECTOR(0, -80, 205), new TV_3DVECTOR(0, 0, 0), true)
 
         //Shield Generators
-        , new AddOnInfo("Victory Star Destroyer Shield Generator", new TV_3DVECTOR(-120, 310, -415), new TV_3DVECTOR(0, 0, 0), true)
-        , new AddOnInfo("Victory Star Destroyer Shield Generator", new TV_3DVECTOR(120, 310, -415), new TV_3DVECTOR(0, 0, 0), true)
+        , new AddOnInfo("Star Destroyer Shield Generator", new TV_3DVECTOR(-120, 310, -415), new TV_3DVECTOR(0, 0, 0), true)
+        , new AddOnInfo("Star Destroyer Shield Generator", new TV_3DVECTOR(120, 310, -415), new TV_3DVECTOR(0, 0, 0), true)
       };
     }
 

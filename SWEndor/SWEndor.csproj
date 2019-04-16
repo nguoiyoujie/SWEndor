@@ -117,6 +117,7 @@
     <Compile Include="ActorTypes\General\Factory\Parser.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\MissilePods\NebulonBMissilePodATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\MissilePods\SDMissilePodATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\ShieldGenerators\SDShieldGeneratorATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\ArqTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\ACTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Untargetables\HangarBayATI.cs" />
@@ -154,6 +155,8 @@
     <Compile Include="ActorTypes\Groups\Projectiles\Yellow2LaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\GreenAntiShipLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\Green2LaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\StarDestroyers\InterdictorATI.cs" />
+    <Compile Include="ActorTypes\Groups\StarDestroyers\VictoryIATI.cs" />
     <Compile Include="ActorTypes\Groups\SurfaceTowerGroup.cs" />
     <Compile Include="ActorTypes\Groups\StarDestroyers\ArquitensATI.cs" />
     <Compile Include="ActorTypes\Groups\StarDestroyers\AcclamatorATI.cs" />
@@ -204,6 +207,7 @@
     <Compile Include="ActorTypes\Groups\SurfaceTowers\TowerGunAdvATI.cs" />
     <Compile Include="ActorTypes\Groups\SurfaceTowers\TowerGunATI.cs" />
     <Compile Include="ActorTypes\Groups\SurfaceTowers\Tower00ATI.cs" />
+    <Compile Include="ActorTypes\Groups\TIEs\TIE_A_ATI.cs" />
     <Compile Include="ActorTypes\Groups\TIEs\TIE_sa_ATI.cs" />
     <Compile Include="ActorTypes\Groups\TIEs\TIE_X1_ATI.cs" />
     <Compile Include="ActorTypes\DeathCameraATI.cs" />
@@ -216,7 +220,7 @@
     <Compile Include="ActorTypes\Groups\AddOns\ShieldGenerators\ExecutorShieldGeneratorATI.cs" />
     <Compile Include="ActorTypes\Groups\DebrisGroup.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\CorellianTurboLaserATI.cs" />
-    <Compile Include="ActorTypes\Groups\AddOns\ShieldGenerators\SDShieldGeneratorATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\ShieldGenerators\ISDShieldGeneratorATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\SDTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Explosions\ExplosionLgATI.cs" />
     <Compile Include="ActorTypes\General\Factory\Factory.cs" />
@@ -468,6 +472,8 @@
     <Compile Include="Weapons\NebulonB\NebulonBMissileWeapon.cs" />
     <Compile Include="Weapons\TIE-IN\TIE_IN_DblLaserWeapon.cs" />
     <Compile Include="Weapons\TIE-LN\TIE_LN_DblLaserWeapon.cs" />
+    <Compile Include="Weapons\TIE-A\TIE_A_LaserWeapon.cs" />
+    <Compile Include="Weapons\TIE-A\TIE_A_TorpWeapon.cs" />
     <Compile Include="Weapons\Towers\Tower_SuperLaserWeapon.cs" />
     <Compile Include="Weapons\Towers\Tower_LaserWeapon.cs" />
     <Compile Include="Weapons\Towers\Tower_DblLaserWeapon.cs" />
@@ -529,10 +535,19 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Scenarios\ImperialTestMessage.sw">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\TestMessage.sw">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Scenarios\ImperialTestScenario.scen">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Scenarios\TestScenario.scen">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\ImperialTestScript.sw">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Scenarios\TestScript.sw">

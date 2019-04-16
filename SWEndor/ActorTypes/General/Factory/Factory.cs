@@ -62,6 +62,7 @@ namespace SWEndor.ActorTypes
         Register(TIE_LN_ATI.Instance());
         Register(TIE_IN_ATI.Instance());
         Register(TIE_D_ATI.Instance());
+        Register(TIE_A_ATI.Instance());
         Register(TIE_X1_ATI.Instance());
         Register(TIE_sa_ATI.Instance());
 
@@ -76,11 +77,12 @@ namespace SWEndor.ActorTypes
         // Star Destroyers
         Register(ImperialIATI.Instance());
         Register(DevastatorATI.Instance());
+        Register(InterdictorATI.Instance());
         Register(VictoryIATI.Instance());
         Register(AcclamatorATI.Instance());
         Register(ArquitensATI.Instance());
         Register(ExecutorATI.Instance());
-
+        
         // surface
         Register(Surface001_00ATI.Instance());
         Register(Surface001_01ATI.Instance());
@@ -140,8 +142,8 @@ namespace SWEndor.ActorTypes
         Register(SDAntiShipTurboLaserATI.Instance());
         Register(SDTurboLaserATI.Instance());
         Register(SDMissilePodATI.Instance());
+        Register(ISDShieldGeneratorATI.Instance());
         Register(SDShieldGeneratorATI.Instance());
-        Register(VSDShieldGeneratorATI.Instance());
         Register(SDLowerShieldGeneratorATI.Instance());
         Register(ExecutorTurboLaserATI.Instance());
         Register(ExecutorShieldGeneratorATI.Instance());

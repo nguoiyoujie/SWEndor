@@ -41,8 +41,10 @@ namespace SWEndor.ActorTypes
       base.Initialize(ainfo);
 
       ainfo.RegenerationInfo.AllowRegen = false;
-      ainfo.RegenerationInfo.ParentRegenRate = 15f;
-      ainfo.RegenerationInfo.RelativeRegenRate = 0.5f;
+      ainfo.RegenerationInfo.ParentRegenRate = 3f;
+      ainfo.RegenerationInfo.RelativeRegenRate = 0.25f;
+
+      ainfo.Scale *= 0.9f;
     }
 
     public override void ProcessHit(ActorInfo ainfo, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)

@@ -9,5 +9,6 @@ Difficulties = Normal
 Paths = .\Scenarios\TestScript.sw,.\Scenarios\TestMessage.sw
 Fn_load = load
 Fn_loadfaction = loadfaction
+Fn_loadscene = loadscene
 Fn_makeplayer = makeplayer
 Fns_gametick = gametick

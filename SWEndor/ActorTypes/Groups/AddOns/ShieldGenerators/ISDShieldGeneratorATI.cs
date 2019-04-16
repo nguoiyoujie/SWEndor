@@ -4,16 +4,16 @@ using System.IO;
 
 namespace SWEndor.ActorTypes
 {
-  public class VSDShieldGeneratorATI : AddOnGroup
+  public class ISDShieldGeneratorATI : AddOnGroup
   {
-    private static VSDShieldGeneratorATI _instance;
-    public static VSDShieldGeneratorATI Instance()
+    private static ISDShieldGeneratorATI _instance;
+    public static ISDShieldGeneratorATI Instance()
     {
-      if (_instance == null) { _instance = new VSDShieldGeneratorATI(); }
+      if (_instance == null) { _instance = new ISDShieldGeneratorATI(); }
       return _instance;
     }
 
-    private VSDShieldGeneratorATI() : base("Victory Star Destroyer Shield Generator")
+    private ISDShieldGeneratorATI() : base("Imperial Star Destroyer Shield Generator")
     {
       // Combat
       IsCombatObject = true;
@@ -41,10 +41,8 @@ namespace SWEndor.ActorTypes
       base.Initialize(ainfo);
 
       ainfo.RegenerationInfo.AllowRegen = false;
-      ainfo.RegenerationInfo.ParentRegenRate = 6f;
-      ainfo.RegenerationInfo.RelativeRegenRate = 0.25f;
-
-      ainfo.Scale *= 0.9f;
+      ainfo.RegenerationInfo.ParentRegenRate = 12f;
+      ainfo.RegenerationInfo.RelativeRegenRate = 0.5f;
     }
 
     public override void ProcessHit(ActorInfo ainfo, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)

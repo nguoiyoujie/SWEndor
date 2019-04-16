@@ -654,7 +654,7 @@ namespace SWEndor.Scenarios
             foreach (int i in rs.GetAllChildren(1))
             {
               ActorInfo rc = ActorInfo.Factory.GetExact(i);
-              if (rc?.TypeInfo is SDShieldGeneratorATI)
+              if (rc?.TypeInfo is ISDShieldGeneratorATI)
                 if (Engine.Instance().Random.NextDouble() > 0.4f)
                   rs = rc;
             }
