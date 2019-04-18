@@ -127,7 +127,7 @@ namespace SWEndor.Actors
         */
 
         // don't remove, keep future reuse. But reduce counters
-        if (list[x].CreationState != CreationState.DISPOSED)
+        if (list[x]?.CreationState != CreationState.DISPOSED)
         {
           mu_counter.WaitOne();
           count--;
