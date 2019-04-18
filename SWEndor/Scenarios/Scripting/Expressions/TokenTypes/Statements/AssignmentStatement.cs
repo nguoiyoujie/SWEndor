@@ -54,6 +54,11 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       {
         _assigntype = TokenEnum.NOTHING;
         _value = new Expression(lexer).Get();
+
+        if (lexer.TokenType == TokenEnum.SEMICOLON)
+          lexer.Next();
+        else
+          throw new ParseException(lexer, TokenEnum.SEMICOLON);
       }
     }
 
