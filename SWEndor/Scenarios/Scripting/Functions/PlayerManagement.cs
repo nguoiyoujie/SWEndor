@@ -31,6 +31,18 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return true;
     }
 
+    public static object Player_GetActor(Context context, object[] ps)
+    {
+      ActorInfo a = GameScenarioManager.Instance().Scenario.ActiveActor;
+      return a?.ID;
+    }
+
+    public static object Player_RequestSpawn(Context context, object[] ps)
+    {
+      PlayerInfo.Instance().RequestSpawn = true;
+      return true;
+    }
+
     public static object Player_SetMovementEnabled(Context context, object[] ps)
     {
       bool enabled = Convert.ToBoolean(ps[0].ToString());

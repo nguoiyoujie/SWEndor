@@ -79,6 +79,8 @@ namespace SWEndor.Scenarios.Scripting.Expressions
 
       // Player Management
       Functions.Add("Player_AssignActor".ToLowerInvariant(), PlayerManagement.Player_AssignActor);
+      Functions.Add("Player_GetActor".ToLowerInvariant(), PlayerManagement.Player_GetActor);
+      Functions.Add("Player_RequestSpawn".ToLowerInvariant(), PlayerManagement.Player_RequestSpawn);
       Functions.Add("Player_SetMovementEnabled".ToLowerInvariant(), PlayerManagement.Player_SetMovementEnabled);
       Functions.Add("Player_SetAI".ToLowerInvariant(), PlayerManagement.Player_SetAI);
       Functions.Add("Player_SetLives".ToLowerInvariant(), PlayerManagement.Player_SetLives);

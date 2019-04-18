@@ -100,7 +100,7 @@ namespace SWEndor.Player
     public float ScoreForNextLife = 50000;
 
     // should set as configurable?
-    public string[] DamagedReportSound = new string[] { "r25", "r24", "r23", "r22", "r21", "r20" };
+    public string[] DamagedReportSound = new string[] { }; // "r25", "r24", "r23", "r22", "r21", "r20" };
 
     // weapons
     private List<string> PrimaryWeaponModes = new List<string>();

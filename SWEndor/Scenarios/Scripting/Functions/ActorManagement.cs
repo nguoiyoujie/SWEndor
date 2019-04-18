@@ -393,6 +393,12 @@ namespace SWEndor.Scenarios.Scripting.Functions
           else
             newValue = actor.SpawnerInfo?.Enabled ?? false;
           return;
+        case "Strength":
+          if (setValue)
+            actor.CombatInfo.Strength = Convert.ToSingle(newValue);
+          else
+            newValue = actor.CombatInfo.Strength;
+          return;
       }
     }
 
