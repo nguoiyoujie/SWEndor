@@ -20,9 +20,11 @@ namespace SWEndor
       {
         StringBuilder sb = new StringBuilder();
 
-        foreach (ActorInfo ainfo in ActorInfo.Factory.GetList())
+        foreach (int actorID in ActorInfo.Factory.GetList())
         {
-          new ActorParser(ainfo).Generate(sb);
+          ActorInfo a = ActorInfo.Factory.Get(actorID);
+          if (a != null)
+            new ActorParser(a).Generate(sb);
         }
 
         string filepath = Path.Combine(Globals.SaveGamePath, filename);

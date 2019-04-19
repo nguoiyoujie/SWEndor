@@ -45,19 +45,25 @@ namespace SWEndor.ActorTypes
       ainfo.RegenerationInfo.RelativeRegenRate = 0.5f;
     }
 
-    public override void ProcessHit(ActorInfo ainfo, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
+      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
+      ActorInfo hitby = ActorInfo.Factory.Get(hitbyActorID);
+
+      if (owner == null || hitby == null)
+        return;
+
       if (!hitby.TypeInfo.IsDamage)
-      {
-        ainfo.CombatInfo.Strength = 0;
-      }
-      base.ProcessHit(ainfo, hitby, impact, normal);
+        owner.CombatInfo.Strength = 0;
+
+      base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
+
       if (hitby.TypeInfo.IsDamage)
       {
         ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("Electro"));
-        acinfo.Position = ainfo.GetPosition();
+        acinfo.Position = owner.GetPosition();
         ActorInfo electro = ActorInfo.Create(acinfo);
-        electro.AddParent(ainfo);
+        electro.AddParent(owner.ID);
         electro.CycleInfo.CyclesRemaining = 2.5f / electro.TypeInfo.TimedLife;
       }
     }

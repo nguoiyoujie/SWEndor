@@ -21,7 +21,7 @@
       Strength = 1;
       MaxStrength = 1;
       DamageModifier = 1;
-      HitWhileDyingLeadsToDeath = true;
+      HitWhileDyingLeadsToDeath = false;
     }
 
     public void Reset()
@@ -32,7 +32,7 @@
       Strength = 1;
       MaxStrength = 1;
       DamageModifier = 1;
-      HitWhileDyingLeadsToDeath = true;
+      HitWhileDyingLeadsToDeath = false;
     }
 
     private void Dying()

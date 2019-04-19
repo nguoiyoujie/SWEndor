@@ -150,10 +150,10 @@ namespace SWEndor.Scenarios
 
       if (GameScenarioManager.Instance().CameraTargetActor == null || GameScenarioManager.Instance().CameraTargetActor.CreationState != CreationState.ACTIVE)
       {
-        List<ActorInfo> list = new List<ActorInfo>(MainAllyFaction.GetWings());
+        List<int> list = new List<int>(MainAllyFaction.GetWings());
         if (list.Count > 0)
         {
-          GameScenarioManager.Instance().CameraTargetActor = list[Engine.Instance().Random.Next(0, list.Count)];
+          GameScenarioManager.Instance().CameraTargetActor = ActorInfo.Factory.Get(list[Engine.Instance().Random.Next(0, list.Count)]);
         }
       }
 
@@ -339,16 +339,19 @@ namespace SWEndor.Scenarios
 
     private void Rebel_HyperspaceOut(object[] param)
     {
-      foreach (ActorInfo a in MainAllyFaction.GetShips())
+      foreach (int actorID in MainAllyFaction.GetShips())
       {
-        if (a.ActorState != ActorState.DYING && a.ActorState != ActorState.DEAD)
+        ActorInfo actor = ActorInfo.Factory.Get(actorID);
+        if (actor != null
+          && actor.ActorState != ActorState.DYING 
+          && actor.ActorState != ActorState.DEAD)
         {
-          ActionManager.ForceClearQueue(a);
-          ActionManager.QueueLast(a, new Rotate(a.GetPosition() + new TV_3DVECTOR(8000, 0, -20000)
-                                                , a.MovementInfo.Speed
-                                                , a.TypeInfo.Move_CloseEnough));
-          ActionManager.QueueLast(a, new HyperspaceOut());
-          ActionManager.QueueLast(a, new Delete());
+          ActionManager.ForceClearQueue(actorID);
+          ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() + new TV_3DVECTOR(8000, 0, -20000)
+                                                , actor.MovementInfo.Speed
+                                                , actor.TypeInfo.Move_CloseEnough));
+          ActionManager.QueueLast(actorID, new HyperspaceOut());
+          ActionManager.QueueLast(actorID, new Delete());
         }
       }
     }

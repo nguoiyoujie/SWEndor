@@ -247,9 +247,7 @@ namespace SWEndor.Actors
 
     public static ActorInfo Create(ActorCreationInfo acinfo)
     {
-      ActorInfo a;
-      Factory.Register(acinfo, out a);
-      return a;
+      return Factory.Register(acinfo);
     }
     #endregion
 
@@ -290,7 +288,7 @@ namespace SWEndor.Actors
         )
         return;
 
-      ActionManager.Run(this, CurrentAction);
+      ActionManager.Run(ID, CurrentAction);
     }
 
     public void ProcessCollision()
@@ -386,23 +384,24 @@ namespace SWEndor.Actors
       if (!PrevPosition.Equals(new TV_3DVECTOR()) && !GetPosition().Equals(new TV_3DVECTOR()))
       {
         // only check player and projectiles
-        if (IsPlayer() || TypeInfo is ProjectileGroup || (ActorState == ActorState.DYING && TypeInfo.TargetType.HasFlag(TargetType.FIGHTER)))
-        //  if ((IsPlayer() && !PlayerInfo.Instance().PlayerAIEnabled) || TypeInfo is ProjectileGroup || (ActorState == ActorState.DYING && TypeInfo.TargetType.HasFlag(TargetType.FIGHTER)))
-        //if (TypeInfo.IsDamage || TypeInfo.TargetType.HasFlag(TargetType.FIGHTER))
+        if (IsPlayer() 
+          || TypeInfo is ProjectileGroup 
+          || (ActorState == ActorState.DYING && TypeInfo.TargetType.HasFlag(TargetType.FIGHTER)))
         {
           if (CollisionInfo.IsInCollision)
           {
+            ActorInfo a = Factory.Get(CollisionInfo.CollisionActorID);
             if (IsPlayer() && PlayerInfo.Instance().PlayerAIEnabled)
             {
-              Screen2D.Instance().MessageSecondaryText(string.Format("DEV WARNING: PLAYER AI COLLIDED: {0}", CollisionInfo.CollisionActor), 1.5f, new TV_COLOR(1, 0.2f, 0.2f, 1), 99999);
+              Screen2D.Instance().MessageSecondaryText(string.Format("DEV WARNING: PLAYER AI COLLIDED: {0}", a.ToString()), 1.5f, new TV_COLOR(1, 0.2f, 0.2f, 1), 99999);
               CollisionInfo.IsInCollision = false;
               CollisionInfo.IsTestingCollision = true;
               return;
             }
-            if (CollisionInfo.CollisionActor != null)
+            if (a != null)
             {
-              CollisionInfo.CollisionActor.TypeInfo.ProcessHit(CollisionInfo.CollisionActor, this, CollisionInfo.CollisionImpact, CollisionInfo.CollisionNormal);
-              TypeInfo.ProcessHit(this, CollisionInfo.CollisionActor, CollisionInfo.CollisionImpact, -1 * CollisionInfo.CollisionNormal);
+              a.TypeInfo.ProcessHit(CollisionInfo.CollisionActorID, ID, CollisionInfo.CollisionImpact, CollisionInfo.CollisionNormal);
+              TypeInfo.ProcessHit(ID, CollisionInfo.CollisionActorID, CollisionInfo.CollisionImpact, -1 * CollisionInfo.CollisionNormal);
             }
             CollisionInfo.IsInCollision = false;
           }
@@ -428,20 +427,15 @@ namespace SWEndor.Actors
     {
       if (CollisionInfo.IsTestingCollision)
       {
-        //using (new PerfElement("collision_combat_" + Name.PadRight(15).Substring(0, 13)))
-        //{
         TV_3DVECTOR vmin = GetRelativePositionXYZ(0, 0, TypeInfo.max_dimensions.z, false);
         TV_3DVECTOR vmax = GetRelativePositionXYZ(0, 0, TypeInfo.min_dimensions.z, false) + PrevPosition - Position;
 
-        CollisionInfo.IsInCollision = TestCollision(vmin, vmax, true, out CollisionInfo.CollisionImpact, out CollisionInfo.CollisionNormal, out CollisionInfo.CollisionActor);
+        CollisionInfo.IsInCollision = TestCollision(vmin, vmax, true, out CollisionInfo.CollisionImpact, out CollisionInfo.CollisionNormal, out CollisionInfo.CollisionActorID);
         CollisionInfo.IsTestingCollision = false;
-        //}
       }
       if (CollisionInfo.IsTestingProspectiveCollision)
       {
-        //using (new PerfElement("collision_prospect"))
-        //{
-        ActorInfo dummy;
+        int dummy;
 
         TV_3DVECTOR prostart = GetRelativePositionXYZ(0, 0, TypeInfo.max_dimensions.z + 10);
         TV_3DVECTOR proend0 = GetRelativePositionXYZ(0, 0, TypeInfo.max_dimensions.z + 10 + CollisionInfo.ProspectiveCollisionScanDistance);
@@ -455,7 +449,7 @@ namespace SWEndor.Actors
 
         CollisionInfo.IsInProspectiveCollision = false;
 
-        if (TestCollision(prostart, proend0, false, out _Impact, out _Normal, out CollisionInfo.ProspectiveCollisionActor))
+        if (TestCollision(prostart, proend0, false, out _Impact, out _Normal, out CollisionInfo.ProspectiveCollisionActorID))
         {
           proImpact += _Impact;
           proNormal += _Normal;
@@ -512,16 +506,15 @@ namespace SWEndor.Actors
         }
         CollisionInfo.IsTestingProspectiveCollision = false;
       }
-      //}
     }
 
-    private bool TestCollision(TV_3DVECTOR start, TV_3DVECTOR end, bool getActorInfo, out TV_3DVECTOR vImpact, out TV_3DVECTOR vNormal, out ActorInfo actor)
+    private bool TestCollision(TV_3DVECTOR start, TV_3DVECTOR end, bool getActorInfo, out TV_3DVECTOR vImpact, out TV_3DVECTOR vNormal, out int actorID)
     {
       using (new PerfElement("fn_testcollision"))
       {
         try
         {
-          actor = null;
+          actorID = -1;
           vImpact = new TV_3DVECTOR();
           vNormal = new TV_3DVECTOR();
 
@@ -560,13 +553,12 @@ namespace SWEndor.Actors
               TVMesh tvm = Engine.Instance().TVGlobals.GetMeshFromID(tvcres.iMeshID);
               if (tvm != null) // && tvm.IsVisible())
               {
-                int n = 0;
-                if (int.TryParse(tvm.GetTag(), out n))
+                if (int.TryParse(tvm.GetTag(), out actorID))
                 {
-                  actor = Factory.GetExact(n);
+                  ActorInfo actor = Factory.Get(actorID);
                   return (actor != null
-                       && actor != this
-                       && !HasRelative(actor)
+                       && actorID != ID
+                       && !HasRelative(actorID)
                        && actor.TypeInfo.CollisionEnabled
                        && !actor.IsAggregateMode()
                        && actor.CreationState == CreationState.ACTIVE);
@@ -584,10 +576,8 @@ namespace SWEndor.Actors
               TVMesh tvm = Engine.Instance().TVGlobals.GetMeshFromID(tvcres.iMeshID);
               if (tvm != null) // && tvm.IsVisible())
               {
-                int n = 0;
-                if (int.TryParse(tvm.GetTag(), out n))
+                if (int.TryParse(tvm.GetTag(), out actorID))
                 {
-                  actor = Factory.GetExact(n);
                   return true;
                 }
               }
@@ -614,7 +604,7 @@ namespace SWEndor.Actors
         }
         catch
         {
-          actor = null;
+          actorID = -1;
           vImpact = new TV_3DVECTOR();
           vNormal = new TV_3DVECTOR();
           return false;
@@ -622,10 +612,10 @@ namespace SWEndor.Actors
       }
     }
 
-    public void FireWeapon(ActorInfo target, string weapon)
+    public void FireWeapon(int targetActorID, string weapon)
     {
       if (ActorState != ActorState.DYING && ActorState != ActorState.DEAD)
-        TypeInfo.FireWeapon(this, target, weapon);
+        TypeInfo.FireWeapon(ID, targetActorID, weapon);
     }
 
     #region Position / Rotation
@@ -884,17 +874,14 @@ namespace SWEndor.Actors
       args.Action?.Invoke();
     }
     */
-    public void AddParent(ActorInfo actor)
+    public void AddParent(int actorID)
     {
-      if (actor != null)
-      {
-        if (ParentID >= 0)
-          RemoveParent();
+      if (ParentID >= 0)
+        RemoveParent();
 
-        ParentID = actor.ID;
-        //NotifyChildEvent += Parent.ChildExecute;
-        //NotifyParentEvent += ParentExecute;
-      }
+      ParentID = actorID;
+      //NotifyChildEvent += Parent.ChildExecute;
+      //NotifyParentEvent += ParentExecute;
     }
 
     public void RemoveParent()
@@ -909,7 +896,7 @@ namespace SWEndor.Actors
       ParentID = -1;
     }
 
-    public bool HasParent(ActorInfo a, int searchlevel = 99)
+    public bool HasParent(int actorID, int searchlevel = 99)
     {
       if (searchlevel < 0)
         return false;
@@ -918,17 +905,17 @@ namespace SWEndor.Actors
       if (ParentID < 0)
         return false;
 
-      ret |= (ParentID == a.ID) || (Factory.Get(ParentID)?.HasParent(a, searchlevel - 1) ?? false);
+      ret |= (ParentID == actorID) || (Factory.Get(ParentID)?.HasParent(actorID, searchlevel - 1) ?? false);
 
       return ret;
     }
 
-    public ActorInfo GetTopParent(int searchlevel = 99)
+    public int GetTopParent(int searchlevel = 99)
     {
       if (ParentID < 0 || searchlevel <= 1)
-        return this;
+        return ID;
       else
-        return Factory.Get(ParentID)?.GetTopParent(searchlevel - 1) ?? this;
+        return Factory.Get(ParentID)?.GetTopParent(searchlevel - 1) ?? ID;
     }
 
     public List<int> GetAllParents(int searchlevel = 99)
@@ -959,21 +946,26 @@ namespace SWEndor.Actors
         return new List<int>();
 
       List<int> ret = new List<int>();
-      foreach (ActorInfo p in Factory.GetList())
-        if (p != null && p.HasParent(this, searchlevel))
+
+      foreach (int actorID in Factory.GetHoldingList())
+      {
+        ActorInfo p = Factory.Get(actorID);
+        if (p != null && p.HasParent(ID, searchlevel))
           ret.Add(p.ID);
+      }
       return ret;
     }
 
-    public bool HasRelative(ActorInfo a, int searchlevel = 99, List<ActorInfo> alreadysearched = null)
+    public bool HasRelative(int actorID, int searchlevel = 99, List<int> alreadysearched = null)
     {
       if (searchlevel < 0)
         return false;
 
       if (alreadysearched == null)
-        alreadysearched = new List<ActorInfo>();
+        alreadysearched = new List<int>();
 
-      return (a != null && a.GetTopParent() == GetTopParent());
+      ActorInfo actor = Factory.Get(actorID);
+      return (actor != null && actor.GetTopParent() == GetTopParent());
     }
 
     public List<int> GetAllRelatives(int searchlevel = 99)
@@ -982,20 +974,24 @@ namespace SWEndor.Actors
         return new List<int>();
 
       List<int> ret = new List<int>();
-      foreach (ActorInfo p in Factory.GetList())
+
+      foreach (int actorID in Factory.GetHoldingList())
+      {
+        ActorInfo p = Factory.Get(actorID);
         if (p != null && p.GetTopParent() == GetTopParent())
           ret.Add(p.ID);
+      }
       return ret;
     }
 
     #endregion
 
     #region Event Methods
-    public void OnTickEvent(object[] param) { TickEvents?.Invoke(this); }
-    public void OnHitEvent(ActorInfo victim) { HitEvents?.Invoke(this, victim); }
-    public void OnStateChangeEvent(object[] param) { ActorStateChangeEvents?.Invoke(this); }
-    public void OnCreatedEvent(object[] param) { CreatedEvents?.Invoke(this); }
-    public void OnDestroyedEvent(object[] param) { DestroyedEvents?.Invoke(this); }
+    public void OnTickEvent(object[] param) { TickEvents?.Invoke(ID); }
+    public void OnHitEvent(int victimID) { HitEvents?.Invoke(ID, victimID); }
+    public void OnStateChangeEvent(object[] param) { ActorStateChangeEvents?.Invoke(ID); }
+    public void OnCreatedEvent(object[] param) { CreatedEvents?.Invoke(ID); }
+    public void OnDestroyedEvent(object[] param) { DestroyedEvents?.Invoke(ID); }
 
     #endregion
 
@@ -1032,14 +1028,14 @@ namespace SWEndor.Actors
       return ret;
     }
 
-    public bool SelectWeapon(ActorInfo target, float delta_angle, float delta_distance, out WeaponInfo weapon, out int burst)
+    public bool SelectWeapon(int targetActorID, float delta_angle, float delta_distance, out WeaponInfo weapon, out int burst)
     {
       weapon = null;
       burst = 0;
       WeaponInfo weap = null;
       foreach (string ws in WeaponSystemInfo.AIWeapons)
       {
-        TypeInfo.InterpretWeapon(this, ws, out weap, out burst);
+        TypeInfo.InterpretWeapon(ID, ws, out weap, out burst);
 
         if (weap != null)
         {
@@ -1047,7 +1043,7 @@ namespace SWEndor.Actors
             && delta_angle > -weap.AngularRange)
             && (delta_distance < weap.Range
             && delta_distance > -weap.Range)
-            && weap.CanTarget(this, target)
+            && weap.CanTarget(ID, targetActorID)
             && (weap.MaxAmmo == -1 || weap.Ammo > 0))
           {
             weapon = weap;
@@ -1063,7 +1059,7 @@ namespace SWEndor.Actors
       ActorInfo a = (PlayerInfo.Instance().Actor != null) ? PlayerInfo.Instance().Actor : GameScenarioManager.Instance().SceneCamera;
       float distcheck = TypeInfo.CullDistance * Game.Instance().PerfCullModifier;
 
-      return (!IsPlayer() && TypeInfo.EnableDistanceCull && ActorDistanceInfo.GetRoughDistance(this, a) > distcheck);
+      return (!IsPlayer() && TypeInfo.EnableDistanceCull && ActorDistanceInfo.GetRoughDistance(ID, a.ID) > distcheck);
     }
 
     public bool IsFarMode()
@@ -1071,7 +1067,7 @@ namespace SWEndor.Actors
       ActorInfo a = (PlayerInfo.Instance().Actor != null) ? PlayerInfo.Instance().Actor : GameScenarioManager.Instance().SceneCamera;
       float distcheck = TypeInfo.CullDistance * 0.25f * Game.Instance().PerfCullModifier;
 
-      return (!IsPlayer() && TypeInfo.EnableDistanceCull && ActorDistanceInfo.GetRoughDistance(this, a) > distcheck);
+      return (!IsPlayer() && TypeInfo.EnableDistanceCull && ActorDistanceInfo.GetRoughDistance(ID, a.ID) > distcheck);
     }
 
     public bool IsPlayer()
@@ -1115,7 +1111,7 @@ namespace SWEndor.Actors
         // Destroy Children
         foreach (int i in GetAllChildren(1))
         {
-          ActorInfo child = ActorInfo.Factory.GetExact(i);
+          ActorInfo child = ActorInfo.Factory.Get(i);
 
           if (child.TypeInfo is AddOnGroup || child.AttachToParent)
             child.Destroy();
@@ -1163,9 +1159,9 @@ namespace SWEndor.Actors
 
         // Player
         if (IsPlayer())
-          PlayerInfo.Instance().Actor = null;
+          PlayerInfo.Instance().ActorID = -1;
         else if (this == PlayerInfo.Instance().TempActor)
-          PlayerInfo.Instance().TempActor = null;
+          PlayerInfo.Instance().TempActorID = -1;
 
         // Final dispose
         Faction.UnregisterActor(this);

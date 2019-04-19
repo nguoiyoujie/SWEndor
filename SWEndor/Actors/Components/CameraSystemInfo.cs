@@ -1,5 +1,4 @@
 ﻿using MTV3D65;
-using System.Collections.Generic;
 
 namespace SWEndor.Actors.Components
 {

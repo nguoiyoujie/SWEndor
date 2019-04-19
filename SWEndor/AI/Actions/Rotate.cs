@@ -50,7 +50,7 @@ namespace SWEndor.AI.Actions
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
       if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
       {
-        ActionManager.QueueFirst(owner, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
+        ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
       }
     }
   }

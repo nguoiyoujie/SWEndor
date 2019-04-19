@@ -18,7 +18,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (action == null)
         return false;
 
-      ActionManager.QueueFirst(GameScenarioManager.Instance().Scenario.ActiveActor, action);
+      ActionManager.QueueFirst(GameScenarioManager.Instance().Scenario.ActiveActor.ID, action);
       return true;
     }
 
@@ -31,7 +31,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (action == null)
         return false;
 
-      ActionManager.QueueNext(GameScenarioManager.Instance().Scenario.ActiveActor, action);
+      ActionManager.QueueNext(GameScenarioManager.Instance().Scenario.ActiveActor.ID, action);
       return true;
     }
 
@@ -44,7 +44,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (action == null)
         return false;
 
-      ActionManager.QueueLast(GameScenarioManager.Instance().Scenario.ActiveActor, action);
+      ActionManager.QueueLast(GameScenarioManager.Instance().Scenario.ActiveActor.ID, action);
       return true;
     }
 
@@ -53,7 +53,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
         return false;
 
-      ActionManager.Unlock(GameScenarioManager.Instance().Scenario.ActiveActor);
+      ActionManager.UnlockOne(GameScenarioManager.Instance().Scenario.ActiveActor.ID);
       return true;
     }
 
@@ -62,7 +62,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
         return false;
 
-      ActionManager.ClearQueue(GameScenarioManager.Instance().Scenario.ActiveActor);
+      ActionManager.ClearQueue(GameScenarioManager.Instance().Scenario.ActiveActor.ID);
       return true;
     }
 
@@ -71,12 +71,13 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
         return false;
 
-      ActionManager.ForceClearQueue(GameScenarioManager.Instance().Scenario.ActiveActor);
+      ActionManager.ForceClearQueue(GameScenarioManager.Instance().Scenario.ActiveActor.ID);
       return true;
     }
 
     private static ActionInfo ParseAction(object[] ps)
     {
+      int tgtid = -1;
       ActorInfo tgt = null;
       ActionInfo action = null;
       switch (ps[0].ToString().ToLower())
@@ -204,27 +205,28 @@ namespace SWEndor.Scenarios.Scripting.Functions
         case "attackactor":
           if (ps.Length >= 2)
           {
-            tgt = ActorInfo.Factory.GetExact(Convert.ToInt32(ps[1].ToString()));
+            tgtid = Convert.ToInt32(ps[1].ToString());
+            tgt = ActorInfo.Factory.Get(tgtid);
             if (tgt == null)
               throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[0].ToString().ToLower(), ps[1].ToString().ToLower()));
 
             switch (ps.Length)
             {
               case 2:
-                action = new AttackActor(tgt);
+                action = new AttackActor(tgtid);
                 break;
               case 3:
-                action = new AttackActor(tgt, Convert.ToSingle(ps[2].ToString()));
+                action = new AttackActor(tgtid, Convert.ToSingle(ps[2].ToString()));
                 break;
               case 4:
-                action = new AttackActor(tgt, Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
+                action = new AttackActor(tgtid, Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
                 break;
               case 5:
-                action = new AttackActor(tgt, Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()), Convert.ToBoolean(ps[4].ToString()));
+                action = new AttackActor(tgtid, Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()), Convert.ToBoolean(ps[4].ToString()));
                 break;
               default:
               case 6:
-                action = new AttackActor(tgt, Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()), Convert.ToBoolean(ps[4].ToString()), Convert.ToSingle(ps[5].ToString()));
+                action = new AttackActor(tgtid, Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()), Convert.ToBoolean(ps[4].ToString()), Convert.ToSingle(ps[5].ToString()));
                 break;
             }
           }
@@ -235,21 +237,21 @@ namespace SWEndor.Scenarios.Scripting.Functions
         case "followactor":
           if (ps.Length >= 2)
           {
-            tgt = ActorInfo.Factory.GetExact(Convert.ToInt32(ps[1].ToString()));
-            if (tgt == null)
+            tgtid = Convert.ToInt32(ps[1].ToString());
+            tgt = ActorInfo.Factory.Get(tgtid); if (tgt == null)
               throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[0].ToString().ToLower(), ps[1].ToString().ToLower()));
 
             switch (ps.Length)
             {
               case 2:
-                action = new FollowActor(tgt);
+                action = new FollowActor(tgtid);
                 break;
               case 3:
-                action = new FollowActor(tgt, Convert.ToSingle(ps[2].ToString()));
+                action = new FollowActor(tgtid, Convert.ToSingle(ps[2].ToString()));
                 break;
               default:
               case 4:
-                action = new FollowActor(tgt, Convert.ToSingle(ps[2].ToString()), Convert.ToBoolean(ps[3].ToString()));
+                action = new FollowActor(tgtid, Convert.ToSingle(ps[2].ToString()), Convert.ToBoolean(ps[3].ToString()));
                 break;
             }
           }

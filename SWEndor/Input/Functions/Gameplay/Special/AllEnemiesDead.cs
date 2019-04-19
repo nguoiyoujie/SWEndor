@@ -6,7 +6,7 @@ namespace SWEndor.Input.Functions.Gameplay.Special
 {
   public class AllEnemiesDead : InputFunction
   {
-    private int _key = (int)CONST_TV_KEY.TV_KEY_5;
+    private int _key = (int)CONST_TV_KEY.TV_KEY_6;
     public static string InternalName = "d_enemy_dead";
     public override int Key { get { return _key; } set { _key = value; } }
     public override string Name { get { return InternalName; } }
@@ -15,8 +15,14 @@ namespace SWEndor.Input.Functions.Gameplay.Special
     public override void Process()
     {
       if (GameScenarioManager.Instance().Scenario != null)
-        foreach (ActorInfo ainfo in GameScenarioManager.Instance().Scenario.MainEnemyFaction.GetAll())
-          ainfo.ActorState = ActorState.DEAD;
+      {
+        foreach (int actorID in GameScenarioManager.Instance().Scenario.MainEnemyFaction.GetAll())
+        {
+          ActorInfo actor = ActorInfo.Factory.Get(actorID);
+          if (actor != null)
+            actor.ActorState = ActorState.DEAD;
+        }
+      }
     }
   }
 }

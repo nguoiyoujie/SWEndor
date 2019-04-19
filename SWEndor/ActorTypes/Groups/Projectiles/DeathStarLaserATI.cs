@@ -78,18 +78,20 @@ namespace SWEndor.ActorTypes
     {
     }
 
-    public override void ProcessHit(ActorInfo ainfo, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      base.ProcessHit(ainfo, hitby, impact, normal);
-      if (hitby.CombatInfo.TimedLife > 0.5f)
-      {
-        hitby.CombatInfo.TimedLife = 0.5f;
-      }
+      base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
+      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
+      ActorInfo hitby = ActorInfo.Factory.Get(hitbyActorID);
 
-      if (ainfo.CombatInfo.TimedLife > 0)
-      {
-        ainfo.CombatInfo.TimedLife = 0;
-      }
+      if (owner == null || hitby == null)
+        return;
+
+      if (hitby.CombatInfo.TimedLife > 0.5f)
+        hitby.CombatInfo.TimedLife = 0.5f;
+
+      if (owner.CombatInfo.TimedLife > 0)
+        owner.CombatInfo.TimedLife = 0;
     }
   }
 }

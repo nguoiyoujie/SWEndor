@@ -43,14 +43,14 @@ namespace SWEndor.UI.Widgets
 
       if (m_target == null)
       {
-        PlayerInfo.Instance().AimTarget = null;
+        PlayerInfo.Instance().AimTargetID = -1;
       }
       else
       {
         float x = 0;
         float y = 0;
         Engine.Instance().TVScreen2DImmediate.Math_3DPointTo2D(m_target.GetPosition(), ref x, ref y);
-        float dist = ActorDistanceInfo.GetDistance(p, m_target, 7501);
+        float dist = ActorDistanceInfo.GetDistance(p.ID, m_target.ID, 7501);
         float limit = 0.005f * dist;
         if (limit < 50)
           limit = 50;
@@ -66,7 +66,7 @@ namespace SWEndor.UI.Widgets
         || !PlayerCameraInfo.Instance().Camera.IsPointVisible(m_target.GetPosition()))
         {
           m_target = null;
-          PlayerInfo.Instance().AimTarget = null;
+          PlayerInfo.Instance().AimTargetID = -1;
         }
         else
         {
@@ -88,7 +88,7 @@ namespace SWEndor.UI.Widgets
 
             WeaponInfo weap;
             int burst = 0;
-            p.TypeInfo.InterpretWeapon(p, PlayerInfo.Instance().SecondaryWeapon, out weap, out burst);
+            p.TypeInfo.InterpretWeapon(p.ID, PlayerInfo.Instance().SecondaryWeapon, out weap, out burst);
             if (weap != null && weap.Ammo > 0)
             {
               Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());
@@ -114,7 +114,7 @@ namespace SWEndor.UI.Widgets
             );
           Engine.Instance().TVScreen2DText.Action_EndText();
 
-          PlayerInfo.Instance().AimTarget = PlayerInfo.Instance().Actor.Faction.IsAlliedWith(m_target.Faction) ? null : m_target;
+          PlayerInfo.Instance().AimTargetID = PlayerInfo.Instance().Actor.Faction.IsAlliedWith(m_target.Faction) ? -1 : m_target.ID;
 
           if (PlayerInfo.Instance().Actor.Faction != null && !PlayerInfo.Instance().Actor.Faction.IsAlliedWith(m_target.Faction) && !PlayerInfo.Instance().IsTorpedoMode)
           {
@@ -142,8 +142,10 @@ namespace SWEndor.UI.Widgets
       {
         // Attempt close enough
         float bestlimit = 9999;
-        foreach (ActorInfo a in ActorInfo.Factory.GetHoldingList())
+
+        foreach (int actorID in ActorInfo.Factory.GetHoldingList())
         {
+          ActorInfo a = ActorInfo.Factory.Get(actorID);
           if (a != null
             && p != a
             && a.CreationState == CreationState.ACTIVE
@@ -154,7 +156,7 @@ namespace SWEndor.UI.Widgets
             && PlayerCameraInfo.Instance().Camera.IsPointVisible(a.GetPosition())
             )
           {
-            float dist = ActorDistanceInfo.GetDistance(p, a, 7501);
+            float dist = ActorDistanceInfo.GetDistance(p.ID, actorID, 7501);
             if (dist < 7500)
             {
               float x = 0;

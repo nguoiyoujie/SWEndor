@@ -101,7 +101,7 @@ namespace SWEndor.Scenarios
     
     public void Test_SpawnPlayer(object[] param)
     {
-      PlayerInfo.Instance().Actor = PlayerInfo.Instance().TempActor;
+      PlayerInfo.Instance().ActorID = PlayerInfo.Instance().TempActorID;
 
       if (PlayerInfo.Instance().Actor == null || PlayerInfo.Instance().Actor.CreationState == CreationState.DISPOSED)
       { 
@@ -123,7 +123,7 @@ namespace SWEndor.Scenarios
             Registries = null
           }.Spawn(this);
 
-          PlayerInfo.Instance().Actor = ainfo;
+          PlayerInfo.Instance().ActorID = ainfo.ID;
         }
       }
       m_Player = PlayerInfo.Instance().Actor;

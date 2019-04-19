@@ -30,8 +30,9 @@ namespace SWEndor.AI.Actions
       List<ActorInfo> targets = new List<ActorInfo>();
       int weight = 0;
 
-      foreach (ActorInfo a in ActorInfo.Factory.GetHoldingList())
+      foreach (int actorID in ActorInfo.Factory.GetHoldingList())
       {
+        ActorInfo a = ActorInfo.Factory.Get(actorID);
         if (a != null
           && owner != a
           && a.CreationState == CreationState.ACTIVE
@@ -47,8 +48,8 @@ namespace SWEndor.AI.Actions
           {
             WeaponInfo weap = null;
             int dummy = 0;
-            float dist = ActorDistanceInfo.GetDistance(owner, a, owner.GetWeaponRange());
-            owner.SelectWeapon(a, 0, dist, out weap, out dummy);
+            float dist = ActorDistanceInfo.GetDistance(owner.ID, actorID, owner.GetWeaponRange());
+            owner.SelectWeapon(a.ID, 0, dist, out weap, out dummy);
 
             if (weap != null)
             {
@@ -78,11 +79,11 @@ namespace SWEndor.AI.Actions
 
       if (currtarget != null)
       {
-        ActionManager.QueueLast(owner, new AttackActor(currtarget));
+        ActionManager.QueueLast(owner.ID, new AttackActor(currtarget.ID));
       }
       else
       {
-        ActionManager.QueueLast(owner, new Wait(1));
+        ActionManager.QueueLast(owner.ID, new Wait(1));
       }
 
       Complete = true;

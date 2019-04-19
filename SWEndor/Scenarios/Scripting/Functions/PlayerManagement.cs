@@ -12,22 +12,21 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       if (ps.Length == 0)
       {
-        PlayerInfo.Instance().Actor = GameScenarioManager.Instance().Scenario.ActiveActor;
+        PlayerInfo.Instance().ActorID = GameScenarioManager.Instance().Scenario.ActiveActor?.ID ?? -1;
         return true;
       }
 
       int id = Convert.ToInt32(ps[0].ToString());
       if (id < 0)
       {
-        PlayerInfo.Instance().Actor = null;
+        PlayerInfo.Instance().ActorID = -1;
         return false;
       }
 
-      ActorInfo a = ActorInfo.Factory.GetExact(id);
-      if (a == null)
+      if (!ActorInfo.Factory.Exists(id))
         return false;
 
-      PlayerInfo.Instance().Actor = a;
+      PlayerInfo.Instance().ActorID = id;
       return true;
     }
 

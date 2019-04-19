@@ -38,7 +38,7 @@ namespace SWEndor.Scenarios
 
       if (Actions != null)
         foreach (ActionInfo act in Actions)
-          ActionManager.QueueLast(ainfo, act);
+          ActionManager.QueueLast(ainfo.ID, act);
 
       if (Registries != null)
       {

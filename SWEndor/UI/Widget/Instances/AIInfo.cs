@@ -52,11 +52,15 @@ namespace SWEndor.UI.Widgets
         TV_3DVECTOR targetpos = new TV_3DVECTOR();
         if (p.CurrentAction is AttackActor)
         {
-          targetpos = ((AttackActor)p.CurrentAction).Target_Position;
-          TV_3DVECTOR targetactpos = ((AttackActor)p.CurrentAction).Target_Actor.GetPosition();
-          Engine.Instance().TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 0, 0, 1).GetIntColor());
-          Engine.Instance().TVScreen2DImmediate.Draw_Box3D(targetpos - new TV_3DVECTOR(25, 25, 25), targetpos + new TV_3DVECTOR(25, 25, 25), new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor());
-          Engine.Instance().TVScreen2DImmediate.Draw_Box3D(targetactpos - new TV_3DVECTOR(50, 50, 50), targetactpos + new TV_3DVECTOR(50, 50, 50), new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor());
+          ActorInfo target = ActorInfo.Factory.Get(((AttackActor)p.CurrentAction).Target_ActorID);
+          if (target != null)
+          {
+            targetpos = ((AttackActor)p.CurrentAction).Target_Position;
+            TV_3DVECTOR targetactpos = target.GetPosition();
+            Engine.Instance().TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 0, 0, 1).GetIntColor());
+            Engine.Instance().TVScreen2DImmediate.Draw_Box3D(targetpos - new TV_3DVECTOR(25, 25, 25), targetpos + new TV_3DVECTOR(25, 25, 25), new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor());
+            Engine.Instance().TVScreen2DImmediate.Draw_Box3D(targetactpos - new TV_3DVECTOR(50, 50, 50), targetactpos + new TV_3DVECTOR(50, 50, 50), new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor());
+          }
         }
         else if (p.CurrentAction is Move)
         {
@@ -75,8 +79,12 @@ namespace SWEndor.UI.Widgets
         }
         else if (p.CurrentAction is FollowActor)
         {
-          targetpos = ((FollowActor)p.CurrentAction).Target_Actor.GetPosition();
-          Engine.Instance().TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(0.5f, 0.5f, 1, 1).GetIntColor());
+          ActorInfo target = ActorInfo.Factory.Get(((AttackActor)p.CurrentAction).Target_ActorID);
+          if (target != null)
+          {
+            targetpos = target.GetPosition();
+            Engine.Instance().TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(0.5f, 0.5f, 1, 1).GetIntColor());
+          }
         }
         else if (p.CurrentAction is Evade)
         {

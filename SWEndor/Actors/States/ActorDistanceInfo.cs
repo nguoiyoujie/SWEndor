@@ -27,8 +27,16 @@ namespace SWEndor.Actors
     /// Gets a higher bound on the distance between Actors by taking the sum of the coordinate deltas.
     /// </summary>
     /// <returns></returns>
-    public static float GetRoughDistance(ActorInfo a1, ActorInfo a2)
+    public static float GetRoughDistance(int actorID1, int actorID2)
     {
+      if (actorID1 == actorID2)
+        return 0;
+
+      ActorInfo a1 = ActorInfo.Factory.Get(actorID1);
+      ActorInfo a2 = ActorInfo.Factory.Get(actorID2);
+      if (a1 == null || a2 == null)
+        return float.MaxValue;
+
       TV_3DVECTOR a1v = a1.GetPosition();
       TV_3DVECTOR a2v = a2.GetPosition();
       float dx = a1v.x - a2v.x;
@@ -44,58 +52,47 @@ namespace SWEndor.Actors
       return dx + dy + dz;
     }
 
-    public static float GetDistance(ActorInfo a1, ActorInfo a2, float limit)
+    public static float GetDistance(int actorID1, int actorID2, float limit)
     {
-      float d = GetRoughDistance(a1, a2);
+      float d = GetRoughDistance(actorID1, actorID2);
       if (d > limit)
         return limit;
       else
-        return GetDistance(a1, a2);
+        return GetDistance(actorID1, actorID2);
     }
 
-    public static float GetDistance(ActorInfo a1, ActorInfo a2)
+    public static float GetDistance(int actorID1, int actorID2)
     {
-      using (new PerfElement("fn_getactordistance"))
+      if (actorID1 == actorID2)
+        return 0;
+
+      ActorInfo a1 = ActorInfo.Factory.Get(actorID1);
+      ActorInfo a2 = ActorInfo.Factory.Get(actorID2);
+
+      if (a1 == null || a2 == null)
+        return float.MaxValue;
+
+      if (Cleartime < Game.Instance().GameTime)
       {
-        if (a1 == a2)
-          return 0;
-
-        ActorInfo first;
-        ActorInfo second;
-
-        if (a1.ID < a2.ID)
-        {
-          first = a1;
-          second = a2;
-        }
-        else
-        {
-          first = a2;
-          second = a1;
-        }
-
-        if (Cleartime < Game.Instance().GameTime)
-        {
-          list.Clear();
-          list.Refresh();
-          Cleartime = Game.Instance().GameTime + 5;
-        }
-
-        long hash = (uint)(first.ID << sizeof(int)) | (uint)second.ID;
-        float dist;
-        CachedFloat cached = list.Get(hash);
-        if (cached.Time < Game.Instance().GameTime)
-        {
-          dist = CalculateDistance(first, second);
-          list.Put(hash, new CachedFloat() { Time = Game.Instance().GameTime, Value = dist });
-        }
-        else
-        {
-          dist = cached.Value;
-        }
-
-        return dist;
+        list.Clear();
+        list.Refresh();
+        Cleartime = Game.Instance().GameTime + 5;
       }
+
+      long hash = (actorID1 < actorID2) ? (uint)(actorID1 << sizeof(int)) | (uint)actorID2 : (uint)(actorID2 << sizeof(int)) | (uint)actorID1 ;
+      float dist;
+      CachedFloat cached = list.Get(hash);
+      if (cached.Time < Game.Instance().GameTime)
+      {
+        dist = CalculateDistance(a1, a2);
+        list.Put(hash, new CachedFloat() { Time = Game.Instance().GameTime, Value = dist });
+      }
+      else
+      {
+        dist = cached.Value;
+      }
+
+      return dist;
     }
 
     public static float CalculateDistance(ActorInfo first, ActorInfo second)

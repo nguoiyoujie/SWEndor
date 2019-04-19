@@ -133,7 +133,7 @@ namespace SWEndor.Weapons
       }
     }
 
-    public bool Fire(ActorInfo owner, ActorInfo target, int burst)
+    public bool Fire(int ownerActorID, int targetActorID, int burst)
     {
       int burstremaining = burst;
       bool fired = false;
@@ -143,7 +143,7 @@ namespace SWEndor.Weapons
         WeaponCooldown = Game.Instance().GameTime;
         while (burstremaining > 0)
         {
-          if (CreateProjectile(owner, target))
+          if (CreateProjectile(ownerActorID, targetActorID))
           {
             WeaponCooldown += WeaponCooldownRate * burstremaining;
             if (WeaponCooldownRateRandom != 0)
@@ -157,7 +157,7 @@ namespace SWEndor.Weapons
           }
           burstremaining--;
         }
-        if (fired && owner.IsPlayer())
+        if (fired && ActorInfo.Factory.IsPlayer(ownerActorID))
         {
           SoundManager.Instance().SetSound(FireSound);
         }
@@ -165,22 +165,38 @@ namespace SWEndor.Weapons
       return fired;
     }
 
-    public bool CanTarget(ActorInfo owner, ActorInfo target)
+    public bool CanTarget(int ownerActorID, int targetActorID)
     {
-      return ((owner.IsPlayer() && !PlayerInfo.Instance().PlayerAIEnabled)
-          || (target == null && AIAttackNull)
-          || (target != null && (target.TypeInfo.TargetType & AIAttackTargets) != 0));
+      // player override
+      if (ActorInfo.Factory.IsPlayer(ownerActorID) && !PlayerInfo.Instance().PlayerAIEnabled)
+        return true;
+
+      // null
+      if (targetActorID < 0)
+        return AIAttackNull;
+
+      ActorInfo ta = ActorInfo.Factory.Get(targetActorID);
+      if (ta != null)
+        return (ta.TypeInfo.TargetType & AIAttackTargets) != 0;
+      return false;
     }
 
-    private bool CreateProjectile(ActorInfo owner, ActorInfo target)
+    private bool CreateProjectile(int ownerActorID, int targetActorID)
     {
-      if ((owner == PlayerInfo.Instance().Actor && !PlayerInfo.Instance().PlayerAIEnabled && (!RequirePlayerTargetLock || PlayerInfo.Instance().AimTarget != null)))
+      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
+      if (owner == null)
+        return false;
+
+      ActorInfo target = ActorInfo.Factory.Get(targetActorID);
+
+      if ((ActorInfo.Factory.IsPlayer(ownerActorID) 
+        && !PlayerInfo.Instance().PlayerAIEnabled 
+        && (!RequirePlayerTargetLock || PlayerInfo.Instance().AimTargetID == targetActorID)))
       { // Player
         if (WeaponProjectile == null)
           return true;
 
-        target = PlayerInfo.Instance().AimTarget;
-
+        //target = ActorInfo.Factory.GetExact(PlayerInfo.Instance().AimTargetID);
         TV_3DVECTOR targetloc = GetFirePosition(owner);
 
         ActorCreationInfo acinfo = new ActorCreationInfo(WeaponProjectile);
@@ -189,7 +205,7 @@ namespace SWEndor.Weapons
 
         if (EnablePlayerAutoAim && target != null)
         {
-          float dist = ActorDistanceInfo.GetDistance(owner, target);
+          float dist = ActorDistanceInfo.GetDistance(ownerActorID, targetActorID);
           float d = dist / WeaponProjectile.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)Engine.Instance().Random.NextDouble());
 
           TV_3DVECTOR dir = target.GetRelativePositionXYZ(0, 0, target.GetTrueSpeed() * d) - owner.GetPosition();
@@ -201,15 +217,16 @@ namespace SWEndor.Weapons
         }
 
         ActorInfo a = ActorInfo.Create(acinfo);
-        a.AddParent(owner);
+        a.AddParent(ownerActorID);
 
         if (!a.TypeInfo.NoAI)
-          ActionManager.QueueLast(a, new Wait(ProjectileWaitBeforeHoming));
-        ActionManager.QueueLast(a, new AttackActor(target, 0, 0, false, 9999));
-        ActionManager.QueueLast(a, new Idle());
+          ActionManager.QueueLast(a.ID, new Wait(ProjectileWaitBeforeHoming));
+        ActionManager.QueueLast(a.ID, new AttackActor(targetActorID, 0, 0, false, 9999));
+        ActionManager.QueueLast(a.ID, new Idle());
 
         return true;
       }
+
       if ((target == null && AIAttackNull)
           || (target != null && (target.TypeInfo.TargetType & AIAttackTargets) != 0)
           )
@@ -219,7 +236,7 @@ namespace SWEndor.Weapons
 
         if (target != null && (owner.IsAggregateMode() || target.IsAggregateMode()))
         {
-          WeaponProjectile.FireAggregation(owner, target, WeaponProjectile);
+          WeaponProjectile.FireAggregation(ownerActorID, targetActorID, WeaponProjectile);
         }
 
         TV_3DVECTOR targetloc = GetFirePosition(owner);
@@ -229,7 +246,7 @@ namespace SWEndor.Weapons
 
         if (EnableAIAutoAim && target != null)
         {
-          float dist = ActorDistanceInfo.GetDistance(owner, target);
+          float dist = ActorDistanceInfo.GetDistance(ownerActorID, targetActorID);
 
           float d;
           if (AutoAimMaxDeviation == AutoAimMinDeviation)
@@ -261,12 +278,13 @@ namespace SWEndor.Weapons
         }
 
         ActorInfo a = ActorInfo.Create(acinfo);
-        a.AddParent(owner);
+        a.AddParent(ownerActorID);
 
         if (!a.TypeInfo.NoAI)
-          ActionManager.QueueLast(a, new Wait(ProjectileWaitBeforeHoming));
-        ActionManager.QueueLast(a, new AttackActor(target, 0, 0, false, 9999));
-        ActionManager.QueueLast(a, new Lock());
+          ActionManager.QueueLast(a.ID, new Wait(ProjectileWaitBeforeHoming));
+
+        ActionManager.QueueLast(a.ID, new AttackActor(targetActorID, 0, 0, false, 9999));
+        ActionManager.QueueLast(a.ID, new Lock());
 
         return true;
       }

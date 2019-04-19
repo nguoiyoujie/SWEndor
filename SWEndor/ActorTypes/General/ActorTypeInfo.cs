@@ -364,9 +364,9 @@ namespace SWEndor.ActorTypes
             camaci.Position = ainfo.GetPosition();
             camaci.Rotation = new TV_3DVECTOR();
             ActorInfo a = ActorInfo.Create(camaci);
-            PlayerInfo.Instance().Actor = a;
-            PlayerInfo.Instance().Actor.CombatInfo.Strength = 0;
+            PlayerInfo.Instance().ActorID = a.ID;
 
+            a.CombatInfo.Strength = 0;
             a.CameraSystemInfo.CamDeathCirclePeriod = ainfo.CameraSystemInfo.CamDeathCirclePeriod;
             a.CameraSystemInfo.CamDeathCircleRadius = ainfo.CameraSystemInfo.CamDeathCircleRadius;
             a.CameraSystemInfo.CamDeathCircleHeight = ainfo.CameraSystemInfo.CamDeathCircleHeight;
@@ -397,105 +397,114 @@ namespace SWEndor.ActorTypes
       }
     }
 
-    public virtual void ProcessHit(ActorInfo ainfo, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public virtual void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      if (hitby.TypeInfo.ImpactDamage * ainfo.CombatInfo.DamageModifier == 0)
+      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
+      ActorInfo hitby = ActorInfo.Factory.Get(hitbyActorID);
+
+      if (owner == null || hitby == null)
+        return;
+
+      if (owner.ActorState == ActorState.DYING && owner.CombatInfo.HitWhileDyingLeadsToDeath)
+        owner.ActorState = ActorState.DEAD;
+
+      if (hitby.TypeInfo.ImpactDamage * owner.CombatInfo.DamageModifier == 0)
         return;
 
       if (hitby.TypeInfo.IsDamage)
       {
-        float str0 = ainfo.CombatInfo.Strength;
-        ainfo.CombatInfo.Strength -= hitby.TypeInfo.ImpactDamage * ainfo.CombatInfo.DamageModifier;
-        float str1 = ainfo.CombatInfo.Strength;
-        if (ainfo.IsPlayer())
+        float str0 = owner.CombatInfo.Strength;
+        owner.CombatInfo.Strength -= hitby.TypeInfo.ImpactDamage * owner.CombatInfo.DamageModifier;
+        float str1 = owner.CombatInfo.Strength;
+        if (owner.IsPlayer())
         {
           if (str1 < (int)str0)
             PlayerInfo.Instance().FlashHit(PlayerInfo.Instance().HealthColor);
-          PlayerInfo.Instance().Score.DamageTaken += hitby.TypeInfo.ImpactDamage * ainfo.CombatInfo.DamageModifier;
-        }
+          PlayerInfo.Instance().Score.DamageTaken += hitby.TypeInfo.ImpactDamage * owner.CombatInfo.DamageModifier;
 
-        if (ainfo.ActorState != ActorState.DEAD && ainfo.ActorState != ActorState.DEAD && ainfo.CombatInfo.Strength <= 0)
-        {
-          if (ainfo.IsPlayer())
+          if (owner.ActorState != ActorState.DYING 
+            && owner.ActorState != ActorState.DEAD 
+            && owner.CombatInfo.Strength <= 0)
+          {
             PlayerInfo.Instance().Score.Deaths++;
+          }
         }
 
         List<int> attackerfamily = hitby.GetAllParents();
         foreach (int i in attackerfamily)
         {
-          ActorInfo a = ActorInfo.Factory.GetExact(i);
-          if (a != null && a.Faction != null && !a.Faction.IsAlliedWith(ainfo.Faction))
+          ActorInfo a = ActorInfo.Factory.Get(i);
+          if (a != null && a.Faction != null && !a.Faction.IsAlliedWith(owner.Faction))
           {
             if (!(a.TypeInfo is AddOnGroup))
-              AddScore(a.Score, a, ainfo);
-            else
-            { }
-            //if (a.IsPlayer())
-            //  AddScore(PlayerInfo.Instance().Score, a, ainfo);
+              AddScore(a.Score, a, owner);
+
+            if (a.IsPlayer())
+              AddScore(PlayerInfo.Instance().Score, a, owner);
           }
         }
 
         hitby.SetLocalPosition(impact.x, impact.y, impact.z);
         hitby.ActorState = ActorState.DYING;
 
-        if ((ainfo.TypeInfo is FighterGroup))
+        if ((owner.TypeInfo is FighterGroup))
         {
           List<int> hparents = hitby.GetAllParents();
           if (hparents.Count > 0)
           {
-            ActorInfo h = ActorInfo.Factory.GetExact(hparents[0]);
+            ActorInfo h = ActorInfo.Factory.Get(hparents[0]);
             if (h != null && hitby.TypeInfo.IsDamage && hparents.Count > 0)
             {
-              if (ainfo.CurrentAction != null && ainfo.CurrentAction.CanInterrupt && ainfo.Faction != null && !ainfo.Faction.IsAlliedWith(h.Faction) && ainfo.CanRetaliate)
+              if (owner.CurrentAction != null && owner.CurrentAction.CanInterrupt && owner.Faction != null && !owner.Faction.IsAlliedWith(h.Faction) && owner.CanRetaliate)
               {
-                ActionManager.ClearQueue(ainfo);
-                ActionManager.QueueLast(ainfo, new AttackActor(h));
+                ActionManager.ClearQueue(ownerActorID);
+                ActionManager.QueueLast(ownerActorID, new AttackActor(h.ID));
               }
-              else if (ainfo.CurrentAction != null && !(ainfo.CurrentAction is Evade) && ainfo.CanEvade)
+              else if (owner.CurrentAction != null && !(owner.CurrentAction is Evade) && owner.CanEvade)
               {
-                ActionManager.QueueFirst(ainfo, new Evade());
+                ActionManager.QueueFirst(ownerActorID, new Evade());
               }
             }
           }
         }
       }
-      else if (ainfo.TypeInfo.IsDamage)
+      else if (owner.TypeInfo.IsDamage)
       {
       }
       else
       {
         // Collision
-        ainfo.CombatInfo.Strength -= hitby.TypeInfo.ImpactDamage * ainfo.CombatInfo.DamageModifier;
-        if (ainfo.CombatInfo.Strength > 0 && !ainfo.TypeInfo.NoMove && ainfo.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER))
+        owner.CombatInfo.Strength -= hitby.TypeInfo.ImpactDamage * owner.CombatInfo.DamageModifier;
+        if (owner.CombatInfo.Strength > 0 && !owner.TypeInfo.NoMove && owner.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER))
         {
-          float repel = -ainfo.MovementInfo.Speed * 0.25f;
-          ainfo.MoveRelative(repel, 0, 0);
+          float repel = -owner.MovementInfo.Speed * 0.25f;
+          owner.MoveRelative(repel, 0, 0);
         }
 
-        if (ainfo.IsPlayer())
+        if (owner.IsPlayer())
           PlayerInfo.Instance().FlashHit(PlayerInfo.Instance().HealthColor);
 
         List<int> attackerfamily = hitby.GetAllParents();
         attackerfamily.Add(hitby.ID);
         foreach (int i in attackerfamily)
         {
-          ActorInfo a = ActorInfo.Factory.GetExact(i);
-          if (a != null && a.Faction != null && !a.Faction.IsAlliedWith(ainfo.Faction))
+          ActorInfo a = ActorInfo.Factory.Get(i);
+          if (a != null && a.Faction != null && !a.Faction.IsAlliedWith(owner.Faction))
           {
             if (!(a.TypeInfo is AddOnGroup))
-              AddScore(a.Score, a, ainfo);
+              AddScore(a.Score, a, owner);
           }
         }
 
-        if (ainfo.CombatInfo.Strength < 0 && !(ainfo.TypeInfo is StarDestroyerGroup || ainfo.TypeInfo is WarshipGroup))
+        if (owner.CombatInfo.Strength < 0 && !(owner.TypeInfo is StarDestroyerGroup || owner.TypeInfo is WarshipGroup))
         {
-          ainfo.ActorState = ActorState.DEAD;
-          if (ainfo.IsPlayer())
+          owner.ActorState = ActorState.DEAD;
+          if (owner.IsPlayer())
             PlayerInfo.Instance().Score.Deaths++;
         }
       }
 
-      hitby.OnHitEvent(ainfo);
+      hitby.OnHitEvent(owner.ID);
     }
 
     private void AddScore(ScoreInfo score, ActorInfo scorer, ActorInfo victim)
@@ -506,7 +515,7 @@ namespace SWEndor.ActorTypes
       bool shielded = false;
       foreach (int i in victim.GetAllChildren())
       {
-        ActorInfo shd = ActorInfo.Factory.GetExact(i);
+        ActorInfo shd = ActorInfo.Factory.Get(i);
         if (shd != null && shd.RegenerationInfo.ParentRegenRate > 0 || shd.RegenerationInfo.RelativeRegenRate > 0)
           shielded = true;
       }
@@ -534,11 +543,15 @@ namespace SWEndor.ActorTypes
       }
     }
 
-    public void InterpretWeapon(ActorInfo ainfo, string sweapon, out WeaponInfo weapon, out int burst)
+    public void InterpretWeapon(int ownerActorID, string sweapon, out WeaponInfo weapon, out int burst)
     {
       string s = "none";
       weapon = null;
       burst = 1;
+
+      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
+      if (owner == null)
+        return;
 
       int seperatorpos = sweapon.IndexOf(':');
       if (seperatorpos > -1)
@@ -551,43 +564,49 @@ namespace SWEndor.ActorTypes
         s = sweapon.Trim();
       }
 
-      if (ainfo.WeaponSystemInfo.Weapons.ContainsKey(s))
+      if (owner.WeaponSystemInfo.Weapons.ContainsKey(s))
       {
-        weapon = ainfo.WeaponSystemInfo.Weapons[s];
+        weapon = owner.WeaponSystemInfo.Weapons[s];
       }
     }
 
-    public virtual bool FireWeapon(ActorInfo ainfo, ActorInfo target, string sweapon)
+    public virtual bool FireWeapon(int ownerActorID, int targetActorID, string sweapon)
     {
+      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
+      if (owner == null)
+        return false;
+
       WeaponInfo weapon = null;
       int burst = 0;
 
       // AI Determination
       if (sweapon == "auto")
       {
-        foreach (string ws in ainfo.WeaponSystemInfo.AIWeapons)
+        foreach (string ws in owner.WeaponSystemInfo.AIWeapons)
         {
-          if (FireWeapon(ainfo, target, ws))
+          if (FireWeapon(ownerActorID, targetActorID, ws))
             return true;
         }
       }
       else
       {
-        InterpretWeapon(ainfo, sweapon, out weapon, out burst);
+        InterpretWeapon(ownerActorID, sweapon, out weapon, out burst);
 
         if (weapon != null)
-          return weapon.Fire(ainfo, target, burst);
+          return weapon.Fire(ownerActorID, targetActorID, burst);
       }
       
       return false;
     }
 
-    public virtual void FireAggregation(ActorInfo ainfo, ActorInfo target, ActorTypeInfo weapontype)
+    public virtual void FireAggregation(int ownerActorID, int targetActorID, ActorTypeInfo weapontype)
     {
       float accuracy = 1;
-
-      float d = ActorDistanceInfo.GetDistance(ainfo, target) / weapontype.MaxSpeed;
-      TV_3DVECTOR angle = Utilities.GetRotation(target.GetPosition() - ainfo.GetPosition()) - ainfo.GetRotation();
+      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
+      ActorInfo target = ActorInfo.Factory.Get(targetActorID);
+      
+      float d = ActorDistanceInfo.GetDistance(ownerActorID, targetActorID) / weapontype.MaxSpeed;
+      TV_3DVECTOR angle = Utilities.GetRotation(target.GetPosition() - owner.GetPosition()) - owner.GetRotation();
       angle.x -= (int)((angle.x + 180) / 360) * 360;
       angle.y -= (int)((angle.y + 180) / 360) * 360;
 

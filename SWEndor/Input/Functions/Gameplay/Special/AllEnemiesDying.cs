@@ -15,8 +15,14 @@ namespace SWEndor.Input.Functions.Gameplay.Special
     public override void Process()
     {
       if (GameScenarioManager.Instance().Scenario != null)
-        foreach (ActorInfo ainfo in GameScenarioManager.Instance().Scenario.MainEnemyFaction.GetAll())
-          ainfo.ActorState = ActorState.DYING;
+      {
+        foreach (int actorID in GameScenarioManager.Instance().Scenario.MainEnemyFaction.GetAll())
+        {
+          ActorInfo actor = ActorInfo.Factory.Get(actorID);
+          if (actor != null)
+            actor.ActorState = ActorState.DYING;
+        }
+      }
     }
   }
 }

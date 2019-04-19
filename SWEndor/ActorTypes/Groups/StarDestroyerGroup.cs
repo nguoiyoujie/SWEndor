@@ -50,7 +50,7 @@ namespace SWEndor.ActorTypes
       {
         ActorCreationInfo acinfo = new ActorCreationInfo(ExplosionWaveATI.Instance());
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo.Create(acinfo).AddParent(ainfo);
+        ActorInfo.Create(acinfo).AddParent(ainfo.ID);
       }
     }
   }

@@ -14,14 +14,15 @@ namespace SWEndor.Actors
       private static ConcurrentQueue<ActorInfo> deadqueue = new ConcurrentQueue<ActorInfo>();
       private static ActorInfo[] list = new ActorInfo[Capacity];
       private static int count = 0;
-      private static ActorInfo[] holdinglist = new ActorInfo[0];
+      private static int[] holdinglist = new int[0];
       private static float listtime = 0;
       private static int counter = 0;
       private static int emptycounter = 0;
       private static Mutex mu_counter = new Mutex();
 
-      public static void Register(ActorCreationInfo amake, out ActorInfo actor, string key = "")
+      public static ActorInfo Register(ActorCreationInfo amake, string key = "")
       {
+        ActorInfo actor = null;
         if (amake.ActorTypeInfo == null)
           throw new Exception("Attempted to register actor with null ActorTypeInfo!");
 
@@ -51,6 +52,7 @@ namespace SWEndor.Actors
         count++;
 
         mu_counter.ReleaseMutex();
+        return actor;
       }
 
       public static void ActivatePlanned()
@@ -78,24 +80,21 @@ namespace SWEndor.Actors
         return count;
       }
 
-      public static ActorInfo[] GetList()
+      public static int[] GetList()
       {
-        using (new PerfElement("fn_getactorlist"))
+        if (listtime < Game.Instance().GameTime)
         {
-          if (listtime < Game.Instance().GameTime)
-          {
-            List<ActorInfo> hl = new List<ActorInfo>();
-            foreach (ActorInfo a in list)
-              if (a != null && a.CreationState != CreationState.DISPOSED)
-                hl.Add(a);
-            holdinglist = hl.ToArray();
-            listtime = Game.Instance().GameTime;
-          }
-          return holdinglist;
+          List<int> hl = new List<int>();
+          foreach (ActorInfo a in list)
+            if (a != null && a.CreationState != CreationState.DISPOSED)
+              hl.Add(a.ID);
+          holdinglist = hl.ToArray();
+          listtime = Game.Instance().GameTime;
         }
+        return holdinglist;
       }
 
-      public static ActorInfo[] GetHoldingList()
+      public static int[] GetHoldingList()
       {
         return holdinglist;
       }
@@ -104,15 +103,20 @@ namespace SWEndor.Actors
       {
         if (id < 0)
           return null;
-        return list[id % Capacity];
-      }
-
-      public static ActorInfo GetExact(int id)
-      {
-        ActorInfo a = Get(id);
+        ActorInfo a = list[id % Capacity];
         if (a != null && id == a.ID)
           return a;
         return null;
+      }
+
+      public static bool Exists(int id)
+      {
+        return id >= 0 && list[id % Capacity] != null && list[id % Capacity].ID == id;
+      }
+
+      public static bool IsPlayer(int id)
+      {
+        return id == Player.PlayerInfo.Instance().Actor?.ID;
       }
 
       public static void Remove(int id)

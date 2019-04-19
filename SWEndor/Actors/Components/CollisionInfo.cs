@@ -10,15 +10,17 @@ namespace SWEndor.Actors.Components
     public bool IsInCollision;
     public TV_3DVECTOR CollisionImpact;
     public TV_3DVECTOR CollisionNormal;
-    public ActorInfo CollisionActor;
+    public int CollisionActorID;
+
     public bool IsTestingProspectiveCollision;
     public bool IsInProspectiveCollision;
-    public ActorInfo ProspectiveCollisionActor;
+    public int ProspectiveCollisionActorID;
     public TV_3DVECTOR ProspectiveCollisionImpact;
     public TV_3DVECTOR ProspectiveCollisionNormal;
     public TV_3DVECTOR ProspectiveCollisionSafe;
     public float ProspectiveCollisionScanDistance;
     public float ProspectiveCollisionLevel;
+
     public bool IsAvoidingCollision;
 
 
@@ -30,10 +32,10 @@ namespace SWEndor.Actors.Components
       IsInCollision = false;
       CollisionImpact = new TV_3DVECTOR();
       CollisionNormal = new TV_3DVECTOR();
-      CollisionActor = null;
+      CollisionActorID = -1;
       IsTestingProspectiveCollision = false;
       IsInProspectiveCollision = false;
-      ProspectiveCollisionActor = null;
+      ProspectiveCollisionActorID = -1;
       ProspectiveCollisionImpact = new TV_3DVECTOR();
       ProspectiveCollisionNormal = new TV_3DVECTOR();
       ProspectiveCollisionSafe = new TV_3DVECTOR();
@@ -48,10 +50,10 @@ namespace SWEndor.Actors.Components
       IsInCollision = false;
       CollisionImpact = new TV_3DVECTOR();
       CollisionNormal = new TV_3DVECTOR();
-      CollisionActor = null;
+      CollisionActorID = -1;
       IsTestingProspectiveCollision = false;
       IsInProspectiveCollision = false;
-      ProspectiveCollisionActor = null;
+      ProspectiveCollisionActorID = -1;
       ProspectiveCollisionImpact = new TV_3DVECTOR();
       ProspectiveCollisionNormal = new TV_3DVECTOR();
       ProspectiveCollisionSafe = new TV_3DVECTOR();

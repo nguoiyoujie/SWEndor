@@ -52,7 +52,7 @@ namespace SWEndor.ActorTypes
       base.ProcessState(ainfo);
       if (ainfo.ActorState == ActorState.NORMAL)
       {
-        ActorInfo p = ActorInfo.Factory.GetExact(ainfo.ParentID);
+        ActorInfo p = ActorInfo.Factory.Get(ainfo.ParentID);
         if (p != null)
         {
           if (p.CreationState != CreationState.DISPOSED)

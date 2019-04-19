@@ -27,33 +27,25 @@ namespace SWEndor.Player
     public ActorTypeInfo ActorType;
     public bool RequestSpawn;
 
-    private ActorInfo prevActor;
-    private ActorInfo _actor = null;
-    public ActorInfo Actor
+    private int _actorID = -1;
+    public int ActorID
     {
-      get { return _actor; }
+      get { return _actorID; }
       set
       {
-        if (_actor != value)
+        if (_actorID != value)
         {
-          //if (_actor != null)
-          //  _actor.Score = new ScoreInfo(_actor.Key);
-          _actor = value;
-          if (_actor != null)
-            _actor.Score = Score;
-        }
-        if (prevActor != _actor)
-        {
+          _actorID = value;
           ParseWeapons();
           ResetPrimaryWeapon();
           ResetSecondaryWeapon();
-          prevActor = Actor;
         }
       }
     }
-
-    public ActorInfo TempActor;
-
+    public ActorInfo Actor { get { return ActorInfo.Factory.Get(ActorID); } }
+    public int TempActorID;
+    public ActorInfo TempActor { get { return ActorInfo.Factory.Get(TempActorID); } }
+    
     private float m_LowAlarmSoundTime = 0;
     public float StrengthFrac
     {
@@ -186,13 +178,13 @@ namespace SWEndor.Player
     public void FirePrimaryWeapon()
     {
       if (Actor != null && IsMovementControlsEnabled && !PlayerAIEnabled)
-        Actor.FireWeapon(AimTarget, PrimaryWeapon);
+        Actor.FireWeapon(AimTargetID, PrimaryWeapon);
     }
 
     public void FireSecondaryWeapon()
     {
       if (Actor != null && IsMovementControlsEnabled && !PlayerAIEnabled)
-        Actor.FireWeapon(AimTarget, SecondaryWeapon);
+        Actor.FireWeapon(AimTargetID, SecondaryWeapon);
     }
 
     private void ParseWeapons()
@@ -297,7 +289,7 @@ namespace SWEndor.Player
           || (SecondaryWeapon != null && SecondaryWeapon.Contains("torp"));
       }
     }
-    public ActorInfo AimTarget = null;
+    public int AimTargetID = -1;
 
     public bool PlayerAIEnabled = false;
   }

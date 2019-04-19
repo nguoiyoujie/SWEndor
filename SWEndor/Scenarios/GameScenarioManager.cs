@@ -74,7 +74,7 @@ namespace SWEndor.Scenarios
       Game.Instance().IsPaused = false;
       Screen2D.Instance().ShowPage = true;
       Screen2D.Instance().CurrentPage = new MainMenu();
-      Scenario = new Scenarios.GSMainMenu();
+      Scenario = new GSMainMenu();
       Scenario.Load(null, "");
       Scenario.Launch();
     }
@@ -82,7 +82,7 @@ namespace SWEndor.Scenarios
     public void LoadInitial()
     {
       LoadInvisibleCam();
-      PlayerInfo.Instance().Actor = SceneCamera;
+      PlayerInfo.Instance().ActorID = SceneCamera?.ID ?? -1;
       PlayerInfo.Instance().IsMovementControlsEnabled = false;
     }
 

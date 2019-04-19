@@ -96,6 +96,7 @@ namespace SWEndor.UI.Menu.Pages
       Screen2D.Instance().ShowPage = false;
     }
 
+    /*
     private bool SelectSave(CONST_TV_KEY key)
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
@@ -115,6 +116,7 @@ namespace SWEndor.UI.Menu.Pages
       }
       return false;
     }
+    */
 
     private bool SelectOptions(CONST_TV_KEY key)
     {

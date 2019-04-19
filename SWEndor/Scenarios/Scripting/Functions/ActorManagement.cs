@@ -54,7 +54,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
         return false;
 
       int id = Convert.ToInt32(ps[0].ToString());
-      GameScenarioManager.Instance().Scenario.ActiveActor = ActorInfo.Factory.GetExact(id);
+      GameScenarioManager.Instance().Scenario.ActiveActor = ActorInfo.Factory.Get(id);
       return GameScenarioManager.Instance().Scenario.ActiveActor != null;
     }
 

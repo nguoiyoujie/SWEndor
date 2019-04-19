@@ -45,18 +45,24 @@ namespace SWEndor.ActorTypes
       ainfo.RegenerationInfo.RelativeRegenRate = 0.5f;
     }
 
-    public override void ProcessHit(ActorInfo ainfo, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
+      base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
+      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
+      ActorInfo hitby = ActorInfo.Factory.Get(hitbyActorID);
+      if (owner == null || hitby == null)
+        return;
+
       if (!hitby.TypeInfo.IsDamage)
       {
-        ainfo.CombatInfo.Strength = 0;
+        owner.CombatInfo.Strength = 0;
       }
-      base.ProcessHit(ainfo, hitby, impact, normal);
+      base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
       if (hitby.TypeInfo.IsDamage)
       {
-        foreach (int i in ainfo.GetAllChildren(1))
+        foreach (int i in owner.GetAllChildren(1))
         {
-          ActorInfo child = ActorInfo.Factory.GetExact(i);
+          ActorInfo child = ActorInfo.Factory.Get(i);
           if (child?.TypeInfo is ElectroATI)
           {
             child.CycleInfo.CyclesRemaining = 2.5f / child.CycleInfo.CyclePeriod;
@@ -64,9 +70,9 @@ namespace SWEndor.ActorTypes
           }
         }
         ActorCreationInfo acinfo = new ActorCreationInfo(ElectroATI.Instance());
-        acinfo.Position = ainfo.GetPosition();
+        acinfo.Position = owner.GetPosition();
         ActorInfo electro = ActorInfo.Create(acinfo);
-        electro.AddParent(ainfo);
+        electro.AddParent(ownerActorID);
         electro.CycleInfo.CyclesRemaining = 2.5f / electro.CycleInfo.CyclePeriod;
       }
     }

@@ -132,11 +132,12 @@ namespace SWEndor
 
     public void Process()
     {
-      Queue<ActorInfo> q = new Queue<ActorInfo>(ActorInfo.Factory.GetList());
-      while (q.Count > 0)
+      foreach (int actorID in ActorInfo.Factory.GetList())
       {
-        ActorInfo a = q.Dequeue();
-        a.Process();
+        ActorInfo a = ActorInfo.Factory.Get(actorID);
+        if (a != null)
+          a.Process();
+
         //if (a.IsPlayer())
         //  ProcessPlayerCamera();
       }
@@ -144,19 +145,21 @@ namespace SWEndor
 
     public void ProcessAI()
     {
-      Queue<ActorInfo> q = new Queue<ActorInfo>(ActorInfo.Factory.GetHoldingList());
-      while (q.Count > 0)
+      foreach (int actorID in ActorInfo.Factory.GetHoldingList())
       {
-        q.Dequeue().ProcessAI();
+        ActorInfo a = ActorInfo.Factory.Get(actorID);
+        if (a != null)
+          a.ProcessAI();
       }
     }
 
     public void ProcessCollision()
     {
-      Queue<ActorInfo> q = new Queue<ActorInfo>(ActorInfo.Factory.GetHoldingList());
-      while (q.Count > 0)
+      foreach (int actorID in ActorInfo.Factory.GetHoldingList())
       {
-        q.Dequeue().ProcessCollision();
+        ActorInfo a = ActorInfo.Factory.Get(actorID);
+        if (a != null)
+          a.ProcessCollision();
       }
     }
 
@@ -194,11 +197,12 @@ namespace SWEndor
       tv_scene.FinalizeShadows();
       LandInfo.Instance().Render();
 
-      ActorInfo[] ainfo = ActorInfo.Factory.GetHoldingList();
-      foreach (ActorInfo a in ainfo)
+      foreach (int actorID in ActorInfo.Factory.GetHoldingList())
+      {
+        ActorInfo a = ActorInfo.Factory.Get(actorID);
         if (a != null)
           a.Render();
-
+      }
 
       using (new PerfElement("render_2D_draw"))
         Screen2D.Instance().Draw();

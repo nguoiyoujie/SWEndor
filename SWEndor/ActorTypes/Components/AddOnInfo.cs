@@ -39,7 +39,7 @@ namespace SWEndor.ActorTypes.Components
       acinfo.CreationTime = actor.CreationTime;
 
       ActorInfo a = ActorInfo.Create(acinfo);
-      a.AddParent(actor);
+      a.AddParent(actor.ID);
       
       a.AttachToParent = AttachToParent;
     }

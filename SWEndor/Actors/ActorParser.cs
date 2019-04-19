@@ -47,7 +47,7 @@ namespace SWEndor.Actors
       string parents = "";
       foreach (int i in Actor.GetAllParents(1))
       {
-        ActorInfo p = ActorInfo.Factory.GetExact(i);
+        ActorInfo p = ActorInfo.Factory.Get(i);
         if (p != null)
           parents += (parents.Length == 0) ? p.ID.ToString() : ("," + p.ID);
       }
@@ -56,7 +56,7 @@ namespace SWEndor.Actors
       string children = "";
       foreach (int i in Actor.GetAllChildren(1))
       {
-        ActorInfo c = ActorInfo.Factory.GetExact(i);
+        ActorInfo c = ActorInfo.Factory.Get(i);
         if (c != null)
           children += (children.Length == 0) ? c.ID.ToString() : ("," + c.ID);
       }

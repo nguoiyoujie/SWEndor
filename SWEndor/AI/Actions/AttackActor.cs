@@ -9,9 +9,9 @@ namespace SWEndor.AI.Actions
 {
   public class AttackActor : ActionInfo
   {
-    public AttackActor(ActorInfo target, float follow_distance = -1, float too_close_distance = -1, bool can_interrupt = true, float hunt_interval = 15) : base("AttackActor")
+    public AttackActor(int targetActorID, float follow_distance = -1, float too_close_distance = -1, bool can_interrupt = true, float hunt_interval = 15) : base("AttackActor")
     {
-      Target_Actor = target;
+      Target_ActorID = targetActorID;
       FollowDistance = follow_distance;
       TooCloseDistance = too_close_distance;
       CanInterrupt = can_interrupt;
@@ -20,7 +20,7 @@ namespace SWEndor.AI.Actions
     }
 
     // parameters
-    public readonly ActorInfo Target_Actor = null;
+    public readonly int Target_ActorID = -1;
     public TV_3DVECTOR Target_Position = new TV_3DVECTOR();
     public float FollowDistance = -1;
     public float TooCloseDistance = -1;
@@ -31,7 +31,7 @@ namespace SWEndor.AI.Actions
     {
       return string.Format("{0},{1},{2},{3},{4},{5},{6},{7}"
                           , Name
-                          , (Target_Actor != null) ? Target_Actor.ID : -1
+                          , Target_ActorID
                           , FollowDistance
                           , TooCloseDistance
                           , SpeedAdjustmentDistanceRange
@@ -43,7 +43,8 @@ namespace SWEndor.AI.Actions
 
     public override void Process(ActorInfo owner)
     {
-      if (Target_Actor == null)
+      ActorInfo target = ActorInfo.Factory.Get(Target_ActorID);
+      if (target == null)
       {
         Complete = true;
         return;
@@ -57,36 +58,36 @@ namespace SWEndor.AI.Actions
         if (TooCloseDistance < 0)
           TooCloseDistance = 0.75f * owner.MovementInfo.Speed;
 
-        float dist = ActorDistanceInfo.GetDistance(owner, Target_Actor);
+        float dist = ActorDistanceInfo.GetDistance(owner.ID, Target_ActorID);
         if (dist > TooCloseDistance)
         {
           float d = dist / Globals.LaserSpeed;
-          ActorInfo a2 = Target_Actor.AttachToParent ? ActorInfo.Factory.Get(Target_Actor.ParentID) : null;
+          ActorInfo a2 = target.AttachToParent ? ActorInfo.Factory.Get(target.ParentID) : null;
           if (a2 == null)
           {
-            Target_Position = Target_Actor.GetRelativePositionXYZ(0, 0, Target_Actor.MovementInfo.Speed * d);
+            Target_Position = target.GetRelativePositionXYZ(0, 0, target.MovementInfo.Speed * d);
           }
           else
           {
-            Target_Position = a2.GetRelativePositionXYZ(Target_Actor.GetLocalPosition().x, Target_Actor.GetLocalPosition().y, Target_Actor.GetLocalPosition().z + a2.MovementInfo.Speed * d);
+            Target_Position = a2.GetRelativePositionXYZ(target.GetLocalPosition().x, target.GetLocalPosition().y, target.GetLocalPosition().z + a2.MovementInfo.Speed * d);
           }
 
           float delta_angle = AdjustRotation(owner, Target_Position, true);
 
-          float addspd = (owner.MovementInfo.MaxSpeed > Target_Actor.MovementInfo.Speed) ? owner.MovementInfo.MaxSpeed - Target_Actor.MovementInfo.Speed : 0;
-          float subspd = (owner.MovementInfo.MinSpeed < Target_Actor.MovementInfo.Speed) ? Target_Actor.MovementInfo.Speed - owner.MovementInfo.MinSpeed : 0;
+          float addspd = (owner.MovementInfo.MaxSpeed > target.MovementInfo.Speed) ? owner.MovementInfo.MaxSpeed - target.MovementInfo.Speed : 0;
+          float subspd = (owner.MovementInfo.MinSpeed < target.MovementInfo.Speed) ? target.MovementInfo.Speed - owner.MovementInfo.MinSpeed : 0;
 
           if (dist > FollowDistance)
-            AdjustSpeed(owner, Target_Actor.MovementInfo.Speed + (dist - FollowDistance) / SpeedAdjustmentDistanceRange * addspd);
+            AdjustSpeed(owner, target.MovementInfo.Speed + (dist - FollowDistance) / SpeedAdjustmentDistanceRange * addspd);
           else
-            AdjustSpeed(owner, Target_Actor.MovementInfo.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
+            AdjustSpeed(owner, target.MovementInfo.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
 
           WeaponInfo weapon = null;
           int burst = 0;
-          owner.SelectWeapon(Target_Actor, delta_angle, dist, out weapon, out burst);
+          owner.SelectWeapon(Target_ActorID, delta_angle, dist, out weapon, out burst);
           if (weapon != null)
           {
-            weapon.Fire(owner, Target_Actor, burst);
+            weapon.Fire(owner.ID, Target_ActorID, burst);
           }
           else
           {
@@ -104,52 +105,55 @@ namespace SWEndor.AI.Actions
           if (CanInterrupt && ReHuntTime < Game.Instance().GameTime)
           {
             Complete = true;
-            ActionManager.QueueNext(owner, new Hunt());
+            ActionManager.QueueNext(owner.ID, new Hunt());
           }
           else
           {
-            Complete |= (Target_Actor.CreationState != CreationState.ACTIVE || Target_Actor.ActorState == ActorState.DYING || Target_Actor.ActorState == ActorState.DEAD);
+            Complete |= (target.CreationState != CreationState.ACTIVE || target.ActorState == ActorState.DYING || target.ActorState == ActorState.DEAD);
           }
         }
         else
         {
-          if (Target_Actor.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER))
+          if (target.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER))
           {
-            float evadeduration = 2000 / (Target_Actor.GetTrueSpeed() + 500);
-            ActionManager.QueueFirst(owner, new Evade(evadeduration));
+            float evadeduration = 2000 / (target.GetTrueSpeed() + 500);
+            ActionManager.QueueFirst(owner.ID, new Evade(evadeduration));
           }
-          else if (!(Target_Actor.TypeInfo is ProjectileGroup))
+          else if (!(target.TypeInfo is ProjectileGroup))
           {
-            ActionManager.QueueFirst(owner, new Move(MakeAltPosition(owner, Target_Actor.GetTopParent()), owner.MovementInfo.MaxSpeed));
+            ActionManager.QueueFirst(owner.ID, new Move(MakeAltPosition(owner, target.GetTopParent()), owner.MovementInfo.MaxSpeed));
           }
           return;
         }
 
         if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
         {
-          ActionManager.QueueFirst(owner, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
+          ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
           //if (owner.ProspectiveCollisionActor != null && owner.ProspectiveCollisionActor.GetTopParent() == Target_Actor.GetTopParent())
           //  ActionManager.QueueNext(owner, new Rotate(owner.ProspectiveCollisionImpact + owner.CollisionInfo.ProspectiveCollisionNormal * 10000, owner.MovementInfo.MinSpeed, 45));
         }
       }
     }
 
-    private TV_3DVECTOR MakeAltPosition(ActorInfo owner, ActorInfo target)
+    private TV_3DVECTOR MakeAltPosition(ActorInfo owner, int targetActorID)
     {
       float radius = 0;
       TV_3DVECTOR center = new TV_3DVECTOR();
-      target.GetBoundingSphere(ref center, ref radius);
-      center += target.GetPosition();
-      radius += Engine.Instance().Random.Next((int)(-4 * owner.TypeInfo.MaxSpeed), (int)(4 * owner.TypeInfo.MaxSpeed));
+      ActorInfo target = ActorInfo.Factory.Get(targetActorID);
+      if (target != null)
+      {
+        target.GetBoundingSphere(ref center, ref radius);
+        center += target.GetPosition();
+        radius += Engine.Instance().Random.Next((int)(-4 * owner.TypeInfo.MaxSpeed), (int)(4 * owner.TypeInfo.MaxSpeed));
 
-      float xzAngle = Engine.Instance().Random.Next(0, 360);
+        float xzAngle = Engine.Instance().Random.Next(0, 360);
 
-      center.x += (float)Math.Cos(xzAngle) * radius;
-      center.y += Engine.Instance().Random.Next(-200, 200);
-      center.x += (float)Math.Sin(xzAngle) * radius;
+        center.x += (float)Math.Cos(xzAngle) * radius;
+        center.y += Engine.Instance().Random.Next(-200, 200);
+        center.x += (float)Math.Sin(xzAngle) * radius; // x??
 
-      Utilities.Clamp(ref center, GameScenarioManager.Instance().MinAIBounds * 0.75f, GameScenarioManager.Instance().MaxAIBounds * 0.75f);
-      
+        Utilities.Clamp(ref center, GameScenarioManager.Instance().MinAIBounds * 0.75f, GameScenarioManager.Instance().MaxAIBounds * 0.75f);
+      }
       return center;
     }
 
@@ -158,17 +162,18 @@ namespace SWEndor.AI.Actions
       float dist = 0;
       float delta_angle = 0;
 
-      foreach (ActorInfo a in ActorInfo.Factory.GetHoldingList())
+      foreach (int actorID in ActorInfo.Factory.GetHoldingList())
       {
+        ActorInfo a = ActorInfo.Factory.Get(actorID);
         if (a != null
-            && owner != a
+            && owner.ID != actorID
             && a.CreationState == CreationState.ACTIVE
             && a.ActorState != ActorState.DYING
             && a.ActorState != ActorState.DEAD
             && a.CombatInfo.IsCombatObject
             && !owner.Faction.IsAlliedWith(a.Faction))
         {
-          dist = ActorDistanceInfo.GetDistance(a, owner, owner.GetWeaponRange());
+          dist = ActorDistanceInfo.GetDistance(actorID, owner.ID, owner.GetWeaponRange());
 
           TV_3DVECTOR vec = new TV_3DVECTOR();
           TV_3DVECTOR dir = owner.GetDirection();
@@ -177,10 +182,10 @@ namespace SWEndor.AI.Actions
 
           WeaponInfo weapon = null;
           int burst = 0;
-          owner.SelectWeapon(a, delta_angle, dist, out weapon, out burst);
+          owner.SelectWeapon(a.ID, delta_angle, dist, out weapon, out burst);
           if (weapon != null)
           {
-            weapon.Fire(owner, a, burst);
+            weapon.Fire(owner.ID, a.ID, burst);
             return;
           }
         }

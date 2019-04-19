@@ -24,8 +24,9 @@ namespace SWEndor.UI.Widgets
       TV_2DVECTOR loc = new TV_2DVECTOR(30, 375);
       string swingcount = "";
       Dictionary<string, int> wingcount = new Dictionary<string, int>();
-      foreach (ActorInfo a in ActorInfo.Factory.GetHoldingList())
+      foreach (int actorID in ActorInfo.Factory.GetHoldingList())
       {
+        ActorInfo a = ActorInfo.Factory.Get(actorID);
         if (a != null && a.CreationState == CreationState.ACTIVE)
         {
           if (!wingcount.ContainsKey("All Objects"))

@@ -51,7 +51,7 @@ namespace SWEndor.Actors.Components
 
     private void Regenerate(int i, float amount)
     {
-      ActorInfo a = ActorInfo.Factory.GetExact(i);
+      ActorInfo a = ActorInfo.Factory.Get(i);
       Regenerate(a, amount);
     }
 

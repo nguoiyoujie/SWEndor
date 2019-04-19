@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
+using SWEndor.Scenarios;
 using System.Collections.Generic;
 
 namespace SWEndor.ActorTypes
@@ -32,7 +33,7 @@ namespace SWEndor.ActorTypes
     {
       base.ProcessState(ainfo);
 
-      ActorInfo p = ainfo.GetTopParent();
+      ActorInfo p = ActorInfo.Factory.Get(ainfo.GetTopParent());
 
       if (p.SpawnerInfo != null
        && p.SpawnerInfo.Enabled
@@ -46,13 +47,13 @@ namespace SWEndor.ActorTypes
         if (p.SpawnerInfo.SpawnMoveTime < Game.Instance().GameTime)
         {
           List<ActorInfo> rm = new List<ActorInfo>();
-          foreach (int i in ainfo.GetAllChildren(1))
+          foreach (int id in ainfo.GetAllChildren(1))
           {
-            ActorInfo a = ActorInfo.Factory.GetExact(i);
+            ActorInfo a = ActorInfo.Factory.Get(id);
 
             a.ActorState = ActorState.NORMAL;
-            ActionManager.Unlock(a);
-            ActionManager.QueueLast(a, new Hunt());
+            ActionManager.UnlockOne(id);
+            ActionManager.QueueLast(id, new Hunt());
 
             if (a.IsPlayer())
               PlayerInfo.Instance().IsMovementControlsEnabled = true;
@@ -73,7 +74,7 @@ namespace SWEndor.ActorTypes
 
       foreach (int i in ainfo.GetAllChildren(1))
       {
-        ActorInfo a = ActorInfo.Factory.GetExact(i);
+        ActorInfo a = ActorInfo.Factory.Get(i);
         if (a != null && a.TypeInfo is FighterGroup)
         {
           if (p.SpawnerInfo.SpawnSpeed == -1)
@@ -115,10 +116,10 @@ namespace SWEndor.ActorTypes
       acinfo.InitialState = ActorState.FREE;
       acinfo.Faction = ainfo.Faction;
       ActorInfo a = ActorInfo.Create(acinfo);
-      a.AddParent(ainfo);
-      ActionManager.QueueNext(a, new Lock());
+      a.AddParent(ainfo.ID);
+      ActionManager.QueueNext(a.ID, new Lock());
 
-      PlayerInfo.Instance().Actor = a;
+      PlayerInfo.Instance().ActorID = a.ID;
 
       if (a.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER) && a.Faction.WingLimit >= 0)
         a.Faction.WingLimit++;
@@ -163,8 +164,9 @@ namespace SWEndor.ActorTypes
             acinfo.InitialState = ActorState.FREE;
             acinfo.Faction = ainfo.Faction;
             ActorInfo a = ActorInfo.Create(acinfo);
-            a.AddParent(ainfo);
-            ActionManager.QueueFirst(a, new Lock());
+            a.AddParent(ainfo.ID);
+            GameScenarioManager.Instance().Scenario?.RegisterEvents(a);
+            ActionManager.QueueFirst(a.ID, new Lock());
           }
           p.SpawnerInfo.SpawnMoveTime = Game.Instance().GameTime + p.SpawnerInfo.SpawnMoveDelay;
         }

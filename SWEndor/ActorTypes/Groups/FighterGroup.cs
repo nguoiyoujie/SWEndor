@@ -34,6 +34,8 @@ namespace SWEndor.ActorTypes
       ainfo.MovementInfo.DyingMovement = Actors.Components.DyingMovement.SPIN;
       ainfo.MovementInfo.D_spin_min_rate = 180;
       ainfo.MovementInfo.D_spin_max_rate = 270;
+
+      ainfo.CombatInfo.HitWhileDyingLeadsToDeath = true;
     }
 
     public override void ProcessNewState(ActorInfo ainfo)
@@ -57,16 +59,8 @@ namespace SWEndor.ActorTypes
 
         ActorCreationInfo acinfo = new ActorCreationInfo(ElectroATI.Instance());
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo.Create(acinfo).AddParent(ainfo);
+        ActorInfo.Create(acinfo).AddParent(ainfo.ID);
       }
-    }
-    
-    public override void ProcessHit(ActorInfo ainfo, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
-    {
-      if (ainfo.ActorState == ActorState.DYING && ainfo.CombatInfo.HitWhileDyingLeadsToDeath)
-        ainfo.ActorState = ActorState.DEAD;
-
-      base.ProcessHit(ainfo, hitby, impact, normal);
     }
   }
 }

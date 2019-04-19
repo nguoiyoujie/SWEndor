@@ -342,10 +342,10 @@ namespace SWEndor.Scenarios
 
     public virtual void ProcessPlayerDying(params object[] param)
     {
-      ActorInfo ainfo = (ActorInfo)param[0];
+      ActorInfo ainfo = ActorInfo.Factory.Get((int)param[0]);
       if (ainfo != null)
       {
-        PlayerInfo.Instance().TempActor = ainfo;
+        PlayerInfo.Instance().TempActorID = ainfo.ID;
 
         if (PlayerInfo.Instance().Actor.TypeInfo is DeathCameraATI)
           if (PlayerInfo.Instance().Actor.CreationState == CreationState.ACTIVE)
@@ -371,8 +371,8 @@ namespace SWEndor.Scenarios
 
     public virtual void ProcessHit(params object[] param)
     {
-      ActorInfo av = (ActorInfo)param[0];
-      ActorInfo aa = (ActorInfo)param[1];
+      ActorInfo av = ActorInfo.Factory.Get((int)param[0]);
+      ActorInfo aa = ActorInfo.Factory.Get((int)param[1]);
 
       if (PlayerInfo.Instance().Actor != null
         && av.Faction != null
@@ -381,7 +381,7 @@ namespace SWEndor.Scenarios
         List<int> attackerfamily = aa.GetAllParents();
         foreach (int i in attackerfamily)
         {
-          ActorInfo a = ActorInfo.Factory.GetExact(i);
+          ActorInfo a = ActorInfo.Factory.Get(i);
           if (PlayerInfo.Instance().Actor == a)
           {
             Screen2D.Instance().MessageText(string.Format("{0}: {1}, watch your fire!", av.Name, PlayerInfo.Instance().Name)

@@ -31,19 +31,19 @@ namespace SWEndor.ActorTypes
       {
         if (ImpactCloseEnoughDistance > 0 && ainfo.CurrentAction != null && ainfo.CurrentAction is AttackActor)
         {
-          AttackActor action = (AttackActor)ainfo.CurrentAction;
-          if (action.Target_Actor != null)
+          ActorInfo target = ActorInfo.Factory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
+          if (target != null)
           {
             // Anticipate
-            float dist = ActorDistanceInfo.GetDistance(ainfo, action.Target_Actor, ImpactCloseEnoughDistance + 1);
+            float dist = ActorDistanceInfo.GetDistance(ainfo.ID, target.ID, ImpactCloseEnoughDistance + 1);
 
             if (dist < ImpactCloseEnoughDistance)
             {
-              action.Target_Actor.TypeInfo.ProcessHit(action.Target_Actor, ainfo, action.Target_Actor.GetPosition(), new TV_3DVECTOR());
-              ainfo.TypeInfo.ProcessHit(ainfo, action.Target_Actor, action.Target_Actor.GetPosition(), new TV_3DVECTOR());
+              target.TypeInfo.ProcessHit(target.ID, ainfo.ID, target.GetPosition(), new TV_3DVECTOR());
+              ainfo.TypeInfo.ProcessHit(ainfo.ID, target.ID, target.GetPosition(), new TV_3DVECTOR());
 
-              ainfo.OnHitEvent(action.Target_Actor);
-              action.Target_Actor.OnHitEvent(ainfo);
+              ainfo.OnHitEvent(target.ID);
+              target.OnHitEvent(ainfo.ID);
             }
           }
         }

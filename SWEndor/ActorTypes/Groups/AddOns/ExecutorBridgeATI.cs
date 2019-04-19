@@ -50,13 +50,13 @@ namespace SWEndor.ActorTypes
 
       if (ainfo.CreationState == CreationState.ACTIVE)
       {
-        ActorInfo parent = ainfo.GetTopParent();
+        ActorInfo parent = ActorInfo.Factory.Get(ainfo.GetTopParent());
         if (parent != null)
         {
           List<int> cs = new List<int>(parent.GetAllChildren(1));
           foreach (int i in cs)
           {
-            ActorInfo pn = ActorInfo.Factory.GetExact(i);
+            ActorInfo pn = ActorInfo.Factory.Get(i);
             if (pn?.TypeInfo is ExecutorShieldGeneratorATI)
               ainfo.CombatInfo.Strength = ainfo.TypeInfo.MaxStrength;
           }
@@ -65,7 +65,7 @@ namespace SWEndor.ActorTypes
 
       if (ainfo.ActorState == ActorState.DYING)
       {
-        ActorInfo parent = ainfo.GetTopParent();
+        ActorInfo parent = ActorInfo.Factory.Get(ainfo.GetTopParent());
         if (parent != null)
         {
           parent.CombatInfo.Strength *= 0.75f;
@@ -85,24 +85,29 @@ namespace SWEndor.ActorTypes
       }
     }
 
-    public override void ProcessHit(ActorInfo ainfo, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      base.ProcessHit(ainfo, hitby, impact, normal);
+      base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
+      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
+      ActorInfo hitby = ActorInfo.Factory.Get(hitbyActorID);
+      if (owner == null || hitby == null)
+        return;
+
       if (!hitby.TypeInfo.IsDamage)
       {
-        if (ainfo.StrengthFrac < 0.5f)
+        if (owner.StrengthFrac < 0.5f)
         {
-          ainfo.CombatInfo.Strength = 0;
+          owner.CombatInfo.Strength = 0;
           hitby.DestroyedEvents = null;
         }
         else
         {
-          ainfo.CombatInfo.Strength -= hitby.TypeInfo.ImpactDamage * 4;
+          owner.CombatInfo.Strength -= hitby.TypeInfo.ImpactDamage * 4;
         }
       }
 
       //bool hasshield = false;
-      ActorInfo parent = ainfo.GetTopParent();
+      ActorInfo parent = ActorInfo.Factory.Get(owner.GetTopParent());
       if (parent != null)
       {
         /*
@@ -112,8 +117,8 @@ namespace SWEndor.ActorTypes
             */
 
         //if (!hasshield)
-          if (parent.StrengthFrac > ainfo.StrengthFrac)
-            parent.CombatInfo.Strength = ainfo.StrengthFrac * parent.TypeInfo.MaxStrength;
+          if (parent.StrengthFrac > owner.StrengthFrac)
+            parent.CombatInfo.Strength = owner.StrengthFrac * parent.TypeInfo.MaxStrength;
       }
     }
   }

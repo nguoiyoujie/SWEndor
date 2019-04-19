@@ -74,7 +74,7 @@ namespace SWEndor.AI.Actions
       else
       {
         owner.CollisionInfo.IsAvoidingCollision = false;
-        ActionManager.QueueNext(owner, new Wait(2.5f));
+        ActionManager.QueueNext(owner.ID, new Wait(2.5f));
         Complete = true;
       }
     }

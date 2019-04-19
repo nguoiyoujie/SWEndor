@@ -39,14 +39,17 @@ namespace SWEndor.ActorTypes
       ainfo.ExplosionInfo.DeathExplosionSize = 5;
     }
 
-    public override void ProcessHit(ActorInfo ainfo, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      base.ProcessHit(ainfo, hitby, impact, normal);
+      base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
+      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
+      ActorInfo hitby = ActorInfo.Factory.Get(hitbyActorID);
+
+      if (owner == null || hitby == null)
+        return;
 
       if (hitby.TypeInfo is TorpedoATI) //hard code?
-      {
-        ainfo.ActorState = ActorState.DEAD;
-      }
+        owner.ActorState = ActorState.DEAD;
     }
   }
 }

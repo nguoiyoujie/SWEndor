@@ -27,7 +27,7 @@ namespace SWEndor.UI.Widgets
 
     public override void Draw()
     {
-      ActorInfo m_target = PlayerInfo.Instance().AimTarget;
+      ActorInfo m_target = ActorInfo.Factory.Get(PlayerInfo.Instance().AimTargetID);
 
       if (m_target == null)
       {

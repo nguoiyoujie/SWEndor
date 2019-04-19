@@ -5,15 +5,15 @@ namespace SWEndor.AI.Actions
 {
   public class FollowActor : ActionInfo
   {
-    public FollowActor(ActorInfo target, float follow_distance = 500, bool can_interrupt = true) : base("FollowActor")
+    public FollowActor(int targetActorID, float follow_distance = 500, bool can_interrupt = true) : base("FollowActor")
     {
-      Target_Actor = target;
+      Target_ActorID = targetActorID;
       FollowDistance = follow_distance;
       CanInterrupt = can_interrupt;
     }
 
     // parameters
-    public ActorInfo Target_Actor = null;
+    public int Target_ActorID = -1;
     public float FollowDistance = 500;
     public float SpeedAdjustmentDistanceRange = 100;
 
@@ -21,7 +21,7 @@ namespace SWEndor.AI.Actions
     {
       return string.Format("{0},{1},{2},{3},{4},{5}"
                           , Name
-                          , (Target_Actor != null) ? Target_Actor.ID : -1
+                          , Target_ActorID
                           , FollowDistance
                           , SpeedAdjustmentDistanceRange
                           , CanInterrupt
@@ -31,7 +31,8 @@ namespace SWEndor.AI.Actions
 
     public override void Process(ActorInfo owner)
     {
-      if (owner.MovementInfo.MaxSpeed == 0)
+      ActorInfo target = ActorInfo.Factory.Get(Target_ActorID);
+      if (target == null || owner.MovementInfo.MaxSpeed == 0)
       {
         Complete = true;
         return;
@@ -39,25 +40,25 @@ namespace SWEndor.AI.Actions
 
       if (CheckBounds(owner))
       {
-        AdjustRotation(owner, Target_Actor.GetPosition());
-        float dist = ActorDistanceInfo.GetDistance(owner, Target_Actor, FollowDistance + 1);
+        AdjustRotation(owner, target.GetPosition());
+        float dist = ActorDistanceInfo.GetDistance(owner.ID, Target_ActorID, FollowDistance + 1);
 
-        float addspd = (owner.MovementInfo.MaxSpeed > Target_Actor.MovementInfo.Speed) ? owner.MovementInfo.MaxSpeed - Target_Actor.MovementInfo.Speed : 0;
-        float subspd = (owner.MovementInfo.MinSpeed < Target_Actor.MovementInfo.Speed) ? Target_Actor.MovementInfo.Speed - owner.MovementInfo.MinSpeed : 0;
+        float addspd = (owner.MovementInfo.MaxSpeed > target.MovementInfo.Speed) ? owner.MovementInfo.MaxSpeed - target.MovementInfo.Speed : 0;
+        float subspd = (owner.MovementInfo.MinSpeed < target.MovementInfo.Speed) ? target.MovementInfo.Speed - owner.MovementInfo.MinSpeed : 0;
 
         if (dist > FollowDistance)
-          AdjustSpeed(owner, Target_Actor.MovementInfo.Speed + (dist - FollowDistance) / SpeedAdjustmentDistanceRange * addspd);
+          AdjustSpeed(owner, target.MovementInfo.Speed + (dist - FollowDistance) / SpeedAdjustmentDistanceRange * addspd);
         else
-          AdjustSpeed(owner, Target_Actor.MovementInfo.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
+          AdjustSpeed(owner, target.MovementInfo.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
 
-        Complete |= (Target_Actor.CreationState != CreationState.ACTIVE);
+        Complete |= (target.CreationState != CreationState.ACTIVE);
       }
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
       if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
       {
-        ActionManager.QueueFirst(owner, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
+        ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
       }
     }
   }
