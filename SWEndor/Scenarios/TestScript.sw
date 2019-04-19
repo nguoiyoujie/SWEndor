@@ -130,8 +130,8 @@ gametick:
 	if (time > interval) then CallScript("spawntie"); 
 	if (time2 > interval2) then CallScript("spawnwing"); 
 	
-	if (GetTimeSinceLostWing() < GetGameTime() || GetGameTime() % 0.2 > 0.1) then SetUILine1Text("WINGS: " + Faction_GetWingCount("Smugglers")) else SetUILine1Text("");
-	if (GetTimeSinceLostShip() < GetGameTime() || GetGameTime() % 0.2 > 0.1) then SetUILine2Text("SHIPS: " + Faction_GetShipCount("Smugglers")) else SetUILine2Text("");
+	if (GetTimeSinceLostWing() < GetGameTime() || GetGameTime() % 0.2 > 0.1) then SetUILine1Text("WINGS: " + Faction_GetWingCount("Smugglers")); else SetUILine1Text("");
+	if (GetTimeSinceLostShip() < GetGameTime() || GetGameTime() % 0.2 > 0.1) then SetUILine2Text("SHIPS: " + Faction_GetShipCount("Smugglers")); else SetUILine2Text("");
 	
 	if (GetGameStateB("TransportExit") && !triggerwinlose) then CallScript("win");
 	if (Faction_GetShipCount("Smugglers") < 1 && !triggerwinlose) then SetGameStateB("TransportDead",true);
