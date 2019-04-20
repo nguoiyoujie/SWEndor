@@ -191,7 +191,7 @@ namespace SWEndor.Weapons
 
       if ((ActorInfo.Factory.IsPlayer(ownerActorID) 
         && !PlayerInfo.Instance().PlayerAIEnabled 
-        && (!RequirePlayerTargetLock || PlayerInfo.Instance().AimTargetID == targetActorID)))
+        && (!RequirePlayerTargetLock || target != null)))
       { // Player
         if (WeaponProjectile == null)
           return true;
