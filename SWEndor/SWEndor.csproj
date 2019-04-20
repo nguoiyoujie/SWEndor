@@ -138,6 +138,7 @@
     <Compile Include="ActorTypes\Groups\Asteroids\Asteroid03ATI.cs" />
     <Compile Include="ActorTypes\Groups\Asteroids\Asteroid02ATI.cs" />
     <Compile Include="ActorTypes\Groups\Asteroids\Asteroid01ATI.cs" />
+    <Compile Include="ActorTypes\Groups\Fighters\Z95ATI.cs" />
     <Compile Include="ActorTypes\Groups\RebelWingGroup.cs" />
     <Compile Include="ActorTypes\Groups\SpinningDebrisGroup.cs" />
     <Compile Include="ActorTypes\Groups\Debris\Tower03_RuinsATI.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="ActorTypes\Groups\SurfaceTowers\TowerGunAdvATI.cs" />
     <Compile Include="ActorTypes\Groups\SurfaceTowers\TowerGunATI.cs" />
     <Compile Include="ActorTypes\Groups\SurfaceTowers\Tower00ATI.cs" />
+    <Compile Include="ActorTypes\Groups\TIEs\MissileBoatATI.cs" />
     <Compile Include="ActorTypes\Groups\TIEs\TIE_A_ATI.cs" />
     <Compile Include="ActorTypes\Groups\TIEs\TIE_sa_ATI.cs" />
     <Compile Include="ActorTypes\Groups\TIEs\TIE_X1_ATI.cs" />
@@ -365,6 +367,7 @@
     <Compile Include="Scenarios\Scripting\Functions\ActorManagement.cs" />
     <Compile Include="Scenarios\Scripting\Functions\SceneCameraManagement.cs" />
     <Compile Include="Scenarios\Scripting\Functions\SceneManagement.cs" />
+    <Compile Include="Sound\Instructions\InstAddSyncPoint.cs" />
     <Compile Include="Sound\Instructions\InstPauseMusic.cs" />
     <Compile Include="Sound\Instructions\InstPlaySound.cs" />
     <Compile Include="Sound\Instructions\InstResumeMusic.cs" />
@@ -471,7 +474,10 @@
     <Compile Include="Weapons\Imperial\ImperialAntiShipTurboLaserWeapon.cs" />
     <Compile Include="Weapons\Imperial\ImperialTurboLaserWeapon.cs" />
     <Compile Include="Weapons\Acclamator\AcclamatorTurboLaserWeapon.cs" />
+    <Compile Include="Weapons\MissileBoat\MissileBoat_MissileWeapon.cs" />
     <Compile Include="Weapons\NebulonB\NebulonBMissileWeapon.cs" />
+    <Compile Include="Weapons\MissileBoat\MissileBoat_LaserWeapon.cs" />
+    <Compile Include="Weapons\MissileBoat\MissileBoat_TorpWeapon.cs" />
     <Compile Include="Weapons\TIE-IN\TIE_IN_DblLaserWeapon.cs" />
     <Compile Include="Weapons\TIE-LN\TIE_LN_DblLaserWeapon.cs" />
     <Compile Include="Weapons\TIE-A\TIE_A_LaserWeapon.cs" />
@@ -498,6 +504,7 @@
     <Compile Include="Weapons\Corellian\CorellianTurboLaserWeapon.cs" />
     <Compile Include="Weapons\WeaponFactory.cs" />
     <Compile Include="Weapons\WeaponParser.cs" />
+    <Compile Include="Weapons\Z95\Z95LaserWeapon.cs" />
     <Compile Include="Weapons\YWing\YWingIonWeapon.cs" />
     <Compile Include="Weapons\TIE-sa\TIE_sa_TorpWeapon.cs" />
     <Compile Include="Weapons\YWing\YWingTorpWeapon.cs" />

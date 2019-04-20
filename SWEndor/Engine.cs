@@ -302,6 +302,9 @@ namespace SWEndor
     {
       SoundManager.Instance().Initialize();
       SoundManager.Instance().Load();
+
+      SoundManager.Instance().AddMusicSyncPoint("trofix", "try", 10714);
+      SoundManager.Instance().AddMusicSyncPoint("trofix", "try2", 68571);
     }
 
     public void Exit()

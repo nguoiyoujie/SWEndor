@@ -34,11 +34,11 @@ load:
 	AddEvent(200, "spawnenemy");
 	AddEvent(205, "spawnenemy2");
 	AddEvent(240, "spawnenemybombers2");
-	AddEvent(250, "messagebombercorvus");
+	AddEvent(270, "messagebombercorvus");
 	AddEvent(300, "spawnenemy");
 	AddEvent(325, "spawnenemy2");
 	AddEvent(350, "messagebombergreywolf");
-	AddEvent(340, "spawnenemybombers3");
+	AddEvent(380, "spawnenemybombers3");
 
 	AddEvent(17, "message01");
 	AddEvent(22, "message02");

@@ -77,6 +77,21 @@ namespace SWEndor.UI.Widgets
                                                   , vec2.y + Engine.Instance().ScreenHeight / 2
                                                   , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
           }
+          else if (vec0.y != 0)
+          {
+            vec1 = new TV_2DVECTOR(k
+                                 , vec0.y + (vec0.y > 0 ? l : -l));
+            vec2 = new TV_2DVECTOR(-vec1.x, vec1.y);
+
+
+            Engine.Instance().TVScreen2DImmediate.Draw_Triangle(vec0.x + Engine.Instance().ScreenWidth / 2
+                                                  , vec0.y + Engine.Instance().ScreenHeight / 2
+                                                  , vec1.x + Engine.Instance().ScreenWidth / 2
+                                                  , vec1.y + Engine.Instance().ScreenHeight / 2
+                                                  , vec2.x + Engine.Instance().ScreenWidth / 2
+                                                  , vec2.y + Engine.Instance().ScreenHeight / 2
+                                                  , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
+          }
           else
           {
             Engine.Instance().TVScreen2DImmediate.Draw_Line(vec0.x + l + Engine.Instance().ScreenWidth / 2
@@ -148,8 +163,52 @@ namespace SWEndor.UI.Widgets
             t++;
             if (t % 10 == 0)
             {
-              p1_x = 19;
-              p2_x = 23;
+              p1_x = -40;
+              p2_x = -36;
+              p1_y += p3_y;
+              p2_y += p3_y;
+            }
+          }
+        }
+        else if (PlayerInfo.Instance().SecondaryWeapon.Contains("misl"))
+        {
+          float p1_x = -40;
+          float p1_y = 28;
+          float p2_x = -38;
+          float p2_y = 36;
+          float p3_x = 4;
+          float p3_y = 10;
+          float tremain = weap.Ammo;
+          float tmax = weap.MaxAmmo;
+          int t = 0;
+
+          while (t < tremain) //|| t < tmax)
+          {
+            if (t < tremain)
+            {
+              Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(p1_x + Engine.Instance().ScreenWidth / 2
+                                                    , p1_y + Engine.Instance().ScreenHeight / 2
+                                                    , p2_x + Engine.Instance().ScreenWidth / 2
+                                                    , p2_y + Engine.Instance().ScreenHeight / 2
+                                                    , pcolor.GetIntColor());
+            }
+            /*else
+            {
+              Engine.Instance().TVScreen2DImmediate.Draw_Box(p1_x + Engine.Instance().ScreenWidth / 2
+                                    , p1_y + Engine.Instance().ScreenHeight / 2
+                                    , p2_x + Engine.Instance().ScreenWidth / 2
+                                    , p2_y + Engine.Instance().ScreenHeight / 2
+                                    , pcolor.GetIntColor());
+            }*/
+
+            p1_x += p3_x;
+            p2_x += p3_x;
+
+            t++;
+            if (t % 20 == 0)
+            {
+              p1_x = -40;
+              p2_x = -38;
               p1_y += p3_y;
               p2_y += p3_y;
             }

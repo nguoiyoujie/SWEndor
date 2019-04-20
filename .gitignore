@@ -16,3 +16,12 @@
 /Report20190408-0429.diagsession
 /SWEndor.psess
 /SWEndor190408.vsp
+/SWEndor/obj/Debug
+/SWEndor/obj/Release/TempPE
+/SWEndor/obj/Release/SWEndor.csprojResolveAssemblyReference.cache
+/SWEndor/obj/Release/SWEndor.Properties.Resources.resources
+/SWEndor/obj/Release/SWEndor.pdb
+/SWEndor/obj/Release/SWEndor.GameForm.resources
+/SWEndor/obj/Release/SWEndor.csproj.GenerateResource.Cache
+/SWEndor/obj/Release/SWEndor.csproj.FileListAbsolute.txt
+/SWEndor/obj/Release/DesignTimeResolveAssemblyReferencesInput.cache

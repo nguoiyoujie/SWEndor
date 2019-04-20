@@ -50,6 +50,7 @@ namespace SWEndor.ActorTypes
         Register(ElectroATI.Instance());
 
         // fighters
+        Register(Z95ATI.Instance());
         Register(XWingATI.Instance());
         Register(YWingATI.Instance());
         Register(AWingATI.Instance());
@@ -65,6 +66,7 @@ namespace SWEndor.ActorTypes
         Register(TIE_A_ATI.Instance());
         Register(TIE_X1_ATI.Instance());
         Register(TIE_sa_ATI.Instance());
+        Register(MissileBoatATI.Instance());
 
         // ships
         Register(CorellianATI.Instance());
