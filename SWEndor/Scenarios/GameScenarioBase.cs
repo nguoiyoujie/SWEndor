@@ -69,7 +69,7 @@ namespace SWEndor.Scenarios
     }
 
     // scripting
-    public ActorInfo ActiveActor { get; set; }
+    //public ActorInfo ActiveActor { get; set; }
 
     public float RebelSpawnTime = 0;
     public float TIESpawnTime = 0;
@@ -77,6 +77,7 @@ namespace SWEndor.Scenarios
     public float TimeSinceLostWing = -100;
     public float TimeSinceLostShip = -100;
     public float TimeSinceLostStructure = -100;
+    public bool Launched = false;
 
     public FactionInfo MainAllyFaction = FactionInfo.Neutral;
     public FactionInfo MainEnemyFaction = FactionInfo.Neutral;
@@ -95,6 +96,7 @@ namespace SWEndor.Scenarios
       PlayerInfo.Instance().Score.Reset();
       LoadFactions();
       LoadScene();
+      Launched = true;
     }
 
     public virtual void LoadFactions()
@@ -115,6 +117,7 @@ namespace SWEndor.Scenarios
 
     public virtual void Unload()
     {
+      Launched = false;
       GameScenarioManager.Instance().Scenario = null;
 
       // Full reset
@@ -123,6 +126,7 @@ namespace SWEndor.Scenarios
       GameScenarioManager.Instance().ClearGameStates();
       GameScenarioManager.Instance().ClearEvents();
       Screen2D.Instance().ClearText();
+      PlayerInfo.Instance().RequestSpawn = false;
 
       // clear sounds
       SoundManager.Instance().SetSoundStopAll();

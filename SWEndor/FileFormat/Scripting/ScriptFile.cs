@@ -1,5 +1,7 @@
 ﻿using SWEndor.Scenarios.Scripting;
+using System;
 using System.IO;
+using System.Text;
 
 namespace SWEndor.FileFormat.Scripting
 {
@@ -19,6 +21,7 @@ namespace SWEndor.FileFormat.Scripting
     public void ReadFile()
     {
       Script script = null;
+      StringBuilder sb = new StringBuilder();
       using (StreamReader sr = new StreamReader(FilePath))
       {
         while (!sr.EndOfStream)
@@ -27,17 +30,27 @@ namespace SWEndor.FileFormat.Scripting
 
           if (line.EndsWith(":"))
           {
+            if (script != null)
+            {
+              script.AddExpression(sb.ToString());
+            }
+
             line = line.TrimEnd(':').Trim();
             script = new Script(FilePath, line);
+            sb.Clear();
           }
           else
           {
             if (script != null)
             {
-              if (line.Length > 0)
-                script.AddExpression(line);
+              sb.Append(line);
+              sb.Append(Environment.NewLine);
             }
           }
+        }
+        if (script != null) // last script
+        {
+          script.AddExpression(sb.ToString());
         }
       }
     }

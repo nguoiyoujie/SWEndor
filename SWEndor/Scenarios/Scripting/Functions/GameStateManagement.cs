@@ -123,7 +123,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       Script s = Script.Registry.Get(ps[1].ToString());
       if (s != null)
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + Convert.ToInt32(ps[0].ToString())
+        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + Convert.ToSingle(ps[0].ToString())
         , (_) => s.Run());
       else
       {
@@ -131,11 +131,11 @@ namespace SWEndor.Scenarios.Scripting.Functions
         GameEvent g = null;
         switch (ps[1].ToString().ToLower())
         {
-          case "common_fadein":
+          case "common.fadein":
             g = GameScenarioManager.Instance().Scenario.FadeIn;
             break;
 
-          case "common_fadeout":
+          case "common.fadeout":
             g = GameScenarioManager.Instance().Scenario.FadeOut;
             break;
         }

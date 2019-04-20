@@ -3,21 +3,20 @@ using SWEndor.Actors;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
-using SWEndor.Scenarios;
 using System.Collections.Generic;
 
 namespace SWEndor.ActorTypes
 {
-  public class HangarBayATI : AddOnGroup
+  public class PlayerSpawnerATI : AddOnGroup
   {
-    private static HangarBayATI _instance;
-    public static HangarBayATI Instance()
+    private static PlayerSpawnerATI _instance;
+    public static PlayerSpawnerATI Instance()
     {
-      if (_instance == null) { _instance = new HangarBayATI(); }
+      if (_instance == null) { _instance = new PlayerSpawnerATI(); }
       return _instance;
     }
 
-    private HangarBayATI() : base("Hangar Bay")
+    private PlayerSpawnerATI() : base("Player Spawner")
     {
       // Combat
       IsCombatObject = false;
@@ -27,6 +26,11 @@ namespace SWEndor.ActorTypes
       RadarSize = 0;
 
       TargetType = TargetType.NULL;
+    }
+
+    public override void Initialize(ActorInfo ainfo)
+    {
+      ainfo.SpawnerInfo = new PlayerSpawner(ainfo);
     }
 
     public override void ProcessState(ActorInfo ainfo)
@@ -66,7 +70,6 @@ namespace SWEndor.ActorTypes
         if (p.ActorState != ActorState.DYING)
         {
           SpawnPlayer(ainfo, p);
-          SpawnFighter(ainfo, p);
         }
       }
 
@@ -130,47 +133,6 @@ namespace SWEndor.ActorTypes
       PlayerInfo.Instance().RequestSpawn = false;
 
       p.SpawnerInfo.SpawnMoveTime = Game.Instance().GameTime + p.SpawnerInfo.SpawnMoveDelay;
-      return true;
-    }
-
-    public bool SpawnFighter(ActorInfo ainfo, ActorInfo p)
-    {
-      if (p.SpawnerInfo.NextSpawnTime < Game.Instance().GameTime
-       && p.SpawnerInfo.SpawnsRemaining > 0
-       && p.SpawnerInfo.SpawnTypes != null
-       && p.SpawnerInfo.SpawnTypes.Length > 0)
-      {
-        ActorTypeInfo spawntype = p.SpawnerInfo.SpawnTypes[Engine.Instance().Random.Next(0, p.SpawnerInfo.SpawnTypes.Length)];
-        if ((spawntype.TargetType.HasFlag(TargetType.FIGHTER) 
-          && (p.Faction.WingSpawnLimit == -1 || p.Faction.Wings.Count < p.Faction.WingSpawnLimit)
-          && (p.Faction.WingLimit == -1 || p.Faction.Wings.Count < p.Faction.WingLimit)
-          )
-        || (spawntype.TargetType.HasFlag(TargetType.SHIP) 
-          && (p.Faction.ShipSpawnLimit == -1 || p.Faction.Ships.Count < p.Faction.ShipSpawnLimit))
-          && (p.Faction.ShipLimit == -1 || p.Faction.Ships.Count < p.Faction.ShipLimit)
-          )
-        {
-          p.SpawnerInfo.NextSpawnTime = Game.Instance().GameTime + p.SpawnerInfo.SpawnInterval;
-          p.SpawnerInfo.SpawnsRemaining--;
-
-          foreach (TV_3DVECTOR sv in p.SpawnerInfo.SpawnLocations)
-          {
-            ActorCreationInfo acinfo = new ActorCreationInfo(spawntype);
-            TV_3DVECTOR clone = ainfo.GetRelativePositionXYZ(sv.x * ainfo.Scale.x, sv.y * ainfo.Scale.y, sv.z * ainfo.Scale.z);
-            acinfo.Position = new TV_3DVECTOR(clone.x, clone.y, clone.z);
-            acinfo.Rotation = new TV_3DVECTOR(p.Rotation.x, p.Rotation.y, p.Rotation.z);
-            acinfo.Rotation += p.SpawnerInfo.SpawnRotation;
-
-            acinfo.InitialState = ActorState.FREE;
-            acinfo.Faction = ainfo.Faction;
-            ActorInfo a = ActorInfo.Create(acinfo);
-            a.AddParent(ainfo.ID);
-            GameScenarioManager.Instance().Scenario?.RegisterEvents(a);
-            ActionManager.QueueFirst(a.ID, new Lock());
-          }
-          p.SpawnerInfo.SpawnMoveTime = Game.Instance().GameTime + p.SpawnerInfo.SpawnMoveDelay;
-        }
-      }
       return true;
     }
   }

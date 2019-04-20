@@ -26,38 +26,39 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       Functions.Add("FadeOut".ToLowerInvariant(), SceneManagement.FadeOut);
 
       // Scene Camera Management
-      Functions.Add("Actor_SetSceneCameraAsActive".ToLowerInvariant(), SceneCameraManagement.Actor_SetSceneCameraAsActive);
+      Functions.Add("Scene.SetSceneCameraAsActive".ToLowerInvariant(), SceneCameraManagement.SetSceneCameraAsActive);
 
       // Actor Management
-      Functions.Add("Actor_Spawn".ToLowerInvariant(), ActorManagement.Actor_Spawn);
-      Functions.Add("Actor_SetActive".ToLowerInvariant(), ActorManagement.Actor_SetActive);
-      Functions.Add("Actor_IsAlive".ToLowerInvariant(), ActorManagement.Actor_IsAlive);
-      Functions.Add("Actor_RegisterEvents".ToLowerInvariant(), ActorManagement.Actor_RegisterEvents);
-      Functions.Add("Actor_GetLocalPosition".ToLowerInvariant(), ActorManagement.Actor_GetLocalPosition);
-      Functions.Add("Actor_SetLocalPosition".ToLowerInvariant(), ActorManagement.Actor_SetLocalPosition);
-      Functions.Add("Actor_GetLocalRotation".ToLowerInvariant(), ActorManagement.Actor_GetLocalRotation);
-      Functions.Add("Actor_SetLocalRotation".ToLowerInvariant(), ActorManagement.Actor_SetLocalRotation);
-      Functions.Add("Actor_GetLocalDirection".ToLowerInvariant(), ActorManagement.Actor_GetLocalDirection);
-      Functions.Add("Actor_SetLocalDirection".ToLowerInvariant(), ActorManagement.Actor_SetLocalDirection);
-      Functions.Add("Actor_GetPosition".ToLowerInvariant(), ActorManagement.Actor_GetPosition);
-      Functions.Add("Actor_GetRotation".ToLowerInvariant(), ActorManagement.Actor_GetRotation);
-      Functions.Add("Actor_SetRotation".ToLowerInvariant(), ActorManagement.Actor_SetRotation);
-      Functions.Add("Actor_GetDirection".ToLowerInvariant(), ActorManagement.Actor_GetDirection);
-      Functions.Add("Actor_SetDirection".ToLowerInvariant(), ActorManagement.Actor_SetDirection);
-      Functions.Add("Actor_LookAtPoint".ToLowerInvariant(), ActorManagement.Actor_LookAtPoint);
-      Functions.Add("Actor_GetProperty".ToLowerInvariant(), ActorManagement.Actor_GetProperty);
-      Functions.Add("Actor_SetProperty".ToLowerInvariant(), ActorManagement.Actor_SetProperty);
+      Functions.Add("Actor.Spawn".ToLowerInvariant(), ActorManagement.Spawn);
+      //Functions.Add("Actor.SetActive".ToLowerInvariant(), ActorManagement.SetActive);
+      Functions.Add("Actor.IsAlive".ToLowerInvariant(), ActorManagement.IsAlive);
+      Functions.Add("Actor.RegisterEvents".ToLowerInvariant(), ActorManagement.RegisterEvents);
+      Functions.Add("Actor.GetLocalPosition".ToLowerInvariant(), ActorManagement.GetLocalPosition);
+      Functions.Add("Actor.SetLocalPosition".ToLowerInvariant(), ActorManagement.SetLocalPosition);
+      Functions.Add("Actor.GetLocalRotation".ToLowerInvariant(), ActorManagement.GetLocalRotation);
+      Functions.Add("Actor.SetLocalRotation".ToLowerInvariant(), ActorManagement.SetLocalRotation);
+      Functions.Add("Actor.GetLocalDirection".ToLowerInvariant(), ActorManagement.GetLocalDirection);
+      Functions.Add("Actor.SetLocalDirection".ToLowerInvariant(), ActorManagement.SetLocalDirection);
+      Functions.Add("Actor.GetPosition".ToLowerInvariant(), ActorManagement.GetPosition);
+      Functions.Add("Actor.GetRotation".ToLowerInvariant(), ActorManagement.GetRotation);
+      Functions.Add("Actor.SetRotation".ToLowerInvariant(), ActorManagement.SetRotation);
+      Functions.Add("Actor.GetDirection".ToLowerInvariant(), ActorManagement.GetDirection);
+      Functions.Add("Actor.SetDirection".ToLowerInvariant(), ActorManagement.SetDirection);
+      Functions.Add("Actor.LookAtPoint".ToLowerInvariant(), ActorManagement.LookAtPoint);
+      Functions.Add("Actor.GetChildren".ToLowerInvariant(), ActorManagement.GetChildren);
+      Functions.Add("Actor.GetProperty".ToLowerInvariant(), ActorManagement.GetProperty);
+      Functions.Add("Actor.SetProperty".ToLowerInvariant(), ActorManagement.SetProperty);
 
       // Message Box
       Functions.Add("Message".ToLowerInvariant(), Messaging.MessageText);
 
       // Action Management
-      Functions.Add("Actor_QueueFirst".ToLowerInvariant(), AIManagement.Actor_QueueFirst);
-      Functions.Add("Actor_QueueNext".ToLowerInvariant(), AIManagement.Actor_QueueNext);
-      Functions.Add("Actor_QueueLast".ToLowerInvariant(), AIManagement.Actor_QueueLast);
-      Functions.Add("Actor_UnlockActor".ToLowerInvariant(), AIManagement.Actor_UnlockActor);
-      Functions.Add("Actor_ClearQueue".ToLowerInvariant(), AIManagement.Actor_ClearQueue);
-      Functions.Add("Actor_ForceClearQueue".ToLowerInvariant(), AIManagement.Actor_ForceClearQueue);
+      Functions.Add("Actor.QueueFirst".ToLowerInvariant(), AIManagement.QueueFirst);
+      Functions.Add("Actor.QueueNext".ToLowerInvariant(), AIManagement.QueueNext);
+      Functions.Add("Actor.QueueLast".ToLowerInvariant(), AIManagement.QueueLast);
+      Functions.Add("Actor.UnlockActor".ToLowerInvariant(), AIManagement.UnlockActor);
+      Functions.Add("Actor.ClearQueue".ToLowerInvariant(), AIManagement.ClearQueue);
+      Functions.Add("Actor.ForceClearQueue".ToLowerInvariant(), AIManagement.ForceClearQueue);
 
       // Game states
       Functions.Add("GetGameTime".ToLowerInvariant(), GameStateManagement.GetGameTime);
@@ -78,37 +79,38 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       Functions.Add("AddEvent".ToLowerInvariant(), GameStateManagement.AddEvent);
 
       // Player Management
-      Functions.Add("Player_AssignActor".ToLowerInvariant(), PlayerManagement.Player_AssignActor);
-      Functions.Add("Player_GetActor".ToLowerInvariant(), PlayerManagement.Player_GetActor);
-      Functions.Add("Player_RequestSpawn".ToLowerInvariant(), PlayerManagement.Player_RequestSpawn);
-      Functions.Add("Player_SetMovementEnabled".ToLowerInvariant(), PlayerManagement.Player_SetMovementEnabled);
-      Functions.Add("Player_SetAI".ToLowerInvariant(), PlayerManagement.Player_SetAI);
-      Functions.Add("Player_SetLives".ToLowerInvariant(), PlayerManagement.Player_SetLives);
-      Functions.Add("Player_SetScorePerLife".ToLowerInvariant(), PlayerManagement.Player_SetScorePerLife);
-      Functions.Add("Player_SetScoreForNextLife".ToLowerInvariant(), PlayerManagement.Player_SetScoreForNextLife);
-      Functions.Add("Player_ResetScore".ToLowerInvariant(), PlayerManagement.Player_ResetScore);
+      Functions.Add("Player.AssignActor".ToLowerInvariant(), PlayerManagement.AssignActor);
+      Functions.Add("Player.GetActor".ToLowerInvariant(), PlayerManagement.GetActor);
+      Functions.Add("Player.RequestSpawn".ToLowerInvariant(), PlayerManagement.RequestSpawn);
+      Functions.Add("Player.SetMovementEnabled".ToLowerInvariant(), PlayerManagement.SetMovementEnabled);
+      Functions.Add("Player.SetAI".ToLowerInvariant(), PlayerManagement.SetAI);
+      Functions.Add("Player.SetLives".ToLowerInvariant(), PlayerManagement.SetLives);
+      Functions.Add("Player.DecreaseLives".ToLowerInvariant(), PlayerManagement.DecreaseLives);
+      Functions.Add("Player.SetScorePerLife".ToLowerInvariant(), PlayerManagement.SetScorePerLife);
+      Functions.Add("Player.SetScoreForNextLife".ToLowerInvariant(), PlayerManagement.SetScoreForNextLife);
+      Functions.Add("Player.ResetScore".ToLowerInvariant(), PlayerManagement.ResetScore);
 
       // Faction
       Functions.Add("AddFaction".ToLowerInvariant(), FactionManagement.AddFaction);
-      Functions.Add("Faction_SetAsMainAllyFaction".ToLowerInvariant(), FactionManagement.Faction_SetAsMainAllyFaction);
-      Functions.Add("Faction_SetAsMainEnemyFaction".ToLowerInvariant(), FactionManagement.Faction_SetAsMainEnemyFaction);
-      Functions.Add("Faction_MakeAlly".ToLowerInvariant(), FactionManagement.Faction_MakeAlly);
-      Functions.Add("Faction_MakeEnemy".ToLowerInvariant(), FactionManagement.Faction_MakeEnemy);
-      Functions.Add("Faction_GetWingCount".ToLowerInvariant(), FactionManagement.Faction_GetWingCount);
-      Functions.Add("Faction_GetShipCount".ToLowerInvariant(), FactionManagement.Faction_GetShipCount);
-      Functions.Add("Faction_GetStructureCount".ToLowerInvariant(), FactionManagement.Faction_GetStructureCount);
-      Functions.Add("Faction_GetWingLimit".ToLowerInvariant(), FactionManagement.Faction_GetWingLimit);
-      Functions.Add("Faction_GetShipLimit".ToLowerInvariant(), FactionManagement.Faction_GetShipLimit);
-      Functions.Add("Faction_GetStructureLimit".ToLowerInvariant(), FactionManagement.Faction_GetStructureLimit);
-      Functions.Add("Faction_SetWingLimit".ToLowerInvariant(), FactionManagement.Faction_SetWingLimit);
-      Functions.Add("Faction_SetShipLimit".ToLowerInvariant(), FactionManagement.Faction_SetShipLimit);
-      Functions.Add("Faction_SetStructureLimit".ToLowerInvariant(), FactionManagement.Faction_SetStructureLimit);
-      Functions.Add("Faction_GetWingSpawnLimit".ToLowerInvariant(), FactionManagement.Faction_GetWingSpawnLimit);
-      Functions.Add("Faction_GetShipSpawnLimit".ToLowerInvariant(), FactionManagement.Faction_GetShipSpawnLimit);
-      Functions.Add("Faction_GetStructureSpawnLimit".ToLowerInvariant(), FactionManagement.Faction_GetStructureSpawnLimit);
-      Functions.Add("Faction_SetWingSpawnLimit".ToLowerInvariant(), FactionManagement.Faction_SetWingSpawnLimit);
-      Functions.Add("Faction_SetShipSpawnLimit".ToLowerInvariant(), FactionManagement.Faction_SetShipSpawnLimit);
-      Functions.Add("Faction_SetStructureSpawnLimit".ToLowerInvariant(), FactionManagement.Faction_SetStructureSpawnLimit);
+      Functions.Add("Faction.SetAsMainAllyFaction".ToLowerInvariant(), FactionManagement.SetAsMainAllyFaction);
+      Functions.Add("Faction.SetAsMainEnemyFaction".ToLowerInvariant(), FactionManagement.SetAsMainEnemyFaction);
+      Functions.Add("Faction.MakeAlly".ToLowerInvariant(), FactionManagement.MakeAlly);
+      Functions.Add("Faction.MakeEnemy".ToLowerInvariant(), FactionManagement.MakeEnemy);
+      Functions.Add("Faction.GetWingCount".ToLowerInvariant(), FactionManagement.GetWingCount);
+      Functions.Add("Faction.GetShipCount".ToLowerInvariant(), FactionManagement.GetShipCount);
+      Functions.Add("Faction.GetStructureCount".ToLowerInvariant(), FactionManagement.GetStructureCount);
+      Functions.Add("Faction.GetWingLimit".ToLowerInvariant(), FactionManagement.GetWingLimit);
+      Functions.Add("Faction.GetShipLimit".ToLowerInvariant(), FactionManagement.GetShipLimit);
+      Functions.Add("Faction.GetStructureLimit".ToLowerInvariant(), FactionManagement.GetStructureLimit);
+      Functions.Add("Faction.SetWingLimit".ToLowerInvariant(), FactionManagement.SetWingLimit);
+      Functions.Add("Faction.SetShipLimit".ToLowerInvariant(), FactionManagement.SetShipLimit);
+      Functions.Add("Faction.SetStructureLimit".ToLowerInvariant(), FactionManagement.SetStructureLimit);
+      Functions.Add("Faction.GetWingSpawnLimit".ToLowerInvariant(), FactionManagement.GetWingSpawnLimit);
+      Functions.Add("Faction.GetShipSpawnLimit".ToLowerInvariant(), FactionManagement.GetShipSpawnLimit);
+      Functions.Add("Faction.GetStructureSpawnLimit".ToLowerInvariant(), FactionManagement.GetStructureSpawnLimit);
+      Functions.Add("Faction.SetWingSpawnLimit".ToLowerInvariant(), FactionManagement.SetWingSpawnLimit);
+      Functions.Add("Faction.SetShipSpawnLimit".ToLowerInvariant(), FactionManagement.SetShipSpawnLimit);
+      Functions.Add("Faction.SetStructureSpawnLimit".ToLowerInvariant(), FactionManagement.SetStructureSpawnLimit);
 
       // Sounds and Music
       Functions.Add("SetMusic".ToLowerInvariant(), AudioManagement.SetMusic);

@@ -3,7 +3,6 @@ load:
 	triggerwinlose = false;
 	triggerdangergreywolf = false;
 	triggerdangercorvus = false;
-	lives = 5;
 
 	SetMaxBounds(10000, 1500, 15000);
 	SetMinBounds(-10000, -1500, -20000);
@@ -13,17 +12,20 @@ load:
 	SetMusic("battle_4_1");
 	SetMusicLoop("battle_4_2");
 	
-	Player_SetLives(lives);
-	Player_SetScorePerLife(1000000);
-	Player_SetScoreForNextLife(1000000);
-	Player_ResetScore();
+	Player.SetLives(5);
+	Player.SetScorePerLife(1000000);
+	Player.SetScoreForNextLife(1000000);
+	Player.ResetScore();
 	
 	SetUILine1Color(0, 0.8, 0);
 	SetUILine2Color(0.4, 0.5, 0.9);
 	
-	CallScript("makeplayer");
+	CallScript("spawnreset");	
 	CallScript("makeimperials");
+	CallScript("makeplayer");
+	AddEvent(2, "getchildren");
 	AddEvent(3, "start");
+	AddEvent(5, "spawnenemybombers");
 	AddEvent(40, "spawnenemy");
 	AddEvent(80, "spawnenemy");
 	AddEvent(120, "spawnenemy");
@@ -31,14 +33,19 @@ load:
 	AddEvent(170, "spawnenemy");
 	AddEvent(200, "spawnenemy");
 	AddEvent(205, "spawnenemy2");
+	AddEvent(240, "spawnenemybombers2");
+	AddEvent(250, "messagebombercorvus");
 	AddEvent(300, "spawnenemy");
-	
-	AddEvent(12, "message01");
-	AddEvent(17, "message02");
-	AddEvent(22, "message03");
-	AddEvent(28, "message04");
-	AddEvent(33, "message05");
-	AddEvent(40, "message06");
+	AddEvent(325, "spawnenemy2");
+	AddEvent(350, "messagebombergreywolf");
+	AddEvent(340, "spawnenemybombers3");
+
+	AddEvent(17, "message01");
+	AddEvent(22, "message02");
+	AddEvent(27, "message03");
+	AddEvent(34, "message04");
+	AddEvent(38, "message05");
+	AddEvent(45, "message06");
 
 	AddEvent(50, "corvusbeginspawn");
 
@@ -48,319 +55,432 @@ load:
 loadfaction:
 	AddFaction("Empire", 0, 0.8, 0);
 	AddFaction("Traitors", 0.4, 0.5, 0.9);
-	Faction_SetWingSpawnLimit("Empire", 25);
-	Faction_SetWingSpawnLimit("Traitors", 25);
+	Faction.SetWingSpawnLimit("Empire", 26);
+	Faction.SetWingSpawnLimit("Traitors", 32);
 
 loadscene:
-	greywolf = Actor_Spawn("Imperial-I Star Destroyer", "ISD GREY WOLF (Thrawn)", "", "GREY WOLF", 0, "Empire", 1000, 400, 12000, 0, -180, 0, "CriticalAllies");
-	Actor_SetActive(greywolf);
-	Actor_SetProperty("SetSpawnerEnable", true);
-	Actor_QueueLast("move", -1000, 400, -3000, 25);
-	Actor_QueueLast("rotate", -2000, 210, -20000, 0);
-	Actor_QueueLast("lock");
+	greywolf = Actor.Spawn("Imperial-I Star Destroyer", "ISD GREY WOLF (Thrawn)", "", "GREY WOLF", 0, "Empire", 1000, 400, 12000, 0, -180, 0, "CriticalAllies");
+	Actor.SetProperty(greywolf, "DamageModifier", 0.8);
+	Actor.SetProperty(greywolf, "SetSpawnerEnable", true);
+	Actor.QueueLast(greywolf, "move", -1000, 400, -3000, 25);
+	Actor.QueueLast(greywolf, "rotate", -2000, 210, -20000, 0);
+	Actor.QueueLast(greywolf, "lock");
+
+	corvus = Actor.Spawn("Interdictor Star Destroyer", "INT CORVUS", "", "CORVUS", 0, "Empire", 3500, -500, 500, 0, -130, 0, "CriticalAllies");
+	Actor.SetProperty(corvus, "DamageModifier", 0.6);
+	Actor.QueueLast(corvus, "move", 2000, -500, -1500, 8);
+	Actor.QueueLast(corvus, "rotate", 0, -500, 4000, 0);
+	Actor.QueueLast(corvus, "lock");
+
+	ebolo = Actor.Spawn("Arquitens Light Cruiser", "EBOLO", "", "EBOLO", 0, "Empire", 3000, -120, 350, 0, -130, 45);
+	Actor.SetProperty(ebolo, "DamageModifier", 0.4);
+	Actor.QueueLast(ebolo, "move", -400, 200, -350, 100);
+	Actor.QueueLast(ebolo, "move", 1000, 150, -3000, 100);
+	Actor.QueueLast(ebolo, "move", -8470, -300, -350, 100);
+	Actor.QueueLast(ebolo, "rotate", -2000, 210, -20000, 0);
+	Actor.QueueLast(ebolo, "lock");
 	
-	corvus = Actor_Spawn("Interdictor Star Destroyer", "INT CORVUS", "", "CORVUS", 0, "Empire", 3500, -500, 500, 0, -130, 0, "CriticalAllies");
-	Actor_SetActive(corvus);
-	Actor_QueueLast("move", 2000, -500, -1500, 6);
-	Actor_QueueLast("rotate", 0, -500, 4000, 0);
-	Actor_QueueLast("lock");
-	
-	Actor_SetActive(Actor_Spawn("Arquitens Light Cruiser", "EBOLO", "", "EBOLO", 0, "Empire", 3000, -120, 350, 0, -130, 45));
-	Actor_SetProperty("DamageModifier", 0.4);
-	Actor_QueueLast("move", -400, 200, -350, 100);
-	Actor_QueueLast("move", 1000, 150, -3000, 100);
-	Actor_QueueLast("move", -8470, -300, -350, 100);
-	Actor_QueueLast("rotate", -2000, 210, -20000, 0);
-	Actor_QueueLast("lock");
-	
-	Actor_SetActive(Actor_Spawn("Arquitens Light Cruiser", "DARING", "", "DARING", 0, "Empire", 3200, -300, -1450, 0, -130, 45));
-	Actor_SetProperty("DamageModifier", 0.4);
-	Actor_QueueLast("move", -7780, -450, 450, 15);
-	Actor_QueueLast("move", -8470, -300, -350, 100);
-	Actor_QueueLast("rotate", -2000, 210, -20000, 0);
-	Actor_QueueLast("lock");
+	daring = Actor.Spawn("Arquitens Light Cruiser", "DARING", "", "DARING", 0, "Empire", 3200, -300, -1450, 0, -130, 45);
+	Actor.SetProperty(daring, "DamageModifier", 0.4);
+	Actor.QueueLast(daring, "move", -7780, -450, 450, 15);
+	Actor.QueueLast(daring, "move", -8470, -300, -350, 100);
+	Actor.QueueLast(daring, "rotate", -2000, 210, -20000, 0);
+	Actor.QueueLast(daring, "lock");
 
-	Actor_SetActive(Actor_Spawn("Devastator Imperial-I Star Destroyer", "ISD GLORY", "", "GLORY", 0, "Traitors", -6750, 0, -22000, 0, 40, 0, "CriticalEnemies"));
-	Actor_SetProperty("SetSpawnerEnable", true);
-	Actor_SetProperty("DamageModifier", 0.75);
-	Actor_QueueLast("move", -1000, 100, -6000, 70);
-	Actor_QueueLast("move", 4000, 200, -10000, 10);
-	Actor_QueueLast("rotate", 2000, 210, -20000, 0);
-	Actor_QueueLast("lock");
+	glory = Actor.Spawn("Devastator Imperial-I Star Destroyer", "ISD GLORY", "", "GLORY", 0, "Traitors", -6750, 0, -22000, 0, 40, 0, "CriticalEnemies");
+	Actor.SetProperty(glory, "SetSpawnerEnable", true);
+	Actor.SetProperty(glory, "DamageModifier", 0.75);
+	Actor.QueueLast(glory, "move", -1000, 100, -6000, 70);
+	Actor.QueueLast(glory, "move", 4000, 200, -10000, 10);
+	Actor.QueueLast(glory, "rotate", 2000, 210, -20000, 0);
+	Actor.QueueLast(glory, "lock");
 
-	Actor_SetActive(Actor_Spawn("Corellian Corvette", "", "", "", 0, "Traitors", -7750, 250, -20000, 0, 20, 0));
-	Actor_QueueLast("move", 0, 250, -3000, 70);
-	Actor_QueueLast("move", 3000, 250, -5000, 10);
-	Actor_QueueLast("rotate", 0, 500, 4000, 0);
-	Actor_QueueLast("lock");
+	corv1 = Actor.Spawn("Corellian Corvette", "", "", "", 0, "Traitors", -7750, 250, -20000, 0, 20, 0);
+	Actor.QueueLast(corv1, "move", 0, 250, -3000, 70);
+	Actor.QueueLast(corv1, "move", 3000, 250, -5000, 10);
+	Actor.QueueLast(corv1, "rotate", 0, 500, 4000, 0);
+	Actor.QueueLast(corv1, "lock");
 
-	Actor_SetActive(Actor_Spawn("Nebulon-B Frigate", "", "", "", 0, "Traitors", -3750, -450, -16000, 0, 30, 0));
-	Actor_QueueLast("move", 6250, -450, -3200, 100);
-	Actor_QueueLast("hyperspaceout");
+	nebu = Actor.Spawn("Nebulon-B Frigate", "", "", "", 0, "Traitors", -3750, -450, -16000, 0, 30, 0);
+	Actor.QueueLast(nebu, "move", 6250, -450, -3200, 100);
+	Actor.QueueLast(nebu, "hyperspaceout");
 
-	Actor_SetActive(Actor_Spawn("Corellian Corvette", "", "", "", 0, "Traitors", -8750, -100, -11000, 0, 75, 0));
-	Actor_QueueLast("move", 1550, -200, -2200, 100);
-	Actor_QueueLast("rotate", 0, 500, 4000, 0);
-	Actor_QueueLast("lock");
+	corv2 = Actor.Spawn("Corellian Corvette", "", "", "", 0, "Traitors", -8750, -100, -11000, 0, 75, 0);
+	Actor.QueueLast(corv2, "move", 1550, -200, -2200, 100);
+	Actor.QueueLast(corv2, "rotate", 0, 500, 4000, 0);
+	Actor.QueueLast(corv2, "lock");
 
-	Actor_SetActive(Actor_Spawn("Corellian Corvette", "", "", "", 0, "Traitors", -3750, 300, -12500, 0, 45, 0));
-	Actor_QueueLast("move", 2750, -100, -800, 100);
-	Actor_QueueLast("rotate", 0, 500, 4000, 0);
-	Actor_QueueLast("lock");
+	corv3 = Actor.Spawn("Corellian Corvette", "", "", "", 0, "Traitors", -3750, 300, -12500, 0, 45, 0);
+	Actor.QueueLast(corv3, "move", 2750, -100, -800, 100);
+	Actor.QueueLast(corv3, "rotate", 0, 500, 4000, 0);
+	Actor.QueueLast(corv3, "lock");
 
-	Actor_SetActive(Actor_Spawn("Corellian Corvette", "", "", "", 0, "Traitors", -1750, 50, -14500, 0, 20, 0));
-	Actor_QueueLast("move", -750, 100, -1400, 100);
-	Actor_QueueLast("rotate", 0, 500, 4000, 0);
-	Actor_QueueLast("lock");
+	corv4 = Actor.Spawn("Corellian Corvette", "", "", "", 0, "Traitors", -1750, 50, -14500, 0, 20, 0);
+	Actor.QueueLast(corv4, "move", -750, 100, -1400, 100);
+	Actor.QueueLast(corv4, "rotate", 0, 500, 4000, 0);
+	Actor.QueueLast(corv4, "lock");
+
+getchildren:
+	greywolfc = Actor.GetChildren(greywolf);
+	greywolfshd1 = GetArrayElement(greywolfc, 30);
+	greywolfshd2 = GetArrayElement(greywolfc, 31);
+	corvusc = Actor.GetChildren(corvus);
+	corvusshd1 = GetArrayElement(corvusc, 18);
+	corvusshd2 = GetArrayElement(corvusc, 19);
 
 makeplayer:
-	lives = lives - 1;
-	Player_SetLives(lives);
-	if (respawn) then Player_RequestSpawn(); else CallScript("firstspawn");
+	Player.DecreaseLives();
+	if (respawn) 
+		Player.RequestSpawn(); 
+	else 
+		CallScript("firstspawn");
+	
 	AddEvent(5, "setupplayer");
 
 setupplayer:
-	Actor_SetActive(Player_GetActor());
-	Actor_SetProperty("DamageModifier", 0.25);
-	Actor_RegisterEvents();
+	Actor.SetProperty(Player.GetActor(), "DamageModifier", 0.25);
+	Actor.RegisterEvents(Player.GetActor());
 
 firstspawn:
-	player = Actor_Spawn(GetPlayerActorType(), "(Player)", "", "(Player)", 0, "Empire", 500, -300, 12500, 0, -180, 0);
-	Actor_SetActive(player);
-	Player_AssignActor();
+	Player.AssignActor(Actor.Spawn(GetPlayerActorType(), "(Player)", "", "(Player)", 0, "Empire", 500, -300, 12500, 0, -180, 0));
 	respawn = true;
 
 makeimperials:
-	Actor_SetActive(Actor_Spawn("TIE Avenger", "Alpha-2", "", "", 0, "Empire", 700, -620, 10500, 0, -180, 0));
-	Actor_SetProperty("DamageModifier", 0.25);
-	Actor_QueueLast("wait", 2.5);
+	tiea1 = Actor.Spawn("TIE Avenger", "Alpha-2", "", "", 0, "Empire", 700, -620, 10500, 0, -180, 0);
+	Actor.SetProperty(tiea1, "DamageModifier", 0.25);
+	Actor.QueueLast(tiea1, "wait", 2.5);
 	
-	Actor_SetActive(Actor_Spawn("TIE Avenger", "Alpha-3", "", "", 0, "Empire", 6000, 300, -500, 0, -90, 0));
-	Actor_SetProperty("DamageModifier", 0.25);
-	Actor_QueueLast("rotate", 0, 0, 0, 0);
-	Actor_QueueLast("wait", 2.5);
+	tiea2 = Actor.Spawn("TIE Avenger", "Alpha-3", "", "", 4, "Empire", 6000, 300, -500, 0, -90, 0);
+	Actor.SetProperty(tiea2, "DamageModifier", 0.25);
+	Actor.QueueLast(tiea2, "wait", 2.5);
 
-	Actor_SetActive(Actor_Spawn("TIE Avenger", "Alpha-4", "", "", 0, "Empire", 6500, 600, -750, 0, -90, 0));
-	Actor_SetProperty("DamageModifier", 0.25);
-	Actor_QueueLast("rotate", 0, 0, 0, 0);
-	Actor_QueueLast("wait", 2.5);
+	tiea3 = Actor.Spawn("TIE Avenger", "Alpha-4", "", "", 4, "Empire", 6500, 600, -750, 0, -90, 0);
+	Actor.SetProperty(tiea3, "DamageModifier", 0.25);
+	Actor.QueueLast(tiea3, "wait", 2.5);
 
-	Actor_SetActive(Actor_Spawn("TIE Defender", "Delta-1", "", "", 0, "Empire", 7000, 300, -500, 0, -90, 0));
-	Actor_SetProperty("DamageModifier", 0.25);
-	Actor_QueueLast("rotate", 0, 0, 0, 0);
-	Actor_QueueLast("wait", 2.5);
+	tied1 = Actor.Spawn("TIE Defender", "Delta-1", "", "", 4, "Empire", 7000, 300, -500, 0, -90, 0);
+	Actor.SetProperty(tied1, "DamageModifier", 0.25);
+	Actor.QueueLast(tied1, "wait", 2.5);
 
-	Actor_SetActive(Actor_Spawn("TIE Defender", "Delta-2", "", "", 0, "Empire", 7500, 600, -750, 0, -90, 0));
-	Actor_SetProperty("DamageModifier", 0.25);
-	Actor_QueueLast("rotate", 0, 0, 0, 0);
-	Actor_QueueLast("wait", 2.5);
+	tied2 = Actor.Spawn("TIE Defender", "Delta-2", "", "", 4, "Empire", 7500, 600, -750, 0, -90, 0);
+	Actor.SetProperty(tied2, "DamageModifier", 0.25);
+	Actor.QueueLast(tied2, "wait", 2.5);
 
+	spawnfaction = "Empire";
+	damagemod = 0.25;
+	spawnwait = 3.5;
+	spawntype = "TIE Interceptor";
+	spawntarget = -1;
+	spawnX = 200;
+	spawnY = 0;
+	spawnZ = 8000;
+	spawnRotX = 0;
+	spawnRotY = -180;
+	spawnRotZ = 0;
+	CallScript("spawn4");
 
-	Actor_SetActive(Actor_Spawn("TIE Interceptor", "", "", "", 0, "Empire", 500, 90, 8000, 0, -180, 0));
-	Actor_SetProperty("DamageModifier", 0.25);
-	Actor_QueueLast("wait", 2.5);
+	spawnX = 1300;
+	spawnY = 150;
+	spawnZ = 11000;
+	spawnRotX = 0;
+	spawnRotY = -180;
+	spawnRotZ = 0;
+	CallScript("spawn4");
 
-	Actor_SetActive(Actor_Spawn("TIE Interceptor", "", "", "", 0, "Empire", 480, -120, 8100, 0, -180, 0));
-	Actor_SetProperty("DamageModifier", 0.25);
-	Actor_QueueLast("wait", 2.5);
+	spawnfaction = "Traitors";
+	damagemod = 0.5;
+	spawnwait = 0;
+	spawnX = 400;
+	spawnY = 0;
+	spawnZ = -2000;
+	spawnRotX = 0;
+	spawnRotY = 0;
+	spawnRotZ = 0;
+	spawntype = "TIE";
+	CallScript("spawn4");
 
-	Actor_SetActive(Actor_Spawn("TIE Interceptor", "", "", "", 0, "Empire", -500, 100, 8050, 0, -180, 0));
-	Actor_SetProperty("DamageModifier", 0.25);
-	Actor_QueueLast("wait", 2.5);
+	spawnX = -400;
+	spawnY = 0;
+	spawnZ = -2000;
+	CallScript("spawn4");
 
-	Actor_SetActive(Actor_Spawn("TIE Interceptor", "", "", "", 0, "Empire", -515, -100, 8000, 0, -180, 0));
-	Actor_SetProperty("DamageModifier", 0.25);
-	Actor_QueueLast("wait", 2.5);
+	spawnX = -2000;
+	spawnY = 0;
+	spawnZ = -3500;
+	spawntarget = corvus;
+	spawntype = "TIE Bomber";
+	CallScript("spawn4");
 
-	Actor_SetActive(Actor_Spawn("TIE Interceptor", "", "", "", 0, "Empire", 1500, 290, 11000, 0, -180, 0));
-	Actor_SetProperty("DamageModifier", 0.25);
-	Actor_QueueLast("wait", 2.5);
+	spawnX = -4600;
+	spawnY = 0;
+	spawnZ = -3000;
+	spawntarget = corvus;
+	spawntype = "TIE";
+	CallScript("spawn4");
 
-	Actor_SetActive(Actor_Spawn("TIE Interceptor", "", "", "", 0, "Empire", 1480, -20, 11120, 0, -180, 0));
-	Actor_SetProperty("DamageModifier", 0.25);
-	Actor_QueueLast("wait", 2.5);
+	spawnX = -5400;
+	spawnY = 0;
+	spawnZ = -3000;
+	spawntarget = -1;
+	CallScript("spawn4");
 
-	Actor_SetActive(Actor_Spawn("TIE Interceptor", "", "", "", 0, "Empire", 500, 100, 11000, 0, -180, 0));
-	Actor_SetProperty("DamageModifier", 0.25);
-	Actor_QueueLast("wait", 2.5);
-
-	Actor_SetActive(Actor_Spawn("TIE Interceptor", "", "", "", 0, "Empire", 515, -50, 10980, 0, -180, 0));
-	Actor_SetProperty("DamageModifier", 0.25);
-	Actor_QueueLast("wait", 2.5);
-
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", 500, 100, -2000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", 500, -100, -2000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", 300, 100, -2000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", 300, -100, -2000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", -500, 100, -2000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE Bomber", "", "", "", 0, "Traitors", -500, -100, -3000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE Bomber", "", "", "", 0, "Traitors", -300, 100, -3000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE Bomber", "", "", "", 0, "Traitors", -300, -100, -3000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE Interceptor", "", "", "", 0, "Traitors", -100, 0, -3000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE Interceptor", "", "", "", 0, "Traitors", -100, 0, -3000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", 2500, 100, -2000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", 2500, -100, -2000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", 2300, 100, -2000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", 2300, -100, -2000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", -5500, 100, -2000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE Bomber", "", "", "", 0, "Traitors", -5500, -100, -3000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE Bomber", "", "", "", 0, "Traitors", -5300, 100, -3000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE Bomber", "", "", "", 0, "Traitors", -5300, -100, -3000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE Interceptor", "", "", "", 0, "Traitors", -5100, 0, -3000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE Interceptor", "", "", "", 0, "Traitors", -5100, 0, -3000, 0, 0, 0));
-	Actor_SetProperty("DamageModifier", 0.5);
-	Actor_QueueLast("hunt");
 
 gametick:
-	SetUILine1Text("WINGS: " + Faction_GetWingCount("Empire"));
-	SetUILine2Text("ENEMY: " + Faction_GetWingCount("Traitors"));
+	SetUILine1Text("WINGS: " + Faction.GetWingCount("Empire"));
+	SetUILine2Text("ENEMY: " + Faction.GetWingCount("Traitors"));
 	
-	Actor_SetActive(greywolf);
-	hp = Actor_GetProperty("Strength");
-	if ((hp == null || hp <= 0) && !triggerwinlose) then CallScript("losegreywolf");
-	if (!triggerwinlose && !triggerwinlose && hp < 450) then CallScript("dangergreywolf");
+	hp = Actor.GetProperty(greywolf, "Strength");
+	if ((hp == null || hp <= 0) && !triggerwinlose) 
+		CallScript("losegreywolf");
+	
+	if (!triggerwinlose && !triggerdangergreywolf && hp < 450) 
+		CallScript("dangergreywolf");
 
-	Actor_SetActive(corvus);
-	hp = Actor_GetProperty("Strength");
-	if ((hp == null || hp <= 0) && !triggerwinlose) then CallScript("losecorvus");
-	if (!triggerwinlose && !triggerdangercorvus && hp < 300) then CallScript("dangercorvus");
+	hp = Actor.GetProperty(corvus, "Strength");
+	if ((hp == null || hp <= 0) && !triggerwinlose) 
+		CallScript("losecorvus");
+	
+	if (!triggerwinlose && !triggerdangercorvus && hp < 300) 
+		CallScript("dangercorvus");
 
-	if (Faction_GetShipCount("Traitors") < 1 && !triggerwinlose) then CallScript("win");
+	if (Faction.GetShipCount("Traitors") < 1 && !triggerwinlose) 
+		CallScript("win");
 
 win:
 	triggerwinlose = true;
 	Message("Such is the fate of the enemies of the Empire.", 5, 0, 0.8, 0, 1);
 	SetGameStateB("GameWon",true);
-	AddEvent(3, "Common_FadeOut");
+	AddEvent(3, "Common.FadeOut");
 
 dangergreywolf:
 	triggerdangergreywolf = true;
-	Message("WARNING! Our flagship is under heavy fire!", 5, 0, 0.8, 0, 1);
+	AddEvent(0.0, "dangergreywolfmsgG");
+	AddEvent(0.2, "dangergreywolfmsgY");
+	AddEvent(0.4, "dangergreywolfmsgG");
+	AddEvent(0.6, "dangergreywolfmsgY");
+	AddEvent(0.8, "dangergreywolfmsgG");
+	AddEvent(1.0, "dangergreywolfmsgY");
+	AddEvent(1.2, "dangergreywolfmsgG");
+	AddEvent(1.4, "dangergreywolfmsgY");
+	AddEvent(1.6, "dangergreywolfmsgG");
+	AddEvent(1.8, "dangergreywolfmsgY");
+	AddEvent(2.0, "dangergreywolfmsgG");
+	AddEvent(2.2, "dangergreywolfmsgY");
+	AddEvent(2.4, "dangergreywolfmsgG");
+	AddEvent(2.6, "dangergreywolfmsgY");
+	AddEvent(2.8, "dangergreywolfmsgG");
+	AddEvent(3.0, "dangergreywolfmsgY");
+
+dangergreywolfmsgY:
+	Message("WARNING! Our flagship is under heavy fire!", 3, 0.8, 0.8, 0, 1);
+
+dangergreywolfmsgG:
+	Message("WARNING! Our flagship is under heavy fire!", 3, 0, 0.8, 0, 1);
+
 
 losegreywolf:
 	triggerwinlose = true;
-	Message("MISSION FAILED: Our flagship has been destroyed!", 5, 0, 0.8, 0, 1);
+	Message("MISSION FAILED: Our flagship has been destroyed!", 5, 0.8, 0, 0, 1);
 	SetGameStateB("GameOver",true);
-	AddEvent(3, "Common_FadeOut");
+	AddEvent(3, "Common.FadeOut");
 
 dangercorvus:
 	triggerdangercorvus = true;
-	Message("WARNING! INT Corvus is under heavy fire!", 5, 0, 0.8, 0, 1);
+	AddEvent(0.0, "dangercorvusmsgG");
+	AddEvent(0.2, "dangercorvusmsgY");
+	AddEvent(0.4, "dangercorvusmsgG");
+	AddEvent(0.6, "dangercorvusmsgY");
+	AddEvent(0.8, "dangercorvusmsgG");
+	AddEvent(1.0, "dangercorvusmsgY");
+	AddEvent(1.2, "dangercorvusmsgG");
+	AddEvent(1.4, "dangercorvusmsgY");
+	AddEvent(1.6, "dangercorvusmsgG");
+	AddEvent(1.8, "dangercorvusmsgY");
+	AddEvent(2.0, "dangercorvusmsgG");
+	AddEvent(2.2, "dangercorvusmsgY");
+	AddEvent(2.4, "dangercorvusmsgG");
+	AddEvent(2.6, "dangercorvusmsgY");
+	AddEvent(2.8, "dangercorvusmsgG");
+	AddEvent(3.0, "dangercorvusmsgY");
+
+dangercorvusmsgY:
+	Message("WARNING! INT Corvus is under heavy fire!", 3, 0.8, 0.8, 0, 1);
+
+dangercorvusmsgG:
+	Message("WARNING! INT Corvus is under heavy fire!", 3, 0, 0.8, 0, 1);
 
 losecorvus:
 	triggerwinlose = true;
-	Message("MISSION FAILED: INT CORVUS has been destroyed!", 5, 0, 0.8, 0, 1);
+	Message("MISSION FAILED: INT CORVUS has been destroyed!", 5, 0.8, 0, 0, 1);
 	SetGameStateB("GameOver",true);
-	AddEvent(3, "Common_FadeOut");
+	AddEvent(3, "Common.FadeOut");
 
 start:
-	Player_SetMovementEnabled(true);
+	Player.SetMovementEnabled(true);
 
 corvusbeginspawn:
-	Actor_SetActive(corvus);
-	Actor_SetProperty("SetSpawnerEnable", true);
+	Actor.SetProperty(corvus, "SetSpawnerEnable", true);
+
+spawnenemybombers:
+	spawnfaction = "Traitors";
+	damagemod = 1;
+	spawnwait = 0;
+	spawnX = -2000;
+	spawnY = 250;
+	spawnZ = -22500;
+	spawnRotX = 0;
+	spawnRotY = 0;
+	spawnRotZ = 0;
+	spawntype = "TIE Bomber";
+	spawntarget = corvusshd1;
+	CallScript("spawn1");
+
+	spawnX = -4000;
+	spawnY = 50;
+	spawnZ = -12000;
+	spawntarget = corvusshd2;
+	CallScript("spawn2");
+
+	spawnX = -5000;
+	spawnY = -150;
+	spawnZ = -24500;
+	spawntarget = corvus;
+	CallScript("spawn4");
+
+	spawnX = -25000;
+	spawnY = 300;
+	spawnZ = -23500;
+	spawntype = "TIE Avenger";
+	spawntarget = corvusshd1;
+	CallScript("spawn1");
+
+	spawnX = -24000;
+	spawnY = 200;
+	spawnZ = -24500;
+	spawntype = "TIE Defender";
+	spawntarget = corvus;
+	CallScript("spawn2");
+
+spawnenemybombers2:
+	spawnfaction = "Traitors";
+	damagemod = 1;
+	spawnwait = 0;
+	spawnX = -20000;
+	spawnY = 250;
+	spawnZ = -22500;
+	spawnRotX = 0;
+	spawnRotY = 0;
+	spawnRotZ = 0;
+	spawntype = "TIE";
+	spawntarget = corvusshd1;
+	CallScript("spawn2");
+
+	spawnX = -21000;
+	spawnY = 150;
+	spawnZ = -23500;
+	spawntarget = corvusshd2;
+	CallScript("spawn2");
+
+	spawnX = -21000;
+	spawnY = 50;
+	spawnZ = -23500;
+	spawntype = "TIE Bomber";
+	spawntarget = corvus;
+	CallScript("spawn2");
+
+spawnenemybombers3:
+	spawnfaction = "Traitors";
+	damagemod = 1;
+	spawnwait = 0;
+	spawnX = -20000;
+	spawnY = 250;
+	spawnZ = -22500;
+	spawnRotX = 0;
+	spawnRotY = 0;
+	spawnRotZ = 0;
+	spawntype = "TIE Bomber";
+	spawntarget = greywolfshd1;
+	CallScript("spawn4");
+
+	spawnX = -21000;
+	spawnY = 450;
+	spawnZ = -23500;
+	spawntarget = greywolfshd2;
+	CallScript("spawn4");
+
+	spawnX = -21000;
+	spawnY = 650;
+	spawnZ = -23500;
+	spawntype = "Y-Wing";
+	spawntarget = greywolf;
+	CallScript("spawn3");
+
+	spawnX = -22000;
+	spawnY = 150;
+	spawnZ = -23500;
+	spawntype = "TIE";
+	CallScript("spawn4");
+
+	spawnX = -20000;
+	spawnY = 150;
+	spawnZ = -23500;
+	CallScript("spawn4");
 
 spawnenemy:
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", 500, 100, -20000, 0, 0, 0));
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", 500, -100, -20000, 0, 0, 0));
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", 300, 100, -20000, 0, 0, 0));
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", 300, -100, -20000, 0, 0, 0));
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", -500, 100, -20000, 0, 0, 0));
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", -500, -100, -20000, 0, 0, 0));
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", -300, 100, -20000, 0, 0, 0));
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("TIE", "", "", "", 0, "Traitors", -300, -100, -20000, 0, 0, 0));
-	Actor_QueueLast("hunt");
-	
+	spawnfaction = "Traitors";
+	damagemod = 1;
+	spawnwait = 0;
+	spawntype = "TIE";
+	spawntarget = -1;
+	spawnX = 400;
+	spawnY = 0;
+	spawnZ = -20000;
+	spawnRotX = 0;
+	spawnRotY = 0;
+	spawnRotZ = 0;
+	CallScript("spawn4");
+
+	spawnX = -400;
+	CallScript("spawn4");
+
 spawnenemy2:
-	Actor_SetActive(Actor_Spawn("TIE Defender", "", "", "", 0, "Traitors", -5500, 0, -20200, 0, 0, 0));
-	Actor_QueueLast("hunt");
+	spawnfaction = "Traitors";
+	damagemod = 1;
+	spawnwait = 0;
+	spawntype = "TIE Defender";
+	spawntarget = -1;
+	spawnX = -5500;
+	spawnY = 0;
+	spawnZ = -20200;
+	spawnRotX = 0;
+	spawnRotY = 0;
+	spawnRotZ = 0;
+	CallScript("spawn2");
 
-	Actor_SetActive(Actor_Spawn("TIE Defender", "", "", "", 0, "Traitors", -4500, 0, -20200, 0, 0, 0));
-	Actor_QueueLast("hunt");
+	spawnX = -12500;
+	spawnY = -50;
+	spawnZ = -25000;
+	spawntype = "TIE Avenger";
+	CallScript("spawn1");
 
-	Actor_SetActive(Actor_Spawn("X-Wing", "", "", "", 0, "Traitors", -4900, -50, -21200, 0, 0, 0));
-	Actor_QueueLast("hunt");
+	spawnX = -5000;
+	spawnY = -50;
+	spawnZ = -21200;
+	spawntype = "X-Wing";
+	CallScript("spawn2");
 
-	Actor_SetActive(Actor_Spawn("X-Wing", "", "", "", 0, "Traitors", -5100, -50, -21200, 0, 0, 0));
-	Actor_QueueLast("hunt");
-	
-	Actor_SetActive(Actor_Spawn("A-Wing", "", "", "", 0, "Traitors", -4800, 50, -21200, 0, 0, 0));
-	Actor_QueueLast("hunt");
+	spawnX = -4800;
+	spawnY = 50;
+	spawnZ = -21100;
+	spawntype = "A-Wing";
+	CallScript("spawn1");
 
-	Actor_SetActive(Actor_Spawn("Y-Wing", "", "", "", 0, "Traitors", -5000, -50, -22200, 0, 0, 0));
-	Actor_QueueLast("hunt");
-	
+	spawnX = -5000;
+	spawnY = -50;
+	spawnZ = -22200;
+	spawntype = "Y-Wing";
+	CallScript("spawn3");
+
 
 stage1:
 	SetStageNumber(1);

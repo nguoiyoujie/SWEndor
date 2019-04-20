@@ -11,8 +11,8 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 
     internal IfThenElseStatement(Lexer lexer) : base(lexer)
     {
-      // IF ( EXPR ) THEN STATEMENT ELSE STATEMENT
-      // IF ( EXPR ) THEN { STATEMENT STATEMENT STATEMENT ... } ELSE { STATEMENT ...}
+      // IF ( EXPR ) STATEMENT ELSE STATEMENT
+      // IF ( EXPR ) { STATEMENT STATEMENT STATEMENT ... } ELSE { STATEMENT ... }
       // or
       // ASSIGNMENTEXPR
 
@@ -29,9 +29,9 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
           throw new ParseException(lexer, TokenEnum.BRACKETCLOSE);
         lexer.Next(); //BRACKETCLOSE
 
-        if (lexer.TokenType != TokenEnum.THEN)
-          throw new ParseException(lexer, TokenEnum.THEN);
-        lexer.Next(); //THEN
+        //if (lexer.TokenType != TokenEnum.THEN)
+        //  throw new ParseException(lexer, TokenEnum.THEN);
+        //lexer.Next(); //THEN
 
         if (lexer.TokenType == TokenEnum.BRACEOPEN)
         {

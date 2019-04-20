@@ -41,7 +41,7 @@ namespace SWEndor.ActorTypes
       base.Initialize(ainfo);
 
       ainfo.RegenerationInfo.AllowRegen = false;
-      ainfo.RegenerationInfo.ParentRegenRate = 2.5f;
+      ainfo.RegenerationInfo.ParentRegenRate = 3.5f;
       ainfo.RegenerationInfo.RelativeRegenRate = 0.3f;
 
       ainfo.Scale *= 0.9f;

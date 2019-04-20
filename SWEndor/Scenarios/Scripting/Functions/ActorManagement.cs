@@ -9,7 +9,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
 {
   public static class ActorManagement
   {
-    public static object Actor_Spawn(Context context, params object[] ps)
+    public static object Spawn(Context context, params object[] ps)
     {
       GameScenarioBase gscenario = GameScenarioManager.Instance().Scenario;
       if (gscenario == null)
@@ -48,163 +48,207 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return res.ID;
     }
 
-    public static object Actor_SetActive(Context context, params object[] ps)
+    /*
+    public static object SetActive(Context context, params object[] ps)
     {
       if (GameScenarioManager.Instance().Scenario == null)
         return false;
 
       int id = Convert.ToInt32(ps[0].ToString());
-      GameScenarioManager.Instance().Scenario.ActiveActor = ActorInfo.Factory.Get(id);
-      return GameScenarioManager.Instance().Scenario.ActiveActor != null;
+      actor = ActorInfo.Factory.Get(id);
+      return actor != null;
     }
+    */
 
-    public static object Actor_IsAlive(Context context, params object[] ps)
+    public static object IsAlive(Context context, params object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = ActorInfo.Factory.Get(id);
+      if (GameScenarioManager.Instance().Scenario == null || actor == null)
         return false;
 
-      return GameScenarioManager.Instance().Scenario.ActiveActor.ActorState != ActorState.DEAD;
+      return actor.ActorState != ActorState.DEAD;
     }
 
-    public static object Actor_RegisterEvents(Context context, params object[] ps)
+    public static object RegisterEvents(Context context, params object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = ActorInfo.Factory.Get(id);
+      if (GameScenarioManager.Instance().Scenario == null || actor == null)
         return false;
 
-      GameScenarioManager.Instance().Scenario.RegisterEvents(GameScenarioManager.Instance().Scenario.ActiveActor);
+      GameScenarioManager.Instance().Scenario.RegisterEvents(actor);
       return true;
     }
 
-    public static object Actor_GetLocalPosition(Context context, params object[] ps)
+    public static object GetLocalPosition(Context context, params object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = ActorInfo.Factory.Get(id);
+      if (GameScenarioManager.Instance().Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = GameScenarioManager.Instance().Scenario.ActiveActor.GetLocalPosition();
+      TV_3DVECTOR vec = actor.GetLocalPosition();
       return new float[] { vec.x, vec.y, vec.z };
     }
 
-    public static object Actor_GetLocalRotation(Context context, params object[] ps)
+    public static object GetLocalRotation(Context context, params object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = ActorInfo.Factory.Get(id);
+      if (GameScenarioManager.Instance().Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = GameScenarioManager.Instance().Scenario.ActiveActor.GetLocalRotation();
+      TV_3DVECTOR vec = actor.GetLocalRotation();
       return new float[] { vec.x, vec.y, vec.z };
     }
 
-    public static object Actor_GetLocalDirection(Context context, params object[] ps)
+    public static object GetLocalDirection(Context context, params object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = ActorInfo.Factory.Get(id);
+      if (GameScenarioManager.Instance().Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = GameScenarioManager.Instance().Scenario.ActiveActor.GetLocalDirection();
+      TV_3DVECTOR vec = actor.GetLocalDirection();
       return new float[] { vec.x, vec.y, vec.z };
     }
 
-    public static object Actor_GetPosition(Context context, params object[] ps)
+    public static object GetPosition(Context context, params object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = ActorInfo.Factory.Get(id);
+      if (GameScenarioManager.Instance().Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = GameScenarioManager.Instance().Scenario.ActiveActor.GetPosition();
+      TV_3DVECTOR vec = actor.GetPosition();
       return new float[] { vec.x, vec.y, vec.z };
     }
 
-    public static object Actor_GetRotation(Context context, params object[] ps)
+    public static object GetRotation(Context context, params object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = ActorInfo.Factory.Get(id);
+      if (GameScenarioManager.Instance().Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = GameScenarioManager.Instance().Scenario.ActiveActor.GetRotation();
+      TV_3DVECTOR vec = actor.GetRotation();
       return new float[] { vec.x, vec.y, vec.z };
     }
 
-    public static object Actor_GetDirection(Context context, params object[] ps)
+    public static object GetDirection(Context context, params object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = ActorInfo.Factory.Get(id);
+      if (GameScenarioManager.Instance().Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = GameScenarioManager.Instance().Scenario.ActiveActor.GetDirection();
+      TV_3DVECTOR vec = actor.GetDirection();
       return new float[] { vec.x, vec.y, vec.z };
     }
 
-    public static object Actor_SetLocalPosition(Context context, params object[] ps)
+    public static object SetLocalPosition(Context context, params object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = ActorInfo.Factory.Get(id);
+      if (GameScenarioManager.Instance().Scenario == null || actor == null)
         return false;
 
-      GameScenarioManager.Instance().Scenario.ActiveActor.SetLocalPosition(Convert.ToSingle(ps[0].ToString()), Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()));
+      actor.SetLocalPosition(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
       return true;
     }
 
-    public static object Actor_SetLocalRotation(Context context, params object[] ps)
+    public static object SetLocalRotation(Context context, params object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = ActorInfo.Factory.Get(id);
+      if (GameScenarioManager.Instance().Scenario == null || actor == null)
         return false;
 
-      GameScenarioManager.Instance().Scenario.ActiveActor.SetLocalRotation(Convert.ToSingle(ps[0].ToString()), Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()));
+      actor.SetLocalRotation(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
       return true;
     }
 
-    public static object Actor_SetLocalDirection(Context context, params object[] ps)
+    public static object SetLocalDirection(Context context, params object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = ActorInfo.Factory.Get(id);
+      if (GameScenarioManager.Instance().Scenario == null || actor == null)
         return false;
 
-      GameScenarioManager.Instance().Scenario.ActiveActor.SetLocalDirection(Convert.ToSingle(ps[0].ToString()), Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()));
+      actor.SetLocalDirection(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
       return true;
     }
 
-    public static object Actor_SetRotation(Context context, params object[] ps)
+    public static object SetRotation(Context context, params object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = ActorInfo.Factory.Get(id);
+      if (GameScenarioManager.Instance().Scenario == null || actor == null)
         return false;
 
-      GameScenarioManager.Instance().Scenario.ActiveActor.SetRotation(Convert.ToSingle(ps[0].ToString()), Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()));
+      actor.SetRotation(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
       return true;
     }
 
-    public static object Actor_SetDirection(Context context, params object[] ps)
+    public static object SetDirection(Context context, params object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = ActorInfo.Factory.Get(id);
+      if (GameScenarioManager.Instance().Scenario == null || actor == null)
         return false;
 
-      GameScenarioManager.Instance().Scenario.ActiveActor.SetDirection(Convert.ToSingle(ps[0].ToString()), Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()));
+      actor.SetDirection(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
       return true;
     }
 
-    public static object Actor_LookAtPoint(Context context, params object[] ps)
+    public static object LookAtPoint(Context context, params object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = ActorInfo.Factory.Get(id);
+      if (GameScenarioManager.Instance().Scenario == null || actor == null)
         return false;
 
-      TV_3DVECTOR vec = new TV_3DVECTOR(Convert.ToSingle(ps[0].ToString()), Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()));
-      if (ps.Length == 3)
-        GameScenarioManager.Instance().Scenario.ActiveActor.LookAtPoint(vec);
+      TV_3DVECTOR vec = new TV_3DVECTOR(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
+      if (ps.Length == 4)
+        actor.LookAtPoint(vec);
       else
-        GameScenarioManager.Instance().Scenario.ActiveActor.LookAtPoint(vec, Convert.ToBoolean(ps[3].ToString()));
+        actor.LookAtPoint(vec, Convert.ToBoolean(ps[4].ToString()));
 
       return true;
     }
 
-    public static object Actor_GetProperty(Context context, params object[] ps)
+    public static object GetChildren(Context context, params object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = ActorInfo.Factory.Get(id);
+      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+        return new int[] { };
+
+      return actor.GetAllChildren(1).ToArray();
+    }
+
+    public static object GetProperty(Context context, params object[] ps)
+    {
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = ActorInfo.Factory.Get(id);
+      if (GameScenarioManager.Instance().Scenario == null || actor == null)
         return null;
 
       object result = null;
-      ConfigureActorProperty(GameScenarioManager.Instance().Scenario.ActiveActor, ps[0].ToString(), false, ref result);
+      ConfigureActorProperty(actor, ps[1].ToString(), false, ref result);
       return result;
     }
 
-    public static object Actor_SetProperty(Context context, params object[] ps)
+    public static object SetProperty(Context context, params object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null || GameScenarioManager.Instance().Scenario.ActiveActor == null)
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = ActorInfo.Factory.Get(id);
+      if (GameScenarioManager.Instance().Scenario == null || actor == null)
         return null;
 
-      ConfigureActorProperty(GameScenarioManager.Instance().Scenario.ActiveActor, ps[0].ToString(), true, ref ps[1]);
-      return ps[1];
+      ConfigureActorProperty(actor, ps[1].ToString(), true, ref ps[2]);
+      return ps[2];
     }
 
     private static void ConfigureActorProperty(ActorInfo actor, string key, bool setValue, ref object newValue)

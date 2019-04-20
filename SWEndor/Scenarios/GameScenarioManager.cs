@@ -96,8 +96,8 @@ namespace SWEndor.Scenarios
         {
           rm.Add(kvp.Key);
 
-          if (Scenario != null && Scenario.ActiveActor == kvp.Value)
-            Scenario.ActiveActor = null;
+          //if (Scenario != null && Scenario.ActiveActor == kvp.Value)
+          //  Scenario.ActiveActor = null;
 
           if (kvp.Value != PlayerInfo.Instance().Actor)
           {
@@ -130,7 +130,8 @@ namespace SWEndor.Scenarios
       UpdateActorLists(CriticalAllies);
       UpdateActorLists(CriticalEnemies);
 
-      if (Scenario != null)
+      if (Scenario != null
+        && Scenario.Launched)
         Scenario.GameTick();
 
       GameEventQueue.Process();

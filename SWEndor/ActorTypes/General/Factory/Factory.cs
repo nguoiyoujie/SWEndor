@@ -151,6 +151,7 @@ namespace SWEndor.ActorTypes
         Register(InvisibleRebelTurboLaserATI.Instance());
         Register(DSLaserSourceATI.Instance());
         Register(HangarBayATI.Instance());
+        Register(PlayerSpawnerATI.Instance());
 
         // asteroids
         Register(Asteroid01ATI.Instance());

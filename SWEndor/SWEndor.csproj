@@ -104,6 +104,7 @@
     <Compile Include="Actors\Enums\CreationState.cs" />
     <Compile Include="Actors\States\ActorDistanceInfo.cs" />
     <Compile Include="Actors\TVFunctions.cs" />
+    <Compile Include="ActorTypes\General\ActorSpawner\PlayerSpawner.cs" />
     <Compile Include="ActorTypes\General\Enums\TargetType.cs" />
     <Compile Include="ActorTypes\Components\AddOnInfo.cs" />
     <Compile Include="ActorTypes\Components\SoundSourceInfo.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="ActorTypes\Groups\AddOns\ShieldGenerators\SDShieldGeneratorATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\ArqTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\ACTurboLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\Untargetables\PlayerSpawnerATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Untargetables\HangarBayATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\ShieldGenerators\SDLowerShieldGeneratorATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\SDAntiShipTurboLaserATI.cs" />
@@ -548,6 +550,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Scenarios\ImperialTestScript.sw">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Scenarios\SpawnScript.sw">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Scenarios\TestScript.sw">

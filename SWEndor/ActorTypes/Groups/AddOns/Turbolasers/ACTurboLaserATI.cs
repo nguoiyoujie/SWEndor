@@ -22,7 +22,7 @@ namespace SWEndor.ActorTypes
       IsDamage = false;
       CollisionEnabled = true;
 
-      MaxStrength = 25;
+      MaxStrength = 85;
       ImpactDamage = 16;
 
       Score_perStrength = 250;

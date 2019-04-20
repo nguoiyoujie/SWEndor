@@ -6,7 +6,7 @@ Wings = Millennium Falcon
 Difficulties = Normal
 
 [Script]
-Paths = .\Scenarios\TestScript.sw,.\Scenarios\TestMessage.sw
+Paths = .\Scenarios\TestScript.sw,.\Scenarios\TestMessage.sw,.\Scenarios\SpawnScript.sw
 Fn_load = load
 Fn_loadfaction = loadfaction
 Fn_loadscene = loadscene

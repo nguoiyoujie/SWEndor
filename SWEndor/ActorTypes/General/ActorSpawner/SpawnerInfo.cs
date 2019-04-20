@@ -27,7 +27,7 @@ namespace SWEndor
     public List<TV_3DVECTOR> SpawnLocations = new List<TV_3DVECTOR>();
     public TV_3DVECTOR PlayerSpawnLocation = new TV_3DVECTOR();
 
-    public float SpawnSpeed = -1; // -1 means follow spawner
+    public float SpawnSpeed = -1; // -1 means follow spawner, -2 means maxSpeed of spawned
     public TV_3DVECTOR SpawnRotation = new TV_3DVECTOR();
     public TV_3DVECTOR SpawnManualPositioningMult = new TV_3DVECTOR();
     public TV_3DVECTOR SpawnSpeedPositioningMult = new TV_3DVECTOR();

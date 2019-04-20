@@ -3,10 +3,10 @@ Name = Imperial Test Custom Scenario
 PlayerName = Alpha-1
 Description = Traitorous forces are attempting to destroy the Interdictor vessel Corvus. Protect it at all costs!
 Wings = TIE Avenger, TIE Defender
-Difficulties = Normal
+Difficulties = Hard
 
 [Script]
-Paths = .\Scenarios\ImperialTestScript.sw,.\Scenarios\ImperialTestMessage.sw
+Paths = .\Scenarios\ImperialTestScript.sw,.\Scenarios\ImperialTestMessage.sw,.\Scenarios\SpawnScript.sw
 Fn_load = load
 Fn_loadfaction = loadfaction
 Fn_loadscene = loadscene
