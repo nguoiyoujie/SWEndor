@@ -143,7 +143,7 @@ namespace SWEndor.Actors
 
       public static void Reset()
       {
-
+        DestroyDead();
         for (int i = 0; i < list.Length; i++)
         {
           list[i]?.Destroy();
