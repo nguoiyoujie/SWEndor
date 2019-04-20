@@ -150,7 +150,7 @@ namespace SWEndor.AI.Actions
 
     protected bool CheckImminentCollision(ActorInfo owner, float scandistance)
     {
-      return false; // disable for now
+      //return false; // disable for now
 
       if (!owner.TypeInfo.CanCheckCollisionAhead)
         return false;
