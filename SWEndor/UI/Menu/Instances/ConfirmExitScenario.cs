@@ -21,7 +21,7 @@ namespace SWEndor.UI.Menu.Pages
       ConfirmText.Text = "Confirm Quit Scenario?";
       ConfirmText.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth / 2 - 150, Engine.Instance().ScreenHeight / 2 - 80);
       ConfirmText.HighlightBoxPosition = ConfirmText.TextPosition - new TV_2DVECTOR(5, 5);
-      ConfirmText.HighlightBoxWidth = 80;
+      ConfirmText.HighlightBoxWidth = 320;
       ConfirmText.HighlightBoxHeight = 30;
 
       ConfirmNo.Text = "NO";
