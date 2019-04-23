@@ -5,6 +5,7 @@ namespace SWEndor.UI.Menu.Pages
   public class MainMenu : Page
   {
     SelectionElement MainMenuText = new SelectionElement();
+    SelectionElement VersionText = new SelectionElement();
     SelectionElement ButtonPlay = new SelectionElement();
     //UISelectionElement ButtonLoad = new UISelectionElement();
     SelectionElement ButtonOptions = new SelectionElement();
@@ -14,9 +15,13 @@ namespace SWEndor.UI.Menu.Pages
 
     public MainMenu()
     {
-      MainMenuText.Text = "Battle of Endor";
+      MainMenuText.Text = "<Title>";
       MainMenuText.TextPosition = new TV_2DVECTOR(75, 60);
       MainMenuText.TextFont = Font.Factory.Get("Title_48").ID;
+
+      VersionText.Text = Globals.Version;
+      VersionText.TextPosition = new TV_2DVECTOR(85, 150);
+      VersionText.TextFont = Font.Factory.Get("Text_12").ID;
 
       ButtonPlay.Text = "Play Scenario";
       ButtonPlay.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth - 200, Engine.Instance().ScreenHeight - 300);
@@ -61,6 +66,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonExit.OnKeyPress += SelectExit;
 
       Elements.Add(MainMenuText);
+      Elements.Add(VersionText);
       Elements.Add(ButtonPlay);
       //Elements.Add(ButtonLoad);
       Elements.Add(ButtonOptions);
