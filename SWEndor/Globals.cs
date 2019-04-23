@@ -1,6 +1,4 @@
-﻿using SWEndor.Actors;
-using SWEndor.Weapons;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -43,6 +41,7 @@ namespace SWEndor
     public static string DataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\");
 
     public static string ActorTypeINIPath = Path.Combine(DataPath, @"actortypes.ini");
+    public static string DynamicMusicINIPath = Path.Combine(DataPath, @"dynamicmusic.ini");
     public static string WeaponStatINIPath = Path.Combine(DataPath, @"weapons.ini");
     
     public static void Initialize()

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using MTV3D65;
 using System.IO;
 using SWEndor.Actors;
@@ -120,10 +119,12 @@ namespace SWEndor
     {
       Screen2D.Instance().LoadingTextLines.Add(Globals.LoadingFlavourTexts[Random.Next(0, Globals.LoadingFlavourTexts.Count)]);
       ActorTypeInfo.Factory.Initialise();
-      Screen2D.Instance().LoadingTextLines.Add("Loading other actortypes...");
+      Screen2D.Instance().LoadingTextLines.Add("Loading other actor definitions...");
       ActorTypeInfo.Factory.LoadFromINI(Globals.ActorTypeINIPath);
       Screen2D.Instance().LoadingTextLines.Add("Loading weapons...");
       WeaponFactory.LoadFromINI(Globals.WeaponStatINIPath);
+      Screen2D.Instance().LoadingTextLines.Add("Loading dynamic music info...");
+      SoundManager.Piece.Factory.LoadFromINI(Globals.DynamicMusicINIPath);
       Screen2D.Instance().LoadingTextLines.Add("Loading scenario engine...");
       GameScenarioManager.Instance().LoadInitial();
       Screen2D.Instance().LoadingTextLines.Add("Loading main menu...");
@@ -303,8 +304,35 @@ namespace SWEndor
       SoundManager.Instance().Initialize();
       SoundManager.Instance().Load();
 
-      SoundManager.Instance().AddMusicSyncPoint("trofix", "try", 10714);
+
+      //2142 + 8572x
+      for (uint i = 2142; i < 68571; i += 8572)
+        SoundManager.Instance().AddMusicSyncPoint("trofix", "try", i);
       SoundManager.Instance().AddMusicSyncPoint("trofix", "try2", 68571);
+
+      for (uint i = 2142; i < 123000; i += 4922)
+        SoundManager.Instance().AddMusicSyncPoint("rebfix", "try", i);
+
+      for (uint i = 2142; i < 123000; i += 4922)
+        SoundManager.Instance().AddMusicSyncPoint("waitfix", "try", i);
+      SoundManager.Instance().AddMusicSyncPoint("waitfix", "try2", 41922);
+      SoundManager.Instance().AddMusicSyncPoint("waitfix", "try2", 44895);
+
+      for (uint i = 2142; i < 123000; i += 4922)
+        SoundManager.Instance().AddMusicSyncPoint("confix", "try", i);
+
+      for (uint i = 2142; i < 123000; i += 4922)
+        SoundManager.Instance().AddMusicSyncPoint("polfix", "try", i);
+
+      SoundManager.Instance().AddMusicSyncPoint("dynamic\\S-EMP-SM", "", 5240);
+      SoundManager.Instance().AddMusicSyncPoint("dynamic\\S-EMP-LG", "", 9030);
+      //SoundManager.Instance().AddMusicSyncPoint("dynamic\\imperialfighterarrv", "", 4300);
+      //SoundManager.Instance().AddMusicSyncPoint("dynamic\\imperialfighterlost", "", 5192);
+      //SoundManager.Instance().AddMusicSyncPoint("dynamic\\rebelcapshiparrv", "", 7600);
+      //SoundManager.Instance().AddMusicSyncPoint("dynamic\\rebelfighterarrv", "", 5800);
+
+
+
     }
 
     public void Exit()

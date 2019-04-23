@@ -1,13 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using FMOD;
 using System.Collections.Concurrent;
+using SWEndor.Primitives;
+using System.Text;
 
 namespace SWEndor.Sound
 {
   public partial class SoundManager
   {
+    private struct SoundStartInfo
+    {
+      public string Name;
+      public uint Position;
+    }
+
     private static SoundManager _instance;
     public static SoundManager Instance()
     {
@@ -23,14 +30,20 @@ namespace SWEndor.Sound
     private FMOD.System fmodsystem = null;
     private int channels = 32; // 0 = music. 1-31 = sounds. ?
     private ChannelGroup musicgrp;
-    private Dictionary<string, ChannelGroup> soundgrps = new Dictionary<string, ChannelGroup>();
+    private ChannelGroup interruptmusicgrp;
+    private bool interruptActive;
+    private ThreadSafeDictionary<string, ChannelGroup> soundgrps = new ThreadSafeDictionary<string, ChannelGroup>();
 
-    private Dictionary<string, FMOD.Sound> music = new Dictionary<string, FMOD.Sound>();
-    private Dictionary<string, FMOD.Sound> sounds = new Dictionary<string, FMOD.Sound>();
+    private ThreadSafeDictionary<string, FMOD.Sound> music = new ThreadSafeDictionary<string, FMOD.Sound>();
+    private ThreadSafeDictionary<string, FMOD.Sound> sounds = new ThreadSafeDictionary<string, FMOD.Sound>();
 
+    // keep callback references alive
     private CHANNEL_CALLBACK m_cb;
-    private string m_musicLoopName = "";
-    private uint m_musicLoopPosition = 0;
+    private CHANNEL_CALLBACK m_icb;
+
+    private SoundStartInfo m_musicLoop = new SoundStartInfo();
+    private ConcurrentQueue<SoundStartInfo> m_musicQueue = new ConcurrentQueue<SoundStartInfo>();
+    private string m_currMusic;
 
     private float m_MasterMusicVolume = 1;
     private float m_MasterSFXVolume = 1;
@@ -45,6 +58,8 @@ namespace SWEndor.Sound
       {
         if (musicgrp != null)
           musicgrp.setVolume(value);
+        if (interruptmusicgrp != null)
+          interruptmusicgrp.setVolume(value);
         m_MasterMusicVolume = value;
       }
     }
@@ -54,7 +69,7 @@ namespace SWEndor.Sound
       set
       {
         m_MasterSFXVolume = value;
-        foreach (ChannelGroup soundgrp in soundgrps.Values)
+        foreach (ChannelGroup soundgrp in soundgrps.GetValues())
           soundgrp.setVolume(m_MasterSFXVolume * m_MasterSFXVolumeScenario);
       }
     }
@@ -64,7 +79,7 @@ namespace SWEndor.Sound
       set
       {
         m_MasterSFXVolumeScenario = value;
-        foreach (ChannelGroup soundgrp in soundgrps.Values)
+        foreach (ChannelGroup soundgrp in soundgrps.GetValues())
           soundgrp.setVolume(m_MasterSFXVolume * m_MasterSFXVolumeScenario);
       }
     }
@@ -77,8 +92,9 @@ namespace SWEndor.Sound
 
       //Initialise FMOD
       fmodsystem.init(channels, INITFLAGS.NORMAL, (IntPtr)null);
-
       fmodsystem.createChannelGroup("music", out musicgrp);
+      fmodsystem.createChannelGroup("interruptmusic", out interruptmusicgrp);
+
       for (int i = 0; i < channels; i++)
       {
         Channel ch;
@@ -87,6 +103,10 @@ namespace SWEndor.Sound
           if (i == 0)
           {
             ch.setChannelGroup(musicgrp);
+          }
+          else if (i == 1)
+          {
+            ch.setChannelGroup(interruptmusicgrp);
           }
           else
           {
@@ -98,7 +118,8 @@ namespace SWEndor.Sound
         }
       }
 
-      m_cb = new CHANNEL_CALLBACK(SoundEndCallback);
+      m_cb = new CHANNEL_CALLBACK(MusicCallback);
+      m_icb = new CHANNEL_CALLBACK(InterruptMusiCallback);
     }
 
     public void Load()
@@ -129,33 +150,45 @@ namespace SWEndor.Sound
         i++;
       }
 
-      string[] musicfiles = Directory.GetFiles(Globals.MusicPath, "*.mp3", SearchOption.TopDirectoryOnly);
+      string[] musicfiles = Directory.GetFiles(Globals.MusicPath, "*.mp3", SearchOption.AllDirectories);
       foreach (string mufl in musicfiles)
       {
-        string muname = Path.GetFileNameWithoutExtension(mufl);
+        string muname = Path.Combine(Path.GetDirectoryName(mufl), Path.GetFileNameWithoutExtension(mufl)).Replace(Globals.MusicPath, "");
 
         FMOD.Sound mu = null;
         fmodsystem.createStream(mufl, FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out mu);
         music.Add(muname, mu);
+
+        // second one for fadepoint to self
+        FMOD.Sound mu2 = null;
+        fmodsystem.createStream(mufl, FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out mu2);
+        music.Add(muname + "%", mu2);
       }
     }
 
-    public bool SetMusic(string name, bool loop = false, uint position_ms = 0)
+    public string[] GetMusicNames()
     {
-      m_queuedInstructions.Enqueue(new InstPlayMusic { Name = name, Loop = loop, Interrupt = true, Position_ms = position_ms });
-      if (loop)
-        m_musicLoopName = name;
+      return music.GetKeys();
+    }
 
+    public bool SetMusic(string name, bool loop = false, uint position_ms = 0, uint end_ms = 0)
+    {
+      m_queuedInstructions.Enqueue(new InstPlayMusic { Name = name, Loop = loop, Position_ms = position_ms, End_ms = end_ms });
+      if (loop)
+      {
+        m_musicLoop.Name = name;
+        m_musicLoop.Position = position_ms;
+      }
       return true;
     }
 
     public void SetMusicLoop(string name, uint position_ms = 0)
     {
-      m_musicLoopName = name;
-      m_musicLoopPosition = position_ms;
+      m_musicLoop.Name = name;
+      m_musicLoop.Position = position_ms;
     }
 
-    public void Process() //, uint position = 0)
+    public void Process()
     {
       InstBase instr;
       while (m_queuedInstructions.TryDequeue(out instr))
@@ -177,14 +210,106 @@ namespace SWEndor.Sound
       m_queuedInstructions.Enqueue(new InstResumeMusic());
     }
 
-    private RESULT SoundEndCallback(IntPtr channelraw, CHANNELCONTROL_TYPE controltype, CHANNELCONTROL_CALLBACK_TYPE type, IntPtr commanddata1, IntPtr commanddata2)
+    public void AddMusicSyncPoint(string name, string label, uint position_ms)
     {
-      if (type == FMOD.CHANNELCONTROL_CALLBACK_TYPE.END)
+      m_queuedInstructions.Enqueue(new InstAddSyncPoint { Name = name, Label = label, Position_ms = position_ms });
+    }
+
+    public void SetInterruptMusic(string name)
+    {
+      if (!interruptActive)
+        m_queuedInstructions.Enqueue(new InstPlayMusic { Name = name, isInterruptMusic = true, Loop = false, Position_ms = 0, End_ms = 0 });
+    }
+
+    public void QueueMusic(string name, uint position_ms)
+    {
+      m_musicQueue.Enqueue(new SoundStartInfo { Name = name, Position = position_ms });
+    }
+
+    private RESULT MusicCallback(IntPtr channelraw, CHANNELCONTROL_TYPE controltype, CHANNELCONTROL_CALLBACK_TYPE type, IntPtr commanddata1, IntPtr commanddata2)
+    {
+      switch (type)
       {
-        if (m_musicLoopName.Length > 0)
-          SetMusic(m_musicLoopName);
+        case FMOD.CHANNELCONTROL_CALLBACK_TYPE.END:
+          if (!interruptActive)
+          {
+            if (m_musicLoop.Name != null && m_musicLoop.Name.Length > 0)
+              SetMusic(m_musicLoop.Name, false, m_musicLoop.Position);
+            else
+            {
+              PopDynamicQueue();
+            }
+          }
+          break;
+        case FMOD.CHANNELCONTROL_CALLBACK_TYPE.SYNCPOINT:
+          if (!interruptActive)
+          {
+            IntPtr syncp;
+            music[m_currMusic].getSyncPoint((int)commanddata1, out syncp);
+            StringBuilder name = new StringBuilder(4);
+            uint offset;
+            music[m_currMusic].getSyncPointInfo(syncp, name, 4, out offset, TIMEUNIT.MS);
+
+            switch (name.ToString().ToLower())
+            {
+              case "exit":
+              case "end":
+                PopDynamicQueue();
+                break;
+            }
+          }
+          break;
       }
+
       return FMOD.RESULT.OK;
+    }
+
+    private RESULT InterruptMusiCallback(IntPtr channelraw, CHANNELCONTROL_TYPE controltype, CHANNELCONTROL_CALLBACK_TYPE type, IntPtr commanddata1, IntPtr commanddata2)
+    {
+      switch (type)
+      {
+        case FMOD.CHANNELCONTROL_CALLBACK_TYPE.END:
+          interruptActive = false;
+          break;
+        case FMOD.CHANNELCONTROL_CALLBACK_TYPE.SYNCPOINT:
+          PopDynamicQueue();
+          break;
+      }
+
+      return FMOD.RESULT.OK;
+    }
+
+    private void PopDynamicQueue()
+    {
+      SoundStartInfo ssi2;
+      if (m_musicQueue.TryDequeue(out ssi2))
+      {
+        SetMusic(ssi2.Name, false, ssi2.Position);
+      }
+      else
+      {
+        // find next piece dynamically using Mood
+        Piece p = Piece.Factory.Get(m_currMusic);
+        if (p == null)
+          return;
+
+        int mood = 0; // get mood from somewhere...
+
+        string next = null;
+        if (p.MoodTransitions != null
+          && p.MoodTransitions.Length > mood
+          && p.MoodTransitions[mood] != null
+          && p.MoodTransitions[mood].Length > 0)
+        {
+          next = p.MoodTransitions[mood][Engine.Instance().Random.Next(0, p.MoodTransitions[mood].Length)];
+        }
+
+        if (next != null)
+        {
+          Piece pnext = Piece.Factory.Get(next);
+          SetMusic(next, false, pnext?.EntryPosition ?? 0);
+        }
+      }
     }
 
     public bool SetSound(string name, bool interrupt = true, float volume = 1.0f, bool loop = true)//, uint position = 0)

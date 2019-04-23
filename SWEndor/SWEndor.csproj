@@ -253,6 +253,8 @@
     <Compile Include="ActorTypes\Groups\Projectiles\GreenLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\RedLaserATI.cs" />
     <Compile Include="AI\Actions\AttackActor.cs" />
+    <Compile Include="AI\Actions\EnableSpawn.cs" />
+    <Compile Include="AI\Actions\CustomAction.cs" />
     <Compile Include="AI\Actions\SetGameStateB.cs" />
     <Compile Include="AI\Actions\ForcedMove.cs" />
     <Compile Include="AI\Actions\AvoidCollisionRotate.cs" />
@@ -376,6 +378,9 @@
     <Compile Include="Sound\Instructions\InstStopMusic.cs" />
     <Compile Include="Sound\Instructions\InstPlayMusic.cs" />
     <Compile Include="Sound\Instructions\InstBase.cs" />
+    <Compile Include="Sound\Piece\Factory\Factory.cs" />
+    <Compile Include="Sound\Piece\Factory\Parser.cs" />
+    <Compile Include="Sound\Piece\Piece.cs" />
     <Compile Include="UI\Font\Factory\Factory.cs" />
     <Compile Include="UI\Font\Font.cs" />
     <Compile Include="UI\Menu\Instances\FatalError.cs" />
@@ -450,7 +455,7 @@
     <Compile Include="UI\Widget\Instances\Radar.cs" />
     <Compile Include="UI\Widget\Instances\SideBars.cs" />
     <Compile Include="UI\Screen2D.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="Settings\Settings.cs" />
     <Compile Include="Sound\SoundManager.cs" />
     <Compile Include="Sound\fmod\fmod.cs" />
     <Compile Include="Sound\fmod\fmod_dsp.cs" />
@@ -529,6 +534,9 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="Data\dynamicmusic.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Data\actortypes.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -565,6 +573,7 @@
     <None Include="Scenarios\TestScript.sw">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Settings\settings.ini" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SWEndor.ico" />
