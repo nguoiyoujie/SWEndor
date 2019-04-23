@@ -297,17 +297,21 @@ namespace SWEndor
         {
           isProcessingProcess = true;
 
+          if (!IsPaused)
+            using (new PerfElement("tick_process_player"))
+              PlayerInfo.Instance().Update();
+
+          if (!IsPaused)
+            using (new PerfElement("tick_render_playercamera"))
+              PlayerCameraInfo.Instance().Update();
+
           using (new PerfElement("tick_process_input"))
             InputManager.Instance().ProcessInput();
 
           if (!IsPaused)
             using (new PerfElement("tick_process_actors"))
               Engine.Instance().Process();
-
-          if (!IsPaused)
-            using (new PerfElement("tick_process_player"))
-              PlayerInfo.Instance().Update();
-
+          
           using (new PerfElement("tick_page"))
             Screen2D.Instance().CurrentPage?.Tick();
 
@@ -322,10 +326,6 @@ namespace SWEndor
           if (!IsPaused)
             using (new PerfElement("tick_process_scenario"))
               GameScenarioManager.Instance().Update();
-
-          if (!IsPaused)
-            using (new PerfElement("tick_render_playercamera"))
-              PlayerCameraInfo.Instance().Update();
 
           isProcessingProcess = false;
         }
