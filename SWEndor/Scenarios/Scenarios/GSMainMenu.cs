@@ -45,11 +45,12 @@ namespace SWEndor.Scenarios
       GameScenarioManager.Instance().MinAIBounds = new TV_3DVECTOR(-15000, -1500, -5000);
 
       PlayerCameraInfo.Instance().CameraMode = CameraMode.FIRSTPERSON;
-
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Rebel_HyperspaceIn);
+      
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0f, Rebel_HyperspaceIn);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0f, Empire_TIEDefender);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.2f, Empire_TIEAvengers);
+      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0f, Empire_StarDestroyer_01);
       GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.5f, Rebel_BeginBattle);
-
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 7f, Empire_StarDestroyer_01);
 
       PlayerInfo.Instance().Lives = 2;
       PlayerInfo.Instance().ScorePerLife = 9999999;
@@ -60,6 +61,7 @@ namespace SWEndor.Scenarios
       //SoundManager.Instance().SetMusic("battle_1_1", false, 191000);
       //SoundManager.Instance().SetMusicLoop("battle_3_4");
 
+      /*
       switch (sceneid)
       {
         // Endor reportorie
@@ -95,8 +97,23 @@ namespace SWEndor.Scenarios
           SoundManager.Instance().SetMusicLoop("battle_2_2");
           break;
       }
+      */
+
+      SoundManager.Instance().SetMusic("trofix", false, 2142);
+      //SoundManager.Instance().QueueMusic("trofix", 64286);
+      //SoundManager.Instance().QueueMusic("rebfix", 2142);
+
+      //SoundManager.Instance().QueueMusic("dynamic\\approach4", 0);
+      //SoundManager.Instance().QueueMusic("dynamic\\approach4", 67935);
+      //SoundManager.Instance().QueueMusic("dynamic\\wait", 0);
+      //SoundManager.Instance().QueueMusic("dynamic\\rebel", 0);
 
       GameScenarioManager.Instance().IsCutsceneMode = true;
+    }
+    public override void Unload()
+    {
+      base.Unload();
+      //SoundManager.Instance().RemoveMusicSyncPoint("trofix");
     }
 
     public override void LoadFactions()
@@ -150,7 +167,8 @@ namespace SWEndor.Scenarios
 
       if (GameScenarioManager.Instance().CameraTargetActor == null || GameScenarioManager.Instance().CameraTargetActor.CreationState != CreationState.ACTIVE)
       {
-        List<int> list = new List<int>(MainAllyFaction.GetWings());
+        List<int> list = new List<int>(MainEnemyFaction.GetWings());
+        //List<int> list = new List<int>(MainAllyFaction.GetWings());
         if (list.Count > 0)
         {
           GameScenarioManager.Instance().CameraTargetActor = ActorInfo.Factory.Get(list[Engine.Instance().Random.Next(0, list.Count)]);
@@ -183,7 +201,7 @@ namespace SWEndor.Scenarios
           if (MainAllyFaction.GetWings().Count < 10)
           {
             RebelSpawnTime = Game.Instance().GameTime + 10f;
-            Rebel_Wave(new object[] { 15 });
+            Rebel_Wave(new object[] { 18 });
           }
         }
 
@@ -201,7 +219,13 @@ namespace SWEndor.Scenarios
       if (m_APlanet != null && m_APlanet.CreationState == CreationState.ACTIVE)
       {
         float x_en = PlayerInfo.Instance().Position.x / 1.2f;
-        float y_en = (PlayerInfo.Instance().Position.y > 0) ? (PlayerInfo.Instance().Position.y / 6f) - 9000.0f : (PlayerInfo.Instance().Position.y / 2.5f) - 9000.0f;
+        float y_en = (PlayerInfo.Instance().Position.y > 0) 
+          ? (PlayerInfo.Instance().Position.y / 6f) - 9000.0f 
+          : (PlayerInfo.Instance().Position.y / 2.5f) - 9000.0f;
+
+        if (PlayerInfo.Instance().Position.z < -30000)
+          y_en += (PlayerInfo.Instance().Position.z + 30000) * 25;
+
         float z_en = PlayerInfo.Instance().Position.z / 1.2f;
         m_APlanet.SetLocalPosition(x_en, y_en, z_en);
       }
@@ -212,9 +236,9 @@ namespace SWEndor.Scenarios
       ActorInfo ainfo;
       float creationTime = Game.Instance().GameTime;
 
-      // Wings x16
+      // Wings x24
       List<TV_3DVECTOR> positions = new List<TV_3DVECTOR>();
-      for (int i = 0; i < 16; i++)
+      for (int i = 0; i < 24; i++)
       {
         if (i % 2 == 1)
           positions.Add(new TV_3DVECTOR(Engine.Instance().Random.Next(-800, -80), Engine.Instance().Random.Next(-100, 100), Engine.Instance().Random.Next(-800, -150)));
@@ -226,7 +250,10 @@ namespace SWEndor.Scenarios
       {
         TV_3DVECTOR v = positions[i];
 
-        ActorTypeInfo[] atypes = new ActorTypeInfo[] { XWingATI.Instance()
+        ActorTypeInfo[] atypes = new ActorTypeInfo[] { Z95ATI.Instance()
+                                                      , Z95ATI.Instance()
+                                                      , Z95ATI.Instance()
+                                                      , Z95ATI.Instance()
                                                       , XWingATI.Instance()
                                                       , XWingATI.Instance()
                                                       , AWingATI.Instance()
@@ -236,7 +263,7 @@ namespace SWEndor.Scenarios
                                                       , BWingATI.Instance()
                                                       , BWingATI.Instance() };
 
-        ActorTypeInfo at = atypes[Engine.Instance().Random.Next(0, atypes.Length)];
+        ActorTypeInfo at = atypes[i % atypes.Length];
         ainfo = new ActorSpawnInfo
         {
           Type = at,
@@ -281,9 +308,11 @@ namespace SWEndor.Scenarios
         }.Spawn(this);
       }
 
-      // Corellian x1
+      // Corellian x3
       positions.Clear();
       positions.Add(new TV_3DVECTOR(300, 370, -3200));
+      positions.Add(new TV_3DVECTOR(100, 170, 7200));
+      positions.Add(new TV_3DVECTOR(-1000, -60, 7700));
 
       for (int i = 0; i < positions.Count; i++)
       {
@@ -308,10 +337,12 @@ namespace SWEndor.Scenarios
         }.Spawn(this);
       }
 
-      // Transport x2
+      // Transport x4
       positions.Clear();
       positions.Add(new TV_3DVECTOR(-800, -120, 600));
-      positions.Add(new TV_3DVECTOR(700, -220, -5600));
+      positions.Add(new TV_3DVECTOR(700, -220, 5600));
+      positions.Add(new TV_3DVECTOR(-100, -220, 6400));
+      positions.Add(new TV_3DVECTOR(1200, 160, 6200));
 
       for (int i = 0; i < positions.Count; i++)
       {
@@ -347,7 +378,7 @@ namespace SWEndor.Scenarios
           && actor.ActorState != ActorState.DEAD)
         {
           ActionManager.ForceClearQueue(actorID);
-          ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() + new TV_3DVECTOR(8000, 0, -20000)
+          ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() + new TV_3DVECTOR(18000, 0, -20000)
                                                 , actor.MovementInfo.Speed
                                                 , actor.TypeInfo.Move_CloseEnough));
           ActionManager.QueueLast(actorID, new HyperspaceOut());
@@ -426,14 +457,25 @@ namespace SWEndor.Scenarios
       if (param != null && param.GetLength(0) >= 1 && !int.TryParse(param[0].ToString(), out sets))
         sets = 15;
 
-      ActorTypeInfo[] tietypes = new ActorTypeInfo[] { XWingATI.Instance(), AWingATI.Instance(), XWingATI.Instance(), AWingATI.Instance(), BWingATI.Instance(), YWingATI.Instance() };
+      ActorTypeInfo[] tietypes = new ActorTypeInfo[] { Z95ATI.Instance()
+                                                      , Z95ATI.Instance()
+                                                      , Z95ATI.Instance()
+                                                      , Z95ATI.Instance()
+                                                      , XWingATI.Instance()
+                                                      , XWingATI.Instance()
+                                                      , AWingATI.Instance()
+                                                      , AWingATI.Instance()
+                                                      , YWingATI.Instance()
+                                                      , YWingATI.Instance()
+                                                      , BWingATI.Instance()
+                                                      , BWingATI.Instance() };
       float t = 0;
       for (int k = 1; k < sets; k++)
       {
         float fx = Engine.Instance().Random.Next(-2500, 2500);
         float fy = Engine.Instance().Random.Next(-500, 500);
 
-        int n = Engine.Instance().Random.Next(0, tietypes.Length);
+        int n = k % tietypes.Length;
 
         new ActorSpawnInfo
         {
@@ -495,20 +537,104 @@ namespace SWEndor.Scenarios
         t += 1.5f;
       }
     }
-    
-    public void Empire_StarDestroyer_01(object[] param)
+
+    public void Empire_TIEDefender(object[] param)
     {
-      // SD
+      // TID/D
       ActorInfo ainfo;
-      TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(0, 0, -10000);
+      TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(-22000, 0, -100000);
+      TV_3DVECTOR plus = new TV_3DVECTOR(3500, 500, 2750);
       float creationTime = Game.Instance().GameTime;
 
       List<TV_3DVECTOR> positions = new List<TV_3DVECTOR>();
       List<float> createtime = new List<float>();
 
-      positions.Add(new TV_3DVECTOR(-7000, 110, GameScenarioManager.Instance().MinBounds.z - 500));
-      createtime.Add(0);
+      positions.Add(new TV_3DVECTOR(-10500, -1010, GameScenarioManager.Instance().MinBounds.z - 7500));
+      positions.Add(new TV_3DVECTOR(-10250, -910, GameScenarioManager.Instance().MinBounds.z - 7600));
+      positions.Add(new TV_3DVECTOR(-10750, -910, GameScenarioManager.Instance().MinBounds.z - 7600));
 
+      for (int i = 0; i < positions.Count; i++)
+      {
+        TV_3DVECTOR v = positions[i];
+
+        ainfo = new ActorSpawnInfo
+        {
+          Type = TIE_D_ATI.Instance(),
+          Name = "",
+          RegisterName = "",
+          SidebarName = "",
+          SpawnTime = creationTime,
+          Faction = MainEnemyFaction,
+          Position = v + hyperspaceInOffset + plus,
+          Rotation = new TV_3DVECTOR(),
+          Actions = new ActionInfo[] { new Wait(7.5f)
+                                     , new Rotate(v, 0)
+                                     , new Wait(2.5f)
+                                     , new HyperspaceIn(v)
+                                     , new Rotate(new TV_3DVECTOR(0, 0, 0), 1)
+                                     , new Wait(3f+10f)}
+        }.Spawn(this);
+
+        ainfo.MovementInfo.MinSpeed = 0;
+        ainfo.CombatInfo.DamageModifier = 0.1f;
+      }
+    }
+
+    public void Empire_TIEAvengers(object[] param)
+    {
+      // TID/A
+      ActorInfo ainfo;
+      TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(-22000, 0, -100000);
+      TV_3DVECTOR plus = new TV_3DVECTOR(3500, 500, 2750);
+      float creationTime = Game.Instance().GameTime;
+
+      List<TV_3DVECTOR> positions = new List<TV_3DVECTOR>();
+      List<float> createtime = new List<float>();
+
+      positions.Add(new TV_3DVECTOR(-9500, -560, GameScenarioManager.Instance().MinBounds.z - 6500));
+      positions.Add(new TV_3DVECTOR(-9250, -660, GameScenarioManager.Instance().MinBounds.z - 6600));
+      positions.Add(new TV_3DVECTOR(-9750, -660, GameScenarioManager.Instance().MinBounds.z - 6600));
+
+      for (int i = 0; i < positions.Count; i++)
+      {
+        TV_3DVECTOR v = positions[i];
+
+        ainfo = new ActorSpawnInfo
+        {
+          Type = TIE_A_ATI.Instance(),
+          Name = "",
+          RegisterName = "",
+          SidebarName = "",
+          SpawnTime = creationTime,
+          Faction = MainEnemyFaction,
+          Position = v + hyperspaceInOffset + plus,
+          Rotation = new TV_3DVECTOR(),
+          Actions = new ActionInfo[] { new Wait(7.5f)
+                                     , new Rotate(v, 0)
+                                     , new Wait(12.5f)
+                                     , new HyperspaceIn(v)
+                                     , new Rotate(new TV_3DVECTOR(0, 0, 0), 40)
+                                     , new Wait(3f)
+                                     }
+        }.Spawn(this);
+
+        ainfo.MovementInfo.MinSpeed = 0;
+        ainfo.CombatInfo.DamageModifier = 0.1f;
+      }
+    }
+
+    public void Empire_StarDestroyer_01(object[] param)
+    {
+      // SD
+      ActorInfo ainfo;
+      TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(-22000, 0, -100000);
+      float creationTime = Game.Instance().GameTime;
+
+      List<TV_3DVECTOR> positions = new List<TV_3DVECTOR>();
+      List<float> createtime = new List<float>();
+
+      positions.Add(new TV_3DVECTOR(-6000, 110, GameScenarioManager.Instance().MinBounds.z - 500));
+      createtime.Add(0);
 
       for (int i = 0; i < positions.Count; i++)
       {
@@ -524,13 +650,15 @@ namespace SWEndor.Scenarios
           Faction = MainEnemyFaction,
           Position = v + hyperspaceInOffset,
           Rotation = new TV_3DVECTOR(),
-          Actions = new ActionInfo[] { new HyperspaceIn(v)
-                                           , new Move(new TV_3DVECTOR(v.x * 0.2f, v.y, -1000), ImperialIATI.Instance().MaxSpeed / 2)
-                                           , new Rotate(new TV_3DVECTOR(-1600, -120, 6300), 0)
-                                           , new Lock() }
+          Actions = new ActionInfo[] { new Wait(32f+10f)
+                                     //, new HyperspaceIn(v + hyperspaceInOffset + new TV_3DVECTOR(0, 0, 100000))
+                                     //, new HyperspaceIn(v + hyperspaceInOffset)
+                                     , new HyperspaceIn(v)
+                                     , new EnableSpawn(true)
+                                     , new Move(new TV_3DVECTOR(v.x * 0.2f, v.y, -1000), ImperialIATI.Instance().MaxSpeed / 2)
+                                     , new Rotate(new TV_3DVECTOR(-1600, -120, 6300), 0)
+                                     , new Lock() }
         }.Spawn(this);
-
-        ainfo.SetSpawnerEnable(true);
       }
     }
   }
