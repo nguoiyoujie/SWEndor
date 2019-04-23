@@ -1,72 +1,164 @@
-CREDIT LIST
----------------------------------------------------------------------------
-This credit serves to acknowledge the various sources and contributors in the making of this project.
 
-I am primarily a programmer. You may assume most visual/audio assets to be the work of these great contributors.
+---------------------------------------------------------------------------------------------------------------------------------------------------
+1.	CREDIT LIST
+	-------------------------------------------------------------------------------------------------------------------------------------------
+	This credit serves to acknowledge the various sources and contributors in the making of this project.
+
+	I am primarily a programmer. You may assume most visual/audio assets to be the work of these great contributors.
 
 
-CONTRIBUTORS
----------------------------------------------------------------------------
-Original Game Design: Bruno R. Marcos
+---------------------------------------------------------------------------------------------------------------------------------------------------
+2.	SECONDARY CONTRIBUTOR ATTRIBUTIONS
+	-------------------------------------------------------------------------------------------------------------------------------------------
+	Note that the following contributors have listed the following as contributors to their content.
+	-------------------------------------------------------------------------------------------------------------------------------------------
+	Master_Syrus 					STARWARS Graphic Update (February 6, 2007)
+		Includes other contributors: Hory, Trousers, Yo-da-man, Lurker
 
-Original Game Assets
-Image - Planet Yavin
-Image - Planet Yavin 4
-Image - Death Star
-Image - Death Star 2
-Image - Various Explosion Effects
-Model - Executor
-Model - Various Turbolaser Towers
-Model - Red / Green / Yellow Laser
-Model - Torpedo Missile
------------------------
-Derivatives by Author
-Model - Small Ion Laser:	Modified Torpedo Missile
 
----------------------------------------------------------------------------
-Master_Syrus' STARWARS Graphic Update (February 6, 2007)
-Other contributors: Hory, Trousers, Yo-da-man, Lurker 
+---------------------------------------------------------------------------------------------------------------------------------------------------
+3.	ASSET CONTRIBUTORS
+	-------------------------------------------------------------------------------------------------------------------------------------------
+	Assets prefixed with [P] are currently placeholders and will likely be changed in the future.
+	-------------------------------------------------------------------------------------------------------------------------------------------
+	Game Asset					Attribution				Comment
+	-------------------------------------------------------------------------------------------------------------------------------------------
+	----------------
+	Design
+	----------------
+	Original Game Design				Bruno R. Marcos				Battle of Endor, Battle of Yavin
 
-Image - Planet Endor
-Image - Electro
-Model - X-Wing
-Model - Y-Wing
-Model - A-Wing
-Model - B-Wing
-Model - Millennium Falcon
-Model - CR90 Corellian Corvette
-Model - Rebel Transport
-Model - Nebulon B Frigate
-Model - 'Home One' Mon Calamari Cruiser
-Model - TIE/LN Fighter
-Model - TIE/IN Interceptor
-Model - TIE/X1 Advanced X1
-Model - Imperial-I Star Destroyer
------------------------
-Derivatives by Author
-Model - TIE/D  Defender:	Modified TIE/IN Interceptor
-Model - TIE/sa Bomber:		Modified TIE/X1 Advanced X1
-Model - Nebulon B2 Frigate:	Modified Nebulon B Frigate
+	----------------
+	Engine
+	----------------
+	Game Engine					Nguoi You Jie				
 
----------------------------------------------------------------------------
-OTHER
----------------------------------------------------------------------------
-Image - Planet Hoth:		http://starwars.wikia.com/wiki/Hoth
-Model - Acclamator: 		https://3dwarehouse.sketchup.com/model/6551e357c6b770b93f217b945a063dd2/Acclamator-I-class-assault-ship
-Model - Arquitens:		https://3dwarehouse.sketchup.com/model/b6e0c4cc2a9576393f217b945a063dd2/Republic-Light-Cruiser
-Model - Asteroid01:		https://space.frieger.com/asteroids/asteroids/29075-1950-DA
-Model - Asteroid02:		https://space.frieger.com/asteroids/asteroids/15677-1980-TZ5
-Model - Asteroid03:		https://space.frieger.com/asteroids/asteroids/13002-1982-BJ13
-Model - Asteroid04:		https://space.frieger.com/asteroids/asteroids/5776-1989-UT2
-Model - Asteroid05:		https://space.frieger.com/asteroids/asteroids/8359-1989-WD
-Model - Asteroid06:		https://space.frieger.com/asteroids/asteroids/22298-1990-EJ
-Model - Asteroid07:		https://space.frieger.com/asteroids/asteroids/16468-1990-HW1
-Model - Asteroid08:		https://space.frieger.com/asteroids/asteroids/5587-1990-SB
+	----------------
+	Scenario
+	----------------
+	Endor						Nguoi You Jie				Hardcoded to Game Engine
+	Yavin						Nguoi You Jie				Hardcoded to Game Engine
+	Hoth (WIP)					Nguoi You Jie				Hardcoded to Game Engine
 
-Sound - beep24			https://www.soundjay.com/beep-sounds-3.html
-Sound - beep22			https://www.soundjay.com/beep-sounds-3.html
+	----------------
+	Images
+	----------------
+	Starry Space					Master_Syrus				STARWARS Graphic Update
+	Sun & Flares					Master_Syrus				STARWARS Graphic Update
+	Planet Yavin					Bruno R. Marcos				Original Game Asset (Battle of Yavin)
+	Planet Yavin 4					Bruno R. Marcos				Original Game Asset (Battle of Yavin)
+	Death Star					Bruno R. Marcos				Original Game Asset (Battle of Yavin)
+	Death Star 2					Bruno R. Marcos				Original Game Asset (Battle of Endor)
+	Explosion Effects				Bruno R. Marcos				Original Game Asset
+	Planet Endor					Master_Syrus				STARWARS Graphic Update
+	Electro						Master_Syrus				STARWARS Graphic Update
+	Planet Hoth					http://starwars.wikia.com/wiki/Hoth
 
-Some models are converted by http://www.meshconvert.com/
+	-----------------------
+	Models (Capital Ships)
+	-----------------------
+	Executor Super Star Destroyer			Bruno R. Marcos				Original Game Asset (Battle of Endor)
+	Imperial-I Star Destroyer			Master_Syrus				STARWARS Graphic Update
+	Interdictor Cruiser				Nguoi You Jie / Master_Syrus		Modified Imperial-I Star Destroyer	
+	Victory Star Destroyer				Nguoi You Jie / Master_Syrus		Modified Imperial-I Star Destroyer
+	Acclamator Assault Frigate			https://3dwarehouse.sketchup.com/model/6551e357c6b770b93f217b945a063dd2/Acclamator-I-class-assault-ship
+	Arquitens Light Cruiser				https://3dwarehouse.sketchup.com/model/b6e0c4cc2a9576393f217b945a063dd2/Republic-Light-Cruiser
+
+	'Home One' Mon Calamari Cruiser			Master_Syrus				STARWARS Graphic Update
+	Nebulon B2 Modified Frigate			Nguoi You Jie / Master_Syrus		Modified Nebulon B2
+	Nebulon B Frigate				Master_Syrus				STARWARS Graphic Update
+	CR90 Corellian Corvette				Master_Syrus				STARWARS Graphic Update
+	GR-95 Transport					Master_Syrus				STARWARS Graphic Update
+
+	------------------
+	Models (Fighters)
+	------------------
+	TIE/LN Fighter					Master_Syrus				STARWARS Graphic Update
+	TIE/IN Interceptor				Master_Syrus				STARWARS Graphic Update
+	TIE/X1 Advanced X1				Master_Syrus				STARWARS Graphic Update
+	TIE/sa Bomber					Nguoi You Jie / Master_Syrus		Modified TIE/X1 Advanced X1
+	TIE/D Defender					Nguoi You Jie / Master_Syrus		Modified TIE/IN Interceptor
+	[P] TIE/A Avenger				Master_Syrus				[Placeholder] TIE/X1 Advanced X1
+	[P] Missile Boat				Master_Syrus				[Placeholder] TIE/X1 Advanced X1
+
+	Z-95 Headhunter					Nguoi You Jie / Master_Syrus		Modified X-Wing
+	X-Wing						Master_Syrus				STARWARS Graphic Update
+	Y-Wing						Master_Syrus				STARWARS Graphic Update
+	A-Wing						Master_Syrus				STARWARS Graphic Update
+	B-Wing						Master_Syrus				STARWARS Graphic Update
+	Millennium Falcon				Master_Syrus				STARWARS Graphic Update
+
+	------------------
+	Models (Structures)
+	------------------
+	Turbolaser Towers & Turrets			Bruno R. Marcos / Master_Syrus		Original Game Asset (Battle of Yavin), Textured by STARWARS Graphic Update 
+	Trench Walls					Bruno R. Marcos / Master_Syrus		Original Game Asset (Battle of Yavin), Textured by STARWARS Graphic Update 
+	Death Star Surface				Bruno R. Marcos / Master_Syrus		Original Game Asset (Battle of Yavin), Textured by STARWARS Graphic Update
+
+	----------------
+	Models (Addons)
+	----------------	
+	Star Destroyer Shield Generators		Master_Syrus				STARWARS Graphic Update
+	Turbolaser Addons (Yellow, Blue, Red)		Bruno R. Marcos				Original Game Asset
+	Heavy Turbolaser Addons (Green)			Nguoi You Jie / Bruno R. Marcos		Derivative: Modified Turbolaser Addons			
+	Missile Pod Addons (Green)			Nguoi You Jie / Bruno R. Marcos		Derivative: Modified Turbolaser Addons		
+	
+	---------------------
+	Models (Projectiles)
+	---------------------
+	Lasers (Red, Green, Yellow)			Bruno R. Marcos				Original Game Asset
+	Torpedo (Blue)					Bruno R. Marcos				Original Game Asset
+	Small Ion Laser (Blue)				Nguoi You Jie / Bruno R. Marcos		Derivative: Modified Laser
+	Big Ion Laser (Blue)				Nguoi You Jie / Bruno R. Marcos		Derivative: Modified Torpedo Missile
+	Missile (Yellow)				Nguoi You Jie / Bruno R. Marcos		Derivative: Recolored Torpedo Missile
+	
+	----------------
+	Models (Others)
+	----------------
+	Asteroid01					https://space.frieger.com/asteroids/asteroids/29075-1950-DA
+	Asteroid02					https://space.frieger.com/asteroids/asteroids/15677-1980-TZ5
+	Asteroid03					https://space.frieger.com/asteroids/asteroids/13002-1982-BJ13
+	Asteroid04					https://space.frieger.com/asteroids/asteroids/5776-1989-UT2
+	Asteroid05					https://space.frieger.com/asteroids/asteroids/8359-1989-WD
+	Asteroid06					https://space.frieger.com/asteroids/asteroids/22298-1990-EJ
+	Asteroid07					https://space.frieger.com/asteroids/asteroids/16468-1990-HW1
+	Asteroid08					https://space.frieger.com/asteroids/asteroids/5587-1990-SB
+
+	----------------
+	Sounds
+	----------------
+	beep24						https://www.soundjay.com/beep-sounds-3.html
+	beep22						https://www.soundjay.com/beep-sounds-3.html
+
+	----------------
+	Music
+	----------------
+	
+	TIE Fighter In-Game Music (MIDI, self-rendered)	http://sites.google.com/site/stephen1297/latracks, direct from game.
+	
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+4.	ASSISTANT PROGRAMS
+	-------------------------------------------------------------------------------------------------------------------------------------------
+	The following programs / websites are attributed for assisting in the making of this game
+	-------------------------------------------------------------------------------------------------------------------------------------------
+	------------------------
+	Engine Dependences
+	------------------------
+	TrueVision 3D 6.5				3D engine
+	FMOD						Sound engine	
+
+	------------------------
+	Programming & Scripting
+	------------------------
+	Microsoft Visual Studio 2015			Main programming effort, complier, and git control
+	Notepad++					Scripting
+	
+	----------------
+	Modelling
+	----------------
+	Milkshape 3D 1.8.5 				Processing, conversion to .x format
+	http://www.meshconvert.com/ 			Conversion to .obj format (can be imported by Milkshape 3D) 
 
 
 
