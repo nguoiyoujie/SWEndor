@@ -37,7 +37,7 @@ load:
 	AddEvent(270, "messagebombercorvus");
 	AddEvent(300, "spawnenemy");
 	AddEvent(325, "spawnenemy2");
-	AddEvent(350, "messagebombergreywolf");
+	AddEvent(360, "messagebombergreywolf");
 	AddEvent(380, "spawnenemybombers3");
 
 	AddEvent(17, "message01");
@@ -55,6 +55,8 @@ load:
 loadfaction:
 	AddFaction("Empire", 0, 0.8, 0);
 	AddFaction("Traitors", 0.4, 0.5, 0.9);
+	AddFaction("TraitorsII", 0.8, 0, 0);
+	Faction.MakeAlly("Traitors", "TraitorsII");
 	Faction.SetWingSpawnLimit("Empire", 26);
 	Faction.SetWingSpawnLimit("Traitors", 32);
 
@@ -104,6 +106,7 @@ loadscene:
 	nebu = Actor.Spawn("Nebulon-B Frigate", "", "", "", 0, "Traitors", -3750, -450, -16000, 0, 30, 0);
 	Actor.QueueLast(nebu, "move", 6250, -450, -3200, 100);
 	Actor.QueueLast(nebu, "hyperspaceout");
+	Actor.QueueLast(nebu, "delete");
 
 	corv2 = Actor.Spawn("Corellian Corvette", "", "", "", 0, "Traitors", -8750, -100, -11000, 0, 75, 0);
 	Actor.QueueLast(corv2, "move", 1550, -200, -2200, 100);
@@ -362,12 +365,12 @@ spawnenemybombers:
 	CallScript("spawn2");
 
 spawnenemybombers2:
-	spawnfaction = "Traitors";
+	spawnfaction = "TraitorsII";
 	damagemod = 1;
 	spawnwait = 0;
-	spawnX = -20000;
+	spawnX = -10000;
 	spawnY = 250;
-	spawnZ = -22500;
+	spawnZ = -12500;
 	spawnRotX = 0;
 	spawnRotY = 0;
 	spawnRotZ = 0;
@@ -375,26 +378,26 @@ spawnenemybombers2:
 	spawntarget = corvusshd1;
 	CallScript("spawn2");
 
-	spawnX = -21000;
+	spawnX = -11000;
 	spawnY = 150;
-	spawnZ = -23500;
+	spawnZ = -13500;
 	spawntarget = corvusshd2;
 	CallScript("spawn2");
 
-	spawnX = -21000;
+	spawnX = -11000;
 	spawnY = 50;
-	spawnZ = -23500;
+	spawnZ = -13500;
 	spawntype = "TIE Bomber";
 	spawntarget = corvus;
 	CallScript("spawn2");
 
 spawnenemybombers3:
-	spawnfaction = "Traitors";
+	spawnfaction = "TraitorsII";
 	damagemod = 1;
 	spawnwait = 0;
-	spawnX = -20000;
+	spawnX = -10000;
 	spawnY = 250;
-	spawnZ = -22500;
+	spawnZ = -12500;
 	spawnRotX = 0;
 	spawnRotY = 0;
 	spawnRotZ = 0;
@@ -402,28 +405,28 @@ spawnenemybombers3:
 	spawntarget = greywolfshd1;
 	CallScript("spawn4");
 
-	spawnX = -21000;
+	spawnX = -11000;
 	spawnY = 450;
-	spawnZ = -23500;
+	spawnZ = -13500;
 	spawntarget = greywolfshd2;
 	CallScript("spawn4");
 
-	spawnX = -21000;
+	spawnX = -11000;
 	spawnY = 650;
-	spawnZ = -23500;
+	spawnZ = -13500;
 	spawntype = "Y-Wing";
 	spawntarget = greywolf;
 	CallScript("spawn3");
 
-	spawnX = -22000;
+	spawnX = -12000;
 	spawnY = 150;
-	spawnZ = -23500;
+	spawnZ = -13500;
 	spawntype = "TIE";
 	CallScript("spawn4");
 
-	spawnX = -20000;
+	spawnX = -10000;
 	spawnY = 150;
-	spawnZ = -23500;
+	spawnZ = -13500;
 	CallScript("spawn4");
 
 spawnenemy:
@@ -442,6 +445,14 @@ spawnenemy:
 
 	spawnX = -400;
 	CallScript("spawn4");
+
+	spawntype = "Z-95";
+	spawnX = 300;
+	spawnZ = -21000;
+	CallScript("spawn3");
+
+	spawnX = -300;
+	CallScript("spawn3");
 
 spawnenemy2:
 	spawnfaction = "Traitors";
