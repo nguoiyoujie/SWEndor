@@ -1,12 +1,11 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
-using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class MC90ATI : WarshipGroup
+  public class MC90ATI : Groups.Warship
   {
     private static MC90ATI _instance;
     public static MC90ATI Instance()

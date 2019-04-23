@@ -1,10 +1,10 @@
 ﻿using SWEndor.Actors;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Groups
 {
-  public class SurfaceTowerGroup : ActorTypeInfo
+  public class SurfaceTower : ActorTypeInfo
   {
-    internal SurfaceTowerGroup(string name) : base(name)
+    internal SurfaceTower(string name) : base(name)
     {
       // Combat
       IsCombatObject = true;

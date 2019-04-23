@@ -2,9 +2,9 @@
 using SWEndor.Actors;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class ExplosionWaveMegaATI : ExplosionGroup
+  public class ExplosionWaveMegaATI : Groups.Explosion
   {
     private static ExplosionWaveMegaATI _instance;
     public static ExplosionWaveMegaATI Instance()

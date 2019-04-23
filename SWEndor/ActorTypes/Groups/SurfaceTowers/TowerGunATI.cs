@@ -4,9 +4,9 @@ using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class TowerGunATI : SurfaceTowerGroup
+  public class TowerGunATI : Groups.SurfaceTower
   {
     private static TowerGunATI _instance;
     public static TowerGunATI Instance()

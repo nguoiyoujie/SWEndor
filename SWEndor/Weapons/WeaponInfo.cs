@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
+using SWEndor.ActorTypes.Group;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
@@ -23,7 +24,7 @@ namespace SWEndor.Weapons
     {
       Name = stat.Name;
 
-      WeaponProjectile = (ProjectileGroup) ActorTypeInfo.Factory.Get(stat.WeaponProjectile);
+      WeaponProjectile = (Projectile) ActorTypeInfo.Factory.Get(stat.WeaponProjectile);
       WeaponCooldown = stat.WeaponCooldown;
       WeaponCooldownRate = stat.WeaponCooldownRate;
       WeaponCooldownRateRandom = stat.WeaponCooldownRateRandom;
@@ -64,7 +65,7 @@ namespace SWEndor.Weapons
 
     public readonly string Name = "Null Weapon";
 
-    public ProjectileGroup WeaponProjectile = null;
+    public Projectile WeaponProjectile = null;
     public float WeaponCooldown = 0;
     public float WeaponCooldownRate = 1;
     public float WeaponCooldownRateRandom = 0;

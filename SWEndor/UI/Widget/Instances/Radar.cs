@@ -133,11 +133,11 @@ namespace SWEndor.UI.Widgets
             {
               Engine.Instance().TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RadarSize, 6, acolor.GetIntColor());
             }
-            else if (a.TypeInfo is ExplosionGroup)
+            else if (a.TypeInfo is ActorTypes.Groups.Explosion)
             {
               Engine.Instance().TVScreen2DImmediate.Draw_FilledCircle(x, y, a.TypeInfo.RadarSize, 36, new TV_COLOR(0.75f, 0.75f, 0, 1).GetIntColor());
             }
-            else if (a.TypeInfo is WarshipGroup)
+            else if (a.TypeInfo is ActorTypes.Groups.Warship)
             {
               float gt = Game.Instance().GameTime * radar_blinkfreq;
               if (a.CombatInfo.Strength / a.TypeInfo.MaxStrength > 0.1f || (gt - (int)gt > 0.5f))
@@ -221,7 +221,7 @@ namespace SWEndor.UI.Widgets
                 }
               }
             }
-            else if (a.TypeInfo is StarDestroyerGroup)
+            else if (a.TypeInfo is ActorTypes.Groups.StarDestroyer)
             {
               float gt = Game.Instance().GameTime * radar_blinkfreq;
               if (a.CombatInfo.Strength / a.TypeInfo.MaxStrength > 0.1f || (gt - (int)gt > 0.5f))
@@ -299,7 +299,7 @@ namespace SWEndor.UI.Widgets
                 }
               }
             }
-            else if (a.TypeInfo is ProjectileGroup)
+            else if (a.TypeInfo is ActorTypes.Group.Projectile)
             {
               TV_2DVECTOR prevtemp = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(a.PrevPosition.x, a.PrevPosition.z);
               float prevdist = Engine.Instance().TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), prevtemp);

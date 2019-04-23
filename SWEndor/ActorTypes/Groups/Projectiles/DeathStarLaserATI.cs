@@ -1,9 +1,9 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class DeathStarLaserATI : ProjectileGroup
+  public class DeathStarLaserATI : Group.Projectile
   {
     private static DeathStarLaserATI _instance;
     public static DeathStarLaserATI Instance()

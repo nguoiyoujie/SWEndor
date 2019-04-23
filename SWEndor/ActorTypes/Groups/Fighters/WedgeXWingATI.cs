@@ -5,9 +5,9 @@ using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class WedgeXWingATI : RebelWingGroup
+  public class WedgeXWingATI : Groups.RebelWing
   {
     private static WedgeXWingATI _instance;
     public static WedgeXWingATI Instance()

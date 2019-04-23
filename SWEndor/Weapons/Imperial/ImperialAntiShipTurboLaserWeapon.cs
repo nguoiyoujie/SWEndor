@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
-using SWEndor.Actors;
 using SWEndor.ActorTypes;
+using SWEndor.ActorTypes.Instances;
 
 namespace SWEndor.Weapons.Types
 {

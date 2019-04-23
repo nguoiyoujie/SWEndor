@@ -5,9 +5,9 @@ using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class MissileBoatATI : TIEGroup
+  public class MissileBoatATI : Groups.TIE
   {
     private static MissileBoatATI _instance;
     public static MissileBoatATI Instance()

@@ -1,5 +1,4 @@
-﻿using SWEndor.Actors;
-using SWEndor.ActorTypes;
+﻿using SWEndor.ActorTypes;
 using SWEndor.FileFormat.INI;
 using SWEndor.FileFormat.Scripting;
 using SWEndor.Player;

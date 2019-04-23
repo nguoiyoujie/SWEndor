@@ -259,7 +259,7 @@ namespace SWEndor.Player
 
     public void FlashHit(TV_COLOR color)
     {
-      if (Actor.TypeInfo is FighterGroup)
+      if (Actor.TypeInfo is ActorTypes.Groups.Fighter)
       {
         SoundManager.Instance().SetSound("hit");
         Engine.Instance().TVGraphicEffect.Flash(color.r, color.g, color.b, 200);

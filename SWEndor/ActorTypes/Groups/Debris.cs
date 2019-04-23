@@ -1,10 +1,10 @@
 ﻿using SWEndor.Actors;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Groups
 {
-  public class DebrisGroup : ActorTypeInfo
+  public class Debris : ActorTypeInfo
   {
-    internal DebrisGroup(string name) : base(name)
+    internal Debris(string name) : base(name)
     {
       // Combat
       IsCombatObject = true;

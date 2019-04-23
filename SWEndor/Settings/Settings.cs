@@ -1,5 +1,4 @@
 ﻿using MTV3D65;
-using SWEndor.Input;
 using SWEndor.Input.Functions;
 using SWEndor.Sound;
 using System.IO;

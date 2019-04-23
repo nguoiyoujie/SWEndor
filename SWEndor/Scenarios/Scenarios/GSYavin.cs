@@ -10,6 +10,7 @@ using SWEndor.Weapons.Types;
 using SWEndor.Sound;
 using SWEndor.Player;
 using SWEndor.Primitives;
+using SWEndor.ActorTypes.Instances;
 
 namespace SWEndor.Scenarios
 {

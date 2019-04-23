@@ -2,9 +2,9 @@
 using SWEndor.Actors;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class ExecutorShieldGeneratorATI : AddOnGroup
+  public class ExecutorShieldGeneratorATI : Groups.AddOn
   {
     private static ExecutorShieldGeneratorATI _instance;
     public static ExecutorShieldGeneratorATI Instance()

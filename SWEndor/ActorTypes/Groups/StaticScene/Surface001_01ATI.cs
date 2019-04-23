@@ -2,9 +2,9 @@
 using SWEndor.Actors;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class Surface001_01ATI : StaticSceneGroup
+  public class Surface001_01ATI : Groups.StaticScene
   {
     private static Surface001_01ATI _instance;
     public static Surface001_01ATI Instance()

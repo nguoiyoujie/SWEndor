@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.ActorTypes;
 using System.Collections.Generic;
 
 namespace SWEndor.UI.Widgets
@@ -34,14 +33,14 @@ namespace SWEndor.UI.Widgets
           else
             wingcount["All Objects"]++;
         }
-        if (a != null && a.TypeInfo is ProjectileGroup && a.CreationState == CreationState.ACTIVE && a.Faction != null)
+        if (a != null && a.TypeInfo is ActorTypes.Group.Projectile && a.CreationState == CreationState.ACTIVE && a.Faction != null)
         {
           if (!wingcount.ContainsKey("Projectiles"))
             wingcount.Add("Projectiles", 1);
           else
             wingcount["Projectiles"]++;
         }
-        if (a != null && (a.TypeInfo is FighterGroup) && a.CreationState == CreationState.ACTIVE && a.Faction != null)
+        if (a != null && (a.TypeInfo is ActorTypes.Groups.Fighter) && a.CreationState == CreationState.ACTIVE && a.Faction != null)
         {
           if (!wingcount.ContainsKey(a.Faction.Name + " Wings"))
             wingcount.Add(a.Faction.Name + " Wings", 1);

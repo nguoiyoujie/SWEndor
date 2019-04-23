@@ -3,9 +3,9 @@ using SWEndor.Weapons;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class ACTurboLaserATI : AddOnGroup
+  public class ACTurboLaserATI : Groups.AddOn
   {
     private static ACTurboLaserATI _instance;
     public static ACTurboLaserATI Instance()

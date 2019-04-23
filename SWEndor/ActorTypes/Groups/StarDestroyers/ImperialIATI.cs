@@ -1,12 +1,11 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
-using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class ImperialIATI : StarDestroyerGroup
+  public class ImperialIATI : Groups.StarDestroyer
   {
     private static ImperialIATI _instance;
     public static ImperialIATI Instance()

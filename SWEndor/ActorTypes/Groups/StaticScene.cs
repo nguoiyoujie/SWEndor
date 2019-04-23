@@ -1,10 +1,10 @@
 ﻿using SWEndor.Actors;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Groups
 {
-  public class StaticSceneGroup : ActorTypeInfo
+  public class StaticScene : ActorTypeInfo
   {
-    internal StaticSceneGroup(string name) : base(name)
+    internal StaticScene(string name) : base(name)
     {
       // Combat
       IsCombatObject = false;

@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
+using SWEndor.ActorTypes.Instances;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
@@ -412,7 +413,7 @@ namespace SWEndor.Scenarios
         type = (ActorTypeInfo)spawn[1];
         creationTime += creationDelay;
         position = (TV_3DVECTOR)spawn[0];
-        if (type is FighterGroup)
+        if (type is ActorTypes.Groups.Fighter)
         {
           actions = new ActionInfo[] { new HyperspaceIn(position)
                                  , new Move(new TV_3DVECTOR(position.x + Engine.Instance().Random.Next(-5, 5), position.y + Engine.Instance().Random.Next(-5, 5), -position.z - 1500)

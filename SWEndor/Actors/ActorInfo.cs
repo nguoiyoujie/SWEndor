@@ -7,7 +7,6 @@ using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using SWEndor.Weapons;
-using System;
 using System.Collections.Generic;
 
 namespace SWEndor.Actors
@@ -268,7 +267,7 @@ namespace SWEndor.Actors
           CheckState();
           if (ActorState != ActorState.DEAD)
           {
-            if (TypeInfo.CollisionEnabled || TypeInfo is ProjectileGroup)
+            if (TypeInfo.CollisionEnabled || TypeInfo is ActorTypes.Group.Projectile)
               CheckCollision();
             MovementInfo.Move();
           }
@@ -385,7 +384,7 @@ namespace SWEndor.Actors
       {
         // only check player and projectiles
         if (IsPlayer() 
-          || TypeInfo is ProjectileGroup 
+          || TypeInfo is ActorTypes.Group.Projectile
           || (ActorState == ActorState.DYING && TypeInfo.TargetType.HasFlag(TargetType.FIGHTER)))
         {
           if (CollisionInfo.IsInCollision)
@@ -416,7 +415,7 @@ namespace SWEndor.Actors
       TV_3DVECTOR vmax = GetRelativePositionXYZ(0, 0, TypeInfo.min_dimensions.z, false) + PrevPosition - Position;
 
       // check landscape only
-      if (TypeInfo is ProjectileGroup || TypeInfo.TargetType != TargetType.NULL)
+      if (TypeInfo is ActorTypes.Group.Projectile || TypeInfo.TargetType != TargetType.NULL)
         if (LandInfo.Instance().Land.AdvancedCollide(vmin, vmax).IsCollision())
         {
           ActorState = ActorState.DEAD;
@@ -1113,7 +1112,7 @@ namespace SWEndor.Actors
         {
           ActorInfo child = ActorInfo.Factory.Get(i);
 
-          if (child.TypeInfo is AddOnGroup || child.AttachToParent)
+          if (child.TypeInfo is ActorTypes.Groups.AddOn || child.AttachToParent)
             child.Destroy();
           else
             child.RemoveParent();

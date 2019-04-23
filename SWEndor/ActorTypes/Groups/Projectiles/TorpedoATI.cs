@@ -6,9 +6,9 @@ using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class TorpedoATI : ProjectileGroup
+  public class TorpedoATI : Group.Projectile
   {
     private static TorpedoATI _instance;
     public static TorpedoATI Instance()

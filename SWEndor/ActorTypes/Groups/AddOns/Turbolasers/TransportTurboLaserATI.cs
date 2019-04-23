@@ -4,9 +4,9 @@ using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class TransportTurboLaserATI : AddOnGroup
+  public class TransportTurboLaserATI : Groups.AddOn
   {
     private static TransportTurboLaserATI _instance;
     public static TransportTurboLaserATI Instance()

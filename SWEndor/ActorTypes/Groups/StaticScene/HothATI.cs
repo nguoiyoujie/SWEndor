@@ -1,8 +1,8 @@
 ﻿using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class HothATI : StaticSceneGroup
+  public class HothATI : Groups.StaticScene
   {
     private static HothATI _instance;
     public static HothATI Instance()

@@ -6,9 +6,9 @@ using System.IO;
 using SWEndor.Weapons;
 using SWEndor.Actors;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class BigIonLaserATI : ProjectileGroup
+  public class BigIonLaserATI : Group.Projectile
   {
     private static BigIonLaserATI _instance;
     public static BigIonLaserATI Instance()

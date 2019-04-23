@@ -4,9 +4,9 @@ using SWEndor.ActorTypes.Components;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class DeathStar2ATI : StaticSceneGroup
+  public class DeathStar2ATI : Groups.StaticScene
   {
     private static DeathStar2ATI _instance;
     public static DeathStar2ATI Instance()

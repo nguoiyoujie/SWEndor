@@ -1,11 +1,9 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes.Components;
-using System.Collections.Generic;
-using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class ExplosionMegaATI : ExplosionGroup
+  public class ExplosionMegaATI : Groups.Explosion
   {
     private static ExplosionMegaATI _instance;
     public static ExplosionMegaATI Instance()

@@ -1,8 +1,8 @@
 ﻿using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class Yavin4ATI : StaticSceneGroup
+  public class Yavin4ATI : Groups.StaticScene
   {
     private static Yavin4ATI _instance;
     public static Yavin4ATI Instance()

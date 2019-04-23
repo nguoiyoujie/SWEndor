@@ -1,12 +1,9 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes.Components;
-using SWEndor.Scenarios;
-using System.Collections.Generic;
-using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class ExplosionLgATI : ExplosionGroup
+  public class ExplosionLgATI : Groups.Explosion
   {
     private static ExplosionLgATI _instance;
     public static ExplosionLgATI Instance()

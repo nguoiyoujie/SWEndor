@@ -1,11 +1,11 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes.Components;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Groups
 {
-  public class RebelWingGroup : FighterGroup
+  public class RebelWing : Fighter
   {
-    internal RebelWingGroup(string name): base(name)
+    internal RebelWing(string name): base(name)
     {
       CullDistance = 7500;
       SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("xwing_engine", 200f, new TV_3DVECTOR(0, 0, -30), true) };

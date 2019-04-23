@@ -1,10 +1,10 @@
 ﻿using SWEndor.Actors;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Groups
 {
-  public class AsteroidGroup : ActorTypeInfo
+  public class Asteroid : ActorTypeInfo
   {
-    internal AsteroidGroup(string name) : base(name)
+    internal Asteroid(string name) : base(name)
     {
       // Combat
       IsCombatObject = true;

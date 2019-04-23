@@ -1,9 +1,8 @@
-﻿using SWEndor.Actors.Components;
-using System.IO;
+﻿using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class BWing_Top_WingATI : SpinningDebrisGroup
+  public class BWing_Top_WingATI : Groups.SpinningDebris
   {
     private static BWing_Top_WingATI _instance;
     public static BWing_Top_WingATI Instance()

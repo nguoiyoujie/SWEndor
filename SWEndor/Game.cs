@@ -4,7 +4,6 @@ using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using SWEndor.Sound;
-using SWEndor.UI;
 using SWEndor.UI.Menu.Pages;
 using System;
 using System.Threading;

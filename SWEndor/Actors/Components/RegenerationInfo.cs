@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace SWEndor.Actors.Components
+﻿namespace SWEndor.Actors.Components
 {
   public struct RegenerationInfo
   {

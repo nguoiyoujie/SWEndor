@@ -4,9 +4,9 @@ using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class NebulonBMissilePodATI : AddOnGroup
+  public class NebulonBMissilePodATI : Groups.AddOn
   {
     private static NebulonBMissilePodATI _instance;
     public static NebulonBMissilePodATI Instance()

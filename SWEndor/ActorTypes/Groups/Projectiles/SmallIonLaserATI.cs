@@ -4,9 +4,9 @@ using SWEndor.Weapons;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class SmallIonLaserATI : ProjectileGroup
+  public class SmallIonLaserATI : Group.Projectile
   {
     private static SmallIonLaserATI _instance;
     public static SmallIonLaserATI Instance()

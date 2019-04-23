@@ -5,9 +5,9 @@ using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class TIE_X1_ATI : TIEGroup
+  public class TIE_X1_ATI : Groups.TIE
   {
     private static TIE_X1_ATI _instance;
     public static TIE_X1_ATI Instance()

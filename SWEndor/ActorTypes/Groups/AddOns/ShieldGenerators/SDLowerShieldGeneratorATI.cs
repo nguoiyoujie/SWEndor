@@ -2,9 +2,9 @@
 using SWEndor.Actors;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class SDLowerShieldGeneratorATI : AddOnGroup
+  public class SDLowerShieldGeneratorATI : Groups.AddOn
   {
     private static SDLowerShieldGeneratorATI _instance;
     public static SDLowerShieldGeneratorATI Instance()

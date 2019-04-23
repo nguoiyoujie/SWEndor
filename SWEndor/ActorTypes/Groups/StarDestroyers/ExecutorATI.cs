@@ -1,12 +1,11 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
-using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class ExecutorATI : StarDestroyerGroup
+  public class ExecutorATI : Groups.StarDestroyer
   {
     private static ExecutorATI _instance;
     public static ExecutorATI Instance()

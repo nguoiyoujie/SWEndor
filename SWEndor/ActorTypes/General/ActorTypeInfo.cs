@@ -436,7 +436,7 @@ namespace SWEndor.ActorTypes
           ActorInfo a = ActorInfo.Factory.Get(i);
           if (a != null && a.Faction != null && !a.Faction.IsAlliedWith(owner.Faction))
           {
-            if (!(a.TypeInfo is AddOnGroup))
+            if (!(a.TypeInfo is Groups.AddOn))
               AddScore(a.Score, a, owner);
 
             if (a.IsPlayer())
@@ -447,7 +447,7 @@ namespace SWEndor.ActorTypes
         hitby.SetLocalPosition(impact.x, impact.y, impact.z);
         hitby.ActorState = ActorState.DYING;
 
-        if ((owner.TypeInfo is FighterGroup))
+        if ((owner.TypeInfo is Groups.Fighter))
         {
           List<int> hparents = hitby.GetAllParents();
           if (hparents.Count > 0)
@@ -491,12 +491,12 @@ namespace SWEndor.ActorTypes
           ActorInfo a = ActorInfo.Factory.Get(i);
           if (a != null && a.Faction != null && !a.Faction.IsAlliedWith(owner.Faction))
           {
-            if (!(a.TypeInfo is AddOnGroup))
+            if (!(a.TypeInfo is Groups.AddOn))
               AddScore(a.Score, a, owner);
           }
         }
 
-        if (owner.CombatInfo.Strength < 0 && !(owner.TypeInfo is StarDestroyerGroup || owner.TypeInfo is WarshipGroup))
+        if (owner.CombatInfo.Strength < 0 && !(owner.TypeInfo is Groups.StarDestroyer || owner.TypeInfo is Groups.Warship))
         {
           owner.ActorState = ActorState.DEAD;
           if (owner.IsPlayer())
@@ -527,7 +527,7 @@ namespace SWEndor.ActorTypes
         }
       }
 
-      if (victim.TypeInfo is FighterGroup)
+      if (victim.TypeInfo is Groups.Fighter)
       {
         score.HitsOnFighters++;
       }

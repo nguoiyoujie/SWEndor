@@ -1,8 +1,8 @@
 ﻿using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class Asteroid04ATI : AsteroidGroup
+  public class Asteroid04ATI : Groups.Asteroid
   {
     private static Asteroid04ATI _instance;
     public static Asteroid04ATI Instance()

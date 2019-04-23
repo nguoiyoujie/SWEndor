@@ -1,8 +1,8 @@
 ﻿using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class XWing_RU_LD_WingATI : SpinningDebrisGroup
+  public class XWing_RU_LD_WingATI : Groups.SpinningDebris
   {
     private static XWing_RU_LD_WingATI _instance;
     public static XWing_RU_LD_WingATI Instance()

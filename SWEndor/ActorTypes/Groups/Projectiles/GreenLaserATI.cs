@@ -1,9 +1,9 @@
 ﻿using SWEndor.Actors;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class GreenLaserATI : ProjectileGroup
+  public class GreenLaserATI : Group.Projectile
   {
     private static GreenLaserATI _instance;
     public static GreenLaserATI Instance()

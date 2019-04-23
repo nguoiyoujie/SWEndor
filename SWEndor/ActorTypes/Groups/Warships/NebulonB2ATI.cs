@@ -1,12 +1,11 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
-using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class NebulonB2ATI : WarshipGroup
+  public class NebulonB2ATI : Groups.Warship
   {
     private static NebulonB2ATI _instance;
     public static NebulonB2ATI Instance()

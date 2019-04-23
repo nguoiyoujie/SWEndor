@@ -3,9 +3,9 @@ using SWEndor.Actors;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class ExecutorBridgeATI : AddOnGroup
+  public class ExecutorBridgeATI : Groups.AddOn
   {
     private static ExecutorBridgeATI _instance;
     public static ExecutorBridgeATI Instance()

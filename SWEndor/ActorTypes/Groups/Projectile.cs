@@ -2,11 +2,11 @@
 using SWEndor.Actors;
 using SWEndor.AI.Actions;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Group
 {
-  public class ProjectileGroup : ActorTypeInfo
+  public class Projectile : ActorTypeInfo
   {
-    internal ProjectileGroup(string name) : base(name)
+    internal Projectile(string name) : base(name)
     {
       // Combat
       IsCombatObject = false;

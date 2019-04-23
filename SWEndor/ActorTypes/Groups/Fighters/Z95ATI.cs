@@ -6,9 +6,9 @@ using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class Z95ATI : RebelWingGroup
+  public class Z95ATI : Groups.RebelWing
   {
     private static Z95ATI _instance;
     public static Z95ATI Instance()

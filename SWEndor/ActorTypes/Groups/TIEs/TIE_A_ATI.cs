@@ -1,14 +1,13 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.ActorTypes.Components;
 using SWEndor.Weapons;
 using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class TIE_A_ATI : TIEGroup
+  public class TIE_A_ATI : Groups.TIE
   {
     private static TIE_A_ATI _instance;
     public static TIE_A_ATI Instance()

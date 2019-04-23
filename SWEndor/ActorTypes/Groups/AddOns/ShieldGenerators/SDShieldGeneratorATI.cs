@@ -2,9 +2,9 @@
 using SWEndor.Actors;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class SDShieldGeneratorATI : AddOnGroup
+  public class SDShieldGeneratorATI : Groups.AddOn
   {
     private static SDShieldGeneratorATI _instance;
     public static SDShieldGeneratorATI Instance()

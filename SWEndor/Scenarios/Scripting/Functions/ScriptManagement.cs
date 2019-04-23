@@ -1,5 +1,4 @@
-﻿using MTV3D65;
-using SWEndor.Scenarios.Scripting.Expressions;
+﻿using SWEndor.Scenarios.Scripting.Expressions;
 using System;
 
 namespace SWEndor.Scenarios.Scripting.Functions

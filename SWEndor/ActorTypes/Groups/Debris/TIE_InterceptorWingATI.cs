@@ -1,9 +1,8 @@
-﻿using SWEndor.Actors.Components;
-using System.IO;
+﻿using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class TIE_InterceptorWingATI : SpinningDebrisGroup
+  public class TIE_InterceptorWingATI : Groups.SpinningDebris
   {
     private static TIE_InterceptorWingATI _instance;
     public static TIE_InterceptorWingATI Instance()

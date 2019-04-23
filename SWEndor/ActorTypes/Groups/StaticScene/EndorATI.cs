@@ -1,8 +1,8 @@
 ﻿using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class EndorATI : StaticSceneGroup
+  public class EndorATI : Groups.StaticScene
   {
     private static EndorATI _instance;
     public static EndorATI Instance()

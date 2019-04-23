@@ -5,9 +5,9 @@ using SWEndor.AI.Actions;
 using SWEndor.Player;
 using System.Collections.Generic;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class PlayerSpawnerATI : AddOnGroup
+  public class PlayerSpawnerATI : Groups.AddOn
   {
     private static PlayerSpawnerATI _instance;
     public static PlayerSpawnerATI Instance()
@@ -76,7 +76,7 @@ namespace SWEndor.ActorTypes
       foreach (int i in ainfo.GetAllChildren(1))
       {
         ActorInfo a = ActorInfo.Factory.Get(i);
-        if (a != null && a.TypeInfo is FighterGroup)
+        if (a != null && a.TypeInfo is Groups.Fighter)
         {
           if (p.SpawnerInfo.SpawnSpeed == -2)
             a.MovementInfo.Speed = a.MovementInfo.MaxSpeed;

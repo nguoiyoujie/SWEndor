@@ -1,11 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Input.Functions;
-using SWEndor.Input.Functions.Gameplay;
-using SWEndor.Input.Functions.Gameplay.Camera;
 using SWEndor.Input.Functions.Gameplay.Special;
-using SWEndor.Input.Functions.Gameplay.Speed;
-using SWEndor.Input.Functions.Gameplay.UI;
-using SWEndor.Input.Functions.Gameplay.Weapon;
 
 namespace SWEndor.Input.Context
 {

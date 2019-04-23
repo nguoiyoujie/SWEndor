@@ -1,4 +1,4 @@
-﻿using SWEndor.ActorTypes;
+﻿using SWEndor.ActorTypes.Instances;
 using SWEndor.FileFormat.INI;
 using System;
 using System.Collections.Generic;

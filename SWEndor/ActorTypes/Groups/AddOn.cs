@@ -1,10 +1,10 @@
 ﻿using SWEndor.Actors;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Groups
 {
-  public class AddOnGroup : ActorTypeInfo
+  public class AddOn : ActorTypeInfo
   {
-    internal AddOnGroup(string name) : base(name)
+    internal AddOn(string name) : base(name)
     {
       // Combat
       IsCombatObject = true;

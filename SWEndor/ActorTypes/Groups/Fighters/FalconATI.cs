@@ -6,9 +6,9 @@ using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class FalconATI : RebelWingGroup
+  public class FalconATI : Groups.RebelWing
   {
     private static FalconATI _instance;
     public static FalconATI Instance()

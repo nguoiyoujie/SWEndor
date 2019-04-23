@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.ActorTypes;
 using SWEndor.Scenarios;
 using System;
 
@@ -39,7 +38,7 @@ namespace SWEndor.AI.Actions
     protected bool CheckBounds(ActorInfo owner)
     {
       float boundmult = 0.99f;
-      if (!(owner.TypeInfo is ProjectileGroup) && owner.IsOutOfBounds(GameScenarioManager.Instance().MinAIBounds * boundmult, GameScenarioManager.Instance().MaxAIBounds * boundmult) && owner.EnteredCombatZone)
+      if (!(owner.TypeInfo is ActorTypes.Group.Projectile) && owner.IsOutOfBounds(GameScenarioManager.Instance().MinAIBounds * boundmult, GameScenarioManager.Instance().MaxAIBounds * boundmult) && owner.EnteredCombatZone)
       {
         float x = Engine.Instance().Random.Next((int)(GameScenarioManager.Instance().MinAIBounds.x * 0.65f), (int)(GameScenarioManager.Instance().MaxAIBounds.x * 0.65f));
         float y = Engine.Instance().Random.Next(-200, 200);

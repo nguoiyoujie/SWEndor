@@ -1,8 +1,8 @@
 ﻿using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class Surface002_01ATI : StaticSceneGroup
+  public class Surface002_01ATI : Groups.StaticScene
   {
     private static Surface002_01ATI _instance;
     public static Surface002_01ATI Instance()

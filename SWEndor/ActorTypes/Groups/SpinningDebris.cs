@@ -1,11 +1,11 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Groups
 {
-  public class SpinningDebrisGroup : DebrisGroup
+  public class SpinningDebris : Debris
   {
-    internal SpinningDebrisGroup(string name) : base(name)
+    internal SpinningDebris(string name) : base(name)
     {
       IsCombatObject = false;
       IsSelectable = false;

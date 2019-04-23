@@ -2,9 +2,9 @@
 using SWEndor.Actors;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class SurfaceVentATI : SurfaceTowerGroup
+  public class SurfaceVentATI : Groups.SurfaceTower
   {
     private static SurfaceVentATI _instance;
     public static SurfaceVentATI Instance()

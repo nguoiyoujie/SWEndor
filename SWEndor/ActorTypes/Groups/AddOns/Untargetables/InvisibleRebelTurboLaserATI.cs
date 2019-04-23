@@ -3,9 +3,9 @@ using SWEndor.Weapons;
 using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class InvisibleRebelTurboLaserATI : AddOnGroup
+  public class InvisibleRebelTurboLaserATI : Groups.AddOn
   {
     private static InvisibleRebelTurboLaserATI _instance;
     public static InvisibleRebelTurboLaserATI Instance()

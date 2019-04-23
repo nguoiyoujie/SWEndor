@@ -1,9 +1,9 @@
 ﻿using SWEndor.Actors;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class Transport_Box2ATI : SpinningDebrisGroup
+  public class Transport_Box2ATI : Groups.SpinningDebris
   {
     private static Transport_Box2ATI _instance;
     public static Transport_Box2ATI Instance()

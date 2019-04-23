@@ -1,5 +1,4 @@
 ﻿using MTV3D65;
-using SWEndor.UI;
 using SWEndor.UI.Menu.Pages;
 
 namespace SWEndor.Input.Functions.Gameplay.UI

@@ -1,8 +1,8 @@
 ﻿using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class Tower02_RuinsATI : DebrisGroup
+  public class Tower02_RuinsATI : Groups.Debris
   {
     private static Tower02_RuinsATI _instance;
     public static Tower02_RuinsATI Instance()

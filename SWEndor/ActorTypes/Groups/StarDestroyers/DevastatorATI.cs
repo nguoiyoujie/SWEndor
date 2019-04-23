@@ -4,9 +4,9 @@ using SWEndor.ActorTypes.Components;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class DevastatorATI : StarDestroyerGroup
+  public class DevastatorATI : Groups.StarDestroyer
   {
     private static DevastatorATI _instance;
     public static DevastatorATI Instance()

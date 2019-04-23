@@ -3,9 +3,9 @@ using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class Tower04ATI : SurfaceTowerGroup
+  public class Tower04ATI : Groups.SurfaceTower
   {
     private static Tower04ATI _instance;
     public static Tower04ATI Instance()

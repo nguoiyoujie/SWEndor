@@ -4,9 +4,9 @@ using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class NebulonBTurboLaserATI : AddOnGroup
+  public class NebulonBTurboLaserATI : Groups.AddOn
   {
     private static NebulonBTurboLaserATI _instance;
     public static NebulonBTurboLaserATI Instance()

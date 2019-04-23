@@ -1,17 +1,16 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Player;
-using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Groups
 {
-  public class ExplosionGroup : ActorTypeInfo
+  public class Explosion : ActorTypeInfo
   {
     protected int[] texanimframes = new int[0];
 
-    internal ExplosionGroup(string name): base(name)
+    internal Explosion(string name): base(name)
     {
       // Combat
       IsCombatObject = false;

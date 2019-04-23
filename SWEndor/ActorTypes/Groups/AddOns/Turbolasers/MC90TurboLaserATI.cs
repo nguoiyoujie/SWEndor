@@ -4,9 +4,9 @@ using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class mc90TurbolaserATI : AddOnGroup
+  public class mc90TurbolaserATI : Groups.AddOn
   {
     private static mc90TurbolaserATI _instance;
     public static mc90TurbolaserATI Instance()

@@ -1,14 +1,15 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.ActorTypes.Groups;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
 using SWEndor.Scenarios;
 using System.Collections.Generic;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class HangarBayATI : AddOnGroup
+  public class HangarBayATI : Groups.AddOn
   {
     private static HangarBayATI _instance;
     public static HangarBayATI Instance()
@@ -73,7 +74,7 @@ namespace SWEndor.ActorTypes
       foreach (int i in ainfo.GetAllChildren(1))
       {
         ActorInfo a = ActorInfo.Factory.Get(i);
-        if (a != null && a.TypeInfo is FighterGroup)
+        if (a != null && a.TypeInfo is Fighter)
         {
           if (p.SpawnerInfo.SpawnSpeed == -2)
             a.MovementInfo.Speed = a.MovementInfo.MaxSpeed;
@@ -141,11 +142,11 @@ namespace SWEndor.ActorTypes
        && p.SpawnerInfo.SpawnTypes.Length > 0)
       {
         ActorTypeInfo spawntype = p.SpawnerInfo.SpawnTypes[Engine.Instance().Random.Next(0, p.SpawnerInfo.SpawnTypes.Length)];
-        if ((spawntype.TargetType.HasFlag(TargetType.FIGHTER) 
+        if ((spawntype.TargetType.HasFlag(TargetType.FIGHTER)
           && (p.Faction.WingSpawnLimit == -1 || p.Faction.Wings.Count < p.Faction.WingSpawnLimit)
           && (p.Faction.WingLimit == -1 || p.Faction.Wings.Count < p.Faction.WingLimit)
           )
-        || (spawntype.TargetType.HasFlag(TargetType.SHIP) 
+        || (spawntype.TargetType.HasFlag(TargetType.SHIP)
           && (p.Faction.ShipSpawnLimit == -1 || p.Faction.Ships.Count < p.Faction.ShipSpawnLimit))
           && (p.Faction.ShipLimit == -1 || p.Faction.Ships.Count < p.Faction.ShipLimit)
           )
@@ -175,4 +176,5 @@ namespace SWEndor.ActorTypes
     }
   }
 }
+
 

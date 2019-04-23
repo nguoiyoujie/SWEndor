@@ -1,11 +1,11 @@
-﻿using MTV3D65;
-using SWEndor.Actors;
+﻿using SWEndor.Actors;
+using SWEndor.ActorTypes.Instances;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Groups
 {
-  public class FighterGroup : ActorTypeInfo
+  public class Fighter : ActorTypeInfo
   {
-    internal FighterGroup(string name): base(name)
+    internal Fighter(string name): base(name)
     {
       // Combat
       IsCombatObject = true;

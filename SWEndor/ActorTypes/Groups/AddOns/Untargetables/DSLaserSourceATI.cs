@@ -5,7 +5,7 @@ using SWEndor.Weapons;
 using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
   public class DSLaserSourceATI : ActorTypeInfo //: AddOnGroup
   {

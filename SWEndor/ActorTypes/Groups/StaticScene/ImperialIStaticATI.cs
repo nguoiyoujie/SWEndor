@@ -1,8 +1,8 @@
 ﻿using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class ImperialIStaticATI : StaticSceneGroup
+  public class ImperialIStaticATI : Groups.StaticScene
   {
     private static ImperialIStaticATI _instance;
     public static ImperialIStaticATI Instance()

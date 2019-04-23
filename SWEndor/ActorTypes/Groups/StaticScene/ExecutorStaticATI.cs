@@ -1,8 +1,8 @@
 ﻿using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class ExecutorStaticATI : StaticSceneGroup
+  public class ExecutorStaticATI : Groups.StaticScene
   {
     private static ExecutorStaticATI _instance;
     public static ExecutorStaticATI Instance()

@@ -1,12 +1,11 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
-using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class AcclamatorATI : StarDestroyerGroup
+  public class AcclamatorATI : Groups.StarDestroyer
   {
     private static AcclamatorATI _instance;
     public static AcclamatorATI Instance()
@@ -60,8 +59,6 @@ namespace SWEndor.ActorTypes
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-
-      List<float[]> ttowers = new List<float[]>();
 
       ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 143, 65) };
       ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 143, 2000) };

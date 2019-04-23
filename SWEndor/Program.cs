@@ -1,5 +1,4 @@
-﻿using SWEndor.Input;
-using SWEndor.Input.Functions;
+﻿using SWEndor.Input.Functions;
 using System;
 using System.Windows.Forms;
 

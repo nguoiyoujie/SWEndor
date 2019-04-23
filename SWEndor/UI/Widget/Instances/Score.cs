@@ -2,7 +2,6 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.Player;
-using System.Collections.Generic;
 
 namespace SWEndor.UI.Widgets
 {

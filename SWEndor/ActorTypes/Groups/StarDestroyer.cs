@@ -1,10 +1,11 @@
 ﻿using SWEndor.Actors;
+using SWEndor.ActorTypes.Instances;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Groups
 {
-  public class WarshipGroup : ActorTypeInfo
+  public class StarDestroyer : ActorTypeInfo
   {
-    internal WarshipGroup(string name): base(name)
+    internal StarDestroyer(string name) : base(name)
     {
       // Combat
       IsCombatObject = true;
@@ -14,8 +15,8 @@ namespace SWEndor.ActorTypes
 
       CullDistance = 20000;
 
-      ZTilt = 7.5f;
-      ZNormFrac = 0.005f;
+      ZTilt = 2.5f;
+      ZNormFrac = 0.011f;
       RadarSize = 10;
 
       TargetType = TargetType.SHIP;
@@ -43,7 +44,7 @@ namespace SWEndor.ActorTypes
       if (ainfo.ActorState == ActorState.DYING)
       {
         ainfo.CombatInfo.OnTimedLife = true;
-        ainfo.CombatInfo.TimedLife = 20f;
+        ainfo.CombatInfo.TimedLife = 25f;
         ainfo.CombatInfo.IsCombatObject = false;
       }
       else if (ainfo.ActorState == ActorState.DEAD)

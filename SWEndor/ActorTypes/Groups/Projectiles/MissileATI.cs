@@ -6,9 +6,9 @@ using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class MissileATI : ProjectileGroup
+  public class MissileATI : Group.Projectile
   {
     private static MissileATI _instance;
     public static MissileATI Instance()

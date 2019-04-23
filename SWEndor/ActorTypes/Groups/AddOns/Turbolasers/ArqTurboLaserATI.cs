@@ -3,9 +3,9 @@ using SWEndor.Weapons;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.ActorTypes
+namespace SWEndor.ActorTypes.Instances
 {
-  public class ArqTurboLaserATI : AddOnGroup
+  public class ArqTurboLaserATI : Groups.AddOn
   {
     private static ArqTurboLaserATI _instance;
     public static ArqTurboLaserATI Instance()

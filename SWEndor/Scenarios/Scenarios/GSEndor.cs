@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
+using SWEndor.ActorTypes.Instances;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
@@ -8,8 +9,6 @@ using SWEndor.Sound;
 using SWEndor.Weapons;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading;
 
 namespace SWEndor.Scenarios
 {
@@ -761,7 +760,7 @@ namespace SWEndor.Scenarios
         int huntw = 5;
         creationTime += creationDelay;
         position = (TV_3DVECTOR)spawn[0];
-        if (type is FighterGroup)
+        if (type is ActorTypes.Groups.Fighter)
         {
           actions = new ActionInfo[] { new HyperspaceIn(position)
                                  , new Lock()
