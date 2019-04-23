@@ -110,6 +110,15 @@ namespace SWEndor.FileFormat.INI
       return defaultValue;
     }
 
+    public uint GetUIntValue(string section, string key, uint defaultValue = 0)
+    {
+      uint ret = defaultValue;
+      string s = GetStringValue(section, key, defaultValue.ToString());
+      if (s != null && uint.TryParse(s, out ret))
+        return ret;
+      return defaultValue;
+    }
+
     public float GetFloatValue(string section, string key, float defaultValue = 0)
     {
       float ret = defaultValue;
@@ -166,6 +175,21 @@ namespace SWEndor.FileFormat.INI
         int.TryParse(tokens[i], out ret[i]);
       return ret;
     }
+
+    public uint[] GetUIntList(string section, string key, uint[] defaultList, char delimiter = ',')
+    {
+      string str = GetStringValue(section, key, "");
+      if (str == "")
+        return defaultList;
+
+      string[] tokens = str.Split(delimiter);
+      uint[] ret = new uint[tokens.Length];
+
+      for (int i = 0; i < tokens.Length; i++)
+        uint.TryParse(tokens[i], out ret[i]);
+      return ret;
+    }
+
 
     public float[] GetFloatList(string section, string key, float[] defaultList, char delimiter = ',')
     {
