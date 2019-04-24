@@ -15,14 +15,7 @@ namespace SWEndor.Sound
       public uint Position;
     }
 
-    private static SoundManager _instance;
-    public static SoundManager Instance()
-    {
-      if (_instance == null) { _instance = new SoundManager(); }
-      return _instance;
-    }
-
-    private SoundManager() { }
+    internal SoundManager() { }
 
     public void Dispose() { }
 
@@ -44,6 +37,7 @@ namespace SWEndor.Sound
     private SoundStartInfo m_musicLoop = new SoundStartInfo();
     private ConcurrentQueue<SoundStartInfo> m_musicQueue = new ConcurrentQueue<SoundStartInfo>();
     private string m_currMusic;
+    private string m_prevDynMusic;
 
     private float m_MasterMusicVolume = 1;
     private float m_MasterSFXVolume = 1;
@@ -137,7 +131,7 @@ namespace SWEndor.Sound
           //rpt = true;
         }
         FMOD.Sound sd = null;
-        fmodsystem.createStream(sdfl, FMOD.MODE.CREATESAMPLE | FMOD.MODE.ACCURATETIME, out sd);
+        fmodsystem.createSound(sdfl, FMOD.MODE.LOWMEM | FMOD.MODE.CREATECOMPRESSEDSAMPLE | FMOD.MODE.ACCURATETIME, out sd);
         sounds.Add(sdname, sd);
 
         Channel ch;
@@ -156,12 +150,12 @@ namespace SWEndor.Sound
         string muname = Path.Combine(Path.GetDirectoryName(mufl), Path.GetFileNameWithoutExtension(mufl)).Replace(Globals.MusicPath, "");
 
         FMOD.Sound mu = null;
-        fmodsystem.createStream(mufl, FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out mu);
+        fmodsystem.createSound(mufl, FMOD.MODE.LOWMEM | FMOD.MODE.CREATECOMPRESSEDSAMPLE | FMOD.MODE.ACCURATETIME, out mu);
         music.Add(muname, mu);
 
         // second one for fadepoint to self
         FMOD.Sound mu2 = null;
-        fmodsystem.createStream(mufl, FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out mu2);
+        fmodsystem.createStream(mufl, FMOD.MODE.LOWMEM | FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out mu2);
         music.Add(muname + "%", mu2);
       }
     }
@@ -237,7 +231,7 @@ namespace SWEndor.Sound
               SetMusic(m_musicLoop.Name, false, m_musicLoop.Position);
             else
             {
-              PopDynamicQueue();
+              PopDynamicQueue(false);
             }
           }
           break;
@@ -246,15 +240,17 @@ namespace SWEndor.Sound
           {
             IntPtr syncp;
             music[m_currMusic].getSyncPoint((int)commanddata1, out syncp);
-            StringBuilder name = new StringBuilder(4);
+            StringBuilder name = new StringBuilder(5);
             uint offset;
-            music[m_currMusic].getSyncPointInfo(syncp, name, 4, out offset, TIMEUNIT.MS);
+            music[m_currMusic].getSyncPointInfo(syncp, name, 5, out offset, TIMEUNIT.MS);
 
             switch (name.ToString().ToLower())
             {
               case "exit":
+                PopDynamicQueue(false);
+                break;
               case "end":
-                PopDynamicQueue();
+                PopDynamicQueue(true);
                 break;
             }
           }
@@ -272,44 +268,56 @@ namespace SWEndor.Sound
           interruptActive = false;
           break;
         case FMOD.CHANNELCONTROL_CALLBACK_TYPE.SYNCPOINT:
-          PopDynamicQueue();
+          PopDynamicQueue(true);
           break;
       }
 
       return FMOD.RESULT.OK;
     }
 
-    private void PopDynamicQueue()
+    private void PopDynamicQueue(bool autogenerate)
     {
       SoundStartInfo ssi2;
       if (m_musicQueue.TryDequeue(out ssi2))
       {
         SetMusic(ssi2.Name, false, ssi2.Position);
       }
-      else
+      else if (autogenerate)
       {
         // find next piece dynamically using Mood
-        Piece p = Piece.Factory.Get(m_currMusic);
-        if (p == null)
-          return;
-
-        int mood = 0; // get mood from somewhere...
-
-        string next = null;
-        if (p.MoodTransitions != null
-          && p.MoodTransitions.Length > mood
-          && p.MoodTransitions[mood] != null
-          && p.MoodTransitions[mood].Length > 0)
-        {
-          next = p.MoodTransitions[mood][Engine.Instance().Random.Next(0, p.MoodTransitions[mood].Length)];
-        }
+        string next = GetDynNext(m_currMusic);
+        if (next != null)
+          m_prevDynMusic = m_currMusic;
+        else
+          next = GetDynNext(m_prevDynMusic);
 
         if (next != null)
         {
           Piece pnext = Piece.Factory.Get(next);
           SetMusic(next, false, pnext?.EntryPosition ?? 0);
         }
+        else
+        { }
       }
+    }
+
+    private string GetDynNext(string currentSound)
+    {
+      Piece p = Piece.Factory.Get(currentSound);
+      if (p == null)
+        return null;
+
+      int mood = 0; // get mood from somewhere...
+
+      string next = null;
+      if (p.MoodTransitions != null
+        && p.MoodTransitions.Length > mood
+        && p.MoodTransitions[mood] != null
+        && p.MoodTransitions[mood].Length > 0)
+      {
+        next = p.MoodTransitions[mood][Globals.Engine.Random.Next(0, p.MoodTransitions[mood].Length)];
+      }
+      return next;
     }
 
     public bool SetSound(string name, bool interrupt = true, float volume = 1.0f, bool loop = true)//, uint position = 0)

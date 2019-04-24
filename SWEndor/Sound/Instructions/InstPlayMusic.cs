@@ -11,7 +11,7 @@ namespace SWEndor.Sound
       public bool Loop;
       public uint Position_ms;
       public uint End_ms;
-      public float FadeTime = 0.5f;
+      public float FadeTime = -1;
 
       public override void Process(SoundManager s)
       {
@@ -25,7 +25,7 @@ namespace SWEndor.Sound
           Channel fmodchannel = null;
           if (!isInterruptMusic)
           {
-            new InstStopMusic() { FadeTime = this.FadeTime }.Process(s);
+            new InstStopMusic() { FadeTime = 0.5f }.Process(s);
             s.fmodsystem.playSound(s.music[Name], s.musicgrp, true, out fmodchannel);
 
             if (FadeTime > 0)

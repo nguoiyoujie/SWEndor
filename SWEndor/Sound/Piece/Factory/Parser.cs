@@ -22,13 +22,13 @@ namespace SWEndor.Sound
           p.MoodTransitions = new string[maxmood][];
           for (int i = 0; i < maxmood; i++)
           {
-            string[] headers = file.GetStringList(sectionname, "Mood", new string[0]);
+            string[] headers = file.GetStringList(sectionname, "Mood" + i, new string[0]);
             //p.MoodTransitions[i] = new string[headers.Length];
             List<string> addlist = new List<string>();
             for (int j = 0; j < headers.Length; j++)
             {
               string snd = file.GetStringValue(headers[j], "Sound", null);
-              if (snd != null && new List<string>(SoundManager.Instance().GetMusicNames()).Contains(snd))
+              if (snd != null && new List<string>(Globals.Engine.SoundManager.GetMusicNames()).Contains(snd))
               {
                 addlist.Add(snd);
               }

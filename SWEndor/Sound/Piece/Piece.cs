@@ -18,7 +18,30 @@ namespace SWEndor.Sound
         if (SoundName == null)
           return;
 
-        FMOD.Sound sound = SoundManager.Instance().music[SoundName];
+        string name = SoundName;
+        FMOD.Sound sound = Globals.Engine.SoundManager.music[name];
+
+        if (sound == null)
+          return;
+
+        IntPtr ptr;
+        foreach (uint ep in ExitPositions)
+          if (ep > 0)
+            sound.addSyncPoint(ep, FMOD.TIMEUNIT.MS, "exit", out ptr);
+
+        if (EndPosition > 0)
+          sound.addSyncPoint(EndPosition, FMOD.TIMEUNIT.MS, "end", out ptr);
+
+        UpdateReuseSound();
+      }
+
+      private void UpdateReuseSound()
+      {
+        if (SoundName == null)
+          return;
+
+        string name = SoundName + "%";
+        FMOD.Sound sound = Globals.Engine.SoundManager.music[name];
 
         if (sound == null)
           return;
