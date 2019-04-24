@@ -13,10 +13,10 @@ namespace SWEndor.ActorTypes.Instances
 
     private YavinATI() : base("Yavin")
     {
-      SourceMesh = Engine.Instance().TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Engine.Instance().TVScene.CreateMeshBuilder(Key);
+        SourceMesh = Globals.Engine.TVScene.CreateMeshBuilder(Key);
 
         // 1 texture
         string texname = Path.Combine("planets", @"yavin.bmp");

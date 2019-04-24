@@ -12,12 +12,12 @@ namespace SWEndor.Input.Functions.Gameplay.Special
 
     public override void Process()
     {
-      Game.Instance().TimeControl.SpeedModifier = 1;
-      Screen2D.Instance().MessageSecondaryText(string.Format("DEV: TIMEMULT = {0:0.00}", Game.Instance().TimeControl.SpeedModifier)
+      Globals.Engine.Game.TimeControl.SpeedModifier = 1;
+      Globals.Engine.Screen2D.MessageSecondaryText(string.Format("DEV: TIMEMULT = {0:0.00}", Globals.Engine.Game.TimeControl.SpeedModifier)
                                                       , 1.5f
                                                       , new TV_COLOR(0.5f, 0.5f, 1, 1)
                                                       , 99);
-      Utilities.Clamp(ref Game.Instance().TimeControl.SpeedModifier, 0.01f, 100);
+      Utilities.Clamp(ref Globals.Engine.Game.TimeControl.SpeedModifier, 0.01f, 100);
     }
   }
 }

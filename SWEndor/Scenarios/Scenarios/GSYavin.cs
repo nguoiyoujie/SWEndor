@@ -63,80 +63,80 @@ namespace SWEndor.Scenarios
     public override void Load(ActorTypeInfo wing, string difficulty)
     {
       base.Load(wing, difficulty);
-      PlayerInfo.Instance().Name = "Red Five";
+      Globals.Engine.PlayerInfo.Name = "Red Five";
     }
 
     public override void Launch()
     {
       base.Launch();
 
-      GameScenarioManager.Instance().SceneCamera.SetLocalPosition(0, 0, 0);
-      GameScenarioManager.Instance().MaxBounds = new TV_3DVECTOR(15000, 1500, 10000);
-      GameScenarioManager.Instance().MinBounds = new TV_3DVECTOR(-15000, -1500, -15000);
-      GameScenarioManager.Instance().MaxAIBounds = new TV_3DVECTOR(15000, 1500, 10000);
-      GameScenarioManager.Instance().MinAIBounds = new TV_3DVECTOR(-15000, -1500, -15000);
+      Globals.Engine.GameScenarioManager.SceneCamera.SetLocalPosition(0, 0, 0);
+      Globals.Engine.GameScenarioManager.MaxBounds = new TV_3DVECTOR(15000, 1500, 10000);
+      Globals.Engine.GameScenarioManager.MinBounds = new TV_3DVECTOR(-15000, -1500, -15000);
+      Globals.Engine.GameScenarioManager.MaxAIBounds = new TV_3DVECTOR(15000, 1500, 10000);
+      Globals.Engine.GameScenarioManager.MinAIBounds = new TV_3DVECTOR(-15000, -1500, -15000);
 
       PlayerCameraInfo.Instance().CameraMode = CameraMode.FIRSTPERSON;
 
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Rebel_HyperspaceIn);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 3.5f, Rebel_MakePlayer);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 3f, Rebel_RemoveTorps);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 7.5f, Rebel_GiveControl);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 0.1f, Rebel_HyperspaceIn);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 3.5f, Rebel_MakePlayer);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 3f, Rebel_RemoveTorps);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 7.5f, Rebel_GiveControl);
 
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 6f, Message_01_EnemyShipsInbound);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 1f, Empire_FirstWave);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 8f, Empire_FirstTIEWave);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 9f, Rebel_YWingsAttackScan);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 6f, Message_01_EnemyShipsInbound);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 1f, Empire_FirstWave);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 8f, Empire_FirstTIEWave);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 9f, Rebel_YWingsAttackScan);
 
       switch (Difficulty.ToLower())
       {
         case "mental":
-          expiretime = Game.Instance().GameTime + 1230;
+          expiretime = Globals.Engine.Game.GameTime + 1230;
           break;
         case "hard":
-          expiretime = Game.Instance().GameTime + 1530;
+          expiretime = Globals.Engine.Game.GameTime + 1530;
           break;
         case "normal":
-          expiretime = Game.Instance().GameTime + 1530;
+          expiretime = Globals.Engine.Game.GameTime + 1530;
           break;
         case "easy":
         default:
-          expiretime = Game.Instance().GameTime + 1830;
+          expiretime = Globals.Engine.Game.GameTime + 1830;
           break;
       }
 
-      GameScenarioManager.Instance().AddEvent(expiretime, Message_100_RebelBaseInRange);
+      Globals.Engine.GameScenarioManager.AddEvent(expiretime, Message_100_RebelBaseInRange);
 
-      if (expiretime - Game.Instance().GameTime > 60)
-        GameScenarioManager.Instance().AddEvent(expiretime - 60, Message_101_RebelBase);
+      if (expiretime - Globals.Engine.Game.GameTime > 60)
+        Globals.Engine.GameScenarioManager.AddEvent(expiretime - 60, Message_101_RebelBase);
 
-      if (expiretime - Game.Instance().GameTime > 120)
-        GameScenarioManager.Instance().AddEvent(expiretime - 120, Message_102_RebelBase);
+      if (expiretime - Globals.Engine.Game.GameTime > 120)
+        Globals.Engine.GameScenarioManager.AddEvent(expiretime - 120, Message_102_RebelBase);
 
-      if (expiretime - Game.Instance().GameTime > 180)
-        GameScenarioManager.Instance().AddEvent(expiretime - 180, Message_103_RebelBase);
+      if (expiretime - Globals.Engine.Game.GameTime > 180)
+        Globals.Engine.GameScenarioManager.AddEvent(expiretime - 180, Message_103_RebelBase);
 
-      if (expiretime - Game.Instance().GameTime > 300)
-        GameScenarioManager.Instance().AddEvent(expiretime - 300, Message_105_RebelBase);
+      if (expiretime - Globals.Engine.Game.GameTime > 300)
+        Globals.Engine.GameScenarioManager.AddEvent(expiretime - 300, Message_105_RebelBase);
 
-      if (expiretime - Game.Instance().GameTime > 600)
-        GameScenarioManager.Instance().AddEvent(expiretime - 600, Message_110_RebelBase);
+      if (expiretime - Globals.Engine.Game.GameTime > 600)
+        Globals.Engine.GameScenarioManager.AddEvent(expiretime - 600, Message_110_RebelBase);
 
-      if (expiretime - Game.Instance().GameTime > 900)
-        GameScenarioManager.Instance().AddEvent(expiretime - 900, Message_115_RebelBase);
+      if (expiretime - Globals.Engine.Game.GameTime > 900)
+        Globals.Engine.GameScenarioManager.AddEvent(expiretime - 900, Message_115_RebelBase);
 
-      if (expiretime - Game.Instance().GameTime > 1200)
-        GameScenarioManager.Instance().AddEvent(expiretime - 1200, Message_120_RebelBase);
+      if (expiretime - Globals.Engine.Game.GameTime > 1200)
+        Globals.Engine.GameScenarioManager.AddEvent(expiretime - 1200, Message_120_RebelBase);
 
-      if (expiretime - Game.Instance().GameTime > 1500)
-        GameScenarioManager.Instance().AddEvent(expiretime - 1500, Message_125_RebelBase);
+      if (expiretime - Globals.Engine.Game.GameTime > 1500)
+        Globals.Engine.GameScenarioManager.AddEvent(expiretime - 1500, Message_125_RebelBase);
 
-      if (expiretime - Game.Instance().GameTime > 1800)
-        GameScenarioManager.Instance().AddEvent(expiretime - 1800, Message_130_RebelBase);
+      if (expiretime - Globals.Engine.Game.GameTime > 1800)
+        Globals.Engine.GameScenarioManager.AddEvent(expiretime - 1800, Message_130_RebelBase);
 
-      PlayerInfo.Instance().Lives = 4;
-      PlayerInfo.Instance().ScorePerLife = 1000000;
-      PlayerInfo.Instance().ScoreForNextLife = 1000000;
+      Globals.Engine.PlayerInfo.Lives = 4;
+      Globals.Engine.PlayerInfo.ScorePerLife = 1000000;
+      Globals.Engine.PlayerInfo.ScoreForNextLife = 1000000;
 
       MakePlayer = Rebel_MakePlayer;
 
@@ -173,14 +173,14 @@ namespace SWEndor.Scenarios
       names.Add("Gold Seven (Gazdo Woolcob)");
       names.Add("Gold Eight");
 
-      GameScenarioManager.Instance().Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1);
-      GameScenarioManager.Instance().Line2Color = new TV_COLOR(1f, 1f, 0.3f, 1);
-      //GameScenarioManager.Instance().Line3Color = new TV_COLOR(0.7f, 1f, 0.3f, 1);
+      Globals.Engine.GameScenarioManager.Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1);
+      Globals.Engine.GameScenarioManager.Line2Color = new TV_COLOR(1f, 1f, 0.3f, 1);
+      //Globals.Engine.GameScenarioManager.Line3Color = new TV_COLOR(0.7f, 1f, 0.3f, 1);
 
-      SoundManager.Instance().SetMusic("battle_1_1");
-      SoundManager.Instance().SetMusicLoop("battle_1_4");
+      Globals.Engine.SoundManager.SetMusic("battle_1_1");
+      Globals.Engine.SoundManager.SetMusicLoop("battle_1_4");
 
-      GameScenarioManager.Instance().IsCutsceneMode = false;
+      Globals.Engine.GameScenarioManager.IsCutsceneMode = false;
     }
 
     public override void LoadFactions()
@@ -263,7 +263,7 @@ namespace SWEndor.Scenarios
     {
       base.GameTick();
       CalibrateSceneObjects();
-      if (GameScenarioManager.Instance().GetGameStateB("in_battle"))
+      if (Globals.Engine.GameScenarioManager.GetGameStateB("in_battle"))
       {
         float enemystrength = 0;
         if (StageNumber == 0)
@@ -280,69 +280,69 @@ namespace SWEndor.Scenarios
               enemystrength += actor.StrengthFrac * 100 + (actor.SpawnerInfo != null ? actor.SpawnerInfo.SpawnsRemaining : 0);
           }
 
-          if (!GameScenarioManager.Instance().GetGameStateB("Stage1B"))
+          if (!Globals.Engine.GameScenarioManager.GetGameStateB("Stage1B"))
           {
             if (enemystrength < 50)
             {
-              GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 10f, Message_02_MoreEnemyShipsInbound);
-              GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 13f, Empire_SecondWave);
-              GameScenarioManager.Instance().SetGameStateB("Stage1B", true);
+              Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 10f, Message_02_MoreEnemyShipsInbound);
+              Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 13f, Empire_SecondWave);
+              Globals.Engine.GameScenarioManager.SetGameStateB("Stage1B", true);
             }
           }
-          else if (GameScenarioManager.Instance().GetGameStateB("Stage1BBegin"))
+          else if (Globals.Engine.GameScenarioManager.GetGameStateB("Stage1BBegin"))
           {
-            if (enemystrength == 0 && !GameScenarioManager.Instance().GetGameStateB("Stage1BEnd"))
+            if (enemystrength == 0 && !Globals.Engine.GameScenarioManager.GetGameStateB("Stage1BEnd"))
             {
-              GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 1.5f, Message_03_Clear);
-              GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 2f, Rebel_Forward);
-              GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 10f, Scene_Stage02_ApproachDeathStar);
-              GameScenarioManager.Instance().SetGameStateB("Stage1BEnd", true);
+              Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 1.5f, Message_03_Clear);
+              Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 2f, Rebel_Forward);
+              Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 10f, Scene_Stage02_ApproachDeathStar);
+              Globals.Engine.GameScenarioManager.SetGameStateB("Stage1BEnd", true);
             }
           }
         }
         else if (StageNumber == 2)
         {
-          GameScenarioManager.Instance().UpdateActorLists(m_CriticalGroundObjects);
+          Globals.Engine.GameScenarioManager.UpdateActorLists(m_CriticalGroundObjects);
           enemystrength = MainEnemyFaction.GetWings().Count;
           enemystrength += MainEnemyFaction.GetShips().Count;
           enemystrength += m_CriticalGroundObjects.Count;
 
-          if (enemystrength == 0 && !GameScenarioManager.Instance().GetGameStateB("Stage2End"))
+          if (enemystrength == 0 && !Globals.Engine.GameScenarioManager.GetGameStateB("Stage2End"))
           {
-            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 1.5f, Message_05_Clear);
-            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 2f, Rebel_Forward);
-            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 10f, Scene_Stage03_Spawn);
-            GameScenarioManager.Instance().SetGameStateB("Stage2End", true);
+            Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 1.5f, Message_05_Clear);
+            Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 2f, Rebel_Forward);
+            Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 10f, Scene_Stage03_Spawn);
+            Globals.Engine.GameScenarioManager.SetGameStateB("Stage2End", true);
           }
         }
         else if (StageNumber == 3)
         {
-          GameScenarioManager.Instance().UpdateActorLists(m_CriticalGroundObjects);
+          Globals.Engine.GameScenarioManager.UpdateActorLists(m_CriticalGroundObjects);
           enemystrength = MainEnemyFaction.GetWings().Count;
           enemystrength += MainEnemyFaction.GetShips().Count;
           enemystrength += m_CriticalGroundObjects.Count;
 
-          if (enemystrength == 0 && !GameScenarioManager.Instance().GetGameStateB("Stage3End"))
+          if (enemystrength == 0 && !Globals.Engine.GameScenarioManager.GetGameStateB("Stage3End"))
           {
-            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 1.5f, Message_07_Clear);
-            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 2f, Rebel_Forward);
-            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 10f, Scene_Stage04_Spawn);
-            GameScenarioManager.Instance().SetGameStateB("Stage3End", true);
+            Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 1.5f, Message_07_Clear);
+            Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 2f, Rebel_Forward);
+            Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 10f, Scene_Stage04_Spawn);
+            Globals.Engine.GameScenarioManager.SetGameStateB("Stage3End", true);
           }
         }
         else if (StageNumber == 4)
         {
-          GameScenarioManager.Instance().UpdateActorLists(m_CriticalGroundObjects);
+          Globals.Engine.GameScenarioManager.UpdateActorLists(m_CriticalGroundObjects);
           enemystrength = MainEnemyFaction.GetWings().Count;
           enemystrength += MainEnemyFaction.GetShips().Count;
           enemystrength += m_CriticalGroundObjects.Count;
 
-          if (enemystrength == 0 && !GameScenarioManager.Instance().GetGameStateB("Stage4End"))
+          if (enemystrength == 0 && !Globals.Engine.GameScenarioManager.GetGameStateB("Stage4End"))
           {
-            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 1.5f, Message_09_Clear);
-            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 2f, Rebel_Forward);
-            GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 10f, Scene_Stage05_Spawn);
-            GameScenarioManager.Instance().SetGameStateB("Stage4End", true);
+            Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 1.5f, Message_09_Clear);
+            Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 2f, Rebel_Forward);
+            Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 10f, Scene_Stage05_Spawn);
+            Globals.Engine.GameScenarioManager.SetGameStateB("Stage4End", true);
           }
         }
         else if (StageNumber == 5)
@@ -353,51 +353,51 @@ namespace SWEndor.Scenarios
             player.CombatInfo.DamageModifier = 0.75f;
 
             /*
-            if (PlayerInfo.Instance().Actor != null && !GameScenarioManager.Instance().GetGameStateB("Stage5StartRun"))
+            if (Globals.Engine.Player.Actor != null && !Globals.Engine.GameScenarioManager.GetGameStateB("Stage5StartRun"))
             { 
-              ActionManager.ForceClearQueue(PlayerInfo.Instance().Actor);
-              if (PlayerInfo.Instance().Actor.GetPosition().x > 250)
-                ActionManager.QueueFirst(PlayerInfo.Instance().Actor, new Move(new TV_3DVECTOR(0, 1500, 200), 1000, can_interrupt: false));
+              ActionManager.ForceClearQueue(Globals.Engine.Player.Actor);
+              if (Globals.Engine.Player.Actor.GetPosition().x > 250)
+                ActionManager.QueueFirst(Globals.Engine.Player.Actor, new Move(new TV_3DVECTOR(0, 1500, 200), 1000, can_interrupt: false));
               else
-                ActionManager.QueueNext(PlayerInfo.Instance().Actor, new Move(new TV_3DVECTOR(GameScenarioManager.Instance().MaxBounds.x - 500, -220, 0), 1000, can_interrupt: false));
+                ActionManager.QueueNext(Globals.Engine.Player.Actor, new Move(new TV_3DVECTOR(Globals.Engine.GameScenarioManager.MaxBounds.x - 500, -220, 0), 1000, can_interrupt: false));
             }
-            else if (PlayerInfo.Instance().Actor != null && GameScenarioManager.Instance().GetGameStateB("Stage5StartRun") && (PlayerInfo.Instance().Actor.CurrentAction is AttackActor || PlayerInfo.Instance().Actor.CurrentAction is Wait))
+            else if (Globals.Engine.Player.Actor != null && Globals.Engine.GameScenarioManager.GetGameStateB("Stage5StartRun") && (Globals.Engine.Player.Actor.CurrentAction is AttackActor || Globals.Engine.Player.Actor.CurrentAction is Wait))
             {
-              ActionManager.ForceClearQueue(PlayerInfo.Instance().Actor);
-              ActionManager.QueueFirst(PlayerInfo.Instance().Actor, new Move(new TV_3DVECTOR(PlayerInfo.Instance().Actor.GetPosition().x + 2000, PlayerInfo.Instance().Actor.GetPosition().y, PlayerInfo.Instance().Actor.GetPosition().z), 1000, can_interrupt: false));
+              ActionManager.ForceClearQueue(Globals.Engine.Player.Actor);
+              ActionManager.QueueFirst(Globals.Engine.Player.Actor, new Move(new TV_3DVECTOR(Globals.Engine.Player.Actor.GetPosition().x + 2000, Globals.Engine.Player.Actor.GetPosition().y, Globals.Engine.Player.Actor.GetPosition().z), 1000, can_interrupt: false));
             }
             */
 
-            if (player.GetPosition().x > GameScenarioManager.Instance().MaxBounds.x - 500
+            if (player.GetPosition().x > Globals.Engine.GameScenarioManager.MaxBounds.x - 500
              && player.GetPosition().y < -180
              && player.GetPosition().z < 120
              && player.GetPosition().z > -120
              && !Stage5StartRun)
             {
-              GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Scene_Stage05b_Spawn);
+              Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 0.1f, Scene_Stage05b_Spawn);
               Stage5StartRun = true;
-              Screen2D.Instance().OverrideTargetingRadar = true;
+              Globals.Engine.Screen2D.OverrideTargetingRadar = true;
             }
             else if (Stage5StartRun)
             {
               if (last_target_distX < player.GetPosition().x)
               {
-                PlayerInfo.Instance().Score.Score += (player.GetPosition().x - last_target_distX) * 10;
+                Globals.Engine.PlayerInfo.Score.Score += (player.GetPosition().x - last_target_distX) * 10;
                 last_target_distX = player.GetPosition().x;
               }
-              if (last_sound_distX < player.GetPosition().x && !GameScenarioManager.Instance().IsCutsceneMode)
+              if (last_sound_distX < player.GetPosition().x && !Globals.Engine.GameScenarioManager.IsCutsceneMode)
               {
-                SoundManager.Instance().SetSound("button_3");
+                Globals.Engine.SoundManager.SetSound("button_3");
                 last_sound_distX = player.GetPosition().x + 250;
               }
-              Screen2D.Instance().TargetingRadar_text = string.Format("{0:00000000}", (target_distX - player.GetPosition().x) * 30);
+              Globals.Engine.Screen2D.TargetingRadar_text = string.Format("{0:00000000}", (target_distX - player.GetPosition().x) * 30);
               Scene_Stage05b_ContinuouslySpawnRoute(null);
 
               if (player.GetPosition().x > vader_distX 
                 && player.ActorState == ActorState.NORMAL
                 && !Stage5End)
               {
-                GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Scene_Stage06_Vader);
+                Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 0.1f, Scene_Stage06_Vader);
                 Stage5End = true;
               }
             }
@@ -410,7 +410,7 @@ namespace SWEndor.Scenarios
           {
             if (!Stage6VaderEnd)
             {
-              if (Screen2D.Instance().ShowRadar)
+              if (Globals.Engine.Screen2D.ShowRadar)
                 player.CombatInfo.DamageModifier = 2.5f;
               else
                 player.CombatInfo.DamageModifier = 1f;
@@ -420,24 +420,24 @@ namespace SWEndor.Scenarios
             {
               if (last_target_distX < player.GetPosition().x)
               {
-                PlayerInfo.Instance().Score.Score += (player.GetPosition().x - last_target_distX) * 10;
+                Globals.Engine.PlayerInfo.Score.Score += (player.GetPosition().x - last_target_distX) * 10;
                 last_target_distX = player.GetPosition().x;
               }
 
-              if (last_sound_distX < player.GetPosition().x && !GameScenarioManager.Instance().IsCutsceneMode)
+              if (last_sound_distX < player.GetPosition().x && !Globals.Engine.GameScenarioManager.IsCutsceneMode)
               {
-                SoundManager.Instance().SetSound("button_3");
+                Globals.Engine.SoundManager.SetSound("button_3");
                 last_sound_distX = player.GetPosition().x + 250;
               }
 
-              Screen2D.Instance().TargetingRadar_text = string.Format("{0:00000000}", (target_distX - player.GetPosition().x) * 30);
+              Globals.Engine.Screen2D.TargetingRadar_text = string.Format("{0:00000000}", (target_distX - player.GetPosition().x) * 30);
               Scene_Stage05b_ContinuouslySpawnRoute(null);
 
               if (player.GetPosition().x > vaderend_distX 
                 && player.ActorState == ActorState.NORMAL 
                 && !Stage6VaderEnd)
               {
-                GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Scene_Stage06_VaderEnd);
+                Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 0.1f, Scene_Stage06_VaderEnd);
                 Stage6VaderEnd = true;
                 Rebel_RemoveTorps(null);
               }
@@ -467,24 +467,24 @@ namespace SWEndor.Scenarios
 
       if (!Stage5StartRun)
       {
-        if (GameScenarioManager.Instance().Scenario.TimeSinceLostWing < Game.Instance().GameTime || Game.Instance().GameTime % 0.2f > 0.1f)
+        if (Globals.Engine.GameScenarioManager.Scenario.TimeSinceLostWing < Globals.Engine.Game.GameTime || Globals.Engine.Game.GameTime % 0.2f > 0.1f)
         {
-          GameScenarioManager.Instance().Line1Text = string.Format("WINGS: {0}", MainAllyFaction.GetWings().Count);
+          Globals.Engine.GameScenarioManager.Line1Text = string.Format("WINGS: {0}", MainAllyFaction.GetWings().Count);
         }
         else
         {
-          GameScenarioManager.Instance().Line1Text = string.Format("");
+          Globals.Engine.GameScenarioManager.Line1Text = string.Format("");
         }
       }
       else
       {
-        GameScenarioManager.Instance().Line1Text = Screen2D.Instance().TargetingRadar_text;
+        Globals.Engine.GameScenarioManager.Line1Text = Globals.Engine.Screen2D.TargetingRadar_text;
       }
 
-      GameScenarioManager.Instance().Line2Text = string.Format("TIME: {0:00}:{1:00}", (int)(expiretime - Game.Instance().GameTime) / 60, (int)(expiretime - Game.Instance().GameTime) % 60);
-      if ((int)(expiretime - Game.Instance().GameTime) / 60 < 4)
+      Globals.Engine.GameScenarioManager.Line2Text = string.Format("TIME: {0:00}:{1:00}", (int)(expiretime - Globals.Engine.Game.GameTime) / 60, (int)(expiretime - Globals.Engine.Game.GameTime) % 60);
+      if ((int)(expiretime - Globals.Engine.Game.GameTime) / 60 < 4)
       {
-        GameScenarioManager.Instance().Line2Color = new TV_COLOR(1, 0.3f, 0.3f, 1);
+        Globals.Engine.GameScenarioManager.Line2Color = new TV_COLOR(1, 0.3f, 0.3f, 1);
       }
     }
 
@@ -494,31 +494,31 @@ namespace SWEndor.Scenarios
       {
         if (StageNumber < 2)
         {
-          float x_yv = (PlayerInfo.Instance().Position.y > 0) ? (PlayerInfo.Instance().Position.y / 6f) - 18000.0f : (PlayerInfo.Instance().Position.y / 2.5f) - 18000.0f;
-          float y_yv = PlayerInfo.Instance().Position.x / 1.2f;
-          float z_yv = PlayerInfo.Instance().Position.z / 1.2f;
+          float x_yv = (Globals.Engine.PlayerInfo.Position.y > 0) ? (Globals.Engine.PlayerInfo.Position.y / 6f) - 18000.0f : (Globals.Engine.PlayerInfo.Position.y / 2.5f) - 18000.0f;
+          float y_yv = Globals.Engine.PlayerInfo.Position.x / 1.2f;
+          float z_yv = Globals.Engine.PlayerInfo.Position.z / 1.2f;
           m_AYavin.SetLocalPosition(x_yv, y_yv, z_yv);
         }
         else
         {
-          float x_yv = PlayerInfo.Instance().Position.x / 1.2f;
+          float x_yv = Globals.Engine.PlayerInfo.Position.x / 1.2f;
           float y_yv = 20000.0f;
-          float z_yv = PlayerInfo.Instance().Position.z / 1.2f;
+          float z_yv = Globals.Engine.PlayerInfo.Position.z / 1.2f;
           m_AYavin.SetLocalPosition(x_yv, y_yv, z_yv);
         }
       }
       if (m_AYavin4 != null && m_AYavin4.CreationState == CreationState.ACTIVE)
       {
-        float x_y4 = PlayerInfo.Instance().Position.x / 10f;
-        float y_y4 = PlayerInfo.Instance().Position.y / 2f;
-        float z_y4 = (PlayerInfo.Instance().Position.z > 0) ? PlayerInfo.Instance().Position.z / 1.5f + 30000f : PlayerInfo.Instance().Position.z / 100f + 30000f;
+        float x_y4 = Globals.Engine.PlayerInfo.Position.x / 10f;
+        float y_y4 = Globals.Engine.PlayerInfo.Position.y / 2f;
+        float z_y4 = (Globals.Engine.PlayerInfo.Position.z > 0) ? Globals.Engine.PlayerInfo.Position.z / 1.5f + 30000f : Globals.Engine.PlayerInfo.Position.z / 100f + 30000f;
         m_AYavin4.SetLocalPosition(x_y4, y_y4, z_y4);
       }
       if (m_ADS != null && m_ADS.CreationState == CreationState.ACTIVE)
       {
-        float x_ds = PlayerInfo.Instance().Position.x / 5f;
-        float y_ds = (PlayerInfo.Instance().Position.y / 1.5f) + 3200.0f;
-        float z_ds = (PlayerInfo.Instance().Position.z > 0) ? PlayerInfo.Instance().Position.z / 1.5f - 30000f : PlayerInfo.Instance().Position.z / 100f - 30000f;
+        float x_ds = Globals.Engine.PlayerInfo.Position.x / 5f;
+        float y_ds = (Globals.Engine.PlayerInfo.Position.y / 1.5f) + 3200.0f;
+        float z_ds = (Globals.Engine.PlayerInfo.Position.z > 0) ? Globals.Engine.PlayerInfo.Position.z / 1.5f - 30000f : Globals.Engine.PlayerInfo.Position.z / 100f - 30000f;
         m_ADS.SetLocalPosition(x_ds, y_ds, z_ds);
       }
     }
@@ -530,27 +530,27 @@ namespace SWEndor.Scenarios
       //ActorCreationInfo acinfo;
       ActorInfo ainfo;
 
-      GameScenarioManager.Instance().SceneCamera.SetLocalPosition(150, 100, GameScenarioManager.Instance().MaxBounds.z - 1000);
+      Globals.Engine.GameScenarioManager.SceneCamera.SetLocalPosition(150, 100, Globals.Engine.GameScenarioManager.MaxBounds.z - 1000);
 
       // Player X-Wing
       ainfo = new ActorSpawnInfo
       {
-        Type = PlayerInfo.Instance().ActorType,
+        Type = Globals.Engine.PlayerInfo.ActorType,
         Name = "(Player)",
         RegisterName = "",
         SidebarName = "",
-        SpawnTime = Game.Instance().GameTime,
+        SpawnTime = Globals.Engine.Game.GameTime,
         Faction = MainAllyFaction,
-        Position = new TV_3DVECTOR(0, 0, GameScenarioManager.Instance().MaxBounds.z - 150),
+        Position = new TV_3DVECTOR(0, 0, Globals.Engine.GameScenarioManager.MaxBounds.z - 150),
         Rotation = new TV_3DVECTOR(0, 180, 0),
         Actions = new ActionInfo[] { new Lock()
-                                  , new Move(new TV_3DVECTOR(Engine.Instance().Random.Next(-5, 5), Engine.Instance().Random.Next(-5, 5), GameScenarioManager.Instance().MaxBounds.z - 150 - 4500)
-                                                    , PlayerInfo.Instance().ActorType.MaxSpeed)},
+                                  , new Move(new TV_3DVECTOR(Globals.Engine.Random.Next(-5, 5), Globals.Engine.Random.Next(-5, 5), Globals.Engine.GameScenarioManager.MaxBounds.z - 150 - 4500)
+                                                    , Globals.Engine.PlayerInfo.ActorType.MaxSpeed)},
         Registries = null
       }.Spawn(this);
 
-      GameScenarioManager.Instance().CameraTargetActor = ainfo;
-      PlayerInfo.Instance().TempActorID = ainfo.ID;
+      Globals.Engine.GameScenarioManager.CameraTargetActor = ainfo;
+      Globals.Engine.PlayerInfo.TempActorID = ainfo.ID;
 
       // X-Wings x21, Y-Wing x8
       List<TV_3DVECTOR> positions = new List<TV_3DVECTOR>();
@@ -558,9 +558,9 @@ namespace SWEndor.Scenarios
       for (int i = 0; i < 29; i++)
       {
         if (i % 2 == 1)
-          positions.Add(new TV_3DVECTOR(Engine.Instance().Random.Next(-2800, -80), Engine.Instance().Random.Next(-200, 200), GameScenarioManager.Instance().MaxBounds.z + Engine.Instance().Random.Next(-2200, -150)));
+          positions.Add(new TV_3DVECTOR(Globals.Engine.Random.Next(-2800, -80), Globals.Engine.Random.Next(-200, 200), Globals.Engine.GameScenarioManager.MaxBounds.z + Globals.Engine.Random.Next(-2200, -150)));
         else
-          positions.Add(new TV_3DVECTOR(Engine.Instance().Random.Next(80, 2800), Engine.Instance().Random.Next(-200, 200), GameScenarioManager.Instance().MaxBounds.z + Engine.Instance().Random.Next(-2200, -150)));
+          positions.Add(new TV_3DVECTOR(Globals.Engine.Random.Next(80, 2800), Globals.Engine.Random.Next(-200, 200), Globals.Engine.GameScenarioManager.MaxBounds.z + Globals.Engine.Random.Next(-2200, -150)));
       }
 
       for (int i = 0; i < positions.Count; i++)
@@ -574,12 +574,12 @@ namespace SWEndor.Scenarios
             Name = names[i],
             RegisterName = "",
             SidebarName = names[i],
-            SpawnTime = Game.Instance().GameTime,
+            SpawnTime = Globals.Engine.Game.GameTime,
             Faction = MainAllyFaction,
             Position = v,
             Rotation = new TV_3DVECTOR(0, 180, 0),
             Actions = new ActionInfo[] { new Lock()
-                                       , new Move(new TV_3DVECTOR(v.x + Engine.Instance().Random.Next(-5, 5), v.y + Engine.Instance().Random.Next(-5, 5), v.z - 4500)
+                                       , new Move(new TV_3DVECTOR(v.x + Globals.Engine.Random.Next(-5, 5), v.y + Globals.Engine.Random.Next(-5, 5), v.z - 4500)
                                        , XWingATI.Instance().MaxSpeed)},
             Registries = null
           }.Spawn(this);
@@ -594,12 +594,12 @@ namespace SWEndor.Scenarios
             Name = names[i],
             RegisterName = "",
             SidebarName = names[i],
-            SpawnTime = Game.Instance().GameTime,
+            SpawnTime = Globals.Engine.Game.GameTime,
             Faction = MainAllyFaction,
             Position = v,
             Rotation = new TV_3DVECTOR(0, 180, 0),
             Actions = new ActionInfo[] { new Lock()
-                                       , new Move(new TV_3DVECTOR(v.x + Engine.Instance().Random.Next(-5, 5), v.y + Engine.Instance().Random.Next(-5, 5), v.z - 4500)
+                                       , new Move(new TV_3DVECTOR(v.x + Globals.Engine.Random.Next(-5, 5), v.y + Globals.Engine.Random.Next(-5, 5), v.z - 4500)
                                        , YWingATI.Instance().MaxSpeed)},
             Registries = null
           }.Spawn(this);
@@ -669,8 +669,8 @@ namespace SWEndor.Scenarios
           player.MovementInfo.MinSpeed = player.MovementInfo.MaxSpeed * 0.75f;
         }
       }
-      PlayerInfo.Instance().ResetPrimaryWeapon();
-      PlayerInfo.Instance().ResetSecondaryWeapon();
+      Globals.Engine.PlayerInfo.ResetPrimaryWeapon();
+      Globals.Engine.PlayerInfo.ResetSecondaryWeapon();
     }
 
     public void Rebel_YWingsAttackScan(object[] param)
@@ -684,14 +684,14 @@ namespace SWEndor.Scenarios
           {
             if (actor.TypeInfo is YWingATI || actor.TypeInfo is BWingATI)
             {
-              int rsID = MainEnemyFaction.GetShips()[Engine.Instance().Random.Next(0, MainEnemyFaction.GetShips().Count)];
+              int rsID = MainEnemyFaction.GetShips()[Globals.Engine.Random.Next(0, MainEnemyFaction.GetShips().Count)];
               ActorInfo rs = ActorInfo.Factory.Get(actorID);
               {
                 foreach (int i in rs.GetAllChildren(1))
                 {
                   ActorInfo rc = ActorInfo.Factory.Get(i);
                   if (rc.RegenerationInfo.ParentRegenRate > 0)
-                    if (Engine.Instance().Random.NextDouble() > 0.4f)
+                    if (Globals.Engine.Random.NextDouble() > 0.4f)
                       rsID = rc.ID;
                 }
               }
@@ -703,17 +703,17 @@ namespace SWEndor.Scenarios
         }
       }
 
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5f, Rebel_YWingsAttackScan);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 5f, Rebel_YWingsAttackScan);
     }
 
     public void Rebel_MakePlayer(object[] param)
     {
-      PlayerInfo.Instance().ActorID = PlayerInfo.Instance().TempActorID;
-      if (PlayerInfo.Instance().Actor == null || PlayerInfo.Instance().Actor.CreationState == CreationState.DISPOSED)
+      Globals.Engine.PlayerInfo.ActorID = Globals.Engine.PlayerInfo.TempActorID;
+      if (Globals.Engine.PlayerInfo.Actor == null || Globals.Engine.PlayerInfo.Actor.CreationState == CreationState.DISPOSED)
       {
-        if (PlayerInfo.Instance().Lives > 0)
+        if (Globals.Engine.PlayerInfo.Lives > 0)
         {
-          PlayerInfo.Instance().Lives--;
+          Globals.Engine.PlayerInfo.Lives--;
 
           TV_3DVECTOR pos = new TV_3DVECTOR();
           TV_3DVECTOR rot = new TV_3DVECTOR();
@@ -727,7 +727,7 @@ namespace SWEndor.Scenarios
               pos = new TV_3DVECTOR(vader_distX - 5000, -200, 0);
               Stage6VaderEnd = false;
               Stage6VaderAttacking = false;
-              GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Scene_Stage06_Vader);
+              Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 0.1f, Scene_Stage06_Vader);
             }
             else
             {
@@ -736,17 +736,17 @@ namespace SWEndor.Scenarios
           }
           else
           {
-            pos = new TV_3DVECTOR(0, 200, GameScenarioManager.Instance().MaxBounds.z - 1000);
+            pos = new TV_3DVECTOR(0, 200, Globals.Engine.GameScenarioManager.MaxBounds.z - 1000);
             rot = new TV_3DVECTOR(0, 180, 0);
           }
 
           ActorInfo ainfo = new ActorSpawnInfo
           {
-            Type = PlayerInfo.Instance().ActorType,
+            Type = Globals.Engine.PlayerInfo.ActorType,
             Name = "(Player)",
             RegisterName = "",
             SidebarName = "",
-            SpawnTime = Game.Instance().GameTime,
+            SpawnTime = Globals.Engine.Game.GameTime,
             Faction = MainAllyFaction,
             Position = pos,
             Rotation = rot,
@@ -754,11 +754,11 @@ namespace SWEndor.Scenarios
             Registries = null
           }.Spawn(this);
 
-          PlayerInfo.Instance().ActorID = ainfo.ID;
+          Globals.Engine.PlayerInfo.ActorID = ainfo.ID;
         }
       }
-      m_PlayerID = PlayerInfo.Instance().ActorID;
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Rebel_RemoveTorps);
+      m_PlayerID = Globals.Engine.PlayerInfo.ActorID;
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 0.1f, Rebel_RemoveTorps);
     }
 
     public void Rebel_GiveControl(object[] param)
@@ -773,8 +773,8 @@ namespace SWEndor.Scenarios
           actor.MovementInfo.Speed = actor.MovementInfo.MaxSpeed;
         }
       }
-      PlayerInfo.Instance().IsMovementControlsEnabled = true;
-      GameScenarioManager.Instance().SetGameStateB("in_battle", true);
+      Globals.Engine.PlayerInfo.IsMovementControlsEnabled = true;
+      Globals.Engine.GameScenarioManager.SetGameStateB("in_battle", true);
     }
 
     public void Rebel_Forward(object[] param)
@@ -796,7 +796,7 @@ namespace SWEndor.Scenarios
       int sw = -1;
       float x = 0;
       float y = 0;
-      float z = GameScenarioManager.Instance().MaxBounds.z - 150 ;
+      float z = Globals.Engine.GameScenarioManager.MaxBounds.z - 150 ;
       foreach (int actorID in MainAllyFaction.GetWings())
       {
         ActorInfo actor = ActorInfo.Factory.Get(actorID);
@@ -805,7 +805,7 @@ namespace SWEndor.Scenarios
           ActionManager.ForceClearQueue(actorID);
           if (actor.Name == "(Player)")
           {
-            actor.SetLocalPosition(0, 100, GameScenarioManager.Instance().MaxBounds.z - 150);
+            actor.SetLocalPosition(0, 100, Globals.Engine.GameScenarioManager.MaxBounds.z - 150);
             actor.SetLocalRotation(0, 180, 0);
             actor.MovementInfo.ResetTurn();
             actor.MovementInfo.Speed = actor.MovementInfo.MaxSpeed;
@@ -813,9 +813,9 @@ namespace SWEndor.Scenarios
           }
           else
           {
-            x = Engine.Instance().Random.Next(80, 1800) * sw;
-            y = Engine.Instance().Random.Next(-40, 100);
-            z = GameScenarioManager.Instance().MaxBounds.z + Engine.Instance().Random.Next(-1800, -150);
+            x = Globals.Engine.Random.Next(80, 1800) * sw;
+            y = Globals.Engine.Random.Next(-40, 100);
+            z = Globals.Engine.GameScenarioManager.MaxBounds.z + Globals.Engine.Random.Next(-1800, -150);
             sw = -sw;
             actor.SetLocalPosition(x, y, z);
             actor.SetLocalRotation(0, 180, 0);
@@ -851,7 +851,7 @@ namespace SWEndor.Scenarios
         Name = "",
         RegisterName = "",
         SidebarName = type.Name.Substring(0, type.Name.IndexOf(' ')).ToUpper(),
-        SpawnTime = Game.Instance().GameTime,
+        SpawnTime = Globals.Engine.Game.GameTime,
         Faction = MainEnemyFaction,
         Position = position + hyperspaceInOffset,
         Rotation = new TV_3DVECTOR(),
@@ -912,7 +912,7 @@ namespace SWEndor.Scenarios
           Empire_TIEWave(new object[] { 3 });
           break;
       }
-      GameScenarioManager.Instance().SetGameStateB("Stage1BBegin", true);
+      Globals.Engine.GameScenarioManager.SetGameStateB("Stage1BBegin", true);
     }
 
     public void Empire_FirstTIEWave(object[] param)
@@ -938,9 +938,9 @@ namespace SWEndor.Scenarios
       // TIEs
       for (int k = 1; k < count; k++)
       {
-        float fx = Engine.Instance().Random.Next(-500, 500);
-        float fy = Engine.Instance().Random.Next(-500, 0);
-        float fz = Engine.Instance().Random.Next(-2500, 2500);
+        float fx = Globals.Engine.Random.Next(-500, 500);
+        float fy = Globals.Engine.Random.Next(-500, 0);
+        float fz = Globals.Engine.Random.Next(-2500, 2500);
 
         for (int x = 0; x <= 1; x++)
         {
@@ -961,7 +961,7 @@ namespace SWEndor.Scenarios
               Name = "",
               RegisterName = "",
               SidebarName = "",
-              SpawnTime = Game.Instance().GameTime,
+              SpawnTime = Globals.Engine.Game.GameTime,
               Faction = MainEnemyFaction,
               Position = new TV_3DVECTOR(fx + x * 100, fy + y * 100, fz - 4000 - k * 100),
               Rotation = new TV_3DVECTOR(),
@@ -982,8 +982,8 @@ namespace SWEndor.Scenarios
       float t = 0;
       for (int k = 1; k < sets; k++)
       {
-        float fx = Engine.Instance().Random.Next(-2500, 2500);
-        float fy = Engine.Instance().Random.Next(-200, 800);
+        float fx = Globals.Engine.Random.Next(-2500, 2500);
+        float fy = Globals.Engine.Random.Next(-200, 800);
 
         for (int x = 0; x <= 1; x++)
         {
@@ -1003,9 +1003,9 @@ namespace SWEndor.Scenarios
               Name = "",
               RegisterName = "",
               SidebarName = "",
-              SpawnTime = Game.Instance().GameTime + t,
+              SpawnTime = Globals.Engine.Game.GameTime + t,
               Faction = MainEnemyFaction,
-              Position = new TV_3DVECTOR(fx + x * 100, fy + y * 100, GameScenarioManager.Instance().MinBounds.z - 5000),
+              Position = new TV_3DVECTOR(fx + x * 100, fy + y * 100, Globals.Engine.GameScenarioManager.MinBounds.z - 5000),
               Rotation = new TV_3DVECTOR(),
               Actions = actions
             }.Spawn(this);
@@ -1018,7 +1018,7 @@ namespace SWEndor.Scenarios
     public void Empire_Towers01(object[] param)
     {
       float dist = 2500;
-      float height = GameScenarioManager.Instance().MinBounds.y;
+      float height = Globals.Engine.GameScenarioManager.MinBounds.y;
 
       for (int x = -2; x <= 2; x++)
         for (int z = -3; z <= -1; z++)
@@ -1028,7 +1028,7 @@ namespace SWEndor.Scenarios
     public void Empire_Towers02(object[] param)
     {
       float dist = 2500;
-      float height = GameScenarioManager.Instance().MinBounds.y;
+      float height = Globals.Engine.GameScenarioManager.MinBounds.y;
 
       for (int x = -3; x <= 3; x += 2)
         for (int z = -2; z <= -1; z++)
@@ -1043,7 +1043,7 @@ namespace SWEndor.Scenarios
         Name = "",
         RegisterName = "",
         SidebarName = "",
-        SpawnTime = Game.Instance().GameTime,
+        SpawnTime = Globals.Engine.Game.GameTime,
         Faction = FactionInfo.Factory.Get("Empire_DeathStarDefenses"),
         Position = position,
         Rotation = new TV_3DVECTOR()
@@ -1071,7 +1071,7 @@ namespace SWEndor.Scenarios
         Name = "",
         RegisterName = "",
         SidebarName = "",
-        SpawnTime = Game.Instance().GameTime,
+        SpawnTime = Globals.Engine.Game.GameTime,
         Faction = FactionInfo.Factory.Get("Empire_DeathStarDefenses"),
         Position = position,
         Rotation = new TV_3DVECTOR()
@@ -1091,7 +1091,7 @@ namespace SWEndor.Scenarios
     public void Empire_Towers03(object[] param)
     {
       float dist = 2500;
-      float height = GameScenarioManager.Instance().MinBounds.y;
+      float height = Globals.Engine.GameScenarioManager.MinBounds.y;
 
       for (int z = -3; z <= 0; z++)
       {
@@ -1114,7 +1114,7 @@ namespace SWEndor.Scenarios
         Name = "",
         RegisterName = "",
         SidebarName = "",
-        SpawnTime = Game.Instance().GameTime,
+        SpawnTime = Globals.Engine.Game.GameTime,
         Faction = FactionInfo.Factory.Get("Empire_DeathStarDefenses"),
         Position = position,
         Rotation = new TV_3DVECTOR()
@@ -1148,16 +1148,16 @@ namespace SWEndor.Scenarios
       ActorInfo player = ActorInfo.Factory.Get(m_PlayerID);
       if (player != null)
       {
-        m_Player_PrimaryWeapon = PlayerInfo.Instance().PrimaryWeapon;
-        m_Player_SecondaryWeapon = PlayerInfo.Instance().SecondaryWeapon;
+        m_Player_PrimaryWeapon = Globals.Engine.PlayerInfo.PrimaryWeapon;
+        m_Player_SecondaryWeapon = Globals.Engine.PlayerInfo.SecondaryWeapon;
         m_Player_DamageModifier = player.CombatInfo.DamageModifier;
         player.CombatInfo.DamageModifier = 0;
         ActionManager.ForceClearQueue(m_PlayerID);
         ActionManager.QueueNext(m_PlayerID, new Lock());
       }
-      PlayerInfo.Instance().ActorID = GameScenarioManager.Instance().SceneCamera.ID;
+      Globals.Engine.PlayerInfo.ActorID = Globals.Engine.GameScenarioManager.SceneCamera.ID;
       
-      GameScenarioManager.Instance().IsCutsceneMode = true;
+      Globals.Engine.GameScenarioManager.IsCutsceneMode = true;
     }
 
     public void Scene_ExitCutscene(object[] param)
@@ -1165,34 +1165,34 @@ namespace SWEndor.Scenarios
       ActorInfo player = ActorInfo.Factory.Get(m_PlayerID);
       if (player != null)
       {
-        PlayerInfo.Instance().ActorID = m_PlayerID;
-        PlayerInfo.Instance().PrimaryWeapon = m_Player_PrimaryWeapon;
-        PlayerInfo.Instance().SecondaryWeapon = m_Player_SecondaryWeapon;
+        Globals.Engine.PlayerInfo.ActorID = m_PlayerID;
+        Globals.Engine.PlayerInfo.PrimaryWeapon = m_Player_PrimaryWeapon;
+        Globals.Engine.PlayerInfo.SecondaryWeapon = m_Player_SecondaryWeapon;
         player.CombatInfo.DamageModifier = m_Player_DamageModifier;
         ActionManager.ForceClearQueue(m_PlayerID);
       }
-      GameScenarioManager.Instance().IsCutsceneMode = false;
+      Globals.Engine.GameScenarioManager.IsCutsceneMode = false;
     }
 
     public void Scene_DeathStarCam(object[] param)
     {
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Scene_EnterCutscene);
-      GameScenarioManager.Instance().SceneCamera.SetLocalPosition(1000, 300, -15000);
-      GameScenarioManager.Instance().SceneCamera.MovementInfo.MaxSpeed = 600;
-      GameScenarioManager.Instance().SceneCamera.MovementInfo.Speed = 600;
-      GameScenarioManager.Instance().CameraTargetActor = m_ADS;
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 0.1f, Scene_EnterCutscene);
+      Globals.Engine.GameScenarioManager.SceneCamera.SetLocalPosition(1000, 300, -15000);
+      Globals.Engine.GameScenarioManager.SceneCamera.MovementInfo.MaxSpeed = 600;
+      Globals.Engine.GameScenarioManager.SceneCamera.MovementInfo.Speed = 600;
+      Globals.Engine.GameScenarioManager.CameraTargetActor = m_ADS;
     }
 
 
     public void Scene_Stage02_ApproachDeathStar(object[] param)
     {
       Scene_DeathStarCam(null);
-      SoundManager.Instance().SetMusic("battle_1_1", false, 71250);
+      Globals.Engine.SoundManager.SetMusic("battle_1_1", false, 71250);
 
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 4.8f, Rebel_Reposition);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5f, Scene_Stage02_Spawn);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 9f, Scene_ExitCutscene);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 11f, Message_04_Target);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 4.8f, Rebel_Reposition);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 5f, Scene_Stage02_Spawn);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 9f, Scene_ExitCutscene);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 11f, Message_04_Target);
 
       foreach (int actorID in MainAllyFaction.GetWings())
       {
@@ -1208,10 +1208,10 @@ namespace SWEndor.Scenarios
           actor.Kill();
       }
 
-      GameScenarioManager.Instance().MaxBounds = new TV_3DVECTOR(10000, 400, 8000);
-      GameScenarioManager.Instance().MinBounds = new TV_3DVECTOR(-10000, -175, -12000);
-      GameScenarioManager.Instance().MaxAIBounds = new TV_3DVECTOR(8000, 400, 8000);
-      GameScenarioManager.Instance().MinAIBounds = new TV_3DVECTOR(-8000, -160, -10000);
+      Globals.Engine.GameScenarioManager.MaxBounds = new TV_3DVECTOR(10000, 400, 8000);
+      Globals.Engine.GameScenarioManager.MinBounds = new TV_3DVECTOR(-10000, -175, -12000);
+      Globals.Engine.GameScenarioManager.MaxAIBounds = new TV_3DVECTOR(8000, 400, 8000);
+      Globals.Engine.GameScenarioManager.MinAIBounds = new TV_3DVECTOR(-8000, -160, -10000);
     }
 
     public void Scene_ClearGroundObjects(object[] param)
@@ -1229,7 +1229,7 @@ namespace SWEndor.Scenarios
       StageNumber = 2;
       Rebel_RemoveTorps(null);
 
-      GameScenarioManager.Instance().SceneCamera.SetLocalPosition(-550, -130, GameScenarioManager.Instance().MaxBounds.z - 1500);
+      Globals.Engine.GameScenarioManager.SceneCamera.SetLocalPosition(-550, -130, Globals.Engine.GameScenarioManager.MaxBounds.z - 1500);
 
       m_ADS_Surface = new ActorSpawnInfo
       {
@@ -1237,7 +1237,7 @@ namespace SWEndor.Scenarios
         Name = "",
         RegisterName = "",
         SidebarName = "",
-        SpawnTime = Game.Instance().GameTime,
+        SpawnTime = Globals.Engine.Game.GameTime,
         Faction = FactionInfo.Neutral,
         Position = new TV_3DVECTOR(0, -175, 0),
         Rotation = new TV_3DVECTOR()
@@ -1249,7 +1249,7 @@ namespace SWEndor.Scenarios
         Name = "",
         RegisterName = "",
         SidebarName = "",
-        SpawnTime = Game.Instance().GameTime,
+        SpawnTime = Globals.Engine.Game.GameTime,
         Faction = FactionInfo.Neutral,
         Position = new TV_3DVECTOR(0, -175, 0),
         Rotation = new TV_3DVECTOR()
@@ -1266,11 +1266,11 @@ namespace SWEndor.Scenarios
       m_ADS.Kill();
       m_AYavin.SetLocalRotation(0, 0, 180);
       m_AYavin4.Kill();
-      GameScenarioManager.Instance().SceneCamera.MovementInfo.MaxSpeed = 450;
-      GameScenarioManager.Instance().SceneCamera.MovementInfo.Speed = 450;
+      Globals.Engine.GameScenarioManager.SceneCamera.MovementInfo.MaxSpeed = 450;
+      Globals.Engine.GameScenarioManager.SceneCamera.MovementInfo.Speed = 450;
 
       ActorInfo player = ActorInfo.Factory.Get(m_PlayerID);
-      GameScenarioManager.Instance().CameraTargetActor = player;
+      Globals.Engine.GameScenarioManager.CameraTargetActor = player;
 
       //Empire_TIEWave(null);
       Empire_Towers01(null);
@@ -1278,19 +1278,19 @@ namespace SWEndor.Scenarios
 
     public void Scene_Stage03_Spawn(object[] param)
     {
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Scene_EnterCutscene);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Rebel_Reposition);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5f, Scene_ExitCutscene);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 6.5f, Message_06_TIE);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 0.1f, Scene_EnterCutscene);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 0.1f, Rebel_Reposition);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 5f, Scene_ExitCutscene);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 6.5f, Message_06_TIE);
 
 
       StageNumber = 3;
-      GameScenarioManager.Instance().SceneCamera.SetLocalPosition(600, 130, GameScenarioManager.Instance().MaxBounds.z - 1000);
+      Globals.Engine.GameScenarioManager.SceneCamera.SetLocalPosition(600, 130, Globals.Engine.GameScenarioManager.MaxBounds.z - 1000);
 
-      GameScenarioManager.Instance().SceneCamera.MovementInfo.MaxSpeed = 450;
-      GameScenarioManager.Instance().SceneCamera.MovementInfo.Speed = 450;
+      Globals.Engine.GameScenarioManager.SceneCamera.MovementInfo.MaxSpeed = 450;
+      Globals.Engine.GameScenarioManager.SceneCamera.MovementInfo.Speed = 450;
       ActorInfo player = ActorInfo.Factory.Get(m_PlayerID);
-      GameScenarioManager.Instance().CameraTargetActor = player;
+      Globals.Engine.GameScenarioManager.CameraTargetActor = player;
 
       foreach (int actorID in MainAllyFaction.GetWings())
       {
@@ -1307,13 +1307,13 @@ namespace SWEndor.Scenarios
           break;
         case "mental":
           Empire_TIEWave(new object[] { 8 });
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 43f, Empire_TIEWave);
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 45f, Message_06_TIE);
+          Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 43f, Empire_TIEWave);
+          Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 45f, Message_06_TIE);
           break;
         case "hard":
           Empire_TIEWave(new object[] { 7 });
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 43f, Empire_TIEWave);
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 45f, Message_06_TIE);
+          Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 43f, Empire_TIEWave);
+          Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 45f, Message_06_TIE);
           break;
         case "normal":
         default:
@@ -1325,10 +1325,10 @@ namespace SWEndor.Scenarios
 
     public void Scene_Stage04_Spawn(object[] param)
     {
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Scene_EnterCutscene);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Rebel_Reposition);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5f, Scene_ExitCutscene);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 6.5f, Message_08_Target);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 0.1f, Scene_EnterCutscene);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 0.1f, Rebel_Reposition);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 5f, Scene_ExitCutscene);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 6.5f, Message_08_Target);
 
       ActorTypeInfo type = ImperialIATI.Instance();
       TV_3DVECTOR position = new TV_3DVECTOR(2000, 750, -8000);
@@ -1341,7 +1341,7 @@ namespace SWEndor.Scenarios
         Name = "",
         RegisterName = "",
         SidebarName = "",
-        SpawnTime = Game.Instance().GameTime,
+        SpawnTime = Globals.Engine.Game.GameTime,
         Faction = MainEnemyFaction,
         Position = position + hyperspaceInOffset,
         Rotation = new TV_3DVECTOR(),
@@ -1356,14 +1356,14 @@ namespace SWEndor.Scenarios
 
       ainfo.SetSpawnerEnable(true);
       if (ainfo.SpawnerInfo != null)
-          ainfo.SpawnerInfo.NextSpawnTime = Game.Instance().GameTime + 3f;
+          ainfo.SpawnerInfo.NextSpawnTime = Globals.Engine.Game.GameTime + 3f;
 
       StageNumber = 4;
-      GameScenarioManager.Instance().SceneCamera.SetLocalPosition(1000, 30, -2000);
+      Globals.Engine.GameScenarioManager.SceneCamera.SetLocalPosition(1000, 30, -2000);
 
-      GameScenarioManager.Instance().SceneCamera.MovementInfo.MaxSpeed = 750;
-      GameScenarioManager.Instance().SceneCamera.MovementInfo.Speed = 750;
-      GameScenarioManager.Instance().CameraTargetActor = ainfo;
+      Globals.Engine.GameScenarioManager.SceneCamera.MovementInfo.MaxSpeed = 750;
+      Globals.Engine.GameScenarioManager.SceneCamera.MovementInfo.Speed = 750;
+      Globals.Engine.GameScenarioManager.CameraTargetActor = ainfo;
 
       foreach (int actorID in MainAllyFaction.GetWings())
       {
@@ -1378,15 +1378,15 @@ namespace SWEndor.Scenarios
 
     public void Scene_Stage05_Spawn(object[] param)
     {
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Scene_EnterCutscene);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Rebel_Reposition);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 5f, Scene_ExitCutscene);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 6.5f, Message_10_BeginRun);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 0.1f, Scene_EnterCutscene);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 0.1f, Rebel_Reposition);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 5f, Scene_ExitCutscene);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 6.5f, Message_10_BeginRun);
 
       StageNumber = 5;
-      GameScenarioManager.Instance().SceneCamera.SetLocalPosition(550, -130, -1500);
-      SoundManager.Instance().SetMusic("battle_1_2", true);
-      GameScenarioManager.Instance().MaxAIBounds = GameScenarioManager.Instance().MaxAIBounds + new TV_3DVECTOR(2500, 0, 0);
+      Globals.Engine.GameScenarioManager.SceneCamera.SetLocalPosition(550, -130, -1500);
+      Globals.Engine.SoundManager.SetMusic("battle_1_2", true);
+      Globals.Engine.GameScenarioManager.MaxAIBounds = Globals.Engine.GameScenarioManager.MaxAIBounds + new TV_3DVECTOR(2500, 0, 0);
 
       foreach (ActorInfo a in m_ADS_SurfaceParts)
       {
@@ -1400,7 +1400,7 @@ namespace SWEndor.Scenarios
         Name = "",
         RegisterName = "",
         SidebarName = "",
-        SpawnTime = Game.Instance().GameTime,
+        SpawnTime = Globals.Engine.Game.GameTime,
         Faction = FactionInfo.Neutral,
         Position = new TV_3DVECTOR(0, -175, 0),
         Rotation = new TV_3DVECTOR()
@@ -1423,18 +1423,18 @@ namespace SWEndor.Scenarios
         m_ADS_SurfaceParts.Add(asi.Spawn(this));
       }
 
-      GameScenarioManager.Instance().MaxBounds = new TV_3DVECTOR(7500, 300, 8000);
-      GameScenarioManager.Instance().MinBounds = new TV_3DVECTOR(-7500, -400, -12000);
-      GameScenarioManager.Instance().MaxAIBounds = new TV_3DVECTOR(7000, 300, 8000);
-      GameScenarioManager.Instance().MinAIBounds = new TV_3DVECTOR(-7000, -160, -10000);
+      Globals.Engine.GameScenarioManager.MaxBounds = new TV_3DVECTOR(7500, 300, 8000);
+      Globals.Engine.GameScenarioManager.MinBounds = new TV_3DVECTOR(-7500, -400, -12000);
+      Globals.Engine.GameScenarioManager.MaxAIBounds = new TV_3DVECTOR(7000, 300, 8000);
+      Globals.Engine.GameScenarioManager.MinAIBounds = new TV_3DVECTOR(-7000, -160, -10000);
 
       m_ADS_Surface.Kill();
       Scene_ClearGroundObjects(null);
 
-      GameScenarioManager.Instance().SceneCamera.MovementInfo.MaxSpeed = 450;
-      GameScenarioManager.Instance().SceneCamera.MovementInfo.Speed = 450;
+      Globals.Engine.GameScenarioManager.SceneCamera.MovementInfo.MaxSpeed = 450;
+      Globals.Engine.GameScenarioManager.SceneCamera.MovementInfo.Speed = 450;
       ActorInfo player = ActorInfo.Factory.Get(m_PlayerID);
-      GameScenarioManager.Instance().CameraTargetActor = player;
+      Globals.Engine.GameScenarioManager.CameraTargetActor = player;
 
       Empire_Towers04(null);
     }
@@ -1443,11 +1443,11 @@ namespace SWEndor.Scenarios
     {
       DeathCamMode = DeathCamMode.FOLLOW;
 
-      GameScenarioManager.Instance().MaxBounds = new TV_3DVECTOR(5000000, -185, 1000);
-      //GameScenarioManager.Instance().MinBounds = new TV_3DVECTOR(vader_distX - 1000, -400, -1000);
-      GameScenarioManager.Instance().MinBounds = new TV_3DVECTOR(7000, -400, -1000);
-      GameScenarioManager.Instance().MaxAIBounds = new TV_3DVECTOR(5000000, 300, 2000);
-      GameScenarioManager.Instance().MinAIBounds = new TV_3DVECTOR(0, -400, -2000);
+      Globals.Engine.GameScenarioManager.MaxBounds = new TV_3DVECTOR(5000000, -185, 1000);
+      //Globals.Engine.GameScenarioManager.MinBounds = new TV_3DVECTOR(vader_distX - 1000, -400, -1000);
+      Globals.Engine.GameScenarioManager.MinBounds = new TV_3DVECTOR(7000, -400, -1000);
+      Globals.Engine.GameScenarioManager.MaxAIBounds = new TV_3DVECTOR(5000000, 300, 2000);
+      Globals.Engine.GameScenarioManager.MinAIBounds = new TV_3DVECTOR(0, -400, -2000);
 
       foreach (int actorID in MainAllyFaction.GetWings())
       {
@@ -1498,7 +1498,7 @@ namespace SWEndor.Scenarios
         Name = "",
         RegisterName = "",
         SidebarName = "",
-        SpawnTime = Game.Instance().GameTime,
+        SpawnTime = Globals.Engine.Game.GameTime,
         Faction = MainEnemyFaction,
         Position = new TV_3DVECTOR(target_distX + 500, -385 + 47, 0),
         Rotation = new TV_3DVECTOR(0, 180, 0)
@@ -1566,7 +1566,7 @@ namespace SWEndor.Scenarios
           TrenchTurrets[i] = new List<ActorInfo>();
       }
 
-      int counter = (int)(PlayerInfo.Instance().Position.x - 8000) / 1000 - 7;
+      int counter = (int)(Globals.Engine.PlayerInfo.Position.x - 8000) / 1000 - 7;
       if (counter < 0)
         counter = 0;
 
@@ -1595,7 +1595,7 @@ namespace SWEndor.Scenarios
                 Name = "",
                 RegisterName = "",
                 SidebarName = "",
-                SpawnTime = Game.Instance().GameTime,
+                SpawnTime = Globals.Engine.Game.GameTime,
                 Faction = FactionInfo.Neutral,
                 Position = new TV_3DVECTOR(7000 + i * 1000, -173, 0),
                 Rotation = new TV_3DVECTOR(0, 180, 0)
@@ -1613,7 +1613,7 @@ namespace SWEndor.Scenarios
           {
             int trench = Trenches[i];
             if (trench < 0)
-              trench = Engine.Instance().Random.Next(0, -trench + 1);
+              trench = Globals.Engine.Random.Next(0, -trench + 1);
 
             ActorSpawnInfo asi = new ActorSpawnInfo
             {
@@ -1621,7 +1621,7 @@ namespace SWEndor.Scenarios
               Name = "",
               RegisterName = "",
               SidebarName = "",
-              SpawnTime = Game.Instance().GameTime,
+              SpawnTime = Globals.Engine.Game.GameTime,
               Faction = FactionInfo.Neutral,
               Position = new TV_3DVECTOR(7000 + i * 1000, -173, 0),
               Rotation = new TV_3DVECTOR(0, 180, 0)
@@ -1643,7 +1643,7 @@ namespace SWEndor.Scenarios
               Name = "",
               RegisterName = "",
               SidebarName = "",
-              SpawnTime = Game.Instance().GameTime,
+              SpawnTime = Globals.Engine.Game.GameTime,
               Faction = FactionInfo.Factory.Get("Empire_DeathStarDefenses"),
               Position = new TV_3DVECTOR(7000 + i * 1000 - 140, 90 - 390, 40),
               Rotation = new TV_3DVECTOR()
@@ -1785,13 +1785,13 @@ namespace SWEndor.Scenarios
     public void Scene_Stage06_Vader(object[] param)
     {
       Scene_EnterCutscene(null);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 7.9f, Scene_Stage06_SetPlayer);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 8f, Scene_ExitCutscene);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 8f, Scene_Stage06_VaderAttack);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 7.9f, Scene_Stage06_SetPlayer);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 8f, Scene_ExitCutscene);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 8f, Scene_Stage06_VaderAttack);
 
       StageNumber = 6;
-      GameScenarioManager.Instance().SceneCamera.SetLocalPosition(vader_distX - 2750, -225, 0);
-      SoundManager.Instance().SetMusic("battle_1_3", true);
+      Globals.Engine.GameScenarioManager.SceneCamera.SetLocalPosition(vader_distX - 2750, -225, 0);
+      Globals.Engine.SoundManager.SetMusic("battle_1_3", true);
 
       ActorInfo player = ActorInfo.Factory.Get(m_PlayerID);
       if (player != null)
@@ -1822,7 +1822,7 @@ namespace SWEndor.Scenarios
         Name = "",
         RegisterName = "",
         SidebarName = "",
-        SpawnTime = Game.Instance().GameTime,
+        SpawnTime = Globals.Engine.Game.GameTime,
         Faction = FactionInfo.Factory.Get("Empire"),
         Position = new TV_3DVECTOR(vader_distX - 2000, 85, 0),
         Rotation = new TV_3DVECTOR(-10, 90, 0),
@@ -1839,7 +1839,7 @@ namespace SWEndor.Scenarios
         Name = "",
         RegisterName = "",
         SidebarName = "",
-        SpawnTime = Game.Instance().GameTime,
+        SpawnTime = Globals.Engine.Game.GameTime,
         Faction = FactionInfo.Factory.Get("Empire"),
         Position = new TV_3DVECTOR(vader_distX - 2100, 85, 75),
         Rotation = new TV_3DVECTOR(-10, 90, 0),
@@ -1855,7 +1855,7 @@ namespace SWEndor.Scenarios
         Name = "",
         RegisterName = "",
         SidebarName = "",
-        SpawnTime = Game.Instance().GameTime,
+        SpawnTime = Globals.Engine.Game.GameTime,
         Faction = FactionInfo.Factory.Get("Empire"),
         Position = new TV_3DVECTOR(vader_distX - 2100, 85, -75),
         Rotation = new TV_3DVECTOR(-10, 90, 0),
@@ -1887,9 +1887,9 @@ namespace SWEndor.Scenarios
       vaderE2.CanEvade = false;
       vaderE2.CanRetaliate = false;
 
-      GameScenarioManager.Instance().SceneCamera.MovementInfo.MaxSpeed = 425;
-      GameScenarioManager.Instance().SceneCamera.MovementInfo.Speed = 425;
-      GameScenarioManager.Instance().CameraTargetActor = player;
+      Globals.Engine.GameScenarioManager.SceneCamera.MovementInfo.MaxSpeed = 425;
+      Globals.Engine.GameScenarioManager.SceneCamera.MovementInfo.Speed = 425;
+      Globals.Engine.GameScenarioManager.CameraTargetActor = player;
     }
 
     public void Scene_Stage06_VaderAttack(object[] param)
@@ -1920,15 +1920,15 @@ namespace SWEndor.Scenarios
 
     public void Scene_Stage06_VaderEnd(object[] param)
     {
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 0.1f, Scene_EnterCutscene);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 8f, Scene_ExitCutscene);
-      GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + 7.9f, Scene_Stage06_SetPlayer);
-      AtmosphereInfo.Instance().SetPos_Sun(new TV_3DVECTOR(1000, 100, 0));
-      AtmosphereInfo.Instance().ShowSun = true;
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 0.1f, Scene_EnterCutscene);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 8f, Scene_ExitCutscene);
+      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 7.9f, Scene_Stage06_SetPlayer);
+      Globals.Engine.AtmosphereInfo.SetPos_Sun(new TV_3DVECTOR(1000, 100, 0));
+      Globals.Engine.AtmosphereInfo.ShowSun = true;
 
       StageNumber = 6;
-      GameScenarioManager.Instance().SceneCamera.SetLocalPosition(vaderend_distX + 900, -365, 0);
-      SoundManager.Instance().SetMusic("ds_end_1_1", true);
+      Globals.Engine.GameScenarioManager.SceneCamera.SetLocalPosition(vaderend_distX + 900, -365, 0);
+      Globals.Engine.SoundManager.SetMusic("ds_end_1_1", true);
 
       ActorInfo vader = ActorInfo.Factory.Get(m_VaderID);
       ActorInfo vaderE1 = ActorInfo.Factory.Get(m_VaderEscort1ID);
@@ -1950,7 +1950,7 @@ namespace SWEndor.Scenarios
         Name = "",
         RegisterName = "",
         SidebarName = "",
-        SpawnTime = Game.Instance().GameTime,
+        SpawnTime = Globals.Engine.Game.GameTime,
         Faction = FactionInfo.Factory.Get("Rebels"),
         Position = new TV_3DVECTOR(vaderend_distX + 2500, 185, 0),
         Rotation = new TV_3DVECTOR(0, -90, 0),
@@ -1981,9 +1981,9 @@ namespace SWEndor.Scenarios
       vaderE1.HitEvents += Scene_Stage06_VaderFlee;
       vaderE2.HitEvents += Scene_Stage06_VaderFlee;
 
-      GameScenarioManager.Instance().SceneCamera.MovementInfo.MaxSpeed = 25;
-      GameScenarioManager.Instance().SceneCamera.MovementInfo.Speed = 25;
-      GameScenarioManager.Instance().CameraTargetActor = falcon;
+      Globals.Engine.GameScenarioManager.SceneCamera.MovementInfo.MaxSpeed = 25;
+      Globals.Engine.GameScenarioManager.SceneCamera.MovementInfo.Speed = 25;
+      Globals.Engine.GameScenarioManager.CameraTargetActor = falcon;
     }
 
     public void Scene_Stage06_VaderFlee(object[] param)
@@ -2013,102 +2013,102 @@ namespace SWEndor.Scenarios
     #region Text
     public void Message_01_EnemyShipsInbound(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Enemy signals are approaching your position.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Enemy signals are approaching your position.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_02_MoreEnemyShipsInbound(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Another enemy signal are en route to your position.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Another enemy signal are en route to your position.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_03_Clear(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Area cleared. Resume your attack on the Death Star.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Area cleared. Resume your attack on the Death Star.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_04_Target(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Eliminate all Radar Towers.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Eliminate all Radar Towers.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_05_Clear(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Area cleared. Proceed to the next sector.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Area cleared. Proceed to the next sector.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_06_TIE(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Enemy fighters detected.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Enemy fighters detected.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_07_Clear(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Deflector Towers detected en route to the trench.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Deflector Towers detected en route to the trench.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_08_Target(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Destroy all Deflection Towers and Radar Towers.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Destroy all Deflection Towers and Radar Towers.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_09_Clear(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: The path to the trench line is clear.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: The path to the trench line is clear.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_10_BeginRun(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Luke, start your attack run.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Luke, start your attack run.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_100_RebelBaseInRange(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Our Rebel Base is in range of the Death Star.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is in range of the Death Star.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_101_RebelBase(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in ONE minute.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in ONE minute.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_102_RebelBase(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TWO minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TWO minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_103_RebelBase(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in THREE minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in THREE minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_105_RebelBase(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in FIVE minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in FIVE minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_110_RebelBase(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TEN minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TEN minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_115_RebelBase(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in FIFTEEN minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in FIFTEEN minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_120_RebelBase(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TWENTY minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TWENTY minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_125_RebelBase(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TWENTY-FIVE minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TWENTY-FIVE minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     public void Message_130_RebelBase(object[] param)
     {
-      Screen2D.Instance().MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in THIRTY minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Globals.Engine.Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in THIRTY minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
     #endregion

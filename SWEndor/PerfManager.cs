@@ -27,16 +27,7 @@ namespace SWEndor
 
   public class PerfManager
   {
-    private static PerfManager m_instance;
-    public static PerfManager Instance()
-    {
-      if (m_instance == null)
-      {
-        m_instance = new PerfManager();
-      }
-      return m_instance;
-    }
-    private PerfManager() { }
+    internal PerfManager() { }
 
     public static string Report = "";
     private DateTime m_last_refresh_time = DateTime.Now;
@@ -106,7 +97,7 @@ namespace SWEndor
         StringBuilder sb = new StringBuilder();
         sb.AppendLine();
         sb.AppendLine(string.Format("{0,30} : [{1,4:0}ms] {2:s}", "Sampling Time", refresh_ms, m_last_refresh_time));
-        sb.AppendLine(string.Format("{0,30} : {1}", "FPS", Game.Instance().CurrentFPS));
+        sb.AppendLine(string.Format("{0,30} : {1}", "FPS", Globals.Engine.Game.CurrentFPS));
         sb.AppendLine(string.Format("{0,30} : {1}", "Actors", ActorInfo.Factory.GetActorCount()));
 
         List<PerfToken> newElements = new List<PerfToken>(Elements.GetValues());
@@ -159,7 +150,7 @@ namespace SWEndor
     public void Dispose()
     {
       if (Settings.ShowPerformance)
-        PerfManager.Instance().UpdatePerfElement(Name, Math.Max(0.0, Stopwatch.GetTimestamp() - m_timestamp) / Stopwatch.Frequency);
+        Globals.Engine.PerfManager.UpdatePerfElement(Name, Math.Max(0.0, Stopwatch.GetTimestamp() - m_timestamp) / Stopwatch.Frequency);
     }
   }
 }

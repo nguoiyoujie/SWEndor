@@ -10,14 +10,7 @@ namespace SWEndor.Scenarios
 {
   public class GameScenarioManager
   {
-    private static GameScenarioManager _instance;
-    public static GameScenarioManager Instance()
-    {
-      if (_instance == null) { _instance = new GameScenarioManager(); }
-      return _instance;
-    }
-
-    private GameScenarioManager()
+    internal GameScenarioManager()
     {
       ScenarioList.Add(new Scenarios.GSEndor());
       ScenarioList.Add(new Scenarios.GSYavin());
@@ -70,9 +63,9 @@ namespace SWEndor.Scenarios
 
     public void LoadMainMenu()
     {
-      Game.Instance().IsPaused = false;
-      Screen2D.Instance().ShowPage = true;
-      Screen2D.Instance().CurrentPage = new MainMenu();
+      Globals.Engine.Game.IsPaused = false;
+      Globals.Engine.Screen2D.ShowPage = true;
+      Globals.Engine.Screen2D.CurrentPage = new MainMenu();
       Scenario = new GSMainMenu();
       Scenario.Load(null, "");
       Scenario.Launch();
@@ -81,8 +74,8 @@ namespace SWEndor.Scenarios
     public void LoadInitial()
     {
       LoadInvisibleCam();
-      PlayerInfo.Instance().ActorID = SceneCamera?.ID ?? -1;
-      PlayerInfo.Instance().IsMovementControlsEnabled = false;
+      Globals.Engine.PlayerInfo.ActorID = SceneCamera?.ID ?? -1;
+      Globals.Engine.PlayerInfo.IsMovementControlsEnabled = false;
     }
 
     public int UpdateActorLists(Dictionary<string, ActorInfo> list)
@@ -98,7 +91,7 @@ namespace SWEndor.Scenarios
           //if (Scenario != null && Scenario.ActiveActor == kvp.Value)
           //  Scenario.ActiveActor = null;
 
-          if (kvp.Value != PlayerInfo.Instance().Actor)
+          if (kvp.Value != Globals.Engine.PlayerInfo.Actor)
           {
             ret++;
           }
@@ -144,7 +137,7 @@ namespace SWEndor.Scenarios
       }
 
       ActorCreationInfo camaci = new ActorCreationInfo(InvisibleCameraATI.Instance());
-      camaci.CreationTime = Game.Instance().GameTime;
+      camaci.CreationTime = Globals.Engine.Game.GameTime;
       camaci.InitialState = ActorState.NORMAL;
       camaci.Position = new TV_3DVECTOR(0, 0, 0);
       camaci.Rotation = new TV_3DVECTOR();
@@ -157,10 +150,10 @@ namespace SWEndor.Scenarios
       if (Scenario != null)
         Scenario.Unload();
 
-      PlayerInfo.Instance().Score.Reset();
+      Globals.Engine.PlayerInfo.Score.Reset();
 
-      _instance = new GameScenarioManager();
-      _instance.LoadInitial();
+      //_instance = new GameScenarioManager();
+      //_instance.LoadInitial();
     }
 
     public void AddEvent(float time, GameEvent gevent)

@@ -1,4 +1,5 @@
 ﻿using SWEndor.Input.Functions;
+using SWEndor.Log;
 using System;
 using System.Windows.Forms;
 
@@ -21,7 +22,9 @@ namespace SWEndor
     { 
       try
       {
-        Globals.Initialize();
+        Globals.PreInit();
+        Globals.InitEngine();
+
         InputFunction.Registry.GenerateDefault();
         Settings.LoadSettings();
         Settings.SaveSettings();
@@ -31,7 +34,7 @@ namespace SWEndor
       catch (Exception ex)
       {
         string errorfilename = @"initerror.txt";
-        Globals.GenerateErrLog(ex, errorfilename);
+        Logger.GenerateErrLog(ex, errorfilename);
         MessageBox.Show(string.Format("Fatal Error occurred during initialization. Please see " + errorfilename + " in the /Log folder for the error message."
                       , Application.ProductName + " - Error Encountered!"
                       , MessageBoxButtons.OK));

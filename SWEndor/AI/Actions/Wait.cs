@@ -16,7 +16,7 @@ namespace SWEndor.AI.Actions
     {
       return string.Format("{0},{1},{2}"
                           , Name
-                          , ResumeTime - Game.Instance().GameTime
+                          , ResumeTime - Globals.Engine.Game.GameTime
                           , Complete
                           );
     }
@@ -25,7 +25,7 @@ namespace SWEndor.AI.Actions
     {
       if (ResumeTime == 0)
       {
-        ResumeTime = Game.Instance().GameTime + WaitTime;
+        ResumeTime = Globals.Engine.Game.GameTime + WaitTime;
       }
 
       AdjustRotation(owner, owner.GetRelativePositionXYZ(0, 0, 1000), false);
@@ -33,7 +33,7 @@ namespace SWEndor.AI.Actions
       {
         ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
       }
-      Complete |= (ResumeTime < Game.Instance().GameTime);
+      Complete |= (ResumeTime < Globals.Engine.Game.GameTime);
     }
   }
 }

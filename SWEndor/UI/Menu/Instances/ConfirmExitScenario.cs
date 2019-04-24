@@ -14,18 +14,18 @@ namespace SWEndor.UI.Menu.Pages
     public ConfirmExitScenario()
     {
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
-      Cover.HighlightBoxWidth = Engine.Instance().ScreenWidth;
-      Cover.HighlightBoxHeight = Engine.Instance().ScreenHeight;
+      Cover.HighlightBoxWidth = Globals.Engine.ScreenWidth;
+      Cover.HighlightBoxHeight = Globals.Engine.ScreenHeight;
       Cover.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.3f);
 
       ConfirmText.Text = "Confirm Quit Scenario?";
-      ConfirmText.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth / 2 - 150, Engine.Instance().ScreenHeight / 2 - 80);
+      ConfirmText.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 - 150, Globals.Engine.ScreenHeight / 2 - 80);
       ConfirmText.HighlightBoxPosition = ConfirmText.TextPosition - new TV_2DVECTOR(5, 5);
       ConfirmText.HighlightBoxWidth = 320;
       ConfirmText.HighlightBoxHeight = 30;
 
       ConfirmNo.Text = "NO";
-      ConfirmNo.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth / 2 + 60, Engine.Instance().ScreenHeight / 2 + 20);
+      ConfirmNo.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 + 60, Globals.Engine.ScreenHeight / 2 + 20);
       ConfirmNo.HighlightBoxPosition = ConfirmNo.TextPosition - new TV_2DVECTOR(5, 5);
       ConfirmNo.HighlightBoxWidth = 60;
       ConfirmNo.HighlightBoxHeight = 30;
@@ -33,7 +33,7 @@ namespace SWEndor.UI.Menu.Pages
       ConfirmNo.OnKeyPress += SelectNo;
 
       ConfirmYes.Text = "YES";
-      ConfirmYes.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth / 2 + 60, Engine.Instance().ScreenHeight / 2 + 60);
+      ConfirmYes.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 + 60, Globals.Engine.ScreenHeight / 2 + 60);
       ConfirmYes.HighlightBoxPosition = ConfirmYes.TextPosition - new TV_2DVECTOR(5, 5);
       ConfirmYes.HighlightBoxWidth = 60;
       ConfirmYes.HighlightBoxHeight = 30;
@@ -61,9 +61,9 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        GameScenarioManager.Instance().Reset();
-        GameScenarioManager.Instance().LoadMainMenu();
-        SoundManager.Instance().SetMusicResume();
+        Globals.Engine.GameScenarioManager.Reset();
+        Globals.Engine.GameScenarioManager.LoadMainMenu();
+        Globals.Engine.SoundManager.SetMusicResume();
 
         return true;
       }

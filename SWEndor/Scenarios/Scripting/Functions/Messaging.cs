@@ -13,9 +13,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
       TV_COLOR color = new TV_COLOR(Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()), Convert.ToSingle(ps[4].ToString()), Convert.ToSingle(ps[5].ToString()));
 
       if (ps.Length <= 6)
-        Screen2D.Instance().MessageText(text, expiretime, color);
+        Globals.Engine.Screen2D.MessageText(text, expiretime, color);
       else
-        Screen2D.Instance().MessageText(text, expiretime, color, Convert.ToInt32(ps[6].ToString()));
+        Globals.Engine.Screen2D.MessageText(text, expiretime, color, Convert.ToInt32(ps[6].ToString()));
       return true;
     }
   }

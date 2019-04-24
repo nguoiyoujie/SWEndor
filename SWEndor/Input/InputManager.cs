@@ -5,13 +5,6 @@ namespace SWEndor.Input
 {
   public class InputManager
   {
-    private static InputManager _instance;
-    public static InputManager Instance()
-    {
-      if (_instance == null) { _instance = new InputManager(); }
-      return _instance;
-    }
-
     private TVInputEngine INPUT_ENGINE;
     private int numkeybuffer;
     private TV_KEYDATA[] KEY_BUFFER;
@@ -28,7 +21,7 @@ namespace SWEndor.Input
     private int MOUSE_SCROLL_NEW;
     private AInputContext Context;
 
-    private InputManager()
+    internal InputManager()
     {
       INPUT_ENGINE = new TVInputEngine();
       INPUT_ENGINE.Initialize(true, true);
@@ -63,7 +56,7 @@ namespace SWEndor.Input
         if (Context == null || !(Context is TerminalGameInputContext))
           Context = new TerminalGameInputContext();
       }
-      else if (Screen2D.Instance().ShowPage && Screen2D.Instance().CurrentPage != null)
+      else if (Globals.Engine.Screen2D.ShowPage && Globals.Engine.Screen2D.CurrentPage != null)
       { // Handling Menu
         if (Context == null || !(Context is MenuInputContext))
           Context = new MenuInputContext();

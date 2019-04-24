@@ -16,9 +16,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object SetAsMainAllyFaction(Context context, object[] ps)
     {
       FactionInfo f = FactionInfo.Factory.Get(ps[0].ToString());
-      if (f != null && GameScenarioManager.Instance().Scenario != null)
+      if (f != null && Globals.Engine.GameScenarioManager.Scenario != null)
       {
-        GameScenarioManager.Instance().Scenario.MainAllyFaction = f;
+        Globals.Engine.GameScenarioManager.Scenario.MainAllyFaction = f;
         return true;
       }
       return false;
@@ -27,9 +27,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object SetAsMainEnemyFaction(Context context, object[] ps)
     {
       FactionInfo f = FactionInfo.Factory.Get(ps[0].ToString());
-      if (f != null && GameScenarioManager.Instance().Scenario != null)
+      if (f != null && Globals.Engine.GameScenarioManager.Scenario != null)
       {
-        GameScenarioManager.Instance().Scenario.MainEnemyFaction = f;
+        Globals.Engine.GameScenarioManager.Scenario.MainEnemyFaction = f;
         return true;
       }
       return false;

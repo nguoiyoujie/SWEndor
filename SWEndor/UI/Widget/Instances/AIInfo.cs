@@ -14,19 +14,19 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
-        return (!Screen2D.Instance().ShowPage
-            && PlayerInfo.Instance().Actor != null
-            && PlayerInfo.Instance().Actor.ActorState != ActorState.DEAD
-            && PlayerInfo.Instance().Actor.ActorState != ActorState.DYING
-            && !(PlayerInfo.Instance().Actor.TypeInfo is InvisibleCameraATI)
-            && Screen2D.Instance().ShowUI
-            && PlayerInfo.Instance().PlayerAIEnabled);
+        return (!Globals.Engine.Screen2D.ShowPage
+            && Globals.Engine.PlayerInfo.Actor != null
+            && Globals.Engine.PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && Globals.Engine.PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !(Globals.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
+            && Globals.Engine.Screen2D.ShowUI
+            && Globals.Engine.PlayerInfo.PlayerAIEnabled);
       }
     }
 
     public override void Draw()
     {
-      ActorInfo p = PlayerInfo.Instance().Actor;
+      ActorInfo p = Globals.Engine.PlayerInfo.Actor;
       if (p == null || p.CreationState != CreationState.ACTIVE)
         return;
 
@@ -43,7 +43,7 @@ namespace SWEndor.UI.Widgets
 
       int lines = actiontext.Split('\n').Length;
 
-      Engine.Instance().TVScreen2DImmediate.Action_Begin2D();
+      Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
 
       if (p.CurrentAction != null)
       {
@@ -57,25 +57,25 @@ namespace SWEndor.UI.Widgets
           {
             targetpos = ((AttackActor)p.CurrentAction).Target_Position;
             TV_3DVECTOR targetactpos = target.GetPosition();
-            Engine.Instance().TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 0, 0, 1).GetIntColor());
-            Engine.Instance().TVScreen2DImmediate.Draw_Box3D(targetpos - new TV_3DVECTOR(25, 25, 25), targetpos + new TV_3DVECTOR(25, 25, 25), new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor());
-            Engine.Instance().TVScreen2DImmediate.Draw_Box3D(targetactpos - new TV_3DVECTOR(50, 50, 50), targetactpos + new TV_3DVECTOR(50, 50, 50), new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor());
+            Globals.Engine.TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 0, 0, 1).GetIntColor());
+            Globals.Engine.TVScreen2DImmediate.Draw_Box3D(targetpos - new TV_3DVECTOR(25, 25, 25), targetpos + new TV_3DVECTOR(25, 25, 25), new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor());
+            Globals.Engine.TVScreen2DImmediate.Draw_Box3D(targetactpos - new TV_3DVECTOR(50, 50, 50), targetactpos + new TV_3DVECTOR(50, 50, 50), new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor());
           }
         }
         else if (p.CurrentAction is Move)
         {
           targetpos = ((Move)p.CurrentAction).Target_Position;
-          Engine.Instance().TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(0.5f, 1, 0.5f, 1).GetIntColor());
+          Globals.Engine.TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(0.5f, 1, 0.5f, 1).GetIntColor());
         }
         else if (p.CurrentAction is ForcedMove)
         {
           targetpos = ((ForcedMove)p.CurrentAction).Target_Position;
-          Engine.Instance().TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 1, 0.5f, 1).GetIntColor());
+          Globals.Engine.TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 1, 0.5f, 1).GetIntColor());
         }
         else if (p.CurrentAction is Rotate)
         {
           targetpos = ((Rotate)p.CurrentAction).Target_Position;
-          Engine.Instance().TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(0.5f, 1, 1, 1).GetIntColor());
+          Globals.Engine.TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(0.5f, 1, 1, 1).GetIntColor());
         }
         else if (p.CurrentAction is FollowActor)
         {
@@ -83,27 +83,27 @@ namespace SWEndor.UI.Widgets
           if (target != null)
           {
             targetpos = target.GetPosition();
-            Engine.Instance().TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(0.5f, 0.5f, 1, 1).GetIntColor());
+            Globals.Engine.TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(0.5f, 0.5f, 1, 1).GetIntColor());
           }
         }
         else if (p.CurrentAction is Evade)
         {
           targetpos = ((Evade)p.CurrentAction).Target_Position;
-          Engine.Instance().TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 0.3f, 0, 1).GetIntColor());
+          Globals.Engine.TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 0.3f, 0, 1).GetIntColor());
         }
         else if (p.CurrentAction is AvoidCollisionRotate)
         {
           targetpos = ((AvoidCollisionRotate)p.CurrentAction).Target_Position;
-          Engine.Instance().TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 0.2f, 0.6f, 1).GetIntColor());
+          Globals.Engine.TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 0.2f, 0.6f, 1).GetIntColor());
           targetpos = p.CollisionInfo.ProspectiveCollisionImpact + p.CollisionInfo.ProspectiveCollisionNormal * 250;
-          Engine.Instance().TVScreen2DImmediate.Draw_Line3D(p.CollisionInfo.ProspectiveCollisionImpact.x, p.CollisionInfo.ProspectiveCollisionImpact.y, p.CollisionInfo.ProspectiveCollisionImpact.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 1, 1, 1).GetIntColor());
+          Globals.Engine.TVScreen2DImmediate.Draw_Line3D(p.CollisionInfo.ProspectiveCollisionImpact.x, p.CollisionInfo.ProspectiveCollisionImpact.y, p.CollisionInfo.ProspectiveCollisionImpact.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 1, 1, 1).GetIntColor());
         }
 
         /*
         TV_3DVECTOR prostart = p.GetRelativePositionXYZ(0, 0, p.TypeInfo.max_dimensions.z + 10);
         TV_3DVECTOR proend0 = p.GetRelativePositionXYZ(0, 0, p.TypeInfo.max_dimensions.z + 10 + p.ProspectiveCollisionScanDistance);
 
-        Engine.Instance().TVScreen2DImmediate.Draw_Line3D(prostart.x
+        Globals.Engine.TVScreen2DImmediate.Draw_Line3D(prostart.x
                                                         , prostart.y
                                                         , prostart.z
                                                         , proend0.x
@@ -114,21 +114,21 @@ namespace SWEndor.UI.Widgets
         */
       }
 
-      Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(loc.x - 5, loc.y - 5, loc.x + 405, loc.y + 40 / 3 * lines + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
-      Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(Engine.Instance().ScreenWidth / 2 - 80, Engine.Instance().ScreenHeight / 2 - 25, Engine.Instance().ScreenWidth / 2 - 40, Engine.Instance().ScreenHeight / 2 + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
-      Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(Engine.Instance().ScreenWidth / 2 + 45, Engine.Instance().ScreenHeight / 2 - 25, Engine.Instance().ScreenWidth / 2 + 55 + 10 * name.Length, Engine.Instance().ScreenHeight / 2 + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
-      Engine.Instance().TVScreen2DImmediate.Action_End2D();
+      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(loc.x - 5, loc.y - 5, loc.x + 405, loc.y + 40 / 3 * lines + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
+      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(Globals.Engine.ScreenWidth / 2 - 80, Globals.Engine.ScreenHeight / 2 - 25, Globals.Engine.ScreenWidth / 2 - 40, Globals.Engine.ScreenHeight / 2 + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
+      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(Globals.Engine.ScreenWidth / 2 + 45, Globals.Engine.ScreenHeight / 2 - 25, Globals.Engine.ScreenWidth / 2 + 55 + 10 * name.Length, Globals.Engine.ScreenHeight / 2 + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
+      Globals.Engine.TVScreen2DImmediate.Action_End2D();
 
-      Engine.Instance().TVScreen2DText.Action_BeginText();
-      Engine.Instance().TVScreen2DText.TextureFont_DrawText(actiontext
+      Globals.Engine.TVScreen2DText.Action_BeginText();
+      Globals.Engine.TVScreen2DText.TextureFont_DrawText(actiontext
         , loc.x, loc.y, new TV_COLOR(0.6f, 0.8f, 0.6f, 1).GetIntColor(), Font.Factory.Get("Text_08").ID);
 
-      Engine.Instance().TVScreen2DText.TextureFont_DrawText("AI"
-        , Engine.Instance().ScreenWidth / 2 - 75, Engine.Instance().ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), Font.Factory.Get("Text_14").ID);
+      Globals.Engine.TVScreen2DText.TextureFont_DrawText("AI"
+        , Globals.Engine.ScreenWidth / 2 - 75, Globals.Engine.ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), Font.Factory.Get("Text_14").ID);
 
-      Engine.Instance().TVScreen2DText.TextureFont_DrawText(name
-        , Engine.Instance().ScreenWidth / 2 + 50, Engine.Instance().ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), Font.Factory.Get("Text_14").ID);
-      Engine.Instance().TVScreen2DText.Action_EndText();
+      Globals.Engine.TVScreen2DText.TextureFont_DrawText(name
+        , Globals.Engine.ScreenWidth / 2 + 50, Globals.Engine.ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), Font.Factory.Get("Text_14").ID);
+      Globals.Engine.TVScreen2DText.Action_EndText();
 
     }
   }

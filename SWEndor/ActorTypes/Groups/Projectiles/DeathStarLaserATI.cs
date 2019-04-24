@@ -27,10 +27,10 @@ namespace SWEndor.ActorTypes.Instances
       NoAI = true;
       EnableDistanceCull = false;
 
-      SourceMesh = Engine.Instance().TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Engine.Instance().TVScene.CreateMeshBuilder(Key);
+        SourceMesh = Globals.Engine.TVScene.CreateMeshBuilder(Key);
 
         SourceMesh.CreateBox(40, 40, 1000);
         SourceMesh.SetMeshCenter(0, 0, 2200);

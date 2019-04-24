@@ -13,13 +13,13 @@ namespace SWEndor.UI.Menu.Pages
     public ConfirmExit()
     {
       ConfirmText.Text = "Confirm Exit?";
-      ConfirmText.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth / 2 - 150, Engine.Instance().ScreenHeight / 2 - 80);
+      ConfirmText.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 - 150, Globals.Engine.ScreenHeight / 2 - 80);
       ConfirmText.HighlightBoxPosition = ConfirmText.TextPosition - new TV_2DVECTOR(5, 5);
       ConfirmText.HighlightBoxWidth = 240;
       ConfirmText.HighlightBoxHeight = 30;
 
       ConfirmNo.Text = "NO";
-      ConfirmNo.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth / 2 + 60, Engine.Instance().ScreenHeight / 2 + 20);
+      ConfirmNo.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 + 60, Globals.Engine.ScreenHeight / 2 + 20);
       ConfirmNo.HighlightBoxPosition = ConfirmNo.TextPosition - new TV_2DVECTOR(5, 5);
       ConfirmNo.HighlightBoxWidth = 60;
       ConfirmNo.HighlightBoxHeight = 30;
@@ -27,7 +27,7 @@ namespace SWEndor.UI.Menu.Pages
       ConfirmNo.OnKeyPress += SelectNo;
 
       ConfirmYes.Text = "YES";
-      ConfirmYes.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth / 2 + 60, Engine.Instance().ScreenHeight / 2 + 60);
+      ConfirmYes.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 + 60, Globals.Engine.ScreenHeight / 2 + 60);
       ConfirmYes.HighlightBoxPosition = ConfirmYes.TextPosition - new TV_2DVECTOR(5, 5);
       ConfirmYes.HighlightBoxWidth = 60;
       ConfirmYes.HighlightBoxHeight = 30;
@@ -54,10 +54,10 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        SoundManager.Instance().SetSound("r23");
-        SoundManager.Instance().SetMusicStop();
+        Globals.Engine.SoundManager.SetSound("r23");
+        Globals.Engine.SoundManager.SetMusicStop();
         Thread.Sleep(1500);
-        Engine.Instance().Exit();
+        Globals.Engine.Exit();
         return false;
       }
       return false;

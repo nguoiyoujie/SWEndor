@@ -13,7 +13,7 @@ namespace SWEndor.Input.Functions.Gameplay.Speed
 
     public override void Process()
     {
-      PlayerInfo.Instance().ChangeSpeed(1);
+      Globals.Engine.PlayerInfo.ChangeSpeed(1);
     }
   }
 }

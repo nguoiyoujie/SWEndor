@@ -65,9 +65,9 @@ namespace SWEndor.Scenarios
       LoadScripts();
       base.Load(wing, difficulty);
 
-      PlayerInfo.Instance().Name = PlayerName;
-      Screen2D.Instance().LoadingTextLines.Add("starting game");
-      Screen2D.Instance().LoadingTextLines.RemoveAt(0);
+      Globals.Engine.PlayerInfo.Name = PlayerName;
+      Globals.Engine.Screen2D.LoadingTextLines.Add("starting game");
+      Globals.Engine.Screen2D.LoadingTextLines.RemoveAt(0);
     }
 
     public override void Unload()

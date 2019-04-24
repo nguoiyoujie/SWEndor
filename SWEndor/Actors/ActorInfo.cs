@@ -283,7 +283,7 @@ namespace SWEndor.Actors
         || CreationState != CreationState.ACTIVE
         || ActorState == ActorState.DYING
         || ActorState == ActorState.DEAD
-        || (IsPlayer() && !PlayerInfo.Instance().PlayerAIEnabled)
+        || (IsPlayer() && !Globals.Engine.PlayerInfo.PlayerAIEnabled)
         )
         return;
 
@@ -390,9 +390,9 @@ namespace SWEndor.Actors
           if (CollisionInfo.IsInCollision)
           {
             ActorInfo a = Factory.Get(CollisionInfo.CollisionActorID);
-            if (IsPlayer() && PlayerInfo.Instance().PlayerAIEnabled)
+            if (IsPlayer() && Globals.Engine.PlayerInfo.PlayerAIEnabled)
             {
-              Screen2D.Instance().MessageSecondaryText(string.Format("DEV WARNING: PLAYER AI COLLIDED: {0}", a.ToString()), 1.5f, new TV_COLOR(1, 0.2f, 0.2f, 1), 99999);
+              Globals.Engine.Screen2D.MessageSecondaryText(string.Format("DEV WARNING: PLAYER AI COLLIDED: {0}", a.ToString()), 1.5f, new TV_COLOR(1, 0.2f, 0.2f, 1), 99999);
               CollisionInfo.IsInCollision = false;
               CollisionInfo.IsTestingCollision = true;
               return;
@@ -416,7 +416,7 @@ namespace SWEndor.Actors
 
       // check landscape only
       if (TypeInfo is ActorTypes.Group.Projectile || TypeInfo.TargetType != TargetType.NULL)
-        if (LandInfo.Instance().Land.AdvancedCollide(vmin, vmax).IsCollision())
+        if (Globals.Engine.LandInfo.Land.AdvancedCollide(vmin, vmax).IsCollision())
         {
           ActorState = ActorState.DEAD;
         }
@@ -479,7 +479,7 @@ namespace SWEndor.Actors
                 proImpact += _Impact;
                 proNormal += _Normal;
                 count++;
-                float newdist = Engine.Instance().TVMathLibrary.GetDistanceVec3D(Position, _Impact);
+                float newdist = Globals.Engine.TVMathLibrary.GetDistanceVec3D(Position, _Impact);
                 if (dist < newdist)
                 {
                   dist = newdist;
@@ -519,12 +519,12 @@ namespace SWEndor.Actors
 
           TV_COLLISIONRESULT tvcres = new TV_COLLISIONRESULT();
 
-          if (Engine.Instance().TVScene.AdvancedCollision(start, end, ref tvcres))
+          if (Globals.Engine.TVScene.AdvancedCollision(start, end, ref tvcres))
           {
             if (IsPlayer())
             {
-              Engine.Instance().TVScreen2DImmediate.Action_Begin2D();
-              Engine.Instance().TVScreen2DImmediate.Draw_Line3D(start.x
+              Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
+              Globals.Engine.TVScreen2DImmediate.Draw_Line3D(start.x
                                                 , start.y
                                                 , start.z
                                                 , end.x
@@ -532,7 +532,7 @@ namespace SWEndor.Actors
                                                 , end.z
                                                 , new TV_COLOR(0.5f, 1, 0.2f, 1).GetIntColor()
                                                 );
-              Engine.Instance().TVScreen2DImmediate.Action_End2D();
+              Globals.Engine.TVScreen2DImmediate.Action_End2D();
             }
 
             if (tvcres.eCollidedObjectType != CONST_TV_OBJECT_TYPE.TV_OBJECT_MESH && tvcres.eCollidedObjectType != CONST_TV_OBJECT_TYPE.TV_OBJECT_LANDSCAPE)
@@ -549,7 +549,7 @@ namespace SWEndor.Actors
                 return true;
               }
 
-              TVMesh tvm = Engine.Instance().TVGlobals.GetMeshFromID(tvcres.iMeshID);
+              TVMesh tvm = Globals.Engine.TVGlobals.GetMeshFromID(tvcres.iMeshID);
               if (tvm != null) // && tvm.IsVisible())
               {
                 if (int.TryParse(tvm.GetTag(), out actorID))
@@ -572,7 +572,7 @@ namespace SWEndor.Actors
                 return true;
               }
 
-              TVMesh tvm = Engine.Instance().TVGlobals.GetMeshFromID(tvcres.iMeshID);
+              TVMesh tvm = Globals.Engine.TVGlobals.GetMeshFromID(tvcres.iMeshID);
               if (tvm != null) // && tvm.IsVisible())
               {
                 if (int.TryParse(tvm.GetTag(), out actorID))
@@ -587,8 +587,8 @@ namespace SWEndor.Actors
           {
             if (IsPlayer())
             {
-              Engine.Instance().TVScreen2DImmediate.Action_Begin2D();
-              Engine.Instance().TVScreen2DImmediate.Draw_Line3D(start.x
+              Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
+              Globals.Engine.TVScreen2DImmediate.Draw_Line3D(start.x
                                                 , start.y
                                                 , start.z
                                                 , end.x
@@ -596,7 +596,7 @@ namespace SWEndor.Actors
                                                 , end.z
                                                 , new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor()
                                                 );
-              Engine.Instance().TVScreen2DImmediate.Action_End2D();
+              Globals.Engine.TVScreen2DImmediate.Action_End2D();
             }
           }
           return false;
@@ -620,7 +620,7 @@ namespace SWEndor.Actors
     #region Position / Rotation
     public TV_3DVECTOR GetPosition()
     {
-      //if (WorldPosition.Time >= Game.Instance().GameTime)
+      //if (WorldPosition.Time >= Globals.Engine.Game.GameTime)
       //  return WorldPosition.Value;
 
       TV_3DVECTOR ret = Position;
@@ -628,7 +628,7 @@ namespace SWEndor.Actors
       if (a != null)
         ret = a.GetRelativePositionXYZ(ret.x, ret.y, ret.z);
       WorldPosition.Value = ret;
-      WorldPosition.Time = Game.Instance().GameTime;
+      WorldPosition.Time = Globals.Engine.Game.GameTime;
       return ret;
     }
 
@@ -654,7 +654,7 @@ namespace SWEndor.Actors
 
       TV_3DVECTOR ret = new TV_3DVECTOR();
 
-      Engine.Instance().TVMathLibrary.TVVec3Rotate(ref ret, new TV_3DVECTOR(right, up, front), rot.y, rot.x, rot.z);
+      Globals.Engine.TVMathLibrary.TVVec3Rotate(ref ret, new TV_3DVECTOR(right, up, front), rot.y, rot.x, rot.z);
       ret += pos;
       return ret;
     }
@@ -671,14 +671,14 @@ namespace SWEndor.Actors
 
       TV_3DVECTOR ret = new TV_3DVECTOR();
 
-      Engine.Instance().TVMathLibrary.TVVec3Rotate(ref ret, new TV_3DVECTOR(x, y, z), rot.y, rot.x, rot.z);
+      Globals.Engine.TVMathLibrary.TVVec3Rotate(ref ret, new TV_3DVECTOR(x, y, z), rot.y, rot.x, rot.z);
       ret += pos;
       return ret;
     }
 
     public TV_3DVECTOR GetRotation()
     {
-      //if (WorldRotation.Time >= Game.Instance().GameTime)
+      //if (WorldRotation.Time >= Globals.Engine.Game.GameTime)
       //  return WorldRotation.Value;
 
       ActorInfo a = AttachToParent ? Factory.Get(ParentID) : null;
@@ -690,7 +690,7 @@ namespace SWEndor.Actors
         TV_3DMATRIX pymat = new TV_3DMATRIX();
         TV_3DMATRIX pyxmat = new TV_3DMATRIX();
         TV_3DMATRIX pyxzmat = new TV_3DMATRIX();
-        Engine.Instance().TVMathLibrary.TVMatrixIdentity(ref pmat);
+        Globals.Engine.TVMathLibrary.TVMatrixIdentity(ref pmat);
         TV_3DMATRIX xmat = new TV_3DMATRIX();
         TV_3DMATRIX ymat = new TV_3DMATRIX();
         TV_3DMATRIX zmat = new TV_3DMATRIX();
@@ -699,26 +699,26 @@ namespace SWEndor.Actors
         TV_3DVECTOR right = new TV_3DVECTOR();
         a.Mesh.GetBasisVectors(ref front, ref up, ref right);
 
-        Engine.Instance().TVMathLibrary.TVMatrixRotationAxis(ref ymat, up, Rotation.y);
-        Engine.Instance().TVMathLibrary.TVMatrixRotationAxis(ref xmat, right, Rotation.x);
-        Engine.Instance().TVMathLibrary.TVMatrixRotationAxis(ref zmat, front, Rotation.z);
-        Engine.Instance().TVMathLibrary.TVMatrixMultiply(ref pymat, pmat, ymat);
-        Engine.Instance().TVMathLibrary.TVMatrixMultiply(ref pyxmat, pymat, xmat);
-        Engine.Instance().TVMathLibrary.TVMatrixMultiply(ref pyxzmat, pyxmat, zmat);
+        Globals.Engine.TVMathLibrary.TVMatrixRotationAxis(ref ymat, up, Rotation.y);
+        Globals.Engine.TVMathLibrary.TVMatrixRotationAxis(ref xmat, right, Rotation.x);
+        Globals.Engine.TVMathLibrary.TVMatrixRotationAxis(ref zmat, front, Rotation.z);
+        Globals.Engine.TVMathLibrary.TVMatrixMultiply(ref pymat, pmat, ymat);
+        Globals.Engine.TVMathLibrary.TVMatrixMultiply(ref pyxmat, pymat, xmat);
+        Globals.Engine.TVMathLibrary.TVMatrixMultiply(ref pyxzmat, pyxmat, zmat);
 
         TV_3DVECTOR dir = Utilities.GetDirection(a.GetRotation());
         TV_3DVECTOR rdir = new TV_3DVECTOR();
-        Engine.Instance().TVMathLibrary.TVVec3TransformCoord(ref rdir, dir, pyxzmat);
+        Globals.Engine.TVMathLibrary.TVVec3TransformCoord(ref rdir, dir, pyxzmat);
         TV_3DVECTOR rot = Utilities.GetRotation(rdir);
 
         WorldRotation.Value = rot;
-        WorldRotation.Time = Game.Instance().GameTime;
+        WorldRotation.Time = Globals.Engine.Game.GameTime;
         return rot;
       }
       else
       {
         WorldRotation.Value = Rotation;
-        WorldRotation.Time = Game.Instance().GameTime;
+        WorldRotation.Time = Globals.Engine.Game.GameTime;
         return Rotation;
       }
     }
@@ -733,10 +733,10 @@ namespace SWEndor.Actors
         /*
         TV_3DVECTOR aret = a.GetRotation();
         TV_3DQUATERNION pmat = new TV_3DQUATERNION();
-        Engine.Instance().TVMathLibrary.TVQuaternionIdentity(ref pmat);
-        Engine.Instance().TVMathLibrary.TVQuaternionRotationYawPitchRoll(ref pmat, aret.y, aret.x, aret.z);
-        Engine.Instance().TVMathLibrary.TVQuaternionRotationYawPitchRoll(ref pmat, -Rotation.y, -Rotation.x, -Rotation.z);
-        Engine.Instance().TVMathLibrary.TVQuaternionNormalize(ref pmat, pmat);
+        Globals.Engine.TVMathLibrary.TVQuaternionIdentity(ref pmat);
+        Globals.Engine.TVMathLibrary.TVQuaternionRotationYawPitchRoll(ref pmat, aret.y, aret.x, aret.z);
+        Globals.Engine.TVMathLibrary.TVQuaternionRotationYawPitchRoll(ref pmat, -Rotation.y, -Rotation.x, -Rotation.z);
+        Globals.Engine.TVMathLibrary.TVQuaternionNormalize(ref pmat, pmat);
         Rotation = new TV_3DVECTOR(pmat.x, pmat.y, pmat.z);
         */
         /*
@@ -745,16 +745,16 @@ namespace SWEndor.Actors
         TV_3DMATRIX pinmat = new TV_3DMATRIX();
         float pindet = 0;
         TV_3DMATRIX mat = new TV_3DMATRIX();
-        Engine.Instance().TVMathLibrary.TVMatrixRotationYawPitchRoll(ref pmat, aret.y, aret.x, aret.z);
-        Engine.Instance().TVMathLibrary.TVMatrixInverse(ref pinmat, ref pindet, pmat);
-        Engine.Instance().TVMathLibrary.TVMatrixRotationYawPitchRoll(ref mat, y, x, z);
+        Globals.Engine.TVMathLibrary.TVMatrixRotationYawPitchRoll(ref pmat, aret.y, aret.x, aret.z);
+        Globals.Engine.TVMathLibrary.TVMatrixInverse(ref pinmat, ref pindet, pmat);
+        Globals.Engine.TVMathLibrary.TVMatrixRotationYawPitchRoll(ref mat, y, x, z);
         TV_3DMATRIX lmat = mat * pinmat;
 
         TV_3DQUATERNION quad = new TV_3DQUATERNION();
-        Engine.Instance().TVMathLibrary.TVConvertMatrixToQuaternion(ref quad, lmat);
-        //Engine.Instance().TVMathLibrary.TVEulerAnglesFromMatrix(ref aret, lmat);
-        //Engine.Instance().TVMathLibrary.TVVec3Rotate(ref aret, new TV_3DVECTOR(), aret.x, aret.y, aret.z);
-        Engine.Instance().TVMathLibrary.TVQuaternionNormalize(ref quad, quad);
+        Globals.Engine.TVMathLibrary.TVConvertMatrixToQuaternion(ref quad, lmat);
+        //Globals.Engine.TVMathLibrary.TVEulerAnglesFromMatrix(ref aret, lmat);
+        //Globals.Engine.TVMathLibrary.TVVec3Rotate(ref aret, new TV_3DVECTOR(), aret.x, aret.y, aret.z);
+        Globals.Engine.TVMathLibrary.TVQuaternionNormalize(ref quad, quad);
         Rotation = new TV_3DVECTOR(quad.x, quad.y, quad.z);
         */
         //Rotation = aret;
@@ -783,7 +783,7 @@ namespace SWEndor.Actors
         ret += a.GetDirection();
 
       TV_3DVECTOR dir = new TV_3DVECTOR();
-      Engine.Instance().TVMathLibrary.TVVec3Normalize(ref dir, ret);
+      Globals.Engine.TVMathLibrary.TVVec3Normalize(ref dir, ret);
       return dir;
     }
 
@@ -802,7 +802,7 @@ namespace SWEndor.Actors
       TV_3DVECTOR ret = Utilities.GetDirection(Rotation);
 
       TV_3DVECTOR dir = new TV_3DVECTOR();
-      Engine.Instance().TVMathLibrary.TVVec3Normalize(ref dir, ret);
+      Globals.Engine.TVMathLibrary.TVVec3Normalize(ref dir, ret);
       return dir;
     }
 
@@ -1008,12 +1008,12 @@ namespace SWEndor.Actors
     public bool IsNearlyOutOfBounds(float dx = 1000, float dy = 250, float dz = 1000)
     {
       TV_3DVECTOR pos = GetPosition();
-      return (pos.x < GameScenarioManager.Instance().MinBounds.x + dx)
-          || (pos.x > GameScenarioManager.Instance().MaxBounds.x - dx)
-          || (pos.y < GameScenarioManager.Instance().MinBounds.y + dy)
-          || (pos.y > GameScenarioManager.Instance().MaxBounds.y - dy)
-          || (pos.z < GameScenarioManager.Instance().MinBounds.z + dz)
-          || (pos.z > GameScenarioManager.Instance().MaxBounds.z - dz);
+      return (pos.x < Globals.Engine.GameScenarioManager.MinBounds.x + dx)
+          || (pos.x > Globals.Engine.GameScenarioManager.MaxBounds.x - dx)
+          || (pos.y < Globals.Engine.GameScenarioManager.MinBounds.y + dy)
+          || (pos.y > Globals.Engine.GameScenarioManager.MaxBounds.y - dy)
+          || (pos.z < Globals.Engine.GameScenarioManager.MinBounds.z + dz)
+          || (pos.z > Globals.Engine.GameScenarioManager.MaxBounds.z - dz);
     }
 
     public float GetWeaponRange()
@@ -1055,28 +1055,28 @@ namespace SWEndor.Actors
 
     public bool IsAggregateMode()
     {
-      ActorInfo a = (PlayerInfo.Instance().Actor != null) ? PlayerInfo.Instance().Actor : GameScenarioManager.Instance().SceneCamera;
-      float distcheck = TypeInfo.CullDistance * Game.Instance().PerfCullModifier;
+      ActorInfo a = (Globals.Engine.PlayerInfo.Actor != null) ? Globals.Engine.PlayerInfo.Actor : Globals.Engine.GameScenarioManager.SceneCamera;
+      float distcheck = TypeInfo.CullDistance * Globals.Engine.Game.PerfCullModifier;
 
       return (!IsPlayer() && TypeInfo.EnableDistanceCull && ActorDistanceInfo.GetRoughDistance(ID, a.ID) > distcheck);
     }
 
     public bool IsFarMode()
     {
-      ActorInfo a = (PlayerInfo.Instance().Actor != null) ? PlayerInfo.Instance().Actor : GameScenarioManager.Instance().SceneCamera;
-      float distcheck = TypeInfo.CullDistance * 0.25f * Game.Instance().PerfCullModifier;
+      ActorInfo a = (Globals.Engine.PlayerInfo.Actor != null) ? Globals.Engine.PlayerInfo.Actor : Globals.Engine.GameScenarioManager.SceneCamera;
+      float distcheck = TypeInfo.CullDistance * 0.25f * Globals.Engine.Game.PerfCullModifier;
 
       return (!IsPlayer() && TypeInfo.EnableDistanceCull && ActorDistanceInfo.GetRoughDistance(ID, a.ID) > distcheck);
     }
 
     public bool IsPlayer()
     {
-      return this == PlayerInfo.Instance().Actor;
+      return this == Globals.Engine.PlayerInfo.Actor;
     }
 
     public bool IsScenePlayer()
     {
-      return IsPlayer() || this == PlayerInfo.Instance().TempActor;
+      return IsPlayer() || this == Globals.Engine.PlayerInfo.TempActor;
     }
 
     public float StrengthFrac
@@ -1158,9 +1158,9 @@ namespace SWEndor.Actors
 
         // Player
         if (IsPlayer())
-          PlayerInfo.Instance().ActorID = -1;
-        else if (this == PlayerInfo.Instance().TempActor)
-          PlayerInfo.Instance().TempActorID = -1;
+          Globals.Engine.PlayerInfo.ActorID = -1;
+        else if (this == Globals.Engine.PlayerInfo.TempActor)
+          Globals.Engine.PlayerInfo.TempActorID = -1;
 
         // Final dispose
         Faction.UnregisterActor(this);

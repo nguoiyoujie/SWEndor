@@ -34,11 +34,10 @@ namespace SWEndor
       pbGame.Height = Settings.ResolutionY;
 
       // game
-      Game.Instance().StartLoad();
-      Engine.Instance().LinkHandle(pbGame.Handle);
-      Engine.Instance().Initialize();
-      Engine.Instance().InitializeComponents();
-      Game.Instance().Run();
+      Globals.Engine.Game.StartLoad();
+      Globals.Engine.LinkHandle(pbGame.Handle);
+      Globals.Engine.InitTrueVision();
+      Globals.Engine.Game.Run();
 
       pbGame.Width = (int)(Settings.ResolutionX * m);
       pbGame.Height = (int)(Settings.ResolutionY * m);
@@ -53,7 +52,7 @@ namespace SWEndor
 
     private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
     {
-      Game.Instance().Close();
+      Globals.Engine.Game.Close();
     }
 
     private void pbGame_MouseLeave(object sender, EventArgs e)

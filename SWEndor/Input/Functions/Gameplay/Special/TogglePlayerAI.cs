@@ -13,7 +13,7 @@ namespace SWEndor.Input.Functions.Gameplay.Special
 
     public override void Process()
     {
-      PlayerInfo.Instance().PlayerAIEnabled = !PlayerInfo.Instance().PlayerAIEnabled;
+      Globals.Engine.PlayerInfo.PlayerAIEnabled = !Globals.Engine.PlayerInfo.PlayerAIEnabled;
     }
   }
 }

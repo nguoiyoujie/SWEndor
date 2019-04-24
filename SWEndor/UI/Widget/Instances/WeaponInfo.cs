@@ -19,60 +19,60 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
-        return (!Screen2D.Instance().ShowPage
-            && PlayerInfo.Instance().Actor != null
-            && PlayerInfo.Instance().Actor.ActorState != ActorState.DEAD
-            && PlayerInfo.Instance().Actor.ActorState != ActorState.DYING
-            && !(PlayerInfo.Instance().Actor.TypeInfo is InvisibleCameraATI)
-            && Screen2D.Instance().ShowUI);
+        return (!Globals.Engine.Screen2D.ShowPage
+            && Globals.Engine.PlayerInfo.Actor != null
+            && Globals.Engine.PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && Globals.Engine.PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !(Globals.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
+            && Globals.Engine.Screen2D.ShowUI);
       }
     }
 
     public override void Draw()
     {
-      ActorInfo p = PlayerInfo.Instance().Actor;
+      ActorInfo p = Globals.Engine.PlayerInfo.Actor;
       if (p == null || p.CreationState != CreationState.ACTIVE)
         return;
 
       TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;
 
-      Engine.Instance().TVScreen2DImmediate.Action_Begin2D();
-      Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(leftinfo_left - 5
+      Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
+      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(leftinfo_left - 5
                                     , leftinfo_weapontop - 5
                                     , leftinfo_left + leftinfo_weaponwidth * 2 + 5
                                     , leftinfo_weapontop + leftinfo_weaponheight + 5
                                     , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
 
-      Engine.Instance().TVScreen2DImmediate.Draw_Box(leftinfo_left - 5
+      Globals.Engine.TVScreen2DImmediate.Draw_Box(leftinfo_left - 5
                             , leftinfo_weapontop - 5
                             , leftinfo_left + leftinfo_weaponwidth
                             , leftinfo_weapontop + leftinfo_weaponheight + 5
                             , pcolor.GetIntColor());
 
-      Engine.Instance().TVScreen2DImmediate.Draw_Box(leftinfo_left + leftinfo_weaponwidth
+      Globals.Engine.TVScreen2DImmediate.Draw_Box(leftinfo_left + leftinfo_weaponwidth
                             , leftinfo_weapontop - 5
                             , leftinfo_left + leftinfo_weaponwidth * 2 + 5
                             , leftinfo_weapontop + leftinfo_weaponheight + 5
                             , pcolor.GetIntColor());
-      Engine.Instance().TVScreen2DImmediate.Action_End2D();
+      Globals.Engine.TVScreen2DImmediate.Action_End2D();
 
 
-      Engine.Instance().TVScreen2DText.Action_BeginText();
+      Globals.Engine.TVScreen2DText.Action_BeginText();
 
-      Engine.Instance().TVScreen2DText.TextureFont_DrawText(PlayerInfo.Instance().PrimaryWeapon.ToUpper() //.Replace("A", "").Replace("E", "").Replace("I", "").Replace("O", "").Replace("U", "")
+      Globals.Engine.TVScreen2DText.TextureFont_DrawText(Globals.Engine.PlayerInfo.PrimaryWeapon.ToUpper() //.Replace("A", "").Replace("E", "").Replace("I", "").Replace("O", "").Replace("U", "")
       , leftinfo_left
       , leftinfo_weapontop + 20
       , pcolor.GetIntColor()
       , Font.Factory.Get("Text_16").ID
       );
 
-      Engine.Instance().TVScreen2DText.TextureFont_DrawText(PlayerInfo.Instance().SecondaryWeapon.ToUpper() //.Replace("A", "").Replace("E", "").Replace("I", "").Replace("O", "").Replace("U", "")
+      Globals.Engine.TVScreen2DText.TextureFont_DrawText(Globals.Engine.PlayerInfo.SecondaryWeapon.ToUpper() //.Replace("A", "").Replace("E", "").Replace("I", "").Replace("O", "").Replace("U", "")
       , leftinfo_left + leftinfo_weaponwidth + 5
       , leftinfo_weapontop + 20
       , pcolor.GetIntColor()
       , Font.Factory.Get("Text_16").ID
       );
-      Engine.Instance().TVScreen2DText.Action_EndText();
+      Globals.Engine.TVScreen2DText.Action_EndText();
     }
   }
 }

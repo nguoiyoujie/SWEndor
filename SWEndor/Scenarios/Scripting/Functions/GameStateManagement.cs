@@ -12,91 +12,91 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object GetGameStateB(Context context, object[] ps)
     {
       if (ps.Length == 1)
-        return GameScenarioManager.Instance().GetGameStateB(ps[0].ToString());
+        return Globals.Engine.GameScenarioManager.GetGameStateB(ps[0].ToString());
       else
-        return GameScenarioManager.Instance().GetGameStateB(ps[0].ToString(), Convert.ToBoolean(ps[1].ToString()));
+        return Globals.Engine.GameScenarioManager.GetGameStateB(ps[0].ToString(), Convert.ToBoolean(ps[1].ToString()));
     }
 
     public static object SetGameStateB(Context context, object[] ps)
     {
-      GameScenarioManager.Instance().SetGameStateB(ps[0].ToString(), Convert.ToBoolean(ps[1].ToString()));
+      Globals.Engine.GameScenarioManager.SetGameStateB(ps[0].ToString(), Convert.ToBoolean(ps[1].ToString()));
       return true;
     }
 
     public static object GetGameStateF(Context context, object[] ps)
     {
       if (ps.Length == 1)
-        return GameScenarioManager.Instance().GetGameStateF(ps[0].ToString());
+        return Globals.Engine.GameScenarioManager.GetGameStateF(ps[0].ToString());
       else
-        return GameScenarioManager.Instance().GetGameStateF(ps[0].ToString(), Convert.ToSingle(ps[1].ToString()));
+        return Globals.Engine.GameScenarioManager.GetGameStateF(ps[0].ToString(), Convert.ToSingle(ps[1].ToString()));
     }
 
     public static object SetGameStateF(Context context, object[] ps)
     {
-      GameScenarioManager.Instance().SetGameStateF(ps[0].ToString(), Convert.ToSingle(ps[1].ToString()));
+      Globals.Engine.GameScenarioManager.SetGameStateF(ps[0].ToString(), Convert.ToSingle(ps[1].ToString()));
       return true;
     }
 
     public static object GetGameStateS(Context context, object[] ps)
     {
       if (ps.Length == 1)
-        return GameScenarioManager.Instance().GetGameStateS(ps[0].ToString());
+        return Globals.Engine.GameScenarioManager.GetGameStateS(ps[0].ToString());
       else
-        return GameScenarioManager.Instance().GetGameStateS(ps[0].ToString(), ps[1].ToString());
+        return Globals.Engine.GameScenarioManager.GetGameStateS(ps[0].ToString(), ps[1].ToString());
     }
 
     public static object SetGameStateS(Context context, object[] ps)
     {
-      GameScenarioManager.Instance().SetGameStateS(ps[0].ToString(), ps[1].ToString());
+      Globals.Engine.GameScenarioManager.SetGameStateS(ps[0].ToString(), ps[1].ToString());
       return true;
     }
 
     public static object GetGameTime(Context context, object[] ps)
     {
-      return Game.Instance().GameTime;
+      return Globals.Engine.Game.GameTime;
     }
 
     public static object GetLastFrameTime(Context context, object[] ps)
     {
-      return Game.Instance().TimeSinceRender;
+      return Globals.Engine.Game.TimeSinceRender;
     }
 
     public static object GetDifficulty(Context context, object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null)
         return 0;
 
-      return GameScenarioManager.Instance().Scenario.Difficulty;
+      return Globals.Engine.GameScenarioManager.Scenario.Difficulty;
     }
 
     public static object GetPlayerActorType(Context context, object[] ps)
     {
-      return PlayerInfo.Instance().ActorType.Name;
+      return Globals.Engine.PlayerInfo.ActorType.Name;
     }
 
     public static object GetStageNumber(Context context, object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null)
         return 0;
 
-      return GameScenarioManager.Instance().Scenario.StageNumber;
+      return Globals.Engine.GameScenarioManager.Scenario.StageNumber;
     }
 
     public static object SetStageNumber(Context context, object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null)
         return false;
 
-      GameScenarioManager.Instance().Scenario.StageNumber = Convert.ToInt32(ps[0].ToString());
+      Globals.Engine.GameScenarioManager.Scenario.StageNumber = Convert.ToInt32(ps[0].ToString());
       return true;
     }
 
     public static object GetRegisterCount(Context context, object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null)
         return 0;
 
-      Dictionary<string, ActorInfo> reg = GameScenarioManager.Instance().Scenario.GetRegister(ps[0].ToString());
+      Dictionary<string, ActorInfo> reg = Globals.Engine.GameScenarioManager.Scenario.GetRegister(ps[0].ToString());
       if (reg == null)
         return 0;
       return reg.Count;
@@ -104,25 +104,25 @@ namespace SWEndor.Scenarios.Scripting.Functions
 
     public static object GetTimeSinceLostWing(Context context, object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null)
         return 0;
 
-      return GameScenarioManager.Instance().Scenario.TimeSinceLostWing;
+      return Globals.Engine.GameScenarioManager.Scenario.TimeSinceLostWing;
     }
 
     public static object GetTimeSinceLostShip(Context context, object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null)
         return 0;
 
-      return GameScenarioManager.Instance().Scenario.TimeSinceLostShip;
+      return Globals.Engine.GameScenarioManager.Scenario.TimeSinceLostShip;
     }
 
     public static object AddEvent(Context context, object[] ps)
     {
       Script s = Script.Registry.Get(ps[1].ToString());
       if (s != null)
-        GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + Convert.ToSingle(ps[0].ToString())
+        Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + Convert.ToSingle(ps[0].ToString())
         , (_) => s.Run());
       else
       {
@@ -131,15 +131,15 @@ namespace SWEndor.Scenarios.Scripting.Functions
         switch (ps[1].ToString().ToLower())
         {
           case "common.fadein":
-            g = GameScenarioManager.Instance().Scenario.FadeIn;
+            g = Globals.Engine.GameScenarioManager.Scenario.FadeIn;
             break;
 
           case "common.fadeout":
-            g = GameScenarioManager.Instance().Scenario.FadeOut;
+            g = Globals.Engine.GameScenarioManager.Scenario.FadeOut;
             break;
         }
         if (g != null)
-          GameScenarioManager.Instance().AddEvent(Game.Instance().GameTime + Convert.ToInt32(ps[0].ToString()), g);
+          Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + Convert.ToInt32(ps[0].ToString()), g);
         else
           throw new InvalidOperationException(string.Format("Script event '{0}' does not exist!", ps[1].ToString()));
       }

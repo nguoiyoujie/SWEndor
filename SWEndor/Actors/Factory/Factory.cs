@@ -59,7 +59,7 @@ namespace SWEndor.Actors
       {
         foreach (ActorInfo a in list)
           if (a != null)
-            if (a.CreationState == CreationState.PLANNED && a.CreationTime < Game.Instance().GameTime)
+            if (a.CreationState == CreationState.PLANNED && a.CreationTime < Globals.Engine.Game.GameTime)
               a.Generate();
       }
 
@@ -82,14 +82,14 @@ namespace SWEndor.Actors
 
       public static int[] GetList()
       {
-        if (listtime < Game.Instance().GameTime)
+        if (listtime < Globals.Engine.Game.GameTime)
         {
           List<int> hl = new List<int>();
           foreach (ActorInfo a in list)
             if (a != null && a.CreationState != CreationState.DISPOSED)
               hl.Add(a.ID);
           holdinglist = hl.ToArray();
-          listtime = Game.Instance().GameTime;
+          listtime = Globals.Engine.Game.GameTime;
         }
         return holdinglist;
       }
@@ -116,19 +116,12 @@ namespace SWEndor.Actors
 
       public static bool IsPlayer(int id)
       {
-        return id == Player.PlayerInfo.Instance().Actor?.ID;
+        return id == Globals.Engine.PlayerInfo.Actor?.ID;
       }
 
       public static void Remove(int id)
       {
         int x = id % Capacity;
-
-        /*
-        list[x] = null;
-        count--;
-        if (x < emptycounter)
-          emptycounter = x;
-        */
 
         // don't remove, keep future reuse. But reduce counters
         if (list[x]?.CreationState != CreationState.DISPOSED)

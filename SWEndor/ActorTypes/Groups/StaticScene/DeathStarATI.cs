@@ -18,10 +18,10 @@ namespace SWEndor.ActorTypes.Instances
     {
       float size = 20000;
 
-      SourceMesh = Engine.Instance().TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Engine.Instance().TVScene.CreateMeshBuilder(Key);
+        SourceMesh = Globals.Engine.TVScene.CreateMeshBuilder(Key);
 
         string texname = Path.Combine("deathstar", "deathstar.bmp");
         string alphatexname = Path.Combine("deathstar", "deathstaralpha.bmp"); 

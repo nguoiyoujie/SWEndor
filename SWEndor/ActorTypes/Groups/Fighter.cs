@@ -46,7 +46,7 @@ namespace SWEndor.ActorTypes.Groups
         ainfo.MovementInfo.ApplyZBalance = false;
         ainfo.CombatInfo.OnTimedLife = true;
 
-        if (ainfo.GetAllParents(1).Count > 0 || (ainfo.CombatInfo.HitWhileDyingLeadsToDeath && Engine.Instance().Random.NextDouble() < 0.3f))
+        if (ainfo.GetAllParents(1).Count > 0 || (ainfo.CombatInfo.HitWhileDyingLeadsToDeath && Globals.Engine.Random.NextDouble() < 0.3f))
         {
           ainfo.CombatInfo.TimedLife = 0.1f;
         }

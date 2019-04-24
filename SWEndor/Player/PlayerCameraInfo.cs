@@ -21,7 +21,7 @@ namespace SWEndor.Player
       Camera.SetViewFrustum(90, 65000);
     }
 
-    public TVCamera Camera { get { return Engine.Instance().TVEngine.GetCamera(); } }
+    public TVCamera Camera { get { return Globals.Engine.TVEngine.GetCamera(); } }
     public CameraMode CameraMode = CameraMode.FIRSTPERSON;
     private CameraMode prevCameraMode = CameraMode.FIRSTPERSON;
 
@@ -34,8 +34,8 @@ namespace SWEndor.Player
     {
       UpdateMode();
 
-      if (PlayerInfo.Instance().Actor != null)
-        PlayerInfo.Instance().Actor.TypeInfo.ChaseCamera(PlayerInfo.Instance().Actor);
+      if (Globals.Engine.PlayerInfo.Actor != null)
+        Globals.Engine.PlayerInfo.Actor.TypeInfo.ChaseCamera(Globals.Engine.PlayerInfo.Actor);
 
       ShakeCam();
       ShakeDecay();
@@ -46,8 +46,8 @@ namespace SWEndor.Player
       if (prevCameraMode != CameraMode)
       {
         prevCameraMode = CameraMode;
-        if (PlayerInfo.Instance().Actor != null && !GameScenarioManager.Instance().IsCutsceneMode)
-          Screen2D.Instance().MessageSecondaryText(string.Format("CAMERA: {0}", CameraMode)
+        if (Globals.Engine.PlayerInfo.Actor != null && !Globals.Engine.GameScenarioManager.IsCutsceneMode)
+          Globals.Engine.Screen2D.MessageSecondaryText(string.Format("CAMERA: {0}", CameraMode)
                                                         , 2.5f
                                                         , new TV_COLOR(0.5f, 0.5f, 1, 1)
                                                         , 1);
@@ -56,10 +56,10 @@ namespace SWEndor.Player
 
     public void ShakeCam()
     {
-      if (Shake > 1 && PlayerInfo.Instance().StrengthFrac > 0)
+      if (Shake > 1 && Globals.Engine.PlayerInfo.StrengthFrac > 0)
       {
-        int dispx = Engine.Instance().Random.Next(-(int)Shake, (int)Shake);
-        int dispy = Engine.Instance().Random.Next(-(int)Shake, (int)Shake);
+        int dispx = Globals.Engine.Random.Next(-(int)Shake, (int)Shake);
+        int dispy = Globals.Engine.Random.Next(-(int)Shake, (int)Shake);
         Camera.MoveRelative(0, dispx - prev_shake_displacement_x, dispy - prev_shake_displacement_y, true);
         prev_shake_displacement_x = dispx;
         prev_shake_displacement_y = dispy;
@@ -73,7 +73,7 @@ namespace SWEndor.Player
 
     public void RotateCam(float aX, float aY)
     {
-      if (PlayerInfo.Instance().IsMovementControlsEnabled)
+      if (Globals.Engine.PlayerInfo.IsMovementControlsEnabled)
       {
         float angleX = aY * Settings.SteeringSensitivity;
         float angleY = aX * Settings.SteeringSensitivity;
@@ -81,30 +81,30 @@ namespace SWEndor.Player
         if (CameraMode == CameraMode.FREEMODE 
          || CameraMode == CameraMode.FREEROTATION)
         {
-          float rate = Game.Instance().TimeControl.RenderInterval;
+          float rate = Globals.Engine.Game.TimeControl.RenderInterval;
           angleX *= 100;
           angleY *= 100;
 
-          Camera.RotateX(angleX * rate); //Game.Instance().TimeSinceRender / Game.Instance().TimeControl.SpeedModifier);
+          Camera.RotateX(angleX * rate); //Globals.Engine.Game.TimeSinceRender / Globals.Engine.Game.TimeControl.SpeedModifier);
           Camera.RotateY(angleY * rate);
 
           TV_3DVECTOR rot = Camera.GetRotation();
           Utilities.Clamp(ref rot.x, -75, 75);
           Camera.SetRotation(rot.x, rot.y, rot.z);
         }
-        else if (PlayerInfo.Instance().Actor != null && PlayerInfo.Instance().Actor.CreationState != CreationState.DISPOSED)
+        else if (Globals.Engine.PlayerInfo.Actor != null && Globals.Engine.PlayerInfo.Actor.CreationState != CreationState.DISPOSED)
         {
-          float maxT = PlayerInfo.Instance().Actor.TypeInfo.MaxTurnRate;
+          float maxT = Globals.Engine.PlayerInfo.Actor.TypeInfo.MaxTurnRate;
           angleX *= maxT;
           angleY *= maxT;
 
-          if (!PlayerInfo.Instance().PlayerAIEnabled)
+          if (!Globals.Engine.PlayerInfo.PlayerAIEnabled)
           {
             Utilities.Clamp(ref angleX, -maxT, maxT);
             Utilities.Clamp(ref angleY, -maxT, maxT);
 
-            PlayerInfo.Instance().Actor.MovementInfo.XTurnAngle = angleX;
-            PlayerInfo.Instance().Actor.MovementInfo.YTurnAngle = angleY;
+            Globals.Engine.PlayerInfo.Actor.MovementInfo.XTurnAngle = angleX;
+            Globals.Engine.PlayerInfo.Actor.MovementInfo.YTurnAngle = angleY;
           }
         }
       }

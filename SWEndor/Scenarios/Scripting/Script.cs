@@ -15,8 +15,8 @@ namespace SWEndor.Scenarios.Scripting
       if (!File.Exists(filepath))
         throw new FileNotFoundException("Script file '" + filepath + "' is not found!");
 
-      Screen2D.Instance().LoadingTextLines.Add("loading script:" + scriptname);
-      Screen2D.Instance().LoadingTextLines.RemoveAt(0);
+      Globals.Engine.Screen2D.LoadingTextLines.Add("loading script:" + scriptname);
+      Globals.Engine.Screen2D.LoadingTextLines.RemoveAt(0);
       Name = scriptname;
       Registry.Add(scriptname, this);
     }

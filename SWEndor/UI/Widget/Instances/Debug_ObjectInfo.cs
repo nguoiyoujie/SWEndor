@@ -18,7 +18,7 @@ namespace SWEndor.UI.Widgets
 
     public override void Draw()
     {
-      Engine.Instance().TVScreen2DText.Action_BeginText();
+      Globals.Engine.TVScreen2DText.Action_BeginText();
 
       TV_2DVECTOR loc = new TV_2DVECTOR(30, 375);
       string swingcount = "";
@@ -52,10 +52,10 @@ namespace SWEndor.UI.Widgets
       {
         swingcount += kvp.Key + ": " + kvp.Value + "\n";
       }
-      Engine.Instance().TVScreen2DText.TextureFont_DrawText(swingcount
+      Globals.Engine.TVScreen2DText.TextureFont_DrawText(swingcount
       , loc.x, loc.y, new TV_COLOR(0.6f, 0.8f, 0.6f, 1).GetIntColor());
 
-      Engine.Instance().TVScreen2DText.Action_EndText();
+      Globals.Engine.TVScreen2DText.Action_EndText();
     }
   }
 }

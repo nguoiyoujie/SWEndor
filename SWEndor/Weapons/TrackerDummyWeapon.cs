@@ -8,7 +8,7 @@ namespace SWEndor.Weapons.Types
     public TrackerDummyWeapon() : base("Tracker Dummy")
     {
       WeaponProjectile = RedLaserATI.Instance();
-      WeaponCooldown = Game.Instance().GameTime + 9999999;
+      WeaponCooldown = Globals.Engine.Game.GameTime + 9999999;
       WeaponCooldownRate = 1000;
       WeaponCooldownRateRandom = 0;
 

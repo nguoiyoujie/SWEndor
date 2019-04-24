@@ -14,8 +14,8 @@ namespace SWEndor.UI.Menu.Pages
     public Credits()
     {
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
-      Cover.HighlightBoxWidth = Engine.Instance().ScreenWidth;
-      Cover.HighlightBoxHeight = Engine.Instance().ScreenHeight;
+      Cover.HighlightBoxWidth = Globals.Engine.ScreenWidth;
+      Cover.HighlightBoxHeight = Globals.Engine.ScreenHeight;
       Cover.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.3f);
 
       MainText.Text = "Credits";
@@ -39,7 +39,7 @@ namespace SWEndor.UI.Menu.Pages
       CreditText.HighlightBoxHeight = 350;
 
       ButtonExit.Text = "Back";
-      ButtonExit.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth - 200, Engine.Instance().ScreenHeight - 80);
+      ButtonExit.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth - 200, Globals.Engine.ScreenHeight - 80);
       ButtonExit.HighlightBoxPosition = ButtonExit.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonExit.HighlightBoxWidth = 200;
       ButtonExit.HighlightBoxHeight = 30;

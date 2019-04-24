@@ -86,16 +86,16 @@ namespace SWEndor.ActorTypes.Instances
 
       if (ainfo.ActorState == ActorState.DEAD)
       {
-        if (!ainfo.IsAggregateMode() && !Game.Instance().IsLowFPS())
+        if (!ainfo.IsAggregateMode() && !Globals.Engine.Game.IsLowFPS())
         {
-          double d = Engine.Instance().Random.NextDouble();
+          double d = Globals.Engine.Random.NextDouble();
 
-          float x = Engine.Instance().Random.Next(-1000, 1000) / 100f;
-          float y = Engine.Instance().Random.Next(0, 3000) / 100f;
-          float z = Engine.Instance().Random.Next(-2500, 2500) / 100f;
-          float x2 = Engine.Instance().Random.Next(-1000, 1000) / 100f;
-          float y2 = Engine.Instance().Random.Next(-3000, 0) / 100f;
-          float z2 = Engine.Instance().Random.Next(-2500, 2500) / 100f;
+          float x = Globals.Engine.Random.Next(-1000, 1000) / 100f;
+          float y = Globals.Engine.Random.Next(0, 3000) / 100f;
+          float z = Globals.Engine.Random.Next(-2500, 2500) / 100f;
+          float x2 = Globals.Engine.Random.Next(-1000, 1000) / 100f;
+          float y2 = Globals.Engine.Random.Next(-3000, 0) / 100f;
+          float z2 = Globals.Engine.Random.Next(-2500, 2500) / 100f;
 
           if (d > 0.5f)
           {
@@ -106,7 +106,7 @@ namespace SWEndor.ActorTypes.Instances
             ActorInfo a = ActorInfo.Create(acinfo);
           }
 
-          d = Engine.Instance().Random.NextDouble();
+          d = Globals.Engine.Random.NextDouble();
           if (d > 0.5f)
           {
             ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("YWing_WingATI"));

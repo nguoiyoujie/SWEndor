@@ -40,7 +40,7 @@ namespace SWEndor.AI.Actions
           && a.ActorState != ActorState.DEAD
           && a.CombatInfo.IsCombatObject
           && (a.TypeInfo.TargetType & m_TargetType) != 0
-          && !a.IsOutOfBounds(GameScenarioManager.Instance().MinAIBounds, GameScenarioManager.Instance().MaxAIBounds)
+          && !a.IsOutOfBounds(Globals.Engine.GameScenarioManager.MinAIBounds, Globals.Engine.GameScenarioManager.MaxAIBounds)
           && !owner.Faction.IsAlliedWith(a.Faction) // enemy
           )
         {
@@ -67,7 +67,7 @@ namespace SWEndor.AI.Actions
 
       if (targets.Count > 0)
       {
-        int w = Engine.Instance().Random.Next(0, weight);
+        int w = Globals.Engine.Random.Next(0, weight);
         for (int i = 0; i < targets.Count; i++)
         {
           w -= targets[i].HuntWeight;

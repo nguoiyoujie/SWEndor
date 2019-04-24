@@ -13,7 +13,7 @@ namespace SWEndor.Input.Functions.Gameplay.Special
 
     public override void Process()
     {
-      PlayerInfo.Instance().IsMovementControlsEnabled = !PlayerInfo.Instance().IsMovementControlsEnabled;
+      Globals.Engine.PlayerInfo.IsMovementControlsEnabled = !Globals.Engine.PlayerInfo.IsMovementControlsEnabled;
     }
   }
 }

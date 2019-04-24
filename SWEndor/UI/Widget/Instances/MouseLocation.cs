@@ -18,17 +18,17 @@ namespace SWEndor.UI.Widgets
 
     public override void Draw()
     {
-      Engine.Instance().TVScreen2DImmediate.Action_Begin2D();
-      int mX = InputManager.Instance().MOUSE_X;
-      int mY = InputManager.Instance().MOUSE_Y;
+      Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
+      int mX = Globals.Engine.InputManager.MOUSE_X;
+      int mY = Globals.Engine.InputManager.MOUSE_Y;
 
       TV_COLOR color = new TV_COLOR(1, 1, 1, 0.5f);
-      if (PlayerInfo.Instance().Actor != null && PlayerInfo.Instance().Actor.Faction != null)
-        color = PlayerInfo.Instance().Actor.Faction.Color;
+      if (Globals.Engine.PlayerInfo.Actor != null && Globals.Engine.PlayerInfo.Actor.Faction != null)
+        color = Globals.Engine.PlayerInfo.Actor.Faction.Color;
 
-      Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(mX - 2, mY - 2, mX + 2, mY + 2, color.GetIntColor());
+      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(mX - 2, mY - 2, mX + 2, mY + 2, color.GetIntColor());
 
-      Engine.Instance().TVScreen2DImmediate.Action_End2D();
+      Globals.Engine.TVScreen2DImmediate.Action_End2D();
     }
   }
 }

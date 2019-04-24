@@ -23,11 +23,11 @@ namespace SWEndor.ActorTypes.Instances
       CollisionEnabled = false;
       RadarSize = 2;
 
-      SourceMesh = Engine.Instance().TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
         LoadAlphaTextureFromFolder(Globals.ImagePath, "explosion/small");
-        SourceMesh = Engine.Instance().TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 10, 10, Key, true);
+        SourceMesh = Globals.Engine.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 10, 10, Key, true);
         SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
         SourceMesh.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
 

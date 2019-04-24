@@ -74,14 +74,14 @@ namespace SWEndor.ActorTypes.Instances
       {
         for (int shock = 3; shock > 0; shock--)
         {
-          ActorInfo child = ActorInfo.Factory.Get(children[Engine.Instance().Random.Next(0, children.Count)]);
-          child.CombatInfo.Strength -= 0.1f * Engine.Instance().Random.Next(25, 50);
+          ActorInfo child = ActorInfo.Factory.Get(children[Globals.Engine.Random.Next(0, children.Count)]);
+          child.CombatInfo.Strength -= 0.1f * Globals.Engine.Random.Next(25, 50);
 
           float empduration = 12;
           
           foreach (WeaponInfo w in child.WeaponSystemInfo.Weapons.Values)
-            if (w.WeaponCooldown < Game.Instance().GameTime + empduration + 2)
-              w.WeaponCooldown = Game.Instance().GameTime + empduration + 2;
+            if (w.WeaponCooldown < Globals.Engine.Game.GameTime + empduration + 2)
+              w.WeaponCooldown = Globals.Engine.Game.GameTime + empduration + 2;
 
           foreach (int i in child.GetAllChildren(1))
           {

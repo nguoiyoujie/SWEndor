@@ -8,7 +8,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
   {
     public static object SetSceneCameraAsActive(Context context, object[] ps)
     {
-      GameScenarioManager.Instance().MaxBounds = new TV_3DVECTOR(Convert.ToSingle(ps[0].ToString()), Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()));
+      Globals.Engine.GameScenarioManager.MaxBounds = new TV_3DVECTOR(Convert.ToSingle(ps[0].ToString()), Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()));
       return true;
     }
   }

@@ -15,9 +15,9 @@ namespace SWEndor.Input.Functions.Gameplay
     {
       if (PlayerCameraInfo.Instance().CameraMode == CameraMode.FREEMODE)
       {
-        float rate = InputManager.Instance().SHIFT ? 2500 : 500;
+        float rate = Globals.Engine.InputManager.SHIFT ? 2500 : 500;
         TVCamera tvc = PlayerCameraInfo.Instance().Camera;
-        rate *= Game.Instance().TimeControl.RenderInterval;
+        rate *= Globals.Engine.Game.TimeControl.RenderInterval;
         tvc.MoveRelative(-rate, 0, 0);
       }
     }

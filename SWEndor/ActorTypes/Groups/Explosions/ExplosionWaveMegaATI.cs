@@ -27,10 +27,10 @@ namespace SWEndor.ActorTypes.Instances
       EnableDistanceCull = false;
 
 
-      SourceMesh = Engine.Instance().TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Engine.Instance().TVScene.CreateMeshBuilder(Key);
+        SourceMesh = Globals.Engine.TVScene.CreateMeshBuilder(Key);
 
         string texname = Path.Combine("explosion", "wave", @"tex0000.jpg");
         string texpath = Path.Combine(Globals.ImagePath, texname);
@@ -49,7 +49,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       if (ainfo.ActorState == ActorState.NORMAL)
       {
-        ainfo.Scale += new TV_3DVECTOR(7500, 0, 7500) * Game.Instance().TimeSinceRender;
+        ainfo.Scale += new TV_3DVECTOR(7500, 0, 7500) * Globals.Engine.Game.TimeSinceRender;
       }
     }
   }

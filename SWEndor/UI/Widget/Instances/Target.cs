@@ -22,34 +22,34 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
-        return (!Screen2D.Instance().ShowPage
-            && PlayerInfo.Instance().Actor != null
-            && PlayerInfo.Instance().Actor.ActorState != ActorState.DEAD
-            && PlayerInfo.Instance().Actor.ActorState != ActorState.DYING
-            && !(PlayerInfo.Instance().Actor.TypeInfo is InvisibleCameraATI)
-            && Screen2D.Instance().ShowUI);
+        return (!Globals.Engine.Screen2D.ShowPage
+            && Globals.Engine.PlayerInfo.Actor != null
+            && Globals.Engine.PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && Globals.Engine.PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !(Globals.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
+            && Globals.Engine.Screen2D.ShowUI);
       }
     }
 
     public override void Draw()
     {
-      ActorInfo p = PlayerInfo.Instance().Actor;
+      ActorInfo p = Globals.Engine.PlayerInfo.Actor;
       if (p == null || p.CreationState != CreationState.ACTIVE)
         return;
 
       ActorInfo prev_target = m_target;
 
-      PickTarget(!PlayerInfo.Instance().IsTorpedoMode);
+      PickTarget(!Globals.Engine.PlayerInfo.IsTorpedoMode);
 
       if (m_target == null)
       {
-        PlayerInfo.Instance().AimTargetID = -1;
+        Globals.Engine.PlayerInfo.AimTargetID = -1;
       }
       else
       {
         float x = 0;
         float y = 0;
-        Engine.Instance().TVScreen2DImmediate.Math_3DPointTo2D(m_target.GetPosition(), ref x, ref y);
+        Globals.Engine.TVScreen2DImmediate.Math_3DPointTo2D(m_target.GetPosition(), ref x, ref y);
         float dist = ActorDistanceInfo.GetDistance(p.ID, m_target.ID, 7501);
         float limit = 0.005f * dist;
         if (limit < 50)
@@ -60,74 +60,74 @@ namespace SWEndor.UI.Widgets
         || m_target.ActorState == ActorState.DEAD
         || !m_target.CombatInfo.IsCombatObject
         || dist > 7500
-        || Math.Abs(x - Engine.Instance().ScreenWidth / 2) > limit
-        || Math.Abs(y - Engine.Instance().ScreenHeight / 2) > limit
-        || (PlayerInfo.Instance().Actor.Faction.IsAlliedWith(m_target.Faction) && PlayerInfo.Instance().IsTorpedoMode)
+        || Math.Abs(x - Globals.Engine.ScreenWidth / 2) > limit
+        || Math.Abs(y - Globals.Engine.ScreenHeight / 2) > limit
+        || (Globals.Engine.PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && Globals.Engine.PlayerInfo.IsTorpedoMode)
         || !PlayerCameraInfo.Instance().Camera.IsPointVisible(m_target.GetPosition()))
         {
           m_target = null;
-          PlayerInfo.Instance().AimTargetID = -1;
+          Globals.Engine.PlayerInfo.AimTargetID = -1;
         }
         else
         {
           TV_COLOR acolor = (m_target.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : m_target.Faction.Color;
           string name = m_target.Name;
-          Engine.Instance().TVScreen2DImmediate.Action_Begin2D();
-          if (PlayerInfo.Instance().IsTorpedoMode)
+          Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
+          if (Globals.Engine.PlayerInfo.IsTorpedoMode)
           {
-            if (!PlayerInfo.Instance().Actor.Faction.IsAlliedWith(m_target.Faction) && prev_target != m_target)
+            if (!Globals.Engine.PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && prev_target != m_target)
             {
-              SoundManager.Instance().SetSound("button_3");
+              Globals.Engine.SoundManager.SetSound("button_3");
               m_targetBigSize = 15;
             }
             if (m_targetBigSize > m_targetSize)
             {
-              m_targetBigSize -= 25 * Game.Instance().TimeSinceRender;
-              Engine.Instance().TVScreen2DImmediate.Draw_Box(x - m_targetBigSize, y - m_targetBigSize, x + m_targetBigSize, y + m_targetBigSize, acolor.GetIntColor());
+              m_targetBigSize -= 25 * Globals.Engine.Game.TimeSinceRender;
+              Globals.Engine.TVScreen2DImmediate.Draw_Box(x - m_targetBigSize, y - m_targetBigSize, x + m_targetBigSize, y + m_targetBigSize, acolor.GetIntColor());
             }
 
             WeaponInfo weap;
             int burst = 0;
-            p.TypeInfo.InterpretWeapon(p.ID, PlayerInfo.Instance().SecondaryWeapon, out weap, out burst);
+            p.TypeInfo.InterpretWeapon(p.ID, Globals.Engine.PlayerInfo.SecondaryWeapon, out weap, out burst);
             if (weap != null && weap.Ammo > 0)
             {
-              Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());
+              Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());
             }
             else
             {
-              Engine.Instance().TVScreen2DImmediate.Draw_Box(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());
+              Globals.Engine.TVScreen2DImmediate.Draw_Box(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());
             }
           }
           else
           {
-            Engine.Instance().TVScreen2DImmediate.Draw_Box(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());
+            Globals.Engine.TVScreen2DImmediate.Draw_Box(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());
           }
-          Engine.Instance().TVScreen2DImmediate.Action_End2D();
+          Globals.Engine.TVScreen2DImmediate.Action_End2D();
 
-          Engine.Instance().TVScreen2DText.Action_BeginText();
-          Engine.Instance().TVScreen2DText.TextureFont_DrawText(string.Format("{0}\nDamage: {1:0}%"
+          Globals.Engine.TVScreen2DText.Action_BeginText();
+          Globals.Engine.TVScreen2DText.TextureFont_DrawText(string.Format("{0}\nDamage: {1:0}%"
             , name
             , (int)(100 * (1 - m_target.StrengthFrac))
             )
             , x, y + m_targetSize + 10, acolor.GetIntColor()
             , Font.Factory.Get("Text_10").ID
             );
-          Engine.Instance().TVScreen2DText.Action_EndText();
+          Globals.Engine.TVScreen2DText.Action_EndText();
 
-          PlayerInfo.Instance().AimTargetID = PlayerInfo.Instance().Actor.Faction.IsAlliedWith(m_target.Faction) ? -1 : m_target.ID;
+          Globals.Engine.PlayerInfo.AimTargetID = Globals.Engine.PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) ? -1 : m_target.ID;
 
-          if (PlayerInfo.Instance().Actor.Faction != null && !PlayerInfo.Instance().Actor.Faction.IsAlliedWith(m_target.Faction) && !PlayerInfo.Instance().IsTorpedoMode)
+          if (Globals.Engine.PlayerInfo.Actor.Faction != null && !Globals.Engine.PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && !Globals.Engine.PlayerInfo.IsTorpedoMode)
           {
             // Targeting cross
             // Anticipate
             float d = dist / Globals.LaserSpeed; // Laser Speed
             TV_3DVECTOR target = m_target.GetRelativePositionXYZ(0, 0, m_target.MovementInfo.Speed * d);
-            Engine.Instance().TVScreen2DImmediate.Math_3DPointTo2D(target, ref x, ref y);
+            Globals.Engine.TVScreen2DImmediate.Math_3DPointTo2D(target, ref x, ref y);
 
-            Engine.Instance().TVScreen2DImmediate.Action_Begin2D();
-            Engine.Instance().TVScreen2DImmediate.Draw_Line(x - m_targetSize, y, x + m_targetSize, y, acolor.GetIntColor());
-            Engine.Instance().TVScreen2DImmediate.Draw_Line(x, y - m_targetSize, x, y + m_targetSize, acolor.GetIntColor());
-            Engine.Instance().TVScreen2DImmediate.Action_End2D();
+            Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
+            Globals.Engine.TVScreen2DImmediate.Draw_Line(x - m_targetSize, y, x + m_targetSize, y, acolor.GetIntColor());
+            Globals.Engine.TVScreen2DImmediate.Draw_Line(x, y - m_targetSize, x, y + m_targetSize, acolor.GetIntColor());
+            Globals.Engine.TVScreen2DImmediate.Action_End2D();
           }
         }
       }
@@ -135,7 +135,7 @@ namespace SWEndor.UI.Widgets
 
     private bool PickTarget(bool pick_allies)
     {
-      ActorInfo p = PlayerInfo.Instance().Actor;
+      ActorInfo p = Globals.Engine.PlayerInfo.Actor;
       bool ret = false;
 
       if (p != null && p.CreationState == CreationState.ACTIVE)
@@ -166,10 +166,10 @@ namespace SWEndor.UI.Widgets
                 limit = 50;
               m_targetX = limit;
               m_targetY = limit;
-              Engine.Instance().TVScreen2DImmediate.Math_3DPointTo2D(a.GetPosition(), ref x, ref y);
+              Globals.Engine.TVScreen2DImmediate.Math_3DPointTo2D(a.GetPosition(), ref x, ref y);
 
-              x -= Engine.Instance().ScreenWidth / 2;
-              y -= Engine.Instance().ScreenHeight / 2;
+              x -= Globals.Engine.ScreenWidth / 2;
+              y -= Globals.Engine.ScreenHeight / 2;
 
               x = Math.Abs(x);
               y = Math.Abs(y);

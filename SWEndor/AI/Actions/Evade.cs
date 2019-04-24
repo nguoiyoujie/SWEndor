@@ -24,7 +24,7 @@ namespace SWEndor.AI.Actions
     {
       return string.Format("{0},{1},{2}"
                           , Name
-                          , ResumeTime - Game.Instance().GameTime
+                          , ResumeTime - Globals.Engine.Game.GameTime
                           , Complete
                           );
     }
@@ -39,7 +39,7 @@ namespace SWEndor.AI.Actions
 
       if (ResumeTime == 0)
       {
-        ResumeTime = Game.Instance().GameTime + WaitTime;
+        ResumeTime = Globals.Engine.Game.GameTime + WaitTime;
       }
 
       if (CheckBounds(owner))
@@ -50,14 +50,14 @@ namespace SWEndor.AI.Actions
           if (owner.IsNearlyOutOfBounds())
             Target_Position = new TV_3DVECTOR();
           else
-            Target_Position = owner.GetRelativePositionXYZ(1000, Engine.Instance().Random.Next(-500, 500), Engine.Instance().Random.Next(-500, 500));
+            Target_Position = owner.GetRelativePositionXYZ(1000, Globals.Engine.Random.Next(-500, 500), Globals.Engine.Random.Next(-500, 500));
         }
 
         float delta_angle = AdjustRotation(owner, Target_Position);
         float delta_speed = AdjustSpeed(owner, owner.MovementInfo.Speed);
 
         Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle && delta_speed == 0);
-        Complete |= (ResumeTime < Game.Instance().GameTime);
+        Complete |= (ResumeTime < Globals.Engine.Game.GameTime);
       }
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();

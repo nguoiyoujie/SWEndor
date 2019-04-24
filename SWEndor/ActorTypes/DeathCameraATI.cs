@@ -26,10 +26,10 @@ namespace SWEndor.ActorTypes
       EnableDistanceCull = false;
       CollisionEnabled = false;
 
-      SourceMesh = Engine.Instance().TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Engine.Instance().TVScene.CreateMeshBuilder(Key);
+        SourceMesh = Globals.Engine.TVScene.CreateMeshBuilder(Key);
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);
       }
@@ -40,12 +40,12 @@ namespace SWEndor.ActorTypes
       TVCamera cam = PlayerCameraInfo.Instance().Camera;
 
       float circleperiod = ainfo.CameraSystemInfo.CamDeathCirclePeriod;
-      float angularphase = (Game.Instance().GameTime % circleperiod) * (2 * Globals.PI / circleperiod);
+      float angularphase = (Globals.Engine.Game.GameTime % circleperiod) * (2 * Globals.PI / circleperiod);
       float radius = ainfo.CameraSystemInfo.CamDeathCircleRadius;
       float height = ainfo.CameraSystemInfo.CamDeathCircleHeight;
 
       TV_3DVECTOR pos = ainfo.GetPosition();
-      switch (GameScenarioManager.Instance().Scenario.DeathCamMode)
+      switch (Globals.Engine.GameScenarioManager.Scenario.DeathCamMode)
       {
         case DeathCamMode.CIRCLE:
           cam.SetPosition(pos.x + radius * (float)Math.Cos(angularphase)

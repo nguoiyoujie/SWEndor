@@ -16,7 +16,7 @@ namespace SWEndor.AI.Actions
       TooCloseDistance = too_close_distance;
       CanInterrupt = can_interrupt;
 
-      ReHuntTime = Game.Instance().GameTime + hunt_interval;
+      ReHuntTime = Globals.Engine.Game.GameTime + hunt_interval;
     }
 
     // parameters
@@ -102,7 +102,7 @@ namespace SWEndor.AI.Actions
             }
           }
 
-          if (CanInterrupt && ReHuntTime < Game.Instance().GameTime)
+          if (CanInterrupt && ReHuntTime < Globals.Engine.Game.GameTime)
           {
             Complete = true;
             ActionManager.QueueNext(owner.ID, new Hunt());
@@ -144,15 +144,15 @@ namespace SWEndor.AI.Actions
       {
         target.GetBoundingSphere(ref center, ref radius);
         center += target.GetPosition();
-        radius += Engine.Instance().Random.Next((int)(-4 * owner.TypeInfo.MaxSpeed), (int)(4 * owner.TypeInfo.MaxSpeed));
+        radius += Globals.Engine.Random.Next((int)(-4 * owner.TypeInfo.MaxSpeed), (int)(4 * owner.TypeInfo.MaxSpeed));
 
-        float xzAngle = Engine.Instance().Random.Next(0, 360);
+        float xzAngle = Globals.Engine.Random.Next(0, 360);
 
         center.x += (float)Math.Cos(xzAngle) * radius;
-        center.y += Engine.Instance().Random.Next(-200, 200);
+        center.y += Globals.Engine.Random.Next(-200, 200);
         center.x += (float)Math.Sin(xzAngle) * radius; // x??
 
-        Utilities.Clamp(ref center, GameScenarioManager.Instance().MinAIBounds * 0.75f, GameScenarioManager.Instance().MaxAIBounds * 0.75f);
+        Utilities.Clamp(ref center, Globals.Engine.GameScenarioManager.MinAIBounds * 0.75f, Globals.Engine.GameScenarioManager.MaxAIBounds * 0.75f);
       }
       return center;
     }
@@ -177,8 +177,8 @@ namespace SWEndor.AI.Actions
 
           TV_3DVECTOR vec = new TV_3DVECTOR();
           TV_3DVECTOR dir = owner.GetDirection();
-          Engine.Instance().TVMathLibrary.TVVec3Normalize(ref vec, a.GetPosition() - owner.GetPosition());
-          delta_angle = Engine.Instance().TVMathLibrary.ACos(Engine.Instance().TVMathLibrary.TVVec3Dot(dir, vec));
+          Globals.Engine.TVMathLibrary.TVVec3Normalize(ref vec, a.GetPosition() - owner.GetPosition());
+          delta_angle = Globals.Engine.TVMathLibrary.ACos(Globals.Engine.TVMathLibrary.TVVec3Dot(dir, vec));
 
           WeaponInfo weapon = null;
           int burst = 0;

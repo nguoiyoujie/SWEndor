@@ -22,7 +22,7 @@ namespace SWEndor.Input.Context
           TConsole.InputLine = TConsole.InputLine.Substring(0, TConsole.InputLine.Length - 1);
         else
         {
-          char chr = Utilities.TVKeyToChar((CONST_TV_KEY)keydata.Key);
+          char chr = Utilities.TVKeyToChar(Globals.Engine.InputManager.SHIFT, (CONST_TV_KEY)keydata.Key);
           if (!char.IsControl(chr))
             TConsole.InputLine += chr;
         }

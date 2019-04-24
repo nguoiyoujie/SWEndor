@@ -42,34 +42,34 @@ namespace SWEndor
 
     private static void UpdateUI()
     {
-      Engine.Instance().TVScreen2DImmediate.Action_Begin2D();
-      Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(Engine.Instance().ScreenWidth / 2 - 80
-                                                          , Engine.Instance().ScreenWidth / 2 - 20
-                                                          , Engine.Instance().ScreenWidth / 2 + 80
-                                                          , Engine.Instance().ScreenWidth / 2 + 20
+      Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
+      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(Globals.Engine.ScreenWidth / 2 - 80
+                                                          , Globals.Engine.ScreenWidth / 2 - 20
+                                                          , Globals.Engine.ScreenWidth / 2 + 80
+                                                          , Globals.Engine.ScreenWidth / 2 + 20
                                                           , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
 
-      Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(Engine.Instance().ScreenWidth / 2 - 80
-                                                          , Engine.Instance().ScreenWidth / 2 - 20
-                                                          , Engine.Instance().ScreenWidth / 2 + 80
-                                                          , Engine.Instance().ScreenWidth / 2 + 20
+      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(Globals.Engine.ScreenWidth / 2 - 80
+                                                          , Globals.Engine.ScreenWidth / 2 - 20
+                                                          , Globals.Engine.ScreenWidth / 2 + 80
+                                                          , Globals.Engine.ScreenWidth / 2 + 20
                                                           , new TV_COLOR(0.5f, 0.5f, 0.5f, 1f).GetIntColor());
 
-      Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(Engine.Instance().ScreenWidth / 2 - 75
-                                                          , Engine.Instance().ScreenWidth / 2 - 15
-                                                          , Engine.Instance().ScreenWidth / 2 + 75
-                                                          , Engine.Instance().ScreenWidth / 2 + 15
+      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(Globals.Engine.ScreenWidth / 2 - 75
+                                                          , Globals.Engine.ScreenWidth / 2 - 15
+                                                          , Globals.Engine.ScreenWidth / 2 + 75
+                                                          , Globals.Engine.ScreenWidth / 2 + 15
                                                           , new TV_COLOR(0.5f, 0.5f, 0.5f, 1f).GetIntColor());
-      Engine.Instance().TVScreen2DImmediate.Action_End2D();
+      Globals.Engine.TVScreen2DImmediate.Action_End2D();
 
-      Engine.Instance().TVScreen2DText.Action_BeginText();
-      Engine.Instance().TVScreen2DText.TextureFont_DrawText("Saving Game..."
-                                                          , Engine.Instance().ScreenWidth / 2 - 60
-                                                          , Engine.Instance().ScreenWidth / 2 - 10
+      Globals.Engine.TVScreen2DText.Action_BeginText();
+      Globals.Engine.TVScreen2DText.TextureFont_DrawText("Saving Game..."
+                                                          , Globals.Engine.ScreenWidth / 2 - 60
+                                                          , Globals.Engine.ScreenWidth / 2 - 10
                                                           , new TV_COLOR(0.5f, 0.5f, 0.5f, 1f).GetIntColor()
                                                           , Font.Factory.Get("Text_14").ID
       );
-      Engine.Instance().TVScreen2DText.Action_EndText();
+      Globals.Engine.TVScreen2DText.Action_EndText();
 
       //Thread.Sleep(1000);
     }

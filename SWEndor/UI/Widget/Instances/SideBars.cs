@@ -10,8 +10,8 @@ namespace SWEndor.UI.Widgets
   public class SideBars: Widget
   {
     // Right Info
-    private TV_2DVECTOR bar_topleft = new TV_2DVECTOR(Engine.Instance().ScreenWidth * 0.85f - 5, 25); //new TV_2DVECTOR(0, -150);
-    private float bar_length = Engine.Instance().ScreenWidth * 0.15f;
+    private TV_2DVECTOR bar_topleft = new TV_2DVECTOR(Globals.Engine.ScreenWidth * 0.85f - 5, 25); //new TV_2DVECTOR(0, -150);
+    private float bar_length = Globals.Engine.ScreenWidth * 0.15f;
     private float bar_height = 16;
     private float bar_barheight = 6;
 
@@ -21,19 +21,19 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
-        return (!Screen2D.Instance().ShowPage
-            && PlayerInfo.Instance().Actor != null
-            && PlayerInfo.Instance().Actor.ActorState != ActorState.DEAD
-            && PlayerInfo.Instance().Actor.ActorState != ActorState.DYING
-            && !(PlayerInfo.Instance().Actor.TypeInfo is InvisibleCameraATI)
-            && Screen2D.Instance().ShowUI
-            && Screen2D.Instance().ShowStatus);
+        return (!Globals.Engine.Screen2D.ShowPage
+            && Globals.Engine.PlayerInfo.Actor != null
+            && Globals.Engine.PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && Globals.Engine.PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !(Globals.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
+            && Globals.Engine.Screen2D.ShowUI
+            && Globals.Engine.Screen2D.ShowStatus);
       }
     }
 
     public override void Draw()
     {
-      ActorInfo p = PlayerInfo.Instance().Actor;
+      ActorInfo p = Globals.Engine.PlayerInfo.Actor;
 
       if (p != null && p.CreationState == CreationState.ACTIVE)
       {
@@ -41,9 +41,9 @@ namespace SWEndor.UI.Widgets
 
         //Health Bar
         DrawSingleBar(0
-                      , string.Format("HP [{0}%]", Math.Ceiling(PlayerInfo.Instance().StrengthFrac * 100))
-                      , PlayerInfo.Instance().StrengthFrac
-                      , PlayerInfo.Instance().HealthColor
+                      , string.Format("HP [{0}%]", Math.Ceiling(Globals.Engine.PlayerInfo.StrengthFrac * 100))
+                      , Globals.Engine.PlayerInfo.StrengthFrac
+                      , Globals.Engine.PlayerInfo.HealthColor
                       );
 
         //Speed Bar
@@ -56,7 +56,7 @@ namespace SWEndor.UI.Widgets
         int barnumber = 2;
 
         //Allies
-        foreach (ActorInfo a in GameScenarioManager.Instance().CriticalAllies.Values)
+        foreach (ActorInfo a in Globals.Engine.GameScenarioManager.CriticalAllies.Values)
         {
           DrawSingleBar(barnumber
               , a.SideBarName.PadRight(12).Remove(11)
@@ -67,7 +67,7 @@ namespace SWEndor.UI.Widgets
         }
 
         //Enemies
-        foreach (ActorInfo a in GameScenarioManager.Instance().CriticalEnemies.Values)
+        foreach (ActorInfo a in Globals.Engine.GameScenarioManager.CriticalEnemies.Values)
         {
           DrawSingleBar(barnumber
               , a.SideBarName.PadRight(12).Remove(11)
@@ -78,8 +78,8 @@ namespace SWEndor.UI.Widgets
         }
 
         /*
-        Engine.Instance().TVScreen2DText.Action_BeginText();
-        Engine.Instance().TVScreen2DText.TextureFont_DrawText(string.Format("TOGGLE: {0} "
+        Globals.Engine.TVScreen2DText.Action_BeginText();
+        Globals.Engine.TVScreen2DText.TextureFont_DrawText(string.Format("TOGGLE: {0} "
             , ((CONST_TV_KEY)InputKeyMap.GetFnKey("g_ui_status_toggle")).ToString().Replace("TV_KEY_", "").Replace("-1", "").PadLeft(1)
             )
           , bar_topleft.x - 90
@@ -87,7 +87,7 @@ namespace SWEndor.UI.Widgets
           , pcolor.GetIntColor()
           , FontID08
           );
-        Engine.Instance().TVScreen2DText.Action_EndText();
+        Globals.Engine.TVScreen2DText.Action_EndText();
         */
       }
     }
@@ -100,42 +100,42 @@ namespace SWEndor.UI.Widgets
       else if (barlengthfrac > 1)
         barlengthfrac = 1;
 
-      Engine.Instance().TVScreen2DImmediate.Action_Begin2D();
+      Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
 
       // Background
-      Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(bar_topleft.x - 120
+      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(bar_topleft.x - 120
                                     , bar_topleft.y + bar_height * (h - 0.1f)
                                     , bar_topleft.x + bar_length + 5
                                     , bar_topleft.y + bar_height * (h + 1.1f)
                                     , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
-      Engine.Instance().TVScreen2DImmediate.Action_End2D();
+      Globals.Engine.TVScreen2DImmediate.Action_End2D();
 
       // Bar Background
-      Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(bar_topleft.x
+      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(bar_topleft.x
                                           , bar_topleft.y + bar_height * (h + 0.6f) - bar_barheight / 2
                                           , bar_topleft.x + bar_length
                                           , bar_topleft.y + bar_height * (h + 0.6f) + bar_barheight / 2
                                           , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
 
-      Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(bar_topleft.x
+      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(bar_topleft.x
                                                   , bar_topleft.y + bar_height * (h + 0.6f) - bar_barheight / 2
                                                   , bar_topleft.x + bar_length * barlengthfrac
                                                   , bar_topleft.y + bar_height * (h + 0.6f) + bar_barheight / 2
                                                   , color.GetIntColor());
 
-      Engine.Instance().TVScreen2DImmediate.Action_End2D();
+      Globals.Engine.TVScreen2DImmediate.Action_End2D();
 
 
-      Engine.Instance().TVScreen2DText.Action_BeginText();
+      Globals.Engine.TVScreen2DText.Action_BeginText();
 
-      Engine.Instance().TVScreen2DText.TextureFont_DrawText(text
+      Globals.Engine.TVScreen2DText.TextureFont_DrawText(text
         , bar_topleft.x - 115
         , bar_topleft.y + bar_height * h
         , color.GetIntColor()
         , Font.Factory.Get("Text_12").ID
         );
 
-      Engine.Instance().TVScreen2DText.Action_EndText();
+      Globals.Engine.TVScreen2DText.Action_EndText();
     }
   }
 }

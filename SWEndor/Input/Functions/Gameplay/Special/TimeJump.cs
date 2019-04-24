@@ -12,7 +12,7 @@ namespace SWEndor.Input.Functions.Gameplay.Special
 
     public override void Process()
     {
-      Game.Instance().AddTime = 5;
+      Globals.Engine.Game.AddTime = 5;
     }
   }
 }

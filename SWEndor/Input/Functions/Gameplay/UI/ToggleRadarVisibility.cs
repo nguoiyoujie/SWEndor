@@ -13,8 +13,8 @@ namespace SWEndor.Input.Functions.Gameplay.UI
 
     public override void Process()
     {
-      Screen2D.Instance().ShowRadar = !Screen2D.Instance().ShowRadar;
-      SoundManager.Instance().SetSound("button_1");
+      Globals.Engine.Screen2D.ShowRadar = !Globals.Engine.Screen2D.ShowRadar;
+      Globals.Engine.SoundManager.SetSound("button_1");
     }
   }
 }

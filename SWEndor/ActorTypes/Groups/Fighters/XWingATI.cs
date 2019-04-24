@@ -86,15 +86,15 @@ namespace SWEndor.ActorTypes.Instances
       /*
       if (ainfo.ActorState == ActorState.DEAD)
       {
-        if (!ainfo.IsAggregateMode() && !Game.Instance().IsLowFPS())
+        if (!ainfo.IsAggregateMode() && !Globals.Engine.Game.IsLowFPS())
         {
-          double d = Engine.Instance().Random.NextDouble();
+          double d = Globals.Engine.Random.NextDouble();
 
           if (d > 0.5f)
           {
-            float x = Engine.Instance().Random.Next(0, 2000) / 100f;
-            float y = Engine.Instance().Random.Next(0, 3000) / 100f;
-            float z = Engine.Instance().Random.Next(-2500, 2500) / 100f;
+            float x = Globals.Engine.Random.Next(0, 2000) / 100f;
+            float y = Globals.Engine.Random.Next(0, 3000) / 100f;
+            float z = Globals.Engine.Random.Next(-2500, 2500) / 100f;
 
             ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("XWing_RU_LD_WingATI"));
             acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(-30, -30, 0);
@@ -103,12 +103,12 @@ namespace SWEndor.ActorTypes.Instances
             ActorInfo a = ActorInfo.Create(acinfo);
           }
 
-          d = Engine.Instance().Random.NextDouble();
+          d = Globals.Engine.Random.NextDouble();
           if (d > 0.5f)
           {
-            float x = Engine.Instance().Random.Next(-2000, 0) / 100f;
-            float y = Engine.Instance().Random.Next(-3000, 0) / 100f;
-            float z = Engine.Instance().Random.Next(-2500, 2500) / 100f;
+            float x = Globals.Engine.Random.Next(-2000, 0) / 100f;
+            float y = Globals.Engine.Random.Next(-3000, 0) / 100f;
+            float z = Globals.Engine.Random.Next(-2500, 2500) / 100f;
 
             ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("XWing_RU_LD_WingATI"));
             acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(30, 30, 0);
@@ -118,12 +118,12 @@ namespace SWEndor.ActorTypes.Instances
             ActorInfo a = ActorInfo.Create(acinfo);
           }
 
-          d = Engine.Instance().Random.NextDouble();
+          d = Globals.Engine.Random.NextDouble();
           if (d > 0.5f)
           {
-            float x = Engine.Instance().Random.Next(0, 2000) / 100f;
-            float y = Engine.Instance().Random.Next(-3000, 0) / 100f;
-            float z = Engine.Instance().Random.Next(-2500, 2500) / 100f;
+            float x = Globals.Engine.Random.Next(0, 2000) / 100f;
+            float y = Globals.Engine.Random.Next(-3000, 0) / 100f;
+            float z = Globals.Engine.Random.Next(-2500, 2500) / 100f;
 
             ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("XWing_RD_LU_WingATI"));
             acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(30, -30, 0);
@@ -133,12 +133,12 @@ namespace SWEndor.ActorTypes.Instances
             ActorInfo a = ActorInfo.Create(acinfo);
           }
 
-          d = Engine.Instance().Random.NextDouble();
+          d = Globals.Engine.Random.NextDouble();
           if (d > 0.5f)
           {
-            float x = Engine.Instance().Random.Next(-2000, 0) / 100f;
-            float y = Engine.Instance().Random.Next(-3000, 0) / 100f;
-            float z = Engine.Instance().Random.Next(-2500, 2500) / 100f;
+            float x = Globals.Engine.Random.Next(-2000, 0) / 100f;
+            float y = Globals.Engine.Random.Next(-3000, 0) / 100f;
+            float z = Globals.Engine.Random.Next(-2500, 2500) / 100f;
 
             ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("XWing_RD_LU_WingATI"));
             acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(-30, 30, 0);

@@ -9,13 +9,6 @@ namespace SWEndor
 {
   public class Screen2D
   {
-    private static Screen2D _instance;
-    public static Screen2D Instance()
-    {
-      if (_instance == null) { _instance = new Screen2D(); }
-      return _instance;
-    }
-
     // Show toggles
     public bool ShowUI = true;
     public bool ShowStatus = true;
@@ -45,7 +38,7 @@ namespace SWEndor
 
     ThreadSafeList<Widget> m_Widgets = new ThreadSafeList<Widget>();
 
-    private Screen2D()
+    internal Screen2D()
     {
       m_Widgets.Add(new SideBars());
       m_Widgets.Add(new HitBar());
@@ -86,22 +79,22 @@ namespace SWEndor
 
     public void MessageText(string text, float expiretime, TV_COLOR color, int priority = 0)
     {
-      if (PrimaryText.Priority <= priority || PrimaryText.ExpireTime < Game.Instance().GameTime)
+      if (PrimaryText.Priority <= priority || PrimaryText.ExpireTime < Globals.Engine.Game.GameTime)
       {
         PrimaryText.Priority = priority;
         PrimaryText.Text = text;
-        PrimaryText.ExpireTime = Game.Instance().GameTime + expiretime;
+        PrimaryText.ExpireTime = Globals.Engine.Game.GameTime + expiretime;
         PrimaryText.Color = color;
       }
     }
 
     public void MessageSecondaryText(string text, float expiretime, TV_COLOR color, int priority = 0)
     {
-      if (SecondaryText.Priority <= priority || SecondaryText.ExpireTime < Game.Instance().GameTime)
+      if (SecondaryText.Priority <= priority || SecondaryText.ExpireTime < Globals.Engine.Game.GameTime)
       {
         SecondaryText.Priority = priority;
         SecondaryText.Text = text;
-        SecondaryText.ExpireTime = Game.Instance().GameTime + expiretime;
+        SecondaryText.ExpireTime = Globals.Engine.Game.GameTime + expiretime;
         SecondaryText.Color = color;
       }
     }

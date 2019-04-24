@@ -13,11 +13,11 @@ namespace SWEndor.Input.Functions.Gameplay.UI
 
     public override void Process()
     {
-      if (!Screen2D.Instance().ShowPage)
+      if (!Globals.Engine.Screen2D.ShowPage)
       {
-        Screen2D.Instance().CurrentPage = new PauseMenu(); // configurable?
-        Screen2D.Instance().ShowPage = true;
-        Game.Instance().IsPaused = true;
+        Globals.Engine.Screen2D.CurrentPage = new PauseMenu(); // configurable?
+        Globals.Engine.Screen2D.ShowPage = true;
+        Globals.Engine.Game.IsPaused = true;
       }
     }
   }

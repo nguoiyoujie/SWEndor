@@ -46,7 +46,7 @@ namespace SWEndor.ActorTypes.Instances
        && p.CreationState == CreationState.ACTIVE
        )
       {
-        if (p.SpawnerInfo.SpawnMoveTime < Game.Instance().GameTime)
+        if (p.SpawnerInfo.SpawnMoveTime < Globals.Engine.Game.GameTime)
         {
           List<ActorInfo> rm = new List<ActorInfo>();
           foreach (int id in ainfo.GetAllChildren(1))
@@ -58,7 +58,7 @@ namespace SWEndor.ActorTypes.Instances
             ActionManager.QueueLast(id, new Hunt());
 
             if (a.IsPlayer())
-              PlayerInfo.Instance().IsMovementControlsEnabled = true;
+              Globals.Engine.PlayerInfo.IsMovementControlsEnabled = true;
 
             rm.Add(a);
           }
@@ -85,31 +85,31 @@ namespace SWEndor.ActorTypes.Instances
           else
             a.MovementInfo.Speed = p.SpawnerInfo.SpawnSpeed;
 
-          a.MoveRelative(p.SpawnerInfo.SpawnSpeedPositioningMult.x * p.MovementInfo.Speed * Game.Instance().TimeSinceRender * p.Scale.x
-                       , p.SpawnerInfo.SpawnSpeedPositioningMult.y * p.MovementInfo.Speed * Game.Instance().TimeSinceRender * p.Scale.y
-                       , p.SpawnerInfo.SpawnSpeedPositioningMult.z * p.MovementInfo.Speed * Game.Instance().TimeSinceRender * p.Scale.z);
+          a.MoveRelative(p.SpawnerInfo.SpawnSpeedPositioningMult.x * p.MovementInfo.Speed * Globals.Engine.Game.TimeSinceRender * p.Scale.x
+                       , p.SpawnerInfo.SpawnSpeedPositioningMult.y * p.MovementInfo.Speed * Globals.Engine.Game.TimeSinceRender * p.Scale.y
+                       , p.SpawnerInfo.SpawnSpeedPositioningMult.z * p.MovementInfo.Speed * Globals.Engine.Game.TimeSinceRender * p.Scale.z);
 
-          a.MoveRelative(p.SpawnerInfo.SpawnManualPositioningMult.x * Game.Instance().TimeSinceRender * p.Scale.x
-                       , p.SpawnerInfo.SpawnManualPositioningMult.y * Game.Instance().TimeSinceRender * p.Scale.y
-                       , p.SpawnerInfo.SpawnManualPositioningMult.z * Game.Instance().TimeSinceRender * p.Scale.z);
+          a.MoveRelative(p.SpawnerInfo.SpawnManualPositioningMult.x * Globals.Engine.Game.TimeSinceRender * p.Scale.x
+                       , p.SpawnerInfo.SpawnManualPositioningMult.y * Globals.Engine.Game.TimeSinceRender * p.Scale.y
+                       , p.SpawnerInfo.SpawnManualPositioningMult.z * Globals.Engine.Game.TimeSinceRender * p.Scale.z);
 
           if (a.IsPlayer())
-            PlayerInfo.Instance().IsMovementControlsEnabled = false;
+            Globals.Engine.PlayerInfo.IsMovementControlsEnabled = false;
         }
       }
     }
 
     public bool SpawnPlayer(ActorInfo ainfo, ActorInfo p)
     {
-      if (!PlayerInfo.Instance().RequestSpawn)
+      if (!Globals.Engine.PlayerInfo.RequestSpawn)
         return false;
 
-      if (p.SpawnerInfo.NextSpawnTime < Game.Instance().GameTime + p.SpawnerInfo.SpawnPlayerDelay)
-        p.SpawnerInfo.NextSpawnTime = Game.Instance().GameTime + p.SpawnerInfo.SpawnPlayerDelay;
+      if (p.SpawnerInfo.NextSpawnTime < Globals.Engine.Game.GameTime + p.SpawnerInfo.SpawnPlayerDelay)
+        p.SpawnerInfo.NextSpawnTime = Globals.Engine.Game.GameTime + p.SpawnerInfo.SpawnPlayerDelay;
 
-      PlayerInfo.Instance().IsMovementControlsEnabled = false;
+      Globals.Engine.PlayerInfo.IsMovementControlsEnabled = false;
 
-      ActorCreationInfo acinfo = new ActorCreationInfo(PlayerInfo.Instance().ActorType);
+      ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.PlayerInfo.ActorType);
 
       TV_3DVECTOR clone = ainfo.GetRelativePositionXYZ(p.SpawnerInfo.PlayerSpawnLocation.x * ainfo.Scale.x, p.SpawnerInfo.PlayerSpawnLocation.y * ainfo.Scale.y, p.SpawnerInfo.PlayerSpawnLocation.z * ainfo.Scale.z);
       acinfo.Position = new TV_3DVECTOR(clone.x, clone.y, clone.z);
@@ -122,7 +122,7 @@ namespace SWEndor.ActorTypes.Instances
       a.AddParent(ainfo.ID);
       ActionManager.QueueNext(a.ID, new Lock());
 
-      PlayerInfo.Instance().ActorID = a.ID;
+      Globals.Engine.PlayerInfo.ActorID = a.ID;
 
       if (a.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER) && a.Faction.WingLimit >= 0)
         a.Faction.WingLimit++;
@@ -130,9 +130,9 @@ namespace SWEndor.ActorTypes.Instances
       if (a.TypeInfo.TargetType.HasFlag(TargetType.SHIP) && a.Faction.ShipLimit >= 0)
         a.Faction.ShipLimit++;
 
-      PlayerInfo.Instance().RequestSpawn = false;
+      Globals.Engine.PlayerInfo.RequestSpawn = false;
 
-      p.SpawnerInfo.SpawnMoveTime = Game.Instance().GameTime + p.SpawnerInfo.SpawnMoveDelay;
+      p.SpawnerInfo.SpawnMoveTime = Globals.Engine.Game.GameTime + p.SpawnerInfo.SpawnMoveDelay;
       return true;
     }
   }

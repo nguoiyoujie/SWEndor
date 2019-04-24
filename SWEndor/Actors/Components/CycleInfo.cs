@@ -31,7 +31,7 @@ namespace SWEndor.Actors.Components
 
     public void Process()
     {
-      CycleTime -= Game.Instance().TimeSinceRender;
+      CycleTime -= Globals.Engine.Game.TimeSinceRender;
       if (CyclesRemaining > 0)
       {
         if (CycleTime < 0)

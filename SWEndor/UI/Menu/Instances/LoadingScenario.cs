@@ -30,13 +30,13 @@ namespace SWEndor.UI.Menu.Pages
       SelectedDifficulty = selectedDifficulty;
 
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
-      Cover.HighlightBoxWidth = Engine.Instance().ScreenWidth;
-      Cover.HighlightBoxHeight = Engine.Instance().ScreenHeight;
+      Cover.HighlightBoxWidth = Globals.Engine.ScreenWidth;
+      Cover.HighlightBoxHeight = Globals.Engine.ScreenHeight;
       Cover.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.3f);
 
-      Screen2D.Instance().LoadingTextLines = new List<string> { "" };
+      Globals.Engine.Screen2D.LoadingTextLines = new List<string> { "" };
       LoadingText.Text = PrintLoadingText();
-      LoadingText.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth * 0.2f, Engine.Instance().ScreenHeight * 0.35f);
+      LoadingText.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth * 0.2f, Globals.Engine.ScreenHeight * 0.35f);
 
       float di = 0.04f;
       float dj = 0.03f;
@@ -44,11 +44,11 @@ namespace SWEndor.UI.Menu.Pages
         for (float j = 0.6f; j < 0.7f; j += dj)
         {
           SelectionElement sqi = new SelectionElement();
-          sqi.HighlightBoxPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth * (i + 0.005f), Engine.Instance().ScreenHeight * (j + 0.005f));
-          sqi.HighlightBoxWidth = Engine.Instance().ScreenWidth * (di - 0.01f);
-          sqi.HighlightBoxHeight = Engine.Instance().ScreenHeight * (dj - 0.01f);
+          sqi.HighlightBoxPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth * (i + 0.005f), Globals.Engine.ScreenHeight * (j + 0.005f));
+          sqi.HighlightBoxWidth = Globals.Engine.ScreenWidth * (di - 0.01f);
+          sqi.HighlightBoxHeight = Globals.Engine.ScreenHeight * (dj - 0.01f);
           sqi.UnHighlightBoxPositionColor = SquareColor1;
-          Squares.Put(sqi, (float)Engine.Instance().Random.NextDouble());
+          Squares.Put(sqi, (float)Globals.Engine.Random.NextDouble());
         }
 
       Elements.Add(Cover);
@@ -61,12 +61,12 @@ namespace SWEndor.UI.Menu.Pages
 
     private string PrintLoadingText()
     {
-      return "Loading Scenario...\n" + string.Join("\n", Screen2D.Instance().LoadingTextLines.ToArray());
+      return "Loading Scenario...\n" + string.Join("\n", Globals.Engine.Screen2D.LoadingTextLines.ToArray());
     }
 
     private void StartLoad()
     {
-      //Game.Instance().IsPaused = true;
+      //Globals.Engine.Game.IsPaused = true;
 
       Thread th_Load = new Thread(Load);
       th_Load.Start();
@@ -92,14 +92,14 @@ namespace SWEndor.UI.Menu.Pages
       if (Loaded)
         ScenarioLoaded();
       else if (LoadException != null)
-        Screen2D.Instance().CurrentPage = new FatalError(LoadException);
+        Globals.Engine.Screen2D.CurrentPage = new FatalError(LoadException);
       else
       {
         LoadingText.Text = PrintLoadingText();
 
         foreach (SelectionElement sq in Squares.GetKeys())
         {
-          Squares[sq] -= Game.Instance().TimeSinceRender;
+          Squares[sq] -= Globals.Engine.Game.TimeSinceRender;
           if (Squares[sq] < 0)
           {
             if (sq.UnHighlightBoxPositionColor.GetIntColor() == SquareColor1.GetIntColor())
@@ -107,7 +107,7 @@ namespace SWEndor.UI.Menu.Pages
             else
               sq.UnHighlightBoxPositionColor = SquareColor1;
 
-            Squares[sq] += (float)Engine.Instance().Random.NextDouble();
+            Squares[sq] += (float)Globals.Engine.Random.NextDouble();
           }
         }
       }
@@ -115,16 +115,16 @@ namespace SWEndor.UI.Menu.Pages
 
     private void ScenarioLoaded()
     {
-      Game.Instance().IsPaused = true;
-      GameScenarioManager.Instance().Reset();
+      Globals.Engine.Game.IsPaused = true;
+      Globals.Engine.GameScenarioManager.Reset();
 
-      SoundManager.Instance().SetSound("r23");
+      Globals.Engine.SoundManager.SetSound("r23");
       Thread.Sleep(1200);
 
       SelectedScenario.Launch();
-      Game.Instance().IsPaused = false;
-      Screen2D.Instance().CurrentPage = null;
-      Screen2D.Instance().ShowPage = false;
+      Globals.Engine.Game.IsPaused = false;
+      Globals.Engine.Screen2D.CurrentPage = null;
+      Globals.Engine.Screen2D.ShowPage = false;
     }
   }
 }

@@ -1,9 +1,7 @@
 ﻿using SWEndor.Actors;
-using SWEndor.Input;
+using SWEndor.Log;
 using SWEndor.Player;
 using SWEndor.Primitives;
-using SWEndor.Scenarios;
-using SWEndor.Sound;
 using SWEndor.UI.Menu.Pages;
 using System;
 using System.Threading;
@@ -15,34 +13,15 @@ namespace SWEndor
 {
   public class Game
   {
-    private static Game _instance;
-    public static Game Instance()
-    {
-      if (_instance == null) { _instance = new Game(); }
-      return _instance;
-    }
-
-    private Game()
+    internal Game()
     {
       TimeSinceRender = 1;
-      th_load = new Thread(new ThreadStart(Engine.Instance().Load));
 
-      tm_sound = new System.Timers.Timer(30);
       tm_sound.Elapsed += TimerSound;
-
-      tm_ai = new System.Timers.Timer(30);
       tm_ai.Elapsed += TimerAI;
-
-      tm_collision = new System.Timers.Timer(30);
       tm_collision.Elapsed += TimerCollision;
-
-      tm_render = new System.Timers.Timer(30);
       tm_render.Elapsed += TimerRender;
-
-      tm_process = new System.Timers.Timer(30);
       tm_process.Elapsed += TimerProcess;
-
-      tm_perf = new System.Timers.Timer(1000);
       tm_perf.Elapsed += TimerPerf;
     }
 
@@ -57,15 +36,15 @@ namespace SWEndor
     public float AddTime { get; set; }
     public bool IsPaused { get; set; }
 
-    private Thread th_load { get; set; }
+    private Thread th_load { get; set; } = new Thread(new ThreadStart(Globals.Engine.Load));
     private Thread th_tick { get; set; }
 
-    private System.Timers.Timer tm_sound { get; set; }
-    private System.Timers.Timer tm_perf { get; set; }
-    private System.Timers.Timer tm_ai { get; set; }
-    private System.Timers.Timer tm_collision { get; set; }
-    private System.Timers.Timer tm_render { get; set; }
-    private System.Timers.Timer tm_process { get; set; }
+    private readonly System.Timers.Timer tm_sound = new System.Timers.Timer(30);
+    private readonly System.Timers.Timer tm_ai = new System.Timers.Timer(30);
+    private readonly System.Timers.Timer tm_collision = new System.Timers.Timer(30);
+    private readonly System.Timers.Timer tm_render  = new System.Timers.Timer(30);
+    private readonly System.Timers.Timer tm_process  = new System.Timers.Timer(30);
+    private readonly System.Timers.Timer tm_perf  = new System.Timers.Timer(1000);
 
     public float CurrentFPS { get { return TimeControl.FPS; } } //{ get; private set; }
 
@@ -132,18 +111,18 @@ namespace SWEndor
       Thread.CurrentThread.Name = "Main Loop";
       Thread.Sleep(1000);
 
-      PerfManager.Instance().ClearPerf();
+      Globals.Engine.PerfManager.ClearPerf();
 
       // Pre-load
       th_load.Start();
       while (th_load.ThreadState == System.Threading.ThreadState.Running)
       {
-        Engine.Instance().PreRender();
+        Globals.Engine.PreRender();
         TimeControl.Update();
         TimeControl.Wait();
 
         using (new PerfElement("tick_process_input"))
-          InputManager.Instance().ClearInput();
+          Globals.Engine.InputManager.ClearInput();
       }
 
       // Initialize other threads/timers
@@ -204,14 +183,14 @@ namespace SWEndor
       catch (Exception ex)
       {
         string errorfilename = @"error.txt";
-        Globals.GenerateErrLog(ex, errorfilename);
+        Logger.GenerateErrLog(ex, errorfilename);
         MessageBox.Show(string.Format("Fatal Error occurred during runtime. Please see " + errorfilename + " in the /Log folder for the error message."
                       , Application.ProductName + " - Error Encountered!"
                       , MessageBoxButtons.OK));
         return;
       }
 
-      Engine.Instance().Dispose();
+      Globals.Engine.Dispose();
       Close();
     }
 
@@ -220,8 +199,8 @@ namespace SWEndor
       // Replace this block to print this on file!
       if (State == RunState.RUNNING)
       {
-        Screen2D.Instance().CurrentPage = new FatalError(ex);
-        Screen2D.Instance().ShowPage = true;
+        Globals.Engine.Screen2D.CurrentPage = new FatalError(ex);
+        Globals.Engine.Screen2D.ShowPage = true;
         IsPaused = true;
       }
     }
@@ -278,7 +257,7 @@ namespace SWEndor
         {
           isProcessingRender = true;
           using (new PerfElement("tick_render"))
-            Engine.Instance().Render();
+            Globals.Engine.Render();
           isProcessingRender = false;
         }
       }
@@ -298,21 +277,21 @@ namespace SWEndor
 
           if (!IsPaused)
             using (new PerfElement("tick_process_player"))
-              PlayerInfo.Instance().Update();
+              Globals.Engine.PlayerInfo.Update();
 
           if (!IsPaused)
             using (new PerfElement("tick_render_playercamera"))
               PlayerCameraInfo.Instance().Update();
 
           using (new PerfElement("tick_process_input"))
-            InputManager.Instance().ProcessInput();
+            Globals.Engine.InputManager.ProcessInput();
 
           if (!IsPaused)
             using (new PerfElement("tick_process_actors"))
-              Engine.Instance().Process();
+              Globals.Engine.Process();
           
           using (new PerfElement("tick_page"))
-            Screen2D.Instance().CurrentPage?.Tick();
+            Globals.Engine.Screen2D.CurrentPage?.Tick();
 
           if (!IsPaused)
             using (new PerfElement("tick_process_plannedactors"))
@@ -324,7 +303,7 @@ namespace SWEndor
 
           if (!IsPaused)
             using (new PerfElement("tick_process_scenario"))
-              GameScenarioManager.Instance().Update();
+              Globals.Engine.GameScenarioManager.Update();
 
           isProcessingProcess = false;
         }
@@ -345,7 +324,7 @@ namespace SWEndor
           {
             isProcessingAI = true;
             using (new PerfElement("tick_ai"))
-              Engine.Instance().ProcessAI();
+              Globals.Engine.ProcessAI();
             isProcessingAI = false;
           }
       }
@@ -361,9 +340,9 @@ namespace SWEndor
       try
       {
         if (EnableSound)
-          if (SoundManager.Instance().PendingUpdate)
+          if (Globals.Engine.SoundManager.PendingUpdate)
             using (new PerfElement("tick_sound"))
-              SoundManager.Instance().Update();
+              Globals.Engine.SoundManager.Update();
       }
       catch (Exception ex)
       {
@@ -381,7 +360,7 @@ namespace SWEndor
           {
             isProcessingCollision = true;
             using (new PerfElement("tick_collision"))
-              Engine.Instance().ProcessCollision();
+              Globals.Engine.ProcessCollision();
             isProcessingCollision = false;
           }
       }
@@ -399,7 +378,7 @@ namespace SWEndor
         {
           isProcessingPerf = true;
           using (new PerfElement("perf"))
-            PerfManager.Instance().PrintPerf();
+            Globals.Engine.PerfManager.PrintPerf();
           Thread.Sleep(1000);
           isProcessingPerf = false;
         }

@@ -20,9 +20,11 @@ namespace SWEndor
       }
     }
 
+    // Constant
     public const float PI = 3.1415f;
-    public static float LaserSpeed = 3000f;
+    public const float LaserSpeed = 3000f;
 
+    // Directories
     public static string BasePath = AppDomain.CurrentDomain.BaseDirectory;
     public static string DllPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"dll\");
     public static string DebugPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"debug\");
@@ -37,17 +39,27 @@ namespace SWEndor
     public static string AtmospherePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\atmosphere\");
     public static string LandscapePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\landscape\");
     public static string CustomScenarioPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Scenarios\");
-
     public static string DataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\");
 
+    // Files
     public static string ActorTypeINIPath = Path.Combine(DataPath, @"actortypes.ini");
     public static string DynamicMusicINIPath = Path.Combine(DataPath, @"dynamicmusic.ini");
     public static string WeaponStatINIPath = Path.Combine(DataPath, @"weapons.ini");
-    
-    public static void Initialize()
+
+    // Game Engine
+    public static Engine Engine;
+
+
+    public static void PreInit()
     {
       CreateDirectories();
       LoadDlls();
+    }
+
+    public static void InitEngine()
+    {
+      Engine = new Engine();
+      Engine.Init();
     }
 
     public static void CreateDirectories()
@@ -81,22 +93,6 @@ namespace SWEndor
     {
       foreach (string dllpath in Directory.GetFiles(DllPath, "*.dll", SearchOption.TopDirectoryOnly))
         File.Copy(dllpath, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.GetFileName(dllpath)), true);
-    }
-
-    public static void GenerateErrLog(Exception ex, string errorfilename)
-    {
-      string errlogpath = Path.Combine(Globals.LogPath, errorfilename);
-
-      using (StreamWriter sw = new StreamWriter(errlogpath, false))
-      {
-        sw.WriteLine(string.Format("Fatal Error occured at {0:s}", DateTime.Now.ToString()));
-        sw.WriteLine("----------------------------------------------------------------");
-        sw.WriteLine(string.Format("Message: {0}", ex.Message));
-        sw.WriteLine();
-        sw.WriteLine(string.Format("{0}", ex.StackTrace));
-        sw.WriteLine();
-        sw.WriteLine();
-      }
     }
 
     public static List<string> LoadingFlavourTexts = new List<string> {

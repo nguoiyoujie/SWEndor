@@ -11,7 +11,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
   {
     public static object Spawn(Context context, params object[] ps)
     {
-      GameScenarioBase gscenario = GameScenarioManager.Instance().Scenario;
+      GameScenarioBase gscenario = Globals.Engine.GameScenarioManager.Scenario;
       if (gscenario == null)
         return "-1";
 
@@ -51,7 +51,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /*
     public static object SetActive(Context context, params object[] ps)
     {
-      if (GameScenarioManager.Instance().Scenario == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null)
         return false;
 
       int id = Convert.ToInt32(ps[0].ToString());
@@ -64,7 +64,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = ActorInfo.Factory.Get(id);
-      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
       return actor.ActorState != ActorState.DEAD;
@@ -74,10 +74,10 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = ActorInfo.Factory.Get(id);
-      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      GameScenarioManager.Instance().Scenario.RegisterEvents(actor);
+      Globals.Engine.GameScenarioManager.Scenario.RegisterEvents(actor);
       return true;
     }
 
@@ -85,7 +85,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = ActorInfo.Factory.Get(id);
-      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
       TV_3DVECTOR vec = actor.GetLocalPosition();
@@ -96,7 +96,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = ActorInfo.Factory.Get(id);
-      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
       TV_3DVECTOR vec = actor.GetLocalRotation();
@@ -107,7 +107,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = ActorInfo.Factory.Get(id);
-      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
       TV_3DVECTOR vec = actor.GetLocalDirection();
@@ -118,7 +118,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = ActorInfo.Factory.Get(id);
-      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
       TV_3DVECTOR vec = actor.GetPosition();
@@ -129,7 +129,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = ActorInfo.Factory.Get(id);
-      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
       TV_3DVECTOR vec = actor.GetRotation();
@@ -140,7 +140,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = ActorInfo.Factory.Get(id);
-      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
       TV_3DVECTOR vec = actor.GetDirection();
@@ -151,7 +151,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = ActorInfo.Factory.Get(id);
-      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
       actor.SetLocalPosition(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
@@ -162,7 +162,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = ActorInfo.Factory.Get(id);
-      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
       actor.SetLocalRotation(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
@@ -173,7 +173,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = ActorInfo.Factory.Get(id);
-      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
       actor.SetLocalDirection(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
@@ -184,7 +184,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = ActorInfo.Factory.Get(id);
-      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
       actor.SetRotation(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
@@ -195,7 +195,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = ActorInfo.Factory.Get(id);
-      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
       actor.SetDirection(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
@@ -206,7 +206,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = ActorInfo.Factory.Get(id);
-      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
       TV_3DVECTOR vec = new TV_3DVECTOR(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
@@ -222,7 +222,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = ActorInfo.Factory.Get(id);
-      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new int[] { };
 
       return actor.GetAllChildren(1).ToArray();
@@ -232,7 +232,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = ActorInfo.Factory.Get(id);
-      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return null;
 
       object result = null;
@@ -244,7 +244,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = ActorInfo.Factory.Get(id);
-      if (GameScenarioManager.Instance().Scenario == null || actor == null)
+      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return null;
 
       ConfigureActorProperty(actor, ps[1].ToString(), true, ref ps[2]);

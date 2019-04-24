@@ -14,18 +14,18 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
-        return (!Screen2D.Instance().ShowPage
-            && PlayerInfo.Instance().Actor != null
-            && PlayerInfo.Instance().Actor.ActorState != ActorState.DEAD
-            && PlayerInfo.Instance().Actor.ActorState != ActorState.DYING
-            && !(PlayerInfo.Instance().Actor.TypeInfo is InvisibleCameraATI)
-            && Screen2D.Instance().ShowUI);
+        return (!Globals.Engine.Screen2D.ShowPage
+            && Globals.Engine.PlayerInfo.Actor != null
+            && Globals.Engine.PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && Globals.Engine.PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !(Globals.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
+            && Globals.Engine.Screen2D.ShowUI);
       }
     }
 
     public override void Draw()
     {
-      ActorInfo p = PlayerInfo.Instance().Actor;
+      ActorInfo p = Globals.Engine.PlayerInfo.Actor;
       if (p == null || p.CreationState != CreationState.ACTIVE)
         return;
 
@@ -33,10 +33,10 @@ namespace SWEndor.UI.Widgets
       int burst = 1;
       TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;
 
-      p.TypeInfo.InterpretWeapon(p.ID, PlayerInfo.Instance().PrimaryWeapon, out weap, out burst);
+      p.TypeInfo.InterpretWeapon(p.ID, Globals.Engine.PlayerInfo.PrimaryWeapon, out weap, out burst);
       if (weap != null)
       {
-        Engine.Instance().TVScreen2DImmediate.Action_Begin2D();
+        Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
 
         float xs = 1;
         float ys = 1.5f;
@@ -69,12 +69,12 @@ namespace SWEndor.UI.Widgets
                                  , vec0.y + (vec0.y > 0 ? 1 : -1) * (k * m + l) / (1 + m));
 
 
-            Engine.Instance().TVScreen2DImmediate.Draw_Triangle(vec0.x + Engine.Instance().ScreenWidth / 2
-                                                  , vec0.y + Engine.Instance().ScreenHeight / 2
-                                                  , vec1.x + Engine.Instance().ScreenWidth / 2
-                                                  , vec1.y + Engine.Instance().ScreenHeight / 2
-                                                  , vec2.x + Engine.Instance().ScreenWidth / 2
-                                                  , vec2.y + Engine.Instance().ScreenHeight / 2
+            Globals.Engine.TVScreen2DImmediate.Draw_Triangle(vec0.x + Globals.Engine.ScreenWidth / 2
+                                                  , vec0.y + Globals.Engine.ScreenHeight / 2
+                                                  , vec1.x + Globals.Engine.ScreenWidth / 2
+                                                  , vec1.y + Globals.Engine.ScreenHeight / 2
+                                                  , vec2.x + Globals.Engine.ScreenWidth / 2
+                                                  , vec2.y + Globals.Engine.ScreenHeight / 2
                                                   , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
           }
           else if (vec0.y != 0)
@@ -84,49 +84,49 @@ namespace SWEndor.UI.Widgets
             vec2 = new TV_2DVECTOR(-vec1.x, vec1.y);
 
 
-            Engine.Instance().TVScreen2DImmediate.Draw_Triangle(vec0.x + Engine.Instance().ScreenWidth / 2
-                                                  , vec0.y + Engine.Instance().ScreenHeight / 2
-                                                  , vec1.x + Engine.Instance().ScreenWidth / 2
-                                                  , vec1.y + Engine.Instance().ScreenHeight / 2
-                                                  , vec2.x + Engine.Instance().ScreenWidth / 2
-                                                  , vec2.y + Engine.Instance().ScreenHeight / 2
+            Globals.Engine.TVScreen2DImmediate.Draw_Triangle(vec0.x + Globals.Engine.ScreenWidth / 2
+                                                  , vec0.y + Globals.Engine.ScreenHeight / 2
+                                                  , vec1.x + Globals.Engine.ScreenWidth / 2
+                                                  , vec1.y + Globals.Engine.ScreenHeight / 2
+                                                  , vec2.x + Globals.Engine.ScreenWidth / 2
+                                                  , vec2.y + Globals.Engine.ScreenHeight / 2
                                                   , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
           }
           else
           {
-            Engine.Instance().TVScreen2DImmediate.Draw_Line(vec0.x + l + Engine.Instance().ScreenWidth / 2
-                                                          , vec0.y + Engine.Instance().ScreenHeight / 2
-                                                          , vec0.x + Engine.Instance().ScreenWidth / 2
-                                                          , vec0.y + l + Engine.Instance().ScreenHeight / 2
+            Globals.Engine.TVScreen2DImmediate.Draw_Line(vec0.x + l + Globals.Engine.ScreenWidth / 2
+                                                          , vec0.y + Globals.Engine.ScreenHeight / 2
+                                                          , vec0.x + Globals.Engine.ScreenWidth / 2
+                                                          , vec0.y + l + Globals.Engine.ScreenHeight / 2
                                                           , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
 
-            Engine.Instance().TVScreen2DImmediate.Draw_Line(vec0.x - l + Engine.Instance().ScreenWidth / 2
-                                                          , vec0.y + Engine.Instance().ScreenHeight / 2
-                                                          , vec0.x + Engine.Instance().ScreenWidth / 2
-                                                          , vec0.y + l + Engine.Instance().ScreenHeight / 2
+            Globals.Engine.TVScreen2DImmediate.Draw_Line(vec0.x - l + Globals.Engine.ScreenWidth / 2
+                                                          , vec0.y + Globals.Engine.ScreenHeight / 2
+                                                          , vec0.x + Globals.Engine.ScreenWidth / 2
+                                                          , vec0.y + l + Globals.Engine.ScreenHeight / 2
                                                           , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
 
-            Engine.Instance().TVScreen2DImmediate.Draw_Line(vec0.x + l + Engine.Instance().ScreenWidth / 2
-                                                          , vec0.y + Engine.Instance().ScreenHeight / 2
-                                                          , vec0.x + Engine.Instance().ScreenWidth / 2
-                                                          , vec0.y - l + Engine.Instance().ScreenHeight / 2
+            Globals.Engine.TVScreen2DImmediate.Draw_Line(vec0.x + l + Globals.Engine.ScreenWidth / 2
+                                                          , vec0.y + Globals.Engine.ScreenHeight / 2
+                                                          , vec0.x + Globals.Engine.ScreenWidth / 2
+                                                          , vec0.y - l + Globals.Engine.ScreenHeight / 2
                                                           , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
 
-            Engine.Instance().TVScreen2DImmediate.Draw_Line(vec0.x - l + Engine.Instance().ScreenWidth / 2
-                                                          , vec0.y + Engine.Instance().ScreenHeight / 2
-                                                          , vec0.x + Engine.Instance().ScreenWidth / 2
-                                                          , vec0.y - l + Engine.Instance().ScreenHeight / 2
+            Globals.Engine.TVScreen2DImmediate.Draw_Line(vec0.x - l + Globals.Engine.ScreenWidth / 2
+                                                          , vec0.y + Globals.Engine.ScreenHeight / 2
+                                                          , vec0.x + Globals.Engine.ScreenWidth / 2
+                                                          , vec0.y - l + Globals.Engine.ScreenHeight / 2
                                                           , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
 
           }
         }
-        Engine.Instance().TVScreen2DImmediate.Action_End2D();
+        Globals.Engine.TVScreen2DImmediate.Action_End2D();
       }
 
-      p.TypeInfo.InterpretWeapon(p.ID, PlayerInfo.Instance().SecondaryWeapon, out weap, out burst);
+      p.TypeInfo.InterpretWeapon(p.ID, Globals.Engine.PlayerInfo.SecondaryWeapon, out weap, out burst);
       if (weap != null)
       {
-        if (PlayerInfo.Instance().SecondaryWeapon.Contains("torp"))
+        if (Globals.Engine.PlayerInfo.SecondaryWeapon.Contains("torp"))
         {
           float p1_x = -40;
           float p1_y = 28;
@@ -142,18 +142,18 @@ namespace SWEndor.UI.Widgets
           {
             if (t < tremain)
             {
-              Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(p1_x + Engine.Instance().ScreenWidth / 2
-                                                    , p1_y + Engine.Instance().ScreenHeight / 2
-                                                    , p2_x + Engine.Instance().ScreenWidth / 2
-                                                    , p2_y + Engine.Instance().ScreenHeight / 2
+              Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(p1_x + Globals.Engine.ScreenWidth / 2
+                                                    , p1_y + Globals.Engine.ScreenHeight / 2
+                                                    , p2_x + Globals.Engine.ScreenWidth / 2
+                                                    , p2_y + Globals.Engine.ScreenHeight / 2
                                                     , pcolor.GetIntColor());
             }
             else
             {
-              Engine.Instance().TVScreen2DImmediate.Draw_Box(p1_x + Engine.Instance().ScreenWidth / 2
-                                    , p1_y + Engine.Instance().ScreenHeight / 2
-                                    , p2_x + Engine.Instance().ScreenWidth / 2
-                                    , p2_y + Engine.Instance().ScreenHeight / 2
+              Globals.Engine.TVScreen2DImmediate.Draw_Box(p1_x + Globals.Engine.ScreenWidth / 2
+                                    , p1_y + Globals.Engine.ScreenHeight / 2
+                                    , p2_x + Globals.Engine.ScreenWidth / 2
+                                    , p2_y + Globals.Engine.ScreenHeight / 2
                                     , pcolor.GetIntColor());
             }
 
@@ -170,7 +170,7 @@ namespace SWEndor.UI.Widgets
             }
           }
         }
-        else if (PlayerInfo.Instance().SecondaryWeapon.Contains("misl"))
+        else if (Globals.Engine.PlayerInfo.SecondaryWeapon.Contains("misl"))
         {
           float p1_x = -40;
           float p1_y = 28;
@@ -186,18 +186,18 @@ namespace SWEndor.UI.Widgets
           {
             if (t < tremain)
             {
-              Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(p1_x + Engine.Instance().ScreenWidth / 2
-                                                    , p1_y + Engine.Instance().ScreenHeight / 2
-                                                    , p2_x + Engine.Instance().ScreenWidth / 2
-                                                    , p2_y + Engine.Instance().ScreenHeight / 2
+              Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(p1_x + Globals.Engine.ScreenWidth / 2
+                                                    , p1_y + Globals.Engine.ScreenHeight / 2
+                                                    , p2_x + Globals.Engine.ScreenWidth / 2
+                                                    , p2_y + Globals.Engine.ScreenHeight / 2
                                                     , pcolor.GetIntColor());
             }
             /*else
             {
-              Engine.Instance().TVScreen2DImmediate.Draw_Box(p1_x + Engine.Instance().ScreenWidth / 2
-                                    , p1_y + Engine.Instance().ScreenHeight / 2
-                                    , p2_x + Engine.Instance().ScreenWidth / 2
-                                    , p2_y + Engine.Instance().ScreenHeight / 2
+              Globals.Engine.TVScreen2DImmediate.Draw_Box(p1_x + Globals.Engine.ScreenWidth / 2
+                                    , p1_y + Globals.Engine.ScreenHeight / 2
+                                    , p2_x + Globals.Engine.ScreenWidth / 2
+                                    , p2_y + Globals.Engine.ScreenHeight / 2
                                     , pcolor.GetIntColor());
             }*/
 
@@ -222,19 +222,19 @@ namespace SWEndor.UI.Widgets
           float p2_y = 33;
           float tremain = (float)weap.Ammo / weap.MaxAmmo;
 
-          Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(p1_x + Engine.Instance().ScreenWidth / 2
-                                                    , p1_y + Engine.Instance().ScreenHeight / 2
-                                                    , p1_x + (p2_x - p1_x) * tremain + Engine.Instance().ScreenWidth / 2
-                                                    , p2_y + Engine.Instance().ScreenHeight / 2
+          Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(p1_x + Globals.Engine.ScreenWidth / 2
+                                                    , p1_y + Globals.Engine.ScreenHeight / 2
+                                                    , p1_x + (p2_x - p1_x) * tremain + Globals.Engine.ScreenWidth / 2
+                                                    , p2_y + Globals.Engine.ScreenHeight / 2
                                                     , new TV_COLOR(0.6f, 0.6f, 1, 1).GetIntColor());
 
-          Engine.Instance().TVScreen2DImmediate.Draw_Box(p1_x + Engine.Instance().ScreenWidth / 2
-                                                    , p1_y + Engine.Instance().ScreenHeight / 2
-                                                    , p2_x + Engine.Instance().ScreenWidth / 2
-                                                    , p2_y + Engine.Instance().ScreenHeight / 2
+          Globals.Engine.TVScreen2DImmediate.Draw_Box(p1_x + Globals.Engine.ScreenWidth / 2
+                                                    , p1_y + Globals.Engine.ScreenHeight / 2
+                                                    , p2_x + Globals.Engine.ScreenWidth / 2
+                                                    , p2_y + Globals.Engine.ScreenHeight / 2
                                                     , new TV_COLOR(1, 0.5f, 0, 1).GetIntColor());
         }
-        Engine.Instance().TVScreen2DImmediate.Action_End2D();
+        Globals.Engine.TVScreen2DImmediate.Action_End2D();
       }
 
 
@@ -247,7 +247,7 @@ namespace SWEndor.UI.Widgets
       float p3_y = 14;
       TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;
 
-      Engine.Instance().TVScreen2DImmediate.Action_Begin2D();
+      Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
       if (p.TypeInfo is XWingATI)
       {
         p1_x = 5;
@@ -285,13 +285,13 @@ namespace SWEndor.UI.Widgets
               }
             }
 
-            Engine.Instance().TVScreen2DImmediate.Draw_Triangle(p1_x * i + Engine.Instance().ScreenWidth / 2
-                                                                , p1_y * j + Engine.Instance().ScreenHeight / 2
-                                                                , p2_x * i + Engine.Instance().ScreenWidth / 2
-                                                                , p2_y * j + Engine.Instance().ScreenHeight / 2
-                                                                , p3_x * i + Engine.Instance().ScreenWidth / 2
-                                                                , p3_y * j + Engine.Instance().ScreenHeight / 2
-                                                                , (p.TypeInfo.PlayerInfo.Instance().PrimaryWeapon.IsStateFDefined("LaserPosition") && p.GetStateF("LaserPosition") == n) ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
+            Globals.Engine.TVScreen2DImmediate.Draw_Triangle(p1_x * i + Globals.Engine.ScreenWidth / 2
+                                                                , p1_y * j + Globals.Engine.ScreenHeight / 2
+                                                                , p2_x * i + Globals.Engine.ScreenWidth / 2
+                                                                , p2_y * j + Globals.Engine.ScreenHeight / 2
+                                                                , p3_x * i + Globals.Engine.ScreenWidth / 2
+                                                                , p3_y * j + Globals.Engine.ScreenHeight / 2
+                                                                , (p.TypeInfo.Globals.Engine.Player.PrimaryWeapon.IsStateFDefined("LaserPosition") && p.GetStateF("LaserPosition") == n) ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
           }
         }
       }
@@ -304,40 +304,40 @@ namespace SWEndor.UI.Widgets
         p3_x = -6;
         p3_y = 12;
 
-        Engine.Instance().TVScreen2DImmediate.Draw_Triangle(p1_x + Engine.Instance().ScreenWidth / 2
-                                                            , p1_y + Engine.Instance().ScreenHeight / 2
-                                                            , p2_x + Engine.Instance().ScreenWidth / 2
-                                                            , p2_y + Engine.Instance().ScreenHeight / 2
-                                                            , p3_x + Engine.Instance().ScreenWidth / 2
-                                                            , p3_y + Engine.Instance().ScreenHeight / 2
+        Globals.Engine.TVScreen2DImmediate.Draw_Triangle(p1_x + Globals.Engine.ScreenWidth / 2
+                                                            , p1_y + Globals.Engine.ScreenHeight / 2
+                                                            , p2_x + Globals.Engine.ScreenWidth / 2
+                                                            , p2_y + Globals.Engine.ScreenHeight / 2
+                                                            , p3_x + Globals.Engine.ScreenWidth / 2
+                                                            , p3_y + Globals.Engine.ScreenHeight / 2
                                                             , new TV_COLOR(1, 0.5f, 0, 1).GetIntColor());
 
-        Engine.Instance().TVScreen2DImmediate.Draw_Line(0 + Engine.Instance().ScreenWidth / 2
-                                                            , 0 + Engine.Instance().ScreenHeight / 2
-                                                            , 0 + Engine.Instance().ScreenWidth / 2
-                                                            , -25 + Engine.Instance().ScreenHeight / 2
+        Globals.Engine.TVScreen2DImmediate.Draw_Line(0 + Globals.Engine.ScreenWidth / 2
+                                                            , 0 + Globals.Engine.ScreenHeight / 2
+                                                            , 0 + Globals.Engine.ScreenWidth / 2
+                                                            , -25 + Globals.Engine.ScreenHeight / 2
                                                             , new TV_COLOR(1, 0.5f, 0, 1).GetIntColor());
 
-        Engine.Instance().TVScreen2DImmediate.Draw_Line(-10 + Engine.Instance().ScreenWidth / 2
-                                                            , -25 + Engine.Instance().ScreenHeight / 2
-                                                            , 10 + Engine.Instance().ScreenWidth / 2
-                                                            , -25 + Engine.Instance().ScreenHeight / 2
+        Globals.Engine.TVScreen2DImmediate.Draw_Line(-10 + Globals.Engine.ScreenWidth / 2
+                                                            , -25 + Globals.Engine.ScreenHeight / 2
+                                                            , 10 + Globals.Engine.ScreenWidth / 2
+                                                            , -25 + Globals.Engine.ScreenHeight / 2
                                                             , new TV_COLOR(1, 0.5f, 0, 1).GetIntColor());
 
 
-        Engine.Instance().TVScreen2DImmediate.Draw_Line(0 + Engine.Instance().ScreenWidth / 2
-                                                            , 12 + Engine.Instance().ScreenHeight / 2
-                                                            , 0 + Engine.Instance().ScreenWidth / 2
-                                                            , 25 + Engine.Instance().ScreenHeight / 2
+        Globals.Engine.TVScreen2DImmediate.Draw_Line(0 + Globals.Engine.ScreenWidth / 2
+                                                            , 12 + Globals.Engine.ScreenHeight / 2
+                                                            , 0 + Globals.Engine.ScreenWidth / 2
+                                                            , 25 + Globals.Engine.ScreenHeight / 2
                                                             , new TV_COLOR(1, 0.5f, 0, 1).GetIntColor());
 
-        Engine.Instance().TVScreen2DImmediate.Draw_Line(-25 + Engine.Instance().ScreenWidth / 2
-                                                            , 25 + Engine.Instance().ScreenHeight / 2
-                                                            , 25 + Engine.Instance().ScreenWidth / 2
-                                                            , 25 + Engine.Instance().ScreenHeight / 2
+        Globals.Engine.TVScreen2DImmediate.Draw_Line(-25 + Globals.Engine.ScreenWidth / 2
+                                                            , 25 + Globals.Engine.ScreenHeight / 2
+                                                            , 25 + Globals.Engine.ScreenWidth / 2
+                                                            , 25 + Globals.Engine.ScreenHeight / 2
                                                             , new TV_COLOR(1, 0.5f, 0, 1).GetIntColor());
 
-        if ((PlayerInfo.Instance().PrimaryWeapon.Contains("photon") || PlayerInfo.Instance().SecondaryWeapon.Contains("photon")) && p.GetStateB("EnablePhoton"))
+        if ((Globals.Engine.Player.PrimaryWeapon.Contains("photon") || Globals.Engine.Player.SecondaryWeapon.Contains("photon")) && p.GetStateB("EnablePhoton"))
         {
           p1_x = -25;
           p1_y = 28;
@@ -347,16 +347,16 @@ namespace SWEndor.UI.Widgets
           float tremain = p.GetStateF("PhotonRemaining") / p.GetStateF("PhotonMax");
 
 
-          Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(p1_x + Engine.Instance().ScreenWidth / 2
-                                                    , p1_y + Engine.Instance().ScreenHeight / 2
-                                                    , p1_x + (p2_x - p1_x) * tremain + Engine.Instance().ScreenWidth / 2
-                                                    , p2_y + Engine.Instance().ScreenHeight / 2
+          Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(p1_x + Globals.Engine.ScreenWidth / 2
+                                                    , p1_y + Globals.Engine.ScreenHeight / 2
+                                                    , p1_x + (p2_x - p1_x) * tremain + Globals.Engine.ScreenWidth / 2
+                                                    , p2_y + Globals.Engine.ScreenHeight / 2
                                                     , new TV_COLOR(0.6f, 0.6f, 1, 1).GetIntColor());
 
-          Engine.Instance().TVScreen2DImmediate.Draw_Box(p1_x + Engine.Instance().ScreenWidth / 2
-                                                    , p1_y + Engine.Instance().ScreenHeight / 2
-                                                    , p2_x + Engine.Instance().ScreenWidth / 2
-                                                    , p2_y + Engine.Instance().ScreenHeight / 2
+          Globals.Engine.TVScreen2DImmediate.Draw_Box(p1_x + Globals.Engine.ScreenWidth / 2
+                                                    , p1_y + Globals.Engine.ScreenHeight / 2
+                                                    , p2_x + Globals.Engine.ScreenWidth / 2
+                                                    , p2_y + Globals.Engine.ScreenHeight / 2
                                                     , new TV_COLOR(1, 0.5f, 0, 1).GetIntColor());
         }
       }
@@ -381,16 +381,16 @@ namespace SWEndor.UI.Widgets
             n = 2;
           }
 
-          Engine.Instance().TVScreen2DImmediate.Draw_Triangle(p1_x * i + Engine.Instance().ScreenWidth / 2
-                                                              , p1_y + Engine.Instance().ScreenHeight / 2
-                                                              , p2_x * i + Engine.Instance().ScreenWidth / 2
-                                                              , p2_y + Engine.Instance().ScreenHeight / 2
-                                                              , p3_x * i + Engine.Instance().ScreenWidth / 2
-                                                              , p3_y + Engine.Instance().ScreenHeight / 2
+          Globals.Engine.TVScreen2DImmediate.Draw_Triangle(p1_x * i + Globals.Engine.ScreenWidth / 2
+                                                              , p1_y + Globals.Engine.ScreenHeight / 2
+                                                              , p2_x * i + Globals.Engine.ScreenWidth / 2
+                                                              , p2_y + Globals.Engine.ScreenHeight / 2
+                                                              , p3_x * i + Globals.Engine.ScreenWidth / 2
+                                                              , p3_y + Globals.Engine.ScreenHeight / 2
                                                               , (p.IsStateFDefined("LaserPosition") && p.GetStateF("LaserPosition") == n) ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
 
-          Engine.Instance().TVScreen2DImmediate.Draw_Circle(Engine.Instance().ScreenWidth / 2
-                                                              , Engine.Instance().ScreenHeight / 2
+          Globals.Engine.TVScreen2DImmediate.Draw_Circle(Globals.Engine.ScreenWidth / 2
+                                                              , Globals.Engine.ScreenHeight / 2
                                                               , 5
                                                               , 24
                                                               , (p.IsStateFDefined("LaserPosition") && p.GetStateF("LaserPosition") != 0 && p.GetStateF("LaserPosition") != 2) ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
@@ -406,51 +406,51 @@ namespace SWEndor.UI.Widgets
         p3_x = 22;
         p3_y = -5;
 
-        Engine.Instance().TVScreen2DImmediate.Draw_Triangle(p1_x + Engine.Instance().ScreenWidth / 2
-                                                            , p1_y + Engine.Instance().ScreenHeight / 2
-                                                            , p2_x + Engine.Instance().ScreenWidth / 2
-                                                            , p2_y + Engine.Instance().ScreenHeight / 2
-                                                            , p3_x + Engine.Instance().ScreenWidth / 2
-                                                            , p3_y + Engine.Instance().ScreenHeight / 2
+        Globals.Engine.TVScreen2DImmediate.Draw_Triangle(p1_x + Globals.Engine.ScreenWidth / 2
+                                                            , p1_y + Globals.Engine.ScreenHeight / 2
+                                                            , p2_x + Globals.Engine.ScreenWidth / 2
+                                                            , p2_y + Globals.Engine.ScreenHeight / 2
+                                                            , p3_x + Globals.Engine.ScreenWidth / 2
+                                                            , p3_y + Globals.Engine.ScreenHeight / 2
                                                             , (p.IsStateFDefined("LaserPosition") && p.GetStateF("LaserPosition") == 3) ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
 
-        Engine.Instance().TVScreen2DImmediate.Draw_Triangle(-p1_x + Engine.Instance().ScreenWidth / 2
-                                                            , -p1_y + Engine.Instance().ScreenHeight / 2
-                                                            , -p2_x + Engine.Instance().ScreenWidth / 2
-                                                            , -p2_y + Engine.Instance().ScreenHeight / 2
-                                                            , -p3_x + Engine.Instance().ScreenWidth / 2
-                                                            , -p3_y + Engine.Instance().ScreenHeight / 2
+        Globals.Engine.TVScreen2DImmediate.Draw_Triangle(-p1_x + Globals.Engine.ScreenWidth / 2
+                                                            , -p1_y + Globals.Engine.ScreenHeight / 2
+                                                            , -p2_x + Globals.Engine.ScreenWidth / 2
+                                                            , -p2_y + Globals.Engine.ScreenHeight / 2
+                                                            , -p3_x + Globals.Engine.ScreenWidth / 2
+                                                            , -p3_y + Globals.Engine.ScreenHeight / 2
                                                             , (p.IsStateFDefined("LaserPosition") && p.GetStateF("LaserPosition") == 2) ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
 
-        Engine.Instance().TVScreen2DImmediate.Draw_Triangle(p1_y + Engine.Instance().ScreenWidth / 2
-                                                            , p1_x + Engine.Instance().ScreenHeight / 2
-                                                            , p2_y + Engine.Instance().ScreenWidth / 2
-                                                            , p2_x + Engine.Instance().ScreenHeight / 2
-                                                            , p3_y + Engine.Instance().ScreenWidth / 2
-                                                            , p3_x + Engine.Instance().ScreenHeight / 2
+        Globals.Engine.TVScreen2DImmediate.Draw_Triangle(p1_y + Globals.Engine.ScreenWidth / 2
+                                                            , p1_x + Globals.Engine.ScreenHeight / 2
+                                                            , p2_y + Globals.Engine.ScreenWidth / 2
+                                                            , p2_x + Globals.Engine.ScreenHeight / 2
+                                                            , p3_y + Globals.Engine.ScreenWidth / 2
+                                                            , p3_x + Globals.Engine.ScreenHeight / 2
                                                             , (p.IsStateFDefined("LaserPosition") && p.GetStateF("LaserPosition") == 0) ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
 
-        Engine.Instance().TVScreen2DImmediate.Draw_Triangle(-p1_y + Engine.Instance().ScreenWidth / 2
-                                                            , -p1_x + Engine.Instance().ScreenHeight / 2
-                                                            , -p2_y + Engine.Instance().ScreenWidth / 2
-                                                            , -p2_x + Engine.Instance().ScreenHeight / 2
-                                                            , -p3_y + Engine.Instance().ScreenWidth / 2
-                                                            , -p3_x + Engine.Instance().ScreenHeight / 2
+        Globals.Engine.TVScreen2DImmediate.Draw_Triangle(-p1_y + Globals.Engine.ScreenWidth / 2
+                                                            , -p1_x + Globals.Engine.ScreenHeight / 2
+                                                            , -p2_y + Globals.Engine.ScreenWidth / 2
+                                                            , -p2_x + Globals.Engine.ScreenHeight / 2
+                                                            , -p3_y + Globals.Engine.ScreenWidth / 2
+                                                            , -p3_x + Globals.Engine.ScreenHeight / 2
                                                             , (p.IsStateFDefined("LaserPosition") && p.GetStateF("LaserPosition") == 1) ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
 
-        Engine.Instance().TVScreen2DImmediate.Draw_Line(0 + Engine.Instance().ScreenWidth / 2
-                                                  , 22 + Engine.Instance().ScreenHeight / 2
-                                                  , 0 + Engine.Instance().ScreenWidth / 2
-                                                  , 25 + Engine.Instance().ScreenHeight / 2
+        Globals.Engine.TVScreen2DImmediate.Draw_Line(0 + Globals.Engine.ScreenWidth / 2
+                                                  , 22 + Globals.Engine.ScreenHeight / 2
+                                                  , 0 + Globals.Engine.ScreenWidth / 2
+                                                  , 25 + Globals.Engine.ScreenHeight / 2
                                                   , pcolor.GetIntColor());
 
-        Engine.Instance().TVScreen2DImmediate.Draw_Line(-15 + Engine.Instance().ScreenWidth / 2
-                                                            , 25 + Engine.Instance().ScreenHeight / 2
-                                                            , 15 + Engine.Instance().ScreenWidth / 2
-                                                            , 25 + Engine.Instance().ScreenHeight / 2
+        Globals.Engine.TVScreen2DImmediate.Draw_Line(-15 + Globals.Engine.ScreenWidth / 2
+                                                            , 25 + Globals.Engine.ScreenHeight / 2
+                                                            , 15 + Globals.Engine.ScreenWidth / 2
+                                                            , 25 + Globals.Engine.ScreenHeight / 2
                                                             , pcolor.GetIntColor());
 
-        if ((PlayerInfo.Instance().PrimaryWeapon.Contains("photon") || PlayerInfo.Instance().SecondaryWeapon.Contains("photon")) && p.GetStateB("EnablePhoton"))
+        if ((Globals.Engine.Player.PrimaryWeapon.Contains("photon") || Globals.Engine.Player.SecondaryWeapon.Contains("photon")) && p.GetStateB("EnablePhoton"))
         {
           p1_x = -15;
           p1_y = 28;
@@ -460,21 +460,21 @@ namespace SWEndor.UI.Widgets
           float tremain = p.GetStateF("PhotonRemaining") / p.GetStateF("PhotonMax");
 
 
-          Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(p1_x + Engine.Instance().ScreenWidth / 2
-                                                    , p1_y + Engine.Instance().ScreenHeight / 2
-                                                    , p1_x + (p2_x - p1_x) * tremain + Engine.Instance().ScreenWidth / 2
-                                                    , p2_y + Engine.Instance().ScreenHeight / 2
+          Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(p1_x + Globals.Engine.ScreenWidth / 2
+                                                    , p1_y + Globals.Engine.ScreenHeight / 2
+                                                    , p1_x + (p2_x - p1_x) * tremain + Globals.Engine.ScreenWidth / 2
+                                                    , p2_y + Globals.Engine.ScreenHeight / 2
                                                     , new TV_COLOR(0.6f, 0.6f, 1, 1).GetIntColor());
 
-          Engine.Instance().TVScreen2DImmediate.Draw_Box(p1_x + Engine.Instance().ScreenWidth / 2
-                                                    , p1_y + Engine.Instance().ScreenHeight / 2
-                                                    , p2_x + Engine.Instance().ScreenWidth / 2
-                                                    , p2_y + Engine.Instance().ScreenHeight / 2
+          Globals.Engine.TVScreen2DImmediate.Draw_Box(p1_x + Globals.Engine.ScreenWidth / 2
+                                                    , p1_y + Globals.Engine.ScreenHeight / 2
+                                                    , p2_x + Globals.Engine.ScreenWidth / 2
+                                                    , p2_y + Globals.Engine.ScreenHeight / 2
                                                     , new TV_COLOR(1, 0.5f, 0, 1).GetIntColor());
         }
       }
 
-      if (PlayerInfo.Instance().IsTorpedoMode & p.GetStateB("EnableTorp"))
+      if (Globals.Engine.Player.IsTorpedoMode & p.GetStateB("EnableTorp"))
       {
         p1_x = 19;
         p1_y = 17;
@@ -490,18 +490,18 @@ namespace SWEndor.UI.Widgets
         {
           if (t < tremain)
           {
-            Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(p1_x + Engine.Instance().ScreenWidth / 2
-                                                  , p1_y + Engine.Instance().ScreenHeight / 2
-                                                  , p2_x + Engine.Instance().ScreenWidth / 2
-                                                  , p2_y + Engine.Instance().ScreenHeight / 2
+            Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(p1_x + Globals.Engine.ScreenWidth / 2
+                                                  , p1_y + Globals.Engine.ScreenHeight / 2
+                                                  , p2_x + Globals.Engine.ScreenWidth / 2
+                                                  , p2_y + Globals.Engine.ScreenHeight / 2
                                                   , pcolor.GetIntColor());
           }
           else
           {
-            Engine.Instance().TVScreen2DImmediate.Draw_Box(p1_x + Engine.Instance().ScreenWidth / 2
-                                  , p1_y + Engine.Instance().ScreenHeight / 2
-                                  , p2_x + Engine.Instance().ScreenWidth / 2
-                                  , p2_y + Engine.Instance().ScreenHeight / 2
+            Globals.Engine.TVScreen2DImmediate.Draw_Box(p1_x + Globals.Engine.ScreenWidth / 2
+                                  , p1_y + Globals.Engine.ScreenHeight / 2
+                                  , p2_x + Globals.Engine.ScreenWidth / 2
+                                  , p2_y + Globals.Engine.ScreenHeight / 2
                                   , pcolor.GetIntColor());
           }
 
@@ -528,25 +528,25 @@ namespace SWEndor.UI.Widgets
         p3_x = 5;
         p3_y = 60;
 
-        Engine.Instance().TVScreen2DImmediate.Draw_Line(0 + Engine.Instance().ScreenWidth / 2
-                                                        , p1_x + Engine.Instance().ScreenHeight / 2
-                                                        , 0 + Engine.Instance().ScreenWidth / 2
-                                                        , p1_y + Engine.Instance().ScreenHeight / 2
+        Globals.Engine.TVScreen2DImmediate.Draw_Line(0 + Globals.Engine.ScreenWidth / 2
+                                                        , p1_x + Globals.Engine.ScreenHeight / 2
+                                                        , 0 + Globals.Engine.ScreenWidth / 2
+                                                        , p1_y + Globals.Engine.ScreenHeight / 2
                                                         , pcolor.GetIntColor());
 
-        Engine.Instance().TVScreen2DImmediate.Draw_Line(p2_x + Engine.Instance().ScreenWidth / 2
-                                                        , 0 + Engine.Instance().ScreenHeight / 2
-                                                        , p2_y + Engine.Instance().ScreenWidth / 2
-                                                        , 0 + Engine.Instance().ScreenHeight / 2
+        Globals.Engine.TVScreen2DImmediate.Draw_Line(p2_x + Globals.Engine.ScreenWidth / 2
+                                                        , 0 + Globals.Engine.ScreenHeight / 2
+                                                        , p2_y + Globals.Engine.ScreenWidth / 2
+                                                        , 0 + Globals.Engine.ScreenHeight / 2
                                                         , pcolor.GetIntColor());
 
-        Engine.Instance().TVScreen2DImmediate.Draw_Line(p3_x + Engine.Instance().ScreenWidth / 2
-                                                        , 0 + Engine.Instance().ScreenHeight / 2
-                                                        , p3_y + Engine.Instance().ScreenWidth / 2
-                                                        , 0 + Engine.Instance().ScreenHeight / 2
+        Globals.Engine.TVScreen2DImmediate.Draw_Line(p3_x + Globals.Engine.ScreenWidth / 2
+                                                        , 0 + Globals.Engine.ScreenHeight / 2
+                                                        , p3_y + Globals.Engine.ScreenWidth / 2
+                                                        , 0 + Globals.Engine.ScreenHeight / 2
                                                         , pcolor.GetIntColor());
       }
-      Engine.Instance().TVScreen2DImmediate.Action_End2D();
+      Globals.Engine.TVScreen2DImmediate.Action_End2D();
       */
     }
   }

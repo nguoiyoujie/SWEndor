@@ -50,7 +50,7 @@
       {
         if (TimedLife < 0f)
           Dying();
-        TimedLife -= Game.Instance().TimeSinceRender;
+        TimedLife -= Globals.Engine.Game.TimeSinceRender;
       }
 
       // Strength

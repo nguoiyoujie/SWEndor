@@ -21,7 +21,7 @@ namespace SWEndor.Actors.Components
       Actor = actor;
 
       Active = false;
-      ExplosionCooldown = Game.Instance().GameTime;
+      ExplosionCooldown = Globals.Engine.Game.GameTime;
       ExplosionRate = 0.5f;
       ExplosionSize = 1;
       ExplosionType = "Explosion";
@@ -34,7 +34,7 @@ namespace SWEndor.Actors.Components
     public void Reset()
     {
       Active = false;
-      ExplosionCooldown = Game.Instance().GameTime;
+      ExplosionCooldown = Globals.Engine.Game.GameTime;
       ExplosionRate = 0.5f;
       ExplosionSize = 1;
       ExplosionType = "Explosion";
@@ -53,20 +53,20 @@ namespace SWEndor.Actors.Components
         Active = true;
 
       // Explosion
-      if (Active && !Game.Instance().IsLowFPS())
+      if (Active && !Globals.Engine.Game.IsLowFPS())
       {
-        if (ExplosionCooldown < Game.Instance().GameTime - 5f) // skip explosion effects that are delayed after more than 5 secs
-          ExplosionCooldown = Game.Instance().GameTime;
+        if (ExplosionCooldown < Globals.Engine.Game.GameTime - 5f) // skip explosion effects that are delayed after more than 5 secs
+          ExplosionCooldown = Globals.Engine.Game.GameTime;
 
-        while (ExplosionCooldown < Game.Instance().GameTime && Actor.GetVertexCount() > 0)
+        while (ExplosionCooldown < Globals.Engine.Game.GameTime && Actor.GetVertexCount() > 0)
         {
-          ExplosionCooldown += (float)Engine.Instance().Random.NextDouble() * ExplosionRate;
+          ExplosionCooldown += (float)Globals.Engine.Random.NextDouble() * ExplosionRate;
           MakeExplosion(Actor.GetRandomVertex());
         }
       }
       else
       {
-        ExplosionCooldown = Game.Instance().GameTime;
+        ExplosionCooldown = Globals.Engine.Game.GameTime;
       }
     }
 

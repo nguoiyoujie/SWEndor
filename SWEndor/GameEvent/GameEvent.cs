@@ -34,7 +34,7 @@ namespace SWEndor
       {
         float time = gekeys[i];
         GameEvent ev = list[time];
-        if (ev == null || time < Game.Instance().GameTime)
+        if (ev == null || time < Globals.Engine.Game.GameTime)
         {
           remove.Add(time);
           ev?.Invoke();

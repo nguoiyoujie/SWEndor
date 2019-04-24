@@ -17,9 +17,9 @@ namespace SWEndor.UI.Widgets
 
     public override void Draw()
     {
-      Engine.Instance().TVScreen2DText.Action_BeginText();
+      Globals.Engine.TVScreen2DText.Action_BeginText();
 
-      TVCollisionResult tvcres = Engine.Instance().TVScene.MousePick((int)Engine.Instance().ScreenWidth / 2, (int)Engine.Instance().ScreenHeight / 2);
+      TVCollisionResult tvcres = Globals.Engine.TVScene.MousePick((int)Globals.Engine.ScreenWidth / 2, (int)Globals.Engine.ScreenHeight / 2);
       if (tvcres.GetCollisionMesh() != null)
       {
         int n = 0;
@@ -32,7 +32,7 @@ namespace SWEndor.UI.Widgets
             TV_3DVECTOR vec = tvcres.GetCollisionImpact() - a.GetPosition();
             TV_3DVECTOR vvec = new TV_3DVECTOR();
             TV_3DVECTOR rot = a.GetRotation();
-            Engine.Instance().TVMathLibrary.TVVec3Rotate(ref vvec, vec, -rot.y, rot.x, rot.z);
+            Globals.Engine.TVMathLibrary.TVVec3Rotate(ref vvec, vec, -rot.y, rot.x, rot.z);
 
             string text = string.Format("{0}({1:0.0},{2:0.0},{3:0.0})\nPos: {4:0.0},{5:0.0},{6:0.0}\nSpd: {7: 0.0}\n"//{8}  {9:0.0},{10:0.0},{11:0.0}\n"
               , a.Name
@@ -59,12 +59,12 @@ namespace SWEndor.UI.Widgets
                                     );
             }*/
             
-            Engine.Instance().TVScreen2DText.TextureFont_DrawText(text
+            Globals.Engine.TVScreen2DText.TextureFont_DrawText(text
           , 900, 400, new TV_COLOR(0.8f, 0.8f, 0.2f, 1).GetIntColor(), Font.Factory.Get("Text_12").ID);
           }
         }
       }
-      Engine.Instance().TVScreen2DText.Action_EndText();
+      Globals.Engine.TVScreen2DText.Action_EndText();
     }
   }
 }

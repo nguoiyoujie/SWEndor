@@ -38,10 +38,10 @@ namespace SWEndor.UI.Menu.Pages
       ButtonScenario.HighlightBoxHeight = 30;
       ButtonScenario.Selectable = true;
       ButtonScenario.OnKeyPress += SelectScenario;
-      if (GameScenarioManager.Instance().ScenarioList.Count > 0)
+      if (Globals.Engine.GameScenarioManager.ScenarioList.Count > 0)
       {
-        ButtonScenario.SecondaryText = GameScenarioManager.Instance().ScenarioList[0].Name.ToUpper();
-        SelectedScenario = GameScenarioManager.Instance().ScenarioList[0];
+        ButtonScenario.SecondaryText = Globals.Engine.GameScenarioManager.ScenarioList[0].Name.ToUpper();
+        SelectedScenario = Globals.Engine.GameScenarioManager.ScenarioList[0];
         SelectedScenarioID = 0;
       }
 
@@ -97,7 +97,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonPlay.OnKeyPress += SelectPlay;
 
       ButtonBack.Text = "Exit";
-      ButtonBack.TextPosition = new TV_2DVECTOR(x, Engine.Instance().ScreenHeight - 80);
+      ButtonBack.TextPosition = new TV_2DVECTOR(x, Globals.Engine.ScreenHeight - 80);
       ButtonBack.HighlightBoxPosition = ButtonBack.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonBack.HighlightBoxWidth = 150;
       ButtonBack.HighlightBoxHeight = 30;
@@ -122,7 +122,7 @@ namespace SWEndor.UI.Menu.Pages
         return true;
       }
 
-      if (GameScenarioManager.Instance().ScenarioList.Count > 0)
+      if (Globals.Engine.GameScenarioManager.ScenarioList.Count > 0)
       {
         if (key == CONST_TV_KEY.TV_KEY_LEFT)
         {
@@ -130,10 +130,10 @@ namespace SWEndor.UI.Menu.Pages
 
           newSelectedScenario--;
           if (newSelectedScenario < 0)
-            newSelectedScenario = GameScenarioManager.Instance().ScenarioList.Count - 1;
+            newSelectedScenario = Globals.Engine.GameScenarioManager.ScenarioList.Count - 1;
 
-          ButtonScenario.SecondaryText = GameScenarioManager.Instance().ScenarioList[newSelectedScenario].Name.ToUpper();
-          SelectedScenario = GameScenarioManager.Instance().ScenarioList[newSelectedScenario];
+          ButtonScenario.SecondaryText = Globals.Engine.GameScenarioManager.ScenarioList[newSelectedScenario].Name.ToUpper();
+          SelectedScenario = Globals.Engine.GameScenarioManager.ScenarioList[newSelectedScenario];
           SelectedScenarioID = newSelectedScenario;
 
           SelectedActorTypeInfoID = 1;
@@ -151,11 +151,11 @@ namespace SWEndor.UI.Menu.Pages
           int newSelectedScenario = SelectedScenarioID;
 
           newSelectedScenario++;
-          if (newSelectedScenario >= GameScenarioManager.Instance().ScenarioList.Count)
+          if (newSelectedScenario >= Globals.Engine.GameScenarioManager.ScenarioList.Count)
             newSelectedScenario = 0;
 
-          ButtonScenario.SecondaryText = GameScenarioManager.Instance().ScenarioList[newSelectedScenario].Name.ToUpper();
-          SelectedScenario = GameScenarioManager.Instance().ScenarioList[newSelectedScenario];
+          ButtonScenario.SecondaryText = Globals.Engine.GameScenarioManager.ScenarioList[newSelectedScenario].Name.ToUpper();
+          SelectedScenario = Globals.Engine.GameScenarioManager.ScenarioList[newSelectedScenario];
           SelectedScenarioID = newSelectedScenario;
 
           SelectedActorTypeInfoID = 1;

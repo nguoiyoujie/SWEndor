@@ -13,8 +13,8 @@ namespace SWEndor.Input.Functions.Gameplay.Weapon
 
     public override void Process()
     {
-      PlayerInfo.Instance().PrevPrimaryWeapon();
-      SoundManager.Instance().SetSound("button_1");
+      Globals.Engine.PlayerInfo.PrevPrimaryWeapon();
+      Globals.Engine.SoundManager.SetSound("button_1");
     }
   }
 }

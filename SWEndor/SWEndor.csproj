@@ -315,6 +315,7 @@
     <Compile Include="FileFormat\INI\INILine.cs" />
     <Compile Include="FileFormat\INI\INISection.cs" />
     <Compile Include="FileFormat\Scripting\ScriptFile.cs" />
+    <Compile Include="Log\Logger.cs" />
     <Compile Include="Player\PlayerCameraInfo.cs" />
     <Compile Include="Primitives\Cached3DVector.cs" />
     <Compile Include="Primitives\CachedFloat.cs" />
@@ -413,7 +414,7 @@
     <Compile Include="Scenarios\Scripting\Script.cs" />
     <Compile Include="Actors\Components\ScoreInfo.cs" />
     <Compile Include="FactionInfo.cs" />
-    <Compile Include="Game.cs" />
+    <Compile Include="Core\Game.cs" />
     <Compile Include="ActorTypes\Groups\Warships\NebulonBATI.cs" />
     <Compile Include="ActorTypes\Groups\Warships\MC90ATI.cs" />
     <Compile Include="ActorTypes\Groups\Warships\CorellianATI.cs" />
@@ -423,7 +424,7 @@
     <Compile Include="ActorTypes\Groups\Fighters\YWingATI.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\XWingATI.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene\EndorATI.cs" />
-    <Compile Include="Engine.cs" />
+    <Compile Include="Core\Engine.cs" />
     <Compile Include="GameForm.cs">
       <SubType>Form</SubType>
     </Compile>

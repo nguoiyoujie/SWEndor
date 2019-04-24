@@ -10,52 +10,52 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
-        return !Screen2D.Instance().ShowPage
-            && Screen2D.Instance().ShowUI;
+        return !Globals.Engine.Screen2D.ShowPage
+            && Globals.Engine.Screen2D.ShowUI;
       }
     }
 
     public override void Draw()
     {
-      TextInfo t1 = Screen2D.Instance().PrimaryText;
-      TextInfo t2 = Screen2D.Instance().SecondaryText;
+      TextInfo t1 = Globals.Engine.Screen2D.PrimaryText;
+      TextInfo t2 = Globals.Engine.Screen2D.SecondaryText;
       int fntID = Font.Factory.Get("Text_12").ID;
 
       float letter_width = 4.5f;
-      float t1_opacity = t1.ExpireTime - Game.Instance().GameTime;
-      float t2_opacity = t2.ExpireTime - Game.Instance().GameTime;
+      float t1_opacity = t1.ExpireTime - Globals.Engine.Game.GameTime;
+      float t2_opacity = t2.ExpireTime - Globals.Engine.Game.GameTime;
       Utilities.Clamp(ref t1_opacity, 0, 1);
       Utilities.Clamp(ref t2_opacity, 0, 1);
 
       // boxes
-      Engine.Instance().TVScreen2DImmediate.Action_Begin2D();
+      Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
       if (t1_opacity > 0 && t1.Text.Length > 0)
       {
-        Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(Engine.Instance().ScreenWidth / 2 - 5 - letter_width * t1.Text.Length
-                                                           , Engine.Instance().ScreenHeight / 2 - 62
-                                                           , Engine.Instance().ScreenWidth / 2 + 5 + letter_width * t1.Text.Length
-                                                           , Engine.Instance().ScreenHeight / 2 - 38
+        Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(Globals.Engine.ScreenWidth / 2 - 5 - letter_width * t1.Text.Length
+                                                           , Globals.Engine.ScreenHeight / 2 - 62
+                                                           , Globals.Engine.ScreenWidth / 2 + 5 + letter_width * t1.Text.Length
+                                                           , Globals.Engine.ScreenHeight / 2 - 38
                                                            , new TV_COLOR(0, 0, 0, 0.5f * t1_opacity).GetIntColor());
       }
 
       if (t2_opacity > 0 && t1.Text.Length > 0)
       {
-        Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(Engine.Instance().ScreenWidth / 2 - 5 - letter_width * t2.Text.Length
-                                                           , Engine.Instance().ScreenHeight / 2 - 92
-                                                           , Engine.Instance().ScreenWidth / 2 + 5 + letter_width * t2.Text.Length
-                                                           , Engine.Instance().ScreenHeight / 2 - 68
+        Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(Globals.Engine.ScreenWidth / 2 - 5 - letter_width * t2.Text.Length
+                                                           , Globals.Engine.ScreenHeight / 2 - 92
+                                                           , Globals.Engine.ScreenWidth / 2 + 5 + letter_width * t2.Text.Length
+                                                           , Globals.Engine.ScreenHeight / 2 - 68
                                                            , new TV_COLOR(0, 0, 0, 0.5f * t2_opacity).GetIntColor());
       }
-      Engine.Instance().TVScreen2DImmediate.Action_End2D();
+      Globals.Engine.TVScreen2DImmediate.Action_End2D();
       // text
 
-      Engine.Instance().TVScreen2DText.Action_BeginText();
+      Globals.Engine.TVScreen2DText.Action_BeginText();
       if (t1_opacity > 0 && t1.Text.Length > 0)
       {
         t1.Color.a = t1_opacity;
-        Engine.Instance().TVScreen2DText.TextureFont_DrawText(t1.Text
-                                                              , Engine.Instance().ScreenWidth / 2 - letter_width * t1.Text.Length
-                                                              , Engine.Instance().ScreenHeight / 2 - 60
+        Globals.Engine.TVScreen2DText.TextureFont_DrawText(t1.Text
+                                                              , Globals.Engine.ScreenWidth / 2 - letter_width * t1.Text.Length
+                                                              , Globals.Engine.ScreenHeight / 2 - 60
                                                               , t1.Color.GetIntColor()
                                                               , fntID);
       }
@@ -63,13 +63,13 @@ namespace SWEndor.UI.Widgets
       if (t2_opacity > 0 && t2.Text.Length > 0)
       {
         t2.Color.a = t2_opacity;
-        Engine.Instance().TVScreen2DText.TextureFont_DrawText(t2.Text
-                                                              , Engine.Instance().ScreenWidth / 2 - letter_width * t2.Text.Length
-                                                              , Engine.Instance().ScreenHeight / 2 - 90
+        Globals.Engine.TVScreen2DText.TextureFont_DrawText(t2.Text
+                                                              , Globals.Engine.ScreenWidth / 2 - letter_width * t2.Text.Length
+                                                              , Globals.Engine.ScreenHeight / 2 - 90
                                                               , t2.Color.GetIntColor()
                                                               , fntID);
       }
-      Engine.Instance().TVScreen2DText.Action_EndText();
+      Globals.Engine.TVScreen2DText.Action_EndText();
     }
   }
 }

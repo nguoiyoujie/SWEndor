@@ -14,8 +14,8 @@ namespace SWEndor.Input.Functions.Gameplay.Special
 
     public override void Process()
     {
-      PlayerInfo.Instance().Lives++;
-      SoundManager.Instance().SetSound("button_4");
+      Globals.Engine.PlayerInfo.Lives++;
+      Globals.Engine.SoundManager.SetSound("button_4");
     }
   }
 }

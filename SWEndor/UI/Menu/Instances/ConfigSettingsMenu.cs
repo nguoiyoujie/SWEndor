@@ -23,8 +23,8 @@ namespace SWEndor.UI.Menu.Pages
 
 
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
-      Cover.HighlightBoxWidth = Engine.Instance().ScreenWidth;
-      Cover.HighlightBoxHeight = Engine.Instance().ScreenHeight;
+      Cover.HighlightBoxWidth = Globals.Engine.ScreenWidth;
+      Cover.HighlightBoxHeight = Globals.Engine.ScreenHeight;
       Cover.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.3f);
 
       MainText.Text = "Configuration Menu";
@@ -74,7 +74,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonChangesComment.Selectable = false;
 
       ButtonSaveAndExit.Text = "Save";
-      ButtonSaveAndExit.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth - 200, Engine.Instance().ScreenHeight - 120);
+      ButtonSaveAndExit.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth - 200, Globals.Engine.ScreenHeight - 120);
       ButtonSaveAndExit.HighlightBoxPosition = ButtonSaveAndExit.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonSaveAndExit.HighlightBoxWidth = 200;
       ButtonSaveAndExit.HighlightBoxHeight = 30;
@@ -82,7 +82,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonSaveAndExit.OnKeyPress += SelectSave;
 
       ButtonExit.Text = "Cancel";
-      ButtonExit.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth - 200, Engine.Instance().ScreenHeight - 80);
+      ButtonExit.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth - 200, Globals.Engine.ScreenHeight - 80);
       ButtonExit.HighlightBoxPosition = ButtonExit.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonExit.HighlightBoxWidth = 200;
       ButtonExit.HighlightBoxHeight = 30;

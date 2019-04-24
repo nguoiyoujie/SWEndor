@@ -15,19 +15,19 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
-        return (!Screen2D.Instance().ShowPage
-            && PlayerInfo.Instance().Actor != null
-            && PlayerInfo.Instance().Actor.ActorState != ActorState.DEAD
-            && PlayerInfo.Instance().Actor.ActorState != ActorState.DYING
-            && !(PlayerInfo.Instance().Actor.TypeInfo is InvisibleCameraATI)
-            && Screen2D.Instance().ShowUI
-            && Screen2D.Instance().ShowStatus);
+        return (!Globals.Engine.Screen2D.ShowPage
+            && Globals.Engine.PlayerInfo.Actor != null
+            && Globals.Engine.PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && Globals.Engine.PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !(Globals.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
+            && Globals.Engine.Screen2D.ShowUI
+            && Globals.Engine.Screen2D.ShowStatus);
       }
     }
 
     public override void Draw()
     {
-      ActorInfo m_target = ActorInfo.Factory.Get(PlayerInfo.Instance().AimTargetID);
+      ActorInfo m_target = ActorInfo.Factory.Get(Globals.Engine.PlayerInfo.AimTargetID);
 
       if (m_target == null)
       {
@@ -35,27 +35,27 @@ namespace SWEndor.UI.Widgets
         return;
       }
 
-      Engine.Instance().TVScreen2DImmediate.Action_Begin2D();
-      float barlength = Engine.Instance().ScreenWidth * 0.75f - 100;
+      Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
+      float barlength = Globals.Engine.ScreenWidth * 0.75f - 100;
       TV_COLOR tcolor = (m_target.Faction != null) ? m_target.Faction.Color : new TV_COLOR(1, 0.5f, 0, 1);
       TV_COLOR tpcolor = new TV_COLOR(tcolor.r, tcolor.g, tcolor.b, 0.3f);
 
-      Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(50
-                                        , Engine.Instance().ScreenHeight - 25
+      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(50
+                                        , Globals.Engine.ScreenHeight - 25
                                         , barlength + 50
-                                        , Engine.Instance().ScreenHeight - 20
+                                        , Globals.Engine.ScreenHeight - 20
                                         , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
 
-      Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(50
-                                        , Engine.Instance().ScreenHeight - 25
+      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(50
+                                        , Globals.Engine.ScreenHeight - 25
                                         , 50 + barlength * m_target.StrengthFrac
-                                        , Engine.Instance().ScreenHeight - 20
+                                        , Globals.Engine.ScreenHeight - 20
                                         , tpcolor.GetIntColor());
 
-      Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(50
-                                        , Engine.Instance().ScreenHeight - 25
+      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(50
+                                        , Globals.Engine.ScreenHeight - 25
                                         , 50 + barlength * prevstrengthfrac
-                                        , Engine.Instance().ScreenHeight - 20
+                                        , Globals.Engine.ScreenHeight - 20
                                         , tcolor.GetIntColor());
 
       if (prevstrengthfrac == 0)
@@ -66,16 +66,16 @@ namespace SWEndor.UI.Widgets
       {
         prevstrengthfrac = prevstrengthfrac + (m_target.StrengthFrac - prevstrengthfrac) * 0.2f;
       }
-      Engine.Instance().TVScreen2DImmediate.Action_End2D();
+      Globals.Engine.TVScreen2DImmediate.Action_End2D();
 
 
-      Engine.Instance().TVScreen2DText.Action_BeginText();
-      Engine.Instance().TVScreen2DText.TextureFont_DrawText(m_target.Name
+      Globals.Engine.TVScreen2DText.Action_BeginText();
+      Globals.Engine.TVScreen2DText.TextureFont_DrawText(m_target.Name
                                         , 65
-                                        , Engine.Instance().ScreenHeight - 50
+                                        , Globals.Engine.ScreenHeight - 50
                                         , tcolor.GetIntColor()
                                         , Font.Factory.Get("Text_12").ID);
-      Engine.Instance().TVScreen2DText.Action_EndText();
+      Globals.Engine.TVScreen2DText.Action_EndText();
     }
   }
 }

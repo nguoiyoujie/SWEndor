@@ -35,12 +35,12 @@ namespace SWEndor.ActorTypes.Components
       if (_cache == null)
         _cache = ActorTypeInfo.Factory.Get(Type);
 
-      double d = Engine.Instance().Random.NextDouble();
+      double d = Globals.Engine.Random.NextDouble();
       if (d < Chance)
       {
-        float x = Engine.Instance().Random.Next(RotationXMin, RotationXMax) / 100f;
-        float y = Engine.Instance().Random.Next(RotationYMin, RotationYMax) / 100f;
-        float z = Engine.Instance().Random.Next(RotationZMin, RotationZMax) / 100f;
+        float x = Globals.Engine.Random.Next(RotationXMin, RotationXMax) / 100f;
+        float y = Globals.Engine.Random.Next(RotationYMin, RotationYMax) / 100f;
+        float z = Globals.Engine.Random.Next(RotationZMin, RotationZMax) / 100f;
 
         ActorCreationInfo acinfo = new ActorCreationInfo(_cache);
         acinfo.Position = actor.GetPosition() + SpawnPosition;

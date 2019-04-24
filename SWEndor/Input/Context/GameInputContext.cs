@@ -67,12 +67,12 @@ namespace SWEndor.Input.Context
       base.HandleMouse(mouseX, mouseY, button1, button2, button3, button4, mouseScroll);
 
       if (button1)
-        PlayerInfo.Instance().FirePrimaryWeapon();
+        Globals.Engine.PlayerInfo.FirePrimaryWeapon();
 
       if (button2)
-        PlayerInfo.Instance().FireSecondaryWeapon();
+        Globals.Engine.PlayerInfo.FireSecondaryWeapon();
 
-      PlayerCameraInfo.Instance().RotateCam(mouseX / Engine.Instance().ScreenWidth * 2 - 1, mouseY / Engine.Instance().ScreenHeight * 2 - 1);
+      PlayerCameraInfo.Instance().RotateCam(mouseX / Globals.Engine.ScreenWidth * 2 - 1, mouseY / Globals.Engine.ScreenHeight * 2 - 1);
     }
   }
 }

@@ -44,19 +44,19 @@ namespace SWEndor.Input.Context
         switch (keydata.Key)
         {
           case (int)CONST_TV_KEY.TV_KEY_7: // Toggle AI
-            Game.Instance().EnableAI = !Game.Instance().EnableAI;
+            Globals.Engine.Game.EnableAI = !Globals.Engine.Game.EnableAI;
             break;
 
           case (int)CONST_TV_KEY.TV_KEY_8: // Toggle Collisioj
-            Game.Instance().EnableCollision = !Game.Instance().EnableCollision;
+            Globals.Engine.Game.EnableCollision = !Globals.Engine.Game.EnableCollision;
             break;
 
           case (int)CONST_TV_KEY.TV_KEY_9: // Toggle Perf
-            Game.Instance().EnablePerf = !Game.Instance().EnablePerf;
+            Globals.Engine.Game.EnablePerf = !Globals.Engine.Game.EnablePerf;
             break;
 
           case (int)CONST_TV_KEY.TV_KEY_0: // Toggle Sound
-            Game.Instance().EnableSound = !Game.Instance().EnableSound;
+            Globals.Engine.Game.EnableSound = !Globals.Engine.Game.EnableSound;
             break;
 
           case (int)CONST_TV_KEY.TV_KEY_L: // Test save
@@ -64,11 +64,11 @@ namespace SWEndor.Input.Context
             break;
 
           case (int)CONST_TV_KEY.TV_KEY_K: // Test LandInfo
-            LandInfo.Instance().Enabled = !LandInfo.Instance().Enabled;
+            Globals.Engine.LandInfo.Enabled = !Globals.Engine.LandInfo.Enabled;
             break;
 
           case (int)CONST_TV_KEY.TV_KEY_J: // Test AtmosphereInfo
-            AtmosphereInfo.Instance().Enabled = !AtmosphereInfo.Instance().Enabled;
+            Globals.Engine.AtmosphereInfo.Enabled = !Globals.Engine.AtmosphereInfo.Enabled;
             break;
         }
       }

@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Log;
 using SWEndor.Sound;
 using System;
 using System.Threading;
@@ -15,26 +16,26 @@ namespace SWEndor.UI.Menu.Pages
 
     public FatalError(Exception exception)
     {
-      Globals.GenerateErrLog(exception, errorfilename);
+      Logger.GenerateErrLog(exception, errorfilename);
 
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
-      Cover.HighlightBoxWidth = Engine.Instance().ScreenWidth;
-      Cover.HighlightBoxHeight = Engine.Instance().ScreenHeight;
+      Cover.HighlightBoxWidth = Globals.Engine.ScreenWidth;
+      Cover.HighlightBoxHeight = Globals.Engine.ScreenHeight;
       Cover.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.6f);
 
       MainText.Text = "FATAL ERROR ENCOUNTERED";
       MainText.TextFont = Font.Factory.Get("Text_24").ID;
       MainText.TextColor = new TV_COLOR(0.8f, 0.2f, 0.2f, 1);
-      MainText.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth / 2 - 200, Engine.Instance().ScreenHeight / 2 - 180);
+      MainText.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 - 200, Globals.Engine.ScreenHeight / 2 - 180);
 
       Instructions.Text = "A fatal error has been encountered and the program needs to close.\nPlease see " + errorfilename + " in the /Log folder for the error message.\n\n" 
         + Utilities.Multiline("Error: " + exception.Message, 72);
       Instructions.TextFont = Font.Factory.Get("Text_12").ID;
       Instructions.TextColor = new TV_COLOR(0.8f, 0.2f, 0.2f, 1);
-      Instructions.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth / 2 - 250, Engine.Instance().ScreenHeight / 2 - 130);
+      Instructions.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 - 250, Globals.Engine.ScreenHeight / 2 - 130);
 
       ButtonReturn.Text = "Exit";
-      ButtonReturn.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth / 2 + 100, Engine.Instance().ScreenHeight / 2 + 60);
+      ButtonReturn.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 + 100, Globals.Engine.ScreenHeight / 2 + 60);
       ButtonReturn.HighlightBoxPosition = ButtonReturn.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonReturn.HighlightBoxWidth = 200;
       ButtonReturn.HighlightBoxHeight = 30;
@@ -54,10 +55,10 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        SoundManager.Instance().SetSound("r23");
-        SoundManager.Instance().SetMusicStop();
+        Globals.Engine.SoundManager.SetSound("r23");
+        Globals.Engine.SoundManager.SetMusicStop();
         Thread.Sleep(1500);
-        Engine.Instance().Exit();
+        Globals.Engine.Exit();
         return true;
       }
       return false;

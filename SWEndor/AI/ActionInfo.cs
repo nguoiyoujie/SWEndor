@@ -38,11 +38,11 @@ namespace SWEndor.AI.Actions
     protected bool CheckBounds(ActorInfo owner)
     {
       float boundmult = 0.99f;
-      if (!(owner.TypeInfo is ActorTypes.Group.Projectile) && owner.IsOutOfBounds(GameScenarioManager.Instance().MinAIBounds * boundmult, GameScenarioManager.Instance().MaxAIBounds * boundmult) && owner.EnteredCombatZone)
+      if (!(owner.TypeInfo is ActorTypes.Group.Projectile) && owner.IsOutOfBounds(Globals.Engine.GameScenarioManager.MinAIBounds * boundmult, Globals.Engine.GameScenarioManager.MaxAIBounds * boundmult) && owner.EnteredCombatZone)
       {
-        float x = Engine.Instance().Random.Next((int)(GameScenarioManager.Instance().MinAIBounds.x * 0.65f), (int)(GameScenarioManager.Instance().MaxAIBounds.x * 0.65f));
-        float y = Engine.Instance().Random.Next(-200, 200);
-        float z = Engine.Instance().Random.Next((int)(GameScenarioManager.Instance().MinAIBounds.z * 0.65f), (int)(GameScenarioManager.Instance().MaxAIBounds.z * 0.65f));
+        float x = Globals.Engine.Random.Next((int)(Globals.Engine.GameScenarioManager.MinAIBounds.x * 0.65f), (int)(Globals.Engine.GameScenarioManager.MaxAIBounds.x * 0.65f));
+        float y = Globals.Engine.Random.Next(-200, 200);
+        float z = Globals.Engine.Random.Next((int)(Globals.Engine.GameScenarioManager.MinAIBounds.z * 0.65f), (int)(Globals.Engine.GameScenarioManager.MaxAIBounds.z * 0.65f));
 
         if (owner.CurrentAction is Move)
           owner.CurrentAction.Complete = true;
@@ -51,7 +51,7 @@ namespace SWEndor.AI.Actions
       }
       else
       {
-        if (!owner.IsOutOfBounds(GameScenarioManager.Instance().MinAIBounds * boundmult, GameScenarioManager.Instance().MaxAIBounds * boundmult))
+        if (!owner.IsOutOfBounds(Globals.Engine.GameScenarioManager.MinAIBounds * boundmult, Globals.Engine.GameScenarioManager.MaxAIBounds * boundmult))
         {
           owner.EnteredCombatZone = true;
         }
@@ -106,11 +106,11 @@ namespace SWEndor.AI.Actions
 
         TV_3DVECTOR vec = new TV_3DVECTOR();
         TV_3DVECTOR dir = owner.GetDirection();
-        Engine.Instance().TVMathLibrary.TVVec3Normalize(ref vec, tgtdir);
-        float delta = Engine.Instance().TVMathLibrary.ACos(Engine.Instance().TVMathLibrary.TVVec3Dot(dir, vec));
+        Globals.Engine.TVMathLibrary.TVVec3Normalize(ref vec, tgtdir);
+        float delta = Globals.Engine.TVMathLibrary.ACos(Globals.Engine.TVMathLibrary.TVVec3Dot(dir, vec));
 
         if (owner.IsPlayer())
-          Screen2D.Instance().MessageSecondaryText(string.Format("DELTA: {0:0.000}", delta), 1.5f, new TV_COLOR(0.5f, 0.5f, 1, 1), 0);
+          Globals.Engine.Screen2D.MessageSecondaryText(string.Format("DELTA: {0:0.000}", delta), 1.5f, new TV_COLOR(0.5f, 0.5f, 1, 1), 0);
         return delta;
 
         /*
@@ -133,13 +133,13 @@ namespace SWEndor.AI.Actions
 
       if (owner.MovementInfo.Speed > target_Speed)
       {
-        owner.MovementInfo.Speed -= owner.MovementInfo.MaxSpeedChangeRate * Game.Instance().TimeSinceRender;
+        owner.MovementInfo.Speed -= owner.MovementInfo.MaxSpeedChangeRate * Globals.Engine.Game.TimeSinceRender;
         if (owner.MovementInfo.Speed < target_Speed)
           owner.MovementInfo.Speed = target_Speed;
       }
       else
       {
-        owner.MovementInfo.Speed += owner.MovementInfo.MaxSpeedChangeRate * Game.Instance().TimeSinceRender;
+        owner.MovementInfo.Speed += owner.MovementInfo.MaxSpeedChangeRate * Globals.Engine.Game.TimeSinceRender;
         if (owner.MovementInfo.Speed > target_Speed)
           owner.MovementInfo.Speed = target_Speed;
       }
@@ -160,15 +160,15 @@ namespace SWEndor.AI.Actions
       if (scandistance <= 0)
         return false;
 
-      if (m_collisioncheck_time < Game.Instance().GameTime)
+      if (m_collisioncheck_time < Globals.Engine.Game.GameTime)
       {
         if (owner.CollisionInfo.IsInProspectiveCollision)
         {
-          m_collisioncheck_time = Game.Instance().GameTime + 0.25f; // delay should be adjusted with FPS / CPU load, ideally every ~0.5s, but not more than 2.5s. Can be slightly longer since it is already performing evasion.
+          m_collisioncheck_time = Globals.Engine.Game.GameTime + 0.25f; // delay should be adjusted with FPS / CPU load, ideally every ~0.5s, but not more than 2.5s. Can be slightly longer since it is already performing evasion.
         }
         else
         {
-          m_collisioncheck_time = Game.Instance().GameTime + 0.1f; // delay should be adjusted with FPS / CPU load, ideally every run (~0.1s), but not more than 2s.
+          m_collisioncheck_time = Globals.Engine.Game.GameTime + 0.1f; // delay should be adjusted with FPS / CPU load, ideally every run (~0.1s), but not more than 2s.
         }
         owner.CollisionInfo.ProspectiveCollisionScanDistance = scandistance;
         owner.CollisionInfo.IsTestingProspectiveCollision = true;

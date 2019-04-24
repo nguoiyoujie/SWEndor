@@ -15,8 +15,8 @@ namespace SWEndor
     public bool Enabled = false;
 
     public readonly ActorInfo Owner = null;
-    public float SpawnMoveTime = Game.Instance().GameTime;
-    public float NextSpawnTime = Game.Instance().GameTime + 1f;
+    public float SpawnMoveTime = Globals.Engine.Game.GameTime;
+    public float NextSpawnTime = Globals.Engine.Game.GameTime + 1f;
 
     public ActorTypeInfo[] SpawnTypes = new ActorTypeInfo[0];
     public float SpawnMoveDelay = 4;

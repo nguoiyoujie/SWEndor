@@ -37,7 +37,7 @@ namespace SWEndor.ActorTypes.Instances
       ImpactCloseEnoughDistance = 100;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"projectiles\torpedo.x");
-      m_particletex = Engine.Instance().TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, @"particle.dds"));
+      m_particletex = Globals.Engine.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, @"particle.dds"));
     }
 
     private int m_particletex;
@@ -76,7 +76,7 @@ namespace SWEndor.ActorTypes.Instances
       {
         if (ainfo.ParticleSystem == null)
         {
-          ainfo.ParticleSystem = Engine.Instance().TVScene.CreateParticleSystem();
+          ainfo.ParticleSystem = Globals.Engine.TVScene.CreateParticleSystem();
           int emitter = ainfo.ParticleSystem.CreateEmitter(CONST_TV_EMITTERTYPE.TV_EMITTER_BILLBOARD, 250);
           ainfo.ParticleEmitterID = emitter;
 

@@ -181,7 +181,7 @@ namespace SWEndor.ActorTypes
               list.Add(atype.Name, atype);
             }
             atype.RegisterModel();
-            Screen2D.Instance().LoadingTextLines.Add(atype.Name + " loaded!");
+            Globals.Engine.Screen2D.LoadingTextLines.Add(atype.Name + " loaded!");
           }
         }
       }

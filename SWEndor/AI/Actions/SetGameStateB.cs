@@ -17,7 +17,7 @@ namespace SWEndor.AI.Actions
 
     public override void Process(ActorInfo owner)
     {
-      GameScenarioManager.Instance().SetGameStateB(m_key, m_state);
+      Globals.Engine.GameScenarioManager.SetGameStateB(m_key, m_state);
       Complete = true;
     }
   }

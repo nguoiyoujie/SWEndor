@@ -24,7 +24,7 @@ namespace SWEndor.UI.Menu.Pages
       VersionText.TextFont = Font.Factory.Get("Text_12").ID;
 
       ButtonPlay.Text = "Play Scenario";
-      ButtonPlay.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth - 200, Engine.Instance().ScreenHeight - 300);
+      ButtonPlay.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth - 200, Globals.Engine.ScreenHeight - 300);
       ButtonPlay.HighlightBoxPosition = ButtonPlay.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonPlay.HighlightBoxWidth = 200;
       ButtonPlay.HighlightBoxHeight = 30;
@@ -33,7 +33,7 @@ namespace SWEndor.UI.Menu.Pages
 
       /*
       ButtonLoad.Text = "Load Scenario";
-      ButtonLoad.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth - 200, Engine.Instance().ScreenHeight - 260);
+      ButtonLoad.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth - 200, Globals.Engine.ScreenHeight - 260);
       ButtonLoad.HighlightBoxPosition = ButtonLoad.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonLoad.HighlightBoxWidth = 200;
       ButtonLoad.HighlightBoxHeight = 30;
@@ -42,7 +42,7 @@ namespace SWEndor.UI.Menu.Pages
       */
 
       ButtonOptions.Text = "Options";
-      ButtonOptions.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth - 200, Engine.Instance().ScreenHeight - 220);
+      ButtonOptions.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth - 200, Globals.Engine.ScreenHeight - 220);
       ButtonOptions.HighlightBoxPosition = ButtonOptions.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonOptions.HighlightBoxWidth = 200;
       ButtonOptions.HighlightBoxHeight = 30;
@@ -50,7 +50,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonOptions.OnKeyPress += SelectOptions;
 
       ButtonCredits.Text = "Credits";
-      ButtonCredits.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth - 200, Engine.Instance().ScreenHeight - 180);
+      ButtonCredits.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth - 200, Globals.Engine.ScreenHeight - 180);
       ButtonCredits.HighlightBoxPosition = ButtonCredits.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonCredits.HighlightBoxWidth = 200;
       ButtonCredits.HighlightBoxHeight = 30;
@@ -58,7 +58,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonCredits.OnKeyPress += SelectCredits;
 
       ButtonExit.Text = "Exit";
-      ButtonExit.TextPosition = new TV_2DVECTOR(Engine.Instance().ScreenWidth - 200, Engine.Instance().ScreenHeight - 140);
+      ButtonExit.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth - 200, Globals.Engine.ScreenHeight - 140);
       ButtonExit.HighlightBoxPosition = ButtonExit.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonExit.HighlightBoxWidth = 200;
       ButtonExit.HighlightBoxHeight = 30;

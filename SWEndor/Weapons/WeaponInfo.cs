@@ -120,15 +120,15 @@ namespace SWEndor.Weapons
     {
       if (Ammo == MaxAmmo)
       {
-        AmmoReloadCooldown = Game.Instance().GameTime + AmmoReloadRate;
+        AmmoReloadCooldown = Globals.Engine.Game.GameTime + AmmoReloadRate;
       }
 
-      if (MaxAmmo > 0 && AmmoReloadCooldown < Game.Instance().GameTime && Ammo < MaxAmmo)
+      if (MaxAmmo > 0 && AmmoReloadCooldown < Globals.Engine.Game.GameTime && Ammo < MaxAmmo)
       {
-        AmmoReloadCooldown = Game.Instance().GameTime + AmmoReloadRate;
+        AmmoReloadCooldown = Globals.Engine.Game.GameTime + AmmoReloadRate;
         if (AmmoReloadRateRandom != 0)
         {
-          AmmoReloadCooldown += (float)Engine.Instance().Random.NextDouble() * AmmoReloadRateRandom;
+          AmmoReloadCooldown += (float)Globals.Engine.Random.NextDouble() * AmmoReloadRateRandom;
         }
         Ammo += AmmoReloadAmount;
       }
@@ -139,9 +139,9 @@ namespace SWEndor.Weapons
       int burstremaining = burst;
       bool fired = false;
 
-      if (WeaponCooldown < Game.Instance().GameTime && (Ammo > 0 || MaxAmmo < 0))
+      if (WeaponCooldown < Globals.Engine.Game.GameTime && (Ammo > 0 || MaxAmmo < 0))
       {
-        WeaponCooldown = Game.Instance().GameTime;
+        WeaponCooldown = Globals.Engine.Game.GameTime;
         while (burstremaining > 0)
         {
           if (CreateProjectile(ownerActorID, targetActorID))
@@ -149,7 +149,7 @@ namespace SWEndor.Weapons
             WeaponCooldown += WeaponCooldownRate * burstremaining;
             if (WeaponCooldownRateRandom != 0)
             {
-              WeaponCooldown += (float)Engine.Instance().Random.NextDouble() * WeaponCooldownRateRandom * 4;
+              WeaponCooldown += (float)Globals.Engine.Random.NextDouble() * WeaponCooldownRateRandom * 4;
             }
             fired = true;
             CurrentPositionIndex++;
@@ -160,7 +160,7 @@ namespace SWEndor.Weapons
         }
         if (fired && ActorInfo.Factory.IsPlayer(ownerActorID))
         {
-          SoundManager.Instance().SetSound(FireSound);
+          Globals.Engine.SoundManager.SetSound(FireSound);
         }
       }
       return fired;
@@ -169,7 +169,7 @@ namespace SWEndor.Weapons
     public bool CanTarget(int ownerActorID, int targetActorID)
     {
       // player override
-      if (ActorInfo.Factory.IsPlayer(ownerActorID) && !PlayerInfo.Instance().PlayerAIEnabled)
+      if (ActorInfo.Factory.IsPlayer(ownerActorID) && !Globals.Engine.PlayerInfo.PlayerAIEnabled)
         return true;
 
       // null
@@ -191,13 +191,13 @@ namespace SWEndor.Weapons
       ActorInfo target = ActorInfo.Factory.Get(targetActorID);
 
       if ((ActorInfo.Factory.IsPlayer(ownerActorID) 
-        && !PlayerInfo.Instance().PlayerAIEnabled 
+        && !Globals.Engine.PlayerInfo.PlayerAIEnabled 
         && (!RequirePlayerTargetLock || target != null)))
       { // Player
         if (WeaponProjectile == null)
           return true;
 
-        //target = ActorInfo.Factory.GetExact(PlayerInfo.Instance().AimTargetID);
+        //target = ActorInfo.Factory.GetExact(Globals.Engine.Player.AimTargetID);
         TV_3DVECTOR targetloc = GetFirePosition(owner);
 
         ActorCreationInfo acinfo = new ActorCreationInfo(WeaponProjectile);
@@ -207,7 +207,7 @@ namespace SWEndor.Weapons
         if (EnablePlayerAutoAim && target != null)
         {
           float dist = ActorDistanceInfo.GetDistance(ownerActorID, targetActorID);
-          float d = dist / WeaponProjectile.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)Engine.Instance().Random.NextDouble());
+          float d = dist / WeaponProjectile.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)Globals.Engine.Random.NextDouble());
 
           TV_3DVECTOR dir = target.GetRelativePositionXYZ(0, 0, target.GetTrueSpeed() * d) - owner.GetPosition();
           acinfo.Rotation = Utilities.GetRotation(dir);
@@ -256,7 +256,7 @@ namespace SWEndor.Weapons
           }
           else
           {
-            d = dist / WeaponProjectile.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)Engine.Instance().Random.NextDouble());
+            d = dist / WeaponProjectile.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)Globals.Engine.Random.NextDouble());
           }
 
           TV_3DVECTOR dir = new TV_3DVECTOR();

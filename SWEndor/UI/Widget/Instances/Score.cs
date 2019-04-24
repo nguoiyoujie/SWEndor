@@ -8,9 +8,9 @@ namespace SWEndor.UI.Widgets
   public class Score : Widget
   {
     // Score
-    private TV_2DVECTOR score_position = new TV_2DVECTOR(Engine.Instance().ScreenWidth * 0.76f, 325);
-    private float score_height = Engine.Instance().ScreenHeight - 325;
-    private float score_width = Engine.Instance().ScreenWidth * 0.24f;
+    private TV_2DVECTOR score_position = new TV_2DVECTOR(Globals.Engine.ScreenWidth * 0.76f, 325);
+    private float score_height = Globals.Engine.ScreenHeight - 325;
+    private float score_width = Globals.Engine.ScreenWidth * 0.24f;
 
     public Score() : base("score") { }
 
@@ -18,25 +18,25 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
-        return (!Screen2D.Instance().ShowPage
-            && PlayerInfo.Instance().Actor != null
-            && PlayerInfo.Instance().Actor.ActorState != ActorState.DEAD
-            && PlayerInfo.Instance().Actor.ActorState != ActorState.DYING
-            && !(PlayerInfo.Instance().Actor.TypeInfo is InvisibleCameraATI)
-            && Screen2D.Instance().ShowUI
-            && Screen2D.Instance().ShowScore);
+        return (!Globals.Engine.Screen2D.ShowPage
+            && Globals.Engine.PlayerInfo.Actor != null
+            && Globals.Engine.PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && Globals.Engine.PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !(Globals.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
+            && Globals.Engine.Screen2D.ShowUI
+            && Globals.Engine.Screen2D.ShowScore);
       }
     }
 
     public override void Draw()
     {
-      Engine.Instance().TVScreen2DImmediate.Action_Begin2D();
-      Engine.Instance().TVScreen2DImmediate.Draw_FilledBox(score_position.x
+      Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
+      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(score_position.x
                                     , score_position.y
                                     , score_position.x + score_width
                                     , score_position.y + score_height
                                     , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
-      Engine.Instance().TVScreen2DImmediate.Action_End2D();
+      Globals.Engine.TVScreen2DImmediate.Action_End2D();
 
       /*
       List<ScoreInfo> HighScorers = new List<ScoreInfo>(ScoreInfo.Scores.GetList());
@@ -55,7 +55,7 @@ namespace SWEndor.UI.Widgets
         hi--;
       }
 
-      Engine.Instance().TVScreen2DText.TextureFont_DrawText(hiscoretext
+      Globals.Engine.TVScreen2DText.TextureFont_DrawText(hiscoretext
       , score_position.x + 5
       , score_position.y + 5
       , new TV_COLOR(0.7f, 1f, 0.3f, 1).GetIntColor()

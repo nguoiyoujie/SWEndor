@@ -14,9 +14,9 @@ namespace SWEndor.Input.Functions.Gameplay.Special
 
     public override void Process()
     {
-      if (GameScenarioManager.Instance().Scenario != null)
+      if (Globals.Engine.GameScenarioManager.Scenario != null)
       {
-        foreach (int actorID in GameScenarioManager.Instance().Scenario.MainEnemyFaction.GetAll())
+        foreach (int actorID in Globals.Engine.GameScenarioManager.Scenario.MainEnemyFaction.GetAll())
         {
           ActorInfo actor = ActorInfo.Factory.Get(actorID);
           if (actor != null)

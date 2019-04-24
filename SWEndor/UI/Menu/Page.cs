@@ -75,7 +75,7 @@ namespace SWEndor.UI.Menu
     {
       if (Parent != null)
       {
-        Screen2D.Instance().CurrentPage = Parent;
+        Globals.Engine.Screen2D.CurrentPage = Parent;
         return true;
       }
       return false;
@@ -84,7 +84,7 @@ namespace SWEndor.UI.Menu
     public virtual void EnterPage(Page page)
     {
       page.Parent = this;
-      Screen2D.Instance().CurrentPage = page;
+      Globals.Engine.Screen2D.CurrentPage = page;
     }
 
     public virtual bool OnKeyPress(CONST_TV_KEY key)

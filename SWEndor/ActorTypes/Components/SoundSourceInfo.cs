@@ -25,17 +25,17 @@ namespace SWEndor.ActorTypes.Components
 
     public void Process(ActorInfo actor)
     {
-      if (!PlayInCutscene || !GameScenarioManager.Instance().IsCutsceneMode)
+      if (!PlayInCutscene || !Globals.Engine.GameScenarioManager.IsCutsceneMode)
       {
         TV_3DVECTOR engineloc = actor.GetRelativePositionXYZ(RelativeLocation.x, RelativeLocation.y, RelativeLocation.z);
-        Play(Engine.Instance().TVMathLibrary.GetDistanceVec3D(PlayerInfo.Instance().Position, engineloc));
+        Play(Globals.Engine.TVMathLibrary.GetDistanceVec3D(Globals.Engine.PlayerInfo.Position, engineloc));
       }
     }
 
     public void Play(float dist)
     {
       if (dist < Distance)
-        SoundManager.Instance().SetSound(Sound, false, 1 - dist / Distance, Loop);
+        Globals.Engine.SoundManager.SetSound(Sound, false, 1 - dist / Distance, Loop);
     }
   }
 }

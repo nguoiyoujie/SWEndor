@@ -10,13 +10,13 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
-        return Screen2D.Instance().ShowPage;
+        return Globals.Engine.Screen2D.ShowPage;
       }
     }
 
     public override void Draw()
     {
-      Page uip = Screen2D.Instance().CurrentPage;
+      Page uip = Globals.Engine.Screen2D.CurrentPage;
       if (uip != null)
         uip.Show();
     }

@@ -72,20 +72,20 @@ namespace SWEndor.Actors
       if (a1 == null || a2 == null)
         return float.MaxValue;
 
-      if (Cleartime < Game.Instance().GameTime)
+      if (Cleartime < Globals.Engine.Game.GameTime)
       {
         list.Clear();
         list.Refresh();
-        Cleartime = Game.Instance().GameTime + 5;
+        Cleartime = Globals.Engine.Game.GameTime + 5;
       }
 
       long hash = (actorID1 < actorID2) ? (uint)(actorID1 << sizeof(int)) | (uint)actorID2 : (uint)(actorID2 << sizeof(int)) | (uint)actorID1 ;
       float dist;
       CachedFloat cached = list.Get(hash);
-      if (cached.Time < Game.Instance().GameTime)
+      if (cached.Time < Globals.Engine.Game.GameTime)
       {
         dist = CalculateDistance(a1, a2);
-        list.Put(hash, new CachedFloat() { Time = Game.Instance().GameTime, Value = dist });
+        list.Put(hash, new CachedFloat() { Time = Globals.Engine.Game.GameTime, Value = dist });
       }
       else
       {
@@ -97,7 +97,7 @@ namespace SWEndor.Actors
 
     public static float CalculateDistance(ActorInfo first, ActorInfo second)
     {
-      return Engine.Instance().TVMathLibrary.GetDistanceVec3D(first.GetPosition(), second.GetPosition());
+      return Globals.Engine.TVMathLibrary.GetDistanceVec3D(first.GetPosition(), second.GetPosition());
     }
   }
 }

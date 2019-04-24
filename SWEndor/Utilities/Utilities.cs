@@ -48,8 +48,8 @@ namespace SWEndor
 
     public static TV_3DVECTOR GetRotation(TV_3DVECTOR direction)
     {
-      float x = Engine.Instance().TVMathLibrary.Direction2Ang(-direction.y, Engine.Instance().TVMathLibrary.TVVec2Length(new TV_2DVECTOR(direction.z, direction.x)));
-      float y = Engine.Instance().TVMathLibrary.Direction2Ang(direction.x, direction.z);
+      float x = Globals.Engine.TVMathLibrary.Direction2Ang(-direction.y, Globals.Engine.TVMathLibrary.TVVec2Length(new TV_2DVECTOR(direction.z, direction.x)));
+      float y = Globals.Engine.TVMathLibrary.Direction2Ang(direction.x, direction.z);
 
       return new TV_3DVECTOR(x, y, 0);
     }
@@ -153,7 +153,7 @@ namespace SWEndor
       return ret;
     }
 
-    public static char TVKeyToChar(CONST_TV_KEY key)
+    public static char TVKeyToChar(bool shift, CONST_TV_KEY key)
     {
       switch (key)
       {
@@ -189,57 +189,57 @@ namespace SWEndor
           return '9';
 
         case CONST_TV_KEY.TV_KEY_A:
-          return InputManager.Instance().SHIFT ? 'A' : 'a';
+          return shift ? 'A' : 'a';
         case CONST_TV_KEY.TV_KEY_B:
-          return InputManager.Instance().SHIFT ? 'B' : 'b';
+          return shift ? 'B' : 'b';
         case CONST_TV_KEY.TV_KEY_C:
-          return InputManager.Instance().SHIFT ? 'C' : 'c';
+          return shift ? 'C' : 'c';
         case CONST_TV_KEY.TV_KEY_D:
-          return InputManager.Instance().SHIFT ? 'D' : 'd';
+          return shift ? 'D' : 'd';
         case CONST_TV_KEY.TV_KEY_E:
-          return InputManager.Instance().SHIFT ? 'E' : 'e';
+          return shift ? 'E' : 'e';
         case CONST_TV_KEY.TV_KEY_F:
-          return InputManager.Instance().SHIFT ? 'F' : 'f';
+          return shift ? 'F' : 'f';
         case CONST_TV_KEY.TV_KEY_G:
-          return InputManager.Instance().SHIFT ? 'G' : 'g';
+          return shift ? 'G' : 'g';
         case CONST_TV_KEY.TV_KEY_H:
-          return InputManager.Instance().SHIFT ? 'H' : 'h';
+          return shift ? 'H' : 'h';
         case CONST_TV_KEY.TV_KEY_I:
-          return InputManager.Instance().SHIFT ? 'I' : 'i';
+          return shift ? 'I' : 'i';
         case CONST_TV_KEY.TV_KEY_J:
-          return InputManager.Instance().SHIFT ? 'J' : 'j';
+          return shift ? 'J' : 'j';
         case CONST_TV_KEY.TV_KEY_K:
-          return InputManager.Instance().SHIFT ? 'K' : 'k';
+          return shift ? 'K' : 'k';
         case CONST_TV_KEY.TV_KEY_L:
-          return InputManager.Instance().SHIFT ? 'L' : 'l';
+          return shift ? 'L' : 'l';
         case CONST_TV_KEY.TV_KEY_M:
-          return InputManager.Instance().SHIFT ? 'M' : 'm';
+          return shift ? 'M' : 'm';
         case CONST_TV_KEY.TV_KEY_N:
-          return InputManager.Instance().SHIFT ? 'N' : 'n';
+          return shift ? 'N' : 'n';
         case CONST_TV_KEY.TV_KEY_O:
-          return InputManager.Instance().SHIFT ? 'O' : 'o';
+          return shift ? 'O' : 'o';
         case CONST_TV_KEY.TV_KEY_P:
-          return InputManager.Instance().SHIFT ? 'P' : 'p';
+          return shift ? 'P' : 'p';
         case CONST_TV_KEY.TV_KEY_Q:
-          return InputManager.Instance().SHIFT ? 'Q' : 'q';
+          return shift ? 'Q' : 'q';
         case CONST_TV_KEY.TV_KEY_R:
-          return InputManager.Instance().SHIFT ? 'R' : 'r';
+          return shift ? 'R' : 'r';
         case CONST_TV_KEY.TV_KEY_S:
-          return InputManager.Instance().SHIFT ? 'S' : 's';
+          return shift ? 'S' : 's';
         case CONST_TV_KEY.TV_KEY_T:
-          return InputManager.Instance().SHIFT ? 'T' : 't';
+          return shift ? 'T' : 't';
         case CONST_TV_KEY.TV_KEY_U:
-          return InputManager.Instance().SHIFT ? 'U' : 'u';
+          return shift ? 'U' : 'u';
         case CONST_TV_KEY.TV_KEY_V:
-          return InputManager.Instance().SHIFT ? 'V' : 'v';
+          return shift ? 'V' : 'v';
         case CONST_TV_KEY.TV_KEY_W:
-          return InputManager.Instance().SHIFT ? 'W' : 'w';
+          return shift ? 'W' : 'w';
         case CONST_TV_KEY.TV_KEY_X:
-          return InputManager.Instance().SHIFT ? 'X' : 'x';
+          return shift ? 'X' : 'x';
         case CONST_TV_KEY.TV_KEY_Y:
-          return InputManager.Instance().SHIFT ? 'Y' : 'y';
+          return shift ? 'Y' : 'y';
         case CONST_TV_KEY.TV_KEY_Z:
-          return InputManager.Instance().SHIFT ? 'Z' : 'z';
+          return shift ? 'Z' : 'z';
 
         case CONST_TV_KEY.TV_KEY_APOSTROPHE:
           return '\'';

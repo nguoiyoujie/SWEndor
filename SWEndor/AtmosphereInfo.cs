@@ -8,13 +8,13 @@ namespace SWEndor
   {
     public FlareInfo(string texpath)
     {
-      TexID = Engine.Instance().TVTextureFactory.LoadTexture(texpath, Path.GetFileNameWithoutExtension(texpath), -1, -1, CONST_TV_COLORKEY.TV_COLORKEY_NO, true);
+      TexID = Globals.Engine.TVTextureFactory.LoadTexture(texpath, Path.GetFileNameWithoutExtension(texpath), -1, -1, CONST_TV_COLORKEY.TV_COLORKEY_NO, true);
     }
 
     //~FlareInfo()
     //{
-      //if (Engine.Instance().TVTextureFactory != null)
-      //  Engine.Instance().TVTextureFactory.DeleteTexture(TexID);
+      //if (Globals.Engine.TVTextureFactory != null)
+      //  Globals.Engine.TVTextureFactory.DeleteTexture(TexID);
     //}
 
     public int TexID = -1;
@@ -26,22 +26,10 @@ namespace SWEndor
 
   public class AtmosphereInfo
   {
-    private static AtmosphereInfo _instance;
-    public static AtmosphereInfo Instance()
-    {
-      if (_instance == null) { _instance = new AtmosphereInfo(); }
-      return _instance;
-    }
-
-    private AtmosphereInfo()
+    internal AtmosphereInfo()
     {
       m_atmosphere = new TVAtmosphere();
     }
-
-    //~AtmosphereInfo()
-    //{
-    //  m_atmosphere = null;
-    //}
 
     private TVAtmosphere m_atmosphere;
     private int m_tex = -1;
@@ -128,8 +116,8 @@ namespace SWEndor
       if (m_texpath != path)
       {
         if (m_tex != -1)
-          Engine.Instance().TVTextureFactory.DeleteTexture(m_tex);
-        m_tex = Engine.Instance().TVTextureFactory.LoadTexture(path);
+          Globals.Engine.TVTextureFactory.DeleteTexture(m_tex);
+        m_tex = Globals.Engine.TVTextureFactory.LoadTexture(path);
         m_texpath = path;
         m_radius = radius;
       }
@@ -152,8 +140,8 @@ namespace SWEndor
       if (m_sunpath != path)
       {
         if (m_Sun != -1)
-          Engine.Instance().TVTextureFactory.DeleteTexture(m_Sun);
-        m_Sun = Engine.Instance().TVTextureFactory.LoadTexture(path);
+          Globals.Engine.TVTextureFactory.DeleteTexture(m_Sun);
+        m_Sun = Globals.Engine.TVTextureFactory.LoadTexture(path);
         m_sunpath = path;
       }
     }

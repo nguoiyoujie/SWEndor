@@ -24,10 +24,10 @@ namespace SWEndor.ActorTypes.Instances
 
       float size = 20000;
 
-      SourceMesh = Engine.Instance().TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Engine.Instance().TVScene.CreateMeshBuilder(Key);
+        SourceMesh = Globals.Engine.TVScene.CreateMeshBuilder(Key);
 
         List<int> death = new List<int> { 1, 10, 15, 16, 20, 21, 22, 23, 27, 28, 30, 31, 34, 35, 36 };
         List<int> frames = new List<int>();
@@ -42,18 +42,18 @@ namespace SWEndor.ActorTypes.Instances
         
         int dstartex = 0;
         int dstardtex = 0;
-        if (Engine.Instance().TVGlobals.GetTex(texname) == 0)
+        if (Globals.Engine.TVGlobals.GetTex(texname) == 0)
         {
-          int texS = Engine.Instance().TVTextureFactory.LoadTexture(texpath);
-          int texA = Engine.Instance().TVTextureFactory.LoadTexture(alphatexpath); // note we are loading alpha map as texture
-          dstartex = Engine.Instance().TVTextureFactory.AddAlphaChannel(texS, texA, texname);
+          int texS = Globals.Engine.TVTextureFactory.LoadTexture(texpath);
+          int texA = Globals.Engine.TVTextureFactory.LoadTexture(alphatexpath); // note we are loading alpha map as texture
+          dstartex = Globals.Engine.TVTextureFactory.AddAlphaChannel(texS, texA, texname);
         }
 
-        if (Engine.Instance().TVGlobals.GetTex(texdname) == 0)
+        if (Globals.Engine.TVGlobals.GetTex(texdname) == 0)
         {
-          int texS = Engine.Instance().TVTextureFactory.LoadTexture(texdpath);
-          int texA = Engine.Instance().TVTextureFactory.LoadTexture(alphatexpath);
-          dstardtex = Engine.Instance().TVTextureFactory.AddAlphaChannel(texS, texA, texdname);
+          int texS = Globals.Engine.TVTextureFactory.LoadTexture(texdpath);
+          int texA = Globals.Engine.TVTextureFactory.LoadTexture(alphatexpath);
+          dstardtex = Globals.Engine.TVTextureFactory.AddAlphaChannel(texS, texA, texdname);
         }
         
         /*

@@ -10,14 +10,7 @@ namespace SWEndor.Player
 {
   public class PlayerInfo
   {
-    private static PlayerInfo _instance;
-    public static PlayerInfo Instance()
-    {
-      if (_instance == null) { _instance = new PlayerInfo(); }
-      return _instance;
-    }
-
-    private PlayerInfo()
+    internal PlayerInfo()
     {
       Name = "Luke";
       Score = ScoreInfo.Player;
@@ -58,10 +51,10 @@ namespace SWEndor.Player
             frac = 0;
           else if (frac < 0.1f)
           {
-            if (m_LowAlarmSoundTime < Game.Instance().GameTime)
+            if (m_LowAlarmSoundTime < Globals.Engine.Game.GameTime)
             {
-              SoundManager.Instance().SetSound("shieldlow");
-              m_LowAlarmSoundTime = Game.Instance().GameTime + 0.5f;
+              Globals.Engine.SoundManager.SetSound("shieldlow");
+              m_LowAlarmSoundTime = Globals.Engine.Game.GameTime + 0.5f;
             }
           }
           return frac;
@@ -121,7 +114,7 @@ namespace SWEndor.Player
       {
         Lives++;
         ScoreForNextLife += ScorePerLife;
-        SoundManager.Instance().SetSound("button_4");
+        Globals.Engine.SoundManager.SetSound("button_4");
       }
     }
 
@@ -131,36 +124,36 @@ namespace SWEndor.Player
       if (Actor != null && !(Actor.TypeInfo is InvisibleCameraATI) && !(Actor.TypeInfo is DeathCameraATI))
       {
         TV_3DVECTOR pos = Actor.GetPosition();
-        if (pos.x < GameScenarioManager.Instance().MinBounds.x)
+        if (pos.x < Globals.Engine.GameScenarioManager.MinBounds.x)
         {
-          Actor.SetLocalPosition(GameScenarioManager.Instance().MinBounds.x, pos.y, pos.z);
+          Actor.SetLocalPosition(Globals.Engine.GameScenarioManager.MinBounds.x, pos.y, pos.z);
           announceOutOfBounds = true;
         }
-        else if (pos.x > GameScenarioManager.Instance().MaxBounds.x)
+        else if (pos.x > Globals.Engine.GameScenarioManager.MaxBounds.x)
         {
-          Actor.SetLocalPosition(GameScenarioManager.Instance().MaxBounds.x, pos.y, pos.z);
+          Actor.SetLocalPosition(Globals.Engine.GameScenarioManager.MaxBounds.x, pos.y, pos.z);
           announceOutOfBounds = true;
         }
 
-        if (pos.y < GameScenarioManager.Instance().MinBounds.y)
-          Actor.SetLocalPosition(pos.x, GameScenarioManager.Instance().MinBounds.y, pos.z);
-        else if (pos.y > GameScenarioManager.Instance().MaxBounds.y)
-          Actor.SetLocalPosition(pos.x, GameScenarioManager.Instance().MaxBounds.y, pos.z);
+        if (pos.y < Globals.Engine.GameScenarioManager.MinBounds.y)
+          Actor.SetLocalPosition(pos.x, Globals.Engine.GameScenarioManager.MinBounds.y, pos.z);
+        else if (pos.y > Globals.Engine.GameScenarioManager.MaxBounds.y)
+          Actor.SetLocalPosition(pos.x, Globals.Engine.GameScenarioManager.MaxBounds.y, pos.z);
 
 
-        if (pos.z < GameScenarioManager.Instance().MinBounds.z)
+        if (pos.z < Globals.Engine.GameScenarioManager.MinBounds.z)
         {
-          Actor.SetLocalPosition(pos.x, pos.y, GameScenarioManager.Instance().MinBounds.z);
+          Actor.SetLocalPosition(pos.x, pos.y, Globals.Engine.GameScenarioManager.MinBounds.z);
           announceOutOfBounds = true;
         }
-        else if (pos.z > GameScenarioManager.Instance().MaxBounds.z)
+        else if (pos.z > Globals.Engine.GameScenarioManager.MaxBounds.z)
         {
-          Actor.SetLocalPosition(pos.x, pos.y, GameScenarioManager.Instance().MaxBounds.z);
+          Actor.SetLocalPosition(pos.x, pos.y, Globals.Engine.GameScenarioManager.MaxBounds.z);
           announceOutOfBounds = true;
         }
 
         if (announceOutOfBounds)
-          Screen2D.Instance().MessageText("You are going out of bounds! Return to the battle!", 5, new TV_COLOR(1, 1, 1, 1), 99);
+          Globals.Engine.Screen2D.MessageText("You are going out of bounds! Return to the battle!", 5, new TV_COLOR(1, 1, 1, 1), 99);
       }
     }
 
@@ -170,7 +163,7 @@ namespace SWEndor.Player
         return;
       if (IsMovementControlsEnabled && !PlayerAIEnabled && Actor != null)
       {
-        Actor.MovementInfo.Speed += frac * Actor.TypeInfo.MaxSpeedChangeRate * Game.Instance().TimeSinceRender;
+        Actor.MovementInfo.Speed += frac * Actor.TypeInfo.MaxSpeedChangeRate * Globals.Engine.Game.TimeSinceRender;
         Utilities.Clamp(ref Actor.MovementInfo.Speed, Actor.MovementInfo.MinSpeed, Actor.MovementInfo.MaxSpeed);
       }
     }
@@ -261,18 +254,18 @@ namespace SWEndor.Player
     {
       if (Actor.TypeInfo is ActorTypes.Groups.Fighter)
       {
-        SoundManager.Instance().SetSound("hit");
-        Engine.Instance().TVGraphicEffect.Flash(color.r, color.g, color.b, 200);
+        Globals.Engine.SoundManager.SetSound("hit");
+        Globals.Engine.TVGraphicEffect.Flash(color.r, color.g, color.b, 200);
 
         if (Actor.CombatInfo.Strength > 0 && DamagedReportSound != null && DamagedReportSound.Length > 0)
         {
-          double r = Engine.Instance().Random.NextDouble();
+          double r = Globals.Engine.Random.NextDouble();
           int dmgnum = DamagedReportSound.Length;
 
           int dmgst = (int)(Actor.CombatInfo.Strength * (dmgnum + 1) / Actor.CombatInfo.MaxStrength);
           if (dmgst < DamagedReportSound.Length)
             if (r < 0.25f * (dmgnum - dmgst) / dmgnum)
-              SoundManager.Instance().SetSound(DamagedReportSound[dmgst], false);
+              Globals.Engine.SoundManager.SetSound(DamagedReportSound[dmgst], false);
         }
       }
     }

@@ -16,11 +16,11 @@ namespace SWEndor.UI.Menu.Pages
 
     public PauseMenu()
     {
-      SoundManager.Instance().SetMusicPause();
+      Globals.Engine.SoundManager.SetMusicPause();
 
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
-      Cover.HighlightBoxWidth = Engine.Instance().ScreenWidth;
-      Cover.HighlightBoxHeight = Engine.Instance().ScreenHeight;
+      Cover.HighlightBoxWidth = Globals.Engine.ScreenWidth;
+      Cover.HighlightBoxHeight = Globals.Engine.ScreenHeight;
       Cover.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.3f);
 
       MainText.Text = "Game Paused";
@@ -90,10 +90,10 @@ namespace SWEndor.UI.Menu.Pages
 
     private void ResumeGame()
     {
-      SoundManager.Instance().SetMusicResume();
-      Game.Instance().IsPaused = false;
-      Screen2D.Instance().CurrentPage = null;
-      Screen2D.Instance().ShowPage = false;
+      Globals.Engine.SoundManager.SetMusicResume();
+      Globals.Engine.Game.IsPaused = false;
+      Globals.Engine.Screen2D.CurrentPage = null;
+      Globals.Engine.Screen2D.ShowPage = false;
     }
 
     /*

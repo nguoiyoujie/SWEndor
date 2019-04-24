@@ -14,7 +14,7 @@ namespace SWEndor.Input.Functions.Gameplay.Camera
 
     public override void Process()
     {
-      PlayerCameraInfo.Instance().CameraMode = GameScenarioManager.Instance().Scenario.NextCameraMode();
+      PlayerCameraInfo.Instance().CameraMode = Globals.Engine.GameScenarioManager.Scenario.NextCameraMode();
     }
   }
 }

@@ -28,7 +28,7 @@ namespace SWEndor.AI.Actions
                           , Utilities.ToString(Target_Position)
                           , Target_Speed
                           , CloseEnoughDistance
-                          , ResumeTime - Game.Instance().GameTime
+                          , ResumeTime - Globals.Engine.Game.GameTime
                           , CanInterrupt
                           , Complete
                           );
@@ -44,7 +44,7 @@ namespace SWEndor.AI.Actions
 
       if (ResumeTime == 0)
       {
-        ResumeTime = Game.Instance().GameTime + WaitTime;
+        ResumeTime = Globals.Engine.Game.GameTime + WaitTime;
       }
 
       if (CloseEnoughDistance < 0)
@@ -53,9 +53,9 @@ namespace SWEndor.AI.Actions
       AdjustRotation(owner, Target_Position);
       AdjustSpeed(owner, Target_Speed);
 
-      float dist = Engine.Instance().TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Target_Position);
+      float dist = Globals.Engine.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Target_Position);
       Complete |= (dist <= CloseEnoughDistance);
-      Complete |= (ResumeTime < Game.Instance().GameTime);
+      Complete |= (ResumeTime < Globals.Engine.Game.GameTime);
 
       //TV_3DVECTOR vNormal = new TV_3DVECTOR();
       //TV_3DVECTOR vImpact = new TV_3DVECTOR();
