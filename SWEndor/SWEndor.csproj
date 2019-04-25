@@ -274,6 +274,8 @@
     <Compile Include="AI\ActionInfo.cs" />
     <Compile Include="Build.cs" />
     <Compile Include="Core\TrueVision.cs" />
+    <Compile Include="FileFormat\INI\SetValues.cs" />
+    <Compile Include="FileFormat\INI\GetValues.cs" />
     <Compile Include="GameEvent\GameEvent.cs" />
     <Compile Include="Input\Context\DebugGameInputContext.cs" />
     <Compile Include="Input\Context\TerminalGameInputContext.cs" />
