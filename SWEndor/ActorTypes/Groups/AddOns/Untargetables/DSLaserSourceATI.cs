@@ -1,5 +1,4 @@
 ﻿using SWEndor.Actors;
-using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Weapons;
 using SWEndor.Weapons.Types;

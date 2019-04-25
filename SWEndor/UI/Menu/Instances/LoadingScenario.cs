@@ -2,7 +2,6 @@
 using SWEndor.ActorTypes;
 using SWEndor.Primitives;
 using SWEndor.Scenarios;
-using SWEndor.Sound;
 using System;
 using System.Collections.Generic;
 using System.Threading;

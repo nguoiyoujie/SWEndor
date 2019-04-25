@@ -1,5 +1,4 @@
 ﻿using SWEndor.Actors;
-using SWEndor.Scenarios;
 
 namespace SWEndor.AI.Actions
 {

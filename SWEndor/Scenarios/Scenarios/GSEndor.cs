@@ -2,10 +2,8 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Instances;
-using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
-using SWEndor.Sound;
 using SWEndor.Weapons;
 using System;
 using System.Collections.Generic;

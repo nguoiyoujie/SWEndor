@@ -1,5 +1,4 @@
 ﻿using SWEndor.Actors;
-using SWEndor.Player;
 using SWEndor.Scenarios.Scripting.Expressions;
 using System;
 using System.Collections.Generic;

@@ -1,6 +1,5 @@
 ﻿using SWEndor.FileFormat.INI;
 using SWEndor.Primitives;
-using SWEndor.Weapons.Types;
 using System.IO;
 
 namespace SWEndor.Weapons

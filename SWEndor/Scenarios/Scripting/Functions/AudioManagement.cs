@@ -1,5 +1,4 @@
 ﻿using SWEndor.Scenarios.Scripting.Expressions;
-using SWEndor.Sound;
 using System;
 
 namespace SWEndor.Scenarios.Scripting.Functions

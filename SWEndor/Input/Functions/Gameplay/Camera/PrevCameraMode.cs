@@ -1,5 +1,4 @@
 ﻿using SWEndor.Player;
-using SWEndor.Scenarios;
 
 namespace SWEndor.Input.Functions.Gameplay.Camera
 {

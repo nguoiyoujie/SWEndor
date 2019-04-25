@@ -1,6 +1,4 @@
-﻿using MTV3D65;
-
-namespace SWEndor.Weapons.Types
+﻿namespace SWEndor.Weapons.Types
 {
   /*
   public class DummyWeapon : WeaponInfo

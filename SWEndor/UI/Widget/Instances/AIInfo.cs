@@ -2,7 +2,6 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
-using SWEndor.Player;
 
 namespace SWEndor.UI.Widgets
 {

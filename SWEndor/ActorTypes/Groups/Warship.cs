@@ -1,5 +1,4 @@
 ﻿using SWEndor.Actors;
-using SWEndor.ActorTypes.Instances;
 
 namespace SWEndor.ActorTypes.Groups
 {

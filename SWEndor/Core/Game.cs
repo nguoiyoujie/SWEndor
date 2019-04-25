@@ -1,5 +1,4 @@
-﻿using SWEndor.Actors;
-using SWEndor.Log;
+﻿using SWEndor.Log;
 using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.UI.Menu.Pages;

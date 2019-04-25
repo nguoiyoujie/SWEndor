@@ -2,7 +2,6 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.Player;
-using SWEndor.Sound;
 using SWEndor.Weapons;
 using System;
 

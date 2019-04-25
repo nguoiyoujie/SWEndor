@@ -1,7 +1,4 @@
-﻿using SWEndor.Player;
-using SWEndor.Sound;
-
-namespace SWEndor.Input.Functions.Gameplay.Weapon
+﻿namespace SWEndor.Input.Functions.Gameplay.Weapon
 {
   public class PrevSecondary : InputFunction
   {

@@ -1,8 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
-using SWEndor.Player;
-using SWEndor.Scenarios;
 
 namespace SWEndor.UI.Widgets
 {

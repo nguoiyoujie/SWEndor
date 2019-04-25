@@ -2,10 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Group;
-using SWEndor.AI;
 using SWEndor.AI.Actions;
-using SWEndor.Player;
-using SWEndor.Sound;
 
 namespace SWEndor.Weapons
 {

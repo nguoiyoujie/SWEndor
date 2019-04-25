@@ -1,11 +1,9 @@
 ﻿using MTV3D65;
 using SWEndor.Actors.Components;
 using SWEndor.ActorTypes;
-using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
 using SWEndor.Primitives;
-using SWEndor.Scenarios;
 using SWEndor.Weapons;
 using System.Collections.Generic;
 

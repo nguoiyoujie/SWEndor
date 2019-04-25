@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
-using SWEndor.Scenarios;
 using System.Collections.Generic;
 
 namespace SWEndor

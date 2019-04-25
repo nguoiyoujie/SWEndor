@@ -1,10 +1,8 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
-using SWEndor.ActorTypes.Instances;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
-using SWEndor.Sound;
 using System.Collections.Generic;
 
 namespace SWEndor.Scenarios

@@ -1,5 +1,4 @@
 ﻿using MTV3D65;
-using SWEndor.Sound;
 using System.Threading;
 
 namespace SWEndor.UI.Menu.Pages

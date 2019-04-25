@@ -1,6 +1,4 @@
 ﻿using MTV3D65;
-using SWEndor.Player;
-using SWEndor.Scenarios;
 using System.Collections.Generic;
 
 namespace SWEndor.UI.Menu.Pages

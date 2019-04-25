@@ -1,6 +1,4 @@
 ﻿using MTV3D65;
-using SWEndor.Player;
-using SWEndor.Sound;
 
 namespace SWEndor.Input.Functions.Gameplay.Weapon
 {

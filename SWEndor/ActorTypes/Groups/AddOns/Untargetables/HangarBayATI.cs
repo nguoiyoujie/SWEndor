@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes.Groups;
-using SWEndor.AI;
 using SWEndor.AI.Actions;
 using System.Collections.Generic;
 

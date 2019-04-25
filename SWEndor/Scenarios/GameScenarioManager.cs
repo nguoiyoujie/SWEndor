@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
-using SWEndor.Player;
 using SWEndor.UI.Menu.Pages;
 using System.Collections.Generic;
 using System.IO;
