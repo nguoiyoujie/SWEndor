@@ -4,14 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class Asteroid08ATI : Groups.Asteroid
   {
-    private static Asteroid08ATI _instance;
-    public static Asteroid08ATI Instance()
-    {
-      if (_instance == null) { _instance = new Asteroid08ATI(); }
-      return _instance;
-    }
-
-    private Asteroid08ATI() : base("Asteroid 08")
+    internal Asteroid08ATI(Factory owner) : base(owner, "Asteroid 08")
     {
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"asteroids\asteroid08.x");
     }

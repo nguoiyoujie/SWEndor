@@ -6,14 +6,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class Surface001_00ATI : Groups.StaticScene
   {
-    private static Surface001_00ATI _instance;
-    public static Surface001_00ATI Instance()
-    {
-      if (_instance == null) { _instance = new Surface001_00ATI(); }
-      return _instance;
-    }
-
-    private Surface001_00ATI() : base("Surface001_00ATI")
+    internal Surface001_00ATI(Factory owner) : base(owner, "Surface001_00ATI")
     {
       //CollisionEnabled = true;
       EnableDistanceCull = true;

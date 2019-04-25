@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class Asteroid : ActorTypeInfo
   {
-    internal Asteroid(string name) : base(name)
+    internal Asteroid(Factory owner, string name) : base(owner, name)
     {
       // Combat
       IsCombatObject = true;

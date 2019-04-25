@@ -7,14 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class VictoryIATI : Groups.StarDestroyer
   {
-    private static VictoryIATI _instance;
-    public static VictoryIATI Instance()
-    {
-      if (_instance == null) { _instance = new VictoryIATI(); }
-      return _instance;
-    }
-
-    private VictoryIATI() : base("Victory-I Star Destroyer")
+    internal VictoryIATI(Factory owner) : base(owner, "Victory-I Star Destroyer")
     {
       // Combat
       IsCombatObject = true;

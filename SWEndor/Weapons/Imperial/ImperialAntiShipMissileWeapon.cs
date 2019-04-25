@@ -6,9 +6,8 @@ namespace SWEndor.Weapons.Types
 {
   public class ImperialAntiShipMissileWeapon : WeaponInfo
   {
-    public ImperialAntiShipMissileWeapon() : base("Imperial Anti-Ship Missile")
+    public ImperialAntiShipMissileWeapon() : base("Imperial Anti-Ship Missile", "Missile")
     {
-      WeaponProjectile = MissileATI.Instance();
       WeaponCooldownRate = 0.5f;
       WeaponCooldownRateRandom = 0;
 

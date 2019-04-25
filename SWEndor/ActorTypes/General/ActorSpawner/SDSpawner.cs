@@ -10,12 +10,12 @@ namespace SWEndor
   {
     public SDSpawner(ActorInfo a) : base(a)
     {
-      SpawnTypes = new ActorTypeInfo[] { TIE_LN_ATI.Instance() };
+      SpawnTypes = new ActorTypeInfo[] { a.TypeInfo.Owner.Get("TIE") };
       SpawnMoveDelay = 4;
       SpawnInterval = 5;
       SpawnsRemaining = 60;
 
-      SpawnLocations = new List<TV_3DVECTOR>() { new TV_3DVECTOR(25, 0, -25)
+      SpawnLocations = new TV_3DVECTOR[]{ new TV_3DVECTOR(25, 0, -25)
                                                , new TV_3DVECTOR(25, 0, 25)
                                                , new TV_3DVECTOR(-25, 0, -25)
                                                , new TV_3DVECTOR(-25, 0, 25)

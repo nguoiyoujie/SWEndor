@@ -5,9 +5,8 @@ namespace SWEndor.Weapons.Types
 {
   public class BWingLaserWeapon : WeaponInfo
   {
-    public BWingLaserWeapon() : base("B-Wing Laser")
+    public BWingLaserWeapon() : base("B-Wing Laser", "Red Laser")
     {
-      WeaponProjectile = RedLaserATI.Instance();
       WeaponCooldownRate = 0.2f;
       WeaponCooldownRateRandom = 0;
 

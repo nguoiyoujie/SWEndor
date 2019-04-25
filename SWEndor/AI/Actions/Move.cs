@@ -46,7 +46,7 @@ namespace SWEndor.AI.Actions
         AdjustRotation(owner, Target_Position);
         AdjustSpeed(owner, Target_Speed);
 
-        float dist = Globals.Engine.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Target_Position);
+        float dist = Globals.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Target_Position);
         Complete |= (dist <= CloseEnoughDistance);
       }
 
@@ -54,7 +54,7 @@ namespace SWEndor.AI.Actions
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
       if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
       {
-        ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
+        owner.Owner.Engine.ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
       }
     }
   }

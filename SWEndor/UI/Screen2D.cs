@@ -9,6 +9,8 @@ namespace SWEndor
 {
   public class Screen2D
   {
+    public readonly Engine Engine;
+
     // Show toggles
     public bool ShowUI = true;
     public bool ShowStatus = true;
@@ -38,33 +40,34 @@ namespace SWEndor
 
     ThreadSafeList<Widget> m_Widgets = new ThreadSafeList<Widget>();
 
-    internal Screen2D()
+    internal Screen2D(Engine engine)
     {
-      m_Widgets.Add(new SideBars());
-      m_Widgets.Add(new HitBar());
+      Engine = engine;
+      m_Widgets.Add(new SideBars(this));
+      m_Widgets.Add(new HitBar(this));
 
-      m_Widgets.Add(new Radar());
+      m_Widgets.Add(new Radar(this));
 
-      //m_Widgets.Add(new UIWidget_Score()); // Disabled
-      m_Widgets.Add(new AIInfo());
-      m_Widgets.Add(new ScenarioInfo());
-      m_Widgets.Add(new WidgetWeaponInfo());
-      m_Widgets.Add(new Steering());
-      m_Widgets.Add(new CrossHair());
-      m_Widgets.Add(new Target());
+      //m_Widgets.Add(new UIWidget_Score(this)); // Disabled
+      m_Widgets.Add(new AIInfo(this));
+      m_Widgets.Add(new ScenarioInfo(this));
+      m_Widgets.Add(new WidgetWeaponInfo(this));
+      m_Widgets.Add(new Steering(this));
+      m_Widgets.Add(new CrossHair(this));
+      m_Widgets.Add(new Target(this));
 
-      m_Widgets.Add(new Box3D());
-      //m_Widgets.Add(new Debug_GeneralInfo());
-      //m_Widgets.Add(new Debug_ObjectInfo());
-      //m_Widgets.Add(new Debug_SelectInfo());
+      m_Widgets.Add(new Box3D(this));
+      //m_Widgets.Add(new Debug_GeneralInfo(this));
+      //m_Widgets.Add(new Debug_ObjectInfo(this));
+      //m_Widgets.Add(new Debug_SelectInfo(this));
 
-      m_Widgets.Add(new MessageText());
+      m_Widgets.Add(new MessageText(this));
 
-      m_Widgets.Add(new WidgetPage());
-      m_Widgets.Add(new PerfText());
-      m_Widgets.Add(new WidgetTerminal());
+      m_Widgets.Add(new WidgetPage(this));
+      m_Widgets.Add(new PerfText(this));
+      m_Widgets.Add(new WidgetTerminal(this));
 
-      m_Widgets.Add(new MouseLocation());
+      m_Widgets.Add(new MouseLocation(this));
     }
 
     public void Draw()
@@ -79,22 +82,22 @@ namespace SWEndor
 
     public void MessageText(string text, float expiretime, TV_COLOR color, int priority = 0)
     {
-      if (PrimaryText.Priority <= priority || PrimaryText.ExpireTime < Globals.Engine.Game.GameTime)
+      if (PrimaryText.Priority <= priority || PrimaryText.ExpireTime < Engine.Game.GameTime)
       {
         PrimaryText.Priority = priority;
         PrimaryText.Text = text;
-        PrimaryText.ExpireTime = Globals.Engine.Game.GameTime + expiretime;
+        PrimaryText.ExpireTime = Engine.Game.GameTime + expiretime;
         PrimaryText.Color = color;
       }
     }
 
     public void MessageSecondaryText(string text, float expiretime, TV_COLOR color, int priority = 0)
     {
-      if (SecondaryText.Priority <= priority || SecondaryText.ExpireTime < Globals.Engine.Game.GameTime)
+      if (SecondaryText.Priority <= priority || SecondaryText.ExpireTime < Engine.Game.GameTime)
       {
         SecondaryText.Priority = priority;
         SecondaryText.Text = text;
-        SecondaryText.ExpireTime = Globals.Engine.Game.GameTime + expiretime;
+        SecondaryText.ExpireTime = Engine.Game.GameTime + expiretime;
         SecondaryText.Color = color;
       }
     }

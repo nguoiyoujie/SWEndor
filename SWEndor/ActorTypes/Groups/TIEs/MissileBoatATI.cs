@@ -9,14 +9,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class MissileBoatATI : Groups.TIE
   {
-    private static MissileBoatATI _instance;
-    public static MissileBoatATI Instance()
-    {
-      if (_instance == null) { _instance = new MissileBoatATI(); }
-      return _instance;
-    }
-
-    private MissileBoatATI() : base("Missile Boat")
+    internal MissileBoatATI(Factory owner) : base(owner, "Missile Boat")
     {
       MaxStrength = 12;
       ImpactDamage = 16;

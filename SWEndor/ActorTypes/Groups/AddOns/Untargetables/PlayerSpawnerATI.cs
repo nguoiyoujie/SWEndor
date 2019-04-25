@@ -2,21 +2,13 @@
 using SWEndor.Actors;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
-using SWEndor.Player;
 using System.Collections.Generic;
 
 namespace SWEndor.ActorTypes.Instances
 {
   public class PlayerSpawnerATI : Groups.AddOn
   {
-    private static PlayerSpawnerATI _instance;
-    public static PlayerSpawnerATI Instance()
-    {
-      if (_instance == null) { _instance = new PlayerSpawnerATI(); }
-      return _instance;
-    }
-
-    private PlayerSpawnerATI() : base("Player Spawner")
+    internal PlayerSpawnerATI(Factory owner) : base(owner, "Player Spawner")
     {
       // Combat
       IsCombatObject = false;
@@ -37,7 +29,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.ProcessState(ainfo);
 
-      ActorInfo p = ActorInfo.Factory.Get(ainfo.GetTopParent());
+      ActorInfo p = Owner.Engine.ActorFactory.Get(ainfo.GetTopParent());
 
       if (p.SpawnerInfo != null
        && p.SpawnerInfo.Enabled
@@ -51,11 +43,11 @@ namespace SWEndor.ActorTypes.Instances
           List<ActorInfo> rm = new List<ActorInfo>();
           foreach (int id in ainfo.GetAllChildren(1))
           {
-            ActorInfo a = ActorInfo.Factory.Get(id);
+            ActorInfo a = Owner.Engine.ActorFactory.Get(id);
 
             a.ActorState = ActorState.NORMAL;
-            ActionManager.UnlockOne(id);
-            ActionManager.QueueLast(id, new Hunt());
+            Owner.Engine.ActionManager.UnlockOne(id);
+            Owner.Engine.ActionManager.QueueLast(id, new Hunt());
 
             if (a.IsPlayer())
               Globals.Engine.PlayerInfo.IsMovementControlsEnabled = true;
@@ -75,7 +67,7 @@ namespace SWEndor.ActorTypes.Instances
 
       foreach (int i in ainfo.GetAllChildren(1))
       {
-        ActorInfo a = ActorInfo.Factory.Get(i);
+        ActorInfo a = Owner.Engine.ActorFactory.Get(i);
         if (a != null && a.TypeInfo is Groups.Fighter)
         {
           if (p.SpawnerInfo.SpawnSpeed == -2)
@@ -118,9 +110,9 @@ namespace SWEndor.ActorTypes.Instances
 
       acinfo.InitialState = ActorState.FREE;
       acinfo.Faction = ainfo.Faction;
-      ActorInfo a = ActorInfo.Create(acinfo);
+      ActorInfo a = ActorInfo.Create(Owner.Engine.ActorFactory, acinfo);
       a.AddParent(ainfo.ID);
-      ActionManager.QueueNext(a.ID, new Lock());
+      Owner.Engine.ActionManager.QueueNext(a.ID, new Lock());
 
       Globals.Engine.PlayerInfo.ActorID = a.ID;
 

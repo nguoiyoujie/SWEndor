@@ -9,14 +9,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class DSLaserSourceATI : ActorTypeInfo //: AddOnGroup
   {
-    private static DSLaserSourceATI _instance;
-    public static DSLaserSourceATI Instance()
-    {
-      if (_instance == null) { _instance = new DSLaserSourceATI(); }
-      return _instance;
-    }
-
-    private DSLaserSourceATI() : base("Death Star Laser Source")
+    internal DSLaserSourceATI(Factory owner) : base(owner, "Death Star Laser Source")
     {
       // Combat
       IsCombatObject = false;
@@ -43,7 +36,7 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
       ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:laser" };
 
-      ActionManager.QueueNext(ainfo.ID, new Lock());
+      Owner.Engine.ActionManager.QueueNext(ainfo.ID, new Lock());
     }
 
     public override void ProcessState(ActorInfo ainfo)
@@ -52,7 +45,7 @@ namespace SWEndor.ActorTypes.Instances
       
       if (ainfo.CurrentAction != null && ainfo.CurrentAction is AttackActor)
       {
-        ActorInfo target = ActorInfo.Factory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
+        ActorInfo target = Owner.Engine.ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
         if (target != null && target.CreationState == CreationState.ACTIVE)
         {
           FireWeapon(ainfo.ID, target.ID, "auto");

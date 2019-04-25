@@ -2,14 +2,7 @@
 {
   public class InvisibleCameraATI : ActorTypeInfo
   {
-    private static InvisibleCameraATI _instance;
-    public static InvisibleCameraATI Instance()
-    {
-      if (_instance == null) { _instance = new InvisibleCameraATI(); }
-      return _instance;
-    }
-
-    private InvisibleCameraATI() : base("Invisible Camera")
+    internal InvisibleCameraATI(Factory owner) : base(owner, "Invisible Camera")
     {
       // Combat
       IsCombatObject = false;
@@ -18,10 +11,10 @@
       EnableDistanceCull = false;
       CollisionEnabled = false;
 
-      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Globals.Engine.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);
       }

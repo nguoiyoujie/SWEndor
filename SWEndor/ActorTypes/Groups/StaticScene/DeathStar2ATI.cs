@@ -8,26 +8,19 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class DeathStar2ATI : Groups.StaticScene
   {
-    private static DeathStar2ATI _instance;
-    public static DeathStar2ATI Instance()
-    {
-      if (_instance == null) { _instance = new DeathStar2ATI(); }
-      return _instance;
-    }
-
     int[] texanimframes;
 
-    private DeathStar2ATI() : base("DeathStar2")
+    internal DeathStar2ATI(Factory owner) : base(owner, "DeathStar2")
     {
       OnTimedLife = false;
       TimedLife = 5;
 
       float size = 20000;
 
-      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Globals.Engine.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
 
         List<int> death = new List<int> { 1, 10, 15, 16, 20, 21, 22, 23, 27, 28, 30, 31, 34, 35, 36 };
         List<int> frames = new List<int>();
@@ -42,18 +35,18 @@ namespace SWEndor.ActorTypes.Instances
         
         int dstartex = 0;
         int dstardtex = 0;
-        if (Globals.Engine.TVGlobals.GetTex(texname) == 0)
+        if (Globals.Engine.TrueVision.TVGlobals.GetTex(texname) == 0)
         {
-          int texS = Globals.Engine.TVTextureFactory.LoadTexture(texpath);
-          int texA = Globals.Engine.TVTextureFactory.LoadTexture(alphatexpath); // note we are loading alpha map as texture
-          dstartex = Globals.Engine.TVTextureFactory.AddAlphaChannel(texS, texA, texname);
+          int texS = Globals.Engine.TrueVision.TVTextureFactory.LoadTexture(texpath);
+          int texA = Globals.Engine.TrueVision.TVTextureFactory.LoadTexture(alphatexpath); // note we are loading alpha map as texture
+          dstartex = Globals.Engine.TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texname);
         }
 
-        if (Globals.Engine.TVGlobals.GetTex(texdname) == 0)
+        if (Globals.Engine.TrueVision.TVGlobals.GetTex(texdname) == 0)
         {
-          int texS = Globals.Engine.TVTextureFactory.LoadTexture(texdpath);
-          int texA = Globals.Engine.TVTextureFactory.LoadTexture(alphatexpath);
-          dstardtex = Globals.Engine.TVTextureFactory.AddAlphaChannel(texS, texA, texdname);
+          int texS = Globals.Engine.TrueVision.TVTextureFactory.LoadTexture(texdpath);
+          int texA = Globals.Engine.TrueVision.TVTextureFactory.LoadTexture(alphatexpath);
+          dstardtex = Globals.Engine.TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texdname);
         }
         
         /*
@@ -94,9 +87,9 @@ namespace SWEndor.ActorTypes.Instances
       }
       else if (ainfo.ActorState == ActorState.DEAD)
       {
-        ActorCreationInfo acinfo = new ActorCreationInfo(ExplosionWaveMegaATI.Instance());
+        ActorCreationInfo acinfo = new ActorCreationInfo(Owner.Get("Explosion Wave Mega"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo explwav = ActorInfo.Create(acinfo);
+        ActorInfo explwav = ActorInfo.Create(Owner.Engine.ActorFactory, acinfo);
         explwav.Scale = new MTV3D65.TV_3DVECTOR(10, 10, 10);
       }
     }

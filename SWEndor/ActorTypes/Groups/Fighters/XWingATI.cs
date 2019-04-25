@@ -10,14 +10,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class XWingATI : Groups.RebelWing
   {
-    private static XWingATI _instance;
-    public static XWingATI Instance()
-    {
-      if (_instance == null) { _instance = new XWingATI(); }
-      return _instance;
-    }
-
-    private XWingATI() : base("X-Wing")
+    internal XWingATI(Factory owner) : base(owner, "X-Wing")
     {
       // Combat
       IsCombatObject = true;
@@ -96,7 +89,7 @@ namespace SWEndor.ActorTypes.Instances
             float y = Globals.Engine.Random.Next(0, 3000) / 100f;
             float z = Globals.Engine.Random.Next(-2500, 2500) / 100f;
 
-            ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("XWing_RU_LD_WingATI"));
+            ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("XWing_RU_LD_WingATI"));
             acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(-30, -30, 0);
             acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x, ainfo.Rotation.y + y, ainfo.Rotation.z + z);
             acinfo.InitialSpeed = ainfo.Speed;
@@ -110,7 +103,7 @@ namespace SWEndor.ActorTypes.Instances
             float y = Globals.Engine.Random.Next(-3000, 0) / 100f;
             float z = Globals.Engine.Random.Next(-2500, 2500) / 100f;
 
-            ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("XWing_RU_LD_WingATI"));
+            ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("XWing_RU_LD_WingATI"));
             acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(30, 30, 0);
             acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x, ainfo.Rotation.y + y, ainfo.Rotation.z + z);
 
@@ -125,7 +118,7 @@ namespace SWEndor.ActorTypes.Instances
             float y = Globals.Engine.Random.Next(-3000, 0) / 100f;
             float z = Globals.Engine.Random.Next(-2500, 2500) / 100f;
 
-            ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("XWing_RD_LU_WingATI"));
+            ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("XWing_RD_LU_WingATI"));
             acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(30, -30, 0);
             acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x, ainfo.Rotation.y + y, ainfo.Rotation.z + z);
 
@@ -140,7 +133,7 @@ namespace SWEndor.ActorTypes.Instances
             float y = Globals.Engine.Random.Next(-3000, 0) / 100f;
             float z = Globals.Engine.Random.Next(-2500, 2500) / 100f;
 
-            ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("XWing_RD_LU_WingATI"));
+            ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("XWing_RD_LU_WingATI"));
             acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(-30, 30, 0);
             acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x, ainfo.Rotation.y + y, ainfo.Rotation.z + z);
 

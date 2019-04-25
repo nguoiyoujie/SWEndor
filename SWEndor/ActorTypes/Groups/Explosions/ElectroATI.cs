@@ -6,14 +6,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class ElectroATI : Groups.Explosion
   {
-    private static ElectroATI _instance;
-    public static ElectroATI Instance()
-    {
-      if (_instance == null) { _instance = new ElectroATI(); }
-      return _instance;
-    }
-
-    private ElectroATI() : base("Electro")
+    internal ElectroATI(Factory owner) : base(owner, "Electro")
     {
       // Combat
       OnTimedLife = true;
@@ -24,11 +17,11 @@ namespace SWEndor.ActorTypes.Instances
       CollisionEnabled = false;
       RadarSize = 0;
 
-      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
         LoadAlphaTextureFromFolder(Globals.ImagePath, "electro");
-        SourceMesh = Globals.Engine.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 40, 40, Key, true);
+        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 40, 40, Key, true);
         SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
         SourceMesh.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
 
@@ -50,7 +43,7 @@ namespace SWEndor.ActorTypes.Instances
       base.ProcessState(ainfo);
       if (ainfo.ActorState == ActorState.NORMAL)
       {
-        ActorInfo p = ActorInfo.Factory.Get(ainfo.ParentID);
+        ActorInfo p = Owner.Engine.ActorFactory.Get(ainfo.ParentID);
         if (p != null)
         {
           if (p.CreationState != CreationState.DISPOSED)

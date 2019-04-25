@@ -24,7 +24,7 @@ namespace SWEndor
     public float SpawnPlayerDelay = 10;
     public int SpawnsRemaining = 30;
 
-    public List<TV_3DVECTOR> SpawnLocations = new List<TV_3DVECTOR>();
+    public TV_3DVECTOR[] SpawnLocations = new TV_3DVECTOR[0];
     public TV_3DVECTOR PlayerSpawnLocation = new TV_3DVECTOR();
 
     public float SpawnSpeed = -1; // -1 means follow spawner, -2 means maxSpeed of spawned

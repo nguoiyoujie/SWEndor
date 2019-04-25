@@ -4,14 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class XWing_RU_LD_WingATI : Groups.SpinningDebris
   {
-    private static XWing_RU_LD_WingATI _instance;
-    public static XWing_RU_LD_WingATI Instance()
-    {
-      if (_instance == null) { _instance = new XWing_RU_LD_WingATI(); }
-      return _instance;
-    }
-
-    private XWing_RU_LD_WingATI() : base("XWing_RU_LD_WingATI")
+    internal XWing_RU_LD_WingATI(Factory owner) : base(owner, "XWing_RU_LD_WingATI")
     {
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"xwing\xwing_rightup_leftdown_wing.x");
     }

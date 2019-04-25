@@ -6,14 +6,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class ExecutorShieldGeneratorATI : Groups.AddOn
   {
-    private static ExecutorShieldGeneratorATI _instance;
-    public static ExecutorShieldGeneratorATI Instance()
-    {
-      if (_instance == null) { _instance = new ExecutorShieldGeneratorATI(); }
-      return _instance;
-    }
-
-    private ExecutorShieldGeneratorATI() : base("Executor Super Star Destroyer Shield Generator")
+    internal ExecutorShieldGeneratorATI(Factory owner) : base(owner, "Executor Super Star Destroyer Shield Generator")
     {
       // Combat
       IsCombatObject = true;
@@ -45,8 +38,8 @@ namespace SWEndor.ActorTypes.Instances
 
     public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
-      ActorInfo hitby = ActorInfo.Factory.Get(hitbyActorID);
+      ActorInfo owner = Owner.Engine.ActorFactory.Get(ownerActorID);
+      ActorInfo hitby = Owner.Engine.ActorFactory.Get(hitbyActorID);
 
       if (owner == null || hitby == null)
         return;
@@ -60,16 +53,16 @@ namespace SWEndor.ActorTypes.Instances
       {
         foreach (int i in owner.GetAllChildren(1))
         {
-          ActorInfo child = ActorInfo.Factory.Get(i);
+          ActorInfo child = Owner.Engine.ActorFactory.Get(i);
           if (child?.TypeInfo is ElectroATI)
           {
             child.CycleInfo.CyclesRemaining = 2.5f / child.TypeInfo.TimedLife;
             return;
           }
         }
-        ActorCreationInfo acinfo = new ActorCreationInfo(Factory.Get("Electro"));
+        ActorCreationInfo acinfo = new ActorCreationInfo(Owner.Engine.ActorTypeFactory.Get("Electro"));
         acinfo.Position = owner.GetPosition();
-        ActorInfo electro = ActorInfo.Create(acinfo);
+        ActorInfo electro = ActorInfo.Create(Owner.Engine.ActorFactory, acinfo);
         electro.AddParent(ownerActorID);
         electro.CycleInfo.CyclesRemaining = 2.5f / electro.TypeInfo.TimedLife;
       }

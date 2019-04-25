@@ -14,7 +14,7 @@
       Italic = italic;
       International = international;
 
-      ID = Globals.Engine.TVScreen2DText.TextureFont_Create(Key, FontName, Size, Bold, Underlined, Italic, International);
+      ID = Globals.Engine.TrueVision.TVScreen2DText.TextureFont_Create(Key, FontName, Size, Bold, Underlined, Italic, International);
     }
 
     public readonly int ID;

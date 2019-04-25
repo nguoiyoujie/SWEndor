@@ -21,7 +21,7 @@ namespace SWEndor.Player
       Camera.SetViewFrustum(90, 65000);
     }
 
-    public TVCamera Camera { get { return Globals.Engine.TVEngine.GetCamera(); } }
+    public TVCamera Camera { get { return Globals.Engine.TrueVision.TVEngine.GetCamera(); } }
     public CameraMode CameraMode = CameraMode.FIRSTPERSON;
     private CameraMode prevCameraMode = CameraMode.FIRSTPERSON;
 

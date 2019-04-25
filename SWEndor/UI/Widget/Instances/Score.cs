@@ -12,31 +12,31 @@ namespace SWEndor.UI.Widgets
     private float score_height = Globals.Engine.ScreenHeight - 325;
     private float score_width = Globals.Engine.ScreenWidth * 0.24f;
 
-    public Score() : base("score") { }
+    public Score(Screen2D owner) : base(owner, "score") { }
 
     public override bool Visible
     {
       get
       {
-        return (!Globals.Engine.Screen2D.ShowPage
-            && Globals.Engine.PlayerInfo.Actor != null
-            && Globals.Engine.PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && Globals.Engine.PlayerInfo.Actor.ActorState != ActorState.DYING
-            && !(Globals.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
-            && Globals.Engine.Screen2D.ShowUI
-            && Globals.Engine.Screen2D.ShowScore);
+        return (!Owner.ShowPage
+            && Owner.Engine.PlayerInfo.Actor != null
+            && Owner.Engine.PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && Owner.Engine.PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !(Owner.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
+            && Owner.ShowUI
+            && Owner.ShowScore);
       }
     }
 
     public override void Draw()
     {
-      Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
-      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(score_position.x
+      TVScreen2DImmediate.Action_Begin2D();
+      TVScreen2DImmediate.Draw_FilledBox(score_position.x
                                     , score_position.y
                                     , score_position.x + score_width
                                     , score_position.y + score_height
                                     , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
-      Globals.Engine.TVScreen2DImmediate.Action_End2D();
+      TVScreen2DImmediate.Action_End2D();
 
       /*
       List<ScoreInfo> HighScorers = new List<ScoreInfo>(ScoreInfo.Scores.GetList());
@@ -55,7 +55,7 @@ namespace SWEndor.UI.Widgets
         hi--;
       }
 
-      Globals.Engine.TVScreen2DText.TextureFont_DrawText(hiscoretext
+      Globals.Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(hiscoretext
       , score_position.x + 5
       , score_position.y + 5
       , new TV_COLOR(0.7f, 1f, 0.3f, 1).GetIntColor()

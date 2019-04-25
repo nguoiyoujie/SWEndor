@@ -5,7 +5,7 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class SpinningDebris : Debris
   {
-    internal SpinningDebris(string name) : base(name)
+    internal SpinningDebris(Factory owner, string name) : base(owner, name)
     {
       IsCombatObject = false;
       IsSelectable = false;

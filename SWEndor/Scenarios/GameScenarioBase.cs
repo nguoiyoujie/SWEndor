@@ -14,7 +14,7 @@ namespace SWEndor.Scenarios
   {
     public string Name = "Untitled Scenario";
     public string Description = "";
-    public List<ActorTypeInfo> AllowedWings = new List<ActorTypeInfo> { XWingATI.Instance() };
+    public List<ActorTypeInfo> AllowedWings = new List<ActorTypeInfo>();
     public List<string> AllowedDifficulties = new List<string> { "normal" };
 
     public string Difficulty { get; set; }
@@ -77,6 +77,13 @@ namespace SWEndor.Scenarios
     public FactionInfo MainAllyFaction = FactionInfo.Neutral;
     public FactionInfo MainEnemyFaction = FactionInfo.Neutral;
 
+    public readonly GameScenarioManager Manager;
+
+    public GameScenarioBase(GameScenarioManager manager)
+    {
+      Manager = manager;
+    }
+
     public virtual void Load(ActorTypeInfo wing, string difficulty)
     {
       Difficulty = difficulty;
@@ -102,7 +109,7 @@ namespace SWEndor.Scenarios
 
     public virtual void LoadScene()
     {
-      Globals.Engine.TVGraphicEffect.FadeIn();
+      Globals.Engine.TrueVision.TVGraphicEffect.FadeIn();
     }
 
     public virtual void GameTick()
@@ -115,7 +122,7 @@ namespace SWEndor.Scenarios
       Globals.Engine.GameScenarioManager.Scenario = null;
 
       // Full reset
-      ActorInfo.Factory.Reset();
+      Manager.Engine.ActorFactory.Reset();
 
       Globals.Engine.GameScenarioManager.ClearGameStates();
       Globals.Engine.GameScenarioManager.ClearEvents();
@@ -136,17 +143,17 @@ namespace SWEndor.Scenarios
 
     public void FadeOut(params object[] param)
     {
-      Globals.Engine.TVGraphicEffect.FadeOut();
+      Globals.Engine.TrueVision.TVGraphicEffect.FadeOut();
       Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 0.01f, FadeInterim);
     }
 
     public void FadeInterim(params object[] param)
     {
-      if (Globals.Engine.TVGraphicEffect.IsFadeFinished())
+      if (Globals.Engine.TrueVision.TVGraphicEffect.IsFadeFinished())
       {
-        Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
-        Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(0, 0, Globals.Engine.ScreenWidth, Globals.Engine.ScreenHeight, new TV_COLOR(0, 0, 0, 1).GetIntColor());
-        Globals.Engine.TVScreen2DImmediate.Action_End2D();
+        Globals.Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
+        Globals.Engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(0, 0, Globals.Engine.ScreenWidth, Globals.Engine.ScreenHeight, new TV_COLOR(0, 0, 0, 1).GetIntColor());
+        Globals.Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
 
         if (Globals.Engine.GameScenarioManager.GetGameStateB("GameOver"))
         {
@@ -177,12 +184,12 @@ namespace SWEndor.Scenarios
 
     public void FadeIn(params object[] param)
     {
-      Globals.Engine.TVGraphicEffect.FadeIn();
+      Globals.Engine.TrueVision.TVGraphicEffect.FadeIn();
     }
 
     public void GameOver(params object[] param)
     {
-      Globals.Engine.TVGraphicEffect.FadeIn(2.5f);
+      Globals.Engine.TrueVision.TVGraphicEffect.FadeIn(2.5f);
 
       Globals.Engine.SoundManager.SetSoundStopAll();
 
@@ -339,7 +346,7 @@ namespace SWEndor.Scenarios
 
     public virtual void ProcessPlayerDying(params object[] param)
     {
-      ActorInfo ainfo = ActorInfo.Factory.Get((int)param[0]);
+      ActorInfo ainfo = Manager.Engine.ActorFactory.Get((int)param[0]);
       if (ainfo != null)
       {
         Globals.Engine.PlayerInfo.TempActorID = ainfo.ID;
@@ -368,8 +375,8 @@ namespace SWEndor.Scenarios
 
     public virtual void ProcessHit(params object[] param)
     {
-      ActorInfo av = ActorInfo.Factory.Get((int)param[0]);
-      ActorInfo aa = ActorInfo.Factory.Get((int)param[1]);
+      ActorInfo av = Manager.Engine.ActorFactory.Get((int)param[0]);
+      ActorInfo aa = Manager.Engine.ActorFactory.Get((int)param[1]);
 
       if (Globals.Engine.PlayerInfo.Actor != null
         && av.Faction != null
@@ -378,7 +385,7 @@ namespace SWEndor.Scenarios
         List<int> attackerfamily = aa.GetAllParents();
         foreach (int i in attackerfamily)
         {
-          ActorInfo a = ActorInfo.Factory.Get(i);
+          ActorInfo a = Manager.Engine.ActorFactory.Get(i);
           if (Globals.Engine.PlayerInfo.Actor == a)
           {
             Globals.Engine.Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", av.Name, Globals.Engine.PlayerInfo.Name)
@@ -397,7 +404,7 @@ namespace SWEndor.Scenarios
 
     public virtual void GameWonSequence(object[] param = null)
     {
-      Globals.Engine.TVGraphicEffect.FadeIn(2.5f);
+      Globals.Engine.TrueVision.TVGraphicEffect.FadeIn(2.5f);
 
       Globals.Engine.SoundManager.SetSoundStopAll();
 

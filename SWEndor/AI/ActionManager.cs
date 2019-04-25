@@ -3,11 +3,15 @@ using SWEndor.AI.Actions;
 
 namespace SWEndor.AI
 {
-  public static class ActionManager
+  public class ActionManager
   {
-    public static void UnlockOne(int actorID)
+    public readonly Engine Engine;
+    internal ActionManager(Engine engine)
+    { Engine = engine; }
+
+    public void UnlockOne(int actorID)
     {
-      ActorInfo actor = ActorInfo.Factory.Get(actorID);
+      ActorInfo actor = Engine.ActorFactory.Get(actorID);
       if (actor != null)
       {
         ActionInfo action = actor.CurrentAction;
@@ -23,9 +27,9 @@ namespace SWEndor.AI
       }
     }
 
-    public static void ClearQueue(int actorID)
+    public void ClearQueue(int actorID)
     {
-      ActorInfo actor = ActorInfo.Factory.Get(actorID);
+      ActorInfo actor = Engine.ActorFactory.Get(actorID);
       if (actor != null)
       {
         if (actor.CurrentAction != null)
@@ -49,18 +53,18 @@ namespace SWEndor.AI
       }
     }
 
-    public static void ForceClearQueue(int actorID)
+    public void ForceClearQueue(int actorID)
     {
-      ActorInfo actor = ActorInfo.Factory.Get(actorID);
+      ActorInfo actor = Engine.ActorFactory.Get(actorID);
       if (actor != null)
       {
         actor.CurrentAction = null;
       }
     }
 
-    public static void QueueFirst(int actorID, ActionInfo action)
+    public void QueueFirst(int actorID, ActionInfo action)
     {
-      ActorInfo actor = ActorInfo.Factory.Get(actorID);
+      ActorInfo actor = Engine.ActorFactory.Get(actorID);
       if (actor != null)
       {
         if (actor.CurrentAction == null)
@@ -81,9 +85,9 @@ namespace SWEndor.AI
       }
     }
 
-    public static void QueueNext(int actorID, ActionInfo action)
+    public void QueueNext(int actorID, ActionInfo action)
     {
-      ActorInfo actor = ActorInfo.Factory.Get(actorID);
+      ActorInfo actor = Engine.ActorFactory.Get(actorID);
       if (actor != null)
       {
         if (actor.CurrentAction == null)
@@ -104,9 +108,9 @@ namespace SWEndor.AI
       }
     }
 
-    public static void QueueLast(int actorID, ActionInfo action)
+    public void QueueLast(int actorID, ActionInfo action)
     {
-      ActorInfo actor = ActorInfo.Factory.Get(actorID);
+      ActorInfo actor = Globals.Engine.ActorFactory.Get(actorID);
       if (actor != null)
       {
         if (actor.CurrentAction == null)
@@ -125,9 +129,9 @@ namespace SWEndor.AI
       }
     }
 
-    public static void Run(int actorID, ActionInfo action)
+    public void Run(int actorID, ActionInfo action)
     {
-      ActorInfo actor = ActorInfo.Factory.Get(actorID);
+      ActorInfo actor = Engine.ActorFactory.Get(actorID);
       if (actor != null)
       {
         if (action == null)

@@ -6,14 +6,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class ExplosionWaveATI : Groups.Explosion
   {
-    private static ExplosionWaveATI _instance;
-    public static ExplosionWaveATI Instance()
-    {
-      if (_instance == null) { _instance = new ExplosionWaveATI(); }
-      return _instance;
-    }
-
-    private ExplosionWaveATI() : base("Explosion Wave")
+    internal ExplosionWaveATI(Factory owner) : base(owner, "Explosion Wave")
     {
       // Combat
       OnTimedLife = true;
@@ -27,10 +20,10 @@ namespace SWEndor.ActorTypes.Instances
       EnableDistanceCull = false;
 
 
-      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Globals.Engine.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
 
         string texname = Path.Combine("explosion", "wave", @"tex0000.jpg");
         string texpath = Path.Combine(Globals.ImagePath, texname);

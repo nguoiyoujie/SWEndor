@@ -5,14 +5,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class Transport_Box2ATI : Groups.SpinningDebris
   {
-    private static Transport_Box2ATI _instance;
-    public static Transport_Box2ATI Instance()
-    {
-      if (_instance == null) { _instance = new Transport_Box2ATI(); }
-      return _instance;
-    }
-
-    private Transport_Box2ATI() : base("Transport Box 2")
+    internal Transport_Box2ATI(Factory owner) : base(owner, "Transport Box 2")
     {
       // Combat
       IsCombatObject = false;

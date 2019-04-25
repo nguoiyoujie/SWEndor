@@ -30,9 +30,9 @@ namespace SWEndor.AI.Actions
       List<ActorInfo> targets = new List<ActorInfo>();
       int weight = 0;
 
-      foreach (int actorID in ActorInfo.Factory.GetHoldingList())
+      foreach (int actorID in owner.Owner.Engine.ActorFactory.GetHoldingList())
       {
-        ActorInfo a = ActorInfo.Factory.Get(actorID);
+        ActorInfo a = owner.Owner.Engine.ActorFactory.Get(actorID);
         if (a != null
           && owner != a
           && a.CreationState == CreationState.ACTIVE
@@ -79,11 +79,11 @@ namespace SWEndor.AI.Actions
 
       if (currtarget != null)
       {
-        ActionManager.QueueLast(owner.ID, new AttackActor(currtarget.ID));
+        owner.Owner.Engine.ActionManager.QueueLast(owner.ID, new AttackActor(currtarget.ID));
       }
       else
       {
-        ActionManager.QueueLast(owner.ID, new Wait(1));
+        owner.Owner.Engine.ActionManager.QueueLast(owner.ID, new Wait(1));
       }
 
       Complete = true;

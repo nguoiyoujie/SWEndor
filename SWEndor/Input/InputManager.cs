@@ -20,9 +20,11 @@ namespace SWEndor.Input
     private bool MOUSE_B4;
     private int MOUSE_SCROLL_NEW;
     private AInputContext Context;
+    public readonly Engine Engine;
 
-    internal InputManager()
+    internal InputManager(Engine engine)
     {
+      Engine = engine;
       INPUT_ENGINE = new TVInputEngine();
       INPUT_ENGINE.Initialize(true, true);
       numkeybuffer = 0;

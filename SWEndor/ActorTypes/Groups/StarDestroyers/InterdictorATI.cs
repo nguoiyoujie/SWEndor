@@ -7,14 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class InterdictorATI : Groups.StarDestroyer
   {
-    private static InterdictorATI _instance;
-    public static InterdictorATI Instance()
-    {
-      if (_instance == null) { _instance = new InterdictorATI(); }
-      return _instance;
-    }
-
-    private InterdictorATI() : base("Interdictor Star Destroyer")
+    internal InterdictorATI(Factory owner) : base(owner, "Interdictor Star Destroyer")
     {
       // Combat
       IsCombatObject = true;

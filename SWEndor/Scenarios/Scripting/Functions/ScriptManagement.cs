@@ -10,7 +10,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       Script scr = Script.Registry.Get(ps[0].ToString());
       if (scr != null)
       {
-        scr.Run();
+        scr.Run(context);
         return true;
       }
       return false;

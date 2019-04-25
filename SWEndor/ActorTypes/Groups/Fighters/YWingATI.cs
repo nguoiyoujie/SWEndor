@@ -10,14 +10,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class YWingATI : Groups.RebelWing
   {
-    private static YWingATI _instance;
-    public static YWingATI Instance()
-    {
-      if (_instance == null) { _instance = new YWingATI(); }
-      return _instance;
-    }
-
-    private YWingATI() : base("Y-Wing")
+    internal YWingATI(Factory owner) : base(owner, "Y-Wing")
     {
       // Combat
       IsCombatObject = true;
@@ -99,7 +92,7 @@ namespace SWEndor.ActorTypes.Instances
 
           if (d > 0.5f)
           {
-            ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("YWing_WingATI"));
+            ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("YWing_WingATI"));
             acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(-30, 0, 0);
             acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x, ainfo.Rotation.y + y, ainfo.Rotation.z + z);
             acinfo.InitialSpeed = ainfo.Speed;
@@ -109,7 +102,7 @@ namespace SWEndor.ActorTypes.Instances
           d = Globals.Engine.Random.NextDouble();
           if (d > 0.5f)
           {
-            ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("YWing_WingATI"));
+            ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("YWing_WingATI"));
             acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(30, 0, 0);
             acinfo.Rotation = new TV_3DVECTOR(ainfo.Rotation.x + x2, ainfo.Rotation.y + y2, ainfo.Rotation.z + z2);
 

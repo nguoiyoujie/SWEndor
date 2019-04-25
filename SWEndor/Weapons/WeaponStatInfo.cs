@@ -107,7 +107,7 @@ namespace SWEndor.Weapons
       WeaponInfo w = new WeaponInfo(sectionname);
 
       string proj = file.GetStringValue(sectionname, "WeaponProjectile", null);
-      w.WeaponProjectile = (proj != null) ? ActorTypeInfo.Factory.Get(proj) as ProjectileGroup : null;
+      w.WeaponProjectile = (proj != null) ? Globals.Engine.ActorTypeFactory.Get(proj) as ProjectileGroup : null;
       w.WeaponCooldown = file.GetFloatValue(sectionname, "WeaponCooldown", w.WeaponCooldown);
       w.WeaponCooldownRate = file.GetFloatValue(sectionname, "WeaponCooldownRate", w.WeaponCooldownRate);
       w.WeaponCooldownRateRandom = file.GetFloatValue(sectionname, "WeaponCooldownRateRandom", w.WeaponCooldownRateRandom);

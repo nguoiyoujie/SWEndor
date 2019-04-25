@@ -14,22 +14,21 @@ namespace SWEndor.Scenarios
 {
   public class GSEndor : GameScenarioBase
   {
-    public GSEndor()
+    public GSEndor(GameScenarioManager manager) : base(manager)
     {
       Name = "Battle of Endor";
       Description = "The Rebel fleet, amassed on Sullust, prepares to move to Endor "
                   + "where the Emperor is overseeing the construction of the second "
                   + "Death Star.";
-      AllowedWings = new List<ActorTypeInfo> { XWingATI.Instance()
-                                               , YWingATI.Instance()
-                                               , AWingATI.Instance()
-                                               , BWingATI.Instance()
-                                               , WedgeXWingATI.Instance()
-                                               , LandoFalconATI.Instance()
-                                               , CorellianATI.Instance()
-                                               , VictoryIATI.Instance()
-                                               , ImperialIATI.Instance()
-                                               , TIE_X1_ATI.Instance()
+      AllowedWings = new List<ActorTypeInfo> { Manager.Engine.ActorTypeFactory.Get("X-Wing")
+                                               , Manager.Engine.ActorTypeFactory.Get("Y-Wing")
+                                               , Manager.Engine.ActorTypeFactory.Get("A-Wing")
+                                               , Manager.Engine.ActorTypeFactory.Get("B-Wing")
+                                               , Manager.Engine.ActorTypeFactory.Get("Millennium Falcon")
+                                               , Manager.Engine.ActorTypeFactory.Get("Corellian Corvette")
+                                               , Manager.Engine.ActorTypeFactory.Get("Victory-I Star Destroyer")
+                                               , Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer")
+                                               , Manager.Engine.ActorTypeFactory.Get("TIE Advanced X1")
                                               };
 
       AllowedDifficulties = new List<string> { "easy"
@@ -177,25 +176,25 @@ namespace SWEndor.Scenarios
       // Create Endor
       if (m_AEndor == null)
       {
-        ActorCreationInfo aci_Endor = new ActorCreationInfo(EndorATI.Instance())
+        ActorCreationInfo aci_Endor = new ActorCreationInfo(Manager.Engine.ActorTypeFactory.Get("Endor"))
         {
           Position = new TV_3DVECTOR(0, -1200, 0),
           Rotation = new TV_3DVECTOR(0, 180, 0),
           InitialScale = new TV_3DVECTOR(6, 6, 6)
         };
-        m_AEndor = ActorInfo.Create(aci_Endor);
+        m_AEndor = ActorInfo.Create(Manager.Engine.ActorFactory, aci_Endor);
       }
 
       // Create DeathStar
       if (m_ADS == null)
       {
-        ActorCreationInfo aci_DS = new ActorCreationInfo(DeathStar2ATI.Instance())
+        ActorCreationInfo aci_DS = new ActorCreationInfo(Manager.Engine.ActorTypeFactory.Get("DeathStar2"))
         {
           Position = new TV_3DVECTOR(0, 800, 18000),
           Rotation = new TV_3DVECTOR(0, 0, 5),
           Faction = MainEnemyFaction
         };
-        m_ADS = ActorInfo.Create(aci_DS);
+        m_ADS = ActorInfo.Create(Manager.Engine.ActorFactory, aci_DS);
       }
     }
 
@@ -420,7 +419,7 @@ namespace SWEndor.Scenarios
           m_Enemy_pull -= Globals.Engine.Game.TimeSinceRender * m_Enemy_pullrate;
           foreach (int enemyshipID in  MainEnemyFaction.GetShips())
           {
-            ActorInfo enemyship = ActorInfo.Factory.Get(enemyshipID);
+            ActorInfo enemyship = Manager.Engine.ActorFactory.Get(enemyshipID);
             if (enemyship != null)
               enemyship.MoveAbsolute(0, 0, Globals.Engine.Game.TimeSinceRender * m_Enemy_pullrate);
           }
@@ -526,7 +525,7 @@ namespace SWEndor.Scenarios
       FactionInfo faction;
 
       // Millennium Falcon
-      type = LandoFalconATI.Instance();
+      type = Manager.Engine.ActorTypeFactory.Get("Millennium Falcon (Lando)");
       name = "Millennium Falcon (Lando)";
       sidebar_name = "FALCON";
       creationTime += creationDelay;
@@ -562,7 +561,7 @@ namespace SWEndor.Scenarios
       m_FalconID = ainfo.ID;
 
       // Wedge X-Wing
-      type = WedgeXWingATI.Instance();
+      type = Manager.Engine.ActorTypeFactory.Get("X-Wing (Wedge)");
       name = "X-Wing (Wedge)";
       sidebar_name = "WEDGE";
       creationTime += creationDelay;
@@ -599,23 +598,23 @@ namespace SWEndor.Scenarios
 
       // Player X-Wing
       position = new TV_3DVECTOR(0, 0, -25);
-      if (Globals.Engine.PlayerInfo.ActorType == XWingATI.Instance())
+      if (Globals.Engine.PlayerInfo.ActorType == Manager.Engine.ActorTypeFactory.Get("X-Wing"))
       {
         position = new TV_3DVECTOR(0, 0, -25);
       }
-      else if (Globals.Engine.PlayerInfo.ActorType == YWingATI.Instance())
+      else if (Globals.Engine.PlayerInfo.ActorType == Manager.Engine.ActorTypeFactory.Get("Y-Wing"))
       {
         position = new TV_3DVECTOR(-250, 60, -520);
       }
-      else if (Globals.Engine.PlayerInfo.ActorType == AWingATI.Instance())
+      else if (Globals.Engine.PlayerInfo.ActorType == Manager.Engine.ActorTypeFactory.Get("A-Wing"))
       {
         position = new TV_3DVECTOR(100, 70, -720);
       }
-      else if (Globals.Engine.PlayerInfo.ActorType == BWingATI.Instance())
+      else if (Globals.Engine.PlayerInfo.ActorType == Manager.Engine.ActorTypeFactory.Get("B-Wing"))
       {
         position = new TV_3DVECTOR(-80, 20, -50);
       }
-      else if (Globals.Engine.PlayerInfo.ActorType == CorellianATI.Instance())
+      else if (Globals.Engine.PlayerInfo.ActorType == Manager.Engine.ActorTypeFactory.Get("Corellian Corvette"))
       {
         position = new TV_3DVECTOR(-20, -420, -30);
       }
@@ -651,7 +650,7 @@ namespace SWEndor.Scenarios
       Globals.Engine.GameScenarioManager.CameraTargetActor = ainfo;
 
       // Mon Calamari (HomeOne)
-      type = MC90ATI.Instance();
+      type = Manager.Engine.ActorTypeFactory.Get("Mon Calamari Capital Ship");
       name = "Mon Calamari (Home One)";
       sidebar_name = "HOME ONE";
       faction = MainAllyFaction;
@@ -697,63 +696,63 @@ namespace SWEndor.Scenarios
       float nvd = 6000;
       List<object[]> spawns = new List<object[]>();
       // X-Wings x6
-      spawns.Add(new object[] { new TV_3DVECTOR(60, 30, -390), XWingATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(-20, -50, -320), XWingATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(110, 20, -340), XWingATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(-40, 50, -360), XWingATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(-120, 20, -380), XWingATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(70, -20, -400), XWingATI.Instance() });
+      spawns.Add(new object[] { new TV_3DVECTOR(60, 30, -390), Manager.Engine.ActorTypeFactory.Get("X-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-20, -50, -320), Manager.Engine.ActorTypeFactory.Get("X-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(110, 20, -340), Manager.Engine.ActorTypeFactory.Get("X-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-40, 50, -360), Manager.Engine.ActorTypeFactory.Get("X-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-120, 20, -380), Manager.Engine.ActorTypeFactory.Get("X-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(70, -20, -400), Manager.Engine.ActorTypeFactory.Get("X-Wing") });
 
       // A-Wings x4
-      spawns.Add(new object[] { new TV_3DVECTOR(200, -10, -750), AWingATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(80, 20, -800), AWingATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(270, 40, -850), AWingATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(65, 65, -900), AWingATI.Instance() });
+      spawns.Add(new object[] { new TV_3DVECTOR(200, -10, -750), Manager.Engine.ActorTypeFactory.Get("A-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(80, 20, -800), Manager.Engine.ActorTypeFactory.Get("A-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(270, 40, -850), Manager.Engine.ActorTypeFactory.Get("A-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(65, 65, -900), Manager.Engine.ActorTypeFactory.Get("A-Wing") });
 
       // B-Wings x4
-      spawns.Add(new object[] { new TV_3DVECTOR(-150, 50, -250), BWingATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(-290, 80, -280), BWingATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(-20, 100, -350), BWingATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(-200, 65, -400), BWingATI.Instance() });
+      spawns.Add(new object[] { new TV_3DVECTOR(-150, 50, -250), Manager.Engine.ActorTypeFactory.Get("B-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-290, 80, -280), Manager.Engine.ActorTypeFactory.Get("B-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-20, 100, -350), Manager.Engine.ActorTypeFactory.Get("B-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-200, 65, -400), Manager.Engine.ActorTypeFactory.Get("B-Wing") });
 
       // Y-Wings x6
-      spawns.Add(new object[] { new TV_3DVECTOR(-10, 100, -350), YWingATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(50, 80, -380), YWingATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(-40, 90, -420), YWingATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(-90, 100, -440), YWingATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(75, 110, -450), YWingATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(100, 85, -500), YWingATI.Instance() });
+      spawns.Add(new object[] { new TV_3DVECTOR(-10, 100, -350), Manager.Engine.ActorTypeFactory.Get("Y-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(50, 80, -380), Manager.Engine.ActorTypeFactory.Get("Y-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-40, 90, -420), Manager.Engine.ActorTypeFactory.Get("Y-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-90, 100, -440), Manager.Engine.ActorTypeFactory.Get("Y-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(75, 110, -450), Manager.Engine.ActorTypeFactory.Get("Y-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(100, 85, -500), Manager.Engine.ActorTypeFactory.Get("Y-Wing") });
 
       // Corellian x9 (5 forward, 4 rear)
-      spawns.Add(new object[] { new TV_3DVECTOR(-1600, -120, 1300), CorellianATI.Instance(), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(1400, -320, 400), CorellianATI.Instance(), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-2400, 150, 1500), CorellianATI.Instance(), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(2500, 470, 850), CorellianATI.Instance(), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(100, 300, 200), CorellianATI.Instance(), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(600, 70, -150), CorellianATI.Instance(), 5500 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-700, -150, -600), CorellianATI.Instance(), 5500 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-600, 250, -1200), CorellianATI.Instance(), 5500 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-1600, 200, -1200), CorellianATI.Instance(), 5500 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-1600, -120, 1300), Manager.Engine.ActorTypeFactory.Get("Corellian Corvette"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(1400, -320, 400), Manager.Engine.ActorTypeFactory.Get("Corellian Corvette"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-2400, 150, 1500), Manager.Engine.ActorTypeFactory.Get("Corellian Corvette"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(2500, 470, 850), Manager.Engine.ActorTypeFactory.Get("Corellian Corvette"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(100, 300, 200), Manager.Engine.ActorTypeFactory.Get("Corellian Corvette"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(600, 70, -150), Manager.Engine.ActorTypeFactory.Get("Corellian Corvette"), 5500 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-700, -150, -600), Manager.Engine.ActorTypeFactory.Get("Corellian Corvette"), 5500 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-600, 250, -1200), Manager.Engine.ActorTypeFactory.Get("Corellian Corvette"), 5500 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-1600, 200, -1200), Manager.Engine.ActorTypeFactory.Get("Corellian Corvette"), 5500 });
 
       // Mon Calamari x2 (not including HomeOne)
-      spawns.Add(new object[] { new TV_3DVECTOR(4500, -120, -500), MC90ATI.Instance(), 7200 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-2000, 550, -1500), MC90ATI.Instance(), 7200 });
+      spawns.Add(new object[] { new TV_3DVECTOR(4500, -120, -500), Manager.Engine.ActorTypeFactory.Get("Mon Calamari Capital Ship"), 7200 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-2000, 550, -1500), Manager.Engine.ActorTypeFactory.Get("Mon Calamari Capital Ship"), 7200 });
 
       // Nebulon B x3
-      spawns.Add(new object[] { new TV_3DVECTOR(-2700, 320, -1850), NebulonBATI.Instance(), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(1800, -280, -900), NebulonBATI.Instance(), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(2500, 850, -150), NebulonBATI.Instance(), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-2700, 320, -1850), Manager.Engine.ActorTypeFactory.Get("Nebulon-B Frigate"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(1800, -280, -900), Manager.Engine.ActorTypeFactory.Get("Nebulon-B Frigate"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(2500, 850, -150), Manager.Engine.ActorTypeFactory.Get("Nebulon-B Frigate"), 8000 });
 
       // Transport x9
-      spawns.Add(new object[] { new TV_3DVECTOR(1200, 550, -750), TransportATI.Instance(), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(1750, 350, 150), TransportATI.Instance(), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(3500, 280, -1200), TransportATI.Instance(), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(4000, 280, -800), TransportATI.Instance(), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-500, -175, -1600), TransportATI.Instance(), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-1650, -230, -800), TransportATI.Instance(), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-2000, 450, 0), TransportATI.Instance(), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-3500, -280, -1200), TransportATI.Instance(), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-900, 10, -400), TransportATI.Instance(), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(1200, 550, -750), Manager.Engine.ActorTypeFactory.Get("Transport"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(1750, 350, 150), Manager.Engine.ActorTypeFactory.Get("Transport"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(3500, 280, -1200), Manager.Engine.ActorTypeFactory.Get("Transport"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(4000, 280, -800), Manager.Engine.ActorTypeFactory.Get("Transport"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-500, -175, -1600), Manager.Engine.ActorTypeFactory.Get("Transport"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-1650, -230, -800), Manager.Engine.ActorTypeFactory.Get("Transport"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-2000, 450, 0), Manager.Engine.ActorTypeFactory.Get("Transport"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-3500, -280, -1200), Manager.Engine.ActorTypeFactory.Get("Transport"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-900, 10, -400), Manager.Engine.ActorTypeFactory.Get("Transport"), 8000 });
 
       foreach (object[] spawn in spawns)
       {
@@ -827,7 +826,7 @@ namespace SWEndor.Scenarios
     {
       foreach (int id in m_rebelPosition.Keys)
       {
-        ActorInfo actor = ActorInfo.Factory.Get(id);
+        ActorInfo actor = Manager.Engine.ActorFactory.Get(id);
         if (actor != null)
         {
           actor.Position = m_rebelPosition[id] + new TV_3DVECTOR(0, 0, actor.TypeInfo.MaxSpeed * 8f);
@@ -840,28 +839,28 @@ namespace SWEndor.Scenarios
     {
       foreach (int actorID in MainAllyFaction.GetWings())
       {
-        ActorInfo actor = ActorInfo.Factory.Get(actorID);
+        ActorInfo actor = Manager.Engine.ActorFactory.Get(actorID);
         if (actor != null)
         {
-          ActionManager.ForceClearQueue(actorID);
-          ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() + new TV_3DVECTOR(500, 0, -20000)
+          Manager.Engine.ActionManager.ForceClearQueue(actorID);
+          Manager.Engine.ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() + new TV_3DVECTOR(500, 0, -20000)
                                                         , actor.MovementInfo.MaxSpeed
                                                         , actor.TypeInfo.Move_CloseEnough));
-          ActionManager.QueueLast(actorID, new HyperspaceOut());
-          ActionManager.QueueLast(actorID, new Delete());
+          Manager.Engine.ActionManager.QueueLast(actorID, new HyperspaceOut());
+          Manager.Engine.ActionManager.QueueLast(actorID, new Delete());
         }
       }
       foreach (int actorID in MainAllyFaction.GetShips())
       {
-        ActorInfo actor = ActorInfo.Factory.Get(actorID);
+        ActorInfo actor = Manager.Engine.ActorFactory.Get(actorID);
         if (actor != null)
         {
-          ActionManager.ForceClearQueue(actorID);
-          ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() + new TV_3DVECTOR(500, 0, -20000)
+          Manager.Engine.ActionManager.ForceClearQueue(actorID);
+          Manager.Engine.ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() + new TV_3DVECTOR(500, 0, -20000)
                                                 , actor.MovementInfo.MaxSpeed
                                                 , actor.TypeInfo.Move_CloseEnough));
-          ActionManager.QueueLast(actorID, new HyperspaceOut());
-          ActionManager.QueueLast(actorID, new Delete());
+          Manager.Engine.ActionManager.QueueLast(actorID, new HyperspaceOut());
+          Manager.Engine.ActionManager.QueueLast(actorID, new Delete());
         }
       }
     }
@@ -878,7 +877,7 @@ namespace SWEndor.Scenarios
         {
           foreach (int actorID in MainAllyFaction.GetShips())
           {
-            ActorInfo actor = ActorInfo.Factory.Get(actorID);
+            ActorInfo actor = Manager.Engine.ActorFactory.Get(actorID);
             if (actor != null)
             {
               actor.ActorState = ActorState.FREE;
@@ -888,7 +887,7 @@ namespace SWEndor.Scenarios
 
           foreach (int actorID in MainAllyFaction.GetWings())
           {
-            ActorInfo actor = ActorInfo.Factory.Get(actorID);
+            ActorInfo actor = Manager.Engine.ActorFactory.Get(actorID);
             if (actor != null)
             {
               actor.ActorState = ActorState.FREE;
@@ -912,13 +911,13 @@ namespace SWEndor.Scenarios
     {
       foreach (int actorID in MainAllyFaction.GetShips())
       {
-        ActorInfo actor = ActorInfo.Factory.Get(actorID);
+        ActorInfo actor = Manager.Engine.ActorFactory.Get(actorID);
         if (actor != null)
         {
-          ActionManager.ForceClearQueue(actorID);
-          ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() - new TV_3DVECTOR(actor.GetPosition().x * 0.35f, 0, Math.Abs(actor.GetPosition().x) + 1500)
+          Manager.Engine.ActionManager.ForceClearQueue(actorID);
+          Manager.Engine.ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() - new TV_3DVECTOR(actor.GetPosition().x * 0.35f, 0, Math.Abs(actor.GetPosition().x) + 1500)
                                                     , actor.MovementInfo.MinSpeed));
-          ActionManager.QueueLast(actorID, new Lock());
+          Manager.Engine.ActionManager.QueueLast(actorID, new Lock());
         }
       }
     }
@@ -927,15 +926,15 @@ namespace SWEndor.Scenarios
     {
       foreach (int actorID in MainAllyFaction.GetShips())
       {
-        ActorInfo actor = ActorInfo.Factory.Get(actorID);
+        ActorInfo actor = Manager.Engine.ActorFactory.Get(actorID);
         if (actor != null)
         {
-          ActionManager.ForceClearQueue(actorID);
-          ActionManager.QueueLast(actorID, new Move(actor.GetPosition() - new TV_3DVECTOR(actor.GetPosition().x * 0.35f, 0, Math.Abs(actor.GetPosition().x) + 1500)
+          Manager.Engine.ActionManager.ForceClearQueue(actorID);
+          Manager.Engine.ActionManager.QueueLast(actorID, new Move(actor.GetPosition() - new TV_3DVECTOR(actor.GetPosition().x * 0.35f, 0, Math.Abs(actor.GetPosition().x) + 1500)
                                                     , actor.MovementInfo.MaxSpeed));
-          ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() - new TV_3DVECTOR(0, 0, 20000)
+          Manager.Engine.ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() - new TV_3DVECTOR(0, 0, 20000)
                                                     , actor.MovementInfo.MinSpeed));
-          ActionManager.QueueLast(actorID, new Lock());
+          Manager.Engine.ActionManager.QueueLast(actorID, new Lock());
         }
       }
     }
@@ -946,25 +945,25 @@ namespace SWEndor.Scenarios
       {
         foreach (int actorID in MainAllyFaction.GetWings())
         {
-          ActorInfo actor = ActorInfo.Factory.Get(actorID);
+          ActorInfo actor = Manager.Engine.ActorFactory.Get(actorID);
           if (actor != null)
           {
             if (actor.TypeInfo is YWingATI || actor.TypeInfo is BWingATI)
             {
               int rsID = MainEnemyFaction.GetShips()[Globals.Engine.Random.Next(0, MainEnemyFaction.GetShips().Count)];
-              ActorInfo rs = ActorInfo.Factory.Get(actorID);
+              ActorInfo rs = Manager.Engine.ActorFactory.Get(actorID);
               {
                 foreach (int i in rs.GetAllChildren(1))
                 {
-                  ActorInfo rc = ActorInfo.Factory.Get(i);
+                  ActorInfo rc = Manager.Engine.ActorFactory.Get(i);
                   if (rc.RegenerationInfo.ParentRegenRate > 0)
                     if (Globals.Engine.Random.NextDouble() > 0.4f)
                       rsID = rc.ID;
                 }
               }
 
-              ActionManager.ClearQueue(actorID);
-              ActionManager.QueueLast(actorID, new AttackActor(rsID, -1, -1, false));
+              Manager.Engine.ActionManager.ClearQueue(actorID);
+              Manager.Engine.ActionManager.QueueLast(actorID, new AttackActor(rsID, -1, -1, false));
             }
           }
         }
@@ -975,50 +974,50 @@ namespace SWEndor.Scenarios
 
     public void Rebel_DeathStarGo(object[] param)
     {
-      ActorInfo falcon = ActorInfo.Factory.Get(m_FalconID);
+      ActorInfo falcon = Manager.Engine.ActorFactory.Get(m_FalconID);
       if (falcon != null)
       {
         falcon.CombatInfo.DamageModifier = 0;
-        ActionManager.ForceClearQueue(m_FalconID);
-        ActionManager.QueueLast(m_FalconID, new ForcedMove(new TV_3DVECTOR(0, 0, 20000), falcon.MovementInfo.MaxSpeed, -1));
-        ActionManager.QueueLast(m_FalconID, new HyperspaceOut());
-        ActionManager.QueueLast(m_FalconID, new Delete());
+        Manager.Engine.ActionManager.ForceClearQueue(m_FalconID);
+        Manager.Engine.ActionManager.QueueLast(m_FalconID, new ForcedMove(new TV_3DVECTOR(0, 0, 20000), falcon.MovementInfo.MaxSpeed, -1));
+        Manager.Engine.ActionManager.QueueLast(m_FalconID, new HyperspaceOut());
+        Manager.Engine.ActionManager.QueueLast(m_FalconID, new Delete());
         m_FalconID = -1;
       }
 
-      ActorInfo wedge = ActorInfo.Factory.Get(m_WedgeID);
+      ActorInfo wedge = Manager.Engine.ActorFactory.Get(m_WedgeID);
       if (wedge != null)
       {
         wedge.CombatInfo.DamageModifier = 0;
-        ActionManager.ForceClearQueue(m_WedgeID);
-        ActionManager.QueueLast(m_WedgeID, new ForcedMove(new TV_3DVECTOR(0, 0, 20000), wedge.MovementInfo.MaxSpeed, -1));
-        ActionManager.QueueLast(m_WedgeID, new HyperspaceOut());
-        ActionManager.QueueLast(m_WedgeID, new Delete());
+        Manager.Engine.ActionManager.ForceClearQueue(m_WedgeID);
+        Manager.Engine.ActionManager.QueueLast(m_WedgeID, new ForcedMove(new TV_3DVECTOR(0, 0, 20000), wedge.MovementInfo.MaxSpeed, -1));
+        Manager.Engine.ActionManager.QueueLast(m_WedgeID, new HyperspaceOut());
+        Manager.Engine.ActionManager.QueueLast(m_WedgeID, new Delete());
         m_WedgeID = -1;
       }
     }
 
     public void Rebel_GiveControl(object[] param)
     {
-      ActorInfo falcon = ActorInfo.Factory.Get(m_FalconID);
-      ActorInfo wedge = ActorInfo.Factory.Get(m_WedgeID);
+      ActorInfo falcon = Manager.Engine.ActorFactory.Get(m_FalconID);
+      ActorInfo wedge = Manager.Engine.ActorFactory.Get(m_WedgeID);
 
-      ActionManager.UnlockOne(m_FalconID);
+      Manager.Engine.ActionManager.UnlockOne(m_FalconID);
       falcon.ActorState = ActorState.NORMAL;
       falcon.MovementInfo.Speed = falcon.MovementInfo.MaxSpeed;
 
-      ActionManager.UnlockOne(m_WedgeID);
-      ActionManager.QueueFirst(m_WedgeID, new Wait(2.5f));
+      Manager.Engine.ActionManager.UnlockOne(m_WedgeID);
+      Manager.Engine.ActionManager.QueueFirst(m_WedgeID, new Wait(2.5f));
       wedge.ActorState = ActorState.NORMAL;
       wedge.MovementInfo.Speed = wedge.MovementInfo.MaxSpeed;
 
       float time = 5f;
       foreach (int actorID in MainAllyFaction.GetWings())
       {
-        ActorInfo actor = ActorInfo.Factory.Get(actorID);
+        ActorInfo actor = Manager.Engine.ActorFactory.Get(actorID);
 
-        ActionManager.UnlockOne(actorID);
-        ActionManager.QueueFirst(actorID, new Wait(time));
+        Manager.Engine.ActionManager.UnlockOne(actorID);
+        Manager.Engine.ActionManager.QueueFirst(actorID, new Wait(time));
         actor.ActorState = ActorState.NORMAL;
         actor.MovementInfo.Speed = actor.MovementInfo.MaxSpeed;
         time += 2.5f;
@@ -1026,9 +1025,9 @@ namespace SWEndor.Scenarios
 
       foreach (int actorID in MainAllyFaction.GetShips())
       {
-        ActorInfo actor = ActorInfo.Factory.Get(actorID);
+        ActorInfo actor = Manager.Engine.ActorFactory.Get(actorID);
 
-        ActionManager.UnlockOne(actorID);
+        Manager.Engine.ActionManager.UnlockOne(actorID);
         actor.ActorState = ActorState.NORMAL;
         actor.MovementInfo.Speed = actor.MovementInfo.MaxSpeed;
         actor.SetSpawnerEnable(true);
@@ -1046,16 +1045,16 @@ namespace SWEndor.Scenarios
     {
       foreach (int actorID in MainAllyFaction.GetWings())
       {
-        ActorInfo actor = ActorInfo.Factory.Get(actorID);
+        ActorInfo actor = Manager.Engine.ActorFactory.Get(actorID);
         if (actor != null)
         {
           double d = Globals.Engine.Random.NextDouble();
           if (d < chance)
           {
-            ActorInfo homeone = ActorInfo.Factory.Get(m_HomeOneID);
+            ActorInfo homeone = Manager.Engine.ActorFactory.Get(m_HomeOneID);
 
-            ActionManager.ClearQueue(actorID);
-            ActionManager.QueueLast(actorID, new Move(homeone.GetPosition() + new TV_3DVECTOR(Globals.Engine.Random.Next(-2500, 2500), Globals.Engine.Random.Next(-50, 50), Globals.Engine.Random.Next(-2500, 2500))
+            Manager.Engine.ActionManager.ClearQueue(actorID);
+            Manager.Engine.ActionManager.QueueLast(actorID, new Move(homeone.GetPosition() + new TV_3DVECTOR(Globals.Engine.Random.Next(-2500, 2500), Globals.Engine.Random.Next(-50, 50), Globals.Engine.Random.Next(-2500, 2500))
                                                        , actor.MovementInfo.MaxSpeed));
           }
         }
@@ -1066,7 +1065,7 @@ namespace SWEndor.Scenarios
     {
       foreach (int actorID in MainAllyFaction.GetWings())
       {
-        ActorInfo actor = ActorInfo.Factory.Get(actorID);
+        ActorInfo actor = Manager.Engine.ActorFactory.Get(actorID);
         if (actor != null)
         {
           if (!actor.IsPlayer())
@@ -1110,16 +1109,16 @@ namespace SWEndor.Scenarios
         return;
 
       int actorID = (int)param[0];
-      ActorInfo av = ActorInfo.Factory.Get(actorID);
+      ActorInfo av = Manager.Engine.ActorFactory.Get(actorID);
 
       if (av != null 
         && av.CombatInfo.Strength < av.TypeInfo.MaxStrength * 0.8f 
         && MainAllyFaction.GetShips().Count > 0)
       {
-        ActorInfo homeone = ActorInfo.Factory.Get(m_HomeOneID);
+        ActorInfo homeone = Manager.Engine.ActorFactory.Get(m_HomeOneID);
 
-        ActionManager.ClearQueue(actorID);
-        ActionManager.QueueLast(actorID
+        Manager.Engine.ActionManager.ClearQueue(actorID);
+        Manager.Engine.ActionManager.QueueLast(actorID
                               , new Move(homeone.GetPosition() + new TV_3DVECTOR(Globals.Engine.Random.Next(-2500, 2500)
                               , Globals.Engine.Random.Next(-50, 50)
                               , Globals.Engine.Random.Next(-2500, 2500))
@@ -1133,7 +1132,7 @@ namespace SWEndor.Scenarios
         return;
 
       int actorID = (int)param[0];
-      ActorInfo av = ActorInfo.Factory.Get(actorID);
+      ActorInfo av = Manager.Engine.ActorFactory.Get(actorID);
 
       if (av != null
         && av.StrengthFrac < 0.67f 
@@ -1165,7 +1164,7 @@ namespace SWEndor.Scenarios
         return;
 
       int actorID = (int)param[0];
-      ActorInfo actor = ActorInfo.Factory.Get(actorID);
+      ActorInfo actor = Manager.Engine.ActorFactory.Get(actorID);
 
       if (actor != null
         && (actor.ActorState == ActorState.DYING || actor.ActorState == ActorState.DEAD))
@@ -1177,13 +1176,13 @@ namespace SWEndor.Scenarios
 
         if (Globals.Engine.GameScenarioManager.SceneCamera == null || !(Globals.Engine.GameScenarioManager.SceneCamera.TypeInfo is DeathCameraATI))
         {
-          ActorCreationInfo camaci = new ActorCreationInfo(DeathCameraATI.Instance());
+          ActorCreationInfo camaci = new ActorCreationInfo(Manager.Engine.ActorTypeFactory.Get("Death Camera"));
           camaci.CreationTime = Globals.Engine.Game.GameTime;
           camaci.InitialState = ActorState.DYING;
           camaci.Position = actor.GetPosition();
           camaci.Rotation = new TV_3DVECTOR();
 
-          ActorInfo a = ActorInfo.Create(camaci);
+          ActorInfo a = ActorInfo.Create(Manager.Engine.ActorFactory, camaci);
           Globals.Engine.PlayerInfo.ActorID = a.ID;
           a.CombatInfo.Strength = 0;
           Globals.Engine.PlayerInfo.TempActorID = actorID;
@@ -1257,7 +1256,7 @@ namespace SWEndor.Scenarios
 
             ActorSpawnInfo asi = new ActorSpawnInfo
             {
-              Type = TIE_LN_ATI.Instance(),
+              Type = Manager.Engine.ActorTypeFactory.Get("TIE"),
               Name = "",
               RegisterName = "",
               SidebarName = "",
@@ -1300,7 +1299,7 @@ namespace SWEndor.Scenarios
 
             ActorSpawnInfo asi = new ActorSpawnInfo
             {
-              Type = TIE_LN_ATI.Instance(),
+              Type = Manager.Engine.ActorTypeFactory.Get("TIE"),
               Name = "",
               RegisterName = "",
               SidebarName = "",
@@ -1345,7 +1344,7 @@ namespace SWEndor.Scenarios
 
             ActorSpawnInfo asi = new ActorSpawnInfo
             {
-              Type = TIE_LN_ATI.Instance(),
+              Type = Manager.Engine.ActorTypeFactory.Get("TIE"),
               Name = "",
               RegisterName = "",
               SidebarName = "",
@@ -1370,7 +1369,7 @@ namespace SWEndor.Scenarios
         sets = 15;
 
       // TIEs
-      ActorTypeInfo[] tietypes = new ActorTypeInfo[] { TIE_LN_ATI.Instance(), TIE_IN_ATI.Instance() };
+      ActorTypeInfo[] tietypes = new ActorTypeInfo[] { Manager.Engine.ActorTypeFactory.Get("TIE"), Manager.Engine.ActorTypeFactory.Get("TIE Interceptor") };
       float t = 0;
       for (int k = 1; k < sets; k++)
       {
@@ -1437,7 +1436,7 @@ namespace SWEndor.Scenarios
 
             ActorSpawnInfo asi = new ActorSpawnInfo
             {
-              Type = TIE_IN_ATI.Instance(),
+              Type = Manager.Engine.ActorTypeFactory.Get("TIE Interceptor"),
               Name = "",
               RegisterName = "",
               SidebarName = "",
@@ -1478,7 +1477,7 @@ namespace SWEndor.Scenarios
 
         ActorSpawnInfo asi = new ActorSpawnInfo
         {
-          Type = TIE_D_ATI.Instance(),
+          Type = Manager.Engine.ActorTypeFactory.Get("TIE Defender"),
           Name = "",
           RegisterName = "",
           SidebarName = "",
@@ -1508,7 +1507,7 @@ namespace SWEndor.Scenarios
 
         ActorSpawnInfo asi = new ActorSpawnInfo
         {
-          Type = TIE_LN_ATI.Instance(),
+          Type = Manager.Engine.ActorTypeFactory.Get("TIE"),
           Name = "",
           RegisterName = "",
           SidebarName = "",
@@ -1539,7 +1538,7 @@ namespace SWEndor.Scenarios
 
         ActorSpawnInfo asi = new ActorSpawnInfo
         {
-          Type = TIE_IN_ATI.Instance(),
+          Type = Manager.Engine.ActorTypeFactory.Get("TIE Interceptor"),
           Name = "",
           RegisterName = "",
           SidebarName = "",
@@ -1572,7 +1571,7 @@ namespace SWEndor.Scenarios
 
         ActorSpawnInfo asi = new ActorSpawnInfo
         {
-          Type = TIE_LN_ATI.Instance(),
+          Type = Manager.Engine.ActorTypeFactory.Get("TIE"),
           Name = "",
           RegisterName = "",
           SidebarName = "",
@@ -1605,7 +1604,7 @@ namespace SWEndor.Scenarios
 
         ActorSpawnInfo asi = new ActorSpawnInfo
         {
-          Type = TIE_IN_ATI.Instance(),
+          Type = Manager.Engine.ActorTypeFactory.Get("TIE Interceptor"),
           Name = "",
           RegisterName = "",
           SidebarName = "",
@@ -1638,7 +1637,7 @@ namespace SWEndor.Scenarios
 
         ActorSpawnInfo asi = new ActorSpawnInfo
         {
-          Type = TIE_LN_ATI.Instance(),
+          Type = Manager.Engine.ActorTypeFactory.Get("TIE"),
           Name = "",
           RegisterName = "",
           SidebarName = "",
@@ -1675,7 +1674,7 @@ namespace SWEndor.Scenarios
           {
             ActorSpawnInfo asi = new ActorSpawnInfo
             {
-              Type = TIE_LN_ATI.Instance(),
+              Type = Manager.Engine.ActorTypeFactory.Get("TIE"),
               Name = "",
               RegisterName = "",
               SidebarName = "",
@@ -1709,7 +1708,7 @@ namespace SWEndor.Scenarios
 
         ActorSpawnInfo asi = new ActorSpawnInfo
         {
-          Type = TIE_LN_ATI.Instance(),
+          Type = Manager.Engine.ActorTypeFactory.Get("TIE"),
           Name = "",
           RegisterName = "",
           SidebarName = "",
@@ -1746,7 +1745,7 @@ namespace SWEndor.Scenarios
           {
             ActorSpawnInfo asi = new ActorSpawnInfo
             {
-              Type = TIE_sa_ATI.Instance(),
+              Type = Manager.Engine.ActorTypeFactory.Get("TIE Bomber"),
               Name = "",
               RegisterName = "",
               SidebarName = "",
@@ -1776,19 +1775,19 @@ namespace SWEndor.Scenarios
       string name;
 
       List<object[]> spawns = new List<object[]>();
-      spawns.Add(new object[] { new TV_3DVECTOR(0, 50, -33500), ExecutorStaticATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(-1500, 180, -32500), ImperialIStaticATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(1500, 180, -32500), ImperialIStaticATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(-3500, 280, -27500), ImperialIStaticATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(5500, 280, -27500), ImperialIStaticATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(-5500, -30, -29500), ImperialIStaticATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(3500, -30, -29500), ImperialIStaticATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(-7500, 130, -31000), ImperialIStaticATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(7500, 130, -31000), ImperialIStaticATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(-11500, -80, -29000), ImperialIStaticATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(11500, -80, -29000), ImperialIStaticATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(-14500, 80, -27500), ImperialIStaticATI.Instance() });
-      spawns.Add(new object[] { new TV_3DVECTOR(14500, 80, -27500), ImperialIStaticATI.Instance() });
+      spawns.Add(new object[] { new TV_3DVECTOR(0, 50, -33500), Manager.Engine.ActorTypeFactory.Get("Executor Static") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-1500, 180, -32500), Manager.Engine.ActorTypeFactory.Get("Imperial-I Static") });
+      spawns.Add(new object[] { new TV_3DVECTOR(1500, 180, -32500), Manager.Engine.ActorTypeFactory.Get("Imperial-I Static") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-3500, 280, -27500), Manager.Engine.ActorTypeFactory.Get("Imperial-I Static") });
+      spawns.Add(new object[] { new TV_3DVECTOR(5500, 280, -27500), Manager.Engine.ActorTypeFactory.Get("Imperial-I Static") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-5500, -30, -29500), Manager.Engine.ActorTypeFactory.Get("Imperial-I Static") });
+      spawns.Add(new object[] { new TV_3DVECTOR(3500, -30, -29500), Manager.Engine.ActorTypeFactory.Get("Imperial-I Static") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-7500, 130, -31000), Manager.Engine.ActorTypeFactory.Get("Imperial-I Static") });
+      spawns.Add(new object[] { new TV_3DVECTOR(7500, 130, -31000), Manager.Engine.ActorTypeFactory.Get("Imperial-I Static") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-11500, -80, -29000), Manager.Engine.ActorTypeFactory.Get("Imperial-I Static") });
+      spawns.Add(new object[] { new TV_3DVECTOR(11500, -80, -29000), Manager.Engine.ActorTypeFactory.Get("Imperial-I Static") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-14500, 80, -27500), Manager.Engine.ActorTypeFactory.Get("Imperial-I Static") });
+      spawns.Add(new object[] { new TV_3DVECTOR(14500, 80, -27500), Manager.Engine.ActorTypeFactory.Get("Imperial-I Static") });
 
       foreach (object[] spawn in spawns)
       {
@@ -1862,28 +1861,28 @@ namespace SWEndor.Scenarios
       switch (Difficulty.ToLower())
       {
         case "easy":
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(0, 110, -17500), new TV_3DVECTOR(0, 110, -9000) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(-2500, -250, -19500), new TV_3DVECTOR(-2500, -250, -9500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(0, 110, -17500), new TV_3DVECTOR(0, 110, -9000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(-2500, -250, -19500), new TV_3DVECTOR(-2500, -250, -9500) });
           break;
         case "mental":
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(0, 110, -17500), new TV_3DVECTOR(0, 110, -9000) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(-750, -50, -19000), new TV_3DVECTOR(-750, -50, -6500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(750, -50, -19000), new TV_3DVECTOR(750, -50, -6500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-1500, 150, -18500), new TV_3DVECTOR(-1000, 210, -7500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(1500, 150, -18500), new TV_3DVECTOR(1000, 210, -7500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(0, 110, -17500), new TV_3DVECTOR(0, 110, -9000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(-750, -50, -19000), new TV_3DVECTOR(-750, -50, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(750, -50, -19000), new TV_3DVECTOR(750, -50, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(-1500, 150, -18500), new TV_3DVECTOR(-1000, 210, -7500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(1500, 150, -18500), new TV_3DVECTOR(1000, 210, -7500) });
 
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(-2250, -50, -19000), new TV_3DVECTOR(-1250, -50, -6500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(2250, -50, -19000), new TV_3DVECTOR(1250, -50, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(-2250, -50, -19000), new TV_3DVECTOR(-1250, -50, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(2250, -50, -19000), new TV_3DVECTOR(1250, -50, -6500) });
           
           break;
         case "hard":
         case "normal":
         default:
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(0, 110, -17500), new TV_3DVECTOR(0, 110, -9000) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(2500, -250, -19500), new TV_3DVECTOR(2000, 110, -9500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-2500, -250, -19500), new TV_3DVECTOR(-2000, 110, -9500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(-1500, 150, -18500), new TV_3DVECTOR(-1000, 210, -7500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(1500, 150, -18500), new TV_3DVECTOR(1000, 210, -7500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(0, 110, -17500), new TV_3DVECTOR(0, 110, -9000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(2500, -250, -19500), new TV_3DVECTOR(2000, 110, -9500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(-2500, -250, -19500), new TV_3DVECTOR(-2000, 110, -9500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(-1500, 150, -18500), new TV_3DVECTOR(-1000, 210, -7500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(1500, 150, -18500), new TV_3DVECTOR(1000, 210, -7500) });
           break;
       }
       Globals.Engine.SoundManager.SetMusic("battle_3_2");
@@ -1897,59 +1896,59 @@ namespace SWEndor.Scenarios
       switch (Difficulty.ToLower())
       {
         case "easy":
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(0, 60, -22500), new TV_3DVECTOR(0, 60, -12000) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-1500, 150, -18500), new TV_3DVECTOR(-1000, 210, -7500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(1500, 150, -18500), new TV_3DVECTOR(1000, 210, -7500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(0, 60, -22500), new TV_3DVECTOR(0, 60, -12000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(-1500, 150, -18500), new TV_3DVECTOR(-1000, 210, -7500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(1500, 150, -18500), new TV_3DVECTOR(1000, 210, -7500) });
 
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-7500, 60, -24500), new TV_3DVECTOR(-2000, 60, -12500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(-7500, 60, -24500), new TV_3DVECTOR(-2000, 60, -12500) });
           break;
         case "mental":
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(0, 60, -22500), new TV_3DVECTOR(0, 60, -12000) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(-1500, 150, -24500), new TV_3DVECTOR(-1000, 150, -10500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(1500, 150, -24500), new TV_3DVECTOR(1000, 150, -10500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(-6500, 100, -25500), new TV_3DVECTOR(-2200, 50, -12000) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(6500, 100, -25500), new TV_3DVECTOR(2200, 50, -12000) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-4500, 150, -26500), new TV_3DVECTOR(-3000, 100, -10500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(4500, 150, -26500), new TV_3DVECTOR(3000, 100, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(0, 60, -22500), new TV_3DVECTOR(0, 60, -12000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(-1500, 150, -24500), new TV_3DVECTOR(-1000, 150, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(1500, 150, -24500), new TV_3DVECTOR(1000, 150, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(-6500, 100, -25500), new TV_3DVECTOR(-2200, 50, -12000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(6500, 100, -25500), new TV_3DVECTOR(2200, 50, -12000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(-4500, 150, -26500), new TV_3DVECTOR(-3000, 100, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(4500, 150, -26500), new TV_3DVECTOR(3000, 100, -10500) });
 
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-10000, -300, -23500), new TV_3DVECTOR(-1250, -300, -10500) });
-          m_pendingSDspawnlist.Add(new object[] { DevastatorATI.Instance(), new TV_3DVECTOR(0, 120, -24500), new TV_3DVECTOR(0, 120, -11500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(-2500, 150, -24500), new TV_3DVECTOR(-2000, 150, -10500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(-6500, 100, -25500), new TV_3DVECTOR(-3200, 50, -12000) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(10000, -300, -23500), new TV_3DVECTOR(1250, -300, -10500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(2500, 150, -24500), new TV_3DVECTOR(2000, 150, -10500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(6500, 100, -25500), new TV_3DVECTOR(3200, 50, -12000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(-10000, -300, -23500), new TV_3DVECTOR(-1250, -300, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Devastator Imperial-I Star Destroyer"), new TV_3DVECTOR(0, 120, -24500), new TV_3DVECTOR(0, 120, -11500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(-2500, 150, -24500), new TV_3DVECTOR(-2000, 150, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(-6500, 100, -25500), new TV_3DVECTOR(-3200, 50, -12000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(10000, -300, -23500), new TV_3DVECTOR(1250, -300, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(2500, 150, -24500), new TV_3DVECTOR(2000, 150, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(6500, 100, -25500), new TV_3DVECTOR(3200, 50, -12000) });
 
           break;
         case "hard":
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(0, 60, -22500), new TV_3DVECTOR(0, 60, -12000) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-1500, 150, -24500), new TV_3DVECTOR(-1000, 150, -10500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(1500, 150, -24500), new TV_3DVECTOR(1000, 150, -10500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(-6500, 100, -25500), new TV_3DVECTOR(-2200, 50, -12000) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(6500, 100, -25500), new TV_3DVECTOR(2200, 50, -12000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(0, 60, -22500), new TV_3DVECTOR(0, 60, -12000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(-1500, 150, -24500), new TV_3DVECTOR(-1000, 150, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(1500, 150, -24500), new TV_3DVECTOR(1000, 150, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(-6500, 100, -25500), new TV_3DVECTOR(-2200, 50, -12000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(6500, 100, -25500), new TV_3DVECTOR(2200, 50, -12000) });
 
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2500, -100, -24500), new TV_3DVECTOR(-2000, -100, -12500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-500, 150, -26500), new TV_3DVECTOR(-500, 100, -10500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(-4500, 150, -26500), new TV_3DVECTOR(-3000, 100, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(-2500, -100, -24500), new TV_3DVECTOR(-2000, -100, -12500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(-500, 150, -26500), new TV_3DVECTOR(-500, 100, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(-4500, 150, -26500), new TV_3DVECTOR(-3000, 100, -10500) });
 
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(4500, -100, -24500), new TV_3DVECTOR(2000, -100, -12500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(2500, 150, -26500), new TV_3DVECTOR(500, 100, -10500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(7500, 150, -26500), new TV_3DVECTOR(3000, 100, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(4500, -100, -24500), new TV_3DVECTOR(2000, -100, -12500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(2500, 150, -26500), new TV_3DVECTOR(500, 100, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(7500, 150, -26500), new TV_3DVECTOR(3000, 100, -10500) });
 
           break;
         case "normal":
         default:
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(0, 60, -22500), new TV_3DVECTOR(0, 60, -12000) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(-1500, 150, -24500), new TV_3DVECTOR(-1000, 150, -10500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(1500, 150, -24500), new TV_3DVECTOR(1000, 150, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(0, 60, -22500), new TV_3DVECTOR(0, 60, -12000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(-1500, 150, -24500), new TV_3DVECTOR(-1000, 150, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(1500, 150, -24500), new TV_3DVECTOR(1000, 150, -10500) });
 
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-2500, -100, -24500), new TV_3DVECTOR(-2000, -100, -12500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(-500, 150, -26500), new TV_3DVECTOR(-500, 100, -10500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(-4500, 150, -26500), new TV_3DVECTOR(-3000, 100, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(-2500, -100, -24500), new TV_3DVECTOR(-2000, -100, -12500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(-500, 150, -26500), new TV_3DVECTOR(-500, 100, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(-4500, 150, -26500), new TV_3DVECTOR(-3000, 100, -10500) });
 
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(2500, -100, -24500), new TV_3DVECTOR(2000, -100, -12500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(500, 150, -26500), new TV_3DVECTOR(500, 100, -10500) });
-          m_pendingSDspawnlist.Add(new object[] { ArquitensATI.Instance(), new TV_3DVECTOR(4500, 150, -26500), new TV_3DVECTOR(3000, 100, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(2500, -100, -24500), new TV_3DVECTOR(2000, -100, -12500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(500, 150, -26500), new TV_3DVECTOR(500, 100, -10500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Arquitens Light Cruiser"), new TV_3DVECTOR(4500, 150, -26500), new TV_3DVECTOR(3000, 100, -10500) });
 
           break;
       }
@@ -1961,13 +1960,13 @@ namespace SWEndor.Scenarios
     {
       //m_Enemy_pull = 4000;
       SDWaves++;
-      ActorInfo.Factory.Get(m_ExecutorStaticID)?.Kill();
+      Manager.Engine.ActorFactory.Get(m_ExecutorStaticID)?.Kill();
 
       TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(0, 0, -10000);
       float creationTime = Globals.Engine.Game.GameTime;
 
       TV_3DVECTOR position = new TV_3DVECTOR(0, -950, -20000);
-      ActorTypeInfo atinfo = ExecutorATI.Instance();
+      ActorTypeInfo atinfo = Manager.Engine.ActorTypeFactory.Get("Executor Super Star Destroyer");
 
       ActorSpawnInfo asi = new ActorSpawnInfo
       {
@@ -2002,41 +2001,41 @@ namespace SWEndor.Scenarios
           break;
         case "mental":
           Empire_TIEWave_0D (new object[] { 2 });
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2500, -80, -21000), new TV_3DVECTOR(-550, 80, -7000) });
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(2500, -80, -21000), new TV_3DVECTOR(550, -160, -7000) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-3500, 120, -20500), new TV_3DVECTOR(-1500, 90, -6500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(3500, 120, -20500), new TV_3DVECTOR(1500, 90, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(-2500, -80, -21000), new TV_3DVECTOR(-550, 80, -7000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(2500, -80, -21000), new TV_3DVECTOR(550, -160, -7000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(-3500, 120, -20500), new TV_3DVECTOR(-1500, 90, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(3500, 120, -20500), new TV_3DVECTOR(1500, 90, -6500) });
 
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2000, -80, -24000), new TV_3DVECTOR(-2000, -80, -7000) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-4500, 120, -20500), new TV_3DVECTOR(-3500, 120, -6500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-500, 120, -20500), new TV_3DVECTOR(-500, 120, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(-2000, -80, -24000), new TV_3DVECTOR(-2000, -80, -7000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(-4500, 120, -20500), new TV_3DVECTOR(-3500, 120, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(-500, 120, -20500), new TV_3DVECTOR(-500, 120, -6500) });
 
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(2000, -80, -24000), new TV_3DVECTOR(2000, -80, -7000) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(500, 120, -20500), new TV_3DVECTOR(500, 120, -6500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(4500, 120, -20500), new TV_3DVECTOR(3500, 120, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(2000, -80, -24000), new TV_3DVECTOR(2000, -80, -7000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(500, 120, -20500), new TV_3DVECTOR(500, 120, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(4500, 120, -20500), new TV_3DVECTOR(3500, 120, -6500) });
 
           break;
         case "hard":
           Empire_TIEWave_0D(new object[] { 1 });
           Empire_TIEWave_TIEsvsShips(new object[] { 5 });
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-4500, 120, -20500), new TV_3DVECTOR(-3500, 120, -6500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-500, 120, -20500), new TV_3DVECTOR(-500, 120, -6500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-3500, 120, -20500), new TV_3DVECTOR(-2500, 120, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(-2500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(-4500, 120, -20500), new TV_3DVECTOR(-3500, 120, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(-500, 120, -20500), new TV_3DVECTOR(-500, 120, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(-3500, 120, -20500), new TV_3DVECTOR(-2500, 120, -6500) });
 
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(2500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(500, 120, -20500), new TV_3DVECTOR(500, 120, -6500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(4500, 120, -20500), new TV_3DVECTOR(3500, 120, -6500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(3500, 120, -20500), new TV_3DVECTOR(2500, 120, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(2500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(500, 120, -20500), new TV_3DVECTOR(500, 120, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(4500, 120, -20500), new TV_3DVECTOR(3500, 120, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(3500, 120, -20500), new TV_3DVECTOR(2500, 120, -6500) });
 
           break;
         case "normal":
         default:
           Empire_TIEWave_TIEsvsShips(new object[] { 10 });
-          m_pendingSDspawnlist.Add(new object[] { ImperialIATI.Instance(), new TV_3DVECTOR(-2500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(-500, 120, -20500), new TV_3DVECTOR(-500, 120, -6500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(4500, 120, -20500), new TV_3DVECTOR(3500, 120, -6500) });
-          m_pendingSDspawnlist.Add(new object[] { AcclamatorATI.Instance(), new TV_3DVECTOR(3500, 120, -20500), new TV_3DVECTOR(2500, 120, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Imperial-I Star Destroyer"), new TV_3DVECTOR(-2500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(-500, 120, -20500), new TV_3DVECTOR(-500, 120, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(4500, 120, -20500), new TV_3DVECTOR(3500, 120, -6500) });
+          m_pendingSDspawnlist.Add(new object[] { Manager.Engine.ActorTypeFactory.Get("Acclamator Assault Ship"), new TV_3DVECTOR(3500, 120, -20500), new TV_3DVECTOR(2500, 120, -6500) });
           break;
       }
     }
@@ -2059,13 +2058,13 @@ namespace SWEndor.Scenarios
 
         if (Globals.Engine.GameScenarioManager.SceneCamera == null || !(Globals.Engine.GameScenarioManager.SceneCamera.TypeInfo is DeathCameraATI))
         {
-          ActorCreationInfo camaci = new ActorCreationInfo(DeathCameraATI.Instance());
+          ActorCreationInfo camaci = new ActorCreationInfo(Manager.Engine.ActorTypeFactory.Get("Death Camera"));
           camaci.CreationTime = Globals.Engine.Game.GameTime;
           camaci.InitialState = ActorState.DYING;
           camaci.Position = ainfo.GetPosition();
           camaci.Rotation = new TV_3DVECTOR();
 
-          ActorInfo a = ActorInfo.Create(camaci);
+          ActorInfo a = ActorInfo.Create(Manager.Engine.ActorFactory, camaci);
           Globals.Engine.PlayerInfo.ActorID = a.ID;
           a.CombatInfo.Strength = 0;
 
@@ -2086,7 +2085,7 @@ namespace SWEndor.Scenarios
           Globals.Engine.SoundManager.SetMusic("executorend");
           ainfo.CombatInfo.TimedLife = 2000f;
 
-          ActorInfo homeone = ActorInfo.Factory.Get(m_HomeOneID);
+          ActorInfo homeone = Manager.Engine.ActorFactory.Get(m_HomeOneID);
           if (homeone != null)
             homeone.CombatInfo.DamageModifier = 0;
           Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 55, FadeOut);
@@ -2100,7 +2099,7 @@ namespace SWEndor.Scenarios
 
     public void Empire_DeathStarAttack(object[] param)
     {
-      ActorInfo lsrSrc = ActorInfo.Factory.Get(m_ADSLaserSourceID);
+      ActorInfo lsrSrc = Manager.Engine.ActorFactory.Get(m_ADSLaserSourceID);
       if (lsrSrc != null 
         && lsrSrc.CreationState == CreationState.ACTIVE)
       {
@@ -2111,11 +2110,11 @@ namespace SWEndor.Scenarios
         {
           m_ADS_targetID = victims[Globals.Engine.Random.Next(0, victims.Count)];
 
-          ActionManager.ForceClearQueue(m_ADSLaserSourceID);
-          ActionManager.QueueNext(m_ADSLaserSourceID, new AttackActor(m_ADS_targetID));
-          ActionManager.QueueNext(m_ADSLaserSourceID, new Lock());
+          Manager.Engine.ActionManager.ForceClearQueue(m_ADSLaserSourceID);
+          Manager.Engine.ActionManager.QueueNext(m_ADSLaserSourceID, new AttackActor(m_ADS_targetID));
+          Manager.Engine.ActionManager.QueueNext(m_ADSLaserSourceID, new Lock());
 
-          ActorInfo target = ActorInfo.Factory.Get(m_ADS_targetID);
+          ActorInfo target = Manager.Engine.ActorFactory.Get(m_ADS_targetID);
           target.DestroyedEvents += DeathStarKill_Effect;
           Globals.Engine.GameScenarioManager.AddEvent(0.1f, Scene_DeathStarCam);
         }
@@ -2124,22 +2123,22 @@ namespace SWEndor.Scenarios
 
     public void Empire_DeathStarAttack_01(object[] param)
     {
-      Empire_DeathStarAttack(CorellianATI.Instance());
+      Empire_DeathStarAttack(Manager.Engine.ActorTypeFactory.Get("Corellian Corvette"));
     }
 
     public void Empire_DeathStarAttack_02(object[] param)
     {
-      Empire_DeathStarAttack(TransportATI.Instance());
+      Empire_DeathStarAttack(Manager.Engine.ActorTypeFactory.Get("Transport"));
     }
 
     public void Empire_DeathStarAttack_03(object[] param)
     {
-      Empire_DeathStarAttack(MC90ATI.Instance());
+      Empire_DeathStarAttack(Manager.Engine.ActorTypeFactory.Get("Mon Calamari Capital Ship"));
     }
 
     private void Empire_DeathStarAttack(ActorTypeInfo type)
     {
-      ActorInfo lsrSrc = ActorInfo.Factory.Get(m_ADSLaserSourceID);
+      ActorInfo lsrSrc = Manager.Engine.ActorFactory.Get(m_ADSLaserSourceID);
       if (lsrSrc != null
         && lsrSrc.CreationState == CreationState.ACTIVE)
       {
@@ -2148,16 +2147,16 @@ namespace SWEndor.Scenarios
 
         foreach (int tid in tgt)
         {
-          ActorInfo t = ActorInfo.Factory.Get(tid);
+          ActorInfo t = Manager.Engine.ActorFactory.Get(tid);
           if (t != null 
             && t.TypeInfo == type
             && tid != m_HomeOneID)
           {
             m_ADS_targetID = tid;
             
-            ActionManager.ForceClearQueue(m_ADSLaserSourceID);
-            ActionManager.QueueNext(m_ADSLaserSourceID, new AttackActor(tid));
-            ActionManager.QueueNext(m_ADSLaserSourceID, new Lock());
+            Manager.Engine.ActionManager.ForceClearQueue(m_ADSLaserSourceID);
+            Manager.Engine.ActionManager.QueueNext(m_ADSLaserSourceID, new AttackActor(tid));
+            Manager.Engine.ActionManager.QueueNext(m_ADSLaserSourceID, new Lock());
 
             t.DestroyedEvents += DeathStarKill_Effect;
             Globals.Engine.GameScenarioManager.AddEvent(0.1f, Scene_DeathStarCam);
@@ -2315,9 +2314,9 @@ namespace SWEndor.Scenarios
     #region Scene
     public void Scene_EnterCutscene(object[] param)
     {
-      ActorInfo falcon = ActorInfo.Factory.Get(m_FalconID);
-      ActorInfo wedge = ActorInfo.Factory.Get(m_WedgeID);
-      ActorInfo homeone = ActorInfo.Factory.Get(m_HomeOneID);
+      ActorInfo falcon = Manager.Engine.ActorFactory.Get(m_FalconID);
+      ActorInfo wedge = Manager.Engine.ActorFactory.Get(m_WedgeID);
+      ActorInfo homeone = Manager.Engine.ActorFactory.Get(m_HomeOneID);
 
       if (falcon != null)
         falcon.CombatInfo.DamageModifier = 0;
@@ -2329,11 +2328,11 @@ namespace SWEndor.Scenarios
         homeone.CombatInfo.DamageModifier = 0;
 
       m_PlayerID = Globals.Engine.PlayerInfo.ActorID;
-      ActorInfo player = ActorInfo.Factory.Get(m_PlayerID);
+      ActorInfo player = Manager.Engine.ActorFactory.Get(m_PlayerID);
       if (player != null)
       {
         m_Player_pos = player.Position;
-        ActionManager.QueueFirst(m_PlayerID, new Lock());
+        Manager.Engine.ActionManager.QueueFirst(m_PlayerID, new Lock());
         player.Position = new TV_3DVECTOR(30, 0, -100000);
         m_Player_PrimaryWeapon = Globals.Engine.PlayerInfo.PrimaryWeapon;
         m_Player_SecondaryWeapon = Globals.Engine.PlayerInfo.SecondaryWeapon;
@@ -2346,9 +2345,9 @@ namespace SWEndor.Scenarios
 
     public void Scene_ExitCutscene(object[] param)
     {
-      ActorInfo falcon = ActorInfo.Factory.Get(m_FalconID);
-      ActorInfo wedge = ActorInfo.Factory.Get(m_WedgeID);
-      ActorInfo homeone = ActorInfo.Factory.Get(m_HomeOneID);
+      ActorInfo falcon = Manager.Engine.ActorFactory.Get(m_FalconID);
+      ActorInfo wedge = Manager.Engine.ActorFactory.Get(m_WedgeID);
+      ActorInfo homeone = Manager.Engine.ActorFactory.Get(m_HomeOneID);
 
       if (falcon != null)
         falcon.CombatInfo.DamageModifier = 1;
@@ -2359,12 +2358,12 @@ namespace SWEndor.Scenarios
       if (homeone != null)
         homeone.CombatInfo.DamageModifier = 1;
 
-      ActorInfo player = ActorInfo.Factory.Get(m_PlayerID);
+      ActorInfo player = Manager.Engine.ActorFactory.Get(m_PlayerID);
       if (player != null)
       {
         player.ActorState = ActorState.NORMAL;
         player.Position = m_Player_pos;
-        ActionManager.ForceClearQueue(m_PlayerID);
+        Manager.Engine.ActionManager.ForceClearQueue(m_PlayerID);
         Globals.Engine.PlayerInfo.ActorID = m_PlayerID;
         Globals.Engine.PlayerInfo.PrimaryWeapon = m_Player_PrimaryWeapon;
         Globals.Engine.PlayerInfo.SecondaryWeapon = m_Player_SecondaryWeapon;
@@ -2376,7 +2375,7 @@ namespace SWEndor.Scenarios
 
     public void Scene_DeathStarCam(object[] param)
     {
-      ActorInfo target = ActorInfo.Factory.Get(m_ADS_targetID);
+      ActorInfo target = Manager.Engine.ActorFactory.Get(m_ADS_targetID);
 
       if (target != null 
         && target.CreationState == CreationState.ACTIVE)

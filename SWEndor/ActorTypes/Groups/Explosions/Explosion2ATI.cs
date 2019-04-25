@@ -4,14 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class Explosion2ATI : Groups.Explosion
   {
-    private static Explosion2ATI _instance;
-    public static Explosion2ATI Instance()
-    {
-      if (_instance == null) { _instance = new Explosion2ATI(); }
-      return _instance;
-    }
-
-    private Explosion2ATI() : base("Explosion2")
+    internal Explosion2ATI(Factory owner) : base(owner, "Explosion2")
     {
       // Combat
       OnTimedLife = true;
@@ -22,11 +15,11 @@ namespace SWEndor.ActorTypes.Instances
       CollisionEnabled = false;
       RadarSize = 5;
 
-      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
         LoadAlphaTextureFromFolder(Globals.ImagePath, "explosion/large");
-        SourceMesh = Globals.Engine.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 40, 40, Key, true);
+        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 40, 40, Key, true);
         SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
         SourceMesh.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
 

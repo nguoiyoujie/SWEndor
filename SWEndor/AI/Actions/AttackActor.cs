@@ -43,7 +43,7 @@ namespace SWEndor.AI.Actions
 
     public override void Process(ActorInfo owner)
     {
-      ActorInfo target = ActorInfo.Factory.Get(Target_ActorID);
+      ActorInfo target = owner.Owner.Engine.ActorFactory.Get(Target_ActorID);
       if (target == null)
       {
         Complete = true;
@@ -62,7 +62,7 @@ namespace SWEndor.AI.Actions
         if (dist > TooCloseDistance)
         {
           float d = dist / Globals.LaserSpeed;
-          ActorInfo a2 = target.AttachToParent ? ActorInfo.Factory.Get(target.ParentID) : null;
+          ActorInfo a2 = target.AttachToParent ? owner.Owner.Engine.ActorFactory.Get(target.ParentID) : null;
           if (a2 == null)
           {
             Target_Position = target.GetRelativePositionXYZ(0, 0, target.MovementInfo.Speed * d);
@@ -105,7 +105,7 @@ namespace SWEndor.AI.Actions
           if (CanInterrupt && ReHuntTime < Globals.Engine.Game.GameTime)
           {
             Complete = true;
-            ActionManager.QueueNext(owner.ID, new Hunt());
+            owner.Owner.Engine.ActionManager.QueueNext(owner.ID, new Hunt());
           }
           else
           {
@@ -117,18 +117,18 @@ namespace SWEndor.AI.Actions
           if (target.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER))
           {
             float evadeduration = 2000 / (target.GetTrueSpeed() + 500);
-            ActionManager.QueueFirst(owner.ID, new Evade(evadeduration));
+            owner.Owner.Engine.ActionManager.QueueFirst(owner.ID, new Evade(evadeduration));
           }
           else if (!(target.TypeInfo is ActorTypes.Group.Projectile))
           {
-            ActionManager.QueueFirst(owner.ID, new Move(MakeAltPosition(owner, target.GetTopParent()), owner.MovementInfo.MaxSpeed));
+            owner.Owner.Engine.ActionManager.QueueFirst(owner.ID, new Move(MakeAltPosition(owner, target.GetTopParent()), owner.MovementInfo.MaxSpeed));
           }
           return;
         }
 
         if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
         {
-          ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
+          owner.Owner.Engine.ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
           //if (owner.ProspectiveCollisionActor != null && owner.ProspectiveCollisionActor.GetTopParent() == Target_Actor.GetTopParent())
           //  ActionManager.QueueNext(owner, new Rotate(owner.ProspectiveCollisionImpact + owner.CollisionInfo.ProspectiveCollisionNormal * 10000, owner.MovementInfo.MinSpeed, 45));
         }
@@ -139,7 +139,7 @@ namespace SWEndor.AI.Actions
     {
       float radius = 0;
       TV_3DVECTOR center = new TV_3DVECTOR();
-      ActorInfo target = ActorInfo.Factory.Get(targetActorID);
+      ActorInfo target = owner.Owner.Engine.ActorFactory.Get(targetActorID);
       if (target != null)
       {
         target.GetBoundingSphere(ref center, ref radius);
@@ -162,9 +162,9 @@ namespace SWEndor.AI.Actions
       float dist = 0;
       float delta_angle = 0;
 
-      foreach (int actorID in ActorInfo.Factory.GetHoldingList())
+      foreach (int actorID in owner.Owner.Engine.ActorFactory.GetHoldingList())
       {
-        ActorInfo a = ActorInfo.Factory.Get(actorID);
+        ActorInfo a = owner.Owner.Engine.ActorFactory.Get(actorID);
         if (a != null
             && owner.ID != actorID
             && a.CreationState == CreationState.ACTIVE
@@ -177,8 +177,8 @@ namespace SWEndor.AI.Actions
 
           TV_3DVECTOR vec = new TV_3DVECTOR();
           TV_3DVECTOR dir = owner.GetDirection();
-          Globals.Engine.TVMathLibrary.TVVec3Normalize(ref vec, a.GetPosition() - owner.GetPosition());
-          delta_angle = Globals.Engine.TVMathLibrary.ACos(Globals.Engine.TVMathLibrary.TVVec3Dot(dir, vec));
+          Globals.Engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, a.GetPosition() - owner.GetPosition());
+          delta_angle = Globals.Engine.TrueVision.TVMathLibrary.ACos(Globals.Engine.TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
 
           WeaponInfo weapon = null;
           int burst = 0;

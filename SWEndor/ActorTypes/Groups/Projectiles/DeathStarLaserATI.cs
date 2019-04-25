@@ -5,14 +5,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class DeathStarLaserATI : Group.Projectile
   {
-    private static DeathStarLaserATI _instance;
-    public static DeathStarLaserATI Instance()
-    {
-      if (_instance == null) { _instance = new DeathStarLaserATI(); }
-      return _instance;
-    }
-
-    private DeathStarLaserATI() : base("Death Star Laser")
+    internal DeathStarLaserATI(Factory owner) : base(owner, "Death Star Laser")
     {
       // Combat
       OnTimedLife = true;
@@ -27,10 +20,10 @@ namespace SWEndor.ActorTypes.Instances
       NoAI = true;
       EnableDistanceCull = false;
 
-      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Globals.Engine.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
 
         SourceMesh.CreateBox(40, 40, 1000);
         SourceMesh.SetMeshCenter(0, 0, 2200);
@@ -64,7 +57,7 @@ namespace SWEndor.ActorTypes.Instances
       {
         if (ainfo.TimedLife > 0)
         {
-          ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("Explosion"));
+          ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("Explosion"));
           acinfo.Position = ainfo.Position;
           ActorInfo.Create(acinfo);
         }
@@ -81,8 +74,8 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
       base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
-      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
-      ActorInfo hitby = ActorInfo.Factory.Get(hitbyActorID);
+      ActorInfo owner = Owner.Engine.ActorFactory.Get(ownerActorID);
+      ActorInfo hitby = Owner.Engine.ActorFactory.Get(hitbyActorID);
 
       if (owner == null || hitby == null)
         return;

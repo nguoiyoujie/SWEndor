@@ -115,30 +115,13 @@ namespace SWEndor.Actors
 
     // Ownership
     public int ParentID { get; private set; } = -1;
-    /*
-    public event EventHandler<ActionEventArgs> NotifyChildEvent;
-    public event EventHandler<ActionEventArgs> NotifyParentEvent;
-    public class ActionEventArgs : EventArgs
-    {
-      public Action Action;
-      public ActionEventArgs(Action action) : base() { Action = action; }
-      public void Execute() { Action?.Invoke(); }
-    }
+    public readonly Factory Owner;
 
-    protected virtual void OnNotifyChildEvent(object sender, ActionEventArgs e)
-    {
-      NotifyChildEvent?.Invoke(this, e);
-    }
-
-    protected virtual void OnNotifyParentEvent(object sender, ActionEventArgs e)
-    {
-      NotifyParentEvent?.Invoke(this, e);
-    }
-    */
     #region Creation Methods
 
-    private ActorInfo(int id, ActorCreationInfo acinfo)
+    private ActorInfo(Factory owner, int id, ActorCreationInfo acinfo)
     {
+      Owner = owner;
       ID = id;
 
       TypeInfo = acinfo.ActorTypeInfo;
@@ -244,9 +227,9 @@ namespace SWEndor.Actors
       //SpawnerInfo = new SpawnerInfo(this);
     }
 
-    public static ActorInfo Create(ActorCreationInfo acinfo)
+    public static ActorInfo Create(Factory factory, ActorCreationInfo acinfo)
     {
-      return Factory.Register(acinfo);
+      return factory.Register(acinfo);
     }
     #endregion
 
@@ -287,7 +270,7 @@ namespace SWEndor.Actors
         )
         return;
 
-      ActionManager.Run(ID, CurrentAction);
+      Owner.Engine.ActionManager.Run(ID, CurrentAction);
     }
 
     public void ProcessCollision()
@@ -389,7 +372,7 @@ namespace SWEndor.Actors
         {
           if (CollisionInfo.IsInCollision)
           {
-            ActorInfo a = Factory.Get(CollisionInfo.CollisionActorID);
+            ActorInfo a = Owner.Engine.ActorFactory.Get(CollisionInfo.CollisionActorID);
             if (IsPlayer() && Globals.Engine.PlayerInfo.PlayerAIEnabled)
             {
               Globals.Engine.Screen2D.MessageSecondaryText(string.Format("DEV WARNING: PLAYER AI COLLIDED: {0}", a.ToString()), 1.5f, new TV_COLOR(1, 0.2f, 0.2f, 1), 99999);
@@ -479,7 +462,7 @@ namespace SWEndor.Actors
                 proImpact += _Impact;
                 proNormal += _Normal;
                 count++;
-                float newdist = Globals.Engine.TVMathLibrary.GetDistanceVec3D(Position, _Impact);
+                float newdist = Globals.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(Position, _Impact);
                 if (dist < newdist)
                 {
                   dist = newdist;
@@ -519,12 +502,12 @@ namespace SWEndor.Actors
 
           TV_COLLISIONRESULT tvcres = new TV_COLLISIONRESULT();
 
-          if (Globals.Engine.TVScene.AdvancedCollision(start, end, ref tvcres))
+          if (Globals.Engine.TrueVision.TVScene.AdvancedCollision(start, end, ref tvcres))
           {
             if (IsPlayer())
             {
-              Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
-              Globals.Engine.TVScreen2DImmediate.Draw_Line3D(start.x
+              Globals.Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
+              Globals.Engine.TrueVision.TVScreen2DImmediate.Draw_Line3D(start.x
                                                 , start.y
                                                 , start.z
                                                 , end.x
@@ -532,7 +515,7 @@ namespace SWEndor.Actors
                                                 , end.z
                                                 , new TV_COLOR(0.5f, 1, 0.2f, 1).GetIntColor()
                                                 );
-              Globals.Engine.TVScreen2DImmediate.Action_End2D();
+              Globals.Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
             }
 
             if (tvcres.eCollidedObjectType != CONST_TV_OBJECT_TYPE.TV_OBJECT_MESH && tvcres.eCollidedObjectType != CONST_TV_OBJECT_TYPE.TV_OBJECT_LANDSCAPE)
@@ -549,12 +532,12 @@ namespace SWEndor.Actors
                 return true;
               }
 
-              TVMesh tvm = Globals.Engine.TVGlobals.GetMeshFromID(tvcres.iMeshID);
+              TVMesh tvm = Globals.Engine.TrueVision.TVGlobals.GetMeshFromID(tvcres.iMeshID);
               if (tvm != null) // && tvm.IsVisible())
               {
                 if (int.TryParse(tvm.GetTag(), out actorID))
                 {
-                  ActorInfo actor = Factory.Get(actorID);
+                  ActorInfo actor = Owner.Engine.ActorFactory.Get(actorID);
                   return (actor != null
                        && actorID != ID
                        && !HasRelative(actorID)
@@ -572,7 +555,7 @@ namespace SWEndor.Actors
                 return true;
               }
 
-              TVMesh tvm = Globals.Engine.TVGlobals.GetMeshFromID(tvcres.iMeshID);
+              TVMesh tvm = Globals.Engine.TrueVision.TVGlobals.GetMeshFromID(tvcres.iMeshID);
               if (tvm != null) // && tvm.IsVisible())
               {
                 if (int.TryParse(tvm.GetTag(), out actorID))
@@ -587,8 +570,8 @@ namespace SWEndor.Actors
           {
             if (IsPlayer())
             {
-              Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
-              Globals.Engine.TVScreen2DImmediate.Draw_Line3D(start.x
+              Globals.Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
+              Globals.Engine.TrueVision.TVScreen2DImmediate.Draw_Line3D(start.x
                                                 , start.y
                                                 , start.z
                                                 , end.x
@@ -596,7 +579,7 @@ namespace SWEndor.Actors
                                                 , end.z
                                                 , new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor()
                                                 );
-              Globals.Engine.TVScreen2DImmediate.Action_End2D();
+              Globals.Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
             }
           }
           return false;
@@ -624,7 +607,7 @@ namespace SWEndor.Actors
       //  return WorldPosition.Value;
 
       TV_3DVECTOR ret = Position;
-      ActorInfo a = AttachToParent ? Factory.Get(ParentID) : null;
+      ActorInfo a = AttachToParent ? Owner.Engine.ActorFactory.Get(ParentID) : null;
       if (a != null)
         ret = a.GetRelativePositionXYZ(ret.x, ret.y, ret.z);
       WorldPosition.Value = ret;
@@ -654,7 +637,7 @@ namespace SWEndor.Actors
 
       TV_3DVECTOR ret = new TV_3DVECTOR();
 
-      Globals.Engine.TVMathLibrary.TVVec3Rotate(ref ret, new TV_3DVECTOR(right, up, front), rot.y, rot.x, rot.z);
+      Globals.Engine.TrueVision.TVMathLibrary.TVVec3Rotate(ref ret, new TV_3DVECTOR(right, up, front), rot.y, rot.x, rot.z);
       ret += pos;
       return ret;
     }
@@ -671,7 +654,7 @@ namespace SWEndor.Actors
 
       TV_3DVECTOR ret = new TV_3DVECTOR();
 
-      Globals.Engine.TVMathLibrary.TVVec3Rotate(ref ret, new TV_3DVECTOR(x, y, z), rot.y, rot.x, rot.z);
+      Globals.Engine.TrueVision.TVMathLibrary.TVVec3Rotate(ref ret, new TV_3DVECTOR(x, y, z), rot.y, rot.x, rot.z);
       ret += pos;
       return ret;
     }
@@ -681,16 +664,17 @@ namespace SWEndor.Actors
       //if (WorldRotation.Time >= Globals.Engine.Game.GameTime)
       //  return WorldRotation.Value;
 
-      ActorInfo a = AttachToParent ? Factory.Get(ParentID) : null;
+      ActorInfo a = AttachToParent ? Owner.Engine.ActorFactory.Get(ParentID) : null;
       if (a != null && a.Mesh != null)
       {
+        TVMathLibrary mathl = Globals.Engine.TrueVision.TVMathLibrary;
         //TV_3DVECTOR aret = a.GetRotation();
 
         TV_3DMATRIX pmat = new TV_3DMATRIX();
         TV_3DMATRIX pymat = new TV_3DMATRIX();
         TV_3DMATRIX pyxmat = new TV_3DMATRIX();
         TV_3DMATRIX pyxzmat = new TV_3DMATRIX();
-        Globals.Engine.TVMathLibrary.TVMatrixIdentity(ref pmat);
+        mathl.TVMatrixIdentity(ref pmat);
         TV_3DMATRIX xmat = new TV_3DMATRIX();
         TV_3DMATRIX ymat = new TV_3DMATRIX();
         TV_3DMATRIX zmat = new TV_3DMATRIX();
@@ -699,16 +683,16 @@ namespace SWEndor.Actors
         TV_3DVECTOR right = new TV_3DVECTOR();
         a.Mesh.GetBasisVectors(ref front, ref up, ref right);
 
-        Globals.Engine.TVMathLibrary.TVMatrixRotationAxis(ref ymat, up, Rotation.y);
-        Globals.Engine.TVMathLibrary.TVMatrixRotationAxis(ref xmat, right, Rotation.x);
-        Globals.Engine.TVMathLibrary.TVMatrixRotationAxis(ref zmat, front, Rotation.z);
-        Globals.Engine.TVMathLibrary.TVMatrixMultiply(ref pymat, pmat, ymat);
-        Globals.Engine.TVMathLibrary.TVMatrixMultiply(ref pyxmat, pymat, xmat);
-        Globals.Engine.TVMathLibrary.TVMatrixMultiply(ref pyxzmat, pyxmat, zmat);
+        mathl.TVMatrixRotationAxis(ref ymat, up, Rotation.y);
+        mathl.TVMatrixRotationAxis(ref xmat, right, Rotation.x);
+        mathl.TVMatrixRotationAxis(ref zmat, front, Rotation.z);
+        mathl.TVMatrixMultiply(ref pymat, pmat, ymat);
+        mathl.TVMatrixMultiply(ref pyxmat, pymat, xmat);
+        mathl.TVMatrixMultiply(ref pyxzmat, pyxmat, zmat);
 
         TV_3DVECTOR dir = Utilities.GetDirection(a.GetRotation());
         TV_3DVECTOR rdir = new TV_3DVECTOR();
-        Globals.Engine.TVMathLibrary.TVVec3TransformCoord(ref rdir, dir, pyxzmat);
+        mathl.TVVec3TransformCoord(ref rdir, dir, pyxzmat);
         TV_3DVECTOR rot = Utilities.GetRotation(rdir);
 
         WorldRotation.Value = rot;
@@ -725,7 +709,7 @@ namespace SWEndor.Actors
 
     public void SetRotation(float x, float y, float z)
     {
-      ActorInfo a = AttachToParent ? Factory.Get(ParentID) : null;
+      ActorInfo a = AttachToParent ? Owner.Engine.ActorFactory.Get(ParentID) : null;
       if (a != null)
       {
         //TV_3DVECTOR dir = new TV_3DVECTOR(x, y, z);
@@ -733,10 +717,10 @@ namespace SWEndor.Actors
         /*
         TV_3DVECTOR aret = a.GetRotation();
         TV_3DQUATERNION pmat = new TV_3DQUATERNION();
-        Globals.Engine.TVMathLibrary.TVQuaternionIdentity(ref pmat);
-        Globals.Engine.TVMathLibrary.TVQuaternionRotationYawPitchRoll(ref pmat, aret.y, aret.x, aret.z);
-        Globals.Engine.TVMathLibrary.TVQuaternionRotationYawPitchRoll(ref pmat, -Rotation.y, -Rotation.x, -Rotation.z);
-        Globals.Engine.TVMathLibrary.TVQuaternionNormalize(ref pmat, pmat);
+        Globals.Engine.TrueVision.TVMathLibrary.TVQuaternionIdentity(ref pmat);
+        Globals.Engine.TrueVision.TVMathLibrary.TVQuaternionRotationYawPitchRoll(ref pmat, aret.y, aret.x, aret.z);
+        Globals.Engine.TrueVision.TVMathLibrary.TVQuaternionRotationYawPitchRoll(ref pmat, -Rotation.y, -Rotation.x, -Rotation.z);
+        Globals.Engine.TrueVision.TVMathLibrary.TVQuaternionNormalize(ref pmat, pmat);
         Rotation = new TV_3DVECTOR(pmat.x, pmat.y, pmat.z);
         */
         /*
@@ -745,16 +729,16 @@ namespace SWEndor.Actors
         TV_3DMATRIX pinmat = new TV_3DMATRIX();
         float pindet = 0;
         TV_3DMATRIX mat = new TV_3DMATRIX();
-        Globals.Engine.TVMathLibrary.TVMatrixRotationYawPitchRoll(ref pmat, aret.y, aret.x, aret.z);
-        Globals.Engine.TVMathLibrary.TVMatrixInverse(ref pinmat, ref pindet, pmat);
-        Globals.Engine.TVMathLibrary.TVMatrixRotationYawPitchRoll(ref mat, y, x, z);
+        Globals.Engine.TrueVision.TVMathLibrary.TVMatrixRotationYawPitchRoll(ref pmat, aret.y, aret.x, aret.z);
+        Globals.Engine.TrueVision.TVMathLibrary.TVMatrixInverse(ref pinmat, ref pindet, pmat);
+        Globals.Engine.TrueVision.TVMathLibrary.TVMatrixRotationYawPitchRoll(ref mat, y, x, z);
         TV_3DMATRIX lmat = mat * pinmat;
 
         TV_3DQUATERNION quad = new TV_3DQUATERNION();
-        Globals.Engine.TVMathLibrary.TVConvertMatrixToQuaternion(ref quad, lmat);
-        //Globals.Engine.TVMathLibrary.TVEulerAnglesFromMatrix(ref aret, lmat);
-        //Globals.Engine.TVMathLibrary.TVVec3Rotate(ref aret, new TV_3DVECTOR(), aret.x, aret.y, aret.z);
-        Globals.Engine.TVMathLibrary.TVQuaternionNormalize(ref quad, quad);
+        Globals.Engine.TrueVision.TVMathLibrary.TVConvertMatrixToQuaternion(ref quad, lmat);
+        //Globals.Engine.TrueVision.TVMathLibrary.TVEulerAnglesFromMatrix(ref aret, lmat);
+        //Globals.Engine.TrueVision.TVMathLibrary.TVVec3Rotate(ref aret, new TV_3DVECTOR(), aret.x, aret.y, aret.z);
+        Globals.Engine.TrueVision.TVMathLibrary.TVQuaternionNormalize(ref quad, quad);
         Rotation = new TV_3DVECTOR(quad.x, quad.y, quad.z);
         */
         //Rotation = aret;
@@ -778,19 +762,19 @@ namespace SWEndor.Actors
     public TV_3DVECTOR GetDirection()
     {
       TV_3DVECTOR ret = Utilities.GetDirection(Rotation);
-      ActorInfo a = AttachToParent ? Factory.Get(ParentID) : null;
+      ActorInfo a = AttachToParent ? Owner.Engine.ActorFactory.Get(ParentID) : null;
       if (a != null)
         ret += a.GetDirection();
 
       TV_3DVECTOR dir = new TV_3DVECTOR();
-      Globals.Engine.TVMathLibrary.TVVec3Normalize(ref dir, ret);
+      Globals.Engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref dir, ret);
       return dir;
     }
 
     public void SetDirection(float x, float y, float z)
     {
       TV_3DVECTOR dir = new TV_3DVECTOR(x, y, z);
-      ActorInfo a = AttachToParent ? Factory.Get(ParentID) : null;
+      ActorInfo a = AttachToParent ? Owner.Engine.ActorFactory.Get(ParentID) : null;
       if (a != null)
         dir -= a.GetDirection();
 
@@ -802,7 +786,7 @@ namespace SWEndor.Actors
       TV_3DVECTOR ret = Utilities.GetDirection(Rotation);
 
       TV_3DVECTOR dir = new TV_3DVECTOR();
-      Globals.Engine.TVMathLibrary.TVVec3Normalize(ref dir, ret);
+      Globals.Engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref dir, ret);
       return dir;
     }
 
@@ -848,7 +832,7 @@ namespace SWEndor.Actors
     public float GetTrueSpeed()
     {
       float ret = MovementInfo.Speed;
-      ActorInfo a = AttachToParent ? Factory.Get(ParentID) : null;
+      ActorInfo a = AttachToParent ? Owner.Engine.ActorFactory.Get(ParentID) : null;
       if (a != null)
         ret += a.GetTrueSpeed();
 
@@ -862,36 +846,16 @@ namespace SWEndor.Actors
     }
 
     #region Parent, Child and Relatives
-    /*
-    public void ChildExecute(object sender, ActionEventArgs args)
-    {
-      args.Action?.Invoke();
-    }
-
-    public void ParentExecute(object sender, ActionEventArgs args)
-    {
-      args.Action?.Invoke();
-    }
-    */
     public void AddParent(int actorID)
     {
       if (ParentID >= 0)
         RemoveParent();
 
       ParentID = actorID;
-      //NotifyChildEvent += Parent.ChildExecute;
-      //NotifyParentEvent += ParentExecute;
     }
 
     public void RemoveParent()
     {
-      /*
-      if (ParentID >= 0)
-      {
-        NotifyChildEvent -= Parent.ChildExecute;
-        NotifyParentEvent -= ParentExecute;
-      }
-      */
       ParentID = -1;
     }
 
@@ -904,7 +868,7 @@ namespace SWEndor.Actors
       if (ParentID < 0)
         return false;
 
-      ret |= (ParentID == actorID) || (Factory.Get(ParentID)?.HasParent(actorID, searchlevel - 1) ?? false);
+      ret |= (ParentID == actorID) || (Owner.Engine.ActorFactory.Get(ParentID)?.HasParent(actorID, searchlevel - 1) ?? false);
 
       return ret;
     }
@@ -914,7 +878,7 @@ namespace SWEndor.Actors
       if (ParentID < 0 || searchlevel <= 1)
         return ID;
       else
-        return Factory.Get(ParentID)?.GetTopParent(searchlevel - 1) ?? ID;
+        return Owner.Engine.ActorFactory.Get(ParentID)?.GetTopParent(searchlevel - 1) ?? ID;
     }
 
     public List<int> GetAllParents(int searchlevel = 99)
@@ -928,7 +892,7 @@ namespace SWEndor.Actors
         if (ParentID >= 0 && !ret.Contains(ParentID))
         {
           ret.Add(ParentID);
-          ret.AddRange(Factory.Get(ParentID)?.GetAllParents(searchlevel - 1));
+          ret.AddRange(Owner.Engine.ActorFactory.Get(ParentID)?.GetAllParents(searchlevel - 1));
         }
       }
       else
@@ -946,9 +910,9 @@ namespace SWEndor.Actors
 
       List<int> ret = new List<int>();
 
-      foreach (int actorID in Factory.GetHoldingList())
+      foreach (int actorID in Owner.Engine.ActorFactory.GetHoldingList())
       {
-        ActorInfo p = Factory.Get(actorID);
+        ActorInfo p = Owner.Engine.ActorFactory.Get(actorID);
         if (p != null && p.HasParent(ID, searchlevel))
           ret.Add(p.ID);
       }
@@ -963,7 +927,7 @@ namespace SWEndor.Actors
       if (alreadysearched == null)
         alreadysearched = new List<int>();
 
-      ActorInfo actor = Factory.Get(actorID);
+      ActorInfo actor = Owner.Engine.ActorFactory.Get(actorID);
       return (actor != null && actor.GetTopParent() == GetTopParent());
     }
 
@@ -974,9 +938,9 @@ namespace SWEndor.Actors
 
       List<int> ret = new List<int>();
 
-      foreach (int actorID in Factory.GetHoldingList())
+      foreach (int actorID in Owner.Engine.ActorFactory.GetHoldingList())
       {
-        ActorInfo p = Factory.Get(actorID);
+        ActorInfo p = Owner.Engine.ActorFactory.Get(actorID);
         if (p != null && p.GetTopParent() == GetTopParent())
           ret.Add(p.ID);
       }
@@ -1094,7 +1058,7 @@ namespace SWEndor.Actors
 
     public void Kill()
     {
-      Factory.MakeDead(this);
+      Owner.Engine.ActorFactory.MakeDead(this);
     }
 
     public void Destroy()
@@ -1110,7 +1074,7 @@ namespace SWEndor.Actors
         // Destroy Children
         foreach (int i in GetAllChildren(1))
         {
-          ActorInfo child = ActorInfo.Factory.Get(i);
+          ActorInfo child = Owner.Engine.ActorFactory.Get(i);
 
           if (child.TypeInfo is ActorTypes.Groups.AddOn || child.AttachToParent)
             child.Destroy();
@@ -1164,7 +1128,7 @@ namespace SWEndor.Actors
 
         // Final dispose
         Faction.UnregisterActor(this);
-        Factory.Remove(ID);
+        Owner.Engine.ActorFactory.Remove(ID);
 
         // Finally
         CreationState = CreationState.DISPOSED;

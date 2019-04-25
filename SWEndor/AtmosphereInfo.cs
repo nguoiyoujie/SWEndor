@@ -6,15 +6,15 @@ namespace SWEndor
 {
   public class FlareInfo
   {
-    public FlareInfo(string texpath)
+    public FlareInfo(TVTextureFactory texturefactory, string texpath)
     {
-      TexID = Globals.Engine.TVTextureFactory.LoadTexture(texpath, Path.GetFileNameWithoutExtension(texpath), -1, -1, CONST_TV_COLORKEY.TV_COLORKEY_NO, true);
+      TexID = texturefactory.LoadTexture(texpath, Path.GetFileNameWithoutExtension(texpath), -1, -1, CONST_TV_COLORKEY.TV_COLORKEY_NO, true);
     }
 
     //~FlareInfo()
     //{
-      //if (Globals.Engine.TVTextureFactory != null)
-      //  Globals.Engine.TVTextureFactory.DeleteTexture(TexID);
+      //if (Globals.Engine.TrueVision.TVTextureFactory != null)
+      //  Globals.Engine.TrueVision.TVTextureFactory.DeleteTexture(TexID);
     //}
 
     public int TexID = -1;
@@ -26,8 +26,10 @@ namespace SWEndor
 
   public class AtmosphereInfo
   {
-    internal AtmosphereInfo()
+    public readonly Engine Engine;
+    internal AtmosphereInfo(Engine engine)
     {
+      Engine = engine;
       m_atmosphere = new TVAtmosphere();
     }
 
@@ -116,8 +118,8 @@ namespace SWEndor
       if (m_texpath != path)
       {
         if (m_tex != -1)
-          Globals.Engine.TVTextureFactory.DeleteTexture(m_tex);
-        m_tex = Globals.Engine.TVTextureFactory.LoadTexture(path);
+          Engine.TrueVision.TVTextureFactory.DeleteTexture(m_tex);
+        m_tex = Engine.TrueVision.TVTextureFactory.LoadTexture(path);
         m_texpath = path;
         m_radius = radius;
       }
@@ -140,8 +142,8 @@ namespace SWEndor
       if (m_sunpath != path)
       {
         if (m_Sun != -1)
-          Globals.Engine.TVTextureFactory.DeleteTexture(m_Sun);
-        m_Sun = Globals.Engine.TVTextureFactory.LoadTexture(path);
+          Engine.TrueVision.TVTextureFactory.DeleteTexture(m_Sun);
+        m_Sun = Engine.TrueVision.TVTextureFactory.LoadTexture(path);
         m_sunpath = path;
       }
     }
@@ -214,7 +216,7 @@ namespace SWEndor
           List<FlareInfo> fset = new List<FlareInfo>(); 
           for (int i = 1; i <= 4; i++)
           {
-            FlareInfo finfo = new FlareInfo(Path.Combine(Globals.AtmospherePath, @"flare" + i + ".jpg"));
+            FlareInfo finfo = new FlareInfo(Engine.TrueVision.TVTextureFactory, Path.Combine(Globals.AtmospherePath, @"flare" + i + ".jpg"));
             switch (i)
             {
               case 1:

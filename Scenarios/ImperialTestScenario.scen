@@ -2,7 +2,7 @@
 Name = Imperial Test Custom Scenario
 PlayerName = Alpha-1
 Description = Traitorous forces are attempting to destroy the Interdictor vessel Corvus. Protect it at all costs!
-Wings = TIE Avenger, TIE Defender, Missile Boat
+Wings = TIE Avenger, TIE Defender, Missile Boat, Victory-I Star Destroyer
 Difficulties = Hard
 
 [Script]

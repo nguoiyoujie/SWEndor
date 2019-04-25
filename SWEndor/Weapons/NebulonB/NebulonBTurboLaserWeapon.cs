@@ -5,9 +5,8 @@ namespace SWEndor.Weapons.Types
 {
   public class NebulonBTurboLaserWeapon : WeaponInfo
   {
-    public NebulonBTurboLaserWeapon() : base("Nebulon-B Laser")
+    public NebulonBTurboLaserWeapon() : base("Nebulon-B Laser", "Red Laser")
     {
-      WeaponProjectile = RedLaserATI.Instance();
       WeaponCooldownRate = 3.5f;
       WeaponCooldownRateRandom = 0;
 

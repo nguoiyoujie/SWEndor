@@ -7,14 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class TransportATI : Groups.Warship
   {
-    private static TransportATI _instance;
-    public static TransportATI Instance()
-    {
-      if (_instance == null) { _instance = new TransportATI(); }
-      return _instance;
-    }
-
-    private TransportATI() : base("Transport")
+    internal TransportATI(Factory owner) : base(owner, "Transport")
     {
       MaxStrength = 250.0f;
       ImpactDamage = 60.0f;

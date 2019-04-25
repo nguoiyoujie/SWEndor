@@ -10,14 +10,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class FalconATI : Groups.RebelWing
   {
-    private static FalconATI _instance;
-    public static FalconATI Instance()
-    {
-      if (_instance == null) { _instance = new FalconATI(); }
-      return _instance;
-    }
-
-    private FalconATI() : base("Millennium Falcon")
+    internal FalconATI(Factory owner) : base(owner, "Millennium Falcon")
     {
       // Combat
       IsCombatObject = true;

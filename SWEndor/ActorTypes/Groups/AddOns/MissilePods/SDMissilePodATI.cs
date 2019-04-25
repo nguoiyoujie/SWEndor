@@ -8,14 +8,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class SDMissilePodATI : Groups.AddOn
   {
-    private static SDMissilePodATI _instance;
-    public static SDMissilePodATI Instance()
-    {
-      if (_instance == null) { _instance = new SDMissilePodATI(); }
-      return _instance;
-    }
-
-    private SDMissilePodATI() : base("Star Destroyer Missile Pod")
+    internal SDMissilePodATI(Factory owner) : base(owner, "Star Destroyer Missile Pod")
     {
       // Combat
       IsCombatObject = true;

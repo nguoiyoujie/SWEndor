@@ -5,9 +5,8 @@ namespace SWEndor.Weapons.Types
 {
   public class MissileBoat_LaserWeapon : WeaponInfo
   {
-    public MissileBoat_LaserWeapon() : base("Missile Boat Laser")
+    public MissileBoat_LaserWeapon() : base("Missile Boat Laser", "Green Laser")
     {
-      WeaponProjectile = GreenLaserATI.Instance();
       WeaponCooldownRate = 0.24f;
       WeaponCooldownRateRandom = 0;
 

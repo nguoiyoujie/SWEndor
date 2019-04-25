@@ -10,14 +10,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class BigIonLaserATI : Group.Projectile
   {
-    private static BigIonLaserATI _instance;
-    public static BigIonLaserATI Instance()
-    {
-      if (_instance == null) { _instance = new BigIonLaserATI(); }
-      return _instance;
-    }
-
-    private BigIonLaserATI() : base("Large Ion Cannon Laser")
+    internal BigIonLaserATI(Factory owner) : base(owner, "Large Ion Laser")
     {
       // Combat
       OnTimedLife = true;
@@ -48,9 +41,9 @@ namespace SWEndor.ActorTypes.Instances
     {
       if (ainfo.ActorState == ActorState.DYING || ainfo.ActorState == ActorState.DEAD)
       {
-        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("ExplosionSm"));
+        ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("ExplosionSm"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo expl = ActorInfo.Create(acinfo);
+        ActorInfo expl = ActorInfo.Create(Owner.Engine.ActorFactory, acinfo);
         expl.Scale *= 10;
 
         ainfo.ActorState = ActorState.DEAD;
@@ -59,8 +52,8 @@ namespace SWEndor.ActorTypes.Instances
 
     public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
-      ActorInfo hitby = ActorInfo.Factory.Get(hitbyActorID);
+      ActorInfo owner = Owner.Engine.ActorFactory.Get(ownerActorID);
+      ActorInfo hitby = Owner.Engine.ActorFactory.Get(hitbyActorID);
 
       if (owner == null || hitby == null)
         return;
@@ -70,7 +63,7 @@ namespace SWEndor.ActorTypes.Instances
       List<int> rm = new List<int>();
       foreach (int i in children)
       {
-        ActorInfo c = ActorInfo.Factory.Get(i);
+        ActorInfo c = Owner.Engine.ActorFactory.Get(i);
         if (c == null
           || c.CreationState != CreationState.ACTIVE
           || !c.TypeInfo.TargetType.HasFlag(TargetType.ADDON))
@@ -84,7 +77,7 @@ namespace SWEndor.ActorTypes.Instances
       {
         foreach (int i in children)
         {
-          ActorInfo child = ActorInfo.Factory.Get(i);
+          ActorInfo child = Owner.Engine.ActorFactory.Get(i);
           child.CombatInfo.Strength -= 0.5f * child.CombatInfo.MaxStrength;
           float empduration = 10000;
           
@@ -94,7 +87,7 @@ namespace SWEndor.ActorTypes.Instances
 
           foreach (int i2 in child.GetAllChildren(1))
           {
-            ActorInfo child2 = ActorInfo.Factory.Get(i2);
+            ActorInfo child2 = Owner.Engine.ActorFactory.Get(i2);
 
             if (child2.TypeInfo is ElectroATI)
             {
@@ -102,9 +95,9 @@ namespace SWEndor.ActorTypes.Instances
               return;
             }
           }
-          ActorCreationInfo acinfo = new ActorCreationInfo(ElectroATI.Instance());
+          ActorCreationInfo acinfo = new ActorCreationInfo(Owner.Get("Electro"));
           acinfo.Position = child.GetPosition();
-          ActorInfo electro = ActorInfo.Create(acinfo);
+          ActorInfo electro = ActorInfo.Create(Owner.Engine.ActorFactory, acinfo);
           electro.AddParent(child.ID);
           electro.CycleInfo.CyclesRemaining = empduration / electro.TypeInfo.TimedLife;
         }
@@ -112,9 +105,9 @@ namespace SWEndor.ActorTypes.Instances
 
       if (hitby.TypeInfo.TargetType.HasFlag(TargetType.SHIP))
       {
-        ActionManager.ForceClearQueue(hitbyActorID);
-        ActionManager.QueueNext(hitbyActorID, new Rotate(hitby.GetRelativePositionFUR(1000, -800, -200), hitby.MovementInfo.MaxSpeed, 0.1f, false));
-        ActionManager.QueueNext(hitbyActorID, new Lock());
+        Owner.Engine.ActionManager.ForceClearQueue(hitbyActorID);
+        Owner.Engine.ActionManager.QueueNext(hitbyActorID, new Rotate(hitby.GetRelativePositionFUR(1000, -800, -200), hitby.MovementInfo.MaxSpeed, 0.1f, false));
+        Owner.Engine.ActionManager.QueueNext(hitbyActorID, new Lock());
       }
     }
   }

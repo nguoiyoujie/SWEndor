@@ -8,14 +8,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class NebulonBTurboLaserATI : Groups.AddOn
   {
-    private static NebulonBTurboLaserATI _instance;
-    public static NebulonBTurboLaserATI Instance()
-    {
-      if (_instance == null) { _instance = new NebulonBTurboLaserATI(); }
-      return _instance;
-    }
-
-    private NebulonBTurboLaserATI() : base("Nebulon B Turbolaser Tower")
+    internal NebulonBTurboLaserATI(Factory owner) : base(owner, "Nebulon B Turbolaser Tower")
     {
       // Combat
       IsCombatObject = true;

@@ -7,14 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class ACTurboLaserATI : Groups.AddOn
   {
-    private static ACTurboLaserATI _instance;
-    public static ACTurboLaserATI Instance()
-    {
-      if (_instance == null) { _instance = new ACTurboLaserATI(); }
-      return _instance;
-    }
-
-    private ACTurboLaserATI() : base("Acclamator Turbolaser Tower")
+    internal ACTurboLaserATI(Factory owner) : base(owner, "Acclamator Turbolaser Tower")
     {
       // Combat
       IsCombatObject = true;

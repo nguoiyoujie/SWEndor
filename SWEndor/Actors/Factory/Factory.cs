@@ -8,8 +8,12 @@ namespace SWEndor.Actors
 {
   public partial class ActorInfo
   {
-    public static class Factory
+    public class Factory
     {
+      public readonly Engine Engine;
+      internal Factory(Engine engine)
+      { Engine = engine; }
+
       private const int Capacity = 2500; // hard code limit to ActorInfo. We should not be exceeding 1000 normally.
       private static ConcurrentQueue<ActorInfo> deadqueue = new ConcurrentQueue<ActorInfo>();
       private static ActorInfo[] list = new ActorInfo[Capacity];
@@ -20,7 +24,7 @@ namespace SWEndor.Actors
       private static int emptycounter = 0;
       private static Mutex mu_counter = new Mutex();
 
-      public static ActorInfo Register(ActorCreationInfo amake, string key = "")
+      public ActorInfo Register(ActorCreationInfo amake, string key = "")
       {
         ActorInfo actor = null;
         if (amake.ActorTypeInfo == null)
@@ -40,7 +44,7 @@ namespace SWEndor.Actors
 
         if (list[i] == null)
         {
-          actor = new ActorInfo(i, amake);
+          actor = new ActorInfo(this, i, amake);
           list[i] = actor;
         }
         else
@@ -55,51 +59,51 @@ namespace SWEndor.Actors
         return actor;
       }
 
-      public static void ActivatePlanned()
+      public void ActivatePlanned()
       {
         foreach (ActorInfo a in list)
           if (a != null)
-            if (a.CreationState == CreationState.PLANNED && a.CreationTime < Globals.Engine.Game.GameTime)
+            if (a.CreationState == CreationState.PLANNED && a.CreationTime < Engine.Game.GameTime)
               a.Generate();
       }
 
-      public static void MakeDead(ActorInfo a)
+      public void MakeDead(ActorInfo a)
       {
         deadqueue.Enqueue(a);
       }
 
-      public static void DestroyDead()
+      public void DestroyDead()
       {
         ActorInfo a;
         while (deadqueue.TryDequeue(out a))
           a.Destroy();
       }
 
-      public static int GetActorCount()
+      public int GetActorCount()
       {
         return count;
       }
 
-      public static int[] GetList()
+      public int[] GetList()
       {
-        if (listtime < Globals.Engine.Game.GameTime)
+        if (listtime < Engine.Game.GameTime)
         {
           List<int> hl = new List<int>();
           foreach (ActorInfo a in list)
             if (a != null && a.CreationState != CreationState.DISPOSED)
               hl.Add(a.ID);
           holdinglist = hl.ToArray();
-          listtime = Globals.Engine.Game.GameTime;
+          listtime = Engine.Game.GameTime;
         }
         return holdinglist;
       }
 
-      public static int[] GetHoldingList()
+      public int[] GetHoldingList()
       {
         return holdinglist;
       }
 
-      public static ActorInfo Get(int id)
+      public ActorInfo Get(int id)
       {
         if (id < 0)
           return null;
@@ -109,17 +113,17 @@ namespace SWEndor.Actors
         return null;
       }
 
-      public static bool Exists(int id)
+      public bool Exists(int id)
       {
         return id >= 0 && list[id % Capacity] != null && list[id % Capacity].ID == id;
       }
 
-      public static bool IsPlayer(int id)
+      public bool IsPlayer(int id)
       {
-        return id == Globals.Engine.PlayerInfo.Actor?.ID;
+        return id == Engine.PlayerInfo.Actor?.ID;
       }
 
-      public static void Remove(int id)
+      public void Remove(int id)
       {
         int x = id % Capacity;
 
@@ -134,7 +138,7 @@ namespace SWEndor.Actors
         }
       }
 
-      public static void Reset()
+      public void Reset()
       {
         DestroyDead();
         for (int i = 0; i < list.Length; i++)

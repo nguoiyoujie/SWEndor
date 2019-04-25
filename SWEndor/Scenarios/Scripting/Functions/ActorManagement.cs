@@ -15,7 +15,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (gscenario == null)
         return "-1";
 
-      ActorTypeInfo atype = ActorTypeInfo.Factory.Get(ps[0].ToString());
+      ActorTypeInfo atype = Globals.Engine.ActorTypeFactory.Get(ps[0].ToString());
       string unitname = ps[1].ToString();
       string regname = ps[2].ToString();
       string sidebarname = ps[3].ToString();
@@ -51,11 +51,11 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /*
     public static object SetActive(Context context, params object[] ps)
     {
-      if (Globals.Engine.GameScenarioManager.Scenario == null)
+      if (Owner.Engine.GameScenarioManager.Scenario == null)
         return false;
 
       int id = Convert.ToInt32(ps[0].ToString());
-      actor = ActorInfo.Factory.Get(id);
+      actor = ActorFactory.Get(id);
       return actor != null;
     }
     */
@@ -63,7 +63,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object IsAlive(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
@@ -73,7 +73,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object RegisterEvents(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
@@ -84,7 +84,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object GetLocalPosition(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
@@ -95,7 +95,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object GetLocalRotation(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
@@ -106,7 +106,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object GetLocalDirection(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
@@ -117,7 +117,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object GetPosition(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
@@ -128,7 +128,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object GetRotation(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
@@ -139,7 +139,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object GetDirection(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
@@ -150,7 +150,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object SetLocalPosition(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
@@ -161,7 +161,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object SetLocalRotation(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
@@ -172,7 +172,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object SetLocalDirection(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
@@ -183,7 +183,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object SetRotation(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
@@ -194,7 +194,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object SetDirection(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
@@ -205,7 +205,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object LookAtPoint(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
@@ -221,7 +221,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object GetChildren(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new int[] { };
 
@@ -231,7 +231,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object GetProperty(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return null;
 
@@ -243,7 +243,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object SetProperty(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return null;
 

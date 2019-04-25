@@ -33,12 +33,12 @@ namespace SWEndor.Scenarios
       acinfo.CreationTime = SpawnTime;
       acinfo.Position = Position;
       acinfo.Rotation = Rotation;
-      ainfo = ActorInfo.Create(acinfo);
+      ainfo = ActorInfo.Create(scenario.Manager.Engine.ActorFactory, acinfo);
       ainfo.SideBarName = SidebarName;
 
       if (Actions != null)
         foreach (ActionInfo act in Actions)
-          ActionManager.QueueLast(ainfo.ID, act);
+          scenario.Manager.Engine.ActionManager.QueueLast(ainfo.ID, act);
 
       if (Registries != null)
       {

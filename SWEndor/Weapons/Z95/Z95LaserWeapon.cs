@@ -5,9 +5,8 @@ namespace SWEndor.Weapons.Types
 {
   public class Z95LaserWeapon : WeaponInfo
   {
-    public Z95LaserWeapon() : base("Z-95 Laser")
-    {
-      WeaponProjectile = RedLaserATI.Instance();
+    public Z95LaserWeapon() : base("Z-95 Laser", "Red Laser")
+    { 
       WeaponCooldownRate = 0.21f;
       WeaponCooldownRateRandom = 0;
       

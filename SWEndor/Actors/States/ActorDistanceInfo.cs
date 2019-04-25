@@ -32,8 +32,8 @@ namespace SWEndor.Actors
       if (actorID1 == actorID2)
         return 0;
 
-      ActorInfo a1 = ActorInfo.Factory.Get(actorID1);
-      ActorInfo a2 = ActorInfo.Factory.Get(actorID2);
+      ActorInfo a1 = Globals.Engine.ActorFactory.Get(actorID1);
+      ActorInfo a2 = Globals.Engine.ActorFactory.Get(actorID2);
       if (a1 == null || a2 == null)
         return float.MaxValue;
 
@@ -66,8 +66,8 @@ namespace SWEndor.Actors
       if (actorID1 == actorID2)
         return 0;
 
-      ActorInfo a1 = ActorInfo.Factory.Get(actorID1);
-      ActorInfo a2 = ActorInfo.Factory.Get(actorID2);
+      ActorInfo a1 = Globals.Engine.ActorFactory.Get(actorID1);
+      ActorInfo a2 = Globals.Engine.ActorFactory.Get(actorID2);
 
       if (a1 == null || a2 == null)
         return float.MaxValue;
@@ -97,7 +97,7 @@ namespace SWEndor.Actors
 
     public static float CalculateDistance(ActorInfo first, ActorInfo second)
     {
-      return Globals.Engine.TVMathLibrary.GetDistanceVec3D(first.GetPosition(), second.GetPosition());
+      return Globals.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(first.GetPosition(), second.GetPosition());
     }
   }
 }

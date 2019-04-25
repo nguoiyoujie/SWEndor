@@ -9,14 +9,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class WedgeXWingATI : Groups.RebelWing
   {
-    private static WedgeXWingATI _instance;
-    public static WedgeXWingATI Instance()
-    {
-      if (_instance == null) { _instance = new WedgeXWingATI(); }
-      return _instance;
-    }
-
-    private WedgeXWingATI() : base("X-Wing (Wedge)")
+    internal WedgeXWingATI(Factory owner) : base(owner, "X-Wing (Wedge)")
     {
       // Combat
       IsCombatObject = true;

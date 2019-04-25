@@ -7,14 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class AcclamatorATI : Groups.StarDestroyer
   {
-    private static AcclamatorATI _instance;
-    public static AcclamatorATI Instance()
-    {
-      if (_instance == null) { _instance = new AcclamatorATI(); }
-      return _instance;
-    }
-
-    private AcclamatorATI() : base("Acclamator Assault Ship")
+    internal AcclamatorATI(Factory owner) : base(owner, "Acclamator Assault Ship")
     {
       // Combat
       IsCombatObject = true;

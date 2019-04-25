@@ -46,7 +46,7 @@ namespace SWEndor.AI.Actions
 
         if (owner.CurrentAction is Move)
           owner.CurrentAction.Complete = true;
-        ActionManager.QueueFirst(owner.ID, new ForcedMove(new TV_3DVECTOR(x, y, z), owner.MovementInfo.MaxSpeed, -1, 360 / (owner.MovementInfo.MaxTurnRate + 72)));
+        owner.Owner.Engine.ActionManager.QueueFirst(owner.ID, new ForcedMove(new TV_3DVECTOR(x, y, z), owner.MovementInfo.MaxSpeed, -1, 360 / (owner.MovementInfo.MaxTurnRate + 72)));
         return false;
       }
       else
@@ -106,8 +106,8 @@ namespace SWEndor.AI.Actions
 
         TV_3DVECTOR vec = new TV_3DVECTOR();
         TV_3DVECTOR dir = owner.GetDirection();
-        Globals.Engine.TVMathLibrary.TVVec3Normalize(ref vec, tgtdir);
-        float delta = Globals.Engine.TVMathLibrary.ACos(Globals.Engine.TVMathLibrary.TVVec3Dot(dir, vec));
+        Globals.Engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, tgtdir);
+        float delta = Globals.Engine.TrueVision.TVMathLibrary.ACos(Globals.Engine.TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
 
         if (owner.IsPlayer())
           Globals.Engine.Screen2D.MessageSecondaryText(string.Format("DELTA: {0:0.000}", delta), 1.5f, new TV_COLOR(0.5f, 0.5f, 1, 1), 0);

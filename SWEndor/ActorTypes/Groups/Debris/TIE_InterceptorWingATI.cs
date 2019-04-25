@@ -4,14 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class TIE_InterceptorWingATI : Groups.SpinningDebris
   {
-    private static TIE_InterceptorWingATI _instance;
-    public static TIE_InterceptorWingATI Instance()
-    {
-      if (_instance == null) { _instance = new TIE_InterceptorWingATI(); }
-      return _instance;
-    }
-
-    private TIE_InterceptorWingATI() : base("TIE_InterceptorWingATI")
+    internal TIE_InterceptorWingATI(Factory owner) : base(owner, "TIE_InterceptorWingATI")
     {
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"tie\tie_interceptor_right_left_wing.x");
     }

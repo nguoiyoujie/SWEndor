@@ -5,9 +5,8 @@ namespace SWEndor.Weapons.Types
 {
   public class DeathStarLaserWeapon : WeaponInfo
   {
-    public DeathStarLaserWeapon() : base("Death Star Laser")
+    public DeathStarLaserWeapon() : base("Death Star Laser", "Death Star Laser")
     {
-      WeaponProjectile = DeathStarLaserATI.Instance();
       WeaponCooldownRate = 0.01f;
       WeaponCooldownRateRandom = 0;
 

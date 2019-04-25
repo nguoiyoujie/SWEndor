@@ -5,9 +5,8 @@ namespace SWEndor.Weapons.Types
 {
   public class Tower_DblLaserWeapon : WeaponInfo
   {
-    public Tower_DblLaserWeapon() : base("Tower Double Laser")
+    public Tower_DblLaserWeapon() : base("Tower Double Laser", "Yellow Double Laser")
     {
-      WeaponProjectile = Yellow2LaserATI.Instance();
       WeaponCooldownRate = 2.25f;
       WeaponCooldownRateRandom = 0;
 

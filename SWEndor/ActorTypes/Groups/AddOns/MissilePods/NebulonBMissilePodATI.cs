@@ -8,14 +8,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class NebulonBMissilePodATI : Groups.AddOn
   {
-    private static NebulonBMissilePodATI _instance;
-    public static NebulonBMissilePodATI Instance()
-    {
-      if (_instance == null) { _instance = new NebulonBMissilePodATI(); }
-      return _instance;
-    }
-
-    private NebulonBMissilePodATI() : base("Nebulon B Missile Pod")
+    internal NebulonBMissilePodATI(Factory owner) : base(owner, "Nebulon B Missile Pod")
     {
       // Combat
       IsCombatObject = true;

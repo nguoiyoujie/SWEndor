@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class StaticScene : ActorTypeInfo
   {
-    internal StaticScene(string name) : base(name)
+    internal StaticScene(Factory owner, string name) : base(owner, name)
     {
       // Combat
       IsCombatObject = false;

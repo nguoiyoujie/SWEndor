@@ -10,18 +10,20 @@ namespace SWEndor.Scenarios
 {
   public class GameScenarioManager
   {
-    internal GameScenarioManager()
+    public readonly Engine Engine;
+    internal GameScenarioManager(Engine engine)
     {
-      ScenarioList.Add(new Scenarios.GSEndor());
-      ScenarioList.Add(new Scenarios.GSYavin());
-      ScenarioList.Add(new Scenarios.GSHoth());
-      ScenarioList.Add(new Scenarios.GSTIEAdvanced());
-      ScenarioList.Add(new Scenarios.GSTestZone());
+      Engine = engine;
+      ScenarioList.Add(new Scenarios.GSEndor(this));
+      ScenarioList.Add(new Scenarios.GSYavin(this));
+      ScenarioList.Add(new Scenarios.GSHoth(this));
+      ScenarioList.Add(new Scenarios.GSTIEAdvanced(this));
+      ScenarioList.Add(new Scenarios.GSTestZone(this));
 
       // Add scripted scenarios?
       if (Directory.Exists(Globals.CustomScenarioPath))
         foreach (string path in Directory.GetFiles(Globals.CustomScenarioPath, "*.scen"))
-          ScenarioList.Add(new Scenarios.GSCustomScenario(path));
+          ScenarioList.Add(new Scenarios.GSCustomScenario(this, path));
     }
 
     public List<GameScenarioBase> ScenarioList = new List<GameScenarioBase>();
@@ -66,7 +68,7 @@ namespace SWEndor.Scenarios
       Globals.Engine.Game.IsPaused = false;
       Globals.Engine.Screen2D.ShowPage = true;
       Globals.Engine.Screen2D.CurrentPage = new MainMenu();
-      Scenario = new GSMainMenu();
+      Scenario = new GSMainMenu(this);
       Scenario.Load(null, "");
       Scenario.Launch();
     }
@@ -136,12 +138,12 @@ namespace SWEndor.Scenarios
         SceneCamera.Kill();
       }
 
-      ActorCreationInfo camaci = new ActorCreationInfo(InvisibleCameraATI.Instance());
+      ActorCreationInfo camaci = new ActorCreationInfo(Engine.ActorTypeFactory.Get("Invisible Camera"));
       camaci.CreationTime = Globals.Engine.Game.GameTime;
       camaci.InitialState = ActorState.NORMAL;
       camaci.Position = new TV_3DVECTOR(0, 0, 0);
       camaci.Rotation = new TV_3DVECTOR();
-      SceneCamera = ActorInfo.Create(camaci);
+      SceneCamera = ActorInfo.Create(Engine.ActorFactory, camaci);
       CameraTargetPoint = new TV_3DVECTOR(0, 0, 100);
     }
 

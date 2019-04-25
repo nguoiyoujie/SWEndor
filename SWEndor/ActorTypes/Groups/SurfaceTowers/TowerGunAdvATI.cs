@@ -8,14 +8,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class TowerGunAdvATI : Groups.SurfaceTower
   {
-    private static TowerGunAdvATI _instance;
-    public static TowerGunAdvATI Instance()
-    {
-      if (_instance == null) { _instance = new TowerGunAdvATI(); }
-      return _instance;
-    }
-
-    private TowerGunAdvATI() : base("Advanced Turbolaser Turret")
+    internal TowerGunAdvATI(Factory owner) : base(owner, "Advanced Turbolaser Turret")
     {
       MaxStrength = 45;
       ImpactDamage = 60;

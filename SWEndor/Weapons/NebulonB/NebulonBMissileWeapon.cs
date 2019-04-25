@@ -6,9 +6,8 @@ namespace SWEndor.Weapons.Types
 {
   public class NebulonBMissileWeapon : WeaponInfo
   {
-    public NebulonBMissileWeapon() : base("Nebulon B Missile")
+    public NebulonBMissileWeapon() : base("Nebulon B Missile", "Missile")
     {
-      WeaponProjectile = MissileATI.Instance();
       WeaponCooldownRate = 0.5f;
       WeaponCooldownRateRandom = 0;
 

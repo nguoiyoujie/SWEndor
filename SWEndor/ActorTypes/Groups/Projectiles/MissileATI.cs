@@ -10,14 +10,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class MissileATI : Group.Projectile
   {
-    private static MissileATI _instance;
-    public static MissileATI Instance()
-    {
-      if (_instance == null) { _instance = new MissileATI(); }
-      return _instance;
-    }
-
-    private MissileATI() : base("Missile")
+    internal MissileATI(Factory owner) : base(owner, "Missile")
     {
       // Combat
       OnTimedLife = true;
@@ -37,7 +30,7 @@ namespace SWEndor.ActorTypes.Instances
       ImpactCloseEnoughDistance = 100;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"projectiles\missile.x");
-      m_particletex = Globals.Engine.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, @"particle.dds"));
+      m_particletex = Globals.Engine.TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, @"particle.dds"));
     }
 
     private int m_particletex;
@@ -46,9 +39,9 @@ namespace SWEndor.ActorTypes.Instances
     {
       if (ainfo.ActorState == ActorState.DYING || ainfo.ActorState == ActorState.DEAD)
       {
-        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("ExplosionSm"));
+        ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("ExplosionSm"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo.Create(acinfo);
+        ActorInfo.Create(Owner.Engine.ActorFactory, acinfo);
 
         ainfo.ActorState = ActorState.DEAD;
       }
@@ -77,7 +70,7 @@ namespace SWEndor.ActorTypes.Instances
       {
         if (ainfo.ParticleSystem == null)
         {
-          ainfo.ParticleSystem = Globals.Engine.TVScene.CreateParticleSystem();
+          ainfo.ParticleSystem = Globals.Engine.TrueVision.TVScene.CreateParticleSystem();
           int emitter = ainfo.ParticleSystem.CreateEmitter(CONST_TV_EMITTERTYPE.TV_EMITTER_BILLBOARD, 250);
           ainfo.ParticleEmitterID = emitter;
 

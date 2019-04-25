@@ -5,9 +5,8 @@ namespace SWEndor.Weapons.Types
 {
   public class ExecutorTurboLaserWeapon : WeaponInfo
   {
-    public ExecutorTurboLaserWeapon() : base("Executor Laser")
+    public ExecutorTurboLaserWeapon() : base("Executor Laser", "Yellow Laser")
     {
-      WeaponProjectile = YellowLaserATI.Instance();
       WeaponCooldownRate = 2.4f;
       WeaponCooldownRateRandom = 0;
 

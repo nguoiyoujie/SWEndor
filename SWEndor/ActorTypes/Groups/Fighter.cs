@@ -5,7 +5,7 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class Fighter : ActorTypeInfo
   {
-    internal Fighter(string name): base(name)
+    internal Fighter(Factory owner, string name): base(owner, name)
     {
       // Combat
       IsCombatObject = true;
@@ -57,9 +57,9 @@ namespace SWEndor.ActorTypes.Groups
 
         ainfo.CombatInfo.IsCombatObject = false;
 
-        ActorCreationInfo acinfo = new ActorCreationInfo(ElectroATI.Instance());
+        ActorCreationInfo acinfo = new ActorCreationInfo(Owner.Get("Electro"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo.Create(acinfo).AddParent(ainfo.ID);
+        ActorInfo.Create(Owner.Engine.ActorFactory, acinfo).AddParent(ainfo.ID);
       }
     }
   }

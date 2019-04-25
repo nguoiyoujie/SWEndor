@@ -13,11 +13,14 @@ namespace SWEndor.ActorTypes
 {
   public partial class ActorTypeInfo : IDisposable
   {
-    public ActorTypeInfo(string name = "")
+    public ActorTypeInfo(Factory owner, string name = "")
     {
+      Owner = owner;
       if (name.Length > 0) { _name = name; }
       _counter = counter++;
     }
+
+    public readonly Factory Owner;
 
     // Basic Info
     private string _name = "New ActorType";
@@ -107,10 +110,10 @@ namespace SWEndor.ActorTypes
     {
       if (SourceMesh == null)
       {
-        SourceMesh = Globals.Engine.TVGlobals.GetMesh(_name);
+        SourceMesh = Owner.Engine.TrueVision.TVGlobals.GetMesh(_name);
         if (SourceMesh == null)
         {
-          SourceMesh = Globals.Engine.TVScene.CreateMeshBuilder(_name);
+          SourceMesh = Owner.Engine.TrueVision.TVScene.CreateMeshBuilder(_name);
           if (SourceMeshPath.Length > 0)
             SourceMesh.LoadXFile(SourceMeshPath, true);
           SourceMesh.Enable(false);
@@ -121,12 +124,12 @@ namespace SWEndor.ActorTypes
 
       if (SourceFarMesh == null)
       {
-        SourceFarMesh = Globals.Engine.TVGlobals.GetMesh(_name + "_far");
+        SourceFarMesh = Owner.Engine.TrueVision.TVGlobals.GetMesh(_name + "_far");
         if (SourceFarMesh == null)
         {
           if (SourceFarMeshPath.Length > 0)
           {
-            SourceFarMesh = Globals.Engine.TVScene.CreateMeshBuilder(_name + "_far");
+            SourceFarMesh = Owner.Engine.TrueVision.TVScene.CreateMeshBuilder(_name + "_far");
             SourceFarMesh.LoadXFile(SourceFarMeshPath, true);
             SourceFarMesh.Enable(false);
             SourceFarMesh.WeldVertices();
@@ -171,21 +174,21 @@ namespace SWEndor.ActorTypes
 
     public int LoadAlphaTexture(string name, string texpath, string alphatexpath = null)
     {
-      int tex = Globals.Engine.TVGlobals.GetTex(name);
+      int tex = Owner.Engine.TrueVision.TVGlobals.GetTex(name);
       if (tex == 0)
       {
-        int texS = Globals.Engine.TVTextureFactory.LoadTexture(texpath);
-        int texA = Globals.Engine.TVTextureFactory.LoadTexture(alphatexpath ?? texpath); //LoadAlphaTexture
-        tex = Globals.Engine.TVTextureFactory.AddAlphaChannel(texS, texA, name);
+        int texS = Owner.Engine.TrueVision.TVTextureFactory.LoadTexture(texpath);
+        int texA = Owner.Engine.TrueVision.TVTextureFactory.LoadTexture(alphatexpath ?? texpath); //LoadAlphaTexture
+        tex = Owner.Engine.TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, name);
       }
       return tex;
     }
 
     public int LoadTexture(string name, string texpath)
     {
-      int tex = Globals.Engine.TVGlobals.GetTex(name);
+      int tex = Owner.Engine.TrueVision.TVGlobals.GetTex(name);
       if (tex == 0)
-        tex = Globals.Engine.TVTextureFactory.LoadTexture(texpath, name);
+        tex = Owner.Engine.TrueVision.TVTextureFactory.LoadTexture(texpath, name);
       return tex;
     }
 
@@ -216,7 +219,7 @@ namespace SWEndor.ActorTypes
       }
 
       if (mode == CameraMode.FREEROTATION
-      && !Globals.Engine.GameScenarioManager.IsCutsceneMode)
+      && !Owner.Engine.GameScenarioManager.IsCutsceneMode)
       {
         TV_3DVECTOR location = new TV_3DVECTOR();
         TV_3DVECTOR campos = ainfo.GetRelativePositionXYZ(location.x, location.y, location.z);
@@ -227,14 +230,14 @@ namespace SWEndor.ActorTypes
         cam.SetRotation(rot.x, rot.y, rot.z / 2);
       }
       else if (mode == CameraMode.FREEMODE
-            && !Globals.Engine.GameScenarioManager.IsCutsceneMode)
+            && !Owner.Engine.GameScenarioManager.IsCutsceneMode)
       {
         TV_3DVECTOR rot = cam.GetRotation();
         cam.SetRotation(rot.x, rot.y, rot.z / 2);
       }
       else
       {
-        int cammode = (Globals.Engine.GameScenarioManager.IsCutsceneMode) ? 0 : (int)mode;
+        int cammode = (Owner.Engine.GameScenarioManager.IsCutsceneMode) ? 0 : (int)mode;
         TV_3DVECTOR location = new TV_3DVECTOR();
         TV_3DVECTOR target = new TV_3DVECTOR();
 
@@ -248,8 +251,8 @@ namespace SWEndor.ActorTypes
           && !(ainfo.TypeInfo is InvisibleCameraATI) 
           && !(ainfo.TypeInfo is DeathCameraATI))
         {
-          if (Globals.Engine.GameScenarioManager.CameraTargetActor != null
-            && Globals.Engine.GameScenarioManager.CameraTargetActor.Mesh != null)
+          if (Owner.Engine.GameScenarioManager.CameraTargetActor != null
+            && Owner.Engine.GameScenarioManager.CameraTargetActor.Mesh != null)
           {
             cam.SetPosition(campos.x, campos.y, campos.z);
             cam.SetLookAt(camview.x, camview.y, camview.z);
@@ -291,7 +294,7 @@ namespace SWEndor.ActorTypes
       ainfo.CanEvade = CanEvade;
       ainfo.CanRetaliate = CanRetaliate;
 
-      if (!(Globals.Engine.GameScenarioManager.Scenario is GSMainMenu))
+      if (!(Owner.Engine.GameScenarioManager.Scenario is GSMainMenu))
         foreach (SoundSourceInfo assi in InitialSoundSources)
           assi.Process(ainfo);
     }
@@ -305,9 +308,9 @@ namespace SWEndor.ActorTypes
     public virtual void ProcessState(ActorInfo ainfo)
     {
       // only per second.
-      if (ainfo.LastProcessStateUpdateTime < Globals.Engine.Game.GameTime)
+      if (ainfo.LastProcessStateUpdateTime < Owner.Engine.Game.GameTime)
       {
-        ainfo.LastProcessStateUpdateTime = Globals.Engine.Game.GameTime + 1;
+        ainfo.LastProcessStateUpdateTime = Owner.Engine.Game.GameTime + 1;
         // weapons
         foreach (WeaponInfo w in ainfo.WeaponSystemInfo.Weapons.Values)
           w.Reload();
@@ -321,12 +324,12 @@ namespace SWEndor.ActorTypes
       ainfo.MovementInfo.ExecuteDyingMovement();
 
       // sound
-      if (Globals.Engine.PlayerInfo.Actor != null
-        && !(Globals.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
-        && !(Globals.Engine.PlayerInfo.Actor.TypeInfo is DeathCameraATI)
+      if (Owner.Engine.PlayerInfo.Actor != null
+        && !(Owner.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
+        && !(Owner.Engine.PlayerInfo.Actor.TypeInfo is DeathCameraATI)
         && ainfo.CreationState == CreationState.ACTIVE 
         && !ainfo.IsScenePlayer()
-        && !(Globals.Engine.GameScenarioManager.Scenario is GSMainMenu))
+        && !(Owner.Engine.GameScenarioManager.Scenario is GSMainMenu))
       {
         foreach (SoundSourceInfo assi in SoundSources)
           assi.Process(ainfo);
@@ -342,7 +345,7 @@ namespace SWEndor.ActorTypes
           ainfo.ExplosionInfo.OnDeath();
 
           // Debris
-          if (!ainfo.IsAggregateMode() && !Globals.Engine.Game.IsLowFPS())
+          if (!ainfo.IsAggregateMode() && !Owner.Engine.Game.IsLowFPS())
             foreach (DebrisSpawnerInfo ds in Debris)
               ds.Process(ainfo);
           break;
@@ -356,15 +359,15 @@ namespace SWEndor.ActorTypes
       {
         if (ainfo.ActorState == ActorState.DYING || ainfo.ActorState == ActorState.DEAD)
         {
-          if (Globals.Engine.GameScenarioManager.SceneCamera == null || !(Globals.Engine.GameScenarioManager.SceneCamera.TypeInfo is DeathCameraATI))
+          if (Owner.Engine.GameScenarioManager.SceneCamera == null || !(Owner.Engine.GameScenarioManager.SceneCamera.TypeInfo is DeathCameraATI))
           {
-            ActorCreationInfo camaci = new ActorCreationInfo(DeathCameraATI.Instance());
-            camaci.CreationTime = Globals.Engine.Game.GameTime;
+            ActorCreationInfo camaci = new ActorCreationInfo(Owner.Engine.ActorTypeFactory.Get("Death Camera"));
+            camaci.CreationTime = Owner.Engine.Game.GameTime;
             camaci.InitialState = ActorState.DYING;
             camaci.Position = ainfo.GetPosition();
             camaci.Rotation = new TV_3DVECTOR();
-            ActorInfo a = ActorInfo.Create(camaci);
-            Globals.Engine.PlayerInfo.ActorID = a.ID;
+            ActorInfo a = ActorInfo.Create(Owner.Engine.ActorFactory, camaci);
+            Owner.Engine.PlayerInfo.ActorID = a.ID;
 
             a.CombatInfo.Strength = 0;
             a.CameraSystemInfo.CamDeathCirclePeriod = ainfo.CameraSystemInfo.CamDeathCirclePeriod;
@@ -373,25 +376,25 @@ namespace SWEndor.ActorTypes
 
             if (ainfo.ActorState == ActorState.DYING)
             {
-              ainfo.TickEvents += Globals.Engine.GameScenarioManager.Scenario.ProcessPlayerDying;
-              ainfo.DestroyedEvents += Globals.Engine.GameScenarioManager.Scenario.ProcessPlayerKilled;
+              ainfo.TickEvents += Owner.Engine.GameScenarioManager.Scenario.ProcessPlayerDying;
+              ainfo.DestroyedEvents += Owner.Engine.GameScenarioManager.Scenario.ProcessPlayerKilled;
             }
             else
             {
-              ainfo.DestroyedEvents += Globals.Engine.GameScenarioManager.Scenario.ProcessPlayerKilled;
+              ainfo.DestroyedEvents += Owner.Engine.GameScenarioManager.Scenario.ProcessPlayerKilled;
             }
           }
           else
           {
-            Globals.Engine.GameScenarioManager.SceneCamera.SetLocalPosition(ainfo.GetLocalPosition().x, ainfo.GetLocalPosition().y, ainfo.GetLocalPosition().z);
+            Owner.Engine.GameScenarioManager.SceneCamera.SetLocalPosition(ainfo.GetLocalPosition().x, ainfo.GetLocalPosition().y, ainfo.GetLocalPosition().z);
           }
         }
         else
         {
-          if (Globals.Engine.GameScenarioManager.SceneCamera != null && Globals.Engine.GameScenarioManager.SceneCamera.TypeInfo is DeathCameraATI)
+          if (Owner.Engine.GameScenarioManager.SceneCamera != null && Owner.Engine.GameScenarioManager.SceneCamera.TypeInfo is DeathCameraATI)
           {
-            Globals.Engine.GameScenarioManager.SceneCamera.Kill();
-            Globals.Engine.GameScenarioManager.SceneCamera = null;
+            Owner.Engine.GameScenarioManager.SceneCamera.Kill();
+            Owner.Engine.GameScenarioManager.SceneCamera = null;
           }
         }
       }
@@ -399,8 +402,8 @@ namespace SWEndor.ActorTypes
 
     public virtual void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
-      ActorInfo hitby = ActorInfo.Factory.Get(hitbyActorID);
+      ActorInfo owner = Owner.Engine.ActorFactory.Get(ownerActorID);
+      ActorInfo hitby = Owner.Engine.ActorFactory.Get(hitbyActorID);
 
       if (owner == null || hitby == null)
         return;
@@ -419,28 +422,28 @@ namespace SWEndor.ActorTypes
         if (owner.IsPlayer())
         {
           if (str1 < (int)str0)
-            Globals.Engine.PlayerInfo.FlashHit(Globals.Engine.PlayerInfo.HealthColor);
-          Globals.Engine.PlayerInfo.Score.DamageTaken += hitby.TypeInfo.ImpactDamage * owner.CombatInfo.DamageModifier;
+            Owner.Engine.PlayerInfo.FlashHit(Owner.Engine.PlayerInfo.HealthColor);
+          Owner.Engine.PlayerInfo.Score.DamageTaken += hitby.TypeInfo.ImpactDamage * owner.CombatInfo.DamageModifier;
 
           if (owner.ActorState != ActorState.DYING 
             && owner.ActorState != ActorState.DEAD 
             && owner.CombatInfo.Strength <= 0)
           {
-            Globals.Engine.PlayerInfo.Score.Deaths++;
+            Owner.Engine.PlayerInfo.Score.Deaths++;
           }
         }
 
         List<int> attackerfamily = hitby.GetAllParents();
         foreach (int i in attackerfamily)
         {
-          ActorInfo a = ActorInfo.Factory.Get(i);
+          ActorInfo a = Owner.Engine.ActorFactory.Get(i);
           if (a != null && a.Faction != null && !a.Faction.IsAlliedWith(owner.Faction))
           {
             if (!(a.TypeInfo is Groups.AddOn))
               AddScore(a.Score, a, owner);
 
             if (a.IsPlayer())
-              AddScore(Globals.Engine.PlayerInfo.Score, a, owner);
+              AddScore(Owner.Engine.PlayerInfo.Score, a, owner);
           }
         }
 
@@ -452,17 +455,17 @@ namespace SWEndor.ActorTypes
           List<int> hparents = hitby.GetAllParents();
           if (hparents.Count > 0)
           {
-            ActorInfo h = ActorInfo.Factory.Get(hparents[0]);
+            ActorInfo h = Owner.Engine.ActorFactory.Get(hparents[0]);
             if (h != null && hitby.TypeInfo.IsDamage && hparents.Count > 0)
             {
               if (owner.CurrentAction != null && owner.CurrentAction.CanInterrupt && owner.Faction != null && !owner.Faction.IsAlliedWith(h.Faction) && owner.CanRetaliate)
               {
-                ActionManager.ClearQueue(ownerActorID);
-                ActionManager.QueueLast(ownerActorID, new AttackActor(h.ID));
+                owner.Owner.Engine.ActionManager.ClearQueue(ownerActorID);
+                owner.Owner.Engine.ActionManager.QueueLast(ownerActorID, new AttackActor(h.ID));
               }
               else if (owner.CurrentAction != null && !(owner.CurrentAction is Evade) && owner.CanEvade)
               {
-                ActionManager.QueueFirst(ownerActorID, new Evade());
+                owner.Owner.Engine.ActionManager.QueueFirst(ownerActorID, new Evade());
               }
             }
           }
@@ -482,13 +485,13 @@ namespace SWEndor.ActorTypes
         }
 
         if (owner.IsPlayer())
-          Globals.Engine.PlayerInfo.FlashHit(Globals.Engine.PlayerInfo.HealthColor);
+          Owner.Engine.PlayerInfo.FlashHit(Owner.Engine.PlayerInfo.HealthColor);
 
         List<int> attackerfamily = hitby.GetAllParents();
         attackerfamily.Add(hitby.ID);
         foreach (int i in attackerfamily)
         {
-          ActorInfo a = ActorInfo.Factory.Get(i);
+          ActorInfo a = Owner.Engine.ActorFactory.Get(i);
           if (a != null && a.Faction != null && !a.Faction.IsAlliedWith(owner.Faction))
           {
             if (!(a.TypeInfo is Groups.AddOn))
@@ -500,7 +503,7 @@ namespace SWEndor.ActorTypes
         {
           owner.ActorState = ActorState.DEAD;
           if (owner.IsPlayer())
-            Globals.Engine.PlayerInfo.Score.Deaths++;
+            Owner.Engine.PlayerInfo.Score.Deaths++;
         }
       }
 
@@ -515,7 +518,7 @@ namespace SWEndor.ActorTypes
       bool shielded = false;
       foreach (int i in victim.GetAllChildren())
       {
-        ActorInfo shd = ActorInfo.Factory.Get(i);
+        ActorInfo shd = Owner.Engine.ActorFactory.Get(i);
         if (shd != null && shd.RegenerationInfo.ParentRegenRate > 0 || shd.RegenerationInfo.RelativeRegenRate > 0)
           shielded = true;
       }
@@ -549,7 +552,7 @@ namespace SWEndor.ActorTypes
       weapon = null;
       burst = 1;
 
-      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
+      ActorInfo owner = Owner.Engine.ActorFactory.Get(ownerActorID);
       if (owner == null)
         return;
 
@@ -572,7 +575,7 @@ namespace SWEndor.ActorTypes
 
     public virtual bool FireWeapon(int ownerActorID, int targetActorID, string sweapon)
     {
-      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
+      ActorInfo owner = Owner.Engine.ActorFactory.Get(ownerActorID);
       if (owner == null)
         return false;
 
@@ -602,8 +605,8 @@ namespace SWEndor.ActorTypes
     public virtual void FireAggregation(int ownerActorID, int targetActorID, ActorTypeInfo weapontype)
     {
       float accuracy = 1;
-      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
-      ActorInfo target = ActorInfo.Factory.Get(targetActorID);
+      ActorInfo owner = Owner.Engine.ActorFactory.Get(ownerActorID);
+      ActorInfo target = Owner.Engine.ActorFactory.Get(targetActorID);
       
       float d = ActorDistanceInfo.GetDistance(ownerActorID, targetActorID) / weapontype.MaxSpeed;
       TV_3DVECTOR angle = Utilities.GetRotation(target.GetPosition() - owner.GetPosition()) - owner.GetRotation();
@@ -614,7 +617,7 @@ namespace SWEndor.ActorTypes
       accuracy /= (Math.Abs(angle.x) + 1);
       accuracy /= (Math.Abs(angle.y) + 1);
 
-      if (Globals.Engine.Random.NextDouble() < accuracy)
+      if (Owner.Engine.Random.NextDouble() < accuracy)
         target.CombatInfo.Strength -= weapontype.ImpactDamage * target.CombatInfo.DamageModifier;
     }
 

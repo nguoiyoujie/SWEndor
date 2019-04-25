@@ -12,11 +12,11 @@ namespace SWEndor.Scenarios
 {
   public class GSTIEAdvanced : GameScenarioBase
   {
-    public GSTIEAdvanced()
+    public GSTIEAdvanced(GameScenarioManager manager) : base(manager)
     {
       Name = "TIE Advanced Challenge";
-      AllowedWings = new List<ActorTypeInfo> { XWingATI.Instance()
-                                               , AWingATI.Instance()
+      AllowedWings = new List<ActorTypeInfo> { Manager.Engine.ActorTypeFactory.Get("X-Wing")
+                                               , Manager.Engine.ActorTypeFactory.Get("A-Wing")
                                               };
 
       AllowedDifficulties = new List<string> { "easy"
@@ -88,7 +88,7 @@ namespace SWEndor.Scenarios
       int tie_sa = 0;
       foreach (int actorID in MainEnemyFaction.GetWings())
       {
-        ActorInfo actor = ActorInfo.Factory.Get(actorID);
+        ActorInfo actor = Manager.Engine.ActorFactory.Get(actorID);
         if (actor != null)
         {
           if (actor.TypeInfo is TIE_D_ATI)
@@ -169,7 +169,7 @@ namespace SWEndor.Scenarios
       creationTime += 0.025f;
       ainfo = new ActorSpawnInfo
       {
-        Type = TIE_X1_ATI.Instance(),
+        Type = Manager.Engine.ActorTypeFactory.Get("TIE Advanced X1"),
         Name = "(Player)",
         RegisterName = "",
         SidebarName = "",
@@ -198,11 +198,11 @@ namespace SWEndor.Scenarios
       for (int i = 0; i < positions.Count; i++)
       {
         TV_3DVECTOR v = positions[i];
-        ActorTypeInfo[] atypes = new ActorTypeInfo[] { XWingATI.Instance()
-                                                      , XWingATI.Instance()
-                                                      , XWingATI.Instance()
-                                                      , AWingATI.Instance()
-                                                      , AWingATI.Instance()
+        ActorTypeInfo[] atypes = new ActorTypeInfo[] { Manager.Engine.ActorTypeFactory.Get("X-Wing")
+                                                      , Manager.Engine.ActorTypeFactory.Get("X-Wing")
+                                                      , Manager.Engine.ActorTypeFactory.Get("X-Wing")
+                                                      , Manager.Engine.ActorTypeFactory.Get("A-Wing")
+                                                      , Manager.Engine.ActorTypeFactory.Get("A-Wing")
                                                       };
 
         creationTime += 0.025f;
@@ -237,7 +237,7 @@ namespace SWEndor.Scenarios
 
         ainfo = new ActorSpawnInfo
         {
-          Type = CorellianATI.Instance(),
+          Type = Manager.Engine.ActorTypeFactory.Get("Corellian Corvette"),
           Name = "",
           RegisterName = "",
           SidebarName = "CORELLIAN",
@@ -268,7 +268,7 @@ namespace SWEndor.Scenarios
 
         ainfo = new ActorSpawnInfo
         {
-          Type = TransportATI.Instance(),
+          Type = Manager.Engine.ActorTypeFactory.Get("Transport"),
           Name = "",
           RegisterName = "",
           SidebarName = "TRANSPORT",
@@ -290,7 +290,7 @@ namespace SWEndor.Scenarios
     {
       foreach (int actorID in MainAllyFaction.GetWings())
       {
-        ActorInfo actor = ActorInfo.Factory.Get(actorID);
+        ActorInfo actor = Manager.Engine.ActorFactory.Get(actorID);
         if (actor != null)
         {
           actor.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
@@ -313,7 +313,7 @@ namespace SWEndor.Scenarios
           TV_3DVECTOR pos = new TV_3DVECTOR(0, -200, 500);
           if (MainAllyFaction.GetShips().Count > 0)
           {
-            ActorInfo rs = ActorInfo.Factory.Get(MainAllyFaction.GetShips()[0]);
+            ActorInfo rs = Manager.Engine.ActorFactory.Get(MainAllyFaction.GetShips()[0]);
             if (rs != null)
               pos += rs.GetPosition();
           }
@@ -342,10 +342,10 @@ namespace SWEndor.Scenarios
     {
       foreach (int actorID in MainAllyFaction.GetAll())
       {
-        ActorInfo actor = ActorInfo.Factory.Get(actorID);
+        ActorInfo actor = Manager.Engine.ActorFactory.Get(actorID);
         if (actor != null)
         {
-          ActionManager.UnlockOne(actorID);
+          Manager.Engine.ActionManager.UnlockOne(actorID);
           actor.ActorState = ActorState.NORMAL;
           actor.MovementInfo.Speed = actor.MovementInfo.MaxSpeed;
         }
@@ -410,7 +410,7 @@ namespace SWEndor.Scenarios
 
         ActorInfo ainfo = new ActorSpawnInfo
         {
-          Type = TIE_D_ATI.Instance(),
+          Type = Manager.Engine.ActorTypeFactory.Get("TIE Defender"),
           Name = "",
           RegisterName = "",
           SidebarName = "",
@@ -445,7 +445,7 @@ namespace SWEndor.Scenarios
           {
             ActorInfo ainfo = new ActorSpawnInfo
             {
-              Type = TIE_sa_ATI.Instance(),
+              Type = Manager.Engine.ActorTypeFactory.Get("TIE Bomber"),
               Name = "",
               RegisterName = "",
               SidebarName = "",
@@ -486,7 +486,7 @@ namespace SWEndor.Scenarios
 
       m_X1ID = new ActorSpawnInfo
       {
-        Type = TIE_X1_ATI.Instance(),
+        Type = Manager.Engine.ActorTypeFactory.Get("TIE Advanced X1"),
         Name = "",
         RegisterName = "",
         SidebarName = "TIE ADV. X1",
@@ -513,14 +513,14 @@ namespace SWEndor.Scenarios
 
     public void Empire_TIEAdvanced_Control_AttackShip(object[] param)
     {
-      ActionManager.ForceClearQueue(m_X1ID);
-      ActionManager.QueueLast(m_X1ID, new Hunt(TargetType.SHIP));
+      Manager.Engine.ActionManager.ForceClearQueue(m_X1ID);
+      Manager.Engine.ActionManager.QueueLast(m_X1ID, new Hunt(TargetType.SHIP));
     }
 
     public void Empire_TIEAdvanced_Control_AttackFighter(object[] param)
     {
-      ActionManager.ForceClearQueue(m_X1ID);
-      ActionManager.QueueLast(m_X1ID, new Hunt(TargetType.FIGHTER));
+      Manager.Engine.ActionManager.ForceClearQueue(m_X1ID);
+      Manager.Engine.ActionManager.QueueLast(m_X1ID, new Hunt(TargetType.FIGHTER));
     }
 
     #endregion

@@ -8,14 +8,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class TransportTurboLaserATI : Groups.AddOn
   {
-    private static TransportTurboLaserATI _instance;
-    public static TransportTurboLaserATI Instance()
-    {
-      if (_instance == null) { _instance = new TransportTurboLaserATI(); }
-      return _instance;
-    }
-
-    private TransportTurboLaserATI() : base("Transport Turbolaser Tower")
+    internal TransportTurboLaserATI(Factory owner) : base(owner, "Transport Turbolaser Tower")
     {
       // Combat
       IsCombatObject = true;

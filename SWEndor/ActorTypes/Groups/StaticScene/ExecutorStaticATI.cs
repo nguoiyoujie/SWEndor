@@ -4,14 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class ExecutorStaticATI : Groups.StaticScene
   {
-    private static ExecutorStaticATI _instance;
-    public static ExecutorStaticATI Instance()
-    {
-      if (_instance == null) { _instance = new ExecutorStaticATI(); }
-      return _instance;
-    }
-
-    private ExecutorStaticATI() : base("Executor Static")
+    internal ExecutorStaticATI(Factory owner) : base(owner, "Executor Static")
     {
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"executor\executor_static.x");
     }

@@ -10,8 +10,10 @@ namespace SWEndor.Player
 {
   public class PlayerInfo
   {
-    internal PlayerInfo()
+    public readonly Engine Engine;
+    internal PlayerInfo(Engine engine)
     {
+      Engine = engine;
       Name = "Luke";
       Score = ScoreInfo.Player;
     }
@@ -35,9 +37,9 @@ namespace SWEndor.Player
         }
       }
     }
-    public ActorInfo Actor { get { return ActorInfo.Factory.Get(ActorID); } }
+    public ActorInfo Actor { get { return Engine.ActorFactory.Get(ActorID); } }
     public int TempActorID;
-    public ActorInfo TempActor { get { return ActorInfo.Factory.Get(TempActorID); } }
+    public ActorInfo TempActor { get { return Engine.ActorFactory.Get(TempActorID); } }
     
     private float m_LowAlarmSoundTime = 0;
     public float StrengthFrac
@@ -255,7 +257,7 @@ namespace SWEndor.Player
       if (Actor.TypeInfo is ActorTypes.Groups.Fighter)
       {
         Globals.Engine.SoundManager.SetSound("hit");
-        Globals.Engine.TVGraphicEffect.Flash(color.r, color.g, color.b, 200);
+        Globals.Engine.TrueVision.TVGraphicEffect.Flash(color.r, color.g, color.b, 200);
 
         if (Actor.CombatInfo.Strength > 0 && DamagedReportSound != null && DamagedReportSound.Length > 0)
         {

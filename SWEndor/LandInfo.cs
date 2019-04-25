@@ -5,9 +5,11 @@ namespace SWEndor
 {
   public class LandInfo
   {
-    internal LandInfo()
+    public readonly Engine Engine;
+    internal LandInfo(Engine engine)
     {
-      m_land = Globals.Engine.TVScene.CreateLandscape("Land");
+      Engine = engine;
+      m_land = Engine.TrueVision.TVScene.CreateLandscape("Land");
     }
 
     private TVLandscape m_land;
@@ -42,8 +44,8 @@ namespace SWEndor
       if (m_texpath != path)
       {
         if (m_tex != -1)
-          Globals.Engine.TVTextureFactory.DeleteTexture(m_tex);
-        m_tex = Globals.Engine.TVTextureFactory.LoadTexture(path, "Land", -1, -1);
+          Engine.TrueVision.TVTextureFactory.DeleteTexture(m_tex);
+        m_tex = Engine.TrueVision.TVTextureFactory.LoadTexture(path, "Land", -1, -1);
         m_heightmap = heightmap;
       }
     }
@@ -54,7 +56,7 @@ namespace SWEndor
         m_land.Enable(false);
       else
       {
-        TV_TEXTURE tex = Globals.Engine.TVTextureFactory.GetTextureInfo(m_tex);
+        TV_TEXTURE tex = Engine.TrueVision.TVTextureFactory.GetTextureInfo(m_tex);
         int height = 256;// tex.Height;
         int width = 256;// tex.Width;
 
@@ -63,7 +65,7 @@ namespace SWEndor
 
         m_land.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_NORMAL);
 
-        m_land.SetMaterial(Globals.Engine.TVMaterialFactory.CreateLightMaterial(1, 1, 1, 1, 0, 1));
+        m_land.SetMaterial(Engine.TrueVision.TVMaterialFactory.CreateLightMaterial(1, 1, 1, 1, 0, 1));
         m_land.SetScale(xzScale, yScale, xzScale);
         m_land.SetTextureScale(texScale, texScale);
         m_land.SetCollisionEnable(true);
@@ -80,7 +82,7 @@ namespace SWEndor
     {
       m_land.Enable(false);
       m_land.Destroy();
-      m_land = Globals.Engine.TVScene.CreateLandscape("Land");
+      m_land = Engine.TrueVision.TVScene.CreateLandscape("Land");
     }
 
     public void LoadDefaults()

@@ -6,9 +6,8 @@ namespace SWEndor.Weapons.Types
 {
   public class TIE_sa_IonWeapon : WeaponInfo
   {
-    public TIE_sa_IonWeapon() : base("TIE/sa Ion")
+    public TIE_sa_IonWeapon() : base("TIE/sa Ion", "Ion Laser")
     {
-      WeaponProjectile = SmallIonLaserATI.Instance();
       WeaponCooldownRate = 0.1f;
       WeaponCooldownRateRandom = 0;
 

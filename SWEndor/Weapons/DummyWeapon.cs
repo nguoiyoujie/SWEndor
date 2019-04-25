@@ -2,6 +2,7 @@
 
 namespace SWEndor.Weapons.Types
 {
+  /*
   public class DummyWeapon : WeaponInfo
   {
     public DummyWeapon() : base("Dummy")
@@ -24,4 +25,5 @@ namespace SWEndor.Weapons.Types
       AngularRange = 999999;
     }
   }
+  */
 }

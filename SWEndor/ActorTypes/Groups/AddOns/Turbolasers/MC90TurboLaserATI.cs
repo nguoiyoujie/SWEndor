@@ -8,14 +8,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class mc90TurbolaserATI : Groups.AddOn
   {
-    private static mc90TurbolaserATI _instance;
-    public static mc90TurbolaserATI Instance()
-    {
-      if (_instance == null) { _instance = new mc90TurbolaserATI(); }
-      return _instance;
-    }
-
-    private mc90TurbolaserATI() : base("MC90 Turbolaser Tower")
+    internal mc90TurbolaserATI(Factory owner) : base(owner, "MC90 Turbolaser Tower")
     {
       // Combat
       IsCombatObject = true;

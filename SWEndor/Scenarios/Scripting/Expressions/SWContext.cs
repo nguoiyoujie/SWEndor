@@ -4,16 +4,9 @@ namespace SWEndor.Scenarios.Scripting.Expressions
 {
   public class SWContext : Context
   {
-    public static SWContext Instance = new SWContext();
-
-    private SWContext()
+    internal SWContext(Engine engine) : base(engine)
     {
       AddFunctions();
-    }
-
-    public void Reset()
-    {
-      Variables.Clear();
     }
 
     public void AddFunctions()
@@ -133,8 +126,6 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       // Misc
       Functions.Add("IsNull".ToLowerInvariant(), delegate (Context c, object[] ps) { return ps[0] == null; });
       Functions.Add("GetArrayElement".ToLowerInvariant(), ScriptManagement.GetArrayElement);
-
-
     }
   }
 }

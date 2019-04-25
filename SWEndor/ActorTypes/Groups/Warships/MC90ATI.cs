@@ -7,14 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class MC90ATI : Groups.Warship
   {
-    private static MC90ATI _instance;
-    public static MC90ATI Instance()
-    {
-      if (_instance == null) { _instance = new MC90ATI(); }
-      return _instance;
-    }
-
-    private MC90ATI() : base("Mon Calamari Capital Ship")
+    internal MC90ATI(Factory owner) : base(owner, "Mon Calamari Capital Ship")
     {
       MaxStrength = 3200.0f;
       ImpactDamage = 60.0f;

@@ -27,7 +27,11 @@ namespace SWEndor
 
   public class PerfManager
   {
-    internal PerfManager() { }
+    public readonly Engine Engine;
+    internal PerfManager(Engine engine)
+    {
+      Engine = engine;
+    }
 
     public static string Report = "";
     private DateTime m_last_refresh_time = DateTime.Now;
@@ -97,8 +101,8 @@ namespace SWEndor
         StringBuilder sb = new StringBuilder();
         sb.AppendLine();
         sb.AppendLine(string.Format("{0,30} : [{1,4:0}ms] {2:s}", "Sampling Time", refresh_ms, m_last_refresh_time));
-        sb.AppendLine(string.Format("{0,30} : {1}", "FPS", Globals.Engine.Game.CurrentFPS));
-        sb.AppendLine(string.Format("{0,30} : {1}", "Actors", ActorInfo.Factory.GetActorCount()));
+        sb.AppendLine(string.Format("{0,30} : {1}", "FPS", Engine.Game.CurrentFPS));
+        sb.AppendLine(string.Format("{0,30} : {1}", "Actors", Engine.ActorFactory.GetActorCount()));
 
         List<PerfToken> newElements = new List<PerfToken>(Elements.GetValues());
 

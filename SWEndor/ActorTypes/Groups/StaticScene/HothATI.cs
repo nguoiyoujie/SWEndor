@@ -4,19 +4,12 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class HothATI : Groups.StaticScene
   {
-    private static HothATI _instance;
-    public static HothATI Instance()
+    internal HothATI(Factory owner) : base(owner, "Hoth")
     {
-      if (_instance == null) { _instance = new HothATI(); }
-      return _instance;
-    }
-
-    private HothATI() : base("Hoth")
-    {
-      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Globals.Engine.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
 
         // 1 texture
         string texname = Path.Combine("planets", @"hoth.bmp");

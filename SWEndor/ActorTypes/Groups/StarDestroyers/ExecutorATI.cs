@@ -7,14 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class ExecutorATI : Groups.StarDestroyer
   {
-    private static ExecutorATI _instance;
-    public static ExecutorATI Instance()
-    {
-      if (_instance == null) { _instance = new ExecutorATI(); }
-      return _instance;
-    }
-
-    private ExecutorATI() : base("Executor Super Star Destroyer")
+    internal ExecutorATI(Factory owner) : base(owner, "Executor Super Star Destroyer")
     {
       MaxStrength = 3500.0f;
       ImpactDamage = 120.0f;

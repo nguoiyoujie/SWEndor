@@ -8,14 +8,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class SDAntiShipTurboLaserATI : Groups.AddOn
   {
-    private static SDAntiShipTurboLaserATI _instance;
-    public static SDAntiShipTurboLaserATI Instance()
-    {
-      if (_instance == null) { _instance = new SDAntiShipTurboLaserATI(); }
-      return _instance;
-    }
-
-    private SDAntiShipTurboLaserATI() : base("Star Destroyer Heavy Turbolaser Tower")
+    internal SDAntiShipTurboLaserATI(Factory owner) : base(owner, "Star Destroyer Heavy Turbolaser Tower")
     {
       // Combat
       IsCombatObject = true;

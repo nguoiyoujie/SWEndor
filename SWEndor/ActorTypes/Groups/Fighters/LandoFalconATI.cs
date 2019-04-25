@@ -10,14 +10,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class LandoFalconATI : Groups.RebelWing
   {
-    private static LandoFalconATI _instance;
-    public static LandoFalconATI Instance()
-    {
-      if (_instance == null) { _instance = new LandoFalconATI(); }
-      return _instance;
-    }
-
-    private LandoFalconATI() : base("Millennium Falcon (Lando)")
+    internal LandoFalconATI(Factory owner) : base(owner, "Millennium Falcon (Lando)")
     {
       // Combat
       IsCombatObject = true;

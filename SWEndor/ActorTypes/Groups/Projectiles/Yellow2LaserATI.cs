@@ -5,14 +5,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class Yellow2LaserATI : Group.Projectile
   {
-    private static Yellow2LaserATI _instance;
-    public static Yellow2LaserATI Instance()
-    {
-      if (_instance == null) { _instance = new Yellow2LaserATI(); }
-      return _instance;
-    }
-
-    private Yellow2LaserATI() : base("Yellow Double Laser")
+    internal Yellow2LaserATI(Factory owner) : base(owner, "Yellow Double Laser")
     {
       // Combat
       OnTimedLife = true;
@@ -38,9 +31,9 @@ namespace SWEndor.ActorTypes.Instances
       {
         if (ainfo.CombatInfo.TimedLife > 0)
         {
-          ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("Explosion"));
+          ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("Explosion"));
           acinfo.Position = ainfo.GetPosition();
-          ActorInfo.Create(acinfo);
+          ActorInfo.Create(Owner.Engine.ActorFactory, acinfo);
         }
         ainfo.ActorState = ActorState.DEAD;
       }

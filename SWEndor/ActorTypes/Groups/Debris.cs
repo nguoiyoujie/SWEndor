@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class Debris : ActorTypeInfo
   {
-    internal Debris(string name) : base(name)
+    internal Debris(Factory owner, string name) : base(owner, name)
     {
       // Combat
       IsCombatObject = true;

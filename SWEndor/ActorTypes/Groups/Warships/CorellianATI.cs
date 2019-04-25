@@ -7,14 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class CorellianATI : Groups.Warship
   {
-    private static CorellianATI _instance;
-    public static CorellianATI Instance()
-    {
-      if (_instance == null) { _instance = new CorellianATI(); }
-      return _instance;
-    }
-
-    private CorellianATI() : base("Corellian Corvette")
+    internal CorellianATI(Factory owner) : base(owner, "Corellian Corvette")
     {
       MaxStrength = 575.0f;
       ImpactDamage = 60.0f;

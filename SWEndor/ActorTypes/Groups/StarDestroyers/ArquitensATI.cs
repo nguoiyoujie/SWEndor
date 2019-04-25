@@ -7,14 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class ArquitensATI : Groups.StarDestroyer
   {
-    private static ArquitensATI _instance;
-    public static ArquitensATI Instance()
-    {
-      if (_instance == null) { _instance = new ArquitensATI(); }
-      return _instance;
-    }
-
-    private ArquitensATI() : base("Arquitens Light Cruiser")
+    internal ArquitensATI(Factory owner) : base(owner, "Arquitens Light Cruiser")
     {
       // Combat
       IsCombatObject = true;

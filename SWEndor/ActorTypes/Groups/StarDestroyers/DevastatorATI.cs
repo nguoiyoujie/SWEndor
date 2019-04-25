@@ -8,14 +8,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class DevastatorATI : Groups.StarDestroyer
   {
-    private static DevastatorATI _instance;
-    public static DevastatorATI Instance()
-    {
-      if (_instance == null) { _instance = new DevastatorATI(); }
-      return _instance;
-    }
-
-    private DevastatorATI() : base("Devastator Imperial-I Star Destroyer")
+    internal DevastatorATI(Factory owner) : base(owner, "Devastator Imperial-I Star Destroyer")
     {
       // Combat
       IsCombatObject = true;

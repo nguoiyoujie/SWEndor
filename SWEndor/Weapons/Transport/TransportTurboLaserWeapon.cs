@@ -5,9 +5,8 @@ namespace SWEndor.Weapons.Types
 {
   public class TransportTurboLaserWeapon : WeaponInfo
   {
-    public TransportTurboLaserWeapon() : base("Transport Laser")
+    public TransportTurboLaserWeapon() : base("Transport Laser", "Red Laser")
     {
-      WeaponProjectile = RedLaserATI.Instance();
       WeaponCooldownRate = 2.5f;
       WeaponCooldownRateRandom = 0;
 

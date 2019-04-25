@@ -7,14 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class MC80BATI : Groups.Warship
   {
-    private static MC80BATI _instance;
-    public static MC80BATI Instance()
-    {
-      if (_instance == null) { _instance = new MC80BATI(); }
-      return _instance;
-    }
-
-    private MC80BATI() : base("Mon Calamari 80B Capital Ship")
+    internal MC80BATI(Factory owner) : base(owner, "Mon Calamari 80B Capital Ship")
     {
       MaxStrength = 2800.0f;
       ImpactDamage = 60.0f;

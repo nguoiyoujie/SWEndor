@@ -5,9 +5,8 @@ namespace SWEndor.Weapons.Types
 {
   public class ImperialTurboLaserWeapon : WeaponInfo
   {
-    public ImperialTurboLaserWeapon() : base("Imperial Laser")
+    public ImperialTurboLaserWeapon() : base("Imperial Laser", "Yellow Laser")
     {
-      WeaponProjectile = YellowLaserATI.Instance();
       WeaponCooldownRate = 2.75f;
       WeaponCooldownRateRandom = 0;
 

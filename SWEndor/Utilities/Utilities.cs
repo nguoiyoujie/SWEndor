@@ -48,8 +48,8 @@ namespace SWEndor
 
     public static TV_3DVECTOR GetRotation(TV_3DVECTOR direction)
     {
-      float x = Globals.Engine.TVMathLibrary.Direction2Ang(-direction.y, Globals.Engine.TVMathLibrary.TVVec2Length(new TV_2DVECTOR(direction.z, direction.x)));
-      float y = Globals.Engine.TVMathLibrary.Direction2Ang(direction.x, direction.z);
+      float x = Globals.Engine.TrueVision.TVMathLibrary.Direction2Ang(-direction.y, Globals.Engine.TrueVision.TVMathLibrary.TVVec2Length(new TV_2DVECTOR(direction.z, direction.x)));
+      float y = Globals.Engine.TrueVision.TVMathLibrary.Direction2Ang(direction.x, direction.z);
 
       return new TV_3DVECTOR(x, y, 0);
     }

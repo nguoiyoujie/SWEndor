@@ -32,7 +32,7 @@ namespace SWEndor.AI.Actions
       //AdjustSpeed(owner, Target_Speed);
       owner.MovementInfo.Speed += Target_Speed;
 
-      float dist = Globals.Engine.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Origin_Position);
+      float dist = Globals.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Origin_Position);
       if (dist >= FarEnoughDistance)
       {
         owner.ActorState = prevState;

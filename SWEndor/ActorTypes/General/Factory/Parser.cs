@@ -7,9 +7,9 @@ using System;
   {
     public static class Parser
     {
-      public static ActorTypeInfo Parse(INIFile file, string sectionname)
+      public static ActorTypeInfo Parse(Factory factory, INIFile file, string sectionname)
       {
-        ActorTypeInfo at = new ActorTypeInfo(sectionname);
+        ActorTypeInfo at = new ActorTypeInfo(factory, sectionname);
 
         at.CollisionEnabled = file.GetBoolValue(sectionname, "CollisionEnabled", at.CollisionEnabled);
         at.IsCombatObject = file.GetBoolValue(sectionname, "IsCombatObject", at.IsCombatObject);

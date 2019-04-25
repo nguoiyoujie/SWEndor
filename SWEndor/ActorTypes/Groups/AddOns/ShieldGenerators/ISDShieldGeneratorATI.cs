@@ -6,14 +6,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class ISDShieldGeneratorATI : Groups.AddOn
   {
-    private static ISDShieldGeneratorATI _instance;
-    public static ISDShieldGeneratorATI Instance()
-    {
-      if (_instance == null) { _instance = new ISDShieldGeneratorATI(); }
-      return _instance;
-    }
-
-    private ISDShieldGeneratorATI() : base("Imperial Star Destroyer Shield Generator")
+    internal ISDShieldGeneratorATI(Factory owner) : base(owner, "Imperial Star Destroyer Shield Generator")
     {
       // Combat
       IsCombatObject = true;
@@ -48,8 +41,8 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
       base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
-      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
-      ActorInfo hitby = ActorInfo.Factory.Get(hitbyActorID);
+      ActorInfo owner = Owner.Engine.ActorFactory.Get(ownerActorID);
+      ActorInfo hitby = Owner.Engine.ActorFactory.Get(hitbyActorID);
       if (owner == null || hitby == null)
         return;
 
@@ -62,16 +55,16 @@ namespace SWEndor.ActorTypes.Instances
       {
         foreach (int i in owner.GetAllChildren(1))
         {
-          ActorInfo child = ActorInfo.Factory.Get(i);
+          ActorInfo child = Owner.Engine.ActorFactory.Get(i);
           if (child?.TypeInfo is ElectroATI)
           {
             child.CycleInfo.CyclesRemaining = 2.5f / child.CycleInfo.CyclePeriod;
             return;
           }
         }
-        ActorCreationInfo acinfo = new ActorCreationInfo(ElectroATI.Instance());
+        ActorCreationInfo acinfo = new ActorCreationInfo(Owner.Get("Electro"));
         acinfo.Position = owner.GetPosition();
-        ActorInfo electro = ActorInfo.Create(acinfo);
+        ActorInfo electro = ActorInfo.Create(Owner.Engine.ActorFactory, acinfo);
         electro.AddParent(ownerActorID);
         electro.CycleInfo.CyclesRemaining = 2.5f / electro.CycleInfo.CyclePeriod;
       }

@@ -37,7 +37,7 @@ namespace SWEndor.Terminal.Commands.Actor
       if (gscenario == null)
         return new TCommandFeedback(TCommandFeedbackType.ERROR, "GameScenario is null!");
 
-      ActorTypeInfo atype = ActorTypeInfo.Factory.Get(param[0].ToString());
+      ActorTypeInfo atype = Globals.Engine.ActorTypeFactory.Get(param[0].ToString());
       string unitname = param[1];
       string regname = param[2];
       string sidebarname = param[3];

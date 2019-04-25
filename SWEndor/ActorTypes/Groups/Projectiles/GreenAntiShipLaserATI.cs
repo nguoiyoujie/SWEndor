@@ -5,14 +5,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class GreenAntiShipLaserATI : Group.Projectile
   {
-    private static GreenAntiShipLaserATI _instance;
-    public static GreenAntiShipLaserATI Instance()
-    {
-      if (_instance == null) { _instance = new GreenAntiShipLaserATI(); }
-      return _instance;
-    }
-
-    private GreenAntiShipLaserATI() : base("Green Anti-Ship Laser")
+    internal GreenAntiShipLaserATI(Factory owner) : base(owner, "Green Anti-Ship Laser")
     {
       // Combat
       OnTimedLife = true;
@@ -38,9 +31,9 @@ namespace SWEndor.ActorTypes.Instances
       {
         if (ainfo.CombatInfo.TimedLife > 0)
         {
-          ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("ExplosionSm"));
+          ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("ExplosionSm"));
           acinfo.Position = ainfo.GetPosition();
-          ActorInfo.Create(acinfo);
+          ActorInfo.Create(Owner.Engine.ActorFactory, acinfo);
         }
         ainfo.ActorState = ActorState.DEAD;
       }

@@ -5,9 +5,8 @@ namespace SWEndor.Weapons.Types
 {
   public class MC90TurboLaserWeapon : WeaponInfo
   {
-    public MC90TurboLaserWeapon() : base("MC90 Laser")
+    public MC90TurboLaserWeapon() : base("MC90 Laser", "Red Laser")
     {
-      WeaponProjectile = RedLaserATI.Instance();
       WeaponCooldownRate = 2.4f;
       WeaponCooldownRateRandom = 0;
 

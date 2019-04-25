@@ -4,19 +4,12 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class EndorATI : Groups.StaticScene
   {
-    private static EndorATI _instance;
-    public static EndorATI Instance()
+    internal EndorATI(Factory owner) : base(owner, "Endor")
     {
-      if (_instance == null) { _instance = new EndorATI(); }
-      return _instance;
-    }
-
-    private EndorATI() : base("Endor")
-    {
-      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Globals.Engine.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
 
         // 1 texture
         string texname = Path.Combine("planets", @"endor.jpg");

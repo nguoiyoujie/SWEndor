@@ -8,14 +8,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class CorellianTurboLaserATI : Groups.AddOn
   {
-    private static CorellianTurboLaserATI _instance;
-    public static CorellianTurboLaserATI Instance()
-    {
-      if (_instance == null) { _instance = new CorellianTurboLaserATI(); }
-      return _instance;
-    }
-
-    private CorellianTurboLaserATI() : base("Corellian Turbolaser Tower")
+    internal CorellianTurboLaserATI(Factory owner) : base(owner, "Corellian Turbolaser Tower")
     {
       // Combat
       IsCombatObject = true;

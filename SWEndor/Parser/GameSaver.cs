@@ -20,9 +20,9 @@ namespace SWEndor
       {
         StringBuilder sb = new StringBuilder();
 
-        foreach (int actorID in ActorInfo.Factory.GetList())
+        foreach (int actorID in Globals.Engine.ActorFactory.GetList())
         {
-          ActorInfo a = ActorInfo.Factory.Get(actorID);
+          ActorInfo a = Globals.Engine.ActorFactory.Get(actorID);
           if (a != null)
             new ActorParser(a).Generate(sb);
         }
@@ -42,34 +42,34 @@ namespace SWEndor
 
     private static void UpdateUI()
     {
-      Globals.Engine.TVScreen2DImmediate.Action_Begin2D();
-      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(Globals.Engine.ScreenWidth / 2 - 80
+      Globals.Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
+      Globals.Engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(Globals.Engine.ScreenWidth / 2 - 80
                                                           , Globals.Engine.ScreenWidth / 2 - 20
                                                           , Globals.Engine.ScreenWidth / 2 + 80
                                                           , Globals.Engine.ScreenWidth / 2 + 20
                                                           , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
 
-      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(Globals.Engine.ScreenWidth / 2 - 80
+      Globals.Engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(Globals.Engine.ScreenWidth / 2 - 80
                                                           , Globals.Engine.ScreenWidth / 2 - 20
                                                           , Globals.Engine.ScreenWidth / 2 + 80
                                                           , Globals.Engine.ScreenWidth / 2 + 20
                                                           , new TV_COLOR(0.5f, 0.5f, 0.5f, 1f).GetIntColor());
 
-      Globals.Engine.TVScreen2DImmediate.Draw_FilledBox(Globals.Engine.ScreenWidth / 2 - 75
+      Globals.Engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(Globals.Engine.ScreenWidth / 2 - 75
                                                           , Globals.Engine.ScreenWidth / 2 - 15
                                                           , Globals.Engine.ScreenWidth / 2 + 75
                                                           , Globals.Engine.ScreenWidth / 2 + 15
                                                           , new TV_COLOR(0.5f, 0.5f, 0.5f, 1f).GetIntColor());
-      Globals.Engine.TVScreen2DImmediate.Action_End2D();
+      Globals.Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
 
-      Globals.Engine.TVScreen2DText.Action_BeginText();
-      Globals.Engine.TVScreen2DText.TextureFont_DrawText("Saving Game..."
+      Globals.Engine.TrueVision.TVScreen2DText.Action_BeginText();
+      Globals.Engine.TrueVision.TVScreen2DText.TextureFont_DrawText("Saving Game..."
                                                           , Globals.Engine.ScreenWidth / 2 - 60
                                                           , Globals.Engine.ScreenWidth / 2 - 10
                                                           , new TV_COLOR(0.5f, 0.5f, 0.5f, 1f).GetIntColor()
                                                           , Font.Factory.Get("Text_14").ID
       );
-      Globals.Engine.TVScreen2DText.Action_EndText();
+      Globals.Engine.TrueVision.TVScreen2DText.Action_EndText();
 
       //Thread.Sleep(1000);
     }

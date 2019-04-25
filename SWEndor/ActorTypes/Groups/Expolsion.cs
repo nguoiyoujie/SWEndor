@@ -10,7 +10,7 @@ namespace SWEndor.ActorTypes.Groups
   {
     protected int[] texanimframes = new int[0];
 
-    internal Explosion(string name): base(name)
+    internal Explosion(Factory owner, string name): base(owner, name)
     {
       // Combat
       IsCombatObject = false;

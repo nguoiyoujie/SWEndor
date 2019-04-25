@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class AddOn : ActorTypeInfo
   {
-    internal AddOn(string name) : base(name)
+    internal AddOn(Factory owner, string name) : base(owner, name)
     {
       // Combat
       IsCombatObject = true;

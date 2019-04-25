@@ -7,14 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class ExecutorBridgeATI : Groups.AddOn
   {
-    private static ExecutorBridgeATI _instance;
-    public static ExecutorBridgeATI Instance()
-    {
-      if (_instance == null) { _instance = new ExecutorBridgeATI(); }
-      return _instance;
-    }
-
-    private ExecutorBridgeATI() : base("Executor Super Star Destroyer Bridge")
+    internal ExecutorBridgeATI(Factory owner) : base(owner, "Executor Super Star Destroyer Bridge")
     {
       // Combat
       IsCombatObject = true;
@@ -50,13 +43,13 @@ namespace SWEndor.ActorTypes.Instances
 
       if (ainfo.CreationState == CreationState.ACTIVE)
       {
-        ActorInfo parent = ActorInfo.Factory.Get(ainfo.GetTopParent());
+        ActorInfo parent = Owner.Engine.ActorFactory.Get(ainfo.GetTopParent());
         if (parent != null)
         {
           List<int> cs = new List<int>(parent.GetAllChildren(1));
           foreach (int i in cs)
           {
-            ActorInfo pn = ActorInfo.Factory.Get(i);
+            ActorInfo pn = Owner.Engine.ActorFactory.Get(i);
             if (pn?.TypeInfo is ExecutorShieldGeneratorATI)
               ainfo.CombatInfo.Strength = ainfo.TypeInfo.MaxStrength;
           }
@@ -65,7 +58,7 @@ namespace SWEndor.ActorTypes.Instances
 
       if (ainfo.ActorState == ActorState.DYING)
       {
-        ActorInfo parent = ActorInfo.Factory.Get(ainfo.GetTopParent());
+        ActorInfo parent = Owner.Engine.ActorFactory.Get(ainfo.GetTopParent());
         if (parent != null)
         {
           parent.CombatInfo.Strength *= 0.75f;
@@ -88,8 +81,8 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
       base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
-      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
-      ActorInfo hitby = ActorInfo.Factory.Get(hitbyActorID);
+      ActorInfo owner = Owner.Engine.ActorFactory.Get(ownerActorID);
+      ActorInfo hitby = Owner.Engine.ActorFactory.Get(hitbyActorID);
       if (owner == null || hitby == null)
         return;
 
@@ -107,7 +100,7 @@ namespace SWEndor.ActorTypes.Instances
       }
 
       //bool hasshield = false;
-      ActorInfo parent = ActorInfo.Factory.Get(owner.GetTopParent());
+      ActorInfo parent = Owner.Engine.ActorFactory.Get(owner.GetTopParent());
       if (parent != null)
       {
         /*

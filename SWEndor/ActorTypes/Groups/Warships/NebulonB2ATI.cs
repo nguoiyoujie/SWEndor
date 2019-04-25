@@ -7,14 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class NebulonB2ATI : Groups.Warship
   {
-    private static NebulonB2ATI _instance;
-    public static NebulonB2ATI Instance()
-    {
-      if (_instance == null) { _instance = new NebulonB2ATI(); }
-      return _instance;
-    }
-
-    private NebulonB2ATI() : base("Nebulon-B2 Frigate")
+    internal NebulonB2ATI(Factory owner) : base(owner, "Nebulon-B2 Frigate")
     {
       MaxStrength = 1350.0f;
       ImpactDamage = 60.0f;

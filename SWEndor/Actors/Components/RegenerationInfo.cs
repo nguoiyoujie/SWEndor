@@ -49,7 +49,7 @@
 
     private void Regenerate(int i, float amount)
     {
-      ActorInfo a = ActorInfo.Factory.Get(i);
+      ActorInfo a = Actor.Owner.Engine.ActorFactory.Get(i);
       Regenerate(a, amount);
     }
 

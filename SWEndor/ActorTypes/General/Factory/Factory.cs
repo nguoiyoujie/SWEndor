@@ -1,206 +1,199 @@
 ﻿using SWEndor.ActorTypes.Instances;
 using SWEndor.FileFormat.INI;
+using SWEndor.Primitives.Factories;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace SWEndor.ActorTypes
 {
   public partial class ActorTypeInfo
   {
-    public static class Factory
+    public class Factory : Registry<ActorTypeInfo>
     {
-      private static Dictionary<string, ActorTypeInfo> list = new Dictionary<string, ActorTypeInfo>();
+      //private static Dictionary<string, ActorTypeInfo> list = new Dictionary<string, ActorTypeInfo>();
 
-      public static void Initialise()
+      public readonly Engine Engine;
+      internal Factory(Engine engine)
+      { Engine = engine; }
+
+      public void Initialise()
       {
-        Register(EndorATI.Instance());
-        Register(YavinATI.Instance());
-        Register(Yavin4ATI.Instance());
-        Register(HothATI.Instance());
-        Register(DeathStarATI.Instance());
-        Register(DeathStar2ATI.Instance());
-        Register(InvisibleCameraATI.Instance());
-        Register(DeathCameraATI.Instance());
-        Register(ImperialIStaticATI.Instance());
-        Register(ExecutorStaticATI.Instance());
+        Register(new EndorATI(this));
+        Register(new YavinATI(this));
+        Register(new Yavin4ATI(this));
+        Register(new HothATI(this));
+        Register(new DeathStarATI(this));
+        Register(new DeathStar2ATI(this));
+        Register(new InvisibleCameraATI(this));
+        Register(new DeathCameraATI(this));
+        Register(new ImperialIStaticATI(this));
+        Register(new ExecutorStaticATI(this));
 
         // debris (load before their parents)
-        Register(XWing_RD_LU_WingATI.Instance());
-        Register(XWing_RU_LD_WingATI.Instance());
-        Register(TIE_WingATI.Instance());
-        Register(TIE_InterceptorWingATI.Instance());
-        Register(YWing_WingATI.Instance());
-        Register(BWing_Top_WingATI.Instance());
-        Register(BWing_Bottom_WingATI.Instance());
-        Register(BWing_WingATI.Instance());
-        Register(Transport_Box1ATI.Instance());
-        Register(Transport_Box2ATI.Instance());
-        Register(Transport_Box3ATI.Instance());
-        Register(Transport_Box4ATI.Instance());
+        Register(new XWing_RD_LU_WingATI(this));
+        Register(new XWing_RU_LD_WingATI(this));
+        Register(new TIE_WingATI(this));
+        Register(new TIE_InterceptorWingATI(this));
+        Register(new YWing_WingATI(this));
+        Register(new BWing_Top_WingATI(this));
+        Register(new BWing_Bottom_WingATI(this));
+        Register(new BWing_WingATI(this));
+        Register(new Transport_Box1ATI(this));
+        Register(new Transport_Box2ATI(this));
+        Register(new Transport_Box3ATI(this));
+        Register(new Transport_Box4ATI(this));
 
         // explosions
-        Register(ExplosionATI.Instance());
-        Register(Explosion2ATI.Instance());
-        Register(ExplosionSmATI.Instance());
-        Register(ExplosionLgATI.Instance());
-        Register(ExplosionMegaATI.Instance());
-        Register(ExplosionWaveATI.Instance());
-        Register(ExplosionWaveMegaATI.Instance());
-        Register(ElectroATI.Instance());
+        Register(new ExplosionATI(this));
+        Register(new Explosion2ATI(this));
+        Register(new ExplosionSmATI(this));
+        Register(new ExplosionLgATI(this));
+        Register(new ExplosionMegaATI(this));
+        Register(new ExplosionWaveATI(this));
+        Register(new ExplosionWaveMegaATI(this));
+        Register(new ElectroATI(this));
 
         // fighters
-        Register(Z95ATI.Instance());
-        Register(XWingATI.Instance());
-        Register(YWingATI.Instance());
-        Register(AWingATI.Instance());
-        Register(BWingATI.Instance());
-        Register(FalconATI.Instance());
-        Register(LandoFalconATI.Instance());
-        Register(WedgeXWingATI.Instance());
+        Register(new Z95ATI(this));
+        Register(new XWingATI(this));
+        Register(new YWingATI(this));
+        Register(new AWingATI(this));
+        Register(new BWingATI(this));
+        Register(new FalconATI(this));
+        Register(new LandoFalconATI(this));
+        Register(new WedgeXWingATI(this));
 
         // TIEs
-        Register(TIE_LN_ATI.Instance());
-        Register(TIE_IN_ATI.Instance());
-        Register(TIE_D_ATI.Instance());
-        Register(TIE_A_ATI.Instance());
-        Register(TIE_X1_ATI.Instance());
-        Register(TIE_sa_ATI.Instance());
-        Register(MissileBoatATI.Instance());
+        Register(new TIE_LN_ATI(this));
+        Register(new TIE_IN_ATI(this));
+        Register(new TIE_D_ATI(this));
+        Register(new TIE_A_ATI(this));
+        Register(new TIE_X1_ATI(this));
+        Register(new TIE_sa_ATI(this));
+        Register(new MissileBoatATI(this));
 
         // ships
-        Register(CorellianATI.Instance());
-        Register(NebulonBATI.Instance());
-        Register(NebulonB2ATI.Instance());
-        Register(MC90ATI.Instance());
-        Register(MC80BATI.Instance());
-        Register(TransportATI.Instance());
+        Register(new CorellianATI(this));
+        Register(new NebulonBATI(this));
+        Register(new NebulonB2ATI(this));
+        Register(new MC90ATI(this));
+        Register(new MC80BATI(this));
+        Register(new TransportATI(this));
 
         // Star Destroyers
-        Register(ImperialIATI.Instance());
-        Register(DevastatorATI.Instance());
-        Register(InterdictorATI.Instance());
-        Register(VictoryIATI.Instance());
-        Register(AcclamatorATI.Instance());
-        Register(ArquitensATI.Instance());
-        Register(ExecutorATI.Instance());
-        
+        Register(new ImperialIATI(this));
+        Register(new DevastatorATI(this));
+        Register(new InterdictorATI(this));
+        Register(new VictoryIATI(this));
+        Register(new AcclamatorATI(this));
+        Register(new ArquitensATI(this));
+        Register(new ExecutorATI(this));
+
         // surface
-        Register(Surface001_00ATI.Instance());
-        Register(Surface001_01ATI.Instance());
-        Register(Surface002_00ATI.Instance());
-        Register(Surface002_01ATI.Instance());
-        Register(Surface002_02ATI.Instance());
-        Register(Surface002_03ATI.Instance());
-        Register(Surface002_04ATI.Instance());
-        Register(Surface002_05ATI.Instance());
-        Register(Surface002_06ATI.Instance());
-        Register(Surface002_07ATI.Instance());
-        Register(Surface002_08ATI.Instance());
-        Register(Surface002_09ATI.Instance());
-        Register(Surface002_10ATI.Instance());
-        Register(Surface002_11ATI.Instance());
-        Register(Surface002_12ATI.Instance());
-        Register(Surface002_99ATI.Instance());
-        Register(Surface003_00ATI.Instance());
+        Register(new Surface001_00ATI(this));
+        Register(new Surface001_01ATI(this));
+        Register(new Surface002_00ATI(this));
+        Register(new Surface002_01ATI(this));
+        Register(new Surface002_02ATI(this));
+        Register(new Surface002_03ATI(this));
+        Register(new Surface002_04ATI(this));
+        Register(new Surface002_05ATI(this));
+        Register(new Surface002_06ATI(this));
+        Register(new Surface002_07ATI(this));
+        Register(new Surface002_08ATI(this));
+        Register(new Surface002_09ATI(this));
+        Register(new Surface002_10ATI(this));
+        Register(new Surface002_11ATI(this));
+        Register(new Surface002_12ATI(this));
+        Register(new Surface002_99ATI(this));
+        Register(new Surface003_00ATI(this));
 
         // towers
-        Register(Tower00ATI.Instance());
-        Register(Tower01ATI.Instance());
-        Register(Tower02ATI.Instance());
-        Register(Tower03ATI.Instance());
-        Register(Tower04ATI.Instance());
-        Register(Tower00_RuinsATI.Instance());
-        Register(Tower01_RuinsATI.Instance());
-        Register(Tower02_RuinsATI.Instance());
-        Register(Tower03_RuinsATI.Instance());
-        Register(TowerGunATI.Instance());
-        Register(TowerGunAdvATI.Instance());
-        Register(TowerGunSuperATI.Instance());
+        Register(new Tower00ATI(this));
+        Register(new Tower01ATI(this));
+        Register(new Tower02ATI(this));
+        Register(new Tower03ATI(this));
+        Register(new Tower04ATI(this));
+        Register(new Tower00_RuinsATI(this));
+        Register(new Tower01_RuinsATI(this));
+        Register(new Tower02_RuinsATI(this));
+        Register(new Tower03_RuinsATI(this));
+        Register(new TowerGunATI(this));
+        Register(new TowerGunAdvATI(this));
+        Register(new TowerGunSuperATI(this));
 
         // lasers
-        Register(RedLaserATI.Instance());
-        Register(GreenLaserATI.Instance());
-        Register(Green2LaserATI.Instance());
-        Register(GreenAntiShipLaserATI.Instance());
-        Register(GreenLaserAdvancedATI.Instance());
-        Register(YellowLaserATI.Instance());
-        Register(SmallIonLaserATI.Instance());
-        Register(BigIonLaserATI.Instance());
-        Register(DeathStarLaserATI.Instance());
+        Register(new RedLaserATI(this));
+        Register(new GreenLaserATI(this));
+        Register(new Green2LaserATI(this));
+        Register(new GreenAntiShipLaserATI(this));
+        Register(new GreenLaserAdvancedATI(this));
+        Register(new YellowLaserATI(this));
+        Register(new SmallIonLaserATI(this));
+        Register(new BigIonLaserATI(this));
+        Register(new DeathStarLaserATI(this));
 
         // torps
-        Register(MissileATI.Instance());
-        Register(TorpedoATI.Instance());
+        Register(new MissileATI(this));
+        Register(new TorpedoATI(this));
 
         // add ons
-        Register(mc90TurbolaserATI.Instance());
-        Register(CorellianTurboLaserATI.Instance());
-        Register(TransportTurboLaserATI.Instance());
-        Register(NebulonBTurboLaserATI.Instance());
-        Register(NebulonBMissilePodATI.Instance());
-        Register(ACTurboLaserATI.Instance());
-        Register(ArqTurboLaserATI.Instance());
-        Register(SDAntiShipTurboLaserATI.Instance());
-        Register(SDTurboLaserATI.Instance());
-        Register(SDMissilePodATI.Instance());
-        Register(ISDShieldGeneratorATI.Instance());
-        Register(SDShieldGeneratorATI.Instance());
-        Register(SDLowerShieldGeneratorATI.Instance());
-        Register(ExecutorTurboLaserATI.Instance());
-        Register(ExecutorShieldGeneratorATI.Instance());
-        Register(ExecutorBridgeATI.Instance());
-        Register(InvisibleRebelTurboLaserATI.Instance());
-        Register(DSLaserSourceATI.Instance());
-        Register(HangarBayATI.Instance());
-        Register(PlayerSpawnerATI.Instance());
+        Register(new mc90TurbolaserATI(this));
+        Register(new CorellianTurboLaserATI(this));
+        Register(new TransportTurboLaserATI(this));
+        Register(new NebulonBTurboLaserATI(this));
+        Register(new NebulonBMissilePodATI(this));
+        Register(new ACTurboLaserATI(this));
+        Register(new ArqTurboLaserATI(this));
+        Register(new SDAntiShipTurboLaserATI(this));
+        Register(new SDTurboLaserATI(this));
+        Register(new SDMissilePodATI(this));
+        Register(new ISDShieldGeneratorATI(this));
+        Register(new SDShieldGeneratorATI(this));
+        Register(new SDLowerShieldGeneratorATI(this));
+        Register(new ExecutorTurboLaserATI(this));
+        Register(new ExecutorShieldGeneratorATI(this));
+        Register(new ExecutorBridgeATI(this));
+        Register(new InvisibleRebelTurboLaserATI(this));
+        Register(new DSLaserSourceATI(this));
+        Register(new HangarBayATI(this));
+        Register(new PlayerSpawnerATI(this));
 
         // asteroids
-        Register(Asteroid01ATI.Instance());
-        Register(Asteroid02ATI.Instance());
-        Register(Asteroid03ATI.Instance());
-        Register(Asteroid04ATI.Instance());
-        Register(Asteroid05ATI.Instance());
-        Register(Asteroid06ATI.Instance());
-        Register(Asteroid07ATI.Instance());
-        Register(Asteroid08ATI.Instance());
+        Register(new Asteroid01ATI(this));
+        Register(new Asteroid02ATI(this));
+        Register(new Asteroid03ATI(this));
+        Register(new Asteroid04ATI(this));
+        Register(new Asteroid05ATI(this));
+        Register(new Asteroid06ATI(this));
+        Register(new Asteroid07ATI(this));
+        Register(new Asteroid08ATI(this));
       }
 
-      public static void Register(ActorTypeInfo atype)
+      public void Register(ActorTypeInfo atype)
       {
-        using (new PerfElement("preload_register"))
+        if (list.ContainsKey(atype.Name))
         {
-          using (new PerfElement("preload_register_" + atype.Name))
-          {
-            if (list.ContainsKey(atype.Name))
-            {
-              atype = list[atype.Name];
-            }
-            else
-            {
-              list.Add(atype.Name, atype);
-            }
-            atype.RegisterModel();
-            Globals.Engine.Screen2D.LoadingTextLines.Add(atype.Name + " loaded!");
-          }
+          atype = list[atype.Name];
         }
-      }
-
-      public static ActorTypeInfo Get(string name)
-      {
-        if (list.ContainsKey(name))
-          return list[name];
         else
-          throw new Exception("ActorTypeInfo '" + name + "' does not exist");
+        {
+          list.Add(atype.Name, atype);
+        }
+        atype.RegisterModel();
+        Engine.Screen2D.LoadingTextLines.Add(atype.Name + " loaded!");
       }
 
-      public static void Remove(string name)
+      public new ActorTypeInfo Get(string id)
       {
-        if (list.ContainsKey(name))
-          list.Remove(name);
+        ActorTypeInfo ret = base.Get(id);
+        if (ret == null)
+          throw new Exception("ActorTypeInfo '" + id + "' does not exist");
+
+        return ret;
       }
 
-      public static void LoadFromINI(string filepath)
+      public void LoadFromINI(string filepath)
       {
         if (File.Exists(filepath))
         {
@@ -208,7 +201,7 @@ namespace SWEndor.ActorTypes
           foreach (string s in f.Sections.Keys)
           {
             if (s != INIFile.PreHeaderSectionName)
-              Register(Parser.Parse(f, s));
+              Register(Parser.Parse(this, f, s));
           }
         }
       }

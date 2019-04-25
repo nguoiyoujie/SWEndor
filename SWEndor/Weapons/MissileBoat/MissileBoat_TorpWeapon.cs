@@ -6,9 +6,8 @@ namespace SWEndor.Weapons.Types
 {
   public class MissileBoat_TorpWeapon : WeaponInfo
   {
-    public MissileBoat_TorpWeapon() : base("Missile Boat Torpedo")
+    public MissileBoat_TorpWeapon() : base("Missile Boat Torpedo", "Torpedo")
     {
-      WeaponProjectile = TorpedoATI.Instance();
       WeaponCooldownRate = 0.4f;
       WeaponCooldownRateRandom = 0;
 

@@ -6,14 +6,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class SDLowerShieldGeneratorATI : Groups.AddOn
   {
-    private static SDLowerShieldGeneratorATI _instance;
-    public static SDLowerShieldGeneratorATI Instance()
-    {
-      if (_instance == null) { _instance = new SDLowerShieldGeneratorATI(); }
-      return _instance;
-    }
-
-    private SDLowerShieldGeneratorATI() : base("Star Destroyer Lower Shield Generator")
+    internal SDLowerShieldGeneratorATI(Factory owner) : base(owner, "Star Destroyer Lower Shield Generator")
     {
       // Combat
       IsCombatObject = true;
@@ -47,8 +40,8 @@ namespace SWEndor.ActorTypes.Instances
 
     public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
-      ActorInfo hitby = ActorInfo.Factory.Get(hitbyActorID);
+      ActorInfo owner = Owner.Engine.ActorFactory.Get(ownerActorID);
+      ActorInfo hitby = Owner.Engine.ActorFactory.Get(hitbyActorID);
 
       if (owner == null || hitby == null)
         return;
@@ -60,9 +53,9 @@ namespace SWEndor.ActorTypes.Instances
 
       if (hitby.TypeInfo.IsDamage)
       {
-        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeInfo.Factory.Get("Electro"));
+        ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("Electro"));
         acinfo.Position = owner.GetPosition();
-        ActorInfo electro = ActorInfo.Create(acinfo);
+        ActorInfo electro = ActorInfo.Create(Owner.Engine.ActorFactory, acinfo);
         electro.AddParent(owner.ID);
         electro.CycleInfo.CyclesRemaining = 2.5f / electro.TypeInfo.TimedLife;
       }

@@ -18,7 +18,7 @@ namespace SWEndor.Input.Functions.Gameplay.Special
       {
         foreach (int actorID in Globals.Engine.GameScenarioManager.Scenario.MainEnemyFaction.GetAll())
         {
-          ActorInfo actor = ActorInfo.Factory.Get(actorID);
+          ActorInfo actor = Globals.Engine.ActorFactory.Get(actorID);
           if (actor != null)
             actor.ActorState = ActorState.DEAD;
         }

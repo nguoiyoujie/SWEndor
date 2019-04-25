@@ -7,14 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class InvisibleRebelTurboLaserATI : Groups.AddOn
   {
-    private static InvisibleRebelTurboLaserATI _instance;
-    public static InvisibleRebelTurboLaserATI Instance()
-    {
-      if (_instance == null) { _instance = new InvisibleRebelTurboLaserATI(); }
-      return _instance;
-    }
-
-    private InvisibleRebelTurboLaserATI() : base("Invisible Rebel Turbo Laser")
+    internal InvisibleRebelTurboLaserATI(Factory owner) : base(owner, "Invisible Rebel Turbo Laser")
     {
       // Combat
       IsCombatObject = false;

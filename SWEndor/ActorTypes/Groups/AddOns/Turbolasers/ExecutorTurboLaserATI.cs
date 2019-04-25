@@ -8,14 +8,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class ExecutorTurboLaserATI : Groups.AddOn
   {
-    private static ExecutorTurboLaserATI _instance;
-    public static ExecutorTurboLaserATI Instance()
-    {
-      if (_instance == null) { _instance = new ExecutorTurboLaserATI(); }
-      return _instance;
-    }
-
-    private ExecutorTurboLaserATI() : base("Executor Super Star Destroyer Turbolaser Tower")
+    internal ExecutorTurboLaserATI(Factory owner) : base(owner, "Executor Super Star Destroyer Turbolaser Tower")
     {
       // Combat
       IsCombatObject = true;

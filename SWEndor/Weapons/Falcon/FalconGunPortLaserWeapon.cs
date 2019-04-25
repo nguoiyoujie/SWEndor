@@ -5,9 +5,8 @@ namespace SWEndor.Weapons.Types
 {
   public class FalconGunPortLaserWeapon : WeaponInfo
   {
-    public FalconGunPortLaserWeapon() : base("Falcon Gun-Port Laser")
+    public FalconGunPortLaserWeapon() : base("Falcon Gun-Port Laser", "Red Laser")
     {
-      WeaponProjectile = RedLaserATI.Instance();
       WeaponCooldownRate = 0.1f;
       WeaponCooldownRateRandom = 0;
 

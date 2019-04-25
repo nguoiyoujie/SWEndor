@@ -6,14 +6,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class SurfaceVentATI : Groups.SurfaceTower
   {
-    private static SurfaceVentATI _instance;
-    public static SurfaceVentATI Instance()
-    {
-      if (_instance == null) { _instance = new SurfaceVentATI(); }
-      return _instance;
-    }
-
-    private SurfaceVentATI() : base("Thermal Exhaust Port")
+    internal SurfaceVentATI(Factory owner) : base(owner, "Thermal Exhaust Port")
     {
       MaxStrength = 12000;
       ImpactDamage = 120;
@@ -42,8 +35,8 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
       base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
-      ActorInfo owner = ActorInfo.Factory.Get(ownerActorID);
-      ActorInfo hitby = ActorInfo.Factory.Get(hitbyActorID);
+      ActorInfo owner = Owner.Engine.ActorFactory.Get(ownerActorID);
+      ActorInfo hitby = Owner.Engine.ActorFactory.Get(hitbyActorID);
 
       if (owner == null || hitby == null)
         return;

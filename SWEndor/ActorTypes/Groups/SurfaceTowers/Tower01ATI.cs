@@ -7,14 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class Tower01ATI : Groups.SurfaceTower
   {
-    private static Tower01ATI _instance;
-    public static Tower01ATI Instance()
-    {
-      if (_instance == null) { _instance = new Tower01ATI(); }
-      return _instance;
-    }
-
-    private Tower01ATI() : base("Deflector Tower")
+    internal Tower01ATI(Factory owner) : base(owner, "Deflector Tower")
     {
       MaxStrength = 100;
       ImpactDamage = 120;

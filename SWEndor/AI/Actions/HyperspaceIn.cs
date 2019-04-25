@@ -45,7 +45,7 @@ namespace SWEndor.AI.Actions
 
     public void ApplyMove(ActorInfo owner)
     {
-      float dist = Globals.Engine.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Target_Position);
+      float dist = Globals.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Target_Position);
 
       if (dist <= CloseEnoughDistance || prevdist < dist)
       {

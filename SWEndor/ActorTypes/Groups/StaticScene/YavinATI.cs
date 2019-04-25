@@ -4,19 +4,12 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class YavinATI : Groups.StaticScene
   {
-    private static YavinATI _instance;
-    public static YavinATI Instance()
+    internal YavinATI(Factory owner) : base(owner, "Yavin")
     {
-      if (_instance == null) { _instance = new YavinATI(); }
-      return _instance;
-    }
-
-    private YavinATI() : base("Yavin")
-    {
-      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Globals.Engine.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
 
         // 1 texture
         string texname = Path.Combine("planets", @"yavin.bmp");

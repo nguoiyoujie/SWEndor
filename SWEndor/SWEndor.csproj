@@ -273,6 +273,7 @@
     <Compile Include="AI\ActionManager.cs" />
     <Compile Include="AI\ActionInfo.cs" />
     <Compile Include="Build.cs" />
+    <Compile Include="Core\TrueVision.cs" />
     <Compile Include="GameEvent\GameEvent.cs" />
     <Compile Include="Input\Context\DebugGameInputContext.cs" />
     <Compile Include="Input\Context\TerminalGameInputContext.cs" />
@@ -509,7 +510,7 @@
     <Compile Include="Weapons\TIE-X1\TIE_X1_TorpWeapon.cs" />
     <Compile Include="Weapons\Corellian\CorellianTurboLaserWeapon.cs" />
     <Compile Include="Weapons\WeaponFactory.cs" />
-    <Compile Include="Weapons\WeaponParser.cs" />
+    <Compile Include="Weapons\WeaponStatInfo.cs" />
     <Compile Include="Weapons\Z95\Z95LaserWeapon.cs" />
     <Compile Include="Weapons\YWing\YWingIonWeapon.cs" />
     <Compile Include="Weapons\TIE-sa\TIE_sa_TorpWeapon.cs" />

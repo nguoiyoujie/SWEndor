@@ -6,9 +6,8 @@ namespace SWEndor.Weapons.Types
 {
   public class YWingTorpWeapon : WeaponInfo
   {
-    public YWingTorpWeapon() : base("Y-Wing Torpedo")
+    public YWingTorpWeapon() : base("Y-Wing Torpedo", "Torpedo")
     {
-      WeaponProjectile = TorpedoATI.Instance();
       WeaponCooldownRate = 0.15f;
       WeaponCooldownRateRandom = 0;
 

@@ -24,7 +24,7 @@ namespace SWEndor.ActorTypes.Components
     {
       // cache
       if (_cache == null)
-        _cache = ActorTypeInfo.Factory.Get(Type);
+        _cache = Globals.Engine.ActorTypeFactory.Get(Type);
 
       ActorCreationInfo acinfo = new ActorCreationInfo(_cache);
       acinfo.InitialState = ActorState.NORMAL;
@@ -38,7 +38,7 @@ namespace SWEndor.ActorTypes.Components
       acinfo.Rotation = new TV_3DVECTOR(Rotation.x, Rotation.y, Rotation.z);
       acinfo.CreationTime = actor.CreationTime;
 
-      ActorInfo a = ActorInfo.Create(acinfo);
+      ActorInfo a = ActorInfo.Create(actor.Owner.Engine.ActorFactory, acinfo);
       a.AddParent(actor.ID);
       
       a.AttachToParent = AttachToParent;

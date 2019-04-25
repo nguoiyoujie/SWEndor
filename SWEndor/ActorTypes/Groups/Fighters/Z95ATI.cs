@@ -10,14 +10,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class Z95ATI : Groups.RebelWing
   {
-    private static Z95ATI _instance;
-    public static Z95ATI Instance()
-    {
-      if (_instance == null) { _instance = new Z95ATI(); }
-      return _instance;
-    }
-
-    private Z95ATI() : base("Z-95")
+    internal Z95ATI(Factory owner) : base(owner, "Z-95")
     {
       // Combat
       IsCombatObject = true;

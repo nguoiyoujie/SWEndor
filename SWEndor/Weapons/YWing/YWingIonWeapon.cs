@@ -6,9 +6,8 @@ namespace SWEndor.Weapons.Types
 {
   public class YWingIonWeapon : WeaponInfo
   {
-    public YWingIonWeapon() : base("Y-Wing Ion")
+    public YWingIonWeapon() : base("Y-Wing Ion", "Ion Laser")
     {
-      WeaponProjectile = SmallIonLaserATI.Instance();
       WeaponCooldownRate = 0.15f;
       WeaponCooldownRateRandom = 0;
 

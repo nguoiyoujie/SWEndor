@@ -9,14 +9,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class TIE_A_ATI : Groups.TIE
   {
-    private static TIE_A_ATI _instance;
-    public static TIE_A_ATI Instance()
-    {
-      if (_instance == null) { _instance = new TIE_A_ATI(); }
-      return _instance;
-    }
-
-    private TIE_A_ATI() : base("TIE Avenger")
+    internal TIE_A_ATI(Factory owner) : base(owner, "TIE Avenger")
     {
       MaxStrength = 15;
       ImpactDamage = 16;

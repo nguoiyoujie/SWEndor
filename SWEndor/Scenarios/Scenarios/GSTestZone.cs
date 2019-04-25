@@ -11,15 +11,15 @@ namespace SWEndor.Scenarios
 {
   public class GSTestZone : GameScenarioBase
   {
-    public GSTestZone()
+    public GSTestZone(GameScenarioManager manager) : base(manager)
     {
       Name = "Test Zone";
-      AllowedWings = new List<ActorTypeInfo> { Tower00ATI.Instance()
-                                             , Tower01ATI.Instance()
-                                             , Tower02ATI.Instance()
-                                             , Tower03ATI.Instance()
-                                             , Tower04ATI.Instance()
-                                             , TowerGunSuperATI.Instance()
+      AllowedWings = new List<ActorTypeInfo> { Manager.Engine.ActorTypeFactory.Get("Advanced Turbolaser Tower")
+                                             , Manager.Engine.ActorTypeFactory.Get("Deflector Tower")
+                                             , Manager.Engine.ActorTypeFactory.Get("Gun Tower")
+                                             , Manager.Engine.ActorTypeFactory.Get("Radar Tower")
+                                             , Manager.Engine.ActorTypeFactory.Get("Super Deflector Tower")
+                                             , Manager.Engine.ActorTypeFactory.Get("Super Turbolaser Turret")
                                              };
 
       AllowedDifficulties = new List<string> { "normal"
@@ -139,11 +139,11 @@ namespace SWEndor.Scenarios
 
     public void Test_Towers01(object[] param)
     {
-      List<ActorTypeInfo> towers = new List<ActorTypeInfo> { Tower00ATI.Instance()
-                                             , Tower01ATI.Instance()
-                                             , Tower02ATI.Instance()
-                                             , Tower03ATI.Instance()
-                                             , Tower04ATI.Instance()
+      List<ActorTypeInfo> towers = new List<ActorTypeInfo> { Manager.Engine.ActorTypeFactory.Get("Advanced Turbolaser Tower")
+                                             , Manager.Engine.ActorTypeFactory.Get("Deflector Tower")
+                                             , Manager.Engine.ActorTypeFactory.Get("Gun Tower")
+                                             , Manager.Engine.ActorTypeFactory.Get("Radar Tower")
+                                             , Manager.Engine.ActorTypeFactory.Get("Super Deflector Tower")
                                              };
 
       for (int x = -5; x <= 5; x++)
@@ -171,7 +171,7 @@ namespace SWEndor.Scenarios
         sets = 3;
 
       // TIEs
-      ActorTypeInfo[] tietypes = new ActorTypeInfo[] { XWingATI.Instance(), AWingATI.Instance() };
+      ActorTypeInfo[] tietypes = new ActorTypeInfo[] { Manager.Engine.ActorTypeFactory.Get("X-Wing"), Manager.Engine.ActorTypeFactory.Get("A-Wing") };
       float t = 0;
       for (int k = 1; k < sets; k++)
       {

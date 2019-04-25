@@ -12,7 +12,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object QueueFirst(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
@@ -20,14 +20,14 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (action == null)
         return false;
 
-      ActionManager.QueueFirst(actor.ID, action);
+      context.Engine.ActionManager.QueueFirst(actor.ID, action);
       return true;
     }
 
     public static object QueueNext(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
@@ -35,14 +35,14 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (action == null)
         return false;
 
-      ActionManager.QueueNext(actor.ID, action);
+      context.Engine.ActionManager.QueueNext(actor.ID, action);
       return true;
     }
 
     public static object QueueLast(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
@@ -50,40 +50,40 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (action == null)
         return false;
 
-      ActionManager.QueueLast(actor.ID, action);
+      context.Engine.ActionManager.QueueLast(actor.ID, action);
       return true;
     }
 
     public static object UnlockActor(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      ActionManager.UnlockOne(actor.ID);
+      context.Engine.ActionManager.UnlockOne(actor.ID);
       return true;
     }
 
     public static object ClearQueue(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      ActionManager.ClearQueue(actor.ID);
+      context.Engine.ActionManager.ClearQueue(actor.ID);
       return true;
     }
 
     public static object ForceClearQueue(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = ActorInfo.Factory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      ActionManager.ForceClearQueue(actor.ID);
+      context.Engine.ActionManager.ForceClearQueue(actor.ID);
       return true;
     }
 
@@ -218,7 +218,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
           if (ps.Length >= 3)
           {
             tgtid = Convert.ToInt32(ps[2].ToString());
-            //tgt = ActorInfo.Factory.Get(tgtid);
+            //tgt = ActorFactory.Get(tgtid);
             //if (tgt == null)
             //  throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[1].ToString().ToLower(), ps[2].ToString().ToLower()));
 
@@ -250,7 +250,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
           if (ps.Length >= 3)
           {
             tgtid = Convert.ToInt32(ps[2].ToString());
-            //tgt = ActorInfo.Factory.Get(tgtid);
+            //tgt = ActorFactory.Get(tgtid);
             //if (tgt == null)
             //  throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[1].ToString().ToLower(), ps[2].ToString().ToLower()));
 

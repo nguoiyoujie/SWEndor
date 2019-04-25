@@ -5,9 +5,8 @@ namespace SWEndor.Weapons.Types
 {
   public class CorellianTurboLaserWeapon : WeaponInfo
   {
-    public CorellianTurboLaserWeapon() : base("Corellian Laser")
+    public CorellianTurboLaserWeapon() : base("Corellian Laser", "Red Laser")
     {
-      WeaponProjectile = RedLaserATI.Instance();
       WeaponCooldownRate = 2.25f;
       WeaponCooldownRateRandom = 0;
 

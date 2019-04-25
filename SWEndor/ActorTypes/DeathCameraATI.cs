@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Player;
-using SWEndor.Scenarios;
 using System;
 
 namespace SWEndor.ActorTypes
@@ -10,14 +9,7 @@ namespace SWEndor.ActorTypes
 
   public class DeathCameraATI : ActorTypeInfo
   {
-    private static DeathCameraATI _instance;
-    public static DeathCameraATI Instance()
-    {
-      if (_instance == null) { _instance = new DeathCameraATI(); }
-      return _instance;
-    }
-
-    private DeathCameraATI() : base("Death Camera")
+    internal DeathCameraATI(Factory owner) : base(owner, "Death Camera")
     {
       // Combat
       IsCombatObject = false;
@@ -26,10 +18,10 @@ namespace SWEndor.ActorTypes
       EnableDistanceCull = false;
       CollisionEnabled = false;
 
-      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Globals.Engine.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);
       }

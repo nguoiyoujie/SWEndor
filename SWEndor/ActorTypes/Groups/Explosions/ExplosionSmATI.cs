@@ -5,14 +5,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class ExplosionSmATI : Groups.Explosion
   {
-    private static ExplosionSmATI _instance;
-    public static ExplosionSmATI Instance()
-    {
-      if (_instance == null) { _instance = new ExplosionSmATI(); }
-      return _instance;
-    }
-
-    private ExplosionSmATI() : base("ExplosionSm")
+    internal ExplosionSmATI(Factory owner) : base(owner, "ExplosionSm")
     {
       // Combat
       OnTimedLife = true;
@@ -25,11 +18,11 @@ namespace SWEndor.ActorTypes.Instances
       EnableDistanceCull = false;
 
 
-      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
         LoadAlphaTextureFromFolder(Globals.ImagePath, "explosion/large");
-        SourceMesh = Globals.Engine.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 100, 100, Key, true);
+        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 100, 100, Key, true);
         SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
         SourceMesh.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
 

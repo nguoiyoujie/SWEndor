@@ -5,9 +5,8 @@ namespace SWEndor.Weapons.Types
 {
   public class TIE_A_LaserWeapon : WeaponInfo
   {
-    public TIE_A_LaserWeapon() : base("TIE/A Laser")
+    public TIE_A_LaserWeapon() : base("TIE/A Laser", "Green Laser Advanced")
     {
-      WeaponProjectile = GreenLaserAdvancedATI.Instance();
       WeaponCooldownRate = 0.18f;
       WeaponCooldownRateRandom = 0;
 

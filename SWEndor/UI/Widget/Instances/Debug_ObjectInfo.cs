@@ -6,7 +6,7 @@ namespace SWEndor.UI.Widgets
 {
   public class Debug_ObjectInfo : Widget
   {
-    public Debug_ObjectInfo() : base("debug_objectinfo") { }
+    public Debug_ObjectInfo(Screen2D owner) : base(owner, "debug_objectinfo") { }
 
     public override bool Visible
     {
@@ -18,14 +18,14 @@ namespace SWEndor.UI.Widgets
 
     public override void Draw()
     {
-      Globals.Engine.TVScreen2DText.Action_BeginText();
+      TVScreen2DText.Action_BeginText();
 
       TV_2DVECTOR loc = new TV_2DVECTOR(30, 375);
       string swingcount = "";
       Dictionary<string, int> wingcount = new Dictionary<string, int>();
-      foreach (int actorID in ActorInfo.Factory.GetHoldingList())
+      foreach (int actorID in Owner.Engine.ActorFactory.GetHoldingList())
       {
-        ActorInfo a = ActorInfo.Factory.Get(actorID);
+        ActorInfo a = Owner.Engine.ActorFactory.Get(actorID);
         if (a != null && a.CreationState == CreationState.ACTIVE)
         {
           if (!wingcount.ContainsKey("All Objects"))
@@ -52,10 +52,10 @@ namespace SWEndor.UI.Widgets
       {
         swingcount += kvp.Key + ": " + kvp.Value + "\n";
       }
-      Globals.Engine.TVScreen2DText.TextureFont_DrawText(swingcount
+      TVScreen2DText.TextureFont_DrawText(swingcount
       , loc.x, loc.y, new TV_COLOR(0.6f, 0.8f, 0.6f, 1).GetIntColor());
 
-      Globals.Engine.TVScreen2DText.Action_EndText();
+      TVScreen2DText.Action_EndText();
     }
   }
 }

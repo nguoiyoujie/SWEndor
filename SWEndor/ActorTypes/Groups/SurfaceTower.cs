@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class SurfaceTower : ActorTypeInfo
   {
-    internal SurfaceTower(string name) : base(name)
+    internal SurfaceTower(Factory owner, string name) : base(owner, name)
     {
       // Combat
       IsCombatObject = true;

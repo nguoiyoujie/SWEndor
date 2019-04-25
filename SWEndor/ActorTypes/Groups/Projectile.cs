@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Group
 {
   public class Projectile : ActorTypeInfo
   {
-    internal Projectile(string name) : base(name)
+    internal Projectile(Factory owner, string name) : base(owner, name)
     {
       // Combat
       IsCombatObject = false;
@@ -31,7 +31,7 @@ namespace SWEndor.ActorTypes.Group
       {
         if (ImpactCloseEnoughDistance > 0 && ainfo.CurrentAction != null && ainfo.CurrentAction is AttackActor)
         {
-          ActorInfo target = ActorInfo.Factory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
+          ActorInfo target = Owner.Engine.ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
           if (target != null)
           {
             // Anticipate

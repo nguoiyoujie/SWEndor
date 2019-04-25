@@ -82,14 +82,14 @@ namespace SWEndor.Actors.Components
     private void MakeExplosion(TV_3DVECTOR vert)
     {
       if (_cache == null)
-        _cache = ActorTypeInfo.Factory.Get(ExplosionType);
+        _cache = Globals.Engine.ActorTypeFactory.Get(ExplosionType);
       MakeExplosion(_cache, Actor.GetRelativePositionXYZ(vert.x * Actor.Scale.x, vert.y * Actor.Scale.y, vert.z * Actor.Scale.z), ExplosionSize);
     }
 
     private void MakeDeathExplosion()
     {
       // Death explosion is one count, no cache needed
-      MakeExplosion(ActorTypeInfo.Factory.Get(DeathExplosionType), Actor.GetPosition(), DeathExplosionSize);
+      MakeExplosion(Globals.Engine.ActorTypeFactory.Get(DeathExplosionType), Actor.GetPosition(), DeathExplosionSize);
     }
 
     private void MakeExplosion(ActorTypeInfo type, TV_3DVECTOR globalPosition, float explSize)
@@ -97,7 +97,7 @@ namespace SWEndor.Actors.Components
       ActorCreationInfo acinfo = new ActorCreationInfo(type);
       acinfo.Position = globalPosition;
       acinfo.InitialScale = new TV_3DVECTOR(explSize * (Actor.Scale.x + Actor.Scale.y + Actor.Scale.z) / 3, explSize * (Actor.Scale.x + Actor.Scale.y + Actor.Scale.z) / 3, 1);
-      ActorInfo.Create(acinfo);
+      ActorInfo.Create(type.Owner.Engine.ActorFactory, acinfo);
     }
   }
 }

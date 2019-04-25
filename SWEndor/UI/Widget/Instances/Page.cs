@@ -4,19 +4,19 @@ namespace SWEndor.UI.Widgets
 {
   public class WidgetPage : Widget
   {
-    public WidgetPage() : base("page") { }
+    public WidgetPage(Screen2D owner) : base(owner, "page") { }
 
     public override bool Visible
     {
       get
       {
-        return Globals.Engine.Screen2D.ShowPage;
+        return Owner.ShowPage;
       }
     }
 
     public override void Draw()
     {
-      Page uip = Globals.Engine.Screen2D.CurrentPage;
+      Page uip = Owner.CurrentPage;
       if (uip != null)
         uip.Show();
     }

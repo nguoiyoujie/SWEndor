@@ -28,7 +28,7 @@ namespace SWEndor.ActorTypes.Components
       if (!PlayInCutscene || !Globals.Engine.GameScenarioManager.IsCutsceneMode)
       {
         TV_3DVECTOR engineloc = actor.GetRelativePositionXYZ(RelativeLocation.x, RelativeLocation.y, RelativeLocation.z);
-        Play(Globals.Engine.TVMathLibrary.GetDistanceVec3D(Globals.Engine.PlayerInfo.Position, engineloc));
+        Play(Globals.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(Globals.Engine.PlayerInfo.Position, engineloc));
       }
     }
 

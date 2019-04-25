@@ -15,7 +15,11 @@ namespace SWEndor.Sound
       public uint Position;
     }
 
-    internal SoundManager() { }
+    public readonly Engine Engine;
+    internal SoundManager(Engine engine)
+    {
+      Engine = engine;
+    }
 
     public void Dispose() { }
 

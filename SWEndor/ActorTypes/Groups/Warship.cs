@@ -5,7 +5,7 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class Warship : ActorTypeInfo
   {
-    internal Warship(string name): base(name)
+    internal Warship(Factory owner, string name): base(owner, name)
     {
       // Combat
       IsCombatObject = true;
@@ -49,9 +49,9 @@ namespace SWEndor.ActorTypes.Groups
       }
       else if (ainfo.ActorState == ActorState.DEAD)
       {
-        ActorCreationInfo acinfo = new ActorCreationInfo(ExplosionWaveATI.Instance());
+        ActorCreationInfo acinfo = new ActorCreationInfo(Owner.Get("Explosion Wave"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo.Create(acinfo).AddParent(ainfo.ID);
+        ActorInfo.Create(Owner.Engine.ActorFactory, acinfo).AddParent(ainfo.ID);
       }
     }
   }

@@ -28,10 +28,10 @@ namespace SWEndor.Scenarios.Scripting
       m_statements.Add(statement);
     }
 
-    public void Run()
+    public void Run(Context context)
     {
       foreach (RootStatement statement in m_statements)
-        statement.Evaluate(SWContext.Instance);
+        statement.Evaluate(context);
     }
   }
 }

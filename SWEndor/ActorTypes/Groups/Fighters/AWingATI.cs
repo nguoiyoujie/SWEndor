@@ -8,14 +8,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class AWingATI : Groups.RebelWing
   {
-    private static AWingATI _instance;
-    public static AWingATI Instance()
-    {
-      if (_instance == null) { _instance = new AWingATI(); }
-      return _instance;
-    }
-
-    private AWingATI() : base("A-Wing")
+    internal AWingATI(Factory owner) : base(owner, "A-Wing")
     {
       // Combat
       IsCombatObject = true;

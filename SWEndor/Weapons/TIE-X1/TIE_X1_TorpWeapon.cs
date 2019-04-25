@@ -6,9 +6,8 @@ namespace SWEndor.Weapons.Types
 {
   public class TIE_X1_TorpWeapon : WeaponInfo
   {
-    public TIE_X1_TorpWeapon() : base("TIE/X1 Torpedo")
+    public TIE_X1_TorpWeapon() : base("TIE/X1 Torpedo", "Torpedo")
     {
-      WeaponProjectile = TorpedoATI.Instance();
       WeaponCooldownRate = 0.15f;
       WeaponCooldownRateRandom = 0;
 

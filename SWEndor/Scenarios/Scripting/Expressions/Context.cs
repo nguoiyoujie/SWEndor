@@ -8,6 +8,12 @@ namespace SWEndor.Scenarios.Scripting.Expressions
   {
     public readonly Registry<FunctionDelegate> Functions = new Registry<FunctionDelegate>();
     public readonly Registry<ContextVariable> Variables = new Registry<ContextVariable>();
+    public readonly Engine Engine;
+
+    public Context(Engine engine)
+    {
+      Engine = engine;
+    }
 
     public class ContextVariable
     {
@@ -18,5 +24,9 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       public dynamic Value { get; set; }
     }
 
+    public virtual void Reset()
+    {
+      Variables.Clear();
+    }
   }
 }

@@ -7,21 +7,14 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class DeathStarATI : Groups.StaticScene
   {
-    private static DeathStarATI _instance;
-    public static DeathStarATI Instance()
-    {
-      if (_instance == null) { _instance = new DeathStarATI(); }
-      return _instance;
-    }
-
-    private DeathStarATI() : base("DeathStar")
+    internal DeathStarATI(Factory owner) : base(owner, "DeathStar")
     {
       float size = 20000;
 
-      SourceMesh = Globals.Engine.TVGlobals.GetMesh(Key);
+      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Globals.Engine.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
 
         string texname = Path.Combine("deathstar", "deathstar.bmp");
         string alphatexname = Path.Combine("deathstar", "deathstaralpha.bmp"); 
@@ -58,9 +51,9 @@ namespace SWEndor.ActorTypes.Instances
       }
       else if (ainfo.ActorState == ActorState.DEAD)
       {
-        ActorCreationInfo acinfo = new ActorCreationInfo(ExplosionWaveMegaATI.Instance());
+        ActorCreationInfo acinfo = new ActorCreationInfo(Owner.Get("Explosion Wave Mega"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo explwav = ActorInfo.Create(acinfo);
+        ActorInfo explwav = ActorInfo.Create(Owner.Engine.ActorFactory, acinfo);
         explwav.Scale = new MTV3D65.TV_3DVECTOR(10, 10, 10);
       }
     }
