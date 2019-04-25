@@ -15,7 +15,7 @@ namespace SWEndor.Weapons
       if (weapproj != null)
       {
         Projectile = (Projectile)Globals.Engine.ActorTypeFactory.Get(weapproj);
-        Range = Projectile.MaxSpeed * Projectile.TimedLife;
+        //Range = Projectile.MaxSpeed * Projectile.TimedLife;
       }
     }
 
@@ -55,11 +55,16 @@ namespace SWEndor.Weapons
       AIAttackNull = stat.AIAttackNull;
 
       AngularRange = stat.AngularRange;
-      //Range = stat.Range;
+      Range = stat.Range;
 
       FireSound = stat.FireSound;
-      Projectile = (Projectile)Globals.Engine.ActorTypeFactory.Get(stat.WeaponProjectile);
-      Range = Projectile.MaxSpeed * Projectile.TimedLife;
+
+      if (stat.WeaponProjectile != null)
+      {
+        Projectile = (Projectile)Globals.Engine.ActorTypeFactory.Get(stat.WeaponProjectile);
+        if (Range == 0)
+          Range = Projectile.MaxSpeed * Projectile.TimedLife;
+      }
     }
 
     public readonly string Name = "Null Weapon";

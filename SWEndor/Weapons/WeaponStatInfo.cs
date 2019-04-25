@@ -46,7 +46,7 @@ namespace SWEndor.Weapons
     public bool AIAttackNull = true;
 
     public float AngularRange = 10;
-    public float Range = 4500;
+    public float Range = 0;
 
     public string FireSound = "laser_sf";
 
