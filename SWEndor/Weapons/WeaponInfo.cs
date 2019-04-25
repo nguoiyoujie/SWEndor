@@ -15,7 +15,7 @@ namespace SWEndor.Weapons
     {
       Name = name;
 
-      if (weapproj == null)
+      if (weapproj != null)
       {
         Projectile = (Projectile)Globals.Engine.ActorTypeFactory.Get(weapproj);
         Range = Projectile.MaxSpeed * Projectile.TimedLife;
