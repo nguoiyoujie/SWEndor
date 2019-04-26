@@ -24,6 +24,9 @@ namespace SWEndor.FileFormat.INI
     public INIHeaderLine HeaderLine { get { return m_headerline; } }
     public List<INILine> Lines { get { return m_lines; } }
 
+    public string[] InheritsSections = new string[0];
+
+
     public void ReadLine(string line)
     {
       INILine newiniline = INILine.ReadLine(line);

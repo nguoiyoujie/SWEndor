@@ -8,11 +8,28 @@ namespace SWEndor.FileFormat.INI
   {
     public string GetStringValue(string section, string key, string defaultValue = "")
     {
+      return GetStringValue(section, key, defaultValue, section);
+    }
+
+    private string GetStringValue(string section, string key, string defaultValue, string firstsection)
+    {
       if (Sections.ContainsKey(section))
       {
         INILine line = Sections[section].GetLine(key);
         if (line != null)
           return line.Value;
+
+        string val = defaultValue;
+        foreach (string inherit in Sections[section].InheritsSections)
+        {
+          if (inherit != firstsection  
+            && val == defaultValue 
+            && Sections.ContainsKey(inherit))
+          {
+            val = GetStringValue(inherit, key, defaultValue, firstsection);
+          }
+        }
+        return val;
       }
       return defaultValue;
     }
