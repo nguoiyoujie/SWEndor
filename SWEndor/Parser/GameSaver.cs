@@ -6,6 +6,7 @@ using SWEndor.UI;
 
 namespace SWEndor
 {
+  /*
   public static class GameSaver
   {
     public static bool Save(string filename)
@@ -74,4 +75,5 @@ namespace SWEndor
       //Thread.Sleep(1000);
     }
   }
+  */
 }
