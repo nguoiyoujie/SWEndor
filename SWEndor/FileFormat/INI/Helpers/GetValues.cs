@@ -15,12 +15,11 @@ namespace SWEndor.FileFormat.INI
     {
       if (Sections.ContainsKey(section))
       {
-        INILine line = Sections[section].GetLine(key);
-        if (line != null)
-          return line.Value;
+        if (Sections[section].HasKey(key))
+          return Sections[section].GetLine(key).Value;
 
         string val = defaultValue;
-        foreach (string inherit in Sections[section].InheritsSections)
+        foreach (string inherit in Sections[section].Inherits)
         {
           if (inherit != firstsection  
             && val == defaultValue 

@@ -27,7 +27,7 @@ namespace SWEndor.Weapons
       if (File.Exists(filepath))
       {
         INIFile f = new INIFile(filepath);
-        foreach (string s in f.Sections.Keys)
+        foreach (string s in f.SectionKeys)
         {
           if (s != INIFile.PreHeaderSectionName)
             Register(new WeaponStatInfo(f, s));//WeaponParser.Parse(f, s));

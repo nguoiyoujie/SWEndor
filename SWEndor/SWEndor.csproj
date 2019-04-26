@@ -274,8 +274,8 @@
     <Compile Include="AI\ActionInfo.cs" />
     <Compile Include="Build.cs" />
     <Compile Include="Core\TrueVision.cs" />
-    <Compile Include="FileFormat\INI\SetValues.cs" />
-    <Compile Include="FileFormat\INI\GetValues.cs" />
+    <Compile Include="FileFormat\INI\Helpers\SetValues.cs" />
+    <Compile Include="FileFormat\INI\Helpers\GetValues.cs" />
     <Compile Include="GameEvent\GameEvent.cs" />
     <Compile Include="Input\Context\DebugGameInputContext.cs" />
     <Compile Include="Input\Context\TerminalGameInputContext.cs" />
@@ -314,9 +314,9 @@
     <Compile Include="Input\Functions\InputFunction.cs" />
     <Compile Include="LandInfo.cs" />
     <Compile Include="FileFormat\INI\INIFile.cs" />
-    <Compile Include="FileFormat\INI\INIHeaderLine.cs" />
-    <Compile Include="FileFormat\INI\INILine.cs" />
-    <Compile Include="FileFormat\INI\INISection.cs" />
+    <Compile Include="FileFormat\INI\Components\INIHeaderLine.cs" />
+    <Compile Include="FileFormat\INI\Components\INILine.cs" />
+    <Compile Include="FileFormat\INI\Components\INISection.cs" />
     <Compile Include="FileFormat\Scripting\ScriptFile.cs" />
     <Compile Include="Log\Logger.cs" />
     <Compile Include="Player\PlayerCameraInfo.cs" />

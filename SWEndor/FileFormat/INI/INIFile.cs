@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SWEndor.Primitives;
+using System;
 using System.IO;
 
 namespace SWEndor.FileFormat.INI
@@ -10,20 +10,19 @@ namespace SWEndor.FileFormat.INI
 
     public INIFile(string filepath)
     {
-      m_filepath = filepath;
+      FilePath = filepath;
       ReadFile();
     }
 
-    private string m_filepath = "";
-    private Dictionary<string, INISection> m_section = new Dictionary<string, INISection>();
-
-    public string FilePath { get { return m_filepath; } }
-    public Dictionary<string, INISection> Sections { get { return m_section; } }
+    public readonly string FilePath;
+    private readonly ThreadSafeDictionary<string, INISection> Sections = new ThreadSafeDictionary<string, INISection>();
+    public string[] SectionKeys { get { return Sections.GetKeys(); } }
 
     public void Reset()
     {
-      m_section.Clear();
+      Sections.Clear();
     }
+
 
     public void ReadFile()
     {
@@ -38,19 +37,19 @@ namespace SWEndor.FileFormat.INI
         using (StreamReader sr = new StreamReader(FilePath))
         {
           INISection currSection = new INISection("");
-          m_section.Add(PreHeaderSectionName, currSection);
+          Sections.Add(PreHeaderSectionName, currSection);
 
           while (!sr.EndOfStream)
           {
             string line = sr.ReadLine();
 
-            if (INIHeaderLine.IsHeader(line))
+            if (INISection.INIHeaderLine.IsHeader(line))
             {
               currSection = new INISection(line);
-              if (!m_section.ContainsKey(currSection.Header))
-                m_section.Add(currSection.Header, currSection);
+              if (!Sections.ContainsKey(currSection.Header))
+                Sections.Add(currSection.Header, currSection);
               else
-                m_section[currSection.Header].Merge(currSection);
+                Sections[currSection.Header].Merge(currSection);
             }
             else
             {
@@ -67,21 +66,15 @@ namespace SWEndor.FileFormat.INI
 
       using (StreamWriter sw = new StreamWriter(filepath, false))
       {
-        foreach (INISection section in Sections.Values)
+        foreach (INISection section in Sections.GetValues())
         {
           if (section != null)
           {
             if (section.Header != null && section.Header.Length > 0)
-            {
-              section.HeaderLine.UpdateRaw();
-              sw.WriteLine(section.HeaderLine.Raw);
-            }
+              sw.WriteLine(section.HLine.ToString());
 
-            foreach (INILine line in section.Lines)
-            {
-              line.UpdateRaw();
-              sw.WriteLine(line.Raw);
-            }
+            foreach (INISection.INILine line in section.Lines)
+              sw.WriteLine(line.ToString());
           }
         }
       }
