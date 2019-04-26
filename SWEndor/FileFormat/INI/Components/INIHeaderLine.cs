@@ -13,7 +13,7 @@ namespace SWEndor.FileFormat.INI
 
         public override string ToString()
         {
-          return string.Format("[{0}]", Header);
+          return string.Format("[{0}] : {1}", Header, string.Join(",", Inherits));
         }
 
         public static bool IsHeader(string line)
