@@ -37,7 +37,7 @@ namespace SWEndor.UI.Menu.Pages
     CONST_TV_KEY KeyToggleIncreaseSpeed;
     CONST_TV_KEY KeyToggleDecreaseSpeed;
     
-    public KeyboardControls()
+    public KeyboardControls(Screen2D owner) : base(owner)
     {
       float height_gap = 40;
       float x = 75;

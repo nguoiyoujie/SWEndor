@@ -10,7 +10,7 @@ namespace SWEndor.Input.Functions.Gameplay.Special
     public override string Name { get { return InternalName; } }
     public override InputOptions Options { get { return InputOptions.ONPRESS; } }
 
-    public override void Process()
+    public override void Process(InputManager manager)
     {
       Globals.Engine.PlayerInfo.IsMovementControlsEnabled = !Globals.Engine.PlayerInfo.IsMovementControlsEnabled;
     }

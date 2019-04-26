@@ -8,10 +8,10 @@ namespace SWEndor
   {
     public MC90Spawner(ActorInfo a) : base(a)
     {
-      SpawnTypes = new ActorTypeInfo[] { a.TypeInfo.Owner.Get("X-Wing")
-                                       , a.TypeInfo.Owner.Get("A-Wing")
-                                       , a.TypeInfo.Owner.Get("Y-Wing")
-                                       , a.TypeInfo.Owner.Get("B-Wing")
+      SpawnTypes = new ActorTypeInfo[] { a.TypeInfo.FactoryOwner.Get("X-Wing")
+                                       , a.TypeInfo.FactoryOwner.Get("A-Wing")
+                                       , a.TypeInfo.FactoryOwner.Get("Y-Wing")
+                                       , a.TypeInfo.FactoryOwner.Get("B-Wing")
                                        };
       SpawnMoveDelay = 3;
       SpawnInterval = 10;

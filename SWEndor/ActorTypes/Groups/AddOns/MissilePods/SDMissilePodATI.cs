@@ -33,7 +33,7 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
       ainfo.ExplosionInfo.DeathExplosionSize = 5;
 
-      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"missile", new ImperialAntiShipMissileWeapon() }
+      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"missile", WeaponFactory.Get("IMPL_MISL") }
                                                         };
       ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:missile" };
       ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };

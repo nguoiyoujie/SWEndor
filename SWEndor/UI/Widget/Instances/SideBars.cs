@@ -16,7 +16,7 @@ namespace SWEndor.UI.Widgets
     public SideBars(Screen2D owner) : base(owner, "sidebar")
     {
       bar_topleft = new TV_2DVECTOR(Owner.Engine.ScreenWidth * 0.85f - 5, 25);
-      bar_length = Owner.Engine.ScreenWidth * 0.15f;
+      bar_length = this.GetEngine().ScreenWidth * 0.15f;
       bar_height = 16;
       bar_barheight = 6;
     }
@@ -26,9 +26,9 @@ namespace SWEndor.UI.Widgets
       get
       {
         return (!Owner.ShowPage
-            && Owner.Engine.PlayerInfo.Actor != null
-            && Owner.Engine.PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && Owner.Engine.PlayerInfo.Actor.ActorState != ActorState.DYING
+            && this.GetEngine().PlayerInfo.Actor != null
+            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DYING
             && !(Owner.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
             && Owner.ShowUI
             && Owner.ShowStatus);
@@ -37,7 +37,7 @@ namespace SWEndor.UI.Widgets
 
     public override void Draw()
     {
-      ActorInfo p = Owner.Engine.PlayerInfo.Actor;
+      ActorInfo p = this.GetEngine().PlayerInfo.Actor;
 
       if (p != null && p.CreationState == CreationState.ACTIVE)
       {
@@ -46,8 +46,8 @@ namespace SWEndor.UI.Widgets
         //Health Bar
         DrawSingleBar(0
                       , string.Format("HP [{0}%]", Math.Ceiling(Owner.Engine.PlayerInfo.StrengthFrac * 100))
-                      , Owner.Engine.PlayerInfo.StrengthFrac
-                      , Owner.Engine.PlayerInfo.HealthColor
+                      , this.GetEngine().PlayerInfo.StrengthFrac
+                      , this.GetEngine().PlayerInfo.HealthColor
                       );
 
         //Speed Bar
@@ -60,7 +60,7 @@ namespace SWEndor.UI.Widgets
         int barnumber = 2;
 
         //Allies
-        foreach (ActorInfo a in Owner.Engine.GameScenarioManager.CriticalAllies.Values)
+        foreach (ActorInfo a in this.GetEngine().GameScenarioManager.CriticalAllies.Values)
         {
           DrawSingleBar(barnumber
               , a.SideBarName.PadRight(12).Remove(11)
@@ -71,7 +71,7 @@ namespace SWEndor.UI.Widgets
         }
 
         //Enemies
-        foreach (ActorInfo a in Owner.Engine.GameScenarioManager.CriticalEnemies.Values)
+        foreach (ActorInfo a in this.GetEngine().GameScenarioManager.CriticalEnemies.Values)
         {
           DrawSingleBar(barnumber
               , a.SideBarName.PadRight(12).Remove(11)

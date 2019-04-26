@@ -39,7 +39,7 @@ namespace SWEndor.AI.Actions
 
       if (ResumeTime == 0)
       {
-        ResumeTime = Globals.Engine.Game.GameTime + WaitTime;
+        ResumeTime = owner.GetEngine().Game.GameTime + WaitTime;
       }
 
       if (CheckBounds(owner))
@@ -50,21 +50,21 @@ namespace SWEndor.AI.Actions
           if (owner.IsNearlyOutOfBounds())
             Target_Position = new TV_3DVECTOR();
           else
-            Target_Position = owner.GetRelativePositionXYZ(1000, Globals.Engine.Random.Next(-500, 500), Globals.Engine.Random.Next(-500, 500));
+            Target_Position = owner.GetRelativePositionXYZ(1000, owner.GetEngine().Random.Next(-500, 500), owner.GetEngine().Random.Next(-500, 500));
         }
 
         float delta_angle = AdjustRotation(owner, Target_Position);
         float delta_speed = AdjustSpeed(owner, owner.MovementInfo.Speed);
 
         Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle && delta_speed == 0);
-        Complete |= (ResumeTime < Globals.Engine.Game.GameTime);
+        Complete |= (ResumeTime < owner.GetEngine().Game.GameTime);
       }
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
       if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
       {
-        owner.Owner.Engine.ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
+        owner.GetEngine().ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
       }
     }
   }

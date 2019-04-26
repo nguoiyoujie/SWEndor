@@ -110,7 +110,7 @@ namespace SWEndor.AI
 
     public void QueueLast(int actorID, ActionInfo action)
     {
-      ActorInfo actor = Globals.Engine.ActorFactory.Get(actorID);
+      ActorInfo actor = Engine.ActorFactory.Get(actorID);
       if (actor != null)
       {
         if (actor.CurrentAction == null)

@@ -6,10 +6,10 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal HothATI(Factory owner) : base(owner, "Hoth")
     {
-      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = FactoryOwner.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = FactoryOwner.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
 
         // 1 texture
         string texname = Path.Combine("planets", @"hoth.bmp");

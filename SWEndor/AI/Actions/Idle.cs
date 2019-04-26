@@ -18,7 +18,7 @@ namespace SWEndor.AI.Actions
 
         if (NextAction == null)
         {
-          owner.Owner.Engine.ActionManager.QueueLast(owner.ID, new Hunt());
+          owner.GetEngine().ActionManager.QueueLast(owner.ID, new Hunt());
         }
 
         Complete = true;
@@ -27,7 +27,7 @@ namespace SWEndor.AI.Actions
         TV_3DVECTOR vImpact = new TV_3DVECTOR();
         if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
         {
-          owner.Owner.Engine.ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
+          owner.GetEngine().ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
         }
       }
     }

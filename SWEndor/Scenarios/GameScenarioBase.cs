@@ -29,16 +29,16 @@ namespace SWEndor.Scenarios
       {
         m_PlayerCameraModes = value;
         if (m_PlayerCameraModes == null || m_PlayerCameraModes.Length == 0)
-          PlayerCameraInfo.Instance().CameraMode = CameraMode.FIRSTPERSON;
+          Manager.Engine.PlayerCameraInfo.CameraMode = CameraMode.FIRSTPERSON;
         else
         {
           for (int i = 0; i < m_PlayerCameraModes.Length; i++)
-            if (m_PlayerCameraModes[i] == PlayerCameraInfo.Instance().CameraMode)
+            if (m_PlayerCameraModes[i] == Manager.Engine.PlayerCameraInfo.CameraMode)
             {
               m_PlayerModeNum = i;
               return;
             }
-          PlayerCameraInfo.Instance().CameraMode = m_PlayerCameraModes[0];
+          Manager.Engine.PlayerCameraInfo.CameraMode = m_PlayerCameraModes[0];
         }
       }
     }
@@ -87,13 +87,13 @@ namespace SWEndor.Scenarios
     {
       Difficulty = difficulty;
       StageNumber = 0;
-      Globals.Engine.PlayerInfo.ActorType = wing;
+      this.GetEngine().PlayerInfo.ActorType = wing;
     }
 
     public virtual void Launch()
     {
-      Globals.Engine.GameScenarioManager.Scenario = this;
-      Globals.Engine.PlayerInfo.Score.Reset();
+      Manager.Scenario = this;
+      this.GetEngine().PlayerInfo.Score.Reset();
       LoadFactions();
       LoadScene();
       Launched = true;
@@ -108,7 +108,7 @@ namespace SWEndor.Scenarios
 
     public virtual void LoadScene()
     {
-      Globals.Engine.TrueVision.TVGraphicEffect.FadeIn();
+      this.GetEngine().TrueVision.TVGraphicEffect.FadeIn();
     }
 
     public virtual void GameTick()
@@ -118,23 +118,23 @@ namespace SWEndor.Scenarios
     public virtual void Unload()
     {
       Launched = false;
-      Globals.Engine.GameScenarioManager.Scenario = null;
+      Manager.Scenario = null;
 
       // Full reset
-      Manager.Engine.ActorFactory.Reset();
+      this.GetEngine().ActorFactory.Reset();
 
-      Globals.Engine.GameScenarioManager.ClearGameStates();
-      Globals.Engine.GameScenarioManager.ClearEvents();
-      Globals.Engine.Screen2D.ClearText();
-      Globals.Engine.PlayerInfo.RequestSpawn = false;
+      Manager.ClearGameStates();
+      Manager.ClearEvents();
+      this.GetEngine().Screen2D.ClearText();
+      this.GetEngine().PlayerInfo.RequestSpawn = false;
 
       // clear sounds
-      Globals.Engine.SoundManager.SetSoundStopAll();
+      this.GetEngine().SoundManager.SetSoundStopAll();
 
-      Globals.Engine.Screen2D.OverrideTargetingRadar = false;
-      Globals.Engine.Screen2D.Box3D_Enable = false;
+      this.GetEngine().Screen2D.OverrideTargetingRadar = false;
+      this.GetEngine().Screen2D.Box3D_Enable = false;
 
-      Globals.Engine.LandInfo.Enabled = false;
+      this.GetEngine().LandInfo.Enabled = false;
 
       // deleted many things, and this function is called when the game is not active. Probably safe to force GC
       GC.Collect();
@@ -142,29 +142,29 @@ namespace SWEndor.Scenarios
 
     public void FadeOut(params object[] param)
     {
-      Globals.Engine.TrueVision.TVGraphicEffect.FadeOut();
-      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 0.01f, FadeInterim);
+      this.GetEngine().TrueVision.TVGraphicEffect.FadeOut();
+      Manager.AddEvent(this.GetEngine().Game.GameTime + 0.01f, FadeInterim);
     }
 
     public void FadeInterim(params object[] param)
     {
-      if (Globals.Engine.TrueVision.TVGraphicEffect.IsFadeFinished())
+      if (this.GetEngine().TrueVision.TVGraphicEffect.IsFadeFinished())
       {
-        Globals.Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
-        Globals.Engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(0, 0, Globals.Engine.ScreenWidth, Globals.Engine.ScreenHeight, new TV_COLOR(0, 0, 0, 1).GetIntColor());
-        Globals.Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
+        this.GetEngine().TrueVision.TVScreen2DImmediate.Action_Begin2D();
+        this.GetEngine().TrueVision.TVScreen2DImmediate.Draw_FilledBox(0, 0, this.GetEngine().ScreenWidth, this.GetEngine().ScreenHeight, new TV_COLOR(0, 0, 0, 1).GetIntColor());
+        this.GetEngine().TrueVision.TVScreen2DImmediate.Action_End2D();
 
-        if (Globals.Engine.GameScenarioManager.GetGameStateB("GameOver"))
+        if (Manager.GetGameStateB("GameOver"))
         {
           GameOver();
           return;
         }
-        else if (Globals.Engine.GameScenarioManager.GetGameStateF("PlayCutsceneSequence", -1) != -1)
+        else if (Manager.GetGameStateF("PlayCutsceneSequence", -1) != -1)
         {
-          PlayCutsceneSequence(new object[] { Globals.Engine.GameScenarioManager.GetGameStateF("PlayCutsceneSequence", -1) });
+          PlayCutsceneSequence(new object[] { Manager.GetGameStateF("PlayCutsceneSequence", -1) });
           return;
         }
-        else if (Globals.Engine.GameScenarioManager.GetGameStateB("GameWon"))
+        else if (Manager.GetGameStateB("GameWon"))
         {
           GameWonSequence();
           return;
@@ -173,96 +173,96 @@ namespace SWEndor.Scenarios
         MakePlayer?.Invoke(null);
 
         FadeIn();
-        Globals.Engine.GameScenarioManager.IsCutsceneMode = false;
+        Manager.IsCutsceneMode = false;
       }
       else
       {
-         Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 0.01f, FadeInterim);
+         Manager.AddEvent(this.GetEngine().Game.GameTime + 0.01f, FadeInterim);
       }
     }
 
     public void FadeIn(params object[] param)
     {
-      Globals.Engine.TrueVision.TVGraphicEffect.FadeIn();
+      this.GetEngine().TrueVision.TVGraphicEffect.FadeIn();
     }
 
     public void GameOver(params object[] param)
     {
-      Globals.Engine.TrueVision.TVGraphicEffect.FadeIn(2.5f);
+      this.GetEngine().TrueVision.TVGraphicEffect.FadeIn(2.5f);
 
-      Globals.Engine.SoundManager.SetSoundStopAll();
+      this.GetEngine().SoundManager.SetSoundStopAll();
 
-      Globals.Engine.Screen2D.CurrentPage = new GameOver();
-      Globals.Engine.Screen2D.ShowPage = true;
-      Globals.Engine.Game.IsPaused = true;
-      Globals.Engine.SoundManager.SetMusic("battle_3_2"); // make modifiable
+      this.GetEngine().Screen2D.CurrentPage = new GameOver(this.GetEngine().Screen2D);
+      this.GetEngine().Screen2D.ShowPage = true;
+      this.GetEngine().Game.IsPaused = true;
+      this.GetEngine().SoundManager.SetMusic("battle_3_2"); // make modifiable
     }
 
     public void LostWing()
     {
-      float t = Globals.Engine.Game.GameTime;
-      if (TimeSinceLostWing > Globals.Engine.Game.GameTime)
+      float t = this.GetEngine().Game.GameTime;
+      if (TimeSinceLostWing > this.GetEngine().Game.GameTime)
         t = TimeSinceLostWing;
 
-      if (TimeSinceLostShip > Globals.Engine.Game.GameTime)
+      if (TimeSinceLostShip > this.GetEngine().Game.GameTime)
         t = TimeSinceLostShip;
 
-      if (TimeSinceLostStructure > Globals.Engine.Game.GameTime)
+      if (TimeSinceLostStructure > this.GetEngine().Game.GameTime)
         t = TimeSinceLostStructure;
 
-      while (t < Globals.Engine.Game.GameTime + 3f)
+      while (t < this.GetEngine().Game.GameTime + 3f)
       {
-          Globals.Engine.GameScenarioManager.AddEvent(t, LostSound);
+          Manager.AddEvent(t, LostSound);
         t += 0.2f;
       }
-      TimeSinceLostWing = Globals.Engine.Game.GameTime + 3f;
+      TimeSinceLostWing = this.GetEngine().Game.GameTime + 3f;
     }
 
     public void LostShip()
     {
-      float t = Globals.Engine.Game.GameTime;
-      if (TimeSinceLostWing > Globals.Engine.Game.GameTime)
+      float t = this.GetEngine().Game.GameTime;
+      if (TimeSinceLostWing > this.GetEngine().Game.GameTime)
         t = TimeSinceLostWing;
 
-      if (TimeSinceLostShip > Globals.Engine.Game.GameTime)
+      if (TimeSinceLostShip > this.GetEngine().Game.GameTime)
         t = TimeSinceLostShip;
 
-      if (TimeSinceLostStructure > Globals.Engine.Game.GameTime)
+      if (TimeSinceLostStructure > this.GetEngine().Game.GameTime)
         t = TimeSinceLostStructure;
 
-      while (t < Globals.Engine.Game.GameTime + 3f)
+      while (t < this.GetEngine().Game.GameTime + 3f)
       {
-        Globals.Engine.GameScenarioManager.AddEvent(t, LostSound);
+        Manager.AddEvent(t, LostSound);
         t += 0.2f;
       }
-      TimeSinceLostShip = Globals.Engine.Game.GameTime + 3f;
+      TimeSinceLostShip = this.GetEngine().Game.GameTime + 3f;
     }
 
     public void LostStructure()
     {
-      float t = Globals.Engine.Game.GameTime;
-      if (TimeSinceLostWing > Globals.Engine.Game.GameTime)
+      float t = this.GetEngine().Game.GameTime;
+      if (TimeSinceLostWing > this.GetEngine().Game.GameTime)
         t = TimeSinceLostWing;
 
-      if (TimeSinceLostShip > Globals.Engine.Game.GameTime)
+      if (TimeSinceLostShip > this.GetEngine().Game.GameTime)
         t = TimeSinceLostShip;
 
-      if (TimeSinceLostStructure > Globals.Engine.Game.GameTime)
+      if (TimeSinceLostStructure > this.GetEngine().Game.GameTime)
         t = TimeSinceLostStructure;
 
-      while (t < Globals.Engine.Game.GameTime + 3f)
+      while (t < this.GetEngine().Game.GameTime + 3f)
       {
-        Globals.Engine.GameScenarioManager.AddEvent(t, LostSound);
+        Manager.AddEvent(t, LostSound);
         t += 0.2f;
       }
-      TimeSinceLostShip = Globals.Engine.Game.GameTime + 3f;
+      TimeSinceLostShip = this.GetEngine().Game.GameTime + 3f;
     }
 
     public void LostSound(object[] param)
     {
-      if (!Globals.Engine.GameScenarioManager.IsCutsceneMode)
+      if (!Manager.IsCutsceneMode)
       {
-        Globals.Engine.SoundManager.SetSound("beep-22", true);
+        this.GetEngine().SoundManager.SetSound("beep-22", true);
       }
     }
 
@@ -271,22 +271,22 @@ namespace SWEndor.Scenarios
       switch (key.ToLower())
       {
         //case "enemystructures":
-        //  return Globals.Engine.GameScenarioManager.EnemyStructures;
+        //  return Manager.EnemyStructures;
         //case "allyfighters":
-        //  return Globals.Engine.GameScenarioManager.AllyFighters;
+        //  return Manager.AllyFighters;
         //case "allyships":
-        //  return Globals.Engine.GameScenarioManager.AllyShips;
+        //  return Manager.AllyShips;
         //case "allystructures":
-        //  return Globals.Engine.GameScenarioManager.AllyStructures;
+        //  return Manager.AllyStructures;
         //case "enemyfighters":
-        //  return Globals.Engine.GameScenarioManager.EnemyFighters;
+        //  return Manager.EnemyFighters;
         //case "enemyships":
-        //  return Globals.Engine.GameScenarioManager.EnemyShips;
+        //  return Manager.EnemyShips;
 
         case "criticalallies":
-          return Globals.Engine.GameScenarioManager.CriticalAllies;
+          return Manager.CriticalAllies;
         case "criticalenemies":
-          return Globals.Engine.GameScenarioManager.CriticalEnemies;
+          return Manager.CriticalEnemies;
         default:
           return null;
       }
@@ -345,23 +345,23 @@ namespace SWEndor.Scenarios
 
     public virtual void ProcessPlayerDying(params object[] param)
     {
-      ActorInfo ainfo = Manager.Engine.ActorFactory.Get((int)param[0]);
+      ActorInfo ainfo = this.GetEngine().ActorFactory.Get((int)param[0]);
       if (ainfo != null)
       {
-        Globals.Engine.PlayerInfo.TempActorID = ainfo.ID;
+        this.GetEngine().PlayerInfo.TempActorID = ainfo.ID;
 
-        if (Globals.Engine.PlayerInfo.Actor.TypeInfo is DeathCameraATI)
-          if (Globals.Engine.PlayerInfo.Actor.CreationState == CreationState.ACTIVE)
-            Globals.Engine.PlayerInfo.Actor.SetLocalPosition(ainfo.GetLocalPosition().x, ainfo.GetLocalPosition().y, ainfo.GetLocalPosition().z);
+        if (this.GetEngine().PlayerInfo.Actor.TypeInfo is DeathCameraATI)
+          if (this.GetEngine().PlayerInfo.Actor.CreationState == CreationState.ACTIVE)
+            this.GetEngine().PlayerInfo.Actor.SetLocalPosition(ainfo.GetLocalPosition().x, ainfo.GetLocalPosition().y, ainfo.GetLocalPosition().z);
       }
     }
 
     public virtual void ProcessPlayerKilled(params object[] param)
     {
-      Globals.Engine.GameScenarioManager.IsCutsceneMode = true;
-      Globals.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + 3f, FadeOut);
-      if (Globals.Engine.PlayerInfo.Lives == 0)
-        Globals.Engine.GameScenarioManager.SetGameStateB("GameOver", true);
+      Manager.IsCutsceneMode = true;
+      Manager.AddEvent(this.GetEngine().Game.GameTime + 3f, FadeOut);
+      if (this.GetEngine().PlayerInfo.Lives == 0)
+        Manager.SetGameStateB("GameOver", true);
     }
 
     public virtual void ProcessTick(params object[] param)
@@ -374,20 +374,20 @@ namespace SWEndor.Scenarios
 
     public virtual void ProcessHit(params object[] param)
     {
-      ActorInfo av = Manager.Engine.ActorFactory.Get((int)param[0]);
-      ActorInfo aa = Manager.Engine.ActorFactory.Get((int)param[1]);
+      ActorInfo av = this.GetEngine().ActorFactory.Get((int)param[0]);
+      ActorInfo aa = this.GetEngine().ActorFactory.Get((int)param[1]);
 
-      if (Globals.Engine.PlayerInfo.Actor != null
+      if (this.GetEngine().PlayerInfo.Actor != null
         && av.Faction != null
-        && av.Faction.IsAlliedWith(Globals.Engine.PlayerInfo.Actor.Faction))
+        && av.Faction.IsAlliedWith(this.GetEngine().PlayerInfo.Actor.Faction))
       {
         List<int> attackerfamily = aa.GetAllParents();
         foreach (int i in attackerfamily)
         {
-          ActorInfo a = Manager.Engine.ActorFactory.Get(i);
-          if (Globals.Engine.PlayerInfo.Actor == a)
+          ActorInfo a = this.GetEngine().ActorFactory.Get(i);
+          if (this.GetEngine().PlayerInfo.Actor == a)
           {
-            Globals.Engine.Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", av.Name, Globals.Engine.PlayerInfo.Name)
+            this.GetEngine().Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", av.Name, this.GetEngine().PlayerInfo.Name)
                                                         , 5
                                                         , av.Faction.Color
                                                         , -1);
@@ -403,15 +403,15 @@ namespace SWEndor.Scenarios
 
     public virtual void GameWonSequence(object[] param = null)
     {
-      Globals.Engine.TrueVision.TVGraphicEffect.FadeIn(2.5f);
+      this.GetEngine().TrueVision.TVGraphicEffect.FadeIn(2.5f);
 
-      Globals.Engine.SoundManager.SetSoundStopAll();
+      this.GetEngine().SoundManager.SetSoundStopAll();
 
-      Globals.Engine.Screen2D.CurrentPage = new GameWon();
-      Globals.Engine.Screen2D.ShowPage = true;
-      Globals.Engine.Game.IsPaused = true;
-      Globals.Engine.SoundManager.SetMusic("finale_3_1");
-      Globals.Engine.SoundManager.SetMusicLoop("credits_3_1");
+      this.GetEngine().Screen2D.CurrentPage = new GameWon(this.GetEngine().Screen2D);
+      this.GetEngine().Screen2D.ShowPage = true;
+      this.GetEngine().Game.IsPaused = true;
+      this.GetEngine().SoundManager.SetMusic("finale_3_1");
+      this.GetEngine().SoundManager.SetMusicLoop("credits_3_1");
     }
   }
 }

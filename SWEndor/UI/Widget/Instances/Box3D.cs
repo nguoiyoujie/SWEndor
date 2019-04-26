@@ -12,9 +12,9 @@ namespace SWEndor.UI.Widgets
       get
       {
         return (!Owner.ShowPage
-            && Owner.Engine.PlayerInfo.Actor != null
-            && Owner.Engine.PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && Owner.Engine.PlayerInfo.Actor.ActorState != ActorState.DYING
+            && this.GetEngine().PlayerInfo.Actor != null
+            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DYING
             && !(Owner.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
             && Owner.ShowUI
             && Owner.Box3D_Enable);
@@ -23,9 +23,9 @@ namespace SWEndor.UI.Widgets
 
     public override void Draw()
     {
-      Owner.Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
-      Owner.Engine.TrueVision.TVScreen2DImmediate.Draw_Box3D(Globals.Engine.Screen2D.Box3D_min, Globals.Engine.Screen2D.Box3D_max, Globals.Engine.Screen2D.Box3D_color.GetIntColor());
-      Owner.Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
+      this.GetEngine().TrueVision.TVScreen2DImmediate.Action_Begin2D();
+      this.GetEngine().TrueVision.TVScreen2DImmediate.Draw_Box3D(Globals.Engine.Screen2D.Box3D_min, Globals.Engine.Screen2D.Box3D_max, Globals.Engine.Screen2D.Box3D_color.GetIntColor());
+      this.GetEngine().TrueVision.TVScreen2DImmediate.Action_End2D();
     }
   }
 }

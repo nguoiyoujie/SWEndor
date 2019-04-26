@@ -35,8 +35,8 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
       base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
-      ActorInfo owner = Owner.Engine.ActorFactory.Get(ownerActorID);
-      ActorInfo hitby = Owner.Engine.ActorFactory.Get(hitbyActorID);
+      ActorInfo owner = this.GetEngine().ActorFactory.Get(ownerActorID);
+      ActorInfo hitby = this.GetEngine().ActorFactory.Get(hitbyActorID);
 
       if (owner == null || hitby == null)
         return;

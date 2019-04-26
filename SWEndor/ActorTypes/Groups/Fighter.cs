@@ -56,9 +56,9 @@ namespace SWEndor.ActorTypes.Groups
 
         ainfo.CombatInfo.IsCombatObject = false;
 
-        ActorCreationInfo acinfo = new ActorCreationInfo(Owner.Get("Electro"));
+        ActorCreationInfo acinfo = new ActorCreationInfo(FactoryOwner.Get("Electro"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo.Create(Owner.Engine.ActorFactory, acinfo).AddParent(ainfo.ID);
+        ActorInfo.Create(this.GetEngine().ActorFactory, acinfo).AddParent(ainfo.ID);
       }
     }
   }

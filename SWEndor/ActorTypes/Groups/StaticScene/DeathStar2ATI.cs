@@ -17,10 +17,10 @@ namespace SWEndor.ActorTypes.Instances
 
       float size = 20000;
 
-      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = FactoryOwner.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = FactoryOwner.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
 
         List<int> death = new List<int> { 1, 10, 15, 16, 20, 21, 22, 23, 27, 28, 30, 31, 34, 35, 36 };
         List<int> frames = new List<int>();
@@ -87,9 +87,9 @@ namespace SWEndor.ActorTypes.Instances
       }
       else if (ainfo.ActorState == ActorState.DEAD)
       {
-        ActorCreationInfo acinfo = new ActorCreationInfo(Owner.Get("Explosion Wave Mega"));
+        ActorCreationInfo acinfo = new ActorCreationInfo(FactoryOwner.Get("Explosion Wave Mega"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo explwav = ActorInfo.Create(Owner.Engine.ActorFactory, acinfo);
+        ActorInfo explwav = ActorInfo.Create(FactoryOwner.Engine.ActorFactory, acinfo);
         explwav.Scale = new MTV3D65.TV_3DVECTOR(10, 10, 10);
       }
     }

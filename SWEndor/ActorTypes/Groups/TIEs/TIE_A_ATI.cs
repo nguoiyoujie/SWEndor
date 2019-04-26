@@ -53,8 +53,8 @@ namespace SWEndor.ActorTypes.Instances
 
       ainfo.RegenerationInfo.SelfRegenRate = 0.075f;
 
-      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", new TIE_A_TorpWeapon() }
-                                                        , {"laser", new TIE_A_LaserWeapon() }
+      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("TIEA_TORP") }
+                                                        , {"laser", WeaponFactory.Get("TIEA_LASR") }
                                                         };
       ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser", "2:laser" };
       ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none", "1:torp" };

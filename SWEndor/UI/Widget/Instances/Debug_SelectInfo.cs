@@ -19,20 +19,20 @@ namespace SWEndor.UI.Widgets
     {
       TVScreen2DText.Action_BeginText();
 
-      TVCollisionResult tvcres = Owner.Engine.TrueVision.TVScene.MousePick((int)Owner.Engine.ScreenWidth / 2, (int)Owner.Engine.ScreenHeight / 2);
+      TVCollisionResult tvcres = this.GetEngine().TrueVision.TVScene.MousePick((int)Owner.Engine.ScreenWidth / 2, (int)Owner.Engine.ScreenHeight / 2);
       if (tvcres.GetCollisionMesh() != null)
       {
         int n = 0;
         if (int.TryParse(tvcres.GetCollisionMesh().GetMeshName(), out n))
         {
-          ActorInfo a = Owner.Engine.ActorFactory.Get(n);
+          ActorInfo a = this.GetEngine().ActorFactory.Get(n);
 
           if (a != null) //&& a.TypeInfo.CollisionEnabled)
           {
             TV_3DVECTOR vec = tvcres.GetCollisionImpact() - a.GetPosition();
             TV_3DVECTOR vvec = new TV_3DVECTOR();
             TV_3DVECTOR rot = a.GetRotation();
-            Owner.Engine.TrueVision.TVMathLibrary.TVVec3Rotate(ref vvec, vec, -rot.y, rot.x, rot.z);
+            this.GetEngine().TrueVision.TVMathLibrary.TVVec3Rotate(ref vvec, vec, -rot.y, rot.x, rot.z);
 
             string text = string.Format("{0}({1:0.0},{2:0.0},{3:0.0})\nPos: {4:0.0},{5:0.0},{6:0.0}\nSpd: {7: 0.0}\n"//{8}  {9:0.0},{10:0.0},{11:0.0}\n"
               , a.Name

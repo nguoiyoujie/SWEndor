@@ -31,7 +31,7 @@ namespace SWEndor.AI.Actions
 
     public override void Process(ActorInfo owner)
     {
-      ActorInfo target = owner.Owner.Engine.ActorFactory.Get(Target_ActorID);
+      ActorInfo target = owner.GetEngine().ActorFactory.Get(Target_ActorID);
       if (target == null || owner.MovementInfo.MaxSpeed == 0)
       {
         Complete = true;
@@ -58,7 +58,7 @@ namespace SWEndor.AI.Actions
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
       if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
       {
-        owner.Owner.Engine.ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
+        owner.GetEngine().ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
       }
     }
   }

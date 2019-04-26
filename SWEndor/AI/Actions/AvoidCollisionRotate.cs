@@ -46,7 +46,7 @@ namespace SWEndor.AI.Actions
           Target_Position = owner.CollisionInfo.ProspectiveCollisionSafe;
         else
           Target_Position = Impact_Position + Normal * 10000;
-        float dist = Globals.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Impact_Position);
+        float dist = owner.GetEngine().TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Impact_Position);
         float Target_Speed = owner.MovementInfo.MinSpeed; //dist / 25;
 
         float delta_angle = AdjustRotation(owner, Target_Position);
@@ -57,7 +57,7 @@ namespace SWEndor.AI.Actions
 
       if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
       {
-        float newavoid = GetAvoidanceAngle(owner.GetDirection(), Normal);
+        float newavoid = GetAvoidanceAngle(owner, owner.GetDirection(), Normal);
         float concavecheck = 60;
         if (!calcAvoidAngle || (AvoidanceAngle - newavoid > -concavecheck && AvoidanceAngle - newavoid < concavecheck))
         {
@@ -74,21 +74,21 @@ namespace SWEndor.AI.Actions
       else
       {
         owner.CollisionInfo.IsAvoidingCollision = false;
-        owner.Owner.Engine.ActionManager.QueueNext(owner.ID, new Wait(2.5f));
+        owner.GetEngine().ActionManager.QueueNext(owner.ID, new Wait(2.5f));
         Complete = true;
       }
     }
 
-    private float GetAvoidanceAngle(TV_3DVECTOR travelling_vec, TV_3DVECTOR impact_normal)
+    private float GetAvoidanceAngle(ActorInfo owner, TV_3DVECTOR travelling_vec, TV_3DVECTOR impact_normal)
     {
       //get an orthogonal direction to travelling_vec on the xz plane
       TV_3DVECTOR xzdir = new TV_3DVECTOR();
-      Globals.Engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref xzdir, new TV_3DVECTOR(travelling_vec.z, 0, -travelling_vec.x));
+      owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Normalize(ref xzdir, new TV_3DVECTOR(travelling_vec.z, 0, -travelling_vec.x));
 
       TV_3DVECTOR avoidvec = new TV_3DVECTOR();
-      Globals.Engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref avoidvec, impact_normal - Globals.Engine.TrueVision.TVMathLibrary.VDotProduct(impact_normal, travelling_vec) * travelling_vec);
-      float val = Globals.Engine.TrueVision.TVMathLibrary.VDotProduct(avoidvec, xzdir);
-      return Globals.Engine.TrueVision.TVMathLibrary.ACos(val);
+      owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Normalize(ref avoidvec, impact_normal - owner.GetEngine().TrueVision.TVMathLibrary.VDotProduct(impact_normal, travelling_vec) * travelling_vec);
+      float val = owner.GetEngine().TrueVision.TVMathLibrary.VDotProduct(avoidvec, xzdir);
+      return owner.GetEngine().TrueVision.TVMathLibrary.ACos(val);
     }
   }
 }

@@ -48,9 +48,9 @@ namespace SWEndor.ActorTypes.Groups
       }
       else if (ainfo.ActorState == ActorState.DEAD)
       {
-        ActorCreationInfo acinfo = new ActorCreationInfo(Owner.Get("Explosion Wave"));
+        ActorCreationInfo acinfo = new ActorCreationInfo(FactoryOwner.Get("Explosion Wave"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo.Create(Owner.Engine.ActorFactory, acinfo).AddParent(ainfo.ID);
+        ActorInfo.Create(FactoryOwner.Engine.ActorFactory, acinfo).AddParent(ainfo.ID);
       }
     }
   }

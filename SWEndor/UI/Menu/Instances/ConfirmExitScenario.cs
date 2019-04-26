@@ -9,7 +9,7 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement ConfirmNo = new SelectionElement();
     SelectionElement ConfirmYes = new SelectionElement();
 
-    public ConfirmExitScenario()
+    public ConfirmExitScenario(Screen2D owner) : base(owner)
     {
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
       Cover.HighlightBoxWidth = Globals.Engine.ScreenWidth;
@@ -59,9 +59,9 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        Globals.Engine.GameScenarioManager.Reset();
-        Globals.Engine.GameScenarioManager.LoadMainMenu();
-        Globals.Engine.SoundManager.SetMusicResume();
+        this.GetEngine().GameScenarioManager.Reset();
+        this.GetEngine().GameScenarioManager.LoadMainMenu();
+        this.GetEngine().SoundManager.SetMusicResume();
 
         return true;
       }

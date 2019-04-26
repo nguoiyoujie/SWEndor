@@ -10,7 +10,7 @@ namespace SWEndor.Input.Functions.Gameplay.UI
     public override string Name { get { return InternalName; } }
     public override InputOptions Options { get { return InputOptions.ONPRESS; } }
 
-    public override void Process()
+    public override void Process(InputManager manager)
     {
       Globals.Engine.Screen2D.ShowScore = !Globals.Engine.Screen2D.ShowScore;
       Globals.Engine.SoundManager.SetSound("button_1");

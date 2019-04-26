@@ -10,7 +10,7 @@ namespace SWEndor.Input.Functions.Gameplay.Special
     public override string Name { get { return InternalName; } }
     public override InputOptions Options { get { return InputOptions.WHILEPRESSED; } }
 
-    public override void Process()
+    public override void Process(InputManager manager)
     {
       Globals.Engine.Game.TimeControl.SpeedModifier *= 0.9f;
       Globals.Engine.Screen2D.MessageSecondaryText(string.Format("DEV: TIMEMULT = {0:0.00}", Globals.Engine.Game.TimeControl.SpeedModifier)

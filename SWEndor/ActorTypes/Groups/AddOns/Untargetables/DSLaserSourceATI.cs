@@ -35,7 +35,7 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
       ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:laser" };
 
-      Owner.Engine.ActionManager.QueueNext(ainfo.ID, new Lock());
+      this.GetEngine().ActionManager.QueueNext(ainfo.ID, new Lock());
     }
 
     public override void ProcessState(ActorInfo ainfo)
@@ -44,7 +44,7 @@ namespace SWEndor.ActorTypes.Instances
       
       if (ainfo.CurrentAction != null && ainfo.CurrentAction is AttackActor)
       {
-        ActorInfo target = Owner.Engine.ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
+        ActorInfo target = this.GetEngine().ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
         if (target != null && target.CreationState == CreationState.ACTIVE)
         {
           FireWeapon(ainfo.ID, target.ID, "auto");

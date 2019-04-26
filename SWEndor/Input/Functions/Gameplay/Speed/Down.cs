@@ -10,7 +10,7 @@ namespace SWEndor.Input.Functions.Gameplay.Speed
     public override string Name { get { return InternalName; } }
     public override InputOptions Options { get { return InputOptions.WHILEPRESSED; } }
 
-    public override void Process()
+    public override void Process(InputManager manager)
     {
       Globals.Engine.PlayerInfo.ChangeSpeed(-1);
     }

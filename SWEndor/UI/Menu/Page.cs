@@ -9,6 +9,12 @@ namespace SWEndor.UI.Menu
     public Page Parent = null;
     public int SelectedElementID = -1;
 
+    public Page(Screen2D owner)
+    {
+      Owner = owner;
+    }
+    public readonly Screen2D Owner;
+
     public virtual void Show()
     {
       SelectionElement SelectedElement = null;

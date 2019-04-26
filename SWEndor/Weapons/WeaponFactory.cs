@@ -18,7 +18,6 @@ namespace SWEndor.Weapons
       WeaponStatInfo wsi = list.Get(key);
       if (wsi == null)
         throw new System.Exception("Weapon '" + key + "' is not found!");
-        //return new DummyWeapon();
       return new WeaponInfo(wsi);
     }
 
@@ -27,10 +26,22 @@ namespace SWEndor.Weapons
       if (File.Exists(filepath))
       {
         INIFile f = new INIFile(filepath);
-        foreach (string s in f.SectionKeys)
+
+        // [Weapons]
+        // X=weapon1
+        //
+        // [weapon1]
+        // ...
+
+        string main = "Weapons";
+        if (f.HasSection(main))
         {
-          if (s != INIFile.PreHeaderSectionName)
-            Register(new WeaponStatInfo(f, s));//WeaponParser.Parse(f, s));
+          INIFile.INISection weaps = f.GetSection(main);
+          foreach (string s in weaps.GetKeys())
+          {
+            if (s != INIFile.PreHeaderSectionName)
+              Register(new WeaponStatInfo(f, s));
+          }
         }
       }
     }

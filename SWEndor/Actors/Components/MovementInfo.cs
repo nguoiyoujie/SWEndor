@@ -111,7 +111,7 @@ namespace SWEndor.Actors.Components
         else if (Actor.CurrentAction is HyperspaceOut)
           ((HyperspaceOut)Actor.CurrentAction).ApplyMove(Actor);
 
-        Actor.MoveRelative(Speed * Globals.Engine.Game.TimeSinceRender, 0, 0);
+        Actor.MoveRelative(Speed * Actor.GetEngine().Game.TimeSinceRender, 0, 0);
         return;
       }
 
@@ -125,32 +125,32 @@ namespace SWEndor.Actors.Components
       {
         TV_3DVECTOR vec = Actor.GetRotation();
         Actor.SetLocalRotation(vec.x, vec.y, 0);
-        Actor.MoveRelative(Speed * Globals.Engine.Game.TimeSinceRender, 0, 0);
-        ZRoll -= YTurnAngle * ZTilt * Globals.Engine.Game.TimeSinceRender;
+        Actor.MoveRelative(Speed * Actor.GetEngine().Game.TimeSinceRender, 0, 0);
+        ZRoll -= YTurnAngle * ZTilt * Actor.GetEngine().Game.TimeSinceRender;
 
         // Z rotation decay.
-        Zdiv += Globals.Engine.Game.TimeSinceRender / 0.005f;
+        Zdiv += Actor.GetEngine().Game.TimeSinceRender / 0.005f;
         while (Zdiv > 0 && !float.IsInfinity(Zdiv))
         {
           ZRoll *= 1 - ZNormFrac;
           Zdiv--;
         }
 
-        float rotX2 = vec.x + XTurnAngle * Globals.Engine.Game.TimeSinceRender;
+        float rotX2 = vec.x + XTurnAngle * Actor.GetEngine().Game.TimeSinceRender;
         Utilities.Clamp(ref rotX2, -Actor.TypeInfo.XLimit, Actor.TypeInfo.XLimit);
-        float rotY2 = vec.y + YTurnAngle * Globals.Engine.Game.TimeSinceRender;
+        float rotY2 = vec.y + YTurnAngle * Actor.GetEngine().Game.TimeSinceRender;
 
         Actor.SetLocalRotation(rotX2, rotY2, ZRoll);
       }
       else
       {
         TV_3DVECTOR vec = Actor.GetRotation();
-        Actor.MoveRelative(Speed * Globals.Engine.Game.TimeSinceRender, 0, 0);
+        Actor.MoveRelative(Speed * Actor.GetEngine().Game.TimeSinceRender, 0, 0);
         ZRoll = vec.z;
-        ZRoll -= YTurnAngle * ZTilt * Globals.Engine.Game.TimeSinceRender;
-        float rotX2 = vec.x + XTurnAngle * Globals.Engine.Game.TimeSinceRender;
+        ZRoll -= YTurnAngle * ZTilt * Actor.GetEngine().Game.TimeSinceRender;
+        float rotX2 = vec.x + XTurnAngle * Actor.GetEngine().Game.TimeSinceRender;
         Utilities.Clamp(ref rotX2, -Actor.TypeInfo.XLimit, Actor.TypeInfo.XLimit);
-        float rotY2 = vec.y + YTurnAngle * Globals.Engine.Game.TimeSinceRender;
+        float rotY2 = vec.y + YTurnAngle * Actor.GetEngine().Game.TimeSinceRender;
         Actor.SetLocalRotation(rotX2, rotY2, ZRoll);
       }
     }
@@ -163,8 +163,8 @@ namespace SWEndor.Actors.Components
         {
           case DyingMovement.SPIN:
             ApplyZBalance = false;
-            D_spin_r = Globals.Engine.Random.Next(D_spin_min_rate, D_spin_max_rate); // assumed D_spin_min_rate < D_spin_max_rate
-            if (Globals.Engine.Random.NextDouble() > 0.5f)
+            D_spin_r = Actor.GetEngine().Random.Next(D_spin_min_rate, D_spin_max_rate); // assumed D_spin_min_rate < D_spin_max_rate
+            if (Actor.GetEngine().Random.NextDouble() > 0.5f)
               D_spin_r = -D_spin_r;
             break;
         }
@@ -178,14 +178,14 @@ namespace SWEndor.Actors.Components
         switch (DyingMovement)
         {
           case DyingMovement.SPIN:
-            float rotZ = D_spin_r * Globals.Engine.Game.TimeSinceRender;
+            float rotZ = D_spin_r * Actor.GetEngine().Game.TimeSinceRender;
             Actor.Rotate(0, 0, rotZ);
             Actor.MovementInfo.ResetTurn(); // force only forward
             break;
 
           case DyingMovement.SINK:
-            Actor.MovementInfo.XTurnAngle += D_sink_pitch_rate * Globals.Engine.Game.TimeSinceRender;
-            Actor.MoveAbsolute(D_sink_forward_rate * Globals.Engine.Game.TimeSinceRender, -D_sink_down_rate * Globals.Engine.Game.TimeSinceRender, 0);
+            Actor.MovementInfo.XTurnAngle += D_sink_pitch_rate * Actor.GetEngine().Game.TimeSinceRender;
+            Actor.MoveAbsolute(D_sink_forward_rate * Actor.GetEngine().Game.TimeSinceRender, -D_sink_down_rate * Actor.GetEngine().Game.TimeSinceRender, 0);
             break;
         }
       }

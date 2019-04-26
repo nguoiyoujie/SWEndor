@@ -12,7 +12,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
-      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
       ActionInfo action = ParseAction(ps);
@@ -27,7 +27,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
-      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
       ActionInfo action = ParseAction(ps);
@@ -42,7 +42,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
-      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
       ActionInfo action = ParseAction(ps);
@@ -57,7 +57,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
-      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
       context.Engine.ActionManager.UnlockOne(actor.ID);
@@ -68,7 +68,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
-      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
       context.Engine.ActionManager.ClearQueue(actor.ID);
@@ -79,7 +79,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       int id = Convert.ToInt32(ps[0].ToString());
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
-      if (Globals.Engine.GameScenarioManager.Scenario == null || actor == null)
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
       context.Engine.ActionManager.ForceClearQueue(actor.ID);

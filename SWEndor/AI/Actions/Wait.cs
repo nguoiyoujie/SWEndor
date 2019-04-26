@@ -25,15 +25,15 @@ namespace SWEndor.AI.Actions
     {
       if (ResumeTime == 0)
       {
-        ResumeTime = Globals.Engine.Game.GameTime + WaitTime;
+        ResumeTime = owner.GetEngine().Game.GameTime + WaitTime;
       }
 
       AdjustRotation(owner, owner.GetRelativePositionXYZ(0, 0, 1000), false);
       if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
       {
-        owner.Owner.Engine.ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
+        owner.GetEngine().ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
       }
-      Complete |= (ResumeTime < Globals.Engine.Game.GameTime);
+      Complete |= (ResumeTime < owner.GetEngine().Game.GameTime);
     }
   }
 }

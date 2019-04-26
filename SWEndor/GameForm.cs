@@ -6,18 +6,14 @@ namespace SWEndor
 {
   public partial class GameForm : Form
   {
-    private static GameForm _instance;
-    public static GameForm Instance()
+    internal GameForm(Engine engine)
     {
-      if (_instance == null) { _instance = new GameForm(); }
-      return _instance;
-    }
-
-    private GameForm()
-    {
+      Engine = engine;
       InitializeComponent();
       lblVersion.Text = Globals.Version;
     }
+
+    private readonly Engine Engine;
 
     private void GameForm_Load(object sender, EventArgs e)
     {
@@ -34,10 +30,11 @@ namespace SWEndor
       pbGame.Height = Settings.ResolutionY;
 
       // game
-      Globals.Engine.Game.StartLoad();
-      Globals.Engine.LinkHandle(pbGame.Handle);
-      Globals.Engine.InitTrueVision();
-      Globals.Engine.Game.Run();
+      Engine.Game.StartLoad();
+      Engine.LinkForm(this);
+      Engine.LinkHandle(pbGame.Handle);
+      Engine.InitTrueVision();
+      Engine.Game.Run();
 
       pbGame.Width = (int)(Settings.ResolutionX * m);
       pbGame.Height = (int)(Settings.ResolutionY * m);
@@ -52,7 +49,6 @@ namespace SWEndor
 
     private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
     {
-      Globals.Engine.Game.Close();
     }
 
     private void pbGame_MouseLeave(object sender, EventArgs e)

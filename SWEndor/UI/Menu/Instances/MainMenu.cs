@@ -13,7 +13,7 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement ButtonExit = new SelectionElement();
 
 
-    public MainMenu()
+    public MainMenu(Screen2D owner) : base(owner)
     {
       MainMenuText.Text = "<Title>";
       MainMenuText.TextPosition = new TV_2DVECTOR(75, 60);
@@ -79,7 +79,7 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        EnterPage(new PlayScenario());
+        EnterPage(new PlayScenario(Owner));
         return true;
       }
       return false;
@@ -99,7 +99,7 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        EnterPage(new OptionsMenu());
+        EnterPage(new OptionsMenu(Owner));
         return true;
       }
       return false;
@@ -109,7 +109,7 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        EnterPage(new Credits());
+        EnterPage(new Credits(Owner));
         return true;
       }
       return false;
@@ -119,7 +119,7 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        EnterPage(new ConfirmExit());
+        EnterPage(new ConfirmExit(Owner));
         return true;
       }
       return false;

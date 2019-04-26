@@ -15,7 +15,7 @@ namespace SWEndor.UI
     public virtual string Name { get; }
     public virtual void Draw() { }
 
-    public TVScreen2DImmediate TVScreen2DImmediate { get { return Owner.Engine.TrueVision.TVScreen2DImmediate; } }
-    public TVScreen2DText TVScreen2DText { get { return Owner.Engine.TrueVision.TVScreen2DText; } }
+    public TVScreen2DImmediate TVScreen2DImmediate { get { return this.GetEngine().TrueVision.TVScreen2DImmediate; } }
+    public TVScreen2DText TVScreen2DText { get { return this.GetEngine().TrueVision.TVScreen2DText; } }
   }
 }

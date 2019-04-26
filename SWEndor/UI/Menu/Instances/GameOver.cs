@@ -7,7 +7,7 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement MainText = new SelectionElement();
     SelectionElement ButtonReturn = new SelectionElement();
 
-    public GameOver()
+    public GameOver(Screen2D owner) : base(owner)
     {
       MainText.Text = "GAME OVER";
       MainText.TextFont = Font.Factory.Get("Title_36").ID;
@@ -30,8 +30,8 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        Globals.Engine.GameScenarioManager.Reset();
-        Globals.Engine.GameScenarioManager.LoadMainMenu();
+        this.GetEngine().GameScenarioManager.Reset();
+        this.GetEngine().GameScenarioManager.LoadMainMenu();
         return true;
       }
       return false;

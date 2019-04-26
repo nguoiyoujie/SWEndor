@@ -11,10 +11,10 @@
       EnableDistanceCull = false;
       CollisionEnabled = false;
 
-      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = FactoryOwner.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = FactoryOwner.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);
       }

@@ -15,7 +15,7 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement ButtonExit = new SelectionElement();
 
 
-    public ConfigSettingsMenu()
+    public ConfigSettingsMenu(Screen2D owner) : base(owner)
     {
       float height_gap = 40;
       float x = 75;

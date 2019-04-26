@@ -13,7 +13,7 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement ButtonReturn = new SelectionElement();
     string errorfilename = @"error.txt";
 
-    public FatalError(Exception exception)
+    public FatalError(Screen2D owner, Exception exception) : base(owner)
     {
       Logger.GenerateErrLog(exception, errorfilename);
 
@@ -54,10 +54,10 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        Globals.Engine.SoundManager.SetSound("r23");
-        Globals.Engine.SoundManager.SetMusicStop();
+        this.GetEngine().SoundManager.SetSound("r23");
+        this.GetEngine().SoundManager.SetMusicStop();
         Thread.Sleep(1500);
-        Globals.Engine.Exit();
+        this.GetEngine().Exit();
         return true;
       }
       return false;

@@ -114,12 +114,12 @@ namespace SWEndor
       Task.Factory.StartNew(new Action(Tick)).ContinueWith(new Action<Task>(t => GenerateFatalError(t.Exception.InnerException)), TaskContinuationOptions.OnlyOnFaulted);
     }
 
-    public void Close()
+    public void Stop()
     {
-      if (State == RunState.RUNNING) // TO DO: Check if this condition is needed
+      if (State != RunState.STOPPED)
       {
         State = RunState.STOPPED;
-        GameForm.Instance().Exit();
+        Engine.Exit();
       }
     }
 
@@ -206,9 +206,7 @@ namespace SWEndor
                       , MessageBoxButtons.OK));
         return;
       }
-
-      Engine.Dispose();
-      Close();
+      Stop();
     }
 
     private void GenerateFatalError(Exception ex)
@@ -216,7 +214,7 @@ namespace SWEndor
       // Replace this block to print this on file!
       if (State == RunState.RUNNING)
       {
-        Engine.Screen2D.CurrentPage = new FatalError(ex);
+        Engine.Screen2D.CurrentPage = new FatalError(Engine.Screen2D, ex);
         Engine.Screen2D.ShowPage = true;
         IsPaused = true;
       }
@@ -298,7 +296,7 @@ namespace SWEndor
 
           if (!IsPaused)
             using (new PerfElement("tick_render_playercamera"))
-              PlayerCameraInfo.Instance().Update();
+              Engine.PlayerCameraInfo.Update();
 
           using (new PerfElement("tick_process_input"))
             Engine.InputManager.ProcessInput();

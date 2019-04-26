@@ -33,21 +33,21 @@ namespace SWEndor.ActorTypes.Components
     public void Process(ActorInfo actor)
     {
       if (_cache == null)
-        _cache = Globals.Engine.ActorTypeFactory.Get(Type);
+        _cache = actor.GetEngine().ActorTypeFactory.Get(Type);
 
-      double d = Globals.Engine.Random.NextDouble();
+      double d = actor.GetEngine().Random.NextDouble();
       if (d < Chance)
       {
-        float x = Globals.Engine.Random.Next(RotationXMin, RotationXMax) / 100f;
-        float y = Globals.Engine.Random.Next(RotationYMin, RotationYMax) / 100f;
-        float z = Globals.Engine.Random.Next(RotationZMin, RotationZMax) / 100f;
+        float x = actor.GetEngine().Random.Next(RotationXMin, RotationXMax) / 100f;
+        float y = actor.GetEngine().Random.Next(RotationYMin, RotationYMax) / 100f;
+        float z = actor.GetEngine().Random.Next(RotationZMin, RotationZMax) / 100f;
 
         ActorCreationInfo acinfo = new ActorCreationInfo(_cache);
         acinfo.Position = actor.GetPosition() + SpawnPosition;
         acinfo.Rotation = new TV_3DVECTOR(actor.Rotation.x + x, actor.Rotation.y + y, actor.Rotation.z + z);
         acinfo.InitialSpeed = actor.MovementInfo.Speed;
         acinfo.InitialState = ActorState.DYING;
-        ActorInfo a = ActorInfo.Create(actor.Owner.Engine.ActorFactory, acinfo);
+        ActorInfo a = ActorInfo.Create(actor.GetEngine().ActorFactory, acinfo);
       }
     }
   }

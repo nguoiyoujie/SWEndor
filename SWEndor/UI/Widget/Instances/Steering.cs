@@ -17,9 +17,9 @@ namespace SWEndor.UI.Widgets
       get
       {
         return (!Owner.ShowPage
-            && Owner.Engine.PlayerInfo.Actor != null
-            && Owner.Engine.PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && Owner.Engine.PlayerInfo.Actor.ActorState != ActorState.DYING
+            && this.GetEngine().PlayerInfo.Actor != null
+            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DYING
             && !(Owner.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
             && Owner.ShowUI);
       }
@@ -27,7 +27,7 @@ namespace SWEndor.UI.Widgets
 
     public override void Draw()
     {
-      ActorInfo p = Owner.Engine.PlayerInfo.Actor;
+      ActorInfo p = this.GetEngine().PlayerInfo.Actor;
       if (p == null || p.CreationState != CreationState.ACTIVE)
         return;
 

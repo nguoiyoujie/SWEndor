@@ -124,31 +124,31 @@ namespace SWEndor.Player
       if (Actor != null && !(Actor.TypeInfo is InvisibleCameraATI) && !(Actor.TypeInfo is DeathCameraATI))
       {
         TV_3DVECTOR pos = Actor.GetPosition();
-        if (pos.x < Globals.Engine.GameScenarioManager.MinBounds.x)
+        if (pos.x < Engine.GameScenarioManager.MinBounds.x)
         {
-          Actor.SetLocalPosition(Globals.Engine.GameScenarioManager.MinBounds.x, pos.y, pos.z);
+          Actor.SetLocalPosition(Engine.GameScenarioManager.MinBounds.x, pos.y, pos.z);
           announceOutOfBounds = true;
         }
-        else if (pos.x > Globals.Engine.GameScenarioManager.MaxBounds.x)
+        else if (pos.x > Engine.GameScenarioManager.MaxBounds.x)
         {
-          Actor.SetLocalPosition(Globals.Engine.GameScenarioManager.MaxBounds.x, pos.y, pos.z);
+          Actor.SetLocalPosition(Engine.GameScenarioManager.MaxBounds.x, pos.y, pos.z);
           announceOutOfBounds = true;
         }
 
-        if (pos.y < Globals.Engine.GameScenarioManager.MinBounds.y)
-          Actor.SetLocalPosition(pos.x, Globals.Engine.GameScenarioManager.MinBounds.y, pos.z);
-        else if (pos.y > Globals.Engine.GameScenarioManager.MaxBounds.y)
-          Actor.SetLocalPosition(pos.x, Globals.Engine.GameScenarioManager.MaxBounds.y, pos.z);
+        if (pos.y < Engine.GameScenarioManager.MinBounds.y)
+          Actor.SetLocalPosition(pos.x, Engine.GameScenarioManager.MinBounds.y, pos.z);
+        else if (pos.y > Engine.GameScenarioManager.MaxBounds.y)
+          Actor.SetLocalPosition(pos.x, Engine.GameScenarioManager.MaxBounds.y, pos.z);
 
 
-        if (pos.z < Globals.Engine.GameScenarioManager.MinBounds.z)
+        if (pos.z < Engine.GameScenarioManager.MinBounds.z)
         {
-          Actor.SetLocalPosition(pos.x, pos.y, Globals.Engine.GameScenarioManager.MinBounds.z);
+          Actor.SetLocalPosition(pos.x, pos.y, Engine.GameScenarioManager.MinBounds.z);
           announceOutOfBounds = true;
         }
-        else if (pos.z > Globals.Engine.GameScenarioManager.MaxBounds.z)
+        else if (pos.z > Engine.GameScenarioManager.MaxBounds.z)
         {
-          Actor.SetLocalPosition(pos.x, pos.y, Globals.Engine.GameScenarioManager.MaxBounds.z);
+          Actor.SetLocalPosition(pos.x, pos.y, Engine.GameScenarioManager.MaxBounds.z);
           announceOutOfBounds = true;
         }
 

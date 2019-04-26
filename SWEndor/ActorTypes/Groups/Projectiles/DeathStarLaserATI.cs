@@ -20,10 +20,10 @@ namespace SWEndor.ActorTypes.Instances
       NoAI = true;
       EnableDistanceCull = false;
 
-      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = FactoryOwner.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = FactoryOwner.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
 
         SourceMesh.CreateBox(40, 40, 1000);
         SourceMesh.SetMeshCenter(0, 0, 2200);
@@ -74,8 +74,8 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
       base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
-      ActorInfo owner = Owner.Engine.ActorFactory.Get(ownerActorID);
-      ActorInfo hitby = Owner.Engine.ActorFactory.Get(hitbyActorID);
+      ActorInfo owner = this.GetEngine().ActorFactory.Get(ownerActorID);
+      ActorInfo hitby = this.GetEngine().ActorFactory.Get(hitbyActorID);
 
       if (owner == null || hitby == null)
         return;

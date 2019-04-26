@@ -41,7 +41,7 @@ namespace SWEndor.ActorTypes.Instances
       {
         ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("ExplosionSm"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo.Create(Owner.Engine.ActorFactory, acinfo);
+        ActorInfo.Create(FactoryOwner.Engine.ActorFactory, acinfo);
 
         ainfo.ActorState = ActorState.DEAD;
       }

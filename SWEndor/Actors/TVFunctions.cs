@@ -21,7 +21,7 @@ namespace SWEndor.Actors
       if (a.Mesh == null)
         return new TV_3DVECTOR();
 
-      int r = Globals.Engine.Random.Next(0, a.Mesh.GetVertexCount());
+      int r = a.GetEngine().Random.Next(0, a.Mesh.GetVertexCount());
 
       float x = 0;
       float y = 0;

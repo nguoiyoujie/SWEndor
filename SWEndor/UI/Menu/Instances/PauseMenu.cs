@@ -13,7 +13,7 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement ButtonQuit = new SelectionElement();
 
 
-    public PauseMenu()
+    public PauseMenu(Screen2D owner) : base(owner)
     {
       Globals.Engine.SoundManager.SetMusicPause();
 
@@ -121,7 +121,7 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        EnterPage(new OptionsMenu());
+        EnterPage(new OptionsMenu(Owner));
         return true;
       }
       return false;
@@ -131,7 +131,7 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        EnterPage(new ConfirmExitScenario());
+        EnterPage(new ConfirmExitScenario(Owner));
         return true;
       }
       return false;

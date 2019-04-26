@@ -11,10 +11,10 @@ namespace SWEndor.ActorTypes.Instances
     {
       float size = 20000;
 
-      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = FactoryOwner.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = FactoryOwner.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
 
         string texname = Path.Combine("deathstar", "deathstar.bmp");
         string alphatexname = Path.Combine("deathstar", "deathstaralpha.bmp"); 
@@ -51,9 +51,9 @@ namespace SWEndor.ActorTypes.Instances
       }
       else if (ainfo.ActorState == ActorState.DEAD)
       {
-        ActorCreationInfo acinfo = new ActorCreationInfo(Owner.Get("Explosion Wave Mega"));
+        ActorCreationInfo acinfo = new ActorCreationInfo(FactoryOwner.Get("Explosion Wave Mega"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo explwav = ActorInfo.Create(Owner.Engine.ActorFactory, acinfo);
+        ActorInfo explwav = ActorInfo.Create(FactoryOwner.Engine.ActorFactory, acinfo);
         explwav.Scale = new MTV3D65.TV_3DVECTOR(10, 10, 10);
       }
     }

@@ -70,11 +70,11 @@ namespace SWEndor
           if (WingLimit > 0)
             WingLimit--;
 
-          if (Globals.Engine.GameScenarioManager.Scenario != null
-             && Globals.Engine.GameScenarioManager.Scenario.MainAllyFaction != null
-             && (this == Globals.Engine.GameScenarioManager.Scenario.MainAllyFaction
-              || (Globals.Engine.GameScenarioManager.Scenario.MainAllyFaction.WingLimitIncludesAllies && Globals.Engine.GameScenarioManager.Scenario.MainAllyFaction.IsAlliedWith(this))))
-            Globals.Engine.GameScenarioManager.Scenario.LostWing();
+          if (ainfo.GetEngine().GameScenarioManager.Scenario != null
+             && ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction != null
+             && (this == ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction
+              || (ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction.WingLimitIncludesAllies && ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction.IsAlliedWith(this))))
+            ainfo.GetEngine().GameScenarioManager.Scenario.LostWing();
         }
       }
 
@@ -86,11 +86,11 @@ namespace SWEndor
           if (ShipLimit > 0)
             ShipLimit--;
 
-          if (Globals.Engine.GameScenarioManager.Scenario != null
-             && Globals.Engine.GameScenarioManager.Scenario.MainAllyFaction != null
-             && (this == Globals.Engine.GameScenarioManager.Scenario.MainAllyFaction
-              || (Globals.Engine.GameScenarioManager.Scenario.MainAllyFaction.ShipLimitIncludesAllies && Globals.Engine.GameScenarioManager.Scenario.MainAllyFaction.IsAlliedWith(this))))
-            Globals.Engine.GameScenarioManager.Scenario.LostShip();
+          if (ainfo.GetEngine().GameScenarioManager.Scenario != null
+             && ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction != null
+             && (this == ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction
+              || (ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction.ShipLimitIncludesAllies && ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction.IsAlliedWith(this))))
+            ainfo.GetEngine().GameScenarioManager.Scenario.LostShip();
         }
       }
 
@@ -103,11 +103,11 @@ namespace SWEndor
           if (StructureLimit > 0)
             StructureLimit--;
 
-          if (Globals.Engine.GameScenarioManager.Scenario != null
-             && Globals.Engine.GameScenarioManager.Scenario.MainAllyFaction != null
-             && (this == Globals.Engine.GameScenarioManager.Scenario.MainAllyFaction
-              || (Globals.Engine.GameScenarioManager.Scenario.MainAllyFaction.StructureLimitIncludesAllies && Globals.Engine.GameScenarioManager.Scenario.MainAllyFaction.IsAlliedWith(this))))
-            Globals.Engine.GameScenarioManager.Scenario.LostStructure();
+          if (ainfo.GetEngine().GameScenarioManager.Scenario != null
+             && ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction != null
+             && (this == ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction
+              || (ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction.StructureLimitIncludesAllies && ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction.IsAlliedWith(this))))
+            ainfo.GetEngine().GameScenarioManager.Scenario.LostStructure();
         }
       }
     }

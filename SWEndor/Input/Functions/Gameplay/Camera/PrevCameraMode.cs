@@ -10,9 +10,9 @@ namespace SWEndor.Input.Functions.Gameplay.Camera
     public override string Name { get { return InternalName; } }
     public override InputOptions Options { get { return InputOptions.ONPRESS; } }
 
-    public override void Process()
+    public override void Process(InputManager manager)
     {
-      PlayerCameraInfo.Instance().CameraMode = Globals.Engine.GameScenarioManager.Scenario.NextCameraMode();
+      manager.Engine.PlayerCameraInfo.CameraMode = manager.Engine.GameScenarioManager.Scenario.NextCameraMode();
     }
   }
 }

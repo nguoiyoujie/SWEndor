@@ -226,9 +226,9 @@ namespace SWEndor.Weapons
         a.AddParent(ownerActorID);
 
         if (!a.TypeInfo.NoAI)
-          owner.Owner.Engine.ActionManager.QueueLast(a.ID, new Wait(ProjectileWaitBeforeHoming));
-        owner.Owner.Engine.ActionManager.QueueLast(a.ID, new AttackActor(targetActorID, 0, 0, false, 9999));
-        owner.Owner.Engine.ActionManager.QueueLast(a.ID, new Idle());
+          owner.GetEngine().ActionManager.QueueLast(a.ID, new Wait(ProjectileWaitBeforeHoming));
+        owner.GetEngine().ActionManager.QueueLast(a.ID, new AttackActor(targetActorID, 0, 0, false, 9999));
+        owner.GetEngine().ActionManager.QueueLast(a.ID, new Idle());
 
         return true;
       }
@@ -287,10 +287,10 @@ namespace SWEndor.Weapons
         a.AddParent(ownerActorID);
 
         if (!a.TypeInfo.NoAI)
-          owner.Owner.Engine.ActionManager.QueueLast(a.ID, new Wait(ProjectileWaitBeforeHoming));
+          owner.GetEngine().ActionManager.QueueLast(a.ID, new Wait(ProjectileWaitBeforeHoming));
 
-        owner.Owner.Engine.ActionManager.QueueLast(a.ID, new AttackActor(targetActorID, 0, 0, false, 9999));
-        owner.Owner.Engine.ActionManager.QueueLast(a.ID, new Lock());
+        owner.GetEngine().ActionManager.QueueLast(a.ID, new AttackActor(targetActorID, 0, 0, false, 9999));
+        owner.GetEngine().ActionManager.QueueLast(a.ID, new Lock());
 
         return true;
       }

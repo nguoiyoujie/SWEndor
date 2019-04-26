@@ -34,7 +34,7 @@ namespace SWEndor.ActorTypes.Instances
       {
         ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("ExplosionSm"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo.Create(Owner.Engine.ActorFactory, acinfo);
+        ActorInfo.Create(FactoryOwner.Engine.ActorFactory, acinfo);
 
         ainfo.ActorState = ActorState.DEAD;
       }
@@ -42,8 +42,8 @@ namespace SWEndor.ActorTypes.Instances
 
     public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      ActorInfo owner = Owner.Engine.ActorFactory.Get(ownerActorID);
-      ActorInfo hitby = Owner.Engine.ActorFactory.Get(hitbyActorID);
+      ActorInfo owner = this.GetEngine().ActorFactory.Get(ownerActorID);
+      ActorInfo hitby = this.GetEngine().ActorFactory.Get(hitbyActorID);
 
       if (owner == null || hitby == null)
         return;
@@ -53,7 +53,7 @@ namespace SWEndor.ActorTypes.Instances
       List<int> rm = new List<int>();
       foreach (int i in children)
       {
-        ActorInfo c = Owner.Engine.ActorFactory.Get(i);
+        ActorInfo c = this.GetEngine().ActorFactory.Get(i);
         if (c == null
           || c.CreationState != CreationState.ACTIVE
           || !c.TypeInfo.TargetType.HasFlag(TargetType.ADDON))
@@ -67,7 +67,7 @@ namespace SWEndor.ActorTypes.Instances
       {
         for (int shock = 3; shock > 0; shock--)
         {
-          ActorInfo child = Owner.Engine.ActorFactory.Get(children[Globals.Engine.Random.Next(0, children.Count)]);
+          ActorInfo child = this.GetEngine().ActorFactory.Get(children[Globals.Engine.Random.Next(0, children.Count)]);
           child.CombatInfo.Strength -= 0.1f * Globals.Engine.Random.Next(25, 50);
 
           float empduration = 12;
@@ -78,16 +78,16 @@ namespace SWEndor.ActorTypes.Instances
 
           foreach (int i in child.GetAllChildren(1))
           {
-            ActorInfo child2 = Owner.Engine.ActorFactory.Get(i);
+            ActorInfo child2 = this.GetEngine().ActorFactory.Get(i);
             if (child2.TypeInfo is ElectroATI)
             {
               child2.CycleInfo.CyclesRemaining = empduration / child2.CycleInfo.CyclePeriod;
               return;
             }
           }
-          ActorCreationInfo acinfo = new ActorCreationInfo(Owner.Get("Electro"));
+          ActorCreationInfo acinfo = new ActorCreationInfo(FactoryOwner.Get("Electro"));
           acinfo.Position = child.GetPosition();
-          ActorInfo electro = ActorInfo.Create(Owner.Engine.ActorFactory, acinfo);
+          ActorInfo electro = ActorInfo.Create(FactoryOwner.Engine.ActorFactory, acinfo);
           electro.AddParent(child.ID);
           electro.CycleInfo.CyclesRemaining = empduration / electro.CycleInfo.CyclePeriod;
         }

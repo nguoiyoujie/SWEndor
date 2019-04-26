@@ -11,7 +11,7 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement ButtonExit = new SelectionElement();
 
 
-    public Credits()
+    public Credits(Screen2D owner) : base(owner)
     {
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
       Cover.HighlightBoxWidth = Globals.Engine.ScreenWidth;

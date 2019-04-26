@@ -23,13 +23,13 @@ namespace SWEndor
       try
       {
         Globals.PreInit();
-        Globals.InitEngine();
+        Engine engine = Globals.InitEngine();
 
         InputFunction.Registry.GenerateDefault();
         Settings.LoadSettings();
         Settings.SaveSettings();
 
-        Application.Run(GameForm.Instance());
+        Application.Run(new GameForm(engine));
       }
       catch (Exception ex)
       {

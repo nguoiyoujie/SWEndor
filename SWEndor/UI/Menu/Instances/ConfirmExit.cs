@@ -9,7 +9,7 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement ConfirmNo = new SelectionElement();
     SelectionElement ConfirmYes = new SelectionElement();
 
-    public ConfirmExit()
+    public ConfirmExit(Screen2D owner) : base(owner)
     {
       ConfirmText.Text = "Confirm Exit?";
       ConfirmText.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 - 150, Globals.Engine.ScreenHeight / 2 - 80);
@@ -53,10 +53,10 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        Globals.Engine.SoundManager.SetSound("r23");
-        Globals.Engine.SoundManager.SetMusicStop();
+        this.GetEngine().SoundManager.SetSound("r23");
+        this.GetEngine().SoundManager.SetMusicStop();
         Thread.Sleep(1500);
-        Globals.Engine.Exit();
+        this.GetEngine().Exit();
         return false;
       }
       return false;

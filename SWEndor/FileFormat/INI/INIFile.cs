@@ -23,6 +23,21 @@ namespace SWEndor.FileFormat.INI
       Sections.Clear();
     }
 
+    public bool HasSection(string key)
+    {
+      if (Sections.ContainsKey(key))
+        return true;
+      else
+        return false;
+    }
+
+    public INISection GetSection(string key)
+    {
+      if (Sections.ContainsKey(key))
+        return Sections[key];
+      else
+        throw new Exception(string.Format("The section [{0}] does not exist in '{1}'!", key, FilePath));
+    }
 
     public void ReadFile()
     {

@@ -44,7 +44,7 @@ namespace SWEndor.AI.Actions
 
       if (ResumeTime == 0)
       {
-        ResumeTime = Globals.Engine.Game.GameTime + WaitTime;
+        ResumeTime = owner.GetEngine().Game.GameTime + WaitTime;
       }
 
       if (CloseEnoughDistance < 0)
@@ -53,16 +53,9 @@ namespace SWEndor.AI.Actions
       AdjustRotation(owner, Target_Position);
       AdjustSpeed(owner, Target_Speed);
 
-      float dist = Globals.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Target_Position);
+      float dist = owner.GetEngine().TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Target_Position);
       Complete |= (dist <= CloseEnoughDistance);
-      Complete |= (ResumeTime < Globals.Engine.Game.GameTime);
-
-      //TV_3DVECTOR vNormal = new TV_3DVECTOR();
-      //TV_3DVECTOR vImpact = new TV_3DVECTOR();
-      //if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
-      //{
-      //  ActionManager.QueueFirst(owner, new AvoidCollisionRotate(owner.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
-      //}
+      Complete |= (ResumeTime < owner.GetEngine().Game.GameTime);
     }
   }
 }

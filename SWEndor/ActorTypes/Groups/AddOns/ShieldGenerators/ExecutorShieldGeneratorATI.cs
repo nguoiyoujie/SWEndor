@@ -38,8 +38,8 @@ namespace SWEndor.ActorTypes.Instances
 
     public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      ActorInfo owner = Owner.Engine.ActorFactory.Get(ownerActorID);
-      ActorInfo hitby = Owner.Engine.ActorFactory.Get(hitbyActorID);
+      ActorInfo owner = this.GetEngine().ActorFactory.Get(ownerActorID);
+      ActorInfo hitby = this.GetEngine().ActorFactory.Get(hitbyActorID);
 
       if (owner == null || hitby == null)
         return;
@@ -53,16 +53,16 @@ namespace SWEndor.ActorTypes.Instances
       {
         foreach (int i in owner.GetAllChildren(1))
         {
-          ActorInfo child = Owner.Engine.ActorFactory.Get(i);
+          ActorInfo child = this.GetEngine().ActorFactory.Get(i);
           if (child?.TypeInfo is ElectroATI)
           {
             child.CycleInfo.CyclesRemaining = 2.5f / child.TypeInfo.TimedLife;
             return;
           }
         }
-        ActorCreationInfo acinfo = new ActorCreationInfo(Owner.Engine.ActorTypeFactory.Get("Electro"));
+        ActorCreationInfo acinfo = new ActorCreationInfo(this.GetEngine().ActorTypeFactory.Get("Electro"));
         acinfo.Position = owner.GetPosition();
-        ActorInfo electro = ActorInfo.Create(Owner.Engine.ActorFactory, acinfo);
+        ActorInfo electro = ActorInfo.Create(this.GetEngine().ActorFactory, acinfo);
         electro.AddParent(ownerActorID);
         electro.CycleInfo.CyclesRemaining = 2.5f / electro.TypeInfo.TimedLife;
       }

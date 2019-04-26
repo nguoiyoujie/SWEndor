@@ -56,10 +56,11 @@ namespace SWEndor
       LoadDlls();
     }
 
-    public static void InitEngine()
+    public static Engine InitEngine()
     {
       Engine = new Engine();
       Engine.Init();
+      return Engine;
     }
 
     public static void CreateDirectories()

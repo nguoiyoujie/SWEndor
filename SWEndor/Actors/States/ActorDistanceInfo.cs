@@ -97,7 +97,7 @@ namespace SWEndor.Actors
 
     public static float CalculateDistance(ActorInfo first, ActorInfo second)
     {
-      return Globals.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(first.GetPosition(), second.GetPosition());
+      return first.GetEngine().TrueVision.TVMathLibrary.GetDistanceVec3D(first.GetPosition(), second.GetPosition());
     }
   }
 }

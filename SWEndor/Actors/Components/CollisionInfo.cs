@@ -77,11 +77,11 @@ namespace SWEndor.Actors.Components
         {
           if (IsInCollision)
           {
-            ActorInfo a = Actor.Owner.Engine.ActorFactory.Get(CollisionActorID);
+            ActorInfo a = Actor.GetEngine().ActorFactory.Get(CollisionActorID);
             if (Actor.IsPlayer() 
-              && Globals.Engine.PlayerInfo.PlayerAIEnabled)
+              && Actor.GetEngine().PlayerInfo.PlayerAIEnabled)
             {
-              Globals.Engine.Screen2D.MessageSecondaryText(string.Format("DEV WARNING: PLAYER AI COLLIDED: {0}", a.ToString()), 1.5f, new TV_COLOR(1, 0.2f, 0.2f, 1), 99999);
+              Actor.GetEngine().Screen2D.MessageSecondaryText(string.Format("DEV WARNING: PLAYER AI COLLIDED: {0}", a.ToString()), 1.5f, new TV_COLOR(1, 0.2f, 0.2f, 1), 99999);
               IsInCollision = false;
               IsTestingCollision = true;
               return;
@@ -105,7 +105,7 @@ namespace SWEndor.Actors.Components
 
       // check landscape only
       if (Actor.TypeInfo is ActorTypes.Group.Projectile || Actor.TypeInfo.TargetType != TargetType.NULL)
-        if (Globals.Engine.LandInfo.Land.AdvancedCollide(vmin, vmax).IsCollision())
+        if (Actor.GetEngine().LandInfo.Land.AdvancedCollide(vmin, vmax).IsCollision())
         {
           Actor.ActorState = ActorState.DEAD;
         }
@@ -168,7 +168,7 @@ namespace SWEndor.Actors.Components
                 proImpact += _Impact;
                 proNormal += _Normal;
                 count++;
-                float newdist = Globals.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(Actor.Position, _Impact);
+                float newdist = Actor.GetEngine().TrueVision.TVMathLibrary.GetDistanceVec3D(Actor.Position, _Impact);
                 if (dist < newdist)
                 {
                   dist = newdist;
@@ -208,12 +208,12 @@ namespace SWEndor.Actors.Components
 
           TV_COLLISIONRESULT tvcres = new TV_COLLISIONRESULT();
 
-          if (Globals.Engine.TrueVision.TVScene.AdvancedCollision(start, end, ref tvcres))
+          if (Actor.GetEngine().TrueVision.TVScene.AdvancedCollision(start, end, ref tvcres))
           {
             if (Actor.IsPlayer())
             {
-              Globals.Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
-              Globals.Engine.TrueVision.TVScreen2DImmediate.Draw_Line3D(start.x
+              Actor.GetEngine().TrueVision.TVScreen2DImmediate.Action_Begin2D();
+              Actor.GetEngine().TrueVision.TVScreen2DImmediate.Draw_Line3D(start.x
                                                 , start.y
                                                 , start.z
                                                 , end.x
@@ -221,7 +221,7 @@ namespace SWEndor.Actors.Components
                                                 , end.z
                                                 , new TV_COLOR(0.5f, 1, 0.2f, 1).GetIntColor()
                                                 );
-              Globals.Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
+              Actor.GetEngine().TrueVision.TVScreen2DImmediate.Action_End2D();
             }
 
             if (tvcres.eCollidedObjectType != CONST_TV_OBJECT_TYPE.TV_OBJECT_MESH && tvcres.eCollidedObjectType != CONST_TV_OBJECT_TYPE.TV_OBJECT_LANDSCAPE)
@@ -238,12 +238,12 @@ namespace SWEndor.Actors.Components
                 return true;
               }
 
-              TVMesh tvm = Globals.Engine.TrueVision.TVGlobals.GetMeshFromID(tvcres.iMeshID);
+              TVMesh tvm = Actor.GetEngine().TrueVision.TVGlobals.GetMeshFromID(tvcres.iMeshID);
               if (tvm != null) // && tvm.IsVisible())
               {
                 if (int.TryParse(tvm.GetTag(), out actorID))
                 {
-                  ActorInfo actor = Actor.Owner.Engine.ActorFactory.Get(actorID);
+                  ActorInfo actor = Actor.GetEngine().ActorFactory.Get(actorID);
                   return (actor != null
                        && actorID != Actor.ID
                        && !Actor.HasRelative(actorID)
@@ -261,7 +261,7 @@ namespace SWEndor.Actors.Components
                 return true;
               }
 
-              TVMesh tvm = Globals.Engine.TrueVision.TVGlobals.GetMeshFromID(tvcres.iMeshID);
+              TVMesh tvm = Actor.GetEngine().TrueVision.TVGlobals.GetMeshFromID(tvcres.iMeshID);
               if (tvm != null) // && tvm.IsVisible())
               {
                 if (int.TryParse(tvm.GetTag(), out actorID))
@@ -276,8 +276,8 @@ namespace SWEndor.Actors.Components
           {
             if (Actor.IsPlayer())
             {
-              Globals.Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
-              Globals.Engine.TrueVision.TVScreen2DImmediate.Draw_Line3D(start.x
+              Actor.GetEngine().TrueVision.TVScreen2DImmediate.Action_Begin2D();
+              Actor.GetEngine().TrueVision.TVScreen2DImmediate.Draw_Line3D(start.x
                                                 , start.y
                                                 , start.z
                                                 , end.x
@@ -285,7 +285,7 @@ namespace SWEndor.Actors.Components
                                                 , end.z
                                                 , new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor()
                                                 );
-              Globals.Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
+              Actor.GetEngine().TrueVision.TVScreen2DImmediate.Action_End2D();
             }
           }
           return false;

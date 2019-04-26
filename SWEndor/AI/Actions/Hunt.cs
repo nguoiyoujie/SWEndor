@@ -29,9 +29,9 @@ namespace SWEndor.AI.Actions
       List<ActorInfo> targets = new List<ActorInfo>();
       int weight = 0;
 
-      foreach (int actorID in owner.Owner.Engine.ActorFactory.GetHoldingList())
+      foreach (int actorID in owner.GetEngine().ActorFactory.GetHoldingList())
       {
-        ActorInfo a = owner.Owner.Engine.ActorFactory.Get(actorID);
+        ActorInfo a = owner.GetEngine().ActorFactory.Get(actorID);
         if (a != null
           && owner != a
           && a.CreationState == CreationState.ACTIVE
@@ -39,7 +39,7 @@ namespace SWEndor.AI.Actions
           && a.ActorState != ActorState.DEAD
           && a.CombatInfo.IsCombatObject
           && (a.TypeInfo.TargetType & m_TargetType) != 0
-          && !a.IsOutOfBounds(Globals.Engine.GameScenarioManager.MinAIBounds, Globals.Engine.GameScenarioManager.MaxAIBounds)
+          && !a.IsOutOfBounds(owner.GetEngine().GameScenarioManager.MinAIBounds, owner.GetEngine().GameScenarioManager.MaxAIBounds)
           && !owner.Faction.IsAlliedWith(a.Faction) // enemy
           )
         {
@@ -78,11 +78,11 @@ namespace SWEndor.AI.Actions
 
       if (currtarget != null)
       {
-        owner.Owner.Engine.ActionManager.QueueLast(owner.ID, new AttackActor(currtarget.ID));
+        owner.GetEngine().ActionManager.QueueLast(owner.ID, new AttackActor(currtarget.ID));
       }
       else
       {
-        owner.Owner.Engine.ActionManager.QueueLast(owner.ID, new Wait(1));
+        owner.GetEngine().ActionManager.QueueLast(owner.ID, new Wait(1));
       }
 
       Complete = true;

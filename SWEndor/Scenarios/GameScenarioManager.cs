@@ -64,9 +64,9 @@ namespace SWEndor.Scenarios
 
     public void LoadMainMenu()
     {
-      Globals.Engine.Game.IsPaused = false;
-      Globals.Engine.Screen2D.ShowPage = true;
-      Globals.Engine.Screen2D.CurrentPage = new MainMenu();
+      Engine.Game.IsPaused = false;
+      Engine.Screen2D.ShowPage = true;
+      Engine.Screen2D.CurrentPage = new MainMenu(Engine.Screen2D);
       Scenario = new GSMainMenu(this);
       Scenario.Load(null, "");
       Scenario.Launch();
@@ -75,8 +75,8 @@ namespace SWEndor.Scenarios
     public void LoadInitial()
     {
       LoadInvisibleCam();
-      Globals.Engine.PlayerInfo.ActorID = SceneCamera?.ID ?? -1;
-      Globals.Engine.PlayerInfo.IsMovementControlsEnabled = false;
+      Engine.PlayerInfo.ActorID = SceneCamera?.ID ?? -1;
+      Engine.PlayerInfo.IsMovementControlsEnabled = false;
     }
 
     public int UpdateActorLists(Dictionary<string, ActorInfo> list)
@@ -92,7 +92,7 @@ namespace SWEndor.Scenarios
           //if (Scenario != null && Scenario.ActiveActor == kvp.Value)
           //  Scenario.ActiveActor = null;
 
-          if (kvp.Value != Globals.Engine.PlayerInfo.Actor)
+          if (kvp.Value != Engine.PlayerInfo.Actor)
           {
             ret++;
           }
@@ -138,7 +138,7 @@ namespace SWEndor.Scenarios
       }
 
       ActorCreationInfo camaci = new ActorCreationInfo(Engine.ActorTypeFactory.Get("Invisible Camera"));
-      camaci.CreationTime = Globals.Engine.Game.GameTime;
+      camaci.CreationTime = Engine.Game.GameTime;
       camaci.InitialState = ActorState.NORMAL;
       camaci.Position = new TV_3DVECTOR(0, 0, 0);
       camaci.Rotation = new TV_3DVECTOR();
@@ -151,7 +151,7 @@ namespace SWEndor.Scenarios
       if (Scenario != null)
         Scenario.Unload();
 
-      Globals.Engine.PlayerInfo.Score.Reset();
+      Engine.PlayerInfo.Score.Reset();
 
       //_instance = new GameScenarioManager();
       //_instance.LoadInitial();

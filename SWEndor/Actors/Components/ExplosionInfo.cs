@@ -21,7 +21,7 @@ namespace SWEndor.Actors.Components
       Actor = actor;
 
       Active = false;
-      ExplosionCooldown = Globals.Engine.Game.GameTime;
+      ExplosionCooldown = Actor.GetEngine().Game.GameTime;
       ExplosionRate = 0.5f;
       ExplosionSize = 1;
       ExplosionType = "Explosion";
@@ -34,7 +34,7 @@ namespace SWEndor.Actors.Components
     public void Reset()
     {
       Active = false;
-      ExplosionCooldown = Globals.Engine.Game.GameTime;
+      ExplosionCooldown = Actor.GetEngine().Game.GameTime;
       ExplosionRate = 0.5f;
       ExplosionSize = 1;
       ExplosionType = "Explosion";
@@ -53,20 +53,20 @@ namespace SWEndor.Actors.Components
         Active = true;
 
       // Explosion
-      if (Active && !Globals.Engine.Game.IsLowFPS())
+      if (Active && !Actor.GetEngine().Game.IsLowFPS())
       {
-        if (ExplosionCooldown < Globals.Engine.Game.GameTime - 5f) // skip explosion effects that are delayed after more than 5 secs
-          ExplosionCooldown = Globals.Engine.Game.GameTime;
+        if (ExplosionCooldown < Actor.GetEngine().Game.GameTime - 5f) // skip explosion effects that are delayed after more than 5 secs
+          ExplosionCooldown = Actor.GetEngine().Game.GameTime;
 
-        while (ExplosionCooldown < Globals.Engine.Game.GameTime && Actor.GetVertexCount() > 0)
+        while (ExplosionCooldown < Actor.GetEngine().Game.GameTime && Actor.GetVertexCount() > 0)
         {
-          ExplosionCooldown += (float)Globals.Engine.Random.NextDouble() * ExplosionRate;
+          ExplosionCooldown += (float)Actor.GetEngine().Random.NextDouble() * ExplosionRate;
           MakeExplosion(Actor.GetRandomVertex());
         }
       }
       else
       {
-        ExplosionCooldown = Globals.Engine.Game.GameTime;
+        ExplosionCooldown = Actor.GetEngine().Game.GameTime;
       }
     }
 
@@ -82,14 +82,14 @@ namespace SWEndor.Actors.Components
     private void MakeExplosion(TV_3DVECTOR vert)
     {
       if (_cache == null)
-        _cache = Globals.Engine.ActorTypeFactory.Get(ExplosionType);
+        _cache = Actor.GetEngine().ActorTypeFactory.Get(ExplosionType);
       MakeExplosion(_cache, Actor.GetRelativePositionXYZ(vert.x * Actor.Scale.x, vert.y * Actor.Scale.y, vert.z * Actor.Scale.z), ExplosionSize);
     }
 
     private void MakeDeathExplosion()
     {
       // Death explosion is one count, no cache needed
-      MakeExplosion(Globals.Engine.ActorTypeFactory.Get(DeathExplosionType), Actor.GetPosition(), DeathExplosionSize);
+      MakeExplosion(Actor.GetEngine().ActorTypeFactory.Get(DeathExplosionType), Actor.GetPosition(), DeathExplosionSize);
     }
 
     private void MakeExplosion(ActorTypeInfo type, TV_3DVECTOR globalPosition, float explSize)
@@ -97,7 +97,7 @@ namespace SWEndor.Actors.Components
       ActorCreationInfo acinfo = new ActorCreationInfo(type);
       acinfo.Position = globalPosition;
       acinfo.InitialScale = new TV_3DVECTOR(explSize * (Actor.Scale.x + Actor.Scale.y + Actor.Scale.z) / 3, explSize * (Actor.Scale.x + Actor.Scale.y + Actor.Scale.z) / 3, 1);
-      ActorInfo.Create(type.Owner.Engine.ActorFactory, acinfo);
+      ActorInfo.Create(type.GetEngine().ActorFactory, acinfo);
     }
   }
 }

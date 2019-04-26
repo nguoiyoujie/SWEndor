@@ -16,6 +16,7 @@ namespace SWEndor
   {
     internal Engine() { }
 
+    private GameForm Form;
     private IntPtr Handle;
     public float ScreenWidth { get; internal set;}
     public float ScreenHeight { get; internal set; }
@@ -26,6 +27,7 @@ namespace SWEndor
     internal SoundManager SoundManager { get; private set; }
     internal PerfManager PerfManager { get; private set; }
     internal PlayerInfo PlayerInfo { get; private set; }
+    internal PlayerCameraInfo PlayerCameraInfo { get; private set; }
 
     // TrueVision part
     internal TrueVision TrueVision { get; private set; }
@@ -66,7 +68,8 @@ namespace SWEndor
       TrueVision.Init(Handle);
 
       InputManager = new InputManager(this);
-      
+      PlayerCameraInfo = new PlayerCameraInfo(this);
+
       AtmosphereInfo = new AtmosphereInfo(this);
       LandInfo = new LandInfo(this);
       Screen2D = new Screen2D(this);
@@ -192,6 +195,11 @@ namespace SWEndor
         TrueVision.TVEngine.RenderToScreen();
     }
 
+    public void LinkForm(GameForm form)
+    {
+      Form = form;
+    }
+
     public void LinkHandle(IntPtr handle)
     {
       Handle = handle;
@@ -199,7 +207,9 @@ namespace SWEndor
 
     public void Exit()
     {
-      Game.Close();
+      Game.Stop();
+      Form.Exit();
+      Dispose();
     }
   }
 }

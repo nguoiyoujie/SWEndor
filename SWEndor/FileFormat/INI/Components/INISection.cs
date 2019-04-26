@@ -33,6 +33,29 @@ namespace SWEndor.FileFormat.INI
         m_lines.Add(newiniline);
       }
 
+      public string[] GetKeys()
+      {
+        string[] ret = new string[m_lines.Count];
+        for (int i = 0; i < m_lines.Count; i++)
+        {
+          ret[i] = m_lines[i].Key;
+        }
+        return ret;
+      }
+
+      public string[] GetValues()
+      {
+        List<string> ret = new List<string>();
+        for (int i = 0; i < m_lines.Count; i++)
+        {
+          if (m_lines[i].Value != null)
+          {
+            ret.Add(m_lines[i].Value);
+          }
+        }
+        return ret.ToArray();
+      }
+
       public bool HasKey(string key)
       {
         for (int i = 0; i < m_lines.Count; i++)

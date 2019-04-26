@@ -38,7 +38,7 @@ namespace SWEndor.ActorTypes.Components
       acinfo.Rotation = new TV_3DVECTOR(Rotation.x, Rotation.y, Rotation.z);
       acinfo.CreationTime = actor.CreationTime;
 
-      ActorInfo a = ActorInfo.Create(actor.Owner.Engine.ActorFactory, acinfo);
+      ActorInfo a = ActorInfo.Create(actor.GetEngine().ActorFactory, acinfo);
       a.AddParent(actor.ID);
       
       a.AttachToParent = AttachToParent;

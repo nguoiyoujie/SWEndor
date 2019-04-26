@@ -11,11 +11,11 @@ namespace SWEndor.Input.Functions.Gameplay.Special
     public override string Name { get { return InternalName; } }
     public override InputOptions Options { get { return InputOptions.ONPRESS; } }
 
-    public override void Process()
+    public override void Process(InputManager manager)
     {
-      if (Globals.Engine.GameScenarioManager.Scenario != null)
+      if (manager.Engine.GameScenarioManager.Scenario != null)
       {
-        foreach (int actorID in Globals.Engine.GameScenarioManager.Scenario.MainEnemyFaction.GetAll())
+        foreach (int actorID in manager.Engine.GameScenarioManager.Scenario.MainEnemyFaction.GetAll())
         {
           ActorInfo actor = Globals.Engine.ActorFactory.Get(actorID);
           if (actor != null)

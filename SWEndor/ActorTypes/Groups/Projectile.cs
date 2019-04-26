@@ -31,7 +31,7 @@ namespace SWEndor.ActorTypes.Group
       {
         if (ImpactCloseEnoughDistance > 0 && ainfo.CurrentAction != null && ainfo.CurrentAction is AttackActor)
         {
-          ActorInfo target = Owner.Engine.ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
+          ActorInfo target = this.GetEngine().ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
           if (target != null)
           {
             // Anticipate

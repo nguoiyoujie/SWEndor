@@ -14,9 +14,9 @@ namespace SWEndor.UI.Widgets
       get
       {
         return (!Owner.ShowPage
-            && Owner.Engine.PlayerInfo.Actor != null
-            && Owner.Engine.PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && Owner.Engine.PlayerInfo.Actor.ActorState != ActorState.DYING
+            && this.GetEngine().PlayerInfo.Actor != null
+            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DYING
             && !(Owner.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
             && Owner.ShowUI);
       }
@@ -24,7 +24,7 @@ namespace SWEndor.UI.Widgets
 
     public override void Draw()
     {
-      ActorInfo p = Owner.Engine.PlayerInfo.Actor;
+      ActorInfo p = this.GetEngine().PlayerInfo.Actor;
       if (p == null || p.CreationState != CreationState.ACTIVE)
         return;
 
@@ -32,7 +32,7 @@ namespace SWEndor.UI.Widgets
       int burst = 1;
       TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;
 
-      p.TypeInfo.InterpretWeapon(p.ID, Owner.Engine.PlayerInfo.PrimaryWeapon, out weap, out burst);
+      p.TypeInfo.InterpretWeapon(p.ID, this.GetEngine().PlayerInfo.PrimaryWeapon, out weap, out burst);
       if (weap != null)
       {
         TVScreen2DImmediate.Action_Begin2D();
@@ -68,12 +68,12 @@ namespace SWEndor.UI.Widgets
                                  , vec0.y + (vec0.y > 0 ? 1 : -1) * (k * m + l) / (1 + m));
 
 
-            TVScreen2DImmediate.Draw_Triangle(vec0.x + Owner.Engine.ScreenWidth / 2
-                                                  , vec0.y + Owner.Engine.ScreenHeight / 2
-                                                  , vec1.x + Owner.Engine.ScreenWidth / 2
-                                                  , vec1.y + Owner.Engine.ScreenHeight / 2
-                                                  , vec2.x + Owner.Engine.ScreenWidth / 2
-                                                  , vec2.y + Owner.Engine.ScreenHeight / 2
+            TVScreen2DImmediate.Draw_Triangle(vec0.x + this.GetEngine().ScreenWidth / 2
+                                                  , vec0.y + this.GetEngine().ScreenHeight / 2
+                                                  , vec1.x + this.GetEngine().ScreenWidth / 2
+                                                  , vec1.y + this.GetEngine().ScreenHeight / 2
+                                                  , vec2.x + this.GetEngine().ScreenWidth / 2
+                                                  , vec2.y + this.GetEngine().ScreenHeight / 2
                                                   , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
           }
           else if (vec0.y != 0)
@@ -83,38 +83,38 @@ namespace SWEndor.UI.Widgets
             vec2 = new TV_2DVECTOR(-vec1.x, vec1.y);
 
 
-            TVScreen2DImmediate.Draw_Triangle(vec0.x + Owner.Engine.ScreenWidth / 2
-                                                  , vec0.y + Owner.Engine.ScreenHeight / 2
-                                                  , vec1.x + Owner.Engine.ScreenWidth / 2
-                                                  , vec1.y + Owner.Engine.ScreenHeight / 2
-                                                  , vec2.x + Owner.Engine.ScreenWidth / 2
-                                                  , vec2.y + Owner.Engine.ScreenHeight / 2
+            TVScreen2DImmediate.Draw_Triangle(vec0.x + this.GetEngine().ScreenWidth / 2
+                                                  , vec0.y + this.GetEngine().ScreenHeight / 2
+                                                  , vec1.x + this.GetEngine().ScreenWidth / 2
+                                                  , vec1.y + this.GetEngine().ScreenHeight / 2
+                                                  , vec2.x + this.GetEngine().ScreenWidth / 2
+                                                  , vec2.y + this.GetEngine().ScreenHeight / 2
                                                   , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
           }
           else
           {
-            TVScreen2DImmediate.Draw_Line(vec0.x + l + Owner.Engine.ScreenWidth / 2
-                                                          , vec0.y + Owner.Engine.ScreenHeight / 2
-                                                          , vec0.x + Owner.Engine.ScreenWidth / 2
-                                                          , vec0.y + l + Owner.Engine.ScreenHeight / 2
+            TVScreen2DImmediate.Draw_Line(vec0.x + l + this.GetEngine().ScreenWidth / 2
+                                                          , vec0.y + this.GetEngine().ScreenHeight / 2
+                                                          , vec0.x + this.GetEngine().ScreenWidth / 2
+                                                          , vec0.y + l + this.GetEngine().ScreenHeight / 2
                                                           , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
 
-            TVScreen2DImmediate.Draw_Line(vec0.x - l + Owner.Engine.ScreenWidth / 2
-                                                          , vec0.y + Owner.Engine.ScreenHeight / 2
-                                                          , vec0.x + Owner.Engine.ScreenWidth / 2
-                                                          , vec0.y + l + Owner.Engine.ScreenHeight / 2
+            TVScreen2DImmediate.Draw_Line(vec0.x - l + this.GetEngine().ScreenWidth / 2
+                                                          , vec0.y + this.GetEngine().ScreenHeight / 2
+                                                          , vec0.x + this.GetEngine().ScreenWidth / 2
+                                                          , vec0.y + l + this.GetEngine().ScreenHeight / 2
                                                           , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
 
-            TVScreen2DImmediate.Draw_Line(vec0.x + l + Owner.Engine.ScreenWidth / 2
-                                                          , vec0.y + Owner.Engine.ScreenHeight / 2
-                                                          , vec0.x + Owner.Engine.ScreenWidth / 2
-                                                          , vec0.y - l + Owner.Engine.ScreenHeight / 2
+            TVScreen2DImmediate.Draw_Line(vec0.x + l + this.GetEngine().ScreenWidth / 2
+                                                          , vec0.y + this.GetEngine().ScreenHeight / 2
+                                                          , vec0.x + this.GetEngine().ScreenWidth / 2
+                                                          , vec0.y - l + this.GetEngine().ScreenHeight / 2
                                                           , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
 
-            TVScreen2DImmediate.Draw_Line(vec0.x - l + Owner.Engine.ScreenWidth / 2
-                                                          , vec0.y + Owner.Engine.ScreenHeight / 2
-                                                          , vec0.x + Owner.Engine.ScreenWidth / 2
-                                                          , vec0.y - l + Owner.Engine.ScreenHeight / 2
+            TVScreen2DImmediate.Draw_Line(vec0.x - l + this.GetEngine().ScreenWidth / 2
+                                                          , vec0.y + this.GetEngine().ScreenHeight / 2
+                                                          , vec0.x + this.GetEngine().ScreenWidth / 2
+                                                          , vec0.y - l + this.GetEngine().ScreenHeight / 2
                                                           , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
 
           }
@@ -122,7 +122,7 @@ namespace SWEndor.UI.Widgets
         TVScreen2DImmediate.Action_End2D();
       }
 
-      p.TypeInfo.InterpretWeapon(p.ID, Owner.Engine.PlayerInfo.SecondaryWeapon, out weap, out burst);
+      p.TypeInfo.InterpretWeapon(p.ID, this.GetEngine().PlayerInfo.SecondaryWeapon, out weap, out burst);
       if (weap != null)
       {
         if (Owner.Engine.PlayerInfo.SecondaryWeapon.Contains("torp"))
@@ -141,18 +141,18 @@ namespace SWEndor.UI.Widgets
           {
             if (t < tremain)
             {
-              TVScreen2DImmediate.Draw_FilledBox(p1_x + Owner.Engine.ScreenWidth / 2
-                                                    , p1_y + Owner.Engine.ScreenHeight / 2
-                                                    , p2_x + Owner.Engine.ScreenWidth / 2
-                                                    , p2_y + Owner.Engine.ScreenHeight / 2
+              TVScreen2DImmediate.Draw_FilledBox(p1_x + this.GetEngine().ScreenWidth / 2
+                                                    , p1_y + this.GetEngine().ScreenHeight / 2
+                                                    , p2_x + this.GetEngine().ScreenWidth / 2
+                                                    , p2_y + this.GetEngine().ScreenHeight / 2
                                                     , pcolor.GetIntColor());
             }
             else
             {
-              TVScreen2DImmediate.Draw_Box(p1_x + Owner.Engine.ScreenWidth / 2
-                                    , p1_y + Owner.Engine.ScreenHeight / 2
-                                    , p2_x + Owner.Engine.ScreenWidth / 2
-                                    , p2_y + Owner.Engine.ScreenHeight / 2
+              TVScreen2DImmediate.Draw_Box(p1_x + this.GetEngine().ScreenWidth / 2
+                                    , p1_y + this.GetEngine().ScreenHeight / 2
+                                    , p2_x + this.GetEngine().ScreenWidth / 2
+                                    , p2_y + this.GetEngine().ScreenHeight / 2
                                     , pcolor.GetIntColor());
             }
 
@@ -185,18 +185,18 @@ namespace SWEndor.UI.Widgets
           {
             if (t < tremain)
             {
-              TVScreen2DImmediate.Draw_FilledBox(p1_x + Owner.Engine.ScreenWidth / 2
-                                                    , p1_y + Owner.Engine.ScreenHeight / 2
-                                                    , p2_x + Owner.Engine.ScreenWidth / 2
-                                                    , p2_y + Owner.Engine.ScreenHeight / 2
+              TVScreen2DImmediate.Draw_FilledBox(p1_x + this.GetEngine().ScreenWidth / 2
+                                                    , p1_y + this.GetEngine().ScreenHeight / 2
+                                                    , p2_x + this.GetEngine().ScreenWidth / 2
+                                                    , p2_y + this.GetEngine().ScreenHeight / 2
                                                     , pcolor.GetIntColor());
             }
             /*else
             {
-              TVScreen2DImmediate.Draw_Box(p1_x + Owner.Engine.ScreenWidth / 2
-                                    , p1_y + Owner.Engine.ScreenHeight / 2
-                                    , p2_x + Owner.Engine.ScreenWidth / 2
-                                    , p2_y + Owner.Engine.ScreenHeight / 2
+              TVScreen2DImmediate.Draw_Box(p1_x + this.GetEngine().ScreenWidth / 2
+                                    , p1_y + this.GetEngine().ScreenHeight / 2
+                                    , p2_x + this.GetEngine().ScreenWidth / 2
+                                    , p2_y + this.GetEngine().ScreenHeight / 2
                                     , pcolor.GetIntColor());
             }*/
 
@@ -221,16 +221,16 @@ namespace SWEndor.UI.Widgets
           float p2_y = 33;
           float tremain = (float)weap.Ammo / weap.MaxAmmo;
 
-          TVScreen2DImmediate.Draw_FilledBox(p1_x + Owner.Engine.ScreenWidth / 2
-                                                    , p1_y + Owner.Engine.ScreenHeight / 2
-                                                    , p1_x + (p2_x - p1_x) * tremain + Owner.Engine.ScreenWidth / 2
-                                                    , p2_y + Owner.Engine.ScreenHeight / 2
+          TVScreen2DImmediate.Draw_FilledBox(p1_x + this.GetEngine().ScreenWidth / 2
+                                                    , p1_y + this.GetEngine().ScreenHeight / 2
+                                                    , p1_x + (p2_x - p1_x) * tremain + this.GetEngine().ScreenWidth / 2
+                                                    , p2_y + this.GetEngine().ScreenHeight / 2
                                                     , new TV_COLOR(0.6f, 0.6f, 1, 1).GetIntColor());
 
-          TVScreen2DImmediate.Draw_Box(p1_x + Owner.Engine.ScreenWidth / 2
-                                                    , p1_y + Owner.Engine.ScreenHeight / 2
-                                                    , p2_x + Owner.Engine.ScreenWidth / 2
-                                                    , p2_y + Owner.Engine.ScreenHeight / 2
+          TVScreen2DImmediate.Draw_Box(p1_x + this.GetEngine().ScreenWidth / 2
+                                                    , p1_y + this.GetEngine().ScreenHeight / 2
+                                                    , p2_x + this.GetEngine().ScreenWidth / 2
+                                                    , p2_y + this.GetEngine().ScreenHeight / 2
                                                     , new TV_COLOR(1, 0.5f, 0, 1).GetIntColor());
         }
         TVScreen2DImmediate.Action_End2D();

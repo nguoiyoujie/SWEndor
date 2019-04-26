@@ -15,7 +15,7 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement ButtonExit = new SelectionElement();
 
 
-    public OptionsMenu()
+    public OptionsMenu(Screen2D owner) : base(owner)
     {
       float height_gap = 40;
       float x = 75;
@@ -156,7 +156,7 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        EnterPage(new KeyboardControls());
+        EnterPage(new KeyboardControls(Owner));
         return true;
       }
       return false;
@@ -166,7 +166,7 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        EnterPage(new ConfigSettingsMenu());
+        EnterPage(new ConfigSettingsMenu(Owner));
         return true;
       }
       return false;

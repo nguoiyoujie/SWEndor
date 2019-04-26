@@ -20,10 +20,10 @@ namespace SWEndor.ActorTypes.Instances
       EnableDistanceCull = false;
 
 
-      SourceMesh = Globals.Engine.TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = FactoryOwner.Engine.TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = FactoryOwner.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
 
         string texname = Path.Combine("explosion", "wave", @"tex0000.jpg");
         string texpath = Path.Combine(Globals.ImagePath, texname);
