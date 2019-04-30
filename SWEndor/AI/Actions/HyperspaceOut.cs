@@ -31,7 +31,7 @@ namespace SWEndor.AI.Actions
     public void ApplyMove(ActorInfo owner)
     {
       //AdjustSpeed(owner, Target_Speed);
-      owner.MovementInfo.Speed += Target_Speed;
+      owner.MoveComponent.Speed += Target_Speed;
 
       float dist = owner.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Origin_Position);
       if (dist >= FarEnoughDistance)

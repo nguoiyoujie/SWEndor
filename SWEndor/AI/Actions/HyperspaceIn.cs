@@ -51,7 +51,7 @@ namespace SWEndor.AI.Actions
       if (dist <= CloseEnoughDistance || prevdist < dist)
       {
         owner.ActorState = prevState;
-        owner.MovementInfo.Speed = owner.MovementInfo.MaxSpeed;
+        owner.MoveComponent.Speed = owner.MoveComponent.MaxSpeed;
         //owner.SetLocalPosition(Target_Position.x, Target_Position.y, Target_Position.z);
         Complete = true;
       }
@@ -64,9 +64,9 @@ namespace SWEndor.AI.Actions
           owner.LookAtPoint(Target_Position);
         }
 
-        owner.MovementInfo.Speed = Min_Speed + dist * SpeedDistanceFactor;
-        if (owner.MovementInfo.Speed > Max_Speed)
-          owner.MovementInfo.Speed = Max_Speed;
+        owner.MoveComponent.Speed = Min_Speed + dist * SpeedDistanceFactor;
+        if (owner.MoveComponent.Speed > Max_Speed)
+          owner.MoveComponent.Speed = Max_Speed;
 
         //AdjustSpeed(owner, owner.MovementInfo.Speed);
 

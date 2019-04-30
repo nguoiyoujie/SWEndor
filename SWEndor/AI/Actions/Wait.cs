@@ -28,7 +28,7 @@ namespace SWEndor.AI.Actions
         ResumeTime = engine.Game.GameTime + WaitTime;
 
       AdjustRotation(actor, actor.GetRelativePositionXYZ(0, 0, 1000), false);
-      if (CheckImminentCollision(actor, actor.MovementInfo.Speed * 2.5f))
+      if (CheckImminentCollision(actor, actor.MoveComponent.Speed * 2.5f))
       {
         engine.ActionManager.QueueFirst(actorID, new AvoidCollisionRotate(actor.CollisionInfo.ProspectiveCollisionImpact, actor.CollisionInfo.ProspectiveCollisionNormal));
       }

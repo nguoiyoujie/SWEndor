@@ -103,7 +103,7 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.ExplosionInfo.DeathExplosionSize = 2.5f;
       ainfo.ExplosionInfo.ExplosionRate = 0.25f;
 
-      ainfo.DyingMovement = new DyingSinkInfo(0.005f, 5f, 0.8f);
+      ainfo.DyingMoveComponent = new DyingSink(0.005f, 5f, 0.8f);
 
       ainfo.Scale *= 1.7f;
 

@@ -323,22 +323,17 @@ namespace SWEndor.ActorTypes
 
     public virtual void ProcessState(ActorInfo ainfo)
     {
-      // only per second.
-      if (ainfo.LastProcessStateUpdateTime < Game.GameTime)
-      {
-        ainfo.LastProcessStateUpdateTime = Game.GameTime + 1;
-        // weapons
-        foreach (WeaponInfo w in ainfo.WeaponSystemInfo.Weapons.Values)
-          w.Reload(Engine);
+      // weapons
+      foreach (WeaponInfo w in ainfo.WeaponSystemInfo.Weapons.Values)
+        w.Reload(Engine);
 
-        // regeneration
-        ainfo.RegenerationInfo.Process();
-      }
+      // regeneration
+      ainfo.RegenerationInfo.Process(Game.TimeSinceRender);
 
       if (ainfo.ActorState.IsDying())
       {
         ainfo.ExplosionInfo.ProcessDying();
-        ainfo.DyingMovement?.Update(ainfo, Game.TimeSinceRender);
+        ainfo.DyingMoveComponent?.Update(ainfo, Game.TimeSinceRender);
       }
 
       // sound
@@ -369,7 +364,7 @@ namespace SWEndor.ActorTypes
           break;
 
         case ActorState.DYING:
-          ainfo.DyingMovement?.Initialize(ainfo);
+          ainfo.DyingMoveComponent?.Initialize(ainfo);
           break;
       }
 
@@ -489,7 +484,7 @@ namespace SWEndor.ActorTypes
           && !owner.TypeInfo.NoMove
           && owner.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER))
         {
-          float repel = -owner.MovementInfo.Speed * 0.25f;
+          float repel = -owner.MoveComponent.Speed * 0.25f;
           owner.MoveRelative(repel, 0, 0);
         }
 

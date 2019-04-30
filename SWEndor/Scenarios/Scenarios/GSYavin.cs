@@ -657,8 +657,8 @@ namespace SWEndor.Scenarios
       {
         if (Stage6VaderEnd)
         {
-          player.MovementInfo.MinSpeed = 400;
-          player.MovementInfo.MaxSpeed = 400;
+          player.MoveComponent.MinSpeed = 400;
+          player.MoveComponent.MaxSpeed = 400;
           player.CombatInfo.DamageModifier = 0.5f;
           player.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("X_WG_TORP") }
                                                         , {"laser", WeaponFactory.Get("X_WG_LASR") }
@@ -669,13 +669,13 @@ namespace SWEndor.Scenarios
         }
         else if (Stage5StartRun)
         {
-          player.MovementInfo.MinSpeed = 400;
-          player.MovementInfo.MaxSpeed = 400;
+          player.MoveComponent.MinSpeed = 400;
+          player.MoveComponent.MaxSpeed = 400;
           //m_Player.DamageModifier = 0.5f;
         }
         else if (StageNumber > 1)
         {
-          player.MovementInfo.MinSpeed = player.MovementInfo.MaxSpeed * 0.75f;
+          player.MoveComponent.MinSpeed = player.MoveComponent.MaxSpeed * 0.75f;
         }
       }
       PlayerInfo.ResetPrimaryWeapon();
@@ -779,7 +779,7 @@ namespace SWEndor.Scenarios
         {
           ActionManager.UnlockOne(actorID);
           actor.ActorState = ActorState.NORMAL;
-          actor.MovementInfo.Speed = actor.MovementInfo.MaxSpeed;
+          actor.MoveComponent.Speed = actor.MoveComponent.MaxSpeed;
         }
       }
       PlayerInfo.IsMovementControlsEnabled = true;
@@ -794,7 +794,7 @@ namespace SWEndor.Scenarios
         if (actor != null)
         {
           ActionManager.ForceClearQueue(actorID);
-          ActionManager.QueueNext(actorID, new Rotate(actor.GetPosition() + new TV_3DVECTOR(0, 0, -20000), actor.MovementInfo.MaxSpeed));
+          ActionManager.QueueNext(actorID, new Rotate(actor.GetPosition() + new TV_3DVECTOR(0, 0, -20000), actor.MoveComponent.MaxSpeed));
           ActionManager.QueueNext(actorID, new Lock());
         }
       }
@@ -816,8 +816,8 @@ namespace SWEndor.Scenarios
           {
             actor.SetLocalPosition(0, 100, Manager.MaxBounds.z - 150);
             actor.SetLocalRotation(0, 180, 0);
-            actor.MovementInfo.ResetTurn();
-            actor.MovementInfo.Speed = actor.MovementInfo.MaxSpeed;
+            actor.MoveComponent.ResetTurn();
+            actor.MoveComponent.Speed = actor.MoveComponent.MaxSpeed;
             ActionManager.QueueNext(actorID, new Wait(5));
           }
           else
@@ -828,8 +828,8 @@ namespace SWEndor.Scenarios
             sw = -sw;
             actor.SetLocalPosition(x, y, z);
             actor.SetLocalRotation(0, 180, 0);
-            actor.MovementInfo.ResetTurn();
-            actor.MovementInfo.Speed = actor.MovementInfo.MaxSpeed;
+            actor.MoveComponent.ResetTurn();
+            actor.MoveComponent.Speed = actor.MoveComponent.MaxSpeed;
             ActionManager.QueueNext(actorID, new Wait(5));
           }
         }
@@ -1188,8 +1188,8 @@ namespace SWEndor.Scenarios
       Manager.AddEvent(Game.GameTime + 0.1f, Scene_EnterCutscene);
       ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
       cam.SetLocalPosition(1000, 300, -15000);
-      cam.MovementInfo.MaxSpeed = 600;
-      cam.MovementInfo.Speed = 600;
+      cam.MoveComponent.MaxSpeed = 600;
+      cam.MoveComponent.Speed = 600;
       Manager.CameraTargetActorID = m_ADS.ID;
     }
 
@@ -1274,8 +1274,8 @@ namespace SWEndor.Scenarios
       m_AYavin.SetLocalRotation(0, 0, 180);
       ActorInfo.Kill(Engine, m_AYavin4.ID);
 
-      cam.MovementInfo.MaxSpeed = 450;
-      cam.MovementInfo.Speed = 450;
+      cam.MoveComponent.MaxSpeed = 450;
+      cam.MoveComponent.Speed = 450;
       Manager.CameraTargetActorID = m_PlayerID;
 
       //Empire_TIEWave(null);
@@ -1294,8 +1294,8 @@ namespace SWEndor.Scenarios
 
       ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
       cam.SetLocalPosition(600, 130, Manager.MaxBounds.z - 1000);
-      cam.MovementInfo.MaxSpeed = 450;
-      cam.MovementInfo.Speed = 450;
+      cam.MoveComponent.MaxSpeed = 450;
+      cam.MoveComponent.Speed = 450;
       Manager.CameraTargetActorID = m_PlayerID;
 
       foreach (int actorID in MainAllyFaction.GetWings())
@@ -1367,8 +1367,8 @@ namespace SWEndor.Scenarios
       StageNumber = 4;
       ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
       cam.SetLocalPosition(1000, 30, -2000);
-      cam.MovementInfo.MaxSpeed = 750;
-      cam.MovementInfo.Speed = 750;
+      cam.MoveComponent.MaxSpeed = 750;
+      cam.MoveComponent.Speed = 750;
       Manager.CameraTargetActorID = ainfo.ID;
 
       foreach (int actorID in MainAllyFaction.GetWings())
@@ -1438,8 +1438,8 @@ namespace SWEndor.Scenarios
       ActorInfo.Kill(Engine, m_ADS_Surface.ID);
       Scene_ClearGroundObjects(null);
 
-      cam.MovementInfo.MaxSpeed = 450;
-      cam.MovementInfo.Speed = 450;
+      cam.MoveComponent.MaxSpeed = 450;
+      cam.MoveComponent.Speed = 450;
       Manager.CameraTargetActorID = m_PlayerID;
 
       Empire_Towers04(null);
@@ -1768,7 +1768,7 @@ namespace SWEndor.Scenarios
       {
         player.SetLocalPosition(player.GetPosition().x, -220, 0);
         player.SetLocalRotation(0, 90, 0);
-        player.MovementInfo.ResetTurn();
+        player.MoveComponent.ResetTurn();
       }
     }
 
@@ -1789,7 +1789,7 @@ namespace SWEndor.Scenarios
       {
         player.SetLocalPosition(vader_distX, -220, 0);
         player.SetLocalRotation(0, 90, 0);
-        player.MovementInfo.ResetTurn();
+        player.MoveComponent.ResetTurn();
         ActionManager.ForceClearQueue(m_PlayerID);
         ActionManager.QueueNext(m_PlayerID, new Lock());
 
@@ -1860,23 +1860,23 @@ namespace SWEndor.Scenarios
                                                         , {"laser", WeaponFactory.Get("TIED_LASR") }
                                                         };
       vader.WeaponSystemInfo.AIWeapons = new string[] { "1:laser", "1:lsrb" };
-      vader.MovementInfo.MaxSpeed = 400;
-      vader.MovementInfo.MinSpeed = 400;
+      vader.MoveComponent.MaxSpeed = 400;
+      vader.MoveComponent.MinSpeed = 400;
       vader.CanEvade = false;
       vader.CanRetaliate = false;
 
-      vaderE1.MovementInfo.MaxSpeed = 400;
-      vaderE1.MovementInfo.MinSpeed = 400;
+      vaderE1.MoveComponent.MaxSpeed = 400;
+      vaderE1.MoveComponent.MinSpeed = 400;
       vaderE1.CanEvade = false;
       vaderE1.CanRetaliate = false;
 
-      vaderE2.MovementInfo.MaxSpeed = 400;
-      vaderE2.MovementInfo.MinSpeed = 400;
+      vaderE2.MoveComponent.MaxSpeed = 400;
+      vaderE2.MoveComponent.MinSpeed = 400;
       vaderE2.CanEvade = false;
       vaderE2.CanRetaliate = false;
 
-      cam.MovementInfo.MaxSpeed = 425;
-      cam.MovementInfo.Speed = 425;
+      cam.MoveComponent.MaxSpeed = 425;
+      cam.MoveComponent.Speed = 425;
       Manager.CameraTargetActorID = player.ID;
     }
 
@@ -1925,7 +1925,7 @@ namespace SWEndor.Scenarios
 
       player.SetLocalPosition(vaderend_distX, -220, 0);
       player.SetLocalRotation(0, 90, 0);
-      player.MovementInfo.ResetTurn();
+      player.MoveComponent.ResetTurn();
       ActionManager.ForceClearQueue(m_PlayerID);
       ActionManager.QueueNext(m_PlayerID, new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
       ActionManager.QueueNext(m_PlayerID, new Lock());
@@ -1969,8 +1969,8 @@ namespace SWEndor.Scenarios
       vaderE1.HitEvents += Scene_Stage06_VaderFlee;
       vaderE2.HitEvents += Scene_Stage06_VaderFlee;
 
-      cam.MovementInfo.MaxSpeed = 25;
-      cam.MovementInfo.Speed = 25;
+      cam.MoveComponent.MaxSpeed = 25;
+      cam.MoveComponent.Speed = 25;
       Manager.CameraTargetActorID = falcon.ID;
     }
 
@@ -1985,7 +1985,7 @@ namespace SWEndor.Scenarios
         ActorInfo vaderE2 = ActorFactory.Get(m_VaderEscort2ID);
 
         ActionManager.ForceClearQueue(m_VaderID);
-        vader.MovementInfo.ApplyZBalance = false;
+        vader.MoveComponent.ApplyZBalance = false;
         vader.SetLocalRotation(-30, 85, 5);
         vader.CombatInfo.TimedLife = 999;
         vader.ActorState = ActorState.DYING;

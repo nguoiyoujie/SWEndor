@@ -246,8 +246,8 @@ namespace SWEndor.Scenarios
           Rotation = new TV_3DVECTOR(),
           Actions = new ActionInfo[] { new HyperspaceIn(v)
                                            , new Lock()
-                                           , new Move(nv, ainfo.MovementInfo.MaxSpeed)
-                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), ainfo.MovementInfo.MinSpeed)
+                                           , new Move(nv, ainfo.MoveComponent.MaxSpeed)
+                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), ainfo.MoveComponent.MinSpeed)
                                            , new Lock() },
           Registries = new string[] { "CriticalAllies" }
         }.Spawn(this);
@@ -277,8 +277,8 @@ namespace SWEndor.Scenarios
           Rotation = new TV_3DVECTOR(),
           Actions = new ActionInfo[] { new HyperspaceIn(v)
                                            , new Lock()
-                                           , new Move(nv, ainfo.MovementInfo.MaxSpeed)
-                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), ainfo.MovementInfo.MinSpeed)
+                                           , new Move(nv, ainfo.MoveComponent.MaxSpeed)
+                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), ainfo.MoveComponent.MinSpeed)
                                            , new Lock() },
           Registries = new string[] { "CriticalAllies" }
         }.Spawn(this);
@@ -346,7 +346,7 @@ namespace SWEndor.Scenarios
         {
           Engine.ActionManager.UnlockOne(actorID);
           actor.ActorState = ActorState.NORMAL;
-          actor.MovementInfo.Speed = actor.MovementInfo.MaxSpeed;
+          actor.MoveComponent.Speed = actor.MoveComponent.MaxSpeed;
         }
       }
 

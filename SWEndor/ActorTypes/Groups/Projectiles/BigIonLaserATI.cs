@@ -96,7 +96,7 @@ namespace SWEndor.ActorTypes.Instances
       if (hitby.TypeInfo.TargetType.HasFlag(TargetType.SHIP))
       {
         ActionManager.ForceClearQueue(hitbyActorID);
-        ActionManager.QueueNext(hitbyActorID, new Rotate(hitby.GetRelativePositionFUR(1000, -800, -200), hitby.MovementInfo.MaxSpeed, 0.1f, false));
+        ActionManager.QueueNext(hitbyActorID, new Rotate(hitby.GetRelativePositionFUR(1000, -800, -200), hitby.MoveComponent.MaxSpeed, 0.1f, false));
         ActionManager.QueueNext(hitbyActorID, new Lock());
       }
     }

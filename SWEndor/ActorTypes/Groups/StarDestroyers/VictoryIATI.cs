@@ -98,7 +98,7 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 300, -385) };
       ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 300, 2000) };
 
-      ainfo.DyingMovement = new DyingSinkInfo(0.005f, 5f, 0.8f);
+      ainfo.DyingMoveComponent = new DyingSink(0.005f, 5f, 0.8f);
 
       ainfo.Scale *= 0.9f;
 

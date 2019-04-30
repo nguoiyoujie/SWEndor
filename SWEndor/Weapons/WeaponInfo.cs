@@ -301,12 +301,12 @@ namespace SWEndor.Weapons
           ActorInfo a2 = target.AttachToParent ? engine.ActorFactory.Get(target.ParentID) : null;
           if (a2 == null)
           {
-            dir = target.GetRelativePositionXYZ(0, 0, target.MovementInfo.Speed * d) - owner.GetPosition();
+            dir = target.GetRelativePositionXYZ(0, 0, target.MoveComponent.Speed * d) - owner.GetPosition();
           }
           else
           {
             //dir = target.GetPosition() - owner.GetPosition();
-            dir = a2.GetRelativePositionXYZ(target.GetLocalPosition().x, target.GetLocalPosition().y, target.GetLocalPosition().z + a2.MovementInfo.Speed * d) - owner.GetPosition();
+            dir = a2.GetRelativePositionXYZ(target.GetLocalPosition().x, target.GetLocalPosition().y, target.GetLocalPosition().z + a2.MoveComponent.Speed * d) - owner.GetPosition();
           }
 
           acinfo.Rotation = Utilities.GetRotation(dir);

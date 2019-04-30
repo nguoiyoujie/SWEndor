@@ -1,12 +1,6 @@
 ﻿namespace SWEndor.Actors.Components
 {
-  public interface IDyingMovementInfo
-  {
-    void Initialize(ActorInfo actor);
-    void Update(ActorInfo actor, float time);
-  }
-
-  public interface IMovementInfo
+  public interface IMoveComponent
   {
     // General
     float Speed { get; set; }

@@ -76,8 +76,8 @@ namespace SWEndor.Actors
     public ScoreInfo Score;
     public CombatInfo CombatInfo;
 
-    public IMovementInfo MovementInfo;
-    public IDyingMovementInfo DyingMovement;
+    public IMoveComponent MoveComponent;
+    public IDyingMoveComponent DyingMoveComponent;
 
     public CycleInfo CycleInfo;
     public WeaponSystemInfo WeaponSystemInfo;
@@ -88,7 +88,6 @@ namespace SWEndor.Actors
 
     // Checks
     public bool EnteredCombatZone = false;
-    public float LastProcessStateUpdateTime = 0;
 
     // Delegate Events
     // plan to make them true delegates instead of string
@@ -169,7 +168,7 @@ namespace SWEndor.Actors
       Score = new ScoreInfo(this);
       CombatInfo = new CombatInfo(this);
 
-      MovementInfo = MovementDecorator.Create(this, TypeInfo, acinfo);
+      MoveComponent = MoveDecorator.Create(this, TypeInfo, acinfo);
 
       CycleInfo = new CycleInfo(this, null);
 
@@ -191,7 +190,6 @@ namespace SWEndor.Actors
       Position = acinfo.Position;
       Rotation = acinfo.Rotation;
       Scale = acinfo.InitialScale;
-      MovementInfo.Speed = acinfo.InitialSpeed;
       PrevPosition = Position;
 
       HuntWeight = TypeInfo.HuntWeight;
@@ -221,7 +219,7 @@ namespace SWEndor.Actors
       Scale = acinfo.InitialScale;
       PrevPosition = Position;
 
-      MovementInfo = MovementDecorator.Create(this, TypeInfo, acinfo);
+      MoveComponent = MoveDecorator.Create(this, TypeInfo, acinfo);
 
       HuntWeight = TypeInfo.HuntWeight;
       TypeInfo.Initialize(this);
@@ -495,7 +493,7 @@ namespace SWEndor.Actors
 
     public float GetTrueSpeed()
     {
-      float ret = MovementInfo.Speed;
+      float ret = MoveComponent.Speed;
       ActorInfo a = AttachToParent ? ActorFactory.Get(ParentID) : null;
       if (a != null)
         ret += a.GetTrueSpeed();
@@ -726,8 +724,8 @@ namespace SWEndor.Actors
       Score.Reset();
       CombatInfo.Reset();
 
-      MovementInfo = NoMoveInfo.Instance;
-      DyingMovement = null;
+      MoveComponent = NoMove.Instance;
+      DyingMoveComponent = null;
 
       CycleInfo.Reset();
       RegenerationInfo.Reset();

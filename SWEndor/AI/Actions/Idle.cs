@@ -15,7 +15,7 @@ namespace SWEndor.AI.Actions
       if (CheckBounds(actor))
       {
         AdjustRotation(actor, actor.GetPosition());
-        AdjustSpeed(actor, actor.MovementInfo.MinSpeed);
+        AdjustSpeed(actor, actor.MoveComponent.MinSpeed);
 
         if (NextAction == null)
         {
@@ -26,7 +26,7 @@ namespace SWEndor.AI.Actions
 
         TV_3DVECTOR vNormal = new TV_3DVECTOR();
         TV_3DVECTOR vImpact = new TV_3DVECTOR();
-        if (CheckImminentCollision(actor, actor.MovementInfo.Speed * 2.5f))
+        if (CheckImminentCollision(actor, actor.MoveComponent.Speed * 2.5f))
         {
           engine.ActionManager.QueueFirst(actorID, new AvoidCollisionRotate(actor.CollisionInfo.ProspectiveCollisionImpact, actor.CollisionInfo.ProspectiveCollisionNormal));
         }

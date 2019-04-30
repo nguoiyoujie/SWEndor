@@ -32,7 +32,7 @@ namespace SWEndor.ActorTypes.Groups
       ainfo.ExplosionInfo.ExplosionSize = 1;
       ainfo.ExplosionInfo.ExplosionType = "ExplosionSm";
 
-      ainfo.DyingMovement = new DyingSinkInfo(0.06f, 15f, 2.5f);
+      ainfo.DyingMoveComponent = new DyingSink(0.06f, 15f, 2.5f);
     }
 
     public override void ProcessNewState(ActorInfo ainfo)

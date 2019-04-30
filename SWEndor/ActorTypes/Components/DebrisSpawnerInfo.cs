@@ -45,7 +45,7 @@ namespace SWEndor.ActorTypes.Components
         ActorCreationInfo acinfo = new ActorCreationInfo(_cache);
         acinfo.Position = actor.GetPosition() + SpawnPosition;
         acinfo.Rotation = new TV_3DVECTOR(actor.Rotation.x + x, actor.Rotation.y + y, actor.Rotation.z + z);
-        acinfo.InitialSpeed = actor.MovementInfo.Speed;
+        acinfo.InitialSpeed = actor.MoveComponent.Speed;
         acinfo.InitialState = ActorState.DYING;
         ActorInfo a = ActorInfo.Create(actor.ActorFactory, acinfo);
       }

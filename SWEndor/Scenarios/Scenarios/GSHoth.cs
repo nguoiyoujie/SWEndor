@@ -461,7 +461,7 @@ namespace SWEndor.Scenarios
         {
           ActionManager.UnlockOne(actorID);
           actor.ActorState = ActorState.NORMAL;
-          actor.MovementInfo.Speed = actor.MovementInfo.MaxSpeed;
+          actor.MoveComponent.Speed = actor.MoveComponent.MaxSpeed;
         }
       }
       PlayerInfo.IsMovementControlsEnabled = true;
@@ -896,8 +896,8 @@ namespace SWEndor.Scenarios
 
       ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
       cam.SetLocalPosition(400, 130, -1800);
-      cam.MovementInfo.MaxSpeed = 50;
-      cam.MovementInfo.Speed = 50;
+      cam.MoveComponent.MaxSpeed = 50;
+      cam.MoveComponent.Speed = 50;
       Manager.CameraTargetActorID = m_PlayerID;
       PlayerInfo.TempActorID = m_PlayerID;
 
@@ -926,8 +926,8 @@ namespace SWEndor.Scenarios
           ActionManager.QueueNext(actorID, new HyperspaceOut());
           actor.SetLocalPosition(x, y, z);
           actor.SetLocalRotation(0, 180, 0);
-          actor.MovementInfo.Speed = 450;
-          actor.MovementInfo.ResetTurn();
+          actor.MoveComponent.Speed = 450;
+          actor.MoveComponent.ResetTurn();
           actor.CanRetaliate = false;
           actor.CanEvade = false;
           counter++;
@@ -947,23 +947,23 @@ namespace SWEndor.Scenarios
       ActionManager.ForceClearQueue(m_Transport1ID);
       ActionManager.QueueNext(m_Transport1ID, new Wait(8.5f));
       ActionManager.QueueNext(m_Transport1ID, new HyperspaceOut());
-      trn1.MovementInfo.MaxSpeed = 400;
-      trn1.MovementInfo.Speed = 400;
+      trn1.MoveComponent.MaxSpeed = 400;
+      trn1.MoveComponent.Speed = 400;
 
       ActionManager.ForceClearQueue(m_Transport2ID);
       ActionManager.QueueNext(m_Transport2ID, new Wait(8.8f));
       ActionManager.QueueNext(m_Transport2ID, new HyperspaceOut());
-      trn2.MovementInfo.MaxSpeed = 400;
-      trn2.MovementInfo.Speed = 400;
+      trn2.MoveComponent.MaxSpeed = 400;
+      trn2.MoveComponent.Speed = 400;
 
       ActionManager.ForceClearQueue(m_Transport3ID);
       ActionManager.QueueNext(m_Transport3ID, new Wait(9.1f));
       ActionManager.QueueNext(m_Transport3ID, new HyperspaceOut());
-      trn3.MovementInfo.MaxSpeed = 400;
-      trn3.MovementInfo.Speed = 400;
+      trn3.MoveComponent.MaxSpeed = 400;
+      trn3.MoveComponent.Speed = 400;
 
-      player.MovementInfo.Speed = 400;
-      player.MovementInfo.ResetTurn(); 
+      player.MoveComponent.Speed = 400;
+      player.MoveComponent.ResetTurn(); 
       ActionManager.ForceClearQueue(m_PlayerID);
       ActionManager.QueueNext(m_PlayerID, new Lock());
       
@@ -978,7 +978,7 @@ namespace SWEndor.Scenarios
           {
             actor.SetLocalPosition(0, -300, 2500);
             actor.SetLocalRotation(0, 180, 0);
-            actor.MovementInfo.Speed = actor.MovementInfo.MaxSpeed * 0.25f;
+            actor.MoveComponent.Speed = actor.MoveComponent.MaxSpeed * 0.25f;
             ActionManager.ForceClearQueue(actorID);
             ActionManager.QueueNext(actorID, new Wait(60));
             ActionManager.QueueNext(actorID, new Rotate(new TV_3DVECTOR(-2000, -300, 2000), 0, -1, false));
@@ -988,7 +988,7 @@ namespace SWEndor.Scenarios
           {
             actor.SetLocalPosition(3300, 150, 5500);
             actor.LookAtPoint(new TV_3DVECTOR(1400, 150, 1000));
-            actor.MovementInfo.Speed = actor.MovementInfo.MaxSpeed * 0.25f;
+            actor.MoveComponent.Speed = actor.MoveComponent.MaxSpeed * 0.25f;
             ActionManager.ForceClearQueue(actorID);
             ActionManager.QueueNext(actorID, new Wait(30));
             ActionManager.QueueNext(actorID, new Rotate(new TV_3DVECTOR(-32000, 150, 2000), 0, -1, false));

@@ -56,7 +56,7 @@ namespace SWEndor.AI.Actions
           FollowDistance = actor.TypeInfo.Move_CloseEnough;
 
         if (TooCloseDistance < 0)
-          TooCloseDistance = 0.75f * actor.MovementInfo.Speed;
+          TooCloseDistance = 0.75f * actor.MoveComponent.Speed;
 
         float dist = ActorDistanceInfo.GetDistance(actorID, Target_ActorID);
         if (dist > TooCloseDistance)
@@ -65,22 +65,22 @@ namespace SWEndor.AI.Actions
           ActorInfo a2 = target.AttachToParent ? engine.ActorFactory.Get(target.ParentID) : null;
           if (a2 == null)
           {
-            Target_Position = target.GetRelativePositionXYZ(0, 0, target.MovementInfo.Speed * d);
+            Target_Position = target.GetRelativePositionXYZ(0, 0, target.MoveComponent.Speed * d);
           }
           else
           {
-            Target_Position = a2.GetRelativePositionXYZ(target.GetLocalPosition().x, target.GetLocalPosition().y, target.GetLocalPosition().z + a2.MovementInfo.Speed * d);
+            Target_Position = a2.GetRelativePositionXYZ(target.GetLocalPosition().x, target.GetLocalPosition().y, target.GetLocalPosition().z + a2.MoveComponent.Speed * d);
           }
 
           float delta_angle = AdjustRotation(actor, Target_Position, true);
 
-          float addspd = (actor.MovementInfo.MaxSpeed > target.MovementInfo.Speed) ? actor.MovementInfo.MaxSpeed - target.MovementInfo.Speed : 0;
-          float subspd = (actor.MovementInfo.MinSpeed < target.MovementInfo.Speed) ? target.MovementInfo.Speed - actor.MovementInfo.MinSpeed : 0;
+          float addspd = (actor.MoveComponent.MaxSpeed > target.MoveComponent.Speed) ? actor.MoveComponent.MaxSpeed - target.MoveComponent.Speed : 0;
+          float subspd = (actor.MoveComponent.MinSpeed < target.MoveComponent.Speed) ? target.MoveComponent.Speed - actor.MoveComponent.MinSpeed : 0;
 
           if (dist > FollowDistance)
-            AdjustSpeed(actor, target.MovementInfo.Speed + (dist - FollowDistance) / SpeedAdjustmentDistanceRange * addspd);
+            AdjustSpeed(actor, target.MoveComponent.Speed + (dist - FollowDistance) / SpeedAdjustmentDistanceRange * addspd);
           else
-            AdjustSpeed(actor, target.MovementInfo.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
+            AdjustSpeed(actor, target.MoveComponent.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
 
           WeaponInfo weapon = null;
           int burst = 0;
@@ -121,12 +121,12 @@ namespace SWEndor.AI.Actions
           }
           else if (!(target.TypeInfo is ActorTypes.Group.Projectile))
           {
-            engine.ActionManager.QueueFirst(actorID, new Move(MakeAltPosition(engine, actorID, target.GetTopParent()), actor.MovementInfo.MaxSpeed));
+            engine.ActionManager.QueueFirst(actorID, new Move(MakeAltPosition(engine, actorID, target.GetTopParent()), actor.MoveComponent.MaxSpeed));
           }
           return;
         }
 
-        if (CheckImminentCollision(actor, actor.MovementInfo.Speed * 2.5f))
+        if (CheckImminentCollision(actor, actor.MoveComponent.Speed * 2.5f))
         {
           engine.ActionManager.QueueFirst(actorID, new AvoidCollisionRotate(actor.CollisionInfo.ProspectiveCollisionImpact, actor.CollisionInfo.ProspectiveCollisionNormal));
           //if (owner.ProspectiveCollisionActor != null && owner.ProspectiveCollisionActor.GetTopParent() == Target_Actor.GetTopParent())

@@ -33,7 +33,7 @@ namespace SWEndor.AI.Actions
     public override void Process(Engine engine, int actorID)
     {
       ActorInfo actor = engine.ActorFactory.Get(actorID);
-      if (actor.MovementInfo.MaxSpeed == 0)
+      if (actor.MoveComponent.MaxSpeed == 0)
       {
         Complete = true;
         return;
@@ -53,7 +53,7 @@ namespace SWEndor.AI.Actions
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
-      if (CheckImminentCollision(actor, actor.MovementInfo.Speed * 2.5f))
+      if (CheckImminentCollision(actor, actor.MoveComponent.Speed * 2.5f))
       {
         engine.ActionManager.QueueFirst(actorID, new AvoidCollisionRotate(actor.CollisionInfo.ProspectiveCollisionImpact, actor.CollisionInfo.ProspectiveCollisionNormal));
       }

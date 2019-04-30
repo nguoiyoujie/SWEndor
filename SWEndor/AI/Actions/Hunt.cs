@@ -43,7 +43,7 @@ namespace SWEndor.AI.Actions
           && !actor.Faction.IsAlliedWith(a.Faction) // enemy
           )
         {
-          if (actor.MovementInfo.MaxSpeed == 0) // stationary, can only target those in range
+          if (actor.MoveComponent.MaxSpeed == 0) // stationary, can only target those in range
           {
             WeaponInfo weap = null;
             int dummy = 0;

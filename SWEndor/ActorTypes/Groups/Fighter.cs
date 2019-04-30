@@ -31,7 +31,7 @@ namespace SWEndor.ActorTypes.Groups
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-      ainfo.DyingMovement = new DyingSpinInfo(180, 270);
+      ainfo.DyingMoveComponent = new DyingSpin(180, 270);
 
       ainfo.CombatInfo.HitWhileDyingLeadsToDeath = true;
     }
@@ -41,7 +41,7 @@ namespace SWEndor.ActorTypes.Groups
       base.ProcessNewState(ainfo);
       if (ainfo.ActorState.IsDying())
       {
-        ainfo.MovementInfo.ApplyZBalance = false;
+        ainfo.MoveComponent.ApplyZBalance = false;
         ainfo.CombatInfo.OnTimedLife = true;
 
         if (ainfo.GetAllParents(1).Count > 0 || (ainfo.CombatInfo.HitWhileDyingLeadsToDeath && Globals.Engine.Random.NextDouble() < 0.3f))

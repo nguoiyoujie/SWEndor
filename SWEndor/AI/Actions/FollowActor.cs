@@ -33,7 +33,7 @@ namespace SWEndor.AI.Actions
     {
       ActorInfo actor = engine.ActorFactory.Get(actorID);
       ActorInfo target = engine.ActorFactory.Get(Target_ActorID);
-      if (target == null || actor.MovementInfo.MaxSpeed == 0)
+      if (target == null || actor.MoveComponent.MaxSpeed == 0)
       {
         Complete = true;
         return;
@@ -44,20 +44,20 @@ namespace SWEndor.AI.Actions
         AdjustRotation(actor, target.GetPosition());
         float dist = ActorDistanceInfo.GetDistance(actorID, Target_ActorID, FollowDistance + 1);
 
-        float addspd = (actor.MovementInfo.MaxSpeed > target.MovementInfo.Speed) ? actor.MovementInfo.MaxSpeed - target.MovementInfo.Speed : 0;
-        float subspd = (actor.MovementInfo.MinSpeed < target.MovementInfo.Speed) ? target.MovementInfo.Speed - actor.MovementInfo.MinSpeed : 0;
+        float addspd = (actor.MoveComponent.MaxSpeed > target.MoveComponent.Speed) ? actor.MoveComponent.MaxSpeed - target.MoveComponent.Speed : 0;
+        float subspd = (actor.MoveComponent.MinSpeed < target.MoveComponent.Speed) ? target.MoveComponent.Speed - actor.MoveComponent.MinSpeed : 0;
 
         if (dist > FollowDistance)
-          AdjustSpeed(actor, target.MovementInfo.Speed + (dist - FollowDistance) / SpeedAdjustmentDistanceRange * addspd);
+          AdjustSpeed(actor, target.MoveComponent.Speed + (dist - FollowDistance) / SpeedAdjustmentDistanceRange * addspd);
         else
-          AdjustSpeed(actor, target.MovementInfo.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
+          AdjustSpeed(actor, target.MoveComponent.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
 
         Complete |= (target.CreationState != CreationState.ACTIVE);
       }
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
-      if (CheckImminentCollision(actor, actor.MovementInfo.Speed * 2.5f))
+      if (CheckImminentCollision(actor, actor.MoveComponent.Speed * 2.5f))
       {
         engine.ActionManager.QueueFirst(actorID, new AvoidCollisionRotate(actor.CollisionInfo.ProspectiveCollisionImpact, actor.CollisionInfo.ProspectiveCollisionNormal));
       }

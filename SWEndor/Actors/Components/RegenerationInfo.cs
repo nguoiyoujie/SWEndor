@@ -29,22 +29,22 @@
       RelativeRegenRate = 0;
     }
 
-    public void Process()
+    public void Process(float time)
     {
       // Regen
-      Regenerate(Actor, SelfRegenRate);
+      Regenerate(Actor, SelfRegenRate * time);
 
       if (ParentRegenRate != 0)
         foreach (int p in Actor.GetAllParents())
-          Regenerate(p, ParentRegenRate);
+          Regenerate(p, ParentRegenRate * time);
 
       if (ChildRegenRate != 0)
         foreach (int c in Actor.GetAllChildren())
-          Regenerate(c, ChildRegenRate);
+          Regenerate(c, ChildRegenRate * time);
 
       if (RelativeRegenRate != 0)
         foreach (int r in Actor.GetAllRelatives())
-          Regenerate(r, RelativeRegenRate);
+          Regenerate(r, RelativeRegenRate * time);
     }
 
     private void Regenerate(int i, float amount)

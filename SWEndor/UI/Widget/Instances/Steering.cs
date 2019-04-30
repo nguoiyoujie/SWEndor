@@ -59,8 +59,8 @@ namespace SWEndor.UI.Widgets
                                                    , steering_position.y + steering_height / 2
                                                    , pcolor.GetIntColor());
 
-      float xfrac = p.MovementInfo.YTurnAngle / p.MovementInfo.MaxTurnRate / 2;
-      float yfrac = p.MovementInfo.XTurnAngle / p.MovementInfo.MaxTurnRate / 2;
+      float xfrac = p.MoveComponent.YTurnAngle / p.MoveComponent.MaxTurnRate / 2;
+      float yfrac = p.MoveComponent.XTurnAngle / p.MoveComponent.MaxTurnRate / 2;
       float size = 3;
 
       TVScreen2DImmediate.Draw_Box(steering_position.x + steering_width * (xfrac + 0.5f) - size

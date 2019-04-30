@@ -25,7 +25,7 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessState(ActorInfo ainfo)
     {
       base.ProcessState(ainfo);
-      ainfo.DyingMovement = new DyingSpinInfo(100, 450);
+      ainfo.DyingMoveComponent = new DyingSpin(100, 450);
     }
   }
 }

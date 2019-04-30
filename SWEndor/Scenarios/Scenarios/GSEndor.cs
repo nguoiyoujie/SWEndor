@@ -815,7 +815,7 @@ namespace SWEndor.Scenarios
         if (actor != null)
         {
           actor.Position = m_rebelPosition[id] + new TV_3DVECTOR(0, 0, actor.TypeInfo.MaxSpeed * 8f);
-          actor.MovementInfo.Speed = actor.TypeInfo.MaxSpeed;
+          actor.MoveComponent.Speed = actor.TypeInfo.MaxSpeed;
         }
       }
     }
@@ -829,7 +829,7 @@ namespace SWEndor.Scenarios
         {
           ActionManager.ForceClearQueue(actorID);
           ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() + new TV_3DVECTOR(500, 0, -20000)
-                                                        , actor.MovementInfo.MaxSpeed
+                                                        , actor.MoveComponent.MaxSpeed
                                                         , actor.TypeInfo.Move_CloseEnough));
           ActionManager.QueueLast(actorID, new HyperspaceOut());
           ActionManager.QueueLast(actorID, new Delete());
@@ -842,7 +842,7 @@ namespace SWEndor.Scenarios
         {
           ActionManager.ForceClearQueue(actorID);
           ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() + new TV_3DVECTOR(500, 0, -20000)
-                                                , actor.MovementInfo.MaxSpeed
+                                                , actor.MoveComponent.MaxSpeed
                                                 , actor.TypeInfo.Move_CloseEnough));
           ActionManager.QueueLast(actorID, new HyperspaceOut());
           ActionManager.QueueLast(actorID, new Delete());
@@ -866,7 +866,7 @@ namespace SWEndor.Scenarios
             if (actor != null)
             {
               actor.ActorState = ActorState.FREE;
-              actor.MovementInfo.Speed = 275;
+              actor.MoveComponent.Speed = 275;
             }
           }
 
@@ -876,8 +876,8 @@ namespace SWEndor.Scenarios
             if (actor != null)
             {
               actor.ActorState = ActorState.FREE;
-              if (actor.MovementInfo.Speed < 425)
-                actor.MovementInfo.Speed = 425;
+              if (actor.MoveComponent.Speed < 425)
+                actor.MoveComponent.Speed = 425;
             }
           }
         }
@@ -901,7 +901,7 @@ namespace SWEndor.Scenarios
         {
           ActionManager.ForceClearQueue(actorID);
           ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() - new TV_3DVECTOR(actor.GetPosition().x * 0.35f, 0, Math.Abs(actor.GetPosition().x) + 1500)
-                                                    , actor.MovementInfo.MinSpeed));
+                                                    , actor.MoveComponent.MinSpeed));
           ActionManager.QueueLast(actorID, new Lock());
         }
       }
@@ -916,9 +916,9 @@ namespace SWEndor.Scenarios
         {
           ActionManager.ForceClearQueue(actorID);
           ActionManager.QueueLast(actorID, new Move(actor.GetPosition() - new TV_3DVECTOR(actor.GetPosition().x * 0.35f, 0, Math.Abs(actor.GetPosition().x) + 1500)
-                                                    , actor.MovementInfo.MaxSpeed));
+                                                    , actor.MoveComponent.MaxSpeed));
           ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() - new TV_3DVECTOR(0, 0, 20000)
-                                                    , actor.MovementInfo.MinSpeed));
+                                                    , actor.MoveComponent.MinSpeed));
           ActionManager.QueueLast(actorID, new Lock());
         }
       }
@@ -964,7 +964,7 @@ namespace SWEndor.Scenarios
       {
         falcon.CombatInfo.DamageModifier = 0;
         ActionManager.ForceClearQueue(m_FalconID);
-        ActionManager.QueueLast(m_FalconID, new ForcedMove(new TV_3DVECTOR(0, 0, 20000), falcon.MovementInfo.MaxSpeed, -1));
+        ActionManager.QueueLast(m_FalconID, new ForcedMove(new TV_3DVECTOR(0, 0, 20000), falcon.MoveComponent.MaxSpeed, -1));
         ActionManager.QueueLast(m_FalconID, new HyperspaceOut());
         ActionManager.QueueLast(m_FalconID, new Delete());
         m_FalconID = -1;
@@ -975,7 +975,7 @@ namespace SWEndor.Scenarios
       {
         wedge.CombatInfo.DamageModifier = 0;
         ActionManager.ForceClearQueue(m_WedgeID);
-        ActionManager.QueueLast(m_WedgeID, new ForcedMove(new TV_3DVECTOR(0, 0, 20000), wedge.MovementInfo.MaxSpeed, -1));
+        ActionManager.QueueLast(m_WedgeID, new ForcedMove(new TV_3DVECTOR(0, 0, 20000), wedge.MoveComponent.MaxSpeed, -1));
         ActionManager.QueueLast(m_WedgeID, new HyperspaceOut());
         ActionManager.QueueLast(m_WedgeID, new Delete());
         m_WedgeID = -1;
@@ -989,12 +989,12 @@ namespace SWEndor.Scenarios
 
       ActionManager.UnlockOne(m_FalconID);
       falcon.ActorState = ActorState.NORMAL;
-      falcon.MovementInfo.Speed = falcon.MovementInfo.MaxSpeed;
+      falcon.MoveComponent.Speed = falcon.MoveComponent.MaxSpeed;
 
       ActionManager.UnlockOne(m_WedgeID);
       ActionManager.QueueFirst(m_WedgeID, new Wait(2.5f));
       wedge.ActorState = ActorState.NORMAL;
-      wedge.MovementInfo.Speed = wedge.MovementInfo.MaxSpeed;
+      wedge.MoveComponent.Speed = wedge.MoveComponent.MaxSpeed;
 
       float time = 5f;
       foreach (int actorID in MainAllyFaction.GetWings())
@@ -1004,7 +1004,7 @@ namespace SWEndor.Scenarios
         ActionManager.UnlockOne(actorID);
         ActionManager.QueueFirst(actorID, new Wait(time));
         actor.ActorState = ActorState.NORMAL;
-        actor.MovementInfo.Speed = actor.MovementInfo.MaxSpeed;
+        actor.MoveComponent.Speed = actor.MoveComponent.MaxSpeed;
         time += 2.5f;
       }
 
@@ -1014,7 +1014,7 @@ namespace SWEndor.Scenarios
 
         ActionManager.UnlockOne(actorID);
         actor.ActorState = ActorState.NORMAL;
-        actor.MovementInfo.Speed = actor.MovementInfo.MaxSpeed;
+        actor.MoveComponent.Speed = actor.MoveComponent.MaxSpeed;
         actor.SetSpawnerEnable(true);
       }
       PlayerInfo.IsMovementControlsEnabled = true;
@@ -1040,7 +1040,7 @@ namespace SWEndor.Scenarios
 
             ActionManager.ClearQueue(actorID);
             ActionManager.QueueLast(actorID, new Move(homeone.GetPosition() + new TV_3DVECTOR(Engine.Random.Next(-2500, 2500), Engine.Random.Next(-50, 50), Engine.Random.Next(-2500, 2500))
-                                                       , actor.MovementInfo.MaxSpeed));
+                                                       , actor.MoveComponent.MaxSpeed));
           }
         }
       }
@@ -1107,7 +1107,7 @@ namespace SWEndor.Scenarios
                               , new Move(homeone.GetPosition() + new TV_3DVECTOR(Engine.Random.Next(-2500, 2500)
                               , Engine.Random.Next(-50, 50)
                               , Engine.Random.Next(-2500, 2500))
-                              , av.MovementInfo.MaxSpeed));
+                              , av.MoveComponent.MaxSpeed));
       }
     }
 
@@ -2384,8 +2384,8 @@ namespace SWEndor.Scenarios
         ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
         cam.SetLocalPosition(pos.x, pos.y, pos.z);
         cam.LookAtPoint(new TV_3DVECTOR());
-        cam.MovementInfo.MaxSpeed = 50;
-        cam.MovementInfo.Speed = 50;
+        cam.MoveComponent.MaxSpeed = 50;
+        cam.MoveComponent.Speed = 50;
         Manager.CameraTargetActorID = target.ID;
         Manager.AddEvent(Game.GameTime + 5f, Scene_ExitCutscene);
       }

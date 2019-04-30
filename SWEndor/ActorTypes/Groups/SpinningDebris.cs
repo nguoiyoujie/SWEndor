@@ -21,7 +21,7 @@ namespace SWEndor.ActorTypes.Groups
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-      ainfo.DyingMovement = new DyingSpinInfo(120, 270);
+      ainfo.DyingMoveComponent = new DyingSpin(120, 270);
 
       ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
     }

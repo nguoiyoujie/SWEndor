@@ -33,7 +33,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
 
-      ainfo.DyingMovement = DyingKillInfo.Instance;
+      ainfo.DyingMoveComponent = DyingKill.Instance;
 
       ainfo.CombatInfo.CollisionDamageModifier = 100;
       ainfo.RegenerationInfo.AllowRegen = false;

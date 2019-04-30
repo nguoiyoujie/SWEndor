@@ -1,9 +1,9 @@
 ﻿namespace SWEndor.Actors.Components
 {
-  public class LaserMoveInfo : IMovementInfo
+  public class MoveLaser : IMoveComponent
   {
-    public static readonly LaserMoveInfo Instance = new LaserMoveInfo();
-    private LaserMoveInfo() { }
+    public static readonly MoveLaser Instance = new MoveLaser();
+    private MoveLaser() { }
 
     // General
     public float Speed { get { return Globals.LaserSpeed; } set { } }

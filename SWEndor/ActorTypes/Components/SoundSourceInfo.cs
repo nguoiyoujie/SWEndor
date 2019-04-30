@@ -33,7 +33,7 @@ namespace SWEndor.ActorTypes.Components
     {
       if (dist < Distance)
       {
-        float vol = actor.MovementInfo.Speed / actor.MovementInfo.MaxSpeed;
+        float vol = actor.MoveComponent.Speed / actor.MoveComponent.MaxSpeed;
         vol = vol.Clamp(0, 1);
         vol -= dist / Distance;
         if (vol > 0)

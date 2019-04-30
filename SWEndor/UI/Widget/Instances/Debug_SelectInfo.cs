@@ -42,7 +42,7 @@ namespace SWEndor.UI.Widgets
               , a.GetPosition().x
               , a.GetPosition().y
               , a.GetPosition().z
-              , a.MovementInfo.Speed
+              , a.MoveComponent.Speed
               //, a.AI.Master.CurrAI
               //, a.AI.Master.Move_TargetPosition.x
               //, a.AI.Master.Move_TargetPosition.y

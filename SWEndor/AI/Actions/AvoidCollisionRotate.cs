@@ -35,7 +35,7 @@ namespace SWEndor.AI.Actions
     public override void Process(Engine engine, int actorID)
     {
       ActorInfo actor = engine.ActorFactory.Get(actorID);
-      if (actor.MovementInfo.MaxTurnRate == 0)
+      if (actor.MoveComponent.MaxTurnRate == 0)
       {
         Complete = true;
         return;
@@ -48,7 +48,7 @@ namespace SWEndor.AI.Actions
         else
           Target_Position = Impact_Position + Normal * 10000;
         float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetPosition(), Impact_Position);
-        float Target_Speed = actor.MovementInfo.MinSpeed; //dist / 25;
+        float Target_Speed = actor.MoveComponent.MinSpeed; //dist / 25;
 
         float delta_angle = AdjustRotation(actor, Target_Position);
         float delta_speed = AdjustSpeed(actor, Target_Speed);
@@ -56,7 +56,7 @@ namespace SWEndor.AI.Actions
         Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle); //&& delta_speed == 0);
       }
 
-      if (CheckImminentCollision(actor, actor.MovementInfo.Speed * 2.5f))
+      if (CheckImminentCollision(actor, actor.MoveComponent.Speed * 2.5f))
       {
         float newavoid = GetAvoidanceAngle(actor, actor.GetDirection(), Normal);
         float concavecheck = 60;

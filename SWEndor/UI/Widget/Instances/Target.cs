@@ -119,7 +119,7 @@ namespace SWEndor.UI.Widgets
             // Targeting cross
             // Anticipate
             float d = dist / Globals.LaserSpeed; // Laser Speed
-            TV_3DVECTOR target = m_target.GetRelativePositionXYZ(0, 0, m_target.MovementInfo.Speed * d);
+            TV_3DVECTOR target = m_target.GetRelativePositionXYZ(0, 0, m_target.MoveComponent.Speed * d);
             TVScreen2DImmediate.Math_3DPointTo2D(target, ref x, ref y);
 
             TVScreen2DImmediate.Action_Begin2D();

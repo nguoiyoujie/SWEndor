@@ -67,15 +67,15 @@ namespace SWEndor.ActorTypes.Instances
         if (a != null && a.TypeInfo is Fighter)
         {
           if (p.SpawnerInfo.SpawnSpeed == -2)
-            a.MovementInfo.Speed = a.MovementInfo.MaxSpeed;
+            a.MoveComponent.Speed = a.MoveComponent.MaxSpeed;
           else if (p.SpawnerInfo.SpawnSpeed == -1)
-            a.MovementInfo.Speed = p.MovementInfo.Speed;
+            a.MoveComponent.Speed = p.MoveComponent.Speed;
           else
-            a.MovementInfo.Speed = p.SpawnerInfo.SpawnSpeed;
+            a.MoveComponent.Speed = p.SpawnerInfo.SpawnSpeed;
 
-          a.MoveRelative(p.SpawnerInfo.SpawnSpeedPositioningMult.x * p.MovementInfo.Speed * Game.TimeSinceRender * p.Scale.x
-                       , p.SpawnerInfo.SpawnSpeedPositioningMult.y * p.MovementInfo.Speed * Game.TimeSinceRender * p.Scale.y
-                       , p.SpawnerInfo.SpawnSpeedPositioningMult.z * p.MovementInfo.Speed * Game.TimeSinceRender * p.Scale.z);
+          a.MoveRelative(p.SpawnerInfo.SpawnSpeedPositioningMult.x * p.MoveComponent.Speed * Game.TimeSinceRender * p.Scale.x
+                       , p.SpawnerInfo.SpawnSpeedPositioningMult.y * p.MoveComponent.Speed * Game.TimeSinceRender * p.Scale.y
+                       , p.SpawnerInfo.SpawnSpeedPositioningMult.z * p.MoveComponent.Speed * Game.TimeSinceRender * p.Scale.z);
 
           a.MoveRelative(p.SpawnerInfo.SpawnManualPositioningMult.x * Game.TimeSinceRender * p.Scale.x
                        , p.SpawnerInfo.SpawnManualPositioningMult.y * Game.TimeSinceRender * p.Scale.y

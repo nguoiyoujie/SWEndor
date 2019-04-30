@@ -269,9 +269,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
           return;
         case "ApplyZBalance":
           if (setValue)
-            actor.MovementInfo.ApplyZBalance = Convert.ToBoolean(newValue);
+            actor.MoveComponent.ApplyZBalance = Convert.ToBoolean(newValue);
           else
-            newValue = actor.MovementInfo.ApplyZBalance;
+            newValue = actor.MoveComponent.ApplyZBalance;
           return;
         case "CamDeathCircleHeight":
           if (setValue)
@@ -379,15 +379,15 @@ namespace SWEndor.Scenarios.Scripting.Functions
           return;
         case "MaxSpeed":
           if (setValue)
-            actor.MovementInfo.MaxSpeed = Convert.ToSingle(newValue);
+            actor.MoveComponent.MaxSpeed = Convert.ToSingle(newValue);
           else
-            newValue = actor.MovementInfo.MaxSpeed;
+            newValue = actor.MoveComponent.MaxSpeed;
           return;
         case "MaxSpeedChangeRate":
           if (setValue)
-            actor.MovementInfo.MaxSpeedChangeRate = Convert.ToSingle(newValue);
+            actor.MoveComponent.MaxSpeedChangeRate = Convert.ToSingle(newValue);
           else
-            newValue = actor.MovementInfo.MaxSpeedChangeRate;
+            newValue = actor.MoveComponent.MaxSpeedChangeRate;
           return;
         case "MaxStrength":
           if (setValue)
@@ -397,15 +397,15 @@ namespace SWEndor.Scenarios.Scripting.Functions
           return;
         case "MaxTurnRate":
           if (setValue)
-            actor.MovementInfo.MaxTurnRate = Convert.ToSingle(newValue);
+            actor.MoveComponent.MaxTurnRate = Convert.ToSingle(newValue);
           else
-            newValue = actor.MovementInfo.MaxTurnRate;
+            newValue = actor.MoveComponent.MaxTurnRate;
           return;
         case "MinSpeed":
           if (setValue)
-            actor.MovementInfo.MinSpeed = Convert.ToSingle(newValue);
+            actor.MoveComponent.MinSpeed = Convert.ToSingle(newValue);
           else
-            newValue = actor.MovementInfo.MinSpeed;
+            newValue = actor.MoveComponent.MinSpeed;
           return;
         case "SideBarName":
           if (setValue)

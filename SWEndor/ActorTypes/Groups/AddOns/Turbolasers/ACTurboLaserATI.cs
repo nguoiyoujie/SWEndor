@@ -29,7 +29,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
 
-      ainfo.DyingMovement = DyingKillInfo.Instance;
+      ainfo.DyingMoveComponent = DyingKill.Instance;
 
       ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
       ainfo.ExplosionInfo.DeathExplosionType = "Explosion";

@@ -2,9 +2,9 @@
 
 namespace SWEndor.Actors.Components
 {
-  public class ForwardMoveInfo : IMovementInfo
+  public class MoveForwardOnly : IMoveComponent
   {
-    public ForwardMoveInfo(float speed, float maxspeed, float minspeed, float changerate)
+    public MoveForwardOnly(float speed, float maxspeed, float minspeed, float changerate)
     {
       Speed = speed;
       MaxSpeed = maxspeed;

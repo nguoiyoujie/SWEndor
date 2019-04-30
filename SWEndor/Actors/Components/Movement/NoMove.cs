@@ -1,9 +1,9 @@
 ﻿namespace SWEndor.Actors.Components
 {
-  public class NoMoveInfo : IMovementInfo
+  public class NoMove : IMoveComponent
   {
-    public static readonly NoMoveInfo Instance = new NoMoveInfo();
-    private NoMoveInfo() { }
+    public static readonly NoMove Instance = new NoMove();
+    private NoMove() { }
 
     // General
     public float Speed { get { return 0; } set { } }

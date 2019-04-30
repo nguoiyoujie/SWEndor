@@ -37,7 +37,7 @@ namespace SWEndor.AI.Actions
     public override void Process(Engine engine, int actorID)
     {
       ActorInfo actor = engine.ActorFactory.Get(actorID);
-      if (actor.MovementInfo.MaxSpeed == 0)
+      if (actor.MoveComponent.MaxSpeed == 0)
       {
         Complete = true;
         return;

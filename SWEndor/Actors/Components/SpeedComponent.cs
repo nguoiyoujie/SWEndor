@@ -52,17 +52,17 @@ namespace SWEndor.Actors.Components
     void Move(float time);
   }
 
-  public class NoMove : IMovable
+  public class AAANoMove : IMovable
   {
     public void Move(float time) { }
   }
 
-  public class MoveForwardOnly : IMovable
+  public class AAAMoveForwardOnly : IMovable
   {
     private CoordComponent _coord;
     private SpeedComponent _speed;
 
-    public MoveForwardOnly(CoordComponent coord, SpeedComponent speed)
+    public AAAMoveForwardOnly(CoordComponent coord, SpeedComponent speed)
     { _coord = coord; _speed = speed; }
 
     public void Move(float time)
@@ -76,13 +76,13 @@ namespace SWEndor.Actors.Components
     }
   }
 
-  public class RotateOnly : IMovable
+  public class AAARotateOnly : IMovable
   {
     private CoordComponent _coord;
     private TurnComponent _turn;
     private TurnSettingsComponent _turnS;
 
-    public RotateOnly(CoordComponent coord, TurnComponent turn, TurnSettingsComponent turnS)
+    public AAARotateOnly(CoordComponent coord, TurnComponent turn, TurnSettingsComponent turnS)
     { _coord = coord; _turn = turn; _turnS = turnS; }
 
     public void Move(float time)

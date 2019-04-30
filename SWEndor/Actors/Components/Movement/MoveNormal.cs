@@ -1,29 +1,21 @@
 ﻿using MTV3D65;
+using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
 
 namespace SWEndor.Actors.Components
 {
-  public class RotateOnlyInfo : IMovementInfo
+  public class MoveNormal : IMoveComponent
   {
-    public RotateOnlyInfo(float maxturn, float max2orderturn, float ztilt, float znormfrac)
-    {
-      MaxTurnRate = maxturn;
-      MaxSecondOrderTurnRateFrac = max2orderturn;
-      ZTilt = ztilt;
-      ZNormFrac = znormfrac;
-      ApplyZBalance = true;
-    }
-
     // General
-    public float Speed { get { return 0; } set { } }
+    public float Speed { get; set; }
     public float XTurnAngle { get; set; }
     public float YTurnAngle { get; set; }
     public float ZRoll { get; set; }
 
     // speed settings
-    public float MaxSpeed { get { return 0; } set { } }
-    public float MinSpeed { get { return 0; } set { } }
-    public float MaxSpeedChangeRate { get { return 0; } set { } }
+    public float MaxSpeed { get; set; }
+    public float MinSpeed { get; set; }
+    public float MaxSpeedChangeRate { get; set; }
 
     // yaw settings
     public float MaxTurnRate { get; set; }
@@ -37,11 +29,31 @@ namespace SWEndor.Actors.Components
     // iterates Z rotation decay, uses a while loop... the algorithm should be replaced
     private float Zdiv;
 
-    public void Reset()
+    public MoveNormal(ActorTypeInfo atype, ActorCreationInfo acreate)
     {
+      Speed = acreate.InitialSpeed;
       XTurnAngle = 0;
       YTurnAngle = 0;
       ZRoll = 0;
+      MaxSpeed = atype.MaxSpeed;
+      MinSpeed = atype.MinSpeed;
+      MaxSpeedChangeRate = atype.MaxSpeedChangeRate;
+      MaxTurnRate = atype.MaxTurnRate;
+      MaxSecondOrderTurnRateFrac = atype.MaxSecondOrderTurnRateFrac;
+      ZTilt = atype.ZTilt;
+      ZNormFrac = atype.ZNormFrac;
+      ApplyZBalance = true;
+    }
+
+    public void Reset()
+    {
+      Speed = 0;
+      XTurnAngle = 0;
+      YTurnAngle = 0;
+      ZRoll = 0;
+      MaxSpeed = 0;
+      MinSpeed = 0;
+      MaxSpeedChangeRate = 0;
       MaxTurnRate = 0;
       MaxSecondOrderTurnRateFrac = 0;
       ZTilt = 0;
@@ -60,11 +72,29 @@ namespace SWEndor.Actors.Components
     {
       float time = actor.Game.TimeSinceRender;
 
+      // Hyperspace special: AI loop may not be in sync
+      if (actor.ActorState == ActorState.HYPERSPACE)
+      {
+        if (actor.CurrentAction is HyperspaceIn)
+          ((HyperspaceIn)actor.CurrentAction).ApplyMove(actor);
+        else if (actor.CurrentAction is HyperspaceOut)
+          ((HyperspaceOut)actor.CurrentAction).ApplyMove(actor);
+
+        actor.MoveRelative(Speed * time, 0, 0);
+        return;
+      }
+
+      // Control speed
+      if (actor.ActorState != ActorState.FREE
+       && actor.ActorState != ActorState.HYPERSPACE)
+        Speed = Speed.Clamp(MinSpeed, MaxSpeed);
+
       // Control rotation
       if (ApplyZBalance)
       {
         TV_3DVECTOR vec = actor.GetRotation();
         actor.SetLocalRotation(vec.x, vec.y, 0);
+        actor.MoveRelative(Speed * time, 0, 0);
         ZRoll -= YTurnAngle * ZTilt * time;
 
         // Z rotation decay.
@@ -84,6 +114,7 @@ namespace SWEndor.Actors.Components
       else
       {
         TV_3DVECTOR vec = actor.GetRotation();
+        actor.MoveRelative(Speed * time, 0, 0);
         ZRoll = vec.z;
         ZRoll -= YTurnAngle * ZTilt * time;
         float rotX2 = vec.x + XTurnAngle * time;

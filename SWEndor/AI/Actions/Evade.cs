@@ -32,7 +32,7 @@ namespace SWEndor.AI.Actions
     public override void Process(Engine engine, int actorID)
     {
       ActorInfo actor = engine.ActorFactory.Get(actorID);
-      if (actor.MovementInfo.MaxTurnRate == 0)
+      if (actor.MoveComponent.MaxTurnRate == 0)
       {
         Complete = true;
         return;
@@ -55,7 +55,7 @@ namespace SWEndor.AI.Actions
         }
 
         float delta_angle = AdjustRotation(actor, Target_Position);
-        float delta_speed = AdjustSpeed(actor, actor.MovementInfo.Speed);
+        float delta_speed = AdjustSpeed(actor, actor.MoveComponent.Speed);
 
         Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle && delta_speed == 0);
         Complete |= (ResumeTime < engine.Game.GameTime);
@@ -63,7 +63,7 @@ namespace SWEndor.AI.Actions
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
-      if (CheckImminentCollision(actor, actor.MovementInfo.Speed * 2.5f))
+      if (CheckImminentCollision(actor, actor.MoveComponent.Speed * 2.5f))
       {
         engine.ActionManager.QueueFirst(actorID, new AvoidCollisionRotate(actor.CollisionInfo.ProspectiveCollisionImpact, actor.CollisionInfo.ProspectiveCollisionNormal));
       }

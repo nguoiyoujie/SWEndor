@@ -98,8 +98,8 @@ namespace SWEndor.Player
             angleX = angleX.Clamp(-maxT, maxT);
             angleY = angleY.Clamp(-maxT, maxT);
 
-            Engine.PlayerInfo.Actor.MovementInfo.XTurnAngle = angleX;
-            Engine.PlayerInfo.Actor.MovementInfo.YTurnAngle = angleY;
+            Engine.PlayerInfo.Actor.MoveComponent.XTurnAngle = angleX;
+            Engine.PlayerInfo.Actor.MoveComponent.YTurnAngle = angleY;
           }
         }
       }

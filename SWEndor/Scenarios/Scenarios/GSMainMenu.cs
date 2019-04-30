@@ -388,7 +388,7 @@ namespace SWEndor.Scenarios
         {
           ActionManager.ForceClearQueue(actorID);
           ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() + new TV_3DVECTOR(18000, 0, -20000)
-                                                , actor.MovementInfo.Speed
+                                                , actor.MoveComponent.Speed
                                                 , actor.TypeInfo.Move_CloseEnough));
           ActionManager.QueueLast(actorID, new HyperspaceOut());
           ActionManager.QueueLast(actorID, new Delete());
@@ -584,7 +584,7 @@ namespace SWEndor.Scenarios
                                      , new Wait(3f+10f)}
         }.Spawn(this);
 
-        ainfo.MovementInfo.MinSpeed = 0;
+        ainfo.MoveComponent.MinSpeed = 0;
         ainfo.CombatInfo.DamageModifier = 0.1f;
       }
     }
@@ -627,7 +627,7 @@ namespace SWEndor.Scenarios
                                      }
         }.Spawn(this);
 
-        ainfo.MovementInfo.MinSpeed = 0;
+        ainfo.MoveComponent.MinSpeed = 0;
         ainfo.CombatInfo.DamageModifier = 0.1f;
       }
     }

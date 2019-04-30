@@ -30,7 +30,7 @@ namespace SWEndor.Actors
           {
             actor.CollisionInfo.CheckCollision();
           }
-          actor.MovementInfo.Move(actor);
+          actor.MoveComponent.Move(actor);
         }
       }
       actor.OnTickEvent(engine, new object[] { actor, actor.ActorState });

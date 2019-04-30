@@ -40,7 +40,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
 
-      ainfo.DyingMovement = new DyingSinkInfo(0.02f, 5f, 0.8f);
+      ainfo.DyingMoveComponent = new DyingSink(0.02f, 5f, 0.8f);
 
       ainfo.RegenerationInfo.SelfRegenRate = 0.1f;
 

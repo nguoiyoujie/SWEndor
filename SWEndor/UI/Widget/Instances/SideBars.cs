@@ -53,7 +53,7 @@ namespace SWEndor.UI.Widgets
         //Speed Bar
         DrawSingleBar(1
               , string.Format("SPEED ")
-              , p.MovementInfo.Speed / p.MovementInfo.MaxSpeed
+              , p.MoveComponent.Speed / p.MoveComponent.MaxSpeed
               , new TV_COLOR(0.7f, 0.8f, 0.4f, 1)
               );
 
