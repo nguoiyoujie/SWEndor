@@ -8,7 +8,7 @@ namespace SWEndor
   {
     public SDSpawner(ActorInfo a) : base(a)
     {
-      SpawnTypes = new ActorTypeInfo[] { a.TypeInfo.FactoryOwner.Get("TIE") };
+      SpawnTypes = new ActorTypeInfo[] { a.ActorTypeFactory.Get("TIE") };
       SpawnMoveDelay = 4;
       SpawnInterval = 5;
       SpawnsRemaining = 60;

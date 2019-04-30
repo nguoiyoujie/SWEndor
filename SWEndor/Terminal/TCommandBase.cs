@@ -23,7 +23,7 @@ namespace SWEndor.Terminal
         return TCommandFeedback.NULL;
     }
 
-    public TCommandFeedback Execute(object[] param)
+    public TCommandFeedback Execute(params object[] param)
     {
       TCommandFeedback ret = CheckParamCount(param.Length);
       if (ret.IsError())

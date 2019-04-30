@@ -67,12 +67,12 @@ namespace SWEndor
       return string.Format("(VEC:{0},{1},{2})", vector.x, vector.y, vector.z);
     }
 
-    public static void Clamp(ref float value, float min, float max)
+    public static float Clamp(this float value, float min, float max)
     {
       if (max == min)
       {
         value = min;
-        return;
+        return value;
       }
       else if (max < min)
       {
@@ -85,14 +85,16 @@ namespace SWEndor
         value = max;
       else if (value < min)
         value = min;
+
+      return value;
     }
 
-    public static void Modulus(ref float value, float min, float max)
+    public static float Modulus(this float value, float min, float max)
     {
       if (max == min)
       {
         value = min;
-        return;
+        return value;
       }
       else if (max < min)
       {
@@ -107,6 +109,8 @@ namespace SWEndor
         value -= max - min;
       else if (value < min)
         value += max - min;
+
+      return value;
     }
 
     public static void Clamp(ref TV_3DVECTOR point, TV_3DVECTOR minBound, TV_3DVECTOR maxBound)

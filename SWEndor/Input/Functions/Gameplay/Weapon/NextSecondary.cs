@@ -10,10 +10,10 @@ namespace SWEndor.Input.Functions.Gameplay.Weapon
     public override string Name { get { return InternalName; } }
     public override InputOptions Options { get { return InputOptions.ONPRESS; } }
 
-    public override void Process(InputManager manager)
+    public override void Process(Engine engine)
     {
-      manager.Engine.PlayerInfo.NextSecondaryWeapon();
-      manager.Engine.SoundManager.SetSound("button_1");
+      engine.PlayerInfo.NextSecondaryWeapon();
+      engine.SoundManager.SetSound("button_1");
     }
   }
 }

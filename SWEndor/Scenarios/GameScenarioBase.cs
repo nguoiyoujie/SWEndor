@@ -1,8 +1,10 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
+using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
+using SWEndor.Sound;
 using SWEndor.UI.Menu.Pages;
 using System;
 using System.Collections.Generic;
@@ -29,16 +31,16 @@ namespace SWEndor.Scenarios
       {
         m_PlayerCameraModes = value;
         if (m_PlayerCameraModes == null || m_PlayerCameraModes.Length == 0)
-          Manager.Engine.PlayerCameraInfo.CameraMode = CameraMode.FIRSTPERSON;
+          PlayerCameraInfo.CameraMode = CameraMode.FIRSTPERSON;
         else
         {
           for (int i = 0; i < m_PlayerCameraModes.Length; i++)
-            if (m_PlayerCameraModes[i] == Manager.Engine.PlayerCameraInfo.CameraMode)
+            if (m_PlayerCameraModes[i] == PlayerCameraInfo.CameraMode)
             {
               m_PlayerModeNum = i;
               return;
             }
-          Manager.Engine.PlayerCameraInfo.CameraMode = m_PlayerCameraModes[0];
+          PlayerCameraInfo.CameraMode = m_PlayerCameraModes[0];
         }
       }
     }
@@ -78,6 +80,20 @@ namespace SWEndor.Scenarios
 
     public readonly GameScenarioManager Manager;
 
+    public Engine Engine { get { return Manager.Engine; } }
+    public Game Game { get { return Engine.Game; } }
+    public TrueVision TrueVision { get { return Engine.TrueVision; } }
+    public ActorInfo.Factory ActorFactory { get { return Engine.ActorFactory; } }
+    public ActorTypeInfo.Factory ActorTypeFactory { get { return Engine.ActorTypeFactory; } }
+    public ActionManager ActionManager { get { return Engine.ActionManager; } }
+    public SoundManager SoundManager { get { return Engine.SoundManager; } }
+    public LandInfo LandInfo { get { return Engine.LandInfo; } }
+    public AtmosphereInfo AtmosphereInfo { get { return Engine.AtmosphereInfo; } }
+    public PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }
+    public PlayerCameraInfo PlayerCameraInfo { get { return Engine.PlayerCameraInfo; } }
+    public Screen2D Screen2D { get { return Engine.Screen2D; } }
+    public Scripting.Expressions.Context ScriptContext { get { return Engine.ScriptContext; } }
+
     public GameScenarioBase(GameScenarioManager manager)
     {
       Manager = manager;
@@ -87,13 +103,13 @@ namespace SWEndor.Scenarios
     {
       Difficulty = difficulty;
       StageNumber = 0;
-      this.GetEngine().PlayerInfo.ActorType = wing;
+      PlayerInfo.ActorType = wing;
     }
 
     public virtual void Launch()
     {
       Manager.Scenario = this;
-      this.GetEngine().PlayerInfo.Score.Reset();
+      PlayerInfo.Score.Reset();
       LoadFactions();
       LoadScene();
       Launched = true;
@@ -108,7 +124,7 @@ namespace SWEndor.Scenarios
 
     public virtual void LoadScene()
     {
-      this.GetEngine().TrueVision.TVGraphicEffect.FadeIn();
+      TrueVision.TVGraphicEffect.FadeIn();
     }
 
     public virtual void GameTick()
@@ -121,20 +137,20 @@ namespace SWEndor.Scenarios
       Manager.Scenario = null;
 
       // Full reset
-      this.GetEngine().ActorFactory.Reset();
+      ActorFactory.Reset();
 
       Manager.ClearGameStates();
       Manager.ClearEvents();
-      this.GetEngine().Screen2D.ClearText();
-      this.GetEngine().PlayerInfo.RequestSpawn = false;
+      Screen2D.ClearText();
+      PlayerInfo.RequestSpawn = false;
 
       // clear sounds
-      this.GetEngine().SoundManager.SetSoundStopAll();
+      SoundManager.SetSoundStopAll();
 
-      this.GetEngine().Screen2D.OverrideTargetingRadar = false;
-      this.GetEngine().Screen2D.Box3D_Enable = false;
+      Screen2D.OverrideTargetingRadar = false;
+      Screen2D.Box3D_Enable = false;
 
-      this.GetEngine().LandInfo.Enabled = false;
+      LandInfo.Enabled = false;
 
       // deleted many things, and this function is called when the game is not active. Probably safe to force GC
       GC.Collect();
@@ -142,17 +158,17 @@ namespace SWEndor.Scenarios
 
     public void FadeOut(params object[] param)
     {
-      this.GetEngine().TrueVision.TVGraphicEffect.FadeOut();
-      Manager.AddEvent(this.GetEngine().Game.GameTime + 0.01f, FadeInterim);
+      TrueVision.TVGraphicEffect.FadeOut();
+      Manager.AddEvent(Game.GameTime + 0.01f, FadeInterim);
     }
 
     public void FadeInterim(params object[] param)
     {
-      if (this.GetEngine().TrueVision.TVGraphicEffect.IsFadeFinished())
+      if (TrueVision.TVGraphicEffect.IsFadeFinished())
       {
-        this.GetEngine().TrueVision.TVScreen2DImmediate.Action_Begin2D();
-        this.GetEngine().TrueVision.TVScreen2DImmediate.Draw_FilledBox(0, 0, this.GetEngine().ScreenWidth, this.GetEngine().ScreenHeight, new TV_COLOR(0, 0, 0, 1).GetIntColor());
-        this.GetEngine().TrueVision.TVScreen2DImmediate.Action_End2D();
+        TrueVision.TVScreen2DImmediate.Action_Begin2D();
+        TrueVision.TVScreen2DImmediate.Draw_FilledBox(0, 0, Engine.ScreenWidth, Engine.ScreenHeight, new TV_COLOR(0, 0, 0, 1).GetIntColor());
+        TrueVision.TVScreen2DImmediate.Action_End2D();
 
         if (Manager.GetGameStateB("GameOver"))
         {
@@ -177,112 +193,99 @@ namespace SWEndor.Scenarios
       }
       else
       {
-         Manager.AddEvent(this.GetEngine().Game.GameTime + 0.01f, FadeInterim);
+         Manager.AddEvent(Game.GameTime + 0.01f, FadeInterim);
       }
     }
 
     public void FadeIn(params object[] param)
     {
-      this.GetEngine().TrueVision.TVGraphicEffect.FadeIn();
+      TrueVision.TVGraphicEffect.FadeIn();
     }
 
     public void GameOver(params object[] param)
     {
-      this.GetEngine().TrueVision.TVGraphicEffect.FadeIn(2.5f);
+      TrueVision.TVGraphicEffect.FadeIn(2.5f);
 
-      this.GetEngine().SoundManager.SetSoundStopAll();
+      SoundManager.SetSoundStopAll();
 
-      this.GetEngine().Screen2D.CurrentPage = new GameOver(this.GetEngine().Screen2D);
-      this.GetEngine().Screen2D.ShowPage = true;
-      this.GetEngine().Game.IsPaused = true;
-      this.GetEngine().SoundManager.SetMusic("battle_3_2"); // make modifiable
+      Screen2D.CurrentPage = new GameOver(Screen2D);
+      Screen2D.ShowPage = true;
+      Game.IsPaused = true;
+      SoundManager.SetMusic("battle_3_2"); // make modifiable
     }
 
     public void LostWing()
     {
-      float t = this.GetEngine().Game.GameTime;
-      if (TimeSinceLostWing > this.GetEngine().Game.GameTime)
+      float t = Game.GameTime;
+      if (TimeSinceLostWing > Game.GameTime)
         t = TimeSinceLostWing;
 
-      if (TimeSinceLostShip > this.GetEngine().Game.GameTime)
+      if (TimeSinceLostShip > Game.GameTime)
         t = TimeSinceLostShip;
 
-      if (TimeSinceLostStructure > this.GetEngine().Game.GameTime)
+      if (TimeSinceLostStructure > Game.GameTime)
         t = TimeSinceLostStructure;
 
-      while (t < this.GetEngine().Game.GameTime + 3f)
+      while (t < Game.GameTime + 3f)
       {
           Manager.AddEvent(t, LostSound);
         t += 0.2f;
       }
-      TimeSinceLostWing = this.GetEngine().Game.GameTime + 3f;
+      TimeSinceLostWing = Game.GameTime + 3f;
     }
 
     public void LostShip()
     {
-      float t = this.GetEngine().Game.GameTime;
-      if (TimeSinceLostWing > this.GetEngine().Game.GameTime)
+      float t = Game.GameTime;
+      if (TimeSinceLostWing > Game.GameTime)
         t = TimeSinceLostWing;
 
-      if (TimeSinceLostShip > this.GetEngine().Game.GameTime)
+      if (TimeSinceLostShip > Game.GameTime)
         t = TimeSinceLostShip;
 
-      if (TimeSinceLostStructure > this.GetEngine().Game.GameTime)
+      if (TimeSinceLostStructure > Game.GameTime)
         t = TimeSinceLostStructure;
 
-      while (t < this.GetEngine().Game.GameTime + 3f)
+      while (t < Game.GameTime + 3f)
       {
         Manager.AddEvent(t, LostSound);
         t += 0.2f;
       }
-      TimeSinceLostShip = this.GetEngine().Game.GameTime + 3f;
+      TimeSinceLostShip = Game.GameTime + 3f;
     }
 
     public void LostStructure()
     {
-      float t = this.GetEngine().Game.GameTime;
-      if (TimeSinceLostWing > this.GetEngine().Game.GameTime)
+      float t = Game.GameTime;
+      if (TimeSinceLostWing > Game.GameTime)
         t = TimeSinceLostWing;
 
-      if (TimeSinceLostShip > this.GetEngine().Game.GameTime)
+      if (TimeSinceLostShip > Game.GameTime)
         t = TimeSinceLostShip;
 
-      if (TimeSinceLostStructure > this.GetEngine().Game.GameTime)
+      if (TimeSinceLostStructure > Game.GameTime)
         t = TimeSinceLostStructure;
 
-      while (t < this.GetEngine().Game.GameTime + 3f)
+      while (t < Game.GameTime + 3f)
       {
         Manager.AddEvent(t, LostSound);
         t += 0.2f;
       }
-      TimeSinceLostShip = this.GetEngine().Game.GameTime + 3f;
+      TimeSinceLostShip = Game.GameTime + 3f;
     }
 
-    public void LostSound(object[] param)
+    public void LostSound(params object[] param)
     {
       if (!Manager.IsCutsceneMode)
       {
-        this.GetEngine().SoundManager.SetSound("beep-22", true);
+        SoundManager.SetSound("beep-22", true);
       }
     }
 
-    public Dictionary<string, ActorInfo> GetRegister(string key)
+    public Dictionary<string, int> GetRegister(string key)
     {
       switch (key.ToLower())
       {
-        //case "enemystructures":
-        //  return Manager.EnemyStructures;
-        //case "allyfighters":
-        //  return Manager.AllyFighters;
-        //case "allyships":
-        //  return Manager.AllyShips;
-        //case "allystructures":
-        //  return Manager.AllyStructures;
-        //case "enemyfighters":
-        //  return Manager.EnemyFighters;
-        //case "enemyships":
-        //  return Manager.EnemyShips;
-
         case "criticalallies":
           return Manager.CriticalAllies;
         case "criticalenemies":
@@ -345,22 +348,22 @@ namespace SWEndor.Scenarios
 
     public virtual void ProcessPlayerDying(params object[] param)
     {
-      ActorInfo ainfo = this.GetEngine().ActorFactory.Get((int)param[0]);
+      ActorInfo ainfo = ActorFactory.Get((int)param[0]);
       if (ainfo != null)
       {
-        this.GetEngine().PlayerInfo.TempActorID = ainfo.ID;
+        PlayerInfo.TempActorID = ainfo.ID;
 
-        if (this.GetEngine().PlayerInfo.Actor.TypeInfo is DeathCameraATI)
-          if (this.GetEngine().PlayerInfo.Actor.CreationState == CreationState.ACTIVE)
-            this.GetEngine().PlayerInfo.Actor.SetLocalPosition(ainfo.GetLocalPosition().x, ainfo.GetLocalPosition().y, ainfo.GetLocalPosition().z);
+        if (PlayerInfo.Actor.TypeInfo is DeathCameraATI)
+          if (PlayerInfo.Actor.CreationState == CreationState.ACTIVE)
+            PlayerInfo.Actor.SetLocalPosition(ainfo.GetLocalPosition().x, ainfo.GetLocalPosition().y, ainfo.GetLocalPosition().z);
       }
     }
 
     public virtual void ProcessPlayerKilled(params object[] param)
     {
       Manager.IsCutsceneMode = true;
-      Manager.AddEvent(this.GetEngine().Game.GameTime + 3f, FadeOut);
-      if (this.GetEngine().PlayerInfo.Lives == 0)
+      Manager.AddEvent(Game.GameTime + 3f, FadeOut);
+      if (PlayerInfo.Lives == 0)
         Manager.SetGameStateB("GameOver", true);
     }
 
@@ -374,20 +377,20 @@ namespace SWEndor.Scenarios
 
     public virtual void ProcessHit(params object[] param)
     {
-      ActorInfo av = this.GetEngine().ActorFactory.Get((int)param[0]);
-      ActorInfo aa = this.GetEngine().ActorFactory.Get((int)param[1]);
+      ActorInfo av = ActorFactory.Get((int)param[0]);
+      ActorInfo aa = ActorFactory.Get((int)param[1]);
 
-      if (this.GetEngine().PlayerInfo.Actor != null
+      if (PlayerInfo.Actor != null
         && av.Faction != null
-        && av.Faction.IsAlliedWith(this.GetEngine().PlayerInfo.Actor.Faction))
+        && av.Faction.IsAlliedWith(PlayerInfo.Actor.Faction))
       {
         List<int> attackerfamily = aa.GetAllParents();
         foreach (int i in attackerfamily)
         {
-          ActorInfo a = this.GetEngine().ActorFactory.Get(i);
-          if (this.GetEngine().PlayerInfo.Actor == a)
+          ActorInfo a = ActorFactory.Get(i);
+          if (PlayerInfo.Actor == a)
           {
-            this.GetEngine().Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", av.Name, this.GetEngine().PlayerInfo.Name)
+            Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", av.Name, PlayerInfo.Name)
                                                         , 5
                                                         , av.Faction.Color
                                                         , -1);
@@ -403,15 +406,15 @@ namespace SWEndor.Scenarios
 
     public virtual void GameWonSequence(object[] param = null)
     {
-      this.GetEngine().TrueVision.TVGraphicEffect.FadeIn(2.5f);
+      TrueVision.TVGraphicEffect.FadeIn(2.5f);
 
-      this.GetEngine().SoundManager.SetSoundStopAll();
+      SoundManager.SetSoundStopAll();
 
-      this.GetEngine().Screen2D.CurrentPage = new GameWon(this.GetEngine().Screen2D);
-      this.GetEngine().Screen2D.ShowPage = true;
-      this.GetEngine().Game.IsPaused = true;
-      this.GetEngine().SoundManager.SetMusic("finale_3_1");
-      this.GetEngine().SoundManager.SetMusicLoop("credits_3_1");
+      Screen2D.CurrentPage = new GameWon(Screen2D);
+      Screen2D.ShowPage = true;
+      Game.IsPaused = true;
+      SoundManager.SetMusic("finale_3_1");
+      SoundManager.SetMusicLoop("credits_3_1");
     }
   }
 }

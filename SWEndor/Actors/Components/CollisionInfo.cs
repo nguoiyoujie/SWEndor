@@ -3,7 +3,7 @@ using SWEndor.ActorTypes;
 
 namespace SWEndor.Actors.Components
 {
-  public struct CollisionInfo
+  public class CollisionInfo
   {
     private readonly ActorInfo Actor;
 
@@ -63,25 +63,23 @@ namespace SWEndor.Actors.Components
       IsAvoidingCollision = false;
     }
 
-
     internal void CheckCollision()
     {
       IsTestingCollision = false;
       if (!Actor.PrevPosition.Equals(new TV_3DVECTOR()) && !Actor.GetPosition().Equals(new TV_3DVECTOR()))
       {
         // only check player and projectiles
-        if (Actor.IsPlayer()
+        if (ActorInfo.IsPlayer(Actor.Engine, Actor.ID)
           || Actor.TypeInfo is ActorTypes.Group.Projectile
-          || (Actor.ActorState == ActorState.DYING 
-          && Actor.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER)))
+          || (Actor.ActorState.IsDying() && Actor.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER)))
         {
           if (IsInCollision)
           {
-            ActorInfo a = Actor.GetEngine().ActorFactory.Get(CollisionActorID);
-            if (Actor.IsPlayer() 
-              && Actor.GetEngine().PlayerInfo.PlayerAIEnabled)
+            ActorInfo a = Actor.Engine.ActorFactory.Get(CollisionActorID);
+            if (ActorInfo.IsPlayer(Actor.Engine, Actor.ID)
+                  && Actor.Engine.PlayerInfo.PlayerAIEnabled)
             {
-              Actor.GetEngine().Screen2D.MessageSecondaryText(string.Format("DEV WARNING: PLAYER AI COLLIDED: {0}", a.ToString()), 1.5f, new TV_COLOR(1, 0.2f, 0.2f, 1), 99999);
+              Actor.Engine.Screen2D.MessageSecondaryText(string.Format("DEV WARNING: PLAYER AI COLLIDED: {0}", a.ToString()), 1.5f, new TV_COLOR(1, 0.2f, 0.2f, 1), 99999);
               IsInCollision = false;
               IsTestingCollision = true;
               return;
@@ -105,7 +103,7 @@ namespace SWEndor.Actors.Components
 
       // check landscape only
       if (Actor.TypeInfo is ActorTypes.Group.Projectile || Actor.TypeInfo.TargetType != TargetType.NULL)
-        if (Actor.GetEngine().LandInfo.Land.AdvancedCollide(vmin, vmax).IsCollision())
+        if (Actor.Engine.LandInfo.Land.AdvancedCollide(vmin, vmax).IsCollision())
         {
           Actor.ActorState = ActorState.DEAD;
         }
@@ -168,7 +166,7 @@ namespace SWEndor.Actors.Components
                 proImpact += _Impact;
                 proNormal += _Normal;
                 count++;
-                float newdist = Actor.GetEngine().TrueVision.TVMathLibrary.GetDistanceVec3D(Actor.Position, _Impact);
+                float newdist = Actor.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(Actor.Position, _Impact);
                 if (dist < newdist)
                 {
                   dist = newdist;
@@ -208,12 +206,12 @@ namespace SWEndor.Actors.Components
 
           TV_COLLISIONRESULT tvcres = new TV_COLLISIONRESULT();
 
-          if (Actor.GetEngine().TrueVision.TVScene.AdvancedCollision(start, end, ref tvcres))
+          if (Actor.Engine.TrueVision.TVScene.AdvancedCollision(start, end, ref tvcres))
           {
-            if (Actor.IsPlayer())
+            if (ActorInfo.IsPlayer(Actor.Engine, Actor.ID))
             {
-              Actor.GetEngine().TrueVision.TVScreen2DImmediate.Action_Begin2D();
-              Actor.GetEngine().TrueVision.TVScreen2DImmediate.Draw_Line3D(start.x
+              Actor.Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
+              Actor.Engine.TrueVision.TVScreen2DImmediate.Draw_Line3D(start.x
                                                 , start.y
                                                 , start.z
                                                 , end.x
@@ -221,7 +219,7 @@ namespace SWEndor.Actors.Components
                                                 , end.z
                                                 , new TV_COLOR(0.5f, 1, 0.2f, 1).GetIntColor()
                                                 );
-              Actor.GetEngine().TrueVision.TVScreen2DImmediate.Action_End2D();
+              Actor.Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
             }
 
             if (tvcres.eCollidedObjectType != CONST_TV_OBJECT_TYPE.TV_OBJECT_MESH && tvcres.eCollidedObjectType != CONST_TV_OBJECT_TYPE.TV_OBJECT_LANDSCAPE)
@@ -238,17 +236,17 @@ namespace SWEndor.Actors.Components
                 return true;
               }
 
-              TVMesh tvm = Actor.GetEngine().TrueVision.TVGlobals.GetMeshFromID(tvcres.iMeshID);
+              TVMesh tvm = Actor.Engine.TrueVision.TVGlobals.GetMeshFromID(tvcres.iMeshID);
               if (tvm != null) // && tvm.IsVisible())
               {
                 if (int.TryParse(tvm.GetTag(), out actorID))
                 {
-                  ActorInfo actor = Actor.GetEngine().ActorFactory.Get(actorID);
+                  ActorInfo actor = Actor.Engine.ActorFactory.Get(actorID);
                   return (actor != null
                        && actorID != Actor.ID
                        && !Actor.HasRelative(actorID)
                        && actor.TypeInfo.CollisionEnabled
-                       && !actor.IsAggregateMode()
+                       && !ActorInfo.IsAggregateMode(Actor.Engine, actorID)
                        && actor.CreationState == CreationState.ACTIVE);
                 }
               }
@@ -261,7 +259,7 @@ namespace SWEndor.Actors.Components
                 return true;
               }
 
-              TVMesh tvm = Actor.GetEngine().TrueVision.TVGlobals.GetMeshFromID(tvcres.iMeshID);
+              TVMesh tvm = Actor.Engine.TrueVision.TVGlobals.GetMeshFromID(tvcres.iMeshID);
               if (tvm != null) // && tvm.IsVisible())
               {
                 if (int.TryParse(tvm.GetTag(), out actorID))
@@ -274,10 +272,10 @@ namespace SWEndor.Actors.Components
           }
           else
           {
-            if (Actor.IsPlayer())
+            if (ActorInfo.IsPlayer(Actor.Engine, Actor.ID))
             {
-              Actor.GetEngine().TrueVision.TVScreen2DImmediate.Action_Begin2D();
-              Actor.GetEngine().TrueVision.TVScreen2DImmediate.Draw_Line3D(start.x
+              Actor.Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
+              Actor.Engine.TrueVision.TVScreen2DImmediate.Draw_Line3D(start.x
                                                 , start.y
                                                 , start.z
                                                 , end.x
@@ -285,7 +283,7 @@ namespace SWEndor.Actors.Components
                                                 , end.z
                                                 , new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor()
                                                 );
-              Actor.GetEngine().TrueVision.TVScreen2DImmediate.Action_End2D();
+              Actor.Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
             }
           }
           return false;

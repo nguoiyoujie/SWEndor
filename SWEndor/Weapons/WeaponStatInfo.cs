@@ -20,7 +20,6 @@ namespace SWEndor.Weapons
     public float WeaponCooldownRateRandom = 0;
 
     public int Burst = 1;
-    public int Ammo = -1;
     public int MaxAmmo = -1;
     public float AmmoReloadCooldown = 1;
     public float AmmoReloadRate = 1;
@@ -60,7 +59,6 @@ namespace SWEndor.Weapons
       WeaponCooldownRateRandom = file.GetFloatValue(sectionname, "WeaponCooldownRateRandom", WeaponCooldownRateRandom);
 
       Burst = file.GetIntValue(sectionname, "Burst", Burst);
-      Ammo = file.GetIntValue(sectionname, "Ammo", Ammo);
       MaxAmmo = file.GetIntValue(sectionname, "MaxAmmo", MaxAmmo);
       AmmoReloadCooldown = file.GetFloatValue(sectionname, "AmmoReloadCooldown", AmmoReloadCooldown);
       AmmoReloadRate = file.GetFloatValue(sectionname, "AmmoReloadRate", AmmoReloadRate);

@@ -4,19 +4,31 @@ using System.Collections.Generic;
 namespace SWEndor
 {
   public delegate void GameEvent(params object[] parameters);
-
+    
   public class GameEventQueue
   {
-    private static ThreadSafeDictionary<float, GameEvent> list = new ThreadSafeDictionary<float, GameEvent>();
+    private static ThreadSafeDictionary<float, GameEventObject> list = new ThreadSafeDictionary<float, GameEventObject>();
 
-    public static void Add(float time, GameEvent method)
+    private struct GameEventObject
+    {
+      internal readonly GameEvent Method;
+      internal readonly object[] Parameters;
+
+      internal GameEventObject(GameEvent gameEvent,  params object[] param)
+      {
+        Method = gameEvent;
+        Parameters = param;
+      }
+    }
+
+    public static void Add(float time, GameEvent method, params object[] param)
     {
       // should replace this with more efficient checking?
       while (list.ContainsKey(time))
         time += 0.01f;
 
       if (method != null)
-        list.Add(time, method);
+        list.Add(time, new GameEventObject(method, param));
     }
 
     public static void Clear()
@@ -24,7 +36,7 @@ namespace SWEndor
       list.Clear();
     }
 
-    public static void Process()
+    public static void Process(Engine engine)
     {
       List<float> remove = new List<float>();
 
@@ -33,11 +45,11 @@ namespace SWEndor
       for (int i = 0; i < gekeys.Length; i++)
       {
         float time = gekeys[i];
-        GameEvent ev = list[time];
-        if (ev == null || time < Globals.Engine.Game.GameTime)
+        GameEventObject ev = list[time];
+        if (ev.Method == null || time < engine.Game.GameTime)
         {
           remove.Add(time);
-          ev?.Invoke();
+          ev.Method?.Invoke(ev.Parameters);
         }
       }
 

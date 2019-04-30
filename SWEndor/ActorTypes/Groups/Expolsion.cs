@@ -19,6 +19,8 @@ namespace SWEndor.ActorTypes.Groups
       CullDistance = 12500f;
 
       RadarSize = 1;
+      NoMove = true;
+      NoAI = true;
 
       IsExplosion = true;
     }

@@ -23,29 +23,13 @@ namespace SWEndor.ActorTypes.Instances
       ImpactCloseEnoughDistance = 60;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"projectiles\green_laser.x");
-      if (SourceMesh == null)
-      {
-        /*
-        CollisionRays.Add(new TV_3DVectorRay(new TV_3DVECTOR(0, 0, 35), new TV_3DVECTOR(30, 30, -200)));
-        CollisionRays.Add(new TV_3DVectorRay(new TV_3DVECTOR(0, 0, 35), new TV_3DVECTOR(-30, 30, -200)));
-        CollisionRays.Add(new TV_3DVectorRay(new TV_3DVECTOR(0, 0, 35), new TV_3DVECTOR(30, -30, -200)));
-        CollisionRays.Add(new TV_3DVectorRay(new TV_3DVECTOR(0, 0, 35), new TV_3DVECTOR(-30, -30, -200)));
-        */
-      }
     }
 
-    public override void ProcessNewState(ActorInfo ainfo)
+    public override void Initialize(ActorInfo ainfo)
     {
-      if (ainfo.ActorState == ActorState.DYING)
-      {
-        if (ainfo.CombatInfo.TimedLife > 0)
-        {
-          ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("Explosion"));
-          acinfo.Position = ainfo.GetPosition();
-          ActorInfo.Create(this.GetEngine().ActorFactory, acinfo);
-        }
-        ainfo.ActorState = ActorState.DEAD;
-      }
+      base.Initialize(ainfo);
+
+      ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
     }
   }
 }

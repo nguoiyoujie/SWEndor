@@ -1,6 +1,9 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
+using SWEndor.AI;
+using SWEndor.Player;
+using SWEndor.Sound;
 using SWEndor.UI.Menu.Pages;
 using System.Collections.Generic;
 using System.IO;
@@ -10,6 +13,19 @@ namespace SWEndor.Scenarios
   public class GameScenarioManager
   {
     public readonly Engine Engine;
+    public Game Game { get { return Engine.Game; } }
+    public TrueVision TrueVision { get { return Engine.TrueVision; } }
+    public ActorInfo.Factory ActorFactory { get { return Engine.ActorFactory; } }
+    public ActorTypeInfo.Factory ActorTypeFactory { get { return Engine.ActorTypeFactory; } }
+    public ActionManager ActionManager { get { return Engine.ActionManager; } }
+    public SoundManager SoundManager { get { return Engine.SoundManager; } }
+    public LandInfo LandInfo { get { return Engine.LandInfo; } }
+    public AtmosphereInfo AtmosphereInfo { get { return Engine.AtmosphereInfo; } }
+    public PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }
+    public PlayerCameraInfo PlayerCameraInfo { get { return Engine.PlayerCameraInfo; } }
+    public Screen2D Screen2D { get { return Engine.Screen2D; } }
+    public Scripting.Expressions.Context ScriptContext { get { return Engine.ScriptContext; } }
+
     internal GameScenarioManager(Engine engine)
     {
       Engine = engine;
@@ -33,8 +49,8 @@ namespace SWEndor.Scenarios
 
     //private Dictionary<float, GameEvent> GameEvents = new Dictionary<float, GameEvent>();
     public GameScenarioBase Scenario = null;
-    public ActorInfo SceneCamera = null;
-    public ActorInfo CameraTargetActor = null;
+    public int SceneCameraID = -1;
+    public int CameraTargetActorID = -1;
     public TV_3DVECTOR CameraTargetPoint = new TV_3DVECTOR();
 
     public TV_3DVECTOR MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
@@ -43,14 +59,8 @@ namespace SWEndor.Scenarios
     public TV_3DVECTOR MinAIBounds = new TV_3DVECTOR(-20000, -1500, -20000);
 
     // Actor Registers
-    //public Dictionary<string, ActorInfo> AllyFighters = new Dictionary<string, ActorInfo>();
-    //public Dictionary<string, ActorInfo> AllyShips = new Dictionary<string, ActorInfo>();
-    //public Dictionary<string, ActorInfo> AllyStructures = new Dictionary<string, ActorInfo>();
-    //public Dictionary<string, ActorInfo> EnemyFighters = new Dictionary<string, ActorInfo>();
-    //public Dictionary<string, ActorInfo> EnemyShips = new Dictionary<string, ActorInfo>();
-    public Dictionary<string, ActorInfo> EnemyStructures = new Dictionary<string, ActorInfo>();
-    public Dictionary<string, ActorInfo> CriticalAllies = new Dictionary<string, ActorInfo>();
-    public Dictionary<string, ActorInfo> CriticalEnemies = new Dictionary<string, ActorInfo>();
+    public Dictionary<string, int> CriticalAllies = new Dictionary<string, int>();
+    public Dictionary<string, int> CriticalEnemies = new Dictionary<string, int>();
 
     public string Line1Text = "";
     public string Line2Text = "";
@@ -75,24 +85,22 @@ namespace SWEndor.Scenarios
     public void LoadInitial()
     {
       LoadInvisibleCam();
-      Engine.PlayerInfo.ActorID = SceneCamera?.ID ?? -1;
-      Engine.PlayerInfo.IsMovementControlsEnabled = false;
+      PlayerInfo.ActorID = SceneCameraID;
+      PlayerInfo.IsMovementControlsEnabled = false;
     }
 
-    public int UpdateActorLists(Dictionary<string, ActorInfo> list)
+    public int UpdateActorLists(Dictionary<string, int> list)
     {
       int ret = 0;
       List<string> rm = new List<string>();
-      foreach (KeyValuePair<string, ActorInfo> kvp in list)
+      foreach (KeyValuePair<string, int> kvp in list)
       {
-        if (kvp.Value.CreationState == CreationState.DISPOSED)
+        ActorInfo actor = Engine.ActorFactory.Get(kvp.Value);
+        if (actor != null && actor.CreationState == CreationState.DISPOSED)
         {
           rm.Add(kvp.Key);
 
-          //if (Scenario != null && Scenario.ActiveActor == kvp.Value)
-          //  Scenario.ActiveActor = null;
-
-          if (kvp.Value != Engine.PlayerInfo.Actor)
+          if (ActorInfo.IsPlayer(Engine, actor.ID))
           {
             ret++;
           }
@@ -108,16 +116,15 @@ namespace SWEndor.Scenarios
 
     public void Update()
     {
-      if (SceneCamera != null) //&& SceneCamera.Mesh != null)
+      ActorInfo cam = Engine.ActorFactory.Get(SceneCameraID);
+      ActorInfo tgt = Engine.ActorFactory.Get(CameraTargetActorID);
+      if (cam != null)
       {
-        if (CameraTargetActor != null)
+        if (tgt != null)
         {
-          SceneCamera.LookAtPoint(CameraTargetActor.GetPosition(), true);
+          CameraTargetPoint = tgt.GetPosition();
         }
-        else
-        {
-          SceneCamera.LookAtPoint(CameraTargetPoint, true);
-        }
+        cam.LookAtPoint(CameraTargetPoint, true);
       }
 
       UpdateActorLists(CriticalAllies);
@@ -127,22 +134,19 @@ namespace SWEndor.Scenarios
         && Scenario.Launched)
         Scenario.GameTick();
 
-      GameEventQueue.Process();
+      GameEventQueue.Process(Engine);
     }
 
     public void LoadInvisibleCam()
     {
-      if (SceneCamera != null)
-      {
-        SceneCamera.Kill();
-      }
-
       ActorCreationInfo camaci = new ActorCreationInfo(Engine.ActorTypeFactory.Get("Invisible Camera"));
       camaci.CreationTime = Engine.Game.GameTime;
       camaci.InitialState = ActorState.NORMAL;
       camaci.Position = new TV_3DVECTOR(0, 0, 0);
       camaci.Rotation = new TV_3DVECTOR();
-      SceneCamera = ActorInfo.Create(Engine.ActorFactory, camaci);
+
+      ActorInfo.Kill(Engine, SceneCameraID);
+      SceneCameraID = ActorInfo.Create(Engine.ActorFactory, camaci).ID;
       CameraTargetPoint = new TV_3DVECTOR(0, 0, 100);
     }
 
@@ -151,15 +155,17 @@ namespace SWEndor.Scenarios
       if (Scenario != null)
         Scenario.Unload();
 
-      Engine.PlayerInfo.Score.Reset();
+      PlayerInfo.Score.Reset();
+
+      LoadInitial();
 
       //_instance = new GameScenarioManager();
       //_instance.LoadInitial();
     }
 
-    public void AddEvent(float time, GameEvent gevent)
+    public void AddEvent(float time, GameEvent gevent, params object[] param)
     {
-      GameEventQueue.Add(time, gevent);
+      GameEventQueue.Add(time, gevent, param);
     }
 
     public void ClearEvents()
@@ -173,6 +179,8 @@ namespace SWEndor.Scenarios
       GameStatesF.Clear();
       GameStatesB.Clear();
       GameStatesS.Clear();
+      CriticalAllies.Clear();
+      CriticalEnemies.Clear();
     }
 
     public bool IsGameStateFDefined(string key)

@@ -17,17 +17,17 @@ namespace SWEndor.UI.Widgets
       get
       {
         return (!Owner.ShowPage
-            && this.GetEngine().PlayerInfo.Actor != null
-            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DYING
-            && !(Owner.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
+            && PlayerInfo.Actor != null
+            && PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !(PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
             && Owner.ShowUI);
       }
     }
 
     public override void Draw()
     {
-      ActorInfo p = this.GetEngine().PlayerInfo.Actor;
+      ActorInfo p = PlayerInfo.Actor;
       if (p == null || p.CreationState != CreationState.ACTIVE)
         return;
 

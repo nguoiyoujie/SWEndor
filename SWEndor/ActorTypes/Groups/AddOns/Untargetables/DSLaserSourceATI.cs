@@ -29,13 +29,13 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
 
-      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", new DeathStarLaserWeapon() }
+      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", WeaponFactory.Get("DSTAR_LSR") }
                                                         };
-      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser" };
+      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "none" };
       ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
-      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:laser" };
+      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "none" };
 
-      this.GetEngine().ActionManager.QueueNext(ainfo.ID, new Lock());
+      ActionManager.QueueNext(ainfo.ID, new Lock());
     }
 
     public override void ProcessState(ActorInfo ainfo)
@@ -44,10 +44,10 @@ namespace SWEndor.ActorTypes.Instances
       
       if (ainfo.CurrentAction != null && ainfo.CurrentAction is AttackActor)
       {
-        ActorInfo target = this.GetEngine().ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
+        ActorInfo target = ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
         if (target != null && target.CreationState == CreationState.ACTIVE)
         {
-          FireWeapon(ainfo.ID, target.ID, "auto");
+          FireWeapon(ainfo.ID, target.ID, "laser");
         }
       }
     }

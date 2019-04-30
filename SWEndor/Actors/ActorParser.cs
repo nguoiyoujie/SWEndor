@@ -48,7 +48,7 @@ public class ActorParser
     string parents = "";
     foreach (int i in Actor.GetAllParents(1))
     {
-      ActorInfo p = Actor.GetEngine().ActorFactory.Get(i);
+      ActorInfo p = Engine.ActorFactory.Get(i);
       if (p != null)
         parents += (parents.Length == 0) ? p.ID.ToString() : ("," + p.ID);
     }
@@ -57,7 +57,7 @@ public class ActorParser
     string children = "";
     foreach (int i in Actor.GetAllChildren(1))
     {
-      ActorInfo c = Actor.GetEngine().ActorFactory.Get(i);
+      ActorInfo c = Engine.ActorFactory.Get(i);
       if (c != null)
         children += (children.Length == 0) ? c.ID.ToString() : ("," + c.ID);
     }

@@ -9,9 +9,10 @@ namespace SWEndor.AI.Actions
       CanInterrupt = false;
     }
 
-    public override void Process(ActorInfo owner)
+    public override void Process(Engine engine, int actorID)
     {
-      owner.MovementInfo.ResetTurn();
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
+      actor.MovementInfo.ResetTurn();
     }
   }
 }

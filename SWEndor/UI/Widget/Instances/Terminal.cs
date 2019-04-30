@@ -23,7 +23,7 @@ namespace SWEndor.UI.Widgets
       //int lines = perftext.Split('\n').Length;
 
       TVScreen2DImmediate.Action_Begin2D();
-      TVScreen2DImmediate.Draw_FilledBox(loc.x - 5, loc.y - 5, this.GetEngine().ScreenWidth - 5, this.GetEngine().ScreenHeight - 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
+      TVScreen2DImmediate.Draw_FilledBox(loc.x - 5, loc.y - 5, Engine.ScreenWidth - 5, Engine.ScreenHeight - 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
       TVScreen2DImmediate.Action_End2D();
 
       TVScreen2DText.Action_BeginText();
@@ -35,7 +35,7 @@ namespace SWEndor.UI.Widgets
         y += 40f / 3f;
       }
       TVScreen2DText.TextureFont_DrawText(TConsole.InputLine
-        , loc.x, this.GetEngine().ScreenHeight - loc.y - 40f / 3f, new TV_COLOR(1, 1, 1, 1).GetIntColor(), Font.Factory.Get("Text_08").ID);
+        , loc.x, Engine.ScreenHeight - loc.y - 40f / 3f, new TV_COLOR(1, 1, 1, 1).GetIntColor(), Font.Factory.Get("Text_08").ID);
       TVScreen2DText.Action_EndText();
     }
   }

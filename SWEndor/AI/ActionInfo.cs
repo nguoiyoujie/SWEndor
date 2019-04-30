@@ -29,7 +29,7 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    public virtual void Process(ActorInfo owner)
+    public virtual void Process(Engine engine, int ownerID)
     {
       Complete = true;
     }
@@ -75,8 +75,8 @@ namespace SWEndor.AI.Actions
 
         TV_3DVECTOR chgrot = Utilities.GetRotation(tgtdir) - owner.GetRotation();
 
-        Utilities.Modulus(ref chgrot.x, -180, 180);
-        Utilities.Modulus(ref chgrot.y, -180, 180);
+        chgrot.x = chgrot.x.Modulus(-180, 180);
+        chgrot.y = chgrot.y.Modulus(-180, 180);
 
         TV_3DVECTOR truechg = new TV_3DVECTOR(chgrot.x, chgrot.y, chgrot.z);
 
@@ -86,8 +86,8 @@ namespace SWEndor.AI.Actions
         else
           chgrot *= 10;
 
-        Utilities.Clamp(ref chgrot.x, -owner.TypeInfo.MaxTurnRate, owner.TypeInfo.MaxTurnRate);
-        Utilities.Clamp(ref chgrot.y, -owner.TypeInfo.MaxTurnRate, owner.TypeInfo.MaxTurnRate);
+        chgrot.x = chgrot.x.Clamp(-owner.TypeInfo.MaxTurnRate, owner.TypeInfo.MaxTurnRate);
+        chgrot.y = chgrot.y.Clamp(-owner.TypeInfo.MaxTurnRate, owner.TypeInfo.MaxTurnRate);
 
         // limit abrupt changes
         float limit = owner.TypeInfo.MaxTurnRate * owner.TypeInfo.MaxSecondOrderTurnRateFrac;
@@ -108,7 +108,7 @@ namespace SWEndor.AI.Actions
         owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, tgtdir);
         float delta = owner.GetEngine().TrueVision.TVMathLibrary.ACos(owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
 
-        if (owner.IsPlayer())
+        if (ActorInfo.IsPlayer(owner.GetEngine(), owner.ID))
           owner.GetEngine().Screen2D.MessageSecondaryText(string.Format("DELTA: {0:0.000}", delta), 1.5f, new TV_COLOR(0.5f, 0.5f, 1, 1), 0);
         return delta;
 
@@ -127,7 +127,7 @@ namespace SWEndor.AI.Actions
     {
       if (owner.ActorState != ActorState.FREE && owner.ActorState != ActorState.HYPERSPACE)
       {
-        Utilities.Clamp(ref target_Speed, owner.MovementInfo.MinSpeed, owner.MovementInfo.MaxSpeed);
+        target_Speed = target_Speed.Clamp(owner.MovementInfo.MinSpeed, owner.MovementInfo.MaxSpeed);
       }
 
       if (owner.MovementInfo.Speed > target_Speed)
@@ -148,7 +148,7 @@ namespace SWEndor.AI.Actions
 
     protected bool CheckImminentCollision(ActorInfo owner, float scandistance)
     {
-      //return false; // disable for now
+      return false; // disable for now
 
       if (!owner.TypeInfo.CanCheckCollisionAhead)
         return false;

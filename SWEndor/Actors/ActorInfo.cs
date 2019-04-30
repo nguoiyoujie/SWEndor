@@ -4,6 +4,8 @@ using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
 using SWEndor.Primitives;
+using SWEndor.Scenarios;
+using SWEndor.Sound;
 using SWEndor.Weapons;
 using System.Collections.Generic;
 
@@ -13,6 +15,20 @@ namespace SWEndor.Actors
   {
     public ActorTypeInfo TypeInfo { get; private set; }
     public SpawnerInfo SpawnerInfo { get; set; }
+
+    public readonly Factory ActorFactory;
+    public Engine Engine { get { return ActorFactory.Engine; } }
+
+    public Game Game { get { return Engine.Game; } }
+    public GameScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
+    public TrueVision TrueVision { get { return Engine.TrueVision; } }
+    public ActorTypeInfo.Factory ActorTypeFactory { get { return Engine.ActorTypeFactory; } }
+    public LandInfo LandInfo { get { return Engine.LandInfo; } }
+    public AtmosphereInfo AtmosphereInfo { get { return Engine.AtmosphereInfo; } }
+    public SoundManager SoundManager { get { return Engine.SoundManager; } }
+    public PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }
+    public PlayerCameraInfo PlayerCameraInfo { get { return Engine.PlayerCameraInfo; } }
+    public Screen2D Screen2D { get { return Engine.Screen2D; } }
 
     // Identifiers
     private string _name = "New Actor";
@@ -59,7 +75,10 @@ namespace SWEndor.Actors
     // Components
     public ScoreInfo Score;
     public CombatInfo CombatInfo;
-    public MovementInfo MovementInfo;
+
+    public IMovementInfo MovementInfo;
+    public IDyingMovementInfo DyingMovement;
+
     public CycleInfo CycleInfo;
     public WeaponSystemInfo WeaponSystemInfo;
     public RegenerationInfo RegenerationInfo;
@@ -70,9 +89,6 @@ namespace SWEndor.Actors
     // Checks
     public bool EnteredCombatZone = false;
     public float LastProcessStateUpdateTime = 0;
-
-    // Camera System
-
 
     // Delegate Events
     // plan to make them true delegates instead of string
@@ -89,18 +105,43 @@ namespace SWEndor.Actors
     public int HuntWeight = 1;
 
     // Utility
-    public ActorState ActorState { get; set; }
-    public ActorState prevActorState { get; private set; }
+    private ActorState m_ActorState;
+    public ActorState ActorState
+    {
+      get { return m_ActorState; }
+      set
+      {
+        if (m_ActorState != value)
+        {
+          ActorState prevState = m_ActorState;
+          m_ActorState = value;
+          TypeInfo.ProcessNewState(this);
+          OnStateChangeEvent();
+        }
+      }
+    }
 
-    public TV_3DVECTOR Scale { get; set; }
-    public TV_3DVECTOR prevScale { get; private set; }
+    private TV_3DVECTOR m_Scale;
+    public TV_3DVECTOR Scale
+    {
+      get { return m_Scale; }
+      set
+      {
+        if (!m_Scale.Equals(value))
+        {
+          Mesh?.SetScale(Scale.x, Scale.y, Scale.z);
+          FarMesh?.SetScale(Scale.x, Scale.y, Scale.z);
+          m_Scale = value;
+        }
+      }
+    }
 
     public TV_3DVECTOR Position { get; set; }
-    public Cached3DVector WorldPosition;
+    //public Cached3DVector WorldPosition;
     public TV_3DVECTOR PrevPosition { get; private set; }
 
     public TV_3DVECTOR Rotation { get; private set; }
-    public Cached3DVector WorldRotation;
+    //public Cached3DVector WorldRotation;
 
     // Render
     public TVMesh Mesh { get; private set; }
@@ -113,13 +154,12 @@ namespace SWEndor.Actors
 
     // Ownership
     public int ParentID { get; private set; } = -1;
-    public readonly Factory FactoryOwner;
 
     #region Creation Methods
 
     private ActorInfo(Factory owner, int id, ActorCreationInfo acinfo)
     {
-      FactoryOwner = owner;
+      ActorFactory = owner;
       ID = id;
 
       TypeInfo = acinfo.ActorTypeInfo;
@@ -128,8 +168,11 @@ namespace SWEndor.Actors
       // Components
       Score = new ScoreInfo(this);
       CombatInfo = new CombatInfo(this);
-      MovementInfo = new MovementInfo(this);
+
+      MovementInfo = MovementDecorator.Create(this, TypeInfo, acinfo);
+
       CycleInfo = new CycleInfo(this, null);
+
       WeaponSystemInfo = new WeaponSystemInfo(this);
       RegenerationInfo = new RegenerationInfo(this);
       ExplosionInfo = new ExplosionInfo(this);
@@ -141,19 +184,14 @@ namespace SWEndor.Actors
       CreationTime = acinfo.CreationTime;
 
       // Combat
-      CombatInfo.IsCombatObject = TypeInfo.IsCombatObject;
-      CombatInfo.OnTimedLife = TypeInfo.OnTimedLife;
-      CombatInfo.TimedLife = TypeInfo.TimedLife;
-      CombatInfo.Strength = (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : TypeInfo.MaxStrength;
+      CombatInfo.onNotify(CombatEventType.SET_STRENGTH, (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : TypeInfo.MaxStrength);
 
       Faction = acinfo.Faction;
       ActorState = acinfo.InitialState;
       Position = acinfo.Position;
       Rotation = acinfo.Rotation;
       Scale = acinfo.InitialScale;
-
-      MovementInfo.Speed = (acinfo.InitialSpeed > 0) ? acinfo.InitialSpeed : TypeInfo.MaxSpeed;
-      prevScale = acinfo.InitialScale;
+      MovementInfo.Speed = acinfo.InitialSpeed;
       PrevPosition = Position;
 
       HuntWeight = TypeInfo.HuntWeight;
@@ -174,20 +212,16 @@ namespace SWEndor.Actors
       CreationTime = acinfo.CreationTime;
 
       // Combat
-      CombatInfo.IsCombatObject = TypeInfo.IsCombatObject;
-      CombatInfo.OnTimedLife = TypeInfo.OnTimedLife;
-      CombatInfo.TimedLife = TypeInfo.TimedLife;
-      CombatInfo.Strength = (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : TypeInfo.MaxStrength;
+      CombatInfo.onNotify(CombatEventType.SET_STRENGTH, (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : TypeInfo.MaxStrength);
 
       Faction = acinfo.Faction;
       ActorState = acinfo.InitialState;
       Position = acinfo.Position;
       Rotation = acinfo.Rotation;
       Scale = acinfo.InitialScale;
-
-      MovementInfo.Speed = (acinfo.InitialSpeed > 0) ? acinfo.InitialSpeed : TypeInfo.MaxSpeed;
-      prevScale = acinfo.InitialScale;
       PrevPosition = Position;
+
+      MovementInfo = MovementDecorator.Create(this, TypeInfo, acinfo);
 
       HuntWeight = TypeInfo.HuntWeight;
       TypeInfo.Initialize(this);
@@ -219,10 +253,9 @@ namespace SWEndor.Actors
 
       CreationState = CreationState.GENERATED;
       Update();
-      OnCreatedEvent(new object[] { this });
+      OnCreatedEvent(Engine, new object[] { this });
 
       TypeInfo.GenerateAddOns(this);
-      //SpawnerInfo = new SpawnerInfo(this);
     }
 
     public static ActorInfo Create(Factory factory, ActorCreationInfo acinfo)
@@ -231,151 +264,18 @@ namespace SWEndor.Actors
     }
     #endregion
 
-    public void Process()
-    {
-      using (new PerfElement("actor_process"))
-      {
-        if (TypeInfo.NoProcess)
-          return;
-
-        if (ActorState != ActorState.DEAD)
-          Update();
-
-        CycleInfo.Process();
-
-        if (Mesh != null)
-        {
-          CheckState();
-          if (ActorState != ActorState.DEAD)
-          {
-            if (TypeInfo.CollisionEnabled || TypeInfo is ActorTypes.Group.Projectile)
-              CollisionInfo.CheckCollision();
-            MovementInfo.Move();
-          }
-        }
-      }
-      OnTickEvent(new object[] { this, ActorState });
-    }
-
-    public void ProcessAI()
-    {
-      if (TypeInfo.NoProcess
-        || TypeInfo.NoAI
-        || CreationState != CreationState.ACTIVE
-        || ActorState == ActorState.DYING
-        || ActorState == ActorState.DEAD
-        || (IsPlayer() && !this.GetEngine().PlayerInfo.PlayerAIEnabled)
-        )
-        return;
-
-      this.GetEngine().ActionManager.Run(ID, CurrentAction);
-    }
-
-    public void ProcessCollision()
-    {
-      CollisionInfo.TestCollision();
-    }
-
-    private void CheckState()
-    {
-      CombatInfo.Process();
-
-      if (prevActorState == ActorState)
-      {
-        TypeInfo.ProcessState(this);
-      }
-      else
-      {
-        TypeInfo.ProcessNewState(this);
-        OnStateChangeEvent(new object[] { this, prevActorState });
-        prevActorState = ActorState;
-      }
-
-      if (ActorState == ActorState.DEAD)
-        Kill();
-    }
-
-    private void Update()
-    {
-      PrevPosition = Position;
-
-      if (Mesh == null)
-        return;
-
-      TV_3DVECTOR pos = GetPosition();
-      TV_3DVECTOR rot = GetRotation();
-
-      Mesh.SetPosition(pos.x, pos.y, pos.z);
-      Mesh.SetRotation(rot.x, rot.y, rot.z);
-      FarMesh.SetPosition(pos.x, pos.y, pos.z);
-      FarMesh.SetRotation(rot.x, rot.y, rot.z);
-
-      Mesh.SetCollisionEnable(!IsAggregateMode() && TypeInfo.CollisionEnabled);
-      FarMesh.SetCollisionEnable(false);
-
-      if (Scale.x != prevScale.x || Scale.y != prevScale.y || Scale.z != prevScale.z)
-      {
-        prevScale = new TV_3DVECTOR(Scale.x, Scale.y, Scale.z);
-        Mesh.SetScale(Scale.x, Scale.y, Scale.z);
-        FarMesh.SetScale(Scale.x, Scale.y, Scale.z);
-      }
-
-      if (CreationState == CreationState.GENERATED)
-        CreationState = CreationState.ACTIVE;
-
-      if (ParticleSystem != null && !IsFarMode())
-        ParticleSystem.Update();
-    }
-
-    public void Render()
-    {
-      if (TypeInfo.NoRender || CreationState != CreationState.ACTIVE)
-      {
-        return;
-      }
-
-      if (!IsAggregateMode())
-      {
-        if (!IsPlayer() || this.GetEngine().PlayerCameraInfo.CameraMode != CameraMode.FREEROTATION)
-        {
-          if (!IsFarMode())
-          {
-            if (Mesh != null && Mesh.IsVisible())
-              using (new PerfElement("mesh_render"))
-                Mesh.Render();
-          }
-          else
-          {
-            if (FarMesh != null && FarMesh.IsVisible())
-              using (new PerfElement("mesh_render_far"))
-                FarMesh.Render();
-          }
-
-          if (ParticleSystem != null && !IsFarMode())
-            using (new PerfElement("particlesys_render"))
-              ParticleSystem.Render();
-        }
-      }
-    }
-
-    public void FireWeapon(int targetActorID, string weapon)
-    {
-      if (ActorState != ActorState.DYING && ActorState != ActorState.DEAD)
-        TypeInfo.FireWeapon(ID, targetActorID, weapon);
-    }
-
     #region Position / Rotation
     public TV_3DVECTOR GetPosition()
     {
-      //if (WorldPosition.Time >= this.GetEngine().Game.GameTime)
+      //if (WorldPosition.Time >= Game.GameTime)
       //  return WorldPosition.Value;
 
       TV_3DVECTOR ret = Position;
-      ActorInfo a = AttachToParent ? this.GetEngine().ActorFactory.Get(ParentID) : null;
+      ActorInfo a = AttachToParent ? ActorFactory.Get(ParentID) : null;
       if (a != null)
         ret = a.GetRelativePositionXYZ(ret.x, ret.y, ret.z);
-      WorldPosition.Value = ret;
-      WorldPosition.Time = this.GetEngine().Game.GameTime;
+      //WorldPosition.Value = ret;
+      //WorldPosition.Time = Game.GameTime;
       return ret;
     }
 
@@ -401,7 +301,7 @@ namespace SWEndor.Actors
 
       TV_3DVECTOR ret = new TV_3DVECTOR();
 
-      this.GetEngine().TrueVision.TVMathLibrary.TVVec3Rotate(ref ret, new TV_3DVECTOR(right, up, front), rot.y, rot.x, rot.z);
+      TrueVision.TVMathLibrary.TVVec3Rotate(ref ret, new TV_3DVECTOR(right, up, front), rot.y, rot.x, rot.z);
       ret += pos;
       return ret;
     }
@@ -418,20 +318,20 @@ namespace SWEndor.Actors
 
       TV_3DVECTOR ret = new TV_3DVECTOR();
 
-      this.GetEngine().TrueVision.TVMathLibrary.TVVec3Rotate(ref ret, new TV_3DVECTOR(x, y, z), rot.y, rot.x, rot.z);
+      TrueVision.TVMathLibrary.TVVec3Rotate(ref ret, new TV_3DVECTOR(x, y, z), rot.y, rot.x, rot.z);
       ret += pos;
       return ret;
     }
 
     public TV_3DVECTOR GetRotation()
     {
-      //if (WorldRotation.Time >= this.GetEngine().Game.GameTime)
+      //if (WorldRotation.Time >= Game.GameTime)
       //  return WorldRotation.Value;
 
-      ActorInfo a = AttachToParent ? this.GetEngine().ActorFactory.Get(ParentID) : null;
+      ActorInfo a = AttachToParent ? ActorFactory.Get(ParentID) : null;
       if (a != null && a.Mesh != null)
       {
-        TVMathLibrary mathl = this.GetEngine().TrueVision.TVMathLibrary;
+        TVMathLibrary mathl = TrueVision.TVMathLibrary;
         //TV_3DVECTOR aret = a.GetRotation();
 
         TV_3DMATRIX pmat = new TV_3DMATRIX();
@@ -459,21 +359,21 @@ namespace SWEndor.Actors
         mathl.TVVec3TransformCoord(ref rdir, dir, pyxzmat);
         TV_3DVECTOR rot = Utilities.GetRotation(rdir);
 
-        WorldRotation.Value = rot;
-        WorldRotation.Time = this.GetEngine().Game.GameTime;
+        //WorldRotation.Value = rot;
+        //WorldRotation.Time = Game.GameTime;
         return rot;
       }
       else
       {
-        WorldRotation.Value = Rotation;
-        WorldRotation.Time = this.GetEngine().Game.GameTime;
+        //WorldRotation.Value = Rotation;
+        //WorldRotation.Time = Game.GameTime;
         return Rotation;
       }
     }
 
     public void SetRotation(float x, float y, float z)
     {
-      ActorInfo a = AttachToParent ? this.GetEngine().ActorFactory.Get(ParentID) : null;
+      ActorInfo a = AttachToParent ? ActorFactory.Get(ParentID) : null;
       if (a != null)
       {
         //TV_3DVECTOR dir = new TV_3DVECTOR(x, y, z);
@@ -481,10 +381,10 @@ namespace SWEndor.Actors
         /*
         TV_3DVECTOR aret = a.GetRotation();
         TV_3DQUATERNION pmat = new TV_3DQUATERNION();
-        this.GetEngine().TrueVision.TVMathLibrary.TVQuaternionIdentity(ref pmat);
-        this.GetEngine().TrueVision.TVMathLibrary.TVQuaternionRotationYawPitchRoll(ref pmat, aret.y, aret.x, aret.z);
-        this.GetEngine().TrueVision.TVMathLibrary.TVQuaternionRotationYawPitchRoll(ref pmat, -Rotation.y, -Rotation.x, -Rotation.z);
-        this.GetEngine().TrueVision.TVMathLibrary.TVQuaternionNormalize(ref pmat, pmat);
+        TrueVision.TVMathLibrary.TVQuaternionIdentity(ref pmat);
+        TrueVision.TVMathLibrary.TVQuaternionRotationYawPitchRoll(ref pmat, aret.y, aret.x, aret.z);
+        TrueVision.TVMathLibrary.TVQuaternionRotationYawPitchRoll(ref pmat, -Rotation.y, -Rotation.x, -Rotation.z);
+        TrueVision.TVMathLibrary.TVQuaternionNormalize(ref pmat, pmat);
         Rotation = new TV_3DVECTOR(pmat.x, pmat.y, pmat.z);
         */
         /*
@@ -493,16 +393,16 @@ namespace SWEndor.Actors
         TV_3DMATRIX pinmat = new TV_3DMATRIX();
         float pindet = 0;
         TV_3DMATRIX mat = new TV_3DMATRIX();
-        this.GetEngine().TrueVision.TVMathLibrary.TVMatrixRotationYawPitchRoll(ref pmat, aret.y, aret.x, aret.z);
-        this.GetEngine().TrueVision.TVMathLibrary.TVMatrixInverse(ref pinmat, ref pindet, pmat);
-        this.GetEngine().TrueVision.TVMathLibrary.TVMatrixRotationYawPitchRoll(ref mat, y, x, z);
+        TrueVision.TVMathLibrary.TVMatrixRotationYawPitchRoll(ref pmat, aret.y, aret.x, aret.z);
+        TrueVision.TVMathLibrary.TVMatrixInverse(ref pinmat, ref pindet, pmat);
+        TrueVision.TVMathLibrary.TVMatrixRotationYawPitchRoll(ref mat, y, x, z);
         TV_3DMATRIX lmat = mat * pinmat;
 
         TV_3DQUATERNION quad = new TV_3DQUATERNION();
-        this.GetEngine().TrueVision.TVMathLibrary.TVConvertMatrixToQuaternion(ref quad, lmat);
-        //this.GetEngine().TrueVision.TVMathLibrary.TVEulerAnglesFromMatrix(ref aret, lmat);
-        //this.GetEngine().TrueVision.TVMathLibrary.TVVec3Rotate(ref aret, new TV_3DVECTOR(), aret.x, aret.y, aret.z);
-        this.GetEngine().TrueVision.TVMathLibrary.TVQuaternionNormalize(ref quad, quad);
+        TrueVision.TVMathLibrary.TVConvertMatrixToQuaternion(ref quad, lmat);
+        //TrueVision.TVMathLibrary.TVEulerAnglesFromMatrix(ref aret, lmat);
+        //TrueVision.TVMathLibrary.TVVec3Rotate(ref aret, new TV_3DVECTOR(), aret.x, aret.y, aret.z);
+        TrueVision.TVMathLibrary.TVQuaternionNormalize(ref quad, quad);
         Rotation = new TV_3DVECTOR(quad.x, quad.y, quad.z);
         */
         //Rotation = aret;
@@ -526,19 +426,19 @@ namespace SWEndor.Actors
     public TV_3DVECTOR GetDirection()
     {
       TV_3DVECTOR ret = Utilities.GetDirection(Rotation);
-      ActorInfo a = AttachToParent ? this.GetEngine().ActorFactory.Get(ParentID) : null;
+      ActorInfo a = AttachToParent ? ActorFactory.Get(ParentID) : null;
       if (a != null)
         ret += a.GetDirection();
 
       TV_3DVECTOR dir = new TV_3DVECTOR();
-      this.GetEngine().TrueVision.TVMathLibrary.TVVec3Normalize(ref dir, ret);
+      TrueVision.TVMathLibrary.TVVec3Normalize(ref dir, ret);
       return dir;
     }
 
     public void SetDirection(float x, float y, float z)
     {
       TV_3DVECTOR dir = new TV_3DVECTOR(x, y, z);
-      ActorInfo a = AttachToParent ? this.GetEngine().ActorFactory.Get(ParentID) : null;
+      ActorInfo a = AttachToParent ? ActorFactory.Get(ParentID) : null;
       if (a != null)
         dir -= a.GetDirection();
 
@@ -550,7 +450,7 @@ namespace SWEndor.Actors
       TV_3DVECTOR ret = Utilities.GetDirection(Rotation);
 
       TV_3DVECTOR dir = new TV_3DVECTOR();
-      this.GetEngine().TrueVision.TVMathLibrary.TVVec3Normalize(ref dir, ret);
+      TrueVision.TVMathLibrary.TVVec3Normalize(ref dir, ret);
       return dir;
     }
 
@@ -596,7 +496,7 @@ namespace SWEndor.Actors
     public float GetTrueSpeed()
     {
       float ret = MovementInfo.Speed;
-      ActorInfo a = AttachToParent ? this.GetEngine().ActorFactory.Get(ParentID) : null;
+      ActorInfo a = AttachToParent ? ActorFactory.Get(ParentID) : null;
       if (a != null)
         ret += a.GetTrueSpeed();
 
@@ -632,7 +532,7 @@ namespace SWEndor.Actors
       if (ParentID < 0)
         return false;
 
-      ret |= (ParentID == actorID) || (this.GetEngine().ActorFactory.Get(ParentID)?.HasParent(actorID, searchlevel - 1) ?? false);
+      ret |= (ParentID == actorID) || (ActorFactory.Get(ParentID)?.HasParent(actorID, searchlevel - 1) ?? false);
 
       return ret;
     }
@@ -642,7 +542,7 @@ namespace SWEndor.Actors
       if (ParentID < 0 || searchlevel <= 1)
         return ID;
       else
-        return this.GetEngine().ActorFactory.Get(ParentID)?.GetTopParent(searchlevel - 1) ?? ID;
+        return ActorFactory.Get(ParentID)?.GetTopParent(searchlevel - 1) ?? ID;
     }
 
     public List<int> GetAllParents(int searchlevel = 99)
@@ -656,7 +556,7 @@ namespace SWEndor.Actors
         if (ParentID >= 0 && !ret.Contains(ParentID))
         {
           ret.Add(ParentID);
-          ret.AddRange(this.GetEngine().ActorFactory.Get(ParentID)?.GetAllParents(searchlevel - 1));
+          ret.AddRange(ActorFactory.Get(ParentID)?.GetAllParents(searchlevel - 1));
         }
       }
       else
@@ -674,9 +574,9 @@ namespace SWEndor.Actors
 
       List<int> ret = new List<int>();
 
-      foreach (int actorID in this.GetEngine().ActorFactory.GetHoldingList())
+      foreach (int actorID in ActorFactory.GetHoldingList())
       {
-        ActorInfo p = this.GetEngine().ActorFactory.Get(actorID);
+        ActorInfo p = ActorFactory.Get(actorID);
         if (p != null && p.HasParent(ID, searchlevel))
           ret.Add(p.ID);
       }
@@ -691,7 +591,7 @@ namespace SWEndor.Actors
       if (alreadysearched == null)
         alreadysearched = new List<int>();
 
-      ActorInfo actor = this.GetEngine().ActorFactory.Get(actorID);
+      ActorInfo actor = ActorFactory.Get(actorID);
       return (actor != null && actor.GetTopParent() == GetTopParent());
     }
 
@@ -702,9 +602,9 @@ namespace SWEndor.Actors
 
       List<int> ret = new List<int>();
 
-      foreach (int actorID in this.GetEngine().ActorFactory.GetHoldingList())
+      foreach (int actorID in ActorFactory.GetHoldingList())
       {
-        ActorInfo p = this.GetEngine().ActorFactory.Get(actorID);
+        ActorInfo p = ActorFactory.Get(actorID);
         if (p != null && p.GetTopParent() == GetTopParent())
           ret.Add(p.ID);
       }
@@ -714,11 +614,11 @@ namespace SWEndor.Actors
     #endregion
 
     #region Event Methods
-    public void OnTickEvent(object[] param) { TickEvents?.Invoke(ID); }
+    public void OnTickEvent(params object[] param) { TickEvents?.Invoke(ID); }
     public void OnHitEvent(int victimID) { HitEvents?.Invoke(ID, victimID); }
-    public void OnStateChangeEvent(object[] param) { ActorStateChangeEvents?.Invoke(ID); }
-    public void OnCreatedEvent(object[] param) { CreatedEvents?.Invoke(ID); }
-    public void OnDestroyedEvent(object[] param) { DestroyedEvents?.Invoke(ID); }
+    public void OnStateChangeEvent(params object[] param) { ActorStateChangeEvents?.Invoke(ID, ActorState); }
+    public void OnCreatedEvent(params object[] param) { CreatedEvents?.Invoke(ID); }
+    public void OnDestroyedEvent(params object[] param) { DestroyedEvents?.Invoke(ID); }
 
     #endregion
 
@@ -736,167 +636,125 @@ namespace SWEndor.Actors
     public bool IsNearlyOutOfBounds(float dx = 1000, float dy = 250, float dz = 1000)
     {
       TV_3DVECTOR pos = GetPosition();
-      return (pos.x < this.GetEngine().GameScenarioManager.MinBounds.x + dx)
-          || (pos.x > this.GetEngine().GameScenarioManager.MaxBounds.x - dx)
-          || (pos.y < this.GetEngine().GameScenarioManager.MinBounds.y + dy)
-          || (pos.y > this.GetEngine().GameScenarioManager.MaxBounds.y - dy)
-          || (pos.z < this.GetEngine().GameScenarioManager.MinBounds.z + dz)
-          || (pos.z > this.GetEngine().GameScenarioManager.MaxBounds.z - dz);
+      return (pos.x < GameScenarioManager.MinBounds.x + dx)
+          || (pos.x > GameScenarioManager.MaxBounds.x - dx)
+          || (pos.y < GameScenarioManager.MinBounds.y + dy)
+          || (pos.y > GameScenarioManager.MaxBounds.y - dy)
+          || (pos.z < GameScenarioManager.MinBounds.z + dz)
+          || (pos.z > GameScenarioManager.MaxBounds.z - dz);
     }
 
-    public float GetWeaponRange()
+    public static bool IsAggregateMode(Engine engine, int id)
     {
-      float ret = 0;
-      foreach (WeaponInfo w in WeaponSystemInfo.Weapons.Values)
-      {
-        if (ret < w.Range)
-          ret = w.Range;
-      }
-      return ret;
+      ActorInfo cam = engine.ActorFactory.Get(engine.GameScenarioManager.SceneCameraID);
+      ActorInfo actor = engine.ActorFactory.Get(id);
+      ActorInfo player = (engine.PlayerInfo.Actor != null) ? engine.PlayerInfo.Actor : cam;
+      float distcheck = actor.TypeInfo.CullDistance * engine.Game.PerfCullModifier;
+
+      return (!IsPlayer(engine, id) && actor.TypeInfo.EnableDistanceCull && ActorDistanceInfo.GetRoughDistance(id, player.ID) > distcheck);
     }
 
-    public bool SelectWeapon(int targetActorID, float delta_angle, float delta_distance, out WeaponInfo weapon, out int burst)
+    public static bool IsFarMode(Engine engine, int id)
     {
-      weapon = null;
-      burst = 0;
-      WeaponInfo weap = null;
-      foreach (string ws in WeaponSystemInfo.AIWeapons)
-      {
-        TypeInfo.InterpretWeapon(ID, ws, out weap, out burst);
+      ActorInfo cam = engine.ActorFactory.Get(engine.GameScenarioManager.SceneCameraID);
+      ActorInfo actor = engine.ActorFactory.Get(id);
+      ActorInfo player = (engine.PlayerInfo.Actor != null) ? engine.PlayerInfo.Actor : cam;
+      float distcheck = actor.TypeInfo.CullDistance * 0.25f * engine.Game.PerfCullModifier;
 
-        if (weap != null)
-        {
-          if ((delta_angle < weap.AngularRange
-            && delta_angle > -weap.AngularRange)
-            && (delta_distance < weap.Range
-            && delta_distance > -weap.Range)
-            && weap.CanTarget(ID, targetActorID)
-            && (weap.MaxAmmo == -1 || weap.Ammo > 0))
-          {
-            weapon = weap;
-            return true;
-          }
-        }
-      }
-      return false;
+      return (!IsPlayer(engine, id) && actor.TypeInfo.EnableDistanceCull && ActorDistanceInfo.GetRoughDistance(id, player.ID) > distcheck);
     }
 
-    public bool IsAggregateMode()
+    public static bool IsPlayer(Engine engine, int id)
     {
-      ActorInfo a = (this.GetEngine().PlayerInfo.Actor != null) ? this.GetEngine().PlayerInfo.Actor : this.GetEngine().GameScenarioManager.SceneCamera;
-      float distcheck = TypeInfo.CullDistance * this.GetEngine().Game.PerfCullModifier;
-
-      return (!IsPlayer() && TypeInfo.EnableDistanceCull && ActorDistanceInfo.GetRoughDistance(ID, a.ID) > distcheck);
+      return engine.PlayerInfo.Actor?.ID == id;
     }
 
-    public bool IsFarMode()
+    public static bool IsScenePlayer(Engine engine, int id)
     {
-      ActorInfo a = (this.GetEngine().PlayerInfo.Actor != null) ? this.GetEngine().PlayerInfo.Actor : this.GetEngine().GameScenarioManager.SceneCamera;
-      float distcheck = TypeInfo.CullDistance * 0.25f * this.GetEngine().Game.PerfCullModifier;
-
-      return (!IsPlayer() && TypeInfo.EnableDistanceCull && ActorDistanceInfo.GetRoughDistance(ID, a.ID) > distcheck);
+      return IsPlayer(engine, id) || engine.PlayerInfo.TempActor?.ID == id;
     }
 
-    public bool IsPlayer()
-    {
-      return this == this.GetEngine().PlayerInfo.Actor;
-    }
+    public float StrengthFrac { get { return (CombatInfo.Strength / CombatInfo.MaxStrength).Clamp(0, 1); } }
 
-    public bool IsScenePlayer()
+    public static void Kill(Engine engine, int id)
     {
-      return IsPlayer() || this == this.GetEngine().PlayerInfo.TempActor;
-    }
-
-    public float StrengthFrac
-    {
-      get
-      {
-        float f = CombatInfo.Strength / TypeInfo.MaxStrength;
-        if (f > 1)
-          f = 1;
-        else if (f < 0)
-          f = 0;
-        return f;
-      }
-    }
-
-    public void Kill()
-    {
-      this.GetEngine().ActorFactory.MakeDead(this);
+      ActorInfo actor = engine.ActorFactory.Get(id);
+      if (actor != null)
+        engine.ActorFactory.MakeDead(actor);
     }
 
     public void Destroy()
     {
-      using (new PerfElement("actor_process_destroy"))
+      //if (CreationState == CreationState.DISPOSED)
+      //  return;
+
+      // Parent
+      RemoveParent();
+
+      // Destroy Children
+      foreach (int i in GetAllChildren(1))
       {
-        //if (CreationState == CreationState.DISPOSED)
-        //  return;
+        ActorInfo child = Engine.ActorFactory.Get(i);
 
-        // Parent
-        RemoveParent();
-
-        // Destroy Children
-        foreach (int i in GetAllChildren(1))
-        {
-          ActorInfo child = this.GetEngine().ActorFactory.Get(i);
-
-          if (child.TypeInfo is ActorTypes.Groups.AddOn || child.AttachToParent)
-            child.Destroy();
-          else
-            child.RemoveParent();
-        }
-        
-        // Mesh
-        if (Mesh != null)
-          Mesh.Destroy();
-        Mesh = null;
-
-        if (FarMesh != null)
-          FarMesh.Destroy();
-        FarMesh = null;
-
-        AttachToParent = false;
-
-        // Particle System
-        if (ParticleSystem != null)
-          ParticleSystem.Destroy();
-        ParticleSystem = null;
-
-        // Actions
-        CurrentAction = null;
-        //ActionManager.ClearQueue(this);
-
-        // Reset components
-        Score.Reset();
-        CombatInfo.Reset();
-        MovementInfo.Reset();
-        CycleInfo.Reset();
-        RegenerationInfo.Reset();
-        ExplosionInfo.Reset();
-        WeaponSystemInfo.Reset();
-        CollisionInfo.Reset();
-
-        // Events
-        OnDestroyedEvent(new object[] { this, ActorState });
-        CreatedEvents = null;
-        DestroyedEvents = null;
-        TickEvents = null;
-        HitEvents = null;
-        ActorStateChangeEvents = null;
-
-        // Player
-        if (IsPlayer())
-          this.GetEngine().PlayerInfo.ActorID = -1;
-        else if (this == this.GetEngine().PlayerInfo.TempActor)
-          this.GetEngine().PlayerInfo.TempActorID = -1;
-
-        // Final dispose
-        Faction.UnregisterActor(this);
-        this.GetEngine().ActorFactory.Remove(ID);
-
-        // Finally
-        CreationState = CreationState.DISPOSED;
+        if (child.TypeInfo is ActorTypes.Groups.AddOn || child.AttachToParent)
+          child.Destroy();
+        else
+          child.RemoveParent();
       }
+
+      // Mesh
+      if (Mesh != null)
+        Mesh.Destroy();
+      Mesh = null;
+
+      if (FarMesh != null)
+        FarMesh.Destroy();
+      FarMesh = null;
+
+      AttachToParent = false;
+
+      // Particle System
+      if (ParticleSystem != null)
+        ParticleSystem.Destroy();
+      ParticleSystem = null;
+
+      // Actions
+      CurrentAction = null;
+      //ActionManager.ClearQueue(this);
+
+      // Reset components
+      Score.Reset();
+      CombatInfo.Reset();
+
+      MovementInfo = NoMoveInfo.Instance;
+      DyingMovement = null;
+
+      CycleInfo.Reset();
+      RegenerationInfo.Reset();
+      ExplosionInfo.Reset();
+      WeaponSystemInfo.Reset();
+      CollisionInfo.Reset();
+
+      // Events
+      OnDestroyedEvent(Engine, new object[] { this, ActorState });
+      CreatedEvents = null;
+      DestroyedEvents = null;
+      TickEvents = null;
+      HitEvents = null;
+      ActorStateChangeEvents = null;
+
+      // Player
+      if (this == PlayerInfo.Actor)
+        PlayerInfo.ActorID = -1;
+      else if (this == PlayerInfo.TempActor)
+        PlayerInfo.TempActorID = -1;
+
+      // Final dispose
+      Faction.UnregisterActor(this);
+      Engine.ActorFactory.Remove(ID);
+
+      // Finally
+      CreationState = CreationState.DISPOSED;
     }
   }
 }

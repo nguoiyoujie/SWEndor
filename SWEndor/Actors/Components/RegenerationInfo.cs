@@ -1,6 +1,6 @@
 ﻿namespace SWEndor.Actors.Components
 {
-  public struct RegenerationInfo
+  public class RegenerationInfo
   {
     private readonly ActorInfo Actor;
     public bool AllowRegen;
@@ -49,20 +49,14 @@
 
     private void Regenerate(int i, float amount)
     {
-      ActorInfo a = Actor.GetEngine().ActorFactory.Get(i);
+      ActorInfo a = Actor.ActorFactory.Get(i);
       Regenerate(a, amount);
     }
 
     private void Regenerate(ActorInfo a, float amount)
     {
-      if (a.RegenerationInfo.AllowRegen
-        && a.ActorState != ActorState.DYING 
-        && a.ActorState != ActorState.DEAD)
-      {
-        a.CombatInfo.Strength += amount;
-        if (a.CombatInfo.Strength > a.TypeInfo.MaxStrength)
-          a.CombatInfo.Strength = a.TypeInfo.MaxStrength;
-      }
+      if (a.RegenerationInfo.AllowRegen && !a.ActorState.IsDyingOrDead())
+        a.CombatInfo.onNotify(CombatEventType.RECOVER, amount);
     }
   }
 }

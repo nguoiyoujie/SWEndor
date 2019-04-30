@@ -32,49 +32,50 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    public override void Process(ActorInfo owner)
+    public override void Process(Engine engine, int actorID)
     {
-      if (owner.MovementInfo.MaxTurnRate == 0)
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
+      if (actor.MovementInfo.MaxTurnRate == 0)
       {
         Complete = true;
         return;
       }
 
-      if (CheckBounds(owner))
+      if (CheckBounds(actor))
       {
-        if (owner.CollisionInfo.ProspectiveCollisionLevel > 0 && owner.CollisionInfo.ProspectiveCollisionLevel < 5)
-          Target_Position = owner.CollisionInfo.ProspectiveCollisionSafe;
+        if (actor.CollisionInfo.ProspectiveCollisionLevel > 0 && actor.CollisionInfo.ProspectiveCollisionLevel < 5)
+          Target_Position = actor.CollisionInfo.ProspectiveCollisionSafe;
         else
           Target_Position = Impact_Position + Normal * 10000;
-        float dist = owner.GetEngine().TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Impact_Position);
-        float Target_Speed = owner.MovementInfo.MinSpeed; //dist / 25;
+        float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetPosition(), Impact_Position);
+        float Target_Speed = actor.MovementInfo.MinSpeed; //dist / 25;
 
-        float delta_angle = AdjustRotation(owner, Target_Position);
-        float delta_speed = AdjustSpeed(owner, Target_Speed);
+        float delta_angle = AdjustRotation(actor, Target_Position);
+        float delta_speed = AdjustSpeed(actor, Target_Speed);
 
         Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle); //&& delta_speed == 0);
       }
 
-      if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
+      if (CheckImminentCollision(actor, actor.MovementInfo.Speed * 2.5f))
       {
-        float newavoid = GetAvoidanceAngle(owner, owner.GetDirection(), Normal);
+        float newavoid = GetAvoidanceAngle(actor, actor.GetDirection(), Normal);
         float concavecheck = 60;
         if (!calcAvoidAngle || (AvoidanceAngle - newavoid > -concavecheck && AvoidanceAngle - newavoid < concavecheck))
         {
           AvoidanceAngle = newavoid;
-          Impact_Position = owner.CollisionInfo.ProspectiveCollisionImpact;
-          Normal = owner.CollisionInfo.ProspectiveCollisionNormal;
+          Impact_Position = actor.CollisionInfo.ProspectiveCollisionImpact;
+          Normal = actor.CollisionInfo.ProspectiveCollisionNormal;
           calcAvoidAngle = true;
         }
         else
         { }
-        owner.CollisionInfo.IsAvoidingCollision = true;
+        actor.CollisionInfo.IsAvoidingCollision = true;
         Complete = false;
       }
       else
       {
-        owner.CollisionInfo.IsAvoidingCollision = false;
-        owner.GetEngine().ActionManager.QueueNext(owner.ID, new Wait(2.5f));
+        actor.CollisionInfo.IsAvoidingCollision = false;
+        engine.ActionManager.QueueNext(actorID, new Wait(2.5f));
         Complete = true;
       }
     }

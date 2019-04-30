@@ -44,7 +44,8 @@ loadfaction:
 	Faction.SetWingSpawnLimit("Rebels", 10);
 
 loadscene:
-	planet = Actor.Spawn("Hoth", "", "", "", 0, "", 0, -2000, 0, 0, 180, 0);
+	planet = Actor.Spawn("Hoth", "", "", "", 0, "", 0, -20000, 0, 0, 180, 0);
+	Actor.SetProperty(planet, "Scale", 10);
 	
 	impSD1 = Actor.Spawn("Imperial-I Star Destroyer", "", "", "", 0, "Empire", 0, 500, -15000, 0, 25, 0);
 	Actor.QueueLast(impSD1, "move", 0, 500, -12000, 2);
@@ -168,13 +169,6 @@ lose:
 	Message("All our Transports has been destroyed!", 5, 0.6, 0.6, 0, 1);
 	SetGameStateB("GameOver",true);
 	AddEvent(3, "Common.FadeOut");
-
-calibratescene:
-	if (Actor.IsAlive(Player.GetActor())) 
-	{
-		player.pos = Actor.GetLocalPosition(Player.GetActor());
-		Actor.SetLocalPosition(planet, GetArrayElement(player.pos, 0) / 1.25,GetArrayElement(player.pos, 1) / 2.5 - 2000, GetArrayElement(player.pos, 2) / 1.25);
-	}
 
 start:
 	started = true;

@@ -59,9 +59,9 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        this.GetEngine().GameScenarioManager.Reset();
-        this.GetEngine().GameScenarioManager.LoadMainMenu();
-        this.GetEngine().SoundManager.SetMusicResume();
+        GameScenarioManager.Reset();
+        GameScenarioManager.LoadMainMenu();
+        Engine.SoundManager.SetMusicResume();
 
         return true;
       }

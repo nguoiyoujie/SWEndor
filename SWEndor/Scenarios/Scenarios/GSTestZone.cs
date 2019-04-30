@@ -12,12 +12,12 @@ namespace SWEndor.Scenarios
     public GSTestZone(GameScenarioManager manager) : base(manager)
     {
       Name = "Test Zone";
-      AllowedWings = new List<ActorTypeInfo> { this.GetEngine().ActorTypeFactory.Get("Advanced Turbolaser Tower")
-                                             , this.GetEngine().ActorTypeFactory.Get("Deflector Tower")
-                                             , this.GetEngine().ActorTypeFactory.Get("Gun Tower")
-                                             , this.GetEngine().ActorTypeFactory.Get("Radar Tower")
-                                             , this.GetEngine().ActorTypeFactory.Get("Super Deflector Tower")
-                                             , this.GetEngine().ActorTypeFactory.Get("Super Turbolaser Turret")
+      AllowedWings = new List<ActorTypeInfo> { Engine.ActorTypeFactory.Get("Advanced Turbolaser Tower")
+                                             , Engine.ActorTypeFactory.Get("Deflector Tower")
+                                             , Engine.ActorTypeFactory.Get("Gun Tower")
+                                             , Engine.ActorTypeFactory.Get("Radar Tower")
+                                             , Engine.ActorTypeFactory.Get("Super Deflector Tower")
+                                             , Engine.ActorTypeFactory.Get("Super Turbolaser Turret")
                                              };
 
       AllowedDifficulties = new List<string> { "normal"
@@ -35,28 +35,29 @@ namespace SWEndor.Scenarios
     {
       base.Launch();
 
-      Manager.SceneCamera.SetLocalPosition(0, 0, 0);
+      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
+      cam.SetLocalPosition(0, 0, 0);
       Manager.MaxBounds = new TV_3DVECTOR(2500, 200, 2500);
       Manager.MinBounds = new TV_3DVECTOR(-2500, -200, -2500);
       Manager.MaxAIBounds = new TV_3DVECTOR(2500, 200, 2500);
       Manager.MinAIBounds = new TV_3DVECTOR(-2500, -200, -2500);
 
-      Manager.Engine.PlayerCameraInfo.CameraMode = CameraMode.THIRDPERSON;
+      PlayerCameraInfo.CameraMode = CameraMode.THIRDPERSON;
 
-      Manager.AddEvent(Manager.Engine.Game.GameTime + 0.1f, Test_SpawnPlayer);
-      Manager.AddEvent(Manager.Engine.Game.GameTime + 0.1f, Test_Towers01);
-      Manager.AddEvent(Manager.Engine.Game.GameTime + 5f, Empire_TIEWave_02);
+      Manager.AddEvent(Game.GameTime + 0.1f, Test_SpawnPlayer);
+      Manager.AddEvent(Game.GameTime + 0.1f, Test_Towers01);
+      Manager.AddEvent(Game.GameTime + 5f, Empire_TIEWave_02);
 
-      Manager.Engine.PlayerInfo.Lives = 2;
-      Manager.Engine.PlayerInfo.ScorePerLife = 1000000;
-      Manager.Engine.PlayerInfo.ScoreForNextLife = 1000000;
+      PlayerInfo.Lives = 2;
+      PlayerInfo.ScorePerLife = 1000000;
+      PlayerInfo.ScoreForNextLife = 1000000;
 
       MakePlayer = Test_SpawnPlayer;
       
       Manager.Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1);
 
-      Manager.Engine.SoundManager.SetMusic("battle_1_1");
-      Manager.Engine.SoundManager.SetMusicLoop("battle_1_4");
+      SoundManager.SetMusic("battle_1_1");
+      SoundManager.SetMusicLoop("battle_1_4");
 
       Manager.IsCutsceneMode = false;
     }
@@ -87,7 +88,7 @@ namespace SWEndor.Scenarios
           StageNumber = 1;
 
         if (MainEnemyFaction.Wings.Count < 10)
-          Manager.AddEvent(Manager.Engine.Game.GameTime, Empire_TIEWave_02);
+          Manager.AddEvent(Game.GameTime, Empire_TIEWave_02);
 
       //}
     }
@@ -98,23 +99,23 @@ namespace SWEndor.Scenarios
 
     #region Test events
     
-    public void Test_SpawnPlayer(object[] param)
+    public void Test_SpawnPlayer(params object[] param)
     {
-      Manager.Engine.PlayerInfo.ActorID = Manager.Engine.PlayerInfo.TempActorID;
+      PlayerInfo.ActorID = PlayerInfo.TempActorID;
 
-      if (Manager.Engine.PlayerInfo.Actor == null || Manager.Engine.PlayerInfo.Actor.CreationState == CreationState.DISPOSED)
+      if (PlayerInfo.Actor == null || PlayerInfo.Actor.CreationState == CreationState.DISPOSED)
       { 
-        if (Manager.Engine.PlayerInfo.Lives > 0)
+        if (PlayerInfo.Lives > 0)
         {
-          Manager.Engine.PlayerInfo.Lives--;
+          PlayerInfo.Lives--;
 
           ActorInfo ainfo = new ActorSpawnInfo
           {
-            Type = Manager.Engine.PlayerInfo.ActorType,
+            Type = PlayerInfo.ActorType,
             Name = "(Player)",
             RegisterName = "",
             SidebarName = "",
-            SpawnTime = Manager.Engine.Game.GameTime,
+            SpawnTime = Game.GameTime,
             Faction = MainAllyFaction,
             Position = new TV_3DVECTOR(125, 0, 125),
             Rotation = new TV_3DVECTOR(),
@@ -122,26 +123,26 @@ namespace SWEndor.Scenarios
             Registries = null
           }.Spawn(this);
 
-          Manager.Engine.PlayerInfo.ActorID = ainfo.ID;
+          PlayerInfo.ActorID = ainfo.ID;
         }
       }
-      m_Player = Manager.Engine.PlayerInfo.Actor;
-      Manager.Engine.PlayerInfo.IsMovementControlsEnabled = true;
+      m_Player = PlayerInfo.Actor;
+      PlayerInfo.IsMovementControlsEnabled = true;
     }
 
-    public void Test_GiveControl(object[] param)
+    public void Test_GiveControl(params object[] param)
     {
-      Manager.Engine.PlayerInfo.IsMovementControlsEnabled = true;
+      PlayerInfo.IsMovementControlsEnabled = true;
       Manager.SetGameStateB("in_battle", true);
     }
 
-    public void Test_Towers01(object[] param)
+    public void Test_Towers01(params object[] param)
     {
-      List<ActorTypeInfo> towers = new List<ActorTypeInfo> { this.GetEngine().ActorTypeFactory.Get("Advanced Turbolaser Tower")
-                                             , this.GetEngine().ActorTypeFactory.Get("Deflector Tower")
-                                             , this.GetEngine().ActorTypeFactory.Get("Gun Tower")
-                                             , this.GetEngine().ActorTypeFactory.Get("Radar Tower")
-                                             , this.GetEngine().ActorTypeFactory.Get("Super Deflector Tower")
+      List<ActorTypeInfo> towers = new List<ActorTypeInfo> { Engine.ActorTypeFactory.Get("Advanced Turbolaser Tower")
+                                             , Engine.ActorTypeFactory.Get("Deflector Tower")
+                                             , Engine.ActorTypeFactory.Get("Gun Tower")
+                                             , Engine.ActorTypeFactory.Get("Radar Tower")
+                                             , Engine.ActorTypeFactory.Get("Super Deflector Tower")
                                              };
 
       for (int x = -5; x <= 5; x++)
@@ -149,11 +150,11 @@ namespace SWEndor.Scenarios
         {
           ActorInfo ainfo = new ActorSpawnInfo
           {
-            Type = towers[Manager.Engine.Random.Next(0, towers.Count)],
+            Type = towers[Engine.Random.Next(0, towers.Count)],
             Name = "",
             RegisterName = "",
             SidebarName = "",
-            SpawnTime = Manager.Engine.Game.GameTime,
+            SpawnTime = Game.GameTime,
             Faction = MainAllyFaction,
             Position = new TV_3DVECTOR(x * 500, 0, y * 500),
             Rotation = new TV_3DVECTOR()
@@ -162,21 +163,21 @@ namespace SWEndor.Scenarios
     }
     #endregion
 
-    public void Empire_TIEWave_02(object[] param)
+    public void Empire_TIEWave_02(params object[] param)
     {
       int sets = 3;
       if (param != null && param.GetLength(0) >= 1 && !int.TryParse(param[0].ToString(), out sets))
         sets = 3;
 
       // TIEs
-      ActorTypeInfo[] tietypes = new ActorTypeInfo[] { this.GetEngine().ActorTypeFactory.Get("X-Wing"), this.GetEngine().ActorTypeFactory.Get("A-Wing") };
+      ActorTypeInfo[] tietypes = new ActorTypeInfo[] { Engine.ActorTypeFactory.Get("X-Wing"), Engine.ActorTypeFactory.Get("A-Wing") };
       float t = 0;
       for (int k = 1; k < sets; k++)
       {
-        float fx = Manager.Engine.Random.Next(-2500, 2500);
-        float fy = Manager.Engine.Random.Next(-500, 500);
+        float fx = Engine.Random.Next(-2500, 2500);
+        float fy = Engine.Random.Next(-500, 500);
 
-        int n = Manager.Engine.Random.Next(0, tietypes.Length);
+        int n = Engine.Random.Next(0, tietypes.Length);
         for (int x = 0; x <= 1; x++)
         {
           for (int y = 0; y <= 1; y++)
@@ -187,7 +188,7 @@ namespace SWEndor.Scenarios
               Name = "",
               RegisterName = "",
               SidebarName = "",
-              SpawnTime = Manager.Engine.Game.GameTime + t,
+              SpawnTime = Game.GameTime + t,
               Faction = MainEnemyFaction,
               Position = new TV_3DVECTOR(fx + x * 100, fy + y * 100, Manager.MaxBounds.z + 1500),
               Rotation = new TV_3DVECTOR(0, 180, 0)
@@ -196,7 +197,7 @@ namespace SWEndor.Scenarios
         }
         t += 1.5f;
       }
-      //Manager.AddEvent(Manager.Engine.Game.GameTime + 30f, "Empire_TIEWave_02");
+      //Manager.AddEvent(Game.GameTime + 30f, "Empire_TIEWave_02");
     }
   }
 }

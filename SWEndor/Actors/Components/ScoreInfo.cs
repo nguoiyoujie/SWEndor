@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SWEndor
 {
-  public struct ScoreInfo
+  public class ScoreInfo
   {
     public class ScoreComparer : IComparer<ScoreInfo>
     {

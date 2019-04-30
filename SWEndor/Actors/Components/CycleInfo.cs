@@ -2,7 +2,7 @@
 
 namespace SWEndor.Actors.Components
 {
-  public struct CycleInfo
+  public class CycleInfo
   {
     private readonly ActorInfo Actor;
     public float CyclesRemaining;
@@ -31,7 +31,7 @@ namespace SWEndor.Actors.Components
 
     public void Process()
     {
-      CycleTime -= Actor.GetEngine().Game.TimeSinceRender;
+      CycleTime -= Actor.Game.TimeSinceRender;
       if (CyclesRemaining > 0)
       {
         if (CycleTime < 0)

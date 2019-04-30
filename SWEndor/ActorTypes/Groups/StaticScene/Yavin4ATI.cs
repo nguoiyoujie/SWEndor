@@ -6,24 +6,24 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal Yavin4ATI(Factory owner) : base(owner, "Yavin4")
     {
-      SourceMesh = FactoryOwner.Engine.TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = FactoryOwner.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Key);
 
         // 1 texture
         string texname = @"yavin4.bmp";
         string alphatexname = @"yavin4alpha.bmp";
         string texpath = Path.Combine(Globals.ImagePath, "planets", texname);
         string alphatexpath = Path.Combine(Globals.ImagePath, "planets", alphatexname);
-        if (Globals.Engine.TrueVision.TVGlobals.GetTex(texname) == 0)
+        if (TrueVision.TVGlobals.GetTex(texname) == 0)
         {
-          int texS = Globals.Engine.TrueVision.TVTextureFactory.LoadTexture(texpath);
-          int texA = Globals.Engine.TrueVision.TVTextureFactory.LoadTexture(alphatexpath);
-          Globals.Engine.TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texname);
+          int texS = TrueVision.TVTextureFactory.LoadTexture(texpath);
+          int texA = TrueVision.TVTextureFactory.LoadTexture(alphatexpath);
+          TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texname);
         }
         SourceMesh.CreateBox(50000, 50000, 0.001f);
-        SourceMesh.SetTexture(Globals.Engine.TrueVision.TVGlobals.GetTex(texname));
+        SourceMesh.SetTexture(TrueVision.TVGlobals.GetTex(texname));
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);
       }

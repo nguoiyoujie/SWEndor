@@ -10,9 +10,9 @@ namespace SWEndor.Input.Functions.Gameplay.Special
     public override string Name { get { return InternalName; } }
     public override InputOptions Options { get { return InputOptions.ONPRESS; } }
 
-    public override void Process(InputManager manager)
+    public override void Process(Engine engine)
     {
-      Globals.Engine.PlayerInfo.PlayerAIEnabled = !Globals.Engine.PlayerInfo.PlayerAIEnabled;
+      engine.PlayerInfo.PlayerAIEnabled = !engine.PlayerInfo.PlayerAIEnabled;
     }
   }
 }

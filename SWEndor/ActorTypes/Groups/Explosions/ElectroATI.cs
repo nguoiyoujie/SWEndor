@@ -17,11 +17,11 @@ namespace SWEndor.ActorTypes.Instances
       CollisionEnabled = false;
       RadarSize = 0;
 
-      SourceMesh = FactoryOwner.Engine.TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
         LoadAlphaTextureFromFolder(Globals.ImagePath, "electro");
-        SourceMesh = FactoryOwner.Engine.TrueVision.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 40, 40, Key, true);
+        SourceMesh = TrueVision.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 40, 40, Key, true);
         SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
         SourceMesh.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
 
@@ -43,7 +43,7 @@ namespace SWEndor.ActorTypes.Instances
       base.ProcessState(ainfo);
       if (ainfo.ActorState == ActorState.NORMAL)
       {
-        ActorInfo p = this.GetEngine().ActorFactory.Get(ainfo.ParentID);
+        ActorInfo p = ActorFactory.Get(ainfo.ParentID);
         if (p != null)
         {
           if (p.CreationState != CreationState.DISPOSED)

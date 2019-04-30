@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -32,40 +33,11 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
 
+      ainfo.DyingMovement = DyingKillInfo.Instance;
+
+      ainfo.CombatInfo.CollisionDamageModifier = 100;
       ainfo.RegenerationInfo.ParentRegenRate = 40f;
       ainfo.RegenerationInfo.RelativeRegenRate = 0.1f;
-    }
-
-    public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
-    {
-      ActorInfo owner = this.GetEngine().ActorFactory.Get(ownerActorID);
-      ActorInfo hitby = this.GetEngine().ActorFactory.Get(hitbyActorID);
-
-      if (owner == null || hitby == null)
-        return;
-
-      if (!hitby.TypeInfo.IsDamage)
-      {
-        owner.CombatInfo.Strength = 0;
-      }
-      base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
-      if (hitby.TypeInfo.IsDamage)
-      {
-        foreach (int i in owner.GetAllChildren(1))
-        {
-          ActorInfo child = this.GetEngine().ActorFactory.Get(i);
-          if (child?.TypeInfo is ElectroATI)
-          {
-            child.CycleInfo.CyclesRemaining = 2.5f / child.TypeInfo.TimedLife;
-            return;
-          }
-        }
-        ActorCreationInfo acinfo = new ActorCreationInfo(this.GetEngine().ActorTypeFactory.Get("Electro"));
-        acinfo.Position = owner.GetPosition();
-        ActorInfo electro = ActorInfo.Create(this.GetEngine().ActorFactory, acinfo);
-        electro.AddParent(ownerActorID);
-        electro.CycleInfo.CyclesRemaining = 2.5f / electro.TypeInfo.TimedLife;
-      }
     }
   }
 }

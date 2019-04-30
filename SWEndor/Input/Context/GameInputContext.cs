@@ -11,8 +11,7 @@ namespace SWEndor.Input.Context
 {
   public class GameInputContext : AInputContext
   {
-    public readonly static GameInputContext Instance = new GameInputContext();
-    protected GameInputContext() { }
+    public GameInputContext(InputManager manager) : base(manager) { }
 
     public static string[] _functions = new string[]
     {
@@ -52,30 +51,30 @@ namespace SWEndor.Input.Context
       }
     }
 
-    public override void HandleKeyBuffer(InputManager manager, TV_KEYDATA keydata)
+    public override void HandleKeyBuffer(TV_KEYDATA keydata)
     {
-      base.HandleKeyBuffer(manager, keydata);
+      base.HandleKeyBuffer(keydata);
       if (keydata.Pressed > 0)
-        InputFunction.Registry.ProcessOnPress(manager, keydata.Key);
+        InputFunction.Registry.ProcessOnPress(Engine, keydata.Key);
     }
 
-    public override void HandleKeyState(InputManager manager, byte[] keyPressedStates)
+    public override void HandleKeyState(byte[] keyPressedStates)
     {
-      base.HandleKeyState(manager, keyPressedStates);
-      InputFunction.Registry.ProcessWhilePressed(manager, keyPressedStates);
+      base.HandleKeyState(keyPressedStates);
+      InputFunction.Registry.ProcessWhilePressed(Engine, keyPressedStates);
     }
 
-    public override void HandleMouse(InputManager manager, int mouseX, int mouseY, bool button1, bool button2, bool button3, bool button4, int mouseScroll)
+    public override void HandleMouse(int mouseX, int mouseY, bool button1, bool button2, bool button3, bool button4, int mouseScroll)
     {
-      base.HandleMouse(manager, mouseX, mouseY, button1, button2, button3, button4, mouseScroll);
+      base.HandleMouse(mouseX, mouseY, button1, button2, button3, button4, mouseScroll);
 
       if (button1)
-        manager.Engine.PlayerInfo.FirePrimaryWeapon();
+        PlayerInfo.FirePrimaryWeapon();
 
       if (button2)
-        manager.Engine.PlayerInfo.FireSecondaryWeapon();
+        PlayerInfo.FireSecondaryWeapon();
 
-      manager.Engine.PlayerCameraInfo.RotateCam(mouseX / manager.Engine.ScreenWidth * 2 - 1, mouseY / manager.Engine.ScreenHeight * 2 - 1);
+      PlayerCameraInfo.RotateCam(mouseX / Engine.ScreenWidth * 2 - 1, mouseY / Engine.ScreenHeight * 2 - 1);
     }
   }
 }

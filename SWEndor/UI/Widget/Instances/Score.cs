@@ -18,10 +18,10 @@ namespace SWEndor.UI.Widgets
       get
       {
         return (!Owner.ShowPage
-            && this.GetEngine().PlayerInfo.Actor != null
-            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DYING
-            && !(Owner.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
+            && PlayerInfo.Actor != null
+            && PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !(PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
             && Owner.ShowUI
             && Owner.ShowScore);
       }

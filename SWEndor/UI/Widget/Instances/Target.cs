@@ -22,27 +22,27 @@ namespace SWEndor.UI.Widgets
       get
       {
         return (!Owner.ShowPage
-            && this.GetEngine().PlayerInfo.Actor != null
-            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DYING
-            && !(Owner.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
+            && PlayerInfo.Actor != null
+            && PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !(PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
             && Owner.ShowUI);
       }
     }
 
     public override void Draw()
     {
-      ActorInfo p = this.GetEngine().PlayerInfo.Actor;
+      ActorInfo p = PlayerInfo.Actor;
       if (p == null || p.CreationState != CreationState.ACTIVE)
         return;
 
       ActorInfo prev_target = m_target;
 
-      PickTarget(!Owner.Engine.PlayerInfo.IsTorpedoMode);
+      PickTarget(!PlayerInfo.IsTorpedoMode);
 
       if (m_target == null)
       {
-        this.GetEngine().PlayerInfo.AimTargetID = -1;
+        PlayerInfo.AimTargetID = -1;
       }
       else
       {
@@ -50,44 +50,43 @@ namespace SWEndor.UI.Widgets
         float y = 0;
         TVScreen2DImmediate.Math_3DPointTo2D(m_target.GetPosition(), ref x, ref y);
         float dist = ActorDistanceInfo.GetDistance(p.ID, m_target.ID, 7501);
-        float limit = 0.005f * dist;
-        if (limit < 50)
-          limit = 50;
+        float limit = 0.05f * dist;
+        if (limit < 250)
+          limit = 250;
 
         if (m_target.CreationState != CreationState.ACTIVE
-        || m_target.ActorState == ActorState.DYING
-        || m_target.ActorState == ActorState.DEAD
+        || m_target.ActorState.IsDyingOrDead()
         || !m_target.CombatInfo.IsCombatObject
         || dist > 7500
-        || Math.Abs(x - this.GetEngine().ScreenWidth / 2) > limit
-        || Math.Abs(y - this.GetEngine().ScreenHeight / 2) > limit
-        || (Owner.Engine.PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && this.GetEngine().PlayerInfo.IsTorpedoMode)
-        || !this.GetEngine().PlayerCameraInfo.Camera.IsPointVisible(m_target.GetPosition()))
+        || Math.Abs(x - Engine.ScreenWidth / 2) > limit
+        || Math.Abs(y - Engine.ScreenHeight / 2) > limit
+        || (PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && PlayerInfo.IsTorpedoMode)
+        || !PlayerCameraInfo.Camera.IsPointVisible(m_target.GetPosition()))
         {
           m_target = null;
-          this.GetEngine().PlayerInfo.AimTargetID = -1;
+          PlayerInfo.AimTargetID = -1;
         }
         else
         {
           TV_COLOR acolor = (m_target.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : m_target.Faction.Color;
           string name = m_target.Name;
           TVScreen2DImmediate.Action_Begin2D();
-          if (Owner.Engine.PlayerInfo.IsTorpedoMode)
+          if (PlayerInfo.IsTorpedoMode)
           {
-            if (!Owner.Engine.PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && prev_target != m_target)
+            if (!PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && prev_target != m_target)
             {
-              this.GetEngine().SoundManager.SetSound("button_3");
+              SoundManager.SetSound("button_3");
               m_targetBigSize = 15;
             }
             if (m_targetBigSize > m_targetSize)
             {
-              m_targetBigSize -= 25 * this.GetEngine().Game.TimeSinceRender;
+              m_targetBigSize -= 25 * Game.TimeSinceRender;
               TVScreen2DImmediate.Draw_Box(x - m_targetBigSize, y - m_targetBigSize, x + m_targetBigSize, y + m_targetBigSize, acolor.GetIntColor());
             }
 
             WeaponInfo weap;
             int burst = 0;
-            p.TypeInfo.InterpretWeapon(p.ID, this.GetEngine().PlayerInfo.SecondaryWeapon, out weap, out burst);
+            p.TypeInfo.InterpretWeapon(p.ID, PlayerInfo.SecondaryWeapon, out weap, out burst);
             if (weap != null && weap.Ammo > 0)
             {
               TVScreen2DImmediate.Draw_FilledBox(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());
@@ -113,9 +112,9 @@ namespace SWEndor.UI.Widgets
             );
           TVScreen2DText.Action_EndText();
 
-          this.GetEngine().PlayerInfo.AimTargetID = this.GetEngine().PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) ? -1 : m_target.ID;
+          PlayerInfo.AimTargetID = PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) ? -1 : m_target.ID;
 
-          if (Owner.Engine.PlayerInfo.Actor.Faction != null && !Owner.Engine.PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && !Owner.Engine.PlayerInfo.IsTorpedoMode)
+          if (PlayerInfo.Actor.Faction != null && !PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && !PlayerInfo.IsTorpedoMode)
           {
             // Targeting cross
             // Anticipate
@@ -134,7 +133,7 @@ namespace SWEndor.UI.Widgets
 
     private bool PickTarget(bool pick_allies)
     {
-      ActorInfo p = this.GetEngine().PlayerInfo.Actor;
+      ActorInfo p = PlayerInfo.Actor;
       bool ret = false;
 
       if (p != null && p.CreationState == CreationState.ACTIVE)
@@ -142,9 +141,9 @@ namespace SWEndor.UI.Widgets
         // Attempt close enough
         float bestlimit = 9999;
 
-        foreach (int actorID in this.GetEngine().ActorFactory.GetHoldingList())
+        foreach (int actorID in ActorFactory.GetHoldingList())
         {
-          ActorInfo a = this.GetEngine().ActorFactory.Get(actorID);
+          ActorInfo a = ActorFactory.Get(actorID);
           if (a != null
             && p != a
             && a.CreationState == CreationState.ACTIVE
@@ -152,7 +151,7 @@ namespace SWEndor.UI.Widgets
             && a.ActorState != ActorState.DEAD
             && a.TypeInfo.IsSelectable
             && (pick_allies || !p.Faction.IsAlliedWith(a.Faction))
-            && this.GetEngine().PlayerCameraInfo.Camera.IsPointVisible(a.GetPosition())
+            && PlayerCameraInfo.Camera.IsPointVisible(a.GetPosition())
             )
           {
             float dist = ActorDistanceInfo.GetDistance(p.ID, actorID, 7501);
@@ -167,8 +166,8 @@ namespace SWEndor.UI.Widgets
               m_targetY = limit;
               TVScreen2DImmediate.Math_3DPointTo2D(a.GetPosition(), ref x, ref y);
 
-              x -= this.GetEngine().ScreenWidth / 2;
-              y -= this.GetEngine().ScreenHeight / 2;
+              x -= Engine.ScreenWidth / 2;
+              y -= Engine.ScreenHeight / 2;
 
               x = Math.Abs(x);
               y = Math.Abs(y);

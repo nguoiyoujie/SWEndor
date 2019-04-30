@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using SWEndor.AI.Actions;
 
 namespace SWEndor.ActorTypes.Group
@@ -24,6 +25,13 @@ namespace SWEndor.ActorTypes.Group
 
     public float ImpactCloseEnoughDistance = 0;
 
+    public override void Initialize(ActorInfo ainfo)
+    {
+      base.Initialize(ainfo);
+
+      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.TIMENOTEXPIRED_ONLY;
+    }
+
     public override void ProcessState(ActorInfo ainfo)
     {
       base.ProcessState(ainfo);
@@ -31,7 +39,7 @@ namespace SWEndor.ActorTypes.Group
       {
         if (ImpactCloseEnoughDistance > 0 && ainfo.CurrentAction != null && ainfo.CurrentAction is AttackActor)
         {
-          ActorInfo target = this.GetEngine().ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
+          ActorInfo target = ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
           if (target != null)
           {
             // Anticipate
@@ -47,6 +55,24 @@ namespace SWEndor.ActorTypes.Group
             }
           }
         }
+      }
+    }
+
+    public override void ProcessNewState(ActorInfo ainfo)
+    {
+      base.ProcessNewState(ainfo);
+      if (ainfo.ActorState.IsDying())
+      {
+        /*
+        if (ainfo.CombatInfo.TimedLife > 0 
+          && ainfo.ExplosionInfo.DeathExplosionTrigger)
+        {
+          ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get(ainfo.ExplosionInfo.DeathExplosionType));
+          acinfo.Position = ainfo.GetPosition();
+          ActorInfo.Create(ActorFactory, acinfo);
+        }
+        */
+        ainfo.ActorState = ActorState.DEAD;
       }
     }
   }

@@ -5,10 +5,9 @@ namespace SWEndor.Input.Context
 {
   public class MenuInputContext : AInputContext
   {
-    public readonly static MenuInputContext Instance = new MenuInputContext();
-    protected MenuInputContext() { }
+    public MenuInputContext(InputManager manager) : base(manager) { }
 
-    public override void HandleKeyBuffer(InputManager manager, TV_KEYDATA keydata)
+    public override void HandleKeyBuffer(TV_KEYDATA keydata)
     {
       if (keydata.Pressed > 0)
       {

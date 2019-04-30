@@ -11,12 +11,12 @@ namespace SWEndor.Input.Functions.Gameplay.Special
     public override string Name { get { return InternalName; } }
     public override InputOptions Options { get { return InputOptions.ONPRESS; } }
 
-    public override void Process(InputManager manager)
+    public override void Process(Engine engine)
     {
-      if (manager.Engine.PlayerCameraInfo.CameraMode == CameraMode.FREEMODE) // last camera mode
-        manager.Engine.PlayerCameraInfo.CameraMode = 0;
+      if (engine.PlayerCameraInfo.CameraMode == CameraMode.FREEMODE) // last camera mode
+        engine.PlayerCameraInfo.CameraMode = 0;
       else
-        manager.Engine.PlayerCameraInfo.CameraMode++;
+        engine.PlayerCameraInfo.CameraMode++;
     }
   }
 }

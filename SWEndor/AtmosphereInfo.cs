@@ -36,7 +36,7 @@ namespace SWEndor
     private TVAtmosphere m_atmosphere;
     private int m_tex = -1;
     private string m_texpath = "";
-    private float m_radius = 60000;
+    private float m_radius = 600000;
 
     private int m_Sun = -1;
     private string m_sunpath = "";

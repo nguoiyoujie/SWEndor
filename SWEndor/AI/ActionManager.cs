@@ -156,7 +156,7 @@ namespace SWEndor.AI
             }
             else
             {
-              action.Process(actor);
+              action.Process(Engine, actor.ID);
             }
           }
         }

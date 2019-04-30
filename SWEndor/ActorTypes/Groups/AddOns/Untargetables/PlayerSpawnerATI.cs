@@ -28,7 +28,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.ProcessState(ainfo);
 
-      ActorInfo p = this.GetEngine().ActorFactory.Get(ainfo.GetTopParent());
+      ActorInfo p = ActorFactory.Get(ainfo.GetTopParent());
 
       if (p.SpawnerInfo != null
        && p.SpawnerInfo.Enabled
@@ -37,19 +37,19 @@ namespace SWEndor.ActorTypes.Instances
        && p.CreationState == CreationState.ACTIVE
        )
       {
-        if (p.SpawnerInfo.SpawnMoveTime < this.GetEngine().Game.GameTime)
+        if (p.SpawnerInfo.SpawnMoveTime < Game.GameTime)
         {
           List<ActorInfo> rm = new List<ActorInfo>();
           foreach (int id in ainfo.GetAllChildren(1))
           {
-            ActorInfo a = this.GetEngine().ActorFactory.Get(id);
+            ActorInfo a = ActorFactory.Get(id);
 
             a.ActorState = ActorState.NORMAL;
-            this.GetEngine().ActionManager.UnlockOne(id);
-            this.GetEngine().ActionManager.QueueLast(id, new Hunt());
+            ActionManager.UnlockOne(id);
+            ActionManager.QueueLast(id, new Hunt());
 
-            if (a.IsPlayer())
-              this.GetEngine().PlayerInfo.IsMovementControlsEnabled = true;
+            if (ActorInfo.IsPlayer(Engine, id))
+              PlayerInfo.IsMovementControlsEnabled = true;
 
             rm.Add(a);
           }
@@ -64,9 +64,9 @@ namespace SWEndor.ActorTypes.Instances
         }
       }
 
-      foreach (int i in ainfo.GetAllChildren(1))
+      foreach (int id in ainfo.GetAllChildren(1))
       {
-        ActorInfo a = this.GetEngine().ActorFactory.Get(i);
+        ActorInfo a = ActorFactory.Get(id);
         if (a != null && a.TypeInfo is Groups.Fighter)
         {
           if (p.SpawnerInfo.SpawnSpeed == -2)
@@ -76,31 +76,31 @@ namespace SWEndor.ActorTypes.Instances
           else
             a.MovementInfo.Speed = p.SpawnerInfo.SpawnSpeed;
 
-          a.MoveRelative(p.SpawnerInfo.SpawnSpeedPositioningMult.x * p.MovementInfo.Speed * this.GetEngine().Game.TimeSinceRender * p.Scale.x
-                       , p.SpawnerInfo.SpawnSpeedPositioningMult.y * p.MovementInfo.Speed * this.GetEngine().Game.TimeSinceRender * p.Scale.y
-                       , p.SpawnerInfo.SpawnSpeedPositioningMult.z * p.MovementInfo.Speed * this.GetEngine().Game.TimeSinceRender * p.Scale.z);
+          a.MoveRelative(p.SpawnerInfo.SpawnSpeedPositioningMult.x * p.MovementInfo.Speed * Game.TimeSinceRender * p.Scale.x
+                       , p.SpawnerInfo.SpawnSpeedPositioningMult.y * p.MovementInfo.Speed * Game.TimeSinceRender * p.Scale.y
+                       , p.SpawnerInfo.SpawnSpeedPositioningMult.z * p.MovementInfo.Speed * Game.TimeSinceRender * p.Scale.z);
 
-          a.MoveRelative(p.SpawnerInfo.SpawnManualPositioningMult.x * this.GetEngine().Game.TimeSinceRender * p.Scale.x
-                       , p.SpawnerInfo.SpawnManualPositioningMult.y * this.GetEngine().Game.TimeSinceRender * p.Scale.y
-                       , p.SpawnerInfo.SpawnManualPositioningMult.z * this.GetEngine().Game.TimeSinceRender * p.Scale.z);
+          a.MoveRelative(p.SpawnerInfo.SpawnManualPositioningMult.x * Game.TimeSinceRender * p.Scale.x
+                       , p.SpawnerInfo.SpawnManualPositioningMult.y * Game.TimeSinceRender * p.Scale.y
+                       , p.SpawnerInfo.SpawnManualPositioningMult.z * Game.TimeSinceRender * p.Scale.z);
 
-          if (a.IsPlayer())
-            this.GetEngine().PlayerInfo.IsMovementControlsEnabled = false;
+          if (ActorInfo.IsPlayer(Engine, id))
+            PlayerInfo.IsMovementControlsEnabled = false;
         }
       }
     }
 
-    public bool SpawnPlayer(ActorInfo ainfo, ActorInfo p)
+    private bool SpawnPlayer(ActorInfo ainfo, ActorInfo p)
     {
-      if (!this.GetEngine().PlayerInfo.RequestSpawn)
+      if (!PlayerInfo.RequestSpawn)
         return false;
 
-      if (p.SpawnerInfo.NextSpawnTime < this.GetEngine().Game.GameTime + p.SpawnerInfo.SpawnPlayerDelay)
-        p.SpawnerInfo.NextSpawnTime = this.GetEngine().Game.GameTime + p.SpawnerInfo.SpawnPlayerDelay;
+      if (p.SpawnerInfo.NextSpawnTime < Game.GameTime + p.SpawnerInfo.SpawnPlayerDelay)
+        p.SpawnerInfo.NextSpawnTime = Game.GameTime + p.SpawnerInfo.SpawnPlayerDelay;
 
-      this.GetEngine().PlayerInfo.IsMovementControlsEnabled = false;
+      PlayerInfo.IsMovementControlsEnabled = false;
 
-      ActorCreationInfo acinfo = new ActorCreationInfo(this.GetEngine().PlayerInfo.ActorType);
+      ActorCreationInfo acinfo = new ActorCreationInfo(PlayerInfo.ActorType);
 
       TV_3DVECTOR clone = ainfo.GetRelativePositionXYZ(p.SpawnerInfo.PlayerSpawnLocation.x * ainfo.Scale.x, p.SpawnerInfo.PlayerSpawnLocation.y * ainfo.Scale.y, p.SpawnerInfo.PlayerSpawnLocation.z * ainfo.Scale.z);
       acinfo.Position = new TV_3DVECTOR(clone.x, clone.y, clone.z);
@@ -109,11 +109,11 @@ namespace SWEndor.ActorTypes.Instances
 
       acinfo.InitialState = ActorState.FREE;
       acinfo.Faction = ainfo.Faction;
-      ActorInfo a = ActorInfo.Create(this.GetEngine().ActorFactory, acinfo);
+      ActorInfo a = ActorInfo.Create(ActorFactory, acinfo);
       a.AddParent(ainfo.ID);
-      this.GetEngine().ActionManager.QueueNext(a.ID, new Lock());
+      ActionManager.QueueNext(a.ID, new Lock());
 
-      this.GetEngine().PlayerInfo.ActorID = a.ID;
+      PlayerInfo.ActorID = a.ID;
 
       if (a.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER) && a.Faction.WingLimit >= 0)
         a.Faction.WingLimit++;
@@ -121,9 +121,9 @@ namespace SWEndor.ActorTypes.Instances
       if (a.TypeInfo.TargetType.HasFlag(TargetType.SHIP) && a.Faction.ShipLimit >= 0)
         a.Faction.ShipLimit++;
 
-      this.GetEngine().PlayerInfo.RequestSpawn = false;
+      PlayerInfo.RequestSpawn = false;
 
-      p.SpawnerInfo.SpawnMoveTime = this.GetEngine().Game.GameTime + p.SpawnerInfo.SpawnMoveDelay;
+      p.SpawnerInfo.SpawnMoveTime = Game.GameTime + p.SpawnerInfo.SpawnMoveDelay;
       return true;
     }
   }

@@ -1,4 +1,5 @@
 ﻿using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -24,8 +25,7 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessState(ActorInfo ainfo)
     {
       base.ProcessState(ainfo);
-      ainfo.MovementInfo.D_spin_min_rate = 100;
-      ainfo.MovementInfo.D_spin_max_rate = 450;
+      ainfo.DyingMovement = new DyingSpinInfo(100, 450);
     }
   }
 }

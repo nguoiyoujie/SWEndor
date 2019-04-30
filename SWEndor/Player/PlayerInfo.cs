@@ -164,20 +164,20 @@ namespace SWEndor.Player
       if (IsMovementControlsEnabled && !PlayerAIEnabled && Actor != null)
       {
         Actor.MovementInfo.Speed += frac * Actor.TypeInfo.MaxSpeedChangeRate * Globals.Engine.Game.TimeSinceRender;
-        Utilities.Clamp(ref Actor.MovementInfo.Speed, Actor.MovementInfo.MinSpeed, Actor.MovementInfo.MaxSpeed);
+        Actor.MovementInfo.Speed = Actor.MovementInfo.Speed.Clamp(Actor.MovementInfo.MinSpeed, Actor.MovementInfo.MaxSpeed);
       }
     }
 
     public void FirePrimaryWeapon()
     {
       if (Actor != null && IsMovementControlsEnabled && !PlayerAIEnabled)
-        Actor.FireWeapon(AimTargetID, PrimaryWeapon);
+        ActorInfo.FireWeapon(Engine, ActorID, AimTargetID, PrimaryWeapon);
     }
 
     public void FireSecondaryWeapon()
     {
       if (Actor != null && IsMovementControlsEnabled && !PlayerAIEnabled)
-        Actor.FireWeapon(AimTargetID, SecondaryWeapon);
+        ActorInfo.FireWeapon(Engine, ActorID, AimTargetID, SecondaryWeapon);
     }
 
     private void ParseWeapons()

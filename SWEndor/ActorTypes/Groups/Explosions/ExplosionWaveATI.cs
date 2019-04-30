@@ -20,10 +20,10 @@ namespace SWEndor.ActorTypes.Instances
       EnableDistanceCull = false;
 
 
-      SourceMesh = FactoryOwner.Engine.TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = FactoryOwner.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Key);
 
         string texname = Path.Combine("explosion", "wave", @"tex0000.jpg");
         string texpath = Path.Combine(Globals.ImagePath, texname);
@@ -41,7 +41,7 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessState(ActorInfo ainfo)
     {
       if (ainfo.ActorState == ActorState.NORMAL)
-        ainfo.Scale += new TV_3DVECTOR(100, 0, 100) * Globals.Engine.Game.TimeSinceRender;
+        ainfo.Scale += new TV_3DVECTOR(100, 0, 100) * Game.TimeSinceRender;
     }
   }
 }

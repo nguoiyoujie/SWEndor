@@ -6,8 +6,7 @@ namespace SWEndor.Input.Context
 {
   public class DebugGameInputContext : GameInputContext
   {
-    public new readonly static DebugGameInputContext Instance = new DebugGameInputContext();
-    protected DebugGameInputContext() { }
+    public DebugGameInputContext(InputManager manager) : base(manager) { }
 
     public static string[] _dbg_functions = new string[]
     {
@@ -36,9 +35,9 @@ namespace SWEndor.Input.Context
     }
 
 
-    public override void HandleKeyBuffer(InputManager manager, TV_KEYDATA keydata)
+    public override void HandleKeyBuffer(TV_KEYDATA keydata)
     {
-      base.HandleKeyBuffer(manager, keydata);
+      base.HandleKeyBuffer(keydata);
 
       /*
       if (keydata.Pressed > 0)
@@ -76,16 +75,6 @@ namespace SWEndor.Input.Context
         }
       }
       */
-    }
-
-    public override void HandleKeyState(InputManager manager, byte[] keyPressedStates)
-    {
-      base.HandleKeyState(manager, keyPressedStates);
-    }
-
-    public override void HandleMouse(InputManager manager, int mouseX, int mouseY, bool button1, bool button2, bool button3, bool button4, int mouseScroll)
-    {
-      base.HandleMouse(manager, mouseX, mouseY, button1, button2, button3, button4, mouseScroll);
     }
   }
 }

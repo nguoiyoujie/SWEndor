@@ -5,10 +5,9 @@ namespace SWEndor.Input.Context
 {
   public class TerminalGameInputContext : GameInputContext
   {
-    public new readonly static TerminalGameInputContext Instance = new TerminalGameInputContext();
-    protected TerminalGameInputContext() { }
+    public TerminalGameInputContext(InputManager manager) : base(manager) { }
 
-    public override void HandleKeyBuffer(InputManager manager, TV_KEYDATA keydata)
+    public override void HandleKeyBuffer(TV_KEYDATA keydata)
     {
       // base.HandleKeyBuffer(keydata); // disable
       if (keydata.Key == (int)CONST_TV_KEY.TV_KEY_ESCAPE)
@@ -32,7 +31,7 @@ namespace SWEndor.Input.Context
       }
     }
 
-    public override void HandleKeyState(InputManager manager, byte[] keyPressedStates)
+    public override void HandleKeyState(byte[] keyPressedStates)
     {
       //base.HandleKeyState(keyPressedStates); // disable
     }

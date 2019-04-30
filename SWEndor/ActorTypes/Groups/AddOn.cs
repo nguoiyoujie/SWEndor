@@ -1,4 +1,5 @@
 ﻿using SWEndor.Actors;
+using SWEndor.Actors.Components;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -26,7 +27,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       base.Initialize(ainfo);
 
-      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
     }
   }
 }

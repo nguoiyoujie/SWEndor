@@ -63,8 +63,7 @@ namespace SWEndor
       }
     }
 
-
-    public static void LoadSettings()
+    public static void LoadSettings(Engine engine)
     {
       if (File.Exists(Path.Combine(Globals.SettingsPath, "settings.ini")))
       {
@@ -72,7 +71,7 @@ namespace SWEndor
         {
           while (!sr.EndOfStream)
           {
-            ProcessLine(sr.ReadLine());
+            ProcessLine(engine, sr.ReadLine());
           }
         }
       }
@@ -81,7 +80,7 @@ namespace SWEndor
       ResolutionY = (int)GetResolution.y;
     }
 
-    public static void SaveSettings()
+    public static void SaveSettings(Engine engine)
     {
       using (StreamWriter sr = new StreamWriter(Path.Combine(Globals.SettingsPath, "settings.ini"), false))
       {
@@ -89,8 +88,8 @@ namespace SWEndor
         sr.WriteLine(string.Format("FullScreen={0}", FullScreenMode));
         sr.WriteLine(string.Format("ShowPerformance={0}", ShowPerformance));
         sr.WriteLine(string.Format("GameDebug={0}", GameDebug));
-        sr.WriteLine(string.Format("MasterMusicVolume={0}", Globals.Engine.SoundManager.MasterMusicVolume));
-        sr.WriteLine(string.Format("MasterSFXVolume={0}", Globals.Engine.SoundManager.MasterSFXVolume));
+        sr.WriteLine(string.Format("MasterMusicVolume={0}", engine.SoundManager.MasterMusicVolume));
+        sr.WriteLine(string.Format("MasterSFXVolume={0}", engine.SoundManager.MasterSFXVolume));
         sr.WriteLine(string.Format("SteeringSensitivity={0}", SteeringSensitivity));
 
         foreach (InputFunction fn in InputFunction.Registry.GetList())
@@ -100,7 +99,7 @@ namespace SWEndor
       }
     }
 
-    private static void ProcessLine(string line)
+    private static void ProcessLine(Engine engine, string line)
     {
       int seperator_pos = line.IndexOf('=');
       if (seperator_pos != -1 && seperator_pos < line.Length)
@@ -128,11 +127,11 @@ namespace SWEndor
             break;
           case "mastermusicvolume":
             float mastermusicvol = 1.0f;
-            Globals.Engine.SoundManager.MasterMusicVolume = (float.TryParse(value, out mastermusicvol)) ? mastermusicvol : 1.0f;
+            engine.SoundManager.MasterMusicVolume = (float.TryParse(value, out mastermusicvol)) ? mastermusicvol : 1.0f;
             break;
           case "mastersfxvolume":
             float mastersfxvol = 1.0f;
-            Globals.Engine.SoundManager.MasterSFXVolume = (float.TryParse(value, out mastersfxvol)) ? mastersfxvol : 1.0f;
+            engine.SoundManager.MasterSFXVolume = (float.TryParse(value, out mastersfxvol)) ? mastersfxvol : 1.0f;
             break;
           case "steeringsensitivity":
             float steer = 1.5f;

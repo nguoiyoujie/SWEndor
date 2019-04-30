@@ -26,24 +26,24 @@ namespace SWEndor.UI.Widgets
       get
       {
         return (!Owner.ShowPage
-            && this.GetEngine().PlayerInfo.Actor != null
-            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DYING
-            && !(Owner.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
+            && PlayerInfo.Actor != null
+            && PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !(PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
             && Owner.ShowUI);
       }
     }
 
     public override void Draw()
     {
-      ActorInfo p = this.GetEngine().PlayerInfo.Actor;
+      ActorInfo p = PlayerInfo.Actor;
       if (p == null || p.CreationState != CreationState.ACTIVE)
         return;
 
       TVScreen2DImmediate.Action_Begin2D();
-      TVScreen2DImmediate.Draw_FilledBox(Owner.Engine.ScreenWidth / 2 - infomiddlegap - infowidth_left - 5
+      TVScreen2DImmediate.Draw_FilledBox(Engine.ScreenWidth / 2 - infomiddlegap - infowidth_left - 5
                                     , infotop - 5
-                                    , this.GetEngine().ScreenWidth / 2 - infomiddlegap + 5
+                                    , Engine.ScreenWidth / 2 - infomiddlegap + 5
                                     , infotop + infoheight * 4 + 5
                                     , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
       TVScreen2DImmediate.Action_End2D();
@@ -52,12 +52,12 @@ namespace SWEndor.UI.Widgets
 
       TVScreen2DText.Action_BeginText();
       TVScreen2DText.TextureFont_DrawText(string.Format("LIVES: {0,8:0}\nSCORE: {1,8:00000000}\nKILLS: {2,8:0}\nHITS:  {3,8:0}"
-      , this.GetEngine().PlayerInfo.Lives
-      , this.GetEngine().PlayerInfo.Score.Score
-      , this.GetEngine().PlayerInfo.Score.Kills
-      , this.GetEngine().PlayerInfo.Score.Hits
+      , PlayerInfo.Lives
+      , PlayerInfo.Score.Score
+      , PlayerInfo.Score.Kills
+      , PlayerInfo.Score.Hits
       )
-      , this.GetEngine().ScreenWidth / 2 - infomiddlegap - infowidth_left
+      , Engine.ScreenWidth / 2 - infomiddlegap - infowidth_left
       , infotop
       , pcolor.GetIntColor()
       , Font.Factory.Get("Text_12").ID
@@ -65,7 +65,7 @@ namespace SWEndor.UI.Widgets
       TVScreen2DText.Action_EndText();
 
 
-      if (Owner.Engine.GameScenarioManager.Scenario != null)
+      if (GameScenarioManager.Scenario != null)
       {
         TVScreen2DImmediate.Action_Begin2D();
         TVScreen2DImmediate.Draw_FilledBox(leftinfo_left - 5
@@ -74,9 +74,9 @@ namespace SWEndor.UI.Widgets
                                       , leftinfo_stageheight + 5
                                       , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
 
-        TVScreen2DImmediate.Draw_FilledBox(Owner.Engine.ScreenWidth / 2 + infomiddlegap - 5
+        TVScreen2DImmediate.Draw_FilledBox(Engine.ScreenWidth / 2 + infomiddlegap - 5
                                       , infotop - 5
-                                      , this.GetEngine().ScreenWidth / 2 + -infomiddlegap + infowidth_right + 5
+                                      , Engine.ScreenWidth / 2 + -infomiddlegap + infowidth_right + 5
                                       , infotop + infoheight * 4 + 5
                                       , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
         TVScreen2DImmediate.Action_End2D();
@@ -84,8 +84,8 @@ namespace SWEndor.UI.Widgets
         TVScreen2DText.Action_BeginText();
         // Scenario Title, Difficulty
         TVScreen2DText.TextureFont_DrawText(string.Format("{0}: {1}"
-          , this.GetEngine().GameScenarioManager.Scenario.Name
-          , this.GetEngine().GameScenarioManager.Scenario.Difficulty
+          , GameScenarioManager.Scenario.Name
+          , GameScenarioManager.Scenario.Difficulty
           )
           , leftinfo_left
           , leftinfo_stagetop
@@ -95,32 +95,32 @@ namespace SWEndor.UI.Widgets
 
         // StageNumber
         TVScreen2DText.TextureFont_DrawText(string.Format("STAGE: {0}"
-          , this.GetEngine().GameScenarioManager.Scenario.StageNumber
+          , GameScenarioManager.Scenario.StageNumber
           )
-          , this.GetEngine().ScreenWidth / 2 + infomiddlegap
+          , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop
           , pcolor.GetIntColor()
           , Font.Factory.Get("Text_12").ID
           );
 
-        TVScreen2DText.TextureFont_DrawText(Owner.Engine.GameScenarioManager.Line1Text
-          , this.GetEngine().ScreenWidth / 2 + infomiddlegap
+        TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line1Text
+          , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop + infoheight
-          , this.GetEngine().GameScenarioManager.Line1Color.GetIntColor()
+          , GameScenarioManager.Line1Color.GetIntColor()
           , Font.Factory.Get("Text_12").ID
           );
 
-        TVScreen2DText.TextureFont_DrawText(Owner.Engine.GameScenarioManager.Line2Text
-          , this.GetEngine().ScreenWidth / 2 + infomiddlegap
+        TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line2Text
+          , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop + infoheight * 2
-          , this.GetEngine().GameScenarioManager.Line2Color.GetIntColor()
+          , GameScenarioManager.Line2Color.GetIntColor()
           , Font.Factory.Get("Text_12").ID
           );
 
-        TVScreen2DText.TextureFont_DrawText(Owner.Engine.GameScenarioManager.Line3Text
-          , this.GetEngine().ScreenWidth / 2 + infomiddlegap
+        TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line3Text
+          , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop + infoheight * 3
-          , this.GetEngine().GameScenarioManager.Line3Color.GetIntColor()
+          , GameScenarioManager.Line3Color.GetIntColor()
           , Font.Factory.Get("Text_12").ID
           );
 

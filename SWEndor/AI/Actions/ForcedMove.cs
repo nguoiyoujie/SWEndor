@@ -34,9 +34,10 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    public override void Process(ActorInfo owner)
+    public override void Process(Engine engine, int actorID)
     {
-      if (owner.MovementInfo.MaxSpeed == 0)
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
+      if (actor.MovementInfo.MaxSpeed == 0)
       {
         Complete = true;
         return;
@@ -44,18 +45,18 @@ namespace SWEndor.AI.Actions
 
       if (ResumeTime == 0)
       {
-        ResumeTime = owner.GetEngine().Game.GameTime + WaitTime;
+        ResumeTime = engine.Game.GameTime + WaitTime;
       }
 
       if (CloseEnoughDistance < 0)
-        CloseEnoughDistance = owner.TypeInfo.Move_CloseEnough;
+        CloseEnoughDistance = actor.TypeInfo.Move_CloseEnough;
 
-      AdjustRotation(owner, Target_Position);
-      AdjustSpeed(owner, Target_Speed);
+      AdjustRotation(actor, Target_Position);
+      AdjustSpeed(actor, Target_Speed);
 
-      float dist = owner.GetEngine().TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Target_Position);
+      float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetPosition(), Target_Position);
       Complete |= (dist <= CloseEnoughDistance);
-      Complete |= (ResumeTime < owner.GetEngine().Game.GameTime);
+      Complete |= (ResumeTime < engine.Game.GameTime);
     }
   }
 }

@@ -9,6 +9,7 @@ using SWEndor.Weapons;
 using SWEndor.ActorTypes;
 using SWEndor.Player;
 using SWEndor.AI;
+using SWEndor.UI.Forms;
 
 namespace SWEndor
 {
@@ -117,34 +118,19 @@ namespace SWEndor
     public void Process()
     {
       foreach (int actorID in ActorFactory.GetList())
-      {
-        ActorInfo a = ActorFactory.Get(actorID);
-        if (a != null)
-          a.Process();
-
-        //if (a.IsPlayer())
-        //  ProcessPlayerCamera();
-      }
+        ActorInfo.Process(this, actorID);
     }
 
     public void ProcessAI()
     {
       foreach (int actorID in ActorFactory.GetHoldingList())
-      {
-        ActorInfo a = ActorFactory.Get(actorID);
-        if (a != null)
-          a.ProcessAI();
-      }
+        ActorInfo.ProcessAI(this, actorID);
     }
 
     public void ProcessCollision()
     {
       foreach (int actorID in ActorFactory.GetHoldingList())
-      {
-        ActorInfo a = ActorFactory.Get(actorID);
-        if (a != null)
-          a.ProcessCollision();
-      }
+        ActorInfo.ProcessCollision(this, actorID);
     }
 
     public void PreRender()
@@ -182,17 +168,10 @@ namespace SWEndor
       LandInfo.Render();
 
       foreach (int actorID in ActorFactory.GetHoldingList())
-      {
-        ActorInfo a = ActorFactory.Get(actorID);
-        if (a != null)
-          a.Render();
-      }
+        ActorInfo.Render(this, actorID);
 
-      using (new PerfElement("render_2D_draw"))
-        Screen2D.Draw();
-
-      using (new PerfElement("render_drawtoscreen"))
-        TrueVision.TVEngine.RenderToScreen();
+      Screen2D.Draw();
+      TrueVision.TVEngine.RenderToScreen();
     }
 
     public void LinkForm(GameForm form)
@@ -207,6 +186,7 @@ namespace SWEndor
 
     public void Exit()
     {
+      Game.PrepExit();
       Game.Stop();
       Form.Exit();
       Dispose();

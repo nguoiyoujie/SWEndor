@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Input.Context;
+using SWEndor.Input.Functions;
 
 namespace SWEndor.Input
 {
@@ -20,7 +21,14 @@ namespace SWEndor.Input
     private bool MOUSE_B4;
     private int MOUSE_SCROLL_NEW;
     private AInputContext Context;
+
     public readonly Engine Engine;
+
+    public TerminalGameInputContext TerminalGameInputContext;
+    public MenuInputContext MenuInputContext;
+    public DebugGameInputContext DebugGameInputContext;
+    public GameInputContext GameInputContext;
+
 
     internal InputManager(Engine engine)
     {
@@ -38,6 +46,11 @@ namespace SWEndor.Input
       MOUSE_B4 = false;
       MOUSE_SCROLL_NEW = 0;
       Context = null;
+
+      TerminalGameInputContext = new TerminalGameInputContext(this);
+      MenuInputContext = new MenuInputContext(this);
+      DebugGameInputContext = new DebugGameInputContext(this);
+      GameInputContext = new GameInputContext(this);
     }
 
     public void Dispose()
@@ -51,28 +64,29 @@ namespace SWEndor.Input
       INPUT_ENGINE.GetKeyPressedArray(KEY_PRESSED);
     }
 
+
     public void ProcessInput()
     {
       if (Terminal.TConsole.Visible)
       { // Handling Terminal
-        if (Context == null || !(Context is TerminalGameInputContext))
-          Context = TerminalGameInputContext.Instance;
+        if (Context != TerminalGameInputContext)
+          Context = TerminalGameInputContext;
       }
       else if (Globals.Engine.Screen2D.ShowPage && Globals.Engine.Screen2D.CurrentPage != null)
       { // Handling Menu
-        if (Context == null || !(Context is MenuInputContext))
-          Context = MenuInputContext.Instance;
+        if (Context != MenuInputContext)
+          Context = MenuInputContext;
       }
       else
       { // Handling Game
         if (Settings.GameDebug)
         {
-          if (Context == null || !(Context is DebugGameInputContext))
-            Context = DebugGameInputContext.Instance;
+          if (Context != DebugGameInputContext)
+            Context = DebugGameInputContext;
         }
         else
-          if (Context == null || !(Context is GameInputContext) || Context is DebugGameInputContext)
-            Context = GameInputContext.Instance;
+          if (Context != GameInputContext)
+            Context = GameInputContext;
       }
       
       INPUT_ENGINE.GetKeyBuffer(KEY_BUFFER, ref numkeybuffer);
@@ -87,10 +101,10 @@ namespace SWEndor.Input
       Context.Set();
 
       for (int n = 0; n < numkeybuffer; n++)
-        Context.HandleKeyBuffer(this, KEY_BUFFER[n]);
+        Context.HandleKeyBuffer(KEY_BUFFER[n]);
 
-      Context.HandleKeyState(this, KEY_PRESSED);
-      Context.HandleMouse(this, MOUSE_X, MOUSE_Y, MOUSE_B1, MOUSE_B2, MOUSE_B3, MOUSE_B4, MOUSE_SCROLL_NEW);
+      Context.HandleKeyState(KEY_PRESSED);
+      Context.HandleMouse(MOUSE_X, MOUSE_Y, MOUSE_B1, MOUSE_B2, MOUSE_B3, MOUSE_B4, MOUSE_SCROLL_NEW);
     }
   }
 }

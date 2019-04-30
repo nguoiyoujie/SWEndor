@@ -320,7 +320,7 @@ namespace SWEndor.UI.Menu.Pages
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
         SaveBindings();
-        Settings.SaveSettings();
+        Settings.SaveSettings(Engine);
         Back();
         return true;
       }

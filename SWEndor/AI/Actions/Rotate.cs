@@ -30,27 +30,28 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    public override void Process(ActorInfo owner)
+    public override void Process(Engine engine, int actorID)
     {
-      if (owner.MovementInfo.MaxTurnRate == 0)
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
+      if (actor.MovementInfo.MaxTurnRate == 0)
       {
         Complete = true;
         return;
       }
 
-      if (CheckBounds(owner))
+      if (CheckBounds(actor))
       {
-        float delta_angle = AdjustRotation(owner, Target_Position);
-        float delta_speed = AdjustSpeed(owner, Target_Speed);
+        float delta_angle = AdjustRotation(actor, Target_Position);
+        float delta_speed = AdjustSpeed(actor, Target_Speed);
 
         Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle && delta_speed == 0);
       }
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
-      if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
+      if (CheckImminentCollision(actor, actor.MovementInfo.Speed * 2.5f))
       {
-        owner.GetEngine().ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
+        engine.ActionManager.QueueFirst(actorID, new AvoidCollisionRotate(actor.CollisionInfo.ProspectiveCollisionImpact, actor.CollisionInfo.ProspectiveCollisionNormal));
       }
     }
   }

@@ -15,7 +15,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (gscenario == null)
         return "-1";
 
-      ActorTypeInfo atype = Globals.Engine.ActorTypeFactory.Get(ps[0].ToString());
+      ActorTypeInfo atype = context.Engine.ActorTypeFactory.Get(ps[0].ToString());
       string unitname = ps[1].ToString();
       string regname = ps[2].ToString();
       string sidebarname = ps[3].ToString();
@@ -51,7 +51,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /*
     public static object SetActive(Context context, params object[] ps)
     {
-      if (Owner.Engine.GameScenarioManager.Scenario == null)
+      if (GameScenarioManager.Scenario == null)
         return false;
 
       int id = Convert.ToInt32(ps[0].ToString());
@@ -327,12 +327,12 @@ namespace SWEndor.Scenarios.Scripting.Functions
           else
             newValue = actor.ExplosionInfo.DeathExplosionType;
           return;
-        case "EnableDeathExplosion":
-          if (setValue)
-            actor.ExplosionInfo.EnableDeathExplosion = Convert.ToBoolean(newValue);
-          else
-            newValue = actor.ExplosionInfo.EnableDeathExplosion;
-          return;
+        //case "DeathExplosionTrigger":
+        //  if (setValue)
+        //    actor.ExplosionInfo.DeathExplosionTrigger = Convert.ToBoolean(newValue);
+        //  else
+        //    newValue = actor.ExplosionInfo.DeathExplosionTrigger;
+        //  return;
         /*
       case "EnableExplosions":
         if (setValue)
@@ -377,12 +377,6 @@ namespace SWEndor.Scenarios.Scripting.Functions
           else
             newValue = actor.CombatInfo.IsCombatObject;
           return;
-        case "MaxSecondOrderTurnRateFrac":
-          if (setValue)
-            actor.MovementInfo.MaxSecondOrderTurnRateFrac = Convert.ToSingle(newValue);
-          else
-            newValue = actor.MovementInfo.MaxSecondOrderTurnRateFrac;
-          return;
         case "MaxSpeed":
           if (setValue)
             actor.MovementInfo.MaxSpeed = Convert.ToSingle(newValue);
@@ -419,18 +413,6 @@ namespace SWEndor.Scenarios.Scripting.Functions
           else
             newValue = actor.SideBarName;
           return;
-        case "ZNormFrac":
-          if (setValue)
-            actor.MovementInfo.ZNormFrac = Convert.ToSingle(newValue);
-          else
-            newValue = actor.MovementInfo.ZNormFrac;
-          return;
-        case "ZTilt":
-          if (setValue)
-            actor.MovementInfo.ZTilt = Convert.ToSingle(newValue);
-          else
-            newValue = actor.MovementInfo.ZTilt;
-          return;
         case "SetSpawnerEnable":
           if (setValue)
             actor.SetSpawnerEnable(Convert.ToBoolean(newValue));
@@ -439,9 +421,18 @@ namespace SWEndor.Scenarios.Scripting.Functions
           return;
         case "Strength":
           if (setValue)
-            actor.CombatInfo.Strength = Convert.ToSingle(newValue);
+            actor.CombatInfo.onNotify(Actors.Components.CombatEventType.SET_STRENGTH, Convert.ToSingle(newValue));
           else
             newValue = actor.CombatInfo.Strength;
+          return;
+        case "Scale":
+          if (setValue)
+          {
+            float newscale = Convert.ToSingle(newValue);
+            actor.Scale = new TV_3DVECTOR(newscale, newscale, newscale);
+          }
+          else
+            newValue = actor.Scale.x;
           return;
       }
     }

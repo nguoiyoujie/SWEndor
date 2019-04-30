@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 
@@ -97,10 +98,7 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 300, -385) };
       ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 300, 2000) };
 
-      ainfo.MovementInfo.DyingMovement = Actors.Components.DyingMovement.SINK;
-      ainfo.MovementInfo.D_sink_pitch_rate = 0.005f;
-      ainfo.MovementInfo.D_sink_down_rate = 5f;
-      ainfo.MovementInfo.D_sink_forward_rate = 0.8f;
+      ainfo.DyingMovement = new DyingSinkInfo(0.005f, 5f, 0.8f);
 
       ainfo.Scale *= 0.9f;
 

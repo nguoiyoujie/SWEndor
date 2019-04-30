@@ -30,13 +30,14 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    public override void Process(ActorInfo owner)
+    public override void Process(Engine engine, int actorID)
     {
-      if (owner.ActorState != ActorState.HYPERSPACE && !m_switch)
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
+      if (actor.ActorState != ActorState.HYPERSPACE && !m_switch)
       {
-        prevState = owner.ActorState;
-        owner.ActorState = ActorState.HYPERSPACE;
-        owner.LookAtPoint(Target_Position);
+        prevState = actor.ActorState;
+        actor.ActorState = ActorState.HYPERSPACE;
+        actor.LookAtPoint(Target_Position);
         m_switch = true;
       }
 
@@ -45,7 +46,7 @@ namespace SWEndor.AI.Actions
 
     public void ApplyMove(ActorInfo owner)
     {
-      float dist = Globals.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Target_Position);
+      float dist = owner.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Target_Position);
 
       if (dist <= CloseEnoughDistance || prevdist < dist)
       {

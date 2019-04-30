@@ -23,23 +23,22 @@ namespace SWEndor.Input.Functions
     public abstract int Key { get; set; }
     public abstract InputOptions Options { get; }
     public bool Enabled { get; set; }
-    public virtual void Process(InputManager manager) { }
-
+    public virtual void Process(Engine engine) { }
 
     public static class Registry
     {
       private static InputFunction[] fns = new InputFunction[0];
 
-      public static void ProcessOnPress(InputManager manager, int key)
+      public static void ProcessOnPress(Engine engine, int key)
       {
         InputFunction fn = Get(key);
         if (fn != null
           && fn.Enabled
           && fn.Options.HasFlag(InputOptions.ONPRESS))
-          fn.Process(manager);
+          fn.Process(engine);
       }
 
-      public static void ProcessWhilePressed(InputManager manager, byte[] keyPressedStates)
+      public static void ProcessWhilePressed(Engine engine, byte[] keyPressedStates)
       {
         int i = 0;
         while (i < fns.Length)
@@ -51,7 +50,7 @@ namespace SWEndor.Input.Functions
             && fn.Key >= byte.MinValue 
             && fn.Key < byte.MaxValue 
             && keyPressedStates[fn.Key] != 0)
-            fn.Process(manager);
+            fn.Process(engine);
           i++;
         }
       }

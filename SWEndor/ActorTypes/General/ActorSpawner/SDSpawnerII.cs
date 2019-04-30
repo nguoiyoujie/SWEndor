@@ -8,7 +8,7 @@ namespace SWEndor
   {
     public SDSpawnerII(ActorInfo a) : base(a)
     {
-      SpawnTypes = new ActorTypeInfo[] { a.TypeInfo.FactoryOwner.Get("TIE Interceptor") };
+      SpawnTypes = new ActorTypeInfo[] { a.ActorTypeFactory.Get("TIE Interceptor") };
       SpawnMoveDelay = 4;
       SpawnInterval = 5;
       SpawnsRemaining = 99;

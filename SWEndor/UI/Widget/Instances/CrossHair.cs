@@ -2,29 +2,38 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.Weapons;
+using System.IO;
 
 namespace SWEndor.UI.Widgets
 {
   public class CrossHair : Widget
   {
-    public CrossHair(Screen2D owner) : base(owner, "crosshair") { }
+    public CrossHair(Screen2D owner) : base(owner, "crosshair")
+    {
+      tex = Engine.TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, "crosshair/Crosshair.png")
+                                                                   , "Crosshair"
+                                                                   , 64
+                                                                   , 64
+                                                                   , CONST_TV_COLORKEY.TV_COLORKEY_USE_ALPHA_CHANNEL);
+    }
+    int tex;
 
     public override bool Visible
     {
       get
       {
         return (!Owner.ShowPage
-            && this.GetEngine().PlayerInfo.Actor != null
-            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DYING
-            && !(Owner.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
+            && PlayerInfo.Actor != null
+            && PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !(PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
             && Owner.ShowUI);
       }
     }
 
     public override void Draw()
     {
-      ActorInfo p = this.GetEngine().PlayerInfo.Actor;
+      ActorInfo p = PlayerInfo.Actor;
       if (p == null || p.CreationState != CreationState.ACTIVE)
         return;
 
@@ -32,100 +41,59 @@ namespace SWEndor.UI.Widgets
       int burst = 1;
       TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;
 
-      p.TypeInfo.InterpretWeapon(p.ID, this.GetEngine().PlayerInfo.PrimaryWeapon, out weap, out burst);
+      p.TypeInfo.InterpretWeapon(p.ID, PlayerInfo.PrimaryWeapon, out weap, out burst);
       if (weap != null)
       {
         TVScreen2DImmediate.Action_Begin2D();
 
-        float xs = 1;
-        float ys = 1.5f;
-        float k = 16;
-        float l = 4;
-        float xmin = 10;
-        float ymin = 10;
+        TVScreen2DImmediate.Draw_Texture(tex
+                                       , Engine.ScreenWidth / 2 - 32
+                                       , Engine.ScreenHeight / 2 - 32
+                                       , Engine.ScreenWidth / 2 + 32
+                                       , Engine.ScreenHeight / 2 + 32
+                                       , pcolor.GetIntColor()
+                                       , pcolor.GetIntColor()
+                                       , pcolor.GetIntColor()
+                                       , pcolor.GetIntColor());
 
-        for (int i = 0; i < weap.FirePositions.Length; i++)
+        for (int i = 0; i < weap.UIFirePositions.Length; i++)
         {
-          TV_2DVECTOR vec0 = new TV_2DVECTOR(weap.FirePositions[i].x * xs, -weap.FirePositions[i].y * ys);
-          if (vec0.x < -xmin) vec0.x = -xmin;
-          if (vec0.x > xmin) vec0.x = xmin;
-          if (vec0.y < -ymin) vec0.y = -ymin;
-          if (vec0.y > ymin) vec0.y = ymin;
-
-          TV_2DVECTOR vec1 = new TV_2DVECTOR();
-          TV_2DVECTOR vec2 = new TV_2DVECTOR();
-          int wpi = i - weap.CurrentPositionIndex;
-          if (wpi < 0)
-            wpi += weap.FirePositions.Length;
-          bool highlighted = (wpi >= 0 && wpi < burst);
-          if (vec0.x != 0)
+          if (weap.UIFirePositions[i].x != 0 || weap.UIFirePositions[i].y != 0)
           {
-            float m = vec0.y / vec0.x;
-            if (m < 0) { m = -m; }
-            vec1 = new TV_2DVECTOR(vec0.x + (vec0.x > 0 ? 1 : -1) * (k + l * m) / (1 + m)
-                                 , vec0.y + (vec0.y > 0 ? 1 : -1) * (k * m - l) / (1 + m));
-            vec2 = new TV_2DVECTOR(vec0.x + (vec0.x > 0 ? 1 : -1) * (k - l * m) / (1 + m)
-                                 , vec0.y + (vec0.y > 0 ? 1 : -1) * (k * m + l) / (1 + m));
+            TV_2DVECTOR vec0 = new TV_2DVECTOR(weap.UIFirePositions[i].x, weap.UIFirePositions[i].y);
+            int wpi = i - weap.CurrentPositionIndex;
+            if (wpi < 0)
+              wpi += weap.FirePositions.Length;
+            bool highlighted = (wpi >= 0 && wpi < burst);
 
+            float x = weap.UIFirePositions[i].x;
+            float y = weap.UIFirePositions[i].y;
 
-            TVScreen2DImmediate.Draw_Triangle(vec0.x + this.GetEngine().ScreenWidth / 2
-                                                  , vec0.y + this.GetEngine().ScreenHeight / 2
-                                                  , vec1.x + this.GetEngine().ScreenWidth / 2
-                                                  , vec1.y + this.GetEngine().ScreenHeight / 2
-                                                  , vec2.x + this.GetEngine().ScreenWidth / 2
-                                                  , vec2.y + this.GetEngine().ScreenHeight / 2
-                                                  , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
-          }
-          else if (vec0.y != 0)
-          {
-            vec1 = new TV_2DVECTOR(k
-                                 , vec0.y + (vec0.y > 0 ? l : -l));
-            vec2 = new TV_2DVECTOR(-vec1.x, vec1.y);
-
-
-            TVScreen2DImmediate.Draw_Triangle(vec0.x + this.GetEngine().ScreenWidth / 2
-                                                  , vec0.y + this.GetEngine().ScreenHeight / 2
-                                                  , vec1.x + this.GetEngine().ScreenWidth / 2
-                                                  , vec1.y + this.GetEngine().ScreenHeight / 2
-                                                  , vec2.x + this.GetEngine().ScreenWidth / 2
-                                                  , vec2.y + this.GetEngine().ScreenHeight / 2
-                                                  , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
-          }
-          else
-          {
-            TVScreen2DImmediate.Draw_Line(vec0.x + l + this.GetEngine().ScreenWidth / 2
-                                                          , vec0.y + this.GetEngine().ScreenHeight / 2
-                                                          , vec0.x + this.GetEngine().ScreenWidth / 2
-                                                          , vec0.y + l + this.GetEngine().ScreenHeight / 2
-                                                          , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
-
-            TVScreen2DImmediate.Draw_Line(vec0.x - l + this.GetEngine().ScreenWidth / 2
-                                                          , vec0.y + this.GetEngine().ScreenHeight / 2
-                                                          , vec0.x + this.GetEngine().ScreenWidth / 2
-                                                          , vec0.y + l + this.GetEngine().ScreenHeight / 2
-                                                          , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
-
-            TVScreen2DImmediate.Draw_Line(vec0.x + l + this.GetEngine().ScreenWidth / 2
-                                                          , vec0.y + this.GetEngine().ScreenHeight / 2
-                                                          , vec0.x + this.GetEngine().ScreenWidth / 2
-                                                          , vec0.y - l + this.GetEngine().ScreenHeight / 2
-                                                          , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
-
-            TVScreen2DImmediate.Draw_Line(vec0.x - l + this.GetEngine().ScreenWidth / 2
-                                                          , vec0.y + this.GetEngine().ScreenHeight / 2
-                                                          , vec0.x + this.GetEngine().ScreenWidth / 2
-                                                          , vec0.y - l + this.GetEngine().ScreenHeight / 2
-                                                          , highlighted ? new TV_COLOR(1, 0.5f, 0, 1).GetIntColor() : pcolor.GetIntColor());
-
+            if (highlighted)
+            {
+              TVScreen2DImmediate.Draw_FilledBox(x - 2 + Engine.ScreenWidth / 2
+                                              , y - 2 + Engine.ScreenHeight / 2
+                                              , x + 2 + Engine.ScreenWidth / 2
+                                              , y + 2 + Engine.ScreenHeight / 2
+                                              , pcolor.GetIntColor());
+            }
+            else
+            {
+              TVScreen2DImmediate.Draw_Box(x - 2 + Engine.ScreenWidth / 2
+                                              , y - 2 + Engine.ScreenHeight / 2
+                                              , x + 2 + Engine.ScreenWidth / 2
+                                              , y + 2 + Engine.ScreenHeight / 2
+                                              , new TV_COLOR(0.4f, 0.5f, 1f, 0.4f).GetIntColor());
+            }
           }
         }
         TVScreen2DImmediate.Action_End2D();
       }
 
-      p.TypeInfo.InterpretWeapon(p.ID, this.GetEngine().PlayerInfo.SecondaryWeapon, out weap, out burst);
+      p.TypeInfo.InterpretWeapon(p.ID, PlayerInfo.SecondaryWeapon, out weap, out burst);
       if (weap != null)
       {
-        if (Owner.Engine.PlayerInfo.SecondaryWeapon.Contains("torp"))
+        if (PlayerInfo.SecondaryWeapon.Contains("torp"))
         {
           float p1_x = -40;
           float p1_y = 28;
@@ -141,18 +109,18 @@ namespace SWEndor.UI.Widgets
           {
             if (t < tremain)
             {
-              TVScreen2DImmediate.Draw_FilledBox(p1_x + this.GetEngine().ScreenWidth / 2
-                                                    , p1_y + this.GetEngine().ScreenHeight / 2
-                                                    , p2_x + this.GetEngine().ScreenWidth / 2
-                                                    , p2_y + this.GetEngine().ScreenHeight / 2
+              TVScreen2DImmediate.Draw_FilledBox(p1_x + Engine.ScreenWidth / 2
+                                                    , p1_y + Engine.ScreenHeight / 2
+                                                    , p2_x + Engine.ScreenWidth / 2
+                                                    , p2_y + Engine.ScreenHeight / 2
                                                     , pcolor.GetIntColor());
             }
             else
             {
-              TVScreen2DImmediate.Draw_Box(p1_x + this.GetEngine().ScreenWidth / 2
-                                    , p1_y + this.GetEngine().ScreenHeight / 2
-                                    , p2_x + this.GetEngine().ScreenWidth / 2
-                                    , p2_y + this.GetEngine().ScreenHeight / 2
+              TVScreen2DImmediate.Draw_Box(p1_x + Engine.ScreenWidth / 2
+                                    , p1_y + Engine.ScreenHeight / 2
+                                    , p2_x + Engine.ScreenWidth / 2
+                                    , p2_y + Engine.ScreenHeight / 2
                                     , pcolor.GetIntColor());
             }
 
@@ -169,7 +137,7 @@ namespace SWEndor.UI.Widgets
             }
           }
         }
-        else if (Owner.Engine.PlayerInfo.SecondaryWeapon.Contains("misl"))
+        else if (PlayerInfo.SecondaryWeapon.Contains("misl"))
         {
           float p1_x = -40;
           float p1_y = 28;
@@ -185,18 +153,18 @@ namespace SWEndor.UI.Widgets
           {
             if (t < tremain)
             {
-              TVScreen2DImmediate.Draw_FilledBox(p1_x + this.GetEngine().ScreenWidth / 2
-                                                    , p1_y + this.GetEngine().ScreenHeight / 2
-                                                    , p2_x + this.GetEngine().ScreenWidth / 2
-                                                    , p2_y + this.GetEngine().ScreenHeight / 2
+              TVScreen2DImmediate.Draw_FilledBox(p1_x + Engine.ScreenWidth / 2
+                                                    , p1_y + Engine.ScreenHeight / 2
+                                                    , p2_x + Engine.ScreenWidth / 2
+                                                    , p2_y + Engine.ScreenHeight / 2
                                                     , pcolor.GetIntColor());
             }
             /*else
             {
-              TVScreen2DImmediate.Draw_Box(p1_x + this.GetEngine().ScreenWidth / 2
-                                    , p1_y + this.GetEngine().ScreenHeight / 2
-                                    , p2_x + this.GetEngine().ScreenWidth / 2
-                                    , p2_y + this.GetEngine().ScreenHeight / 2
+              TVScreen2DImmediate.Draw_Box(p1_x + Engine.ScreenWidth / 2
+                                    , p1_y + Engine.ScreenHeight / 2
+                                    , p2_x + Engine.ScreenWidth / 2
+                                    , p2_y + Engine.ScreenHeight / 2
                                     , pcolor.GetIntColor());
             }*/
 
@@ -221,16 +189,16 @@ namespace SWEndor.UI.Widgets
           float p2_y = 33;
           float tremain = (float)weap.Ammo / weap.MaxAmmo;
 
-          TVScreen2DImmediate.Draw_FilledBox(p1_x + this.GetEngine().ScreenWidth / 2
-                                                    , p1_y + this.GetEngine().ScreenHeight / 2
-                                                    , p1_x + (p2_x - p1_x) * tremain + this.GetEngine().ScreenWidth / 2
-                                                    , p2_y + this.GetEngine().ScreenHeight / 2
+          TVScreen2DImmediate.Draw_FilledBox(p1_x + Engine.ScreenWidth / 2
+                                                    , p1_y + Engine.ScreenHeight / 2
+                                                    , p1_x + (p2_x - p1_x) * tremain + Engine.ScreenWidth / 2
+                                                    , p2_y + Engine.ScreenHeight / 2
                                                     , new TV_COLOR(0.6f, 0.6f, 1, 1).GetIntColor());
 
-          TVScreen2DImmediate.Draw_Box(p1_x + this.GetEngine().ScreenWidth / 2
-                                                    , p1_y + this.GetEngine().ScreenHeight / 2
-                                                    , p2_x + this.GetEngine().ScreenWidth / 2
-                                                    , p2_y + this.GetEngine().ScreenHeight / 2
+          TVScreen2DImmediate.Draw_Box(p1_x + Engine.ScreenWidth / 2
+                                                    , p1_y + Engine.ScreenHeight / 2
+                                                    , p2_x + Engine.ScreenWidth / 2
+                                                    , p2_y + Engine.ScreenHeight / 2
                                                     , new TV_COLOR(1, 0.5f, 0, 1).GetIntColor());
         }
         TVScreen2DImmediate.Action_End2D();

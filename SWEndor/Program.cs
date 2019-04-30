@@ -26,10 +26,10 @@ namespace SWEndor
         Engine engine = Globals.InitEngine();
 
         InputFunction.Registry.GenerateDefault();
-        Settings.LoadSettings();
-        Settings.SaveSettings();
+        Settings.LoadSettings(engine);
+        Settings.SaveSettings(engine);
 
-        Application.Run(new GameForm(engine));
+        Application.Run(new UI.Forms.BackgroundForm(engine));
       }
       catch (Exception ex)
       {

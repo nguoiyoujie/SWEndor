@@ -87,18 +87,27 @@
       <HintPath>..\dll\MTV3D65.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actors\ActorCreationInfo.cs" />
+    <Compile Include="Actors\Components\Movement\RotateOnlyInfo.cs" />
+    <Compile Include="Actors\Components\Movement\IMovementInfo.cs" />
+    <Compile Include="Actors\Components\Movement\ForwardMoveInfo.cs" />
+    <Compile Include="Actors\Components\Movement\LaserMoveInfo.cs" />
+    <Compile Include="Actors\Components\Movement\NoMoveInfo.cs" />
+    <Compile Include="Actors\Components\SpeedComponent.cs" />
+    <Compile Include="Actors\ProcessActorInfo.cs" />
     <Compile Include="Actors\Components\CollisionInfo.cs" />
     <Compile Include="Actors\Components\CameraSystemInfo.cs" />
     <Compile Include="Actors\Components\WeaponSystemInfo.cs" />
     <Compile Include="Actors\Components\CycleInfo.cs" />
     <Compile Include="Actors\Components\ExplosionInfo.cs" />
     <Compile Include="Actors\Components\RegenerationInfo.cs" />
-    <Compile Include="Actors\Components\MovementInfo.cs" />
+    <Compile Include="Actors\Components\Movement\MovementInfo.cs" />
     <Compile Include="Actors\Components\CombatInfo.cs" />
     <Compile Include="Actors\Enums\ActorState.cs" />
     <Compile Include="Actors\Enums\CreationState.cs" />
@@ -300,6 +309,7 @@
     <Compile Include="Input\Functions\Gameplay\Special\AllEnemiesDying.cs" />
     <Compile Include="Input\Functions\Gameplay\Special\AllEnemiesDead.cs" />
     <Compile Include="Input\Functions\Gameplay\Special\AddLife.cs" />
+    <Compile Include="Input\Functions\Gameplay\Weapon\RemoveLockOn.cs" />
     <Compile Include="Input\Functions\Gameplay\Weapon\NextSecondary.cs" />
     <Compile Include="Input\Functions\Gameplay\Weapon\PrevSecondary.cs" />
     <Compile Include="Input\Functions\Gameplay\Weapon\PrevPrimary.cs" />
@@ -387,6 +397,12 @@
     <Compile Include="Sound\Piece\Piece.cs" />
     <Compile Include="UI\Font\Factory\Factory.cs" />
     <Compile Include="UI\Font\Font.cs" />
+    <Compile Include="UI\Forms\BackgroundForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\BackgroundForm.Designer.cs">
+      <DependentUpon>BackgroundForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Menu\Instances\FatalError.cs" />
     <Compile Include="UI\Menu\Instances\GameWon.cs" />
     <Compile Include="UI\Menu\Instances\GameOver.cs" />
@@ -428,10 +444,10 @@
     <Compile Include="ActorTypes\Groups\Fighters\XWingATI.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene\EndorATI.cs" />
     <Compile Include="Core\Engine.cs" />
-    <Compile Include="GameForm.cs">
+    <Compile Include="UI\Forms\GameForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GameForm.Designer.cs">
+    <Compile Include="UI\Forms\GameForm.Designer.cs">
       <DependentUpon>GameForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Scenarios\GameScenarioManager.cs" />
@@ -476,41 +492,18 @@
     <Compile Include="UI\Widget\UIWidget.cs" />
     <Compile Include="Utilities\Navigation.cs" />
     <Compile Include="Utilities\Utilities.cs" />
-    <Compile Include="Weapons\DeathStar\DeathStarLaserWeapon.cs" />
-    <Compile Include="Weapons\Falcon\FalconGunPortLaserWeapon.cs" />
-    <Compile Include="Weapons\MissileBoat\MissileBoat_MissileWeapon.cs" />
-    <Compile Include="Weapons\NebulonB\NebulonBMissileWeapon.cs" />
-    <Compile Include="Weapons\MissileBoat\MissileBoat_LaserWeapon.cs" />
-    <Compile Include="Weapons\MissileBoat\MissileBoat_TorpWeapon.cs" />
-    <Compile Include="Weapons\TIE-IN\TIE_IN_DblLaserWeapon.cs" />
-    <Compile Include="Weapons\TIE-LN\TIE_LN_DblLaserWeapon.cs" />
     <Compile Include="Weapons\Towers\Tower_SuperLaserWeapon.cs" />
     <Compile Include="Weapons\Towers\Tower_LaserWeapon.cs" />
     <Compile Include="Weapons\Towers\Tower_DblLaserWeapon.cs" />
     <Compile Include="Weapons\DummyWeapon.cs" />
-    <Compile Include="Weapons\Transport\TransportTurboLaserWeapon.cs" />
     <Compile Include="Weapons\TrackerDummyWeapon.cs" />
-    <Compile Include="Weapons\MC90\MC90TurboLaserWeapon.cs" />
-    <Compile Include="Weapons\NebulonB\NebulonBTurboLaserWeapon.cs" />
-    <Compile Include="Weapons\TIE-X1\TIE_X1_LaserWeapon.cs" />
-    <Compile Include="Weapons\TIE-IN\TIE_IN_LaserWeapon.cs" />
-    <Compile Include="Weapons\TIE-sa\TIE_sa_LaserWeapon.cs" />
-    <Compile Include="Weapons\TIE-LN\TIE_LN_LaserWeapon.cs" />
-    <Compile Include="Weapons\Falcon\FalconLaserWeapon.cs" />
-    <Compile Include="Weapons\TIE-sa\TIE_sa_IonWeapon.cs" />
-    <Compile Include="Weapons\TIE-X1\TIE_X1_TorpWeapon.cs" />
-    <Compile Include="Weapons\Corellian\CorellianTurboLaserWeapon.cs" />
     <Compile Include="Weapons\WeaponFactory.cs" />
     <Compile Include="Weapons\WeaponStatInfo.cs" />
-    <Compile Include="Weapons\Z95\Z95LaserWeapon.cs" />
-    <Compile Include="Weapons\YWing\YWingIonWeapon.cs" />
-    <Compile Include="Weapons\TIE-sa\TIE_sa_TorpWeapon.cs" />
-    <Compile Include="Weapons\YWing\YWingTorpWeapon.cs" />
-    <Compile Include="Weapons\XWing\XWingTorpWeapon.cs" />
-    <Compile Include="Weapons\YWing\YWingLaserWeapon.cs" />
-    <Compile Include="Weapons\XWing\XWingLaserWeapon.cs" />
     <Compile Include="Weapons\WeaponInfo.cs" />
-    <EmbeddedResource Include="GameForm.resx">
+    <EmbeddedResource Include="UI\Forms\BackgroundForm.resx">
+      <DependentUpon>BackgroundForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -12,9 +12,10 @@ namespace SWEndor.AI.Actions
 
     private bool Enabled;
 
-    public override void Process(ActorInfo owner)
+    public override void Process(Engine engine, int actorID)
     {
-      owner.SetSpawnerEnable(Enabled);
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
+      actor.SetSpawnerEnable(Enabled);
       Complete = true;
     }
   }

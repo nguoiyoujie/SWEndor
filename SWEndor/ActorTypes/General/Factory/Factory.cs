@@ -129,6 +129,7 @@ namespace SWEndor.ActorTypes
         Register(new GreenAntiShipLaserATI(this));
         Register(new GreenLaserAdvancedATI(this));
         Register(new YellowLaserATI(this));
+        Register(new Yellow2LaserATI(this));
         Register(new SmallIonLaserATI(this));
         Register(new BigIonLaserATI(this));
         Register(new DeathStarLaserATI(this));

@@ -28,22 +28,17 @@ namespace SWEndor.ActorTypes.Instances
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"projectiles\ion_sm_laser.x");
     }
 
-    public override void ProcessNewState(ActorInfo ainfo)
+    public override void Initialize(ActorInfo ainfo)
     {
-      if (ainfo.ActorState == ActorState.DYING || ainfo.ActorState == ActorState.DEAD)
-      {
-        ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("ExplosionSm"));
-        acinfo.Position = ainfo.GetPosition();
-        ActorInfo.Create(FactoryOwner.Engine.ActorFactory, acinfo);
+      base.Initialize(ainfo);
 
-        ainfo.ActorState = ActorState.DEAD;
-      }
+      ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
     }
 
     public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      ActorInfo owner = this.GetEngine().ActorFactory.Get(ownerActorID);
-      ActorInfo hitby = this.GetEngine().ActorFactory.Get(hitbyActorID);
+      ActorInfo owner = ActorFactory.Get(ownerActorID);
+      ActorInfo hitby = ActorFactory.Get(hitbyActorID);
 
       if (owner == null || hitby == null)
         return;
@@ -53,7 +48,7 @@ namespace SWEndor.ActorTypes.Instances
       List<int> rm = new List<int>();
       foreach (int i in children)
       {
-        ActorInfo c = this.GetEngine().ActorFactory.Get(i);
+        ActorInfo c = ActorFactory.Get(i);
         if (c == null
           || c.CreationState != CreationState.ACTIVE
           || !c.TypeInfo.TargetType.HasFlag(TargetType.ADDON))
@@ -67,27 +62,27 @@ namespace SWEndor.ActorTypes.Instances
       {
         for (int shock = 3; shock > 0; shock--)
         {
-          ActorInfo child = this.GetEngine().ActorFactory.Get(children[Globals.Engine.Random.Next(0, children.Count)]);
-          child.CombatInfo.Strength -= 0.1f * Globals.Engine.Random.Next(25, 50);
+          ActorInfo child = ActorFactory.Get(children[Engine.Random.Next(0, children.Count)]);
+          child.CombatInfo.onNotify(Actors.Components.CombatEventType.DAMAGE, 0.1f * Engine.Random.Next(25, 50));
 
           float empduration = 12;
           
           foreach (WeaponInfo w in child.WeaponSystemInfo.Weapons.Values)
-            if (w.WeaponCooldown < Globals.Engine.Game.GameTime + empduration + 2)
-              w.WeaponCooldown = Globals.Engine.Game.GameTime + empduration + 2;
+            if (w.WeaponCooldown < Game.GameTime + empduration + 2)
+              w.WeaponCooldown = Game.GameTime + empduration + 2;
 
           foreach (int i in child.GetAllChildren(1))
           {
-            ActorInfo child2 = this.GetEngine().ActorFactory.Get(i);
+            ActorInfo child2 = ActorFactory.Get(i);
             if (child2.TypeInfo is ElectroATI)
             {
               child2.CycleInfo.CyclesRemaining = empduration / child2.CycleInfo.CyclePeriod;
               return;
             }
           }
-          ActorCreationInfo acinfo = new ActorCreationInfo(FactoryOwner.Get("Electro"));
+          ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
           acinfo.Position = child.GetPosition();
-          ActorInfo electro = ActorInfo.Create(FactoryOwner.Engine.ActorFactory, acinfo);
+          ActorInfo electro = ActorInfo.Create(ActorFactory, acinfo);
           electro.AddParent(child.ID);
           electro.CycleInfo.CyclesRemaining = empduration / electro.CycleInfo.CyclePeriod;
         }

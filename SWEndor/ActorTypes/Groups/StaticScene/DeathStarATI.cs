@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 
@@ -11,10 +12,10 @@ namespace SWEndor.ActorTypes.Instances
     {
       float size = 20000;
 
-      SourceMesh = FactoryOwner.Engine.TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = FactoryOwner.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Key);
 
         string texname = Path.Combine("deathstar", "deathstar.bmp");
         string alphatexname = Path.Combine("deathstar", "deathstaralpha.bmp"); 
@@ -35,7 +36,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
 
-      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
       ainfo.ExplosionInfo.DeathExplosionType = "ExplosionMega";
       ainfo.ExplosionInfo.DeathExplosionSize = 1;
     }
@@ -43,17 +44,17 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessNewState(ActorInfo ainfo)
     {
       base.ProcessNewState(ainfo);
-      if (ainfo.ActorState == ActorState.DYING)
+      if (ainfo.ActorState.IsDying())
       {
         ainfo.CombatInfo.OnTimedLife = true;
         ainfo.CombatInfo.TimedLife = 5f;
         ainfo.CombatInfo.IsCombatObject = false;
       }
-      else if (ainfo.ActorState == ActorState.DEAD)
+      else if (ainfo.ActorState.IsDead())
       {
-        ActorCreationInfo acinfo = new ActorCreationInfo(FactoryOwner.Get("Explosion Wave Mega"));
+        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave Mega"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo explwav = ActorInfo.Create(FactoryOwner.Engine.ActorFactory, acinfo);
+        ActorInfo explwav = ActorInfo.Create(ActorFactory, acinfo);
         explwav.Scale = new MTV3D65.TV_3DVECTOR(10, 10, 10);
       }
     }

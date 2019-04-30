@@ -17,11 +17,11 @@ namespace SWEndor.ActorTypes.Instances
 
       EnableDistanceCull = false;
 
-      SourceMesh = FactoryOwner.Engine.TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
         LoadAlphaTextureFromFolder(Globals.ImagePath, "explosion/large");
-        SourceMesh = FactoryOwner.Engine.TrueVision.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 1000, 1000, Key, true);
+        SourceMesh = TrueVision.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 1000, 1000, Key, true);
         SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
         SourceMesh.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
 

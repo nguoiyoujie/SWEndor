@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 
@@ -39,10 +40,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
 
-      ainfo.MovementInfo.DyingMovement = Actors.Components.DyingMovement.SINK;
-      ainfo.MovementInfo.D_sink_pitch_rate = 0.02f;
-      ainfo.MovementInfo.D_sink_down_rate = 5f;
-      ainfo.MovementInfo.D_sink_forward_rate = 0.8f;
+      ainfo.DyingMovement = new DyingSinkInfo(0.02f, 5f, 0.8f);
 
       ainfo.RegenerationInfo.SelfRegenRate = 0.1f;
 

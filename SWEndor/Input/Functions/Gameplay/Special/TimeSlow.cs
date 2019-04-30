@@ -10,14 +10,14 @@ namespace SWEndor.Input.Functions.Gameplay.Special
     public override string Name { get { return InternalName; } }
     public override InputOptions Options { get { return InputOptions.WHILEPRESSED; } }
 
-    public override void Process(InputManager manager)
+    public override void Process(Engine engine)
     {
-      Globals.Engine.Game.TimeControl.SpeedModifier *= 0.9f;
-      Globals.Engine.Screen2D.MessageSecondaryText(string.Format("DEV: TIMEMULT = {0:0.00}", Globals.Engine.Game.TimeControl.SpeedModifier)
+      engine.Game.TimeControl.SpeedModifier *= 0.9f;
+      engine.Screen2D.MessageSecondaryText(string.Format("DEV: TIMEMULT = {0:0.00}", engine.Game.TimeControl.SpeedModifier)
                                                       , 1.5f
                                                       , new TV_COLOR(0.5f, 0.5f, 1, 1)
                                                       , 99);
-      Utilities.Clamp(ref Globals.Engine.Game.TimeControl.SpeedModifier, 0.01f, 100);
+      engine.Game.TimeControl.SpeedModifier = engine.Game.TimeControl.SpeedModifier.Clamp(0.01f, 100);
     }
   }
 }

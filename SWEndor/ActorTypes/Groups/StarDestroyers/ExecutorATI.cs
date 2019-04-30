@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 
@@ -87,10 +88,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ainfo.ExplosionInfo.DeathExplosionSize = 5;
 
-      ainfo.MovementInfo.DyingMovement = Actors.Components.DyingMovement.SINK;
-      ainfo.MovementInfo.D_sink_pitch_rate = 0.00025f;
-      ainfo.MovementInfo.D_sink_down_rate = 1.3f;
-      ainfo.MovementInfo.D_sink_forward_rate = 0.2f;
+      ainfo.DyingMovement = new DyingSinkInfo(0.00025f, 1.3f, 0.2f);
 
       ainfo.Scale *= 2.5f;
     }
@@ -98,7 +96,7 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessNewState(ActorInfo ainfo)
     {
       base.ProcessNewState(ainfo);
-      if (ainfo.ActorState == ActorState.DYING)
+      if (ainfo.ActorState.IsDying())
       {
         ainfo.CombatInfo.OnTimedLife = true;
         ainfo.CombatInfo.TimedLife = 2000f;

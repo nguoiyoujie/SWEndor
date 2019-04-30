@@ -10,27 +10,27 @@ namespace SWEndor
   {
     public static Engine GetEngine(this ActorInfo a)
     {
-      return a.FactoryOwner.Engine;
+      return a.Engine;
     }
 
     public static Engine GetEngine(this ActorTypeInfo at)
     {
-      return at.FactoryOwner.Engine;
+      return at.Engine;
     }
 
     public static Engine GetEngine(this GameScenarioBase gsb)
     {
-      return gsb.Manager.Engine;
+      return gsb.Engine;
     }
 
     public static Engine GetEngine(this Widget widget)
     {
-      return widget.Owner.Engine;
+      return widget.Engine;
     }
 
     public static Engine GetEngine(this Page page)
     {
-      return page.Owner.Engine;
+      return page.Engine;
     }
   }
 }

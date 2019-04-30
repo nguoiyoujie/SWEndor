@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using SWEndor.ActorTypes.Components;
 using System.Collections.Generic;
 using System.IO;
@@ -17,10 +18,10 @@ namespace SWEndor.ActorTypes.Instances
 
       float size = 20000;
 
-      SourceMesh = FactoryOwner.Engine.TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = FactoryOwner.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Key);
 
         List<int> death = new List<int> { 1, 10, 15, 16, 20, 21, 22, 23, 27, 28, 30, 31, 34, 35, 36 };
         List<int> frames = new List<int>();
@@ -35,18 +36,18 @@ namespace SWEndor.ActorTypes.Instances
         
         int dstartex = 0;
         int dstardtex = 0;
-        if (Globals.Engine.TrueVision.TVGlobals.GetTex(texname) == 0)
+        if (TrueVision.TVGlobals.GetTex(texname) == 0)
         {
-          int texS = Globals.Engine.TrueVision.TVTextureFactory.LoadTexture(texpath);
-          int texA = Globals.Engine.TrueVision.TVTextureFactory.LoadTexture(alphatexpath); // note we are loading alpha map as texture
-          dstartex = Globals.Engine.TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texname);
+          int texS = TrueVision.TVTextureFactory.LoadTexture(texpath);
+          int texA = TrueVision.TVTextureFactory.LoadTexture(alphatexpath); // note we are loading alpha map as texture
+          dstartex = TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texname);
         }
 
-        if (Globals.Engine.TrueVision.TVGlobals.GetTex(texdname) == 0)
+        if (TrueVision.TVGlobals.GetTex(texdname) == 0)
         {
-          int texS = Globals.Engine.TrueVision.TVTextureFactory.LoadTexture(texdpath);
-          int texA = Globals.Engine.TrueVision.TVTextureFactory.LoadTexture(alphatexpath);
-          dstardtex = Globals.Engine.TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texdname);
+          int texS = TrueVision.TVTextureFactory.LoadTexture(texdpath);
+          int texA = TrueVision.TVTextureFactory.LoadTexture(alphatexpath);
+          dstardtex = TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texdname);
         }
         
         /*
@@ -71,7 +72,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
 
-      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
       ainfo.ExplosionInfo.DeathExplosionType = "ExplosionMega";
       ainfo.ExplosionInfo.DeathExplosionSize = 1;
     }
@@ -79,17 +80,17 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessNewState(ActorInfo ainfo)
     {
       base.ProcessNewState(ainfo);
-      if (ainfo.ActorState == ActorState.DYING)
+      if (ainfo.ActorState.IsDying())
       {
         ainfo.CombatInfo.OnTimedLife = true;
         ainfo.CombatInfo.TimedLife = 5f;
         ainfo.CombatInfo.IsCombatObject = false;
       }
-      else if (ainfo.ActorState == ActorState.DEAD)
+      else if (ainfo.ActorState.IsDead())
       {
-        ActorCreationInfo acinfo = new ActorCreationInfo(FactoryOwner.Get("Explosion Wave Mega"));
+        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave Mega"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo explwav = ActorInfo.Create(FactoryOwner.Engine.ActorFactory, acinfo);
+        ActorInfo explwav = ActorInfo.Create(ActorFactory, acinfo);
         explwav.Scale = new MTV3D65.TV_3DVECTOR(10, 10, 10);
       }
     }
@@ -97,7 +98,7 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessState(ActorInfo ainfo)
     {
       base.ProcessState(ainfo);
-      if (ainfo.ActorState == ActorState.DYING)
+      if (ainfo.ActorState.IsDying())
       {
         int k = texanimframes.Length - 1 - (int)(ainfo.CycleInfo.CycleTime / ainfo.CycleInfo.CyclePeriod * texanimframes.Length);
         if (k >= 0 && k < texanimframes.Length)

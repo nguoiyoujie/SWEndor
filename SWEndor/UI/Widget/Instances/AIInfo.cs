@@ -14,18 +14,18 @@ namespace SWEndor.UI.Widgets
       get
       {
         return (!Owner.ShowPage
-            && this.GetEngine().PlayerInfo.Actor != null
-            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DYING
-            && !(Owner.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
+            && PlayerInfo.Actor != null
+            && PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !(PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
             && Owner.ShowUI
-            && this.GetEngine().PlayerInfo.PlayerAIEnabled);
+            && PlayerInfo.PlayerAIEnabled);
       }
     }
 
     public override void Draw()
     {
-      ActorInfo p = this.GetEngine().PlayerInfo.Actor;
+      ActorInfo p = PlayerInfo.Actor;
       if (p == null || p.CreationState != CreationState.ACTIVE)
         return;
 
@@ -51,7 +51,7 @@ namespace SWEndor.UI.Widgets
         TV_3DVECTOR targetpos = new TV_3DVECTOR();
         if (p.CurrentAction is AttackActor)
         {
-          ActorInfo target = this.GetEngine().ActorFactory.Get(((AttackActor)p.CurrentAction).Target_ActorID);
+          ActorInfo target = Engine.ActorFactory.Get(((AttackActor)p.CurrentAction).Target_ActorID);
           if (target != null)
           {
             targetpos = ((AttackActor)p.CurrentAction).Target_Position;
@@ -78,7 +78,7 @@ namespace SWEndor.UI.Widgets
         }
         else if (p.CurrentAction is FollowActor)
         {
-          ActorInfo target = this.GetEngine().ActorFactory.Get(((AttackActor)p.CurrentAction).Target_ActorID);
+          ActorInfo target = Engine.ActorFactory.Get(((AttackActor)p.CurrentAction).Target_ActorID);
           if (target != null)
           {
             targetpos = target.GetPosition();
@@ -114,8 +114,8 @@ namespace SWEndor.UI.Widgets
       }
 
       TVScreen2DImmediate.Draw_FilledBox(loc.x - 5, loc.y - 5, loc.x + 405, loc.y + 40 / 3 * lines + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
-      TVScreen2DImmediate.Draw_FilledBox(Owner.Engine.ScreenWidth / 2 - 80, this.GetEngine().ScreenHeight / 2 - 25, this.GetEngine().ScreenWidth / 2 - 40, this.GetEngine().ScreenHeight / 2 + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
-      TVScreen2DImmediate.Draw_FilledBox(Owner.Engine.ScreenWidth / 2 + 45, this.GetEngine().ScreenHeight / 2 - 25, this.GetEngine().ScreenWidth / 2 + 55 + 10 * name.Length, this.GetEngine().ScreenHeight / 2 + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
+      TVScreen2DImmediate.Draw_FilledBox(Engine.ScreenWidth / 2 - 80, Engine.ScreenHeight / 2 - 25, Engine.ScreenWidth / 2 - 40, Engine.ScreenHeight / 2 + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
+      TVScreen2DImmediate.Draw_FilledBox(Engine.ScreenWidth / 2 + 45, Engine.ScreenHeight / 2 - 25, Engine.ScreenWidth / 2 + 55 + 10 * name.Length, Engine.ScreenHeight / 2 + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
       TVScreen2DImmediate.Action_End2D();
 
       TVScreen2DText.Action_BeginText();
@@ -123,10 +123,10 @@ namespace SWEndor.UI.Widgets
         , loc.x, loc.y, new TV_COLOR(0.6f, 0.8f, 0.6f, 1).GetIntColor(), Font.Factory.Get("Text_08").ID);
 
       TVScreen2DText.TextureFont_DrawText("AI"
-        , this.GetEngine().ScreenWidth / 2 - 75, this.GetEngine().ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), Font.Factory.Get("Text_14").ID);
+        , Engine.ScreenWidth / 2 - 75, Engine.ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), Font.Factory.Get("Text_14").ID);
 
       TVScreen2DText.TextureFont_DrawText(name
-        , this.GetEngine().ScreenWidth / 2 + 50, this.GetEngine().ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), Font.Factory.Get("Text_14").ID);
+        , Engine.ScreenWidth / 2 + 50, Engine.ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), Font.Factory.Get("Text_14").ID);
       TVScreen2DText.Action_EndText();
 
     }

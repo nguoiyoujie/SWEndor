@@ -25,18 +25,11 @@ namespace SWEndor.ActorTypes.Instances
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"projectiles\green_laser.x");
     }
 
-    public override void ProcessNewState(ActorInfo ainfo)
+    public override void Initialize(ActorInfo ainfo)
     {
-      if (ainfo.ActorState == ActorState.DYING)
-      {
-        if (ainfo.CombatInfo.TimedLife > 0)
-        {
-          ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("Explosion"));
-          acinfo.Position = ainfo.GetPosition();
-          ActorInfo.Create(this.GetEngine().ActorFactory, acinfo);
-        }
-        ainfo.ActorState = ActorState.DEAD;
-      }
+      base.Initialize(ainfo);
+
+      ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
     }
   }
 }

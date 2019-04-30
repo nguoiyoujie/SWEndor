@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using SWEndor.Weapons;
 using SWEndor.Weapons.Types;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace SWEndor.ActorTypes.Instances
         new TV_3DVECTOR(0, 0, -2000)
       };
 
-      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
       ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
       ainfo.ExplosionInfo.ExplosionRate = 0.75f;
       ainfo.ExplosionInfo.ExplosionSize = 1;
@@ -53,12 +54,12 @@ namespace SWEndor.ActorTypes.Instances
 
       ainfo.RegenerationInfo.SelfRegenRate = 0.075f;
 
-      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("TIEA_TORP") }
+      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"misl", WeaponFactory.Get("TIEA_MISL") }
                                                         , {"laser", WeaponFactory.Get("TIEA_LASR") }
                                                         };
       ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser", "2:laser" };
-      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none", "1:torp" };
-      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:torp", "1:laser" };
+      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none", "1:misl" };
+      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:misl", "1:laser" };
     }
   }
 }

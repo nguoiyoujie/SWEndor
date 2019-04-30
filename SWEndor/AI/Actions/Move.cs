@@ -30,31 +30,32 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    public override void Process(ActorInfo owner)
+    public override void Process(Engine engine, int actorID)
     {
-      if (owner.MovementInfo.MaxSpeed == 0)
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
+      if (actor.MovementInfo.MaxSpeed == 0)
       {
         Complete = true;
         return;
       }
 
-      if (CheckBounds(owner))
+      if (CheckBounds(actor))
       {
         if (CloseEnoughDistance < 0)
-          CloseEnoughDistance = owner.TypeInfo.Move_CloseEnough;
+          CloseEnoughDistance = actor.TypeInfo.Move_CloseEnough;
 
-        AdjustRotation(owner, Target_Position);
-        AdjustSpeed(owner, Target_Speed);
+        AdjustRotation(actor, Target_Position);
+        AdjustSpeed(actor, Target_Speed);
 
-        float dist = Globals.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Target_Position);
+        float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetPosition(), Target_Position);
         Complete |= (dist <= CloseEnoughDistance);
       }
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
-      if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
+      if (CheckImminentCollision(actor, actor.MovementInfo.Speed * 2.5f))
       {
-        owner.GetEngine().ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
+        engine.ActionManager.QueueFirst(actorID, new AvoidCollisionRotate(actor.CollisionInfo.ProspectiveCollisionImpact, actor.CollisionInfo.ProspectiveCollisionNormal));
       }
     }
   }

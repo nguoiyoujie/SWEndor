@@ -38,10 +38,10 @@ namespace SWEndor.UI.Menu.Pages
       ButtonScenario.HighlightBoxHeight = 30;
       ButtonScenario.Selectable = true;
       ButtonScenario.OnKeyPress += SelectScenario;
-      if (this.GetEngine().GameScenarioManager.ScenarioList.Count > 0)
+      if (GameScenarioManager.ScenarioList.Count > 0)
       {
-        ButtonScenario.SecondaryText = this.GetEngine().GameScenarioManager.ScenarioList[0].Name.ToUpper();
-        SelectedScenario = this.GetEngine().GameScenarioManager.ScenarioList[0];
+        ButtonScenario.SecondaryText = GameScenarioManager.ScenarioList[0].Name.ToUpper();
+        SelectedScenario = GameScenarioManager.ScenarioList[0];
         SelectedScenarioID = 0;
       }
 
@@ -122,7 +122,7 @@ namespace SWEndor.UI.Menu.Pages
         return true;
       }
 
-      if (this.GetEngine().GameScenarioManager.ScenarioList.Count > 0)
+      if (GameScenarioManager.ScenarioList.Count > 0)
       {
         if (key == CONST_TV_KEY.TV_KEY_LEFT)
         {
@@ -130,10 +130,10 @@ namespace SWEndor.UI.Menu.Pages
 
           newSelectedScenario--;
           if (newSelectedScenario < 0)
-            newSelectedScenario = this.GetEngine().GameScenarioManager.ScenarioList.Count - 1;
+            newSelectedScenario = GameScenarioManager.ScenarioList.Count - 1;
 
-          ButtonScenario.SecondaryText = this.GetEngine().GameScenarioManager.ScenarioList[newSelectedScenario].Name.ToUpper();
-          SelectedScenario = this.GetEngine().GameScenarioManager.ScenarioList[newSelectedScenario];
+          ButtonScenario.SecondaryText = GameScenarioManager.ScenarioList[newSelectedScenario].Name.ToUpper();
+          SelectedScenario = GameScenarioManager.ScenarioList[newSelectedScenario];
           SelectedScenarioID = newSelectedScenario;
 
           SelectedActorTypeInfoID = 1;
@@ -151,11 +151,11 @@ namespace SWEndor.UI.Menu.Pages
           int newSelectedScenario = SelectedScenarioID;
 
           newSelectedScenario++;
-          if (newSelectedScenario >= this.GetEngine().GameScenarioManager.ScenarioList.Count)
+          if (newSelectedScenario >= GameScenarioManager.ScenarioList.Count)
             newSelectedScenario = 0;
 
-          ButtonScenario.SecondaryText = this.GetEngine().GameScenarioManager.ScenarioList[newSelectedScenario].Name.ToUpper();
-          SelectedScenario = this.GetEngine().GameScenarioManager.ScenarioList[newSelectedScenario];
+          ButtonScenario.SecondaryText = GameScenarioManager.ScenarioList[newSelectedScenario].Name.ToUpper();
+          SelectedScenario = GameScenarioManager.ScenarioList[newSelectedScenario];
           SelectedScenarioID = newSelectedScenario;
 
           SelectedActorTypeInfoID = 1;

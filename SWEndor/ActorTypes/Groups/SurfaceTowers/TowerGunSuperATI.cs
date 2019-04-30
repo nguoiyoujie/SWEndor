@@ -1,4 +1,5 @@
 ﻿using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using SWEndor.Weapons;
 using SWEndor.Weapons.Types;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace SWEndor.ActorTypes.Instances
       base.Initialize(ainfo);
 
       // Tower Gun
-      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
       ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
       ainfo.ExplosionInfo.DeathExplosionSize = 3;
 

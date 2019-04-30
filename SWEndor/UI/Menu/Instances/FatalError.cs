@@ -54,10 +54,9 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        this.GetEngine().SoundManager.SetSound("r23");
-        this.GetEngine().SoundManager.SetMusicStop();
-        Thread.Sleep(1500);
-        this.GetEngine().Exit();
+        Engine.SoundManager.SetSound("r23");
+        Engine.SoundManager.SetMusicStop();
+        Engine.Exit();
         return true;
       }
       return false;

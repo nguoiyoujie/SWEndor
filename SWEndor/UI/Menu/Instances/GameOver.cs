@@ -30,8 +30,8 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        this.GetEngine().GameScenarioManager.Reset();
-        this.GetEngine().GameScenarioManager.LoadMainMenu();
+        GameScenarioManager.Reset();
+        GameScenarioManager.LoadMainMenu();
         return true;
       }
       return false;

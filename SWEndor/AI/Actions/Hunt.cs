@@ -23,32 +23,32 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    public override void Process(ActorInfo owner)
+    public override void Process(Engine engine, int actorID)
     {
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
       ActorInfo currtarget = null;
       List<ActorInfo> targets = new List<ActorInfo>();
       int weight = 0;
 
-      foreach (int actorID in owner.GetEngine().ActorFactory.GetHoldingList())
+      foreach (int aID in engine.ActorFactory.GetHoldingList())
       {
-        ActorInfo a = owner.GetEngine().ActorFactory.Get(actorID);
+        ActorInfo a = engine.ActorFactory.Get(aID);
         if (a != null
-          && owner != a
+          && actor != a
           && a.CreationState == CreationState.ACTIVE
-          && a.ActorState != ActorState.DYING
-          && a.ActorState != ActorState.DEAD
+          && !a.ActorState.IsDyingOrDead()
           && a.CombatInfo.IsCombatObject
           && (a.TypeInfo.TargetType & m_TargetType) != 0
-          && !a.IsOutOfBounds(owner.GetEngine().GameScenarioManager.MinAIBounds, owner.GetEngine().GameScenarioManager.MaxAIBounds)
-          && !owner.Faction.IsAlliedWith(a.Faction) // enemy
+          && !a.IsOutOfBounds(engine.GameScenarioManager.MinAIBounds, engine.GameScenarioManager.MaxAIBounds)
+          && !actor.Faction.IsAlliedWith(a.Faction) // enemy
           )
         {
-          if (owner.MovementInfo.MaxSpeed == 0) // stationary, can only target those in range
+          if (actor.MovementInfo.MaxSpeed == 0) // stationary, can only target those in range
           {
             WeaponInfo weap = null;
             int dummy = 0;
-            float dist = ActorDistanceInfo.GetDistance(owner.ID, actorID, owner.GetWeaponRange());
-            owner.SelectWeapon(a.ID, 0, dist, out weap, out dummy);
+            float dist = ActorDistanceInfo.GetDistance(actorID, aID, actor.WeaponSystemInfo.GetWeaponRange());
+            actor.WeaponSystemInfo.SelectWeapon(a.ID, 0, dist, out weap, out dummy);
 
             if (weap != null)
             {
@@ -78,11 +78,11 @@ namespace SWEndor.AI.Actions
 
       if (currtarget != null)
       {
-        owner.GetEngine().ActionManager.QueueLast(owner.ID, new AttackActor(currtarget.ID));
+        engine.ActionManager.QueueLast(actorID, new AttackActor(currtarget.ID));
       }
       else
       {
-        owner.GetEngine().ActionManager.QueueLast(owner.ID, new Wait(1));
+        engine.ActionManager.QueueLast(actorID, new Wait(1));
       }
 
       Complete = true;

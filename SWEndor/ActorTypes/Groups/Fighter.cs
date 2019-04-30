@@ -1,4 +1,5 @@
 ﻿using SWEndor.Actors;
+using SWEndor.Actors.Components;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -30,9 +31,7 @@ namespace SWEndor.ActorTypes.Groups
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-      ainfo.MovementInfo.DyingMovement = Actors.Components.DyingMovement.SPIN;
-      ainfo.MovementInfo.D_spin_min_rate = 180;
-      ainfo.MovementInfo.D_spin_max_rate = 270;
+      ainfo.DyingMovement = new DyingSpinInfo(180, 270);
 
       ainfo.CombatInfo.HitWhileDyingLeadsToDeath = true;
     }
@@ -40,7 +39,7 @@ namespace SWEndor.ActorTypes.Groups
     public override void ProcessNewState(ActorInfo ainfo)
     {
       base.ProcessNewState(ainfo);
-      if (ainfo.ActorState == ActorState.DYING)
+      if (ainfo.ActorState.IsDying())
       {
         ainfo.MovementInfo.ApplyZBalance = false;
         ainfo.CombatInfo.OnTimedLife = true;
@@ -56,9 +55,9 @@ namespace SWEndor.ActorTypes.Groups
 
         ainfo.CombatInfo.IsCombatObject = false;
 
-        ActorCreationInfo acinfo = new ActorCreationInfo(FactoryOwner.Get("Electro"));
+        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo.Create(this.GetEngine().ActorFactory, acinfo).AddParent(ainfo.ID);
+        ActorInfo.Create(ActorFactory, acinfo).AddParent(ainfo.ID);
       }
     }
   }

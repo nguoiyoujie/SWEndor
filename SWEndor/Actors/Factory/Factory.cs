@@ -15,14 +15,14 @@ namespace SWEndor.Actors
       { Engine = engine; }
 
       private const int Capacity = 2500; // hard code limit to ActorInfo. We should not be exceeding 1000 normally.
-      private static ConcurrentQueue<ActorInfo> deadqueue = new ConcurrentQueue<ActorInfo>();
-      private static ActorInfo[] list = new ActorInfo[Capacity];
-      private static int count = 0;
-      private static int[] holdinglist = new int[0];
-      private static float listtime = 0;
-      private static int counter = 0;
-      private static int emptycounter = 0;
-      private static Mutex mu_counter = new Mutex();
+      private ConcurrentQueue<ActorInfo> deadqueue = new ConcurrentQueue<ActorInfo>();
+      private ActorInfo[] list = new ActorInfo[Capacity];
+      private int count = 0;
+      private int[] holdinglist = new int[0];
+      private float listtime = 0;
+      private int counter = 0;
+      private int emptycounter = 0;
+      private Mutex mu_counter = new Mutex();
 
       public ActorInfo Register(ActorCreationInfo amake, string key = "")
       {

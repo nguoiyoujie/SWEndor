@@ -21,7 +21,7 @@ namespace SWEndor.Scenarios
 
       AllowedWings = new List<ActorTypeInfo>();
       foreach (string wing in f.GetStringList("General", "Wings", new string[0]))
-        AllowedWings.Add(Manager.Engine.ActorTypeFactory.Get(wing.Trim()));
+        AllowedWings.Add(ActorTypeFactory.Get(wing.Trim()));
 
       AllowedDifficulties = new List<string>(f.GetStringList("General", "Difficulties", new string[] { "Normal" }));
 
@@ -32,7 +32,7 @@ namespace SWEndor.Scenarios
       Fn_loadfaction = f.GetStringValue("Script", "Fn_loadfaction", Fn_loadfaction);
       Fn_loadscene = f.GetStringValue("Script", "Fn_loadscene", Fn_loadscene);
       Fn_makeplayer = f.GetStringValue("Script", "Fn_makeplayer", Fn_makeplayer);
-      Fn_calibratescene = f.GetStringValue("Script", "Fn_calibratescene", Fn_calibratescene);
+      //Fn_calibratescene = f.GetStringValue("Script", "Fn_calibratescene", Fn_calibratescene);
       Fns_gametick = new List<string>(f.GetStringList("Script", "Fns_gametick", new string[0]));
     }
 
@@ -51,7 +51,7 @@ namespace SWEndor.Scenarios
     public void LoadScripts()
     {
       Script.Registry.Clear();
-      Manager.Engine.ScriptContext.Reset();
+      ScriptContext.Reset();
       foreach (string scrfile in ScriptPaths)
       {
         ScriptFile f = new ScriptFile(scrfile);
@@ -63,16 +63,16 @@ namespace SWEndor.Scenarios
       LoadScripts();
       base.Load(wing, difficulty);
 
-      Manager.Engine.PlayerInfo.Name = PlayerName;
-      Manager.Engine.Screen2D.LoadingTextLines.Add("starting game");
-      Manager.Engine.Screen2D.LoadingTextLines.RemoveAt(0);
+      PlayerInfo.Name = PlayerName;
+      Screen2D.LoadingTextLines.Add("starting game");
+      Screen2D.LoadingTextLines.RemoveAt(0);
     }
 
     public override void Unload()
     {
       base.Unload();
       Script.Registry.Clear();
-      Manager.Engine.ScriptContext.Reset();
+      ScriptContext.Reset();
     }
 
     public override void Launch()
@@ -82,13 +82,13 @@ namespace SWEndor.Scenarios
 
       Script scr = Script.Registry.Get(Fn_load);
       if (scr != null)
-        scr.Run(this.GetEngine().ScriptContext);
+        scr.Run(ScriptContext);
 
       MakePlayer = delegate (object[] ps)
       {
         Script smk = Script.Registry.Get(Fn_makeplayer);
         if (smk != null)
-          smk.Run(this.GetEngine().ScriptContext);
+          smk.Run(ScriptContext);
       };
     }
 
@@ -98,7 +98,7 @@ namespace SWEndor.Scenarios
 
       Script scr = Script.Registry.Get(Fn_loadfaction);
       if (scr != null)
-        scr.Run(this.GetEngine().ScriptContext);
+        scr.Run(ScriptContext);
     }
 
     public override void LoadScene()
@@ -107,27 +107,20 @@ namespace SWEndor.Scenarios
 
       Script scr = Script.Registry.Get(Fn_loadscene);
       if (scr != null)
-        scr.Run(this.GetEngine().ScriptContext);
+        scr.Run(ScriptContext);
     }
 
     public override void GameTick()
     {
       base.GameTick();
-      CalibrateSceneObjects();
+      //CalibrateSceneObjects();
 
       foreach (string s in Fns_gametick)
       {
         Script scr = Script.Registry.Get(s);
         if (scr != null)
-          scr.Run(this.GetEngine().ScriptContext);
+          scr.Run(ScriptContext);
       }
-    }
-
-    private void CalibrateSceneObjects()
-    {
-      Script scr = Script.Registry.Get(Fn_calibratescene);
-      if (scr != null)
-        scr.Run(this.GetEngine().ScriptContext);
     }
   }
 }

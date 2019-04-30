@@ -29,36 +29,37 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    public override void Process(ActorInfo owner)
+    public override void Process(Engine engine, int actorID)
     {
-      ActorInfo target = owner.GetEngine().ActorFactory.Get(Target_ActorID);
-      if (target == null || owner.MovementInfo.MaxSpeed == 0)
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
+      ActorInfo target = engine.ActorFactory.Get(Target_ActorID);
+      if (target == null || actor.MovementInfo.MaxSpeed == 0)
       {
         Complete = true;
         return;
       }
 
-      if (CheckBounds(owner))
+      if (CheckBounds(actor))
       {
-        AdjustRotation(owner, target.GetPosition());
-        float dist = ActorDistanceInfo.GetDistance(owner.ID, Target_ActorID, FollowDistance + 1);
+        AdjustRotation(actor, target.GetPosition());
+        float dist = ActorDistanceInfo.GetDistance(actorID, Target_ActorID, FollowDistance + 1);
 
-        float addspd = (owner.MovementInfo.MaxSpeed > target.MovementInfo.Speed) ? owner.MovementInfo.MaxSpeed - target.MovementInfo.Speed : 0;
-        float subspd = (owner.MovementInfo.MinSpeed < target.MovementInfo.Speed) ? target.MovementInfo.Speed - owner.MovementInfo.MinSpeed : 0;
+        float addspd = (actor.MovementInfo.MaxSpeed > target.MovementInfo.Speed) ? actor.MovementInfo.MaxSpeed - target.MovementInfo.Speed : 0;
+        float subspd = (actor.MovementInfo.MinSpeed < target.MovementInfo.Speed) ? target.MovementInfo.Speed - actor.MovementInfo.MinSpeed : 0;
 
         if (dist > FollowDistance)
-          AdjustSpeed(owner, target.MovementInfo.Speed + (dist - FollowDistance) / SpeedAdjustmentDistanceRange * addspd);
+          AdjustSpeed(actor, target.MovementInfo.Speed + (dist - FollowDistance) / SpeedAdjustmentDistanceRange * addspd);
         else
-          AdjustSpeed(owner, target.MovementInfo.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
+          AdjustSpeed(actor, target.MovementInfo.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
 
         Complete |= (target.CreationState != CreationState.ACTIVE);
       }
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
-      if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
+      if (CheckImminentCollision(actor, actor.MovementInfo.Speed * 2.5f))
       {
-        owner.GetEngine().ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
+        engine.ActionManager.QueueFirst(actorID, new AvoidCollisionRotate(actor.CollisionInfo.ProspectiveCollisionImpact, actor.CollisionInfo.ProspectiveCollisionNormal));
       }
     }
   }

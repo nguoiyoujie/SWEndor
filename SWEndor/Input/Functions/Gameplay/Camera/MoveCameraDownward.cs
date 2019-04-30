@@ -11,13 +11,13 @@ namespace SWEndor.Input.Functions.Gameplay
     public override string Name { get { return InternalName; } }
     public override InputOptions Options { get { return InputOptions.WHILEPRESSED; } }
 
-    public override void Process(InputManager manager)
+    public override void Process(Engine engine)
     {
-      if (manager.Engine.PlayerCameraInfo.CameraMode == CameraMode.FREEMODE)
+      if (engine.PlayerCameraInfo.CameraMode == CameraMode.FREEMODE)
       {
-        float rate = manager.Engine.InputManager.SHIFT ? 2500 : 500;
-        TVCamera tvc = manager.Engine.PlayerCameraInfo.Camera;
-        rate *= manager.Engine.Game.TimeControl.RenderInterval;
+        float rate = engine.InputManager.SHIFT ? 2500 : 500;
+        TVCamera tvc = engine.PlayerCameraInfo.Camera;
+        rate *= engine.Game.TimeControl.RenderInterval;
         tvc.MoveRelative(0, -rate, 0);
       }
     }

@@ -1,4 +1,5 @@
 ﻿using SWEndor.Actors;
+using SWEndor.Actors.Components;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -24,33 +25,30 @@ namespace SWEndor.ActorTypes.Groups
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
       ainfo.ExplosionInfo.DeathExplosionType = "ExplosionLg";
       ainfo.ExplosionInfo.DeathExplosionSize = 2f;
       ainfo.ExplosionInfo.ExplosionRate = 0.5f;
       ainfo.ExplosionInfo.ExplosionSize = 1;
       ainfo.ExplosionInfo.ExplosionType = "ExplosionSm";
 
-      ainfo.MovementInfo.DyingMovement = Actors.Components.DyingMovement.SINK;
-      ainfo.MovementInfo.D_sink_pitch_rate = 0.06f;
-      ainfo.MovementInfo.D_sink_down_rate = 15f;
-      ainfo.MovementInfo.D_sink_forward_rate = 2.5f;
+      ainfo.DyingMovement = new DyingSinkInfo(0.06f, 15f, 2.5f);
     }
 
     public override void ProcessNewState(ActorInfo ainfo)
     {
       base.ProcessNewState(ainfo);
-      if (ainfo.ActorState == ActorState.DYING)
+      if (ainfo.ActorState.IsDying())
       {
         ainfo.CombatInfo.OnTimedLife = true;
         ainfo.CombatInfo.TimedLife = 25f;
         ainfo.CombatInfo.IsCombatObject = false;
       }
-      else if (ainfo.ActorState == ActorState.DEAD)
+      else if (ainfo.ActorState.IsDead())
       {
-        ActorCreationInfo acinfo = new ActorCreationInfo(FactoryOwner.Get("Explosion Wave"));
+        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo.Create(FactoryOwner.Engine.ActorFactory, acinfo).AddParent(ainfo.ID);
+        ActorInfo.Create(ActorFactory, acinfo).AddParent(ainfo.ID);
       }
     }
   }

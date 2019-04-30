@@ -14,13 +14,13 @@ namespace SWEndor.ActorTypes.Instances
     {
       // Combat
       OnTimedLife = true;
-      TimedLife = 25;
-      IsCombatObject = false;
-      IsSelectable = false;
+      TimedLife = 35;
+      IsCombatObject = true;
+      IsSelectable = true;
       IsDamage = true;
       ImpactDamage = 7.5f;
-      MaxSpeed = 800;
-      MinSpeed = 800;
+      MaxSpeed = 600;
+      MinSpeed = 600;
       MaxTurnRate = 120;
 
       CullDistance = 12000;
@@ -30,22 +30,10 @@ namespace SWEndor.ActorTypes.Instances
       ImpactCloseEnoughDistance = 100;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"projectiles\missile.x");
-      m_particletex = Globals.Engine.TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, @"particle.dds"));
+      m_particletex = TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, @"particle.dds"));
     }
 
     private int m_particletex;
-
-    public override void ProcessNewState(ActorInfo ainfo)
-    {
-      if (ainfo.ActorState == ActorState.DYING || ainfo.ActorState == ActorState.DEAD)
-      {
-        ActorCreationInfo acinfo = new ActorCreationInfo(Globals.Engine.ActorTypeFactory.Get("ExplosionSm"));
-        acinfo.Position = ainfo.GetPosition();
-        ActorInfo.Create(FactoryOwner.Engine.ActorFactory, acinfo);
-
-        ainfo.ActorState = ActorState.DEAD;
-      }
-    }
 
     public override void Initialize(ActorInfo ainfo)
     {
@@ -56,6 +44,9 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:dummy" };
       ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
       ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:dummy" };
+
+      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
+
       ainfo.Scale *= 2.5f;
     }
 
@@ -66,17 +57,17 @@ namespace SWEndor.ActorTypes.Instances
         ainfo.ActorState = ActorState.DEAD;
 
 
-      if (ainfo.ActorState == ActorState.NORMAL && !ainfo.IsFarMode())
+      if (ainfo.ActorState == ActorState.NORMAL && !ActorInfo.IsFarMode(ainfo.GetEngine(), ainfo.ID))
       {
         if (ainfo.ParticleSystem == null)
         {
-          ainfo.ParticleSystem = Globals.Engine.TrueVision.TVScene.CreateParticleSystem();
+          ainfo.ParticleSystem = TrueVision.TVScene.CreateParticleSystem();
           int emitter = ainfo.ParticleSystem.CreateEmitter(CONST_TV_EMITTERTYPE.TV_EMITTER_BILLBOARD, 250);
           ainfo.ParticleEmitterID = emitter;
 
           ainfo.ParticleSystem.Enable(true);
           ainfo.ParticleSystem.SetBillboard(emitter, m_particletex);
-          ainfo.ParticleSystem.SetEmitterSphereRadius(emitter, 50);
+          ainfo.ParticleSystem.SetEmitterSphereRadius(emitter, 5);
           ainfo.ParticleSystem.SetEmitterShape(emitter, CONST_TV_EMITTERSHAPE.TV_EMITTERSHAPE_SPHERESURFACE);
           ainfo.ParticleSystem.SetEmitterPower(emitter, 80, 0.2f);
           ainfo.ParticleSystem.SetEmitterDirection(emitter, true, new TV_3DVECTOR(0, 1, 0), new TV_3DVECTOR(0.01f, 0, 0.01f));

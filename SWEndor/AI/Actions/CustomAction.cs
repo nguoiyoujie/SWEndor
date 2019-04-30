@@ -13,7 +13,7 @@ namespace SWEndor.AI.Actions
 
     private Action Action;
 
-    public override void Process(ActorInfo owner)
+    public override void Process(Engine engine, int actorID)
     {
       Action.Invoke();
       Complete = true;

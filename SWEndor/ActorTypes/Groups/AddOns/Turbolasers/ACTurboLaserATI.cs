@@ -1,4 +1,5 @@
 ﻿using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using SWEndor.Weapons;
 using System.Collections.Generic;
 using System.IO;
@@ -28,7 +29,9 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
 
-      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.DyingMovement = DyingKillInfo.Instance;
+
+      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
       ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
       ainfo.ExplosionInfo.DeathExplosionSize = 5;
 

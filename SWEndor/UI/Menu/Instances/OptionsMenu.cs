@@ -126,7 +126,7 @@ namespace SWEndor.UI.Menu.Pages
       {
         //ButtonMusicVol.SecondaryText = ButtonMusicVol.ToggleButtonsCurrentNumber.ToString();
         Globals.Engine.SoundManager.MasterMusicVolume = float.Parse(ButtonMusicVol.ToggleButtonsValues[ButtonMusicVol.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
-        Settings.SaveSettings();
+        Settings.SaveSettings(Engine);
       }
       return false;
     }
@@ -137,7 +137,7 @@ namespace SWEndor.UI.Menu.Pages
       {
         Globals.Engine.SoundManager.MasterSFXVolume = float.Parse(ButtonSFXVol.ToggleButtonsValues[ButtonSFXVol.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
         Globals.Engine.SoundManager.SetSound("shieldlow");
-        Settings.SaveSettings();
+        Settings.SaveSettings(Engine);
       }
       return false;
     }
@@ -147,7 +147,7 @@ namespace SWEndor.UI.Menu.Pages
       if (key == CONST_TV_KEY.TV_KEY_LEFT || key == CONST_TV_KEY.TV_KEY_RIGHT)
       {
         Settings.SteeringSensitivity = float.Parse(ButtonSteeringSensitivity.ToggleButtonsValues[ButtonSteeringSensitivity.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
-        Settings.SaveSettings();
+        Settings.SaveSettings(Engine);
       }
       return false;
     }

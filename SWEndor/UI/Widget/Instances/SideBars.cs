@@ -15,8 +15,8 @@ namespace SWEndor.UI.Widgets
 
     public SideBars(Screen2D owner) : base(owner, "sidebar")
     {
-      bar_topleft = new TV_2DVECTOR(Owner.Engine.ScreenWidth * 0.85f - 5, 25);
-      bar_length = this.GetEngine().ScreenWidth * 0.15f;
+      bar_topleft = new TV_2DVECTOR(Engine.ScreenWidth * 0.85f - 5, 25);
+      bar_length = Engine.ScreenWidth * 0.15f;
       bar_height = 16;
       bar_barheight = 6;
     }
@@ -26,10 +26,10 @@ namespace SWEndor.UI.Widgets
       get
       {
         return (!Owner.ShowPage
-            && this.GetEngine().PlayerInfo.Actor != null
-            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DYING
-            && !(Owner.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
+            && PlayerInfo.Actor != null
+            && PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !(PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
             && Owner.ShowUI
             && Owner.ShowStatus);
       }
@@ -37,7 +37,7 @@ namespace SWEndor.UI.Widgets
 
     public override void Draw()
     {
-      ActorInfo p = this.GetEngine().PlayerInfo.Actor;
+      ActorInfo p = PlayerInfo.Actor;
 
       if (p != null && p.CreationState == CreationState.ACTIVE)
       {
@@ -45,9 +45,9 @@ namespace SWEndor.UI.Widgets
 
         //Health Bar
         DrawSingleBar(0
-                      , string.Format("HP [{0}%]", Math.Ceiling(Owner.Engine.PlayerInfo.StrengthFrac * 100))
-                      , this.GetEngine().PlayerInfo.StrengthFrac
-                      , this.GetEngine().PlayerInfo.HealthColor
+                      , string.Format("HP [{0}%]", Math.Ceiling(PlayerInfo.StrengthFrac * 100))
+                      , PlayerInfo.StrengthFrac
+                      , PlayerInfo.HealthColor
                       );
 
         //Speed Bar
@@ -60,8 +60,9 @@ namespace SWEndor.UI.Widgets
         int barnumber = 2;
 
         //Allies
-        foreach (ActorInfo a in this.GetEngine().GameScenarioManager.CriticalAllies.Values)
+        foreach (int i in GameScenarioManager.CriticalAllies.Values)
         {
+          ActorInfo a = ActorFactory.Get(i);
           DrawSingleBar(barnumber
               , a.SideBarName.PadRight(12).Remove(11)
               , a.StrengthFrac
@@ -71,8 +72,9 @@ namespace SWEndor.UI.Widgets
         }
 
         //Enemies
-        foreach (ActorInfo a in this.GetEngine().GameScenarioManager.CriticalEnemies.Values)
+        foreach (int i in GameScenarioManager.CriticalEnemies.Values)
         {
+          ActorInfo a = ActorFactory.Get(i);
           DrawSingleBar(barnumber
               , a.SideBarName.PadRight(12).Remove(11)
               , a.StrengthFrac

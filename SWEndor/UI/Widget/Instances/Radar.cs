@@ -23,10 +23,10 @@ namespace SWEndor.UI.Widgets
       get
       {
         return (!Owner.ShowPage
-            && this.GetEngine().PlayerInfo.Actor != null
-            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && this.GetEngine().PlayerInfo.Actor.ActorState != ActorState.DYING
-            && !(Owner.Engine.PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
+            && PlayerInfo.Actor != null
+            && PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !(PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
             && Owner.ShowUI
             && Owner.ShowRadar);
       }
@@ -34,7 +34,7 @@ namespace SWEndor.UI.Widgets
 
     public override void Draw()
     {
-      ActorInfo p = this.GetEngine().PlayerInfo.Actor;
+      ActorInfo p = PlayerInfo.Actor;
       if (p == null || p.CreationState != CreationState.ACTIVE)
         return;
 
@@ -54,7 +54,7 @@ namespace SWEndor.UI.Widgets
       float right = posX + targetingradar_radius;
       float top = posY - targetingradar_radius;
       float bottom = posY + targetingradar_radius;
-      float timefactor = this.GetEngine().Game.GameTime % 1;
+      float timefactor = Engine.Game.GameTime % 1;
       float divisor = 1.75f;
       while (timefactor + 1 / divisor < 1)
       {
@@ -96,9 +96,9 @@ namespace SWEndor.UI.Widgets
       TVScreen2DImmediate.Draw_Circle(radar_center.x, radar_center.y, radar_radius + 2, 300, pcolor.GetIntColor());
       TVScreen2DImmediate.Draw_Circle(radar_center.x, radar_center.y, radar_radius - 2, 300, pcolor.GetIntColor());
 
-      foreach (int actorID in this.GetEngine().ActorFactory.GetHoldingList())
+      foreach (int actorID in Engine.ActorFactory.GetHoldingList())
       {
-        ActorInfo a = this.GetEngine().ActorFactory.Get(actorID);
+        ActorInfo a = Engine.ActorFactory.Get(actorID);
         if (a != null)
         {
           TV_3DVECTOR ppos = p.GetPosition();
@@ -112,8 +112,8 @@ namespace SWEndor.UI.Widgets
 
             TV_2DVECTOR posvec = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(apos.x, apos.z);
             float proty = p.GetRotation().y;
-            float dist = this.GetEngine().TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), posvec);
-            float angl = this.GetEngine().TrueVision.TVMathLibrary.Direction2Ang(posvec.x, posvec.y) - proty;
+            float dist = Engine.TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), posvec);
+            float angl = Engine.TrueVision.TVMathLibrary.Direction2Ang(posvec.x, posvec.y) - proty;
             if (dist > radar_range)
               dist = radar_range;
 
@@ -138,8 +138,8 @@ namespace SWEndor.UI.Widgets
             }
             else if (a.TypeInfo is ActorTypes.Groups.Warship)
             {
-              float gt = this.GetEngine().Game.GameTime * radar_blinkfreq;
-              if (a.CombatInfo.Strength / a.TypeInfo.MaxStrength > 0.1f || (gt - (int)gt > 0.5f))
+              float gt = Engine.Game.GameTime * radar_blinkfreq;
+              if (a.StrengthFrac > 0.1f || (gt - (int)gt > 0.5f))
               {
                 TV_3DVECTOR boxmin = new TV_3DVECTOR();
                 TV_3DVECTOR boxmax = new TV_3DVECTOR();
@@ -157,8 +157,8 @@ namespace SWEndor.UI.Widgets
                   TV_2DVECTOR temp = posvec;
                   temp -= new TV_2DVECTOR(bx * (float)Math.Cos(ang * Globals.PI / 180) + bz * (float)Math.Sin(ang * Globals.PI / 180),
                                           bz * (float)Math.Cos(ang * Globals.PI / 180) - bx * (float)Math.Sin(ang * Globals.PI / 180));
-                  float tdist = this.GetEngine().TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), temp);
-                  float tangl = this.GetEngine().TrueVision.TVMathLibrary.Direction2Ang(temp.x, temp.y) - proty;
+                  float tdist = Engine.TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), temp);
+                  float tangl = Engine.TrueVision.TVMathLibrary.Direction2Ang(temp.x, temp.y) - proty;
                   if (tdist > radar_range)
                   {
                     tdist = radar_range;
@@ -222,8 +222,8 @@ namespace SWEndor.UI.Widgets
             }
             else if (a.TypeInfo is ActorTypes.Groups.StarDestroyer)
             {
-              float gt = this.GetEngine().Game.GameTime * radar_blinkfreq;
-              if (a.CombatInfo.Strength / a.TypeInfo.MaxStrength > 0.1f || (gt - (int)gt > 0.5f))
+              float gt = Engine.Game.GameTime * radar_blinkfreq;
+              if (a.StrengthFrac > 0.1f || (gt - (int)gt > 0.5f))
               {
                 TV_3DVECTOR boxmin = new TV_3DVECTOR();
                 TV_3DVECTOR boxmax = new TV_3DVECTOR();
@@ -241,8 +241,8 @@ namespace SWEndor.UI.Widgets
                   TV_2DVECTOR temp = posvec;
                   temp -= new TV_2DVECTOR(bx * (float)Math.Cos(ang * Globals.PI / 180) + bz * (float)Math.Sin(ang * Globals.PI / 180),
                                           bz * (float)Math.Cos(ang * Globals.PI / 180) - bx * (float)Math.Sin(ang * Globals.PI / 180));
-                  float tdist = this.GetEngine().TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), temp);
-                  float tangl = this.GetEngine().TrueVision.TVMathLibrary.Direction2Ang(temp.x, temp.y) - proty;
+                  float tdist = Engine.TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), temp);
+                  float tangl = Engine.TrueVision.TVMathLibrary.Direction2Ang(temp.x, temp.y) - proty;
                   if (tdist > radar_range)
                   {
                     tdist = radar_range;
@@ -301,8 +301,8 @@ namespace SWEndor.UI.Widgets
             else if (a.TypeInfo is ActorTypes.Group.Projectile)
             {
               TV_2DVECTOR prevtemp = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(a.PrevPosition.x, a.PrevPosition.z);
-              float prevdist = this.GetEngine().TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), prevtemp);
-              float prevangl = this.GetEngine().TrueVision.TVMathLibrary.Direction2Ang(prevtemp.x, prevtemp.y) - p.GetRotation().y;
+              float prevdist = Engine.TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), prevtemp);
+              float prevangl = Engine.TrueVision.TVMathLibrary.Direction2Ang(prevtemp.x, prevtemp.y) - p.GetRotation().y;
               if (dist < radar_range && prevdist < radar_range)
               {
                 float px = radar_center.x - radar_radius * prevdist / radar_range * (float)Math.Sin(prevangl * Globals.PI / 180);

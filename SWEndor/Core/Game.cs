@@ -114,11 +114,22 @@ namespace SWEndor
       Task.Factory.StartNew(new Action(Tick)).ContinueWith(new Action<Task>(t => GenerateFatalError(t.Exception.InnerException)), TaskContinuationOptions.OnlyOnFaulted);
     }
 
+    public void PrepExit()
+    {
+      tm_sound.Stop();
+      tm_ai.Stop();
+      tm_collision.Stop();
+      tm_render.Stop();
+      tm_process.Stop();
+      tm_perf.Stop();
+    }
+
     public void Stop()
     {
       if (State != RunState.STOPPED)
       {
         State = RunState.STOPPED;
+        Thread.Sleep(1500);
         Engine.Exit();
       }
     }

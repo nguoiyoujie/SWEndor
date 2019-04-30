@@ -21,19 +21,18 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    public override void Process(ActorInfo owner)
+    public override void Process(Engine engine, int actorID)
     {
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
       if (ResumeTime == 0)
-      {
-        ResumeTime = owner.GetEngine().Game.GameTime + WaitTime;
-      }
+        ResumeTime = engine.Game.GameTime + WaitTime;
 
-      AdjustRotation(owner, owner.GetRelativePositionXYZ(0, 0, 1000), false);
-      if (CheckImminentCollision(owner, owner.MovementInfo.Speed * 2.5f))
+      AdjustRotation(actor, actor.GetRelativePositionXYZ(0, 0, 1000), false);
+      if (CheckImminentCollision(actor, actor.MovementInfo.Speed * 2.5f))
       {
-        owner.GetEngine().ActionManager.QueueFirst(owner.ID, new AvoidCollisionRotate(owner.CollisionInfo.ProspectiveCollisionImpact, owner.CollisionInfo.ProspectiveCollisionNormal));
+        engine.ActionManager.QueueFirst(actorID, new AvoidCollisionRotate(actor.CollisionInfo.ProspectiveCollisionImpact, actor.CollisionInfo.ProspectiveCollisionNormal));
       }
-      Complete |= (ResumeTime < owner.GetEngine().Game.GameTime);
+      Complete |= (ResumeTime < engine.Game.GameTime);
     }
   }
 }

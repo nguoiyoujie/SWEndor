@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SWEndor.Actors.Components
 {
-  public struct WeaponSystemInfo
+  public class WeaponSystemInfo
   {
     private readonly ActorInfo Actor;
     public Dictionary<string, WeaponInfo> Weapons;
@@ -27,6 +27,43 @@ namespace SWEndor.Actors.Components
       PrimaryWeapons = new string[0];
       SecondaryWeapons = new string[0];
       AIWeapons = new string[0];
+    }
+
+    public float GetWeaponRange()
+    {
+      float ret = 0;
+      foreach (WeaponInfo w in Weapons.Values)
+      {
+        if (ret < w.Range)
+          ret = w.Range;
+      }
+      return ret;
+    }
+
+    public bool SelectWeapon(int targetActorID, float delta_angle, float delta_distance, out WeaponInfo weapon, out int burst)
+    {
+      weapon = null;
+      burst = 0;
+      WeaponInfo weap = null;
+      foreach (string ws in AIWeapons)
+      {
+        Actor.TypeInfo.InterpretWeapon(Actor.ID, ws, out weap, out burst);
+
+        if (weap != null)
+        {
+          if ((delta_angle < weap.AngularRange
+            && delta_angle > -weap.AngularRange)
+            && (delta_distance < weap.Range
+            && delta_distance > -weap.Range)
+            && weap.CanTarget(Actor.Engine, Actor.ID, targetActorID)
+            && (weap.MaxAmmo == -1 || weap.Ammo > 0))
+          {
+            weapon = weap;
+            return true;
+          }
+        }
+      }
+      return false;
     }
   }
 }

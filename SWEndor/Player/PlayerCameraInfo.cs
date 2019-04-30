@@ -11,11 +11,12 @@ namespace SWEndor.Player
     internal PlayerCameraInfo(Engine engine)
     {
       Engine = engine;
+      Camera = Engine.TrueVision.TVEngine.GetCamera();
       Camera.SetCamera(0, 0, 0, 0, 0, 100);
-      Camera.SetViewFrustum(90, 65000);
+      Camera.SetViewFrustum(90, 650000);
     }
 
-    public TVCamera Camera { get { return Engine.TrueVision.TVEngine.GetCamera(); } }
+    public readonly TVCamera Camera;
     public CameraMode CameraMode = CameraMode.FIRSTPERSON;
     private CameraMode prevCameraMode = CameraMode.FIRSTPERSON;
 
@@ -83,7 +84,7 @@ namespace SWEndor.Player
           Camera.RotateY(angleY * rate);
 
           TV_3DVECTOR rot = Camera.GetRotation();
-          Utilities.Clamp(ref rot.x, -75, 75);
+          rot.x = rot.x.Clamp(-75, 75);
           Camera.SetRotation(rot.x, rot.y, rot.z);
         }
         else if (Engine.PlayerInfo.Actor != null && Engine.PlayerInfo.Actor.CreationState != CreationState.DISPOSED)
@@ -94,8 +95,8 @@ namespace SWEndor.Player
 
           if (!Engine.PlayerInfo.PlayerAIEnabled)
           {
-            Utilities.Clamp(ref angleX, -maxT, maxT);
-            Utilities.Clamp(ref angleY, -maxT, maxT);
+            angleX = angleX.Clamp(-maxT, maxT);
+            angleY = angleY.Clamp(-maxT, maxT);
 
             Engine.PlayerInfo.Actor.MovementInfo.XTurnAngle = angleX;
             Engine.PlayerInfo.Actor.MovementInfo.YTurnAngle = angleY;

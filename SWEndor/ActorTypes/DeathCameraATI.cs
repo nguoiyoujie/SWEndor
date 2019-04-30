@@ -18,10 +18,10 @@ namespace SWEndor.ActorTypes
       EnableDistanceCull = false;
       CollisionEnabled = false;
 
-      SourceMesh = owner.Engine.TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {
-        SourceMesh = owner.Engine.TrueVision.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Key);
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);
       }
@@ -29,15 +29,15 @@ namespace SWEndor.ActorTypes
 
     public override void ChaseCamera(ActorInfo ainfo)
     {
-      TVCamera cam = ainfo.GetEngine().PlayerCameraInfo.Camera;
+      TVCamera cam = PlayerCameraInfo.Camera;
 
       float circleperiod = ainfo.CameraSystemInfo.CamDeathCirclePeriod;
-      float angularphase = (ainfo.GetEngine().Game.GameTime % circleperiod) * (2 * Globals.PI / circleperiod);
+      float angularphase = (Game.GameTime % circleperiod) * (2 * Globals.PI / circleperiod);
       float radius = ainfo.CameraSystemInfo.CamDeathCircleRadius;
       float height = ainfo.CameraSystemInfo.CamDeathCircleHeight;
 
       TV_3DVECTOR pos = ainfo.GetPosition();
-      switch (FactoryOwner.Engine.GameScenarioManager.Scenario.DeathCamMode)
+      switch (GameScenarioManager.Scenario.DeathCamMode)
       {
         case DeathCamMode.CIRCLE:
           cam.SetPosition(pos.x + radius * (float)Math.Cos(angularphase)

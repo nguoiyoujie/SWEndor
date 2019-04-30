@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 
@@ -33,7 +34,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
 
-      ainfo.ExplosionInfo.EnableDeathExplosion = true;
+      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
       ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
       ainfo.ExplosionInfo.DeathExplosionSize = 5;
     }
@@ -43,7 +44,7 @@ namespace SWEndor.ActorTypes.Instances
       base.ProcessNewState(ainfo);
 
       /*
-      if (ainfo.ActorState == ActorState.DEAD)
+      if (ainfo.ActorState.IsDead())
       {
         ActorCreationInfo acinfo = new ActorCreationInfo(Tower00_RuinsATI.Instance());
         acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(0, -72, 0);

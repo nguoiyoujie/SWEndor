@@ -43,13 +43,13 @@ namespace SWEndor.Scenarios
       {
         foreach (string s in Registries)
         {
-          Dictionary<string, ActorInfo> reg = scenario.GetRegister(s);
+          Dictionary<string, int> reg = scenario.GetRegister(s);
           if (reg != null)
           {
             if (RegisterName != "")
-              reg.Add(RegisterName, ainfo);
+              reg.Add(RegisterName, ainfo.ID);
             else
-              reg.Add(ainfo.Key, ainfo);
+              reg.Add(ainfo.Key, ainfo.ID);
           }
         }
       }
