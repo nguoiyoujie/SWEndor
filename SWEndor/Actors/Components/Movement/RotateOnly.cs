@@ -2,7 +2,7 @@
 
 namespace SWEndor.Actors.Components
 {
-  public class RotateOnly : IMoveComponent
+  public struct RotateOnly : IMoveComponent
   {
     public RotateOnly(float maxturn, float max2orderturn, float ztilt, float znormfrac)
     {
@@ -11,6 +11,10 @@ namespace SWEndor.Actors.Components
       ZTilt = ztilt;
       ZNormFrac = znormfrac;
       ApplyZBalance = true;
+      XTurnAngle = 0;
+      YTurnAngle = 0;
+      ZRoll = 0;
+      Zdiv = 0;
     }
 
     // General

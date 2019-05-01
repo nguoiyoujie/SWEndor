@@ -121,7 +121,7 @@ namespace SWEndor.AI.Actions
           }
           else if (!(target.TypeInfo is ActorTypes.Group.Projectile))
           {
-            engine.ActionManager.QueueFirst(actorID, new Move(MakeAltPosition(engine, actorID, target.GetTopParent()), actor.MoveComponent.MaxSpeed));
+            engine.ActionManager.QueueFirst(actorID, new Move(MakeAltPosition(engine, actorID, target.TopParent), actor.MoveComponent.MaxSpeed));
           }
           return;
         }
@@ -129,7 +129,7 @@ namespace SWEndor.AI.Actions
         if (CheckImminentCollision(actor, actor.MoveComponent.Speed * 2.5f))
         {
           engine.ActionManager.QueueFirst(actorID, new AvoidCollisionRotate(actor.CollisionInfo.ProspectiveCollisionImpact, actor.CollisionInfo.ProspectiveCollisionNormal));
-          //if (owner.ProspectiveCollisionActor != null && owner.ProspectiveCollisionActor.GetTopParent() == Target_Actor.GetTopParent())
+          //if (owner.ProspectiveCollisionActor != null && owner.ProspectiveCollisionActor.TopParent == Target_Actor.TopParent)
           //  ActionManager.QueueNext(owner, new Rotate(owner.ProspectiveCollisionImpact + owner.CollisionInfo.ProspectiveCollisionNormal * 10000, owner.MovementInfo.MinSpeed, 45));
         }
       }
@@ -164,34 +164,38 @@ namespace SWEndor.AI.Actions
       float delta_angle = 0;
       ActorInfo actor = engine.ActorFactory.Get(actorID);
 
-      foreach (int aID in engine.ActorFactory.GetHoldingList())
-      {
-        ActorInfo a = engine.ActorFactory.Get(aID);
-        if (a != null
-            && actorID != aID
-            && a.CreationState == CreationState.ACTIVE
-            && a.ActorState != ActorState.DYING
-            && a.ActorState != ActorState.DEAD
-            && a.CombatInfo.IsCombatObject
-            && !actor.Faction.IsAlliedWith(a.Faction))
-        {
-          dist = ActorDistanceInfo.GetDistance(aID, actorID, actor.WeaponSystemInfo.GetWeaponRange());
+      Action<Engine, int> action = new Action<Engine, int>(
+        (_, aID) =>
+         {
+           ActorInfo a = engine.ActorFactory.Get(aID);
+           if (a != null
+               && actorID != aID
+               && a.CreationState == CreationState.ACTIVE
+               && a.ActorState != ActorState.DYING
+               && a.ActorState != ActorState.DEAD
+               && a.CombatInfo.IsCombatObject
+               && !actor.Faction.IsAlliedWith(a.Faction))
+           {
+             dist = ActorDistanceInfo.GetDistance(aID, actorID, actor.WeaponSystemInfo.GetWeaponRange());
 
-          TV_3DVECTOR vec = new TV_3DVECTOR();
-          TV_3DVECTOR dir = actor.GetDirection();
-          engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, a.GetPosition() - actor.GetPosition());
-          delta_angle = engine.TrueVision.TVMathLibrary.ACos(engine.TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
+             TV_3DVECTOR vec = new TV_3DVECTOR();
+             TV_3DVECTOR dir = actor.GetDirection();
+             engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, a.GetPosition() - actor.GetPosition());
+             delta_angle = engine.TrueVision.TVMathLibrary.ACos(engine.TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
 
-          WeaponInfo weapon = null;
-          int burst = 0;
-          actor.WeaponSystemInfo.SelectWeapon(aID, delta_angle, dist, out weapon, out burst);
-          if (weapon != null)
-          {
-            weapon.Fire(engine, actorID, aID, burst);
-            return;
-          }
-        }
-      }
+             WeaponInfo weapon = null;
+             int burst = 0;
+             actor.WeaponSystemInfo.SelectWeapon(aID, delta_angle, dist, out weapon, out burst);
+             if (weapon != null)
+             {
+               weapon.Fire(engine, actorID, aID, burst);
+               return;
+             }
+           }
+         }
+      );
+
+      engine.ActorFactory.DoEach(action);
     }
   }
 }

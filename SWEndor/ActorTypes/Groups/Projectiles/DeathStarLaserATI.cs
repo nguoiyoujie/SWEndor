@@ -18,6 +18,7 @@ namespace SWEndor.ActorTypes.Instances
       MinSpeed = Globals.LaserSpeed * 8.5f;
 
       NoAI = true;
+      IsLaser = true;
       EnableDistanceCull = false;
 
       SourceMesh = TrueVision.TVGlobals.GetMesh(Key);

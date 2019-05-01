@@ -814,7 +814,7 @@ namespace SWEndor.Scenarios
         ActorInfo actor = ActorFactory.Get(id);
         if (actor != null)
         {
-          actor.Position = m_rebelPosition[id] + new TV_3DVECTOR(0, 0, actor.TypeInfo.MaxSpeed * 8f);
+          actor.CoordData.Position = m_rebelPosition[id] + new TV_3DVECTOR(0, 0, actor.TypeInfo.MaxSpeed * 8f);
           actor.MoveComponent.Speed = actor.TypeInfo.MaxSpeed;
         }
       }
@@ -938,7 +938,7 @@ namespace SWEndor.Scenarios
               int rsID = MainEnemyFaction.GetShips()[Engine.Random.Next(0, MainEnemyFaction.GetShips().Count)];
               ActorInfo rs = ActorFactory.Get(actorID);
               {
-                foreach (int i in rs.GetAllChildren(1))
+                foreach (int i in rs.Children)
                 {
                   ActorInfo rc = ActorFactory.Get(i);
                   if (rc.RegenerationInfo.ParentRegenRate > 0)
@@ -1214,9 +1214,7 @@ namespace SWEndor.Scenarios
     #region Empire spawns
     public void Empire_FirstTIEWave(params object[] param)
     {
-      List<int> list = m_ADS.GetAllChildren(1);
-      if (list.Count > 0)
-        m_ADSLaserSourceID = list[0];
+      m_ADSLaserSourceID = m_ADS.Children[0];
 
       // TIEs
       float t = 0;
@@ -2319,9 +2317,9 @@ namespace SWEndor.Scenarios
       ActorInfo player = ActorFactory.Get(m_PlayerID);
       if (player != null)
       {
-        m_Player_pos = player.Position;
+        m_Player_pos = player.CoordData.Position;
         ActionManager.QueueFirst(m_PlayerID, new Lock());
-        player.Position = new TV_3DVECTOR(30, 0, -100000);
+        player.CoordData.Position = new TV_3DVECTOR(30, 0, -100000);
         m_Player_PrimaryWeapon = PlayerInfo.PrimaryWeapon;
         m_Player_SecondaryWeapon = PlayerInfo.SecondaryWeapon;
         player.CombatInfo.DamageModifier = 0;
@@ -2350,7 +2348,7 @@ namespace SWEndor.Scenarios
       if (player != null)
       {
         player.ActorState = ActorState.NORMAL;
-        player.Position = m_Player_pos;
+        player.CoordData.Position = m_Player_pos;
         ActionManager.ForceClearQueue(m_PlayerID);
         PlayerInfo.ActorID = m_PlayerID;
         PlayerInfo.PrimaryWeapon = m_Player_PrimaryWeapon;

@@ -21,6 +21,7 @@ namespace SWEndor.ActorTypes.Groups
       TargetType = TargetType.ADDON;
 
       NoMove = true;
+      NoRotate = true;
     }
 
     public override void Initialize(ActorInfo ainfo)

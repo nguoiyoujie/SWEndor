@@ -141,7 +141,7 @@ makeplayer:
 	AddEvent(5, "setupplayer");
 
 setupplayer:
-	Actor.SetProperty(Player.GetActor(), "DamageModifier", 0.25);
+	//Actor.SetProperty(Player.GetActor(), "DamageModifier", 0.25);
 	Actor.RegisterEvents(Player.GetActor());
 
 firstspawn:

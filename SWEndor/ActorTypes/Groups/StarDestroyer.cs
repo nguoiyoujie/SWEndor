@@ -48,7 +48,7 @@ namespace SWEndor.ActorTypes.Groups
       {
         ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo.Create(ActorFactory, acinfo).AddParent(ainfo.ID);
+        ainfo.AddChild(ActorInfo.Create(ActorFactory, acinfo).ID);
       }
     }
   }

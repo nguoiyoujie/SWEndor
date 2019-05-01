@@ -4,7 +4,7 @@ using SWEndor.AI.Actions;
 
 namespace SWEndor.Actors.Components
 {
-  public class MoveNormal : IMoveComponent
+  public struct MoveNormal : IMoveComponent
   {
     // General
     public float Speed { get; set; }
@@ -43,6 +43,7 @@ namespace SWEndor.Actors.Components
       ZTilt = atype.ZTilt;
       ZNormFrac = atype.ZNormFrac;
       ApplyZBalance = true;
+      Zdiv = 0;
     }
 
     public void Reset()
@@ -67,6 +68,7 @@ namespace SWEndor.Actors.Components
       XTurnAngle = 0;
       YTurnAngle = 0;
     }
+
 
     public void Move(ActorInfo actor)
     {

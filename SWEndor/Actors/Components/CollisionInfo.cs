@@ -66,7 +66,7 @@ namespace SWEndor.Actors.Components
     internal void CheckCollision()
     {
       IsTestingCollision = false;
-      if (!Actor.PrevPosition.Equals(new TV_3DVECTOR()) && !Actor.GetPosition().Equals(new TV_3DVECTOR()))
+      if (Actor.CoordData.Initialized)
       {
         // only check player and projectiles
         if (ActorInfo.IsPlayer(Actor.Engine, Actor.ID)
@@ -99,7 +99,7 @@ namespace SWEndor.Actors.Components
     private void TestLandscapeCollision()
     {
       TV_3DVECTOR vmin = Actor.GetRelativePositionXYZ(0, 0, Actor.TypeInfo.max_dimensions.z, false);
-      TV_3DVECTOR vmax = Actor.GetRelativePositionXYZ(0, 0, Actor.TypeInfo.min_dimensions.z, false) + Actor.PrevPosition - Actor.Position;
+      TV_3DVECTOR vmax = Actor.GetRelativePositionXYZ(0, 0, Actor.TypeInfo.min_dimensions.z, false) - Actor.CoordData.LastTravelled;
 
       // check landscape only
       if (Actor.TypeInfo is ActorTypes.Group.Projectile || Actor.TypeInfo.TargetType != TargetType.NULL)
@@ -114,7 +114,7 @@ namespace SWEndor.Actors.Components
       if (IsTestingCollision)
       {
         TV_3DVECTOR vmin = Actor.GetRelativePositionXYZ(0, 0, Actor.TypeInfo.max_dimensions.z, false);
-        TV_3DVECTOR vmax = Actor.GetRelativePositionXYZ(0, 0, Actor.TypeInfo.min_dimensions.z, false) + Actor.PrevPosition - Actor.Position;
+        TV_3DVECTOR vmax = Actor.GetRelativePositionXYZ(0, 0, Actor.TypeInfo.min_dimensions.z, false) - Actor.CoordData.LastTravelled;
 
         IsInCollision = TestCollision(vmin, vmax, true, out CollisionImpact, out CollisionNormal, out CollisionActorID);
         IsTestingCollision = false;
@@ -166,11 +166,11 @@ namespace SWEndor.Actors.Components
                 proImpact += _Impact;
                 proNormal += _Normal;
                 count++;
-                float newdist = Actor.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(Actor.Position, _Impact);
+                float newdist = Actor.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(Actor.CoordData.Position, _Impact);
                 if (dist < newdist)
                 {
                   dist = newdist;
-                  ProspectiveCollisionSafe = Actor.Position + (proend0 - Actor.Position) * 1000;
+                  ProspectiveCollisionSafe = Actor.CoordData.Position + (proend0 - Actor.CoordData.Position) * 1000;
                   if (IsAvoidingCollision)
                     nextlevel = false;
                 }
@@ -180,7 +180,7 @@ namespace SWEndor.Actors.Components
                 dist = float.MaxValue;
                 if (!IsAvoidingCollision)
                   nextlevel = false;
-                ProspectiveCollisionSafe = Actor.Position + (proend0 - Actor.Position) * 1000;
+                ProspectiveCollisionSafe = Actor.CoordData.Position + (proend0 - Actor.CoordData.Position) * 1000;
               }
             }
         }
@@ -205,7 +205,6 @@ namespace SWEndor.Actors.Components
           vNormal = new TV_3DVECTOR();
 
           TV_COLLISIONRESULT tvcres = new TV_COLLISIONRESULT();
-
           if (Actor.Engine.TrueVision.TVScene.AdvancedCollision(start, end, ref tvcres))
           {
             if (ActorInfo.IsPlayer(Actor.Engine, Actor.ID))
@@ -244,7 +243,7 @@ namespace SWEndor.Actors.Components
                   ActorInfo actor = Actor.Engine.ActorFactory.Get(actorID);
                   return (actor != null
                        && actorID != Actor.ID
-                       && !Actor.HasRelative(actorID)
+                       && Actor.TopParent != actor.TopParent
                        && actor.TypeInfo.CollisionEnabled
                        && !ActorInfo.IsAggregateMode(Actor.Engine, actorID)
                        && actor.CreationState == CreationState.ACTIVE);

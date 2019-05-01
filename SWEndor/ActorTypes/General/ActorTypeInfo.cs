@@ -103,6 +103,8 @@ namespace SWEndor.ActorTypes
     public bool NoRender = false;
     public bool NoProcess = false;
     public bool NoMove = false;
+    public bool NoRotate = false;
+    public bool IsLaser = false;
     public bool NoAI = false;
 
     // Misc
@@ -433,28 +435,40 @@ namespace SWEndor.ActorTypes
         float str0 = owner.CombatInfo.Strength;
         owner.CombatInfo.onNotify(Actors.Components.CombatEventType.DAMAGE, hitby.TypeInfo.ImpactDamage);
         float str1 = owner.CombatInfo.Strength;
+
+
         if (ActorInfo.IsPlayer(Engine, owner.ID))
         {
           if (str1 < (int)str0)
             PlayerInfo.FlashHit(PlayerInfo.HealthColor);
-          PlayerInfo.Score.DamageTaken += hitby.TypeInfo.ImpactDamage * owner.CombatInfo.DamageModifier;
 
-          if (owner.ActorState.IsDyingOrDead())
-          {
-            PlayerInfo.Score.Deaths++;
-          }
+
         }
 
         // scoring
-        int attackerID = hitby.GetTopParent();
+        int attackerID = hitby.TopParent;
         ActorInfo attacker = ActorFactory.Get(attackerID);
+        if (attacker == PlayerInfo.Actor)
+        {
+          if (!attacker.Faction.IsAlliedWith(owner.Faction))
+            AddScore(PlayerInfo.Score, hitby, owner);
+          else
+            Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", owner.Name, PlayerInfo.Name)
+                                            , 5
+                                            , owner.Faction.Color
+                                            , -1);
+        }
+
+        if (owner == PlayerInfo.Actor)
+        {
+          PlayerInfo.Score.AddDamage(attacker, hitby.TypeInfo.ImpactDamage * owner.CombatInfo.DamageModifier);
+
+          if (owner.ActorState.IsDyingOrDead())
+            PlayerInfo.Score.AddDeath(attacker);
+        }
+
         if (attacker != null && !attacker.Faction.IsAlliedWith(owner.Faction))
         {
-          AddScore(attacker.Score, attacker, owner);
-
-          if (ActorInfo.IsPlayer(Engine, hitby.ID))
-            AddScore(PlayerInfo.Score, attacker, owner);
-
           // Fighter AI
           if ((owner.TypeInfo is Groups.Fighter))
           {
@@ -488,33 +502,35 @@ namespace SWEndor.ActorTypes
           owner.MoveRelative(repel, 0, 0);
         }
 
-        //if (ActorInfo.IsPlayer(Engine, owner.ID))
-        //  PlayerInfo.FlashHit(PlayerInfo.HealthColor);
-
-        int attackerID = hitby.GetTopParent();
+        int attackerID = hitby.TopParent;
         ActorInfo attacker = ActorFactory.Get(attackerID);
-        if (attacker != null && !attacker.Faction.IsAlliedWith(owner.Faction))
-          AddScore(attacker.Score, attacker, owner);
+        if (attacker == PlayerInfo.Actor)
+        {
+          if (!attacker.Faction.IsAlliedWith(owner.Faction))
+            AddScore(PlayerInfo.Score, attacker, owner);
+          else
+            Screen2D.MessageText(string.Format("{0}: {1}, watch it!", owner.Name, PlayerInfo.Name)
+                                            , 5
+                                            , owner.Faction.Color
+                                            , -1);
+        }
 
         // Fighter Collision
         if ((owner.TypeInfo is Groups.Fighter && owner.ActorState.IsDyingOrDead()))
         {
           owner.ActorState = ActorState.DEAD;
           if (ActorInfo.IsPlayer(Engine, owner.ID))
-            PlayerInfo.Score.Deaths++;
+            PlayerInfo.Score.AddDeath(attacker);
         }
       }
 
       hitby.OnHitEvent(owner.ID);
     }
 
-    private void AddScore(ScoreInfo score, ActorInfo scorer, ActorInfo victim)
+    private void AddScore(ScoreInfo score, ActorInfo proj, ActorInfo victim)
     {
-      score.Hits++;
-      score.Score++;
-
       bool shielded = false;
-      foreach (int i in victim.GetAllChildren())
+      foreach (int i in victim.Children)
       {
         ActorInfo shd = ActorFactory.Get(i);
         if (shd != null && (shd.RegenerationInfo.ParentRegenRate > 0 || shd.RegenerationInfo.RelativeRegenRate > 0))
@@ -524,24 +540,14 @@ namespace SWEndor.ActorTypes
       {
         if (!victim.ActorState.IsDyingOrDead())
         {
-          score.Score += victim.TypeInfo.Score_perStrength * scorer.TypeInfo.ImpactDamage * victim.CombatInfo.DamageModifier;
+          score.AddHit(victim, proj.TypeInfo.ImpactDamage * victim.CombatInfo.DamageModifier);
         }
       }
 
-      if (victim.TypeInfo is Groups.Fighter)
-      {
-        score.HitsOnFighters++;
-      }
       if (!victim.ActorState.IsDyingOrDead() 
         && victim.CombatInfo.Strength <= 0)
       {
-        score.Kills++;
-        score.Score += victim.TypeInfo.Score_DestroyBonus;
-        string t = victim.TypeInfo.Name;
-        if (!score.KillsByType.ContainsKey(t))
-          score.KillsByType.Add(t, 1);
-        else
-          score.KillsByType[t]++;
+        score.AddKill(victim);
       }
     }
 

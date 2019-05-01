@@ -22,6 +22,8 @@ namespace SWEndor.ActorTypes.Groups
       Score_DestroyBonus = 0;
 
       NoMove = true;
+      NoRotate = true;
+      NoAI = true;
     }
 
     public override void Initialize(ActorInfo ainfo)

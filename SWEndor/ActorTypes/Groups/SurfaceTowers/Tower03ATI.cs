@@ -17,6 +17,7 @@ namespace SWEndor.ActorTypes.Instances
       RadarSize = 2.5f;
 
       NoMove = true;
+      NoRotate = true;
       NoAI = true;
 
       AlwaysShowInRadar = true;

@@ -17,6 +17,7 @@ namespace SWEndor.ActorTypes.Instances
       Score_DestroyBonus = 5000;
 
       NoMove = true;
+      NoRotate = true;
       NoAI = true;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"towers\tower_01.x");

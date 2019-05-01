@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using System;
 using System.Collections.Generic;
 
 namespace SWEndor.UI.Widgets
@@ -23,31 +24,36 @@ namespace SWEndor.UI.Widgets
       TV_2DVECTOR loc = new TV_2DVECTOR(30, 375);
       string swingcount = "";
       Dictionary<string, int> wingcount = new Dictionary<string, int>();
-      foreach (int actorID in Engine.ActorFactory.GetHoldingList())
-      {
-        ActorInfo a = Engine.ActorFactory.Get(actorID);
-        if (a != null && a.CreationState == CreationState.ACTIVE)
+
+      Action<Engine, int> action = new Action<Engine, int>(
+        (_, aID) =>
         {
-          if (!wingcount.ContainsKey("All Objects"))
-            wingcount.Add("All Objects", 1);
-          else
-            wingcount["All Objects"]++;
-        }
-        if (a != null && a.TypeInfo is ActorTypes.Group.Projectile && a.CreationState == CreationState.ACTIVE && a.Faction != null)
-        {
-          if (!wingcount.ContainsKey("Projectiles"))
-            wingcount.Add("Projectiles", 1);
-          else
-            wingcount["Projectiles"]++;
-        }
-        if (a != null && (a.TypeInfo is ActorTypes.Groups.Fighter) && a.CreationState == CreationState.ACTIVE && a.Faction != null)
-        {
-          if (!wingcount.ContainsKey(a.Faction.Name + " Wings"))
-            wingcount.Add(a.Faction.Name + " Wings", 1);
-          else
-            wingcount[a.Faction.Name + " Wings"]++;
-        }
-      }
+          ActorInfo a = Engine.ActorFactory.Get(aID);
+          if (a != null && a.CreationState == CreationState.ACTIVE)
+          {
+            if (!wingcount.ContainsKey("All Objects"))
+              wingcount.Add("All Objects", 1);
+            else
+              wingcount["All Objects"]++;
+          }
+          if (a != null && a.TypeInfo is ActorTypes.Group.Projectile && a.CreationState == CreationState.ACTIVE && a.Faction != null)
+          {
+            if (!wingcount.ContainsKey("Projectiles"))
+              wingcount.Add("Projectiles", 1);
+            else
+              wingcount["Projectiles"]++;
+          }
+          if (a != null && (a.TypeInfo is ActorTypes.Groups.Fighter) && a.CreationState == CreationState.ACTIVE && a.Faction != null)
+          {
+            if (!wingcount.ContainsKey(a.Faction.Name + " Wings"))
+              wingcount.Add(a.Faction.Name + " Wings", 1);
+            else
+              wingcount[a.Faction.Name + " Wings"]++;
+          }
+        });
+
+      ActorFactory.DoEach(action);
+
       foreach (KeyValuePair<string, int> kvp in wingcount)
       {
         swingcount += kvp.Key + ": " + kvp.Value + "\n";

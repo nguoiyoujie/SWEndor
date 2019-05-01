@@ -116,22 +116,18 @@ namespace SWEndor
 
     public void PrepExit()
     {
-      tm_sound.Stop();
       tm_ai.Stop();
       tm_collision.Stop();
       tm_render.Stop();
       tm_process.Stop();
       tm_perf.Stop();
+      Thread.Sleep(1500);
+      tm_sound.Stop();
     }
 
     public void Stop()
     {
-      if (State != RunState.STOPPED)
-      {
-        State = RunState.STOPPED;
-        Thread.Sleep(1500);
-        Engine.Exit();
-      }
+      State = RunState.STOPPED;
     }
 
     private void Tick()
@@ -217,7 +213,6 @@ namespace SWEndor
                       , MessageBoxButtons.OK));
         return;
       }
-      Stop();
     }
 
     private void GenerateFatalError(Exception ex)

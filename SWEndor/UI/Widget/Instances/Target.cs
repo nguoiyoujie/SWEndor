@@ -141,48 +141,52 @@ namespace SWEndor.UI.Widgets
         // Attempt close enough
         float bestlimit = 9999;
 
-        foreach (int actorID in ActorFactory.GetHoldingList())
-        {
-          ActorInfo a = ActorFactory.Get(actorID);
-          if (a != null
-            && p != a
-            && a.CreationState == CreationState.ACTIVE
-            && a.ActorState != ActorState.DYING
-            && a.ActorState != ActorState.DEAD
-            && a.TypeInfo.IsSelectable
-            && (pick_allies || !p.Faction.IsAlliedWith(a.Faction))
-            && PlayerCameraInfo.Camera.IsPointVisible(a.GetPosition())
-            )
+        Action<Engine, int> action = new Action<Engine, int>(
+          (_, actorID) =>
           {
-            float dist = ActorDistanceInfo.GetDistance(p.ID, actorID, 7501);
-            if (dist < 7500)
+            ActorInfo a = ActorFactory.Get(actorID);
+            if (a != null
+              && p != a
+              && a.CreationState == CreationState.ACTIVE
+              && a.ActorState != ActorState.DYING
+              && a.ActorState != ActorState.DEAD
+              && a.TypeInfo.IsSelectable
+              && (pick_allies || !p.Faction.IsAlliedWith(a.Faction))
+              && PlayerCameraInfo.Camera.IsPointVisible(a.GetPosition())
+              )
             {
-              float x = 0;
-              float y = 0;
-              float limit = 0.015f * dist;
-              if (limit < 50)
-                limit = 50;
-              m_targetX = limit;
-              m_targetY = limit;
-              TVScreen2DImmediate.Math_3DPointTo2D(a.GetPosition(), ref x, ref y);
-
-              x -= Engine.ScreenWidth / 2;
-              y -= Engine.ScreenHeight / 2;
-
-              x = Math.Abs(x);
-              y = Math.Abs(y);
-
-              if (x < limit && y < limit && x + y < bestlimit)
+              float dist = ActorDistanceInfo.GetDistance(p.ID, actorID, 7501);
+              if (dist < 7500)
               {
-                bestlimit = x + y;
-                m_target = a;
-                m_targetX = x;
-                m_targetY = y;
-                ret = true;
+                float x = 0;
+                float y = 0;
+                float limit = 0.015f * dist;
+                if (limit < 50)
+                  limit = 50;
+                m_targetX = limit;
+                m_targetY = limit;
+                TVScreen2DImmediate.Math_3DPointTo2D(a.GetPosition(), ref x, ref y);
+
+                x -= Engine.ScreenWidth / 2;
+                y -= Engine.ScreenHeight / 2;
+
+                x = Math.Abs(x);
+                y = Math.Abs(y);
+
+                if (x < limit && y < limit && x + y < bestlimit)
+                {
+                  bestlimit = x + y;
+                  m_target = a;
+                  m_targetX = x;
+                  m_targetY = y;
+                  ret = true;
+                }
               }
             }
           }
-        }
+        );
+
+        ActorFactory.DoEach(action);
       }
       return ret;
     }

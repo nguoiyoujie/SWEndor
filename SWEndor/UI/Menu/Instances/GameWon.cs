@@ -17,13 +17,13 @@ namespace SWEndor.UI.Menu.Pages
 
       Score.Text += string.Format("{0,42} {1,8:0}", "Score".PadRight(42), PlayerInfo.Score.Score);
       Score.Text += string.Format("\n\n{0,42} {1,8:0}", "Total Hits".PadRight(42), PlayerInfo.Score.Hits);
-      Score.Text += string.Format("\n{0,42} {1,8:0}", "Total Hits on Fighters".PadRight(42), PlayerInfo.Score.HitsOnFighters);
+      //Score.Text += string.Format("\n{0,42} {1,8:0}", "Total Hits on Fighters".PadRight(42), PlayerInfo.Score.HitsOnFighters);
       Score.Text += string.Format("\n{0,42} {1,8:0}", "Damage Taken".PadRight(42), PlayerInfo.Score.DamageTaken);
       Score.Text += string.Format("\n{0,42} {1,8:0}", "Deaths".PadRight(42), PlayerInfo.Score.Deaths);
       Score.Text += string.Format("\n\n{0,42} {1,8:0}", "", "Kills");
 
-      foreach (KeyValuePair<string, int> kvp in PlayerInfo.Score.KillsByType)
-        Score.Text += string.Format("\n{0,42} {1,8:0}", (kvp.Key.Length > 42) ? kvp.Key.Remove(42) : kvp.Key.PadRight(42), kvp.Value);
+      //foreach (KeyValuePair<string, int> kvp in PlayerInfo.Score.KillsByName.GetList())
+      //  Score.Text += string.Format("\n{0,42} {1,8:0}", (kvp.Key.Length > 42) ? kvp.Key.Remove(42) : kvp.Key.PadRight(42), kvp.Value);
 
       Score.TextFont = Font.Factory.Get("Text_12").ID;
       Score.TextPosition = new TV_2DVECTOR(Engine.ScreenWidth / 2 - 242, 120);

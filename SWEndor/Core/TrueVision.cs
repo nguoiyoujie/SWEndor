@@ -82,11 +82,11 @@ namespace SWEndor
     private void InitEngine()
     {
       TVEngine.AllowMultithreading(true);
-      //TVEngine.SetDebugMode(true, true);
+      TVEngine.SetDebugMode(true, true);
       TVEngine.SetDebugFile(Path.Combine(Globals.DebugPath, @"truevision_debug.txt"));
 
       TVEngine.DisplayFPS(true);
-      //TVEngine.EnableProfiler(true);
+      TVEngine.EnableProfiler(true);
       TVEngine.EnableSmoothTime(true);
       TVEngine.SetVSync(true);
 

@@ -418,7 +418,7 @@ namespace SWEndor.Scenarios
               ActorInfo en = ActorFactory.Get(enID);
               if (en != null)
               {
-                pos += en.Position;
+                pos += en.CoordData.Position;
                 count++;
               }
             }
@@ -497,7 +497,7 @@ namespace SWEndor.Scenarios
       else
       {
         TV_3DVECTOR rot = player.GetRotation();
-        TV_3DVECTOR tgtrot = Utilities.GetRotation(attacker.GetRelativePositionFUR(-1000, 0, 0) - player.PrevPosition);
+        TV_3DVECTOR tgtrot = Utilities.GetRotation(attacker.GetRelativePositionFUR(-1000, 0, 0) - player.CoordData.PrevPosition);
 
         float chgy = tgtrot.y - rot.y;
 

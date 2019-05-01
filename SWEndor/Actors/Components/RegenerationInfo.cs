@@ -35,15 +35,14 @@
       Regenerate(Actor, SelfRegenRate * time);
 
       if (ParentRegenRate != 0)
-        foreach (int p in Actor.GetAllParents())
-          Regenerate(p, ParentRegenRate * time);
+          Regenerate(Actor.ParentID, ParentRegenRate * time);
 
       if (ChildRegenRate != 0)
-        foreach (int c in Actor.GetAllChildren())
+        foreach (int c in Actor.Children)
           Regenerate(c, ChildRegenRate * time);
 
       if (RelativeRegenRate != 0)
-        foreach (int r in Actor.GetAllRelatives())
+        foreach (int r in Actor.Siblings)
           Regenerate(r, RelativeRegenRate * time);
     }
 

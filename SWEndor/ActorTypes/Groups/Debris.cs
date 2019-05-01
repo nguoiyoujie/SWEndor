@@ -12,12 +12,15 @@ namespace SWEndor.ActorTypes.Groups
       IsDamage = false;
       CollisionEnabled = false;
       CullDistance = 4500f;
+
+      NoAI = true;
     }
 
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
       ainfo.CombatInfo.DamageModifier = 0;
+      ainfo.MoveComponent.ApplyZBalance = false;
     }
   }
 }

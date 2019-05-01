@@ -1,51 +1,15 @@
 ﻿using MTV3D65;
+using SWEndor.Actors.Data;
 
 namespace SWEndor.Actors.Components
 {
-  public class CoordComponent
-  {
-    // General
-    public TV_3DVECTOR Position { get; set; }
-    public TV_3DVECTOR Rotation { get; set; }
-  }
 
-  public class SpeedComponent
-  {
-    // General
-    public float Speed { get; set; }
-  }
 
-  public class SpeedSettingsComponent
-  {
-    public float MaxSpeed { get; set; }
-    public float MinSpeed { get; set; }
-    public float MaxSpeedChangeRate { get; set; }
-  }
 
-  public class TurnComponent
-  {
-    public float XTurnAngle { get; set; } // Pitch
-    public float YTurnAngle { get; set; } // Yaw
-    public float ZRoll { get; set; } // Roll
-  }
 
-  public class TurnSettingsComponent
-  {
-    // Pitch settings
-    public float PitchLimit { get; set; }
 
-    // yaw settings
-    public float MaxTurnRate { get; set; }
-    public float MaxSecondOrderTurnRateFrac { get; set; }
 
-    // roll settings
-    public float ZTilt { get; set; }
-    public float ZNormFrac { get; set; }
-    public bool ApplyZBalance { get; set; }
 
-    // iterates Z rotation decay, uses a while loop... the algorithm should be replaced
-    public float Zdiv;
-  }
 
   public interface IMovable
   {
@@ -59,10 +23,10 @@ namespace SWEndor.Actors.Components
 
   public class AAAMoveForwardOnly : IMovable
   {
-    private CoordComponent _coord;
-    private SpeedComponent _speed;
+    private CoordData _coord;
+    private SpeedData _speed;
 
-    public AAAMoveForwardOnly(CoordComponent coord, SpeedComponent speed)
+    public AAAMoveForwardOnly(CoordData coord, SpeedData speed)
     { _coord = coord; _speed = speed; }
 
     public void Move(float time)
@@ -78,11 +42,11 @@ namespace SWEndor.Actors.Components
 
   public class AAARotateOnly : IMovable
   {
-    private CoordComponent _coord;
-    private TurnComponent _turn;
-    private TurnSettingsComponent _turnS;
+    private CoordData _coord;
+    private TurnData _turn;
+    private TurnSettingData _turnS;
 
-    public AAARotateOnly(CoordComponent coord, TurnComponent turn, TurnSettingsComponent turnS)
+    public AAARotateOnly(CoordData coord, TurnData turn, TurnSettingData turnS)
     { _coord = coord; _turn = turn; _turnS = turnS; }
 
     public void Move(float time)
@@ -122,13 +86,13 @@ namespace SWEndor.Actors.Components
 
   public class Moveable : IMovable
   {
-    private CoordComponent _coord;
-    private SpeedComponent _speed;
-    private TurnComponent _turn;
-    private SpeedSettingsComponent _speedS;
-    private TurnSettingsComponent _turnS;
+    private CoordData _coord;
+    private SpeedData _speed;
+    private TurnData _turn;
+    private SpeedSettingData _speedS;
+    private TurnSettingData _turnS;
 
-    public Moveable(CoordComponent coord, SpeedComponent speed, TurnComponent turn, SpeedSettingsComponent speedS, TurnSettingsComponent turnS)
+    public Moveable(CoordData coord, SpeedData speed, TurnData turn, SpeedSettingData speedS, TurnSettingData turnS)
     { _coord = coord; _speed = speed; _turn = turn; _speedS = speedS; _turnS = turnS; }
 
     public void Move(float time)

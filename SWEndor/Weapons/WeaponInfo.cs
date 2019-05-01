@@ -251,12 +251,12 @@ namespace SWEndor.Weapons
         }
         else
         {
-          acinfo.Rotation = owner.Rotation;
+          acinfo.Rotation = owner.CoordData.Rotation;
         }
 
         ActorInfo a = ActorInfo.Create(engine.ActorFactory, acinfo);
         a.Faction = owner.Faction;
-        a.AddParent(ownerActorID);
+        owner.AddChild(a.ID);
 
         if (!a.TypeInfo.NoAI)
           engine.ActionManager.QueueLast(a.ID, new Wait(ProjectileWaitBeforeHoming));
@@ -317,7 +317,7 @@ namespace SWEndor.Weapons
         }
 
         ActorInfo a = ActorInfo.Create(engine.ActorFactory, acinfo);
-        a.AddParent(ownerActorID);
+        owner.AddChild(a.ID);
         a.Faction = owner.Faction;
 
         if (!a.TypeInfo.NoAI)

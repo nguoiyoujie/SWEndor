@@ -26,9 +26,8 @@ namespace SWEndor.UI.Forms
     {
       gameTimer.Enabled = false;
       GameForm gf = new GameForm(Engine);
-      gf.ShowDialog();
-
-      Close();
+      gf.Owner = this;
+      gf.Show();
     }
   }
 }

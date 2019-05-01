@@ -53,7 +53,7 @@ namespace SWEndor.ActorTypes.Instances
           }
           else
           {
-            ainfo.RemoveParent();
+            p.RemoveChild(ainfo.ID);
           } 
         }
         else

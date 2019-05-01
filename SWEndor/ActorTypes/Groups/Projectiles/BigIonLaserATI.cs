@@ -23,6 +23,7 @@ namespace SWEndor.ActorTypes.Instances
       MinSpeed = Globals.LaserSpeed * 2f;
 
       NoAI = true;
+      IsLaser = true;
       EnableDistanceCull = false;
       // Projectile
       ImpactCloseEnoughDistance = 150;
@@ -49,23 +50,9 @@ namespace SWEndor.ActorTypes.Instances
         return;
 
       base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
-      List<int> children = hitby.GetAllChildren(1);
-      List<int> rm = new List<int>();
-      foreach (int i in children)
+      if (hitby.Children.Length > 0)
       {
-        ActorInfo c = ActorFactory.Get(i);
-        if (c == null
-          || c.CreationState != CreationState.ACTIVE
-          || !c.TypeInfo.TargetType.HasFlag(TargetType.ADDON))
-          rm.Add(c.ID);
-      }
-
-      foreach (int r in rm)
-        children.Remove(r);
-
-      if (children.Count > 0)
-      {
-        foreach (int i in children)
+        foreach (int i in hitby.Children)
         {
           ActorInfo child = ActorFactory.Get(i);
           child.CombatInfo.onNotify(Actors.Components.CombatEventType.DAMAGE, 0.5f * child.CombatInfo.MaxStrength);
@@ -75,7 +62,7 @@ namespace SWEndor.ActorTypes.Instances
             if (w.WeaponCooldown < Game.GameTime + empduration + 2)
               w.WeaponCooldown = Game.GameTime + empduration + 2;
 
-          foreach (int i2 in child.GetAllChildren(1))
+          foreach (int i2 in child.Children)
           {
             ActorInfo child2 = ActorFactory.Get(i2);
 
@@ -88,7 +75,7 @@ namespace SWEndor.ActorTypes.Instances
           ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
           acinfo.Position = child.GetPosition();
           ActorInfo electro = ActorInfo.Create(ActorFactory, acinfo);
-          electro.AddParent(child.ID);
+          child.AddChild(electro.ID);
           electro.CycleInfo.CyclesRemaining = empduration / electro.TypeInfo.TimedLife;
         }
       }

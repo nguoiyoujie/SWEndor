@@ -44,7 +44,7 @@ namespace SWEndor.ActorTypes.Groups
         ainfo.MoveComponent.ApplyZBalance = false;
         ainfo.CombatInfo.OnTimedLife = true;
 
-        if (ainfo.GetAllParents(1).Count > 0 || (ainfo.CombatInfo.HitWhileDyingLeadsToDeath && Globals.Engine.Random.NextDouble() < 0.3f))
+        if (ainfo.ParentID < 0 || (ainfo.CombatInfo.HitWhileDyingLeadsToDeath && Globals.Engine.Random.NextDouble() < 0.3f))
         {
           ainfo.CombatInfo.TimedLife = 0.1f;
         }
@@ -57,7 +57,7 @@ namespace SWEndor.ActorTypes.Groups
 
         ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo.Create(ActorFactory, acinfo).AddParent(ainfo.ID);
+        ainfo.AddChild(ActorInfo.Create(ActorFactory, acinfo).ID);
       }
     }
   }

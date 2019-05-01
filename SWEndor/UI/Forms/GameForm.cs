@@ -31,7 +31,7 @@ namespace SWEndor.UI.Forms
     public void Exit()
     {
       Cursor.Show();
-      Invoke(new Action(Close));
+      Owner.Invoke(new Action(Owner.Close));
     }
 
     private void GameForm_FormClosing(object sender, FormClosingEventArgs e)

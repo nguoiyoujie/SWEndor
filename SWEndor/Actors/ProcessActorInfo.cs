@@ -117,7 +117,7 @@ namespace SWEndor.Actors
 
     private void Update()
     {
-      PrevPosition = Position;
+      //PrevPosition = Position;
 
       if (Mesh == null)
         return;

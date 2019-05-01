@@ -2,7 +2,7 @@
 
 namespace SWEndor.Actors.Components
 {
-  public class MoveForwardOnly : IMoveComponent
+  public struct MoveForwardOnly : IMoveComponent
   {
     public MoveForwardOnly(float speed, float maxspeed, float minspeed, float changerate)
     {

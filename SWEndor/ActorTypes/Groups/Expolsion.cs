@@ -20,6 +20,7 @@ namespace SWEndor.ActorTypes.Groups
 
       RadarSize = 1;
       NoMove = true;
+      NoRotate = true;
       NoAI = true;
 
       IsExplosion = true;

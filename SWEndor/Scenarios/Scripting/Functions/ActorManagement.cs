@@ -225,7 +225,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new int[] { };
 
-      return actor.GetAllChildren(1).ToArray();
+      return actor.Children;
     }
 
     public static object GetProperty(Context context, params object[] ps)

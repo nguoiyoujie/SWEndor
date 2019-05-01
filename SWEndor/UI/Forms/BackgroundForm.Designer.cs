@@ -59,8 +59,9 @@
       this.ClientSize = new System.Drawing.Size(603, 456);
       this.ControlBox = false;
       this.Controls.Add(this.lblVersion);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
       this.Name = "BackgroundForm";
+      this.ShowInTaskbar = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Game";
       this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

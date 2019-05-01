@@ -117,20 +117,26 @@ namespace SWEndor
 
     public void Process()
     {
-      foreach (int actorID in ActorFactory.GetList())
-        ActorInfo.Process(this, actorID);
+      ActorFactory.DoEach(ActorInfo.Process);
+
+      //foreach (int actorID in ActorFactory.GetList())
+      //  ActorInfo.Process(this, actorID);
     }
 
     public void ProcessAI()
     {
-      foreach (int actorID in ActorFactory.GetHoldingList())
-        ActorInfo.ProcessAI(this, actorID);
+      ActorFactory.DoEach(ActorInfo.ProcessAI);
+
+      //foreach (int actorID in ActorFactory.GetHoldingList())
+      //  ActorInfo.ProcessAI(this, actorID);
     }
 
     public void ProcessCollision()
     {
-      foreach (int actorID in ActorFactory.GetHoldingList())
-        ActorInfo.ProcessCollision(this, actorID);
+      ActorFactory.DoEach(ActorInfo.ProcessCollision);
+
+      //foreach (int actorID in ActorFactory.GetHoldingList())
+      //  ActorInfo.ProcessCollision(this, actorID);
     }
 
     public void PreRender()
@@ -167,8 +173,10 @@ namespace SWEndor
       TrueVision.TVScene.FinalizeShadows();
       LandInfo.Render();
 
-      foreach (int actorID in ActorFactory.GetHoldingList())
-        ActorInfo.Render(this, actorID);
+      ActorFactory.DoEach(ActorInfo.Render);
+
+      //foreach (int actorID in ActorFactory.GetHoldingList())
+      //  ActorInfo.Render(this, actorID);
 
       Screen2D.Draw();
       TrueVision.TVEngine.RenderToScreen();

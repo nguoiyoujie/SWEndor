@@ -18,6 +18,12 @@ namespace SWEndor.ActorTypes
       EnableDistanceCull = false;
       CollisionEnabled = false;
 
+      NoMove = true;
+      NoRotate = true;
+      NoAI = true;
+      NoRender = true;
+      NoProcess = true;
+
       SourceMesh = TrueVision.TVGlobals.GetMesh(Key);
       if (SourceMesh == null)
       {

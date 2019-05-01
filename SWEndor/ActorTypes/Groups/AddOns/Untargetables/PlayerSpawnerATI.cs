@@ -28,7 +28,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.ProcessState(ainfo);
 
-      ActorInfo p = ActorFactory.Get(ainfo.GetTopParent());
+      ActorInfo p = ActorFactory.Get(ainfo.TopParent);
 
       if (p.SpawnerInfo != null
        && p.SpawnerInfo.Enabled
@@ -39,8 +39,7 @@ namespace SWEndor.ActorTypes.Instances
       {
         if (p.SpawnerInfo.SpawnMoveTime < Game.GameTime)
         {
-          List<ActorInfo> rm = new List<ActorInfo>();
-          foreach (int id in ainfo.GetAllChildren(1))
+          foreach (int id in ainfo.Children)
           {
             ActorInfo a = ActorFactory.Get(id);
 
@@ -51,11 +50,8 @@ namespace SWEndor.ActorTypes.Instances
             if (ActorInfo.IsPlayer(Engine, id))
               PlayerInfo.IsMovementControlsEnabled = true;
 
-            rm.Add(a);
+            ainfo.RemoveChild(id);
           }
-
-          foreach (ActorInfo a in rm)
-            a.RemoveParent();
         }
 
         if (p.ActorState != ActorState.DYING)
@@ -64,7 +60,7 @@ namespace SWEndor.ActorTypes.Instances
         }
       }
 
-      foreach (int id in ainfo.GetAllChildren(1))
+      foreach (int id in ainfo.Children)
       {
         ActorInfo a = ActorFactory.Get(id);
         if (a != null && a.TypeInfo is Groups.Fighter)
@@ -104,13 +100,13 @@ namespace SWEndor.ActorTypes.Instances
 
       TV_3DVECTOR clone = ainfo.GetRelativePositionXYZ(p.SpawnerInfo.PlayerSpawnLocation.x * ainfo.Scale.x, p.SpawnerInfo.PlayerSpawnLocation.y * ainfo.Scale.y, p.SpawnerInfo.PlayerSpawnLocation.z * ainfo.Scale.z);
       acinfo.Position = new TV_3DVECTOR(clone.x, clone.y, clone.z);
-      acinfo.Rotation = new TV_3DVECTOR(p.Rotation.x, p.Rotation.y, p.Rotation.z);
+      acinfo.Rotation = new TV_3DVECTOR(p.CoordData.Rotation.x, p.CoordData.Rotation.y, p.CoordData.Rotation.z);
       acinfo.Rotation += p.SpawnerInfo.SpawnRotation;
 
       acinfo.InitialState = ActorState.FREE;
       acinfo.Faction = ainfo.Faction;
       ActorInfo a = ActorInfo.Create(ActorFactory, acinfo);
-      a.AddParent(ainfo.ID);
+      ainfo.AddChild(a.ID);
       ActionManager.QueueNext(a.ID, new Lock());
 
       PlayerInfo.ActorID = a.ID;

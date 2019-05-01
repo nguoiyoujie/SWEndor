@@ -380,21 +380,16 @@ namespace SWEndor.Scenarios
       ActorInfo av = ActorFactory.Get((int)param[0]);
       ActorInfo aa = ActorFactory.Get((int)param[1]);
 
-      if (PlayerInfo.Actor != null
+      if (PlayerInfo.ActorID == aa.TopParent)
+      {
+        if (PlayerInfo.Actor != null
         && av.Faction != null
         && av.Faction.IsAlliedWith(PlayerInfo.Actor.Faction))
-      {
-        List<int> attackerfamily = aa.GetAllParents();
-        foreach (int i in attackerfamily)
         {
-          ActorInfo a = ActorFactory.Get(i);
-          if (PlayerInfo.Actor == a)
-          {
-            Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", av.Name, PlayerInfo.Name)
-                                                        , 5
-                                                        , av.Faction.Color
-                                                        , -1);
-          }
+          Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", av.Name, PlayerInfo.Name)
+                                                      , 5
+                                                      , av.Faction.Color
+                                                      , -1);
         }
       }
     }

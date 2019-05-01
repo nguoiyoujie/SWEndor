@@ -1,6 +1,7 @@
 ﻿using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.Weapons;
+using System;
 using System.Collections.Generic;
 
 namespace SWEndor.AI.Actions
@@ -30,39 +31,43 @@ namespace SWEndor.AI.Actions
       List<ActorInfo> targets = new List<ActorInfo>();
       int weight = 0;
 
-      foreach (int aID in engine.ActorFactory.GetHoldingList())
-      {
-        ActorInfo a = engine.ActorFactory.Get(aID);
-        if (a != null
-          && actor != a
-          && a.CreationState == CreationState.ACTIVE
-          && !a.ActorState.IsDyingOrDead()
-          && a.CombatInfo.IsCombatObject
-          && (a.TypeInfo.TargetType & m_TargetType) != 0
-          && !a.IsOutOfBounds(engine.GameScenarioManager.MinAIBounds, engine.GameScenarioManager.MaxAIBounds)
-          && !actor.Faction.IsAlliedWith(a.Faction) // enemy
-          )
-        {
-          if (actor.MoveComponent.MaxSpeed == 0) // stationary, can only target those in range
-          {
-            WeaponInfo weap = null;
-            int dummy = 0;
-            float dist = ActorDistanceInfo.GetDistance(actorID, aID, actor.WeaponSystemInfo.GetWeaponRange());
-            actor.WeaponSystemInfo.SelectWeapon(a.ID, 0, dist, out weap, out dummy);
+      Action<Engine, int> action = new Action<Engine, int>(
+         (_, aID) =>
+         {
+           ActorInfo a = engine.ActorFactory.Get(aID);
+           if (a != null
+             && actor != a
+             && a.CreationState == CreationState.ACTIVE
+             && !a.ActorState.IsDyingOrDead()
+             && a.CombatInfo.IsCombatObject
+             && (a.TypeInfo.TargetType & m_TargetType) != 0
+             && !a.IsOutOfBounds(engine.GameScenarioManager.MinAIBounds, engine.GameScenarioManager.MaxAIBounds)
+             && !actor.Faction.IsAlliedWith(a.Faction) // enemy
+             )
+           {
+             if (actor.MoveComponent.MaxSpeed == 0) // stationary, can only target those in range
+             {
+               WeaponInfo weap = null;
+               int dummy = 0;
+               float dist = ActorDistanceInfo.GetDistance(actorID, aID, actor.WeaponSystemInfo.GetWeaponRange());
+               actor.WeaponSystemInfo.SelectWeapon(a.ID, 0, dist, out weap, out dummy);
 
-            if (weap != null)
-            {
-              targets.Add(a);
-              weight += a.HuntWeight;
-            }
-          }
-          else
-          {
-            targets.Add(a);
-            weight += a.HuntWeight;
-          }
-        }
-      }
+               if (weap != null)
+               {
+                 targets.Add(a);
+                 weight += a.HuntWeight;
+               }
+             }
+             else
+             {
+               targets.Add(a);
+               weight += a.HuntWeight;
+             }
+           }
+         }
+       );
+
+      engine.ActorFactory.DoEach(action);
 
       if (targets.Count > 0)
       {

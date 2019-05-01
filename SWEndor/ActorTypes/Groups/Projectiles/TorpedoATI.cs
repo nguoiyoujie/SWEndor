@@ -56,7 +56,7 @@ namespace SWEndor.ActorTypes.Instances
       if (ainfo.CurrentAction == null || ainfo.CurrentAction is Idle)
         ainfo.ActorState = ActorState.DEAD;
 
-
+      /*
       if (ainfo.ActorState == ActorState.NORMAL && !ActorInfo.IsFarMode(ainfo.GetEngine(), ainfo.ID))
       {
         if (ainfo.ParticleSystem == null)
@@ -79,6 +79,7 @@ namespace SWEndor.ActorTypes.Instances
           if (ainfo.ParticleEmitterID >= 0)
             ainfo.ParticleSystem.SetEmitterPosition(ainfo.ParticleEmitterID, ainfo.GetPosition());
       }
+      */
     }
   }
 }

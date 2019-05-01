@@ -18,11 +18,13 @@ namespace SWEndor.Actors
       private ConcurrentQueue<ActorInfo> deadqueue = new ConcurrentQueue<ActorInfo>();
       private ActorInfo[] list = new ActorInfo[Capacity];
       private int count = 0;
-      private int[] holdinglist = new int[0];
-      private float listtime = 0;
+      //private int[] holdinglist = new int[0];
+      //private float listtime = 0;
       private int counter = 0;
       private int emptycounter = 0;
       private Mutex mu_counter = new Mutex();
+      public int First = -1;
+      public int Last = -1;
 
       public ActorInfo Register(ActorCreationInfo amake, string key = "")
       {
@@ -53,9 +55,18 @@ namespace SWEndor.Actors
           actor.ID += Capacity;
           actor.Rebuild(amake);
         }
-        count++;
 
+        if (First < 0)
+          First = actor.ID;
+        else
+        {
+          Get(Last).NextID = actor.ID;
+          actor.PrevID = Last;
+        }
+        Last = actor.ID;
+        count++;
         mu_counter.ReleaseMutex();
+
         return actor;
       }
 
@@ -84,6 +95,7 @@ namespace SWEndor.Actors
         return count;
       }
 
+      /*
       public int[] GetList()
       {
         if (listtime < Engine.Game.GameTime)
@@ -101,6 +113,16 @@ namespace SWEndor.Actors
       public int[] GetHoldingList()
       {
         return holdinglist;
+      }
+      */
+      public void DoEach(Action<Engine, int> action)
+      {
+        ActorInfo actor = Get(First);
+        for (int i = 0; i < count; i++)
+        {
+          action.Invoke(Engine, actor.ID);
+          actor = Get(actor.NextID);
+        }
       }
 
       public ActorInfo Get(int id)
@@ -127,11 +149,32 @@ namespace SWEndor.Actors
       {
         int x = id % Capacity;
 
-        // don't remove, keep future reuse. But reduce counters
         if (list[x]?.CreationState != CreationState.DISPOSED)
         {
           mu_counter.WaitOne();
+
           count--;
+
+          ActorInfo actor = Get(id);
+          if (First == id && Last == id)
+          {
+            First = -1;
+            Last = -1;
+          }
+          else if (First == id)
+          {
+            First = actor.NextID;
+          }
+          else if (Last == id)
+          {
+            Last = actor.PrevID;
+          }
+          else
+          {
+            Get(actor.PrevID).NextID = actor.NextID;
+            Get(actor.NextID).PrevID = actor.PrevID;
+          }
+
           if (x < emptycounter)
             emptycounter = x;
           mu_counter.ReleaseMutex();
@@ -146,6 +189,8 @@ namespace SWEndor.Actors
           list[i]?.Destroy();
           list[i] = null;
         }
+        First = -1;
+        Last = -1;
       }
     }
   }

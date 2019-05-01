@@ -390,7 +390,7 @@ namespace SWEndor.Scenarios
             {
               if (last_target_distX < player.GetPosition().x)
               {
-                PlayerInfo.Score.Score += (player.GetPosition().x - last_target_distX) * 10;
+                PlayerInfo.Score.AddDirect((player.GetPosition().x - last_target_distX) * 10);
                 last_target_distX = player.GetPosition().x;
               }
               if (last_sound_distX < player.GetPosition().x && !Manager.IsCutsceneMode)
@@ -428,7 +428,7 @@ namespace SWEndor.Scenarios
             {
               if (last_target_distX < player.GetPosition().x)
               {
-                PlayerInfo.Score.Score += (player.GetPosition().x - last_target_distX) * 10;
+                PlayerInfo.Score.AddDirect((player.GetPosition().x - last_target_distX) * 10);
                 last_target_distX = player.GetPosition().x;
               }
 
@@ -696,7 +696,7 @@ namespace SWEndor.Scenarios
               int rsID = MainEnemyFaction.GetShips()[Engine.Random.Next(0, MainEnemyFaction.GetShips().Count)];
               ActorInfo rs = ActorFactory.Get(actorID);
               {
-                foreach (int i in rs.GetAllChildren(1))
+                foreach (int i in rs.Children)
                 {
                   ActorInfo rc = ActorFactory.Get(i);
                   if (rc.RegenerationInfo.ParentRegenRate > 0)

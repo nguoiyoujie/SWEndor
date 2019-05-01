@@ -43,10 +43,10 @@ namespace SWEndor.ActorTypes.Instances
 
       if (ainfo.CreationState == CreationState.ACTIVE)
       {
-        ActorInfo parent = ActorFactory.Get(ainfo.GetTopParent());
+        ActorInfo parent = ActorFactory.Get(ainfo.TopParent);
         if (parent != null)
         {
-          List<int> cs = new List<int>(parent.GetAllChildren(1));
+          List<int> cs = new List<int>(parent.Children);
           foreach (int i in cs)
           {
             ActorInfo pn = ActorFactory.Get(i);
@@ -67,7 +67,7 @@ namespace SWEndor.ActorTypes.Instances
         ainfo.CombatInfo.TimedLife = 2000f;
         ainfo.CombatInfo.IsCombatObject = false;
 
-        ActorInfo parent = ActorFactory.Get(ainfo.GetTopParent());
+        ActorInfo parent = ActorFactory.Get(ainfo.TopParent);
         if (parent != null)
           parent.ActorState = ActorState.DYING;
       }

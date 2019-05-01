@@ -55,7 +55,7 @@ public class ActorParser
     builder.AppendLine(string.Format("Parent={0}", parents));
 
     string children = "";
-    foreach (int i in Actor.GetAllChildren(1))
+    foreach (int i in Actor.Children)
     {
       ActorInfo c = Engine.ActorFactory.Get(i);
       if (c != null)

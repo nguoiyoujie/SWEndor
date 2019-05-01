@@ -60,14 +60,13 @@ namespace SWEndor.UI.Widgets
         {
           if (weap.UIFirePositions[i].x != 0 || weap.UIFirePositions[i].y != 0)
           {
-            TV_2DVECTOR vec0 = new TV_2DVECTOR(weap.UIFirePositions[i].x, weap.UIFirePositions[i].y);
             int wpi = i - weap.CurrentPositionIndex;
             if (wpi < 0)
               wpi += weap.FirePositions.Length;
             bool highlighted = (wpi >= 0 && wpi < burst);
 
             float x = weap.UIFirePositions[i].x;
-            float y = weap.UIFirePositions[i].y;
+            float y = -weap.UIFirePositions[i].y;
 
             if (highlighted)
             {

@@ -18,6 +18,7 @@ namespace SWEndor.ActorTypes.Instances
       MinSpeed = Globals.LaserSpeed;
 
       NoAI = true;
+      IsLaser = true;
 
       // Projectile
       ImpactCloseEnoughDistance = 25;
