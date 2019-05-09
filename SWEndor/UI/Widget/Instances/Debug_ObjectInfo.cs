@@ -36,7 +36,7 @@ namespace SWEndor.UI.Widgets
             else
               wingcount["All Objects"]++;
           }
-          if (a != null && a.TypeInfo is ActorTypes.Group.Projectile && a.CreationState == CreationState.ACTIVE && a.Faction != null)
+          if (a != null && a.TypeInfo is ActorTypes.Groups.Projectile && a.CreationState == CreationState.ACTIVE && a.Faction != null)
           {
             if (!wingcount.ContainsKey("Projectiles"))
               wingcount.Add("Projectiles", 1);

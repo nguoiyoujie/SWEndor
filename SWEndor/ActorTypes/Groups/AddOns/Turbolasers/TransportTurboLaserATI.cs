@@ -1,22 +1,15 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Weapons;
-using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class TransportTurboLaserATI : Groups.AddOn
+  public class TransportTurboLaserATI : Groups.Turbolasers
   {
     internal TransportTurboLaserATI(Factory owner) : base(owner, "Transport Turbolaser Tower")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 80;
       ImpactDamage = 16;
 
@@ -31,10 +24,6 @@ namespace SWEndor.ActorTypes.Instances
       base.Initialize(ainfo);
 
       ainfo.DyingMoveComponent = DyingKill.Instance;
-
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
-      ainfo.ExplosionInfo.DeathExplosionSize = 5;
 
       ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", WeaponFactory.Get("TRNS_LASR") }
                                                         };

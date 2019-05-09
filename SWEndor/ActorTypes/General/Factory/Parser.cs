@@ -11,15 +11,17 @@ using System;
       {
         ActorTypeInfo at = new ActorTypeInfo(factory, sectionname);
 
-        at.CollisionEnabled = file.GetBoolValue(sectionname, "CollisionEnabled", at.CollisionEnabled);
-        at.IsCombatObject = file.GetBoolValue(sectionname, "IsCombatObject", at.IsCombatObject);
-        at.IsSelectable = file.GetBoolValue(sectionname, "IsSelectable", at.IsSelectable);
-        at.IsDamage = file.GetBoolValue(sectionname, "IsDamage", at.IsDamage);
+        //at.CollisionEnabled = file.GetBoolValue(sectionname, "CollisionEnabled", at.CollisionEnabled);
+
+        at.CombatData.IsCombatObject = file.GetBoolValue(sectionname, "IsCombatObject", at.CombatData.IsCombatObject);
+
+        //at.IsSelectable = file.GetBoolValue(sectionname, "IsSelectable", at.IsSelectable);
+        //at.IsDamage = file.GetBoolValue(sectionname, "IsDamage", at.IsDamage);
         at.MaxStrength = file.GetFloatValue(sectionname, "MaxStrength", at.MaxStrength);
         at.ImpactDamage = file.GetFloatValue(sectionname, "ImpactDamage", at.ImpactDamage);
 
-        at.OnTimedLife = file.GetBoolValue(sectionname, "OnTimedLife", at.OnTimedLife);
-        at.TimedLife = file.GetFloatValue(sectionname, "TimedLife", at.TimedLife);
+        at.TimedLifeData.OnTimedLife = file.GetBoolValue(sectionname, "OnTimedLife", at.TimedLifeData.OnTimedLife);
+        at.TimedLifeData.TimedLife = file.GetFloatValue(sectionname, "TimedLife", at.TimedLifeData.TimedLife);
 
         at.MaxSpeed = file.GetFloatValue(sectionname, "MaxSpeed", at.MaxSpeed);
         at.MinSpeed = file.GetFloatValue(sectionname, "MinSpeed", at.MinSpeed);
@@ -64,10 +66,10 @@ using System;
         at.RadarSize = file.GetFloatValue(sectionname, "RadarSize", at.RadarSize);
         at.AlwaysShowInRadar = file.GetBoolValue(sectionname, "AlwaysShowInRadar", at.AlwaysShowInRadar);
 
-        at.NoRender = file.GetBoolValue(sectionname, "NoRender", at.NoRender);
-        at.NoProcess = file.GetBoolValue(sectionname, "NoProcess", at.NoProcess);
-        at.NoMove = file.GetBoolValue(sectionname, "NoMove", at.NoMove);
-        at.NoAI = file.GetBoolValue(sectionname, "NoAI", at.NoAI);
+        //at.NoRender = file.GetBoolValue(sectionname, "NoRender", at.NoRender);
+        //at.NoProcess = file.GetBoolValue(sectionname, "NoProcess", at.NoProcess);
+        //at.NoMove = file.GetBoolValue(sectionname, "NoMove", at.NoMove);
+        //at.NoAI = file.GetBoolValue(sectionname, "NoAI", at.NoAI);
 
 
         // Debris

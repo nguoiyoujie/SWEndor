@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 
@@ -10,21 +11,27 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal MC90ATI(Factory owner) : base(owner, "Mon Calamari Capital Ship")
     {
+      ExplodeData = new ExplodeData(0.5f, 1, "ExplosionSm", DeathExplosionTrigger.ALWAYS, 3.5f, "ExplosionLg");
+
       MaxStrength = 3200.0f;
       ImpactDamage = 60.0f;
       MaxSpeed = 30.0f;
       MinSpeed = 0.0f;
       MaxSpeedChangeRate = 5.0f;
-      MaxTurnRate = 3f;
+      MaxTurnRate = 2.6f;
       ZNormFrac = 0.006f;
-      ZTilt = 1.8f; // low number so fighters come out properly when mothership is rotating
+      ZTilt = 2.2f; // low number so fighters come out properly when mothership is rotating
 
-      CullDistance = 40000;
+      CullDistance = 30000;
+      Scale = 1.8f;
 
       Score_perStrength = 20;
       Score_DestroyBonus = 20000;
 
+      RegenData = new RegenData { SelfRegenRate = 0.35f };
+
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"mc90\mc90.x");
+      SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"mc90\mc90_far.x");
 
       SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 1500f, new TV_3DVECTOR(0, 0, -750), true) };
       AddOns = new AddOnInfo[]
@@ -45,6 +52,8 @@ namespace SWEndor.ActorTypes.Instances
 
         // Hangar Bay
         , new AddOnInfo("Hangar Bay", new TV_3DVECTOR(95, -30, -200), new TV_3DVECTOR(0, 0, 0), true)
+        , new AddOnInfo("Hangar Bay", new TV_3DVECTOR(-145, -25, -27), new TV_3DVECTOR(0, 180, 0), true)
+        , new AddOnInfo("Hangar Bay", new TV_3DVECTOR(-145, -25, -230), new TV_3DVECTOR(0, 180, 0), true)
       };
     }
 
@@ -59,13 +68,7 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 45, 660) };
       ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 45, 2000) };
 
-      ainfo.ExplosionInfo.DeathExplosionSize = 3.5f;
-
       ainfo.DyingMoveComponent = new DyingSink(0.01f, 2.5f, 0.4f);
-
-      ainfo.RegenerationInfo.SelfRegenRate = 0.2f;
-
-      ainfo.Scale *= 1.1f;
 
       ainfo.SpawnerInfo = new MC90Spawner(ainfo);
     }

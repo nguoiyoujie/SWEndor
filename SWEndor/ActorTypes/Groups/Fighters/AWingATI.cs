@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using SWEndor.Weapons;
 using System.Collections.Generic;
 using System.IO;
@@ -11,12 +12,6 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal AWingATI(Factory owner) : base(owner, "A-Wing")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 18;
       ImpactDamage = 16;
       MaxSpeed = 500;
@@ -26,6 +21,8 @@ namespace SWEndor.ActorTypes.Instances
 
       Score_perStrength = 500;
       Score_DestroyBonus = 2500;
+
+      RegenData = new RegenData { SelfRegenRate = 0.08f };
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"awing\awing.x");
     }
@@ -47,12 +44,6 @@ namespace SWEndor.ActorTypes.Instances
         new TV_3DVECTOR(0, 0, 2000),
         new TV_3DVECTOR(0, 0, -2000)
       };
-
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.ExplosionRate = 0.75f;
-      ainfo.ExplosionInfo.ExplosionSize = 1;
-
-      ainfo.RegenerationInfo.SelfRegenRate = 0.08f;
 
       ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("A_WG_TORP")}
                                                                          , {"misl", WeaponFactory.Get("A_WG_MISL")}

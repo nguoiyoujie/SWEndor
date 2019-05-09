@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Data;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -8,19 +9,15 @@ namespace SWEndor.ActorTypes.Instances
     internal ExplosionATI(Factory owner) : base(owner, "Explosion")
     {
       // Combat
-      OnTimedLife = true;
-      TimedLife = 0.5f;
-      IsCombatObject = false;
-      IsSelectable = false;
-      IsDamage = false;
-      CollisionEnabled = false;
+      TimedLifeData = new TimedLifeData(true, 0.5f);
+
       RadarSize = 2;
 
-      SourceMesh = TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = TrueVision.TVGlobals.GetMesh(Name);
       if (SourceMesh == null)
       {
         LoadAlphaTextureFromFolder(Globals.ImagePath, "explosion/small");
-        SourceMesh = TrueVision.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 10, 10, Key, true);
+        SourceMesh = TrueVision.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 10, 10, Name, true);
         SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
         SourceMesh.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
 

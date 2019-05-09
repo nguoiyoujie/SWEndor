@@ -1,7 +1,6 @@
 ﻿using System;
 using MTV3D65;
 using System.IO;
-using SWEndor.UI;
 
 namespace SWEndor
 {
@@ -82,11 +81,11 @@ namespace SWEndor
     private void InitEngine()
     {
       TVEngine.AllowMultithreading(true);
-      TVEngine.SetDebugMode(true, true);
+      //TVEngine.SetDebugMode(true, true);
       TVEngine.SetDebugFile(Path.Combine(Globals.DebugPath, @"truevision_debug.txt"));
 
       TVEngine.DisplayFPS(true);
-      TVEngine.EnableProfiler(true);
+      //TVEngine.EnableProfiler(true);
       TVEngine.EnableSmoothTime(true);
       TVEngine.SetVSync(true);
 
@@ -110,14 +109,7 @@ namespace SWEndor
 
     private void InitFonts()
     {
-      Font.Factory.Create("Text_08", "Consolas", 8, false, false, false, true);
-      Font.Factory.Create("Text_10", "Consolas", 10, true, false, false, true);
-      Font.Factory.Create("Text_12", "Consolas", 12, true, false, false, true);
-      Font.Factory.Create("Text_14", "Consolas", 14, true, false, false, true);
-      Font.Factory.Create("Text_16", "Consolas", 16, true, false, false, true);
-      Font.Factory.Create("Text_24", "Consolas", 24, true, false, false, true);
-      Font.Factory.Create("Title_36", "Impact", 36, false, false, false, true);
-      Font.Factory.Create("Title_48", "Impact", 48, false, false, false, true);
+      Engine.FontFactory.Init(Engine);
     }
 
     private void InitScene()

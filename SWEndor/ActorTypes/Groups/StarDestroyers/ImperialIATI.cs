@@ -10,12 +10,6 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ImperialIATI(Factory owner) : base(owner, "Imperial-I Star Destroyer")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 850.0f;
       ImpactDamage = 60.0f;
       MaxSpeed = 75.0f;
@@ -24,6 +18,7 @@ namespace SWEndor.ActorTypes.Instances
       MaxTurnRate = 1.2f;
 
       CullDistance = 40000;
+      Scale = 1.6f;
 
       Score_perStrength = 60;
       Score_DestroyBonus = 10000;
@@ -98,8 +93,6 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 300, 2000) };
 
       ainfo.DyingMoveComponent = new DyingSink(0.005f, 5f, 0.8f);
-
-      ainfo.Scale *= 1.6f;
 
       ainfo.SpawnerInfo = new SDSpawner(ainfo);
     }

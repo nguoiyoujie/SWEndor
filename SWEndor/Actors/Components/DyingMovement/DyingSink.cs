@@ -1,4 +1,6 @@
-﻿namespace SWEndor.Actors.Components
+﻿using SWEndor.Actors.Data;
+
+namespace SWEndor.Actors.Components
 {
   public class DyingSink : IDyingMoveComponent
   {
@@ -13,10 +15,10 @@
       SinkRate = sinkRate;
     }
 
-    public void Initialize(ActorInfo actor) { }
-    public void Update(ActorInfo actor, float time)
+    public void Initialize(ActorInfo actor, ref MoveData data) { }
+    public void Update(ActorInfo actor, ref MoveData data, float time)
     {
-      actor.MoveComponent.XTurnAngle += PitchRate * time;
+      data.XTurnAngle += PitchRate * time;
       actor.MoveAbsolute(ForwardRate * time, -SinkRate * time, 0);
     }
   }

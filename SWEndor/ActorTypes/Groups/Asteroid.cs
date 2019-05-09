@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -8,20 +9,19 @@ namespace SWEndor.ActorTypes.Groups
     internal Asteroid(Factory owner, string name) : base(owner, name)
     {
       // Combat
-      IsCombatObject = true;
-      IsSelectable = false;
-      IsDamage = false;
-      CollisionEnabled = true;
+      CombatData = CombatData.Immune;
+      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS, deathExplosionType: "Explosion");
+
       CullDistance = 4500;
+
+      RadarType = RadarType.HOLLOW_CIRCLE_M;
+
+      Mask = ComponentMask.MINDLESS_ACTOR;
     }
 
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-
-      ainfo.CombatInfo.DamageModifier = 0;
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
     }
   }
 }

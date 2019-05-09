@@ -32,8 +32,7 @@ namespace SWEndor.Player
       if (Engine.PlayerInfo.Actor != null)
         Engine.PlayerInfo.Actor.TypeInfo.ChaseCamera(Engine.PlayerInfo.Actor);
 
-      ShakeCam();
-      ShakeDecay();
+      ApplyShake();
     }
 
     public void UpdateMode()
@@ -49,15 +48,19 @@ namespace SWEndor.Player
       }
     }
 
-    public void ShakeCam()
+    public void ApplyShake()
     {
-      if (Shake > 1 && Engine.PlayerInfo.StrengthFrac > 0)
+      if (Shake > 1)
       {
-        int dispx = Engine.Random.Next(-(int)Shake, (int)Shake);
-        int dispy = Engine.Random.Next(-(int)Shake, (int)Shake);
-        Camera.MoveRelative(0, dispx - prev_shake_displacement_x, dispy - prev_shake_displacement_y, true);
-        prev_shake_displacement_x = dispx;
-        prev_shake_displacement_y = dispy;
+        if (Engine.PlayerInfo.StrengthFrac > 0)
+        {
+          int dispx = Engine.Random.Next(-(int)Shake, (int)Shake);
+          int dispy = Engine.Random.Next(-(int)Shake, (int)Shake);
+          Camera.MoveRelative(0, dispx - prev_shake_displacement_x, dispy - prev_shake_displacement_y, true);
+          prev_shake_displacement_x = dispx;
+          prev_shake_displacement_y = dispy;
+        }
+        ShakeDecay();
       }
     }
 
@@ -98,8 +101,8 @@ namespace SWEndor.Player
             angleX = angleX.Clamp(-maxT, maxT);
             angleY = angleY.Clamp(-maxT, maxT);
 
-            Engine.PlayerInfo.Actor.MoveComponent.XTurnAngle = angleX;
-            Engine.PlayerInfo.Actor.MoveComponent.YTurnAngle = angleY;
+            Engine.PlayerInfo.Actor.MoveData.XTurnAngle = angleX;
+            Engine.PlayerInfo.Actor.MoveData.YTurnAngle = angleY;
           }
         }
       }

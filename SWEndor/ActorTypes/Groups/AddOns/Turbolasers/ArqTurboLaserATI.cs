@@ -1,21 +1,16 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using SWEndor.Weapons;
 using System.Collections.Generic;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class ArqTurboLaserATI : Groups.AddOn
+  public class ArqTurboLaserATI : Groups.Turbolasers
   {
     internal ArqTurboLaserATI(Factory owner) : base(owner, "Arquitens Turbolaser Tower")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 80;
       ImpactDamage = 16;
 
@@ -29,11 +24,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
 
-      ainfo.DyingMoveComponent = Actors.Components.DyingKill.Instance;
-
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
-      ainfo.ExplosionInfo.DeathExplosionSize = 5;
+      ainfo.DyingMoveComponent = DyingKill.Instance;
 
       ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", WeaponFactory.Get("ARQT_LASR") } };
       ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser" };

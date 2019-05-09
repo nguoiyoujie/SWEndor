@@ -1,5 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using System.Collections.Generic;
 using System.IO;
 
@@ -9,11 +11,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ExecutorBridgeATI(Factory owner) : base(owner, "Executor Super Star Destroyer Bridge")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
+      CombatData = new CombatData(true, false, 1, 4);
+      ExplodeData = new ExplodeData(0.5f, 5);
 
       MaxStrength = 600.0f;
       ImpactDamage = 200.0f;
@@ -25,16 +24,9 @@ namespace SWEndor.ActorTypes.Instances
       Score_DestroyBonus = 100000;
 
       TargetType = TargetType.ADDON;
+      RadarType = RadarType.NULL;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"executor\executor_bridge.x");
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-      ainfo.CombatInfo.CollisionDamageModifier = 0.25f;
-      ainfo.ExplosionInfo.ExplosionRate = 0.5f;
-      ainfo.ExplosionInfo.ExplosionSize = 5;
     }
 
     public override void ProcessState(ActorInfo ainfo)
@@ -51,7 +43,7 @@ namespace SWEndor.ActorTypes.Instances
           {
             ActorInfo pn = ActorFactory.Get(i);
             if (pn?.TypeInfo is ExecutorShieldGeneratorATI)
-              ainfo.CombatInfo.onNotify(Actors.Components.CombatEventType.RECOVER, ainfo.TypeInfo.MaxStrength);
+              CombatSystem.onNotify(Engine, ainfo.ID, Actors.Components.CombatEventType.RECOVER, ainfo.TypeInfo.MaxStrength);
           }
         }
       }
@@ -63,9 +55,8 @@ namespace SWEndor.ActorTypes.Instances
 
       if (ainfo.ActorState.IsDyingOrDead())
       {
-        ainfo.CombatInfo.OnTimedLife = true;
-        ainfo.CombatInfo.TimedLife = 2000f;
-        ainfo.CombatInfo.IsCombatObject = false;
+        TimedLifeSystem.Activate(Engine, ainfo.ID, 2000f);
+        CombatSystem.Deactivate(Engine, ainfo.ID);
 
         ActorInfo parent = ActorFactory.Get(ainfo.TopParent);
         if (parent != null)
@@ -81,7 +72,7 @@ namespace SWEndor.ActorTypes.Instances
       if (owner == null || hitby == null)
         return;
 
-      if (!hitby.TypeInfo.IsDamage && owner.StrengthFrac < 0.5f)
+      if (!Engine.MaskDataSet[hitbyActorID].Has(ComponentMask.IS_DAMAGE) && Engine.SysDataSet.StrengthFrac_get(ownerActorID) < 0.5f)
       {
         owner.ActorState = ActorState.DYING;
         hitby.DestroyedEvents = null;

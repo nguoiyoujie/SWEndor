@@ -104,6 +104,8 @@ namespace SWEndor.Scenarios
       Difficulty = difficulty;
       StageNumber = 0;
       PlayerInfo.ActorType = wing;
+      Manager.CameraTargetActorID = -1;
+      Manager.CameraTargetPoint = new TV_3DVECTOR(0, 0, 100);
     }
 
     public virtual void Launch()
@@ -156,13 +158,13 @@ namespace SWEndor.Scenarios
       GC.Collect();
     }
 
-    public void FadeOut(params object[] param)
+    public void FadeOut(GameEventArg arg)
     {
       TrueVision.TVGraphicEffect.FadeOut();
       Manager.AddEvent(Game.GameTime + 0.01f, FadeInterim);
     }
 
-    public void FadeInterim(params object[] param)
+    public void FadeInterim(GameEventArg arg)
     {
       if (TrueVision.TVGraphicEffect.IsFadeFinished())
       {
@@ -172,7 +174,7 @@ namespace SWEndor.Scenarios
 
         if (Manager.GetGameStateB("GameOver"))
         {
-          GameOver();
+          GameOver(null);
           return;
         }
         else if (Manager.GetGameStateF("PlayCutsceneSequence", -1) != -1)
@@ -188,7 +190,7 @@ namespace SWEndor.Scenarios
 
         MakePlayer?.Invoke(null);
 
-        FadeIn();
+        FadeIn(null);
         Manager.IsCutsceneMode = false;
       }
       else
@@ -197,12 +199,12 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void FadeIn(params object[] param)
+    public void FadeIn(GameEventArg arg)
     {
       TrueVision.TVGraphicEffect.FadeIn();
     }
 
-    public void GameOver(params object[] param)
+    public void GameOver(GameEventArg arg)
     {
       TrueVision.TVGraphicEffect.FadeIn(2.5f);
 
@@ -274,7 +276,7 @@ namespace SWEndor.Scenarios
       TimeSinceLostShip = Game.GameTime + 3f;
     }
 
-    public void LostSound(params object[] param)
+    public void LostSound(GameEventArg arg)
     {
       if (!Manager.IsCutsceneMode)
       {
@@ -338,17 +340,17 @@ namespace SWEndor.Scenarios
       actor.TickEvents += ProcessTick; 
     }
 
-    public virtual void ProcessCreated(params object[] param)
+    public virtual void ProcessCreated(GameEventArg arg)
     {
     }
 
-    public virtual void ProcessKilled(params object[] param)
+    public virtual void ProcessKilled(GameEventArg arg)
     {
     }
 
-    public virtual void ProcessPlayerDying(params object[] param)
+    public virtual void ProcessPlayerDying(ActorEventArg arg)
     {
-      ActorInfo ainfo = ActorFactory.Get((int)param[0]);
+      ActorInfo ainfo = ActorFactory.Get(arg.ActorID);
       if (ainfo != null)
       {
         PlayerInfo.TempActorID = ainfo.ID;
@@ -359,7 +361,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public virtual void ProcessPlayerKilled(params object[] param)
+    public virtual void ProcessPlayerKilled(GameEventArg arg)
     {
       Manager.IsCutsceneMode = true;
       Manager.AddEvent(Game.GameTime + 3f, FadeOut);
@@ -367,18 +369,18 @@ namespace SWEndor.Scenarios
         Manager.SetGameStateB("GameOver", true);
     }
 
-    public virtual void ProcessTick(params object[] param)
+    public virtual void ProcessTick(GameEventArg arg)
     {
     }
 
-    public virtual void ProcessStateChange(params object[] param)
+    public virtual void ProcessStateChange(GameEventArg arg)
     {
     }
 
-    public virtual void ProcessHit(params object[] param)
+    public virtual void ProcessHit(GameEventArg arg)
     {
-      ActorInfo av = ActorFactory.Get((int)param[0]);
-      ActorInfo aa = ActorFactory.Get((int)param[1]);
+      ActorInfo av = ActorFactory.Get(((HitEventArg)arg).VictimID);
+      ActorInfo aa = ActorFactory.Get(((HitEventArg)arg).ActorID);
 
       if (PlayerInfo.ActorID == aa.TopParent)
       {

@@ -4,8 +4,23 @@ namespace SWEndor.Actors.Components
 {
   public static class MoveDecorator
   {
-    public static IMoveComponent Create(ActorInfo actor, ActorTypeInfo atype, ActorCreationInfo acreate)
+    public static IMoveComponent Create(ActorTypeInfo atype)
     {
+      if (atype.Mask.Has(ComponentMask.CAN_MOVE & ComponentMask.CAN_ROTATE))
+        return MoveNormal.Instance;
+
+      else if (atype.IsLaser)
+        return MoveLaser.Instance;
+
+      else if (atype.Mask.Has(ComponentMask.CAN_MOVE))
+        return MoveForwardOnly.Instance;
+
+      else if (atype.Mask.Has(ComponentMask.CAN_ROTATE))
+        return RotateOnly.Instance;
+
+      return NoMove.Instance;
+
+      /*
       if (atype.NoMove && atype.NoRotate)
         return NoMove.Instance;
 
@@ -13,12 +28,13 @@ namespace SWEndor.Actors.Components
         return MoveLaser.Instance;
 
       else if (atype.NoRotate)
-        return new MoveForwardOnly(acreate.InitialSpeed, atype.MaxSpeed, atype.MinSpeed, atype.MaxSpeedChangeRate);
+        return MoveForwardOnly.Instance;
 
       else if (atype.NoMove)
-        return new RotateOnly(atype.MaxTurnRate, atype.MaxSecondOrderTurnRateFrac, atype.ZTilt, atype.ZNormFrac);
+        return RotateOnly.Instance;
 
-      return new MoveNormal(atype, acreate);
+      return MoveNormal.Instance;
+      */
     }
   }
 }

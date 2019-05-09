@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Input.Context;
-using SWEndor.Input.Functions;
 
 namespace SWEndor.Input
 {

@@ -1,7 +1,7 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using SWEndor.Weapons;
-using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
@@ -11,6 +11,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal TowerGunATI(Factory owner) : base(owner, "Turbolaser Turret")
     {
+      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS, deathExplosionSize: 3);
+
       MaxStrength = 16;
       ImpactDamage = 60;
       MaxTurnRate = 36;
@@ -23,6 +25,7 @@ namespace SWEndor.ActorTypes.Instances
       Score_DestroyBonus = 1500;
 
       TargetType = TargetType.ADDON;
+      RadarType = RadarType.NULL;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"towers\tower_turbolaser.x");
     }
@@ -31,12 +34,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
 
-      // Tower Gun
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
-      ainfo.ExplosionInfo.DeathExplosionSize = 3;
-
-      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", new Tower_DblLaserWeapon() }
+      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo> { { "laser", WeaponFactory.Get("TOWR_DLSR") }
                                                         };
       ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser" };
       ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };

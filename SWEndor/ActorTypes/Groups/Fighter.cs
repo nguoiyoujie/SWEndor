@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -8,10 +9,8 @@ namespace SWEndor.ActorTypes.Groups
     internal Fighter(Factory owner, string name): base(owner, name)
     {
       // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
+      CombatData = CombatData.DefaultFighter;
+      ExplodeData = new ExplodeData(explosionRate: 0.75f, deathTrigger: DeathExplosionTrigger.ALWAYS);
 
       ZTilt = 2.5f;
       ZNormFrac = 0.01f;
@@ -20,6 +19,9 @@ namespace SWEndor.ActorTypes.Groups
       CullDistance = 7500;
 
       TargetType = TargetType.FIGHTER;
+      RadarType = RadarType.FILLED_CIRCLE_S;
+
+      Mask = ComponentMask.ACTOR;
 
       CanEvade = true;
       CanRetaliate = true;
@@ -32,8 +34,6 @@ namespace SWEndor.ActorTypes.Groups
     {
       base.Initialize(ainfo);
       ainfo.DyingMoveComponent = new DyingSpin(180, 270);
-
-      ainfo.CombatInfo.HitWhileDyingLeadsToDeath = true;
     }
 
     public override void ProcessNewState(ActorInfo ainfo)
@@ -41,19 +41,18 @@ namespace SWEndor.ActorTypes.Groups
       base.ProcessNewState(ainfo);
       if (ainfo.ActorState.IsDying())
       {
-        ainfo.MoveComponent.ApplyZBalance = false;
-        ainfo.CombatInfo.OnTimedLife = true;
+        ainfo.MoveData.ApplyZBalance = false;
 
-        if (ainfo.ParentID < 0 || (ainfo.CombatInfo.HitWhileDyingLeadsToDeath && Globals.Engine.Random.NextDouble() < 0.3f))
+        if (ainfo.ParentID >= 0 || (ainfo.ActorDataSet.CombatData[ainfo.dataID].HitWhileDyingLeadsToDeath && Engine.Random.NextDouble() < 0.3f))
         {
-          ainfo.CombatInfo.TimedLife = 0.1f;
+          TimedLifeSystem.Activate(Engine, ainfo.ID, 0.1f);
+          CombatSystem.Deactivate(Engine, ainfo.ID);
         }
         else
         {
-          ainfo.CombatInfo.TimedLife = 5f;
+          TimedLifeSystem.Activate(Engine, ainfo.ID, 5);
+          CombatSystem.Deactivate(Engine, ainfo.ID);
         }
-
-        ainfo.CombatInfo.IsCombatObject = false;
 
         ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
         acinfo.Position = ainfo.GetPosition();

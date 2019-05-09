@@ -1,5 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 
 namespace SWEndor.AI.Actions
 {
@@ -33,7 +35,7 @@ namespace SWEndor.AI.Actions
     public override void Process(Engine engine, int actorID)
     {
       ActorInfo actor = engine.ActorFactory.Get(actorID);
-      if (actor.MoveComponent.MaxSpeed == 0)
+      if (actor.MoveData.MaxSpeed == 0)
       {
         Complete = true;
         return;
@@ -53,9 +55,9 @@ namespace SWEndor.AI.Actions
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
-      if (CheckImminentCollision(actor, actor.MoveComponent.Speed * 2.5f))
+      if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
       {
-        engine.ActionManager.QueueFirst(actorID, new AvoidCollisionRotate(actor.CollisionInfo.ProspectiveCollisionImpact, actor.CollisionInfo.ProspectiveCollisionNormal));
+        CollisionSystem.CreateAvoidAction(engine, actorID);
       }
     }
   }

@@ -12,8 +12,8 @@ namespace SWEndor.UI.Menu.Pages
     public GameWon(Screen2D owner) : base(owner)
     {
       MainText.Text = "MISSION ACCOMPLISHED!";
-      MainText.TextFont = Font.Factory.Get("Title_36").ID;
-      MainText.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 - 242, 60);
+      MainText.TextFont = FontFactory.Get(Font.T36).ID;
+      MainText.TextPosition = new TV_2DVECTOR(Engine.ScreenWidth / 2 - 242, 60);
 
       Score.Text += string.Format("{0,42} {1,8:0}", "Score".PadRight(42), PlayerInfo.Score.Score);
       Score.Text += string.Format("\n\n{0,42} {1,8:0}", "Total Hits".PadRight(42), PlayerInfo.Score.Hits);
@@ -22,14 +22,14 @@ namespace SWEndor.UI.Menu.Pages
       Score.Text += string.Format("\n{0,42} {1,8:0}", "Deaths".PadRight(42), PlayerInfo.Score.Deaths);
       Score.Text += string.Format("\n\n{0,42} {1,8:0}", "", "Kills");
 
-      //foreach (KeyValuePair<string, int> kvp in PlayerInfo.Score.KillsByName.GetList())
-      //  Score.Text += string.Format("\n{0,42} {1,8:0}", (kvp.Key.Length > 42) ? kvp.Key.Remove(42) : kvp.Key.PadRight(42), kvp.Value);
+      foreach (KeyValuePair<string, int> kvp in PlayerInfo.Score.KillsByName.GetList())
+        Score.Text += string.Format("\n{0,42} {1,8:0}", (kvp.Key.Length > 42) ? kvp.Key.Remove(42) : kvp.Key.PadRight(42), kvp.Value);
 
-      Score.TextFont = Font.Factory.Get("Text_12").ID;
+      Score.TextFont = FontFactory.Get(Font.T12).ID;
       Score.TextPosition = new TV_2DVECTOR(Engine.ScreenWidth / 2 - 242, 120);
       Score.HighlightBoxPosition = new TV_2DVECTOR(Engine.ScreenWidth / 2 - 255, 55);
       Score.HighlightBoxWidth = 255 * 2;
-      Score.HighlightBoxHeight = Globals.Engine.ScreenHeight / 2 + 242 - 55;
+      Score.HighlightBoxHeight = Engine.ScreenHeight / 2 + 242 - 55;
 
       ButtonReturn.Text = "Return to Menu";
       ButtonReturn.TextPosition = new TV_2DVECTOR(Engine.ScreenWidth / 2 + 60, Engine.ScreenHeight / 2 + 260);

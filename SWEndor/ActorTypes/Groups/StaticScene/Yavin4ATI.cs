@@ -6,10 +6,10 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal Yavin4ATI(Factory owner) : base(owner, "Yavin4")
     {
-      SourceMesh = TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = TrueVision.TVGlobals.GetMesh(Name);
       if (SourceMesh == null)
       {
-        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Name);
 
         // 1 texture
         string texname = @"yavin4.bmp";

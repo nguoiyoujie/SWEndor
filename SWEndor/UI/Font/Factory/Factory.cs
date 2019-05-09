@@ -1,24 +1,46 @@
-﻿using SWEndor.Primitives;
-
-namespace SWEndor.UI
+﻿namespace SWEndor.UI
 {
   public partial class Font
   {
-    public static class Factory
-    {
-      private static ThreadSafeDictionary<string, Font> list = new ThreadSafeDictionary<string, Font>();
-      private static Font Default = new Font("default", "Consolas", 10);
+    public const string Consolas = "Consolas";
+    public const string Impact = "Impact";
 
-      public static Font Create(string key, string fontname, int size = 10, bool bold = false, bool underlined = false, bool italic = false, bool international = true)
+    public const byte T08 = 8;
+    public const byte T10 = 10;
+    public const byte T12 = 12;
+    public const byte T14 = 14;
+    public const byte T16 = 16;
+    public const byte T24 = 24;
+    public const byte T36 = 36;
+    public const byte T48 = 48;
+
+    public class Factory
+    {
+      private Font Default;
+      private Font[] list = new Font[byte.MaxValue];
+      public void Init(Engine engine)
       {
-        Font font = new Font(key, fontname, size, bold, underlined, italic, international);
-        list.Add(key, font);
+        Default = new Font(engine, 0, Consolas, 10);
+        Create(engine, T08, Consolas, 8, FontMode.NONE);
+        Create(engine, T10, Consolas, 10, FontMode.BOLD);
+        Create(engine, T12, Consolas, 12, FontMode.BOLD);
+        Create(engine, T14, Consolas, 14, FontMode.BOLD);
+        Create(engine, T16, Consolas, 16, FontMode.BOLD);
+        Create(engine, T24, Consolas, 24, FontMode.BOLD);
+        Create(engine, T36, Impact, 36, FontMode.NONE);
+        Create(engine, T48, Impact, 48, FontMode.NONE);
+      }
+
+      public Font Create(Engine engine, byte key, string fontname, int size = 10, FontMode mode = FontMode.NONE)
+      {
+        Font font = new Font(engine, key, fontname, size, mode);
+        list[key] = font;
         return font;
       }
 
-      public static Font Get(string key)
+      public Font Get(byte key)
       {
-        Font ret = list.Get(key);
+        Font ret = list[key];
         if (ret == null)
           ret = Default;
         return ret;

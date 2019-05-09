@@ -60,7 +60,7 @@ namespace SWEndor.UI.Widgets
       , Engine.ScreenWidth / 2 - infomiddlegap - infowidth_left
       , infotop
       , pcolor.GetIntColor()
-      , Font.Factory.Get("Text_12").ID
+      , FontFactory.Get(Font.T12).ID
       );
       TVScreen2DText.Action_EndText();
 
@@ -90,7 +90,7 @@ namespace SWEndor.UI.Widgets
           , leftinfo_left
           , leftinfo_stagetop
           , pcolor.GetIntColor()
-          , Font.Factory.Get("Text_12").ID
+          , FontFactory.Get(Font.T12).ID
           );
 
         // StageNumber
@@ -100,28 +100,28 @@ namespace SWEndor.UI.Widgets
           , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop
           , pcolor.GetIntColor()
-          , Font.Factory.Get("Text_12").ID
+          , FontFactory.Get(Font.T12).ID
           );
 
         TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line1Text
           , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop + infoheight
           , GameScenarioManager.Line1Color.GetIntColor()
-          , Font.Factory.Get("Text_12").ID
+          , FontFactory.Get(Font.T12).ID
           );
 
         TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line2Text
           , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop + infoheight * 2
           , GameScenarioManager.Line2Color.GetIntColor()
-          , Font.Factory.Get("Text_12").ID
+          , FontFactory.Get(Font.T12).ID
           );
 
         TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line3Text
           , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop + infoheight * 3
           , GameScenarioManager.Line3Color.GetIntColor()
-          , Font.Factory.Get("Text_12").ID
+          , FontFactory.Get(Font.T12).ID
           );
 
         TVScreen2DText.Action_EndText();

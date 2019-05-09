@@ -1,39 +1,27 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using SWEndor.Weapons;
 using System.Collections.Generic;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class SmallIonLaserATI : Group.Projectile
+  public class SmallIonLaserATI : Groups.LaserProjectile
   {
     internal SmallIonLaserATI(Factory owner) : base(owner, "Ion Laser")
     {
-      // Combat
-      OnTimedLife = true;
-      TimedLife = 5;
-      IsCombatObject = false;
-      IsSelectable = false;
-      IsDamage = true;
+      TimedLifeData = new TimedLifeData(true, 5);
+
       ImpactDamage = 5;
       MaxSpeed = Globals.LaserSpeed * 0.6f;
       MinSpeed = Globals.LaserSpeed * 0.6f;
 
-      NoAI = true;
-      IsLaser = true;
-
-      // Projectile
       ImpactCloseEnoughDistance = 75;
+      IsLaser = false; // not the same speed
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"projectiles\ion_sm_laser.x");
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
     }
 
     public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
@@ -45,8 +33,8 @@ namespace SWEndor.ActorTypes.Instances
         return;
 
       base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
-      /*
-      List<int> children = hitby.Children;
+      
+      List<int> children = new List<int>(hitby.Children);
       List<int> rm = new List<int>();
       foreach (int i in children)
       {
@@ -59,13 +47,13 @@ namespace SWEndor.ActorTypes.Instances
 
       foreach (int r in rm)
         children.Remove(r);
-        */
-      if (hitby.Children.Length > 0)
+        
+      if (children.Count > 0)
       {
         for (int shock = 3; shock > 0; shock--)
         {
-          ActorInfo child = ActorFactory.Get(hitby.Children[Engine.Random.Next(0, hitby.Children.Length)]);
-          child.CombatInfo.onNotify(Actors.Components.CombatEventType.DAMAGE, 0.1f * Engine.Random.Next(25, 50));
+          ActorInfo child = ActorFactory.Get(children[Engine.Random.Next(0, children.Count)]);
+          CombatSystem.onNotify(Engine, child.ID, CombatEventType.DAMAGE, 0.1f * Engine.Random.Next(25, 50));
 
           float empduration = 12;
           

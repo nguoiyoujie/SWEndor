@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 
@@ -10,10 +11,7 @@ namespace SWEndor.ActorTypes.Instances
     internal ArquitensATI(Factory owner) : base(owner, "Arquitens Light Cruiser")
     {
       // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
+      ExplodeData = new ExplodeData(0.5f, 1, "ExplosionSm", DeathExplosionTrigger.ALWAYS, 1.5f, "ExplosionLg");
 
       MaxStrength = 450.0f;
       ImpactDamage = 60.0f;
@@ -50,8 +48,6 @@ namespace SWEndor.ActorTypes.Instances
 
       ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 80, -45) };
       ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 80, 2000) };
-
-      ainfo.ExplosionInfo.DeathExplosionSize = 1.5f;
     }
   }
 }

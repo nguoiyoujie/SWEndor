@@ -1,22 +1,15 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Weapons;
-using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class mc90TurbolaserATI : Groups.AddOn
+  public class mc90TurbolaserATI : Groups.Turbolasers
   {
     internal mc90TurbolaserATI(Factory owner) : base(owner, "MC90 Turbolaser Tower")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 200;
       ImpactDamage = 16;
       MaxTurnRate = 50f;
@@ -32,10 +25,6 @@ namespace SWEndor.ActorTypes.Instances
       base.Initialize(ainfo);
 
       ainfo.DyingMoveComponent = DyingKill.Instance;
-
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
-      ainfo.ExplosionInfo.DeathExplosionSize = 5;
 
       ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", WeaponFactory.Get("MC90_LASR") }
                                                         };

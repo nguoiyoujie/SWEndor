@@ -47,13 +47,13 @@ namespace SWEndor.UI.Widgets
         DrawSingleBar(0
                       , string.Format("HP [{0}%]", Math.Ceiling(PlayerInfo.StrengthFrac * 100))
                       , PlayerInfo.StrengthFrac
-                      , PlayerInfo.HealthColor
+                      , PlayerInfo.StrengthColor
                       );
 
         //Speed Bar
         DrawSingleBar(1
               , string.Format("SPEED ")
-              , p.MoveComponent.Speed / p.MoveComponent.MaxSpeed
+              , p.MoveData.Speed / p.MoveData.MaxSpeed
               , new TV_COLOR(0.7f, 0.8f, 0.4f, 1)
               );
 
@@ -65,7 +65,7 @@ namespace SWEndor.UI.Widgets
           ActorInfo a = ActorFactory.Get(i);
           DrawSingleBar(barnumber
               , a.SideBarName.PadRight(12).Remove(11)
-              , a.StrengthFrac
+              , Engine.SysDataSet.StrengthFrac_get(i)
               , new TV_COLOR(0, 0.8f, 0.6f, 1)
               );
           barnumber++;
@@ -77,7 +77,7 @@ namespace SWEndor.UI.Widgets
           ActorInfo a = ActorFactory.Get(i);
           DrawSingleBar(barnumber
               , a.SideBarName.PadRight(12).Remove(11)
-              , a.StrengthFrac
+              , Engine.SysDataSet.StrengthFrac_get(i)
               , new TV_COLOR(1f, 0, 0, 1)
               );
           barnumber++;
@@ -138,7 +138,7 @@ namespace SWEndor.UI.Widgets
         , bar_topleft.x - 115
         , bar_topleft.y + bar_height * h
         , color.GetIntColor()
-        , Font.Factory.Get("Text_12").ID
+        , FontFactory.Get(Font.T12).ID
         );
 
       TVScreen2DText.Action_EndText();

@@ -1,6 +1,4 @@
-﻿using SWEndor.Actors;
-
-namespace SWEndor.AI.Actions
+﻿namespace SWEndor.AI.Actions
 {
   public class SetGameStateB : ActionInfo
   {

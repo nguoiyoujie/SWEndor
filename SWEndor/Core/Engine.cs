@@ -10,6 +10,8 @@ using SWEndor.ActorTypes;
 using SWEndor.Player;
 using SWEndor.AI;
 using SWEndor.UI.Forms;
+using SWEndor.Actors.Data;
+using System.Text;
 
 namespace SWEndor
 {
@@ -22,6 +24,14 @@ namespace SWEndor
     public float ScreenWidth { get; internal set;}
     public float ScreenHeight { get; internal set; }
     public Random Random { get; } = new Random();
+
+    // Data sets
+    internal MaskDataSet MaskDataSet { get; private set; }
+
+    internal ActorDataSet ActorDataSet { get; private set; }
+    internal SysDataSet SysDataSet { get; private set; }
+    internal MeshDataSet MeshDataSet { get; private set; }
+    internal TimedLifeDataSet TimedLifeDataSet { get; private set; }
 
     // Engine parts
     internal Game Game { get; private set; }
@@ -40,6 +50,7 @@ namespace SWEndor
     internal Screen2D Screen2D { get; private set; }
 
     // Factories and Registries
+    internal Font.Factory FontFactory { get; private set; }
     internal ActorInfo.Factory ActorFactory { get; private set; }
     internal ActorTypeInfo.Factory ActorTypeFactory { get; private set; }
     internal ActionManager ActionManager { get; private set; }
@@ -51,6 +62,12 @@ namespace SWEndor
 
     public void Init()
     {
+      MaskDataSet = new MaskDataSet();
+      ActorDataSet = new ActorDataSet();
+      SysDataSet = new SysDataSet();
+      MeshDataSet = new MeshDataSet();
+      TimedLifeDataSet = new TimedLifeDataSet();
+
       Game = new Game(this);
       SoundManager = new SoundManager(this);
       PerfManager = new PerfManager(this);
@@ -58,6 +75,8 @@ namespace SWEndor
       ActorTypeFactory = new ActorTypeInfo.Factory(this);
       ActionManager = new ActionManager(this);
       PlayerInfo = new PlayerInfo(this);
+
+      FontFactory = new Font.Factory();
     }
 
     public void InitTrueVision()
@@ -118,25 +137,16 @@ namespace SWEndor
     public void Process()
     {
       ActorFactory.DoEach(ActorInfo.Process);
-
-      //foreach (int actorID in ActorFactory.GetList())
-      //  ActorInfo.Process(this, actorID);
     }
 
     public void ProcessAI()
     {
       ActorFactory.DoEach(ActorInfo.ProcessAI);
-
-      //foreach (int actorID in ActorFactory.GetHoldingList())
-      //  ActorInfo.ProcessAI(this, actorID);
     }
 
     public void ProcessCollision()
     {
       ActorFactory.DoEach(ActorInfo.ProcessCollision);
-
-      //foreach (int actorID in ActorFactory.GetHoldingList())
-      //  ActorInfo.ProcessCollision(this, actorID);
     }
 
     public void PreRender()
@@ -145,20 +155,21 @@ namespace SWEndor
       TrueVision.TVScene.FinalizeShadows();
 
       TrueVision.TVScreen2DText.Action_BeginText();
-      string text = "";
       int i = 0;
       while (Screen2D.LoadingTextLines.Count > 20)
       {
         Screen2D.LoadingTextLines.RemoveAt(0);
       }
 
+      StringBuilder text = new StringBuilder();
       while (i < Screen2D.LoadingTextLines.Count)
       {
-        text += Screen2D.LoadingTextLines[i] + "\n";
+        text.Append(Screen2D.LoadingTextLines[i]);
+        text.Append("\n");
         i++;
       }
 
-      TrueVision.TVScreen2DText.TextureFont_DrawText(text, 40, 40, new TV_COLOR(1,1,1,1).GetIntColor(), Font.Factory.Get("Text_12").ID);
+      TrueVision.TVScreen2DText.TextureFont_DrawText(text.ToString(), 40, 40, new TV_COLOR(1,1,1,1).GetIntColor(), FontFactory.Get(Font.T12).ID);
       TrueVision.TVScreen2DText.Action_EndText();
 
       Screen2D.Draw();
@@ -174,9 +185,6 @@ namespace SWEndor
       LandInfo.Render();
 
       ActorFactory.DoEach(ActorInfo.Render);
-
-      //foreach (int actorID in ActorFactory.GetHoldingList())
-      //  ActorInfo.Render(this, actorID);
 
       Screen2D.Draw();
       TrueVision.TVEngine.RenderToScreen();
@@ -194,6 +202,7 @@ namespace SWEndor
 
     public void Exit()
     {
+      GameScenarioManager.Scenario.Unload();
       Game.PrepExit();
       Game.Stop();
       Form.Exit();

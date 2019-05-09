@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Data;
 
 namespace SWEndor.AI.Actions
 {
@@ -35,47 +36,55 @@ namespace SWEndor.AI.Actions
     public override void Process(Engine engine, int actorID)
     {
       ActorInfo actor = engine.ActorFactory.Get(actorID);
-      if (actor.MoveComponent.MaxTurnRate == 0)
+
+      if (actor.MoveData.MaxTurnRate == 0)
       {
         Complete = true;
         return;
       }
 
+      Process(engine, actor, ref engine.ActorDataSet.CollisionData[engine.ActorFactory.GetIndex(actorID)]);
+    }
+
+
+    private void Process(Engine engine, ActorInfo actor, ref CollisionData data)
+    {
+
       if (CheckBounds(actor))
       {
-        if (actor.CollisionInfo.ProspectiveCollisionLevel > 0 && actor.CollisionInfo.ProspectiveCollisionLevel < 5)
-          Target_Position = actor.CollisionInfo.ProspectiveCollisionSafe;
+        if (data.ProspectiveCollisionLevel > 0 && data.ProspectiveCollisionLevel < 5)
+          Target_Position = data.ProspectiveCollisionSafe;
         else
           Target_Position = Impact_Position + Normal * 10000;
         float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetPosition(), Impact_Position);
-        float Target_Speed = actor.MoveComponent.MinSpeed; //dist / 25;
+        float Target_Speed = actor.MoveData.MinSpeed; //dist / 25;
 
-        float delta_angle = AdjustRotation(actor, Target_Position);
+        float delta_angle = AdjustRotation(actor, Target_Position, false, true);
         float delta_speed = AdjustSpeed(actor, Target_Speed);
 
         Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle); //&& delta_speed == 0);
       }
 
-      if (CheckImminentCollision(actor, actor.MoveComponent.Speed * 2.5f))
+      if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
       {
         float newavoid = GetAvoidanceAngle(actor, actor.GetDirection(), Normal);
         float concavecheck = 60;
         if (!calcAvoidAngle || (AvoidanceAngle - newavoid > -concavecheck && AvoidanceAngle - newavoid < concavecheck))
         {
           AvoidanceAngle = newavoid;
-          Impact_Position = actor.CollisionInfo.ProspectiveCollisionImpact;
-          Normal = actor.CollisionInfo.ProspectiveCollisionNormal;
+          Impact_Position = data.ProspectiveCollision.Impact;
+          Normal = data.ProspectiveCollision.Normal;
           calcAvoidAngle = true;
         }
-        else
-        { }
-        actor.CollisionInfo.IsAvoidingCollision = true;
+
+        // don't override as the 
+        data.IsAvoidingCollision = true;
         Complete = false;
       }
       else
       {
-        actor.CollisionInfo.IsAvoidingCollision = false;
-        engine.ActionManager.QueueNext(actorID, new Wait(2.5f));
+        data.IsAvoidingCollision = false;
+        engine.ActionManager.QueueNext(actor.ID, new Wait(2.5f));
         Complete = true;
       }
     }

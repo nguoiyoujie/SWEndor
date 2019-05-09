@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 
@@ -10,6 +11,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal MC80BATI(Factory owner) : base(owner, "Mon Calamari 80B Capital Ship")
     {
+      ExplodeData = new ExplodeData(0.5f, 1, "ExplosionSm", DeathExplosionTrigger.ALWAYS, 3.5f, "ExplosionLg");
+
       MaxStrength = 2800.0f;
       ImpactDamage = 60.0f;
       MaxSpeed = 30.0f;
@@ -20,9 +23,12 @@ namespace SWEndor.ActorTypes.Instances
       ZTilt = 3.5f;
 
       CullDistance = 40000;
+      Scale = 1.8f;
 
       Score_perStrength = 20;
       Score_DestroyBonus = 20000;
+
+      RegenData = new RegenData { SelfRegenRate = 0.3f };
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"mc90\mc80b.x");
 
@@ -57,13 +63,7 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 45, 660) };
       ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 45, 2000)};
 
-      ainfo.ExplosionInfo.DeathExplosionSize = 3.5f;
-
       ainfo.DyingMoveComponent = new DyingSink(0.01f, 2.5f, 0.4f);
-
-      ainfo.RegenerationInfo.SelfRegenRate = 0.2f;
-
-      ainfo.Scale *= 1.1f;
     }
   }
 }

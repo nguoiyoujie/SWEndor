@@ -32,6 +32,7 @@ namespace SWEndor
       Engine = engine;
     }
 
+    public static string PerfLogPath = Path.Combine(Globals.LogPath, @"perf.log");
     public static string Report = "";
     private DateTime m_last_refresh_time = DateTime.Now;
     private ConcurrentQueue<PerfToken> Queue = new ConcurrentQueue<PerfToken>();
@@ -78,9 +79,8 @@ namespace SWEndor
 
     public void ClearPerf()
     {
-      string filepath = Path.Combine(Globals.LogPath, @"perf.log");
-      if (File.Exists(filepath))
-        File.Delete(filepath);
+      if (File.Exists(PerfLogPath))
+        File.Delete(PerfLogPath);
 
       Refresh();
     }
@@ -128,7 +128,7 @@ namespace SWEndor
                         , e.Peak * 1000));
         }
 
-        string filepath = Path.Combine(Globals.LogPath, @"perf.log");
+        string filepath = PerfLogPath;
         File.AppendAllText(filepath, sb.ToString());
         Report = sb.ToString();
         Refresh();

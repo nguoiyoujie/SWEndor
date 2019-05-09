@@ -2,7 +2,6 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Weapons;
-using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
@@ -42,12 +41,6 @@ namespace SWEndor.ActorTypes.Instances
         new TV_3DVECTOR(0, 0, 2000),
         new TV_3DVECTOR(0, 0, -2000)
       };
-
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
-      ainfo.ExplosionInfo.ExplosionRate = 0.75f;
-      ainfo.ExplosionInfo.ExplosionSize = 1;
-      ainfo.ExplosionInfo.ExplosionType = "Explosion";
 
       ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("TIEB_TORP") }
                                                         , {"ion", WeaponFactory.Get("TIEB_ION") }

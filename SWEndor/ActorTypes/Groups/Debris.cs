@@ -1,4 +1,5 @@
 ﻿using SWEndor.Actors;
+using SWEndor.Actors.Data;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -7,20 +8,10 @@ namespace SWEndor.ActorTypes.Groups
     internal Debris(Factory owner, string name) : base(owner, name)
     {
       // Combat
-      IsCombatObject = true;
-      IsSelectable = false;
-      IsDamage = false;
-      CollisionEnabled = false;
+      CombatData = CombatData.Disabled;
       CullDistance = 4500f;
 
-      NoAI = true;
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-      ainfo.CombatInfo.DamageModifier = 0;
-      ainfo.MoveComponent.ApplyZBalance = false;
+      Mask = ComponentMask.DEBRIS;
     }
   }
 }

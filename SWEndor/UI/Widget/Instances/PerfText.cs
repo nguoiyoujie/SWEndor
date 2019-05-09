@@ -27,7 +27,7 @@ namespace SWEndor.UI.Widgets
 
       TVScreen2DText.Action_BeginText();
       TVScreen2DText.TextureFont_DrawText(perftext
-        , loc.x, loc.y, new TV_COLOR(0.6f, 0.8f, 0.6f, 1).GetIntColor(), Font.Factory.Get("Text_08").ID);
+        , loc.x, loc.y, new TV_COLOR(0.6f, 0.8f, 0.6f, 1).GetIntColor(), FontFactory.Get(Font.T08).ID);
       TVScreen2DText.Action_EndText();
     }
   }

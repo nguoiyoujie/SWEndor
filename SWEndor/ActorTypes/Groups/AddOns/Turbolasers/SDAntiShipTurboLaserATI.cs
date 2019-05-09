@@ -1,22 +1,15 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Weapons;
-using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class SDAntiShipTurboLaserATI : Groups.AddOn
+  public class SDAntiShipTurboLaserATI : Groups.Turbolasers
   {
     internal SDAntiShipTurboLaserATI(Factory owner) : base(owner, "Star Destroyer Heavy Turbolaser Tower")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 12; //25
       ImpactDamage = 16;
 
@@ -30,11 +23,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
 
-      ainfo.DyingMoveComponent = Actors.Components.DyingKill.Instance;
-
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
-      ainfo.ExplosionInfo.DeathExplosionSize = 5;
+      ainfo.DyingMoveComponent = DyingKill.Instance;
 
       ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"aship", WeaponFactory.Get("IMPL_3LSR") }
                                                         };

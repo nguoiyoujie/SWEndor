@@ -1,5 +1,5 @@
 ﻿using SWEndor.Actors;
-using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -8,21 +8,17 @@ namespace SWEndor.ActorTypes.Groups
     internal SurfaceTower(Factory owner, string name) : base(owner, name)
     {
       // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
+      CombatData = CombatData.DefaultShip;
+      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS, deathExplosionSize: 5);
+
       CullDistance = 10000;
 
       RadarSize = 1.5f;
 
       TargetType = TargetType.ADDON | TargetType.STRUCTURE;
-    }
+      RadarType = RadarType.FILLED_SQUARE;
 
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
+      Mask = ComponentMask.ACTOR;
     }
   }
 }

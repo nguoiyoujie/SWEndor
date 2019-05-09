@@ -80,7 +80,7 @@ namespace SWEndor.UI.Menu.Pages
       }
 
       DescText.Text = Utilities.Multiline(SelectedScenario.Description, 64);
-      DescText.TextFont = Font.Factory.Get("Text_14").ID;
+      DescText.TextFont = FontFactory.Get(Font.T14).ID;
       DescText.TextPosition = new TV_2DVECTOR(x, y);
       y += 120 +  height_gap;
       DescText.HighlightBoxPosition = DescText.TextPosition - new TV_2DVECTOR(5, 5);

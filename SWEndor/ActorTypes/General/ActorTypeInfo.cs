@@ -1,5 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
@@ -7,7 +9,6 @@ using SWEndor.Player;
 using SWEndor.Scenarios;
 using SWEndor.Weapons;
 using System;
-using System.Collections.Generic;
 
 namespace SWEndor.ActorTypes
 {
@@ -16,8 +17,12 @@ namespace SWEndor.ActorTypes
     public ActorTypeInfo(Factory owner, string name = "")
     {
       ActorTypeFactory = owner;
-      if (name.Length > 0) { _name = name; }
-      _counter = counter++;
+      if (name.Length > 0) { Name = name; }
+
+      RegenData.Reset();
+      ExplodeData.Reset();
+      CombatData.Reset();
+      TimedLifeData.Reset();
     }
 
     public readonly Factory ActorTypeFactory;
@@ -26,6 +31,7 @@ namespace SWEndor.ActorTypes
     public Game Game { get { return Engine.Game; } }
     public GameScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
     public TrueVision TrueVision { get { return Engine.TrueVision; } }
+    public ActorDataSet ActorDataSet { get { return Engine.ActorDataSet; } }
     public ActorInfo.Factory ActorFactory { get { return Engine.ActorFactory; } }
     public ActionManager ActionManager { get { return Engine.ActionManager; } }
     public LandInfo LandInfo { get { return Engine.LandInfo; } }
@@ -35,27 +41,25 @@ namespace SWEndor.ActorTypes
     public Screen2D Screen2D { get { return Engine.Screen2D; } }
 
     // Basic Info
-    private string _name = "New ActorType";
-    private long _counter = 0;
-    private static long counter = 0;
-    public string Key { get { return _name + " " + _counter; } }
+    public string Name;
 
-    public string Name
-    {
-      get { return _name; }
-      set { _name = value; _counter = counter++; }
-    }
+    // Data
+    public ComponentMask Mask = ComponentMask.NONE;
+    public RegenData RegenData = new RegenData();
+    public ExplodeData ExplodeData = new ExplodeData();
+    public CombatData CombatData = new CombatData();
+    public TimedLifeData TimedLifeData = new TimedLifeData();
 
-    // Combat
-    public bool CollisionEnabled = false;
-    public bool IsCombatObject = false;
-    public bool IsSelectable = false;
-    public bool IsDamage = false;
+    // Mesh Data
+    public float Scale = 1;
+
+    //Sys Data
     public float MaxStrength = 1.0f;
+
+    //Combat Data
     public float ImpactDamage = 1.0f;
 
-    public bool OnTimedLife = false;
-    public float TimedLife = 100;
+    //Move Data
     public float MaxSpeed = 0.0f;
     public float MinSpeed = 0.0f;
     public float MaxSpeedChangeRate = 0.0f;
@@ -64,9 +68,12 @@ namespace SWEndor.ActorTypes
     public float XLimit = 75.0f;
     public float ZTilt = 0.0f;
     public float ZNormFrac = 0.025f;
+
+
     public bool EnableDistanceCull = true;
     public float CullDistance = 20000.0f;
 
+    // AI
     public float Attack_AngularDelta = 5f;
     public float Attack_HighAccuracyAngularDelta = 1f;
     public float Move_CloseEnough = 500;
@@ -77,7 +84,7 @@ namespace SWEndor.ActorTypes
     public int Score_perStrength = 0;
     public int Score_DestroyBonus = 0;
 
-    // Movement
+    // AI
     public bool CanEvade = false;
     public bool CanRetaliate = false;
     public bool CanCheckCollisionAhead = false;
@@ -97,15 +104,16 @@ namespace SWEndor.ActorTypes
 
     // Render
     public float RadarSize = 0;
+    public RadarType RadarType = RadarType.NULL;
     public bool AlwaysShowInRadar = false;
 
     // Performance Savings
-    public bool NoRender = false;
-    public bool NoProcess = false;
-    public bool NoMove = false;
-    public bool NoRotate = false;
+    //public bool NoRender = false;
+    //public bool NoProcess = false;
+    //public bool NoMove = false;
+    //public bool NoRotate = false;
     public bool IsLaser = false;
-    public bool NoAI = false;
+    //public bool NoAI = false;
 
     // Misc
     public bool IsExplosion = false;
@@ -125,10 +133,10 @@ namespace SWEndor.ActorTypes
     {
       if (SourceMesh == null)
       {
-        SourceMesh = TrueVision.TVGlobals.GetMesh(_name);
+        SourceMesh = TrueVision.TVGlobals.GetMesh(Name);
         if (SourceMesh == null)
         {
-          SourceMesh = TrueVision.TVScene.CreateMeshBuilder(_name);
+          SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Name);
           if (SourceMeshPath.Length > 0)
             SourceMesh.LoadXFile(SourceMeshPath, true);
           SourceMesh.Enable(false);
@@ -139,12 +147,12 @@ namespace SWEndor.ActorTypes
 
       if (SourceFarMesh == null)
       {
-        SourceFarMesh = TrueVision.TVGlobals.GetMesh(_name + "_far");
+        SourceFarMesh = TrueVision.TVGlobals.GetMesh(Name + "_far");
         if (SourceFarMesh == null)
         {
           if (SourceFarMeshPath.Length > 0)
           {
-            SourceFarMesh = TrueVision.TVScene.CreateMeshBuilder(_name + "_far");
+            SourceFarMesh = TrueVision.TVScene.CreateMeshBuilder(Name + "_far");
             SourceFarMesh.LoadXFile(SourceFarMeshPath, true);
             SourceFarMesh.Enable(false);
             SourceFarMesh.WeldVertices();
@@ -158,9 +166,6 @@ namespace SWEndor.ActorTypes
 
     public virtual TVMesh GenerateMesh()
     {
-      //if (SourceMesh == null)
-      //  RegisterModel(engine);
-
       if (SourceMesh == null)
         throw new NotImplementedException("Attempted to generate empty model");
 
@@ -261,28 +266,7 @@ namespace SWEndor.ActorTypes
 
         TV_3DVECTOR campos = ainfo.GetRelativePositionXYZ(location.x, location.y, location.z);
         TV_3DVECTOR camview = ainfo.GetRelativePositionXYZ(target.x, target.y, target.z);
-        /*
-        if (ainfo.Mesh != null 
-          && !(ainfo.TypeInfo is InvisibleCameraATI) 
-          && !(ainfo.TypeInfo is DeathCameraATI))
-        {
-          if (GameScenarioManager.CameraTargetActor != null
-            && GameScenarioManager.CameraTargetActor.Mesh != null)
-          {
-            cam.SetPosition(campos.x, campos.y, campos.z);
-            cam.SetLookAt(camview.x, camview.y, camview.z);
-          }
-          else
-          {
-            cam.ChaseCamera(ainfo.Mesh, location, target, 100, true);
-          }
-        }
-        else
-        {
-          cam.SetPosition(campos.x, campos.y, campos.z);
-          cam.SetLookAt(camview.x, camview.y, camview.z);
-        }
-        */
+
         cam.SetPosition(campos.x, campos.y, campos.z);
         cam.SetLookAt(camview.x, camview.y, camview.z);
 
@@ -293,21 +277,6 @@ namespace SWEndor.ActorTypes
 
     public virtual void Initialize(ActorInfo ainfo)
     {
-      // Combat
-      ainfo.CombatInfo.MaxStrength = MaxStrength;
-      ainfo.CombatInfo.IsCombatObject = IsCombatObject;
-      ainfo.CombatInfo.OnTimedLife = OnTimedLife;
-      ainfo.CombatInfo.TimedLife = TimedLife;
-
-      // Movement
-      //ainfo.MovementInfo.MaxSpeed = MaxSpeed;
-      //ainfo.MovementInfo.MinSpeed = MinSpeed;
-      //ainfo.MovementInfo.MaxSpeedChangeRate = MaxSpeedChangeRate;
-      //ainfo.MovementInfo.MaxTurnRate = MaxTurnRate;
-      //ainfo.MovementInfo.MaxSecondOrderTurnRateFrac = MaxSecondOrderTurnRateFrac;
-      //ainfo.MovementInfo.ZTilt = ZTilt;
-      //ainfo.MovementInfo.ZNormFrac = ZNormFrac;
-
       // AI
       ainfo.CanEvade = CanEvade;
       ainfo.CanRetaliate = CanRetaliate;
@@ -330,12 +299,12 @@ namespace SWEndor.ActorTypes
         w.Reload(Engine);
 
       // regeneration
-      ainfo.RegenerationInfo.Process(Game.TimeSinceRender);
+      RegenerationSystem.Process(Engine, ainfo.ID, Game.TimeSinceRender);
 
       if (ainfo.ActorState.IsDying())
       {
-        ainfo.ExplosionInfo.ProcessDying();
-        ainfo.DyingMoveComponent?.Update(ainfo, Game.TimeSinceRender);
+        ExplosionSystem.ProcessDying(Engine, ainfo.ID);
+        ainfo.DyingMoveComponent?.Update(ainfo, ref ainfo.MoveData, Game.TimeSinceRender);
       }
 
       // sound
@@ -357,7 +326,7 @@ namespace SWEndor.ActorTypes
       {
         case ActorState.DEAD:
           // Explode
-          ainfo.ExplosionInfo.OnDeath();
+          ExplosionSystem.OnDeath(Engine, ainfo.ID);
 
           // Debris
           if (!ActorInfo.IsAggregateMode(Engine, ainfo.ID) && !Game.IsLowFPS())
@@ -366,7 +335,7 @@ namespace SWEndor.ActorTypes
           break;
 
         case ActorState.DYING:
-          ainfo.DyingMoveComponent?.Initialize(ainfo);
+          ainfo.DyingMoveComponent?.Initialize(ainfo, ref ainfo.MoveData);
           break;
       }
 
@@ -423,26 +392,23 @@ namespace SWEndor.ActorTypes
       if (owner == null || hitby == null)
         return;
 
-      if (owner.ActorState.IsDying() && owner.CombatInfo.HitWhileDyingLeadsToDeath)
+      if (owner.ActorState.IsDying() && ActorDataSet.CombatData[ActorFactory.GetIndex(ownerActorID)].HitWhileDyingLeadsToDeath)
         owner.ActorState = ActorState.DEAD;
 
       if (owner.ActorState.IsDyingOrDead()
         || hitby.TypeInfo.ImpactDamage == 0)
         return;
 
-      if (hitby.TypeInfo.IsDamage)
+      if (Engine.MaskDataSet[hitbyActorID].Has(ComponentMask.IS_DAMAGE))
       {
-        float str0 = owner.CombatInfo.Strength;
-        owner.CombatInfo.onNotify(Actors.Components.CombatEventType.DAMAGE, hitby.TypeInfo.ImpactDamage);
-        float str1 = owner.CombatInfo.Strength;
-
+        float str0 = Engine.SysDataSet.Strength_get(ownerActorID);
+        CombatSystem.onNotify(Engine, ownerActorID, CombatEventType.DAMAGE, hitby.TypeInfo.ImpactDamage);
+        float str1 = Engine.SysDataSet.Strength_get(ownerActorID);
 
         if (ActorInfo.IsPlayer(Engine, owner.ID))
         {
           if (str1 < (int)str0)
-            PlayerInfo.FlashHit(PlayerInfo.HealthColor);
-
-
+            PlayerInfo.FlashHit(PlayerInfo.StrengthColor);
         }
 
         // scoring
@@ -461,7 +427,7 @@ namespace SWEndor.ActorTypes
 
         if (owner == PlayerInfo.Actor)
         {
-          PlayerInfo.Score.AddDamage(attacker, hitby.TypeInfo.ImpactDamage * owner.CombatInfo.DamageModifier);
+          PlayerInfo.Score.AddDamage(attacker, hitby.TypeInfo.ImpactDamage * ActorDataSet.CombatData[ActorFactory.GetIndex(ownerActorID)].DamageModifier);
 
           if (owner.ActorState.IsDyingOrDead())
             PlayerInfo.Score.AddDeath(attacker);
@@ -487,18 +453,18 @@ namespace SWEndor.ActorTypes
         hitby.SetLocalPosition(impact.x, impact.y, impact.z);
         hitby.ActorState = ActorState.DYING;
       }
-      else if (owner.TypeInfo.IsDamage)
+      else if (Engine.MaskDataSet[ownerActorID].Has(ComponentMask.IS_DAMAGE))
       {
       }
       else
       {
         // Collision
-        owner.CombatInfo.onNotify(Actors.Components.CombatEventType.COLLISIONDAMAGE, hitby.TypeInfo.ImpactDamage);
-        if (owner.CombatInfo.Strength > 0
-          && !owner.TypeInfo.NoMove
+        CombatSystem.onNotify(Engine, ownerActorID, CombatEventType.COLLISIONDAMAGE, hitby.TypeInfo.ImpactDamage);
+        if (Engine.SysDataSet.Strength_get(ownerActorID) > 0
+          && Engine.MaskDataSet[ownerActorID].Has(ComponentMask.CAN_MOVE)
           && owner.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER))
         {
-          float repel = -owner.MoveComponent.Speed * 0.25f;
+          float repel = -owner.MoveData.Speed * 0.25f;
           owner.MoveRelative(repel, 0, 0);
         }
 
@@ -529,23 +495,12 @@ namespace SWEndor.ActorTypes
 
     private void AddScore(ScoreInfo score, ActorInfo proj, ActorInfo victim)
     {
-      bool shielded = false;
-      foreach (int i in victim.Children)
+      if (!victim.ActorState.IsDyingOrDead())
       {
-        ActorInfo shd = ActorFactory.Get(i);
-        if (shd != null && (shd.RegenerationInfo.ParentRegenRate > 0 || shd.RegenerationInfo.RelativeRegenRate > 0))
-          shielded = true;
-      }
-      if (!shielded)
-      {
-        if (!victim.ActorState.IsDyingOrDead())
-        {
-          score.AddHit(victim, proj.TypeInfo.ImpactDamage * victim.CombatInfo.DamageModifier);
-        }
+        score.AddHit(victim, proj.TypeInfo.ImpactDamage * ActorDataSet.CombatData[victim.dataID].DamageModifier);
       }
 
-      if (!victim.ActorState.IsDyingOrDead() 
-        && victim.CombatInfo.Strength <= 0)
+      if (victim.ActorState.IsDyingOrDead())
       {
         score.AddKill(victim);
       }
@@ -623,7 +578,7 @@ namespace SWEndor.ActorTypes
       accuracy /= (Math.Abs(angle.y) + 1);
 
       if (Engine.Random.NextDouble() < accuracy)
-        target.CombatInfo.onNotify(Actors.Components.CombatEventType.DAMAGE, weapontype.ImpactDamage);
+        CombatSystem.onNotify(Engine, targetActorID, CombatEventType.DAMAGE, weapontype.ImpactDamage);
     }
 
     public void Dispose()

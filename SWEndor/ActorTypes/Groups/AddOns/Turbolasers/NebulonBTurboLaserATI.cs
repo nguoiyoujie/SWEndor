@@ -1,22 +1,15 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Weapons;
-using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class NebulonBTurboLaserATI : Groups.AddOn
+  public class NebulonBTurboLaserATI : Groups.Turbolasers
   {
     internal NebulonBTurboLaserATI(Factory owner) : base(owner, "Nebulon B Turbolaser Tower")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 135;
       ImpactDamage = 16;
 
@@ -30,11 +23,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
 
-      ainfo.DyingMoveComponent = Actors.Components.DyingKill.Instance;
-
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
-      ainfo.ExplosionInfo.DeathExplosionSize = 5;
+      ainfo.DyingMoveComponent = DyingKill.Instance;
 
       ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", WeaponFactory.Get("NEBL_LASR") }
                                                         };

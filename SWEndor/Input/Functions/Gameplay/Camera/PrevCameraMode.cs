@@ -1,6 +1,4 @@
-﻿using SWEndor.Player;
-
-namespace SWEndor.Input.Functions.Gameplay.Camera
+﻿namespace SWEndor.Input.Functions.Gameplay.Camera
 {
   public class PrevCameraMode : InputFunction
   {

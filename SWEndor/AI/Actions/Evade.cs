@@ -1,5 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 
 namespace SWEndor.AI.Actions
 {
@@ -32,7 +34,7 @@ namespace SWEndor.AI.Actions
     public override void Process(Engine engine, int actorID)
     {
       ActorInfo actor = engine.ActorFactory.Get(actorID);
-      if (actor.MoveComponent.MaxTurnRate == 0)
+      if (actor.MoveData.MaxTurnRate == 0)
       {
         Complete = true;
         return;
@@ -55,7 +57,7 @@ namespace SWEndor.AI.Actions
         }
 
         float delta_angle = AdjustRotation(actor, Target_Position);
-        float delta_speed = AdjustSpeed(actor, actor.MoveComponent.Speed);
+        float delta_speed = AdjustSpeed(actor, actor.MoveData.Speed);
 
         Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle && delta_speed == 0);
         Complete |= (ResumeTime < engine.Game.GameTime);
@@ -63,9 +65,9 @@ namespace SWEndor.AI.Actions
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
-      if (CheckImminentCollision(actor, actor.MoveComponent.Speed * 2.5f))
+      if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
       {
-        engine.ActionManager.QueueFirst(actorID, new AvoidCollisionRotate(actor.CollisionInfo.ProspectiveCollisionImpact, actor.CollisionInfo.ProspectiveCollisionNormal));
+        CollisionSystem.CreateAvoidAction(engine, actorID);
       }
     }
   }

@@ -1,22 +1,16 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using SWEndor.Weapons;
-using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class NebulonBMissilePodATI : Groups.AddOn
+  public class NebulonBMissilePodATI : Groups.Turbolasers
   {
     internal NebulonBMissilePodATI(Factory owner) : base(owner, "Nebulon B Missile Pod")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 140; //32
       ImpactDamage = 16;
 
@@ -31,10 +25,6 @@ namespace SWEndor.ActorTypes.Instances
       base.Initialize(ainfo);
 
       ainfo.DyingMoveComponent = DyingKill.Instance;
-
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
-      ainfo.ExplosionInfo.DeathExplosionSize = 5;
 
       ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"missile", WeaponFactory.Get("NEBL_MISL") }
                                                         };

@@ -39,13 +39,13 @@ namespace SWEndor.AI.Actions
              && actor != a
              && a.CreationState == CreationState.ACTIVE
              && !a.ActorState.IsDyingOrDead()
-             && a.CombatInfo.IsCombatObject
+             && engine.ActorDataSet.CombatData[a.dataID].IsCombatObject
              && (a.TypeInfo.TargetType & m_TargetType) != 0
              && !a.IsOutOfBounds(engine.GameScenarioManager.MinAIBounds, engine.GameScenarioManager.MaxAIBounds)
              && !actor.Faction.IsAlliedWith(a.Faction) // enemy
              )
            {
-             if (actor.MoveComponent.MaxSpeed == 0) // stationary, can only target those in range
+             if (actor.MoveData.MaxSpeed == 0) // stationary, can only target those in range
              {
                WeaponInfo weap = null;
                int dummy = 0;
@@ -71,7 +71,7 @@ namespace SWEndor.AI.Actions
 
       if (targets.Count > 0)
       {
-        int w = Globals.Engine.Random.Next(0, weight);
+        int w = engine.Random.Next(0, weight);
         for (int i = 0; i < targets.Count; i++)
         {
           w -= targets[i].HuntWeight;

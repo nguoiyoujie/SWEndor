@@ -23,7 +23,7 @@ namespace SWEndor.UI.Widgets
       if (tvcres.GetCollisionMesh() != null)
       {
         int n = 0;
-        if (int.TryParse(tvcres.GetCollisionMesh().GetMeshName(), out n))
+        if (int.TryParse(tvcres.GetCollisionMesh().GetTag(), out n))
         {
           ActorInfo a = Engine.ActorFactory.Get(n);
 
@@ -42,7 +42,7 @@ namespace SWEndor.UI.Widgets
               , a.GetPosition().x
               , a.GetPosition().y
               , a.GetPosition().z
-              , a.MoveComponent.Speed
+              , a.MoveData.Speed
               //, a.AI.Master.CurrAI
               //, a.AI.Master.Move_TargetPosition.x
               //, a.AI.Master.Move_TargetPosition.y
@@ -60,7 +60,7 @@ namespace SWEndor.UI.Widgets
             }*/
             
             TVScreen2DText.TextureFont_DrawText(text
-          , 900, 400, new TV_COLOR(0.8f, 0.8f, 0.2f, 1).GetIntColor(), Font.Factory.Get("Text_12").ID);
+          , 900, 400, new TV_COLOR(0.8f, 0.8f, 0.2f, 1).GetIntColor(), FontFactory.Get(Font.T12).ID);
           }
         }
       }

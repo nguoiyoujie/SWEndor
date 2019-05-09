@@ -1,8 +1,8 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using SWEndor.Weapons;
-using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
@@ -12,6 +12,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal TIE_X1_ATI(Factory owner) : base(owner, "TIE Advanced X1")
     {
+      CombatData = CombatData.DefaultShip;
+
       MaxStrength = 275;
       ImpactDamage = 100;
       MaxSpeed = 900;
@@ -31,6 +33,8 @@ namespace SWEndor.ActorTypes.Instances
 
       Score_perStrength = 750;
       Score_DestroyBonus = 10000;
+
+      RegenData = new RegenData { SelfRegenRate = 0.06f };
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"tie_vader\tie_vader.x");
     }
@@ -53,23 +57,12 @@ namespace SWEndor.ActorTypes.Instances
         new TV_3DVECTOR(0, 0, -2000)
       };
 
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
-      ainfo.ExplosionInfo.DeathExplosionSize = 1;
-      ainfo.ExplosionInfo.ExplosionRate = 0.5f;
-      ainfo.ExplosionInfo.ExplosionSize = 1;
-      ainfo.ExplosionInfo.ExplosionType = "Explosion";
-
-      ainfo.RegenerationInfo.SelfRegenRate = 0.075f;
-
       ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("TIEX_TORP") }
                                                         , {"laser", WeaponFactory.Get("TIEX_LASR") }
                                                         };
       ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser", "2:laser", "3:laser" };
       ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none", "1:torp" };
       ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:torp", "2:laser" };
-
-      ainfo.CombatInfo.HitWhileDyingLeadsToDeath = false;
     }
   }
 }

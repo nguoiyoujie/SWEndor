@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using System.Collections.Generic;
 using System.IO;
@@ -12,10 +13,7 @@ namespace SWEndor.ActorTypes.Instances
     internal DevastatorATI(Factory owner) : base(owner, "Devastator Imperial-I Star Destroyer")
     {
       // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
+      ExplodeData = new ExplodeData(0.25f, 1, "ExplosionSm", DeathExplosionTrigger.ALWAYS, 2.5f, "ExplosionLg");
 
       MaxStrength = 1075.0f;
       ImpactDamage = 60.0f;
@@ -25,6 +23,7 @@ namespace SWEndor.ActorTypes.Instances
       MaxTurnRate = 1.2f;
 
       CullDistance = 40000;
+      Scale = 1.7f;
 
       Score_perStrength = 70;
       Score_DestroyBonus = 20000;
@@ -100,12 +99,7 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 300, -385) };
       ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 300, 2000) };
 
-      ainfo.ExplosionInfo.DeathExplosionSize = 2.5f;
-      ainfo.ExplosionInfo.ExplosionRate = 0.25f;
-
       ainfo.DyingMoveComponent = new DyingSink(0.005f, 5f, 0.8f);
-
-      ainfo.Scale *= 1.7f;
 
       ainfo.SpawnerInfo = new SDSpawnerII(ainfo);
     }

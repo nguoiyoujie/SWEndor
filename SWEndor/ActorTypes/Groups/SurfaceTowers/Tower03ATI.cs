@@ -16,23 +16,9 @@ namespace SWEndor.ActorTypes.Instances
 
       RadarSize = 2.5f;
 
-      NoMove = true;
-      NoRotate = true;
-      NoAI = true;
-
       AlwaysShowInRadar = true;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"towers\tower_03.x");
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      // Tower Gun
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
-      ainfo.ExplosionInfo.DeathExplosionSize = 5;
     }
 
     public override void ProcessNewState(ActorInfo ainfo)

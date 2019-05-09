@@ -24,6 +24,7 @@ namespace SWEndor.UI.Menu
     public Game Game { get { return Engine.Game; } }
     public GameScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
     public TrueVision TrueVision { get { return Engine.TrueVision; } }
+    public Font.Factory FontFactory { get { return Engine.FontFactory; } }
     public ActorInfo.Factory ActorFactory { get { return Engine.ActorFactory; } }
     public ActorTypeInfo.Factory ActorTypeFactory { get { return Engine.ActorTypeFactory; } }
     public ActionManager ActionManager { get { return Engine.ActionManager; } }
@@ -45,7 +46,7 @@ namespace SWEndor.UI.Menu
         SelectedElement = Elements[SelectedElementID];
 
       foreach (SelectionElement se in Elements)
-        se.Show((se == SelectedElement));
+        se.Show(Engine, (se == SelectedElement));
     }
 
     public virtual void Tick()
@@ -104,7 +105,7 @@ namespace SWEndor.UI.Menu
     {
       if (Parent != null)
       {
-        Globals.Engine.Screen2D.CurrentPage = Parent;
+        Screen2D.CurrentPage = Parent;
         return true;
       }
       return false;
@@ -113,7 +114,7 @@ namespace SWEndor.UI.Menu
     public virtual void EnterPage(Page page)
     {
       page.Parent = this;
-      Globals.Engine.Screen2D.CurrentPage = page;
+      Screen2D.CurrentPage = page;
     }
 
     public virtual bool OnKeyPress(CONST_TV_KEY key)

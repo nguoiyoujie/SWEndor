@@ -23,6 +23,7 @@ namespace SWEndor
     // Constant
     public const float PI = 3.1415f;
     public const float LaserSpeed = 3000f;
+    public const int ActorLimit = 1000;
 
     // Directories
     public static string BasePath = AppDomain.CurrentDomain.BaseDirectory;
@@ -38,8 +39,10 @@ namespace SWEndor
     public static string SoundPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\sounds\");
     public static string AtmospherePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\atmosphere\");
     public static string LandscapePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\landscape\");
-    public static string CustomScenarioPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Scenarios\");
     public static string DataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\");
+
+    public static string CustomScenarioPath = Path.Combine(DataPath, @"Scenarios\");
+
 
     // Files
     public static string ActorTypeINIPath = Path.Combine(DataPath, @"actortypes.ini");

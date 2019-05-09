@@ -34,8 +34,8 @@ namespace SWEndor.ActorTypes.Components
       if (dist < Distance)
       {
         float vol = 1;
-        if (actor.MoveComponent.MaxSpeed > 0)
-          vol = (actor.MoveComponent.Speed / actor.MoveComponent.MaxSpeed).Clamp(0, 1);
+        if (actor.MoveData.MaxSpeed > 0)
+          vol = (actor.MoveData.Speed / actor.MoveData.MaxSpeed).Clamp(0, 1);
         vol -= dist / Distance;
         if (vol > 0)
           actor.SoundManager.SetSound(Sound, false, vol, Loop);

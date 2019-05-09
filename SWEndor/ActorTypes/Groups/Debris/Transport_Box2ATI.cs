@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -9,12 +10,7 @@ namespace SWEndor.ActorTypes.Instances
     internal Transport_Box2ATI(Factory owner) : base(owner, "Transport Box 2")
     {
       // Combat
-      IsCombatObject = false;
-      IsSelectable = false;
-      IsDamage = false;
-      CollisionEnabled = false;
-      OnTimedLife = true;
-      TimedLife = 12f;
+      TimedLifeData = new TimedLifeData(true, 12);
 
       MaxSpeed = 500;
       MinSpeed = 100;

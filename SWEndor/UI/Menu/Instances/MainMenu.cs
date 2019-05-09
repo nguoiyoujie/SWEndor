@@ -17,11 +17,11 @@ namespace SWEndor.UI.Menu.Pages
     {
       MainMenuText.Text = "<Title>";
       MainMenuText.TextPosition = new TV_2DVECTOR(75, 60);
-      MainMenuText.TextFont = Font.Factory.Get("Title_48").ID;
+      MainMenuText.TextFont = FontFactory.Get(Font.T48).ID;
 
       VersionText.Text = Globals.Version;
       VersionText.TextPosition = new TV_2DVECTOR(85, 150);
-      VersionText.TextFont = Font.Factory.Get("Text_12").ID;
+      VersionText.TextFont = FontFactory.Get(Font.T12).ID;
 
       ButtonPlay.Text = "Play Scenario";
       ButtonPlay.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth - 200, Globals.Engine.ScreenHeight - 300);

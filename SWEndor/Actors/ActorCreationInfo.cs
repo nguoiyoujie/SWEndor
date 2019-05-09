@@ -10,7 +10,7 @@ namespace SWEndor.ActorTypes
     public string Name;
     public float CreationTime;
     public ActorState InitialState;
-    public TV_3DVECTOR InitialScale;
+    public float InitialScale;
     public TV_3DVECTOR Position;
     public TV_3DVECTOR Rotation;
 
@@ -28,7 +28,7 @@ namespace SWEndor.ActorTypes
       Faction = FactionInfo.Neutral;
       CreationTime = 0;
       InitialState = ActorState.NORMAL;
-      InitialScale = new TV_3DVECTOR(1, 1, 1);
+      InitialScale = 1;
       Position = new TV_3DVECTOR();
       Rotation = new TV_3DVECTOR();
     }

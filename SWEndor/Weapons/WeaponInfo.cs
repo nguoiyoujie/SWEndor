@@ -1,7 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
-using SWEndor.ActorTypes.Group;
+using SWEndor.ActorTypes.Groups;
 using SWEndor.AI.Actions;
 
 namespace SWEndor.Weapons
@@ -109,7 +109,7 @@ namespace SWEndor.Weapons
     public void Init()
     {
       if (Range == 0 && Projectile != null)
-        Range = Projectile.MaxSpeed * Projectile.TimedLife;
+        Range = Projectile.MaxSpeed * Projectile.TimedLifeData.TimedLife;
 
       UIFirePositions = new TV_3DVECTOR[FirePositions.Length];
 
@@ -239,7 +239,9 @@ namespace SWEndor.Weapons
 
         ActorCreationInfo acinfo = new ActorCreationInfo(Projectile);
         acinfo.Position = owner.GetRelativePositionXYZ(targetloc.x, targetloc.y, targetloc.z);
-        acinfo.Faction = owner.Faction;
+
+        if (owner.MoveData.Speed > Projectile.MinSpeed)
+          acinfo.InitialSpeed = owner.MoveData.Speed;
 
         if (EnablePlayerAutoAim && target != null)
         {
@@ -258,7 +260,7 @@ namespace SWEndor.Weapons
         a.Faction = owner.Faction;
         owner.AddChild(a.ID);
 
-        if (!a.TypeInfo.NoAI)
+        if (engine.MaskDataSet[a.ID].Has(ComponentMask.HAS_AI))
           engine.ActionManager.QueueLast(a.ID, new Wait(ProjectileWaitBeforeHoming));
         engine.ActionManager.QueueLast(a.ID, new AttackActor(targetActorID, 0, 0, false, 9999));
         engine.ActionManager.QueueLast(a.ID, new Idle());
@@ -283,6 +285,9 @@ namespace SWEndor.Weapons
         ActorCreationInfo acinfo = new ActorCreationInfo(Projectile);
         acinfo.Position = owner.GetRelativePositionXYZ(targetloc.x, targetloc.y, targetloc.z);
 
+        if (owner.MoveData.Speed > Projectile.MinSpeed)
+          acinfo.InitialSpeed = owner.MoveData.Speed;
+
         if (EnableAIAutoAim && target != null)
         {
           float dist = ActorDistanceInfo.GetDistance(ownerActorID, targetActorID);
@@ -301,12 +306,12 @@ namespace SWEndor.Weapons
           ActorInfo a2 = target.AttachToParent ? engine.ActorFactory.Get(target.ParentID) : null;
           if (a2 == null)
           {
-            dir = target.GetRelativePositionXYZ(0, 0, target.MoveComponent.Speed * d) - owner.GetPosition();
+            dir = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d) - owner.GetPosition();
           }
           else
           {
             //dir = target.GetPosition() - owner.GetPosition();
-            dir = a2.GetRelativePositionXYZ(target.GetLocalPosition().x, target.GetLocalPosition().y, target.GetLocalPosition().z + a2.MoveComponent.Speed * d) - owner.GetPosition();
+            dir = a2.GetRelativePositionXYZ(target.GetLocalPosition().x, target.GetLocalPosition().y, target.GetLocalPosition().z + a2.MoveData.Speed * d) - owner.GetPosition();
           }
 
           acinfo.Rotation = Utilities.GetRotation(dir);
@@ -320,9 +325,8 @@ namespace SWEndor.Weapons
         owner.AddChild(a.ID);
         a.Faction = owner.Faction;
 
-        if (!a.TypeInfo.NoAI)
+        if (engine.MaskDataSet[a.ID].Has(ComponentMask.HAS_AI))
           engine.ActionManager.QueueLast(a.ID, new Wait(ProjectileWaitBeforeHoming));
-
         engine.ActionManager.QueueLast(a.ID, new AttackActor(targetActorID, 0, 0, false, 9999));
         engine.ActionManager.QueueLast(a.ID, new Lock());
 

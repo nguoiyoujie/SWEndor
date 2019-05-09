@@ -46,7 +46,7 @@ namespace SWEndor.Scenarios
           Dictionary<string, int> reg = scenario.GetRegister(s);
           if (reg != null)
           {
-            if (RegisterName != "")
+            if (RegisterName != null && RegisterName != "")
               reg.Add(RegisterName, ainfo.ID);
             else
               reg.Add(ainfo.Key, ainfo.ID);

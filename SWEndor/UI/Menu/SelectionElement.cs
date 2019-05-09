@@ -37,12 +37,12 @@ namespace SWEndor.UI
     public KeyEvent OnKeyPress;
     public KeyEvent AfterKeyPress;
 
-    public virtual void Show(bool ishighlighted)
+    public virtual void Show(Engine engine, bool ishighlighted)
     {
-      int font = (TextFont > -1) ? TextFont : Font.Factory.Get("Text_16").ID;
+      int font = (TextFont > -1) ? TextFont : engine.FontFactory.Get(Font.T16).ID;
 
-      Globals.Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
-      Globals.Engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(HighlightBoxPosition.x
+      engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
+      engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(HighlightBoxPosition.x
                                        , HighlightBoxPosition.y
                                        , HighlightBoxPosition.x + HighlightBoxWidth
                                        , HighlightBoxPosition.y + HighlightBoxHeight
@@ -56,7 +56,7 @@ namespace SWEndor.UI
       {
         if (n < ToggleButtonsCurrentNumber)
         {
-          Globals.Engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(x
+          engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(x
                                                    , y
                                                    , x + ToggleButtonsWidth
                                                    , y + ToggleButtonsHeight
@@ -64,7 +64,7 @@ namespace SWEndor.UI
         }
         else
         {
-          Globals.Engine.TrueVision.TVScreen2DImmediate.Draw_Box(x
+          engine.TrueVision.TVScreen2DImmediate.Draw_Box(x
                                          , y
                                          , x + ToggleButtonsWidth
                                          , y + ToggleButtonsHeight
@@ -75,22 +75,22 @@ namespace SWEndor.UI
         n++;
       }
 
-      Globals.Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
+      engine.TrueVision.TVScreen2DImmediate.Action_End2D();
 
 
-      Globals.Engine.TrueVision.TVScreen2DText.Action_BeginText();
-      Globals.Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(Text
+      engine.TrueVision.TVScreen2DText.Action_BeginText();
+      engine.TrueVision.TVScreen2DText.TextureFont_DrawText(Text
                                                             , TextPosition.x
                                                             , TextPosition.y
                                                             , TextColor.GetIntColor()
                                                             , font);
 
-      Globals.Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(SecondaryText
+      engine.TrueVision.TVScreen2DText.TextureFont_DrawText(SecondaryText
                                                       , SecondaryTextPosition.x
                                                       , SecondaryTextPosition.y
                                                       , SecondaryTextColor.GetIntColor()
                                                       , font);
-      Globals.Engine.TrueVision.TVScreen2DText.Action_EndText();
+      engine.TrueVision.TVScreen2DText.Action_EndText();
     }
 
     public virtual bool IncrementToggleButtonNumber()

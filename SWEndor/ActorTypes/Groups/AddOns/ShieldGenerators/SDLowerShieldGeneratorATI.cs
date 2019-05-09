@@ -1,20 +1,14 @@
-﻿using MTV3D65;
-using SWEndor.Actors;
+﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class SDLowerShieldGeneratorATI : Groups.AddOn
+  public class SDLowerShieldGeneratorATI : Groups.ShieldGenerators
   {
     internal SDLowerShieldGeneratorATI(Factory owner) : base(owner, "Star Destroyer Lower Shield Generator")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 90;
       ImpactDamage = 300.0f;
       RadarSize = 2.5f;
@@ -25,6 +19,9 @@ namespace SWEndor.ActorTypes.Instances
       Score_DestroyBonus = 2500;
 
       TargetType |= TargetType.SHIELDGENERATOR;
+      RadarType = RadarType.HOLLOW_CIRCLE_M;
+
+      RegenData = new RegenData { NoRegen = true, ParentRegenRate = 20f, SiblingRegenRate = 0.5f };
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"stardestroyer\star_destroyer_lower_energy_pod.x");
     }
@@ -35,11 +32,6 @@ namespace SWEndor.ActorTypes.Instances
       base.Initialize(ainfo);
 
       ainfo.DyingMoveComponent = DyingKill.Instance;
-
-      ainfo.CombatInfo.CollisionDamageModifier = 100;
-      ainfo.RegenerationInfo.AllowRegen = false;
-      ainfo.RegenerationInfo.ParentRegenRate = 20f;
-      ainfo.RegenerationInfo.RelativeRegenRate = 0.5f;
     }
   }
 }

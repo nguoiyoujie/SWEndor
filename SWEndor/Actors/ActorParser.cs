@@ -1,6 +1,4 @@
-﻿using SWEndor.AI.Actions;
-using System.Text;
-
+﻿
 /*
 namespace SWEndor.Actors
 {
@@ -38,7 +36,7 @@ public class ActorParser
     builder.AppendLine(string.Format("CreationState={0}", Actor.CreationState.ToString()));                                        //ActorState State 
     builder.AppendLine(string.Format("ActorState={0}", Actor.ActorState.ToString()));                                        //ActorState State 
     builder.AppendLine(string.Format("prevActorState={0}", Actor.prevActorState.ToString()));                                //ActorState prevState
-    builder.AppendLine(string.Format("Scale={0}", Utilities.ToString(Actor.Scale)));                               //TV_3DVECTOR Scale
+    builder.AppendLine(string.Format("Scale={0}", Utilities.ToString(actor.MeshData.Scale)));                               //TV_3DVECTOR Scale
     builder.AppendLine(string.Format("prevScale={0}", Utilities.ToString(Actor.prevScale)));                       //TV_3DVECTOR prevScale
     builder.AppendLine(string.Format("Position={0}", Utilities.ToString(Actor.Position)));                         //TV_3DVECTOR Position
     builder.AppendLine(string.Format("PrevPosition={0}", Utilities.ToString(Actor.PrevPosition)));                 //TV_3DVECTOR PrevPosition

@@ -13,13 +13,11 @@ namespace SWEndor.AI.Actions
 
     // parameters
     private TV_3DVECTOR Target_Position = new TV_3DVECTOR();
-    private float Max_Speed = 25000;
-    private float Min_Speed = 1000;
-    private float SpeedDistanceFactor = 2.5f;
-    private float CloseEnoughDistance = 500;
+    private static float Max_Speed = 25000;
+    private static float SpeedDistanceFactor = 2.5f;
+    private static float CloseEnoughDistance = 500;
     private ActorState prevState = ActorState.NORMAL;
     private float prevdist = 9999999;
-    private bool m_switch = false;
 
     public override string ToString()
     {
@@ -33,12 +31,11 @@ namespace SWEndor.AI.Actions
     public override void Process(Engine engine, int actorID)
     {
       ActorInfo actor = engine.ActorFactory.Get(actorID);
-      if (actor.ActorState != ActorState.HYPERSPACE && !m_switch)
+      if (actor.ActorState != ActorState.HYPERSPACE && !Complete)
       {
         prevState = actor.ActorState;
         actor.ActorState = ActorState.HYPERSPACE;
         actor.LookAtPoint(Target_Position);
-        m_switch = true;
       }
 
       //Complete = (owner.ActorState != ActorState.HYPERSPACE);
@@ -51,7 +48,7 @@ namespace SWEndor.AI.Actions
       if (dist <= CloseEnoughDistance || prevdist < dist)
       {
         owner.ActorState = prevState;
-        owner.MoveComponent.Speed = owner.MoveComponent.MaxSpeed;
+        owner.MoveData.Speed = owner.MoveData.MaxSpeed;
         //owner.SetLocalPosition(Target_Position.x, Target_Position.y, Target_Position.z);
         Complete = true;
       }
@@ -64,9 +61,9 @@ namespace SWEndor.AI.Actions
           owner.LookAtPoint(Target_Position);
         }
 
-        owner.MoveComponent.Speed = Min_Speed + dist * SpeedDistanceFactor;
-        if (owner.MoveComponent.Speed > Max_Speed)
-          owner.MoveComponent.Speed = Max_Speed;
+        owner.MoveData.Speed = owner.MoveData.MaxSpeed + dist * SpeedDistanceFactor;
+        if (owner.MoveData.Speed > Max_Speed)
+          owner.MoveData.Speed = Max_Speed;
 
         //AdjustSpeed(owner, owner.MovementInfo.Speed);
 

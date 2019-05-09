@@ -11,24 +11,29 @@ namespace SWEndor.ActorTypes
     NULL = 0,
 
     /// <summary>
+    /// Actor is a munition
+    /// </summary>
+    MUNITION = 0x0001,
+
+    /// <summary>
     /// Actor is a fighter
     /// </summary>
-    FIGHTER = 0x0001,
+    FIGHTER = 0x0002,
 
     /// <summary>
     /// Actor is a large vessel
     /// </summary>
-    SHIP = 0x0002,
+    SHIP = 0x0004,
 
     /// <summary>
     /// Actor is a dedicated add-on to another actor
     /// </summary>
-    ADDON = 0x0004,
+    ADDON = 0x0008,
 
     /// <summary>
     /// Actor is a shield generator
     /// </summary>
-    SHIELDGENERATOR = 0x0008,
+    SHIELDGENERATOR = 0x0010,
 
     /// <summary>
     /// Actor is a 'structure' (think towers)

@@ -19,13 +19,11 @@ namespace SWEndor.UI.Widgets
     {
       TextInfo t1 = Owner.PrimaryText;
       TextInfo t2 = Owner.SecondaryText;
-      int fntID = Font.Factory.Get("Text_12").ID;
+      int fntID = FontFactory.Get(Font.T12).ID;
 
       float letter_width = 4.5f;
-      float t1_opacity = t1.ExpireTime - Engine.Game.GameTime;
-      float t2_opacity = t2.ExpireTime - Engine.Game.GameTime;
-      t1_opacity = t1_opacity.Clamp(0, 1);
-      t2_opacity = t2_opacity.Clamp(0, 1);
+      float t1_opacity = (t1.ExpireTime - Engine.Game.GameTime).Clamp(0, 1);
+      float t2_opacity = (t2.ExpireTime - Engine.Game.GameTime).Clamp(0, 1);
 
       // boxes
       TVScreen2DImmediate.Action_Begin2D();

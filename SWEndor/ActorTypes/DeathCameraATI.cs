@@ -12,22 +12,12 @@ namespace SWEndor.ActorTypes
     internal DeathCameraATI(Factory owner) : base(owner, "Death Camera")
     {
       // Combat
-      IsCombatObject = false;
-      IsSelectable = false;
-      IsDamage = false;
       EnableDistanceCull = false;
-      CollisionEnabled = false;
 
-      NoMove = true;
-      NoRotate = true;
-      NoAI = true;
-      NoRender = true;
-      NoProcess = true;
-
-      SourceMesh = TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = TrueVision.TVGlobals.GetMesh(Name);
       if (SourceMesh == null)
       {
-        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Name);
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);
       }

@@ -12,28 +12,25 @@ namespace SWEndor.Actors
       if (actor == null)
         return;
 
-      if (actor.TypeInfo.NoProcess)
-        return;
-
       if (!actor.ActorState.IsDead())
         actor.Update();
 
       actor.CycleInfo.Process();
 
-      if (actor.Mesh != null)
+      if (engine.MeshDataSet.Mesh_get(id) != null)
       {
         actor.CheckState(engine);
         if (!actor.ActorState.IsDead())
         {
-          if (actor.TypeInfo.CollisionEnabled
-          || actor.TypeInfo is ActorTypes.Group.Projectile)
+          if (engine.MaskDataSet[id].Has(ComponentMask.CAN_BECOLLIDED)
+          || actor.TypeInfo is ActorTypes.Groups.Projectile)
           {
-            actor.CollisionInfo.CheckCollision();
+            CollisionSystem.CheckCollision(engine, id);
           }
-          actor.MoveComponent.Move(actor);
+          actor.MoveComponent.Move(actor, ref actor.MoveData);
         }
       }
-      actor.OnTickEvent(engine, new object[] { actor, actor.ActorState });
+      actor.OnTickEvent();
     }
 
     internal static void ProcessAI(Engine engine, int id)
@@ -42,8 +39,7 @@ namespace SWEndor.Actors
       if (actor == null)
         return;
 
-      if (actor.TypeInfo.NoProcess
-        || actor.TypeInfo.NoAI
+      if (engine.MaskDataSet[id].Has(ComponentMask.HAS_AI)
         || actor.CreationState != CreationState.ACTIVE
         || actor.ActorState.IsDyingOrDead()
         || (IsPlayer(engine, id) && !engine.PlayerInfo.PlayerAIEnabled)
@@ -60,7 +56,7 @@ namespace SWEndor.Actors
       if (actor == null)
         return;
 
-      actor.CollisionInfo.TestCollision();
+      CollisionSystem.TestCollision(engine, id);
     }
 
     internal static void Render(Engine engine, int id)
@@ -69,28 +65,19 @@ namespace SWEndor.Actors
       if (actor == null)
         return;
 
-      if (actor.TypeInfo.NoRender
-        || actor.CreationState != CreationState.ACTIVE)
-      {
-        return;
-      }
-
-      if (!IsAggregateMode(engine, id))
+      if (engine.MaskDataSet[id].Has(ComponentMask.CAN_RENDER)
+        && actor.CreationState == CreationState.ACTIVE
+        && !IsAggregateMode(engine, id))
       {
         if (!IsPlayer(engine, id) || engine.PlayerCameraInfo.CameraMode != CameraMode.FREEROTATION)
         {
           if (!IsFarMode(engine, id))
           {
-            if (actor.Mesh != null && actor.Mesh.IsVisible())
-              actor.Mesh.Render();
-
-            if (actor.ParticleSystem != null)
-              actor.ParticleSystem.Render();
+            MeshSystem.RenderMesh(engine, id);
           }
           else
           {
-            if (actor.FarMesh != null && actor.FarMesh.IsVisible())
-              actor.FarMesh.Render();
+            MeshSystem.RenderFarMesh(engine, id);
           }
         }
       }
@@ -108,7 +95,7 @@ namespace SWEndor.Actors
 
     private void CheckState(Engine engine)
     {
-      CombatInfo.Process();
+      CombatSystem.Process(engine, ID);
       TypeInfo.ProcessState(this);
 
       if (ActorState == ActorState.DEAD)
@@ -119,25 +106,16 @@ namespace SWEndor.Actors
     {
       //PrevPosition = Position;
 
-      if (Mesh == null)
+      if (Engine.MeshDataSet.Mesh_get(ID) == null)
         return;
 
-      TV_3DVECTOR pos = GetPosition();
-      TV_3DVECTOR rot = GetRotation();
-
-      Mesh.SetPosition(pos.x, pos.y, pos.z);
-      Mesh.SetRotation(rot.x, rot.y, rot.z);
-      FarMesh.SetPosition(pos.x, pos.y, pos.z);
-      FarMesh.SetRotation(rot.x, rot.y, rot.z);
-
-      Mesh.SetCollisionEnable(!IsAggregateMode(Engine, ID) && TypeInfo.CollisionEnabled);
-      FarMesh.SetCollisionEnable(false);
+      MeshSystem.Update(Engine, ID);
 
       if (CreationState == CreationState.GENERATED)
         CreationState = CreationState.ACTIVE;
 
-      if (ParticleSystem != null && !IsFarMode(Engine, ID))
-        ParticleSystem.Update();
+      //if (ParticleSystem != null && !IsFarMode(Engine, ID))
+      //  ParticleSystem.Update();
     }
     
   }

@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Player;
 using System.Collections.Generic;
 using System.IO;
 
@@ -13,17 +12,13 @@ namespace SWEndor.ActorTypes.Groups
     internal Explosion(Factory owner, string name): base(owner, name)
     {
       // Combat
-      IsCombatObject = false;
-      IsSelectable = false;
-      IsDamage = false;
       CullDistance = 12500f;
 
       RadarSize = 1;
-      NoMove = true;
-      NoRotate = true;
-      NoAI = true;
+      RadarType = RadarType.FILLED_CIRCLE_M;
 
       IsExplosion = true;
+      Mask = ComponentMask.EXPLOSION;
     }
 
     protected void LoadAlphaTextureFromFolder(string mainPath, string subPath)

@@ -6,10 +6,10 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal EndorATI(Factory owner) : base(owner, "Endor")
     {
-      SourceMesh = TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = TrueVision.TVGlobals.GetMesh(Name);
       if (SourceMesh == null)
       {
-        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Name);
 
         // 1 texture
         string texname = Path.Combine("planets", @"endor.jpg");

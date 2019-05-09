@@ -12,7 +12,7 @@ namespace SWEndor.AI.Actions
     public override void Process(Engine engine, int actorID)
     {
       ActorInfo actor = engine.ActorFactory.Get(actorID);
-      actor.MoveComponent.ResetTurn();
+      actor.MoveData.ResetTurn();
     }
   }
 }

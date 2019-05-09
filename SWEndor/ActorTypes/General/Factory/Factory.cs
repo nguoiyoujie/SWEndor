@@ -76,6 +76,7 @@ namespace SWEndor.ActorTypes
         Register(new CorellianATI(this));
         Register(new NebulonBATI(this));
         Register(new NebulonB2ATI(this));
+        Register(new MCLATI(this));
         Register(new MC90ATI(this));
         Register(new MC80BATI(this));
         Register(new TransportATI(this));
@@ -182,14 +183,14 @@ namespace SWEndor.ActorTypes
           list.Add(atype.Name, atype);
         }
         atype.RegisterModel();
-        Engine.Screen2D.LoadingTextLines.Add(atype.Name + " loaded!");
+        Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
       }
 
       public new ActorTypeInfo Get(string id)
       {
         ActorTypeInfo ret = base.Get(id);
         if (ret == null)
-          throw new Exception("ActorTypeInfo '" + id + "' does not exist");
+          throw new Exception(string.Format("ActorTypeInfo '{0}' does not exist", id));
 
         return ret;
       }

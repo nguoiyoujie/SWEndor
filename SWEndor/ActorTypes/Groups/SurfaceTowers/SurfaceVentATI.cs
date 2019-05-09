@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -17,21 +18,7 @@ namespace SWEndor.ActorTypes.Instances
       Score_perStrength = 50;
       Score_DestroyBonus = 5000;
 
-      NoMove = true;
-      NoRotate = true;
-      NoAI = true;
-
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"surface\surface_vent.x");
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      // Tower Gun
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
-      ainfo.ExplosionInfo.DeathExplosionSize = 5;
     }
 
     public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)

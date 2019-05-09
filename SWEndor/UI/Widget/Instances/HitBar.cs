@@ -36,6 +36,7 @@ namespace SWEndor.UI.Widgets
 
       TVScreen2DImmediate.Action_Begin2D();
       float barlength = Engine.ScreenWidth * 0.75f - 100;
+      float frac = Engine.SysDataSet.StrengthFrac_get(m_target.ID); 
       TV_COLOR tcolor = (m_target.Faction != null) ? m_target.Faction.Color : new TV_COLOR(1, 0.5f, 0, 1);
       TV_COLOR tpcolor = new TV_COLOR(tcolor.r, tcolor.g, tcolor.b, 0.3f);
 
@@ -47,7 +48,7 @@ namespace SWEndor.UI.Widgets
 
       TVScreen2DImmediate.Draw_FilledBox(50
                                         , Engine.ScreenHeight - 25
-                                        , 50 + barlength * m_target.StrengthFrac
+                                        , 50 + barlength * frac
                                         , Engine.ScreenHeight - 20
                                         , tpcolor.GetIntColor());
 
@@ -59,11 +60,11 @@ namespace SWEndor.UI.Widgets
 
       if (prevstrengthfrac == 0)
       {
-        prevstrengthfrac = m_target.StrengthFrac;
+        prevstrengthfrac = frac;
       }
       else
       {
-        prevstrengthfrac = prevstrengthfrac + (m_target.StrengthFrac - prevstrengthfrac) * 0.2f;
+        prevstrengthfrac = prevstrengthfrac + (frac - prevstrengthfrac) * 0.2f;
       }
       TVScreen2DImmediate.Action_End2D();
 
@@ -73,7 +74,7 @@ namespace SWEndor.UI.Widgets
                                         , 65
                                         , Engine.ScreenHeight - 50
                                         , tcolor.GetIntColor()
-                                        , Font.Factory.Get("Text_12").ID);
+                                        , FontFactory.Get(Font.T12).ID);
       TVScreen2DText.Action_EndText();
     }
   }

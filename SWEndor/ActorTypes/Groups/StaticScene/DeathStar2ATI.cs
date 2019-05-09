@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using System.Collections.Generic;
 using System.IO;
@@ -13,15 +14,14 @@ namespace SWEndor.ActorTypes.Instances
 
     internal DeathStar2ATI(Factory owner) : base(owner, "DeathStar2")
     {
-      OnTimedLife = false;
-      TimedLife = 5;
+      ExplodeData = new ExplodeData( deathTrigger: DeathExplosionTrigger.ALWAYS, deathExplosionType: "ExplosionMega");
 
       float size = 20000;
 
-      SourceMesh = TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = TrueVision.TVGlobals.GetMesh(Name);
       if (SourceMesh == null)
       {
-        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Name);
 
         List<int> death = new List<int> { 1, 10, 15, 16, 20, 21, 22, 23, 27, 28, 30, 31, 34, 35, 36 };
         List<int> frames = new List<int>();
@@ -68,30 +68,20 @@ namespace SWEndor.ActorTypes.Instances
       AddOns = new AddOnInfo[] { new AddOnInfo("Death Star Laser Source", new TV_3DVECTOR(-0.13f * size, 0.2f * size, -0.04f * size), new TV_3DVECTOR(0, 0, 0), true) };
     }
 
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionMega";
-      ainfo.ExplosionInfo.DeathExplosionSize = 1;
-    }
-
     public override void ProcessNewState(ActorInfo ainfo)
     {
       base.ProcessNewState(ainfo);
       if (ainfo.ActorState.IsDying())
       {
-        ainfo.CombatInfo.OnTimedLife = true;
-        ainfo.CombatInfo.TimedLife = 5f;
-        ainfo.CombatInfo.IsCombatObject = false;
+        TimedLifeSystem.Activate(Engine, ainfo.ID, 5);
+        CombatSystem.Deactivate(Engine, ainfo.ID);
       }
       else if (ainfo.ActorState.IsDead())
       {
         ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave Mega"));
         acinfo.Position = ainfo.GetPosition();
         ActorInfo explwav = ActorInfo.Create(ActorFactory, acinfo);
-        explwav.Scale = new MTV3D65.TV_3DVECTOR(10, 10, 10);
+        MeshSystem.SetScale(Engine, explwav.ID, 10);
       }
     }
 

@@ -1,9 +1,9 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Weapons;
-using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
@@ -13,12 +13,6 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal BWingATI(Factory owner) : base(owner, "B-Wing")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 45;
       ImpactDamage = 16;
       MaxSpeed = 400;
@@ -28,6 +22,8 @@ namespace SWEndor.ActorTypes.Instances
 
       Score_perStrength = 400;
       Score_DestroyBonus = 2500;
+
+      RegenData = new RegenData { SelfRegenRate = 0.08f };
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"bwing\bwing.x");
       SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"bwing\bwing_far.x");
@@ -57,14 +53,6 @@ namespace SWEndor.ActorTypes.Instances
         new TV_3DVECTOR(0, 0, 2000),
         new TV_3DVECTOR(0, 0, -2000)
       };
-
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
-      ainfo.ExplosionInfo.ExplosionRate = 0.75f;
-      ainfo.ExplosionInfo.ExplosionSize = 1;
-      ainfo.ExplosionInfo.ExplosionType = "Explosion";
-
-      ainfo.RegenerationInfo.SelfRegenRate = 0.08f;
 
       ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("B_WG_TORP") }
                                                                          , {"ion", WeaponFactory.Get("B_WG_ION")}

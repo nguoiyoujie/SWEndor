@@ -1,5 +1,4 @@
 ﻿using MTV3D65;
-using System.Threading;
 
 namespace SWEndor.UI.Menu.Pages
 {

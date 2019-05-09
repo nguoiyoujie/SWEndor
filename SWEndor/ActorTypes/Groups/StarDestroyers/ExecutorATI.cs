@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 
@@ -10,6 +11,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ExecutorATI(Factory owner) : base(owner, "Executor Super Star Destroyer")
     {
+      ExplodeData = new ExplodeData(0.5f, 1, "ExplosionSm", DeathExplosionTrigger.ALWAYS, 5, "ExplosionLg");
+
       MaxStrength = 3500.0f;
       ImpactDamage = 120.0f;
       MaxSpeed = 30;
@@ -18,6 +21,7 @@ namespace SWEndor.ActorTypes.Instances
       MaxTurnRate = 2f;
 
       CullDistance = 60000;
+      Scale = 2.5f;
 
       Score_perStrength = 75;
       Score_DestroyBonus = 100000;
@@ -86,11 +90,7 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.CameraSystemInfo.CamDeathCircleHeight = 600;
       ainfo.CameraSystemInfo.CamDeathCirclePeriod = 40;
 
-      ainfo.ExplosionInfo.DeathExplosionSize = 5;
-
       ainfo.DyingMoveComponent = new DyingSink(0.00025f, 1.3f, 0.2f);
-
-      ainfo.Scale *= 2.5f;
     }
 
     public override void ProcessNewState(ActorInfo ainfo)
@@ -98,9 +98,8 @@ namespace SWEndor.ActorTypes.Instances
       base.ProcessNewState(ainfo);
       if (ainfo.ActorState.IsDying())
       {
-        ainfo.CombatInfo.OnTimedLife = true;
-        ainfo.CombatInfo.TimedLife = 2000f;
-        ainfo.CombatInfo.IsCombatObject = false;
+        TimedLifeSystem.Activate(Engine, ainfo.ID, 2000f);
+        CombatSystem.Deactivate(Engine, ainfo.ID);
       }
     }
   }

@@ -186,7 +186,7 @@ namespace SWEndor.Sound
       m_musicLoop.Position = position_ms;
     }
 
-    public void Process()
+    public void Update()
     {
       InstBase instr;
       while (m_queuedInstructions.TryDequeue(out instr))
@@ -307,6 +307,9 @@ namespace SWEndor.Sound
 
     private string GetDynNext(string currentSound)
     {
+      if (currentSound == null)
+        return null;
+
       Piece p = Piece.Factory.Get(currentSound);
       if (p == null)
         return null;
@@ -319,7 +322,7 @@ namespace SWEndor.Sound
         && p.MoodTransitions[mood] != null
         && p.MoodTransitions[mood].Length > 0)
       {
-        next = p.MoodTransitions[mood][Globals.Engine.Random.Next(0, p.MoodTransitions[mood].Length)];
+        next = p.MoodTransitions[mood][Engine.Random.Next(0, p.MoodTransitions[mood].Length)];
       }
       return next;
     }
@@ -390,12 +393,6 @@ namespace SWEndor.Sound
     public void SetSoundStopAll()
     {
       m_queuedInstructions.Enqueue(new InstStopAllSound());
-    }
-
-
-    public void Update()
-    {
-      Process();
     }
 
     public bool PendingUpdate

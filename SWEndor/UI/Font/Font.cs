@@ -1,29 +1,35 @@
-﻿namespace SWEndor.UI
+﻿using System;
+
+namespace SWEndor.UI
 {
   public partial class Font
   {
-    private static Font Default = new Font("default", "Consolas", 10);
-
-    private Font(string key, string fontname, int size = 10, bool bold = false, bool underlined = false, bool italic = false, bool international = true)
+    [Flags]
+    public enum FontMode : byte
     {
-      Key = key;
-      FontName = fontname;
-      Size = size;
-      Bold = bold;
-      Underlined = underlined;
-      Italic = italic;
-      International = international;
-
-      ID = Globals.Engine.TrueVision.TVScreen2DText.TextureFont_Create(Key, FontName, Size, Bold, Underlined, Italic, International);
+      NONE = 0,
+      BOLD = 0x1,
+      UNDERLINED = 0x2,
+      ITALIC = 0x4,
     }
 
+    private Font(Engine engine
+               , byte key
+               , string fontname
+               , int size = 10
+               , FontMode mode = FontMode.NONE
+               )
+    {
+      ID = engine.TrueVision.TVScreen2DText.TextureFont_Create(key.ToString()
+                                                            , fontname
+                                                            , size
+                                                            , mode.HasFlag(FontMode.BOLD)
+                                                            , mode.HasFlag(FontMode.UNDERLINED)
+                                                            , mode.HasFlag(FontMode.ITALIC)
+                                                            , true);
+    }
+
+    // we actually don't need to store all those setting variables as the created font cannot be changed
     public readonly int ID;
-    public readonly string Key;
-    public readonly string FontName;
-    public readonly int Size;
-    public readonly bool Bold;
-    public readonly bool Underlined;
-    public readonly bool Italic;
-    public readonly bool International;
   }
 }

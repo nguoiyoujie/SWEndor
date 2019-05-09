@@ -65,7 +65,7 @@ namespace SWEndor.UI.Menu.Pages
 
       ButtonChangesComment.Text = "";
       ButtonChangesComment.TextColor = new TV_COLOR(1, 0.5f, 0.2f, 1);
-      ButtonChangesComment.TextFont = Font.Factory.Get("Text_12").ID;
+      ButtonChangesComment.TextFont = FontFactory.Get(Font.T12).ID;
       ButtonChangesComment.TextPosition = new TV_2DVECTOR(x, y);
       y += height_gap;
       //ButtonChangesComment.HighlightBoxPosition = ButtonChangesComment.TextPosition - new TV_2DVECTOR(5, 5);

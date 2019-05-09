@@ -1,9 +1,9 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Weapons;
-using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
@@ -14,10 +14,8 @@ namespace SWEndor.ActorTypes.Instances
     internal FalconATI(Factory owner) : base(owner, "Millennium Falcon")
     {
       // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
+      CombatData = CombatData.DefaultShip;
+      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS);
 
       MaxStrength = 50;
       ImpactDamage = 10;
@@ -29,6 +27,8 @@ namespace SWEndor.ActorTypes.Instances
       AggressiveTracker = true;
       Score_perStrength = 750;
       Score_DestroyBonus = 10000;
+
+      RegenData = new RegenData { SelfRegenRate = 0.1f };
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"falcon\falcon.x");
 
@@ -54,21 +54,13 @@ namespace SWEndor.ActorTypes.Instances
         new TV_3DVECTOR(0, 0, -2000)
       };
 
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
-      ainfo.ExplosionInfo.ExplosionRate = 1;
-      ainfo.ExplosionInfo.ExplosionSize = 1;
-      ainfo.ExplosionInfo.ExplosionType = "Explosion";
 
-      ainfo.RegenerationInfo.SelfRegenRate = 0.08f;
 
       ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", WeaponFactory.Get("FALC_LASR") }
                                                         };
       ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser" };
       ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
       ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:laser" };
-
-      ainfo.CombatInfo.HitWhileDyingLeadsToDeath = false;
     }
   }
 }

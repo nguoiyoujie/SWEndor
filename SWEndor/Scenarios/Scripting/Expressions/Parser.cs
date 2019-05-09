@@ -7,7 +7,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions
 {
   public class Parser
   {
-    public static RegexOptions RegexOption = RegexOptions.Compiled;
+    public static RegexOptions RegexOption = RegexOptions.CultureInvariant;
     public static TokenDefinition[] Definitions =
       new TokenDefinition[]
       {

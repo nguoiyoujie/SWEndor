@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 
@@ -22,6 +23,8 @@ namespace SWEndor.ActorTypes.Instances
       Score_perStrength = 15;
       Score_DestroyBonus = 10000;
 
+      RegenData = new RegenData { SelfRegenRate = 0.25f };
+
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"nebulonb\nebulonb2.x");
 
       SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 1500.0f, new TV_3DVECTOR(0, 100, -300), true) };
@@ -40,8 +43,6 @@ namespace SWEndor.ActorTypes.Instances
       base.Initialize(ainfo);
 
       ainfo.DyingMoveComponent = new DyingSink(0.02f, 5f, 0.8f);
-
-      ainfo.RegenerationInfo.SelfRegenRate = 0.1f;
 
       ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 120, -300) };
       ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 120, 2000) };

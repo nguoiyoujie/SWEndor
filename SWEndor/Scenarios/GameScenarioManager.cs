@@ -116,6 +116,9 @@ namespace SWEndor.Scenarios
 
     public void Update()
     {
+      if (Scenario != null && Scenario.Launched)
+        Scenario.GameTick();
+
       ActorInfo cam = Engine.ActorFactory.Get(SceneCameraID);
       ActorInfo tgt = Engine.ActorFactory.Get(CameraTargetActorID);
       if (cam != null)
@@ -129,10 +132,6 @@ namespace SWEndor.Scenarios
 
       UpdateActorLists(CriticalAllies);
       UpdateActorLists(CriticalEnemies);
-
-      if (Scenario != null
-        && Scenario.Launched)
-        Scenario.GameTick();
 
       GameEventQueue.Process(Engine);
     }
@@ -163,9 +162,9 @@ namespace SWEndor.Scenarios
       //_instance.LoadInitial();
     }
 
-    public void AddEvent(float time, GameEvent gevent, params object[] param)
+    public void AddEvent(float time, GameEvent gevent, GameEventArg garg = null)
     {
-      GameEventQueue.Add(time, gevent, param);
+      GameEventQueue.Add(time, gevent, garg);
     }
 
     public void ClearEvents()

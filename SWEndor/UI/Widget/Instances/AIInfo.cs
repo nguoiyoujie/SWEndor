@@ -94,8 +94,9 @@ namespace SWEndor.UI.Widgets
         {
           targetpos = ((AvoidCollisionRotate)p.CurrentAction).Target_Position;
           TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 0.2f, 0.6f, 1).GetIntColor());
-          targetpos = p.CollisionInfo.ProspectiveCollisionImpact + p.CollisionInfo.ProspectiveCollisionNormal * 250;
-          TVScreen2DImmediate.Draw_Line3D(p.CollisionInfo.ProspectiveCollisionImpact.x, p.CollisionInfo.ProspectiveCollisionImpact.y, p.CollisionInfo.ProspectiveCollisionImpact.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 1, 1, 1).GetIntColor());
+
+          //targetpos = p.CollisionData.ProspectiveCollision.Impact + p.CollisionData.ProspectiveCollision.Normal * 250;
+          //TVScreen2DImmediate.Draw_Line3D(p.CollisionData.ProspectiveCollision.Impact.x, p.CollisionData.ProspectiveCollision.Impact.y, p.CollisionData.ProspectiveCollision.Impact.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 1, 1, 1).GetIntColor());
         }
 
         /*
@@ -120,13 +121,13 @@ namespace SWEndor.UI.Widgets
 
       TVScreen2DText.Action_BeginText();
       TVScreen2DText.TextureFont_DrawText(actiontext
-        , loc.x, loc.y, new TV_COLOR(0.6f, 0.8f, 0.6f, 1).GetIntColor(), Font.Factory.Get("Text_08").ID);
+        , loc.x, loc.y, new TV_COLOR(0.6f, 0.8f, 0.6f, 1).GetIntColor(), FontFactory.Get(Font.T08).ID);
 
       TVScreen2DText.TextureFont_DrawText("AI"
-        , Engine.ScreenWidth / 2 - 75, Engine.ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), Font.Factory.Get("Text_14").ID);
+        , Engine.ScreenWidth / 2 - 75, Engine.ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), FontFactory.Get(Font.T14).ID);
 
       TVScreen2DText.TextureFont_DrawText(name
-        , Engine.ScreenWidth / 2 + 50, Engine.ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), Font.Factory.Get("Text_14").ID);
+        , Engine.ScreenWidth / 2 + 50, Engine.ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), FontFactory.Get(Font.T14).ID);
       TVScreen2DText.Action_EndText();
 
     }

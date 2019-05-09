@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 
@@ -22,6 +23,8 @@ namespace SWEndor.ActorTypes.Instances
 
       CullDistance = 30000;
 
+      RegenData = new RegenData { SelfRegenRate = 0.2f };
+
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"nebulonb\nebulonb.x");
       SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"nebulonb\nebulonb_far.x");
 
@@ -42,7 +45,6 @@ namespace SWEndor.ActorTypes.Instances
 
       ainfo.DyingMoveComponent = new DyingSink(0.02f, 5f, 0.8f);
 
-      ainfo.RegenerationInfo.SelfRegenRate = 0.1f;
 
       ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(66, 78, -480) };
       ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 75, 2000) };

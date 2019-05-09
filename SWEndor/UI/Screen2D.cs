@@ -47,6 +47,7 @@ namespace SWEndor
       m_Widgets.Add(new HitBar(this));
 
       m_Widgets.Add(new Radar(this));
+      m_Widgets.Add(new LargeShipSystems(this));
 
       //m_Widgets.Add(new UIWidget_Score(this)); // Disabled
       m_Widgets.Add(new AIInfo(this));
@@ -75,7 +76,6 @@ namespace SWEndor
       foreach (Widget w in m_Widgets.GetList())
       {
         if (w != null && w.Visible)
-          using (new PerfElement("render_" + w.Name))
             w.Draw();
       }
     }

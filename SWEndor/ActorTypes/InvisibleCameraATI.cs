@@ -4,17 +4,10 @@
   {
     internal InvisibleCameraATI(Factory owner) : base(owner, "Invisible Camera")
     {
-      // Combat
-      IsCombatObject = false;
-      IsSelectable = false;
-      IsDamage = false;
-      EnableDistanceCull = false;
-      CollisionEnabled = false;
-
-      SourceMesh = TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = TrueVision.TVGlobals.GetMesh(Name);
       if (SourceMesh == null)
       {
-        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Name);
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);
       }

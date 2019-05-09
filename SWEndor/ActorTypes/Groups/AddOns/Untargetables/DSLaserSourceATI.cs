@@ -1,7 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.AI.Actions;
 using SWEndor.Weapons;
-using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 
 namespace SWEndor.ActorTypes.Instances
@@ -10,19 +9,15 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal DSLaserSourceATI(Factory owner) : base(owner, "Death Star Laser Source")
     {
-      // Combat
-      IsCombatObject = false;
-      IsSelectable = false;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 1500.0f;
       ImpactDamage = 4000.0f;
 
       EnableDistanceCull = false;
-      CullDistance = 40000;
 
       TargetType = TargetType.NULL;
+      RadarType = RadarType.NULL;
+
+      Mask &= ~(ComponentMask.CAN_BECOLLIDED | ComponentMask.CAN_BETARGETED);
     }
 
     public override void Initialize(ActorInfo ainfo)

@@ -1,5 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using System;
 
 namespace SWEndor.ActorTypes.Instances
@@ -9,19 +11,15 @@ namespace SWEndor.ActorTypes.Instances
     internal ElectroATI(Factory owner) : base(owner, "Electro")
     {
       // Combat
-      OnTimedLife = true;
-      TimedLife = 0.5f;
-      IsCombatObject = false;
-      IsSelectable = false;
-      IsDamage = false;
-      CollisionEnabled = false;
+      TimedLifeData = new TimedLifeData(true, 0.5f);
+
       RadarSize = 0;
 
-      SourceMesh = TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = TrueVision.TVGlobals.GetMesh(Name);
       if (SourceMesh == null)
       {
         LoadAlphaTextureFromFolder(Globals.ImagePath, "electro");
-        SourceMesh = TrueVision.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 40, 40, Key, true);
+        SourceMesh = TrueVision.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 40, 40, Name, true);
         SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
         SourceMesh.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
 
@@ -33,7 +31,15 @@ namespace SWEndor.ActorTypes.Instances
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-      ainfo.CycleInfo.Action = new Action(() => { ainfo.ActorState = ActorState.NORMAL; ainfo.CombatInfo.TimedLife = TimedLife; });
+      ainfo.CycleInfo.Action = new Action(
+        () => 
+        {
+          ainfo.ActorState = ActorState.NORMAL;
+          //ainfo.CombatSystem.onNotify(Engine, ainfo.ID, CombatEventType.TIMEACTIVATE , TimedLifeData.TimedLife);
+          TimedLifeSystem.Activate(Engine, ainfo.ID, TimedLifeData.TimedLife);
+        }
+        );
+
       ainfo.CycleInfo.CyclesRemaining = 99;
       ainfo.CycleInfo.CyclePeriod = 0.25f;
     }

@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Data;
 using SWEndor.ActorTypes;
 using System;
 using System.Collections.Generic;
@@ -40,51 +41,15 @@ namespace SWEndor.Player
     public ActorInfo TempActor { get { return Engine.ActorFactory.Get(TempActorID); } }
     
     private float m_LowAlarmSoundTime = 0;
-    public float StrengthFrac
-    {
-      get
-      {
-        if (Actor != null)
-        {
-          float frac = Actor.CombatInfo.Strength / Actor.TypeInfo.MaxStrength;
-          if (frac <= 0)
-            frac = 0;
-          else if (frac < 0.1f)
-          {
-            if (m_LowAlarmSoundTime < Globals.Engine.Game.GameTime)
-            {
-              Globals.Engine.SoundManager.SetSound("shieldlow");
-              m_LowAlarmSoundTime = Globals.Engine.Game.GameTime + 0.5f;
-            }
-          }
-          return frac;
-        }
-        else
-          return 0;
-      }
-    }
-
-    public TV_COLOR HealthColor
-    {
-      get
-      {
-        double quad = 1.6708;
-        float sr = StrengthFrac;
-        float r = (float)Math.Cos(sr * quad);
-        float g = (float)Math.Sin(sr * quad);
-        float b = 0;
-        if (r < 0) r = 0;
-        if (g < 0) g = 0;
-        if (b < 0) b = 0;
-        return new TV_COLOR(r, g, b, 1);
-      }
-    }
+    public float StrengthFrac { get { return (Actor != null) ? Engine.SysDataSet.StrengthFrac_get(ActorID) : 0; } }
+    public TV_COLOR StrengthColor { get { return (Actor != null) ? Engine.SysDataSet.StrengthColor_get(ActorID) : new TV_COLOR(1, 1, 1, 1); } }
 
     public int Lives = 3;
     public float ScorePerLife = 50000;
     public float ScoreForNextLife = 50000;
 
     // should set as configurable?
+    public string StrengthLowSound = "shieldlow";
     public string[] DamagedReportSound = new string[] { }; // "r25", "r24", "r23", "r22", "r21", "r20" };
 
     // weapons
@@ -98,27 +63,38 @@ namespace SWEndor.Player
     public void Update()
     {
       UpdatePosition();
-      UpdateScoreToLives();
+      UpdateStats();
       UpdateBounds();
     }
 
-    public void UpdatePosition()
+    private void UpdatePosition()
     {
       if (Actor != null)
         Position = Actor.GetPosition();
     }
 
-    public void UpdateScoreToLives()
+    private void UpdateStats()
     {
+      // score
       while (Score.Score > ScoreForNextLife)
       {
         Lives++;
         ScoreForNextLife += ScorePerLife;
-        Globals.Engine.SoundManager.SetSound("button_4");
+        Engine.SoundManager.SetSound("button_4");
+      }
+
+      // this should be moved elsewhere
+      if (StrengthFrac > 0 && StrengthFrac < 0.1f)
+      {
+        if (m_LowAlarmSoundTime < Engine.Game.GameTime)
+        {
+          Engine.SoundManager.SetSound("shieldlow");
+          m_LowAlarmSoundTime = Engine.Game.GameTime + 0.5f;
+        }
       }
     }
 
-    public void UpdateBounds()
+    private void UpdateBounds()
     {
       bool announceOutOfBounds = false;
       if (Actor != null && !(Actor.TypeInfo is InvisibleCameraATI) && !(Actor.TypeInfo is DeathCameraATI))
@@ -153,7 +129,7 @@ namespace SWEndor.Player
         }
 
         if (announceOutOfBounds)
-          Globals.Engine.Screen2D.MessageText("You are going out of bounds! Return to the battle!", 5, new TV_COLOR(1, 1, 1, 1), 99);
+          Engine.Screen2D.MessageText("You are going out of bounds! Return to the battle!", 5, new TV_COLOR(1, 1, 1, 1), 99);
       }
     }
 
@@ -163,8 +139,8 @@ namespace SWEndor.Player
         return;
       if (IsMovementControlsEnabled && !PlayerAIEnabled && Actor != null)
       {
-        Actor.MoveComponent.Speed += frac * Actor.TypeInfo.MaxSpeedChangeRate * Globals.Engine.Game.TimeSinceRender;
-        Actor.MoveComponent.Speed = Actor.MoveComponent.Speed.Clamp(Actor.MoveComponent.MinSpeed, Actor.MoveComponent.MaxSpeed);
+        Actor.MoveData.Speed += frac * Actor.TypeInfo.MaxSpeedChangeRate * Engine.Game.TimeSinceRender;
+        Actor.MoveData.Speed = Actor.MoveData.Speed.Clamp(Actor.MoveData.MinSpeed, Actor.MoveData.MaxSpeed);
       }
     }
 
@@ -254,18 +230,18 @@ namespace SWEndor.Player
     {
       if (Actor.TypeInfo is ActorTypes.Groups.Fighter)
       {
-        Globals.Engine.SoundManager.SetSound("hit");
-        Globals.Engine.TrueVision.TVGraphicEffect.Flash(color.r, color.g, color.b, 200);
+        Engine.SoundManager.SetSound("hit");
+        Engine.TrueVision.TVGraphicEffect.Flash(color.r, color.g, color.b, 200);
 
-        if (Actor.CombatInfo.Strength > 0 && DamagedReportSound != null && DamagedReportSound.Length > 0)
+        if (Engine.SysDataSet.Strength_get(ActorID) > 0 && DamagedReportSound != null && DamagedReportSound.Length > 0)
         {
-          double r = Globals.Engine.Random.NextDouble();
+          double r = Engine.Random.NextDouble();
           int dmgnum = DamagedReportSound.Length;
 
-          int dmgst = (int)(Actor.CombatInfo.Strength * (dmgnum + 1) / Actor.CombatInfo.MaxStrength);
+          int dmgst = (int)((dmgnum + 1) * Engine.SysDataSet.StrengthFrac_get(ActorID));
           if (dmgst < DamagedReportSound.Length)
             if (r < 0.25f * (dmgnum - dmgst) / dmgnum)
-              Globals.Engine.SoundManager.SetSound(DamagedReportSound[dmgst], false);
+              Engine.SoundManager.SetSound(DamagedReportSound[dmgst], false);
         }
       }
     }

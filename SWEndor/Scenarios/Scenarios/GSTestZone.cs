@@ -11,7 +11,7 @@ namespace SWEndor.Scenarios
   {
     public GSTestZone(GameScenarioManager manager) : base(manager)
     {
-      Name = "Test Zone";
+      Name = "Tower Test Zone";
       AllowedWings = new List<ActorTypeInfo> { Engine.ActorTypeFactory.Get("Advanced Turbolaser Tower")
                                              , Engine.ActorTypeFactory.Get("Deflector Tower")
                                              , Engine.ActorTypeFactory.Get("Gun Tower")
@@ -46,7 +46,7 @@ namespace SWEndor.Scenarios
 
       Manager.AddEvent(Game.GameTime + 0.1f, Test_SpawnPlayer);
       Manager.AddEvent(Game.GameTime + 0.1f, Test_Towers01);
-      Manager.AddEvent(Game.GameTime + 5f, Empire_TIEWave_02);
+      Manager.AddEvent(Game.GameTime + 5f, Test_EnemyWave);
 
       PlayerInfo.Lives = 2;
       PlayerInfo.ScorePerLife = 1000000;
@@ -88,7 +88,7 @@ namespace SWEndor.Scenarios
           StageNumber = 1;
 
         if (MainEnemyFaction.Wings.Count < 10)
-          Manager.AddEvent(Game.GameTime, Empire_TIEWave_02);
+          Manager.AddEvent(Game.GameTime, Test_EnemyWave);
 
       //}
     }
@@ -99,7 +99,7 @@ namespace SWEndor.Scenarios
 
     #region Test events
     
-    public void Test_SpawnPlayer(params object[] param)
+    public void Test_SpawnPlayer(GameEventArg arg)
     {
       PlayerInfo.ActorID = PlayerInfo.TempActorID;
 
@@ -130,13 +130,13 @@ namespace SWEndor.Scenarios
       PlayerInfo.IsMovementControlsEnabled = true;
     }
 
-    public void Test_GiveControl(params object[] param)
+    public void Test_GiveControl(GameEventArg arg)
     {
       PlayerInfo.IsMovementControlsEnabled = true;
       Manager.SetGameStateB("in_battle", true);
     }
 
-    public void Test_Towers01(params object[] param)
+    public void Test_Towers01(GameEventArg arg)
     {
       List<ActorTypeInfo> towers = new List<ActorTypeInfo> { Engine.ActorTypeFactory.Get("Advanced Turbolaser Tower")
                                              , Engine.ActorTypeFactory.Get("Deflector Tower")
@@ -163,41 +163,30 @@ namespace SWEndor.Scenarios
     }
     #endregion
 
-    public void Empire_TIEWave_02(params object[] param)
+    public void Test_EnemyWave(GameEventArg arg)
     {
-      int sets = 3;
-      if (param != null && param.GetLength(0) >= 1 && !int.TryParse(param[0].ToString(), out sets))
-        sets = 3;
+      GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -500, Manager.MaxBounds.z + 1500), new TV_3DVECTOR(2500, 500, Manager.MaxBounds.z + 1500));
+      GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
+                                                                          , ActorTypeFactory.Get("Z-95")
+                                                                          , MainEnemyFaction
+                                                                          , 3
+                                                                          , 18
+                                                                          , TargetType.FIGHTER
+                                                                          , true
+                                                                          , GSFunctions.SquadFormation.VSHAPE
+                                                                          , new TV_3DVECTOR(0, 180, 0)
+                                                                          , 400
+                                                                          , null);
 
-      // TIEs
-      ActorTypeInfo[] tietypes = new ActorTypeInfo[] { Engine.ActorTypeFactory.Get("X-Wing"), Engine.ActorTypeFactory.Get("A-Wing") };
-      float t = 0;
-      for (int k = 1; k < sets; k++)
-      {
-        float fx = Engine.Random.Next(-2500, 2500);
-        float fy = Engine.Random.Next(-500, 500);
-
-        int n = Engine.Random.Next(0, tietypes.Length);
-        for (int x = 0; x <= 1; x++)
-        {
-          for (int y = 0; y <= 1; y++)
-          {
-            ActorInfo ainfo = new ActorSpawnInfo
-            {
-              Type = tietypes[n],
-              Name = "",
-              RegisterName = "",
-              SidebarName = "",
-              SpawnTime = Game.GameTime + t,
-              Faction = MainEnemyFaction,
-              Position = new TV_3DVECTOR(fx + x * 100, fy + y * 100, Manager.MaxBounds.z + 1500),
-              Rotation = new TV_3DVECTOR(0, 180, 0)
-            }.Spawn(this);
-          }
-        }
-        t += 1.5f;
-      }
-      //Manager.AddEvent(Game.GameTime + 30f, "Empire_TIEWave_02");
+      GSFunctions.MultipleSquadron_Spawn(Engine, this, 2, box, 1.5f, spawninfo);
+      spawninfo.TypeInfo = ActorTypeFactory.Get("X-Wing");
+      GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
+      spawninfo.TypeInfo = ActorTypeFactory.Get("Y-Wing");
+      GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
+      spawninfo.TypeInfo = ActorTypeFactory.Get("A-Wing");
+      GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
+      spawninfo.TypeInfo = ActorTypeFactory.Get("B-Wing");
+      GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
     }
   }
 }

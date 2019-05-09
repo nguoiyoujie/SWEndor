@@ -56,7 +56,7 @@ namespace SWEndor.UI.Widgets
 
         if (m_target.CreationState != CreationState.ACTIVE
         || m_target.ActorState.IsDyingOrDead()
-        || !m_target.CombatInfo.IsCombatObject
+        || !Engine.ActorDataSet.CombatData[m_target.dataID].IsCombatObject
         || dist > 7500
         || Math.Abs(x - Engine.ScreenWidth / 2) > limit
         || Math.Abs(y - Engine.ScreenHeight / 2) > limit
@@ -105,10 +105,9 @@ namespace SWEndor.UI.Widgets
           TVScreen2DText.Action_BeginText();
           TVScreen2DText.TextureFont_DrawText(string.Format("{0}\nDamage: {1:0}%"
             , name
-            , (int)(100 * (1 - m_target.StrengthFrac))
-            )
+            , (int)(100 * (1 - Engine.SysDataSet.StrengthFrac_get(m_target.dataID))))
             , x, y + m_targetSize + 10, acolor.GetIntColor()
-            , Font.Factory.Get("Text_10").ID
+            , FontFactory.Get(Font.T10).ID
             );
           TVScreen2DText.Action_EndText();
 
@@ -119,7 +118,7 @@ namespace SWEndor.UI.Widgets
             // Targeting cross
             // Anticipate
             float d = dist / Globals.LaserSpeed; // Laser Speed
-            TV_3DVECTOR target = m_target.GetRelativePositionXYZ(0, 0, m_target.MoveComponent.Speed * d);
+            TV_3DVECTOR target = m_target.GetRelativePositionXYZ(0, 0, m_target.MoveData.Speed * d);
             TVScreen2DImmediate.Math_3DPointTo2D(target, ref x, ref y);
 
             TVScreen2DImmediate.Action_Begin2D();
@@ -150,7 +149,7 @@ namespace SWEndor.UI.Widgets
               && a.CreationState == CreationState.ACTIVE
               && a.ActorState != ActorState.DYING
               && a.ActorState != ActorState.DEAD
-              && a.TypeInfo.IsSelectable
+              && Engine.MaskDataSet[actorID].Has(ComponentMask.CAN_BETARGETED)
               && (pick_allies || !p.Faction.IsAlliedWith(a.Faction))
               && PlayerCameraInfo.Camera.IsPointVisible(a.GetPosition())
               )

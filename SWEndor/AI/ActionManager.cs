@@ -140,8 +140,6 @@ namespace SWEndor.AI
         }
         else
         {
-          using (new PerfElement("action_" + action.Name))
-          {
             if (action.Complete)
             {
               if (action.NextAction == null)
@@ -159,7 +157,6 @@ namespace SWEndor.AI
               action.Process(Engine, actor.ID);
             }
           }
-        }
       }
     }
   }

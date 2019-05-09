@@ -4,11 +4,8 @@ using SWEndor.Actors.Data;
 using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
-using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using SWEndor.Sound;
-using SWEndor.Weapons;
-using System.Collections.Generic;
 
 namespace SWEndor.Actors
 {
@@ -23,6 +20,8 @@ namespace SWEndor.Actors
     public Game Game { get { return Engine.Game; } }
     public GameScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
     public TrueVision TrueVision { get { return Engine.TrueVision; } }
+
+    public ActorDataSet ActorDataSet { get { return Engine.ActorDataSet; } }
     public ActorTypeInfo.Factory ActorTypeFactory { get { return Engine.ActorTypeFactory; } }
     public LandInfo LandInfo { get { return Engine.LandInfo; } }
     public AtmosphereInfo AtmosphereInfo { get { return Engine.AtmosphereInfo; } }
@@ -38,6 +37,7 @@ namespace SWEndor.Actors
     public string Name { get { return _name; } }
     public string SideBarName { get { return (sidebar_name.Length == 0) ? _name : sidebar_name; } set { sidebar_name = value; } }
     public int ID { get; private set; }
+    public int dataID { get { return ID % Globals.ActorLimit; } }
     public string Key { get { return _name + " " + ID; } }
 
     public override string ToString()
@@ -74,28 +74,22 @@ namespace SWEndor.Actors
     }
 
     // Components
-    public CombatInfo CombatInfo;
-
     public IMoveComponent MoveComponent;
     public IDyingMoveComponent DyingMoveComponent;
 
     public CycleInfo CycleInfo;
     public WeaponSystemInfo WeaponSystemInfo;
-    public RegenerationInfo RegenerationInfo;
-    public ExplosionInfo ExplosionInfo;
-    public CollisionInfo CollisionInfo;
     public CameraSystemInfo CameraSystemInfo;
 
     // Checks
     public bool EnteredCombatZone = false;
 
     // Delegate Events
-    // plan to make them true delegates instead of string
-    public GameEvent TickEvents;
-    public GameEvent CreatedEvents;
-    public GameEvent DestroyedEvents;
-    public GameEvent ActorStateChangeEvents;
-    public GameEvent HitEvents;
+    public ActorEvent TickEvents;
+    public ActorEvent CreatedEvents;
+    public ActorEvent DestroyedEvents;
+    public ActorStateChangeEvent ActorStateChangeEvents;
+    public HitEvent HitEvents;
 
     // AI
     public ActionInfo CurrentAction = null;
@@ -120,36 +114,27 @@ namespace SWEndor.Actors
       }
     }
 
-    private TV_3DVECTOR m_Scale;
-    public TV_3DVECTOR Scale
-    {
-      get { return m_Scale; }
-      set
-      {
-        if (!m_Scale.Equals(value))
-        {
-          Mesh?.SetScale(Scale.x, Scale.y, Scale.z);
-          FarMesh?.SetScale(Scale.x, Scale.y, Scale.z);
-          m_Scale = value;
-        }
-      }
-    }
-
+    // Data
     public CoordData CoordData;
+    public MoveData MoveData;
+    //public MeshData MeshData;
+    //public ExplodeData ExplodeData;
+    //public CombatData CombatData;
+    //public TimedLifeData TimedLifeData;
 
-    // Render
-    public TVMesh Mesh { get; private set; }
-    public TVMesh FarMesh { get; private set; }
-    public bool AttachToParent = false;
+    //public SysData SysData; //strength of systems
+    //public WeapData WeapData;
+    //public OwnerData OwnerData;
 
     // Particle system
-    public int ParticleEmitterID = -1;
-    public TVParticleSystem ParticleSystem = null;
+    //public int ParticleEmitterID = -1;
+    //public TVParticleSystem ParticleSystem = null;
 
     // Ownership
     public int PrevID = -1;
     public int NextID = -1;
     public int ParentID = -1;
+    public bool AttachToParent = false;
     public int PrevSiblingID = -1;
     public int NextSiblingID = -1;
     public int FirstChildID = -1;
@@ -166,34 +151,37 @@ namespace SWEndor.Actors
       TypeInfo = acinfo.ActorTypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
 
-      // Components
-      CombatInfo = new CombatInfo(this);
+      // Init data before components
+      CoordData.Init(acinfo);
+      //ActorDataSet.CoordData[dataID].Init(acinfo);
 
-      MoveComponent = MoveDecorator.Create(this, TypeInfo, acinfo);
+      MoveData.Init(TypeInfo, acinfo);
+      Engine.SysDataSet.Init(ID, TypeInfo, acinfo);
+      Engine.MeshDataSet.Init(ID, TypeInfo, acinfo);
+      ActorDataSet.CollisionData[dataID].Init();
+      ActorDataSet.ExplodeData[dataID].CopyFrom(TypeInfo.ExplodeData);
+      ActorDataSet.RegenData[dataID].CopyFrom(TypeInfo.RegenData);
+      ActorDataSet.CombatData[dataID].CopyFrom(TypeInfo.CombatData);
+      Engine.TimedLifeDataSet.Init(ID, TypeInfo);
+
+      Engine.MaskDataSet[ID] = TypeInfo.Mask; 
+
+      // Components
+      MoveComponent = MoveDecorator.Create(TypeInfo);
 
       CycleInfo = new CycleInfo(this, null);
 
       WeaponSystemInfo = new WeaponSystemInfo(this);
-      RegenerationInfo = new RegenerationInfo(this);
-      ExplosionInfo = new ExplosionInfo(this);
-      CollisionInfo = new CollisionInfo(this);
       CameraSystemInfo = new CameraSystemInfo(this);
 
-      CoordData.Init(); // = new CoordData();
       
       // Creation
       CreationState = CreationState.PLANNED;
       CreationTime = acinfo.CreationTime;
 
-      // Combat
-      CombatInfo.onNotify(CombatEventType.SET_STRENGTH, (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : TypeInfo.MaxStrength);
 
       Faction = acinfo.Faction;
       ActorState = acinfo.InitialState;
-      CoordData.Position = acinfo.Position;
-      CoordData.Rotation = acinfo.Rotation;
-      Scale = acinfo.InitialScale;
-      //PrevPosition = Position;
 
       HuntWeight = TypeInfo.HuntWeight;
 
@@ -208,21 +196,28 @@ namespace SWEndor.Actors
       TypeInfo = acinfo.ActorTypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
 
+
+      // Init data before components
+      CoordData.Init(acinfo);
+      MoveData.Init(TypeInfo, acinfo);
+      Engine.SysDataSet.Init(ID, TypeInfo, acinfo);
+      Engine.MeshDataSet.Init(ID, TypeInfo, acinfo);
+      ActorDataSet.CollisionData[dataID].Init();
+      ActorDataSet.ExplodeData[dataID] = TypeInfo.ExplodeData;
+      ActorDataSet.RegenData[dataID] = TypeInfo.RegenData;
+      ActorDataSet.CombatData[dataID] = TypeInfo.CombatData;
+      Engine.TimedLifeDataSet.Init(ID, TypeInfo);
+
+      Engine.MaskDataSet[ID] = TypeInfo.Mask;
+
       // Creation
       CreationState = CreationState.PLANNED;
       CreationTime = acinfo.CreationTime;
 
-      // Combat
-      CombatInfo.onNotify(CombatEventType.SET_STRENGTH, (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : TypeInfo.MaxStrength);
-
       Faction = acinfo.Faction;
       ActorState = acinfo.InitialState;
-      CoordData.Position = acinfo.Position;
-      CoordData.Rotation = acinfo.Rotation;
-      Scale = acinfo.InitialScale;
-      //PrevPosition = Position;
 
-      MoveComponent = MoveDecorator.Create(this, TypeInfo, acinfo);
+      MoveComponent = MoveDecorator.Create(TypeInfo);
 
       HuntWeight = TypeInfo.HuntWeight;
       TypeInfo.Initialize(this);
@@ -230,28 +225,11 @@ namespace SWEndor.Actors
 
     public void Generate()
     {
-      Mesh = TypeInfo.GenerateMesh();
-      FarMesh = TypeInfo.GenerateFarMesh();
-
-      Mesh.SetScale(Scale.x, Scale.y, Scale.z);
-      Mesh.SetMeshName(ID.ToString());
-      Mesh.SetTag(ID.ToString());
-      Mesh.ComputeBoundings();
-      //Mesh.ShowBoundingBox(true);
-
-      FarMesh.SetScale(Scale.x, Scale.y, Scale.z);
-      FarMesh.SetMeshName(ID.ToString());
-      FarMesh.SetTag(ID.ToString());
-      FarMesh.ComputeBoundings();
-
-      Mesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 8);
-      FarMesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 8);
-      Mesh.Enable(true);
-      FarMesh.Enable(true);
+      Engine.MeshDataSet.Mesh_generate(ID, TypeInfo);
 
       CreationState = CreationState.GENERATED;
       Update();
-      OnCreatedEvent(Engine, new object[] { this });
+      OnCreatedEvent();
 
       TypeInfo.GenerateAddOns(this);
     }
@@ -319,11 +297,8 @@ namespace SWEndor.Actors
 
     public TV_3DVECTOR GetRotation()
     {
-      //if (WorldRotation.Time >= Game.GameTime)
-      //  return WorldRotation.Value;
-
       ActorInfo a = AttachToParent ? ActorFactory.Get(ParentID) : null;
-      if (a != null && a.Mesh != null)
+      if (a != null && Engine.MeshDataSet.Mesh_get(ParentID) != null)
       {
         TVMathLibrary mathl = TrueVision.TVMathLibrary;
         //TV_3DVECTOR aret = a.GetRotation();
@@ -339,7 +314,7 @@ namespace SWEndor.Actors
         TV_3DVECTOR front = new TV_3DVECTOR();
         TV_3DVECTOR up = new TV_3DVECTOR();
         TV_3DVECTOR right = new TV_3DVECTOR();
-        a.Mesh.GetBasisVectors(ref front, ref up, ref right);
+        Engine.MeshDataSet.Mesh_get(ParentID).GetBasisVectors(ref front, ref up, ref right);
 
         mathl.TVMatrixRotationAxis(ref ymat, up, CoordData.Rotation.y);
         mathl.TVMatrixRotationAxis(ref xmat, right, CoordData.Rotation.x);
@@ -353,14 +328,10 @@ namespace SWEndor.Actors
         mathl.TVVec3TransformCoord(ref rdir, dir, pyxzmat);
         TV_3DVECTOR rot = Utilities.GetRotation(rdir);
 
-        //WorldRotation.Value = rot;
-        //WorldRotation.Time = Game.GameTime;
         return rot;
       }
       else
       {
-        //WorldRotation.Value = Rotation;
-        //WorldRotation.Time = Game.GameTime;
         return CoordData.Rotation;
       }
     }
@@ -489,7 +460,7 @@ namespace SWEndor.Actors
 
     public float GetTrueSpeed()
     {
-      float ret = MoveComponent.Speed;
+      float ret = MoveData.Speed;
       ActorInfo a = AttachToParent ? ActorFactory.Get(ParentID) : null;
       if (a != null)
         ret += a.GetTrueSpeed();
@@ -589,11 +560,11 @@ namespace SWEndor.Actors
     #endregion
 
     #region Event Methods
-    public void OnTickEvent(params object[] param) { TickEvents?.Invoke(ID); }
-    public void OnHitEvent(int victimID) { HitEvents?.Invoke(ID, victimID); }
-    public void OnStateChangeEvent(params object[] param) { ActorStateChangeEvents?.Invoke(ID, ActorState); }
-    public void OnCreatedEvent(params object[] param) { CreatedEvents?.Invoke(ID); }
-    public void OnDestroyedEvent(params object[] param) { DestroyedEvents?.Invoke(ID); }
+    public void OnTickEvent() { TickEvents?.Invoke(new ActorEventArg(ID)); }
+    public void OnHitEvent(int victimID) { HitEvents?.Invoke(new HitEventArg(ID, victimID)); }
+    public void OnStateChangeEvent() { ActorStateChangeEvents?.Invoke(new ActorStateChangeEventArg(ID, ActorState)); }
+    public void OnCreatedEvent() { CreatedEvents?.Invoke(new ActorEventArg(ID)); }
+    public void OnDestroyedEvent() { DestroyedEvents?.Invoke(new ActorEventArg(ID)); }
 
     #endregion
 
@@ -653,8 +624,6 @@ namespace SWEndor.Actors
       return IsPlayer(engine, id) || engine.PlayerInfo.TempActor?.ID == id;
     }
 
-    public float StrengthFrac { get { return (CombatInfo.Strength / CombatInfo.MaxStrength).Clamp(0, 1); } }
-
     public static void Kill(Engine engine, int id)
     {
       ActorInfo actor = engine.ActorFactory.Get(id);
@@ -679,40 +648,27 @@ namespace SWEndor.Actors
           RemoveChild(i);
       }
 
-      // Mesh
-      if (Mesh != null)
-        Mesh.Destroy();
-      Mesh = null;
-
-      if (FarMesh != null)
-        FarMesh.Destroy();
-      FarMesh = null;
-
       AttachToParent = false;
 
       // Particle System
-      if (ParticleSystem != null)
-        ParticleSystem.Destroy();
-      ParticleSystem = null;
+      //if (ParticleSystem != null)
+      //  ParticleSystem.Destroy();
+      //ParticleSystem = null;
 
       // Actions
       CurrentAction = null;
       //ActionManager.ClearQueue(this);
 
       // Reset components
-      CombatInfo.Reset();
 
       MoveComponent = NoMove.Instance;
       DyingMoveComponent = null;
 
       CycleInfo.Reset();
-      RegenerationInfo.Reset();
-      ExplosionInfo.Reset();
       WeaponSystemInfo.Reset();
-      CollisionInfo.Reset();
 
       // Events
-      OnDestroyedEvent(Engine, new object[] { this, ActorState });
+      OnDestroyedEvent();
       CreatedEvents = null;
       DestroyedEvents = null;
       TickEvents = null;
@@ -731,6 +687,15 @@ namespace SWEndor.Actors
 
       // Kill data
       CoordData.Reset();
+      //ActorDataSet.CoordData[dataID].Reset();
+      MoveData.Reset();
+      Engine.SysDataSet.Reset(ID);
+      Engine.MeshDataSet.Reset(ID);
+      ActorDataSet.CollisionData[dataID].Reset();
+      ActorDataSet.RegenData[dataID].Reset();
+      ActorDataSet.ExplodeData[dataID].Reset();
+      ActorDataSet.CombatData[dataID].Reset();
+      Engine.TimedLifeDataSet.Reset(ID);
 
       // Finally
       CreationState = CreationState.DISPOSED;

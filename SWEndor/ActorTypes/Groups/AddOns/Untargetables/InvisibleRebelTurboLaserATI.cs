@@ -1,6 +1,5 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Weapons;
-using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 
 namespace SWEndor.ActorTypes.Instances
@@ -9,14 +8,11 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal InvisibleRebelTurboLaserATI(Factory owner) : base(owner, "Invisible Rebel Turbo Laser")
     {
-      // Combat
-      IsCombatObject = false;
-      IsSelectable = false;
-      IsDamage = false;
-      CollisionEnabled = true;
       RadarSize = 0;
 
       TargetType = TargetType.NULL;
+
+      Mask &= ~(ComponentMask.CAN_BECOLLIDED | ComponentMask.CAN_BETARGETED);
     }
 
     public override void Initialize(ActorInfo ainfo)

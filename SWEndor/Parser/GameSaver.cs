@@ -1,10 +1,4 @@
-﻿using System.Text;
-using System.IO;
-using MTV3D65;
-using SWEndor.Actors;
-using SWEndor.UI;
-
-namespace SWEndor
+﻿namespace SWEndor
 {
   /*
   public static class GameSaver
@@ -68,7 +62,7 @@ namespace SWEndor
                                                           , Globals.Engine.ScreenWidth / 2 - 60
                                                           , Globals.Engine.ScreenWidth / 2 - 10
                                                           , new TV_COLOR(0.5f, 0.5f, 0.5f, 1f).GetIntColor()
-                                                          , Font.Factory.Get("Text_14").ID
+                                                          , FontFactory.Get(Font.T14).ID
       );
       Globals.Engine.TrueVision.TVScreen2DText.Action_EndText();
 

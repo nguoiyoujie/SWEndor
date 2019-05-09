@@ -94,37 +94,48 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actors\ActorCreationInfo.cs" />
+    <Compile Include="Actors\Components\TimedLifeSystem.cs" />
+    <Compile Include="Actors\Components\MeshSystem.cs" />
     <Compile Include="Actors\Components\DyingMovement\DyingSpin.cs" />
     <Compile Include="Actors\Components\DyingMovement\DyingSink.cs" />
     <Compile Include="Actors\Components\DyingMovement\DyingKill.cs" />
     <Compile Include="Actors\Components\DyingMovement\Interfaces.cs" />
     <Compile Include="Actors\Components\Movement\MoveDecorator.cs" />
-    <Compile Include="Actors\Components\Movement\MoveData.cs" />
+    <Compile Include="Actors\Data\ActorDataSet.cs" />
+    <Compile Include="Actors\Data\CollisionData.cs" />
+    <Compile Include="Actors\Data\CommonData.cs" />
+    <Compile Include="Actors\Data\ExplodeData.cs" />
+    <Compile Include="Actors\Data\TimedLifeData.cs" />
+    <Compile Include="Actors\Data\CombatData.cs" />
+    <Compile Include="Actors\Data\RegenData.cs" />
+    <Compile Include="Actors\Data\WeapData.cs" />
+    <Compile Include="Actors\Data\StateData.cs" />
+    <Compile Include="Actors\Data\SysData.cs" />
+    <Compile Include="Actors\Data\MoveData.cs" />
     <Compile Include="Actors\Components\Movement\RotateOnly.cs" />
     <Compile Include="Actors\Components\Movement\Interfaces.cs" />
     <Compile Include="Actors\Components\Movement\MoveForwardOnly.cs" />
     <Compile Include="Actors\Components\Movement\MoveLaser.cs" />
     <Compile Include="Actors\Components\Movement\NoMove.cs" />
-    <Compile Include="Actors\Components\SpeedComponent.cs" />
-    <Compile Include="Actors\Data\TurnSettingData.cs" />
-    <Compile Include="Actors\Data\TurnData.cs" />
-    <Compile Include="Actors\Data\SpeedSettingData.cs" />
-    <Compile Include="Actors\Data\SpeedData.cs" />
+    <Compile Include="Actors\Data\MeshData.cs" />
     <Compile Include="Actors\Data\CoordData.cs" />
+    <Compile Include="Actors\Enums\ComponentMask.cs" />
     <Compile Include="Actors\ProcessActorInfo.cs" />
-    <Compile Include="Actors\Components\CollisionInfo.cs" />
+    <Compile Include="Actors\Components\CollisionSystem.cs" />
     <Compile Include="Actors\Components\CameraSystemInfo.cs" />
     <Compile Include="Actors\Components\WeaponSystemInfo.cs" />
     <Compile Include="Actors\Components\CycleInfo.cs" />
-    <Compile Include="Actors\Components\ExplosionInfo.cs" />
-    <Compile Include="Actors\Components\RegenerationInfo.cs" />
+    <Compile Include="Actors\Components\ExplosionSystem.cs" />
+    <Compile Include="Actors\Components\RegenerationSystem.cs" />
     <Compile Include="Actors\Components\Movement\MoveNormal.cs" />
-    <Compile Include="Actors\Components\CombatInfo.cs" />
+    <Compile Include="Actors\Components\CombatSystem.cs" />
     <Compile Include="Actors\Enums\ActorState.cs" />
     <Compile Include="Actors\Enums\CreationState.cs" />
     <Compile Include="Actors\States\ActorDistanceInfo.cs" />
     <Compile Include="Actors\TVFunctions.cs" />
+    <Compile Include="ActorTypes\General\ActorSpawner\MCLSpawner.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\PlayerSpawner.cs" />
+    <Compile Include="ActorTypes\General\Enums\RadarType.cs" />
     <Compile Include="ActorTypes\General\Enums\TargetType.cs" />
     <Compile Include="ActorTypes\Components\AddOnInfo.cs" />
     <Compile Include="ActorTypes\Components\SoundSourceInfo.cs" />
@@ -136,6 +147,11 @@
     <Compile Include="ActorTypes\General\ActorSpawner\SpawnerInfo.cs" />
     <Compile Include="Actors\ActorParser.cs" />
     <Compile Include="ActorTypes\General\Factory\Parser.cs" />
+    <Compile Include="ActorTypes\Groups\MissileProjectile.cs" />
+    <Compile Include="ActorTypes\Groups\LaserProjectile.cs" />
+    <Compile Include="ActorTypes\Groups\ShieldGenerators.cs" />
+    <Compile Include="ActorTypes\Groups\GroundSurface.cs" />
+    <Compile Include="ActorTypes\Groups\Turbolasers.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\MissilePods\NebulonBMissilePodATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\MissilePods\SDMissilePodATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\ShieldGenerators\SDShieldGeneratorATI.cs" />
@@ -236,7 +252,9 @@
     <Compile Include="ActorTypes\Groups\TIEs\TIE_X1_ATI.cs" />
     <Compile Include="ActorTypes\DeathCameraATI.cs" />
     <Compile Include="ActorTypes\Groups\TIEs\TIE_D_ATI.cs" />
+    <Compile Include="ActorTypes\Groups\LargeShip.cs" />
     <Compile Include="ActorTypes\Groups\Warships\MC80BATI.cs" />
+    <Compile Include="ActorTypes\Groups\Warships\MCLATI.cs" />
     <Compile Include="ActorTypes\Groups\Warships\NebulonB2ATI.cs" />
     <Compile Include="ActorTypes\InvisibleCameraATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\NebulonBTurboLaserATI.cs" />
@@ -253,7 +271,7 @@
     <Compile Include="ActorTypes\General\ActorTypeInfo.cs" />
     <Compile Include="ActorTypes\Groups\Explosions\ElectroATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOn.cs" />
-    <Compile Include="ActorTypes\Groups\Expolsion.cs" />
+    <Compile Include="ActorTypes\Groups\Explosion.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\MC90TurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\YellowLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\StarDestroyers\ExecutorATI.cs" />
@@ -345,9 +363,11 @@
     <Compile Include="Primitives\CachedFloat.cs" />
     <Compile Include="Primitives\Factories\Factory.cs" />
     <Compile Include="Primitives\Factories\Interfaces.cs" />
+    <Compile Include="Primitives\Factories\ObjectPool.cs" />
     <Compile Include="Primitives\Factories\Registry.cs" />
     <Compile Include="Primitives\TimeControl.cs" />
     <Compile Include="Scenarios\ActorSpawnInfo.cs" />
+    <Compile Include="Scenarios\GSFunctions.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\SWContext.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\Context.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\Interfaces.cs" />
@@ -473,10 +493,10 @@
     <Compile Include="UI\Widget\Instances\Debug_ObjectInfo.cs" />
     <Compile Include="UI\Widget\Instances\Debug_GeneralInfo.cs" />
     <Compile Include="UI\Widget\Instances\Box3D.cs" />
+    <Compile Include="UI\Widget\Instances\LargeShipSystems.cs" />
     <Compile Include="UI\Widget\Instances\Terminal.cs" />
     <Compile Include="UI\Widget\Instances\ScenarioInfo.cs" />
     <Compile Include="UI\Widget\Instances\HitBar.cs" />
-    <Compile Include="UI\Widget\Instances\Score.cs" />
     <Compile Include="UI\Widget\Instances\Target.cs" />
     <Compile Include="UI\Widget\Instances\Steering.cs" />
     <Compile Include="UI\Widget\Instances\WeaponInfo.cs" />
@@ -503,10 +523,6 @@
     <Compile Include="UI\Widget\UIWidget.cs" />
     <Compile Include="Utilities\Navigation.cs" />
     <Compile Include="Utilities\Utilities.cs" />
-    <Compile Include="Weapons\Towers\Tower_SuperLaserWeapon.cs" />
-    <Compile Include="Weapons\Towers\Tower_LaserWeapon.cs" />
-    <Compile Include="Weapons\Towers\Tower_DblLaserWeapon.cs" />
-    <Compile Include="Weapons\DummyWeapon.cs" />
     <Compile Include="Weapons\TrackerDummyWeapon.cs" />
     <Compile Include="Weapons\WeaponFactory.cs" />
     <Compile Include="Weapons\WeaponStatInfo.cs" />
@@ -547,25 +563,25 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Scenarios\ImperialTestMessage.sw">
+    <None Include="Data\Scenarios\ImperialTest\Message.sw">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\TestMessage.sw">
+    <None Include="Data\Scenarios\SmugglersTest\Message.sw">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\ImperialTestScenario.scen">
+    <None Include="Data\Scenarios\ImperialTestScenario.scen">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\TestScenario.scen">
+    <None Include="Data\Scenarios\SmugglerTestScenario.scen">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\ImperialTestScript.sw">
+    <None Include="Data\Scenarios\ImperialTest\Script.sw">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\SpawnScript.sw">
+    <None Include="Data\Scenarios\Common\Spawn.sw">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Scenarios\TestScript.sw">
+    <None Include="Data\Scenarios\SmugglersTest\Script.sw">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Settings\settings.ini" />

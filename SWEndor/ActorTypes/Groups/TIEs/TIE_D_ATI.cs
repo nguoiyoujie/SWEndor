@@ -1,9 +1,9 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Weapons;
-using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 using System.IO;
 
@@ -26,6 +26,8 @@ namespace SWEndor.ActorTypes.Instances
       Score_perStrength = 800;
       Score_DestroyBonus = 2000;
 
+      RegenData = new RegenData { SelfRegenRate = 0.075f };
+
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"tie\tie_defender.x");
     }
 
@@ -46,14 +48,6 @@ namespace SWEndor.ActorTypes.Instances
         new TV_3DVECTOR(0, 0, 2000),
         new TV_3DVECTOR(0, 0, -2000)
       };
-
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
-      ainfo.ExplosionInfo.ExplosionRate = 0.75f;
-      ainfo.ExplosionInfo.ExplosionSize = 1;
-      ainfo.ExplosionInfo.ExplosionType = "Explosion";
-
-      ainfo.RegenerationInfo.SelfRegenRate = 0.075f;
 
       ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", WeaponFactory.Get("TIED_LASR") }
                                                         };

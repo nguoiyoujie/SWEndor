@@ -1,5 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -9,27 +11,23 @@ namespace SWEndor.ActorTypes.Instances
     internal ExplosionWaveATI(Factory owner) : base(owner, "Explosion Wave")
     {
       // Combat
-      OnTimedLife = true;
-      TimedLife = 2f;
-      IsCombatObject = false;
-      IsSelectable = false;
-      IsDamage = false;
-      CollisionEnabled = false;
+      TimedLifeData = new TimedLifeData(true, 2);
+
       RadarSize = 0;
 
       EnableDistanceCull = false;
 
 
-      SourceMesh = TrueVision.TVGlobals.GetMesh(Key);
+      SourceMesh = TrueVision.TVGlobals.GetMesh(Name);
       if (SourceMesh == null)
       {
-        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Key);
+        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Name);
 
         string texname = Path.Combine("explosion", "wave", @"tex0000.jpg");
         string texpath = Path.Combine(Globals.ImagePath, texname);
         int tex = LoadAlphaTexture(texname, texpath);
 
-        SourceMesh.CreateBox(100, 0.001f, 100f);
+        SourceMesh.CreateBox(100, 0.00001f, 100f);
         SourceMesh.SetTexture(tex);
         SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
 
@@ -41,7 +39,7 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessState(ActorInfo ainfo)
     {
       if (ainfo.ActorState == ActorState.NORMAL)
-        ainfo.Scale += new TV_3DVECTOR(100, 0, 100) * Game.TimeSinceRender;
+        MeshSystem.EnlargeScale(ainfo.Engine, ainfo.ID, 100 * Game.TimeSinceRender);
     }
   }
 }

@@ -10,7 +10,7 @@ namespace SWEndor.UI.Menu.Pages
     public GameOver(Screen2D owner) : base(owner)
     {
       MainText.Text = "GAME OVER";
-      MainText.TextFont = Font.Factory.Get("Title_36").ID;
+      MainText.TextFont = FontFactory.Get(Font.T36).ID;
       MainText.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 - 150, Globals.Engine.ScreenHeight / 2 - 80);
 
       ButtonReturn.Text = "Return to Menu";

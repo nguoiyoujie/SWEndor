@@ -29,12 +29,14 @@ namespace SWEndor.ActorTypes.Components
       ActorCreationInfo acinfo = new ActorCreationInfo(_cache);
       acinfo.InitialState = ActorState.NORMAL;
       acinfo.Faction = actor.Faction;
-      if (AttachToParent)
-        acinfo.Position = new TV_3DVECTOR(Position.x * actor.Scale.x, Position.y * actor.Scale.y, Position.z * actor.Scale.z);
-      else
-        acinfo.Position = actor.GetRelativePositionFUR(Position.x * actor.Scale.x, Position.y * actor.Scale.y, Position.z * actor.Scale.z);
 
-      acinfo.InitialScale = actor.Scale;
+      float scale = engine.MeshDataSet.Scale_get(actor.ID);
+      if (AttachToParent)
+        acinfo.Position = new TV_3DVECTOR(Position.x * scale, Position.y * scale, Position.z * scale);
+      else
+        acinfo.Position = actor.GetRelativePositionFUR(Position.x * scale, Position.y * scale, Position.z * scale);
+
+      acinfo.InitialScale = scale;
       acinfo.Rotation = new TV_3DVECTOR(Rotation.x, Rotation.y, Rotation.z);
       acinfo.CreationTime = actor.CreationTime;
 

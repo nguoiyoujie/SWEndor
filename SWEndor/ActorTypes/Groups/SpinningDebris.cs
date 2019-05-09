@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Actors.Data;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -7,12 +8,8 @@ namespace SWEndor.ActorTypes.Groups
   {
     internal SpinningDebris(Factory owner, string name) : base(owner, name)
     {
-      IsCombatObject = false;
-      IsSelectable = false;
-      IsDamage = false;
-      CollisionEnabled = false;
-      OnTimedLife = true;
-      TimedLife = 5f;
+      CombatData = CombatData.Disabled;
+      TimedLifeData = new TimedLifeData(true, 5);
 
       MaxSpeed = 500;
       MinSpeed = 5;
@@ -22,8 +19,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       base.Initialize(ainfo);
       ainfo.DyingMoveComponent = new DyingSpin(120, 270);
-
-      ainfo.ExplosionInfo.DeathExplosionType = "Explosion";
+      ainfo.ActorState = ActorState.DYING;
     }
   }
 }

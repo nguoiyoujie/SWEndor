@@ -18,10 +18,6 @@ namespace SWEndor.ActorTypes.Instances
       Score_perStrength = 50;
       Score_DestroyBonus = 5000;
 
-      NoMove = true;
-      NoRotate = true;
-      NoAI = true;
-
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"towers\tower_00.x");
 
       AddOns = new AddOnInfo[] 
@@ -29,15 +25,6 @@ namespace SWEndor.ActorTypes.Instances
         new AddOnInfo("Turbolaser Turret", new TV_3DVECTOR(95, 155, 0), new TV_3DVECTOR(0, 0, 0), true)
         , new AddOnInfo("Turbolaser Turret", new TV_3DVECTOR(-95, 155, 0), new TV_3DVECTOR(0, 0, 0), true)
       };
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.ExplosionInfo.DeathExplosionTrigger = DeathExplosionTrigger.ALWAYS;
-      ainfo.ExplosionInfo.DeathExplosionType = "ExplosionSm";
-      ainfo.ExplosionInfo.DeathExplosionSize = 5;
     }
 
     public override void ProcessNewState(ActorInfo ainfo)

@@ -10,12 +10,6 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal InterdictorATI(Factory owner) : base(owner, "Interdictor Star Destroyer")
     {
-      // Combat
-      IsCombatObject = true;
-      IsSelectable = true;
-      IsDamage = false;
-      CollisionEnabled = true;
-
       MaxStrength = 550.0f;
       ImpactDamage = 60.0f;
       MaxSpeed = 60.0f;
@@ -24,6 +18,7 @@ namespace SWEndor.ActorTypes.Instances
       MaxTurnRate = 1.2f;
 
       CullDistance = 40000;
+      Scale = 1.1f;
 
       Score_perStrength = 60;
       Score_DestroyBonus = 10000;
@@ -80,8 +75,6 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 300, 2000) };
 
       ainfo.DyingMoveComponent = new DyingSink(0.005f, 5f, 0.8f);
-
-      ainfo.Scale *= 1.1f;
 
       ainfo.SpawnerInfo = new SDSpawner(ainfo);
     }
