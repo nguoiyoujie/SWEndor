@@ -6,7 +6,7 @@ Wings = TIE Avenger, TIE Defender, Missile Boat, Victory-I Star Destroyer
 Difficulties = Hard
 
 [Script]
-Paths = .\Scenarios\ImperialTestScript.sw,.\Scenarios\ImperialTestMessage.sw,.\Scenarios\SpawnScript.sw
+Paths = .\Data\Scenarios\ImperialTest\Script.sw,.\Data\Scenarios\ImperialTest\Message.sw,.\Data\Scenarios\Common\Spawn.sw
 Fn_load = load
 Fn_loadfaction = loadfaction
 Fn_loadscene = loadscene
