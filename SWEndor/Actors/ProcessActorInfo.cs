@@ -1,5 +1,4 @@
-﻿using MTV3D65;
-using SWEndor.Actors.Components;
+﻿using SWEndor.Actors.Components;
 using SWEndor.Player;
 
 namespace SWEndor.Actors
@@ -17,18 +16,15 @@ namespace SWEndor.Actors
 
       actor.CycleInfo.Process();
 
-      if (engine.MeshDataSet.Mesh_get(id) != null)
+      actor.CheckState(engine);
+      if (!actor.ActorState.IsDead())
       {
-        actor.CheckState(engine);
-        if (!actor.ActorState.IsDead())
+        if (engine.MaskDataSet[id].Has(ComponentMask.CAN_BECOLLIDED)
+        || actor.TypeInfo is ActorTypes.Groups.Projectile)
         {
-          if (engine.MaskDataSet[id].Has(ComponentMask.CAN_BECOLLIDED)
-          || actor.TypeInfo is ActorTypes.Groups.Projectile)
-          {
-            CollisionSystem.CheckCollision(engine, id);
-          }
-          actor.MoveComponent.Move(actor, ref actor.MoveData);
+          CollisionSystem.CheckCollision(engine, id);
         }
+        actor.MoveComponent.Move(actor, ref actor.MoveData);
       }
       actor.OnTickEvent();
     }
@@ -39,7 +35,7 @@ namespace SWEndor.Actors
       if (actor == null)
         return;
 
-      if (engine.MaskDataSet[id].Has(ComponentMask.HAS_AI)
+      if (!engine.MaskDataSet[id].Has(ComponentMask.HAS_AI)
         || actor.CreationState != CreationState.ACTIVE
         || actor.ActorState.IsDyingOrDead()
         || (IsPlayer(engine, id) && !engine.PlayerInfo.PlayerAIEnabled)
@@ -66,6 +62,7 @@ namespace SWEndor.Actors
         return;
 
       if (engine.MaskDataSet[id].Has(ComponentMask.CAN_RENDER)
+        //&& !engine.MaskDataSet[id].Has(ComponentMask.CAN_GLOW)
         && actor.CreationState == CreationState.ACTIVE
         && !IsAggregateMode(engine, id))
       {
@@ -80,6 +77,27 @@ namespace SWEndor.Actors
             MeshSystem.RenderFarMesh(engine, id);
           }
         }
+      }
+    }
+
+    internal static void RenderGlow(Engine engine, int id)
+    {
+      ActorInfo actor = engine.ActorFactory.Get(id);
+      if (actor == null)
+        return;
+
+      if (engine.MaskDataSet[id].Has(ComponentMask.CAN_RENDER | ComponentMask.CAN_GLOW)
+        && actor.CreationState == CreationState.ACTIVE
+        && !IsAggregateMode(engine, id))
+        //&& !IsFarMode(engine, id))
+      {
+        float dist = ActorDistanceInfo.GetRoughDistance(actor.GetPosition(), engine.PlayerCameraInfo.Position);
+        float intensity = 500 / (dist + 200);
+        float scale = 500 / (dist + 200);
+
+        //engine.TrueVision.TVGraphicEffect.SetGlowParameters(new TV_COLOR(1, 1, 1, 1), intensity, scale);
+
+        MeshSystem.RenderMesh(engine, id);
       }
     }
 
@@ -99,23 +117,15 @@ namespace SWEndor.Actors
       TypeInfo.ProcessState(this);
 
       if (ActorState == ActorState.DEAD)
-        ActorInfo.Kill(engine, ID);
+        Kill(engine, ID);
     }
 
     private void Update()
     {
-      //PrevPosition = Position;
-
-      if (Engine.MeshDataSet.Mesh_get(ID) == null)
-        return;
-
       MeshSystem.Update(Engine, ID);
 
       if (CreationState == CreationState.GENERATED)
         CreationState = CreationState.ACTIVE;
-
-      //if (ParticleSystem != null && !IsFarMode(Engine, ID))
-      //  ParticleSystem.Update();
     }
     
   }

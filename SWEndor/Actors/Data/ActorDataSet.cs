@@ -8,8 +8,6 @@ namespace SWEndor.Actors.Data
   {
     //public CoordData[] CoordData = new CoordData[Globals.ActorLimit];
 
-    //internal SysData[] SysData = new SysData[Globals.ActorLimit];
-    //internal MeshData[] MeshData = new MeshData[Globals.ActorLimit];
     internal CollisionData[] CollisionData = new CollisionData[Globals.ActorLimit];
 
     internal ExplodeData[] ExplodeData = new ExplodeData[Globals.ActorLimit];

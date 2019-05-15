@@ -23,10 +23,12 @@ namespace SWEndor
     internal TVShader TVShader { get; private set; }
     internal TVScreen2DText TVScreen2DText { get; private set; }
     internal TVScreen2DImmediate TVScreen2DImmediate { get; private set; }
-    internal TVPhysics TVPhysics { get; private set; }
     internal TVParticleSystem TVParticleSystem { get; private set; }
     internal TVGlobals TVGlobals { get; private set; }
 
+    internal TVRenderSurface LaserRenderSurface;
+    internal TVRenderSurface DepthofFieldSurface;
+    
     public void Init(IntPtr handle)
     {
       if (Handle == null)
@@ -37,7 +39,6 @@ namespace SWEndor
       TVGlobals = new TVGlobals();
       TVMathLibrary = new TVMathLibrary();
       TVScene = new TVScene();
-      TVPhysics = new TVPhysics();
       TVScreen2DImmediate = new TVScreen2DImmediate();
       TVScreen2DText = new TVScreen2DText();
       TVShader = new TVShader();
@@ -53,7 +54,6 @@ namespace SWEndor
       InitFonts();
       InitScene();
       InitShaders();
-      InitPhysics();
       InitLights();
     }
 
@@ -68,7 +68,6 @@ namespace SWEndor
       TVScreen2DText = null;
       TVScreen2DImmediate = null;
       TVShader = null;
-      TVPhysics = null;
       TVScene = null;
       TVMathLibrary = null;
       TVGlobals = null;
@@ -84,6 +83,7 @@ namespace SWEndor
       //TVEngine.SetDebugMode(true, true);
       TVEngine.SetDebugFile(Path.Combine(Globals.DebugPath, @"truevision_debug.txt"));
 
+      TVEngine.SetAntialiasing(true, CONST_TV_MULTISAMPLE_TYPE.TV_MULTISAMPLE_2_SAMPLES);
       TVEngine.DisplayFPS(true);
       //TVEngine.EnableProfiler(true);
       TVEngine.EnableSmoothTime(true);
@@ -117,22 +117,20 @@ namespace SWEndor
       TVScene.SetShadeMode(CONST_TV_SHADEMODE.TV_SHADEMODE_GOURAUD);
       TVScene.SetRenderMode(CONST_TV_RENDERMODE.TV_SOLID);
       TVScene.SetBackgroundColor(0f, 0f, 0f);
+
+      LaserRenderSurface = TVScene.CreateRenderSurface(-1, -1, true, CONST_TV_RENDERSURFACEFORMAT.TV_TEXTUREFORMAT_A8R8G8B8);
+      TVGraphicEffect.InitGlowEffect(LaserRenderSurface);
+      TVGraphicEffect.SetGlowParameters(new TV_COLOR(1, 1, 1, 1), 1.1f, 1.05f);
+
+      DepthofFieldSurface = TVScene.CreateRenderSurface(-1, -1, true, CONST_TV_RENDERSURFACEFORMAT.TV_TEXTUREFORMAT_DEFAULT);
+      TVGraphicEffect.InitDepthOfField(8, DepthofFieldSurface);
+      TVGraphicEffect.SetDepthOfFieldParameters(1, 100, 1.1f);
     }
 
     private void InitShaders()
     {
       //TVShader = TVScene.CreateShader("common");
       //TVShader.CreateFromEffectFile(Path.Combine(Globals.ShaderPath, "Common_shader"));
-    }
-
-    private void InitPhysics()
-    {
-      //TVPhysics.Initialize();
-      //TVPhysics.SetSolverModel(CONST_TVPhysics_SOLVER.TV_SOLVER_ADAPTIVE);
-      //TVPhysics.SetFrictionModel(CONST_TVPhysics_FRICTION.TV_FRICTION_ADAPTIVE);
-      //TVPhysics.SetGlobalGravity(new TV_3DVECTOR(0, 0, 0));
-      //TVPhysics.SetGlobalGravity(new TV_3DVECTOR(0, -9.800908285f, 0));
-      //TVPhysics.EnableCPUOptimizations(true); 
     }
 
     private void InitLights()

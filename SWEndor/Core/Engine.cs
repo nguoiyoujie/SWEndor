@@ -21,8 +21,8 @@ namespace SWEndor
 
     private GameForm Form;
     private IntPtr Handle;
-    public float ScreenWidth { get; internal set;}
-    public float ScreenHeight { get; internal set; }
+    public int ScreenWidth { get; internal set;}
+    public int ScreenHeight { get; internal set; }
     public Random Random { get; } = new Random();
 
     // Data sets
@@ -185,9 +185,20 @@ namespace SWEndor
       LandInfo.Render();
 
       ActorFactory.DoEach(ActorInfo.Render);
+      //TrueVision.TVGraphicEffect.DrawGlow();
+      //TrueVision.TVGraphicEffect.DrawDepthOfField();
 
       Screen2D.Draw();
       TrueVision.TVEngine.RenderToScreen();
+      //UpdateEffect();
+    }
+
+    public void UpdateEffect()
+    {
+      TrueVision.LaserRenderSurface.StartRender(false);
+      ActorFactory.DoEach(ActorInfo.RenderGlow);
+      TrueVision.LaserRenderSurface.EndRender();
+      TrueVision.TVGraphicEffect.UpdateGlow();
     }
 
     public void LinkForm(GameForm form)

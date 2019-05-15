@@ -34,11 +34,9 @@ namespace SWEndor.Actors.Data
       Mesh = atype.GenerateMesh();
       FarMesh = atype.GenerateFarMesh();
 
-      //Mesh.SetMeshName(id.ToString());
       Mesh.SetTag(id.ToString());
       //Mesh.ShowBoundingBox(true);
 
-      //FarMesh.SetMeshName(id.ToString());
       FarMesh.SetTag(id.ToString());
 
       SetScale();
@@ -47,6 +45,7 @@ namespace SWEndor.Actors.Data
 
       Mesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 8);
       FarMesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 8);
+      //Mesh.SetShadowCast(true, false);
 
       Mesh.Enable(true);
       FarMesh.Enable(true);

@@ -44,17 +44,20 @@ namespace SWEndor.Actors.Components
 
     private static void Update(Engine engine, int actorID, ref MeshData data)
     {
-      ActorInfo actor = engine.ActorFactory.Get(actorID);
-      TV_3DVECTOR pos = actor.GetPosition();
-      TV_3DVECTOR rot = actor.GetRotation();
+      if (data.Mesh != null && data.FarMesh != null)
+      {
+        ActorInfo actor = engine.ActorFactory.Get(actorID);
+        TV_3DVECTOR pos = actor.GetPosition();
+        TV_3DVECTOR rot = actor.GetRotation();
 
-      data.Mesh.SetPosition(pos.x, pos.y, pos.z);
-      data.Mesh.SetRotation(rot.x, rot.y, rot.z);
-      data.FarMesh.SetPosition(pos.x, pos.y, pos.z);
-      data.FarMesh.SetRotation(rot.x, rot.y, rot.z);
+        data.Mesh.SetPosition(pos.x, pos.y, pos.z);
+        data.Mesh.SetRotation(rot.x, rot.y, rot.z);
+        data.FarMesh.SetPosition(pos.x, pos.y, pos.z);
+        data.FarMesh.SetRotation(rot.x, rot.y, rot.z);
 
-      data.Mesh.SetCollisionEnable(engine.MaskDataSet[actorID].Has(ComponentMask.CAN_BECOLLIDED) && !ActorInfo.IsAggregateMode(engine, actorID));
-      data.FarMesh.SetCollisionEnable(false);
+        data.Mesh.SetCollisionEnable(engine.MaskDataSet[actorID].Has(ComponentMask.CAN_BECOLLIDED) && !ActorInfo.IsAggregateMode(engine, actorID));
+        data.FarMesh.SetCollisionEnable(false);
+      }
     }
   }
 }

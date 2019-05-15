@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -38,7 +38,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
@@ -61,7 +61,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
@@ -122,7 +122,6 @@
     <Compile Include="Actors\Enums\ComponentMask.cs" />
     <Compile Include="Actors\ProcessActorInfo.cs" />
     <Compile Include="Actors\Components\CollisionSystem.cs" />
-    <Compile Include="Actors\Components\CameraSystemInfo.cs" />
     <Compile Include="Actors\Components\WeaponSystemInfo.cs" />
     <Compile Include="Actors\Components\CycleInfo.cs" />
     <Compile Include="Actors\Components\ExplosionSystem.cs" />
@@ -133,6 +132,8 @@
     <Compile Include="Actors\Enums\CreationState.cs" />
     <Compile Include="Actors\States\ActorDistanceInfo.cs" />
     <Compile Include="Actors\TVFunctions.cs" />
+    <Compile Include="ActorTypes\Components\DeathCameraInfo.cs" />
+    <Compile Include="ActorTypes\Components\ActorCameraInfo.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\MCLSpawner.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\PlayerSpawner.cs" />
     <Compile Include="ActorTypes\General\Enums\RadarType.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="ActorTypes\Groups\LaserProjectile.cs" />
     <Compile Include="ActorTypes\Groups\ShieldGenerators.cs" />
     <Compile Include="ActorTypes\Groups\GroundSurface.cs" />
+    <Compile Include="ActorTypes\Groups\SurfaceGun.cs" />
     <Compile Include="ActorTypes\Groups\Turbolasers.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\MissilePods\NebulonBMissilePodATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\MissilePods\SDMissilePodATI.cs" />
@@ -242,21 +244,19 @@
     <Compile Include="ActorTypes\Groups\SurfaceTowers\Tower03ATI.cs" />
     <Compile Include="ActorTypes\Groups\SurfaceTowers\Tower02ATI.cs" />
     <Compile Include="ActorTypes\Groups\SurfaceTowers\Tower01ATI.cs" />
-    <Compile Include="ActorTypes\Groups\SurfaceTowers\TowerGunSuperATI.cs" />
-    <Compile Include="ActorTypes\Groups\SurfaceTowers\TowerGunAdvATI.cs" />
-    <Compile Include="ActorTypes\Groups\SurfaceTowers\TowerGunATI.cs" />
+    <Compile Include="ActorTypes\Groups\SurfaceTowers\Guns\TowerGunSuperATI.cs" />
+    <Compile Include="ActorTypes\Groups\SurfaceTowers\Guns\TowerGunAdvATI.cs" />
+    <Compile Include="ActorTypes\Groups\SurfaceTowers\Guns\TowerGunATI.cs" />
     <Compile Include="ActorTypes\Groups\SurfaceTowers\Tower00ATI.cs" />
     <Compile Include="ActorTypes\Groups\TIEs\MissileBoatATI.cs" />
     <Compile Include="ActorTypes\Groups\TIEs\TIE_A_ATI.cs" />
     <Compile Include="ActorTypes\Groups\TIEs\TIE_sa_ATI.cs" />
     <Compile Include="ActorTypes\Groups\TIEs\TIE_X1_ATI.cs" />
-    <Compile Include="ActorTypes\DeathCameraATI.cs" />
     <Compile Include="ActorTypes\Groups\TIEs\TIE_D_ATI.cs" />
     <Compile Include="ActorTypes\Groups\LargeShip.cs" />
     <Compile Include="ActorTypes\Groups\Warships\MC80BATI.cs" />
     <Compile Include="ActorTypes\Groups\Warships\MCLATI.cs" />
     <Compile Include="ActorTypes\Groups\Warships\NebulonB2ATI.cs" />
-    <Compile Include="ActorTypes\InvisibleCameraATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\NebulonBTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\ExecutorTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\ShieldGenerators\ExecutorShieldGeneratorATI.cs" />
