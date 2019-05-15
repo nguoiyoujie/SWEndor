@@ -27,25 +27,16 @@ namespace SWEndor.ActorTypes.Instances
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"ywing\ywing.x");
       SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"ywing\ywing_far.x");
+
+      Cameras = new ActorCameraInfo[] {
+        new ActorCameraInfo(new TV_3DVECTOR(0, 4, 30), new TV_3DVECTOR(0, 0, 2000)),
+        new ActorCameraInfo(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
+        };
     }
 
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-
-      ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[]
-      {
-        new TV_3DVECTOR(0, 4, 30),
-        new TV_3DVECTOR(0, 125, -200),
-        new TV_3DVECTOR(0, 40, 250)
-      };
-
-      ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[]
-      {
-        new TV_3DVECTOR(0, 5, 2000),
-        new TV_3DVECTOR(0, 0, 2000),
-        new TV_3DVECTOR(0, 0, -2000)
-      };
 
       ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("Y_WG_TORP") }
                                                         , {"ion", WeaponFactory.Get("Y_WG_ION")}

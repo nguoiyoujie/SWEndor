@@ -49,9 +49,6 @@ namespace SWEndor.Scenarios
 
     //private Dictionary<float, GameEvent> GameEvents = new Dictionary<float, GameEvent>();
     public GameScenarioBase Scenario = null;
-    public int SceneCameraID = -1;
-    public int CameraTargetActorID = -1;
-    public TV_3DVECTOR CameraTargetPoint = new TV_3DVECTOR();
 
     public TV_3DVECTOR MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
     public TV_3DVECTOR MinBounds = new TV_3DVECTOR(-20000, -1500, -20000);
@@ -84,8 +81,7 @@ namespace SWEndor.Scenarios
 
     public void LoadInitial()
     {
-      LoadInvisibleCam();
-      PlayerInfo.ActorID = SceneCameraID;
+      PlayerInfo.Score.Reset();
       PlayerInfo.IsMovementControlsEnabled = false;
     }
 
@@ -119,34 +115,10 @@ namespace SWEndor.Scenarios
       if (Scenario != null && Scenario.Launched)
         Scenario.GameTick();
 
-      ActorInfo cam = Engine.ActorFactory.Get(SceneCameraID);
-      ActorInfo tgt = Engine.ActorFactory.Get(CameraTargetActorID);
-      if (cam != null)
-      {
-        if (tgt != null)
-        {
-          CameraTargetPoint = tgt.GetPosition();
-        }
-        cam.LookAtPoint(CameraTargetPoint, true);
-      }
-
       UpdateActorLists(CriticalAllies);
       UpdateActorLists(CriticalEnemies);
 
       GameEventQueue.Process(Engine);
-    }
-
-    public void LoadInvisibleCam()
-    {
-      ActorCreationInfo camaci = new ActorCreationInfo(Engine.ActorTypeFactory.Get("Invisible Camera"));
-      camaci.CreationTime = Engine.Game.GameTime;
-      camaci.InitialState = ActorState.NORMAL;
-      camaci.Position = new TV_3DVECTOR(0, 0, 0);
-      camaci.Rotation = new TV_3DVECTOR();
-
-      ActorInfo.Kill(Engine, SceneCameraID);
-      SceneCameraID = ActorInfo.Create(Engine.ActorFactory, camaci).ID;
-      CameraTargetPoint = new TV_3DVECTOR(0, 0, 100);
     }
 
     public void Reset()
@@ -154,12 +126,7 @@ namespace SWEndor.Scenarios
       if (Scenario != null)
         Scenario.Unload();
 
-      PlayerInfo.Score.Reset();
-
       LoadInitial();
-
-      //_instance = new GameScenarioManager();
-      //_instance.LoadInitial();
     }
 
     public void AddEvent(float time, GameEvent gevent, GameEventArg garg = null)

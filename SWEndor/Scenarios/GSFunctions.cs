@@ -141,7 +141,7 @@ namespace SWEndor.Scenarios
               int abrelative = (m + 1) / 2;
               int relative = (m % 2 == 0) ? abrelative : -abrelative;
               TV_3DVECTOR dirv = dirs * 0.7f - dirf * 0.3f;
-              ret[m] = position + (dirs * 0.7f * abrelative - dirf * 0.7f * abrelative) * spawninfo.FormationDistance;
+              ret[m] = position + (dirs * 0.7f * relative - dirf * 0.7f * abrelative) * spawninfo.FormationDistance;
             }
             break;
 
@@ -167,7 +167,7 @@ namespace SWEndor.Scenarios
         }
 
         if (spawninfo.HyperspaceIn)
-          spawnpos[m] = ret[m] - dirf * 100000;
+          spawnpos[m] = ret[m] - dirf * 50000;
         else
           spawnpos[m] = ret[m];
       }
@@ -271,7 +271,10 @@ namespace SWEndor.Scenarios
         Registries = spawninfo.Registries
       };
 
-      return asi.Spawn(scenario);
+      ActorInfo a = asi.Spawn(scenario);
+      if (a.SpawnerInfo != null)
+        a.SpawnerInfo.SpawnsRemaining = spawninfo.CarrierSpawns;
+      return a;
     }
 
     public static TV_3DVECTOR GetSpawnPosition(TV_3DVECTOR position, ShipSpawnInfo spawninfo)
@@ -279,7 +282,7 @@ namespace SWEndor.Scenarios
       if (spawninfo.HyperspaceIn)
       {
         TV_3DVECTOR dirf = Utilities.GetDirection(new TV_3DVECTOR(spawninfo.Rotation.x, spawninfo.Rotation.y, spawninfo.Rotation.z));
-        return position - dirf * 100000;
+        return position - dirf * 50000;
       }
       else
         return position;

@@ -23,6 +23,7 @@ namespace SWEndor.ActorTypes.Instances
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"transport\transport.x");
 
+      Cameras = new ActorCameraInfo[] { new ActorCameraInfo(new TV_3DVECTOR(0, 86, -150), new TV_3DVECTOR(0, 86, 2000)) };
       Debris = new DebrisSpawnerInfo[] {
         new DebrisSpawnerInfo("Transport Box 1", new TV_3DVECTOR(60, -30, 100), -1000, 1000, -2000, 2000, -2500, 2500, 0.5f),
         new DebrisSpawnerInfo("Transport Box 1", new TV_3DVECTOR(0, -30, 100), -1000, 1000, -2000, 2000, -2500, 2500, 0.5f),
@@ -43,14 +44,6 @@ namespace SWEndor.ActorTypes.Instances
       {
         new AddOnInfo("Transport Turbolaser Tower", new TV_3DVECTOR(0, 70, 200), new TV_3DVECTOR(-90, 0, 0), true)
       };
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 86, -150) };
-      ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 86, 2000) };
     }
   }
 }

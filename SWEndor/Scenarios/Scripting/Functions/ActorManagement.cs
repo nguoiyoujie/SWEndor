@@ -274,24 +274,26 @@ namespace SWEndor.Scenarios.Scripting.Functions
           else
             newValue = actor.MoveData.ApplyZBalance;
           return;
+          /*
         case "CamDeathCircleHeight":
           if (setValue)
-            actor.CameraSystemInfo.CamDeathCircleHeight = Convert.ToSingle(newValue);
+            actor.TypeInfo.DeathCamera.Height = Convert.ToSingle(newValue);
           else
-            newValue = actor.CameraSystemInfo.CamDeathCircleHeight;
+            newValue = actor.TypeInfo.DeathCamera.Height;
           return;
         case "CamDeathCirclePeriod":
           if (setValue)
-            actor.CameraSystemInfo.CamDeathCirclePeriod = Convert.ToSingle(newValue);
+            actor.TypeInfo.DeathCamera.Period = Convert.ToSingle(newValue);
           else
-            newValue = actor.CameraSystemInfo.CamDeathCirclePeriod;
+            newValue = actor.TypeInfo.DeathCamera.Period;
           return;
         case "CamDeathCircleRadius":
           if (setValue)
-            actor.CameraSystemInfo.CamDeathCircleRadius = Convert.ToSingle(newValue);
+            actor.TypeInfo.DeathCamera.Radius = Convert.ToSingle(newValue);
           else
-            newValue = actor.CameraSystemInfo.CamDeathCircleRadius;
+            newValue = actor.TypeInfo.DeathCamera.Radius;
           return;
+          */
         case "CanEvade":
           if (setValue)
             actor.CanEvade = Convert.ToBoolean(newValue);

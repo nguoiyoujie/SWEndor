@@ -28,6 +28,11 @@ namespace SWEndor.ActorTypes.Instances
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"xwing\z95.x");
       //SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"xwing\xwing_far.x");
 
+      Cameras = new ActorCameraInfo[] {
+        new ActorCameraInfo(new TV_3DVECTOR(0, 3, 25), new TV_3DVECTOR(0, 3, 2000)),
+        new ActorCameraInfo(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
+        };
+
       Debris = new DebrisSpawnerInfo[] {
         new DebrisSpawnerInfo("XWing_RU_LD_WingATI", new TV_3DVECTOR(-30, -10, 0), 0, 2000, 1000, 1000, -2500, 2500, 0.5f),
         new DebrisSpawnerInfo("XWing_RD_LU_WingATI", new TV_3DVECTOR(30, -10, 0), -2000, 0, -1000, 1000, -2500, 2500, 0.5f),
@@ -37,20 +42,6 @@ namespace SWEndor.ActorTypes.Instances
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-
-      ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[]
-      {
-        new TV_3DVECTOR(0, 3, 25),
-        new TV_3DVECTOR(0, 125, -200),
-        new TV_3DVECTOR(0, 40, 250)
-      };
-
-      ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[]
-      {
-        new TV_3DVECTOR(0, 5, 2000),
-        new TV_3DVECTOR(0, 0, 2000),
-        new TV_3DVECTOR(0, 0, -2000)
-      };
 
       ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", WeaponFactory.Get("Z95__LASR") }
                                                         };

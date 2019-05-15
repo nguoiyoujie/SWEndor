@@ -27,6 +27,10 @@ namespace SWEndor.ActorTypes.Instances
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"corellian\corellian.x");
       SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"corellian\corellian_far.x");
 
+      Cameras = new ActorCameraInfo[] {
+        new ActorCameraInfo(new TV_3DVECTOR(0, 55, -35), new TV_3DVECTOR(0, 55, 2000)),
+        new ActorCameraInfo(new TV_3DVECTOR(0, 300, -800), new TV_3DVECTOR(0, 0, 2000))
+        };
       SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 500f, new TV_3DVECTOR(0, 0, -200), true) };
       AddOns = new AddOnInfo[]
       {
@@ -36,25 +40,6 @@ namespace SWEndor.ActorTypes.Instances
         , new AddOnInfo("Corellian Turbolaser Tower", new TV_3DVECTOR(35, 15, 80), new TV_3DVECTOR(-90, 0, -10), true)
         , new AddOnInfo("Corellian Turbolaser Tower", new TV_3DVECTOR(0, -45, 150), new TV_3DVECTOR(90, 0, 0), true)
         , new AddOnInfo("Corellian Turbolaser Tower", new TV_3DVECTOR(0, 45, 150), new TV_3DVECTOR(-90, 0, 0), true)
-      };
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[]
-      {
-        new TV_3DVECTOR(0, 55, -35),
-        new TV_3DVECTOR(0, 300, -800),
-        new TV_3DVECTOR(0, 40, 250)
-      };
-
-      ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[]
-      {
-        new TV_3DVECTOR(0, 55, 2000),
-        new TV_3DVECTOR(0, 0, 2000),
-        new TV_3DVECTOR(0, 0, -2000)
       };
     }
   }

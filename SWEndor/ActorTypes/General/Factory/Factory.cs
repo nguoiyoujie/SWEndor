@@ -24,8 +24,6 @@ namespace SWEndor.ActorTypes
         Register(new HothATI(this));
         Register(new DeathStarATI(this));
         Register(new DeathStar2ATI(this));
-        Register(new InvisibleCameraATI(this));
-        Register(new DeathCameraATI(this));
         Register(new ImperialIStaticATI(this));
         Register(new ExecutorStaticATI(this));
 

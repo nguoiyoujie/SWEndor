@@ -21,7 +21,7 @@ namespace SWEndor.Scenarios
     public string Difficulty { get; set; }
     public int StageNumber { get; set; }
 
-    public DeathCamMode DeathCamMode = DeathCamMode.CIRCLE;
+    //public DeathCamMode DeathCamMode = DeathCamMode.CIRCLE;
     private CameraMode[] m_PlayerCameraModes = new CameraMode[] { CameraMode.FIRSTPERSON };
     private int m_PlayerModeNum = 0;
     public CameraMode[] PlayerCameraModes
@@ -104,8 +104,6 @@ namespace SWEndor.Scenarios
       Difficulty = difficulty;
       StageNumber = 0;
       PlayerInfo.ActorType = wing;
-      Manager.CameraTargetActorID = -1;
-      Manager.CameraTargetPoint = new TV_3DVECTOR(0, 0, 100);
     }
 
     public virtual void Launch()
@@ -115,6 +113,9 @@ namespace SWEndor.Scenarios
       LoadFactions();
       LoadScene();
       Launched = true;
+      PlayerCameraInfo.CameraMode = CameraMode.FIRSTPERSON;
+      PlayerCameraInfo.LookActor = -1;
+      PlayerCameraInfo.LookAtActor = -1;
     }
 
     public virtual void LoadFactions()
@@ -355,9 +356,9 @@ namespace SWEndor.Scenarios
       {
         PlayerInfo.TempActorID = ainfo.ID;
 
-        if (PlayerInfo.Actor.TypeInfo is DeathCameraATI)
-          if (PlayerInfo.Actor.CreationState == CreationState.ACTIVE)
-            PlayerInfo.Actor.SetLocalPosition(ainfo.GetLocalPosition().x, ainfo.GetLocalPosition().y, ainfo.GetLocalPosition().z);
+        //if (PlayerInfo.Actor.TypeInfo is DeathCameraATI)
+        //  if (PlayerInfo.Actor.CreationState == CreationState.ACTIVE)
+        //    PlayerInfo.Actor.SetLocalPosition(ainfo.GetLocalPosition().x, ainfo.GetLocalPosition().y, ainfo.GetLocalPosition().z);
       }
     }
 

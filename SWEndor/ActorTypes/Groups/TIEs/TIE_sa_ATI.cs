@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.ActorTypes.Components;
 using SWEndor.Weapons;
 using System.Collections.Generic;
 using System.IO;
@@ -22,25 +23,17 @@ namespace SWEndor.ActorTypes.Instances
       Score_DestroyBonus = 500;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"tie_vader\tie_bomber.x");
+
+      Cameras = new ActorCameraInfo[]
+      {
+        new ActorCameraInfo(new TV_3DVECTOR(0, 0, 20), new TV_3DVECTOR(0, 0, 2000)),
+        new ActorCameraInfo(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
+      };
     }
 
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-
-      ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[]
-      {
-        new TV_3DVECTOR(0, 0, 20),
-        new TV_3DVECTOR(0, 125, -200),
-        new TV_3DVECTOR(0, 40, 250)
-      };
-
-      ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[]
-      {
-        new TV_3DVECTOR(0, 0, 2000),
-        new TV_3DVECTOR(0, 0, 2000),
-        new TV_3DVECTOR(0, 0, -2000)
-      };
 
       ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("TIEB_TORP") }
                                                         , {"ion", WeaponFactory.Get("TIEB_ION") }

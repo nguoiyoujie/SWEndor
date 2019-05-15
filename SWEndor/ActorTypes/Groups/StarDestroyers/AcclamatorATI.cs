@@ -27,6 +27,7 @@ namespace SWEndor.ActorTypes.Instances
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"acclamator\acclamator.x");
 
+      Cameras = new ActorCameraInfo[] { new ActorCameraInfo(new TV_3DVECTOR(0, 143, 65), new TV_3DVECTOR(0, 143, 2000)) };
       SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 500.0f, new TV_3DVECTOR(0, 0, -100), true) };
       AddOns = new AddOnInfo[]
       {
@@ -45,14 +46,6 @@ namespace SWEndor.ActorTypes.Instances
         , new AddOnInfo("Acclamator Turbolaser Tower", new TV_3DVECTOR(145, 42, 70), new TV_3DVECTOR(-90, 0, -15), true)
         , new AddOnInfo("Acclamator Turbolaser Tower", new TV_3DVECTOR(-145, 42, 70), new TV_3DVECTOR(-90, 0, 15), true)
       };
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 143, 65) };
-      ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 143, 2000) };
     }
   }
 }

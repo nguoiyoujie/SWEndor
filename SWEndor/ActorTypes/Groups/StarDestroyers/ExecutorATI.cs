@@ -28,6 +28,10 @@ namespace SWEndor.ActorTypes.Instances
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"executor\executor.x");
 
+      Cameras = new ActorCameraInfo[] {
+        new ActorCameraInfo(new TV_3DVECTOR(0, 325, -840), new TV_3DVECTOR(0, 325, 2000)),
+        };
+      DeathCamera = new DeathCameraInfo(3000, 600, 40);
       SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 2500.0f, new TV_3DVECTOR(0, 0, -800), true) };
       AddOns = new AddOnInfo[]
       {
@@ -82,14 +86,6 @@ namespace SWEndor.ActorTypes.Instances
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-
-      ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 325, -840), new TV_3DVECTOR(0, 1000, -2000) };
-      ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 325, 2000), new TV_3DVECTOR(0, 325, 2000) };
-
-      ainfo.CameraSystemInfo.CamDeathCircleRadius = 3000;
-      ainfo.CameraSystemInfo.CamDeathCircleHeight = 600;
-      ainfo.CameraSystemInfo.CamDeathCirclePeriod = 40;
-
       ainfo.DyingMoveComponent = new DyingSink(0.00025f, 1.3f, 0.2f);
     }
 

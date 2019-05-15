@@ -85,9 +85,6 @@ namespace SWEndor.Scenarios
     {
       base.Launch();
 
-      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      cam.SetLocalPosition(0, 0, 0);
-      Manager.CameraTargetPoint = new TV_3DVECTOR(0, 0, -100);
       Manager.MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
       Manager.MinBounds = new TV_3DVECTOR(-20000, -1500, -10000);
       Manager.MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
@@ -488,8 +485,7 @@ namespace SWEndor.Scenarios
       float creationTime = Game.GameTime;
       float creationDelay = 0.025f;
 
-      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      cam.SetLocalPosition(10, -20, 1500);
+      PlayerCameraInfo.Position = new TV_3DVECTOR(10, -20, 1500);
 
       ActorTypeInfo type;
       string name;
@@ -619,7 +615,7 @@ namespace SWEndor.Scenarios
 
       m_rebelPosition.Add(ainfo.ID, position);
       PlayerInfo.TempActorID = ainfo.ID;
-      Manager.CameraTargetActorID = ainfo.ID;
+      PlayerCameraInfo.LookAtActor = ainfo.ID;
 
       // Mon Calamari (HomeOne)
       type = ActorTypeFactory.Get("Mon Calamari Capital Ship");
@@ -1121,51 +1117,33 @@ namespace SWEndor.Scenarios
         Manager.SetGameStateB("GameOver", true);
         Manager.IsCutsceneMode = true;
 
-        ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-        if (cam == null || !(cam.TypeInfo is DeathCameraATI))
+        PlayerInfo.ActorID = -1;
+        PlayerCameraInfo.LookActor = actor.ID;
+        PlayerCameraInfo.Look.SetModeDeathCircle(actor.TypeInfo.DeathCamera);
+
+        if (actor.ActorState.IsDying())
         {
-          ActorCreationInfo camaci = new ActorCreationInfo(ActorTypeFactory.Get("Death Camera"));
-          camaci.CreationTime = Game.GameTime;
-          camaci.InitialState = ActorState.DYING;
-          camaci.Position = actor.GetPosition();
-          camaci.Rotation = new TV_3DVECTOR();
-
-          ActorInfo a = ActorInfo.Create(ActorFactory, camaci);
-          PlayerInfo.ActorID = a.ID;
-          PlayerInfo.TempActorID = actorID;
-
-          a.CameraSystemInfo.CamDeathCirclePeriod = actor.CameraSystemInfo.CamDeathCirclePeriod;
-          a.CameraSystemInfo.CamDeathCircleRadius = actor.CameraSystemInfo.CamDeathCircleRadius;
-          a.CameraSystemInfo.CamDeathCircleHeight = actor.CameraSystemInfo.CamDeathCircleHeight;
-
-          if (actor.ActorState.IsDying())
-          {
-            actor.TickEvents += Manager.Scenario.ProcessPlayerDying;
-            actor.DestroyedEvents += Manager.Scenario.ProcessPlayerKilled;
-          }
-          else
-          {
-            actor.DestroyedEvents += Manager.Scenario.ProcessPlayerKilled;
-          }
-
-          if (actor.TypeInfo is WedgeXWingATI)
-          {
-            Manager.AddEvent(Game.GameTime, Message_90_LostWedge);
-          }
-          else if (actor.TypeInfo is LandoFalconATI)
-          {
-            Manager.AddEvent(Game.GameTime, Message_91_LostFalcon);
-          }
-          else if (actor.TypeInfo is MC90ATI)
-          {
-            Manager.AddEvent(Game.GameTime + 15, Message_92_LostHomeOne);
-            TimedLifeSystem.Activate(Engine, actor.ID, 2000f);
-            Manager.AddEvent(Game.GameTime + 25, FadeOut);
-          }
+          actor.TickEvents += ProcessPlayerDying;
+          actor.DestroyedEvents += ProcessPlayerKilled;
         }
         else
         {
-          cam.SetLocalPosition(actor.GetPosition().x, actor.GetPosition().y, actor.GetPosition().z);
+          actor.DestroyedEvents += ProcessPlayerKilled;
+        }
+
+        if (actor.TypeInfo is WedgeXWingATI)
+        {
+          Manager.AddEvent(Game.GameTime, Message_90_LostWedge);
+        }
+        else if (actor.TypeInfo is LandoFalconATI)
+        {
+          Manager.AddEvent(Game.GameTime, Message_91_LostFalcon);
+        }
+        else if (actor.TypeInfo is MC90ATI)
+        {
+          Manager.AddEvent(Game.GameTime + 15, Message_92_LostHomeOne);
+          TimedLifeSystem.Activate(Engine, actor.ID, 2000f);
+          Manager.AddEvent(Game.GameTime + 25, FadeOut);
         }
       }
     }
@@ -2013,44 +1991,27 @@ namespace SWEndor.Scenarios
         Manager.SetGameStateB("GameWon", true);
         Manager.IsCutsceneMode = true;
 
-        ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-        if (cam == null || !(cam.TypeInfo is DeathCameraATI))
+        PlayerInfo.ActorID = -1;
+        PlayerCameraInfo.LookActor = ainfo.ID;
+        PlayerCameraInfo.Look.SetModeDeathCircle(ainfo.TypeInfo.DeathCamera);
+
+        if (ainfo.ActorState.IsDying())
         {
-          ActorCreationInfo camaci = new ActorCreationInfo(ActorTypeFactory.Get("Death Camera"));
-          camaci.CreationTime = Game.GameTime;
-          camaci.InitialState = ActorState.DYING;
-          camaci.Position = ainfo.GetPosition();
-          camaci.Rotation = new TV_3DVECTOR();
-
-          ActorInfo a = ActorInfo.Create(ActorFactory, camaci);
-          PlayerInfo.ActorID = a.ID;
-
-          a.CameraSystemInfo.CamDeathCirclePeriod = ainfo.CameraSystemInfo.CamDeathCirclePeriod;
-          a.CameraSystemInfo.CamDeathCircleRadius = ainfo.CameraSystemInfo.CamDeathCircleRadius;
-          a.CameraSystemInfo.CamDeathCircleHeight = ainfo.CameraSystemInfo.CamDeathCircleHeight;
-
-          if (ainfo.ActorState.IsDying())
-          {
-            ainfo.TickEvents += ProcessPlayerDying;
-            ainfo.DestroyedEvents += ProcessPlayerKilled;
-          }
-          else
-          {
-            ainfo.DestroyedEvents += ProcessPlayerKilled;
-          }
-
-          SoundManager.SetMusic("executorend");
-          TimedLifeSystem.Activate(Engine, ainfo.ID, 2000f);
-
-          ActorInfo homeone = ActorFactory.Get(m_HomeOneID);
-          if (homeone != null)
-            Engine.ActorDataSet.CombatData[homeone.dataID].DamageModifier = 0;
-          Manager.AddEvent(Game.GameTime + 55, FadeOut);
+          ainfo.TickEvents += ProcessPlayerDying;
+          ainfo.DestroyedEvents += ProcessPlayerKilled;
         }
         else
         {
-          cam.SetLocalPosition(ainfo.GetPosition().x, ainfo.GetPosition().y, ainfo.GetPosition().z);
+          ainfo.DestroyedEvents += ProcessPlayerKilled;
         }
+
+        SoundManager.SetMusic("executorend");
+        TimedLifeSystem.Activate(Engine, ainfo.ID, 2000f);
+
+        ActorInfo homeone = ActorFactory.Get(m_HomeOneID);
+        if (homeone != null)
+          Engine.ActorDataSet.CombatData[homeone.dataID].DamageModifier = 0;
+        Manager.AddEvent(Game.GameTime + 55, FadeOut);
       }
     }
 
@@ -2273,7 +2234,7 @@ namespace SWEndor.Scenarios
         Engine.ActorDataSet.CombatData[player.dataID].DamageModifier = 0;
       }
 
-      PlayerInfo.ActorID = Manager.SceneCameraID;
+      PlayerInfo.ActorID = -1; // Manager.SceneCameraID;
       Manager.IsCutsceneMode = true;
     }
 
@@ -2327,12 +2288,15 @@ namespace SWEndor.Scenarios
         else if (target.TypeInfo is MC90ATI)
           pos += new TV_3DVECTOR(-850, -400, 2500);
 
-        ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-        cam.SetLocalPosition(pos.x, pos.y, pos.z);
-        cam.LookAtPoint(new TV_3DVECTOR());
-        cam.MoveData.MaxSpeed = 50;
-        cam.MoveData.Speed = 50;
-        Manager.CameraTargetActorID = target.ID;
+        PlayerCameraInfo.Position = pos;
+        PlayerCameraInfo.LookAtActor = target.ID;
+        //ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
+        //cam.SetLocalPosition(pos.x, pos.y, pos.z);
+        //cam.LookAtPoint(new TV_3DVECTOR());
+        //cam.MoveData.MaxSpeed = 50;
+        //cam.MoveData.Speed = 50;
+
+        PlayerCameraInfo.LookAtActor = target.ID;
         Manager.AddEvent(Game.GameTime + 5f, Scene_ExitCutscene);
       }
     }

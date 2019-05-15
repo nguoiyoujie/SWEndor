@@ -79,7 +79,6 @@ namespace SWEndor.Actors
 
     public CycleInfo CycleInfo;
     public WeaponSystemInfo WeaponSystemInfo;
-    public CameraSystemInfo CameraSystemInfo;
 
     // Checks
     public bool EnteredCombatZone = false;
@@ -172,7 +171,6 @@ namespace SWEndor.Actors
       CycleInfo = new CycleInfo(this, null);
 
       WeaponSystemInfo = new WeaponSystemInfo(this);
-      CameraSystemInfo = new CameraSystemInfo(this);
 
       
       // Creation
@@ -592,26 +590,22 @@ namespace SWEndor.Actors
 
     public static bool IsAggregateMode(Engine engine, int id)
     {
-      ActorInfo cam = engine.ActorFactory.Get(engine.GameScenarioManager.SceneCameraID);
       ActorInfo actor = engine.ActorFactory.Get(id);
-      ActorInfo player = (engine.PlayerInfo.Actor != null) ? engine.PlayerInfo.Actor : cam;
       float distcheck = actor.TypeInfo.CullDistance * engine.Game.PerfCullModifier;
 
       return (!IsPlayer(engine, id)
         && actor.TypeInfo.EnableDistanceCull 
-        && ActorDistanceInfo.GetRoughDistance(id, player.ID) > distcheck);
+        && ActorDistanceInfo.GetRoughDistance(actor.GetPosition(), engine.PlayerCameraInfo.Position) > distcheck);
     }
 
     public static bool IsFarMode(Engine engine, int id)
     {
-      ActorInfo cam = engine.ActorFactory.Get(engine.GameScenarioManager.SceneCameraID);
       ActorInfo actor = engine.ActorFactory.Get(id);
-      ActorInfo player = (engine.PlayerInfo.Actor != null) ? engine.PlayerInfo.Actor : cam;
       float distcheck = actor.TypeInfo.CullDistance * 0.25f * engine.Game.PerfCullModifier;
 
       return (!IsPlayer(engine, id) 
-        && actor.TypeInfo.EnableDistanceCull 
-        && ActorDistanceInfo.GetRoughDistance(id, player.ID) > distcheck);
+        && actor.TypeInfo.EnableDistanceCull
+        && ActorDistanceInfo.GetRoughDistance(actor.GetPosition(), engine.PlayerCameraInfo.Position) > distcheck);
     }
 
     public static bool IsPlayer(Engine engine, int id)

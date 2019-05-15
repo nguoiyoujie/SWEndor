@@ -35,8 +35,6 @@ namespace SWEndor.Scenarios
     {
       base.Launch();
 
-      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      cam.SetLocalPosition(0, 0, 0);
       Manager.MaxBounds = new TV_3DVECTOR(15000, 1500, 15000);
       Manager.MinBounds = new TV_3DVECTOR(-15000, -1500, -15000);
       Manager.MaxAIBounds = new TV_3DVECTOR(10000, 1500, 10000);
@@ -159,8 +157,7 @@ namespace SWEndor.Scenarios
       TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(0, 0, 5000);
       float creationTime = Game.GameTime;
 
-      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      cam.SetLocalPosition(350, 100, 1300);
+      PlayerCameraInfo.Position = new TV_3DVECTOR(350, 100, 1300);
 
       // Player X-Wing
       pos = new TV_3DVECTOR(0, 0, -150);
@@ -181,7 +178,7 @@ namespace SWEndor.Scenarios
         Registries = null
       }.Spawn(this);
 
-      Manager.CameraTargetActorID = ainfo.ID;
+      PlayerCameraInfo.LookAtActor = ainfo.ID;
       PlayerInfo.TempActorID = ainfo.ID;
 
       // Wings x(45-1)

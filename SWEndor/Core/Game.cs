@@ -275,6 +275,9 @@ namespace SWEndor
         {
           isProcessingRender = true;
           Engine.Render();
+
+          if (!IsPaused)
+            Engine.PlayerCameraInfo.Update();
           isProcessingRender = false;
         }
       }
@@ -299,9 +302,6 @@ namespace SWEndor
 
           if (!IsPaused)
             Engine.PlayerInfo.Update();
-
-          if (!IsPaused)
-            Engine.PlayerCameraInfo.Update();
 
           Engine.Screen2D.CurrentPage?.Tick();
 

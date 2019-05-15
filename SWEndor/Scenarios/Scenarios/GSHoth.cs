@@ -60,9 +60,6 @@ namespace SWEndor.Scenarios
     {
       base.Launch();
 
-      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      cam.SetLocalPosition(0, 0, 0);
-
       Manager.MaxBounds = new TV_3DVECTOR(15000, 1500, 9000);
       Manager.MinBounds = new TV_3DVECTOR(-15000, -1500, -20000);
       Manager.MaxAIBounds = new TV_3DVECTOR(15000, 1500, 8000);
@@ -249,8 +246,9 @@ namespace SWEndor.Scenarios
     public void Rebel_HyperspaceIn(GameEventArg arg)
     {
       ActorInfo ainfo;
-      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      cam.SetLocalPosition(200, 350, Manager.MaxBounds.z - 1500);
+      //ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
+      //cam.SetLocalPosition(200, 350, Manager.MaxBounds.z - 1500);
+      PlayerCameraInfo.Position = new TV_3DVECTOR(200, 350, Manager.MaxBounds.z - 1500);
 
       // Player Falcon
       ainfo = new ActorSpawnInfo
@@ -270,7 +268,7 @@ namespace SWEndor.Scenarios
       ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "front", "rear" };
       Engine.ActorDataSet.CombatData[ainfo.dataID].DamageModifier = 0.1f;
       ainfo.HitEvents += Rebel_PlayerHit;
-      Manager.CameraTargetActorID = ainfo.ID;
+      PlayerCameraInfo.LookAtActor = ainfo.ID;
       PlayerInfo.TempActorID = ainfo.ID;
 
       // X-Wings x12
@@ -532,49 +530,31 @@ namespace SWEndor.Scenarios
         if (Manager.GetGameStateB("GameOver"))
           return;
 
-        ActorInfo ainfo = ActorFactory.Get(((ActorStateChangeEventArg)arg).ActorID);
+        ActorInfo ainfo = ActorFactory.Get(arg.ActorID);
 
       if (ainfo.ActorState.IsDyingOrDead())
       {
         Manager.SetGameStateB("GameOver", true);
         Manager.IsCutsceneMode = true;
 
-        ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-        if (cam == null || !(cam.TypeInfo is DeathCameraATI))
+        PlayerInfo.ActorID = -1;
+        PlayerCameraInfo.LookActor = ainfo.ID;
+        PlayerCameraInfo.Look.SetModeDeathCircle(ainfo.TypeInfo.DeathCamera);
+
+        if (ainfo.ActorState.IsDying())
         {
-          ActorCreationInfo camaci = new ActorCreationInfo(ActorTypeFactory.Get("Death Camera"));
-          camaci.CreationTime = Game.GameTime;
-          camaci.InitialState = ActorState.DYING;
-          camaci.Position = ainfo.GetPosition();
-          camaci.Rotation = new TV_3DVECTOR();
-
-          ActorInfo a = ActorInfo.Create(ActorFactory, camaci);
-          PlayerInfo.ActorID = a.ID;
-
-          a.CameraSystemInfo.CamDeathCirclePeriod = ainfo.CameraSystemInfo.CamDeathCirclePeriod;
-          a.CameraSystemInfo.CamDeathCircleRadius = ainfo.CameraSystemInfo.CamDeathCircleRadius;
-          a.CameraSystemInfo.CamDeathCircleHeight = ainfo.CameraSystemInfo.CamDeathCircleHeight;
-
-          if (ainfo.ActorState.IsDying())
-          {
-            ainfo.TickEvents += ProcessPlayerDying;
-            ainfo.DestroyedEvents += ProcessPlayerKilled;
-          }
-          else
-          {
-            ainfo.DestroyedEvents += ProcessPlayerKilled;
-          }
-
-          if (ainfo.TypeInfo is TransportATI)
-          {
-            //Manager.AddEvent(Game.GameTime + 15, "Message.92");
-            TimedLifeSystem.Activate(Engine, ainfo.ID, 2000f);
-            Manager.AddEvent(Game.GameTime + 25, FadeOut);
-          }
+          ainfo.TickEvents += ProcessPlayerDying;
+          ainfo.DestroyedEvents += ProcessPlayerKilled;
         }
         else
         {
-          cam.SetLocalPosition(ainfo.GetPosition().x, ainfo.GetPosition().y, ainfo.GetPosition().z);
+          ainfo.DestroyedEvents += ProcessPlayerKilled;
+        }
+
+        if (ainfo.TypeInfo is TransportATI)
+        {
+          TimedLifeSystem.Activate(Engine, ainfo.ID, 2000f);
+          Manager.AddEvent(Game.GameTime + 25, FadeOut);
         }
       }
     }
@@ -825,7 +805,7 @@ namespace SWEndor.Scenarios
         ActionManager.ForceClearQueue(m_PlayerID);
         ActionManager.QueueNext(m_PlayerID, new Lock());
       }
-      PlayerInfo.ActorID = Manager.SceneCameraID;
+      PlayerInfo.ActorID = -1; // Manager.SceneCameraID;
 
       Manager.IsCutsceneMode = true;
     }
@@ -882,11 +862,12 @@ namespace SWEndor.Scenarios
       Manager.AddEvent(Game.GameTime + 15, Message_14);
       Manager.AddEvent(Game.GameTime + 25, Message_15);
 
-      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      cam.SetLocalPosition(400, 130, -1800);
-      cam.MoveData.MaxSpeed = 50;
-      cam.MoveData.Speed = 50;
-      Manager.CameraTargetActorID = m_PlayerID;
+      //cam.MoveData.MaxSpeed = 50;
+      //cam.MoveData.Speed = 50;
+      PlayerCameraInfo.Position = new TV_3DVECTOR(400, 130, -1800);
+      //PlayerCameraInfo.LookAtPosition = new TV_3DVECTOR(200, 350, Manager.MaxBounds.z - 1500);
+
+      PlayerCameraInfo.LookAtActor = m_PlayerID;
       PlayerInfo.TempActorID = m_PlayerID;
 
       int counter = 0;

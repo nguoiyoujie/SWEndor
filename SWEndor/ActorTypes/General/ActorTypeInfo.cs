@@ -108,12 +108,7 @@ namespace SWEndor.ActorTypes
     public bool AlwaysShowInRadar = false;
 
     // Performance Savings
-    //public bool NoRender = false;
-    //public bool NoProcess = false;
-    //public bool NoMove = false;
-    //public bool NoRotate = false;
     public bool IsLaser = false;
-    //public bool NoAI = false;
 
     // Misc
     public bool IsExplosion = false;
@@ -123,6 +118,9 @@ namespace SWEndor.ActorTypes
 
     // Debris
     public DebrisSpawnerInfo[] Debris = new DebrisSpawnerInfo[0];
+
+    public ActorCameraInfo[] Cameras = new ActorCameraInfo[0];
+    public DeathCameraInfo DeathCamera = new DeathCameraInfo(350, 25, 15);
 
     // Sound
     public SoundSourceInfo[] InitialSoundSources = new SoundSourceInfo[0];
@@ -137,6 +135,8 @@ namespace SWEndor.ActorTypes
         if (SourceMesh == null)
         {
           SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Name);
+          //SourceMesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_BUMPMAPPING_TANGENTSPACE, 8);
+
           if (SourceMeshPath.Length > 0)
             SourceMesh.LoadXFile(SourceMeshPath, true);
           SourceMesh.Enable(false);
@@ -212,69 +212,6 @@ namespace SWEndor.ActorTypes
       return tex;
     }
 
-  public virtual void ChaseCamera(ActorInfo ainfo)
-    {
-      TVCamera cam = PlayerCameraInfo.Camera;
-      CameraMode mode = PlayerCameraInfo.CameraMode;
-
-      // defaults
-      TV_3DVECTOR defaultcam = new TV_3DVECTOR();
-      TV_3DVECTOR defaulttgt = new TV_3DVECTOR();
-      switch (mode)
-      {
-        case CameraMode.FREEROTATION:
-        case CameraMode.FREEMODE:
-        case CameraMode.FIRSTPERSON:
-          defaultcam = new TV_3DVECTOR(0, 0, ainfo.TypeInfo.max_dimensions.z + 10);
-          defaulttgt = new TV_3DVECTOR(0, 0, 20000);
-          break;
-        case CameraMode.THIRDPERSON:
-          defaultcam = new TV_3DVECTOR(0, ainfo.TypeInfo.max_dimensions.y * 5, ainfo.TypeInfo.min_dimensions.z * 8);
-          defaulttgt = new TV_3DVECTOR(0, 0, 20000);
-          break;
-        case CameraMode.THIRDREAR:
-          defaultcam = new TV_3DVECTOR(0, ainfo.TypeInfo.max_dimensions.y * 3, ainfo.TypeInfo.max_dimensions.z * 8);
-          defaulttgt = new TV_3DVECTOR(0, 0, -20000);
-          break;
-      }
-
-      if (mode == CameraMode.FREEROTATION
-      && !GameScenarioManager.IsCutsceneMode)
-      {
-        TV_3DVECTOR location = new TV_3DVECTOR();
-        TV_3DVECTOR campos = ainfo.GetRelativePositionXYZ(location.x, location.y, location.z);
-
-        cam.SetPosition(campos.x, campos.y, campos.z);
-
-        TV_3DVECTOR rot = cam.GetRotation();
-        cam.SetRotation(rot.x, rot.y, rot.z / 2);
-      }
-      else if (mode == CameraMode.FREEMODE
-            && !GameScenarioManager.IsCutsceneMode)
-      {
-        TV_3DVECTOR rot = cam.GetRotation();
-        cam.SetRotation(rot.x, rot.y, rot.z / 2);
-      }
-      else
-      {
-        int cammode = (GameScenarioManager.IsCutsceneMode) ? 0 : (int)mode;
-        TV_3DVECTOR location = new TV_3DVECTOR();
-        TV_3DVECTOR target = new TV_3DVECTOR();
-
-        location = (cammode < ainfo.CameraSystemInfo.CamLocations.Length) ? ainfo.CameraSystemInfo.CamLocations[cammode] : defaultcam;
-        target = (cammode < ainfo.CameraSystemInfo.CamTargets.Length) ? ainfo.CameraSystemInfo.CamTargets[cammode] : defaulttgt;
-
-        TV_3DVECTOR campos = ainfo.GetRelativePositionXYZ(location.x, location.y, location.z);
-        TV_3DVECTOR camview = ainfo.GetRelativePositionXYZ(target.x, target.y, target.z);
-
-        cam.SetPosition(campos.x, campos.y, campos.z);
-        cam.SetLookAt(camview.x, camview.y, camview.z);
-
-        TV_3DVECTOR rot = cam.GetRotation();
-        cam.SetRotation(rot.x, rot.y, ainfo.GetRotation().z / 2);
-      }
-    }
-
     public virtual void Initialize(ActorInfo ainfo)
     {
       // AI
@@ -309,8 +246,6 @@ namespace SWEndor.ActorTypes
 
       // sound
       if (PlayerInfo.Actor != null
-        && !(PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
-        && !(PlayerInfo.Actor.TypeInfo is DeathCameraATI)
         && ainfo.CreationState == CreationState.ACTIVE 
         && !ActorInfo.IsScenePlayer(Engine, ainfo.ID)
         && !(GameScenarioManager.Scenario is GSMainMenu))
@@ -339,47 +274,18 @@ namespace SWEndor.ActorTypes
           break;
       }
 
-      if (ActorInfo.IsPlayer(Engine, ainfo.ID) && !(ainfo.TypeInfo is DeathCameraATI))
+      if (ainfo.ActorState.IsDyingOrDead())
       {
-        ActorInfo cam = ainfo.GetEngine().ActorFactory.Get(GameScenarioManager.SceneCameraID);
-        if (ainfo.ActorState.IsDyingOrDead())
+        if (ActorInfo.IsPlayer(Engine, ainfo.ID))
         {
-          if (cam == null || !(cam.TypeInfo is DeathCameraATI))
-          {
-            ActorCreationInfo camaci = new ActorCreationInfo(ActorTypeFactory.Get("Death Camera"));
-            camaci.CreationTime = Game.GameTime;
-            camaci.InitialState = ActorState.DYING;
-            camaci.Position = ainfo.GetPosition();
-            camaci.Rotation = new TV_3DVECTOR();
-            ActorInfo a = ActorInfo.Create(ActorFactory, camaci);
-            PlayerInfo.ActorID = a.ID;
+          PlayerInfo.ActorID = -1;
+          PlayerCameraInfo.LookActor = ainfo.ID;
+          PlayerCameraInfo.Look.SetModeDeathCircle(DeathCamera);
 
-            a.CameraSystemInfo.CamDeathCirclePeriod = ainfo.CameraSystemInfo.CamDeathCirclePeriod;
-            a.CameraSystemInfo.CamDeathCircleRadius = ainfo.CameraSystemInfo.CamDeathCircleRadius;
-            a.CameraSystemInfo.CamDeathCircleHeight = ainfo.CameraSystemInfo.CamDeathCircleHeight;
+          if (ainfo.ActorState.IsDying())
+            ainfo.TickEvents += GameScenarioManager.Scenario.ProcessPlayerDying;
 
-            if (ainfo.ActorState.IsDying())
-            {
-              ainfo.TickEvents += GameScenarioManager.Scenario.ProcessPlayerDying;
-              ainfo.DestroyedEvents += GameScenarioManager.Scenario.ProcessPlayerKilled;
-            }
-            else
-            {
-              ainfo.DestroyedEvents += GameScenarioManager.Scenario.ProcessPlayerKilled;
-            }
-          }
-          else
-          {
-            cam.SetLocalPosition(ainfo.GetLocalPosition().x, ainfo.GetLocalPosition().y, ainfo.GetLocalPosition().z);
-          }
-        }
-        else
-        {
-          if (cam != null && cam.TypeInfo is DeathCameraATI)
-          {
-            ActorInfo.Kill(Engine, cam.ID);
-            GameScenarioManager.SceneCameraID = -1;
-          }
+          ainfo.DestroyedEvents += GameScenarioManager.Scenario.ProcessPlayerKilled;
         }
       }
     }
@@ -392,7 +298,8 @@ namespace SWEndor.ActorTypes
       if (owner == null || hitby == null)
         return;
 
-      if (owner.ActorState.IsDying() && ActorDataSet.CombatData[ActorFactory.GetIndex(ownerActorID)].HitWhileDyingLeadsToDeath)
+      if (owner.ActorState.IsDying() 
+        && ActorDataSet.CombatData[ActorFactory.GetIndex(ownerActorID)].HitWhileDyingLeadsToDeath)
         owner.ActorState = ActorState.DEAD;
 
       if (owner.ActorState.IsDyingOrDead()

@@ -35,8 +35,6 @@ namespace SWEndor.Scenarios
     {
       base.Launch();
 
-      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      cam.SetLocalPosition(0, 0, 0);
       Manager.MaxBounds = new TV_3DVECTOR(2500, 200, 2500);
       Manager.MinBounds = new TV_3DVECTOR(-2500, -200, -2500);
       Manager.MaxAIBounds = new TV_3DVECTOR(2500, 200, 2500);

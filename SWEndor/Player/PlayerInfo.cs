@@ -97,7 +97,7 @@ namespace SWEndor.Player
     private void UpdateBounds()
     {
       bool announceOutOfBounds = false;
-      if (Actor != null && !(Actor.TypeInfo is InvisibleCameraATI) && !(Actor.TypeInfo is DeathCameraATI))
+      if (Actor != null)
       {
         TV_3DVECTOR pos = Actor.GetPosition();
         if (pos.x < Engine.GameScenarioManager.MinBounds.x)

@@ -15,7 +15,6 @@ namespace SWEndor.UI.Widgets
             && PlayerInfo.Actor != null
             && PlayerInfo.Actor.ActorState != ActorState.DEAD
             && PlayerInfo.Actor.ActorState != ActorState.DYING
-            && !(PlayerInfo.Actor.TypeInfo is InvisibleCameraATI)
             && Owner.ShowUI
             && Owner.Box3D_Enable);
       }

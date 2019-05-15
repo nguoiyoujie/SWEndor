@@ -26,6 +26,10 @@ namespace SWEndor.ActorTypes.Instances
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"stardestroyer\star_destroyer.x");
       SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"stardestroyer\star_destroyer_far.x");
 
+      Cameras = new ActorCameraInfo[] {
+        new ActorCameraInfo(new TV_3DVECTOR(0, 300, -385), new TV_3DVECTOR(0, 300, 2000)),
+        };
+      DeathCamera = new DeathCameraInfo(1750, 400, 30);
       SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 1500f, new TV_3DVECTOR(0, -100, -400), true) };
       AddOns = new AddOnInfo[]
       {
@@ -88,12 +92,7 @@ namespace SWEndor.ActorTypes.Instances
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-
-      ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 300, -385) };
-      ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 300, 2000) };
-
       ainfo.DyingMoveComponent = new DyingSink(0.005f, 5f, 0.8f);
-
       ainfo.SpawnerInfo = new SDSpawner(ainfo);
     }
   }

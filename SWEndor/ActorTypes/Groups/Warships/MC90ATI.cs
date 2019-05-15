@@ -33,6 +33,8 @@ namespace SWEndor.ActorTypes.Instances
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"mc90\mc90.x");
       SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"mc90\mc90_far.x");
 
+      Cameras = new ActorCameraInfo[] { new ActorCameraInfo(new TV_3DVECTOR(0, 45, 660), new TV_3DVECTOR(0, 45, 2000)) };
+      DeathCamera = new DeathCameraInfo(1500, 250, 30);
       SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 1500f, new TV_3DVECTOR(0, 0, -750), true) };
       AddOns = new AddOnInfo[]
       {
@@ -61,15 +63,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
 
-      ainfo.CameraSystemInfo.CamDeathCircleRadius = 1500;
-      ainfo.CameraSystemInfo.CamDeathCircleHeight = 250;
-      ainfo.CameraSystemInfo.CamDeathCirclePeriod = 30;
-
-      ainfo.CameraSystemInfo.CamLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 45, 660) };
-      ainfo.CameraSystemInfo.CamTargets = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 45, 2000) };
-
       ainfo.DyingMoveComponent = new DyingSink(0.01f, 2.5f, 0.4f);
-
       ainfo.SpawnerInfo = new MC90Spawner(ainfo);
     }
   }

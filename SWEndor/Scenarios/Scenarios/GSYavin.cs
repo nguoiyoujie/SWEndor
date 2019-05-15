@@ -88,8 +88,8 @@ namespace SWEndor.Scenarios
     {
       base.Launch();
 
-      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      cam.SetLocalPosition(0, 0, 0);
+      PlayerCameraInfo.CameraMode = CameraMode.FIRSTPERSON;
+
       Manager.MaxBounds = new TV_3DVECTOR(15000, 1500, 10000);
       Manager.MinBounds = new TV_3DVECTOR(-15000, -1500, -15000);
       Manager.MaxAIBounds = new TV_3DVECTOR(15000, 1500, 10000);
@@ -535,11 +535,9 @@ namespace SWEndor.Scenarios
 
     public void Rebel_HyperspaceIn(GameEventArg arg)
     {
-      //ActorCreationInfo acinfo;
       ActorInfo ainfo;
 
-      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      cam.SetLocalPosition(150, 100, Manager.MaxBounds.z - 1000);
+      PlayerCameraInfo.Position = new TV_3DVECTOR(150, 100, Manager.MaxBounds.z - 1000);
 
       // Player X-Wing
       ainfo = new ActorSpawnInfo
@@ -558,7 +556,7 @@ namespace SWEndor.Scenarios
         Registries = null
       }.Spawn(this);
 
-      Manager.CameraTargetActorID = ainfo.ID;
+      PlayerCameraInfo.LookAtActor = ainfo.ID;
       PlayerInfo.TempActorID = ainfo.ID;
 
       // X-Wings x21, Y-Wing x8
@@ -1174,7 +1172,8 @@ namespace SWEndor.Scenarios
         ActionManager.ForceClearQueue(m_PlayerID);
         ActionManager.QueueNext(m_PlayerID, new Lock());
       }
-      PlayerInfo.ActorID = Manager.SceneCameraID;
+      PlayerCameraInfo.LookActor = -1;
+      //PlayerInfo.ActorID = Manager.SceneCameraID;
       
       Manager.IsCutsceneMode = true;
     }
@@ -1196,11 +1195,12 @@ namespace SWEndor.Scenarios
     public void Scene_DeathStarCam(GameEventArg arg)
     {
       Manager.AddEvent(Game.GameTime + 0.1f, Scene_EnterCutscene);
-      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      cam.SetLocalPosition(1000, 300, -15000);
-      cam.MoveData.MaxSpeed = 600;
-      cam.MoveData.Speed = 600;
-      Manager.CameraTargetActorID = m_ADS.ID;
+
+      PlayerCameraInfo.Position = new TV_3DVECTOR(1000, 300, -15000);
+      PlayerCameraInfo.LookAtActor = m_ADS.ID;
+
+      //cam.MoveData.MaxSpeed = 600;
+      //cam.MoveData.Speed = 600;
     }
 
 
@@ -1245,8 +1245,7 @@ namespace SWEndor.Scenarios
       StageNumber = 2;
       Rebel_RemoveTorps(null);
 
-      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      cam.SetLocalPosition(-550, -130, Manager.MaxBounds.z - 1500);
+      PlayerCameraInfo.Position = new TV_3DVECTOR(-550, -130, Manager.MaxBounds.z - 1500);
 
       m_ADS_Surface = new ActorSpawnInfo
       {
@@ -1284,9 +1283,9 @@ namespace SWEndor.Scenarios
       m_AYavin.SetLocalRotation(0, 0, 180);
       ActorInfo.Kill(Engine, m_AYavin4.ID);
 
-      cam.MoveData.MaxSpeed = 450;
-      cam.MoveData.Speed = 450;
-      Manager.CameraTargetActorID = m_PlayerID;
+      //cam.MoveData.MaxSpeed = 450;
+      //cam.MoveData.Speed = 450;
+      PlayerCameraInfo.LookAtActor = m_PlayerID;
 
       //Empire_TIEWave(null);
       Empire_Towers01(null);
@@ -1302,11 +1301,10 @@ namespace SWEndor.Scenarios
 
       StageNumber = 3;
 
-      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      cam.SetLocalPosition(600, 130, Manager.MaxBounds.z - 1000);
-      cam.MoveData.MaxSpeed = 450;
-      cam.MoveData.Speed = 450;
-      Manager.CameraTargetActorID = m_PlayerID;
+      PlayerCameraInfo.Position = new TV_3DVECTOR(600, 130, Manager.MaxBounds.z - 1000);
+      //cam.MoveData.MaxSpeed = 450;
+      //cam.MoveData.Speed = 450;
+      PlayerCameraInfo.LookAtActor = m_PlayerID;
 
       foreach (int actorID in MainAllyFaction.GetWings())
       {
@@ -1375,11 +1373,10 @@ namespace SWEndor.Scenarios
           ainfo.SpawnerInfo.NextSpawnTime = Game.GameTime + 3f;
 
       StageNumber = 4;
-      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      cam.SetLocalPosition(1000, 30, -2000);
-      cam.MoveData.MaxSpeed = 750;
-      cam.MoveData.Speed = 750;
-      Manager.CameraTargetActorID = ainfo.ID;
+      PlayerCameraInfo.Position = new TV_3DVECTOR(1000, 30, -2000);
+      //cam.MoveData.MaxSpeed = 750;
+      //cam.MoveData.Speed = 750;
+      PlayerCameraInfo.LookAtActor = m_PlayerID;
 
       foreach (int actorID in MainAllyFaction.GetWings())
       {
@@ -1400,8 +1397,8 @@ namespace SWEndor.Scenarios
       Manager.AddEvent(Game.GameTime + 6.5f, Message_10_BeginRun);
 
       StageNumber = 5;
-      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      cam.SetLocalPosition(550, -130, -1500);
+
+      PlayerCameraInfo.Position = new TV_3DVECTOR(550, -130, -1500);
       SoundManager.SetMusic("battle_1_2", true);
       Manager.MaxAIBounds = Manager.MaxAIBounds + new TV_3DVECTOR(2500, 0, 0);
 
@@ -1448,16 +1445,16 @@ namespace SWEndor.Scenarios
       ActorInfo.Kill(Engine, m_ADS_Surface.ID);
       Scene_ClearGroundObjects(null);
 
-      cam.MoveData.MaxSpeed = 450;
-      cam.MoveData.Speed = 450;
-      Manager.CameraTargetActorID = m_PlayerID;
+      //cam.MoveData.MaxSpeed = 450;
+      //cam.MoveData.Speed = 450;
+      PlayerCameraInfo.LookAtActor = m_PlayerID;
 
       Empire_Towers04(null);
     }
 
     public void Scene_Stage05b_Spawn(GameEventArg arg)
     {
-      DeathCamMode = DeathCamMode.FOLLOW;
+      //DeathCamMode = DeathCamMode.FOLLOW;
 
       Manager.MaxBounds = new TV_3DVECTOR(5000000, -185, 1000);
       //Manager.MinBounds = new TV_3DVECTOR(vader_distX - 1000, -400, -1000);
@@ -1790,8 +1787,7 @@ namespace SWEndor.Scenarios
       Manager.AddEvent(Game.GameTime + 8f, Scene_Stage06_VaderAttack);
 
       StageNumber = 6;
-      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      cam.SetLocalPosition(vader_distX - 2750, -225, 0);
+      PlayerCameraInfo.Position = new TV_3DVECTOR(vader_distX - 2750, -225, 0);
       SoundManager.SetMusic("battle_1_3", true);
 
       ActorInfo player = ActorFactory.Get(m_PlayerID);
@@ -1885,9 +1881,9 @@ namespace SWEndor.Scenarios
       vaderE2.CanEvade = false;
       vaderE2.CanRetaliate = false;
 
-      cam.MoveData.MaxSpeed = 425;
-      cam.MoveData.Speed = 425;
-      Manager.CameraTargetActorID = player.ID;
+      //cam.MoveData.MaxSpeed = 425;
+      //cam.MoveData.Speed = 425;
+      PlayerCameraInfo.LookAtActor = player.ID;
     }
 
     public void Scene_Stage06_VaderAttack(GameEventArg arg)
@@ -1924,8 +1920,8 @@ namespace SWEndor.Scenarios
       AtmosphereInfo.ShowSun = true;
 
       StageNumber = 6;
-      ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      cam.SetLocalPosition(vaderend_distX + 900, -365, 0);
+
+      PlayerCameraInfo.Position = new TV_3DVECTOR(vaderend_distX + 900, -365, 0);
       SoundManager.SetMusic("ds_end_1_1", true);
 
       ActorInfo vader = ActorFactory.Get(m_VaderID);
@@ -1979,9 +1975,9 @@ namespace SWEndor.Scenarios
       vaderE1.HitEvents += Scene_Stage06_VaderFlee;
       vaderE2.HitEvents += Scene_Stage06_VaderFlee;
 
-      cam.MoveData.MaxSpeed = 25;
-      cam.MoveData.Speed = 25;
-      Manager.CameraTargetActorID = falcon.ID;
+      //cam.MoveData.MaxSpeed = 25;
+      //cam.MoveData.Speed = 25;
+      PlayerCameraInfo.LookAtActor = falcon.ID;
     }
 
     public void Scene_Stage06_VaderFlee(GameEventArg arg)
