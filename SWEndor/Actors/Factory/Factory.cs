@@ -101,13 +101,15 @@ namespace SWEndor.Actors
       public void DoEach(Action<Engine, int> action)
       {
         ActorInfo actor = Get(First);
-        for (int i = 0; i < count; i++)
+        int freezecount = count;
+        for (int i = 0; i < freezecount && actor != null; i++)
         {
           action.Invoke(Engine, actor.ID);
-          actor = Get(actor.NextID);
 
-          if (actor == null && i < count - 1)
+          if (Get(actor.NextID) == null && i < count - 1)
           { }
+
+          actor = Get(actor.NextID);
         }
       }
 
