@@ -63,17 +63,6 @@ namespace SWEndor.ActorTypes.Groups
         }
       }
     }
-
-    /*
-    public override void ProcessNewState(ActorInfo ainfo)
-    {
-      base.ProcessNewState(ainfo);
-      if (ainfo.ActorState.IsDying())
-      {
-        ainfo.ActorState = ActorState.DEAD;
-      }
-    }
-    */
   }
 }
 

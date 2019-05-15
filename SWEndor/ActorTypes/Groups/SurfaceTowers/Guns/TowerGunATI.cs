@@ -7,25 +7,20 @@ using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class TowerGunAdvATI : Groups.SurfaceTower
+  public class TowerGunATI : Groups.SurfaceGun
   {
-    internal TowerGunAdvATI(Factory owner) : base(owner, "Advanced Turbolaser Turret")
+    internal TowerGunATI(Factory owner) : base(owner, "Turbolaser Turret")
     {
       ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS, deathExplosionSize: 3);
 
-      MaxStrength = 45;
+      MaxStrength = 16;
       ImpactDamage = 60;
-      MaxTurnRate = 48;
+      MaxTurnRate = 36;
       ZTilt = 0;
-      XLimit = 55;
+      XLimit = 35;
 
-      RadarSize = 0;
-
-      Score_perStrength = 100;
-      Score_DestroyBonus = 3500;
-
-      TargetType = TargetType.ADDON;
-      RadarType = RadarType.NULL;
+      Score_perStrength = 25;
+      Score_DestroyBonus = 1500;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"towers\tower_turbolaser.x");
     }
@@ -34,7 +29,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
 
-      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", WeaponFactory.Get("TOWR_LASR") }
+      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo> { { "laser", WeaponFactory.Get("TOWR_DLSR") }
                                                         };
       ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser" };
       ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };

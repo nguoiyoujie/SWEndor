@@ -3,9 +3,9 @@ using SWEndor.Actors.Data;
 
 namespace SWEndor.ActorTypes.Groups
 {
-  public class SurfaceTower : ActorTypeInfo
+  public class SurfaceGun : ActorTypeInfo
   {
-    internal SurfaceTower(Factory owner, string name) : base(owner, name)
+    internal SurfaceGun(Factory owner, string name) : base(owner, name)
     {
       // Combat
       CombatData = CombatData.DefaultShip;
@@ -13,12 +13,11 @@ namespace SWEndor.ActorTypes.Groups
 
       CullDistance = 10000;
 
-      RadarSize = 1.5f;
+      RadarSize = 0;
+      TargetType = TargetType.ADDON;
+      RadarType = RadarType.NULL;
 
-      TargetType = TargetType.ADDON | TargetType.STRUCTURE;
-      RadarType = RadarType.FILLED_SQUARE;
-
-      Mask = ComponentMask.STATIC_ACTOR;
+      Mask = ComponentMask.ACTOR;
     }
   }
 }

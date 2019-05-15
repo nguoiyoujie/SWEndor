@@ -1,4 +1,5 @@
-﻿using SWEndor.Actors.Data;
+﻿using SWEndor.Actors;
+using SWEndor.Actors.Data;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -15,6 +16,8 @@ namespace SWEndor.ActorTypes.Groups
 
       TargetType |= TargetType.ADDON;
       RadarType = RadarType.HOLLOW_CIRCLE_S;
+
+      Mask |= ComponentMask.HAS_AI;
 
       RadarSize = 1;
     }
