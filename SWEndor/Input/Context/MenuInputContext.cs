@@ -1,5 +1,7 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.Terminal;
+using System.Collections.Generic;
 
 namespace SWEndor.Input.Context
 {
@@ -66,6 +68,17 @@ namespace SWEndor.Input.Context
         {
           Globals.Engine.SoundManager.QueueMusic("dynamic\\S-WIN-LG", 1657);
           Globals.Engine.SoundManager.SetSound("button_1");
+        }
+
+        if (keydata.Key.Equals((int)CONST_TV_KEY.TV_KEY_9))
+        {
+          List<int> list = new List<int>(Globals.Engine.GameScenarioManager.Scenario.MainEnemyFaction.GetWings());
+          list.AddRange(Globals.Engine.GameScenarioManager.Scenario.MainAllyFaction.GetWings());
+
+          foreach (int i in list)
+          {
+            ActorInfo.Kill(Globals.Engine, i);
+          }
         }
       }
     }

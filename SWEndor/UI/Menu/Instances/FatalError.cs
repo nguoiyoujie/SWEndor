@@ -55,7 +55,7 @@ namespace SWEndor.UI.Menu.Pages
       {
         Engine.SoundManager.SetSound("r23");
         Engine.SoundManager.SetMusicStop();
-        Engine.Exit();
+        Engine.BeginExit();
         return true;
       }
       return false;

@@ -1,6 +1,8 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Data;
 using SWEndor.ActorTypes;
+using SWEndor.Primitives;
 using System;
 using System.Collections.Generic;
 
@@ -288,16 +290,12 @@ namespace SWEndor.UI.Widgets
 
     private void DrawRectGiant(ActorInfo a, float x, float y, float proty, int color)
     {
-      TV_3DVECTOR boxmin = new TV_3DVECTOR();
-      TV_3DVECTOR boxmax = new TV_3DVECTOR();
-      a.GetBoundingBox(ref boxmin, ref boxmax, true);
+      BoundingBox box = Engine.MeshDataSet.Mesh_getBoundingBox(a.ID, true);
       float scale = Engine.MeshDataSet.Scale_get(a.ID);
-      boxmin *= scale;
-      boxmax *= scale;
 
       List<TV_2DVECTOR?> ts = new List<TV_2DVECTOR?>();
-      float bx = boxmin.x;
-      float bz = boxmin.z;
+      float bx = box.X.Min * scale;
+      float bz = box.Z.Min * scale;
       int i = 0;
       float ang = a.GetRotation().y;
       while (i < 4)
@@ -323,36 +321,36 @@ namespace SWEndor.UI.Widgets
         {
           case 3:
             bz -= radar_bigshiprenderunit;
-            if (bz < boxmin.z)
+            if (bz < box.Z.Min * scale)
             {
-              bz = boxmin.z;
+              bz = box.Z.Min * scale;
               i++;
               ts.Add(null);
             }
             break;
           case 2:
             bx -= radar_bigshiprenderunit;
-            if (bx < boxmin.x)
+            if (bx < box.X.Min * scale)
             {
-              bx = boxmin.x;
+              bx = box.X.Min * scale;
               i++;
               ts.Add(null);
             }
             break;
           case 1:
             bz += radar_bigshiprenderunit;
-            if (bz > boxmax.z)
+            if (bz > box.Z.Max * scale)
             {
-              bz = boxmax.z;
+              bz = box.Z.Max * scale;
               i++;
               ts.Add(null);
             }
             break;
           case 0:
             bx += radar_bigshiprenderunit;
-            if (bx > boxmax.x)
+            if (bx > box.X.Max * scale)
             {
-              bx = boxmax.x;
+              bx = box.X.Max * scale;
               i++;
               ts.Add(null);
             }
@@ -370,16 +368,12 @@ namespace SWEndor.UI.Widgets
 
     private void DrawTriangleGiant(ActorInfo a, float x, float y, float proty, int color)
     {
-      TV_3DVECTOR boxmin = new TV_3DVECTOR();
-      TV_3DVECTOR boxmax = new TV_3DVECTOR();
-      a.GetBoundingBox(ref boxmin, ref boxmax, true);
+      BoundingBox box = Engine.MeshDataSet.Mesh_getBoundingBox(a.ID, true);
       float scale = Engine.MeshDataSet.Scale_get(a.ID);
-      boxmin *= scale;
-      boxmax *= scale;
 
       List<TV_2DVECTOR?> ts = new List<TV_2DVECTOR?>();
-      float bx = boxmin.x;
-      float bz = boxmin.z;
+      float bx = box.X.Min * scale;
+      float bz = box.Z.Min * scale;
       int i = 0;
       float ang = a.GetRotation().y;
       while (i < 3)
@@ -405,29 +399,29 @@ namespace SWEndor.UI.Widgets
         {
           case 2:
             bx -= radar_bigshiprenderunit;
-            if (bx <= boxmin.x)
+            if (bx <= box.X.Min * scale)
             {
-              bx = boxmin.x;
+              bx = box.X.Min * scale;
               i++;
               ts.Add(null);
             }
             break;
           case 1:
             bz -= radar_bigshiprenderunit;
-            bx += radar_bigshiprenderunit * (boxmax.x - boxmin.x) / (boxmax.z - boxmin.z) / 2;
-            if (bz <= boxmin.z)
+            bx += radar_bigshiprenderunit * (box.X.Max * scale - box.X.Min * scale) / (box.Z.Max * scale - box.Z.Min * scale) / 2;
+            if (bz <= box.Z.Min * scale)
             {
-              bz = boxmin.z;
+              bz = box.Z.Min * scale;
               i++;
               ts.Add(null);
             }
             break;
           case 0:
             bz += radar_bigshiprenderunit;
-            bx += radar_bigshiprenderunit * (boxmax.x - boxmin.x) / (boxmax.z - boxmin.z) / 2;
-            if (bz >= boxmax.z)
+            bx += radar_bigshiprenderunit * (box.X.Max * scale - box.X.Min * scale) / (box.Z.Max * scale - box.Z.Min * scale) / 2;
+            if (bz >= box.Z.Max * scale)
             {
-              bz = boxmax.z;
+              bz = box.Z.Max * scale;
               i++;
               ts.Add(null);
             }

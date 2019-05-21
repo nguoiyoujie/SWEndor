@@ -12,6 +12,7 @@ namespace SWEndor.ActorTypes.Instances
         SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Name);
 
         // 1 texture
+        int tex = 0;
         string texname = @"yavin4.bmp";
         string alphatexname = @"yavin4alpha.bmp";
         string texpath = Path.Combine(Globals.ImagePath, "planets", texname);
@@ -20,10 +21,13 @@ namespace SWEndor.ActorTypes.Instances
         {
           int texS = TrueVision.TVTextureFactory.LoadTexture(texpath);
           int texA = TrueVision.TVTextureFactory.LoadTexture(alphatexpath);
-          TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texname);
+          tex = TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texname);
         }
-        SourceMesh.CreateBox(50000, 50000, 0.001f);
-        SourceMesh.SetTexture(TrueVision.TVGlobals.GetTex(texname));
+
+        float size = 50000;
+        SourceMesh.AddWall(tex, -size / 2, 0, size / 2, 0, size, -size / 2);
+        //SourceMesh.CreateBox(50000, 50000, 0.001f);
+        SourceMesh.SetTexture(tex);
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);
       }

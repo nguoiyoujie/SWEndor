@@ -113,6 +113,11 @@ namespace SWEndor
       Task.Factory.StartNew(new Action(Tick)).ContinueWith(new Action<Task>(t => GenerateFatalError(t.Exception.InnerException)), TaskContinuationOptions.OnlyOnFaulted);
     }
 
+    public void Stop()
+    {
+      State = RunState.STOPPED;
+    }
+
     public void PrepExit()
     {
       tm_ai.Stop();
@@ -123,11 +128,6 @@ namespace SWEndor
       tm_sound.Stop();
       Engine.SoundManager.Update();
       Thread.Sleep(1500);
-    }
-
-    public void Stop()
-    {
-      State = RunState.STOPPED;
     }
 
     private void Tick()
@@ -177,9 +177,6 @@ namespace SWEndor
             TimeSinceRender += AddTime;
             AddTime = 0;
 
-            if (!septhread_render)
-              TickRender();
-
             if (!septhread_collision)
               TickCollision();
 
@@ -191,6 +188,9 @@ namespace SWEndor
 
             if (!septhread_sound)
               TickSound();
+
+            if (!septhread_render)
+              TickRender();
 
             if (!IsPaused)
               GameTime += TimeSinceRender;
@@ -209,6 +209,10 @@ namespace SWEndor
                       , Application.ProductName + " - Error Encountered!"
                       , MessageBoxButtons.OK));
         return;
+      }
+      finally
+      {
+        Engine.Exit();
       }
     }
 

@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes;
+using SWEndor.Primitives;
 using SWEndor.Weapons;
 using System;
 
@@ -145,15 +146,15 @@ namespace SWEndor.AI.Actions
       ActorInfo target = engine.ActorFactory.Get(targetActorID);
       if (target != null)
       {
-        target.GetBoundingSphere(ref center, ref radius);
-        center += target.GetPosition();
-        radius += engine.Random.Next((int)(-4 * actor.TypeInfo.MaxSpeed), (int)(4 * actor.TypeInfo.MaxSpeed));
+        BoundingSphere sph = engine.MeshDataSet.Mesh_getBoundingSphere(targetActorID, true);
+        center = sph.Position;
+        radius = sph.Radius + engine.Random.Next((int)(-4 * actor.TypeInfo.MaxSpeed), (int)(4 * actor.TypeInfo.MaxSpeed));
 
         float xzAngle = engine.Random.Next(0, 360);
 
-        center.x += (float)Math.Cos(xzAngle) * radius;
+        center.x += (float)Math.Cos(xzAngle * Globals.PI / 180) * radius;
         center.y += engine.Random.Next(-200, 200);
-        center.x += (float)Math.Sin(xzAngle) * radius; // x??
+        center.z += (float)Math.Sin(xzAngle * Globals.PI / 180) * radius;
 
         Utilities.Clamp(ref center, engine.GameScenarioManager.MinAIBounds * 0.75f, engine.GameScenarioManager.MaxAIBounds * 0.75f);
       }

@@ -2,6 +2,7 @@
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
+using System;
 
 namespace SWEndor.Actors.Components
 {
@@ -93,7 +94,11 @@ namespace SWEndor.Actors.Components
         int dummy;
 
         TV_3DVECTOR prostart = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.max_dimensions.z + 10);
-        TV_3DVECTOR proend0 = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.max_dimensions.z + 10 + data.ProspectiveCollisionScanDistance);
+        TV_3DVECTOR proend0 = actor.GetRelativePositionXYZ((float)Math.Sin(actor.MoveData.YTurnAngle * Globals.PI / 180) * data.ProspectiveCollisionScanDistance  //* actor.MoveData.Speed
+                                                         , -(float)Math.Sin(actor.MoveData.XTurnAngle * Globals.PI / 180) * data.ProspectiveCollisionScanDistance  //* actor.MoveData.Speed
+        //TV_3DVECTOR proend0 = actor.GetRelativePositionXYZ((float)Math.Sin(actor.MoveData.YTurnAngle * Globals.PI / 180) * data.ProspectiveCollisionScanDistance
+        //                                                , -(float)Math.Sin(actor.MoveData.XTurnAngle * Globals.PI / 180) * data.ProspectiveCollisionScanDistance
+                                                         , actor.TypeInfo.max_dimensions.z + 10 + data.ProspectiveCollisionScanDistance);
 
         TV_3DVECTOR proImpact = new TV_3DVECTOR();
         TV_3DVECTOR proNormal = new TV_3DVECTOR();

@@ -25,7 +25,8 @@ namespace SWEndor.ActorTypes.Instances
         string alphatexpath = Path.Combine(Globals.ImagePath, alphatexname); // alphatexname
         int itex = LoadAlphaTexture(texname, texpath, alphatexpath);
 
-        SourceMesh.CreateBox(size, size, 0.001f);
+        SourceMesh.AddWall(itex, -size / 2, 0, size / 2, 0, size, -size / 2);
+        //SourceMesh.CreateBox(size, size, 0.001f);
         SourceMesh.SetTexture(itex);
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);

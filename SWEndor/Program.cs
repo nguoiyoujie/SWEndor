@@ -41,7 +41,7 @@ namespace SWEndor
         return;
       }
 
-      Globals.UnloadDlls();
+      //Globals.UnloadDlls();
     }
   }
 }

@@ -27,7 +27,8 @@ namespace SWEndor.ActorTypes.Instances
         string texpath = Path.Combine(Globals.ImagePath, texname);
         int tex = LoadAlphaTexture(texname, texpath);
 
-        SourceMesh.CreateBox(100, 0.00001f, 100f);
+        SourceMesh.AddFloor(tex, -50, -50, 50, 50);
+        //SourceMesh.CreateBox(100, 0.00001f, 100f);
         SourceMesh.SetTexture(tex);
         SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
 

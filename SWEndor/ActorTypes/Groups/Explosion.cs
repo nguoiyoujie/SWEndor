@@ -55,7 +55,7 @@ namespace SWEndor.ActorTypes.Groups
 
         int k = texanimframes.Length - 1 - (int)(ainfo.CycleInfo.CycleTime / ainfo.CycleInfo.CyclePeriod * texanimframes.Length);
         if (k >= 0 && k < texanimframes.Length)
-          ainfo.SetTexture(texanimframes[k]);
+          ainfo.Engine.MeshDataSet.Mesh_setTexture(ainfo.ID, texanimframes[k]); //ainfo.SetTexture(texanimframes[k]);
       }
     }
   }

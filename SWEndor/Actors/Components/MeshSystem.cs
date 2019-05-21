@@ -22,7 +22,7 @@ namespace SWEndor.Actors.Components
 
     private static void RenderMesh(Engine engine, int actorID, ref MeshData data)
     {
-      if (data.Initialized && data.Mesh.IsVisible())
+      if (data.Mesh?.IsVisible() ?? false)
         data.Mesh.Render();
     }
 
@@ -52,11 +52,12 @@ namespace SWEndor.Actors.Components
 
         data.Mesh.SetPosition(pos.x, pos.y, pos.z);
         data.Mesh.SetRotation(rot.x, rot.y, rot.z);
+
         data.FarMesh.SetPosition(pos.x, pos.y, pos.z);
         data.FarMesh.SetRotation(rot.x, rot.y, rot.z);
 
         data.Mesh.SetCollisionEnable(engine.MaskDataSet[actorID].Has(ComponentMask.CAN_BECOLLIDED) && !ActorInfo.IsAggregateMode(engine, actorID));
-        data.FarMesh.SetCollisionEnable(false);
+        //data.FarMesh.SetCollisionEnable(false);
       }
     }
   }

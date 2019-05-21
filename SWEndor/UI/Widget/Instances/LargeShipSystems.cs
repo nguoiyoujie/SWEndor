@@ -1,6 +1,8 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Data;
 using SWEndor.ActorTypes;
+using SWEndor.Primitives;
 using System;
 
 namespace SWEndor.UI.Widgets
@@ -88,34 +90,26 @@ namespace SWEndor.UI.Widgets
           }
           else if (a.TypeInfo.RadarType == RadarType.RECTANGLE_GIANT)
           {
-            TV_3DVECTOR boxmin = new TV_3DVECTOR();
-            TV_3DVECTOR boxmax = new TV_3DVECTOR();
-            a.GetBoundingBox(ref boxmin, ref boxmax, true);
-            boxmin *= scale;
-            boxmax *= scale;
-            radar_range = boxmax.z - boxmin.z;
+            BoundingBox box = engine.MeshDataSet.Mesh_getBoundingBox(actorID, true);
+            radar_range = (box.Z.Max - box.Z.Min) * scale;
 
-            TVScreen2DImmediate.Draw_Box(boxmin.x * radar_radius / radar_range + radar_center.x
-                                       , boxmin.z * radar_radius / radar_range + radar_center.y
-                                       , boxmax.x * radar_radius / radar_range + radar_center.x
-                                       , boxmax.z * radar_radius / radar_range + radar_center.y
+            TVScreen2DImmediate.Draw_Box(box.X.Min * scale * radar_radius / radar_range + radar_center.x
+                                       , box.Z.Min * scale * radar_radius / radar_range + radar_center.y
+                                       , box.X.Max * scale * radar_radius / radar_range + radar_center.x
+                                       , box.Z.Max * scale * radar_radius / radar_range + radar_center.y
                                        , scolor);
           }
           else if (a.TypeInfo.RadarType == RadarType.TRIANGLE_GIANT)
           {
-            TV_3DVECTOR boxmin = new TV_3DVECTOR();
-            TV_3DVECTOR boxmax = new TV_3DVECTOR();
-            a.GetBoundingBox(ref boxmin, ref boxmax, true);
-            boxmin *= scale;
-            boxmax *= scale;
-            radar_range = boxmax.z - boxmin.z;
+            BoundingBox box = engine.MeshDataSet.Mesh_getBoundingBox(actorID, true);
+            radar_range = (box.Z.Max - box.Z.Min) * scale;
 
-            TVScreen2DImmediate.Draw_Triangle(boxmin.x * radar_radius / radar_range + radar_center.x
-                                            , -boxmin.z * radar_radius / radar_range + radar_center.y
-                                            , (boxmin.x + boxmax.x) * radar_radius / radar_range / 2 + radar_center.x
-                                            , -boxmax.z * radar_radius / radar_range + radar_center.y
-                                            , boxmax.x * radar_radius / radar_range + radar_center.x
-                                            , -boxmin.z * radar_radius / radar_range + radar_center.y
+            TVScreen2DImmediate.Draw_Triangle(box.X.Min * scale * radar_radius / radar_range + radar_center.x
+                                            , -box.Z.Min * scale * radar_radius / radar_range + radar_center.y
+                                            , (box.X.Min + box.X.Max) / 2 * scale * radar_radius / radar_range + radar_center.x
+                                            , -box.Z.Max * scale * radar_radius / radar_range + radar_center.y
+                                            , box.X.Max * scale * radar_radius / radar_range + radar_center.x
+                                            , -box.Z.Min * scale * radar_radius / radar_range + radar_center.y
                                             , scolor);
 
           }

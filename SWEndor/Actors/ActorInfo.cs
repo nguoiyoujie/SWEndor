@@ -116,18 +116,6 @@ namespace SWEndor.Actors
     // Data
     public CoordData CoordData;
     public MoveData MoveData;
-    //public MeshData MeshData;
-    //public ExplodeData ExplodeData;
-    //public CombatData CombatData;
-    //public TimedLifeData TimedLifeData;
-
-    //public SysData SysData; //strength of systems
-    //public WeapData WeapData;
-    //public OwnerData OwnerData;
-
-    // Particle system
-    //public int ParticleEmitterID = -1;
-    //public TVParticleSystem ParticleSystem = null;
 
     // Ownership
     public int PrevID = -1;
@@ -312,7 +300,7 @@ namespace SWEndor.Actors
         TV_3DVECTOR front = new TV_3DVECTOR();
         TV_3DVECTOR up = new TV_3DVECTOR();
         TV_3DVECTOR right = new TV_3DVECTOR();
-        Engine.MeshDataSet.Mesh_get(ParentID).GetBasisVectors(ref front, ref up, ref right);
+        Engine.MeshDataSet.Mesh_getBasisVectors(ParentID, ref front, ref up, ref right);
 
         mathl.TVMatrixRotationAxis(ref ymat, up, CoordData.Rotation.y);
         mathl.TVMatrixRotationAxis(ref xmat, right, CoordData.Rotation.x);

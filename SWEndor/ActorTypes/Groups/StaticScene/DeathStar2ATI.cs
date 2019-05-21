@@ -59,7 +59,8 @@ namespace SWEndor.ActorTypes.Instances
 
         texanimframes = frames.ToArray();
 
-        SourceMesh.CreateBox(size, size, 0.001f);
+        SourceMesh.AddWall(texanimframes[0], -size / 2, 0, size / 2, 0, size, -size / 2);
+        //SourceMesh.CreateBox(size, size, 0.001f);
         SourceMesh.SetTexture(texanimframes[0]);
         SourceMesh.Enable(false);
         SourceMesh.SetCollisionEnable(false);
@@ -92,7 +93,7 @@ namespace SWEndor.ActorTypes.Instances
       {
         int k = texanimframes.Length - 1 - (int)(ainfo.CycleInfo.CycleTime / ainfo.CycleInfo.CyclePeriod * texanimframes.Length);
         if (k >= 0 && k < texanimframes.Length)
-          ainfo.SetTexture(texanimframes[k]);
+          ainfo.Engine.MeshDataSet.Mesh_setTexture(ainfo.ID, texanimframes[k]); //ainfo.SetTexture(texanimframes[k]);
       }
     }
   }

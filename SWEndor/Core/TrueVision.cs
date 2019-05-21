@@ -85,7 +85,7 @@ namespace SWEndor
 
       TVEngine.SetAntialiasing(true, CONST_TV_MULTISAMPLE_TYPE.TV_MULTISAMPLE_2_SAMPLES);
       TVEngine.DisplayFPS(true);
-      //TVEngine.EnableProfiler(true);
+      TVEngine.EnableProfiler(true);
       TVEngine.EnableSmoothTime(true);
       TVEngine.SetVSync(true);
 

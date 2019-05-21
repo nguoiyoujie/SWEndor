@@ -13,10 +13,16 @@ namespace SWEndor
     {
       get
       {
-        return string.Format("v{0}.{1}.{2}"
+        return string.Format("v{0}.{1}.{2}-{3}"
         , MajorVersion
         , MinorVersion
-        , DateTime.Parse(Build.Time).ToString("yyyy.MMdd.hhmm"));
+        , DateTime.Parse(Build.Time).ToString("yyyy.MMdd.hhmm")
+#if DEBUG
+        , "Debug"
+#else
+        , "Release"
+#endif
+        );
       }
     }
 
@@ -56,7 +62,7 @@ namespace SWEndor
     public static void PreInit()
     {
       CreateDirectories();
-      LoadDlls();
+      //LoadDlls();
     }
 
     public static Engine InitEngine()

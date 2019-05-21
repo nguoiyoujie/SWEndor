@@ -25,6 +25,9 @@ namespace SWEndor
     public int ScreenHeight { get; internal set; }
     public Random Random { get; } = new Random();
 
+    // Data
+    //internal MemoryManager Memory { get; private set; }
+
     // Data sets
     internal MaskDataSet MaskDataSet { get; private set; }
 
@@ -62,9 +65,11 @@ namespace SWEndor
 
     public void Init()
     {
+      //Memory = new MemoryManager(this);
+
       MaskDataSet = new MaskDataSet();
       ActorDataSet = new ActorDataSet();
-      SysDataSet = new SysDataSet();
+      SysDataSet = new SysDataSet(this);
       MeshDataSet = new MeshDataSet();
       TimedLifeDataSet = new TimedLifeDataSet();
 
@@ -189,6 +194,26 @@ namespace SWEndor
       //TrueVision.TVGraphicEffect.DrawDepthOfField();
 
       Screen2D.Draw();
+
+      /*
+      ActorInfo tgt = ActorFactory.Get(PlayerCameraInfo.LookActor);
+      if (tgt != null && tgt.CreationState == CreationState.ACTIVE)
+      {
+        TV_3DVECTOR prostart = tgt.GetRelativePositionXYZ(0, 0, tgt.TypeInfo.max_dimensions.z + 10);
+        TV_3DVECTOR proend0 = tgt.GetRelativePositionXYZ((float)Math.Sin(tgt.MoveData.YTurnAngle * Globals.PI / 180) * tgt.MoveData.Speed
+                                                         , -(float)Math.Sin(tgt.MoveData.XTurnAngle * Globals.PI / 180) * tgt.MoveData.Speed
+                                                         , tgt.TypeInfo.max_dimensions.z + 10 + ActorDataSet.CollisionData[tgt.dataID].ProspectiveCollisionScanDistance);
+        //TrueVision.TVMathLibrary.MoveAroundPoint(tgt.GetPosition(), 1000, tgt.)
+
+        TrueVision.TVScreen2DImmediate.Action_Begin2D();
+        //Engine.TrueVision.TVScreen2DImmediate.Draw_Box3D(prostart, proend0, new TV_COLOR(1, 1, 1, 1).GetIntColor());
+        TrueVision.TVScreen2DImmediate.Draw_Line3D(prostart.x, prostart.y, prostart.z, proend0.x, proend0.y, proend0.z, new TV_COLOR(1, 0, 0, 1).GetIntColor(), new TV_COLOR(1, 1, 0, 1).GetIntColor());
+        //TrueVision.TVScreen2DImmediate.Draw_FilledBox(100, 100, 200, 200, new TV_COLOR(1, 1, 1, 1).GetIntColor());
+        TrueVision.TVScreen2DImmediate.Action_End2D();
+
+      }
+      */
+
       TrueVision.TVEngine.RenderToScreen();
       //UpdateEffect();
     }
@@ -211,11 +236,16 @@ namespace SWEndor
       Handle = handle;
     }
 
+    public void BeginExit()
+    {
+      Game.Stop();
+    }
+
     public void Exit()
     {
       GameScenarioManager.Scenario.Unload();
       Game.PrepExit();
-      Game.Stop();
+      //Game.Stop();
       Form.Exit();
       Dispose();
     }

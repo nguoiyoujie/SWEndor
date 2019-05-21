@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
+using System;
 using System.Collections.Generic;
 
 namespace SWEndor.Scenarios
@@ -214,9 +215,9 @@ namespace SWEndor.Scenarios
       {
         float y_en = -40000;
         if (PlayerCameraInfo.Position.z < -30000)
-          y_en += (PlayerCameraInfo.Position.z + 30000) * 150f;
+          y_en += (PlayerCameraInfo.Position.z + 30000) * 50f;
         else if (PlayerCameraInfo.Position.z > 30000)
-          y_en -= (PlayerCameraInfo.Position.z - 30000) * 150f;
+          y_en -= (PlayerCameraInfo.Position.z - 30000) * 50f;
 
         m_APlanet.SetLocalPosition(0, y_en, 0);
       }
