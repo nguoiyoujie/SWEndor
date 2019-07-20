@@ -20,7 +20,7 @@
     /// <summary>
     /// Actor is executing a hyperspace speed up or slow down
     /// </summary>
-    HYPERSPACE = 2,
+    //HYPERSPACE = 2,
 
     // DEAD STATES use Negative numbers
 

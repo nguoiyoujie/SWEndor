@@ -1,5 +1,6 @@
 ﻿using SWEndor.ActorTypes.Instances;
 using SWEndor.FileFormat.INI;
+using SWEndor.Primitives;
 using SWEndor.Primitives.Factories;
 using System;
 using System.IO;
@@ -42,13 +43,12 @@ namespace SWEndor.ActorTypes
         Register(new Transport_Box4ATI(this));
 
         // explosions
-        Register(new ExplosionATI(this));
-        Register(new Explosion2ATI(this));
-        Register(new ExplosionSmATI(this));
-        Register(new ExplosionLgATI(this));
-        Register(new ExplosionMegaATI(this));
-        Register(new ExplosionWaveATI(this));
-        Register(new ExplosionWaveMegaATI(this));
+        Register(new ExpS00(this));
+        Register(new ExpL00(this));
+        Register(new ExpL01(this));
+        Register(new ExpL02(this));
+        Register(new ExpW01(this));
+        Register(new ExpW02(this));
         Register(new ElectroATI(this));
 
         // fighters
@@ -181,14 +181,14 @@ namespace SWEndor.ActorTypes
           list.Add(atype.Name, atype);
         }
         atype.RegisterModel();
-        Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
+        Engine.Screen2D.LoadingTextLines.Add("{0} loaded!".F(atype.Name));
       }
 
       public new ActorTypeInfo Get(string id)
       {
         ActorTypeInfo ret = base.Get(id);
         if (ret == null)
-          throw new Exception(string.Format("ActorTypeInfo '{0}' does not exist", id));
+          throw new Exception("ActorTypeInfo '{0}' does not exist".F(id));
 
         return ret;
       }
@@ -198,7 +198,7 @@ namespace SWEndor.ActorTypes
         if (File.Exists(filepath))
         {
           INIFile f = new INIFile(filepath);
-          foreach (string s in f.SectionKeys)
+          foreach (string s in f.Sections)
           {
             if (s != INIFile.PreHeaderSectionName)
               Register(Parser.Parse(this, f, s));

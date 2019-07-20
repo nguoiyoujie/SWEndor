@@ -21,7 +21,12 @@
     ACTIVE,
 
     /// <summary>
-    /// Actor is destroyed and awaits clean-up / reuse
+    /// Actor is destroyed and awaits clean-up
+    /// </summary>
+    DISPOSING,
+
+    /// <summary>
+    /// Actor is disposed and awaits reuse
     /// </summary>
     DISPOSED
   }

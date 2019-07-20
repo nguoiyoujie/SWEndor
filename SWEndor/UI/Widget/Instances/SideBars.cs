@@ -1,6 +1,8 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes;
+using SWEndor.Primitives;
 using System;
 
 namespace SWEndor.UI.Widgets
@@ -27,9 +29,7 @@ namespace SWEndor.UI.Widgets
       {
         return (!Owner.ShowPage
             && PlayerInfo.Actor != null
-            && PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && PlayerInfo.Actor.ActorState != ActorState.DYING
-
+            && !PlayerInfo.Actor.StateModel.IsDyingOrDead
             && Owner.ShowUI
             && Owner.ShowStatus);
       }
@@ -39,13 +39,13 @@ namespace SWEndor.UI.Widgets
     {
       ActorInfo p = PlayerInfo.Actor;
 
-      if (p != null && p.CreationState == CreationState.ACTIVE)
+      if (p != null && p.Active)
       {
         TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;
 
         //Health Bar
         DrawSingleBar(0
-                      , string.Format("HP [{0}%]", Math.Ceiling(PlayerInfo.StrengthFrac * 100))
+                      , "HP [{0}%]".F(Math.Ceiling(PlayerInfo.StrengthFrac * 100))
                       , PlayerInfo.StrengthFrac
                       , PlayerInfo.StrengthColor
                       );
@@ -65,7 +65,7 @@ namespace SWEndor.UI.Widgets
           ActorInfo a = ActorFactory.Get(i);
           DrawSingleBar(barnumber
               , a.SideBarName.PadRight(12).Remove(11)
-              , Engine.SysDataSet.StrengthFrac_get(i)
+              , a.Health.Frac
               , new TV_COLOR(0, 0.8f, 0.6f, 1)
               );
           barnumber++;
@@ -77,7 +77,7 @@ namespace SWEndor.UI.Widgets
           ActorInfo a = ActorFactory.Get(i);
           DrawSingleBar(barnumber
               , a.SideBarName.PadRight(12).Remove(11)
-              , Engine.SysDataSet.StrengthFrac_get(i)
+              , a.Health.Frac
               , new TV_COLOR(1f, 0, 0, 1)
               );
           barnumber++;

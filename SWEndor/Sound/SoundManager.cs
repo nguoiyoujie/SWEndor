@@ -4,6 +4,7 @@ using FMOD;
 using System.Collections.Concurrent;
 using SWEndor.Primitives;
 using System.Text;
+using System.Collections.Generic;
 
 namespace SWEndor.Sound
 {
@@ -67,7 +68,7 @@ namespace SWEndor.Sound
       set
       {
         m_MasterSFXVolume = value;
-        foreach (ChannelGroup soundgrp in soundgrps.GetValues())
+        foreach (ChannelGroup soundgrp in soundgrps.Values)
           soundgrp.setVolume(m_MasterSFXVolume * m_MasterSFXVolumeScenario);
       }
     }
@@ -77,7 +78,7 @@ namespace SWEndor.Sound
       set
       {
         m_MasterSFXVolumeScenario = value;
-        foreach (ChannelGroup soundgrp in soundgrps.GetValues())
+        foreach (ChannelGroup soundgrp in soundgrps.Values)
           soundgrp.setVolume(m_MasterSFXVolume * m_MasterSFXVolumeScenario);
       }
     }
@@ -86,7 +87,10 @@ namespace SWEndor.Sound
     public void Initialize()
     {
       //Create FMOD System
-      FMOD.Factory.System_Create(out fmodsystem);
+      RESULT res = FMOD.Factory.System_Create(out fmodsystem);
+      
+      if (res != RESULT.OK)
+        throw new Exception("FMOD Sound failed to initailize./n/nResult Code: {0}".F(res));
 
       //Initialise FMOD
       fmodsystem.init(channels, INITFLAGS.NORMAL, (IntPtr)null);
@@ -164,9 +168,9 @@ namespace SWEndor.Sound
       }
     }
 
-    public string[] GetMusicNames()
+    public IEnumerable<string> GetMusicNames()
     {
-      return music.GetKeys();
+      return music.Keys;
     }
 
     public bool SetMusic(string name, bool loop = false, uint position_ms = 0, uint end_ms = 0)

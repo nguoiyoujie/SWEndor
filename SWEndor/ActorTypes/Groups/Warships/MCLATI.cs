@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 
@@ -11,8 +12,12 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal MCLATI(Factory owner) : base(owner, "Mon Calamari Light Cruiser")
     {
-      ExplodeData = new ExplodeData(0.5f, 1, "ExplosionSm", DeathExplosionTrigger.ALWAYS, 3.5f, "ExplosionLg");
-
+      Explodes = new ExplodeInfo[] {
+        new ExplodeInfo("ExpL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeInfo("ExpL01", 1, 3.5f, ExplodeTrigger.ON_DEATH),
+        new ExplodeInfo("ExpW01", 1, 1, ExplodeTrigger.ON_DEATH)
+      };
+      
       MaxStrength = 1400.0f;
       ImpactDamage = 60.0f;
       MaxSpeed = 45.0f;

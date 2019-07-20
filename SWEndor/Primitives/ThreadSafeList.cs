@@ -55,11 +55,12 @@ namespace SWEndor.Primitives
     /// Obtains last updated collection
     /// </summary>
     /// <returns></returns>
-    public T[] GetList()
+    public IEnumerable<T> GetList()
     {
       Update();
-      T[] ret = _list.ToArray();
-      return ret;
+      return _list;
+      //T[] ret = _list.ToArray();
+      //return ret;
     }
 
     private void Update()
@@ -177,6 +178,18 @@ namespace SWEndor.Primitives
         _dirty = true;
 
       return ret;
+    }
+
+    /// <summary>
+    /// Removes a range of items from the collection
+    /// </summary>
+    public void RemoveRange(int index, int count)
+    {
+      lock (locker)
+        _pending_list.RemoveRange(index, count);
+
+      if (!ExplicitUpdateOnly)
+        _dirty = true;
     }
 
     /// <summary>

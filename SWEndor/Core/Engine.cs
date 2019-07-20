@@ -12,6 +12,9 @@ using SWEndor.AI;
 using SWEndor.UI.Forms;
 using SWEndor.Actors.Data;
 using System.Text;
+using SWEndor.Primitives.Traits;
+using SWEndor.Primitives;
+using SWEndor.Actors.Traits;
 
 namespace SWEndor
 {
@@ -23,18 +26,21 @@ namespace SWEndor
     private IntPtr Handle;
     public int ScreenWidth { get; internal set;}
     public int ScreenHeight { get; internal set; }
+
+    // Core
     public Random Random { get; } = new Random();
 
     // Data
-    //internal MemoryManager Memory { get; private set; }
+    //internal TraitDictionary TraitDictionary { get; private set; }
+    internal TraitPoolCollection TraitPoolCollection { get; private set; }
 
     // Data sets
-    internal MaskDataSet MaskDataSet { get; private set; }
+    //internal MaskDataSet MaskDataSet { get; private set; }
 
-    internal ActorDataSet ActorDataSet { get; private set; }
-    internal SysDataSet SysDataSet { get; private set; }
-    internal MeshDataSet MeshDataSet { get; private set; }
-    internal TimedLifeDataSet TimedLifeDataSet { get; private set; }
+    //internal ActorDataSet ActorDataSet { get; private set; }
+    //internal SysDataSet SysDataSet { get; private set; }
+    //internal MeshDataSet MeshDataSet { get; private set; }
+    //internal TimedLifeDataSet TimedLifeDataSet { get; private set; }
 
     // Engine parts
     internal Game Game { get; private set; }
@@ -56,7 +62,6 @@ namespace SWEndor
     internal Font.Factory FontFactory { get; private set; }
     internal ActorInfo.Factory ActorFactory { get; private set; }
     internal ActorTypeInfo.Factory ActorTypeFactory { get; private set; }
-    internal ActionManager ActionManager { get; private set; }
 
     // Engine pars to be loaded late
     // Requires ActorInfoType initialization
@@ -65,20 +70,21 @@ namespace SWEndor
 
     public void Init()
     {
-      //Memory = new MemoryManager(this);
+      //TraitDictionary = new TraitDictionary();
+      TraitPoolCollection = new TraitPoolCollection();
 
-      MaskDataSet = new MaskDataSet();
-      ActorDataSet = new ActorDataSet();
-      SysDataSet = new SysDataSet(this);
-      MeshDataSet = new MeshDataSet();
-      TimedLifeDataSet = new TimedLifeDataSet();
+      //MaskDataSet = new MaskDataSet();
+      //ActorDataSet = new ActorDataSet();
+      //SysDataSet = new SysDataSet(this);
+      //MeshDataSet = new MeshDataSet();
+
+      //TimedLifeDataSet = new TimedLifeDataSet();
 
       Game = new Game(this);
       SoundManager = new SoundManager(this);
       PerfManager = new PerfManager(this);
       ActorFactory = new ActorInfo.Factory(this);
       ActorTypeFactory = new ActorTypeInfo.Factory(this);
-      ActionManager = new ActionManager(this);
       PlayerInfo = new PlayerInfo(this);
 
       FontFactory = new Font.Factory();
@@ -110,7 +116,7 @@ namespace SWEndor
 
     public void Load()
     {
-      Screen2D.LoadingTextLines.Add(Globals.LoadingFlavourTexts[Random.Next(0, Globals.LoadingFlavourTexts.Count)]);
+      Screen2D.LoadingTextLines.Add(Globals.LoadingFlavourTexts.Random(this));
       ActorTypeFactory.Initialise();
 
       Screen2D.LoadingTextLines.Add("Loading other actor definitions...");
@@ -142,6 +148,7 @@ namespace SWEndor
     public void Process()
     {
       ActorFactory.DoEach(ActorInfo.Process);
+      ActorFactory.DoEach(ActorInfo.PostFrameProcess);
     }
 
     public void ProcessAI()
@@ -216,14 +223,6 @@ namespace SWEndor
 
       TrueVision.TVEngine.RenderToScreen();
       //UpdateEffect();
-    }
-
-    public void UpdateEffect()
-    {
-      TrueVision.LaserRenderSurface.StartRender(false);
-      ActorFactory.DoEach(ActorInfo.RenderGlow);
-      TrueVision.LaserRenderSurface.EndRender();
-      TrueVision.TVGraphicEffect.UpdateGlow();
     }
 
     public void LinkForm(GameForm form)

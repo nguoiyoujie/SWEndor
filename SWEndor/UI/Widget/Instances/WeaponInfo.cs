@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes;
 
 namespace SWEndor.UI.Widgets
@@ -20,8 +21,7 @@ namespace SWEndor.UI.Widgets
       {
         return (!Owner.ShowPage
             && PlayerInfo.Actor != null
-            && PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !PlayerInfo.Actor.StateModel.IsDyingOrDead
             && Owner.ShowUI);
       }
     }
@@ -29,7 +29,7 @@ namespace SWEndor.UI.Widgets
     public override void Draw()
     {
       ActorInfo p = PlayerInfo.Actor;
-      if (p == null || p.CreationState != CreationState.ACTIVE)
+      if (p == null || !p.Active)
         return;
 
       TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;

@@ -4,7 +4,7 @@ namespace SWEndor.Actors.Data
 {
   public struct CollisionResultData
   {
-    public int ActorID;
+    public ActorInfo Actor;
     public TV_3DVECTOR Impact;
     public TV_3DVECTOR Normal;
 
@@ -12,7 +12,7 @@ namespace SWEndor.Actors.Data
     {
       Impact = new TV_3DVECTOR();
       Normal = new TV_3DVECTOR();
-      ActorID = -1;
+      Actor = null;
     }
   }
 
@@ -29,6 +29,8 @@ namespace SWEndor.Actors.Data
     public TV_3DVECTOR ProspectiveCollisionSafe;
     public float ProspectiveCollisionScanDistance;
     public float ProspectiveCollisionLevel;
+    public float ProspectiveCollisionTime;
+    public float ProspectiveCollisionFactor;
 
     public bool IsAvoidingCollision;
 
@@ -51,6 +53,8 @@ namespace SWEndor.Actors.Data
       ProspectiveCollisionSafe = new TV_3DVECTOR();
       ProspectiveCollisionScanDistance = 1000;
       ProspectiveCollisionLevel = 0;
+      ProspectiveCollisionTime = 0;
+      ProspectiveCollisionFactor = 2.5f;
       IsAvoidingCollision = false;
     }
   }

@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
 
@@ -15,8 +16,7 @@ namespace SWEndor.UI.Widgets
       {
         return (!Owner.ShowPage
             && PlayerInfo.Actor != null
-            && PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !PlayerInfo.Actor.StateModel.IsDyingOrDead
             && Owner.ShowUI
             && PlayerInfo.PlayerAIEnabled);
       }
@@ -25,7 +25,7 @@ namespace SWEndor.UI.Widgets
     public override void Draw()
     {
       ActorInfo p = PlayerInfo.Actor;
-      if (p == null || p.CreationState != CreationState.ACTIVE)
+      if (p == null || !p.Active)
         return;
 
       TV_2DVECTOR loc = new TV_2DVECTOR(10, 175);
@@ -45,16 +45,16 @@ namespace SWEndor.UI.Widgets
 
       if (p.CurrentAction != null)
       {
-        TV_3DVECTOR pos = p.GetPosition(); // p.GetRelativePositionXYZ(0, 0, p.TypeInfo.max_dimensions.z + p.ProspectiveCollisionScanDistance);
+        TV_3DVECTOR pos = p.GetGlobalPosition(); // p.GetRelativePositionXYZ(0, 0, p.TypeInfo.max_dimensions.z + p.ProspectiveCollisionScanDistance);
 
         TV_3DVECTOR targetpos = new TV_3DVECTOR();
         if (p.CurrentAction is AttackActor)
         {
-          ActorInfo target = Engine.ActorFactory.Get(((AttackActor)p.CurrentAction).Target_ActorID);
+          ActorInfo target = ((AttackActor)p.CurrentAction).Target_Actor;
           if (target != null)
           {
             targetpos = ((AttackActor)p.CurrentAction).Target_Position;
-            TV_3DVECTOR targetactpos = target.GetPosition();
+            TV_3DVECTOR targetactpos = target.GetGlobalPosition();
             TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 0, 0, 1).GetIntColor());
             TVScreen2DImmediate.Draw_Box3D(targetpos - new TV_3DVECTOR(25, 25, 25), targetpos + new TV_3DVECTOR(25, 25, 25), new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor());
             TVScreen2DImmediate.Draw_Box3D(targetactpos - new TV_3DVECTOR(50, 50, 50), targetactpos + new TV_3DVECTOR(50, 50, 50), new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor());
@@ -77,10 +77,10 @@ namespace SWEndor.UI.Widgets
         }
         else if (p.CurrentAction is FollowActor)
         {
-          ActorInfo target = Engine.ActorFactory.Get(((AttackActor)p.CurrentAction).Target_ActorID);
+          ActorInfo target = ((AttackActor)p.CurrentAction).Target_Actor;
           if (target != null)
           {
-            targetpos = target.GetPosition();
+            targetpos = target.GetGlobalPosition();
             TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(0.5f, 0.5f, 1, 1).GetIntColor());
           }
         }

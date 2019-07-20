@@ -4,6 +4,7 @@ using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
+using SWEndor.Primitives;
 using SWEndor.Sound;
 using SWEndor.UI.Menu.Pages;
 using System;
@@ -85,7 +86,6 @@ namespace SWEndor.Scenarios
     public TrueVision TrueVision { get { return Engine.TrueVision; } }
     public ActorInfo.Factory ActorFactory { get { return Engine.ActorFactory; } }
     public ActorTypeInfo.Factory ActorTypeFactory { get { return Engine.ActorTypeFactory; } }
-    public ActionManager ActionManager { get { return Engine.ActionManager; } }
     public SoundManager SoundManager { get { return Engine.SoundManager; } }
     public LandInfo LandInfo { get { return Engine.LandInfo; } }
     public AtmosphereInfo AtmosphereInfo { get { return Engine.AtmosphereInfo; } }
@@ -383,13 +383,13 @@ namespace SWEndor.Scenarios
       ActorInfo av = ActorFactory.Get(((HitEventArg)arg).VictimID);
       ActorInfo aa = ActorFactory.Get(((HitEventArg)arg).ActorID);
 
-      if (PlayerInfo.ActorID == aa.TopParent)
+      if (PlayerInfo.Actor == aa.TopParent)
       {
         if (PlayerInfo.Actor != null
         && av.Faction != null
         && av.Faction.IsAlliedWith(PlayerInfo.Actor.Faction))
         {
-          Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", av.Name, PlayerInfo.Name)
+          Screen2D.MessageText("{0}: {1}, watch your fire!".F(av.Name, PlayerInfo.Name)
                                                       , 5
                                                       , av.Faction.Color
                                                       , -1);

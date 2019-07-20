@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes;
 using SWEndor.Weapons;
 using System.IO;
@@ -23,24 +24,23 @@ namespace SWEndor.UI.Widgets
       get
       {
         return (!Owner.ShowPage
-            && PlayerInfo.Actor != null
-            && PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && PlayerInfo.Actor.ActorState != ActorState.DYING
-            && Owner.ShowUI);
+           && PlayerInfo.Actor != null
+           && !PlayerInfo.Actor.StateModel.IsDyingOrDead
+           && Owner.ShowUI);
       }
     }
 
     public override void Draw()
     {
       ActorInfo p = PlayerInfo.Actor;
-      if (p == null || p.CreationState != CreationState.ACTIVE)
+      if (p == null || !p.Active)
         return;
 
       WeaponInfo weap = null;
       int burst = 1;
       TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;
 
-      p.TypeInfo.InterpretWeapon(p.ID, PlayerInfo.PrimaryWeapon, out weap, out burst);
+      p.TypeInfo.InterpretWeapon(p, PlayerInfo.PrimaryWeapon, out weap, out burst);
       if (weap != null)
       {
         TVScreen2DImmediate.Action_Begin2D();
@@ -88,7 +88,7 @@ namespace SWEndor.UI.Widgets
         TVScreen2DImmediate.Action_End2D();
       }
 
-      p.TypeInfo.InterpretWeapon(p.ID, PlayerInfo.SecondaryWeapon, out weap, out burst);
+      p.TypeInfo.InterpretWeapon(p, PlayerInfo.SecondaryWeapon, out weap, out burst);
       if (weap != null)
       {
         if (PlayerInfo.SecondaryWeapon.Contains("torp"))

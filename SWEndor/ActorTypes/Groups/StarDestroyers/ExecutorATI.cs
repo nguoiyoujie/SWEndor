@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 
@@ -11,7 +12,12 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ExecutorATI(Factory owner) : base(owner, "Executor Super Star Destroyer")
     {
-      ExplodeData = new ExplodeData(0.5f, 1, "ExplosionSm", DeathExplosionTrigger.ALWAYS, 5, "ExplosionLg");
+      Explodes = new ExplodeInfo[]
+      {
+        new ExplodeInfo("ExpL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeInfo("ExpL01", 1, 5, ExplodeTrigger.ON_DEATH),
+        new ExplodeInfo("ExpW01", 1, 5, ExplodeTrigger.ON_DEATH)
+      };
 
       MaxStrength = 3500.0f;
       ImpactDamage = 120.0f;
@@ -89,14 +95,15 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.DyingMoveComponent = new DyingSink(0.00025f, 1.3f, 0.2f);
     }
 
-    public override void ProcessNewState(ActorInfo ainfo)
+    public override void Dying<A1>(A1 self)
     {
-      base.ProcessNewState(ainfo);
-      if (ainfo.ActorState.IsDying())
-      {
-        TimedLifeSystem.Activate(Engine, ainfo.ID, 2000f);
-        CombatSystem.Deactivate(Engine, ainfo.ID);
-      }
+      base.Dying(self);
+      ActorInfo ainfo = self as ActorInfo;
+      if (ainfo == null)
+        return;
+
+      ainfo.DyingTimer.Set(2000).Start();
+      CombatSystem.Deactivate(Engine, ainfo.ID);
     }
   }
 }

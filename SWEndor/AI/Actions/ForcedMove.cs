@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Primitives;
 
 namespace SWEndor.AI.Actions
 {
@@ -23,20 +24,18 @@ namespace SWEndor.AI.Actions
 
     public override string ToString()
     {
-      return string.Format("{0},{1},{2},{3},{4},{5},{6}"
-                          , Name
-                          , Utilities.ToString(Target_Position)
-                          , Target_Speed
-                          , CloseEnoughDistance
-                          , ResumeTime - Globals.Engine.Game.GameTime
-                          , CanInterrupt
-                          , Complete
-                          );
+      return "{0},{1},{2},{3},{4},{5},{6}".F(Name
+                                          , Utilities.ToString(Target_Position)
+                                          , Target_Speed
+                                          , CloseEnoughDistance
+                                          , ResumeTime - Globals.Engine.Game.GameTime
+                                          , CanInterrupt
+                                          , Complete
+                                          );
     }
 
-    public override void Process(Engine engine, int actorID)
+    public override void Process(Engine engine, ActorInfo actor)
     {
-      ActorInfo actor = engine.ActorFactory.Get(actorID);
       if (actor.MoveData.MaxSpeed == 0)
       {
         Complete = true;
@@ -54,7 +53,7 @@ namespace SWEndor.AI.Actions
       AdjustRotation(actor, Target_Position);
       AdjustSpeed(actor, Target_Speed);
 
-      float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetPosition(), Target_Position);
+      float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetGlobalPosition(), Target_Position);
       Complete |= (dist <= CloseEnoughDistance);
       Complete |= (ResumeTime < engine.Game.GameTime);
     }

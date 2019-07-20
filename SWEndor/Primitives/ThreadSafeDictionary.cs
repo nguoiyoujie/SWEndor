@@ -66,20 +66,30 @@ namespace SWEndor.Primitives
     /// Obtains last updated keys
     /// </summary>
     /// <returns></returns>
-    public T[] GetKeys()
+    public IEnumerable<T> Keys
     {
-      Update();
-      return new List<T>(_list.Keys).ToArray();
+      get
+      {
+        Update();
+        return _list.Keys;
+      }
+      //Update();
+      //return new List<T>(_list.Keys).ToArray();
     }
 
     /// <summary>
     /// Obtains last updated values
     /// </summary>
     /// <returns></returns>
-    public U[] GetValues()
+    public IEnumerable<U> Values
     {
-      Update();
-      return new List<U>(_list.Values).ToArray();
+      get
+      {
+        Update();
+        return _list.Values;
+      }
+      //Update();
+      //return new List<U>(_list.Values).ToArray();
     }
 
     /// <summary>
@@ -91,7 +101,7 @@ namespace SWEndor.Primitives
     {
       Update();
       U ret = default(U);
-      GetList().TryGetValue(key, out ret);
+      _list.TryGetValue(key, out ret);
       return ret;
     }
 
@@ -100,8 +110,8 @@ namespace SWEndor.Primitives
       if (_dirty)
       {
         Refresh();
+        _dirty = false;
       }
-      _dirty = false;
     }
 
     /// <summary>

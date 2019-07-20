@@ -72,12 +72,12 @@ namespace SWEndor.Input.Context
 
         if (keydata.Key.Equals((int)CONST_TV_KEY.TV_KEY_9))
         {
-          List<int> list = new List<int>(Globals.Engine.GameScenarioManager.Scenario.MainEnemyFaction.GetWings());
+          List<ActorInfo> list = new List<ActorInfo>(Globals.Engine.GameScenarioManager.Scenario.MainEnemyFaction.GetWings());
           list.AddRange(Globals.Engine.GameScenarioManager.Scenario.MainAllyFaction.GetWings());
 
-          foreach (int i in list)
+          foreach (ActorInfo a in list)
           {
-            ActorInfo.Kill(Globals.Engine, i);
+            a.Kill();
           }
         }
       }

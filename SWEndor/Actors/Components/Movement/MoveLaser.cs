@@ -8,7 +8,7 @@ namespace SWEndor.Actors.Components
 
     public void Move(ActorInfo actor, ref MoveData data)
     {
-      actor.MoveRelative(Globals.LaserSpeed * actor.Game.TimeSinceRender, 0, 0);
+      actor.MoveRelative(Globals.LaserSpeed * actor.Game.TimeSinceRender);
     }
   }
 }

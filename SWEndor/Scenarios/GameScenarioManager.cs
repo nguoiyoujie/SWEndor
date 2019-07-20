@@ -17,7 +17,6 @@ namespace SWEndor.Scenarios
     public TrueVision TrueVision { get { return Engine.TrueVision; } }
     public ActorInfo.Factory ActorFactory { get { return Engine.ActorFactory; } }
     public ActorTypeInfo.Factory ActorTypeFactory { get { return Engine.ActorTypeFactory; } }
-    public ActionManager ActionManager { get { return Engine.ActionManager; } }
     public SoundManager SoundManager { get { return Engine.SoundManager; } }
     public LandInfo LandInfo { get { return Engine.LandInfo; } }
     public AtmosphereInfo AtmosphereInfo { get { return Engine.AtmosphereInfo; } }
@@ -92,11 +91,11 @@ namespace SWEndor.Scenarios
       foreach (KeyValuePair<string, int> kvp in list)
       {
         ActorInfo actor = Engine.ActorFactory.Get(kvp.Value);
-        if (actor != null && actor.CreationState == CreationState.DISPOSED)
+        if (actor != null && actor.Disposed)
         {
           rm.Add(kvp.Key);
 
-          if (ActorInfo.IsPlayer(Engine, actor.ID))
+          if (actor.IsPlayer)
           {
             ret++;
           }

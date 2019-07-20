@@ -99,11 +99,11 @@ namespace SWEndor
         m_last_refresh_time = DateTime.Now;
         StringBuilder sb = new StringBuilder();
         sb.AppendLine();
-        sb.AppendLine(string.Format("{0,30} : [{1,4:0}ms] {2:s}", "Sampling Time", refresh_ms, m_last_refresh_time));
-        sb.AppendLine(string.Format("{0,30} : {1}", "FPS", Engine.Game.CurrentFPS));
-        sb.AppendLine(string.Format("{0,30} : {1}", "Actors", Engine.ActorFactory.GetActorCount()));
+        sb.AppendLine("{0,30} : [{1,4:0}ms] {2:s}".F("Sampling Time", refresh_ms, m_last_refresh_time));
+        sb.AppendLine("{0,30} : {1}".F("FPS", Engine.Game.CurrentFPS));
+        sb.AppendLine("{0,30} : {1}".F("Actors", Engine.ActorFactory.GetActorCount()));
 
-        List<PerfToken> newElements = new List<PerfToken>(Elements.GetValues());
+        List<PerfToken> newElements = new List<PerfToken>(Elements.Values);
 
         // ---------- PROCESS THREAD
         foreach (ProcessThread pt in Process.GetCurrentProcess().Threads)
@@ -111,17 +111,17 @@ namespace SWEndor
           if (pt.ThreadState != System.Diagnostics.ThreadState.Terminated && pt.ThreadState != System.Diagnostics.ThreadState.Wait)
           {
             double d = pt.TotalProcessorTime.TotalMilliseconds - ThreadTimes.Get(pt.Id);
-            sb.AppendLine(string.Format("Thread {0:00000} {1,17} : {2:0.00}%", pt.Id, pt.ThreadState, d / refresh_ms * 100));
+            sb.AppendLine("Thread {0:00000} {1,17} : {2:0.00}%".F(pt.Id, pt.ThreadState, d / refresh_ms * 100));
             ThreadTimes.Put(pt.Id, pt.TotalProcessorTime.TotalMilliseconds);
           }
         }
 
-        sb.AppendLine(string.Format("{0,-30}   [{1,6}] {2,7}  {3,7}  {4,7}", "", "Count", "Total|s", "Avg|ms", "Peak|ms"));
+        sb.AppendLine("{0,-30}   [{1,6}] {2,7}  {3,7}  {4,7}".F("", "Count", "Total|s", "Avg|ms", "Peak|ms"));
         newElements.Sort(new PerfComparer());
         foreach (PerfToken e in newElements)
         {
-          sb.AppendLine(string.Format("{0,-30} : [{1,6}] {2,7:0.000}  {3,7:0.00}  {4,7:0.00}"
-                        , (e.Name.Length > 30) ? e.Name.Remove(27) + "..." : e.Name
+          sb.AppendLine("{0,-30} : [{1,6}] {2,7:0.000}  {3,7:0.00}  {4,7:0.00}".F(
+                          (e.Name.Length > 30) ? e.Name.Remove(27) + "..." : e.Name
                         , e.Count
                         , e.Seconds
                         , e.Seconds / e.Count * 1000

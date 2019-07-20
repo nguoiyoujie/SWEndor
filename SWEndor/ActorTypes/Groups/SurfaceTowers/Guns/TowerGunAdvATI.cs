@@ -1,6 +1,7 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.Actors.Traits;
 using SWEndor.Weapons;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +12,9 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal TowerGunAdvATI(Factory owner) : base(owner, "Advanced Turbolaser Turret")
     {
-      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS, deathExplosionSize: 3);
+      Explodes = new ExplodeInfo[] {
+        new ExplodeInfo("ExpL00", 1, 3, ExplodeTrigger.ON_DEATH)
+      };
 
       MaxStrength = 45;
       ImpactDamage = 60;

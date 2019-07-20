@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.Actors.Traits;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -21,17 +22,15 @@ namespace SWEndor.ActorTypes.Instances
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"surface\surface_vent.x");
     }
 
-    public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
-      ActorInfo owner = ActorFactory.Get(ownerActorID);
-      ActorInfo hitby = ActorFactory.Get(hitbyActorID);
+      base.ProcessHit(owner, hitby, impact, normal);
 
       if (owner == null || hitby == null)
         return;
 
       if (hitby.TypeInfo is TorpedoATI) //hard code?
-        owner.ActorState = ActorState.DEAD;
+        owner.StateModel.MakeDead(owner);
     }
   }
 }

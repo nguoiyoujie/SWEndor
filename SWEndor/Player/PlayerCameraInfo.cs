@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes.Components;
 using System;
 
@@ -25,9 +26,9 @@ namespace SWEndor.Player
       if (TargetActorID > 0)
       {
         ActorInfo tgt = engine.ActorFactory.Get(TargetActorID);
-        if (tgt != null && tgt.CreationState == CreationState.ACTIVE)
+        if (tgt != null && tgt.Active)
         {
-          ret = Position + Utilities.GetRelativePositionXYZ(engine, tgt.GetPosition(), tgt.GetRotation(), PositionRelative.x, PositionRelative.y, PositionRelative.z);
+          ret = Position + Utilities.GetRelativePositionXYZ(engine, tgt.GetGlobalPosition(), tgt.Transform.Rotation, PositionRelative.x, PositionRelative.y, PositionRelative.z);
           _lastPos = new TV_3DVECTOR(ret.x, ret.y, ret.z);
         }
       }
@@ -166,11 +167,11 @@ namespace SWEndor.Player
       if (Engine.PlayerInfo.Actor == null)
         actor = Engine.ActorFactory.Get(LookActor);
 
-      if (actor != null && actor.CreationState == CreationState.ACTIVE)
+      if (actor != null && actor.Active)
       {
         UpdateFromActor(Engine, actor);
-        Position = actor.GetPosition();
-        Rotation = actor.GetRotation();
+        Position = actor.Transform.Position;
+        Rotation = actor.Transform.Rotation;
         Look.Update(Engine, Camera, Position, Rotation);
       }
       else
@@ -215,7 +216,7 @@ namespace SWEndor.Player
         target = actor.TypeInfo.Cameras[cammode].LookAt;
       }
 
-      if (!actor.ActorState.IsDyingOrDead())
+      if (!actor.StateModel.IsDyingOrDead)
       {
         if (LookAtActor >= 0)
         {
@@ -291,7 +292,7 @@ namespace SWEndor.Player
         }
         else */
 
-        if (Engine.PlayerInfo.Actor != null && Engine.PlayerInfo.Actor.CreationState != CreationState.DISPOSED)
+        if (Engine.PlayerInfo.Actor != null && !Engine.PlayerInfo.Actor.Disposed)
         {
           float maxT = Engine.PlayerInfo.Actor.TypeInfo.MaxTurnRate;
           angleX *= maxT;

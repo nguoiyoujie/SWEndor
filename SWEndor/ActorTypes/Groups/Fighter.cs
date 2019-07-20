@@ -1,6 +1,7 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.Actors.Traits;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -10,7 +11,12 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.DefaultFighter;
-      ExplodeData = new ExplodeData(explosionRate: 0.75f, deathTrigger: DeathExplosionTrigger.ALWAYS);
+
+      Explodes = new ExplodeInfo[]
+      {
+        new ExplodeInfo("ExpS00", 0.75f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeInfo("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH)
+      };
 
       ZTilt = 2.5f;
       ZNormFrac = 0.01f;
@@ -36,28 +42,25 @@ namespace SWEndor.ActorTypes.Groups
       ainfo.DyingMoveComponent = new DyingSpin(180, 270);
     }
 
-    public override void ProcessNewState(ActorInfo ainfo)
+    public override void Dying<A1>(A1 self)
     {
-      base.ProcessNewState(ainfo);
-      if (ainfo.ActorState.IsDying())
-      {
-        ainfo.MoveData.ApplyZBalance = false;
+      base.Dying(self);
+      ActorInfo ainfo = self as ActorInfo;
+      if (ainfo == null)
+        return;
 
-        if (ainfo.ParentID >= 0 || (ainfo.ActorDataSet.CombatData[ainfo.dataID].HitWhileDyingLeadsToDeath && Engine.Random.NextDouble() < 0.3f))
-        {
-          TimedLifeSystem.Activate(Engine, ainfo.ID, 0.1f);
-          CombatSystem.Deactivate(Engine, ainfo.ID);
-        }
-        else
-        {
-          TimedLifeSystem.Activate(Engine, ainfo.ID, 5);
-          CombatSystem.Deactivate(Engine, ainfo.ID);
-        }
+      ainfo.MoveData.ApplyZBalance = false;
 
-        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
-        acinfo.Position = ainfo.GetPosition();
-        ainfo.AddChild(ActorInfo.Create(ActorFactory, acinfo).ID);
-      }
+      if (ainfo.Relation.Parent != null || (ainfo.CombatData.HitWhileDyingLeadsToDeath && Engine.Random.NextDouble() < 0.3f))
+        ainfo.DyingTimer.Set(0.1f).Start();
+      else
+        ainfo.DyingTimer.Set(5).Start();
+
+      CombatSystem.Deactivate(Engine, ainfo.ID);
+
+      ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
+      acinfo.Position = ainfo.GetGlobalPosition();
+      ainfo.AddChild(ActorFactory.Create(acinfo));
     }
   }
 }

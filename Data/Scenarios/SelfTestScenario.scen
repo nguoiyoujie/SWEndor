@@ -1,0 +1,14 @@
+[General]
+Name = Self Test Custom Scenario
+PlayerName = Alpha-1
+Description = Demo Flight Test
+Wings = X-Wing, Y-Wing, TIE
+Difficulties = Demo
+
+[Script]
+Paths = .\Data\Scenarios\SelfTest\Script.sw,.\Data\Scenarios\Common\Spawn.sw
+Fn_load = load
+Fn_loadfaction = loadfaction
+Fn_loadscene = loadscene
+Fn_makeplayer = makeplayer
+Fns_gametick = gametick

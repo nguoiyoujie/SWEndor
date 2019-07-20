@@ -1,12 +1,15 @@
 ﻿using MTV3D65;
 using SWEndor.Primitives;
+using System;
+using System.Collections.Generic;
 
 namespace SWEndor.Actors
 {
   public static class ActorDistanceInfo
   {
-    private static ThreadSafeDictionary<long, CachedFloat> list = new ThreadSafeDictionary<long, CachedFloat>() { ExplicitUpdateOnly = true };
+    private static Dictionary<int, TimeCache<float>> list = new Dictionary<int, TimeCache<float>>(); //{ ExplicitUpdateOnly = true };
     private static float Cleartime = 0;
+    private static object locker = new object();
 
     public static float GetRoughDistance(TV_3DVECTOR v1, TV_3DVECTOR v2)
     {
@@ -27,18 +30,16 @@ namespace SWEndor.Actors
     /// Gets a higher bound on the distance between Actors by taking the sum of the coordinate deltas.
     /// </summary>
     /// <returns></returns>
-    public static float GetRoughDistance(int actorID1, int actorID2)
+    public static float GetRoughDistance(ActorInfo a1, ActorInfo a2)
     {
-      if (actorID1 == actorID2)
-        return 0;
-
-      ActorInfo a1 = Globals.Engine.ActorFactory.Get(actorID1);
-      ActorInfo a2 = Globals.Engine.ActorFactory.Get(actorID2);
       if (a1 == null || a2 == null)
         return float.MaxValue;
 
-      TV_3DVECTOR a1v = a1.GetPosition();
-      TV_3DVECTOR a2v = a2.GetPosition();
+      if (a1 == a2)
+        return 0;
+
+      TV_3DVECTOR a1v = a1.GetGlobalPosition();
+      TV_3DVECTOR a2v = a2.GetGlobalPosition();
       float dx = a1v.x - a2v.x;
       float dy = a1v.y - a2v.y;
       float dz = a1v.z - a2v.z;
@@ -52,52 +53,47 @@ namespace SWEndor.Actors
       return dx + dy + dz;
     }
 
-    public static float GetDistance(int actorID1, int actorID2, float limit)
+    public static float GetDistance(ActorInfo a1, ActorInfo a2, float limit)
     {
-      float d = GetRoughDistance(actorID1, actorID2);
+      float d = GetRoughDistance(a1, a2);
       if (d > limit)
         return limit;
       else
-        return GetDistance(actorID1, actorID2);
+        return GetDistance(a1, a2);
     }
 
-    public static float GetDistance(int actorID1, int actorID2)
+    public static float GetDistance(ActorInfo a1, ActorInfo a2)
     {
-      if (actorID1 == actorID2)
-        return 0;
-
-      ActorInfo a1 = Globals.Engine.ActorFactory.Get(actorID1);
-      ActorInfo a2 = Globals.Engine.ActorFactory.Get(actorID2);
-
       if (a1 == null || a2 == null)
         return float.MaxValue;
+
+      if (a1 == a2)
+        return 0;
 
       if (Cleartime < Globals.Engine.Game.GameTime)
       {
         list.Clear();
-        list.Refresh();
         Cleartime = Globals.Engine.Game.GameTime + 5;
       }
 
-      long hash = (actorID1 < actorID2) ? (uint)(actorID1 << sizeof(int)) | (uint)actorID2 : (uint)(actorID2 << sizeof(int)) | (uint)actorID1 ;
-      float dist;
-      CachedFloat cached = list.Get(hash);
-      if (cached.Time < Globals.Engine.Game.GameTime)
-      {
-        dist = CalculateDistance(a1, a2);
-        list.Put(hash, new CachedFloat() { Time = Globals.Engine.Game.GameTime, Value = dist });
-      }
-      else
-      {
-        dist = cached.Value;
-      }
+      int hash = (a1.ID < a2.ID) ? a1.ID * Globals.ActorLimit + a2.ID : a2.ID * Globals.ActorLimit + a1.ID;
 
-      return dist;
+      Func<float> fn = () => CalculateDistance(a1, a2);
+
+      lock (locker)
+      {
+        if (!list.ContainsKey(hash))
+          //list[hash].Set(Globals.Engine.Game.GameTime, fn);
+        //else
+          list.Add(hash, new TimeCache<float>(Globals.Engine.Game.GameTime, fn));
+
+        return list[hash].Get(Globals.Engine.Game.GameTime);
+      }
     }
 
     public static float CalculateDistance(ActorInfo first, ActorInfo second)
     {
-      return first.GetEngine().TrueVision.TVMathLibrary.GetDistanceVec3D(first.GetPosition(), second.GetPosition());
+      return first.GetEngine().TrueVision.TVMathLibrary.GetDistanceVec3D(first.GetGlobalPosition(), second.GetGlobalPosition());
     }
   }
 }

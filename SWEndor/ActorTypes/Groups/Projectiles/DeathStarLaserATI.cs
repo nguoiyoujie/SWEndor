@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.Actors.Traits;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -42,12 +43,13 @@ namespace SWEndor.ActorTypes.Instances
       // Override
     }
 
-    public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
+      base.ProcessHit(owner, hitby, impact, normal);
+      float time = 0.5f;
 
-      TimedLifeSystem.ReduceTimerTo(Engine, hitbyActorID, 0.5f);
-      TimedLifeSystem.ReduceTimerTo(Engine, ownerActorID, 0);
+      if (hitby.DyingTimer.TimeRemaining > time)
+        hitby.DyingTimer.Set(time);
     }
   }
 }

@@ -1,4 +1,5 @@
 ﻿using SWEndor.Actors;
+using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Weapons;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
       ainfo.WeaponSystemInfo.AIWeapons = new string[] { "none" };
 
-      ActionManager.QueueNext(ainfo.ID, new Lock());
+      ainfo.QueueNext(new Lock());
     }
 
     public override void ProcessState(ActorInfo ainfo)
@@ -39,10 +40,10 @@ namespace SWEndor.ActorTypes.Instances
       
       if (ainfo.CurrentAction != null && ainfo.CurrentAction is AttackActor)
       {
-        ActorInfo target = ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
-        if (target != null && target.CreationState == CreationState.ACTIVE)
+        ActorInfo target = ((AttackActor)ainfo.CurrentAction).Target_Actor;
+        if (target != null && target.Active)
         {
-          FireWeapon(ainfo.ID, target.ID, "laser");
+          FireWeapon(ainfo, target, "laser");
         }
       }
     }

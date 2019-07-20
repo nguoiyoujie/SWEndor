@@ -1,6 +1,7 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.Actors.Traits;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -9,7 +10,13 @@ namespace SWEndor.ActorTypes.Groups
     internal LargeShip(Factory owner, string name): base(owner, name)
     {
       CombatData = CombatData.DefaultShip;
-      ExplodeData = new ExplodeData(0.5f, 1, "ExplosionSm", DeathExplosionTrigger.ALWAYS, 2, "ExplosionLg");
+
+      Explodes = new ExplodeInfo[]
+      {
+        new ExplodeInfo("ExpL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeInfo("ExpL01", 1, 2, ExplodeTrigger.ON_DEATH),
+        new ExplodeInfo("ExpW01", 1, 1, ExplodeTrigger.ON_DEATH)
+      };
 
       CullDistance = 20000;
 
@@ -29,20 +36,29 @@ namespace SWEndor.ActorTypes.Groups
       ainfo.DyingMoveComponent = new DyingSink(0.06f, 15f, 2.5f);
     }
 
-    public override void ProcessNewState(ActorInfo ainfo)
+    public override void Dying<A1>(A1 self)
     {
-      base.ProcessNewState(ainfo);
-      if (ainfo.ActorState.IsDying())
-      {
-        TimedLifeSystem.Activate(Engine, ainfo.ID, 25);
-        CombatSystem.Deactivate(Engine, ainfo.ID);
-      }
-      else if (ainfo.ActorState.IsDead())
-      {
-        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave"));
-        acinfo.Position = ainfo.GetPosition();
-        ainfo.AddChild(ActorInfo.Create(ActorFactory, acinfo).ID);
-      }
+      base.Dying(self);
+      ActorInfo ainfo = self as ActorInfo;
+      if (ainfo == null)
+        return;
+
+      ainfo.DyingTimer.Set(25).Start();
+      CombatSystem.Deactivate(Engine, ainfo.ID);
+    }
+
+    public override void Dead<A1>(A1 self)
+    {
+      base.Dead(self);
+      /*
+      ActorInfo ainfo = self as ActorInfo;
+      if (ainfo == null)
+        return;
+
+      ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave"));
+      acinfo.Position = ainfo.GetPosition();
+      ainfo.AddChild(ActorFactory.Create(acinfo));
+      */
     }
   }
 }

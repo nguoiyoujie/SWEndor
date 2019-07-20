@@ -53,11 +53,11 @@ namespace SWEndor.Terminal
         sb.AppendLine("--PARAMETERS--");
         if (i < ParameterDesc.Count && ParameterDesc[i] != null && ParameterDesc[i].Length > 0)
           if (i < MaxParameters)
-            sb.AppendLine(string.Format(" {0,20} : {1}", ParameterNames[i], ParameterDesc[i]));
+            sb.AppendLine(" {0,20} : {1}".F(ParameterNames[i], ParameterDesc[i]));
           else
-            sb.AppendLine(string.Format("<{0,20}>: {1}", ParameterNames[i], ParameterDesc[i]));
+            sb.AppendLine("<{0,20}>: {1}".F(ParameterNames[i], ParameterDesc[i]));
         else
-          sb.AppendLine(string.Format(" {0,20} ", ParameterNames[i]));
+          sb.AppendLine(" {0,20} ".F(ParameterNames[i]));
       }
 
       return new TCommandFeedback(TCommandFeedbackType.NORMAL, sb.ToString());

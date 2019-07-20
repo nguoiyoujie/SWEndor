@@ -1,8 +1,11 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Instances;
+using SWEndor.AI;
 using SWEndor.AI.Actions;
+using SWEndor.Primitives;
 using System.Collections.Generic;
 
 namespace SWEndor.Scenarios
@@ -23,7 +26,7 @@ namespace SWEndor.Scenarios
                                               };
     }
 
-    private int m_X1ID = -1;
+    private ActorInfo m_X1 = null;
 
     public override void Load(ActorTypeInfo wing, string difficulty)
     {
@@ -73,18 +76,17 @@ namespace SWEndor.Scenarios
 
       if (Manager.Scenario.TimeSinceLostWing < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
       {
-        Manager.Line1Text = string.Format("WINGS: {0}", MainAllyFaction.GetWings().Count);
+        Manager.Line1Text = "WINGS: {0}".F(MainAllyFaction.GetWings().Count);
       }
       else
       {
-        Manager.Line1Text = string.Format("");
+        Manager.Line1Text = "";
       }
 
       int tie_d = 0;
       int tie_sa = 0;
-      foreach (int actorID in MainEnemyFaction.GetWings())
+      foreach (ActorInfo actor in MainEnemyFaction.GetWings())
       {
-        ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
         {
           if (actor.TypeInfo is TIE_D_ATI)
@@ -96,10 +98,10 @@ namespace SWEndor.Scenarios
 
       if (tie_d > 0)
       {
-        Manager.Line2Text = string.Format("TIE/D: {0}", tie_d);
+        Manager.Line2Text = "TIE/D: {0}".F(tie_d);
         if (tie_sa > 0)
         {
-          Manager.Line3Text = string.Format("TIE/SA:{0}", tie_sa);
+          Manager.Line3Text = "TIE/SA:{0}".F(tie_sa);
         }
         else
         {
@@ -108,7 +110,7 @@ namespace SWEndor.Scenarios
       }
       else if (tie_sa > 0)
       {
-        Manager.Line2Text = string.Format("TIE/SA:{0}", tie_sa);
+        Manager.Line2Text = "TIE/SA:{0}".F(tie_sa);
         Manager.Line3Text = "";
       }
       else
@@ -284,9 +286,8 @@ namespace SWEndor.Scenarios
 
     public void Rebel_RemoveTorps(GameEventArg arg)
     {
-      foreach (int actorID in MainAllyFaction.GetWings())
+      foreach (ActorInfo actor in MainAllyFaction.GetWings())
       {
-        ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
         {
           actor.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
@@ -301,7 +302,7 @@ namespace SWEndor.Scenarios
     {
       PlayerInfo.ActorID = PlayerInfo.TempActorID;
 
-      if (PlayerInfo.Actor == null || PlayerInfo.Actor.CreationState == CreationState.DISPOSED)
+      if (PlayerInfo.Actor == null || PlayerInfo.Actor.Disposed)
       {
         if (PlayerInfo.Lives > 0)
         {
@@ -309,9 +310,9 @@ namespace SWEndor.Scenarios
           TV_3DVECTOR pos = new TV_3DVECTOR(0, -200, 500);
           if (MainAllyFaction.GetShips().Count > 0)
           {
-            ActorInfo rs = Engine.ActorFactory.Get(MainAllyFaction.GetShips()[0]);
+            ActorInfo rs = MainAllyFaction.GetShips()[0];
             if (rs != null)
-              pos += rs.GetPosition();
+              pos += rs.GetGlobalPosition();
           }
 
           ActorInfo ainfo = new ActorSpawnInfo
@@ -336,13 +337,12 @@ namespace SWEndor.Scenarios
 
     public void Rebel_GiveControl(GameEventArg arg)
     {
-      foreach (int actorID in MainAllyFaction.GetAll())
+      foreach (ActorInfo actor in MainAllyFaction.GetAll())
       {
-        ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
         {
-          Engine.ActionManager.UnlockOne(actorID);
-          actor.ActorState = ActorState.NORMAL;
+          actor.UnlockOne();
+          actor.StateModel.MakeNormal(actor);
           actor.MoveData.Speed = actor.MoveData.MaxSpeed;
         }
       }
@@ -443,7 +443,7 @@ namespace SWEndor.Scenarios
       float fx = Engine.Random.Next(-2500, 2500);
       float fy = Engine.Random.Next(-500, 500);
 
-      m_X1ID = new ActorSpawnInfo
+      m_X1 = new ActorSpawnInfo
       {
         Type = Engine.ActorTypeFactory.Get("TIE Advanced X1"),
         Name = "",
@@ -455,7 +455,7 @@ namespace SWEndor.Scenarios
         Rotation = new TV_3DVECTOR(),
         Actions = new ActionInfo[] { new Hunt(TargetType.SHIP) },
         Registries = new string[] { "CriticalEnemies" }
-      }.Spawn(this).ID;
+      }.Spawn(this);
 
       Screen2D.MessageText("The TIE Advanced X1 has arrived.", 5, new TV_COLOR(1, 1, 1, 1));
     }
@@ -472,14 +472,14 @@ namespace SWEndor.Scenarios
 
     public void Empire_TIEAdvanced_Control_AttackShip(GameEventArg arg)
     {
-      Engine.ActionManager.ForceClearQueue(m_X1ID);
-      Engine.ActionManager.QueueLast(m_X1ID, new Hunt(TargetType.SHIP));
+      m_X1.ForceClearQueue();
+      m_X1.QueueLast(new Hunt(TargetType.SHIP));
     }
 
     public void Empire_TIEAdvanced_Control_AttackFighter(GameEventArg arg)
     {
-      Engine.ActionManager.ForceClearQueue(m_X1ID);
-      Engine.ActionManager.QueueLast(m_X1ID, new Hunt(TargetType.FIGHTER));
+      m_X1.ForceClearQueue();
+      m_X1.QueueLast(new Hunt(TargetType.FIGHTER));
     }
 
     #endregion

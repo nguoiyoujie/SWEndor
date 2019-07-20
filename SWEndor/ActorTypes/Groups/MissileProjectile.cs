@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.Actors.Traits;
 using SWEndor.AI.Actions;
 using SWEndor.Weapons;
 using SWEndor.Weapons.Types;
@@ -13,8 +14,11 @@ namespace SWEndor.ActorTypes.Groups
   {
     internal MissileProjectile(Factory owner, string name) : base(owner, name)
     {
-      // Combat
-      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.TIMENOTEXPIRED_ONLY, deathExplosionType: "ExplosionSm");
+      Explodes = new ExplodeInfo[]
+      {
+        new ExplodeInfo("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
+      };
+
       CombatData = CombatData.DefaultFighter;
 
       CullDistance = 12000;
@@ -42,7 +46,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       base.ProcessState(ainfo);
       if (ainfo.CurrentAction == null || ainfo.CurrentAction is Idle)
-        ainfo.ActorState = ActorState.DEAD;
+        ainfo.StateModel.MakeDead(ainfo);
     }
   }
 }

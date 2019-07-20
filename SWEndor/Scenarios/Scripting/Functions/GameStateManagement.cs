@@ -1,4 +1,5 @@
-﻿using SWEndor.Scenarios.Scripting.Expressions;
+﻿using SWEndor.Primitives;
+using SWEndor.Scenarios.Scripting.Expressions;
 using System;
 using System.Collections.Generic;
 
@@ -139,7 +140,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
         if (g != null)
           context.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + Convert.ToInt32(ps[0].ToString()), g);
         else
-          throw new InvalidOperationException(string.Format("Script event '{0}' does not exist!", ps[1].ToString()));
+          throw new InvalidOperationException("Script event '{0}' does not exist!".F(ps[1].ToString()));
       }
 
       return true;

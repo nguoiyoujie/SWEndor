@@ -1,4 +1,5 @@
 ﻿using SWEndor.Actors;
+using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes;
 
 namespace SWEndor.UI.Widgets
@@ -13,8 +14,7 @@ namespace SWEndor.UI.Widgets
       {
         return (!Owner.ShowPage
             && PlayerInfo.Actor != null
-            && PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && PlayerInfo.Actor.ActorState != ActorState.DYING
+            && !PlayerInfo.Actor.StateModel.IsDyingOrDead
             && Owner.ShowUI
             && Owner.Box3D_Enable);
       }

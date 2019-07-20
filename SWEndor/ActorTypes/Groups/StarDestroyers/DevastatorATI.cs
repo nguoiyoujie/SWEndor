@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes.Components;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +14,11 @@ namespace SWEndor.ActorTypes.Instances
     internal DevastatorATI(Factory owner) : base(owner, "Devastator Imperial-I Star Destroyer")
     {
       // Combat
-      ExplodeData = new ExplodeData(0.25f, 1, "ExplosionSm", DeathExplosionTrigger.ALWAYS, 2.5f, "ExplosionLg");
+      Explodes = new ExplodeInfo[] {
+        new ExplodeInfo("ExpL00", 0.25f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeInfo("ExpL01", 1, 2.5f, ExplodeTrigger.ON_DEATH),
+        new ExplodeInfo("ExpW01", 1, 1, ExplodeTrigger.ON_DEATH)
+      };
 
       MaxStrength = 1075.0f;
       ImpactDamage = 60.0f;

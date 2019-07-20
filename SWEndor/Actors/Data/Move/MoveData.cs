@@ -6,6 +6,9 @@ namespace SWEndor.Actors.Data
   {
     // General
     public float Speed;
+
+    public bool FreeSpeed;
+
     public float XTurnAngle;
     public float YTurnAngle;
     public float ZRoll;
@@ -29,6 +32,7 @@ namespace SWEndor.Actors.Data
 
     public void Init(ActorTypeInfo atype, ActorCreationInfo acreate)
     {
+      FreeSpeed = acreate.FreeSpeed;
       Speed = acreate.InitialSpeed;
       XTurnAngle = 0;
       YTurnAngle = 0;

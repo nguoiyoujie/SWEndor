@@ -1,6 +1,7 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.Actors.Traits;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -10,7 +11,8 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.Immune;
-      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS, deathExplosionType: "Explosion");
+
+      Explodes = new ExplodeInfo[] { new ExplodeInfo("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH)};
 
       CullDistance = 4500;
 

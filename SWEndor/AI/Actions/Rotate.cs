@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.Primitives;
 
 namespace SWEndor.AI.Actions
 {
@@ -22,19 +23,17 @@ namespace SWEndor.AI.Actions
 
     public override string ToString()
     {
-      return string.Format("{0},{1},{2},{3},{4},{5}"
-                          , Name
-                          , Utilities.ToString(Target_Position)
-                          , Target_Speed
-                          , CloseEnoughAngle
-                          , CanInterrupt
-                          , Complete
-                          );
+      return "{0},{1},{2},{3},{4},{5}".F(Name
+                                      , Utilities.ToString(Target_Position)
+                                      , Target_Speed
+                                      , CloseEnoughAngle
+                                      , CanInterrupt
+                                      , Complete
+                                      );
     }
 
-    public override void Process(Engine engine, int actorID)
+    public override void Process(Engine engine, ActorInfo actor)
     {
-      ActorInfo actor = engine.ActorFactory.Get(actorID);
       if (actor.MoveData.MaxTurnRate == 0)
       {
         Complete = true;
@@ -51,9 +50,9 @@ namespace SWEndor.AI.Actions
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
-      if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
+      if (CheckImminentCollision(actor))
       {
-        CollisionSystem.CreateAvoidAction(engine, actorID);
+        CollisionSystem.CreateAvoidAction(engine, actor);
       }
     }
   }

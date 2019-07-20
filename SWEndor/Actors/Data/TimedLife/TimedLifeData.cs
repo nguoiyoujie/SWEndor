@@ -1,5 +1,9 @@
-﻿namespace SWEndor.Actors.Data
+﻿using System;
+using SWEndor.ActorTypes;
+
+namespace SWEndor.Actors.Data
 {
+  // preserved due to use for ActorTypeInfo
   public struct TimedLifeData
   {
     public bool OnTimedLife;
@@ -9,18 +13,6 @@
     {
       OnTimedLife = enabled;
       TimedLife = time;
-    }
-
-    public void CopyFrom(TimedLifeData src)
-    {
-      OnTimedLife = src.OnTimedLife;
-      TimedLife = src.TimedLife;
-    }
-
-    public void Reset()
-    {
-      OnTimedLife = false;
-      TimedLife = 100;
     }
   }
 }

@@ -29,9 +29,9 @@ namespace SWEndor.UI.Widgets
 
           if (a != null) //&& a.TypeInfo.CollisionEnabled)
           {
-            TV_3DVECTOR vec = tvcres.GetCollisionImpact() - a.GetPosition();
+            TV_3DVECTOR vec = tvcres.GetCollisionImpact() - a.GetGlobalPosition();
             TV_3DVECTOR vvec = new TV_3DVECTOR();
-            TV_3DVECTOR rot = a.GetRotation();
+            TV_3DVECTOR rot = a.Transform.Rotation;
             Engine.TrueVision.TVMathLibrary.TVVec3Rotate(ref vvec, vec, -rot.y, rot.x, rot.z);
 
             string text = string.Format("{0}({1:0.0},{2:0.0},{3:0.0})\nPos: {4:0.0},{5:0.0},{6:0.0}\nSpd: {7: 0.0}\n"//{8}  {9:0.0},{10:0.0},{11:0.0}\n"
@@ -39,9 +39,9 @@ namespace SWEndor.UI.Widgets
               , vvec.x
               , vvec.y
               , vvec.z
-              , a.GetPosition().x
-              , a.GetPosition().y
-              , a.GetPosition().z
+              , a.GetGlobalPosition().x
+              , a.GetGlobalPosition().y
+              , a.GetGlobalPosition().z
               , a.MoveData.Speed
               //, a.AI.Master.CurrAI
               //, a.AI.Master.Move_TargetPosition.x

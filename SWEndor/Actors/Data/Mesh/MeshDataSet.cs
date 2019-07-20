@@ -14,25 +14,6 @@ namespace SWEndor.Actors.Data
     public void Reset(int id) { ((DoFunc<MeshData>)((ref MeshData d) => { d.Reset(); }))(ref list[id % Globals.ActorLimit]); }
     public void Do(int id, DoFunc<MeshData> func) { func.Invoke(ref list[id % Globals.ActorLimit]); }
 
-    // Scale { get; set; }
-    public void Scale_set(int id, float value)
-    {
-      ((SetFunc<MeshData, float>)((ref MeshData d, float v) => 
-      {
-        d.Scale = v;
-      }
-      ))(ref list[id % Globals.ActorLimit], value);
-    }
-
-    public float Scale_get(int id)
-    {
-      return ((GetFunc<MeshData, float>)((ref MeshData d) => 
-      {
-        return d.Scale;
-      }
-      ))(ref list[id % Globals.ActorLimit]);
-    }
-
     // Mesh { get; functions; }
     public TVMesh Mesh_get(int id)
     {
@@ -68,15 +49,6 @@ namespace SWEndor.Actors.Data
         d.Mesh?.SetTexture(iTexture);
       }
       ))(ref list[id % Globals.ActorLimit], iTexture);
-    }
-
-    public void Mesh_getBasisVectors(int id, ref TV_3DVECTOR front, ref TV_3DVECTOR up, ref TV_3DVECTOR right)
-    {
-      ((DoFunc<MeshData, TV_3DVECTOR, TV_3DVECTOR, TV_3DVECTOR>)((ref MeshData d, ref TV_3DVECTOR f, ref TV_3DVECTOR u, ref TV_3DVECTOR r) =>
-      {
-        d.Mesh?.GetBasisVectors(ref f, ref u, ref r);
-      }
-      ))(ref list[id % Globals.ActorLimit], ref front, ref up, ref right);
     }
 
     public BoundingBox Mesh_getBoundingBox(int id, bool uselocal)

@@ -15,6 +15,14 @@ namespace SWEndor.Primitives.Factories
     void Clear();
   }
 
+  public interface IRegistry<K, T>
+  {
+    T Get(K key);
+    void Add(K key, T item);
+    void Remove(K key);
+    void Clear();
+  }
+
   public abstract class AFactoryObject
   {
     private string id;
