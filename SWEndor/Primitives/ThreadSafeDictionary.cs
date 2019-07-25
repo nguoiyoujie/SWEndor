@@ -10,9 +10,8 @@ namespace SWEndor.Primitives
   /// <typeparam name="U">The item type to be stored as values in this list</typeparam>
   public class ThreadSafeDictionary<T, U>
   {
-    private object locker = new object();
+    private object write_locker = new object();
 
-    //private Mutex mu_pending_list = new Mutex();
     private Dictionary<T, U> _list = new Dictionary<T, U>();
     private Dictionary<T, U> _pending_list = new Dictionary<T, U>();
     private bool _dirty = true;
@@ -127,8 +126,11 @@ namespace SWEndor.Primitives
     /// </summary>
     public void Refresh()
     {
-      lock (locker)
+      lock (write_locker)
       {
+        //Dictionary<T, U> _d = _list;
+        //_list = _pending_list;
+        //_pending_list = _d;
         _list = new Dictionary<T, U>(_pending_list);
       }
     }
@@ -140,16 +142,16 @@ namespace SWEndor.Primitives
     {
       try
       {
-        lock (locker)
+        lock (write_locker)
           _pending_list.Add(key, value);
       }
       catch (ArgumentNullException ex)
       {
-        throw new ArgumentNullException("Attempted to add a null key to a ThreadSafeDictionary", ex);
+        throw new ArgumentNullException("Attempted to add a null key to a {0}".F(GetType().Name), ex);
       }
       catch (ArgumentException ex)
       {
-        throw new ArgumentException("Attempted to add an existing key to a ThreadSafeDictionary", ex);
+        throw new ArgumentException("Attempted to add an existing key '{0}' to a {1}".F(key, GetType().Name), ex);
       }
 
       if (!ExplicitUpdateOnly)
@@ -163,16 +165,16 @@ namespace SWEndor.Primitives
     {
       try
       {
-        lock (locker)
+        lock (write_locker)
           _pending_list[key] = value;
       }
       catch (ArgumentNullException ex)
       {
-        throw new ArgumentNullException("Attempted to set value of a null key in a ThreadSafeDictionary", ex);
+        throw new ArgumentNullException("Attempted to set value of a null key to a {0}".F(GetType().Name), ex);
       }
       catch (KeyNotFoundException ex)
       {
-        throw new ArgumentException("Attempted to set value to an non-existend key in a ThreadSafeDictionary", ex);
+        throw new ArgumentException("Attempted to set value to an non-existent key '{0}' in a {1}".F(key, GetType().Name), ex);
       }
 
       if (!ExplicitUpdateOnly)
@@ -186,7 +188,7 @@ namespace SWEndor.Primitives
     {
       try
       {
-        lock (locker)
+        lock (write_locker)
           if (_pending_list.ContainsKey(key))
             _pending_list[key] = value;
           else
@@ -194,7 +196,7 @@ namespace SWEndor.Primitives
       }
       catch (ArgumentNullException ex)
       {
-        throw new ArgumentNullException("Attempted to put value of a null key in a ThreadSafeDictionary", ex);
+        throw new ArgumentNullException("Attempted to put value of a null key in a {0}".F(GetType().Name), ex);
       }
 
       if (!ExplicitUpdateOnly)
@@ -206,7 +208,7 @@ namespace SWEndor.Primitives
     /// </summary>
     public void Clear()
     {
-      lock (locker)
+      lock (write_locker)
         _pending_list = new Dictionary<T, U>();
 
       if (!ExplicitUpdateOnly)
@@ -219,7 +221,7 @@ namespace SWEndor.Primitives
     public bool Remove(T key)
     {
       bool ret = false;
-      lock (locker)
+      lock (write_locker)
         if (_pending_list.ContainsKey(key))
           ret = _pending_list.Remove(key);
 

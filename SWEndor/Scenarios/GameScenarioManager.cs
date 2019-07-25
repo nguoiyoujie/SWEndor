@@ -91,14 +91,11 @@ namespace SWEndor.Scenarios
       foreach (KeyValuePair<string, int> kvp in list)
       {
         ActorInfo actor = Engine.ActorFactory.Get(kvp.Value);
-        if (actor != null && actor.Disposed)
+        if (actor?.Disposed ?? false)
         {
           rm.Add(kvp.Key);
-
           if (actor.IsPlayer)
-          {
             ret++;
-          }
         }
       }
 

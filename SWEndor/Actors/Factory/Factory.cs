@@ -116,6 +116,9 @@ namespace SWEndor.Actors
         int x = id;
 
         ActorInfo actor = Get(id);
+        if (actor == null)
+          return;
+
         if (First == actor && Last == actor)
         {
           First = null;

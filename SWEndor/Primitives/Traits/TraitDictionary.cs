@@ -3,13 +3,23 @@ using System.Collections.Generic;
 
 namespace SWEndor.Primitives.Traits
 {
+  public enum TraitCollectionState { INIT, ACTIVE, DISPOSED }
+
   public class TraitCollection
   {
     readonly Dictionary<Type, List<ITrait>> traits = new Dictionary<Type, List<ITrait>>();
+    readonly ITraitOwner owner;
+    internal TraitCollectionState State;
+
+    public TraitCollection(ITraitOwner owner)
+    {
+      this.owner = owner;
+    }
 
     public IEnumerable<T> TraitsImplementing<T>() where T : ITrait
     {
       Type type = typeof(T);
+      //CheckDisposed(type);
       if (traits.ContainsKey(type))
         foreach (ITrait t in traits[type])
           yield return (T)t;
@@ -71,6 +81,7 @@ namespace SWEndor.Primitives.Traits
       where T : ITrait
     {
       ret = default(T);
+      //CheckDisposed(typeof(T));
       Type type = typeof(T);
       if (!traits.ContainsKey(type))
         return false;
@@ -92,6 +103,12 @@ namespace SWEndor.Primitives.Traits
         traits.Add(type, new List<ITrait>());
 
       traits[type].Add(val);
+    }
+
+    private void CheckDisposed(Type type)
+    {
+      if (State == TraitCollectionState.DISPOSED || (State == TraitCollectionState.ACTIVE && owner.Disposed))
+        throw new InvalidOperationException("Attempted to get trait '{0}' from disposed object ({1})".F(type.Name, owner));
     }
   }
 

@@ -44,16 +44,16 @@ namespace SWEndor.Actors.Traits
 
     TransformData currData;
     TransformData prevData;
-    TimeCache<TV_3DMATRIX> currWMat;
-    TimeCache<TV_3DMATRIX> prevWMat;
+    object currWMat;
+    object prevWMat;
 
     public void Init(ActorTypeInfo type, ActorCreationInfo acinfo)
     {
       Position = acinfo.Position;
       Rotation = acinfo.Rotation;
       Scale = type.Scale * acinfo.InitialScale;
-      currWMat = new TimeCache<TV_3DMATRIX>(0, () => { return new TV_3DMATRIX(); });
-      prevWMat = new TimeCache<TV_3DMATRIX>(0, () => { return new TV_3DMATRIX(); });
+      //currWMat = new TimeCache<TV_3DMATRIX>();
+      //prevWMat = new TimeCache<TV_3DMATRIX>();
     }
 
     public float Scale
@@ -124,12 +124,29 @@ namespace SWEndor.Actors.Traits
 
     public TV_3DMATRIX GetWorldMatrix<A>(A self, float time) where A : ITraitOwner
     {
-      return currWMat.Get(time, InnerGetWorldMatrix, self, time);
+      TimeCache<A, float, TV_3DMATRIX> fn;
+      if (currWMat is TimeCache<A, float, TV_3DMATRIX>)
+        fn = (TimeCache<A, float, TV_3DMATRIX>)currWMat;
+      else
+      {
+        fn = new TimeCache<A, float, TV_3DMATRIX>(0, InnerGetWorldMatrix, self, time);
+        currWMat = fn;
+      }
+
+      return fn.Get(time, self, time);
     }
 
     public TV_3DMATRIX GetPrevWorldMatrix<A>(A self, float time) where A : ITraitOwner
     {
-      return prevWMat.Get(time, InnerGetPrevWorldMatrix, self, time);
+      TimeCache<A, float, TV_3DMATRIX> fn;
+      if (prevWMat is TimeCache<A, float, TV_3DMATRIX>)
+        fn = (TimeCache<A, float, TV_3DMATRIX>)prevWMat;
+      else
+      {
+        fn = new TimeCache<A, float, TV_3DMATRIX>(0, InnerGetWorldMatrix, self, time);
+        prevWMat = fn;
+      }
+      return fn.Get(time, self, time);
     }
 
     public TV_3DMATRIX InnerGetWorldMatrix<A>(A self, float time) where A : ITraitOwner

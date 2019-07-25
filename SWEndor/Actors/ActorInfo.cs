@@ -120,7 +120,7 @@ namespace SWEndor.Actors
     public IRelation<ActorInfo> Relation { get; private set; }
 
     // 
-    private readonly TraitCollection Traits = new TraitCollection();
+    private readonly TraitCollection Traits;
     public List<Action<ActorInfo>> PostFrameActions = new List<Action<ActorInfo>>();
 
 
@@ -135,6 +135,7 @@ namespace SWEndor.Actors
       TypeInfo = acinfo.ActorTypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
 
+      Traits = new TraitCollection(this);
       InitializeTraits(acinfo);
 
       // Init data before components
@@ -185,24 +186,15 @@ namespace SWEndor.Actors
 
     public void InitializeTraits(ActorCreationInfo acinfo)
     {
+      Traits.State = TraitCollectionState.INIT;
       Traits.Add(TypeInfo);
       Traits.Add(Engine.TraitPoolCollection.GetTrait<StateModel>()).Init(TypeInfo, acinfo);
       Traits.Add(Engine.TraitPoolCollection.GetTrait<Health>()).Init(TypeInfo, acinfo);
       Traits.Add(Engine.TraitPoolCollection.GetTrait<DyingTimer>()).Init(TypeInfo);
       Traits.Add(Engine.TraitPoolCollection.GetTrait<MeshModel>()).Init(ID, TypeInfo);
       Traits.Add(Engine.TraitPoolCollection.GetTrait<Transform>()).Init(TypeInfo, acinfo);
-      Traits.Add(Engine.TraitPoolCollection.GetTrait<Relation<ActorInfo>>());
+      Traits.Add(Engine.TraitPoolCollection.GetTrait<Relation<ActorInfo>>()).Init();
       Traits.Add(Engine.TraitPoolCollection.GetTrait<Explodes>()).Init(TypeInfo, acinfo);
-
-      /*
-      Traits.Add(new StateModel()).Init(TypeInfo, acinfo);
-      Traits.Add(new Health()).Init(TypeInfo, acinfo);
-      Traits.Add(new DyingTimer()).Init(TypeInfo);
-      Traits.Add(new MeshModel()).Init(ID, TypeInfo);
-      Traits.Add(new Transform()).Init(TypeInfo, acinfo);
-      Traits.Add(new Relation<ActorInfo>());
-      Traits.Add(new Explodes()).Init(TypeInfo, acinfo);
-      */
 
       StateModel = Traits.Get<IStateModel>();
       MeshModel = Traits.Get<IMeshModel>();
@@ -210,6 +202,8 @@ namespace SWEndor.Actors
       DyingTimer = Traits.Get<DyingTimer>();
       Transform = Traits.Get<ITransform>();
       Relation = Traits.Get<IRelation<ActorInfo>>();
+
+      Traits.State = TraitCollectionState.ACTIVE;
     }
 
     public void Initialize()
@@ -439,13 +433,14 @@ namespace SWEndor.Actors
 
     public void Kill()
     {
-      StateModel.CreationState = CreationState.DISPOSING;
+      //StateModel.CreationState = CreationState.DISPOSING;
       ActorFactory.MakeDead(this);
     }
 
     public void Destroy()
     {
-      if (Disposed)
+      if (StateModel.CreationState == CreationState.DISPOSING
+        || StateModel.CreationState == CreationState.DISPOSED)
         return;
 
       StateModel.CreationState = CreationState.DISPOSING;
@@ -488,6 +483,8 @@ namespace SWEndor.Actors
       else if (this == PlayerInfo.TempActor)
         PlayerInfo.TempActorID = -1;
 
+      Faction.UnregisterActor(this);
+
       // Dispose Traits
       foreach (IDisposableTrait t in TraitsImplementing<IDisposableTrait>())
       {
@@ -495,24 +492,19 @@ namespace SWEndor.Actors
         Engine.TraitPoolCollection.ReturnTrait(t);
       }
 
+      StateModel.CreationState = CreationState.DISPOSED;
+      Traits.State = TraitCollectionState.DISPOSED;
       Traits.Clear();
 
-      // Final dispose
-      Faction.UnregisterActor(this);
-      //Engine.TraitDictionary.RemoveActor(this);
-      Engine.ActorFactory.Remove(ID);
-
       // Kill data
-      //CoordData.Reset();
       MoveData.Reset();
 
       CollisionData.Reset();
       RegenData.Reset();
       CombatData.Reset();
 
-
-      // Finally
-      StateModel.CreationState = CreationState.DISPOSED;
+      // Final dispose
+      Engine.ActorFactory.Remove(ID);
     }
 
 

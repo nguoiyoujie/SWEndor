@@ -35,13 +35,11 @@ namespace SWEndor
       catch (Exception ex)
       {
         Log.WriteErr(Log.INITERROR, ex);
-        MessageBox.Show("Fatal Error occurred during initialization. Please see {0} in the /Log folder for the error message.".F(Log.INITERROR)
-                      , Application.ProductName + " - Error Encountered!"
+        MessageBox.Show(TextLocalization.Get(TextLocalKeys.SYSTEM_INIT_ERROR).F(Log.INITERROR)
+                      , TextLocalization.Get(TextLocalKeys.SYSTEM_TITLE_ERROR).F(Application.ProductName)
                       , MessageBoxButtons.OK);
         return;
       }
-
-      //Globals.UnloadDlls();
     }
   }
 }

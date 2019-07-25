@@ -1,4 +1,6 @@
-﻿using SWEndor.Primitives.Traits;
+﻿using SWEndor.Primitives;
+using SWEndor.Primitives.Traits;
+using System;
 using System.Collections.Generic;
 
 namespace SWEndor.Actors.Traits
@@ -13,11 +15,24 @@ namespace SWEndor.Actors.Traits
 
     public T FirstChild { get; set; }
     public T LastChild { get; set; }
-    public uint NumberOfChildren { get; set; }
+    public int NumberOfChildren { get; set; }
 
+    public void Init()
+    {
+      Parent = default(T);
+      UseParentCoords = false;
+      PrevSibling = default(T);
+      NextSibling = default(T);
+      FirstChild = default(T);
+      LastChild = default(T);
+      NumberOfChildren = 0;
+    }
 
     public void AddChild(T self, T child)
     {
+      if (self.Equals(child))
+        throw new InvalidOperationException("Adding the same {0} instance as its own child is not allowed.".F(typeof(T).Name));
+
       IRelation<T> cTrait;
       bool bcT = child.TryGetTrait(out cTrait);
       if (bcT)
@@ -50,6 +65,9 @@ namespace SWEndor.Actors.Traits
       if (bcT && self.Equals(cTrait.Parent))
       {
         NumberOfChildren--;
+        if (NumberOfChildren < -1)
+        { }
+
         if (child.Equals(FirstChild))
         {
           FirstChild = cTrait.NextSibling;

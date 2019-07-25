@@ -21,8 +21,9 @@ namespace SWEndor.Primitives.Traits
     {
       Type t = trait.GetType();
       if (!pools.ContainsKey(t))
-        pools.Add(t, (ITraitPool)typeof(TraitPool<>).MakeGenericType(t).GetConstructor(Type.EmptyTypes).Invoke(null));
+        return; // don't do anything if the GetTrait did not generate the pool.
 
+        //pools.Add(t, (ITraitPool)typeof(TraitPool<>).MakeGenericType(t).GetConstructor(Type.EmptyTypes).Invoke(null));
       pools[t].ReturnTrait(trait);
     }
   }

@@ -5,6 +5,8 @@ namespace SWEndor.Actors.Traits
 {
   public interface IRelation<T> : ITrait where T : ITraitOwner
   {
+    void Init(); 
+
     T Parent { get; set; }
     bool UseParentCoords { get; set; }
 
@@ -13,7 +15,7 @@ namespace SWEndor.Actors.Traits
 
     T FirstChild { get; set; }
     T LastChild { get; set; }
-    uint NumberOfChildren { get; set; }
+    int NumberOfChildren { get; }
 
     void AddChild(T self, T child);
     void RemoveChild(T self, T child);

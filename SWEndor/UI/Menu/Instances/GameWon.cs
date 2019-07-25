@@ -22,8 +22,8 @@ namespace SWEndor.UI.Menu.Pages
       Score.Text += "\n{0,42} {1,8:0}".F("Deaths".PadRight(42), PlayerInfo.Score.Deaths);
       Score.Text += "\n\n{0,42} {1,8:0}".F("", "Kills");
 
-      foreach (KeyValuePair<string, int> kvp in PlayerInfo.Score.KillsByName.GetList())
-        Score.Text += "\n{0,42} {1,8:0}".F((kvp.Key.Length > 42) ? kvp.Key.Remove(42) : kvp.Key.PadRight(42), kvp.Value);
+      foreach (string key in PlayerInfo.Score.KillsByName.Keys)
+        Score.Text += "\n{0,42} {1,8:0}".F((key.Length > 42) ? key.Remove(42) : key.PadRight(42), PlayerInfo.Score.KillsByName[key]);
 
       Score.TextFont = FontFactory.Get(Font.T12).ID;
       Score.TextPosition = new TV_2DVECTOR(Engine.ScreenWidth / 2 - 242, 120);

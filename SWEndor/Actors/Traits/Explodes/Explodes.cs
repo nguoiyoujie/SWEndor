@@ -34,7 +34,7 @@ namespace SWEndor.Actors.Traits
     }
   }
 
-  public class Explodes : ITick
+  public class Explodes : ITick, INotifyDying, INotifyDead
   {
     ExplodeInfo[] _data;
     ActorTypeInfo[] _types;
@@ -133,6 +133,16 @@ namespace SWEndor.Actors.Traits
       acinfo.Position = globalPosition;
       acinfo.InitialScale = explSize;
       Globals.Engine.ActorFactory.Create(acinfo);
+    }
+
+    void INotifyDying.Dying<A1>(A1 self)
+    {
+      Process(self);
+    }
+
+    void INotifyDead.Dead<A1>(A1 self)
+    {
+      Process(self);
     }
   }
 }

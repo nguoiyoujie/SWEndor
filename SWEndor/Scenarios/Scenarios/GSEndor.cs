@@ -837,7 +837,6 @@ namespace SWEndor.Scenarios
       if (PlayerInfo.Actor != null
         && !PlayerInfo.Actor.Disposed)
       {
-        // m_Player = Player.Actor;
         if (!Manager.GetGameStateB("in_battle"))
         {
           foreach (ActorInfo actor in MainAllyFaction.GetShips())

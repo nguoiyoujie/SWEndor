@@ -270,7 +270,8 @@ namespace SWEndor.Player
 
     public void RotateCam(float aX, float aY)
     {
-      if (Engine.PlayerInfo.IsMovementControlsEnabled)
+      PlayerInfo pl = Engine.PlayerInfo;
+      if (pl.IsMovementControlsEnabled)
       {
         float angleX = aY * Settings.SteeringSensitivity;
         float angleY = aX * Settings.SteeringSensitivity;
@@ -292,7 +293,7 @@ namespace SWEndor.Player
         }
         else */
 
-        if (Engine.PlayerInfo.Actor != null && !Engine.PlayerInfo.Actor.Disposed)
+        if (pl.Actor?.Active ?? false)
         {
           float maxT = Engine.PlayerInfo.Actor.TypeInfo.MaxTurnRate;
           angleX *= maxT;
