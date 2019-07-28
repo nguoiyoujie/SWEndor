@@ -86,7 +86,6 @@ namespace SWEndor.Actors.Traits
       FarMesh?.SetMatrix(mat);
 
       Mesh?.SetCollisionEnable(actor.StateModel.ComponentMask.Has(ComponentMask.CAN_BECOLLIDED) && !actor.IsAggregateMode);
-      //FarMesh?.SetCollisionEnable(false);
     }
   }
 }
