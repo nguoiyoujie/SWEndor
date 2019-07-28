@@ -4,6 +4,7 @@ using SWEndor.Primitives.Traits;
 
 namespace SWEndor.Actors.Traits
 {
+  /*
   public interface ISpawner : ITrait { void Spawn<A>(A actor) where A : ITraitOwner; }
   public interface IExplodeOnDying : ISpawner { }
   public interface IExplodeOnDeath : ISpawner { }
@@ -114,4 +115,5 @@ namespace SWEndor.Actors.Traits
       actor.Engine.ActorFactory.Create(acinfo);
     }
   }
+  */
 }

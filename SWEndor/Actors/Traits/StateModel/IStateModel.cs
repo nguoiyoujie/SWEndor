@@ -5,10 +5,10 @@ namespace SWEndor.Actors.Traits
 {
   public interface IStateModel : ITrait
   {
-    void Init(ActorTypeInfo type, ActorCreationInfo acinfo);
+    void Init(ActorInfo self, ActorTypeInfo type, ActorCreationInfo acinfo);
 
     ActorState ActorState { get; }
-    CreationState CreationState { get; set; }
+    CreationState CreationState { get; } //set; }
     ComponentMask ComponentMask { get; set; }
     float CreationTime { get; }
 
@@ -16,10 +16,15 @@ namespace SWEndor.Actors.Traits
     void MakeDead<A>(A self) where A : ITraitOwner;
     void MakeDying<A>(A self) where A : ITraitOwner;
     void MakeNormal<A>(A self) where A : ITraitOwner;
-    //void MakeFree<A>(A self) where A : ITraitOwner;
 
     bool IsDead { get; }
     bool IsDying { get; }
     bool IsDyingOrDead { get; }
+
+    void SetGenerated();
+    void SetActivated();
+    void SetDisposing();
+    void SetDisposed();
+    void ResetPlanned();
   }
 }

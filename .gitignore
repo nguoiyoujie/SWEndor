@@ -26,3 +26,4 @@
 /SWEndor/obj/Release/SWEndor.csproj.FileListAbsolute.txt
 /SWEndor/obj/Release/DesignTimeResolveAssemblyReferencesInput.cache
 /SWEndor/obj/Release/SWEndor.exe
+*.diagsession

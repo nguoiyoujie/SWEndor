@@ -122,8 +122,8 @@ namespace SWEndor.Actors
       //MeshSystem.Update(Engine, ID);
 
       if (StateModel != null && StateModel.CreationState == CreationState.GENERATED)
-        StateModel.CreationState = CreationState.ACTIVE;
+        StateModel.SetActivated();
     }
-    
+
   }
 }

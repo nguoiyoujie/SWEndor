@@ -11,7 +11,6 @@ using SWEndor.Primitives.Traits;
 using SWEndor.Scenarios;
 using SWEndor.Sound;
 using SWEndor.Actors.Traits;
-using SWEndor.Primitives.Factories;
 
 namespace SWEndor.Actors
 {
@@ -188,7 +187,7 @@ namespace SWEndor.Actors
     {
       Traits.State = TraitCollectionState.INIT;
       Traits.Add(TypeInfo);
-      Traits.Add(Engine.TraitPoolCollection.GetTrait<StateModel>()).Init(TypeInfo, acinfo);
+      Traits.Add(Engine.TraitPoolCollection.GetTrait<StateModel>()).Init(this, TypeInfo, acinfo);
       Traits.Add(Engine.TraitPoolCollection.GetTrait<Health>()).Init(TypeInfo, acinfo);
       Traits.Add(Engine.TraitPoolCollection.GetTrait<DyingTimer>()).Init(TypeInfo);
       Traits.Add(Engine.TraitPoolCollection.GetTrait<MeshModel>()).Init(ID, TypeInfo);
@@ -209,7 +208,7 @@ namespace SWEndor.Actors
     public void Initialize()
     {
       // Update State
-      StateModel.CreationState = CreationState.GENERATED;
+      StateModel.SetGenerated();
       Update();
       OnCreatedEvent();
 
@@ -443,7 +442,7 @@ namespace SWEndor.Actors
         || StateModel.CreationState == CreationState.DISPOSED)
         return;
 
-      StateModel.CreationState = CreationState.DISPOSING;
+      StateModel.SetDisposing();
 
       // Parent
       Relation.Parent?.RemoveChild(this);
@@ -492,7 +491,7 @@ namespace SWEndor.Actors
         Engine.TraitPoolCollection.ReturnTrait(t);
       }
 
-      StateModel.CreationState = CreationState.DISPOSED;
+      StateModel.SetDisposed();
       Traits.State = TraitCollectionState.DISPOSED;
       Traits.Clear();
 

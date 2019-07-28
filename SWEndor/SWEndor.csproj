@@ -65,6 +65,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>..\</OutputPath>
@@ -412,6 +413,7 @@
     <Compile Include="Primitives\BoundingSphere.cs" />
     <Compile Include="Primitives\BoundingValue.cs" />
     <Compile Include="Primitives\Pair.cs" />
+    <Compile Include="Primitives\StateMachines\StateMachine.cs" />
     <Compile Include="Primitives\TimeCache.cs" />
     <Compile Include="Primitives\Delegates.cs" />
     <Compile Include="Primitives\Exts.cs" />
