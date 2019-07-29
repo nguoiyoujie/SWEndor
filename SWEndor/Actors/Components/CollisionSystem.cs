@@ -52,9 +52,6 @@ namespace SWEndor.Actors.Components
     {
       data.IsTestingCollision = false;
 
-      if (actor.TypeInfo is ActorTypes.Groups.Projectile)
-      { }
-
       // only check player and projectiles
         if (actor.IsPlayer
           || actor.TypeInfo is ActorTypes.Groups.Projectile

@@ -2,7 +2,7 @@
 
 namespace SWEndor.Primitives
 {
-  public struct TimeCache<B1, B2, T>
+  public class TimeCache<B1, B2, T>
   {
     public float Time { get; private set; }
     private Func<B1, B2, T> fn;
