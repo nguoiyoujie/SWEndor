@@ -16,7 +16,6 @@ namespace SWEndor.ActorTypes
 
     public float InitialStrength;
     public float InitialSpeed;
-    public bool FreeSpeed;
 
     public ActorCreationInfo(ActorTypeInfo at)
     {
@@ -27,12 +26,11 @@ namespace SWEndor.ActorTypes
       InitialSpeed = at.MaxSpeed;
 
       Faction = FactionInfo.Neutral;
-      CreationTime = at.Engine.Game.GameTime;
+      CreationTime = 0;
       InitialState = ActorState.NORMAL;
       InitialScale = 1;
       Position = new TV_3DVECTOR();
       Rotation = new TV_3DVECTOR();
-      FreeSpeed = false;
     }
   }
 }

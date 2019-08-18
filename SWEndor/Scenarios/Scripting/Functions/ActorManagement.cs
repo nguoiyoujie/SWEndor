@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
-using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes;
 using SWEndor.Scenarios.Scripting.Expressions;
 using System;
@@ -69,7 +68,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      return !actor.StateModel.IsDead;
+      return actor.ActorState != ActorState.DEAD;
     }
 
     public static object RegisterEvents(Context context, params object[] ps)
@@ -90,7 +89,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = actor.Transform.Position;
+      TV_3DVECTOR vec = actor.GetLocalPosition();
       return new float[] { vec.x, vec.y, vec.z };
     }
 
@@ -101,7 +100,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = actor.Transform.Rotation;
+      TV_3DVECTOR vec = actor.GetLocalRotation();
       return new float[] { vec.x, vec.y, vec.z };
     }
 
@@ -112,7 +111,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = actor.Transform.Direction;
+      TV_3DVECTOR vec = actor.GetLocalDirection();
       return new float[] { vec.x, vec.y, vec.z };
     }
 
@@ -123,7 +122,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = actor.Transform.Position;
+      TV_3DVECTOR vec = actor.GetPosition();
       return new float[] { vec.x, vec.y, vec.z };
     }
 
@@ -134,7 +133,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = actor.Transform.GetGlobalRotation(actor);
+      TV_3DVECTOR vec = actor.GetRotation();
       return new float[] { vec.x, vec.y, vec.z };
     }
 
@@ -145,7 +144,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = actor.Transform.GetGlobalDirection(actor);
+      TV_3DVECTOR vec = actor.GetDirection();
       return new float[] { vec.x, vec.y, vec.z };
     }
 
@@ -156,7 +155,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      actor.Transform.Position = new TV_3DVECTOR(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
+      actor.SetLocalPosition(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
       return true;
     }
 
@@ -167,7 +166,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      actor.Transform.Rotation = new TV_3DVECTOR(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
+      actor.SetLocalRotation(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
       return true;
     }
 
@@ -178,7 +177,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      actor.Transform.Direction = new TV_3DVECTOR(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
+      actor.SetLocalDirection(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
       return true;
     }
 
@@ -189,7 +188,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      actor.Transform.Rotation = new TV_3DVECTOR(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
+      actor.SetRotation(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
       return true;
     }
 
@@ -200,7 +199,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      actor.Transform.Direction = new TV_3DVECTOR(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
+      actor.SetDirection(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
       return true;
     }
 
@@ -213,9 +212,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
 
       TV_3DVECTOR vec = new TV_3DVECTOR(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
       if (ps.Length == 4)
-        actor.Transform.LookAt(vec);
+        actor.LookAtPoint(vec);
       else
-        actor.Transform.LookAt(vec, Convert.ToBoolean(ps[4].ToString()));
+        actor.LookAtPoint(vec, Convert.ToBoolean(ps[4].ToString()));
 
       return true;
     }
@@ -265,9 +264,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
         //  return;
         case "NoRegen":
           if (setValue)
-            actor.RegenData.NoRegen = Convert.ToBoolean(newValue);
+            engine.ActorDataSet.RegenData[actor.dataID].NoRegen = Convert.ToBoolean(newValue);
           else
-            newValue = actor.RegenData.NoRegen;
+            newValue = engine.ActorDataSet.RegenData[actor.dataID].NoRegen;
           return;
         case "ApplyZBalance":
           if (setValue)
@@ -309,66 +308,66 @@ namespace SWEndor.Scenarios.Scripting.Functions
           return;
         case "ChildRegenRate":
           if (setValue)
-            actor.RegenData.ChildRegenRate = Convert.ToSingle(newValue);
+            engine.ActorDataSet.RegenData[actor.dataID].ChildRegenRate = Convert.ToSingle(newValue);
           else
-            newValue = actor.RegenData.ChildRegenRate;
+            newValue = engine.ActorDataSet.RegenData[actor.dataID].ChildRegenRate;
           return;
         case "DamageModifier":
           if (setValue)
-            actor.CombatData.DamageModifier = Convert.ToSingle(newValue);
+            engine.ActorDataSet.CombatData[actor.dataID].DamageModifier = Convert.ToSingle(newValue);
           else
-            newValue = actor.CombatData.DamageModifier;
+            newValue = engine.ActorDataSet.CombatData[actor.dataID].DamageModifier;
           return;
-        //case "DeathExplosionSize":
-        //  if (setValue)
-        //    actor.ExplodeData.DeathExplosionSize = Convert.ToSingle(newValue);
-        //  else
-        //    newValue = actor.ExplodeData.DeathExplosionSize;
-        //  return;
-        //case "DeathExplosionType":
-        //  if (setValue)
-        //    actor.ExplodeData.DeathExplosionType = newValue.ToString();
-        //  else
-        //    newValue = actor.ExplodeData.DeathExplosionType;
-        //  return;
+        case "DeathExplosionSize":
+          if (setValue)
+            engine.ActorDataSet.ExplodeData[actor.dataID].DeathExplosionSize = Convert.ToSingle(newValue);
+          else
+            newValue = engine.ActorDataSet.ExplodeData[actor.dataID].DeathExplosionSize;
+          return;
+        case "DeathExplosionType":
+          if (setValue)
+            engine.ActorDataSet.ExplodeData[actor.dataID].DeathExplosionType = newValue.ToString();
+          else
+            newValue = engine.ActorDataSet.ExplodeData[actor.dataID].DeathExplosionType;
+          return;
         //case "DeathExplosionTrigger":
         //  if (setValue)
-        //    actor.ExplodeData.DeathExplosionTrigger = Convert.ToBoolean(newValue);
+        //    engine.ActorDataSet.ExplodeData[actor.dataID].DeathExplosionTrigger = Convert.ToBoolean(newValue);
         //  else
-        //    newValue = actor.ExplodeData.DeathExplosionTrigger;
+        //    newValue = engine.ActorDataSet.ExplodeData[actor.dataID].DeathExplosionTrigger;
         //  return;
         /*
       case "EnableExplosions":
         if (setValue)
-          actor.ExplodeData.EnableExplosions = Convert.ToBoolean(newValue);
+          engine.ActorDataSet.ExplodeData[actor.dataID].EnableExplosions = Convert.ToBoolean(newValue);
         else
-          newValue = actor.ExplodeData.EnableExplosions;
+          newValue = engine.ActorDataSet.ExplodeData[actor.dataID].EnableExplosions;
         return;
         */
-        //case "ExplosionCooldown":
-        //  if (setValue)
-        //    actor.ExplodeData.ExplosionCooldown = Convert.ToSingle(newValue);
-        //  else
-        //    newValue = actor.ExplodeData.ExplosionCooldown;
-        //  return;
-        //case "ExplosionRate":
-        //  if (setValue)
-        //    actor.ExplodeData.ExplosionRate = Convert.ToSingle(newValue);
-        //  else
-        //    newValue = actor.ExplodeData.ExplosionRate;
-        //  return;
-        //case "ExplosionSize":
-        //  if (setValue)
-        //    actor.ExplodeData.ExplosionSize = Convert.ToSingle(newValue);
-        //  else
-        //    newValue = actor.ExplodeData.ExplosionSize;
-        //  return;
-        //case "ExplosionType":
-        //  if (setValue)
-        //    actor.ExplodeData.ExplosionType = newValue.ToString();
-        //  else
-        //    newValue = actor.ExplodeData.ExplosionType;
-        //  return;
+        case "ExplosionCooldown":
+          if (setValue)
+            engine.ActorDataSet.ExplodeData[actor.dataID].ExplosionCooldown = Convert.ToSingle(newValue);
+          else
+            newValue = engine.ActorDataSet.ExplodeData[actor.dataID].ExplosionCooldown;
+          return;
+        case "ExplosionRate":
+          if (setValue)
+            engine.ActorDataSet.ExplodeData[actor.dataID].ExplosionRate = Convert.ToSingle(newValue);
+          else
+            newValue = engine.ActorDataSet.ExplodeData[actor.dataID].ExplosionRate;
+          return;
+        case "ExplosionSize":
+          if (setValue)
+            engine.ActorDataSet.ExplodeData[actor.dataID].ExplosionSize = Convert.ToSingle(newValue);
+          else
+            newValue = engine.ActorDataSet.ExplodeData[actor.dataID].ExplosionSize;
+          return;
+        case "ExplosionType":
+          if (setValue)
+            engine.ActorDataSet.ExplodeData[actor.dataID].ExplosionType = newValue.ToString();
+          else
+            newValue = engine.ActorDataSet.ExplodeData[actor.dataID].ExplosionType;
+          return;
         case "HuntWeight":
           if (setValue)
             actor.HuntWeight = Convert.ToInt32(newValue);
@@ -377,9 +376,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
           return;
         case "IsCombatObject":
           if (setValue)
-            actor.CombatData.IsCombatObject = Convert.ToBoolean(newValue);
+            engine.ActorDataSet.CombatData[actor.dataID].IsCombatObject = Convert.ToBoolean(newValue);
           else
-            newValue = actor.CombatData.IsCombatObject;
+            newValue = engine.ActorDataSet.CombatData[actor.dataID].IsCombatObject;
           return;
         case "MaxSpeed":
           if (setValue)
@@ -395,9 +394,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
           return;
         case "MaxStrength":
           if (setValue)
-            actor.Health.SetMaxHP(actor, Convert.ToSingle(newValue), true);
+            engine.SysDataSet.MaxStrength_set(actor.ID, Convert.ToSingle(newValue));
           else
-            newValue = actor.Health.MaxHP;
+            newValue = engine.SysDataSet.MaxStrength_get(actor.ID);
           return;
         case "MaxTurnRate":
           if (setValue)
@@ -425,18 +424,18 @@ namespace SWEndor.Scenarios.Scripting.Functions
           return;
         case "Strength":
           if (setValue)
-            actor.Health.SetHP(actor, Convert.ToSingle(newValue));
+            CombatSystem.onNotify(actor.Engine, actor.ID, CombatEventType.SET_STRENGTH, Convert.ToSingle(newValue));
           else
-            newValue = actor.Health.HP;
+            newValue = engine.SysDataSet.Strength_get(actor.ID);
           return;
         case "Scale":
           if (setValue)
           {
             float newscale = Convert.ToSingle(newValue);
-            actor.Transform.Scale = newscale;
+            engine.MeshDataSet.Scale_set(actor.ID, newscale);
           }
           else
-            newValue = actor.Transform.Scale;
+            newValue = engine.MeshDataSet.Scale_get(actor.ID);
           return;
       }
     }

@@ -1,128 +1,131 @@
 ﻿using SWEndor.Actors.Components;
-using SWEndor.Actors.Traits;
-using SWEndor.AI;
 using SWEndor.Player;
-using System;
 
 namespace SWEndor.Actors
 {
   public partial class ActorInfo
   {
-    internal static void Process(Engine engine, ActorInfo actor)
+    internal static void Process(Engine engine, int id)
     {
+      ActorInfo actor = engine.ActorFactory.Get(id);
       if (actor == null)
         return;
 
-      if (!actor.Active)
-        return;
-
-      IStateModel s = actor.StateModel;
-      if (!s.IsDead) 
+      if (!actor.ActorState.IsDead())
         actor.Update();
 
       actor.CycleInfo.Process();
 
-      foreach (ITick t in actor.TraitsImplementing<ITick>())
-        t.Tick(actor, engine.Game.TimeSinceRender);
-
       actor.CheckState(engine);
-      if (!s.IsDead)
+      if (!actor.ActorState.IsDead())
       {
-        if (actor.StateModel.ComponentMask.Has(ComponentMask.CAN_BECOLLIDED) || actor.TypeInfo is ActorTypes.Groups.Projectile)
-          CollisionSystem.CheckCollision(engine, actor);
-
+        if (engine.MaskDataSet[id].Has(ComponentMask.CAN_BECOLLIDED)
+        || actor.TypeInfo is ActorTypes.Groups.Projectile)
+        {
+          CollisionSystem.CheckCollision(engine, id);
+        }
         actor.MoveComponent.Move(actor, ref actor.MoveData);
       }
       actor.OnTickEvent();
     }
 
-    internal static void PostFrameProcess(Engine engine, ActorInfo actor)
+    internal static void ProcessAI(Engine engine, int id)
     {
+      ActorInfo actor = engine.ActorFactory.Get(id);
       if (actor == null)
         return;
 
-      if (!actor.Active)
+      if (!engine.MaskDataSet[id].Has(ComponentMask.HAS_AI)
+        || actor.CreationState != CreationState.ACTIVE
+        || actor.ActorState.IsDyingOrDead()
+        || (IsPlayer(engine, id) && !engine.PlayerInfo.PlayerAIEnabled)
+        )
         return;
 
-      foreach (Action<ActorInfo> a in actor.PostFrameActions.ToArray()) // or consider ConcurrentQueue?
-        a.Invoke(actor);
+      engine.ActionManager.Run(id, actor.CurrentAction);
     }
 
-    internal static void ProcessAI(Engine engine, ActorInfo actor)
+    internal static void ProcessCollision(Engine engine, int id)
     {
+      ActorInfo actor = engine.ActorFactory.Get(id);
+
       if (actor == null)
         return;
 
-      if (!actor.StateModel.ComponentMask.Has(ComponentMask.HAS_AI))
-        return;
-
-      if (!actor.Active)
-        return;
-
-      if (actor.StateModel.IsDyingOrDead)
-        return;
-
-      if (actor.IsPlayer && !engine.PlayerInfo.PlayerAIEnabled)
-        return;
-
-      actor.Run(actor.CurrentAction);
+      CollisionSystem.TestCollision(engine, id);
     }
 
-    internal static void ProcessCollision(Engine engine, ActorInfo actor)
+    internal static void Render(Engine engine, int id)
     {
+      ActorInfo actor = engine.ActorFactory.Get(id);
       if (actor == null)
         return;
 
-      CollisionSystem.TestCollision(engine, actor);
-    }
-
-    internal static void Render(Engine engine, ActorInfo actor)
-    {
-      if (actor == null)
-        return;
-
-      if (!actor.StateModel.ComponentMask.Has(ComponentMask.CAN_RENDER))
-        return;
-
-      if (!actor.Active)
-        return;
-
-      if (actor.IsAggregateMode)
-        return;
-
-      if (!actor.IsPlayer || engine.PlayerCameraInfo.CameraMode != CameraMode.FREEROTATION)
+      if (engine.MaskDataSet[id].Has(ComponentMask.CAN_RENDER)
+        //&& !engine.MaskDataSet[id].Has(ComponentMask.CAN_GLOW)
+        && actor.CreationState == CreationState.ACTIVE
+        && !IsAggregateMode(engine, id))
       {
-        actor.TraitOrDefault<IMeshModel>()?.Render(actor.IsFarMode);
+        if (!IsPlayer(engine, id) || engine.PlayerCameraInfo.CameraMode != CameraMode.FREEROTATION)
+        {
+          if (!IsFarMode(engine, id))
+          {
+            MeshSystem.RenderMesh(engine, id);
+          }
+          else
+          {
+            MeshSystem.RenderFarMesh(engine, id);
+          }
+        }
+      }
+    }
+
+    internal static void RenderGlow(Engine engine, int id)
+    {
+      ActorInfo actor = engine.ActorFactory.Get(id);
+      if (actor == null)
+        return;
+
+      if (engine.MaskDataSet[id].Has(ComponentMask.CAN_RENDER | ComponentMask.CAN_GLOW)
+        && actor.CreationState == CreationState.ACTIVE
+        && !IsAggregateMode(engine, id))
+        //&& !IsFarMode(engine, id))
+      {
+        float dist = ActorDistanceInfo.GetRoughDistance(actor.GetPosition(), engine.PlayerCameraInfo.Position);
+        float intensity = 500 / (dist + 200);
+        float scale = 500 / (dist + 200);
+
+        //engine.TrueVision.TVGraphicEffect.SetGlowParameters(new TV_COLOR(1, 1, 1, 1), intensity, scale);
+
+        MeshSystem.RenderMesh(engine, id);
       }
     }
 
     internal static void FireWeapon(Engine engine, int id, int targetActorID, string weapon)
     {
       ActorInfo actor = engine.ActorFactory.Get(id);
-      ActorInfo target = engine.ActorFactory.Get(targetActorID);
       if (actor == null)
         return;
 
-      IStateModel s = actor.StateModel;
-      if (s != null && !s.IsDyingOrDead)
-        actor.TypeInfo.FireWeapon(actor, target, weapon);
+      if (!actor.ActorState.IsDyingOrDead())
+        actor.TypeInfo.FireWeapon(id, targetActorID, weapon);
     }
 
     private void CheckState(Engine engine)
     {
+      CombatSystem.Process(engine, ID);
       TypeInfo.ProcessState(this);
 
-      if (StateModel.IsDead)
-        Kill();
+      if (ActorState == ActorState.DEAD)
+        Kill(engine, ID);
     }
 
     private void Update()
     {
-      TraitOrDefault<IMeshModel>()?.Update(this);
-      //MeshSystem.Update(Engine, ID);
+      MeshSystem.Update(Engine, ID);
 
-      if (StateModel != null && StateModel.CreationState == CreationState.GENERATED)
-        StateModel.CreationState = CreationState.ACTIVE;
+      if (CreationState == CreationState.GENERATED)
+        CreationState = CreationState.ACTIVE;
     }
     
   }

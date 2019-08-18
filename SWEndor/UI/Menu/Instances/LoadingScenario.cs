@@ -52,7 +52,7 @@ namespace SWEndor.UI.Menu.Pages
 
       Elements.Add(Cover);
       Elements.Add(LoadingText);
-      foreach (SelectionElement sq in Squares.Keys)
+      foreach (SelectionElement sq in Squares.GetKeys())
         Elements.Add(sq);
 
       StartLoad();
@@ -96,7 +96,7 @@ namespace SWEndor.UI.Menu.Pages
       {
         LoadingText.Text = PrintLoadingText();
 
-        foreach (SelectionElement sq in Squares.Keys)
+        foreach (SelectionElement sq in Squares.GetKeys())
         {
           Squares[sq] -= Engine.Game.TimeSinceRender;
           if (Squares[sq] < 0)

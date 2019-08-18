@@ -1,34 +1,35 @@
 ﻿using SWEndor.Actors.Data;
-using SWEndor.Actors.Traits;
 
 namespace SWEndor.Actors.Components
 {
   public static class RegenerationSystem
   {
-    public static void Process(Engine engine, ActorInfo a, float time)
+    public static void Process(Engine engine, int id, float time)
     {
-      RegenData data = a.RegenData;
+      ActorInfo actor = engine.ActorFactory.Get(id);
+      RegenData data = engine.ActorDataSet.RegenData[engine.ActorFactory.GetIndex(id)];
 
       // Regen
       if (data.SelfRegenRate != 0)
-        Regenerate(engine, a, data.SelfRegenRate * time);
+        Regenerate(engine, id, data.SelfRegenRate * time);
 
       if (data.ParentRegenRate != 0)
-          Regenerate(engine, a.Relation.Parent, data.ParentRegenRate * time);
+          Regenerate(engine, actor.ParentID, data.ParentRegenRate * time);
 
       if (data.ChildRegenRate != 0)
-        foreach (ActorInfo c in a.Children)
+        foreach (int c in actor.Children)
           Regenerate(engine, c, data.ChildRegenRate * time);
 
       if (data.SiblingRegenRate != 0)
-        foreach (ActorInfo r in a.Siblings)
+        foreach (int r in actor.Siblings)
           Regenerate(engine, r, data.SiblingRegenRate * time);
     }
 
-    private static void Regenerate(Engine engine, ActorInfo a, float amount)
+    private static void Regenerate(Engine engine, int i, float amount)
     {
-      if (!a.RegenData.NoRegen && !a.StateModel.IsDyingOrDead)
-        a.Health.InflictDamage(a, new DamageInfo<ActorInfo>(a, -amount));
+      ActorInfo a = engine.ActorFactory.Get(i);
+      if (!engine.ActorDataSet.RegenData[engine.ActorFactory.GetIndex(i)].NoRegen && !a.ActorState.IsDyingOrDead())
+        CombatSystem.onNotify(engine, i, CombatEventType.RECOVER, amount);
     }
   }
 }

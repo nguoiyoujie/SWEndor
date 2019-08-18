@@ -4,10 +4,10 @@
   {
     public void SetStringValue(string section, string key, string value)
     {
-      if (!m_sections.ContainsKey(section))
-        m_sections.Add(section, new INISection(section));
+      if (!Sections.ContainsKey(section))
+        Sections.Add(section, new INISection(section));
 
-      m_sections[section].SetValue(key, value);
+      Sections[section].SetValue(key, value);
     }
 
     public void SetIntValue(string section, string key, int value) { SetStringValue(section, key, value.ToString()); }

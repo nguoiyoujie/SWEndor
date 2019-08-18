@@ -35,7 +35,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
     public override object Evaluate(Context context)
     {
       dynamic result = _first.Evaluate(context);
-      foreach (CExpression _expr in _set.Keys)
+      foreach (CExpression _expr in _set.GetKeys())
       {
         dynamic adden = _expr.Evaluate(context);
         switch (_set[_expr])

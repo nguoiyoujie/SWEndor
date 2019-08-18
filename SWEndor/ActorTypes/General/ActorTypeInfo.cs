@@ -2,21 +2,17 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
-using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes.Components;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
-using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using SWEndor.Weapons;
 using System;
-using SWEndor.Primitives.Traits;
-using System.Collections.Generic;
 
 namespace SWEndor.ActorTypes
 {
-  public partial class ActorTypeInfo : IDisposable, INotifyDead, INotifyDying, INotifyDamage, INotifyAppliedDamage
+  public partial class ActorTypeInfo : IDisposable
   {
     public ActorTypeInfo(Factory owner, string name = "")
     {
@@ -24,8 +20,9 @@ namespace SWEndor.ActorTypes
       if (name.Length > 0) { Name = name; }
 
       RegenData.Reset();
-      //ExplodeData.Reset();
+      ExplodeData.Reset();
       CombatData.Reset();
+      TimedLifeData.Reset();
     }
 
     public readonly Factory ActorTypeFactory;
@@ -34,8 +31,9 @@ namespace SWEndor.ActorTypes
     public Game Game { get { return Engine.Game; } }
     public GameScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
     public TrueVision TrueVision { get { return Engine.TrueVision; } }
-    //public ActorDataSet ActorDataSet { get { return Engine.ActorDataSet; } }
+    public ActorDataSet ActorDataSet { get { return Engine.ActorDataSet; } }
     public ActorInfo.Factory ActorFactory { get { return Engine.ActorFactory; } }
+    public ActionManager ActionManager { get { return Engine.ActionManager; } }
     public LandInfo LandInfo { get { return Engine.LandInfo; } }
     public AtmosphereInfo AtmosphereInfo { get { return Engine.AtmosphereInfo; } }
     public PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }
@@ -48,7 +46,7 @@ namespace SWEndor.ActorTypes
     // Data
     public ComponentMask Mask = ComponentMask.NONE;
     public RegenData RegenData = new RegenData();
-
+    public ExplodeData ExplodeData = new ExplodeData();
     public CombatData CombatData = new CombatData();
     public TimedLifeData TimedLifeData = new TimedLifeData();
 
@@ -117,9 +115,6 @@ namespace SWEndor.ActorTypes
 
     // AddOns
     public AddOnInfo[] AddOns = new AddOnInfo[0];
-
-    // Explosionf
-    public ExplodeInfo[] Explodes = new ExplodeInfo[0];
 
     // Debris
     public DebrisSpawnerInfo[] Debris = new DebrisSpawnerInfo[0];
@@ -241,18 +236,18 @@ namespace SWEndor.ActorTypes
         w.Reload(Engine);
 
       // regeneration
-      RegenerationSystem.Process(Engine, ainfo, Game.TimeSinceRender);
+      RegenerationSystem.Process(Engine, ainfo.ID, Game.TimeSinceRender);
 
-      if (ainfo.StateModel.IsDying)
+      if (ainfo.ActorState.IsDying())
       {
-        //ExplosionSystem.ProcessDying(Engine, ainfo.ID);
+        ExplosionSystem.ProcessDying(Engine, ainfo.ID);
         ainfo.DyingMoveComponent?.Update(ainfo, ref ainfo.MoveData, Game.TimeSinceRender);
       }
 
       // sound
       if (PlayerInfo.Actor != null
-        && ainfo.Active
-        && !ainfo.IsScenePlayer
+        && ainfo.CreationState == CreationState.ACTIVE 
+        && !ActorInfo.IsScenePlayer(Engine, ainfo.ID)
         && !(GameScenarioManager.Scenario is GSMainMenu))
       {
         foreach (SoundSourceInfo assi in SoundSources)
@@ -262,45 +257,76 @@ namespace SWEndor.ActorTypes
 
     public virtual void ProcessNewState(ActorInfo ainfo)
     {
+      switch (ainfo.ActorState)
+      {
+        case ActorState.DEAD:
+          // Explode
+          ExplosionSystem.OnDeath(Engine, ainfo.ID);
 
+          // Debris
+          if (!ActorInfo.IsAggregateMode(Engine, ainfo.ID) && !Game.IsLowFPS())
+            foreach (DebrisSpawnerInfo ds in Debris)
+              ds.Process(ainfo);
+          break;
+
+        case ActorState.DYING:
+          ainfo.DyingMoveComponent?.Initialize(ainfo, ref ainfo.MoveData);
+          break;
+      }
+
+      if (ainfo.ActorState.IsDyingOrDead())
+      {
+        if (ActorInfo.IsPlayer(Engine, ainfo.ID))
+        {
+          PlayerInfo.ActorID = -1;
+          PlayerCameraInfo.LookActor = ainfo.ID;
+          PlayerCameraInfo.Look.SetModeDeathCircle(DeathCamera);
+
+          if (ainfo.ActorState.IsDying())
+            ainfo.TickEvents += GameScenarioManager.Scenario.ProcessPlayerDying;
+
+          ainfo.DestroyedEvents += GameScenarioManager.Scenario.ProcessPlayerKilled;
+        }
+      }
     }
 
-    public virtual void ProcessHit(ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public virtual void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
+      ActorInfo owner = ActorFactory.Get(ownerActorID);
+      ActorInfo hitby = ActorFactory.Get(hitbyActorID);
+
       if (owner == null || hitby == null)
         return;
 
-      IStateModel s = owner.StateModel;
-      IHealth h = owner.Health;
+      if (owner.ActorState.IsDying() 
+        && ActorDataSet.CombatData[ActorFactory.GetIndex(ownerActorID)].HitWhileDyingLeadsToDeath)
+        owner.ActorState = ActorState.DEAD;
 
-      if (s.IsDying
-        && owner.CombatData.HitWhileDyingLeadsToDeath)
-        s.MakeDead(owner);
-
-      if (s.IsDyingOrDead
+      if (owner.ActorState.IsDyingOrDead()
         || hitby.TypeInfo.ImpactDamage == 0)
         return;
 
-      if (hitby.StateModel.ComponentMask.Has(ComponentMask.IS_DAMAGE))
+      if (Engine.MaskDataSet[hitbyActorID].Has(ComponentMask.IS_DAMAGE))
       {
-        float str0 = h.HP;
-        h.InflictDamage(owner, new DamageInfo<ActorInfo>(hitby, hitby.TypeInfo.ImpactDamage, DamageType.NORMAL));
-        float str1 = h.HP; 
+        float str0 = Engine.SysDataSet.Strength_get(ownerActorID);
+        CombatSystem.onNotify(Engine, ownerActorID, CombatEventType.DAMAGE, hitby.TypeInfo.ImpactDamage);
+        float str1 = Engine.SysDataSet.Strength_get(ownerActorID);
 
-        if (owner.IsPlayer)
+        if (ActorInfo.IsPlayer(Engine, owner.ID))
         {
           if (str1 < (int)str0)
-            PlayerInfo.FlashHit();
+            PlayerInfo.FlashHit(PlayerInfo.StrengthColor);
         }
 
         // scoring
-        ActorInfo attacker = hitby.TopParent;
+        int attackerID = hitby.TopParent;
+        ActorInfo attacker = ActorFactory.Get(attackerID);
         if (attacker == PlayerInfo.Actor)
         {
           if (!attacker.Faction.IsAlliedWith(owner.Faction))
             AddScore(PlayerInfo.Score, hitby, owner);
           else
-            Screen2D.MessageText("{0}: {1}, watch your fire!".F(owner.Name, PlayerInfo.Name)
+            Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", owner.Name, PlayerInfo.Name)
                                             , 5
                                             , owner.Faction.Color
                                             , -1);
@@ -308,9 +334,9 @@ namespace SWEndor.ActorTypes
 
         if (owner == PlayerInfo.Actor)
         {
-          PlayerInfo.Score.AddDamage(attacker, hitby.TypeInfo.ImpactDamage * owner.CombatData.DamageModifier);
+          PlayerInfo.Score.AddDamage(attacker, hitby.TypeInfo.ImpactDamage * ActorDataSet.CombatData[ActorFactory.GetIndex(ownerActorID)].DamageModifier);
 
-          if (s.IsDyingOrDead)
+          if (owner.ActorState.IsDyingOrDead())
             PlayerInfo.Score.AddDeath(attacker);
         }
 
@@ -321,53 +347,52 @@ namespace SWEndor.ActorTypes
           {
             if (owner.CanRetaliate && (owner.CurrentAction == null || owner.CurrentAction.CanInterrupt))
             {
-              owner.ClearQueue();
-              owner.QueueLast(new AttackActor(attacker));
+              ActionManager.ClearQueue(ownerActorID);
+              ActionManager.QueueLast(ownerActorID, new AttackActor(attackerID));
             }
             else if (owner.CanEvade && !(owner.CurrentAction is Evade))
             {
-              owner.QueueFirst(new Evade());
+              ActionManager.QueueFirst(ownerActorID, new Evade());
             }
           }
         }
 
-        hitby.Transform.Position = new TV_3DVECTOR(impact.x, impact.y, impact.z);
-        hitby.StateModel.MakeDead(hitby); // projectiles die on impact
+        hitby.SetLocalPosition(impact.x, impact.y, impact.z);
+        hitby.ActorState = ActorState.DYING;
       }
-      else if (owner.StateModel.ComponentMask.Has(ComponentMask.IS_DAMAGE))
+      else if (Engine.MaskDataSet[ownerActorID].Has(ComponentMask.IS_DAMAGE))
       {
       }
       else
       {
         // Collision
-        h.InflictDamage(owner, new DamageInfo<ActorInfo>(hitby, hitby.TypeInfo.ImpactDamage, DamageType.COLLISION));
-
-        // Repulsion
-        if (h.HP > 0
-          && owner.StateModel.ComponentMask.Has(ComponentMask.CAN_MOVE)
+        CombatSystem.onNotify(Engine, ownerActorID, CombatEventType.COLLISIONDAMAGE, hitby.TypeInfo.ImpactDamage);
+        if (Engine.SysDataSet.Strength_get(ownerActorID) > 0
+          && Engine.MaskDataSet[ownerActorID].Has(ComponentMask.CAN_MOVE)
           && owner.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER))
         {
           float repel = -owner.MoveData.Speed * 0.25f;
-          owner.MoveRelative(repel);
+          owner.MoveRelative(repel, 0, 0);
         }
 
-        ActorInfo attacker = hitby.TopParent;
+        int attackerID = hitby.TopParent;
+        ActorInfo attacker = ActorFactory.Get(attackerID);
         if (attacker == PlayerInfo.Actor)
         {
           if (!attacker.Faction.IsAlliedWith(owner.Faction))
             AddScore(PlayerInfo.Score, attacker, owner);
           else
-            Screen2D.MessageText("{0}: {1}, watch it!".F(owner.Name, PlayerInfo.Name)
+            Screen2D.MessageText(string.Format("{0}: {1}, watch it!", owner.Name, PlayerInfo.Name)
                                             , 5
                                             , owner.Faction.Color
                                             , -1);
         }
 
         // Fighter Collision
-        if ((owner.TypeInfo is Groups.Fighter && s.IsDyingOrDead))
+        if ((owner.TypeInfo is Groups.Fighter && owner.ActorState.IsDyingOrDead()))
         {
-          owner.StateModel.MakeDead(owner);
-          if (owner.IsPlayer)
+          owner.ActorState = ActorState.DEAD;
+          if (ActorInfo.IsPlayer(Engine, owner.ID))
             PlayerInfo.Score.AddDeath(attacker);
         }
       }
@@ -377,18 +402,24 @@ namespace SWEndor.ActorTypes
 
     private void AddScore(ScoreInfo score, ActorInfo proj, ActorInfo victim)
     {
-      if (victim.StateModel.IsDyingOrDead)
+      if (!victim.ActorState.IsDyingOrDead())
+      {
+        score.AddHit(victim, proj.TypeInfo.ImpactDamage * ActorDataSet.CombatData[victim.dataID].DamageModifier);
+      }
+
+      if (victim.ActorState.IsDyingOrDead())
+      {
         score.AddKill(victim);
-      else
-        score.AddHit(victim, proj.TypeInfo.ImpactDamage * victim.CombatData.DamageModifier);
+      }
     }
 
-    public void InterpretWeapon(ActorInfo owner, string sweapon, out WeaponInfo weapon, out int burst)
+    public void InterpretWeapon(int ownerActorID, string sweapon, out WeaponInfo weapon, out int burst)
     {
       string s = "none";
       weapon = null;
       burst = 1;
 
+      ActorInfo owner = ActorFactory.Get(ownerActorID);
       if (owner == null)
         return;
 
@@ -409,8 +440,9 @@ namespace SWEndor.ActorTypes
       }
     }
 
-    public virtual bool FireWeapon(ActorInfo owner, ActorInfo target, string sweapon)
+    public virtual bool FireWeapon(int ownerActorID, int targetActorID, string sweapon)
     {
+      ActorInfo owner = ActorFactory.Get(ownerActorID);
       if (owner == null)
         return false;
 
@@ -422,27 +454,29 @@ namespace SWEndor.ActorTypes
       {
         foreach (string ws in owner.WeaponSystemInfo.AIWeapons)
         {
-          if (FireWeapon(owner, target, ws))
+          if (FireWeapon(ownerActorID, targetActorID, ws))
             return true;
         }
       }
       else
       {
-        InterpretWeapon(owner, sweapon, out weapon, out burst);
+        InterpretWeapon(ownerActorID, sweapon, out weapon, out burst);
 
         if (weapon != null)
-          return weapon.Fire(owner, target, burst);
+          return weapon.Fire(Engine, ownerActorID, targetActorID, burst);
       }
       
       return false;
     }
 
-    public virtual void FireAggregation(ActorInfo owner, ActorInfo target, ActorTypeInfo weapontype)
+    public virtual void FireAggregation(int ownerActorID, int targetActorID, ActorTypeInfo weapontype)
     {
       float accuracy = 1;
+      ActorInfo owner = ActorFactory.Get(ownerActorID);
+      ActorInfo target = ActorFactory.Get(targetActorID);
       
-      float d = ActorDistanceInfo.GetDistance(owner, target) / weapontype.MaxSpeed;
-      TV_3DVECTOR angle = Utilities.GetRotation(target.Transform.Position - owner.Transform.Position) - owner.Transform.Rotation;
+      float d = ActorDistanceInfo.GetDistance(ownerActorID, targetActorID) / weapontype.MaxSpeed;
+      TV_3DVECTOR angle = Utilities.GetRotation(target.GetPosition() - owner.GetPosition()) - owner.GetRotation();
       angle.x -= (int)((angle.x + 180) / 360) * 360;
       angle.y -= (int)((angle.y + 180) / 360) * 360;
 
@@ -451,66 +485,11 @@ namespace SWEndor.ActorTypes
       accuracy /= (Math.Abs(angle.y) + 1);
 
       if (Engine.Random.NextDouble() < accuracy)
-        target.Health.InflictDamage(target, new DamageInfo<ActorInfo>(owner, weapontype.ImpactDamage, DamageType.NORMAL));
+        CombatSystem.onNotify(Engine, targetActorID, CombatEventType.DAMAGE, weapontype.ImpactDamage);
     }
 
     public void Dispose()
     {
-    }
-
-    public virtual void Dying<A1>(A1 self) where A1 : ITraitOwner
-    {
-      ActorInfo ainfo = self as ActorInfo;
-      if (ainfo == null)
-        return;
-
-      ainfo.DyingMoveComponent?.Initialize(ainfo, ref ainfo.MoveData);
-
-      if (ainfo.IsPlayer)
-      {
-        PlayerInfo.ActorID = -1;
-        PlayerCameraInfo.LookActor = ainfo.ID;
-        PlayerCameraInfo.Look.SetModeDeathCircle(DeathCamera);
-
-        if (ainfo.StateModel.IsDying)
-          ainfo.TickEvents += GameScenarioManager.Scenario.ProcessPlayerDying;
-
-        ainfo.DestroyedEvents += GameScenarioManager.Scenario.ProcessPlayerKilled;
-      }
-    }
-
-    public virtual void Dead<A1>(A1 self) where A1 : ITraitOwner
-    {
-      ActorInfo ainfo = self as ActorInfo;
-      if (ainfo == null)
-        return;
-
-      // Debris
-      if (!ainfo.IsAggregateMode && !Game.IsLowFPS())
-        foreach (DebrisSpawnerInfo ds in Debris)
-          ds.Process(ainfo);
-
-      if (ainfo.IsPlayer)
-      {
-        PlayerInfo.ActorID = -1;
-        PlayerCameraInfo.LookActor = ainfo.ID;
-        PlayerCameraInfo.Look.SetModeDeathCircle(DeathCamera);
-        ainfo.DestroyedEvents += GameScenarioManager.Scenario.ProcessPlayerKilled;
-      }
-    }
-
-    public virtual void Damaged<A1, A2>(A1 self, DamageInfo<A2> e)
-      where A1 : ITraitOwner
-      where A2 : ITraitOwner
-    {
-
-    }
-
-    public virtual void AppliedDamage<A1, A2>(A2 attacker, A1 target, DamageInfo<A2> e)
-      where A1 : ITraitOwner
-      where A2 : ITraitOwner
-    {
-
     }
   }
 }

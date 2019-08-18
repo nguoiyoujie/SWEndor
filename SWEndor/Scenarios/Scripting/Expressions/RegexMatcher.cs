@@ -1,5 +1,4 @@
-﻿using SWEndor.Primitives;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace SWEndor.Scenarios.Scripting.Expressions
 {
@@ -7,7 +6,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions
   internal sealed class RegexMatcher : IMatcher
   {
     private readonly Regex m_regex;
-    public RegexMatcher(string regex, RegexOptions options) { m_regex = new Regex("^({0})".F(regex), options); }
+    public RegexMatcher(string regex, RegexOptions options) { m_regex = new Regex(string.Format("^({0})", regex), options); }
 
     public int Match(string text)
     {

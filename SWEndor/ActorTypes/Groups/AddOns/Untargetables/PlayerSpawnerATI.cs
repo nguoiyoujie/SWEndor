@@ -1,7 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Traits;
-using SWEndor.AI;
 using SWEndor.AI.Actions;
 
 namespace SWEndor.ActorTypes.Instances
@@ -27,38 +25,41 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.ProcessState(ainfo);
 
-      ActorInfo p = ainfo.TopParent;
+      ActorInfo p = ActorFactory.Get(ainfo.TopParent);
 
       if (p.SpawnerInfo != null
        && p.SpawnerInfo.Enabled
-       && !p.StateModel.IsDead
-       && !(p.CurrentAction is HyperspaceIn || p.CurrentAction is HyperspaceOut)//ActorState != ActorState.HYPERSPACE
-       && p.Active
+       && p.ActorState != ActorState.DEAD
+       && p.ActorState != ActorState.HYPERSPACE
+       && p.CreationState == CreationState.ACTIVE
        )
       {
         if (p.SpawnerInfo.SpawnMoveTime < Game.GameTime)
         {
-          foreach (ActorInfo a in ainfo.Children)
+          foreach (int id in ainfo.Children)
           {
-            a.MoveData.FreeSpeed = false;
-            a.UnlockOne();
-            a.QueueLast(new Hunt());
+            ActorInfo a = ActorFactory.Get(id);
 
-            if (a.IsPlayer)
+            a.ActorState = ActorState.NORMAL;
+            ActionManager.UnlockOne(id);
+            ActionManager.QueueLast(id, new Hunt());
+
+            if (ActorInfo.IsPlayer(Engine, id))
               PlayerInfo.IsMovementControlsEnabled = true;
 
-            ainfo.RemoveChild(a);
+            ainfo.RemoveChild(id);
           }
         }
 
-        if (!p.StateModel.IsDying)
+        if (p.ActorState != ActorState.DYING)
         {
           SpawnPlayer(ainfo, p);
         }
       }
 
-      foreach (ActorInfo a in ainfo.Children)
+      foreach (int id in ainfo.Children)
       {
+        ActorInfo a = ActorFactory.Get(id);
         if (a != null && a.TypeInfo is Groups.Fighter)
         {
           if (p.SpawnerInfo.SpawnSpeed == -2)
@@ -68,7 +69,7 @@ namespace SWEndor.ActorTypes.Instances
           else
             a.MoveData.Speed = p.SpawnerInfo.SpawnSpeed;
 
-          float scale = p.Transform.Scale;
+          float scale = Engine.MeshDataSet.Scale_get(p.ID);
           a.MoveRelative(p.SpawnerInfo.SpawnSpeedPositioningMult.x * p.MoveData.Speed * Game.TimeSinceRender * scale
                        , p.SpawnerInfo.SpawnSpeedPositioningMult.y * p.MoveData.Speed * Game.TimeSinceRender * scale
                        , p.SpawnerInfo.SpawnSpeedPositioningMult.z * p.MoveData.Speed * Game.TimeSinceRender * scale);
@@ -77,7 +78,7 @@ namespace SWEndor.ActorTypes.Instances
                        , p.SpawnerInfo.SpawnManualPositioningMult.y * Game.TimeSinceRender * scale
                        , p.SpawnerInfo.SpawnManualPositioningMult.z * Game.TimeSinceRender * scale);
 
-          if (a.IsPlayer)
+          if (ActorInfo.IsPlayer(Engine, id))
             PlayerInfo.IsMovementControlsEnabled = false;
         }
       }
@@ -95,17 +96,17 @@ namespace SWEndor.ActorTypes.Instances
 
       ActorCreationInfo acinfo = new ActorCreationInfo(PlayerInfo.ActorType);
 
-      float scale = ainfo.Transform.Scale;
+      float scale = Engine.MeshDataSet.Scale_get(ainfo.ID);
       TV_3DVECTOR clone = ainfo.GetRelativePositionXYZ(p.SpawnerInfo.PlayerSpawnLocation.x * scale, p.SpawnerInfo.PlayerSpawnLocation.y * scale, p.SpawnerInfo.PlayerSpawnLocation.z * scale);
       acinfo.Position = new TV_3DVECTOR(clone.x, clone.y, clone.z);
-      acinfo.Rotation = p.Transform.Rotation; 
+      acinfo.Rotation = new TV_3DVECTOR(p.CoordData.Rotation.x, p.CoordData.Rotation.y, p.CoordData.Rotation.z);
       acinfo.Rotation += p.SpawnerInfo.SpawnRotation;
 
-      acinfo.FreeSpeed = true;
+      acinfo.InitialState = ActorState.FREE;
       acinfo.Faction = ainfo.Faction;
-      ActorInfo a = ActorFactory.Create(acinfo);
-      ainfo.AddChild(a);
-      a.QueueNext(new Lock());
+      ActorInfo a = ActorInfo.Create(ActorFactory, acinfo);
+      ainfo.AddChild(a.ID);
+      ActionManager.QueueNext(a.ID, new Lock());
 
       PlayerInfo.ActorID = a.ID;
 

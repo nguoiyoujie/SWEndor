@@ -2,7 +2,6 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
-using SWEndor.Actors.Traits;
 using System;
 
 namespace SWEndor.ActorTypes.Instances
@@ -35,10 +34,9 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.CycleInfo.Action = new Action(
         () => 
         {
-          ainfo.StateModel.MakeNormal(ainfo);
-
-          // use a different timer, like an animation timer
-          ainfo.DyingTimer.Set(TimedLifeData.TimedLife).Start();
+          ainfo.ActorState = ActorState.NORMAL;
+          //ainfo.CombatSystem.onNotify(Engine, ainfo.ID, CombatEventType.TIMEACTIVATE , TimedLifeData.TimedLife);
+          TimedLifeSystem.Activate(Engine, ainfo.ID, TimedLifeData.TimedLife);
         }
         );
 
@@ -49,24 +47,24 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessState(ActorInfo ainfo)
     {
       base.ProcessState(ainfo);
-      if (!ainfo.StateModel.IsDyingOrDead)
+      if (ainfo.ActorState == ActorState.NORMAL)
       {
-        ActorInfo p = ainfo.Relation.Parent;
+        ActorInfo p = ActorFactory.Get(ainfo.ParentID);
         if (p != null)
         {
-          if (!p.Disposed)
+          if (p.CreationState != CreationState.DISPOSED)
           {
-            TV_3DVECTOR pos = p.GetGlobalPosition();
-            ainfo.Transform.Position = new TV_3DVECTOR(pos.x, pos.y, pos.z);
+            TV_3DVECTOR pos = p.GetPosition();
+            ainfo.SetLocalPosition(pos.x, pos.y, pos.z);
           }
           else
           {
-            p.RemoveChild(ainfo);
+            p.RemoveChild(ainfo.ID);
           } 
         }
         else
         {
-          ainfo.StateModel.MakeDead(ainfo);
+          ainfo.ActorState = ActorState.DEAD;
         }
       }
     }

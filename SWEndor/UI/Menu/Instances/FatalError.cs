@@ -1,5 +1,5 @@
 ﻿using MTV3D65;
-using SWEndor.Primitives;
+using SWEndor.Log;
 using System;
 
 namespace SWEndor.UI.Menu.Pages
@@ -10,10 +10,11 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement MainText = new SelectionElement();
     SelectionElement Instructions = new SelectionElement();
     SelectionElement ButtonReturn = new SelectionElement();
+    string errorfilename = @"error.txt";
 
     public FatalError(Screen2D owner, Exception exception) : base(owner)
     {
-      Log.WriteErr(Log.ERROR, exception);
+      Logger.GenerateErrLog(exception, errorfilename);
 
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
       Cover.HighlightBoxWidth = Globals.Engine.ScreenWidth;
@@ -25,10 +26,8 @@ namespace SWEndor.UI.Menu.Pages
       MainText.TextColor = new TV_COLOR(0.8f, 0.2f, 0.2f, 1);
       MainText.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 - 200, Globals.Engine.ScreenHeight / 2 - 180);
 
-      Instructions.Text = "A fatal error has been encountered and the program needs to close.\nPlease see {0} in the /Log folder for the error message.\n\n{1}".F(
-        Log.ERROR, 
-        Utilities.Multiline("Error: " + exception.Message, 72));
-
+      Instructions.Text = "A fatal error has been encountered and the program needs to close.\nPlease see " + errorfilename + " in the /Log folder for the error message.\n\n" 
+        + Utilities.Multiline("Error: " + exception.Message, 72);
       Instructions.TextFont = FontFactory.Get(Font.T12).ID;
       Instructions.TextColor = new TV_COLOR(0.8f, 0.2f, 0.2f, 1);
       Instructions.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 - 250, Globals.Engine.ScreenHeight / 2 - 130);

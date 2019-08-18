@@ -1,5 +1,4 @@
 ﻿using SWEndor.Actors;
-using SWEndor.Actors.Traits;
 
 namespace SWEndor.AI.Actions
 {
@@ -10,9 +9,10 @@ namespace SWEndor.AI.Actions
       CanInterrupt = false;
     }
 
-    public override void Process(Engine engine, ActorInfo actor)
+    public override void Process(Engine engine, int actorID)
     {
-      actor.StateModel.MakeDead(actor);
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
+      actor.ActorState = ActorState.DEAD;
       Complete = true;
     }
   }

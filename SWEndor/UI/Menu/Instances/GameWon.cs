@@ -1,5 +1,4 @@
 ﻿using MTV3D65;
-using SWEndor.Primitives;
 using System.Collections.Generic;
 
 namespace SWEndor.UI.Menu.Pages
@@ -16,14 +15,15 @@ namespace SWEndor.UI.Menu.Pages
       MainText.TextFont = FontFactory.Get(Font.T36).ID;
       MainText.TextPosition = new TV_2DVECTOR(Engine.ScreenWidth / 2 - 242, 60);
 
-      Score.Text += "{0,42} {1,8:0}".F("Score".PadRight(42), PlayerInfo.Score.Score);
-      Score.Text += "\n\n{0,42} {1,8:0}".F("Total Hits".PadRight(42), PlayerInfo.Score.Hits);
-      Score.Text += "\n{0,42} {1,8:0}".F("Damage Taken".PadRight(42), PlayerInfo.Score.DamageTaken);
-      Score.Text += "\n{0,42} {1,8:0}".F("Deaths".PadRight(42), PlayerInfo.Score.Deaths);
-      Score.Text += "\n\n{0,42} {1,8:0}".F("", "Kills");
+      Score.Text += string.Format("{0,42} {1,8:0}", "Score".PadRight(42), PlayerInfo.Score.Score);
+      Score.Text += string.Format("\n\n{0,42} {1,8:0}", "Total Hits".PadRight(42), PlayerInfo.Score.Hits);
+      //Score.Text += string.Format("\n{0,42} {1,8:0}", "Total Hits on Fighters".PadRight(42), PlayerInfo.Score.HitsOnFighters);
+      Score.Text += string.Format("\n{0,42} {1,8:0}", "Damage Taken".PadRight(42), PlayerInfo.Score.DamageTaken);
+      Score.Text += string.Format("\n{0,42} {1,8:0}", "Deaths".PadRight(42), PlayerInfo.Score.Deaths);
+      Score.Text += string.Format("\n\n{0,42} {1,8:0}", "", "Kills");
 
       foreach (KeyValuePair<string, int> kvp in PlayerInfo.Score.KillsByName.GetList())
-        Score.Text += "\n{0,42} {1,8:0}".F((kvp.Key.Length > 42) ? kvp.Key.Remove(42) : kvp.Key.PadRight(42), kvp.Value);
+        Score.Text += string.Format("\n{0,42} {1,8:0}", (kvp.Key.Length > 42) ? kvp.Key.Remove(42) : kvp.Key.PadRight(42), kvp.Value);
 
       Score.TextFont = FontFactory.Get(Font.T12).ID;
       Score.TextPosition = new TV_2DVECTOR(Engine.ScreenWidth / 2 - 242, 120);

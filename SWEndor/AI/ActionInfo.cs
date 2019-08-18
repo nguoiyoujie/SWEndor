@@ -2,8 +2,6 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
-using SWEndor.Actors.Traits;
-using SWEndor.Primitives;
 using System;
 
 namespace SWEndor.AI.Actions
@@ -21,14 +19,22 @@ namespace SWEndor.AI.Actions
     public bool CanInterrupt = true;
     public ActionInfo NextAction = null;
 
+    // collision avoidance
+    private float m_collisioncheck_time = 0;
+
+
     public override string ToString()
     {
-      return "{0},{1}".F(Name
-                      , Complete
-                      );
+      return string.Format("{0},{1}"
+                          , Name
+                          , Complete
+                          );
     }
 
-    public virtual void Process(Engine engine, ActorInfo actor) { Complete = true; }
+    public virtual void Process(Engine engine, int ownerID)
+    {
+      Complete = true;
+    }
 
     protected bool CheckBounds(ActorInfo owner)
     {
@@ -43,7 +49,7 @@ namespace SWEndor.AI.Actions
 
         if (owner.CurrentAction is Move)
           owner.CurrentAction.Complete = true;
-        owner.QueueFirst(new ForcedMove(new TV_3DVECTOR(x, y, z), owner.MoveData.MaxSpeed, -1, 360 / (owner.MoveData.MaxTurnRate + 72)));
+        owner.GetEngine().ActionManager.QueueFirst(owner.ID, new ForcedMove(new TV_3DVECTOR(x, y, z), owner.MoveData.MaxSpeed, -1, 360 / (owner.MoveData.MaxTurnRate + 72)));
         return false;
       }
       else
@@ -60,7 +66,7 @@ namespace SWEndor.AI.Actions
     {
       if (owner.TypeInfo.AlwaysAccurateRotation)
       {
-        owner.Transform.LookAt(target_Position);
+        owner.LookAtPoint(target_Position);
         return 0;
       }
       if (owner.TypeInfo.MaxTurnRate == 0) // Cannot turn
@@ -69,9 +75,9 @@ namespace SWEndor.AI.Actions
       }
       else
       {
-        TV_3DVECTOR tgtdir = target_Position - owner.GetGlobalPosition();
+        TV_3DVECTOR tgtdir = target_Position - owner.GetPosition();
 
-        TV_3DVECTOR chgrot = Utilities.GetRotation(tgtdir) - owner.Transform.Rotation;
+        TV_3DVECTOR chgrot = Utilities.GetRotation(tgtdir) - owner.GetRotation();
 
         chgrot.x = chgrot.x.Modulus(-180, 180);
         chgrot.y = chgrot.y.Modulus(-180, 180);
@@ -99,12 +105,12 @@ namespace SWEndor.AI.Actions
         
 
         TV_3DVECTOR vec = new TV_3DVECTOR();
-        TV_3DVECTOR dir = owner.Transform.GetGlobalDirection(owner);
+        TV_3DVECTOR dir = owner.GetDirection();
         owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, tgtdir);
         float delta = owner.GetEngine().TrueVision.TVMathLibrary.ACos(owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
 
-        if (owner.IsPlayer)
-          owner.GetEngine().Screen2D.MessageSecondaryText("DELTA: {0:0.000}".F(delta), 1.5f, new TV_COLOR(0.5f, 0.5f, 1, 1), 0);
+        if (ActorInfo.IsPlayer(owner.GetEngine(), owner.ID))
+          owner.GetEngine().Screen2D.MessageSecondaryText(string.Format("DELTA: {0:0.000}", delta), 1.5f, new TV_COLOR(0.5f, 0.5f, 1, 1), 0);
         return delta;
 
       }
@@ -112,7 +118,7 @@ namespace SWEndor.AI.Actions
 
     internal static float AdjustSpeed(ActorInfo owner, float target_Speed)
     {
-      if (!owner.MoveData.FreeSpeed) 
+      if (owner.ActorState != ActorState.FREE && owner.ActorState != ActorState.HYPERSPACE)
       {
         target_Speed = target_Speed.Clamp(owner.MoveData.MinSpeed, owner.MoveData.MaxSpeed);
       }
@@ -133,17 +139,20 @@ namespace SWEndor.AI.Actions
       return (owner.MoveData.Speed - target_Speed);
     }
 
-    protected bool CheckImminentCollision(ActorInfo owner)
+    protected bool CheckImminentCollision(ActorInfo owner, float scandistance)
     {
       //return false; // disable for now
 
       if (!owner.TypeInfo.CanCheckCollisionAhead)
         return false;
 
-      if (!owner.StateModel.ComponentMask.Has(ComponentMask.CAN_BECOLLIDED))
+      if (!owner.Engine.MaskDataSet[owner.ID].Has(ComponentMask.CAN_BECOLLIDED))
         return false;
 
-      return CollisionSystem.ActivateImminentCollisionCheck(owner.Engine, owner);
+      if (scandistance <= 0)
+        return false;
+
+      return CollisionSystem.ActivateImminentCollisionCheck(owner.Engine, owner.ID, ref m_collisioncheck_time, scandistance);
     }
 
     public void Dispose()

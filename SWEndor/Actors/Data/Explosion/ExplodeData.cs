@@ -3,10 +3,10 @@ using SWEndor.ActorTypes;
 
 namespace SWEndor.Actors.Data
 {
-  /*
+  public enum ExplosionTrigger { NONE, DYING, ALWAYS }
   public enum DeathExplosionTrigger { NONE, TIMENOTEXPIRED_ONLY, ALWAYS }
 
-  public struct ExplodeData : Data
+  public struct ExplodeData
   {
     public const string ExplosionTypeDefault = "Explosion";
     public const string DeathExplosionTypeDefault = "ExplosionSm";
@@ -20,10 +20,6 @@ namespace SWEndor.Actors.Data
     public float DeathExplosionSize;
 
     internal ActorTypeInfo _cache;
-
-    public void Init(ActorTypeInfo type, ActorCreationInfo acreate)
-    {
-    }
 
     public ExplodeData(float explosionRate = 1, float explosionSize = 1, string explosionType = ExplosionTypeDefault, DeathExplosionTrigger deathTrigger = DeathExplosionTrigger.NONE, float deathExplosionSize = 1, string deathExplosionType = DeathExplosionTypeDefault)
     {
@@ -59,6 +55,10 @@ namespace SWEndor.Actors.Data
 
       _cache = null;
     }
+
+    public static implicit operator float(ExplodeData v)
+    {
+      throw new NotImplementedException();
+    }
   }
-  */
 }

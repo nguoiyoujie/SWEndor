@@ -137,21 +137,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actors\ActorCreationInfo.cs" />
+    <Compile Include="Actors\Components\TimedLifeSystem.cs" />
+    <Compile Include="Actors\Components\MeshSystem.cs" />
     <Compile Include="Actors\Components\DyingMovement\DyingSpin.cs" />
     <Compile Include="Actors\Components\DyingMovement\DyingSink.cs" />
     <Compile Include="Actors\Components\DyingMovement\DyingKill.cs" />
     <Compile Include="Actors\Components\DyingMovement\Interfaces.cs" />
     <Compile Include="Actors\Components\Movement\MoveDecorator.cs" />
-    <Compile Include="Actors\Data\Explosion\ExplodeDataSet.cs" />
-    <Compile Include="Actors\Data\MaskDataSet.cs" />
     <Compile Include="Actors\Data\Mesh\MeshDataSet.cs" />
+    <Compile Include="Actors\Data\ActorDataSet.cs" />
     <Compile Include="Actors\Data\Collision\CollisionData.cs" />
     <Compile Include="Actors\Data\CommonData.cs" />
     <Compile Include="Actors\Data\Explosion\ExplodeData.cs" />
     <Compile Include="Actors\Data\Sys\SysDataSet.cs" />
+    <Compile Include="Actors\Data\TimedLife\TimedLifeDataSet.cs" />
     <Compile Include="Actors\Data\TimedLife\TimedLifeData.cs" />
     <Compile Include="Actors\Data\Combat\CombatData.cs" />
     <Compile Include="Actors\Data\Regeneration\RegenData.cs" />
+    <Compile Include="Actors\Data\WeapData.cs" />
+    <Compile Include="Actors\Data\StateData.cs" />
     <Compile Include="Actors\Data\Sys\SysData.cs" />
     <Compile Include="Actors\Data\Move\MoveData.cs" />
     <Compile Include="Actors\Components\Movement\RotateOnly.cs" />
@@ -166,29 +170,13 @@
     <Compile Include="Actors\Components\CollisionSystem.cs" />
     <Compile Include="Actors\Components\WeaponSystemInfo.cs" />
     <Compile Include="Actors\Components\CycleInfo.cs" />
+    <Compile Include="Actors\Components\ExplosionSystem.cs" />
     <Compile Include="Actors\Components\RegenerationSystem.cs" />
     <Compile Include="Actors\Components\Movement\MoveNormal.cs" />
     <Compile Include="Actors\Components\CombatSystem.cs" />
     <Compile Include="Actors\Enums\ActorState.cs" />
     <Compile Include="Actors\Enums\CreationState.cs" />
     <Compile Include="Actors\States\ActorDistanceInfo.cs" />
-    <Compile Include="Actors\Traits\Health\IHealth.cs" />
-    <Compile Include="Actors\Traits\MeshModel\IMeshModel.cs" />
-    <Compile Include="Actors\Traits\Relation\IRelation.cs" />
-    <Compile Include="Actors\Traits\Spawner.cs" />
-    <Compile Include="Actors\Traits\Explodes\Explodes.cs" />
-    <Compile Include="Actors\Traits\StateModel\IStateModel.cs" />
-    <Compile Include="Actors\Traits\Timers\ITimer.cs" />
-    <Compile Include="Actors\Traits\Timers\DyingTimer.cs" />
-    <Compile Include="Actors\Traits\StateModel\StateModel.cs" />
-    <Compile Include="Actors\Traits\MeshModel\MeshModel.cs" />
-    <Compile Include="Actors\Traits\Transform\ITransform.cs" />
-    <Compile Include="Actors\Traits\Transform\Transform.cs" />
-    <Compile Include="Actors\Traits\Relation\Relation.cs" />
-    <Compile Include="Actors\Traits\Position.cs" />
-    <Compile Include="Actors\Traits\Movement\MovementNormal.cs" />
-    <Compile Include="Actors\Traits\Health\Health.cs" />
-    <Compile Include="Actors\Traits\Interfaces.cs" />
     <Compile Include="Actors\TVFunctions.cs" />
     <Compile Include="ActorTypes\Components\DeathCameraInfo.cs" />
     <Compile Include="ActorTypes\Components\ActorCameraInfo.cs" />
@@ -245,9 +233,9 @@
     <Compile Include="ActorTypes\Groups\Debris\Transport_Box4ATI.cs" />
     <Compile Include="ActorTypes\Groups\Debris\Transport_Box2ATI.cs" />
     <Compile Include="ActorTypes\Groups\Debris\Transport_Box1ATI.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExpL02.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExpW02.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExpW01.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\ExplosionMegaATI.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\ExplosionWaveMegaATI.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\ExplosionWaveATI.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\FalconATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\SmallIonLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\MissileATI.cs" />
@@ -322,7 +310,7 @@
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\CorellianTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\ShieldGenerators\ISDShieldGeneratorATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\SDTurboLaserATI.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExpL01.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\ExplosionLgATI.cs" />
     <Compile Include="ActorTypes\General\Factory\Factory.cs" />
     <Compile Include="Actors\Factory\Factory.cs" />
     <Compile Include="Actors\ActorInfo.cs" />
@@ -342,8 +330,9 @@
     <Compile Include="ActorTypes\Groups\Warship.cs" />
     <Compile Include="ActorTypes\Groups\Fighter.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene\DeathStar2ATI.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExpL00.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExpS00.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\ExplosionSmATI.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\Explosion2ATI.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\ExplosionATI.cs" />
     <Compile Include="ActorTypes\Groups\Warships\TransportATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\GreenLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\RedLaserATI.cs" />
@@ -365,7 +354,7 @@
     <Compile Include="AI\Actions\HyperspaceIn.cs" />
     <Compile Include="AI\Actions\Rotate.cs" />
     <Compile Include="AI\Actions\Move.cs" />
-    <Compile Include="AI\ActionExt.cs" />
+    <Compile Include="AI\ActionManager.cs" />
     <Compile Include="AI\ActionInfo.cs" />
     <Compile Include="Build.cs" />
     <Compile Include="Core\TrueVision.cs" />
@@ -419,20 +408,13 @@
     <Compile Include="Primitives\BoundingBox.cs" />
     <Compile Include="Primitives\BoundingSphere.cs" />
     <Compile Include="Primitives\BoundingValue.cs" />
-    <Compile Include="Primitives\Pair.cs" />
-    <Compile Include="Primitives\TimeCache.cs" />
-    <Compile Include="Primitives\Delegates.cs" />
-    <Compile Include="Primitives\Exts.cs" />
+    <Compile Include="Primitives\Cached3DVector.cs" />
+    <Compile Include="Primitives\CachedFloat.cs" />
     <Compile Include="Primitives\Factories\Factory.cs" />
     <Compile Include="Primitives\Factories\Interfaces.cs" />
     <Compile Include="Primitives\Factories\ObjectPool.cs" />
     <Compile Include="Primitives\Factories\Registry.cs" />
-    <Compile Include="Primitives\Interfaces.cs" />
     <Compile Include="Primitives\TimeControl.cs" />
-    <Compile Include="Primitives\Traits\Interfaces.cs" />
-    <Compile Include="Primitives\Traits\TraitPool.cs" />
-    <Compile Include="Primitives\Traits\TraitDictionary.cs" />
-    <Compile Include="Primitives\Traits\TraitPair.cs" />
     <Compile Include="Scenarios\ActorSpawnInfo.cs" />
     <Compile Include="Scenarios\GSFunctions.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\SWContext.cs" />
@@ -481,7 +463,6 @@
     <Compile Include="Scenarios\Scripting\Functions\ActorManagement.cs" />
     <Compile Include="Scenarios\Scripting\Functions\SceneCameraManagement.cs" />
     <Compile Include="Scenarios\Scripting\Functions\SceneManagement.cs" />
-    <Compile Include="Settings\TextLocalization.cs" />
     <Compile Include="Sound\Instructions\InstAddSyncPoint.cs" />
     <Compile Include="Sound\Instructions\InstPauseMusic.cs" />
     <Compile Include="Sound\Instructions\InstPlaySound.cs" />
@@ -620,12 +601,6 @@
     <None Include="Data\actortypes.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Scenarios\SelfTest\Script.sw">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\Scenarios\SelfTestScenario.scen">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Data\weapons.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -669,8 +644,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Actors\Events\" />
-    <Folder Include="Actors\Traits\Fighter\" />
-    <Folder Include="Actors\Traits\Projectile\" />
     <Folder Include="AI\Actions\Idle\" />
     <Folder Include="AI\AI\" />
   </ItemGroup>

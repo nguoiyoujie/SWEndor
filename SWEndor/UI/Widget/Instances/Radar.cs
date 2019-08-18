@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
-using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes;
 using SWEndor.Primitives;
 using System;
@@ -38,7 +37,9 @@ namespace SWEndor.UI.Widgets
       {
         return (!Owner.ShowPage
             && PlayerInfo.Actor != null
-            && !PlayerInfo.Actor.StateModel.IsDyingOrDead
+            && PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && PlayerInfo.Actor.ActorState != ActorState.DYING
+
             && Owner.ShowUI
             && Owner.ShowRadar);
       }
@@ -47,7 +48,7 @@ namespace SWEndor.UI.Widgets
     public override void Draw()
     {
       ActorInfo p = PlayerInfo.Actor;
-      if (p == null || !p.Active)
+      if (p == null || p.CreationState != CreationState.ACTIVE)
         return;
 
       if (Owner.OverrideTargetingRadar)
@@ -162,21 +163,22 @@ namespace SWEndor.UI.Widgets
     }
 
 
-    private void DrawElement(Engine engine, ActorInfo a)
+    private void DrawElement(Engine engine, int actorID)
     {
       ActorInfo p = PlayerInfo.Actor;
+      ActorInfo a = ActorFactory.Get(actorID);
       if (a != null)
       {
-        TV_3DVECTOR ppos = p.GetGlobalPosition();
-        TV_3DVECTOR apos = a.GetGlobalPosition();
+        TV_3DVECTOR ppos = p.GetPosition();
+        TV_3DVECTOR apos = a.GetPosition();
 
-        if (a.Active
+        if (a.CreationState == CreationState.ACTIVE
           && a.TypeInfo.RadarSize > 0
           && (a.TypeInfo.AlwaysShowInRadar || ActorDistanceInfo.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
         {
           int acolor = GetColor(a);
           
-          float proty = p.Transform.Rotation.y;
+          float proty = p.GetRotation().y;
 
           XYCoord posvec = new XYCoord { X = ppos.x - apos.x, Y = ppos.z - apos.z };
           PolarCoord polar = posvec.ToPolarCoord;
@@ -203,7 +205,7 @@ namespace SWEndor.UI.Widgets
           switch (a.TypeInfo.RadarType)
           {
             case RadarType.TRAILLINE:
-              TV_2DVECTOR prevtemp = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(a.Transform.PrevPosition.x, a.Transform.PrevPosition.z);
+              TV_2DVECTOR prevtemp = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(a.CoordData.PrevPosition.x, a.CoordData.PrevPosition.z);
               float prevdist = Engine.TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), prevtemp);
               float prevangl = Engine.TrueVision.TVMathLibrary.Direction2Ang(prevtemp.x, prevtemp.y) - proty;
               if (polar.Dist < radar_range && prevdist < radar_range)
@@ -241,7 +243,7 @@ namespace SWEndor.UI.Widgets
             case RadarType.RECTANGLE_GIANT:
               {
                 float gt = Engine.Game.GameTime * radar_blinkfreq;
-                if (a.Health.Frac > 0.1f || (gt - (int)gt > 0.5f))
+                if (Engine.SysDataSet.StrengthFrac_get(actorID) > 0.1f || (gt - (int)gt > 0.5f))
                 {
                   DrawRectGiant(a, posvec.X, posvec.Y, proty, acolor);
                 }
@@ -250,7 +252,7 @@ namespace SWEndor.UI.Widgets
             case RadarType.TRIANGLE_GIANT:
               {
                 float gt = Engine.Game.GameTime * radar_blinkfreq;
-                if (a.Health.Frac > 0.1f || (gt - (int)gt > 0.5f))
+                if (Engine.SysDataSet.StrengthFrac_get(actorID) > 0.1f || (gt - (int)gt > 0.5f))
                 {
                   DrawTriangleGiant(a, posvec.X, posvec.Y, proty, acolor);
                 }
@@ -288,14 +290,14 @@ namespace SWEndor.UI.Widgets
 
     private void DrawRectGiant(ActorInfo a, float x, float y, float proty, int color)
     {
-      BoundingBox box = a.MeshModel.GetBoundingBox(true);//Engine.MeshDataSet.Mesh_getBoundingBox(a.ID, true);
-      float scale = a.Transform.Scale; //a.CoordData.Scale;
+      BoundingBox box = Engine.MeshDataSet.Mesh_getBoundingBox(a.ID, true);
+      float scale = Engine.MeshDataSet.Scale_get(a.ID);
 
       List<TV_2DVECTOR?> ts = new List<TV_2DVECTOR?>();
       float bx = box.X.Min * scale;
       float bz = box.Z.Min * scale;
       int i = 0;
-      float ang = a.Transform.Rotation.y;
+      float ang = a.GetRotation().y;
       while (i < 4)
       {
         TV_2DVECTOR temp = new TV_2DVECTOR(x, y);
@@ -366,14 +368,14 @@ namespace SWEndor.UI.Widgets
 
     private void DrawTriangleGiant(ActorInfo a, float x, float y, float proty, int color)
     {
-      BoundingBox box = a.MeshModel.GetBoundingBox(true);// Engine.MeshDataSet.Mesh_getBoundingBox(a.ID, true);
-      float scale = a.Transform.Scale; //a.CoordData.Scale;
+      BoundingBox box = Engine.MeshDataSet.Mesh_getBoundingBox(a.ID, true);
+      float scale = Engine.MeshDataSet.Scale_get(a.ID);
 
       List<TV_2DVECTOR?> ts = new List<TV_2DVECTOR?>();
       float bx = box.X.Min * scale;
       float bz = box.Z.Min * scale;
       int i = 0;
-      float ang = a.Transform.Rotation.y;
+      float ang = a.GetRotation().y;
       while (i < 3)
       {
         TV_2DVECTOR temp = new TV_2DVECTOR(x, y);

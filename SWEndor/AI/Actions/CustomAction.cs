@@ -1,5 +1,4 @@
-﻿using SWEndor.Actors;
-using System;
+﻿using System;
 
 namespace SWEndor.AI.Actions
 {
@@ -13,7 +12,7 @@ namespace SWEndor.AI.Actions
 
     private Action Action;
 
-    public override void Process(Engine engine, ActorInfo actor)
+    public override void Process(Engine engine, int actorID)
     {
       Action.Invoke();
       Complete = true;

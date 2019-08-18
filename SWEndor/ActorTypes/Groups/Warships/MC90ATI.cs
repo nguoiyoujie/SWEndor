@@ -2,7 +2,6 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
-using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 
@@ -12,11 +11,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal MC90ATI(Factory owner) : base(owner, "Mon Calamari Capital Ship")
     {
-      Explodes = new ExplodeInfo[] {
-        new ExplodeInfo("ExpL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
-        new ExplodeInfo("ExpL01", 1, 3.5f, ExplodeTrigger.ON_DEATH),
-        new ExplodeInfo("ExpW01", 1, 1, ExplodeTrigger.ON_DEATH)
-      };
+      ExplodeData = new ExplodeData(0.5f, 1, "ExplosionSm", DeathExplosionTrigger.ALWAYS, 3.5f, "ExplosionLg");
 
       MaxStrength = 3200.0f;
       ImpactDamage = 60.0f;

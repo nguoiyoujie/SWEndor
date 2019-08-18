@@ -11,25 +11,26 @@ namespace SWEndor.AI.Actions
     {
     }
 
-    public override void Process(Engine engine, ActorInfo actor)
+    public override void Process(Engine engine, int actorID)
     {
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
       if (CheckBounds(actor))
       {
-        AdjustRotation(actor, actor.GetGlobalPosition());
+        AdjustRotation(actor, actor.GetPosition());
         AdjustSpeed(actor, actor.MoveData.MinSpeed);
 
         if (NextAction == null)
         {
-          actor.QueueLast(new Hunt());
+          engine.ActionManager.QueueLast(actorID, new Hunt());
         }
 
         Complete = true;
 
         TV_3DVECTOR vNormal = new TV_3DVECTOR();
         TV_3DVECTOR vImpact = new TV_3DVECTOR();
-        if (CheckImminentCollision(actor))
+        if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
         {
-          CollisionSystem.CreateAvoidAction(engine, actor);
+          CollisionSystem.CreateAvoidAction(engine, actorID);
         }
       }
     }

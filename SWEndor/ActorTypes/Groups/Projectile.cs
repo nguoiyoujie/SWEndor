@@ -2,7 +2,6 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
-using SWEndor.Actors.Traits;
 using SWEndor.AI.Actions;
 
 namespace SWEndor.ActorTypes.Groups
@@ -13,11 +12,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.Disabled;
-
-      Explodes = new ExplodeInfo[]
-      {
-        new ExplodeInfo("ExpS00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
-      };
+      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.TIMENOTEXPIRED_ONLY, deathExplosionType: "Explosion");
 
       EnableDistanceCull = true;
       CullDistance = 6000;
@@ -42,24 +37,24 @@ namespace SWEndor.ActorTypes.Groups
     public override void ProcessState(ActorInfo ainfo)
     {
       base.ProcessState(ainfo);
-      if (!ainfo.StateModel.IsDyingOrDead)
+      if (ainfo.ActorState == ActorState.NORMAL)
       {
         float impdist = ImpactCloseEnoughDistance;
         if (impdist > 0 && ainfo.CurrentAction != null && ainfo.CurrentAction is AttackActor)
         {
-          ActorInfo target = ((AttackActor)ainfo.CurrentAction).Target_Actor;
+          ActorInfo target = ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
           if (target != null)
           {
             if (target.TypeInfo is Projectile)
               impdist += ((Projectile)target.TypeInfo).ImpactCloseEnoughDistance;
 
             // Anticipate
-            float dist = ActorDistanceInfo.GetDistance(ainfo, target, impdist + 1);
+            float dist = ActorDistanceInfo.GetDistance(ainfo.ID, target.ID, impdist + 1);
 
             if (dist < impdist)
             {
-              target.TypeInfo.ProcessHit(target, ainfo, target.GetGlobalPosition(), new TV_3DVECTOR());
-              ainfo.TypeInfo.ProcessHit(ainfo, target, target.GetGlobalPosition(), new TV_3DVECTOR());
+              target.TypeInfo.ProcessHit(target.ID, ainfo.ID, target.GetPosition(), new TV_3DVECTOR());
+              ainfo.TypeInfo.ProcessHit(ainfo.ID, target.ID, target.GetPosition(), new TV_3DVECTOR());
 
               ainfo.OnHitEvent(target.ID);
               target.OnHitEvent(ainfo.ID);

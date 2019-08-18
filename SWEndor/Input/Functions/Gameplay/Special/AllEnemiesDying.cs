@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Traits;
 
 namespace SWEndor.Input.Functions.Gameplay.Special
 {
@@ -16,10 +15,11 @@ namespace SWEndor.Input.Functions.Gameplay.Special
     {
       if (engine.GameScenarioManager.Scenario != null)
       {
-        foreach (ActorInfo actor in engine.GameScenarioManager.Scenario.MainEnemyFaction.GetAll())
+        foreach (int actorID in engine.GameScenarioManager.Scenario.MainEnemyFaction.GetAll())
         {
+          ActorInfo actor = engine.ActorFactory.Get(actorID);
           if (actor != null)
-            actor.StateModel.MakeDying(actor);
+            actor.ActorState = ActorState.DYING;
         }
       }
     }

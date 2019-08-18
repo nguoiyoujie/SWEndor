@@ -26,6 +26,21 @@ namespace SWEndor.ActorTypes.Instances
         , new AddOnInfo("Turbolaser Turret", new TV_3DVECTOR(-95, 155, 0), new TV_3DVECTOR(0, 0, 0), true)
       };
     }
+
+    public override void ProcessNewState(ActorInfo ainfo)
+    {
+      base.ProcessNewState(ainfo);
+
+      /*
+      if (ainfo.ActorState.IsDead())
+      {
+        ActorCreationInfo acinfo = new ActorCreationInfo(Tower00_RuinsATI.Instance());
+        acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(0, -72, 0);
+        acinfo.Rotation = ainfo.GetRotation();
+        ActorInfo a = ActorInfo.Create(acinfo);
+      }
+      */
+    }
   }
 }
 

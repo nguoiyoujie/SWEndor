@@ -40,14 +40,14 @@ namespace SWEndor.Actors.Components
       return ret;
     }
 
-    public bool SelectWeapon(ActorInfo targetActor, float delta_angle, float delta_distance, out WeaponInfo weapon, out int burst)
+    public bool SelectWeapon(int targetActorID, float delta_angle, float delta_distance, out WeaponInfo weapon, out int burst)
     {
       weapon = null;
       burst = 0;
       WeaponInfo weap = null;
       foreach (string ws in AIWeapons)
       {
-        Actor.TypeInfo.InterpretWeapon(Actor, ws, out weap, out burst);
+        Actor.TypeInfo.InterpretWeapon(Actor.ID, ws, out weap, out burst);
 
         if (weap != null)
         {
@@ -55,7 +55,7 @@ namespace SWEndor.Actors.Components
             && delta_angle > -weap.AngularRange)
             && (delta_distance < weap.Range
             && delta_distance > -weap.Range)
-            && weap.CanTarget(Actor, targetActor)
+            && weap.CanTarget(Actor.Engine, Actor.ID, targetActorID)
             && (weap.MaxAmmo == -1 || weap.Ammo > 0))
           {
             weapon = weap;

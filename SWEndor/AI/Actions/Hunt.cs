@@ -1,5 +1,4 @@
 ﻿using SWEndor.Actors;
-using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes;
 using SWEndor.Weapons;
 using System;
@@ -25,20 +24,22 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    public override void Process(Engine engine, ActorInfo actor)
+    public override void Process(Engine engine, int actorID)
     {
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
       ActorInfo currtarget = null;
       List<ActorInfo> targets = new List<ActorInfo>();
       int weight = 0;
 
-      Action<Engine, ActorInfo> action = new Action<Engine, ActorInfo>(
-         (_, a) =>
+      Action<Engine, int> action = new Action<Engine, int>(
+         (_, aID) =>
          {
+           ActorInfo a = engine.ActorFactory.Get(aID);
            if (a != null
              && actor != a
-             && a.Active
-             && !a.StateModel.IsDyingOrDead
-             && a.CombatData.IsCombatObject
+             && a.CreationState == CreationState.ACTIVE
+             && !a.ActorState.IsDyingOrDead()
+             && engine.ActorDataSet.CombatData[a.dataID].IsCombatObject
              && (a.TypeInfo.TargetType & m_TargetType) != 0
              && !a.IsOutOfBounds(engine.GameScenarioManager.MinAIBounds, engine.GameScenarioManager.MaxAIBounds)
              && !actor.Faction.IsAlliedWith(a.Faction) // enemy
@@ -48,8 +49,8 @@ namespace SWEndor.AI.Actions
              {
                WeaponInfo weap = null;
                int dummy = 0;
-               float dist = ActorDistanceInfo.GetDistance(actor, a, actor.WeaponSystemInfo.GetWeaponRange());
-               actor.WeaponSystemInfo.SelectWeapon(a, 0, dist, out weap, out dummy);
+               float dist = ActorDistanceInfo.GetDistance(actorID, aID, actor.WeaponSystemInfo.GetWeaponRange());
+               actor.WeaponSystemInfo.SelectWeapon(a.ID, 0, dist, out weap, out dummy);
 
                if (weap != null)
                {
@@ -82,11 +83,11 @@ namespace SWEndor.AI.Actions
 
       if (currtarget != null)
       {
-        actor.QueueLast(new AttackActor(currtarget));
+        engine.ActionManager.QueueLast(actorID, new AttackActor(currtarget.ID));
       }
       else
       {
-        actor.QueueLast(new Wait(1));
+        engine.ActionManager.QueueLast(actorID, new Wait(1));
       }
 
       Complete = true;

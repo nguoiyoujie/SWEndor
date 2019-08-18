@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Scenarios.Scripting.Expressions;
 using System;
@@ -16,11 +15,11 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      ActionInfo action = ParseAction(context, ps);
+      ActionInfo action = ParseAction(ps);
       if (action == null)
         return false;
 
-      actor.QueueFirst(action);
+      context.Engine.ActionManager.QueueFirst(actor.ID, action);
       return true;
     }
 
@@ -31,11 +30,11 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      ActionInfo action = ParseAction(context, ps);
+      ActionInfo action = ParseAction(ps);
       if (action == null)
         return false;
 
-      actor.QueueNext(action);
+      context.Engine.ActionManager.QueueNext(actor.ID, action);
       return true;
     }
 
@@ -46,11 +45,11 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      ActionInfo action = ParseAction(context, ps);
+      ActionInfo action = ParseAction(ps);
       if (action == null)
         return false;
 
-      actor.QueueLast(action);
+      context.Engine.ActionManager.QueueLast(actor.ID, action);
       return true;
     }
 
@@ -61,7 +60,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      actor.UnlockOne();
+      context.Engine.ActionManager.UnlockOne(actor.ID);
       return true;
     }
 
@@ -72,7 +71,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      actor.ClearQueue();
+      context.Engine.ActionManager.ClearQueue(actor.ID);
       return true;
     }
 
@@ -83,11 +82,11 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      actor.ForceClearQueue();
+      context.Engine.ActionManager.ForceClearQueue(actor.ID);
       return true;
     }
 
-    private static ActionInfo ParseAction(Context context, object[] ps)
+    private static ActionInfo ParseAction(object[] ps)
     {
       int tgtid = -1;
       //ActorInfo tgt = null;
@@ -218,27 +217,27 @@ namespace SWEndor.Scenarios.Scripting.Functions
           if (ps.Length >= 3)
           {
             tgtid = Convert.ToInt32(ps[2].ToString());
-            ActorInfo t = context.Engine.ActorFactory.Get(tgtid);
-            if (t == null)
-              throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[1].ToString().ToLower(), ps[2].ToString().ToLower()));
+            //tgt = ActorFactory.Get(tgtid);
+            //if (tgt == null)
+            //  throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[1].ToString().ToLower(), ps[2].ToString().ToLower()));
 
             switch (ps.Length)
             {
               case 3:
-                action = new AttackActor(t);
+                action = new AttackActor(tgtid);
                 break;
               case 4:
-                action = new AttackActor(t, Convert.ToSingle(ps[3].ToString()));
+                action = new AttackActor(tgtid, Convert.ToSingle(ps[3].ToString()));
                 break;
               case 5:
-                action = new AttackActor(t, Convert.ToSingle(ps[3].ToString()), Convert.ToSingle(ps[4].ToString()));
+                action = new AttackActor(tgtid, Convert.ToSingle(ps[3].ToString()), Convert.ToSingle(ps[4].ToString()));
                 break;
               case 6:
-                action = new AttackActor(t, Convert.ToSingle(ps[3].ToString()), Convert.ToSingle(ps[4].ToString()), Convert.ToBoolean(ps[5].ToString()));
+                action = new AttackActor(tgtid, Convert.ToSingle(ps[3].ToString()), Convert.ToSingle(ps[4].ToString()), Convert.ToBoolean(ps[5].ToString()));
                 break;
               default:
               case 7:
-                action = new AttackActor(t, Convert.ToSingle(ps[3].ToString()), Convert.ToSingle(ps[4].ToString()), Convert.ToBoolean(ps[5].ToString()), Convert.ToSingle(ps[6].ToString()));
+                action = new AttackActor(tgtid, Convert.ToSingle(ps[3].ToString()), Convert.ToSingle(ps[4].ToString()), Convert.ToBoolean(ps[5].ToString()), Convert.ToSingle(ps[6].ToString()));
                 break;
             }
           }
@@ -250,21 +249,21 @@ namespace SWEndor.Scenarios.Scripting.Functions
           if (ps.Length >= 3)
           {
             tgtid = Convert.ToInt32(ps[2].ToString());
-            ActorInfo t = context.Engine.ActorFactory.Get(tgtid);
-            if (t == null)
-              throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[1].ToString().ToLower(), ps[2].ToString().ToLower()));
+            //tgt = ActorFactory.Get(tgtid);
+            //if (tgt == null)
+            //  throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[1].ToString().ToLower(), ps[2].ToString().ToLower()));
 
             switch (ps.Length)
             {
               case 3:
-                action = new FollowActor(t);
+                action = new FollowActor(tgtid);
                 break;
               case 4:
-                action = new FollowActor(t, Convert.ToSingle(ps[3].ToString()));
+                action = new FollowActor(tgtid, Convert.ToSingle(ps[3].ToString()));
                 break;
               default:
               case 5:
-                action = new FollowActor(t, Convert.ToSingle(ps[3].ToString()), Convert.ToBoolean(ps[4].ToString()));
+                action = new FollowActor(tgtid, Convert.ToSingle(ps[3].ToString()), Convert.ToBoolean(ps[4].ToString()));
                 break;
             }
           }

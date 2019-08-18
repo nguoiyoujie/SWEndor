@@ -41,8 +41,8 @@ namespace SWEndor.Player
     public ActorInfo TempActor { get { return Engine.ActorFactory.Get(TempActorID); } }
     
     private float m_LowAlarmSoundTime = 0;
-    public float StrengthFrac { get { return (Actor != null) ? Actor.Health.Frac : 0; } }
-    public TV_COLOR StrengthColor { get { return (Actor != null) ? Actor.Health.Color : new TV_COLOR(1, 1, 1, 1); } }
+    public float StrengthFrac { get { return (Actor != null) ? Engine.SysDataSet.StrengthFrac_get(ActorID) : 0; } }
+    public TV_COLOR StrengthColor { get { return (Actor != null) ? Engine.SysDataSet.StrengthColor_get(ActorID) : new TV_COLOR(1, 1, 1, 1); } }
 
     public int Lives = 3;
     public float ScorePerLife = 50000;
@@ -64,13 +64,13 @@ namespace SWEndor.Player
     {
       UpdatePosition();
       UpdateStats();
-      SnapToBounds();
+      UpdateBounds();
     }
 
     private void UpdatePosition()
     {
       if (Actor != null)
-        Position = Actor.GetGlobalPosition();
+        Position = Actor.GetPosition();
     }
 
     private void UpdateStats()
@@ -94,41 +94,42 @@ namespace SWEndor.Player
       }
     }
 
-    private void SnapToBounds()
+    private void UpdateBounds()
     {
       bool announceOutOfBounds = false;
       if (Actor != null)
       {
-        TV_3DVECTOR pos = Actor.GetGlobalPosition();
+        TV_3DVECTOR pos = Actor.GetPosition();
         if (pos.x < Engine.GameScenarioManager.MinBounds.x)
         {
-          Actor.Transform.Position = new TV_3DVECTOR(Engine.GameScenarioManager.MinBounds.x, pos.y, pos.z);
+          Actor.SetLocalPosition(Engine.GameScenarioManager.MinBounds.x, pos.y, pos.z);
           announceOutOfBounds = true;
         }
         else if (pos.x > Engine.GameScenarioManager.MaxBounds.x)
         {
-          Actor.Transform.Position = new TV_3DVECTOR(Engine.GameScenarioManager.MaxBounds.x, pos.y, pos.z);
+          Actor.SetLocalPosition(Engine.GameScenarioManager.MaxBounds.x, pos.y, pos.z);
           announceOutOfBounds = true;
         }
 
         if (pos.y < Engine.GameScenarioManager.MinBounds.y)
-          Actor.Transform.Position = new TV_3DVECTOR(pos.x, Engine.GameScenarioManager.MinBounds.y, pos.z);
+          Actor.SetLocalPosition(pos.x, Engine.GameScenarioManager.MinBounds.y, pos.z);
         else if (pos.y > Engine.GameScenarioManager.MaxBounds.y)
-          Actor.Transform.Position = new TV_3DVECTOR(pos.x, Engine.GameScenarioManager.MaxBounds.y, pos.z);
+          Actor.SetLocalPosition(pos.x, Engine.GameScenarioManager.MaxBounds.y, pos.z);
+
 
         if (pos.z < Engine.GameScenarioManager.MinBounds.z)
         {
-          Actor.Transform.Position = new TV_3DVECTOR(pos.x, pos.y, Engine.GameScenarioManager.MinBounds.z);
+          Actor.SetLocalPosition(pos.x, pos.y, Engine.GameScenarioManager.MinBounds.z);
           announceOutOfBounds = true;
         }
         else if (pos.z > Engine.GameScenarioManager.MaxBounds.z)
         {
-          Actor.Transform.Position = new TV_3DVECTOR(pos.x, pos.y, Engine.GameScenarioManager.MaxBounds.z);
+          Actor.SetLocalPosition(pos.x, pos.y, Engine.GameScenarioManager.MaxBounds.z);
           announceOutOfBounds = true;
         }
 
         if (announceOutOfBounds)
-          Engine.Screen2D.MessageText(TextLocalization.Get(TextLocalKeys.PLAYER_OUTOFBOUNDS), 5, new TV_COLOR(1, 1, 1, 1), 99);
+          Engine.Screen2D.MessageText("You are going out of bounds! Return to the battle!", 5, new TV_COLOR(1, 1, 1, 1), 99);
       }
     }
 
@@ -225,20 +226,19 @@ namespace SWEndor.Player
     }
 
 
-    public void FlashHit()
+    public void FlashHit(TV_COLOR color)
     {
       if (Actor.TypeInfo is ActorTypes.Groups.Fighter)
       {
         Engine.SoundManager.SetSound("hit");
-        TV_COLOR color = StrengthColor;
         Engine.TrueVision.TVGraphicEffect.Flash(color.r, color.g, color.b, 200);
 
-        if (Actor.Health.HP > 0 && DamagedReportSound != null && DamagedReportSound.Length > 0)
+        if (Engine.SysDataSet.Strength_get(ActorID) > 0 && DamagedReportSound != null && DamagedReportSound.Length > 0)
         {
           double r = Engine.Random.NextDouble();
           int dmgnum = DamagedReportSound.Length;
 
-          int dmgst = (int)((dmgnum + 1) * Actor.Health.Frac);
+          int dmgst = (int)((dmgnum + 1) * Engine.SysDataSet.StrengthFrac_get(ActorID));
           if (dmgst < DamagedReportSound.Length)
             if (r < 0.25f * (dmgnum - dmgst) / dmgnum)
               Engine.SoundManager.SetSound(DamagedReportSound[dmgst], false);

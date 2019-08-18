@@ -1,7 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
-using SWEndor.Actors.Traits;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -20,7 +19,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       base.Initialize(ainfo);
       ainfo.DyingMoveComponent = new DyingSpin(120, 270);
-      ainfo.StateModel.MakeDying(ainfo);
+      ainfo.ActorState = ActorState.DYING;
     }
   }
 }

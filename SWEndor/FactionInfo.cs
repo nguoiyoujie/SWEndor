@@ -46,26 +46,26 @@ namespace SWEndor
     public int WingLimit = -1;
     public int WingSpawnLimit = -1;
     public bool WingLimitIncludesAllies = true;
-    public List<ActorInfo> Wings = new List<ActorInfo>();
+    public List<int> Wings = new List<int>();
 
     public int ShipLimit = -1;
     public int ShipSpawnLimit = -1;
     public bool ShipLimitIncludesAllies = true;
-    public List<ActorInfo> Ships = new List<ActorInfo>();
+    public List<int> Ships = new List<int>();
 
     public int StructureLimit = -1;
     public int StructureSpawnLimit = -1;
     public bool StructureLimitIncludesAllies = true;
-    public List<ActorInfo> Structures = new List<ActorInfo>();
+    public List<int> Structures = new List<int>();
 
     public List<FactionInfo> Allies = new List<FactionInfo>();
 
     public void UnregisterActor(ActorInfo ainfo)
     {
-      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER) && Wings.Contains(ainfo))
+      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER) && Wings.Contains(ainfo.ID))
       {
-        Wings.Remove(ainfo);
-        if (ainfo.Disposed)
+        Wings.Remove(ainfo.ID);
+        if (ainfo.CreationState == CreationState.DISPOSED)
         {
           if (WingLimit > 0)
             WingLimit--;
@@ -78,10 +78,10 @@ namespace SWEndor
         }
       }
 
-      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.SHIP) && Ships.Contains(ainfo))
+      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.SHIP) && Ships.Contains(ainfo.ID))
       {
-        Ships.Remove(ainfo);
-        if (ainfo.Disposed)
+        Ships.Remove(ainfo.ID);
+        if (ainfo.CreationState == CreationState.DISPOSED)
         {
           if (ShipLimit > 0)
             ShipLimit--;
@@ -95,10 +95,10 @@ namespace SWEndor
       }
 
 
-      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.STRUCTURE) && Structures.Contains(ainfo))
+      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.STRUCTURE) && Structures.Contains(ainfo.ID))
       {
-        Structures.Remove(ainfo);
-        if (ainfo.Disposed)
+        Structures.Remove(ainfo.ID);
+        if (ainfo.CreationState == CreationState.DISPOSED)
         {
           if (StructureLimit > 0)
             StructureLimit--;
@@ -114,57 +114,57 @@ namespace SWEndor
 
     public void RegisterActor(ActorInfo ainfo)
     {
-      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER) && !Wings.Contains(ainfo))
+      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER) && !Wings.Contains(ainfo.ID))
       {
-        Wings.Add(ainfo);
+        Wings.Add(ainfo.ID);
         if (WingLimit != -1 && WingLimit < Wings.Count)
           WingLimit = Wings.Count;
       }
 
-      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.SHIP) && !Ships.Contains(ainfo))
+      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.SHIP) && !Ships.Contains(ainfo.ID))
       {
-        Ships.Add(ainfo);
+        Ships.Add(ainfo.ID);
         if (ShipLimit != -1 && ShipLimit < Ships.Count)
           ShipLimit = Ships.Count;
       }
 
-      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.STRUCTURE) && !Structures.Contains(ainfo))
+      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.STRUCTURE) && !Structures.Contains(ainfo.ID))
       {
-        Structures.Add(ainfo);
+        Structures.Add(ainfo.ID);
         if (StructureLimit != -1 && StructureLimit < Structures.Count)
           StructureLimit = Structures.Count;
       }
     }
 
-    public List<ActorInfo> GetAll()
+    public List<int> GetAll()
     {
-      List<ActorInfo> ret = GetWings();
+      List<int> ret = GetWings();
       ret.AddRange(GetShips());
       ret.AddRange(GetStructures());
       return ret;
     }
 
-    public List<ActorInfo> GetWings()
+    public List<int> GetWings()
     {
-      List<ActorInfo> ret = new List<ActorInfo>(Wings);
+      List<int> ret = new List<int>(Wings);
       if (WingLimitIncludesAllies)
         foreach (FactionInfo fi in Allies)
           ret.AddRange(fi.Wings);
       return ret;
     }
 
-    public List<ActorInfo> GetShips()
+    public List<int> GetShips()
     {
-      List<ActorInfo> ret = new List<ActorInfo>(Ships);
+      List<int> ret = new List<int>(Ships);
       if (ShipLimitIncludesAllies)
         foreach (FactionInfo fi in Allies)
           ret.AddRange(fi.Ships);
       return ret;
     }
 
-    public List<ActorInfo> GetStructures()
+    public List<int> GetStructures()
     {
-      List<ActorInfo> ret = new List<ActorInfo>(Structures);
+      List<int> ret = new List<int>(Structures);
       if (StructureLimitIncludesAllies)
         foreach (FactionInfo fi in Allies)
           ret.AddRange(fi.Structures);

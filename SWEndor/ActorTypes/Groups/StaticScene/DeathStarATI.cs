@@ -2,7 +2,6 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
-using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 
@@ -12,12 +11,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal DeathStarATI(Factory owner) : base(owner, "DeathStar")
     {
-      Explodes = new ExplodeInfo[]
-      {
-        new ExplodeInfo("ExpL02", 1, 1, ExplodeTrigger.ON_DEATH),
-        new ExplodeInfo("ExpW02", 1, 1, ExplodeTrigger.ON_DEATH),
-      };
-
+      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS, deathExplosionType: "ExplosionMega");
       float size = 20000;
 
       SourceMesh = TrueVision.TVGlobals.GetMesh(Name);
@@ -41,30 +35,21 @@ namespace SWEndor.ActorTypes.Instances
       AddOns = new AddOnInfo[] { new AddOnInfo("Death Star Laser Source", new TV_3DVECTOR(-0.13f * size, 0.2f * size, -0.04f * size), new TV_3DVECTOR(0, 0, 0), true) };
     }
 
-    public override void Dying<A1>(A1 self)
+    public override void ProcessNewState(ActorInfo ainfo)
     {
-      base.Dying(self);
-      ActorInfo ainfo = self as ActorInfo;
-      if (ainfo == null)
-        return;
-
-      ainfo.DyingTimer.Set(5).Start();
-      CombatSystem.Deactivate(Engine, ainfo.ID);
-    }
-
-    public override void Dead<A1>(A1 self)
-    {
-      base.Dead(self);
-      /*
-      ActorInfo ainfo = self as ActorInfo;
-      if (ainfo == null)
-        return;
-
-      ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("ExpW02"));
-      acinfo.Position = ainfo.GetPosition();
-      ActorInfo explwav = ActorFactory.Create(acinfo);
-      explwav.CoordData.Scale = 10;
-      */
+      base.ProcessNewState(ainfo);
+      if (ainfo.ActorState.IsDying())
+      {
+        TimedLifeSystem.Activate(Engine, ainfo.ID, 5);
+        CombatSystem.Deactivate(Engine, ainfo.ID);
+      }
+      else if (ainfo.ActorState.IsDead())
+      {
+        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave Mega"));
+        acinfo.Position = ainfo.GetPosition();
+        ActorInfo explwav = ActorInfo.Create(ActorFactory, acinfo);
+        MeshSystem.SetScale(Engine, explwav.ID, 10);
+      }
     }
   }
 }

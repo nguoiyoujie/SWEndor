@@ -1,5 +1,4 @@
-﻿using SWEndor.Primitives;
-using System;
+﻿using System;
 
 namespace SWEndor.FileFormat.INI
 {
@@ -14,7 +13,7 @@ namespace SWEndor.FileFormat.INI
 
         public override string ToString()
         {
-          return "[{0}] : {1}".F(Header, string.Join(",", Inherits));
+          return string.Format("[{0}] : {1}", Header, string.Join(",", Inherits));
         }
 
         public static bool IsHeader(string line)

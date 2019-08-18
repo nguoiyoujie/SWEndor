@@ -2,7 +2,6 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
-using SWEndor.Actors.Traits;
 using System.Collections.Generic;
 using System.IO;
 
@@ -13,12 +12,7 @@ namespace SWEndor.ActorTypes.Instances
     internal ExecutorBridgeATI(Factory owner) : base(owner, "Executor Super Star Destroyer Bridge")
     {
       CombatData = new CombatData(true, false, 1, 4);
-
-      Explodes = new ExplodeInfo[] 
-      {
-        new ExplodeInfo("ExpL00", 0.5f, 5, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
-        new ExplodeInfo("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH)
-      };
+      ExplodeData = new ExplodeData(0.5f, 5);
 
       MaxStrength = 600.0f;
       ImpactDamage = 200.0f;
@@ -39,41 +33,48 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.ProcessState(ainfo);
 
-      if (ainfo.Active)
+      if (ainfo.CreationState == CreationState.ACTIVE)
       {
-        if (ainfo.TopParent != null)
+        ActorInfo parent = ActorFactory.Get(ainfo.TopParent);
+        if (parent != null)
         {
-          foreach (ActorInfo pn in ainfo.TopParent.Children)
+          List<int> cs = new List<int>(parent.Children);
+          foreach (int i in cs)
           {
+            ActorInfo pn = ActorFactory.Get(i);
             if (pn?.TypeInfo is ExecutorShieldGeneratorATI)
-              ainfo.Health.InflictDamage(ainfo, new DamageInfo<ActorInfo>(ainfo, -ainfo.Health.MaxHP, DamageType.ALWAYS_100PERCENT));
+              CombatSystem.onNotify(Engine, ainfo.ID, Actors.Components.CombatEventType.RECOVER, ainfo.TypeInfo.MaxStrength);
           }
         }
       }
     }
 
-    public override void Dying<A1>(A1 self)
+    public override void ProcessNewState(ActorInfo ainfo)
     {
-      base.Dying(self);
-      ActorInfo ainfo = self as ActorInfo;
-      if (ainfo == null)
-        return;
+      base.ProcessNewState(ainfo);
 
-      ainfo.DyingTimer.Set(2000).Start();
-      CombatSystem.Deactivate(Engine, ainfo.ID);
+      if (ainfo.ActorState.IsDyingOrDead())
+      {
+        TimedLifeSystem.Activate(Engine, ainfo.ID, 2000f);
+        CombatSystem.Deactivate(Engine, ainfo.ID);
 
-      ainfo.TopParent?.StateModel.MakeDying(ainfo.TopParent);
+        ActorInfo parent = ActorFactory.Get(ainfo.TopParent);
+        if (parent != null)
+          parent.ActorState = ActorState.DYING;
+      }
     }
 
-    public override void ProcessHit(ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      base.ProcessHit(owner, hitby, impact, normal);
+      base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
+      ActorInfo owner = ActorFactory.Get(ownerActorID);
+      ActorInfo hitby = ActorFactory.Get(hitbyActorID);
       if (owner == null || hitby == null)
         return;
 
-      if (!hitby.StateModel.ComponentMask.Has(ComponentMask.IS_DAMAGE) && owner.Health.Frac < 0.5f)
+      if (!Engine.MaskDataSet[hitbyActorID].Has(ComponentMask.IS_DAMAGE) && Engine.SysDataSet.StrengthFrac_get(ownerActorID) < 0.5f)
       {
-        owner.StateModel.MakeDying(owner);
+        owner.ActorState = ActorState.DYING;
         hitby.DestroyedEvents = null;
       }
     }

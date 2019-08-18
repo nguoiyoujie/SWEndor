@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
-using SWEndor.AI;
 using SWEndor.AI.Actions;
 using System.Collections.Generic;
 
@@ -33,12 +32,12 @@ namespace SWEndor.Scenarios
       acinfo.CreationTime = SpawnTime;
       acinfo.Position = Position;
       acinfo.Rotation = Rotation;
-      ainfo = scenario.GetEngine().ActorFactory.Create(acinfo);
+      ainfo = ActorInfo.Create(scenario.GetEngine().ActorFactory, acinfo);
       ainfo.SideBarName = SidebarName;
 
       if (Actions != null)
         foreach (ActionInfo act in Actions)
-          ainfo.QueueLast(act);
+          scenario.GetEngine().ActionManager.QueueLast(ainfo.ID, act);
 
       if (Registries != null)
       {

@@ -1,104 +1,97 @@
 ﻿using MTV3D65;
 using SWEndor.Actors.Data;
-using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes;
-using SWEndor.AI;
 using SWEndor.AI.Actions;
-using SWEndor.Primitives;
 using System;
-using System.Collections.Generic;
 
 namespace SWEndor.Actors.Components
 {
   public static class CollisionSystem
   {
-    internal static bool ActivateImminentCollisionCheck(Engine engine, ActorInfo actor)
+    internal static bool ActivateImminentCollisionCheck(Engine engine, int actorID, ref float check_time, float scandistance)
     {
-      return ActivateImminentCollisionCheck(engine
-                                          , actor
-                                          , ref actor.CollisionData
-                                          , ref actor.MoveData);
+      return ActivateImminentCollisionCheck(engine, actorID, ref check_time, scandistance, ref engine.ActorDataSet.CollisionData[engine.ActorFactory.GetIndex(actorID)]);
     }
 
-    private static bool ActivateImminentCollisionCheck(Engine engine, ActorInfo actor, ref CollisionData data, ref MoveData mdata)
+    private static bool ActivateImminentCollisionCheck(Engine engine, int actorID, ref float check_time, float scandistance, ref CollisionData data)
     {
-      if (data.ProspectiveCollisionTime < engine.Game.GameTime)
+      if (check_time < engine.Game.GameTime)
       {
         if (data.IsInProspectiveCollision)
         {
-          data.ProspectiveCollisionTime = engine.Game.GameTime + 0.25f; // delay should be adjusted with FPS / CPU load, ideally every ~0.5s, but not more than 2.5s. Can be slightly longer since it is already performing evasion.
+          check_time = engine.Game.GameTime + 0.25f; // delay should be adjusted with FPS / CPU load, ideally every ~0.5s, but not more than 2.5s. Can be slightly longer since it is already performing evasion.
         }
         else
         {
-          data.ProspectiveCollisionTime = engine.Game.GameTime + 0.1f; // delay should be adjusted with FPS / CPU load, ideally every run (~0.1s), but not more than 2s.
+          check_time = engine.Game.GameTime + 0.1f; // delay should be adjusted with FPS / CPU load, ideally every run (~0.1s), but not more than 2s.
         }
-        data.ProspectiveCollisionScanDistance = mdata.Speed * data.ProspectiveCollisionFactor;
+        data.ProspectiveCollisionScanDistance = scandistance;
         data.IsTestingProspectiveCollision = true;
       }
       return data.IsInProspectiveCollision;
     }
 
-    internal static void CreateAvoidAction(Engine engine, ActorInfo actor)
+    internal static void CreateAvoidAction(Engine engine, int actorID)
     {
-      actor.QueueFirst(new AvoidCollisionRotate(actor.CollisionData.ProspectiveCollision.Impact, actor.CollisionData.ProspectiveCollision.Normal));
+      engine.ActionManager.QueueFirst(actorID, new AvoidCollisionRotate(engine.ActorDataSet.CollisionData[engine.ActorFactory.GetIndex(actorID)].ProspectiveCollision.Impact, engine.ActorDataSet.CollisionData[engine.ActorFactory.GetIndex(actorID)].ProspectiveCollision.Normal));
     }
 
-    internal static void CheckCollision(Engine engine, ActorInfo actor)
+    internal static void CheckCollision(Engine engine, int actorID)
     {
-      CheckCollision(engine, actor, ref actor.CollisionData);
+      CheckCollision(engine, actorID, ref engine.ActorDataSet.CollisionData[engine.ActorFactory.GetIndex(actorID)]);
     }
 
-    private static void CheckCollision(Engine engine, ActorInfo actor, ref CollisionData data)
+    private static void CheckCollision(Engine engine, int actorID, ref CollisionData data)
     {
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
+
       data.IsTestingCollision = false;
-
-      if (actor.TypeInfo is ActorTypes.Groups.Projectile)
-      { }
-
       // only check player and projectiles
-        if (actor.IsPlayer
+      if (ActorInfo.IsPlayer(engine, actorID)
           || actor.TypeInfo is ActorTypes.Groups.Projectile
-          || ((actor.StateModel.IsDying) && actor.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER)))
+          || (actor.ActorState.IsDying() && actor.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER)))
       {
-        if (data.Collision.Actor != null)
+        if (data.Collision.ActorID >= 0)
         {
-          ActorInfo d = data.Collision.Actor;
-          if (actor.IsPlayer
+          ActorInfo a = engine.ActorFactory.Get(data.Collision.ActorID);
+          if (ActorInfo.IsPlayer(engine, actorID)
                 && engine.PlayerInfo.PlayerAIEnabled)
           {
-            engine.Screen2D.MessageSecondaryText("DEV WARNING: PLAYER AI COLLIDED: {0}".F(d), 1.5f, new TV_COLOR(1, 0.2f, 0.2f, 1), 99999);
-            data.Collision.Actor = null;
+            engine.Screen2D.MessageSecondaryText(string.Format("DEV WARNING: PLAYER AI COLLIDED: {0}", a.ToString()), 1.5f, new TV_COLOR(1, 0.2f, 0.2f, 1), 99999);
+            data.Collision.ActorID = -1;
             data.IsTestingCollision = true;
             return;
           }
 
-          d.TypeInfo.ProcessHit(d, actor, data.Collision.Impact, data.Collision.Normal);
-          actor.TypeInfo.ProcessHit(actor, d, data.Collision.Impact, -1 * data.Collision.Normal);
+          a.TypeInfo.ProcessHit(data.Collision.ActorID, actorID, data.Collision.Impact, data.Collision.Normal);
+          actor.TypeInfo.ProcessHit(actorID, data.Collision.ActorID, data.Collision.Impact, -1 * data.Collision.Normal);
 
-          data.Collision.Actor = null;
+          data.Collision.ActorID = -1;
         }
         data.IsTestingCollision = true;
       }
     }
 
-    internal static void TestCollision(Engine engine, ActorInfo actor)
+    internal static void TestCollision(Engine engine, int actorID)
     {
-      TestCollision(engine, actor, ref actor.CollisionData);
+      TestCollision(engine, actorID, ref engine.ActorDataSet.CollisionData[engine.ActorFactory.GetIndex(actorID)]);
     }
 
-    private static void TestCollision(Engine engine, ActorInfo actor, ref CollisionData data)
+    private static void TestCollision(Engine engine, int actorID, ref CollisionData data)
     {
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
+
       if (data.IsTestingCollision)
       {
         TV_3DVECTOR vmin = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.max_dimensions.z, false);
-        TV_3DVECTOR vmax = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.min_dimensions.z, false) - (actor.Transform.GetGlobalPosition(actor, engine.Game.GameTime) - actor.Transform.GetPrevGlobalPosition(actor, engine.Game.GameTime));//- actor.CoordData.LastTravelled;
+        TV_3DVECTOR vmax = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.min_dimensions.z, false) - actor.CoordData.LastTravelled;
 
-        TestCollision(engine, actor, vmin, vmax, false, out data.Collision.Impact, out data.Collision.Normal, out data.Collision.Actor);
+        TestCollision(engine, actorID, vmin, vmax, false, out data.Collision.Impact, out data.Collision.Normal, out data.Collision.ActorID);
         data.IsTestingCollision = false;
       }
       if (data.IsTestingProspectiveCollision)
       {
-        ActorInfo dummy;
+        int dummy;
 
         TV_3DVECTOR prostart = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.max_dimensions.z + 10);
         TV_3DVECTOR proend0 = actor.GetRelativePositionXYZ((float)Math.Sin(actor.MoveData.YTurnAngle * Globals.PI / 180) * data.ProspectiveCollisionScanDistance  //* actor.MoveData.Speed
@@ -116,9 +109,9 @@ namespace SWEndor.Actors.Components
 
         data.IsInProspectiveCollision = false;
 
-        TestCollision(engine, actor, prostart, proend0, true, out _Impact, out _Normal, out data.ProspectiveCollision.Actor);
+        TestCollision(engine, actorID, prostart, proend0, true, out _Impact, out _Normal, out data.ProspectiveCollision.ActorID);
 
-        if (data.ProspectiveCollision.Actor != null)
+        if (data.ProspectiveCollision.ActorID >= 0)
         {
           proImpact += _Impact;
           proNormal += _Normal;
@@ -144,18 +137,18 @@ namespace SWEndor.Actors.Components
               proend0 = actor.GetRelativePositionXYZ(i * data.ProspectiveCollisionScanDistance * 0.1f * data.ProspectiveCollisionLevel
                                              , j * data.ProspectiveCollisionScanDistance * 0.1f * data.ProspectiveCollisionLevel
                                              , actor.TypeInfo.max_dimensions.z + 10 + data.ProspectiveCollisionScanDistance);
-              TestCollision(engine, actor, prostart, proend0, true, out _Impact, out _Normal, out dummy);
+              TestCollision(engine, actorID, prostart, proend0, true, out _Impact, out _Normal, out dummy);
 
-              if (dummy != null)
+              if (dummy >= 0)
               {
                 proImpact += _Impact;
                 proNormal += _Normal;
                 count++;
-                float newdist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.Transform.Position, _Impact);
+                float newdist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.CoordData.Position, _Impact);
                 if (dist < newdist)
                 {
                   dist = newdist;
-                  data.ProspectiveCollisionSafe = actor.Transform.Position + (proend0 - actor.Transform.Position) * 1000;
+                  data.ProspectiveCollisionSafe = actor.CoordData.Position + (proend0 - actor.CoordData.Position) * 1000;
                   if (data.IsAvoidingCollision)
                     nextlevel = false;
                 }
@@ -165,7 +158,7 @@ namespace SWEndor.Actors.Components
                 dist = float.MaxValue;
                 if (!data.IsAvoidingCollision)
                   nextlevel = false;
-                data.ProspectiveCollisionSafe = actor.Transform.Position + (proend0 - actor.Transform.Position) * 1000;
+                data.ProspectiveCollisionSafe = actor.CoordData.Position + (proend0 - actor.CoordData.Position) * 1000;
               }
             }
         }
@@ -179,11 +172,12 @@ namespace SWEndor.Actors.Components
       }
     }
 
-    private static void TestCollision(Engine engine, ActorInfo actor, TV_3DVECTOR start, TV_3DVECTOR end, bool isProspective, out TV_3DVECTOR vImpact, out TV_3DVECTOR vNormal, out ActorInfo CollisionActor)
+    private static void TestCollision(Engine engine, int actorID, TV_3DVECTOR start, TV_3DVECTOR end, bool isProspective, out TV_3DVECTOR vImpact, out TV_3DVECTOR vNormal, out int CollisionActorID)
     {
+
       try
       {
-        CollisionActor = null;
+        CollisionActorID = -1;
         vImpact = new TV_3DVECTOR();
         vNormal = new TV_3DVECTOR();
 
@@ -200,6 +194,8 @@ namespace SWEndor.Actors.Components
 
           if (!isProspective)
           {
+            ActorInfo actor = engine.ActorFactory.Get(actorID);
+
             TVMesh tvm = engine.TrueVision.TVGlobals.GetMeshFromID(tvcres.iMeshID);
             if (tvm != null) // && tvm.IsVisible())
             {
@@ -208,13 +204,13 @@ namespace SWEndor.Actors.Components
               {
                 ActorInfo checkActor = engine.ActorFactory.Get(checkID);
                 if (checkActor != null
-                     && checkActor != actor
+                     && CollisionActorID != actorID
                      && actor.TopParent != checkActor.TopParent
-                     && checkActor.StateModel.ComponentMask.Has(ComponentMask.CAN_BECOLLIDED)
-                     && !checkActor.IsAggregateMode
+                     && engine.MaskDataSet[checkID].Has(ComponentMask.CAN_BECOLLIDED)
+                     && !ActorInfo.IsAggregateMode(engine, checkID)
                      )
                 {
-                  CollisionActor = checkActor;
+                  CollisionActorID = checkID;
                 }
               }
             }
@@ -232,7 +228,7 @@ namespace SWEndor.Actors.Components
                      && !(checkActor.TypeInfo is ActorTypes.Groups.Fighter)
                      )
                 {
-                  CollisionActor = checkActor;
+                  CollisionActorID = checkID;
                 }
               }
             }
@@ -241,7 +237,7 @@ namespace SWEndor.Actors.Components
       }
       catch
       {
-        CollisionActor = null;
+        CollisionActorID = -1;
         vImpact = new TV_3DVECTOR();
         vNormal = new TV_3DVECTOR();
       }

@@ -28,22 +28,22 @@ namespace SWEndor.ActorTypes.Components
 
       ActorCreationInfo acinfo = new ActorCreationInfo(_cache);
       acinfo.InitialState = ActorState.NORMAL;
-      acinfo.CreationTime = actor.StateModel.CreationTime;
       acinfo.Faction = actor.Faction;
 
-      //float scale = actor.CoordData.Scale;
+      float scale = engine.MeshDataSet.Scale_get(actor.ID);
       if (AttachToParent)
-        acinfo.Position = Position;
+        acinfo.Position = new TV_3DVECTOR(Position.x * scale, Position.y * scale, Position.z * scale);
       else
-        acinfo.Position = actor.GetRelativePositionFUR(Position.x, Position.y, Position.z);
+        acinfo.Position = actor.GetRelativePositionFUR(Position.x * scale, Position.y * scale, Position.z * scale);
 
-      //acinfo.InitialScale = scale;
+      acinfo.InitialScale = scale;
       acinfo.Rotation = new TV_3DVECTOR(Rotation.x, Rotation.y, Rotation.z);
+      acinfo.CreationTime = actor.CreationTime;
 
-      ActorInfo a = actor.ActorFactory.Create(acinfo);
-      actor.AddChild(a);
+      ActorInfo a = ActorInfo.Create(actor.ActorFactory, acinfo);
+      actor.AddChild(a.ID);
       
-      a.Relation.UseParentCoords = AttachToParent;
+      a.AttachToParent = AttachToParent;
     }
   }
 }

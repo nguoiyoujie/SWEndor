@@ -2,7 +2,6 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Groups;
-using SWEndor.AI;
 using SWEndor.AI.Actions;
 
 namespace SWEndor.Weapons
@@ -173,22 +172,22 @@ namespace SWEndor.Weapons
       }
     }
 
-    public bool Fire(ActorInfo owner, ActorInfo target, int burst)
+    public bool Fire(Engine engine, int ownerActorID, int targetActorID, int burst)
     {
       int burstremaining = burst;
       bool fired = false;
 
-      if (WeaponCooldown < owner.Game.GameTime && (Ammo > 0 || MaxAmmo < 0))
+      if (WeaponCooldown < engine.Game.GameTime && (Ammo > 0 || MaxAmmo < 0))
       {
-        WeaponCooldown = owner.Game.GameTime;
+        WeaponCooldown = engine.Game.GameTime;
         while (burstremaining > 0)
         {
-          if (CreateProjectile(owner, target))
+          if (CreateProjectile(engine, ownerActorID, targetActorID))
           {
             WeaponCooldown += WeaponCooldownRate * burstremaining;
             if (WeaponCooldownRateRandom != 0)
             {
-              WeaponCooldown += (float)owner.Engine.Random.NextDouble() * WeaponCooldownRateRandom * 4;
+              WeaponCooldown += (float)engine.Random.NextDouble() * WeaponCooldownRateRandom * 4;
             }
             fired = true;
             CurrentPositionIndex++;
@@ -197,36 +196,39 @@ namespace SWEndor.Weapons
           }
           burstremaining--;
         }
-
-        if (fired && owner.IsPlayer)
+        if (fired && ActorInfo.IsPlayer(engine, ownerActorID))
         {
-          owner.SoundManager.SetSound(FireSound);
+          engine.SoundManager.SetSound(FireSound);
         }
       }
       return fired;
     }
 
-    public bool CanTarget(ActorInfo owner, ActorInfo target)
+    public bool CanTarget(Engine engine, int ownerActorID, int targetActorID)
     {
       // player override
-      if (owner.IsPlayer && !owner.PlayerInfo.PlayerAIEnabled)
+      if (ActorInfo.IsPlayer(engine, ownerActorID) && !engine.PlayerInfo.PlayerAIEnabled)
         return true;
 
       // null
-      if (target == null)
+      if (targetActorID < 0)
         return AIAttackNull;
 
-      return (target.TypeInfo.TargetType & AIAttackTargets) != 0;
+      ActorInfo ta = engine.ActorFactory.Get(targetActorID);
+      if (ta != null)
+        return (ta.TypeInfo.TargetType & AIAttackTargets) != 0;
+      return false;
     }
 
-    private bool CreateProjectile(ActorInfo owner, ActorInfo target)
+    private bool CreateProjectile(Engine engine, int ownerActorID, int targetActorID)
     {
+      ActorInfo owner = engine.ActorFactory.Get(ownerActorID);
       if (owner == null)
         return false;
 
-      Engine engine = owner.Engine;
+      ActorInfo target = engine.ActorFactory.Get(targetActorID);
 
-      if ((owner.IsPlayer 
+      if ((ActorInfo.IsPlayer(engine, ownerActorID) 
         && !engine.PlayerInfo.PlayerAIEnabled 
         && (!RequirePlayerTargetLock || target != null)))
       { // Player
@@ -243,30 +245,25 @@ namespace SWEndor.Weapons
 
         if (EnablePlayerAutoAim && target != null)
         {
-          float dist = ActorDistanceInfo.GetDistance(owner, target);
+          float dist = ActorDistanceInfo.GetDistance(ownerActorID, targetActorID);
           float d = dist / Projectile.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
 
-          TV_3DVECTOR dir = target.GetGlobalPosition() - owner.GetGlobalPosition();
-          ActorInfo tgtparent = target.Relation.UseParentCoords ? target.TopParent : null;
-          if (tgtparent != null)
-            dir += tgtparent.GetRelativePositionXYZ(0, 0, target.GetTrueSpeed() * d) - tgtparent.GetGlobalPosition();
-
-          //TV_3DVECTOR dir = target.GetRelativePositionXYZ(0, 0, target.GetTrueSpeed() * d) - owner.GetPosition();
+          TV_3DVECTOR dir = target.GetRelativePositionXYZ(0, 0, target.GetTrueSpeed() * d) - owner.GetPosition();
           acinfo.Rotation = Utilities.GetRotation(dir);
         }
         else
         {
-          acinfo.Rotation = owner.Transform.Rotation;
+          acinfo.Rotation = owner.CoordData.Rotation;
         }
 
-        ActorInfo a = engine.ActorFactory.Create(acinfo);
+        ActorInfo a = ActorInfo.Create(engine.ActorFactory, acinfo);
         a.Faction = owner.Faction;
-        owner.AddChild(a);
+        owner.AddChild(a.ID);
 
-        if (a.StateModel.ComponentMask.Has(ComponentMask.HAS_AI))
-          a.QueueLast(new Wait(ProjectileWaitBeforeHoming));
-        a.QueueLast(new AttackActor(target, 0, 0, false, 9999));
-        a.QueueLast(new Idle());
+        if (engine.MaskDataSet[a.ID].Has(ComponentMask.HAS_AI))
+          engine.ActionManager.QueueLast(a.ID, new Wait(ProjectileWaitBeforeHoming));
+        engine.ActionManager.QueueLast(a.ID, new AttackActor(targetActorID, 0, 0, false, 9999));
+        engine.ActionManager.QueueLast(a.ID, new Idle());
 
         return true;
       }
@@ -278,9 +275,9 @@ namespace SWEndor.Weapons
         if (Projectile == null)
           return true;
 
-        if (target != null && (owner.IsAggregateMode || target.IsAggregateMode))
+        if (target != null && (ActorInfo.IsAggregateMode(engine, ownerActorID) || ActorInfo.IsAggregateMode(engine, targetActorID)))
         {
-          Projectile.FireAggregation(owner, target, Projectile);
+          Projectile.FireAggregation(ownerActorID, targetActorID, Projectile);
         }
 
         TV_3DVECTOR targetloc = GetFirePosition(owner);
@@ -293,7 +290,7 @@ namespace SWEndor.Weapons
 
         if (EnableAIAutoAim && target != null)
         {
-          float dist = ActorDistanceInfo.GetDistance(owner, target);
+          float dist = ActorDistanceInfo.GetDistance(ownerActorID, targetActorID);
 
           float d;
           if (AutoAimMaxDeviation == AutoAimMinDeviation)
@@ -305,12 +302,7 @@ namespace SWEndor.Weapons
             d = dist / Projectile.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
           }
 
-          TV_3DVECTOR dir = target.GetGlobalPosition() - owner.GetGlobalPosition();
-          ActorInfo tgtparent = target.Relation.UseParentCoords ? target.TopParent : null;
-          if (tgtparent != null)
-            dir += tgtparent.GetRelativePositionXYZ(0, 0, target.GetTrueSpeed() * d) - tgtparent.GetGlobalPosition();
-
-          /*
+          TV_3DVECTOR dir = new TV_3DVECTOR();
           ActorInfo a2 = target.AttachToParent ? engine.ActorFactory.Get(target.ParentID) : null;
           if (a2 == null)
           {
@@ -321,22 +313,22 @@ namespace SWEndor.Weapons
             //dir = target.GetPosition() - owner.GetPosition();
             dir = a2.GetRelativePositionXYZ(target.GetLocalPosition().x, target.GetLocalPosition().y, target.GetLocalPosition().z + a2.MoveData.Speed * d) - owner.GetPosition();
           }
-          */
+
           acinfo.Rotation = Utilities.GetRotation(dir);
         }
         else
         {
-          acinfo.Rotation = owner.Transform.Rotation;
+          acinfo.Rotation = owner.GetRotation();
         }
 
-        ActorInfo a = engine.ActorFactory.Create(acinfo);
-        owner.AddChild(a);
+        ActorInfo a = ActorInfo.Create(engine.ActorFactory, acinfo);
+        owner.AddChild(a.ID);
         a.Faction = owner.Faction;
 
-        if (a.StateModel.ComponentMask.Has(ComponentMask.HAS_AI))
-          a.QueueLast(new Wait(ProjectileWaitBeforeHoming));
-        a.QueueLast(new AttackActor(target, 0, 0, false, 9999));
-        a.QueueLast(new Lock());
+        if (engine.MaskDataSet[a.ID].Has(ComponentMask.HAS_AI))
+          engine.ActionManager.QueueLast(a.ID, new Wait(ProjectileWaitBeforeHoming));
+        engine.ActionManager.QueueLast(a.ID, new AttackActor(targetActorID, 0, 0, false, 9999));
+        engine.ActionManager.QueueLast(a.ID, new Lock());
 
         return true;
       }

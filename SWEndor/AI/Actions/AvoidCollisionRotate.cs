@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
-using SWEndor.Primitives;
 
 namespace SWEndor.AI.Actions
 {
@@ -25,23 +24,26 @@ namespace SWEndor.AI.Actions
 
     public override string ToString()
     {
-      return "{0},{1},{2},{3},{4}".F(Name
-                                  , Utilities.ToString(Impact_Position)
-                                  , Utilities.ToString(Normal)
-                                  , CloseEnoughAngle
-                                  , Complete
-                                  );
+      return string.Format("{0},{1},{2},{3},{4}"
+                          , Name
+                          , Utilities.ToString(Impact_Position)
+                          , Utilities.ToString(Normal)
+                          , CloseEnoughAngle
+                          , Complete
+                          );
     }
 
-    public override void Process(Engine engine, ActorInfo actor)
+    public override void Process(Engine engine, int actorID)
     {
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
+
       if (actor.MoveData.MaxTurnRate == 0)
       {
         Complete = true;
         return;
       }
 
-      Process(engine, actor, ref actor.CollisionData);
+      Process(engine, actor, ref engine.ActorDataSet.CollisionData[engine.ActorFactory.GetIndex(actorID)]);
     }
 
 
@@ -54,7 +56,7 @@ namespace SWEndor.AI.Actions
           Target_Position = data.ProspectiveCollisionSafe;
         else
           Target_Position = Impact_Position + Normal * 10000;
-        float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetGlobalPosition(), Impact_Position);
+        float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetPosition(), Impact_Position);
         float Target_Speed = actor.MoveData.MinSpeed; //dist / 25;
 
         float delta_angle = AdjustRotation(actor, Target_Position, false, true);
@@ -63,9 +65,9 @@ namespace SWEndor.AI.Actions
         Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle); //&& delta_speed == 0);
       }
 
-      if (CheckImminentCollision(actor))
+      if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
       {
-        float newavoid = GetAvoidanceAngle(actor, actor.Transform.GetGlobalDirection(actor), Normal);
+        float newavoid = GetAvoidanceAngle(actor, actor.GetDirection(), Normal);
         float concavecheck = 60;
         if (!calcAvoidAngle || (AvoidanceAngle - newavoid > -concavecheck && AvoidanceAngle - newavoid < concavecheck))
         {
@@ -82,7 +84,7 @@ namespace SWEndor.AI.Actions
       else
       {
         data.IsAvoidingCollision = false;
-        actor.QueueNext(new Wait(2.5f));
+        engine.ActionManager.QueueNext(actor.ID, new Wait(2.5f));
         Complete = true;
       }
     }

@@ -1,13 +1,10 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
-using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Instances;
-using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
-using SWEndor.Primitives;
 using SWEndor.Weapons;
 using System;
 using System.Collections.Generic;
@@ -189,7 +186,7 @@ namespace SWEndor.Scenarios
         Rotation = new TV_3DVECTOR(0, 180, 0),
         InitialScale = 60
       };
-      ActorFactory.Create(aci_Endor);
+      ActorInfo.Create(ActorFactory, aci_Endor);
 
       // Create DeathStar
       ActorCreationInfo aci_DS = new ActorCreationInfo(ActorTypeFactory.Get("DeathStar2"))
@@ -199,7 +196,7 @@ namespace SWEndor.Scenarios
         InitialScale = 1,
         Faction = MainEnemyFaction
       };
-      m_ADS = ActorFactory.Create(aci_DS);
+      m_ADS = ActorInfo.Create(ActorFactory, aci_DS);
     }
 
     public override void GameTick()
@@ -407,8 +404,12 @@ namespace SWEndor.Scenarios
         if (m_Enemy_pull > 0)
         {
           m_Enemy_pull -= Game.TimeSinceRender * m_Enemy_pullrate;
-          foreach (ActorInfo enemyship in MainEnemyFaction.GetShips())
-              enemyship?.MoveAbsolute(0, 0, Game.TimeSinceRender * m_Enemy_pullrate);
+          foreach (int enemyshipID in MainEnemyFaction.GetShips())
+          {
+            ActorInfo enemyship = ActorFactory.Get(enemyshipID);
+            if (enemyship != null)
+              enemyship.MoveAbsolute(0, 0, Game.TimeSinceRender * m_Enemy_pullrate);
+          }
         }
 
         //Rebel_ForceAwayFromBounds(null);
@@ -454,20 +455,20 @@ namespace SWEndor.Scenarios
 
       if (Manager.Scenario.TimeSinceLostWing < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
       {
-        Manager.Line1Text = "WINGS: {0}".F(MainAllyFaction.WingLimit);
+        Manager.Line1Text = string.Format("WINGS: {0}", MainAllyFaction.WingLimit);
       }
       else
       {
-        Manager.Line1Text = "";
+        Manager.Line1Text = string.Format("");
       }
 
       if (Manager.Scenario.TimeSinceLostShip < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
       {
-        Manager.Line2Text = "SHIPS: {0}".F(MainAllyFaction.ShipLimit);
+        Manager.Line2Text = string.Format("SHIPS: {0}", MainAllyFaction.ShipLimit);
       }
       else
       {
-        Manager.Line2Text = "";
+        Manager.Line2Text = string.Format("");
       }
     }
 
@@ -796,7 +797,7 @@ namespace SWEndor.Scenarios
         ActorInfo actor = ActorFactory.Get(id);
         if (actor != null)
         {
-          actor.Transform.Position = m_rebelPosition[id] + new TV_3DVECTOR(0, 0, actor.TypeInfo.MaxSpeed * 8f);
+          actor.CoordData.Position = m_rebelPosition[id] + new TV_3DVECTOR(0, 0, actor.TypeInfo.MaxSpeed * 8f);
           actor.MoveData.Speed = actor.TypeInfo.MaxSpeed;
         }
       }
@@ -804,28 +805,30 @@ namespace SWEndor.Scenarios
 
     private void Rebel_HyperspaceOut(GameEventArg arg)
     {
-      foreach (ActorInfo actor in MainAllyFaction.GetWings())
+      foreach (int actorID in MainAllyFaction.GetWings())
       {
+        ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
         {
-          actor.ForceClearQueue();
-          actor.QueueLast(new Rotate(actor.GetGlobalPosition() + new TV_3DVECTOR(500, 0, -20000)
+          ActionManager.ForceClearQueue(actorID);
+          ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() + new TV_3DVECTOR(500, 0, -20000)
                                                         , actor.MoveData.MaxSpeed
                                                         , actor.TypeInfo.Move_CloseEnough));
-          actor.QueueLast(new HyperspaceOut());
-          actor.QueueLast(new Delete());
+          ActionManager.QueueLast(actorID, new HyperspaceOut());
+          ActionManager.QueueLast(actorID, new Delete());
         }
       }
-      foreach (ActorInfo actor in MainAllyFaction.GetShips())
+      foreach (int actorID in MainAllyFaction.GetShips())
       {
+        ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
         {
-          actor.ForceClearQueue();
-          actor.QueueLast(new Rotate(actor.GetGlobalPosition() + new TV_3DVECTOR(500, 0, -20000)
+          ActionManager.ForceClearQueue(actorID);
+          ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() + new TV_3DVECTOR(500, 0, -20000)
                                                 , actor.MoveData.MaxSpeed
                                                 , actor.TypeInfo.Move_CloseEnough));
-          actor.QueueLast(new HyperspaceOut());
-          actor.QueueLast(new Delete());
+          ActionManager.QueueLast(actorID, new HyperspaceOut());
+          ActionManager.QueueLast(actorID, new Delete());
         }
       }
     }
@@ -835,25 +838,27 @@ namespace SWEndor.Scenarios
       PlayerInfo.ActorID = PlayerInfo.TempActorID;
 
       if (PlayerInfo.Actor != null
-        && !PlayerInfo.Actor.Disposed)
+        && PlayerInfo.Actor.CreationState != CreationState.DISPOSED)
       {
         // m_Player = Player.Actor;
         if (!Manager.GetGameStateB("in_battle"))
         {
-          foreach (ActorInfo actor in MainAllyFaction.GetShips())
+          foreach (int actorID in MainAllyFaction.GetShips())
           {
+            ActorInfo actor = ActorFactory.Get(actorID);
             if (actor != null)
             {
-              actor.MoveData.FreeSpeed = true;
+              actor.ActorState = ActorState.FREE;
               actor.MoveData.Speed = 275;
             }
           }
 
-          foreach (ActorInfo actor in MainAllyFaction.GetWings())
+          foreach (int actorID in MainAllyFaction.GetWings())
           {
+            ActorInfo actor = ActorFactory.Get(actorID);
             if (actor != null)
             {
-              actor.MoveData.FreeSpeed = true;
+              actor.ActorState = ActorState.FREE;
               if (actor.MoveData.Speed < 425)
                 actor.MoveData.Speed = 425;
             }
@@ -872,30 +877,32 @@ namespace SWEndor.Scenarios
 
     public void Rebel_ShipsForward(GameEventArg arg)
     {
-      foreach (ActorInfo actor in MainAllyFaction.GetShips())
+      foreach (int actorID in MainAllyFaction.GetShips())
       {
+        ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
         {
-          actor.ForceClearQueue();
-          actor.QueueLast(new Rotate(actor.GetGlobalPosition() - new TV_3DVECTOR(actor.GetGlobalPosition().x * 0.35f, 0, Math.Abs(actor.GetGlobalPosition().x) + 1500)
+          ActionManager.ForceClearQueue(actorID);
+          ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() - new TV_3DVECTOR(actor.GetPosition().x * 0.35f, 0, Math.Abs(actor.GetPosition().x) + 1500)
                                                     , actor.MoveData.MinSpeed));
-          actor.QueueLast(new Lock());
+          ActionManager.QueueLast(actorID, new Lock());
         }
       }
     }
 
     public void Rebel_ShipsForward_2(GameEventArg arg)
     {
-      foreach (ActorInfo actor in MainAllyFaction.GetShips())
+      foreach (int actorID in MainAllyFaction.GetShips())
       {
+        ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
         {
-          actor.ForceClearQueue();
-          actor.QueueLast(new Move(actor.GetGlobalPosition() - new TV_3DVECTOR(actor.GetGlobalPosition().x * 0.35f, 0, Math.Abs(actor.GetGlobalPosition().x) + 1500)
+          ActionManager.ForceClearQueue(actorID);
+          ActionManager.QueueLast(actorID, new Move(actor.GetPosition() - new TV_3DVECTOR(actor.GetPosition().x * 0.35f, 0, Math.Abs(actor.GetPosition().x) + 1500)
                                                     , actor.MoveData.MaxSpeed));
-          actor.QueueLast(new Rotate(actor.GetGlobalPosition() - new TV_3DVECTOR(0, 0, 20000)
+          ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() - new TV_3DVECTOR(0, 0, 20000)
                                                     , actor.MoveData.MinSpeed));
-          actor.QueueLast(new Lock());
+          ActionManager.QueueLast(actorID, new Lock());
         }
       }
     }
@@ -904,24 +911,26 @@ namespace SWEndor.Scenarios
     {
       if (MainEnemyFaction.GetShips().Count > 0)
       {
-        foreach (ActorInfo wing in MainAllyFaction.GetWings())
+        foreach (int actorID in MainAllyFaction.GetWings())
         {
-          if (wing != null)
+          ActorInfo actor = ActorFactory.Get(actorID);
+          if (actor != null)
           {
-            if (wing.TypeInfo is YWingATI || wing.TypeInfo is BWingATI)
+            if (actor.TypeInfo is YWingATI || actor.TypeInfo is BWingATI)
             {
-              ActorInfo rs = MainEnemyFaction.GetShips()[Engine.Random.Next(0, MainEnemyFaction.GetShips().Count)];
+              int rsID = MainEnemyFaction.GetShips()[Engine.Random.Next(0, MainEnemyFaction.GetShips().Count)];
+              ActorInfo rs = ActorFactory.Get(actorID);
               {
-                foreach (ActorInfo a in rs.Children)
+                foreach (int i in rs.Children)
                 {
-                  if (a.RegenData.ParentRegenRate > 0)
+                  if (Engine.ActorDataSet.RegenData[ActorFactory.GetIndex(i)].ParentRegenRate > 0)
                     if (Engine.Random.NextDouble() > 0.4f)
-                      rs = a;
+                      rsID = i;
                 }
               }
 
-              wing.ClearQueue();
-              wing.QueueLast(new AttackActor(rs, -1, -1, false));
+              ActionManager.ClearQueue(actorID);
+              ActionManager.QueueLast(actorID, new AttackActor(rsID, -1, -1, false));
             }
           }
         }
@@ -935,22 +944,22 @@ namespace SWEndor.Scenarios
       ActorInfo falcon = ActorFactory.Get(m_FalconID);
       if (falcon != null)
       {
-        falcon.CombatData.DamageModifier = 0;
-        falcon.ForceClearQueue();
-        falcon.QueueLast(new ForcedMove(new TV_3DVECTOR(0, 0, 20000), falcon.MoveData.MaxSpeed, -1));
-        falcon.QueueLast(new HyperspaceOut());
-        falcon.QueueLast(new Delete());
+        Engine.ActorDataSet.CombatData[falcon.dataID].DamageModifier = 0;
+        ActionManager.ForceClearQueue(m_FalconID);
+        ActionManager.QueueLast(m_FalconID, new ForcedMove(new TV_3DVECTOR(0, 0, 20000), falcon.MoveData.MaxSpeed, -1));
+        ActionManager.QueueLast(m_FalconID, new HyperspaceOut());
+        ActionManager.QueueLast(m_FalconID, new Delete());
         m_FalconID = -1;
       }
 
       ActorInfo wedge = ActorFactory.Get(m_WedgeID);
       if (wedge != null)
       {
-        wedge.CombatData.DamageModifier = 0;
-        wedge.ForceClearQueue();
-        wedge.QueueLast(new ForcedMove(new TV_3DVECTOR(0, 0, 20000), wedge.MoveData.MaxSpeed, -1));
-        wedge.QueueLast(new HyperspaceOut());
-        wedge.QueueLast(new Delete());
+        Engine.ActorDataSet.CombatData[wedge.dataID].DamageModifier = 0;
+        ActionManager.ForceClearQueue(m_WedgeID);
+        ActionManager.QueueLast(m_WedgeID, new ForcedMove(new TV_3DVECTOR(0, 0, 20000), wedge.MoveData.MaxSpeed, -1));
+        ActionManager.QueueLast(m_WedgeID, new HyperspaceOut());
+        ActionManager.QueueLast(m_WedgeID, new Delete());
         m_WedgeID = -1;
       }
     }
@@ -960,29 +969,33 @@ namespace SWEndor.Scenarios
       ActorInfo falcon = ActorFactory.Get(m_FalconID);
       ActorInfo wedge = ActorFactory.Get(m_WedgeID);
 
-      falcon.UnlockOne();
-      falcon.MoveData.FreeSpeed = false;
+      ActionManager.UnlockOne(m_FalconID);
+      falcon.ActorState = ActorState.NORMAL;
       falcon.MoveData.Speed = falcon.MoveData.MaxSpeed;
 
-      wedge.UnlockOne();
-      wedge.QueueFirst(new Wait(2.5f));
-      wedge.MoveData.FreeSpeed = false;
+      ActionManager.UnlockOne(m_WedgeID);
+      ActionManager.QueueFirst(m_WedgeID, new Wait(2.5f));
+      wedge.ActorState = ActorState.NORMAL;
       wedge.MoveData.Speed = wedge.MoveData.MaxSpeed;
 
       float time = 5f;
-      foreach (ActorInfo actor in MainAllyFaction.GetWings())
+      foreach (int actorID in MainAllyFaction.GetWings())
       {
-        actor.UnlockOne();
-        actor.QueueFirst(new Wait(time));
-        actor.MoveData.FreeSpeed = false;
+        ActorInfo actor = ActorFactory.Get(actorID);
+
+        ActionManager.UnlockOne(actorID);
+        ActionManager.QueueFirst(actorID, new Wait(time));
+        actor.ActorState = ActorState.NORMAL;
         actor.MoveData.Speed = actor.MoveData.MaxSpeed;
         time += 2.5f;
       }
 
-      foreach (ActorInfo actor in MainAllyFaction.GetShips())
+      foreach (int actorID in MainAllyFaction.GetShips())
       {
-        actor.UnlockOne();
-        actor.MoveData.FreeSpeed = false;
+        ActorInfo actor = ActorFactory.Get(actorID);
+
+        ActionManager.UnlockOne(actorID);
+        actor.ActorState = ActorState.NORMAL;
         actor.MoveData.Speed = actor.MoveData.MaxSpeed;
         actor.SetSpawnerEnable(true);
       }
@@ -997,8 +1010,9 @@ namespace SWEndor.Scenarios
 
     private void Rebel_GoBack(float chance)
     {
-      foreach (ActorInfo actor in MainAllyFaction.GetWings())
+      foreach (int actorID in MainAllyFaction.GetWings())
       {
+        ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
         {
           double d = Engine.Random.NextDouble();
@@ -1006,8 +1020,8 @@ namespace SWEndor.Scenarios
           {
             ActorInfo homeone = ActorFactory.Get(m_HomeOneID);
 
-            actor.ClearQueue();
-            actor.QueueLast(new Move(homeone.GetGlobalPosition() + new TV_3DVECTOR(Engine.Random.Next(-2500, 2500), Engine.Random.Next(-50, 50), Engine.Random.Next(-2500, 2500))
+            ActionManager.ClearQueue(actorID);
+            ActionManager.QueueLast(actorID, new Move(homeone.GetPosition() + new TV_3DVECTOR(Engine.Random.Next(-2500, 2500), Engine.Random.Next(-50, 50), Engine.Random.Next(-2500, 2500))
                                                        , actor.MoveData.MaxSpeed));
           }
         }
@@ -1016,11 +1030,12 @@ namespace SWEndor.Scenarios
 
     public void Rebel_RemoveTorps(GameEventArg arg)
     {
-      foreach (ActorInfo actor in MainAllyFaction.GetWings())
+      foreach (int actorID in MainAllyFaction.GetWings())
       {
+        ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
         {
-          if (!actor.IsPlayer)
+          if (!ActorInfo.IsPlayer(Engine, actorID))
           {
             foreach (KeyValuePair<string, WeaponInfo> kvp in actor.WeaponSystemInfo.Weapons)
             {
@@ -1043,13 +1058,14 @@ namespace SWEndor.Scenarios
         ActorInfo av = ActorFactory.Get(actorID);
 
         if (av != null
-          && av.Health.Frac < 0.8f
+          && Engine.SysDataSet.StrengthFrac_get(actorID) < 0.8f
           && MainAllyFaction.GetShips().Count > 0)
         {
           ActorInfo homeone = ActorFactory.Get(m_HomeOneID);
 
-          av.ClearQueue();
-          av.QueueLast(new Move(homeone.GetGlobalPosition() + new TV_3DVECTOR(Engine.Random.Next(-2500, 2500)
+          ActionManager.ClearQueue(actorID);
+          ActionManager.QueueLast(actorID
+                                , new Move(homeone.GetPosition() + new TV_3DVECTOR(Engine.Random.Next(-2500, 2500)
                                 , Engine.Random.Next(-50, 50)
                                 , Engine.Random.Next(-2500, 2500))
                                 , av.MoveData.MaxSpeed));
@@ -1064,17 +1080,17 @@ namespace SWEndor.Scenarios
         int actorID = ((HitEventArg)arg).VictimID;
         ActorInfo av = ActorFactory.Get(actorID);
 
-        float f = av.Health.Frac;
+        float f = Engine.SysDataSet.StrengthFrac_get(actorID);
         if (f < 0.67f && f >= 0.33f)
         {
-          Screen2D.MessageText("{0}: {1}, I need cover!".F(av.Name, PlayerInfo.Name)
+          Screen2D.MessageText(string.Format("{0}: {1}, I need cover!", av.Name, PlayerInfo.Name)
                                               , 5
                                               , av.Faction.Color
                                               , 100);
         }
         else if (f < 0.33f)
         {
-          Screen2D.MessageText("{0}: {1}, Get those TIEs off me!".F(av.Name, PlayerInfo.Name)
+          Screen2D.MessageText(string.Format("{0}: {1}, Get those TIEs off me!", av.Name, PlayerInfo.Name)
                                               , 5
                                               , av.Faction.Color
                                               , 100);
@@ -1094,7 +1110,7 @@ namespace SWEndor.Scenarios
       ActorInfo actor = ActorFactory.Get(actorID);
 
       if (actor != null
-        && actor.StateModel.IsDyingOrDead)
+        && actor.ActorState.IsDyingOrDead())
       {
         PlayerInfo.TempActorID = actorID;
 
@@ -1105,7 +1121,7 @@ namespace SWEndor.Scenarios
         PlayerCameraInfo.LookActor = actor.ID;
         PlayerCameraInfo.Look.SetModeDeathCircle(actor.TypeInfo.DeathCamera);
 
-        if (actor.StateModel.IsDying)
+        if (actor.ActorState.IsDying())
         {
           actor.TickEvents += ProcessPlayerDying;
           actor.DestroyedEvents += ProcessPlayerKilled;
@@ -1126,7 +1142,7 @@ namespace SWEndor.Scenarios
         else if (actor.TypeInfo is MC90ATI)
         {
           Manager.AddEvent(Game.GameTime + 15, Message_92_LostHomeOne);
-          actor.DyingTimer.Set(2000).Start();
+          TimedLifeSystem.Activate(Engine, actor.ID, 2000f);
           Manager.AddEvent(Game.GameTime + 25, FadeOut);
         }
       }
@@ -1778,7 +1794,7 @@ namespace SWEndor.Scenarios
     {
       //m_Enemy_pull = 4000;
       SDWaves++;
-      Engine.ActorFactory.Get(m_ExecutorStaticID)?.Kill();
+      ActorInfo.Kill(Engine, m_ExecutorStaticID);
 
       TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(0, 0, -10000);
       float creationTime = Game.GameTime;
@@ -1970,7 +1986,7 @@ namespace SWEndor.Scenarios
 
       ActorInfo ainfo = ActorFactory.Get(arg.ActorID);
 
-      if (ainfo.StateModel.IsDyingOrDead)
+      if (ainfo.ActorState.IsDyingOrDead())
       {
         Manager.SetGameStateB("GameWon", true);
         Manager.IsCutsceneMode = true;
@@ -1979,7 +1995,7 @@ namespace SWEndor.Scenarios
         PlayerCameraInfo.LookActor = ainfo.ID;
         PlayerCameraInfo.Look.SetModeDeathCircle(ainfo.TypeInfo.DeathCamera);
 
-        if (ainfo.StateModel.IsDying)
+        if (ainfo.ActorState.IsDying())
         {
           ainfo.TickEvents += ProcessPlayerDying;
           ainfo.DestroyedEvents += ProcessPlayerKilled;
@@ -1990,11 +2006,11 @@ namespace SWEndor.Scenarios
         }
 
         SoundManager.SetMusic("executorend");
-        ainfo.DyingTimer.Set(2000).Start();
+        TimedLifeSystem.Activate(Engine, ainfo.ID, 2000f);
 
         ActorInfo homeone = ActorFactory.Get(m_HomeOneID);
         if (homeone != null)
-          homeone.CombatData.DamageModifier = 0;
+          Engine.ActorDataSet.CombatData[homeone.dataID].DamageModifier = 0;
         Manager.AddEvent(Game.GameTime + 55, FadeOut);
       }
     }
@@ -2016,34 +2032,32 @@ namespace SWEndor.Scenarios
 
     private void Empire_DeathStarAttack(ActorTypeInfo type)
     {
-      foreach (ActorInfo m_ADSLaserSource in m_ADS.Children)
+      int m_ADSLaserSourceID = m_ADS.Children[0];
+      ActorInfo lsrSrc = ActorFactory.Get(m_ADSLaserSourceID);
+      if (lsrSrc != null
+        && lsrSrc.CreationState == CreationState.ACTIVE)
       {
-        //ActorInfo m_ADSLaserSource = m_ADS.Children[0];
-        if (m_ADSLaserSource != null
-          && m_ADSLaserSource.Active)
+        List<int> tgt = new List<int>(MainAllyFaction.GetShips());
+        tgt.Reverse();
+
+        foreach (int tid in tgt)
         {
-          List<ActorInfo> tgt = new List<ActorInfo>(MainAllyFaction.GetShips());
-          tgt.Reverse();
-
-          foreach (ActorInfo t in tgt)
+          ActorInfo t = ActorFactory.Get(tid);
+          if (t != null
+            && t.TypeInfo == type
+            && tid != m_HomeOneID)
           {
-            if (t != null
-              && t.TypeInfo == type
-              && t.ID != m_HomeOneID)
-            {
-              m_ADS_targetID = t.ID;
+            m_ADS_targetID = tid;
 
-              m_ADSLaserSource.ForceClearQueue();
-              m_ADSLaserSource.QueueNext(new AttackActor(t));
-              m_ADSLaserSource.QueueNext(new Lock());
+            ActionManager.ForceClearQueue(m_ADSLaserSourceID);
+            ActionManager.QueueNext(m_ADSLaserSourceID, new AttackActor(tid));
+            ActionManager.QueueNext(m_ADSLaserSourceID, new Lock());
 
-              t.DestroyedEvents += DeathStarKill_Effect;
-              Manager.AddEvent(0.1f, Scene_DeathStarCam);
-              return;
-            }
+            t.DestroyedEvents += DeathStarKill_Effect;
+            Manager.AddEvent(0.1f, Scene_DeathStarCam);
+            return;
           }
         }
-        break;
       }
     }
 
@@ -2200,24 +2214,24 @@ namespace SWEndor.Scenarios
       ActorInfo homeone = ActorFactory.Get(m_HomeOneID);
 
       if (falcon != null)
-        falcon.CombatData.DamageModifier = 0;
+        Engine.ActorDataSet.CombatData[falcon.dataID].DamageModifier = 0;
 
       if (wedge != null)
-        wedge.CombatData.DamageModifier = 0;
+        Engine.ActorDataSet.CombatData[wedge.dataID].DamageModifier = 0;
 
       if (homeone != null)
-        homeone.CombatData.DamageModifier = 0;
+        Engine.ActorDataSet.CombatData[homeone.dataID].DamageModifier = 0;
 
       m_PlayerID = PlayerInfo.ActorID;
       ActorInfo player = ActorFactory.Get(m_PlayerID);
       if (player != null)
       {
-        m_Player_pos = player.Transform.Position;
-        player.QueueFirst(new Lock());
-        player.Transform.Position = new TV_3DVECTOR(30, 0, -100000);
+        m_Player_pos = player.CoordData.Position;
+        ActionManager.QueueFirst(m_PlayerID, new Lock());
+        player.CoordData.Position = new TV_3DVECTOR(30, 0, -100000);
         m_Player_PrimaryWeapon = PlayerInfo.PrimaryWeapon;
         m_Player_SecondaryWeapon = PlayerInfo.SecondaryWeapon;
-        player.CombatData.DamageModifier = 0;
+        Engine.ActorDataSet.CombatData[player.dataID].DamageModifier = 0;
       }
 
       PlayerInfo.ActorID = -1; // Manager.SceneCameraID;
@@ -2231,24 +2245,24 @@ namespace SWEndor.Scenarios
       ActorInfo homeone = ActorFactory.Get(m_HomeOneID);
 
       if (falcon != null)
-        falcon.CombatData.DamageModifier = 1;
+        Engine.ActorDataSet.CombatData[falcon.dataID].DamageModifier = 1;
 
       if (wedge != null)
-        wedge.CombatData.DamageModifier = 1;
+        Engine.ActorDataSet.CombatData[wedge.dataID].DamageModifier = 1;
 
       if (homeone != null)
-        homeone.CombatData.DamageModifier = 1;
+        Engine.ActorDataSet.CombatData[homeone.dataID].DamageModifier = 1;
 
       ActorInfo player = ActorFactory.Get(m_PlayerID);
       if (player != null)
       {
-        player.StateModel.MakeNormal(player);
-        player.Transform.Position = m_Player_pos;
-        player.ForceClearQueue();
+        player.ActorState = ActorState.NORMAL;
+        player.CoordData.Position = m_Player_pos;
+        ActionManager.ForceClearQueue(m_PlayerID);
         PlayerInfo.ActorID = m_PlayerID;
         PlayerInfo.PrimaryWeapon = m_Player_PrimaryWeapon;
         PlayerInfo.SecondaryWeapon = m_Player_SecondaryWeapon;
-        player.CombatData.DamageModifier = 1;
+        Engine.ActorDataSet.CombatData[player.dataID].DamageModifier = 1;
       }
 
       Manager.IsCutsceneMode = false;
@@ -2259,13 +2273,13 @@ namespace SWEndor.Scenarios
       ActorInfo target = ActorFactory.Get(m_ADS_targetID);
 
       if (target != null
-        && target.Active)
+        && target.CreationState == CreationState.ACTIVE)
       {
         Manager.AddEvent(Game.GameTime + 0.1f, Scene_EnterCutscene);
         SoundManager.SetSound("ds_beam", false, 1, false);
 
-        TV_3DVECTOR pos = target.Transform.Position;
-        TV_3DVECTOR rot = target.Transform.Rotation;
+        TV_3DVECTOR pos = target.GetPosition();
+        TV_3DVECTOR rot = target.GetRotation();
 
         if (target.TypeInfo is CorellianATI)
           pos += new TV_3DVECTOR(150, 120, -2000);
@@ -2277,7 +2291,7 @@ namespace SWEndor.Scenarios
         PlayerCameraInfo.Position = pos;
         PlayerCameraInfo.LookAtActor = target.ID;
         //ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-        //cam.Transform.Position = new TV_3DVECTOR(pos.x, pos.y, pos.z);
+        //cam.SetLocalPosition(pos.x, pos.y, pos.z);
         //cam.LookAtPoint(new TV_3DVECTOR());
         //cam.MoveData.MaxSpeed = 50;
         //cam.MoveData.Speed = 50;

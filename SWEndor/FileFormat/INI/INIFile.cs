@@ -1,6 +1,5 @@
 ﻿using SWEndor.Primitives;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace SWEndor.FileFormat.INI
@@ -16,17 +15,17 @@ namespace SWEndor.FileFormat.INI
     }
 
     public readonly string FilePath;
-    private readonly ThreadSafeDictionary<string, INISection> m_sections = new ThreadSafeDictionary<string, INISection>();
-    public IEnumerable<string> Sections { get { return m_sections.Keys; } }
+    private readonly ThreadSafeDictionary<string, INISection> Sections = new ThreadSafeDictionary<string, INISection>();
+    public string[] SectionKeys { get { return Sections.GetKeys(); } }
 
     public void Reset()
     {
-      m_sections.Clear();
+      Sections.Clear();
     }
 
     public bool HasSection(string key)
     {
-      if (m_sections.ContainsKey(key))
+      if (Sections.ContainsKey(key))
         return true;
       else
         return false;
@@ -34,17 +33,17 @@ namespace SWEndor.FileFormat.INI
 
     public INISection GetSection(string key)
     {
-      if (m_sections.ContainsKey(key))
-        return m_sections[key];
+      if (Sections.ContainsKey(key))
+        return Sections[key];
       else
-        throw new Exception("The section [{0}] does not exist in '{1}'!".F(key, FilePath));
+        throw new Exception(string.Format("The section [{0}] does not exist in '{1}'!", key, FilePath));
     }
 
     public void ReadFile()
     {
       if (!File.Exists(FilePath))
       {
-        throw new Exception("The file {0} is not found!".F(FilePath));
+        throw new Exception(string.Format("The file {0} is not found!", FilePath));
       }
       else
       {
@@ -53,7 +52,7 @@ namespace SWEndor.FileFormat.INI
         using (StreamReader sr = new StreamReader(FilePath))
         {
           INISection currSection = new INISection("");
-          m_sections.Add(PreHeaderSectionName, currSection);
+          Sections.Add(PreHeaderSectionName, currSection);
 
           while (!sr.EndOfStream)
           {
@@ -62,10 +61,10 @@ namespace SWEndor.FileFormat.INI
             if (INISection.INIHeaderLine.IsHeader(line))
             {
               currSection = new INISection(line);
-              if (!m_sections.ContainsKey(currSection.Header))
-                m_sections.Add(currSection.Header, currSection);
+              if (!Sections.ContainsKey(currSection.Header))
+                Sections.Add(currSection.Header, currSection);
               else
-                m_sections[currSection.Header].Merge(currSection);
+                Sections[currSection.Header].Merge(currSection);
             }
             else
             {
@@ -82,7 +81,7 @@ namespace SWEndor.FileFormat.INI
 
       using (StreamWriter sw = new StreamWriter(filepath, false))
       {
-        foreach (INISection section in m_sections.Values)
+        foreach (INISection section in Sections.GetValues())
         {
           if (section != null)
           {

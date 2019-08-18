@@ -23,15 +23,16 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    public override void Process(Engine engine, ActorInfo actor)
+    public override void Process(Engine engine, int actorID)
     {
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
       if (ResumeTime == 0)
         ResumeTime = engine.Game.GameTime + WaitTime;
 
       AdjustRotation(actor, actor.GetRelativePositionXYZ(0, 0, 1000), false);
-      if (CheckImminentCollision(actor))
+      if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
       {
-        CollisionSystem.CreateAvoidAction(engine, actor);
+        CollisionSystem.CreateAvoidAction(engine, actorID);
       }
       Complete |= (ResumeTime < engine.Game.GameTime);
     }

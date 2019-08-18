@@ -4,7 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWEndor
+namespace SWEndor.Utilities
 {
+  public static class Math
+  {
 
+
+
+  }
 }

@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Input.Functions;
-using SWEndor.Primitives;
 using System.IO;
 using System.Windows.Forms;
 
@@ -85,17 +84,17 @@ namespace SWEndor
     {
       using (StreamWriter sr = new StreamWriter(Path.Combine(Globals.SettingsPath, "settings.ini"), false))
       {
-        sr.WriteLine("ResolutionMode={0}".F((int)ResolutionMode));
-        sr.WriteLine("FullScreen={0}".F(FullScreenMode));
-        sr.WriteLine("ShowPerformance={0}".F(ShowPerformance));
-        sr.WriteLine("GameDebug={0}".F(GameDebug));
-        sr.WriteLine("MasterMusicVolume={0}".F(engine.SoundManager.MasterMusicVolume));
-        sr.WriteLine("MasterSFXVolume={0}".F(engine.SoundManager.MasterSFXVolume));
-        sr.WriteLine("SteeringSensitivity={0}".F(SteeringSensitivity));
+        sr.WriteLine(string.Format("ResolutionMode={0}", (int)ResolutionMode));
+        sr.WriteLine(string.Format("FullScreen={0}", FullScreenMode));
+        sr.WriteLine(string.Format("ShowPerformance={0}", ShowPerformance));
+        sr.WriteLine(string.Format("GameDebug={0}", GameDebug));
+        sr.WriteLine(string.Format("MasterMusicVolume={0}", engine.SoundManager.MasterMusicVolume));
+        sr.WriteLine(string.Format("MasterSFXVolume={0}", engine.SoundManager.MasterSFXVolume));
+        sr.WriteLine(string.Format("SteeringSensitivity={0}", SteeringSensitivity));
 
         foreach (InputFunction fn in InputFunction.Registry.GetList())
           if (fn.Name != null && fn.Name.Length > 0)
-           sr.WriteLine("FuncKey:{0}={1}".F(fn.Name, fn.Key));
+           sr.WriteLine(string.Format("FuncKey:{0}={1}", fn.Name, fn.Key));
         sr.Flush();
       }
     }

@@ -1,8 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes;
-using SWEndor.Primitives;
 
 namespace SWEndor.UI.Widgets
 {
@@ -29,7 +27,8 @@ namespace SWEndor.UI.Widgets
       {
         return (!Owner.ShowPage
             && PlayerInfo.Actor != null
-            && !PlayerInfo.Actor.StateModel.IsDyingOrDead
+            && PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && PlayerInfo.Actor.ActorState != ActorState.DYING
             && Owner.ShowUI);
       }
     }
@@ -37,7 +36,7 @@ namespace SWEndor.UI.Widgets
     public override void Draw()
     {
       ActorInfo p = PlayerInfo.Actor;
-      if (p == null || !p.Active)
+      if (p == null || p.CreationState != CreationState.ACTIVE)
         return;
 
       TVScreen2DImmediate.Action_Begin2D();
@@ -83,7 +82,10 @@ namespace SWEndor.UI.Widgets
 
         TVScreen2DText.Action_BeginText();
         // Scenario Title, Difficulty
-        TVScreen2DText.TextureFont_DrawText("{0}: {1}".F(GameScenarioManager.Scenario.Name, GameScenarioManager.Scenario.Difficulty)
+        TVScreen2DText.TextureFont_DrawText(string.Format("{0}: {1}"
+          , GameScenarioManager.Scenario.Name
+          , GameScenarioManager.Scenario.Difficulty
+          )
           , leftinfo_left
           , leftinfo_stagetop
           , pcolor.GetIntColor()
@@ -91,7 +93,9 @@ namespace SWEndor.UI.Widgets
           );
 
         // StageNumber
-        TVScreen2DText.TextureFont_DrawText("STAGE: {0}".F(GameScenarioManager.Scenario.StageNumber)
+        TVScreen2DText.TextureFont_DrawText(string.Format("STAGE: {0}"
+          , GameScenarioManager.Scenario.StageNumber
+          )
           , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop
           , pcolor.GetIntColor()

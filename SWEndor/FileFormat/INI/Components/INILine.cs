@@ -1,6 +1,4 @@
-﻿using SWEndor.Primitives;
-
-namespace SWEndor.FileFormat.INI
+﻿namespace SWEndor.FileFormat.INI
 {
   public partial class INIFile
   {
@@ -15,7 +13,7 @@ namespace SWEndor.FileFormat.INI
 
         public override string ToString()
         {
-          return "{0}={1}".F(Key, Value);
+          return string.Format("{0}={1}", Key, Value);
         }
 
         public static INILine ReadLine(string line)

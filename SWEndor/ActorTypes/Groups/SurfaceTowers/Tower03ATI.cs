@@ -20,6 +20,21 @@ namespace SWEndor.ActorTypes.Instances
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"towers\tower_03.x");
     }
+
+    public override void ProcessNewState(ActorInfo ainfo)
+    {
+      base.ProcessNewState(ainfo);
+
+      /*
+      if (ainfo.ActorState == ActorState.DEAD)
+      {
+        ActorCreationInfo acinfo = new ActorCreationInfo(Tower03_RuinsATI.Instance());
+        acinfo.Position = ainfo.GetPosition() + new TV_3DVECTOR(0, -72, 0);
+        acinfo.Rotation = ainfo.GetRotation();
+        ActorInfo a = ActorInfo.Create(acinfo);
+      }
+      */
+    }
   }
 }
 

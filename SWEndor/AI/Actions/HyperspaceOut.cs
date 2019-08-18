@@ -14,23 +14,34 @@ namespace SWEndor.AI.Actions
     private TV_3DVECTOR Origin_Position = new TV_3DVECTOR();
     private static float Incre_Speed = 2500;
     private static float FarEnoughDistance = 250000;
-    private bool hyperspace = false;
+    private ActorState prevState = ActorState.NORMAL;
 
-    public override void Process(Engine engine, ActorInfo actor) { }
+    public override void Process(Engine engine, int actorID)
+    {
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
+      if (actor.ActorState != ActorState.HYPERSPACE)
+      {
+        prevState = actor.ActorState;
+        actor.ActorState = ActorState.HYPERSPACE;
+        Origin_Position = actor.GetPosition();
+      }
+    }
 
     public void ApplyMove(ActorInfo owner)
     {
-      if (!hyperspace)
-      {
-        hyperspace = true;
-        Origin_Position = owner.GetGlobalPosition();
-      }
-
+      //AdjustSpeed(owner, Target_Speed);
       owner.MoveData.Speed += Incre_Speed * owner.Game.TimeSinceRender;
 
-      float dist = owner.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetGlobalPosition(), Origin_Position);
+      float dist = owner.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Origin_Position);
       if (dist >= FarEnoughDistance)
+      {
+        owner.ActorState = prevState;
         Complete = true;
+      }
+      else
+      {
+        Complete = false;
+      }
     }
   }
 }

@@ -4,7 +4,7 @@ using System;
 
 namespace SWEndor.Actors.Data
 {
-  public struct SysData : Data
+  public struct SysData
   {
     public void Init(ActorTypeInfo type, ActorCreationInfo acinfo)
     {
@@ -20,7 +20,6 @@ namespace SWEndor.Actors.Data
       get { return m_str; }
       set { m_str = value.Clamp(-1, MaxStrength); }
     }
-
     public float MaxStrength
     {
       get { return m_maxstr; }
@@ -31,8 +30,7 @@ namespace SWEndor.Actors.Data
           m_str = m_maxstr;
       }
     }
-
-    public float StrengthFrac { get { return Strength / MaxStrength; } }
+    public float StrengthFrac { get { return Strength / MaxStrength; } } // strength is already clamped
 
     public TV_COLOR StrengthColor
     {
@@ -55,6 +53,9 @@ namespace SWEndor.Actors.Data
       // actually, do we need to reset these values?
       MaxStrength = 1;
       Strength = 1;
-    } 
+      //mem?.Dispose(); // reintroduce if taken out of lifetime array
+    }
+
+    //public void 
   }
 }

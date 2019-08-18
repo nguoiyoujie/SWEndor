@@ -1,13 +1,12 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes;
 
 namespace SWEndor.UI.Widgets
 {
   public class HitBar : Widget
   {
-    //private float prevstrengthfrac = 0;
+    private float prevstrengthfrac = 0;
 
     public HitBar(Screen2D owner) : base(owner, "hit") { }
 
@@ -17,7 +16,9 @@ namespace SWEndor.UI.Widgets
       {
         return (!Owner.ShowPage
             && PlayerInfo.Actor != null
-            && !PlayerInfo.Actor.StateModel.IsDyingOrDead
+            && PlayerInfo.Actor.ActorState != ActorState.DEAD
+            && PlayerInfo.Actor.ActorState != ActorState.DYING
+
             && Owner.ShowUI
             && Owner.ShowStatus);
       }
@@ -29,14 +30,13 @@ namespace SWEndor.UI.Widgets
 
       if (m_target == null)
       {
-        //prevstrengthfrac = 0;
+        prevstrengthfrac = 0;
         return;
       }
 
       TVScreen2DImmediate.Action_Begin2D();
       float barlength = Engine.ScreenWidth * 0.75f - 100;
-      float frac = m_target.Health.Frac;
-      float dfrac = m_target.Health.DisplayFrac;
+      float frac = Engine.SysDataSet.StrengthFrac_get(m_target.ID); 
       TV_COLOR tcolor = (m_target.Faction != null) ? m_target.Faction.Color : new TV_COLOR(1, 0.5f, 0, 1);
       TV_COLOR tpcolor = new TV_COLOR(tcolor.r, tcolor.g, tcolor.b, 0.3f);
 
@@ -54,15 +54,18 @@ namespace SWEndor.UI.Widgets
 
       TVScreen2DImmediate.Draw_FilledBox(50
                                         , Engine.ScreenHeight - 25
-                                        , 50 + barlength * dfrac //prevstrengthfrac
+                                        , 50 + barlength * prevstrengthfrac
                                         , Engine.ScreenHeight - 20
                                         , tcolor.GetIntColor());
 
-      //if (prevstrengthfrac == 0)
-      //  prevstrengthfrac = frac;
-      //else
-      //  prevstrengthfrac = prevstrengthfrac + (frac - prevstrengthfrac) * 0.2f;
-
+      if (prevstrengthfrac == 0)
+      {
+        prevstrengthfrac = frac;
+      }
+      else
+      {
+        prevstrengthfrac = prevstrengthfrac + (frac - prevstrengthfrac) * 0.2f;
+      }
       TVScreen2DImmediate.Action_End2D();
 
 

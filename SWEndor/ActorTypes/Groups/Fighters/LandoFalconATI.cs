@@ -2,7 +2,6 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
-using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Weapons;
 using System.Collections.Generic;
@@ -16,6 +15,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       // Combat
       CombatData = CombatData.DefaultShip;
+      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS);
 
       MaxStrength = 200;
       ImpactDamage = 10;

@@ -2,38 +2,39 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
-using SWEndor.Primitives;
 
 namespace SWEndor.AI.Actions
 {
   public class FollowActor : ActionInfo
   {
-    public FollowActor(ActorInfo target, float follow_distance = 500, bool can_interrupt = true) : base("FollowActor")
+    public FollowActor(int targetActorID, float follow_distance = 500, bool can_interrupt = true) : base("FollowActor")
     {
-      Target_Actor = target;
+      Target_ActorID = targetActorID;
       FollowDistance = follow_distance;
       CanInterrupt = can_interrupt;
     }
 
     // parameters
-    public ActorInfo Target_Actor = null;
+    public int Target_ActorID = -1;
     public float FollowDistance = 500;
     public float SpeedAdjustmentDistanceRange = 100;
 
     public override string ToString()
     {
-      return "{0},{1},{2},{3},{4},{5}".F(Name
-                                      , Target_Actor.ID
-                                      , FollowDistance
-                                      , SpeedAdjustmentDistanceRange
-                                      , CanInterrupt
-                                      , Complete
-                                      );
+      return string.Format("{0},{1},{2},{3},{4},{5}"
+                          , Name
+                          , Target_ActorID
+                          , FollowDistance
+                          , SpeedAdjustmentDistanceRange
+                          , CanInterrupt
+                          , Complete
+                          );
     }
 
-    public override void Process(Engine engine, ActorInfo actor)
+    public override void Process(Engine engine, int actorID)
     {
-      ActorInfo target = Target_Actor;
+      ActorInfo actor = engine.ActorFactory.Get(actorID);
+      ActorInfo target = engine.ActorFactory.Get(Target_ActorID);
       if (target == null || actor.MoveData.MaxSpeed == 0)
       {
         Complete = true;
@@ -42,8 +43,8 @@ namespace SWEndor.AI.Actions
 
       if (CheckBounds(actor))
       {
-        AdjustRotation(actor, target.GetGlobalPosition());
-        float dist = ActorDistanceInfo.GetDistance(actor, target, FollowDistance + 1);
+        AdjustRotation(actor, target.GetPosition());
+        float dist = ActorDistanceInfo.GetDistance(actorID, Target_ActorID, FollowDistance + 1);
 
         float addspd = (actor.MoveData.MaxSpeed > target.MoveData.Speed) ? actor.MoveData.MaxSpeed - target.MoveData.Speed : 0;
         float subspd = (actor.MoveData.MinSpeed < target.MoveData.Speed) ? target.MoveData.Speed - actor.MoveData.MinSpeed : 0;
@@ -53,14 +54,14 @@ namespace SWEndor.AI.Actions
         else
           AdjustSpeed(actor, target.MoveData.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
 
-        Complete |= (!target.Active);
+        Complete |= (target.CreationState != CreationState.ACTIVE);
       }
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
-      if (CheckImminentCollision(actor))
+      if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
       {
-        CollisionSystem.CreateAvoidAction(engine, actor);
+        CollisionSystem.CreateAvoidAction(engine, actorID);
       }
     }
   }

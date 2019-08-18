@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Traits;
 using System.Collections.Generic;
 using System.IO;
 
@@ -49,14 +48,14 @@ namespace SWEndor.ActorTypes.Groups
 
     public override void ProcessState(ActorInfo ainfo)
     {
-      if (!ainfo.StateModel.IsDyingOrDead)
+      if (ainfo.ActorState == ActorState.NORMAL)
       {
         TV_3DVECTOR pos = ainfo.GetEngine().PlayerCameraInfo.Camera.GetWorldPosition(new TV_3DVECTOR(0, 0, -1000));
-        ainfo.Transform.LookAt(pos);
+        ainfo.LookAtPoint(pos);
 
         int k = texanimframes.Length - 1 - (int)(ainfo.CycleInfo.CycleTime / ainfo.CycleInfo.CyclePeriod * texanimframes.Length);
         if (k >= 0 && k < texanimframes.Length)
-          ainfo.MeshModel.SetTexture(texanimframes[k]); //ainfo.Engine.MeshDataSet.Mesh_setTexture(ainfo.ID, texanimframes[k]); //ainfo.SetTexture(texanimframes[k]);
+          ainfo.Engine.MeshDataSet.Mesh_setTexture(ainfo.ID, texanimframes[k]); //ainfo.SetTexture(texanimframes[k]);
       }
     }
   }

@@ -9,9 +9,9 @@ namespace SWEndor.AI.Actions
       CanInterrupt = false;
     }
 
-    public override void Process(Engine engine, ActorInfo actor)
+    public override void Process(Engine engine, int actorID)
     {
-      actor.Kill();
+      ActorInfo.Kill(engine, actorID);
       Complete = true;
     }
   }
