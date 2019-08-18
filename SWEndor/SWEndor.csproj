@@ -570,7 +570,6 @@
     <Compile Include="UI\Widget\Instances\CrossHair.cs" />
     <Compile Include="UI\Widget\TextInfo.cs" />
     <Compile Include="UI\Widget\UIWidget.cs" />
-    <Compile Include="Utilities\Math.cs" />
     <Compile Include="Utilities\Navigation.cs" />
     <Compile Include="Utilities\Utilities.cs" />
     <Compile Include="Weapons\TrackerDummyWeapon.cs" />

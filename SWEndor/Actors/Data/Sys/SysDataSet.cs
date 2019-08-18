@@ -1,7 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes;
-using System.Buffers;
-using System.Runtime.InteropServices;
 
 namespace SWEndor.Actors.Data
 {
