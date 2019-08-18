@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWEndor", "SWEndor\SWEndor.csproj", "{38B23038-2CB8-4D0B-B97F-BD9AF261DC02}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWEndorTest", "SWEndorTest\SWEndorTest.csproj", "{1ED14DC7-63A2-492F-8153-B5600B751AE3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{38B23038-2CB8-4D0B-B97F-BD9AF261DC02}.Release|x64.Build.0 = Release|x64
 		{38B23038-2CB8-4D0B-B97F-BD9AF261DC02}.Release|x86.ActiveCfg = Release|x86
 		{38B23038-2CB8-4D0B-B97F-BD9AF261DC02}.Release|x86.Build.0 = Release|x86
+		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Debug|x64.Build.0 = Debug|Any CPU
+		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Debug|x86.ActiveCfg = Debug|x86
+		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Debug|x86.Build.0 = Debug|x86
+		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Release|x64.ActiveCfg = Release|Any CPU
+		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Release|x64.Build.0 = Release|Any CPU
+		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Release|x86.ActiveCfg = Release|Any CPU
+		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

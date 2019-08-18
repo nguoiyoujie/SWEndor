@@ -120,12 +120,11 @@ namespace SWEndor
     {
       List<float> remove = new List<float>();
 
-      //float[] gekeys = new float[list.Count];
-      //list.GetKeys().CopyTo(gekeys, 0);
-      foreach (KeyValuePair<float, GameEventObject> t in list.GetList()) //(int i = 0; i < list.GetKeys().Length; i++)
+      //for (int i = 0; i < list.Keys.Length; i++)
+        foreach (float t in list.Keys) //
       {
-        float time = t.Key;  //gekeys[i];
-        GameEventObject ev = t.Value; //list[time];
+        float time = t;  //gekeys[i];
+        GameEventObject ev = list[time];
         if (ev.Method == null || time < engine.Game.GameTime)
         {
           remove.Add(time);

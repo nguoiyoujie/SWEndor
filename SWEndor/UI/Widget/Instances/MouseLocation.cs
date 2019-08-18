@@ -21,8 +21,8 @@ namespace SWEndor.UI.Widgets
       int mY = Engine.InputManager.MOUSE_Y;
 
       TV_COLOR color = new TV_COLOR(1, 1, 1, 0.5f);
-      if (PlayerInfo.Actor != null && PlayerInfo.Actor.Faction != null)
-        color = PlayerInfo.Actor.Faction.Color;
+      if (PlayerInfo.Exists)
+        color = PlayerInfo.FactionColor;
 
       TVScreen2DImmediate.Draw_FilledBox(mX - 2, mY - 2, mX + 2, mY + 2, color.GetIntColor());
 

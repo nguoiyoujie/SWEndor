@@ -2,7 +2,7 @@
 
 namespace SWEndor.Scenarios.Scripting.Expressions
 {
-  public delegate object FunctionDelegate(Context context, params object[] param);
+  public delegate object FunctionDelegate(Context context, object[] param);
 
   public class Context
   {
