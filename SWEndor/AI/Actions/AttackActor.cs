@@ -1,8 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
-using SWEndor.Actors.Data;
-using SWEndor.Actors.Traits;
 using SWEndor.ActorTypes;
 using SWEndor.Primitives;
 using SWEndor.Weapons;
@@ -15,15 +13,17 @@ namespace SWEndor.AI.Actions
     public AttackActor(ActorInfo targetActor, float follow_distance = -1, float too_close_distance = -1, bool can_interrupt = true, float hunt_interval = 15) : base("AttackActor")
     {
       Target_Actor = targetActor;
+      ID = targetActor?.ID ?? -1;
       FollowDistance = follow_distance;
       TooCloseDistance = too_close_distance;
       CanInterrupt = can_interrupt;
 
-      ReHuntTime = Globals.Engine.Game.GameTime + hunt_interval; //!
+      ReHuntTime = Globals.Engine.Game.GameTime + hunt_interval;
     }
 
     // parameters
     public readonly ActorInfo Target_Actor = null;
+    public readonly int ID;
     public TV_3DVECTOR Target_Position = new TV_3DVECTOR();
     public float FollowDistance = -1;
     public float TooCloseDistance = -1;
@@ -33,7 +33,7 @@ namespace SWEndor.AI.Actions
     public override string ToString()
     {
       return "{0},{1},{2},{3},{4},{5},{6},{7}".F(Name
-                                              , Target_Actor.ID
+                                              , ID
                                               , FollowDistance
                                               , TooCloseDistance
                                               , SpeedAdjustmentDistanceRange
@@ -46,7 +46,7 @@ namespace SWEndor.AI.Actions
     public override void Process(Engine engine, ActorInfo actor)
     {
       ActorInfo target = Target_Actor;
-      if (target == null)
+      if (target == null || ID != target.ID)
       {
         Complete = true;
         return;

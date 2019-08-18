@@ -264,9 +264,11 @@ namespace SWEndor.Weapons
         owner.AddChild(a);
 
         if (a.StateModel.ComponentMask.Has(ComponentMask.HAS_AI))
+        {
           a.QueueLast(new Wait(ProjectileWaitBeforeHoming));
-        a.QueueLast(new AttackActor(target, 0, 0, false, 9999));
-        a.QueueLast(new Idle());
+          a.QueueLast(new ProjectileAttackActor(target));
+          a.QueueLast(new SelfDestruct());
+        }
 
         return true;
       }
@@ -334,9 +336,11 @@ namespace SWEndor.Weapons
         a.Faction = owner.Faction;
 
         if (a.StateModel.ComponentMask.Has(ComponentMask.HAS_AI))
+        {
           a.QueueLast(new Wait(ProjectileWaitBeforeHoming));
-        a.QueueLast(new AttackActor(target, 0, 0, false, 9999));
-        a.QueueLast(new Lock());
+          a.QueueLast(new ProjectileAttackActor(target));
+          a.QueueLast(new Lock());
+        }
 
         return true;
       }

@@ -27,99 +27,111 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
-        return (!Owner.ShowPage
-            && PlayerInfo.Actor != null
-            && !PlayerInfo.Actor.StateModel.IsDyingOrDead
-            && Owner.ShowUI);
+        using (var v = ActorFactory.Get(PlayerInfo.ActorID))
+        {
+          if (v == null)
+            return false;
+
+          ActorInfo p = v.Value;
+          return (!Owner.ShowPage
+          && !p.StateModel.IsDyingOrDead
+          && Owner.ShowUI);
+        }
       }
     }
 
     public override void Draw()
     {
-      ActorInfo p = PlayerInfo.Actor;
-      if (p == null || !p.Active)
-        return;
-
-      TVScreen2DImmediate.Action_Begin2D();
-      TVScreen2DImmediate.Draw_FilledBox(Engine.ScreenWidth / 2 - infomiddlegap - infowidth_left - 5
-                                    , infotop - 5
-                                    , Engine.ScreenWidth / 2 - infomiddlegap + 5
-                                    , infotop + infoheight * 4 + 5
-                                    , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
-      TVScreen2DImmediate.Action_End2D();
-
-      TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;
-
-      TVScreen2DText.Action_BeginText();
-      TVScreen2DText.TextureFont_DrawText(string.Format("LIVES: {0,8:0}\nSCORE: {1,8:00000000}\nKILLS: {2,8:0}\nHITS:  {3,8:0}"
-      , PlayerInfo.Lives
-      , PlayerInfo.Score.Score
-      , PlayerInfo.Score.Kills
-      , PlayerInfo.Score.Hits
-      )
-      , Engine.ScreenWidth / 2 - infomiddlegap - infowidth_left
-      , infotop
-      , pcolor.GetIntColor()
-      , FontFactory.Get(Font.T12).ID
-      );
-      TVScreen2DText.Action_EndText();
-
-
-      if (GameScenarioManager.Scenario != null)
+      using (var v = ActorFactory.Get(PlayerInfo.ActorID))
       {
-        TVScreen2DImmediate.Action_Begin2D();
-        TVScreen2DImmediate.Draw_FilledBox(leftinfo_left - 5
-                                      , leftinfo_stagetop - 5
-                                      , leftinfo_left + leftinfo_stagewidth + 5
-                                      , leftinfo_stageheight + 5
-                                      , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
+        if (v == null)
+          return;
 
-        TVScreen2DImmediate.Draw_FilledBox(Engine.ScreenWidth / 2 + infomiddlegap - 5
+        ActorInfo p = v.Value;
+        if (!p.Active)
+          return;
+
+        TVScreen2DImmediate.Action_Begin2D();
+        TVScreen2DImmediate.Draw_FilledBox(Engine.ScreenWidth / 2 - infomiddlegap - infowidth_left - 5
                                       , infotop - 5
-                                      , Engine.ScreenWidth / 2 + -infomiddlegap + infowidth_right + 5
+                                      , Engine.ScreenWidth / 2 - infomiddlegap + 5
                                       , infotop + infoheight * 4 + 5
                                       , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
         TVScreen2DImmediate.Action_End2D();
 
+        TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;
+
         TVScreen2DText.Action_BeginText();
-        // Scenario Title, Difficulty
-        TVScreen2DText.TextureFont_DrawText("{0}: {1}".F(GameScenarioManager.Scenario.Name, GameScenarioManager.Scenario.Difficulty)
-          , leftinfo_left
-          , leftinfo_stagetop
-          , pcolor.GetIntColor()
-          , FontFactory.Get(Font.T12).ID
-          );
-
-        // StageNumber
-        TVScreen2DText.TextureFont_DrawText("STAGE: {0}".F(GameScenarioManager.Scenario.StageNumber)
-          , Engine.ScreenWidth / 2 + infomiddlegap
-          , infotop
-          , pcolor.GetIntColor()
-          , FontFactory.Get(Font.T12).ID
-          );
-
-        TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line1Text
-          , Engine.ScreenWidth / 2 + infomiddlegap
-          , infotop + infoheight
-          , GameScenarioManager.Line1Color.GetIntColor()
-          , FontFactory.Get(Font.T12).ID
-          );
-
-        TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line2Text
-          , Engine.ScreenWidth / 2 + infomiddlegap
-          , infotop + infoheight * 2
-          , GameScenarioManager.Line2Color.GetIntColor()
-          , FontFactory.Get(Font.T12).ID
-          );
-
-        TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line3Text
-          , Engine.ScreenWidth / 2 + infomiddlegap
-          , infotop + infoheight * 3
-          , GameScenarioManager.Line3Color.GetIntColor()
-          , FontFactory.Get(Font.T12).ID
-          );
-
+        TVScreen2DText.TextureFont_DrawText(string.Format("LIVES: {0,8:0}\nSCORE: {1,8:00000000}\nKILLS: {2,8:0}\nHITS:  {3,8:0}"
+        , PlayerInfo.Lives
+        , PlayerInfo.Score.Score
+        , PlayerInfo.Score.Kills
+        , PlayerInfo.Score.Hits
+        )
+        , Engine.ScreenWidth / 2 - infomiddlegap - infowidth_left
+        , infotop
+        , pcolor.GetIntColor()
+        , FontFactory.Get(Font.T12).ID
+        );
         TVScreen2DText.Action_EndText();
+
+
+        if (GameScenarioManager.Scenario != null)
+        {
+          TVScreen2DImmediate.Action_Begin2D();
+          TVScreen2DImmediate.Draw_FilledBox(leftinfo_left - 5
+                                        , leftinfo_stagetop - 5
+                                        , leftinfo_left + leftinfo_stagewidth + 5
+                                        , leftinfo_stageheight + 5
+                                        , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
+
+          TVScreen2DImmediate.Draw_FilledBox(Engine.ScreenWidth / 2 + infomiddlegap - 5
+                                        , infotop - 5
+                                        , Engine.ScreenWidth / 2 + -infomiddlegap + infowidth_right + 5
+                                        , infotop + infoheight * 4 + 5
+                                        , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
+          TVScreen2DImmediate.Action_End2D();
+
+          TVScreen2DText.Action_BeginText();
+          // Scenario Title, Difficulty
+          TVScreen2DText.TextureFont_DrawText("{0}: {1}".F(GameScenarioManager.Scenario.Name, GameScenarioManager.Scenario.Difficulty)
+            , leftinfo_left
+            , leftinfo_stagetop
+            , pcolor.GetIntColor()
+            , FontFactory.Get(Font.T12).ID
+            );
+
+          // StageNumber
+          TVScreen2DText.TextureFont_DrawText("STAGE: {0}".F(GameScenarioManager.Scenario.StageNumber)
+            , Engine.ScreenWidth / 2 + infomiddlegap
+            , infotop
+            , pcolor.GetIntColor()
+            , FontFactory.Get(Font.T12).ID
+            );
+
+          TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line1Text
+            , Engine.ScreenWidth / 2 + infomiddlegap
+            , infotop + infoheight
+            , GameScenarioManager.Line1Color.GetIntColor()
+            , FontFactory.Get(Font.T12).ID
+            );
+
+          TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line2Text
+            , Engine.ScreenWidth / 2 + infomiddlegap
+            , infotop + infoheight * 2
+            , GameScenarioManager.Line2Color.GetIntColor()
+            , FontFactory.Get(Font.T12).ID
+            );
+
+          TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line3Text
+            , Engine.ScreenWidth / 2 + infomiddlegap
+            , infotop + infoheight * 3
+            , GameScenarioManager.Line3Color.GetIntColor()
+            , FontFactory.Get(Font.T12).ID
+            );
+
+          TVScreen2DText.Action_EndText();
+        }
       }
     }
   }

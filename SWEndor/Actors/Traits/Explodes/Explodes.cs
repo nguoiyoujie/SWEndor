@@ -69,7 +69,7 @@ namespace SWEndor.Actors.Traits
         && (!exp.Trigger.HasFlag(ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED) || (d != null && d.TimeRemaining > 0));
     }
 
-    private void Process<A>(A self) where A : ITraitOwner
+    private void Process<A>(A self) where A : class, ITraitOwner
     {
       IStateModel s = self.TraitOrDefault<IStateModel>();
       DyingTimer d = self.TraitOrDefault<DyingTimer>();
@@ -108,7 +108,7 @@ namespace SWEndor.Actors.Traits
       }
     }
 
-    private void CreateOnMeshVertices<A>(Engine engine, A self, int i, float rate, float size, IMeshModel m, ITransform t) where A : ITraitOwner
+    private void CreateOnMeshVertices<A>(Engine engine, A self, int i, float rate, float size, IMeshModel m, ITransform t) where A : class, ITraitOwner
     {
       while (_time[i] < engine.Game.GameTime && m.GetVertexCount() > 0)
       {
@@ -121,7 +121,7 @@ namespace SWEndor.Actors.Traits
       }
     }
 
-    private void CreateOnMeshCenter<A>(Engine engine, A self, int i, float rate, float size, ITransform t) where A : ITraitOwner
+    private void CreateOnMeshCenter<A>(Engine engine, A self, int i, float rate, float size, ITransform t) where A : class, ITraitOwner
     {
       _time[i] = engine.Game.GameTime + rate;
       MakeExplosion(_types[i], t.GetPrevGlobalPosition(self, engine.Game.GameTime), size);

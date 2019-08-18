@@ -37,7 +37,7 @@ namespace SWEndor.Scenarios
     private ThreadSafeDictionary<int, ActorInfo> m_ADS_TrenchParts;
     //private ActorInfo m_AStar = null;
     private List<ShipSpawnEventArg> m_pendingSDspawnlist;
-    private Dictionary<string, int> m_CriticalGroundObjects;
+    private Dictionary<string, ActorInfo> m_CriticalGroundObjects;
 
     private float expiretime = 1800;
     private float target_distX = 118000;
@@ -53,8 +53,6 @@ namespace SWEndor.Scenarios
     private int m_VaderEscort1ID = -1;
     private int m_VaderEscort2ID = -1;
     private float m_Player_DamageModifier = 1;
-    private string m_Player_PrimaryWeapon = "";
-    private string m_Player_SecondaryWeapon = "";
 
     private bool Stage5StartRun = false;
     private bool Stage5End = false;
@@ -69,7 +67,7 @@ namespace SWEndor.Scenarios
       m_ADS_SurfaceParts = new List<ActorInfo>();
       m_ADS_TrenchParts = new ThreadSafeDictionary<int, ActorInfo>();
       m_pendingSDspawnlist = new List<ShipSpawnEventArg>();
-      m_CriticalGroundObjects = new Dictionary<string, int>();
+      m_CriticalGroundObjects = new Dictionary<string, ActorInfo>();
     }
 
     public override void Unload()
@@ -357,77 +355,82 @@ namespace SWEndor.Scenarios
         }
         else if (StageNumber == 5)
         {
-          ActorInfo player = ActorFactory.Get(m_PlayerID);
-          if (player != null)
+          using (var vp = ActorFactory.Get(m_PlayerID))
           {
-            player.CombatData.DamageModifier = 0.75f;
+            if (vp != null)
+            {
+              ActorInfo player = vp.Value;
+              player.CombatData.DamageModifier = 0.75f;
 
-            /*
-            if (Player.Actor != null && !Manager.GetGameStateB("Stage5StartRun"))
-            { 
-             ActionManager.ForceClearQueue(Player.Actor);
-              if (Player.Actor.GetPosition().x > 250)
-                ActionManager.QueueFirst(Player.Actor, new Move(new TV_3DVECTOR(0, 1500, 200), 1000, can_interrupt: false));
-              else
-                ActionManager.QueueNext(Player.Actor, new Move(new TV_3DVECTOR(Manager.MaxBounds.x - 500, -220, 0), 1000, can_interrupt: false));
-            }
-            else if (Player.Actor != null && Manager.GetGameStateB("Stage5StartRun") && (Player.Actor.CurrentAction is AttackActor || Player.Actor.CurrentAction is Wait))
-            {
-              ActionManager.ForceClearQueue(Player.Actor);
-              ActionManager.QueueFirst(Player.Actor, new Move(new TV_3DVECTOR(Player.Actor.GetPosition().x + 2000, Player.Actor.GetPosition().y, Player.Actor.GetPosition().z), 1000, can_interrupt: false));
-            }
-            */
-
-            if (player.GetGlobalPosition().x > Manager.MaxBounds.x - 500
-             && player.GetGlobalPosition().y < -180
-             && player.GetGlobalPosition().z < 120
-             && player.GetGlobalPosition().z > -120
-             && !Stage5StartRun)
-            {
-              Manager.AddEvent(Game.GameTime + 0.1f, Scene_Stage05b_Spawn);
-              Stage5StartRun = true;
-              Screen2D.OverrideTargetingRadar = true;
-            }
-            else if (Stage5StartRun)
-            {
-              if (last_target_distX < player.GetGlobalPosition().x)
-              {
-                PlayerInfo.Score.AddDirect((player.GetGlobalPosition().x - last_target_distX) * 10);
-                last_target_distX = player.GetGlobalPosition().x;
+              /*
+              if (Player.Actor != null && !Manager.GetGameStateB("Stage5StartRun"))
+              { 
+               ActionManager.ForceClearQueue(Player.Actor);
+                if (Player.Actor.GetPosition().x > 250)
+                  ActionManager.QueueFirst(Player.Actor, new Move(new TV_3DVECTOR(0, 1500, 200), 1000, can_interrupt: false));
+                else
+                  ActionManager.QueueNext(Player.Actor, new Move(new TV_3DVECTOR(Manager.MaxBounds.x - 500, -220, 0), 1000, can_interrupt: false));
               }
-              if (last_sound_distX < player.GetGlobalPosition().x && !Manager.IsCutsceneMode)
+              else if (Player.Actor != null && Manager.GetGameStateB("Stage5StartRun") && (Player.Actor.CurrentAction is AttackActor || Player.Actor.CurrentAction is Wait))
               {
-                SoundManager.SetSound("button_3");
-                last_sound_distX = player.GetGlobalPosition().x + 250;
+                ActionManager.ForceClearQueue(Player.Actor);
+                ActionManager.QueueFirst(Player.Actor, new Move(new TV_3DVECTOR(Player.Actor.GetPosition().x + 2000, Player.Actor.GetPosition().y, Player.Actor.GetPosition().z), 1000, can_interrupt: false));
               }
-              Screen2D.TargetingRadar_text = "{0:00000000}".F((target_distX - player.GetGlobalPosition().x) * 30);
-              Scene_Stage05b_ContinuouslySpawnRoute(null);
+              */
 
-              if (player.GetGlobalPosition().x > vader_distX
-                && !player.StateModel.IsDyingOrDead
-                && !Stage5End)
+              if (player.GetGlobalPosition().x > Manager.MaxBounds.x - 500
+               && player.GetGlobalPosition().y < -180
+               && player.GetGlobalPosition().z < 120
+               && player.GetGlobalPosition().z > -120
+               && !Stage5StartRun)
               {
-                Manager.AddEvent(Game.GameTime + 0.1f, Scene_Stage06_Vader);
-                Stage5End = true;
+                Manager.AddEvent(Game.GameTime + 0.1f, Scene_Stage05b_Spawn);
+                Stage5StartRun = true;
+                Screen2D.OverrideTargetingRadar = true;
+              }
+              else if (Stage5StartRun)
+              {
+                if (last_target_distX < player.GetGlobalPosition().x)
+                {
+                  PlayerInfo.Score.AddDirect((player.GetGlobalPosition().x - last_target_distX) * 10);
+                  last_target_distX = player.GetGlobalPosition().x;
+                }
+                if (last_sound_distX < player.GetGlobalPosition().x && !Manager.IsCutsceneMode)
+                {
+                  SoundManager.SetSound("button_3");
+                  last_sound_distX = player.GetGlobalPosition().x + 250;
+                }
+                Screen2D.TargetingRadar_text = "{0:00000000}".F((target_distX - player.GetGlobalPosition().x) * 30);
+                Scene_Stage05b_ContinuouslySpawnRoute(null);
+
+                if (player.GetGlobalPosition().x > vader_distX
+                  && !player.StateModel.IsDyingOrDead
+                  && !Stage5End)
+                {
+                  Manager.AddEvent(Game.GameTime + 0.1f, Scene_Stage06_Vader);
+                  Stage5End = true;
+                }
               }
             }
           }
         }
         else if (StageNumber == 6)
         {
-          ActorInfo player = ActorFactory.Get(m_PlayerID);
-          if (player != null)
+          using (var vp = ActorFactory.Get(m_PlayerID))
           {
-            if (!Stage6VaderEnd)
+            if (vp != null)
             {
-              if (Screen2D.ShowRadar)
-                player.CombatData.DamageModifier = 2.5f;
-              else
-                player.CombatData.DamageModifier = 1f;
-            }
+              ActorInfo player = vp.Value;
 
-            if (player != null)
-            {
+              if (!Stage6VaderEnd)
+              {
+                if (Screen2D.ShowRadar)
+                  player.CombatData.DamageModifier = 2.5f;
+                else
+                  player.CombatData.DamageModifier = 1f;
+              }
+
+
               if (last_target_distX < player.GetGlobalPosition().x)
               {
                 PlayerInfo.Score.AddDirect((player.GetGlobalPosition().x - last_target_distX) * 10);
@@ -443,7 +446,7 @@ namespace SWEndor.Scenarios
               Screen2D.TargetingRadar_text = "{0:00000000}".F((target_distX - player.GetGlobalPosition().x) * 30);
               Scene_Stage05b_ContinuouslySpawnRoute(null);
 
-              if (player.GetGlobalPosition().x > vaderend_distX 
+              if (player.GetGlobalPosition().x > vaderend_distX
                 && !player.StateModel.IsDyingOrDead
                 && !Stage6VaderEnd)
               {
@@ -452,20 +455,19 @@ namespace SWEndor.Scenarios
                 Rebel_RemoveTorps(null);
               }
 
-              ActorInfo vader = ActorFactory.Get(m_VaderID);
-              ActorInfo vaderEscort1 = ActorFactory.Get(m_VaderEscort1ID);
-              ActorInfo vaderEscort2 = ActorFactory.Get(m_VaderEscort2ID);
-
-              if (vader != null 
-                && Stage6VaderAttacking)
+              if (Stage6VaderAttacking)
               {
-                vader.Transform.Position = new TV_3DVECTOR(player.GetGlobalPosition().x - 1700, -200, 0);
+                using (var v = ActorFactory.Get(m_VaderID))
+                  if (v != null)
+                    v.Value.Transform.Position = new TV_3DVECTOR(player.GetGlobalPosition().x - 1700, -200, 0);
 
-                if (vaderEscort1 != null)
-                  vaderEscort1.Transform.Position = new TV_3DVECTOR(player.GetGlobalPosition().x - 1700, -220, 75);
+                using (var v = ActorFactory.Get(m_VaderID))
+                  if (v != null)
+                    v.Value.Transform.Position = new TV_3DVECTOR(player.GetGlobalPosition().x - 1700, -220, 75);
 
-                if (vaderEscort2 != null)
-                  vaderEscort2.Transform.Position = new TV_3DVECTOR(player.GetGlobalPosition().x - 1700, -220, -75);
+                using (var v = ActorFactory.Get(m_VaderID))
+                  if (v != null)
+                    v.Value.Transform.Position = new TV_3DVECTOR(player.GetGlobalPosition().x - 1700, -220, -75);
               }
             }
           }
@@ -654,31 +656,35 @@ namespace SWEndor.Scenarios
         }
       }
 
-      ActorInfo player = ActorFactory.Get(m_PlayerID);
-      if (player != null)
+      using (var v = ActorFactory.Get(m_PlayerID))
       {
-        if (Stage6VaderEnd)
+        if (v != null)
         {
-          player.MoveData.MinSpeed = 400;
-          player.MoveData.MaxSpeed = 400;
+          ActorInfo player = v.Value;
 
-          player.CombatData.DamageModifier = 0.5f;
-          player.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("X_WG_TORP") }
+          if (Stage6VaderEnd)
+          {
+            player.MoveData.MinSpeed = 400;
+            player.MoveData.MaxSpeed = 400;
+
+            player.CombatData.DamageModifier = 0.5f;
+            player.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("X_WG_TORP") }
                                                         , {"laser", WeaponFactory.Get("X_WG_LASR") }
                                                         };
-          player.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser", "2:laser", "4:laser" };
-          player.WeaponSystemInfo.SecondaryWeapons = new string[] { "4:laser", "1:torp" };
-          player.WeaponSystemInfo.AIWeapons = new string[] { "1:torp", "1:laser" };
-        }
-        else if (Stage5StartRun)
-        {
-          player.MoveData.MinSpeed = 400;
-          player.MoveData.MaxSpeed = 400;
-          //m_Player.DamageModifier = 0.5f;
-        }
-        else if (StageNumber > 1)
-        {
-          player.MoveData.MinSpeed = player.MoveData.MaxSpeed * 0.75f;
+            player.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser", "2:laser", "4:laser" };
+            player.WeaponSystemInfo.SecondaryWeapons = new string[] { "4:laser", "1:torp" };
+            player.WeaponSystemInfo.AIWeapons = new string[] { "1:torp", "1:laser" };
+          }
+          else if (Stage5StartRun)
+          {
+            player.MoveData.MinSpeed = 400;
+            player.MoveData.MaxSpeed = 400;
+            //m_Player.DamageModifier = 0.5f;
+          }
+          else if (StageNumber > 1)
+          {
+            player.MoveData.MinSpeed = player.MoveData.MaxSpeed * 0.75f;
+          }
         }
       }
       PlayerInfo.ResetPrimaryWeapon();
@@ -718,7 +724,7 @@ namespace SWEndor.Scenarios
     public void Rebel_MakePlayer(GameEventArg arg)
     {
       PlayerInfo.ActorID = PlayerInfo.TempActorID;
-      if (PlayerInfo.Actor == null || PlayerInfo.Actor.Disposed)
+      if (!PlayerInfo.Exists)
       {
         if (PlayerInfo.Lives > 0)
         {
@@ -1066,7 +1072,7 @@ namespace SWEndor.Scenarios
       };
 
       ActorInfo a = asi.Spawn(this);
-      m_CriticalGroundObjects.Add(a.Key, a.ID);
+      m_CriticalGroundObjects.Add(a.Key, a);
 
       asi.Type = ActorTypeFactory.Get("Gun Tower");
       asi.Position = position + new TV_3DVECTOR(300, 0, 0);
@@ -1094,7 +1100,7 @@ namespace SWEndor.Scenarios
       };
 
       ActorInfo a = asi.Spawn(this);
-      m_CriticalGroundObjects.Add(a.Key, a.ID);
+      m_CriticalGroundObjects.Add(a.Key, a);
 
       asi.Type = ActorTypeFactory.Get("Gun Tower");
       asi.Position = position + new TV_3DVECTOR(500, 0, 0);
@@ -1161,16 +1167,17 @@ namespace SWEndor.Scenarios
 
     public void Scene_EnterCutscene(GameEventArg arg)
     {
-      ActorInfo player = ActorFactory.Get(m_PlayerID);
-      if (player != null)
-      {
-        m_Player_PrimaryWeapon = PlayerInfo.PrimaryWeapon;
-        m_Player_SecondaryWeapon = PlayerInfo.SecondaryWeapon;
-        m_Player_DamageModifier = player.CombatData.DamageModifier;
-        player.CombatData.DamageModifier = 0;
-        player.ForceClearQueue();
-        player.QueueNext(new Lock());
-      }
+      using (var v = ActorFactory.Get(m_PlayerID))
+        if (v != null)
+        {
+          ActorInfo player = v.Value;
+          PlayerInfo.SaveWeapons();
+          m_Player_DamageModifier = player.CombatData.DamageModifier;
+          player.CombatData.DamageModifier = 0;
+          player.ForceClearQueue();
+          player.QueueNext(new Lock());
+        }
+
       PlayerCameraInfo.LookActor = -1;
       //PlayerInfo.ActorID = Manager.SceneCameraID;
       
@@ -1179,14 +1186,17 @@ namespace SWEndor.Scenarios
 
     public void Scene_ExitCutscene(GameEventArg arg)
     {
-      ActorInfo player = ActorFactory.Get(m_PlayerID);
-      if (player != null)
+      using (var v = ActorFactory.Get(m_PlayerID))
       {
-        PlayerInfo.ActorID = m_PlayerID;
-        PlayerInfo.PrimaryWeapon = m_Player_PrimaryWeapon;
-        PlayerInfo.SecondaryWeapon = m_Player_SecondaryWeapon;
-        player.CombatData.DamageModifier = m_Player_DamageModifier;
-        player.ForceClearQueue();
+        if (v != null)
+        {
+          ActorInfo player = v.Value;
+
+          PlayerInfo.ActorID = m_PlayerID;
+          PlayerInfo.LoadWeapons();
+          player.CombatData.DamageModifier = m_Player_DamageModifier;
+          player.ForceClearQueue();
+        }
       }
       Manager.IsCutsceneMode = false;
     }
@@ -1765,12 +1775,15 @@ namespace SWEndor.Scenarios
 
     public void Scene_Stage06_SetPlayer(GameEventArg arg)
     {
-      ActorInfo player = ActorFactory.Get(m_PlayerID);
-      if (player != null)
+      using (var v = ActorFactory.Get(m_PlayerID))
       {
-        player.Transform.Position = new TV_3DVECTOR(player.GetGlobalPosition().x, -220, 0);
-        player.Transform.Rotation = new TV_3DVECTOR(0, 90, 0);
-        player.MoveData.ResetTurn();
+        if (v != null)
+        {
+          ActorInfo player = v.Value;
+          player.Transform.Position = new TV_3DVECTOR(player.GetGlobalPosition().x, -220, 0);
+          player.Transform.Rotation = new TV_3DVECTOR(0, 90, 0);
+          player.MoveData.ResetTurn();
+        }
       }
     }
 
@@ -1785,131 +1798,189 @@ namespace SWEndor.Scenarios
       PlayerCameraInfo.Position = new TV_3DVECTOR(vader_distX - 2750, -225, 0);
       SoundManager.SetMusic("battle_1_3", true);
 
-      ActorInfo player = ActorFactory.Get(m_PlayerID);
-      if (player != null)
-      {
-        player.Transform.Position = new TV_3DVECTOR(vader_distX, -220, 0);
-        player.Transform.Rotation = new TV_3DVECTOR(0, 90, 0);
-        player.MoveData.ResetTurn();
-        player.ForceClearQueue();
-        player.QueueNext( new Lock());
-
-        player.CanEvade = false;
-        player.CanRetaliate = false;
-      }
       Scene_ClearGroundObjects(null);
 
-      ActorFactory.Get(m_VaderID).Kill();
-      ActorFactory.Get(m_VaderEscort1ID).Kill();
-      ActorFactory.Get(m_VaderEscort2ID).Kill();
-      ActorFactory.Get(m_FalconID).Kill();
-
-      m_VaderID = new ActorSpawnInfo
+      using (var vp = ActorFactory.Get(m_PlayerID))
       {
-        Type = ActorTypeFactory.Get("TIE Advanced X1"),
-        Name = "",
-        RegisterName = "",
-        SidebarName = "",
-        SpawnTime = Game.GameTime,
-        Faction = FactionInfo.Factory.Get("Empire"),
-        Position = new TV_3DVECTOR(vader_distX - 2000, 85, 0),
-        Rotation = new TV_3DVECTOR(-10, 90, 0),
-        Actions = new ActionInfo[] { new Move(new TV_3DVECTOR(vader_distX + 2000, -250, 0), 400)
+        if (vp != null)
+        {
+          ActorInfo player = vp.Value;
+          player.Transform.Position = new TV_3DVECTOR(vader_distX, -220, 0);
+          player.Transform.Rotation = new TV_3DVECTOR(0, 90, 0);
+          player.MoveData.ResetTurn();
+          player.ForceClearQueue();
+          player.QueueNext(new Lock());
+
+          player.CanEvade = false;
+          player.CanRetaliate = false;
+
+          using (var v = ActorFactory.Get(m_VaderID))
+            v?.Value.Kill();
+
+          using (var v = ActorFactory.Get(m_VaderEscort1ID))
+            v?.Value.Kill();
+
+          using (var v = ActorFactory.Get(m_VaderEscort2ID))
+            v?.Value.Kill();
+
+          using (var v = ActorFactory.Get(m_FalconID))
+            v?.Value.Kill();
+
+          m_VaderID = new ActorSpawnInfo
+          {
+            Type = ActorTypeFactory.Get("TIE Advanced X1"),
+            Name = "",
+            RegisterName = "",
+            SidebarName = "",
+            SpawnTime = Game.GameTime,
+            Faction = FactionInfo.Factory.Get("Empire"),
+            Position = new TV_3DVECTOR(vader_distX - 2000, 85, 0),
+            Rotation = new TV_3DVECTOR(-10, 90, 0),
+            Actions = new ActionInfo[] { new Move(new TV_3DVECTOR(vader_distX + 2000, -250, 0), 400)
                                              , new Rotate(new TV_3DVECTOR(vader_distX + 10000, -250, 0), 400)
                                              , new Wait(3)
                                              , new AttackActor(player, 1500, 1, false, 9999) },
-        Registries = null
-      }.Spawn(this).ID;
+            Registries = null
+          }.Spawn(this).ID;
 
-      m_VaderEscort1ID = new ActorSpawnInfo
-      {
-        Type = ActorTypeFactory.Get("TIE"),
-        Name = "",
-        RegisterName = "",
-        SidebarName = "",
-        SpawnTime = Game.GameTime,
-        Faction = FactionInfo.Factory.Get("Empire"),
-        Position = new TV_3DVECTOR(vader_distX - 2100, 85, 75),
-        Rotation = new TV_3DVECTOR(-10, 90, 0),
-        Actions = new ActionInfo[] {  new Move(new TV_3DVECTOR(vader_distX + 2000, -250, 75), 400)
+          m_VaderEscort1ID = new ActorSpawnInfo
+          {
+            Type = ActorTypeFactory.Get("TIE"),
+            Name = "",
+            RegisterName = "",
+            SidebarName = "",
+            SpawnTime = Game.GameTime,
+            Faction = FactionInfo.Factory.Get("Empire"),
+            Position = new TV_3DVECTOR(vader_distX - 2100, 85, 75),
+            Rotation = new TV_3DVECTOR(-10, 90, 0),
+            Actions = new ActionInfo[] {  new Move(new TV_3DVECTOR(vader_distX + 2000, -250, 75), 400)
                                        , new Rotate(new TV_3DVECTOR(vader_distX + 10000, -250, 75), 400)
                                        , new Lock() },
-        Registries = null
-      }.Spawn(this).ID;
+            Registries = null
+          }.Spawn(this).ID;
 
-      m_VaderEscort2ID = new ActorSpawnInfo
-      {
-        Type = ActorTypeFactory.Get("TIE"),
-        Name = "",
-        RegisterName = "",
-        SidebarName = "",
-        SpawnTime = Game.GameTime,
-        Faction = FactionInfo.Factory.Get("Empire"),
-        Position = new TV_3DVECTOR(vader_distX - 2100, 85, -75),
-        Rotation = new TV_3DVECTOR(-10, 90, 0),
-        Actions = new ActionInfo[] { new Move(new TV_3DVECTOR(vader_distX + 2000, -250, -75), 400)
+          m_VaderEscort2ID = new ActorSpawnInfo
+          {
+            Type = ActorTypeFactory.Get("TIE"),
+            Name = "",
+            RegisterName = "",
+            SidebarName = "",
+            SpawnTime = Game.GameTime,
+            Faction = FactionInfo.Factory.Get("Empire"),
+            Position = new TV_3DVECTOR(vader_distX - 2100, 85, -75),
+            Rotation = new TV_3DVECTOR(-10, 90, 0),
+            Actions = new ActionInfo[] { new Move(new TV_3DVECTOR(vader_distX + 2000, -250, -75), 400)
                                        , new Rotate(new TV_3DVECTOR(vader_distX + 10000, -250, -75), 400)
                                        , new Lock() },
-        Registries = null
-      }.Spawn(this).ID;
+            Registries = null
+          }.Spawn(this).ID;
 
-      ActorInfo vader = ActorFactory.Get(m_VaderID);
-      ActorInfo vaderE1 = ActorFactory.Get(m_VaderEscort1ID);
-      ActorInfo vaderE2 = ActorFactory.Get(m_VaderEscort2ID);
-
-      vader.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"lsrb", WeaponFactory.Get("TIED_LASR") }
+          using (var v = ActorFactory.Get(m_VaderID))
+          {
+            if (v != null)
+            {
+              ActorInfo vader = v.Value;
+              vader.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"lsrb", WeaponFactory.Get("TIED_LASR") }
                                                         , {"laser", WeaponFactory.Get("TIED_LASR") }
                                                         };
-      vader.WeaponSystemInfo.AIWeapons = new string[] { "1:laser", "1:lsrb" };
-      vader.MoveData.MaxSpeed = 400;
-      vader.MoveData.MinSpeed = 400;
-      vader.CanEvade = false;
-      vader.CanRetaliate = false;
+              vader.WeaponSystemInfo.AIWeapons = new string[] { "1:laser", "1:lsrb" };
+              vader.MoveData.MaxSpeed = 400;
+              vader.MoveData.MinSpeed = 400;
+              vader.CanEvade = false;
+              vader.CanRetaliate = false;
+            }
+          }
 
-      vaderE1.MoveData.MaxSpeed = 400;
-      vaderE1.MoveData.MinSpeed = 400;
-      vaderE1.CanEvade = false;
-      vaderE1.CanRetaliate = false;
+          using (var v = ActorFactory.Get(m_VaderEscort1ID))
+          {
+            if (v != null)
+            {
+              ActorInfo vaderE1 = v.Value;
+              vaderE1.MoveData.MaxSpeed = 400;
+              vaderE1.MoveData.MinSpeed = 400;
+              vaderE1.CanEvade = false;
+              vaderE1.CanRetaliate = false;
+            }
+          }
 
-      vaderE2.MoveData.MaxSpeed = 400;
-      vaderE2.MoveData.MinSpeed = 400;
-      vaderE2.CanEvade = false;
-      vaderE2.CanRetaliate = false;
+          using (var v = ActorFactory.Get(m_VaderEscort2ID))
+          {
+            if (v != null)
+            {
+              ActorInfo vaderE2 = v.Value;
+              vaderE2.MoveData.MaxSpeed = 400;
+              vaderE2.MoveData.MinSpeed = 400;
+              vaderE2.CanEvade = false;
+              vaderE2.CanRetaliate = false;
+            }
+          }
 
-      //cam.MoveData.MaxSpeed = 425;
-      //cam.MoveData.Speed = 425;
-      PlayerCameraInfo.LookAtActor = player.ID;
+          //cam.MoveData.MaxSpeed = 425;
+          //cam.MoveData.Speed = 425;
+          PlayerCameraInfo.LookAtActor = player.ID;
+        }
+      }
     }
 
     public void Scene_Stage06_VaderAttack(GameEventArg arg)
     {
       Stage6VaderAttacking = true;
 
-      ActorInfo player = ActorFactory.Get(m_PlayerID);
-      ActorInfo falcon = ActorFactory.Get(m_FalconID);
-      ActorInfo vader = ActorFactory.Get(m_VaderID);
-      ActorInfo vaderE1 = ActorFactory.Get(m_VaderEscort1ID);
-      ActorInfo vaderE2 = ActorFactory.Get(m_VaderEscort2ID);
+      using (var v = ActorFactory.Get(m_FalconID))
+      {
+        if (v != null)
+        {
+          ActorInfo falcon = v.Value;
+          falcon.Kill();
+        }
+      }
 
-      falcon?.Kill();
+      using (var vp = ActorFactory.Get(m_PlayerID))
+      {
+        if (vp != null)
+        {
+          ActorInfo player = vp.Value;
 
-      vader.ForceClearQueue();
-      vader.QueueNext(new AttackActor(player, -1, -1, false, 9999));
-      vader.QueueNext(new AttackActor(player, -1, -1, false, 9999));
-      vader.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
-      vader.QueueNext(new Lock());
+          using (var v = ActorFactory.Get(m_VaderID))
+          {
+            if (v != null)
+            {
+              ActorInfo vader = v.Value;
+              vader.ForceClearQueue();
+              vader.QueueNext(new AttackActor(player, -1, -1, false, 9999));
+              vader.QueueNext(new AttackActor(player, -1, -1, false, 9999));
+              vader.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
+              vader.QueueNext(new Lock());
+            }
+          }
 
-      vaderE1.ForceClearQueue();
-      vaderE1.QueueNext(new AttackActor(player, -1, -1, false, 9999));
-      vaderE1.QueueNext(new AttackActor(player, -1, -1, false, 9999));
-      vaderE1.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
-      vaderE1.QueueNext(new Lock());
+          using (var v = ActorFactory.Get(m_VaderEscort1ID))
+          {
+            if (v != null)
+            {
+              ActorInfo vaderE1 = v.Value;
+              vaderE1.ForceClearQueue();
+              vaderE1.QueueNext(new AttackActor(player, -1, -1, false, 9999));
+              vaderE1.QueueNext(new AttackActor(player, -1, -1, false, 9999));
+              vaderE1.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
+              vaderE1.QueueNext(new Lock());
+            }
+          }
 
-      vaderE2.ForceClearQueue();
-      vaderE2.QueueNext(new AttackActor(player, -1, -1, false, 9999));
-      vaderE2.QueueNext(new AttackActor(player, -1, -1, false, 9999));
-      vaderE2.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
-      vaderE2.QueueNext(new Lock());
+          using (var v = ActorFactory.Get(m_VaderEscort2ID))
+          {
+            if (v != null)
+            {
+              ActorInfo vaderE2 = v.Value;
+              vaderE2.ForceClearQueue();
+              vaderE2.QueueNext(new AttackActor(player, -1, -1, false, 9999));
+              vaderE2.QueueNext(new AttackActor(player, -1, -1, false, 9999));
+              vaderE2.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
+              vaderE2.QueueNext(new Lock());
+            }
+          }
+        }
+      }
     }
 
     public void Scene_Stage06_VaderEnd(GameEventArg arg)
@@ -1925,19 +1996,19 @@ namespace SWEndor.Scenarios
       PlayerCameraInfo.Position = new TV_3DVECTOR(vaderend_distX + 900, -365, 0);
       SoundManager.SetMusic("ds_end_1_1", true);
 
-      ActorInfo vader = ActorFactory.Get(m_VaderID);
-      ActorInfo vaderE1 = ActorFactory.Get(m_VaderEscort1ID);
-      ActorInfo vaderE2 = ActorFactory.Get(m_VaderEscort2ID);
-      ActorInfo player = ActorFactory.Get(m_PlayerID);
-
-      player.Transform.Position = new TV_3DVECTOR(vaderend_distX, -220, 0);
-      player.Transform.Rotation = new TV_3DVECTOR(0, 90, 0);
-      player.MoveData.ResetTurn();
-      player.ForceClearQueue();
-      player.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
-      player.QueueNext(new Lock());
-
-      vader.Transform.Rotation = new TV_3DVECTOR(0, 90, 0);
+      using (var v = ActorFactory.Get(m_PlayerID))
+      {
+        if (v != null)
+        {
+          ActorInfo player = v.Value;
+          player.Transform.Position = new TV_3DVECTOR(vaderend_distX, -220, 0);
+          player.Transform.Rotation = new TV_3DVECTOR(0, 90, 0);
+          player.MoveData.ResetTurn();
+          player.ForceClearQueue();
+          player.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
+          player.QueueNext(new Lock());
+        }
+      }
 
       ActorInfo falcon = new ActorSpawnInfo
       {
@@ -1950,8 +2021,8 @@ namespace SWEndor.Scenarios
         Position = new TV_3DVECTOR(vaderend_distX + 2500, 185, 0),
         Rotation = new TV_3DVECTOR(0, -90, 0),
         Actions = new ActionInfo[] { new Move(new TV_3DVECTOR(vaderend_distX + 1300, 5, 0), 500, -1, false)
-                                       , new AttackActor(vaderE1, -1, -1, false, 9999)
-                                       , new AttackActor(vaderE2, -1, -1, false, 9999)
+                                       //, new AttackActor(vaderE1, -1, -1, false, 9999)
+                                       //, new AttackActor(vaderE2, -1, -1, false, 9999)
                                        , new Move(new TV_3DVECTOR(vaderend_distX - 5300, 315, 0), 500, -1, false)
                                        , new Delete() }
       }.Spawn(this);
@@ -1960,21 +2031,43 @@ namespace SWEndor.Scenarios
       falcon.CanRetaliate = false;
       m_FalconID = falcon.ID;
 
-        vader.ForceClearQueue();
-        vader.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
-        vader.QueueNext(new Lock());
 
-        vaderE1.ForceClearQueue();
-        vaderE1.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
-        vaderE1.QueueNext(new Lock());
+      using (var v = ActorFactory.Get(m_VaderID))
+      {
+        if (v != null)
+        {
+          ActorInfo vader = v.Value;
+          vader.Transform.Rotation = new TV_3DVECTOR(0, 90, 0);
+          vader.ForceClearQueue();
+          vader.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
+          vader.QueueNext(new Lock());
+          vader.HitEvents += Scene_Stage06_VaderFlee;
+        }
+      }
 
-        vaderE2.ForceClearQueue();
-        vaderE2.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
-        vaderE2.QueueNext(new Lock());
+      using (var v = ActorFactory.Get(m_VaderEscort1ID))
+      {
+        if (v != null)
+        {
+          ActorInfo vaderE1 = v.Value;
+          vaderE1.ForceClearQueue();
+          vaderE1.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
+          vaderE1.QueueNext(new Lock());
+          vaderE1.HitEvents += Scene_Stage06_VaderFlee;
+        }
+      }
 
-      vader.HitEvents += Scene_Stage06_VaderFlee;
-      vaderE1.HitEvents += Scene_Stage06_VaderFlee;
-      vaderE2.HitEvents += Scene_Stage06_VaderFlee;
+      using (var v = ActorFactory.Get(m_VaderEscort2ID))
+      {
+        if (v != null)
+        {
+          ActorInfo vaderE2 = v.Value;
+          vaderE2.ForceClearQueue();
+          vaderE2.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
+          vaderE2.QueueNext(new Lock());
+          vaderE2.HitEvents += Scene_Stage06_VaderFlee;
+        }
+      }
 
       //cam.MoveData.MaxSpeed = 25;
       //cam.MoveData.Speed = 25;
@@ -1987,21 +2080,38 @@ namespace SWEndor.Scenarios
       {
         Stage6VaderAttacking = false;
 
-        ActorInfo vader = ActorFactory.Get(m_VaderID);
-        ActorInfo vaderE1 = ActorFactory.Get(m_VaderEscort1ID);
-        ActorInfo vaderE2 = ActorFactory.Get(m_VaderEscort2ID);
+        using (var v = ActorFactory.Get(m_VaderID))
+        {
+          if (v != null)
+          {
+            ActorInfo vader = v.Value;
+            vader.ForceClearQueue();
+            vader.MoveData.ApplyZBalance = false;
+            vader.Transform.Rotation = new TV_3DVECTOR(-30, 85, 5);
 
-        vader.ForceClearQueue();
-        vader.MoveData.ApplyZBalance = false;
-        vader.Transform.Rotation = new TV_3DVECTOR(-30, 85, 5);
+            vader.DyingTimer.Set(999).Start();
+            vader.StateModel.MakeDying(vader);
+          }
+        }
 
-        vader.DyingTimer.Set(999).Start();
-        //TimedLifeSystem.Activate(Engine, m_VaderID, 999);
+        using (var v = ActorFactory.Get(m_VaderEscort1ID))
+        {
+          if (v != null)
+          {
+            ActorInfo vaderE1 = v.Value;
+            vaderE1.StateModel.MakeDying(vaderE1);
+          }
+        }
 
-        vader.StateModel.MakeDying(vader);
-        vaderE2.Transform.Rotation = new TV_3DVECTOR(-5, 93, 0);
-        vaderE2.StateModel.MakeDying(vaderE2);
-        vaderE1.StateModel.MakeDying(vaderE1);
+        using (var v = ActorFactory.Get(m_VaderEscort2ID))
+        {
+          if (v != null)
+          {
+            ActorInfo vaderE2 = v.Value;
+            vaderE2.Transform.Rotation = new TV_3DVECTOR(-5, 93, 0);
+            vaderE2.StateModel.MakeDying(vaderE2);
+          }
+        }
       }
     }
 

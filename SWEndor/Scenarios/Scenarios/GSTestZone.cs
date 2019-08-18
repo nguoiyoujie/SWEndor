@@ -24,8 +24,6 @@ namespace SWEndor.Scenarios
                                               };
     }
 
-    private ActorInfo m_Player = null;
-
     public override void Load(ActorTypeInfo wing, string difficulty)
     {
       base.Load(wing, difficulty);
@@ -101,7 +99,7 @@ namespace SWEndor.Scenarios
     {
       PlayerInfo.ActorID = PlayerInfo.TempActorID;
 
-      if (PlayerInfo.Actor == null || PlayerInfo.Actor.Disposed)
+      if (!PlayerInfo.Exists)
       { 
         if (PlayerInfo.Lives > 0)
         {
@@ -124,7 +122,6 @@ namespace SWEndor.Scenarios
           PlayerInfo.ActorID = ainfo.ID;
         }
       }
-      m_Player = PlayerInfo.Actor;
       PlayerInfo.IsMovementControlsEnabled = true;
     }
 

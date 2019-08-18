@@ -19,8 +19,6 @@ namespace SWEndor.UI.Widgets
     private TV_2DVECTOR targetingradar_center;
     private float targetingradar_radius;
 
-    private TV_COLOR pcolor { get { return (PlayerInfo.Actor?.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : PlayerInfo.Actor.Faction.Color; } }
-
     public Radar(Screen2D owner) : base(owner, "radar")
     {
       radar_center = new TV_2DVECTOR(Engine.ScreenWidth * 0.34f, Engine.ScreenHeight * 0.24f) + new TV_2DVECTOR(Engine.ScreenWidth / 2, Engine.ScreenHeight / 2);
@@ -36,24 +34,36 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
-        return (!Owner.ShowPage
-            && PlayerInfo.Actor != null
-            && !PlayerInfo.Actor.StateModel.IsDyingOrDead
-            && Owner.ShowUI
-            && Owner.ShowRadar);
+        using (var v = ActorFactory.Get(PlayerInfo.ActorID))
+        {
+          if (v == null)
+            return false;
+
+          ActorInfo p = v.Value;
+          return (!Owner.ShowPage
+          && !p.StateModel.IsDyingOrDead
+          && Owner.ShowUI
+          && Owner.ShowRadar);
+        }
       }
     }
 
     public override void Draw()
     {
-      ActorInfo p = PlayerInfo.Actor;
-      if (p == null || !p.Active)
-        return;
+      using (var v = ActorFactory.Get(PlayerInfo.ActorID))
+      {
+        if (v == null)
+          return;
 
-      if (Owner.OverrideTargetingRadar)
-        DrawTargetingRadar();
-      else
-        DrawRadar();
+        ActorInfo p = v.Value;
+        if (!p.Active)
+          return;
+
+        if (Owner.OverrideTargetingRadar)
+          DrawTargetingRadar();
+        else
+          DrawRadar();
+      }
     }
 
     // We should move this to a separate class
@@ -161,101 +171,106 @@ namespace SWEndor.UI.Widgets
       }
     }
 
-
     private void DrawElement(Engine engine, ActorInfo a)
     {
-      ActorInfo p = PlayerInfo.Actor;
       if (a != null)
       {
-        TV_3DVECTOR ppos = p.GetGlobalPosition();
-        TV_3DVECTOR apos = a.GetGlobalPosition();
-
-        if (a.Active
-          && a.TypeInfo.RadarSize > 0
-          && (a.TypeInfo.AlwaysShowInRadar || ActorDistanceInfo.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
+        using (var v = ActorFactory.Get(PlayerInfo.ActorID))
         {
-          int acolor = GetColor(a);
-          
-          float proty = p.Transform.Rotation.y;
+          if (v == null)
+            return;
 
-          XYCoord posvec = new XYCoord { X = ppos.x - apos.x, Y = ppos.z - apos.z };
-          PolarCoord polar = posvec.ToPolarCoord;
-          polar.Angle -= proty;
-          if (polar.Dist > radar_range)
-            polar.Dist = radar_range;
+          ActorInfo p = v.Value;
+          TV_3DVECTOR ppos = p.GetGlobalPosition();
+          TV_3DVECTOR apos = a.GetGlobalPosition();
 
-          XYCoord xy = polar.ToXYCoord;
-          float x = radar_center.x - radar_radius * xy.X / radar_range;
-          float y = radar_center.y - radar_radius * xy.Y / radar_range;
-          
-          /*
-          TV_2DVECTOR posvec = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(apos.x, apos.z);
-          float proty = p.GetRotation().y;
-
-          float dist = TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), posvec);
-          float angl = TrueVision.TVMathLibrary.Direction2Ang(posvec.x, posvec.y) - proty;
-          if (dist > radar_range)
-            dist = radar_range;
-
-          float x = radar_center.x - radar_radius * dist / radar_range * (float)Math.Sin(angl * Globals.PI / 180);
-          float y = radar_center.y + radar_radius * dist / radar_range * (float)Math.Cos(angl * Globals.PI / 180);
-          */
-          switch (a.TypeInfo.RadarType)
+          if (a.Active
+            && a.TypeInfo.RadarSize > 0
+            && (a.TypeInfo.AlwaysShowInRadar || ActorDistanceInfo.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
           {
-            case RadarType.TRAILLINE:
-              TV_2DVECTOR prevtemp = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(a.Transform.PrevPosition.x, a.Transform.PrevPosition.z);
-              float prevdist = Engine.TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), prevtemp);
-              float prevangl = Engine.TrueVision.TVMathLibrary.Direction2Ang(prevtemp.x, prevtemp.y) - proty;
-              if (polar.Dist < radar_range && prevdist < radar_range)
-              {
-                float px = radar_center.x - radar_radius * prevdist / radar_range * (float)Math.Sin(prevangl * Globals.PI / 180);
-                float py = radar_center.y + radar_radius * prevdist / radar_range * (float)Math.Cos(prevangl * Globals.PI / 180);
+            int acolor = GetColor(a);
 
-                DrawLine(x, y, px, py, acolor);
-              }
-              break;
-            case RadarType.HOLLOW_SQUARE:
-              DrawHollowSquare(x, y, a.TypeInfo.RadarSize, acolor);
-              break;
-            case RadarType.FILLED_SQUARE:
-              DrawFilledSquare(x, y, a.TypeInfo.RadarSize, acolor);
-              break;
-            case RadarType.HOLLOW_CIRCLE_S:
-              DrawHollowCircle(x, y, a.TypeInfo.RadarSize, 4, acolor);
-              break;
-            case RadarType.HOLLOW_CIRCLE_M:
-              DrawHollowCircle(x, y, a.TypeInfo.RadarSize, 12, acolor);
-              break;
-            case RadarType.HOLLOW_CIRCLE_L:
-              DrawHollowCircle(x, y, a.TypeInfo.RadarSize, 36, acolor);
-              break;
-            case RadarType.FILLED_CIRCLE_S:
-              DrawFilledCircle(x, y, a.TypeInfo.RadarSize, 4, acolor);
-              break;
-            case RadarType.FILLED_CIRCLE_M:
-              DrawFilledCircle(x, y, a.TypeInfo.RadarSize, 12, acolor);
-              break;
-            case RadarType.FILLED_CIRCLE_L:
-              DrawFilledCircle(x, y, a.TypeInfo.RadarSize, 36, acolor);
-              break;
-            case RadarType.RECTANGLE_GIANT:
-              {
-                float gt = Engine.Game.GameTime * radar_blinkfreq;
-                if (a.Health.Frac > 0.1f || (gt - (int)gt > 0.5f))
+            float proty = p.Transform.Rotation.y;
+
+            XYCoord posvec = new XYCoord { X = ppos.x - apos.x, Y = ppos.z - apos.z };
+            PolarCoord polar = posvec.ToPolarCoord;
+            polar.Angle -= proty;
+            if (polar.Dist > radar_range)
+              polar.Dist = radar_range;
+
+            XYCoord xy = polar.ToXYCoord;
+            float x = radar_center.x - radar_radius * xy.X / radar_range;
+            float y = radar_center.y - radar_radius * xy.Y / radar_range;
+
+            /*
+            TV_2DVECTOR posvec = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(apos.x, apos.z);
+            float proty = p.GetRotation().y;
+
+            float dist = TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), posvec);
+            float angl = TrueVision.TVMathLibrary.Direction2Ang(posvec.x, posvec.y) - proty;
+            if (dist > radar_range)
+              dist = radar_range;
+
+            float x = radar_center.x - radar_radius * dist / radar_range * (float)Math.Sin(angl * Globals.PI / 180);
+            float y = radar_center.y + radar_radius * dist / radar_range * (float)Math.Cos(angl * Globals.PI / 180);
+            */
+            switch (a.TypeInfo.RadarType)
+            {
+              case RadarType.TRAILLINE:
+                TV_2DVECTOR prevtemp = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(a.Transform.PrevPosition.x, a.Transform.PrevPosition.z);
+                float prevdist = Engine.TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), prevtemp);
+                float prevangl = Engine.TrueVision.TVMathLibrary.Direction2Ang(prevtemp.x, prevtemp.y) - proty;
+                if (polar.Dist < radar_range && prevdist < radar_range)
                 {
-                  DrawRectGiant(a, posvec.X, posvec.Y, proty, acolor);
+                  float px = radar_center.x - radar_radius * prevdist / radar_range * (float)Math.Sin(prevangl * Globals.PI / 180);
+                  float py = radar_center.y + radar_radius * prevdist / radar_range * (float)Math.Cos(prevangl * Globals.PI / 180);
+
+                  DrawLine(x, y, px, py, acolor);
                 }
-              }
-              break;
-            case RadarType.TRIANGLE_GIANT:
-              {
-                float gt = Engine.Game.GameTime * radar_blinkfreq;
-                if (a.Health.Frac > 0.1f || (gt - (int)gt > 0.5f))
+                break;
+              case RadarType.HOLLOW_SQUARE:
+                DrawHollowSquare(x, y, a.TypeInfo.RadarSize, acolor);
+                break;
+              case RadarType.FILLED_SQUARE:
+                DrawFilledSquare(x, y, a.TypeInfo.RadarSize, acolor);
+                break;
+              case RadarType.HOLLOW_CIRCLE_S:
+                DrawHollowCircle(x, y, a.TypeInfo.RadarSize, 4, acolor);
+                break;
+              case RadarType.HOLLOW_CIRCLE_M:
+                DrawHollowCircle(x, y, a.TypeInfo.RadarSize, 12, acolor);
+                break;
+              case RadarType.HOLLOW_CIRCLE_L:
+                DrawHollowCircle(x, y, a.TypeInfo.RadarSize, 36, acolor);
+                break;
+              case RadarType.FILLED_CIRCLE_S:
+                DrawFilledCircle(x, y, a.TypeInfo.RadarSize, 4, acolor);
+                break;
+              case RadarType.FILLED_CIRCLE_M:
+                DrawFilledCircle(x, y, a.TypeInfo.RadarSize, 12, acolor);
+                break;
+              case RadarType.FILLED_CIRCLE_L:
+                DrawFilledCircle(x, y, a.TypeInfo.RadarSize, 36, acolor);
+                break;
+              case RadarType.RECTANGLE_GIANT:
                 {
-                  DrawTriangleGiant(a, posvec.X, posvec.Y, proty, acolor);
+                  float gt = Engine.Game.GameTime * radar_blinkfreq;
+                  if (a.Health.Frac > 0.1f || (gt - (int)gt > 0.5f))
+                  {
+                    DrawRectGiant(a, posvec.X, posvec.Y, proty, acolor);
+                  }
                 }
-              }
-              break;
+                break;
+              case RadarType.TRIANGLE_GIANT:
+                {
+                  float gt = Engine.Game.GameTime * radar_blinkfreq;
+                  if (a.Health.Frac > 0.1f || (gt - (int)gt > 0.5f))
+                  {
+                    DrawTriangleGiant(a, posvec.X, posvec.Y, proty, acolor);
+                  }
+                }
+                break;
+            }
           }
         }
       }

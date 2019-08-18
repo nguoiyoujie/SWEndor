@@ -54,6 +54,7 @@ namespace SWEndor.Actors.Traits
       MaxHP = type.MaxStrength;
       HP = (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : type.MaxStrength;
 
+      // hard code for now
       DamageModifiers.Put(DamageType.NORMAL, type.CombatData.DamageModifier);
       DamageModifiers.Put(DamageType.COLLISION, type.CombatData.CollisionDamageModifier);
     }
@@ -75,8 +76,8 @@ namespace SWEndor.Actors.Traits
     }
 
     public void InflictDamage<A1,A2>(A1 self, DamageInfo<A2> dmg)
-      where A1 : ITraitOwner
-      where A2 : ITraitOwner
+      where A1 : class, ITraitOwner
+      where A2 : class, ITraitOwner
     {
       if (IsDead)
         return;
@@ -100,21 +101,21 @@ namespace SWEndor.Actors.Traits
         self.Trait<IStateModel>().MakeDying(self);
 
         if (dmg.Source == null)
-          Log.Write(Log.DEBUG, "'{0}' was killed.", self);
+          Log.Write(Log.DEBUG, LogType.ACTOR_KILLED, self);
         else
-          Log.Write(Log.DEBUG, "'{0}' killed by '{1}'", self, dmg.Source);
+          Log.Write(Log.DEBUG, LogType.ACTOR_KILLED_BY, self, dmg.Source);
       }
     }
 
     public void Kill<A1, A2>(A1 self, A2 attacker)
-      where A1 : ITraitOwner
-      where A2 : ITraitOwner
+      where A1 : class, ITraitOwner
+      where A2 : class, ITraitOwner
     {
       InflictDamage(self, new DamageInfo<A2>(attacker, MaxHP, DamageType.ALWAYS_100PERCENT));
     }
 
     public void SetHP<A1>(A1 self, float value)
-      where A1 : ITraitOwner
+      where A1 : class, ITraitOwner
     {
       if (IsDead)
         return;
@@ -124,12 +125,12 @@ namespace SWEndor.Actors.Traits
       if (HP <= 0)
       {
         self.Trait<IStateModel>().MakeDying(self);
-        Log.Write(Log.DEBUG, "{0} #{1} was killed by setting HP to 0.", self.Name, self.ID);
+        Log.Write(Log.DEBUG, LogType.ACTOR_KILLED_BY, self, "setting HP to 0");
       }
     }
 
     public void SetMaxHP<A1>(A1 self, float value, bool scaleHP)
-      where A1 : ITraitOwner
+      where A1 : class, ITraitOwner
     {
       float f = Frac;
       MaxHP = value;

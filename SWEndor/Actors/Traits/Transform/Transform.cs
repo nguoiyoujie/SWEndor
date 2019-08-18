@@ -2,6 +2,7 @@
 using SWEndor.ActorTypes;
 using SWEndor.Primitives;
 using SWEndor.Primitives.Traits;
+using System;
 
 namespace SWEndor.Actors.Traits
 {
@@ -44,16 +45,18 @@ namespace SWEndor.Actors.Traits
 
     TransformData currData;
     TransformData prevData;
-    object currWMat;
-    object prevWMat;
+    float currTime = 0;
+    float prevTime = 0;
+    TV_3DMATRIX currMat;
+    TV_3DMATRIX prevMat;
+    //object currWMat;
+    //object prevWMat;
 
     public void Init(ActorTypeInfo type, ActorCreationInfo acinfo)
     {
       Position = acinfo.Position;
       Rotation = acinfo.Rotation;
       Scale = type.Scale * acinfo.InitialScale;
-      //currWMat = new TimeCache<TV_3DMATRIX>();
-      //prevWMat = new TimeCache<TV_3DMATRIX>();
     }
 
     public float Scale
@@ -122,22 +125,26 @@ namespace SWEndor.Actors.Traits
       return matrix;
     }
 
-    public TV_3DMATRIX GetWorldMatrix<A>(A self, float time) where A : ITraitOwner
+    public TV_3DMATRIX GetWorldMatrix<A>(A self, float time) where A : class, ITraitOwner
     {
-      TimeCache<A, float, TV_3DMATRIX> fn;
-      if (currWMat is TimeCache<A, float, TV_3DMATRIX>)
-        fn = (TimeCache<A, float, TV_3DMATRIX>)currWMat;
-      else
+      if (time > currTime)
       {
-        fn = new TimeCache<A, float, TV_3DMATRIX>(0, InnerGetWorldMatrix, self, time);
-        currWMat = fn;
+        currMat = InnerGetWorldMatrix(self, time);
+        currTime = time;
       }
-
-      return fn.Get(time, self, time);
+      return currMat;
     }
 
-    public TV_3DMATRIX GetPrevWorldMatrix<A>(A self, float time) where A : ITraitOwner
+    public TV_3DMATRIX GetPrevWorldMatrix<A>(A self, float time) where A : class, ITraitOwner
     {
+      if (time > prevTime)
+      {
+        prevMat = InnerGetPrevWorldMatrix(self, time);
+        prevTime = time;
+      }
+      return prevMat;
+
+      /*
       TimeCache<A, float, TV_3DMATRIX> fn;
       if (prevWMat is TimeCache<A, float, TV_3DMATRIX>)
         fn = (TimeCache<A, float, TV_3DMATRIX>)prevWMat;
@@ -147,27 +154,44 @@ namespace SWEndor.Actors.Traits
         prevWMat = fn;
       }
       return fn.Get(time, self, time);
+      */
     }
 
-    public TV_3DMATRIX InnerGetWorldMatrix<A>(A self, float time) where A : ITraitOwner
+    public TV_3DMATRIX InnerGetWorldMatrix<A>(A self, float time) where A : class, ITraitOwner
     {
       Relation<A> rel;
       if (self.TryGetTrait(out rel) && rel.Parent != null && !rel.Parent.Disposed && rel.UseParentCoords)
-        return GetMatS(ref currData) * GetMatR(ref currData) * GetMatT(ref currData) * rel.Parent.Trait<Transform>().GetWorldMatrix(rel.Parent, time);
-
-      return GetMatS(ref currData) * GetMatR(ref currData) * GetMatT(ref currData);
+      {
+        TV_3DMATRIX m = new TV_3DMATRIX();
+        mlib.TVMatrixMultiply(ref m, GetMat(ref currData), rel.Parent.Trait<Transform>().GetWorldMatrix(rel.Parent, time));
+        return m;
+      }
+      return GetMat(ref currData);
     }
 
-    public TV_3DMATRIX InnerGetPrevWorldMatrix<A>(A self, float time) where A : ITraitOwner
+    public TV_3DMATRIX InnerGetPrevWorldMatrix<A>(A self, float time) where A : class, ITraitOwner
     {
       Relation<A> rel;
       if (self.TryGetTrait(out rel) && rel.Parent != null && !rel.Parent.Disposed && rel.UseParentCoords)
-        return GetMatS(ref currData) * GetMatR(ref prevData) * GetMatT(ref prevData) * rel.Parent.Trait<Transform>().GetPrevWorldMatrix(rel.Parent, time);
+      {
+        TV_3DMATRIX m = new TV_3DMATRIX();
+        mlib.TVMatrixMultiply(ref m, GetMat(ref prevData), rel.Parent.Trait<Transform>().GetPrevWorldMatrix(rel.Parent, time));
+        return m;
+      }
 
-      return GetMatS(ref prevData) * GetMatR(ref prevData) * GetMatT(ref prevData);
+      return GetMat(ref prevData);
     }
 
-    public TV_3DVECTOR GetGlobalPosition<A>(A self, float time) where A : ITraitOwner
+    private TV_3DMATRIX GetMat(ref TransformData data)
+    {
+      TV_3DMATRIX mSR = new TV_3DMATRIX();
+      TV_3DMATRIX mSRT = new TV_3DMATRIX();
+      mlib.TVMatrixMultiply(ref mSR, GetMatS(ref currData), GetMatR(ref currData));
+      mlib.TVMatrixMultiply(ref mSRT, mSR, GetMatT(ref currData));
+      return mSRT;
+    }
+
+    public TV_3DVECTOR GetGlobalPosition<A>(A self, float time) where A : class, ITraitOwner
     {
       Relation<A> rel;
       if (self.TryGetTrait(out rel) && rel.Parent != null && !rel.Parent.Disposed && rel.UseParentCoords)
@@ -182,7 +206,7 @@ namespace SWEndor.Actors.Traits
         return currData.Position;
     }
 
-    public TV_3DVECTOR GetPrevGlobalPosition<A>(A self, float time) where A : ITraitOwner
+    public TV_3DVECTOR GetPrevGlobalPosition<A>(A self, float time) where A : class, ITraitOwner
     {
       Relation<A> rel;
       if (self.TryGetTrait(out rel) && rel.Parent != null && !rel.Parent.Disposed && rel.UseParentCoords)
@@ -198,7 +222,7 @@ namespace SWEndor.Actors.Traits
     }
 
     public TV_3DVECTOR GetGlobalRotation<A>(A self)
-       where A : ITraitOwner
+       where A : class, ITraitOwner
     {
       Relation<A> rel;
       if (self.TryGetTrait(out rel) && rel.Parent != null && !rel.Parent.Disposed && rel.UseParentCoords)
@@ -213,7 +237,7 @@ namespace SWEndor.Actors.Traits
     }
 
     public TV_3DVECTOR GetPrevGlobalRotation<A>(A self)
-      where A : ITraitOwner
+      where A : class, ITraitOwner
     {
       Relation<A> rel;
       if (self.TryGetTrait(out rel) && rel.Parent != null && !rel.Parent.Disposed && rel.UseParentCoords)
@@ -229,7 +253,7 @@ namespace SWEndor.Actors.Traits
 
     // ?
     public TV_3DVECTOR GetGlobalDirection<A>(A self)
-       where A : ITraitOwner
+       where A : class, ITraitOwner
     {
       TV_3DVECTOR ret = Direction;
 
@@ -243,7 +267,7 @@ namespace SWEndor.Actors.Traits
     }
 
     public TV_3DVECTOR GetPrevGlobalDirection<A>(A self)
-      where A : ITraitOwner
+      where A : class, ITraitOwner
     {
       TV_3DVECTOR ret = PrevDirection;
 
@@ -257,7 +281,7 @@ namespace SWEndor.Actors.Traits
     }
 
     public TV_3DVECTOR GetRelativePositionFUR<A>(A self, float time, float forward, float up = 0, float right = 0, bool local = false)
-       where A : ITraitOwner
+       where A : class, ITraitOwner
     {
       TV_3DVECTOR pos = local ? Position : GetGlobalPosition(self, time);
       TV_3DVECTOR rot = local ? Rotation : GetGlobalRotation(self);
@@ -269,7 +293,7 @@ namespace SWEndor.Actors.Traits
     }
 
     public TV_3DVECTOR GetRelativePositionXYZ<A>(A self, float time, float x, float y, float z, bool local = false) 
-      where A : ITraitOwner
+      where A : class, ITraitOwner
     {
       TV_3DVECTOR pos = local ? Position : GetGlobalPosition(self, time);
       TV_3DVECTOR rot = local ? Rotation : GetGlobalRotation(self);

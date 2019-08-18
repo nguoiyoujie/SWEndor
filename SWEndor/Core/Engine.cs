@@ -18,7 +18,7 @@ using SWEndor.Actors.Traits;
 
 namespace SWEndor
 {
-  public class Engine
+  public class Engine : IDisposable
   {
     internal Engine() { }
 
@@ -32,15 +32,8 @@ namespace SWEndor
 
     // Data
     //internal TraitDictionary TraitDictionary { get; private set; }
+    //internal TraitCollection Traits { get; private set; }
     internal TraitPoolCollection TraitPoolCollection { get; private set; }
-
-    // Data sets
-    //internal MaskDataSet MaskDataSet { get; private set; }
-
-    //internal ActorDataSet ActorDataSet { get; private set; }
-    //internal SysDataSet SysDataSet { get; private set; }
-    //internal MeshDataSet MeshDataSet { get; private set; }
-    //internal TimedLifeDataSet TimedLifeDataSet { get; private set; }
 
     // Engine parts
     internal Game Game { get; private set; }
@@ -72,13 +65,6 @@ namespace SWEndor
     {
       //TraitDictionary = new TraitDictionary();
       TraitPoolCollection = new TraitPoolCollection();
-
-      //MaskDataSet = new MaskDataSet();
-      //ActorDataSet = new ActorDataSet();
-      //SysDataSet = new SysDataSet(this);
-      //MeshDataSet = new MeshDataSet();
-
-      //TimedLifeDataSet = new TimedLifeDataSet();
 
       Game = new Game(this);
       SoundManager = new SoundManager(this);
@@ -148,7 +134,7 @@ namespace SWEndor
     public void Process()
     {
       ActorFactory.DoEach(ActorInfo.Process);
-      ActorFactory.DoEach(ActorInfo.PostFrameProcess);
+      //ActorFactory.DoEach(ActorInfo.PostFrameProcess);
     }
 
     public void ProcessAI()
@@ -197,6 +183,7 @@ namespace SWEndor
       LandInfo.Render();
 
       ActorFactory.DoEach(ActorInfo.Render);
+      //ActorFactory.DoEach(RenderAction);
       //TrueVision.TVGraphicEffect.DrawGlow();
       //TrueVision.TVGraphicEffect.DrawDepthOfField();
 
@@ -225,6 +212,35 @@ namespace SWEndor
       //UpdateEffect();
     }
 
+    internal static void RenderAction(Engine engine, ActorInfo actor)
+    {
+      if (actor == null)
+        return;
+
+      if (!actor.StateModel.ComponentMask.Has(ComponentMask.CAN_RENDER))
+        return;
+
+      if (!actor.Active)
+        return;
+
+      if (actor.IsAggregateMode)
+        return;
+
+      if (actor.TypeInfo is ActorTypes.Groups.MissileProjectile)
+      {
+        AI.Actions.ActionInfo action = actor.CurrentAction;
+
+        if (action is AI.Actions.ProjectileAttackActor)
+        {
+          TV_3DVECTOR prostart = actor.GetGlobalPosition();
+          TV_3DVECTOR proend0 = ((AI.Actions.AttackActor)action).Target_Position;
+          engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
+          engine.TrueVision.TVScreen2DImmediate.Draw_Line3D(prostart.x, prostart.y, prostart.z, proend0.x, proend0.y, proend0.z, new TV_COLOR(1, 0, 0, 1).GetIntColor(), new TV_COLOR(1, 1, 0, 1).GetIntColor());
+          engine.TrueVision.TVScreen2DImmediate.Action_End2D();
+        }
+      }
+    }
+
     public void LinkForm(GameForm form)
     {
       Form = form;
@@ -244,7 +260,6 @@ namespace SWEndor
     {
       GameScenarioManager.Scenario.Unload();
       Game.PrepExit();
-      //Game.Stop();
       Form.Exit();
       Dispose();
     }

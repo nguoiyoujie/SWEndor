@@ -58,7 +58,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonShowPerformanceStat.HighlightBoxPosition = ButtonShowPerformanceStat.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonShowPerformanceStat.HighlightBoxWidth = 600;
       ButtonShowPerformanceStat.HighlightBoxHeight = 30;
-      ButtonShowPerformanceStat.SecondaryText = Settings.ShowPerformance.ToString();
+      ButtonShowPerformanceStat.SecondaryText = Engine.PerfManager.Enabled.ToString();
       ButtonShowPerformanceStat.SecondaryTextPosition = ButtonShowPerformanceStat.TextPosition + new TV_2DVECTOR(400, 0);
       ButtonShowPerformanceStat.Selectable = true;
       ButtonShowPerformanceStat.OnKeyPress += SelectPerformanceToggle;
@@ -140,8 +140,8 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_LEFT || key == CONST_TV_KEY.TV_KEY_RIGHT)
       {
-        Settings.ShowPerformance = !Settings.ShowPerformance;
-        ButtonShowPerformanceStat.SecondaryText = Settings.ShowPerformance.ToString();
+        Engine.PerfManager.Enabled = !Engine.PerfManager.Enabled;
+        ButtonShowPerformanceStat.SecondaryText = Engine.PerfManager.Enabled.ToString();
         return true;
       }
       return false;

@@ -13,10 +13,8 @@ namespace SWEndor.Actors.Traits
     // To replace with something that does not reference ActorTypeInfo
     public void Init(ActorTypeInfo type)
     {
-      Set(type.TimedLifeData.TimedLife);
-
-      if (type.TimedLifeData.OnTimedLife)
-        Start();
+      TimeRemaining = type.TimedLifeData.TimedLife;
+      State = type.TimedLifeData.OnTimedLife ? TimerStates.ACTIVE : TimerStates.INACTIVE;
     }
 
     public DyingTimer Start()
@@ -42,7 +40,7 @@ namespace SWEndor.Actors.Traits
     }
 
     public void Tick<A>(A self, float time)
-      where A : ITraitOwner
+      where A : class, ITraitOwner
     {
       if (State == TimerStates.ACTIVE)
       {

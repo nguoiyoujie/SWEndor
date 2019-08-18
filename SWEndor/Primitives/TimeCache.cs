@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SWEndor.Primitives
 {
+
+
   public class TimeCache<B1, B2, T>
   {
     public float Time { get; private set; }
@@ -26,7 +29,7 @@ namespace SWEndor.Primitives
     }
   }
 
-  public struct TimeCache<T>
+  public class TimeCache<T>
   {
     public float Time { get; private set; }
     private Func<T> fn;

@@ -17,25 +17,32 @@ namespace SWEndor.Actors
         return;
 
       IStateModel s = actor.StateModel;
-      if (!s.IsDead) 
-        actor.Update();
+      if (!s.IsDead)
+        using (engine.PerfManager.Create("actor_update"))
+          actor.Update();
 
-      actor.CycleInfo.Process();
+      using (engine.PerfManager.Create("actor_cycleinfo"))
+        actor.CycleInfo.Process();
 
       foreach (ITick t in actor.TraitsImplementing<ITick>())
-        t.Tick(actor, engine.Game.TimeSinceRender);
+        using (engine.PerfManager.Create("itick"))
+          t.Tick(actor, engine.Game.TimeSinceRender);
 
       actor.CheckState(engine);
       if (!s.IsDead)
       {
         if (actor.StateModel.ComponentMask.Has(ComponentMask.CAN_BECOLLIDED) || actor.TypeInfo is ActorTypes.Groups.Projectile)
-          CollisionSystem.CheckCollision(engine, actor);
+          using (engine.PerfManager.Create("actor_collisioncheck"))
+            CollisionSystem.CheckCollision(engine, actor);
 
-        actor.MoveComponent.Move(actor, ref actor.MoveData);
+        using (engine.PerfManager.Create("actor_move"))
+          actor.MoveComponent.Move(actor, ref actor.MoveData);
       }
-      actor.OnTickEvent();
+      using (engine.PerfManager.Create("actor_OnTickEvent()"))
+        actor.OnTickEvent();
     }
 
+    /*
     internal static void PostFrameProcess(Engine engine, ActorInfo actor)
     {
       if (actor == null)
@@ -45,8 +52,10 @@ namespace SWEndor.Actors
         return;
 
       foreach (Action<ActorInfo> a in actor.PostFrameActions.ToArray()) // or consider ConcurrentQueue?
-        a.Invoke(actor);
+        using (engine.PerfManager.Create("actor_postframeaction"))
+          a.Invoke(actor);
     }
+    */
 
     internal static void ProcessAI(Engine engine, ActorInfo actor)
     {
@@ -65,7 +74,8 @@ namespace SWEndor.Actors
       if (actor.IsPlayer && !engine.PlayerInfo.PlayerAIEnabled)
         return;
 
-      actor.Run(actor.CurrentAction);
+      using (engine.PerfManager.Create("actor_ai"))
+        actor.Run(actor.CurrentAction);
     }
 
     internal static void ProcessCollision(Engine engine, ActorInfo actor)
@@ -73,7 +83,8 @@ namespace SWEndor.Actors
       if (actor == null)
         return;
 
-      CollisionSystem.TestCollision(engine, actor);
+      using (engine.PerfManager.Create("actor_collision"))
+        CollisionSystem.TestCollision(engine, actor);
     }
 
     internal static void Render(Engine engine, ActorInfo actor)
@@ -91,21 +102,14 @@ namespace SWEndor.Actors
         return;
 
       if (!actor.IsPlayer || engine.PlayerCameraInfo.CameraMode != CameraMode.FREEROTATION)
-      {
-        actor.TraitOrDefault<IMeshModel>()?.Render(actor.IsFarMode);
-      }
+        using (engine.PerfManager.Create("actor_rendermesh"))
+          actor.TraitOrDefault<IMeshModel>()?.Render(actor.IsFarMode);
     }
 
-    internal static void FireWeapon(Engine engine, int id, int targetActorID, string weapon)
+    internal void FireWeapon(ActorInfo target, string weapon) // actor, target not null
     {
-      ActorInfo actor = engine.ActorFactory.Get(id);
-      ActorInfo target = engine.ActorFactory.Get(targetActorID);
-      if (actor == null)
-        return;
-
-      IStateModel s = actor.StateModel;
-      if (s != null && !s.IsDyingOrDead)
-        actor.TypeInfo.FireWeapon(actor, target, weapon);
+      if (StateModel != null && !StateModel.IsDyingOrDead)
+        TypeInfo.FireWeapon(this, target, weapon);
     }
 
     private void CheckState(Engine engine)
@@ -119,7 +123,6 @@ namespace SWEndor.Actors
     private void Update()
     {
       TraitOrDefault<IMeshModel>()?.Update(this);
-      //MeshSystem.Update(Engine, ID);
 
       if (StateModel != null && StateModel.CreationState == CreationState.GENERATED)
         StateModel.SetActivated();

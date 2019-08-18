@@ -7,9 +7,8 @@ namespace SWEndor.Actors.Components
 {
   public class CombatSystem
   {
-    internal static void Deactivate(Engine engine, int id)
+    internal static void Deactivate(Engine engine, ActorInfo actor)
     {
-      ActorInfo actor = engine.ActorFactory.Get(id);
       actor.CombatData.IsCombatObject = false;
     }
   }

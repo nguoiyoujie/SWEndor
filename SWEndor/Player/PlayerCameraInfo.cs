@@ -22,15 +22,18 @@ namespace SWEndor.Player
     private TV_3DVECTOR _lastPos;
     public TV_3DVECTOR GetGlobalPosition(Engine engine)
     {
-      TV_3DVECTOR ret = new TV_3DVECTOR(Position.x, Position.y, Position.z);
       if (TargetActorID > 0)
       {
-        ActorInfo tgt = engine.ActorFactory.Get(TargetActorID);
-        if (tgt != null && tgt.Active)
-        {
-          ret = Position + Utilities.GetRelativePositionXYZ(engine, tgt.GetGlobalPosition(), tgt.Transform.Rotation, PositionRelative.x, PositionRelative.y, PositionRelative.z);
-          _lastPos = new TV_3DVECTOR(ret.x, ret.y, ret.z);
-        }
+        using (var v = engine.ActorFactory.Get(TargetActorID))
+          if (v != null)
+          {
+            ActorInfo tgt = v.Value;
+            if (tgt.Active)
+            {
+              TV_3DVECTOR ret = Position + Utilities.GetRelativePositionXYZ(engine, tgt.GetGlobalPosition(), tgt.Transform.Rotation, PositionRelative.x, PositionRelative.y, PositionRelative.z);
+              _lastPos = new TV_3DVECTOR(ret.x, ret.y, ret.z);
+            }
+          }
       }
       return new TV_3DVECTOR(_lastPos.x, _lastPos.y, _lastPos.z);
     }
@@ -147,6 +150,7 @@ namespace SWEndor.Player
 
     public readonly TVCamera Camera;
     public CameraMode CameraMode = CameraMode.FIRSTPERSON;
+    public CameraMode prevCameraMode = CameraMode.FIRSTPERSON;
     public CameraLook Look = CameraLook.Default;
     public int LookActor = -1;
     public int LookAtActor = -1;
@@ -163,11 +167,18 @@ namespace SWEndor.Player
     {
       UpdateMode();
 
-      ActorInfo actor = Engine.PlayerInfo.Actor;
-      if (Engine.PlayerInfo.Actor == null)
-        actor = Engine.ActorFactory.Get(LookActor);
+      using (var v = Engine.ActorFactory.Get(Engine.PlayerInfo.ActorID))
+        if (v != null)
+          Update(v.Value);
+        else
+          using (var v2 = Engine.ActorFactory.Get(LookActor))
+            if (v2 != null)
+              Update(v2.Value);
+    }
 
-      if (actor != null && actor.Active)
+    public void Update(ActorInfo actor) //actor cannot be null
+    {
+      if (actor.Active)
       {
         UpdateFromActor(Engine, actor);
         Position = actor.Transform.Position;
@@ -182,7 +193,7 @@ namespace SWEndor.Player
       ApplyShake();
     }
 
-    public void UpdateFromActor(Engine engine, ActorInfo actor)
+    public void UpdateFromActor(Engine engine, ActorInfo actor) //actor cannot be null
     {
       if (CameraMode == CameraMode.CUSTOM)
         return;
@@ -234,17 +245,16 @@ namespace SWEndor.Player
 
     public void UpdateMode()
     {
-      /*
       if (prevCameraMode != CameraMode)
       {
         prevCameraMode = CameraMode;
-        if (Engine.PlayerInfo.Actor != null && !Engine.GameScenarioManager.IsCutsceneMode)
+        if (Engine.PlayerInfo.Exists 
+          && !Engine.GameScenarioManager.IsCutsceneMode)
           Engine.Screen2D.MessageSecondaryText(string.Format("CAMERA: {0}", CameraMode)
                                                         , 2.5f
                                                         , new TV_COLOR(0.5f, 0.5f, 1, 1)
                                                         , 1);
       }
-      */
     }
 
     public void ApplyShake()
@@ -293,21 +303,26 @@ namespace SWEndor.Player
         }
         else */
 
-        if (pl.Actor?.Active ?? false)
-        {
-          float maxT = Engine.PlayerInfo.Actor.TypeInfo.MaxTurnRate;
-          angleX *= maxT;
-          angleY *= maxT;
-
-          if (!Engine.PlayerInfo.PlayerAIEnabled)
+        using (var v = Engine.ActorFactory.Get(pl.ActorID))
+          if (v != null)
           {
-            angleX = angleX.Clamp(-maxT, maxT);
-            angleY = angleY.Clamp(-maxT, maxT);
+            ActorInfo a = v.Value;
+            if (a.Active)
+            {
+              float maxT = a.TypeInfo.MaxTurnRate;
+              angleX *= maxT;
+              angleY *= maxT;
 
-            Engine.PlayerInfo.Actor.MoveData.XTurnAngle = angleX;
-            Engine.PlayerInfo.Actor.MoveData.YTurnAngle = angleY;
+              if (!Engine.PlayerInfo.PlayerAIEnabled)
+              {
+                angleX = angleX.Clamp(-maxT, maxT);
+                angleY = angleY.Clamp(-maxT, maxT);
+
+                a.MoveData.XTurnAngle = angleX;
+                a.MoveData.YTurnAngle = angleY;
+              }
+            }
           }
-        }
       }
     }
   }

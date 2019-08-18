@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SWEndor.Primitives.StateMachines
 {
@@ -9,24 +10,22 @@ namespace SWEndor.Primitives.StateMachines
 
     public T PreviousState { get; private set; }
     public T CurrentState { get; private set; }
-    private ThreadSafeDictionary<T, InStateMachine> _transitions = new ThreadSafeDictionary<T, InStateMachine>();
+    private Dictionary<T, InStateMachine> _transitions = new Dictionary<T, InStateMachine>();
 
     protected void Initialize(T state)
     {
       PreviousState = state;
       CurrentState = state;
 
-      if (_transitions.ContainsKey(CurrentState))
-      {
-        InStateMachine _in = _transitions[CurrentState];
+      InStateMachine _in;
+      if (_transitions.TryGetValue(CurrentState, out _in))
         _in.Initialize();
-      }
     }
 
     protected InStateMachine In(T state)
     {
-      InStateMachine ret = _transitions.Get(state);
-      if (ret == null)
+      InStateMachine ret;
+      if (!_transitions.TryGetValue(state, out ret))
       {
         ret = new InStateMachine(this, state);
         _transitions.Add(state, ret);
@@ -40,14 +39,14 @@ namespace SWEndor.Primitives.StateMachines
       private T State;
       private TransitionAction Entry;
       private TransitionAction Exit;
-      private ThreadSafeDictionary<U, OutStateMachine> _transitions = new ThreadSafeDictionary<U, OutStateMachine>();
+      private Dictionary<U, OutStateMachine> _transitions = new Dictionary<U, OutStateMachine>();
 
       internal InStateMachine(StateMachine<T, U> statemachine, T state) { State = state; SM = statemachine; }
 
       public OutStateMachine On(U command)
       {
-        OutStateMachine ret = _transitions.Get(command);
-        if (ret == null)
+        OutStateMachine ret;
+        if (!_transitions.TryGetValue(command, out ret))
         {
           ret = new OutStateMachine(SM, this, command);
           _transitions.Add(command, ret);
@@ -66,9 +65,9 @@ namespace SWEndor.Primitives.StateMachines
 
       public void Fire(U command)
       {
-        if (_transitions.ContainsKey(command))
+        OutStateMachine _on;
+        if (_transitions.TryGetValue(command, out _on))
         {
-          OutStateMachine _on = _transitions[command];
           Exit?.Invoke(SM.PreviousState, SM.CurrentState);
           _on.Fire(); // state is changed here
           SM.Initialize(SM.CurrentState);
@@ -106,11 +105,9 @@ namespace SWEndor.Primitives.StateMachines
 
     public void Fire(U command)
     {
-      if (_transitions.ContainsKey(CurrentState))
-      {
-        InStateMachine _in = _transitions[CurrentState];
+      InStateMachine _in;
+      if (_transitions.TryGetValue(CurrentState, out _in))
         _in.Fire(command);
-      }
       else
         throw new InvalidOperationException(string.Format("Command '{0}' is not valid on state '{1}'", command, CurrentState));
     }

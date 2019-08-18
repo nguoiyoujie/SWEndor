@@ -20,8 +20,9 @@ namespace SWEndor.Primitives.Traits
     {
       Type type = typeof(T);
       //CheckDisposed(type);
-      if (traits.ContainsKey(type))
-        foreach (ITrait t in traits[type])
+      List<ITrait> list;
+      if (traits.TryGetValue(type, out list))
+        foreach (ITrait t in list)
           yield return (T)t;
     }
 
@@ -83,16 +84,17 @@ namespace SWEndor.Primitives.Traits
       ret = default(T);
       //CheckDisposed(typeof(T));
       Type type = typeof(T);
-      if (!traits.ContainsKey(type))
+      List<ITrait> lt;
+      if (!traits.TryGetValue(type, out lt))
         return false;
 
-      if (traits[type] == null || (traits[type].Count == 0))
+      if (lt.Count == 0)
         return false;
 
-      if (traits[type].Count > 1)
+      if (lt.Count > 1)
         throw new InvalidOperationException("TraitOwner has multiple traits of type `{0}`".F(typeof(T)));//owner.Name, typeof(T)));
 
-      ret = (T)(traits[type][0]);
+      ret = (T)(lt[0]);
       return true;
     }
 

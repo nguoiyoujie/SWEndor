@@ -8,10 +8,10 @@ namespace SWEndor.Primitives.Factories
   /// <typeparam name="T"></typeparam>
   public class Registry<T> : IRegistry<T>
   {
-    protected static ThreadSafeDictionary<string, T> list = new ThreadSafeDictionary<string, T>();
-    public string DefaultKey = null;
+    protected Dictionary<string, T> list = new Dictionary<string, T>();
+    public static T Default = default(T);
 
-    public T Get(string id) { if (DefaultKey == null || list.ContainsKey(id)) { return list.Get(id); } else { return list.Get(DefaultKey); } }
+    public T Get(string id) { return (list.ContainsKey(id)) ? list[id] : Default; }
     public IEnumerable<T> GetAll() { return list.Values; }
     public virtual void Add(string id, T item) { list.Add(id, item); }
     public virtual void Put(string id, T item) { list.Put(id, item); }
@@ -26,11 +26,11 @@ namespace SWEndor.Primitives.Factories
   /// <typeparam name="T"></typeparam>
   public class Registry<K, T> : IRegistry<K, T>
   {
-    protected ThreadSafeDictionary<K, T> list = new ThreadSafeDictionary<K, T>();
-    public K DefaultKey = default(K);
+    protected Dictionary<K, T> list = new Dictionary<K, T>();
+    public static T Default = default(T);
 
     public bool Contains(K key) { return list.ContainsKey(key); }
-    public T Get(K key) { if (DefaultKey == null || list.ContainsKey(key)) { return list.Get(key); } else { return list.Get(DefaultKey); } }
+    public T Get(K key) { return (list.ContainsKey(key)) ? list[key] : Default; }
     public IEnumerable<T> GetAll() { return list.Values; }
     public virtual void Add(K key, T item) { list.Add(key, item); }
     public virtual void Put(K key, T item) { list.Put(key, item); }

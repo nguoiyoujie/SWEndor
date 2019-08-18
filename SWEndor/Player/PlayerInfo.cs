@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes;
+using SWEndor.Primitives;
 using System;
 using System.Collections.Generic;
 
@@ -36,13 +37,37 @@ namespace SWEndor.Player
         }
       }
     }
-    public ActorInfo Actor { get { return Engine.ActorFactory.Get(ActorID); } }
+    public ActorInfo Actor { get { return Engine.ActorFactory.Get(ActorID)?.Value ?? null; } }
+    //public ActorInfo TempActor { get { return Engine.ActorFactory.Get(TempActorID)?.Value ?? null; } }
+
+    public bool Exists { get { return Engine.ActorFactory.Contains(ActorID); } }
     public int TempActorID;
-    public ActorInfo TempActor { get { return Engine.ActorFactory.Get(TempActorID); } }
-    
+
     private float m_LowAlarmSoundTime = 0;
-    public float StrengthFrac { get { return (Actor != null) ? Actor.Health.Frac : 0; } }
-    public TV_COLOR StrengthColor { get { return (Actor != null) ? Actor.Health.Color : new TV_COLOR(1, 1, 1, 1); } }
+    public float StrengthFrac
+    {
+      get
+      {
+        using (var v = Engine.ActorFactory.Get(ActorID))
+          return v?.Value.Health.Frac ?? 0;
+      }
+    }
+    public TV_COLOR StrengthColor
+    {
+      get
+      {
+        using (var v = Engine.ActorFactory.Get(ActorID))
+          return v?.Value.Health.Color ?? new TV_COLOR(1, 1, 1, 1);
+      }
+    }
+    public TV_COLOR FactionColor
+    {
+      get
+      {
+        using (var v = Engine.ActorFactory.Get(ActorID))
+          return v?.Value?.Faction.Color ?? new TV_COLOR(1, 1, 1, 1);
+      }
+    }
 
     public int Lives = 3;
     public float ScorePerLife = 50000;
@@ -55,22 +80,29 @@ namespace SWEndor.Player
     // weapons
     private List<string> PrimaryWeaponModes = new List<string>();
     private List<string> SecondaryWeaponModes = new List<string>();
-    public string PrimaryWeapon { get; set; }
-    public string SecondaryWeapon { get; set; }
+    public string PrimaryWeapon { get { return (PrimaryWeaponModes.Count > PrimaryWeaponN) ? PrimaryWeaponModes[PrimaryWeaponN].Trim() : null; } }
+    public string SecondaryWeapon { get { return (SecondaryWeaponModes.Count > SecondaryWeaponN) ? SecondaryWeaponModes[SecondaryWeaponN].Trim() : null; } }
     private int PrimaryWeaponN = 0;
     private int SecondaryWeaponN = 0;
 
+    private int PrimaryWeaponNs = 0;
+    private int SecondaryWeaponNs = 0;
+
     public void Update()
     {
-      UpdatePosition();
+      using (var v = Engine.ActorFactory.Get(ActorID))
+        if (v != null)
+        {
+          UpdatePosition(v.Value);
+          SnapToBounds(v.Value);
+        }
+
       UpdateStats();
-      SnapToBounds();
     }
 
-    private void UpdatePosition()
+    private void UpdatePosition(ActorInfo a)
     {
-      if (Actor != null)
-        Position = Actor.GetGlobalPosition();
+      Position = a.GetGlobalPosition();
     }
 
     private void UpdateStats()
@@ -94,65 +126,73 @@ namespace SWEndor.Player
       }
     }
 
-    private void SnapToBounds()
+    private void SnapToBounds(ActorInfo a) // change to use ActorInfo as a parameter
     {
       bool announceOutOfBounds = false;
-      if (Actor != null)
+
+      TV_3DVECTOR pos = a.GetGlobalPosition();
+      if (pos.x < Engine.GameScenarioManager.MinBounds.x)
       {
-        TV_3DVECTOR pos = Actor.GetGlobalPosition();
-        if (pos.x < Engine.GameScenarioManager.MinBounds.x)
-        {
-          Actor.Transform.Position = new TV_3DVECTOR(Engine.GameScenarioManager.MinBounds.x, pos.y, pos.z);
-          announceOutOfBounds = true;
-        }
-        else if (pos.x > Engine.GameScenarioManager.MaxBounds.x)
-        {
-          Actor.Transform.Position = new TV_3DVECTOR(Engine.GameScenarioManager.MaxBounds.x, pos.y, pos.z);
-          announceOutOfBounds = true;
-        }
-
-        if (pos.y < Engine.GameScenarioManager.MinBounds.y)
-          Actor.Transform.Position = new TV_3DVECTOR(pos.x, Engine.GameScenarioManager.MinBounds.y, pos.z);
-        else if (pos.y > Engine.GameScenarioManager.MaxBounds.y)
-          Actor.Transform.Position = new TV_3DVECTOR(pos.x, Engine.GameScenarioManager.MaxBounds.y, pos.z);
-
-        if (pos.z < Engine.GameScenarioManager.MinBounds.z)
-        {
-          Actor.Transform.Position = new TV_3DVECTOR(pos.x, pos.y, Engine.GameScenarioManager.MinBounds.z);
-          announceOutOfBounds = true;
-        }
-        else if (pos.z > Engine.GameScenarioManager.MaxBounds.z)
-        {
-          Actor.Transform.Position = new TV_3DVECTOR(pos.x, pos.y, Engine.GameScenarioManager.MaxBounds.z);
-          announceOutOfBounds = true;
-        }
-
-        if (announceOutOfBounds)
-          Engine.Screen2D.MessageText(TextLocalization.Get(TextLocalKeys.PLAYER_OUTOFBOUNDS), 5, new TV_COLOR(1, 1, 1, 1), 99);
+        a.Transform.Position = new TV_3DVECTOR(Engine.GameScenarioManager.MinBounds.x, pos.y, pos.z);
+        announceOutOfBounds = true;
       }
+      else if (pos.x > Engine.GameScenarioManager.MaxBounds.x)
+      {
+        a.Transform.Position = new TV_3DVECTOR(Engine.GameScenarioManager.MaxBounds.x, pos.y, pos.z);
+        announceOutOfBounds = true;
+      }
+
+      if (pos.y < Engine.GameScenarioManager.MinBounds.y)
+        a.Transform.Position = new TV_3DVECTOR(pos.x, Engine.GameScenarioManager.MinBounds.y, pos.z);
+      else if (pos.y > Engine.GameScenarioManager.MaxBounds.y)
+        a.Transform.Position = new TV_3DVECTOR(pos.x, Engine.GameScenarioManager.MaxBounds.y, pos.z);
+
+      if (pos.z < Engine.GameScenarioManager.MinBounds.z)
+      {
+        a.Transform.Position = new TV_3DVECTOR(pos.x, pos.y, Engine.GameScenarioManager.MinBounds.z);
+        announceOutOfBounds = true;
+      }
+      else if (pos.z > Engine.GameScenarioManager.MaxBounds.z)
+      {
+        a.Transform.Position = new TV_3DVECTOR(pos.x, pos.y, Engine.GameScenarioManager.MaxBounds.z);
+        announceOutOfBounds = true;
+      }
+
+      if (announceOutOfBounds)
+        Engine.Screen2D.MessageText(TextLocalization.Get(TextLocalKeys.PLAYER_OUTOFBOUNDS), 5, new TV_COLOR(1, 1, 1, 1), 99);
     }
 
     public void ChangeSpeed(float frac)
     {
       if (frac == 0)
         return;
-      if (IsMovementControlsEnabled && !PlayerAIEnabled && Actor != null)
-      {
-        Actor.MoveData.Speed += frac * Actor.TypeInfo.MaxSpeedChangeRate * Engine.Game.TimeSinceRender;
-        Actor.MoveData.Speed = Actor.MoveData.Speed.Clamp(Actor.MoveData.MinSpeed, Actor.MoveData.MaxSpeed);
-      }
+
+      if (IsMovementControlsEnabled && !PlayerAIEnabled)
+        using (var v = Engine.ActorFactory.Get(ActorID))
+          if (v != null)
+          {
+            ActorInfo a = v.Value;
+            a.MoveData.Speed += frac * a.TypeInfo.MaxSpeedChangeRate * Engine.Game.TimeSinceRender;
+            a.MoveData.Speed = a.MoveData.Speed.Clamp(a.MoveData.MinSpeed, a.MoveData.MaxSpeed);
+          }
     }
 
     public void FirePrimaryWeapon()
     {
-      if (Actor != null && IsMovementControlsEnabled && !PlayerAIEnabled)
-        ActorInfo.FireWeapon(Engine, ActorID, AimTargetID, PrimaryWeapon);
+      FireWeapon(PrimaryWeapon);
     }
 
     public void FireSecondaryWeapon()
     {
-      if (Actor != null && IsMovementControlsEnabled && !PlayerAIEnabled)
-        ActorInfo.FireWeapon(Engine, ActorID, AimTargetID, SecondaryWeapon);
+      FireWeapon(SecondaryWeapon);
+    }
+
+    public void FireWeapon(string weapon)
+    {
+      if (IsMovementControlsEnabled && !PlayerAIEnabled)
+        using (var v = Engine.ActorFactory.Get(ActorID))
+        using (var vtgt = Engine.ActorFactory.Get(AimTargetID))
+          v?.Value.FireWeapon(vtgt?.Value, weapon);
     }
 
     private void ParseWeapons()
@@ -160,36 +200,46 @@ namespace SWEndor.Player
       PrimaryWeaponModes.Clear();
       SecondaryWeaponModes.Clear();
 
-      if (Actor != null) 
-      {
-        PrimaryWeaponModes.AddRange(Actor.WeaponSystemInfo.PrimaryWeapons);
-        SecondaryWeaponModes.AddRange(Actor.WeaponSystemInfo.SecondaryWeapons);
+      using (var v = Engine.ActorFactory.Get(ActorID))
+        if (v != null)
+        {
+          ActorInfo a = v.Value;
+          PrimaryWeaponModes.AddRange(a.WeaponSystemInfo.PrimaryWeapons);
+          SecondaryWeaponModes.AddRange(a.WeaponSystemInfo.SecondaryWeapons);
 
-        if (PrimaryWeapon == null || PrimaryWeapon.Length == 0)
-          ResetPrimaryWeapon();
+          if (PrimaryWeapon == null)
+            ResetPrimaryWeapon();
 
-        if (SecondaryWeapon == null || SecondaryWeapon.Length == 0)
-          ResetSecondaryWeapon();
-      }
-      else
-      {
-        PrimaryWeaponN = 0;
-        SecondaryWeaponN = 0;
-        PrimaryWeapon = "none";
-        SecondaryWeapon = "none";
-      }
+          if (SecondaryWeapon == null)
+            ResetSecondaryWeapon();
+        }
+        else
+        {
+          PrimaryWeaponN = 0;
+          SecondaryWeaponN = 0;
+        }
     }
 
     public void ResetPrimaryWeapon()
     {
       PrimaryWeaponN = 0;
-      PrimaryWeapon = (PrimaryWeaponModes.Count > PrimaryWeaponN) ? PrimaryWeaponModes[PrimaryWeaponN].Trim() : "none";
     }
 
     public void ResetSecondaryWeapon()
     {
       SecondaryWeaponN = 0;
-      SecondaryWeapon = (SecondaryWeaponModes.Count > SecondaryWeaponN) ? SecondaryWeaponModes[SecondaryWeaponN].Trim() : "none";
+    }
+
+    public void SaveWeapons()
+    {
+      PrimaryWeaponNs = PrimaryWeaponN;
+      SecondaryWeaponNs = SecondaryWeaponN;
+    }
+
+    public void LoadWeapons()
+    {
+      PrimaryWeaponN = PrimaryWeaponNs;
+      SecondaryWeaponN = SecondaryWeaponNs;
     }
 
     public void NextPrimaryWeapon()
@@ -197,7 +247,6 @@ namespace SWEndor.Player
       PrimaryWeaponN++;
       if (PrimaryWeaponModes.Count <= PrimaryWeaponN)
         PrimaryWeaponN = 0;
-      PrimaryWeapon = (PrimaryWeaponModes.Count > PrimaryWeaponN) ? PrimaryWeaponModes[PrimaryWeaponN].Trim() : "none";
     }
 
     public void PrevPrimaryWeapon()
@@ -205,7 +254,6 @@ namespace SWEndor.Player
       PrimaryWeaponN--;
       if (PrimaryWeaponN < 0)
         PrimaryWeaponN = PrimaryWeaponModes.Count - 1;
-      PrimaryWeapon = (PrimaryWeaponModes.Count > PrimaryWeaponN) ? PrimaryWeaponModes[PrimaryWeaponN].Trim() : "none";
     }
 
     public void NextSecondaryWeapon()
@@ -213,35 +261,40 @@ namespace SWEndor.Player
       SecondaryWeaponN++;
       if (SecondaryWeaponModes.Count <= SecondaryWeaponN)
         SecondaryWeaponN = 0;
-      SecondaryWeapon = (SecondaryWeaponModes.Count > SecondaryWeaponN) ? SecondaryWeaponModes[SecondaryWeaponN].Trim() : "none";
     }
 
     public void PrevSecondaryWeapon()
     {
       SecondaryWeaponN--;
       if (SecondaryWeaponN < 0)
-        SecondaryWeaponN = SecondaryWeaponModes.Count- 1;
-      SecondaryWeapon = (SecondaryWeaponModes.Count > SecondaryWeaponN) ? SecondaryWeaponModes[SecondaryWeaponN].Trim() : "none";
+        SecondaryWeaponN = SecondaryWeaponModes.Count - 1;
     }
 
 
     public void FlashHit()
     {
-      if (Actor.TypeInfo is ActorTypes.Groups.Fighter)
+      using (ScopedManager<ActorInfo>.ScopedItem v = Engine.ActorFactory.Get(ActorID))
       {
-        Engine.SoundManager.SetSound("hit");
-        TV_COLOR color = StrengthColor;
-        Engine.TrueVision.TVGraphicEffect.Flash(color.r, color.g, color.b, 200);
-
-        if (Actor.Health.HP > 0 && DamagedReportSound != null && DamagedReportSound.Length > 0)
+        if (v != null)
         {
-          double r = Engine.Random.NextDouble();
-          int dmgnum = DamagedReportSound.Length;
+          ActorInfo a = v.Value;
+          if (a.TypeInfo is ActorTypes.Groups.Fighter)
+          {
+            Engine.SoundManager.SetSound("hit");
+            TV_COLOR color = StrengthColor;
+            Engine.TrueVision.TVGraphicEffect.Flash(color.r, color.g, color.b, 200);
 
-          int dmgst = (int)((dmgnum + 1) * Actor.Health.Frac);
-          if (dmgst < DamagedReportSound.Length)
-            if (r < 0.25f * (dmgnum - dmgst) / dmgnum)
-              Engine.SoundManager.SetSound(DamagedReportSound[dmgst], false);
+            if (a.Health.HP > 0 && DamagedReportSound != null && DamagedReportSound.Length > 0)
+            {
+              double r = Engine.Random.NextDouble();
+              int dmgnum = DamagedReportSound.Length;
+
+              int dmgst = (int)((dmgnum + 1) * a.Health.Frac);
+              if (dmgst < DamagedReportSound.Length)
+                if (r < 0.25f * (dmgnum - dmgst) / dmgnum)
+                  Engine.SoundManager.SetSound(DamagedReportSound[dmgst], false);
+            }
+          }
         }
       }
     }

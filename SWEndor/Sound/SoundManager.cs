@@ -132,6 +132,7 @@ namespace SWEndor.Sound
       foreach (string sdfl in soundfiles)
       {
         string sdname = Path.GetFileNameWithoutExtension(sdfl);
+        Log.Write(Log.DEBUG, LogType.ASSET_SOUND_LOAD, sdname);
 
         if (i >= soundgrps.Count)
         {
@@ -150,12 +151,14 @@ namespace SWEndor.Sound
         soundgrps.Add(sdname, grp);
 
         i++;
+        Log.Write(Log.DEBUG, LogType.ASSET_SOUND_LOADED, sdname);
       }
 
       string[] musicfiles = Directory.GetFiles(Globals.MusicPath, "*.mp3", SearchOption.AllDirectories);
       foreach (string mufl in musicfiles)
       {
         string muname = Path.Combine(Path.GetDirectoryName(mufl), Path.GetFileNameWithoutExtension(mufl)).Replace(Globals.MusicPath, "");
+        Log.Write(Log.DEBUG, LogType.ASSET_SOUND_LOAD, muname);
 
         FMOD.Sound mu = null;
         fmodsystem.createSound(mufl, FMOD.MODE.LOWMEM | FMOD.MODE.CREATECOMPRESSEDSAMPLE | FMOD.MODE.ACCURATETIME, out mu);
@@ -165,6 +168,8 @@ namespace SWEndor.Sound
         FMOD.Sound mu2 = null;
         fmodsystem.createStream(mufl, FMOD.MODE.LOWMEM | FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out mu2);
         music.Add(muname + "%", mu2);
+
+        Log.Write(Log.DEBUG, LogType.ASSET_SOUND_LOADED, muname);
       }
     }
 

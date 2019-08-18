@@ -28,7 +28,7 @@ namespace SWEndor.ActorTypes.Groups
       TargetType = TargetType.MUNITION;
       RadarType = RadarType.TRAILLINE;
 
-      Mask = ComponentMask.MISSILE_PROJECTILE;
+      Mask = ComponentMask.GUIDED_PROJECTILE;
     }
 
     public override void Initialize(ActorInfo ainfo)

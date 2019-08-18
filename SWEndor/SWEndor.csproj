@@ -340,6 +340,7 @@
     <Compile Include="ActorTypes\Groups\Warships\TransportATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\GreenLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\RedLaserATI.cs" />
+    <Compile Include="AI\Actions\ProjectileAttackActor.cs" />
     <Compile Include="AI\Actions\AttackActor.cs" />
     <Compile Include="AI\Actions\EnableSpawn.cs" />
     <Compile Include="AI\Actions\CustomAction.cs" />
@@ -407,12 +408,17 @@
     <Compile Include="FileFormat\INI\Components\INILine.cs" />
     <Compile Include="FileFormat\INI\Components\INISection.cs" />
     <Compile Include="FileFormat\Scripting\ScriptFile.cs" />
+    <Compile Include="Log\LogType.cs" />
     <Compile Include="Log\Logger.cs" />
     <Compile Include="Player\PlayerCameraInfo.cs" />
     <Compile Include="Primitives\BoundingBox.cs" />
     <Compile Include="Primitives\BoundingSphere.cs" />
     <Compile Include="Primitives\BoundingValue.cs" />
+    <Compile Include="Primitives\Cache\Cache.cs" />
+    <Compile Include="Primitives\Cache\Cache_P2.cs" />
+    <Compile Include="Primitives\Collections\CircularQueue.cs" />
     <Compile Include="Primitives\Pair.cs" />
+    <Compile Include="Primitives\ScopedItem.cs" />
     <Compile Include="Primitives\StateMachines\StateMachine.cs" />
     <Compile Include="Primitives\TimeCache.cs" />
     <Compile Include="Primitives\Delegates.cs" />
@@ -512,8 +518,8 @@
     <Compile Include="UI\Menu\Page.cs" />
     <Compile Include="Parser\GameSaver.cs" />
     <Compile Include="AtmosphereInfo.cs" />
-    <Compile Include="Primitives\ThreadSafeDictionary.cs" />
-    <Compile Include="Primitives\ThreadSafeList.cs" />
+    <Compile Include="Primitives\Collections\ThreadSafeDictionary.cs" />
+    <Compile Include="Primitives\Collections\ThreadSafeList.cs" />
     <Compile Include="Scenarios\GameScenarioBase.cs" />
     <Compile Include="Scenarios\Scenarios\GSCustomScenario.cs" />
     <Compile Include="Scenarios\Scenarios\GSTIEAdvanced.cs" />

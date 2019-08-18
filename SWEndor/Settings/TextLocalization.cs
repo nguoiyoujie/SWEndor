@@ -30,7 +30,7 @@ namespace SWEndor
       { TextLocalKeys.DUMMY, "" },
 
       { TextLocalKeys.SYSTEM_INIT_ERROR, "Fatal Error occurred during initialization. Please see {0} in the /Log folder for the error message." },
-      { TextLocalKeys.SYSTEM_RUN_ERROR, "Fatal Error occurred during initialization. Please see {0} in the /Log folder for the error message." },
+      { TextLocalKeys.SYSTEM_RUN_ERROR, "Fatal Error occurred during runtime. Please see {0} in the /Log folder for the error message." },
 
       { TextLocalKeys.SYSTEM_TITLE_ERROR,"{0} - Error Encountered!" },
 

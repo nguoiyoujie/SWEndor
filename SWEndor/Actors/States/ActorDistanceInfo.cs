@@ -1,14 +1,28 @@
 ﻿using MTV3D65;
 using SWEndor.Primitives;
 using System;
-using System.Collections.Generic;
 
 namespace SWEndor.Actors
 {
+  public struct int2
+  {
+    public int Value1;
+    public int Value2;
+
+    public int2(int v1, int v2)
+    {
+      Value1 = v1;
+      Value2 = v2;
+    }
+  }
+
   public static class ActorDistanceInfo
   {
-    private static Dictionary<int, TimeCache<float>> list = new Dictionary<int, TimeCache<float>>(); //{ ExplicitUpdateOnly = true };
+    private static Cache<int2, float, float, ActorInfo, ActorInfo> cache = new Cache<int2, float, float, ActorInfo, ActorInfo>(); 
     private static float Cleartime = 0;
+    private static Func<ActorInfo, ActorInfo, float> func = (n1, n2) => CalculateDistance(n1, n2);
+    private static Func<float, bool> clearfunc = (f) => { return f > Globals.Engine.Game.GameTime; };
+
     private static object locker = new object();
 
     public static float GetRoughDistance(TV_3DVECTOR v1, TV_3DVECTOR v2)
@@ -70,24 +84,15 @@ namespace SWEndor.Actors
       if (a1 == a2)
         return 0;
 
-      if (Cleartime < Globals.Engine.Game.GameTime)
-      {
-        list.Clear();
-        Cleartime = Globals.Engine.Game.GameTime + 5;
-      }
-
-      int hash = (a1.ID < a2.ID) ? a1.ID * Globals.ActorLimit + a2.ID : a2.ID * Globals.ActorLimit + a1.ID;
-
-      Func<float> fn = () => CalculateDistance(a1, a2);
-
       lock (locker)
       {
-        if (!list.ContainsKey(hash))
-          //list[hash].Set(Globals.Engine.Game.GameTime, fn);
-        //else
-          list.Add(hash, new TimeCache<float>(Globals.Engine.Game.GameTime, fn));
+        if (Cleartime < Globals.Engine.Game.GameTime)
+        {
+          cache.Clear(clearfunc);
+          Cleartime = Globals.Engine.Game.GameTime + 5;
+        }
 
-        return list[hash].Get(Globals.Engine.Game.GameTime);
+        return cache.GetOrDefine(new int2(a1.ID, a2.ID), Globals.Engine.Game.GameTime, func, a1, a2);
       }
     }
 

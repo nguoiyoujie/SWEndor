@@ -41,16 +41,15 @@ namespace SWEndor.Actors
     public string Name { get { return _name; } }
     public string SideBarName { get { return (sidebar_name.Length == 0) ? _name : sidebar_name; } set { sidebar_name = value; } }
     public int ID { get; private set; }
-    public int dataID { get { return ID % Globals.ActorLimit; } }
-    public string Key { get { return "{0}:{1}".F(ID, _name); } }
+    public string Key { get { return "{0} {1}".F(_name, ID); } }
 
     public override string ToString()
     {
-#if DEBUG
-      return "{0},{1}".F(Key, StateModel?.CreationState.ToString() ?? "NO STATE");
-#else
+//#if DEBUG
+//      return "{0},{1}".F(Key, StateModel?.CreationState.ToString() ?? "NO STATE");
+//#else
       return Key;
-#endif
+//#endif
     }
 
     // Faction
@@ -119,8 +118,9 @@ namespace SWEndor.Actors
     public IRelation<ActorInfo> Relation { get; private set; }
 
     // 
+    //private TraitCollection Traits { get { return Engine.Traits; } }
     private readonly TraitCollection Traits;
-    public List<Action<ActorInfo>> PostFrameActions = new List<Action<ActorInfo>>();
+    //public List<Action<ActorInfo>> PostFrameActions = new List<Action<ActorInfo>>();
 
 
 
@@ -262,10 +262,14 @@ namespace SWEndor.Actors
     public float GetTrueSpeed()
     {
       float ret = MoveData.Speed;
-      ActorInfo a = Relation.UseParentCoords ? Relation.Parent : null;
-      if (a != null)
-        ret += a.GetTrueSpeed();
-
+      if (Relation.UseParentCoords)
+      {
+        using (var v = ScopedManager<ActorInfo>.Scope(Relation.Parent))
+        {
+          if (v.Value != null)
+            ret += v.Value.GetTrueSpeed();
+        }
+      }
       return ret;
     }
 
@@ -274,92 +278,17 @@ namespace SWEndor.Actors
       Transform.Rotation += new TV_3DVECTOR(x, y, z);
     }
 
-#region Parent, Child and Relatives
+    #region Parent, Child and Relatives
 
-    public void AddChild(ActorInfo c)
-    {
-      Relation.AddChild(this, c);
+    public void AddChild(ActorInfo c) { Relation.AddChild(this, c, c.Relation); }
 
-      /*
-      c.Parent = this;
+    public void RemoveChild(ActorInfo c) { Relation.RemoveChild(this, c, c.Relation); }
 
-      if (NumberOfChildren == 0)
-      {
-        FirstChild = c;
-      }
-      else
-      {
-        LastChild.NextSibling = c;
-        c.PrevSibling = LastChild;
-      }
-      LastChild = c;
-      NumberOfChildren++;
-      */
-    }
+    public IEnumerable<ActorInfo> Children { get { return Relation.Children; } }
 
-    public void RemoveChild(ActorInfo c)
-    {
-      Relation.RemoveChild(this, c);
+    public ActorInfo TopParent { get { return Relation.GetTopParent(this); } }
 
-      /*
-      if (c.Parent == this)
-      {
-        NumberOfChildren--;
-        if (FirstChild == c)
-        {
-          FirstChild = c.NextSibling;
-        }
-        else if (LastChild == c)
-        {
-          LastChild = c.PrevSibling;
-        }
-        else
-        {
-          c.PrevSibling.NextSibling = c.NextSibling;
-          c.NextSibling.PrevSibling = c.PrevSibling;
-        }
-
-        c.Parent = null;
-      }
-      */
-    }
-
-    public IEnumerable<ActorInfo> Children
-    {
-      get
-      {
-        return Relation.Children;
-
-        /*
-        ActorInfo[] ret = new ActorInfo[NumberOfChildren];
-        ActorInfo child = FirstChild;
-        for (int i = 0; i < NumberOfChildren; i++)
-        {
-          ret[i] = child;
-          child = child.NextSibling;
-        }
-        return ret;
-        */
-      }
-    }
-
-    public ActorInfo TopParent
-    {
-      get
-      {
-        return Relation.GetTopParent(this);
-        //return Parent?.TopParent ?? this;
-      }
-    }
-
-    public IEnumerable<ActorInfo> Siblings
-    {
-      get
-      {
-        return Relation.Siblings;
-        //return Parent?.Children ?? new ActorInfo[0];
-      }
-    }
+    public IEnumerable<ActorInfo> Siblings { get { return Relation.Siblings; } }
 
     // To be replaced by ITraitOwner-compatible Faction
     ITraitOwner ITraitOwner.Owner
@@ -426,86 +355,89 @@ namespace SWEndor.Actors
       }
     }
 
-    public bool IsPlayer { get { return PlayerInfo.Actor == this; } }
+    public bool IsPlayer { get { return PlayerInfo.ActorID == ID; } }
 
-    public bool IsScenePlayer { get { return IsPlayer || PlayerInfo.TempActor == this; } }
+    public bool IsScenePlayer { get { return IsPlayer || PlayerInfo.TempActorID == ID; } }
 
     public void Kill()
     {
-      //StateModel.CreationState = CreationState.DISPOSING;
       ActorFactory.MakeDead(this);
     }
 
     public void Destroy()
     {
-      if (StateModel.CreationState == CreationState.DISPOSING
-        || StateModel.CreationState == CreationState.DISPOSED)
-        return;
-
-      StateModel.SetDisposing();
-
-      // Parent
-      Relation.Parent?.RemoveChild(this);
-
-      // Destroy Children
-      foreach (ActorInfo c in Children)
+      using (var scope = ScopedManager<ActorInfo>.Scope(this))
       {
-        if (c.TypeInfo is ActorTypes.Groups.AddOn || c.Relation.UseParentCoords)
-          c.Destroy();
-        else
-          RemoveChild(c);
+        if (StateModel.CreationState == CreationState.DISPOSING
+          || StateModel.CreationState == CreationState.DISPOSED)
+          return;
+
+        StateModel.SetDisposing();
+
+        // Parent
+        Relation.Parent?.RemoveChild(this);
+
+        // Destroy Children
+        foreach (ActorInfo c in new List<ActorInfo>(Children)) // use new list as members are deleted from the IEnumerable
+        {
+          if (c.TypeInfo is ActorTypes.Groups.AddOn || c.Relation.UseParentCoords)
+            c.Destroy();
+          else
+            RemoveChild(c);
+        }
+
+        Relation.UseParentCoords = false;
+
+        // Actions
+        CurrentAction = null;
+
+        // Reset components
+        MoveComponent = NoMove.Instance;
+        DyingMoveComponent = null;
+
+        CycleInfo.Reset();
+        WeaponSystemInfo.Reset();
+
+        // Events
+        OnDestroyedEvent();
+        CreatedEvents = null;
+        DestroyedEvents = null;
+        TickEvents = null;
+        HitEvents = null;
+        ActorStateChangeEvents = null;
+
+        // Player
+        if (ID == PlayerInfo.ActorID)
+          PlayerInfo.ActorID = -1;
+        else if (ID == PlayerInfo.TempActorID)
+          PlayerInfo.TempActorID = -1;
+
+        Faction.UnregisterActor(this);
+
+        // Dispose Traits
+        foreach (IDisposableTrait t in TraitsImplementing<IDisposableTrait>())
+        {
+          t.Dispose();
+          Engine.TraitPoolCollection.ReturnTrait(t);
+        }
+
+        StateModel.SetDisposed();
+        Traits.State = TraitCollectionState.DISPOSED;
+        Traits.Clear();
+
+        // Kill data
+        MoveData.Reset();
+
+        CollisionData.Reset();
+        RegenData.Reset();
+        CombatData.Reset();
+
+        // Final dispose
+        Engine.ActorFactory.Remove(ID);
+
+        Log.Write(Log.DEBUG, LogType.ACTOR_DISPOSED, this);
       }
-
-      Relation.UseParentCoords = false;
-
-      // Actions
-      CurrentAction = null;
-
-      // Reset components
-      MoveComponent = NoMove.Instance;
-      DyingMoveComponent = null;
-
-      CycleInfo.Reset();
-      WeaponSystemInfo.Reset();
-
-      // Events
-      OnDestroyedEvent();
-      CreatedEvents = null;
-      DestroyedEvents = null;
-      TickEvents = null;
-      HitEvents = null;
-      ActorStateChangeEvents = null;
-
-      // Player
-      if (this == PlayerInfo.Actor)
-        PlayerInfo.ActorID = -1;
-      else if (this == PlayerInfo.TempActor)
-        PlayerInfo.TempActorID = -1;
-
-      Faction.UnregisterActor(this);
-
-      // Dispose Traits
-      foreach (IDisposableTrait t in TraitsImplementing<IDisposableTrait>())
-      {
-        t.Dispose();
-        Engine.TraitPoolCollection.ReturnTrait(t);
-      }
-
-      StateModel.SetDisposed();
-      Traits.State = TraitCollectionState.DISPOSED;
-      Traits.Clear();
-
-      // Kill data
-      MoveData.Reset();
-
-      CollisionData.Reset();
-      RegenData.Reset();
-      CombatData.Reset();
-
-      // Final dispose
-      Engine.ActorFactory.Remove(ID);
     }
-
 
     public T Trait<T>() where T : ITrait { return Traits.Get<T>(); }
 

@@ -93,7 +93,7 @@ namespace SWEndor.ActorTypes.Instances
         return;
 
       ainfo.DyingTimer.Set(5).Start();
-      CombatSystem.Deactivate(Engine, ainfo.ID);
+      CombatSystem.Deactivate(Engine, ainfo);
     }
 
     public override void Dead<A1>(A1 self)

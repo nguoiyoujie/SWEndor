@@ -18,7 +18,7 @@ namespace SWEndor
     public static int ResolutionY { get; private set; }
     public static bool GameDebug = false;
     public static bool FullScreenMode = false;
-    public static bool ShowPerformance = false;
+    //public static bool ShowPerformance = false;
     public static float SteeringSensitivity = 1.5f;
 
     public static TV_2DVECTOR GetResolution
@@ -87,7 +87,7 @@ namespace SWEndor
       {
         sr.WriteLine("ResolutionMode={0}".F((int)ResolutionMode));
         sr.WriteLine("FullScreen={0}".F(FullScreenMode));
-        sr.WriteLine("ShowPerformance={0}".F(ShowPerformance));
+        sr.WriteLine("ShowPerformance={0}".F(engine.PerfManager.Enabled));
         sr.WriteLine("GameDebug={0}".F(GameDebug));
         sr.WriteLine("MasterMusicVolume={0}".F(engine.SoundManager.MasterMusicVolume));
         sr.WriteLine("MasterSFXVolume={0}".F(engine.SoundManager.MasterSFXVolume));
@@ -124,7 +124,7 @@ namespace SWEndor
             break;
           case "showperformance":
             bool showperf = false;
-            ShowPerformance = (bool.TryParse(value, out showperf)) ? showperf : false;
+            engine.PerfManager.Enabled = (bool.TryParse(value, out showperf)) ? showperf : false;
             break;
           case "mastermusicvolume":
             float mastermusicvol = 1.0f;

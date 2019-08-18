@@ -203,16 +203,20 @@ namespace SWEndor.Actors.Components
               int checkID = -1;
               if (int.TryParse(tvm.GetTag(), out checkID))
               {
-                ActorInfo checkActor = engine.ActorFactory.Get(checkID);
-                if (checkActor != null
-                     && checkActor != actor
-                     && actor.TopParent != checkActor.TopParent
-                     && checkActor.StateModel.ComponentMask.Has(ComponentMask.CAN_BECOLLIDED)
-                     && !checkActor.IsAggregateMode
-                     )
-                {
-                  CollisionActor = checkActor;
-                }
+                using (var v = engine.ActorFactory.Get(checkID))
+                  if (v != null)
+                  {
+                    ActorInfo checkActor = v.Value;
+                    if (checkActor != null
+                         && checkActor != actor
+                         && actor.TopParent != checkActor.TopParent
+                         && checkActor.StateModel.ComponentMask.Has(ComponentMask.CAN_BECOLLIDED)
+                         && !checkActor.IsAggregateMode
+                         )
+                    {
+                      CollisionActor = checkActor;
+                    }
+                  }
               }
             }
           }
@@ -224,13 +228,17 @@ namespace SWEndor.Actors.Components
               int checkID = -1;
               if (int.TryParse(tvm.GetTag(), out checkID))
               {
-                ActorInfo checkActor = engine.ActorFactory.Get(checkID);
-                if (checkActor != null
-                     && !(checkActor.TypeInfo is ActorTypes.Groups.Fighter)
-                     )
-                {
-                  CollisionActor = checkActor;
-                }
+                using (var v = engine.ActorFactory.Get(checkID))
+                  if (v != null)
+                  {
+                    ActorInfo checkActor = v.Value;
+                    if (checkActor != null
+                       && !(checkActor.TypeInfo is ActorTypes.Groups.Fighter)
+                       )
+                    {
+                      CollisionActor = checkActor;
+                    }
+                  }
               }
             }
           }

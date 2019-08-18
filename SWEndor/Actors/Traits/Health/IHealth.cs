@@ -22,9 +22,9 @@ namespace SWEndor.Actors.Traits
 
     TV_COLOR Color { get; }
 
-    void InflictDamage<A1, A2>(A1 self, DamageInfo<A2> dmg) where A1 : ITraitOwner where A2 : ITraitOwner;
-    void Kill<A1, A2>(A1 self, A2 attacker) where A1 : ITraitOwner where A2 : ITraitOwner;
-    void SetHP<A1>(A1 self, float value) where A1 : ITraitOwner;
-    void SetMaxHP<A1>(A1 self, float value, bool scaleHP) where A1 : ITraitOwner;
+    void InflictDamage<A1, A2>(A1 self, DamageInfo<A2> dmg) where A1 : class, ITraitOwner where A2 : class, ITraitOwner;
+    void Kill<A1, A2>(A1 self, A2 attacker) where A1 : class, ITraitOwner where A2 : class, ITraitOwner;
+    void SetHP<A1>(A1 self, float value) where A1 : class, ITraitOwner;
+    void SetMaxHP<A1>(A1 self, float value, bool scaleHP) where A1 : class, ITraitOwner;
   }
 }

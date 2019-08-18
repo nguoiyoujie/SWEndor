@@ -1,4 +1,5 @@
 ﻿using SWEndor.ActorTypes;
+using SWEndor.Primitives;
 using System;
 using System.Collections.Concurrent;
 using System.Threading;
@@ -13,13 +14,19 @@ namespace SWEndor.Actors
       internal Factory(Engine engine)
       {
         Engine = engine;
-        DefaultKey = -1;
       }
 
       private int counter = 0;
       private ConcurrentQueue<ActorInfo> planned = new ConcurrentQueue<ActorInfo>();
+      private ConcurrentQueue<ActorInfo> prepool = new ConcurrentQueue<ActorInfo>();
       private ConcurrentQueue<ActorInfo> pool = new ConcurrentQueue<ActorInfo>();
       private ConcurrentQueue<ActorInfo> dead = new ConcurrentQueue<ActorInfo>();
+
+      // temp pools
+      private ConcurrentQueue<ActorInfo> redo = new ConcurrentQueue<ActorInfo>();
+      private ConcurrentQueue<ActorInfo> nextplan = new ConcurrentQueue<ActorInfo>();
+      private ConcurrentQueue<ActorInfo> nextdead = new ConcurrentQueue<ActorInfo>();
+
       private ActorInfo First;
       private ActorInfo Last;
       private object creationLock = new object();
@@ -45,6 +52,7 @@ namespace SWEndor.Actors
 
           planned.Enqueue(actor);
           Add(id, actor);
+          Log.Write(Log.DEBUG, LogType.ACTOR_CREATED, actor);
 
           if (First == null)
           {
@@ -67,7 +75,6 @@ namespace SWEndor.Actors
 
       public void ActivatePlanned()
       {
-        ConcurrentQueue<ActorInfo> nextplan = new ConcurrentQueue<ActorInfo>();
         ActorInfo actor = null;
         while (planned.TryDequeue(out actor))
         {
@@ -93,7 +100,27 @@ namespace SWEndor.Actors
       {
         ActorInfo a;
         while (dead.TryDequeue(out a))
-          a.Destroy();
+          if (ScopedManager<ActorInfo>.Check(a) == 0)
+            a.Destroy();
+          else
+            nextdead.Enqueue(a);
+
+        while (nextdead.TryDequeue(out a))
+          dead.Enqueue(a);
+      }
+
+      public void ReturnToPool()
+      {
+        ActorInfo a;
+
+        while (prepool.TryDequeue(out a))
+          if (ScopedManager<ActorInfo>.Check(a) == 0)
+            pool.Enqueue(a);
+          else
+            redo.Enqueue(a);
+
+        while (redo.TryDequeue(out a))
+          prepool.Enqueue(a);
       }
 
       public int GetActorCount()
@@ -111,49 +138,57 @@ namespace SWEndor.Actors
         }
       }
 
-      public new void Remove(int id)
+      public new ScopedManager<ActorInfo>.ScopedItem Get(int id)
       {
-        int x = id;
-
-        ActorInfo actor = Get(id);
-        if (actor == null)
-          return;
-
-        if (First == actor && Last == actor)
-        {
-          First = null;
-          Last = null;
-        }
-        else if (First == actor)
-        {
-          First = actor.Next;
-        }
-        else if (Last == actor)
-        {
-          Last = actor.Prev;
-        }
-        else
-        {
-          actor.Prev.Next = actor.Next;
-          actor.Next.Prev = actor.Prev;
-        }
-
-        actor.Next = null;
-        actor.Prev = null;
-
-        base.Remove(id);
-        pool.Enqueue(actor);
+        return ScopedManager<ActorInfo>.Scope(base.Get(id));
       }
 
+      public new void Remove(int id)
+      {
+        using (var v = Get(id))
+          if (v != null)
+          {
+            ActorInfo actor = v.Value;
+            if (First == actor && Last == actor)
+            {
+              First = null;
+              Last = null;
+            }
+            else if (First == actor)
+            {
+              First = actor.Next;
+            }
+            else if (Last == actor)
+            {
+              Last = actor.Prev;
+            }
+            else
+            {
+              actor.Prev.Next = actor.Next;
+              actor.Next.Prev = actor.Prev;
+            }
+
+            actor.Next = null;
+            actor.Prev = null;
+
+            base.Remove(id);
+            prepool.Enqueue(actor);
+          }
+      }
+
+      Action<Engine, ActorInfo> destroy = (e, a) => { a?.Destroy(); };
       public void Reset()
       {
         DestroyDead();
-        foreach (ActorInfo a in GetAll())
-          a?.Destroy();
+        DoEach(destroy);
+
+        //foreach (ActorInfo a in GetAll())
+        //  a?.Destroy();
 
         list.Clear();
         planned = new ConcurrentQueue<ActorInfo>();
         dead = new ConcurrentQueue<ActorInfo>();
+        prepool = new ConcurrentQueue<ActorInfo>();
         pool = new ConcurrentQueue<ActorInfo>();
         First = null;
         Last = null;

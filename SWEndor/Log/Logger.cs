@@ -14,12 +14,12 @@ namespace SWEndor
     private const string ext = "log";
     private static readonly Dictionary<string, TextWriter> Loggers = new Dictionary<string, TextWriter>();
 
-    public static void Init()
-    {
-      AddLogger(INITERROR, "initerror.log");
-      AddLogger(ERROR, "error.log");
-      AddLogger(DEBUG, "debug.log");
-    }
+    //public static void Init()
+    //{
+      //AddLogger(INITERROR, "initerror.log");
+      //AddLogger(ERROR, "error.log");
+      //AddLogger(DEBUG, "debug.log");
+    //}
 
     private static IEnumerable<string> GetFilename(string baseFilename)
     {
@@ -29,25 +29,29 @@ namespace SWEndor
         yield return Path.Combine(Globals.LogPath, i > 0 ? "{0}.{1}".F(baseFilename, i) : baseFilename);
     }
 
-    public static void AddLogger(string channel)
+    public static TextWriter AddLogger(string channel)
     {
-      AddLogger(channel, "{0}.{1}".F(channel, ext));
+      return AddLogger(channel, "{0}.{1}".F(channel, ext));
     }
 
-    public static void AddLogger(string channel, string baseFilename)
+    public static TextWriter AddLogger(string channel, string baseFilename)
     {
-      if (Loggers.ContainsKey(channel))
-        return;
+      TextWriter info;
+      if (Loggers.TryGetValue(channel, out info))
+        return info;
 
       foreach (string filename in GetFilename(baseFilename))
         try
         {
           StreamWriter writer = File.CreateText(filename);
           writer.AutoFlush = true;
-          Loggers.Add(channel, TextWriter.Synchronized(writer));
-          return;
+          info = TextWriter.Synchronized(writer);
+          Loggers.Add(channel, info);
+          return info;
         }
         catch (IOException) { } // if error, continue and attempt generating the next filename
+
+      return info;
     }
 
     static TextWriter GetWriter(string channel)
@@ -55,7 +59,10 @@ namespace SWEndor
       TextWriter info;
       lock (Loggers)
         if (!Loggers.TryGetValue(channel, out info))
-          throw new ArgumentException("Tried logging to non-existent channel " + channel, "channelName");
+        {
+          //throw new ArgumentException("Tried logging to non-existent channel " + channel, "channelName");
+          info = AddLogger(channel);
+        }
 
       return info;
     }
@@ -68,6 +75,20 @@ namespace SWEndor
     public static void Write(string channel, string formatvalue, params object[] args)
     {
       GetWriter(channel)?.WriteLine(formatvalue, args);
+    }
+
+    internal static void Write(string channel, LogType type, params object[] args)
+    {
+      string s = string.Empty;
+      if (LogDecorator.Decorator.TryGetValue(type, out s))
+      {
+        GetWriter(channel)?.Write("{0:s}\t{1:x}\t".F(DateTime.Now, type));
+        GetWriter(channel)?.WriteLine(s, args);
+      }
+      else
+      {
+        GetWriter(channel)?.WriteLine("{0:s}\t{1:x}\t".F(DateTime.Now, type));
+      }
     }
 
     public static void WriteErr(string channel, Exception ex)

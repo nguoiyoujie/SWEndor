@@ -162,50 +162,53 @@ namespace SWEndor.Scenarios
       base.GameTick();
       CalibrateSceneObjects();
 
-      ActorInfo tgt = ActorFactory.Get(PlayerCameraInfo.LookActor);
-
-      if (tgt == null || !tgt.Active)
+      using (var v = ActorFactory.Get(PlayerCameraInfo.LookActor))
       {
-        List<ActorInfo> list = new List<ActorInfo>(MainEnemyFaction.GetWings());
-        list.AddRange(MainAllyFaction.GetWings());
-        if (list.Count > 0)
-          PlayerCameraInfo.LookActor = list[Engine.Random.Next(0, list.Count)].ID;
-      }
+        ActorInfo tgt = v?.Value;
 
-      if (tgt != null && tgt.Active)
-      {
-        PlayerCameraInfo.Look.SetPosition_Actor(tgt.ID, new TV_3DVECTOR(0, 25, 0), new TV_3DVECTOR(0, 0, -100));
-        PlayerCameraInfo.Look.SetTarget_LookAtActor(tgt.ID, new TV_3DVECTOR(0, 30, 0), new TV_3DVECTOR(0, 0, 20000));
-        PlayerCameraInfo.Look.SetRotationMult(0.2f);
-      }
-
-      if (Manager.GetGameStateB("in_battle"))
-      {
-        // TIE spawn
-        if (TIESpawnTime < Game.GameTime)
+        if (tgt == null || !tgt.Active)
         {
-          if (MainEnemyFaction.GetWings().Count < 12)
-          {
-            TIESpawnTime = Game.GameTime + 10f;
-            Manager.AddEvent(0, Empire_TIEWave_01, IntegerEventArg.N4);
-          }
+          List<ActorInfo> list = new List<ActorInfo>(MainEnemyFaction.GetWings());
+          list.AddRange(MainAllyFaction.GetWings());
+          if (list.Count > 0)
+            PlayerCameraInfo.LookActor = list[Engine.Random.Next(0, list.Count)].ID;
         }
 
-        // Rebel spawn
-        if (RebelSpawnTime < Game.GameTime)
+        if (tgt != null && tgt.Active)
         {
-          if (MainAllyFaction.GetWings().Count < 8)
-          {
-            RebelSpawnTime = Game.GameTime + 10f;
-            Manager.AddEvent(0, Rebel_Wave);
-          }
+          PlayerCameraInfo.Look.SetPosition_Actor(tgt.ID, new TV_3DVECTOR(0, 25, 0), new TV_3DVECTOR(0, 0, -100));
+          PlayerCameraInfo.Look.SetTarget_LookAtActor(tgt.ID, new TV_3DVECTOR(0, 30, 0), new TV_3DVECTOR(0, 0, 20000));
+          PlayerCameraInfo.Look.SetRotationMult(0.2f);
         }
 
-        if (MainAllyFaction.GetShips().Count < 3 && !Manager.GetGameStateB("rebels_fled"))
+        if (Manager.GetGameStateB("in_battle"))
         {
-          Manager.SetGameStateB("rebels_fled", true);
-          Manager.AddEvent(Game.GameTime + 15f, Rebel_HyperspaceIn2);
-          Rebel_HyperspaceOut(null);
+          // TIE spawn
+          if (TIESpawnTime < Game.GameTime)
+          {
+            if (MainEnemyFaction.GetWings().Count < 12)
+            {
+              TIESpawnTime = Game.GameTime + 10f;
+              Manager.AddEvent(0, Empire_TIEWave_01, IntegerEventArg.N4);
+            }
+          }
+
+          // Rebel spawn
+          if (RebelSpawnTime < Game.GameTime)
+          {
+            if (MainAllyFaction.GetWings().Count < 8)
+            {
+              RebelSpawnTime = Game.GameTime + 10f;
+              Manager.AddEvent(0, Rebel_Wave);
+            }
+          }
+
+          if (MainAllyFaction.GetShips().Count < 3 && !Manager.GetGameStateB("rebels_fled"))
+          {
+            Manager.SetGameStateB("rebels_fled", true);
+            Manager.AddEvent(Game.GameTime + 15f, Rebel_HyperspaceIn2);
+            Rebel_HyperspaceOut(null);
+          }
         }
       }
     }

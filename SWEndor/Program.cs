@@ -19,10 +19,12 @@ namespace SWEndor
     }
 
     static void Init()
-    { 
+    {
+      //Log.Init();
       try
       {
-        Log.Init();
+        Log.Write(Log.DEBUG, LogType.SYS_INIT, Application.ProductName, Globals.Version);
+
         Globals.PreInit();
         Engine engine = Globals.InitEngine();
 
@@ -38,7 +40,10 @@ namespace SWEndor
         MessageBox.Show(TextLocalization.Get(TextLocalKeys.SYSTEM_INIT_ERROR).F(Log.INITERROR)
                       , TextLocalization.Get(TextLocalKeys.SYSTEM_TITLE_ERROR).F(Application.ProductName)
                       , MessageBoxButtons.OK);
-        return;
+      }
+      finally
+      {
+        Log.Write(Log.DEBUG, LogType.SYS_CLOSE, Application.ProductName);
       }
     }
   }

@@ -12,11 +12,17 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
-        return (!Owner.ShowPage
-            && PlayerInfo.Actor != null
-            && !PlayerInfo.Actor.StateModel.IsDyingOrDead
-            && Owner.ShowUI
-            && Owner.Box3D_Enable);
+        using (var v = ActorFactory.Get(PlayerInfo.ActorID))
+        {
+          if (v == null)
+            return false;
+
+          ActorInfo p = v.Value;
+          return (!Owner.ShowPage
+          && !p.StateModel.IsDyingOrDead
+          && Owner.ShowUI
+          && Owner.Box3D_Enable);
+        }
       }
     }
 

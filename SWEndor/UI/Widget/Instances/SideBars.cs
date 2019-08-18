@@ -27,20 +27,31 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
-        return (!Owner.ShowPage
-            && PlayerInfo.Actor != null
-            && !PlayerInfo.Actor.StateModel.IsDyingOrDead
-            && Owner.ShowUI
-            && Owner.ShowStatus);
+        using (var v = ActorFactory.Get(PlayerInfo.ActorID))
+        {
+          if (v == null)
+            return false;
+
+          ActorInfo p = v.Value;
+          return (!Owner.ShowPage
+          && !p.StateModel.IsDyingOrDead
+          && Owner.ShowUI
+          && Owner.ShowStatus);
+        }
       }
     }
 
     public override void Draw()
     {
-      ActorInfo p = PlayerInfo.Actor;
-
-      if (p != null && p.Active)
+      using (var v = ActorFactory.Get(PlayerInfo.ActorID))
       {
+        if (v == null)
+          return;
+
+        ActorInfo p = v.Value;
+        if (!p.Active)
+          return;
+
         TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;
 
         //Health Bar
@@ -60,9 +71,9 @@ namespace SWEndor.UI.Widgets
         int barnumber = 2;
 
         //Allies
-        foreach (int i in GameScenarioManager.CriticalAllies.Values)
+        foreach (ActorInfo a in GameScenarioManager.CriticalAllies.Values)
         {
-          ActorInfo a = ActorFactory.Get(i);
+          //ActorInfo a = ActorFactory.Get(i);
           DrawSingleBar(barnumber
               , a.SideBarName.PadRight(12).Remove(11)
               , a.Health.Frac
@@ -72,9 +83,9 @@ namespace SWEndor.UI.Widgets
         }
 
         //Enemies
-        foreach (int i in GameScenarioManager.CriticalEnemies.Values)
+        foreach (ActorInfo a in GameScenarioManager.CriticalEnemies.Values)
         {
-          ActorInfo a = ActorFactory.Get(i);
+          //ActorInfo a = ActorFactory.Get(i);
           DrawSingleBar(barnumber
               , a.SideBarName.PadRight(12).Remove(11)
               , a.Health.Frac

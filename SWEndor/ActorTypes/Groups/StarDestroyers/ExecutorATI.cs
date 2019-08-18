@@ -103,7 +103,7 @@ namespace SWEndor.ActorTypes.Instances
         return;
 
       ainfo.DyingTimer.Set(2000).Start();
-      CombatSystem.Deactivate(Engine, ainfo.ID);
+      CombatSystem.Deactivate(Engine, ainfo);
     }
   }
 }

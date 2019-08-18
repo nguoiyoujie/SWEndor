@@ -1,4 +1,5 @@
-﻿using SWEndor.Primitives;
+﻿using SWEndor.Actors;
+using SWEndor.Primitives;
 using SWEndor.Scenarios.Scripting.Expressions;
 using System;
 using System.Collections.Generic;
@@ -95,7 +96,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null)
         return 0;
 
-      Dictionary<string, int> reg = context.Engine.GameScenarioManager.Scenario.GetRegister(ps[0].ToString());
+      Dictionary<string, ActorInfo> reg = context.Engine.GameScenarioManager.Scenario.GetRegister(ps[0].ToString());
       if (reg == null)
         return 0;
       return reg.Count;

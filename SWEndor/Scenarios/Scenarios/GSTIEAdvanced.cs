@@ -302,7 +302,7 @@ namespace SWEndor.Scenarios
     {
       PlayerInfo.ActorID = PlayerInfo.TempActorID;
 
-      if (PlayerInfo.Actor == null || PlayerInfo.Actor.Disposed)
+      if (!PlayerInfo.Exists)
       {
         if (PlayerInfo.Lives > 0)
         {

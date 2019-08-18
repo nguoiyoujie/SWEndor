@@ -48,7 +48,6 @@ namespace SWEndor.Actors.Data
       Zdiv = 0;
     }
 
-
     public void Reset()
     {
       Speed = 0;

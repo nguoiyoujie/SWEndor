@@ -12,8 +12,8 @@ namespace SWEndor.Primitives.Factories
     }
 
     private ConcurrentQueue<T> list = new ConcurrentQueue<T>();
-    private Func<T> creator;
-    private Action<T> resetor;
+    internal Func<T> creator;
+    internal Action<T> resetor;
 
     public T GetNew()
     {

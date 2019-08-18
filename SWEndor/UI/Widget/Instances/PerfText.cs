@@ -10,13 +10,13 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
-        return Settings.ShowPerformance;
+        return Engine.PerfManager.Enabled;
       }
     }
 
     public override void Draw()
     {
-      string perftext = PerfManager.Report;
+      string perftext = Engine.PerfManager.Report;
 
       TV_2DVECTOR loc = new TV_2DVECTOR(10, 215);
       int lines = perftext.Split('\n').Length;

@@ -14,8 +14,6 @@ namespace SWEndor.UI.Widgets
     private float radar_radius;
     private float radar_range;
 
-    private TV_COLOR pcolor { get { return (PlayerInfo.Actor?.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : PlayerInfo.Actor.Faction.Color; } }
-
     public LargeShipSystems(Screen2D owner) : base(owner, "largeshipsystems")
     {
       radar_center = new TV_2DVECTOR(-Engine.ScreenWidth * 0.42f, Engine.ScreenHeight * 0.3f) + new TV_2DVECTOR(Engine.ScreenWidth / 2, Engine.ScreenHeight / 2);
@@ -27,104 +25,111 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
-        return (!Owner.ShowPage
-            && PlayerInfo.Actor != null
-            && !PlayerInfo.Actor.StateModel.IsDyingOrDead
-            && Owner.ShowUI);
+        using (var v = ActorFactory.Get(PlayerInfo.ActorID))
+        {
+          if (v == null)
+            return false;
+
+          ActorInfo p = v.Value;
+          return (!Owner.ShowPage
+          && !p.StateModel.IsDyingOrDead
+          && Owner.ShowUI);
+        }
       }
     }
 
     public override void Draw()
     {
-      ActorInfo p = PlayerInfo.Actor;
-      if (p == null
-        || !p.Active
-        || !(p.TypeInfo is ActorTypes.Groups.StarDestroyer
+      using (var v = ActorFactory.Get(PlayerInfo.ActorID))
+      {
+        if (v == null)
+          return;
+
+        ActorInfo p = v.Value;
+        if (!p.Active
+          || !(p.TypeInfo is ActorTypes.Groups.StarDestroyer
           || p.TypeInfo is ActorTypes.Groups.Warship
         ))
-        return;
+          return;
 
-      DrawRadar();
+        DrawRadar(p);
+      }
     }
 
-    private void DrawRadar()
+    private void DrawRadar(ActorInfo p)
     {
       TVScreen2DImmediate.Action_Begin2D();
 
-      DrawElement(Engine, PlayerInfo.ActorID);
-      foreach (ActorInfo c in PlayerInfo.Actor.Children)
-        DrawElement(Engine, c.ID);
+      DrawElement(Engine, p, p);
+      foreach (ActorInfo c in p.Children)
+        DrawElement(Engine, p, c);
 
       TVScreen2DImmediate.Action_End2D();
     }
 
-    private void DrawElement(Engine engine, int actorID)
+    private void DrawElement(Engine engine, ActorInfo p, ActorInfo a)
     {
-      ActorInfo p = PlayerInfo.Actor;
-      ActorInfo a = ActorFactory.Get(actorID);
-      if (a != null)
+      TV_3DVECTOR ppos = p.GetGlobalPosition();
+      TV_3DVECTOR apos = a.GetGlobalPosition();
+
+      if (a.Active
+        && a.TypeInfo.RadarSize > 0
+        && (a.TypeInfo.AlwaysShowInRadar || ActorDistanceInfo.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
       {
-        TV_3DVECTOR ppos = p.GetGlobalPosition();
-        TV_3DVECTOR apos = a.GetGlobalPosition();
+        TV_2DVECTOR posvec = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(apos.x, apos.z);
+        float proty = p.Transform.Rotation.y;
+        float dist = TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), posvec);
+        float angl = TrueVision.TVMathLibrary.Direction2Ang(posvec.x, posvec.y) - proty;
+        if (dist > radar_range)
+          dist = radar_range;
 
-        if (a.Active
-          && a.TypeInfo.RadarSize > 0
-          && (a.TypeInfo.AlwaysShowInRadar || ActorDistanceInfo.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
+        float x = radar_center.x - radar_radius * dist / radar_range * (float)Math.Sin(angl * Globals.PI / 180);
+        float y = radar_center.y + radar_radius * dist / radar_range * (float)Math.Cos(angl * Globals.PI / 180);
+        float scale = a.Transform.Scale;
+
+        int scolor = a.Health.Color.GetIntColor();
+
+        switch (a.TypeInfo.RadarType)
         {
-          TV_2DVECTOR posvec = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(apos.x, apos.z);
-          float proty = p.Transform.Rotation.y;
-          float dist = TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), posvec);
-          float angl = TrueVision.TVMathLibrary.Direction2Ang(posvec.x, posvec.y) - proty;
-          if (dist > radar_range)
-            dist = radar_range;
+          case RadarType.HOLLOW_CIRCLE_S:
+            TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RadarSize * 2, 6, scolor);
+            break;
+          case RadarType.HOLLOW_CIRCLE_M:
+            TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RadarSize * 2, 16, scolor);
+            break;
+          case RadarType.HOLLOW_CIRCLE_L:
+            TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RadarSize * 2, 40, scolor);
+            break;
+          case RadarType.RECTANGLE_GIANT:
+            {
+              BoundingBox box = a.MeshModel.GetBoundingBox(true); //engine.MeshDataSet.Mesh_getBoundingBox(actorID, true);
+              radar_range = (box.Z.Max - box.Z.Min) * scale;
 
-          float x = radar_center.x - radar_radius * dist / radar_range * (float)Math.Sin(angl * Globals.PI / 180);
-          float y = radar_center.y + radar_radius * dist / radar_range * (float)Math.Cos(angl * Globals.PI / 180);
-          float scale = a.Transform.Scale;
-
-          int scolor = a.Health.Color.GetIntColor();
-
-          switch (a.TypeInfo.RadarType)
-          {
-            case RadarType.HOLLOW_CIRCLE_S:
-              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RadarSize * 2, 6, scolor);
+              TVScreen2DImmediate.Draw_Box(box.X.Min * scale * radar_radius / radar_range + radar_center.x
+                                         , box.Z.Min * scale * radar_radius / radar_range + radar_center.y
+                                         , box.X.Max * scale * radar_radius / radar_range + radar_center.x
+                                         , box.Z.Max * scale * radar_radius / radar_range + radar_center.y
+                                         , scolor);
               break;
-            case RadarType.HOLLOW_CIRCLE_M:
-              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RadarSize * 2, 16, scolor);
+            }
+          case RadarType.TRIANGLE_GIANT:
+            {
+              BoundingBox box = a.MeshModel.GetBoundingBox(true); //engine.MeshDataSet.Mesh_getBoundingBox(actorID, true);
+              radar_range = (box.Z.Max - box.Z.Min) * scale;
+
+              TVScreen2DImmediate.Draw_Triangle(box.X.Min * scale * radar_radius / radar_range + radar_center.x
+                                              , -box.Z.Min * scale * radar_radius / radar_range + radar_center.y
+                                              , (box.X.Min + box.X.Max) / 2 * scale * radar_radius / radar_range + radar_center.x
+                                              , -box.Z.Max * scale * radar_radius / radar_range + radar_center.y
+                                              , box.X.Max * scale * radar_radius / radar_range + radar_center.x
+                                              , -box.Z.Min * scale * radar_radius / radar_range + radar_center.y
+                                              , scolor);
+
               break;
-            case RadarType.HOLLOW_CIRCLE_L:
-              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RadarSize * 2, 40, scolor);
-              break;
-            case RadarType.RECTANGLE_GIANT:
-              {
-                BoundingBox box = a.MeshModel.GetBoundingBox(true); //engine.MeshDataSet.Mesh_getBoundingBox(actorID, true);
-                radar_range = (box.Z.Max - box.Z.Min) * scale;
-
-                TVScreen2DImmediate.Draw_Box(box.X.Min * scale * radar_radius / radar_range + radar_center.x
-                                           , box.Z.Min * scale * radar_radius / radar_range + radar_center.y
-                                           , box.X.Max * scale * radar_radius / radar_range + radar_center.x
-                                           , box.Z.Max * scale * radar_radius / radar_range + radar_center.y
-                                           , scolor);
-                break;
-              }
-            case RadarType.TRIANGLE_GIANT:
-              {
-                BoundingBox box = a.MeshModel.GetBoundingBox(true); //engine.MeshDataSet.Mesh_getBoundingBox(actorID, true);
-                radar_range = (box.Z.Max - box.Z.Min) * scale;
-
-                TVScreen2DImmediate.Draw_Triangle(box.X.Min * scale * radar_radius / radar_range + radar_center.x
-                                                , -box.Z.Min * scale * radar_radius / radar_range + radar_center.y
-                                                , (box.X.Min + box.X.Max) / 2 * scale * radar_radius / radar_range + radar_center.x
-                                                , -box.Z.Max * scale * radar_radius / radar_range + radar_center.y
-                                                , box.X.Max * scale * radar_radius / radar_range + radar_center.x
-                                                , -box.Z.Min * scale * radar_radius / radar_range + radar_center.y
-                                                , scolor);
-
-                break;
-              }
-          }
+            }
         }
       }
     }
   }
 }
+

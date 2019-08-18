@@ -143,7 +143,11 @@ namespace SWEndor.ActorTypes
           //SourceMesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_BUMPMAPPING_TANGENTSPACE, 8);
 
           if (SourceMeshPath.Length > 0)
+          {
+            Log.Write(Log.DEBUG, LogType.ASSET_MODEL_LOAD, SourceMeshPath);
             SourceMesh.LoadXFile(SourceMeshPath, true);
+            Log.Write(Log.DEBUG, LogType.ASSET_MODEL_LOADED, SourceMeshPath);
+          }
           SourceMesh.Enable(false);
           SourceMesh.WeldVertices();
           SourceMesh.ComputeBoundings();
@@ -250,7 +254,7 @@ namespace SWEndor.ActorTypes
       }
 
       // sound
-      if (PlayerInfo.Actor != null
+      if (PlayerInfo.Exists
         && ainfo.Active
         && !ainfo.IsScenePlayer
         && !(GameScenarioManager.Scenario is GSMainMenu))
@@ -295,7 +299,7 @@ namespace SWEndor.ActorTypes
 
         // scoring
         ActorInfo attacker = hitby.TopParent;
-        if (attacker == PlayerInfo.Actor)
+        if (attacker.IsPlayer)
         {
           if (!attacker.Faction.IsAlliedWith(owner.Faction))
             AddScore(PlayerInfo.Score, hitby, owner);
@@ -306,7 +310,7 @@ namespace SWEndor.ActorTypes
                                             , -1);
         }
 
-        if (owner == PlayerInfo.Actor)
+        if (owner.IsPlayer)
         {
           PlayerInfo.Score.AddDamage(attacker, hitby.TypeInfo.ImpactDamage * owner.CombatData.DamageModifier);
 
@@ -352,7 +356,7 @@ namespace SWEndor.ActorTypes
         }
 
         ActorInfo attacker = hitby.TopParent;
-        if (attacker == PlayerInfo.Actor)
+        if (attacker.IsPlayer)
         {
           if (!attacker.Faction.IsAlliedWith(owner.Faction))
             AddScore(PlayerInfo.Score, attacker, owner);
@@ -458,7 +462,7 @@ namespace SWEndor.ActorTypes
     {
     }
 
-    public virtual void Dying<A1>(A1 self) where A1 : ITraitOwner
+    public virtual void Dying<A1>(A1 self) where A1 : class, ITraitOwner
     {
       ActorInfo ainfo = self as ActorInfo;
       if (ainfo == null)
@@ -479,7 +483,7 @@ namespace SWEndor.ActorTypes
       }
     }
 
-    public virtual void Dead<A1>(A1 self) where A1 : ITraitOwner
+    public virtual void Dead<A1>(A1 self) where A1 : class, ITraitOwner
     {
       ActorInfo ainfo = self as ActorInfo;
       if (ainfo == null)
@@ -500,15 +504,15 @@ namespace SWEndor.ActorTypes
     }
 
     public virtual void Damaged<A1, A2>(A1 self, DamageInfo<A2> e)
-      where A1 : ITraitOwner
-      where A2 : ITraitOwner
+      where A1 : class, ITraitOwner
+      where A2 : class, ITraitOwner
     {
 
     }
 
     public virtual void AppliedDamage<A1, A2>(A2 attacker, A1 target, DamageInfo<A2> e)
-      where A1 : ITraitOwner
-      where A2 : ITraitOwner
+      where A1 : class, ITraitOwner
+      where A2 : class, ITraitOwner
     {
 
     }

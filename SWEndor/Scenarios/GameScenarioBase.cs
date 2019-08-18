@@ -285,7 +285,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public Dictionary<string, int> GetRegister(string key)
+    public Dictionary<string, ActorInfo> GetRegister(string key)
     {
       switch (key.ToLower())
       {
@@ -351,15 +351,9 @@ namespace SWEndor.Scenarios
 
     public virtual void ProcessPlayerDying(ActorEventArg arg)
     {
-      ActorInfo ainfo = ActorFactory.Get(arg.ActorID);
-      if (ainfo != null)
-      {
-        PlayerInfo.TempActorID = ainfo.ID;
-
-        //if (PlayerInfo.Actor.TypeInfo is DeathCameraATI)
-        //  if (PlayerInfo.Actor.CreationState == CreationState.ACTIVE)
-        //    PlayerInfo.Actor.SetLocalPosition(ainfo.GetLocalPosition().x, ainfo.GetLocalPosition().y, ainfo.GetLocalPosition().z);
-      }
+      using (var v = ActorFactory.Get(arg.ActorID))
+        if (v != null)
+          PlayerInfo.TempActorID = v.Value.ID;
     }
 
     public virtual void ProcessPlayerKilled(GameEventArg arg)
@@ -380,19 +374,25 @@ namespace SWEndor.Scenarios
 
     public virtual void ProcessHit(GameEventArg arg)
     {
-      ActorInfo av = ActorFactory.Get(((HitEventArg)arg).VictimID);
-      ActorInfo aa = ActorFactory.Get(((HitEventArg)arg).ActorID);
-
-      if (PlayerInfo.Actor == aa.TopParent)
+      using (var v = ActorFactory.Get(((HitEventArg)arg).ActorID))
+      using (var vv = ActorFactory.Get(((HitEventArg)arg).VictimID))
+      using (var vp = ActorFactory.Get(PlayerInfo.ActorID))
       {
-        if (PlayerInfo.Actor != null
-        && av.Faction != null
-        && av.Faction.IsAlliedWith(PlayerInfo.Actor.Faction))
+        if (v != null && vv != null && vp != null)
         {
-          Screen2D.MessageText("{0}: {1}, watch your fire!".F(av.Name, PlayerInfo.Name)
-                                                      , 5
-                                                      , av.Faction.Color
-                                                      , -1);
+          ActorInfo aa = v.Value;
+          ActorInfo av = vv.Value;
+          ActorInfo ap = vp.Value;
+
+          if (ap != aa.TopParent
+            && av.Faction != null
+            && av.Faction.IsAlliedWith(ap.Faction))
+          {
+            Screen2D.MessageText("{0}: {1}, watch your fire!".F(av.Name, PlayerInfo.Name)
+                                                        , 5
+                                                        , av.Faction.Color
+                                                        , -1);
+          }
         }
       }
     }
