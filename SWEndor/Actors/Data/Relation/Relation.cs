@@ -7,7 +7,10 @@ namespace SWEndor.Actors
   public struct Relation
   {
     public ActorInfo Parent { get; set; }
+    public ActorInfo ParentForCoords { get { return UseParentCoords ? Parent : null; } }
     public bool UseParentCoords { get; set; }
+
+
     LinkedList<ActorInfo> list;
 
     public void Init()

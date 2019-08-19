@@ -197,7 +197,7 @@ namespace SWEndor
 
       /*
       ActorInfo tgt = ActorFactory.Get(PlayerCameraInfo.LookActor);
-      if (tgt != null && tgt.CreationState == CreationState.ACTIVE)
+      if (tgt != null && tgt.Active)
       {
         TV_3DVECTOR prostart = tgt.GetRelativePositionXYZ(0, 0, tgt.TypeInfo.max_dimensions.z + 10);
         TV_3DVECTOR proend0 = tgt.GetRelativePositionXYZ((float)Math.Sin(tgt.MoveData.YTurnAngle * Globals.PI / 180) * tgt.MoveData.Speed

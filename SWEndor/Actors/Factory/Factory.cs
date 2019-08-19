@@ -50,8 +50,8 @@ namespace SWEndor.Actors
         if (acinfo.ActorTypeInfo == null)
           throw new Exception("Attempted to register actor with null ActorTypeInfo!");
 
-        lock (creationLock)
-        {
+        //lock (creationLock)
+        //{
           int id = counter++;
           if (pool.TryDequeue(out actor))
           {
@@ -80,11 +80,10 @@ namespace SWEndor.Actors
             actor.Next = null;
           }
           Last = actor;
-        }
+        //}
 
         return actor;
       }
-
 
       public void ActivatePlanned()
       {
@@ -189,7 +188,6 @@ namespace SWEndor.Actors
           base.Remove(id);
           prepool.Enqueue(actor);
         }
-        //}
       }
 
       Action<Engine, ActorInfo> destroy = (e, a) => { a?.Destroy(); };
@@ -198,9 +196,6 @@ namespace SWEndor.Actors
         DestroyDead();
         DoEach(destroy);
 
-        //foreach (ActorInfo a in GetAll())
-        //  a?.Destroy();
-
         list.Clear();
         planned = new ConcurrentQueue<ActorInfo>();
         dead = new ConcurrentQueue<ActorInfo>();
@@ -208,6 +203,8 @@ namespace SWEndor.Actors
         pool = new ConcurrentQueue<ActorInfo>();
         First = null;
         Last = null;
+
+        lastdataid = 0;
       }
     }
   }

@@ -53,7 +53,7 @@ namespace SWEndor.AI.Actions
         else
           AdjustSpeed(actor, target.MoveData.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
 
-        Complete |= (target.CreationState != CreationState.ACTIVE);
+        Complete |= (!target.Active);
       }
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();

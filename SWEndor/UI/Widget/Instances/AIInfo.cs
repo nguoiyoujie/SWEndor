@@ -13,19 +13,19 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
+        ActorInfo p = PlayerInfo.Actor;
         return (!Owner.ShowPage
-            && PlayerInfo.Actor != null
-            && PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && PlayerInfo.Actor.ActorState != ActorState.DYING
-            && Owner.ShowUI
-            && PlayerInfo.PlayerAIEnabled);
+          && p != null
+          && !p.IsDyingOrDead
+          && Owner.ShowUI
+          && PlayerInfo.PlayerAIEnabled);
       }
     }
 
     public override void Draw()
     {
       ActorInfo p = PlayerInfo.Actor;
-      if (p == null || p.CreationState != CreationState.ACTIVE)
+      if (p == null || !p.Active)
         return;
 
       TV_2DVECTOR loc = new TV_2DVECTOR(10, 175);

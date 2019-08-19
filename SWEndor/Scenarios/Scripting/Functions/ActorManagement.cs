@@ -68,7 +68,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      return actor.ActorState != ActorState.DEAD;
+      return !actor.IsDead;
     }
 
     public static object RegisterEvents(Context context, params object[] ps)

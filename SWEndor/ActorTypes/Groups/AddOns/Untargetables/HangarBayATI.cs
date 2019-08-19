@@ -27,16 +27,16 @@ namespace SWEndor.ActorTypes.Instances
 
       if (p.SpawnerInfo != null
        && p.SpawnerInfo.Enabled
-       && p.ActorState != ActorState.DEAD
-       && p.ActorState != ActorState.HYPERSPACE
-       && p.CreationState == CreationState.ACTIVE
+       && !p.IsDead
+       && !(p.CurrentAction is HyperspaceIn || p.CurrentAction is HyperspaceOut)//ActorState != ActorState.HYPERSPACE
+       && p.Active
        )
       {
         if (p.SpawnerInfo.SpawnMoveTime < Game.GameTime)
         {
           foreach (ActorInfo a in ainfo.Children)
           {
-            a.ActorState = ActorState.NORMAL;
+            a.MoveData.FreeSpeed = false;
             a.UnlockOne();
             a.QueueLast(new Hunt());
 
@@ -47,7 +47,7 @@ namespace SWEndor.ActorTypes.Instances
           }
         }
 
-        if (p.ActorState != ActorState.DYING)
+        if (!p.IsDying)
         {
           SpawnPlayer(ainfo, p);
           SpawnFighter(ainfo, p);
@@ -98,7 +98,7 @@ namespace SWEndor.ActorTypes.Instances
       acinfo.Rotation = new TV_3DVECTOR(p.CoordData.Rotation.x, p.CoordData.Rotation.y, p.CoordData.Rotation.z);
       acinfo.Rotation += p.SpawnerInfo.SpawnRotation;
 
-      acinfo.InitialState = ActorState.FREE;
+      acinfo.FreeSpeed = true;
       acinfo.Faction = ainfo.Faction;
       ActorInfo a = ActorFactory.Create(acinfo);
       ainfo.AddChild(a);
@@ -148,7 +148,7 @@ namespace SWEndor.ActorTypes.Instances
             acinfo.Rotation = new TV_3DVECTOR(p.CoordData.Rotation.x, p.CoordData.Rotation.y, p.CoordData.Rotation.z);
             acinfo.Rotation += p.SpawnerInfo.SpawnRotation;
 
-            acinfo.InitialState = ActorState.FREE;
+            acinfo.FreeSpeed = true;
             acinfo.Faction = ainfo.Faction;
             ActorInfo a = ActorFactory.Create(acinfo);
             ainfo.AddChild(a);

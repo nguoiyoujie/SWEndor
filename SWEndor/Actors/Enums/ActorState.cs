@@ -15,12 +15,12 @@
     /// <summary>
     /// Actor is in the free state: No speed limit (Note: consider a different setting to turn off Speed limits)
     /// </summary>
-    FREE = 1,
+    //FREE = 1,
 
     /// <summary>
     /// Actor is executing a hyperspace speed up or slow down
     /// </summary>
-    HYPERSPACE = 2,
+    //HYPERSPACE = 2,
 
     // DEAD STATES use Negative numbers
 

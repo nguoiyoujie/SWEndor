@@ -24,12 +24,11 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
+        ActorInfo p = PlayerInfo.Actor;
         return (!Owner.ShowPage
-            && PlayerInfo.Actor != null
-            && PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && PlayerInfo.Actor.ActorState != ActorState.DYING
-
-            && Owner.ShowUI);
+          && p != null
+          && !p.IsDyingOrDead
+          && Owner.ShowUI);
       }
     }
 
@@ -37,7 +36,7 @@ namespace SWEndor.UI.Widgets
     {
       ActorInfo p = PlayerInfo.Actor;
       if (p == null
-        || p.CreationState != CreationState.ACTIVE
+        || !p.Active
         || !(p.TypeInfo is ActorTypes.Groups.StarDestroyer
           || p.TypeInfo is ActorTypes.Groups.Warship
         ))
@@ -65,7 +64,7 @@ namespace SWEndor.UI.Widgets
         TV_3DVECTOR ppos = p.GetPosition();
         TV_3DVECTOR apos = a.GetPosition();
 
-        if (a.CreationState == CreationState.ACTIVE
+        if (a.Active
           && a.TypeInfo.RadarSize > 0
           && (a.TypeInfo.AlwaysShowInRadar || ActorDistanceInfo.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
         {

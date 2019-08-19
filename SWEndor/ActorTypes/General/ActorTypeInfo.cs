@@ -238,7 +238,7 @@ namespace SWEndor.ActorTypes
       // regeneration
       RegenerationSystem.Process(Engine, ainfo, Game.TimeSinceRender);
 
-      if (ainfo.ActorState.IsDying())
+      if (ainfo.IsDying)
       {
         ExplosionSystem.ProcessDying(Engine, ainfo);
         ainfo.DyingMoveComponent?.Update(ainfo, ref ainfo.MoveData, Game.TimeSinceRender);
@@ -246,7 +246,7 @@ namespace SWEndor.ActorTypes
 
       // sound
       if (PlayerInfo.Actor != null
-        && ainfo.CreationState == CreationState.ACTIVE 
+        && ainfo.Active 
         && !ainfo.IsScenePlayer
         && !(GameScenarioManager.Scenario is GSMainMenu))
       {
@@ -255,51 +255,16 @@ namespace SWEndor.ActorTypes
       }
     }
 
-    public virtual void ProcessNewState(ActorInfo ainfo)
-    {
-      switch (ainfo.ActorState)
-      {
-        case ActorState.DEAD:
-          // Explode
-          ExplosionSystem.OnDeath(Engine, ainfo);
-
-          // Debris
-          if (!ainfo.IsAggregateMode && !Game.IsLowFPS())
-            foreach (DebrisSpawnerInfo ds in Debris)
-              ds.Process(ainfo);
-          break;
-
-        case ActorState.DYING:
-          ainfo.DyingMoveComponent?.Initialize(ainfo, ref ainfo.MoveData);
-          break;
-      }
-
-      if (ainfo.ActorState.IsDyingOrDead())
-      {
-        if (ainfo.IsPlayer)
-        {
-          PlayerInfo.ActorID = -1;
-          PlayerCameraInfo.LookActor = ainfo.ID;
-          PlayerCameraInfo.Look.SetModeDeathCircle(DeathCamera);
-
-          if (ainfo.ActorState.IsDying())
-            ainfo.TickEvents += GameScenarioManager.Scenario.ProcessPlayerDying;
-
-          ainfo.DestroyedEvents += GameScenarioManager.Scenario.ProcessPlayerKilled;
-        }
-      }
-    }
-
     public virtual void ProcessHit(ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
       if (owner == null || hitby == null)
         return;
 
-      if (owner.ActorState.IsDying() 
+      if (owner.IsDying 
         && ActorDataSet.CombatData[owner.dataID].HitWhileDyingLeadsToDeath)
-        owner.ActorState = ActorState.DEAD;
+        owner.SetState_Dead();
 
-      if (owner.ActorState.IsDyingOrDead()
+      if (owner.IsDyingOrDead
         || hitby.TypeInfo.ImpactDamage == 0)
         return;
 
@@ -332,7 +297,7 @@ namespace SWEndor.ActorTypes
         {
           PlayerInfo.Score.AddDamage(attacker, hitby.TypeInfo.ImpactDamage * ActorDataSet.CombatData[owner.dataID].DamageModifier);
 
-          if (owner.ActorState.IsDyingOrDead())
+          if (owner.IsDyingOrDead)
             PlayerInfo.Score.AddDeath(attacker);
         }
 
@@ -354,7 +319,7 @@ namespace SWEndor.ActorTypes
         }
 
         hitby.SetLocalPosition(impact.x, impact.y, impact.z);
-        hitby.ActorState = ActorState.DYING;
+        hitby.SetState_Dead(); // projectiles die on impact
       }
       else if (Engine.MaskDataSet[owner].Has(ComponentMask.IS_DAMAGE))
       {
@@ -384,9 +349,9 @@ namespace SWEndor.ActorTypes
         }
 
         // Fighter Collision
-        if ((owner.TypeInfo is Groups.Fighter && owner.ActorState.IsDyingOrDead()))
+        if ((owner.TypeInfo is Groups.Fighter && owner.IsDyingOrDead))
         {
-          owner.ActorState = ActorState.DEAD;
+          owner.SetState_Dead();
           if (owner.IsPlayer)
             PlayerInfo.Score.AddDeath(attacker);
         }
@@ -397,12 +362,12 @@ namespace SWEndor.ActorTypes
 
     private void AddScore(ScoreInfo score, ActorInfo proj, ActorInfo victim)
     {
-      if (!victim.ActorState.IsDyingOrDead())
+      if (!victim.IsDyingOrDead)
       {
         score.AddHit(victim, proj.TypeInfo.ImpactDamage * ActorDataSet.CombatData[victim.dataID].DamageModifier);
       }
 
-      if (victim.ActorState.IsDyingOrDead())
+      if (victim.IsDyingOrDead)
       {
         score.AddKill(victim);
       }
@@ -481,6 +446,46 @@ namespace SWEndor.ActorTypes
 
     public void Dispose()
     {
+    }
+
+    public virtual void Dying(ActorInfo ainfo)
+    {
+      if (ainfo == null)
+        return;
+
+      ainfo.DyingMoveComponent?.Initialize(ainfo, ref ainfo.MoveData);
+
+      if (ainfo.IsPlayer)
+      {
+        PlayerInfo.ActorID = -1;
+        PlayerCameraInfo.Look.SetPosition_Actor(ainfo.ID);
+        PlayerCameraInfo.Look.SetModeDeathCircle(DeathCamera);
+
+        ainfo.TickEvents += GameScenarioManager.Scenario.ProcessPlayerDying;
+        ainfo.DestroyedEvents += GameScenarioManager.Scenario.ProcessPlayerKilled;
+      }
+    }
+
+    public virtual void Dead(ActorInfo ainfo)
+    {
+      if (ainfo == null)
+        return;
+
+      // Explode
+      ExplosionSystem.OnDeath(Engine, ainfo);
+
+      // Debris
+      if (!ainfo.IsAggregateMode && !Game.IsLowFPS())
+        foreach (DebrisSpawnerInfo ds in Debris)
+          ds.Process(ainfo);
+
+      if (ainfo.IsPlayer)
+      {
+        PlayerInfo.ActorID = -1;
+        PlayerCameraInfo.Look.SetPosition_Actor(ainfo.ID);
+        PlayerCameraInfo.Look.SetModeDeathCircle(DeathCamera);
+        ainfo.DestroyedEvents += GameScenarioManager.Scenario.ProcessPlayerKilled;
+      }
     }
   }
 }

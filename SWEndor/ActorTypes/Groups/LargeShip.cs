@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class LargeShip : ActorTypeInfo
   {
-    internal LargeShip(Factory owner, string name): base(owner, name)
+    internal LargeShip(Factory owner, string name) : base(owner, name)
     {
       CombatData = CombatData.DefaultShip;
       ExplodeData = new ExplodeData(0.5f, 1, "ExplosionSm", DeathExplosionTrigger.ALWAYS, 2, "ExplosionLg");
@@ -29,20 +29,21 @@ namespace SWEndor.ActorTypes.Groups
       ainfo.DyingMoveComponent = new DyingSink(0.06f, 15f, 2.5f);
     }
 
-    public override void ProcessNewState(ActorInfo ainfo)
+    public override void Dying(ActorInfo ainfo)
     {
-      base.ProcessNewState(ainfo);
-      if (ainfo.ActorState.IsDying())
-      {
-        TimedLifeSystem.Activate(Engine, ainfo, 25);
-        CombatSystem.Deactivate(Engine, ainfo);
-      }
-      else if (ainfo.ActorState.IsDead())
-      {
-        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave"));
-        acinfo.Position = ainfo.GetPosition();
-        ainfo.AddChild(ActorFactory.Create(acinfo));
-      }
+      base.Dying(ainfo);
+
+      TimedLifeSystem.Activate(Engine, ainfo, 25);
+      CombatSystem.Deactivate(Engine, ainfo);
+    }
+
+    public override void Dead(ActorInfo ainfo)
+    {
+      base.Dead(ainfo);
+
+      ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave"));
+      acinfo.Position = ainfo.GetPosition();
+      ainfo.AddChild(ActorFactory.Create(acinfo));
     }
   }
 }

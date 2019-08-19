@@ -25,7 +25,7 @@ namespace SWEndor.Player
       if (TargetActorID > 0)
       {
         ActorInfo tgt = engine.ActorFactory.Get(TargetActorID);
-        if (tgt != null && tgt.CreationState == CreationState.ACTIVE)
+        if (tgt != null && tgt.Active)
         {
           ret = Position + Utilities.GetRelativePositionXYZ(engine, tgt.GetPosition(), tgt.GetRotation(), PositionRelative.x, PositionRelative.y, PositionRelative.z);
           _lastPos = new TV_3DVECTOR(ret.x, ret.y, ret.z);
@@ -65,6 +65,13 @@ namespace SWEndor.Player
     private DeathCameraInfo DeathCamera;
     private float RotationMultiplier;
 
+    public void ResetPosition()
+    {
+      LookFrom.Position = default(TV_3DVECTOR);
+      LookFrom.PositionRelative = default(TV_3DVECTOR);
+      LookFrom.TargetActorID = -1;
+    }
+
     public void SetPosition_Point(TV_3DVECTOR position)
     {
       LookFrom.Position = position;
@@ -72,11 +79,40 @@ namespace SWEndor.Player
       LookFrom.TargetActorID = -1;
     }
 
+    public TV_3DVECTOR GetPosition_Point()
+    {
+      return LookFrom.Position;
+    }
+
+    public int GetPosition_Actor()
+    {
+      return LookFrom.TargetActorID;
+    }
+
+    public TV_3DVECTOR GetTarget_Point()
+    {
+      return LookTo.Position;
+    }
+
+    public int GetTarget_Actor()
+    {
+      return LookTo.TargetActorID;
+    }
+
     public void SetPosition_Actor(int posActorID, TV_3DVECTOR displacementXYZ = default(TV_3DVECTOR), TV_3DVECTOR displacementRelative = default(TV_3DVECTOR))
     {
       LookFrom.Position = displacementXYZ;
       LookFrom.PositionRelative = displacementRelative;
       LookFrom.TargetActorID = posActorID;
+    }
+
+    public void ResetTarget()
+    {
+      Mode = CamMode.NONE;
+
+      LookTo.Position = default(TV_3DVECTOR);
+      LookTo.PositionRelative = default(TV_3DVECTOR);
+      LookTo.TargetActorID = -1;
     }
 
     public void SetTarget_LookAtPoint(TV_3DVECTOR position)
@@ -146,12 +182,13 @@ namespace SWEndor.Player
 
     public readonly TVCamera Camera;
     public CameraMode CameraMode = CameraMode.FIRSTPERSON;
+    public CameraMode prevCameraMode = CameraMode.FIRSTPERSON;
     public CameraLook Look = CameraLook.Default;
-    public int LookActor = -1;
-    public int LookAtActor = -1;
+    public int LookActor { get; private set; } = -1;
+    private int LookAtActor = -1;
     private TV_3DVECTOR LookAtPos = new TV_3DVECTOR();
-    public TV_3DVECTOR Position = new TV_3DVECTOR();
-    public TV_3DVECTOR Rotation = new TV_3DVECTOR();
+    public TV_3DVECTOR Position { get; private set; }
+    public TV_3DVECTOR Rotation { get; private set; }
 
     public float Shake = 0;
     private float prev_shake_displacement_x = 0;
@@ -164,20 +201,16 @@ namespace SWEndor.Player
 
       ActorInfo actor = Engine.PlayerInfo.Actor;
       if (Engine.PlayerInfo.Actor == null)
-        actor = Engine.ActorFactory.Get(LookActor);
+        actor = Engine.ActorFactory.Get(Look.GetPosition_Actor());
 
-      if (actor != null && actor.CreationState == CreationState.ACTIVE)
+      if (actor != null && actor.Active)
       {
         UpdateFromActor(Engine, actor);
         Position = actor.GetPosition();
         Rotation = actor.GetRotation();
-        Look.Update(Engine, Camera, Position, Rotation);
-      }
-      else
-      {
-        Look.Update(Engine, Camera, Position, Rotation);
       }
 
+      Look.Update(Engine, Camera, Position, Rotation);
       ApplyShake();
     }
 
@@ -215,15 +248,20 @@ namespace SWEndor.Player
         target = actor.TypeInfo.Cameras[cammode].LookAt;
       }
 
-      if (!actor.ActorState.IsDyingOrDead())
+      if (!actor.IsDyingOrDead)
       {
-        if (LookAtActor >= 0)
+        if (actor.IsPlayer) // active view
+        {
+          Look.SetPosition_Actor(actor.ID, displacementRelative: location);
+          Look.SetTarget_LookAtActor(actor.ID, displacementRelative: target);
+        }
+        else if (LookAtActor >= 0) // cutscene to actor view
         {
           Look.SetPosition_Actor(actor.ID, displacementRelative: location);
           Look.SetTarget_LookAtActor(LookAtActor);
           Look.SetRotationMult(0.5f);
         }
-        else
+        else // same as active view
         {
           Look.SetPosition_Actor(actor.ID, displacementRelative: location);
           Look.SetTarget_LookAtActor(actor.ID, displacementRelative: target);
@@ -233,7 +271,6 @@ namespace SWEndor.Player
 
     public void UpdateMode()
     {
-      /*
       if (prevCameraMode != CameraMode)
       {
         prevCameraMode = CameraMode;
@@ -243,7 +280,6 @@ namespace SWEndor.Player
                                                         , new TV_COLOR(0.5f, 0.5f, 1, 1)
                                                         , 1);
       }
-      */
     }
 
     public void ApplyShake()
@@ -269,7 +305,8 @@ namespace SWEndor.Player
 
     public void RotateCam(float aX, float aY)
     {
-      if (Engine.PlayerInfo.IsMovementControlsEnabled)
+      PlayerInfo pl = Engine.PlayerInfo;
+      if (pl.IsMovementControlsEnabled)
       {
         float angleX = aY * Settings.SteeringSensitivity;
         float angleY = aX * Settings.SteeringSensitivity;
@@ -291,9 +328,10 @@ namespace SWEndor.Player
         }
         else */
 
-        if (Engine.PlayerInfo.Actor != null && Engine.PlayerInfo.Actor.CreationState != CreationState.DISPOSED)
+        ActorInfo a = pl.Actor;
+        if (a != null && a.Active)
         {
-          float maxT = Engine.PlayerInfo.Actor.TypeInfo.MaxTurnRate;
+          float maxT = a.TypeInfo.MaxTurnRate;
           angleX *= maxT;
           angleY *= maxT;
 
@@ -302,8 +340,8 @@ namespace SWEndor.Player
             angleX = angleX.Clamp(-maxT, maxT);
             angleY = angleY.Clamp(-maxT, maxT);
 
-            Engine.PlayerInfo.Actor.MoveData.XTurnAngle = angleX;
-            Engine.PlayerInfo.Actor.MoveData.YTurnAngle = angleY;
+            a.MoveData.XTurnAngle = angleX;
+            a.MoveData.YTurnAngle = angleY;
           }
         }
       }

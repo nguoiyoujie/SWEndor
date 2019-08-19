@@ -486,8 +486,6 @@ namespace SWEndor.Scenarios
       float creationTime = Game.GameTime;
       float creationDelay = 0.025f;
 
-      PlayerCameraInfo.Position = new TV_3DVECTOR(10, -20, 1500);
-
       ActorTypeInfo type;
       string name;
       string sidebar_name;
@@ -616,7 +614,8 @@ namespace SWEndor.Scenarios
 
       m_rebelPosition.Add(ainfo.ID, position);
       PlayerInfo.TempActorID = ainfo.ID;
-      PlayerCameraInfo.LookAtActor = ainfo.ID;
+      PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(10, -20, 1500));
+      PlayerCameraInfo.Look.SetTarget_LookAtActor(ainfo.ID);
 
       // Mon Calamari (HomeOne)
       type = ActorTypeFactory.Get("Mon Calamari Capital Ship");
@@ -838,8 +837,7 @@ namespace SWEndor.Scenarios
     {
       PlayerInfo.ActorID = PlayerInfo.TempActorID;
 
-      if (PlayerInfo.Actor != null
-        && PlayerInfo.Actor.CreationState != CreationState.DISPOSED)
+      if (PlayerInfo.Actor != null && !PlayerInfo.Actor.Disposed)
       {
         // m_Player = Player.Actor;
         if (!Manager.GetGameStateB("in_battle"))
@@ -849,7 +847,7 @@ namespace SWEndor.Scenarios
             ActorInfo actor = ActorFactory.Get(actorID);
             if (actor != null)
             {
-              actor.ActorState = ActorState.FREE;
+              actor.MoveData.FreeSpeed = true;
               actor.MoveData.Speed = 275;
             }
           }
@@ -859,7 +857,7 @@ namespace SWEndor.Scenarios
             ActorInfo actor = ActorFactory.Get(actorID);
             if (actor != null)
             {
-              actor.ActorState = ActorState.FREE;
+              actor.MoveData.FreeSpeed = true;
               if (actor.MoveData.Speed < 425)
                 actor.MoveData.Speed = 425;
             }
@@ -968,15 +966,14 @@ namespace SWEndor.Scenarios
     public void Rebel_GiveControl(GameEventArg arg)
     {
       ActorInfo falcon = ActorFactory.Get(m_FalconID);
-      ActorInfo wedge = ActorFactory.Get(m_WedgeID);
-
-      ActionManager.UnlockOne(m_FalconID);
-      falcon.ActorState = ActorState.NORMAL;
+      falcon.UnlockOne();
+      falcon.MoveData.FreeSpeed = false;
       falcon.MoveData.Speed = falcon.MoveData.MaxSpeed;
 
-      ActionManager.UnlockOne(m_WedgeID);
-      ActionManager.QueueFirst(m_WedgeID, new Wait(2.5f));
-      wedge.ActorState = ActorState.NORMAL;
+      ActorInfo wedge = ActorFactory.Get(m_WedgeID);
+      wedge.UnlockOne();
+      wedge.QueueFirst(new Wait(2.5f));
+      wedge.MoveData.FreeSpeed = false;
       wedge.MoveData.Speed = wedge.MoveData.MaxSpeed;
 
       float time = 5f;
@@ -984,9 +981,9 @@ namespace SWEndor.Scenarios
       {
         ActorInfo actor = ActorFactory.Get(actorID);
 
-        ActionManager.UnlockOne(actorID);
-        ActionManager.QueueFirst(actorID, new Wait(time));
-        actor.ActorState = ActorState.NORMAL;
+        actor.UnlockOne();
+        actor.QueueFirst(new Wait(time));
+        actor.MoveData.FreeSpeed = false;
         actor.MoveData.Speed = actor.MoveData.MaxSpeed;
         time += 2.5f;
       }
@@ -995,8 +992,8 @@ namespace SWEndor.Scenarios
       {
         ActorInfo actor = ActorFactory.Get(actorID);
 
-        ActionManager.UnlockOne(actorID);
-        actor.ActorState = ActorState.NORMAL;
+        actor.UnlockOne();
+        actor.MoveData.FreeSpeed = false;
         actor.MoveData.Speed = actor.MoveData.MaxSpeed;
         actor.SetSpawnerEnable(true);
       }
@@ -1111,7 +1108,7 @@ namespace SWEndor.Scenarios
       ActorInfo actor = ActorFactory.Get(actorID);
 
       if (actor != null
-        && actor.ActorState.IsDyingOrDead())
+        && actor.IsDyingOrDead)
       {
         PlayerInfo.TempActorID = actorID;
 
@@ -1119,10 +1116,10 @@ namespace SWEndor.Scenarios
         Manager.IsCutsceneMode = true;
 
         PlayerInfo.ActorID = -1;
-        PlayerCameraInfo.LookActor = actor.ID;
+        PlayerCameraInfo.Look.SetPosition_Actor(actor.ID);
         PlayerCameraInfo.Look.SetModeDeathCircle(actor.TypeInfo.DeathCamera);
 
-        if (actor.ActorState.IsDying())
+        if (actor.IsDying)
         {
           actor.TickEvents += ProcessPlayerDying;
           actor.DestroyedEvents += ProcessPlayerKilled;
@@ -1988,16 +1985,16 @@ namespace SWEndor.Scenarios
 
       ActorInfo ainfo = ActorFactory.Get(arg.ActorID);
 
-      if (ainfo.ActorState.IsDyingOrDead())
+      if (ainfo.IsDyingOrDead)
       {
         Manager.SetGameStateB("GameWon", true);
         Manager.IsCutsceneMode = true;
 
         PlayerInfo.ActorID = -1;
-        PlayerCameraInfo.LookActor = ainfo.ID;
+        PlayerCameraInfo.Look.SetPosition_Actor(ainfo.ID);
         PlayerCameraInfo.Look.SetModeDeathCircle(ainfo.TypeInfo.DeathCamera);
 
-        if (ainfo.ActorState.IsDying())
+        if (ainfo.IsDying)
         {
           ainfo.TickEvents += ProcessPlayerDying;
           ainfo.DestroyedEvents += ProcessPlayerKilled;
@@ -2036,7 +2033,7 @@ namespace SWEndor.Scenarios
     {
       ActorInfo lsrSrc = new List<ActorInfo>(m_ADS.Children)[0];
       if (lsrSrc != null
-        && lsrSrc.CreationState == CreationState.ACTIVE)
+        && lsrSrc.Active)
       {
         List<int> tgt = new List<int>(MainAllyFaction.GetShips());
         tgt.Reverse();
@@ -2257,7 +2254,7 @@ namespace SWEndor.Scenarios
       ActorInfo player = ActorFactory.Get(m_PlayerID);
       if (player != null)
       {
-        player.ActorState = ActorState.NORMAL;
+        player.SetState_Normal();
         player.CoordData.Position = m_Player_pos;
         ActionManager.ForceClearQueue(m_PlayerID);
         PlayerInfo.ActorID = m_PlayerID;
@@ -2267,6 +2264,8 @@ namespace SWEndor.Scenarios
       }
 
       Manager.IsCutsceneMode = false;
+      PlayerCameraInfo.Look.ResetPosition();
+      PlayerCameraInfo.Look.ResetTarget();
     }
 
     public void Scene_DeathStarCam(GameEventArg arg)
@@ -2274,7 +2273,7 @@ namespace SWEndor.Scenarios
       ActorInfo target = ActorFactory.Get(m_ADS_targetID);
 
       if (target != null
-        && target.CreationState == CreationState.ACTIVE)
+        && target.Active)
       {
         Manager.AddEvent(Game.GameTime + 0.1f, Scene_EnterCutscene);
         SoundManager.SetSound("ds_beam", false, 1, false);
@@ -2289,15 +2288,16 @@ namespace SWEndor.Scenarios
         else if (target.TypeInfo is MC90ATI)
           pos += new TV_3DVECTOR(-850, -400, 2500);
 
-        PlayerCameraInfo.Position = pos;
-        PlayerCameraInfo.LookAtActor = target.ID;
+        PlayerCameraInfo.Look.SetPosition_Point(pos);
+        PlayerCameraInfo.Look.SetTarget_LookAtActor(target.ID);
+
         //ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
         //cam.SetLocalPosition(pos.x, pos.y, pos.z);
         //cam.LookAtPoint(new TV_3DVECTOR());
         //cam.MoveData.MaxSpeed = 50;
         //cam.MoveData.Speed = 50;
 
-        PlayerCameraInfo.LookAtActor = target.ID;
+        PlayerCameraInfo.Look.SetTarget_LookAtActor(target.ID);
         Manager.AddEvent(Game.GameTime + 5f, Scene_ExitCutscene);
       }
     }

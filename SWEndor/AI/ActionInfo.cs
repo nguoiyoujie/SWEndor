@@ -118,7 +118,7 @@ namespace SWEndor.AI.Actions
 
     internal static float AdjustSpeed(ActorInfo owner, float target_Speed)
     {
-      if (owner.ActorState != ActorState.FREE && owner.ActorState != ActorState.HYPERSPACE)
+      if (!owner.MoveData.FreeSpeed)
       {
         target_Speed = target_Speed.Clamp(owner.MoveData.MinSpeed, owner.MoveData.MaxSpeed);
       }

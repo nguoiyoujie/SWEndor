@@ -106,10 +106,7 @@ namespace SWEndor.Actors.Components
 
     private static void Dying(Engine engine, ActorInfo actor)
     {
-      if (!actor.ActorState.IsDyingOrDead())
-        actor.ActorState = ActorState.DYING;
-      else if (actor.ActorState.IsDying())
-        actor.ActorState = ActorState.DEAD;
+      actor.AdvanceDeathOneLevel();
     }
 
     public static void Process(Engine engine, ActorInfo actor)

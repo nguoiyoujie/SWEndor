@@ -18,10 +18,10 @@ namespace SWEndor.Actors
 
   public static class ActorDistanceInfo
   {
-    private static Cache<int2, float, float, ActorInfo, ActorInfo> cache = new Cache<int2, float, float, ActorInfo, ActorInfo>(); 
+    private static Cache<long, float, float, ActorInfo, ActorInfo> cache = new Cache<long, float, float, ActorInfo, ActorInfo>(); 
     private static float Cleartime = 0;
-    private static Func<ActorInfo, ActorInfo, float> func = (n1, n2) => CalculateDistance(n1, n2);
-    private static Func<float, bool> clearfunc = (f) => { return f > Globals.Engine.Game.GameTime; };
+    //private static Func<ActorInfo, ActorInfo, float> func = (n1, n2) => CalculateDistance(n1, n2);
+    private static Func<float, bool> clearfunc = (f) => { return f < Globals.Engine.Game.GameTime; };
 
     private static object locker = new object();
 
@@ -92,7 +92,20 @@ namespace SWEndor.Actors
           Cleartime = Globals.Engine.Game.GameTime + 5;
         }
 
-        return cache.GetOrDefine(new int2(a1.ID, a2.ID), Globals.Engine.Game.GameTime, func, a1, a2);
+        long hash;
+        if (a1.ID > a2.ID)
+        {
+          hash = a1.ID;
+          hash = hash << 32;
+          hash += a2.ID;
+        }
+        else
+        {
+          hash = a2.ID;
+          hash = hash << 32;
+          hash += a1.ID;
+        }
+        return cache.GetOrDefine(hash, Globals.Engine.Game.GameTime, CalculateDistance, a1, a2);
       }
     }
 

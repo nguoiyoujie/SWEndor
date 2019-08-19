@@ -35,21 +35,22 @@ namespace SWEndor.ActorTypes.Instances
       AddOns = new AddOnInfo[] { new AddOnInfo("Death Star Laser Source", new TV_3DVECTOR(-0.13f * size, 0.2f * size, -0.04f * size), new TV_3DVECTOR(0, 0, 0), true) };
     }
 
-    public override void ProcessNewState(ActorInfo ainfo)
+    public override void Dying(ActorInfo ainfo)
     {
-      base.ProcessNewState(ainfo);
-      if (ainfo.ActorState.IsDying())
-      {
-        TimedLifeSystem.Activate(Engine, ainfo, 5);
-        CombatSystem.Deactivate(Engine, ainfo);
-      }
-      else if (ainfo.ActorState.IsDead())
-      {
-        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave Mega"));
-        acinfo.Position = ainfo.GetPosition();
-        ActorInfo explwav = ActorFactory.Create(acinfo);
-        MeshSystem.SetScale(Engine, explwav, 10);
-      }
+      base.Dying(ainfo);
+
+      TimedLifeSystem.Activate(Engine, ainfo, 5);
+      CombatSystem.Deactivate(Engine, ainfo);
+    }
+
+    public override void Dead(ActorInfo ainfo)
+    {
+      base.Dead(ainfo);
+
+      ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave Mega"));
+      acinfo.Position = ainfo.GetPosition();
+      ActorInfo explwav = ActorFactory.Create(acinfo);
+      MeshSystem.SetScale(Engine, explwav, 10);
     }
   }
 }

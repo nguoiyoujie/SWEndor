@@ -89,14 +89,10 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.DyingMoveComponent = new DyingSink(0.00025f, 1.3f, 0.2f);
     }
 
-    public override void ProcessNewState(ActorInfo ainfo)
+    public override void Dying(ActorInfo ainfo)
     {
-      base.ProcessNewState(ainfo);
-      if (ainfo.ActorState.IsDying())
-      {
-        TimedLifeSystem.Activate(Engine, ainfo, 2000f);
-        CombatSystem.Deactivate(Engine, ainfo);
-      }
+      TimedLifeSystem.Activate(Engine, ainfo, 2000f);
+      CombatSystem.Deactivate(Engine, ainfo);
     }
   }
 }

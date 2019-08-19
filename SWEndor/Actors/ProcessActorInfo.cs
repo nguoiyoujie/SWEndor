@@ -11,13 +11,13 @@ namespace SWEndor.Actors
       if (actor == null)
         return;
 
-      if (!actor.ActorState.IsDead())
+      if (!actor.IsDead)
         actor.Update();
 
       actor.CycleInfo.Process();
 
       actor.CheckState(engine);
-      if (!actor.ActorState.IsDead())
+      if (!actor.IsDead)
       {
         if (engine.MaskDataSet[actor].Has(ComponentMask.CAN_BECOLLIDED)
         || actor.TypeInfo is ActorTypes.Groups.Projectile)
@@ -35,8 +35,8 @@ namespace SWEndor.Actors
         return;
 
       if (!engine.MaskDataSet[actor].Has(ComponentMask.HAS_AI)
-        || actor.CreationState != CreationState.ACTIVE
-        || actor.ActorState.IsDyingOrDead()
+        || !actor.Active
+        || actor.IsDyingOrDead
         || (actor.IsPlayer && !engine.PlayerInfo.PlayerAIEnabled)
         )
         return;
@@ -58,7 +58,7 @@ namespace SWEndor.Actors
 
       if (engine.MaskDataSet[actor].Has(ComponentMask.CAN_RENDER)
         //&& !engine.MaskDataSet[id].Has(ComponentMask.CAN_GLOW)
-        && actor.CreationState == CreationState.ACTIVE
+        && actor.Active
         && !actor.IsAggregateMode)
       {
         if (!actor.IsPlayer || engine.PlayerCameraInfo.CameraMode != CameraMode.FREEROTATION)
@@ -80,7 +80,7 @@ namespace SWEndor.Actors
       if (actor == null)
         return;
 
-      if (!actor.ActorState.IsDyingOrDead())
+      if (!actor.IsDyingOrDead)
         actor.TypeInfo.FireWeapon(actor, target, weapon);
     }
 
@@ -89,7 +89,7 @@ namespace SWEndor.Actors
       CombatSystem.Process(engine, this);
       TypeInfo.ProcessState(this);
 
-      if (ActorState == ActorState.DEAD)
+      if (IsDead)
         Kill();
     }
 
@@ -97,8 +97,8 @@ namespace SWEndor.Actors
     {
       MeshSystem.Update(Engine, this);
 
-      if (CreationState == CreationState.GENERATED)
-        CreationState = CreationState.ACTIVE;
+      if (Generated)
+        SetActivated();
     }
     
   }

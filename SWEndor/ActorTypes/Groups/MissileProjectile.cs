@@ -42,7 +42,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       base.ProcessState(ainfo);
       if (ainfo.CurrentAction == null || ainfo.CurrentAction is Idle)
-        ainfo.ActorState = ActorState.DEAD;
+        ainfo.SetState_Dead();
     }
   }
 }

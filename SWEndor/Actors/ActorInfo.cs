@@ -6,7 +6,6 @@ using SWEndor.AI.Actions;
 using SWEndor.Player;
 using SWEndor.Scenarios;
 using SWEndor.Sound;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace SWEndor.Actors
@@ -46,10 +45,6 @@ namespace SWEndor.Actors
     {
       return string.Format("ACTOR:{0},{1}", ID, _name);
     }
-
-    // Creation and Disposal
-    public float CreationTime = 0;
-    public CreationState CreationState = CreationState.PLANNED;
 
     // Faction
     private FactionInfo _faction;
@@ -98,35 +93,20 @@ namespace SWEndor.Actors
     public bool CanRetaliate = true;
     public int HuntWeight = 1;
 
-    // Utility
-    private ActorState m_ActorState;
-    public ActorState ActorState
-    {
-      get { return m_ActorState; }
-      set
-      {
-        if (m_ActorState != value)
-        {
-          ActorState prevState = m_ActorState;
-          m_ActorState = value;
-          TypeInfo.ProcessNewState(this);
-          OnStateChangeEvent();
-        }
-      }
-    }
-
-    // Data
+    // Data (structs)
     public CoordData CoordData;
     public MoveData MoveData;
 
-    // Traits
-    //public //
+    // Traits (structs)
+    public Relation Relation;
+
+    // Traits (classes)
+    private StateModel State;
 
     // Ownership
     public ActorInfo Prev;
     public ActorInfo Next;
 
-    public Relation Relation;
 
     #region Creation Methods
 
@@ -165,12 +145,9 @@ namespace SWEndor.Actors
 
 
       // Creation
-      CreationState = CreationState.PLANNED;
-      CreationTime = acinfo.CreationTime;
-
+      State.Init(this, TypeInfo, acinfo);
 
       Faction = acinfo.Faction;
-      ActorState = acinfo.InitialState;
 
       HuntWeight = TypeInfo.HuntWeight;
 
@@ -203,11 +180,9 @@ namespace SWEndor.Actors
       Engine.MaskDataSet[this] = TypeInfo.Mask;
 
       // Creation
-      CreationState = CreationState.PLANNED;
-      CreationTime = acinfo.CreationTime;
+      State.Init(this, TypeInfo, acinfo);
 
       Faction = acinfo.Faction;
-      ActorState = acinfo.InitialState;
 
       MoveComponent = MoveDecorator.Create(TypeInfo);
 
@@ -219,7 +194,7 @@ namespace SWEndor.Actors
     {
       Engine.MeshDataSet.Mesh_generate(this, TypeInfo);
 
-      CreationState = CreationState.GENERATED;
+      SetGenerated();
       Update();
       OnCreatedEvent();
 
@@ -231,7 +206,7 @@ namespace SWEndor.Actors
     public TV_3DVECTOR GetPosition()
     {
       TV_3DVECTOR ret = CoordData.Position;
-      ActorInfo a = Relation.UseParentCoords ? Relation.Parent : null;
+      ActorInfo a = Relation.ParentForCoords;
       if (a != null)
         ret = a.GetRelativePositionXYZ(ret.x, ret.y, ret.z);
 
@@ -284,7 +259,7 @@ namespace SWEndor.Actors
 
     public TV_3DVECTOR GetRotation()
     {
-      ActorInfo a = Relation.UseParentCoords ? Relation.Parent : null;
+      ActorInfo a = Relation.ParentForCoords;
       if (a != null && Engine.MeshDataSet.Mesh_get(a) != null)
       {
         TVMathLibrary mathl = TrueVision.TVMathLibrary;
@@ -325,7 +300,7 @@ namespace SWEndor.Actors
 
     public void SetRotation(float x, float y, float z)
     {
-      ActorInfo a = Relation.UseParentCoords ? Relation.Parent : null;
+      ActorInfo a = Relation.ParentForCoords;
       if (a != null)
       {
         CoordData.Rotation = new TV_3DVECTOR(x, y, z);
@@ -347,7 +322,7 @@ namespace SWEndor.Actors
     public TV_3DVECTOR GetDirection()
     {
       TV_3DVECTOR ret = Utilities.GetDirection(CoordData.Rotation);
-      ActorInfo a = Relation.UseParentCoords ? Relation.Parent : null;
+      ActorInfo a = Relation.ParentForCoords;
       if (a != null)
         ret += a.GetDirection();
 
@@ -359,7 +334,7 @@ namespace SWEndor.Actors
     public void SetDirection(float x, float y, float z)
     {
       TV_3DVECTOR dir = new TV_3DVECTOR(x, y, z);
-      ActorInfo a = Relation.UseParentCoords ? Relation.Parent : null;
+      ActorInfo a = Relation.ParentForCoords;
       if (a != null)
         dir -= a.GetDirection();
 
@@ -393,7 +368,7 @@ namespace SWEndor.Actors
       }
     }
 
-    public void MoveRelative(float front, float up, float right)
+    public void MoveRelative(float front, float up = 0, float right = 0)
     {
       TV_3DVECTOR vec = GetRelativePositionFUR(front, up, right, true);
       SetLocalPosition(vec.x, vec.y, vec.z);
@@ -417,7 +392,7 @@ namespace SWEndor.Actors
     public float GetTrueSpeed()
     {
       float ret = MoveData.Speed;
-      ActorInfo a = Relation.UseParentCoords ? Relation.Parent : null;
+      ActorInfo a = Relation.ParentForCoords;
       if (a != null)
         ret += a.GetTrueSpeed();
 
@@ -446,7 +421,7 @@ namespace SWEndor.Actors
     #region Event Methods
     public void OnTickEvent() { TickEvents?.Invoke(new ActorEventArg(ID)); }
     public void OnHitEvent(int victimID) { HitEvents?.Invoke(new HitEventArg(ID, victimID)); }
-    public void OnStateChangeEvent() { ActorStateChangeEvents?.Invoke(new ActorStateChangeEventArg(ID, ActorState)); }
+    public void OnStateChangeEvent() { ActorStateChangeEvents?.Invoke(new ActorStateChangeEventArg(ID, State.ActorState)); }
     public void OnCreatedEvent() { CreatedEvents?.Invoke(new ActorEventArg(ID)); }
     public void OnDestroyedEvent() { DestroyedEvents?.Invoke(new ActorEventArg(ID)); }
 
@@ -506,6 +481,11 @@ namespace SWEndor.Actors
 
     public void Destroy()
     {
+      if (DisposingOrDisposed)
+        return;
+
+      SetDisposing();
+
       // Parent
       Relation.Parent?.RemoveChild(this);
 
@@ -562,13 +542,7 @@ namespace SWEndor.Actors
       Engine.TimedLifeDataSet.Reset(this);
 
       // Finally
-      CreationState = CreationState.DISPOSED;
+      SetDisposed();
     }
-
-    public bool Planned { get { return CreationState == CreationState.PLANNED; } }
-
-    public bool Active { get { return CreationState == CreationState.ACTIVE; } }
-
-    public bool Disposed { get { return CreationState == CreationState.DISPOSED; } }
   }
 }

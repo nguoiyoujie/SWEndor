@@ -48,7 +48,7 @@ namespace SWEndor.Actors.Components
       // only check player and projectiles
       if (actor.IsPlayer
           || actor.TypeInfo is ActorTypes.Groups.Projectile
-          || (actor.ActorState.IsDying() && actor.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER)))
+          || (actor.IsDying && actor.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER)))
       {
         if (data.Collision.ActorID >= 0)
         {

@@ -37,7 +37,7 @@ namespace SWEndor.ActorTypes.Groups
     public override void ProcessState(ActorInfo ainfo)
     {
       base.ProcessState(ainfo);
-      if (ainfo.ActorState == ActorState.NORMAL)
+      if (!ainfo.IsDyingOrDead)
       {
         float impdist = ImpactCloseEnoughDistance;
         if (impdist > 0 && ainfo.CurrentAction != null && ainfo.CurrentAction is AttackActor)

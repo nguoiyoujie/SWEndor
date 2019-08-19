@@ -114,8 +114,8 @@ namespace SWEndor.Scenarios
       LoadScene();
       Launched = true;
       PlayerCameraInfo.CameraMode = CameraMode.FIRSTPERSON;
-      PlayerCameraInfo.LookActor = -1;
-      PlayerCameraInfo.LookAtActor = -1;
+      PlayerCameraInfo.Look.ResetPosition();
+      PlayerCameraInfo.Look.ResetTarget();
     }
 
     public virtual void LoadFactions()
@@ -357,7 +357,7 @@ namespace SWEndor.Scenarios
         PlayerInfo.TempActorID = ainfo.ID;
 
         //if (PlayerInfo.Actor.TypeInfo is DeathCameraATI)
-        //  if (PlayerInfo.Actor.CreationState == CreationState.ACTIVE)
+        //  if (PlayerInfo.Actor.Active)
         //    PlayerInfo.Actor.SetLocalPosition(ainfo.GetLocalPosition().x, ainfo.GetLocalPosition().y, ainfo.GetLocalPosition().z);
       }
     }

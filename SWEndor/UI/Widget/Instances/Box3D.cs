@@ -11,10 +11,10 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
+        ActorInfo p = PlayerInfo.Actor;
         return (!Owner.ShowPage
-            && PlayerInfo.Actor != null
-            && PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && PlayerInfo.Actor.ActorState != ActorState.DYING
+            && p != null
+            && !p.IsDyingOrDead
             && Owner.ShowUI
             && Owner.Box3D_Enable);
       }

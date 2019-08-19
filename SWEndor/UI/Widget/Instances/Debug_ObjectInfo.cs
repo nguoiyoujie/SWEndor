@@ -28,26 +28,29 @@ namespace SWEndor.UI.Widgets
       Action<Engine, ActorInfo> action = new Action<Engine, ActorInfo>(
         (_, a) =>
         {
-          if (a != null && a.CreationState == CreationState.ACTIVE)
+          if (a != null)
           {
-            if (!wingcount.ContainsKey("All Objects"))
-              wingcount.Add("All Objects", 1);
-            else
-              wingcount["All Objects"]++;
-          }
-          if (a != null && a.TypeInfo is ActorTypes.Groups.Projectile && a.CreationState == CreationState.ACTIVE && a.Faction != null)
-          {
-            if (!wingcount.ContainsKey("Projectiles"))
-              wingcount.Add("Projectiles", 1);
-            else
-              wingcount["Projectiles"]++;
-          }
-          if (a != null && (a.TypeInfo is ActorTypes.Groups.Fighter) && a.CreationState == CreationState.ACTIVE && a.Faction != null)
-          {
-            if (!wingcount.ContainsKey(a.Faction.Name + " Wings"))
-              wingcount.Add(a.Faction.Name + " Wings", 1);
-            else
-              wingcount[a.Faction.Name + " Wings"]++;
+            if (a.Active)
+            {
+              if (!wingcount.ContainsKey("All Objects"))
+                wingcount.Add("All Objects", 1);
+              else
+                wingcount["All Objects"]++;
+            }
+            if (a.TypeInfo is ActorTypes.Groups.Projectile && a.Active && a.Faction != null)
+            {
+              if (!wingcount.ContainsKey("Projectiles"))
+                wingcount.Add("Projectiles", 1);
+              else
+                wingcount["Projectiles"]++;
+            }
+            if ((a.TypeInfo is ActorTypes.Groups.Fighter) && a.Active && a.Faction != null)
+            {
+              if (!wingcount.ContainsKey(a.Faction.Name + " Wings"))
+                wingcount.Add(a.Faction.Name + " Wings", 1);
+              else
+                wingcount[a.Faction.Name + " Wings"]++;
+            }
           }
         });
 

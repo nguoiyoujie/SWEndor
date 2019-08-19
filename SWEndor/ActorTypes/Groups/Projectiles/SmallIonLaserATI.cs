@@ -36,7 +36,7 @@ namespace SWEndor.ActorTypes.Instances
       foreach (ActorInfo c in children)
       {
         if (c == null
-          || c.CreationState != CreationState.ACTIVE
+          || !c.Active
           || !c.TypeInfo.TargetType.HasFlag(TargetType.ADDON))
           rm.Add(c);
       }

@@ -29,7 +29,7 @@ namespace SWEndor.ActorTypes.Instances
         return;
 
       if (hitby.TypeInfo is TorpedoATI) //hard code?
-        owner.ActorState = ActorState.DEAD;
+        owner.SetState_Dead();
     }
   }
 }

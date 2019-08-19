@@ -141,9 +141,8 @@ namespace SWEndor.Scenarios
       ActorInfo trn1 = ActorFactory.Get(m_Transport1ID);
       ActorInfo trn2 = ActorFactory.Get(m_Transport2ID);
       ActorInfo trn3 = ActorFactory.Get(m_Transport3ID);
-      if (player != null 
-        && player.ActorState != ActorState.DEAD 
-        && player.ActorState != ActorState.DYING)
+      if (player != null
+          && !player.IsDyingOrDead)
       {
         MainEnemyFaction.WingLimit = 6 + MainAllyFaction.GetWings().Count * 2;
         if (MainEnemyFaction.WingLimit > 12)
@@ -159,8 +158,8 @@ namespace SWEndor.Scenarios
           {
             transport_currentZpos = trn1.GetPosition().z;
           }
-          if (trn1.GetPosition().z < transport_hyperspaceZpos 
-            && player.ActorState == ActorState.NORMAL 
+          if (trn1.GetPosition().z < transport_hyperspaceZpos
+            && !player.IsDyingOrDead
             && !Manager.GetGameStateB("Stage1End") 
             && !Manager.GetGameStateB("GameOver"))
           {
@@ -248,7 +247,7 @@ namespace SWEndor.Scenarios
       ActorInfo ainfo;
       //ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
       //cam.SetLocalPosition(200, 350, Manager.MaxBounds.z - 1500);
-      PlayerCameraInfo.Position = new TV_3DVECTOR(200, 350, Manager.MaxBounds.z - 1500);
+      PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(200, 350, Manager.MaxBounds.z - 1500));
 
       // Player Falcon
       ainfo = new ActorSpawnInfo
@@ -268,7 +267,7 @@ namespace SWEndor.Scenarios
       ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "front", "rear" };
       Engine.ActorDataSet.CombatData[ainfo.dataID].DamageModifier = 0.1f;
       ainfo.HitEvents += Rebel_PlayerHit;
-      PlayerCameraInfo.LookAtActor = ainfo.ID;
+      PlayerCameraInfo.Look.SetTarget_LookAtActor(ainfo.ID);
       PlayerInfo.TempActorID = ainfo.ID;
 
       // X-Wings x12
@@ -387,7 +386,7 @@ namespace SWEndor.Scenarios
     {
       PlayerInfo.ActorID = PlayerInfo.TempActorID;
 
-      if (PlayerInfo.Actor == null || PlayerInfo.Actor.CreationState == CreationState.DISPOSED)
+      if (PlayerInfo.Actor == null || PlayerInfo.Actor.Disposed)
       {
         if (PlayerInfo.Lives > 0)
         {
@@ -455,7 +454,7 @@ namespace SWEndor.Scenarios
         if (actor != null)
         {
           ActionManager.UnlockOne(actorID);
-          actor.ActorState = ActorState.NORMAL;
+          actor.SetState_Normal();
           actor.MoveData.Speed = actor.MoveData.MaxSpeed;
         }
       }
@@ -534,16 +533,16 @@ namespace SWEndor.Scenarios
 
         ActorInfo ainfo = ActorFactory.Get(arg.ActorID);
 
-      if (ainfo.ActorState.IsDyingOrDead())
+      if (ainfo.IsDyingOrDead)
       {
         Manager.SetGameStateB("GameOver", true);
         Manager.IsCutsceneMode = true;
 
         PlayerInfo.ActorID = -1;
-        PlayerCameraInfo.LookActor = ainfo.ID;
+        PlayerCameraInfo.Look.SetPosition_Actor(ainfo.ID);
         PlayerCameraInfo.Look.SetModeDeathCircle(ainfo.TypeInfo.DeathCamera);
 
-        if (ainfo.ActorState.IsDying())
+        if (ainfo.IsDying)
         {
           ainfo.TickEvents += ProcessPlayerDying;
           ainfo.DestroyedEvents += ProcessPlayerKilled;
@@ -866,10 +865,10 @@ namespace SWEndor.Scenarios
 
       //cam.MoveData.MaxSpeed = 50;
       //cam.MoveData.Speed = 50;
-      PlayerCameraInfo.Position = new TV_3DVECTOR(400, 130, -1800);
+      PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(400, 130, -1800));
       //PlayerCameraInfo.LookAtPosition = new TV_3DVECTOR(200, 350, Manager.MaxBounds.z - 1500);
 
-      PlayerCameraInfo.LookAtActor = m_PlayerID;
+      PlayerCameraInfo.Look.SetTarget_LookAtActor(m_PlayerID);
       PlayerInfo.TempActorID = m_PlayerID;
 
       int counter = 0;

@@ -404,7 +404,7 @@ namespace SWEndor.Scenarios
               Scene_Stage05b_ContinuouslySpawnRoute(null);
 
               if (player.GetPosition().x > vader_distX 
-                && player.ActorState == ActorState.NORMAL
+                && !player.IsDyingOrDead
                 && !Stage5End)
               {
                 Manager.AddEvent(Game.GameTime + 0.1f, Scene_Stage06_Vader);
@@ -444,7 +444,7 @@ namespace SWEndor.Scenarios
               Scene_Stage05b_ContinuouslySpawnRoute(null);
 
               if (player.GetPosition().x > vaderend_distX 
-                && player.ActorState == ActorState.NORMAL 
+                && !player.IsDyingOrDead
                 && !Stage6VaderEnd)
               {
                 Manager.AddEvent(Game.GameTime + 0.1f, Scene_Stage06_VaderEnd);
@@ -499,7 +499,7 @@ namespace SWEndor.Scenarios
 
     private void CalibrateSceneObjects()
     {
-      if (m_AYavin != null && m_AYavin.CreationState == CreationState.ACTIVE)
+      if (m_AYavin != null && m_AYavin.Active)
       {
         if (StageNumber < 2)
         {
@@ -516,14 +516,14 @@ namespace SWEndor.Scenarios
           m_AYavin.SetLocalPosition(x_yv, y_yv, z_yv);
         }
       }
-      if (m_AYavin4 != null && m_AYavin4.CreationState == CreationState.ACTIVE)
+      if (m_AYavin4 != null && m_AYavin4.Active)
       {
         float x_y4 = PlayerInfo.Position.x / 10f;
         float y_y4 = PlayerInfo.Position.y / 2f;
         float z_y4 = (PlayerInfo.Position.z > 0) ? PlayerInfo.Position.z / 1.5f + 30000f : PlayerInfo.Position.z / 100f + 30000f;
         m_AYavin4.SetLocalPosition(x_y4, y_y4, z_y4);
       }
-      if (m_ADS != null && m_ADS.CreationState == CreationState.ACTIVE)
+      if (m_ADS != null && m_ADS.Active)
       {
         float x_ds = PlayerInfo.Position.x / 5f;
         float y_ds = (PlayerInfo.Position.y / 1.5f) + 3200.0f;
@@ -538,7 +538,7 @@ namespace SWEndor.Scenarios
     {
       ActorInfo ainfo;
 
-      PlayerCameraInfo.Position = new TV_3DVECTOR(150, 100, Manager.MaxBounds.z - 1000);
+      PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(150, 100, Manager.MaxBounds.z - 1000));
 
       // Player X-Wing
       ainfo = new ActorSpawnInfo
@@ -557,7 +557,7 @@ namespace SWEndor.Scenarios
         Registries = null
       }.Spawn(this);
 
-      PlayerCameraInfo.LookAtActor = ainfo.ID;
+      PlayerCameraInfo.Look.SetTarget_LookAtActor(ainfo.ID);
       PlayerInfo.TempActorID = ainfo.ID;
 
       // X-Wings x21, Y-Wing x8
@@ -717,7 +717,7 @@ namespace SWEndor.Scenarios
     public void Rebel_MakePlayer(GameEventArg arg)
     {
       PlayerInfo.ActorID = PlayerInfo.TempActorID;
-      if (PlayerInfo.Actor == null || PlayerInfo.Actor.CreationState == CreationState.DISPOSED)
+      if (PlayerInfo.Actor == null || PlayerInfo.Actor.Disposed)
       {
         if (PlayerInfo.Lives > 0)
         {
@@ -777,7 +777,7 @@ namespace SWEndor.Scenarios
         if (actor != null)
         {
           ActionManager.UnlockOne(actorID);
-          actor.ActorState = ActorState.NORMAL;
+          actor.SetState_Normal();
           actor.MoveData.Speed = actor.MoveData.MaxSpeed;
         }
       }
@@ -1173,7 +1173,7 @@ namespace SWEndor.Scenarios
         ActionManager.ForceClearQueue(m_PlayerID);
         ActionManager.QueueNext(m_PlayerID, new Lock());
       }
-      PlayerCameraInfo.LookActor = -1;
+      PlayerCameraInfo.Look.ResetPosition();
       //PlayerInfo.ActorID = Manager.SceneCameraID;
       
       Manager.IsCutsceneMode = true;
@@ -1197,8 +1197,8 @@ namespace SWEndor.Scenarios
     {
       Manager.AddEvent(Game.GameTime + 0.1f, Scene_EnterCutscene);
 
-      PlayerCameraInfo.Position = new TV_3DVECTOR(1000, 300, -15000);
-      PlayerCameraInfo.LookAtActor = m_ADS.ID;
+      PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(1000, 300, -15000));
+      PlayerCameraInfo.Look.SetTarget_LookAtActor(m_ADS.ID);
 
       //cam.MoveData.MaxSpeed = 600;
       //cam.MoveData.Speed = 600;
@@ -1250,7 +1250,7 @@ namespace SWEndor.Scenarios
       StageNumber = 2;
       Rebel_RemoveTorps(null);
 
-      PlayerCameraInfo.Position = new TV_3DVECTOR(-550, -130, Manager.MaxBounds.z - 1500);
+      PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(-550, -130, Manager.MaxBounds.z - 1500));
 
       m_ADS_Surface = new ActorSpawnInfo
       {
@@ -1290,7 +1290,7 @@ namespace SWEndor.Scenarios
 
       //cam.MoveData.MaxSpeed = 450;
       //cam.MoveData.Speed = 450;
-      PlayerCameraInfo.LookAtActor = m_PlayerID;
+      PlayerCameraInfo.Look.SetTarget_LookAtActor(m_PlayerID);
 
       //Empire_TIEWave(null);
       Empire_Towers01(null);
@@ -1306,10 +1306,10 @@ namespace SWEndor.Scenarios
 
       StageNumber = 3;
 
-      PlayerCameraInfo.Position = new TV_3DVECTOR(600, 130, Manager.MaxBounds.z - 1000);
+      PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(600, 130, Manager.MaxBounds.z - 1000));
       //cam.MoveData.MaxSpeed = 450;
       //cam.MoveData.Speed = 450;
-      PlayerCameraInfo.LookAtActor = m_PlayerID;
+      PlayerCameraInfo.Look.SetTarget_LookAtActor(m_PlayerID);
 
       foreach (int actorID in MainAllyFaction.GetWings())
       {
@@ -1378,10 +1378,10 @@ namespace SWEndor.Scenarios
           ainfo.SpawnerInfo.NextSpawnTime = Game.GameTime + 3f;
 
       StageNumber = 4;
-      PlayerCameraInfo.Position = new TV_3DVECTOR(1000, 30, -2000);
+      PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(1000, 30, -2000));
       //cam.MoveData.MaxSpeed = 750;
       //cam.MoveData.Speed = 750;
-      PlayerCameraInfo.LookAtActor = m_PlayerID;
+      PlayerCameraInfo.Look.SetTarget_LookAtActor(m_PlayerID);
 
       foreach (int actorID in MainAllyFaction.GetWings())
       {
@@ -1403,7 +1403,7 @@ namespace SWEndor.Scenarios
 
       StageNumber = 5;
 
-      PlayerCameraInfo.Position = new TV_3DVECTOR(550, -130, -1500);
+      PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(550, -130, -1500));
       SoundManager.SetMusic("battle_1_2", true);
       Manager.MaxAIBounds = Manager.MaxAIBounds + new TV_3DVECTOR(2500, 0, 0);
 
@@ -1452,7 +1452,7 @@ namespace SWEndor.Scenarios
 
       //cam.MoveData.MaxSpeed = 450;
       //cam.MoveData.Speed = 450;
-      PlayerCameraInfo.LookAtActor = m_PlayerID;
+      PlayerCameraInfo.Look.SetTarget_LookAtActor(m_PlayerID);
 
       Empire_Towers04(null);
     }
@@ -1792,7 +1792,7 @@ namespace SWEndor.Scenarios
       Manager.AddEvent(Game.GameTime + 8f, Scene_Stage06_VaderAttack);
 
       StageNumber = 6;
-      PlayerCameraInfo.Position = new TV_3DVECTOR(vader_distX - 2750, -225, 0);
+      PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(vader_distX - 2750, -225, 0));
       SoundManager.SetMusic("battle_1_3", true);
 
       ActorInfo player = ActorFactory.Get(m_PlayerID);
@@ -1893,7 +1893,7 @@ namespace SWEndor.Scenarios
 
       //cam.MoveData.MaxSpeed = 425;
       //cam.MoveData.Speed = 425;
-      PlayerCameraInfo.LookAtActor = player.ID;
+      PlayerCameraInfo.Look.SetTarget_LookAtActor(player.ID);
     }
 
     public void Scene_Stage06_VaderAttack(GameEventArg arg)
@@ -1903,23 +1903,26 @@ namespace SWEndor.Scenarios
       ActorInfo m_Falcon = ActorFactory.Get(m_FalconID);
       m_Falcon.Kill();
 
-      ActionManager.ForceClearQueue(m_VaderID);
-      ActionManager.QueueNext(m_VaderID, new AttackActor(m_PlayerID, -1, -1, false, 9999));
-      ActionManager.QueueNext(m_VaderID, new AttackActor(m_PlayerID, -1, -1, false, 9999));
-      ActionManager.QueueNext(m_VaderID, new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
-      ActionManager.QueueNext(m_VaderID, new Lock());
+      ActorInfo m_Vader = ActorFactory.Get(m_VaderID);
+      m_Vader.ForceClearQueue();
+      m_Vader.QueueNext(new AttackActor(m_PlayerID, -1, -1, false, 9999));
+      m_Vader.QueueNext(new AttackActor(m_PlayerID, -1, -1, false, 9999));
+      m_Vader.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
+      m_Vader.QueueNext(new Lock());
 
-      ActionManager.ForceClearQueue(m_VaderEscort1ID);
-      ActionManager.QueueNext(m_VaderEscort1ID, new AttackActor(m_PlayerID, -1, -1, false, 9999));
-      ActionManager.QueueNext(m_VaderEscort1ID, new AttackActor(m_PlayerID, -1, -1, false, 9999));
-      ActionManager.QueueNext(m_VaderEscort1ID, new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
-      ActionManager.QueueNext(m_VaderEscort1ID, new Lock());
+      ActorInfo m_VaderE1 = ActorFactory.Get(m_VaderEscort1ID);
+      m_VaderE1.ForceClearQueue();
+      m_VaderE1.QueueNext(new AttackActor(m_PlayerID, -1, -1, false, 9999));
+      m_VaderE1.QueueNext(new AttackActor(m_PlayerID, -1, -1, false, 9999));
+      m_VaderE1.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
+      m_VaderE1.QueueNext(new Lock());
 
-      ActionManager.ForceClearQueue(m_VaderEscort2ID);
-      ActionManager.QueueNext(m_VaderEscort2ID, new AttackActor(m_PlayerID, -1, -1, false, 9999));
-      ActionManager.QueueNext(m_VaderEscort2ID, new AttackActor(m_PlayerID, -1, -1, false, 9999));
-      ActionManager.QueueNext(m_VaderEscort2ID, new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
-      ActionManager.QueueNext(m_VaderEscort2ID, new Lock());
+      ActorInfo m_VaderE2 = ActorFactory.Get(m_VaderEscort2ID);
+      m_VaderE2.ForceClearQueue();
+      m_VaderE2.QueueNext(new AttackActor(m_PlayerID, -1, -1, false, 9999));
+      m_VaderE2.QueueNext(new AttackActor(m_PlayerID, -1, -1, false, 9999));
+      m_VaderE2.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
+      m_VaderE2.QueueNext(new Lock());
     }
 
     public void Scene_Stage06_VaderEnd(GameEventArg arg)
@@ -1932,7 +1935,7 @@ namespace SWEndor.Scenarios
 
       StageNumber = 6;
 
-      PlayerCameraInfo.Position = new TV_3DVECTOR(vaderend_distX + 900, -365, 0);
+      PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(vaderend_distX + 900, -365, 0));
       SoundManager.SetMusic("ds_end_1_1", true);
 
       ActorInfo vader = ActorFactory.Get(m_VaderID);
@@ -1943,9 +1946,9 @@ namespace SWEndor.Scenarios
       player.SetLocalPosition(vaderend_distX, -220, 0);
       player.SetLocalRotation(0, 90, 0);
       player.MoveData.ResetTurn();
-      ActionManager.ForceClearQueue(m_PlayerID);
-      ActionManager.QueueNext(m_PlayerID, new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
-      ActionManager.QueueNext(m_PlayerID, new Lock());
+      player.ForceClearQueue();
+      player.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
+      player.QueueNext(new Lock());
 
       vader.SetLocalRotation(0, 90, 0);
 
@@ -1988,7 +1991,7 @@ namespace SWEndor.Scenarios
 
       //cam.MoveData.MaxSpeed = 25;
       //cam.MoveData.Speed = 25;
-      PlayerCameraInfo.LookAtActor = falcon.ID;
+      PlayerCameraInfo.Look.SetTarget_LookAtActor(falcon.ID);
     }
 
     public void Scene_Stage06_VaderFlee(GameEventArg arg)
@@ -2007,10 +2010,10 @@ namespace SWEndor.Scenarios
 
         TimedLifeSystem.Activate(Engine, vader, 999);
 
-        vader.ActorState = ActorState.DYING;
+        vader.SetState_Dying();
         vaderE2.SetLocalRotation(-5, 93, 0);
-        vaderE2.ActorState = ActorState.DYING;
-        vaderE1.ActorState = ActorState.DYING;
+        vaderE2.SetState_Dying();
+        vaderE1.SetState_Dying();
       }
     }
 

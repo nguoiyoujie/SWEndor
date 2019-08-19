@@ -33,7 +33,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.ProcessState(ainfo);
 
-      if (ainfo.CreationState == CreationState.ACTIVE)
+      if (ainfo.Active)
       {
         ActorInfo parent = ainfo.TopParent;
         if (parent != null)
@@ -47,18 +47,16 @@ namespace SWEndor.ActorTypes.Instances
       }
     }
 
-    public override void ProcessNewState(ActorInfo ainfo)
+    public override void Dying(ActorInfo ainfo)
     {
-      base.ProcessNewState(ainfo);
+      base.Dying(ainfo);
 
-      if (ainfo.ActorState.IsDyingOrDead())
+      if (ainfo.IsDyingOrDead)
       {
         TimedLifeSystem.Activate(Engine, ainfo, 2000f);
         CombatSystem.Deactivate(Engine, ainfo);
 
-        ActorInfo parent = ainfo.TopParent;
-        if (parent != null)
-          parent.ActorState = ActorState.DYING;
+        ainfo.TopParent?.SetState_Dying();
       }
     }
 
@@ -70,7 +68,7 @@ namespace SWEndor.ActorTypes.Instances
 
       if (!Engine.MaskDataSet[hitby].Has(ComponentMask.IS_DAMAGE) && Engine.SysDataSet.StrengthFrac_get(owner) < 0.5f)
       {
-        owner.ActorState = ActorState.DYING;
+        owner.SetState_Dying();
         hitby.DestroyedEvents = null;
       }
     }

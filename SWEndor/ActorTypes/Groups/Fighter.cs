@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class Fighter : ActorTypeInfo
   {
-    internal Fighter(Factory owner, string name): base(owner, name)
+    internal Fighter(Factory owner, string name) : base(owner, name)
     {
       // Combat
       CombatData = CombatData.DefaultFighter;
@@ -36,28 +36,26 @@ namespace SWEndor.ActorTypes.Groups
       ainfo.DyingMoveComponent = new DyingSpin(180, 270);
     }
 
-    public override void ProcessNewState(ActorInfo ainfo)
+    public override void Dying(ActorInfo ainfo)
     {
-      base.ProcessNewState(ainfo);
-      if (ainfo.ActorState.IsDying())
+      base.Dying(ainfo);
+
+      ainfo.MoveData.ApplyZBalance = false;
+
+      if (ainfo.Relation.Parent != null || (ainfo.ActorDataSet.CombatData[ainfo.dataID].HitWhileDyingLeadsToDeath && Engine.Random.NextDouble() < 0.3f))
       {
-        ainfo.MoveData.ApplyZBalance = false;
-
-        if (ainfo.Relation.Parent != null || (ainfo.ActorDataSet.CombatData[ainfo.dataID].HitWhileDyingLeadsToDeath && Engine.Random.NextDouble() < 0.3f))
-        {
-          TimedLifeSystem.Activate(Engine, ainfo, 0.1f);
-          CombatSystem.Deactivate(Engine, ainfo);
-        }
-        else
-        {
-          TimedLifeSystem.Activate(Engine, ainfo, 5);
-          CombatSystem.Deactivate(Engine, ainfo);
-        }
-
-        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
-        acinfo.Position = ainfo.GetPosition();
-        ainfo.AddChild(ActorFactory.Create(acinfo));
+        TimedLifeSystem.Activate(Engine, ainfo, 0.1f);
+        CombatSystem.Deactivate(Engine, ainfo);
       }
+      else
+      {
+        TimedLifeSystem.Activate(Engine, ainfo, 5);
+        CombatSystem.Deactivate(Engine, ainfo);
+      }
+
+      ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
+      acinfo.Position = ainfo.GetPosition();
+      ainfo.AddChild(ActorFactory.Create(acinfo));
     }
   }
 }

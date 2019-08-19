@@ -299,7 +299,7 @@ namespace SWEndor.Weapons
           }
 
           TV_3DVECTOR dir = new TV_3DVECTOR();
-          ActorInfo a2 = target.Relation.UseParentCoords ? target.Relation.Parent : null;
+          ActorInfo a2 = target.Relation.ParentForCoords;
           if (a2 == null)
           {
             dir = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d) - owner.GetPosition();

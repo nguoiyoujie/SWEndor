@@ -26,7 +26,7 @@ namespace SWEndor.Actors.Components
 
     private static void Regenerate(Engine engine, ActorInfo a, float amount)
     {
-      if (!engine.ActorDataSet.RegenData[a.dataID].NoRegen && !a.ActorState.IsDyingOrDead())
+      if (!engine.ActorDataSet.RegenData[a.dataID].NoRegen && !a.IsDyingOrDead)
         CombatSystem.onNotify(engine, a, CombatEventType.RECOVER, amount);
     }
   }

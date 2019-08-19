@@ -34,7 +34,7 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.CycleInfo.Action = new Action(
         () => 
         {
-          ainfo.ActorState = ActorState.NORMAL;
+          ainfo.SetState_Normal();
           //ainfo.CombatSystem.onNotify(Engine, ainfo.ID, CombatEventType.TIMEACTIVATE , TimedLifeData.TimedLife);
           TimedLifeSystem.Activate(Engine, ainfo, TimedLifeData.TimedLife);
         }
@@ -47,12 +47,12 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessState(ActorInfo ainfo)
     {
       base.ProcessState(ainfo);
-      if (ainfo.ActorState == ActorState.NORMAL)
+      if (!ainfo.IsDyingOrDead)
       {
         ActorInfo p = ainfo.Relation.Parent;
         if (p != null)
         {
-          if (p.CreationState != CreationState.DISPOSED)
+          if (!p.Disposed)
           {
             TV_3DVECTOR pos = p.GetPosition();
             ainfo.SetLocalPosition(pos.x, pos.y, pos.z);
@@ -64,7 +64,7 @@ namespace SWEndor.ActorTypes.Instances
         }
         else
         {
-          ainfo.ActorState = ActorState.DEAD;
+          ainfo.SetState_Dead();
         }
       }
     }

@@ -9,20 +9,20 @@ namespace SWEndor.Primitives
 
     public void Define(TKey key, Token token, Func<TParam1, TParam2, TValue> func)
     {
-      CacheItem<Token, TValue, TParam1, TParam2> ret = new CacheItem<Token, TValue, TParam1, TParam2>(token, func);
+      CacheItem<Token, TValue, TParam1, TParam2> ret = new CacheItem<Token, TValue, TParam1, TParam2>(token);
       if (cache.ContainsKey(key))
         cache[key] = ret;
       else
         cache.Add(key, ret);
     }
 
-    public TValue Get(TKey key, Token token, TParam1 p1, TParam2 p2)
+    public TValue Get(TKey key, Token token, Func<TParam1, TParam2, TValue> func, TParam1 p1, TParam2 p2)
     {
       CacheItem<Token, TValue, TParam1, TParam2> item;
       if (!cache.TryGetValue(key, out item))
         throw new InvalidOperationException("Attempted to get an non-existent key '{0}' from a cache.".F(key));
 
-      return item.Get(token, p1, p2);
+      return item.Get(token, func, p1, p2);
     }
 
     public TValue GetOrDefine(TKey key, Token token, Func<TParam1, TParam2, TValue> func, TParam1 p1, TParam2 p2)
@@ -30,10 +30,10 @@ namespace SWEndor.Primitives
       CacheItem<Token, TValue, TParam1, TParam2> item;
       if (!cache.TryGetValue(key, out item))
       {
-        cache.Add(key, new CacheItem<Token, TValue, TParam1, TParam2>(default(Token), func));
+        cache.Add(key, new CacheItem<Token, TValue, TParam1, TParam2>(default(Token)));
         item = cache[key];
       }
-      return item.Get(token, p1, p2);
+      return item.Get(token, func, p1, p2);
     }
 
     public void Clear(Func<Token, bool> func = null)
@@ -44,7 +44,7 @@ namespace SWEndor.Primitives
         return;
       }
 
-      foreach (TKey k in cache.Keys)
+      foreach (TKey k in new List<TKey>(cache.Keys))
       {
         if (func(cache[k].ExpiryToken))
           cache.Remove(k);
@@ -54,21 +54,20 @@ namespace SWEndor.Primitives
     private struct CacheItem<E, T, TP1, TP2> where E : struct
     {
       internal E ExpiryToken;
-      private Func<TP1, TP2, T> fn;
+      //private Func<TP1, TP2, T> fn; // don't store this
       private T val;
 
-      public CacheItem(E token, Func<TP1, TP2, T> func)
+      public CacheItem(E token)
       {
-        fn = func;
         ExpiryToken = token;
         val = default(T);
       }
 
-      public T Get(E token, TP1 p1, TP2 p2)
+      public T Get(E token, Func<TP1, TP2, T> func, TP1 p1, TP2 p2)
       {
         if (!ExpiryToken.Equals(token))
         {
-          val = fn(p1, p2);
+          val = func(p1, p2);
           ExpiryToken = token;
         }
         return val;

@@ -48,7 +48,7 @@ namespace SWEndor.ActorTypes.Groups
 
     public override void ProcessState(ActorInfo ainfo)
     {
-      if (ainfo.ActorState == ActorState.NORMAL)
+      if (!ainfo.IsDyingOrDead)
       {
         TV_3DVECTOR pos = ainfo.GetEngine().PlayerCameraInfo.Camera.GetWorldPosition(new TV_3DVECTOR(0, 0, -1000));
         ainfo.LookAtPoint(pos);

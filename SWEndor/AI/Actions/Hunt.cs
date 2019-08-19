@@ -35,8 +35,8 @@ namespace SWEndor.AI.Actions
          {
            if (a != null
              && actor != a
-             && a.CreationState == CreationState.ACTIVE
-             && !a.ActorState.IsDyingOrDead()
+             && a.Active
+             && !a.IsDyingOrDead
              && engine.ActorDataSet.CombatData[a.dataID].IsCombatObject
              && (a.TypeInfo.TargetType & m_TargetType) != 0
              && !a.IsOutOfBounds(engine.GameScenarioManager.MinAIBounds, engine.GameScenarioManager.MaxAIBounds)

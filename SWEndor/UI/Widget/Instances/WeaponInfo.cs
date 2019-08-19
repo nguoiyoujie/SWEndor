@@ -18,18 +18,18 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
+        ActorInfo p = PlayerInfo.Actor;
         return (!Owner.ShowPage
-            && PlayerInfo.Actor != null
-            && PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && PlayerInfo.Actor.ActorState != ActorState.DYING
-            && Owner.ShowUI);
+          && p != null
+          && !p.IsDyingOrDead
+          && Owner.ShowUI);
       }
     }
 
     public override void Draw()
     {
       ActorInfo p = PlayerInfo.Actor;
-      if (p == null || p.CreationState != CreationState.ACTIVE)
+      if (p == null || !p.Active)
         return;
 
       TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;

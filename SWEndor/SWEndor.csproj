@@ -150,7 +150,9 @@
     <Compile Include="Actors\Data\Collision\CollisionData.cs" />
     <Compile Include="Actors\Data\Explosion\ExplodeData.cs" />
     <Compile Include="Actors\Data\Relation\Relation.cs" />
+    <Compile Include="Actors\Data\StateModel\StateModel.cs" />
     <Compile Include="Actors\Data\Sys\SysDataSet.cs" />
+    <Compile Include="Actors\Data\TimedLife\DyingTimer.cs" />
     <Compile Include="Actors\Data\TimedLife\TimedLifeDataSet.cs" />
     <Compile Include="Actors\Data\TimedLife\TimedLifeData.cs" />
     <Compile Include="Actors\Data\Combat\CombatData.cs" />
@@ -425,6 +427,7 @@
     <Compile Include="Primitives\Factories\Registry.cs" />
     <Compile Include="Primitives\Interfaces.cs" />
     <Compile Include="Primitives\ScopedItem.cs" />
+    <Compile Include="Primitives\StateMachines\StaticStateMachine.cs" />
     <Compile Include="Primitives\StateMachines\StateMachine.cs" />
     <Compile Include="Primitives\TimeControl.cs" />
     <Compile Include="Scenarios\ActorSpawnInfo.cs" />

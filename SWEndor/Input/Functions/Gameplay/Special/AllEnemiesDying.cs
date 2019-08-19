@@ -19,7 +19,7 @@ namespace SWEndor.Input.Functions.Gameplay.Special
         {
           ActorInfo actor = engine.ActorFactory.Get(actorID);
           if (actor != null)
-            actor.ActorState = ActorState.DYING;
+            actor.SetState_Dying();
         }
       }
     }

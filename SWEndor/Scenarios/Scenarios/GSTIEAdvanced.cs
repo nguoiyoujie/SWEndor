@@ -157,7 +157,7 @@ namespace SWEndor.Scenarios
       TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(0, 0, 5000);
       float creationTime = Game.GameTime;
 
-      PlayerCameraInfo.Position = new TV_3DVECTOR(350, 100, 1300);
+      PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(350, 100, 1300));
 
       // Player X-Wing
       pos = new TV_3DVECTOR(0, 0, -150);
@@ -178,7 +178,7 @@ namespace SWEndor.Scenarios
         Registries = null
       }.Spawn(this);
 
-      PlayerCameraInfo.LookAtActor = ainfo.ID;
+      PlayerCameraInfo.Look.SetTarget_LookAtActor(ainfo.ID);
       PlayerInfo.TempActorID = ainfo.ID;
 
       // Wings x(45-1)
@@ -301,7 +301,7 @@ namespace SWEndor.Scenarios
     {
       PlayerInfo.ActorID = PlayerInfo.TempActorID;
 
-      if (PlayerInfo.Actor == null || PlayerInfo.Actor.CreationState == CreationState.DISPOSED)
+      if (PlayerInfo.Actor == null || PlayerInfo.Actor.Disposed)
       {
         if (PlayerInfo.Lives > 0)
         {
@@ -342,7 +342,7 @@ namespace SWEndor.Scenarios
         if (actor != null)
         {
           Engine.ActionManager.UnlockOne(actorID);
-          actor.ActorState = ActorState.NORMAL;
+          actor.SetState_Normal();
           actor.MoveData.Speed = actor.MoveData.MaxSpeed;
         }
       }

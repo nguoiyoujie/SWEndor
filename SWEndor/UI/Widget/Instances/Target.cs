@@ -21,18 +21,18 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
+        ActorInfo p = PlayerInfo.Actor;
         return (!Owner.ShowPage
-            && PlayerInfo.Actor != null
-            && PlayerInfo.Actor.ActorState != ActorState.DEAD
-            && PlayerInfo.Actor.ActorState != ActorState.DYING
-            && Owner.ShowUI);
+          && p != null
+          && !p.IsDyingOrDead
+          && Owner.ShowUI);
       }
     }
 
     public override void Draw()
     {
       ActorInfo p = PlayerInfo.Actor;
-      if (p == null || p.CreationState != CreationState.ACTIVE)
+      if (p == null || !p.Active)
         return;
 
       ActorInfo prev_target = m_target;
@@ -53,8 +53,8 @@ namespace SWEndor.UI.Widgets
         if (limit < 250)
           limit = 250;
 
-        if (m_target.CreationState != CreationState.ACTIVE
-        || m_target.ActorState.IsDyingOrDead()
+        if (!m_target.Active
+        || m_target.IsDyingOrDead
         || !Engine.ActorDataSet.CombatData[m_target.dataID].IsCombatObject
         || dist > 7500
         || Math.Abs(x - Engine.ScreenWidth / 2) > limit
@@ -134,7 +134,7 @@ namespace SWEndor.UI.Widgets
       ActorInfo p = PlayerInfo.Actor;
       bool ret = false;
 
-      if (p != null && p.CreationState == CreationState.ACTIVE)
+      if (p != null || p.Active)
       {
         // Attempt close enough
         float bestlimit = 9999;
@@ -144,9 +144,8 @@ namespace SWEndor.UI.Widgets
           {
             if (a != null
               && p != a
-              && a.CreationState == CreationState.ACTIVE
-              && a.ActorState != ActorState.DYING
-              && a.ActorState != ActorState.DEAD
+              && a.Active
+              && !a.IsDyingOrDead
               && Engine.MaskDataSet[a].Has(ComponentMask.CAN_BETARGETED)
               && (pick_allies || !p.Faction.IsAlliedWith(a.Faction))
               && PlayerCameraInfo.Camera.IsPointVisible(a.GetPosition())

@@ -92,7 +92,7 @@ namespace SWEndor.Scenarios
       foreach (KeyValuePair<string, int> kvp in list)
       {
         ActorInfo actor = Engine.ActorFactory.Get(kvp.Value);
-        if (actor != null && actor.CreationState == CreationState.DISPOSED)
+        if (actor != null && actor.Disposed)
         {
           rm.Add(kvp.Key);
 

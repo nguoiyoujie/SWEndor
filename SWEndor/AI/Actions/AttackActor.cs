@@ -64,7 +64,7 @@ namespace SWEndor.AI.Actions
         if (dist > TooCloseDistance)
         {
           float d = dist / Globals.LaserSpeed;
-          ActorInfo a2 = target.Relation.UseParentCoords ? target.Relation.Parent : null;
+          ActorInfo a2 = target.Relation.ParentForCoords;
           if (a2 == null)
           {
             Target_Position = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d);
@@ -111,7 +111,7 @@ namespace SWEndor.AI.Actions
           }
           else
           {
-            Complete |= (target.CreationState != CreationState.ACTIVE || target.ActorState.IsDyingOrDead());
+            Complete |= (!target.Active || target.IsDyingOrDead);
           }
         }
         else
@@ -170,9 +170,8 @@ namespace SWEndor.AI.Actions
          {
            if (a != null
                && actorID != a.ID
-               && a.CreationState == CreationState.ACTIVE
-               && a.ActorState != ActorState.DYING
-               && a.ActorState != ActorState.DEAD
+               && a.Active
+               && !a.IsDyingOrDead
                && engine.ActorDataSet.CombatData[actor.dataID].IsCombatObject
                && !actor.Faction.IsAlliedWith(a.Faction))
            {

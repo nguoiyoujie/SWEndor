@@ -161,17 +161,17 @@ namespace SWEndor.Scenarios
       base.GameTick();
       CalibrateSceneObjects();
 
-      ActorInfo tgt = ActorFactory.Get(PlayerCameraInfo.LookActor);
+      ActorInfo tgt = ActorFactory.Get(PlayerCameraInfo.Look.GetPosition_Actor());
 
-      if (tgt == null || tgt.CreationState != CreationState.ACTIVE)
+      if (tgt == null || !tgt.Active)
       {
         List<int> list = new List<int>(MainEnemyFaction.GetWings());
         list.AddRange(MainAllyFaction.GetWings());
         if (list.Count > 0)
-          PlayerCameraInfo.LookActor = list[Engine.Random.Next(0, list.Count)];
+          PlayerCameraInfo.Look.SetPosition_Actor(list[Engine.Random.Next(0, list.Count)]);
       }
 
-      if (tgt != null && tgt.CreationState == CreationState.ACTIVE)
+      if (tgt != null && tgt.Active)
       {
         PlayerCameraInfo.Look.SetPosition_Actor(tgt.ID, new TV_3DVECTOR(0, 25, 0), new TV_3DVECTOR(0, 0, -100));
         PlayerCameraInfo.Look.SetTarget_LookAtActor(tgt.ID, new TV_3DVECTOR(0, 30, 0), new TV_3DVECTOR(0, 0, 20000));
@@ -211,7 +211,7 @@ namespace SWEndor.Scenarios
 
     private void CalibrateSceneObjects()
     {
-      if (m_APlanet != null && m_APlanet.CreationState == CreationState.ACTIVE)
+      if (m_APlanet != null && m_APlanet.Active)
       {
         float y_en = -40000;
         if (PlayerCameraInfo.Position.z < -30000)
@@ -364,8 +364,7 @@ namespace SWEndor.Scenarios
       {
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null
-          && actor.ActorState != ActorState.DYING 
-          && actor.ActorState != ActorState.DEAD)
+          && !actor.IsDyingOrDead)
         {
           ActionManager.ForceClearQueue(actorID);
           ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() + new TV_3DVECTOR(18000, 0, -20000)

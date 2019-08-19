@@ -19,7 +19,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       base.Initialize(ainfo);
       ainfo.DyingMoveComponent = new DyingSpin(120, 270);
-      ainfo.ActorState = ActorState.DYING;
+      ainfo.SetState_Dying();
     }
   }
 }
