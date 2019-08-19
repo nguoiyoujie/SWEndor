@@ -30,7 +30,7 @@ namespace SWEndor.ActorTypes.Components
       acinfo.InitialState = ActorState.NORMAL;
       acinfo.Faction = actor.Faction;
 
-      float scale = engine.MeshDataSet.Scale_get(actor.ID);
+      float scale = engine.MeshDataSet.Scale_get(actor);
       if (AttachToParent)
         acinfo.Position = new TV_3DVECTOR(Position.x * scale, Position.y * scale, Position.z * scale);
       else
@@ -40,10 +40,10 @@ namespace SWEndor.ActorTypes.Components
       acinfo.Rotation = new TV_3DVECTOR(Rotation.x, Rotation.y, Rotation.z);
       acinfo.CreationTime = actor.CreationTime;
 
-      ActorInfo a = ActorInfo.Create(actor.ActorFactory, acinfo);
-      actor.AddChild(a.ID);
-      
-      a.AttachToParent = AttachToParent;
+      ActorInfo a = actor.ActorFactory.Create( acinfo);
+      actor.AddChild(a);
+
+      a.Relation.UseParentCoords = AttachToParent;
     }
   }
 }

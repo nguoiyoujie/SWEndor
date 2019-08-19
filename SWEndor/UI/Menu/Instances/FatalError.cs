@@ -1,5 +1,4 @@
 ﻿using MTV3D65;
-using SWEndor.Log;
 using System;
 
 namespace SWEndor.UI.Menu.Pages
@@ -14,7 +13,7 @@ namespace SWEndor.UI.Menu.Pages
 
     public FatalError(Screen2D owner, Exception exception) : base(owner)
     {
-      Logger.GenerateErrLog(exception, errorfilename);
+      Log.WriteErr(Log.ERROR, exception);
 
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
       Cover.HighlightBoxWidth = Globals.Engine.ScreenWidth;

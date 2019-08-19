@@ -37,12 +37,14 @@ namespace SWEndor.Player
       }
     }
     public ActorInfo Actor { get { return Engine.ActorFactory.Get(ActorID); } }
+    public bool Exists { get { return Engine.ActorFactory.Contains(ActorID); } }
     public int TempActorID;
     public ActorInfo TempActor { get { return Engine.ActorFactory.Get(TempActorID); } }
     
     private float m_LowAlarmSoundTime = 0;
-    public float StrengthFrac { get { return (Actor != null) ? Engine.SysDataSet.StrengthFrac_get(ActorID) : 0; } }
-    public TV_COLOR StrengthColor { get { return (Actor != null) ? Engine.SysDataSet.StrengthColor_get(ActorID) : new TV_COLOR(1, 1, 1, 1); } }
+    public float StrengthFrac { get { return (Actor != null) ? Engine.SysDataSet.StrengthFrac_get(Actor) : 0; } }
+    public TV_COLOR StrengthColor { get { return (Actor != null) ? Engine.SysDataSet.StrengthColor_get(Actor) : new TV_COLOR(1, 1, 1, 1); } }
+    public TV_COLOR FactionColor { get { return Actor?.Faction?.Color ?? new TV_COLOR(1, 1, 1, 1); } }
 
     public int Lives = 3;
     public float ScorePerLife = 50000;
@@ -143,7 +145,7 @@ namespace SWEndor.Player
         Actor.MoveData.Speed = Actor.MoveData.Speed.Clamp(Actor.MoveData.MinSpeed, Actor.MoveData.MaxSpeed);
       }
     }
-
+    /*
     public void FirePrimaryWeapon()
     {
       if (Actor != null && IsMovementControlsEnabled && !PlayerAIEnabled)
@@ -154,6 +156,27 @@ namespace SWEndor.Player
     {
       if (Actor != null && IsMovementControlsEnabled && !PlayerAIEnabled)
         ActorInfo.FireWeapon(Engine, ActorID, AimTargetID, SecondaryWeapon);
+    }
+    */
+    public void FirePrimaryWeapon()
+    {
+      FireWeapon(PrimaryWeapon);
+    }
+
+    public void FireSecondaryWeapon()
+    {
+      FireWeapon(SecondaryWeapon);
+    }
+
+    private void FireWeapon(string weapon)
+    {
+      if (IsMovementControlsEnabled && !PlayerAIEnabled)
+      {
+        ActorInfo.FireWeapon(Engine, Actor, AimTarget, weapon);
+      }
+      //using (var v = Engine.ActorFactory.Get(ActorID))
+      //using (var vtgt = Engine.ActorFactory.Get(AimTargetID))
+      //  v?.Value.FireWeapon(vtgt?.Value, weapon);
     }
 
     private void ParseWeapons()
@@ -233,12 +256,12 @@ namespace SWEndor.Player
         Engine.SoundManager.SetSound("hit");
         Engine.TrueVision.TVGraphicEffect.Flash(color.r, color.g, color.b, 200);
 
-        if (Engine.SysDataSet.Strength_get(ActorID) > 0 && DamagedReportSound != null && DamagedReportSound.Length > 0)
+        if (Engine.SysDataSet.Strength_get(Actor) > 0 && DamagedReportSound != null && DamagedReportSound.Length > 0)
         {
           double r = Engine.Random.NextDouble();
           int dmgnum = DamagedReportSound.Length;
 
-          int dmgst = (int)((dmgnum + 1) * Engine.SysDataSet.StrengthFrac_get(ActorID));
+          int dmgst = (int)((dmgnum + 1) * Engine.SysDataSet.StrengthFrac_get(Actor));
           if (dmgst < DamagedReportSound.Length)
             if (r < 0.25f * (dmgnum - dmgst) / dmgnum)
               Engine.SoundManager.SetSound(DamagedReportSound[dmgst], false);
@@ -259,6 +282,7 @@ namespace SWEndor.Player
       }
     }
     public int AimTargetID = -1;
+    public ActorInfo AimTarget { get { return Engine.ActorFactory.Get(AimTargetID); } }
 
     public bool PlayerAIEnabled = false;
   }

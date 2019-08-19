@@ -100,7 +100,7 @@ namespace SWEndor.FileFormat.INI
 
         m_lines.Add(new INILine { Key = key, Value = value });
       }
-      
+
       public void Merge(INISection section)
       {
         foreach (INILine line in section.Lines)

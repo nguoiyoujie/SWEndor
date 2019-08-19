@@ -42,7 +42,7 @@ namespace SWEndor.ActorTypes.Instances
         ActorInfo target = ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
         if (target != null && target.CreationState == CreationState.ACTIVE)
         {
-          FireWeapon(ainfo.ID, target.ID, "laser");
+          FireWeapon(ainfo, target, "laser");
         }
       }
     }

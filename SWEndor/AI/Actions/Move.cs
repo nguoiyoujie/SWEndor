@@ -32,9 +32,8 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    public override void Process(Engine engine, int actorID)
+    public override void Process(Engine engine, ActorInfo actor)
     {
-      ActorInfo actor = engine.ActorFactory.Get(actorID);
       if (actor.MoveData.MaxSpeed == 0)
       {
         Complete = true;
@@ -57,7 +56,7 @@ namespace SWEndor.AI.Actions
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
       if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
       {
-        CollisionSystem.CreateAvoidAction(engine, actorID);
+        CollisionSystem.CreateAvoidAction(engine, actor);
       }
     }
   }

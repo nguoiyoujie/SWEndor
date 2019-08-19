@@ -65,7 +65,7 @@ namespace SWEndor.UI.Widgets
           ActorInfo a = ActorFactory.Get(i);
           DrawSingleBar(barnumber
               , a.SideBarName.PadRight(12).Remove(11)
-              , Engine.SysDataSet.StrengthFrac_get(i)
+              , Engine.SysDataSet.StrengthFrac_get(a)
               , new TV_COLOR(0, 0.8f, 0.6f, 1)
               );
           barnumber++;
@@ -77,7 +77,7 @@ namespace SWEndor.UI.Widgets
           ActorInfo a = ActorFactory.Get(i);
           DrawSingleBar(barnumber
               , a.SideBarName.PadRight(12).Remove(11)
-              , Engine.SysDataSet.StrengthFrac_get(i)
+              , Engine.SysDataSet.StrengthFrac_get(a)
               , new TV_COLOR(1f, 0, 0, 1)
               );
           barnumber++;

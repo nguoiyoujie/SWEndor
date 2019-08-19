@@ -394,9 +394,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
           return;
         case "MaxStrength":
           if (setValue)
-            engine.SysDataSet.MaxStrength_set(actor.ID, Convert.ToSingle(newValue));
+            engine.SysDataSet.MaxStrength_set(actor, Convert.ToSingle(newValue));
           else
-            newValue = engine.SysDataSet.MaxStrength_get(actor.ID);
+            newValue = engine.SysDataSet.MaxStrength_get(actor);
           return;
         case "MaxTurnRate":
           if (setValue)
@@ -424,18 +424,18 @@ namespace SWEndor.Scenarios.Scripting.Functions
           return;
         case "Strength":
           if (setValue)
-            CombatSystem.onNotify(actor.Engine, actor.ID, CombatEventType.SET_STRENGTH, Convert.ToSingle(newValue));
+            CombatSystem.onNotify(actor.Engine, actor, CombatEventType.SET_STRENGTH, Convert.ToSingle(newValue));
           else
-            newValue = engine.SysDataSet.Strength_get(actor.ID);
+            newValue = engine.SysDataSet.Strength_get(actor);
           return;
         case "Scale":
           if (setValue)
           {
             float newscale = Convert.ToSingle(newValue);
-            engine.MeshDataSet.Scale_set(actor.ID, newscale);
+            engine.MeshDataSet.Scale_set(actor, newscale);
           }
           else
-            newValue = engine.MeshDataSet.Scale_get(actor.ID);
+            newValue = engine.MeshDataSet.Scale_get(actor);
           return;
       }
     }

@@ -24,17 +24,15 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    public override void Process(Engine engine, int actorID)
+    public override void Process(Engine engine, ActorInfo actor)
     {
-      ActorInfo actor = engine.ActorFactory.Get(actorID);
       ActorInfo currtarget = null;
       List<ActorInfo> targets = new List<ActorInfo>();
       int weight = 0;
 
-      Action<Engine, int> action = new Action<Engine, int>(
-         (_, aID) =>
+      Action<Engine, ActorInfo> action = new Action<Engine, ActorInfo>(
+         (_, a) =>
          {
-           ActorInfo a = engine.ActorFactory.Get(aID);
            if (a != null
              && actor != a
              && a.CreationState == CreationState.ACTIVE
@@ -49,8 +47,8 @@ namespace SWEndor.AI.Actions
              {
                WeaponInfo weap = null;
                int dummy = 0;
-               float dist = ActorDistanceInfo.GetDistance(actorID, aID, actor.WeaponSystemInfo.GetWeaponRange());
-               actor.WeaponSystemInfo.SelectWeapon(a.ID, 0, dist, out weap, out dummy);
+               float dist = ActorDistanceInfo.GetDistance(actor, a, actor.WeaponSystemInfo.GetWeaponRange());
+               actor.WeaponSystemInfo.SelectWeapon(a, 0, dist, out weap, out dummy);
 
                if (weap != null)
                {
@@ -83,11 +81,11 @@ namespace SWEndor.AI.Actions
 
       if (currtarget != null)
       {
-        engine.ActionManager.QueueLast(actorID, new AttackActor(currtarget.ID));
+        actor.QueueLast(new AttackActor(currtarget.ID));
       }
       else
       {
-        engine.ActionManager.QueueLast(actorID, new Wait(1));
+        actor.QueueLast(new Wait(1));
       }
 
       Complete = true;

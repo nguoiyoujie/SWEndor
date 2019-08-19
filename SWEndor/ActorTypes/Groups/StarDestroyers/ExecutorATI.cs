@@ -94,8 +94,8 @@ namespace SWEndor.ActorTypes.Instances
       base.ProcessNewState(ainfo);
       if (ainfo.ActorState.IsDying())
       {
-        TimedLifeSystem.Activate(Engine, ainfo.ID, 2000f);
-        CombatSystem.Deactivate(Engine, ainfo.ID);
+        TimedLifeSystem.Activate(Engine, ainfo, 2000f);
+        CombatSystem.Deactivate(Engine, ainfo);
       }
     }
   }

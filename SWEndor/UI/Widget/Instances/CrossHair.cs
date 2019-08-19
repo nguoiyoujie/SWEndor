@@ -40,7 +40,7 @@ namespace SWEndor.UI.Widgets
       int burst = 1;
       TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;
 
-      p.TypeInfo.InterpretWeapon(p.ID, PlayerInfo.PrimaryWeapon, out weap, out burst);
+      p.TypeInfo.InterpretWeapon(p, PlayerInfo.PrimaryWeapon, out weap, out burst);
       if (weap != null)
       {
         TVScreen2DImmediate.Action_Begin2D();
@@ -88,7 +88,7 @@ namespace SWEndor.UI.Widgets
         TVScreen2DImmediate.Action_End2D();
       }
 
-      p.TypeInfo.InterpretWeapon(p.ID, PlayerInfo.SecondaryWeapon, out weap, out burst);
+      p.TypeInfo.InterpretWeapon(p, PlayerInfo.SecondaryWeapon, out weap, out burst);
       if (weap != null)
       {
         if (PlayerInfo.SecondaryWeapon.Contains("torp"))

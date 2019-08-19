@@ -43,20 +43,20 @@ namespace SWEndor.ActorTypes.Groups
       {
         ainfo.MoveData.ApplyZBalance = false;
 
-        if (ainfo.ParentID >= 0 || (ainfo.ActorDataSet.CombatData[ainfo.dataID].HitWhileDyingLeadsToDeath && Engine.Random.NextDouble() < 0.3f))
+        if (ainfo.Relation.Parent != null || (ainfo.ActorDataSet.CombatData[ainfo.dataID].HitWhileDyingLeadsToDeath && Engine.Random.NextDouble() < 0.3f))
         {
-          TimedLifeSystem.Activate(Engine, ainfo.ID, 0.1f);
-          CombatSystem.Deactivate(Engine, ainfo.ID);
+          TimedLifeSystem.Activate(Engine, ainfo, 0.1f);
+          CombatSystem.Deactivate(Engine, ainfo);
         }
         else
         {
-          TimedLifeSystem.Activate(Engine, ainfo.ID, 5);
-          CombatSystem.Deactivate(Engine, ainfo.ID);
+          TimedLifeSystem.Activate(Engine, ainfo, 5);
+          CombatSystem.Deactivate(Engine, ainfo);
         }
 
         ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
         acinfo.Position = ainfo.GetPosition();
-        ainfo.AddChild(ActorInfo.Create(ActorFactory, acinfo).ID);
+        ainfo.AddChild(ActorFactory.Create(acinfo));
       }
     }
   }

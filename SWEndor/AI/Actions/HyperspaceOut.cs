@@ -16,9 +16,8 @@ namespace SWEndor.AI.Actions
     private static float FarEnoughDistance = 250000;
     private ActorState prevState = ActorState.NORMAL;
 
-    public override void Process(Engine engine, int actorID)
+    public override void Process(Engine engine, ActorInfo actor)
     {
-      ActorInfo actor = engine.ActorFactory.Get(actorID);
       if (actor.ActorState != ActorState.HYPERSPACE)
       {
         prevState = actor.ActorState;

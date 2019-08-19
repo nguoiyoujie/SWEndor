@@ -34,14 +34,14 @@ namespace SWEndor.ActorTypes.Groups
       base.ProcessNewState(ainfo);
       if (ainfo.ActorState.IsDying())
       {
-        TimedLifeSystem.Activate(Engine, ainfo.ID, 25);
-        CombatSystem.Deactivate(Engine, ainfo.ID);
+        TimedLifeSystem.Activate(Engine, ainfo, 25);
+        CombatSystem.Deactivate(Engine, ainfo);
       }
       else if (ainfo.ActorState.IsDead())
       {
         ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave"));
         acinfo.Position = ainfo.GetPosition();
-        ainfo.AddChild(ActorInfo.Create(ActorFactory, acinfo).ID);
+        ainfo.AddChild(ActorFactory.Create(acinfo));
       }
     }
   }

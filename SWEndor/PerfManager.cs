@@ -5,6 +5,9 @@ using System.Text;
 using System.Diagnostics;
 using System.Collections.Concurrent;
 using SWEndor.Primitives;
+using System.Threading;
+using SWEndor.Primitives.Factories;
+using SWEndor.Primitives.Collections;
 
 namespace SWEndor
 {
@@ -12,7 +15,8 @@ namespace SWEndor
   {
     int IComparer<PerfToken>.Compare(PerfToken x, PerfToken y)
     {
-      return (int)(y.Seconds * 1000 - x.Seconds * 1000);
+      return x.Name.CompareTo(y.Name);
+      //return (int)(y.Seconds * 1000 - x.Seconds * 1000);
     }
   }
 
@@ -30,32 +34,110 @@ namespace SWEndor
     internal PerfManager(Engine engine)
     {
       Engine = engine;
+      pool = new ObjectPool<PerfElement>(() => new PerfElement(this, "<undefined>"), (p) => p.Reset());
+      sbpool = new ObjectPool<StringBuilder>(() => new StringBuilder(128), (p) => p.Clear());
     }
 
     public static string PerfLogPath = Path.Combine(Globals.LogPath, @"perf.log");
-    public static string Report = "";
+    public string Report = string.Empty;
     private DateTime m_last_refresh_time = DateTime.Now;
-    private ConcurrentQueue<PerfToken> Queue = new ConcurrentQueue<PerfToken>();
-    private ThreadSafeDictionary<string, PerfToken> Elements = new ThreadSafeDictionary<string, PerfToken>();
-    private ThreadSafeDictionary<int, double> ThreadTimes = new ThreadSafeDictionary<int, double>();
+    private CircularQueue<PerfToken> Queue;// = new CircularQueue<PerfToken>(100000, false);
+    private Dictionary<string, PerfToken> Elements;
+    private Dictionary<int, double> ThreadTimes;
 
-    public void UpdatePerfElement(string name, double value)
+    private Dictionary<int, List<PerfElement>> pt_current = new Dictionary<int, List<PerfElement>>();
+    private ObjectPool<PerfElement> pool;
+    private ObjectPool<StringBuilder> sbpool;
+
+    private bool _enabled;
+    public bool Enabled
+    {
+      get { return _enabled; }
+      set
+      {
+        if (_enabled != value)
+        {
+          if (value)
+            Init();
+
+          _enabled = value;
+
+          if (!value)
+            Deinit();
+        }
+      }
+    }
+
+    public void Init()
+    {
+      m_last_refresh_time = DateTime.Now;
+      Queue = new CircularQueue<PerfToken>(100000, false);
+      Elements = new Dictionary<string, PerfToken>();
+      ThreadTimes = new Dictionary<int, double>();
+      pt_current = new Dictionary<int, List<PerfElement>>();
+    }
+
+    public void Deinit()
+    {
+      //Queue = null;
+      Elements.Clear();
+      ThreadTimes.Clear();
+      pt_current.Clear();
+    }
+
+    public PerfElement Create(string name)
+    {
+      if (Enabled)
+      {
+        PerfElement e = pool.GetNew();
+        e.Name = name;
+        List<PerfElement> list;
+        int id = Thread.CurrentThread.ManagedThreadId;
+        if (pt_current.TryGetValue(id, out list) && list.Count > 0)
+        {
+          StringBuilder sb = sbpool.GetNew();
+          //sb.Clear();
+          sb.Append(list[list.Count - 1].Name);
+          sb.Append('`');
+          sb.Append(name);
+          e.Name = sb.ToString();
+          sbpool.Return(sb);
+        }
+
+        if (pt_current.ContainsKey(id))
+          pt_current[id].Add(e);
+        else
+          pt_current.Add(id, new List<PerfElement> { e });
+        return e;
+      }
+      else
+        return null;
+    }
+
+    public void UpdatePerfElement(PerfElement element, double value)
     {
       if (Queue.Count < 100000)
-        Queue.Enqueue(new PerfToken { Name = name, Seconds = value });
+        Queue.Enqueue(new PerfToken { Name = element.Name, Seconds = value });
+
+      int id = Thread.CurrentThread.ManagedThreadId;
+      if (pt_current.ContainsKey(id))
+        pt_current[id].Remove(element);
+
+      pool.Return(element);
     }
 
     public void ProcessQueue()
     {
       PerfToken p;
       int limit = 100000;
-      while (Queue.TryDequeue(out p) || limit < 0)
+      while (Queue.Count > 0 && limit >= 0) //Queue.TryDequeue(out p) || limit < 0)
       {
+        p = Queue.Dequeue();
         if (p.Name == null)
           break;
 
-          limit--;
-        PerfToken pt = Elements.Get(p.Name);
+        limit--;
+        PerfToken pt = Elements.GetOrDefault(p.Name);
         if (pt.Name == null)
         {
           Elements.Put(p.Name, new PerfToken { Name = p.Name, Count = 1, Seconds = p.Seconds, Peak = p.Seconds });
@@ -82,12 +164,13 @@ namespace SWEndor
       if (File.Exists(PerfLogPath))
         File.Delete(PerfLogPath);
 
-      Refresh();
+      if (Enabled)
+        Refresh();
     }
 
     public void PrintPerf()
     {
-      if (!Settings.ShowPerformance)
+      if (!Enabled)
         return;
 
       if (!Directory.Exists(Globals.LogPath))
@@ -97,31 +180,34 @@ namespace SWEndor
       {
         double refresh_ms = (DateTime.Now - m_last_refresh_time).TotalMilliseconds;
         m_last_refresh_time = DateTime.Now;
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = sbpool.GetNew();
         sb.AppendLine();
-        sb.AppendLine(string.Format("{0,30} : [{1,4:0}ms] {2:s}", "Sampling Time", refresh_ms, m_last_refresh_time));
-        sb.AppendLine(string.Format("{0,30} : {1}", "FPS", Engine.Game.CurrentFPS));
-        sb.AppendLine(string.Format("{0,30} : {1}", "Actors", Engine.ActorFactory.GetActorCount()));
+        sb.AppendLine("{0,30} : [{1,4:0}ms] {2:s}".F("Sampling Time", refresh_ms, m_last_refresh_time));
+        sb.AppendLine("{0,30} : {1}".F("FPS", Engine.Game.CurrentFPS));
+        sb.AppendLine("{0,30} : {1}".F("Actors", Engine.ActorFactory.GetActorCount()));
 
-        List<PerfToken> newElements = new List<PerfToken>(Elements.GetValues());
+        List<PerfToken> newElements = new List<PerfToken>(Elements.Values);
 
         // ---------- PROCESS THREAD
         foreach (ProcessThread pt in Process.GetCurrentProcess().Threads)
         {
           if (pt.ThreadState != System.Diagnostics.ThreadState.Terminated && pt.ThreadState != System.Diagnostics.ThreadState.Wait)
           {
-            double d = pt.TotalProcessorTime.TotalMilliseconds - ThreadTimes.Get(pt.Id);
-            sb.AppendLine(string.Format("Thread {0:00000} {1,17} : {2:0.00}%", pt.Id, pt.ThreadState, d / refresh_ms * 100));
+            double d = pt.TotalProcessorTime.TotalMilliseconds - ThreadTimes.GetOrDefault(pt.Id);
+            sb.AppendLine("Thread {0:00000} {1,17} : {2:0.00}%".F(pt.Id, pt.ThreadState, d / refresh_ms * 100));
             ThreadTimes.Put(pt.Id, pt.TotalProcessorTime.TotalMilliseconds);
           }
         }
 
-        sb.AppendLine(string.Format("{0,-30}   [{1,6}] {2,7}  {3,7}  {4,7}", "", "Count", "Total|s", "Avg|ms", "Peak|ms"));
+        sb.AppendLine("{0,-30}   [{1,6}] {2,7}  {3,7}  {4,7}".F("", "Count", "Total|s", "Avg|ms", "Peak|ms"));
         newElements.Sort(new PerfComparer());
         foreach (PerfToken e in newElements)
         {
-          sb.AppendLine(string.Format("{0,-30} : [{1,6}] {2,7:0.000}  {3,7:0.00}  {4,7:0.00}"
-                        , (e.Name.Length > 30) ? e.Name.Remove(27) + "..." : e.Name
+          string[] div = e.Name.Split('`');
+          string name = (div.Length > 0) ? new string('-', div.Length - 1) + div[div.Length - 1] : div[div.Length - 1];
+          name = (name.Length > 30) ? name.Remove(27) + "..." : name;
+          sb.AppendLine("{0,-30} : [{1,6}] {2,7:0.000}  {3,7:0.00}  {4,7:0.00}".F(
+                          name
                         , e.Count
                         , e.Seconds
                         , e.Seconds / e.Count * 1000
@@ -131,6 +217,7 @@ namespace SWEndor
         string filepath = PerfLogPath;
         File.AppendAllText(filepath, sb.ToString());
         Report = sb.ToString();
+        sbpool.Return(sb);
         Refresh();
       }
       catch
@@ -142,18 +229,26 @@ namespace SWEndor
   public class PerfElement : IDisposable
   {
     public string Name;
+    private PerfManager mgr;
     private long m_timestamp;
 
-    public PerfElement(string name)
+    public PerfElement(PerfManager manager, string name)
     {
       Name = name;
+      mgr = manager;
+      m_timestamp = Stopwatch.GetTimestamp();
+    }
+
+    public void Reset()
+    {
+      Name = "<undefined>";
       m_timestamp = Stopwatch.GetTimestamp();
     }
 
     public void Dispose()
     {
-      if (Settings.ShowPerformance)
-        Globals.Engine.PerfManager.UpdatePerfElement(Name, Math.Max(0.0, Stopwatch.GetTimestamp() - m_timestamp) / Stopwatch.Frequency);
+      if (mgr.Enabled)
+        mgr.UpdatePerfElement(this, Math.Max(0.0, Stopwatch.GetTimestamp() - m_timestamp) / Stopwatch.Frequency);
     }
   }
 }

@@ -1,4 +1,6 @@
-﻿namespace SWEndor.AI.Actions
+﻿using SWEndor.Actors;
+
+namespace SWEndor.AI.Actions
 {
   public class SetGameStateB : ActionInfo
   {
@@ -12,7 +14,7 @@
     private string m_key;
     private bool m_state;
 
-    public override void Process(Engine engine, int actorID)
+    public override void Process(Engine engine, ActorInfo actor)
     {
       engine.GameScenarioManager.SetGameStateB(m_key, m_state);
       Complete = true;

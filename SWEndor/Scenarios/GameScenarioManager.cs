@@ -96,7 +96,7 @@ namespace SWEndor.Scenarios
         {
           rm.Add(kvp.Key);
 
-          if (ActorInfo.IsPlayer(Engine, actor.ID))
+          if (actor.IsPlayer)
           {
             ret++;
           }

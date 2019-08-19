@@ -1,5 +1,4 @@
-﻿using SWEndor.Log;
-using SWEndor.Primitives;
+﻿using SWEndor.Primitives;
 using SWEndor.UI.Menu.Pages;
 using System;
 using System.Threading;
@@ -206,11 +205,10 @@ namespace SWEndor
       }
       catch (Exception ex)
       {
-        string errorfilename = @"error.txt";
-        Logger.GenerateErrLog(ex, errorfilename);
-        MessageBox.Show(string.Format("Fatal Error occurred during runtime. Please see " + errorfilename + " in the /Log folder for the error message."
+        Log.WriteErr(Log.ERROR, ex);
+        MessageBox.Show("Fatal Error occurred during runtime. Please see {0} in the /Log folder for the error message.".F(Log.ERROR)
                       , Application.ProductName + " - Error Encountered!"
-                      , MessageBoxButtons.OK));
+                      , MessageBoxButtons.OK);
         return;
       }
       finally
@@ -317,8 +315,8 @@ namespace SWEndor
               using (Engine.PerfManager.Create("process_main"))
                 Engine.Process();
 
-                using (Engine.PerfManager.Create("process_player"))
-                  Engine.PlayerInfo.Update();
+              using (Engine.PerfManager.Create("process_player"))
+                Engine.PlayerInfo.Update();
             }
 
             using (Engine.PerfManager.Create("process_page"))

@@ -28,3 +28,4 @@
 /SWEndor/obj/Release/SWEndor.exe
 *.diagsession
 /SWEndorTest/obj
+/Log

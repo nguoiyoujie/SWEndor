@@ -42,12 +42,12 @@ namespace SWEndor.ActorTypes.Instances
       // Override
     }
 
-    public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
+      base.ProcessHit(owner, hitby, impact, normal);
 
-      TimedLifeSystem.ReduceTimerTo(Engine, hitbyActorID, 0.5f);
-      TimedLifeSystem.ReduceTimerTo(Engine, ownerActorID, 0);
+      TimedLifeSystem.ReduceTimerTo(Engine, hitby, 0.5f);
+      TimedLifeSystem.ReduceTimerTo(Engine, owner, 0);
     }
   }
 }

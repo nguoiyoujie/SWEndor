@@ -1,4 +1,6 @@
-﻿using SWEndor.Primitives;
+﻿
+using SWEndor.Primitives;
+using System.Collections.Generic;
 
 namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 {
@@ -36,15 +38,15 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 
     public override object Evaluate(Context context)
     {
-      ThreadSafeList<object> result = new ThreadSafeList<object>();
+      List<object> parsed = new List<object>();
       foreach (CExpression expr in _param.GetList())
       {
-        result.Add(expr.Evaluate(context));
+        parsed.Add(expr.Evaluate(context));
       }
       FunctionDelegate fd = context.Functions.Get(_funcName.ToLower());
       if (fd == null)
         throw new EvalException("The function '" + _funcName + "' does not exist!");
-      return fd.Invoke(context, result.GetList());
+      return fd.Invoke(context, parsed.ToArray());
     }
   }
 }

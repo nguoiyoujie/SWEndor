@@ -6,16 +6,13 @@ namespace SWEndor.Actors.Components
 {
   public static class ExplosionSystem
   {
-    internal static void ProcessDying(Engine engine, int id)
+    internal static void ProcessDying(Engine engine, ActorInfo actor)
     {
-      int index = engine.ActorFactory.GetIndex(id);
-      ProcessDying(engine, id, ref engine.ActorDataSet.ExplodeData[index], ref engine.MeshDataSet.list[index]);
+      ProcessDying(engine, actor, ref engine.ActorDataSet.ExplodeData[actor.dataID], ref engine.MeshDataSet.list[actor.dataID]);
     }
 
-    private static void ProcessDying(Engine engine, int id, ref ExplodeData data, ref MeshData mdata)
+    private static void ProcessDying(Engine engine, ActorInfo actor, ref ExplodeData data, ref MeshData mdata)
     {
-      ActorInfo actor = engine.ActorFactory.Get(id);
-
       if (actor.TypeInfo.IsExplosion) // don't let explosions create explosions.
         return;
 
@@ -29,21 +26,18 @@ namespace SWEndor.Actors.Components
         {
           int vertID = engine.Random.Next(0, mdata.GetVertexCount());
           data.ExplosionCooldown += (float)engine.Random.NextDouble() * data.ExplosionRate;
-          MakeExplosion(engine, id, mdata.GetVertex(vertID), ref data);
+          MakeExplosion(engine, actor, mdata.GetVertex(vertID), ref data);
         }
       }
     }
 
-    internal static void OnDeath(Engine engine, int id)
+    internal static void OnDeath(Engine engine, ActorInfo actor)
     {
-      int index = engine.ActorFactory.GetIndex(id);
-      OnDeath(engine, id, ref engine.ActorDataSet.ExplodeData[index], ref engine.TimedLifeDataSet.list[index]);
+      OnDeath(engine, actor, ref engine.ActorDataSet.ExplodeData[actor.dataID], ref engine.TimedLifeDataSet.list[actor.dataID]);
     }
 
-    private static void OnDeath(Engine engine, int id, ref ExplodeData data, ref TimedLifeData tdata)
+    private static void OnDeath(Engine engine, ActorInfo actor, ref ExplodeData data, ref TimedLifeData tdata)
     {
-      ActorInfo actor = engine.ActorFactory.Get(id);
-
       if (actor.TypeInfo.IsExplosion) // don't let explosions create explosions.
         return;
 
@@ -51,13 +45,12 @@ namespace SWEndor.Actors.Components
         || (data.DeathExplosionTrigger == DeathExplosionTrigger.TIMENOTEXPIRED_ONLY 
           && tdata.TimedLife > 0)
         )
-        MakeDeathExplosion(engine, id, ref data);
+        MakeDeathExplosion(engine, actor, ref data);
     }
 
-    private static void MakeExplosion(Engine engine, int id, TV_3DVECTOR vert, ref ExplodeData data)
+    private static void MakeExplosion(Engine engine, ActorInfo actor, TV_3DVECTOR vert, ref ExplodeData data)
     {
-      ActorInfo actor = engine.ActorFactory.Get(id);
-      float scale = engine.MeshDataSet.Scale_get(id);  
+      float scale = engine.MeshDataSet.Scale_get(actor);  
 
       if (data._cache == null)
         data._cache = actor.ActorTypeFactory.Get(data.ExplosionType);
@@ -69,10 +62,9 @@ namespace SWEndor.Actors.Components
         , ref data);
     }
 
-    private static void MakeDeathExplosion(Engine engine, int id, ref ExplodeData data)
+    private static void MakeDeathExplosion(Engine engine, ActorInfo actor, ref ExplodeData data)
     {
       // Death explosion is one count, no cache needed
-      ActorInfo actor = engine.ActorFactory.Get(id);
       MakeExplosion(actor, actor.ActorTypeFactory.Get(data.DeathExplosionType), actor.GetPosition(), data.DeathExplosionSize, ref data);
     }
 
@@ -80,8 +72,8 @@ namespace SWEndor.Actors.Components
     {
       ActorCreationInfo acinfo = new ActorCreationInfo(type);
       acinfo.Position = globalPosition;
-      acinfo.InitialScale = explSize * actor.Engine.MeshDataSet.Scale_get(actor.ID);
-      ActorInfo.Create(actor.ActorFactory, acinfo);
+      acinfo.InitialScale = explSize * actor.Engine.MeshDataSet.Scale_get(actor);
+      actor.ActorFactory.Create(acinfo);
     }
   }
 }

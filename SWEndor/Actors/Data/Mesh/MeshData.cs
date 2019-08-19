@@ -4,16 +4,10 @@ using System.Runtime.InteropServices;
 
 namespace SWEndor.Actors.Data
 {
-  [StructLayout(LayoutKind.Explicit, Size = 12)]
   public struct MeshData
   {
-    [FieldOffset(0)]
     private float m_Scale;
-
-    [FieldOffset(4)]
     public TVMesh Mesh;
-
-    [FieldOffset(8)]
     public TVMesh FarMesh;
 
     public float Scale
@@ -28,8 +22,6 @@ namespace SWEndor.Actors.Data
         }
       }
     }
-
-
 
     public void Init(ActorTypeInfo type, ActorCreationInfo acreate)
     {

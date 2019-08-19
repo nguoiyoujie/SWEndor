@@ -36,7 +36,7 @@ namespace SWEndor.ActorTypes.Instances
         {
           ainfo.ActorState = ActorState.NORMAL;
           //ainfo.CombatSystem.onNotify(Engine, ainfo.ID, CombatEventType.TIMEACTIVATE , TimedLifeData.TimedLife);
-          TimedLifeSystem.Activate(Engine, ainfo.ID, TimedLifeData.TimedLife);
+          TimedLifeSystem.Activate(Engine, ainfo, TimedLifeData.TimedLife);
         }
         );
 
@@ -49,7 +49,7 @@ namespace SWEndor.ActorTypes.Instances
       base.ProcessState(ainfo);
       if (ainfo.ActorState == ActorState.NORMAL)
       {
-        ActorInfo p = ActorFactory.Get(ainfo.ParentID);
+        ActorInfo p = ainfo.Relation.Parent;
         if (p != null)
         {
           if (p.CreationState != CreationState.DISPOSED)
@@ -59,7 +59,7 @@ namespace SWEndor.ActorTypes.Instances
           }
           else
           {
-            p.RemoveChild(ainfo.ID);
+            p.RemoveChild(ainfo);
           } 
         }
         else

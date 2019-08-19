@@ -130,7 +130,7 @@ namespace SWEndor.Scenarios
         Rotation = new TV_3DVECTOR(-90, 0, 0),
         InitialScale =12
       };
-      ActorInfo.Create(ActorFactory, aci_Hoth);
+      ActorFactory.Create(aci_Hoth);
     }
 
     public override void GameTick()
@@ -468,14 +468,16 @@ namespace SWEndor.Scenarios
     {
       foreach (int actorID in MainAllyFaction.GetWings())
       {
-        if (!ActorInfo.IsPlayer(Engine, actorID))
-          ActorInfo.Kill(Engine, actorID);
+        ActorInfo actor = ActorFactory.Get(actorID);
+        if (actor.IsPlayer)
+          actor.Kill();
       }
 
       foreach (int actorID in MainAllyFaction.GetShips())
       {
-        if (!ActorInfo.IsPlayer(Engine, actorID))
-          ActorInfo.Kill(Engine, actorID);
+        ActorInfo actor = ActorFactory.Get(actorID);
+        if (actor.IsPlayer)
+          actor.Kill();
       }
     }
 
@@ -486,9 +488,9 @@ namespace SWEndor.Scenarios
         ActorInfo player = ActorFactory.Get(((HitEventArg)arg).VictimID);
         ActorInfo attacker = ActorFactory.Get(((HitEventArg)arg).ActorID);
 
-        if (!Engine.MaskDataSet[attacker.ID].Has(ComponentMask.IS_DAMAGE))
+        if (!Engine.MaskDataSet[attacker].Has(ComponentMask.IS_DAMAGE))
         {
-          CombatSystem.onNotify(Engine, player.ID, Actors.Components.CombatEventType.DAMAGE, attacker.TypeInfo.ImpactDamage);
+          CombatSystem.onNotify(Engine, player, Actors.Components.CombatEventType.DAMAGE, attacker.TypeInfo.ImpactDamage);
           PlayerInfo.FlashHit(PlayerInfo.StrengthColor);
         }
         else
@@ -506,12 +508,12 @@ namespace SWEndor.Scenarios
 
           if ((chgy < -90 || chgy > 90) && PlayerInfo.SecondaryWeapon != "rear")
           {
-            CombatSystem.onNotify(Engine, player.ID, Actors.Components.CombatEventType.DAMAGE, 1);
+            CombatSystem.onNotify(Engine, player, Actors.Components.CombatEventType.DAMAGE, 1);
             PlayerInfo.FlashHit(PlayerInfo.StrengthColor);
           }
           else if ((chgy > -90 && chgy < 90) && PlayerInfo.SecondaryWeapon != "front")
           {
-            CombatSystem.onNotify(Engine, player.ID, Actors.Components.CombatEventType.DAMAGE, 1);
+            CombatSystem.onNotify(Engine, player, Actors.Components.CombatEventType.DAMAGE, 1);
             PlayerInfo.FlashHit(PlayerInfo.StrengthColor);
           }
           else
@@ -553,7 +555,7 @@ namespace SWEndor.Scenarios
 
         if (ainfo.TypeInfo is TransportATI)
         {
-          TimedLifeSystem.Activate(Engine, ainfo.ID, 2000f);
+          TimedLifeSystem.Activate(Engine, ainfo, 2000f);
           Manager.AddEvent(Game.GameTime + 25, FadeOut);
         }
       }
@@ -878,7 +880,9 @@ namespace SWEndor.Scenarios
 
       foreach (int actorID in MainEnemyFaction.GetWings())
       {
-        ActorInfo.Kill(Engine, actorID);
+        ActorInfo actor = ActorFactory.Get(actorID);
+        if (actor != null)
+          actor.Kill();
       }
 
       foreach (int actorID in MainAllyFaction.GetWings())
@@ -965,7 +969,7 @@ namespace SWEndor.Scenarios
           }
           else
           {
-            ActorInfo.Kill(Engine, actorID);
+            actor.Kill();
           }
         }
         en_ship++;

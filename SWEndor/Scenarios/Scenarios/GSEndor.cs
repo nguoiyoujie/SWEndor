@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Instances;
+using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
 using SWEndor.Weapons;
@@ -186,7 +187,7 @@ namespace SWEndor.Scenarios
         Rotation = new TV_3DVECTOR(0, 180, 0),
         InitialScale = 60
       };
-      ActorInfo.Create(ActorFactory, aci_Endor);
+      ActorFactory.Create(aci_Endor);
 
       // Create DeathStar
       ActorCreationInfo aci_DS = new ActorCreationInfo(ActorTypeFactory.Get("DeathStar2"))
@@ -196,7 +197,7 @@ namespace SWEndor.Scenarios
         InitialScale = 1,
         Faction = MainEnemyFaction
       };
-      m_ADS = ActorInfo.Create(ActorFactory, aci_DS);
+      m_ADS = ActorFactory.Create(aci_DS);
     }
 
     public override void GameTick()
@@ -921,11 +922,11 @@ namespace SWEndor.Scenarios
               int rsID = MainEnemyFaction.GetShips()[Engine.Random.Next(0, MainEnemyFaction.GetShips().Count)];
               ActorInfo rs = ActorFactory.Get(actorID);
               {
-                foreach (int i in rs.Children)
+                foreach (ActorInfo c in rs.Children)
                 {
-                  if (Engine.ActorDataSet.RegenData[ActorFactory.GetIndex(i)].ParentRegenRate > 0)
+                  if (Engine.ActorDataSet.RegenData[c.dataID].ParentRegenRate > 0)
                     if (Engine.Random.NextDouble() > 0.4f)
-                      rsID = i;
+                      rsID = c.ID;
                 }
               }
 
@@ -1035,7 +1036,7 @@ namespace SWEndor.Scenarios
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
         {
-          if (!ActorInfo.IsPlayer(Engine, actorID))
+          if (!actor.IsPlayer)
           {
             foreach (KeyValuePair<string, WeaponInfo> kvp in actor.WeaponSystemInfo.Weapons)
             {
@@ -1058,7 +1059,7 @@ namespace SWEndor.Scenarios
         ActorInfo av = ActorFactory.Get(actorID);
 
         if (av != null
-          && Engine.SysDataSet.StrengthFrac_get(actorID) < 0.8f
+          && Engine.SysDataSet.StrengthFrac_get(av) < 0.8f
           && MainAllyFaction.GetShips().Count > 0)
         {
           ActorInfo homeone = ActorFactory.Get(m_HomeOneID);
@@ -1080,7 +1081,7 @@ namespace SWEndor.Scenarios
         int actorID = ((HitEventArg)arg).VictimID;
         ActorInfo av = ActorFactory.Get(actorID);
 
-        float f = Engine.SysDataSet.StrengthFrac_get(actorID);
+        float f = Engine.SysDataSet.StrengthFrac_get(av);
         if (f < 0.67f && f >= 0.33f)
         {
           Screen2D.MessageText(string.Format("{0}: {1}, I need cover!", av.Name, PlayerInfo.Name)
@@ -1142,7 +1143,7 @@ namespace SWEndor.Scenarios
         else if (actor.TypeInfo is MC90ATI)
         {
           Manager.AddEvent(Game.GameTime + 15, Message_92_LostHomeOne);
-          TimedLifeSystem.Activate(Engine, actor.ID, 2000f);
+          TimedLifeSystem.Activate(Engine, actor, 2000f);
           Manager.AddEvent(Game.GameTime + 25, FadeOut);
         }
       }
@@ -1794,7 +1795,8 @@ namespace SWEndor.Scenarios
     {
       //m_Enemy_pull = 4000;
       SDWaves++;
-      ActorInfo.Kill(Engine, m_ExecutorStaticID);
+      ActorInfo executor = ActorFactory.Get(m_ExecutorStaticID);
+      executor?.Kill();
 
       TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(0, 0, -10000);
       float creationTime = Game.GameTime;
@@ -2006,7 +2008,7 @@ namespace SWEndor.Scenarios
         }
 
         SoundManager.SetMusic("executorend");
-        TimedLifeSystem.Activate(Engine, ainfo.ID, 2000f);
+        TimedLifeSystem.Activate(Engine, ainfo, 2000f);
 
         ActorInfo homeone = ActorFactory.Get(m_HomeOneID);
         if (homeone != null)
@@ -2032,8 +2034,7 @@ namespace SWEndor.Scenarios
 
     private void Empire_DeathStarAttack(ActorTypeInfo type)
     {
-      int m_ADSLaserSourceID = m_ADS.Children[0];
-      ActorInfo lsrSrc = ActorFactory.Get(m_ADSLaserSourceID);
+      ActorInfo lsrSrc = new List<ActorInfo>(m_ADS.Children)[0];
       if (lsrSrc != null
         && lsrSrc.CreationState == CreationState.ACTIVE)
       {
@@ -2049,9 +2050,9 @@ namespace SWEndor.Scenarios
           {
             m_ADS_targetID = tid;
 
-            ActionManager.ForceClearQueue(m_ADSLaserSourceID);
-            ActionManager.QueueNext(m_ADSLaserSourceID, new AttackActor(tid));
-            ActionManager.QueueNext(m_ADSLaserSourceID, new Lock());
+            lsrSrc.ForceClearQueue();
+            lsrSrc.QueueNext(new AttackActor(tid));
+            lsrSrc.QueueNext(new Lock());
 
             t.DestroyedEvents += DeathStarKill_Effect;
             Manager.AddEvent(0.1f, Scene_DeathStarCam);

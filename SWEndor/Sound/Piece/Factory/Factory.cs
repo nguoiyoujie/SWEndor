@@ -43,7 +43,7 @@ namespace SWEndor.Sound
           if (File.Exists(filepath))
           {
             INIFile f = new INIFile(filepath);
-            foreach (string s in f.SectionKeys)
+            foreach (string s in f.Sections)
             {
               if (s != INIFile.PreHeaderSectionName)
               {

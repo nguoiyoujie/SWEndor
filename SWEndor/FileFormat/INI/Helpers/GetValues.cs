@@ -13,17 +13,17 @@ namespace SWEndor.FileFormat.INI
 
     private string GetStringValue(string section, string key, string defaultValue, string firstsection)
     {
-      if (Sections.ContainsKey(section))
+      if (m_sections.ContainsKey(section))
       {
-        if (Sections[section].HasKey(key))
-          return Sections[section].GetLine(key).Value;
+        if (m_sections[section].HasKey(key))
+          return m_sections[section].GetLine(key).Value;
 
         string val = defaultValue;
-        foreach (string inherit in Sections[section].Inherits)
+        foreach (string inherit in m_sections[section].Inherits)
         {
-          if (inherit != firstsection  
-            && val == defaultValue 
-            && Sections.ContainsKey(inherit))
+          if (inherit != firstsection
+            && val == defaultValue
+            && m_sections.ContainsKey(inherit))
           {
             val = GetStringValue(inherit, key, defaultValue, firstsection);
           }

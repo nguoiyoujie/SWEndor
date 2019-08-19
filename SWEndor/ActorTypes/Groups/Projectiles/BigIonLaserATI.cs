@@ -5,6 +5,7 @@ using SWEndor.Weapons;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.AI;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -30,51 +31,42 @@ namespace SWEndor.ActorTypes.Instances
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"projectiles\ion_sm_laser.x");
     }
 
-    public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      ActorInfo owner = ActorFactory.Get(ownerActorID);
-      ActorInfo hitby = ActorFactory.Get(hitbyActorID);
-
       if (owner == null || hitby == null)
         return;
 
-      base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
-      if (hitby.Children.Length > 0)
+      base.ProcessHit(owner, hitby, impact, normal);
+      foreach (ActorInfo child in hitby.Children)
       {
-        foreach (int i in hitby.Children)
+        CombatSystem.onNotify(Engine, child, CombatEventType.DAMAGE_FRAC, 0.5f);
+
+        float empduration = 10000;
+
+        foreach (WeaponInfo w in child.WeaponSystemInfo.Weapons.Values)
+          if (w.WeaponCooldown < Game.GameTime + empduration + 2)
+            w.WeaponCooldown = Game.GameTime + empduration + 2;
+
+        foreach (ActorInfo child2 in child.Children)
         {
-          ActorInfo child = ActorFactory.Get(i);
-          CombatSystem.onNotify(Engine, child.ID, CombatEventType.DAMAGE_FRAC, 0.5f);
-
-          float empduration = 10000;
-          
-          foreach (WeaponInfo w in child.WeaponSystemInfo.Weapons.Values)
-            if (w.WeaponCooldown < Game.GameTime + empduration + 2)
-              w.WeaponCooldown = Game.GameTime + empduration + 2;
-
-          foreach (int i2 in child.Children)
+          if (child2.TypeInfo is ElectroATI)
           {
-            ActorInfo child2 = ActorFactory.Get(i2);
-
-            if (child2.TypeInfo is ElectroATI)
-            {
-              child2.CycleInfo.CyclesRemaining = empduration / child2.TypeInfo.TimedLifeData.TimedLife;
-              return;
-            }
+            child2.CycleInfo.CyclesRemaining = empduration / child2.TypeInfo.TimedLifeData.TimedLife;
+            return;
           }
-          ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
-          acinfo.Position = child.GetPosition();
-          ActorInfo electro = ActorInfo.Create(ActorFactory, acinfo);
-          child.AddChild(electro.ID);
-          electro.CycleInfo.CyclesRemaining = empduration / electro.TypeInfo.TimedLifeData.TimedLife;
         }
+        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
+        acinfo.Position = child.GetPosition();
+        ActorInfo electro = ActorFactory.Create(acinfo);
+        child.AddChild(electro);
+        electro.CycleInfo.CyclesRemaining = empduration / electro.TypeInfo.TimedLifeData.TimedLife;
       }
 
       if (hitby.TypeInfo.TargetType.HasFlag(TargetType.SHIP))
       {
-        ActionManager.ForceClearQueue(hitbyActorID);
-        ActionManager.QueueNext(hitbyActorID, new Rotate(hitby.GetRelativePositionFUR(1000, -800, -200), hitby.MoveData.MaxSpeed, 0.1f, false));
-        ActionManager.QueueNext(hitbyActorID, new Lock());
+        hitby.ForceClearQueue();
+        hitby.QueueNext(new Rotate(hitby.GetRelativePositionFUR(1000, -800, -200), hitby.MoveData.MaxSpeed, 0.1f, false));
+        hitby.QueueNext(new Lock());
       }
     }
   }

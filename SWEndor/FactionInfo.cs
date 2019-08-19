@@ -65,7 +65,7 @@ namespace SWEndor
       if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER) && Wings.Contains(ainfo.ID))
       {
         Wings.Remove(ainfo.ID);
-        if (ainfo.CreationState == CreationState.DISPOSED)
+        if (ainfo.Disposed)
         {
           if (WingLimit > 0)
             WingLimit--;
@@ -81,7 +81,7 @@ namespace SWEndor
       if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.SHIP) && Ships.Contains(ainfo.ID))
       {
         Ships.Remove(ainfo.ID);
-        if (ainfo.CreationState == CreationState.DISPOSED)
+        if (ainfo.Disposed)
         {
           if (ShipLimit > 0)
             ShipLimit--;
@@ -98,7 +98,7 @@ namespace SWEndor
       if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.STRUCTURE) && Structures.Contains(ainfo.ID))
       {
         Structures.Remove(ainfo.ID);
-        if (ainfo.CreationState == CreationState.DISPOSED)
+        if (ainfo.Disposed)
         {
           if (StructureLimit > 0)
             StructureLimit--;

@@ -10,6 +10,7 @@ using SWEndor.Primitives;
 using SWEndor.ActorTypes.Instances;
 using SWEndor.Actors.Data;
 using SWEndor.Actors.Components;
+using SWEndor.AI;
 
 namespace SWEndor.Scenarios
 {
@@ -248,7 +249,7 @@ namespace SWEndor.Scenarios
         Rotation = new TV_3DVECTOR(90, 90, 0),
         InitialScale = 4
       };
-      m_AYavin = ActorInfo.Create(ActorFactory, aci_Yavin);
+      m_AYavin = ActorFactory.Create(aci_Yavin);
 
       // Create Yavin 4
       ActorCreationInfo aci_Yavin4 = new ActorCreationInfo(ActorTypeFactory.Get("Yavin4"))
@@ -256,7 +257,7 @@ namespace SWEndor.Scenarios
         Position = new TV_3DVECTOR(0, 800, -18000),
         Rotation = new TV_3DVECTOR(0, 0, 0),
       };
-      m_AYavin4 = ActorInfo.Create(ActorFactory, aci_Yavin4);
+      m_AYavin4 = ActorFactory.Create(aci_Yavin4);
 
       // Create DeathStar
       ActorCreationInfo aci_DS = new ActorCreationInfo(ActorTypeFactory.Get("DeathStar"))
@@ -265,7 +266,7 @@ namespace SWEndor.Scenarios
         Rotation = new TV_3DVECTOR(0, 180, 0),
         Faction = MainEnemyFaction
       };
-      m_ADS = ActorInfo.Create(ActorFactory, aci_DS);
+      m_ADS = ActorFactory.Create(aci_DS);
     }
 
     public override void GameTick()
@@ -286,7 +287,7 @@ namespace SWEndor.Scenarios
           {
             ActorInfo actor = ActorFactory.Get(actorID);
             if (actor != null)
-              enemystrength += Engine.SysDataSet.StrengthFrac_get(actorID) * 100 + (actor.SpawnerInfo != null ? actor.SpawnerInfo.SpawnsRemaining : 0);
+              enemystrength += Engine.SysDataSet.StrengthFrac_get(actor) * 100 + (actor.SpawnerInfo != null ? actor.SpawnerInfo.SpawnsRemaining : 0);
           }
 
           if (!Manager.GetGameStateB("Stage1B"))
@@ -695,16 +696,16 @@ namespace SWEndor.Scenarios
               int rsID = MainEnemyFaction.GetShips()[Engine.Random.Next(0, MainEnemyFaction.GetShips().Count)];
               ActorInfo rs = ActorFactory.Get(actorID);
               {
-                foreach (int i in rs.Children)
+                foreach (ActorInfo a in rs.Relation.Children)
                 {
-                  if (Engine.ActorDataSet.RegenData[ActorFactory.GetIndex(i)].ParentRegenRate > 0)
+                  if (Engine.ActorDataSet.RegenData[a.dataID].ParentRegenRate > 0)
                     if (Engine.Random.NextDouble() > 0.4f)
-                      rsID = i;
+                      rsID = a.ID;
                 }
               }
 
-              ActionManager.ClearQueue(actorID);
-              ActionManager.QueueLast(actorID, new AttackActor(rsID, -1, -1, false));
+              actor.ClearQueue();
+              actor.QueueLast(new AttackActor(rsID, -1, -1, false));
             }
           }
         }
@@ -1218,12 +1219,14 @@ namespace SWEndor.Scenarios
       {
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
-          CombatSystem.onNotify(Engine, actorID, CombatEventType.RECOVER_FRAC, 1);
+          CombatSystem.onNotify(Engine, actor, CombatEventType.RECOVER_FRAC, 1);
       }
 
       foreach (int actorID in MainEnemyFaction.GetShips())
       {
-        ActorInfo.Kill(Engine, actorID);
+        ActorInfo actor = ActorFactory.Get(actorID);
+        if (actor != null)
+          actor.Kill();
       }
 
       Manager.MaxBounds = new TV_3DVECTOR(10000, 400, 8000);
@@ -1236,7 +1239,9 @@ namespace SWEndor.Scenarios
     {
       foreach (int actorID in MainEnemyFaction.GetStructures())
       {
-        ActorInfo.Kill(Engine, actorID);
+        ActorInfo actor = ActorFactory.Get(actorID);
+        if (actor != null)
+          actor.Kill();
       }
     }
 
@@ -1279,9 +1284,9 @@ namespace SWEndor.Scenarios
           m_ADS_SurfaceParts.Add(asi.Spawn(this));
         }
 
-      ActorInfo.Kill(Engine, m_ADS.ID);
+      m_ADS.Kill();
       m_AYavin.SetLocalRotation(0, 0, 180);
-      ActorInfo.Kill(Engine, m_AYavin4.ID);
+      m_AYavin4.Kill();
 
       //cam.MoveData.MaxSpeed = 450;
       //cam.MoveData.Speed = 450;
@@ -1310,7 +1315,7 @@ namespace SWEndor.Scenarios
       {
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
-          CombatSystem.onNotify(Engine, actorID, CombatEventType.RECOVER_FRAC, 0.35f);
+          CombatSystem.onNotify(Engine, actor, CombatEventType.RECOVER_FRAC, 0.35f);
       }
 
       Scene_ClearGroundObjects(null);
@@ -1382,7 +1387,7 @@ namespace SWEndor.Scenarios
       {
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
-          CombatSystem.onNotify(Engine, actorID, CombatEventType.RECOVER_FRAC, 0.35f);
+          CombatSystem.onNotify(Engine, actor, CombatEventType.RECOVER_FRAC, 0.35f);
       }
 
       Scene_ClearGroundObjects(null);
@@ -1404,7 +1409,7 @@ namespace SWEndor.Scenarios
 
       foreach (ActorInfo a in m_ADS_SurfaceParts)
       {
-        ActorInfo.Kill(Engine, a.ID);
+        a.Kill();
       }
       m_ADS_SurfaceParts.Clear();
 
@@ -1442,7 +1447,7 @@ namespace SWEndor.Scenarios
       Manager.MaxAIBounds = new TV_3DVECTOR(7000, 300, 8000);
       Manager.MinAIBounds = new TV_3DVECTOR(-7000, -160, -10000);
 
-      ActorInfo.Kill(Engine, m_ADS_Surface.ID);
+      m_ADS_Surface.Kill();
       Scene_ClearGroundObjects(null);
 
       //cam.MoveData.MaxSpeed = 450;
@@ -1467,10 +1472,10 @@ namespace SWEndor.Scenarios
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
         {
-          if (!ActorInfo.IsPlayer(Engine, actorID))
+          if (!actor.IsPlayer)
           {
             actor.Faction = FactionInfo.Neutral;
-            ActorInfo.Kill(Engine, actorID);
+            actor.Kill();
           }
         }
       }
@@ -1478,7 +1483,7 @@ namespace SWEndor.Scenarios
 
       foreach (ActorInfo a in m_ADS_SurfaceParts)
       {
-        ActorInfo.Kill(Engine, a.ID);
+        a.Kill();
       }
       m_ADS_SurfaceParts.Clear();
       Scene_ClearGroundObjects(null);
@@ -1581,9 +1586,9 @@ namespace SWEndor.Scenarios
             Type t = ActorTypeFactory.Get(TrenchTypes[Trenches[0]]).GetType();
             if (!(m_ADS_TrenchParts.Get(i).TypeInfo.GetType() == t) || i < counter)
             {
-              ActorInfo.Kill(Engine, m_ADS_TrenchParts.Get(i).ID);
+              m_ADS_TrenchParts.Get(i).Kill();
               foreach (ActorInfo turret in TrenchTurrets[i])
-                ActorInfo.Kill(Engine, turret.ID);
+                turret.Kill();
               TrenchTurrets[i].Clear();
 
               ActorSpawnInfo asi = new ActorSpawnInfo
@@ -1804,10 +1809,15 @@ namespace SWEndor.Scenarios
       }
       Scene_ClearGroundObjects(null);
 
-      ActorInfo.Kill(Engine, m_VaderID);
-      ActorInfo.Kill(Engine, m_VaderEscort1ID);
-      ActorInfo.Kill(Engine, m_VaderEscort2ID);
-      ActorInfo.Kill(Engine, m_FalconID);
+      ActorInfo m_Vader = ActorFactory.Get(m_VaderID);
+      ActorInfo m_VaderEscort1 = ActorFactory.Get(m_VaderEscort1ID);
+      ActorInfo m_VaderEscort2 = ActorFactory.Get(m_VaderEscort2ID);
+      ActorInfo m_Falcon = ActorFactory.Get(m_FalconID);
+
+      m_Vader?.Kill();
+      m_VaderEscort1?.Kill();
+      m_VaderEscort2?.Kill();
+      m_Falcon?.Kill();
 
       m_VaderID = new ActorSpawnInfo
       {
@@ -1890,7 +1900,8 @@ namespace SWEndor.Scenarios
     {
       Stage6VaderAttacking = true;
 
-      ActorInfo.Kill(Engine, m_FalconID);
+      ActorInfo m_Falcon = ActorFactory.Get(m_FalconID);
+      m_Falcon.Kill();
 
       ActionManager.ForceClearQueue(m_VaderID);
       ActionManager.QueueNext(m_VaderID, new AttackActor(m_PlayerID, -1, -1, false, 9999));
@@ -1990,11 +2001,11 @@ namespace SWEndor.Scenarios
         ActorInfo vaderE1 = ActorFactory.Get(m_VaderEscort1ID);
         ActorInfo vaderE2 = ActorFactory.Get(m_VaderEscort2ID);
 
-        ActionManager.ForceClearQueue(m_VaderID);
+        vader.ForceClearQueue();
         vader.MoveData.ApplyZBalance = false;
         vader.SetLocalRotation(-30, 85, 5);
 
-        TimedLifeSystem.Activate(Engine, m_VaderID, 999);
+        TimedLifeSystem.Activate(Engine, vader, 999);
 
         vader.ActorState = ActorState.DYING;
         vaderE2.SetLocalRotation(-5, 93, 0);

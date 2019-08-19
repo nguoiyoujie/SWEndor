@@ -18,8 +18,6 @@ namespace SWEndor.UI.Widgets
     private TV_2DVECTOR targetingradar_center;
     private float targetingradar_radius;
 
-    private TV_COLOR pcolor { get { return (PlayerInfo.Actor?.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : PlayerInfo.Actor.Faction.Color; } }
-
     public Radar(Screen2D owner) : base(owner, "radar")
     {
       radar_center = new TV_2DVECTOR(Engine.ScreenWidth * 0.34f, Engine.ScreenHeight * 0.24f) + new TV_2DVECTOR(Engine.ScreenWidth / 2, Engine.ScreenHeight / 2);
@@ -163,10 +161,9 @@ namespace SWEndor.UI.Widgets
     }
 
 
-    private void DrawElement(Engine engine, int actorID)
+    private void DrawElement(Engine engine, ActorInfo a)
     {
       ActorInfo p = PlayerInfo.Actor;
-      ActorInfo a = ActorFactory.Get(actorID);
       if (a != null)
       {
         TV_3DVECTOR ppos = p.GetPosition();
@@ -243,7 +240,7 @@ namespace SWEndor.UI.Widgets
             case RadarType.RECTANGLE_GIANT:
               {
                 float gt = Engine.Game.GameTime * radar_blinkfreq;
-                if (Engine.SysDataSet.StrengthFrac_get(actorID) > 0.1f || (gt - (int)gt > 0.5f))
+                if (Engine.SysDataSet.StrengthFrac_get(a) > 0.1f || (gt - (int)gt > 0.5f))
                 {
                   DrawRectGiant(a, posvec.X, posvec.Y, proty, acolor);
                 }
@@ -252,7 +249,7 @@ namespace SWEndor.UI.Widgets
             case RadarType.TRIANGLE_GIANT:
               {
                 float gt = Engine.Game.GameTime * radar_blinkfreq;
-                if (Engine.SysDataSet.StrengthFrac_get(actorID) > 0.1f || (gt - (int)gt > 0.5f))
+                if (Engine.SysDataSet.StrengthFrac_get(a) > 0.1f || (gt - (int)gt > 0.5f))
                 {
                   DrawTriangleGiant(a, posvec.X, posvec.Y, proty, acolor);
                 }
@@ -290,8 +287,8 @@ namespace SWEndor.UI.Widgets
 
     private void DrawRectGiant(ActorInfo a, float x, float y, float proty, int color)
     {
-      BoundingBox box = Engine.MeshDataSet.Mesh_getBoundingBox(a.ID, true);
-      float scale = Engine.MeshDataSet.Scale_get(a.ID);
+      BoundingBox box = Engine.MeshDataSet.Mesh_getBoundingBox(a, true);
+      float scale = Engine.MeshDataSet.Scale_get(a);
 
       List<TV_2DVECTOR?> ts = new List<TV_2DVECTOR?>();
       float bx = box.X.Min * scale;
@@ -368,8 +365,8 @@ namespace SWEndor.UI.Widgets
 
     private void DrawTriangleGiant(ActorInfo a, float x, float y, float proty, int color)
     {
-      BoundingBox box = Engine.MeshDataSet.Mesh_getBoundingBox(a.ID, true);
-      float scale = Engine.MeshDataSet.Scale_get(a.ID);
+      BoundingBox box = Engine.MeshDataSet.Mesh_getBoundingBox(a, true);
+      float scale = Engine.MeshDataSet.Scale_get(a);
 
       List<TV_2DVECTOR?> ts = new List<TV_2DVECTOR?>();
       float bx = box.X.Min * scale;

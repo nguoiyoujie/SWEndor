@@ -13,8 +13,6 @@ namespace SWEndor.UI.Widgets
     private float radar_radius;
     private float radar_range;
 
-    private TV_COLOR pcolor { get { return (PlayerInfo.Actor?.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : PlayerInfo.Actor.Faction.Color; } }
-
     public LargeShipSystems(Screen2D owner) : base(owner, "largeshipsystems")
     {
       radar_center = new TV_2DVECTOR(-Engine.ScreenWidth * 0.42f, Engine.ScreenHeight * 0.3f) + new TV_2DVECTOR(Engine.ScreenWidth / 2, Engine.ScreenHeight / 2);
@@ -52,17 +50,16 @@ namespace SWEndor.UI.Widgets
     {
       TVScreen2DImmediate.Action_Begin2D();
 
-      DrawElement(Engine, PlayerInfo.ActorID);
-      foreach (int id in PlayerInfo.Actor.Children)
-        DrawElement(Engine, id);
+      DrawElement(Engine, PlayerInfo.Actor);
+      foreach (ActorInfo a in PlayerInfo.Actor.Children)
+        DrawElement(Engine, a);
 
       TVScreen2DImmediate.Action_End2D();
     }
 
-    private void DrawElement(Engine engine, int actorID)
+    private void DrawElement(Engine engine, ActorInfo a)
     {
       ActorInfo p = PlayerInfo.Actor;
-      ActorInfo a = ActorFactory.Get(actorID);
       if (a != null)
       {
         TV_3DVECTOR ppos = p.GetPosition();
@@ -81,8 +78,8 @@ namespace SWEndor.UI.Widgets
 
           float x = radar_center.x - radar_radius * dist / radar_range * (float)Math.Sin(angl * Globals.PI / 180);
           float y = radar_center.y + radar_radius * dist / radar_range * (float)Math.Cos(angl * Globals.PI / 180);
-          float scale = Engine.MeshDataSet.Scale_get(a.ID);
-          int scolor = Engine.SysDataSet.StrengthColor_get(actorID).GetIntColor();
+          float scale = Engine.MeshDataSet.Scale_get(a);
+          int scolor = Engine.SysDataSet.StrengthColor_get(a).GetIntColor();
 
           if (a.TypeInfo.TargetType.HasFlag(TargetType.ADDON))
           {
@@ -90,7 +87,7 @@ namespace SWEndor.UI.Widgets
           }
           else if (a.TypeInfo.RadarType == RadarType.RECTANGLE_GIANT)
           {
-            BoundingBox box = engine.MeshDataSet.Mesh_getBoundingBox(actorID, true);
+            BoundingBox box = engine.MeshDataSet.Mesh_getBoundingBox(a, true);
             radar_range = (box.Z.Max - box.Z.Min) * scale;
 
             TVScreen2DImmediate.Draw_Box(box.X.Min * scale * radar_radius / radar_range + radar_center.x
@@ -101,7 +98,7 @@ namespace SWEndor.UI.Widgets
           }
           else if (a.TypeInfo.RadarType == RadarType.TRIANGLE_GIANT)
           {
-            BoundingBox box = engine.MeshDataSet.Mesh_getBoundingBox(actorID, true);
+            BoundingBox box = engine.MeshDataSet.Mesh_getBoundingBox(a, true);
             radar_range = (box.Z.Max - box.Z.Min) * scale;
 
             TVScreen2DImmediate.Draw_Triangle(box.X.Min * scale * radar_radius / radar_range + radar_center.x

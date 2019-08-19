@@ -12,9 +12,8 @@ namespace SWEndor.AI.Actions
 
     private bool Enabled;
 
-    public override void Process(Engine engine, int actorID)
+    public override void Process(Engine engine, ActorInfo actor)
     {
-      ActorInfo actor = engine.ActorFactory.Get(actorID);
       actor.SetSpawnerEnable(Enabled);
       Complete = true;
     }

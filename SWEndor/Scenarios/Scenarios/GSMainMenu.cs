@@ -152,7 +152,7 @@ namespace SWEndor.Scenarios
         acinfo.Position = new TV_3DVECTOR(0, -40000, 0);
         acinfo.Rotation = new TV_3DVECTOR(0, 180, 0);
         acinfo.InitialScale = 60;
-        m_APlanet = ActorInfo.Create(ActorFactory, acinfo);
+        m_APlanet = ActorFactory.Create(acinfo);
       }
     }
 

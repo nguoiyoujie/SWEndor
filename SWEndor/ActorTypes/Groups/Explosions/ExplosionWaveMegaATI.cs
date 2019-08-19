@@ -41,7 +41,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       if (ainfo.ActorState == ActorState.NORMAL)
       {
-        MeshSystem.EnlargeScale(ainfo.Engine, ainfo.ID, 7500 * Game.TimeSinceRender);
+        MeshSystem.EnlargeScale(ainfo.Engine, ainfo, 7500 * Game.TimeSinceRender);
       }
     }
   }

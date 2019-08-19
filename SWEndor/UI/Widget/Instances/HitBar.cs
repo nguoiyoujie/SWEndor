@@ -36,7 +36,7 @@ namespace SWEndor.UI.Widgets
 
       TVScreen2DImmediate.Action_Begin2D();
       float barlength = Engine.ScreenWidth * 0.75f - 100;
-      float frac = Engine.SysDataSet.StrengthFrac_get(m_target.ID); 
+      float frac = Engine.SysDataSet.StrengthFrac_get(m_target); 
       TV_COLOR tcolor = (m_target.Faction != null) ? m_target.Faction.Color : new TV_COLOR(1, 0.5f, 0, 1);
       TV_COLOR tpcolor = new TV_COLOR(tcolor.r, tcolor.g, tcolor.b, 0.3f);
 

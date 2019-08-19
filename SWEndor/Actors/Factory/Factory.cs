@@ -1,197 +1,213 @@
 ﻿using SWEndor.ActorTypes;
+using SWEndor.Primitives;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace SWEndor.Actors
 {
   public partial class ActorInfo
   {
-    public class Factory
+    public class Factory : Primitives.Factories.Registry<int, ActorInfo>
     {
       public readonly Engine Engine;
       internal Factory(Engine engine)
-      { Engine = engine; }
+      {
+        Engine = engine;
+      }
 
-      private const int capacity = Globals.ActorLimit; // hard code limit to ActorInfo. We should not be exceeding 1000 normally.
-      private ConcurrentQueue<ActorInfo> deadqueue = new ConcurrentQueue<ActorInfo>();
-      private ActorInfo[] list = new ActorInfo[capacity];
-      private int count = 0;
       private int counter = 0;
-      private int emptycounter = 0;
-      private Mutex mu_counter = new Mutex();
-      private int First = -1;
-      private int Last = -1;
+      private ConcurrentQueue<ActorInfo> planned = new ConcurrentQueue<ActorInfo>();
+      private ConcurrentQueue<ActorInfo> prepool = new ConcurrentQueue<ActorInfo>();
+      private ConcurrentQueue<ActorInfo> pool = new ConcurrentQueue<ActorInfo>();
+      private ConcurrentQueue<ActorInfo> dead = new ConcurrentQueue<ActorInfo>();
 
-      public ActorInfo Register(ActorCreationInfo amake, string key = "")
+      // temp pools
+      private ConcurrentQueue<ActorInfo> redo = new ConcurrentQueue<ActorInfo>();
+      private ConcurrentQueue<ActorInfo> nextplan = new ConcurrentQueue<ActorInfo>();
+      private ConcurrentQueue<ActorInfo> nextdead = new ConcurrentQueue<ActorInfo>();
+
+      //private HashSet<int> dataid = new HashSet<int>();
+      int lastdataid = 0;
+
+      private ActorInfo First;
+      private ActorInfo Last;
+      private object creationLock = new object();
+
+      private int GetNewDataID()
+      {
+        // since Actors are reused, there is no need to count backwards
+        if (lastdataid >= Globals.ActorLimit)
+          throw new Exception("Number of current actors exceeded limit of {0}!".F(Globals.ActorLimit));
+
+        return lastdataid++;
+      }
+
+      public ActorInfo Create(ActorCreationInfo acinfo)
       {
         ActorInfo actor = null;
-        if (amake.ActorTypeInfo == null)
+        if (acinfo.ActorTypeInfo == null)
           throw new Exception("Attempted to register actor with null ActorTypeInfo!");
 
-        try
+        lock (creationLock)
         {
-          mu_counter.WaitOne();
-          counter = emptycounter;
-          while (counter < list.Length && (list[counter] != null && list[counter].CreationState != CreationState.DISPOSED))
-            counter++;
-
-          if (counter >= list.Length)
-            throw new Exception("The list of Actors has exceeded capacity!");
-
-          int i = counter;
-          emptycounter = i + 1;
-
-          if (list[i] == null)
+          int id = counter++;
+          if (pool.TryDequeue(out actor))
           {
-            actor = new ActorInfo(this, i, amake);
-            list[i] = actor;
+            actor.ID = id;
+            actor.Rebuild(acinfo);
           }
           else
           {
-            actor = list[i];
-            actor.ID += capacity;
-            actor.Rebuild(amake);
+            actor = new ActorInfo(this, id, GetNewDataID(), acinfo);
           }
 
-          if (First < 0)
-            First = actor.ID;
+          planned.Enqueue(actor);
+          Add(id, actor);
+          Log.Write(Log.DEBUG, LogType.ACTOR_CREATED, actor);
+
+          if (First == null)
+          {
+            First = actor;
+            actor.Prev = null;
+            actor.Next = null;
+          }
           else
           {
-            Get(Last).NextID = actor.ID;
-            actor.PrevID = Last;
+            Last.Next = actor;
+            actor.Prev = Last;
+            actor.Next = null;
           }
-          Last = actor.ID;
-          count++;
+          Last = actor;
         }
-        catch (Exception ex)
-        { throw ex; }
-        finally
-        {
-          mu_counter.ReleaseMutex();
-        }
+
         return actor;
       }
 
+
       public void ActivatePlanned()
       {
-        foreach (ActorInfo a in list)
-          if (a != null)
-            if (a.CreationState == CreationState.PLANNED && a.CreationTime < Engine.Game.GameTime)
-              a.Generate();
+        ActorInfo actor = null;
+        while (planned.TryDequeue(out actor))
+        {
+          if (actor.CreationTime < Engine.Game.GameTime)
+          {
+            actor.Initialize();
+            //Add(actor.ID, actor);
+          }
+          else
+            nextplan.Enqueue(actor);
+        }
+
+        while (nextplan.TryDequeue(out actor))
+          planned.Enqueue(actor);
       }
 
       public void MakeDead(ActorInfo a)
       {
-        deadqueue.Enqueue(a);
+        dead.Enqueue(a);
       }
 
       public void DestroyDead()
       {
         ActorInfo a;
-        while (deadqueue.TryDequeue(out a))
-          a.Destroy();
+        while (dead.TryDequeue(out a))
+          if (ScopedManager<ActorInfo>.Check(a) == 0)
+            a.Destroy();
+          else
+            nextdead.Enqueue(a);
+
+        while (nextdead.TryDequeue(out a))
+          dead.Enqueue(a);
+      }
+
+      public void ReturnToPool()
+      {
+        ActorInfo a;
+
+        while (prepool.TryDequeue(out a))
+          if (ScopedManager<ActorInfo>.Check(a) == 0)
+            pool.Enqueue(a);
+          else
+            redo.Enqueue(a);
+
+        while (redo.TryDequeue(out a))
+          prepool.Enqueue(a);
       }
 
       public int GetActorCount()
       {
-        return count;
+        return list.Count;
       }
 
-      public void DoEach(Action<Engine, int> action)
+      public void DoEach(Action<Engine, ActorInfo> action)
       {
-        ActorInfo actor = Get(First);
-        int freezecount = count;
-        for (int i = 0; i < freezecount && actor != null; i++)
+        ActorInfo actor = First;
+        while (actor != null)
         {
-          action.Invoke(Engine, actor.ID);
-
-          if (Get(actor.NextID) == null && i < count - 1)
-          { }
-
-          actor = Get(actor.NextID);
+          action.Invoke(Engine, actor);
+          actor = actor.Next;
         }
       }
 
-      public int GetIndex(int id)
-      {
-        return id % capacity;
-      }
+      //public new ScopedManager<ActorInfo>.ScopedItem Get(int id)
+      //{
+      //  return ScopedManager<ActorInfo>.Scope(base.Get(id));
+      //}
 
-      public ActorInfo Get(int id)
+      public new void Remove(int id)
       {
-        if (id < 0)
-          return null;
-        ActorInfo a = list[id % capacity];
-        if (a != null && id == a.ID)
-          return a;
-        return null;
-      }
-
-      public bool Exists(int id)
-      {
-        return id >= 0 && list[id % capacity] != null && list[id % capacity].ID == id;
-      }
-
-      public bool IsPlayer(int id)
-      {
-        return id == Engine.PlayerInfo.Actor?.ID;
-      }
-
-      public void Remove(int id)
-      {
-        int x = id % capacity;
-
-        if (list[x]?.CreationState != CreationState.DISPOSED)
+        //using (var v = Get(id))
+        //if (v != null)
+        //{
+        ActorInfo actor = Get(id);//v.Value;
+        if (actor != null)
         {
-          try
+          if (First == actor && Last == actor)
           {
-            mu_counter.WaitOne();
-
-            count--;
-
-            ActorInfo actor = Get(id);
-            if (First == id && Last == id)
-            {
-              First = -1;
-              Last = -1;
-            }
-            else if (First == id)
-            {
-              First = actor.NextID;
-            }
-            else if (Last == id)
-            {
-              Last = actor.PrevID;
-            }
-            else
-            {
-              Get(actor.PrevID).NextID = actor.NextID;
-              Get(actor.NextID).PrevID = actor.PrevID;
-            }
-
-            if (x < emptycounter)
-              emptycounter = x;
+            First = null;
+            Last = null;
           }
-          catch (Exception ex)
-          { throw ex; }
-          finally
+          else if (First == actor)
           {
-            mu_counter.ReleaseMutex();
+            First = actor.Next;
           }
+          else if (Last == actor)
+          {
+            Last = actor.Prev;
+          }
+          else
+          {
+            actor.Prev.Next = actor.Next;
+            actor.Next.Prev = actor.Prev;
+          }
+
+          actor.Next = null;
+          actor.Prev = null;
+
+          base.Remove(id);
+          prepool.Enqueue(actor);
         }
+        //}
       }
 
+      Action<Engine, ActorInfo> destroy = (e, a) => { a?.Destroy(); };
       public void Reset()
       {
         DestroyDead();
-        for (int i = 0; i < list.Length; i++)
-        {
-          list[i]?.Destroy();
-          list[i] = null;
-        }
-        First = -1;
-        Last = -1;
+        DoEach(destroy);
+
+        //foreach (ActorInfo a in GetAll())
+        //  a?.Destroy();
+
+        list.Clear();
+        planned = new ConcurrentQueue<ActorInfo>();
+        dead = new ConcurrentQueue<ActorInfo>();
+        prepool = new ConcurrentQueue<ActorInfo>();
+        pool = new ConcurrentQueue<ActorInfo>();
+        First = null;
+        Last = null;
       }
     }
   }

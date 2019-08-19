@@ -33,17 +33,15 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    public override void Process(Engine engine, int actorID)
+    public override void Process(Engine engine, ActorInfo actor)
     {
-      ActorInfo actor = engine.ActorFactory.Get(actorID);
-
       if (actor.MoveData.MaxTurnRate == 0)
       {
         Complete = true;
         return;
       }
 
-      Process(engine, actor, ref engine.ActorDataSet.CollisionData[engine.ActorFactory.GetIndex(actorID)]);
+      Process(engine, actor, ref engine.ActorDataSet.CollisionData[actor.dataID]);
     }
 
 

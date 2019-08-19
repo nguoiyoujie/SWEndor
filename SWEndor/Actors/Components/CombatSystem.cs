@@ -24,32 +24,31 @@ namespace SWEndor.Actors.Components
 
   public class CombatSystem
   {
-    internal static void Deactivate(Engine engine, int id)
+    internal static void Deactivate(Engine engine, ActorInfo actor)
     {
-      engine.ActorDataSet.CombatData[engine.ActorFactory.GetIndex(id)].IsCombatObject = false;
+      engine.ActorDataSet.CombatData[actor.dataID].IsCombatObject = false;
     }
 
-    internal static void onNotify(Engine engine, int id, CombatEventType type, float parameter)
+    internal static void onNotify(Engine engine, ActorInfo actor, CombatEventType type, float parameter)
     {
-      int index = engine.ActorFactory.GetIndex(id);
       onNotify(engine
-              , id
+              , actor
               , type
               , parameter
-              , ref engine.ActorDataSet.CombatData[index]
-              , ref engine.TimedLifeDataSet.list[index]
-              , ref engine.SysDataSet.list[index]
+              , ref engine.ActorDataSet.CombatData[actor.dataID]
+              , ref engine.TimedLifeDataSet.list[actor.dataID]
+              , ref engine.SysDataSet.list[actor.dataID]
               );
     }
 
-    private static void onNotify(Engine engine, int id, CombatEventType type, float parameter, ref CombatData cdata, ref TimedLifeData tdata, ref SysData sdata)
+    private static void onNotify(Engine engine, ActorInfo actor, CombatEventType type, float parameter, ref CombatData cdata, ref TimedLifeData tdata, ref SysData sdata)
     {
       switch (type)
       {
         case CombatEventType.TIME_DECAY:
           tdata.TimedLife -= engine.Game.TimeSinceRender;
           if (tdata.TimedLife < 0f)
-            Dying(engine, id);
+            Dying(engine, actor);
           break;
 
         case CombatEventType.TIME_START:
@@ -74,25 +73,25 @@ namespace SWEndor.Actors.Components
         case CombatEventType.SET_STRENGTH:
           sdata.Strength = parameter;
           if (cdata.IsCombatObject && sdata.Strength <= 0)
-            Dying(engine, id);
+            Dying(engine, actor);
           break;
 
         case CombatEventType.DAMAGE:
           sdata.Strength -= parameter * cdata.DamageModifier;
           if (cdata.IsCombatObject && sdata.Strength <= 0)
-            Dying(engine, id);
+            Dying(engine, actor);
           break;
 
         case CombatEventType.COLLISIONDAMAGE:
           sdata.Strength -= parameter * cdata.CollisionDamageModifier;
           if (cdata.IsCombatObject && sdata.Strength <= 0)
-            Dying(engine, id);
+            Dying(engine, actor);
           break;
 
         case CombatEventType.DAMAGE_FRAC:
           sdata.Strength -= parameter * sdata.MaxStrength;
           if (cdata.IsCombatObject && sdata.Strength <= 0)
-            Dying(engine, id);
+            Dying(engine, actor);
           break;
 
         case CombatEventType.RECOVER:
@@ -105,21 +104,19 @@ namespace SWEndor.Actors.Components
       }
     }
 
-    private static void Dying(Engine engine, int id)
+    private static void Dying(Engine engine, ActorInfo actor)
     {
-      ActorInfo actor = engine.ActorFactory.Get(id);
-
       if (!actor.ActorState.IsDyingOrDead())
         actor.ActorState = ActorState.DYING;
       else if (actor.ActorState.IsDying())
         actor.ActorState = ActorState.DEAD;
     }
 
-    public static void Process(Engine engine, int id)
+    public static void Process(Engine engine, ActorInfo actor)
     {
       // Expired
-      if (engine.TimedLifeDataSet.OnTimedLife_get(id))
-        onNotify(engine, id, CombatEventType.TIME_DECAY, engine.Game.TimeSinceRender);
+      if (engine.TimedLifeDataSet.OnTimedLife_get(actor))
+        onNotify(engine, actor, CombatEventType.TIME_DECAY, engine.Game.TimeSinceRender);
     }
   }
 }

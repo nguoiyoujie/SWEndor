@@ -74,15 +74,15 @@ namespace SWEndor.ActorTypes.Instances
       base.ProcessNewState(ainfo);
       if (ainfo.ActorState.IsDying())
       {
-        TimedLifeSystem.Activate(Engine, ainfo.ID, 5);
-        CombatSystem.Deactivate(Engine, ainfo.ID);
+        TimedLifeSystem.Activate(Engine, ainfo, 5);
+        CombatSystem.Deactivate(Engine, ainfo);
       }
       else if (ainfo.ActorState.IsDead())
       {
         ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave Mega"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo explwav = ActorInfo.Create(ActorFactory, acinfo);
-        MeshSystem.SetScale(Engine, explwav.ID, 10);
+        ActorInfo explwav = ActorFactory.Create(acinfo);
+        MeshSystem.SetScale(Engine, explwav, 10);
       }
     }
 
@@ -93,7 +93,7 @@ namespace SWEndor.ActorTypes.Instances
       {
         int k = texanimframes.Length - 1 - (int)(ainfo.CycleInfo.CycleTime / ainfo.CycleInfo.CyclePeriod * texanimframes.Length);
         if (k >= 0 && k < texanimframes.Length)
-          ainfo.Engine.MeshDataSet.Mesh_setTexture(ainfo.ID, texanimframes[k]); //ainfo.SetTexture(texanimframes[k]);
+          ainfo.Engine.MeshDataSet.Mesh_setTexture(ainfo, texanimframes[k]); //ainfo.SetTexture(texanimframes[k]);
       }
     }
   }

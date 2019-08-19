@@ -49,12 +49,12 @@ namespace SWEndor.ActorTypes.Groups
               impdist += ((Projectile)target.TypeInfo).ImpactCloseEnoughDistance;
 
             // Anticipate
-            float dist = ActorDistanceInfo.GetDistance(ainfo.ID, target.ID, impdist + 1);
+            float dist = ActorDistanceInfo.GetDistance(ainfo, target, impdist + 1);
 
             if (dist < impdist)
             {
-              target.TypeInfo.ProcessHit(target.ID, ainfo.ID, target.GetPosition(), new TV_3DVECTOR());
-              ainfo.TypeInfo.ProcessHit(ainfo.ID, target.ID, target.GetPosition(), new TV_3DVECTOR());
+              target.TypeInfo.ProcessHit(target, ainfo, target.GetPosition(), new TV_3DVECTOR());
+              ainfo.TypeInfo.ProcessHit(ainfo, target, target.GetPosition(), new TV_3DVECTOR());
 
               ainfo.OnHitEvent(target.ID);
               target.OnHitEvent(ainfo.ID);

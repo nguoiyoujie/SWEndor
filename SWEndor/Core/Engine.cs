@@ -218,6 +218,7 @@ namespace SWEndor
       //UpdateEffect();
     }
 
+    /*
     public void UpdateEffect()
     {
       TrueVision.LaserRenderSurface.StartRender(false);
@@ -225,6 +226,7 @@ namespace SWEndor
       TrueVision.LaserRenderSurface.EndRender();
       TrueVision.TVGraphicEffect.UpdateGlow();
     }
+    */
 
     public void LinkForm(GameForm form)
     {

@@ -383,7 +383,7 @@ namespace SWEndor.Scenarios
       ActorInfo av = ActorFactory.Get(((HitEventArg)arg).VictimID);
       ActorInfo aa = ActorFactory.Get(((HitEventArg)arg).ActorID);
 
-      if (PlayerInfo.ActorID == aa.TopParent)
+      if (PlayerInfo.Actor == aa.TopParent)
       {
         if (PlayerInfo.Actor != null
         && av.Faction != null

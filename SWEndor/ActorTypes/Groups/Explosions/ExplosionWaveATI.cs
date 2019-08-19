@@ -38,7 +38,7 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessState(ActorInfo ainfo)
     {
       if (ainfo.ActorState == ActorState.NORMAL)
-        MeshSystem.EnlargeScale(ainfo.Engine, ainfo.ID, 100 * Game.TimeSinceRender);
+        MeshSystem.EnlargeScale(ainfo.Engine, ainfo, 100 * Game.TimeSinceRender);
     }
   }
 }

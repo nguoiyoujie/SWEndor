@@ -25,10 +25,9 @@ namespace SWEndor.UI.Widgets
       string swingcount = "";
       Dictionary<string, int> wingcount = new Dictionary<string, int>();
 
-      Action<Engine, int> action = new Action<Engine, int>(
-        (_, aID) =>
+      Action<Engine, ActorInfo> action = new Action<Engine, ActorInfo>(
+        (_, a) =>
         {
-          ActorInfo a = Engine.ActorFactory.Get(aID);
           if (a != null && a.CreationState == CreationState.ACTIVE)
           {
             if (!wingcount.ContainsKey("All Objects"))

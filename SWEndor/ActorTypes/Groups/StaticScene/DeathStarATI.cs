@@ -40,15 +40,15 @@ namespace SWEndor.ActorTypes.Instances
       base.ProcessNewState(ainfo);
       if (ainfo.ActorState.IsDying())
       {
-        TimedLifeSystem.Activate(Engine, ainfo.ID, 5);
-        CombatSystem.Deactivate(Engine, ainfo.ID);
+        TimedLifeSystem.Activate(Engine, ainfo, 5);
+        CombatSystem.Deactivate(Engine, ainfo);
       }
       else if (ainfo.ActorState.IsDead())
       {
         ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave Mega"));
         acinfo.Position = ainfo.GetPosition();
-        ActorInfo explwav = ActorInfo.Create(ActorFactory, acinfo);
-        MeshSystem.SetScale(Engine, explwav.ID, 10);
+        ActorInfo explwav = ActorFactory.Create(acinfo);
+        MeshSystem.SetScale(Engine, explwav, 10);
       }
     }
   }

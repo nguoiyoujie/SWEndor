@@ -32,7 +32,7 @@ namespace SWEndor.Scenarios
       acinfo.CreationTime = SpawnTime;
       acinfo.Position = Position;
       acinfo.Rotation = Rotation;
-      ainfo = ActorInfo.Create(scenario.GetEngine().ActorFactory, acinfo);
+      ainfo = scenario.GetEngine().ActorFactory.Create(acinfo);
       ainfo.SideBarName = SidebarName;
 
       if (Actions != null)
@@ -43,13 +43,13 @@ namespace SWEndor.Scenarios
       {
         foreach (string s in Registries)
         {
-          Dictionary<string, ActorInfo> reg = scenario.GetRegister(s);
+          Dictionary<string, int> reg = scenario.GetRegister(s);
           if (reg != null)
           {
             if (RegisterName != null && RegisterName != "")
-              reg.Add(RegisterName, ainfo);
+              reg.Add(RegisterName, ainfo.ID);
             else
-              reg.Add(ainfo.Key, ainfo);
+              reg.Add(ainfo.Key, ainfo.ID);
           }
         }
       }

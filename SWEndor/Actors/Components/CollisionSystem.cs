@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes;
+using SWEndor.AI;
 using SWEndor.AI.Actions;
 using System;
 
@@ -8,12 +9,12 @@ namespace SWEndor.Actors.Components
 {
   public static class CollisionSystem
   {
-    internal static bool ActivateImminentCollisionCheck(Engine engine, int actorID, ref float check_time, float scandistance)
+    internal static bool ActivateImminentCollisionCheck(Engine engine, ActorInfo actor, ref float check_time, float scandistance)
     {
-      return ActivateImminentCollisionCheck(engine, actorID, ref check_time, scandistance, ref engine.ActorDataSet.CollisionData[engine.ActorFactory.GetIndex(actorID)]);
+      return ActivateImminentCollisionCheck(engine, actor, ref check_time, scandistance, ref engine.ActorDataSet.CollisionData[actor.dataID]);
     }
 
-    private static bool ActivateImminentCollisionCheck(Engine engine, int actorID, ref float check_time, float scandistance, ref CollisionData data)
+    private static bool ActivateImminentCollisionCheck(Engine engine, ActorInfo actor, ref float check_time, float scandistance, ref CollisionData data)
     {
       if (check_time < engine.Game.GameTime)
       {
@@ -31,30 +32,28 @@ namespace SWEndor.Actors.Components
       return data.IsInProspectiveCollision;
     }
 
-    internal static void CreateAvoidAction(Engine engine, int actorID)
+    internal static void CreateAvoidAction(Engine engine, ActorInfo actor)
     {
-      engine.ActionManager.QueueFirst(actorID, new AvoidCollisionRotate(engine.ActorDataSet.CollisionData[engine.ActorFactory.GetIndex(actorID)].ProspectiveCollision.Impact, engine.ActorDataSet.CollisionData[engine.ActorFactory.GetIndex(actorID)].ProspectiveCollision.Normal));
+      actor.QueueFirst(new AvoidCollisionRotate(engine.ActorDataSet.CollisionData[actor.dataID].ProspectiveCollision.Impact, engine.ActorDataSet.CollisionData[actor.dataID].ProspectiveCollision.Normal));
     }
 
-    internal static void CheckCollision(Engine engine, int actorID)
+    internal static void CheckCollision(Engine engine, ActorInfo actor)
     {
-      CheckCollision(engine, actorID, ref engine.ActorDataSet.CollisionData[engine.ActorFactory.GetIndex(actorID)]);
+      CheckCollision(engine, actor, ref engine.ActorDataSet.CollisionData[actor.dataID]);
     }
 
-    private static void CheckCollision(Engine engine, int actorID, ref CollisionData data)
+    private static void CheckCollision(Engine engine, ActorInfo actor, ref CollisionData data)
     {
-      ActorInfo actor = engine.ActorFactory.Get(actorID);
-
       data.IsTestingCollision = false;
       // only check player and projectiles
-      if (ActorInfo.IsPlayer(engine, actorID)
+      if (actor.IsPlayer
           || actor.TypeInfo is ActorTypes.Groups.Projectile
           || (actor.ActorState.IsDying() && actor.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER)))
       {
         if (data.Collision.ActorID >= 0)
         {
           ActorInfo a = engine.ActorFactory.Get(data.Collision.ActorID);
-          if (ActorInfo.IsPlayer(engine, actorID)
+          if (actor.IsPlayer
                 && engine.PlayerInfo.PlayerAIEnabled)
           {
             engine.Screen2D.MessageSecondaryText(string.Format("DEV WARNING: PLAYER AI COLLIDED: {0}", a.ToString()), 1.5f, new TV_COLOR(1, 0.2f, 0.2f, 1), 99999);
@@ -63,8 +62,8 @@ namespace SWEndor.Actors.Components
             return;
           }
 
-          a.TypeInfo.ProcessHit(data.Collision.ActorID, actorID, data.Collision.Impact, data.Collision.Normal);
-          actor.TypeInfo.ProcessHit(actorID, data.Collision.ActorID, data.Collision.Impact, -1 * data.Collision.Normal);
+          a.TypeInfo.ProcessHit(a, actor, data.Collision.Impact, data.Collision.Normal);
+          actor.TypeInfo.ProcessHit(actor, a, data.Collision.Impact, -1 * data.Collision.Normal);
 
           data.Collision.ActorID = -1;
         }
@@ -72,21 +71,19 @@ namespace SWEndor.Actors.Components
       }
     }
 
-    internal static void TestCollision(Engine engine, int actorID)
+    internal static void TestCollision(Engine engine, ActorInfo actor)
     {
-      TestCollision(engine, actorID, ref engine.ActorDataSet.CollisionData[engine.ActorFactory.GetIndex(actorID)]);
+      TestCollision(engine, actor, ref engine.ActorDataSet.CollisionData[actor.dataID]);
     }
 
-    private static void TestCollision(Engine engine, int actorID, ref CollisionData data)
+    private static void TestCollision(Engine engine, ActorInfo actor, ref CollisionData data)
     {
-      ActorInfo actor = engine.ActorFactory.Get(actorID);
-
       if (data.IsTestingCollision)
       {
         TV_3DVECTOR vmin = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.max_dimensions.z, false);
         TV_3DVECTOR vmax = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.min_dimensions.z, false) - actor.CoordData.LastTravelled;
 
-        TestCollision(engine, actorID, vmin, vmax, false, out data.Collision.Impact, out data.Collision.Normal, out data.Collision.ActorID);
+        TestCollision(engine, actor, vmin, vmax, false, out data.Collision.Impact, out data.Collision.Normal, out data.Collision.ActorID);
         data.IsTestingCollision = false;
       }
       if (data.IsTestingProspectiveCollision)
@@ -109,7 +106,7 @@ namespace SWEndor.Actors.Components
 
         data.IsInProspectiveCollision = false;
 
-        TestCollision(engine, actorID, prostart, proend0, true, out _Impact, out _Normal, out data.ProspectiveCollision.ActorID);
+        TestCollision(engine, actor, prostart, proend0, true, out _Impact, out _Normal, out data.ProspectiveCollision.ActorID);
 
         if (data.ProspectiveCollision.ActorID >= 0)
         {
@@ -137,7 +134,7 @@ namespace SWEndor.Actors.Components
               proend0 = actor.GetRelativePositionXYZ(i * data.ProspectiveCollisionScanDistance * 0.1f * data.ProspectiveCollisionLevel
                                              , j * data.ProspectiveCollisionScanDistance * 0.1f * data.ProspectiveCollisionLevel
                                              , actor.TypeInfo.max_dimensions.z + 10 + data.ProspectiveCollisionScanDistance);
-              TestCollision(engine, actorID, prostart, proend0, true, out _Impact, out _Normal, out dummy);
+              TestCollision(engine, actor, prostart, proend0, true, out _Impact, out _Normal, out dummy);
 
               if (dummy >= 0)
               {
@@ -172,9 +169,8 @@ namespace SWEndor.Actors.Components
       }
     }
 
-    private static void TestCollision(Engine engine, int actorID, TV_3DVECTOR start, TV_3DVECTOR end, bool isProspective, out TV_3DVECTOR vImpact, out TV_3DVECTOR vNormal, out int CollisionActorID)
+    private static void TestCollision(Engine engine, ActorInfo actor, TV_3DVECTOR start, TV_3DVECTOR end, bool isProspective, out TV_3DVECTOR vImpact, out TV_3DVECTOR vNormal, out int CollisionActorID)
     {
-
       try
       {
         CollisionActorID = -1;
@@ -194,8 +190,6 @@ namespace SWEndor.Actors.Components
 
           if (!isProspective)
           {
-            ActorInfo actor = engine.ActorFactory.Get(actorID);
-
             TVMesh tvm = engine.TrueVision.TVGlobals.GetMeshFromID(tvcres.iMeshID);
             if (tvm != null) // && tvm.IsVisible())
             {
@@ -204,10 +198,10 @@ namespace SWEndor.Actors.Components
               {
                 ActorInfo checkActor = engine.ActorFactory.Get(checkID);
                 if (checkActor != null
-                     && CollisionActorID != actorID
+                     //&& checkID != actor.ID
                      && actor.TopParent != checkActor.TopParent
-                     && engine.MaskDataSet[checkID].Has(ComponentMask.CAN_BECOLLIDED)
-                     && !ActorInfo.IsAggregateMode(engine, checkID)
+                     && engine.MaskDataSet[checkActor].Has(ComponentMask.CAN_BECOLLIDED)
+                     && !checkActor.IsAggregateMode
                      )
                 {
                   CollisionActorID = checkID;

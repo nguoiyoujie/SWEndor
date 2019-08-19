@@ -31,7 +31,7 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    public virtual void Process(Engine engine, int ownerID)
+    public virtual void Process(Engine engine, ActorInfo owner)
     {
       Complete = true;
     }
@@ -109,7 +109,7 @@ namespace SWEndor.AI.Actions
         owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, tgtdir);
         float delta = owner.GetEngine().TrueVision.TVMathLibrary.ACos(owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
 
-        if (ActorInfo.IsPlayer(owner.GetEngine(), owner.ID))
+        if (owner.IsPlayer)
           owner.GetEngine().Screen2D.MessageSecondaryText(string.Format("DELTA: {0:0.000}", delta), 1.5f, new TV_COLOR(0.5f, 0.5f, 1, 1), 0);
         return delta;
 
@@ -146,13 +146,13 @@ namespace SWEndor.AI.Actions
       if (!owner.TypeInfo.CanCheckCollisionAhead)
         return false;
 
-      if (!owner.Engine.MaskDataSet[owner.ID].Has(ComponentMask.CAN_BECOLLIDED))
+      if (!owner.Engine.MaskDataSet[owner].Has(ComponentMask.CAN_BECOLLIDED))
         return false;
 
       if (scandistance <= 0)
         return false;
 
-      return CollisionSystem.ActivateImminentCollisionCheck(owner.Engine, owner.ID, ref m_collisioncheck_time, scandistance);
+      return CollisionSystem.ActivateImminentCollisionCheck(owner.Engine, owner, ref m_collisioncheck_time, scandistance);
     }
 
     public void Dispose()

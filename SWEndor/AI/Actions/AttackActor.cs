@@ -43,9 +43,8 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    public override void Process(Engine engine, int actorID)
+    public override void Process(Engine engine, ActorInfo actor)
     {
-      ActorInfo actor = engine.ActorFactory.Get(actorID);
       ActorInfo target = engine.ActorFactory.Get(Target_ActorID);
       if (target == null)
       {
@@ -61,11 +60,11 @@ namespace SWEndor.AI.Actions
         if (TooCloseDistance < 0)
           TooCloseDistance = 0.75f * actor.MoveData.Speed;
 
-        float dist = ActorDistanceInfo.GetDistance(actorID, Target_ActorID);
+        float dist = ActorDistanceInfo.GetDistance(actor, target);
         if (dist > TooCloseDistance)
         {
           float d = dist / Globals.LaserSpeed;
-          ActorInfo a2 = target.AttachToParent ? engine.ActorFactory.Get(target.ParentID) : null;
+          ActorInfo a2 = target.Relation.UseParentCoords ? target.Relation.Parent : null;
           if (a2 == null)
           {
             Target_Position = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d);
@@ -87,19 +86,19 @@ namespace SWEndor.AI.Actions
 
           WeaponInfo weapon = null;
           int burst = 0;
-          actor.WeaponSystemInfo.SelectWeapon(Target_ActorID, delta_angle, dist, out weapon, out burst);
+          actor.WeaponSystemInfo.SelectWeapon(target, delta_angle, dist, out weapon, out burst);
           if (weapon != null)
           {
-            weapon.Fire(engine, actorID, Target_ActorID, burst);
+            weapon.Fire(engine, actor, target, burst);
           }
           else
           {
             if (actor.TypeInfo.AggressiveTracker)
             {
-              AggressiveTracking(engine, actorID);
+              AggressiveTracking(engine, actor.ID);
             }
             
-            if (!engine.MaskDataSet[actorID].Has(ComponentMask.CAN_MOVE)) // can't move to you, I give up
+            if (!engine.MaskDataSet[actor].Has(ComponentMask.CAN_MOVE)) // can't move to you, I give up
             {
               Complete = true;
             }
@@ -108,7 +107,7 @@ namespace SWEndor.AI.Actions
           if (CanInterrupt && ReHuntTime < engine.Game.GameTime)
           {
             Complete = true;
-            engine.ActionManager.QueueNext(actorID, new Hunt());
+            actor.QueueNext(new Hunt());
           }
           else
           {
@@ -120,33 +119,32 @@ namespace SWEndor.AI.Actions
           if (target.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER))
           {
             float evadeduration = 2000 / (target.GetTrueSpeed() + 500);
-            engine.ActionManager.QueueFirst(actorID, new Evade(evadeduration));
+            actor.QueueFirst(new Evade(evadeduration));
           }
           else if (!(target.TypeInfo is ActorTypes.Groups.Projectile))
           {
-            engine.ActionManager.QueueFirst(actorID, new Move(MakeAltPosition(engine, actorID, target.TopParent), actor.MoveData.MaxSpeed));
+            actor.QueueFirst(new Move(MakeAltPosition(engine, actor, target.Relation.Parent), actor.MoveData.MaxSpeed));
           }
           return;
         }
 
         if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
         {
-          CollisionSystem.CreateAvoidAction(engine, actorID);
+          CollisionSystem.CreateAvoidAction(engine, actor);
           //if (owner.ProspectiveCollisionActor != null && owner.ProspectiveCollisionActor.TopParent == Target_Actor.TopParent)
           //  ActionManager.QueueNext(owner, new Rotate(owner.ProspectiveCollision.Impact + owner.CollisionInfo.ProspectiveCollision.Normal * 10000, owner.MovementInfo.MinSpeed, 45));
         }
       }
     }
 
-    private TV_3DVECTOR MakeAltPosition(Engine engine, int actorID, int targetActorID)
+    private TV_3DVECTOR MakeAltPosition(Engine engine, ActorInfo actor, ActorInfo target)
     {
       float radius = 0;
       TV_3DVECTOR center = new TV_3DVECTOR();
-      ActorInfo actor = engine.ActorFactory.Get(actorID);
-      ActorInfo target = engine.ActorFactory.Get(targetActorID);
+
       if (target != null)
       {
-        BoundingSphere sph = engine.MeshDataSet.Mesh_getBoundingSphere(targetActorID, true);
+        BoundingSphere sph = engine.MeshDataSet.Mesh_getBoundingSphere(target, true);
         center = sph.Position;
         radius = sph.Radius + engine.Random.Next((int)(-4 * actor.TypeInfo.MaxSpeed), (int)(4 * actor.TypeInfo.MaxSpeed));
 
@@ -167,19 +165,18 @@ namespace SWEndor.AI.Actions
       float delta_angle = 0;
       ActorInfo actor = engine.ActorFactory.Get(actorID);
 
-      Action<Engine, int> action = new Action<Engine, int>(
-        (_, aID) =>
+      Action<Engine, ActorInfo> action = new Action<Engine, ActorInfo>(
+        (_, a) =>
          {
-           ActorInfo a = engine.ActorFactory.Get(aID);
            if (a != null
-               && actorID != aID
+               && actorID != a.ID
                && a.CreationState == CreationState.ACTIVE
                && a.ActorState != ActorState.DYING
                && a.ActorState != ActorState.DEAD
                && engine.ActorDataSet.CombatData[actor.dataID].IsCombatObject
                && !actor.Faction.IsAlliedWith(a.Faction))
            {
-             dist = ActorDistanceInfo.GetDistance(aID, actorID, actor.WeaponSystemInfo.GetWeaponRange());
+             dist = ActorDistanceInfo.GetDistance(a, actor, actor.WeaponSystemInfo.GetWeaponRange());
 
              TV_3DVECTOR vec = new TV_3DVECTOR();
              TV_3DVECTOR dir = actor.GetDirection();
@@ -188,10 +185,10 @@ namespace SWEndor.AI.Actions
 
              WeaponInfo weapon = null;
              int burst = 0;
-             actor.WeaponSystemInfo.SelectWeapon(aID, delta_angle, dist, out weapon, out burst);
+             actor.WeaponSystemInfo.SelectWeapon(a, delta_angle, dist, out weapon, out burst);
              if (weapon != null)
              {
-               weapon.Fire(engine, actorID, aID, burst);
+               weapon.Fire(engine, actor, a, burst);
                return;
              }
            }

@@ -26,8 +26,8 @@ namespace SWEndor.Actors.Data
   public class MaskDataSet
   {
     private ComponentMask[] list = new ComponentMask[Globals.ActorLimit];
-    public ComponentMask this[int id] { get { return list[id % Globals.ActorLimit]; } set { list[id % Globals.ActorLimit] = value; } }
+    public ComponentMask this[ActorInfo actor] { get { return list[actor.dataID]; } set { list[actor.dataID] = value; } }
 
-    public bool Contains(int id, ComponentMask match) { return (this[id] & match) == match; }
+    public bool Contains(ActorInfo actor, ComponentMask match) { return (this[actor] & match) == match; }
   }
 }

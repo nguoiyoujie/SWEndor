@@ -35,15 +35,13 @@ namespace SWEndor.ActorTypes.Instances
 
       if (ainfo.CreationState == CreationState.ACTIVE)
       {
-        ActorInfo parent = ActorFactory.Get(ainfo.TopParent);
+        ActorInfo parent = ainfo.TopParent;
         if (parent != null)
         {
-          List<int> cs = new List<int>(parent.Children);
-          foreach (int i in cs)
+          foreach (ActorInfo pn in parent.Children)
           {
-            ActorInfo pn = ActorFactory.Get(i);
             if (pn?.TypeInfo is ExecutorShieldGeneratorATI)
-              CombatSystem.onNotify(Engine, ainfo.ID, Actors.Components.CombatEventType.RECOVER, ainfo.TypeInfo.MaxStrength);
+              CombatSystem.onNotify(Engine, ainfo, Actors.Components.CombatEventType.RECOVER, ainfo.TypeInfo.MaxStrength);
           }
         }
       }
@@ -55,24 +53,22 @@ namespace SWEndor.ActorTypes.Instances
 
       if (ainfo.ActorState.IsDyingOrDead())
       {
-        TimedLifeSystem.Activate(Engine, ainfo.ID, 2000f);
-        CombatSystem.Deactivate(Engine, ainfo.ID);
+        TimedLifeSystem.Activate(Engine, ainfo, 2000f);
+        CombatSystem.Deactivate(Engine, ainfo);
 
-        ActorInfo parent = ActorFactory.Get(ainfo.TopParent);
+        ActorInfo parent = ainfo.TopParent;
         if (parent != null)
           parent.ActorState = ActorState.DYING;
       }
     }
 
-    public override void ProcessHit(int ownerActorID, int hitbyActorID, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      base.ProcessHit(ownerActorID, hitbyActorID, impact, normal);
-      ActorInfo owner = ActorFactory.Get(ownerActorID);
-      ActorInfo hitby = ActorFactory.Get(hitbyActorID);
+      base.ProcessHit(owner, hitby, impact, normal);
       if (owner == null || hitby == null)
         return;
 
-      if (!Engine.MaskDataSet[hitbyActorID].Has(ComponentMask.IS_DAMAGE) && Engine.SysDataSet.StrengthFrac_get(ownerActorID) < 0.5f)
+      if (!Engine.MaskDataSet[hitby].Has(ComponentMask.IS_DAMAGE) && Engine.SysDataSet.StrengthFrac_get(owner) < 0.5f)
       {
         owner.ActorState = ActorState.DYING;
         hitby.DestroyedEvents = null;

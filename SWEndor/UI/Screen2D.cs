@@ -18,7 +18,7 @@ namespace SWEndor
     public bool ShowScore = true;
 
     // PreRender Text
-    public List<string> LoadingTextLines = new List<string>(); 
+    public System.Collections.Generic.List<string> LoadingTextLines = new System.Collections.Generic.List<string>(); 
 
     // Page
     public bool ShowPage = false;
@@ -38,7 +38,7 @@ namespace SWEndor
     public TV_3DVECTOR Box3D_max = new TV_3DVECTOR();
     public TV_COLOR Box3D_color = new TV_COLOR(1, 1, 1, 1);
 
-    ThreadSafeList<Widget> m_Widgets = new ThreadSafeList<Widget>();
+    Primitives.ThreadSafeList<Widget> m_Widgets = new Primitives.ThreadSafeList<Widget>();
 
     internal Screen2D(Engine engine)
     {

@@ -28,9 +28,8 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    public override void Process(Engine engine, int actorID)
+    public override void Process(Engine engine, ActorInfo actor)
     {
-      ActorInfo actor = engine.ActorFactory.Get(actorID);
       if (actor.ActorState != ActorState.HYPERSPACE && !Complete)
       {
         prevState = actor.ActorState;
