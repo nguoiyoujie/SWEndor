@@ -36,15 +36,16 @@ namespace SWEndor.Actors.Components
               , type
               , parameter
               , ref engine.ActorDataSet.CombatData[actor.dataID]
-              , ref engine.TimedLifeDataSet.list[actor.dataID]
+              //, ref engine.TimedLifeDataSet.list[actor.dataID]
               , ref engine.SysDataSet.list[actor.dataID]
               );
     }
 
-    private static void onNotify(Engine engine, ActorInfo actor, CombatEventType type, float parameter, ref CombatData cdata, ref TimedLifeData tdata, ref SysData sdata)
+    private static void onNotify(Engine engine, ActorInfo actor, CombatEventType type, float parameter, ref CombatData cdata, ref SysData sdata)
     {
       switch (type)
       {
+        /*
         case CombatEventType.TIME_DECAY:
           tdata.TimedLife -= engine.Game.TimeSinceRender;
           if (tdata.TimedLife < 0f)
@@ -69,7 +70,7 @@ namespace SWEndor.Actors.Components
           if (tdata.TimedLife < parameter)
             tdata.TimedLife = parameter;
           break;
-
+          */
         case CombatEventType.SET_STRENGTH:
           sdata.Strength = parameter;
           if (cdata.IsCombatObject && sdata.Strength <= 0)
@@ -112,8 +113,8 @@ namespace SWEndor.Actors.Components
     public static void Process(Engine engine, ActorInfo actor)
     {
       // Expired
-      if (engine.TimedLifeDataSet.OnTimedLife_get(actor))
-        onNotify(engine, actor, CombatEventType.TIME_DECAY, engine.Game.TimeSinceRender);
+      //if (engine.TimedLifeDataSet.OnTimedLife_get(actor))
+      //  onNotify(engine, actor, CombatEventType.TIME_DECAY, engine.Game.TimeSinceRender);
     }
   }
 }

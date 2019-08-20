@@ -27,6 +27,9 @@ namespace SWEndor
 
     // Actor
     ACTOR_CREATED,
+    ACTOR_CREATIONSTATECHANGED,
+    ACTOR_ACTORSTATECHANGED,
+
     ACTOR_DAMAGED,
     ACTOR_KILLED,
     ACTOR_KILLED_BY,
@@ -56,6 +59,10 @@ namespace SWEndor
         { LogType.ASSET_SOUND_LOADED, "{0} loaded." },
 
         { LogType.ACTOR_CREATED, "{0} was created." },
+        { LogType.ACTOR_CREATIONSTATECHANGED, "{0} creation state changed to {1}." },
+        { LogType.ACTOR_ACTORSTATECHANGED, "{0} actor state changed to {1}." },
+
+
         { LogType.ACTOR_DAMAGED, "{0} was damaged by {1} for {2}." },
         { LogType.ACTOR_KILLED, "{0} was killed." },
         { LogType.ACTOR_KILLED_BY, "{0} was killed by {1}." },

@@ -33,7 +33,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       base.Dying(ainfo);
 
-      TimedLifeSystem.Activate(Engine, ainfo, 25);
+      ainfo.DyingTimer.Set(25, true);
       CombatSystem.Deactivate(Engine, ainfo);
     }
 

@@ -1,11 +1,10 @@
 ﻿using SWEndor.ActorTypes;
 
-namespace SWEndor.Actors.Traits
+namespace SWEndor.Actors
 {
-  public class DyingTimer
+  public struct DyingTimer
   {
     public enum TimerStates { INACTIVE, ACTIVE, EXPIRED }
-
     public float TimeRemaining { get; private set; }
     public TimerStates State { get; private set; }
 
@@ -16,26 +15,23 @@ namespace SWEndor.Actors.Traits
       State = type.TimedLifeData.OnTimedLife ? TimerStates.ACTIVE : TimerStates.INACTIVE;
     }
 
-    public DyingTimer Start()
+    public void Start()
     {
       if (State == TimerStates.INACTIVE)
         State = TimerStates.ACTIVE;
-
-      return this;
     }
 
-    public DyingTimer Pause()
+    public void Pause()
     {
       if (State == TimerStates.ACTIVE)
         State = TimerStates.INACTIVE;
-
-      return this;
     }
 
-    public DyingTimer Set(float time)
+    public void Set(float time, bool startnow)
     {
       TimeRemaining = time;
-      return this;
+      if (startnow)
+        Start();
     }
 
     public void Tick(ActorInfo self, float time)

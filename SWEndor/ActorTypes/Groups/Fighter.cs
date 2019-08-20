@@ -43,15 +43,11 @@ namespace SWEndor.ActorTypes.Groups
       ainfo.MoveData.ApplyZBalance = false;
 
       if (ainfo.Relation.Parent != null || (ainfo.ActorDataSet.CombatData[ainfo.dataID].HitWhileDyingLeadsToDeath && Engine.Random.NextDouble() < 0.3f))
-      {
-        TimedLifeSystem.Activate(Engine, ainfo, 0.1f);
-        CombatSystem.Deactivate(Engine, ainfo);
-      }
+        ainfo.DyingTimer.Set(0.1f, true);
       else
-      {
-        TimedLifeSystem.Activate(Engine, ainfo, 5);
-        CombatSystem.Deactivate(Engine, ainfo);
-      }
+        ainfo.DyingTimer.Set(5, true);
+
+      CombatSystem.Deactivate(Engine, ainfo);
 
       ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
       acinfo.Position = ainfo.GetPosition();

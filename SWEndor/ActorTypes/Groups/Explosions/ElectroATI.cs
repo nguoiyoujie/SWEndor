@@ -36,7 +36,7 @@ namespace SWEndor.ActorTypes.Instances
         {
           ainfo.SetState_Normal();
           //ainfo.CombatSystem.onNotify(Engine, ainfo.ID, CombatEventType.TIMEACTIVATE , TimedLifeData.TimedLife);
-          TimedLifeSystem.Activate(Engine, ainfo, TimedLifeData.TimedLife);
+          ainfo.DyingTimer.Set(TimedLifeData.TimedLife, true);
         }
         );
 

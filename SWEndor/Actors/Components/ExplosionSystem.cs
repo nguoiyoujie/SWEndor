@@ -33,17 +33,17 @@ namespace SWEndor.Actors.Components
 
     internal static void OnDeath(Engine engine, ActorInfo actor)
     {
-      OnDeath(engine, actor, ref engine.ActorDataSet.ExplodeData[actor.dataID], ref engine.TimedLifeDataSet.list[actor.dataID]);
+      OnDeath(engine, actor, ref engine.ActorDataSet.ExplodeData[actor.dataID]);//, ref engine.TimedLifeDataSet.list[actor.dataID]);
     }
 
-    private static void OnDeath(Engine engine, ActorInfo actor, ref ExplodeData data, ref TimedLifeData tdata)
+    private static void OnDeath(Engine engine, ActorInfo actor, ref ExplodeData data)//, ref TimedLifeData tdata)
     {
       if (actor.TypeInfo.IsExplosion) // don't let explosions create explosions.
         return;
 
       if (data.DeathExplosionTrigger == DeathExplosionTrigger.ALWAYS
         || (data.DeathExplosionTrigger == DeathExplosionTrigger.TIMENOTEXPIRED_ONLY 
-          && tdata.TimedLife > 0)
+          && actor.DyingTimer.TimeRemaining > 0)
         )
         MakeDeathExplosion(engine, actor, ref data);
     }

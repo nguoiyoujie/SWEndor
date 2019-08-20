@@ -14,19 +14,7 @@ namespace SWEndor.Actors
       if (!actor.IsDead)
         actor.Update();
 
-      actor.CycleInfo.Process();
-
-      actor.CheckState(engine);
-      if (!actor.IsDead)
-      {
-        if (engine.MaskDataSet[actor].Has(ComponentMask.CAN_BECOLLIDED)
-        || actor.TypeInfo is ActorTypes.Groups.Projectile)
-        {
-          CollisionSystem.CheckCollision(engine, actor);
-        }
-        actor.MoveComponent.Move(actor, ref actor.MoveData);
-      }
-      actor.OnTickEvent();
+      actor.Tick(engine.Game.TimeSinceRender);
     }
 
     internal static void ProcessAI(Engine engine, ActorInfo actor)

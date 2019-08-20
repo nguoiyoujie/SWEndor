@@ -39,7 +39,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Dying(ainfo);
 
-      TimedLifeSystem.Activate(Engine, ainfo, 5);
+      ainfo.DyingTimer.Set(5, true);
       CombatSystem.Deactivate(Engine, ainfo);
     }
 

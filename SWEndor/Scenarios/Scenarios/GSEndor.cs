@@ -1140,7 +1140,7 @@ namespace SWEndor.Scenarios
         else if (actor.TypeInfo is MC90ATI)
         {
           Manager.AddEvent(Game.GameTime + 15, Message_92_LostHomeOne);
-          TimedLifeSystem.Activate(Engine, actor, 2000f);
+          actor.DyingTimer.Set(2000, true);
           Manager.AddEvent(Game.GameTime + 25, FadeOut);
         }
       }
@@ -2005,7 +2005,7 @@ namespace SWEndor.Scenarios
         }
 
         SoundManager.SetMusic("executorend");
-        TimedLifeSystem.Activate(Engine, ainfo, 2000f);
+        ainfo.DyingTimer.Set(2000, true);
 
         ActorInfo homeone = ActorFactory.Get(m_HomeOneID);
         if (homeone != null)

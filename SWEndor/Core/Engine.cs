@@ -34,7 +34,7 @@ namespace SWEndor
     internal ActorDataSet ActorDataSet { get; private set; }
     internal SysDataSet SysDataSet { get; private set; }
     internal MeshDataSet MeshDataSet { get; private set; }
-    internal TimedLifeDataSet TimedLifeDataSet { get; private set; }
+    //internal TimedLifeDataSet TimedLifeDataSet { get; private set; }
 
     // Engine parts
     internal Game Game { get; private set; }
@@ -71,7 +71,7 @@ namespace SWEndor
       ActorDataSet = new ActorDataSet();
       SysDataSet = new SysDataSet(this);
       MeshDataSet = new MeshDataSet();
-      TimedLifeDataSet = new TimedLifeDataSet();
+      //TimedLifeDataSet = new TimedLifeDataSet();
 
       Game = new Game(this);
       SoundManager = new SoundManager(this);

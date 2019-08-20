@@ -53,7 +53,7 @@ namespace SWEndor.ActorTypes.Instances
 
       if (ainfo.IsDyingOrDead)
       {
-        TimedLifeSystem.Activate(Engine, ainfo, 2000f);
+        ainfo.DyingTimer.Set(2000, true);
         CombatSystem.Deactivate(Engine, ainfo);
 
         ainfo.TopParent?.SetState_Dying();

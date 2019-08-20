@@ -2008,7 +2008,7 @@ namespace SWEndor.Scenarios
         vader.MoveData.ApplyZBalance = false;
         vader.SetLocalRotation(-30, 85, 5);
 
-        TimedLifeSystem.Activate(Engine, vader, 999);
+        vader.DyingTimer.Set(2000, true);
 
         vader.SetState_Dying();
         vaderE2.SetLocalRotation(-5, 93, 0);

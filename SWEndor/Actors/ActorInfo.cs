@@ -43,7 +43,7 @@ namespace SWEndor.Actors
 
     public override string ToString()
     {
-      return string.Format("ACTOR:{0},{1}", ID, _name);
+      return string.Format("[{0},{1}:{2}]", _name, ID, dataID);
     }
 
     // Faction
@@ -99,6 +99,7 @@ namespace SWEndor.Actors
 
     // Traits (structs)
     public Relation Relation;
+    public DyingTimer DyingTimer;
 
     // Traits (classes)
     private StateModel State;
@@ -124,6 +125,7 @@ namespace SWEndor.Actors
       //ActorDataSet.CoordData[dataID].Init(acinfo);
 
       Relation.Init();
+      DyingTimer.Init(TypeInfo);
 
       MoveData.Init(TypeInfo, acinfo);
       Engine.SysDataSet.Init(this, TypeInfo, acinfo);
@@ -132,7 +134,7 @@ namespace SWEndor.Actors
       ActorDataSet.ExplodeData[dataID].CopyFrom(TypeInfo.ExplodeData);
       ActorDataSet.RegenData[dataID].CopyFrom(TypeInfo.RegenData);
       ActorDataSet.CombatData[dataID].CopyFrom(TypeInfo.CombatData);
-      Engine.TimedLifeDataSet.Init(this, TypeInfo);
+      //Engine.TimedLifeDataSet.Init(this, TypeInfo);
 
       Engine.MaskDataSet[this] = TypeInfo.Mask;
 
@@ -167,6 +169,7 @@ namespace SWEndor.Actors
       CoordData.Init(acinfo);
 
       Relation.Init();
+      DyingTimer.Init(TypeInfo);
 
       MoveData.Init(TypeInfo, acinfo);
       Engine.SysDataSet.Init(this, TypeInfo, acinfo);
@@ -175,7 +178,7 @@ namespace SWEndor.Actors
       ActorDataSet.ExplodeData[dataID] = TypeInfo.ExplodeData;
       ActorDataSet.RegenData[dataID] = TypeInfo.RegenData;
       ActorDataSet.CombatData[dataID] = TypeInfo.CombatData;
-      Engine.TimedLifeDataSet.Init(this, TypeInfo);
+      //Engine.TimedLifeDataSet.Init(this, TypeInfo);
 
       Engine.MaskDataSet[this] = TypeInfo.Mask;
 
@@ -539,10 +542,30 @@ namespace SWEndor.Actors
       ActorDataSet.RegenData[dataID].Reset();
       ActorDataSet.ExplodeData[dataID].Reset();
       ActorDataSet.CombatData[dataID].Reset();
-      Engine.TimedLifeDataSet.Reset(this);
+      //Engine.TimedLifeDataSet.Reset(this);
 
       // Finally
       SetDisposed();
+    }
+
+    public void Tick(float time)
+    {
+      CycleInfo.Process();
+
+      CheckState(Engine);
+      if (!IsDead)
+      {
+        if (Engine.MaskDataSet[this].Has(ComponentMask.CAN_BECOLLIDED)
+        || TypeInfo is ActorTypes.Groups.Projectile)
+        {
+          CollisionSystem.CheckCollision(Engine, this);
+        }
+        MoveComponent.Move(this, ref MoveData);
+      }
+
+      DyingTimer.Tick(this, time);
+
+      OnTickEvent();
     }
   }
 }

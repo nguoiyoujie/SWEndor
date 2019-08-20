@@ -91,7 +91,7 @@ namespace SWEndor.ActorTypes.Instances
 
     public override void Dying(ActorInfo ainfo)
     {
-      TimedLifeSystem.Activate(Engine, ainfo, 2000f);
+      ainfo.DyingTimer.Set(2000, true);
       CombatSystem.Deactivate(Engine, ainfo);
     }
   }
