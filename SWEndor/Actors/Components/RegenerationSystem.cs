@@ -1,4 +1,5 @@
-﻿using SWEndor.Actors.Data;
+﻿using MTV3D65;
+using SWEndor.Actors.Data;
 
 namespace SWEndor.Actors.Components
 {
@@ -27,7 +28,9 @@ namespace SWEndor.Actors.Components
     private static void Regenerate(Engine engine, ActorInfo a, float amount)
     {
       if (!engine.ActorDataSet.RegenData[a.dataID].NoRegen && !a.IsDyingOrDead)
-        CombatSystem.onNotify(engine, a, CombatEventType.RECOVER, amount);
+        a.InflictDamage(a, -amount, DamageType.ALWAYS_100PERCENT);
+
+      //CombatSystem.onNotify(engine, a, CombatEventType.RECOVER, amount);
     }
   }
 }

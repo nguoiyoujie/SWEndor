@@ -104,7 +104,7 @@ namespace SWEndor.UI.Widgets
           TVScreen2DText.Action_BeginText();
           TVScreen2DText.TextureFont_DrawText(string.Format("{0}\nDamage: {1:0}%"
             , name
-            , (int)(100 * (1 - Engine.SysDataSet.StrengthFrac_get(m_target))))
+            , (int)(100 * (1 - m_target.HP_Frac)))
             , x, y + m_targetSize + 10, acolor.GetIntColor()
             , FontFactory.Get(Font.T10).ID
             );

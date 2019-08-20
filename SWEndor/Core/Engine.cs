@@ -32,7 +32,7 @@ namespace SWEndor
     internal MaskDataSet MaskDataSet { get; private set; }
 
     internal ActorDataSet ActorDataSet { get; private set; }
-    internal SysDataSet SysDataSet { get; private set; }
+    //internal SysDataSet SysDataSet { get; private set; }
     internal MeshDataSet MeshDataSet { get; private set; }
     //internal TimedLifeDataSet TimedLifeDataSet { get; private set; }
 
@@ -69,7 +69,7 @@ namespace SWEndor
 
       MaskDataSet = new MaskDataSet();
       ActorDataSet = new ActorDataSet();
-      SysDataSet = new SysDataSet(this);
+      //SysDataSet = new SysDataSet(this);
       MeshDataSet = new MeshDataSet();
       //TimedLifeDataSet = new TimedLifeDataSet();
 

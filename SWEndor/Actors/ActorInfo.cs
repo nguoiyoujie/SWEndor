@@ -103,10 +103,20 @@ namespace SWEndor.Actors
 
     // Traits (classes)
     private StateModel State;
+    private HealthModel Health;
 
     // Ownership
     public ActorInfo Prev;
     public ActorInfo Next;
+
+    // Log
+    public bool Logged
+    {
+      get
+      {
+        return !(TypeInfo is ActorTypes.Groups.Projectile || TypeInfo is ActorTypes.Groups.Debris || TypeInfo is ActorTypes.Groups.Explosion);
+      }
+    }
 
 
     #region Creation Methods
@@ -126,9 +136,10 @@ namespace SWEndor.Actors
 
       Relation.Init();
       DyingTimer.Init(TypeInfo);
+      Health.Init(TypeInfo, acinfo);
 
       MoveData.Init(TypeInfo, acinfo);
-      Engine.SysDataSet.Init(this, TypeInfo, acinfo);
+      //Engine.SysDataSet.Init(this, TypeInfo, acinfo);
       Engine.MeshDataSet.Init(this, TypeInfo, acinfo);
       ActorDataSet.CollisionData[dataID].Init();
       ActorDataSet.ExplodeData[dataID].CopyFrom(TypeInfo.ExplodeData);
@@ -170,9 +181,10 @@ namespace SWEndor.Actors
 
       Relation.Init();
       DyingTimer.Init(TypeInfo);
+      Health.Init(TypeInfo, acinfo);
 
       MoveData.Init(TypeInfo, acinfo);
-      Engine.SysDataSet.Init(this, TypeInfo, acinfo);
+      //Engine.SysDataSet.Init(this, TypeInfo, acinfo);
       Engine.MeshDataSet.Init(this, TypeInfo, acinfo);
       ActorDataSet.CollisionData[dataID].Init();
       ActorDataSet.ExplodeData[dataID] = TypeInfo.ExplodeData;
@@ -480,7 +492,7 @@ namespace SWEndor.Actors
 
     public bool IsScenePlayer { get { return IsPlayer || PlayerInfo.TempActorID == ID; } }
 
-    public void Kill() { ActorFactory.MakeDead(this); }
+    public void Delete() { ActorFactory.MakeDead(this); }
 
     public void Destroy()
     {
@@ -536,7 +548,7 @@ namespace SWEndor.Actors
       CoordData.Reset();
       //ActorDataSet.CoordData[dataID].Reset();
       MoveData.Reset();
-      Engine.SysDataSet.Reset(this);
+      //Engine.SysDataSet.Reset(this);
       Engine.MeshDataSet.Reset(this);
       ActorDataSet.CollisionData[dataID].Reset();
       ActorDataSet.RegenData[dataID].Reset();
@@ -564,6 +576,7 @@ namespace SWEndor.Actors
       }
 
       DyingTimer.Tick(this, time);
+      Health.Tick(time);
 
       OnTickEvent();
     }

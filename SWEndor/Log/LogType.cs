@@ -31,6 +31,7 @@ namespace SWEndor
     ACTOR_ACTORSTATECHANGED,
 
     ACTOR_DAMAGED,
+    ACTOR_HEALED,
     ACTOR_KILLED,
     ACTOR_KILLED_BY,
     ACTOR_DISPOSED,
@@ -63,7 +64,8 @@ namespace SWEndor
         { LogType.ACTOR_ACTORSTATECHANGED, "{0} actor state changed to {1}." },
 
 
-        { LogType.ACTOR_DAMAGED, "{0} was damaged by {1} for {2}." },
+        { LogType.ACTOR_DAMAGED, "{0} was damaged by {1} for {2}. HP is now {3}." },
+        { LogType.ACTOR_HEALED, "{0} was healed by {1} for {2}. HP is now {3}." },
         { LogType.ACTOR_KILLED, "{0} was killed." },
         { LogType.ACTOR_KILLED_BY, "{0} was killed by {1}." },
         { LogType.ACTOR_DISPOSED, "{0} was disposed." },
@@ -72,6 +74,5 @@ namespace SWEndor
 
 
       };
-
   }
 }

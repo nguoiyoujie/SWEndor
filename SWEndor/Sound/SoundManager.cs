@@ -87,7 +87,10 @@ namespace SWEndor.Sound
     public void Initialize()
     {
       //Create FMOD System
-      FMOD.Factory.System_Create(out fmodsystem);
+      RESULT res = FMOD.Factory.System_Create(out fmodsystem);
+
+      if (res != RESULT.OK)
+        throw new Exception("FMOD Sound failed to initailize./n/nResult Code: {0}".F(res));
 
       //Initialise FMOD
       fmodsystem.init(channels, INITFLAGS.NORMAL, (IntPtr)null);
@@ -339,29 +342,29 @@ namespace SWEndor.Sound
       return true;
     }
 
-        
-        //else if (sound.name.startswith("update_vol_") && sounds.containskey(sound.name.substring(10)))
-        //{
-        //  channelgroup soundgrp = soundgrps[sound.name.substring(10)];
-        //  soundgrp.setvolume(sound.volume * mastersfxvolume);
-        //}
-        //else if (sound.name.startswith("update_vol+_") && sounds.containskey(sound.name.substring(11)))
-        //{
-        //  channelgroup soundgrp = soundgrps[sound.name.substring(11)];
-        //  float vol = 0;
-        //  soundgrp.getvolume(out vol);
-        //  if (vol > sound.volume * mastersfxvolume)
-        //    soundgrp.setvolume(sound.volume * mastersfxvolume);
-        //}
-        //else if (sound.name.startswith("update_vol-_") && sounds.containskey(sound.name.substring(11)))
-        //{
-        //  channelgroup soundgrp = soundgrps[sound.name.substring(11)];
-        //  float vol = 0;
-        //  soundgrp.getvolume(out vol);
-        //  if (vol < sound.volume * mastersfxvolume)
-        //    soundgrp.setvolume(sound.volume * mastersfxvolume);
-        //}
-  
+
+    //else if (sound.name.startswith("update_vol_") && sounds.containskey(sound.name.substring(10)))
+    //{
+    //  channelgroup soundgrp = soundgrps[sound.name.substring(10)];
+    //  soundgrp.setvolume(sound.volume * mastersfxvolume);
+    //}
+    //else if (sound.name.startswith("update_vol+_") && sounds.containskey(sound.name.substring(11)))
+    //{
+    //  channelgroup soundgrp = soundgrps[sound.name.substring(11)];
+    //  float vol = 0;
+    //  soundgrp.getvolume(out vol);
+    //  if (vol > sound.volume * mastersfxvolume)
+    //    soundgrp.setvolume(sound.volume * mastersfxvolume);
+    //}
+    //else if (sound.name.startswith("update_vol-_") && sounds.containskey(sound.name.substring(11)))
+    //{
+    //  channelgroup soundgrp = soundgrps[sound.name.substring(11)];
+    //  float vol = 0;
+    //  soundgrp.getvolume(out vol);
+    //  if (vol < sound.volume * mastersfxvolume)
+    //    soundgrp.setvolume(sound.volume * mastersfxvolume);
+    //}
+
     /*
     public void SetSoundUpdateVolume(string name, float volume)
     {

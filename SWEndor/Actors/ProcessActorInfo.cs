@@ -74,11 +74,10 @@ namespace SWEndor.Actors
 
     private void CheckState(Engine engine)
     {
-      CombatSystem.Process(engine, this);
       TypeInfo.ProcessState(this);
 
       if (IsDead)
-        Kill();
+        Delete();
     }
 
     private void Update()

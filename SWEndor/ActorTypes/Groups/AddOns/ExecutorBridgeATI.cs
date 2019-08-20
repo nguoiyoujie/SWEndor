@@ -41,7 +41,7 @@ namespace SWEndor.ActorTypes.Instances
           foreach (ActorInfo pn in parent.Children)
           {
             if (pn?.TypeInfo is ExecutorShieldGeneratorATI)
-              CombatSystem.onNotify(Engine, ainfo, Actors.Components.CombatEventType.RECOVER, ainfo.TypeInfo.MaxStrength);
+              ainfo.InflictDamage(ainfo, -ainfo.MaxHP, DamageType.ALWAYS_100PERCENT);
           }
         }
       }
@@ -66,7 +66,7 @@ namespace SWEndor.ActorTypes.Instances
       if (owner == null || hitby == null)
         return;
 
-      if (!Engine.MaskDataSet[hitby].Has(ComponentMask.IS_DAMAGE) && Engine.SysDataSet.StrengthFrac_get(owner) < 0.5f)
+      if (!Engine.MaskDataSet[hitby].Has(ComponentMask.IS_DAMAGE) && owner.HP_Frac < 0.5f)
       {
         owner.SetState_Dying();
         hitby.DestroyedEvents = null;

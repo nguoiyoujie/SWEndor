@@ -42,8 +42,8 @@ namespace SWEndor.Player
     public ActorInfo TempActor { get { return Engine.ActorFactory.Get(TempActorID); } }
     
     private float m_LowAlarmSoundTime = 0;
-    public float StrengthFrac { get { return (Actor != null) ? Engine.SysDataSet.StrengthFrac_get(Actor) : 0; } }
-    public TV_COLOR StrengthColor { get { return (Actor != null) ? Engine.SysDataSet.StrengthColor_get(Actor) : new TV_COLOR(1, 1, 1, 1); } }
+    public float StrengthFrac { get { return Actor?.HP_Frac ?? 0; } }
+    public TV_COLOR StrengthColor { get { return Actor?.HP_Color ?? new TV_COLOR(1, 1, 1, 1); } }
     public TV_COLOR FactionColor { get { return Actor?.Faction?.Color ?? new TV_COLOR(1, 1, 1, 1); } }
 
     public int Lives = 3;
@@ -256,12 +256,12 @@ namespace SWEndor.Player
         Engine.SoundManager.SetSound("hit");
         Engine.TrueVision.TVGraphicEffect.Flash(color.r, color.g, color.b, 200);
 
-        if (Engine.SysDataSet.Strength_get(Actor) > 0 && DamagedReportSound != null && DamagedReportSound.Length > 0)
+        if (Actor.HP > 0 && DamagedReportSound != null && DamagedReportSound.Length > 0)
         {
           double r = Engine.Random.NextDouble();
           int dmgnum = DamagedReportSound.Length;
 
-          int dmgst = (int)((dmgnum + 1) * Engine.SysDataSet.StrengthFrac_get(Actor));
+          int dmgst = (int)((dmgnum + 1) * Actor.HP_Frac);
           if (dmgst < DamagedReportSound.Length)
             if (r < 0.25f * (dmgnum - dmgst) / dmgnum)
               Engine.SoundManager.SetSound(DamagedReportSound[dmgst], false);

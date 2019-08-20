@@ -45,13 +45,13 @@ namespace SWEndor.AI.Actions
       }
       else
       {
-        Target_Position = a2.GetRelativePositionXYZ(target.Transform.Position.x, target.Transform.Position.y, target.Transform.Position.z + a2.MoveData.Speed * d);
+        Target_Position = a2.GetRelativePositionXYZ(target.GetLocalPosition().x, target.GetLocalPosition().y, target.GetLocalPosition().z + a2.MoveData.Speed * d);
       }
 
       AdjustRotation(actor, Target_Position, true);
       AdjustSpeed(actor, actor.MoveData.MaxSpeed);
 
-      Complete |= (!target.Active || target.StateModel.IsDyingOrDead);
+      Complete |= (!target.Active || target.IsDyingOrDead);
     }
   }
 }

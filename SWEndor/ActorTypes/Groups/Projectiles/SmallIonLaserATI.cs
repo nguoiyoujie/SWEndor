@@ -49,7 +49,7 @@ namespace SWEndor.ActorTypes.Instances
         for (int shock = 3; shock > 0; shock--)
         {
           ActorInfo child = children[Engine.Random.Next(0, children.Count)];
-          CombatSystem.onNotify(Engine, child, CombatEventType.DAMAGE, 0.1f * Engine.Random.Next(25, 50));
+          child.InflictDamage(hitby, 0.1f * Engine.Random.Next(25, 50), DamageType.NORMAL, child.GetPosition());
 
           float empduration = 12;
           

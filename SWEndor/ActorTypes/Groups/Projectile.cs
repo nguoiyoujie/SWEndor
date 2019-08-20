@@ -40,9 +40,9 @@ namespace SWEndor.ActorTypes.Groups
       if (!ainfo.IsDyingOrDead)
       {
         float impdist = ImpactCloseEnoughDistance;
-        if (impdist > 0 && ainfo.CurrentAction != null && ainfo.CurrentAction is AttackActor)
+        if (impdist > 0 && ainfo.CurrentAction != null && ainfo.CurrentAction is ProjectileAttackActor)
         {
-          ActorInfo target = ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
+          ActorInfo target = ((ProjectileAttackActor)ainfo.CurrentAction).Target_Actor;
           if (target != null)
           {
             if (target.TypeInfo is Projectile)

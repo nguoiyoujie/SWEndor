@@ -469,14 +469,14 @@ namespace SWEndor.Scenarios
       {
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor.IsPlayer)
-          actor.Kill();
+          actor.Delete();
       }
 
       foreach (int actorID in MainAllyFaction.GetShips())
       {
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor.IsPlayer)
-          actor.Kill();
+          actor.Delete();
       }
     }
 
@@ -489,7 +489,8 @@ namespace SWEndor.Scenarios
 
         if (!Engine.MaskDataSet[attacker].Has(ComponentMask.IS_DAMAGE))
         {
-          CombatSystem.onNotify(Engine, player, Actors.Components.CombatEventType.DAMAGE, attacker.TypeInfo.ImpactDamage);
+          player.InflictDamage(attacker, attacker.TypeInfo.ImpactDamage, DamageType.NORMAL, player.GetPosition());
+          //CombatSystem.onNotify(Engine, player, Actors.Components.CombatEventType.DAMAGE, attacker.TypeInfo.ImpactDamage);
           PlayerInfo.FlashHit(PlayerInfo.StrengthColor);
         }
         else
@@ -507,12 +508,14 @@ namespace SWEndor.Scenarios
 
           if ((chgy < -90 || chgy > 90) && PlayerInfo.SecondaryWeapon != "rear")
           {
-            CombatSystem.onNotify(Engine, player, Actors.Components.CombatEventType.DAMAGE, 1);
+            player.InflictDamage(attacker, 1, DamageType.NORMAL, player.GetPosition());
+            //CombatSystem.onNotify(Engine, player, Actors.Components.CombatEventType.DAMAGE, 1);
             PlayerInfo.FlashHit(PlayerInfo.StrengthColor);
           }
           else if ((chgy > -90 && chgy < 90) && PlayerInfo.SecondaryWeapon != "front")
           {
-            CombatSystem.onNotify(Engine, player, Actors.Components.CombatEventType.DAMAGE, 1);
+            player.InflictDamage(attacker, 1, DamageType.NORMAL, player.GetPosition());
+            //CombatSystem.onNotify(Engine, player, Actors.Components.CombatEventType.DAMAGE, 1);
             PlayerInfo.FlashHit(PlayerInfo.StrengthColor);
           }
           else
@@ -881,7 +884,7 @@ namespace SWEndor.Scenarios
       {
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
-          actor.Kill();
+          actor.Delete();
       }
 
       foreach (int actorID in MainAllyFaction.GetWings())
@@ -968,7 +971,7 @@ namespace SWEndor.Scenarios
           }
           else
           {
-            actor.Kill();
+            actor.Delete();
           }
         }
         en_ship++;

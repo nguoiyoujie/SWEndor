@@ -287,7 +287,7 @@ namespace SWEndor.Scenarios
           {
             ActorInfo actor = ActorFactory.Get(actorID);
             if (actor != null)
-              enemystrength += Engine.SysDataSet.StrengthFrac_get(actor) * 100 + (actor.SpawnerInfo != null ? actor.SpawnerInfo.SpawnsRemaining : 0);
+              enemystrength += actor.HP_Frac * 100 + (actor.SpawnerInfo != null ? actor.SpawnerInfo.SpawnsRemaining : 0);
           }
 
           if (!Manager.GetGameStateB("Stage1B"))
@@ -1219,14 +1219,14 @@ namespace SWEndor.Scenarios
       {
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
-          CombatSystem.onNotify(Engine, actor, CombatEventType.RECOVER_FRAC, 1);
+          actor.InflictDamage(actor, -actor.MaxHP, DamageType.ALWAYS_100PERCENT);
       }
 
       foreach (int actorID in MainEnemyFaction.GetShips())
       {
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
-          actor.Kill();
+          actor.Delete();
       }
 
       Manager.MaxBounds = new TV_3DVECTOR(10000, 400, 8000);
@@ -1241,7 +1241,7 @@ namespace SWEndor.Scenarios
       {
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
-          actor.Kill();
+          actor.Delete();
       }
     }
 
@@ -1284,9 +1284,9 @@ namespace SWEndor.Scenarios
           m_ADS_SurfaceParts.Add(asi.Spawn(this));
         }
 
-      m_ADS.Kill();
+      m_ADS.Delete();
       m_AYavin.SetLocalRotation(0, 0, 180);
-      m_AYavin4.Kill();
+      m_AYavin4.Delete();
 
       //cam.MoveData.MaxSpeed = 450;
       //cam.MoveData.Speed = 450;
@@ -1315,7 +1315,7 @@ namespace SWEndor.Scenarios
       {
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
-          CombatSystem.onNotify(Engine, actor, CombatEventType.RECOVER_FRAC, 0.35f);
+          actor.InflictDamage(actor, 0.35f * -actor.MaxHP, DamageType.ALWAYS_100PERCENT);
       }
 
       Scene_ClearGroundObjects(null);
@@ -1387,7 +1387,7 @@ namespace SWEndor.Scenarios
       {
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
-          CombatSystem.onNotify(Engine, actor, CombatEventType.RECOVER_FRAC, 0.35f);
+          actor.InflictDamage(actor, 0.35f * -actor.MaxHP, DamageType.ALWAYS_100PERCENT);
       }
 
       Scene_ClearGroundObjects(null);
@@ -1409,7 +1409,7 @@ namespace SWEndor.Scenarios
 
       foreach (ActorInfo a in m_ADS_SurfaceParts)
       {
-        a.Kill();
+        a.Delete();
       }
       m_ADS_SurfaceParts.Clear();
 
@@ -1447,7 +1447,7 @@ namespace SWEndor.Scenarios
       Manager.MaxAIBounds = new TV_3DVECTOR(7000, 300, 8000);
       Manager.MinAIBounds = new TV_3DVECTOR(-7000, -160, -10000);
 
-      m_ADS_Surface.Kill();
+      m_ADS_Surface.Delete();
       Scene_ClearGroundObjects(null);
 
       //cam.MoveData.MaxSpeed = 450;
@@ -1475,7 +1475,7 @@ namespace SWEndor.Scenarios
           if (!actor.IsPlayer)
           {
             actor.Faction = FactionInfo.Neutral;
-            actor.Kill();
+            actor.Delete();
           }
         }
       }
@@ -1483,7 +1483,7 @@ namespace SWEndor.Scenarios
 
       foreach (ActorInfo a in m_ADS_SurfaceParts)
       {
-        a.Kill();
+        a.Delete();
       }
       m_ADS_SurfaceParts.Clear();
       Scene_ClearGroundObjects(null);
@@ -1586,9 +1586,9 @@ namespace SWEndor.Scenarios
             Type t = ActorTypeFactory.Get(TrenchTypes[Trenches[0]]).GetType();
             if (!(m_ADS_TrenchParts.Get(i).TypeInfo.GetType() == t) || i < counter)
             {
-              m_ADS_TrenchParts.Get(i).Kill();
+              m_ADS_TrenchParts.Get(i).Delete();
               foreach (ActorInfo turret in TrenchTurrets[i])
-                turret.Kill();
+                turret.Delete();
               TrenchTurrets[i].Clear();
 
               ActorSpawnInfo asi = new ActorSpawnInfo
@@ -1814,10 +1814,10 @@ namespace SWEndor.Scenarios
       ActorInfo m_VaderEscort2 = ActorFactory.Get(m_VaderEscort2ID);
       ActorInfo m_Falcon = ActorFactory.Get(m_FalconID);
 
-      m_Vader?.Kill();
-      m_VaderEscort1?.Kill();
-      m_VaderEscort2?.Kill();
-      m_Falcon?.Kill();
+      m_Vader?.Delete();
+      m_VaderEscort1?.Delete();
+      m_VaderEscort2?.Delete();
+      m_Falcon?.Delete();
 
       m_VaderID = new ActorSpawnInfo
       {
@@ -1901,7 +1901,7 @@ namespace SWEndor.Scenarios
       Stage6VaderAttacking = true;
 
       ActorInfo m_Falcon = ActorFactory.Get(m_FalconID);
-      m_Falcon.Kill();
+      m_Falcon.Delete();
 
       ActorInfo m_Vader = ActorFactory.Get(m_VaderID);
       m_Vader.ForceClearQueue();

@@ -258,9 +258,12 @@ namespace SWEndor.Weapons
         if (engine.MaskDataSet[a].Has(ComponentMask.HAS_AI))
         {
           a.QueueLast(new Wait(ProjectileWaitBeforeHoming));
-          a.QueueLast(new AttackActor(target.ID, 0, 0, false, 9999));
-          a.QueueLast(new Idle());
+          a.QueueLast(new ProjectileAttackActor(target));
+          a.QueueLast(new Lock());
         }
+        else // define CurrentAction.target
+          a.QueueLast(new ProjectileAttackActor(target));
+
         return true;
       }
 
@@ -324,9 +327,12 @@ namespace SWEndor.Weapons
         if (engine.MaskDataSet[a].Has(ComponentMask.HAS_AI))
         {
           a.QueueLast(new Wait(ProjectileWaitBeforeHoming));
-          a.QueueLast(new AttackActor(target.ID, 0, 0, false, 9999));
+          a.QueueLast(new ProjectileAttackActor(target));
           a.QueueLast(new Lock());
         }
+        else // define CurrentAction.target
+          a.QueueLast(new ProjectileAttackActor(target));
+
         return true;
       }
       return false;

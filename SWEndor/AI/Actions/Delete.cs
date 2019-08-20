@@ -11,7 +11,7 @@ namespace SWEndor.AI.Actions
 
     public override void Process(Engine engine, ActorInfo actor)
     {
-      actor.Kill();
+      actor.Delete();
       Complete = true;
     }
   }

@@ -78,7 +78,7 @@ namespace SWEndor.Input.Context
           foreach (int i in list)
           {
             ActorInfo a = Engine.ActorFactory.Get(i);
-            a?.Kill();
+            a?.Delete();
           }
         }
       }

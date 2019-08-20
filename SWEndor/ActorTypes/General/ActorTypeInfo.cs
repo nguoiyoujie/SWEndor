@@ -270,9 +270,9 @@ namespace SWEndor.ActorTypes
 
       if (Engine.MaskDataSet[hitby].Has(ComponentMask.IS_DAMAGE))
       {
-        float str0 = Engine.SysDataSet.Strength_get(owner);
-        CombatSystem.onNotify(Engine, owner, CombatEventType.DAMAGE, hitby.TypeInfo.ImpactDamage);
-        float str1 = Engine.SysDataSet.Strength_get(owner);
+        float str0 = owner.HP;
+        owner.InflictDamage(hitby, hitby.TypeInfo.ImpactDamage, DamageType.NORMAL, impact);
+        float str1 = owner.HP;
 
         if (owner.IsPlayer)
         {
@@ -327,8 +327,8 @@ namespace SWEndor.ActorTypes
       else
       {
         // Collision
-        CombatSystem.onNotify(Engine, owner, CombatEventType.COLLISIONDAMAGE, hitby.TypeInfo.ImpactDamage);
-        if (Engine.SysDataSet.Strength_get(owner) > 0
+        owner.InflictDamage(hitby, hitby.TypeInfo.ImpactDamage, DamageType.COLLISION, impact);
+        if (owner.HP > 0
           && Engine.MaskDataSet[owner].Has(ComponentMask.CAN_MOVE)
           && owner.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER))
         {
@@ -441,7 +441,8 @@ namespace SWEndor.ActorTypes
       accuracy /= (Math.Abs(angle.y) + 1);
 
       if (Engine.Random.NextDouble() < accuracy)
-        CombatSystem.onNotify(Engine, target, CombatEventType.DAMAGE, weapontype.ImpactDamage);
+        target.InflictDamage(owner, weapontype.ImpactDamage, DamageType.NORMAL, target.GetPosition());
+        //CombatSystem.onNotify(Engine, target, CombatEventType.DAMAGE, weapontype.ImpactDamage);
     }
 
     public void Dispose()

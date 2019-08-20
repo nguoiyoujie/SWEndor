@@ -37,64 +37,63 @@ namespace SWEndor.UI.Widgets
     public override void Draw()
     {
       ActorInfo p = PlayerInfo.Actor;
-
       if (p == null || !p.Active)
+        return;
+
+      TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;
+
+      //Health Bar
+      DrawSingleBar(0
+                    , string.Format("HP [{0}%]", Math.Ceiling(PlayerInfo.StrengthFrac * 100))
+                    , PlayerInfo.StrengthFrac
+                    , PlayerInfo.StrengthColor
+                    );
+
+      //Speed Bar
+      DrawSingleBar(1
+            , string.Format("SPEED ")
+            , p.MoveData.Speed / p.MoveData.MaxSpeed
+            , new TV_COLOR(0.7f, 0.8f, 0.4f, 1)
+            );
+
+      int barnumber = 2;
+
+      //Allies
+      foreach (int i in GameScenarioManager.CriticalAllies.Values)
       {
-        TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;
-
-        //Health Bar
-        DrawSingleBar(0
-                      , string.Format("HP [{0}%]", Math.Ceiling(PlayerInfo.StrengthFrac * 100))
-                      , PlayerInfo.StrengthFrac
-                      , PlayerInfo.StrengthColor
-                      );
-
-        //Speed Bar
-        DrawSingleBar(1
-              , string.Format("SPEED ")
-              , p.MoveData.Speed / p.MoveData.MaxSpeed
-              , new TV_COLOR(0.7f, 0.8f, 0.4f, 1)
-              );
-
-        int barnumber = 2;
-
-        //Allies
-        foreach (int i in GameScenarioManager.CriticalAllies.Values)
-        {
-          ActorInfo a = ActorFactory.Get(i);
-          DrawSingleBar(barnumber
-              , a.SideBarName.PadRight(12).Remove(11)
-              , Engine.SysDataSet.StrengthFrac_get(a)
-              , new TV_COLOR(0, 0.8f, 0.6f, 1)
-              );
-          barnumber++;
-        }
-
-        //Enemies
-        foreach (int i in GameScenarioManager.CriticalEnemies.Values)
-        {
-          ActorInfo a = ActorFactory.Get(i);
-          DrawSingleBar(barnumber
-              , a.SideBarName.PadRight(12).Remove(11)
-              , Engine.SysDataSet.StrengthFrac_get(a)
-              , new TV_COLOR(1f, 0, 0, 1)
-              );
-          barnumber++;
-        }
-
-        /*
-        TVScreen2DText.Action_BeginText();
-        TVScreen2DText.TextureFont_DrawText(string.Format("TOGGLE: {0} "
-            , ((CONST_TV_KEY)InputKeyMap.GetFnKey("g_ui_status_toggle")).ToString().Replace("TV_KEY_", "").Replace("-1", "").PadLeft(1)
-            )
-          , bar_topleft.x - 90
-          , bar_topleft.y - 15
-          , pcolor.GetIntColor()
-          , FontID08
-          );
-        TVScreen2DText.Action_EndText();
-        */
+        ActorInfo a = ActorFactory.Get(i);
+        DrawSingleBar(barnumber
+            , a.SideBarName.PadRight(12).Remove(11)
+            , a.DisplayHP_Frac
+            , new TV_COLOR(0, 0.8f, 0.6f, 1)
+            );
+        barnumber++;
       }
+
+      //Enemies
+      foreach (int i in GameScenarioManager.CriticalEnemies.Values)
+      {
+        ActorInfo a = ActorFactory.Get(i);
+        DrawSingleBar(barnumber
+            , a.SideBarName.PadRight(12).Remove(11)
+            , a.DisplayHP_Frac
+            , new TV_COLOR(1f, 0, 0, 1)
+            );
+        barnumber++;
+      }
+
+      /*
+      TVScreen2DText.Action_BeginText();
+      TVScreen2DText.TextureFont_DrawText(string.Format("TOGGLE: {0} "
+          , ((CONST_TV_KEY)InputKeyMap.GetFnKey("g_ui_status_toggle")).ToString().Replace("TV_KEY_", "").Replace("-1", "").PadLeft(1)
+          )
+        , bar_topleft.x - 90
+        , bar_topleft.y - 15
+        , pcolor.GetIntColor()
+        , FontID08
+        );
+      TVScreen2DText.Action_EndText();
+      */
     }
 
     private void DrawSingleBar(int barnumber, string text, float barlengthfrac, TV_COLOR color)

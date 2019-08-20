@@ -1056,7 +1056,7 @@ namespace SWEndor.Scenarios
         ActorInfo av = ActorFactory.Get(actorID);
 
         if (av != null
-          && Engine.SysDataSet.StrengthFrac_get(av) < 0.8f
+          && av.HP_Frac < 0.8f
           && MainAllyFaction.GetShips().Count > 0)
         {
           ActorInfo homeone = ActorFactory.Get(m_HomeOneID);
@@ -1078,7 +1078,7 @@ namespace SWEndor.Scenarios
         int actorID = ((HitEventArg)arg).VictimID;
         ActorInfo av = ActorFactory.Get(actorID);
 
-        float f = Engine.SysDataSet.StrengthFrac_get(av);
+        float f = av.HP_Frac;
         if (f < 0.67f && f >= 0.33f)
         {
           Screen2D.MessageText(string.Format("{0}: {1}, I need cover!", av.Name, PlayerInfo.Name)
@@ -1793,7 +1793,7 @@ namespace SWEndor.Scenarios
       //m_Enemy_pull = 4000;
       SDWaves++;
       ActorInfo executor = ActorFactory.Get(m_ExecutorStaticID);
-      executor?.Kill();
+      executor?.Delete();
 
       TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(0, 0, -10000);
       float creationTime = Game.GameTime;

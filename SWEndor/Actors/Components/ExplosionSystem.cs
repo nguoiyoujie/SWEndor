@@ -65,7 +65,8 @@ namespace SWEndor.Actors.Components
     private static void MakeDeathExplosion(Engine engine, ActorInfo actor, ref ExplodeData data)
     {
       // Death explosion is one count, no cache needed
-      MakeExplosion(actor, actor.ActorTypeFactory.Get(data.DeathExplosionType), actor.CoordData.PrevPosition, data.DeathExplosionSize, ref data);
+      TV_3DVECTOR pos = (actor.TypeInfo is ActorTypes.Groups.Projectile) ? actor.CoordData.PrevPosition : actor.GetPosition();
+      MakeExplosion(actor, actor.ActorTypeFactory.Get(data.DeathExplosionType), pos, data.DeathExplosionSize, ref data);
       //MakeExplosion(actor, actor.ActorTypeFactory.Get(data.DeathExplosionType), actor.GetPosition(), data.DeathExplosionSize, ref data);
     }
 

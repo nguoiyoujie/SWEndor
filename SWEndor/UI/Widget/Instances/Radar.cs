@@ -239,7 +239,7 @@ namespace SWEndor.UI.Widgets
             case RadarType.RECTANGLE_GIANT:
               {
                 float gt = Engine.Game.GameTime * radar_blinkfreq;
-                if (Engine.SysDataSet.StrengthFrac_get(a) > 0.1f || (gt - (int)gt > 0.5f))
+                if (a.HP_Frac > 0.1f || (gt - (int)gt > 0.5f))
                 {
                   DrawRectGiant(a, posvec.X, posvec.Y, proty, acolor);
                 }
@@ -248,7 +248,7 @@ namespace SWEndor.UI.Widgets
             case RadarType.TRIANGLE_GIANT:
               {
                 float gt = Engine.Game.GameTime * radar_blinkfreq;
-                if (Engine.SysDataSet.StrengthFrac_get(a) > 0.1f || (gt - (int)gt > 0.5f))
+                if (a.HP_Frac > 0.1f || (gt - (int)gt > 0.5f))
                 {
                   DrawTriangleGiant(a, posvec.X, posvec.Y, proty, acolor);
                 }

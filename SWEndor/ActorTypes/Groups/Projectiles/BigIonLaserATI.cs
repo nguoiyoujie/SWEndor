@@ -39,7 +39,8 @@ namespace SWEndor.ActorTypes.Instances
       base.ProcessHit(owner, hitby, impact, normal);
       foreach (ActorInfo child in hitby.Children)
       {
-        CombatSystem.onNotify(Engine, child, CombatEventType.DAMAGE_FRAC, 0.5f);
+        child.InflictDamage(hitby, 0.5f * child.HP, DamageType.NORMAL, child.GetPosition());
+        //CombatSystem.onNotify(Engine, child, CombatEventType.DAMAGE_FRAC, 0.5f);
 
         float empduration = 10000;
 

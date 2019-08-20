@@ -65,7 +65,8 @@ namespace SWEndor.Actors
 
           planned.Enqueue(actor);
           Add(id, actor);
-          Log.Write(Log.DEBUG, LogType.ACTOR_CREATED, actor);
+          if (actor.Logged)
+            Log.Write(Log.DEBUG, LogType.ACTOR_CREATED, actor);
 
           if (First == null)
           {
