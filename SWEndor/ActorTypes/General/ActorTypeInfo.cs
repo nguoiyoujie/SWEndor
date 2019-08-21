@@ -101,6 +101,8 @@ namespace SWEndor.ActorTypes
 
     public TV_3DVECTOR max_dimensions = new TV_3DVECTOR();
     public TV_3DVECTOR min_dimensions = new TV_3DVECTOR();
+    public TV_3DVECTOR size { get { return max_dimensions - min_dimensions; } }
+
 
     // Render
     public float RadarSize = 0;

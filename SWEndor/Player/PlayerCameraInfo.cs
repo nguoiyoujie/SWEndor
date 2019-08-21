@@ -9,7 +9,10 @@ namespace SWEndor.Player
   {
     CUSTOM = -1,
     FIRSTPERSON = 0,
-    THIRDPERSON, THIRDREAR, FREEROTATION, FREEMODE
+    THIRDPERSON = 1,
+    THIRDREAR = 2,
+    FREEROTATION = 3,
+    FREEMODE = 4
   }
 
   public struct TargetPosition
@@ -33,6 +36,17 @@ namespace SWEndor.Player
         return new TV_3DVECTOR(_lastPos.x, _lastPos.y, _lastPos.z);
       }
       return ret;
+    }
+
+    public void ApproachPosition(TV_3DVECTOR pos, float distance)
+    {
+      if (distance == 0 || TargetActorID > 0) // if locked to Actor, skip
+        return;
+
+      float dist = ActorDistanceInfo.GetDistance(pos, Position);
+
+      if (dist != 0)
+        Position = ActorDistanceInfo.Lerp(Position, pos, (distance / dist).Clamp(-100, 1));
     }
   }
 
@@ -65,6 +79,7 @@ namespace SWEndor.Player
     private TargetPosition LookTo;
     private DeathCameraInfo DeathCamera;
     private float RotationMultiplier;
+    private float ApproachSpeed;
 
     public void ResetPosition()
     {
@@ -73,11 +88,12 @@ namespace SWEndor.Player
       LookFrom.TargetActorID = -1;
     }
 
-    public void SetPosition_Point(TV_3DVECTOR position)
+    public void SetPosition_Point(TV_3DVECTOR position, float approach_speed = 0)
     {
       LookFrom.Position = position;
       LookFrom.PositionRelative = default(TV_3DVECTOR);
       LookFrom.TargetActorID = -1;
+      ApproachSpeed = approach_speed;
     }
 
     public TV_3DVECTOR GetPosition_Point()
@@ -147,8 +163,9 @@ namespace SWEndor.Player
 
     public void Update(Engine engine, TVCamera cam, TV_3DVECTOR position, TV_3DVECTOR rotation)
     {
-      TV_3DVECTOR pos = LookFrom.GetGlobalPosition(engine);
       TV_3DVECTOR tgt = LookTo.GetGlobalPosition(engine);
+      LookFrom.ApproachPosition(tgt, ApproachSpeed * engine.Game.TimeSinceRender);
+      TV_3DVECTOR pos = LookFrom.GetGlobalPosition(engine);
 
       if ((Mode & CamMode.CIRCLE_AROUND_TARGET) == CamMode.CIRCLE_AROUND_TARGET)
       {
@@ -232,7 +249,7 @@ namespace SWEndor.Player
           target = new TV_3DVECTOR(0, 0, 20000);
           break;
         case CameraMode.THIRDPERSON:
-          location = new TV_3DVECTOR(0, actor.TypeInfo.max_dimensions.y * 5, actor.TypeInfo.min_dimensions.z * 8);
+          location = new TV_3DVECTOR(0, actor.TypeInfo.max_dimensions.y * 3, -actor.TypeInfo.max_dimensions.z * 8);
           target = new TV_3DVECTOR(0, 0, 20000);
           break;
         case CameraMode.THIRDREAR:

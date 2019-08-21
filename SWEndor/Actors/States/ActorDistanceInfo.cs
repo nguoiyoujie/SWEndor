@@ -109,9 +109,26 @@ namespace SWEndor.Actors
       }
     }
 
-    public static float CalculateDistance(ActorInfo first, ActorInfo second)
+    public static float GetDistance(TV_3DVECTOR first, TV_3DVECTOR second)
     {
-      return first.GetEngine().TrueVision.TVMathLibrary.GetDistanceVec3D(first.GetPosition(), second.GetPosition());
+      return CalculateDistance(first, second);
+    }
+
+    private static float CalculateDistance(ActorInfo first, ActorInfo second)
+    {
+      return CalculateDistance(first.GetPosition(), second.GetPosition());
+    }
+
+    private static float CalculateDistance(TV_3DVECTOR first, TV_3DVECTOR second)
+    {
+      return Globals.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(first, second);
+    }
+
+    public static TV_3DVECTOR Lerp(TV_3DVECTOR first, TV_3DVECTOR second, float frac)
+    {
+      TV_3DVECTOR ret = new TV_3DVECTOR();
+      Globals.Engine.TrueVision.TVMathLibrary.TVVec3Lerp(ref ret, first, second, frac);
+      return ret;
     }
   }
 }

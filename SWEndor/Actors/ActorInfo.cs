@@ -469,7 +469,7 @@ namespace SWEndor.Actors
       get
       {
         float distcheck = TypeInfo.CullDistance * Game.PerfCullModifier;
-
+        
         return (!IsPlayer
           && TypeInfo.EnableDistanceCull
           && ActorDistanceInfo.GetRoughDistance(GetPosition(), PlayerCameraInfo.Position) > distcheck);
