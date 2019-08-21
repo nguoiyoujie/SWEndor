@@ -23,12 +23,12 @@ namespace SWEndor.AI.Actions
       if (!hyperspace)
       {
         hyperspace = true;
-        Origin_Position = owner.GetPosition();
+        Origin_Position = owner.GetGlobalPosition();
       }
 
       owner.MoveData.Speed += Incre_Speed * owner.Game.TimeSinceRender;
 
-      float dist = owner.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Origin_Position);
+      float dist = owner.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetGlobalPosition(), Origin_Position);
       if (dist >= FarEnoughDistance)
         Complete = true;
     }

@@ -66,7 +66,7 @@ namespace SWEndor.AI.Actions
     {
       if (owner.TypeInfo.AlwaysAccurateRotation)
       {
-        owner.LookAtPoint(target_Position);
+        owner.LookAt(target_Position);
         return 0;
       }
       if (owner.TypeInfo.MaxTurnRate == 0) // Cannot turn
@@ -75,9 +75,9 @@ namespace SWEndor.AI.Actions
       }
       else
       {
-        TV_3DVECTOR tgtdir = target_Position - owner.GetPosition();
+        TV_3DVECTOR tgtdir = target_Position - owner.GetGlobalPosition();
 
-        TV_3DVECTOR chgrot = Utilities.GetRotation(tgtdir) - owner.GetRotation();
+        TV_3DVECTOR chgrot = Utilities.GetRotation(tgtdir) - owner.GetGlobalRotation();
 
         chgrot.x = chgrot.x.Modulus(-180, 180);
         chgrot.y = chgrot.y.Modulus(-180, 180);
@@ -105,7 +105,7 @@ namespace SWEndor.AI.Actions
         
 
         TV_3DVECTOR vec = new TV_3DVECTOR();
-        TV_3DVECTOR dir = owner.GetDirection();
+        TV_3DVECTOR dir = owner.Direction;
         owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, tgtdir);
         float delta = owner.GetEngine().TrueVision.TVMathLibrary.ACos(owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
 

@@ -48,9 +48,9 @@ namespace SWEndor.ActorTypes.Instances
       base.Dead(ainfo);
 
       ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave Mega"));
-      acinfo.Position = ainfo.GetPosition();
+      acinfo.Position = ainfo.GetGlobalPosition();
       ActorInfo explwav = ActorFactory.Create(acinfo);
-      MeshSystem.SetScale(Engine, explwav, 10);
+      explwav.Scale = 10;
     }
   }
 }

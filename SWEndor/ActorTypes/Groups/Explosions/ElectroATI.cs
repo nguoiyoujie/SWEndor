@@ -54,8 +54,8 @@ namespace SWEndor.ActorTypes.Instances
         {
           if (!p.Disposed)
           {
-            TV_3DVECTOR pos = p.GetPosition();
-            ainfo.SetLocalPosition(pos.x, pos.y, pos.z);
+            TV_3DVECTOR pos = p.GetGlobalPosition();
+            ainfo.Position = new TV_3DVECTOR(pos.x, pos.y, pos.z);
           }
           else
           {

@@ -32,7 +32,7 @@ namespace SWEndor.AI.Actions
 
     public void ApplyMove(ActorInfo owner)
     {
-      float dist = owner.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetPosition(), Target_Position);
+      float dist = owner.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetGlobalPosition(), Target_Position);
 
       if (dist <= CloseEnoughDistance || prevdist < dist)
       {
@@ -44,7 +44,7 @@ namespace SWEndor.AI.Actions
         if (!hyperspace)
         {
           hyperspace = true;
-          owner.LookAtPoint(Target_Position);
+          owner.LookAt(Target_Position);
         }
 
         owner.MoveData.Speed = owner.MoveData.MaxSpeed + dist * SpeedDistanceFactor;

@@ -324,7 +324,7 @@ namespace SWEndor.Scenarios
 
         //if (PlayerInfo.Actor.TypeInfo is DeathCameraATI)
         //  if (PlayerInfo.Actor.Active)
-        //    PlayerInfo.Actor.SetLocalPosition(ainfo.GetLocalPosition().x, ainfo.GetLocalPosition().y, ainfo.GetLocalPosition().z);
+        //    PlayerInfo.Actor.Position = new TV_3DVECTOR(ainfo.Position.x, ainfo.Position.y, ainfo.Position.z);
       }
     }
 

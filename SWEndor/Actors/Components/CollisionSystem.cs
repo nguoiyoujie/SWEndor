@@ -81,7 +81,7 @@ namespace SWEndor.Actors.Components
       if (data.IsTestingCollision)
       {
         TV_3DVECTOR vmin = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.max_dimensions.z, false);
-        TV_3DVECTOR vmax = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.min_dimensions.z, false) - actor.CoordData.LastTravelled;
+        TV_3DVECTOR vmax = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.min_dimensions.z, false) - (actor.GetGlobalPosition() - actor.GetPrevGlobalPosition());
 
         TestCollision(engine, actor, vmin, vmax, false, out data.Collision.Impact, out data.Collision.Normal, out data.Collision.ActorID);
         data.IsTestingCollision = false;
@@ -141,11 +141,11 @@ namespace SWEndor.Actors.Components
                 proImpact += _Impact;
                 proNormal += _Normal;
                 count++;
-                float newdist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.CoordData.Position, _Impact);
+                float newdist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.Position, _Impact);
                 if (dist < newdist)
                 {
                   dist = newdist;
-                  data.ProspectiveCollisionSafe = actor.CoordData.Position + (proend0 - actor.CoordData.Position) * 1000;
+                  data.ProspectiveCollisionSafe = actor.Position + (proend0 - actor.Position) * 1000;
                   if (data.IsAvoidingCollision)
                     nextlevel = false;
                 }
@@ -155,7 +155,7 @@ namespace SWEndor.Actors.Components
                 dist = float.MaxValue;
                 if (!data.IsAvoidingCollision)
                   nextlevel = false;
-                data.ProspectiveCollisionSafe = actor.CoordData.Position + (proend0 - actor.CoordData.Position) * 1000;
+                data.ProspectiveCollisionSafe = actor.Position + (proend0 - actor.Position) * 1000;
               }
             }
         }

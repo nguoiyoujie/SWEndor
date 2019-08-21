@@ -42,7 +42,7 @@ namespace SWEndor.ActorTypes.Groups
       base.Dead(ainfo);
 
       ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave"));
-      acinfo.Position = ainfo.GetPosition();
+      acinfo.Position = ainfo.GetGlobalPosition();
       ainfo.AddChild(ActorFactory.Create(acinfo));
     }
   }

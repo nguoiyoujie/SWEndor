@@ -320,7 +320,7 @@ namespace SWEndor.ActorTypes
           }
         }
 
-        hitby.SetLocalPosition(impact.x, impact.y, impact.z);
+        hitby.Position = new TV_3DVECTOR(impact.x, impact.y, impact.z);
         hitby.SetState_Dead(); // projectiles die on impact
       }
       else if (Engine.MaskDataSet[owner].Has(ComponentMask.IS_DAMAGE))
@@ -434,7 +434,7 @@ namespace SWEndor.ActorTypes
       float accuracy = 1;
 
       float d = ActorDistanceInfo.GetDistance(owner, target) / weapontype.MaxSpeed;
-      TV_3DVECTOR angle = Utilities.GetRotation(target.GetPosition() - owner.GetPosition()) - owner.GetRotation();
+      TV_3DVECTOR angle = Utilities.GetRotation(target.GetGlobalPosition() - owner.GetGlobalPosition()) - owner.GetGlobalRotation();
       angle.x -= (int)((angle.x + 180) / 360) * 360;
       angle.y -= (int)((angle.y + 180) / 360) * 360;
 
@@ -443,7 +443,7 @@ namespace SWEndor.ActorTypes
       accuracy /= (Math.Abs(angle.y) + 1);
 
       if (Engine.Random.NextDouble() < accuracy)
-        target.InflictDamage(owner, weapontype.ImpactDamage, DamageType.NORMAL, target.GetPosition());
+        target.InflictDamage(owner, weapontype.ImpactDamage, DamageType.NORMAL, target.GetGlobalPosition());
         //CombatSystem.onNotify(Engine, target, CombatEventType.DAMAGE, weapontype.ImpactDamage);
     }
 

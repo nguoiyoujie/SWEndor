@@ -54,7 +54,7 @@ namespace SWEndor.AI.Actions
           Target_Position = data.ProspectiveCollisionSafe;
         else
           Target_Position = Impact_Position + Normal * 10000;
-        float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetPosition(), Impact_Position);
+        float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetGlobalPosition(), Impact_Position);
         float Target_Speed = actor.MoveData.MinSpeed; //dist / 25;
 
         float delta_angle = AdjustRotation(actor, Target_Position, false, true);
@@ -65,7 +65,7 @@ namespace SWEndor.AI.Actions
 
       if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
       {
-        float newavoid = GetAvoidanceAngle(actor, actor.GetDirection(), Normal);
+        float newavoid = GetAvoidanceAngle(actor, actor.GetGlobalDirection(), Normal);
         float concavecheck = 60;
         if (!calcAvoidAngle || (AvoidanceAngle - newavoid > -concavecheck && AvoidanceAngle - newavoid < concavecheck))
         {

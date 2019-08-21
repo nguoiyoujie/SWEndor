@@ -30,7 +30,7 @@ namespace SWEndor.Player
         ActorInfo tgt = engine.ActorFactory.Get(TargetActorID);
         if (tgt != null && tgt.Active)
         {
-          ret = Position + Utilities.GetRelativePositionXYZ(engine, tgt.GetPosition(), tgt.GetRotation(), PositionRelative.x, PositionRelative.y, PositionRelative.z);
+          ret = Position + Utilities.GetRelativePositionXYZ(engine, tgt.GetGlobalPosition(), tgt.GetGlobalRotation(), PositionRelative.x, PositionRelative.y, PositionRelative.z);
           _lastPos = ret;//new TV_3DVECTOR(ret.x, ret.y, ret.z);
         }
         return new TV_3DVECTOR(_lastPos.x, _lastPos.y, _lastPos.z);
@@ -224,8 +224,8 @@ namespace SWEndor.Player
       if (actor != null && actor.Active)
       {
         UpdateFromActor(Engine, actor);
-        Position = actor.GetPosition();
-        Rotation = actor.GetRotation();
+        Position = actor.GetGlobalPosition();
+        Rotation = actor.GetGlobalRotation();
       }
 
       Look.Update(Engine, Camera, Position, Rotation);
@@ -342,7 +342,7 @@ namespace SWEndor.Player
 
           TV_3DVECTOR rot = Camera.GetRotation();
           rot.x = rot.x.Clamp(-75, 75);
-          Camera.SetRotation(rot.x, rot.y, rot.z);
+          Camera.Rotation = new TV_3DVECTOR(rot.x, rot.y, rot.z);
         }
         else */
 

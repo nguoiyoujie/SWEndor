@@ -50,7 +50,7 @@ namespace SWEndor.ActorTypes.Groups
       CombatSystem.Deactivate(Engine, ainfo);
 
       ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
-      acinfo.Position = ainfo.GetPosition();
+      acinfo.Position = ainfo.GetGlobalPosition();
       ainfo.AddChild(ActorFactory.Create(acinfo));
     }
   }

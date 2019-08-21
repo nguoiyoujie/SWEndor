@@ -65,7 +65,7 @@ namespace SWEndor.ActorTypes.Instances
           else
             a.MoveData.Speed = p.SpawnerInfo.SpawnSpeed;
 
-          float scale = Engine.MeshDataSet.Scale_get(p);
+          float scale = p.Scale;
           a.MoveRelative(p.SpawnerInfo.SpawnSpeedPositioningMult.x * p.MoveData.Speed * Game.TimeSinceRender * scale
                        , p.SpawnerInfo.SpawnSpeedPositioningMult.y * p.MoveData.Speed * Game.TimeSinceRender * scale
                        , p.SpawnerInfo.SpawnSpeedPositioningMult.z * p.MoveData.Speed * Game.TimeSinceRender * scale);
@@ -92,10 +92,10 @@ namespace SWEndor.ActorTypes.Instances
 
       ActorCreationInfo acinfo = new ActorCreationInfo(PlayerInfo.ActorType);
 
-      float scale = Engine.MeshDataSet.Scale_get(ainfo);
+      float scale = ainfo.Scale;
       TV_3DVECTOR clone = ainfo.GetRelativePositionXYZ(p.SpawnerInfo.PlayerSpawnLocation.x * scale, p.SpawnerInfo.PlayerSpawnLocation.y * scale, p.SpawnerInfo.PlayerSpawnLocation.z * scale);
       acinfo.Position = new TV_3DVECTOR(clone.x, clone.y, clone.z);
-      acinfo.Rotation = new TV_3DVECTOR(p.CoordData.Rotation.x, p.CoordData.Rotation.y, p.CoordData.Rotation.z);
+      acinfo.Rotation = new TV_3DVECTOR(p.Rotation.x, p.Rotation.y, p.Rotation.z);
       acinfo.Rotation += p.SpawnerInfo.SpawnRotation;
 
       acinfo.FreeSpeed = true;
@@ -142,10 +142,10 @@ namespace SWEndor.ActorTypes.Instances
           {
             ActorCreationInfo acinfo = new ActorCreationInfo(spawntype);
 
-            float scale = Engine.MeshDataSet.Scale_get(ainfo);
+            float scale = ainfo.Scale;
             TV_3DVECTOR clone = ainfo.GetRelativePositionXYZ(sv.x * scale, sv.y * scale, sv.z * scale);
             acinfo.Position = new TV_3DVECTOR(clone.x, clone.y, clone.z);
-            acinfo.Rotation = new TV_3DVECTOR(p.CoordData.Rotation.x, p.CoordData.Rotation.y, p.CoordData.Rotation.z);
+            acinfo.Rotation = new TV_3DVECTOR(p.Rotation.x, p.Rotation.y, p.Rotation.z);
             acinfo.Rotation += p.SpawnerInfo.SpawnRotation;
 
             acinfo.FreeSpeed = true;

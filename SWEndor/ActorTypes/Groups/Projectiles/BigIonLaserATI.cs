@@ -39,7 +39,7 @@ namespace SWEndor.ActorTypes.Instances
       base.ProcessHit(owner, hitby, impact, normal);
       foreach (ActorInfo child in hitby.Children)
       {
-        child.InflictDamage(hitby, 0.5f * child.HP, DamageType.NORMAL, child.GetPosition());
+        child.InflictDamage(hitby, 0.5f * child.HP, DamageType.NORMAL, child.GetGlobalPosition());
         //CombatSystem.onNotify(Engine, child, CombatEventType.DAMAGE_FRAC, 0.5f);
 
         float empduration = 10000;
@@ -57,7 +57,7 @@ namespace SWEndor.ActorTypes.Instances
           }
         }
         ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
-        acinfo.Position = child.GetPosition();
+        acinfo.Position = child.GetGlobalPosition();
         ActorInfo electro = ActorFactory.Create(acinfo);
         child.AddChild(electro);
         electro.CycleInfo.CyclesRemaining = empduration / electro.TypeInfo.TimedLifeData.TimedLife;

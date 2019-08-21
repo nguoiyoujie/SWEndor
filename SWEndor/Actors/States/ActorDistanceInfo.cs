@@ -52,8 +52,8 @@ namespace SWEndor.Actors
       if (a1 == a2)
         return 0;
 
-      TV_3DVECTOR a1v = a1.GetPosition();
-      TV_3DVECTOR a2v = a2.GetPosition();
+      TV_3DVECTOR a1v = a1.GetGlobalPosition();
+      TV_3DVECTOR a2v = a2.GetGlobalPosition();
       float dx = a1v.x - a2v.x;
       float dy = a1v.y - a2v.y;
       float dz = a1v.z - a2v.z;
@@ -116,7 +116,7 @@ namespace SWEndor.Actors
 
     private static float CalculateDistance(ActorInfo first, ActorInfo second)
     {
-      return CalculateDistance(first.GetPosition(), second.GetPosition());
+      return CalculateDistance(first.GetGlobalPosition(), second.GetGlobalPosition());
     }
 
     private static float CalculateDistance(TV_3DVECTOR first, TV_3DVECTOR second)

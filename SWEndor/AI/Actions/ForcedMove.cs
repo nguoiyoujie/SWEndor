@@ -53,7 +53,7 @@ namespace SWEndor.AI.Actions
       AdjustRotation(actor, Target_Position);
       AdjustSpeed(actor, Target_Speed);
 
-      float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetPosition(), Target_Position);
+      float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetGlobalPosition(), Target_Position);
       Complete |= (dist <= CloseEnoughDistance);
       Complete |= (ResumeTime < engine.Game.GameTime);
     }

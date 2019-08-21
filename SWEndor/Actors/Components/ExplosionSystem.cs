@@ -50,7 +50,7 @@ namespace SWEndor.Actors.Components
 
     private static void MakeExplosion(Engine engine, ActorInfo actor, TV_3DVECTOR vert, ref ExplodeData data)
     {
-      float scale = engine.MeshDataSet.Scale_get(actor);  
+      float scale = actor.Scale;  
 
       if (data._cache == null)
         data._cache = actor.ActorTypeFactory.Get(data.ExplosionType);
@@ -65,7 +65,7 @@ namespace SWEndor.Actors.Components
     private static void MakeDeathExplosion(Engine engine, ActorInfo actor, ref ExplodeData data)
     {
       // Death explosion is one count, no cache needed
-      TV_3DVECTOR pos = (actor.TypeInfo is ActorTypes.Groups.Projectile) ? actor.CoordData.PrevPosition : actor.GetPosition();
+      TV_3DVECTOR pos = (actor.TypeInfo is ActorTypes.Groups.Projectile) ? actor.GetPrevGlobalPosition() : actor.GetGlobalPosition();
       MakeExplosion(actor, actor.ActorTypeFactory.Get(data.DeathExplosionType), pos, data.DeathExplosionSize, ref data);
       //MakeExplosion(actor, actor.ActorTypeFactory.Get(data.DeathExplosionType), actor.GetPosition(), data.DeathExplosionSize, ref data);
     }
@@ -74,7 +74,7 @@ namespace SWEndor.Actors.Components
     {
       ActorCreationInfo acinfo = new ActorCreationInfo(type);
       acinfo.Position = globalPosition;
-      acinfo.InitialScale = explSize * actor.Engine.MeshDataSet.Scale_get(actor);
+      acinfo.InitialScale = explSize * actor.Scale;
       actor.ActorFactory.Create(acinfo);
     }
   }

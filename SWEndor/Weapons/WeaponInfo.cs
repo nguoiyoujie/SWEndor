@@ -243,12 +243,12 @@ namespace SWEndor.Weapons
           float dist = ActorDistanceInfo.GetDistance(owner, target);
           float d = dist / Projectile.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
 
-          TV_3DVECTOR dir = target.GetRelativePositionXYZ(0, 0, target.GetTrueSpeed() * d) - owner.GetPosition();
+          TV_3DVECTOR dir = target.GetRelativePositionXYZ(0, 0, target.GetTrueSpeed() * d) - owner.GetGlobalPosition();
           acinfo.Rotation = Utilities.GetRotation(dir);
         }
         else
         {
-          acinfo.Rotation = owner.CoordData.Rotation;
+          acinfo.Rotation = owner.GetGlobalRotation();
         }
 
         ActorInfo a = engine.ActorFactory.Create(acinfo);
@@ -305,19 +305,19 @@ namespace SWEndor.Weapons
           ActorInfo a2 = target.Relation.ParentForCoords;
           if (a2 == null)
           {
-            dir = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d) - owner.GetPosition();
+            dir = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d) - owner.GetGlobalPosition();
           }
           else
           {
             //dir = target.GetPosition() - owner.GetPosition();
-            dir = a2.GetRelativePositionXYZ(target.GetLocalPosition().x, target.GetLocalPosition().y, target.GetLocalPosition().z + a2.MoveData.Speed * d) - owner.GetPosition();
+            dir = a2.GetRelativePositionXYZ(target.Position.x, target.Position.y, target.Position.z + a2.MoveData.Speed * d) - owner.GetGlobalPosition();
           }
 
           acinfo.Rotation = Utilities.GetRotation(dir);
         }
         else
         {
-          acinfo.Rotation = owner.GetRotation();
+          acinfo.Rotation = owner.GetGlobalRotation();
         }
 
         ActorInfo a = engine.ActorFactory.Create(acinfo);

@@ -5,16 +5,6 @@ namespace SWEndor.Actors.Components
 {
   public static class MeshSystem
   {
-    internal static void SetScale(Engine engine, ActorInfo actor, float scale)
-    {
-      engine.MeshDataSet.Scale_set(actor, scale);
-    }
-
-    internal static void EnlargeScale(Engine engine, ActorInfo actor, float scale)
-    {
-      engine.MeshDataSet.Scale_set(actor, engine.MeshDataSet.Scale_get(actor) + scale);
-    }
-
     internal static void RenderMesh(Engine engine, ActorInfo actor)
     {
       RenderMesh(ref engine.MeshDataSet.list[actor.dataID]);
@@ -44,20 +34,15 @@ namespace SWEndor.Actors.Components
 
     private static void Update(Engine engine, ActorInfo actor, ref MeshData data)
     {
-      if (data.Mesh != null && data.FarMesh != null)
-      {
-        TV_3DVECTOR pos = actor.GetPosition();
-        TV_3DVECTOR rot = actor.GetRotation();
+      if (data.Mesh == null && data.FarMesh == null)
+        return;
 
-        data.Mesh.SetPosition(pos.x, pos.y, pos.z);
-        data.Mesh.SetRotation(rot.x, rot.y, rot.z);
+      TV_3DMATRIX mat = actor.GetMatrix();
 
-        data.FarMesh.SetPosition(pos.x, pos.y, pos.z);
-        data.FarMesh.SetRotation(rot.x, rot.y, rot.z);
+      data.Mesh?.SetMatrix(mat);
+      data.FarMesh?.SetMatrix(mat);
 
-        data.Mesh.SetCollisionEnable(engine.MaskDataSet[actor].Has(ComponentMask.CAN_BECOLLIDED) && !actor.IsAggregateMode);
-        //data.FarMesh.SetCollisionEnable(false);
-      }
+      data.Mesh?.SetCollisionEnable(engine.MaskDataSet[actor].Has(ComponentMask.CAN_BECOLLIDED) && !actor.IsAggregateMode);
     }
   }
 }

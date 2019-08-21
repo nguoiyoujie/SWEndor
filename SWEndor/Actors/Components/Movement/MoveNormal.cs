@@ -33,8 +33,8 @@ namespace SWEndor.Actors.Components
       // Control rotation
       if (data.ApplyZBalance)
       {
-        TV_3DVECTOR vec = actor.GetRotation();
-        actor.SetLocalRotation(vec.x, vec.y, 0);
+        TV_3DVECTOR vec = actor.GetGlobalRotation();
+        actor.Rotation = new TV_3DVECTOR(vec.x, vec.y, 0);
         actor.MoveRelative(data.Speed * time, 0, 0);
         data.ZRoll -= data.YTurnAngle * data.ZTilt * time;
 
@@ -50,18 +50,18 @@ namespace SWEndor.Actors.Components
         rotX2 = rotX2.Clamp(-actor.TypeInfo.XLimit, actor.TypeInfo.XLimit);
         float rotY2 = vec.y + data.YTurnAngle * time;
 
-        actor.SetLocalRotation(rotX2, rotY2, data.ZRoll);
+        actor.Rotation = new TV_3DVECTOR(rotX2, rotY2, data.ZRoll);
       }
       else
       {
-        TV_3DVECTOR vec = actor.GetRotation();
+        TV_3DVECTOR vec = actor.GetGlobalRotation();
         actor.MoveRelative(data.Speed * time, 0, 0);
         data.ZRoll = vec.z;
         data.ZRoll -= data.YTurnAngle * data.ZTilt * time;
         float rotX2 = vec.x + data.XTurnAngle * time;
         rotX2 = rotX2.Clamp(-actor.TypeInfo.XLimit, actor.TypeInfo.XLimit);
         float rotY2 = vec.y + data.YTurnAngle * time;
-        actor.SetLocalRotation(rotX2, rotY2, data.ZRoll);
+        actor.Rotation = new TV_3DVECTOR(rotX2, rotY2, data.ZRoll);
       }
     }
   }

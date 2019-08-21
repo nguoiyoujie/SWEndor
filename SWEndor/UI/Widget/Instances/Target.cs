@@ -47,7 +47,7 @@ namespace SWEndor.UI.Widgets
       {
         float x = 0;
         float y = 0;
-        TVScreen2DImmediate.Math_3DPointTo2D(m_target.GetPosition(), ref x, ref y);
+        TVScreen2DImmediate.Math_3DPointTo2D(m_target.GetGlobalPosition(), ref x, ref y);
         float dist = ActorDistanceInfo.GetDistance(p, m_target, 7501);
         float limit = 0.05f * dist;
         if (limit < 250)
@@ -60,7 +60,7 @@ namespace SWEndor.UI.Widgets
         || Math.Abs(x - Engine.ScreenWidth / 2) > limit
         || Math.Abs(y - Engine.ScreenHeight / 2) > limit
         || (PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && PlayerInfo.IsTorpedoMode)
-        || !PlayerCameraInfo.Camera.IsPointVisible(m_target.GetPosition()))
+        || !PlayerCameraInfo.Camera.IsPointVisible(m_target.GetGlobalPosition()))
         {
           m_target = null;
           PlayerInfo.AimTargetID = -1;
@@ -148,7 +148,7 @@ namespace SWEndor.UI.Widgets
               && !a.IsDyingOrDead
               && Engine.MaskDataSet[a].Has(ComponentMask.CAN_BETARGETED)
               && (pick_allies || !p.Faction.IsAlliedWith(a.Faction))
-              && PlayerCameraInfo.Camera.IsPointVisible(a.GetPosition())
+              && PlayerCameraInfo.Camera.IsPointVisible(a.GetGlobalPosition())
               )
             {
               float dist = ActorDistanceInfo.GetDistance(p, a, 7501);
@@ -161,7 +161,7 @@ namespace SWEndor.UI.Widgets
                   limit = 50;
                 m_targetX = limit;
                 m_targetY = limit;
-                TVScreen2DImmediate.Math_3DPointTo2D(a.GetPosition(), ref x, ref y);
+                TVScreen2DImmediate.Math_3DPointTo2D(a.GetGlobalPosition(), ref x, ref y);
 
                 x -= Engine.ScreenWidth / 2;
                 y -= Engine.ScreenHeight / 2;

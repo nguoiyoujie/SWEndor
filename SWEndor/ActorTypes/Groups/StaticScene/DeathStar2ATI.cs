@@ -66,7 +66,7 @@ namespace SWEndor.ActorTypes.Instances
         SourceMesh.SetCollisionEnable(false);
       }
 
-      AddOns = new AddOnInfo[] { new AddOnInfo("Death Star Laser Source", new TV_3DVECTOR(-0.13f * size, 0.2f * size, -0.04f * size - 10000), new TV_3DVECTOR(0, 0, 0), true) };
+      //AddOns = new AddOnInfo[] { new AddOnInfo("Death Star Laser Source", new TV_3DVECTOR(-1300, 2000, -0.04f * size), new TV_3DVECTOR(0, 0, 0), true) };
     }
 
     public override void Dying(ActorInfo ainfo)
@@ -82,9 +82,9 @@ namespace SWEndor.ActorTypes.Instances
       base.Dead(ainfo);
 
       ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave Mega"));
-      acinfo.Position = ainfo.GetPosition();
+      acinfo.Position = ainfo.GetGlobalPosition();
       ActorInfo explwav = ActorFactory.Create(acinfo);
-      MeshSystem.SetScale(Engine, explwav, 10);
+      explwav.Scale = 10;
     }
 
     public override void ProcessState(ActorInfo ainfo)

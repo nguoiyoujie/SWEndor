@@ -3,6 +3,7 @@ using SWEndor.ActorTypes;
 
 namespace SWEndor.Actors.Data
 {
+  /*
   public struct CoordData
   {
     private TV_3DVECTOR m_prevpos;
@@ -38,4 +39,5 @@ namespace SWEndor.Actors.Data
       Rotation = default(TV_3DVECTOR);
     }
   }
+  */
 }

@@ -49,7 +49,7 @@ namespace SWEndor.ActorTypes.Instances
         for (int shock = 3; shock > 0; shock--)
         {
           ActorInfo child = children[Engine.Random.Next(0, children.Count)];
-          child.InflictDamage(hitby, 0.1f * Engine.Random.Next(25, 50), DamageType.NORMAL, child.GetPosition());
+          child.InflictDamage(hitby, 0.1f * Engine.Random.Next(25, 50), DamageType.NORMAL, child.GetGlobalPosition());
 
           float empduration = 12;
           
@@ -66,7 +66,7 @@ namespace SWEndor.ActorTypes.Instances
             }
           }
           ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
-          acinfo.Position = child.GetPosition();
+          acinfo.Position = child.GetGlobalPosition();
           ActorInfo electro = ActorFactory.Create(acinfo);
           child.AddChild(electro);
           electro.CycleInfo.CyclesRemaining = empduration / electro.CycleInfo.CyclePeriod;

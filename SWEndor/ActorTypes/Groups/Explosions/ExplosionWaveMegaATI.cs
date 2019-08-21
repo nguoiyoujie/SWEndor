@@ -29,6 +29,7 @@ namespace SWEndor.ActorTypes.Instances
 
         SourceMesh.AddFloor(tex, -50, -50, 50, 50);
         //SourceMesh.CreateBox(100, 0.00001f, 100f);
+        SourceMesh.SetCullMode(CONST_TV_CULLING.TV_DOUBLESIDED);
         SourceMesh.SetTexture(tex);
         SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
 
@@ -40,7 +41,7 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessState(ActorInfo ainfo)
     {
       if (!ainfo.IsDyingOrDead)
-        MeshSystem.EnlargeScale(ainfo.Engine, ainfo, 7500 * Game.TimeSinceRender);
+        ainfo.Scale += 7500 * Game.TimeSinceRender;
     }
   }
 }

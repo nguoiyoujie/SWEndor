@@ -378,10 +378,10 @@ namespace SWEndor.Scenarios
             }
             */
 
-            if (player.GetPosition().x > Manager.MaxBounds.x - 500
-             && player.GetPosition().y < -180
-             && player.GetPosition().z < 120
-             && player.GetPosition().z > -120
+            if (player.GetGlobalPosition().x > Manager.MaxBounds.x - 500
+             && player.GetGlobalPosition().y < -180
+             && player.GetGlobalPosition().z < 120
+             && player.GetGlobalPosition().z > -120
              && !Stage5StartRun)
             {
               Manager.AddEvent(Game.GameTime + 0.1f, Scene_Stage05b_Spawn);
@@ -390,20 +390,20 @@ namespace SWEndor.Scenarios
             }
             else if (Stage5StartRun)
             {
-              if (last_target_distX < player.GetPosition().x)
+              if (last_target_distX < player.GetGlobalPosition().x)
               {
-                PlayerInfo.Score.AddDirect((player.GetPosition().x - last_target_distX) * 10);
-                last_target_distX = player.GetPosition().x;
+                PlayerInfo.Score.AddDirect((player.GetGlobalPosition().x - last_target_distX) * 10);
+                last_target_distX = player.GetGlobalPosition().x;
               }
-              if (last_sound_distX < player.GetPosition().x && !Manager.IsCutsceneMode)
+              if (last_sound_distX < player.GetGlobalPosition().x && !Manager.IsCutsceneMode)
               {
                 SoundManager.SetSound("button_3");
-                last_sound_distX = player.GetPosition().x + 250;
+                last_sound_distX = player.GetGlobalPosition().x + 250;
               }
-              Screen2D.TargetingRadar_text = string.Format("{0:00000000}", (target_distX - player.GetPosition().x) * 30);
+              Screen2D.TargetingRadar_text = string.Format("{0:00000000}", (target_distX - player.GetGlobalPosition().x) * 30);
               Scene_Stage05b_ContinuouslySpawnRoute(null);
 
-              if (player.GetPosition().x > vader_distX 
+              if (player.GetGlobalPosition().x > vader_distX 
                 && !player.IsDyingOrDead
                 && !Stage5End)
               {
@@ -428,22 +428,22 @@ namespace SWEndor.Scenarios
 
             if (player != null)
             {
-              if (last_target_distX < player.GetPosition().x)
+              if (last_target_distX < player.GetGlobalPosition().x)
               {
-                PlayerInfo.Score.AddDirect((player.GetPosition().x - last_target_distX) * 10);
-                last_target_distX = player.GetPosition().x;
+                PlayerInfo.Score.AddDirect((player.GetGlobalPosition().x - last_target_distX) * 10);
+                last_target_distX = player.GetGlobalPosition().x;
               }
 
-              if (last_sound_distX < player.GetPosition().x && !Manager.IsCutsceneMode)
+              if (last_sound_distX < player.GetGlobalPosition().x && !Manager.IsCutsceneMode)
               {
                 SoundManager.SetSound("button_3");
-                last_sound_distX = player.GetPosition().x + 250;
+                last_sound_distX = player.GetGlobalPosition().x + 250;
               }
 
-              Screen2D.TargetingRadar_text = string.Format("{0:00000000}", (target_distX - player.GetPosition().x) * 30);
+              Screen2D.TargetingRadar_text = string.Format("{0:00000000}", (target_distX - player.GetGlobalPosition().x) * 30);
               Scene_Stage05b_ContinuouslySpawnRoute(null);
 
-              if (player.GetPosition().x > vaderend_distX 
+              if (player.GetGlobalPosition().x > vaderend_distX 
                 && !player.IsDyingOrDead
                 && !Stage6VaderEnd)
               {
@@ -453,15 +453,19 @@ namespace SWEndor.Scenarios
               }
 
               ActorInfo vader = ActorFactory.Get(m_VaderID);
-              ActorInfo vaderEscort1 = ActorFactory.Get(m_VaderEscort1ID);
-              ActorInfo vaderEscort2 = ActorFactory.Get(m_VaderEscort2ID);
+              ActorInfo vaderE1 = ActorFactory.Get(m_VaderEscort1ID);
+              ActorInfo vaderE2 = ActorFactory.Get(m_VaderEscort2ID);
 
-              if (vader != null 
-                && Stage6VaderAttacking)
+              if (Stage6VaderAttacking)
               {
-                vader?.SetLocalPosition(player.GetPosition().x - 1700, -200, 0);
-                vaderEscort1?.SetLocalPosition(player.GetPosition().x - 1700, -220, 75);
-                vaderEscort2?.SetLocalPosition(player.GetPosition().x - 1700, -220, -75);
+                if (vader != null)
+                vader.Position = new TV_3DVECTOR(player.GetGlobalPosition().x - 1700, -200, 0);
+
+                if (vaderE1 != null)
+                  vaderE1.Position = new TV_3DVECTOR(player.GetGlobalPosition().x - 1700, -220, 75);
+
+                if (vaderE2 != null)
+                  vaderE2.Position = new TV_3DVECTOR(player.GetGlobalPosition().x - 1700, -220, -75);
               }
             }
           }
@@ -506,14 +510,14 @@ namespace SWEndor.Scenarios
           float x_yv = (PlayerInfo.Position.y > 0) ? (PlayerInfo.Position.y / 6f) - 18000.0f : (PlayerInfo.Position.y / 2.5f) - 18000.0f;
           float y_yv = PlayerInfo.Position.x / 1.2f;
           float z_yv = PlayerInfo.Position.z / 1.2f;
-          m_AYavin.SetLocalPosition(x_yv, y_yv, z_yv);
+          m_AYavin.Position = new TV_3DVECTOR(x_yv, y_yv, z_yv);
         }
         else
         {
           float x_yv = PlayerInfo.Position.x / 1.2f;
           float y_yv = 20000.0f;
           float z_yv = PlayerInfo.Position.z / 1.2f;
-          m_AYavin.SetLocalPosition(x_yv, y_yv, z_yv);
+          m_AYavin.Position = new TV_3DVECTOR(x_yv, y_yv, z_yv);
         }
       }
       if (m_AYavin4 != null && m_AYavin4.Active)
@@ -521,14 +525,14 @@ namespace SWEndor.Scenarios
         float x_y4 = PlayerInfo.Position.x / 10f;
         float y_y4 = PlayerInfo.Position.y / 2f;
         float z_y4 = (PlayerInfo.Position.z > 0) ? PlayerInfo.Position.z / 1.5f + 30000f : PlayerInfo.Position.z / 100f + 30000f;
-        m_AYavin4.SetLocalPosition(x_y4, y_y4, z_y4);
+        m_AYavin4.Position = new TV_3DVECTOR(x_y4, y_y4, z_y4);
       }
       if (m_ADS != null && m_ADS.Active)
       {
         float x_ds = PlayerInfo.Position.x / 5f;
         float y_ds = (PlayerInfo.Position.y / 1.5f) + 3200.0f;
         float z_ds = (PlayerInfo.Position.z > 0) ? PlayerInfo.Position.z / 1.5f - 30000f : PlayerInfo.Position.z / 100f - 30000f;
-        m_ADS.SetLocalPosition(x_ds, y_ds, z_ds);
+        m_ADS.Position = new TV_3DVECTOR(x_ds, y_ds, z_ds);
       }
     }
 
@@ -793,7 +797,7 @@ namespace SWEndor.Scenarios
         if (actor != null)
         {
           ActionManager.ForceClearQueue(actorID);
-          ActionManager.QueueNext(actorID, new Rotate(actor.GetPosition() + new TV_3DVECTOR(0, 0, -20000), actor.MoveData.MaxSpeed));
+          ActionManager.QueueNext(actorID, new Rotate(actor.GetGlobalPosition() + new TV_3DVECTOR(0, 0, -20000), actor.MoveData.MaxSpeed));
           ActionManager.QueueNext(actorID, new Lock());
         }
       }
@@ -813,8 +817,8 @@ namespace SWEndor.Scenarios
           ActionManager.ForceClearQueue(actorID);
           if (actor.Name == "(Player)")
           {
-            actor.SetLocalPosition(0, 100, Manager.MaxBounds.z - 150);
-            actor.SetLocalRotation(0, 180, 0);
+            actor.Position = new TV_3DVECTOR(0, 100, Manager.MaxBounds.z - 150);
+            actor.Rotation = new TV_3DVECTOR(0, 180, 0);
             actor.MoveData.ResetTurn();
             actor.MoveData.Speed = actor.MoveData.MaxSpeed;
             ActionManager.QueueNext(actorID, new Wait(5));
@@ -825,8 +829,8 @@ namespace SWEndor.Scenarios
             y = Engine.Random.Next(-40, 100);
             z = Manager.MaxBounds.z + Engine.Random.Next(-1800, -150);
             sw = -sw;
-            actor.SetLocalPosition(x, y, z);
-            actor.SetLocalRotation(0, 180, 0);
+            actor.Position = new TV_3DVECTOR(x, y, z);
+            actor.Rotation = new TV_3DVECTOR(0, 180, 0);
             actor.MoveData.ResetTurn();
             actor.MoveData.Speed = actor.MoveData.MaxSpeed;
             ActionManager.QueueNext(actorID, new Wait(5));
@@ -1285,7 +1289,7 @@ namespace SWEndor.Scenarios
         }
 
       m_ADS.Delete();
-      m_AYavin.SetLocalRotation(0, 0, 180);
+      m_AYavin.Rotation = new TV_3DVECTOR(0, 0, 180);
       m_AYavin4.Delete();
 
       //cam.MoveData.MaxSpeed = 450;
@@ -1479,7 +1483,7 @@ namespace SWEndor.Scenarios
           }
         }
       }
-      //m_Player.SetLocalPosition(7050, m_Player.GetLocalPosition())
+      //m_Player.Position = new TV_3DVECTOR(7050, m_Player.Position)
 
       foreach (ActorInfo a in m_ADS_SurfaceParts)
       {
@@ -1778,8 +1782,8 @@ namespace SWEndor.Scenarios
       ActorInfo player = ActorFactory.Get(m_PlayerID);
       if (player != null)
       {
-        player.SetLocalPosition(player.GetPosition().x, -220, 0);
-        player.SetLocalRotation(0, 90, 0);
+        player.Position = new TV_3DVECTOR(player.GetGlobalPosition().x, -220, 0);
+        player.Rotation = new TV_3DVECTOR(0, 90, 0);
         player.MoveData.ResetTurn();
       }
     }
@@ -1798,8 +1802,8 @@ namespace SWEndor.Scenarios
       ActorInfo player = ActorFactory.Get(m_PlayerID);
       if (player != null)
       {
-        player.SetLocalPosition(vader_distX, -220, 0);
-        player.SetLocalRotation(0, 90, 0);
+        player.Position = new TV_3DVECTOR(vader_distX, -220, 0);
+        player.Rotation = new TV_3DVECTOR(0, 90, 0);
         player.MoveData.ResetTurn();
         ActionManager.ForceClearQueue(m_PlayerID);
         ActionManager.QueueNext(m_PlayerID, new Lock());
@@ -1943,14 +1947,14 @@ namespace SWEndor.Scenarios
       ActorInfo vaderE2 = ActorFactory.Get(m_VaderEscort2ID);
       ActorInfo player = ActorFactory.Get(m_PlayerID);
 
-      player.SetLocalPosition(vaderend_distX, -220, 0);
-      player.SetLocalRotation(0, 90, 0);
+      player.Position = new TV_3DVECTOR(vaderend_distX, -220, 0);
+      player.Rotation = new TV_3DVECTOR(0, 90, 0);
       player.MoveData.ResetTurn();
       player.ForceClearQueue();
       player.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
       player.QueueNext(new Lock());
 
-      vader.SetLocalRotation(0, 90, 0);
+      vader.Rotation = new TV_3DVECTOR(0, 90, 0);
 
       ActorInfo falcon = new ActorSpawnInfo
       {
@@ -2006,12 +2010,12 @@ namespace SWEndor.Scenarios
 
         vader.ForceClearQueue();
         vader.MoveData.ApplyZBalance = false;
-        vader.SetLocalRotation(-30, 85, 5);
+        vader.Rotation = new TV_3DVECTOR(-30, 85, 5);
 
         vader.DyingTimer.Set(2000, true);
 
         vader.SetState_Dying();
-        vaderE2.SetLocalRotation(-5, 93, 0);
+        vaderE2.Rotation = new TV_3DVECTOR(-5, 93, 0);
         vaderE2.SetState_Dying();
         vaderE1.SetState_Dying();
       }

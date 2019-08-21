@@ -43,8 +43,8 @@ namespace SWEndor.ActorTypes.Components
         float z = actor.Engine.Random.Next(RotationZMin, RotationZMax) / 100f;
 
         ActorCreationInfo acinfo = new ActorCreationInfo(_cache);
-        acinfo.Position = actor.GetPosition() + SpawnPosition;
-        acinfo.Rotation = new TV_3DVECTOR(actor.CoordData.Rotation.x + x, actor.CoordData.Rotation.y + y, actor.CoordData.Rotation.z + z);
+        acinfo.Position = actor.GetGlobalPosition() + SpawnPosition;
+        acinfo.Rotation = actor.Rotation + new TV_3DVECTOR(x, y, z);
         acinfo.InitialSpeed = actor.MoveData.Speed;
         //acinfo.InitialState = ActorState.DYING;
         ActorInfo a = actor.ActorFactory.Create( acinfo);

@@ -61,15 +61,15 @@ namespace SWEndor.UI.Widgets
       ActorInfo p = PlayerInfo.Actor;
       if (a != null)
       {
-        TV_3DVECTOR ppos = p.GetPosition();
-        TV_3DVECTOR apos = a.GetPosition();
+        TV_3DVECTOR ppos = p.GetGlobalPosition();
+        TV_3DVECTOR apos = a.GetGlobalPosition();
 
         if (a.Active
           && a.TypeInfo.RadarSize > 0
           && (a.TypeInfo.AlwaysShowInRadar || ActorDistanceInfo.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
         {
           TV_2DVECTOR posvec = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(apos.x, apos.z);
-          float proty = p.GetRotation().y;
+          float proty = p.GetGlobalRotation().y;
           float dist = TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), posvec);
           float angl = TrueVision.TVMathLibrary.Direction2Ang(posvec.x, posvec.y) - proty;
           if (dist > radar_range)
@@ -77,7 +77,7 @@ namespace SWEndor.UI.Widgets
 
           float x = radar_center.x - radar_radius * dist / radar_range * (float)Math.Sin(angl * Globals.PI / 180);
           float y = radar_center.y + radar_radius * dist / radar_range * (float)Math.Cos(angl * Globals.PI / 180);
-          float scale = Engine.MeshDataSet.Scale_get(a);
+          float scale = a.Scale;
           int scolor = a.HP_Color.GetIntColor();
 
           if (a.TypeInfo.TargetType.HasFlag(TargetType.ADDON))

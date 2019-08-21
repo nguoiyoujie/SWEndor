@@ -53,8 +53,8 @@ namespace SWEndor.ActorTypes.Groups
 
             if (dist < impdist)
             {
-              target.TypeInfo.ProcessHit(target, ainfo, target.GetPosition(), new TV_3DVECTOR());
-              ainfo.TypeInfo.ProcessHit(ainfo, target, target.GetPosition(), new TV_3DVECTOR());
+              target.TypeInfo.ProcessHit(target, ainfo, target.GetGlobalPosition(), new TV_3DVECTOR());
+              ainfo.TypeInfo.ProcessHit(ainfo, target, target.GetGlobalPosition(), new TV_3DVECTOR());
 
               ainfo.OnHitEvent(target.ID);
               target.OnHitEvent(ainfo.ID);

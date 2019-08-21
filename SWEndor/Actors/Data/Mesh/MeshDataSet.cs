@@ -14,28 +14,6 @@ namespace SWEndor.Actors.Data
     public void Reset(ActorInfo actor) { ((DoFunc<MeshData>)((ref MeshData d) => { d.Reset(); }))(ref list[actor.dataID]); }
     public void Do(ActorInfo actor, DoFunc<MeshData> func) { func.Invoke(ref list[actor.dataID]); }
 
-    // Scale { get; set; }
-
-
-
-    public void Scale_set(ActorInfo actor, float value)
-    {
-      ((SetFunc<MeshData, float>)((ref MeshData d, float v) => 
-      {
-        d.Scale = v;
-      }
-      ))(ref list[actor.dataID], value);
-    }
-
-    public float Scale_get(ActorInfo actor)
-    {
-      return ((GetFunc<MeshData, float>)((ref MeshData d) => 
-      {
-        return d.Scale;
-      }
-      ))(ref list[actor.dataID]);
-    }
-
     // Mesh { get; functions; }
     public TVMesh Mesh_get(ActorInfo actor)
     {

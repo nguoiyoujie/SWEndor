@@ -38,15 +38,12 @@ namespace SWEndor.AI.Actions
 
       float dist = ActorDistanceInfo.GetDistance(actor, Target_Actor);
       float d = dist / Globals.LaserSpeed;
+
       ActorInfo a2 = target.Relation.UseParentCoords ? target.Relation.Parent : null;
       if (a2 == null)
-      {
         Target_Position = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d);
-      }
       else
-      {
-        Target_Position = a2.GetRelativePositionXYZ(target.GetLocalPosition().x, target.GetLocalPosition().y, target.GetLocalPosition().z + a2.MoveData.Speed * d);
-      }
+        Target_Position = target.GetRelativePositionXYZ(0, 0, a2.MoveData.Speed * d);
 
       AdjustRotation(actor, Target_Position, true);
       AdjustSpeed(actor, actor.MoveData.MaxSpeed);

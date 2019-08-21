@@ -72,7 +72,7 @@ namespace SWEndor.Player
     private void UpdatePosition()
     {
       if (Actor != null)
-        Position = Actor.GetPosition();
+        Position = Actor.GetGlobalPosition();
     }
 
     private void UpdateStats()
@@ -101,32 +101,32 @@ namespace SWEndor.Player
       bool announceOutOfBounds = false;
       if (Actor != null)
       {
-        TV_3DVECTOR pos = Actor.GetPosition();
+        TV_3DVECTOR pos = Actor.GetGlobalPosition();
         if (pos.x < Engine.GameScenarioManager.MinBounds.x)
         {
-          Actor.SetLocalPosition(Engine.GameScenarioManager.MinBounds.x, pos.y, pos.z);
+          Actor.Position = new TV_3DVECTOR(Engine.GameScenarioManager.MinBounds.x, pos.y, pos.z);
           announceOutOfBounds = true;
         }
         else if (pos.x > Engine.GameScenarioManager.MaxBounds.x)
         {
-          Actor.SetLocalPosition(Engine.GameScenarioManager.MaxBounds.x, pos.y, pos.z);
+          Actor.Position = new TV_3DVECTOR(Engine.GameScenarioManager.MaxBounds.x, pos.y, pos.z);
           announceOutOfBounds = true;
         }
 
         if (pos.y < Engine.GameScenarioManager.MinBounds.y)
-          Actor.SetLocalPosition(pos.x, Engine.GameScenarioManager.MinBounds.y, pos.z);
+          Actor.Position = new TV_3DVECTOR(pos.x, Engine.GameScenarioManager.MinBounds.y, pos.z);
         else if (pos.y > Engine.GameScenarioManager.MaxBounds.y)
-          Actor.SetLocalPosition(pos.x, Engine.GameScenarioManager.MaxBounds.y, pos.z);
+          Actor.Position = new TV_3DVECTOR(pos.x, Engine.GameScenarioManager.MaxBounds.y, pos.z);
 
 
         if (pos.z < Engine.GameScenarioManager.MinBounds.z)
         {
-          Actor.SetLocalPosition(pos.x, pos.y, Engine.GameScenarioManager.MinBounds.z);
+          Actor.Position = new TV_3DVECTOR(pos.x, pos.y, Engine.GameScenarioManager.MinBounds.z);
           announceOutOfBounds = true;
         }
         else if (pos.z > Engine.GameScenarioManager.MaxBounds.z)
         {
-          Actor.SetLocalPosition(pos.x, pos.y, Engine.GameScenarioManager.MaxBounds.z);
+          Actor.Position = new TV_3DVECTOR(pos.x, pos.y, Engine.GameScenarioManager.MaxBounds.z);
           announceOutOfBounds = true;
         }
 

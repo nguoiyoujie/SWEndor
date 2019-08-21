@@ -149,13 +149,15 @@
     <Compile Include="Actors\Data\ActorDataSet.cs" />
     <Compile Include="Actors\Data\Collision\CollisionData.cs" />
     <Compile Include="Actors\Data\Explosion\ExplodeData.cs" />
-    <Compile Include="Actors\Data\Relation\Relation.cs" />
+    <Compile Include="Actors\Data\Relation\RelationModel.cs" />
     <Compile Include="Actors\Data\StateModel\StateModel.cs" />
     <Compile Include="Actors\Data\Sys\SysDataSet.cs" />
     <Compile Include="Actors\Data\TimedLife\DyingTimer.cs" />
     <Compile Include="Actors\Data\TimedLife\TimedLifeData.cs" />
     <Compile Include="Actors\Data\Combat\CombatData.cs" />
     <Compile Include="Actors\Data\Regeneration\RegenData.cs" />
+    <Compile Include="Actors\Data\Transform\TransformModel.cs" />
+    <Compile Include="Actors\Data\Transform\TransformData.cs" />
     <Compile Include="Actors\Data\WeapData.cs" />
     <Compile Include="Actors\Data\StateData.cs" />
     <Compile Include="Actors\Data\Sys\SysData.cs" />

@@ -4,6 +4,7 @@ using SWEndor.Actors.Data;
 using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
+using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using SWEndor.Sound;
 using System.Collections.Generic;
@@ -94,16 +95,18 @@ namespace SWEndor.Actors
     public int HuntWeight = 1;
 
     // Data (structs)
-    public CoordData CoordData;
+    //public CoordData CoordData;
     public MoveData MoveData;
 
     // Traits (structs)
-    public Relation Relation;
-    public DyingTimer DyingTimer;
-
-    // Traits (classes)
+    public RelationModel Relation; // Try to make it private
+    public DyingTimer DyingTimer; // Try to make it private
     private StateModel State;
     private HealthModel Health;
+    private TransformModel Transform;
+
+    // Traits (classes)
+
 
     // Ownership
     public ActorInfo Prev;
@@ -131,12 +134,13 @@ namespace SWEndor.Actors
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
 
       // Init data before components
-      CoordData.Init(acinfo);
+      //CoordData.Init(acinfo);
       //ActorDataSet.CoordData[dataID].Init(acinfo);
 
       Relation.Init();
       DyingTimer.Init(TypeInfo);
       Health.Init(TypeInfo, acinfo);
+      Transform.Init(TypeInfo, acinfo);
 
       MoveData.Init(TypeInfo, acinfo);
       //Engine.SysDataSet.Init(this, TypeInfo, acinfo);
@@ -177,11 +181,12 @@ namespace SWEndor.Actors
 
 
       // Init data before components
-      CoordData.Init(acinfo);
+      //CoordData.Init(acinfo);
 
       Relation.Init();
       DyingTimer.Init(TypeInfo);
       Health.Init(TypeInfo, acinfo);
+      Transform.Init(TypeInfo, acinfo);
 
       MoveData.Init(TypeInfo, acinfo);
       //Engine.SysDataSet.Init(this, TypeInfo, acinfo);
@@ -217,183 +222,44 @@ namespace SWEndor.Actors
     }
     #endregion
 
+
     #region Position / Rotation
-    public TV_3DVECTOR GetPosition()
-    {
-      TV_3DVECTOR ret = CoordData.Position;
-      ActorInfo a = Relation.ParentForCoords;
-      if (a != null)
-        ret = a.GetRelativePositionXYZ(ret.x, ret.y, ret.z);
+    public TV_3DVECTOR Position { get { return Transform.Position; } set { Transform.Position = value; } }
+    public TV_3DVECTOR PrevPosition { get { return Transform.PrevPosition; } }
+    public TV_3DVECTOR Rotation { get { return Transform.Rotation; } set { Transform.Rotation = value; } }
+    public TV_3DVECTOR Direction { get { return Transform.Direction; } set { Transform.Direction = value; } }
+    public float Scale { get { return Transform.Scale; } set { Transform.Scale = value; } }
 
-      return ret;
-    }
-
-    public TV_3DVECTOR GetLocalPosition()
-    {
-      return CoordData.Position;
-    }
-
-    public void SetLocalPosition(float x, float y, float z)
-    {
-      CoordData.Position = new TV_3DVECTOR(x, y, z);
-    }
+    public TV_3DMATRIX GetMatrix() { return Transform.GetWorldMatrix(this, Game.GameTime); }
+    public TV_3DVECTOR GetGlobalPosition() { return Transform.GetGlobalPosition(this, Game.GameTime); }
+    public TV_3DVECTOR GetPrevGlobalPosition() { return Transform.GetPrevGlobalPosition(this, Game.GameTime); }
+    public TV_3DVECTOR GetGlobalRotation() { return Transform.GetGlobalRotation(this); }
+    public TV_3DVECTOR GetGlobalDirection() { return Transform.GetGlobalDirection(this); }
 
     public TV_3DVECTOR GetRelativePositionFUR(float front, float up, float right, bool uselocal = false)
     {
-      TV_3DVECTOR pos = GetPosition();
-      TV_3DVECTOR rot = GetRotation();
-      if (uselocal)
-      {
-        pos = GetLocalPosition();
-        rot = GetLocalRotation();
-      }
-
-      TV_3DVECTOR ret = new TV_3DVECTOR();
-
-      TrueVision.TVMathLibrary.TVVec3Rotate(ref ret, new TV_3DVECTOR(right, up, front), rot.y, rot.x, rot.z);
-      ret += pos;
-      return ret;
+      return Transform.GetRelativePositionFUR(this, Game.GameTime, front, up, right, uselocal);
     }
 
     public TV_3DVECTOR GetRelativePositionXYZ(float x, float y, float z, bool uselocal = false)
     {
-      TV_3DVECTOR pos = GetPosition();
-      TV_3DVECTOR rot = GetRotation();
-      if (uselocal)
-      {
-        pos = GetLocalPosition();
-        rot = GetLocalRotation();
-      }
-
-      TV_3DVECTOR ret = new TV_3DVECTOR();
-
-      TrueVision.TVMathLibrary.TVVec3Rotate(ref ret, new TV_3DVECTOR(x, y, z), rot.y, rot.x, rot.z);
-      ret += pos;
-      return ret;
+      return Transform.GetRelativePositionXYZ(this, Game.GameTime, x, y, z, uselocal);
     }
 
-    public TV_3DVECTOR GetRotation()
+    public void MoveRelative(float forward, float up = 0, float right = 0)
     {
-      ActorInfo a = Relation.ParentForCoords;
-      if (a != null && Engine.MeshDataSet.Mesh_get(a) != null)
-      {
-        TVMathLibrary mathl = TrueVision.TVMathLibrary;
-        //TV_3DVECTOR aret = a.GetRotation();
-
-        TV_3DMATRIX pmat = new TV_3DMATRIX();
-        TV_3DMATRIX pymat = new TV_3DMATRIX();
-        TV_3DMATRIX pyxmat = new TV_3DMATRIX();
-        TV_3DMATRIX pyxzmat = new TV_3DMATRIX();
-        mathl.TVMatrixIdentity(ref pmat);
-        TV_3DMATRIX xmat = new TV_3DMATRIX();
-        TV_3DMATRIX ymat = new TV_3DMATRIX();
-        TV_3DMATRIX zmat = new TV_3DMATRIX();
-        TV_3DVECTOR front = new TV_3DVECTOR();
-        TV_3DVECTOR up = new TV_3DVECTOR();
-        TV_3DVECTOR right = new TV_3DVECTOR();
-        Engine.MeshDataSet.Mesh_getBasisVectors(a, ref front, ref up, ref right);
-
-        mathl.TVMatrixRotationAxis(ref ymat, up, CoordData.Rotation.y);
-        mathl.TVMatrixRotationAxis(ref xmat, right, CoordData.Rotation.x);
-        mathl.TVMatrixRotationAxis(ref zmat, front, CoordData.Rotation.z);
-        mathl.TVMatrixMultiply(ref pymat, pmat, ymat);
-        mathl.TVMatrixMultiply(ref pyxmat, pymat, xmat);
-        mathl.TVMatrixMultiply(ref pyxzmat, pyxmat, zmat);
-
-        TV_3DVECTOR dir = Utilities.GetDirection(a.GetRotation());
-        TV_3DVECTOR rdir = new TV_3DVECTOR();
-        mathl.TVVec3TransformCoord(ref rdir, dir, pyxzmat);
-        TV_3DVECTOR rot = Utilities.GetRotation(rdir);
-
-        return rot;
-      }
-      else
-      {
-        return CoordData.Rotation;
-      }
-    }
-
-    public void SetRotation(float x, float y, float z)
-    {
-      ActorInfo a = Relation.ParentForCoords;
-      if (a != null)
-      {
-        CoordData.Rotation = new TV_3DVECTOR(x, y, z);
-      }
-      else
-        CoordData.Rotation = new TV_3DVECTOR(x, y, z);
-    }
-
-    public TV_3DVECTOR GetLocalRotation()
-    {
-      return CoordData.Rotation;
-    }
-
-    public void SetLocalRotation(float x, float y, float z)
-    {
-      CoordData.Rotation = new TV_3DVECTOR(x, y, z);
-    }
-
-    public TV_3DVECTOR GetDirection()
-    {
-      TV_3DVECTOR ret = Utilities.GetDirection(CoordData.Rotation);
-      ActorInfo a = Relation.ParentForCoords;
-      if (a != null)
-        ret += a.GetDirection();
-
-      TV_3DVECTOR dir = new TV_3DVECTOR();
-      TrueVision.TVMathLibrary.TVVec3Normalize(ref dir, ret);
-      return dir;
-    }
-
-    public void SetDirection(float x, float y, float z)
-    {
-      TV_3DVECTOR dir = new TV_3DVECTOR(x, y, z);
-      ActorInfo a = Relation.ParentForCoords;
-      if (a != null)
-        dir -= a.GetDirection();
-
-      CoordData.Rotation = Utilities.GetRotation(dir);
-    }
-
-    public TV_3DVECTOR GetLocalDirection()
-    {
-      TV_3DVECTOR ret = Utilities.GetDirection(CoordData.Rotation);
-
-      TV_3DVECTOR dir = new TV_3DVECTOR();
-      TrueVision.TVMathLibrary.TVVec3Normalize(ref dir, ret);
-      return dir;
-    }
-
-    public void SetLocalDirection(float x, float y, float z)
-    {
-      TV_3DVECTOR dir = new TV_3DVECTOR(x, y, z);
-      CoordData.Rotation = Utilities.GetRotation(dir);
-    }
-
-    public void LookAtPoint(TV_3DVECTOR target, bool preserveZrotation = false)
-    {
-      float zrot = GetRotation().z;
-      TV_3DVECTOR dir = target - GetPosition();
-      SetDirection(dir.x, dir.y, dir.z);
-
-      if (preserveZrotation)
-      {
-        SetRotation(GetRotation().x, GetRotation().y, zrot);
-      }
-    }
-
-    public void MoveRelative(float front, float up = 0, float right = 0)
-    {
-      TV_3DVECTOR vec = GetRelativePositionFUR(front, up, right, true);
-      SetLocalPosition(vec.x, vec.y, vec.z);
+      TV_3DVECTOR vec = GetRelativePositionFUR(forward, up, right, true);
+      Transform.Position = new TV_3DVECTOR(vec.x, vec.y, vec.z);
     }
 
     public void MoveAbsolute(float x, float y, float z)
     {
-      TV_3DVECTOR vec = GetLocalPosition() + new TV_3DVECTOR(x, y, z);
-      SetLocalPosition(vec.x, vec.y, vec.z);
+      TV_3DVECTOR vec = Transform.Position + new TV_3DVECTOR(x, y, z);
+      Transform.Position = new TV_3DVECTOR(vec.x, vec.y, vec.z);
     }
+
+
+    public void LookAt(TV_3DVECTOR point) { Transform.LookAt(point); }
 
     #endregion
 
@@ -403,35 +269,25 @@ namespace SWEndor.Actors
         SpawnerInfo.Enabled = value;
     }
 
-
+    // replace
     public float GetTrueSpeed()
     {
       float ret = MoveData.Speed;
-      ActorInfo a = Relation.ParentForCoords;
-      if (a != null)
-        ret += a.GetTrueSpeed();
-
+      if (Relation.UseParentCoords)
+      {
+        using (var v = ScopedManager<ActorInfo>.Scope(Relation.Parent))
+        {
+          if (v.Value != null)
+            ret += v.Value.GetTrueSpeed();
+        }
+      }
       return ret;
     }
 
     public void Rotate(float x, float y, float z)
     {
-      TV_3DVECTOR vec = GetRotation();
-      SetRotation(vec.x + x, vec.y + y, vec.z + z);
+      Transform.Rotation += new TV_3DVECTOR(x, y, z);
     }
-
-    #region Parent, Child and Relatives
-
-    public void AddChild(ActorInfo a) { Relation.AddChild(this, a); }
-    public void RemoveChild(ActorInfo a) { Relation.RemoveChild(this, a); }
-
-    public IEnumerable<ActorInfo> Children { get { return Relation.Children; } }
-
-    public ActorInfo TopParent { get { return Relation.GetTopParent(this); } }
-
-    public IEnumerable<ActorInfo> Siblings { get { return Relation.Siblings; } }
-
-    #endregion
 
     #region Event Methods
     public void OnTickEvent() { TickEvents?.Invoke(new ActorEventArg(ID)); }
@@ -444,7 +300,7 @@ namespace SWEndor.Actors
 
     public bool IsOutOfBounds(TV_3DVECTOR minbounds, TV_3DVECTOR maxbounds)
     {
-      TV_3DVECTOR pos = GetPosition();
+      TV_3DVECTOR pos = GetGlobalPosition();
       return (pos.x < minbounds.x)
           || (pos.x > maxbounds.x)
           || (pos.y < minbounds.y)
@@ -455,7 +311,7 @@ namespace SWEndor.Actors
 
     public bool IsNearlyOutOfBounds(float dx = 1000, float dy = 250, float dz = 1000)
     {
-      TV_3DVECTOR pos = GetPosition();
+      TV_3DVECTOR pos = GetGlobalPosition();
       return (pos.x < GameScenarioManager.MinBounds.x + dx)
           || (pos.x > GameScenarioManager.MaxBounds.x - dx)
           || (pos.y < GameScenarioManager.MinBounds.y + dy)
@@ -472,7 +328,7 @@ namespace SWEndor.Actors
         
         return (!IsPlayer
           && TypeInfo.EnableDistanceCull
-          && ActorDistanceInfo.GetRoughDistance(GetPosition(), PlayerCameraInfo.Position) > distcheck);
+          && ActorDistanceInfo.GetRoughDistance(GetGlobalPosition(), PlayerCameraInfo.Position) > distcheck);
       }
     }
 
@@ -484,7 +340,7 @@ namespace SWEndor.Actors
 
         return (!IsPlayer
           && TypeInfo.EnableDistanceCull
-          && ActorDistanceInfo.GetRoughDistance(GetPosition(), PlayerCameraInfo.Position) > distcheck);
+          && ActorDistanceInfo.GetRoughDistance(GetGlobalPosition(), PlayerCameraInfo.Position) > distcheck);
       }
     }
 
@@ -545,7 +401,7 @@ namespace SWEndor.Actors
       Engine.ActorFactory.Remove(ID);
 
       // Kill data
-      CoordData.Reset();
+      //CoordData.Reset();
       //ActorDataSet.CoordData[dataID].Reset();
       MoveData.Reset();
       //Engine.SysDataSet.Reset(this);

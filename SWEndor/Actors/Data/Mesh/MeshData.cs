@@ -6,27 +6,12 @@ namespace SWEndor.Actors.Data
 {
   public struct MeshData
   {
-    private float m_Scale;
     public TVMesh Mesh;
     public TVMesh FarMesh;
 
-    public float Scale
-    {
-      get { return m_Scale; }
-      set
-      {
-        if (!m_Scale.Equals(value))
-        {
-          SetScale();
-          m_Scale = value;
-        }
-      }
-    }
+    public void Init(ActorTypeInfo atype, ActorCreationInfo acinfo)
+    { }
 
-    public void Init(ActorTypeInfo type, ActorCreationInfo acreate)
-    {
-      m_Scale = type.Scale * acreate.InitialScale;
-    }
 
     public void Generate(int id, ActorTypeInfo atype)
     {
@@ -38,7 +23,6 @@ namespace SWEndor.Actors.Data
 
       FarMesh.SetTag(id.ToString());
 
-      SetScale();
       Mesh.ComputeBoundings();
       FarMesh.ComputeBoundings();
 
@@ -56,14 +40,6 @@ namespace SWEndor.Actors.Data
 
       FarMesh?.Destroy();
       FarMesh = null;
-
-      Scale = 1;
-    }
-
-    private void SetScale()
-    {
-      Mesh?.SetScale(Scale, Scale, Scale);
-      FarMesh?.SetScale(Scale, Scale, Scale);
     }
 
     public int GetVertexCount() { return Mesh?.GetVertexCount() ?? 0; }

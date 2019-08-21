@@ -88,7 +88,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = actor.GetLocalPosition();
+      TV_3DVECTOR vec = actor.Position;
       return new float[] { vec.x, vec.y, vec.z };
     }
 
@@ -99,7 +99,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = actor.GetLocalRotation();
+      TV_3DVECTOR vec = actor.Rotation;
       return new float[] { vec.x, vec.y, vec.z };
     }
 
@@ -110,7 +110,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = actor.GetLocalDirection();
+      TV_3DVECTOR vec = actor.Direction;
       return new float[] { vec.x, vec.y, vec.z };
     }
 
@@ -121,7 +121,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = actor.GetPosition();
+      TV_3DVECTOR vec = actor.GetGlobalPosition();
       return new float[] { vec.x, vec.y, vec.z };
     }
 
@@ -132,7 +132,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = actor.GetRotation();
+      TV_3DVECTOR vec = actor.GetGlobalRotation();
       return new float[] { vec.x, vec.y, vec.z };
     }
 
@@ -143,7 +143,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new float[] { 0, 0, 0 };
 
-      TV_3DVECTOR vec = actor.GetDirection();
+      TV_3DVECTOR vec = actor.GetGlobalDirection();
       return new float[] { vec.x, vec.y, vec.z };
     }
 
@@ -154,7 +154,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      actor.SetLocalPosition(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
+      actor.Position = new TV_3DVECTOR(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
       return true;
     }
 
@@ -165,7 +165,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      actor.SetLocalRotation(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
+      actor.Rotation = new TV_3DVECTOR(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
       return true;
     }
 
@@ -176,32 +176,10 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      actor.SetLocalDirection(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
+      actor.Direction = new TV_3DVECTOR(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
       return true;
     }
-
-    public static object SetRotation(Context context, params object[] ps)
-    {
-      int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return false;
-
-      actor.SetRotation(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
-      return true;
-    }
-
-    public static object SetDirection(Context context, params object[] ps)
-    {
-      int id = Convert.ToInt32(ps[0].ToString());
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return false;
-
-      actor.SetDirection(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
-      return true;
-    }
-
+    
     public static object LookAtPoint(Context context, params object[] ps)
     {
       int id = Convert.ToInt32(ps[0].ToString());
@@ -210,10 +188,10 @@ namespace SWEndor.Scenarios.Scripting.Functions
         return false;
 
       TV_3DVECTOR vec = new TV_3DVECTOR(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
-      if (ps.Length == 4)
-        actor.LookAtPoint(vec);
-      else
-        actor.LookAtPoint(vec, Convert.ToBoolean(ps[4].ToString()));
+      //if (ps.Length == 4)
+        actor.LookAt(vec);
+      //else
+      //  actor.LookAt(vec, Convert.ToBoolean(ps[4].ToString()));
 
       return true;
     }
@@ -430,11 +408,10 @@ namespace SWEndor.Scenarios.Scripting.Functions
         case "Scale":
           if (setValue)
           {
-            float newscale = Convert.ToSingle(newValue);
-            engine.MeshDataSet.Scale_set(actor, newscale);
+            actor.Scale = Convert.ToSingle(newValue);
           }
           else
-            newValue = engine.MeshDataSet.Scale_get(actor);
+            newValue = actor.Scale;
           return;
       }
     }

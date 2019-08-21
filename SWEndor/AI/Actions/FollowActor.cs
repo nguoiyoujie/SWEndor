@@ -42,7 +42,7 @@ namespace SWEndor.AI.Actions
 
       if (CheckBounds(actor))
       {
-        AdjustRotation(actor, target.GetPosition());
+        AdjustRotation(actor, target.GetGlobalPosition());
         float dist = ActorDistanceInfo.GetDistance(actor, target, FollowDistance + 1);
 
         float addspd = (actor.MoveData.MaxSpeed > target.MoveData.Speed) ? actor.MoveData.MaxSpeed - target.MoveData.Speed : 0;

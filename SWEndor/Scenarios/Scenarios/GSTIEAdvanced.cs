@@ -311,7 +311,7 @@ namespace SWEndor.Scenarios
           {
             ActorInfo rs = Engine.ActorFactory.Get(MainAllyFaction.GetShips()[0]);
             if (rs != null)
-              pos += rs.GetPosition();
+              pos += rs.GetGlobalPosition();
           }
 
           ActorInfo ainfo = new ActorSpawnInfo

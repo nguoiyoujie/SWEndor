@@ -66,13 +66,9 @@ namespace SWEndor.AI.Actions
           float d = dist / Globals.LaserSpeed;
           ActorInfo a2 = target.Relation.ParentForCoords;
           if (a2 == null)
-          {
             Target_Position = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d);
-          }
           else
-          {
-            Target_Position = a2.GetRelativePositionXYZ(target.GetLocalPosition().x, target.GetLocalPosition().y, target.GetLocalPosition().z + a2.MoveData.Speed * d);
-          }
+            Target_Position = target.GetRelativePositionXYZ(0, 0, a2.MoveData.Speed * d);
 
           float delta_angle = AdjustRotation(actor, Target_Position, true);
 
@@ -178,8 +174,8 @@ namespace SWEndor.AI.Actions
              dist = ActorDistanceInfo.GetDistance(a, actor, actor.WeaponSystemInfo.GetWeaponRange());
 
              TV_3DVECTOR vec = new TV_3DVECTOR();
-             TV_3DVECTOR dir = actor.GetDirection();
-             engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, a.GetPosition() - actor.GetPosition());
+             TV_3DVECTOR dir = actor.Direction;
+             engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, a.GetGlobalPosition() - actor.GetGlobalPosition());
              delta_angle = engine.TrueVision.TVMathLibrary.ACos(engine.TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
 
              WeaponInfo weapon = null;

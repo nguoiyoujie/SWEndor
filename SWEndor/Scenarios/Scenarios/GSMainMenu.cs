@@ -42,7 +42,7 @@ namespace SWEndor.Scenarios
       Manager.SetGameStateB("in_menu", true);
 
       //ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-      //cam.SetLocalPosition(100000, 0, 100000);
+      //cam.Position = new TV_3DVECTOR(100000, 0, 100000);
       Manager.MaxBounds = new TV_3DVECTOR(15000, 1500, 5000);
       Manager.MinBounds = new TV_3DVECTOR(-15000, -1500, -5000);
       Manager.MaxAIBounds = new TV_3DVECTOR(15000, 1500, 10000);
@@ -219,7 +219,7 @@ namespace SWEndor.Scenarios
         else if (PlayerCameraInfo.Position.z > 30000)
           y_en -= (PlayerCameraInfo.Position.z - 30000) * 50f;
 
-        m_APlanet.SetLocalPosition(0, y_en, 0);
+        m_APlanet.Position = new TV_3DVECTOR(0, y_en, 0);
       }
     }
 
@@ -363,7 +363,7 @@ namespace SWEndor.Scenarios
           && !actor.IsDyingOrDead)
         {
           ActionManager.ForceClearQueue(actorID);
-          ActionManager.QueueLast(actorID, new Rotate(actor.GetPosition() + new TV_3DVECTOR(18000, 0, -20000)
+          ActionManager.QueueLast(actorID, new Rotate(actor.GetGlobalPosition() + new TV_3DVECTOR(18000, 0, -20000)
                                                 , actor.MoveData.Speed
                                                 , actor.TypeInfo.Move_CloseEnough));
           ActionManager.QueueLast(actorID, new HyperspaceOut());
