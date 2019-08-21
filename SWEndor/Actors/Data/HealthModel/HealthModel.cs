@@ -6,12 +6,15 @@ using System.Collections.Generic;
 
 namespace SWEndor.Actors
 {
+  [Flags]
   public enum DamageType
   {
-    ALWAYS_100PERCENT = -1,
-    NONE,
-    NORMAL,
-    COLLISION
+    NONE = 0,
+    ALWAYS_100PERCENT = 0x0001,
+    NORMAL = 0x0010,
+    COLLISION = 0x0100,
+
+    ALL = 0xFFFF
   }
 
   public class DamageInfo
@@ -47,19 +50,19 @@ namespace SWEndor.Actors
       public float DisplayFrac { get { return DisplayHP / MaxHP; } }
       public float DisplayPerc { get { return DisplayFrac * 100; } }
 
-      private Dictionary<DamageType, float> DamageModifiers; //move Modifiers to combat data or something
+      //private Dictionary<DamageType, float> DamageModifiers; //move Modifiers to combat data or something
 
 
       public void Init(ActorTypeInfo type, ActorCreationInfo acinfo)
       {
         MaxHP = type.MaxStrength;
         HP = (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : type.MaxStrength;
-        DamageModifiers = new Dictionary<DamageType, float>();
+        //DamageModifiers = new Dictionary<DamageType, float>();
 
         // hard code for now
-        DamageModifiers.Add(DamageType.NORMAL, type.CombatData.DamageModifier);
-        DamageModifiers.Add(DamageType.COLLISION, type.CombatData.CollisionDamageModifier);
-        DamageModifiers.Add(DamageType.ALWAYS_100PERCENT, 1);
+        //DamageModifiers.Add(DamageType.NORMAL, type.CombatData.DamageModifier);
+        //DamageModifiers.Add(DamageType.COLLISION, type.CombatData.CollisionDamageModifier);
+        //DamageModifiers.Add(DamageType.ALWAYS_100PERCENT, 1);
       }
 
       public TV_COLOR Color
@@ -83,8 +86,7 @@ namespace SWEndor.Actors
         if (IsDead)
           return;
 
-        float mod = 1;
-        DamageModifiers.TryGetValue(dmg.Type, out mod);
+        float mod = target.Armor.Get(dmg.Type);
 
         float d = dmg.Value * mod;
         HP = (HP - d).Clamp(-1, MaxHP);

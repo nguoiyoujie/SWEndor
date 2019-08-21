@@ -12,6 +12,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.Disabled;
+      Armor = ActorInfo.ArmorModel.Immune;
       ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.TIMENOTEXPIRED_ONLY, deathExplosionType: "Explosion");
 
       EnableDistanceCull = true;
@@ -24,9 +25,10 @@ namespace SWEndor.ActorTypes.Groups
       MaxSecondOrderTurnRateFrac = 0.5f;
 
       Mask = ComponentMask.LASER_PROJECTILE;
-    }
+      DamageType = DamageType.NORMAL;
+  }
 
-    public float ImpactCloseEnoughDistance = 0;
+  public float ImpactCloseEnoughDistance = 0;
 
     public override void Initialize(ActorInfo ainfo)
     {

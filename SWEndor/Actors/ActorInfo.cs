@@ -104,6 +104,7 @@ namespace SWEndor.Actors
     private StateModel State;
     private HealthModel Health;
     private TransformModel Transform;
+    private ArmorModel Armor;
 
     // Traits (classes)
 
@@ -141,6 +142,7 @@ namespace SWEndor.Actors
       DyingTimer.Init(TypeInfo);
       Health.Init(TypeInfo, acinfo);
       Transform.Init(TypeInfo, acinfo);
+      Armor.Init(TypeInfo);
 
       MoveData.Init(TypeInfo, acinfo);
       //Engine.SysDataSet.Init(this, TypeInfo, acinfo);
@@ -187,6 +189,7 @@ namespace SWEndor.Actors
       DyingTimer.Init(TypeInfo);
       Health.Init(TypeInfo, acinfo);
       Transform.Init(TypeInfo, acinfo);
+      Armor.Init(TypeInfo);
 
       MoveData.Init(TypeInfo, acinfo);
       //Engine.SysDataSet.Init(this, TypeInfo, acinfo);
@@ -233,7 +236,7 @@ namespace SWEndor.Actors
     public TV_3DMATRIX GetMatrix() { return Transform.GetWorldMatrix(this, Game.GameTime); }
     public TV_3DVECTOR GetGlobalPosition() { return Transform.GetGlobalPosition(this, Game.GameTime); }
     public TV_3DVECTOR GetPrevGlobalPosition() { return Transform.GetPrevGlobalPosition(this, Game.GameTime); }
-    public TV_3DVECTOR GetGlobalRotation() { return Transform.GetGlobalRotation(this); }
+    public TV_3DVECTOR GetGlobalRotation() { return Transform.GetGlobalRotation(this, Game.GameTime); }
     public TV_3DVECTOR GetGlobalDirection() { return Transform.GetGlobalDirection(this); }
 
     public TV_3DVECTOR GetRelativePositionFUR(float front, float up, float right, bool uselocal = false)

@@ -10,6 +10,7 @@ namespace SWEndor.ActorTypes.Groups
       // Combat
       ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS);
       CombatData = CombatData.Disabled;
+      Armor = ActorInfo.ArmorModel.Immune;
 
       CullDistance = 3500;
 

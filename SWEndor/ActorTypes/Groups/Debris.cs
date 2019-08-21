@@ -9,6 +9,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.Disabled;
+      Armor = ActorInfo.ArmorModel.Immune;
       CullDistance = 4500f;
 
       Mask = ComponentMask.DEBRIS;

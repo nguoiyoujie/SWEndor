@@ -164,9 +164,9 @@ namespace SWEndor.Scenarios
             && !Manager.GetGameStateB("GameOver"))
           {
             Manager.AddEvent(Game.GameTime + 0.1f, Scene_02);
-            Engine.ActorDataSet.CombatData[trn1.dataID].DamageModifier = 0;
-            Engine.ActorDataSet.CombatData[trn2.dataID].DamageModifier = 0;
-            Engine.ActorDataSet.CombatData[trn3.dataID].DamageModifier = 0;
+            trn1.SetArmor(DamageType.ALL, 0);
+            trn2.SetArmor(DamageType.ALL, 0);
+            trn3.SetArmor(DamageType.ALL, 0);
             Manager.SetGameStateB("Stage1End", true);
           }
         }
@@ -264,7 +264,7 @@ namespace SWEndor.Scenarios
       }.Spawn(this);
 
       ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "front", "rear" };
-      Engine.ActorDataSet.CombatData[ainfo.dataID].DamageModifier = 0.1f;
+      ainfo.SetArmor(DamageType.ALL, 0.1f);
       ainfo.HitEvents += Rebel_PlayerHit;
       PlayerCameraInfo.Look.SetTarget_LookAtActor(ainfo.ID);
       PlayerInfo.TempActorID = ainfo.ID;
@@ -301,7 +301,7 @@ namespace SWEndor.Scenarios
           Registries = null
         }.Spawn(this);
 
-        Engine.ActorDataSet.CombatData[ainfo.dataID].DamageModifier = 0.85f;
+        ainfo.SetArmor(DamageType.ALL, 0.85f);
       }
 
       // Transport x3
@@ -327,7 +327,7 @@ namespace SWEndor.Scenarios
           Registries = new string[] { "CriticalAllies" }
         }.Spawn(this);
 
-        Engine.ActorDataSet.CombatData[ainfo.dataID].DamageModifier = 0.6f;
+        ainfo.SetArmor(DamageType.ALL, 0.6f);
 
         switch (i)
         {
@@ -432,7 +432,7 @@ namespace SWEndor.Scenarios
           }.Spawn(this);
 
           ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "front", "rear" };
-          Engine.ActorDataSet.CombatData[ainfo.dataID].DamageModifier = 0.1f;
+          ainfo.SetArmor(DamageType.ALL, 0.1f);
           ainfo.HitEvents += Rebel_PlayerHit;
 
           PlayerInfo.ActorID = ainfo.ID;
@@ -570,7 +570,7 @@ namespace SWEndor.Scenarios
         ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, 0, s.Info);
 
         ship.HuntWeight = 1;
-        Engine.ActorDataSet.CombatData[ship.dataID].DamageModifier = 0.1f;
+        ship.SetArmor(DamageType.ALL, 0.1f);
       }
     }
 
@@ -798,8 +798,8 @@ namespace SWEndor.Scenarios
       {
         m_Player_PrimaryWeapon = PlayerInfo.PrimaryWeapon;
         m_Player_SecondaryWeapon = PlayerInfo.SecondaryWeapon;
-        m_Player_DamageModifier = Engine.ActorDataSet.CombatData[player.dataID].DamageModifier;
-        Engine.ActorDataSet.CombatData[player.dataID].DamageModifier = 0;
+        m_Player_DamageModifier = player.GetArmor(DamageType.ALL);
+        player.SetArmor(DamageType.ALL, 0);
         ActionManager.ForceClearQueue(m_PlayerID);
         ActionManager.QueueNext(m_PlayerID, new Lock());
       }
@@ -817,7 +817,7 @@ namespace SWEndor.Scenarios
         PlayerInfo.PrimaryWeapon = m_Player_PrimaryWeapon;
         PlayerInfo.SecondaryWeapon = m_Player_SecondaryWeapon;
 
-        Engine.ActorDataSet.CombatData[player.dataID].DamageModifier = m_Player_DamageModifier;
+        player.SetArmor(DamageType.ALL, m_Player_DamageModifier);
         ActionManager.ForceClearQueue(m_PlayerID);
       }
       Manager.IsCutsceneMode = false;
@@ -907,9 +907,9 @@ namespace SWEndor.Scenarios
       ActorInfo trn2 = ActorFactory.Get(m_Transport2ID);
       ActorInfo trn3 = ActorFactory.Get(m_Transport3ID);
 
-      Engine.ActorDataSet.CombatData[trn1.dataID].DamageModifier = 0;
-      Engine.ActorDataSet.CombatData[trn2.dataID].DamageModifier = 0;
-      Engine.ActorDataSet.CombatData[trn3.dataID].DamageModifier = 0;
+      trn1.SetArmor(DamageType.ALL, 0);
+      trn2.SetArmor(DamageType.ALL, 0);
+      trn3.SetArmor(DamageType.ALL, 0);
 
       player.Position = new TV_3DVECTOR(0, 0, 500);
 
@@ -987,7 +987,7 @@ namespace SWEndor.Scenarios
         Registries = null
       };
       ActorInfo newDest = asi.Spawn(this);
-      Engine.ActorDataSet.CombatData[newDest.dataID].DamageModifier = 0.1f;
+      newDest.SetArmor(DamageType.ALL, 0.1f);
 
       asi.SpawnTime = Game.GameTime + 9.25f;
       asi.Position = new TV_3DVECTOR(20000, -2000, -25000);
@@ -996,7 +996,7 @@ namespace SWEndor.Scenarios
                                             , new Rotate(new TV_3DVECTOR(2000, -100, -10200), 0, -1, false)
                                             , new Lock() };
       newDest = asi.Spawn(this);
-      Engine.ActorDataSet.CombatData[newDest.dataID].DamageModifier = 0.1f;
+      newDest.SetArmor(DamageType.ALL, 0.1f);
     }
 
     public void Scene_02b_LightspeedFail(GameEventArg arg)

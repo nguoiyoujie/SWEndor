@@ -143,6 +143,7 @@
     <Compile Include="Actors\Components\DyingMovement\DyingKill.cs" />
     <Compile Include="Actors\Components\DyingMovement\Interfaces.cs" />
     <Compile Include="Actors\Components\Movement\MoveDecorator.cs" />
+    <Compile Include="Actors\Data\ArmorModel\ArmorModel.cs" />
     <Compile Include="Actors\Data\Explosion\ExplodeInfo.cs" />
     <Compile Include="Actors\Data\HealthModel\HealthModel.cs" />
     <Compile Include="Actors\Data\Mesh\MeshDataSet.cs" />

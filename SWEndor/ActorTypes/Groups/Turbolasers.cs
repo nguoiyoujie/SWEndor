@@ -9,6 +9,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.DefaultShip;
+      Armor = ActorInfo.ArmorModel.Default;
       ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS, deathExplosionType: "Explosion", deathExplosionSize: 5);
 
       Attack_AngularDelta = 360f;

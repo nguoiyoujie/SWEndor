@@ -15,6 +15,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.TIMENOTEXPIRED_ONLY, deathExplosionType: "ExplosionSm");
+      Armor = ActorInfo.ArmorModel.Default;
       CombatData = CombatData.DefaultFighter;
 
       CullDistance = 12000;

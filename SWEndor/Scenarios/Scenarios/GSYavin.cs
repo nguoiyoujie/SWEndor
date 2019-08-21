@@ -360,7 +360,7 @@ namespace SWEndor.Scenarios
           ActorInfo player = ActorFactory.Get(m_PlayerID);
           if (player != null)
           {
-            Engine.ActorDataSet.CombatData[player.dataID].DamageModifier = 0.75f;
+            player.SetArmor(DamageType.ALL, 0.75f);
 
             /*
             if (Player.Actor != null && !Manager.GetGameStateB("Stage5StartRun"))
@@ -421,9 +421,9 @@ namespace SWEndor.Scenarios
             if (!Stage6VaderEnd)
             {
               if (Screen2D.ShowRadar)
-                Engine.ActorDataSet.CombatData[player.dataID].DamageModifier = 2.5f;
+                player.SetArmor(DamageType.ALL, 2.5f);
               else
-                Engine.ActorDataSet.CombatData[player.dataID].DamageModifier = 1f;
+                player.SetArmor(DamageType.ALL, 1);
             }
 
             if (player != null)
@@ -596,7 +596,7 @@ namespace SWEndor.Scenarios
             Registries = null
           }.Spawn(this);
 
-          Engine.ActorDataSet.CombatData[ainfo.dataID].DamageModifier = 0.75f;
+          ainfo.SetArmor(DamageType.ALL, 0.75f);
         }
         else
         {
@@ -616,7 +616,7 @@ namespace SWEndor.Scenarios
             Registries = null
           }.Spawn(this);
 
-          Engine.ActorDataSet.CombatData[ainfo.dataID].DamageModifier = 0.6f;
+          ainfo.SetArmor(DamageType.ALL, 0.6f);
         }
       }
     }
@@ -663,7 +663,7 @@ namespace SWEndor.Scenarios
           player.MoveData.MinSpeed = 400;
           player.MoveData.MaxSpeed = 400;
 
-          Engine.ActorDataSet.CombatData[player.dataID].DamageModifier = 0.5f;
+          player.SetArmor(DamageType.ALL, 0.5f);
           player.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("X_WG_TORP") }
                                                         , {"laser", WeaponFactory.Get("X_WG_LASR") }
                                                         };
@@ -1172,8 +1172,8 @@ namespace SWEndor.Scenarios
       {
         m_Player_PrimaryWeapon = PlayerInfo.PrimaryWeapon;
         m_Player_SecondaryWeapon = PlayerInfo.SecondaryWeapon;
-        m_Player_DamageModifier = Engine.ActorDataSet.CombatData[player.dataID].DamageModifier;
-        Engine.ActorDataSet.CombatData[player.dataID].DamageModifier = 0;
+        m_Player_DamageModifier = player.GetArmor(DamageType.NORMAL);
+        player.SetArmor(DamageType.ALL, 0);
         ActionManager.ForceClearQueue(m_PlayerID);
         ActionManager.QueueNext(m_PlayerID, new Lock());
       }
@@ -1191,7 +1191,7 @@ namespace SWEndor.Scenarios
         PlayerInfo.ActorID = m_PlayerID;
         PlayerInfo.PrimaryWeapon = m_Player_PrimaryWeapon;
         PlayerInfo.SecondaryWeapon = m_Player_SecondaryWeapon;
-        Engine.ActorDataSet.CombatData[player.dataID].DamageModifier = m_Player_DamageModifier;
+        player.SetArmor(DamageType.ALL, m_Player_DamageModifier);
         ActionManager.ForceClearQueue(m_PlayerID);
       }
       Manager.IsCutsceneMode = false;

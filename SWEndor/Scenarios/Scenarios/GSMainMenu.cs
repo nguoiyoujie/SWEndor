@@ -422,7 +422,7 @@ namespace SWEndor.Scenarios
       {
         ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, 0, s.Info);
         if  (ship.TypeInfo == ActorTypeFactory.Get("Mon Calamari Capital Ship"))
-          Engine.ActorDataSet.CombatData[ship.dataID].DamageModifier = 0.1f;
+          ship.SetArmor(DamageType.ALL, 0.1f);
       }
 
       GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-4000, 500, 7300), new TV_3DVECTOR(-5500, 0, 8000));
@@ -748,7 +748,7 @@ namespace SWEndor.Scenarios
           ActorTypeFactory.Get("TIE Defender"),
         };
 
-        Engine.ActorDataSet.CombatData[ainfo.dataID].DamageModifier = 0.01f;
+        ainfo.SetArmor(DamageType.ALL, 0.01f);
       }
     }
 

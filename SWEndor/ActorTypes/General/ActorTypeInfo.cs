@@ -49,6 +49,8 @@ namespace SWEndor.ActorTypes
     public ExplodeData ExplodeData = new ExplodeData();
     public CombatData CombatData = new CombatData();
     public TimedLifeData TimedLifeData = new TimedLifeData();
+    public ActorInfo.ArmorModel Armor = new ActorInfo.ArmorModel();
+    public DamageType DamageType = DamageType.COLLISION;
 
     // Mesh Data
     public float Scale = 1;
@@ -297,7 +299,7 @@ namespace SWEndor.ActorTypes
 
         if (owner == PlayerInfo.Actor)
         {
-          PlayerInfo.Score.AddDamage(attacker, hitby.TypeInfo.ImpactDamage * ActorDataSet.CombatData[owner.dataID].DamageModifier);
+          PlayerInfo.Score.AddDamage(attacker, hitby.TypeInfo.ImpactDamage * owner.GetArmor(DamageType.NORMAL));
 
           if (owner.IsDyingOrDead)
             PlayerInfo.Score.AddDeath(attacker);
@@ -366,7 +368,7 @@ namespace SWEndor.ActorTypes
     {
       if (!victim.IsDyingOrDead)
       {
-        score.AddHit(victim, proj.TypeInfo.ImpactDamage * ActorDataSet.CombatData[victim.dataID].DamageModifier);
+        score.AddHit(victim, proj.TypeInfo.ImpactDamage * victim.GetArmor(DamageType.NORMAL));
       }
 
       if (victim.IsDyingOrDead)

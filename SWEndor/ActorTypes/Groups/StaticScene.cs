@@ -9,6 +9,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.Disabled;
+      Armor = ActorInfo.ArmorModel.Immune;
 
       MaxStrength = 100000.0f;
       MaxSpeed = 0.0f;

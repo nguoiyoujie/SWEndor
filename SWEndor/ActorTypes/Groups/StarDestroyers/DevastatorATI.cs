@@ -37,7 +37,7 @@ namespace SWEndor.ActorTypes.Instances
       DeathCamera = new DeathCameraInfo(1750, 400, 30);
       SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 1500f, new TV_3DVECTOR(0, -100, -400), true) };
       AddOns = new AddOnInfo[]
-      {
+     {
         // Front
         new AddOnInfo("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(0, -40, 1040), new TV_3DVECTOR(0, 0, 0), true)
 
@@ -90,8 +90,8 @@ namespace SWEndor.ActorTypes.Instances
         //Shield Generators
         , new AddOnInfo("Imperial Star Destroyer Shield Generator", new TV_3DVECTOR(-120, 360, -415), new TV_3DVECTOR(0, 0, 0), true)
         , new AddOnInfo("Imperial Star Destroyer Shield Generator", new TV_3DVECTOR(120, 360, -415), new TV_3DVECTOR(0, 0, 0), true)
-        //, new AddOnInfo("Star Destroyer Lower Shield Generator", new TV_3DVECTOR(0, -180, -250), new TV_3DVECTOR(0, 0, 0), true)
-      };
+       //, new AddOnInfo("Star Destroyer Lower Shield Generator", new TV_3DVECTOR(0, -180, -250), new TV_3DVECTOR(0, 0, 0), true)
+     };
     }
 
     public override void Initialize(ActorInfo ainfo)

@@ -183,27 +183,40 @@ namespace SWEndor.Actors
           return prevData.Position;
       }
 
-      public TV_3DVECTOR GetGlobalRotation(ActorInfo self)
+      public TV_3DVECTOR GetGlobalRotation(ActorInfo self, float time) // broken
       {
         if (self.Relation.Parent != null && !self.Relation.Parent.Disposed && self.Relation.UseParentCoords)
         {
+          TV_3DVECTOR dir = new TV_3DVECTOR();
+          //mlib.TVEulerAnglesFromMatrix(ref vR, GetWorldMatrix(self, time));
+          mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 1), GetWorldMatrix(self, time));
+          return Utilities.GetRotation(dir);
+                    
+          /*
           TV_3DVECTOR dir = self.Relation.Parent.Transform.Direction;
           TV_3DVECTOR rdir = new TV_3DVECTOR();
           mlib.TVVec3TransformCoord(ref rdir, dir, GetMatR(ref currData));
           return Utilities.GetRotation(rdir);
+          */
         }
         else
           return currData.Rotation;
       }
 
-      public TV_3DVECTOR GetPrevGlobalRotation(ActorInfo self)
+      public TV_3DVECTOR GetPrevGlobalRotation(ActorInfo self, float time) // broken
       {
         if (self.Relation.Parent != null && !self.Relation.Parent.Disposed && self.Relation.UseParentCoords)
         {
+          TV_3DVECTOR dir = new TV_3DVECTOR();
+          //mlib.TVEulerAnglesFromMatrix(ref vR, GetWorldMatrix(self, time));
+          mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 1), GetPrevWorldMatrix(self, time));
+          return Utilities.GetRotation(dir);
+          /*
           TV_3DVECTOR dir = self.Relation.Parent.Transform.PrevDirection;
           TV_3DVECTOR rdir = new TV_3DVECTOR();
           mlib.TVVec3TransformCoord(ref rdir, dir, GetMatR(ref prevData));
           return Utilities.GetRotation(rdir);
+          */
         }
         else
           return currData.Rotation;
@@ -235,7 +248,7 @@ namespace SWEndor.Actors
       public TV_3DVECTOR GetRelativePositionFUR(ActorInfo self, float time, float forward, float up = 0, float right = 0, bool local = false)
       {
         TV_3DVECTOR pos = local ? Position : GetGlobalPosition(self, time);
-        TV_3DVECTOR rot = local ? Rotation : GetGlobalRotation(self);
+        TV_3DVECTOR rot = local ? Rotation : GetGlobalRotation(self, time);
         TV_3DVECTOR ret = new TV_3DVECTOR();
 
         mlib.TVVec3Rotate(ref ret, new TV_3DVECTOR(right, up, forward), rot.y, rot.x, rot.z);
@@ -246,7 +259,7 @@ namespace SWEndor.Actors
       public TV_3DVECTOR GetRelativePositionXYZ(ActorInfo self, float time, float x, float y, float z, bool local = false)
       {
         TV_3DVECTOR pos = local ? Position : GetGlobalPosition(self, time);
-        TV_3DVECTOR rot = local ? Rotation : GetGlobalRotation(self);
+        TV_3DVECTOR rot = local ? Rotation : GetGlobalRotation(self, time);
         TV_3DVECTOR ret = new TV_3DVECTOR();
 
         mlib.TVVec3Rotate(ref ret, new TV_3DVECTOR(x, y, z), rot.y, rot.x, rot.z);

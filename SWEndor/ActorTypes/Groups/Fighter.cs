@@ -10,6 +10,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.DefaultFighter;
+      Armor = ActorInfo.ArmorModel.Default;
       ExplodeData = new ExplodeData(explosionRate: 0.75f, deathTrigger: DeathExplosionTrigger.ALWAYS);
 
       ZTilt = 2.5f;

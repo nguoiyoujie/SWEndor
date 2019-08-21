@@ -8,7 +8,8 @@ namespace SWEndor.ActorTypes.Groups
     internal ShieldGenerators(Factory owner, string name) : base(owner, name)
     {
       // Combat
-      CombatData = new CombatData(true, true, 1, 100);
+      CombatData = CombatData.DefaultFighter;
+      Armor = new ActorInfo.ArmorModel() { Light = 1, Hull = 100 };
 
       TargetType |= TargetType.SHIELDGENERATOR;
       RadarType = RadarType.HOLLOW_CIRCLE_M;

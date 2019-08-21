@@ -11,7 +11,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ExecutorBridgeATI(Factory owner) : base(owner, "Executor Super Star Destroyer Bridge")
     {
-      CombatData = new CombatData(true, false, 1, 4);
+      CombatData = CombatData.DefaultShip;
+      Armor = new ActorInfo.ArmorModel() { Light = 1, Hull = 4};
       ExplodeData = new ExplodeData(0.5f, 5);
 
       MaxStrength = 600.0f;

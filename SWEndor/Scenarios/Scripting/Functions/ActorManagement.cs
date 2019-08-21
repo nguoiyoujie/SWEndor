@@ -291,9 +291,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
           return;
         case "DamageModifier":
           if (setValue)
-            engine.ActorDataSet.CombatData[actor.dataID].DamageModifier = Convert.ToSingle(newValue);
+            actor.SetArmor(DamageType.NORMAL, Convert.ToSingle(newValue));
           else
-            newValue = engine.ActorDataSet.CombatData[actor.dataID].DamageModifier;
+            newValue = actor.GetArmor(DamageType.NORMAL);
           return;
         case "DeathExplosionSize":
           if (setValue)

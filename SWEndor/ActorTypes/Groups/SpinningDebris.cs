@@ -9,6 +9,7 @@ namespace SWEndor.ActorTypes.Groups
     internal SpinningDebris(Factory owner, string name) : base(owner, name)
     {
       CombatData = CombatData.Disabled;
+      Armor = ActorInfo.ArmorModel.Immune;
       TimedLifeData = new TimedLifeData(true, 5);
 
       MaxSpeed = 500;

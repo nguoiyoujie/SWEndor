@@ -9,6 +9,7 @@ namespace SWEndor.ActorTypes.Groups
     internal LargeShip(Factory owner, string name) : base(owner, name)
     {
       CombatData = CombatData.DefaultShip;
+      Armor = ActorInfo.ArmorModel.Default;
       ExplodeData = new ExplodeData(0.5f, 1, "ExplosionSm", DeathExplosionTrigger.ALWAYS, 2, "ExplosionLg");
 
       CullDistance = 20000;

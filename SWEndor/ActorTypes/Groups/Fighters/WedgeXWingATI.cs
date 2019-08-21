@@ -15,6 +15,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       // Combat
       CombatData = CombatData.DefaultShip;
+      Armor = ActorInfo.ArmorModel.Default;
 
       MaxStrength = 200;
       ImpactDamage = 16;

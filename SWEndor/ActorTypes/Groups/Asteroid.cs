@@ -9,7 +9,8 @@ namespace SWEndor.ActorTypes.Groups
     internal Asteroid(Factory owner, string name) : base(owner, name)
     {
       // Combat
-      CombatData = CombatData.Immune;
+      CombatData = CombatData.Disabled;
+      Armor = ActorInfo.ArmorModel.Immune;
       ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS, deathExplosionType: "Explosion");
 
       CullDistance = 4500;
