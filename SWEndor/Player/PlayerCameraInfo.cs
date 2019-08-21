@@ -28,10 +28,11 @@ namespace SWEndor.Player
         if (tgt != null && tgt.Active)
         {
           ret = Position + Utilities.GetRelativePositionXYZ(engine, tgt.GetPosition(), tgt.GetRotation(), PositionRelative.x, PositionRelative.y, PositionRelative.z);
-          _lastPos = new TV_3DVECTOR(ret.x, ret.y, ret.z);
+          _lastPos = ret;//new TV_3DVECTOR(ret.x, ret.y, ret.z);
         }
+        return new TV_3DVECTOR(_lastPos.x, _lastPos.y, _lastPos.z);
       }
-      return new TV_3DVECTOR(_lastPos.x, _lastPos.y, _lastPos.z);
+      return ret;
     }
   }
 
