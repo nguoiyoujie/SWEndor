@@ -36,7 +36,7 @@ namespace SWEndor.Scenarios
     private ThreadSafeDictionary<int, ActorInfo> m_ADS_TrenchParts;
     //private ActorInfo m_AStar = null;
     private List<ShipSpawnEventArg> m_pendingSDspawnlist;
-    private Dictionary<string, int> m_CriticalGroundObjects;
+    private HashSet<ActorInfo> m_CriticalGroundObjects;
 
     private float expiretime = 1800;
     private float target_distX = 118000;
@@ -68,7 +68,7 @@ namespace SWEndor.Scenarios
       m_ADS_SurfaceParts = new List<ActorInfo>();
       m_ADS_TrenchParts = new ThreadSafeDictionary<int, ActorInfo>();
       m_pendingSDspawnlist = new List<ShipSpawnEventArg>();
-      m_CriticalGroundObjects = new Dictionary<string, int>();
+      m_CriticalGroundObjects = new HashSet<ActorInfo>();
     }
 
     public override void Unload()
@@ -545,7 +545,7 @@ namespace SWEndor.Scenarios
       {
         Type = PlayerInfo.ActorType,
         Name = "(Player)",
-        RegisterName = "",
+
         SidebarName = "",
         SpawnTime = Game.GameTime,
         Faction = MainAllyFaction,
@@ -580,7 +580,7 @@ namespace SWEndor.Scenarios
           {
             Type = ActorTypeFactory.Get("X-Wing"),
             Name = names[i],
-            RegisterName = "",
+    
             SidebarName = names[i],
             SpawnTime = Game.GameTime,
             Faction = MainAllyFaction,
@@ -600,7 +600,7 @@ namespace SWEndor.Scenarios
           {
             Type = ActorTypeFactory.Get("Y-Wing"),
             Name = names[i],
-            RegisterName = "",
+    
             SidebarName = names[i],
             SpawnTime = Game.GameTime,
             Faction = MainAllyFaction,
@@ -752,7 +752,7 @@ namespace SWEndor.Scenarios
           {
             Type = PlayerInfo.ActorType,
             Name = "(Player)",
-            RegisterName = "",
+    
             SidebarName = "",
             SpawnTime = Game.GameTime,
             Faction = MainAllyFaction,
@@ -1001,7 +1001,7 @@ namespace SWEndor.Scenarios
             {
               Type = ActorTypeFactory.Get("TIE"),
               Name = "",
-              RegisterName = "",
+      
               SidebarName = "",
               SpawnTime = Game.GameTime,
               Faction = MainEnemyFaction,
@@ -1059,7 +1059,7 @@ namespace SWEndor.Scenarios
       {
         Type = ActorTypeFactory.Get("Radar Tower"),
         Name = "",
-        RegisterName = "",
+
         SidebarName = "",
         SpawnTime = Game.GameTime,
         Faction = FactionInfo.Factory.Get("Empire_DeathStarDefenses"),
@@ -1068,7 +1068,7 @@ namespace SWEndor.Scenarios
       };
 
       ActorInfo a = asi.Spawn(this);
-      m_CriticalGroundObjects.Add(a.Key, a.ID);
+      m_CriticalGroundObjects.Add(a);
 
       asi.Type = ActorTypeFactory.Get("Gun Tower");
       asi.Position = position + new TV_3DVECTOR(300, 0, 0);
@@ -1087,7 +1087,7 @@ namespace SWEndor.Scenarios
       {
         Type = ActorTypeFactory.Get("Deflector Tower"),
         Name = "",
-        RegisterName = "",
+
         SidebarName = "",
         SpawnTime = Game.GameTime,
         Faction = FactionInfo.Factory.Get("Empire_DeathStarDefenses"),
@@ -1096,7 +1096,7 @@ namespace SWEndor.Scenarios
       };
 
       ActorInfo a = asi.Spawn(this);
-      m_CriticalGroundObjects.Add(a.Key, a.ID);
+      m_CriticalGroundObjects.Add(a);
 
       asi.Type = ActorTypeFactory.Get("Gun Tower");
       asi.Position = position + new TV_3DVECTOR(500, 0, 0);
@@ -1130,7 +1130,7 @@ namespace SWEndor.Scenarios
       {
         Type = type,
         Name = "",
-        RegisterName = "",
+
         SidebarName = "",
         SpawnTime = Game.GameTime,
         Faction = FactionInfo.Factory.Get("Empire_DeathStarDefenses"),
@@ -1256,7 +1256,7 @@ namespace SWEndor.Scenarios
       {
         Type = ActorTypeFactory.Get("Surface003_00ATI"),
         Name = "",
-        RegisterName = "",
+
         SidebarName = "",
         SpawnTime = Game.GameTime,
         Faction = FactionInfo.Neutral,
@@ -1268,7 +1268,7 @@ namespace SWEndor.Scenarios
       {
         Type = ActorTypeFactory.Get("Surface003_00ATI"),
         Name = "",
-        RegisterName = "",
+
         SidebarName = "",
         SpawnTime = Game.GameTime,
         Faction = FactionInfo.Neutral,
@@ -1358,7 +1358,7 @@ namespace SWEndor.Scenarios
       {
         Type = type,
         Name = "",
-        RegisterName = "",
+
         SidebarName = "",
         SpawnTime = Game.GameTime,
         Faction = MainEnemyFaction,
@@ -1417,7 +1417,7 @@ namespace SWEndor.Scenarios
       {
         Type = ActorTypeFactory.Get("Surface003_00ATI"),
         Name = "",
-        RegisterName = "",
+
         SidebarName = "",
         SpawnTime = Game.GameTime,
         Faction = FactionInfo.Neutral,
@@ -1498,7 +1498,7 @@ namespace SWEndor.Scenarios
       {
         Type = ActorTypeFactory.Get("Thermal Exhaust Port"),
         Name = "",
-        RegisterName = "",
+
         SidebarName = "",
         SpawnTime = Game.GameTime,
         Faction = MainEnemyFaction,
@@ -1595,7 +1595,7 @@ namespace SWEndor.Scenarios
               {
                 Type = ActorTypeFactory.Get(TrenchTypes[Trenches[0]]),
                 Name = "",
-                RegisterName = "",
+        
                 SidebarName = "",
                 SpawnTime = Game.GameTime,
                 Faction = FactionInfo.Neutral,
@@ -1621,7 +1621,7 @@ namespace SWEndor.Scenarios
             {
               Type = ActorTypeFactory.Get(TrenchTypes[trench]),
               Name = "",
-              RegisterName = "",
+      
               SidebarName = "",
               SpawnTime = Game.GameTime,
               Faction = FactionInfo.Neutral,
@@ -1643,7 +1643,7 @@ namespace SWEndor.Scenarios
             {
               Type = ActorTypeFactory.Get("Deflector Tower"),
               Name = "",
-              RegisterName = "",
+      
               SidebarName = "",
               SpawnTime = Game.GameTime,
               Faction = FactionInfo.Factory.Get("Empire_DeathStarDefenses"),
@@ -1823,7 +1823,7 @@ namespace SWEndor.Scenarios
       {
         Type = ActorTypeFactory.Get("TIE Advanced X1"),
         Name = "",
-        RegisterName = "",
+
         SidebarName = "",
         SpawnTime = Game.GameTime,
         Faction = FactionInfo.Factory.Get("Empire"),
@@ -1840,7 +1840,7 @@ namespace SWEndor.Scenarios
       {
         Type = ActorTypeFactory.Get("TIE"),
         Name = "",
-        RegisterName = "",
+
         SidebarName = "",
         SpawnTime = Game.GameTime,
         Faction = FactionInfo.Factory.Get("Empire"),
@@ -1856,7 +1856,7 @@ namespace SWEndor.Scenarios
       {
         Type = ActorTypeFactory.Get("TIE"),
         Name = "",
-        RegisterName = "",
+
         SidebarName = "",
         SpawnTime = Game.GameTime,
         Faction = FactionInfo.Factory.Get("Empire"),
@@ -1956,7 +1956,7 @@ namespace SWEndor.Scenarios
       {
         Type = ActorTypeFactory.Get("Millennium Falcon"),
         Name = "",
-        RegisterName = "",
+
         SidebarName = "",
         SpawnTime = Game.GameTime,
         Faction = FactionInfo.Factory.Get("Rebels"),

@@ -285,7 +285,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public Dictionary<string, int> GetRegister(string key)
+    public HashSet<ActorInfo> GetRegister(string key)
     {
       switch (key.ToLower())
       {
@@ -296,40 +296,6 @@ namespace SWEndor.Scenarios
         default:
           return null;
       }
-    }
-
-    public void SpawnActor(params object[] param)
-    {
-      // Format: Object[]
-
-      if (param == null 
-        || param.GetLength(0) < 10
-        || !(param[0] is ActorTypeInfo)
-        || !(param[1] is string)
-        || !(param[2] is string)
-        || !(param[3] is string)
-        || !(param[4] is float)
-        || !(param[5] is FactionInfo)
-        || !(param[6] is TV_3DVECTOR)
-        || !(param[7] is TV_3DVECTOR)
-        || !(param[8] is ActionInfo[])
-        || !(param[9] is string[])
-        )
-        return;
-
-      new ActorSpawnInfo
-      {
-        Type = (ActorTypeInfo)param[0],
-        Name = (string)param[1],
-        RegisterName = (string)param[2],
-        SidebarName = (string)param[3],
-        SpawnTime = (float)param[4],
-        Faction = (FactionInfo)param[5],
-        Position = (TV_3DVECTOR)param[6],
-        Rotation = (TV_3DVECTOR)param[7],
-        Actions = (ActionInfo[])param[8],
-        Registries = (string[])param[9]
-      }.Spawn(this);
     }
 
     public void RegisterEvents(ActorInfo actor)

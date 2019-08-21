@@ -111,7 +111,6 @@ namespace SWEndor.Scenarios
           {
             Type = PlayerInfo.ActorType,
             Name = "(Player)",
-            RegisterName = "",
             SidebarName = "",
             SpawnTime = Game.GameTime,
             Faction = MainAllyFaction,
@@ -150,7 +149,6 @@ namespace SWEndor.Scenarios
           {
             Type = towers[Engine.Random.Next(0, towers.Count)],
             Name = "",
-            RegisterName = "",
             SidebarName = "",
             SpawnTime = Game.GameTime,
             Faction = MainAllyFaction,

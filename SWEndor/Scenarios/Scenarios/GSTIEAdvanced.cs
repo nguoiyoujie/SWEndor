@@ -167,7 +167,7 @@ namespace SWEndor.Scenarios
       {
         Type = Engine.ActorTypeFactory.Get("TIE Advanced X1"),
         Name = "(Player)",
-        RegisterName = "",
+
         SidebarName = "",
         SpawnTime = creationTime,
         Faction = MainAllyFaction,
@@ -207,7 +207,7 @@ namespace SWEndor.Scenarios
         {
           Type = atypes[Engine.Random.Next(0, atypes.Length)],
           Name = "",
-          RegisterName = "",
+  
           SidebarName = "",
           SpawnTime = creationTime,
           Faction = MainAllyFaction,
@@ -235,7 +235,7 @@ namespace SWEndor.Scenarios
         {
           Type = Engine.ActorTypeFactory.Get("Corellian Corvette"),
           Name = "",
-          RegisterName = "",
+  
           SidebarName = "CORELLIAN",
           SpawnTime = creationTime,
           Faction = MainAllyFaction,
@@ -266,7 +266,7 @@ namespace SWEndor.Scenarios
         {
           Type = Engine.ActorTypeFactory.Get("Transport"),
           Name = "",
-          RegisterName = "",
+  
           SidebarName = "TRANSPORT",
           SpawnTime = creationTime,
           Faction = MainAllyFaction,
@@ -318,7 +318,7 @@ namespace SWEndor.Scenarios
           {
             Type = PlayerInfo.ActorType,
             Name = "(Player)",
-            RegisterName = "",
+    
             SidebarName = "",
             SpawnTime = Game.GameTime,
             Faction = MainAllyFaction,
@@ -447,7 +447,7 @@ namespace SWEndor.Scenarios
       {
         Type = Engine.ActorTypeFactory.Get("TIE Advanced X1"),
         Name = "",
-        RegisterName = "",
+
         SidebarName = "TIE ADV. X1",
         SpawnTime = Game.GameTime,
         Faction = FactionInfo.Factory.Get("Empire_Advanced"),

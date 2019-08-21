@@ -14,7 +14,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
         return false;
       }
 
-      if (context.Engine.ActorFactory.Get(id) != null)
+      if (context.Engine.ActorFactory.Get(id) == null)
         return false;
 
       context.Engine.PlayerInfo.ActorID = id;

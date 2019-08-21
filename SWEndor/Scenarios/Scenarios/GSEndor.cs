@@ -511,7 +511,6 @@ namespace SWEndor.Scenarios
       {
         Type = type,
         Name = name,
-        RegisterName = "",
         SidebarName = sidebar_name,
         SpawnTime = creationTime,
         Faction = faction,
@@ -547,7 +546,6 @@ namespace SWEndor.Scenarios
       {
         Type = type,
         Name = name,
-        RegisterName = "",
         SidebarName = sidebar_name,
         SpawnTime = creationTime,
         Faction = faction,
@@ -602,7 +600,6 @@ namespace SWEndor.Scenarios
       {
         Type = type,
         Name = name,
-        RegisterName = "",
         SidebarName = sidebar_name,
         SpawnTime = creationTime,
         Faction = faction,
@@ -643,7 +640,6 @@ namespace SWEndor.Scenarios
       {
         Type = type,
         Name = name,
-        RegisterName = "",
         SidebarName = sidebar_name,
         SpawnTime = creationTime,
         Faction = faction,
@@ -774,7 +770,6 @@ namespace SWEndor.Scenarios
         {
           Type = type,
           Name = "",
-          RegisterName = "",
           SidebarName = "",
           SpawnTime = creationTime,
           Faction = faction,
@@ -1178,7 +1173,6 @@ namespace SWEndor.Scenarios
             {
               Type = ActorTypeFactory.Get("TIE"),
               Name = "",
-              RegisterName = "",
               SidebarName = "",
               SpawnTime = Game.GameTime + t,
               Faction = MainEnemyFaction,
@@ -1221,7 +1215,6 @@ namespace SWEndor.Scenarios
             {
               Type = ActorTypeFactory.Get("TIE"),
               Name = "",
-              RegisterName = "",
               SidebarName = "",
               SpawnTime = Game.GameTime + t,
               Faction = MainEnemyFaction,
@@ -1389,7 +1382,6 @@ namespace SWEndor.Scenarios
         {
           Type = type,
           Name = name,
-          RegisterName = "",
           SidebarName = "",
           SpawnTime = creationTime,
           Faction = null,
@@ -1805,7 +1797,6 @@ namespace SWEndor.Scenarios
       {
         Type = atinfo,
         Name = "",
-        RegisterName = "",
         SidebarName = "EXECUTOR",
         SpawnTime = Game.GameTime,
         Faction = MainEnemyFaction,

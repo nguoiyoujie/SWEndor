@@ -10,7 +10,7 @@ namespace SWEndor.Scenarios
   {
     public ActorTypeInfo Type;
     public string Name;
-    public string RegisterName;
+    public string Obsolete_var;
     public string SidebarName;
     public float SpawnTime;
     public FactionInfo Faction;
@@ -43,14 +43,9 @@ namespace SWEndor.Scenarios
       {
         foreach (string s in Registries)
         {
-          Dictionary<string, int> reg = scenario.GetRegister(s);
+          HashSet<ActorInfo> reg = scenario.GetRegister(s);
           if (reg != null)
-          {
-            if (RegisterName != null && RegisterName != "")
-              reg.Add(RegisterName, ainfo.ID);
-            else
-              reg.Add(ainfo.Key, ainfo.ID);
-          }
+            reg.Add(ainfo);
         }
       }
 

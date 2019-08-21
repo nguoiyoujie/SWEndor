@@ -56,8 +56,8 @@ namespace SWEndor.Scenarios
     public TV_3DVECTOR MinAIBounds = new TV_3DVECTOR(-20000, -1500, -20000);
 
     // Actor Registers
-    public Dictionary<string, int> CriticalAllies = new Dictionary<string, int>();
-    public Dictionary<string, int> CriticalEnemies = new Dictionary<string, int>();
+    public HashSet<ActorInfo> CriticalAllies = new HashSet<ActorInfo>();
+    public HashSet<ActorInfo> CriticalEnemies = new HashSet<ActorInfo>();
 
     public string Line1Text = "";
     public string Line2Text = "";
@@ -85,29 +85,11 @@ namespace SWEndor.Scenarios
       PlayerInfo.IsMovementControlsEnabled = false;
     }
 
-    public int UpdateActorLists(Dictionary<string, int> list)
+    public void UpdateActorLists(HashSet<ActorInfo> list)
     {
-      int ret = 0;
-      List<string> rm = new List<string>();
-      foreach (KeyValuePair<string, int> kvp in list)
-      {
-        ActorInfo actor = Engine.ActorFactory.Get(kvp.Value);
-        if (actor != null && actor.Disposed)
-        {
-          rm.Add(kvp.Key);
-
-          if (actor.IsPlayer)
-          {
-            ret++;
-          }
-        }
-      }
-
-      foreach (string rs in rm)
-      {
-        list.Remove(rs);
-      }
-      return ret;
+      foreach (ActorInfo a in new List<ActorInfo>(list))
+        if (a != null && a.DisposingOrDisposed)
+          list.Remove(a);
     }
 
     public void Update()

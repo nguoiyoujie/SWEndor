@@ -260,7 +260,6 @@ namespace SWEndor.Scenarios
         {
           Type = at,
           Name = "",
-          RegisterName = "",
           SidebarName = "",
           SpawnTime = creationTime,
           Faction = MainAllyFaction,
@@ -285,7 +284,6 @@ namespace SWEndor.Scenarios
         {
           Type = at,
           Name = "",
-          RegisterName = "",
           SidebarName = "",
           SpawnTime = creationTime,
           Faction = MainAllyFaction,
@@ -314,7 +312,6 @@ namespace SWEndor.Scenarios
         {
           Type = at,
           Name = "",
-          RegisterName = "",
           SidebarName = "",
           SpawnTime = creationTime,
           Faction = MainAllyFaction,
@@ -344,7 +341,6 @@ namespace SWEndor.Scenarios
         {
           Type = at,
           Name = "",
-          RegisterName = "",
           SidebarName = "",
           SpawnTime = creationTime,
           Faction = MainAllyFaction,
@@ -593,7 +589,6 @@ namespace SWEndor.Scenarios
         {
           Type = ActorTypeFactory.Get("TIE Defender"),
           Name = "",
-          RegisterName = "",
           SidebarName = "",
           SpawnTime = 0,
           Faction = MainEnemyFaction,
@@ -633,7 +628,6 @@ namespace SWEndor.Scenarios
         {
           Type = ActorTypeFactory.Get("TIE Avenger"),
           Name = "",
-          RegisterName = "",
           SidebarName = "",
           SpawnTime = 0,
           Faction = MainEnemyFaction,
@@ -713,7 +707,6 @@ namespace SWEndor.Scenarios
         {
           Type = ActorTypeFactory.Get("Imperial-I Star Destroyer"),
           Name = "",
-          RegisterName = "",
           SidebarName = "",
           SpawnTime = creationTime + createtime[i],
           Faction = MainEnemyFaction,

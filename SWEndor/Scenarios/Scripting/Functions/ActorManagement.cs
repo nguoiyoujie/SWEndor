@@ -18,7 +18,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
 
       ActorTypeInfo atype = context.Engine.ActorTypeFactory.Get(ps[0].ToString());
       string unitname = ps[1].ToString();
-      string regname = ps[2].ToString();
+      string regname = ps[2].ToString(); //OBSOLETE, BUT NEED TO RE-WRITE SCRIPTS BEFORE IMPLEMENTING
       string sidebarname = ps[3].ToString();
       float spawntime = Convert.ToSingle(ps[4]);
       FactionInfo faction = FactionInfo.Factory.Get(ps[5].ToString());
@@ -33,7 +33,6 @@ namespace SWEndor.Scenarios.Scripting.Functions
       {
         Type = atype,
         Name = unitname,
-        RegisterName = regname,
         SidebarName = sidebarname,
         SpawnTime = spawntime,
         Faction = faction,

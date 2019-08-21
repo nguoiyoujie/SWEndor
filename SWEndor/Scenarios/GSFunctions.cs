@@ -103,7 +103,7 @@ namespace SWEndor.Scenarios
         {
           Type = spawninfo.TypeInfo,
           Name = name,
-          RegisterName = name,
+          Obsolete_var = name,
           SidebarName = name,
           SpawnTime = spawntime,
           Faction = spawninfo.Faction,
@@ -261,7 +261,7 @@ namespace SWEndor.Scenarios
       {
         Type = spawninfo.TypeInfo,
         Name = name,
-        RegisterName = name,
+        Obsolete_var = name,
         SidebarName = name,
         SpawnTime = engine.Game.GameTime + spawndelay,
         Faction = spawninfo.Faction,

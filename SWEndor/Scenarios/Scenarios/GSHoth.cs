@@ -254,7 +254,6 @@ namespace SWEndor.Scenarios
       {
         Type = PlayerInfo.ActorType,
         Name = "(Player)",
-        RegisterName = "",
         SidebarName = "",
         SpawnTime = Game.GameTime,
         Faction = FactionInfo.Factory.Get("Rebels_Falcon"),
@@ -293,7 +292,6 @@ namespace SWEndor.Scenarios
         {
           Type = ActorTypeFactory.Get("X-Wing"),
           Name = "",
-          RegisterName = "",
           SidebarName = "",
           SpawnTime = Game.GameTime,
           Faction = FactionInfo.Factory.Get("Rebels"),
@@ -320,7 +318,6 @@ namespace SWEndor.Scenarios
         {
           Type = ActorTypeFactory.Get("Transport"),
           Name = "",
-          RegisterName = "",
           SidebarName = "TRANSPORT",
           SpawnTime = Game.GameTime,
           Faction = FactionInfo.Factory.Get("Rebels"),
@@ -371,7 +368,6 @@ namespace SWEndor.Scenarios
       {
         Type = ActorTypeFactory.Get("Large Ion Laser"),
         Name = "",
-        RegisterName = "",
         SidebarName = "",
         SpawnTime = Game.GameTime,
         Faction = FactionInfo.Factory.Get("Rebels"),
@@ -397,7 +393,7 @@ namespace SWEndor.Scenarios
           {
             if (Manager.CriticalAllies.Count > 0)
             {
-              ActorInfo crit = ActorFactory.Get(new List<int>(Manager.CriticalAllies.Values)[0]);
+              ActorInfo crit = new List<ActorInfo>(Manager.CriticalAllies)[0];
               position = crit.GetRelativePositionXYZ(0, -100, -1750);
             }
             else
@@ -426,7 +422,6 @@ namespace SWEndor.Scenarios
           {
             Type = PlayerInfo.ActorType,
             Name = "(Player)",
-            RegisterName = "",
             SidebarName = "",
             SpawnTime = Game.GameTime,
             Faction = FactionInfo.Factory.Get("Rebels_Falcon"),
@@ -741,7 +736,6 @@ namespace SWEndor.Scenarios
             {
               Type = ActorTypeFactory.Get("TIE"),
               Name = "",
-              RegisterName = "",
               SidebarName = "",
               SpawnTime = Game.GameTime,
               Faction = MainEnemyFaction,
@@ -981,7 +975,6 @@ namespace SWEndor.Scenarios
       {
         Type = ActorTypeFactory.Get("Imperial-I Star Destroyer"),
         Name = "",
-        RegisterName = "",
         SidebarName = "",
         SpawnTime = Game.GameTime + 9,
         Faction = MainEnemyFaction,

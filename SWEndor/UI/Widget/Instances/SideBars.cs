@@ -59,9 +59,8 @@ namespace SWEndor.UI.Widgets
       int barnumber = 2;
 
       //Allies
-      foreach (int i in GameScenarioManager.CriticalAllies.Values)
+      foreach (ActorInfo a in GameScenarioManager.CriticalAllies)
       {
-        ActorInfo a = ActorFactory.Get(i);
         DrawSingleBar(barnumber
             , a.SideBarName.PadRight(12).Remove(11)
             , a.DisplayHP_Frac
@@ -71,9 +70,8 @@ namespace SWEndor.UI.Widgets
       }
 
       //Enemies
-      foreach (int i in GameScenarioManager.CriticalEnemies.Values)
+      foreach (ActorInfo a in GameScenarioManager.CriticalEnemies)
       {
-        ActorInfo a = ActorFactory.Get(i);
         DrawSingleBar(barnumber
             , a.SideBarName.PadRight(12).Remove(11)
             , a.DisplayHP_Frac

@@ -18,7 +18,6 @@ namespace SWEndor.Terminal.Commands.Actor
 
       ParameterNames.Add("actortype");
       ParameterNames.Add("unit_name");
-      ParameterNames.Add("registry_name");
       ParameterNames.Add("sidebar_name");
       ParameterNames.Add("spawn_time");
       ParameterNames.Add("faction_name");
@@ -39,15 +38,14 @@ namespace SWEndor.Terminal.Commands.Actor
 
       ActorTypeInfo atype = Globals.Engine.ActorTypeFactory.Get(param[0].ToString());
       string unitname = param[1];
-      string regname = param[2];
-      string sidebarname = param[3];
-      float spawntime = Convert.ToSingle(param[4]);
-      FactionInfo faction = FactionInfo.Factory.Get(param[5]);
-      TV_3DVECTOR position = new TV_3DVECTOR(Convert.ToSingle(param[6]), Convert.ToSingle(param[7]), Convert.ToSingle(param[8]));
-      TV_3DVECTOR rotation = new TV_3DVECTOR(Convert.ToSingle(param[9]), Convert.ToSingle(param[10]), Convert.ToSingle(param[11]));
+      string sidebarname = param[2];
+      float spawntime = Convert.ToSingle(param[3]);
+      FactionInfo faction = FactionInfo.Factory.Get(param[4]);
+      TV_3DVECTOR position = new TV_3DVECTOR(Convert.ToSingle(param[5]), Convert.ToSingle(param[6]), Convert.ToSingle(param[7]));
+      TV_3DVECTOR rotation = new TV_3DVECTOR(Convert.ToSingle(param[8]), Convert.ToSingle(param[9]), Convert.ToSingle(param[10]));
       List<string> registries = new List<string>();
 
-      for (int i = 12; i < param.Length; i++)
+      for (int i = 11; i < param.Length; i++)
       {
         registries.Add(param[i].ToString());
       }
@@ -56,7 +54,6 @@ namespace SWEndor.Terminal.Commands.Actor
       {
         Type = atype,
         Name = unitname,
-        RegisterName = regname,
         SidebarName = sidebarname,
         SpawnTime = spawntime,
         Faction = faction,
