@@ -241,9 +241,20 @@ namespace SWEndor.Weapons
         if (EnablePlayerAutoAim && target != null)
         {
           float dist = ActorDistanceInfo.GetDistance(owner, target);
-          float d = dist / Projectile.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
 
-          TV_3DVECTOR dir = target.GetRelativePositionXYZ(0, 0, target.GetTrueSpeed() * d) - owner.GetGlobalPosition();
+          float d;
+          if (AutoAimMaxDeviation == AutoAimMinDeviation)
+            d = dist / Projectile.MaxSpeed * AutoAimMinDeviation;
+          else
+            d = dist / Projectile.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
+
+          TV_3DVECTOR dir = new TV_3DVECTOR();
+          ActorInfo a2 = target.Relation.ParentForCoords;
+          if (a2 == null)
+            dir = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d) - owner.GetGlobalPosition();
+          else
+            dir = target.GetGlobalPosition() + a2.GetRelativePositionXYZ(0, 0, a2.MoveData.Speed * d) - a2.GetGlobalPosition() - owner.GetGlobalPosition();
+
           acinfo.Rotation = Utilities.GetRotation(dir);
         }
         else
@@ -293,25 +304,16 @@ namespace SWEndor.Weapons
 
           float d;
           if (AutoAimMaxDeviation == AutoAimMinDeviation)
-          {
             d = dist / Projectile.MaxSpeed * AutoAimMinDeviation;
-          }
           else
-          {
             d = dist / Projectile.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
-          }
 
           TV_3DVECTOR dir = new TV_3DVECTOR();
           ActorInfo a2 = target.Relation.ParentForCoords;
           if (a2 == null)
-          {
             dir = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d) - owner.GetGlobalPosition();
-          }
           else
-          {
-            //dir = target.GetPosition() - owner.GetPosition();
-            dir = a2.GetRelativePositionXYZ(target.Position.x, target.Position.y, target.Position.z + a2.MoveData.Speed * d) - owner.GetGlobalPosition();
-          }
+            dir = target.GetGlobalPosition() + a2.GetRelativePositionXYZ(0, 0, a2.MoveData.Speed * d) - a2.GetGlobalPosition() - owner.GetGlobalPosition();
 
           acinfo.Rotation = Utilities.GetRotation(dir);
         }

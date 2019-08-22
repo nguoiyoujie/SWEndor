@@ -20,7 +20,7 @@ namespace SWEndor
       SpawnSpeed = 125;
       SpawnRotation = new TV_3DVECTOR(0, 90, 0);
       SpawnManualPositioningMult = new TV_3DVECTOR(0, 0, 0);
-      SpawnSpeedPositioningMult = new TV_3DVECTOR(0, 0, -1);
+      SpawnSpeedPositioningMult = new TV_3DVECTOR(0, 0, 1);
     }
   }
 }

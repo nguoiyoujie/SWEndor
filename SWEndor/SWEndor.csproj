@@ -185,6 +185,7 @@
     <Compile Include="Actors\TVFunctions.cs" />
     <Compile Include="ActorTypes\Components\DeathCameraInfo.cs" />
     <Compile Include="ActorTypes\Components\ActorCameraInfo.cs" />
+    <Compile Include="ActorTypes\General\ActorSpawner\NebBSpawner.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\MCLSpawner.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\PlayerSpawner.cs" />
     <Compile Include="ActorTypes\General\Enums\RadarType.cs" />

@@ -37,6 +37,8 @@ namespace SWEndor.ActorTypes.Instances
         , new AddOnInfo("Nebulon B Turbolaser Tower", new TV_3DVECTOR(0, -180, -550), new TV_3DVECTOR(90, 0, 0), true)
         , new AddOnInfo("Nebulon B Missile Pod", new TV_3DVECTOR(-80, -45, -485), new TV_3DVECTOR(0, 0, 0), true)
         , new AddOnInfo("Nebulon B Missile Pod", new TV_3DVECTOR(80, -45, -485), new TV_3DVECTOR(0, 0, 0), true)
+
+        , new AddOnInfo("Hangar Bay", new TV_3DVECTOR(10, -60, 192), new TV_3DVECTOR(0, 180, 0), true)
       };
     }
 
@@ -44,6 +46,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
       ainfo.DyingMoveComponent = new DyingSink(0.02f, 5f, 0.8f);
+      ainfo.SpawnerInfo = new NebBSpawner(ainfo);
     }
   }
 }

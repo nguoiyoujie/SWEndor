@@ -97,7 +97,7 @@ namespace SWEndor.ActorTypes.Instances
       float scale = ainfo.Scale;
       TV_3DVECTOR clone = ainfo.GetRelativePositionXYZ(p.SpawnerInfo.PlayerSpawnLocation.x * scale, p.SpawnerInfo.PlayerSpawnLocation.y * scale, p.SpawnerInfo.PlayerSpawnLocation.z * scale);
       acinfo.Position = new TV_3DVECTOR(clone.x, clone.y, clone.z);
-      acinfo.Rotation = new TV_3DVECTOR(p.Rotation.x, p.Rotation.y, p.Rotation.z);
+      acinfo.Rotation = ainfo.GetGlobalRotation();
       acinfo.Rotation += p.SpawnerInfo.SpawnRotation;
 
       acinfo.FreeSpeed = true;
