@@ -12,6 +12,7 @@ using SWEndor.AI;
 using SWEndor.UI.Forms;
 using SWEndor.Actors.Data;
 using System.Text;
+using SWEndor.AI.Squads;
 
 namespace SWEndor
 {
@@ -56,6 +57,7 @@ namespace SWEndor
     internal Font.Factory FontFactory { get; private set; }
     internal ActorInfo.Factory ActorFactory { get; private set; }
     internal ActorTypeInfo.Factory ActorTypeFactory { get; private set; }
+    internal Squadron.Factory SquadronFactory { get; private set; }
     internal ActionManager ActionManager { get; private set; }
 
     // Engine pars to be loaded late
@@ -78,6 +80,7 @@ namespace SWEndor
       PerfManager = new PerfManager(this);
       ActorFactory = new ActorInfo.Factory(this);
       ActorTypeFactory = new ActorTypeInfo.Factory(this);
+      SquadronFactory = new Squadron.Factory();
       ActionManager = new ActionManager(this);
       PlayerInfo = new PlayerInfo(this);
 

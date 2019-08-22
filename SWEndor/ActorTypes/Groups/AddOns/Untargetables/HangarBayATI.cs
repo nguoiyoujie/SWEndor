@@ -4,6 +4,7 @@ using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Groups;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
+using SWEndor.AI.Squads;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -38,7 +39,7 @@ namespace SWEndor.ActorTypes.Instances
           {
             a.MoveData.FreeSpeed = false;
             a.UnlockOne();
-            a.QueueLast(new Hunt());
+            //a.QueueLast(new Hunt());
 
             if (a.IsPlayer)
               PlayerInfo.IsMovementControlsEnabled = true;
@@ -138,6 +139,7 @@ namespace SWEndor.ActorTypes.Instances
           p.SpawnerInfo.NextSpawnTime = Game.GameTime + p.SpawnerInfo.SpawnInterval;
           p.SpawnerInfo.SpawnsRemaining--;
 
+          Squadron squad = ainfo.Engine.SquadronFactory.Create();
           foreach (TV_3DVECTOR sv in p.SpawnerInfo.SpawnLocations)
           {
             ActorCreationInfo acinfo = new ActorCreationInfo(spawntype);
@@ -151,6 +153,8 @@ namespace SWEndor.ActorTypes.Instances
             acinfo.FreeSpeed = true;
             acinfo.Faction = ainfo.Faction;
             ActorInfo a = ActorFactory.Create(acinfo);
+            a.Squad = squad;
+            squad.Members.AddLast(a);
             ainfo.AddChild(a);
             GameScenarioManager.Scenario?.RegisterEvents(a);
             ActionManager.QueueFirst(a.ID, new Lock());

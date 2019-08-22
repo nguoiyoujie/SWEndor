@@ -136,27 +136,27 @@ namespace SWEndor.AI
       {
         if (action == null)
         {
-          actor.CurrentAction = new Idle();
+          actor.CurrentAction = actor.Squad?.GetNewAction() ?? new Idle();
         }
         else
         {
-            if (action.Complete)
+          if (action.Complete)
+          {
+            if (action.NextAction == null)
             {
-              if (action.NextAction == null)
-              {
-                actor.CurrentAction = new Idle();
-              }
-              else
-              {
-                actor.CurrentAction = action.NextAction;
-                action.Dispose();
-              }
+              actor.CurrentAction = actor.Squad?.GetNewAction() ?? new Idle();
             }
             else
             {
-              action.Process(Engine, actor);
+              actor.CurrentAction = action.NextAction;
+              action.Dispose();
             }
           }
+          else
+          {
+            action.Process(Engine, actor);
+          }
+        }
       }
     }
   }

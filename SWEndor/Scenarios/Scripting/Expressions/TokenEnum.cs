@@ -11,6 +11,8 @@
     IF,
     THEN,
     ELSE,
+    FOREACH,
+    IN,
 
     // Literals
     BOOLEANLITERAL,

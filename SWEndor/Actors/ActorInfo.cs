@@ -3,6 +3,7 @@ using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
+using SWEndor.AI.Squads;
 using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.Scenarios;
@@ -89,6 +90,7 @@ namespace SWEndor.Actors
     public HitEvent HitEvents;
 
     // AI
+    public Squadron Squad = null;
     public ActionInfo CurrentAction = null;
     public bool CanEvade = true;
     public bool CanRetaliate = true;
@@ -376,6 +378,12 @@ namespace SWEndor.Actors
 
       // Actions
       CurrentAction = null;
+
+      if (Squad != null)
+      {
+        Squad.Members.Remove(this);
+        Squad = null;
+      }
 
       // Reset components
 

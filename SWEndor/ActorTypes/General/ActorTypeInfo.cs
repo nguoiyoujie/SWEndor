@@ -312,12 +312,31 @@ namespace SWEndor.ActorTypes
           {
             if (owner.CanRetaliate && (owner.CurrentAction == null || owner.CurrentAction.CanInterrupt))
             {
-              owner.ClearQueue();
-              owner.QueueLast(new AttackActor(attacker.ID));
+              if (owner.Squad != null && owner.Squad.Missions.Count == 0)
+              {
+                foreach (ActorInfo a in owner.Squad.Members)
+                {
+                  a.ClearQueue();
+                  a.QueueLast(new AttackActor(attacker.ID));
+                }
+              }
+              else
+              {
+                owner.ClearQueue();
+                owner.QueueLast(new AttackActor(attacker.ID));
+              }
             }
             else if (owner.CanEvade && !(owner.CurrentAction is Evade))
             {
               owner.QueueFirst(new Evade());
+            }
+
+            if (owner.Squad != null)
+            {
+              if (owner.Squad.Members.First.Value == owner)
+                owner.Squad.Threats.AddFirst(attacker);
+              else
+                owner.Squad.Threats.AddLast(attacker);
             }
           }
         }

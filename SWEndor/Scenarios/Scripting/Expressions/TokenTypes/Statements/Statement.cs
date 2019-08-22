@@ -13,7 +13,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Statements
 
       if (lexer.TokenType != TokenEnum.NOTHING && lexer.TokenType != TokenEnum.COMMENT)
       {
-        _statement = new IfThenElseStatement(lexer).Get();
+        _statement = new ForEachStatement(lexer).Get();
 
         // comment (eliminated by lexer)
         //if (lexer.TokenType == TokenEnum.COMMENT)

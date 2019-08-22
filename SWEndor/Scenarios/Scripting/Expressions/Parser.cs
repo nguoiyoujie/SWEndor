@@ -18,6 +18,8 @@ namespace SWEndor.Scenarios.Scripting.Expressions
         new TokenDefinition(@"if", TokenEnum.IF, RegexOption),
         new TokenDefinition(@"then", TokenEnum.THEN, RegexOption),
         new TokenDefinition(@"else", TokenEnum.ELSE, RegexOption),
+        new TokenDefinition(@"foreach", TokenEnum.FOREACH, RegexOption),
+        new TokenDefinition(@"in", TokenEnum.IN, RegexOption),
 
         // literals
         new TokenDefinition(@"true|false", TokenEnum.BOOLEANLITERAL, RegexOption),

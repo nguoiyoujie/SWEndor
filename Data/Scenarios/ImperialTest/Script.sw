@@ -169,6 +169,7 @@ makeimperials:
 	Actor.SetProperty(tied2, "DamageModifier", 0.25);
 	Actor.QueueLast(tied2, "wait", 2.5);
 
+	spawnhyperspace = false;
 	spawnfaction = "Empire";
 	damagemod = 0.25;
 	spawnwait = 3.5;
@@ -365,7 +366,7 @@ spawnenemybombers:
 	CallScript("spawn2");
 
 spawnenemybombers2:
-	spawnfaction = "TraitorsII";
+	//spawnfaction = "TraitorsII";
 	damagemod = 1;
 	spawnwait = 0;
 	spawnX = -10000;
@@ -392,7 +393,7 @@ spawnenemybombers2:
 	CallScript("spawn2");
 
 spawnenemybombers3:
-	spawnfaction = "TraitorsII";
+	//spawnfaction = "TraitorsII";
 	damagemod = 1;
 	spawnwait = 0;
 	spawnX = -10000;

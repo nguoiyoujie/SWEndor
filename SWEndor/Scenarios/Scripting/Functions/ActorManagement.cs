@@ -10,6 +10,38 @@ namespace SWEndor.Scenarios.Scripting.Functions
 {
   public static class ActorManagement
   {
+    public static object Squadron_Spawn(Context context, params object[] ps)
+    {
+      GameScenarioBase gscenario = context.Engine.GameScenarioManager.Scenario;
+      float spawntime = Convert.ToSingle(ps[12]);
+      TV_3DVECTOR position = new TV_3DVECTOR(Convert.ToSingle(ps[13]), Convert.ToSingle(ps[14]), Convert.ToSingle(ps[15]));
+
+      List<string> registries = new List<string>();
+      for (int i = 16; i < ps.Length; i++)
+        registries.Add(ps[i].ToString());
+
+      GSFunctions.SquadSpawnInfo sinfo = new GSFunctions.SquadSpawnInfo(
+        ps[0].ToString(),
+        context.Engine.ActorTypeFactory.Get(ps[1].ToString()),
+        FactionInfo.Factory.Get(ps[2].ToString()),
+        Convert.ToInt32(ps[3]), // member count
+        Convert.ToSingle(ps[4]), // wait delay
+        (TargetType)Enum.Parse(typeof(TargetType), ps[5].ToString(), true), // huntTargetType
+        Convert.ToBoolean(ps[6]), // hyperspace in
+        (GSFunctions.SquadFormation)Enum.Parse(typeof(GSFunctions.SquadFormation), ps[7].ToString(), true),
+        new TV_3DVECTOR(Convert.ToSingle(ps[8]), Convert.ToSingle(ps[9]), Convert.ToSingle(ps[10])),
+        Convert.ToSingle(ps[11]), // formation distance
+        registries.ToArray()
+        );
+
+      ActorInfo[] squad = GSFunctions.Squadron_Spawn(context.Engine, gscenario, position, spawntime, sinfo);
+      int[] ret = new int[squad.Length];
+      for (int i = 0; i < squad.Length; i++)
+        ret[i] = squad[i].ID;
+
+      return ret;
+    }
+
     public static object Spawn(Context context, params object[] ps)
     {
       GameScenarioBase gscenario = context.Engine.GameScenarioManager.Scenario;

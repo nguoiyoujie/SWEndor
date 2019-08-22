@@ -91,13 +91,18 @@ namespace SWEndor.Scenarios
       ActorInfo[] ret = new ActorInfo[spawninfo.MemberCount];
       TV_3DVECTOR[] spawnpos;
       TV_3DVECTOR[] poss = GetMemberPositions(position, spawninfo, out spawnpos);
+      AI.Squads.Squadron squad = engine.SquadronFactory.Create();
       for (int i = 0; i < poss.Length; i++)
       {
-        ActionInfo[] actions = (spawninfo.HyperspaceIn)
-          ? new ActionInfo[] { new HyperspaceIn(poss[i]), new Wait(spawninfo.WaitDelay), new Hunt(spawninfo.HuntTargetType) }
-          : new ActionInfo[] { new Wait(spawninfo.WaitDelay), new Hunt(spawninfo.HuntTargetType) };
+        ActionInfo[] actions;
+        if (spawninfo.HyperspaceIn)
+          actions = new ActionInfo[] { new HyperspaceIn(poss[i]), new Wait(spawninfo.WaitDelay), new Hunt(spawninfo.HuntTargetType) };
+        else if (spawninfo.HuntTargetType == TargetType.ANY)
+          actions = new ActionInfo[] { new Wait(spawninfo.WaitDelay) };
+        else
+          actions = new ActionInfo[] { new Wait(spawninfo.WaitDelay), new Hunt(spawninfo.HuntTargetType) };
 
-        string name = (spawninfo.SquadName == null) ? "" : string.Concat(spawninfo.SquadName, " ", i);
+        string name = (spawninfo.SquadName == null || spawninfo.SquadName == "") ? "" : string.Concat(spawninfo.SquadName, " ", i);
 
         ActorSpawnInfo asi = new ActorSpawnInfo
         {
@@ -114,6 +119,8 @@ namespace SWEndor.Scenarios
         };
 
         ret[i] = asi.Spawn(scenario);
+        ret[i].Squad = squad;
+        squad.Members.AddLast(ret[i]);
       }
       return ret;
     }

@@ -22,6 +22,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       Functions.Add("Scene.SetSceneCameraAsActive".ToLowerInvariant(), SceneCameraManagement.SetSceneCameraAsActive);
 
       // Actor Management
+      Functions.Add("Actor.Squadron_Spawn".ToLowerInvariant(), ActorManagement.Squadron_Spawn);
       Functions.Add("Actor.Spawn".ToLowerInvariant(), ActorManagement.Spawn);
       //Functions.Add("Actor.SetActive".ToLowerInvariant(), ActorManagement.SetActive);
       Functions.Add("Actor.IsAlive".ToLowerInvariant(), ActorManagement.IsAlive);
