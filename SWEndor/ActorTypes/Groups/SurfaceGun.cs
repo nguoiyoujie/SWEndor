@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Data;
+using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -9,7 +10,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.DefaultShip;
-      Armor = ActorInfo.ArmorModel.Default;
+      Armor = ArmorInfo.Default;
       ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS, deathExplosionSize: 5);
 
       CullDistance = 10000;

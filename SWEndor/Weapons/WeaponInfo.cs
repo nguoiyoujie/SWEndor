@@ -249,7 +249,7 @@ namespace SWEndor.Weapons
             d = dist / Projectile.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
 
           TV_3DVECTOR dir = new TV_3DVECTOR();
-          ActorInfo a2 = target.Relation.ParentForCoords;
+          ActorInfo a2 = target.ParentForCoords;
           if (a2 == null)
             dir = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d) - owner.GetGlobalPosition();
           else
@@ -309,7 +309,7 @@ namespace SWEndor.Weapons
             d = dist / Projectile.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
 
           TV_3DVECTOR dir = new TV_3DVECTOR();
-          ActorInfo a2 = target.Relation.ParentForCoords;
+          ActorInfo a2 = target.ParentForCoords;
           if (a2 == null)
             dir = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d) - owner.GetGlobalPosition();
           else

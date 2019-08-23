@@ -5,14 +5,12 @@ namespace SWEndor.Actors
 {
   public partial class ActorInfo
   {
-    public struct RelationModel
+    private struct RelationModel
     {
       public ActorInfo Parent { get; set; }
       public ActorInfo ParentForCoords { get { return UseParentCoords ? Parent : null; } }
       public bool UseParentCoords { get; set; }
-
-
-      LinkedList<ActorInfo> list;
+      private LinkedList<ActorInfo> list;
 
       public void Init()
       {
@@ -77,7 +75,10 @@ namespace SWEndor.Actors
     public void AddChild(ActorInfo a) { Relation.AddChild(this, a); }
     public void RemoveChild(ActorInfo a) { Relation.RemoveChild(this, a); }
     public IEnumerable<ActorInfo> Children { get { return Relation.Children; } }
+    public ActorInfo Parent { get { return Relation.Parent; } }
     public ActorInfo TopParent { get { return Relation.GetTopParent(this); } }
     public IEnumerable<ActorInfo> Siblings { get { return Relation.Siblings; } }
+    public ActorInfo ParentForCoords { get { return Relation.ParentForCoords; } }
+    public bool UseParentCoords { get { return Relation.UseParentCoords; } set { Relation.UseParentCoords = value; } }
   }
 }

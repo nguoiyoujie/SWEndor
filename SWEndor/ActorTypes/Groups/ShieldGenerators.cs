@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Data;
+using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -9,7 +10,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.DefaultFighter;
-      Armor = new ActorInfo.ArmorModel() { Light = 1, Hull = 100 };
+      Armor = new ArmorInfo() { Light = 1, Hull = 100 };
 
       TargetType |= TargetType.SHIELDGENERATOR;
       RadarType = RadarType.HOLLOW_CIRCLE_M;

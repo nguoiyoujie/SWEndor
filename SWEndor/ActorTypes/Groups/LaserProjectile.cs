@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Data;
+using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -10,7 +11,7 @@ namespace SWEndor.ActorTypes.Groups
       // Combat
       TimedLifeData = new TimedLifeData(true, 1.6f);
       CombatData = CombatData.Disabled;
-      Armor = ActorInfo.ArmorModel.Immune;
+      Armor = ArmorInfo.Immune;
       ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.TIMENOTEXPIRED_ONLY, deathExplosionType: "Explosion");
 
       MaxSpeed = Globals.LaserSpeed;

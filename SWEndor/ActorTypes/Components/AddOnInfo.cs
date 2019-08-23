@@ -41,7 +41,7 @@ namespace SWEndor.ActorTypes.Components
       ActorInfo a = actor.ActorFactory.Create( acinfo);
       actor.AddChild(a);
 
-      a.Relation.UseParentCoords = AttachToParent;
+      a.UseParentCoords = AttachToParent;
     }
   }
 }

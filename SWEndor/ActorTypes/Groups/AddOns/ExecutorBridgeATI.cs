@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.ActorTypes.Components;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -11,7 +12,7 @@ namespace SWEndor.ActorTypes.Instances
     internal ExecutorBridgeATI(Factory owner) : base(owner, "Executor Super Star Destroyer Bridge")
     {
       CombatData = CombatData.DefaultShip;
-      Armor = new ActorInfo.ArmorModel() { Light = 1, Hull = 4};
+      Armor = new ArmorInfo() { Light = 1, Hull = 4};
       ExplodeData = new ExplodeData(0.5f, 5);
 
       MaxStrength = 600.0f;
@@ -53,7 +54,7 @@ namespace SWEndor.ActorTypes.Instances
 
       if (ainfo.IsDyingOrDead)
       {
-        ainfo.DyingTimer.Set(2000, true);
+        ainfo.DyingTimerSet(2000, true);
         CombatSystem.Deactivate(Engine, ainfo);
 
         ainfo.TopParent?.SetState_Dying();

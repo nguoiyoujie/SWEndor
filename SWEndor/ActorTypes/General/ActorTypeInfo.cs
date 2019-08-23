@@ -48,7 +48,7 @@ namespace SWEndor.ActorTypes
     public ExplodeData ExplodeData = new ExplodeData();
     public CombatData CombatData = new CombatData();
     public TimedLifeData TimedLifeData = new TimedLifeData();
-    public ActorInfo.ArmorModel Armor = new ActorInfo.ArmorModel();
+    public ArmorInfo Armor = new ArmorInfo();
     public DamageType DamageType = DamageType.COLLISION;
 
     // Mesh Data

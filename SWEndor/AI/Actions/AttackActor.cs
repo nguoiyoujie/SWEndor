@@ -63,7 +63,7 @@ namespace SWEndor.AI.Actions
         if (dist > TooCloseDistance)
         {
           float d = dist / Globals.LaserSpeed;
-          ActorInfo a2 = target.Relation.ParentForCoords;
+          ActorInfo a2 = target.ParentForCoords;
           if (a2 == null)
             Target_Position = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d);
           else
@@ -118,7 +118,7 @@ namespace SWEndor.AI.Actions
           }
           else if (!(target.TypeInfo is ActorTypes.Groups.Projectile))
           {
-            actor.QueueFirst(new Move(MakeAltPosition(engine, actor, target.Relation.Parent), actor.MoveData.MaxSpeed));
+            actor.QueueFirst(new Move(MakeAltPosition(engine, actor, target.Parent), actor.MoveData.MaxSpeed));
           }
           return;
         }

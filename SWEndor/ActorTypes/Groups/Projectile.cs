@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.ActorTypes.Components;
 using SWEndor.AI.Actions;
 
 namespace SWEndor.ActorTypes.Groups
@@ -12,7 +13,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.Disabled;
-      Armor = ActorInfo.ArmorModel.Immune;
+      Armor = ArmorInfo.Immune;
       ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.TIMENOTEXPIRED_ONLY, deathExplosionType: "Explosion");
 
       EnableDistanceCull = true;

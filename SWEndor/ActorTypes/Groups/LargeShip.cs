@@ -1,6 +1,7 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -9,7 +10,7 @@ namespace SWEndor.ActorTypes.Groups
     internal LargeShip(Factory owner, string name) : base(owner, name)
     {
       CombatData = CombatData.DefaultShip;
-      Armor = ActorInfo.ArmorModel.Default;
+      Armor = ArmorInfo.Default;
       ExplodeData = new ExplodeData(0.5f, 1, "ExplosionSm", DeathExplosionTrigger.ALWAYS, 2, "ExplosionLg");
 
       CullDistance = 20000;
@@ -34,7 +35,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       base.Dying(ainfo);
 
-      ainfo.DyingTimer.Set(25, true);
+      ainfo.DyingTimerSet(25, true);
       CombatSystem.Deactivate(Engine, ainfo);
     }
 

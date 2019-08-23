@@ -1145,7 +1145,7 @@ namespace SWEndor.Scenarios
         else if (actor.TypeInfo is MC90ATI)
         {
           Manager.AddEvent(Game.GameTime + 15, Message_92_LostHomeOne);
-          actor.DyingTimer.Set(2000, true);
+          actor.DyingTimerSet(2000, true);
           Manager.AddEvent(Game.GameTime + 25, FadeOut);
         }
       }
@@ -2006,7 +2006,7 @@ namespace SWEndor.Scenarios
         }
 
         SoundManager.SetMusic("executorend");
-        ainfo.DyingTimer.Set(2000, true);
+        ainfo.DyingTimerSet(2000, true);
 
         ActorInfo homeone = ActorFactory.Get(m_HomeOneID);
         if (homeone != null)
@@ -2288,15 +2288,7 @@ namespace SWEndor.Scenarios
         else if (target.TypeInfo is MC90ATI)
           pos += new TV_3DVECTOR(-850, -400, 2500);
 
-        PlayerCameraInfo.Look.SetPosition_Point(pos);
-        PlayerCameraInfo.Look.SetTarget_LookAtActor(target.ID);
-
-        //ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
-        //cam.Position = new TV_3DVECTOR(pos.x, pos.y, pos.z);
-        //cam.LookAtPoint(new TV_3DVECTOR());
-        //cam.MoveData.MaxSpeed = 50;
-        //cam.MoveData.Speed = 50;
-
+        PlayerCameraInfo.Look.SetPosition_Point(pos, 50);
         PlayerCameraInfo.Look.SetTarget_LookAtActor(target.ID);
         Manager.AddEvent(Game.GameTime + 5f, Scene_ExitCutscene);
       }

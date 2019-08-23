@@ -551,7 +551,7 @@ namespace SWEndor.Scenarios
 
         if (ainfo.TypeInfo is TransportATI)
         {
-          ainfo.DyingTimer.Set(2000, true);
+          ainfo.DyingTimerSet(2000, true);
           Manager.AddEvent(Game.GameTime + 25, FadeOut);
         }
       }

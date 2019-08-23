@@ -5,8 +5,8 @@ using System;
 namespace SWEndor.Actors
 {
   public partial class ActorInfo
-  { 
-    public struct HealthModel
+  {
+    private struct HealthModel
     {
       public float HP { get; private set; }
       public float MaxHP { get; private set; }
@@ -45,7 +45,7 @@ namespace SWEndor.Actors
         if (IsDead)
           return;
 
-        float mod = target.Armor.Get(dmg.Type);
+        float mod = target.GetArmor(dmg.Type);
 
         float d = dmg.Value * mod;
         HP = (HP - d).Clamp(-1, MaxHP);

@@ -1,6 +1,7 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -10,7 +11,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.DefaultFighter;
-      Armor = ActorInfo.ArmorModel.Default;
+      Armor = ArmorInfo.Default;
       ExplodeData = new ExplodeData(explosionRate: 0.75f, deathTrigger: DeathExplosionTrigger.ALWAYS);
 
       ZTilt = 2.5f;
@@ -43,10 +44,10 @@ namespace SWEndor.ActorTypes.Groups
 
       ainfo.MoveData.ApplyZBalance = false;
 
-      if (ainfo.Relation.Parent != null || (ainfo.ActorDataSet.CombatData[ainfo.dataID].HitWhileDyingLeadsToDeath && Engine.Random.NextDouble() < 0.3f))
-        ainfo.DyingTimer.Set(0.1f, true);
+      if (ainfo.Parent != null || (ainfo.ActorDataSet.CombatData[ainfo.dataID].HitWhileDyingLeadsToDeath && Engine.Random.NextDouble() < 0.3f))
+        ainfo.DyingTimerSet(0.1f, true);
       else
-        ainfo.DyingTimer.Set(5, true);
+        ainfo.DyingTimerSet(5, true);
 
       CombatSystem.Deactivate(Engine, ainfo);
 

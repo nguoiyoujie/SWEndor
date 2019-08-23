@@ -46,8 +46,8 @@ namespace SWEndor.ActorTypes.Instances
       base.ProcessHit(owner, hitby, impact, normal);
       float time = 0.5f;
 
-      if (hitby.DyingTimer.TimeRemaining > time)
-        hitby.DyingTimer.Set(time, false);
+      if (hitby.DyingTimeRemaining > time)
+        hitby.DyingTimerSet(time, false);
     }
   }
 }

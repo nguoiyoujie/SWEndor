@@ -2,49 +2,63 @@
 
 namespace SWEndor.Actors
 {
-  public struct DyingTimer
+  public partial class ActorInfo
   {
-    public enum TimerStates { INACTIVE, ACTIVE, EXPIRED }
-    public float TimeRemaining { get; private set; }
-    public TimerStates State { get; private set; }
-
-    public void Init(ActorTypeInfo type)
+    public enum TimerStates
     {
-      TimeRemaining = type.TimedLifeData.TimedLife;
-      State = type.TimedLifeData.OnTimedLife ? TimerStates.ACTIVE : TimerStates.INACTIVE;
+      INACTIVE,
+      ACTIVE,
+      EXPIRED
     }
 
-    public void Start()
+    public struct TimerModel
     {
-      if (State == TimerStates.INACTIVE)
-        State = TimerStates.ACTIVE;
-    }
+      public float TimeRemaining { get; private set; }
+      public TimerStates State { get; private set; }
 
-    public void Pause()
-    {
-      if (State == TimerStates.ACTIVE)
-        State = TimerStates.INACTIVE;
-    }
-
-    public void Set(float time, bool startnow)
-    {
-      TimeRemaining = time;
-      if (startnow)
-        Start();
-    }
-
-    public void Tick(ActorInfo self, float time)
-    {
-      if (State == TimerStates.ACTIVE)
+      public void InitAsDyingTimer(ActorTypeInfo type)
       {
-        TimeRemaining -= time;
+        TimeRemaining = type.TimedLifeData.TimedLife;
+        State = type.TimedLifeData.OnTimedLife ? TimerStates.ACTIVE : TimerStates.INACTIVE;
+      }
 
-        if (TimeRemaining < 0)
+      public void Start()
+      {
+        if (State == TimerStates.INACTIVE)
+          State = TimerStates.ACTIVE;
+      }
+
+      public void Pause()
+      {
+        if (State == TimerStates.ACTIVE)
+          State = TimerStates.INACTIVE;
+      }
+
+      public void Set(float time, bool startnow)
+      {
+        TimeRemaining = time;
+        if (startnow)
+          Start();
+      }
+
+      public void Tick(ActorInfo self, float time)
+      {
+        if (State == TimerStates.ACTIVE)
         {
-          State = TimerStates.EXPIRED;
-          self.SetState_Dead();
+          TimeRemaining -= time;
+
+          if (TimeRemaining < 0)
+          {
+            State = TimerStates.EXPIRED;
+            self.SetState_Dead();
+          }
         }
       }
     }
+
+    public float DyingTimeRemaining { get { return DyingTimer.TimeRemaining; } }
+    public void DyingTimerStart() { DyingTimer.Start(); }
+    public void DyingTimerPause() { DyingTimer.Pause(); }
+    public void DyingTimerSet(float time, bool startnow) { DyingTimer.Set(time, startnow); }
   }
 }

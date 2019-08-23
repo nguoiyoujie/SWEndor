@@ -13,7 +13,7 @@ namespace SWEndor.ActorTypes.Instances
     internal TIE_X1_ATI(Factory owner) : base(owner, "TIE Advanced X1")
     {
       CombatData = CombatData.DefaultShip;
-      Armor = ActorInfo.ArmorModel.Default;
+      Armor = ArmorInfo.Default;
 
       MaxStrength = 275;
       ImpactDamage = 100;

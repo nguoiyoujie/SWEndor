@@ -39,7 +39,7 @@ namespace SWEndor.AI.Actions
       float dist = ActorDistanceInfo.GetDistance(actor, Target_Actor);
       float d = dist / Globals.LaserSpeed;
 
-      ActorInfo a2 = target.Relation.UseParentCoords ? target.Relation.Parent : null;
+      ActorInfo a2 = target.UseParentCoords ? target.Parent : null;
       if (a2 == null)
         Target_Position = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d);
       else

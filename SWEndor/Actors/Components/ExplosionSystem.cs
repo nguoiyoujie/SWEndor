@@ -43,7 +43,7 @@ namespace SWEndor.Actors.Components
 
       if (data.DeathExplosionTrigger == DeathExplosionTrigger.ALWAYS
         || (data.DeathExplosionTrigger == DeathExplosionTrigger.TIMENOTEXPIRED_ONLY 
-          && actor.DyingTimer.TimeRemaining > 0)
+          && actor.DyingTimeRemaining > 0)
         )
         MakeDeathExplosion(engine, actor, ref data);
     }

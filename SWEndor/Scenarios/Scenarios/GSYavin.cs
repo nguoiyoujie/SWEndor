@@ -698,7 +698,7 @@ namespace SWEndor.Scenarios
               int rsID = MainEnemyFaction.GetShips()[Engine.Random.Next(0, MainEnemyFaction.GetShips().Count)];
               ActorInfo rs = ActorFactory.Get(actorID);
               {
-                foreach (ActorInfo a in rs.Relation.Children)
+                foreach (ActorInfo a in rs.Children)
                 {
                   if (Engine.ActorDataSet.RegenData[a.dataID].ParentRegenRate > 0)
                     if (Engine.Random.NextDouble() > 0.4f)
@@ -2010,7 +2010,7 @@ namespace SWEndor.Scenarios
         vader.MoveData.ApplyZBalance = false;
         vader.Rotation = new TV_3DVECTOR(-30, 85, 5);
 
-        vader.DyingTimer.Set(2000, true);
+        vader.DyingTimerSet(2000, true);
 
         vader.SetState_Dying();
         vaderE2.Rotation = new TV_3DVECTOR(-5, 93, 0);

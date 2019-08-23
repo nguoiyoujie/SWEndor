@@ -7,7 +7,7 @@ namespace SWEndor.Actors
     /// <summary>
     /// A light implementation of an Armor system, replaces old Damage and CollisionDamage coefficients
     /// </summary>
-    public struct ArmorModel
+    private struct ArmorModel
     {
       public float Light;
       //public float Heavy;
@@ -18,10 +18,10 @@ namespace SWEndor.Actors
       public static ArmorModel Immune { get { return new ArmorModel(); } }
       public static ArmorModel Default { get { return new ArmorModel { Light = 1, Hull = 1 }; } }
 
-
       public void Init(ActorTypeInfo type)
       {
-        this = type.Armor;
+        Light = type.Armor.Light;
+        Hull = type.Armor.Hull;
       }
 
       public float Get(DamageType dmgtype)

@@ -63,11 +63,8 @@ namespace SWEndor.Actors
       }
       set
       {
-        if (_faction != null)
-          _faction.UnregisterActor(this);
-        _faction = value;
-        if (_faction == null)
-          _faction = FactionInfo.Neutral;
+        _faction?.UnregisterActor(this);
+        _faction = value ?? FactionInfo.Neutral;
         _faction.RegisterActor(this);
       }
     }
@@ -97,12 +94,11 @@ namespace SWEndor.Actors
     public int HuntWeight = 1;
 
     // Data (structs)
-    //public CoordData CoordData;
     public MoveData MoveData;
 
     // Traits (structs)
-    public RelationModel Relation; // Try to make it private
-    public DyingTimer DyingTimer; // Try to make it private
+    private RelationModel Relation;
+    private TimerModel DyingTimer; 
     private StateModel State;
     private HealthModel Health;
     private TransformModel Transform;
@@ -137,7 +133,7 @@ namespace SWEndor.Actors
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
 
       Relation.Init();
-      DyingTimer.Init(TypeInfo);
+      DyingTimer.InitAsDyingTimer(TypeInfo);
       Health.Init(TypeInfo, acinfo);
       Transform.Init(TypeInfo, acinfo);
       Armor.Init(TypeInfo);
@@ -178,7 +174,7 @@ namespace SWEndor.Actors
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
 
       Relation.Init();
-      DyingTimer.Init(TypeInfo);
+      DyingTimer.InitAsDyingTimer(TypeInfo);
       Health.Init(TypeInfo, acinfo);
       Transform.Init(TypeInfo, acinfo);
       Armor.Init(TypeInfo);

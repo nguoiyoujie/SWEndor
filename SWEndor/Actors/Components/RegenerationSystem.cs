@@ -13,14 +13,14 @@ namespace SWEndor.Actors.Components
         Regenerate(engine, actor, data.SelfRegenRate * time);
 
       if (data.ParentRegenRate != 0)
-          Regenerate(engine, actor.Relation.Parent, data.ParentRegenRate * time);
+          Regenerate(engine, actor.Parent, data.ParentRegenRate * time);
 
       if (data.ChildRegenRate != 0)
-        foreach (ActorInfo c in actor.Relation.Children)
+        foreach (ActorInfo c in actor.Children)
           Regenerate(engine, c, data.ChildRegenRate * time);
 
       if (data.SiblingRegenRate != 0)
-        foreach (ActorInfo r in actor.Relation.Siblings)
+        foreach (ActorInfo r in actor.Siblings)
           Regenerate(engine, r, data.SiblingRegenRate * time);
     }
 

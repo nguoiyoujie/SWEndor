@@ -173,6 +173,7 @@
     <Compile Include="Actors\Enums\ActorState.cs" />
     <Compile Include="Actors\Enums\CreationState.cs" />
     <Compile Include="Actors\States\ActorDistanceInfo.cs" />
+    <Compile Include="ActorTypes\Components\ArmorInfo.cs" />
     <Compile Include="ActorTypes\Components\DeathCameraInfo.cs" />
     <Compile Include="ActorTypes\Components\ActorCameraInfo.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\NebBSpawner.cs" />

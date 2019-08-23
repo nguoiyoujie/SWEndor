@@ -34,8 +34,7 @@ namespace SWEndor.ActorTypes.Instances
         () => 
         {
           ainfo.SetState_Normal();
-          //ainfo.CombatSystem.onNotify(Engine, ainfo.ID, CombatEventType.TIMEACTIVATE , TimedLifeData.TimedLife);
-          ainfo.DyingTimer.Set(TimedLifeData.TimedLife, true);
+          ainfo.DyingTimerSet(TimedLifeData.TimedLife, true);
         }
         );
 
@@ -48,7 +47,7 @@ namespace SWEndor.ActorTypes.Instances
       base.ProcessState(ainfo);
       if (!ainfo.IsDyingOrDead)
       {
-        ActorInfo p = ainfo.Relation.Parent;
+        ActorInfo p = ainfo.Parent;
         if (p != null)
         {
           if (!p.Disposed)
