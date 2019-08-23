@@ -208,7 +208,7 @@ namespace SWEndor.Player
     public TV_3DVECTOR Position { get; private set; }
     public TV_3DVECTOR Rotation { get; private set; }
 
-    public float Shake = 0;
+    private float shake = 0;
     private float prev_shake_displacement_x = 0;
     private float prev_shake_displacement_y = 0;
 
@@ -300,14 +300,26 @@ namespace SWEndor.Player
       }
     }
 
-    public void ApplyShake()
+    public void Shake(float value)
     {
-      if (Shake > 1)
+      shake = value;
+    }
+
+    public void ProximityShake(float maxValue, float decayDistance, TV_3DVECTOR origin)
+    {
+      float dist = ActorDistanceInfo.GetDistance(Position, origin);
+      if (dist <= decayDistance)
+        shake = maxValue * (decayDistance - dist) / decayDistance;
+    }
+
+    private void ApplyShake()
+    {
+      if (shake > 1)
       {
         if (Engine.PlayerInfo.StrengthFrac > 0)
         {
-          int dispx = Engine.Random.Next(-(int)Shake, (int)Shake);
-          int dispy = Engine.Random.Next(-(int)Shake, (int)Shake);
+          int dispx = Engine.Random.Next(-(int)shake, (int)shake);
+          int dispy = Engine.Random.Next(-(int)shake, (int)shake);
           Camera.MoveRelative(0, dispx - prev_shake_displacement_x, dispy - prev_shake_displacement_y, true);
           prev_shake_displacement_x = dispx;
           prev_shake_displacement_y = dispy;
@@ -318,7 +330,7 @@ namespace SWEndor.Player
 
     public void ShakeDecay()
     {
-      Shake *= 0.95f; // decay
+      shake *= 0.95f; // decay
     }
 
     public void RotateCam(float aX, float aY)

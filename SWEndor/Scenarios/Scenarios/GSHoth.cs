@@ -514,7 +514,7 @@ namespace SWEndor.Scenarios
           }
           else
           {
-            PlayerCameraInfo.Shake = 2 * attacker.TypeInfo.ImpactDamage;
+            PlayerCameraInfo.Shake(2 * attacker.TypeInfo.ImpactDamage);
           }
         }
       }
@@ -1019,7 +1019,7 @@ namespace SWEndor.Scenarios
 
     public void Scene_02_ViolentShake(GameEventArg arg)
     {
-      PlayerCameraInfo.Shake = 75;
+      PlayerCameraInfo.Shake(75);
     }
 
     #endregion

@@ -30,6 +30,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
       ainfo.CycleInfo.CyclePeriod = 0.5f;
+      PlayerCameraInfo.ProximityShake(5, 100, ainfo.Position);
     }
   }
 }

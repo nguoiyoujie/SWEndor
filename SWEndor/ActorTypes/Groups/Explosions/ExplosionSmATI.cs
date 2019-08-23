@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 
@@ -28,6 +29,12 @@ namespace SWEndor.ActorTypes.Instances
       }
 
       InitialSoundSources = new SoundSourceInfo[] { new SoundSourceInfo("exp_resto", 500) };
+    }
+
+    public override void Initialize(ActorInfo ainfo)
+    {
+      base.Initialize(ainfo);
+      PlayerCameraInfo.ProximityShake(25, 300, ainfo.Position);
     }
   }
 }

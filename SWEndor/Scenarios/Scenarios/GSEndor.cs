@@ -2296,7 +2296,7 @@ namespace SWEndor.Scenarios
 
     public void DeathStarKill_Effect(GameEventArg arg)
     {
-      PlayerCameraInfo.Shake = 150;
+      PlayerCameraInfo.Shake(150);
       SoundManager.SetSoundStop("ds_beam");
       SoundManager.SetSound("exp_nave", false, 1, false);
     }
