@@ -1,5 +1,4 @@
 ﻿using SWEndor.Actors;
-using SWEndor.ActorTypes;
 
 namespace SWEndor.UI.Widgets
 {

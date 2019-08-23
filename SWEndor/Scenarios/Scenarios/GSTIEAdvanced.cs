@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Instances;
+using SWEndor.AI;
 using SWEndor.AI.Actions;
 using System.Collections.Generic;
 
@@ -341,7 +342,7 @@ namespace SWEndor.Scenarios
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
         {
-          Engine.ActionManager.UnlockOne(actorID);
+          actor.UnlockOne();
           actor.SetState_Normal();
           actor.MoveData.Speed = actor.MoveData.MaxSpeed;
         }
@@ -472,14 +473,22 @@ namespace SWEndor.Scenarios
 
     public void Empire_TIEAdvanced_Control_AttackShip(GameEventArg arg)
     {
-      Engine.ActionManager.ForceClearQueue(m_X1ID);
-      Engine.ActionManager.QueueLast(m_X1ID, new Hunt(TargetType.SHIP));
+      ActorInfo m_X1 = ActorFactory.Get(m_X1ID);
+      if (m_X1 != null)
+      {
+        m_X1.ForceClearQueue();
+        m_X1.QueueLast(new Hunt(TargetType.SHIP));
+      }
     }
 
     public void Empire_TIEAdvanced_Control_AttackFighter(GameEventArg arg)
     {
-      Engine.ActionManager.ForceClearQueue(m_X1ID);
-      Engine.ActionManager.QueueLast(m_X1ID, new Hunt(TargetType.FIGHTER));
+      ActorInfo m_X1 = ActorFactory.Get(m_X1ID);
+      if (m_X1 != null)
+      {
+        m_X1.ForceClearQueue();
+        m_X1.QueueLast(new Hunt(TargetType.FIGHTER));
+      }
     }
 
     #endregion

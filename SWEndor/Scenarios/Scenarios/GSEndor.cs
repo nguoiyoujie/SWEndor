@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Components;
 using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Instances;
 using SWEndor.AI;
@@ -817,12 +816,12 @@ namespace SWEndor.Scenarios
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
         {
-          ActionManager.ForceClearQueue(actorID);
-          ActionManager.QueueLast(actorID, new Rotate(actor.GetGlobalPosition() + new TV_3DVECTOR(500, 0, -20000)
+          actor.ForceClearQueue();
+          actor.QueueLast(new Rotate(actor.GetGlobalPosition() + new TV_3DVECTOR(500, 0, -20000)
                                                         , actor.MoveData.MaxSpeed
                                                         , actor.TypeInfo.Move_CloseEnough));
-          ActionManager.QueueLast(actorID, new HyperspaceOut());
-          ActionManager.QueueLast(actorID, new Delete());
+          actor.QueueLast(new HyperspaceOut());
+          actor.QueueLast(new Delete());
         }
       }
       foreach (int actorID in MainAllyFaction.GetShips())
@@ -830,12 +829,12 @@ namespace SWEndor.Scenarios
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
         {
-          ActionManager.ForceClearQueue(actorID);
-          ActionManager.QueueLast(actorID, new Rotate(actor.GetGlobalPosition() + new TV_3DVECTOR(500, 0, -20000)
+          actor.ForceClearQueue();
+          actor.QueueLast(new Rotate(actor.GetGlobalPosition() + new TV_3DVECTOR(500, 0, -20000)
                                                 , actor.MoveData.MaxSpeed
                                                 , actor.TypeInfo.Move_CloseEnough));
-          ActionManager.QueueLast(actorID, new HyperspaceOut());
-          ActionManager.QueueLast(actorID, new Delete());
+          actor.QueueLast(new HyperspaceOut());
+          actor.QueueLast(new Delete());
         }
       }
     }
@@ -888,10 +887,10 @@ namespace SWEndor.Scenarios
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
         {
-          ActionManager.ForceClearQueue(actorID);
-          ActionManager.QueueLast(actorID, new Rotate(actor.GetGlobalPosition() - new TV_3DVECTOR(actor.GetGlobalPosition().x * 0.35f, 0, Math.Abs(actor.GetGlobalPosition().x) + 1500)
+          actor.ForceClearQueue();
+          actor.QueueLast(new Rotate(actor.GetGlobalPosition() - new TV_3DVECTOR(actor.GetGlobalPosition().x * 0.35f, 0, Math.Abs(actor.GetGlobalPosition().x) + 1500)
                                                     , actor.MoveData.MinSpeed));
-          ActionManager.QueueLast(actorID, new Lock());
+          actor.QueueLast(new Lock());
         }
       }
     }
@@ -903,12 +902,12 @@ namespace SWEndor.Scenarios
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
         {
-          ActionManager.ForceClearQueue(actorID);
-          ActionManager.QueueLast(actorID, new Move(actor.GetGlobalPosition() - new TV_3DVECTOR(actor.GetGlobalPosition().x * 0.35f, 0, Math.Abs(actor.GetGlobalPosition().x) + 1500)
+          actor.ForceClearQueue();
+          actor.QueueLast(new Move(actor.GetGlobalPosition() - new TV_3DVECTOR(actor.GetGlobalPosition().x * 0.35f, 0, Math.Abs(actor.GetGlobalPosition().x) + 1500)
                                                     , actor.MoveData.MaxSpeed));
-          ActionManager.QueueLast(actorID, new Rotate(actor.GetGlobalPosition() - new TV_3DVECTOR(0, 0, 20000)
+          actor.QueueLast(new Rotate(actor.GetGlobalPosition() - new TV_3DVECTOR(0, 0, 20000)
                                                     , actor.MoveData.MinSpeed));
-          ActionManager.QueueLast(actorID, new Lock());
+          actor.QueueLast(new Lock());
         }
       }
     }
@@ -935,8 +934,8 @@ namespace SWEndor.Scenarios
                 }
               }
 
-              ActionManager.ClearQueue(actorID);
-              ActionManager.QueueLast(actorID, new AttackActor(rsID, -1, -1, false));
+              actor.ClearQueue();
+              actor.QueueLast(new AttackActor(rsID, -1, -1, false));
             }
           }
         }
@@ -1025,9 +1024,9 @@ namespace SWEndor.Scenarios
           {
             ActorInfo homeone = ActorFactory.Get(m_HomeOneID);
 
-            ActionManager.ClearQueue(actorID);
-            ActionManager.QueueLast(actorID, new Move(homeone.GetGlobalPosition() + new TV_3DVECTOR(Engine.Random.Next(-2500, 2500), Engine.Random.Next(-50, 50), Engine.Random.Next(-2500, 2500))
-                                                       , actor.MoveData.MaxSpeed));
+            actor.ClearQueue();
+            actor.QueueLast( new Move(homeone.GetGlobalPosition() + new TV_3DVECTOR(Engine.Random.Next(-2500, 2500), Engine.Random.Next(-50, 50), Engine.Random.Next(-2500, 2500))
+                           , actor.MoveData.MaxSpeed));
           }
         }
       }
@@ -1068,12 +1067,11 @@ namespace SWEndor.Scenarios
         {
           ActorInfo homeone = ActorFactory.Get(m_HomeOneID);
 
-          ActionManager.ClearQueue(actorID);
-          ActionManager.QueueLast(actorID
-                                , new Move(homeone.GetGlobalPosition() + new TV_3DVECTOR(Engine.Random.Next(-2500, 2500)
-                                , Engine.Random.Next(-50, 50)
-                                , Engine.Random.Next(-2500, 2500))
-                                , av.MoveData.MaxSpeed));
+          av.ClearQueue();
+          av.QueueLast( new Move(homeone.GetGlobalPosition() + new TV_3DVECTOR(Engine.Random.Next(-2500, 2500)
+                      , Engine.Random.Next(-50, 50)
+                      , Engine.Random.Next(-2500, 2500))
+                      , av.MoveData.MaxSpeed));
         }
       }
     }
@@ -2227,7 +2225,7 @@ namespace SWEndor.Scenarios
       if (player != null)
       {
         m_Player_pos = player.Position;
-        ActionManager.QueueFirst(m_PlayerID, new Lock());
+        player.QueueFirst(new Lock());
         player.Position = new TV_3DVECTOR(30, 0, -100000);
         m_Player_PrimaryWeapon = PlayerInfo.PrimaryWeapon;
         m_Player_SecondaryWeapon = PlayerInfo.SecondaryWeapon;
@@ -2258,7 +2256,7 @@ namespace SWEndor.Scenarios
       {
         player.SetState_Normal();
         player.Position = m_Player_pos;
-        ActionManager.ForceClearQueue(m_PlayerID);
+        player.ForceClearQueue();
         PlayerInfo.ActorID = m_PlayerID;
         PlayerInfo.PrimaryWeapon = m_Player_PrimaryWeapon;
         PlayerInfo.SecondaryWeapon = m_Player_SecondaryWeapon;

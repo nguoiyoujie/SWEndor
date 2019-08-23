@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SWEndor.AI.Squads
+﻿namespace SWEndor.AI.Squads
 {
   public partial class Squadron
   {

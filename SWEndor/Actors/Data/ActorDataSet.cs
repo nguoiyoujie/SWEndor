@@ -1,15 +1,8 @@
-﻿using MTV3D65;
-using SWEndor.ActorTypes;
-using System;
-
-namespace SWEndor.Actors.Data
+﻿namespace SWEndor.Actors.Data
 {
   public class ActorDataSet
   {
-    //public CoordData[] CoordData = new CoordData[Globals.ActorLimit];
-
     internal CollisionData[] CollisionData = new CollisionData[Globals.ActorLimit];
-
     internal ExplodeData[] ExplodeData = new ExplodeData[Globals.ActorLimit];
     internal CombatData[] CombatData = new CombatData[Globals.ActorLimit];
     internal RegenData[] RegenData = new RegenData[Globals.ActorLimit];

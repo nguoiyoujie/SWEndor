@@ -1,9 +1,4 @@
-﻿using MTV3D65;
-using SWEndor.Input.Functions;
-using SWEndor.Primitives;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms;
+﻿using System.Collections.Generic;
 
 namespace SWEndor
 {

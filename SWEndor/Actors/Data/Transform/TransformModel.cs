@@ -15,8 +15,6 @@ namespace SWEndor.Actors
       float prevTime;
       TV_3DMATRIX currMat;
       TV_3DMATRIX prevMat;
-      //object currWMat;
-      //object prevWMat;
 
       public void Init(ActorTypeInfo type, ActorCreationInfo acinfo)
       {
@@ -109,18 +107,6 @@ namespace SWEndor.Actors
           prevTime = time;
         }
         return prevMat;
-
-        /*
-        TimeCache<A, float, TV_3DMATRIX> fn;
-        if (prevWMat is TimeCache<A, float, TV_3DMATRIX>)
-          fn = (TimeCache<A, float, TV_3DMATRIX>)prevWMat;
-        else
-        {
-          fn = new TimeCache<A, float, TV_3DMATRIX>(0, InnerGetWorldMatrix, self, time);
-          prevWMat = fn;
-        }
-        return fn.Get(time, self, time);
-        */
       }
 
       public TV_3DMATRIX InnerGetWorldMatrix(ActorInfo self, float time)
@@ -188,16 +174,8 @@ namespace SWEndor.Actors
         if (self.Relation.Parent != null && !self.Relation.Parent.Disposed && self.Relation.UseParentCoords)
         {
           TV_3DVECTOR dir = new TV_3DVECTOR();
-          //mlib.TVEulerAnglesFromMatrix(ref vR, GetWorldMatrix(self, time));
-          mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 1), GetWorldMatrix(self, time));
+          mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 100), GetWorldMatrix(self, time));
           return Utilities.GetRotation(dir);
-                    
-          /*
-          TV_3DVECTOR dir = self.Relation.Parent.Transform.Direction;
-          TV_3DVECTOR rdir = new TV_3DVECTOR();
-          mlib.TVVec3TransformCoord(ref rdir, dir, GetMatR(ref currData));
-          return Utilities.GetRotation(rdir);
-          */
         }
         else
           return currData.Rotation;
@@ -208,15 +186,8 @@ namespace SWEndor.Actors
         if (self.Relation.Parent != null && !self.Relation.Parent.Disposed && self.Relation.UseParentCoords)
         {
           TV_3DVECTOR dir = new TV_3DVECTOR();
-          //mlib.TVEulerAnglesFromMatrix(ref vR, GetWorldMatrix(self, time));
-          mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 1), GetPrevWorldMatrix(self, time));
+          mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 100), GetPrevWorldMatrix(self, time));
           return Utilities.GetRotation(dir);
-          /*
-          TV_3DVECTOR dir = self.Relation.Parent.Transform.PrevDirection;
-          TV_3DVECTOR rdir = new TV_3DVECTOR();
-          mlib.TVVec3TransformCoord(ref rdir, dir, GetMatR(ref prevData));
-          return Utilities.GetRotation(rdir);
-          */
         }
         else
           return currData.Rotation;

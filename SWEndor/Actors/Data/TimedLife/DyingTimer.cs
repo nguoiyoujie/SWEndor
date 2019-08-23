@@ -8,7 +8,6 @@ namespace SWEndor.Actors
     public float TimeRemaining { get; private set; }
     public TimerStates State { get; private set; }
 
-    // To replace with something that does not reference ActorTypeInfo
     public void Init(ActorTypeInfo type)
     {
       TimeRemaining = type.TimedLifeData.TimedLife;

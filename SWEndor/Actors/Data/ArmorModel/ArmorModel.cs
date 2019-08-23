@@ -1,14 +1,12 @@
 ﻿using SWEndor.ActorTypes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SWEndor.Actors
 {
   public partial class ActorInfo
   {
+    /// <summary>
+    /// A light implementation of an Armor system, replaces old Damage and CollisionDamage coefficients
+    /// </summary>
     public struct ArmorModel
     {
       public float Light;

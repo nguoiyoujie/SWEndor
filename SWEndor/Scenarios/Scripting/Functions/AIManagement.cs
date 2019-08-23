@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Scenarios.Scripting.Expressions;
 using System;
@@ -19,7 +20,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (action == null)
         return false;
 
-      context.Engine.ActionManager.QueueFirst(actor.ID, action);
+      actor.QueueFirst(action);
       return true;
     }
 
@@ -34,7 +35,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (action == null)
         return false;
 
-      context.Engine.ActionManager.QueueNext(actor.ID, action);
+      actor.QueueNext(action);
       return true;
     }
 
@@ -49,7 +50,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (action == null)
         return false;
 
-      context.Engine.ActionManager.QueueLast(actor.ID, action);
+      actor.QueueLast(action);
       return true;
     }
 
@@ -60,7 +61,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      context.Engine.ActionManager.UnlockOne(actor.ID);
+      actor.UnlockOne();
       return true;
     }
 
@@ -71,7 +72,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      context.Engine.ActionManager.ClearQueue(actor.ID);
+      actor.ForceClearQueue();
       return true;
     }
 
@@ -82,7 +83,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return false;
 
-      context.Engine.ActionManager.ForceClearQueue(actor.ID);
+      actor.ForceClearQueue();
       return true;
     }
 

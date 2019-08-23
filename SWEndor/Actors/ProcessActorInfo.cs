@@ -46,7 +46,6 @@ namespace SWEndor.Actors
         return;
 
       if (engine.MaskDataSet[actor].Has(ComponentMask.CAN_RENDER)
-        //&& !engine.MaskDataSet[id].Has(ComponentMask.CAN_GLOW)
         && actor.Active
         && !actor.IsAggregateMode)
       {
@@ -88,6 +87,5 @@ namespace SWEndor.Actors
       if (Generated)
         SetActivated();
     }
-    
   }
 }

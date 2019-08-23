@@ -1,11 +1,4 @@
-﻿using MTV3D65;
-using SWEndor.ActorTypes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 /*
 namespace SWEndor.Actors.Data.Explosion
 {

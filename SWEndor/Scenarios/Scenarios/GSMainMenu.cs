@@ -1,9 +1,9 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
+using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
-using System;
 using System.Collections.Generic;
 
 namespace SWEndor.Scenarios
@@ -362,12 +362,12 @@ namespace SWEndor.Scenarios
         if (actor != null
           && !actor.IsDyingOrDead)
         {
-          ActionManager.ForceClearQueue(actorID);
-          ActionManager.QueueLast(actorID, new Rotate(actor.GetGlobalPosition() + new TV_3DVECTOR(18000, 0, -20000)
+          actor.ForceClearQueue();
+          actor.QueueLast(new Rotate(actor.GetGlobalPosition() + new TV_3DVECTOR(18000, 0, -20000)
                                                 , actor.MoveData.Speed
                                                 , actor.TypeInfo.Move_CloseEnough));
-          ActionManager.QueueLast(actorID, new HyperspaceOut());
-          ActionManager.QueueLast(actorID, new Delete());
+          actor.QueueLast(new HyperspaceOut());
+          actor.QueueLast(new Delete());
         }
       }
     }

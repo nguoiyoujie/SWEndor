@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
-using SWEndor.Actors.Data;
 
 namespace SWEndor.AI.Actions
 {
@@ -20,7 +19,7 @@ namespace SWEndor.AI.Actions
 
         if (NextAction == null)
         {
-          engine.ActionManager.QueueLast(actor.ID, new Hunt());
+          actor.QueueLast(new Hunt());
         }
 
         Complete = true;

@@ -17,7 +17,6 @@ namespace SWEndor.Scenarios
     public TrueVision TrueVision { get { return Engine.TrueVision; } }
     public ActorInfo.Factory ActorFactory { get { return Engine.ActorFactory; } }
     public ActorTypeInfo.Factory ActorTypeFactory { get { return Engine.ActorTypeFactory; } }
-    public ActionManager ActionManager { get { return Engine.ActionManager; } }
     public SoundManager SoundManager { get { return Engine.SoundManager; } }
     public LandInfo LandInfo { get { return Engine.LandInfo; } }
     public AtmosphereInfo AtmosphereInfo { get { return Engine.AtmosphereInfo; } }

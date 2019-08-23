@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
-using SWEndor.Actors.Data;
 using System;
 
 namespace SWEndor.AI.Actions
@@ -49,7 +48,7 @@ namespace SWEndor.AI.Actions
 
         if (owner.CurrentAction is Move)
           owner.CurrentAction.Complete = true;
-        owner.GetEngine().ActionManager.QueueFirst(owner.ID, new ForcedMove(new TV_3DVECTOR(x, y, z), owner.MoveData.MaxSpeed, -1, 360 / (owner.MoveData.MaxTurnRate + 72)));
+        owner.QueueFirst(new ForcedMove(new TV_3DVECTOR(x, y, z), owner.MoveData.MaxSpeed, -1, 360 / (owner.MoveData.MaxTurnRate + 72)));
         return false;
       }
       else

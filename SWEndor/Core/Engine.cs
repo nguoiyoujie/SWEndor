@@ -58,7 +58,6 @@ namespace SWEndor
     internal ActorInfo.Factory ActorFactory { get; private set; }
     internal ActorTypeInfo.Factory ActorTypeFactory { get; private set; }
     internal Squadron.Factory SquadronFactory { get; private set; }
-    internal ActionManager ActionManager { get; private set; }
 
     // Engine pars to be loaded late
     // Requires ActorInfoType initialization
@@ -71,9 +70,7 @@ namespace SWEndor
 
       MaskDataSet = new MaskDataSet();
       ActorDataSet = new ActorDataSet();
-      //SysDataSet = new SysDataSet(this);
       MeshDataSet = new MeshDataSet();
-      //TimedLifeDataSet = new TimedLifeDataSet();
 
       Game = new Game(this);
       SoundManager = new SoundManager(this);
@@ -81,7 +78,6 @@ namespace SWEndor
       ActorFactory = new ActorInfo.Factory(this);
       ActorTypeFactory = new ActorTypeInfo.Factory(this);
       SquadronFactory = new Squadron.Factory();
-      ActionManager = new ActionManager(this);
       PlayerInfo = new PlayerInfo(this);
 
       FontFactory = new Font.Factory();

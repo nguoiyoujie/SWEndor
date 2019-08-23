@@ -1,4 +1,5 @@
 ﻿using SWEndor.Actors;
+using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Weapons;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
       ainfo.WeaponSystemInfo.AIWeapons = new string[] { "none" };
 
-      ActionManager.QueueNext(ainfo.ID, new Lock());
+      ainfo.QueueNext(new Lock());
     }
 
     public override void ProcessState(ActorInfo ainfo)

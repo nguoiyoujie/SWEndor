@@ -1,9 +1,8 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Components;
-using SWEndor.Actors.Data;
 using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Instances;
+using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
 using System.Collections.Generic;
@@ -448,7 +447,7 @@ namespace SWEndor.Scenarios
         ActorInfo actor = ActorFactory.Get(actorID);
         if (actor != null)
         {
-          ActionManager.UnlockOne(actorID);
+          actor.UnlockOne();
           actor.SetState_Normal();
           actor.MoveData.Speed = actor.MoveData.MaxSpeed;
         }
@@ -800,8 +799,8 @@ namespace SWEndor.Scenarios
         m_Player_SecondaryWeapon = PlayerInfo.SecondaryWeapon;
         m_Player_DamageModifier = player.GetArmor(DamageType.ALL);
         player.SetArmor(DamageType.ALL, 0);
-        ActionManager.ForceClearQueue(m_PlayerID);
-        ActionManager.QueueNext(m_PlayerID, new Lock());
+        player.ForceClearQueue();
+        player.QueueNext(new Lock());
       }
       PlayerInfo.ActorID = -1; // Manager.SceneCameraID;
 
@@ -818,7 +817,7 @@ namespace SWEndor.Scenarios
         PlayerInfo.SecondaryWeapon = m_Player_SecondaryWeapon;
 
         player.SetArmor(DamageType.ALL, m_Player_DamageModifier);
-        ActionManager.ForceClearQueue(m_PlayerID);
+        player.ForceClearQueue();
       }
       Manager.IsCutsceneMode = false;
     }
@@ -890,9 +889,9 @@ namespace SWEndor.Scenarios
           xn *= -1;
           y = Engine.Random.Next(-200, 200);
           z += 200;
-          ActionManager.ForceClearQueue(actorID);
-          ActionManager.QueueNext(actorID, new Wait(8 + 0.2f * counter));
-          ActionManager.QueueNext(actorID, new HyperspaceOut());
+          actor.ForceClearQueue();
+          actor.QueueNext(new Wait(8 + 0.2f * counter));
+          actor.QueueNext(new HyperspaceOut());
           actor.Position = new TV_3DVECTOR(x, y, z);
           actor.Rotation = new TV_3DVECTOR(0, 180, 0);
           actor.MoveData.Speed = 450;
@@ -913,28 +912,28 @@ namespace SWEndor.Scenarios
 
       player.Position = new TV_3DVECTOR(0, 0, 500);
 
-      ActionManager.ForceClearQueue(m_Transport1ID);
-      ActionManager.QueueNext(m_Transport1ID, new Wait(8.5f));
-      ActionManager.QueueNext(m_Transport1ID, new HyperspaceOut());
+      trn1.ForceClearQueue();
+      trn1.QueueNext(new Wait(8.5f));
+      trn1.QueueNext(new HyperspaceOut());
       trn1.MoveData.MaxSpeed = 400;
       trn1.MoveData.Speed = 400;
 
-      ActionManager.ForceClearQueue(m_Transport2ID);
-      ActionManager.QueueNext(m_Transport2ID, new Wait(8.8f));
-      ActionManager.QueueNext(m_Transport2ID, new HyperspaceOut());
+      trn2.ForceClearQueue();
+      trn2.QueueNext(new Wait(8.8f));
+      trn2.QueueNext(new HyperspaceOut());
       trn2.MoveData.MaxSpeed = 400;
       trn2.MoveData.Speed = 400;
 
-      ActionManager.ForceClearQueue(m_Transport3ID);
-      ActionManager.QueueNext(m_Transport3ID, new Wait(9.1f));
-      ActionManager.QueueNext(m_Transport3ID, new HyperspaceOut());
+      trn3.ForceClearQueue();
+      trn3.QueueNext(new Wait(9.1f));
+      trn3.QueueNext(new HyperspaceOut());
       trn3.MoveData.MaxSpeed = 400;
       trn3.MoveData.Speed = 400;
 
       player.MoveData.Speed = 400;
-      player.MoveData.ResetTurn(); 
-      ActionManager.ForceClearQueue(m_PlayerID);
-      ActionManager.QueueNext(m_PlayerID, new Lock());
+      player.MoveData.ResetTurn();
+      player.ForceClearQueue();
+      player.QueueNext(new Lock());
       
 
       int en_ship = 0;
@@ -948,20 +947,20 @@ namespace SWEndor.Scenarios
             actor.Position = new TV_3DVECTOR(0, -300, 2500);
             actor.Rotation = new TV_3DVECTOR(0, 180, 0);
             actor.MoveData.Speed = actor.MoveData.MaxSpeed * 0.25f;
-            ActionManager.ForceClearQueue(actorID);
-            ActionManager.QueueNext(actorID, new Wait(60));
-            ActionManager.QueueNext(actorID, new Rotate(new TV_3DVECTOR(-2000, -300, 2000), 0, -1, false));
-            ActionManager.QueueNext(actorID, new Lock());
+            actor.ForceClearQueue();
+            actor.QueueNext(new Wait(60));
+            actor.QueueNext(new Rotate(new TV_3DVECTOR(-2000, -300, 2000), 0, -1, false));
+            actor.QueueNext(new Lock());
           }
           else if (en_ship == 2)
           {
             actor.Position = new TV_3DVECTOR(3300, 150, 5500);
             actor.LookAt(new TV_3DVECTOR(1400, 150, 1000));
             actor.MoveData.Speed = actor.MoveData.MaxSpeed * 0.25f;
-            ActionManager.ForceClearQueue(actorID);
-            ActionManager.QueueNext(actorID, new Wait(30));
-            ActionManager.QueueNext(actorID, new Rotate(new TV_3DVECTOR(-32000, 150, 2000), 0, -1, false));
-            ActionManager.QueueNext(actorID, new Lock());
+            actor.ForceClearQueue();
+            actor.QueueNext(new Wait(30));
+            actor.QueueNext(new Rotate(new TV_3DVECTOR(-32000, 150, 2000), 0, -1, false));
+            actor.QueueNext(new Lock());
           }
           else
           {

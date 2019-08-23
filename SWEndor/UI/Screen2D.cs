@@ -1,9 +1,7 @@
 ﻿using MTV3D65;
-using SWEndor.Primitives;
 using SWEndor.UI;
 using SWEndor.UI.Menu;
 using SWEndor.UI.Widgets;
-using System.Collections.Generic;
 
 namespace SWEndor
 {

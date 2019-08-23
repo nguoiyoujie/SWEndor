@@ -1,6 +1,4 @@
-﻿using SWEndor.Actors;
-using SWEndor.Actors.Data;
-using System.IO;
+﻿using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {

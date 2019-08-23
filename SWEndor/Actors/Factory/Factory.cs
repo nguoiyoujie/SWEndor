@@ -2,8 +2,6 @@
 using SWEndor.Primitives;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Threading;
 
 namespace SWEndor.Actors
 {
@@ -23,7 +21,7 @@ namespace SWEndor.Actors
       private ConcurrentQueue<ActorInfo> pool = new ConcurrentQueue<ActorInfo>();
       private ConcurrentQueue<ActorInfo> dead = new ConcurrentQueue<ActorInfo>();
 
-      // temp pools
+      // temp holding pools
       private ConcurrentQueue<ActorInfo> redo = new ConcurrentQueue<ActorInfo>();
       private ConcurrentQueue<ActorInfo> nextplan = new ConcurrentQueue<ActorInfo>();
       private ConcurrentQueue<ActorInfo> nextdead = new ConcurrentQueue<ActorInfo>();

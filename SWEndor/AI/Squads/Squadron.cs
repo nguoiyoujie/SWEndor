@@ -1,6 +1,5 @@
 ﻿using SWEndor.Actors;
 using SWEndor.AI.Actions;
-using System;
 using System.Collections.Generic;
 
 namespace SWEndor.AI.Squads

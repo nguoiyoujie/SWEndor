@@ -1,7 +1,4 @@
-﻿using SWEndor.Actors;
-using SWEndor.AI.Actions;
-using System;
-using System.Collections.Generic;
+﻿using SWEndor.AI.Actions;
 
 namespace SWEndor.AI.Squads
 {

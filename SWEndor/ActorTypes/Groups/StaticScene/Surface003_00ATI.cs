@@ -1,5 +1,4 @@
-﻿using SWEndor.Actors;
-using System.IO;
+﻿using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {

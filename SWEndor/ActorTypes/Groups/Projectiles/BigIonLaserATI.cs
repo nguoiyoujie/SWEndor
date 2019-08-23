@@ -3,7 +3,6 @@ using SWEndor.AI.Actions;
 using System.IO;
 using SWEndor.Weapons;
 using SWEndor.Actors;
-using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
 using SWEndor.AI;
 

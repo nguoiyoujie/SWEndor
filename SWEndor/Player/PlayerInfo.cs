@@ -1,8 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Data;
 using SWEndor.ActorTypes;
-using System;
 using System.Collections.Generic;
 
 namespace SWEndor.Player

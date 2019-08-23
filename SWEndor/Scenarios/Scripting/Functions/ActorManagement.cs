@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Components;
 using SWEndor.ActorTypes;
 using SWEndor.Scenarios.Scripting.Expressions;
 using System;

@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Groups;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
@@ -103,7 +102,7 @@ namespace SWEndor.ActorTypes.Instances
       acinfo.Faction = ainfo.Faction;
       ActorInfo a = ActorFactory.Create(acinfo);
       ainfo.AddChild(a);
-      ActionManager.QueueNext(a.ID, new Lock());
+      a.QueueNext(new Lock());
 
       PlayerInfo.ActorID = a.ID;
 
@@ -157,7 +156,7 @@ namespace SWEndor.ActorTypes.Instances
             squad.Members.AddLast(a);
             ainfo.AddChild(a);
             GameScenarioManager.Scenario?.RegisterEvents(a);
-            ActionManager.QueueFirst(a.ID, new Lock());
+            a.QueueFirst(new Lock());
           }
           p.SpawnerInfo.SpawnMoveTime = Game.GameTime + p.SpawnerInfo.SpawnMoveDelay;
         }

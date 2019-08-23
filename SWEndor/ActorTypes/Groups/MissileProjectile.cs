@@ -1,6 +1,4 @@
-﻿using MTV3D65;
-using SWEndor.Actors;
-using SWEndor.Actors.Components;
+﻿using SWEndor.Actors;
 using SWEndor.Actors.Data;
 using SWEndor.AI.Actions;
 using SWEndor.Weapons;

@@ -136,10 +136,6 @@ namespace SWEndor.Actors
       TypeInfo = acinfo.ActorTypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
 
-      // Init data before components
-      //CoordData.Init(acinfo);
-      //ActorDataSet.CoordData[dataID].Init(acinfo);
-
       Relation.Init();
       DyingTimer.Init(TypeInfo);
       Health.Init(TypeInfo, acinfo);
@@ -147,13 +143,11 @@ namespace SWEndor.Actors
       Armor.Init(TypeInfo);
 
       MoveData.Init(TypeInfo, acinfo);
-      //Engine.SysDataSet.Init(this, TypeInfo, acinfo);
       Engine.MeshDataSet.Init(this, TypeInfo, acinfo);
       ActorDataSet.CollisionData[dataID].Init();
       ActorDataSet.ExplodeData[dataID].CopyFrom(TypeInfo.ExplodeData);
       ActorDataSet.RegenData[dataID].CopyFrom(TypeInfo.RegenData);
       ActorDataSet.CombatData[dataID].CopyFrom(TypeInfo.CombatData);
-      //Engine.TimedLifeDataSet.Init(this, TypeInfo);
 
       Engine.MaskDataSet[this] = TypeInfo.Mask;
 
@@ -183,10 +177,6 @@ namespace SWEndor.Actors
       TypeInfo = acinfo.ActorTypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
 
-
-      // Init data before components
-      //CoordData.Init(acinfo);
-
       Relation.Init();
       DyingTimer.Init(TypeInfo);
       Health.Init(TypeInfo, acinfo);
@@ -194,13 +184,11 @@ namespace SWEndor.Actors
       Armor.Init(TypeInfo);
 
       MoveData.Init(TypeInfo, acinfo);
-      //Engine.SysDataSet.Init(this, TypeInfo, acinfo);
       Engine.MeshDataSet.Init(this, TypeInfo, acinfo);
       ActorDataSet.CollisionData[dataID].Init();
       ActorDataSet.ExplodeData[dataID] = TypeInfo.ExplodeData;
       ActorDataSet.RegenData[dataID] = TypeInfo.RegenData;
       ActorDataSet.CombatData[dataID] = TypeInfo.CombatData;
-      //Engine.TimedLifeDataSet.Init(this, TypeInfo);
 
       Engine.MaskDataSet[this] = TypeInfo.Mask;
 
@@ -412,16 +400,12 @@ namespace SWEndor.Actors
       Engine.ActorFactory.Remove(ID);
 
       // Kill data
-      //CoordData.Reset();
-      //ActorDataSet.CoordData[dataID].Reset();
       MoveData.Reset();
-      //Engine.SysDataSet.Reset(this);
       Engine.MeshDataSet.Reset(this);
       ActorDataSet.CollisionData[dataID].Reset();
       ActorDataSet.RegenData[dataID].Reset();
       ActorDataSet.ExplodeData[dataID].Reset();
       ActorDataSet.CombatData[dataID].Reset();
-      //Engine.TimedLifeDataSet.Reset(this);
 
       // Finally
       SetDisposed();

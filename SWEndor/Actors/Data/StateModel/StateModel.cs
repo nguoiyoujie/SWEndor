@@ -1,6 +1,5 @@
 ﻿using SWEndor.ActorTypes;
 using SWEndor.Primitives.StateMachines;
-using System;
 
 namespace SWEndor.Actors
 {

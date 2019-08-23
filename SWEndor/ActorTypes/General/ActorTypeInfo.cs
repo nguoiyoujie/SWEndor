@@ -33,7 +33,6 @@ namespace SWEndor.ActorTypes
     public TrueVision TrueVision { get { return Engine.TrueVision; } }
     public ActorDataSet ActorDataSet { get { return Engine.ActorDataSet; } }
     public ActorInfo.Factory ActorFactory { get { return Engine.ActorFactory; } }
-    public ActionManager ActionManager { get { return Engine.ActionManager; } }
     public LandInfo LandInfo { get { return Engine.LandInfo; } }
     public AtmosphereInfo AtmosphereInfo { get { return Engine.AtmosphereInfo; } }
     public PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }

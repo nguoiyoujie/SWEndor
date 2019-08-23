@@ -122,16 +122,10 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Data">
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System.Drawing">
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Windows.Forms">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -145,6 +139,8 @@
     <Compile Include="Actors\Components\Movement\MoveDecorator.cs" />
     <Compile Include="Actors\Data\ArmorModel\ArmorModel.cs" />
     <Compile Include="Actors\Data\Explosion\ExplodeInfo.cs" />
+    <Compile Include="Actors\Data\HealthModel\DamageInfo.cs" />
+    <Compile Include="Actors\Data\HealthModel\DamageType.cs" />
     <Compile Include="Actors\Data\HealthModel\HealthModel.cs" />
     <Compile Include="Actors\Data\Mesh\MeshDataSet.cs" />
     <Compile Include="Actors\Data\ActorDataSet.cs" />
@@ -152,16 +148,12 @@
     <Compile Include="Actors\Data\Explosion\ExplodeData.cs" />
     <Compile Include="Actors\Data\Relation\RelationModel.cs" />
     <Compile Include="Actors\Data\StateModel\StateModel.cs" />
-    <Compile Include="Actors\Data\Sys\SysDataSet.cs" />
     <Compile Include="Actors\Data\TimedLife\DyingTimer.cs" />
     <Compile Include="Actors\Data\TimedLife\TimedLifeData.cs" />
     <Compile Include="Actors\Data\Combat\CombatData.cs" />
     <Compile Include="Actors\Data\Regeneration\RegenData.cs" />
     <Compile Include="Actors\Data\Transform\TransformModel.cs" />
     <Compile Include="Actors\Data\Transform\TransformData.cs" />
-    <Compile Include="Actors\Data\WeapData.cs" />
-    <Compile Include="Actors\Data\StateData.cs" />
-    <Compile Include="Actors\Data\Sys\SysData.cs" />
     <Compile Include="Actors\Data\Move\MoveData.cs" />
     <Compile Include="Actors\Components\Movement\RotateOnly.cs" />
     <Compile Include="Actors\Components\Movement\Interfaces.cs" />
@@ -169,7 +161,6 @@
     <Compile Include="Actors\Components\Movement\MoveLaser.cs" />
     <Compile Include="Actors\Components\Movement\NoMove.cs" />
     <Compile Include="Actors\Data\Mesh\MeshData.cs" />
-    <Compile Include="Actors\Data\CoordData.cs" />
     <Compile Include="Actors\Enums\ComponentMask.cs" />
     <Compile Include="Actors\ProcessActorInfo.cs" />
     <Compile Include="Actors\Components\CollisionSystem.cs" />
@@ -182,7 +173,6 @@
     <Compile Include="Actors\Enums\ActorState.cs" />
     <Compile Include="Actors\Enums\CreationState.cs" />
     <Compile Include="Actors\States\ActorDistanceInfo.cs" />
-    <Compile Include="Actors\TVFunctions.cs" />
     <Compile Include="ActorTypes\Components\DeathCameraInfo.cs" />
     <Compile Include="ActorTypes\Components\ActorCameraInfo.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\NebBSpawner.cs" />
@@ -198,7 +188,6 @@
     <Compile Include="ActorTypes\General\ActorSpawner\SDSpawnerII.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\SDSpawner.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\SpawnerInfo.cs" />
-    <Compile Include="Actors\ActorParser.cs" />
     <Compile Include="ActorTypes\General\Factory\Parser.cs" />
     <Compile Include="ActorTypes\Groups\MissileProjectile.cs" />
     <Compile Include="ActorTypes\Groups\LaserProjectile.cs" />
@@ -362,7 +351,6 @@
     <Compile Include="AI\Actions\HyperspaceIn.cs" />
     <Compile Include="AI\Actions\Rotate.cs" />
     <Compile Include="AI\Actions\Move.cs" />
-    <Compile Include="AI\ActionManager.cs" />
     <Compile Include="AI\ActionInfo.cs" />
     <Compile Include="AI\Squads\Factory\Factory.cs" />
     <Compile Include="AI\Squads\MissionInfo.cs" />

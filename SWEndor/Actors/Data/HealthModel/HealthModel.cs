@@ -1,68 +1,27 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes;
-using SWEndor.Primitives;
 using System;
-using System.Collections.Generic;
 
 namespace SWEndor.Actors
 {
-  [Flags]
-  public enum DamageType
-  {
-    NONE = 0,
-    ALWAYS_100PERCENT = 0x0001,
-    NORMAL = 0x0010,
-    COLLISION = 0x0100,
-
-    ALL = 0xFFFF
-  }
-
-  public class DamageInfo
-  {
-    public readonly ActorInfo Source;
-    public readonly float Value;
-    public readonly DamageType Type;
-    public readonly TV_3DVECTOR Position;
-
-    public DamageInfo(ActorInfo source, float value, DamageType type = DamageType.NORMAL, TV_3DVECTOR position = default(TV_3DVECTOR))
-    {
-      Source = source;
-      Value = value;
-      Type = type;
-      Position = position;
-    }
-  }
-
   public partial class ActorInfo
   { 
     public struct HealthModel
     {
       public float HP { get; private set; }
       public float MaxHP { get; private set; }
-      //public float Level { get; private set; } // ?? for shield implementation?
       public float DisplayHP { get; private set; }
 
       public bool IsDead { get { return HP <= 0; } }
-
       public float Frac { get { return HP / MaxHP; } }
       public float Perc { get { return Frac * 100; } }
-
       public float DisplayFrac { get { return DisplayHP / MaxHP; } }
       public float DisplayPerc { get { return DisplayFrac * 100; } }
-
-      //private Dictionary<DamageType, float> DamageModifiers; //move Modifiers to combat data or something
-
-
+      
       public void Init(ActorTypeInfo type, ActorCreationInfo acinfo)
       {
         MaxHP = type.MaxStrength;
         HP = (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : type.MaxStrength;
-        //DamageModifiers = new Dictionary<DamageType, float>();
-
-        // hard code for now
-        //DamageModifiers.Add(DamageType.NORMAL, type.CombatData.DamageModifier);
-        //DamageModifiers.Add(DamageType.COLLISION, type.CombatData.CollisionDamageModifier);
-        //DamageModifiers.Add(DamageType.ALWAYS_100PERCENT, 1);
       }
 
       public TV_COLOR Color

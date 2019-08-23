@@ -82,7 +82,7 @@ namespace SWEndor.AI.Actions
       else
       {
         data.IsAvoidingCollision = false;
-        engine.ActionManager.QueueNext(actor.ID, new Wait(2.5f));
+        actor.QueueNext(new Wait(2.5f));
         Complete = true;
       }
     }
