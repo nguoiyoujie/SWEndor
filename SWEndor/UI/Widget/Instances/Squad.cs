@@ -7,7 +7,7 @@ namespace SWEndor.UI.Widgets
   public class Squad : Widget
   {
     private float m_targetSize = 5;
-    private float m_targetSizeDiamond = 4;
+    private bool enabled;
 
     public Squad(Screen2D owner) : base(owner, "squad") { }
 
@@ -16,11 +16,23 @@ namespace SWEndor.UI.Widgets
       get
       {
         ActorInfo p = PlayerInfo.Actor;
-        return (!Owner.ShowPage
+        bool ret = (!Owner.ShowPage
           && p != null
           && !p.IsDyingOrDead
           && Owner.ShowUI
           && Owner.ShowSquad);
+
+        if (enabled != ret)
+        {
+          if (ret)
+            Engine.Screen2D.MessageSecondaryText("Squad Indicator: ENABLED", 5, new TV_COLOR(0.5f, 0.5f, 1, 1));
+          else
+            Engine.Screen2D.MessageSecondaryText("Squad Indicator: DISABLED", 5, new TV_COLOR(0.5f, 0.5f, 1, 1));
+
+          enabled = ret;
+        }
+
+        return ret;
       }
     }
 
@@ -44,21 +56,14 @@ namespace SWEndor.UI.Widgets
         float sy = 0;
         TVScreen2DImmediate.Math_3DPointTo2D(s.GetGlobalPosition(), ref sx, ref sy);
 
-        float m2 = m_targetSizeDiamond + 5;
+        float m2 = m_targetSize + 5;
         if (s == s.Squad.Leader)
         {
-          TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy + m2, scolor.GetIntColor());
-          TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy - m2, scolor.GetIntColor());
-          TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy + m2, scolor.GetIntColor());
-          TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy - m2, scolor.GetIntColor());
+          TVScreen2DImmediate.Draw_Circle(sx, sy, m2, 6, scolor.GetIntColor());
         }
 
-        m2 = m_targetSizeDiamond;
-        TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy + m2, scolor.GetIntColor());
-        TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy - m2, scolor.GetIntColor());
-        TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy + m2, scolor.GetIntColor());
-        TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy - m2, scolor.GetIntColor());
-
+        m2 = m_targetSize;
+        TVScreen2DImmediate.Draw_Circle(sx, sy, m2, 6, scolor.GetIntColor());
       }
       TVScreen2DImmediate.Action_End2D();
     }

@@ -254,7 +254,13 @@ namespace SWEndor.Player
       if (Actor.Squad == null || AimTarget == null)
         return;
 
-      Engine.Screen2D.MessageSecondaryText("Calling reinforcements to attack {0}.".F(AimTarget.Name), 5, FactionColor);
+      if (Actor.Squad.Leader != Actor)
+      {
+        Engine.Screen2D.MessageSecondaryText("You are not the squad leader. You cannot command your squad to perform attacks!", 5, FactionColor);
+        return;
+      }
+
+      Engine.Screen2D.MessageSecondaryText("Directing squad to attack {0}.".F(AimTarget.Name), 5, FactionColor);
 
       foreach (ActorInfo a in Actor.Squad.Members)
         a.QueueFirst(new AttackActor(AimTargetID));
