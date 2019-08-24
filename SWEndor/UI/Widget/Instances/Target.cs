@@ -12,6 +12,7 @@ namespace SWEndor.UI.Widgets
     private float m_targetX = 0;
     private float m_targetY = 0;
     private float m_targetSize = 5;
+    private float m_targetSizeDiamond = 4;
     private float m_targetBigSize = 0;
 
     public Target(Screen2D owner) : base(owner, "target") { }
@@ -110,7 +111,7 @@ namespace SWEndor.UI.Widgets
 
           PlayerInfo.AimTargetID = PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) ? -1 : m_target.ID;
 
-          if (PlayerInfo.Actor.Faction != null && !PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && !PlayerInfo.IsTorpedoMode)
+          if (!PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && !PlayerInfo.IsTorpedoMode)
           {
             // Targeting cross
             // Anticipate
@@ -122,6 +123,40 @@ namespace SWEndor.UI.Widgets
             TVScreen2DImmediate.Draw_Line(x - m_targetSize, y, x + m_targetSize, y, acolor.GetIntColor());
             TVScreen2DImmediate.Draw_Line(x, y - m_targetSize, x, y + m_targetSize, acolor.GetIntColor());
             TVScreen2DImmediate.Action_End2D();
+          }
+
+          if (PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && m_target.TypeInfo is ActorTypes.Groups.Fighter)
+          {
+            // Squad diamond
+            if (m_target.Squad != null)
+            {
+              TVScreen2DImmediate.Action_Begin2D();
+              foreach (ActorInfo s in m_target.Squad.Members)
+              {
+                if (s != m_target && PlayerCameraInfo.Camera.IsPointVisible(s.GetGlobalPosition()))
+                {
+                  float sx = 0;
+                  float sy = 0;
+                  TVScreen2DImmediate.Math_3DPointTo2D(s.GetGlobalPosition(), ref sx, ref sy);
+
+                  float m2 = m_targetSizeDiamond + 5;
+                  if (s == m_target.Squad.Members.First.Value)
+                  {
+                    TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy + m2, acolor.GetIntColor());
+                    TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy - m2, acolor.GetIntColor());
+                    TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy + m2, acolor.GetIntColor());
+                    TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy - m2, acolor.GetIntColor());
+                  }
+
+                  m2 = m_targetSizeDiamond;
+                  TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy + m2, acolor.GetIntColor());
+                  TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy - m2, acolor.GetIntColor());
+                  TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy + m2, acolor.GetIntColor());
+                  TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy - m2, acolor.GetIntColor());
+                }
+              }
+              TVScreen2DImmediate.Action_End2D();
+            }
           }
         }
       }

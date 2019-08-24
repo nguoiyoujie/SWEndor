@@ -82,21 +82,23 @@ namespace SWEndor.Scenarios.Scripting.Expressions
     //internal readonly RootStatement Root;
     //internal readonly Expression RootExpr;
 
-    public static void Parse(string text, out RootStatement result)
+    public static void Parse(string text, out RootStatement result, ref int linenumber)
     {
       using (StringReader reader = new StringReader(text))
       {
-        Lexer lex = new Lexer(reader, Definitions);
+        Lexer lex = new Lexer(reader, Definitions, linenumber);
         result = new RootStatement(lex);
+        linenumber = lex.LineNumber;
       }
     }
 
-    public static void Parse(string text, out Expression result)
+    public static void Parse(string text, out Expression result, ref int linenumber)
     {
       using (StringReader reader = new StringReader(text))
       {
-        Lexer lex = new Lexer(reader, Definitions);
+        Lexer lex = new Lexer(reader, Definitions, linenumber);
         result = new Expression(lex);
+        linenumber = lex.LineNumber;
       }
     }
 

@@ -12,10 +12,11 @@ namespace SWEndor.Scenarios.Scripting.Expressions
 
     private string lineRemaining;
 
-    public Lexer(TextReader reader, TokenDefinition[] tokenDefinitions)
+    public Lexer(TextReader reader, TokenDefinition[] tokenDefinitions, int linenumber)
     {
       m_reader = reader;
       m_tokenDefinitions = tokenDefinitions;
+      LineNumber = linenumber;
       nextLine();
       Next();
     }
@@ -109,7 +110,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions
     public string TokenContents { get; private set; }
     public TokenEnum TokenType { get; private set; }
     public int LineNumber { get; private set; }
-    public int Position { get; private set; }
+    public int Position { get; private set; } = 1;
 
     public void Dispose() => m_reader.Dispose();
   }

@@ -7,7 +7,6 @@ namespace SWEndor.Scenarios.Scripting.Functions
 {
   public static class GameStateManagement
   {
-
     public static object GetGameStateB(Context context, object[] ps)
     {
       if (ps.Length == 1)

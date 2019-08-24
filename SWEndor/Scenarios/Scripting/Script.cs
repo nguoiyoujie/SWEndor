@@ -21,10 +21,10 @@ namespace SWEndor.Scenarios.Scripting
       Registry.Add(scriptname, this);
     }
 
-    public void AddExpression(string line)
+    public void AddExpression(string line, ref int linenumber)
     {
       RootStatement statement;
-      Parser.Parse(line, out statement);
+      Parser.Parse(line, out statement, ref linenumber);
       m_statements.Add(statement);
     }
 

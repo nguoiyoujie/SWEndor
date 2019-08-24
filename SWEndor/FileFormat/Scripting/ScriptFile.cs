@@ -22,6 +22,7 @@ namespace SWEndor.FileFormat.Scripting
     {
       Script script = null;
       StringBuilder sb = new StringBuilder();
+      int linenumber = 1;
       using (StreamReader sr = new StreamReader(FilePath))
       {
         while (!sr.EndOfStream)
@@ -32,7 +33,7 @@ namespace SWEndor.FileFormat.Scripting
           {
             if (script != null)
             {
-              script.AddExpression(sb.ToString());
+              script.AddExpression(sb.ToString(), ref linenumber);
             }
 
             line = line.TrimEnd(':').Trim();
@@ -50,7 +51,7 @@ namespace SWEndor.FileFormat.Scripting
         }
         if (script != null) // last script
         {
-          script.AddExpression(sb.ToString());
+          script.AddExpression(sb.ToString(), ref linenumber);
         }
       }
     }
