@@ -16,6 +16,7 @@ namespace SWEndor.ActorTypes.Groups
       RadarType = RadarType.HOLLOW_CIRCLE_M;
 
       RadarSize = 2;
+      HuntWeight = 3;
     }
   }
 }

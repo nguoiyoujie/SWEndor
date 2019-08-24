@@ -18,6 +18,7 @@ namespace SWEndor.ActorTypes.Groups
       RadarSize = 1;
 
       Mask = ComponentMask.STATIC_ACTOR;
+      HuntWeight = 1;
     }
   }
 }

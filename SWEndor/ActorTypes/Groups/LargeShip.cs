@@ -23,6 +23,7 @@ namespace SWEndor.ActorTypes.Groups
       RadarType = RadarType.RECTANGLE_GIANT;
 
       Mask = ComponentMask.ACTOR;
+      HuntWeight = 5;
     }
 
     public override void Initialize(ActorInfo ainfo)
