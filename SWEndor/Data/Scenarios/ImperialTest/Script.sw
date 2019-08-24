@@ -55,8 +55,8 @@ load:
 loadfaction:
 	AddFaction("Empire", 0, 0.8, 0);
 	AddFaction("Traitors", 0.4, 0.5, 0.9);
-	AddFaction("TraitorsII", 0.8, 0, 0);
-	Faction.MakeAlly("Traitors", "TraitorsII");
+	AddFaction("Rebels", 0.8, 0, 0);
+	Faction.MakeAlly("Traitors", "Rebels");
 	Faction.SetWingSpawnLimit("Empire", 26);
 	Faction.SetWingSpawnLimit("Traitors", 32);
 
@@ -134,7 +134,10 @@ getchildren:
 makeplayer:
 	Player.DecreaseLives();
 	if (respawn) 
-		Player.RequestSpawn(); 
+		if (!playerisship)
+			Player.RequestSpawn(); 
+		else
+			Player.AssignActor(Actor.Spawn(GetPlayerActorType(), "(Player)", "", "(Player)", 0, "Empire", 7000, -300, 0, 0, -120, 0));
 	else 
 		CallScript("firstspawn");
 	
@@ -143,19 +146,28 @@ makeplayer:
 setupplayer:
 	//Actor.SetProperty(Player.GetActor(), "DamageModifier", 0.25);
 	Actor.RegisterEvents(Player.GetActor());
+	playerisship = Actor.IsLargeShip(Player.GetActor());
+	if (respawn) 
+		CallScript("respawn");
 
 firstspawn:
 	Player.AssignActor(Actor.Spawn(GetPlayerActorType(), "(Player)", "", "(Player)", 0, "Empire", 500, -300, 12500, 0, -180, 0));
 	respawn = true;
 
+respawn:
+	Actor.AddToSquad(Player.GetActor(), tiea1);
+	Actor.AddToSquad(Player.GetActor(), tiea2);
+
 makeimperials:
 	tiea1 = Actor.Spawn("TIE Avenger", "Alpha-2", "", "", 0, "Empire", 700, -620, 10500, 0, -180, 0);
 	Actor.SetProperty(tiea1, "DamageModifier", 0.25);
 	Actor.QueueLast(tiea1, "wait", 2.5);
-	
+	Actor.AddToSquad(Player.GetActor(), tiea1);
+
 	tiea2 = Actor.Spawn("TIE Avenger", "Alpha-3", "", "", 4, "Empire", 6000, 300, -500, 0, -90, 0);
 	Actor.SetProperty(tiea2, "DamageModifier", 0.25);
 	Actor.QueueLast(tiea2, "wait", 2.5);
+	Actor.AddToSquad(Player.GetActor(), tiea2);
 
 	tiea3 = Actor.Spawn("TIE Avenger", "Alpha-4", "", "", 4, "Empire", 6500, 600, -750, 0, -90, 0);
 	Actor.SetProperty(tiea3, "DamageModifier", 0.25);
@@ -366,7 +378,7 @@ spawnenemybombers:
 	CallScript("spawn2");
 
 spawnenemybombers2:
-	//spawnfaction = "TraitorsII";
+	//spawnfaction = "Traitors";
 	damagemod = 1;
 	spawnwait = 0;
 	spawnX = -10000;
@@ -393,7 +405,7 @@ spawnenemybombers2:
 	CallScript("spawn2");
 
 spawnenemybombers3:
-	//spawnfaction = "TraitorsII";
+	//spawnfaction = "Traitors";
 	damagemod = 1;
 	spawnwait = 0;
 	spawnX = -10000;

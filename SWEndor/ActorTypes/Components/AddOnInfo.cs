@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.AI.Squads;
 
 namespace SWEndor.ActorTypes.Components
 {
@@ -45,7 +46,7 @@ namespace SWEndor.ActorTypes.Components
       {
         a.UseParentCoords = AttachToParent;
         if (actor.Squad == null)
-          actor.Squad = engine.SquadronFactory.Create();
+          engine.SquadronFactory.Create().Add(actor);
 
         actor.Squad.Add(a);
       }

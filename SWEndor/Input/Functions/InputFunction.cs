@@ -113,6 +113,8 @@ namespace SWEndor.Input.Functions
         fns[i++] = new PrevPrimary();
         fns[i++] = new NextSecondary();
         fns[i++] = new PrevSecondary();
+        fns[i++] = new RemoveLockOn();
+        fns[i++] = new SquadAssist();
 
         // gameplay: camera
         fns[i++] = new NextCameraMode();
@@ -126,6 +128,7 @@ namespace SWEndor.Input.Functions
 
         // gameplay: UI toggles
         fns[i++] = new ToggleUIVisibility();
+        fns[i++] = new ToggleSquadVisibility();
         fns[i++] = new ToggleStatusVisibility();
         fns[i++] = new ToggleRadarVisibility();
         fns[i++] = new ToggleScoreVisibility();

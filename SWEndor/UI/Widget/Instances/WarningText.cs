@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Primitives;
 
 namespace SWEndor.UI.Widgets
 {
@@ -23,6 +24,7 @@ namespace SWEndor.UI.Widgets
           if (((AI.Actions.ProjectileAttackActor)a.CurrentAction).Target_Actor == PlayerInfo.Actor)
           {
             warn = true;
+            dist = ActorDistanceInfo.GetDistance(PlayerInfo.Actor, a);
             return false;
           }
 
@@ -30,6 +32,7 @@ namespace SWEndor.UI.Widgets
     }
 
     bool warn = false;
+    float dist = 0;
     public override void Draw()
     {
       // missile warning?
@@ -39,8 +42,9 @@ namespace SWEndor.UI.Widgets
       if (!warn)
         return;
 
-      string text = "MISSILE WARNING";
+      string text = "MISSILE WARNING [{0:0000.00}]".F(dist);
       int fntID = FontFactory.Get(Font.T12).ID;
+      int colorint = Engine.Game.GameTime % 2 > 1 ? new TV_COLOR(1, 0.2f, 0.2f, 1).GetIntColor() : new TV_COLOR(1, 0.8f, 0.2f, 1).GetIntColor();
 
       float letter_width = 4.5f;
 
@@ -58,7 +62,7 @@ namespace SWEndor.UI.Widgets
       TVScreen2DText.TextureFont_DrawText(text
                                                             , Engine.ScreenWidth / 2 - letter_width * text.Length
                                                             , Engine.ScreenHeight / 2 - 120
-                                                            , new TV_COLOR(1, 0.2f, 0.2f, 1).GetIntColor()
+                                                            , colorint
                                                             , fntID);
       TVScreen2DText.Action_EndText();
     }

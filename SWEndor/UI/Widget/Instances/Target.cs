@@ -37,7 +37,10 @@ namespace SWEndor.UI.Widgets
 
       ActorInfo prev_target = m_target;
 
-      PickTarget(!PlayerInfo.IsTorpedoMode);
+      if (p.TypeInfo is ActorTypes.Groups.LargeShip)
+        PickTargetLargeShip();
+      else
+        PickTargetFighter(!PlayerInfo.IsTorpedoMode);
 
       if (m_target == null)
       {
@@ -53,117 +56,135 @@ namespace SWEndor.UI.Widgets
         if (limit < 250)
           limit = 250;
 
-        if (!m_target.Active
-        || m_target.IsDyingOrDead
-        || !Engine.ActorDataSet.CombatData[m_target.dataID].IsCombatObject
-        || dist > 7500
-        || Math.Abs(x - Engine.ScreenWidth / 2) > limit
-        || Math.Abs(y - Engine.ScreenHeight / 2) > limit
-        || (PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && PlayerInfo.IsTorpedoMode)
-        || !PlayerCameraInfo.Camera.IsPointVisible(m_target.GetGlobalPosition()))
+        if (Check(p, x, y, limit, dist, prev_target))
         {
           m_target = null;
           PlayerInfo.AimTargetID = -1;
         }
         else
         {
-          TV_COLOR acolor = (m_target.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : m_target.Faction.Color;
-          string name = m_target.Name;
-          TVScreen2DImmediate.Action_Begin2D();
-          if (PlayerInfo.IsTorpedoMode)
-          {
-            if (!PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && prev_target != m_target)
-            {
-              SoundManager.SetSound("button_3");
-              m_targetBigSize = 15;
-            }
-            if (m_targetBigSize > m_targetSize)
-            {
-              m_targetBigSize -= 25 * Game.TimeSinceRender;
-              TVScreen2DImmediate.Draw_Box(x - m_targetBigSize, y - m_targetBigSize, x + m_targetBigSize, y + m_targetBigSize, acolor.GetIntColor());
-            }
-
-            WeaponInfo weap;
-            int burst = 0;
-            p.TypeInfo.InterpretWeapon(p, PlayerInfo.SecondaryWeapon, out weap, out burst);
-            if (weap != null && weap.Ammo > 0)
-            {
-              TVScreen2DImmediate.Draw_FilledBox(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());
-            }
-            else
-            {
-              TVScreen2DImmediate.Draw_Box(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());
-            }
-          }
-          else
-          {
-            TVScreen2DImmediate.Draw_Box(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());
-          }
-          TVScreen2DImmediate.Action_End2D();
-
-          TVScreen2DText.Action_BeginText();
-          //TVScreen2DText.TextureFont_DrawText(string.Format("{0} {1}\nDamage: {2:0}%", name, (m_target.Squad == null) ? string.Empty : "[Squad " + m_target.Squad.ID + "]", 100 - m_target.HP_Perc)
-          TVScreen2DText.TextureFont_DrawText(string.Format("{0}\nDamage: {1:0}%", name, 100 - m_target.HP_Perc)
-            , x, y + m_targetSize + 10, acolor.GetIntColor()
-            , FontFactory.Get(Font.T10).ID
-            );
-          TVScreen2DText.Action_EndText();
-
-          PlayerInfo.AimTargetID = PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) ? -1 : m_target.ID;
-
-          if (!PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && !PlayerInfo.IsTorpedoMode)
-          {
-            // Targeting cross
-            // Anticipate
-            float d = dist / Globals.LaserSpeed; // Laser Speed
-            TV_3DVECTOR target = m_target.GetRelativePositionXYZ(0, 0, m_target.MoveData.Speed * d);
-            TVScreen2DImmediate.Math_3DPointTo2D(target, ref x, ref y);
-
-            TVScreen2DImmediate.Action_Begin2D();
-            TVScreen2DImmediate.Draw_Line(x - m_targetSize, y, x + m_targetSize, y, acolor.GetIntColor());
-            TVScreen2DImmediate.Draw_Line(x, y - m_targetSize, x, y + m_targetSize, acolor.GetIntColor());
-            TVScreen2DImmediate.Action_End2D();
-          }
-
-          //if (m_target.TypeInfo is ActorTypes.Groups.Fighter)
-          //if (PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && m_target.TypeInfo is ActorTypes.Groups.Fighter)
-          //{
-          // Squad diamond
-          if (m_target.Squad != null)
-          {
-            TVScreen2DImmediate.Action_Begin2D();
-            foreach (ActorInfo s in m_target.Squad.Members)
-            {
-              if (s != m_target && PlayerCameraInfo.Camera.IsPointVisible(s.GetGlobalPosition()))
-              {
-                float sx = 0;
-                float sy = 0;
-                TVScreen2DImmediate.Math_3DPointTo2D(s.GetGlobalPosition(), ref sx, ref sy);
-
-                float m2 = m_targetSizeDiamond + 5;
-                if (s == m_target.Squad.Leader)
-                {
-                  TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy + m2, acolor.GetIntColor());
-                  TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy - m2, acolor.GetIntColor());
-                  TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy + m2, acolor.GetIntColor());
-                  TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy - m2, acolor.GetIntColor());
-                }
-
-                m2 = m_targetSizeDiamond;
-                TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy + m2, acolor.GetIntColor());
-                TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy - m2, acolor.GetIntColor());
-                TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy + m2, acolor.GetIntColor());
-                TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy - m2, acolor.GetIntColor());
-              }
-            }
-            TVScreen2DImmediate.Action_End2D();
-          }
-          //}
+          Draw(p, x, y, dist, prev_target);
         }
       }
     }
 
-    private bool PickTarget(bool pick_allies)
+    private bool Check(ActorInfo p, float x, float y, float limit, float dist, ActorInfo prev_target)
+    {
+      if (p.TypeInfo is ActorTypes.Groups.LargeShip)
+      {
+        return !m_target.Active
+        || m_target.IsDyingOrDead
+        || !Engine.ActorDataSet.CombatData[m_target.dataID].IsCombatObject
+        || !PlayerCameraInfo.Camera.IsPointVisible(m_target.GetGlobalPosition());
+      }
+      else
+        return !m_target.Active
+        || m_target.IsDyingOrDead
+        || !Engine.ActorDataSet.CombatData[m_target.dataID].IsCombatObject
+        || dist > 7500
+        || Math.Abs(x - Engine.ScreenWidth / 2) > limit
+        || Math.Abs(y - Engine.ScreenHeight / 2) > limit
+        || (PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && PlayerInfo.IsTorpedoMode)
+        || !PlayerCameraInfo.Camera.IsPointVisible(m_target.GetGlobalPosition());
+    }
+
+    private void Draw(ActorInfo p, float x, float y, float dist, ActorInfo prev_target)
+    {
+      TV_COLOR acolor = (m_target.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : m_target.Faction.Color;
+      string name = m_target.Name;
+      TVScreen2DImmediate.Action_Begin2D();
+      if (PlayerInfo.IsTorpedoMode)
+      {
+        if (!PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && prev_target != m_target)
+        {
+          SoundManager.SetSound("button_3");
+          m_targetBigSize = 15;
+        }
+        if (m_targetBigSize > m_targetSize)
+        {
+          m_targetBigSize -= 25 * Game.TimeSinceRender;
+          TVScreen2DImmediate.Draw_Box(x - m_targetBigSize, y - m_targetBigSize, x + m_targetBigSize, y + m_targetBigSize, acolor.GetIntColor());
+        }
+
+        WeaponInfo weap;
+        int burst = 0;
+        p.TypeInfo.InterpretWeapon(p, PlayerInfo.SecondaryWeapon, out weap, out burst);
+        if (weap != null && weap.Ammo > 0)
+        {
+          TVScreen2DImmediate.Draw_FilledBox(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());
+        }
+        else
+        {
+          TVScreen2DImmediate.Draw_Box(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());
+        }
+      }
+      else
+      {
+        TVScreen2DImmediate.Draw_Box(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());
+      }
+      TVScreen2DImmediate.Action_End2D();
+
+      TVScreen2DText.Action_BeginText();
+      //TVScreen2DText.TextureFont_DrawText(string.Format("{0} {1}\nDamage: {2:0}%", name, (m_target.Squad == null) ? string.Empty : "[Squad " + m_target.Squad.ID + "]", 100 - m_target.HP_Perc)
+      TVScreen2DText.TextureFont_DrawText(string.Format("{0}\nDamage: {1:0}%", name, 100 - m_target.HP_Perc)
+        , x, y + m_targetSize + 10, acolor.GetIntColor()
+        , FontFactory.Get(Font.T10).ID
+        );
+      TVScreen2DText.Action_EndText();
+
+      PlayerInfo.AimTargetID = PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) ? -1 : m_target.ID;
+
+      if (!PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && !PlayerInfo.IsTorpedoMode)
+      {
+        // Targeting cross
+        // Anticipate
+        float d = dist / Globals.LaserSpeed; // Laser Speed
+        TV_3DVECTOR target = m_target.GetRelativePositionXYZ(0, 0, m_target.MoveData.Speed * d);
+        TVScreen2DImmediate.Math_3DPointTo2D(target, ref x, ref y);
+
+        TVScreen2DImmediate.Action_Begin2D();
+        TVScreen2DImmediate.Draw_Line(x - m_targetSize, y, x + m_targetSize, y, acolor.GetIntColor());
+        TVScreen2DImmediate.Draw_Line(x, y - m_targetSize, x, y + m_targetSize, acolor.GetIntColor());
+        TVScreen2DImmediate.Action_End2D();
+      }
+
+      //if (m_target.TypeInfo is ActorTypes.Groups.Fighter)
+      //if (PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && m_target.TypeInfo is ActorTypes.Groups.Fighter)
+      //{
+      // Squad diamond
+      if (m_target.Squad != null)
+      {
+        TVScreen2DImmediate.Action_Begin2D();
+        foreach (ActorInfo s in m_target.Squad.Members)
+        {
+          if (s != m_target && PlayerCameraInfo.Camera.IsPointVisible(s.GetGlobalPosition()))
+          {
+            float sx = 0;
+            float sy = 0;
+            TVScreen2DImmediate.Math_3DPointTo2D(s.GetGlobalPosition(), ref sx, ref sy);
+
+            float m2 = m_targetSizeDiamond + 5;
+            if (s == m_target.Squad.Leader)
+            {
+              TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy + m2, acolor.GetIntColor());
+              TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy - m2, acolor.GetIntColor());
+              TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy + m2, acolor.GetIntColor());
+              TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy - m2, acolor.GetIntColor());
+            }
+
+            m2 = m_targetSizeDiamond;
+            TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy + m2, acolor.GetIntColor());
+            TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy - m2, acolor.GetIntColor());
+            TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy + m2, acolor.GetIntColor());
+            TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy - m2, acolor.GetIntColor());
+          }
+        }
+        TVScreen2DImmediate.Action_End2D();
+      }
+      //}
+    }
+
+    private bool PickTargetFighter(bool pick_allies)
     {
       ActorInfo p = PlayerInfo.Actor;
       bool ret = false;
@@ -217,6 +238,34 @@ namespace SWEndor.UI.Widgets
         );
 
         ActorFactory.DoEach(action);
+      }
+      return ret;
+    }
+
+    private bool PickTargetLargeShip()
+    {
+      ActorInfo p = PlayerInfo.Actor;
+      bool ret = false;
+
+      if (p != null || p.Active)
+      {
+        TVCollisionResult tvcres = Engine.TrueVision.TVScene.MousePick(Engine.InputManager.MOUSE_X, Engine.InputManager.MOUSE_Y);
+        if (tvcres.GetCollisionMesh() != null)
+        {
+          int n = 0;
+          if (int.TryParse(tvcres.GetCollisionMesh().GetTag(), out n))
+          {
+            ActorInfo a = Engine.ActorFactory.Get(n);
+
+            if (a != null) //&& a.TypeInfo.CollisionEnabled)
+            {
+              m_target = a;
+              m_targetX = Engine.InputManager.MOUSE_X;
+              m_targetY = Engine.InputManager.MOUSE_Y;
+              ret = true;
+            }
+          }
+        }
       }
       return ret;
     }

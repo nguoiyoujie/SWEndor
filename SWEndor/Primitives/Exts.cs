@@ -5,7 +5,7 @@ namespace SWEndor.Primitives
 {
   public static class ListExts
   {
-    public static int BinarySearchMany<T>(this ThreadSafeList<T> list, int searchFor) where T : IIdentity
+    public static int BinarySearchMany<T>(this List<T> list, int searchFor) where T : IIdentity
     {
       int start = 0;
       int end = list.Count;
@@ -24,7 +24,7 @@ namespace SWEndor.Primitives
       return start;
     }
 
-    public static T Random<T>(this ThreadSafeList<T> list, Engine engine)
+    public static T Random<T>(this List<T> list, Engine engine)
     {
       return list[engine.Random.Next(0, list.Count)];
     }

@@ -18,6 +18,7 @@ namespace SWEndor.Input.Context
       PauseToMenu.InternalName,
 
       ToggleUIVisibility.InternalName,
+      ToggleSquadVisibility.InternalName,
       ToggleRadarVisibility.InternalName,
       ToggleStatusVisibility.InternalName,
       ToggleScoreVisibility.InternalName,
@@ -35,6 +36,9 @@ namespace SWEndor.Input.Context
       PrevPrimary.InternalName,
       NextSecondary.InternalName,
       PrevSecondary.InternalName,
+
+      RemoveLockOn.InternalName,
+      SquadAssist.InternalName,
 
       Up.InternalName,
       Down.InternalName,

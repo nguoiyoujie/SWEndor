@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
+using SWEndor.ActorTypes.Groups;
 using SWEndor.Scenarios.Scripting.Expressions;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,48 @@ namespace SWEndor.Scenarios.Scripting.Functions
         ret[i] = squad[i].ID;
 
       return ret;
+    }
+
+    public static object AddToSquad(Context context, params object[] ps)
+    {
+      int id1 = Convert.ToInt32(ps[0].ToString());
+      int id2 = Convert.ToInt32(ps[1].ToString());
+      ActorInfo a1 = context.Engine.ActorFactory.Get(id1);
+      ActorInfo a2 = context.Engine.ActorFactory.Get(id2);
+      if (context.Engine.GameScenarioManager.Scenario == null || a1 == null || a2 == null)
+        return false;
+
+      if (a1.Squad == null)
+        context.Engine.SquadronFactory.Create().Add(a1);
+
+      a1.Squad.Add(a2);
+
+      return true;
+    }
+
+    public static object RemoveFromSquad(Context context, params object[] ps)
+    {
+      int id1 = Convert.ToInt32(ps[0].ToString());
+      ActorInfo a1 = context.Engine.ActorFactory.Get(id1);
+      if (context.Engine.GameScenarioManager.Scenario == null || a1 == null)
+        return false;
+
+      a1.Squad?.Remove(a1);
+
+      return true;
+    }
+
+    public static object MakeSquadLeader(Context context, params object[] ps)
+    {
+      int id1 = Convert.ToInt32(ps[0].ToString());
+      ActorInfo a1 = context.Engine.ActorFactory.Get(id1);
+      if (context.Engine.GameScenarioManager.Scenario == null || a1 == null)
+        return false;
+
+      a1.Squad?.Remove(a1);
+      a1.Squad.Add(a1, true);
+
+      return true;
     }
 
     public static object Spawn(Context context, params object[] ps)
@@ -90,6 +133,36 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return actor != null;
     }
     */
+
+    public static object GetActorType(Context context, params object[] ps)
+    {
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return null;
+
+      return actor.TypeInfo.Name;
+    }
+
+    public static object IsFighter(Context context, params object[] ps)
+    {
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return false;
+
+      return actor.TypeInfo is Fighter;
+    }
+
+    public static object IsLargeShip(Context context, params object[] ps)
+    {
+      int id = Convert.ToInt32(ps[0].ToString());
+      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return false;
+
+      return actor.TypeInfo is LargeShip;
+    }
 
     public static object IsAlive(Context context, params object[] ps)
     {

@@ -1,6 +1,9 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
+using SWEndor.AI;
+using SWEndor.AI.Actions;
+using SWEndor.Primitives;
 using System.Collections.Generic;
 
 namespace SWEndor.Player
@@ -246,6 +249,16 @@ namespace SWEndor.Player
       SecondaryWeapon = (SecondaryWeaponModes.Count > SecondaryWeaponN) ? SecondaryWeaponModes[SecondaryWeaponN].Trim() : "none";
     }
 
+    public void SquadronAssist()
+    {
+      if (Actor.Squad == null || AimTarget == null)
+        return;
+
+      Engine.Screen2D.MessageSecondaryText("Calling reinforcements to attack {0}.".F(AimTarget.Name), 5, FactionColor);
+
+      foreach (ActorInfo a in Actor.Squad.Members)
+        a.QueueFirst(new AttackActor(AimTargetID));
+    }
 
     public void FlashHit(TV_COLOR color)
     {

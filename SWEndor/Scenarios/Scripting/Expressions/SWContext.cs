@@ -23,8 +23,15 @@ namespace SWEndor.Scenarios.Scripting.Expressions
 
       // Actor Management
       Functions.Add("Actor.Squadron_Spawn".ToLowerInvariant(), ActorManagement.Squadron_Spawn);
+      Functions.Add("Actor.AddToSquad".ToLowerInvariant(), ActorManagement.AddToSquad);
+      Functions.Add("Actor.RemoveFromSquad".ToLowerInvariant(), ActorManagement.RemoveFromSquad);
+      Functions.Add("Actor.MakeSquadLeader".ToLowerInvariant(), ActorManagement.MakeSquadLeader);
+
       Functions.Add("Actor.Spawn".ToLowerInvariant(), ActorManagement.Spawn);
       //Functions.Add("Actor.SetActive".ToLowerInvariant(), ActorManagement.SetActive);
+      Functions.Add("Actor.GetActorType".ToLowerInvariant(), ActorManagement.GetActorType);
+      Functions.Add("Actor.IsFighter".ToLowerInvariant(), ActorManagement.IsFighter);
+      Functions.Add("Actor.IsLargeShip".ToLowerInvariant(), ActorManagement.IsLargeShip);
       Functions.Add("Actor.IsAlive".ToLowerInvariant(), ActorManagement.IsAlive);
       Functions.Add("Actor.RegisterEvents".ToLowerInvariant(), ActorManagement.RegisterEvents);
       Functions.Add("Actor.GetLocalPosition".ToLowerInvariant(), ActorManagement.GetLocalPosition);

@@ -386,6 +386,8 @@
     <Compile Include="Input\Functions\Gameplay\Special\AllEnemiesDying.cs" />
     <Compile Include="Input\Functions\Gameplay\Special\AllEnemiesDead.cs" />
     <Compile Include="Input\Functions\Gameplay\Special\AddLife.cs" />
+    <Compile Include="Input\Functions\Gameplay\UI\ToggleSquadVisibility.cs" />
+    <Compile Include="Input\Functions\Gameplay\Weapon\SquadAssist.cs" />
     <Compile Include="Input\Functions\Gameplay\Weapon\RemoveLockOn.cs" />
     <Compile Include="Input\Functions\Gameplay\Weapon\NextSecondary.cs" />
     <Compile Include="Input\Functions\Gameplay\Weapon\PrevSecondary.cs" />
@@ -549,6 +551,7 @@
     <Compile Include="Player\PlayerInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Widget\Instances\Squad.cs" />
     <Compile Include="UI\Widget\Instances\WarningText.cs" />
     <Compile Include="UI\Widget\Instances\Page.cs" />
     <Compile Include="UI\Widget\Instances\AIInfo.cs" />

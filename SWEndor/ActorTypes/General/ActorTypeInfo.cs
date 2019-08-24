@@ -6,9 +6,11 @@ using SWEndor.ActorTypes.Components;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
+using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using SWEndor.Weapons;
 using System;
+using System.Collections.Generic;
 
 namespace SWEndor.ActorTypes
 {
@@ -313,10 +315,22 @@ namespace SWEndor.ActorTypes
             {
               if (owner.Squad != null && owner.Squad.Missions.Count == 0)
               {
-                foreach (ActorInfo a in owner.Squad.Members)
+                if (attacker.Squad != null)
                 {
-                  a.ClearQueue();
-                  a.QueueLast(new AttackActor(attacker.ID));
+                  foreach (ActorInfo a in owner.Squad.Members)
+                  {
+                    ActorInfo b = new List<ActorInfo>(attacker.Squad.Members).Random(Engine);
+                    a.ClearQueue();
+                    a.QueueLast(new AttackActor(b.ID));
+                  }
+                }
+                else
+                {
+                  foreach (ActorInfo a in owner.Squad.Members)
+                  {
+                    a.ClearQueue();
+                    a.QueueLast(new AttackActor(attacker.ID));
+                  }
                 }
               }
               else

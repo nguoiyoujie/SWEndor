@@ -11,6 +11,7 @@ namespace SWEndor
 
     // Show toggles
     public bool ShowUI = true;
+    public bool ShowSquad = false;
     public bool ShowStatus = true;
     public bool ShowRadar = true;
     public bool ShowScore = true;
@@ -54,6 +55,7 @@ namespace SWEndor
       m_Widgets.Add(new Steering(this));
       m_Widgets.Add(new CrossHair(this));
       m_Widgets.Add(new Target(this));
+      m_Widgets.Add(new Squad(this));
 
       m_Widgets.Add(new Box3D(this));
       //m_Widgets.Add(new Debug_GeneralInfo(this));
