@@ -173,29 +173,32 @@ namespace SWEndor.Actors
         ActorInfo actor = Get(id);//v.Value;
         if (actor != null)
         {
-          if (First == actor && Last == actor)
+          lock (creationLock)
           {
-            First = null;
-            Last = null;
-          }
-          else if (First == actor)
-          {
-            First = actor.Next;
-          }
-          else if (Last == actor)
-          {
-            Last = actor.Prev;
-          }
-          else
-          {
-            actor.Prev.Next = actor.Next;
-            actor.Next.Prev = actor.Prev;
-          }
+            if (First == actor && Last == actor)
+            {
+              First = null;
+              Last = null;
+            }
+            else if (First == actor)
+            {
+              First = actor.Next;
+            }
+            else if (Last == actor)
+            {
+              Last = actor.Prev;
+            }
+            else
+            {
+              actor.Prev.Next = actor.Next;
+              actor.Next.Prev = actor.Prev;
+            }
 
-          actor.Next = null;
-          actor.Prev = null;
+            actor.Next = null;
+            actor.Prev = null;
 
-          base.Remove(id);
+            base.Remove(id);
+          }
           prepool.Enqueue(actor);
         }
       }

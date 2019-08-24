@@ -29,7 +29,7 @@ namespace SWEndor.Actors
 
         child.Relation.Parent = self;
 
-        if (!list.Contains(child))
+        if (list != null && !list.Contains(child))
           list.AddLast(child);
       }
 
@@ -41,13 +41,16 @@ namespace SWEndor.Actors
         if (self.Equals(child.Relation.Parent))
           child.Relation.Parent = null;
 
-        list.Remove(child);
+        list?.Remove(child);
       }
 
       public IEnumerable<ActorInfo> Children
       {
         get
         {
+          if (list == null)
+            yield break;
+
           LinkedListNode<ActorInfo> node = list.First;
           while (node != null)
           {
