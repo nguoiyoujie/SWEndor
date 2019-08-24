@@ -48,9 +48,9 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
         case TokenEnum.NOTHING:
           return result;
         case TokenEnum.MINUS:
-          try { return -result; } catch (Exception ex) { throw new EvalException("-", result, ex); }
+          try { return -result; } catch (Exception ex) { throw new EvalException(this, "-", result, ex); }
         case TokenEnum.NOT:
-          try { return !result; } catch (Exception ex) { throw new EvalException("!", result, ex); }
+          try { return !result; } catch (Exception ex) { throw new EvalException(this, "!", result, ex); }
       }
     }
   }

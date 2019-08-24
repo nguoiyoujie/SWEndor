@@ -5,14 +5,14 @@
     internal CLiteral(Lexer lexer) : base(lexer) { }
   }
 
-  public class CExpression : IExpression
+  public class CExpression : IExpression, ITracker
   {
     internal CExpression(Lexer lexer) { LineNumber = lexer.LineNumber; Position = lexer.Position; }
     public virtual CExpression Get() { return this; }
     public virtual object Evaluate(Context context) { return null; }
 
-    public readonly int LineNumber;
-    public readonly int Position;
+    public int LineNumber { get; }
+    public int Position { get; }
   }
 
   public interface IExpression

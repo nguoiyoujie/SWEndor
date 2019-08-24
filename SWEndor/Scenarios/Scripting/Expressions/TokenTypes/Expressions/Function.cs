@@ -45,7 +45,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       }
       FunctionDelegate fd = context.Functions.Get(_funcName.ToLower());
       if (fd == null)
-        throw new EvalException("The function '" + _funcName + "' does not exist!");
+        throw new EvalException(this, "The function '" + _funcName + "' does not exist!");
       return fd.Invoke(context, parsed.ToArray());
     }
   }

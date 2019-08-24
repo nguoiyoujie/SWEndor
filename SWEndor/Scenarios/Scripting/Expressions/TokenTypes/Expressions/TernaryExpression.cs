@@ -41,7 +41,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
     public override object Evaluate(Context context)
     {
       dynamic result = false;
-      try { result = (bool)(_question.Evaluate(context) as IConvertible); } catch (Exception ex) { throw new EvalException("bool cast", result, ex); }
+      try { result = (bool)(_question.Evaluate(context) as IConvertible); } catch (Exception ex) { throw new EvalException(this, "bool cast", result, ex); }
       if (result)
         return _true?.Evaluate(context);
       else

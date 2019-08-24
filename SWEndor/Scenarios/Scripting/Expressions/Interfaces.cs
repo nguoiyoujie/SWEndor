@@ -11,6 +11,12 @@
     /// <returns>The number of characters that matched</returns>
     int Match(string text);
   }
+
+  internal interface ITracker
+  {
+    int LineNumber { get; }
+    int Position { get; }
+  }
 }
 
 

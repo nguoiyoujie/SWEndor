@@ -45,13 +45,13 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
           switch (_set[_expr])
           {
             case TokenEnum.ASTERISK:
-              try { result *= adden; } catch (Exception ex) { throw new EvalException("*", result, adden, ex); }
+              try { result *= adden; } catch (Exception ex) { throw new EvalException(this, "*", result, adden, ex); }
               break;
             case TokenEnum.SLASH:
-              try { result /= adden; } catch (Exception ex) { throw new EvalException("/", result, adden, ex); }
+              try { result /= adden; } catch (Exception ex) { throw new EvalException(this, "/", result, adden, ex); }
               break;
             case TokenEnum.PERCENT:
-              try { result %= adden; } catch (Exception ex) { throw new EvalException("%", result, adden, ex); }
+              try { result %= adden; } catch (Exception ex) { throw new EvalException(this, "%", result, adden, ex); }
               break;
           }
         }

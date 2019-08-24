@@ -22,17 +22,24 @@ namespace SWEndor.Scenarios.Scripting.Expressions
 
   public class EvalException : Exception
   {
-    internal EvalException(string reason) : base(reason) { }
+    internal EvalException(ITracker eval, string reason) : base(string.Format("Unable to execute script at line {0}:{1} \nReason: {2} \n"
+                                                                              , eval.LineNumber
+                                                                              , eval.Position
+                                                                              , reason)) { }
 
-    internal EvalException(string opname, object target, Exception ex) : base(string.Format("Unable to perform '{0}' operation on {1} \nReason: {2}"
+    internal EvalException(ITracker eval, string opname, object target, Exception ex) : base(string.Format("Unable to perform '{0}' operation on {1} at line {2}:{3} \nReason: {4}"
                                                                               , opname
                                                                               , target?.ToString() ?? "<null>"
+                                                                              , eval.LineNumber
+                                                                              , eval.Position
                                                                               , ex.Message)) { }
 
-    internal EvalException(string opname, object target, object target2, Exception ex) : base(string.Format("Unable to perform '{0}' operation between {1} and {2} \nReason: {3}"
+    internal EvalException(ITracker eval, string opname, object target, object target2, Exception ex) : base(string.Format("Unable to perform '{0}' operation between {1} and {2} at line {3}:{4} \nReason: {5}"
                                                                               , opname
                                                                               , target?.ToString() ?? "<null>"
                                                                               , target2?.ToString() ?? "<null>"
+                                                                              , eval.LineNumber
+                                                                              , eval.Position
                                                                               , ex.Message)) { }
 
   }

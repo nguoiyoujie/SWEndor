@@ -36,13 +36,13 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
         return _first.Evaluate(context);
 
       dynamic result = _first.Evaluate(context);
-      try { result = (bool)(result as IConvertible); } catch (Exception ex) { throw new EvalException("bool cast", result, ex); }
+      try { result = (bool)(result as IConvertible); } catch (Exception ex) { throw new EvalException(this, "bool cast", result, ex); }
       if (result)
       {
         foreach (CExpression _expr in _set.GetList())
         {
           dynamic adden = (dynamic)_expr.Evaluate(context) ?? false;
-          try { result &= adden; } catch (Exception ex) { throw new EvalException("&&", result, adden, ex); }
+          try { result &= adden; } catch (Exception ex) { throw new EvalException(this, "&&", result, adden, ex); }
           if (!result)
             break;
         }

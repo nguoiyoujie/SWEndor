@@ -46,9 +46,9 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       {
         dynamic adden = _expr.Evaluate(context);
         if (isUnequal)
-          try { result = _first.Evaluate(context) != adden; } catch (Exception ex) { throw new EvalException("!=", result, adden, ex); }
+          try { result = _first.Evaluate(context) != adden; } catch (Exception ex) { throw new EvalException(this, "!=", result, adden, ex); }
         else
-          try { result = _first.Evaluate(context) == adden; } catch (Exception ex) { throw new EvalException("==", result, adden, ex); }
+          try { result = _first.Evaluate(context) == adden; } catch (Exception ex) { throw new EvalException(this, "==", result, adden, ex); }
       }
       return result;
     }
