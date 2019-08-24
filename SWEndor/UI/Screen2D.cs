@@ -61,6 +61,7 @@ namespace SWEndor
       //m_Widgets.Add(new Debug_SelectInfo(this));
 
       m_Widgets.Add(new MessageText(this));
+      m_Widgets.Add(new WarningText(this));
 
       m_Widgets.Add(new WidgetPage(this));
       m_Widgets.Add(new PerfText(this));
