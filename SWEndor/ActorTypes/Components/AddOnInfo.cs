@@ -38,10 +38,17 @@ namespace SWEndor.ActorTypes.Components
       acinfo.Rotation = new TV_3DVECTOR(Rotation.x, Rotation.y, Rotation.z);
       acinfo.CreationTime = actor.CreationTime;
 
-      ActorInfo a = actor.ActorFactory.Create( acinfo);
+      ActorInfo a = actor.ActorFactory.Create(acinfo);
       actor.AddChild(a);
 
-      a.UseParentCoords = AttachToParent;
+      if (AttachToParent)
+      {
+        a.UseParentCoords = AttachToParent;
+        if (actor.Squad == null)
+          actor.Squad = engine.SquadronFactory.Create();
+
+        actor.Squad.Add(a);
+      }
     }
   }
 }

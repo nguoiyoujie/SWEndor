@@ -139,6 +139,17 @@ namespace SWEndor.Actors
         return list.Count;
       }
 
+      public void DoUntil(Func<Engine, ActorInfo, bool> action)
+      {
+        ActorInfo actor = First;
+        while (actor != null)
+        {
+          if (!action.Invoke(Engine, actor))
+            break;
+          actor = actor.Next;
+        }
+      }
+
       public void DoEach(Action<Engine, ActorInfo> action)
       {
         ActorInfo actor = First;

@@ -160,7 +160,7 @@ namespace SWEndor.AI.Actions
       float delta_angle = 0;
       ActorInfo actor = engine.ActorFactory.Get(actorID);
 
-      Action<Engine, ActorInfo> action = new Action<Engine, ActorInfo>(
+      Func<Engine, ActorInfo, bool> fn = new Func<Engine, ActorInfo, bool>(
         (_, a) =>
          {
            if (a != null
@@ -183,13 +183,14 @@ namespace SWEndor.AI.Actions
              if (weapon != null)
              {
                weapon.Fire(engine, actor, a, burst);
-               return;
+               return false;
              }
            }
+           return true;
          }
       );
 
-      engine.ActorFactory.DoEach(action);
+      engine.ActorFactory.DoUntil(fn);
     }
   }
 }

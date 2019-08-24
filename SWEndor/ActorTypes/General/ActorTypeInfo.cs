@@ -332,10 +332,10 @@ namespace SWEndor.ActorTypes
 
             if (owner.Squad != null)
             {
-              if (owner.Squad.Members.First.Value == owner)
-                owner.Squad.Threats.AddFirst(attacker);
+              if (owner.Squad.Leader == owner)
+                owner.Squad.AddThreat(attacker, true);
               else
-                owner.Squad.Threats.AddLast(attacker);
+                owner.Squad.AddThreat(attacker);
             }
           }
         }

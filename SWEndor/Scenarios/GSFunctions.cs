@@ -119,8 +119,7 @@ namespace SWEndor.Scenarios
         };
 
         ret[i] = asi.Spawn(scenario);
-        ret[i].Squad = squad;
-        squad.Members.AddLast(ret[i]);
+        squad.Add(ret[i]);
       }
       return ret;
     }

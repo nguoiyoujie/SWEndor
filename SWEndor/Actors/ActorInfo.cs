@@ -363,11 +363,7 @@ namespace SWEndor.Actors
       // Actions
       CurrentAction = null;
 
-      if (Squad != null)
-      {
-        Squad.Members.Remove(this);
-        Squad = null;
-      }
+      Squad?.Remove(this);
 
       // Reset components
 

@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.AI.Actions;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace SWEndor.AI.Squads
@@ -8,8 +9,8 @@ namespace SWEndor.AI.Squads
   {
     public int ID;
     public string Name;
-    public LinkedList<ActorInfo> Members = new LinkedList<ActorInfo>();
-    public LinkedList<ActorInfo> Threats = new LinkedList<ActorInfo>();
+    private LinkedList<ActorInfo> _members = new LinkedList<ActorInfo>();
+    private LinkedList<ActorInfo> _threats = new LinkedList<ActorInfo>();
 
     //public Squadron Parent;
     public Scenarios.GSFunctions.SquadFormation Formation = Scenarios.GSFunctions.SquadFormation.LINE;
@@ -18,17 +19,11 @@ namespace SWEndor.AI.Squads
 
     public void Process(Engine engine)
     {
-      foreach (ActorInfo a in new List<ActorInfo>(Threats))
-        if (a == null || a.DisposingOrDisposed || a.IsDyingOrDead)
-          Threats.Remove(a);
+      foreach (ActorInfo a in new List<ActorInfo>(_threats))
+        if (a == null || a.DisposingOrDisposed || a.IsDyingOrDead || a.Faction.Allies.Contains(Leader.Faction))
+          _threats.Remove(a);
 
-      /*
-      foreach (ActorInfo a in new List<ActorInfo>(Members))
-        if (a == null || a.DisposingOrDisposed || a.IsDyingOrDead)
-          Members.Remove(a);
-          */
-
-      if (Members.Count == 0)
+      if (_members.Count == 0)
         engine.SquadronFactory.Remove(ID);
     }
 
@@ -37,10 +32,44 @@ namespace SWEndor.AI.Squads
       if (Missions.Count > 0)
         return Missions.First.Value.GetNewAction();
 
-      if (Threats.Count > 0)
-        return new Actions.AttackActor(Threats.First.Value.ID);
+      if (_threats.Count > 0)
+        return new Actions.AttackActor(_threats.First.Value.ID);
 
       return new Actions.Idle();
     }
+
+    public void Add(ActorInfo a, bool isLeader = false)
+    {
+      a.Squad?.Remove(a);
+      a.Squad = this;
+      if (isLeader)
+        _members.AddFirst(a);
+      else
+        _members.AddLast(a);
+    }
+
+    public void Remove(ActorInfo a)
+    {
+      a.Squad = null;
+      _members.Remove(a);
+    }
+
+    public void AddThreat(ActorInfo a, bool priorityThreat = false)
+    {
+      if (priorityThreat)
+        _threats.AddFirst(a);
+      else
+        _threats.AddLast(a);
+    }
+
+    public void RemoveThreat(ActorInfo a)
+    {
+      _threats.Remove(a);
+    }
+
+
+    public IEnumerable<ActorInfo> Members { get { return _members; } }
+    public IEnumerable<ActorInfo> Threats { get { return _threats; } }
+    public ActorInfo Leader { get { return (_members.Count > 0) ? _members.First.Value : null; } }
   }
 }

@@ -102,8 +102,8 @@ namespace SWEndor.UI.Widgets
           TVScreen2DImmediate.Action_End2D();
 
           TVScreen2DText.Action_BeginText();
-          TVScreen2DText.TextureFont_DrawText(string.Format("{0} {1}\nDamage: {2:0}%", name, (m_target.Squad == null) ? string.Empty : "[Squad " + m_target.Squad.ID + "]", 100 - m_target.HP_Perc)
-          //TVScreen2DText.TextureFont_DrawText(string.Format("{0}\nDamage: {1:0}%", name, 100 - m_target.HP_Perc)
+          //TVScreen2DText.TextureFont_DrawText(string.Format("{0} {1}\nDamage: {2:0}%", name, (m_target.Squad == null) ? string.Empty : "[Squad " + m_target.Squad.ID + "]", 100 - m_target.HP_Perc)
+          TVScreen2DText.TextureFont_DrawText(string.Format("{0}\nDamage: {1:0}%", name, 100 - m_target.HP_Perc)
             , x, y + m_targetSize + 10, acolor.GetIntColor()
             , FontFactory.Get(Font.T10).ID
             );
@@ -125,39 +125,40 @@ namespace SWEndor.UI.Widgets
             TVScreen2DImmediate.Action_End2D();
           }
 
-          if (PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && m_target.TypeInfo is ActorTypes.Groups.Fighter)
+          //if (m_target.TypeInfo is ActorTypes.Groups.Fighter)
+          //if (PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && m_target.TypeInfo is ActorTypes.Groups.Fighter)
+          //{
+          // Squad diamond
+          if (m_target.Squad != null)
           {
-            // Squad diamond
-            if (m_target.Squad != null)
+            TVScreen2DImmediate.Action_Begin2D();
+            foreach (ActorInfo s in m_target.Squad.Members)
             {
-              TVScreen2DImmediate.Action_Begin2D();
-              foreach (ActorInfo s in m_target.Squad.Members)
+              if (s != m_target && PlayerCameraInfo.Camera.IsPointVisible(s.GetGlobalPosition()))
               {
-                if (s != m_target && PlayerCameraInfo.Camera.IsPointVisible(s.GetGlobalPosition()))
+                float sx = 0;
+                float sy = 0;
+                TVScreen2DImmediate.Math_3DPointTo2D(s.GetGlobalPosition(), ref sx, ref sy);
+
+                float m2 = m_targetSizeDiamond + 5;
+                if (s == m_target.Squad.Leader)
                 {
-                  float sx = 0;
-                  float sy = 0;
-                  TVScreen2DImmediate.Math_3DPointTo2D(s.GetGlobalPosition(), ref sx, ref sy);
-
-                  float m2 = m_targetSizeDiamond + 5;
-                  if (s == m_target.Squad.Members.First.Value)
-                  {
-                    TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy + m2, acolor.GetIntColor());
-                    TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy - m2, acolor.GetIntColor());
-                    TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy + m2, acolor.GetIntColor());
-                    TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy - m2, acolor.GetIntColor());
-                  }
-
-                  m2 = m_targetSizeDiamond;
                   TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy + m2, acolor.GetIntColor());
                   TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy - m2, acolor.GetIntColor());
                   TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy + m2, acolor.GetIntColor());
                   TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy - m2, acolor.GetIntColor());
                 }
+
+                m2 = m_targetSizeDiamond;
+                TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy + m2, acolor.GetIntColor());
+                TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy - m2, acolor.GetIntColor());
+                TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy + m2, acolor.GetIntColor());
+                TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy - m2, acolor.GetIntColor());
               }
-              TVScreen2DImmediate.Action_End2D();
             }
+            TVScreen2DImmediate.Action_End2D();
           }
+          //}
         }
       }
     }

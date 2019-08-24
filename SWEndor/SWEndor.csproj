@@ -549,6 +549,7 @@
     <Compile Include="Player\PlayerInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Widget\Instances\WarningText.cs" />
     <Compile Include="UI\Widget\Instances\Page.cs" />
     <Compile Include="UI\Widget\Instances\AIInfo.cs" />
     <Compile Include="UI\Widget\Instances\Debug_SelectInfo.cs" />

@@ -152,8 +152,7 @@ namespace SWEndor.ActorTypes.Instances
             acinfo.FreeSpeed = true;
             acinfo.Faction = ainfo.Faction;
             ActorInfo a = ActorFactory.Create(acinfo);
-            a.Squad = squad;
-            squad.Members.AddLast(a);
+            squad.Add(a);
             ainfo.AddChild(a);
             GameScenarioManager.Scenario?.RegisterEvents(a);
             a.QueueFirst(new Lock());

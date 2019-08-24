@@ -55,7 +55,7 @@ load:
 loadfaction:
 	AddFaction("Empire", 0, 0.8, 0);
 	AddFaction("Traitors", 0.4, 0.5, 0.9);
-	AddFacteion("TraitorsII", 0.8, 0, 0);
+	AddFaction("TraitorsII", 0.8, 0, 0);
 	Faction.MakeAlly("Traitors", "TraitorsII");
 	Faction.SetWingSpawnLimit("Empire", 26);
 	Faction.SetWingSpawnLimit("Traitors", 32);
