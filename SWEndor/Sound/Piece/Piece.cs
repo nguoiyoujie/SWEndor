@@ -7,6 +7,7 @@ namespace SWEndor.Sound
     public partial class Piece
     {
       //public bool CutIn;
+      public string Name;
       public int[] IntermissionTransitions;
       public string SoundName;
       public uint EntryPosition;
@@ -23,9 +24,9 @@ namespace SWEndor.Sound
         UpdateSound(SoundName + "%");
       }
 
-      private void UpdateSound(string name)
+      private void UpdateSound(string soundname)
       {
-        FMOD.Sound sound = Globals.Engine.SoundManager.music[name];
+        FMOD.Sound sound = Globals.Engine.SoundManager.music[soundname];
 
         if (sound == null)
           return;

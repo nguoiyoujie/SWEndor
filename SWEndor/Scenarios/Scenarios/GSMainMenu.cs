@@ -104,7 +104,8 @@ namespace SWEndor.Scenarios
       }
       */
 
-      SoundManager.SetMusic("dynamic\\CONF-01", false, 1657);
+      SoundManager.SetMusicDyn("CHAL-IN");
+      //SoundManager.SetMusic("dynamic\\CONF-01", false, 1657);
       Manager.IsCutsceneMode = true;
     }
     public override void Unload()
@@ -295,6 +296,7 @@ namespace SWEndor.Scenarios
                                            , new Lock()
                                             }
         }.Spawn(this);
+        ainfo.SetSpawnerEnable(true);
       }
 
       // Corellian x3
@@ -489,6 +491,7 @@ namespace SWEndor.Scenarios
       foreach (ShipSpawnEventArg s in SDspawnlist)
       {
         ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, 0, s.Info);
+        ship.SetSpawnerEnable(true);
       }
 
       GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-4000, 500, 7300), new TV_3DVECTOR(-5500, 0, 8000));
@@ -548,6 +551,7 @@ namespace SWEndor.Scenarios
     public void Rebel_BeginBattle(GameEventArg arg)
     {
       Manager.SetGameStateB("in_battle", true);
+      RebelSpawnTime = Game.GameTime + 30;
       Manager.AddEvent(Game.GameTime + 10f, Empire_TIEWave_01, IntegerEventArg.N8);
     }
 
@@ -686,6 +690,9 @@ namespace SWEndor.Scenarios
       foreach (ShipSpawnEventArg s in SDspawnlist)
       {
         ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, 0, s.Info);
+        ship.SetArmor(DamageType.ALL, 0.5f);
+        foreach (ActorInfo a in ship.Children)
+          a.SetArmor(DamageType.ALL, 0.1f);
       }
 
       Mood = -12;
@@ -756,9 +763,7 @@ namespace SWEndor.Scenarios
 
         ainfo.SetArmor(DamageType.ALL, 0.01f);
         foreach (ActorInfo a in ainfo.Children)
-        {
-          a.SetArmor(DamageType.ALL, 0.01f);
-        }
+          a.SetArmor(DamageType.ALL, 0.001f);
       }
     }
 
@@ -793,6 +798,9 @@ namespace SWEndor.Scenarios
       foreach (ShipSpawnEventArg s in SDspawnlist)
       {
         ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, 0, s.Info);
+        ship.SetArmor(DamageType.ALL, 0.5f);
+        foreach (ActorInfo a in ship.Children)
+          a.SetArmor(DamageType.ALL, 0.1f);
       }
     }
   }

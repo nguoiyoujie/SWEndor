@@ -12,6 +12,7 @@ namespace SWEndor.Sound
         public static Piece Parse(INIFile file, string sectionname)
         {
           Piece p = new Piece();
+          p.Name = sectionname;
           p.SoundName = file.GetStringValue(sectionname, "Sound", "");
           //p.CutIn = file.GetBoolValue(sectionname, "CutIn", false);
           p.EntryPosition = file.GetUIntValue(sectionname, "Entry", 0);

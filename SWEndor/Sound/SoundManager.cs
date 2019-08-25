@@ -195,6 +195,15 @@ namespace SWEndor.Sound
       m_musicLoop.Position = position_ms;
     }
 
+    public void SetMusicDyn(string name)
+    {
+      Piece p = Piece.Factory.Get(name);
+      SetMusic(p.SoundName, false, p.EntryPosition);
+
+      //m_musicLoop.Name = p.SoundName;
+      //m_musicLoop.Position = p.EntryPosition;
+    }
+
     public void Update()
     {
       InstBase instr;

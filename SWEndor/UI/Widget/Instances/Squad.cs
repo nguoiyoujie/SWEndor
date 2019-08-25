@@ -22,22 +22,22 @@ namespace SWEndor.UI.Widgets
           && Owner.ShowUI
           && Owner.ShowSquad);
 
-        if (enabled != ret)
-        {
-          if (ret)
-            Engine.Screen2D.MessageSecondaryText("Squad Indicator: ENABLED", 5, new TV_COLOR(0.5f, 0.5f, 1, 1));
-          else
-            Engine.Screen2D.MessageSecondaryText("Squad Indicator: DISABLED", 5, new TV_COLOR(0.5f, 0.5f, 1, 1));
-
-          enabled = ret;
-        }
-
         return ret;
       }
     }
 
     public override void Draw()
     {
+      if (enabled != Owner.ShowSquad)
+      {
+        if (Owner.ShowSquad)
+          Engine.Screen2D.MessageSecondaryText("Squad Indicator: ENABLED", 5, new TV_COLOR(0.5f, 0.5f, 1, 1));
+        else
+          Engine.Screen2D.MessageSecondaryText("Squad Indicator: DISABLED", 5, new TV_COLOR(0.5f, 0.5f, 1, 1));
+
+        enabled = Owner.ShowSquad;
+      }
+
       ActorInfo p = PlayerInfo.Actor;
       if (p == null || !p.Active || p.Squad == null)
         return;

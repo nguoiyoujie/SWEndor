@@ -251,7 +251,7 @@ namespace SWEndor.Player
 
     public void SquadronAssist()
     {
-      if (Actor.Squad == null || AimTarget == null)
+      if (Actor == null || Actor.Squad == null || AimTarget == null)
         return;
 
       if (Actor.Squad.Leader != Actor)

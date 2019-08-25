@@ -24,6 +24,12 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return true;
     }
 
+    public static object SetMusicDyn(Context context, object[] ps)
+    {
+      Globals.Engine.SoundManager.SetMusicDyn(ps[0].ToString());
+      return true;
+    }
+
     public static object SetMusicStop(Context context, object[] ps)
     {
       Globals.Engine.SoundManager.SetMusicStop();

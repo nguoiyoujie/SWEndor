@@ -11,25 +11,25 @@ namespace SWEndor.Sound
       public class Factory
       {
         private static Dictionary<string, Piece> list = new Dictionary<string, Piece>();
+        private static Dictionary<string, string> soundnamelist = new Dictionary<string, string>();
         private static Dictionary<int, List<Piece>> tran_list = new Dictionary<int, List<Piece>>();
 
         private static void Register(Piece atype)
         {
-          if (list.ContainsKey(atype.SoundName))
+          if (!list.ContainsKey(atype.SoundName))
           {
-            atype = list[atype.SoundName];
-          }
-          else
-          {
+            if (!soundnamelist.ContainsKey(atype.Name))
+              soundnamelist.Add(atype.Name, atype.SoundName);
+
             list.Add(atype.SoundName, atype);
-          }
 
-          foreach (int t in atype.IntermissionTransitions)
-          {
-            if (!tran_list.ContainsKey(t))
-              tran_list.Add(t, new List<Piece>());
+            foreach (int t in atype.IntermissionTransitions)
+            {
+              if (!tran_list.ContainsKey(t))
+                tran_list.Add(t, new List<Piece>());
 
-            tran_list[t].Add(atype);
+              tran_list[t].Add(atype);
+            }
           }
         }
 
@@ -37,16 +37,18 @@ namespace SWEndor.Sound
         {
           if (list.ContainsKey(name))
             return list[name];
+          else if (soundnamelist.ContainsKey(name))
+            return list[soundnamelist[name]];
           else
             return null;
         }
 
-        public static IEnumerable<Piece> GetPieces(int transition)
+        public static Piece[] GetPieces(int transition)
         {
           if (!tran_list.ContainsKey(transition))
-            return null;
+            return new Piece[0];
 
-          return tran_list[transition];
+          return tran_list[transition].ToArray();
         }
 
         /*

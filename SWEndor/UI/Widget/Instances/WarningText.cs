@@ -21,28 +21,31 @@ namespace SWEndor.UI.Widgets
     {
       if (a.TypeInfo.Mask == ComponentMask.GUIDED_PROJECTILE)
         if (a.CurrentAction is AI.Actions.ProjectileAttackActor)
-          if (((AI.Actions.ProjectileAttackActor)a.CurrentAction).Target_Actor == PlayerInfo.Actor)
+          if (((AI.Actions.ProjectileAttackActor)a.CurrentAction).Target_Actor != null && ((AI.Actions.ProjectileAttackActor)a.CurrentAction).Target_Actor.TopParent == PlayerInfo.Actor)
           {
-            warn = true;
-            dist = ActorDistanceInfo.GetDistance(PlayerInfo.Actor, a);
-            return false;
+            warn++;
+            float d = ActorDistanceInfo.GetDistance(PlayerInfo.Actor, a);
+            if (dist < 0 || dist > d)
+              dist = d;
+            //return false;
           }
 
       return true;
     }
 
-    bool warn = false;
-    float dist = 0;
+    int warn = 0;
+    float dist = -1;
     public override void Draw()
     {
       // missile warning?
-      warn = false;
+      warn = 0;
+      dist = -1;
       Engine.ActorFactory.DoUntil(Check);
 
-      if (!warn)
+      if (warn == 0)
         return;
 
-      string text = "MISSILE WARNING [{0:0000.00}]".F(dist);
+      string text = "MISSILE WARNING x{0} [{1:0000.00}]".F(warn, dist);
       int fntID = FontFactory.Get(Font.T12).ID;
       int colorint = Engine.Game.GameTime % 2 > 1 ? new TV_COLOR(1, 0.2f, 0.2f, 1).GetIntColor() : new TV_COLOR(1, 0.8f, 0.2f, 1).GetIntColor();
 
@@ -51,9 +54,9 @@ namespace SWEndor.UI.Widgets
       // boxes
       TVScreen2DImmediate.Action_Begin2D();
       TVScreen2DImmediate.Draw_FilledBox(Engine.ScreenWidth / 2 - 5 - letter_width * text.Length
-                                                         , Engine.ScreenHeight / 2 - 122
+                                                         , Engine.ScreenHeight / 2 - 152
                                                          , Engine.ScreenWidth / 2 + 5 + letter_width * text.Length
-                                                         , Engine.ScreenHeight / 2 - 98
+                                                         , Engine.ScreenHeight / 2 - 128
                                                          , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
       TVScreen2DImmediate.Action_End2D();
       // text
@@ -61,7 +64,7 @@ namespace SWEndor.UI.Widgets
       TVScreen2DText.Action_BeginText();
       TVScreen2DText.TextureFont_DrawText(text
                                                             , Engine.ScreenWidth / 2 - letter_width * text.Length
-                                                            , Engine.ScreenHeight / 2 - 120
+                                                            , Engine.ScreenHeight / 2 - 150
                                                             , colorint
                                                             , fntID);
       TVScreen2DText.Action_EndText();

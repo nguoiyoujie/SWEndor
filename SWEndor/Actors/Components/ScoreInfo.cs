@@ -1,4 +1,6 @@
-﻿using SWEndor.Actors;
+﻿using MTV3D65;
+using SWEndor.Actors;
+using SWEndor.Player;
 using SWEndor.Primitives;
 
 namespace SWEndor
@@ -67,37 +69,43 @@ namespace SWEndor
       Score += score;
     }
 
-    public void AddHit(ActorInfo victim, float damage)
+    public void AddHit(Engine engine, ActorInfo victim, float damage)
     {
       Hits++;
       DamageDealt += damage;
       Increment(DamageDealtByName, victim.Name, damage);
       Score += victim.TypeInfo.Score_perStrength * damage;
+
+      if (engine.PlayerInfo.Actor != null)
+        engine.Screen2D.MessageSystemsText("[HIT]", 0.5f, engine.PlayerInfo.FactionColor, -99);
     }
 
-    public void AddKill(ActorInfo victim)
+    public void AddKill(Engine engine, ActorInfo victim)
     {
       Kills++;
 
       if (victim.TypeInfo is ActorTypes.Groups.Fighter)
-        victim.GameScenarioManager.Scenario.Mood = -1;
+        engine.GameScenarioManager.Scenario.Mood = -1;
       else if (victim.TypeInfo is ActorTypes.Groups.LargeShip)
-        victim.GameScenarioManager.Scenario.Mood = -3;
+        engine.GameScenarioManager.Scenario.Mood = -3;
+
+      if (engine.PlayerInfo.Actor != null)
+        engine.Screen2D.MessageSystemsText("[{0}] destroyed.".F(victim.Name), 2, new TV_COLOR(0.5f, 0.5f, 1, 1));
 
       Increment(KillsByName, victim.Name, 1);
       Score += victim.TypeInfo.Score_DestroyBonus;
     }
 
-    public void AddDamage(ActorInfo hitby, float damage)
+    public void AddDamage(Engine engine, ActorInfo hitby, float damage)
     {
       DamageTaken += damage;
       Increment(DamageTakenByName, hitby.Name, damage);
     }
 
-    public void AddDeath(ActorInfo killedby)
+    public void AddDeath(Engine engine, ActorInfo killedby)
     {
       Deaths++;
-      killedby.GameScenarioManager.Scenario.Mood = -2;
+      engine.GameScenarioManager.Scenario.Mood = -2;
       Increment(KilledByName, killedby.Name, 1);
     }
   }

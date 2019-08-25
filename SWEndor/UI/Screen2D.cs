@@ -26,6 +26,7 @@ namespace SWEndor
     // Message Text
     public TextInfo PrimaryText = new TextInfo();
     public TextInfo SecondaryText = new TextInfo();
+    public TextInfo SystemsText = new TextInfo();
 
     // Radar
     public bool OverrideTargetingRadar = false;
@@ -100,6 +101,17 @@ namespace SWEndor
         SecondaryText.Text = text;
         SecondaryText.ExpireTime = Engine.Game.GameTime + expiretime;
         SecondaryText.Color = color;
+      }
+    }
+
+    public void MessageSystemsText(string text, float expiretime, TV_COLOR color, int priority = 0)
+    {
+      if (SystemsText.Priority <= priority || SystemsText.ExpireTime < Engine.Game.GameTime)
+      {
+        SystemsText.Priority = priority;
+        SystemsText.Text = text;
+        SystemsText.ExpireTime = Engine.Game.GameTime + expiretime;
+        SystemsText.Color = color;
       }
     }
 

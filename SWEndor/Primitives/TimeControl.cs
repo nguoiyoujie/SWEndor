@@ -30,7 +30,7 @@ namespace SWEndor.Primitives
     private object waitlock = new object();
     private Stopwatch stopwatch = Stopwatch.StartNew();
 
-    public float SpeedModifier = 1;
+    public float SpeedModifier = 0.66f; // test
 
     public float WorldTime { get; private set; } = 0;
 

@@ -10,7 +10,7 @@ load:
 	SetMinAIBounds(-10000, -1500, -20000);
 	
 	SetMusic("battle_4_1");
-	SetMusicLoop("dynamic\PANIC-06", 1657);
+	SetMusicDyn("PANIC-06");
 	//SetMusicLoop("battle_4_2");
 	
 	Player.SetLives(5);

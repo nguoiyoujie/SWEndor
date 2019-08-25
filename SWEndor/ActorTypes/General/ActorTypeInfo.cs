@@ -300,10 +300,10 @@ namespace SWEndor.ActorTypes
 
         if (owner.IsScenePlayer)
         {
-          PlayerInfo.Score.AddDamage(attacker, hitby.TypeInfo.ImpactDamage * owner.GetArmor(DamageType.NORMAL));
+          PlayerInfo.Score.AddDamage(Engine, attacker, hitby.TypeInfo.ImpactDamage * owner.GetArmor(DamageType.NORMAL));
 
           if (owner.IsDyingOrDead)
-            PlayerInfo.Score.AddDeath(attacker);
+            PlayerInfo.Score.AddDeath(Engine, attacker);
         }
 
         if (attacker != null && !attacker.Faction.IsAlliedWith(owner.Faction))
@@ -389,7 +389,7 @@ namespace SWEndor.ActorTypes
         {
           owner.SetState_Dead();
           if (owner.IsScenePlayer)
-            PlayerInfo.Score.AddDeath(attacker);
+            PlayerInfo.Score.AddDeath(Engine, attacker);
         }
       }
 
@@ -400,12 +400,12 @@ namespace SWEndor.ActorTypes
     {
       if (!victim.IsDyingOrDead)
       {
-        score.AddHit(victim, proj.TypeInfo.ImpactDamage * victim.GetArmor(DamageType.NORMAL));
+        score.AddHit(Engine, victim, proj.TypeInfo.ImpactDamage * victim.GetArmor(DamageType.NORMAL));
       }
 
       if (victim.IsDyingOrDead)
       {
-        score.AddKill(victim);
+        score.AddKill(Engine, victim);
       }
     }
 
@@ -478,7 +478,6 @@ namespace SWEndor.ActorTypes
 
       if (Engine.Random.NextDouble() < accuracy)
         target.InflictDamage(owner, weapontype.ImpactDamage, DamageType.NORMAL, target.GetGlobalPosition());
-        //CombatSystem.onNotify(Engine, target, CombatEventType.DAMAGE, weapontype.ImpactDamage);
     }
 
     public void Dispose()
@@ -522,6 +521,11 @@ namespace SWEndor.ActorTypes
         PlayerCameraInfo.Look.SetPosition_Actor(ainfo.ID);
         PlayerCameraInfo.Look.SetModeDeathCircle(DeathCamera);
         ainfo.DestroyedEvents += GameScenarioManager.Scenario.ProcessPlayerKilled;
+      }
+      else
+      {
+        if (ainfo.UseParentCoords && ainfo.TopParent.IsPlayer)
+          Screen2D.MessageSystemsText("WARNING: Subsystem [{0}] lost.".F(ainfo.Name), 3, new TV_COLOR(1, 0.2f, 0.2f, 1));
       }
     }
   }

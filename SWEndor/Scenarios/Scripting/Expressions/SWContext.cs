@@ -115,6 +115,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions
 
       // Sounds and Music
       Functions.Add("SetMusic".ToLowerInvariant(), AudioManagement.SetMusic);
+      Functions.Add("SetMusicDyn".ToLowerInvariant(), AudioManagement.SetMusicDyn);
       Functions.Add("SetMusicLoop".ToLowerInvariant(), AudioManagement.SetMusicLoop);
       Functions.Add("SetMusicPause".ToLowerInvariant(), AudioManagement.SetMusicPause);
       Functions.Add("SetMusicResume".ToLowerInvariant(), AudioManagement.SetMusicResume);

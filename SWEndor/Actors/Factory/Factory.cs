@@ -203,11 +203,11 @@ namespace SWEndor.Actors
         }
       }
 
-      Action<Engine, ActorInfo> destroy = (e, a) => { a?.Destroy(); };
+      Action<Engine, ActorInfo> destroy = (e, a) => { a?.Delete(); };
       public void Reset()
       {
-        DestroyDead();
         DoEach(destroy);
+        DestroyDead();
 
         list.Clear();
         planned = new ConcurrentQueue<ActorInfo>();
@@ -218,6 +218,7 @@ namespace SWEndor.Actors
         Last = null;
 
         lastdataid = 0;
+        counter = 0;
       }
     }
   }
