@@ -233,6 +233,31 @@ namespace SWEndor.Sound
       m_musicQueue.Enqueue(new SoundStartInfo { Name = name, Position = position_ms });
     }
 
+    public void Clear()
+    {
+      InstBase i;
+      while (m_queuedInstructions.TryDequeue(out i)) { }
+
+      SoundStartInfo s;
+      while (m_musicQueue.TryDequeue(out s)) { }
+    }
+
+    private int lastInterrupt = 0;
+    public void TriggerInterruptMood(int mood)
+    {
+      if (lastInterrupt == mood) // prevent spam
+        return;
+
+      lastInterrupt = mood;
+
+      List<Piece> plist = new List<Piece>(Piece.Factory.GetPieces(mood));
+      if (plist.Count > 0)
+      {
+        Piece p = plist[Engine.Random.Next(0, plist.Count)];
+        Engine.SoundManager.QueueMusic(p.SoundName, p.EntryPosition);
+      }
+    }
+
     private RESULT MusicCallback(IntPtr channelraw, CHANNELCONTROL_TYPE controltype, CHANNELCONTROL_CALLBACK_TYPE type, IntPtr commanddata1, IntPtr commanddata2)
     {
       switch (type)
@@ -270,6 +295,7 @@ namespace SWEndor.Sound
           break;
       }
 
+      lastInterrupt = 0;
       return FMOD.RESULT.OK;
     }
 
@@ -285,6 +311,7 @@ namespace SWEndor.Sound
           break;
       }
 
+      lastInterrupt = 0;
       return FMOD.RESULT.OK;
     }
 
@@ -323,7 +350,7 @@ namespace SWEndor.Sound
       if (p == null)
         return null;
 
-      int mood = 0; // get mood from somewhere...
+      int mood = Engine.GameScenarioManager.Scenario.Mood; // get mood from somewhere...
 
       string next = null;
       if (p.MoodTransitions != null

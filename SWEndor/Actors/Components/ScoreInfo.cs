@@ -78,6 +78,12 @@ namespace SWEndor
     public void AddKill(ActorInfo victim)
     {
       Kills++;
+
+      if (victim.TypeInfo is ActorTypes.Groups.Fighter)
+        victim.GameScenarioManager.Scenario.Mood = -1;
+      else if (victim.TypeInfo is ActorTypes.Groups.LargeShip)
+        victim.GameScenarioManager.Scenario.Mood = -3;
+
       Increment(KillsByName, victim.Name, 1);
       Score += victim.TypeInfo.Score_DestroyBonus;
     }
@@ -91,6 +97,7 @@ namespace SWEndor
     public void AddDeath(ActorInfo killedby)
     {
       Deaths++;
+      killedby.GameScenarioManager.Scenario.Mood = -2;
       Increment(KilledByName, killedby.Name, 1);
     }
   }

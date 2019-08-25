@@ -582,7 +582,6 @@ namespace SWEndor.Scenarios
                                                               , new TV_3DVECTOR()
                                                               , 999
                                                               , true
-                                                              , null
                                                               );
 
       switch (Difficulty.ToLower())
@@ -637,7 +636,6 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR()
                                                         , 999
                                                         , true
-                                                        , null
                                                         );
 
       switch (Difficulty.ToLower())

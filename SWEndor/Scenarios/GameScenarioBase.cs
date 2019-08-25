@@ -19,6 +19,20 @@ namespace SWEndor.Scenarios
 
     public string Difficulty { get; set; }
     public int StageNumber { get; set; }
+    private int m_mood = 0;
+    public int Mood
+    {
+      get { return m_mood; }
+      set
+      {
+        if (value < 0)
+        {
+          SoundManager.TriggerInterruptMood(value);
+        }
+        else
+          m_mood = value;
+      }
+    }
 
     //public DeathCamMode DeathCamMode = DeathCamMode.CIRCLE;
     private CameraMode[] m_PlayerCameraModes = new CameraMode[] { CameraMode.FIRSTPERSON };
@@ -152,6 +166,8 @@ namespace SWEndor.Scenarios
       Screen2D.Box3D_Enable = false;
 
       LandInfo.Enabled = false;
+      Mood = 0;
+      SoundManager.Clear();
 
       // deleted many things, and this function is called when the game is not active. Probably safe to force GC
       GC.Collect();

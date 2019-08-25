@@ -287,7 +287,7 @@ namespace SWEndor.ActorTypes
 
         // scoring
         ActorInfo attacker = hitby.TopParent;
-        if (attacker == PlayerInfo.Actor)
+        if (attacker.IsScenePlayer)
         {
           if (!attacker.Faction.IsAlliedWith(owner.Faction))
             AddScore(PlayerInfo.Score, hitby, owner);
@@ -298,7 +298,7 @@ namespace SWEndor.ActorTypes
                                             , -1);
         }
 
-        if (owner == PlayerInfo.Actor)
+        if (owner.IsScenePlayer)
         {
           PlayerInfo.Score.AddDamage(attacker, hitby.TypeInfo.ImpactDamage * owner.GetArmor(DamageType.NORMAL));
 
@@ -373,7 +373,7 @@ namespace SWEndor.ActorTypes
         }
 
         ActorInfo attacker = hitby.TopParent;
-        if (attacker == PlayerInfo.Actor)
+        if (attacker.IsScenePlayer)
         {
           if (!attacker.Faction.IsAlliedWith(owner.Faction))
             AddScore(PlayerInfo.Score, attacker, owner);
@@ -388,7 +388,7 @@ namespace SWEndor.ActorTypes
         if ((owner.TypeInfo is Groups.Fighter && owner.IsDyingOrDead))
         {
           owner.SetState_Dead();
-          if (owner.IsPlayer)
+          if (owner.IsScenePlayer)
             PlayerInfo.Score.AddDeath(attacker);
         }
       }

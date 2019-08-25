@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
+using System.Collections.Generic;
 
 namespace SWEndor.Scenarios
 {
@@ -191,6 +192,7 @@ namespace SWEndor.Scenarios
       public int CarrierSpawns;
       public bool HyperspaceIn;
       public bool EnableSpawn;
+      public int IntermissionMood;
       public string[] Registries;
 
       public ShipSpawnInfo(string shipName,
@@ -200,7 +202,8 @@ namespace SWEndor.Scenarios
                       TV_3DVECTOR rotation,
                       int carrierSpawns,
                       bool enableSpawn,
-                      string[] registries
+                      int intermissionMood = 0,
+                      string[] registries = null
                       )
       {
         ShipName = shipName;
@@ -210,6 +213,7 @@ namespace SWEndor.Scenarios
         Rotation = rotation;
         CarrierSpawns = carrierSpawns;
         EnableSpawn = enableSpawn;
+        IntermissionMood = intermissionMood;
         Registries = registries;
       }
     }
@@ -224,44 +228,100 @@ namespace SWEndor.Scenarios
     {
       string name = spawninfo.ShipName ?? "";
 
-      ActionInfo[] actions;
-      
-      if (spawninfo.HyperspaceIn && spawninfo.EnableSpawn)
+      //ActionInfo[] actions;
+
+      List<ActionInfo> actionlist = new List<ActionInfo>();
+      if (spawninfo.IntermissionMood != 0) actionlist.Add(new SetMood(spawninfo.IntermissionMood, true));
+      if (spawninfo.HyperspaceIn) actionlist.Add(new HyperspaceIn(position));
+      if (spawninfo.EnableSpawn) actionlist.Add(new EnableSpawn(true));
+      actionlist.Add(new Move(targetposition, spawninfo.TypeInfo.MaxSpeed));
+      actionlist.Add(new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed));
+      actionlist.Add(new Lock());
+
+      /*
+      if (spawninfo.IntermissionMood != 0)
       {
-        actions = new ActionInfo[] {
+        if (spawninfo.HyperspaceIn && spawninfo.EnableSpawn)
+        {
+          actions = new ActionInfo[] {
+                                     new SetMood(spawninfo.IntermissionMood, true)
+                                   , new HyperspaceIn(position)
+                                   , new EnableSpawn(true)
+                                   , new Move(targetposition, spawninfo.TypeInfo.MaxSpeed)
+                                   , new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed)
+                                   , new Lock()
+                                   };
+        }
+        else if (spawninfo.HyperspaceIn)
+        {
+          actions = new ActionInfo[] {
+                                     new SetMood(spawninfo.IntermissionMood, true)
+                                   , new HyperspaceIn(position)
+                                   , new Move(targetposition, spawninfo.TypeInfo.MaxSpeed)
+                                   , new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed)
+                                   , new Lock()
+                                   };
+        }
+        else if (spawninfo.EnableSpawn)
+        {
+          actions = new ActionInfo[] {
+                                     new SetMood(spawninfo.IntermissionMood, true)
+                                   , new EnableSpawn(true)
+                                   , new Move(targetposition, spawninfo.TypeInfo.MaxSpeed)
+                                   , new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed)
+                                   , new Lock()
+                                   };
+        }
+        else
+        {
+          actions = new ActionInfo[] {
+                                     new SetMood(spawninfo.IntermissionMood, true)
+                                   , new Move(targetposition, spawninfo.TypeInfo.MaxSpeed)
+                                   , new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed)
+                                   , new Lock()
+                                   };
+        }
+      }
+      else
+      {
+        if (spawninfo.HyperspaceIn && spawninfo.EnableSpawn)
+        {
+          actions = new ActionInfo[] {
                                      new HyperspaceIn(position)
                                    , new EnableSpawn(true)
                                    , new Move(targetposition, spawninfo.TypeInfo.MaxSpeed)
                                    , new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed)
                                    , new Lock()
                                    };
-      }
-      else if (spawninfo.HyperspaceIn)
-      {
-        actions = new ActionInfo[] {
+        }
+        else if (spawninfo.HyperspaceIn)
+        {
+          actions = new ActionInfo[] {
                                      new HyperspaceIn(position)
                                    , new Move(targetposition, spawninfo.TypeInfo.MaxSpeed)
                                    , new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed)
                                    , new Lock()
                                    };
-      }
-      else if (spawninfo.EnableSpawn)
-      {
-        actions = new ActionInfo[] {
-                                    new EnableSpawn(true)
+        }
+        else if (spawninfo.EnableSpawn)
+        {
+          actions = new ActionInfo[] {
+                                     new EnableSpawn(true)
                                    , new Move(targetposition, spawninfo.TypeInfo.MaxSpeed)
                                    , new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed)
                                    , new Lock()
                                    };
-      }
-      else
-      {
-        actions = new ActionInfo[] {
+        }
+        else
+        {
+          actions = new ActionInfo[] {
                                     new Move(targetposition, spawninfo.TypeInfo.MaxSpeed)
                                    , new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed)
                                    , new Lock()
                                    };
+        }
       }
+      */
 
       ActorSpawnInfo asi = new ActorSpawnInfo
       {
@@ -273,7 +333,7 @@ namespace SWEndor.Scenarios
         Faction = spawninfo.Faction,
         Position = GetSpawnPosition(position, spawninfo),
         Rotation = new TV_3DVECTOR(),
-        Actions = actions,
+        Actions = actionlist.ToArray(),
         Registries = spawninfo.Registries
       };
 

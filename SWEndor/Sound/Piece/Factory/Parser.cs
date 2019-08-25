@@ -13,10 +13,11 @@ namespace SWEndor.Sound
         {
           Piece p = new Piece();
           p.SoundName = file.GetStringValue(sectionname, "Sound", "");
-          p.CutIn = file.GetBoolValue(sectionname, "CutIn", false);
+          //p.CutIn = file.GetBoolValue(sectionname, "CutIn", false);
           p.EntryPosition = file.GetUIntValue(sectionname, "Entry", 0);
           p.ExitPositions = file.GetUIntList(sectionname, "Exit", new uint[0]);
           p.EndPosition = file.GetUIntValue(sectionname, "End", 0);
+          p.IntermissionTransitions = file.GetIntList(sectionname, "Intermission", new int[0]);
 
           int maxmood = 16; //placeholder
           p.MoodTransitions = new string[maxmood][];

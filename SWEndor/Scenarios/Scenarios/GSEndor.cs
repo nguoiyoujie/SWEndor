@@ -1430,6 +1430,7 @@ namespace SWEndor.Scenarios
                                                                     , new TV_3DVECTOR()
                                                                     , 90
                                                                     , true
+                                                                    , 0
                                                                     , new string[] { "CriticalEnemies" }
                                                                     );
 
@@ -1552,6 +1553,7 @@ namespace SWEndor.Scenarios
                                                               , new TV_3DVECTOR()
                                                               , 90
                                                               , true
+                                                              , 0
                                                               , new string[] { "CriticalEnemies" }
                                                               );
 
@@ -1834,6 +1836,7 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR()
                                                         , 90
                                                         , true
+                                                        , 0
                                                         , new string[] { "CriticalEnemies" }
                                                         );
 

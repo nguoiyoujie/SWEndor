@@ -10,7 +10,8 @@ load:
 	SetMinAIBounds(-10000, -1500, -20000);
 	
 	SetMusic("battle_4_1");
-	SetMusicLoop("battle_4_2");
+	SetMusicLoop("dynamic\PANIC-06", 1657);
+	//SetMusicLoop("battle_4_2");
 	
 	Player.SetLives(5);
 	Player.SetScorePerLife(1000000);

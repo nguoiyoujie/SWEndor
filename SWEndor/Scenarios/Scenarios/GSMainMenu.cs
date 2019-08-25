@@ -173,6 +173,7 @@ namespace SWEndor.Scenarios
 
       if (tgt != null && tgt.Active)
       {
+        PlayerInfo.TempActorID = tgt.ID;
         PlayerCameraInfo.Look.SetPosition_Actor(tgt.ID, new TV_3DVECTOR(0, 25, 0), new TV_3DVECTOR(0, 0, -100));
         PlayerCameraInfo.Look.SetTarget_LookAtActor(tgt.ID, new TV_3DVECTOR(0, 30, 0), new TV_3DVECTOR(0, 0, 20000));
         PlayerCameraInfo.Look.SetRotationMult(0.2f);
@@ -381,7 +382,6 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, -135, 0)
                                                         , 90
                                                         , true
-                                                        , null
                                                         );
 
       List<ShipSpawnEventArg> SDspawnlist = new List<ShipSpawnEventArg>();
@@ -451,6 +451,7 @@ namespace SWEndor.Scenarios
 
       Manager.AddEvent(Game.GameTime + 25, Empire_StarDestroyer_02);
       Manager.AddEvent(Game.GameTime + 50, Rebel_HyperspaceIn3);
+      Mood = -22;
     }
 
     public void Rebel_HyperspaceIn3(GameEventArg arg)
@@ -462,7 +463,6 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, -100, 0)
                                                         , 90
                                                         , true
-                                                        , null
                                                         );
 
       List<ShipSpawnEventArg> SDspawnlist = new List<ShipSpawnEventArg>();
@@ -514,6 +514,7 @@ namespace SWEndor.Scenarios
       spawninfo.TypeInfo = ActorTypeFactory.Get("Y-Wing");
       spawninfo.HuntTargetType = TargetType.SHIELDGENERATOR | TargetType.SHIP;
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
+      Mood = -22;
     }
 
 
@@ -541,6 +542,7 @@ namespace SWEndor.Scenarios
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
       spawninfo.TypeInfo = ActorTypeFactory.Get("Y-Wing");
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
+      Mood = -21;
     }
 
     public void Rebel_BeginBattle(GameEventArg arg)
@@ -598,6 +600,7 @@ namespace SWEndor.Scenarios
                                      , new Rotate(v, 0)
                                      , new Wait(2.5f)
                                      , new HyperspaceIn(v)
+                                     , new SetMood(-11, true)
                                      , new Rotate(new TV_3DVECTOR(0, 0, 0), 1)
                                      , new Wait(3f+10f)}
         }.Spawn(this);
@@ -637,6 +640,7 @@ namespace SWEndor.Scenarios
                                      , new Rotate(v, 0)
                                      , new Wait(12.5f)
                                      , new HyperspaceIn(v)
+                                     , new SetMood(-11, true)
                                      , new Rotate(new TV_3DVECTOR(0, 0, 0), 40)
                                      , new Wait(3f)
                                      }
@@ -656,7 +660,6 @@ namespace SWEndor.Scenarios
                                                               , new TV_3DVECTOR()
                                                               , 999
                                                               , true
-                                                              , null
                                                               );
 
       List<ShipSpawnEventArg> SDspawnlist = new List<ShipSpawnEventArg>();
@@ -684,6 +687,8 @@ namespace SWEndor.Scenarios
       {
         ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, 0, s.Info);
       }
+
+      Mood = -12;
     }
 
     public void Empire_StarDestroyer_01(GameEventArg arg)
@@ -716,6 +721,7 @@ namespace SWEndor.Scenarios
                                      //, new HyperspaceIn(v + hyperspaceInOffset + new TV_3DVECTOR(0, 0, 100000))
                                      //, new HyperspaceIn(v + hyperspaceInOffset)
                                      , new HyperspaceIn(v)
+                                     , new SetMood(-12, true)
                                      , new EnableSpawn(true)
                                      , new Move(new TV_3DVECTOR(v.x * 0.2f, v.y, -1000), ActorTypeFactory.Get("Imperial-I Star Destroyer").MaxSpeed / 2)
                                      , new Rotate(new TV_3DVECTOR(-1600, -120, 6300), 0)
@@ -749,6 +755,10 @@ namespace SWEndor.Scenarios
         };
 
         ainfo.SetArmor(DamageType.ALL, 0.01f);
+        foreach (ActorInfo a in ainfo.Children)
+        {
+          a.SetArmor(DamageType.ALL, 0.01f);
+        }
       }
     }
 
@@ -761,7 +771,7 @@ namespace SWEndor.Scenarios
                                                               , new TV_3DVECTOR()
                                                               , 999
                                                               , true
-                                                              , null
+                                                              , -12
                                                               );
 
       List<ShipSpawnEventArg> SDspawnlist = new List<ShipSpawnEventArg>();

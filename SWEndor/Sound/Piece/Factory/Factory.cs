@@ -11,8 +11,9 @@ namespace SWEndor.Sound
       public class Factory
       {
         private static Dictionary<string, Piece> list = new Dictionary<string, Piece>();
+        private static Dictionary<int, List<Piece>> tran_list = new Dictionary<int, List<Piece>>();
 
-        public static void Register(Piece atype)
+        private static void Register(Piece atype)
         {
           if (list.ContainsKey(atype.SoundName))
           {
@@ -21,6 +22,14 @@ namespace SWEndor.Sound
           else
           {
             list.Add(atype.SoundName, atype);
+          }
+
+          foreach (int t in atype.IntermissionTransitions)
+          {
+            if (!tran_list.ContainsKey(t))
+              tran_list.Add(t, new List<Piece>());
+
+            tran_list[t].Add(atype);
           }
         }
 
@@ -32,11 +41,21 @@ namespace SWEndor.Sound
             return null;
         }
 
+        public static IEnumerable<Piece> GetPieces(int transition)
+        {
+          if (!tran_list.ContainsKey(transition))
+            return null;
+
+          return tran_list[transition];
+        }
+
+        /*
         public static void Remove(string name)
         {
           if (list.ContainsKey(name))
             list.Remove(name);
         }
+        */
 
         public static void LoadFromINI(string filepath)
         {
