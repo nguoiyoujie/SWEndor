@@ -7,11 +7,18 @@ namespace SWEndor
 {
   public class Screen2D
   {
+    public enum ShowSquadMode
+    {
+      NONE = 0,
+      SQUAD = 1,
+      ALL = 2
+    }
+
     public readonly Engine Engine;
 
     // Show toggles
     public bool ShowUI = true;
-    public bool ShowSquad = false;
+    public ShowSquadMode ShowSquad = ShowSquadMode.NONE;
     public bool ShowStatus = true;
     public bool ShowRadar = true;
     public bool ShowScore = true;

@@ -45,7 +45,7 @@ namespace SWEndor.AI.Actions
     public override void Process(Engine engine, ActorInfo actor)
     {
       ActorInfo target = engine.ActorFactory.Get(Target_ActorID);
-      if (target == null)
+      if (target == null || target.Faction.IsAlliedWith(actor.Faction))
       {
         Complete = true;
         return;
@@ -67,7 +67,7 @@ namespace SWEndor.AI.Actions
           if (a2 == null)
             Target_Position = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d);
           else
-            Target_Position = target.GetRelativePositionXYZ(0, 0, a2.MoveData.Speed * d);
+            Target_Position = target.GetGlobalPosition() + a2.GetRelativePositionXYZ(0, 0, a2.MoveData.Speed * d) - a2.GetGlobalPosition();
 
           float delta_angle = AdjustRotation(actor, Target_Position, true);
 

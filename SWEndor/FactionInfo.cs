@@ -146,7 +146,7 @@ namespace SWEndor
 
     public List<int> GetWings()
     {
-      List<int> ret = new List<int>(Wings);
+      List<int> ret = new List<int>(Wings.ToArray());
       if (WingLimitIncludesAllies)
         foreach (FactionInfo fi in Allies)
           ret.AddRange(fi.Wings);
@@ -155,7 +155,7 @@ namespace SWEndor
 
     public List<int> GetShips()
     {
-      List<int> ret = new List<int>(Ships);
+      List<int> ret = new List<int>(Ships.ToArray());
       if (ShipLimitIncludesAllies)
         foreach (FactionInfo fi in Allies)
           ret.AddRange(fi.Ships);
@@ -164,7 +164,7 @@ namespace SWEndor
 
     public List<int> GetStructures()
     {
-      List<int> ret = new List<int>(Structures);
+      List<int> ret = new List<int>(Structures.ToArray());
       if (StructureLimitIncludesAllies)
         foreach (FactionInfo fi in Allies)
           ret.AddRange(fi.Structures);

@@ -114,7 +114,8 @@ namespace SWEndor.Input.Functions
         fns[i++] = new NextSecondary();
         fns[i++] = new PrevSecondary();
         fns[i++] = new RemoveLockOn();
-        fns[i++] = new SquadAssist();
+        fns[i++] = new SquadCommand();
+        fns[i++] = new SquadCancelCommand();
 
         // gameplay: camera
         fns[i++] = new NextCameraMode();

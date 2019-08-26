@@ -31,7 +31,7 @@ namespace SWEndor.AI.Actions
 
     public override void Process(Engine engine, ActorInfo actor)
     {
-      if (!SquadLeaderOnly || actor.Squad == null || actor.Squad.Leader == actor)
+      if (!SquadLeaderOnly || actor.Squad.IsNull || actor.Squad.Leader == actor)
         engine.SoundManager.SetSound(SoundName, Interrupt);
       Complete = true;
     }

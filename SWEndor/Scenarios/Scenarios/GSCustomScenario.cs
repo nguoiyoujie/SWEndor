@@ -33,7 +33,7 @@ namespace SWEndor.Scenarios
       Fn_loadscene = f.GetStringValue("Script", "Fn_loadscene", Fn_loadscene);
       Fn_makeplayer = f.GetStringValue("Script", "Fn_makeplayer", Fn_makeplayer);
       //Fn_calibratescene = f.GetStringValue("Script", "Fn_calibratescene", Fn_calibratescene);
-      Fns_gametick = new List<string>(f.GetStringList("Script", "Fns_gametick", new string[0]));
+      Fns_gametick = f.GetStringList("Script", "Fns_gametick", new string[0]);
     }
 
     public readonly string PlayerName = "Pilot";
@@ -46,7 +46,7 @@ namespace SWEndor.Scenarios
     public string Fn_loadscene = "loadscene";
     public string Fn_makeplayer = "makeplayer";
     public string Fn_calibratescene = "calibratescene";
-    public List<string> Fns_gametick = new List<string>();
+    public string[] Fns_gametick;
 
     public void LoadScripts()
     {

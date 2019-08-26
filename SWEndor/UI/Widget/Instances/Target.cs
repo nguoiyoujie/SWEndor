@@ -45,6 +45,7 @@ namespace SWEndor.UI.Widgets
       if (m_target == null)
       {
         PlayerInfo.AimTargetID = -1;
+        PlayerInfo.AssistTargetID = -1;
       }
       else
       {
@@ -125,7 +126,6 @@ namespace SWEndor.UI.Widgets
       TVScreen2DImmediate.Action_End2D();
 
       TVScreen2DText.Action_BeginText();
-      //TVScreen2DText.TextureFont_DrawText(string.Format("{0} {1}\nDamage: {2:0}%", name, (m_target.Squad == null) ? string.Empty : "[Squad " + m_target.Squad.ID + "]", 100 - m_target.HP_Perc)
       TVScreen2DText.TextureFont_DrawText(string.Format("{0}\nDamage: {1:0}%", name, 100 - m_target.HP_Perc)
         , x, y + m_targetSize + 10, acolor.GetIntColor()
         , FontFactory.Get(Font.T10).ID
@@ -133,6 +133,7 @@ namespace SWEndor.UI.Widgets
       TVScreen2DText.Action_EndText();
 
       PlayerInfo.AimTargetID = PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) ? -1 : m_target.ID;
+      PlayerInfo.AssistTargetID = PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) ? m_target.ID : -1;
 
       if (!PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && !PlayerInfo.IsTorpedoMode)
       {
@@ -152,7 +153,7 @@ namespace SWEndor.UI.Widgets
       //if (PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && m_target.TypeInfo is ActorTypes.Groups.Fighter)
       //{
       // Squad diamond
-      if (m_target.Squad != null)
+      if (!m_target.Squad.IsNull)
       {
         TVScreen2DImmediate.Action_Begin2D();
         foreach (ActorInfo s in m_target.Squad.Members)

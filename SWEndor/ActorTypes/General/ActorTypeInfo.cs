@@ -11,6 +11,7 @@ using SWEndor.Scenarios;
 using SWEndor.Weapons;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SWEndor.ActorTypes
 {
@@ -313,23 +314,32 @@ namespace SWEndor.ActorTypes
           {
             if (owner.CanRetaliate && (owner.CurrentAction == null || owner.CurrentAction.CanInterrupt))
             {
-              if (owner.Squad != null && owner.Squad.Missions.Count == 0)
+              if (!owner.Squad.IsNull && owner.Squad.Mission == null)
               {
-                if (attacker.Squad != null)
+                if (!attacker.Squad.IsNull)
                 {
                   foreach (ActorInfo a in owner.Squad.Members)
                   {
-                    ActorInfo b = new List<ActorInfo>(attacker.Squad.Members).Random(Engine);
-                    a.ClearQueue();
-                    a.QueueLast(new AttackActor(b.ID));
+                    if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
+                    {
+                      ActorInfo b = attacker.Squad.Members.ToArray().Random(Engine);
+                      if (b != null)
+                      {
+                        a.ClearQueue();
+                        a.QueueLast(new AttackActor(b.ID));
+                      }
+                    }
                   }
                 }
                 else
                 {
                   foreach (ActorInfo a in owner.Squad.Members)
                   {
-                    a.ClearQueue();
-                    a.QueueLast(new AttackActor(attacker.ID));
+                    if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
+                    {
+                      a.ClearQueue();
+                      a.QueueLast(new AttackActor(attacker.ID));
+                    }
                   }
                 }
               }
@@ -344,7 +354,7 @@ namespace SWEndor.ActorTypes
               owner.QueueFirst(new Evade());
             }
 
-            if (owner.Squad != null)
+            if (!owner.Squad.IsNull)
             {
               if (owner.Squad.Leader == owner)
                 owner.Squad.AddThreat(attacker, true);

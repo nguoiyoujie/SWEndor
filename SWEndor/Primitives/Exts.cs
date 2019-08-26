@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace SWEndor.Primitives
@@ -28,13 +29,18 @@ namespace SWEndor.Primitives
     {
       return list[engine.Random.Next(0, list.Count)];
     }
+
+    public static T Random<T>(this ConcurrentBag<T> list, Engine engine)
+    {
+      return list.ToArray()[engine.Random.Next(0, list.Count)];
+    }
   }
 
   public static class ArrayExts
   {
     public static T Random<T>(this T[] list, Engine engine)
     {
-      return list[engine.Random.Next(0, list.Length)];
+      return list.Length == 0 ? default(T) : list[engine.Random.Next(0, list.Length)];
     }
   }
 

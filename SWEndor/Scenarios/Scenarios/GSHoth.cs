@@ -6,6 +6,7 @@ using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SWEndor.Scenarios
 {
@@ -392,7 +393,7 @@ namespace SWEndor.Scenarios
           {
             if (Manager.CriticalAllies.Count > 0)
             {
-              ActorInfo crit = new List<ActorInfo>(Manager.CriticalAllies)[0];
+              ActorInfo crit = Manager.CriticalAllies.ToArray()[0];
               position = crit.GetRelativePositionXYZ(0, -100, -1750);
             }
             else

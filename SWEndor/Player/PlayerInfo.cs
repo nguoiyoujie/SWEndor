@@ -251,7 +251,7 @@ namespace SWEndor.Player
 
     public void SquadronAssist()
     {
-      if (Actor == null || Actor.Squad == null || AimTarget == null)
+      if (Actor == null || Actor.Squad.IsNull)
         return;
 
       if (Actor.Squad.Leader != Actor)
@@ -260,10 +260,32 @@ namespace SWEndor.Player
         return;
       }
 
-      Engine.Screen2D.MessageSecondaryText("Directing squad to attack {0}.".F(AimTarget.Name), 5, FactionColor);
+      if (AssistTarget != null)
+      {
+        Engine.Screen2D.MessageSecondaryText("Directing squad to assist {0}.".F(AssistTarget.TopParent.Name), 5, FactionColor);
+        Actor.Squad.Mission = new AI.Squads.Missions.AssistActor(AssistTarget.TopParent);
+      }
 
-      foreach (ActorInfo a in Actor.Squad.Members)
-        a.QueueFirst(new AttackActor(AimTargetID));
+      if (AimTarget != null)
+      {
+        Engine.Screen2D.MessageSecondaryText("Directing squad to attack {0}.".F(AimTarget.Name), 5, FactionColor);
+        Actor.Squad.Mission = new AI.Squads.Missions.AttackActor(AimTarget, 99999);
+      }
+    }
+
+    public void SquadronFree()
+    {
+      if (Actor == null || Actor.Squad.IsNull)
+        return;
+
+      if (Actor.Squad.Leader != Actor)
+      {
+        Engine.Screen2D.MessageSecondaryText("You are not the squad leader. You cannot command your squad to perform attacks!", 5, FactionColor);
+        return;
+      }
+
+      Engine.Screen2D.MessageSecondaryText("Discarding squad orders.", 5, FactionColor);
+      Actor.Squad.Mission = null;
     }
 
     public void FlashHit(TV_COLOR color)
@@ -300,6 +322,9 @@ namespace SWEndor.Player
     }
     public int AimTargetID = -1;
     public ActorInfo AimTarget { get { return Engine.ActorFactory.Get(AimTargetID); } }
+
+    public int AssistTargetID = -1;
+    public ActorInfo AssistTarget { get { return Engine.ActorFactory.Get(AssistTargetID); } }
 
     public bool PlayerAIEnabled = false;
   }

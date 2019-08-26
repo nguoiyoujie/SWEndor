@@ -9,6 +9,7 @@ using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using SWEndor.Sound;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SWEndor.Actors
 {
@@ -69,6 +70,27 @@ namespace SWEndor.Actors
       }
     }
 
+    // Squad
+    private Squadron _squad;
+    public Squadron Squad
+    {
+      get
+      {
+        if (_squad == null)
+        {
+          _squad = Squadron.Neutral;
+          _squad.Add(this);
+        }
+        return _squad;
+      }
+      set
+      {
+        _squad?.Remove(this);
+        _squad = value ?? Squadron.Neutral;
+        _squad.Add(this);
+      }
+    }
+
     // Components
     public IMoveComponent MoveComponent;
     public IDyingMoveComponent DyingMoveComponent;
@@ -87,7 +109,6 @@ namespace SWEndor.Actors
     public HitEvent HitEvents;
 
     // AI
-    public Squadron Squad = null;
     public ActionInfo CurrentAction = null;
     public bool CanEvade = true;
     public bool CanRetaliate = true;
@@ -339,6 +360,25 @@ namespace SWEndor.Actors
 
     public void Delete() { ActorFactory.MakeDead(this); }
 
+    public void CreateNewSquad()
+    {
+      Squad = Engine.SquadronFactory.Create();
+    }
+
+    public void JoinSquad(ActorInfo other)
+    {
+      if (other.Squad.IsNull)
+        other.CreateNewSquad();
+      Squad = other.Squad;
+    }
+
+    public void MakeSquadLeader()
+    {
+      if (Squad.IsNull)
+        CreateNewSquad();
+      Squad.MakeLeader(this);
+    }
+
     public void Destroy()
     {
       if (DisposingOrDisposed)
@@ -350,7 +390,7 @@ namespace SWEndor.Actors
       Relation.Parent?.RemoveChild(this);
 
       // Destroy Children
-      foreach (ActorInfo c in new List<ActorInfo>(Children)) // use new list as members are deleted from the IEnumerable
+      foreach (ActorInfo c in Children.ToArray()) // use new list as members are deleted from the IEnumerable
       {
         if (c.TypeInfo is ActorTypes.Groups.AddOn || c.Relation.UseParentCoords)
           c.Destroy();
@@ -362,8 +402,7 @@ namespace SWEndor.Actors
 
       // Actions
       CurrentAction = null;
-
-      Squad?.Remove(this);
+      Squad = null;
 
       // Reset components
 

@@ -38,7 +38,8 @@ namespace SWEndor.Input.Context
       PrevSecondary.InternalName,
 
       RemoveLockOn.InternalName,
-      SquadAssist.InternalName,
+      SquadCommand.InternalName,
+      SquadCancelCommand.InternalName,
 
       Up.InternalName,
       Down.InternalName,

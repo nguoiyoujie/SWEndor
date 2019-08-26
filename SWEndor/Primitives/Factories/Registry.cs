@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace SWEndor.Primitives.Factories
 {
@@ -10,13 +11,16 @@ namespace SWEndor.Primitives.Factories
   {
     protected Dictionary<string, T> list = new Dictionary<string, T>();
     public static T Default = default(T);
+    private object locker = new object();
 
-    public T Get(string id) { return (list.ContainsKey(id)) ? list[id] : Default; }
-    public IEnumerable<T> GetAll() { return list.Values; }
-    public virtual void Add(string id, T item) { list.Add(id, item); }
-    public virtual void Put(string id, T item) { list.Put(id, item); }
-    public virtual void Remove(string id) { list.Remove(id); }
-    public virtual void Clear() { list.Clear(); }
+    public bool Contains(string id) { lock (locker) return list.ContainsKey(id); }
+    public T Get(string id) { lock (locker) return (list.ContainsKey(id)) ? list[id] : Default; }
+    public T GetX(string id) { lock (locker) return list[id]; }
+    public T[] GetAll() { lock (locker) return list.Values.ToArray(); }
+    public virtual void Add(string id, T item) { lock (locker) list.Add(id, item); }
+    public virtual void Put(string id, T item) { lock (locker) list.Put(id, item); }
+    public virtual void Remove(string id) { lock (locker) list.Remove(id); }
+    public virtual void Clear() { lock (locker) list.Clear(); }
   }
 
   /// <summary>
@@ -28,13 +32,15 @@ namespace SWEndor.Primitives.Factories
   {
     protected Dictionary<K, T> list = new Dictionary<K, T>();
     public static T Default = default(T);
+    private object locker = new object();
 
-    public bool Contains(K key) { return list.ContainsKey(key); }
-    public T Get(K key) { return (list.ContainsKey(key)) ? list[key] : Default; }
-    public IEnumerable<T> GetAll() { return list.Values; }
-    public virtual void Add(K key, T item) { list.Add(key, item); }
-    public virtual void Put(K key, T item) { list.Put(key, item); }
-    public virtual void Remove(K key) { list.Remove(key); }
-    public virtual void Clear() { list.Clear(); }
+    public bool Contains(K key) { lock (locker) return list.ContainsKey(key); }
+    public T Get(K key) { lock (locker) return (list.ContainsKey(key)) ? list[key] : Default; }
+    public T GetX(K key) { lock (locker) return list[key]; }
+    public T[] GetAll() { lock (locker) return list.Values.ToArray(); }
+    public virtual void Add(K key, T item) { lock (locker) list.Add(key, item); }
+    public virtual void Put(K key, T item) { lock (locker) list.Put(key, item); }
+    public virtual void Remove(K key) { lock (locker) list.Remove(key); }
+    public virtual void Clear() { lock (locker) list.Clear(); }
   }
 }

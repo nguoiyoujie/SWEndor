@@ -357,6 +357,7 @@
     <Compile Include="AI\ActionInfo.cs" />
     <Compile Include="AI\Squads\Factory\Factory.cs" />
     <Compile Include="AI\Squads\MissionInfo.cs" />
+    <Compile Include="AI\Squads\Missions\AssistActor.cs" />
     <Compile Include="AI\Squads\Missions\AttackActor.cs" />
     <Compile Include="AI\Squads\Missions\MoveToPoint.cs" />
     <Compile Include="AI\Squads\Squadron.cs" />
@@ -389,6 +390,7 @@
     <Compile Include="Input\Functions\Gameplay\Special\AllEnemiesDead.cs" />
     <Compile Include="Input\Functions\Gameplay\Special\AddLife.cs" />
     <Compile Include="Input\Functions\Gameplay\UI\ToggleSquadVisibility.cs" />
+    <Compile Include="Input\Functions\Gameplay\Weapon\SquadFree.cs" />
     <Compile Include="Input\Functions\Gameplay\Weapon\SquadAssist.cs" />
     <Compile Include="Input\Functions\Gameplay\Weapon\RemoveLockOn.cs" />
     <Compile Include="Input\Functions\Gameplay\Weapon\NextSecondary.cs" />

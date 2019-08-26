@@ -17,7 +17,7 @@ namespace SWEndor.AI.Squads.Missions
       Close_enough_distance = close_enough_distance;
     }
 
-    public override ActionInfo GetNewAction()
+    public override ActionInfo GetNewAction(Engine engine, Squadron squad)
     {
       return new Actions.Move(Target_Position, Speed, Close_enough_distance);
     }

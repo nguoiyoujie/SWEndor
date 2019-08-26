@@ -172,13 +172,13 @@ namespace SWEndor.ActorTypes
 
       public void Register(ActorTypeInfo atype)
       {
-        if (list.ContainsKey(atype.Name))
+        if (Contains(atype.Name))
         {
-          atype = list[atype.Name];
+          atype = GetX(atype.Name);
         }
         else
         {
-          list.Add(atype.Name, atype);
+          Add(atype.Name, atype);
         }
         atype.RegisterModel();
         Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));

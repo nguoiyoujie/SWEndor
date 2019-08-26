@@ -2,7 +2,7 @@
 
 namespace SWEndor.Input.Functions.Gameplay.Weapon
 {
-  public class SquadAssist : InputFunction
+  public class SquadCommand : InputFunction
   {
     private int _key = (int)CONST_TV_KEY.TV_KEY_S;
     public static string InternalName = "g_squadassist";

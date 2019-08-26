@@ -51,11 +51,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || a1 == null || a2 == null)
         return false;
 
-      if (a1.Squad == null)
-        context.Engine.SquadronFactory.Create().Add(a1);
-
-      a1.Squad.Add(a2);
-
+      a2.JoinSquad(a1);
       return true;
     }
 
@@ -66,7 +62,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || a1 == null)
         return false;
 
-      a1.Squad?.Remove(a1);
+      a1.Squad = null;
 
       return true;
     }
@@ -78,9 +74,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || a1 == null)
         return false;
 
-      a1.Squad?.Remove(a1);
-      a1.Squad.Add(a1, true);
-
+      a1.MakeSquadLeader();
       return true;
     }
 

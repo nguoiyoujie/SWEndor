@@ -109,7 +109,7 @@ namespace SWEndor.AI
     {
       if (action == null)
       {
-        actor.CurrentAction = actor.Squad?.GetNewAction() ?? new Idle();
+        actor.CurrentAction = actor.Squad.GetNewAction(actor.Engine) ?? new Idle();
       }
       else
       {
@@ -117,7 +117,7 @@ namespace SWEndor.AI
         {
           if (action.NextAction == null)
           {
-            actor.CurrentAction = actor.Squad?.GetNewAction() ?? new Idle();
+            actor.CurrentAction = actor.Squad.GetNewAction(actor.Engine) ?? new Idle();
           }
           else
           {

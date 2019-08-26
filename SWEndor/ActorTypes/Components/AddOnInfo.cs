@@ -45,10 +45,7 @@ namespace SWEndor.ActorTypes.Components
       if (AttachToParent)
       {
         a.UseParentCoords = AttachToParent;
-        if (actor.Squad == null)
-          engine.SquadronFactory.Create().Add(actor);
-
-        actor.Squad.Add(a);
+        a.JoinSquad(actor);
       }
     }
   }

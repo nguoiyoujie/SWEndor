@@ -359,7 +359,7 @@ namespace SWEndor.Sound
       if (p == null)
         return null;
 
-      int mood = Engine.GameScenarioManager.Scenario.Mood; // get mood from somewhere...
+      int mood = Engine.GameScenarioManager.Scenario?.Mood ?? 0; // get mood from somewhere...
 
       string next = null;
       if (p.MoodTransitions != null

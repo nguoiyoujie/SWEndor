@@ -6,7 +6,7 @@ namespace SWEndor.AI.Squads
   {
     public bool Complete = false;
 
-    public abstract ActionInfo GetNewAction();
+    public abstract ActionInfo GetNewAction(Engine engine, Squadron squad);
     public abstract void Process(Engine engine, Squadron squad);
   }
 }

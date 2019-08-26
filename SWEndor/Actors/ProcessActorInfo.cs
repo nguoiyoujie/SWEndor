@@ -29,7 +29,7 @@ namespace SWEndor.Actors
         )
         return;
 
-      actor.Squad?.Process(engine);
+      actor.Squad.Process(engine);
       actor.Run(actor.CurrentAction);
     }
 
