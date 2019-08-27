@@ -105,6 +105,7 @@ namespace SWEndor.Input.Functions
         int i = 0;
 
         fns[i++] = new PauseToMenu();
+        fns[i++] = new ShowMap();
 
         // gameplay
         fns[i++] = new Up();

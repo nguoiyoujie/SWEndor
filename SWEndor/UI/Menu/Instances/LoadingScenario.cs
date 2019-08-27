@@ -85,9 +85,9 @@ namespace SWEndor.UI.Menu.Pages
       }
     }
 
-    public override void Tick()
+    public override void ProcessTick()
     {
-      base.Tick();
+      base.ProcessTick();
       if (Loaded)
         ScenarioLoaded();
       else if (LoadException != null)

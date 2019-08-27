@@ -16,6 +16,7 @@ namespace SWEndor.Input.Context
     public static string[] _functions = new string[]
     {
       PauseToMenu.InternalName,
+      ShowMap.InternalName,
 
       ToggleUIVisibility.InternalName,
       ToggleSquadVisibility.InternalName,

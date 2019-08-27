@@ -7,6 +7,7 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement Cover = new SelectionElement();
     SelectionElement MainText = new SelectionElement();
     SelectionElement ButtonResume = new SelectionElement();
+    SelectionElement ButtonMap = new SelectionElement();
     //UISelectionElement ButtonSave = new UISelectionElement();
     //UISelectionElement ButtonLoad = new UISelectionElement();
     SelectionElement ButtonOptions = new SelectionElement();
@@ -32,6 +33,14 @@ namespace SWEndor.UI.Menu.Pages
       ButtonResume.HighlightBoxHeight = 30;
       ButtonResume.Selectable = true;
       ButtonResume.OnKeyPress += SelectResume;
+
+      ButtonMap.Text = "Map";
+      ButtonMap.TextPosition = new TV_2DVECTOR(200, 240);
+      ButtonMap.HighlightBoxPosition = ButtonMap.TextPosition - new TV_2DVECTOR(5, 5);
+      ButtonMap.HighlightBoxWidth = 200;
+      ButtonMap.HighlightBoxHeight = 30;
+      ButtonMap.Selectable = true;
+      ButtonMap.OnKeyPress += SelectMap;
 
       /*
       ButtonSave.Text = "Save Scenario";
@@ -70,6 +79,7 @@ namespace SWEndor.UI.Menu.Pages
       Elements.Add(Cover);
       Elements.Add(MainText);
       Elements.Add(ButtonResume);
+      Elements.Add(ButtonMap);
       //Elements.Add(ButtonSave);
       //Elements.Add(ButtonLoad);
       Elements.Add(ButtonOptions);
@@ -82,6 +92,16 @@ namespace SWEndor.UI.Menu.Pages
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
         ResumeGame();
+        return true;
+      }
+      return false;
+    }
+
+    private bool SelectMap(CONST_TV_KEY key)
+    {
+      if (key == CONST_TV_KEY.TV_KEY_RETURN)
+      {
+        EnterPage(new ScenarioMap(Owner, Globals.Engine.GameScenarioManager.Scenario));
         return true;
       }
       return false;

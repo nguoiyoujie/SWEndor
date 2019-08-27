@@ -193,6 +193,7 @@ namespace SWEndor
       //TrueVision.TVGraphicEffect.DrawDepthOfField();
 
       Screen2D.Draw();
+      Screen2D.CurrentPage?.RenderTick();
 
       /*
       ActorInfo tgt = ActorFactory.Get(PlayerCameraInfo.LookActor);

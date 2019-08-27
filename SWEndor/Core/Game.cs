@@ -157,11 +157,11 @@ namespace SWEndor
       if (septhread_collision)
         tm_collision.Start();
 
-      if (septhread_render)
-        tm_render.Start();
-
       if (septhread_process)
         tm_process.Start();
+
+      if (septhread_render)
+        tm_render.Start();
 
       try
       {
@@ -320,7 +320,7 @@ namespace SWEndor
             }
 
             using (Engine.PerfManager.Create("process_page"))
-              Engine.Screen2D.CurrentPage?.Tick();
+              Engine.Screen2D.CurrentPage?.ProcessTick();
 
             if (!IsPaused)
             {

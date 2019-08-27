@@ -63,14 +63,14 @@ loadfaction:
 
 loadscene:
 	greywolf = Actor.Spawn("Imperial-I Star Destroyer", "ISD GREY WOLF (Thrawn)", "", "GREY WOLF", 0, "Empire", 1000, 400, 12000, 0, -180, 0, "CriticalAllies");
-	Actor.SetProperty(greywolf, "DamageModifier", 0.8);
+	Actor.SetProperty(greywolf, "DamageModifier", 0.008);
 	Actor.SetProperty(greywolf, "SetSpawnerEnable", true);
 	Actor.QueueLast(greywolf, "move", -1000, 400, -3000, 25);
 	Actor.QueueLast(greywolf, "rotate", -2000, 210, -20000, 0);
 	Actor.QueueLast(greywolf, "lock");
 
 	corvus = Actor.Spawn("Interdictor Star Destroyer", "INT CORVUS", "", "CORVUS", 0, "Empire", 3500, -500, 500, 0, -130, 0, "CriticalAllies");
-	Actor.SetProperty(corvus, "DamageModifier", 0.6);
+	Actor.SetProperty(corvus, "DamageModifier", 0.006);
 	Actor.QueueLast(corvus, "move", 2000, -500, -1500, 8);
 	Actor.QueueLast(corvus, "rotate", 0, -500, 4000, 0);
 	Actor.QueueLast(corvus, "lock");
@@ -145,7 +145,7 @@ makeplayer:
 	AddEvent(5, "setupplayer");
 
 setupplayer:
-	//Actor.SetProperty(Player.GetActor(), "DamageModifier", 0.25);
+	Actor.SetProperty(Player.GetActor(), "DamageModifier", 0.25);
 	Actor.RegisterEvents(Player.GetActor());
 	playerisship = Actor.IsLargeShip(Player.GetActor());
 	if (respawn) 
@@ -158,6 +158,7 @@ firstspawn:
 respawn:
 	Actor.AddToSquad(Player.GetActor(), tiea1);
 	Actor.AddToSquad(Player.GetActor(), tiea2);
+	Actor.AddToSquad(Player.GetActor(), tiea3);
 
 makeimperials:
 	tiea1 = Actor.Spawn("TIE Avenger", "Alpha-2", "", "", 0, "Empire", 700, -620, 10500, 0, -180, 0);
@@ -173,6 +174,7 @@ makeimperials:
 	tiea3 = Actor.Spawn("TIE Avenger", "Alpha-4", "", "", 4, "Empire", 6500, 600, -750, 0, -90, 0);
 	Actor.SetProperty(tiea3, "DamageModifier", 0.25);
 	Actor.QueueLast(tiea3, "wait", 2.5);
+	Actor.AddToSquad(Player.GetActor(), tiea3);
 
 	tied1 = Actor.Spawn("TIE Defender", "Delta-1", "", "", 4, "Empire", 7000, 300, -500, 0, -90, 0);
 	Actor.SetProperty(tied1, "DamageModifier", 0.25);
@@ -181,6 +183,7 @@ makeimperials:
 	tied2 = Actor.Spawn("TIE Defender", "Delta-2", "", "", 4, "Empire", 7500, 600, -750, 0, -90, 0);
 	Actor.SetProperty(tied2, "DamageModifier", 0.25);
 	Actor.QueueLast(tied2, "wait", 2.5);
+	Actor.AddToSquad(tied1, tied2);
 
 	spawnhyperspace = false;
 	spawnfaction = "Empire";
@@ -379,7 +382,6 @@ spawnenemybombers:
 	CallScript("spawn2");
 
 spawnenemybombers2:
-	//spawnfaction = "Traitors";
 	damagemod = 1;
 	spawnwait = 0;
 	spawnX = -10000;

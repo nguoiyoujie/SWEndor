@@ -48,17 +48,17 @@ namespace SWEndor.UI.Menu
         se.Show(Engine, (se == SelectedElement));
     }
 
-    public virtual void Tick()
-    {
-    }
+    public virtual void ProcessTick() { }
 
-    public virtual void SelectNext()
+    public virtual void RenderTick() { }
+
+    public virtual bool SelectNext()
     {
       int newSelectedElementID = SelectedElementID;
       int count = Elements.Count;
       bool found = false;
 
-      while (!found && count > 0)
+      while (!found && count > 1)
       {
         newSelectedElementID++;
         if (newSelectedElementID >= Elements.Count)
@@ -66,7 +66,7 @@ namespace SWEndor.UI.Menu
 
         SelectionElement newSelectedElement = Elements[newSelectedElementID];
          
-        if (newSelectedElement.Selectable)
+        if (newSelectedElement.Selectable && SelectedElementID != newSelectedElementID)
         {
           SelectedElementID = newSelectedElementID;
           found = true;
@@ -74,15 +74,16 @@ namespace SWEndor.UI.Menu
 
         count--;
       }
+      return found;
     }
 
-    public virtual void SelectPrev()
+    public virtual bool SelectPrev()
     {
       int newSelectedElementID = SelectedElementID;
       int count = Elements.Count;
       bool found = false;
 
-      while (!found && count > 0)
+      while (!found && count > 1)
       {
         newSelectedElementID--;
         if (newSelectedElementID < 0)
@@ -90,7 +91,7 @@ namespace SWEndor.UI.Menu
 
         SelectionElement newSelectedElement = Elements[newSelectedElementID];
 
-        if (newSelectedElement.Selectable)
+        if (newSelectedElement.Selectable && SelectedElementID != newSelectedElementID)
         {
           SelectedElementID = newSelectedElementID;
           found = true;
@@ -98,6 +99,7 @@ namespace SWEndor.UI.Menu
 
         count--;
       }
+      return found;
     }
 
     public virtual bool Back()

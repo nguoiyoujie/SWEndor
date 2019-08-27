@@ -389,6 +389,7 @@
     <Compile Include="Input\Functions\Gameplay\Special\AllEnemiesDying.cs" />
     <Compile Include="Input\Functions\Gameplay\Special\AllEnemiesDead.cs" />
     <Compile Include="Input\Functions\Gameplay\Special\AddLife.cs" />
+    <Compile Include="Input\Functions\Gameplay\UI\ShowMap.cs" />
     <Compile Include="Input\Functions\Gameplay\UI\ToggleSquadVisibility.cs" />
     <Compile Include="Input\Functions\Gameplay\Weapon\SquadFree.cs" />
     <Compile Include="Input\Functions\Gameplay\Weapon\SquadAssist.cs" />
@@ -511,6 +512,7 @@
     <Compile Include="UI\Menu\Instances\KeyboardControls.cs" />
     <Compile Include="UI\Menu\Instances\Credits.cs" />
     <Compile Include="UI\Menu\Instances\ConfigSettingsMenu.cs" />
+    <Compile Include="UI\Menu\Instances\ScenarioMap.cs" />
     <Compile Include="UI\Menu\Instances\OptionsMenu.cs" />
     <Compile Include="UI\Menu\Instances\PauseMenu.cs" />
     <Compile Include="UI\Menu\Instances\LoadingScenario.cs" />
