@@ -2,7 +2,7 @@
 
 namespace SWEndor.Actors
 {
-  public class DamageInfo
+  public struct DamageInfo
   {
     public readonly ActorInfo Source;
     public readonly float Value;
