@@ -11,7 +11,7 @@ namespace SWEndor.Scenarios
   {
     public GSTestZone(GameScenarioManager manager) : base(manager)
     {
-      Name = "Tower Test Zone";
+      Name = "Tower Test Zone [Maintenance]";
       AllowedWings = new List<ActorTypeInfo> { Engine.ActorTypeFactory.Get("Advanced Turbolaser Tower")
                                              , Engine.ActorTypeFactory.Get("Deflector Tower")
                                              , Engine.ActorTypeFactory.Get("Gun Tower")

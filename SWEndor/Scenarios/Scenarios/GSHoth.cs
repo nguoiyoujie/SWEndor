@@ -14,7 +14,7 @@ namespace SWEndor.Scenarios
   {
     public GSHoth(GameScenarioManager manager) : base(manager)
     {
-      Name = "Escape from Hoth (WIP up to Stage 02)";
+      Name = "Escape from Hoth (WIP up to Stage 02) [Maintenance]";
       AllowedWings = new List<ActorTypeInfo> { ActorTypeFactory.Get("Millennium Falcon")
                                               };
 

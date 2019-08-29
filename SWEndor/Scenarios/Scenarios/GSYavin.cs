@@ -17,7 +17,7 @@ namespace SWEndor.Scenarios
   {
     public GSYavin(GameScenarioManager manager) : base(manager)
     {
-      Name = "Battle of Yavin (WIP)";
+      Name = "Battle of Yavin (WIP) [Maintenance]";
       AllowedWings = new List<ActorTypeInfo> { ActorTypeFactory.Get("X-Wing"), ActorTypeFactory.Get("Millennium Falcon") };
 
       AllowedDifficulties = new List<string> { "easy"

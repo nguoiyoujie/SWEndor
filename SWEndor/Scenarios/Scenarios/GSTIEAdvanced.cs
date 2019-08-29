@@ -12,7 +12,7 @@ namespace SWEndor.Scenarios
   {
     public GSTIEAdvanced(GameScenarioManager manager) : base(manager)
     {
-      Name = "TIE Advanced Challenge";
+      Name = "TIE Advanced Challenge [Maintenance]";
       AllowedWings = new List<ActorTypeInfo> { Engine.ActorTypeFactory.Get("X-Wing")
                                                , Engine.ActorTypeFactory.Get("A-Wing")
                                               };

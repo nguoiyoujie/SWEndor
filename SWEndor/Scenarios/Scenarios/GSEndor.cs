@@ -15,7 +15,7 @@ namespace SWEndor.Scenarios
   {
     public GSEndor(GameScenarioManager manager) : base(manager)
     {
-      Name = "Battle of Endor";
+      Name = "Battle of Endor [Maintenance]";
       Description = "The Rebel fleet, amassed on Sullust, prepares to move to Endor "
                   + "where the Emperor is overseeing the construction of the second "
                   + "Death Star.";
