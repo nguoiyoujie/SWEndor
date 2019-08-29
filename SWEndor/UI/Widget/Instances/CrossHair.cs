@@ -35,11 +35,10 @@ namespace SWEndor.UI.Widgets
       if (p == null || !p.Active)
         return;
 
-      WeaponInfo weap = null;
-      int burst = 1;
+      WeaponInfo weap = PlayerInfo.PrimaryWeapon.Weapon;
+      int burst = PlayerInfo.PrimaryWeapon.Burst;
       TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;
 
-      p.TypeInfo.InterpretWeapon(p, PlayerInfo.PrimaryWeapon, out weap, out burst);
       if (weap != null)
       {
         TVScreen2DImmediate.Action_Begin2D();
@@ -54,7 +53,7 @@ namespace SWEndor.UI.Widgets
                                        , pcolor.GetIntColor()
                                        , pcolor.GetIntColor());
 
-        for (int i = 0; i < weap.UIFirePositions.Length; i++)
+        for (int i = 0; i < weap?.UIFirePositions?.Length; i++)
         {
           if (weap.UIFirePositions[i].x != 0 || weap.UIFirePositions[i].y != 0)
           {
@@ -87,10 +86,11 @@ namespace SWEndor.UI.Widgets
         TVScreen2DImmediate.Action_End2D();
       }
 
-      p.TypeInfo.InterpretWeapon(p, PlayerInfo.SecondaryWeapon, out weap, out burst);
+      weap = PlayerInfo.SecondaryWeapon.Weapon;
+      burst = PlayerInfo.SecondaryWeapon.Burst;
       if (weap != null)
       {
-        if (PlayerInfo.SecondaryWeapon.Contains("torp"))
+        if (weap.Type == WeaponType.TORPEDO)
         {
           float p1_x = -40;
           float p1_y = 28;
@@ -134,7 +134,7 @@ namespace SWEndor.UI.Widgets
             }
           }
         }
-        else if (PlayerInfo.SecondaryWeapon.Contains("misl"))
+        else if (weap.Type == WeaponType.MISSILE)
         {
           float p1_x = -40;
           float p1_y = 28;

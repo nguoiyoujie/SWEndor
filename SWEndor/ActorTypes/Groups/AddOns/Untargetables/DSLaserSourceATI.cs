@@ -8,6 +8,8 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class DSLaserSourceATI : ActorTypeInfo //: AddOnGroup
   {
+    WeaponShotInfo laser;
+
     internal DSLaserSourceATI(Factory owner) : base(owner, "Death Star Laser Source")
     {
       MaxStrength = 1500.0f;
@@ -25,11 +27,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(ainfo);
 
-      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", WeaponFactory.Get("DSTAR_LSR") }
-                                                        };
-      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "none" };
-      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
-      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "none" };
+      laser = new WeaponShotInfo(WeaponFactory.Get("DSTAR_LSR"), 1);
 
       ainfo.QueueNext(new Lock());
     }
@@ -43,7 +41,7 @@ namespace SWEndor.ActorTypes.Instances
         ActorInfo target = ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
         if (target != null && target.Active)
         {
-          FireWeapon(ainfo, target, "laser");
+          FireWeapon(ainfo, target, laser);
         }
       }
     }

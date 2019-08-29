@@ -17,6 +17,8 @@ namespace SWEndor.ActorTypes.Instances
       Score_DestroyBonus = 1250;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"turbotowers\acclamator_turbolaser.x");
+
+      Loadouts = new string[] { "ARQT_LASR" };
     }
 
     public override void Initialize(ActorInfo ainfo)
@@ -24,11 +26,6 @@ namespace SWEndor.ActorTypes.Instances
       base.Initialize(ainfo);
 
       ainfo.DyingMoveComponent = DyingKill.Instance;
-
-      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", WeaponFactory.Get("ARQT_LASR") } };
-      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser" };
-      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
-      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:laser" };
     }
   }
 }

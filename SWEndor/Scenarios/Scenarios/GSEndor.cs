@@ -52,8 +52,8 @@ namespace SWEndor.Scenarios
     private int m_WedgeID = -1;
     private int m_PlayerID = -1;
     private TV_3DVECTOR m_Player_pos;
-    private string m_Player_PrimaryWeapon = "";
-    private string m_Player_SecondaryWeapon = "";
+    private int m_Player_PrimaryWeaponN;
+    private int m_Player_SecondaryWeaponN;
 
     private int m_HomeOneID = -1;
 
@@ -1041,12 +1041,12 @@ namespace SWEndor.Scenarios
         {
           if (!actor.IsPlayer)
           {
-            foreach (KeyValuePair<string, WeaponInfo> kvp in actor.WeaponSystemInfo.Weapons)
+            foreach (WeaponInfo w in actor.WeaponSystemInfo.Weapons)
             {
-              if (kvp.Key.Contains("torp") || kvp.Key.Contains("ion"))
+              if (w.Type == WeaponType.TORPEDO)
               {
-                kvp.Value.Ammo = 2;
-                kvp.Value.MaxAmmo = 2;
+                w.Ammo = 2;
+                w.MaxAmmo = 2;
               }
             }
           }
@@ -2230,8 +2230,8 @@ namespace SWEndor.Scenarios
         m_Player_pos = player.Position;
         player.QueueFirst(new Lock());
         player.Position = new TV_3DVECTOR(30, 0, -100000);
-        m_Player_PrimaryWeapon = PlayerInfo.PrimaryWeapon;
-        m_Player_SecondaryWeapon = PlayerInfo.SecondaryWeapon;
+        m_Player_PrimaryWeaponN = PlayerInfo.PrimaryWeaponN;
+        m_Player_SecondaryWeaponN = PlayerInfo.SecondaryWeaponN;
         player.SetArmor(DamageType.ALL, 0);
       }
 
@@ -2261,8 +2261,8 @@ namespace SWEndor.Scenarios
         player.Position = m_Player_pos;
         player.ForceClearQueue();
         PlayerInfo.ActorID = m_PlayerID;
-        PlayerInfo.PrimaryWeapon = m_Player_PrimaryWeapon;
-        PlayerInfo.SecondaryWeapon = m_Player_SecondaryWeapon;
+        PlayerInfo.PrimaryWeaponN = m_Player_PrimaryWeaponN;
+        PlayerInfo.SecondaryWeaponN = m_Player_SecondaryWeaponN;
         player.SetArmor(DamageType.ALL, 1);
       }
 

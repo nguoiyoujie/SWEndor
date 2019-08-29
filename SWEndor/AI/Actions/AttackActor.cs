@@ -79,12 +79,11 @@ namespace SWEndor.AI.Actions
           else
             AdjustSpeed(actor, target.MoveData.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
 
-          WeaponInfo weapon = null;
-          int burst = 0;
-          actor.WeaponSystemInfo.SelectWeapon(target, delta_angle, dist, out weapon, out burst);
-          if (weapon != null)
+          WeaponShotInfo w;
+          actor.WeaponSystemInfo.SelectWeapon(engine, actor, target, delta_angle, dist, out w);
+          if (w.Weapon != null)
           {
-            weapon.Fire(engine, actor, target, burst);
+            w.Fire(engine, actor, target);
           }
           else
           {
@@ -177,12 +176,11 @@ namespace SWEndor.AI.Actions
              engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, a.GetGlobalPosition() - actor.GetGlobalPosition());
              delta_angle = engine.TrueVision.TVMathLibrary.ACos(engine.TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
 
-             WeaponInfo weapon = null;
-             int burst = 0;
-             actor.WeaponSystemInfo.SelectWeapon(a, delta_angle, dist, out weapon, out burst);
-             if (weapon != null)
+             WeaponShotInfo w;
+             actor.WeaponSystemInfo.SelectWeapon(engine, actor, a, delta_angle, dist, out w);
+             if (w.Weapon != null)
              {
-               weapon.Fire(engine, actor, a, burst);
+               w.Fire(engine, actor, a);
                return false;
              }
            }

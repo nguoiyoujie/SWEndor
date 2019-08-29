@@ -45,12 +45,11 @@ namespace SWEndor.AI.Actions
            {
              if (actor.MoveData.MaxSpeed == 0) // stationary, can only target those in range
              {
-               WeaponInfo weap = null;
-               int dummy = 0;
+               WeaponShotInfo w;
                float dist = ActorDistanceInfo.GetDistance(actor, a, actor.WeaponSystemInfo.GetWeaponRange());
-               actor.WeaponSystemInfo.SelectWeapon(a, 0, dist, out weap, out dummy);
+               actor.WeaponSystemInfo.SelectWeapon(engine, actor, a, 0, dist, out w);
 
-               if (weap != null)
+               if (w.Weapon != null)
                {
                  targets.Add(a);
                  weight += a.HuntWeight;

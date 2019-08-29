@@ -4,7 +4,9 @@ namespace SWEndor.Weapons.Types
 {
   public class TrackerDummyWeapon : WeaponInfo
   {
-    public TrackerDummyWeapon() : base("Tracker Dummy", "Red Laser")
+    public static readonly TrackerDummyWeapon Instance = new TrackerDummyWeapon();
+
+    private TrackerDummyWeapon() : base("Tracker", "Red Laser")
     {
       WeaponCooldown = Globals.Engine.Game.GameTime + 9999999;
       WeaponCooldownRate = 1000;

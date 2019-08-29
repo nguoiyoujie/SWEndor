@@ -13,6 +13,7 @@ namespace SWEndor.Weapons
     }
 
     public readonly string Name = "Null Weapon";
+    public readonly string DisplayName = "null";
 
     public string WeaponProjectile = null;
     public float WeaponCooldown = 0;
@@ -38,6 +39,7 @@ namespace SWEndor.Weapons
 
     // Player Config
     public bool RequirePlayerTargetLock = false;
+    public WeaponType Type = WeaponType.NONE;
 
     // AI Config
     public TargetType AIAttackTargets = TargetType.ANY;
@@ -52,6 +54,7 @@ namespace SWEndor.Weapons
     public WeaponStatInfo(INIFile file, string sectionname)
     {
       Name = sectionname;
+      DisplayName = file.GetStringValue(sectionname, "DisplayName", DisplayName);
 
       WeaponProjectile = file.GetStringValue(sectionname, "WeaponProjectile", WeaponProjectile);
       WeaponCooldown = file.GetFloatValue(sectionname, "WeaponCooldown", WeaponCooldown);
@@ -81,6 +84,8 @@ namespace SWEndor.Weapons
 
       // Player Config
       RequirePlayerTargetLock = file.GetBoolValue(sectionname, "RequirePlayerTargetLock", RequirePlayerTargetLock);
+      string typ = file.GetStringValue(sectionname, "WeaponType", Type.ToString());
+      Type = (WeaponType)Enum.Parse(typeof(WeaponType), typ.Trim());
 
       // AI Config
       string[] tgts = file.GetStringValue(sectionname, "AIAttackTargets", AIAttackTargets.ToString()).Split('|', ',');

@@ -420,9 +420,11 @@ namespace SWEndor.Scenarios
                                           , new TV_3DVECTOR(-1200, 120, -1000)
                                           ));
 
+      float delay = 0;
       foreach (ShipSpawnEventArg s in SDspawnlist)
       {
-        ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, 0, s.Info);
+        ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, delay, s.Info);
+        delay += 0.7f;
         if  (ship.TypeInfo == ActorTypeFactory.Get("Mon Calamari Capital Ship"))
           ship.SetArmor(DamageType.ALL, 0.1f);
       }
@@ -488,9 +490,11 @@ namespace SWEndor.Scenarios
                                           , new TV_3DVECTOR(0, 250, 0)
                                           ));
 
+      float delay = 0;
       foreach (ShipSpawnEventArg s in SDspawnlist)
       {
-        ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, 0, s.Info);
+        ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, delay, s.Info);
+        delay += 2.6f;
         ship.SetSpawnerEnable(true);
       }
 
@@ -687,9 +691,11 @@ namespace SWEndor.Scenarios
                                           , new TV_3DVECTOR(8000, 150, 2500)
                                           ));
 
+      float delay = 0;
       foreach (ShipSpawnEventArg s in SDspawnlist)
       {
-        ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, 0, s.Info);
+        ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, delay, s.Info);
+        delay += 1.2f;
         ship.SetArmor(DamageType.ALL, 0.5f);
         foreach (ActorInfo a in ship.Children)
           a.SetArmor(DamageType.ALL, 0.1f);
@@ -794,10 +800,11 @@ namespace SWEndor.Scenarios
                                           , new TV_3DVECTOR(5000, -300, 5000)
                                           ));
 
-
+      float delay = 0;
       foreach (ShipSpawnEventArg s in SDspawnlist)
       {
-        ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, 0, s.Info);
+        ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, delay, s.Info);
+        delay += 3.5f;
         ship.SetArmor(DamageType.ALL, 0.5f);
         foreach (ActorInfo a in ship.Children)
           a.SetArmor(DamageType.ALL, 0.1f);

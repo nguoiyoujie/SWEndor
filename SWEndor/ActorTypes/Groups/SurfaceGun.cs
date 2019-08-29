@@ -1,4 +1,5 @@
 ﻿using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 
@@ -20,6 +21,13 @@ namespace SWEndor.ActorTypes.Groups
       RadarType = RadarType.NULL;
 
       Mask = ComponentMask.ACTOR;
+    }
+
+    public override void Initialize(ActorInfo ainfo)
+    {
+      base.Initialize(ainfo);
+
+      ainfo.DyingMoveComponent = DyingKill.Instance;
     }
   }
 }

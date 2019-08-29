@@ -122,6 +122,10 @@ namespace SWEndor.ActorTypes
     // AddOns
     public AddOnInfo[] AddOns = new AddOnInfo[0];
 
+    // Weapons
+    public string[] Loadouts = new string[0];
+    public bool TrackerDummyWeapon = false;
+
     // Debris
     public DebrisSpawnerInfo[] Debris = new DebrisSpawnerInfo[0];
 
@@ -224,6 +228,7 @@ namespace SWEndor.ActorTypes
       ainfo.CanEvade = CanEvade;
       ainfo.CanRetaliate = CanRetaliate;
 
+      // Sound
       if (!(GameScenarioManager.Scenario is GSMainMenu))
         foreach (SoundSourceInfo assi in InitialSoundSources)
           assi.Process(ainfo);
@@ -238,7 +243,7 @@ namespace SWEndor.ActorTypes
     public virtual void ProcessState(ActorInfo ainfo)
     {
       // weapons
-      foreach (WeaponInfo w in ainfo.WeaponSystemInfo.Weapons.Values)
+      foreach (WeaponInfo w in ainfo.WeaponSystemInfo.Weapons)
         w.Reload(Engine);
 
       // regeneration
@@ -419,7 +424,8 @@ namespace SWEndor.ActorTypes
       }
     }
 
-    public void InterpretWeapon(ActorInfo owner, string sweapon, out WeaponInfo weapon, out int burst)
+    /*
+    public void InterpretWeapon(ActorInfo owner, WeaponShotInfo sweapon, out WeaponInfo weapon, out int burst)
     {
       string s = "none";
       weapon = null;
@@ -444,30 +450,23 @@ namespace SWEndor.ActorTypes
         weapon = owner.WeaponSystemInfo.Weapons[s];
       }
     }
+    */
 
-    public virtual bool FireWeapon(ActorInfo owner, ActorInfo target, string sweapon)
+    public virtual bool FireWeapon(ActorInfo owner, ActorInfo target, WeaponShotInfo sweapon)
     {
       if (owner == null)
         return false;
 
-      WeaponInfo weapon = null;
-      int burst = 0;
-
       // AI Determination
-      if (sweapon == "auto")
+      if (sweapon.Equals(WeaponShotInfo.Automatic))
       {
-        foreach (string ws in owner.WeaponSystemInfo.AIWeapons)
-        {
+        foreach (WeaponShotInfo ws in owner.WeaponSystemInfo.AIWeapons)
           if (FireWeapon(owner, target, ws))
             return true;
-        }
       }
       else
       {
-        InterpretWeapon(owner, sweapon, out weapon, out burst);
-
-        if (weapon != null)
-          return weapon.Fire(Engine, owner, target, burst);
+        return sweapon.Fire(Engine, owner, target);
       }
       
       return false;

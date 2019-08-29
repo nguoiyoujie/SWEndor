@@ -63,14 +63,14 @@ loadfaction:
 
 loadscene:
 	greywolf = Actor.Spawn("Imperial-I Star Destroyer", "ISD GREY WOLF (Thrawn)", "", "GREY WOLF", 0, "Empire", 1000, 400, 12000, 0, -180, 0, "CriticalAllies");
-	Actor.SetProperty(greywolf, "DamageModifier", 0.008);
+	Actor.SetProperty(greywolf, "DamageModifier", 0.8);
 	Actor.SetProperty(greywolf, "SetSpawnerEnable", true);
 	Actor.QueueLast(greywolf, "move", -1000, 400, -3000, 25);
 	Actor.QueueLast(greywolf, "rotate", -2000, 210, -20000, 0);
 	Actor.QueueLast(greywolf, "lock");
 
 	corvus = Actor.Spawn("Interdictor Star Destroyer", "INT CORVUS", "", "CORVUS", 0, "Empire", 3500, -500, 500, 0, -130, 0, "CriticalAllies");
-	Actor.SetProperty(corvus, "DamageModifier", 0.006);
+	Actor.SetProperty(corvus, "DamageModifier", 0.6);
 	Actor.QueueLast(corvus, "move", 2000, -500, -1500, 8);
 	Actor.QueueLast(corvus, "rotate", 0, -500, 4000, 0);
 	Actor.QueueLast(corvus, "lock");
@@ -145,7 +145,7 @@ makeplayer:
 	AddEvent(5, "setupplayer");
 
 setupplayer:
-	Actor.SetProperty(Player.GetActor(), "DamageModifier", 0.25);
+	//Actor.SetProperty(Player.GetActor(), "DamageModifier", 0.25);
 	Actor.RegisterEvents(Player.GetActor());
 	playerisship = Actor.IsLargeShip(Player.GetActor());
 	if (respawn) 

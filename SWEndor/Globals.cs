@@ -56,7 +56,8 @@ namespace SWEndor
     public static string ActorTypeINIPath = Path.Combine(DataPath, @"actortypes.ini");
     public static string DynamicMusicINIPath = Path.Combine(DataPath, @"dynamicmusic.ini");
     public static string WeaponStatINIPath = Path.Combine(DataPath, @"weapons.ini");
-
+    public static string WeaponLoadoutStatINIPath = Path.Combine(DataPath, @"weaponloadouts.ini");
+    
     // Game Engine
     public static Engine Engine;
 

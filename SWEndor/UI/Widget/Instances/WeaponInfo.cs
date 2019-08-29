@@ -56,14 +56,14 @@ namespace SWEndor.UI.Widgets
 
       Engine.TrueVision.TVScreen2DText.Action_BeginText();
 
-      Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(PlayerInfo.PrimaryWeapon.ToUpper() //.Replace("A", "").Replace("E", "").Replace("I", "").Replace("O", "").Replace("U", "")
+      Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(PlayerInfo.PrimaryWeapon.ToString()
       , leftinfo_left
       , leftinfo_weapontop + 20
       , pcolor.GetIntColor()
       , FontFactory.Get(Font.T16).ID
       );
 
-      Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(PlayerInfo.SecondaryWeapon.ToUpper() //.Replace("A", "").Replace("E", "").Replace("I", "").Replace("O", "").Replace("U", "")
+      Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(PlayerInfo.SecondaryWeapon.ToString()
       , leftinfo_left + leftinfo_weaponwidth + 5
       , leftinfo_weapontop + 20
       , pcolor.GetIntColor()

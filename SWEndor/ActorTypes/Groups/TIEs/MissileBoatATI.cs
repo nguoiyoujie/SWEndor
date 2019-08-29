@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Weapons;
@@ -35,19 +36,8 @@ namespace SWEndor.ActorTypes.Instances
         new ActorCameraInfo(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
         new ActorCameraInfo(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
       };
-    }
 
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("MIS__TORP") }
-                                                        , {"misl", WeaponFactory.Get("MIS__MISL") }
-                                                        , {"laser", WeaponFactory.Get("MIS__LASR") }
-                                                        };
-      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser", "2:laser" };
-      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none", "1:misl", "2:misl", "1:torp", "2:torp" };
-      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:torp", "1:misl", "1:laser" };
+      Loadouts = new string[] { "MIS__TORP", "MIS__MISL", "MIS__LASR" };
     }
   }
 }

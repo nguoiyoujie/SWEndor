@@ -4,6 +4,7 @@ using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Primitives;
+using SWEndor.Weapons;
 using System.Collections.Generic;
 
 namespace SWEndor.Player
@@ -56,12 +57,12 @@ namespace SWEndor.Player
     public string[] DamagedReportSound = new string[] { }; // "r25", "r24", "r23", "r22", "r21", "r20" };
 
     // weapons
-    private List<string> PrimaryWeaponModes = new List<string>();
-    private List<string> SecondaryWeaponModes = new List<string>();
-    public string PrimaryWeapon { get; set; }
-    public string SecondaryWeapon { get; set; }
-    private int PrimaryWeaponN = 0;
-    private int SecondaryWeaponN = 0;
+    private WeaponShotInfo[] PrimaryWeaponModes = new WeaponShotInfo[0];
+    private WeaponShotInfo[] SecondaryWeaponModes = new WeaponShotInfo[0];
+    public WeaponShotInfo PrimaryWeapon { get { return (PrimaryWeaponModes.Length > PrimaryWeaponN) ? PrimaryWeaponModes[PrimaryWeaponN] : WeaponShotInfo.Default; } }
+    public WeaponShotInfo SecondaryWeapon { get { return (SecondaryWeaponModes.Length > SecondaryWeaponN) ? SecondaryWeaponModes[SecondaryWeaponN] : WeaponShotInfo.Default; } }
+    public int PrimaryWeaponN = 0;
+    public int SecondaryWeaponN = 0;
 
     public void Update()
     {
@@ -146,19 +147,7 @@ namespace SWEndor.Player
         Actor.MoveData.Speed = Actor.MoveData.Speed.Clamp(Actor.MoveData.MinSpeed, Actor.MoveData.MaxSpeed);
       }
     }
-    /*
-    public void FirePrimaryWeapon()
-    {
-      if (Actor != null && IsMovementControlsEnabled && !PlayerAIEnabled)
-        ActorInfo.FireWeapon(Engine, ActorID, AimTargetID, PrimaryWeapon);
-    }
 
-    public void FireSecondaryWeapon()
-    {
-      if (Actor != null && IsMovementControlsEnabled && !PlayerAIEnabled)
-        ActorInfo.FireWeapon(Engine, ActorID, AimTargetID, SecondaryWeapon);
-    }
-    */
     public void FirePrimaryWeapon()
     {
       FireWeapon(PrimaryWeapon);
@@ -169,84 +158,73 @@ namespace SWEndor.Player
       FireWeapon(SecondaryWeapon);
     }
 
-    private void FireWeapon(string weapon)
+    private void FireWeapon(WeaponShotInfo weapon)
     {
       if (IsMovementControlsEnabled && !PlayerAIEnabled)
       {
         ActorInfo.FireWeapon(Engine, Actor, AimTarget, weapon);
       }
-      //using (var v = Engine.ActorFactory.Get(ActorID))
-      //using (var vtgt = Engine.ActorFactory.Get(AimTargetID))
-      //  v?.Value.FireWeapon(vtgt?.Value, weapon);
     }
 
     private void ParseWeapons()
     {
-      PrimaryWeaponModes.Clear();
-      SecondaryWeaponModes.Clear();
-
       if (Actor != null) 
       {
-        PrimaryWeaponModes.AddRange(Actor.WeaponSystemInfo.PrimaryWeapons);
-        SecondaryWeaponModes.AddRange(Actor.WeaponSystemInfo.SecondaryWeapons);
+        PrimaryWeaponModes = Actor.WeaponSystemInfo.PrimaryWeapons;
+        SecondaryWeaponModes = Actor.WeaponSystemInfo.SecondaryWeapons;
 
-        if (PrimaryWeapon == null || PrimaryWeapon.Length == 0)
+        if (PrimaryWeapon.Weapon == null)
           ResetPrimaryWeapon();
 
-        if (SecondaryWeapon == null || SecondaryWeapon.Length == 0)
+        if (SecondaryWeapon.Weapon == null)
           ResetSecondaryWeapon();
       }
       else
       {
+        PrimaryWeaponModes = new WeaponShotInfo[0];
+        SecondaryWeaponModes = new WeaponShotInfo[0];
+
         PrimaryWeaponN = 0;
         SecondaryWeaponN = 0;
-        PrimaryWeapon = "none";
-        SecondaryWeapon = "none";
       }
     }
 
     public void ResetPrimaryWeapon()
     {
       PrimaryWeaponN = 0;
-      PrimaryWeapon = (PrimaryWeaponModes.Count > PrimaryWeaponN) ? PrimaryWeaponModes[PrimaryWeaponN].Trim() : "none";
     }
 
     public void ResetSecondaryWeapon()
     {
       SecondaryWeaponN = 0;
-      SecondaryWeapon = (SecondaryWeaponModes.Count > SecondaryWeaponN) ? SecondaryWeaponModes[SecondaryWeaponN].Trim() : "none";
     }
 
     public void NextPrimaryWeapon()
     {
       PrimaryWeaponN++;
-      if (PrimaryWeaponModes.Count <= PrimaryWeaponN)
+      if (PrimaryWeaponModes.Length <= PrimaryWeaponN)
         PrimaryWeaponN = 0;
-      PrimaryWeapon = (PrimaryWeaponModes.Count > PrimaryWeaponN) ? PrimaryWeaponModes[PrimaryWeaponN].Trim() : "none";
     }
 
     public void PrevPrimaryWeapon()
     {
       PrimaryWeaponN--;
       if (PrimaryWeaponN < 0)
-        PrimaryWeaponN = PrimaryWeaponModes.Count - 1;
-      PrimaryWeapon = (PrimaryWeaponModes.Count > PrimaryWeaponN) ? PrimaryWeaponModes[PrimaryWeaponN].Trim() : "none";
+        PrimaryWeaponN = PrimaryWeaponModes.Length - 1;
     }
 
     public void NextSecondaryWeapon()
     {
       SecondaryWeaponN++;
-      if (SecondaryWeaponModes.Count <= SecondaryWeaponN)
+      if (SecondaryWeaponModes.Length <= SecondaryWeaponN)
         SecondaryWeaponN = 0;
-      SecondaryWeapon = (SecondaryWeaponModes.Count > SecondaryWeaponN) ? SecondaryWeaponModes[SecondaryWeaponN].Trim() : "none";
     }
 
     public void PrevSecondaryWeapon()
     {
       SecondaryWeaponN--;
       if (SecondaryWeaponN < 0)
-        SecondaryWeaponN = SecondaryWeaponModes.Count- 1;
-      SecondaryWeapon = (SecondaryWeaponModes.Count > SecondaryWeaponN) ? SecondaryWeaponModes[SecondaryWeaponN].Trim() : "none";
+        SecondaryWeaponN = SecondaryWeaponModes.Length - 1;
     }
 
     public void SquadronAssist()
@@ -270,6 +248,14 @@ namespace SWEndor.Player
       {
         Engine.Screen2D.MessageSecondaryText("Directing squad to attack {0}.".F(AimTarget.Name), 5, FactionColor);
         Actor.Squad.Mission = new AI.Squads.Missions.AttackActor(AimTarget, 99999);
+        foreach (ActorInfo c in Actor.Children)
+        {
+          if (c.UseParentCoords)
+          {
+            c.ClearQueue();
+            c.QueueFirst(new AttackActor(AimTargetID));
+          }
+        }
       }
     }
 
@@ -316,8 +302,8 @@ namespace SWEndor.Player
     {
       get
       {
-        return (PrimaryWeapon != null && PrimaryWeapon.Contains("torp")) 
-          || (SecondaryWeapon != null && SecondaryWeapon.Contains("torp"));
+        return (PrimaryWeapon.Weapon?.Type == WeaponType.TORPEDO) 
+          || (SecondaryWeapon.Weapon?.Type == WeaponType.TORPEDO);
       }
     }
     public int AimTargetID = -1;

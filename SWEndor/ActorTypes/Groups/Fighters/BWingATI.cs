@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Weapons;
@@ -39,19 +40,8 @@ namespace SWEndor.ActorTypes.Instances
         new DebrisSpawnerInfo("BWing_Top_WingATI", new TV_3DVECTOR(0, 0, 0), -1000, 1000, -1000, 1000, -2500, 2500, 0.5f),
         new DebrisSpawnerInfo("BWing_Bottom_WingATI", new TV_3DVECTOR(0, -70, 0), -1000, 1000, -1000, 1000, -2500, 2500, 0.5f)
         };
-    }
 
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("B_WG_TORP") }
-                                                                         , {"ion", WeaponFactory.Get("B_WG_ION")}
-                                                                         , {"laser", WeaponFactory.Get("B_WG_LASR") }
-                                                                         };
-      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser", "2:laser", "4:laser" };
-      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none", "1:ion", "1:torp" };
-      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:ion", "1:torp", "1:laser" };
+      Loadouts = new string[] { "B_WG_TORP", "B_WG_ION", "B_WG_LASR" };
     }
   }
 }

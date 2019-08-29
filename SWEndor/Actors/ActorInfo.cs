@@ -165,6 +165,7 @@ namespace SWEndor.Actors
       ActorDataSet.ExplodeData[dataID].CopyFrom(TypeInfo.ExplodeData);
       ActorDataSet.RegenData[dataID].CopyFrom(TypeInfo.RegenData);
       ActorDataSet.CombatData[dataID].CopyFrom(TypeInfo.CombatData);
+      WeaponSystemInfo.Init(TypeInfo);
 
       Engine.MaskDataSet[this] = TypeInfo.Mask;
 
@@ -173,7 +174,7 @@ namespace SWEndor.Actors
 
       CycleInfo = new CycleInfo(this, null);
 
-      WeaponSystemInfo = new WeaponSystemInfo(this);
+      //WeaponSystemInfo = new WeaponSystemInfo(this);
 
 
       // Creation
@@ -206,6 +207,7 @@ namespace SWEndor.Actors
       ActorDataSet.ExplodeData[dataID] = TypeInfo.ExplodeData;
       ActorDataSet.RegenData[dataID] = TypeInfo.RegenData;
       ActorDataSet.CombatData[dataID] = TypeInfo.CombatData;
+      WeaponSystemInfo.Init(TypeInfo);
 
       Engine.MaskDataSet[this] = TypeInfo.Mask;
 

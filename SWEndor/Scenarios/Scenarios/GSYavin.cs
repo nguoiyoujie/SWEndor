@@ -9,6 +9,7 @@ using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.ActorTypes.Instances;
 using SWEndor.AI;
+using SWEndor.Actors.Components;
 
 namespace SWEndor.Scenarios
 {
@@ -50,8 +51,8 @@ namespace SWEndor.Scenarios
     private int m_VaderEscort1ID = -1;
     private int m_VaderEscort2ID = -1;
     private float m_Player_DamageModifier = 1;
-    private string m_Player_PrimaryWeapon = "";
-    private string m_Player_SecondaryWeapon = "";
+    private int m_Player_PrimaryWeapon;
+    private int m_Player_SecondaryWeapon;
 
     private bool Stage5StartRun = false;
     private bool Stage5End = false;
@@ -628,27 +629,25 @@ namespace SWEndor.Scenarios
         {
           if (actor.TypeInfo is YWingATI)
           {
-            foreach (KeyValuePair<string, WeaponInfo> kvp in actor.WeaponSystemInfo.Weapons)
+            foreach (WeaponInfo w in actor.WeaponSystemInfo.Weapons)
             {
-              if (kvp.Key.Contains("torp") || kvp.Key.Contains("ion"))
+              if (w.Type == WeaponType.TORPEDO)
               {
-                kvp.Value.Ammo = 1;
-                kvp.Value.MaxAmmo = 1;
+                w.Ammo = 1;
+                w.MaxAmmo = 1;
               }
             }
           }
           else
           {
-            foreach (KeyValuePair<string, WeaponInfo> kvp in actor.WeaponSystemInfo.Weapons)
+            foreach (WeaponInfo w in actor.WeaponSystemInfo.Weapons)
             {
-              if (kvp.Key.Contains("torp") || kvp.Key.Contains("ion"))
+              if (w.Type == WeaponType.TORPEDO || w.Type == WeaponType.ION)
               {
-                kvp.Value.Ammo = 0;
-                kvp.Value.MaxAmmo = 0;
+                w.Ammo = 0;
+                w.MaxAmmo = 0;
               }
             }
-            actor.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
-            actor.WeaponSystemInfo.AIWeapons = new string[] { "1:laser" };
           }
         }
       }
@@ -662,12 +661,10 @@ namespace SWEndor.Scenarios
           player.MoveData.MaxSpeed = 400;
 
           player.SetArmor(DamageType.ALL, 0.5f);
-          player.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"torp", WeaponFactory.Get("X_WG_TORP") }
-                                                        , {"laser", WeaponFactory.Get("X_WG_LASR") }
-                                                        };
-          player.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser", "2:laser", "4:laser" };
-          player.WeaponSystemInfo.SecondaryWeapons = new string[] { "4:laser", "1:torp" };
-          player.WeaponSystemInfo.AIWeapons = new string[] { "1:torp", "1:laser" };
+
+          player.WeaponSystemInfo.Reset();
+          player.WeaponSystemInfo.InsertLoadout("X_WG_LASR");
+          player.WeaponSystemInfo.InsertLoadout("X_WG_TORP");
         }
         else if (Stage5StartRun)
         {
@@ -1170,8 +1167,8 @@ namespace SWEndor.Scenarios
       ActorInfo player = ActorFactory.Get(m_PlayerID);
       if (player != null)
       {
-        m_Player_PrimaryWeapon = PlayerInfo.PrimaryWeapon;
-        m_Player_SecondaryWeapon = PlayerInfo.SecondaryWeapon;
+        m_Player_PrimaryWeapon = PlayerInfo.PrimaryWeaponN;
+        m_Player_SecondaryWeapon = PlayerInfo.SecondaryWeaponN;
         m_Player_DamageModifier = player.GetArmor(DamageType.NORMAL);
         player.SetArmor(DamageType.ALL, 0);
         player.ForceClearQueue();
@@ -1189,8 +1186,8 @@ namespace SWEndor.Scenarios
       if (player != null)
       {
         PlayerInfo.ActorID = m_PlayerID;
-        PlayerInfo.PrimaryWeapon = m_Player_PrimaryWeapon;
-        PlayerInfo.SecondaryWeapon = m_Player_SecondaryWeapon;
+        PlayerInfo.PrimaryWeaponN = m_Player_PrimaryWeapon;
+        PlayerInfo.SecondaryWeaponN = m_Player_SecondaryWeapon;
         player.SetArmor(DamageType.ALL, m_Player_DamageModifier);
         player.ForceClearQueue();
       }
@@ -1876,10 +1873,10 @@ namespace SWEndor.Scenarios
       ActorInfo vaderE1 = ActorFactory.Get(m_VaderEscort1ID);
       ActorInfo vaderE2 = ActorFactory.Get(m_VaderEscort2ID);
 
-      vader.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"lsrb", WeaponFactory.Get("TIED_LASR") }
-                                                        , {"laser", WeaponFactory.Get("TIED_LASR") }
-                                                        };
-      vader.WeaponSystemInfo.AIWeapons = new string[] { "1:laser", "1:lsrb" };
+      vader.WeaponSystemInfo.Reset();
+      vader.WeaponSystemInfo.InsertLoadout("TIED_LASR");
+      vader.WeaponSystemInfo.InsertLoadout("TIED_LASR");
+
       vader.MoveData.MaxSpeed = 400;
       vader.MoveData.MinSpeed = 400;
       vader.CanEvade = false;

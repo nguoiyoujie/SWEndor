@@ -285,6 +285,7 @@ namespace SWEndor.Scenarios
 
     public void Rebel_RemoveTorps(GameEventArg arg)
     {
+      /*
       foreach (int actorID in MainAllyFaction.GetWings())
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
@@ -296,6 +297,7 @@ namespace SWEndor.Scenarios
       }
       PlayerInfo.ResetPrimaryWeapon();
       PlayerInfo.ResetSecondaryWeapon();
+      */
     }
 
     public void Rebel_MakePlayer(GameEventArg arg)

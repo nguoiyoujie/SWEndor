@@ -1,10 +1,8 @@
 ﻿using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using SWEndor.AI.Actions;
-using SWEndor.Weapons;
-using SWEndor.Weapons.Types;
-using System.Collections.Generic;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -25,17 +23,8 @@ namespace SWEndor.ActorTypes.Groups
       RadarType = RadarType.TRAILLINE;
 
       Mask = ComponentMask.GUIDED_PROJECTILE;
-    }
 
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"dummy", new TrackerDummyWeapon() }
-                                                        };
-      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:dummy" };
-      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
-      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:dummy" };
+      TrackerDummyWeapon = true;
     }
 
     public override void ProcessState(ActorInfo ainfo)

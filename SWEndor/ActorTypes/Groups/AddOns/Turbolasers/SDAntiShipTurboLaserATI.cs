@@ -17,6 +17,8 @@ namespace SWEndor.ActorTypes.Instances
       Score_DestroyBonus = 1250;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"turbotowers\star_destroyer_anti-ship_turbolaser.x");
+
+      Loadouts = new string[] { "IMPL_3LSR" };
     }
 
     public override void Initialize(ActorInfo ainfo)
@@ -24,12 +26,6 @@ namespace SWEndor.ActorTypes.Instances
       base.Initialize(ainfo);
 
       ainfo.DyingMoveComponent = DyingKill.Instance;
-
-      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"aship", WeaponFactory.Get("IMPL_3LSR") }
-                                                        };
-      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:aship" };
-      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
-      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:aship" };
     }
   }
 }

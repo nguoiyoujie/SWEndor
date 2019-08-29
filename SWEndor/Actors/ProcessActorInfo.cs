@@ -1,6 +1,7 @@
 ﻿using SWEndor.Actors.Components;
 using SWEndor.AI;
 using SWEndor.Player;
+using SWEndor.Weapons;
 
 namespace SWEndor.Actors
 {
@@ -63,7 +64,7 @@ namespace SWEndor.Actors
       }
     }
 
-    internal static void FireWeapon(Engine engine, ActorInfo actor, ActorInfo target, string weapon)
+    internal static void FireWeapon(Engine engine, ActorInfo actor, ActorInfo target, WeaponShotInfo weapon)
     {
       if (actor == null)
         return;

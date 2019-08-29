@@ -7,11 +7,21 @@ using SWEndor.AI.Actions;
 
 namespace SWEndor.Weapons
 {
+  public enum WeaponType
+  {
+    NONE,
+    LASER,
+    ION,
+    MISSILE,
+    TORPEDO
+  }
+
   public class WeaponInfo
   {
     public WeaponInfo(string name, string weapproj)
     {
       Name = name;
+      DisplayName = name;
 
       if (weapproj != null)
       {
@@ -21,7 +31,8 @@ namespace SWEndor.Weapons
 
     public WeaponInfo(Engine engine, WeaponStatInfo stat)
     {
-      Name = stat.Name;
+      Name = stat.Name ?? "Null";
+      DisplayName = stat.DisplayName ?? "None";
 
       WeaponCooldown = stat.WeaponCooldown;
       WeaponCooldownRate = stat.WeaponCooldownRate;
@@ -47,6 +58,7 @@ namespace SWEndor.Weapons
 
       // Player Config
       RequirePlayerTargetLock = stat.RequirePlayerTargetLock;
+      Type = stat.Type;
 
       // AI Config
       AIAttackTargets = stat.AIAttackTargets;
@@ -65,8 +77,8 @@ namespace SWEndor.Weapons
     }
 
     public readonly string Name = "Null Weapon";
+    public readonly string DisplayName = "null";
 
-    //public string WeaponProjectile = null;
     private readonly Projectile Projectile = null; // cache
     public float WeaponCooldown = 0;
     public float WeaponCooldownRate = 1;
@@ -94,18 +106,17 @@ namespace SWEndor.Weapons
 
     // Player Config
     public bool RequirePlayerTargetLock = false;
+    public WeaponType Type = WeaponType.NONE;
 
     // AI Config
     public TargetType AIAttackTargets = TargetType.ANY;
-
     public bool AIAttackNull = true;
-
     public float AngularRange = 10;
-    public float Range = 4500; //5500;
+    public float Range = 4500;
 
-
-    // 
+    // Misc
     public string FireSound = "laser_sf";
+
 
     public void Init()
     {

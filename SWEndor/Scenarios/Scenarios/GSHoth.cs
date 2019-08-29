@@ -38,8 +38,8 @@ namespace SWEndor.Scenarios
 
     private int m_PlayerID = -1;
     private float m_Player_DamageModifier = 1;
-    private string m_Player_PrimaryWeapon = "";
-    private string m_Player_SecondaryWeapon = "";
+    private int m_Player_PrimaryWeaponN;
+    private int m_Player_SecondaryWeaponN;
 
     public override void Load(ActorTypeInfo wing, string difficulty)
     {
@@ -263,7 +263,7 @@ namespace SWEndor.Scenarios
         Registries = null
       }.Spawn(this);
 
-      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "front", "rear" };
+      //ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "front", "rear" };
       ainfo.SetArmor(DamageType.ALL, 0.1f);
       ainfo.HitEvents += Rebel_PlayerHit;
       PlayerCameraInfo.Look.SetTarget_LookAtActor(ainfo.ID);
@@ -431,7 +431,7 @@ namespace SWEndor.Scenarios
             Registries = null
           }.Spawn(this);
 
-          ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "front", "rear" };
+          //ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "front", "rear" };
           ainfo.SetArmor(DamageType.ALL, 0.1f);
           ainfo.HitEvents += Rebel_PlayerHit;
 
@@ -482,6 +482,7 @@ namespace SWEndor.Scenarios
         ActorInfo player = ActorFactory.Get(((HitEventArg)arg).VictimID);
         ActorInfo attacker = ActorFactory.Get(((HitEventArg)arg).ActorID);
 
+        /* DISABLED until new Shield implementation is found
         if (!Engine.MaskDataSet[attacker].Has(ComponentMask.IS_DAMAGE))
         {
           player.InflictDamage(attacker, attacker.TypeInfo.ImpactDamage, DamageType.NORMAL, player.GetGlobalPosition());
@@ -518,6 +519,7 @@ namespace SWEndor.Scenarios
             PlayerCameraInfo.Shake(2 * attacker.TypeInfo.ImpactDamage);
           }
         }
+        */
       }
     }
 
@@ -794,8 +796,8 @@ namespace SWEndor.Scenarios
       ActorInfo player = ActorFactory.Get(m_PlayerID);
       if (player != null)
       {
-        m_Player_PrimaryWeapon = PlayerInfo.PrimaryWeapon;
-        m_Player_SecondaryWeapon = PlayerInfo.SecondaryWeapon;
+        m_Player_PrimaryWeaponN = PlayerInfo.PrimaryWeaponN;
+        m_Player_SecondaryWeaponN = PlayerInfo.SecondaryWeaponN;
         m_Player_DamageModifier = player.GetArmor(DamageType.ALL);
         player.SetArmor(DamageType.ALL, 0);
         player.ForceClearQueue();
@@ -812,8 +814,8 @@ namespace SWEndor.Scenarios
       if (player != null)
       {
         PlayerInfo.ActorID = m_PlayerID;
-        PlayerInfo.PrimaryWeapon = m_Player_PrimaryWeapon;
-        PlayerInfo.SecondaryWeapon = m_Player_SecondaryWeapon;
+        PlayerInfo.PrimaryWeaponN = m_Player_PrimaryWeaponN;
+        PlayerInfo.SecondaryWeaponN = m_Player_SecondaryWeaponN;
 
         player.SetArmor(DamageType.ALL, m_Player_DamageModifier);
         player.ForceClearQueue();

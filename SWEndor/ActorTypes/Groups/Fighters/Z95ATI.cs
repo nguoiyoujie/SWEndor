@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Weapons;
@@ -37,17 +38,8 @@ namespace SWEndor.ActorTypes.Instances
         new DebrisSpawnerInfo("XWing_RU_LD_WingATI", new TV_3DVECTOR(-30, -10, 0), 0, 2000, 1000, 1000, -2500, 2500, 0.5f),
         new DebrisSpawnerInfo("XWing_RD_LU_WingATI", new TV_3DVECTOR(30, -10, 0), -2000, 0, -1000, 1000, -2500, 2500, 0.5f),
         };
-    }
 
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.WeaponSystemInfo.Weapons = new Dictionary<string, WeaponInfo>{ {"laser", WeaponFactory.Get("Z95__LASR") }
-                                                        };
-      ainfo.WeaponSystemInfo.PrimaryWeapons = new string[] { "1:laser", "2:laser" };
-      ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "none" };
-      ainfo.WeaponSystemInfo.AIWeapons = new string[] { "1:laser" };
+      Loadouts = new string[] { "Z95__LASR" };
     }
   }
 }

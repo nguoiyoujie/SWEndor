@@ -107,9 +107,7 @@ namespace SWEndor.UI.Widgets
           TVScreen2DImmediate.Draw_Box(x - m_targetBigSize, y - m_targetBigSize, x + m_targetBigSize, y + m_targetBigSize, acolor.GetIntColor());
         }
 
-        WeaponInfo weap;
-        int burst = 0;
-        p.TypeInfo.InterpretWeapon(p, PlayerInfo.SecondaryWeapon, out weap, out burst);
+        WeaponInfo weap = PlayerInfo.SecondaryWeapon.Weapon;
         if (weap != null && weap.Ammo > 0)
         {
           TVScreen2DImmediate.Draw_FilledBox(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());

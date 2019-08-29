@@ -117,6 +117,7 @@ namespace SWEndor
 
       Screen2D.LoadingTextLines.Add("Loading weapons...");
       WeaponFactory.LoadFromINI(Globals.WeaponStatINIPath);
+      WeaponLoadoutFactory.LoadFromINI(Globals.WeaponLoadoutStatINIPath);
 
       Screen2D.LoadingTextLines.Add("Loading sounds...");
       SoundManager.Initialize();

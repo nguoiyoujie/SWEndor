@@ -184,7 +184,6 @@
     <Compile Include="ActorTypes\Components\AddOnInfo.cs" />
     <Compile Include="ActorTypes\Components\SoundSourceInfo.cs" />
     <Compile Include="ActorTypes\Components\DebrisSpawnerInfo.cs" />
-    <Compile Include="Actors\States\ActorStates.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\MC90Spawner.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\SDSpawnerII.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\SDSpawner.cs" />
@@ -595,8 +594,12 @@
     <Compile Include="UI\Widget\UIWidget.cs" />
     <Compile Include="Utilities\Navigation.cs" />
     <Compile Include="Utilities\Utilities.cs" />
+    <Compile Include="Weapons\NullWeapon.cs" />
     <Compile Include="Weapons\TrackerDummyWeapon.cs" />
+    <Compile Include="Weapons\WeaponLoadoutFactory.cs" />
     <Compile Include="Weapons\WeaponFactory.cs" />
+    <Compile Include="Weapons\WeaponLoadoutInfo.cs" />
+    <Compile Include="Weapons\WeaponShotInfo.cs" />
     <Compile Include="Weapons\WeaponStatInfo.cs" />
     <Compile Include="Weapons\WeaponInfo.cs" />
     <EmbeddedResource Include="UI\Forms\BackgroundForm.resx">
@@ -621,6 +624,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\actortypes.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\weaponloadouts.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\weapons.ini">
