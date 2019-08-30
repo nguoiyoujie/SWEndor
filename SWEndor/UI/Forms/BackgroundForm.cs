@@ -29,5 +29,17 @@ namespace SWEndor.UI.Forms
       gf.Owner = this;
       gf.Show();
     }
+
+    protected override CreateParams CreateParams
+    {
+      get
+      {
+        CreateParams cp = base.CreateParams;
+        // turn on WS_EX_TOOLWINDOW style bit, this hides the window from ALT-TAB 
+        // https://stackoverflow.com/questions/27561133/prevent-window-from-showing-in-alt-tab?noredirect=1&lq=1
+        cp.ExStyle |= 0x80;
+        return cp;
+      }
+    }
   }
 }
