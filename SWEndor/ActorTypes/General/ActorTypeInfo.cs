@@ -381,7 +381,7 @@ namespace SWEndor.ActorTypes
         owner.InflictDamage(hitby, hitby.TypeInfo.ImpactDamage, DamageType.COLLISION, impact);
         if (owner.HP > 0
           && Engine.MaskDataSet[owner].Has(ComponentMask.CAN_MOVE)
-          && owner.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER))
+          && owner.TypeInfo.TargetType.Has(TargetType.FIGHTER))
         {
           float repel = -owner.MoveData.Speed * 0.25f;
           owner.MoveRelative(repel, 0, 0);
@@ -458,7 +458,7 @@ namespace SWEndor.ActorTypes
         return false;
 
       // AI Determination
-      if (sweapon.Equals(WeaponShotInfo.Automatic))
+      if (EqualityComparer<WeaponShotInfo>.Default.Equals(sweapon, WeaponShotInfo.Automatic))
       {
         foreach (WeaponShotInfo ws in owner.WeaponSystemInfo.AIWeapons)
           if (FireWeapon(owner, target, ws))

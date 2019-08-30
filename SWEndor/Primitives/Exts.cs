@@ -34,6 +34,41 @@ namespace SWEndor.Primitives
     {
       return list.ToArray()[engine.Random.Next(0, list.Count)];
     }
+
+    public static int RemoveAll<T>(this LinkedList<T> list, Predicate<T> match)
+    {
+      if (list == null) throw new ArgumentNullException("list");
+      if (match == null) throw new ArgumentNullException("match");
+      
+      int count = 0;
+      LinkedListNode<T> node = list.First;
+      LinkedListNode<T> next;
+      while (node != null)
+      {
+        next = node.Next;
+        if (match(node.Value))
+        {
+          list.Remove(node);
+          count++;
+        }
+        node = next;
+      }
+      return count;
+    }
+
+    public static T Random<T>(this LinkedList<T> list, Engine engine)
+    {
+      if (list == null) throw new ArgumentNullException("list");
+
+      int count = engine.Random.Next(0, list.Count);
+      LinkedListNode<T> node = list.First;
+      while (count > 0)
+      {
+        node = node.Next;
+        count--;
+      }
+      return node.Value;
+    }
   }
 
   public static class ArrayExts

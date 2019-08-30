@@ -62,7 +62,7 @@ namespace SWEndor.ActorTypes.Instances
         electro.CycleInfo.CyclesRemaining = empduration / electro.TypeInfo.TimedLifeData.TimedLife;
       }
 
-      if (hitby.TypeInfo.TargetType.HasFlag(TargetType.SHIP))
+      if (hitby.TypeInfo.TargetType.Has(TargetType.SHIP))
       {
         hitby.ForceClearQueue();
         hitby.QueueNext(new Rotate(hitby.GetRelativePositionFUR(1000, -800, -200), hitby.MoveData.MaxSpeed, 0.1f, false));

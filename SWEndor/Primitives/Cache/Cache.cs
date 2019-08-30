@@ -66,7 +66,7 @@ namespace SWEndor.Primitives
 
       public T Get(E token)
       {
-        if (!ExpiryToken.Equals(token))
+        if (!EqualityComparer<E>.Default.Equals(ExpiryToken, token))
         {
           val = fn();
           ExpiryToken = token;

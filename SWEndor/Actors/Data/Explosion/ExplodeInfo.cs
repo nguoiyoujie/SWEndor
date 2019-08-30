@@ -58,11 +58,11 @@ namespace SWEndor.Actors.Data.Explosion
     private bool Check(Engine engine, ExplodeInfo exp, StateModel s, DyingTimer d)
     {
       return
-        (!engine.Game.IsLowFPS() || !exp.Trigger.HasFlag(ExplodeTrigger.DONT_CREATE_ON_LOWFPS))
-        && ((s.ActorState == ActorState.NORMAL && exp.Trigger.HasFlag(ExplodeTrigger.ON_NORMAL))
-            || (s.ActorState == ActorState.DYING && exp.Trigger.HasFlag(ExplodeTrigger.ON_DYING))
-            || (s.ActorState == ActorState.DEAD && exp.Trigger.HasFlag(ExplodeTrigger.ON_DEATH)))
-        && (!exp.Trigger.HasFlag(ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED) || (d != null && d.TimeRemaining > 0));
+        (!engine.Game.IsLowFPS() || !exp.Trigger.Has(ExplodeTrigger.DONT_CREATE_ON_LOWFPS))
+        && ((s.ActorState == ActorState.NORMAL && exp.Trigger.Has(ExplodeTrigger.ON_NORMAL))
+            || (s.ActorState == ActorState.DYING && exp.Trigger.Has(ExplodeTrigger.ON_DYING))
+            || (s.ActorState == ActorState.DEAD && exp.Trigger.Has(ExplodeTrigger.ON_DEATH)))
+        && (!exp.Trigger.Has(ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED) || (d != null && d.TimeRemaining > 0));
     }
 
     private void Process(ActorInfo self)
@@ -95,7 +95,7 @@ namespace SWEndor.Actors.Data.Explosion
             if (_types[i] == null)
               _types[i] = engine.ActorTypeFactory.Get(exp.ActorType);
 
-            if (m != null && exp.Trigger.HasFlag(ExplodeTrigger.CREATE_ON_MESHVERTICES))
+            if (m != null && exp.Trigger.Has(ExplodeTrigger.CREATE_ON_MESHVERTICES))
               CreateOnMeshVertices(engine, self, i, rate, size, m, t);
             else
               CreateOnMeshCenter(engine, self, i, rate, size, t);

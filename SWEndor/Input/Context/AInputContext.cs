@@ -29,7 +29,7 @@ namespace SWEndor.Input.Context
 
     public virtual void Set()
     {
-      foreach (InputFunction fn in InputFunction.Registry.GetList())
+      foreach (InputFunction fn in InputFunction.Registry.Functions)
         if (fn != null)
           fn.Enabled = false;
     }

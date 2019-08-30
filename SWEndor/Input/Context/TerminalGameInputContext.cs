@@ -17,16 +17,20 @@ namespace SWEndor.Input.Context
 
       if (keydata.Pressed > 0)
       {
-        if (((CONST_TV_KEY)keydata.Key).Equals(CONST_TV_KEY.TV_KEY_RETURN))
-          TConsole.Execute();
-        else if (((CONST_TV_KEY)keydata.Key).Equals(CONST_TV_KEY.TV_KEY_DELETE) 
-              || ((CONST_TV_KEY)keydata.Key).Equals(CONST_TV_KEY.TV_KEY_BACKSPACE))
-          TConsole.InputLine = TConsole.InputLine.Substring(0, TConsole.InputLine.Length - 1);
-        else
+        switch ((CONST_TV_KEY)keydata.Key)
         {
-          char chr = Utilities.TVKeyToChar(Globals.Engine.InputManager.SHIFT, (CONST_TV_KEY)keydata.Key);
-          if (!char.IsControl(chr))
-            TConsole.InputLine += chr;
+          case CONST_TV_KEY.TV_KEY_RETURN:
+            TConsole.Execute();
+            break;
+          case CONST_TV_KEY.TV_KEY_DELETE:
+          case CONST_TV_KEY.TV_KEY_BACKSPACE:
+            TConsole.InputLine = TConsole.InputLine.Substring(0, TConsole.InputLine.Length - 1);
+            break;
+          default:
+            char chr = Utilities.TVKeyToChar(Globals.Engine.InputManager.SHIFT, (CONST_TV_KEY)keydata.Key);
+            if (!char.IsControl(chr))
+              TConsole.InputLine += chr;
+            break;
         }
       }
     }

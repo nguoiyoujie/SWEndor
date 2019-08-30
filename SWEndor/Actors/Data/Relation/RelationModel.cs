@@ -24,7 +24,7 @@ namespace SWEndor.Actors
 
       public void AddChild(ActorInfo self, ActorInfo child)
       {
-        if (self.Equals(child))
+        if (self == child)
           throw new InvalidOperationException("Adding the same ActorInfo instance as its own child is not allowed.");
 
         child.Relation.Parent = self;
@@ -38,7 +38,7 @@ namespace SWEndor.Actors
         if (child == null)
           return;
 
-        if (self.Equals(child.Relation.Parent))
+        if (self == child.Relation.Parent)
           child.Relation.Parent = null;
 
         list?.Remove(child);
@@ -63,7 +63,7 @@ namespace SWEndor.Actors
       public ActorInfo GetTopParent(ActorInfo self)
       {
         ActorInfo ret;
-        if (Parent != null && !Parent.Equals(self))
+        if (Parent != null && Parent != self)
         {
           ret = Parent.Relation.GetTopParent(Parent); // Stack overflow?
           return ret ?? self;

@@ -54,7 +54,6 @@ namespace SWEndor.Primitives
     private struct CacheItem<E, T, TP1, TP2> where E : struct
     {
       internal E ExpiryToken;
-      //private Func<TP1, TP2, T> fn; // don't store this
       private T val;
 
       public CacheItem(E token)
@@ -65,7 +64,7 @@ namespace SWEndor.Primitives
 
       public T Get(E token, Func<TP1, TP2, T> func, TP1 p1, TP2 p2)
       {
-        if (!ExpiryToken.Equals(token))
+        if (!EqualityComparer<E>.Default.Equals(ExpiryToken, token))
         {
           val = func(p1, p2);
           ExpiryToken = token;

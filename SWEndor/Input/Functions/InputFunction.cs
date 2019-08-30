@@ -15,7 +15,15 @@ namespace SWEndor.Input.Functions
     NONE = 0,
     ONPRESS = 0x01,
     WHILEPRESSED = 0x02
-}
+  }
+
+  public static class InputOptionsExt
+  {
+    public static bool Has(this InputOptions src, InputOptions flag)
+    {
+      return (src & flag) == flag;
+    }
+  }
 
   public abstract class InputFunction
   {
@@ -34,7 +42,7 @@ namespace SWEndor.Input.Functions
         InputFunction fn = Get(key);
         if (fn != null
           && fn.Enabled
-          && fn.Options.HasFlag(InputOptions.ONPRESS))
+          && fn.Options.Has(InputOptions.ONPRESS))
           fn.Process(engine);
       }
 
@@ -46,7 +54,7 @@ namespace SWEndor.Input.Functions
           InputFunction fn = fns[i];
           if (fn != null
             && fn.Enabled
-            && fn.Options.HasFlag(InputOptions.WHILEPRESSED)
+            && fn.Options.Has(InputOptions.WHILEPRESSED)
             && fn.Key >= byte.MinValue 
             && fn.Key < byte.MaxValue 
             && keyPressedStates[fn.Key] != 0)
@@ -55,18 +63,19 @@ namespace SWEndor.Input.Functions
         }
       }
 
-      public static InputFunction[] GetList()
+      public static IEnumerable<InputFunction> Functions
       {
-        List<InputFunction> ret = new List<InputFunction>();
-        int i = 0;
-        while (i < fns.Length)
+        get
         {
-          InputFunction fn = fns[i];
-          if (fn != null)
-            ret.Add(fn);
-          i++;
+          int i = 0;
+          while (i < fns.Length)
+          {
+            InputFunction fn = fns[i];
+            if (fn != null)
+              yield return fn;
+            i++;
+          }
         }
-        return ret.ToArray();
       }
 
       public static InputFunction Get(string name)

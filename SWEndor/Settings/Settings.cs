@@ -92,7 +92,7 @@ namespace SWEndor
         sr.WriteLine(string.Format("MasterSFXVolume={0}", engine.SoundManager.MasterSFXVolume));
         sr.WriteLine(string.Format("SteeringSensitivity={0}", SteeringSensitivity));
 
-        foreach (InputFunction fn in InputFunction.Registry.GetList())
+        foreach (InputFunction fn in InputFunction.Registry.Functions)
           if (fn.Name != null && fn.Name.Length > 0)
            sr.WriteLine(string.Format("FuncKey:{0}={1}", fn.Name, fn.Key));
         sr.Flush();

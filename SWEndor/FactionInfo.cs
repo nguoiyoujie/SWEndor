@@ -62,7 +62,7 @@ namespace SWEndor
 
     public void UnregisterActor(ActorInfo ainfo)
     {
-      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER) && Wings.Contains(ainfo.ID))
+      if (ainfo.TypeInfo.TargetType.Has(TargetType.FIGHTER) && Wings.Contains(ainfo.ID))
       {
         Wings.Remove(ainfo.ID);
         if (ainfo.Disposed)
@@ -78,7 +78,7 @@ namespace SWEndor
         }
       }
 
-      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.SHIP) && Ships.Contains(ainfo.ID))
+      if (ainfo.TypeInfo.TargetType.Has(TargetType.SHIP) && Ships.Contains(ainfo.ID))
       {
         Ships.Remove(ainfo.ID);
         if (ainfo.Disposed)
@@ -95,7 +95,7 @@ namespace SWEndor
       }
 
 
-      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.STRUCTURE) && Structures.Contains(ainfo.ID))
+      if (ainfo.TypeInfo.TargetType.Has(TargetType.STRUCTURE) && Structures.Contains(ainfo.ID))
       {
         Structures.Remove(ainfo.ID);
         if (ainfo.Disposed)
@@ -114,21 +114,21 @@ namespace SWEndor
 
     public void RegisterActor(ActorInfo ainfo)
     {
-      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER) && !Wings.Contains(ainfo.ID))
+      if (ainfo.TypeInfo.TargetType.Has(TargetType.FIGHTER) && !Wings.Contains(ainfo.ID))
       {
         Wings.Add(ainfo.ID);
         if (WingLimit != -1 && WingLimit < Wings.Count)
           WingLimit = Wings.Count;
       }
 
-      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.SHIP) && !Ships.Contains(ainfo.ID))
+      if (ainfo.TypeInfo.TargetType.Has(TargetType.SHIP) && !Ships.Contains(ainfo.ID))
       {
         Ships.Add(ainfo.ID);
         if (ShipLimit != -1 && ShipLimit < Ships.Count)
           ShipLimit = Ships.Count;
       }
 
-      if (ainfo.TypeInfo.TargetType.HasFlag(TargetType.STRUCTURE) && !Structures.Contains(ainfo.ID))
+      if (ainfo.TypeInfo.TargetType.Has(TargetType.STRUCTURE) && !Structures.Contains(ainfo.ID))
       {
         Structures.Add(ainfo.ID);
         if (StructureLimit != -1 && StructureLimit < Structures.Count)

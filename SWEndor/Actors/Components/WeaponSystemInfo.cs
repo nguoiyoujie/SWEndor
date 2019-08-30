@@ -15,28 +15,17 @@ namespace SWEndor.Actors.Components
     public bool IsNull { get { return Index == byte.MaxValue && Burst == byte.MaxValue; } }
   }
 
-  public struct WeaponSystemInfo
+  public class PreWeaponSystemInfo
   {
-    private static readonly WeaponInfo[] NullWeaponInfoArrayCache = new WeaponInfo[0];
-    private static readonly WeaponShotInfo[] NullWeaponBitArrayCache = new WeaponShotInfo[0];
+    public List<WeaponInfo> Weapons = new List<WeaponInfo>(4);
+    public List<WeaponShotInfo> PrimaryWeapons = new List<WeaponShotInfo>(4);
+    public List<WeaponShotInfo> SecondaryWeapons = new List<WeaponShotInfo>(4) { WeaponShotInfo.Default };
+    public List<WeaponShotInfo> AIWeapons = new List<WeaponShotInfo>(4);
 
-    private List<WeaponInfo> m_weapons;
-    private List<WeaponShotInfo> m_primary;
-    private List<WeaponShotInfo> m_secondary;
-    private List<WeaponShotInfo> m_ai;
+    public PreWeaponSystemInfo() { }
 
-    public WeaponInfo[] Weapons { get { return m_weapons?.ToArray() ?? NullWeaponInfoArrayCache; } }
-    public WeaponShotInfo[] PrimaryWeapons { get { return m_primary?.ToArray() ?? NullWeaponBitArrayCache; } }
-    public WeaponShotInfo[] SecondaryWeapons { get { return m_secondary?.ToArray() ?? NullWeaponBitArrayCache; } }
-    public WeaponShotInfo[] AIWeapons { get { return m_ai?.ToArray() ?? NullWeaponBitArrayCache; } }
-
-    public void Init(ActorTypeInfo atype)
+    public PreWeaponSystemInfo(ActorTypeInfo atype)
     {
-      m_weapons = new List<WeaponInfo>();
-      m_primary = new List<WeaponShotInfo>();
-      m_secondary = new List<WeaponShotInfo> { WeaponShotInfo.Default };
-      m_ai = new List<WeaponShotInfo>();
-
       foreach (string s in atype.Loadouts)
         InsertLoadout(s);
 
@@ -46,11 +35,11 @@ namespace SWEndor.Actors.Components
 
     public void Reset()
     {
-      m_weapons.Clear();
-      m_primary.Clear();
-      m_secondary.Clear();
-      m_secondary.Add(WeaponShotInfo.Default);
-      m_ai.Clear();
+      Weapons.Clear();
+      PrimaryWeapons.Clear();
+      SecondaryWeapons.Clear();
+      SecondaryWeapons.Add(WeaponShotInfo.Default);
+      AIWeapons.Clear();
     }
 
     public void InsertLoadout(string wload)
@@ -61,21 +50,54 @@ namespace SWEndor.Actors.Components
     private void InsertLoadout(WeaponLoadoutInfo wload)
     {
       WeaponInfo weap = WeaponFactory.Get(wload.WeaponName);
-      m_weapons.Add(weap);
+      Weapons.Add(weap);
       foreach (int p in wload.Primary)
-        m_primary.Add(new WeaponShotInfo(weap, p));
+        PrimaryWeapons.Add(new WeaponShotInfo(weap, p));
 
       foreach (int p in wload.Secondary)
-        m_secondary.Add(new WeaponShotInfo(weap, p));
+        SecondaryWeapons.Add(new WeaponShotInfo(weap, p));
 
       foreach (int p in wload.AI)
-        m_ai.Add(new WeaponShotInfo(weap, p));
+        AIWeapons.Add(new WeaponShotInfo(weap, p));
     }
 
     private void InsertDummyTrackerAILoadout()
     {
       WeaponInfo weap = TrackerDummyWeapon.Instance;
-      m_ai.Add(new WeaponShotInfo(weap, 1));
+      AIWeapons.Add(new WeaponShotInfo(weap, 1));
+    }
+
+  }
+
+  public struct WeaponSystemInfo
+  {
+    private static readonly WeaponInfo[] NullWeaponInfoArrayCache = new WeaponInfo[0];
+    private static readonly WeaponShotInfo[] NullWeaponShotInfoCache = new WeaponShotInfo[0];
+
+    public WeaponInfo[] Weapons;
+    public WeaponShotInfo[] PrimaryWeapons;
+    public WeaponShotInfo[] SecondaryWeapons;
+    public WeaponShotInfo[] AIWeapons;
+
+    public void Init(ActorTypeInfo atype)
+    {
+      Init(new PreWeaponSystemInfo(atype));
+    }
+
+    public void Init(PreWeaponSystemInfo preinit)
+    {
+      Weapons = preinit.Weapons.ToArray() ?? NullWeaponInfoArrayCache;
+      PrimaryWeapons = preinit.PrimaryWeapons.ToArray() ?? NullWeaponShotInfoCache;
+      SecondaryWeapons = preinit.SecondaryWeapons.ToArray() ?? NullWeaponShotInfoCache;
+      AIWeapons = preinit.AIWeapons.ToArray() ?? NullWeaponShotInfoCache;
+    }
+
+    public void Reset()
+    {
+      Weapons = NullWeaponInfoArrayCache;
+      PrimaryWeapons = NullWeaponShotInfoCache;
+      SecondaryWeapons = NullWeaponShotInfoCache;
+      AIWeapons = NullWeaponShotInfoCache;
     }
 
     public float GetWeaponRange()
@@ -92,21 +114,25 @@ namespace SWEndor.Actors.Components
     public bool SelectWeapon(Engine engine, ActorInfo actor, ActorInfo target, float delta_angle, float delta_distance, out WeaponShotInfo weapon)
     {
       weapon = WeaponShotInfo.Default;
-      foreach (WeaponShotInfo wb in AIWeapons)
+      if (AIWeapons != null)
       {
-        WeaponInfo ws = wb.Weapon;
-
-        if (ws != null)
+        foreach (WeaponShotInfo wb in AIWeapons)
         {
-          if ((delta_angle < ws.AngularRange
-            && delta_angle > -ws.AngularRange)
-            && (delta_distance < ws.Range
-            && delta_distance > -ws.Range)
-            && ws.CanTarget(engine, actor, target)
-            && (ws.MaxAmmo == -1 || ws.Ammo > 0))
+          WeaponInfo ws = wb.Weapon;
+
+          if (ws != null)
           {
-            weapon = new WeaponShotInfo(ws, wb.Burst);
-            return true;
+            if ((delta_angle < ws.AngularRange
+              && delta_angle > -ws.AngularRange)
+              && (delta_distance < ws.Range
+              && delta_distance > -ws.Range)
+              && ws.CanTarget(engine, actor, target)
+              && (ws.MaxAmmo == -1 || ws.Ammo > 0))
+            {
+              weapon = new WeaponShotInfo(ws, wb.Burst);
+              return true;
+            }
+
           }
         }
       }

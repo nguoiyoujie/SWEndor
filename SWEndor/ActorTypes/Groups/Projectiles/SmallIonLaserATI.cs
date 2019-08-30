@@ -36,7 +36,7 @@ namespace SWEndor.ActorTypes.Instances
       {
         if (c == null
           || !c.Active
-          || !c.TypeInfo.TargetType.HasFlag(TargetType.ADDON))
+          || !c.TypeInfo.TargetType.Has(TargetType.ADDON))
           rm.Add(c);
       }
 

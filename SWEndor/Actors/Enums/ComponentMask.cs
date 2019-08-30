@@ -55,7 +55,7 @@ namespace SWEndor.Actors
     ACTOR = CAN_RENDER | CAN_MOVE | CAN_ROTATE | CAN_BETARGETED | CAN_COLLIDE | CAN_BECOLLIDED | HAS_AI | CAN_REGEN | CAN_EXPLODE
   }
 
-  public static class ComponentMaskHelper
+  public static class ComponentMaskExt
   {
     public static bool Has(this ComponentMask mask, ComponentMask subset)
     {

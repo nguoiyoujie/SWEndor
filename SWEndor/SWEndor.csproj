@@ -417,8 +417,6 @@
     <Compile Include="Primitives\BoundingBox.cs" />
     <Compile Include="Primitives\BoundingSphere.cs" />
     <Compile Include="Primitives\BoundingValue.cs" />
-    <Compile Include="Primitives\Cached3DVector.cs" />
-    <Compile Include="Primitives\CachedFloat.cs" />
     <Compile Include="Primitives\Cache\Cache.cs" />
     <Compile Include="Primitives\Cache\Cache_P2.cs" />
     <Compile Include="Primitives\Collections\CircularQueue.cs" />

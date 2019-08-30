@@ -108,10 +108,10 @@ namespace SWEndor.ActorTypes.Instances
 
       PlayerInfo.ActorID = a.ID;
 
-      if (a.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER) && a.Faction.WingLimit >= 0)
+      if (a.TypeInfo.TargetType.Has(TargetType.FIGHTER) && a.Faction.WingLimit >= 0)
         a.Faction.WingLimit++;
 
-      if (a.TypeInfo.TargetType.HasFlag(TargetType.SHIP) && a.Faction.ShipLimit >= 0)
+      if (a.TypeInfo.TargetType.Has(TargetType.SHIP) && a.Faction.ShipLimit >= 0)
         a.Faction.ShipLimit++;
 
       PlayerInfo.RequestSpawn = false;

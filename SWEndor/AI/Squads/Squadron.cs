@@ -1,8 +1,9 @@
 ﻿using SWEndor.Actors;
 using SWEndor.AI.Actions;
 using SWEndor.Primitives;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+//using System.Linq;
 
 namespace SWEndor.AI.Squads
 {
@@ -20,17 +21,14 @@ namespace SWEndor.AI.Squads
     public static readonly Squadron Neutral = new Squadron();
     public bool IsNull { get { return this == Neutral; } }
 
+    private static Predicate<ActorInfo> rm_func = (a) => a == null || a.DisposingOrDisposed || a.IsDyingOrDead; // || (Leader != null && a.Faction.Allies.Contains(Leader.Faction));
     public void Process(Engine engine)
     {
       if (IsNull)
         return;
 
       lock (lockthreat)
-      {
-        foreach (ActorInfo a in _threats.ToArray())
-          if (a == null || a.DisposingOrDisposed || a.IsDyingOrDead || (Leader != null && a.Faction.Allies.Contains(Leader.Faction)))
-            _threats.Remove(a);
-      }
+        _threats.RemoveAll(rm_func);
     }
 
     public ActionInfo GetNewAction(Engine engine)
@@ -71,7 +69,7 @@ namespace SWEndor.AI.Squads
 
       lock (lockthreat)
         if (_threats.Count > 0)
-          return _threats.ToArray().Random(engine);
+          return _threats.Random(engine);
 
       return null;
     }
@@ -143,7 +141,7 @@ namespace SWEndor.AI.Squads
 
       lock (lockmember)
       {
-        foreach (ActorInfo a in _members.ToArray())
+        foreach (ActorInfo a in _members)
           a.Squad = null;
 
         _members.Clear();

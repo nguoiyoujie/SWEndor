@@ -663,8 +663,11 @@ namespace SWEndor.Scenarios
           player.SetArmor(DamageType.ALL, 0.5f);
 
           player.WeaponSystemInfo.Reset();
-          player.WeaponSystemInfo.InsertLoadout("X_WG_LASR");
-          player.WeaponSystemInfo.InsertLoadout("X_WG_TORP");
+
+          PreWeaponSystemInfo prew = new PreWeaponSystemInfo();
+          prew.InsertLoadout("X_WG_LASR");
+          prew.InsertLoadout("X_WG_TORP");
+          player.WeaponSystemInfo.Init(prew);
         }
         else if (Stage5StartRun)
         {
@@ -1873,9 +1876,10 @@ namespace SWEndor.Scenarios
       ActorInfo vaderE1 = ActorFactory.Get(m_VaderEscort1ID);
       ActorInfo vaderE2 = ActorFactory.Get(m_VaderEscort2ID);
 
-      vader.WeaponSystemInfo.Reset();
-      vader.WeaponSystemInfo.InsertLoadout("TIED_LASR");
-      vader.WeaponSystemInfo.InsertLoadout("TIED_LASR");
+      PreWeaponSystemInfo prew = new PreWeaponSystemInfo();
+      prew.InsertLoadout("TIED_LASR");
+      prew.InsertLoadout("TIED_LASR");
+      vader.WeaponSystemInfo.Init(prew);
 
       vader.MoveData.MaxSpeed = 400;
       vader.MoveData.MinSpeed = 400;

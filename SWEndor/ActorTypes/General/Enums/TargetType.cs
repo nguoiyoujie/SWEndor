@@ -45,4 +45,12 @@ namespace SWEndor.ActorTypes
     /// </summary>
     ANY = 0xFFFF
   }
+
+  public static class TargetTypeExt
+  {
+    public static bool Has(this TargetType src, TargetType flag)
+    {
+      return (src & flag) == flag;
+    }
+  }
 }

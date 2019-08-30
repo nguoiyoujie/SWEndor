@@ -110,7 +110,7 @@ namespace SWEndor.AI.Actions
         }
         else
         {
-          if (target.TypeInfo.TargetType.HasFlag(TargetType.FIGHTER))
+          if (target.TypeInfo.TargetType.Has(TargetType.FIGHTER))
           {
             float evadeduration = 2000 / (target.GetTrueSpeed() + 500);
             actor.QueueFirst(new Evade(evadeduration));

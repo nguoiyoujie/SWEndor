@@ -57,10 +57,36 @@ namespace SWEndor.Player
     public string[] DamagedReportSound = new string[] { }; // "r25", "r24", "r23", "r22", "r21", "r20" };
 
     // weapons
-    private WeaponShotInfo[] PrimaryWeaponModes = new WeaponShotInfo[0];
-    private WeaponShotInfo[] SecondaryWeaponModes = new WeaponShotInfo[0];
-    public WeaponShotInfo PrimaryWeapon { get { return (PrimaryWeaponModes.Length > PrimaryWeaponN) ? PrimaryWeaponModes[PrimaryWeaponN] : WeaponShotInfo.Default; } }
-    public WeaponShotInfo SecondaryWeapon { get { return (SecondaryWeaponModes.Length > SecondaryWeaponN) ? SecondaryWeaponModes[SecondaryWeaponN] : WeaponShotInfo.Default; } }
+    public WeaponShotInfo PrimaryWeapon
+    {
+      get
+      {
+        if (Actor == null)
+          return WeaponShotInfo.Default;
+
+        int i = PrimaryWeaponN;
+        foreach (WeaponShotInfo w in Actor.WeaponSystemInfo.PrimaryWeapons)
+          if (i-- == 0)
+            return w;
+
+        return WeaponShotInfo.Default;
+      }
+    }
+    public WeaponShotInfo SecondaryWeapon
+    {
+      get
+      {
+        if (Actor == null)
+          return WeaponShotInfo.Default;
+
+        int i = SecondaryWeaponN;
+        foreach (WeaponShotInfo w in Actor.WeaponSystemInfo.SecondaryWeapons)
+          if (i-- == 0)
+            return w;
+
+        return WeaponShotInfo.Default;
+      }
+    }
     public int PrimaryWeaponN = 0;
     public int SecondaryWeaponN = 0;
 
@@ -170,9 +196,6 @@ namespace SWEndor.Player
     {
       if (Actor != null) 
       {
-        PrimaryWeaponModes = Actor.WeaponSystemInfo.PrimaryWeapons;
-        SecondaryWeaponModes = Actor.WeaponSystemInfo.SecondaryWeapons;
-
         if (PrimaryWeapon.Weapon == null)
           ResetPrimaryWeapon();
 
@@ -181,9 +204,6 @@ namespace SWEndor.Player
       }
       else
       {
-        PrimaryWeaponModes = new WeaponShotInfo[0];
-        SecondaryWeaponModes = new WeaponShotInfo[0];
-
         PrimaryWeaponN = 0;
         SecondaryWeaponN = 0;
       }
@@ -201,30 +221,42 @@ namespace SWEndor.Player
 
     public void NextPrimaryWeapon()
     {
+      if (Actor == null)
+        return;
+
       PrimaryWeaponN++;
-      if (PrimaryWeaponModes.Length <= PrimaryWeaponN)
+      if (Actor.WeaponSystemInfo.PrimaryWeapons.Length <= PrimaryWeaponN)
         PrimaryWeaponN = 0;
     }
 
     public void PrevPrimaryWeapon()
     {
+      if (Actor == null)
+        return;
+
       PrimaryWeaponN--;
       if (PrimaryWeaponN < 0)
-        PrimaryWeaponN = PrimaryWeaponModes.Length - 1;
+        PrimaryWeaponN = Actor.WeaponSystemInfo.PrimaryWeapons.Length - 1;
     }
 
     public void NextSecondaryWeapon()
     {
+      if (Actor == null)
+        return;
+
       SecondaryWeaponN++;
-      if (SecondaryWeaponModes.Length <= SecondaryWeaponN)
+      if (Actor.WeaponSystemInfo.SecondaryWeapons.Length <= SecondaryWeaponN)
         SecondaryWeaponN = 0;
     }
 
     public void PrevSecondaryWeapon()
     {
+      if (Actor == null)
+        return;
+
       SecondaryWeaponN--;
       if (SecondaryWeaponN < 0)
-        SecondaryWeaponN = SecondaryWeaponModes.Length - 1;
+        SecondaryWeaponN = Actor.WeaponSystemInfo.SecondaryWeapons.Length - 1;
     }
 
     public void SquadronAssist()
