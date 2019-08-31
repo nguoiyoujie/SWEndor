@@ -15,14 +15,14 @@ namespace SWEndor.Scenarios.Scripting.Expressions
         new TokenDefinition(@"\s+", TokenEnum.WHITESPACE, RegexOption),
 
         // keywords
-        new TokenDefinition(@"if(?=\s)", TokenEnum.IF, RegexOption),
-        new TokenDefinition(@"then(?=\s)", TokenEnum.THEN, RegexOption),
-        new TokenDefinition(@"else(?=\s)", TokenEnum.ELSE, RegexOption),
-        new TokenDefinition(@"foreach(?=\s)", TokenEnum.FOREACH, RegexOption),
-        new TokenDefinition(@"in(?=\s)", TokenEnum.IN, RegexOption),
+        new TokenDefinition(@"if\b", TokenEnum.IF, RegexOption),
+        new TokenDefinition(@"then\b", TokenEnum.THEN, RegexOption),
+        new TokenDefinition(@"else\b", TokenEnum.ELSE, RegexOption),
+        new TokenDefinition(@"foreach\b", TokenEnum.FOREACH, RegexOption),
+        new TokenDefinition(@"in\b", TokenEnum.IN, RegexOption),
 
         // literals
-        new TokenDefinition(@"(true|false)(?=\s)", TokenEnum.BOOLEANLITERAL, RegexOption),
+        new TokenDefinition(@"(true|false)\b", TokenEnum.BOOLEANLITERAL, RegexOption),
         new TokenDefinition(@"[a-zA-Z_][a-zA-Z0-9_\.]*(?=\s*\()", TokenEnum.FUNCTION, RegexOption),
         new TokenDefinition(@"[a-zA-Z_][a-zA-Z0-9_\.]*(?!\s*\()", TokenEnum.VARIABLE, RegexOption),
         new TokenDefinition(@"\""(\""\""|[^\""])*\""", TokenEnum.STRINGLITERAL, RegexOption),
