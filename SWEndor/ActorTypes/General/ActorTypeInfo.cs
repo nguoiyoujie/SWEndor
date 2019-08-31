@@ -15,7 +15,7 @@ using System.Linq;
 
 namespace SWEndor.ActorTypes
 {
-  public partial class ActorTypeInfo : IDisposable
+  public partial class ActorTypeInfo
   {
     public ActorTypeInfo(Factory owner, string name = "")
     {
@@ -229,7 +229,7 @@ namespace SWEndor.ActorTypes
       ainfo.CanRetaliate = CanRetaliate;
 
       // Sound
-      if (!(GameScenarioManager.Scenario is GSMainMenu))
+      if (!(GameScenarioManager?.Scenario is GSMainMenu))
         foreach (SoundSourceInfo assi in InitialSoundSources)
           assi.Process(ainfo);
     }
@@ -259,7 +259,7 @@ namespace SWEndor.ActorTypes
       if (PlayerInfo.Actor != null
         && ainfo.Active 
         && !ainfo.IsScenePlayer
-        && !(GameScenarioManager.Scenario is GSMainMenu))
+        && !(GameScenarioManager?.Scenario is GSMainMenu))
       {
         foreach (SoundSourceInfo assi in SoundSources)
           assi.Process(ainfo);
@@ -424,34 +424,6 @@ namespace SWEndor.ActorTypes
       }
     }
 
-    /*
-    public void InterpretWeapon(ActorInfo owner, WeaponShotInfo sweapon, out WeaponInfo weapon, out int burst)
-    {
-      string s = "none";
-      weapon = null;
-      burst = 1;
-
-      if (owner == null)
-        return;
-
-      int seperatorpos = sweapon.IndexOf(':');
-      if (seperatorpos > -1)
-      {
-        s = sweapon.Substring(seperatorpos + 1).Trim();
-        int.TryParse(sweapon.Substring(0, seperatorpos), out burst);
-      }
-      else
-      {
-        s = sweapon.Trim();
-      }
-
-      if (owner.WeaponSystemInfo.Weapons.ContainsKey(s))
-      {
-        weapon = owner.WeaponSystemInfo.Weapons[s];
-      }
-    }
-    */
-
     public virtual bool FireWeapon(ActorInfo owner, ActorInfo target, WeaponShotInfo sweapon)
     {
       if (owner == null)
@@ -487,10 +459,6 @@ namespace SWEndor.ActorTypes
 
       if (Engine.Random.NextDouble() < accuracy)
         target.InflictDamage(owner, weapontype.ImpactDamage, DamageType.NORMAL, target.GetGlobalPosition());
-    }
-
-    public void Dispose()
-    {
     }
 
     public virtual void Dying(ActorInfo ainfo)
