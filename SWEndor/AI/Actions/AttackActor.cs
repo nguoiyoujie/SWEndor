@@ -138,7 +138,7 @@ namespace SWEndor.AI.Actions
 
       if (target != null)
       {
-        BoundingSphere sph = engine.MeshDataSet.Mesh_getBoundingSphere(target, true);
+        BoundingSphere sph = target.GetBoundingSphere(true);
         center = sph.Position;
         radius = sph.Radius + engine.Random.Next((int)(-4 * actor.TypeInfo.MaxSpeed), (int)(4 * actor.TypeInfo.MaxSpeed));
 

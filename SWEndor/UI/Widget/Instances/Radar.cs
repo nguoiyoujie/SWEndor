@@ -285,7 +285,7 @@ namespace SWEndor.UI.Widgets
 
     private void DrawRectGiant(ActorInfo a, float x, float y, float proty, int color)
     {
-      BoundingBox box = Engine.MeshDataSet.Mesh_getBoundingBox(a, true);
+      BoundingBox box = a.GetBoundingBox(true);
       float scale = a.Scale;
 
       List<TV_2DVECTOR?> ts = new List<TV_2DVECTOR?>();
@@ -363,7 +363,7 @@ namespace SWEndor.UI.Widgets
 
     private void DrawTriangleGiant(ActorInfo a, float x, float y, float proty, int color)
     {
-      BoundingBox box = Engine.MeshDataSet.Mesh_getBoundingBox(a, true);
+      BoundingBox box = a.GetBoundingBox(true);
       float scale = a.Scale;
 
       List<TV_2DVECTOR?> ts = new List<TV_2DVECTOR?>();

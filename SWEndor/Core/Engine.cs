@@ -26,16 +26,9 @@ namespace SWEndor
     public int ScreenHeight { get; internal set; }
     public Random Random { get; } = new Random();
 
-    // Data
-    //internal MemoryManager Memory { get; private set; }
-
     // Data sets
     internal MaskDataSet MaskDataSet { get; private set; }
-
     internal ActorDataSet ActorDataSet { get; private set; }
-    //internal SysDataSet SysDataSet { get; private set; }
-    internal MeshDataSet MeshDataSet { get; private set; }
-    //internal TimedLifeDataSet TimedLifeDataSet { get; private set; }
 
     // Engine parts
     internal Game Game { get; private set; }
@@ -66,11 +59,8 @@ namespace SWEndor
 
     public void Init()
     {
-      //Memory = new MemoryManager(this);
-
       MaskDataSet = new MaskDataSet();
       ActorDataSet = new ActorDataSet();
-      MeshDataSet = new MeshDataSet();
 
       Game = new Game(this);
       SoundManager = new SoundManager(this);

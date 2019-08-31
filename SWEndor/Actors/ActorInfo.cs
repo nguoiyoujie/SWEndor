@@ -118,6 +118,7 @@ namespace SWEndor.Actors
     public MoveData MoveData;
 
     // Traits (structs)
+    private MeshModel Meshes;
     private RelationModel Relation;
     private TimerModel DyingTimer; 
     private StateModel State;
@@ -153,6 +154,7 @@ namespace SWEndor.Actors
       TypeInfo = acinfo.ActorTypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
 
+      Meshes.Init(ID, TypeInfo);
       Relation.Init();
       DyingTimer.InitAsDyingTimer(TypeInfo);
       Health.Init(TypeInfo, acinfo);
@@ -160,7 +162,6 @@ namespace SWEndor.Actors
       Armor.Init(TypeInfo);
 
       MoveData.Init(TypeInfo, acinfo);
-      Engine.MeshDataSet.Init(this, TypeInfo, acinfo);
       ActorDataSet.CollisionData[dataID].Init();
       ActorDataSet.ExplodeData[dataID].CopyFrom(TypeInfo.ExplodeData);
       ActorDataSet.RegenData[dataID].CopyFrom(TypeInfo.RegenData);
@@ -195,6 +196,7 @@ namespace SWEndor.Actors
       TypeInfo = acinfo.ActorTypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
 
+      Meshes.Init(ID, TypeInfo);
       Relation.Init();
       DyingTimer.InitAsDyingTimer(TypeInfo);
       Health.Init(TypeInfo, acinfo);
@@ -202,7 +204,6 @@ namespace SWEndor.Actors
       Armor.Init(TypeInfo);
 
       MoveData.Init(TypeInfo, acinfo);
-      Engine.MeshDataSet.Init(this, TypeInfo, acinfo);
       ActorDataSet.CollisionData[dataID].Init();
       ActorDataSet.ExplodeData[dataID] = TypeInfo.ExplodeData;
       ActorDataSet.RegenData[dataID] = TypeInfo.RegenData;
@@ -224,8 +225,6 @@ namespace SWEndor.Actors
 
     public void Initialize()
     {
-      Engine.MeshDataSet.Mesh_generate(this, TypeInfo);
-
       SetGenerated();
       Update();
       OnCreatedEvent();
@@ -434,11 +433,12 @@ namespace SWEndor.Actors
 
       // Kill data
       MoveData.Reset();
-      Engine.MeshDataSet.Reset(this);
       ActorDataSet.CollisionData[dataID].Reset();
       ActorDataSet.RegenData[dataID].Reset();
       ActorDataSet.ExplodeData[dataID].Reset();
       ActorDataSet.CombatData[dataID].Reset();
+
+      Meshes.Dispose();
 
       // Finally
       SetDisposed();

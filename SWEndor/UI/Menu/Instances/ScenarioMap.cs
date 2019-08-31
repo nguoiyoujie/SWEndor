@@ -223,7 +223,7 @@ namespace SWEndor.UI.Menu.Pages
 
     private void DrawRectGiant(ActorInfo a, float x, float y, float proty, int color)
     {
-      BoundingBox box = Engine.MeshDataSet.Mesh_getBoundingBox(a, true);
+      BoundingBox box = a.GetBoundingBox(true);
       float scale = a.Scale * zoom_ratio;
 
       float bx = box.X.Min * scale;
@@ -255,7 +255,7 @@ namespace SWEndor.UI.Menu.Pages
 
     private void DrawTriangleGiant(ActorInfo a, float x, float y, float proty, int color)
     {
-      BoundingBox box = Engine.MeshDataSet.Mesh_getBoundingBox(a, true);
+      BoundingBox box = a.GetBoundingBox(true);
       float scale = a.Scale * zoom_ratio;
 
       float bx = box.X.Min * scale;

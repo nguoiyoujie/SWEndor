@@ -8,10 +8,10 @@ namespace SWEndor.Actors.Components
   {
     internal static void ProcessDying(Engine engine, ActorInfo actor)
     {
-      ProcessDying(engine, actor, ref engine.ActorDataSet.ExplodeData[actor.dataID], ref engine.MeshDataSet.list[actor.dataID]);
+      ProcessDying(engine, actor, ref engine.ActorDataSet.ExplodeData[actor.dataID]);
     }
 
-    private static void ProcessDying(Engine engine, ActorInfo actor, ref ExplodeData data, ref MeshData mdata)
+    private static void ProcessDying(Engine engine, ActorInfo actor, ref ExplodeData data)
     {
       if (actor.TypeInfo.IsExplosion) // don't let explosions create explosions.
         return;
@@ -22,11 +22,11 @@ namespace SWEndor.Actors.Components
         if (data.ExplosionCooldown < engine.Game.GameTime - 5f) // skip explosion effects that are delayed after more than 5 secs
           data.ExplosionCooldown = engine.Game.GameTime;
 
-        while (data.ExplosionCooldown < engine.Game.GameTime && mdata.GetVertexCount() > 0)
+        while (data.ExplosionCooldown < engine.Game.GameTime && actor.GetVertexCount() > 0)
         {
-          int vertID = engine.Random.Next(0, mdata.GetVertexCount());
+          int vertID = engine.Random.Next(0, actor.GetVertexCount());
           data.ExplosionCooldown += (float)engine.Random.NextDouble() * data.ExplosionRate;
-          MakeExplosion(engine, actor, mdata.GetVertex(vertID), ref data);
+          MakeExplosion(engine, actor, actor.GetVertex(vertID), ref data);
         }
       }
     }

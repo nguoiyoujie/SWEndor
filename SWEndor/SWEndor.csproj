@@ -131,7 +131,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actors\ActorCreationInfo.cs" />
-    <Compile Include="Actors\Components\MeshSystem.cs" />
     <Compile Include="Actors\Components\DyingMovement\DyingSpin.cs" />
     <Compile Include="Actors\Components\DyingMovement\DyingSink.cs" />
     <Compile Include="Actors\Components\DyingMovement\DyingKill.cs" />
@@ -142,7 +141,6 @@
     <Compile Include="Actors\Data\HealthModel\DamageInfo.cs" />
     <Compile Include="Actors\Data\HealthModel\DamageType.cs" />
     <Compile Include="Actors\Data\HealthModel\HealthModel.cs" />
-    <Compile Include="Actors\Data\Mesh\MeshDataSet.cs" />
     <Compile Include="Actors\Data\ActorDataSet.cs" />
     <Compile Include="Actors\Data\Collision\CollisionData.cs" />
     <Compile Include="Actors\Data\Explosion\ExplodeData.cs" />
@@ -160,7 +158,7 @@
     <Compile Include="Actors\Components\Movement\MoveForwardOnly.cs" />
     <Compile Include="Actors\Components\Movement\MoveLaser.cs" />
     <Compile Include="Actors\Components\Movement\NoMove.cs" />
-    <Compile Include="Actors\Data\Mesh\MeshData.cs" />
+    <Compile Include="Actors\Data\Mesh\MeshModel.cs" />
     <Compile Include="Actors\Enums\ComponentMask.cs" />
     <Compile Include="Actors\ProcessActorInfo.cs" />
     <Compile Include="Actors\Components\CollisionSystem.cs" />

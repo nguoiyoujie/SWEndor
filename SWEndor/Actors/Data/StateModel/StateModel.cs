@@ -105,7 +105,6 @@ namespace SWEndor.Actors
       public bool IsDying { get { return ActorState == ActorState.DYING; } }
       public bool IsDead { get { return ActorState == ActorState.DEAD; } }
       public bool IsDyingOrDead { get { return ActorState < 0; } }
-
       //Creation State
       public void SetGenerated() { CSM.Fire(CreationStateCommand.GENERATE, ref CreationState); }
       public void SetActivated() { CSM.Fire(CreationStateCommand.ACTIVATE, ref CreationState); }
@@ -120,6 +119,8 @@ namespace SWEndor.Actors
     public bool Disposing { get { return State.CreationState == CreationState.DISPOSING; } }
     public bool DisposingOrDisposed { get { return State.CreationState < 0; } }
     public bool Disposed { get { return State.CreationState == CreationState.DISPOSED; } }
+
+    public ComponentMask Mask { get { return State.ComponentMask; } }
 
     public void AdvanceDeathOneLevel() { State.AdvanceDeathOneLevel(this); if (Logged) Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState); }
 

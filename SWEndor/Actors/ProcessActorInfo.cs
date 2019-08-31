@@ -52,14 +52,7 @@ namespace SWEndor.Actors
       {
         if (!actor.IsPlayer || engine.PlayerCameraInfo.CameraMode != CameraMode.FREEROTATION)
         {
-          if (!actor.IsFarMode)
-          {
-            MeshSystem.RenderMesh(engine, actor);
-          }
-          else
-          {
-            MeshSystem.RenderFarMesh(engine, actor);
-          }
+          actor.Render(actor.IsFarMode);
         }
       }
     }
@@ -83,7 +76,7 @@ namespace SWEndor.Actors
 
     private void Update()
     {
-      MeshSystem.Update(Engine, this);
+      Meshes.Update(this);
 
       if (Generated)
         SetActivated();
