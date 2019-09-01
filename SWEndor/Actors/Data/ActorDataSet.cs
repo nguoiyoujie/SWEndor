@@ -3,7 +3,6 @@
   public class ActorDataSet
   {
     internal CollisionData[] CollisionData = new CollisionData[Globals.ActorLimit];
-    internal ExplodeData[] ExplodeData = new ExplodeData[Globals.ActorLimit];
     internal CombatData[] CombatData = new CombatData[Globals.ActorLimit];
     internal RegenData[] RegenData = new RegenData[Globals.ActorLimit];
   }

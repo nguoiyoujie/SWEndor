@@ -16,7 +16,6 @@ namespace SWEndor.ActorTypes.Instances
       // Combat
       CombatData = CombatData.DefaultShip;
       Armor = ArmorInfo.Default;
-      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS);
 
       MaxStrength = 200;
       ImpactDamage = 10;

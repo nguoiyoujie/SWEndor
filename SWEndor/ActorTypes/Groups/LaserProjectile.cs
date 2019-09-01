@@ -12,7 +12,9 @@ namespace SWEndor.ActorTypes.Groups
       TimedLifeData = new TimedLifeData(true, 1.6f);
       CombatData = CombatData.Disabled;
       Armor = ArmorInfo.Immune;
-      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.TIMENOTEXPIRED_ONLY, deathExplosionType: "Explosion");
+      Explodes = new ExplodeInfo[] {
+        new ExplodeInfo("ExpS00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
+      };
 
       MaxSpeed = Globals.LaserSpeed;
       MinSpeed = Globals.LaserSpeed;

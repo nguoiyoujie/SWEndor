@@ -12,7 +12,11 @@ namespace SWEndor.ActorTypes.Instances
 
     internal DeathStar2ATI(Factory owner) : base(owner, "DeathStar2")
     {
-      ExplodeData = new ExplodeData( deathTrigger: DeathExplosionTrigger.ALWAYS, deathExplosionType: "ExplosionMega");
+      Explodes = new ExplodeInfo[]
+      {
+        new ExplodeInfo("ExpL02", 1, 1, ExplodeTrigger.ON_DEATH),
+        new ExplodeInfo("ExpW02", 1, 1, ExplodeTrigger.ON_DEATH),
+      };
 
       float size = 20000;
 
@@ -73,16 +77,6 @@ namespace SWEndor.ActorTypes.Instances
 
       ainfo.DyingTimerSet(5, true);
       CombatSystem.Deactivate(Engine, ainfo);
-    }
-
-    public override void Dead(ActorInfo ainfo)
-    {
-      base.Dead(ainfo);
-
-      ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave Mega"));
-      acinfo.Position = ainfo.GetGlobalPosition();
-      ActorInfo explwav = ActorFactory.Create(acinfo);
-      explwav.Scale = 10;
     }
 
     public override void ProcessState(ActorInfo ainfo)

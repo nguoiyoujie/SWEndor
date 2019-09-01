@@ -4,9 +4,9 @@ using SWEndor.Actors.Data;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class ExplosionATI : Groups.Explosion
+  public class ExpS00 : Groups.Explosion
   {
-    internal ExplosionATI(Factory owner) : base(owner, "Explosion")
+    internal ExpS00(Factory owner) : base(owner, "ExpS00")
     {
       // Combat
       TimedLifeData = new TimedLifeData(true, 0.5f);

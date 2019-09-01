@@ -8,7 +8,6 @@ using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using SWEndor.Sound;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace SWEndor.Actors
@@ -125,6 +124,7 @@ namespace SWEndor.Actors
     private HealthModel Health;
     private TransformModel Transform;
     private ArmorModel Armor;
+    private ExplodeModel Explosions;
 
     // Traits (classes)
 
@@ -160,10 +160,10 @@ namespace SWEndor.Actors
       Health.Init(TypeInfo, acinfo);
       Transform.Init(TypeInfo, acinfo);
       Armor.Init(TypeInfo);
+      Explosions = new ExplodeModel(TypeInfo, acinfo);
 
       MoveData.Init(TypeInfo, acinfo);
       ActorDataSet.CollisionData[dataID].Init();
-      ActorDataSet.ExplodeData[dataID].CopyFrom(TypeInfo.ExplodeData);
       ActorDataSet.RegenData[dataID].CopyFrom(TypeInfo.RegenData);
       ActorDataSet.CombatData[dataID].CopyFrom(TypeInfo.CombatData);
       WeaponSystemInfo.Init(TypeInfo);
@@ -202,10 +202,10 @@ namespace SWEndor.Actors
       Health.Init(TypeInfo, acinfo);
       Transform.Init(TypeInfo, acinfo);
       Armor.Init(TypeInfo);
+      Explosions = new ExplodeModel(TypeInfo, acinfo);
 
       MoveData.Init(TypeInfo, acinfo);
       ActorDataSet.CollisionData[dataID].Init();
-      ActorDataSet.ExplodeData[dataID] = TypeInfo.ExplodeData;
       ActorDataSet.RegenData[dataID] = TypeInfo.RegenData;
       ActorDataSet.CombatData[dataID] = TypeInfo.CombatData;
       WeaponSystemInfo.Init(TypeInfo);
@@ -435,7 +435,6 @@ namespace SWEndor.Actors
       MoveData.Reset();
       ActorDataSet.CollisionData[dataID].Reset();
       ActorDataSet.RegenData[dataID].Reset();
-      ActorDataSet.ExplodeData[dataID].Reset();
       ActorDataSet.CombatData[dataID].Reset();
 
       Meshes.Dispose();

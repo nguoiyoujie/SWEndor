@@ -11,7 +11,12 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ExecutorATI(Factory owner) : base(owner, "Executor Super Star Destroyer")
     {
-      ExplodeData = new ExplodeData(0.5f, 1, "ExplosionSm", DeathExplosionTrigger.ALWAYS, 5, "ExplosionLg");
+      Explodes = new ExplodeInfo[]
+      {
+        new ExplodeInfo("ExpL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeInfo("ExpL01", 1, 5, ExplodeTrigger.ON_DEATH),
+        new ExplodeInfo("ExpW01", 1, 5, ExplodeTrigger.ON_DEATH)
+      };
 
       MaxStrength = 3500.0f;
       ImpactDamage = 120.0f;

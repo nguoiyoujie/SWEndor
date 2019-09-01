@@ -393,56 +393,6 @@ namespace SWEndor.Scenarios.Scripting.Functions
           else
             newValue = actor.GetArmor(DamageType.NORMAL);
           return;
-        case "DeathExplosionSize":
-          if (setValue)
-            engine.ActorDataSet.ExplodeData[actor.dataID].DeathExplosionSize = Convert.ToSingle(newValue);
-          else
-            newValue = engine.ActorDataSet.ExplodeData[actor.dataID].DeathExplosionSize;
-          return;
-        case "DeathExplosionType":
-          if (setValue)
-            engine.ActorDataSet.ExplodeData[actor.dataID].DeathExplosionType = newValue.ToString();
-          else
-            newValue = engine.ActorDataSet.ExplodeData[actor.dataID].DeathExplosionType;
-          return;
-        //case "DeathExplosionTrigger":
-        //  if (setValue)
-        //    engine.ActorDataSet.ExplodeData[actor.dataID].DeathExplosionTrigger = Convert.ToBoolean(newValue);
-        //  else
-        //    newValue = engine.ActorDataSet.ExplodeData[actor.dataID].DeathExplosionTrigger;
-        //  return;
-        /*
-      case "EnableExplosions":
-        if (setValue)
-          engine.ActorDataSet.ExplodeData[actor.dataID].EnableExplosions = Convert.ToBoolean(newValue);
-        else
-          newValue = engine.ActorDataSet.ExplodeData[actor.dataID].EnableExplosions;
-        return;
-        */
-        case "ExplosionCooldown":
-          if (setValue)
-            engine.ActorDataSet.ExplodeData[actor.dataID].ExplosionCooldown = Convert.ToSingle(newValue);
-          else
-            newValue = engine.ActorDataSet.ExplodeData[actor.dataID].ExplosionCooldown;
-          return;
-        case "ExplosionRate":
-          if (setValue)
-            engine.ActorDataSet.ExplodeData[actor.dataID].ExplosionRate = Convert.ToSingle(newValue);
-          else
-            newValue = engine.ActorDataSet.ExplodeData[actor.dataID].ExplosionRate;
-          return;
-        case "ExplosionSize":
-          if (setValue)
-            engine.ActorDataSet.ExplodeData[actor.dataID].ExplosionSize = Convert.ToSingle(newValue);
-          else
-            newValue = engine.ActorDataSet.ExplodeData[actor.dataID].ExplosionSize;
-          return;
-        case "ExplosionType":
-          if (setValue)
-            engine.ActorDataSet.ExplodeData[actor.dataID].ExplosionType = newValue.ToString();
-          else
-            newValue = engine.ActorDataSet.ExplodeData[actor.dataID].ExplosionType;
-          return;
         case "HuntWeight":
           if (setValue)
             actor.HuntWeight = Convert.ToInt32(newValue);

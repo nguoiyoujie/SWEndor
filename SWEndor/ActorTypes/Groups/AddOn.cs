@@ -9,7 +9,7 @@ namespace SWEndor.ActorTypes.Groups
     internal AddOn(Factory owner, string name) : base(owner, name)
     {
       // Combat
-      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS);
+      Explodes = new ExplodeInfo[] { new ExplodeInfo("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH) };
       CombatData = CombatData.Disabled;
       Armor = ArmorInfo.Immune;
 

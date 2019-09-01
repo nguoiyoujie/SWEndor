@@ -23,7 +23,6 @@ namespace SWEndor.ActorTypes
       if (name.Length > 0) { Name = name; }
 
       RegenData.Reset();
-      ExplodeData.Reset();
       CombatData.Reset();
       TimedLifeData.Reset();
     }
@@ -48,7 +47,6 @@ namespace SWEndor.ActorTypes
     // Data
     public ComponentMask Mask = ComponentMask.NONE;
     public RegenData RegenData = new RegenData();
-    public ExplodeData ExplodeData = new ExplodeData();
     public CombatData CombatData = new CombatData();
     public TimedLifeData TimedLifeData = new TimedLifeData();
     public ArmorInfo Armor = new ArmorInfo();
@@ -121,6 +119,9 @@ namespace SWEndor.ActorTypes
 
     // AddOns
     public AddOnInfo[] AddOns = new AddOnInfo[0];
+
+    // Explosionf
+    public ExplodeInfo[] Explodes = new ExplodeInfo[0];
 
     // Weapons
     public string[] Loadouts = new string[0];
@@ -249,11 +250,10 @@ namespace SWEndor.ActorTypes
       // regeneration
       RegenerationSystem.Process(Engine, ainfo, Game.TimeSinceRender);
 
+      ainfo.TickExplosions();
+
       if (ainfo.IsDying)
-      {
-        ExplosionSystem.ProcessDying(Engine, ainfo);
         ainfo.DyingMoveComponent?.Update(ainfo, ref ainfo.MoveData, Game.TimeSinceRender);
-      }
 
       // sound
       if (PlayerInfo.Actor != null
@@ -485,7 +485,7 @@ namespace SWEndor.ActorTypes
         return;
 
       // Explode
-      ExplosionSystem.OnDeath(Engine, ainfo);
+      ainfo.TickExplosions();
 
       // Debris
       if (!ainfo.IsAggregateMode && !Game.IsLowFPS())

@@ -14,7 +14,9 @@ namespace SWEndor.ActorTypes.Instances
     {
       // Combat
       TimedLifeData = new TimedLifeData(true, 30);
-      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.TIMENOTEXPIRED_ONLY, deathExplosionType: "ExplosionSm", deathExplosionSize: 10);
+      Explodes = new ExplodeInfo[] {
+        new ExplodeInfo("ExpL00", 1, 10, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
+      };
 
       ImpactDamage = 50;
       MaxSpeed = Globals.LaserSpeed * 2f;

@@ -11,7 +11,12 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal DeathStarATI(Factory owner) : base(owner, "DeathStar")
     {
-      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS, deathExplosionType: "ExplosionMega");
+      Explodes = new ExplodeInfo[]
+      {
+        new ExplodeInfo("ExpL02", 1, 1, ExplodeTrigger.ON_DEATH),
+        new ExplodeInfo("ExpW02", 1, 1, ExplodeTrigger.ON_DEATH),
+      };
+
       float size = 20000;
 
       SourceMesh = TrueVision.TVGlobals.GetMesh(Name);
@@ -41,16 +46,6 @@ namespace SWEndor.ActorTypes.Instances
 
       ainfo.DyingTimerSet(5, true);
       CombatSystem.Deactivate(Engine, ainfo);
-    }
-
-    public override void Dead(ActorInfo ainfo)
-    {
-      base.Dead(ainfo);
-
-      ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Explosion Wave Mega"));
-      acinfo.Position = ainfo.GetGlobalPosition();
-      ActorInfo explwav = ActorFactory.Create(acinfo);
-      explwav.Scale = 10;
     }
   }
 }

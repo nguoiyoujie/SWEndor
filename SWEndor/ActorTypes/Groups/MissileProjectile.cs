@@ -11,9 +11,12 @@ namespace SWEndor.ActorTypes.Groups
     internal MissileProjectile(Factory owner, string name) : base(owner, name)
     {
       // Combat
-      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.TIMENOTEXPIRED_ONLY, deathExplosionType: "ExplosionSm");
-      Armor = ArmorInfo.Default;
       CombatData = CombatData.DefaultFighter;
+      Armor = ArmorInfo.Default;
+      Explodes = new ExplodeInfo[]
+      {
+        new ExplodeInfo("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
+      };
 
       CullDistance = 12000;
 

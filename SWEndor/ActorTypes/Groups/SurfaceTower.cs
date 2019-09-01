@@ -11,7 +11,9 @@ namespace SWEndor.ActorTypes.Groups
       // Combat
       CombatData = CombatData.DefaultShip;
       Armor = ArmorInfo.Default;
-      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS, deathExplosionSize: 5);
+      Explodes = new ExplodeInfo[] {
+        new ExplodeInfo("ExpL00", 1, 5, ExplodeTrigger.ON_DEATH)
+      };
 
       CullDistance = 10000;
 

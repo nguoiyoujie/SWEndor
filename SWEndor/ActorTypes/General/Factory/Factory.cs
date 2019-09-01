@@ -42,13 +42,12 @@ namespace SWEndor.ActorTypes
         Register(new Transport_Box4ATI(this));
 
         // explosions
-        Register(new ExplosionATI(this));
-        Register(new Explosion2ATI(this));
-        Register(new ExplosionSmATI(this));
-        Register(new ExplosionLgATI(this));
-        Register(new ExplosionMegaATI(this));
-        Register(new ExplosionWaveATI(this));
-        Register(new ExplosionWaveMegaATI(this));
+        Register(new ExpS00(this));
+        Register(new ExpL00(this));
+        Register(new ExpL01(this));
+        Register(new ExpL02(this));
+        Register(new ExpW01(this));
+        Register(new ExpW02(this));
         Register(new ElectroATI(this));
 
         // fighters

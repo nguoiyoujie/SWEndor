@@ -5,17 +5,15 @@ using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class ExplosionWaveMegaATI : Groups.Explosion
+  public class ExpW01 : Groups.Explosion
   {
-    internal ExplosionWaveMegaATI(Factory owner) : base(owner, "Explosion Wave Mega")
+    internal ExpW01(Factory owner) : base(owner, "ExpW01")
     {
       // Combat
       TimedLifeData = new TimedLifeData(true, 2);
 
       RadarSize = 0;
-
       EnableDistanceCull = false;
-
 
       SourceMesh = TrueVision.TVGlobals.GetMesh(Name);
       if (SourceMesh == null)
@@ -28,8 +26,8 @@ namespace SWEndor.ActorTypes.Instances
 
         SourceMesh.AddFloor(tex, -50, -50, 50, 50);
         //SourceMesh.CreateBox(100, 0.00001f, 100f);
-        SourceMesh.SetCullMode(CONST_TV_CULLING.TV_DOUBLESIDED);
         SourceMesh.SetTexture(tex);
+        SourceMesh.SetCullMode(CONST_TV_CULLING.TV_DOUBLESIDED);
         SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
 
         SourceMesh.Enable(false);
@@ -40,7 +38,7 @@ namespace SWEndor.ActorTypes.Instances
     public override void ProcessState(ActorInfo ainfo)
     {
       if (!ainfo.IsDyingOrDead)
-        ainfo.Scale += 7500 * Game.TimeSinceRender;
+        ainfo.Scale += 100 * Game.TimeSinceRender;
     }
   }
 }

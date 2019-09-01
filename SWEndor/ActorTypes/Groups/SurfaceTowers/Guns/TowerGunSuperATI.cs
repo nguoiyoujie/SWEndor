@@ -11,7 +11,9 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal TowerGunSuperATI(Factory owner) : base(owner, "Super Turbolaser Turret")
     {
-      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS, deathExplosionSize: 3);
+      Explodes = new ExplodeInfo[] {
+        new ExplodeInfo("ExpL00", 1, 3, ExplodeTrigger.ON_DEATH)
+      };
 
       MaxStrength = 45;
       ImpactDamage = 60;

@@ -11,7 +11,9 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal TowerGunATI(Factory owner) : base(owner, "Turbolaser Turret")
     {
-      ExplodeData = new ExplodeData(deathTrigger: DeathExplosionTrigger.ALWAYS, deathExplosionSize: 3);
+      Explodes = new ExplodeInfo[] {
+        new ExplodeInfo("ExpL00", 1, 3, ExplodeTrigger.ON_DEATH)
+      };
 
       MaxStrength = 16;
       ImpactDamage = 60;
