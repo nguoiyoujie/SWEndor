@@ -682,7 +682,7 @@ namespace SWEndor.Scenarios
       SDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                           , new TV_3DVECTOR(800, -100, -6800)
                                           , new TV_3DVECTOR(-1600, -100, -1200)
-                                          , new TV_3DVECTOR(0, 0, 0)
+                                          , new TV_3DVECTOR(0, -150, 0)
                                           ));
 
       SDspawnlist.Add(new ShipSpawnEventArg(sspawn
@@ -698,7 +698,7 @@ namespace SWEndor.Scenarios
         delay += 1.2f;
         ship.SetArmor(DamageType.ALL, 0.5f);
         foreach (ActorInfo a in ship.Children)
-          a.SetArmor(DamageType.ALL, 0.1f);
+          a.SetArmor(DamageType.ALL, 0.25f);
       }
 
       Mood = -12;
