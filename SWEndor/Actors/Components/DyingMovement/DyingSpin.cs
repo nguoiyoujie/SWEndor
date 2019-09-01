@@ -2,6 +2,9 @@
 
 namespace SWEndor.Actors.Components
 {
+  /// <summary>
+  /// Implementation of IDyingMoveComponent that spins the actor along its movement axis
+  /// </summary>
   public class DyingSpin : IDyingMoveComponent
   {
     public int MinRate;

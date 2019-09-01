@@ -5,7 +5,7 @@ namespace SWEndor.Actors
 {
   public partial class ActorInfo
   {
-    private struct RelationModel
+    public struct RelationModel
     {
       public ActorInfo Parent { get; set; }
       public ActorInfo ParentForCoords { get { return UseParentCoords ? Parent : null; } }

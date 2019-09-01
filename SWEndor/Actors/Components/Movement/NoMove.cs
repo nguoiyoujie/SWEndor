@@ -2,6 +2,9 @@
 
 namespace SWEndor.Actors.Components
 {
+  /// <summary>
+  /// Implementation of IMoveComponent that does not move
+  /// </summary>
   public struct NoMove : IMoveComponent
   {
     public static readonly NoMove Instance = new NoMove();

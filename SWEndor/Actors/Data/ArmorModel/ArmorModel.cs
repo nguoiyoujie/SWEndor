@@ -7,7 +7,7 @@ namespace SWEndor.Actors
     /// <summary>
     /// A light implementation of an Armor system, replaces old Damage and CollisionDamage coefficients
     /// </summary>
-    private struct ArmorModel
+    public struct ArmorModel
     {
       public float Light;
       //public float Heavy;

@@ -6,7 +6,7 @@ namespace SWEndor.Actors
 {
   public partial class ActorInfo
   {
-    private struct HealthModel
+    public struct HealthModel
     {
       public float HP { get; private set; }
       public float MaxHP { get; private set; }

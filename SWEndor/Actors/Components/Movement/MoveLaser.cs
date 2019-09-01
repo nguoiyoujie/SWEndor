@@ -2,6 +2,9 @@
 
 namespace SWEndor.Actors.Components
 {
+  /// <summary>
+  /// Implementation of IMoveComponent that moves forward at laser speed
+  /// </summary>
   public struct MoveLaser : IMoveComponent
   {
     public static readonly MoveLaser Instance = new MoveLaser();

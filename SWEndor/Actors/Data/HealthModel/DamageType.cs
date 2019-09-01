@@ -12,4 +12,12 @@ namespace SWEndor.Actors
 
     ALL = 0xFFFF
   }
+
+  public static class DamageTypeExt
+  {
+    public static bool Has(this DamageType mask, DamageType subset)
+    {
+      return (mask & subset) == subset;
+    }
+  }
 }

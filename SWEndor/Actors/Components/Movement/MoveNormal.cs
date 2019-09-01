@@ -4,6 +4,9 @@ using SWEndor.AI.Actions;
 
 namespace SWEndor.Actors.Components
 {
+  /// <summary>
+  /// Implementation of IMoveComponent with full range of movement
+  /// </summary>
   public struct MoveNormal : IMoveComponent
   {
     public static readonly MoveNormal Instance = new MoveNormal();

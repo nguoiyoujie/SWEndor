@@ -3,6 +3,9 @@ using SWEndor.Actors.Data;
 
 namespace SWEndor.Actors.Components
 {
+  /// <summary>
+  /// Implementation of IMoveComponent that rotates only
+  /// </summary>
   public struct RotateOnly : IMoveComponent
   {
     public static readonly RotateOnly Instance = new RotateOnly();

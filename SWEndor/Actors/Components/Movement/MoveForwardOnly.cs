@@ -3,6 +3,9 @@ using SWEndor.AI.Actions;
 
 namespace SWEndor.Actors.Components
 {
+  /// <summary>
+  /// Implementation of IMoveComponent that moves forward only
+  /// </summary>
   public struct MoveForwardOnly : IMoveComponent
   {
     public static readonly MoveForwardOnly Instance = new MoveForwardOnly();

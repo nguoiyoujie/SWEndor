@@ -2,6 +2,9 @@
 
 namespace SWEndor.Actors.Components
 {
+  /// <summary>
+  /// Implementation of IDyingMoveComponent that kills the actor immediately
+  /// </summary>
   public class DyingKill : IDyingMoveComponent
   {
     public static readonly DyingKill Instance = new DyingKill();

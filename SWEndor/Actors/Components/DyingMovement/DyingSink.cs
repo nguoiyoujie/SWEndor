@@ -2,6 +2,9 @@
 
 namespace SWEndor.Actors.Components
 {
+  /// <summary>
+  /// Implementation of IDyingMoveComponent that moves and rotates the actor downwards
+  /// </summary>
   public class DyingSink : IDyingMoveComponent
   {
     public float PitchRate;
