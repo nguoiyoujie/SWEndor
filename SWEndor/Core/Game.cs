@@ -40,7 +40,7 @@ namespace SWEndor
 
     public TimeControl TimeControl;
 
-    public float GameTime { get; private set; }
+    public float GameTime { get; internal set; }
 
     private enum RunState { STOPPED, LOADING, RUNNING }
     private RunState State { get; set; } = RunState.STOPPED;

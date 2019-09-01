@@ -1,9 +1,11 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SWEndor.Actors.Traits;
 using MTV3D65;
 using SWEndor;
 using SWEndor.Primitives;
+using SWEndor.Actors;
+using SWEndor.ActorTypes;
+using SWEndor.ActorTypes.Instances;
 
 namespace SWEndorTest
 {
@@ -13,9 +15,30 @@ namespace SWEndorTest
     private void Init()
     {
       Globals.PreInit();
-      Engine engine = Globals.InitEngine();
-      engine.LinkHandle(new IntPtr(0));
-      engine.InitTrueVision();
+      Globals.InitEngine();
+      Globals.Engine.LinkHandle(new IntPtr(0));
+      Globals.Engine.InitTrueVision();
+
+      Globals.Engine.ActorTypeFactory.Initialise();
+    }
+
+    private ActorTypeInfo _MockActorType;
+    private ActorTypeInfo MockActorType
+    {
+      get
+      {
+        if (_MockActorType == null)
+        {
+          _MockActorType = new ActorTypeInfo(Globals.Engine.ActorTypeFactory, "dummy");
+          Globals.Engine.ActorTypeFactory.Register(_MockActorType);
+        }
+        return _MockActorType;
+      }
+    }
+
+    private ActorInfo CreateMockActor()
+    {
+      return Globals.Engine.ActorFactory.Create(new ActorCreationInfo(MockActorType));
     }
 
     int RunCount = 100000;
@@ -26,8 +49,8 @@ namespace SWEndorTest
     {
       Log.Write(TEST, "TransformTest start");
       Init();
-      DummyTestActor d = new DummyTestActor();
-      Transform trm = d.AddTrait(new Transform());
+
+      ActorInfo d = CreateMockActor();
 
       TV_3DMATRIX m;
       TV_3DMATRIX m2;
@@ -38,19 +61,21 @@ namespace SWEndorTest
       for (int i = 0; i < RunCount; i++)
       {
         Log.Write(TEST, "TransformTest {0}".F(i));
-        trm.Position = t1;
-        trm.Rotation = r1;
+        d.Position = t1;
+        d.Rotation = r1;
 
-        m = trm.GetWorldMatrix(d, i);
+        m = d.GetMatrix();
 
-        trm.Position = t2;
-        trm.Rotation = r2;
+        d.Position = t2;
+        d.Rotation = r2;
 
-        m2 = trm.GetWorldMatrix(d, i);
+        m2 = d.GetMatrix();
         Assert.AreEqual(m, m2);
 
-        m2 = trm.GetWorldMatrix(d, i + .5f);
+        Globals.Engine.Game.GameTime += .5f;
+        m2 = d.GetMatrix();
         Assert.AreNotEqual(m, m2);
+        Globals.Engine.Game.GameTime += .5f;
       }
 
       Log.Write(TEST, "TransformTest end");

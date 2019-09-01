@@ -137,13 +137,12 @@
     <Compile Include="Actors\Components\DyingMovement\Interfaces.cs" />
     <Compile Include="Actors\Components\Movement\MoveDecorator.cs" />
     <Compile Include="Actors\Data\ArmorModel\ArmorModel.cs" />
-    <Compile Include="Actors\Data\Explosion\ExplodeInfo.cs" />
+    <Compile Include="Actors\Data\Explosion\ExplodeModel.cs" />
     <Compile Include="Actors\Data\HealthModel\DamageInfo.cs" />
     <Compile Include="Actors\Data\HealthModel\DamageType.cs" />
     <Compile Include="Actors\Data\HealthModel\HealthModel.cs" />
     <Compile Include="Actors\Data\ActorDataSet.cs" />
     <Compile Include="Actors\Data\Collision\CollisionData.cs" />
-    <Compile Include="Actors\Data\Explosion\ExplodeData.cs" />
     <Compile Include="Actors\Data\Relation\RelationModel.cs" />
     <Compile Include="Actors\Data\StateModel\StateModel.cs" />
     <Compile Include="Actors\Data\TimedLife\DyingTimer.cs" />
@@ -164,7 +163,6 @@
     <Compile Include="Actors\Components\CollisionSystem.cs" />
     <Compile Include="Actors\Components\WeaponSystemInfo.cs" />
     <Compile Include="Actors\Components\CycleInfo.cs" />
-    <Compile Include="Actors\Components\ExplosionSystem.cs" />
     <Compile Include="Actors\Components\RegenerationSystem.cs" />
     <Compile Include="Actors\Components\Movement\MoveNormal.cs" />
     <Compile Include="Actors\Components\CombatSystem.cs" />
@@ -226,9 +224,9 @@
     <Compile Include="ActorTypes\Groups\Debris\Transport_Box4ATI.cs" />
     <Compile Include="ActorTypes\Groups\Debris\Transport_Box2ATI.cs" />
     <Compile Include="ActorTypes\Groups\Debris\Transport_Box1ATI.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExplosionMegaATI.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExplosionWaveMegaATI.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExplosionWaveATI.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\ExpL02.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\ExpW02.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\ExpW01.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\FalconATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\SmallIonLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\MissileATI.cs" />
@@ -303,7 +301,7 @@
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\CorellianTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\ShieldGenerators\ISDShieldGeneratorATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\SDTurboLaserATI.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExplosionLgATI.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\ExpL01.cs" />
     <Compile Include="ActorTypes\General\Factory\Factory.cs" />
     <Compile Include="Actors\Factory\Factory.cs" />
     <Compile Include="Actors\ActorInfo.cs" />
@@ -323,9 +321,8 @@
     <Compile Include="ActorTypes\Groups\Warship.cs" />
     <Compile Include="ActorTypes\Groups\Fighter.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene\DeathStar2ATI.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExplosionSmATI.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\Explosion2ATI.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExplosionATI.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\ExpL00.cs" />
+    <Compile Include="ActorTypes\Groups\Explosions\ExpS00.cs" />
     <Compile Include="ActorTypes\Groups\Warships\TransportATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\GreenLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\RedLaserATI.cs" />

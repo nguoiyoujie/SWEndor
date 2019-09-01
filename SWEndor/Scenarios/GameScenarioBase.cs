@@ -168,6 +168,7 @@ namespace SWEndor.Scenarios
       LandInfo.Enabled = false;
       Mood = 0;
       SoundManager.Clear();
+      Game.GameTime = 0;
 
       // deleted many things, and this function is called when the game is not active. Probably safe to force GC
       GC.Collect();
