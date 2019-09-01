@@ -65,7 +65,11 @@ namespace SWEndor.ActorTypes.Instances
           else
             a.MoveData.Speed = p.SpawnerInfo.SpawnSpeed;
 
+          a.Rotation += p.Rotation - p.PrevRotation;
+          a.Position += p.Position - p.PrevPosition;
+
           float scale = p.Scale;
+
           a.MoveRelative(p.SpawnerInfo.SpawnSpeedPositioningMult.x * p.MoveData.Speed * Game.TimeSinceRender * scale
                        , p.SpawnerInfo.SpawnSpeedPositioningMult.y * p.MoveData.Speed * Game.TimeSinceRender * scale
                        , p.SpawnerInfo.SpawnSpeedPositioningMult.z * p.MoveData.Speed * Game.TimeSinceRender * scale);
@@ -76,6 +80,7 @@ namespace SWEndor.ActorTypes.Instances
 
           if (a.IsPlayer)
             PlayerInfo.IsMovementControlsEnabled = false;
+
         }
       }
     }

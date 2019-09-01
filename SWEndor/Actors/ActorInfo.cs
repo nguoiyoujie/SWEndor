@@ -238,6 +238,7 @@ namespace SWEndor.Actors
     public TV_3DVECTOR Position { get { return Transform.Position; } set { Transform.Position = value; } }
     public TV_3DVECTOR PrevPosition { get { return Transform.PrevPosition; } }
     public TV_3DVECTOR Rotation { get { return Transform.Rotation; } set { Transform.Rotation = value; } }
+    public TV_3DVECTOR PrevRotation { get { return Transform.PrevRotation; } }
     public TV_3DVECTOR Direction { get { return Transform.Direction; } set { Transform.Direction = value; } }
     public float Scale { get { return Transform.Scale; } set { Transform.Scale = value; } }
 
