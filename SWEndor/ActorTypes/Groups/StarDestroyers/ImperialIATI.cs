@@ -24,7 +24,7 @@ namespace SWEndor.ActorTypes.Instances
       Score_DestroyBonus = 10000;
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"stardestroyer\star_destroyer.x");
-      SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"stardestroyer\star_destroyer_far.x");
+      //SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"stardestroyer\star_destroyer_far.x");
 
       Cameras = new ActorCameraInfo[] {
         new ActorCameraInfo(new TV_3DVECTOR(0, 300, -385), new TV_3DVECTOR(0, 300, 2000)),
