@@ -30,7 +30,7 @@ namespace SWEndor.ActorTypes.Instances
 
       AlwaysShowInRadar = true;
 
-      RegenData = new RegenData { SelfRegenRate = 0.1f };
+      RegenData = new RegenInfo { SelfRegenRate = 0.1f };
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"falcon\falcon.x");
 

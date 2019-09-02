@@ -22,7 +22,6 @@ namespace SWEndor.ActorTypes
       ActorTypeFactory = owner;
       if (name.Length > 0) { Name = name; }
 
-      RegenData.Reset();
       CombatData.Reset();
       TimedLifeData.Reset();
     }
@@ -46,10 +45,10 @@ namespace SWEndor.ActorTypes
 
     // Data
     public ComponentMask Mask = ComponentMask.NONE;
-    public RegenData RegenData = new RegenData();
-    public CombatData CombatData = new CombatData();
-    public TimedLifeData TimedLifeData = new TimedLifeData();
-    public ArmorInfo Armor = new ArmorInfo();
+    public RegenInfo RegenData;
+    public CombatData CombatData;
+    public TimedLifeData TimedLifeData;
+    public ArmorInfo Armor;
     public DamageType DamageType = DamageType.COLLISION;
 
     // Mesh Data
@@ -248,7 +247,7 @@ namespace SWEndor.ActorTypes
         w.Reload(Engine);
 
       // regeneration
-      RegenerationSystem.Process(Engine, ainfo, Game.TimeSinceRender);
+      ainfo.Regenerate(Game.TimeSinceRender);
 
       ainfo.TickExplosions();
 

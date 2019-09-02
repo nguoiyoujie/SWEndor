@@ -698,11 +698,11 @@ namespace SWEndor.Scenarios
               int rsID = MainEnemyFaction.GetShips()[Engine.Random.Next(0, MainEnemyFaction.GetShips().Count)];
               ActorInfo rs = ActorFactory.Get(actorID);
               {
-                foreach (ActorInfo a in rs.Children)
+                foreach (ActorInfo c in rs.Children)
                 {
-                  if (Engine.ActorDataSet.RegenData[a.dataID].ParentRegenRate > 0)
+                  if (c.TypeInfo.TargetType.Has(TargetType.SHIELDGENERATOR))
                     if (Engine.Random.NextDouble() > 0.4f)
-                      rsID = a.ID;
+                      rsID = c.ID;
                 }
               }
 

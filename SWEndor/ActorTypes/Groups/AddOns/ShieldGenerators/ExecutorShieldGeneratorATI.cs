@@ -1,6 +1,7 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.ActorTypes.Components;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -22,7 +23,7 @@ namespace SWEndor.ActorTypes.Instances
       TargetType |= TargetType.SHIELDGENERATOR;
       RadarType = RadarType.HOLLOW_CIRCLE_M;
 
-      RegenData = new RegenData { ParentRegenRate = 40f, SiblingRegenRate = 0.1f };
+      RegenData = new RegenInfo { ParentRegenRate = 40f, SiblingRegenRate = 0.1f };
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"executor\executor_energy_pod.x");
     }

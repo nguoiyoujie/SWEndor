@@ -23,7 +23,7 @@ namespace SWEndor.ActorTypes.Instances
       Score_perStrength = 15;
       Score_DestroyBonus = 10000;
 
-      RegenData = new RegenData { SelfRegenRate = 0.25f };
+      RegenData = new RegenInfo { SelfRegenRate = 0.25f };
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"nebulonb\nebulonb2.x");
 

@@ -928,7 +928,7 @@ namespace SWEndor.Scenarios
               {
                 foreach (ActorInfo c in rs.Children)
                 {
-                  if (Engine.ActorDataSet.RegenData[c.dataID].ParentRegenRate > 0)
+                  if (c.TypeInfo.TargetType.Has(TargetType.SHIELDGENERATOR))
                     if (Engine.Random.NextDouble() > 0.4f)
                       rsID = c.ID;
                 }

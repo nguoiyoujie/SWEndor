@@ -26,7 +26,7 @@ namespace SWEndor.ActorTypes.Instances
       Score_perStrength = 800;
       Score_DestroyBonus = 2000;
 
-      RegenData = new RegenData { SelfRegenRate = 0.05f };
+      RegenData = new RegenInfo { SelfRegenRate = 0.05f };
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"tie_vader\tie_vader.x");
 

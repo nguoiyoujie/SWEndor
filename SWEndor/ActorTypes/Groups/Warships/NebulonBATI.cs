@@ -23,7 +23,7 @@ namespace SWEndor.ActorTypes.Instances
 
       CullDistance = 30000;
 
-      RegenData = new RegenData { SelfRegenRate = 0.2f };
+      RegenData = new RegenInfo { SelfRegenRate = 0.2f };
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"nebulonb\nebulonb.x");
       SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"nebulonb\nebulonb_far.x");

@@ -27,7 +27,7 @@ namespace SWEndor.ActorTypes.Instances
       Score_perStrength = 750;
       Score_DestroyBonus = 10000;
 
-      RegenData = new RegenData { SelfRegenRate = 0.1f };
+      RegenData = new RegenInfo { SelfRegenRate = 0.1f };
 
       SourceMeshPath = Path.Combine(Globals.ModelPath, @"falcon\falcon.x");
 

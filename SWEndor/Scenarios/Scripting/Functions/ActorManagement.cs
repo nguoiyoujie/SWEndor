@@ -337,12 +337,12 @@ namespace SWEndor.Scenarios.Scripting.Functions
         //  else
         //    newValue = actor.ActorState;
         //  return;
-        case "NoRegen":
-          if (setValue)
-            engine.ActorDataSet.RegenData[actor.dataID].NoRegen = Convert.ToBoolean(newValue);
-          else
-            newValue = engine.ActorDataSet.RegenData[actor.dataID].NoRegen;
-          return;
+        //case "NoRegen":
+        //  if (setValue)
+        //    engine.ActorDataSet.RegenData[actor.dataID].NoRegen = Convert.ToBoolean(newValue);
+        //  else
+        //    newValue = engine.ActorDataSet.RegenData[actor.dataID].NoRegen;
+        //  return;
         case "ApplyZBalance":
           if (setValue)
             actor.MoveData.ApplyZBalance = Convert.ToBoolean(newValue);
@@ -381,12 +381,12 @@ namespace SWEndor.Scenarios.Scripting.Functions
           else
             newValue = actor.CanRetaliate;
           return;
-        case "ChildRegenRate":
-          if (setValue)
-            engine.ActorDataSet.RegenData[actor.dataID].ChildRegenRate = Convert.ToSingle(newValue);
-          else
-            newValue = engine.ActorDataSet.RegenData[actor.dataID].ChildRegenRate;
-          return;
+        //case "ChildRegenRate":
+        //  if (setValue)
+        //    engine.ActorDataSet.RegenData[actor.dataID].ChildRegenRate = Convert.ToSingle(newValue);
+        //  else
+        //    newValue = engine.ActorDataSet.RegenData[actor.dataID].ChildRegenRate;
+        //  return;
         case "DamageModifier":
           if (setValue)
             actor.SetArmor(DamageType.NORMAL, Convert.ToSingle(newValue));

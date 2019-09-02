@@ -4,7 +4,6 @@
   {
     internal CollisionData[] CollisionData = new CollisionData[Globals.ActorLimit];
     internal CombatData[] CombatData = new CombatData[Globals.ActorLimit];
-    internal RegenData[] RegenData = new RegenData[Globals.ActorLimit];
   }
 
   public delegate void DoFunc<T>(ref T data);
