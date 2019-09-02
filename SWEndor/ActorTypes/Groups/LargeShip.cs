@@ -42,7 +42,6 @@ namespace SWEndor.ActorTypes.Groups
       base.Dying(ainfo);
 
       ainfo.DyingTimerSet(25, true);
-      CombatSystem.Deactivate(Engine, ainfo);
     }
   }
 }
