@@ -89,13 +89,11 @@ namespace SWEndor.Actors
         ActorInfo actor = null;
         while (planned.TryDequeue(out actor))
         {
-          if (actor.CreationTime < Engine.Game.GameTime)
-          {
-            actor.Initialize();
-            //Add(actor.ID, actor);
-          }
-          else
-            nextplan.Enqueue(actor);
+          if (!actor.DisposingOrDisposed)
+            if (actor.CreationTime < Engine.Game.GameTime)
+              actor.Initialize();
+            else
+              nextplan.Enqueue(actor);
         }
 
         while (nextplan.TryDequeue(out actor))
