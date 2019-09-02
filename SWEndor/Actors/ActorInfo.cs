@@ -125,6 +125,7 @@ namespace SWEndor.Actors
     private TransformModel Transform;
     private ArmorModel Armor;
     private ExplodeModel Explosions;
+    private RegenModel Regen;
 
     // Traits (classes)
 
@@ -161,10 +162,10 @@ namespace SWEndor.Actors
       Transform.Init(TypeInfo, acinfo);
       Armor.Init(TypeInfo);
       Explosions = new ExplodeModel(TypeInfo, acinfo);
+      Regen.Init(TypeInfo);
 
       MoveData.Init(TypeInfo, acinfo);
       ActorDataSet.CollisionData[dataID].Init();
-      ActorDataSet.RegenData[dataID].CopyFrom(TypeInfo.RegenData);
       ActorDataSet.CombatData[dataID].CopyFrom(TypeInfo.CombatData);
       WeaponSystemInfo.Init(TypeInfo);
 
@@ -203,10 +204,10 @@ namespace SWEndor.Actors
       Transform.Init(TypeInfo, acinfo);
       Armor.Init(TypeInfo);
       Explosions = new ExplodeModel(TypeInfo, acinfo);
+      Regen.Init(TypeInfo);
 
       MoveData.Init(TypeInfo, acinfo);
       ActorDataSet.CollisionData[dataID].Init();
-      ActorDataSet.RegenData[dataID] = TypeInfo.RegenData;
       ActorDataSet.CombatData[dataID] = TypeInfo.CombatData;
       WeaponSystemInfo.Init(TypeInfo);
 
@@ -435,7 +436,6 @@ namespace SWEndor.Actors
       // Kill data
       MoveData.Reset();
       ActorDataSet.CollisionData[dataID].Reset();
-      ActorDataSet.RegenData[dataID].Reset();
       ActorDataSet.CombatData[dataID].Reset();
 
       Meshes.Dispose();
