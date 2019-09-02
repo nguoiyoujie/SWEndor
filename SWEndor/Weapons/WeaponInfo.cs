@@ -115,7 +115,7 @@ namespace SWEndor.Weapons
     public float Range = 4500;
 
     // Misc
-    public string FireSound = "laser_sf";
+    public string[] FireSound = null; // new string"laser_sf";
 
 
     public void Init()
@@ -210,7 +210,10 @@ namespace SWEndor.Weapons
         }
         if (fired && owner.IsPlayer)
         {
-          engine.SoundManager.SetSound(FireSound);
+          if (FireSound.Length == 1)
+            engine.SoundManager.SetSound(FireSound[0]);
+          else if (FireSound.Length > 1)
+            engine.SoundManager.SetSound(FireSound[engine.Random.Next(0, FireSound.Length)]);
         }
       }
       return fired;

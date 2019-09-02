@@ -49,7 +49,7 @@ namespace SWEndor.Weapons
     public float AngularRange = 10;
     public float Range = 0;
 
-    public string FireSound = "laser_sf";
+    public string[] FireSound = new string[] { "laser_sf" };
 
     public WeaponStatInfo(INIFile file, string sectionname)
     {
@@ -99,7 +99,7 @@ namespace SWEndor.Weapons
       AngularRange = file.GetFloatValue(sectionname, "AngularRange", AngularRange);
       Range = file.GetFloatValue(sectionname, "Range", Range);
 
-      FireSound = file.GetStringValue(sectionname, "FireSound", FireSound);
+      FireSound = file.GetStringList(sectionname, "FireSound", FireSound);
     }
   }
 }
