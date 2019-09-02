@@ -14,8 +14,8 @@ namespace SWEndor.AI.Actions
 
     // parameters
     private TV_3DVECTOR Target_Position = new TV_3DVECTOR();
-    private static float Max_Speed = 25000;
-    private static float SpeedDistanceFactor = 2.5f;
+    private static float Max_Speed = 125000;
+    private static float SpeedDistanceFactor = 25; //2.5f;
     private static float CloseEnoughDistance = 500;
     private bool hyperspace = false;
     private float prevdist = 9999999;
