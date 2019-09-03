@@ -12,7 +12,7 @@ namespace SWEndor.AI.Actions
 
     // parameters
     private TV_3DVECTOR Origin_Position = new TV_3DVECTOR();
-    private static float Incre_Speed = 15000; //2500;
+    private static float Incre_Speed = 125000; //2500;
     private static float FarEnoughDistance = 250000;
     private bool hyperspace = false;
 
