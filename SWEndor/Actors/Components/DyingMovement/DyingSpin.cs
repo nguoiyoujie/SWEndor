@@ -7,8 +7,8 @@ namespace SWEndor.Actors.Components
   /// </summary>
   public class DyingSpin : IDyingMoveComponent
   {
-    public int MinRate;
-    public int MaxRate;
+    public readonly float MinRate;
+    public readonly float MaxRate;
     private float D_spin_r;
 
     public DyingSpin(int minRate, int maxRate)
@@ -20,7 +20,7 @@ namespace SWEndor.Actors.Components
     public void Initialize(ActorInfo actor, ref MoveData data)
     {
       data.ApplyZBalance = false;
-      D_spin_r = actor.Engine.Random.Next(MinRate, MaxRate); // assumed D_spin_min_rate < D_spin_max_rate
+      D_spin_r = MinRate + (float)actor.Engine.Random.NextDouble() * (MaxRate - MinRate); // assumed D_spin_min_rate < D_spin_max_rate
       if (actor.Engine.Random.NextDouble() > 0.5f)
         D_spin_r = -D_spin_r;
     }
