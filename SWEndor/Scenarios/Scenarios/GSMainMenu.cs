@@ -167,7 +167,7 @@ namespace SWEndor.Scenarios
       if (tgt == null || !tgt.Active)
       {
         List<int> list = new List<int>(MainEnemyFaction.GetWings());
-        list.AddRange(MainAllyFaction.GetWings());
+        //list.AddRange(MainAllyFaction.GetWings());
         if (list.Count > 0)
           PlayerCameraInfo.Look.SetPosition_Actor(list[Engine.Random.Next(0, list.Count)]);
       }
