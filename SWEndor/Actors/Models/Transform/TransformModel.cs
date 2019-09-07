@@ -20,6 +20,8 @@ namespace SWEndor.Actors
       {
         Position = acinfo.Position;
         Rotation = acinfo.Rotation;
+        PrevPosition = Position;
+        PrevRotation = Rotation;
         Scale = type.Scale * acinfo.InitialScale;
       }
 
@@ -38,6 +40,7 @@ namespace SWEndor.Actors
       public TV_3DVECTOR PrevPosition
       {
         get { return prevData.Position; }
+        private set { prevData.Position = value; }
       }
 
       public TV_3DVECTOR Direction
@@ -49,6 +52,7 @@ namespace SWEndor.Actors
       public TV_3DVECTOR PrevDirection
       {
         get { return prevData.Direction; }
+        private set { prevData.Direction = value; }
       }
 
       public TV_3DVECTOR Rotation
@@ -60,6 +64,7 @@ namespace SWEndor.Actors
       public TV_3DVECTOR PrevRotation
       {
         get { return prevData.Rotation; }
+        private set { prevData.Rotation = value; }
       }
 
       public TV_3DMATRIX MatrixRotation { get { return GetMatR(ref currData); } }
