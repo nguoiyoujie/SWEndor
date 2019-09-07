@@ -50,11 +50,12 @@ namespace SWEndor.Actors
 
       private void Regenerate(ActorInfo a, float amount)
       {
-        if (!NoRegen && !a.IsDyingOrDead)
+        if (!a.NoRegen && !a.IsDyingOrDead)
           a.InflictDamage(a, -amount, DamageType.ALWAYS_100PERCENT);
       }
     }
 
     public void Regenerate(float time) { Regen.Process(this, time); }
+    public bool NoRegen { get { return Regen.NoRegen; } }
   }
 }
