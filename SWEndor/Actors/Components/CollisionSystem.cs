@@ -181,8 +181,18 @@ namespace SWEndor.Actors.Components
         TV_COLLISIONRESULT tvcres = new TV_COLLISIONRESULT();
 
         bool result = false;
-        using (var s = ScopeCounterManager.Acquire(ScopeGlobals.COLLISION_TEST))
-          result = engine.TrueVision.TVScene.AdvancedCollision(start, end, ref tvcres);
+        if (ScopeCounterManager.AcquireIfZero(ScopeGlobals.GLOBAL_COLLISION))
+        {
+          try
+          {
+            ScopeCounterManager.WaitForZero(ScopeGlobals.PREREQ_COLLISION);
+            result = engine.TrueVision.TVScene.AdvancedCollision(start, end, ref tvcres);
+          }
+          finally
+          {
+            ScopeCounterManager.ReleaseOne(ScopeGlobals.GLOBAL_COLLISION);
+          }
+        }
 
         if (result)
         {

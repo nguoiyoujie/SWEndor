@@ -136,12 +136,12 @@ namespace SWEndor
 
     public void ProcessAI()
     {
-      ActorFactory.DoEach(ActorInfo.ProcessAI);
+      ActorFactory.ParallelDoEach(ActorInfo.ProcessAI);
     }
 
     public void ProcessCollision()
     {
-      ActorFactory.DoEach(ActorInfo.ProcessCollision);
+      ActorFactory.ParallelDoEach(ActorInfo.ProcessCollision);
     }
 
     public void PreRender()
@@ -179,8 +179,11 @@ namespace SWEndor
       TrueVision.TVScene.FinalizeShadows();
       //LandInfo.Render();
 
-      using (var s = ScopeCounterManager.Acquire(ScopeGlobals.GLOBAL_RENDER))
-        TrueVision.TVScene.RenderAll(false);
+      using (ScopeCounterManager.Acquire(ScopeGlobals.GLOBAL_RENDER))
+      {
+        ScopeCounterManager.WaitForZero(ScopeGlobals.PREREQ_RENDER);
+        TrueVision.TVScene.RenderAll(true);
+      }
 
       Screen2D.Draw();
       Screen2D.CurrentPage?.RenderTick();

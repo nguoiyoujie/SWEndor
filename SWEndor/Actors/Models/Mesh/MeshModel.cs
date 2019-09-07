@@ -28,7 +28,7 @@ namespace SWEndor.Actors
 
         ScopeCounterManager.Reset(disposeScope);
 
-        using (var s = ScopeCounterManager.Acquire(meshScope))
+        using (ScopeCounterManager.Acquire(meshScope))
         {
           Mesh.SetTag(id.ToString());
           //Mesh.ShowBoundingBox(true);
@@ -47,7 +47,7 @@ namespace SWEndor.Actors
       {
         if (ScopeCounterManager.AcquireIfZero(disposeScope))
         {
-          ScopeCounterManager.WaitForZero(meshScope, ScopeGlobals.COLLISION_TEST, ScopeGlobals.GLOBAL_RENDER);
+          ScopeCounterManager.WaitForZero(meshScope, ScopeGlobals.GLOBAL_COLLISION, ScopeGlobals.GLOBAL_RENDER);
 
           Mesh?.Destroy();
           Mesh = null;
@@ -62,9 +62,9 @@ namespace SWEndor.Actors
         TV_3DVECTOR minV = new TV_3DVECTOR();
         TV_3DVECTOR maxV = new TV_3DVECTOR();
 
-        using (var s = ScopeCounterManager.Acquire(meshScope))
+        using (ScopeCounterManager.Acquire(meshScope))
           if (ScopeCounterManager.IsZero(disposeScope))
-            Mesh?.GetBoundingBox(ref minV, ref maxV, uselocal);
+            Mesh.GetBoundingBox(ref minV, ref maxV, uselocal);
 
         return new BoundingBox(minV, maxV);
       }
@@ -74,9 +74,9 @@ namespace SWEndor.Actors
         TV_3DVECTOR p = new TV_3DVECTOR();
         float r = 0;
 
-        using (var s = ScopeCounterManager.Acquire(meshScope))
+        using (ScopeCounterManager.Acquire(meshScope))
           if (ScopeCounterManager.IsZero(disposeScope))
-            Mesh?.GetBoundingSphere(ref p, ref r, uselocal);
+            Mesh.GetBoundingSphere(ref p, ref r, uselocal);
 
         return new BoundingSphere(p, r);
       }
@@ -85,18 +85,18 @@ namespace SWEndor.Actors
       {
         int ret = 0;
 
-        using (var s = ScopeCounterManager.Acquire(meshScope))
+        using (ScopeCounterManager.Acquire(meshScope))
           if (ScopeCounterManager.IsZero(disposeScope))
-            ret = Mesh?.GetVertexCount() ?? 0;
+            ret = Mesh.GetVertexCount();
 
         return ret;
       }
 
       public void SetTexture(int iTexture)
       {
-        using (var s = ScopeCounterManager.Acquire(meshScope))
+        using (ScopeCounterManager.Acquire(meshScope))
           if (ScopeCounterManager.IsZero(disposeScope))
-            Mesh?.SetTexture(iTexture);
+            Mesh.SetTexture(iTexture);
       }
 
       public TV_3DVECTOR GetVertex(int vertexID)
@@ -107,9 +107,9 @@ namespace SWEndor.Actors
         float dummy = 0;
         int dumint = 0;
 
-        using (var s = ScopeCounterManager.Acquire(meshScope))
+        using (ScopeCounterManager.Acquire(meshScope))
           if (ScopeCounterManager.IsZero(disposeScope))
-            Mesh?.GetVertex(vertexID, ref x, ref y, ref z, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dumint);
+            Mesh.GetVertex(vertexID, ref x, ref y, ref z, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dumint);
 
         return new TV_3DVECTOR(x, y, z);
       }
@@ -118,9 +118,9 @@ namespace SWEndor.Actors
 
       private void Render(TVMesh mesh)
       {
-        using (var s = ScopeCounterManager.Acquire(meshScope))
+        using (ScopeCounterManager.Acquire(meshScope))
           if (ScopeCounterManager.IsZero(disposeScope))
-            if (mesh?.IsVisible() ?? false)
+            if (mesh.IsVisible())
               mesh.Render();
       }
 
@@ -131,26 +131,24 @@ namespace SWEndor.Actors
         bool render = actor.Mask.Has(ComponentMask.CAN_RENDER) && actor.Active && !actor.IsAggregateMode && (!actor.IsPlayer || actor.PlayerCameraInfo.CameraMode != CameraMode.FREEROTATION);
         bool far = actor.IsFarMode;
 
-        using (var s = ScopeCounterManager.Acquire(meshScope))
+        using (ScopeCounterManager.Acquire(meshScope))
           if (ScopeCounterManager.IsZero(disposeScope))
           {
-            Mesh?.SetMatrix(mat);
-            FarMesh?.SetMatrix(mat);
-            Mesh?.SetCollisionEnable(collide);
+            Mesh.SetMatrix(mat);
+            FarMesh.SetMatrix(mat);
 
-            Mesh?.Enable(render && !far);
-            FarMesh?.Enable(render && far);
+            ScopeCounterManager.WaitForZero(ScopeGlobals.GLOBAL_COLLISION);
+            using (ScopeCounterManager.Acquire(ScopeGlobals.PREREQ_COLLISION))
+              Mesh.SetCollisionEnable(collide);
+
+            ScopeCounterManager.WaitForZero(ScopeGlobals.GLOBAL_RENDER);
+            using (ScopeCounterManager.Acquire(ScopeGlobals.PREREQ_RENDER))
+            {
+              Mesh.Enable(render && !far);
+              FarMesh.Enable(render && far);
+            }
           }
       }
-
-      /*
-      public void TestCollision(TV_3DVECTOR start, TV_3DVECTOR end, ref TV_COLLISIONRESULT result)
-      {
-        using (var s = ScopeCounterManager.Acquire(meshScope))
-          if (ScopeCounterManager.IsZero(disposeScope))
-            Mesh?.AdvancedCollision(start, end, ref result);
-      }
-      */
     }
 
     public BoundingBox GetBoundingBox(bool uselocal) { return Meshes.GetBoundingBox(uselocal); }
@@ -159,6 +157,5 @@ namespace SWEndor.Actors
     public TV_3DVECTOR GetVertex(int vertexID) { return Meshes.GetVertex(vertexID); }
     public int GetVertexCount() { return Meshes.GetVertexCount(); }
     public void Render(bool renderfar) { Meshes.Render(renderfar); }
-    //public void TestCollision(TV_3DVECTOR start, TV_3DVECTOR end, ref TV_COLLISIONRESULT result) { Meshes.TestCollision(start, end, ref result); }
   }
 }

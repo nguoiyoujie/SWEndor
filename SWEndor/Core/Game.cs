@@ -286,7 +286,7 @@ namespace SWEndor
           using (Engine.PerfManager.Create("render"))
           {
             using (Engine.PerfManager.Create("render_main"))
-            using (var s = ScopeCounterManager.Acquire(ScopeGlobals.THREAD_RENDER))
+            using (ScopeCounterManager.Acquire(ScopeGlobals.THREAD_RENDER))
               Engine.Render();
 
             if (!IsPaused)
@@ -310,7 +310,7 @@ namespace SWEndor
         {
           isProcessingProcess = true;
 
-          using (var s = ScopeCounterManager.Acquire(ScopeGlobals.THREAD_PROCESS))
+          using (ScopeCounterManager.Acquire(ScopeGlobals.THREAD_PROCESS))
           using (Engine.PerfManager.Create("tick_process"))
           {
             using (Engine.PerfManager.Create("process_input"))
@@ -362,7 +362,7 @@ namespace SWEndor
           {
             isProcessingAI = true;
             using (Engine.PerfManager.Create("tick_ai"))
-            using (var s = ScopeCounterManager.Acquire(ScopeGlobals.THREAD_AI))
+            using (ScopeCounterManager.Acquire(ScopeGlobals.THREAD_AI))
               Engine.ProcessAI();
             isProcessingAI = false;
           }
@@ -401,7 +401,7 @@ namespace SWEndor
           {
             isProcessingCollision = true;
             using (Engine.PerfManager.Create("tick_collision"))
-            using (var s = ScopeCounterManager.Acquire(ScopeGlobals.THREAD_COLLISION))
+            using (ScopeCounterManager.Acquire(ScopeGlobals.THREAD_COLLISION))
             {
               ScopeCounterManager.WaitForZero(ScopeGlobals.THREAD_RENDER);
               Engine.ProcessCollision();
