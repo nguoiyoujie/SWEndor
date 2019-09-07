@@ -37,7 +37,7 @@ namespace SWEndor.AI.Actions
       }
 
       float dist = ActorDistanceInfo.GetDistance(actor, Target_Actor);
-      float d = dist / Globals.LaserSpeed;
+      float d = dist / Globals.LaserSpeed + engine.Game.TimeSinceRender;
 
       ActorInfo a2 = target.UseParentCoords ? target.Parent : null;
       if (a2 == null)

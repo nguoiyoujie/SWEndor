@@ -62,7 +62,7 @@ namespace SWEndor.AI.Actions
         float dist = ActorDistanceInfo.GetDistance(actor, target);
         if (dist > TooCloseDistance)
         {
-          float d = dist / Globals.LaserSpeed;
+          float d = dist / Globals.LaserSpeed + engine.Game.TimeSinceRender;
           ActorInfo a2 = target.ParentForCoords;
           if (a2 == null)
             Target_Position = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d);
@@ -119,7 +119,6 @@ namespace SWEndor.AI.Actions
           {
             actor.QueueFirst(new Move(MakeAltPosition(engine, actor, target.Parent), actor.MoveData.MaxSpeed));
           }
-          return;
         }
 
         if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
