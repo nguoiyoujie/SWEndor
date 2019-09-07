@@ -1,6 +1,7 @@
 ﻿using SWEndor.FileFormat.INI;
 using SWEndor.Primitives;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace SWEndor.Weapons
 {
@@ -37,11 +38,12 @@ namespace SWEndor.Weapons
         if (f.HasSection(main))
         {
           INIFile.INISection weaps = f.GetSection(main);
-          foreach (string s in weaps.GetKeys())
-          {
-            if (s != INIFile.PreHeaderSectionName)
-              Register(new WeaponStatInfo(f, s));
-          }
+          Parallel.ForEach(weaps.GetKeys(),
+            (s) =>
+            {
+              if (s != INIFile.PreHeaderSectionName)
+                Register(new WeaponStatInfo(f, s));
+            });
         }
       }
     }
