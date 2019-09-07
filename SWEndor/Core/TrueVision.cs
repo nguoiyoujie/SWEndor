@@ -85,7 +85,7 @@ namespace SWEndor
 
       TVEngine.SetAntialiasing(true, CONST_TV_MULTISAMPLE_TYPE.TV_MULTISAMPLE_2_SAMPLES);
       TVEngine.DisplayFPS(true);
-      //TVEngine.EnableProfiler(true);
+      TVEngine.EnableProfiler(true);
       TVEngine.EnableSmoothTime(true);
       TVEngine.SetVSync(true);
 
@@ -116,6 +116,7 @@ namespace SWEndor
     {
       TVScene.SetShadeMode(CONST_TV_SHADEMODE.TV_SHADEMODE_GOURAUD);
       TVScene.SetRenderMode(CONST_TV_RENDERMODE.TV_SOLID);
+      TVScene.SetTextureFilter(CONST_TV_TEXTUREFILTER.TV_FILTER_ANISOTROPIC);
       TVScene.SetBackgroundColor(0f, 0f, 0f);
 
       LaserRenderSurface = TVScene.CreateRenderSurface(-1, -1, true, CONST_TV_RENDERSURFACEFORMAT.TV_TEXTUREFORMAT_A8R8G8B8);
