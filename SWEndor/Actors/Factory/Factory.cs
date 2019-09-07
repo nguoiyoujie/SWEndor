@@ -2,6 +2,8 @@
 using SWEndor.Primitives;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SWEndor.Actors
 {
@@ -26,7 +28,6 @@ namespace SWEndor.Actors
       private ConcurrentQueue<ActorInfo> nextplan = new ConcurrentQueue<ActorInfo>();
       private ConcurrentQueue<ActorInfo> nextdead = new ConcurrentQueue<ActorInfo>();
 
-      //private HashSet<int> dataid = new HashSet<int>();
       int lastdataid = 0;
 
       private ActorInfo First;
@@ -139,36 +140,43 @@ namespace SWEndor.Actors
 
       public void DoUntil(Func<Engine, ActorInfo, bool> action)
       {
-        ActorInfo actor = First;
-        while (actor != null)
-        {
-          if (!action.Invoke(Engine, actor))
+        foreach (ActorInfo a in Actors)
+          if (!action.Invoke(a.Engine, a))
             break;
-          actor = actor.Next;
-        }
+      }
+
+      public void ParallelDoUntil(Func<Engine, ActorInfo, bool> action)
+      {
+        Parallel.ForEach(Actors, (a, state) => { if (!action.Invoke(a.Engine, a)) state.Break(); });
       }
 
       public void DoEach(Action<Engine, ActorInfo> action)
       {
-        ActorInfo actor = First;
-        while (actor != null)
+        foreach (ActorInfo a in Actors)
+          action.Invoke(a.Engine, a);
+      }
+
+      public void ParallelDoEach(Action<Engine, ActorInfo> action)
+      {
+        Parallel.ForEach(Actors, (a) => action.Invoke(a.Engine, a));
+      }
+
+      public IEnumerable<ActorInfo> Actors
+      {
+        get
         {
-          action.Invoke(Engine, actor);
-          actor = actor.Next;
+          ActorInfo actor = First;
+          while (actor != null)
+          {
+            yield return actor;
+            actor = actor.Next;
+          }
         }
       }
 
-      //public new ScopedManager<ActorInfo>.ScopedItem Get(int id)
-      //{
-      //  return ScopedManager<ActorInfo>.Scope(base.Get(id));
-      //}
-
       public new void Remove(int id)
       {
-        //using (var v = Get(id))
-        //if (v != null)
-        //{
-        ActorInfo actor = Get(id);//v.Value;
+        ActorInfo actor = Get(id);
         if (actor != null)
         {
           lock (creationLock)
