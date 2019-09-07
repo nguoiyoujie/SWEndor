@@ -3,7 +3,7 @@ using SWEndor.Actors.Data;
 using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
-using System;
+using SWEndor.Primitives;
 
 namespace SWEndor.Actors.Components
 {
@@ -16,6 +16,7 @@ namespace SWEndor.Actors.Components
 
     private static bool ActivateImminentCollisionCheck(Engine engine, ActorInfo actor, ref float check_time, float scandistance, ref CollisionData data)
     {
+      /*
       if (check_time < engine.Game.GameTime)
       {
         if (data.IsInProspectiveCollision)
@@ -25,10 +26,10 @@ namespace SWEndor.Actors.Components
         else
         {
           check_time = engine.Game.GameTime + 0.1f; // delay should be adjusted with FPS / CPU load, ideally every run (~0.1s), but not more than 2s.
-        }
-        data.ProspectiveCollisionScanDistance = scandistance;
-        data.IsTestingProspectiveCollision = true;
-      }
+        }*/
+      data.ProspectiveCollisionScanDistance = scandistance;
+      data.IsTestingProspectiveCollision = true;
+      //}
       return data.IsInProspectiveCollision;
     }
 
@@ -53,18 +54,20 @@ namespace SWEndor.Actors.Components
         if (data.Collision.ActorID >= 0)
         {
           ActorInfo a = engine.ActorFactory.Get(data.Collision.ActorID);
-          if (actor.IsPlayer
-                && engine.PlayerInfo.PlayerAIEnabled)
+          if (a != null)
           {
-            engine.Screen2D.MessageSecondaryText(string.Format("DEV WARNING: PLAYER AI COLLIDED: {0}", a.ToString()), 1.5f, new TV_COLOR(1, 0.2f, 0.2f, 1), 99999);
-            data.Collision.ActorID = -1;
-            data.IsTestingCollision = true;
-            return;
+            if (actor.IsPlayer
+                  && engine.PlayerInfo.PlayerAIEnabled)
+            {
+              engine.Screen2D.MessageSecondaryText(string.Format("DEV WARNING: PLAYER AI COLLIDED: {0}", a.ToString()), 1.5f, new TV_COLOR(1, 0.2f, 0.2f, 1), 99999);
+              data.Collision.ActorID = -1;
+              data.IsTestingCollision = true;
+              return;
+            }
+
+            a.TypeInfo.ProcessHit(a, actor, data.Collision.Impact, data.Collision.Normal);
+            actor.TypeInfo.ProcessHit(actor, a, data.Collision.Impact, -1 * data.Collision.Normal);
           }
-
-          a.TypeInfo.ProcessHit(a, actor, data.Collision.Impact, data.Collision.Normal);
-          actor.TypeInfo.ProcessHit(actor, a, data.Collision.Impact, -1 * data.Collision.Normal);
-
           data.Collision.ActorID = -1;
         }
         data.IsTestingCollision = true;
@@ -91,8 +94,8 @@ namespace SWEndor.Actors.Components
         int dummy;
 
         TV_3DVECTOR prostart = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.max_dimensions.z + 10);
-        TV_3DVECTOR proend0 = actor.GetRelativePositionXYZ((float)Math.Sin(actor.MoveData.YTurnAngle * Globals.PI / 180) * data.ProspectiveCollisionScanDistance  //* actor.MoveData.Speed
-                                                         , -(float)Math.Sin(actor.MoveData.XTurnAngle * Globals.PI / 180) * data.ProspectiveCollisionScanDistance  //* actor.MoveData.Speed
+        TV_3DVECTOR proend0 = actor.GetRelativePositionXYZ(0 //(float)Math.Sin(actor.MoveData.YTurnAngle * Globals.PI / 180) * data.ProspectiveCollisionScanDistance  //* actor.MoveData.Speed
+                                                         , 0 //-(float)Math.Sin(actor.MoveData.XTurnAngle * Globals.PI / 180) * data.ProspectiveCollisionScanDistance  //* actor.MoveData.Speed
                                                          , actor.TypeInfo.max_dimensions.z + 10 + data.ProspectiveCollisionScanDistance);
 
         TV_3DVECTOR proImpact = new TV_3DVECTOR();
@@ -176,7 +179,12 @@ namespace SWEndor.Actors.Components
         vNormal = new TV_3DVECTOR();
 
         TV_COLLISIONRESULT tvcres = new TV_COLLISIONRESULT();
-        if (engine.TrueVision.TVScene.AdvancedCollision(start, end, ref tvcres))
+
+        bool result = false;
+        using (var s = ScopeCounterManager.Acquire(ScopeGlobals.COLLISION_TEST))
+          result = engine.TrueVision.TVScene.AdvancedCollision(start, end, ref tvcres);
+
+        if (result)
         {
           // removed all landscape collision; unused and unnecessary complication
 
@@ -234,5 +242,83 @@ namespace SWEndor.Actors.Components
         vNormal = new TV_3DVECTOR();
       }
     }
+
+    /*
+    private static void TestCollisionA(Engine engine, ActorInfo actor, TV_3DVECTOR start, TV_3DVECTOR end, bool isProspective, out TV_3DVECTOR vImpact, out TV_3DVECTOR vNormal, out int CollisionActorID)
+    {
+      try
+      {
+        CollisionActorID = -1;
+        vImpact = new TV_3DVECTOR();
+        vNormal = new TV_3DVECTOR();
+
+        TV_COLLISIONRESULT tvcres = new TV_COLLISIONRESULT();
+        ActorInfo ares = null;
+        float dist = 999999999;
+
+        foreach (ActorInfo a in engine.ActorFactory.GetAll())
+        {
+          if (a.Mask.Has(ComponentMask.CAN_BECOLLIDED))
+          {
+            a.TestCollision(start, end, ref tvcres);
+            if (tvcres.bHasCollided)
+            {
+              float d = ActorDistanceInfo.GetDistance(tvcres.vCollisionImpact, start);
+              if (dist < d)
+              {
+                dist = d;
+                ares = a;
+                vImpact = new TV_3DVECTOR(tvcres.vCollisionImpact.x, tvcres.vCollisionImpact.y, tvcres.vCollisionImpact.z);
+                vNormal = new TV_3DVECTOR(tvcres.vCollisionNormal.x, tvcres.vCollisionNormal.y, tvcres.vCollisionNormal.z);
+              }
+            }
+          }
+        }
+
+        if (ares == null)
+        {
+          CollisionActorID = -1;
+          vImpact = new TV_3DVECTOR();
+          vNormal = new TV_3DVECTOR();
+          return;
+        }
+
+
+
+        if (!isProspective)
+        {
+
+          ActorInfo checkActor = ares; // engine.ActorFactory.Get(checkID);
+          if (checkActor != null
+               //&& checkID != actor.ID
+               && actor.TopParent != checkActor.TopParent
+               && engine.MaskDataSet[checkActor].Has(ComponentMask.CAN_BECOLLIDED)
+               && !checkActor.IsAggregateMode
+               )
+          {
+            CollisionActorID = ares.ID; //checkID;
+          }
+
+        }
+        else
+        {
+
+          ActorInfo checkActor = ares;// engine.ActorFactory.Get(checkID);
+          if (checkActor != null
+               && !(checkActor.TypeInfo is ActorTypes.Groups.Fighter)
+               )
+          {
+            CollisionActorID = ares.ID;// checkID;
+          }
+        }
+      }
+      catch
+      {
+        CollisionActorID = -1;
+        vImpact = new TV_3DVECTOR();
+        vNormal = new TV_3DVECTOR();
+      }
+    }
+    */
   }
 }

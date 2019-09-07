@@ -63,7 +63,7 @@ namespace SWEndor
 
     private bool septhread_sound = true;
     private bool septhread_ai = true;
-    private bool septhread_collision = false; // don't set to true, weird things happen if collision is out of sync
+    private bool septhread_collision = true; // don't set to true, weird things happen if collision is out of sync
     private bool septhread_render = false;
     private bool septhread_process = false;
 
@@ -77,6 +77,10 @@ namespace SWEndor
     public bool EnablePerf = true;
     public bool EnableAI = true;
     public bool EnableCollision = true;
+
+    public object renderLockA = new object();
+    public object renderLockC = new object();
+    public object renderLockP = new object();
 
     /// <summary>
     /// Checks if the current FPS is below the LowFPSLimit
@@ -282,6 +286,7 @@ namespace SWEndor
           using (Engine.PerfManager.Create("render"))
           {
             using (Engine.PerfManager.Create("render_main"))
+            using (var s = ScopeCounterManager.Acquire(ScopeGlobals.THREAD_RENDER))
               Engine.Render();
 
             if (!IsPaused)
@@ -305,6 +310,7 @@ namespace SWEndor
         {
           isProcessingProcess = true;
 
+          using (var s = ScopeCounterManager.Acquire(ScopeGlobals.THREAD_PROCESS))
           using (Engine.PerfManager.Create("tick_process"))
           {
             using (Engine.PerfManager.Create("process_input"))
@@ -356,9 +362,12 @@ namespace SWEndor
           {
             isProcessingAI = true;
             using (Engine.PerfManager.Create("tick_ai"))
+            using (var s = ScopeCounterManager.Acquire(ScopeGlobals.THREAD_AI))
               Engine.ProcessAI();
             isProcessingAI = false;
           }
+
+
       }
       catch (Exception ex)
       {
@@ -392,7 +401,11 @@ namespace SWEndor
           {
             isProcessingCollision = true;
             using (Engine.PerfManager.Create("tick_collision"))
+            using (var s = ScopeCounterManager.Acquire(ScopeGlobals.THREAD_COLLISION))
+            {
+              ScopeCounterManager.WaitForZero(ScopeGlobals.THREAD_RENDER);
               Engine.ProcessCollision();
+            }
             isProcessingCollision = false;
           }
       }

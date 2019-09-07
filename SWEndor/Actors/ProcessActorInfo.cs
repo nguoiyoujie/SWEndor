@@ -9,7 +9,7 @@ namespace SWEndor.Actors
   {
     internal static void Process(Engine engine, ActorInfo actor)
     {
-      if (actor == null)
+      if (actor == null || !actor.Active)
         return;
 
       if (!actor.IsDead)
@@ -39,22 +39,6 @@ namespace SWEndor.Actors
       if (actor == null)
         return;
       CollisionSystem.TestCollision(engine, actor);
-    }
-
-    internal static void Render(Engine engine, ActorInfo actor)
-    {
-      if (actor == null)
-        return;
-
-      if (engine.MaskDataSet[actor].Has(ComponentMask.CAN_RENDER)
-        && actor.Active
-        && !actor.IsAggregateMode)
-      {
-        if (!actor.IsPlayer || engine.PlayerCameraInfo.CameraMode != CameraMode.FREEROTATION)
-        {
-          actor.Render(actor.IsFarMode);
-        }
-      }
     }
 
     internal static void FireWeapon(Engine engine, ActorInfo actor, ActorInfo target, WeaponShotInfo weapon)

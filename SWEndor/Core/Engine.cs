@@ -8,11 +8,11 @@ using SWEndor.UI;
 using SWEndor.Weapons;
 using SWEndor.ActorTypes;
 using SWEndor.Player;
-using SWEndor.AI;
 using SWEndor.UI.Forms;
 using SWEndor.Actors.Data;
 using System.Text;
 using SWEndor.AI.Squads;
+using SWEndor.Primitives;
 
 namespace SWEndor
 {
@@ -177,47 +177,16 @@ namespace SWEndor
 
       AtmosphereInfo.Render();
       TrueVision.TVScene.FinalizeShadows();
-      LandInfo.Render();
+      //LandInfo.Render();
 
-      ActorFactory.DoEach(ActorInfo.Render);
-      //TrueVision.TVGraphicEffect.DrawGlow();
-      //TrueVision.TVGraphicEffect.DrawDepthOfField();
+      using (var s = ScopeCounterManager.Acquire(ScopeGlobals.GLOBAL_RENDER))
+        TrueVision.TVScene.RenderAll(false);
 
       Screen2D.Draw();
       Screen2D.CurrentPage?.RenderTick();
 
-      /*
-      ActorInfo tgt = ActorFactory.Get(PlayerCameraInfo.LookActor);
-      if (tgt != null && tgt.Active)
-      {
-        TV_3DVECTOR prostart = tgt.GetRelativePositionXYZ(0, 0, tgt.TypeInfo.max_dimensions.z + 10);
-        TV_3DVECTOR proend0 = tgt.GetRelativePositionXYZ((float)Math.Sin(tgt.MoveData.YTurnAngle * Globals.PI / 180) * tgt.MoveData.Speed
-                                                         , -(float)Math.Sin(tgt.MoveData.XTurnAngle * Globals.PI / 180) * tgt.MoveData.Speed
-                                                         , tgt.TypeInfo.max_dimensions.z + 10 + ActorDataSet.CollisionData[tgt.dataID].ProspectiveCollisionScanDistance);
-        //TrueVision.TVMathLibrary.MoveAroundPoint(tgt.GetPosition(), 1000, tgt.)
-
-        TrueVision.TVScreen2DImmediate.Action_Begin2D();
-        //Engine.TrueVision.TVScreen2DImmediate.Draw_Box3D(prostart, proend0, new TV_COLOR(1, 1, 1, 1).GetIntColor());
-        TrueVision.TVScreen2DImmediate.Draw_Line3D(prostart.x, prostart.y, prostart.z, proend0.x, proend0.y, proend0.z, new TV_COLOR(1, 0, 0, 1).GetIntColor(), new TV_COLOR(1, 1, 0, 1).GetIntColor());
-        //TrueVision.TVScreen2DImmediate.Draw_FilledBox(100, 100, 200, 200, new TV_COLOR(1, 1, 1, 1).GetIntColor());
-        TrueVision.TVScreen2DImmediate.Action_End2D();
-
-      }
-      */
-
       TrueVision.TVEngine.RenderToScreen();
-      //UpdateEffect();
     }
-
-    /*
-    public void UpdateEffect()
-    {
-      TrueVision.LaserRenderSurface.StartRender(false);
-      ActorFactory.DoEach(ActorInfo.RenderGlow);
-      TrueVision.LaserRenderSurface.EndRender();
-      TrueVision.TVGraphicEffect.UpdateGlow();
-    }
-    */
 
     public void LinkForm(GameForm form)
     {

@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.Actors.Models;
 using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
 using SWEndor.AI.Squads;
@@ -161,7 +162,7 @@ namespace SWEndor.Actors
       Health.Init(TypeInfo, acinfo);
       Transform.Init(TypeInfo, acinfo);
       Armor.Init(TypeInfo);
-      Explosions = new ExplodeModel(TypeInfo, acinfo);
+      Explosions.Init(TypeInfo, acinfo);
       Regen.Init(TypeInfo);
 
       MoveData.Init(TypeInfo, acinfo);
@@ -192,7 +193,7 @@ namespace SWEndor.Actors
     private void Rebuild(ActorCreationInfo acinfo)
     {
       // Clear past resources
-      Destroy();
+      //Destroy(); // probably redundant
 
       TypeInfo = acinfo.ActorTypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
@@ -203,7 +204,7 @@ namespace SWEndor.Actors
       Health.Init(TypeInfo, acinfo);
       Transform.Init(TypeInfo, acinfo);
       Armor.Init(TypeInfo);
-      Explosions = new ExplodeModel(TypeInfo, acinfo);
+      Explosions.Init(TypeInfo, acinfo);
       Regen.Init(TypeInfo);
 
       MoveData.Init(TypeInfo, acinfo);
@@ -341,7 +342,7 @@ namespace SWEndor.Actors
         
         return (!IsPlayer
           && TypeInfo.EnableDistanceCull
-          && ActorDistanceInfo.GetRoughDistance(GetGlobalPosition(), PlayerCameraInfo.Position) > distcheck);
+          && ActorDistanceInfo.GetRoughDistance(GetGlobalPosition(), PlayerCameraInfo.Camera.GetPosition()) > distcheck);
       }
     }
 
@@ -353,7 +354,7 @@ namespace SWEndor.Actors
 
         return (!IsPlayer
           && TypeInfo.EnableDistanceCull
-          && ActorDistanceInfo.GetRoughDistance(GetGlobalPosition(), PlayerCameraInfo.Position) > distcheck);
+          && ActorDistanceInfo.GetRoughDistance(GetGlobalPosition(), PlayerCameraInfo.Camera.GetPosition()) > distcheck);
       }
     }
 
@@ -389,19 +390,7 @@ namespace SWEndor.Actors
 
       SetDisposing();
 
-      // Parent
-      Relation.Parent?.RemoveChild(this);
-
-      // Destroy Children
-      foreach (ActorInfo c in Children.ToArray()) // use new list as members are deleted from the IEnumerable
-      {
-        if (c.TypeInfo is ActorTypes.Groups.AddOn || c.Relation.UseParentCoords)
-          c.Destroy();
-        else
-          RemoveChild(c);
-      }
-
-      Relation.UseParentCoords = false;
+      Relation.Dispose(this);
 
       // Actions
       CurrentAction = null;
