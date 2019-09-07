@@ -126,6 +126,10 @@ namespace SWEndor
     {
       PrimaryText.Text = "";
       SecondaryText.Text = "";
+      SystemsText.Text = "";
+      PrimaryText.ExpireTime = 0;
+      SecondaryText.ExpireTime = 0;
+      SystemsText.ExpireTime = 0;
     }
   }
 }
