@@ -10,7 +10,7 @@
 
     public override void Process(Engine engine)
     {
-      engine.PlayerCameraInfo.CameraMode = engine.GameScenarioManager.Scenario.NextCameraMode();
+      engine.PlayerCameraInfo.CameraMode = engine.GameScenarioManager.Scenario.PrevCameraMode();
     }
   }
 }
