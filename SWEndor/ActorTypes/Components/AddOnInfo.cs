@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.AI.Squads;
 
 namespace SWEndor.ActorTypes.Components
 {

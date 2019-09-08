@@ -5,7 +5,6 @@ using SWEndor;
 using SWEndor.Primitives;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
-using SWEndor.ActorTypes.Instances;
 
 namespace SWEndorTest
 {

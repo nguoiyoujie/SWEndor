@@ -84,35 +84,38 @@ namespace SWEndor.Actors
       private static ActorStateMachine ASM = new ActorStateMachine();
       private static CreationStateMachine CSM = new CreationStateMachine();
 
-      public ActorState ActorState;
-      public CreationState CreationState;
+      private ActorState _actorState;
+      private CreationState _creationState;
+      public ActorState ActorState { get { return _actorState; } }
+      public CreationState CreationState { get { return _creationState; } }
       public float CreationTime { get; private set; }
       public ComponentMask ComponentMask { get; set; }
 
       public void Init(ActorInfo self, ActorTypeInfo type, ActorCreationInfo acinfo)
       {
-        ActorState = acinfo.InitialState;
-        CreationState = CreationState.PLANNED;
+        _actorState = acinfo.InitialState;
+        _creationState = CreationState.PLANNED;
         CreationTime = acinfo.CreationTime;
         ComponentMask = type.Mask;
       }
 
-      public void AdvanceDeathOneLevel(ActorInfo actor) { ASM.Fire(actor, ActorStateCommand.ADVANCE_DEATH_ONE_LEVEL, ref ActorState); }
-      public void MakeDead(ActorInfo actor) { ASM.Fire(actor, ActorStateCommand.DEAD, ref ActorState); }
-      public void MakeDying(ActorInfo actor) { ASM.Fire(actor, ActorStateCommand.DYING, ref ActorState); }
-      public void MakeNormal(ActorInfo actor) { ASM.Fire(actor, ActorStateCommand.NORMAL, ref ActorState); }
+      public void AdvanceDeathOneLevel(ActorInfo actor) { ASM.Fire(actor, ActorStateCommand.ADVANCE_DEATH_ONE_LEVEL, ref _actorState); }
+      public void MakeDead(ActorInfo actor) { ASM.Fire(actor, ActorStateCommand.DEAD, ref _actorState); }
+      public void MakeDying(ActorInfo actor) { ASM.Fire(actor, ActorStateCommand.DYING, ref _actorState); }
+      public void MakeNormal(ActorInfo actor) { ASM.Fire(actor, ActorStateCommand.NORMAL, ref _actorState); }
 
-      public bool IsDying { get { return ActorState == ActorState.DYING; } }
-      public bool IsDead { get { return ActorState == ActorState.DEAD; } }
-      public bool IsDyingOrDead { get { return ActorState < 0; } }
+      public bool IsDying { get { return _actorState == ActorState.DYING; } }
+      public bool IsDead { get { return _actorState == ActorState.DEAD; } }
+      public bool IsDyingOrDead { get { return _actorState < 0; } }
       //Creation State
-      public void SetGenerated() { CSM.Fire(CreationStateCommand.GENERATE, ref CreationState); }
-      public void SetActivated() { CSM.Fire(CreationStateCommand.ACTIVATE, ref CreationState); }
-      public void SetDisposing() { CSM.Fire(CreationStateCommand.BEGIN_DISPOSE, ref CreationState); }
-      public void SetDisposed() { CSM.Fire(CreationStateCommand.END_DISPOSE, ref CreationState); }
-      public void ResetPlanned() { CSM.Fire(CreationStateCommand.REVIVE, ref CreationState); }
+      public void SetGenerated() { CSM.Fire(CreationStateCommand.GENERATE, ref _creationState); }
+      public void SetActivated() { CSM.Fire(CreationStateCommand.ACTIVATE, ref _creationState); }
+      public void SetDisposing() { CSM.Fire(CreationStateCommand.BEGIN_DISPOSE, ref _creationState); }
+      public void SetDisposed() { CSM.Fire(CreationStateCommand.END_DISPOSE, ref _creationState); }
+      public void ResetPlanned() { CSM.Fire(CreationStateCommand.REVIVE, ref _creationState); }
     }
 
+    public CreationState CreationState { get { return State.CreationState; } }
     public bool Planned { get { return State.CreationState == CreationState.PLANNED; } }
     public bool Generated { get { return State.CreationState == CreationState.GENERATED; } }
     public bool Active { get { return State.CreationState == CreationState.ACTIVE; } }
@@ -134,6 +137,7 @@ namespace SWEndor.Actors
     public void SetState_Dying() { State.MakeDying(this); if (Logged) Log.Write(Log.DEBUG, LogType.ACTOR_ACTORSTATECHANGED, this, State.ActorState); }
     public void SetState_Normal() { State.MakeNormal(this); if (Logged) Log.Write(Log.DEBUG, LogType.ACTOR_ACTORSTATECHANGED, this, State.ActorState); }
 
+    public ActorState ActorState { get { return State.ActorState; } }
     public bool IsDying { get { return State.IsDying; } }
     public bool IsDead { get { return State.IsDead; } }
     public bool IsDyingOrDead { get { return State.IsDyingOrDead; } }

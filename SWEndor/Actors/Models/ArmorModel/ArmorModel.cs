@@ -7,10 +7,10 @@ namespace SWEndor.Actors.Models
   /// </summary>
   public struct ArmorModel
   {
-    public float Light;
+    public float Light { get; private set; }
     //public float Heavy;
     //public float Bomb;
-    public float Hull;
+    public float Hull { get; private set; }
     // float Heal;
 
     public static ArmorModel Immune { get { return new ArmorModel(); } }

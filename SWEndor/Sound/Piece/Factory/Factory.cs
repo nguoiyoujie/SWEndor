@@ -64,7 +64,7 @@ namespace SWEndor.Sound
           if (File.Exists(filepath))
           {
             INIFile f = new INIFile(filepath);
-            foreach (string s in f.Sections)
+            foreach (string s in f.Sections) // Parallel leads to bug in Register/list.Add
             {
               if (s != INIFile.PreHeaderSectionName)
               {

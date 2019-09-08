@@ -6,15 +6,15 @@ using System;
 namespace SWEndor.Actors
 {
   [Flags]
-  public enum ExplodeTrigger
+  public enum ExplodeTrigger : byte
   {
     NONE = 0,
-    ON_NORMAL = 0x1,
-    ON_DYING = 0x2,
-    ON_DEATH = 0x4,
-    ONLY_WHEN_DYINGTIME_NOT_EXPIRED = 0x8,
-    CREATE_ON_MESHVERTICES = 0x10,
-    DONT_CREATE_ON_LOWFPS = 0x20
+    DONT_CREATE_ON_LOWFPS = 0x1,
+    ONLY_WHEN_DYINGTIME_NOT_EXPIRED = 0x2,
+    CREATE_ON_MESHVERTICES = 0x4,
+    ON_NORMAL = 0x10,
+    ON_DYING = 0x20,
+    ON_DEATH = 0x40,
   }
 
   public static class ExplodeTriggerExt
@@ -67,12 +67,22 @@ namespace SWEndor.Actors
 
       private bool Check(Engine engine, ActorInfo a, ExplodeInfo exp)
       {
+        int comparand = 0x10 << (-(int)a.ActorState); // hack to map ActorState to ExplodeTrigger, should probably revert
+        
         return
           (!engine.Game.IsLowFPS() || !exp.Trigger.Has(ExplodeTrigger.DONT_CREATE_ON_LOWFPS))
-          && ((!a.IsDyingOrDead && exp.Trigger.Has(ExplodeTrigger.ON_NORMAL))
-              || (a.IsDying && exp.Trigger.Has(ExplodeTrigger.ON_DYING))
-              || (a.IsDead && exp.Trigger.Has(ExplodeTrigger.ON_DEATH)))
-          && (!exp.Trigger.Has(ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED) || (a.DyingTimer.TimeRemaining > 0));
+          && (((ExplodeTrigger)comparand & exp.Trigger) > 0)
+          && ((a.DyingTimer.TimeRemaining > 0) || !exp.Trigger.Has(ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED));
+
+
+        /*
+      return
+        (!engine.Game.IsLowFPS() || !exp.Trigger.Has(ExplodeTrigger.DONT_CREATE_ON_LOWFPS))
+        && ((!a.IsDyingOrDead && exp.Trigger.Has(ExplodeTrigger.ON_NORMAL))
+            || (a.IsDying && exp.Trigger.Has(ExplodeTrigger.ON_DYING))
+            || (a.IsDead && exp.Trigger.Has(ExplodeTrigger.ON_DEATH)))
+        && (!exp.Trigger.Has(ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED) || (a.DyingTimer.TimeRemaining > 0));
+        */
       }
 
       private void Process(ActorInfo a)

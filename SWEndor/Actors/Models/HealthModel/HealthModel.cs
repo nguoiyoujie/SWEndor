@@ -57,18 +57,8 @@ namespace SWEndor.Actors
           Log.Write(Log.DEBUG, LogType.ACTOR_HEALED, target, dmg.Source, -d, HP);
         */
 
-        //foreach (INotifyDamage nd in self.TraitsImplementing<INotifyDamage>())
-        //  nd.Damaged(self, dmg);
-
-        //if (dmg.Value > 0 && dmg.Source != null && !dmg.Source.Disposed)
-        //  foreach (INotifyAppliedDamage nd in dmg.Source.TraitsImplementing<INotifyAppliedDamage>())
-        //    nd.AppliedDamage(dmg.Source, self, dmg);
-
         if (HP <= 0)
         {
-          //foreach (INotifyKilled nd in self.TraitsImplementing<INotifyKilled>())
-          //  nd.Killed(self, dmg);
-
           target.SetState_Dying();
 
           if (target.Logged)

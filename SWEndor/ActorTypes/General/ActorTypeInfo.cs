@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using SWEndor.AI;
@@ -150,8 +149,10 @@ namespace SWEndor.ActorTypes
           if (SourceMeshPath.Length > 0)
             SourceMesh.LoadXFile(SourceMeshPath, true);
           SourceMesh.Enable(false);
+          SourceMesh.SetCollisionEnable(false);
           SourceMesh.WeldVertices();
           SourceMesh.ComputeBoundings();
+          SourceMesh.GetBoundingBox(ref min_dimensions, ref max_dimensions);
         }
       }
 
@@ -165,6 +166,7 @@ namespace SWEndor.ActorTypes
             SourceFarMesh = TrueVision.TVScene.CreateMeshBuilder(Name + "_far");
             SourceFarMesh.LoadXFile(SourceFarMeshPath, true);
             SourceFarMesh.Enable(false);
+            SourceMesh.SetCollisionEnable(false);
             SourceFarMesh.WeldVertices();
             SourceFarMesh.ComputeBoundings();
           }
@@ -179,12 +181,7 @@ namespace SWEndor.ActorTypes
       if (SourceMesh == null)
         throw new NotImplementedException("Attempted to generate empty model");
 
-      SourceMesh.Enable(false);
-      SourceMesh.SetCollisionEnable(false);
-
-      TVMesh ret = SourceMesh.Duplicate();
-      SourceMesh.GetBoundingBox(ref min_dimensions, ref max_dimensions);
-      return ret;
+      return SourceMesh.Duplicate();
     }
 
     public virtual TVMesh GenerateFarMesh()
@@ -192,14 +189,7 @@ namespace SWEndor.ActorTypes
       if (SourceFarMesh == null)
         SourceFarMesh = SourceMesh.Duplicate();
 
-      if (SourceFarMesh == null)
-        throw new NotImplementedException("Attempted to generate empty model");
-
-      SourceFarMesh.Enable(false);
-      SourceFarMesh.SetCollisionEnable(false);
-
-      TVMesh ret = SourceFarMesh.Duplicate();
-      return ret;
+      return SourceFarMesh.Duplicate();
     }
 
     public int LoadAlphaTexture(string name, string texpath, string alphatexpath = null)
@@ -270,24 +260,24 @@ namespace SWEndor.ActorTypes
       if (owner == null || hitby == null)
         return;
 
+      if (hitby.TypeInfo.ImpactDamage == 0)
+        return;
+
       if (owner.IsDying 
         && ActorDataSet.CombatData[owner.dataID].HitWhileDyingLeadsToDeath)
         owner.SetState_Dead();
-
-      if (owner.IsDyingOrDead
-        || hitby.TypeInfo.ImpactDamage == 0)
-        return;
-
+      
       if (Engine.MaskDataSet[hitby].Has(ComponentMask.IS_DAMAGE))
       {
-        float str0 = owner.HP;
-        owner.InflictDamage(hitby, hitby.TypeInfo.ImpactDamage, DamageType.NORMAL, impact);
-        float str1 = owner.HP;
-
-        if (owner.IsPlayer)
+        if (!owner.IsDyingOrDead)
         {
-          if (str1 < (int)str0)
-            PlayerInfo.FlashHit(PlayerInfo.StrengthColor);
+          float p_hp = owner.HP;
+          owner.InflictDamage(hitby, hitby.TypeInfo.ImpactDamage, DamageType.NORMAL, impact);
+          float hp = owner.HP;
+
+          if (owner.IsPlayer)
+            if (hp < (int)p_hp)
+              PlayerInfo.FlashHit(PlayerInfo.StrengthColor);
         }
 
         // scoring

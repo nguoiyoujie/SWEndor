@@ -2,6 +2,7 @@
 using SWEndor.ActorTypes;
 using SWEndor.Weapons;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace SWEndor.AI.Actions
@@ -27,7 +28,7 @@ namespace SWEndor.AI.Actions
     public override void Process(Engine engine, ActorInfo actor)
     {
       ActorInfo currtarget = null;
-      List<ActorInfo> targets = new List<ActorInfo>();
+      ConcurrentQueue<ActorInfo> targets = new ConcurrentQueue<ActorInfo>();
       int weight = 0;
 
       Action<Engine, ActorInfo> action = new Action<Engine, ActorInfo>(
@@ -49,30 +50,31 @@ namespace SWEndor.AI.Actions
                float dist = ActorDistanceInfo.GetDistance(actor, a, actor.WeaponSystemInfo.GetWeaponRange());
                actor.WeaponSystemInfo.SelectWeapon(engine, actor, a, 0, dist, out w);
 
-               if (w.Weapon != null)
+               if (!w.IsNull)
                {
-                 targets.Add(a);
+                 targets.Enqueue(a);
                  weight += a.HuntWeight;
                }
              }
              else
              {
-               targets.Add(a);
+               targets.Enqueue(a);
                weight += a.HuntWeight;
              }
            }
          }
        );
 
-      engine.ActorFactory.DoEach(action);
+      engine.ActorFactory.ParallelDoEach(action);
 
       if (targets.Count > 0)
       {
         int w = engine.Random.Next(0, weight);
-        for (int i = 0; i < targets.Count; i++)
+        ActorInfo tgt = null;
+        while (targets.TryDequeue(out tgt))
         {
-          w -= targets[i].HuntWeight;
-          currtarget = targets[i];
+          w -= tgt.HuntWeight;
+          currtarget = tgt;
           if (w < 0)
             break;
         }

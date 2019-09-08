@@ -18,6 +18,8 @@ namespace SWEndor.Weapons
 
   public class WeaponInfo
   {
+    public static readonly WeaponInfo[] NullArrayCache = new WeaponInfo[0];
+
     public WeaponInfo(string name, string weapproj)
     {
       Name = name;

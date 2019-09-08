@@ -1,7 +1,4 @@
-﻿using SWEndor.Actors;
-using SWEndor.ActorTypes;
-
-namespace SWEndor.ActorTypes.Components
+﻿namespace SWEndor.ActorTypes.Components
 {
   /// <summary>
   /// A light implementation of an Armor system, replaces old Damage and CollisionDamage coefficients

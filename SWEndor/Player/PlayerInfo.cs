@@ -5,7 +5,6 @@ using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Primitives;
 using SWEndor.Weapons;
-using System.Collections.Generic;
 
 namespace SWEndor.Player
 {
@@ -196,10 +195,10 @@ namespace SWEndor.Player
     {
       if (Actor != null) 
       {
-        if (PrimaryWeapon.Weapon == null)
+        if (PrimaryWeapon.IsNull)
           ResetPrimaryWeapon();
 
-        if (SecondaryWeapon.Weapon == null)
+        if (SecondaryWeapon.IsNull)
           ResetSecondaryWeapon();
       }
       else
@@ -334,8 +333,8 @@ namespace SWEndor.Player
     {
       get
       {
-        return (PrimaryWeapon.Weapon?.Type == WeaponType.TORPEDO) 
-          || (SecondaryWeapon.Weapon?.Type == WeaponType.TORPEDO);
+        return (PrimaryWeapon.Weapon.Type == WeaponType.TORPEDO) 
+          || (SecondaryWeapon.Weapon.Type == WeaponType.TORPEDO);
       }
     }
     public int AimTargetID = -1;

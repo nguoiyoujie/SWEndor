@@ -16,20 +16,8 @@ namespace SWEndor.Actors.Components
 
     private static bool ActivateImminentCollisionCheck(Engine engine, ActorInfo actor, ref float check_time, float scandistance, ref CollisionData data)
     {
-      /*
-      if (check_time < engine.Game.GameTime)
-      {
-        if (data.IsInProspectiveCollision)
-        {
-          check_time = engine.Game.GameTime + 0.25f; // delay should be adjusted with FPS / CPU load, ideally every ~0.5s, but not more than 2.5s. Can be slightly longer since it is already performing evasion.
-        }
-        else
-        {
-          check_time = engine.Game.GameTime + 0.1f; // delay should be adjusted with FPS / CPU load, ideally every run (~0.1s), but not more than 2s.
-        }*/
       data.ProspectiveCollisionScanDistance = scandistance;
       data.IsTestingProspectiveCollision = true;
-      //}
       return data.IsInProspectiveCollision;
     }
 
@@ -181,23 +169,11 @@ namespace SWEndor.Actors.Components
         TV_COLLISIONRESULT tvcres = new TV_COLLISIONRESULT();
 
         bool result = false;
-        if (ScopeCounterManager.AcquireIfZero(ScopeGlobals.GLOBAL_COLLISION))
-        {
-          try
-          {
-            ScopeCounterManager.WaitForZero(ScopeGlobals.PREREQ_COLLISION);
-            result = engine.TrueVision.TVScene.AdvancedCollision(start, end, ref tvcres);
-          }
-          finally
-          {
-            ScopeCounterManager.ReleaseOne(ScopeGlobals.GLOBAL_COLLISION);
-          }
-        }
-
+        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_COLLISION))
+          result = engine.TrueVision.TVScene.AdvancedCollision(start, end, ref tvcres);
+        
         if (result)
         {
-          // removed all landscape collision; unused and unnecessary complication
-
           if (tvcres.eCollidedObjectType != CONST_TV_OBJECT_TYPE.TV_OBJECT_MESH)
             return;
 
@@ -207,14 +183,13 @@ namespace SWEndor.Actors.Components
           if (!isProspective)
           {
             TVMesh tvm = engine.TrueVision.TVGlobals.GetMeshFromID(tvcres.iMeshID);
-            if (tvm != null) // && tvm.IsVisible())
+            if (tvm != null)
             {
               int checkID = -1;
               if (int.TryParse(tvm.GetTag(), out checkID))
               {
                 ActorInfo checkActor = engine.ActorFactory.Get(checkID);
                 if (checkActor != null
-                     //&& checkID != actor.ID
                      && actor.TopParent != checkActor.TopParent
                      && engine.MaskDataSet[checkActor].Has(ComponentMask.CAN_BECOLLIDED)
                      && !checkActor.IsAggregateMode
@@ -228,7 +203,7 @@ namespace SWEndor.Actors.Components
           else
           {
             TVMesh tvm = engine.TrueVision.TVGlobals.GetMeshFromID(tvcres.iMeshID);
-            if (tvm != null) // && tvm.IsVisible())
+            if (tvm != null)
             {
               int checkID = -1;
               if (int.TryParse(tvm.GetTag(), out checkID))
@@ -252,83 +227,5 @@ namespace SWEndor.Actors.Components
         vNormal = new TV_3DVECTOR();
       }
     }
-
-    /*
-    private static void TestCollisionA(Engine engine, ActorInfo actor, TV_3DVECTOR start, TV_3DVECTOR end, bool isProspective, out TV_3DVECTOR vImpact, out TV_3DVECTOR vNormal, out int CollisionActorID)
-    {
-      try
-      {
-        CollisionActorID = -1;
-        vImpact = new TV_3DVECTOR();
-        vNormal = new TV_3DVECTOR();
-
-        TV_COLLISIONRESULT tvcres = new TV_COLLISIONRESULT();
-        ActorInfo ares = null;
-        float dist = 999999999;
-
-        foreach (ActorInfo a in engine.ActorFactory.GetAll())
-        {
-          if (a.Mask.Has(ComponentMask.CAN_BECOLLIDED))
-          {
-            a.TestCollision(start, end, ref tvcres);
-            if (tvcres.bHasCollided)
-            {
-              float d = ActorDistanceInfo.GetDistance(tvcres.vCollisionImpact, start);
-              if (dist < d)
-              {
-                dist = d;
-                ares = a;
-                vImpact = new TV_3DVECTOR(tvcres.vCollisionImpact.x, tvcres.vCollisionImpact.y, tvcres.vCollisionImpact.z);
-                vNormal = new TV_3DVECTOR(tvcres.vCollisionNormal.x, tvcres.vCollisionNormal.y, tvcres.vCollisionNormal.z);
-              }
-            }
-          }
-        }
-
-        if (ares == null)
-        {
-          CollisionActorID = -1;
-          vImpact = new TV_3DVECTOR();
-          vNormal = new TV_3DVECTOR();
-          return;
-        }
-
-
-
-        if (!isProspective)
-        {
-
-          ActorInfo checkActor = ares; // engine.ActorFactory.Get(checkID);
-          if (checkActor != null
-               //&& checkID != actor.ID
-               && actor.TopParent != checkActor.TopParent
-               && engine.MaskDataSet[checkActor].Has(ComponentMask.CAN_BECOLLIDED)
-               && !checkActor.IsAggregateMode
-               )
-          {
-            CollisionActorID = ares.ID; //checkID;
-          }
-
-        }
-        else
-        {
-
-          ActorInfo checkActor = ares;// engine.ActorFactory.Get(checkID);
-          if (checkActor != null
-               && !(checkActor.TypeInfo is ActorTypes.Groups.Fighter)
-               )
-          {
-            CollisionActorID = ares.ID;// checkID;
-          }
-        }
-      }
-      catch
-      {
-        CollisionActorID = -1;
-        vImpact = new TV_3DVECTOR();
-        vNormal = new TV_3DVECTOR();
-      }
-    }
-    */
   }
 }

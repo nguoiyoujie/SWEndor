@@ -1,8 +1,4 @@
 ﻿using SWEndor.Actors;
-using SWEndor.Actors.Components;
-using SWEndor.Actors.Data;
-using SWEndor.Weapons;
-using System.Collections.Generic;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances

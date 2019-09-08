@@ -4,8 +4,6 @@ using SWEndor.ActorTypes;
 using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using System;
-using System.Collections.Generic;
-using System.Threading;
 using static SWEndor.UI.Widgets.Radar;
 
 namespace SWEndor.UI.Menu.Pages

@@ -2,7 +2,6 @@
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Weapons;
-using System.Collections.Generic;
 
 namespace SWEndor.ActorTypes.Instances
 {

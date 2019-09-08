@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
-using SWEndor.AI;
 using SWEndor.Player;
 using SWEndor.Sound;
 using SWEndor.UI.Menu.Pages;

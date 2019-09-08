@@ -17,8 +17,11 @@ namespace SWEndor.Actors
 
       public void Init(int id, ActorTypeInfo atype)
       {
-        Mesh = atype.GenerateMesh();
-        FarMesh = atype.GenerateFarMesh();
+        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_RENDER))
+        {
+          Mesh = atype.GenerateMesh();
+          FarMesh = atype.GenerateFarMesh();
+        }
 
         if (meshScope == null)
           meshScope = new ScopeCounterManager.ScopeCounter();
@@ -30,6 +33,8 @@ namespace SWEndor.Actors
 
         using (ScopeCounterManager.Acquire(meshScope))
         {
+          ScopeCounterManager.WaitForZero(ScopeGlobals.GLOBAL_COLLISION, ScopeGlobals.GLOBAL_RENDER);
+
           Mesh.SetTag(id.ToString());
           //Mesh.ShowBoundingBox(true);
 
@@ -134,15 +139,15 @@ namespace SWEndor.Actors
         using (ScopeCounterManager.Acquire(meshScope))
           if (ScopeCounterManager.IsZero(disposeScope))
           {
+            //ScopeCounterManager.WaitForZero(ScopeGlobals.GLOBAL_COLLISION);
+            //using (ScopeCounterManager.Acquire(ScopeGlobals.PREREQ_COLLISION))
+              Mesh.SetCollisionEnable(collide);
+
             Mesh.SetMatrix(mat);
             FarMesh.SetMatrix(mat);
 
-            ScopeCounterManager.WaitForZero(ScopeGlobals.GLOBAL_COLLISION);
-            using (ScopeCounterManager.Acquire(ScopeGlobals.PREREQ_COLLISION))
-              Mesh.SetCollisionEnable(collide);
-
-            ScopeCounterManager.WaitForZero(ScopeGlobals.GLOBAL_RENDER);
-            using (ScopeCounterManager.Acquire(ScopeGlobals.PREREQ_RENDER))
+            //ScopeCounterManager.WaitForZero(ScopeGlobals.GLOBAL_RENDER);
+            using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_RENDER))
             {
               Mesh.Enable(render && !far);
               FarMesh.Enable(render && far);

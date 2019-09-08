@@ -9,7 +9,6 @@ using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using SWEndor.Sound;
-using System.Linq;
 
 namespace SWEndor.Actors
 {
@@ -306,7 +305,7 @@ namespace SWEndor.Actors
     #region Event Methods
     public void OnTickEvent() { TickEvents?.Invoke(new ActorEventArg(ID)); }
     public void OnHitEvent(int victimID) { HitEvents?.Invoke(new HitEventArg(ID, victimID)); }
-    public void OnStateChangeEvent() { ActorStateChangeEvents?.Invoke(new ActorStateChangeEventArg(ID, State.ActorState)); }
+    public void OnStateChangeEvent() { ActorStateChangeEvents?.Invoke(new ActorStateChangeEventArg(ID, ActorState)); }
     public void OnCreatedEvent() { CreatedEvents?.Invoke(new ActorEventArg(ID)); }
     public void OnDestroyedEvent() { DestroyedEvents?.Invoke(new ActorEventArg(ID)); }
 

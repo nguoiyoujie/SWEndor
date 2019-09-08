@@ -1,6 +1,5 @@
 ﻿using SWEndor.Actors.Components;
 using SWEndor.AI;
-using SWEndor.Player;
 using SWEndor.Weapons;
 
 namespace SWEndor.Actors

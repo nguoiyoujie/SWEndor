@@ -1,5 +1,4 @@
-﻿using SWEndor.Actors;
-using SWEndor.Actors.Data;
+﻿using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Groups

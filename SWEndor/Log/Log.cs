@@ -14,13 +14,6 @@ namespace SWEndor
     private const string ext = "log";
     private static readonly Dictionary<string, TextWriter> Loggers = new Dictionary<string, TextWriter>();
 
-    //public static void Init()
-    //{
-    //AddLogger(INITERROR, "initerror.log");
-    //AddLogger(ERROR, "error.log");
-    //AddLogger(DEBUG, "debug.log");
-    //}
-
     private static IEnumerable<string> GetFilename(string baseFilename)
     {
       Directory.CreateDirectory(Globals.LogPath);
@@ -59,10 +52,7 @@ namespace SWEndor
       TextWriter info;
       lock (Loggers)
         if (!Loggers.TryGetValue(channel, out info))
-        {
-          //throw new ArgumentException("Tried logging to non-existent channel " + channel, "channelName");
           info = AddLogger(channel);
-        }
 
       return info;
     }

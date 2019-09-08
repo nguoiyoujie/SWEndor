@@ -141,7 +141,7 @@ namespace SWEndor
 
     public void ProcessCollision()
     {
-      ActorFactory.ParallelDoEach(ActorInfo.ProcessCollision);
+      ActorFactory.DoEach(ActorInfo.ProcessCollision);
     }
 
     public void PreRender()
@@ -179,11 +179,8 @@ namespace SWEndor
       TrueVision.TVScene.FinalizeShadows();
       //LandInfo.Render();
 
-      using (ScopeCounterManager.Acquire(ScopeGlobals.GLOBAL_RENDER))
-      {
-        ScopeCounterManager.WaitForZero(ScopeGlobals.PREREQ_RENDER);
-        TrueVision.TVScene.RenderAll(true);
-      }
+      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_RENDER))
+        TrueVision.TVScene.RenderAllMeshes(true); //RenderAll(true);
 
       Screen2D.Draw();
       Screen2D.CurrentPage?.RenderTick();

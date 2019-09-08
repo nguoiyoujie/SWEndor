@@ -18,7 +18,6 @@ namespace SWEndor.Weapons.Types
 
       FirePositions = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 0, 0)
                                         };
-
       // Auto Aim Bot
       EnablePlayerAutoAim = true;
       EnableAIAutoAim = true;

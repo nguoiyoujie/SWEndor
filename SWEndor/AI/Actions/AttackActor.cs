@@ -81,7 +81,7 @@ namespace SWEndor.AI.Actions
 
           WeaponShotInfo w;
           actor.WeaponSystemInfo.SelectWeapon(engine, actor, target, delta_angle, dist, out w);
-          if (w.Weapon != null)
+          if (!w.IsNull)
           {
             w.Fire(engine, actor, target);
           }
@@ -177,7 +177,7 @@ namespace SWEndor.AI.Actions
 
              WeaponShotInfo w;
              actor.WeaponSystemInfo.SelectWeapon(engine, actor, a, delta_angle, dist, out w);
-             if (w.Weapon != null)
+             if (!w.IsNull)
              {
                w.Fire(engine, actor, a);
                return false;

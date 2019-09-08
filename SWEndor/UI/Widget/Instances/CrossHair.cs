@@ -146,7 +146,7 @@ namespace SWEndor.UI.Widgets
           float tmax = weap.MaxAmmo;
           int t = 0;
 
-          while (t < tremain) //|| t < tmax)
+          while (t < tremain)
           {
             if (t < tremain)
             {
@@ -156,14 +156,6 @@ namespace SWEndor.UI.Widgets
                                                     , p2_y + Engine.ScreenHeight / 2
                                                     , pcolor.GetIntColor());
             }
-            /*else
-            {
-              TVScreen2DImmediate.Draw_Box(p1_x + Engine.ScreenWidth / 2
-                                    , p1_y + Engine.ScreenHeight / 2
-                                    , p2_x + Engine.ScreenWidth / 2
-                                    , p2_y + Engine.ScreenHeight / 2
-                                    , pcolor.GetIntColor());
-            }*/
 
             p1_x += p3_x;
             p2_x += p3_x;

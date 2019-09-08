@@ -1,9 +1,4 @@
-﻿using MTV3D65;
-using SWEndor.Actors;
-using SWEndor.ActorTypes;
-using SWEndor.ActorTypes.Groups;
-using SWEndor.AI;
-using SWEndor.AI.Actions;
+﻿using SWEndor.Actors;
 using SWEndor.Primitives;
 using SWEndor.Weapons.Types;
 using System.Collections.Generic;
@@ -12,8 +7,11 @@ namespace SWEndor.Weapons
 {
   public struct WeaponShotInfo
   {
+    public readonly static WeaponShotInfo[] NullArrayCache = new WeaponShotInfo[0];
+
     public readonly WeaponInfo Weapon;
     public readonly int Burst;
+    public bool IsNull { get { return Weapon.MaxAmmo == 0; } }
 
     // special cases
     public readonly static WeaponShotInfo Default = new WeaponShotInfo(null, 0);
@@ -42,7 +40,7 @@ namespace SWEndor.Weapons
 
     public override string ToString()
     {
-      return (Weapon is NullWeapon || Weapon is TrackerDummyWeapon) ? "none" : "{0}:{1}".F(Burst, Weapon.DisplayName.ToUpper());
+      return (Weapon is NullWeapon || Weapon is TrackerDummyWeapon) ? "NONE" : "{0}:{1}".F(Burst, Weapon.DisplayName.ToUpper());
     }
   }
 }

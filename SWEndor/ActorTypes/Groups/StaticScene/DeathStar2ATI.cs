@@ -1,6 +1,5 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
-using SWEndor.Actors.Data;
 using System.Collections.Generic;
 using System.IO;
 
