@@ -37,7 +37,7 @@ namespace SWEndor.Actors.Components
       // only check player and projectiles
       if (actor.IsPlayer
           || actor.TypeInfo is ActorTypes.Groups.Projectile
-          || (actor.IsDying && actor.TypeInfo.TargetType.Has(TargetType.FIGHTER)))
+          || (actor.IsDying && actor.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER)))
       {
         if (data.Collision.ActorID >= 0)
         {
@@ -71,8 +71,8 @@ namespace SWEndor.Actors.Components
     {
       if (data.IsTestingCollision)
       {
-        TV_3DVECTOR vmin = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.max_dimensions.z, false);
-        TV_3DVECTOR vmax = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.min_dimensions.z, false) - (actor.GetGlobalPosition() - actor.GetPrevGlobalPosition());
+        TV_3DVECTOR vmin = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.MeshData.MaxDimensions.z, false);
+        TV_3DVECTOR vmax = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.MeshData.MinDimensions.z, false) - (actor.GetGlobalPosition() - actor.GetPrevGlobalPosition());
 
         TestCollision(engine, actor, vmin, vmax, false, out data.Collision.Impact, out data.Collision.Normal, out data.Collision.ActorID);
         data.IsTestingCollision = false;
@@ -81,10 +81,10 @@ namespace SWEndor.Actors.Components
       {
         int dummy;
 
-        TV_3DVECTOR prostart = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.max_dimensions.z + 10);
+        TV_3DVECTOR prostart = actor.GetRelativePositionXYZ(0, 0, actor.TypeInfo.MeshData.MaxDimensions.z + 10);
         TV_3DVECTOR proend0 = actor.GetRelativePositionXYZ(0 //(float)Math.Sin(actor.MoveData.YTurnAngle * Globals.PI / 180) * data.ProspectiveCollisionScanDistance  //* actor.MoveData.Speed
                                                          , 0 //-(float)Math.Sin(actor.MoveData.XTurnAngle * Globals.PI / 180) * data.ProspectiveCollisionScanDistance  //* actor.MoveData.Speed
-                                                         , actor.TypeInfo.max_dimensions.z + 10 + data.ProspectiveCollisionScanDistance);
+                                                         , actor.TypeInfo.MeshData.MaxDimensions.z + 10 + data.ProspectiveCollisionScanDistance);
 
         TV_3DVECTOR proImpact = new TV_3DVECTOR();
         TV_3DVECTOR proNormal = new TV_3DVECTOR();
@@ -122,7 +122,7 @@ namespace SWEndor.Actors.Components
 
               proend0 = actor.GetRelativePositionXYZ(i * data.ProspectiveCollisionScanDistance * 0.1f * data.ProspectiveCollisionLevel
                                              , j * data.ProspectiveCollisionScanDistance * 0.1f * data.ProspectiveCollisionLevel
-                                             , actor.TypeInfo.max_dimensions.z + 10 + data.ProspectiveCollisionScanDistance);
+                                             , actor.TypeInfo.MeshData.MaxDimensions.z + 10 + data.ProspectiveCollisionScanDistance);
               TestCollision(engine, actor, prostart, proend0, true, out _Impact, out _Normal, out dummy);
 
               if (dummy >= 0)

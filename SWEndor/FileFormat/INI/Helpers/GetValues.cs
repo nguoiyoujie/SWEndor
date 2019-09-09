@@ -212,5 +212,40 @@ namespace SWEndor.FileFormat.INI
         ret[i] = t.GetValue(i).ToString();
       return ret;
     }
+
+    private string[] ConvertToStringArray(TV_2DVECTOR v)
+    {
+      string[] ret = new string[2];
+      ret[0] = v.x.ToString();
+      ret[1] = v.y.ToString();
+      return ret;
+    }
+
+    private string[] ConvertToStringArray(TV_3DVECTOR v)
+    {
+      string[] ret = new string[3];
+      ret[0] = v.x.ToString();
+      ret[1] = v.y.ToString();
+      ret[2] = v.z.ToString();
+      return ret;
+    }
+    
+    private string[] ConvertToStringArray(TV_COLOR v)
+    {
+      string[] ret = new string[4];
+      ret[0] = v.r.ToString();
+      ret[1] = v.g.ToString();
+      ret[2] = v.b.ToString();
+      ret[3] = v.a.ToString();
+      return ret;
+    }
+
+    public T GetEnumValue<T>(string section, string key, T defaultValue) where T : struct
+    {
+      string s = GetStringValue(section, key, defaultValue.ToString()).Replace("|", ","); ;
+      T ret = defaultValue;
+      Enum.TryParse<T>(s, out ret);
+      return ret;
+    }
   }
 }

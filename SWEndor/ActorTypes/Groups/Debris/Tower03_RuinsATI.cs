@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using SWEndor.ActorTypes.Components;
+using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -6,8 +7,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal Tower03_RuinsATI(Factory owner) : base(owner, "Turbolaser Tower 03 Ruins")
     {
-      CullDistance = 10000;
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"towers\tower_03_destroyed.x");
+      RenderData.CullDistance = 10000;
+      MeshData = new MeshData(Name, @"towers\tower_03_destroyed.x");
     }
   }
 }

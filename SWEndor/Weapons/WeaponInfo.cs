@@ -123,7 +123,7 @@ namespace SWEndor.Weapons
     public void Init()
     {
       if (Range == 0 && Projectile != null)
-        Range = Projectile.MaxSpeed * Projectile.TimedLifeData.TimedLife;
+        Range = Projectile.MoveLimitData.MaxSpeed * Projectile.TimedLifeData.TimedLife;
 
       UIFirePositions = new TV_3DVECTOR[FirePositions.Length];
 
@@ -231,7 +231,7 @@ namespace SWEndor.Weapons
       if (target == null)
         return AIAttackNull;
 
-      return (target.TypeInfo.TargetType & AIAttackTargets) != 0;
+      return (target.TypeInfo.AIData.TargetType & AIAttackTargets) != 0;
     }
 
     private bool CreateProjectile(Engine engine, ActorInfo owner, ActorInfo target)
@@ -251,7 +251,7 @@ namespace SWEndor.Weapons
         ActorCreationInfo acinfo = new ActorCreationInfo(Projectile);
         acinfo.Position = owner.GetRelativePositionXYZ(targetloc.x, targetloc.y, targetloc.z);
 
-        if (owner.MoveData.Speed > Projectile.MinSpeed)
+        if (owner.MoveData.Speed > Projectile.MoveLimitData.MinSpeed)
           acinfo.InitialSpeed = owner.MoveData.Speed;
 
         if (EnablePlayerAutoAim && target != null)
@@ -260,9 +260,9 @@ namespace SWEndor.Weapons
 
           float d;
           if (AutoAimMaxDeviation == AutoAimMinDeviation)
-            d = dist / Projectile.MaxSpeed * AutoAimMinDeviation;
+            d = dist / Projectile.MoveLimitData.MaxSpeed * AutoAimMinDeviation;
           else
-            d = dist / Projectile.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
+            d = dist / Projectile.MoveLimitData.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
 
           TV_3DVECTOR dir = new TV_3DVECTOR();
           ActorInfo a2 = target.ParentForCoords;
@@ -295,7 +295,7 @@ namespace SWEndor.Weapons
       }
 
       if ((target == null && AIAttackNull)
-          || (target != null && (target.TypeInfo.TargetType & AIAttackTargets) != 0)
+          || (target != null && (target.TypeInfo.AIData.TargetType & AIAttackTargets) != 0)
           )
       { // AI 
         if (Projectile == null)
@@ -311,7 +311,7 @@ namespace SWEndor.Weapons
         ActorCreationInfo acinfo = new ActorCreationInfo(Projectile);
         acinfo.Position = owner.GetRelativePositionXYZ(targetloc.x, targetloc.y, targetloc.z);
 
-        if (owner.MoveData.Speed > Projectile.MinSpeed)
+        if (owner.MoveData.Speed > Projectile.MoveLimitData.MinSpeed)
           acinfo.InitialSpeed = owner.MoveData.Speed;
 
         if (EnableAIAutoAim && target != null)
@@ -320,9 +320,9 @@ namespace SWEndor.Weapons
 
           float d;
           if (AutoAimMaxDeviation == AutoAimMinDeviation)
-            d = dist / Projectile.MaxSpeed * AutoAimMinDeviation;
+            d = dist / Projectile.MoveLimitData.MaxSpeed * AutoAimMinDeviation;
           else
-            d = dist / Projectile.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
+            d = dist / Projectile.MoveLimitData.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
 
           TV_3DVECTOR dir = new TV_3DVECTOR();
           ActorInfo a2 = target.ParentForCoords;

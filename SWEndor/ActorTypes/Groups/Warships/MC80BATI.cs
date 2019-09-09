@@ -18,42 +18,41 @@ namespace SWEndor.ActorTypes.Instances
 
       MaxStrength = 2800.0f;
       ImpactDamage = 60.0f;
-      MaxSpeed = 30.0f;
-      MinSpeed = 0.0f;
-      MaxSpeedChangeRate = 5.0f;
-      MaxTurnRate = 3f;
-      ZNormFrac = 0.006f;
-      ZTilt = 3.5f;
+      MoveLimitData.MaxSpeed = 30.0f;
+      MoveLimitData.MinSpeed = 0.0f;
+      MoveLimitData.MaxSpeedChangeRate = 5.0f;
+      MoveLimitData.MaxTurnRate = 3f;
+      MoveLimitData.ZNormFrac = 0.006f;
+      MoveLimitData.ZTilt = 3.5f;
 
-      CullDistance = 40000;
       Scale = 1.8f;
 
-      Score_perStrength = 20;
-      Score_DestroyBonus = 20000;
+      ScoreData = new ScoreData(20, 20000);
+      RenderData.CullDistance = 40000;
 
-      RegenData = new RegenInfo { SelfRegenRate = 0.3f };
+      RegenData = new RegenData(false, 0.3f, 0, 0, 0);
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"mc90\mc80b.x");
+      MeshData = new MeshData(Name, @"mc90\mc80b.x");
 
-      Cameras = new ActorCameraInfo[] { new ActorCameraInfo(new TV_3DVECTOR(0, 45, 660), new TV_3DVECTOR(0, 45, 2000)) };
-      DeathCamera = new DeathCameraInfo(1500, 250, 30);
-      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 1500f, new TV_3DVECTOR(0, 0, -750), true) };
-      AddOns = new AddOnInfo[]
+      Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 45, 660), new TV_3DVECTOR(0, 45, 2000)) };
+      DeathCamera = new DeathCameraData(1500, 250, 30);
+      SoundSources = new SoundSourceData[] { new SoundSourceData("engine_big", 1500f, new TV_3DVECTOR(0, 0, -750), true) };
+      AddOns = new AddOnData[]
       {
-        new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(0, 45, 1200), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(-120, 42, 950), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(120, 42, 950), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(-180, 48, 520), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(180, 48, 520), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(-180, -65, 410), new TV_3DVECTOR(90, 0, 0), true)
-        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(180, -65, 410), new TV_3DVECTOR(90, 0, 0), true)
+        new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(0, 45, 1200), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(-120, 42, 950), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(120, 42, 950), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(-180, 48, 520), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(180, 48, 520), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(-180, -65, 410), new TV_3DVECTOR(90, 0, 0), true)
+        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(180, -65, 410), new TV_3DVECTOR(90, 0, 0), true)
 
-        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(-220, 52, 300), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(220, 52, 300), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(-210, -75, 150), new TV_3DVECTOR(90, 0, 0), true)
-        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(210, -75, 150), new TV_3DVECTOR(90, 0, 0), true)
+        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(-220, 52, 300), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(220, 52, 300), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(-210, -75, 150), new TV_3DVECTOR(90, 0, 0), true)
+        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(210, -75, 150), new TV_3DVECTOR(90, 0, 0), true)
 
-        , new AddOnInfo("MC90 Turbolaser Tower", new TV_3DVECTOR(0, 120, -225), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(0, 120, -225), new TV_3DVECTOR(-90, 0, 0), true)
       };
     }
 

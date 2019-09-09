@@ -14,7 +14,7 @@ namespace SWEndor.FileFormat.INI
 
         public override string ToString()
         {
-          return "[{0}] : {1}".F(Header, string.Join(",", Inherits));
+          return (Inherits.Length > 0) ? "[{0}] : {1}".F(Header, string.Join(",", Inherits)) : "[{0}]".F(Header);
         }
 
         public static bool IsHeader(string line)

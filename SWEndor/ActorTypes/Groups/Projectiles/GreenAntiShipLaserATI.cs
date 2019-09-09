@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Data;
+using SWEndor.ActorTypes.Components;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -16,7 +17,7 @@ namespace SWEndor.ActorTypes.Instances
       ImpactDamage = 5;
       ImpactCloseEnoughDistance = 100;
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"projectiles\green3_laser.x");
+      MeshData = new MeshData(Name, @"projectiles\green3_laser.x");
     }
   }
 }

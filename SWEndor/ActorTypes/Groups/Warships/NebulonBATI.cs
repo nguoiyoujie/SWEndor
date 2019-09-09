@@ -12,32 +12,29 @@ namespace SWEndor.ActorTypes.Instances
     {
       MaxStrength = 950.0f;
       ImpactDamage = 60.0f;
-      MaxSpeed = 32.0f;
-      MinSpeed = 0.0f;
-      MaxSpeedChangeRate = 5.0f;
-      MaxTurnRate = 2f;
+      MoveLimitData.MaxSpeed = 32.0f;
+      MoveLimitData.MinSpeed = 0.0f;
+      MoveLimitData.MaxSpeedChangeRate = 5.0f;
+      MoveLimitData.MaxTurnRate = 2f;
 
-      Score_perStrength = 15;
-      Score_DestroyBonus = 10000;
+      ScoreData = new ScoreData(15, 10000);
+      RenderData.CullDistance = 30000;
 
-      CullDistance = 30000;
+      RegenData = new RegenData(false, 0.2f, 0, 0, 0);
 
-      RegenData = new RegenInfo { SelfRegenRate = 0.2f };
+      MeshData = new MeshData(Name, @"nebulonb\nebulonb.x");
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"nebulonb\nebulonb.x");
-      SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"nebulonb\nebulonb_far.x");
-
-      Cameras = new ActorCameraInfo[] { new ActorCameraInfo(new TV_3DVECTOR(66, 78, -480), new TV_3DVECTOR(0, 75, 2000)) };
-      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 1500.0f, new TV_3DVECTOR(0, 100, -300), true) };
-      AddOns = new AddOnInfo[]
+      Cameras = new LookData[] { new LookData(new TV_3DVECTOR(66, 78, -480), new TV_3DVECTOR(0, 75, 2000)) };
+      SoundSources = new SoundSourceData[] { new SoundSourceData("engine_big", 1500.0f, new TV_3DVECTOR(0, 100, -300), true) };
+      AddOns = new AddOnData[]
       {
-        new AddOnInfo("Nebulon B Turbolaser Tower", new TV_3DVECTOR(0, 40, 220), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnInfo("Nebulon B Turbolaser Tower", new TV_3DVECTOR(56, 90, -520), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnInfo("Nebulon B Turbolaser Tower", new TV_3DVECTOR(0, -180, -550), new TV_3DVECTOR(90, 0, 0), true)
-        , new AddOnInfo("Nebulon B Missile Pod", new TV_3DVECTOR(-80, -45, -485), new TV_3DVECTOR(0, 0, 0), true)
-        , new AddOnInfo("Nebulon B Missile Pod", new TV_3DVECTOR(80, -45, -485), new TV_3DVECTOR(0, 0, 0), true)
+        new AddOnData("Nebulon B Turbolaser Tower", new TV_3DVECTOR(0, 40, 220), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("Nebulon B Turbolaser Tower", new TV_3DVECTOR(56, 90, -520), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("Nebulon B Turbolaser Tower", new TV_3DVECTOR(0, -180, -550), new TV_3DVECTOR(90, 0, 0), true)
+        , new AddOnData("Nebulon B Missile Pod", new TV_3DVECTOR(-80, -45, -485), new TV_3DVECTOR(0, 0, 0), true)
+        , new AddOnData("Nebulon B Missile Pod", new TV_3DVECTOR(80, -45, -485), new TV_3DVECTOR(0, 0, 0), true)
 
-        , new AddOnInfo("Hangar Bay", new TV_3DVECTOR(10, -60, 192), new TV_3DVECTOR(0, 180, 0), true)
+        , new AddOnData("Hangar Bay", new TV_3DVECTOR(10, -60, 192), new TV_3DVECTOR(0, 180, 0), true)
       };
     }
 

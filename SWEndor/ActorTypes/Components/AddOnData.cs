@@ -3,7 +3,7 @@ using SWEndor.Actors;
 
 namespace SWEndor.ActorTypes.Components
 {
-  public struct AddOnInfo
+  public struct AddOnData
   {
     public readonly string Type;
     private ActorTypeInfo _cache;
@@ -11,7 +11,7 @@ namespace SWEndor.ActorTypes.Components
     public readonly TV_3DVECTOR Rotation;
     public readonly bool AttachToParent;
 
-    public AddOnInfo(string type, TV_3DVECTOR position, TV_3DVECTOR rotation, bool attachToParent)
+    public AddOnData(string type, TV_3DVECTOR position, TV_3DVECTOR rotation, bool attachToParent)
     {
       Type = type;
       _cache = null;

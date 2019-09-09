@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.ActorTypes.Components;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -11,10 +12,7 @@ namespace SWEndor.ActorTypes.Instances
       MaxStrength = 24; //32
       ImpactDamage = 16;
 
-      Score_perStrength = 250;
-      Score_DestroyBonus = 1250;
-
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"turbotowers\star_destroyer_missilepod.x");
+      MeshData = new MeshData(Name, @"turbotowers\star_destroyer_missilepod.x");
 
       Loadouts = new string[] { "IMPL_MISL" };
     }

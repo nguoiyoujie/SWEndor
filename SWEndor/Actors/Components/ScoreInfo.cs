@@ -73,7 +73,7 @@ namespace SWEndor
       Hits++;
       DamageDealt += damage;
       Increment(DamageDealtByName, victim.Name, damage);
-      Score += victim.TypeInfo.Score_perStrength * damage;
+      Score += victim.TypeInfo.ScoreData.PerStrength * damage;
 
       if (engine.PlayerInfo.Actor != null)
         engine.Screen2D.MessageSystemsText("[HIT]", 0.5f, engine.PlayerInfo.FactionColor, -99);
@@ -92,7 +92,7 @@ namespace SWEndor
         engine.Screen2D.MessageSystemsText("[{0}] destroyed.".F(victim.Name), 2, new TV_COLOR(0.5f, 0.5f, 1, 1));
 
       Increment(KillsByName, victim.Name, 1);
-      Score += victim.TypeInfo.Score_DestroyBonus;
+      Score += victim.TypeInfo.ScoreData.DestroyBonus;
     }
 
     public void AddDamage(Engine engine, ActorInfo hitby, float damage)

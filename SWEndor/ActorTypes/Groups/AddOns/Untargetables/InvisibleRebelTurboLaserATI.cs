@@ -6,9 +6,9 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal InvisibleRebelTurboLaserATI(Factory owner) : base(owner, "Invisible Rebel Turbo Laser")
     {
-      RadarSize = 0;
+      RenderData.RadarSize = 0;
 
-      TargetType = TargetType.NULL;
+      AIData.TargetType = TargetType.NULL;
 
       Mask &= ~(ComponentMask.CAN_BECOLLIDED | ComponentMask.CAN_BETARGETED);
 

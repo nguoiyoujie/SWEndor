@@ -64,8 +64,8 @@ namespace SWEndor.UI.Widgets
         TV_3DVECTOR apos = a.GetGlobalPosition();
 
         if (a.Active
-          && a.TypeInfo.RadarSize > 0
-          && (a.TypeInfo.AlwaysShowInRadar || ActorDistanceInfo.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
+          && a.TypeInfo.RenderData.RadarSize > 0
+          && (a.TypeInfo.RenderData.AlwaysShowInRadar || ActorDistanceInfo.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
         {
           TV_2DVECTOR posvec = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(apos.x, apos.z);
           float proty = p.GetGlobalRotation().y;
@@ -79,16 +79,16 @@ namespace SWEndor.UI.Widgets
           float scale = a.Scale;
           int scolor = a.HP_Color.GetIntColor();
 
-          switch (a.TypeInfo.RadarType)
+          switch (a.TypeInfo.RenderData.RadarType)
           {
             case RadarType.HOLLOW_CIRCLE_S:
-              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RadarSize * 2, 6, scolor);
+              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RenderData.RadarSize * 2, 6, scolor);
               break;
             case RadarType.HOLLOW_CIRCLE_M:
-              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RadarSize * 2, 16, scolor);
+              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RenderData.RadarSize * 2, 16, scolor);
               break;
             case RadarType.HOLLOW_CIRCLE_L:
-              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RadarSize * 2, 40, scolor);
+              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RenderData.RadarSize * 2, 40, scolor);
               break;
             case RadarType.RECTANGLE_GIANT:
               {

@@ -102,8 +102,8 @@ namespace SWEndor
       Screen2D.LoadingTextLines.Add(Globals.LoadingFlavourTexts[Random.Next(0, Globals.LoadingFlavourTexts.Count)]);
       ActorTypeFactory.Initialise();
 
-      Screen2D.LoadingTextLines.Add("Loading other actor definitions...");
-      ActorTypeFactory.LoadFromINI(Globals.ActorTypeINIPath);
+      //Screen2D.LoadingTextLines.Add("Loading other actor definitions...");
+      //ActorTypeFactory.LoadFromINI(Globals.ActorTypeINIPath);
 
       Screen2D.LoadingTextLines.Add("Loading weapons...");
       WeaponFactory.LoadFromINI(Globals.WeaponStatINIPath);

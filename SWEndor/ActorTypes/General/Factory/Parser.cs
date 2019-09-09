@@ -12,7 +12,7 @@ using System;
         ActorTypeInfo at = new ActorTypeInfo(factory, sectionname);
 
         //at.CollisionEnabled = file.GetBoolValue(sectionname, "CollisionEnabled", at.CollisionEnabled);
-
+        /*
         at.CombatData.IsCombatObject = file.GetBoolValue(sectionname, "IsCombatObject", at.CombatData.IsCombatObject);
 
         //at.IsSelectable = file.GetBoolValue(sectionname, "IsSelectable", at.IsSelectable);
@@ -77,7 +77,7 @@ using System;
 
         // Sound
         //public List<ActorSoundSourceInfo> SoundSources = new List<ActorSoundSourceInfo>();
-
+        */
 
         return at;
       }

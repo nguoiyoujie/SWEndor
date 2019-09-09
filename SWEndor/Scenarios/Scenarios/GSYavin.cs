@@ -556,7 +556,7 @@ namespace SWEndor.Scenarios
         Rotation = new TV_3DVECTOR(0, 180, 0),
         Actions = new ActionInfo[] { new Lock()
                                   , new Move(new TV_3DVECTOR(Engine.Random.Next(-5, 5), Engine.Random.Next(-5, 5), Manager.MaxBounds.z - 150 - 4500)
-                                                    , PlayerInfo.ActorType.MaxSpeed)},
+                                                    , PlayerInfo.ActorType.MoveLimitData.MaxSpeed)},
         Registries = null
       }.Spawn(this);
 
@@ -591,7 +591,7 @@ namespace SWEndor.Scenarios
             Rotation = new TV_3DVECTOR(0, 180, 0),
             Actions = new ActionInfo[] { new Lock()
                                        , new Move(new TV_3DVECTOR(v.x + Engine.Random.Next(-5, 5), v.y + Engine.Random.Next(-5, 5), v.z - 4500)
-                                       , ActorTypeFactory.Get("X-Wing").MaxSpeed)},
+                                       , ActorTypeFactory.Get("X-Wing").MoveLimitData.MaxSpeed)},
             Registries = null
           }.Spawn(this);
 
@@ -611,7 +611,7 @@ namespace SWEndor.Scenarios
             Rotation = new TV_3DVECTOR(0, 180, 0),
             Actions = new ActionInfo[] { new Lock()
                                        , new Move(new TV_3DVECTOR(v.x + Engine.Random.Next(-5, 5), v.y + Engine.Random.Next(-5, 5), v.z - 4500)
-                                       , ActorTypeFactory.Get("Y-Wing").MaxSpeed)},
+                                       , ActorTypeFactory.Get("Y-Wing").MoveLimitData.MaxSpeed)},
             Registries = null
           }.Spawn(this);
 
@@ -700,7 +700,7 @@ namespace SWEndor.Scenarios
               {
                 foreach (ActorInfo c in rs.Children)
                 {
-                  if (c.TypeInfo.TargetType.Has(TargetType.SHIELDGENERATOR))
+                  if (c.TypeInfo.AIData.TargetType.Has(TargetType.SHIELDGENERATOR))
                     if (Engine.Random.NextDouble() > 0.4f)
                       rsID = c.ID;
                 }
@@ -1371,7 +1371,7 @@ namespace SWEndor.Scenarios
         Actions = new ActionInfo[]
                      {
                                    new HyperspaceIn(position)
-                                   , new Move(targetposition, type.MaxSpeed)
+                                   , new Move(targetposition, type.MoveLimitData.MaxSpeed)
                                    , new HyperspaceOut()
                                    , new Delete()
                      }

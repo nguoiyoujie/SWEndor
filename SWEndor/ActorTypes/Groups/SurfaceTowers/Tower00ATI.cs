@@ -11,17 +11,16 @@ namespace SWEndor.ActorTypes.Instances
       MaxStrength = 120;
       ImpactDamage = 120;
 
-      RadarSize = 2.5f;
+      RenderData.RadarSize = 2.5f;
 
-      Score_perStrength = 50;
-      Score_DestroyBonus = 5000;
+      ScoreData = new ScoreData(50, 5000);
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"towers\tower_00.x");
+      MeshData = new MeshData(Name, @"towers\tower_00.x");
 
-      AddOns = new AddOnInfo[] 
+      AddOns = new AddOnData[] 
       {
-        new AddOnInfo("Turbolaser Turret", new TV_3DVECTOR(95, 155, 0), new TV_3DVECTOR(0, 0, 0), true)
-        , new AddOnInfo("Turbolaser Turret", new TV_3DVECTOR(-95, 155, 0), new TV_3DVECTOR(0, 0, 0), true)
+        new AddOnData("Turbolaser Turret", new TV_3DVECTOR(95, 155, 0), new TV_3DVECTOR(0, 0, 0), true)
+        , new AddOnData("Turbolaser Turret", new TV_3DVECTOR(-95, 155, 0), new TV_3DVECTOR(0, 0, 0), true)
       };
     }
   }

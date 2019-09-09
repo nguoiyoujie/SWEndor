@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using SWEndor.ActorTypes.Components;
+using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -9,14 +10,13 @@ namespace SWEndor.ActorTypes.Instances
       MaxStrength = 75;
       ImpactDamage = 120;
 
-      Score_perStrength = 50;
-      Score_DestroyBonus = 5000;
+      ScoreData = new ScoreData(50, 5000);
 
-      RadarSize = 2.5f;
+      RenderData.RadarSize = 2.5f;
 
-      AlwaysShowInRadar = true;
+      RenderData.AlwaysShowInRadar = true;
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"towers\tower_03.x");
+      MeshData = new MeshData(Name, @"towers\tower_03.x");
     }
   }
 }

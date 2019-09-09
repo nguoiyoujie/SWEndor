@@ -13,20 +13,19 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.Disabled;
-      Armor = ArmorInfo.Immune;
+      ArmorData = ArmorData.Immune;
       Explodes = new ExplodeInfo[]
       {
         new ExplodeInfo("ExpS00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
       };
 
-      EnableDistanceCull = true;
-      CullDistance = 6000;
+      RenderData.CullDistance = 9000;
 
-      RadarType = RadarType.TRAILLINE;
-      RadarSize = 1;
+      RenderData.RadarType = RadarType.TRAILLINE;
+      RenderData.RadarSize = 1;
 
-      Move_CloseEnough = 0;
-      MaxSecondOrderTurnRateFrac = 0.5f;
+      AIData.Move_CloseEnough = 0;
+      MoveLimitData.MaxSecondOrderTurnRateFrac = 0.5f;
 
       Mask = ComponentMask.LASER_PROJECTILE;
       DamageType = DamageType.NORMAL;

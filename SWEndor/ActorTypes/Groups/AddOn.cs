@@ -11,14 +11,14 @@ namespace SWEndor.ActorTypes.Groups
       // Combat
       Explodes = new ExplodeInfo[] { new ExplodeInfo("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH) };
       CombatData = CombatData.Disabled;
-      Armor = ArmorInfo.Immune;
+      ArmorData = ArmorData.Immune;
 
-      CullDistance = 3500;
+      RenderData.CullDistance = 3500;
 
-      RadarSize = 1;
+      RenderData.RadarSize = 1;
 
       Mask = ComponentMask.STATIC_ACTOR;
-      HuntWeight = 1;
+      AIData.HuntWeight = 1;
     }
   }
 }

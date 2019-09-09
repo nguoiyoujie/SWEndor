@@ -37,13 +37,13 @@ namespace SWEndor.Actors.Data
       XTurnAngle = 0;
       YTurnAngle = 0;
       ZRoll = 0;
-      MaxSpeed = atype.MaxSpeed;
-      MinSpeed = atype.MinSpeed;
-      MaxSpeedChangeRate = atype.MaxSpeedChangeRate;
-      MaxTurnRate = atype.MaxTurnRate;
-      MaxSecondOrderTurnRateFrac = atype.MaxSecondOrderTurnRateFrac;
-      ZTilt = atype.ZTilt;
-      ZNormFrac = atype.ZNormFrac;
+      MaxSpeed = atype.MoveLimitData.MaxSpeed;
+      MinSpeed = atype.MoveLimitData.MinSpeed;
+      MaxSpeedChangeRate = atype.MoveLimitData.MaxSpeedChangeRate;
+      MaxTurnRate = atype.MoveLimitData.MaxTurnRate;
+      MaxSecondOrderTurnRateFrac = atype.MoveLimitData.MaxSecondOrderTurnRateFrac;
+      ZTilt = atype.MoveLimitData.ZTilt;
+      ZNormFrac = atype.MoveLimitData.ZNormFrac;
       ApplyZBalance = true;
       Zdiv = 0;
     }

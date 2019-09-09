@@ -4,12 +4,14 @@ using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
+using SWEndor.FileFormat.INI;
 using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using SWEndor.Weapons;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace SWEndor.ActorTypes
@@ -22,7 +24,6 @@ namespace SWEndor.ActorTypes
       if (name.Length > 0) { Name = name; }
 
       CombatData.Reset();
-      TimedLifeData.Reset();
     }
 
     public readonly Factory ActorTypeFactory;
@@ -44,12 +45,15 @@ namespace SWEndor.ActorTypes
 
     // Data
     public ComponentMask Mask = ComponentMask.NONE;
-    public RegenInfo RegenData;
+    public RegenData RegenData;
     public CombatData CombatData;
     public TimedLifeData TimedLifeData;
-    public ArmorInfo Armor;
-    public DamageType DamageType = DamageType.COLLISION;
-
+    public ArmorData ArmorData;
+    public MoveLimitData MoveLimitData = MoveLimitData.Default;
+    public RenderData RenderData = RenderData.Default;
+    public AIData AIData = AIData.Default;
+    public ScoreData ScoreData;
+    
     // Mesh Data
     public float Scale = 1;
 
@@ -58,65 +62,16 @@ namespace SWEndor.ActorTypes
 
     //Combat Data
     public float ImpactDamage = 1.0f;
-
-    //Move Data
-    public float MaxSpeed = 0.0f;
-    public float MinSpeed = 0.0f;
-    public float MaxSpeedChangeRate = 0.0f;
-    public float MaxTurnRate = 0.0f;
-    public float MaxSecondOrderTurnRateFrac = 0.2f;
-    public float XLimit = 75.0f;
-    public float ZTilt = 0.0f;
-    public float ZNormFrac = 0.025f;
+    public DamageType DamageType = DamageType.COLLISION;
 
 
-    public bool EnableDistanceCull = true;
-    public float CullDistance = 20000.0f;
-
-    // AI
-    public float Attack_AngularDelta = 5f;
-    public float Attack_HighAccuracyAngularDelta = 1f;
-    public float Move_CloseEnough = 500;
-
-    public bool AggressiveTracker = false;
-    public bool AlwaysAccurateRotation = false;
-
-    public int Score_perStrength = 0;
-    public int Score_DestroyBonus = 0;
-
-    // AI
-    public bool CanEvade = false;
-    public bool CanRetaliate = false;
-    public bool CanCheckCollisionAhead = false;
-
-    // Targeting
-    public TargetType TargetType = TargetType.NULL;
-    public int HuntWeight = 1;
-
-    // Meshs
-    public string SourceMeshPath = "";
-    public string SourceFarMeshPath = "";
-    public TVMesh SourceMesh = null;
-    public TVMesh SourceFarMesh = null;
-
-    public TV_3DVECTOR max_dimensions = new TV_3DVECTOR();
-    public TV_3DVECTOR min_dimensions = new TV_3DVECTOR();
-    public TV_3DVECTOR size { get { return max_dimensions - min_dimensions; } }
-
-
-    // Render
-    public float RadarSize = 0;
-    public RadarType RadarType = RadarType.NULL;
-    public bool AlwaysShowInRadar = false;
+    public MeshData MeshData = MeshData.Default;
 
     // Performance Savings
     public bool IsLaser = false;
 
-    // Misc
-    public bool IsExplosion = false;
-
     // AddOns
-    public AddOnInfo[] AddOns = new AddOnInfo[0];
+    public AddOnData[] AddOns = new AddOnData[0];
 
     // Explosionf
     public ExplodeInfo[] Explodes = new ExplodeInfo[0];
@@ -126,107 +81,56 @@ namespace SWEndor.ActorTypes
     public bool TrackerDummyWeapon = false;
 
     // Debris
-    public DebrisSpawnerInfo[] Debris = new DebrisSpawnerInfo[0];
+    public DebrisSpawnerData[] Debris = new DebrisSpawnerData[0];
 
-    public ActorCameraInfo[] Cameras = new ActorCameraInfo[0];
-    public DeathCameraInfo DeathCamera = new DeathCameraInfo(350, 25, 15);
+    public LookData[] Cameras = new LookData[0];
+    public DeathCameraData DeathCamera = new DeathCameraData(350, 25, 15);
 
     // Sound
-    public SoundSourceInfo[] InitialSoundSources = new SoundSourceInfo[0];
-    public SoundSourceInfo[] SoundSources = new SoundSourceInfo[0];
+    public SoundSourceData[] InitialSoundSources = new SoundSourceData[0];
+    public SoundSourceData[] SoundSources = new SoundSourceData[0];
 
-
-    public virtual void RegisterModel()
+    public void LoadFromINI()
     {
-      if (SourceMesh == null)
+      string filepath = Path.Combine(Globals.ActorTypeINIDirectory, Name + ".ini");
+
+      if (File.Exists(filepath))
       {
-        SourceMesh = TrueVision.TVGlobals.GetMesh(Name);
-        if (SourceMesh == null)
-        {
-          SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Name);
-          //SourceMesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_BUMPMAPPING_TANGENTSPACE, 8);
-
-          if (SourceMeshPath.Length > 0)
-            SourceMesh.LoadXFile(SourceMeshPath, true);
-          SourceMesh.Enable(false);
-          SourceMesh.SetCollisionEnable(false);
-          SourceMesh.WeldVertices();
-          SourceMesh.ComputeBoundings();
-          SourceMesh.GetBoundingBox(ref min_dimensions, ref max_dimensions);
-        }
+        INIFile f = new INIFile(filepath);
+        RenderData.LoadFromINI(f, "RenderData");
+        AIData.LoadFromINI(f, "AIData");
+        ScoreData.LoadFromINI(f, "ScoreData");
+        RegenData = new RegenData(f, "RegenData");
+        MoveLimitData.LoadFromINI(f, "MoveLimitData");
       }
-
-      if (SourceFarMesh == null)
+      else
       {
-        SourceFarMesh = TrueVision.TVGlobals.GetMesh(Name + "_far");
-        if (SourceFarMesh == null)
-        {
-          if (SourceFarMeshPath.Length > 0)
-          {
-            SourceFarMesh = TrueVision.TVScene.CreateMeshBuilder(Name + "_far");
-            SourceFarMesh.LoadXFile(SourceFarMeshPath, true);
-            SourceFarMesh.Enable(false);
-            SourceMesh.SetCollisionEnable(false);
-            SourceFarMesh.WeldVertices();
-            SourceFarMesh.ComputeBoundings();
-          }
-          else
-            SourceFarMesh = SourceMesh.Duplicate();
-        }
+        File.Create(filepath).Close();
+        INIFile f = new INIFile(filepath);
+        RenderData.SaveToINI(f, "RenderData");
+        AIData.SaveToINI(f, "AIData");
+        ScoreData.SaveToINI(f, "ScoreData");
+        RegenData.SaveToINI(f, "RegenData");
+        MoveLimitData.SaveToINI(f, "MoveLimitData");
+        f.SaveFile(filepath);
       }
-    }
-
-    public virtual TVMesh GenerateMesh()
-    {
-      if (SourceMesh == null)
-        throw new NotImplementedException("Attempted to generate empty model");
-
-      return SourceMesh.Duplicate();
-    }
-
-    public virtual TVMesh GenerateFarMesh()
-    {
-      if (SourceFarMesh == null)
-        SourceFarMesh = SourceMesh.Duplicate();
-
-      return SourceFarMesh.Duplicate();
-    }
-
-    public int LoadAlphaTexture(string name, string texpath, string alphatexpath = null)
-    {
-      int tex = TrueVision.TVGlobals.GetTex(name);
-      if (tex == 0)
-      {
-        int texS = TrueVision.TVTextureFactory.LoadTexture(texpath);
-        int texA = TrueVision.TVTextureFactory.LoadTexture(alphatexpath ?? texpath); //LoadAlphaTexture
-        tex = TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, name);
-      }
-      return tex;
-    }
-
-    public int LoadTexture(string name, string texpath)
-    {
-      int tex = TrueVision.TVGlobals.GetTex(name);
-      if (tex == 0)
-        tex = TrueVision.TVTextureFactory.LoadTexture(texpath, name);
-      return tex;
     }
 
     public virtual void Initialize(ActorInfo ainfo)
     {
       // AI
-      ainfo.CanEvade = CanEvade;
-      ainfo.CanRetaliate = CanRetaliate;
+      ainfo.CanEvade = AIData.CanEvade;
+      ainfo.CanRetaliate = AIData.CanRetaliate;
 
       // Sound
       if (!(GameScenarioManager?.Scenario is GSMainMenu))
-        foreach (SoundSourceInfo assi in InitialSoundSources)
+        foreach (SoundSourceData assi in InitialSoundSources)
           assi.Process(ainfo);
     }
 
     public void GenerateAddOns(ActorInfo ainfo)
     {
-      foreach (AddOnInfo addon in AddOns)
+      foreach (AddOnData addon in AddOns)
         addon.Create(Engine, ainfo);
     }
 
@@ -250,7 +154,7 @@ namespace SWEndor.ActorTypes
         && !ainfo.IsScenePlayer
         && !(GameScenarioManager?.Scenario is GSMainMenu))
       {
-        foreach (SoundSourceInfo assi in SoundSources)
+        foreach (SoundSourceData assi in SoundSources)
           assi.Process(ainfo);
       }
     }
@@ -370,7 +274,7 @@ namespace SWEndor.ActorTypes
         owner.InflictDamage(hitby, hitby.TypeInfo.ImpactDamage, DamageType.COLLISION, impact);
         if (owner.HP > 0
           && Engine.MaskDataSet[owner].Has(ComponentMask.CAN_MOVE)
-          && owner.TypeInfo.TargetType.Has(TargetType.FIGHTER))
+          && owner.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
         {
           float repel = -owner.MoveData.Speed * 0.25f;
           owner.MoveRelative(repel, 0, 0);
@@ -437,7 +341,7 @@ namespace SWEndor.ActorTypes
     {
       float accuracy = 1;
 
-      float d = ActorDistanceInfo.GetDistance(owner, target) / weapontype.MaxSpeed;
+      float d = ActorDistanceInfo.GetDistance(owner, target) / weapontype.MoveLimitData.MaxSpeed;
       TV_3DVECTOR angle = Utilities.GetRotation(target.GetGlobalPosition() - owner.GetGlobalPosition()) - owner.GetGlobalRotation();
       angle.x -= (int)((angle.x + 180) / 360) * 360;
       angle.y -= (int)((angle.y + 180) / 360) * 360;
@@ -478,7 +382,7 @@ namespace SWEndor.ActorTypes
 
       // Debris
       if (!ainfo.IsAggregateMode && !Game.IsLowFPS())
-        foreach (DebrisSpawnerInfo ds in Debris)
+        foreach (DebrisSpawnerData ds in Debris)
           ds.Process(ainfo);
 
       if (ainfo.IsPlayer)

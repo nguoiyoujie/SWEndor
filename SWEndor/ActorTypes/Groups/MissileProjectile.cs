@@ -11,18 +11,18 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.DefaultFighter;
-      Armor = ArmorInfo.Default;
+      ArmorData = ArmorData.Default;
       Explodes = new ExplodeInfo[]
       {
         new ExplodeInfo("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
       };
 
-      CullDistance = 12000;
+      RenderData.CullDistance = 12000;
 
       // Projectile
       ImpactCloseEnoughDistance = 100;
-      TargetType = TargetType.MUNITION;
-      RadarType = RadarType.TRAILLINE;
+      AIData.TargetType = TargetType.MUNITION;
+      RenderData.RadarType = RadarType.TRAILLINE;
 
       Mask = ComponentMask.GUIDED_PROJECTILE;
 

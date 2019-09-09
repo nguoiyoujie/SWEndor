@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.ActorTypes.Components;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -11,12 +12,11 @@ namespace SWEndor.ActorTypes.Instances
       MaxStrength = 12000;
       ImpactDamage = 120;
 
-      RadarSize = 2.5f;
+      RenderData.RadarSize = 2.5f;
 
-      Score_perStrength = 50;
-      Score_DestroyBonus = 5000;
+      ScoreData = new ScoreData(50, 5000);
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"surface\surface_vent.x");
+      MeshData = new MeshData(Name, @"surface\surface_vent.x");
     }
 
     public override void ProcessHit(ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)

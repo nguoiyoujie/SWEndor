@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.ActorTypes.Components;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -11,10 +12,9 @@ namespace SWEndor.ActorTypes.Instances
       MaxStrength = 105;
       ImpactDamage = 16;
 
-      Score_perStrength = 300;
-      Score_DestroyBonus = 2500;
+      ScoreData = new ScoreData(300, 2500);
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"turbotowers\executor_turbolaser.x");
+      MeshData = new MeshData(Name, @"turbotowers\executor_turbolaser.x");
 
       Loadouts = new string[] { "EXEC_LASR" };
     }

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using SWEndor.ActorTypes.Components;
+using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -6,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ImperialIStaticATI(Factory owner) : base(owner, "Imperial-I Static")
     {
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"stardestroyer\star_destroyer_static.x");
+      MeshData = new MeshData(Name, @"stardestroyer\star_destroyer_static.x");
     }
   }
 }

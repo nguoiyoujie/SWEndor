@@ -9,13 +9,15 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.DefaultFighter;
-      Armor = new ArmorInfo() { Light = 1, Hull = 100 };
+      ArmorData = new ArmorData(1, 100);
 
-      TargetType |= TargetType.SHIELDGENERATOR;
-      RadarType = RadarType.HOLLOW_CIRCLE_M;
+      ScoreData = new ScoreData(75, 2500);
 
-      RadarSize = 2;
-      HuntWeight = 3;
+      AIData.TargetType |= TargetType.SHIELDGENERATOR;
+      RenderData.RadarType = RadarType.HOLLOW_CIRCLE_M;
+
+      RenderData.RadarSize = 2;
+      AIData.HuntWeight = 3;
     }
   }
 }

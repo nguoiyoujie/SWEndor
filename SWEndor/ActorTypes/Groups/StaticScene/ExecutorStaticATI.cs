@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using SWEndor.ActorTypes.Components;
+using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -6,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ExecutorStaticATI(Factory owner) : base(owner, "Executor Static")
     {
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"executor\executor_static.x");
+      MeshData = new MeshData(Name, @"executor\executor_static.x");
     }
   }
 }

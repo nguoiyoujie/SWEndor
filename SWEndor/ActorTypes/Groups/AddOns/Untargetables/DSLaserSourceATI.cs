@@ -14,10 +14,8 @@ namespace SWEndor.ActorTypes.Instances
       MaxStrength = 1500.0f;
       ImpactDamage = 4000.0f;
 
-      EnableDistanceCull = false;
-
-      TargetType = TargetType.NULL;
-      RadarType = RadarType.NULL;
+      AIData.TargetType = TargetType.NULL;
+      RenderData.RadarType = RadarType.NULL;
 
       Mask &= ~(ComponentMask.CAN_BECOLLIDED | ComponentMask.CAN_BETARGETED);
     }

@@ -10,36 +10,35 @@ namespace SWEndor.ActorTypes.Instances
     internal TIE_X1_ATI(Factory owner) : base(owner, "TIE Advanced X1")
     {
       CombatData = CombatData.DefaultShip;
-      Armor = ArmorInfo.Default;
+      ArmorData = ArmorData.Default;
 
       MaxStrength = 275;
       ImpactDamage = 100;
-      MaxSpeed = 900;
-      MinSpeed = 200;
-      MaxSpeedChangeRate = 500;
-      MaxTurnRate = 90;
-      MaxSecondOrderTurnRateFrac = 0.8f;
+      MoveLimitData.MaxSpeed = 900;
+      MoveLimitData.MinSpeed = 200;
+      MoveLimitData.MaxSpeedChangeRate = 500;
+      MoveLimitData.MaxTurnRate = 90;
+      MoveLimitData.MaxSecondOrderTurnRateFrac = 0.8f;
 
-      ZTilt = 3.25f;
-      ZNormFrac = 0.005f;
+      MoveLimitData.ZTilt = 3.25f;
+      MoveLimitData.ZNormFrac = 0.005f;
 
-      Attack_AngularDelta = 7.5f;
-      Attack_HighAccuracyAngularDelta = 5;
-      Move_CloseEnough = 1000;
+      AIData.Attack_AngularDelta = 7.5f;
+      AIData.Attack_HighAccuracyAngularDelta = 5;
+      AIData.Move_CloseEnough = 1000;
 
-      AggressiveTracker = true;
+      AIData.AggressiveTracker = true;
 
-      Score_perStrength = 750;
-      Score_DestroyBonus = 10000;
+      ScoreData = new ScoreData(750, 10000);
 
-      RegenData = new RegenInfo { SelfRegenRate = 0.06f };
+      RegenData = new RegenData(false, 0.06f, 0, 0, 0);
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"tie_vader\tie_vader.x");
-      Cameras = new ActorCameraInfo[] 
+      MeshData = new MeshData(Name, @"tie_vader\tie_vader.x");
+      Cameras = new LookData[] 
       {
-        new ActorCameraInfo(new TV_3DVECTOR(0, 0, 20), new TV_3DVECTOR(0, 0, 2000)),
-        new ActorCameraInfo(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
-        new ActorCameraInfo(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
+        new LookData(new TV_3DVECTOR(0, 0, 20), new TV_3DVECTOR(0, 0, 2000)),
+        new LookData(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
+        new LookData(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
       };
 
       Loadouts = new string[] { "TIEX_TORP", "TIEX_LASR" };

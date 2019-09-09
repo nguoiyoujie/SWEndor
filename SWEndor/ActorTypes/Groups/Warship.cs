@@ -4,10 +4,10 @@
   {
     internal Warship(Factory owner, string name): base(owner, name)
     {
-      ZTilt = 7.5f;
-      ZNormFrac = 0.005f;
+      MoveLimitData.ZTilt = 7.5f;
+      MoveLimitData.ZNormFrac = 0.005f;
 
-      RadarType = RadarType.RECTANGLE_GIANT;
+      RenderData.RadarType = RadarType.RECTANGLE_GIANT;
     }
   }
 }

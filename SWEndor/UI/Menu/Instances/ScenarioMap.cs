@@ -139,7 +139,7 @@ namespace SWEndor.UI.Menu.Pages
         TV_3DVECTOR ppos = PlayerCameraInfo.Position * zoom_ratio;
         TV_3DVECTOR apos = a.GetGlobalPosition() * zoom_ratio;
 
-        float size = a.TypeInfo.RadarSize * 3;
+        float size = a.TypeInfo.RenderData.RadarSize * 3;
 
         if (a.Active
           && size > 0
@@ -158,7 +158,7 @@ namespace SWEndor.UI.Menu.Pages
           float x = Engine.ScreenWidth / 2 - xy.X - displacement.x;
           float y = Engine.ScreenHeight / 2 - xy.Y - displacement.y;
 
-          switch (a.TypeInfo.RadarType)
+          switch (a.TypeInfo.RenderData.RadarType)
           {
             case RadarType.TRAILLINE:
               float ang = a.GetGlobalRotation().y - proty;

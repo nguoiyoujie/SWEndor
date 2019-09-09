@@ -39,7 +39,7 @@ namespace SWEndor.AI.Actions
              && a.Active
              && !a.IsDyingOrDead
              && engine.ActorDataSet.CombatData[a.dataID].IsCombatObject
-             && (a.TypeInfo.TargetType & m_TargetType) != 0
+             && (a.TypeInfo.AIData.TargetType & m_TargetType) != 0
              && !a.IsOutOfBounds(engine.GameScenarioManager.MinAIBounds, engine.GameScenarioManager.MaxAIBounds)
              && !actor.Faction.IsAlliedWith(a.Faction) // enemy
              )

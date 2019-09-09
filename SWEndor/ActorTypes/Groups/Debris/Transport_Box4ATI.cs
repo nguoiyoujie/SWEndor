@@ -1,6 +1,7 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.ActorTypes.Components;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -12,10 +13,10 @@ namespace SWEndor.ActorTypes.Instances
       // Combat
       TimedLifeData = new TimedLifeData(true, 12);
 
-      MaxSpeed = 500;
-      MinSpeed = 100;
+      MoveLimitData.MaxSpeed = 500;
+      MoveLimitData.MinSpeed = 100;
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"transport\transport_box4.x");
+      MeshData = new MeshData(Name, @"transport\transport_box4.x");
     }
 
     public override void ProcessState(ActorInfo ainfo)

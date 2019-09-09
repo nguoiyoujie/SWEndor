@@ -10,17 +10,15 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.Disabled;
-      Armor = ArmorInfo.Immune;
+      ArmorData = ArmorData.Immune;
 
       MaxStrength = 100000.0f;
-      MaxSpeed = 0.0f;
-      MinSpeed = 0.0f;
-      MaxSpeedChangeRate = 0.0f;
-      MaxTurnRate = 0.0f;
-      EnableDistanceCull = false;
+      MoveLimitData.MaxSpeed = 0.0f;
+      MoveLimitData.MinSpeed = 0.0f;
+      MoveLimitData.MaxSpeedChangeRate = 0.0f;
+      MoveLimitData.MaxTurnRate = 0.0f;
 
-      Score_perStrength = 0;
-      Score_DestroyBonus = 0;
+      RenderData.CullDistance = -1;
 
       Mask = ComponentMask.STATIC_PROP;
     }

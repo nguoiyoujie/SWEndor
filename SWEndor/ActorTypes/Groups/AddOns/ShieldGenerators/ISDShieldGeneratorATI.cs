@@ -11,20 +11,17 @@ namespace SWEndor.ActorTypes.Instances
     {
       MaxStrength = 105;
       ImpactDamage = 300.0f;
-      RadarSize = 2;
+      RenderData.RadarSize = 2;
 
-      CullDistance = 30000;
+      RenderData.CullDistance = 30000;
+      
+      AIData.TargetType |= TargetType.SHIELDGENERATOR;
+      RenderData.RadarType = RadarType.HOLLOW_CIRCLE_M;
 
-      Score_perStrength = 75;
-      Score_DestroyBonus = 2500;
-
-      TargetType |= TargetType.SHIELDGENERATOR;
-      RadarType = RadarType.HOLLOW_CIRCLE_M;
-
-      RegenData = new RegenInfo { NoRegen = true, ParentRegenRate = 12f, SiblingRegenRate = 0.5f };
+      RegenData = new RegenData(true, 0, 12, 0, 0.5f);
 
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"stardestroyer\star_destroyer_energy_pod.x");
+      MeshData = new MeshData(Name, @"stardestroyer\star_destroyer_energy_pod.x");
     }
 
     public override void Initialize(ActorInfo ainfo)

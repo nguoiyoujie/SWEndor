@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using SWEndor.ActorTypes.Components;
+using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -6,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal Surface002_08ATI(Factory owner) : base(owner, "Surface002_08ATI")
     {
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"surface\surface002_08.x");
+      MeshData = new MeshData(Name, @"surface\surface002_08.x");
     }
   }
 }

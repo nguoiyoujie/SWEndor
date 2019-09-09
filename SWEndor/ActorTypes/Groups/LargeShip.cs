@@ -10,7 +10,7 @@ namespace SWEndor.ActorTypes.Groups
     internal LargeShip(Factory owner, string name) : base(owner, name)
     {
       CombatData = CombatData.DefaultShip;
-      Armor = ArmorInfo.Default;
+      ArmorData = ArmorData.Default;
       Explodes = new ExplodeInfo[]
       {
         new ExplodeInfo("ExpL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
@@ -18,17 +18,17 @@ namespace SWEndor.ActorTypes.Groups
         new ExplodeInfo("ExpW01", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
-      CullDistance = 20000;
+      RenderData.CullDistance = 20000;
 
-      ZTilt = 5f;
-      ZNormFrac = 0.008f;
-      RadarSize = 10;
+      MoveLimitData.ZTilt = 5f;
+      MoveLimitData.ZNormFrac = 0.008f;
+      RenderData.RadarSize = 10;
 
-      TargetType = TargetType.SHIP;
-      RadarType = RadarType.RECTANGLE_GIANT;
+      AIData.TargetType = TargetType.SHIP;
+      RenderData.RadarType = RadarType.RECTANGLE_GIANT;
 
       Mask = ComponentMask.ACTOR;
-      HuntWeight = 5;
+      AIData.HuntWeight = 5;
     }
 
     public override void Initialize(ActorInfo ainfo)

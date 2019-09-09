@@ -12,24 +12,13 @@ namespace SWEndor.ActorTypes.Instances
       // Combat
       TimedLifeData = new TimedLifeData(true, 1);
 
-      RadarSize = 20;
-      RadarType = RadarType.FILLED_CIRCLE_L;
+      RenderData.RadarSize = 20;
+      RenderData.RadarType = RadarType.FILLED_CIRCLE_L;
+      RenderData.CullDistance = -1;
 
-      EnableDistanceCull = false;
+      MeshData = MeshDataDecorator.CreateBillboardAnimation(Name, 1000, "explosion/large", ref texanimframes);
 
-      SourceMesh = TrueVision.TVGlobals.GetMesh(Name);
-      if (SourceMesh == null)
-      {
-        LoadAlphaTextureFromFolder(Globals.ImagePath, "explosion/large");
-        SourceMesh = TrueVision.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 1000, 1000, Name, true);
-        SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
-        SourceMesh.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
-
-        SourceMesh.Enable(false);
-        SourceMesh.SetCollisionEnable(false);
-      }
-
-      InitialSoundSources = new SoundSourceInfo[] { new SoundSourceInfo("exp_nave", 3000) };
+      InitialSoundSources = new SoundSourceData[] { new SoundSourceData("exp_nave", 3000) };
     }
 
     public override void Initialize(ActorInfo ainfo)

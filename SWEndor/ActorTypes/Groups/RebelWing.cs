@@ -7,8 +7,8 @@ namespace SWEndor.ActorTypes.Groups
   {
     internal RebelWing(Factory owner, string name): base(owner, name)
     {
-      CullDistance = 7500;
-      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("xwing_engine", 200f, new TV_3DVECTOR(0, 0, -30), true) };
+      RenderData.CullDistance = 7500;
+      SoundSources = new SoundSourceData[] { new SoundSourceData("xwing_engine", 200f, new TV_3DVECTOR(0, 0, -30), true) };
     }
   }
 }

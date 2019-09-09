@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.ActorTypes.Components;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -11,10 +12,7 @@ namespace SWEndor.ActorTypes.Instances
       MaxStrength = 105;
       ImpactDamage = 16;
 
-      Score_perStrength = 250;
-      Score_DestroyBonus = 1250;
-
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"turbotowers\corellian_turbolaser.x");
+      MeshData = new MeshData(Name, @"turbotowers\corellian_turbolaser.x");
 
       Loadouts = new string[] { "CRLN_LASR" };
     }

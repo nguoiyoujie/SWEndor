@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.ActorTypes.Components;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -10,12 +11,9 @@ namespace SWEndor.ActorTypes.Instances
     {
       MaxStrength = 200;
       ImpactDamage = 16;
-      MaxTurnRate = 50f;
+      MoveLimitData.MaxTurnRate = 50f;
 
-      Score_perStrength = 250;
-      Score_DestroyBonus = 1250;
-
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"turbotowers\mc90_turbolaser.x");
+      MeshData = new MeshData(Name, @"turbotowers\mc90_turbolaser.x");
 
       Loadouts = new string[] { "MC90_LASR" };
     }

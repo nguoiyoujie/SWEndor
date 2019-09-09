@@ -63,12 +63,12 @@ namespace SWEndor.AI.Actions
 
     internal static float AdjustRotation(ActorInfo owner, TV_3DVECTOR target_Position, bool isAttacking = false, bool isAvoidCollision = false)
     {
-      if (owner.TypeInfo.AlwaysAccurateRotation)
+      if (owner.TypeInfo.AIData.AlwaysAccurateRotation)
       {
         owner.LookAt(target_Position);
         return 0;
       }
-      if (owner.TypeInfo.MaxTurnRate == 0) // Cannot turn
+      if (owner.TypeInfo.MoveLimitData.MaxTurnRate == 0) // Cannot turn
       {
         return 0;
       }
@@ -86,11 +86,11 @@ namespace SWEndor.AI.Actions
         // increased responsiveness
         chgrot *= isAvoidCollision ? 9999 : 10;
 
-        chgrot.x = chgrot.x.Clamp(-owner.TypeInfo.MaxTurnRate, owner.TypeInfo.MaxTurnRate);
-        chgrot.y = chgrot.y.Clamp(-owner.TypeInfo.MaxTurnRate, owner.TypeInfo.MaxTurnRate);
+        chgrot.x = chgrot.x.Clamp(-owner.TypeInfo.MoveLimitData.MaxTurnRate, owner.TypeInfo.MoveLimitData.MaxTurnRate);
+        chgrot.y = chgrot.y.Clamp(-owner.TypeInfo.MoveLimitData.MaxTurnRate, owner.TypeInfo.MoveLimitData.MaxTurnRate);
 
         // limit abrupt changes
-        float limit = owner.TypeInfo.MaxTurnRate * owner.TypeInfo.MaxSecondOrderTurnRateFrac;
+        float limit = owner.TypeInfo.MoveLimitData.MaxTurnRate * owner.TypeInfo.MoveLimitData.MaxSecondOrderTurnRateFrac;
         if (Math.Abs(owner.MoveData.XTurnAngle - chgrot.x) > limit)
           owner.MoveData.XTurnAngle += limit * ((owner.MoveData.XTurnAngle > chgrot.x) ? -1 : 1);
         else
@@ -142,7 +142,7 @@ namespace SWEndor.AI.Actions
     {
       //return false; // disable for now
 
-      if (!owner.TypeInfo.CanCheckCollisionAhead)
+      if (!owner.TypeInfo.AIData.CanCheckCollisionAhead)
         return false;
 
       if (!owner.Engine.MaskDataSet[owner].Has(ComponentMask.CAN_BECOLLIDED))

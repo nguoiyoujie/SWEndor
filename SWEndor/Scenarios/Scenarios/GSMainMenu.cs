@@ -291,8 +291,8 @@ namespace SWEndor.Scenarios
           Faction = MainAllyFaction,
           Position = v + new TV_3DVECTOR(0, 0, Manager.MaxBounds.z),
           Rotation = new TV_3DVECTOR(0, 180, 0),
-          Actions = new ActionInfo[] { new Move(nv, at.MaxSpeed)
-                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), at.MinSpeed)
+          Actions = new ActionInfo[] { new Move(nv, at.MoveLimitData.MaxSpeed)
+                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), at.MoveLimitData.MinSpeed)
                                            , new Lock()
                                             }
         }.Spawn(this);
@@ -320,8 +320,8 @@ namespace SWEndor.Scenarios
           Faction = MainAllyFaction,
           Position = v + new TV_3DVECTOR(0, 0, Manager.MaxBounds.z),
           Rotation = new TV_3DVECTOR(0, 180, 0),
-          Actions = new ActionInfo[] { new Move(nv, at.MaxSpeed)
-                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), at.MinSpeed)
+          Actions = new ActionInfo[] { new Move(nv, at.MoveLimitData.MaxSpeed)
+                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), at.MoveLimitData.MinSpeed)
                                            , new Lock()
                                             }
         }.Spawn(this);
@@ -349,8 +349,8 @@ namespace SWEndor.Scenarios
           Faction = MainAllyFaction,
           Position = v + new TV_3DVECTOR(0, 0, Manager.MaxBounds.z),
           Rotation = new TV_3DVECTOR(0, 180, 0),
-          Actions = new ActionInfo[] { new Move(nv, at.MaxSpeed)
-                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), at.MinSpeed)
+          Actions = new ActionInfo[] { new Move(nv, at.MoveLimitData.MaxSpeed)
+                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), at.MoveLimitData.MinSpeed)
                                            , new Lock()
                                             }
         }.Spawn(this);
@@ -368,7 +368,7 @@ namespace SWEndor.Scenarios
           actor.ForceClearQueue();
           actor.QueueLast(new Rotate(actor.GetGlobalPosition() + new TV_3DVECTOR(18000, 0, -20000)
                                                 , actor.MoveData.Speed
-                                                , actor.TypeInfo.Move_CloseEnough));
+                                                , actor.TypeInfo.AIData.Move_CloseEnough));
           actor.QueueLast(new HyperspaceOut());
           actor.QueueLast(new Delete());
         }
@@ -736,7 +736,7 @@ namespace SWEndor.Scenarios
                                      , new HyperspaceIn(v)
                                      , new SetMood(-12, true)
                                      , new EnableSpawn(true)
-                                     , new Move(new TV_3DVECTOR(v.x * 0.2f, v.y, -1000), ActorTypeFactory.Get("Imperial-I Star Destroyer").MaxSpeed / 2)
+                                     , new Move(new TV_3DVECTOR(v.x * 0.2f, v.y, -1000), ActorTypeFactory.Get("Imperial-I Star Destroyer").MoveLimitData.MaxSpeed / 2)
                                      , new Rotate(new TV_3DVECTOR(-1600, -120, 6300), 0)
                                      , new Lock() }
         }.Spawn(this);

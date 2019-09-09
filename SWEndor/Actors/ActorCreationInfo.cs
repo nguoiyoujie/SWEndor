@@ -24,7 +24,7 @@ namespace SWEndor.ActorTypes
       ActorTypeInfo = at;
       Name = at.Name;
       InitialStrength = at.MaxStrength;
-      InitialSpeed = at.MaxSpeed;
+      InitialSpeed = at.MoveLimitData.MaxSpeed;
 
       Faction = FactionInfo.Neutral;
       CreationTime = 0;

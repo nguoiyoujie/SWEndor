@@ -184,7 +184,7 @@ namespace SWEndor.Actors
 
       Faction = acinfo.Faction;
 
-      HuntWeight = TypeInfo.HuntWeight;
+      HuntWeight = TypeInfo.AIData.HuntWeight;
 
       TypeInfo.Initialize(this);
     }
@@ -220,7 +220,7 @@ namespace SWEndor.Actors
 
       MoveComponent = MoveDecorator.Create(TypeInfo);
 
-      HuntWeight = TypeInfo.HuntWeight;
+      HuntWeight = TypeInfo.AIData.HuntWeight;
       TypeInfo.Initialize(this);
     }
 
@@ -337,10 +337,10 @@ namespace SWEndor.Actors
     {
       get
       {
-        float distcheck = TypeInfo.CullDistance * Game.PerfCullModifier;
+        float distcheck = TypeInfo.RenderData.CullDistance * Game.PerfCullModifier;
         
         return (!IsPlayer
-          && TypeInfo.EnableDistanceCull
+          && TypeInfo.RenderData.EnableDistanceCull
           && ActorDistanceInfo.GetRoughDistance(GetGlobalPosition(), PlayerCameraInfo.Camera.GetPosition()) > distcheck);
       }
     }
@@ -349,10 +349,10 @@ namespace SWEndor.Actors
     {
       get
       {
-        float distcheck = TypeInfo.CullDistance * 0.25f * Game.PerfCullModifier;
+        float distcheck = TypeInfo.RenderData.CullDistance * 0.25f * Game.PerfCullModifier;
 
         return (!IsPlayer
-          && TypeInfo.EnableDistanceCull
+          && TypeInfo.RenderData.EnableDistanceCull
           && ActorDistanceInfo.GetRoughDistance(GetGlobalPosition(), PlayerCameraInfo.Camera.GetPosition()) > distcheck);
       }
     }

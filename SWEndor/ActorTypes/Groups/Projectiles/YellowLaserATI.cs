@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using SWEndor.ActorTypes.Components;
+using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -7,13 +8,13 @@ namespace SWEndor.ActorTypes.Instances
     internal YellowLaserATI(Factory owner) : base(owner, "Yellow Laser")
     {
       ImpactDamage = 1;
-      MaxSpeed = Globals.LaserSpeed * 0.75f;
-      MinSpeed = Globals.LaserSpeed * 0.75f;
+      MoveLimitData.MaxSpeed = Globals.LaserSpeed * 0.75f;
+      MoveLimitData.MinSpeed = Globals.LaserSpeed * 0.75f;
 
       ImpactCloseEnoughDistance = 35;
       IsLaser = false; // not the same speed
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"projectiles\yellow_laser.x");
+      MeshData = new MeshData(Name, @"projectiles\yellow_laser.x");
     }
   }
 }

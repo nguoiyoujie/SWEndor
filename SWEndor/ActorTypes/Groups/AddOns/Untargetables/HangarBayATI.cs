@@ -11,10 +11,10 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal HangarBayATI(Factory owner) : base(owner, "Hangar Bay")
     {
-      RadarSize = 0;
+      RenderData.RadarSize = 0;
 
-      TargetType = TargetType.NULL;
-      RadarType = RadarType.NULL;
+      AIData.TargetType = TargetType.NULL;
+      RenderData.RadarType = RadarType.NULL;
 
       Mask &= ~(ComponentMask.CAN_BECOLLIDED | ComponentMask.CAN_BETARGETED);
     }
@@ -111,10 +111,10 @@ namespace SWEndor.ActorTypes.Instances
 
       PlayerInfo.ActorID = a.ID;
 
-      if (a.TypeInfo.TargetType.Has(TargetType.FIGHTER) && a.Faction.WingLimit >= 0)
+      if (a.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER) && a.Faction.WingLimit >= 0)
         a.Faction.WingLimit++;
 
-      if (a.TypeInfo.TargetType.Has(TargetType.SHIP) && a.Faction.ShipLimit >= 0)
+      if (a.TypeInfo.AIData.TargetType.Has(TargetType.SHIP) && a.Faction.ShipLimit >= 0)
         a.Faction.ShipLimit++;
 
       PlayerInfo.RequestSpawn = false;
@@ -131,11 +131,11 @@ namespace SWEndor.ActorTypes.Instances
        && p.SpawnerInfo.SpawnTypes.Length > 0)
       {
         ActorTypeInfo spawntype = p.SpawnerInfo.SpawnTypes[Engine.Random.Next(0, p.SpawnerInfo.SpawnTypes.Length)];
-        if ((spawntype.TargetType.Has(TargetType.FIGHTER)
+        if ((spawntype.AIData.TargetType.Has(TargetType.FIGHTER)
           && (p.Faction.WingSpawnLimit == -1 || p.Faction.Wings.Count < p.Faction.WingSpawnLimit)
           && (p.Faction.WingLimit == -1 || p.Faction.Wings.Count < p.Faction.WingLimit)
           )
-        || (spawntype.TargetType.Has(TargetType.SHIP)
+        || (spawntype.AIData.TargetType.Has(TargetType.SHIP)
           && (p.Faction.ShipSpawnLimit == -1 || p.Faction.Ships.Count < p.Faction.ShipSpawnLimit))
           && (p.Faction.ShipLimit == -1 || p.Faction.Ships.Count < p.Faction.ShipLimit)
           )

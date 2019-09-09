@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using SWEndor.ActorTypes.Components;
+using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -6,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal Asteroid04ATI(Factory owner) : base(owner, "Asteroid 04")
     {
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"asteroids\asteroid04.x");
+      MeshData = new MeshData(Name, @"asteroids\asteroid04.x");
     }
   }
 }

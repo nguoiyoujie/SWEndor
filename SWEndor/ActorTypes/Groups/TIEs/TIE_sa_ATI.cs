@@ -10,21 +10,20 @@ namespace SWEndor.ActorTypes.Instances
     {
       MaxStrength = 6;
       ImpactDamage = 16;
-      MaxSpeed = 300;
-      MinSpeed = 150;
-      MaxSpeedChangeRate = 200;
-      MaxTurnRate = 40;
+      MoveLimitData.MaxSpeed = 300;
+      MoveLimitData.MinSpeed = 150;
+      MoveLimitData.MaxSpeedChangeRate = 200;
+      MoveLimitData.MaxTurnRate = 40;
 
-      Score_perStrength = 350;
-      Score_DestroyBonus = 500;
+      ScoreData = new ScoreData(350, 500);
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"tie_vader\tie_bomber.x");
+      MeshData = new MeshData(Name, @"tie_vader\tie_bomber.x");
 
-      Cameras = new ActorCameraInfo[]
+      Cameras = new LookData[]
       {
-        new ActorCameraInfo(new TV_3DVECTOR(0, 0, 20), new TV_3DVECTOR(0, 0, 2000)),
-        new ActorCameraInfo(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
-        new ActorCameraInfo(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
+        new LookData(new TV_3DVECTOR(0, 0, 20), new TV_3DVECTOR(0, 0, 2000)),
+        new LookData(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
+        new LookData(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
       };
 
       Loadouts = new string[] { "TIEB_TORP", "TIEB_ION", "TIEB_LASR" };

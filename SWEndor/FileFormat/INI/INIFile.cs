@@ -91,6 +91,8 @@ namespace SWEndor.FileFormat.INI
 
             foreach (INISection.INILine line in section.Lines)
               sw.WriteLine(line.ToString());
+
+            sw.WriteLine();
           }
         }
       }

@@ -10,26 +10,25 @@ namespace SWEndor.ActorTypes.Instances
     {
       MaxStrength = 15;
       ImpactDamage = 16;
-      MaxSpeed = 650;
-      MinSpeed = 200;
-      MaxSpeedChangeRate = 350;
-      MaxTurnRate = 60;
+      MoveLimitData.MaxSpeed = 650;
+      MoveLimitData.MinSpeed = 200;
+      MoveLimitData.MaxSpeedChangeRate = 350;
+      MoveLimitData.MaxTurnRate = 60;
 
-      ZTilt = 1.75f;
-      ZNormFrac = 0.005f;
+      MoveLimitData.ZTilt = 1.75f;
+      MoveLimitData.ZNormFrac = 0.005f;
 
-      Score_perStrength = 800;
-      Score_DestroyBonus = 2000;
+      ScoreData = new ScoreData(800, 2000);
 
-      RegenData = new RegenInfo { SelfRegenRate = 0.06f };
+      RegenData = new RegenData(false, 0.06f, 0, 0, 0);
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"tie_vader\tie_vader.x");
+      MeshData = new MeshData(Name, @"tie_vader\tie_vader.x");
 
-      Cameras = new ActorCameraInfo[]
+      Cameras = new LookData[]
       {
-        new ActorCameraInfo(new TV_3DVECTOR(0, 0, 20), new TV_3DVECTOR(0, 0, 2000)),
-        new ActorCameraInfo(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
-        new ActorCameraInfo(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
+        new LookData(new TV_3DVECTOR(0, 0, 20), new TV_3DVECTOR(0, 0, 2000)),
+        new LookData(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
+        new LookData(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
       };
 
       Loadouts = new string[] { "TIEA_MISL", "TIEA_LASR" };

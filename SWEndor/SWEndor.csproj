@@ -168,18 +168,23 @@
     <Compile Include="Actors\Enums\ActorState.cs" />
     <Compile Include="Actors\Enums\CreationState.cs" />
     <Compile Include="Actors\States\ActorDistanceInfo.cs" />
-    <Compile Include="ActorTypes\Components\ArmorInfo.cs" />
-    <Compile Include="ActorTypes\Components\DeathCameraInfo.cs" />
-    <Compile Include="ActorTypes\Components\ActorCameraInfo.cs" />
-    <Compile Include="ActorTypes\Components\RegenInfo.cs" />
+    <Compile Include="ActorTypes\Components\MeshData.cs" />
+    <Compile Include="ActorTypes\Components\MoveLimitData.cs" />
+    <Compile Include="ActorTypes\Components\RenderData.cs" />
+    <Compile Include="ActorTypes\Components\ScoreData.cs" />
+    <Compile Include="ActorTypes\Components\AIData.cs" />
+    <Compile Include="ActorTypes\Components\ArmorData.cs" />
+    <Compile Include="ActorTypes\Components\DeathCameraData.cs" />
+    <Compile Include="ActorTypes\Components\LookData.cs" />
+    <Compile Include="ActorTypes\Components\RegenData.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\NebBSpawner.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\MCLSpawner.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\PlayerSpawner.cs" />
     <Compile Include="ActorTypes\General\Enums\RadarType.cs" />
     <Compile Include="ActorTypes\General\Enums\TargetType.cs" />
-    <Compile Include="ActorTypes\Components\AddOnInfo.cs" />
-    <Compile Include="ActorTypes\Components\SoundSourceInfo.cs" />
-    <Compile Include="ActorTypes\Components\DebrisSpawnerInfo.cs" />
+    <Compile Include="ActorTypes\Components\AddOnData.cs" />
+    <Compile Include="ActorTypes\Components\SoundSourceData.cs" />
+    <Compile Include="ActorTypes\Components\DebrisSpawnerData.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\MC90Spawner.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\SDSpawnerII.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\SDSpawner.cs" />
@@ -615,6 +620,9 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="Data\ActorTypes\actortypes.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Data\dynamicmusic.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -512,8 +512,8 @@ namespace SWEndor.Scenarios
       actions = new ActionInfo[] { new HyperspaceIn(position)
                                  , new Lock()
                                  , new Move(new TV_3DVECTOR(position.x +Engine.Random.Next(-5, 5), position.y +Engine.Random.Next(-5, 5), -position.z - 1500)
-                                                                  , type.MaxSpeed
-                                                                  , type.Move_CloseEnough)
+                                                                  , type.MoveLimitData.MaxSpeed
+                                                                  , type.AIData.Move_CloseEnough)
                                  };
 
       registries = new string[] { "CriticalAllies" };
@@ -547,8 +547,8 @@ namespace SWEndor.Scenarios
       actions = new ActionInfo[] { new HyperspaceIn(position)
                                  , new Lock()
                                  , new Move(new TV_3DVECTOR(position.x +Engine.Random.Next(-5, 5), position.y +Engine.Random.Next(-5, 5), -position.z - 1500)
-                                                                  , type.MaxSpeed
-                                                                  , type.Move_CloseEnough)
+                                                                  , type.MoveLimitData.MaxSpeed
+                                                                  , type.AIData.Move_CloseEnough)
                                  };
 
       registries = new string[] { "CriticalAllies" };
@@ -603,8 +603,8 @@ namespace SWEndor.Scenarios
       actions = new ActionInfo[] { new HyperspaceIn(position)
                                  , new Lock()
                                  , new Move(new TV_3DVECTOR(position.x +Engine.Random.Next(-5, 5), position.y +Engine.Random.Next(-5, 5), -position.z - 1500)
-                                                                  , type.MaxSpeed
-                                                                  , type.Move_CloseEnough)
+                                                                  , type.MoveLimitData.MaxSpeed
+                                                                  , type.AIData.Move_CloseEnough)
                                  };
 
       ainfo = new ActorSpawnInfo
@@ -635,12 +635,12 @@ namespace SWEndor.Scenarios
       actions = new ActionInfo[] { new HyperspaceIn(position)
                                  , new Lock()
                                  , new Move(nv
-                                                  , type.MaxSpeed
-                                                  , type.Move_CloseEnough
+                                                  , type.MoveLimitData.MaxSpeed
+                                                  , type.AIData.Move_CloseEnough
                                                   , false)
                                  , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000)
-                                                    , type.MinSpeed
-                                                    , type.Move_CloseEnough
+                                                    , type.MoveLimitData.MinSpeed
+                                                    , type.AIData.Move_CloseEnough
                                                     , false)
                                  , new Lock()
                                  };
@@ -740,8 +740,8 @@ namespace SWEndor.Scenarios
           actions = new ActionInfo[] { new HyperspaceIn(position)
                                  , new Lock()
                                  , new Move(new TV_3DVECTOR(position.x +Engine.Random.Next(-5, 5), position.y +Engine.Random.Next(-5, 5), -position.z - 1500)
-                                                                  , type.MaxSpeed
-                                                                  , type.Move_CloseEnough)
+                                                                  , type.MoveLimitData.MaxSpeed
+                                                                  , type.AIData.Move_CloseEnough)
                                  };
           if (type is LandoFalconATI || type is WedgeXWingATI)
             huntw = 5;
@@ -759,12 +759,12 @@ namespace SWEndor.Scenarios
           actions = new ActionInfo[] { new HyperspaceIn(position)
                                  , new Lock()
                                  , new Move(nv
-                                                  , type.MaxSpeed
-                                                  , type.Move_CloseEnough
+                                                  , type.MoveLimitData.MaxSpeed
+                                                  , type.AIData.Move_CloseEnough
                                                   , false)
                                  , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000)
-                                                    , type.MinSpeed
-                                                    , type.Move_CloseEnough
+                                                    , type.MoveLimitData.MinSpeed
+                                                    , type.AIData.Move_CloseEnough
                                                     , false)
                                  , new Lock()
                                  };
@@ -803,8 +803,8 @@ namespace SWEndor.Scenarios
         ActorInfo actor = ActorFactory.Get(id);
         if (actor != null)
         {
-          actor.Position = m_rebelPosition[id] + new TV_3DVECTOR(0, 0, actor.TypeInfo.MaxSpeed * 8f);
-          actor.MoveData.Speed = actor.TypeInfo.MaxSpeed;
+          actor.Position = m_rebelPosition[id] + new TV_3DVECTOR(0, 0, actor.TypeInfo.MoveLimitData.MaxSpeed * 8f);
+          actor.MoveData.Speed = actor.TypeInfo.MoveLimitData.MaxSpeed;
         }
       }
     }
@@ -819,7 +819,7 @@ namespace SWEndor.Scenarios
           actor.ForceClearQueue();
           actor.QueueLast(new Rotate(actor.GetGlobalPosition() + new TV_3DVECTOR(500, 0, -20000)
                                                         , actor.MoveData.MaxSpeed
-                                                        , actor.TypeInfo.Move_CloseEnough));
+                                                        , actor.TypeInfo.AIData.Move_CloseEnough));
           actor.QueueLast(new HyperspaceOut());
           actor.QueueLast(new Delete());
         }
@@ -832,7 +832,7 @@ namespace SWEndor.Scenarios
           actor.ForceClearQueue();
           actor.QueueLast(new Rotate(actor.GetGlobalPosition() + new TV_3DVECTOR(500, 0, -20000)
                                                 , actor.MoveData.MaxSpeed
-                                                , actor.TypeInfo.Move_CloseEnough));
+                                                , actor.TypeInfo.AIData.Move_CloseEnough));
           actor.QueueLast(new HyperspaceOut());
           actor.QueueLast(new Delete());
         }
@@ -928,7 +928,7 @@ namespace SWEndor.Scenarios
               {
                 foreach (ActorInfo c in rs.Children)
                 {
-                  if (c.TypeInfo.TargetType.Has(TargetType.SHIELDGENERATOR))
+                  if (c.TypeInfo.AIData.TargetType.Has(TargetType.SHIELDGENERATOR))
                     if (Engine.Random.NextDouble() > 0.4f)
                       rsID = c.ID;
                 }
@@ -1817,8 +1817,8 @@ namespace SWEndor.Scenarios
         Actions = new ActionInfo[]
                            {
                              new HyperspaceIn(position)
-                             , new Move(new TV_3DVECTOR(position.x, position.y, -4000), atinfo.MaxSpeed)
-                             , new Rotate(position + new TV_3DVECTOR(0, 0, 22500), atinfo.MinSpeed)
+                             , new Move(new TV_3DVECTOR(position.x, position.y, -4000), atinfo.MoveLimitData.MaxSpeed)
+                             , new Rotate(position + new TV_3DVECTOR(0, 0, 22500), atinfo.MoveLimitData.MinSpeed)
                              , new Lock()
                            },
         Registries = new string[] { "CriticalEnemies" }

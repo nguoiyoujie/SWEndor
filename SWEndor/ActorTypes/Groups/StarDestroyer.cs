@@ -4,10 +4,10 @@
   {
     internal StarDestroyer(Factory owner, string name) : base(owner, name)
     {
-      ZTilt = 2.5f;
-      ZNormFrac = 0.011f;
+      MoveLimitData.ZTilt = 2.5f;
+      MoveLimitData.ZNormFrac = 0.011f;
 
-      RadarType = RadarType.TRIANGLE_GIANT;
+      RenderData.RadarType = RadarType.TRIANGLE_GIANT;
     }
   }
 }

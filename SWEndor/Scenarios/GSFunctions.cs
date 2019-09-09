@@ -234,8 +234,8 @@ namespace SWEndor.Scenarios
       if (spawninfo.IntermissionMood != 0) actionlist.Add(new SetMood(spawninfo.IntermissionMood, true));
       if (spawninfo.HyperspaceIn) actionlist.Add(new HyperspaceIn(position));
       if (spawninfo.EnableSpawn) actionlist.Add(new EnableSpawn(true));
-      actionlist.Add(new Move(targetposition, spawninfo.TypeInfo.MaxSpeed));
-      actionlist.Add(new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed));
+      actionlist.Add(new Move(targetposition, spawninfo.TypeInfo.MoveLimitData.MaxSpeed));
+      actionlist.Add(new Rotate(facingposition, spawninfo.TypeInfo.MoveLimitData.MinSpeed));
       actionlist.Add(new Lock());
 
       /*

@@ -18,36 +18,36 @@ namespace SWEndor.ActorTypes.Instances
 
       MaxStrength = 650.0f;
       ImpactDamage = 60.0f;
-      MaxSpeed = 110.0f;
-      MinSpeed = 0.0f;
-      MaxSpeedChangeRate = 8.0f;
-      MaxTurnRate = 1.6f;
+      MoveLimitData.MaxSpeed = 110.0f;
+      MoveLimitData.MinSpeed = 0.0f;
+      MoveLimitData.MaxSpeedChangeRate = 8.0f;
+      MoveLimitData.MaxTurnRate = 1.6f;
 
-      CullDistance = 30000;
+      RenderData.CullDistance = 30000;
 
-      Score_perStrength = 50;
-      Score_DestroyBonus = 5000;
+      ScoreData = new ScoreData(50, 5000);
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"acclamator\acclamator.x");
 
-      Cameras = new ActorCameraInfo[] { new ActorCameraInfo(new TV_3DVECTOR(0, 143, 65), new TV_3DVECTOR(0, 143, 2000)) };
-      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 500.0f, new TV_3DVECTOR(0, 0, -100), true) };
-      AddOns = new AddOnInfo[]
+      MeshData = new MeshData(Name, @"acclamator\acclamator.x");
+
+      Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 143, 65), new TV_3DVECTOR(0, 143, 2000)) };
+      SoundSources = new SoundSourceData[] { new SoundSourceData("engine_big", 500.0f, new TV_3DVECTOR(0, 0, -100), true) };
+      AddOns = new AddOnData[]
       {
         // Sides
-        new AddOnInfo("Acclamator Turbolaser Tower", new TV_3DVECTOR(101, 10, 460), new TV_3DVECTOR(0, 72, 0), true)
-        , new AddOnInfo("Acclamator Turbolaser Tower", new TV_3DVECTOR(150, 10, 360), new TV_3DVECTOR(0, 72, 0), true)
-        , new AddOnInfo("Acclamator Turbolaser Tower", new TV_3DVECTOR(198, 10, 260), new TV_3DVECTOR(0, 72, 0), true)
-        , new AddOnInfo("Acclamator Turbolaser Tower", new TV_3DVECTOR(-101, 10, 460), new TV_3DVECTOR(0, -72, 0), true)
-        , new AddOnInfo("Acclamator Turbolaser Tower", new TV_3DVECTOR(-150, 10, 360), new TV_3DVECTOR(0, -72, 0), true)
-        , new AddOnInfo("Acclamator Turbolaser Tower", new TV_3DVECTOR(-198, 10, 260), new TV_3DVECTOR(0, -72, 0), true)
+        new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(101, 10, 460), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(150, 10, 360), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(198, 10, 260), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(-101, 10, 460), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(-150, 10, 360), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(-198, 10, 260), new TV_3DVECTOR(0, -72, 0), true)
         
         // Front
-        , new AddOnInfo("Acclamator Turbolaser Tower", new TV_3DVECTOR(0, 10, 610), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(0, 10, 610), new TV_3DVECTOR(-90, 0, 0), true)
 
         // Top
-        , new AddOnInfo("Acclamator Turbolaser Tower", new TV_3DVECTOR(145, 42, 70), new TV_3DVECTOR(-90, 0, -15), true)
-        , new AddOnInfo("Acclamator Turbolaser Tower", new TV_3DVECTOR(-145, 42, 70), new TV_3DVECTOR(-90, 0, 15), true)
+        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(145, 42, 70), new TV_3DVECTOR(-90, 0, -15), true)
+        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(-145, 42, 70), new TV_3DVECTOR(-90, 0, 15), true)
       };
     }
   }

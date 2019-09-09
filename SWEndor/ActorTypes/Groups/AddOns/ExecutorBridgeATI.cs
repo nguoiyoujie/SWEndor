@@ -12,7 +12,7 @@ namespace SWEndor.ActorTypes.Instances
     internal ExecutorBridgeATI(Factory owner) : base(owner, "Executor Super Star Destroyer Bridge")
     {
       CombatData = CombatData.DefaultShip;
-      Armor = new ArmorInfo() { Light = 1, Hull = 4};
+      ArmorData = new ArmorData(1, 4);
 
       Explodes = new ExplodeInfo[]
       {
@@ -22,17 +22,16 @@ namespace SWEndor.ActorTypes.Instances
 
       MaxStrength = 600.0f;
       ImpactDamage = 200.0f;
-      RadarSize = -1;
+      RenderData.RadarSize = -1;
 
-      CullDistance = 30000;
+      RenderData.CullDistance = 30000;
 
-      Score_perStrength = 75;
-      Score_DestroyBonus = 100000;
+      ScoreData = new ScoreData(75, 100000);
 
-      TargetType = TargetType.ADDON;
-      RadarType = RadarType.NULL;
+      AIData.TargetType = TargetType.ADDON;
+      RenderData.RadarType = RadarType.NULL;
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"executor\executor_bridge.x");
+      MeshData = new MeshData(Name, @"executor\executor_bridge.x");
     }
 
     public override void ProcessState(ActorInfo ainfo)

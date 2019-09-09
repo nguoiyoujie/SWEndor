@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using SWEndor.ActorTypes.Components;
+using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -6,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal TIE_InterceptorWingATI(Factory owner) : base(owner, "TIE_InterceptorWingATI")
     {
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"tie\tie_interceptor_right_left_wing.x");
+      MeshData = new MeshData(Name, @"tie\tie_interceptor_right_left_wing.x");
     }
   }
 }

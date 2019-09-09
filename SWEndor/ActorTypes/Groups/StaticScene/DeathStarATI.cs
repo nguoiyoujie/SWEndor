@@ -16,27 +16,7 @@ namespace SWEndor.ActorTypes.Instances
         new ExplodeInfo("ExpW02", 1, 1, ExplodeTrigger.ON_DEATH),
       };
 
-      float size = 20000;
-
-      SourceMesh = TrueVision.TVGlobals.GetMesh(Name);
-      if (SourceMesh == null)
-      {
-        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Name);
-
-        string texname = Path.Combine("deathstar", "deathstar.bmp");
-        string alphatexname = Path.Combine("deathstar", "deathstaralpha.bmp"); 
-        string texpath = Path.Combine(Globals.ImagePath, texname);
-        string alphatexpath = Path.Combine(Globals.ImagePath, alphatexname); // alphatexname
-        int itex = LoadAlphaTexture(texname, texpath, alphatexpath);
-
-        SourceMesh.AddWall(itex, -size / 2, 0, size / 2, 0, size, -size / 2);
-        //SourceMesh.CreateBox(size, size, 0.001f);
-        SourceMesh.SetTexture(itex);
-        SourceMesh.Enable(false);
-        SourceMesh.SetCollisionEnable(false);
-      }
-
-      AddOns = new AddOnInfo[] { new AddOnInfo("Death Star Laser Source", new TV_3DVECTOR(-0.13f * size, 0.2f * size, -0.04f * size), new TV_3DVECTOR(0, 0, 0), true) };
+      MeshData = MeshDataDecorator.CreateAlphaTexturedWall(Name, 20000, "deathstar/deathstar.bmp", "deathstar/deathstaralpha.bmp");
     }
 
     public override void Dying(ActorInfo ainfo)

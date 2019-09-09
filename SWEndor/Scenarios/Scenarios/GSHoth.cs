@@ -981,7 +981,7 @@ namespace SWEndor.Scenarios
         Position = new TV_3DVECTOR(20000, -2000, -22000),
         Rotation = new TV_3DVECTOR(),
         Actions = new ActionInfo[] { new HyperspaceIn(new TV_3DVECTOR(2000, 100, -8000))
-                                    , new Move(new TV_3DVECTOR(1000, 100, 2000), ActorTypeFactory.Get("Imperial-I Star Destroyer").MaxSpeed * 0.25f, -1, false)
+                                    , new Move(new TV_3DVECTOR(1000, 100, 2000), ActorTypeFactory.Get("Imperial-I Star Destroyer").MoveLimitData.MaxSpeed * 0.25f, -1, false)
                                     , new Rotate(new TV_3DVECTOR(2000, 100, -9000), 0, -1, false)
                                     , new Lock() },
         Registries = null
@@ -992,7 +992,7 @@ namespace SWEndor.Scenarios
       asi.SpawnTime = Game.GameTime + 9.25f;
       asi.Position = new TV_3DVECTOR(20000, -2000, -25000);
       asi.Actions = new ActionInfo[] { new HyperspaceIn(new TV_3DVECTOR(1500, -100, -10200))
-                                            , new Move(new TV_3DVECTOR(-6500, -100, 4000), ActorTypeFactory.Get("Imperial-I Star Destroyer").MaxSpeed * 0.25f, -1, false)
+                                            , new Move(new TV_3DVECTOR(-6500, -100, 4000), ActorTypeFactory.Get("Imperial-I Star Destroyer").MoveLimitData.MaxSpeed * 0.25f, -1, false)
                                             , new Rotate(new TV_3DVECTOR(2000, -100, -10200), 0, -1, false)
                                             , new Lock() };
       newDest = asi.Spawn(this);

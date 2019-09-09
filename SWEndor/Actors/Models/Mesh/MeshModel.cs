@@ -2,6 +2,7 @@
 using SWEndor.ActorTypes;
 using SWEndor.Primitives;
 using SWEndor.Player;
+using System;
 
 namespace SWEndor.Actors
 {
@@ -17,31 +18,32 @@ namespace SWEndor.Actors
 
       public void Init(int id, ActorTypeInfo atype)
       {
-        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_RENDER))
-        {
-          Mesh = atype.GenerateMesh();
-          FarMesh = atype.GenerateFarMesh();
-        }
-
         if (meshScope == null)
           meshScope = new ScopeCounterManager.ScopeCounter();
 
         if (disposeScope == null)
           disposeScope = new ScopeCounterManager.ScopeCounter();
 
-        ScopeCounterManager.Reset(disposeScope);
+        GenerateMeshes(id, atype);
 
-        using (ScopeCounterManager.Acquire(meshScope))
+        ScopeCounterManager.Reset(disposeScope);
+      }
+
+      private void GenerateMeshes(int id, ActorTypeInfo atype)
+      {
+        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_RENDER))
+        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_COLLISION))
         {
-          ScopeCounterManager.WaitForZero(ScopeGlobals.GLOBAL_COLLISION, ScopeGlobals.GLOBAL_RENDER);
+          Mesh = atype.MeshData.SourceMesh.Duplicate();
+          FarMesh = atype.MeshData.SourceFarMesh == null ? atype.MeshData.SourceMesh.Duplicate() : atype.MeshData.SourceFarMesh.Duplicate();
 
           Mesh.SetTag(id.ToString());
           //Mesh.ShowBoundingBox(true);
 
           FarMesh.SetTag(id.ToString());
 
-          Mesh.ComputeBoundings();
-          FarMesh.ComputeBoundings();
+          //Mesh.ComputeBoundings();
+          //FarMesh.ComputeBoundings();
 
           Mesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 8);
           FarMesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 8);

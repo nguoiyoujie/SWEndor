@@ -3,20 +3,20 @@ using SWEndor.Actors;
 
 namespace SWEndor.ActorTypes.Components
 {
-  public struct DebrisSpawnerInfo
+  public struct DebrisSpawnerData
   {
     public readonly string Type;
     private ActorTypeInfo _cache;
     public readonly TV_3DVECTOR SpawnPosition;
-    public readonly int RotationXMax;
-    public readonly int RotationXMin;
-    public readonly int RotationYMax;
-    public readonly int RotationYMin;
-    public readonly int RotationZMax;
-    public readonly int RotationZMin;
+    public readonly float RotationXMax;
+    public readonly float RotationXMin;
+    public readonly float RotationYMax;
+    public readonly float RotationYMin;
+    public readonly float RotationZMax;
+    public readonly float RotationZMin;
     public readonly float Chance;
 
-    public DebrisSpawnerInfo(string type, TV_3DVECTOR position, int xMin, int xMax, int yMin, int yMax, int zMin, int zMax, float chance)
+    public DebrisSpawnerData(string type, TV_3DVECTOR position, float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, float chance)
     {
       Type = type;
       _cache = null;
@@ -38,9 +38,9 @@ namespace SWEndor.ActorTypes.Components
       double d = actor.Engine.Random.NextDouble();
       if (d < Chance)
       {
-        float x = actor.Engine.Random.Next(RotationXMin, RotationXMax) / 100f;
-        float y = actor.Engine.Random.Next(RotationYMin, RotationYMax) / 100f;
-        float z = actor.Engine.Random.Next(RotationZMin, RotationZMax) / 100f;
+        float x = RotationXMin + (float)actor.Engine.Random.NextDouble() * (RotationXMax - RotationXMin);
+        float y = RotationYMin + (float)actor.Engine.Random.NextDouble() * (RotationYMax - RotationYMin);
+        float z = RotationZMin + (float)actor.Engine.Random.NextDouble() * (RotationZMax - RotationZMin);
 
         ActorCreationInfo acinfo = new ActorCreationInfo(_cache);
         acinfo.Position = actor.GetGlobalPosition() + SpawnPosition;

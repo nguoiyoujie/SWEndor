@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using SWEndor.ActorTypes.Components;
+using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -6,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal XWing_RD_LU_WingATI(Factory owner) : base(owner, "XWing_RD_LU_WingATI")
     {
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"xwing\xwing_rightdown_leftup_wing.x");
+      MeshData = new MeshData(Name, @"xwing\xwing_rightdown_leftup_wing.x");
     }
   }
 }

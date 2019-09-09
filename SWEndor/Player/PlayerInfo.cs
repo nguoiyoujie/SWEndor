@@ -168,7 +168,7 @@ namespace SWEndor.Player
         return;
       if (IsMovementControlsEnabled && !PlayerAIEnabled && Actor != null)
       {
-        Actor.MoveData.Speed += frac * Actor.TypeInfo.MaxSpeedChangeRate * Engine.Game.TimeSinceRender;
+        Actor.MoveData.Speed += frac * Actor.TypeInfo.MoveLimitData.MaxSpeedChangeRate * Engine.Game.TimeSinceRender;
         Actor.MoveData.Speed = Actor.MoveData.Speed.Clamp(Actor.MoveData.MinSpeed, Actor.MoveData.MaxSpeed);
       }
     }

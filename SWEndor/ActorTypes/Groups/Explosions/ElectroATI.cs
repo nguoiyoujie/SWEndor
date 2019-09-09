@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
+using SWEndor.ActorTypes.Components;
 using System;
 
 namespace SWEndor.ActorTypes.Instances
@@ -12,19 +13,9 @@ namespace SWEndor.ActorTypes.Instances
       // Combat
       TimedLifeData = new TimedLifeData(true, 0.5f);
 
-      RadarSize = 0;
+      RenderData.RadarSize = 0;
 
-      SourceMesh = TrueVision.TVGlobals.GetMesh(Name);
-      if (SourceMesh == null)
-      {
-        LoadAlphaTextureFromFolder(Globals.ImagePath, "electro");
-        SourceMesh = TrueVision.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, 40, 40, Name, true);
-        SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
-        SourceMesh.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
-
-        SourceMesh.Enable(false);
-        SourceMesh.SetCollisionEnable(false);
-      }
+      MeshData = MeshDataDecorator.CreateBillboardAnimation(Name, 40, "electro", ref texanimframes);
     }
 
     public override void Initialize(ActorInfo ainfo)

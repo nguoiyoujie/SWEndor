@@ -10,35 +10,33 @@ namespace SWEndor.ActorTypes.Instances
     {
       MaxStrength = 575.0f;
       ImpactDamage = 60.0f;
-      MaxSpeed = 100.0f;
-      MinSpeed = 0.0f;
-      MaxSpeedChangeRate = 50.0f;
-      MaxTurnRate = 9f;
+      MoveLimitData.MaxSpeed = 100.0f;
+      MoveLimitData.MinSpeed = 0.0f;
+      MoveLimitData.MaxSpeedChangeRate = 50.0f;
+      MoveLimitData.MaxTurnRate = 9f;
 
-      ZTilt = 5.5f;
-      ZNormFrac = 0.015f;
+      MoveLimitData.ZTilt = 5.5f;
+      MoveLimitData.ZNormFrac = 0.015f;
 
-      CullDistance = 20000;
+      RenderData.CullDistance = 20000;
 
-      Score_perStrength = 10;
-      Score_DestroyBonus = 5000;
+      ScoreData = new ScoreData(10, 5000);
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"corellian\corellian.x");
-      SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"corellian\corellian_far.x");
+      MeshData = new MeshData(Name, @"corellian\corellian.x");
 
-      Cameras = new ActorCameraInfo[] {
-        new ActorCameraInfo(new TV_3DVECTOR(0, 55, -35), new TV_3DVECTOR(0, 55, 2000)),
-        new ActorCameraInfo(new TV_3DVECTOR(0, 300, -800), new TV_3DVECTOR(0, 0, 2000))
+      Cameras = new LookData[] {
+        new LookData(new TV_3DVECTOR(0, 55, -35), new TV_3DVECTOR(0, 55, 2000)),
+        new LookData(new TV_3DVECTOR(0, 300, -800), new TV_3DVECTOR(0, 0, 2000))
         };
-      SoundSources = new SoundSourceInfo[] { new SoundSourceInfo("engine_big", 500f, new TV_3DVECTOR(0, 0, -200), true) };
-      AddOns = new AddOnInfo[]
+      SoundSources = new SoundSourceData[] { new SoundSourceData("engine_big", 500f, new TV_3DVECTOR(0, 0, -200), true) };
+      AddOns = new AddOnData[]
       {
-        new AddOnInfo("Corellian Turbolaser Tower", new TV_3DVECTOR(-35, 15, 110), new TV_3DVECTOR(-90, 0, 10), true)
-        , new AddOnInfo("Corellian Turbolaser Tower", new TV_3DVECTOR(-35, 15, 80), new TV_3DVECTOR(-90, 0, 10), true)
-        , new AddOnInfo("Corellian Turbolaser Tower", new TV_3DVECTOR(35, 15, 110), new TV_3DVECTOR(-90, 0, -10), true)
-        , new AddOnInfo("Corellian Turbolaser Tower", new TV_3DVECTOR(35, 15, 80), new TV_3DVECTOR(-90, 0, -10), true)
-        , new AddOnInfo("Corellian Turbolaser Tower", new TV_3DVECTOR(0, -45, 150), new TV_3DVECTOR(90, 0, 0), true)
-        , new AddOnInfo("Corellian Turbolaser Tower", new TV_3DVECTOR(0, 45, 150), new TV_3DVECTOR(-90, 0, 0), true)
+        new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(-35, 15, 110), new TV_3DVECTOR(-90, 0, 10), true)
+        , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(-35, 15, 80), new TV_3DVECTOR(-90, 0, 10), true)
+        , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(35, 15, 110), new TV_3DVECTOR(-90, 0, -10), true)
+        , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(35, 15, 80), new TV_3DVECTOR(-90, 0, -10), true)
+        , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(0, -45, 150), new TV_3DVECTOR(90, 0, 0), true)
+        , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(0, 45, 150), new TV_3DVECTOR(-90, 0, 0), true)
       };
     }
   }

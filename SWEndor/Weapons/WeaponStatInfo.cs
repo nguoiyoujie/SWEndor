@@ -84,16 +84,11 @@ namespace SWEndor.Weapons
 
       // Player Config
       RequirePlayerTargetLock = file.GetBoolValue(sectionname, "RequirePlayerTargetLock", RequirePlayerTargetLock);
-      string typ = file.GetStringValue(sectionname, "WeaponType", Type.ToString());
-      Type = (WeaponType)Enum.Parse(typeof(WeaponType), typ.Trim());
+      //string typ = file.GetStringValue(sectionname, "WeaponType", Type.ToString());
+      Type = file.GetEnumValue(sectionname, "WeaponType", Type);
 
       // AI Config
-      string[] tgts = file.GetStringValue(sectionname, "AIAttackTargets", AIAttackTargets.ToString()).Split('|', ',');
-      TargetType tgtt = TargetType.NULL;
-      foreach (string t in tgts)
-        tgtt |= (TargetType)Enum.Parse(typeof(TargetType), t.Trim());
-
-      AIAttackTargets = tgtt;
+      AIAttackTargets = file.GetEnumValue(sectionname, "AIAttackTargets", AIAttackTargets);
       AIAttackNull = file.GetBoolValue(sectionname, "AIAttackNull", AIAttackNull);
 
       AngularRange = file.GetFloatValue(sectionname, "AngularRange", AngularRange);

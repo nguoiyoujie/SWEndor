@@ -77,7 +77,7 @@ namespace SWEndor.Player
     private CamMode Mode;
     private TargetPosition LookFrom;
     private TargetPosition LookTo;
-    private DeathCameraInfo DeathCamera;
+    private DeathCameraData DeathCamera;
     private float RotationMultiplier;
     private float ApproachSpeed;
 
@@ -155,7 +155,7 @@ namespace SWEndor.Player
       RotationMultiplier = rotationMult;
     }
 
-    public void SetModeDeathCircle(DeathCameraInfo info)
+    public void SetModeDeathCircle(DeathCameraData info)
     {
       Mode = CamMode.CIRCLE_AROUND_TARGET;
       DeathCamera = info;
@@ -245,15 +245,15 @@ namespace SWEndor.Player
         case CameraMode.FREEROTATION:
         case CameraMode.FREEMODE:
         case CameraMode.FIRSTPERSON:
-          location = new TV_3DVECTOR(0, 0, actor.TypeInfo.max_dimensions.z + 10);
+          location = new TV_3DVECTOR(0, 0, actor.TypeInfo.MeshData.MaxDimensions.z + 10);
           target = new TV_3DVECTOR(0, 0, 20000);
           break;
         case CameraMode.THIRDPERSON:
-          location = new TV_3DVECTOR(0, actor.TypeInfo.max_dimensions.y * 3, -actor.TypeInfo.max_dimensions.z * 8);
+          location = new TV_3DVECTOR(0, actor.TypeInfo.MeshData.MaxDimensions.y * 3, -actor.TypeInfo.MeshData.MaxDimensions.z * 8);
           target = new TV_3DVECTOR(0, 0, 20000);
           break;
         case CameraMode.THIRDREAR:
-          location = new TV_3DVECTOR(0, actor.TypeInfo.max_dimensions.y * 3, actor.TypeInfo.max_dimensions.z * 8);
+          location = new TV_3DVECTOR(0, actor.TypeInfo.MeshData.MaxDimensions.y * 3, actor.TypeInfo.MeshData.MaxDimensions.z * 8);
           target = new TV_3DVECTOR(0, 0, -20000);
           break;
       }
@@ -361,7 +361,7 @@ namespace SWEndor.Player
         ActorInfo a = pl.Actor;
         if (a != null && a.Active)
         {
-          float maxT = a.TypeInfo.MaxTurnRate;
+          float maxT = a.TypeInfo.MoveLimitData.MaxTurnRate;
           angleX *= maxT;
           angleY *= maxT;
 

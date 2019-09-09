@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
+using SWEndor.ActorTypes.Components;
 using SWEndor.Weapons;
 using System.Collections.Generic;
 using System.IO;
@@ -14,13 +15,13 @@ namespace SWEndor.ActorTypes.Instances
       TimedLifeData = new TimedLifeData(true, 5);
 
       ImpactDamage = 5;
-      MaxSpeed = Globals.LaserSpeed * 0.6f;
-      MinSpeed = Globals.LaserSpeed * 0.6f;
+      MoveLimitData.MaxSpeed = Globals.LaserSpeed * 0.6f;
+      MoveLimitData.MinSpeed = Globals.LaserSpeed * 0.6f;
 
       ImpactCloseEnoughDistance = 75;
       IsLaser = false; // not the same speed
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"projectiles\ion_sm_laser.x");
+      MeshData = new MeshData(Name, @"projectiles\ion_sm_laser.x");
     }
 
     public override void ProcessHit(ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
@@ -36,7 +37,7 @@ namespace SWEndor.ActorTypes.Instances
       {
         if (c == null
           || !c.Active
-          || !c.TypeInfo.TargetType.Has(TargetType.ADDON))
+          || !c.TypeInfo.AIData.TargetType.Has(TargetType.ADDON))
           rm.Add(c);
       }
 

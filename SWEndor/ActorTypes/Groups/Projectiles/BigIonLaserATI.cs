@@ -5,6 +5,7 @@ using SWEndor.Weapons;
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
 using SWEndor.AI;
+using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -19,17 +20,16 @@ namespace SWEndor.ActorTypes.Instances
       };
 
       ImpactDamage = 50;
-      MaxSpeed = Globals.LaserSpeed * 2f;
-      MinSpeed = Globals.LaserSpeed * 2f;
+      MoveLimitData.MaxSpeed = Globals.LaserSpeed * 2f;
+      MoveLimitData.MinSpeed = Globals.LaserSpeed * 2f;
 
       IsLaser = false; // not the same speed
-      EnableDistanceCull = false;
       Scale = 4;
 
       // Projectile
       ImpactCloseEnoughDistance = 150;
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"projectiles\ion_sm_laser.x");
+      MeshData = new MeshData(Name, @"projectiles\ion_sm_laser.x");
     }
 
     public override void ProcessHit(ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
@@ -64,7 +64,7 @@ namespace SWEndor.ActorTypes.Instances
         electro.CycleInfo.CyclesRemaining = empduration / electro.TypeInfo.TimedLifeData.TimedLife;
       }
 
-      if (hitby.TypeInfo.TargetType.Has(TargetType.SHIP))
+      if (hitby.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
       {
         hitby.ForceClearQueue();
         hitby.QueueNext(new Rotate(hitby.GetRelativePositionFUR(1000, -800, -200), hitby.MoveData.MaxSpeed, 0.1f, false));

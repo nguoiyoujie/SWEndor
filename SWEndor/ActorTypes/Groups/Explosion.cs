@@ -12,39 +12,13 @@ namespace SWEndor.ActorTypes.Groups
     internal Explosion(Factory owner, string name): base(owner, name)
     {
       // Combat
-      CullDistance = 12500f;
+      RenderData.CullDistance = 12500f;
 
-      RadarSize = 1;
-      RadarType = RadarType.FILLED_CIRCLE_M;
+      RenderData.RadarSize = 1;
+      RenderData.RadarType = RadarType.FILLED_CIRCLE_M;
 
-      IsExplosion = true;
       Mask = ComponentMask.EXPLOSION;
     }
-
-    protected void LoadAlphaTextureFromFolder(string mainPath, string subPath)
-    {
-      List<int> frames = new List<int>();
-      string folderPath = Path.Combine(mainPath, subPath);
-      foreach (string texpath in Directory.GetFiles(folderPath, "*.jpg", SearchOption.TopDirectoryOnly))
-      {
-        string texname = Path.Combine(subPath, Path.GetFileName(texpath));
-        frames.Add(LoadAlphaTexture(texname, texpath));
-      }
-      texanimframes = frames.ToArray();
-    }
-
-    protected void LoadTextureFromFolder(string mainPath, string subPath)
-    {
-      List<int> frames = new List<int>();
-      string folderPath = Path.Combine(mainPath, subPath);
-      foreach (string texpath in Directory.GetFiles(folderPath, "*.jpg", SearchOption.TopDirectoryOnly))
-      {
-        string texname = Path.Combine(subPath, Path.GetFileName(texpath));
-        frames.Add(LoadTexture(texname, texpath));
-      }
-      texanimframes = frames.ToArray();
-    }
-
 
     public override void ProcessState(ActorInfo ainfo)
     {

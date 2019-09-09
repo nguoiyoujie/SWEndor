@@ -179,7 +179,7 @@ namespace SWEndor.ActorTypes
         {
           Add(atype.Name, atype);
         }
-        atype.RegisterModel();
+        //atype.LoadFromINI();
         Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
       }
 
@@ -192,6 +192,7 @@ namespace SWEndor.ActorTypes
         return ret;
       }
 
+      /*
       public void LoadFromINI(string filepath)
       {
         if (File.Exists(filepath))
@@ -204,6 +205,7 @@ namespace SWEndor.ActorTypes
           }
         }
       }
+      */
     }
   }
 }

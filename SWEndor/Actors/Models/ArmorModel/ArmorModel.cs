@@ -18,8 +18,8 @@ namespace SWEndor.Actors.Models
 
     public void Init(ActorTypeInfo type)
     {
-      Light = type.Armor.Light;
-      Hull = type.Armor.Hull;
+      Light = type.ArmorData.Light;
+      Hull = type.ArmorData.Hull;
     }
 
     public float Get(DamageType dmgtype)

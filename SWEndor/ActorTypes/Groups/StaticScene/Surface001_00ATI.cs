@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using SWEndor.ActorTypes.Components;
+using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -6,12 +7,10 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal Surface001_00ATI(Factory owner) : base(owner, "Surface001_00ATI")
     {
-      //CollisionEnabled = true;
-      EnableDistanceCull = true;
-      CullDistance = 20000;
+      RenderData.CullDistance = 20000;
       Scale = 4;
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"surface\surface001_00.x");
+      MeshData = new MeshData(Name, @"surface\surface001_00.x");
     }
   }
 }

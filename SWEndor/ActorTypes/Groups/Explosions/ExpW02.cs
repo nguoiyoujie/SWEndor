@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
+using SWEndor.ActorTypes.Components;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -12,29 +13,10 @@ namespace SWEndor.ActorTypes.Instances
       // Combat
       TimedLifeData = new TimedLifeData(true, 2);
 
-      RadarSize = 0;
+      RenderData.RadarSize = 0;
+      RenderData.CullDistance = -1;
 
-      EnableDistanceCull = false;
-
-
-      SourceMesh = TrueVision.TVGlobals.GetMesh(Name);
-      if (SourceMesh == null)
-      {
-        SourceMesh = TrueVision.TVScene.CreateMeshBuilder(Name);
-
-        string texname = Path.Combine("explosion", "wave", @"tex0000.jpg");
-        string texpath = Path.Combine(Globals.ImagePath, texname);
-        int tex = LoadAlphaTexture(texname, texpath);
-
-        SourceMesh.AddFloor(tex, -50, -50, 50, 50);
-        //SourceMesh.CreateBox(100, 0.00001f, 100f);
-        SourceMesh.SetCullMode(CONST_TV_CULLING.TV_DOUBLESIDED);
-        SourceMesh.SetTexture(tex);
-        SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
-
-        SourceMesh.Enable(false);
-        SourceMesh.SetCollisionEnable(false);
-      }
+      MeshData = MeshDataDecorator.CreateHorizon(Name, 50, Path.Combine("explosion", "wave", @"tex0000.jpg"));
     }
 
     public override void ProcessState(ActorInfo ainfo)

@@ -10,28 +10,27 @@ namespace SWEndor.ActorTypes.Instances
     {
       MaxStrength = 15;
       ImpactDamage = 16;
-      MaxSpeed = 400;
-      MinSpeed = 175;
-      MaxSpeedChangeRate = 200;
-      MaxTurnRate = 42;
+      MoveLimitData.MaxSpeed = 400;
+      MoveLimitData.MinSpeed = 175;
+      MoveLimitData.MaxSpeedChangeRate = 200;
+      MoveLimitData.MaxTurnRate = 42;
 
-      Score_perStrength = 400;
-      Score_DestroyBonus = 2000;
+      ScoreData = new ScoreData(400, 2000);
 
-      RegenData = new RegenInfo { SelfRegenRate = 0.06f };
+      RegenData = new RegenData(false, 0.06f, 0, 0, 0);
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"xwing\z95.x");
+      MeshData = new MeshData(Name, @"xwing\z95.x");
       //SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"xwing\xwing_far.x");
 
-      Cameras = new ActorCameraInfo[] {
-        new ActorCameraInfo(new TV_3DVECTOR(0, 3, 25), new TV_3DVECTOR(0, 3, 2000)),
-        new ActorCameraInfo(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
-        new ActorCameraInfo(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
+      Cameras = new LookData[] {
+        new LookData(new TV_3DVECTOR(0, 3, 25), new TV_3DVECTOR(0, 3, 2000)),
+        new LookData(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
+        new LookData(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
         };
 
-      Debris = new DebrisSpawnerInfo[] {
-        new DebrisSpawnerInfo("XWing_RU_LD_WingATI", new TV_3DVECTOR(-30, -10, 0), 0, 2000, 1000, 1000, -2500, 2500, 0.5f),
-        new DebrisSpawnerInfo("XWing_RD_LU_WingATI", new TV_3DVECTOR(30, -10, 0), -2000, 0, -1000, 1000, -2500, 2500, 0.5f),
+      Debris = new DebrisSpawnerData[] {
+        new DebrisSpawnerData("XWing_RU_LD_WingATI", new TV_3DVECTOR(-30, -10, 0), 0, 20, 10, 10, -25, 25, 0.5f),
+        new DebrisSpawnerData("XWing_RD_LU_WingATI", new TV_3DVECTOR(30, -10, 0), -20, 0, -10, 10, -25, 25, 0.5f),
         };
 
       Loadouts = new string[] { "Z95__LASR" };

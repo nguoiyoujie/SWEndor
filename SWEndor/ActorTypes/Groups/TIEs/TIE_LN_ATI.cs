@@ -10,27 +10,25 @@ namespace SWEndor.ActorTypes.Instances
     {
       MaxStrength = 4;
       ImpactDamage = 16;
-      MaxSpeed = 350;
-      MinSpeed = 175;
-      MaxSpeedChangeRate = 200;
-      MaxTurnRate = 45;
+      MoveLimitData.MaxSpeed = 350;
+      MoveLimitData.MinSpeed = 175;
+      MoveLimitData.MaxSpeedChangeRate = 200;
+      MoveLimitData.MaxTurnRate = 45;
 
-      Score_perStrength = 400;
-      Score_DestroyBonus = 400;
+      ScoreData = new ScoreData(400, 400);
 
-      SourceMeshPath = Path.Combine(Globals.ModelPath, @"tie\tie.x");
-      SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"tie\tie_far.x");
+      MeshData = new MeshData(Name, @"tie\tie.x");
 
-      Cameras = new ActorCameraInfo[]
+      Cameras = new LookData[]
       {
-        new ActorCameraInfo(new TV_3DVECTOR(0, 0, 12), new TV_3DVECTOR(0, 0, 2000)),
-        new ActorCameraInfo(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
-        new ActorCameraInfo(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
+        new LookData(new TV_3DVECTOR(0, 0, 12), new TV_3DVECTOR(0, 0, 2000)),
+        new LookData(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
+        new LookData(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
       };
 
-      Debris = new DebrisSpawnerInfo[] {
-        new DebrisSpawnerInfo("TIE_WingATI", new TV_3DVECTOR(-30, 0, 0), -1000, 1000, 0, 3000, -2500, 2500, 0.5f),
-        new DebrisSpawnerInfo("TIE_WingATI", new TV_3DVECTOR(30, 0, 0), -1000, 1000, -3000, 0, -2500, 2500, 0.5f),
+      Debris = new DebrisSpawnerData[] {
+        new DebrisSpawnerData("TIE_WingATI", new TV_3DVECTOR(-30, 0, 0), -10, 10, 0, 30, -25, 25, 0.5f),
+        new DebrisSpawnerData("TIE_WingATI", new TV_3DVECTOR(30, 0, 0), -10, 10, -30, 0, -25, 25, 0.5f),
         };
 
       Loadouts = new string[] { "TIE__LASR", "TIE__LASR_AI" };

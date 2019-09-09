@@ -1,12 +1,12 @@
 ﻿namespace SWEndor.ActorTypes.Components
 {
-  public struct DeathCameraInfo
+  public struct DeathCameraData
   {
     public float Radius;
     public float Height;
     public float Period;
 
-    public DeathCameraInfo(float radius, float height, float period)
+    public DeathCameraData(float radius, float height, float period)
     {
       Radius = radius;
       Height = height;

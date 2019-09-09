@@ -50,7 +50,7 @@ namespace SWEndor.Actors.Components
         }
 
         float rotX2 = vec.x + data.XTurnAngle * time;
-        rotX2 = rotX2.Clamp(-actor.TypeInfo.XLimit, actor.TypeInfo.XLimit);
+        rotX2 = rotX2.Clamp(-actor.TypeInfo.MoveLimitData.XLimit, actor.TypeInfo.MoveLimitData.XLimit);
         float rotY2 = vec.y + data.YTurnAngle * time;
 
         actor.Rotation = new TV_3DVECTOR(rotX2, rotY2, data.ZRoll);
@@ -62,7 +62,7 @@ namespace SWEndor.Actors.Components
         data.ZRoll = vec.z;
         data.ZRoll -= data.YTurnAngle * data.ZTilt * time;
         float rotX2 = vec.x + data.XTurnAngle * time;
-        rotX2 = rotX2.Clamp(-actor.TypeInfo.XLimit, actor.TypeInfo.XLimit);
+        rotX2 = rotX2.Clamp(-actor.TypeInfo.MoveLimitData.XLimit, actor.TypeInfo.MoveLimitData.XLimit);
         float rotY2 = vec.y + data.YTurnAngle * time;
         actor.Rotation = new TV_3DVECTOR(rotX2, rotY2, data.ZRoll);
       }

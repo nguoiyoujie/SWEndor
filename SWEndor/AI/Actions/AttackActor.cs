@@ -54,7 +54,7 @@ namespace SWEndor.AI.Actions
       if (CheckBounds(actor))
       {
         if (FollowDistance < 0)
-          FollowDistance = actor.TypeInfo.Move_CloseEnough;
+          FollowDistance = actor.TypeInfo.AIData.Move_CloseEnough;
 
         if (TooCloseDistance < 0)
           TooCloseDistance = 0.75f * actor.MoveData.Speed;
@@ -87,7 +87,7 @@ namespace SWEndor.AI.Actions
           }
           else
           {
-            if (actor.TypeInfo.AggressiveTracker)
+            if (actor.TypeInfo.AIData.AggressiveTracker)
             {
               AggressiveTracking(engine, actor.ID);
             }
@@ -110,7 +110,7 @@ namespace SWEndor.AI.Actions
         }
         else
         {
-          if (target.TypeInfo.TargetType.Has(TargetType.FIGHTER))
+          if (target.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
           {
             float evadeduration = 2000 / (target.GetTrueSpeed() + 500);
             actor.QueueFirst(new Evade(evadeduration));
@@ -139,7 +139,7 @@ namespace SWEndor.AI.Actions
       {
         BoundingSphere sph = target.GetBoundingSphere(true);
         center = sph.Position;
-        radius = sph.Radius + engine.Random.Next((int)(-4 * actor.TypeInfo.MaxSpeed), (int)(4 * actor.TypeInfo.MaxSpeed));
+        radius = sph.Radius + engine.Random.Next((int)(-4 * actor.TypeInfo.MoveLimitData.MaxSpeed), (int)(4 * actor.TypeInfo.MoveLimitData.MaxSpeed));
 
         float xzAngle = engine.Random.Next(0, 360);
 

@@ -10,17 +10,17 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.DefaultShip;
-      Armor = ArmorInfo.Default;
+      ArmorData = ArmorData.Default;
       Explodes = new ExplodeInfo[] {
         new ExplodeInfo("ExpL00", 1, 5, ExplodeTrigger.ON_DEATH)
       };
 
-      CullDistance = 10000;
+      RenderData.CullDistance = 10000;
 
-      RadarSize = 1.5f;
+      RenderData.RadarSize = 1.5f;
 
-      TargetType = TargetType.ADDON | TargetType.STRUCTURE;
-      RadarType = RadarType.FILLED_SQUARE;
+      AIData.TargetType = TargetType.ADDON | TargetType.STRUCTURE;
+      RenderData.RadarType = RadarType.FILLED_SQUARE;
 
       Mask = ComponentMask.STATIC_ACTOR;
     }

@@ -10,20 +10,22 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.DefaultShip;
-      Armor = ArmorInfo.Default;
+      ArmorData = ArmorData.Default;
       Explodes = new ExplodeInfo[] {
         new ExplodeInfo("ExpS00", 1, 5, ExplodeTrigger.ON_DEATH)
       };
 
-      Attack_AngularDelta = 360f;
-      Attack_HighAccuracyAngularDelta = 360f;
+      ScoreData = new ScoreData(250, 1250);
 
-      TargetType |= TargetType.ADDON;
-      RadarType = RadarType.HOLLOW_CIRCLE_S;
+      AIData.Attack_AngularDelta = 360f;
+      AIData.Attack_HighAccuracyAngularDelta = 360f;
+
+      AIData.TargetType |= TargetType.ADDON;
+      RenderData.RadarType = RadarType.HOLLOW_CIRCLE_S;
 
       Mask |= ComponentMask.HAS_AI;
 
-      RadarSize = 1;
+      RenderData.RadarSize = 1;
     }
   }
 }

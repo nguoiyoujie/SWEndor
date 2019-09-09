@@ -11,29 +11,29 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.DefaultFighter;
-      Armor = ArmorInfo.Default;
+      ArmorData = ArmorData.Default;
       Explodes = new ExplodeInfo[]
       {
         new ExplodeInfo("ExpS00", 0.75f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
         new ExplodeInfo("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
-      ZTilt = 2.5f;
-      ZNormFrac = 0.01f;
-      RadarSize = 2;
+      MoveLimitData.ZTilt = 2.5f;
+      MoveLimitData.ZNormFrac = 0.01f;
+      RenderData.RadarSize = 2;
 
-      CullDistance = 7500;
+      RenderData.CullDistance = 7500;
 
-      TargetType = TargetType.FIGHTER;
-      RadarType = RadarType.FILLED_CIRCLE_S;
+      AIData.TargetType = TargetType.FIGHTER;
+      RenderData.RadarType = RadarType.FILLED_CIRCLE_S;
 
       Mask = ComponentMask.ACTOR;
 
-      CanEvade = true;
-      CanRetaliate = true;
-      CanCheckCollisionAhead = true;
+      AIData.CanEvade = true;
+      AIData.CanRetaliate = true;
+      AIData.CanCheckCollisionAhead = true;
 
-      HuntWeight = 5;
+      AIData.HuntWeight = 5;
     }
 
     public override void Initialize(ActorInfo ainfo)
