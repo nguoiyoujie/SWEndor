@@ -35,7 +35,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null)
         return false;
 
-      context.Engine.GameScenarioManager.Scenario.FadeOut(null);
+      context.Engine.GameScenarioManager.Scenario.FadeOut();
       return true;
     }
   }

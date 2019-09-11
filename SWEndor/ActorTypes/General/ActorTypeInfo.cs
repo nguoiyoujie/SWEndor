@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using SWEndor.AI;
@@ -79,6 +80,7 @@ namespace SWEndor.ActorTypes
     // Weapons
     public string[] Loadouts = new string[0];
     public bool TrackerDummyWeapon = false;
+    internal WeaponData cacheWeapon;
 
     // Debris
     public DebrisSpawnerData[] Debris = new DebrisSpawnerData[0];
@@ -114,6 +116,11 @@ namespace SWEndor.ActorTypes
         MoveLimitData.SaveToINI(f, "MoveLimitData");
         f.SaveFile(filepath);
       }
+    }
+
+    public void Init()
+    {
+      cacheWeapon.Init(new UnfixedWeaponData(this));
     }
 
     public virtual void Initialize(ActorInfo ainfo)
@@ -301,7 +308,7 @@ namespace SWEndor.ActorTypes
         }
       }
 
-      hitby.OnHitEvent(owner.ID);
+      hitby.OnHitEvent(owner);
     }
 
     private void AddScore(ScoreInfo score, ActorInfo proj, ActorInfo victim)

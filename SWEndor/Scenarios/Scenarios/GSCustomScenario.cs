@@ -84,7 +84,7 @@ namespace SWEndor.Scenarios
       if (scr != null)
         scr.Run(ScriptContext);
 
-      MakePlayer = delegate (GameEventArg arg)
+      MakePlayer = delegate ()
       {
         Script smk = Script.Registry.Get(Fn_makeplayer);
         if (smk != null)

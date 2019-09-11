@@ -3,62 +3,11 @@ using SWEndor.Actors;
 using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using System.Collections.Generic;
+using System;
 
 namespace SWEndor
 {
-  public class GameEventArg {}
-  public class IntegerEventArg : GameEventArg
-  {
-    public static IntegerEventArg N0 = new IntegerEventArg(0);
-    public static IntegerEventArg N1 = new IntegerEventArg(1);
-    public static IntegerEventArg N2 = new IntegerEventArg(2);
-    public static IntegerEventArg N3 = new IntegerEventArg(3);
-    public static IntegerEventArg N4 = new IntegerEventArg(4);
-    public static IntegerEventArg N5 = new IntegerEventArg(5);
-    public static IntegerEventArg N6 = new IntegerEventArg(6);
-    public static IntegerEventArg N7 = new IntegerEventArg(7);
-    public static IntegerEventArg N8 = new IntegerEventArg(8);
-    public static IntegerEventArg N9 = new IntegerEventArg(9);
-    public static IntegerEventArg N10 = new IntegerEventArg(10);
-    public readonly int Num;
-
-    public IntegerEventArg(int num)
-    {
-      Num = num;
-    }
-  }
-
-  public class ActorEventArg : GameEventArg
-  {
-    public readonly int ActorID;
-
-    public ActorEventArg(int actorID)
-    {
-      ActorID = actorID;
-    }
-  }
-
-  public class HitEventArg : ActorEventArg
-  {
-    public readonly int VictimID;
-
-    public HitEventArg(int actorID, int victimID) : base(actorID)
-    {
-      VictimID = victimID;
-    }
-  }
-
-  public class ActorStateChangeEventArg : ActorEventArg
-  {
-    public readonly ActorState State;
-
-    public ActorStateChangeEventArg(int actorID, ActorState state) : base(actorID)
-    {
-      State = state;
-    }
-  }
-
-  public class ShipSpawnEventArg : GameEventArg
+  public class ShipSpawnEventArg
   {
     public readonly GSFunctions.ShipSpawnInfo Info;
     public readonly TV_3DVECTOR Position;
@@ -74,65 +23,81 @@ namespace SWEndor
     }
   }
 
-
-
-  public delegate void GameEvent(GameEventArg eventArg);
-  public delegate void ActorEvent(ActorEventArg eventArg);
-  public delegate void HitEvent(HitEventArg eventArg);
-  public delegate void IntegerEvent(IntegerEventArg eventArg);
-  public delegate void ActorStateChangeEvent(ActorStateChangeEventArg eventArg);
+  public delegate void GameEvent();
+  public delegate void GameEvent<T>(T arg);
+  public delegate void ActorEvent(ActorInfo actor);
+  public delegate void HitEvent(ActorInfo actor, ActorInfo victim);
+  public delegate void ActorStateChangeEvent(ActorInfo actor, ActorState state);
   public delegate void ShipSpawnEvent(ShipSpawnEventArg eventArg);
 
 
-  public class GameEventQueue
+  internal static class GameEventQueue
   {
-    private static ThreadSafeDictionary<float, GameEventObject> list = new ThreadSafeDictionary<float, GameEventObject>();
+    private static SortedSet<GameEventObject> list = new SortedSet<GameEventObject>(new GameEventObject.Comparer());
+    private static Queue<GameEventObject> queue = new Queue<GameEventObject>();
+    private static ScopeCounterManager.ScopeCounter _scope = new ScopeCounterManager.ScopeCounter();
 
-    private struct GameEventObject
+    internal struct GameEventObject
     {
-      internal readonly GameEvent Method;
-      internal readonly GameEventArg Arg;
+      public readonly float Time;
+      private readonly GameEvent Method;
 
-      internal GameEventObject(GameEvent gameEvent, GameEventArg arg)
+      internal GameEventObject(float time, GameEvent gameEvent)
       {
+        Time = time;
         Method = gameEvent;
-        Arg = arg;
+      }
+
+      internal void Run()
+      {
+        Method?.Invoke();
+      }
+
+      internal class Comparer : IComparer<GameEventObject>
+      {
+        public int Compare(GameEventObject x, GameEventObject y)
+        {
+          return x.Time.CompareTo(y.Time);
+        }
       }
     }
 
-    public static void Add(float time, GameEvent method, GameEventArg arg)
+    public static void Add<T>(float time, GameEvent<T> method, T arg)
     {
-      // should replace this with more efficient checking?
-      while (list.ContainsKey(time))
-        time += 0.01f;
+      Add(time, () => method(arg));
+    }
 
-      if (method != null)
-        list.Add(time, new GameEventObject(method, arg));
+    public static void Add(float time, GameEvent method)
+    {
+      using (ScopeCounterManager.Acquire(_scope))
+        list.Add(new GameEventObject(time, method));
     }
 
     public static void Clear()
     {
-      list.Clear();
+      using (ScopeCounterManager.AcquireWhenZero(_scope))
+        list.Clear();
     }
 
+    private static Predicate<GameEventObject> _expire = (a) => { return a.Time < Globals.Engine.Game.GameTime; };
     public static void Process(Engine engine)
     {
-      List<float> remove = new List<float>();
-
-      //for (int i = 0; i < list.Keys.Length; i++)
-        foreach (float t in list.Keys) //
+      using (ScopeCounterManager.AcquireWhenZero(_scope))
       {
-        float time = t;  //gekeys[i];
-        GameEventObject ev = list[time];
-        if (ev.Method == null || time < engine.Game.GameTime)
+        foreach (var l in list)
         {
-          remove.Add(time);
-          ev.Method?.Invoke(ev.Arg);
+          if (_expire(l))
+            queue.Enqueue(l);
+          else
+            break;
         }
+        list.RemoveWhere(_expire);
       }
 
-      foreach (float f in remove)
-        list.Remove(f);
+      foreach (var l in queue)
+        l.Run();
+
+      queue.Clear();
     }
   }
 }

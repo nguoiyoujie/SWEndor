@@ -61,8 +61,8 @@ namespace SWEndor.ActorTypes.Groups
               target.TypeInfo.ProcessHit(target, ainfo, target.GetGlobalPosition(), new TV_3DVECTOR());
               ainfo.TypeInfo.ProcessHit(ainfo, target, target.GetGlobalPosition(), new TV_3DVECTOR());
 
-              ainfo.OnHitEvent(target.ID);
-              target.OnHitEvent(ainfo.ID);
+              ainfo.OnHitEvent(target);
+              target.OnHitEvent(ainfo);
             }
           }
         }

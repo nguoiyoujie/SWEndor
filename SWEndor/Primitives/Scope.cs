@@ -47,8 +47,8 @@ namespace SWEndor.Primitives
     public static bool AcquireIfZero(byte global) { return Interlocked.CompareExchange(ref _cache[global].Count, 1, 0) == 0; }
     public static bool AcquireIfZero(ScopeCounter scope) { return Interlocked.CompareExchange(ref scope.Count, 1, 0) == 0; }
 
-    public static ScopeGlobalCounter AcquireWhenZero(byte global) { SpinWait.SpinUntil(() => Interlocked.CompareExchange(ref _cache[global].Count, 1, 0) == 0); return _cache[global]; }
-    public static ScopeCounter AcquireWhenZero(ScopeCounter scope) { SpinWait.SpinUntil(() => Interlocked.CompareExchange(ref scope.Count, 1, 0) == 0); return scope; }
+    public static ScopeGlobalCounter AcquireWhenZero(byte global) { while (!(Interlocked.CompareExchange(ref _cache[global].Count, 1, 0) == 0)) ; return _cache[global]; }
+    public static ScopeCounter AcquireWhenZero(ScopeCounter scope) {  while (!(Interlocked.CompareExchange(ref scope.Count, 1, 0) == 0)) ; return scope; }
 
     #region IsZero / WaitForZero
     public static bool IsZero(ScopeCounter t1) { return Get(t1) == 0; }
@@ -63,17 +63,17 @@ namespace SWEndor.Primitives
     public static bool IsZero(params ScopeCounter[] ts) { for (int i = ts.Length - 1; ; i--) if (Get(ts[i]) != 0) return false; else if (i == 0) return true; }
     public static bool IsZero(params byte[] ts) { for (int i = ts.Length - 1; ; i--) if (Get(ts[i]) != 0) return false; else if (i == 0) return true; }
 
-    public static void WaitForZero(ScopeCounter t1) { SpinWait.SpinUntil(() => IsZero(t1)); }
-    public static void WaitForZero(byte t1) { SpinWait.SpinUntil(() => IsZero(t1)); }
-    public static void WaitForZero(ScopeCounter t1, ScopeCounter t2) { SpinWait.SpinUntil(() => IsZero(t1, t2)); }
-    public static void WaitForZero(ScopeCounter t1, byte t2) { SpinWait.SpinUntil(() => IsZero(t1, t2)); }
-    public static void WaitForZero(byte t1, byte t2) { SpinWait.SpinUntil(() => IsZero(t1, t2)); }
-    public static void WaitForZero(ScopeCounter t1, ScopeCounter t2, ScopeCounter t3) { SpinWait.SpinUntil(() => IsZero(t1, t2, t3)); }
-    public static void WaitForZero(ScopeCounter t1, ScopeCounter t2, byte t3) { SpinWait.SpinUntil(() => IsZero(t1, t2, t3)); }
-    public static void WaitForZero(ScopeCounter t1, byte t2, byte t3) { SpinWait.SpinUntil(() => IsZero(t1, t2, t3)); }
-    public static void WaitForZero(byte t1, byte t2, byte t3) { SpinWait.SpinUntil(() => IsZero(t1, t2, t3)); }
-    public static void WaitForZero(params ScopeCounter[] ts) { SpinWait.SpinUntil(() => IsZero(ts)); }
-    public static void WaitForZero(params byte[] ts) { SpinWait.SpinUntil(() => IsZero(ts)); }
+    public static void WaitForZero(ScopeCounter t1) {  while (!(IsZero(t1))); }
+    public static void WaitForZero(byte t1) {  while (!(IsZero(t1))); }
+    public static void WaitForZero(ScopeCounter t1, ScopeCounter t2) {  while (!(IsZero(t1, t2))); }
+    public static void WaitForZero(ScopeCounter t1, byte t2) {  while (!(IsZero(t1, t2))); }
+    public static void WaitForZero(byte t1, byte t2) {  while (!(IsZero(t1, t2))); }
+    public static void WaitForZero(ScopeCounter t1, ScopeCounter t2, ScopeCounter t3) {  while (!(IsZero(t1, t2, t3))); }
+    public static void WaitForZero(ScopeCounter t1, ScopeCounter t2, byte t3) {  while (!(IsZero(t1, t2, t3))); }
+    public static void WaitForZero(ScopeCounter t1, byte t2, byte t3) {  while (!(IsZero(t1, t2, t3))); }
+    public static void WaitForZero(byte t1, byte t2, byte t3) {  while (!(IsZero(t1, t2, t3))); }
+    public static void WaitForZero(params ScopeCounter[] ts) {  while (!(IsZero(ts))); }
+    public static void WaitForZero(params byte[] ts) {  while (!(IsZero(ts))); }
     #endregion
 
     public class ScopeGlobalCounter : IDisposable

@@ -50,9 +50,9 @@ namespace SWEndor.Scenarios
 
       PlayerCameraInfo.CameraMode = CameraMode.CUSTOM;
 
-      Empire_StarDestroyer_01(null);
-      Empire_TIEDefender(null);
-      Rebel_HyperspaceIn(null);
+      Empire_StarDestroyer_01();
+      Empire_TIEDefender();
+      Rebel_HyperspaceIn();
       Manager.AddEvent(Game.GameTime + 0.2f, Empire_TIEAvengers);
       Manager.AddEvent(Game.GameTime + 0.5f, Rebel_BeginBattle);
       Manager.AddEvent(Game.GameTime + 15, Empire_StarDestroyer_00);
@@ -185,28 +185,28 @@ namespace SWEndor.Scenarios
         // TIE spawn
         if (TIESpawnTime < Game.GameTime)
         {
-          if (MainEnemyFaction.GetWings().Count < 12)
+          if (MainEnemyFaction.WingCount < 12)
           {
             TIESpawnTime = Game.GameTime + 10f;
-            Manager.AddEvent(0, Empire_TIEWave_01, IntegerEventArg.N4);
+            Manager.AddEvent(0, Empire_TIEWave_01, 4);
           }
         }
 
         // Rebel spawn
         if (RebelSpawnTime < Game.GameTime)
         {
-          if (MainAllyFaction.GetWings().Count < 8)
+          if (MainAllyFaction.WingCount < 8)
           {
             RebelSpawnTime = Game.GameTime + 10f;
             Manager.AddEvent(0, Rebel_Wave);
           }
         }
 
-        if (MainAllyFaction.GetShips().Count < 3 && !Manager.GetGameStateB("rebels_fled"))
+        if (MainAllyFaction.ShipCount < 3 && !Manager.GetGameStateB("rebels_fled"))
         {
           Manager.SetGameStateB("rebels_fled", true);
           Manager.AddEvent(Game.GameTime + 15f, Rebel_HyperspaceIn2);
-          Rebel_HyperspaceOut(null);
+          Rebel_HyperspaceOut();
         }
       }
     }
@@ -225,7 +225,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void Rebel_HyperspaceIn(GameEventArg arg)
+    public void Rebel_HyperspaceIn()
     {
       ActorInfo ainfo;
       float creationTime = Game.GameTime;
@@ -357,7 +357,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    private void Rebel_HyperspaceOut(GameEventArg arg)
+    private void Rebel_HyperspaceOut()
     {
       foreach (int actorID in MainAllyFaction.GetShips())
       {
@@ -375,7 +375,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void Rebel_HyperspaceIn2(GameEventArg arg)
+    public void Rebel_HyperspaceIn2()
     {
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
                                                         , ActorTypeFactory.Get("Mon Calamari Capital Ship")
@@ -458,7 +458,7 @@ namespace SWEndor.Scenarios
       Mood = -22;
     }
 
-    public void Rebel_HyperspaceIn3(GameEventArg arg)
+    public void Rebel_HyperspaceIn3()
     {
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
                                                         , ActorTypeFactory.Get("Mon Calamari Capital Ship")
@@ -525,7 +525,7 @@ namespace SWEndor.Scenarios
     }
 
 
-    public void Rebel_Wave(GameEventArg arg)
+    public void Rebel_Wave()
     {
       GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -1000, Manager.MaxBounds.z + 1500), new TV_3DVECTOR(2500, 1000, -1500));
       GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
@@ -552,16 +552,15 @@ namespace SWEndor.Scenarios
       Mood = -21;
     }
 
-    public void Rebel_BeginBattle(GameEventArg arg)
+    public void Rebel_BeginBattle()
     {
       Manager.SetGameStateB("in_battle", true);
       RebelSpawnTime = Game.GameTime + 30;
-      Manager.AddEvent(Game.GameTime + 10f, Empire_TIEWave_01, IntegerEventArg.N8);
+      Manager.AddEvent(Game.GameTime + 10f, Empire_TIEWave_01, 8);
     }
 
-    public void Empire_TIEWave_01(GameEventArg arg)
+    public void Empire_TIEWave_01(int sets)
     {
-      int sets = ((IntegerEventArg)arg).Num;
       GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -500, Manager.MinBounds.z - 8000), new TV_3DVECTOR(2500, 500, Manager.MinBounds.z - 9000));
       GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("TIE")
@@ -578,7 +577,7 @@ namespace SWEndor.Scenarios
       GSFunctions.MultipleSquadron_Spawn(Engine, this, sets, box, 1.5f, spawninfo);
     }
 
-    public void Empire_TIEDefender(GameEventArg arg)
+    public void Empire_TIEDefender()
     {
       // TID/D
       ActorInfo ainfo;
@@ -618,7 +617,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void Empire_TIEAvengers(GameEventArg arg)
+    public void Empire_TIEAvengers()
     {
       // TID/A
       ActorInfo ainfo;
@@ -659,7 +658,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void Empire_StarDestroyer_00(GameEventArg arg)
+    public void Empire_StarDestroyer_00()
     {
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
                                                               , ActorTypeFactory.Get("Imperial-I Star Destroyer")
@@ -704,7 +703,7 @@ namespace SWEndor.Scenarios
       Mood = -12;
     }
 
-    public void Empire_StarDestroyer_01(GameEventArg arg)
+    public void Empire_StarDestroyer_01()
     {
       // SD
       ActorInfo ainfo;
@@ -773,7 +772,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void Empire_StarDestroyer_02(GameEventArg arg)
+    public void Empire_StarDestroyer_02()
     {
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
                                                               , ActorTypeFactory.Get("Imperial-I Star Destroyer")

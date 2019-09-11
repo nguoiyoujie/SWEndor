@@ -70,19 +70,19 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static object GetWingCount(Context context, object[] ps)
     {
       FactionInfo f = FactionInfo.Factory.Get(ps[0].ToString());
-      return (f != null) ? f.GetWings().Count : 0;
+      return (f != null) ? f.WingCount : 0;
     }
 
     public static object GetShipCount(Context context, object[] ps)
     {
       FactionInfo f = FactionInfo.Factory.Get(ps[0].ToString());
-      return (f != null) ? f.GetShips().Count : 0;
+      return (f != null) ? f.ShipCount : 0;
     }
 
     public static object GetStructureCount(Context context, object[] ps)
     {
       FactionInfo f = FactionInfo.Factory.Get(ps[0].ToString());
-      return (f != null) ? f.GetStructures().Count : 0;
+      return (f != null) ? f.StructureCount : 0;
     }
 
     public static object GetWingLimit(Context context, object[] ps)

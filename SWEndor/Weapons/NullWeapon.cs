@@ -8,8 +8,8 @@ namespace SWEndor.Weapons.Types
 
     private NullWeapon() : base("Null", "Red Laser")
     {
-      WeaponCooldown = Globals.Engine.Game.GameTime + 9999999;
-      WeaponCooldownRate = 1000;
+      //WeaponCooldown = Globals.Engine.Game.GameTime + 9999999;
+      WeaponCooldownRate = 999999999;
       WeaponCooldownRateRandom = 0;
 
       MaxAmmo = 0;

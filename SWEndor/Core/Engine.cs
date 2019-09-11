@@ -100,8 +100,9 @@ namespace SWEndor
     public void Load()
     {
       Screen2D.LoadingTextLines.Add(Globals.LoadingFlavourTexts[Random.Next(0, Globals.LoadingFlavourTexts.Count)]);
-      ActorTypeFactory.Initialise();
+      ActorTypeFactory.RegisterBase();
 
+      
       //Screen2D.LoadingTextLines.Add("Loading other actor definitions...");
       //ActorTypeFactory.LoadFromINI(Globals.ActorTypeINIPath);
 
@@ -121,6 +122,9 @@ namespace SWEndor
 
       ScriptContext = new Scenarios.Scripting.Expressions.SWContext(this);
 
+      // late ActorType bindings...
+      ActorTypeFactory.Initialise();
+
       Screen2D.LoadingTextLines.Add("Loading scenario engine...");
       GameScenarioManager = new GameScenarioManager(this);
       GameScenarioManager.LoadInitial();
@@ -136,7 +140,7 @@ namespace SWEndor
 
     public void ProcessAI()
     {
-      ActorFactory.ParallelDoEach(ActorInfo.ProcessAI);
+      ActorFactory.DoEach(ActorInfo.ProcessAI); //may ParallelDoEach
     }
 
     public void ProcessCollision()

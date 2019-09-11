@@ -85,7 +85,7 @@ namespace SWEndor.Scenarios
         if (StageNumber == 0)
           StageNumber = 1;
 
-        if (MainEnemyFaction.Wings.Count < 10)
+        if (MainEnemyFaction.WingCount < 10)
           Manager.AddEvent(Game.GameTime, Test_EnemyWave);
 
       //}
@@ -97,7 +97,7 @@ namespace SWEndor.Scenarios
 
     #region Test events
     
-    public void Test_SpawnPlayer(GameEventArg arg)
+    public void Test_SpawnPlayer()
     {
       PlayerInfo.ActorID = PlayerInfo.TempActorID;
 
@@ -127,13 +127,13 @@ namespace SWEndor.Scenarios
       PlayerInfo.IsMovementControlsEnabled = true;
     }
 
-    public void Test_GiveControl(GameEventArg arg)
+    public void Test_GiveControl()
     {
       PlayerInfo.IsMovementControlsEnabled = true;
       Manager.SetGameStateB("in_battle", true);
     }
 
-    public void Test_Towers01(GameEventArg arg)
+    public void Test_Towers01()
     {
       List<ActorTypeInfo> towers = new List<ActorTypeInfo> { Engine.ActorTypeFactory.Get("Advanced Turbolaser Tower")
                                              , Engine.ActorTypeFactory.Get("Deflector Tower")
@@ -159,7 +159,7 @@ namespace SWEndor.Scenarios
     }
     #endregion
 
-    public void Test_EnemyWave(GameEventArg arg)
+    public void Test_EnemyWave()
     {
       GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -500, Manager.MaxBounds.z + 1500), new TV_3DVECTOR(2500, 500, Manager.MaxBounds.z + 1500));
       GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null

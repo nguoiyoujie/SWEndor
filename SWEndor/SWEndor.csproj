@@ -137,6 +137,7 @@
     <Compile Include="Actors\Components\DyingMovement\Interfaces.cs" />
     <Compile Include="Actors\Components\Movement\MoveDecorator.cs" />
     <Compile Include="Actors\Models\ArmorModel\ArmorModel.cs" />
+    <Compile Include="Actors\Models\Collision\CollisionResultData.cs" />
     <Compile Include="Actors\Models\Explosion\ExplodeModel.cs" />
     <Compile Include="Actors\Models\HealthModel\DamageInfo.cs" />
     <Compile Include="Actors\Models\HealthModel\DamageType.cs" />
@@ -620,9 +621,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <None Include="Data\ActorTypes\actortypes.ini">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Data\dynamicmusic.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -676,6 +674,7 @@
   <ItemGroup>
     <Folder Include="Actors\Events\" />
     <Folder Include="AI\AI\" />
+    <Folder Include="Data\ActorTypes\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

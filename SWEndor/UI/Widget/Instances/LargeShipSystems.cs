@@ -82,13 +82,13 @@ namespace SWEndor.UI.Widgets
           switch (a.TypeInfo.RenderData.RadarType)
           {
             case RadarType.HOLLOW_CIRCLE_S:
-              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RenderData.RadarSize * 2, 6, scolor);
+              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RenderData.RadarSize * 2, 4, scolor);
               break;
             case RadarType.HOLLOW_CIRCLE_M:
-              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RenderData.RadarSize * 2, 16, scolor);
+              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RenderData.RadarSize * 2, 12, scolor);
               break;
             case RadarType.HOLLOW_CIRCLE_L:
-              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RenderData.RadarSize * 2, 40, scolor);
+              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RenderData.RadarSize * 2, 36, scolor);
               break;
             case RadarType.RECTANGLE_GIANT:
               {

@@ -132,12 +132,12 @@ namespace SWEndor.ActorTypes.Instances
       {
         ActorTypeInfo spawntype = p.SpawnerInfo.SpawnTypes[Engine.Random.Next(0, p.SpawnerInfo.SpawnTypes.Length)];
         if ((spawntype.AIData.TargetType.Has(TargetType.FIGHTER)
-          && (p.Faction.WingSpawnLimit == -1 || p.Faction.Wings.Count < p.Faction.WingSpawnLimit)
-          && (p.Faction.WingLimit == -1 || p.Faction.Wings.Count < p.Faction.WingLimit)
+          && (p.Faction.WingSpawnLimit == -1 || p.Faction.WingCount < p.Faction.WingSpawnLimit)
+          && (p.Faction.WingLimit == -1 || p.Faction.WingCount < p.Faction.WingLimit)
           )
         || (spawntype.AIData.TargetType.Has(TargetType.SHIP)
-          && (p.Faction.ShipSpawnLimit == -1 || p.Faction.Ships.Count < p.Faction.ShipSpawnLimit))
-          && (p.Faction.ShipLimit == -1 || p.Faction.Ships.Count < p.Faction.ShipLimit)
+          && (p.Faction.ShipSpawnLimit == -1 || p.Faction.WingCount < p.Faction.ShipSpawnLimit))
+          && (p.Faction.ShipLimit == -1 || p.Faction.WingCount < p.Faction.ShipLimit)
           )
         {
           p.SpawnerInfo.NextSpawnTime = Game.GameTime + p.SpawnerInfo.SpawnInterval;

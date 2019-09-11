@@ -95,7 +95,7 @@ namespace SWEndor.Actors
     public IDyingMoveComponent DyingMoveComponent;
 
     public CycleInfo CycleInfo;
-    public WeaponSystemInfo WeaponSystemInfo;
+    public WeaponData WeaponSystemInfo;
 
     // Checks
     public bool EnteredCombatZone = false;
@@ -303,11 +303,11 @@ namespace SWEndor.Actors
     }
 
     #region Event Methods
-    public void OnTickEvent() { TickEvents?.Invoke(new ActorEventArg(ID)); }
-    public void OnHitEvent(int victimID) { HitEvents?.Invoke(new HitEventArg(ID, victimID)); }
-    public void OnStateChangeEvent() { ActorStateChangeEvents?.Invoke(new ActorStateChangeEventArg(ID, ActorState)); }
-    public void OnCreatedEvent() { CreatedEvents?.Invoke(new ActorEventArg(ID)); }
-    public void OnDestroyedEvent() { DestroyedEvents?.Invoke(new ActorEventArg(ID)); }
+    public void OnTickEvent() { TickEvents?.Invoke(this); }
+    public void OnHitEvent(ActorInfo victim) { HitEvents?.Invoke(this, victim); }
+    public void OnStateChangeEvent() { ActorStateChangeEvents?.Invoke(this, ActorState); }
+    public void OnCreatedEvent() { CreatedEvents?.Invoke(this); }
+    public void OnDestroyedEvent() { DestroyedEvents?.Invoke(this); }
 
     #endregion
 

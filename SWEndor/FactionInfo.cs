@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
+using SWEndor.Scenarios;
 using System.Collections.Generic;
 
 namespace SWEndor
@@ -39,136 +40,188 @@ namespace SWEndor
       return (this == faction || Allies.Contains(faction));
     }
 
-    public string Name { get; private set; }
+    public readonly string Name;
     public TV_COLOR Color = new TV_COLOR(1,1,1,1);
     public bool AutoAI = false;
 
     public int WingLimit = -1;
     public int WingSpawnLimit = -1;
     public bool WingLimitIncludesAllies = true;
-    public List<int> Wings = new List<int>();
+    private List<int> _wings = new List<int>();
 
     public int ShipLimit = -1;
     public int ShipSpawnLimit = -1;
     public bool ShipLimitIncludesAllies = true;
-    public List<int> Ships = new List<int>();
+    private List<int> _ships = new List<int>();
 
     public int StructureLimit = -1;
     public int StructureSpawnLimit = -1;
     public bool StructureLimitIncludesAllies = true;
-    public List<int> Structures = new List<int>();
+    private List<int> _structures = new List<int>();
 
     public List<FactionInfo> Allies = new List<FactionInfo>();
 
+    public int WingCount { get { return _wings.Count; } }
+    public int ShipCount { get { return _ships.Count; } }
+    public int StructureCount { get { return _structures.Count; } }
+
+    public int AlliedWingCount
+    {
+      get
+      {
+        int ret = _wings.Count;
+        foreach (FactionInfo fi in Allies)
+          ret += fi.WingCount;
+        return ret;
+      }
+    }
+
+    public int AlliedShipCount
+    {
+      get
+      {
+        int ret = _ships.Count;
+        foreach (FactionInfo fi in Allies)
+          ret += fi.ShipCount;
+        return ret;
+      }
+    }
+
+    public int AlliedStructureCount
+    {
+      get
+      {
+        int ret = _structures.Count;
+        foreach (FactionInfo fi in Allies)
+          ret += fi.StructureCount;
+        return ret;
+      }
+    }
+
     public void UnregisterActor(ActorInfo ainfo)
     {
-      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER) && Wings.Contains(ainfo.ID))
+      if (_wings.Remove(ainfo.ID))
       {
-        Wings.Remove(ainfo.ID);
-        if (ainfo.Disposed)
+        if (ainfo.DisposingOrDisposed)
         {
-          if (WingLimit > 0)
-            WingLimit--;
-
-          if (ainfo.GetEngine().GameScenarioManager.Scenario != null
-             && ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction != null
-             && (this == ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction
-              || (ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction.WingLimitIncludesAllies && ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction.IsAlliedWith(this))))
-            ainfo.GetEngine().GameScenarioManager.Scenario.LostWing();
+          WingLimit--;
+          GameScenarioBase b = ainfo.Engine.GameScenarioManager.Scenario;
+          if (b != null
+             && (this == b.MainAllyFaction
+              || (b.MainAllyFaction.WingLimitIncludesAllies && b.MainAllyFaction.IsAlliedWith(this))))
+            b.LostWing();
         }
       }
 
-      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.SHIP) && Ships.Contains(ainfo.ID))
+      if (_ships.Remove(ainfo.ID))
       {
-        Ships.Remove(ainfo.ID);
-        if (ainfo.Disposed)
+        if (ainfo.DisposingOrDisposed)
         {
-          if (ShipLimit > 0)
-            ShipLimit--;
-
-          if (ainfo.GetEngine().GameScenarioManager.Scenario != null
-             && ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction != null
-             && (this == ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction
-              || (ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction.ShipLimitIncludesAllies && ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction.IsAlliedWith(this))))
-            ainfo.GetEngine().GameScenarioManager.Scenario.LostShip();
+          ShipLimit--;
+          GameScenarioBase b = ainfo.Engine.GameScenarioManager.Scenario;
+          if (b != null
+             && (this == b.MainAllyFaction
+              || (b.MainAllyFaction.WingLimitIncludesAllies && b.MainAllyFaction.IsAlliedWith(this))))
+            b.LostShip();
         }
       }
 
-
-      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.STRUCTURE) && Structures.Contains(ainfo.ID))
+      if (_structures.Remove(ainfo.ID))
       {
-        Structures.Remove(ainfo.ID);
-        if (ainfo.Disposed)
+        if (ainfo.DisposingOrDisposed)
         {
-          if (StructureLimit > 0)
-            StructureLimit--;
-
-          if (ainfo.GetEngine().GameScenarioManager.Scenario != null
-             && ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction != null
-             && (this == ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction
-              || (ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction.StructureLimitIncludesAllies && ainfo.GetEngine().GameScenarioManager.Scenario.MainAllyFaction.IsAlliedWith(this))))
-            ainfo.GetEngine().GameScenarioManager.Scenario.LostStructure();
+          StructureLimit--;
+          GameScenarioBase b = ainfo.Engine.GameScenarioManager.Scenario;
+          if (b != null
+             && (this == b.MainAllyFaction
+              || (b.MainAllyFaction.WingLimitIncludesAllies && b.MainAllyFaction.IsAlliedWith(this))))
+            b.LostStructure();
         }
       }
     }
 
     public void RegisterActor(ActorInfo ainfo)
     {
-      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER) && !Wings.Contains(ainfo.ID))
+      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER) && !_wings.Contains(ainfo.ID))
       {
-        Wings.Add(ainfo.ID);
-        if (WingLimit != -1 && WingLimit < Wings.Count)
-          WingLimit = Wings.Count;
+        _wings.Add(ainfo.ID);
+        if (WingLimit != -1 && WingLimit < _wings.Count)
+          WingLimit = _wings.Count;
       }
 
-      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.SHIP) && !Ships.Contains(ainfo.ID))
+      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.SHIP) && !_ships.Contains(ainfo.ID))
       {
-        Ships.Add(ainfo.ID);
-        if (ShipLimit != -1 && ShipLimit < Ships.Count)
-          ShipLimit = Ships.Count;
+        _ships.Add(ainfo.ID);
+        if (ShipLimit != -1 && ShipLimit < _ships.Count)
+          ShipLimit = _ships.Count;
       }
 
-      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.STRUCTURE) && !Structures.Contains(ainfo.ID))
+      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.STRUCTURE) && !_structures.Contains(ainfo.ID))
       {
-        Structures.Add(ainfo.ID);
-        if (StructureLimit != -1 && StructureLimit < Structures.Count)
-          StructureLimit = Structures.Count;
+        _structures.Add(ainfo.ID);
+        if (StructureLimit != -1 && StructureLimit < _structures.Count)
+          StructureLimit = _structures.Count;
       }
     }
 
     public List<int> GetAll()
     {
-      List<int> ret = GetWings();
+      List<int> ret = new List<int>(WingCount + ShipCount + StructureCount);
+      ret.AddRange(GetWings());
       ret.AddRange(GetShips());
       ret.AddRange(GetStructures());
       return ret;
     }
 
-    public List<int> GetWings()
-    {
-      List<int> ret = new List<int>(Wings.ToArray());
-      if (WingLimitIncludesAllies)
-        foreach (FactionInfo fi in Allies)
-          ret.AddRange(fi.Wings);
-      return ret;
-    }
+    public int GetWing(int index) { return _wings[index]; }
+    public int GetShip(int index) { return _ships[index]; }
+    public int GetStructure(int index) { return _structures[index]; }
 
-    public List<int> GetShips()
+    public IEnumerable<int> GetWings()
     {
-      List<int> ret = new List<int>(Ships.ToArray());
+      List<int> f = _wings;
+      for (int i = 0; i < f.Count; i++)
+        yield return f[i];
+
       if (ShipLimitIncludesAllies)
         foreach (FactionInfo fi in Allies)
-          ret.AddRange(fi.Ships);
-      return ret;
+          for (int i = 0; i < f.Count; i++)
+            yield return fi._wings[i];
     }
 
+    public IEnumerable<int> GetShips()
+    {
+      List<int> f = _ships;
+      for (int i = 0; i < f.Count; i++)
+        yield return f[i];
+
+      if (ShipLimitIncludesAllies)
+        foreach (FactionInfo fi in Allies)
+          for (int i = 0; i < f.Count; i++)
+            yield return fi._ships[i];
+    }
+
+    public IEnumerable<int> GetStructures()
+    {
+      List<int> f = _structures;
+      for (int i = 0; i < f.Count; i++)
+        yield return f[i];
+
+      if (ShipLimitIncludesAllies)
+        foreach (FactionInfo fi in Allies)
+          for (int i = 0; i < f.Count; i++)
+            yield return fi._structures[i];
+    }
+
+    /*
     public List<int> GetStructures()
     {
-      List<int> ret = new List<int>(Structures.ToArray());
+      List<int> ret = new List<int>(_structures.ToArray());
       if (StructureLimitIncludesAllies)
         foreach (FactionInfo fi in Allies)
-          ret.AddRange(fi.Structures);
+          ret.AddRange(fi._structures);
       return ret;
     }
+    */
   }
 }

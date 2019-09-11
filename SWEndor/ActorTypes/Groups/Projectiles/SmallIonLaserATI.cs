@@ -52,10 +52,10 @@ namespace SWEndor.ActorTypes.Instances
           child.InflictDamage(hitby, 0.1f * Engine.Random.Next(25, 50), DamageType.NORMAL, child.GetGlobalPosition());
 
           float empduration = 12;
-          
-          foreach (WeaponInfo w in child.WeaponSystemInfo.Weapons)
-            if (w.WeaponCooldown < Game.GameTime + empduration + 2)
-              w.WeaponCooldown = Game.GameTime + empduration + 2;
+
+          for (int i = 0; i < child.WeaponSystemInfo.Weapons.Length; i++)
+            if (child.WeaponSystemInfo.Weapons[i].WeaponCooldown < Game.GameTime + empduration + 2)
+              child.WeaponSystemInfo.Weapons[i].WeaponCooldown = Game.GameTime + empduration + 2;
 
           foreach (ActorInfo child2 in child.Children)
           {

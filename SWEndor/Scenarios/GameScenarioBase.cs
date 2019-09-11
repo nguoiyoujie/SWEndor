@@ -173,13 +173,13 @@ namespace SWEndor.Scenarios
       GC.Collect();
     }
 
-    public void FadeOut(GameEventArg arg)
+    public void FadeOut()
     {
       TrueVision.TVGraphicEffect.FadeOut();
       Manager.AddEvent(Game.GameTime + 0.01f, FadeInterim);
     }
 
-    public void FadeInterim(GameEventArg arg)
+    public void FadeInterim()
     {
       if (TrueVision.TVGraphicEffect.IsFadeFinished())
       {
@@ -189,23 +189,23 @@ namespace SWEndor.Scenarios
 
         if (Manager.GetGameStateB("GameOver"))
         {
-          GameOver(null);
+          GameOver();
           return;
         }
-        else if (Manager.GetGameStateF("PlayCutsceneSequence", -1) != -1)
-        {
-          PlayCutsceneSequence(new object[] { Manager.GetGameStateF("PlayCutsceneSequence", -1) });
-          return;
-        }
+        //else if (Manager.GetGameStateF("PlayCutsceneSequence", -1) != -1)
+        //{
+        //  PlayCutsceneSequence(new object[] { Manager.GetGameStateF("PlayCutsceneSequence", -1) });
+        //  return;
+        //}
         else if (Manager.GetGameStateB("GameWon"))
         {
           GameWonSequence();
           return;
         }
 
-        MakePlayer?.Invoke(null);
+        MakePlayer?.Invoke();
 
-        FadeIn(null);
+        FadeIn();
         Manager.IsCutsceneMode = false;
       }
       else
@@ -214,12 +214,12 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void FadeIn(GameEventArg arg)
+    public void FadeIn()
     {
       TrueVision.TVGraphicEffect.FadeIn();
     }
 
-    public void GameOver(GameEventArg arg)
+    public void GameOver()
     {
       TrueVision.TVGraphicEffect.FadeIn(2.5f);
 
@@ -291,7 +291,7 @@ namespace SWEndor.Scenarios
       TimeSinceLostShip = Game.GameTime + 3f;
     }
 
-    public void LostSound(GameEventArg arg)
+    public void LostSound()
     {
       if (!Manager.IsCutsceneMode)
       {
@@ -314,27 +314,14 @@ namespace SWEndor.Scenarios
 
     public void RegisterEvents(ActorInfo actor)
     {
-      actor.CreatedEvents += ProcessCreated;
-      actor.DestroyedEvents += ProcessKilled;
       actor.HitEvents += ProcessHit;
-      actor.ActorStateChangeEvents += ProcessStateChange;
-      actor.TickEvents += ProcessTick; 
     }
 
-    public virtual void ProcessCreated(GameEventArg arg)
+    public virtual void ProcessPlayerDying(ActorInfo a)
     {
-    }
-
-    public virtual void ProcessKilled(GameEventArg arg)
-    {
-    }
-
-    public virtual void ProcessPlayerDying(ActorEventArg arg)
-    {
-      ActorInfo ainfo = ActorFactory.Get(arg.ActorID);
-      if (ainfo != null)
+      if (a != null)
       {
-        PlayerInfo.TempActorID = ainfo.ID;
+        PlayerInfo.TempActorID = a.ID;
 
         //if (PlayerInfo.Actor.TypeInfo is DeathCameraATI)
         //  if (PlayerInfo.Actor.Active)
@@ -342,7 +329,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public virtual void ProcessPlayerKilled(GameEventArg arg)
+    public virtual void ProcessPlayerKilled(ActorInfo a)
     {
       Manager.IsCutsceneMode = true;
       Manager.AddEvent(Game.GameTime + 3f, FadeOut);
@@ -350,19 +337,8 @@ namespace SWEndor.Scenarios
         Manager.SetGameStateB("GameOver", true);
     }
 
-    public virtual void ProcessTick(GameEventArg arg)
+    public virtual void ProcessHit(ActorInfo aa, ActorInfo av)
     {
-    }
-
-    public virtual void ProcessStateChange(GameEventArg arg)
-    {
-    }
-
-    public virtual void ProcessHit(GameEventArg arg)
-    {
-      ActorInfo av = ActorFactory.Get(((HitEventArg)arg).VictimID);
-      ActorInfo aa = ActorFactory.Get(((HitEventArg)arg).ActorID);
-
       if (PlayerInfo.Actor == aa.TopParent)
       {
         if (PlayerInfo.Actor != null
@@ -377,12 +353,12 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public virtual void PlayCutsceneSequence(object[] param = null)
+    public virtual void PlayCutsceneSequence()
     {
 
     }
 
-    public virtual void GameWonSequence(object[] param = null)
+    public virtual void GameWonSequence()
     {
       TrueVision.TVGraphicEffect.FadeIn(2.5f);
 

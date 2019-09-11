@@ -5,16 +5,16 @@ using System.Collections.Generic;
 
 namespace SWEndor.Actors.Components
 {
-  public class PreWeaponSystemInfo
+  public class UnfixedWeaponData
   {
     public List<WeaponInfo> Weapons = new List<WeaponInfo>(4);
     public List<WeaponShotInfo> PrimaryWeapons = new List<WeaponShotInfo>(4);
     public List<WeaponShotInfo> SecondaryWeapons = new List<WeaponShotInfo>(4) { WeaponShotInfo.Default };
     public List<WeaponShotInfo> AIWeapons = new List<WeaponShotInfo>(4);
 
-    public PreWeaponSystemInfo() { }
+    public UnfixedWeaponData() { }
 
-    public PreWeaponSystemInfo(ActorTypeInfo atype)
+    public UnfixedWeaponData(ActorTypeInfo atype)
     {
       foreach (string s in atype.Loadouts)
         InsertLoadout(s);
@@ -56,10 +56,9 @@ namespace SWEndor.Actors.Components
       WeaponInfo weap = TrackerDummyWeapon.Instance;
       AIWeapons.Add(new WeaponShotInfo(weap, 1));
     }
-
   }
 
-  public struct WeaponSystemInfo
+  public struct WeaponData
   {
     public WeaponInfo[] Weapons { get; private set; }
     public WeaponShotInfo[] PrimaryWeapons { get; private set; }
@@ -68,10 +67,11 @@ namespace SWEndor.Actors.Components
 
     public void Init(ActorTypeInfo atype)
     {
-      Init(new PreWeaponSystemInfo(atype));
+      // TO DO: Seperate Ammo, Cooldown and actor specific var from Weapons to ease assignment
+      Init(new UnfixedWeaponData (atype));//this = atype.cacheWeapon;
     }
 
-    public void Init(PreWeaponSystemInfo preinit)
+    public void Init(UnfixedWeaponData preinit) // to split into Actor and Atype versions
     {
       Weapons = preinit.Weapons.ToArray();
       PrimaryWeapons = preinit.PrimaryWeapons.ToArray();

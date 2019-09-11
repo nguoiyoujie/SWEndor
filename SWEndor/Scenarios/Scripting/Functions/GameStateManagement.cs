@@ -121,7 +121,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       Script s = Script.Registry.Get(ps[1].ToString());
       if (s != null)
         context.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + Convert.ToSingle(ps[0].ToString())
-        , (_) => s.Run(context));
+        , () => s.Run(context));
       else
       {
         // core events // implement this elsewhere

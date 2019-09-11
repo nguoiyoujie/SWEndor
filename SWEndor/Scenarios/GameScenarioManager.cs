@@ -109,9 +109,14 @@ namespace SWEndor.Scenarios
       LoadInitial();
     }
 
-    public void AddEvent(float time, GameEvent gevent, GameEventArg garg = null)
+    public void AddEvent(float time, GameEvent gevent)
     {
-      GameEventQueue.Add(time, gevent, garg);
+      GameEventQueue.Add(time, gevent);
+    }
+
+    public void AddEvent<T>(float time, GameEvent<T> gevent, T arg)
+    {
+      GameEventQueue.Add(time, gevent, arg);
     }
 
     public void ClearEvents()

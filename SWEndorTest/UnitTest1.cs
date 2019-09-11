@@ -18,7 +18,8 @@ namespace SWEndorTest
       Globals.Engine.LinkHandle(new IntPtr(0));
       Globals.Engine.InitTrueVision();
 
-      Globals.Engine.ActorTypeFactory.Initialise();
+      Globals.Engine.ActorTypeFactory.RegisterBase();
+      //Globals.Engine.ActorTypeFactory.Initialise();
     }
 
     private ActorTypeInfo _MockActorType;

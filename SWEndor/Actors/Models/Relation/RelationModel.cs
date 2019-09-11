@@ -66,6 +66,9 @@ namespace SWEndor.Actors
       {
         get
         {
+          return new ChildEnumerable(list);
+
+          /*
           if (list == null)
             yield break;
 
@@ -75,7 +78,36 @@ namespace SWEndor.Actors
             yield return node.Value;
             node = node.Next;
           }
+          */
         }
+      }
+
+      private struct ChildEnumerable : IEnumerable<ActorInfo>
+      {
+        readonly LinkedList<ActorInfo> L;
+        public ChildEnumerable(LinkedList<ActorInfo> list) { L = list; }
+        public IEnumerator<ActorInfo> GetEnumerator() { return new ChildEnumerator(L); }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { return GetEnumerator(); }
+      }
+
+      private struct ChildEnumerator : IEnumerator<ActorInfo>
+      {
+        readonly LinkedList<ActorInfo> L;
+        LinkedListNode<ActorInfo> current;
+        public ChildEnumerator(LinkedList<ActorInfo> list)
+        {
+          L = list;
+          current = L?.First;
+        }
+
+        public void Reset() { current = L?.First; }
+        public bool MoveNext()
+        {
+          return (current = current?.Next) != null;
+        }
+        public ActorInfo Current { get { return current?.Value; } }
+        object System.Collections.IEnumerator.Current { get { return Current; } }
+        public void Dispose() { }
       }
 
       public ActorInfo GetTopParent(ActorInfo self)

@@ -31,16 +31,17 @@ namespace SWEndor.Actors
 
       private void GenerateMeshes(int id, ActorTypeInfo atype)
       {
+        string sid = id.ToString();
         using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_RENDER))
         using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_COLLISION))
         {
           Mesh = atype.MeshData.SourceMesh.Duplicate();
           FarMesh = atype.MeshData.SourceFarMesh == null ? atype.MeshData.SourceMesh.Duplicate() : atype.MeshData.SourceFarMesh.Duplicate();
 
-          Mesh.SetTag(id.ToString());
+          Mesh.SetTag(sid);
           //Mesh.ShowBoundingBox(true);
 
-          FarMesh.SetTag(id.ToString());
+          FarMesh.SetTag(sid);
 
           //Mesh.ComputeBoundings();
           //FarMesh.ComputeBoundings();

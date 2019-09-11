@@ -74,7 +74,7 @@ namespace SWEndor.Scenarios
 
       if (Manager.Scenario.TimeSinceLostWing < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
       {
-        Manager.Line1Text = string.Format("WINGS: {0}", MainAllyFaction.GetWings().Count);
+        Manager.Line1Text = string.Format("WINGS: {0}", MainAllyFaction.WingCount);
       }
       else
       {
@@ -151,7 +151,7 @@ namespace SWEndor.Scenarios
 
     #region Rebellion spawns
 
-    public void Rebel_HyperspaceIn(GameEventArg arg)
+    public void Rebel_HyperspaceIn()
     {
       ActorInfo ainfo;
       TV_3DVECTOR pos;
@@ -283,7 +283,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void Rebel_RemoveTorps(GameEventArg arg)
+    public void Rebel_RemoveTorps()
     {
       /*
       foreach (int actorID in MainAllyFaction.GetWings())
@@ -300,7 +300,7 @@ namespace SWEndor.Scenarios
       */
     }
 
-    public void Rebel_MakePlayer(GameEventArg arg)
+    public void Rebel_MakePlayer()
     {
       PlayerInfo.ActorID = PlayerInfo.TempActorID;
 
@@ -310,9 +310,10 @@ namespace SWEndor.Scenarios
         {
           PlayerInfo.Lives--;
           TV_3DVECTOR pos = new TV_3DVECTOR(0, -200, 500);
-          if (MainAllyFaction.GetShips().Count > 0)
+          if (MainAllyFaction.ShipCount > 0)
           {
-            ActorInfo rs = Engine.ActorFactory.Get(MainAllyFaction.GetShips()[0]);
+            int rid = MainAllyFaction.GetShip(0);
+            ActorInfo rs = Engine.ActorFactory.Get(rid);
             if (rs != null)
               pos += rs.GetGlobalPosition();
           }
@@ -337,7 +338,7 @@ namespace SWEndor.Scenarios
       Manager.AddEvent(Game.GameTime + 0.1f, Rebel_RemoveTorps);
     }
 
-    public void Rebel_GiveControl(GameEventArg arg)
+    public void Rebel_GiveControl()
     {
       foreach (int actorID in MainAllyFaction.GetAll())
       {
@@ -353,7 +354,7 @@ namespace SWEndor.Scenarios
       PlayerInfo.IsMovementControlsEnabled = true;
 
       Manager.SetGameStateB("in_battle", true);
-      Empire_TIEAdvanced(null);
+      Empire_TIEAdvanced();
     }
 
     #endregion
@@ -361,34 +362,33 @@ namespace SWEndor.Scenarios
 
     #region Empire spawns
 
-    public void Empire_Wave_2(GameEventArg arg)
+    public void Empire_Wave_2()
     {
       switch (Difficulty.ToLower())
       {
         case "mental":
-          Manager.AddEvent(0, Empire_TIEDefender_Wave, IntegerEventArg.N10);
-          Manager.AddEvent(0, Empire_TIEBombers, IntegerEventArg.N4);
+          Manager.AddEvent(0, Empire_TIEDefender_Wave, 10);
+          Manager.AddEvent(0, Empire_TIEBombers, 4);
           break;
         case "hard":
-          Manager.AddEvent(0, Empire_TIEDefender_Wave, IntegerEventArg.N7);
-          Manager.AddEvent(0, Empire_TIEBombers, IntegerEventArg.N2);
+          Manager.AddEvent(0, Empire_TIEDefender_Wave, 7);
+          Manager.AddEvent(0, Empire_TIEBombers, 2);
           break;
         case "normal":
-          Manager.AddEvent(0, Empire_TIEDefender_Wave, IntegerEventArg.N5);
-          Manager.AddEvent(0, Empire_TIEBombers, IntegerEventArg.N1);
+          Manager.AddEvent(0, Empire_TIEDefender_Wave, 5);
+          Manager.AddEvent(0, Empire_TIEBombers, 1);
           break;
         case "easy":
         default:
-          Manager.AddEvent(0, Empire_TIEDefender_Wave, IntegerEventArg.N8);
+          Manager.AddEvent(0, Empire_TIEDefender_Wave, 8);
           break;
       }
       Manager.AddEvent(Game.GameTime + 5f, Empire_TIEAdv_Control_TargetFighter);
       Manager.AddEvent(Game.GameTime + 15f, Empire_TIEAdv_Control_Master);
     }
 
-    public void Empire_TIEDefender_Wave(GameEventArg arg)
+    public void Empire_TIEDefender_Wave(int sets)
     {
-      int sets = ((IntegerEventArg)arg).Num;
       GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -500, -22500), new TV_3DVECTOR(2500, 500, -22500));
       GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("TIE Defender")
@@ -405,9 +405,8 @@ namespace SWEndor.Scenarios
       GSFunctions.MultipleSquadron_Spawn(Engine, this, sets, box, 0.5f, spawninfo);
     }
 
-    public void Empire_TIEBombers(GameEventArg arg)
+    public void Empire_TIEBombers(int sets)
     {
-      int sets = ((IntegerEventArg)arg).Num;
       GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -500, -22500), new TV_3DVECTOR(2500, 500, -22500));
       GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("TIE Bomber")
@@ -424,23 +423,23 @@ namespace SWEndor.Scenarios
       GSFunctions.MultipleSquadron_Spawn(Engine, this, sets, box, 1.5f, spawninfo);
     }
 
-    public void Empire_TIEAdv_Control_Master(GameEventArg arg)
+    public void Empire_TIEAdv_Control_Master()
     {
       double r = Engine.Random.NextDouble();
 
-      if (r * (MainAllyFaction.GetWings().Count + MainAllyFaction.GetShips().Count * 5) < MainAllyFaction.GetWings().Count)
+      if (r * (MainAllyFaction.WingCount + MainAllyFaction.ShipCount * 5) < MainAllyFaction.WingCount)
       {
-        Empire_TIEAdvanced_Control_AttackFighter(null);
+        Empire_TIEAdvanced_Control_AttackFighter();
       }
       else
       {
-        Empire_TIEAdvanced_Control_AttackShip(null);
+        Empire_TIEAdvanced_Control_AttackShip();
         Manager.AddEvent(Game.GameTime + 125f, Empire_TIEAdv_Control_TargetShip);
       }
       Manager.AddEvent(Game.GameTime + 30f, Empire_TIEAdv_Control_Master);
     }
 
-    public void Empire_TIEAdvanced(GameEventArg arg)
+    public void Empire_TIEAdvanced()
     {
       // TIE Advanced x 1
       float fx = Engine.Random.Next(-2500, 2500);
@@ -463,17 +462,17 @@ namespace SWEndor.Scenarios
       Screen2D.MessageText("The TIE Advanced X1 has arrived.", 5, new TV_COLOR(1, 1, 1, 1));
     }
 
-    public void Empire_TIEAdv_Control_TargetFighter(GameEventArg arg)
+    public void Empire_TIEAdv_Control_TargetFighter()
     {
-      Empire_TIEAdvanced_Control_AttackFighter(null);
+      Empire_TIEAdvanced_Control_AttackFighter();
     }
 
-    public void Empire_TIEAdv_Control_TargetShip(GameEventArg arg)
+    public void Empire_TIEAdv_Control_TargetShip()
     {
-      Empire_TIEAdvanced_Control_AttackShip(null);
+      Empire_TIEAdvanced_Control_AttackShip();
     }
 
-    public void Empire_TIEAdvanced_Control_AttackShip(GameEventArg arg)
+    public void Empire_TIEAdvanced_Control_AttackShip()
     {
       ActorInfo m_X1 = ActorFactory.Get(m_X1ID);
       if (m_X1 != null)
@@ -483,7 +482,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void Empire_TIEAdvanced_Control_AttackFighter(GameEventArg arg)
+    public void Empire_TIEAdvanced_Control_AttackFighter()
     {
       ActorInfo m_X1 = ActorFactory.Get(m_X1ID);
       if (m_X1 != null)

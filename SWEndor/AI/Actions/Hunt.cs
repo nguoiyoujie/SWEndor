@@ -28,7 +28,8 @@ namespace SWEndor.AI.Actions
     public override void Process(Engine engine, ActorInfo actor)
     {
       ActorInfo currtarget = null;
-      ConcurrentQueue<ActorInfo> targets = new ConcurrentQueue<ActorInfo>();
+      //ConcurrentQueue<ActorInfo> targets = new ConcurrentQueue<ActorInfo>();
+      Queue<ActorInfo> targets = new Queue<ActorInfo>();
       int weight = 0;
 
       Action<Engine, ActorInfo> action = new Action<Engine, ActorInfo>(
@@ -65,13 +66,14 @@ namespace SWEndor.AI.Actions
          }
        );
 
-      engine.ActorFactory.ParallelDoEach(action);
+      engine.ActorFactory.DoEach(action);
 
       if (targets.Count > 0)
       {
         int w = engine.Random.Next(0, weight);
         ActorInfo tgt = null;
-        while (targets.TryDequeue(out tgt))
+        //while (targets.TryDequeue(out tgt))
+        while ((tgt = targets.Dequeue()) != null)
         {
           w -= tgt.HuntWeight;
           currtarget = tgt;

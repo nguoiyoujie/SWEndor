@@ -281,7 +281,7 @@ namespace SWEndor.Scenarios
         }
         else if (StageNumber == 1)
         {
-          enemystrength = MainEnemyFaction.GetWings().Count;
+          enemystrength = MainEnemyFaction.WingCount;
           foreach (int actorID in MainEnemyFaction.GetShips())
           {
             ActorInfo actor = ActorFactory.Get(actorID);
@@ -312,8 +312,8 @@ namespace SWEndor.Scenarios
         else if (StageNumber == 2)
         {
           Manager.UpdateActorLists(m_CriticalGroundObjects);
-          enemystrength = MainEnemyFaction.GetWings().Count;
-          enemystrength += MainEnemyFaction.GetShips().Count;
+          enemystrength = MainEnemyFaction.WingCount;
+          enemystrength += MainEnemyFaction.ShipCount;
           enemystrength += m_CriticalGroundObjects.Count;
 
           if (enemystrength == 0 && !Manager.GetGameStateB("Stage2End"))
@@ -327,8 +327,8 @@ namespace SWEndor.Scenarios
         else if (StageNumber == 3)
         {
           Manager.UpdateActorLists(m_CriticalGroundObjects);
-          enemystrength = MainEnemyFaction.GetWings().Count;
-          enemystrength += MainEnemyFaction.GetShips().Count;
+          enemystrength = MainEnemyFaction.WingCount;
+          enemystrength += MainEnemyFaction.ShipCount;
           enemystrength += m_CriticalGroundObjects.Count;
 
           if (enemystrength == 0 && !Manager.GetGameStateB("Stage3End"))
@@ -342,8 +342,8 @@ namespace SWEndor.Scenarios
         else if (StageNumber == 4)
         {
           Manager.UpdateActorLists(m_CriticalGroundObjects);
-          enemystrength = MainEnemyFaction.GetWings().Count;
-          enemystrength += MainEnemyFaction.GetShips().Count;
+          enemystrength = MainEnemyFaction.WingCount;
+          enemystrength += MainEnemyFaction.ShipCount;
           enemystrength += m_CriticalGroundObjects.Count;
 
           if (enemystrength == 0 && !Manager.GetGameStateB("Stage4End"))
@@ -400,7 +400,7 @@ namespace SWEndor.Scenarios
                 last_sound_distX = player.GetGlobalPosition().x + 250;
               }
               Screen2D.TargetingRadar_text = string.Format("{0:00000000}", (target_distX - player.GetGlobalPosition().x) * 30);
-              Scene_Stage05b_ContinuouslySpawnRoute(null);
+              Scene_Stage05b_ContinuouslySpawnRoute();
 
               if (player.GetGlobalPosition().x > vader_distX 
                 && !player.IsDyingOrDead
@@ -440,7 +440,7 @@ namespace SWEndor.Scenarios
               }
 
               Screen2D.TargetingRadar_text = string.Format("{0:00000000}", (target_distX - player.GetGlobalPosition().x) * 30);
-              Scene_Stage05b_ContinuouslySpawnRoute(null);
+              Scene_Stage05b_ContinuouslySpawnRoute();
 
               if (player.GetGlobalPosition().x > vaderend_distX 
                 && !player.IsDyingOrDead
@@ -448,7 +448,7 @@ namespace SWEndor.Scenarios
               {
                 Manager.AddEvent(Game.GameTime + 0.1f, Scene_Stage06_VaderEnd);
                 Stage6VaderEnd = true;
-                Rebel_RemoveTorps(null);
+                Rebel_RemoveTorps();
               }
 
               ActorInfo vader = ActorFactory.Get(m_VaderID);
@@ -471,7 +471,7 @@ namespace SWEndor.Scenarios
         }
       }
       
-      if (m_pendingSDspawnlist.Count > 0 && MainEnemyFaction.GetShips().Count < 5)
+      if (m_pendingSDspawnlist.Count > 0 && MainEnemyFaction.ShipCount < 5)
       {
         Manager.AddEvent(0, Empire_StarDestroyer_Spawn, m_pendingSDspawnlist[0]);
         m_pendingSDspawnlist.RemoveAt(0);
@@ -481,7 +481,7 @@ namespace SWEndor.Scenarios
       {
         if (Manager.Scenario.TimeSinceLostWing < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
         {
-          Manager.Line1Text = string.Format("WINGS: {0}", MainAllyFaction.GetWings().Count);
+          Manager.Line1Text = string.Format("WINGS: {0}", MainAllyFaction.WingCount);
         }
         else
         {
@@ -537,7 +537,7 @@ namespace SWEndor.Scenarios
 
     #region Rebellion spawns
 
-    public void Rebel_HyperspaceIn(GameEventArg arg)
+    public void Rebel_HyperspaceIn()
     {
       ActorInfo ainfo;
 
@@ -620,7 +620,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void Rebel_RemoveTorps(GameEventArg arg)
+    public void Rebel_RemoveTorps()
     {
       foreach (int actorID in MainAllyFaction.GetWings())
       {
@@ -664,7 +664,7 @@ namespace SWEndor.Scenarios
 
           player.WeaponSystemInfo.Reset();
 
-          PreWeaponSystemInfo prew = new PreWeaponSystemInfo();
+          UnfixedWeaponData prew = new UnfixedWeaponData();
           prew.InsertLoadout("X_WG_LASR");
           prew.InsertLoadout("X_WG_TORP");
           player.WeaponSystemInfo.Init(prew);
@@ -684,9 +684,9 @@ namespace SWEndor.Scenarios
       PlayerInfo.ResetSecondaryWeapon();
     }
 
-    public void Rebel_YWingsAttackScan(GameEventArg arg)
+    public void Rebel_YWingsAttackScan()
     {
-      if (MainEnemyFaction.GetShips().Count > 0)
+      if (MainEnemyFaction.ShipCount > 0)
       {
         foreach (int actorID in MainAllyFaction.GetWings())
         {
@@ -695,7 +695,7 @@ namespace SWEndor.Scenarios
           {
             if (actor.TypeInfo is YWingATI || actor.TypeInfo is BWingATI)
             {
-              int rsID = MainEnemyFaction.GetShips()[Engine.Random.Next(0, MainEnemyFaction.GetShips().Count)];
+              int rsID = MainEnemyFaction.GetShip(Engine.Random.Next(0, MainEnemyFaction.ShipCount));
               ActorInfo rs = ActorFactory.Get(actorID);
               {
                 foreach (ActorInfo c in rs.Children)
@@ -716,7 +716,7 @@ namespace SWEndor.Scenarios
       Manager.AddEvent(Game.GameTime + 5f, Rebel_YWingsAttackScan);
     }
 
-    public void Rebel_MakePlayer(GameEventArg arg)
+    public void Rebel_MakePlayer()
     {
       PlayerInfo.ActorID = PlayerInfo.TempActorID;
       if (PlayerInfo.Actor == null || PlayerInfo.Actor.Disposed)
@@ -771,7 +771,7 @@ namespace SWEndor.Scenarios
       Manager.AddEvent(Game.GameTime + 0.1f, Rebel_RemoveTorps);
     }
 
-    public void Rebel_GiveControl(GameEventArg arg)
+    public void Rebel_GiveControl()
     {
       foreach (int actorID in MainAllyFaction.GetWings())
       {
@@ -787,7 +787,7 @@ namespace SWEndor.Scenarios
       Manager.SetGameStateB("in_battle", true);
     }
 
-    public void Rebel_Forward(GameEventArg arg)
+    public void Rebel_Forward()
     {
       foreach (int actorID in MainAllyFaction.GetWings())
       {
@@ -801,7 +801,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void Rebel_Reposition(GameEventArg arg)
+    public void Rebel_Reposition()
     {
       int sw = -1;
       float x = 0;
@@ -835,7 +835,7 @@ namespace SWEndor.Scenarios
           }
         }
       }
-      Rebel_RemoveTorps(null);
+      Rebel_RemoveTorps();
     }
 
 
@@ -845,16 +845,12 @@ namespace SWEndor.Scenarios
 
     #region Empire spawns
 
-    public void Empire_StarDestroyer_Spawn(GameEventArg arg)
+    public void Empire_StarDestroyer_Spawn(ShipSpawnEventArg s)
     {
-      if (arg is ShipSpawnEventArg)
-      {
-        ShipSpawnEventArg s = (ShipSpawnEventArg)arg;
-        ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, 0, s.Info);
-      }
+      ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, 0, s.Info);
     }
     
-    public void Empire_FirstWave(GameEventArg arg)
+    public void Empire_FirstWave()
     {
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
                                                               , ActorTypeFactory.Get("Imperial-I Star Destroyer")
@@ -913,7 +909,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void Empire_SecondWave(GameEventArg arg)
+    public void Empire_SecondWave()
     {
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
                                                         , ActorTypeFactory.Get("Imperial-I Star Destroyer")
@@ -936,7 +932,7 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         )); 
 
-          Manager.AddEvent(0, Empire_TIEWave, IntegerEventArg.N4);
+          Manager.AddEvent(0, Empire_TIEWave, 4);
           break;
         case "easy":
           sspawn.CarrierSpawns = 8;
@@ -945,7 +941,7 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          Manager.AddEvent(0, Empire_TIEWave, IntegerEventArg.N2);
+          Manager.AddEvent(0, Empire_TIEWave, 2);
           break;
         case "normal":
         default:
@@ -955,13 +951,13 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          Manager.AddEvent(0, Empire_TIEWave, IntegerEventArg.N3);
+          Manager.AddEvent(0, Empire_TIEWave, 3);
           break;
       }
       Manager.SetGameStateB("Stage1BBegin", true);
     }
 
-    public void Empire_FirstTIEWave(GameEventArg arg)
+    public void Empire_FirstTIEWave()
     {
       int count = 0;
       switch (Difficulty.ToLower())
@@ -1018,9 +1014,8 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void Empire_TIEWave(GameEventArg arg)
+    public void Empire_TIEWave(int sets)
     {
-      int sets = ((IntegerEventArg)arg).Num;
       GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -200, Manager.MinBounds.z - 5000), new TV_3DVECTOR(2500, 800, Manager.MinBounds.z - 5000));
       GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("TIE")
@@ -1037,7 +1032,7 @@ namespace SWEndor.Scenarios
       GSFunctions.MultipleSquadron_Spawn(Engine, this, sets, box, 1.5f, spawninfo);
     }
 
-    public void Empire_Towers01(GameEventArg arg)
+    public void Empire_Towers01()
     {
       float dist = 2500;
       float height = Manager.MinBounds.y;
@@ -1047,7 +1042,7 @@ namespace SWEndor.Scenarios
           Spawn_TowerRadarFormation(Engine, new TV_3DVECTOR(x * dist, 90 + height, z * dist));
     }
 
-    public void Empire_Towers02(GameEventArg arg)
+    public void Empire_Towers02()
     {
       float dist = 2500;
       float height = Manager.MinBounds.y;
@@ -1110,7 +1105,7 @@ namespace SWEndor.Scenarios
     }
 
 
-    public void Empire_Towers03(GameEventArg arg)
+    public void Empire_Towers03()
     {
       float dist = 2500;
       float height = Manager.MinBounds.y;
@@ -1152,7 +1147,7 @@ namespace SWEndor.Scenarios
         TrenchTurrets[trench_slot].Add(ainfo);
     }
 
-    public void Empire_Towers04(GameEventArg arg)
+    public void Empire_Towers04()
     {
       float dist = 1000;
       float height = -175;
@@ -1165,7 +1160,7 @@ namespace SWEndor.Scenarios
 
     #region Scene
 
-    public void Scene_EnterCutscene(GameEventArg arg)
+    public void Scene_EnterCutscene()
     {
       ActorInfo player = ActorFactory.Get(m_PlayerID);
       if (player != null)
@@ -1183,7 +1178,7 @@ namespace SWEndor.Scenarios
       Manager.IsCutsceneMode = true;
     }
 
-    public void Scene_ExitCutscene(GameEventArg arg)
+    public void Scene_ExitCutscene()
     {
       ActorInfo player = ActorFactory.Get(m_PlayerID);
       if (player != null)
@@ -1197,7 +1192,7 @@ namespace SWEndor.Scenarios
       Manager.IsCutsceneMode = false;
     }
 
-    public void Scene_DeathStarCam(GameEventArg arg)
+    public void Scene_DeathStarCam()
     {
       Manager.AddEvent(Game.GameTime + 0.1f, Scene_EnterCutscene);
 
@@ -1209,9 +1204,9 @@ namespace SWEndor.Scenarios
     }
 
 
-    public void Scene_Stage02_ApproachDeathStar(GameEventArg arg)
+    public void Scene_Stage02_ApproachDeathStar()
     {
-      Scene_DeathStarCam(null);
+      Scene_DeathStarCam();
       SoundManager.SetMusic("battle_1_1", false, 71250);
 
       Manager.AddEvent(Game.GameTime + 4.8f, Rebel_Reposition);
@@ -1239,7 +1234,7 @@ namespace SWEndor.Scenarios
       Manager.MinAIBounds = new TV_3DVECTOR(-8000, -160, -10000);
     }
 
-    public void Scene_ClearGroundObjects(GameEventArg arg)
+    public void Scene_ClearGroundObjects()
     {
       foreach (int actorID in MainEnemyFaction.GetStructures())
       {
@@ -1249,10 +1244,10 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void Scene_Stage02_Spawn(GameEventArg arg)
+    public void Scene_Stage02_Spawn()
     {
       StageNumber = 2;
-      Rebel_RemoveTorps(null);
+      Rebel_RemoveTorps();
 
       PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(-550, -130, Manager.MaxBounds.z - 1500));
 
@@ -1296,11 +1291,11 @@ namespace SWEndor.Scenarios
       //cam.MoveData.Speed = 450;
       PlayerCameraInfo.Look.SetTarget_LookAtActor(m_PlayerID);
 
-      //Empire_TIEWave(null);
-      Empire_Towers01(null);
+      //Empire_TIEWave();
+      Empire_Towers01();
     }
 
-    public void Scene_Stage03_Spawn(GameEventArg arg)
+    public void Scene_Stage03_Spawn()
     {
       Manager.AddEvent(Game.GameTime + 0.1f, Scene_EnterCutscene);
       Manager.AddEvent(Game.GameTime + 0.1f, Rebel_Reposition);
@@ -1322,31 +1317,31 @@ namespace SWEndor.Scenarios
           actor.InflictDamage(actor, 0.35f * -actor.MaxHP, DamageType.ALWAYS_100PERCENT);
       }
 
-      Scene_ClearGroundObjects(null);
+      Scene_ClearGroundObjects();
       switch (Difficulty.ToLower())
       {
         case "easy":
-          Manager.AddEvent(0, Empire_TIEWave, IntegerEventArg.N5);
+          Manager.AddEvent(0, Empire_TIEWave, 5);
           break;
         case "mental":
-          Manager.AddEvent(0, Empire_TIEWave, IntegerEventArg.N8);
-          Manager.AddEvent(Game.GameTime + 43f, Empire_TIEWave, IntegerEventArg.N10);
+          Manager.AddEvent(0, Empire_TIEWave, 8);
+          Manager.AddEvent(Game.GameTime + 43f, Empire_TIEWave, 10);
           Manager.AddEvent(Game.GameTime + 45f, Message_06_TIE);
           break;
         case "hard":
-          Manager.AddEvent(0, Empire_TIEWave, IntegerEventArg.N7);
-          Manager.AddEvent(Game.GameTime + 43f, Empire_TIEWave, IntegerEventArg.N10);
+          Manager.AddEvent(0, Empire_TIEWave, 7);
+          Manager.AddEvent(Game.GameTime + 43f, Empire_TIEWave, 10);
           Manager.AddEvent(Game.GameTime + 45f, Message_06_TIE);
           break;
         case "normal":
         default:
-          Manager.AddEvent(0, Empire_TIEWave, IntegerEventArg.N6);
+          Manager.AddEvent(0, Empire_TIEWave, 6);
           break;
       }
-      Empire_Towers02(null);
+      Empire_Towers02();
     }
 
-    public void Scene_Stage04_Spawn(GameEventArg arg)
+    public void Scene_Stage04_Spawn()
     {
       Manager.AddEvent(Game.GameTime + 0.1f, Scene_EnterCutscene);
       Manager.AddEvent(Game.GameTime + 0.1f, Rebel_Reposition);
@@ -1394,11 +1389,11 @@ namespace SWEndor.Scenarios
           actor.InflictDamage(actor, 0.35f * -actor.MaxHP, DamageType.ALWAYS_100PERCENT);
       }
 
-      Scene_ClearGroundObjects(null);
-      Empire_Towers03(null);
+      Scene_ClearGroundObjects();
+      Empire_Towers03();
     }
 
-    public void Scene_Stage05_Spawn(GameEventArg arg)
+    public void Scene_Stage05_Spawn()
     {
       Manager.AddEvent(Game.GameTime + 0.1f, Scene_EnterCutscene);
       Manager.AddEvent(Game.GameTime + 0.1f, Rebel_Reposition);
@@ -1452,16 +1447,16 @@ namespace SWEndor.Scenarios
       Manager.MinAIBounds = new TV_3DVECTOR(-7000, -160, -10000);
 
       m_ADS_Surface.Delete();
-      Scene_ClearGroundObjects(null);
+      Scene_ClearGroundObjects();
 
       //cam.MoveData.MaxSpeed = 450;
       //cam.MoveData.Speed = 450;
       PlayerCameraInfo.Look.SetTarget_LookAtActor(m_PlayerID);
 
-      Empire_Towers04(null);
+      Empire_Towers04();
     }
 
-    public void Scene_Stage05b_Spawn(GameEventArg arg)
+    public void Scene_Stage05b_Spawn()
     {
       //DeathCamMode = DeathCamMode.FOLLOW;
 
@@ -1490,13 +1485,13 @@ namespace SWEndor.Scenarios
         a.Delete();
       }
       m_ADS_SurfaceParts.Clear();
-      Scene_ClearGroundObjects(null);
-      Rebel_RemoveTorps(null);
+      Scene_ClearGroundObjects();
+      Rebel_RemoveTorps();
 
-      Scene_Stage05b_SpawnRoute(null);
+      Scene_Stage05b_SpawnRoute();
     }
 
-    public void Scene_Stage05b_SpawnRoute(GameEventArg arg)
+    public void Scene_Stage05b_SpawnRoute()
     {
       new ActorSpawnInfo
       {
@@ -1563,7 +1558,7 @@ namespace SWEndor.Scenarios
     private List<ActorInfo>[] TrenchTurrets = null;
 
 
-    public void Scene_Stage05b_ContinuouslySpawnRoute(GameEventArg arg)
+    public void Scene_Stage05b_ContinuouslySpawnRoute()
     {
       if (TrenchTurrets == null)
       {
@@ -1777,7 +1772,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void Scene_Stage06_SetPlayer(GameEventArg arg)
+    public void Scene_Stage06_SetPlayer()
     {
       ActorInfo player = ActorFactory.Get(m_PlayerID);
       if (player != null)
@@ -1788,9 +1783,9 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void Scene_Stage06_Vader(GameEventArg arg)
+    public void Scene_Stage06_Vader()
     {
-      Scene_EnterCutscene(null);
+      Scene_EnterCutscene();
       Manager.AddEvent(Game.GameTime + 7.9f, Scene_Stage06_SetPlayer);
       Manager.AddEvent(Game.GameTime + 8f, Scene_ExitCutscene);
       Manager.AddEvent(Game.GameTime + 8f, Scene_Stage06_VaderAttack);
@@ -1811,7 +1806,7 @@ namespace SWEndor.Scenarios
         player.CanEvade = false;
         player.CanRetaliate = false;
       }
-      Scene_ClearGroundObjects(null);
+      Scene_ClearGroundObjects();
 
       ActorInfo m_Vader = ActorFactory.Get(m_VaderID);
       ActorInfo m_VaderEscort1 = ActorFactory.Get(m_VaderEscort1ID);
@@ -1876,7 +1871,7 @@ namespace SWEndor.Scenarios
       ActorInfo vaderE1 = ActorFactory.Get(m_VaderEscort1ID);
       ActorInfo vaderE2 = ActorFactory.Get(m_VaderEscort2ID);
 
-      PreWeaponSystemInfo prew = new PreWeaponSystemInfo();
+      UnfixedWeaponData prew = new UnfixedWeaponData();
       prew.InsertLoadout("TIED_LASR");
       prew.InsertLoadout("TIED_LASR");
       vader.WeaponSystemInfo.Init(prew);
@@ -1901,7 +1896,7 @@ namespace SWEndor.Scenarios
       PlayerCameraInfo.Look.SetTarget_LookAtActor(player.ID);
     }
 
-    public void Scene_Stage06_VaderAttack(GameEventArg arg)
+    public void Scene_Stage06_VaderAttack()
     {
       Stage6VaderAttacking = true;
 
@@ -1930,7 +1925,7 @@ namespace SWEndor.Scenarios
       m_VaderE2.QueueNext(new Lock());
     }
 
-    public void Scene_Stage06_VaderEnd(GameEventArg arg)
+    public void Scene_Stage06_VaderEnd()
     {
       Manager.AddEvent(Game.GameTime + 0.1f, Scene_EnterCutscene);
       Manager.AddEvent(Game.GameTime + 8f, Scene_ExitCutscene);
@@ -1999,7 +1994,7 @@ namespace SWEndor.Scenarios
       PlayerCameraInfo.Look.SetTarget_LookAtActor(falcon.ID);
     }
 
-    public void Scene_Stage06_VaderFlee(GameEventArg arg)
+    public void Scene_Stage06_VaderFlee(ActorInfo aa, ActorInfo av)
     {
       if (Stage6VaderAttacking)
       {
@@ -2026,102 +2021,102 @@ namespace SWEndor.Scenarios
 
 
     #region Text
-    public void Message_01_EnemyShipsInbound(GameEventArg arg)
+    public void Message_01_EnemyShipsInbound()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Enemy signals are approaching your position.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_02_MoreEnemyShipsInbound(GameEventArg arg)
+    public void Message_02_MoreEnemyShipsInbound()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Another enemy signal are en route to your position.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_03_Clear(GameEventArg arg)
+    public void Message_03_Clear()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Area cleared. Resume your attack on the Death Star.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_04_Target(GameEventArg arg)
+    public void Message_04_Target()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Eliminate all Radar Towers.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_05_Clear(GameEventArg arg)
+    public void Message_05_Clear()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Area cleared. Proceed to the next sector.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_06_TIE(GameEventArg arg)
+    public void Message_06_TIE()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Enemy fighters detected.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_07_Clear(GameEventArg arg)
+    public void Message_07_Clear()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Deflector Towers detected en route to the trench.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_08_Target(GameEventArg arg)
+    public void Message_08_Target()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Destroy all Deflection Towers and Radar Towers.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_09_Clear(GameEventArg arg)
+    public void Message_09_Clear()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: The path to the trench line is clear.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_10_BeginRun(GameEventArg arg)
+    public void Message_10_BeginRun()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Luke, start your attack run.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_100_RebelBaseInRange(GameEventArg arg)
+    public void Message_100_RebelBaseInRange()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is in range of the Death Star.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_101_RebelBase(GameEventArg arg)
+    public void Message_101_RebelBase()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in ONE minute.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_102_RebelBase(GameEventArg arg)
+    public void Message_102_RebelBase()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TWO minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_103_RebelBase(GameEventArg arg)
+    public void Message_103_RebelBase()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in THREE minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_105_RebelBase(GameEventArg arg)
+    public void Message_105_RebelBase()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in FIVE minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_110_RebelBase(GameEventArg arg)
+    public void Message_110_RebelBase()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TEN minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_115_RebelBase(GameEventArg arg)
+    public void Message_115_RebelBase()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in FIFTEEN minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_120_RebelBase(GameEventArg arg)
+    public void Message_120_RebelBase()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TWENTY minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_125_RebelBase(GameEventArg arg)
+    public void Message_125_RebelBase()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TWENTY-FIVE minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }
 
-    public void Message_130_RebelBase(GameEventArg arg)
+    public void Message_130_RebelBase()
     {
       Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in THIRTY minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
     }

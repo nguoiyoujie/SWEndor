@@ -179,7 +179,6 @@ namespace SWEndor.UI.Menu.Pages
             case RadarType.FILLED_CIRCLE_S:
             case RadarType.FILLED_CIRCLE_M:
             case RadarType.FILLED_CIRCLE_L:
-              //DrawCircle(x, y, size, 12, acolor);
               DrawTriangleGiant(a, x, y, proty, acolor);
               if (showtext) DrawText(a.Name, x, y + size + 2, acolor);
               break;
