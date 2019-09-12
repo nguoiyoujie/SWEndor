@@ -25,11 +25,11 @@ namespace SWEndor.AI.Actions
                           );
     }
 
+    Queue<ActorInfo> targets = new Queue<ActorInfo>();
     public override void Process(Engine engine, ActorInfo actor)
     {
       ActorInfo currtarget = null;
-      //ConcurrentQueue<ActorInfo> targets = new ConcurrentQueue<ActorInfo>();
-      Queue<ActorInfo> targets = new Queue<ActorInfo>();
+      targets.Clear();
       int weight = 0;
 
       Action<Engine, ActorInfo> action = new Action<Engine, ActorInfo>(

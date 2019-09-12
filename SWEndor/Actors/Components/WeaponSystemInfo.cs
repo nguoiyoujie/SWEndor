@@ -68,7 +68,7 @@ namespace SWEndor.Actors.Components
     public void Init(ActorTypeInfo atype)
     {
       // TO DO: Seperate Ammo, Cooldown and actor specific var from Weapons to ease assignment
-      Init(new UnfixedWeaponData (atype));//this = atype.cacheWeapon;
+      Init(new UnfixedWeaponData(atype)); //atype.cachedWeaponData);
     }
 
     public void Init(UnfixedWeaponData preinit) // to split into Actor and Atype versions

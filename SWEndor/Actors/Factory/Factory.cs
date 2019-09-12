@@ -15,6 +15,7 @@ namespace SWEndor.Actors
       internal Factory(Engine engine)
       {
         Engine = engine;
+        Actors = new ActorEnumerable(this);
       }
 
       private int counter = 0;
@@ -145,27 +146,21 @@ namespace SWEndor.Actors
             break;
       }
 
-      public void ParallelDoUntil(Func<Engine, ActorInfo, bool> action)
-      {
-        Parallel.ForEach(Actors, (a, state) => { if (!action.Invoke(a.Engine, a)) state.Break(); });
-      }
-
       public void DoEach(Action<Engine, ActorInfo> action)
       {
         foreach (ActorInfo a in Actors)
           action.Invoke(a.Engine, a);
       }
 
-      public void ParallelDoEach(Action<Engine, ActorInfo> action)
-      {
-        Parallel.ForEach(Actors, (a) => action.Invoke(a.Engine, a));
-      }
+      public ActorEnumerable Actors;
 
-      public IEnumerable<ActorInfo> Actors
+      public struct ActorEnumerable
       {
-        get
+        readonly Factory F;
+        public ActorEnumerable(Factory f) { F = f; }
+        public IEnumerator<ActorInfo> GetEnumerator()
         {
-          ActorInfo actor = First;
+          ActorInfo actor = F.First;
           while (actor != null)
           {
             yield return actor;

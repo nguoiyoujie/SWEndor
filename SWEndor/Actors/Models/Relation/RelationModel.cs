@@ -12,13 +12,17 @@ namespace SWEndor.Actors
       public ActorInfo ParentForCoords { get { return UseParentCoords ? Parent : null; } }
       public bool UseParentCoords { get; set; }
       private LinkedList<ActorInfo> list;
+      public ChildEnumerable Children;
 
       public void Init()
       {
         Parent = null;
         UseParentCoords = false;
         if (list == null)
+        {
           list = new LinkedList<ActorInfo>();
+          Children = new ChildEnumerable(list);
+        }
         else
           list.Clear();
       }
@@ -62,27 +66,21 @@ namespace SWEndor.Actors
         list?.Remove(child);
       }
 
-      public IEnumerable<ActorInfo> Children
+      public ActorInfo GetTopParent(ActorInfo self)
       {
-        get
+        ActorInfo ret;
+        if (Parent != null && Parent != self)
         {
-          return new ChildEnumerable(list);
-
-          /*
-          if (list == null)
-            yield break;
-
-          LinkedListNode<ActorInfo> node = list.First;
-          while (node != null)
-          {
-            yield return node.Value;
-            node = node.Next;
-          }
-          */
+          ret = Parent.Relation.GetTopParent(Parent); // Stack overflow?
+          return ret ?? self;
         }
+        else
+          return self;
       }
 
-      private struct ChildEnumerable : IEnumerable<ActorInfo>
+      public ChildEnumerable Siblings { get { return Parent.Relation.Children; } }
+
+      public struct ChildEnumerable : IEnumerable<ActorInfo>
       {
         readonly LinkedList<ActorInfo> L;
         public ChildEnumerable(LinkedList<ActorInfo> list) { L = list; }
@@ -101,36 +99,19 @@ namespace SWEndor.Actors
         }
 
         public void Reset() { current = L?.First; }
-        public bool MoveNext()
-        {
-          return (current = current?.Next) != null;
-        }
+        public bool MoveNext() { return (current = current?.Next) != null; }
         public ActorInfo Current { get { return current?.Value; } }
         object System.Collections.IEnumerator.Current { get { return Current; } }
         public void Dispose() { }
       }
-
-      public ActorInfo GetTopParent(ActorInfo self)
-      {
-        ActorInfo ret;
-        if (Parent != null && Parent != self)
-        {
-          ret = Parent.Relation.GetTopParent(Parent); // Stack overflow?
-          return ret ?? self;
-        }
-        else
-          return self;
-      }
-
-      public IEnumerable<ActorInfo> Siblings { get { return Parent.Relation.Children; } }
     }
 
     public void AddChild(ActorInfo a) { Relation.AddChild(this, a); }
     public void RemoveChild(ActorInfo a) { Relation.RemoveChild(this, a); }
-    public IEnumerable<ActorInfo> Children { get { return Relation.Children; } }
+    public RelationModel.ChildEnumerable Children { get { return Relation.Children; } }
     public ActorInfo Parent { get { return Relation.Parent; } }
     public ActorInfo TopParent { get { return Relation.GetTopParent(this); } }
-    public IEnumerable<ActorInfo> Siblings { get { return Relation.Siblings; } }
+    public RelationModel.ChildEnumerable Siblings { get { return Relation.Siblings; } }
     public ActorInfo ParentForCoords { get { return Relation.ParentForCoords; } }
     public bool UseParentCoords { get { return Relation.UseParentCoords; } set { Relation.UseParentCoords = value; } }
   }

@@ -185,10 +185,8 @@ namespace SWEndor.ActorTypes
 
       public void Initialise()
       {
-        // Do not use until WeaponData has been differentiated between Actor and ActorType versions. 
-        // Reason: WeaponData maintains Actor-specific state that has to be factored out first (Ammo, ReloadCooldown, FireCooldown)
-        //foreach (ActorTypeInfo atype in list.Values)
-        //  atype.Init();
+        foreach (ActorTypeInfo atype in list.Values)
+          atype.Init();
       }
 
       public new ActorTypeInfo Get(string id)

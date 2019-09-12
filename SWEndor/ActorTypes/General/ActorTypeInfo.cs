@@ -80,7 +80,7 @@ namespace SWEndor.ActorTypes
     // Weapons
     public string[] Loadouts = new string[0];
     public bool TrackerDummyWeapon = false;
-    internal WeaponData cacheWeapon;
+    //internal UnfixedWeaponData cachedWeaponData;
 
     // Debris
     public DebrisSpawnerData[] Debris = new DebrisSpawnerData[0];
@@ -120,7 +120,7 @@ namespace SWEndor.ActorTypes
 
     public void Init()
     {
-      cacheWeapon.Init(new UnfixedWeaponData(this));
+      //cachedWeaponData = new UnfixedWeaponData(this);
     }
 
     public virtual void Initialize(ActorInfo ainfo)
