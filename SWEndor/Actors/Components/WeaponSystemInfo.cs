@@ -7,10 +7,26 @@ namespace SWEndor.Actors.Components
 {
   public class UnfixedWeaponData
   {
-    public List<WeaponInfo> Weapons = new List<WeaponInfo>(4);
-    public List<WeaponShotInfo> PrimaryWeapons = new List<WeaponShotInfo>(4);
-    public List<WeaponShotInfo> SecondaryWeapons = new List<WeaponShotInfo>(4) { WeaponShotInfo.Default };
-    public List<WeaponShotInfo> AIWeapons = new List<WeaponShotInfo>(4);
+    private List<string> _weapons = new List<string>(4);
+    private int _primary;
+    private int _secondary;
+    private int _ai;
+    private List<UnfixedWeapon> _weaponclasses = new List<UnfixedWeapon>(8);
+
+    internal enum WeaponClass { PRIMARY, SECONDARY, AI }
+    internal struct UnfixedWeapon
+    {
+      public readonly int Order;
+      public readonly WeaponClass Class;
+      public readonly int Burst;
+
+      public UnfixedWeapon(int order, WeaponClass wclass, int burst)
+      {
+        Order = order;
+        Class = wclass;
+        Burst = burst;
+      }
+    }
 
     public UnfixedWeaponData() { }
 
@@ -23,13 +39,32 @@ namespace SWEndor.Actors.Components
         InsertDummyTrackerAILoadout();
     }
 
-    public void Reset()
+    public WeaponData Fix()
     {
-      Weapons.Clear();
-      PrimaryWeapons.Clear();
-      SecondaryWeapons.Clear();
-      SecondaryWeapons.Add(WeaponShotInfo.Default);
-      AIWeapons.Clear();
+      WeaponData d = new WeaponData(_weapons.Count, _primary, _secondary, _ai);
+      for (int i = 0; i < _weapons.Count; i++)
+        d.Weapons[i] = WeaponFactory.Get(_weapons[i]);
+
+      int p = 0;
+      int s = 0;
+      int a = 0;
+
+      for (int i = 0; i < _weaponclasses.Count; i++)
+      {
+        if (_weaponclasses[i].Class == WeaponClass.PRIMARY)
+          d.PrimaryWeapons[p++] = new WeaponShotInfo(d.Weapons[_weaponclasses[i].Order], _weaponclasses[i].Burst);
+
+        if (_weaponclasses[i].Class == WeaponClass.SECONDARY)
+          d.SecondaryWeapons[s++] = new WeaponShotInfo(d.Weapons[_weaponclasses[i].Order], _weaponclasses[i].Burst);
+
+        if (_weaponclasses[i].Class == WeaponClass.AI)
+          d.AIWeapons[a++] = new WeaponShotInfo(d.Weapons[_weaponclasses[i].Order], _weaponclasses[i].Burst);
+      }
+
+      if (a != _ai)
+        d.AIWeapons[a++] = new WeaponShotInfo(TrackerDummyWeapon.Instance, 1);
+
+      return d;
     }
 
     public void InsertLoadout(string wload)
@@ -39,22 +74,32 @@ namespace SWEndor.Actors.Components
 
     private void InsertLoadout(WeaponLoadoutInfo wload)
     {
-      WeaponInfo weap = WeaponFactory.Get(wload.WeaponName);
-      Weapons.Add(weap);
+      int c = _weapons.Count;
+      _weapons.Add(wload.WeaponName);
       foreach (int p in wload.Primary)
-        PrimaryWeapons.Add(new WeaponShotInfo(weap, p));
+      {
+        _primary++;
+        _weaponclasses.Add(new UnfixedWeapon(c, WeaponClass.PRIMARY, p));
+      }
 
       foreach (int p in wload.Secondary)
-        SecondaryWeapons.Add(new WeaponShotInfo(weap, p));
+      {
+        _secondary++;
+        _weaponclasses.Add(new UnfixedWeapon(c, WeaponClass.SECONDARY, p));
+      }
 
       foreach (int p in wload.AI)
-        AIWeapons.Add(new WeaponShotInfo(weap, p));
+      {
+        _ai++;
+        _weaponclasses.Add(new UnfixedWeapon(c, WeaponClass.AI, p));
+      }
     }
 
     private void InsertDummyTrackerAILoadout()
     {
-      WeaponInfo weap = TrackerDummyWeapon.Instance;
-      AIWeapons.Add(new WeaponShotInfo(weap, 1));
+      _ai++;
+      //WeaponInfo weap = TrackerDummyWeapon.Instance;
+      //AIWeapons.Add(new WeaponShotInfo(weap, 1));
     }
   }
 
@@ -68,17 +113,23 @@ namespace SWEndor.Actors.Components
     public void Init(ActorTypeInfo atype)
     {
       // TO DO: Seperate Ammo, Cooldown and actor specific var from Weapons to ease assignment
-      Init(new UnfixedWeaponData(atype)); //atype.cachedWeaponData);
+      //Init(new UnfixedWeaponData(atype)); //atype.cachedWeaponData);
+      this = atype.cachedWeaponData.Fix();
     }
 
-    public void Init(UnfixedWeaponData preinit) // to split into Actor and Atype versions
+    public WeaponData(int weapons, int primary, int secondary, int ai)
     {
-      Weapons = preinit.Weapons.ToArray();
-      PrimaryWeapons = preinit.PrimaryWeapons.ToArray();
-      SecondaryWeapons = preinit.SecondaryWeapons.ToArray();
-      AIWeapons = preinit.AIWeapons.ToArray();
+      Weapons = new WeaponInfo[weapons];
+      PrimaryWeapons = new WeaponShotInfo[primary];
+      SecondaryWeapons = new WeaponShotInfo[secondary];
+      AIWeapons = new WeaponShotInfo[ai];
     }
 
+    public void Init(UnfixedWeaponData preinit)
+    {
+      this = preinit.Fix();
+    }
+    
     public void Reset()
     {
       Weapons = WeaponInfo.NullArrayCache;

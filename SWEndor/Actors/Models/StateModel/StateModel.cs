@@ -1,5 +1,6 @@
 ﻿using SWEndor.ActorTypes;
 using SWEndor.Primitives.StateMachines;
+using System;
 
 namespace SWEndor.Actors
 {
@@ -24,41 +25,31 @@ namespace SWEndor.Actors
         REVIVE
       }
 
-      private class ActorStateMachine : StaticStateMachine<ActorState, ActorStateCommand>
+      private class ActorStateMachine : StaticStateMachine<ActorInfo, ActorState, ActorStateCommand>
       {
-        private ActorInfo temp;
-        private object locker = new object();
-
         public ActorStateMachine()
         {
-          In(ActorState.NORMAL).ExecuteOnEntry((_) => { temp.OnStateChangeEvent(); })
+          In(ActorState.NORMAL).ExecuteOnEntry((a,__) => { a.OnStateChangeEvent(); })
                           .On(ActorStateCommand.NORMAL).Goto(ActorState.NORMAL)
                           .On(ActorStateCommand.DYING).Goto(ActorState.DYING)
                           .On(ActorStateCommand.DEAD).Goto(ActorState.DEAD)
                           .On(ActorStateCommand.ADVANCE_DEATH_ONE_LEVEL).Goto(ActorState.DYING);
-          In(ActorState.DYING).ExecuteOnEntry((_) => { temp.TypeInfo.Dying(temp); temp.OnStateChangeEvent(); })
+          In(ActorState.DYING).ExecuteOnEntry((a, __) => { a.TypeInfo.Dying(a); a.OnStateChangeEvent(); })
                           //.On(ActorStateCommand.NORMAL).Goto(ActorState.NORMAL)
                           .On(ActorStateCommand.DYING).Goto(ActorState.DYING)
                           .On(ActorStateCommand.DEAD).Goto(ActorState.DEAD)
                           .On(ActorStateCommand.ADVANCE_DEATH_ONE_LEVEL).Goto(ActorState.DEAD);
-          In(ActorState.DEAD).ExecuteOnEntry((_) => { temp.TypeInfo.Dead(temp); temp.OnStateChangeEvent(); })
+          In(ActorState.DEAD).ExecuteOnEntry((a, __) => { a.TypeInfo.Dead(a); a.OnStateChangeEvent(); })
                           .On(ActorStateCommand.NORMAL).Goto(ActorState.NORMAL)
                           //.On(ActorStateCommand.DYING).Goto(ActorState.DYING)
                           .On(ActorStateCommand.DEAD).Goto(ActorState.DEAD)
                           .On(ActorStateCommand.ADVANCE_DEATH_ONE_LEVEL).Goto(ActorState.DEAD);
         }
 
-        public void Fire(ActorInfo actor, ActorStateCommand command, ref ActorState state)
-        {
-          //lock (locker)
-          //{
-            temp = actor;
-            Fire(command, ref state);
-          //}
-        }
+        //public new void Fire(ActorInfo actor, ActorStateCommand command, ref ActorState state) { base.Fire(actor, command, ref state); }
       }
 
-      private class CreationStateMachine : StaticStateMachine<CreationState, CreationStateCommand>
+      private class CreationStateMachine : StaticStateMachine<ActorInfo, CreationState, CreationStateCommand>
       {
         public CreationStateMachine()
         {
@@ -108,11 +99,11 @@ namespace SWEndor.Actors
       public bool IsDead { get { return _actorState == ActorState.DEAD; } }
       public bool IsDyingOrDead { get { return _actorState < 0; } }
       //Creation State
-      public void SetGenerated() { CSM.Fire(CreationStateCommand.GENERATE, ref _creationState); }
-      public void SetActivated() { CSM.Fire(CreationStateCommand.ACTIVATE, ref _creationState); }
-      public void SetDisposing() { CSM.Fire(CreationStateCommand.BEGIN_DISPOSE, ref _creationState); }
-      public void SetDisposed() { CSM.Fire(CreationStateCommand.END_DISPOSE, ref _creationState); }
-      public void ResetPlanned() { CSM.Fire(CreationStateCommand.REVIVE, ref _creationState); }
+      public void SetGenerated() { CSM.Fire(null, CreationStateCommand.GENERATE, ref _creationState); }
+      public void SetActivated() { CSM.Fire(null, CreationStateCommand.ACTIVATE, ref _creationState); }
+      public void SetDisposing() { CSM.Fire(null, CreationStateCommand.BEGIN_DISPOSE, ref _creationState); }
+      public void SetDisposed() { CSM.Fire(null, CreationStateCommand.END_DISPOSE, ref _creationState); }
+      public void ResetPlanned() { CSM.Fire(null, CreationStateCommand.REVIVE, ref _creationState); }
     }
 
     public CreationState CreationState { get { return State.CreationState; } }

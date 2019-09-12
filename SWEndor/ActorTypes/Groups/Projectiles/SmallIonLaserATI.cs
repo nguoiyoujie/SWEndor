@@ -30,20 +30,16 @@ namespace SWEndor.ActorTypes.Instances
         return;
 
       base.ProcessHit(owner, hitby, impact, normal);
-      
-      List<ActorInfo> children = new List<ActorInfo>(hitby.Children);
-      List<ActorInfo> rm = new List<ActorInfo>();
-      foreach (ActorInfo c in children)
+
+      List<ActorInfo> children = new List<ActorInfo>(); // hitby.Children);
+      foreach (ActorInfo c in hitby.Children)
       {
-        if (c == null
-          || !c.Active
-          || !c.TypeInfo.AIData.TargetType.Has(TargetType.ADDON))
-          rm.Add(c);
+        if (c != null
+          && c.Active
+          && c.TypeInfo.AIData.TargetType.Has(TargetType.ADDON))
+          children.Add(c);
       }
 
-      foreach (ActorInfo r in rm)
-        children.Remove(r);
-        
       if (children.Count > 0)
       {
         for (int shock = 3; shock > 0; shock--)

@@ -158,15 +158,20 @@ namespace SWEndor.Actors
       {
         readonly Factory F;
         public ActorEnumerable(Factory f) { F = f; }
-        public IEnumerator<ActorInfo> GetEnumerator()
-        {
-          ActorInfo actor = F.First;
-          while (actor != null)
-          {
-            yield return actor;
-            actor = actor.Next;
-          }
-        }
+        public ActorEnumerator GetEnumerator() { return new ActorEnumerator(F); }
+      }
+
+      public struct ActorEnumerator : IEnumerator<ActorInfo>
+      {
+        readonly Factory F;
+        ActorInfo current;
+        public ActorEnumerator(Factory f) { F = f; current = null; }
+
+        public void Reset() { current = null; }
+        public bool MoveNext() { return (current = (current == null) ? F.First : current?.Next) != null; }
+        public ActorInfo Current { get { return current; } }
+        object System.Collections.IEnumerator.Current { get { return Current; } }
+        public void Dispose() { }
       }
 
       public new void Remove(int id)

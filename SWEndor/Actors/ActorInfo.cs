@@ -41,11 +41,11 @@ namespace SWEndor.Actors
     public string SideBarName { get { return (sidebar_name.Length == 0) ? _name : sidebar_name; } set { sidebar_name = value; } }
     public int ID { get; private set; }
     public int dataID = -1;
-    public string Key { get { return _name + " " + ID; } }
+    public string Key { get; private set; }//{ get { return _name + " " + ID; } }
 
     public override string ToString()
     {
-      return string.Format("[{0},{1}:{2}]", _name, ID, dataID);
+      return "[{0},{1}:{2}]".F(_name, ID, dataID);
     }
 
     // Faction
@@ -94,7 +94,7 @@ namespace SWEndor.Actors
     public IMoveComponent MoveComponent;
     public IDyingMoveComponent DyingMoveComponent;
 
-    public CycleInfo CycleInfo;
+    internal CycleInfo<ActorInfo> CycleInfo;
     public WeaponData WeaponSystemInfo;
 
     // Checks
@@ -154,6 +154,7 @@ namespace SWEndor.Actors
 
       TypeInfo = acinfo.ActorTypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
+      Key = "{0} {1}".F(_name, ID);
 
       Meshes.Init(ID, TypeInfo);
       Relation.Init();
@@ -173,8 +174,6 @@ namespace SWEndor.Actors
 
       // Components
       MoveComponent = MoveDecorator.Create(TypeInfo);
-
-      CycleInfo = new CycleInfo(this, null);
 
       //WeaponSystemInfo = new WeaponSystemInfo(this);
 
@@ -196,6 +195,7 @@ namespace SWEndor.Actors
 
       TypeInfo = acinfo.ActorTypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
+      Key = "{0} {1}".F(_name, ID);
 
       Meshes.Init(ID, TypeInfo);
       Relation.Init();
@@ -434,7 +434,7 @@ namespace SWEndor.Actors
 
     public void Tick(float time)
     {
-      CycleInfo.Process();
+      CycleInfo.Process(this);
 
       CheckState(Engine);
       if (!IsDead)

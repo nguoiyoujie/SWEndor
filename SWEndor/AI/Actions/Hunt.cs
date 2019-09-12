@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.ActorTypes;
+using SWEndor.Primitives;
 using SWEndor.Weapons;
 using System;
 using System.Collections.Concurrent;
@@ -18,8 +19,7 @@ namespace SWEndor.AI.Actions
 
     public override string ToString()
     {
-      return string.Format("{0},{1},{2}"
-                          , Name
+      return "{0},{1},{2}".F(Name
                           , m_TargetType
                           , Complete
                           );

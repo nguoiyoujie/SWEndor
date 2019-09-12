@@ -18,7 +18,7 @@ namespace SWEndor.Weapons
     {
       WeaponLoadoutInfo wsi = list.Get(key);
       if (wsi == null)
-        throw new System.Exception("Weapon Loadout '" + key + "' is not found!");
+        throw new System.Exception("Weapon Loadout '{0}' is not found!".F(key));
       return wsi;
     }
 

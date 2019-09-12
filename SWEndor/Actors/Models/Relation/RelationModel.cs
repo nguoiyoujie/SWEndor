@@ -33,7 +33,7 @@ namespace SWEndor.Actors
         Parent?.RemoveChild(self);
 
         // Destroy Children
-        foreach (ActorInfo c in Children.ToArray()) // use new list as members are deleted from the IEnumerable
+        foreach (ActorInfo c in Children)//ToArray()) // use new list as members are deleted from the IEnumerable
         {
           if (c.TypeInfo is ActorTypes.Groups.AddOn || c.Relation.UseParentCoords)
             c.Destroy();
@@ -80,26 +80,21 @@ namespace SWEndor.Actors
 
       public ChildEnumerable Siblings { get { return Parent.Relation.Children; } }
 
-      public struct ChildEnumerable : IEnumerable<ActorInfo>
+      public struct ChildEnumerable
       {
         readonly LinkedList<ActorInfo> L;
         public ChildEnumerable(LinkedList<ActorInfo> list) { L = list; }
-        public IEnumerator<ActorInfo> GetEnumerator() { return new ChildEnumerator(L); }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { return GetEnumerator(); }
+        public ChildEnumerator GetEnumerator() { return new ChildEnumerator(L); }
       }
 
-      private struct ChildEnumerator : IEnumerator<ActorInfo>
+      public struct ChildEnumerator : IEnumerator<ActorInfo>
       {
         readonly LinkedList<ActorInfo> L;
         LinkedListNode<ActorInfo> current;
-        public ChildEnumerator(LinkedList<ActorInfo> list)
-        {
-          L = list;
-          current = L?.First;
-        }
+        public ChildEnumerator(LinkedList<ActorInfo> list) { L = list; current = null; }
 
-        public void Reset() { current = L?.First; }
-        public bool MoveNext() { return (current = current?.Next) != null; }
+        public void Reset() { current = null; }
+        public bool MoveNext() { return (current = (current == null) ? L?.First : current?.Next) != null; }
         public ActorInfo Current { get { return current?.Value; } }
         object System.Collections.IEnumerator.Current { get { return Current; } }
         public void Dispose() { }

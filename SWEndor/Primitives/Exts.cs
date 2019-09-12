@@ -100,7 +100,10 @@ namespace SWEndor.Primitives
     public static V GetOrAdd<K, V>(this Dictionary<K, V> d, K k)
       where V : new()
     {
-      return d.GetOrAdd(k, _ => new V());
+      V ret;
+      if (!d.TryGetValue(k, out ret))
+        d.Add(k, ret = new V());
+      return ret;
     }
 
     public static V GetOrAdd<K, V>(this Dictionary<K, V> d, K k, Func<K, V> createFn)
@@ -126,9 +129,9 @@ namespace SWEndor.Primitives
 
   public static class StringExts
   {
-    public static string F(this string fmt, params object[] args)
-    {
-      return string.Format(fmt, args);
-    }
+    public static string F<T1>(this string fmt, T1 o1) { return string.Format(fmt, o1); }
+    public static string F<T1, T2>(this string fmt, T1 o1, T2 o2) { return string.Format(fmt, o1, o2); }
+    public static string F<T1, T2, T3>(this string fmt, T1 o1, T2 o2, T3 o3) { return string.Format(fmt, o1, o2, o3); }
+    public static string F(this string fmt, params object[] args) { return string.Format(fmt, args); }
   }
 }

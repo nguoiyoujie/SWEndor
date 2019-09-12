@@ -62,10 +62,7 @@ namespace SWEndor
       GetWriter(channel)?.WriteLine(value);
     }
 
-    public static void Write(string channel, string formatvalue, params object[] args)
-    {
-      GetWriter(channel)?.WriteLine(formatvalue, args);
-    }
+    public static void Write(string channel, string formatvalue, params object[] args) { GetWriter(channel)?.WriteLine(formatvalue, args); }
 
     internal static void Write(string channel, LogType type, params object[] args)
     {

@@ -18,7 +18,7 @@ namespace SWEndor.Weapons
     {
       WeaponStatInfo wsi = list.Get(key);
       if (wsi == null)
-        throw new System.Exception("Weapon '" + key + "' is not found!");
+        throw new System.Exception("Weapon '{0}' is not found!".F(key));
       return new WeaponInfo(Globals.Engine, wsi);
     }
 

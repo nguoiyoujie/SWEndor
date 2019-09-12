@@ -2,20 +2,17 @@
 
 namespace SWEndor.Actors.Components
 {
-  public class CycleInfo
+  public struct CycleInfo<T>
   {
-    private readonly ActorInfo Actor;
     public float CyclesRemaining;
     public float CyclePeriod;
     public float CycleTime;
 
-    public Action Action;
+    public Action<T> Action;
 
-    public CycleInfo(ActorInfo actor, Action action)
+    public CycleInfo(Action<T> action)
     {
-      Actor = actor;
       Action = action;
-
       CyclesRemaining = 1;
       CyclePeriod = 1;
       CycleTime = 0;
@@ -29,9 +26,9 @@ namespace SWEndor.Actors.Components
       CycleTime = 0;
     }
 
-    public void Process()
+    public void Process(T owner)
     {
-      CycleTime -= Actor.Game.TimeSinceRender;
+      CycleTime -= Globals.Engine.Game.TimeSinceRender;
       if (CyclesRemaining > 0)
       {
         if (CycleTime < 0)
@@ -39,7 +36,7 @@ namespace SWEndor.Actors.Components
           CyclesRemaining--;
           CycleTime += CyclePeriod;
 
-          Action?.Invoke();
+          Action?.Invoke(owner);
         }
       }
     }
