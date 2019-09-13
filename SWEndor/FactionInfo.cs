@@ -104,7 +104,8 @@ namespace SWEndor
       {
         if (ainfo.DisposingOrDisposed)
         {
-          WingLimit--;
+          if (WingLimit > 0)
+            WingLimit--;
           GameScenarioBase b = ainfo.Engine.GameScenarioManager.Scenario;
           if (b != null
              && (this == b.MainAllyFaction
@@ -117,7 +118,8 @@ namespace SWEndor
       {
         if (ainfo.DisposingOrDisposed)
         {
-          ShipLimit--;
+          if (ShipLimit > 0)
+            ShipLimit--;
           GameScenarioBase b = ainfo.Engine.GameScenarioManager.Scenario;
           if (b != null
              && (this == b.MainAllyFaction
@@ -130,7 +132,8 @@ namespace SWEndor
       {
         if (ainfo.DisposingOrDisposed)
         {
-          StructureLimit--;
+          if (StructureLimit > 0)
+            StructureLimit--;
           GameScenarioBase b = ainfo.Engine.GameScenarioManager.Scenario;
           if (b != null
              && (this == b.MainAllyFaction
