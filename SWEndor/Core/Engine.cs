@@ -133,20 +133,12 @@ namespace SWEndor
       GameScenarioManager.LoadMainMenu();
     }
 
-    public void Process()
-    {
-      ActorFactory.DoEach(ActorInfo.Process);
-    }
-
-    public void ProcessAI()
-    {
-      ActorFactory.DoEach(ActorInfo.ProcessAI); //may ParallelDoEach
-    }
-
-    public void ProcessCollision()
-    {
-      ActorFactory.DoEach(ActorInfo.ProcessCollision);
-    }
+    Action<Engine, ActorInfo> process = ActorInfo.Process;
+    Action<Engine, ActorInfo> processAI = ActorInfo.ProcessAI;
+    Action<Engine, ActorInfo> processCollision = ActorInfo.ProcessCollision;
+    public void Process() { ActorFactory.DoEach(process); }
+    public void ProcessAI() { ActorFactory.DoEach(processAI); } //may ParallelDoEach
+    public void ProcessCollision() { ActorFactory.DoEach(processCollision); }
 
     public void PreRender()
     {

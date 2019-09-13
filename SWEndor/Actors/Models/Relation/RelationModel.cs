@@ -84,9 +84,11 @@ namespace SWEndor.Actors
       {
         readonly LinkedList<ActorInfo> L;
         public ChildEnumerable(LinkedList<ActorInfo> list) { L = list; }
-        public ChildEnumerator GetEnumerator() { return new ChildEnumerator(L); }
+        public LinkedList<ActorInfo>.Enumerator GetEnumerator() { return L.GetEnumerator(); } // new ChildEnumerator(L); }
+        //public ChildEnumerator GetEnumerator() { return new ChildEnumerator(L); }
       }
 
+      /*
       public struct ChildEnumerator : IEnumerator<ActorInfo>
       {
         readonly LinkedList<ActorInfo> L;
@@ -99,6 +101,7 @@ namespace SWEndor.Actors
         object System.Collections.IEnumerator.Current { get { return Current; } }
         public void Dispose() { }
       }
+      */
     }
 
     public void AddChild(ActorInfo a) { Relation.AddChild(this, a); }
