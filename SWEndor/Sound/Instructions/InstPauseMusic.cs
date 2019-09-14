@@ -6,11 +6,12 @@ namespace SWEndor.Sound
   {
     private class InstPauseMusic : InstBase
     {
-      public override void Process(SoundManager s)
+      public void Process(SoundManager s)
       {
-        Channel fmodchannel;
-        s.musicgrp.getChannel(0, out fmodchannel);
-        fmodchannel.setPaused(true);
+        s.current_channel.setPaused(true);
+        //Channel fmodchannel;
+        //s.musicgrp.getChannel(0, out fmodchannel);
+        //fmodchannel.setPaused(true);
       }
     }
   }

@@ -8,20 +8,22 @@ namespace SWEndor.Sound
     {
       public float FadeTime = 0.5f;
 
-      public override void Process(SoundManager s)
+      public void Process(SoundManager s)
       {
-        Channel fmodchannel;
-        s.musicgrp.getChannel(0, out fmodchannel);
+        if (s.current_channel == null)
+          return;
+        //Channel fmodchannel;
+        //s.musicgrp.getChannel(0, out fmodchannel);
         //s.musicgrp.getChannel(s.m_currMusicCh, out fmodchannel);
-        fmodchannel.setCallback(null);
+        s.current_channel.setCallback(null);
 
         if (FadeTime <= 0)
         {
-          fmodchannel.stop();
+          s.current_channel.stop();
         }
         else
         {
-          DoFadeOut(fmodchannel);
+          DoFadeOut(s.current_channel);
         }
       }
 

@@ -6,7 +6,7 @@ namespace SWEndor.Sound
   {
     private class InstStopAllSound : InstBase
     {
-      public override void Process(SoundManager s)
+      public void Process(SoundManager s)
       {
         foreach (string name in s.sounds.Keys)
         {

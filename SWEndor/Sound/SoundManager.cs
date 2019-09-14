@@ -14,6 +14,7 @@ namespace SWEndor.Sound
     {
       public string Name;
       public uint Position;
+      public bool IsInterrupt;
     }
 
     public readonly Engine Engine;
@@ -34,6 +35,7 @@ namespace SWEndor.Sound
 
     private ThreadSafeDictionary<string, FMOD.Sound> music = new ThreadSafeDictionary<string, FMOD.Sound>();
     private ThreadSafeDictionary<string, FMOD.Sound> sounds = new ThreadSafeDictionary<string, FMOD.Sound>();
+    private Channel current_channel;
 
     // keep callback references alive
     private CHANNEL_CALLBACK m_cb;
@@ -140,7 +142,8 @@ namespace SWEndor.Sound
           //rpt = true;
         }
         FMOD.Sound sd = null;
-        fmodsystem.createSound(sdfl, FMOD.MODE.LOWMEM | FMOD.MODE.CREATECOMPRESSEDSAMPLE | FMOD.MODE.ACCURATETIME, out sd);
+        fmodsystem.createSound(sdfl, FMOD.MODE.LOWMEM | FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out sd);
+        //fmodsystem.createSound(sdfl, FMOD.MODE.LOWMEM | FMOD.MODE.CREATECOMPRESSEDSAMPLE | FMOD.MODE.ACCURATETIME, out sd);
         sounds.Add(sdname, sd);
 
         Channel ch;
@@ -161,7 +164,8 @@ namespace SWEndor.Sound
         Log.Write(Log.DEBUG, LogType.ASSET_SOUND_LOAD, muname);
 
         FMOD.Sound mu = null;
-        fmodsystem.createSound(mufl, FMOD.MODE.LOWMEM | FMOD.MODE.CREATECOMPRESSEDSAMPLE | FMOD.MODE.ACCURATETIME, out mu);
+        fmodsystem.createStream(mufl, FMOD.MODE.LOWMEM | FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out mu);
+        //fmodsystem.createSound(mufl, FMOD.MODE.LOWMEM | FMOD.MODE.CREATECOMPRESSEDSAMPLE | FMOD.MODE.ACCURATETIME, out mu);
         music.Add(muname, mu);
 
         // second one for fadepoint to self
@@ -176,6 +180,12 @@ namespace SWEndor.Sound
     public IEnumerable<string> GetMusicNames()
     {
       return music.Keys;
+    }
+
+    public bool PreloadMusic(string name)
+    {
+      m_queuedInstructions.Enqueue(new InstPrepMusic { Name = name });
+      return true;
     }
 
     public bool SetMusic(string name, bool loop = false, uint position_ms = 0, uint end_ms = 0)
@@ -199,9 +209,7 @@ namespace SWEndor.Sound
     {
       Piece p = Piece.Factory.Get(name);
       SetMusic(p.SoundName, false, p.EntryPosition);
-
-      //m_musicLoop.Name = p.SoundName;
-      //m_musicLoop.Position = p.EntryPosition;
+      PrepDynNext(p.SoundName);
     }
 
     public void Update()
@@ -231,15 +239,15 @@ namespace SWEndor.Sound
       m_queuedInstructions.Enqueue(new InstAddSyncPoint { Name = name, Label = label, Position_ms = position_ms });
     }
 
-    public void SetInterruptMusic(string name)
+    public void SetInterruptMusic(string name, uint position_ms = 0, uint end_ms = 0)
     {
-      if (!interruptActive)
-        m_queuedInstructions.Enqueue(new InstPlayMusic { Name = name, isInterruptMusic = true, Loop = false, Position_ms = 0, End_ms = 0 });
+      m_queuedInstructions.Enqueue(new InstPlayMusic { Name = name, isInterruptMusic = true, Position_ms = position_ms, End_ms = end_ms });
     }
 
-    public void QueueMusic(string name, uint position_ms)
+    public void QueueInterruptMusic(string name, uint position_ms)
     {
-      m_musicQueue.Enqueue(new SoundStartInfo { Name = name, Position = position_ms });
+      //if (!interruptActive)
+        m_musicQueue.Enqueue(new SoundStartInfo { Name = name, Position = position_ms, IsInterrupt = true });
     }
 
     public void Clear()
@@ -263,7 +271,7 @@ namespace SWEndor.Sound
       if (plist.Count > 0)
       {
         Piece p = plist[Engine.Random.Next(0, plist.Count)];
-        Engine.SoundManager.QueueMusic(p.SoundName, p.EntryPosition);
+        Engine.SoundManager.QueueInterruptMusic(p.SoundName, p.EntryPosition);
       }
     }
 
@@ -304,16 +312,16 @@ namespace SWEndor.Sound
           break;
       }
 
-      lastInterrupt = 0;
+      //lastInterrupt = 0;
       return FMOD.RESULT.OK;
     }
 
     private RESULT InterruptMusiCallback(IntPtr channelraw, CHANNELCONTROL_TYPE controltype, CHANNELCONTROL_CALLBACK_TYPE type, IntPtr commanddata1, IntPtr commanddata2)
     {
+      interruptActive = false;
       switch (type)
       {
         case FMOD.CHANNELCONTROL_CALLBACK_TYPE.END:
-          interruptActive = false;
           break;
         case FMOD.CHANNELCONTROL_CALLBACK_TYPE.SYNCPOINT:
           PopDynamicQueue(true);
@@ -329,7 +337,12 @@ namespace SWEndor.Sound
       SoundStartInfo ssi2;
       if (m_musicQueue.TryDequeue(out ssi2))
       {
-        SetMusic(ssi2.Name, false, ssi2.Position);
+        if (ssi2.IsInterrupt)
+          SetInterruptMusic(ssi2.Name, ssi2.Position);
+        else
+          SetMusic(ssi2.Name, false, ssi2.Position);
+
+        PrepDynNext(ssi2.Name);
       }
       else if (autogenerate)
       {
@@ -344,10 +357,25 @@ namespace SWEndor.Sound
         {
           Piece pnext = Piece.Factory.Get(next);
           SetMusic(next, false, pnext?.EntryPosition ?? 0);
+          PrepDynNext(next);
         }
-        else
-        { }
       }
+    }
+
+
+    private void PrepDynNext(string currentSound)
+    {
+      if (currentSound == null)
+        return;
+
+      Piece p = Piece.Factory.Get(currentSound);
+      if (p == null)
+        return;
+
+      if (p.MoodTransitions != null)
+        foreach (string[] m in p.MoodTransitions)
+          foreach (string s in m)
+            PreloadMusic(s);
     }
 
     private string GetDynNext(string currentSound)

@@ -2,9 +2,9 @@
 {
   public partial class SoundManager
   {
-    private abstract class InstBase
+    private interface InstBase
     {
-      public abstract void Process(SoundManager s);
+      void Process(SoundManager s);
     }
   }
 }

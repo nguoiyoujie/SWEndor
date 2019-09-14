@@ -13,7 +13,7 @@ namespace SWEndor.Sound
       public uint End_ms;
       public float FadeTime = -1;
 
-      public override void Process(SoundManager s)
+      public void Process(SoundManager s)
       {
         if (Name == s.m_currMusic)
         {
@@ -22,48 +22,56 @@ namespace SWEndor.Sound
 
         if (s.music.ContainsKey(Name))
         {
-          Channel fmodchannel = null;
-          if (!isInterruptMusic)
-          {
+          //if (!isInterruptMusic)
+          //{
             new InstStopMusic() { FadeTime = 0.5f }.Process(s);
-            s.fmodsystem.playSound(s.music[Name], s.musicgrp, true, out fmodchannel);
+            s.fmodsystem.playSound(s.music[Name], s.musicgrp, true, out s.current_channel);
 
             if (FadeTime > 0)
-              DoFadeIn(fmodchannel);
+              DoFadeIn(s.current_channel);
 
             if (Position_ms > 0)
-              fmodchannel.setPosition(Position_ms, TIMEUNIT.MS);
+              s.current_channel.setPosition(Position_ms, TIMEUNIT.MS);
 
             if (End_ms > 0)
-              DoFadeOut(fmodchannel, End_ms / 1000f);
+              DoFadeOut(s.current_channel, End_ms / 1000f);
 
-            fmodchannel.setCallback(s.m_cb);
-            fmodchannel.setPaused(false);
 
+            s.current_channel.setCallback(isInterruptMusic ? s.m_icb : s.m_cb);
+            s.current_channel.setPaused(false);
+
+          if (!isInterruptMusic)
             s.m_currMusic = Name;
-          }
+
+          if (isInterruptMusic)
+            s.interruptActive = true;
+
+/*          }
           else
           {
             s.interruptActive = true;
-            s.musicgrp.getChannel(0, out fmodchannel);
             float duration = GetLength(s.music[Name]);
-            DoFadeOut(fmodchannel);
-            DoFadeIn(fmodchannel, duration - FadeTime * 2);
+            if (s.current_channel != null)
+            {
+              //s.musicgrp.getChannel(0, out fmodchannel);
+              DoFadeOut(s.current_channel);
+              DoFadeIn(s.current_channel, duration - FadeTime * 2);
+            }
 
-            Channel fmodchannel2 = null;
-            s.fmodsystem.playSound(s.music[Name], s.interruptmusicgrp, true, out fmodchannel2);
+            s.fmodsystem.playSound(s.music[Name], s.interruptmusicgrp, true, out s.current_channel);
 
             if (FadeTime > 0)
-              DoFadeIn(fmodchannel2);
+              DoFadeIn(s.current_channel);
 
             if (Position_ms > 0)
-              fmodchannel2.setPosition(Position_ms, TIMEUNIT.MS);
+              s.current_channel.setPosition(Position_ms, TIMEUNIT.MS);
 
-            DoFadeOut(fmodchannel2, duration - FadeTime);
+            DoFadeOut(s.current_channel, duration - FadeTime);
 
-            fmodchannel2.setCallback(s.m_icb);
-            fmodchannel2.setPaused(false);
+            s.current_channel.setCallback(s.m_icb);
+            s.current_channel.setPaused(false);
           }
+          */
         }
       }
 

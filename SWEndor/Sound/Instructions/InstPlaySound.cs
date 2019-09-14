@@ -11,7 +11,7 @@ namespace SWEndor.Sound
       public bool Loop;
       public float Volume;
 
-      public override void Process(SoundManager s)
+      public void Process(SoundManager s)
       {
         ChannelGroup soundgrp = s.soundgrps[Name];
 

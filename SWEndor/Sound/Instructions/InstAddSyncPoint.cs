@@ -11,7 +11,7 @@ namespace SWEndor.Sound
       public string Label;
       public uint Position_ms;
 
-      public override void Process(SoundManager s)
+      public void Process(SoundManager s)
       {
         if (s.music.ContainsKey(Name) && Position_ms > 0)
         {

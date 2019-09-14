@@ -8,7 +8,7 @@ namespace SWEndor.Sound
     {
       public string Name;
 
-      public override void Process(SoundManager s)
+      public void Process(SoundManager s)
       {
         if (s.sounds.ContainsKey(Name))
         {
