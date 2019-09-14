@@ -64,18 +64,64 @@ namespace SWEndor
 
     public static void Write(string channel, string formatvalue, params object[] args) { GetWriter(channel)?.WriteLine(formatvalue, args); }
 
-    internal static void Write(string channel, LogType type, params object[] args)
+    internal static void Write<T>(string channel, LogType type, T arg)
     {
+      TextWriter tw = GetWriter(channel);
+      if (tw == null)
+        return;
+
+      InnerPreWrite(tw, type);
       string s = string.Empty;
       if (LogDecorator.Decorator.TryGetValue(type, out s))
-      {
-        GetWriter(channel)?.Write("{0:s}\t{1:x}\t".F(DateTime.Now, type));
-        GetWriter(channel)?.WriteLine(s, args);
-      }
-      else
-      {
-        GetWriter(channel)?.WriteLine("{0:s}\t{1:x}\t".F(DateTime.Now, type));
-      }
+        tw.Write(s, arg);
+      tw.WriteLine();
+    }
+
+    internal static void Write<T1, T2>(string channel, LogType type, T1 a1, T2 a2)
+    {
+      TextWriter tw = GetWriter(channel);
+      if (tw == null)
+        return;
+
+      InnerPreWrite(tw, type);
+      string s = string.Empty;
+      if (LogDecorator.Decorator.TryGetValue(type, out s))
+        tw.Write(s, a1, a2);
+      tw.WriteLine();
+    }
+
+    internal static void Write<T1, T2, T3>(string channel, LogType type, T1 a1, T2 a2, T3 a3)
+    {
+      TextWriter tw = GetWriter(channel);
+      if (tw == null)
+        return;
+
+      InnerPreWrite(tw, type);
+      string s = string.Empty;
+      if (LogDecorator.Decorator.TryGetValue(type, out s))
+        tw.Write(s, a1, a2, a3);
+      tw.WriteLine();
+    }
+
+    internal static void Write(string channel, LogType type, params object[] args)
+    {
+      TextWriter tw = GetWriter(channel);
+      if (tw == null)
+        return;
+
+      InnerPreWrite(tw, type);
+      string s = string.Empty;
+      if (LogDecorator.Decorator.TryGetValue(type, out s))
+        tw.Write(s, args);
+      tw.WriteLine();
+    }
+
+    private static void InnerPreWrite(TextWriter tw, LogType type)
+    {
+      tw.Write(DateTime.Now.ToString("s"));
+      tw.Write("\t");
+      tw.Write(((int)type).ToString("x"));
+      tw.Write("\t");
     }
 
     public static void WriteErr(string channel, Exception ex)
@@ -85,9 +131,11 @@ namespace SWEndor
       if (tw == null)
         return;
 
-      tw.WriteLine("Fatal Error occured at {0:s}".F(DateTime.Now.ToString()));
+      tw.Write("Fatal Error occured at ");
+      tw.WriteLine(DateTime.Now.ToString("s"));
       tw.WriteLine("----------------------------------------------------------------");
-      tw.WriteLine("Message: {0}", ex.Message);
+      tw.Write("Message: ");
+      tw.WriteLine(ex.Message);
       tw.WriteLine();
       tw.WriteLine(ex.StackTrace);
       tw.WriteLine();

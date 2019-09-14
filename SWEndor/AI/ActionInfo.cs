@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Primitives;
 using System;
 
 namespace SWEndor.AI.Actions
@@ -24,10 +25,9 @@ namespace SWEndor.AI.Actions
 
     public override string ToString()
     {
-      return string.Format("{0},{1}"
-                          , Name
-                          , Complete
-                          );
+      return "{0},{1}".F(Name
+                       , Complete
+                       );
     }
 
     public virtual void Process(Engine engine, ActorInfo owner)
@@ -109,7 +109,7 @@ namespace SWEndor.AI.Actions
         float delta = owner.GetEngine().TrueVision.TVMathLibrary.ACos(owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
 
         if (owner.IsPlayer)
-          owner.GetEngine().Screen2D.MessageSecondaryText(string.Format("DELTA: {0:0.000}", delta), 1.5f, new TV_COLOR(0.5f, 0.5f, 1, 1), 0);
+          owner.GetEngine().Screen2D.MessageSecondaryText(string.Concat("DELTA: ", delta.ToString("0.000")), 1.5f, new TV_COLOR(0.5f, 0.5f, 1, 1), 0);
         return delta;
 
       }

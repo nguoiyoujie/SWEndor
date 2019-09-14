@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using System.Collections.Generic;
+using System.Text;
 
 namespace SWEndor.UI.Menu.Pages
 {
@@ -8,6 +9,7 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement MainText = new SelectionElement();
     SelectionElement Score = new SelectionElement();
     SelectionElement ButtonReturn = new SelectionElement();
+    StringBuilder sb = new StringBuilder();
 
     public GameWon(Screen2D owner) : base(owner)
     {
@@ -15,15 +17,44 @@ namespace SWEndor.UI.Menu.Pages
       MainText.TextFont = FontFactory.Get(Font.T36).ID;
       MainText.TextPosition = new TV_2DVECTOR(Engine.ScreenWidth / 2 - 242, 60);
 
+      sb.Clear();
+      sb.Append("Score                                     ");
+      sb.Append(PlayerInfo.Score.Score.ToString(" 00000000"));
+      sb.AppendLine();
+      sb.AppendLine();
+      sb.Append("Total Hits                                ");
+      sb.Append(PlayerInfo.Score.Hits.ToString(" #######0"));
+      sb.AppendLine();
+      //sb.Append("Total Hits on Fighters                     ");
+      //sb.Append(PlayerInfo.Score.HitsOnFighters.ToString("00000000"));
+      //sb.AppendLine();
+      sb.Append("Damage Taken                              ");
+      sb.Append(PlayerInfo.Score.DamageTaken.ToString(" #######0"));
+      sb.AppendLine();
+      sb.Append("Deaths                                    ");
+      sb.Append(PlayerInfo.Score.Deaths.ToString(" #######0"));
+      sb.AppendLine();
+      sb.AppendLine();
+      sb.Append("Kills                                     ");
+      sb.Append(PlayerInfo.Score.Kills.ToString(" #######0"));
+      sb.AppendLine();
+
+      foreach (KeyValuePair<string, int> kvp in PlayerInfo.Score.KillsByName.GetList())
+      {
+        sb.Append((kvp.Key.Length > 42) ? kvp.Key.Remove(42) : kvp.Key.PadRight(42));
+        sb.Append(kvp.Value.ToString(" #######0"));
+        sb.AppendLine();
+      }
+      /*
       Score.Text += string.Format("{0,42} {1,8:0}", "Score".PadRight(42), PlayerInfo.Score.Score);
       Score.Text += string.Format("\n\n{0,42} {1,8:0}", "Total Hits".PadRight(42), PlayerInfo.Score.Hits);
-      //Score.Text += string.Format("\n{0,42} {1,8:0}", "Total Hits on Fighters".PadRight(42), PlayerInfo.Score.HitsOnFighters);
       Score.Text += string.Format("\n{0,42} {1,8:0}", "Damage Taken".PadRight(42), PlayerInfo.Score.DamageTaken);
       Score.Text += string.Format("\n{0,42} {1,8:0}", "Deaths".PadRight(42), PlayerInfo.Score.Deaths);
       Score.Text += string.Format("\n\n{0,42} {1,8:0}", "", "Kills");
-
       foreach (KeyValuePair<string, int> kvp in PlayerInfo.Score.KillsByName.GetList())
         Score.Text += string.Format("\n{0,42} {1,8:0}", (kvp.Key.Length > 42) ? kvp.Key.Remove(42) : kvp.Key.PadRight(42), kvp.Value);
+      */
+      Score.Text = sb.ToString();
 
       Score.TextFont = FontFactory.Get(Font.T12).ID;
       Score.TextPosition = new TV_2DVECTOR(Engine.ScreenWidth / 2 - 242, 120);

@@ -35,7 +35,6 @@ namespace SWEndor.Actors.Components
         {
           CyclesRemaining--;
           CycleTime += CyclePeriod;
-
           Action?.Invoke(owner);
         }
       }

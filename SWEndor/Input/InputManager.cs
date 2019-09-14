@@ -63,7 +63,6 @@ namespace SWEndor.Input
       INPUT_ENGINE.GetKeyPressedArray(KEY_PRESSED);
     }
 
-
     public void ProcessInput()
     {
       if (Terminal.TConsole.Visible)

@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
+using SWEndor.Primitives;
 
 namespace SWEndor.AI.Actions
 {
@@ -24,8 +25,7 @@ namespace SWEndor.AI.Actions
 
     public override string ToString()
     {
-      return string.Format("{0},{1},{2},{3},{4}"
-                          , Name
+      return "{0},{1},{2},{3},{4}".F(Name
                           , Utilities.ToString(Impact_Position)
                           , Utilities.ToString(Normal)
                           , CloseEnoughAngle

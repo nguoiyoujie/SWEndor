@@ -10,11 +10,7 @@ namespace SWEndor.Primitives
     public const byte THREAD_RENDER = 3;
     public const byte THREAD_AI = 4;
 
-    //public const byte PREREQ_RENDER = 101;
-    //public const byte PREREQ_COLLISION = 102;
-
-    public const byte GLOBAL_RENDER = 111;
-    public const byte GLOBAL_COLLISION = 112;
+    public const byte GLOBAL_TVSCENE = 113;
   }
 
   public static class ScopeCounterManager

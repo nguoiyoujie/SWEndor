@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Primitives;
 
 namespace SWEndor.UI.Widgets
 {
@@ -19,7 +20,10 @@ namespace SWEndor.UI.Widgets
     {
       TVScreen2DText.Action_BeginText();
 
-      TVCollisionResult tvcres = Engine.TrueVision.TVScene.MousePick((int)Engine.ScreenWidth / 2, (int)Engine.ScreenHeight / 2);
+      TVCollisionResult tvcres;
+      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        tvcres = Engine.TrueVision.TVScene.MousePick((int)Engine.ScreenWidth / 2, (int)Engine.ScreenHeight / 2);
+
       TVMesh mesh = tvcres.GetCollisionMesh();
       if (mesh != null)
       {

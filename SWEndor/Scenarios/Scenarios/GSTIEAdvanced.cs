@@ -78,7 +78,7 @@ namespace SWEndor.Scenarios
       }
       else
       {
-        Manager.Line1Text = string.Format("");
+        Manager.Line1Text = "";
       }
 
       int tie_d = 0;

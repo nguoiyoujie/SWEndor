@@ -169,7 +169,7 @@ namespace SWEndor.Actors.Components
         TV_COLLISIONRESULT tvcres = new TV_COLLISIONRESULT();
 
         bool result = false;
-        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_COLLISION))
+        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
           result = engine.TrueVision.TVScene.AdvancedCollision(start, end, ref tvcres);
         
         if (result)

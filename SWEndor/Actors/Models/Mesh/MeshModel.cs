@@ -39,8 +39,7 @@ namespace SWEndor.Actors
 
       private void GenerateMeshes(int id, ActorTypeInfo atype)
       {
-        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_RENDER))
-        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_COLLISION))
+        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
         {
           Mesh = atype.MeshData.SourceMesh.Duplicate();
           FarMesh = atype.MeshData.SourceFarMesh == null ? atype.MeshData.SourceMesh.Duplicate() : atype.MeshData.SourceFarMesh.Duplicate();
@@ -52,23 +51,24 @@ namespace SWEndor.Actors
 
           Mesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 8);
           FarMesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 8);
-        }
+        }        
       }
 
       public void Dispose()
       {
         if (ScopeCounterManager.AcquireIfZero(disposeScope))
         {
-          ScopeCounterManager.WaitForZero(meshScope, ScopeGlobals.GLOBAL_COLLISION, ScopeGlobals.GLOBAL_RENDER);
+          using (ScopeCounterManager.AcquireWhenZero(meshScope))
+          using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE)) //ScopeGlobals.GLOBAL_COLLISION, ScopeGlobals.GLOBAL_RENDER);
+          {
+            Mesh?.Destroy();
+            m_ids.Remove(Mesh.GetIndex());
+            Mesh = null;
 
-          Mesh?.Destroy();
-          m_ids.Remove(Mesh.GetIndex());
-
-          Mesh = null;
-
-          FarMesh?.Destroy();
-          m_ids.Remove(FarMesh.GetIndex());
-          FarMesh = null;
+            FarMesh?.Destroy();
+            m_ids.Remove(FarMesh.GetIndex());
+            FarMesh = null;
+          }
         }
       }
 
@@ -139,29 +139,54 @@ namespace SWEndor.Actors
               mesh.Render();
       }
 
+      bool prev_collide;
+      bool prev_collidefar;
+      bool prev_render;
+      bool prev_renderfar;
+
       public void Update(ActorInfo actor)
       {
         TV_3DMATRIX mat = actor.GetMatrix();
         bool collide = actor.Mask.Has(ComponentMask.CAN_BECOLLIDED) && actor.Active && !actor.IsAggregateMode;
         bool render = actor.Mask.Has(ComponentMask.CAN_RENDER) && actor.Active && !actor.IsAggregateMode && (!actor.IsPlayer || actor.PlayerCameraInfo.CameraMode != CameraMode.FREEROTATION);
         bool far = actor.IsFarMode;
+        bool collidefar = collide && far;
+        bool renderfar = render && far;
+        collide &= !far;
+        render &= !far;
 
         using (ScopeCounterManager.Acquire(meshScope))
           if (ScopeCounterManager.IsZero(disposeScope))
           {
-            ScopeCounterManager.WaitForZero(ScopeGlobals.GLOBAL_COLLISION);
-            {
-              Mesh.SetCollisionEnable(collide && !far);
-              FarMesh.SetCollisionEnable(collide && far);
-            }
-
             Mesh.SetMatrix(mat);
             FarMesh.SetMatrix(mat);
 
-            using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_RENDER))
+            if (prev_collide != collide)
             {
-              Mesh.Enable(render && !far);
-              FarMesh.Enable(render && far);
+              prev_collide = collide;
+              using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+                Mesh.SetCollisionEnable(collide);
+            }
+
+            if (prev_collidefar != collidefar)
+            {
+              prev_collidefar = collidefar;
+              using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+                FarMesh.SetCollisionEnable(collidefar);
+            }
+
+            if (prev_render != render)
+            {
+              prev_render = render;
+              using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+                Mesh.Enable(render);
+            }
+
+            if (prev_renderfar != renderfar)
+            {
+              prev_renderfar = renderfar;
+              using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+                FarMesh.Enable(renderfar);
             }
           }
       }

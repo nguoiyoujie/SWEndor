@@ -152,10 +152,49 @@ namespace SWEndor.Actors
             break;
       }
 
+      public void DoUntil<T>(Func<Engine, ActorInfo, T, bool> action, T cmp)
+      {
+        foreach (ActorInfo a in Actors)
+          if (!action.Invoke(a.Engine, a, cmp))
+            break;
+      }
+
+      public void DoUntil<T1, T2>(Func<Engine, ActorInfo, T1, T2, bool> action, T1 c1, T2 c2)
+      {
+        foreach (ActorInfo a in Actors)
+          if (!action.Invoke(a.Engine, a, c1, c2))
+            break;
+      }
+
+      public void DoUntil<T1, T2, T3>(Func<Engine, ActorInfo, T1, T2, T3, bool> action, T1 c1, T2 c2, T3 c3)
+      {
+        foreach (ActorInfo a in Actors)
+          if (!action.Invoke(a.Engine, a, c1, c2, c3))
+            break;
+      }
+
       public void DoEach(Action<Engine, ActorInfo> action)
       {
         foreach (ActorInfo a in Actors)
           action.Invoke(a.Engine, a);
+      }
+
+      public void DoEach<T>(Action<Engine, ActorInfo, T> action, T cmp)
+      {
+        foreach (ActorInfo a in Actors)
+          action.Invoke(a.Engine, a, cmp);
+      }
+
+      public void DoEach<T1, T2>(Action<Engine, ActorInfo, T1, T2> action, T1 c1, T2 c2)
+      {
+        foreach (ActorInfo a in Actors)
+          action.Invoke(a.Engine, a, c1, c2);
+      }
+
+      public void DoEach<T1, T2, T3>(Action<Engine, ActorInfo, T1, T2, T3> action, T1 c1, T2 c2, T3 c3)
+      {
+        foreach (ActorInfo a in Actors)
+          action.Invoke(a.Engine, a, c1, c2, c3);
       }
 
       public ActorEnumerable Actors;
@@ -167,17 +206,13 @@ namespace SWEndor.Actors
         public ActorEnumerator GetEnumerator() { return new ActorEnumerator(F); }
       }
 
-      public struct ActorEnumerator //: IEnumerator<ActorInfo>
+      public struct ActorEnumerator
       {
         readonly Factory F;
         ActorInfo current;
         public ActorEnumerator(Factory f) { F = f; current = null; }
-
-        public void Reset() { current = null; }
         public bool MoveNext() { return (current = (current == null) ? F.First : current?.Next) != null; }
         public ActorInfo Current { get { return current; } }
-        //object System.Collections.IEnumerator.Current { get { return Current; } }
-        public void Dispose() { }
       }
 
       public new void Remove(int id)

@@ -131,7 +131,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actors\ActorCreationInfo.cs" />
-    <Compile Include="Actors\Components\Movement\MoveDecorator.cs" />
     <Compile Include="Actors\Models\ArmorModel\ArmorModel.cs" />
     <Compile Include="Actors\Models\Collision\CollisionResultData.cs" />
     <Compile Include="Actors\Models\Explosion\ExplodeModel.cs" />
@@ -149,18 +148,18 @@
     <Compile Include="Actors\Models\Transform\TransformModel.cs" />
     <Compile Include="Actors\Models\Transform\TransformData.cs" />
     <Compile Include="Actors\Models\Move\MoveData.cs" />
-    <Compile Include="Actors\Components\Movement\RotateOnly.cs" />
-    <Compile Include="Actors\Components\Movement\Interfaces.cs" />
-    <Compile Include="Actors\Components\Movement\MoveForwardOnly.cs" />
-    <Compile Include="Actors\Components\Movement\MoveLaser.cs" />
-    <Compile Include="Actors\Components\Movement\NoMove.cs" />
+    <Compile Include="ActorTypes\Components\Movement\RotateOnly.cs" />
+    <Compile Include="ActorTypes\Components\Movement\MoveBehavior.cs" />
+    <Compile Include="ActorTypes\Components\Movement\MoveForwardOnly.cs" />
+    <Compile Include="ActorTypes\Components\Movement\MoveLaser.cs" />
+    <Compile Include="ActorTypes\Components\Movement\NoMove.cs" />
     <Compile Include="Actors\Models\Mesh\MeshModel.cs" />
     <Compile Include="Actors\Enums\ComponentMask.cs" />
     <Compile Include="Actors\ProcessActorInfo.cs" />
     <Compile Include="Actors\Components\CollisionSystem.cs" />
-    <Compile Include="Actors\Components\WeaponSystemInfo.cs" />
+    <Compile Include="Actors\Components\WeaponData.cs" />
     <Compile Include="Actors\Components\CycleInfo.cs" />
-    <Compile Include="Actors\Components\Movement\MoveNormal.cs" />
+    <Compile Include="ActorTypes\Components\Movement\MoveNormal.cs" />
     <Compile Include="Actors\Components\CombatSystem.cs" />
     <Compile Include="Actors\Enums\ActorState.cs" />
     <Compile Include="Actors\Enums\CreationState.cs" />
@@ -175,6 +174,7 @@
     <Compile Include="ActorTypes\Components\DeathCameraData.cs" />
     <Compile Include="ActorTypes\Components\LookData.cs" />
     <Compile Include="ActorTypes\Components\RegenData.cs" />
+    <Compile Include="ActorTypes\Components\UnfixedWeaponData.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\NebBSpawner.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\MCLSpawner.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\PlayerSpawner.cs" />
@@ -363,6 +363,7 @@
     <Compile Include="FileFormat\INI\Helpers\SetValues.cs" />
     <Compile Include="FileFormat\INI\Helpers\GetValues.cs" />
     <Compile Include="GameEvent\GameEvent.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Input\Context\DebugGameInputContext.cs" />
     <Compile Include="Input\Context\TerminalGameInputContext.cs" />
     <Compile Include="Input\Context\GameInputContext.cs" />

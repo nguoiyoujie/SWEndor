@@ -9,7 +9,7 @@ using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.ActorTypes.Instances;
 using SWEndor.AI;
-using SWEndor.Actors.Components;
+using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.Scenarios
 {
@@ -439,7 +439,7 @@ namespace SWEndor.Scenarios
                 last_sound_distX = player.GetGlobalPosition().x + 250;
               }
 
-              Screen2D.TargetingRadar_text = string.Format("{0:00000000}", (target_distX - player.GetGlobalPosition().x) * 30);
+              Screen2D.TargetingRadar_text = ((target_distX - player.GetGlobalPosition().x) * 30).ToString("00000000");
               Scene_Stage05b_ContinuouslySpawnRoute();
 
               if (player.GetGlobalPosition().x > vaderend_distX 
@@ -485,7 +485,7 @@ namespace SWEndor.Scenarios
         }
         else
         {
-          Manager.Line1Text = string.Format("");
+          Manager.Line1Text = "";
         }
       }
       else
@@ -629,7 +629,7 @@ namespace SWEndor.Scenarios
         {
           if (actor.TypeInfo is YWingATI)
           {
-            foreach (WeaponInfo w in actor.WeaponSystemInfo.Weapons)
+            foreach (WeaponInfo w in actor.WeaponDefinitions.Weapons)
             {
               if (w.Type == WeaponType.TORPEDO)
               {
@@ -640,7 +640,7 @@ namespace SWEndor.Scenarios
           }
           else
           {
-            foreach (WeaponInfo w in actor.WeaponSystemInfo.Weapons)
+            foreach (WeaponInfo w in actor.WeaponDefinitions.Weapons)
             {
               if (w.Type == WeaponType.TORPEDO || w.Type == WeaponType.ION)
               {
@@ -662,12 +662,12 @@ namespace SWEndor.Scenarios
 
           player.SetArmor(DamageType.ALL, 0.5f);
 
-          player.WeaponSystemInfo.Reset();
+          player.WeaponDefinitions.Reset();
 
           UnfixedWeaponData prew = new UnfixedWeaponData();
           prew.InsertLoadout("X_WG_LASR");
           prew.InsertLoadout("X_WG_TORP");
-          player.WeaponSystemInfo.Init(prew);
+          player.WeaponDefinitions.Load(prew);
         }
         else if (Stage5StartRun)
         {
@@ -1874,7 +1874,7 @@ namespace SWEndor.Scenarios
       UnfixedWeaponData prew = new UnfixedWeaponData();
       prew.InsertLoadout("TIED_LASR");
       prew.InsertLoadout("TIED_LASR");
-      vader.WeaponSystemInfo.Init(prew);
+      vader.WeaponDefinitions.Load(prew);
 
       vader.MoveData.MaxSpeed = 400;
       vader.MoveData.MinSpeed = 400;

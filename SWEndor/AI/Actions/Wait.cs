@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Primitives;
 
 namespace SWEndor.AI.Actions
 {
@@ -15,8 +16,7 @@ namespace SWEndor.AI.Actions
 
     public override string ToString()
     {
-      return string.Format("{0},{1},{2}"
-                          , Name
+      return "{0},{1},{2}".F(Name
                           , ResumeTime - Globals.Engine.Game.GameTime
                           , Complete
                           );

@@ -32,10 +32,10 @@ namespace SWEndor.ActorTypes.Components
     {
       _init = null;
       _update = (a, t) =>
-     {
+      {
        a.XTurnAngle += pitchRate * t;
        a.MoveAbsolute(forwardRate * t, -sinkRate * t, 0);
-     };
+      };
     }
 
     public void Initialize(ActorInfo actor) { _init?.Invoke(actor); }

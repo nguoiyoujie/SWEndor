@@ -16,11 +16,8 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxTurnRate = 42;
 
       ScoreData = new ScoreData(400, 2000);
-
       RegenData = new RegenData(false, 0.06f, 0, 0, 0);
-
       MeshData = new MeshData(Name, @"xwing\z95.x");
-      //SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"xwing\xwing_far.x");
 
       Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 3, 25), new TV_3DVECTOR(0, 3, 2000)),

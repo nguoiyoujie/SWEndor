@@ -23,7 +23,6 @@ namespace SWEndor.ActorTypes.Instances
       ScoreData = new ScoreData(60, 10000);
 
       MeshData = new MeshData(Name, @"stardestroyer\interdictor_star_destroyer.x");
-      //SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"stardestroyer\star_destroyer_far.x");
       DyingMoveData.Sink(0.005f, 5f, 0.8f);
 
       Cameras = new LookData[] {

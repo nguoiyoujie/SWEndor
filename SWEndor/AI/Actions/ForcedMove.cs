@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Primitives;
 
 namespace SWEndor.AI.Actions
 {
@@ -23,8 +24,7 @@ namespace SWEndor.AI.Actions
 
     public override string ToString()
     {
-      return string.Format("{0},{1},{2},{3},{4},{5},{6}"
-                          , Name
+      return "{0},{1},{2},{3},{4},{5},{6}".F(Name
                           , Utilities.ToString(Target_Position)
                           , Target_Speed
                           , CloseEnoughDistance

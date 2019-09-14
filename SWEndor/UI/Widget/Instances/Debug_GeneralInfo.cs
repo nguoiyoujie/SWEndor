@@ -21,15 +21,11 @@ namespace SWEndor.UI.Widgets
       TVScreen2DText.Action_BeginText();
       TVCamera tvp = Engine.PlayerCameraInfo.Camera;
 
-      TVScreen2DText.TextureFont_DrawText(string.Format("POS: {0:0.00},{1:0.00},{2:0.00}\nROT: {3:0.00},{4:0.00},{5:0.00}\nTime/Loop: {6:0000.0000}\nTime: {7:0000.0000}",
-          tvp.GetPosition().x,
-          tvp.GetPosition().y,
-          tvp.GetPosition().z,
-          tvp.GetRotation().x,
-          tvp.GetRotation().y,
-          tvp.GetRotation().z,
-          Engine.Game.TimeSinceRender,
-          Engine.Game.GameTime
+      TVScreen2DText.TextureFont_DrawText(string.Format("POS: {0}\nROT: {1}\nTime/Loop: {2:0000.0000}\nTime: {3:0000.0000}"
+          , Utilities.ToString(tvp.GetPosition())
+          , Utilities.ToString(tvp.GetRotation())
+          , Engine.Game.TimeSinceRender
+          , Engine.Game.GameTime
           )
         , loc.x, loc.y, new TV_COLOR(0.6f, 0.8f, 0.6f, 1).GetIntColor());
 

@@ -172,12 +172,13 @@ namespace SWEndor
       TrueVision.TVEngine.Clear();
 
       AtmosphereInfo.Render();
-      TrueVision.TVScene.FinalizeShadows();
       //LandInfo.Render();
 
-      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_RENDER))
+      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+      {
+        TrueVision.TVScene.FinalizeShadows();
         TrueVision.TVScene.RenderAllMeshes(true); //RenderAll(true);
-
+      }
       Screen2D.Draw();
       Screen2D.CurrentPage?.RenderTick();
 

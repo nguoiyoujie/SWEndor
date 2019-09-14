@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Primitives;
 using System.IO;
 
 namespace SWEndor
@@ -9,7 +10,8 @@ namespace SWEndor
     internal LandInfo(Engine engine)
     {
       Engine = engine;
-      m_land = Engine.TrueVision.TVScene.CreateLandscape("Land");
+      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        m_land = Engine.TrueVision.TVScene.CreateLandscape("Land");
     }
 
     private TVLandscape m_land;
@@ -82,7 +84,8 @@ namespace SWEndor
     {
       m_land.Enable(false);
       m_land.Destroy();
-      m_land = Engine.TrueVision.TVScene.CreateLandscape("Land");
+      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        m_land = Engine.TrueVision.TVScene.CreateLandscape("Land");
     }
 
     public void LoadDefaults()

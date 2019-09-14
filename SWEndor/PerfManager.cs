@@ -15,7 +15,6 @@ namespace SWEndor
     int IComparer<PerfToken>.Compare(PerfToken x, PerfToken y)
     {
       return x.Name.CompareTo(y.Name);
-      //return (int)(y.Seconds * 1000 - x.Seconds * 1000);
     }
   }
 
@@ -40,7 +39,7 @@ namespace SWEndor
     public static string PerfLogPath = Path.Combine(Globals.LogPath, @"perf.log");
     public string Report = string.Empty;
     private DateTime m_last_refresh_time = DateTime.Now;
-    private CircularQueue<PerfToken> Queue;// = new CircularQueue<PerfToken>(100000, false);
+    private CircularQueue<PerfToken> Queue;
     private Dictionary<string, PerfToken> Elements;
     private Dictionary<int, double> ThreadTimes;
 
@@ -198,7 +197,7 @@ namespace SWEndor
           }
         }
 
-        sb.AppendLine("{0,-30}   [{1,6}] {2,7}  {3,7}  {4,7}".F("", "Count", "Total|s", "Avg|ms", "Peak|ms"));
+        sb.AppendLine("                                 [ Count] Total|s   Avg|ms  Peak|ms");
         newElements.Sort(new PerfComparer());
         foreach (PerfToken e in newElements)
         {

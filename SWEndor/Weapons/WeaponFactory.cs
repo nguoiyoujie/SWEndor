@@ -27,13 +27,6 @@ namespace SWEndor.Weapons
       if (File.Exists(filepath))
       {
         INIFile f = new INIFile(filepath);
-
-        // [Weapons]
-        // X=weapon1
-        //
-        // [weapon1]
-        // ...
-
         string main = "Weapons";
         if (f.HasSection(main))
         {

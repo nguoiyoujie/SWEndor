@@ -25,71 +25,57 @@ namespace SWEndor.AI.Actions
                           );
     }
 
-    Queue<ActorInfo> targets = new Queue<ActorInfo>();
+    Action<Engine, ActorInfo, ActorInfo, List<ActorInfo>, TargetType> getTargets = new Action<Engine, ActorInfo, ActorInfo, List<ActorInfo>, TargetType>(
+       (e, a, c, t, mt) =>
+       {
+         if (a != null
+           && c.ID != a.ID
+           && a.Active
+           && !a.IsDyingOrDead
+           && e.ActorDataSet.CombatData[a.dataID].IsCombatObject
+           && (a.TypeInfo.AIData.TargetType & mt) != 0
+           && !a.IsOutOfBounds(e.GameScenarioManager.MinAIBounds, e.GameScenarioManager.MaxAIBounds)
+           && !c.Faction.IsAlliedWith(a.Faction) // enemy
+           )
+         {
+           if (c.MoveData.MaxSpeed == 0) // stationary, can only target those in range
+             {
+             WeaponShotInfo w;
+             float dist = ActorDistanceInfo.GetDistance(c, a, c.WeaponDefinitions.GetWeaponRange());
+             c.WeaponDefinitions.SelectWeapon(e, c, a, 0, dist, out w);
+
+             if (!w.IsNull)
+             {
+               for (int i = a.HuntWeight; i > 0; i--)
+                 t.Add(a);
+             }
+           }
+           else
+           {
+             for (int i = a.HuntWeight; i > 0; i--)
+               t.Add(a);
+           }
+         }
+       }
+     );
+
     public override void Process(Engine engine, ActorInfo actor)
     {
       ActorInfo currtarget = null;
-      targets.Clear();
-      int weight = 0;
+      List<ActorInfo> targets = new List<ActorInfo>(50);
 
-      Action<Engine, ActorInfo> action = new Action<Engine, ActorInfo>(
-         (_, a) =>
-         {
-           if (a != null
-             && actor != a
-             && a.Active
-             && !a.IsDyingOrDead
-             && engine.ActorDataSet.CombatData[a.dataID].IsCombatObject
-             && (a.TypeInfo.AIData.TargetType & m_TargetType) != 0
-             && !a.IsOutOfBounds(engine.GameScenarioManager.MinAIBounds, engine.GameScenarioManager.MaxAIBounds)
-             && !actor.Faction.IsAlliedWith(a.Faction) // enemy
-             )
-           {
-             if (actor.MoveData.MaxSpeed == 0) // stationary, can only target those in range
-             {
-               WeaponShotInfo w;
-               float dist = ActorDistanceInfo.GetDistance(actor, a, actor.WeaponSystemInfo.GetWeaponRange());
-               actor.WeaponSystemInfo.SelectWeapon(engine, actor, a, 0, dist, out w);
-
-               if (!w.IsNull)
-               {
-                 targets.Enqueue(a);
-                 weight += a.HuntWeight;
-               }
-             }
-             else
-             {
-               targets.Enqueue(a);
-               weight += a.HuntWeight;
-             }
-           }
-         }
-       );
-
-      engine.ActorFactory.DoEach(action);
+      engine.ActorFactory.DoEach(getTargets, actor, targets, m_TargetType);
 
       if (targets.Count > 0)
       {
-        int w = engine.Random.Next(0, weight);
-        ActorInfo tgt = null;
-        //while (targets.TryDequeue(out tgt))
-        while ((tgt = targets.Dequeue()) != null)
-        {
-          w -= tgt.HuntWeight;
-          currtarget = tgt;
-          if (w < 0)
-            break;
-        }
+        int w = engine.Random.Next(0, targets.Count);
+        currtarget = targets[w];
       }
 
       if (currtarget != null)
-      {
         actor.QueueLast(new AttackActor(currtarget.ID));
-      }
       else
-      {
         actor.QueueLast(new Wait(1));
-      }
 
       Complete = true;
     }

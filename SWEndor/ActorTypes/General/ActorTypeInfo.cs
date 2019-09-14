@@ -68,6 +68,7 @@ namespace SWEndor.ActorTypes
 
     public MeshData MeshData = MeshData.Default;
 
+    public MoveBehavior MoveBehavior;
     public DyingMoveData DyingMoveData;
 
 
@@ -123,7 +124,8 @@ namespace SWEndor.ActorTypes
 
     public void Init()
     {
-      cachedWeaponData = new UnfixedWeaponData(this);
+      cachedWeaponData.Load(this);
+      MoveBehavior.Load(this);
     }
 
     public virtual void Initialize(ActorInfo ainfo)
@@ -147,7 +149,7 @@ namespace SWEndor.ActorTypes
     public virtual void ProcessState(ActorInfo ainfo)
     {
       // weapons
-      foreach (WeaponInfo w in ainfo.WeaponSystemInfo.Weapons)
+      foreach (WeaponInfo w in ainfo.WeaponDefinitions.Weapons)
         w.Reload(Engine);
 
       // regeneration
@@ -336,7 +338,7 @@ namespace SWEndor.ActorTypes
       // AI Determination
       if (EqualityComparer<WeaponShotInfo>.Default.Equals(sweapon, WeaponShotInfo.Automatic))
       {
-        foreach (WeaponShotInfo ws in owner.WeaponSystemInfo.AIWeapons)
+        foreach (WeaponShotInfo ws in owner.WeaponDefinitions.AIWeapons)
           if (FireWeapon(owner, target, ws))
             return true;
       }

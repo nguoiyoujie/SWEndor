@@ -10,7 +10,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions
     }
 
     public void AddFunctions()
-    { 
+    {
       // Scene Management
       Functions.Add("SetMaxBounds".ToLowerInvariant(), SceneManagement.SetMaxBounds);
       Functions.Add("SetMinBounds".ToLowerInvariant(), SceneManagement.SetMinBounds);
@@ -133,8 +133,13 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       Functions.Add("CallScript".ToLowerInvariant(), ScriptManagement.CallScript);
 
       // Misc
-      Functions.Add("IsNull".ToLowerInvariant(), delegate (Context c, object[] ps) { return ps[0] == null; });
+      Functions.Add("IsNull".ToLowerInvariant(), IsNull);
       Functions.Add("GetArrayElement".ToLowerInvariant(), ScriptManagement.GetArrayElement);
+    }
+
+    public object IsNull(Context c, object[] ps)
+    {
+      return ps[0] == null;
     }
   }
 }

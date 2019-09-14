@@ -57,9 +57,6 @@ namespace SWEndor.Actors
 
   public static class ComponentMaskExt
   {
-    public static bool Has(this ComponentMask mask, ComponentMask subset)
-    {
-      return (mask & subset) == subset;
-    }
+    public static bool Has(this ComponentMask mask, ComponentMask subset) { return (mask & subset) == subset; }
   }
 }

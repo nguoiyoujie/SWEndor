@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace SWEndor.UI.Widgets
 {
@@ -17,50 +18,55 @@ namespace SWEndor.UI.Widgets
       }
     }
 
+    StringBuilder sb = new StringBuilder();
     public override void Draw()
     {
       TVScreen2DText.Action_BeginText();
 
       TV_2DVECTOR loc = new TV_2DVECTOR(30, 375);
-      string swingcount = "";
+      sb.Clear();
       Dictionary<string, int> wingcount = new Dictionary<string, int>();
 
-      Action<Engine, ActorInfo> action = new Action<Engine, ActorInfo>(
-        (_, a) =>
+      Action<Engine, ActorInfo, Dictionary<string, int>> action = new Action<Engine, ActorInfo, Dictionary<string, int>>(
+        (_, a, wc) =>
         {
           if (a != null)
           {
             if (a.Active)
             {
-              if (!wingcount.ContainsKey("All Objects"))
-                wingcount.Add("All Objects", 1);
+              if (!wc.ContainsKey("All Objects"))
+                wc.Add("All Objects", 1);
               else
-                wingcount["All Objects"]++;
+                wc["All Objects"]++;
             }
             if (a.TypeInfo is ActorTypes.Groups.Projectile && a.Active && a.Faction != null)
             {
-              if (!wingcount.ContainsKey("Projectiles"))
-                wingcount.Add("Projectiles", 1);
+              if (!wc.ContainsKey("Projectiles"))
+                wc.Add("Projectiles", 1);
               else
-                wingcount["Projectiles"]++;
+                wc["Projectiles"]++;
             }
             if ((a.TypeInfo is ActorTypes.Groups.Fighter) && a.Active && a.Faction != null)
             {
-              if (!wingcount.ContainsKey(a.Faction.Name + " Wings"))
-                wingcount.Add(a.Faction.Name + " Wings", 1);
+              string w = a.Faction.Name + " Wings";
+              if (!wc.ContainsKey(w))
+                wc.Add(w, 1);
               else
-                wingcount[a.Faction.Name + " Wings"]++;
+                wc[w]++;
             }
           }
         });
 
-      ActorFactory.DoEach(action);
+      ActorFactory.DoEach(action, wingcount);
 
       foreach (KeyValuePair<string, int> kvp in wingcount)
       {
-        swingcount += kvp.Key + ": " + kvp.Value + "\n";
+        sb.Append(kvp.Key);
+        sb.Append(": ");
+        sb.Append(kvp.Value);
+        sb.AppendLine();
       }
-      TVScreen2DText.TextureFont_DrawText(swingcount
+      TVScreen2DText.TextureFont_DrawText(sb.ToString()
       , loc.x, loc.y, new TV_COLOR(0.6f, 0.8f, 0.6f, 1).GetIntColor());
 
       TVScreen2DText.Action_EndText();

@@ -16,9 +16,9 @@ namespace SWEndor.Terminal
     protected virtual TCommandFeedback CheckParamCount(int count)
     {
       if (MinParameters >= 0 && count < MinParameters)
-        return new TCommandFeedback(TCommandFeedbackType.ERROR, "At least " + MinParameters + " parameter(s) expected, but " + count + " encountered!");
+        return new TCommandFeedback(TCommandFeedbackType.ERROR, "At least {0} parameter(s) expected, but {1} encountered!".F(MinParameters, count));
       else if (MaxParameters >= 0 && count > MaxParameters)
-        return new TCommandFeedback(TCommandFeedbackType.ERROR, "At most " + MaxParameters + " parameter(s) expected, but " + count + " encountered!");
+        return new TCommandFeedback(TCommandFeedbackType.ERROR, "At most {0} parameter(s) expected, but {1} encountered!".F(MinParameters, count));
       else
         return TCommandFeedback.NULL;
     }

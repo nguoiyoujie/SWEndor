@@ -23,20 +23,18 @@ namespace SWEndor.ActorTypes.Components
 
     public MeshData(string name, string srcMesh, string srcFarMesh)
     {
+      string farname = name + "_far";
       SourceMeshPath = srcMesh;
       SourceFarMeshPath = srcFarMesh;
       MinDimensions = new TV_3DVECTOR();
       MaxDimensions = new TV_3DVECTOR();
 
       // create SourceMesh and SourceFarMesh
-      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_RENDER))
-      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_COLLISION))
-      {
         SourceMesh = tv.TVGlobals.GetMesh(name);
         if (SourceMesh == null)
         {
-          SourceMesh = tv.TVScene.CreateMeshBuilder(name);
-          //SourceMesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_BUMPMAPPING_TANGENTSPACE, 8);
+          using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+            SourceMesh = tv.TVScene.CreateMeshBuilder(name);
 
           if (srcMesh != null)
             SourceMesh.LoadXFile(Path.Combine(Globals.ModelPath, srcMesh), true);
@@ -47,12 +45,14 @@ namespace SWEndor.ActorTypes.Components
           SourceMesh.GetBoundingBox(ref MinDimensions, ref MaxDimensions);
         }
 
-        SourceFarMesh = tv.TVGlobals.GetMesh(name + "_far");
+        SourceFarMesh = tv.TVGlobals.GetMesh(farname);
         if (SourceFarMesh == null)
         {
           if (srcFarMesh != null)
           {
-            SourceFarMesh = tv.TVScene.CreateMeshBuilder(name + "_far");
+            using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+              SourceFarMesh = tv.TVScene.CreateMeshBuilder(farname);
+
             SourceFarMesh.LoadXFile(Path.Combine(Globals.ModelPath, srcFarMesh), true);
             SourceFarMesh.Enable(false);
             SourceMesh.SetCollisionEnable(false);
@@ -62,7 +62,6 @@ namespace SWEndor.ActorTypes.Components
           else
             SourceFarMesh = SourceMesh; //.Duplicate();
         }
-      }
     }
 
     public MeshData(string name, TVMesh mesh)
@@ -125,7 +124,8 @@ namespace SWEndor.ActorTypes.Components
       TVMesh m = tv.TVGlobals.GetMesh(name);
       if (m == null)
       {
-        m = tv.TVScene.CreateMeshBuilder(name);
+        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+          m = tv.TVScene.CreateMeshBuilder(name);
 
         // 1 texture
         int tex = 0;
@@ -151,7 +151,8 @@ namespace SWEndor.ActorTypes.Components
       TVMesh m = tv.TVGlobals.GetMesh(name);
       if (m == null)
       {
-        m = tv.TVScene.CreateMeshBuilder(name);
+        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+          m = tv.TVScene.CreateMeshBuilder(name);
 
         string texpath = Path.Combine(Globals.ImagePath, texname);
         string texdpath = Path.Combine(Globals.ImagePath, texdname);
@@ -193,7 +194,8 @@ namespace SWEndor.ActorTypes.Components
       if (m == null)
       {
         LoadAlphaTextureFromFolder(ref texanimframes, Globals.ImagePath, texfolder);
-        m = tv.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, size, size, name, true);
+        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+          m = tv.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, size, size, name, true);
         m.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
         m.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
       }
@@ -202,7 +204,7 @@ namespace SWEndor.ActorTypes.Components
 
     public static int LoadAlphaTexture(string name, string texpath, string alphatexpath = null)
     {
-      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_RENDER))
+      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
         int tex = tv.TVGlobals.GetTex(name);
         if (tex == 0)
@@ -217,7 +219,7 @@ namespace SWEndor.ActorTypes.Components
 
     public static int LoadTexture(string name, string texpath)
     {
-      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_RENDER))
+      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
         int tex = tv.TVGlobals.GetTex(name);
         if (tex == 0)

@@ -14,7 +14,6 @@ namespace SWEndor.Sound
           Piece p = new Piece();
           p.Name = sectionname;
           p.SoundName = file.GetStringValue(sectionname, "Sound", "");
-          //p.CutIn = file.GetBoolValue(sectionname, "CutIn", false);
           p.EntryPosition = file.GetUIntValue(sectionname, "Entry", 0);
           p.ExitPositions = file.GetUIntList(sectionname, "Exit", new uint[0]);
           p.EndPosition = file.GetUIntValue(sectionname, "End", 0);
@@ -25,7 +24,6 @@ namespace SWEndor.Sound
           for (int i = 0; i < maxmood; i++)
           {
             string[] headers = file.GetStringList(sectionname, "Mood" + i, new string[0]);
-            //p.MoodTransitions[i] = new string[headers.Length];
             List<string> addlist = new List<string>();
             for (int j = 0; j < headers.Length; j++)
             {

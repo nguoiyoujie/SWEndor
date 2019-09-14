@@ -471,7 +471,7 @@ namespace SWEndor.Scenarios
       }
       else
       {
-        Manager.Line1Text = string.Format("");
+        Manager.Line1Text = "";
       }
 
       if (Manager.Scenario.TimeSinceLostShip < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
@@ -480,7 +480,7 @@ namespace SWEndor.Scenarios
       }
       else
       {
-        Manager.Line2Text = string.Format("");
+        Manager.Line2Text = "";
       }
     }
 
@@ -1041,7 +1041,7 @@ namespace SWEndor.Scenarios
         {
           if (!actor.IsPlayer)
           {
-            foreach (WeaponInfo w in actor.WeaponSystemInfo.Weapons)
+            foreach (WeaponInfo w in actor.WeaponDefinitions.Weapons)
             {
               if (w.Type == WeaponType.TORPEDO)
               {

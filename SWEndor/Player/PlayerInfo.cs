@@ -64,7 +64,7 @@ namespace SWEndor.Player
           return WeaponShotInfo.Default;
 
         int i = PrimaryWeaponN;
-        foreach (WeaponShotInfo w in Actor.WeaponSystemInfo.PrimaryWeapons)
+        foreach (WeaponShotInfo w in Actor.WeaponDefinitions.PrimaryWeapons)
           if (i-- == 0)
             return w;
 
@@ -79,7 +79,7 @@ namespace SWEndor.Player
           return WeaponShotInfo.Default;
 
         int i = SecondaryWeaponN;
-        foreach (WeaponShotInfo w in Actor.WeaponSystemInfo.SecondaryWeapons)
+        foreach (WeaponShotInfo w in Actor.WeaponDefinitions.SecondaryWeapons)
           if (i-- == 0)
             return w;
 
@@ -224,7 +224,7 @@ namespace SWEndor.Player
         return;
 
       PrimaryWeaponN++;
-      if (Actor.WeaponSystemInfo.PrimaryWeapons.Length <= PrimaryWeaponN)
+      if (Actor.WeaponDefinitions.PrimaryWeapons.Length <= PrimaryWeaponN)
         PrimaryWeaponN = 0;
     }
 
@@ -235,7 +235,7 @@ namespace SWEndor.Player
 
       PrimaryWeaponN--;
       if (PrimaryWeaponN < 0)
-        PrimaryWeaponN = Actor.WeaponSystemInfo.PrimaryWeapons.Length - 1;
+        PrimaryWeaponN = Actor.WeaponDefinitions.PrimaryWeapons.Length - 1;
     }
 
     public void NextSecondaryWeapon()
@@ -244,7 +244,7 @@ namespace SWEndor.Player
         return;
 
       SecondaryWeaponN++;
-      if (Actor.WeaponSystemInfo.SecondaryWeapons.Length <= SecondaryWeaponN)
+      if (Actor.WeaponDefinitions.SecondaryWeapons.Length <= SecondaryWeaponN)
         SecondaryWeaponN = 0;
     }
 
@@ -255,7 +255,7 @@ namespace SWEndor.Player
 
       SecondaryWeaponN--;
       if (SecondaryWeaponN < 0)
-        SecondaryWeaponN = Actor.WeaponSystemInfo.SecondaryWeapons.Length - 1;
+        SecondaryWeaponN = Actor.WeaponDefinitions.SecondaryWeapons.Length - 1;
     }
 
     public void SquadronAssist()

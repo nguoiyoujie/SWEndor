@@ -100,15 +100,8 @@ namespace SWEndor.Primitives
     /// </summary>
     public void Insert(int index, T item)
     {
-      try
-      {
-        lock (locker)
-          _pending_list.Insert(index, item);
-      }
-      catch (ArgumentOutOfRangeException ex)
-      {
-        throw new ArgumentOutOfRangeException("Attempted to insert in index '" + index + "' to a ThreadSafeList with " + _pending_list.Count + " items", ex);
-      }
+      lock (locker)
+        _pending_list.Insert(index, item);
 
       if (!ExplicitUpdateOnly)
         _dirty = true;
@@ -144,15 +137,8 @@ namespace SWEndor.Primitives
     /// </summary>
     public void Set(int index, T item)
     {
-      try
-      {
-        lock (locker)
-          _pending_list[index] = item;
-      }
-      catch (ArgumentOutOfRangeException ex)
-      {
-        throw new ArgumentOutOfRangeException("Attempted to access index '" + index + "' to a ThreadSafeList with " + _pending_list.Count + " items", ex);
-      }
+      lock (locker)
+        _pending_list[index] = item;
 
       if (!ExplicitUpdateOnly)
         _dirty = true;

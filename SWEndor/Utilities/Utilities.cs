@@ -24,7 +24,8 @@ namespace SWEndor
       {
         if (word.Length + line.Length <= maxLineLength)
         {
-          line.Append(word + " ");
+          line.Append(word);
+          line.Append(" ");
         }
         else
         {

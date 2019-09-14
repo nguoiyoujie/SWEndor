@@ -91,10 +91,9 @@ namespace SWEndor.Actors
     }
 
     // Components
-    public IMoveComponent MoveComponent;
 
     internal CycleInfo<ActorInfo> CycleInfo;
-    public WeaponData WeaponSystemInfo;
+    public WeaponData WeaponDefinitions;
 
     // Checks
     public bool EnteredCombatZone = false;
@@ -115,7 +114,7 @@ namespace SWEndor.Actors
     // Data (structs)
     public MoveData MoveData;
 
-    // Traits (structs)
+    // Traits/Model (structs)
     private MeshModel Meshes;
     private RelationModel Relation;
     private TimerModel DyingTimer; 
@@ -170,17 +169,10 @@ namespace SWEndor.Actors
       MoveData.Init(TypeInfo, acinfo);
       ActorDataSet.CollisionData[dataID].Init();
       ActorDataSet.CombatData[dataID].CopyFrom(TypeInfo.CombatData);
-      WeaponSystemInfo.Init(TypeInfo);
+      WeaponDefinitions.Init(TypeInfo);
 
       Engine.MaskDataSet[this] = TypeInfo.Mask;
 
-      // Components
-      MoveComponent = MoveDecorator.Create(TypeInfo);
-
-      //WeaponSystemInfo = new WeaponSystemInfo(this);
-
-
-      // Creation
       State.Init(this, TypeInfo, acinfo);
 
       Faction = acinfo.Faction;
@@ -193,7 +185,7 @@ namespace SWEndor.Actors
     private void Rebuild(ActorCreationInfo acinfo)
     {
       // Clear past resources
-      //Destroy(); // probably redundant
+      //Destroy(); // redundant
 
       TypeInfo = acinfo.ActorTypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
@@ -211,7 +203,7 @@ namespace SWEndor.Actors
       MoveData.Init(TypeInfo, acinfo);
       ActorDataSet.CollisionData[dataID].Init();
       ActorDataSet.CombatData[dataID] = TypeInfo.CombatData;
-      WeaponSystemInfo.Init(TypeInfo);
+      WeaponDefinitions.Init(TypeInfo);
 
       Engine.MaskDataSet[this] = TypeInfo.Mask;
 
@@ -219,8 +211,6 @@ namespace SWEndor.Actors
       State.Init(this, TypeInfo, acinfo);
 
       Faction = acinfo.Faction;
-
-      MoveComponent = MoveDecorator.Create(TypeInfo);
 
       HuntWeight = TypeInfo.AIData.HuntWeight;
       TypeInfo.Initialize(this);
@@ -356,11 +346,8 @@ namespace SWEndor.Actors
       Squad = null;
 
       // Reset components
-
-      MoveComponent = NoMove.Instance;
-
       CycleInfo.Reset();
-      WeaponSystemInfo.Reset();
+      WeaponDefinitions.Reset();
 
       // Events
       OnDestroyedEvent();
@@ -402,7 +389,7 @@ namespace SWEndor.Actors
         {
           CollisionSystem.CheckCollision(Engine, this);
         }
-        MoveComponent.Move(this, ref MoveData);
+        TypeInfo.MoveBehavior.Move(this, ref MoveData);
       }
       else
         Delete();

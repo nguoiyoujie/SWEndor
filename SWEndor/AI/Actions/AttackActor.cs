@@ -80,7 +80,7 @@ namespace SWEndor.AI.Actions
             AdjustSpeed(actor, target.MoveData.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
 
           WeaponShotInfo w;
-          actor.WeaponSystemInfo.SelectWeapon(engine, actor, target, delta_angle, dist, out w);
+          actor.WeaponDefinitions.SelectWeapon(engine, actor, target, delta_angle, dist, out w);
           if (!w.IsNull)
           {
             w.Fire(engine, actor, target);
@@ -158,28 +158,28 @@ namespace SWEndor.AI.Actions
       float delta_angle = 0;
       ActorInfo actor = engine.ActorFactory.Get(actorID);
 
-      Func<Engine, ActorInfo, bool> fn = new Func<Engine, ActorInfo, bool>(
-        (_, a) =>
+      Func<Engine, ActorInfo, ActorInfo, bool> fn = new Func<Engine, ActorInfo, ActorInfo, bool>(
+        (e, a, c) =>
          {
            if (a != null
-               && actorID != a.ID
+               && c.ID != a.ID
                && a.Active
                && !a.IsDyingOrDead
-               && engine.ActorDataSet.CombatData[actor.dataID].IsCombatObject
-               && !actor.Faction.IsAlliedWith(a.Faction))
+               && e.ActorDataSet.CombatData[c.dataID].IsCombatObject
+               && !c.Faction.IsAlliedWith(a.Faction))
            {
-             dist = ActorDistanceInfo.GetDistance(a, actor, actor.WeaponSystemInfo.GetWeaponRange());
+             dist = ActorDistanceInfo.GetDistance(a, c, c.WeaponDefinitions.GetWeaponRange());
 
              TV_3DVECTOR vec = new TV_3DVECTOR();
-             TV_3DVECTOR dir = actor.Direction;
-             engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, a.GetGlobalPosition() - actor.GetGlobalPosition());
-             delta_angle = engine.TrueVision.TVMathLibrary.ACos(engine.TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
+             TV_3DVECTOR dir = c.Direction;
+             e.TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, a.GetGlobalPosition() - c.GetGlobalPosition());
+             delta_angle = e.TrueVision.TVMathLibrary.ACos(e.TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
 
              WeaponShotInfo w;
-             actor.WeaponSystemInfo.SelectWeapon(engine, actor, a, delta_angle, dist, out w);
+             c.WeaponDefinitions.SelectWeapon(e, c, a, delta_angle, dist, out w);
              if (!w.IsNull)
              {
-               w.Fire(engine, actor, a);
+               w.Fire(e, c, a);
                return false;
              }
            }
@@ -187,7 +187,7 @@ namespace SWEndor.AI.Actions
          }
       );
 
-      engine.ActorFactory.DoUntil(fn);
+      engine.ActorFactory.DoUntil(fn, actor);
     }
   }
 }

@@ -49,9 +49,9 @@ namespace SWEndor.ActorTypes.Instances
 
           float empduration = 12;
 
-          for (int i = 0; i < child.WeaponSystemInfo.Weapons.Length; i++)
-            if (child.WeaponSystemInfo.Weapons[i].WeaponCooldown < Game.GameTime + empduration + 2)
-              child.WeaponSystemInfo.Weapons[i].WeaponCooldown = Game.GameTime + empduration + 2;
+          for (int i = 0; i < child.WeaponDefinitions.Weapons.Length; i++)
+            if (child.WeaponDefinitions.Weapons[i].WeaponCooldown < Game.GameTime + empduration + 2)
+              child.WeaponDefinitions.Weapons[i].WeaponCooldown = Game.GameTime + empduration + 2;
 
           foreach (ActorInfo child2 in child.Children)
           {

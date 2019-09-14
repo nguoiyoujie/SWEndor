@@ -1,6 +1,7 @@
 ﻿using System;
 using MTV3D65;
 using System.IO;
+using SWEndor.Primitives;
 
 namespace SWEndor
 {
@@ -25,9 +26,6 @@ namespace SWEndor
     internal TVScreen2DImmediate TVScreen2DImmediate { get; private set; }
     internal TVParticleSystem TVParticleSystem { get; private set; }
     internal TVGlobals TVGlobals { get; private set; }
-
-    internal TVRenderSurface LaserRenderSurface;
-    internal TVRenderSurface DepthofFieldSurface;
     
     public void Init(IntPtr handle)
     {
@@ -114,18 +112,13 @@ namespace SWEndor
 
     private void InitScene()
     {
-      TVScene.SetShadeMode(CONST_TV_SHADEMODE.TV_SHADEMODE_GOURAUD);
-      TVScene.SetRenderMode(CONST_TV_RENDERMODE.TV_SOLID);
-      TVScene.SetTextureFilter(CONST_TV_TEXTUREFILTER.TV_FILTER_ANISOTROPIC);
-      TVScene.SetBackgroundColor(0f, 0f, 0f);
-
-      LaserRenderSurface = TVScene.CreateRenderSurface(-1, -1, true, CONST_TV_RENDERSURFACEFORMAT.TV_TEXTUREFORMAT_A8R8G8B8);
-      TVGraphicEffect.InitGlowEffect(LaserRenderSurface);
-      TVGraphicEffect.SetGlowParameters(new TV_COLOR(1, 1, 1, 1), 1.1f, 1.05f);
-
-      DepthofFieldSurface = TVScene.CreateRenderSurface(-1, -1, true, CONST_TV_RENDERSURFACEFORMAT.TV_TEXTUREFORMAT_DEFAULT);
-      TVGraphicEffect.InitDepthOfField(8, DepthofFieldSurface);
-      TVGraphicEffect.SetDepthOfFieldParameters(1, 100, 1.1f);
+      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+      {
+        TVScene.SetShadeMode(CONST_TV_SHADEMODE.TV_SHADEMODE_GOURAUD);
+        TVScene.SetRenderMode(CONST_TV_RENDERMODE.TV_SOLID);
+        TVScene.SetTextureFilter(CONST_TV_TEXTUREFILTER.TV_FILTER_ANISOTROPIC);
+        TVScene.SetBackgroundColor(0f, 0f, 0f);
+      }
     }
 
     private void InitShaders()
