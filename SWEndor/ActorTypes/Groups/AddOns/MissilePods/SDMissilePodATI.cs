@@ -13,15 +13,9 @@ namespace SWEndor.ActorTypes.Instances
       ImpactDamage = 16;
 
       MeshData = new MeshData(Name, @"turbotowers\star_destroyer_missilepod.x");
+      DyingMoveData.Kill();
 
       Loadouts = new string[] { "IMPL_MISL" };
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.DyingMoveComponent = DyingKill.Instance;
     }
   }
 }

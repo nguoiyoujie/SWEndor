@@ -14,15 +14,9 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxTurnRate = 50f;
 
       MeshData = new MeshData(Name, @"turbotowers\mc90_turbolaser.x");
+      DyingMoveData.Kill();
 
       Loadouts = new string[] { "MC90_LASR" };
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.DyingMoveComponent = DyingKill.Instance;
     }
   }
 }

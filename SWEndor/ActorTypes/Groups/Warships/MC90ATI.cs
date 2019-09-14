@@ -33,6 +33,7 @@ namespace SWEndor.ActorTypes.Instances
       RegenData = new RegenData(false, 0.35f, 0, 0, 0);
 
       MeshData = new MeshData(Name, @"mc90\mc90.x");
+      DyingMoveData.Sink(0.01f, 2.5f, 0.4f);
 
       Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 45, 660), new TV_3DVECTOR(0, 45, 2000)) };
       DeathCamera = new DeathCameraData(1500, 250, 30);
@@ -63,8 +64,6 @@ namespace SWEndor.ActorTypes.Instances
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-
-      ainfo.DyingMoveComponent = new DyingSink(0.01f, 2.5f, 0.4f);
       ainfo.SpawnerInfo = new MC90Spawner(ainfo);
     }
   }

@@ -18,6 +18,7 @@ namespace SWEndor.ActorTypes.Groups
       {
         new ExplodeInfo("ExpS00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
       };
+      DyingMoveData.Kill();
 
       RenderData.CullDistance = 9000;
 
@@ -31,13 +32,7 @@ namespace SWEndor.ActorTypes.Groups
       DamageType = DamageType.NORMAL;
   }
 
-  public float ImpactCloseEnoughDistance = 0;
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-      ainfo.DyingMoveComponent = DyingKill.Instance;
-    }
+    public float ImpactCloseEnoughDistance = 0;
 
     public override void ProcessState(ActorInfo ainfo)
     {

@@ -30,7 +30,7 @@ namespace SWEndor.ActorTypes.Instances
       ScoreData = new ScoreData(70, 20000);
 
       MeshData = new MeshData(Name, @"stardestroyer\star_destroyer.x");
-      //SourceFarMeshPath = Path.Combine(Globals.ModelPath, @"stardestroyer\star_destroyer_far.x");
+      DyingMoveData.Sink(0.005f, 5f, 0.8f);
 
       Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 300, -385), new TV_3DVECTOR(0, 300, 2000)),
@@ -98,8 +98,6 @@ namespace SWEndor.ActorTypes.Instances
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-
-      ainfo.DyingMoveComponent = new DyingSink(0.005f, 5f, 0.8f);
       ainfo.SpawnerInfo = new SDSpawnerII(ainfo);
     }
   }

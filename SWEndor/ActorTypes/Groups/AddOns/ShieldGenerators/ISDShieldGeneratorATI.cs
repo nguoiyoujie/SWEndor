@@ -14,7 +14,8 @@ namespace SWEndor.ActorTypes.Instances
       RenderData.RadarSize = 2;
 
       RenderData.CullDistance = 30000;
-      
+      DyingMoveData.Kill();
+
       AIData.TargetType |= TargetType.SHIELDGENERATOR;
       RenderData.RadarType = RadarType.HOLLOW_CIRCLE_M;
 
@@ -22,13 +23,6 @@ namespace SWEndor.ActorTypes.Instances
 
 
       MeshData = new MeshData(Name, @"stardestroyer\star_destroyer_energy_pod.x");
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.DyingMoveComponent = DyingKill.Instance;
     }
   }
 }

@@ -13,15 +13,9 @@ namespace SWEndor.ActorTypes.Instances
       ImpactDamage = 16;
 
       MeshData = new MeshData(Name, @"turbotowers\nebulonb_missilepod.x");
+      DyingMoveData.Kill();
 
       Loadouts = new string[] { "NEBL_MISL" };
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.DyingMoveComponent = DyingKill.Instance;
     }
   }
 }

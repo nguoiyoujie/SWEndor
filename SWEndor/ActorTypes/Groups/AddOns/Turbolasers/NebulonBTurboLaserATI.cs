@@ -15,13 +15,7 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Name, @"turbotowers\nebulonb_turbolaser.x");
 
       Loadouts = new string[] { "NEBL_LASR" };
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.DyingMoveComponent = DyingKill.Instance;
+      DyingMoveData.Kill();
     }
   }
 }

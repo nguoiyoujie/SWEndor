@@ -18,6 +18,7 @@ namespace SWEndor.ActorTypes.Groups
         new ExplodeInfo("ExpW01", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
+      DyingMoveData.Sink(0.06f, 15f, 2.5f);
       RenderData.CullDistance = 20000;
 
       MoveLimitData.ZTilt = 5f;
@@ -29,12 +30,6 @@ namespace SWEndor.ActorTypes.Groups
 
       Mask = ComponentMask.ACTOR;
       AIData.HuntWeight = 5;
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-      ainfo.DyingMoveComponent = new DyingSink(0.06f, 15f, 2.5f);
     }
 
     public override void Dying(ActorInfo ainfo)

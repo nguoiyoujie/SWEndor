@@ -72,3 +72,12 @@ namespace SWEndor.Actors.Data
     }
   }
 }
+
+namespace SWEndor.Actors
+{
+  public partial class ActorInfo
+  {
+    public bool ApplyZBalance { get { return MoveData.ApplyZBalance; }  set { MoveData.ApplyZBalance = value; } }
+    public float XTurnAngle { get { return MoveData.XTurnAngle; } set { MoveData.XTurnAngle = value; } }
+  }
+}

@@ -19,11 +19,6 @@ namespace SWEndor.ActorTypes.Groups
 
       Mask = ComponentMask.MINDLESS_ACTOR;
     }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-    }
   }
 }
 

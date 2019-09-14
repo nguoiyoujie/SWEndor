@@ -12,6 +12,7 @@ namespace SWEndor.ActorTypes.Instances
       MaxStrength = 90;
       ImpactDamage = 300.0f;
       RenderData.RadarSize = 2.5f;
+      DyingMoveData.Kill();
 
       RenderData.CullDistance = 8000;
 
@@ -21,14 +22,6 @@ namespace SWEndor.ActorTypes.Instances
       RegenData = new RegenData(true, 0, 20, 0, 0.5f);
 
       MeshData = new MeshData(Name, @"stardestroyer\star_destroyer_lower_energy_pod.x");
-    }
-
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.DyingMoveComponent = DyingKill.Instance;
     }
   }
 }

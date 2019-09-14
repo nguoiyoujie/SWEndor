@@ -15,15 +15,9 @@ namespace SWEndor.ActorTypes.Instances
       ScoreData = new ScoreData(250, 1250);
 
       MeshData = new MeshData(Name, @"turbotowers\star_destroyer_anti-ship_turbolaser.x");
+      DyingMoveData.Kill();
 
       Loadouts = new string[] { "IMPL_3LSR" };
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.DyingMoveComponent = DyingKill.Instance;
     }
   }
 }

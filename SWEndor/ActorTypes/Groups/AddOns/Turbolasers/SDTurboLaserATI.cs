@@ -17,13 +17,7 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Name, @"turbotowers\star_destroyer_turbolaser.x");
 
       Loadouts = new string[] { "IMPL_LASR" };
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.DyingMoveComponent = DyingKill.Instance;
+      DyingMoveData.Kill();
     }
   }
 }

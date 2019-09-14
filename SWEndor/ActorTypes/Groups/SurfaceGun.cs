@@ -17,6 +17,8 @@ namespace SWEndor.ActorTypes.Groups
         new ExplodeInfo("ExpL00", 1, 5, ExplodeTrigger.ON_DEATH)
       };
 
+      DyingMoveData.Kill();
+
       RenderData.CullDistance = 10000;
 
       RenderData.RadarSize = 0;
@@ -24,13 +26,6 @@ namespace SWEndor.ActorTypes.Groups
       RenderData.RadarType = RadarType.NULL;
 
       Mask = ComponentMask.ACTOR;
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.DyingMoveComponent = DyingKill.Instance;
     }
   }
 }

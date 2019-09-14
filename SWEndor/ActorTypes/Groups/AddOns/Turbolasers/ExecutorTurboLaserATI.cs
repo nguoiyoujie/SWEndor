@@ -13,17 +13,11 @@ namespace SWEndor.ActorTypes.Instances
       ImpactDamage = 16;
 
       ScoreData = new ScoreData(300, 2500);
+      DyingMoveData.Kill();
 
       MeshData = new MeshData(Name, @"turbotowers\executor_turbolaser.x");
 
       Loadouts = new string[] { "EXEC_LASR" };
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.DyingMoveComponent = DyingKill.Instance;
     }
   }
 }

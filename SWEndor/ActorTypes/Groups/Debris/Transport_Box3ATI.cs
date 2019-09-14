@@ -17,12 +17,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MinSpeed = 100;
 
       MeshData = new MeshData(Name, @"transport\transport_box3.x");
-    }
-
-    public override void ProcessState(ActorInfo ainfo)
-    {
-      base.ProcessState(ainfo);
-      ainfo.DyingMoveComponent = new DyingSpin(100, 450);
+      DyingMoveData.Spin(100, 450);
     }
   }
 }

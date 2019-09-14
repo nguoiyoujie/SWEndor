@@ -23,6 +23,7 @@ namespace SWEndor.ActorTypes.Instances
       RegenData = new RegenData(false, 0.2f, 0, 0, 0);
 
       MeshData = new MeshData(Name, @"nebulonb\nebulonb.x");
+      DyingMoveData.Sink(0.02f, 5f, 0.8f);
 
       Cameras = new LookData[] { new LookData(new TV_3DVECTOR(66, 78, -480), new TV_3DVECTOR(0, 75, 2000)) };
       SoundSources = new SoundSourceData[] { new SoundSourceData("engine_big", 1500.0f, new TV_3DVECTOR(0, 100, -300), true) };
@@ -41,7 +42,6 @@ namespace SWEndor.ActorTypes.Instances
     public override void Initialize(ActorInfo ainfo)
     {
       base.Initialize(ainfo);
-      ainfo.DyingMoveComponent = new DyingSink(0.02f, 5f, 0.8f);
       ainfo.SpawnerInfo = new NebBSpawner(ainfo);
     }
   }

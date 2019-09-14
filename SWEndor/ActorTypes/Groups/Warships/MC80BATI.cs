@@ -33,6 +33,7 @@ namespace SWEndor.ActorTypes.Instances
       RegenData = new RegenData(false, 0.3f, 0, 0, 0);
 
       MeshData = new MeshData(Name, @"mc90\mc80b.x");
+      DyingMoveData.Sink(0.01f, 2.5f, 0.4f);
 
       Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 45, 660), new TV_3DVECTOR(0, 45, 2000)) };
       DeathCamera = new DeathCameraData(1500, 250, 30);
@@ -54,13 +55,6 @@ namespace SWEndor.ActorTypes.Instances
 
         , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(0, 120, -225), new TV_3DVECTOR(-90, 0, 0), true)
       };
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.DyingMoveComponent = new DyingSink(0.01f, 2.5f, 0.4f);
     }
   }
 }

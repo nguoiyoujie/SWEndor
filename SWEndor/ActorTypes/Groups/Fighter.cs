@@ -21,6 +21,7 @@ namespace SWEndor.ActorTypes.Groups
       MoveLimitData.ZTilt = 2.5f;
       MoveLimitData.ZNormFrac = 0.01f;
       RenderData.RadarSize = 2;
+      DyingMoveData.Spin(180, 270);
 
       RenderData.CullDistance = 7500;
 
@@ -34,12 +35,6 @@ namespace SWEndor.ActorTypes.Groups
       AIData.CanCheckCollisionAhead = true;
 
       AIData.HuntWeight = 5;
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-      ainfo.DyingMoveComponent = new DyingSpin(180, 270);
     }
 
     public override void Dying(ActorInfo ainfo)

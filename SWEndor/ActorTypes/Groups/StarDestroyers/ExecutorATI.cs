@@ -30,6 +30,7 @@ namespace SWEndor.ActorTypes.Instances
       ScoreData = new ScoreData(75, 100000);
 
       MeshData = new MeshData(Name, @"executor\executor.x");
+      DyingMoveData.Sink(0.00025f, 1.3f, 0.2f);
 
       Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 325, -840), new TV_3DVECTOR(0, 325, 2000)),
@@ -84,12 +85,6 @@ namespace SWEndor.ActorTypes.Instances
 
         , new AddOnData("Executor Super Star Destroyer Bridge", new TV_3DVECTOR(0, 325, -845), new TV_3DVECTOR(0, 0, 0), true)
       };
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-      ainfo.DyingMoveComponent = new DyingSink(0.00025f, 1.3f, 0.2f);
     }
 
     public override void Dying(ActorInfo ainfo)

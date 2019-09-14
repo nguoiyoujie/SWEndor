@@ -13,15 +13,9 @@ namespace SWEndor.ActorTypes.Instances
       ImpactDamage = 16;
 
       MeshData = new MeshData(Name, @"turbotowers\corellian_turbolaser.x");
+      DyingMoveData.Kill();
 
       Loadouts = new string[] { "CRLN_LASR" };
-    }
-
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-
-      ainfo.DyingMoveComponent = DyingKill.Instance;
     }
   }
 }

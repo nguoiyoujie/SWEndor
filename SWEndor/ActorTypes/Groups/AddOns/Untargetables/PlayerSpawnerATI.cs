@@ -27,15 +27,16 @@ namespace SWEndor.ActorTypes.Instances
       base.ProcessState(ainfo);
 
       ActorInfo p = ainfo.TopParent;
+      SpawnerInfo s = p.SpawnerInfo;
 
-      if (p.SpawnerInfo != null
-       && p.SpawnerInfo.Enabled
+      if (s != null
+       && s.Enabled
        && !p.IsDead
        && !(p.CurrentAction is HyperspaceIn || p.CurrentAction is HyperspaceOut)//ActorState != ActorState.HYPERSPACE
        && p.Active
        )
       {
-        if (p.SpawnerInfo.SpawnMoveTime < Game.GameTime)
+        if (s.SpawnMoveTime < Game.GameTime)
         {
           foreach (ActorInfo a in ainfo.Children)
           {
@@ -60,21 +61,21 @@ namespace SWEndor.ActorTypes.Instances
       {
         if (a != null && a.TypeInfo is Groups.Fighter)
         {
-          if (p.SpawnerInfo.SpawnSpeed == -2)
+          if (s.SpawnSpeed == -2)
             a.MoveData.Speed = a.MoveData.MaxSpeed;
-          else if (p.SpawnerInfo.SpawnSpeed == -1)
+          else if (s.SpawnSpeed == -1)
             a.MoveData.Speed = p.MoveData.Speed;
           else
-            a.MoveData.Speed = p.SpawnerInfo.SpawnSpeed;
+            a.MoveData.Speed = s.SpawnSpeed;
 
           float scale = p.Scale;
-          a.MoveRelative(p.SpawnerInfo.SpawnSpeedPositioningMult.x * p.MoveData.Speed * Game.TimeSinceRender * scale
-                       , p.SpawnerInfo.SpawnSpeedPositioningMult.y * p.MoveData.Speed * Game.TimeSinceRender * scale
-                       , p.SpawnerInfo.SpawnSpeedPositioningMult.z * p.MoveData.Speed * Game.TimeSinceRender * scale);
+          a.MoveRelative(s.SpawnSpeedPositioningMult.x * p.MoveData.Speed * Game.TimeSinceRender * scale
+                       , s.SpawnSpeedPositioningMult.y * p.MoveData.Speed * Game.TimeSinceRender * scale
+                       , s.SpawnSpeedPositioningMult.z * p.MoveData.Speed * Game.TimeSinceRender * scale);
 
-          a.MoveRelative(p.SpawnerInfo.SpawnManualPositioningMult.x * Game.TimeSinceRender * scale
-                       , p.SpawnerInfo.SpawnManualPositioningMult.y * Game.TimeSinceRender * scale
-                       , p.SpawnerInfo.SpawnManualPositioningMult.z * Game.TimeSinceRender * scale);
+          a.MoveRelative(s.SpawnManualPositioningMult.x * Game.TimeSinceRender * scale
+                       , s.SpawnManualPositioningMult.y * Game.TimeSinceRender * scale
+                       , s.SpawnManualPositioningMult.z * Game.TimeSinceRender * scale);
 
           if (a.IsPlayer)
             PlayerInfo.IsMovementControlsEnabled = false;
@@ -87,18 +88,20 @@ namespace SWEndor.ActorTypes.Instances
       if (!PlayerInfo.RequestSpawn)
         return false;
 
-      if (p.SpawnerInfo.NextSpawnTime < Game.GameTime + p.SpawnerInfo.SpawnPlayerDelay)
-        p.SpawnerInfo.NextSpawnTime = Game.GameTime + p.SpawnerInfo.SpawnPlayerDelay;
+      SpawnerInfo s = p.SpawnerInfo;
+
+      if (s.NextSpawnTime < Game.GameTime + s.SpawnPlayerDelay)
+        s.NextSpawnTime = Game.GameTime + s.SpawnPlayerDelay;
 
       PlayerInfo.IsMovementControlsEnabled = false;
 
       ActorCreationInfo acinfo = new ActorCreationInfo(PlayerInfo.ActorType);
 
       float scale = ainfo.Scale;
-      TV_3DVECTOR clone = ainfo.GetRelativePositionXYZ(p.SpawnerInfo.PlayerSpawnLocation.x * scale, p.SpawnerInfo.PlayerSpawnLocation.y * scale, p.SpawnerInfo.PlayerSpawnLocation.z * scale);
+      TV_3DVECTOR clone = ainfo.GetRelativePositionXYZ(s.PlayerSpawnLocation.x * scale, s.PlayerSpawnLocation.y * scale, s.PlayerSpawnLocation.z * scale);
       acinfo.Position = new TV_3DVECTOR(clone.x, clone.y, clone.z);
       acinfo.Rotation = ainfo.GetGlobalRotation();
-      acinfo.Rotation += p.SpawnerInfo.SpawnRotation;
+      acinfo.Rotation += s.SpawnRotation;
 
       acinfo.FreeSpeed = true;
       acinfo.Faction = ainfo.Faction;
@@ -116,7 +119,7 @@ namespace SWEndor.ActorTypes.Instances
 
       PlayerInfo.RequestSpawn = false;
 
-      p.SpawnerInfo.SpawnMoveTime = Game.GameTime + p.SpawnerInfo.SpawnMoveDelay;
+      s.SpawnMoveTime = Game.GameTime + s.SpawnMoveDelay;
       return true;
     }
   }
