@@ -182,39 +182,31 @@ namespace SWEndor.Actors.Components
 
           if (!isProspective)
           {
-            TVMesh tvm = engine.TrueVision.TVGlobals.GetMeshFromID(tvcres.iMeshID);
-            if (tvm != null)
+            int checkID = ActorInfo.MeshModel.GetID(tvcres.iMeshID);
+            if (checkID != -1)
             {
-              int checkID = -1;
-              if (int.TryParse(tvm.GetTag(), out checkID))
+              ActorInfo checkActor = engine.ActorFactory.Get(checkID);
+              if (checkActor != null
+                   && actor.TopParent != checkActor.TopParent
+                   && engine.MaskDataSet[checkActor].Has(ComponentMask.CAN_BECOLLIDED)
+                   && !checkActor.IsAggregateMode
+                   )
               {
-                ActorInfo checkActor = engine.ActorFactory.Get(checkID);
-                if (checkActor != null
-                     && actor.TopParent != checkActor.TopParent
-                     && engine.MaskDataSet[checkActor].Has(ComponentMask.CAN_BECOLLIDED)
-                     && !checkActor.IsAggregateMode
-                     )
-                {
-                  CollisionActorID = checkID;
-                }
+                CollisionActorID = checkID;
               }
             }
           }
           else
           {
-            TVMesh tvm = engine.TrueVision.TVGlobals.GetMeshFromID(tvcres.iMeshID);
-            if (tvm != null)
+            int checkID = ActorInfo.MeshModel.GetID(tvcres.iMeshID);
+            if (checkID != -1)
             {
-              int checkID = -1;
-              if (int.TryParse(tvm.GetTag(), out checkID))
+              ActorInfo checkActor = engine.ActorFactory.Get(checkID);
+              if (checkActor != null
+                   && !(checkActor.TypeInfo is ActorTypes.Groups.Fighter)
+                   )
               {
-                ActorInfo checkActor = engine.ActorFactory.Get(checkID);
-                if (checkActor != null
-                     && !(checkActor.TypeInfo is ActorTypes.Groups.Fighter)
-                     )
-                {
-                  CollisionActorID = checkID;
-                }
+                CollisionActorID = checkID;
               }
             }
           }

@@ -3,6 +3,7 @@ using SWEndor.ActorTypes;
 using SWEndor.Primitives;
 using SWEndor.Player;
 using System;
+using System.Collections.Generic;
 
 namespace SWEndor.Actors
 {
@@ -10,6 +11,13 @@ namespace SWEndor.Actors
   {
     public struct MeshModel
     {
+      private static Dictionary<int, int> m_ids = new Dictionary<int, int>();
+      public static int GetID(int meshID)
+      {
+        int i;
+        return m_ids.TryGetValue(meshID, out i) ? i : -1;
+      }
+
       private TVMesh Mesh;
       private TVMesh FarMesh;
 
@@ -38,10 +46,13 @@ namespace SWEndor.Actors
           Mesh = atype.MeshData.SourceMesh.Duplicate();
           FarMesh = atype.MeshData.SourceFarMesh == null ? atype.MeshData.SourceMesh.Duplicate() : atype.MeshData.SourceFarMesh.Duplicate();
 
-          Mesh.SetTag(sid);
+          m_ids[Mesh.GetIndex()] = id;
+          m_ids[FarMesh.GetIndex()] = id;
+
+          //Mesh.SetTag(sid);
           //Mesh.ShowBoundingBox(true);
 
-          FarMesh.SetTag(sid);
+          //FarMesh.SetTag(sid);
 
           //Mesh.ComputeBoundings();
           //FarMesh.ComputeBoundings();
@@ -58,9 +69,12 @@ namespace SWEndor.Actors
           ScopeCounterManager.WaitForZero(meshScope, ScopeGlobals.GLOBAL_COLLISION, ScopeGlobals.GLOBAL_RENDER);
 
           Mesh?.Destroy();
+          m_ids.Remove(Mesh.GetIndex());
+
           Mesh = null;
 
           FarMesh?.Destroy();
+          m_ids.Remove(FarMesh.GetIndex());
           FarMesh = null;
         }
       }
@@ -144,7 +158,8 @@ namespace SWEndor.Actors
           {
             //ScopeCounterManager.WaitForZero(ScopeGlobals.GLOBAL_COLLISION);
             //using (ScopeCounterManager.Acquire(ScopeGlobals.PREREQ_COLLISION))
-              Mesh.SetCollisionEnable(collide);
+            Mesh.SetCollisionEnable(collide && !far);
+            FarMesh.SetCollisionEnable(collide && far);
 
             Mesh.SetMatrix(mat);
             FarMesh.SetMatrix(mat);
