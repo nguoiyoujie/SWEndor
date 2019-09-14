@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SWEndor.Primitives;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,18 +34,19 @@ namespace SWEndor.Actors
         Parent?.RemoveChild(self);
 
         // Destroy Children
-        foreach (ActorInfo c in Children)//ToArray()) // use new list as members are deleted from the IEnumerable
+        foreach (ActorInfo c in list.ToArray()) // use new list as members are deleted from the IEnumerable
         {
-          if (c.TypeInfo is ActorTypes.Groups.AddOn || c.Relation.UseParentCoords)
-            c.Destroy();
-          else
-            self.RemoveChild(c);
+          using (ScopeCounterManager.Acquire(c.Scope))
+            if (c.TypeInfo is ActorTypes.Groups.AddOn || c.Relation.UseParentCoords)
+              c.Destroy();
+            else
+              self.RemoveChild(c);
         }
 
         UseParentCoords = false;
       }
 
-      public void AddChild(ActorInfo self, ActorInfo child)
+      internal void AddChild(ActorInfo self, ActorInfo child)
       {
         if (self == child)
           throw new InvalidOperationException("Adding the same ActorInfo instance as its own child is not allowed.");
@@ -55,7 +57,7 @@ namespace SWEndor.Actors
           list.AddLast(child);
       }
 
-      public void RemoveChild(ActorInfo self, ActorInfo child)
+      internal void RemoveChild(ActorInfo self, ActorInfo child)
       {
         if (child == null)
           return;
@@ -66,7 +68,7 @@ namespace SWEndor.Actors
         list?.Remove(child);
       }
 
-      public ActorInfo GetTopParent(ActorInfo self)
+      internal ActorInfo GetTopParent(ActorInfo self)
       {
         ActorInfo ret;
         if (Parent != null && Parent != self)
@@ -78,18 +80,16 @@ namespace SWEndor.Actors
           return self;
       }
 
-      public ChildEnumerable Siblings { get { return Parent.Relation.Children; } }
+      internal ChildEnumerable Siblings { get { return Parent.Relation.Children; } }
 
       public struct ChildEnumerable
       {
         readonly LinkedList<ActorInfo> L;
         public ChildEnumerable(LinkedList<ActorInfo> list) { L = list; }
-        public LinkedList<ActorInfo>.Enumerator GetEnumerator() { return L.GetEnumerator(); } // new ChildEnumerator(L); }
-        //public ChildEnumerator GetEnumerator() { return new ChildEnumerator(L); }
+        public ChildEnumerator GetEnumerator() { return new ChildEnumerator(L); }
       }
-
-      /*
-      public struct ChildEnumerator : IEnumerator<ActorInfo>
+      
+      public struct ChildEnumerator
       {
         readonly LinkedList<ActorInfo> L;
         LinkedListNode<ActorInfo> current;
@@ -98,17 +98,34 @@ namespace SWEndor.Actors
         public void Reset() { current = null; }
         public bool MoveNext() { return (current = (current == null) ? L?.First : current?.Next) != null; }
         public ActorInfo Current { get { return current?.Value; } }
-        object System.Collections.IEnumerator.Current { get { return Current; } }
         public void Dispose() { }
       }
-      */
     }
 
-    public void AddChild(ActorInfo a) { Relation.AddChild(this, a); }
-    public void RemoveChild(ActorInfo a) { Relation.RemoveChild(this, a); }
+    public void AddChild(ActorInfo a)
+    {
+      using (ScopeCounterManager.Acquire(Scope))
+      using (ScopeCounterManager.Acquire(a.Scope))
+        Relation.AddChild(this, a);
+    }
+
+    public void RemoveChild(ActorInfo a)
+    {
+      using (ScopeCounterManager.Acquire(Scope))
+      using (ScopeCounterManager.Acquire(a.Scope))
+        Relation.RemoveChild(this, a);
+    }
+
     public RelationModel.ChildEnumerable Children { get { return Relation.Children; } }
     public ActorInfo Parent { get { return Relation.Parent; } }
-    public ActorInfo TopParent { get { return Relation.GetTopParent(this); } }
+    public ActorInfo TopParent
+    {
+      get
+      {
+        using (ScopeCounterManager.Acquire(Scope))
+          return Relation.GetTopParent(this);
+      }
+    }
     public RelationModel.ChildEnumerable Siblings { get { return Relation.Siblings; } }
     public ActorInfo ParentForCoords { get { return Relation.ParentForCoords; } }
     public bool UseParentCoords { get { return Relation.UseParentCoords; } set { Relation.UseParentCoords = value; } }

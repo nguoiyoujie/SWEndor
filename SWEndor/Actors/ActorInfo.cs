@@ -92,7 +92,6 @@ namespace SWEndor.Actors
 
     // Components
     public IMoveComponent MoveComponent;
-    public IDyingMoveComponent DyingMoveComponent;
 
     internal CycleInfo<ActorInfo> CycleInfo;
     public WeaponData WeaponSystemInfo;
@@ -142,6 +141,9 @@ namespace SWEndor.Actors
         return !(TypeInfo is ActorTypes.Groups.Projectile || TypeInfo is ActorTypes.Groups.Debris || TypeInfo is ActorTypes.Groups.Explosion);
       }
     }
+
+    // Scope counter
+    public readonly ScopeCounterManager.ScopeCounter Scope = new ScopeCounterManager.ScopeCounter();
 
 
     #region Creation Methods
@@ -232,48 +234,6 @@ namespace SWEndor.Actors
 
       TypeInfo.GenerateAddOns(this);
     }
-    #endregion
-
-
-    #region Position / Rotation
-    public TV_3DVECTOR Position { get { return Transform.Position; } set { Transform.Position = value; } }
-    public TV_3DVECTOR PrevPosition { get { return Transform.PrevPosition; } }
-    public TV_3DVECTOR Rotation { get { return Transform.Rotation; } set { Transform.Rotation = value; } }
-    public TV_3DVECTOR PrevRotation { get { return Transform.PrevRotation; } }
-    public TV_3DVECTOR Direction { get { return Transform.Direction; } set { Transform.Direction = value; } }
-    public float Scale { get { return Transform.Scale; } set { Transform.Scale = value; } }
-
-    public TV_3DMATRIX GetMatrix() { return Transform.GetWorldMatrix(this, Game.GameTime); }
-    public TV_3DVECTOR GetGlobalPosition() { return Transform.GetGlobalPosition(this, Game.GameTime); }
-    public TV_3DVECTOR GetPrevGlobalPosition() { return Transform.GetPrevGlobalPosition(this, Game.GameTime); }
-    public TV_3DVECTOR GetGlobalRotation() { return Transform.GetGlobalRotation(this, Game.GameTime); }
-    public TV_3DVECTOR GetGlobalDirection() { return Transform.GetGlobalDirection(this); }
-
-    public TV_3DVECTOR GetRelativePositionFUR(float front, float up, float right, bool uselocal = false)
-    {
-      return Transform.GetRelativePositionFUR(this, Game.GameTime, front, up, right, uselocal);
-    }
-
-    public TV_3DVECTOR GetRelativePositionXYZ(float x, float y, float z, bool uselocal = false)
-    {
-      return Transform.GetRelativePositionXYZ(this, Game.GameTime, x, y, z, uselocal);
-    }
-
-    public void MoveRelative(float forward, float up = 0, float right = 0)
-    {
-      TV_3DVECTOR vec = GetRelativePositionFUR(forward, up, right, true);
-      Transform.Position = new TV_3DVECTOR(vec.x, vec.y, vec.z);
-    }
-
-    public void MoveAbsolute(float x, float y, float z)
-    {
-      TV_3DVECTOR vec = Transform.Position + new TV_3DVECTOR(x, y, z);
-      Transform.Position = new TV_3DVECTOR(vec.x, vec.y, vec.z);
-    }
-
-
-    public void LookAt(TV_3DVECTOR point) { Transform.LookAt(point); }
-
     #endregion
 
     public void SetSpawnerEnable(bool value)
@@ -398,7 +358,6 @@ namespace SWEndor.Actors
       // Reset components
 
       MoveComponent = NoMove.Instance;
-      DyingMoveComponent = null;
 
       CycleInfo.Reset();
       WeaponSystemInfo.Reset();
@@ -435,8 +394,7 @@ namespace SWEndor.Actors
     public void Tick(float time)
     {
       CycleInfo.Process(this);
-
-      CheckState(Engine);
+      TypeInfo.ProcessState(this);
       if (!IsDead)
       {
         if (Engine.MaskDataSet[this].Has(ComponentMask.CAN_BECOLLIDED)
@@ -446,6 +404,8 @@ namespace SWEndor.Actors
         }
         MoveComponent.Move(this, ref MoveData);
       }
+      else
+        Delete();
 
       DyingTimer.Tick(this, time);
       Health.Tick(time);

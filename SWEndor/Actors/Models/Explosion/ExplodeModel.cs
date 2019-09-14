@@ -1,6 +1,7 @@
 ﻿
 using MTV3D65;
 using SWEndor.ActorTypes;
+using SWEndor.Primitives;
 using System;
 
 namespace SWEndor.Actors
@@ -19,10 +20,7 @@ namespace SWEndor.Actors
 
   public static class ExplodeTriggerExt
   {
-    public static bool Has(this ExplodeTrigger mask, ExplodeTrigger subset)
-    {
-      return (mask & subset) == subset;
-    }
+    public static bool Has(this ExplodeTrigger mask, ExplodeTrigger subset) { return (mask & subset) == subset; }
   }
 
   public struct ExplodeInfo
@@ -60,10 +58,7 @@ namespace SWEndor.Actors
           _time[i] = acinfo.CreationTime;
       }
 
-      public void Tick(ActorInfo self, float time)
-      {
-        Process(self);
-      }
+      public void Tick(ActorInfo self, float time) { Process(self); }
 
       private bool Check(Engine engine, ActorInfo a, ExplodeInfo exp)
       {
@@ -73,7 +68,6 @@ namespace SWEndor.Actors
           (!engine.Game.IsLowFPS() || !exp.Trigger.Has(ExplodeTrigger.DONT_CREATE_ON_LOWFPS))
           && (((ExplodeTrigger)comparand & exp.Trigger) > 0)
           && ((a.DyingTimer.TimeRemaining > 0) || !exp.Trigger.Has(ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED));
-
 
         /*
       return
@@ -146,6 +140,10 @@ namespace SWEndor.Actors
       }
     }
 
-    public void TickExplosions() { Explosions.Tick(this, Game.GameTime); }
+    public void TickExplosions()
+    {
+      using (ScopeCounterManager.Acquire(Scope))
+        Explosions.Tick(this, Game.GameTime);
+    }
   }
 }

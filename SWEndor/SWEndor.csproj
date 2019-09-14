@@ -131,10 +131,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actors\ActorCreationInfo.cs" />
-    <Compile Include="Actors\Components\DyingMovement\DyingSpin.cs" />
-    <Compile Include="Actors\Components\DyingMovement\DyingSink.cs" />
-    <Compile Include="Actors\Components\DyingMovement\DyingKill.cs" />
-    <Compile Include="Actors\Components\DyingMovement\Interfaces.cs" />
     <Compile Include="Actors\Components\Movement\MoveDecorator.cs" />
     <Compile Include="Actors\Models\ArmorModel\ArmorModel.cs" />
     <Compile Include="Actors\Models\Collision\CollisionResultData.cs" />
@@ -147,7 +143,7 @@
     <Compile Include="Actors\Models\Relation\RelationModel.cs" />
     <Compile Include="Actors\Models\StateModel\StateModel.cs" />
     <Compile Include="Actors\Models\TimedLife\DyingTimer.cs" />
-    <Compile Include="Actors\Models\TimedLife\TimedLifeData.cs" />
+    <Compile Include="ActorTypes\Components\TimedLifeData.cs" />
     <Compile Include="Actors\Models\Combat\CombatData.cs" />
     <Compile Include="Actors\Models\Regeneration\RegenModel.cs" />
     <Compile Include="Actors\Models\Transform\TransformModel.cs" />
@@ -169,6 +165,7 @@
     <Compile Include="Actors\Enums\ActorState.cs" />
     <Compile Include="Actors\Enums\CreationState.cs" />
     <Compile Include="Actors\States\ActorDistanceInfo.cs" />
+    <Compile Include="ActorTypes\Components\DyingMoveData.cs" />
     <Compile Include="ActorTypes\Components\MeshData.cs" />
     <Compile Include="ActorTypes\Components\MoveLimitData.cs" />
     <Compile Include="ActorTypes\Components\RenderData.cs" />
@@ -487,6 +484,7 @@
     <Compile Include="Settings\TextLocalization.cs" />
     <Compile Include="Sound\Instructions\InstAddSyncPoint.cs" />
     <Compile Include="Sound\Instructions\InstPauseMusic.cs" />
+    <Compile Include="Sound\Instructions\InstPrepMusic.cs" />
     <Compile Include="Sound\Instructions\InstPlaySound.cs" />
     <Compile Include="Sound\Instructions\InstResumeMusic.cs" />
     <Compile Include="Sound\Instructions\InstStopAllSound .cs" />

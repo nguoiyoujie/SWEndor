@@ -1,1 +1,1 @@
-namespace SWEndor { public static class Build { public static string Time = "Fri 09/13/2019  9:18:10.20";}} 
+namespace SWEndor { public static class Build { public static string Time = "Sat 09/14/2019  9:53:11.19";}} 

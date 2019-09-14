@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes;
+using SWEndor.Primitives;
 using System;
 
 namespace SWEndor.Actors
@@ -40,12 +41,12 @@ namespace SWEndor.Actors
         }
       }
 
-      public void InflictDamage(ActorInfo target, DamageInfo dmg)
+      public void InflictDamage(ActorInfo self, DamageInfo dmg)
       {
         if (IsDead)
           return;
 
-        float mod = target.GetArmor(dmg.Type);
+        float mod = self.GetArmor(dmg.Type);
 
         float d = dmg.Value * mod;
         HP = (HP - d).Clamp(-1, MaxHP);
@@ -59,22 +60,22 @@ namespace SWEndor.Actors
 
         if (HP <= 0)
         {
-          target.SetState_Dying();
+          self.SetState_Dying();
 
-          if (target.Logged)
+          if (self.Logged)
             if (dmg.Source == null)
-              Log.Write(Log.DEBUG, LogType.ACTOR_KILLED, target);
+              Log.Write(Log.DEBUG, LogType.ACTOR_KILLED, self);
             else
-              Log.Write(Log.DEBUG, LogType.ACTOR_KILLED_BY, target, dmg.Source.TopParent);
+              Log.Write(Log.DEBUG, LogType.ACTOR_KILLED_BY, self, dmg.Source.TopParent);
         }
       }
 
-      public void Kill(ActorInfo target, ActorInfo attacker)
+      public void Kill(ActorInfo self, ActorInfo attacker)
       {
-        InflictDamage(target, new DamageInfo(attacker, MaxHP, DamageType.ALWAYS_100PERCENT));
+        InflictDamage(self, new DamageInfo(attacker, MaxHP, DamageType.ALWAYS_100PERCENT));
       }
 
-      public void SetHP(ActorInfo target, float value)
+      public void SetHP(ActorInfo self, float value)
       {
         if (IsDead)
           return;
@@ -83,14 +84,14 @@ namespace SWEndor.Actors
 
         if (HP <= 0)
         {
-          target.SetState_Dying();
+          self.SetState_Dying();
 
-          if (target.Logged)
-            Log.Write(Log.DEBUG, LogType.ACTOR_KILLED_BY, target, "setting HP to 0");
+          if (self.Logged)
+            Log.Write(Log.DEBUG, LogType.ACTOR_KILLED_BY, self, "setting HP to 0");
         }
       }
 
-      public void SetMaxHP(ActorInfo target, float value, bool scaleHP)
+      public void SetMaxHP(float value, bool scaleHP)
       {
         float f = Frac;
         MaxHP = value;
@@ -110,13 +111,38 @@ namespace SWEndor.Actors
       }
     }
 
-    public void InflictDamage(ActorInfo attacker, float value, DamageType type, TV_3DVECTOR position) { Health.InflictDamage(this, new DamageInfo(attacker, value, type, position)); }
-    public void InflictDamage(ActorInfo attacker, float value, DamageType type) { Health.InflictDamage(this, new DamageInfo(attacker, value, type)); }
-    public void InflictDamage(ActorInfo attacker, float value) { Health.InflictDamage(this, new DamageInfo(attacker, value)); }
-    public void Kill(ActorInfo attacker = null) { Health.Kill(this, attacker); }
+    public void InflictDamage(ActorInfo attacker, float value, DamageType type, TV_3DVECTOR position)
+    {
+      using (ScopeCounterManager.Acquire(Scope))
+      using (ScopeCounterManager.Acquire(attacker.Scope))
+        Health.InflictDamage(this, new DamageInfo(attacker, value, type, position));
+    }
 
-    public float HP { get { return Health.HP; } set { Health.SetHP(this, value); } }
-    public float MaxHP { get { return Health.MaxHP; } set { Health.SetMaxHP(this, value, false); } }
+    public void InflictDamage(ActorInfo attacker, float value, DamageType type)
+    {
+      using (ScopeCounterManager.Acquire(Scope))
+      using (ScopeCounterManager.Acquire(attacker.Scope))
+        Health.InflictDamage(this, new DamageInfo(attacker, value, type));
+    }
+
+    public void InflictDamage(ActorInfo attacker, float value)
+    {
+      using (ScopeCounterManager.Acquire(Scope))
+      using (ScopeCounterManager.Acquire(attacker.Scope))
+        Health.InflictDamage(this, new DamageInfo(attacker, value));
+    }
+
+    /*
+    public void Kill(ActorInfo attacker)
+    {
+      using (ScopeCounterManager.Acquire(Scope))
+      using (ScopeCounterManager.Acquire(attacker.Scope))
+        Health.Kill(this, attacker);
+    }
+    */
+
+    public float HP { get { return Health.HP; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetHP(this, value); } }
+    public float MaxHP { get { return Health.MaxHP; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetMaxHP(value, false); } }
     public float HP_Perc { get { return Health.Perc; } }
     public float HP_Frac { get { return Health.Frac; } }
     public TV_COLOR HP_Color { get { return Health.Color; } }

@@ -1,6 +1,8 @@
 ﻿using SWEndor.Actors.Components;
 using SWEndor.AI;
+using SWEndor.Primitives;
 using SWEndor.Weapons;
+using System;
 
 namespace SWEndor.Actors
 {
@@ -8,36 +10,53 @@ namespace SWEndor.Actors
   {
     internal static void Process(Engine engine, ActorInfo actor)
     {
-      if (actor == null || !actor.Active)
-        return;
+#if DEBUG
+      if (actor == null)
+        throw new ArgumentNullException("actor");
+#endif
 
-      if (!actor.IsDead)
-        actor.Update();
+      using (ScopeCounterManager.Acquire(actor.Scope))
+      {
+        if (!actor.Active)
+          return;
 
-      actor.Tick(engine.Game.TimeSinceRender);
+        if (!actor.IsDead)
+          actor.Update();
+
+        actor.Tick(engine.Game.TimeSinceRender);
+      }
     }
 
     internal static void ProcessAI(Engine engine, ActorInfo actor)
     {
+#if DEBUG
       if (actor == null)
-        return;
+        throw new ArgumentNullException("actor");
+#endif
 
-      if (!engine.MaskDataSet[actor].Has(ComponentMask.HAS_AI)
+      using (ScopeCounterManager.Acquire(actor.Scope))
+      {
+        if (!engine.MaskDataSet[actor].Has(ComponentMask.HAS_AI)
         || !actor.Active
         || actor.IsDyingOrDead
         || (actor.IsPlayer && !engine.PlayerInfo.PlayerAIEnabled)
         )
-        return;
+          return;
 
-      actor.Squad.Process(engine);
-      actor.Run(actor.CurrentAction);
+        actor.Squad.Process(engine);
+        actor.Run(actor.CurrentAction);
+      }
     }
 
     internal static void ProcessCollision(Engine engine, ActorInfo actor)
     {
+#if DEBUG
       if (actor == null)
-        return;
-      CollisionSystem.TestCollision(engine, actor);
+        throw new ArgumentNullException("actor");
+#endif
+
+      using (ScopeCounterManager.Acquire(actor.Scope))
+        CollisionSystem.TestCollision(engine, actor);
     }
 
     internal static void FireWeapon(Engine engine, ActorInfo actor, ActorInfo target, WeaponShotInfo weapon)
@@ -47,14 +66,6 @@ namespace SWEndor.Actors
 
       if (!actor.IsDyingOrDead)
         actor.TypeInfo.FireWeapon(actor, target, weapon);
-    }
-
-    private void CheckState(Engine engine)
-    {
-      TypeInfo.ProcessState(this);
-
-      if (IsDead)
-        Delete();
     }
 
     private void Update()

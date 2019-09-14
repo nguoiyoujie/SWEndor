@@ -39,7 +39,6 @@ namespace SWEndor.Actors
 
       private void GenerateMeshes(int id, ActorTypeInfo atype)
       {
-        string sid = id.ToString();
         using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_RENDER))
         using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_COLLISION))
         {
@@ -49,13 +48,7 @@ namespace SWEndor.Actors
           m_ids[Mesh.GetIndex()] = id;
           m_ids[FarMesh.GetIndex()] = id;
 
-          //Mesh.SetTag(sid);
           //Mesh.ShowBoundingBox(true);
-
-          //FarMesh.SetTag(sid);
-
-          //Mesh.ComputeBoundings();
-          //FarMesh.ComputeBoundings();
 
           Mesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 8);
           FarMesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 8);
@@ -156,15 +149,15 @@ namespace SWEndor.Actors
         using (ScopeCounterManager.Acquire(meshScope))
           if (ScopeCounterManager.IsZero(disposeScope))
           {
-            //ScopeCounterManager.WaitForZero(ScopeGlobals.GLOBAL_COLLISION);
-            //using (ScopeCounterManager.Acquire(ScopeGlobals.PREREQ_COLLISION))
-            Mesh.SetCollisionEnable(collide && !far);
-            FarMesh.SetCollisionEnable(collide && far);
+            ScopeCounterManager.WaitForZero(ScopeGlobals.GLOBAL_COLLISION);
+            {
+              Mesh.SetCollisionEnable(collide && !far);
+              FarMesh.SetCollisionEnable(collide && far);
+            }
 
             Mesh.SetMatrix(mat);
             FarMesh.SetMatrix(mat);
 
-            //ScopeCounterManager.WaitForZero(ScopeGlobals.GLOBAL_RENDER);
             using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_RENDER))
             {
               Mesh.Enable(render && !far);

@@ -63,24 +63,27 @@ namespace SWEndor.Actors
             actor = new ActorInfo(this, id, GetNewDataID(), acinfo);
           }
 
-          planned.Enqueue(actor);
-          Add(id, actor);
-          if (actor.Logged)
-            Log.Write(Log.DEBUG, LogType.ACTOR_CREATED, actor);
+          using (ScopeCounterManager.Acquire(actor.Scope))
+          {
+            planned.Enqueue(actor);
+            Add(id, actor);
+            if (actor.Logged)
+              Log.Write(Log.DEBUG, LogType.ACTOR_CREATED, actor);
 
-          if (First == null)
-          {
-            First = actor;
-            actor.Prev = null;
-            actor.Next = null;
+            if (First == null)
+            {
+              First = actor;
+              actor.Prev = null;
+              actor.Next = null;
+            }
+            else
+            {
+              Last.Next = actor;
+              actor.Prev = Last;
+              actor.Next = null;
+            }
+            Last = actor;
           }
-          else
-          {
-            Last.Next = actor;
-            actor.Prev = Last;
-            actor.Next = null;
-          }
-          Last = actor;
         }
 
         return actor;
@@ -91,11 +94,14 @@ namespace SWEndor.Actors
         ActorInfo actor = null;
         while (planned.TryDequeue(out actor))
         {
-          if (!actor.DisposingOrDisposed)
-            if (actor.CreationTime < Engine.Game.GameTime)
-              actor.Initialize();
-            else
-              nextplan.Enqueue(actor);
+          using (ScopeCounterManager.Acquire(actor.Scope))
+          {
+            if (!actor.DisposingOrDisposed)
+              if (actor.CreationTime < Engine.Game.GameTime)
+                actor.Initialize();
+              else
+                nextplan.Enqueue(actor);
+          }
         }
 
         while (nextplan.TryDequeue(out actor))
@@ -111,7 +117,7 @@ namespace SWEndor.Actors
       {
         ActorInfo a;
         while (dead.TryDequeue(out a))
-          if (ScopedManager<ActorInfo>.Check(a) == 0)
+          if (a.Scope.Count == 0)
             a.Destroy();
           else
             nextdead.Enqueue(a);
@@ -125,7 +131,7 @@ namespace SWEndor.Actors
         ActorInfo a;
 
         while (prepool.TryDequeue(out a))
-          if (ScopedManager<ActorInfo>.Check(a) == 0)
+          if (a.Scope.Count == 0)
             pool.Enqueue(a);
           else
             redo.Enqueue(a);
@@ -161,7 +167,7 @@ namespace SWEndor.Actors
         public ActorEnumerator GetEnumerator() { return new ActorEnumerator(F); }
       }
 
-      public struct ActorEnumerator : IEnumerator<ActorInfo>
+      public struct ActorEnumerator //: IEnumerator<ActorInfo>
       {
         readonly Factory F;
         ActorInfo current;
@@ -170,7 +176,7 @@ namespace SWEndor.Actors
         public void Reset() { current = null; }
         public bool MoveNext() { return (current = (current == null) ? F.First : current?.Next) != null; }
         public ActorInfo Current { get { return current; } }
-        object System.Collections.IEnumerator.Current { get { return Current; } }
+        //object System.Collections.IEnumerator.Current { get { return Current; } }
         public void Dispose() { }
       }
 

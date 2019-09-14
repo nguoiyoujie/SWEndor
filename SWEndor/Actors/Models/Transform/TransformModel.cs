@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes;
+using SWEndor.Primitives;
 
 namespace SWEndor.Actors
 {
@@ -114,26 +115,39 @@ namespace SWEndor.Actors
         return prevMat;
       }
 
-      public TV_3DMATRIX InnerGetWorldMatrix(ActorInfo self, float time)
+      private TV_3DMATRIX InnerGetWorldMatrix(ActorInfo a, float time)
       {
-        if (self.Relation.Parent != null && !self.Relation.Parent.Disposed && self.Relation.UseParentCoords)
+        using (ScopeCounterManager.Acquire(a.Scope))
         {
-          TV_3DMATRIX m = new TV_3DMATRIX();
-          mlib.TVMatrixMultiply(ref m, GetMat(ref currData), self.Relation.Parent.Transform.GetWorldMatrix(self.Relation.Parent, time));
-          return m;
+          ActorInfo p = a.ParentForCoords;
+          if (!p?.Disposed ?? false)
+          {
+            using (ScopeCounterManager.Acquire(p.Scope))
+            {
+              TV_3DMATRIX m = new TV_3DMATRIX();
+              mlib.TVMatrixMultiply(ref m, GetMat(ref currData), p.Transform.GetWorldMatrix(p, time));
+              return m;
+            }
+          }
         }
         return GetMat(ref currData);
       }
 
-      public TV_3DMATRIX InnerGetPrevWorldMatrix(ActorInfo self, float time)
+      private TV_3DMATRIX InnerGetPrevWorldMatrix(ActorInfo a, float time)
       {
-        if (self.Relation.Parent != null && !self.Relation.Parent.Disposed && self.Relation.UseParentCoords)
+        using (ScopeCounterManager.Acquire(a.Scope))
         {
-          TV_3DMATRIX m = new TV_3DMATRIX();
-          mlib.TVMatrixMultiply(ref m, GetMat(ref prevData), self.Relation.Parent.Transform.GetPrevWorldMatrix(self.Relation.Parent, time));
-          return m;
+          ActorInfo p = a.ParentForCoords;
+          if (!p?.Disposed ?? false)
+          {
+            using (ScopeCounterManager.Acquire(p.Scope))
+            {
+              TV_3DMATRIX m = new TV_3DMATRIX();
+              mlib.TVMatrixMultiply(ref m, GetMat(ref prevData), p.Transform.GetPrevWorldMatrix(p, time));
+              return m;
+            }
+          }
         }
-
         return GetMat(ref prevData);
       }
 
@@ -148,63 +162,67 @@ namespace SWEndor.Actors
 
       public TV_3DVECTOR GetGlobalPosition(ActorInfo self, float time)
       {
-        if (self.Relation.Parent != null && !self.Relation.Parent.Disposed && self.Relation.UseParentCoords)
-        {
-          TV_3DQUATERNION qR = new TV_3DQUATERNION();
-          TV_3DVECTOR vT = new TV_3DVECTOR();
-          TV_3DVECTOR vS = new TV_3DVECTOR();
-          mlib.TVMatrixDecompose(ref vS, ref qR, ref vT, GetWorldMatrix(self, time));
-          return vT;
-        }
-        else
-          return currData.Position;
+          if (!self.ParentForCoords?.Disposed ?? false)
+          {
+            TV_3DQUATERNION qR = new TV_3DQUATERNION();
+            TV_3DVECTOR vT = new TV_3DVECTOR();
+            TV_3DVECTOR vS = new TV_3DVECTOR();
+            mlib.TVMatrixDecompose(ref vS, ref qR, ref vT, GetWorldMatrix(self, time));
+            return vT;
+          }
+          else
+            return currData.Position;
       }
 
       public TV_3DVECTOR GetPrevGlobalPosition(ActorInfo self, float time)
       {
-        if (self.Relation.Parent != null && !self.Relation.Parent.Disposed && self.Relation.UseParentCoords)
-        {
-          TV_3DQUATERNION qR = new TV_3DQUATERNION();
-          TV_3DVECTOR vT = new TV_3DVECTOR();
-          TV_3DVECTOR vS = new TV_3DVECTOR();
-          mlib.TVMatrixDecompose(ref vS, ref qR, ref vT, GetPrevWorldMatrix(self, time));
-          return vT;
-        }
-        else
-          return prevData.Position;
+          if (!self.ParentForCoords?.Disposed ?? false)
+          {
+            TV_3DQUATERNION qR = new TV_3DQUATERNION();
+            TV_3DVECTOR vT = new TV_3DVECTOR();
+            TV_3DVECTOR vS = new TV_3DVECTOR();
+            mlib.TVMatrixDecompose(ref vS, ref qR, ref vT, GetPrevWorldMatrix(self, time));
+            return vT;
+          }
+          else
+            return prevData.Position;
       }
 
       public TV_3DVECTOR GetGlobalRotation(ActorInfo self, float time) // broken
       {
-        if (self.Relation.Parent != null && !self.Relation.Parent.Disposed && self.Relation.UseParentCoords)
-        {
-          TV_3DVECTOR dir = new TV_3DVECTOR();
-          mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 100), GetWorldMatrix(self, time));
-          return Utilities.GetRotation(dir);
-        }
-        else
-          return currData.Rotation;
+          if (!self.ParentForCoords?.Disposed ?? false)
+          {
+            TV_3DVECTOR dir = new TV_3DVECTOR();
+            mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 100), GetWorldMatrix(self, time));
+            return Utilities.GetRotation(dir);
+          }
+          else
+            return currData.Rotation;
       }
 
       public TV_3DVECTOR GetPrevGlobalRotation(ActorInfo self, float time) // broken
       {
-        if (self.Relation.Parent != null && !self.Relation.Parent.Disposed && self.Relation.UseParentCoords)
-        {
-          TV_3DVECTOR dir = new TV_3DVECTOR();
-          mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 100), GetPrevWorldMatrix(self, time));
-          return Utilities.GetRotation(dir);
-        }
-        else
-          return currData.Rotation;
+          if (!self.ParentForCoords?.Disposed ?? false)
+          {
+            TV_3DVECTOR dir = new TV_3DVECTOR();
+            mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 100), GetPrevWorldMatrix(self, time));
+            return Utilities.GetRotation(dir);
+          }
+          else
+            return currData.Rotation;
       }
 
       // ?
       public TV_3DVECTOR GetGlobalDirection(ActorInfo self)
       {
         TV_3DVECTOR ret = Direction;
-        if (self.Relation.Parent != null && !self.Relation.Parent.Disposed && self.Relation.UseParentCoords)
-          ret += self.Relation.Parent.Transform.GetGlobalDirection(self.Relation.Parent);
-
+        using (ScopeCounterManager.Acquire(self.Scope))
+        {
+          ActorInfo p = self.ParentForCoords;
+          if (!p?.Disposed ?? false)
+            using (ScopeCounterManager.Acquire(p.Scope))
+              ret += p.Transform.GetGlobalDirection(p);
+        }
         TV_3DVECTOR dir = new TV_3DVECTOR();
         mlib.TVVec3Normalize(ref dir, ret);
         return dir;
@@ -213,8 +231,13 @@ namespace SWEndor.Actors
       public TV_3DVECTOR GetPrevGlobalDirection(ActorInfo self)
       {
         TV_3DVECTOR ret = PrevDirection;
-        if (self.Relation.Parent != null && !self.Relation.Parent.Disposed && self.Relation.UseParentCoords)
-          ret += self.Relation.Parent.Transform.GetPrevGlobalDirection(self.Relation.Parent);
+        using (ScopeCounterManager.Acquire(self.Scope))
+        {
+          ActorInfo p = self.ParentForCoords;
+          if (!p?.Disposed ?? false)
+            using (ScopeCounterManager.Acquire(p.Scope))
+              ret += p.Transform.GetPrevGlobalDirection(p);
+        }
 
         TV_3DVECTOR dir = new TV_3DVECTOR();
         mlib.TVVec3Normalize(ref dir, ret);
@@ -253,6 +276,69 @@ namespace SWEndor.Actors
           currData.Roll = zrot;
       }
     }
+
+    public TV_3DVECTOR Position { get { return Transform.Position; } set { Transform.Position = value; } }
+    public TV_3DVECTOR PrevPosition { get { return Transform.PrevPosition; } }
+    public TV_3DVECTOR Rotation { get { return Transform.Rotation; } set { Transform.Rotation = value; } }
+    public TV_3DVECTOR PrevRotation { get { return Transform.PrevRotation; } }
+    public TV_3DVECTOR Direction { get { return Transform.Direction; } set { Transform.Direction = value; } }
+    public float Scale { get { return Transform.Scale; } set { Transform.Scale = value; } }
+
+    public TV_3DMATRIX GetMatrix()
+    {
+      using (ScopeCounterManager.Acquire(Scope))
+        return Transform.GetWorldMatrix(this, Game.GameTime);
+    }
+
+    public TV_3DVECTOR GetGlobalPosition()
+    {
+      using (ScopeCounterManager.Acquire(Scope))
+        return Transform.GetGlobalPosition(this, Game.GameTime);
+    }
+
+    public TV_3DVECTOR GetPrevGlobalPosition()
+    {
+      using (ScopeCounterManager.Acquire(Scope))
+        return Transform.GetPrevGlobalPosition(this, Game.GameTime);
+    }
+
+    public TV_3DVECTOR GetGlobalRotation()
+    {
+      using (ScopeCounterManager.Acquire(Scope))
+        return Transform.GetGlobalRotation(this, Game.GameTime);
+    }
+
+    public TV_3DVECTOR GetGlobalDirection()
+    {
+      using (ScopeCounterManager.Acquire(Scope))
+        return Transform.GetGlobalDirection(this);
+    }
+
+    public TV_3DVECTOR GetRelativePositionFUR(float front, float up, float right, bool uselocal = false)
+    {
+      using (ScopeCounterManager.Acquire(Scope))
+        return Transform.GetRelativePositionFUR(this, Game.GameTime, front, up, right, uselocal);
+    }
+
+    public TV_3DVECTOR GetRelativePositionXYZ(float x, float y, float z, bool uselocal = false)
+    {
+      using (ScopeCounterManager.Acquire(Scope))
+        return Transform.GetRelativePositionXYZ(this, Game.GameTime, x, y, z, uselocal);
+    }
+
+    public void MoveRelative(float forward, float up = 0, float right = 0)
+    {
+      TV_3DVECTOR vec = GetRelativePositionFUR(forward, up, right, true);
+      Transform.Position = new TV_3DVECTOR(vec.x, vec.y, vec.z);
+    }
+
+    public void MoveAbsolute(float x, float y, float z)
+    {
+      TV_3DVECTOR vec = Transform.Position + new TV_3DVECTOR(x, y, z);
+      Transform.Position = new TV_3DVECTOR(vec.x, vec.y, vec.z);
+    }
+
+    public void LookAt(TV_3DVECTOR point) { Transform.LookAt(point); }
   }
 }
 

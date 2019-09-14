@@ -1,4 +1,5 @@
 ﻿using SWEndor.ActorTypes;
+using SWEndor.Primitives;
 
 namespace SWEndor.Actors
 {
@@ -30,22 +31,24 @@ namespace SWEndor.Actors
         SiblingRegenRate = atype.RegenData.SiblingRegenRate;
       }
 
-      public void Process(ActorInfo actor, float time)
+      public void Process(ActorInfo a, float time)
       {
         // Regen
         if (SelfRegenRate != 0)
-          Regenerate(actor, SelfRegenRate * time);
+          Regenerate(a, SelfRegenRate * time);
 
         if (ParentRegenRate != 0)
-          Regenerate(actor.Parent, ParentRegenRate * time);
+          Regenerate(a.Parent, ParentRegenRate * time);
 
         if (ChildRegenRate != 0)
-          foreach (ActorInfo c in actor.Children)
-            Regenerate(c, ChildRegenRate * time);
+          foreach (ActorInfo c in a.Children)
+            using (ScopeCounterManager.Acquire(c.Scope))
+              Regenerate(c, ChildRegenRate * time);
 
         if (SiblingRegenRate != 0)
-          foreach (ActorInfo r in actor.Siblings)
-            Regenerate(r, SiblingRegenRate * time);
+          foreach (ActorInfo r in a.Siblings)
+            using (ScopeCounterManager.Acquire(r.Scope))
+              Regenerate(r, SiblingRegenRate * time);
       }
 
       private void Regenerate(ActorInfo a, float amount)
@@ -55,7 +58,12 @@ namespace SWEndor.Actors
       }
     }
 
-    public void Regenerate(float time) { Regen.Process(this, time); }
+    public void Regenerate(float time)
+    {
+      using (ScopeCounterManager.Acquire(Scope))
+        Regen.Process(this, time);
+    }
+
     public bool NoRegen { get { return Regen.NoRegen; } }
   }
 }
