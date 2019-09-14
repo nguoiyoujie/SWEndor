@@ -20,10 +20,11 @@ namespace SWEndor.UI.Widgets
       TVScreen2DText.Action_BeginText();
 
       TVCollisionResult tvcres = Engine.TrueVision.TVScene.MousePick((int)Engine.ScreenWidth / 2, (int)Engine.ScreenHeight / 2);
-      if (tvcres.GetCollisionMesh() != null)
+      TVMesh mesh = tvcres.GetCollisionMesh();
+      if (mesh != null)
       {
-        int n = 0;
-        if (int.TryParse(tvcres.GetCollisionMesh().GetTag(), out n))
+        int n = ActorInfo.MeshModel.GetID(mesh.GetIndex());
+        if (n != -1)
         {
           ActorInfo a = Engine.ActorFactory.Get(n);
 
