@@ -1,4 +1,4 @@
-﻿namespace SWEndor.Actors.Data
+﻿namespace SWEndor.ActorTypes.Components
 {
   public struct TimedLifeData
   {
