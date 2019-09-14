@@ -68,6 +68,9 @@ namespace SWEndor.ActorTypes
 
     public MeshData MeshData = MeshData.Default;
 
+    public DyingMoveData DyingMoveData;
+
+
     // Performance Savings
     public bool IsLaser = false;
 
@@ -153,7 +156,7 @@ namespace SWEndor.ActorTypes
       ainfo.TickExplosions();
 
       if (ainfo.IsDying)
-        ainfo.DyingMoveComponent?.Update(ainfo, ref ainfo.MoveData, Game.TimeSinceRender);
+        DyingMoveData.Update(ainfo, Game.TimeSinceRender);
 
       // sound
       if (PlayerInfo.Actor != null
@@ -189,82 +192,83 @@ namespace SWEndor.ActorTypes
           if (owner.IsPlayer)
             if (hp < (int)p_hp)
               PlayerInfo.FlashHit(PlayerInfo.StrengthColor);
-        }
 
-        // scoring
-        ActorInfo attacker = hitby.TopParent;
-        if (attacker.IsScenePlayer)
-        {
-          if (!attacker.Faction.IsAlliedWith(owner.Faction))
-            AddScore(PlayerInfo.Score, hitby, owner);
-          else
-            Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", owner.Name, PlayerInfo.Name)
-                                            , 5
-                                            , owner.Faction.Color
-                                            , -1);
-        }
-
-        if (owner.IsScenePlayer)
-        {
-          PlayerInfo.Score.AddDamage(Engine, attacker, hitby.TypeInfo.ImpactDamage * owner.GetArmor(DamageType.NORMAL));
-
-          if (owner.IsDyingOrDead)
-            PlayerInfo.Score.AddDeath(Engine, attacker);
-        }
-
-        if (attacker != null && !attacker.Faction.IsAlliedWith(owner.Faction))
-        {
-          // Fighter AI
-          if ((owner.TypeInfo is Groups.Fighter))
+          // scoring
+          ActorInfo attacker = hitby.TopParent;
+          if (attacker.IsScenePlayer)
           {
-            if (owner.CanRetaliate && (owner.CurrentAction == null || owner.CurrentAction.CanInterrupt))
+            if (!attacker.Faction.IsAlliedWith(owner.Faction))
+              AddScore(PlayerInfo.Score, hitby, owner);
+            else
+              Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", owner.Name, PlayerInfo.Name)
+                                              , 5
+                                              , owner.Faction.Color
+                                              , -1);
+          }
+
+
+          if (owner.IsScenePlayer)
+          {
+            PlayerInfo.Score.AddDamage(Engine, attacker, hitby.TypeInfo.ImpactDamage * owner.GetArmor(DamageType.NORMAL));
+
+            if (owner.IsDyingOrDead)
+              PlayerInfo.Score.AddDeath(Engine, attacker);
+          }
+
+          if (attacker != null && !attacker.Faction.IsAlliedWith(owner.Faction))
+          {
+            // Fighter AI
+            if ((owner.TypeInfo is Groups.Fighter))
             {
-              if (!owner.Squad.IsNull && owner.Squad.Mission == null)
+              if (owner.CanRetaliate && (owner.CurrentAction == null || owner.CurrentAction.CanInterrupt))
               {
-                if (!attacker.Squad.IsNull)
+                if (!owner.Squad.IsNull && owner.Squad.Mission == null)
                 {
-                  foreach (ActorInfo a in owner.Squad.Members)
+                  if (!attacker.Squad.IsNull)
                   {
-                    if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
+                    foreach (ActorInfo a in owner.Squad.Members)
                     {
-                      ActorInfo b = attacker.Squad.Members.ToArray().Random(Engine);
-                      if (b != null)
+                      if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
+                      {
+                        ActorInfo b = attacker.Squad.Members.ToArray().Random(Engine);
+                        if (b != null)
+                        {
+                          a.ClearQueue();
+                          a.QueueLast(new AttackActor(b.ID));
+                        }
+                      }
+                    }
+                  }
+                  else
+                  {
+                    foreach (ActorInfo a in owner.Squad.Members)
+                    {
+                      if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
                       {
                         a.ClearQueue();
-                        a.QueueLast(new AttackActor(b.ID));
+                        a.QueueLast(new AttackActor(attacker.ID));
                       }
                     }
                   }
                 }
                 else
                 {
-                  foreach (ActorInfo a in owner.Squad.Members)
-                  {
-                    if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
-                    {
-                      a.ClearQueue();
-                      a.QueueLast(new AttackActor(attacker.ID));
-                    }
-                  }
+                  owner.ClearQueue();
+                  owner.QueueLast(new AttackActor(attacker.ID));
                 }
               }
-              else
+              else if (owner.CanEvade && !(owner.CurrentAction is Evade))
               {
-                owner.ClearQueue();
-                owner.QueueLast(new AttackActor(attacker.ID));
+                owner.QueueFirst(new Evade());
               }
-            }
-            else if (owner.CanEvade && !(owner.CurrentAction is Evade))
-            {
-              owner.QueueFirst(new Evade());
-            }
 
-            if (!owner.Squad.IsNull)
-            {
-              if (owner.Squad.Leader == owner)
-                owner.Squad.AddThreat(attacker, true);
-              else
-                owner.Squad.AddThreat(attacker);
+              if (!owner.Squad.IsNull)
+              {
+                if (owner.Squad.Leader == owner)
+                  owner.Squad.AddThreat(attacker, true);
+                else
+                  owner.Squad.AddThreat(attacker);
+              }
             }
           }
         }
@@ -364,9 +368,9 @@ namespace SWEndor.ActorTypes
     public virtual void Dying(ActorInfo ainfo)
     {
       if (ainfo == null)
-        return;
+        throw new ArgumentNullException("ainfo");
 
-      ainfo.DyingMoveComponent?.Initialize(ainfo, ref ainfo.MoveData);
+      DyingMoveData.Initialize(ainfo);
 
       if (ainfo.IsPlayer)
       {
@@ -382,7 +386,7 @@ namespace SWEndor.ActorTypes
     public virtual void Dead(ActorInfo ainfo)
     {
       if (ainfo == null)
-        return;
+        throw new ArgumentNullException("ainfo");
 
       // Explode
       ainfo.TickExplosions();
