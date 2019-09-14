@@ -41,13 +41,14 @@ namespace SWEndor.Actors.Components
 
     public WeaponData Fix()
     {
-      WeaponData d = new WeaponData(_weapons.Count, _primary, _secondary, _ai);
+      WeaponData d = new WeaponData(_weapons.Count, _primary, _secondary + 1, _ai);
       for (int i = 0; i < _weapons.Count; i++)
         d.Weapons[i] = WeaponFactory.Get(_weapons[i]);
 
       int p = 0;
-      int s = 0;
+      int s = 1;
       int a = 0;
+      d.SecondaryWeapons[0] = WeaponShotInfo.Default;
 
       for (int i = 0; i < _weaponclasses.Count; i++)
       {
