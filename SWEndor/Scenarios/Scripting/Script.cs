@@ -13,7 +13,7 @@ namespace SWEndor.Scenarios.Scripting
     public Script(string filepath, string scriptname)
     {
       if (!File.Exists(filepath))
-        throw new FileNotFoundException("Script file '" + filepath + "' is not found!");
+        throw new FileNotFoundException("Script file '" + Path.GetFullPath(filepath) + "' is not found!");
 
       Globals.Engine.Screen2D.LoadingTextLines.Add("loading script:" + scriptname);
       Globals.Engine.Screen2D.LoadingTextLines.RemoveAt(0);
