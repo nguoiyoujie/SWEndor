@@ -158,15 +158,17 @@ namespace SWEndor.Scenarios
       Screen2D.ClearText();
       PlayerInfo.RequestSpawn = false;
 
-      // clear sounds
-      SoundManager.SetSoundStopAll();
-
       Screen2D.OverrideTargetingRadar = false;
       Screen2D.Box3D_Enable = false;
 
       LandInfo.Enabled = false;
       Mood = 0;
       SoundManager.Clear();
+
+      // clear sounds
+      SoundManager.SetSoundStopAll();
+      SoundManager.SetMusicStop();
+
       Game.GameTime = 0;
 
       // deleted many things, and this function is called when the game is not active. Probably safe to force GC
