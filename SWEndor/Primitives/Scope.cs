@@ -5,11 +5,6 @@ namespace SWEndor.Primitives
 {
   public static class ScopeGlobals
   {
-    public const byte THREAD_PROCESS = 1;
-    public const byte THREAD_COLLISION = 2;
-    public const byte THREAD_RENDER = 3;
-    public const byte THREAD_AI = 4;
-
     public const byte GLOBAL_TVSCENE = 113;
   }
 

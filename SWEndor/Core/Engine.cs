@@ -13,6 +13,7 @@ using SWEndor.Actors.Data;
 using System.Text;
 using SWEndor.AI.Squads;
 using SWEndor.Primitives;
+using System.Threading;
 
 namespace SWEndor
 {
@@ -202,9 +203,9 @@ namespace SWEndor
 
     public void Exit()
     {
+      Thread.Sleep(1500);
       GameScenarioManager.Scenario.Unload();
       Game.PrepExit();
-      //Game.Stop();
       Form.Exit();
       Dispose();
     }

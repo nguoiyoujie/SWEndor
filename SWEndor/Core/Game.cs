@@ -129,8 +129,6 @@ namespace SWEndor
       tm_process.Stop();
       tm_perf.Stop();
       tm_sound.Stop();
-      Engine.SoundManager.Update();
-      Thread.Sleep(1500);
     }
 
     private void Tick()
@@ -142,14 +140,14 @@ namespace SWEndor
 
       // Pre-load
       th_load.Start();
-      while (th_load.ThreadState == ThreadState.Running)
+      while (th_load.ThreadState != ThreadState.Stopped)
       {
         Engine.PreRender();
         TimeControl.Update();
         TimeControl.Wait();
-
-        Engine.InputManager.ClearInput();
       }
+
+      Engine.InputManager.ClearInput();
 
       // Initialize other threads/timers
       if (septhread_sound)
@@ -286,7 +284,6 @@ namespace SWEndor
           using (Engine.PerfManager.Create("render"))
           {
             using (Engine.PerfManager.Create("render_main"))
-            using (ScopeCounterManager.Acquire(ScopeGlobals.THREAD_RENDER))
               Engine.Render();
 
             if (!IsPaused)
@@ -310,7 +307,6 @@ namespace SWEndor
         {
           isProcessingProcess = true;
 
-          using (ScopeCounterManager.Acquire(ScopeGlobals.THREAD_PROCESS))
           using (Engine.PerfManager.Create("tick_process"))
           {
             using (Engine.PerfManager.Create("process_input"))
@@ -362,12 +358,9 @@ namespace SWEndor
           {
             isProcessingAI = true;
             using (Engine.PerfManager.Create("tick_ai"))
-            using (ScopeCounterManager.Acquire(ScopeGlobals.THREAD_AI))
               Engine.ProcessAI();
             isProcessingAI = false;
           }
-
-
       }
       catch (Exception ex)
       {
@@ -401,11 +394,7 @@ namespace SWEndor
           {
             isProcessingCollision = true;
             using (Engine.PerfManager.Create("tick_collision"))
-            using (ScopeCounterManager.Acquire(ScopeGlobals.THREAD_COLLISION))
-            {
-              ScopeCounterManager.WaitForZero(ScopeGlobals.THREAD_RENDER);
               Engine.ProcessCollision();
-            }
             isProcessingCollision = false;
           }
       }
