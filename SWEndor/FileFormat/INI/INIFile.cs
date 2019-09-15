@@ -44,7 +44,7 @@ namespace SWEndor.FileFormat.INI
     {
       if (!File.Exists(FilePath))
       {
-        throw new Exception("The file {0} is not found!".F(FilePath));
+        throw new Exception("The file {0} is not found!".F(Path.GetFullPath(FilePath)));
       }
       else
       {

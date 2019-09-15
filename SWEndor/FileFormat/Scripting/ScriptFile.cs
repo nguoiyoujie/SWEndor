@@ -10,7 +10,7 @@ namespace SWEndor.FileFormat.Scripting
     public ScriptFile(string filepath)
     {
       if (!File.Exists(filepath))
-        throw new FileNotFoundException("Script file '" + filepath + "' is not found!");
+        throw new FileNotFoundException("Script file '" + Path.GetFullPath(filepath) + "' is not found!");
 
       FilePath = filepath;
       ReadFile();
