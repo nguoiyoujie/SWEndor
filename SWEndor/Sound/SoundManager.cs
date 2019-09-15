@@ -43,6 +43,7 @@ namespace SWEndor.Sound
 
     private SoundStartInfo m_musicLoop = new SoundStartInfo();
     private ConcurrentQueue<SoundStartInfo> m_musicQueue = new ConcurrentQueue<SoundStartInfo>();
+
     private string m_currMusic;
     private string m_prevDynMusic;
 
@@ -190,6 +191,7 @@ namespace SWEndor.Sound
 
     public bool SetMusic(string name, bool loop = false, uint position_ms = 0, uint end_ms = 0)
     {
+      interruptActive = false;
       m_queuedInstructions.Enqueue(new InstPlayMusic { Name = name, Loop = loop, Position_ms = position_ms, End_ms = end_ms });
       if (loop)
       {
@@ -207,6 +209,7 @@ namespace SWEndor.Sound
 
     public void SetMusicDyn(string name)
     {
+      interruptActive = false;
       Piece p = Piece.Factory.Get(name);
       SetMusic(p.SoundName, false, p.EntryPosition);
       PrepDynNext(p.SoundName);
@@ -221,6 +224,7 @@ namespace SWEndor.Sound
 
     public void SetMusicStop()
     {
+      interruptActive = false;
       m_queuedInstructions.Enqueue(new InstStopMusic());
     }
 
