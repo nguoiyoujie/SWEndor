@@ -607,7 +607,7 @@ namespace SWEndor.Scenarios
                                      , new Rotate(v, 0)
                                      , new Wait(2.5f)
                                      , new HyperspaceIn(v)
-                                     , new SetMood(-11, true)
+                                     //, new SetMood(-11, true)
                                      , new Rotate(new TV_3DVECTOR(0, 0, 0), 1)
                                      , new Wait(3f+10f)}
         }.Spawn(this);
