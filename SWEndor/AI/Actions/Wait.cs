@@ -27,11 +27,12 @@ namespace SWEndor.AI.Actions
       if (ResumeTime == 0)
         ResumeTime = engine.Game.GameTime + WaitTime;
 
-      AdjustRotation(actor, actor.GetRelativePositionXYZ(0, 0, 1000), false);
-      if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
-      {
+      actor.AIData.SetTarget(actor.GetRelativePositionXYZ(0, 0, 1000));
+      actor.AIData.AdjustRotation(actor);
+
+      if (CheckImminentCollision(actor))
         CollisionSystem.CreateAvoidAction(engine, actor);
-      }
+
       Complete |= (ResumeTime < engine.Game.GameTime);
     }
   }

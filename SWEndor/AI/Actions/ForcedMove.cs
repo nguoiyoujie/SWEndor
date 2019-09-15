@@ -50,8 +50,11 @@ namespace SWEndor.AI.Actions
       if (CloseEnoughDistance < 0)
         CloseEnoughDistance = actor.TypeInfo.AIData.Move_CloseEnough;
 
-      AdjustRotation(actor, Target_Position);
-      AdjustSpeed(actor, Target_Speed);
+      actor.AIData.SetTarget(Target_Position);
+      actor.AIData.AdjustRotation(actor);
+
+      actor.AIData.SetTargetSpeed(Target_Speed);
+      actor.AIData.AdjustSpeed(actor);
 
       float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetGlobalPosition(), Target_Position);
       Complete |= (dist <= CloseEnoughDistance);

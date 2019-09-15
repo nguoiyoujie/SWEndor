@@ -31,3 +31,6 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HeapAnalyzerBoxingRule:Value type to reference type conversion allocation for string concatenation", Justification = "<Pending>", Scope = "member", Target = "~M:SWEndor.Sound.SoundManager.Piece.Parser.Parse(SWEndor.FileFormat.INI.INIFile,System.String)~SWEndor.Sound.SoundManager.Piece")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HeapAnalyzerClosureSourceRule:Closure Allocation Source", Justification = "<Pending>", Scope = "member", Target = "~M:SWEndor.Game.Run")]
 
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HeapAnalyzerImplicitParamsRule:Array allocation for params parameter", Justification = "<Pending>", Scope = "member", Target = "~F:SWEndor.Globals.Version")]
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HeapAnalyzerBoxingRule:Value type to reference type conversion causing boxing allocation", Justification = "<Pending>", Scope = "member", Target = "~F:SWEndor.Globals.Version")]

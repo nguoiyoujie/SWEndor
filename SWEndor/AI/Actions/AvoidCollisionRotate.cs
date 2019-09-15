@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
 using SWEndor.Primitives;
+using SWEndor.Weapons;
 
 namespace SWEndor.AI.Actions
 {
@@ -47,23 +48,31 @@ namespace SWEndor.AI.Actions
 
     private void Process(Engine engine, ActorInfo actor, ref CollisionData data)
     {
-
       if (CheckBounds(actor))
       {
         if (data.ProspectiveCollisionLevel > 0 && data.ProspectiveCollisionLevel < 5)
-          Target_Position = data.ProspectiveCollisionSafe;
+          actor.AIData.SetTarget(data.ProspectiveCollisionSafe);
         else
-          Target_Position = Impact_Position + Normal * 10000;
+          actor.AIData.SetTarget(Impact_Position + Normal * 10000);
         float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetGlobalPosition(), Impact_Position);
-        float Target_Speed = actor.MoveData.MinSpeed; //dist / 25;
 
-        float delta_angle = AdjustRotation(actor, Target_Position, false, true);
-        float delta_speed = AdjustSpeed(actor, Target_Speed);
+        actor.AIData.SetTargetSpeed(actor.MoveData.MinSpeed);
+        float delta_angle = actor.AIData.AdjustRotation(actor, 9999);
+        float delta_speed = actor.AIData.AdjustSpeed(actor);
 
-        Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle); //&& delta_speed == 0);
+        ActorInfo target = actor.ActorFactory.Get(data.ProspectiveCollision.ActorID);
+        if (target != null && !actor.Faction.IsAlliedWith(target.Faction))
+        {
+          WeaponShotInfo w;
+          actor.WeaponDefinitions.SelectWeapon(engine, actor, target, 0, dist, out w);
+          if (!w.IsNull)
+            w.Fire(engine, actor, target);
+        }
+
+        Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle);
       }
 
-      if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
+      if (CheckImminentCollision(actor))
       {
         float newavoid = GetAvoidanceAngle(actor, actor.GetGlobalDirection(), Normal);
         float concavecheck = 60;
@@ -75,14 +84,12 @@ namespace SWEndor.AI.Actions
           calcAvoidAngle = true;
         }
 
-        // don't override as the 
         data.IsAvoidingCollision = true;
         Complete = false;
       }
       else
       {
         data.IsAvoidingCollision = false;
-        actor.QueueNext(new Wait(2.5f));
         Complete = true;
       }
     }

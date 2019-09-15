@@ -44,72 +44,10 @@ namespace SWEndor.UI.Widgets
 
       if (p.CurrentAction != null)
       {
-        TV_3DVECTOR pos = p.GetGlobalPosition(); // p.GetRelativePositionXYZ(0, 0, p.TypeInfo.max_dimensions.z + p.ProspectiveCollisionScanDistance);
-
-        TV_3DVECTOR targetpos = new TV_3DVECTOR();
-        if (p.CurrentAction is AttackActor)
-        {
-          ActorInfo target = Engine.ActorFactory.Get(((AttackActor)p.CurrentAction).Target_ActorID);
-          if (target != null)
-          {
-            targetpos = ((AttackActor)p.CurrentAction).Target_Position;
-            TV_3DVECTOR targetactpos = target.GetGlobalPosition();
-            TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 0, 0, 1).GetIntColor());
-            TVScreen2DImmediate.Draw_Box3D(targetpos - new TV_3DVECTOR(25, 25, 25), targetpos + new TV_3DVECTOR(25, 25, 25), new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor());
-            TVScreen2DImmediate.Draw_Box3D(targetactpos - new TV_3DVECTOR(50, 50, 50), targetactpos + new TV_3DVECTOR(50, 50, 50), new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor());
-          }
-        }
-        else if (p.CurrentAction is Move)
-        {
-          targetpos = ((Move)p.CurrentAction).Target_Position;
-          TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(0.5f, 1, 0.5f, 1).GetIntColor());
-        }
-        else if (p.CurrentAction is ForcedMove)
-        {
-          targetpos = ((ForcedMove)p.CurrentAction).Target_Position;
-          TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 1, 0.5f, 1).GetIntColor());
-        }
-        else if (p.CurrentAction is Rotate)
-        {
-          targetpos = ((Rotate)p.CurrentAction).Target_Position;
-          TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(0.5f, 1, 1, 1).GetIntColor());
-        }
-        else if (p.CurrentAction is FollowActor)
-        {
-          ActorInfo target = Engine.ActorFactory.Get(((AttackActor)p.CurrentAction).Target_ActorID);
-          if (target != null)
-          {
-            targetpos = target.GetGlobalPosition();
-            TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(0.5f, 0.5f, 1, 1).GetIntColor());
-          }
-        }
-        else if (p.CurrentAction is Evade)
-        {
-          targetpos = ((Evade)p.CurrentAction).Target_Position;
-          TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 0.3f, 0, 1).GetIntColor());
-        }
-        else if (p.CurrentAction is AvoidCollisionRotate)
-        {
-          targetpos = ((AvoidCollisionRotate)p.CurrentAction).Target_Position;
-          TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 0.2f, 0.6f, 1).GetIntColor());
-
-          //targetpos = p.CollisionData.ProspectiveCollision.Impact + p.CollisionData.ProspectiveCollision.Normal * 250;
-          //TVScreen2DImmediate.Draw_Line3D(p.CollisionData.ProspectiveCollision.Impact.x, p.CollisionData.ProspectiveCollision.Impact.y, p.CollisionData.ProspectiveCollision.Impact.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 1, 1, 1).GetIntColor());
-        }
-
-        /*
-        TV_3DVECTOR prostart = p.GetRelativePositionXYZ(0, 0, p.TypeInfo.max_dimensions.z + 10);
-        TV_3DVECTOR proend0 = p.GetRelativePositionXYZ(0, 0, p.TypeInfo.max_dimensions.z + 10 + p.ProspectiveCollisionScanDistance);
-
-        TVScreen2DImmediate.Draw_Line3D(prostart.x
-                                                        , prostart.y
-                                                        , prostart.z
-                                                        , proend0.x
-                                                        , proend0.y
-                                                        , proend0.z
-                                                        , new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor()
-                                                        );
-        */
+        TV_3DVECTOR pos = p.GetRelativePositionXYZ(0, 0, p.TypeInfo.MeshData.MaxDimensions.z); //p.GetGlobalPosition(); // p.GetRelativePositionXYZ(0, 0, p.TypeInfo.max_dimensions.z + p.ProspectiveCollisionScanDistance);
+        TV_3DVECTOR targetpos = p.AIData.GetTargetPos(p);
+        TVScreen2DImmediate.Draw_Box3D(targetpos - new TV_3DVECTOR(25, 25, 25), targetpos + new TV_3DVECTOR(25, 25, 25), new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor());
+        TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 0, 0, 1).GetIntColor());
       }
 
       TVScreen2DImmediate.Draw_FilledBox(loc.x - 5, loc.y - 5, loc.x + 405, loc.y + 40 / 3 * lines + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());

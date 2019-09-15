@@ -9,11 +9,8 @@ namespace SWEndor
     public const int MajorVersion = 0;
     public const int MinorVersion = 0;
 
-    public static string Version
-    {
-      get
-      {
-        return string.Format("v{0}.{1}.{2}-{3}"
+    public static string Version = 
+        string.Format("v{0}.{1}.{2}-{3}"
         , MajorVersion
         , MinorVersion
         , DateTime.Parse(Build.Time).ToString("yyyy.MMdd.hhmm")
@@ -23,8 +20,6 @@ namespace SWEndor
         , "Release"
 #endif
         );
-      }
-    }
 
     // Constant
     public const float PI = 3.1415f;
@@ -32,6 +27,8 @@ namespace SWEndor
     public const float Deg2Rad = 3.1415f / 180;
     public const float LaserSpeed = 3000f;
     public const int ActorLimit = 1000;
+    public const float ImminentCollisionFactor = 1.5f;
+
 
     // Directories
     public static string BasePath = AppDomain.CurrentDomain.BaseDirectory;

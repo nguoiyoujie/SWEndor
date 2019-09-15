@@ -23,6 +23,7 @@ namespace SWEndor.Actors.Components
 
     internal static void CreateAvoidAction(Engine engine, ActorInfo actor)
     {
+      actor.QueueFirst(new AvoidCollisionWait(2.5f)); // 2nd action
       actor.QueueFirst(new AvoidCollisionRotate(engine.ActorDataSet.CollisionData[actor.dataID].ProspectiveCollision.Impact, engine.ActorDataSet.CollisionData[actor.dataID].ProspectiveCollision.Normal));
     }
 

@@ -14,19 +14,18 @@ namespace SWEndor.AI.Actions
     {
       if (CheckBounds(actor))
       {
-        AdjustRotation(actor, actor.GetGlobalPosition());
-        AdjustSpeed(actor, actor.MoveData.MinSpeed);
+        //AdjustRotation(actor, actor.GetGlobalPosition());
+        actor.AIData.SetTargetSpeed(actor.MoveData.MinSpeed);
+        actor.AIData.AdjustSpeed(actor);
 
         if (NextAction == null)
-        {
           actor.QueueLast(new Hunt());
-        }
 
         Complete = true;
 
         TV_3DVECTOR vNormal = new TV_3DVECTOR();
         TV_3DVECTOR vImpact = new TV_3DVECTOR();
-        if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
+        if (CheckImminentCollision(actor))
         {
           CollisionSystem.CreateAvoidAction(engine, actor);
         }

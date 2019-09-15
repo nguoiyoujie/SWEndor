@@ -44,8 +44,11 @@ namespace SWEndor.AI.Actions
         if (CloseEnoughDistance < 0)
           CloseEnoughDistance = actor.TypeInfo.AIData.Move_CloseEnough;
 
-        AdjustRotation(actor, Target_Position);
-        AdjustSpeed(actor, Target_Speed);
+        actor.AIData.SetTarget(Target_Position);
+        actor.AIData.AdjustRotation(actor);
+
+        actor.AIData.SetTargetSpeed(Target_Speed);
+        actor.AIData.AdjustSpeed(actor);
 
         float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetGlobalPosition(), Target_Position);
         Complete |= (dist <= CloseEnoughDistance);
@@ -53,9 +56,17 @@ namespace SWEndor.AI.Actions
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
-      if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
+      if (CheckImminentCollision(actor))
       {
         CollisionSystem.CreateAvoidAction(engine, actor);
+      }
+      else
+      {
+        ActorInfo leader = actor.Squad.Leader;
+        if (leader != null && actor != leader && ActorDistanceInfo.GetRoughDistance(actor, leader) < leader.MoveData.Speed * 0.5f)
+        {
+          actor.QueueFirst(new Evade(0.5f));
+        }
       }
     }
   }

@@ -39,27 +39,30 @@ namespace SWEndor.AI.Actions
         return;
       }
 
+      actor.AIData.SetTarget(actor, target, false);
+
       if (CheckBounds(actor))
       {
-        AdjustRotation(actor, target.GetGlobalPosition());
+        actor.AIData.AdjustRotation(actor);
         float dist = ActorDistanceInfo.GetDistance(actor, target, FollowDistance + 1);
 
-        float addspd = (actor.MoveData.MaxSpeed > target.MoveData.Speed) ? actor.MoveData.MaxSpeed - target.MoveData.Speed : 0;
-        float subspd = (actor.MoveData.MinSpeed < target.MoveData.Speed) ? target.MoveData.Speed - actor.MoveData.MinSpeed : 0;
-
-        if (dist > FollowDistance)
-          AdjustSpeed(actor, target.MoveData.Speed + (dist - FollowDistance) / SpeedAdjustmentDistanceRange * addspd);
-        else
-          AdjustSpeed(actor, target.MoveData.Speed - (FollowDistance - dist) / SpeedAdjustmentDistanceRange * subspd);
-
+        actor.AIData.AdjustSpeed(actor);
         Complete |= (!target.Active);
       }
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
-      if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
+      if (CheckImminentCollision(actor))
       {
         CollisionSystem.CreateAvoidAction(engine, actor);
+      }
+      else
+      {
+        ActorInfo leader = actor.Squad.Leader;
+        if (leader != null && actor != leader && ActorDistanceInfo.GetRoughDistance(actor, leader) < leader.MoveData.Speed * 0.5f)
+        {
+          actor.QueueFirst(new Evade(0.5f));
+        }
       }
     }
   }

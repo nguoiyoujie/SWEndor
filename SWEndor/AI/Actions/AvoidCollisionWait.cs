@@ -1,0 +1,43 @@
+﻿using SWEndor.Actors;
+using SWEndor.Actors.Components;
+using SWEndor.Primitives;
+
+namespace SWEndor.AI.Actions
+{
+  public class AvoidCollisionWait : ActionInfo
+  {
+    public AvoidCollisionWait(float time = 5) : base("AvoidCollisionWait")
+    {
+      WaitTime = time;
+      CanInterrupt = false;
+    }
+
+    private float WaitTime = 0;
+    private float ResumeTime = 0;
+
+    public override string ToString()
+    {
+      return "{0},{1},{2}".F(Name
+                          , ResumeTime - Globals.Engine.Game.GameTime
+                          , Complete
+                          );
+    }
+
+    public override void Process(Engine engine, ActorInfo actor)
+    {
+      if (ResumeTime == 0)
+        ResumeTime = engine.Game.GameTime + WaitTime;
+
+      actor.AIData.SetTarget(actor.GetRelativePositionXYZ(0, 0, 1000));
+      actor.AIData.AdjustRotation(actor, 0.5f);
+
+      actor.AIData.SetTargetSpeed(actor.MoveData.MaxSpeed);
+      actor.AIData.AdjustSpeed(actor);
+
+      if (CheckImminentCollision(actor))
+        CollisionSystem.CreateAvoidAction(engine, actor);
+
+      Complete |= (ResumeTime < engine.Game.GameTime);
+    }
+  }
+}

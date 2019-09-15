@@ -76,6 +76,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>SWEndor.Program</StartupObject>
@@ -131,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actors\ActorCreationInfo.cs" />
+    <Compile Include="Actors\Models\AIModel\AIData.cs" />
     <Compile Include="Actors\Models\ArmorModel\ArmorModel.cs" />
     <Compile Include="Actors\Models\Collision\CollisionResultData.cs" />
     <Compile Include="Actors\Models\Explosion\ExplodeModel.cs" />
@@ -340,6 +342,7 @@
     <Compile Include="AI\Actions\ForcedMove.cs" />
     <Compile Include="AI\Actions\AvoidCollisionRotate.cs" />
     <Compile Include="AI\Actions\Evade.cs" />
+    <Compile Include="AI\Actions\AvoidCollisionWait.cs" />
     <Compile Include="AI\Actions\Wait.cs" />
     <Compile Include="AI\Actions\SelfDestruct.cs" />
     <Compile Include="AI\Actions\HyperspaceOut.cs" />

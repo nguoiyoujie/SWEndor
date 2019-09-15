@@ -42,15 +42,18 @@ namespace SWEndor.AI.Actions
 
       if (CheckBounds(actor))
       {
-        float delta_angle = AdjustRotation(actor, Target_Position);
-        float delta_speed = AdjustSpeed(actor, Target_Speed);
+        actor.AIData.SetTarget(Target_Position);
+        float delta_angle = actor.AIData.AdjustRotation(actor);
+
+        actor.AIData.SetTargetSpeed(Target_Speed);
+        float delta_speed = actor.AIData.AdjustSpeed(actor);
 
         Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle && delta_speed == 0);
       }
 
       TV_3DVECTOR vNormal = new TV_3DVECTOR();
       TV_3DVECTOR vImpact = new TV_3DVECTOR();
-      if (CheckImminentCollision(actor, actor.MoveData.Speed * 2.5f))
+      if (CheckImminentCollision(actor))
       {
         CollisionSystem.CreateAvoidAction(engine, actor);
       }

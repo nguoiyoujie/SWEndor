@@ -36,17 +36,10 @@ namespace SWEndor.AI.Actions
         return;
       }
 
-      float dist = ActorDistanceInfo.GetDistance(actor, Target_Actor);
-      float d = dist / Globals.LaserSpeed + engine.Game.TimeSinceRender;
-
-      ActorInfo a2 = target.UseParentCoords ? target.Parent : null;
-      if (a2 == null)
-        Target_Position = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d);
-      else
-        Target_Position = target.GetRelativePositionXYZ(0, 0, a2.MoveData.Speed * d);
-
-      AdjustRotation(actor, Target_Position, true);
-      AdjustSpeed(actor, actor.MoveData.MaxSpeed);
+      actor.AIData.SetTarget(actor, target, true);
+      actor.AIData.AdjustRotation(actor);
+      actor.AIData.SetTargetSpeed(actor.MoveData.MaxSpeed);
+      actor.AIData.AdjustSpeed(actor);
 
       Complete |= (!target.Active || target.IsDyingOrDead);
     }

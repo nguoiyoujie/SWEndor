@@ -91,12 +91,7 @@ namespace SWEndor.Actors
     }
 
     // Components
-
     internal CycleInfo<ActorInfo> CycleInfo;
-    public WeaponData WeaponDefinitions;
-
-    // Checks
-    public bool EnteredCombatZone = false;
 
     // Delegate Events
     public ActorEvent TickEvents;
@@ -112,7 +107,9 @@ namespace SWEndor.Actors
     public int HuntWeight = 1;
 
     // Data (structs)
+    public WeaponData WeaponDefinitions;
     public MoveData MoveData;
+    public AIData AIData;
 
     // Traits/Model (structs)
     private MeshModel Meshes;

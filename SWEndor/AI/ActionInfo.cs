@@ -40,7 +40,7 @@ namespace SWEndor.AI.Actions
       float boundmult = 0.99f;
       if (!(owner.TypeInfo is ActorTypes.Groups.Projectile) 
         && owner.IsOutOfBounds(owner.GetEngine().GameScenarioManager.MinAIBounds * boundmult, owner.GetEngine().GameScenarioManager.MaxAIBounds * boundmult) 
-        && owner.EnteredCombatZone)
+        && owner.AIData.EnteredCombatZone)
       {
         float x = owner.GetEngine().Random.Next((int)(owner.GetEngine().GameScenarioManager.MinAIBounds.x * 0.65f), (int)(owner.GetEngine().GameScenarioManager.MaxAIBounds.x * 0.65f));
         float y = owner.GetEngine().Random.Next(-200, 200);
@@ -55,103 +55,26 @@ namespace SWEndor.AI.Actions
       {
         if (!owner.IsOutOfBounds(owner.GetEngine().GameScenarioManager.MinAIBounds * boundmult, owner.GetEngine().GameScenarioManager.MaxAIBounds * boundmult))
         {
-          owner.EnteredCombatZone = true;
+          owner.AIData.EnteredCombatZone = true;
         }
       }
       return true;
     }
 
-    internal static float AdjustRotation(ActorInfo owner, TV_3DVECTOR target_Position, bool isAttacking = false, bool isAvoidCollision = false)
+    protected bool CheckImminentCollision(ActorInfo owner)
     {
-      if (owner.TypeInfo.AIData.AlwaysAccurateRotation)
-      {
-        owner.LookAt(target_Position);
-        return 0;
-      }
-      if (owner.TypeInfo.MoveLimitData.MaxTurnRate == 0) // Cannot turn
-      {
-        return 0;
-      }
-      else
-      {
-        TV_3DVECTOR tgtdir = target_Position - owner.GetGlobalPosition();
-
-        TV_3DVECTOR chgrot = Utilities.GetRotation(tgtdir) - owner.GetGlobalRotation();
-
-        chgrot.x = chgrot.x.Modulus(-180, 180);
-        chgrot.y = chgrot.y.Modulus(-180, 180);
-
-        TV_3DVECTOR truechg = new TV_3DVECTOR(chgrot.x, chgrot.y, chgrot.z);
-
-        // increased responsiveness
-        chgrot *= isAvoidCollision ? 9999 : 10;
-
-        chgrot.x = chgrot.x.Clamp(-owner.TypeInfo.MoveLimitData.MaxTurnRate, owner.TypeInfo.MoveLimitData.MaxTurnRate);
-        chgrot.y = chgrot.y.Clamp(-owner.TypeInfo.MoveLimitData.MaxTurnRate, owner.TypeInfo.MoveLimitData.MaxTurnRate);
-
-        // limit abrupt changes
-        float limit = owner.TypeInfo.MoveLimitData.MaxTurnRate * owner.TypeInfo.MoveLimitData.MaxSecondOrderTurnRateFrac;
-        if (Math.Abs(owner.MoveData.XTurnAngle - chgrot.x) > limit)
-          owner.MoveData.XTurnAngle += limit * ((owner.MoveData.XTurnAngle > chgrot.x) ? -1 : 1);
-        else
-          owner.MoveData.XTurnAngle = chgrot.x;
-
-        if (Math.Abs(owner.MoveData.YTurnAngle - chgrot.y) > limit)
-          owner.MoveData.YTurnAngle += limit * ((owner.MoveData.YTurnAngle > chgrot.y) ? -1 : 1);
-        else
-          owner.MoveData.YTurnAngle = chgrot.y;
-
-        
-
-        TV_3DVECTOR vec = new TV_3DVECTOR();
-        TV_3DVECTOR dir = owner.Direction;
-        owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, tgtdir);
-        float delta = owner.GetEngine().TrueVision.TVMathLibrary.ACos(owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
-
-        if (owner.IsPlayer)
-          owner.GetEngine().Screen2D.MessageSecondaryText(string.Concat("DELTA: ", delta.ToString("0.000")), 1.5f, new TV_COLOR(0.5f, 0.5f, 1, 1), 0);
-        return delta;
-
-      }
-    }
-
-    internal static float AdjustSpeed(ActorInfo owner, float target_Speed)
-    {
-      if (!owner.MoveData.FreeSpeed)
-      {
-        target_Speed = target_Speed.Clamp(owner.MoveData.MinSpeed, owner.MoveData.MaxSpeed);
-      }
-
-      if (owner.MoveData.Speed > target_Speed)
-      {
-        owner.MoveData.Speed -= owner.MoveData.MaxSpeedChangeRate * owner.GetEngine().Game.TimeSinceRender;
-        if (owner.MoveData.Speed < target_Speed)
-          owner.MoveData.Speed = target_Speed;
-      }
-      else
-      {
-        owner.MoveData.Speed += owner.MoveData.MaxSpeedChangeRate * owner.GetEngine().Game.TimeSinceRender;
-        if (owner.MoveData.Speed > target_Speed)
-          owner.MoveData.Speed = target_Speed;
-      }
-
-      return (owner.MoveData.Speed - target_Speed);
-    }
-
-    protected bool CheckImminentCollision(ActorInfo owner, float scandistance)
-    {
-      //return false; // disable for now
-
       if (!owner.TypeInfo.AIData.CanCheckCollisionAhead)
         return false;
 
       if (!owner.Engine.MaskDataSet[owner].Has(ComponentMask.CAN_BECOLLIDED))
         return false;
 
-      if (scandistance <= 0)
+      float dist = owner.MoveData.Speed * Globals.ImminentCollisionFactor * (1 + (Math.Abs(owner.MoveData.XTurnAngle) + Math.Abs(owner.MoveData.YTurnAngle)) / 30f) ; // turning plays a role
+
+      if (dist <= 0)
         return false;
 
-      return CollisionSystem.ActivateImminentCollisionCheck(owner.Engine, owner, ref m_collisioncheck_time, scandistance);
+      return CollisionSystem.ActivateImminentCollisionCheck(owner.Engine, owner, ref m_collisioncheck_time, dist);
     }
 
     public void Dispose()
