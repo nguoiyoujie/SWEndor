@@ -161,20 +161,6 @@ namespace SWEndor.Actors
             Mesh.SetMatrix(mat);
             FarMesh.SetMatrix(mat);
 
-            if (prev_collide != collide)
-            {
-              prev_collide = collide;
-              using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
-                Mesh.SetCollisionEnable(collide);
-            }
-
-            if (prev_collidefar != collidefar)
-            {
-              prev_collidefar = collidefar;
-              using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
-                FarMesh.SetCollisionEnable(collidefar);
-            }
-
             if (prev_render != render)
             {
               prev_render = render;
@@ -187,6 +173,20 @@ namespace SWEndor.Actors
               prev_renderfar = renderfar;
               using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
                 FarMesh.Enable(renderfar);
+            }
+
+            if (prev_collide != collide)
+            {
+              prev_collide = collide;
+              using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+                Mesh.SetCollisionEnable(collide);
+            }
+
+            if (prev_collidefar != collidefar)
+            {
+              prev_collidefar = collidefar;
+              using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+                FarMesh.SetCollisionEnable(collidefar);
             }
           }
       }
