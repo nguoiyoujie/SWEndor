@@ -213,34 +213,19 @@ namespace SWEndor.Actors
       }
 
       // ?
-      public TV_3DVECTOR GetGlobalDirection(ActorInfo self)
+      public TV_3DVECTOR GetGlobalDirection(ActorInfo self, float time)
       {
-        TV_3DVECTOR ret = Direction;
-        using (ScopeCounterManager.Acquire(self.Scope))
-        {
-          ActorInfo p = self.ParentForCoords;
-          if (!p?.Disposed ?? false)
-            using (ScopeCounterManager.Acquire(p.Scope))
-              ret += p.Transform.GetGlobalDirection(p);
-        }
-        TV_3DVECTOR dir = new TV_3DVECTOR();
-        mlib.TVVec3Normalize(ref dir, ret);
+        TV_3DVECTOR dir = Utilities.GetDirection(GetGlobalRotation(self, time));
+        //TV_3DVECTOR dir = new TV_3DVECTOR();
+        //mlib.TVVec3Normalize(ref dir, ret);
         return dir;
       }
 
-      public TV_3DVECTOR GetPrevGlobalDirection(ActorInfo self)
+      public TV_3DVECTOR GetPrevGlobalDirection(ActorInfo self, float time)
       {
-        TV_3DVECTOR ret = PrevDirection;
-        using (ScopeCounterManager.Acquire(self.Scope))
-        {
-          ActorInfo p = self.ParentForCoords;
-          if (!p?.Disposed ?? false)
-            using (ScopeCounterManager.Acquire(p.Scope))
-              ret += p.Transform.GetPrevGlobalDirection(p);
-        }
-
-        TV_3DVECTOR dir = new TV_3DVECTOR();
-        mlib.TVVec3Normalize(ref dir, ret);
+        TV_3DVECTOR dir = Utilities.GetDirection(GetPrevGlobalRotation(self, time));
+        //TV_3DVECTOR dir = new TV_3DVECTOR();
+        //mlib.TVVec3Normalize(ref dir, ret);
         return dir;
       }
 
@@ -311,7 +296,7 @@ namespace SWEndor.Actors
     public TV_3DVECTOR GetGlobalDirection()
     {
       using (ScopeCounterManager.Acquire(Scope))
-        return Transform.GetGlobalDirection(this);
+        return Transform.GetGlobalDirection(this, Game.GameTime);
     }
 
     public TV_3DVECTOR GetRelativePositionFUR(float front, float up, float right, bool uselocal = false)

@@ -35,7 +35,7 @@ namespace SWEndor.ActorTypes.Components
       // Control rotation
       if (data.ApplyZBalance)
       {
-        TV_3DVECTOR vec = actor.GetGlobalRotation();
+        TV_3DVECTOR vec = actor.Rotation;
         actor.Rotation = new TV_3DVECTOR(vec.x, vec.y, 0);
         actor.MoveRelative(data.Speed * time, 0, 0);
         data.ZRoll -= data.YTurnAngle * data.ZTilt * time;
@@ -56,7 +56,7 @@ namespace SWEndor.ActorTypes.Components
       }
       else
       {
-        TV_3DVECTOR vec = actor.GetGlobalRotation();
+        TV_3DVECTOR vec = actor.Rotation;
         actor.MoveRelative(data.Speed * time, 0, 0);
         data.ZRoll = vec.z;
         data.ZRoll -= data.YTurnAngle * data.ZTilt * time;
