@@ -12,7 +12,8 @@ namespace SWEndor.UI.Menu.Pages
   {
     SelectionElement Cover = new SelectionElement();
     SelectionElement LoadingText = new SelectionElement();
-    ThreadSafeDictionary<SelectionElement, float> Squares = new ThreadSafeDictionary<SelectionElement, float>();
+    List<float> Vals = new List<float>();
+    List<SelectionElement> Squares = new List<SelectionElement>();
     TV_COLOR SquareColor1 = new TV_COLOR(0, 0, 0, 0.7f);
     TV_COLOR SquareColor2 = new TV_COLOR(0.8f, 0.8f, 0, 1);
 
@@ -47,12 +48,13 @@ namespace SWEndor.UI.Menu.Pages
           sqi.HighlightBoxWidth = Engine.ScreenWidth * (di - 0.01f);
           sqi.HighlightBoxHeight = Engine.ScreenHeight * (dj - 0.01f);
           sqi.UnHighlightBoxPositionColor = SquareColor1;
-          Squares.Put(sqi, (float)Engine.Random.NextDouble());
+          Squares.Add(sqi);
+          Vals.Add((float)Engine.Random.NextDouble());
         }
 
       Elements.Add(Cover);
       Elements.Add(LoadingText);
-      foreach (SelectionElement sq in Squares.Keys)
+      foreach (SelectionElement sq in Squares)
         Elements.Add(sq);
 
       StartLoad();
@@ -96,17 +98,17 @@ namespace SWEndor.UI.Menu.Pages
       {
         LoadingText.Text = PrintLoadingText();
 
-        foreach (SelectionElement sq in Squares.Keys)
+        for (int i = 0; i < Squares.Count; i++)
         {
-          Squares[sq] -= Engine.Game.TimeSinceRender;
-          if (Squares[sq] < 0)
+          Vals[i] -= Engine.Game.TimeSinceRender;
+          if (Vals[i] < 0)
           {
-            if (sq.UnHighlightBoxPositionColor.GetIntColor() == SquareColor1.GetIntColor())
-              sq.UnHighlightBoxPositionColor = SquareColor2;
+            if (Squares[i].UnHighlightBoxPositionColor.GetIntColor() == SquareColor1.GetIntColor())
+              Squares[i].UnHighlightBoxPositionColor = SquareColor2;
             else
-              sq.UnHighlightBoxPositionColor = SquareColor1;
+              Squares[i].UnHighlightBoxPositionColor = SquareColor1;
 
-            Squares[sq] += (float)Engine.Random.NextDouble();
+            Vals[i] += (float)Engine.Random.NextDouble();
           }
         }
       }
