@@ -316,7 +316,7 @@ namespace SWEndor.Scenarios
 
     public void RegisterEvents(ActorInfo actor)
     {
-      actor.HitEvents += ProcessHit;
+     // actor.HitEvents += ProcessHit;
     }
 
     public virtual void ProcessPlayerDying(ActorInfo a)
@@ -341,11 +341,10 @@ namespace SWEndor.Scenarios
 
     public virtual void ProcessHit(ActorInfo aa, ActorInfo av)
     {
+      /*
       if (PlayerInfo.Actor == aa.TopParent)
       {
-        if (PlayerInfo.Actor != null
-        && av.Faction != null
-        && av.Faction.IsAlliedWith(PlayerInfo.Actor.Faction))
+        if (av.Faction.IsAlliedWith(PlayerInfo.Actor.Faction))
         {
           Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", av.Name, PlayerInfo.Name)
                                                       , 5
@@ -353,6 +352,7 @@ namespace SWEndor.Scenarios
                                                       , -1);
         }
       }
+      */
     }
 
     public virtual void PlayCutsceneSequence()
