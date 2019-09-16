@@ -438,6 +438,7 @@
     <Compile Include="Primitives\TimeControl.cs" />
     <Compile Include="Scenarios\ActorSpawnInfo.cs" />
     <Compile Include="Scenarios\GSFunctions.cs" />
+    <Compile Include="Scenarios\Scripting\Expressions\Val.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\SWContext.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\Context.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\Interfaces.cs" />
@@ -453,7 +454,7 @@
     <Compile Include="Scenarios\Scripting\Expressions\TokenTypes\Expressions\Function.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\TokenTypes\Expressions\Interfaces.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\TokenTypes\Expressions\Literals\BoolLiteral.cs" />
-    <Compile Include="Scenarios\Scripting\Expressions\TokenTypes\Expressions\Literals\DoubleLiteral.cs" />
+    <Compile Include="Scenarios\Scripting\Expressions\TokenTypes\Expressions\Literals\SingleLiteral.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\TokenTypes\Expressions\Literals\HexLiteral.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\TokenTypes\Expressions\Literals\IntLiteral.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\TokenTypes\Expressions\Literals\StringLiteral.cs" />

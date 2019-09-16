@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SWEndor.Primitives;
+using System;
 
 namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 {
@@ -38,14 +39,14 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       return this;
     }
 
-    public override object Evaluate(Context context)
+    public override Val Evaluate(Context context)
     {
-      dynamic result = false;
-      try { result = (bool)(_question.Evaluate(context) as IConvertible); } catch (Exception ex) { throw new EvalException(this, "bool cast", result, ex); }
-      if (result)
-        return _true?.Evaluate(context);
+      Val result = _question.Evaluate(context);
+      if (result.Type != ValType.BOOL) throw new EvalException(this, "Non-boolean value {0} found at start of conditional expression".F(result.Value));
+      if (result.ValueB)
+        return _true?.Evaluate(context) ?? new Val();
       else
-        return _false?.Evaluate(context);
+        return _false?.Evaluate(context) ?? new Val();
     }
   }
 }

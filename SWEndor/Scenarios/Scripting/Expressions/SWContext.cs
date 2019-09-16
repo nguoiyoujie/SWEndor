@@ -137,9 +137,9 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       Functions.Add("GetArrayElement".ToLowerInvariant(), ScriptManagement.GetArrayElement);
     }
 
-    public object IsNull(Context c, object[] ps)
+    public Val IsNull(Context c, Val[] ps)
     {
-      return ps[0] == null;
+      return new Val(ps[0].IsNull);
     }
   }
 }

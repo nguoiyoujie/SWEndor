@@ -1,5 +1,5 @@
-﻿using SWEndor.Primitives;
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 {
@@ -7,7 +7,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
   {
     private bool isUnequal = false;
     private CExpression _first;
-    private ThreadSafeList<CExpression> _set = new ThreadSafeList<CExpression>();
+    private List<CExpression> _set = new List<CExpression>();
 
     internal EqualityExpression(Lexer lexer) : base(lexer)
     {
@@ -39,16 +39,16 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       return this;
     }
 
-    public override object Evaluate(Context context)
+    public override Val Evaluate(Context context)
     {
-      dynamic result = _first.Evaluate(context);
-      foreach (CExpression _expr in _set.GetList())
+      Val result = _first.Evaluate(context);
+      foreach (CExpression _expr in _set)
       {
-        dynamic adden = _expr.Evaluate(context);
+        Val adden = _expr.Evaluate(context);
         if (isUnequal)
-          try { result = _first.Evaluate(context) != adden; } catch (Exception ex) { throw new EvalException(this, "!=", result, adden, ex); }
+          try { result = Ops.Do(BOp.NOT_EQUAL_TO, result, adden); } catch (Exception ex) { throw new EvalException(this, "!=", result, adden, ex); }
         else
-          try { result = _first.Evaluate(context) == adden; } catch (Exception ex) { throw new EvalException(this, "==", result, adden, ex); }
+          try { result = Ops.Do(BOp.EQUAL_TO, result, adden); } catch (Exception ex) { throw new EvalException(this, "==", result, adden, ex); }
       }
       return result;
     }

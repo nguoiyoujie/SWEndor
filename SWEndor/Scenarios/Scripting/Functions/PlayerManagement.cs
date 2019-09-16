@@ -5,75 +5,75 @@ namespace SWEndor.Scenarios.Scripting.Functions
 {
   public static class PlayerManagement
   {
-    public static object AssignActor(Context context, object[] ps)
+    public static Val AssignActor(Context context, Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       if (id < 0)
       {
         context.Engine.PlayerInfo.ActorID = -1;
-        return false;
+        return Val.FALSE;
       }
 
       if (context.Engine.ActorFactory.Get(id) == null)
-        return false;
+        return Val.FALSE;
 
       context.Engine.PlayerInfo.ActorID = id;
-      return true;
+      return Val.TRUE;
     }
 
-    public static object GetActor(Context context, object[] ps)
+    public static Val GetActor(Context context, Val[] ps)
     {
-      return context.Engine.PlayerInfo.ActorID;
+      return new Val(context.Engine.PlayerInfo.ActorID);
     }
 
-    public static object RequestSpawn(Context context, object[] ps)
+    public static Val RequestSpawn(Context context, Val[] ps)
     {
       context.Engine.PlayerInfo.RequestSpawn = true;
-      return true;
+      return Val.TRUE;
     }
 
-    public static object SetMovementEnabled(Context context, object[] ps)
+    public static Val SetMovementEnabled(Context context, Val[] ps)
     {
-      bool enabled = Convert.ToBoolean(ps[0].ToString());
+      bool enabled = ps[0].ValueB;
       context.Engine.PlayerInfo.IsMovementControlsEnabled = enabled;
-      return true;
+      return Val.TRUE;
     }
 
-    public static object SetAI(Context context, object[] ps)
+    public static Val SetAI(Context context, Val[] ps)
     {
-      bool enabled = Convert.ToBoolean(ps[0].ToString());
+      bool enabled = ps[0].ValueB;
       context.Engine.PlayerInfo.PlayerAIEnabled = enabled;
-      return true;
+      return Val.TRUE;
     }
 
-    public static object SetLives(Context context, object[] ps)
+    public static Val SetLives(Context context, Val[] ps)
     {
-      context.Engine.PlayerInfo.Lives = Convert.ToInt32(ps[0].ToString());
-      return true;
+      context.Engine.PlayerInfo.Lives = ps[0].ValueI;
+      return Val.TRUE;
     }
 
-    public static object DecreaseLives(Context context, object[] ps)
+    public static Val DecreaseLives(Context context, Val[] ps)
     {
       context.Engine.PlayerInfo.Lives--;
-      return true;
+      return Val.TRUE;
     }
 
-    public static object SetScorePerLife(Context context, object[] ps)
+    public static Val SetScorePerLife(Context context, Val[] ps)
     {
-      context.Engine.PlayerInfo.ScorePerLife = Convert.ToInt32(ps[0].ToString());
-      return true;
+      context.Engine.PlayerInfo.ScorePerLife = ps[0].ValueF;
+      return Val.TRUE;
     }
 
-    public static object SetScoreForNextLife(Context context, object[] ps)
+    public static Val SetScoreForNextLife(Context context, Val[] ps)
     {
-      context.Engine.PlayerInfo.ScoreForNextLife = Convert.ToInt32(ps[0].ToString());
-      return true;
+      context.Engine.PlayerInfo.ScoreForNextLife = ps[0].ValueF;
+      return Val.TRUE;
     }
 
-    public static object ResetScore(Context context, object[] ps)
+    public static Val ResetScore(Context context, Val[] ps)
     {
       context.Engine.PlayerInfo.Score.Reset();
-      return true;
+      return Val.TRUE;
     }
   }
 }

@@ -9,7 +9,7 @@
   {
     internal CExpression(Lexer lexer) { LineNumber = lexer.LineNumber; Position = lexer.Position; }
     public virtual CExpression Get() { return this; }
-    public virtual object Evaluate(Context context) { return null; }
+    public virtual Val Evaluate(Context context) { return default(Val); }
 
     public int LineNumber { get; }
     public int Position { get; }
@@ -18,6 +18,6 @@
   public interface IExpression
   {
     CExpression Get();
-    object Evaluate(Context context);
+    Val Evaluate(Context context);
   }
 }

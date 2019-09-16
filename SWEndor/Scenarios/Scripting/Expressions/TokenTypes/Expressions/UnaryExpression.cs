@@ -38,9 +38,9 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       return this;
     }
 
-    public override object Evaluate(Context context)
+    public override Val Evaluate(Context context)
     {
-      dynamic result = _primary.Evaluate(context);
+      Val result = _primary.Evaluate(context);
       switch (_type)
       {
         default:
@@ -48,9 +48,9 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
         case TokenEnum.NOTHING:
           return result;
         case TokenEnum.MINUS:
-          try { return -result; } catch (Exception ex) { throw new EvalException(this, "-", result, ex); }
+          try { return Ops.Do(UOp.NEGATION, result); } catch (Exception ex) { throw new EvalException(this, "-", result, ex); }
         case TokenEnum.NOT:
-          try { return !result; } catch (Exception ex) { throw new EvalException(this, "!", result, ex); }
+          try { return Ops.Do(UOp.LOGICAL_NOT, result); } catch (Exception ex) { throw new EvalException(this, "!", result, ex); }
       }
     }
   }

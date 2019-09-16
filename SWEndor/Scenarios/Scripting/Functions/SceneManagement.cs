@@ -6,37 +6,37 @@ namespace SWEndor.Scenarios.Scripting.Functions
 {
   public static class SceneManagement
   {
-    public static object SetMaxBounds(Context context, params object[] ps)
+    public static Val SetMaxBounds(Context context, params Val[] ps)
     {
-      context.Engine.GameScenarioManager.MaxBounds = new TV_3DVECTOR(Convert.ToSingle(ps[0].ToString()), Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()));
-      return true;
+      context.Engine.GameScenarioManager.MaxBounds = new TV_3DVECTOR(ps[0].ValueF, ps[1].ValueF, ps[2].ValueF);
+      return Val.TRUE;
     }
 
-    public static object SetMinBounds(Context context, params object[] ps)
+    public static Val SetMinBounds(Context context, params Val[] ps)
     {
-      context.Engine.GameScenarioManager.MinBounds = new TV_3DVECTOR(Convert.ToSingle(ps[0].ToString()), Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()));
-      return true;
+      context.Engine.GameScenarioManager.MinBounds = new TV_3DVECTOR(ps[0].ValueF, ps[1].ValueF, ps[2].ValueF);
+      return Val.TRUE;
     }
 
-    public static object SetMaxAIBounds(Context context, params object[] ps)
+    public static Val SetMaxAIBounds(Context context, params Val[] ps)
     {
-      context.Engine.GameScenarioManager.MaxAIBounds = new TV_3DVECTOR(Convert.ToSingle(ps[0].ToString()), Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()));
-      return true;
+      context.Engine.GameScenarioManager.MaxAIBounds = new TV_3DVECTOR(ps[0].ValueF, ps[1].ValueF, ps[2].ValueF);
+      return Val.TRUE;
     }
 
-    public static object SetMinAIBounds(Context context, params object[] ps)
+    public static Val SetMinAIBounds(Context context, params Val[] ps)
     {
-      context.Engine.GameScenarioManager.MinAIBounds = new TV_3DVECTOR(Convert.ToSingle(ps[0].ToString()), Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()));
-      return true;
+      context.Engine.GameScenarioManager.MinAIBounds = new TV_3DVECTOR(ps[0].ValueF, ps[1].ValueF, ps[2].ValueF);
+      return Val.TRUE;
     }
 
-    public static object FadeOut(Context context, params object[] ps)
+    public static Val FadeOut(Context context, params Val[] ps)
     {
       if (context.Engine.GameScenarioManager.Scenario == null)
-        return false;
+        return Val.FALSE;
 
       context.Engine.GameScenarioManager.Scenario.FadeOut();
-      return true;
+      return Val.TRUE;
     }
   }
 }

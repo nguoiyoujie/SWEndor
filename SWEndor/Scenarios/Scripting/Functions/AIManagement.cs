@@ -9,90 +9,90 @@ namespace SWEndor.Scenarios.Scripting.Functions
 {
   public static class AIManagement
   {
-    public static object QueueFirst(Context context, params object[] ps)
+    public static Val QueueFirst(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return false;
+        return Val.FALSE;
 
       ActionInfo action = ParseAction(ps);
       if (action == null)
-        return false;
+        return Val.FALSE;
 
       actor.QueueFirst(action);
-      return true;
+      return Val.TRUE;
     }
 
-    public static object QueueNext(Context context, params object[] ps)
+    public static Val QueueNext(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return false;
+        return Val.FALSE;
 
       ActionInfo action = ParseAction(ps);
       if (action == null)
-        return false;
+        return Val.FALSE;
 
       actor.QueueNext(action);
-      return true;
+      return Val.TRUE;
     }
 
-    public static object QueueLast(Context context, params object[] ps)
+    public static Val QueueLast(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return false;
+        return Val.FALSE;
 
       ActionInfo action = ParseAction(ps);
       if (action == null)
-        return false;
+        return Val.FALSE;
 
       actor.QueueLast(action);
-      return true;
+      return Val.TRUE;
     }
 
-    public static object UnlockActor(Context context, params object[] ps)
+    public static Val UnlockActor(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return false;
+        return Val.FALSE;
 
       actor.UnlockOne();
-      return true;
+      return Val.TRUE;
     }
 
-    public static object ClearQueue(Context context, params object[] ps)
+    public static Val ClearQueue(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return false;
+        return Val.FALSE;
 
       actor.ForceClearQueue();
-      return true;
+      return Val.TRUE;
     }
 
-    public static object ForceClearQueue(Context context, params object[] ps)
+    public static Val ForceClearQueue(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return false;
+        return Val.FALSE;
 
       actor.ForceClearQueue();
-      return true;
+      return Val.TRUE;
     }
 
-    private static ActionInfo ParseAction(object[] ps)
+    private static ActionInfo ParseAction(Val[] ps)
     {
       int tgtid = -1;
       //ActorInfo tgt = null;
       ActionInfo action = null;
-      switch (ps[1].ToString().ToLower())
+      switch (ps[1].ValueS.ToLower())
       {
         case "idle":
           action = new Idle();
@@ -118,21 +118,21 @@ namespace SWEndor.Scenarios.Scripting.Functions
           if (ps.Length <= 2)
             action = new Wait();
           else
-            action = new Wait(Convert.ToSingle(ps[2].ToString()));
+            action = new Wait(ps[2].ValueF);
           break;
 
         case "evade":
           if (ps.Length <= 2)
             action = new Evade();
           else
-            action = new Evade(Convert.ToSingle(ps[2].ToString()));
+            action = new Evade(ps[2].ValueF);
           break;
 
         case "move":
           if (ps.Length >= 6)
           {
-            TV_3DVECTOR dest = new TV_3DVECTOR(Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()), Convert.ToSingle(ps[4].ToString()));
-            float speed = Convert.ToSingle(ps[5].ToString());
+            TV_3DVECTOR dest = new TV_3DVECTOR(ps[2].ValueF, ps[3].ValueF, ps[4].ValueF);
+            float speed = ps[5].ValueF;
 
             switch (ps.Length)
             {
@@ -140,23 +140,23 @@ namespace SWEndor.Scenarios.Scripting.Functions
                 action = new Move(dest, speed);
                 break;
               case 7:
-                action = new Move(dest, speed, Convert.ToSingle(ps[6].ToString()));
+                action = new Move(dest, speed, ps[6].ValueF);
                 break;
               default:
               case 8:
-                action = new Move(dest, speed, Convert.ToSingle(ps[6].ToString()), Convert.ToBoolean(ps[7].ToString()));
+                action = new Move(dest, speed, ps[6].ValueF, ps[7].ValueB);
                 break;
             }
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ToString().ToLower(), 6, ps.Length));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), 6, ps.Length));
           break;
 
         case "forcedmove":
           if (ps.Length >= 6)
           {
-            TV_3DVECTOR dest = new TV_3DVECTOR(Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()), Convert.ToSingle(ps[4].ToString()));
-            float speed = Convert.ToSingle(ps[5].ToString());
+            TV_3DVECTOR dest = new TV_3DVECTOR(ps[2].ValueF, ps[3].ValueF, ps[4].ValueF);
+            float speed = ps[5].ValueF;
 
             switch (ps.Length)
             {
@@ -164,23 +164,23 @@ namespace SWEndor.Scenarios.Scripting.Functions
                 action = new ForcedMove(dest, speed);
                 break;
               case 7:
-                action = new ForcedMove(dest, speed, Convert.ToSingle(ps[6].ToString()));
+                action = new ForcedMove(dest, speed, ps[6].ValueF);
                 break;
               default:
               case 8:
-                action = new ForcedMove(dest, speed, Convert.ToSingle(ps[6].ToString()), Convert.ToSingle(ps[7].ToString()));
+                action = new ForcedMove(dest, speed, ps[6].ValueF, ps[7].ValueF);
                 break;
             }
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ToString().ToLower(), 6, ps.Length));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), 6, ps.Length));
           break;
 
         case "rotate":
           if (ps.Length >= 6)
           {
-            TV_3DVECTOR dest = new TV_3DVECTOR(Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()), Convert.ToSingle(ps[4].ToString()));
-            float speed = Convert.ToSingle(ps[5].ToString());
+            TV_3DVECTOR dest = new TV_3DVECTOR(ps[2].ValueF, ps[3].ValueF, ps[4].ValueF);
+            float speed = ps[5].ValueF;
 
             switch (ps.Length)
             {
@@ -188,26 +188,26 @@ namespace SWEndor.Scenarios.Scripting.Functions
                 action = new Rotate(dest, speed);
                 break;
               case 7:
-                action = new Rotate(dest, speed, Convert.ToSingle(ps[6].ToString()));
+                action = new Rotate(dest, speed, ps[6].ValueF);
                 break;
               default:
               case 8:
-                action = new Rotate(dest, speed, Convert.ToSingle(ps[6].ToString()), Convert.ToBoolean(ps[7].ToString()));
+                action = new Rotate(dest, speed, ps[6].ValueF, ps[7].ValueB);
                 break;
             }
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ToString().ToLower(), 6, ps.Length));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), 6, ps.Length));
           break;
 
         case "hyperspacein":
           if (ps.Length >= 5)
           {
-            TV_3DVECTOR dest = new TV_3DVECTOR(Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()), Convert.ToSingle(ps[4].ToString()));
+            TV_3DVECTOR dest = new TV_3DVECTOR(ps[2].ValueF, ps[3].ValueF, ps[4].ValueF);
             action = new HyperspaceIn(dest);
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ToString().ToLower(), 5, ps.Length));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), 5, ps.Length));
           break;
 
         case "hyperspaceout":
@@ -217,10 +217,10 @@ namespace SWEndor.Scenarios.Scripting.Functions
         case "attackactor":
           if (ps.Length >= 3)
           {
-            tgtid = Convert.ToInt32(ps[2].ToString());
+            tgtid = ps[2].ValueI;
             //tgt = ActorFactory.Get(tgtid);
             //if (tgt == null)
-            //  throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[1].ToString().ToLower(), ps[2].ToString().ToLower()));
+            //  throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[1].ValueS.ToLower(), ps[2].ToString().ToLower()));
 
             switch (ps.Length)
             {
@@ -228,31 +228,31 @@ namespace SWEndor.Scenarios.Scripting.Functions
                 action = new AttackActor(tgtid);
                 break;
               case 4:
-                action = new AttackActor(tgtid, Convert.ToSingle(ps[3].ToString()));
+                action = new AttackActor(tgtid, ps[3].ValueF);
                 break;
               case 5:
-                action = new AttackActor(tgtid, Convert.ToSingle(ps[3].ToString()), Convert.ToSingle(ps[4].ToString()));
+                action = new AttackActor(tgtid, ps[3].ValueF, ps[4].ValueF);
                 break;
               case 6:
-                action = new AttackActor(tgtid, Convert.ToSingle(ps[3].ToString()), Convert.ToSingle(ps[4].ToString()), Convert.ToBoolean(ps[5].ToString()));
+                action = new AttackActor(tgtid, ps[3].ValueF, ps[4].ValueF, ps[5].ValueB);
                 break;
               default:
               case 7:
-                action = new AttackActor(tgtid, Convert.ToSingle(ps[3].ToString()), Convert.ToSingle(ps[4].ToString()), Convert.ToBoolean(ps[5].ToString()), Convert.ToSingle(ps[6].ToString()));
+                action = new AttackActor(tgtid, ps[3].ValueF, ps[4].ValueF, ps[5].ValueB, ps[6].ValueF);
                 break;
             }
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ToString().ToLower(), 3, ps.Length));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), 3, ps.Length));
           break;
 
         case "followactor":
           if (ps.Length >= 3)
           {
-            tgtid = Convert.ToInt32(ps[2].ToString());
+            tgtid = ps[2].ValueI;
             //tgt = ActorFactory.Get(tgtid);
             //if (tgt == null)
-            //  throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[1].ToString().ToLower(), ps[2].ToString().ToLower()));
+            //  throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[1].ValueS.ToLower(), ps[2].ToString().ToLower()));
 
             switch (ps.Length)
             {
@@ -260,23 +260,23 @@ namespace SWEndor.Scenarios.Scripting.Functions
                 action = new FollowActor(tgtid);
                 break;
               case 4:
-                action = new FollowActor(tgtid, Convert.ToSingle(ps[3].ToString()));
+                action = new FollowActor(tgtid, ps[3].ValueF);
                 break;
               default:
               case 5:
-                action = new FollowActor(tgtid, Convert.ToSingle(ps[3].ToString()), Convert.ToBoolean(ps[4].ToString()));
+                action = new FollowActor(tgtid, ps[3].ValueF, ps[4].ValueB);
                 break;
             }
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ToString().ToLower(), 3, ps.Length));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), 3, ps.Length));
           break;
 
         case "avoidcollisionrotate":
           if (ps.Length >= 8)
           {
-            TV_3DVECTOR pos = new TV_3DVECTOR(Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()), Convert.ToSingle(ps[4].ToString()));
-            TV_3DVECTOR rot = new TV_3DVECTOR(Convert.ToSingle(ps[5].ToString()), Convert.ToSingle(ps[6].ToString()), Convert.ToSingle(ps[7].ToString()));
+            TV_3DVECTOR pos = new TV_3DVECTOR(ps[2].ValueF, ps[3].ValueF, ps[4].ValueF);
+            TV_3DVECTOR rot = new TV_3DVECTOR(ps[5].ValueF, ps[6].ValueF, ps[7].ValueF);
 
             switch (ps.Length)
             {
@@ -285,21 +285,21 @@ namespace SWEndor.Scenarios.Scripting.Functions
                 break;
               default:
               case 9:
-                action = new AvoidCollisionRotate(pos, rot, Convert.ToSingle(ps[8].ToString()));
+                action = new AvoidCollisionRotate(pos, rot, ps[8].ValueF);
                 break;
             }
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[0].ToString().ToLower(), 8, ps.Length));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[0].ValueS.ToLower(), 8, ps.Length));
           break;
 
         case "setgamestateb":
           if (ps.Length >= 4)
           {
-            action = new SetGameStateB(ps[2].ToString(), Convert.ToBoolean(ps[3].ToString()));
+            action = new SetGameStateB(ps[2].ValueS,ps[3].ValueB);
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ToString().ToLower(), 4, ps.Length));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), 4, ps.Length));
           break;
 
       }

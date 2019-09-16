@@ -1,12 +1,12 @@
-﻿using SWEndor.Primitives;
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 {
   public class AddExpression : CExpression
   {
     private CExpression _first;
-    private ThreadSafeDictionary<CExpression, TokenEnum> _set = new ThreadSafeDictionary<CExpression, TokenEnum>();
+    private Dictionary<CExpression, TokenEnum> _set = new Dictionary<CExpression, TokenEnum>();
 
     internal AddExpression(Lexer lexer) : base(lexer)
     {
@@ -32,19 +32,19 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       return this;
     }
 
-    public override object Evaluate(Context context)
+    public override Val Evaluate(Context context)
     {
-      dynamic result = _first.Evaluate(context);
+      Val result = _first.Evaluate(context);
       foreach (CExpression _expr in _set.Keys)
       {
-        dynamic adden = _expr.Evaluate(context);
+        Val adden = _expr.Evaluate(context);
         switch (_set[_expr])
         {
           case TokenEnum.PLUS:
-            try { result += adden; } catch (Exception ex) { throw new EvalException(this, "+", result, adden, ex); }
+            try { result = Ops.Do(BOp.ADD, result, adden); } catch (Exception ex) { throw new EvalException(this, "+", result, adden, ex); }
             break;
           case TokenEnum.MINUS:
-            try { result -= adden; } catch (Exception ex) { throw new EvalException(this, "-", result, adden, ex); }
+            try { result = Ops.Do(BOp.SUBTRACT, result, adden); ; } catch (Exception ex) { throw new EvalException(this, "-", result, adden, ex); }
             break;
         }
       }

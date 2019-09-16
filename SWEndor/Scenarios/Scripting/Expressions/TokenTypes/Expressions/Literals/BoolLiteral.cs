@@ -11,9 +11,9 @@
       lexer.Next();
     }
 
-    public override object Evaluate(Context context)
+    public override Val Evaluate(Context context)
     {
-      return _value;
+      return new Val(_value);
     }
   }
 }

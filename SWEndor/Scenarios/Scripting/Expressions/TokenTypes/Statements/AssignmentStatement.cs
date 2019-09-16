@@ -82,28 +82,28 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
         switch (_assigntype)
         {
           case TokenEnum.ASSIGN:
-            v.Value = (dynamic)_value?.Evaluate(context);
+            v.Value = _value?.Evaluate(context) ?? Val.NULL;
             break;
           case TokenEnum.PLUSASSIGN:
-            v.Value += (dynamic)_value?.Evaluate(context);
+            v.Value = Ops.Do(BOp.ADD, v.Value, _value?.Evaluate(context) ?? Val.NULL); ;
             break;
           case TokenEnum.MINUSASSIGN:
-            v.Value -= (dynamic)_value?.Evaluate(context);
+            v.Value = Ops.Do(BOp.SUBTRACT, v.Value, _value?.Evaluate(context) ?? Val.NULL); ;
             break;
           case TokenEnum.ASTERISKASSIGN:
-            v.Value *= (dynamic)_value?.Evaluate(context);
+            v.Value = Ops.Do(BOp.MULTIPLY, v.Value, _value?.Evaluate(context) ?? Val.NULL); ;
             break;
           case TokenEnum.SLASHASSIGN:
-            v.Value /= (dynamic)_value?.Evaluate(context);
+            v.Value = Ops.Do(BOp.DIVIDE, v.Value, _value?.Evaluate(context) ?? Val.NULL); ;
             break;
           case TokenEnum.PERCENTASSIGN:
-            v.Value %= (dynamic)_value?.Evaluate(context);
+            v.Value = Ops.Do(BOp.MODULUS, v.Value, _value?.Evaluate(context) ?? Val.NULL); ;
             break;
           case TokenEnum.AMPASSIGN:
-            v.Value &= (dynamic)_value?.Evaluate(context);
+            v.Value = Ops.Do(BOp.LOGICAL_AND, v.Value, _value?.Evaluate(context) ?? Val.NULL); ;
             break;
           case TokenEnum.PIPEASSIGN:
-            v.Value |= (dynamic)_value?.Evaluate(context);
+            v.Value = Ops.Do(BOp.LOGICAL_OR, v.Value, _value?.Evaluate(context) ?? Val.NULL); ;
             break;
         }
       }

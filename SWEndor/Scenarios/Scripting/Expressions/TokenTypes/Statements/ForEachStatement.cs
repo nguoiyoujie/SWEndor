@@ -65,12 +65,22 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
     {
       if (_enumerable != null)
       {
-        object array = _enumerable.Evaluate(context);
-        if (array is Array)
+        Val array = _enumerable.Evaluate(context);
+        if (array.Type == ValType.INT_ARRAY)
         {
-          foreach (object o in (Array)array)
+          foreach (int v in array.ArrayI)
           {
-            context.Variables.Put(_var.varName, new Context.ContextVariable(_var.varName, o)); 
+            context.Variables.Put(_var.varName, new Context.ContextVariable(_var.varName, new Val(v))); 
+            foreach (CStatement s in _actions)
+              s.Evaluate(context);
+          }
+          return;
+        }
+        else if (array.Type == ValType.INT_ARRAY)
+        {
+          foreach (float v in array.ArrayF)
+          {
+            context.Variables.Put(_var.varName, new Context.ContextVariable(_var.varName, new Val(v)));
             foreach (CStatement s in _actions)
               s.Evaluate(context);
           }

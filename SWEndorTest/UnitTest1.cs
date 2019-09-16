@@ -5,6 +5,7 @@ using SWEndor;
 using SWEndor.Primitives;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
+using SWEndor.Scenarios.Scripting.Expressions;
 
 namespace SWEndorTest
 {
@@ -79,6 +80,26 @@ namespace SWEndorTest
       }
 
       Log.Write(TEST, "TransformTest end");
+    }
+
+    [TestMethod]
+    public void ScriptValTest()
+    {
+      Val v = new Val(true);
+      Assert.AreEqual(v.Type, ValType.BOOL);
+      Assert.AreEqual(v.ValueB, true);
+
+      v = new Val(2);
+      Assert.AreEqual(v.Type, ValType.INT);
+      Assert.AreEqual(v.ValueI, 2);
+
+      v = new Val(2.5f);
+      Assert.AreEqual(v.Type, ValType.FLOAT);
+      Assert.AreEqual(v.ValueF, 2.5f);
+
+      v = new Val("test");
+      Assert.AreEqual(v.Type, ValType.STRING);
+      Assert.AreEqual(v.ValueS, "test");
     }
   }
 }

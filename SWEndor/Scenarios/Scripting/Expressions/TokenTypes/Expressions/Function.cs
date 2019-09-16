@@ -1,13 +1,11 @@
-﻿
-using SWEndor.Primitives;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 {
   public class Function : CExpression
   {
     private string _funcName;
-    private ThreadSafeList<CExpression> _param = new ThreadSafeList<CExpression>();
+    private List<CExpression> _param = new List<CExpression>();
 
     internal Function(Lexer lexer) : base(lexer)
     {
@@ -36,10 +34,10 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       lexer.Next(); //BRACKETCLOSE
     }
 
-    public override object Evaluate(Context context)
+    public override Val Evaluate(Context context)
     {
-      List<object> parsed = new List<object>();
-      foreach (CExpression expr in _param.GetList())
+      List<Val> parsed = new List<Val>();
+      foreach (CExpression expr in _param)
       {
         parsed.Add(expr.Evaluate(context));
       }

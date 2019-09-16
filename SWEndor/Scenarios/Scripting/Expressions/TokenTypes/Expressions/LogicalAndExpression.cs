@@ -1,12 +1,13 @@
 ﻿using SWEndor.Primitives;
 using System;
+using System.Collections.Generic;
 
 namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 {
   public class LogicalAndExpression : CExpression
   {
     private CExpression _first;
-    private ThreadSafeList<CExpression> _set = new ThreadSafeList<CExpression>();
+    private List<CExpression> _set = new List<CExpression>();
 
     internal LogicalAndExpression(Lexer lexer) : base(lexer)
     {
@@ -30,20 +31,22 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       return this;
     }
 
-    public override object Evaluate(Context context)
+    public override Val Evaluate(Context context)
     {
       if (_set.Count == 0)
         return _first.Evaluate(context);
 
-      dynamic result = _first.Evaluate(context);
-      try { result = (bool)(result as IConvertible); } catch (Exception ex) { throw new EvalException(this, "bool cast", result, ex); }
-      if (result)
+      Val result = _first.Evaluate(context);
+      //try { result = (bool)(result as IConvertible); } catch (Exception ex) { throw new EvalException(this, "bool cast", result, ex); }
+      if (result.Type != ValType.BOOL) throw new EvalException(this, "Non-boolean value {0} found at start of conditional expression".F(result.Value) );
+      if (result.ValueB)
       {
-        foreach (CExpression _expr in _set.GetList())
+        foreach (CExpression _expr in _set)
         {
-          dynamic adden = (dynamic)_expr.Evaluate(context) ?? false;
-          try { result &= adden; } catch (Exception ex) { throw new EvalException(this, "&&", result, adden, ex); }
-          if (!result)
+          Val adden = _expr.Evaluate(context);
+
+          try { result = Ops.Do(BOp.LOGICAL_AND, result, adden); } catch (Exception ex) { throw new EvalException(this, "&&", result, adden, ex); }
+          if (!result.ValueB)
             break;
         }
       }

@@ -10,27 +10,27 @@ namespace SWEndor.Scenarios.Scripting.Functions
 {
   public static class ActorManagement
   {
-    public static object Squadron_Spawn(Context context, params object[] ps)
+    public static Val Squadron_Spawn(Context context, params Val[] ps)
     {
       GameScenarioBase gscenario = context.Engine.GameScenarioManager.Scenario;
-      float spawntime = Convert.ToSingle(ps[12]);
-      TV_3DVECTOR position = new TV_3DVECTOR(Convert.ToSingle(ps[13]), Convert.ToSingle(ps[14]), Convert.ToSingle(ps[15]));
+      float spawntime = ps[12].ValueF;
+      TV_3DVECTOR position = new TV_3DVECTOR(ps[13].ValueF, ps[14].ValueF, ps[15].ValueF);
 
       List<string> registries = new List<string>();
       for (int i = 16; i < ps.Length; i++)
-        registries.Add(ps[i].ToString());
+        registries.Add(ps[i].ValueS);
 
       GSFunctions.SquadSpawnInfo sinfo = new GSFunctions.SquadSpawnInfo(
-        ps[0].ToString(),
-        context.Engine.ActorTypeFactory.Get(ps[1].ToString()),
-        FactionInfo.Factory.Get(ps[2].ToString()),
-        Convert.ToInt32(ps[3]), // member count
-        Convert.ToSingle(ps[4]), // wait delay
-        (TargetType)Enum.Parse(typeof(TargetType), ps[5].ToString(), true), // huntTargetType
-        Convert.ToBoolean(ps[6]), // hyperspace in
-        (GSFunctions.SquadFormation)Enum.Parse(typeof(GSFunctions.SquadFormation), ps[7].ToString(), true),
-        new TV_3DVECTOR(Convert.ToSingle(ps[8]), Convert.ToSingle(ps[9]), Convert.ToSingle(ps[10])),
-        Convert.ToSingle(ps[11]), // formation distance
+        ps[0].ValueS,
+        context.Engine.ActorTypeFactory.Get(ps[1].ValueS),
+        FactionInfo.Factory.Get(ps[2].ValueS),
+        ps[3].ValueI, // member count
+        ps[4].ValueF, // wait delay
+        (TargetType)Enum.Parse(typeof(TargetType), ps[5].ValueS, true), // huntTargetType
+        ps[6].ValueB, // hyperspace in
+        (GSFunctions.SquadFormation)Enum.Parse(typeof(GSFunctions.SquadFormation), ps[7].ValueS, true),
+        new TV_3DVECTOR(ps[8].ValueF, ps[9].ValueF, ps[10].ValueF),
+        ps[11].ValueF, // formation distance
         registries.ToArray()
         );
 
@@ -39,63 +39,63 @@ namespace SWEndor.Scenarios.Scripting.Functions
       for (int i = 0; i < squad.Length; i++)
         ret[i] = squad[i].ID;
 
-      return ret;
+      return new Val(ret);
     }
 
-    public static object AddToSquad(Context context, params object[] ps)
+    public static Val AddToSquad(Context context, params Val[] ps)
     {
-      int id1 = Convert.ToInt32(ps[0].ToString());
-      int id2 = Convert.ToInt32(ps[1].ToString());
+      int id1 = ps[0].ValueI;
+      int id2 = ps[1].ValueI;
       ActorInfo a1 = context.Engine.ActorFactory.Get(id1);
       ActorInfo a2 = context.Engine.ActorFactory.Get(id2);
       if (context.Engine.GameScenarioManager.Scenario == null || a1 == null || a2 == null)
-        return false;
+        return Val.FALSE;
 
       a2.JoinSquad(a1);
-      return true;
+      return Val.TRUE;
     }
 
-    public static object RemoveFromSquad(Context context, params object[] ps)
+    public static Val RemoveFromSquad(Context context, params Val[] ps)
     {
-      int id1 = Convert.ToInt32(ps[0].ToString());
+      int id1 = ps[0].ValueI;
       ActorInfo a1 = context.Engine.ActorFactory.Get(id1);
       if (context.Engine.GameScenarioManager.Scenario == null || a1 == null)
-        return false;
+        return Val.FALSE;
 
       a1.Squad = null;
 
-      return true;
+      return Val.TRUE;
     }
 
-    public static object MakeSquadLeader(Context context, params object[] ps)
+    public static Val MakeSquadLeader(Context context, params Val[] ps)
     {
-      int id1 = Convert.ToInt32(ps[0].ToString());
+      int id1 = ps[0].ValueI;
       ActorInfo a1 = context.Engine.ActorFactory.Get(id1);
       if (context.Engine.GameScenarioManager.Scenario == null || a1 == null)
-        return false;
+        return Val.FALSE;
 
       a1.MakeSquadLeader();
-      return true;
+      return Val.TRUE;
     }
 
-    public static object Spawn(Context context, params object[] ps)
+    public static Val Spawn(Context context, params Val[] ps)
     {
       GameScenarioBase gscenario = context.Engine.GameScenarioManager.Scenario;
       if (gscenario == null)
-        return "-1";
+        return new Val("-1");
 
-      ActorTypeInfo atype = context.Engine.ActorTypeFactory.Get(ps[0].ToString());
-      string unitname = ps[1].ToString();
-      string regname = ps[2].ToString(); //OBSOLETE, BUT NEED TO RE-WRITE SCRIPTS BEFORE IMPLEMENTING
-      string sidebarname = ps[3].ToString();
-      float spawntime = Convert.ToSingle(ps[4]);
-      FactionInfo faction = FactionInfo.Factory.Get(ps[5].ToString());
-      TV_3DVECTOR position = new TV_3DVECTOR(Convert.ToSingle(ps[6]), Convert.ToSingle(ps[7]), Convert.ToSingle(ps[8]));
-      TV_3DVECTOR rotation = new TV_3DVECTOR(Convert.ToSingle(ps[9]), Convert.ToSingle(ps[10]), Convert.ToSingle(ps[11]));
+      ActorTypeInfo atype = context.Engine.ActorTypeFactory.Get(ps[0].ValueS);
+      string unitname = ps[1].ValueS;
+      string regname = ps[2].ValueS; //OBSOLETE, BUT NEED TO RE-WRITE SCRIPTS BEFORE IMPLEMENTING
+      string sidebarname = ps[3].ValueS;
+      float spawntime = ps[4].ValueF;
+      FactionInfo faction = FactionInfo.Factory.Get(ps[5].ValueS);
+      TV_3DVECTOR position = new TV_3DVECTOR(ps[6].ValueF, ps[7].ValueF, ps[8].ValueF);
+      TV_3DVECTOR rotation = new TV_3DVECTOR(ps[9].ValueF, ps[10].ValueF, ps[11].ValueF);
       List<string> registries = new List<string>();
 
       for (int i = 12; i < ps.Length; i++)
-        registries.Add(ps[i].ToString());
+        registries.Add(ps[i].ValueS);
 
       ActorSpawnInfo asi = new ActorSpawnInfo
       {
@@ -112,222 +112,214 @@ namespace SWEndor.Scenarios.Scripting.Functions
 
       ActorInfo res = asi.Spawn(gscenario);
       if (res == null)
-        return "-1";
-      return res.ID;
+        return new Val("-1");
+      return new Val(res.ID);
     }
 
-    /*
-    public static object SetActive(Context context, params object[] ps)
+    public static Val GetActorType(Context context, params Val[] ps)
     {
-      if (GameScenarioManager.Scenario == null)
-        return false;
-
-      int id = Convert.ToInt32(ps[0].ToString());
-      actor = ActorFactory.Get(id);
-      return actor != null;
-    }
-    */
-
-    public static object GetActorType(Context context, params object[] ps)
-    {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return null;
+        return new Val();
 
-      return actor.TypeInfo.Name;
+      return new Val(actor.TypeInfo.Name);
     }
 
-    public static object IsFighter(Context context, params object[] ps)
+    public static Val IsFighter(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return false;
+        return Val.FALSE;
 
-      return actor.TypeInfo is Fighter;
+      return new Val(actor.TypeInfo is Fighter);
     }
 
-    public static object IsLargeShip(Context context, params object[] ps)
+    public static Val IsLargeShip(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return false;
+        return Val.FALSE;
 
-      return actor.TypeInfo is LargeShip;
+      return new Val(actor.TypeInfo is LargeShip);
     }
 
-    public static object IsAlive(Context context, params object[] ps)
+    public static Val IsAlive(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return false;
+        return Val.FALSE;
 
-      return !actor.IsDead;
+      return new Val(!actor.IsDead);
     }
 
-    public static object RegisterEvents(Context context, params object[] ps)
+    public static Val RegisterEvents(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return false;
+        return Val.FALSE;
 
       context.Engine.GameScenarioManager.Scenario.RegisterEvents(actor);
-      return true;
+      return Val.TRUE;
     }
 
-    public static object GetLocalPosition(Context context, params object[] ps)
+    public static Val GetLocalPosition(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return new float[] { 0, 0, 0 };
+        return new Val(new float[] { 0, 0, 0 });
 
       TV_3DVECTOR vec = actor.Position;
-      return new float[] { vec.x, vec.y, vec.z };
+      return new Val(new float[] { vec.x, vec.y, vec.z });
     }
 
-    public static object GetLocalRotation(Context context, params object[] ps)
+    public static Val GetLocalRotation(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return new float[] { 0, 0, 0 };
+        return new Val(new float[] { 0, 0, 0 });
 
       TV_3DVECTOR vec = actor.Rotation;
-      return new float[] { vec.x, vec.y, vec.z };
+      return new Val(new float[] { vec.x, vec.y, vec.z });
     }
 
-    public static object GetLocalDirection(Context context, params object[] ps)
+    public static Val GetLocalDirection(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return new float[] { 0, 0, 0 };
+        return new Val(new float[] { 0, 0, 0 });
 
       TV_3DVECTOR vec = actor.Direction;
-      return new float[] { vec.x, vec.y, vec.z };
+      return new Val(new float[] { vec.x, vec.y, vec.z });
     }
 
-    public static object GetPosition(Context context, params object[] ps)
+    public static Val GetPosition(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return new float[] { 0, 0, 0 };
+        return new Val(new float[] { 0, 0, 0 });
 
       TV_3DVECTOR vec = actor.GetGlobalPosition();
-      return new float[] { vec.x, vec.y, vec.z };
+      return new Val(new float[] { vec.x, vec.y, vec.z });
     }
 
-    public static object GetRotation(Context context, params object[] ps)
+    public static Val GetRotation(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return new float[] { 0, 0, 0 };
+        return new Val(new float[] { 0, 0, 0 });
 
       TV_3DVECTOR vec = actor.GetGlobalRotation();
-      return new float[] { vec.x, vec.y, vec.z };
+      return new Val(new float[] { vec.x, vec.y, vec.z });
     }
 
-    public static object GetDirection(Context context, params object[] ps)
+    public static Val GetDirection(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return new float[] { 0, 0, 0 };
+        return new Val(new float[] { 0, 0, 0 });
 
       TV_3DVECTOR vec = actor.GetGlobalDirection();
-      return new float[] { vec.x, vec.y, vec.z };
+      return new Val(new float[] { vec.x, vec.y, vec.z });
     }
 
-    public static object SetLocalPosition(Context context, params object[] ps)
+    public static Val SetLocalPosition(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return false;
+        return Val.FALSE;
 
-      actor.Position = new TV_3DVECTOR(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
-      return true;
+      actor.Position= new TV_3DVECTOR(ps[1].ValueF, ps[2].ValueF, ps[3].ValueF);
+      return Val.TRUE;
     }
 
-    public static object SetLocalRotation(Context context, params object[] ps)
+    public static Val SetLocalRotation(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return false;
+        return Val.FALSE;
 
-      actor.Rotation = new TV_3DVECTOR(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
-      return true;
+      actor.Rotation= new TV_3DVECTOR(ps[1].ValueF, ps[2].ValueF, ps[3].ValueF);
+      return Val.TRUE;
     }
 
-    public static object SetLocalDirection(Context context, params object[] ps)
+    public static Val SetLocalDirection(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return false;
+        return Val.FALSE;
 
-      actor.Direction = new TV_3DVECTOR(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
-      return true;
+      actor.Direction= new TV_3DVECTOR(ps[1].ValueF, ps[2].ValueF, ps[3].ValueF);
+      return Val.TRUE;
     }
     
-    public static object LookAtPoint(Context context, params object[] ps)
+    public static Val LookAtPoint(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return false;
+        return Val.FALSE;
 
-      TV_3DVECTOR vec = new TV_3DVECTOR(Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), Convert.ToSingle(ps[3].ToString()));
+      TV_3DVECTOR vec= new TV_3DVECTOR(ps[1].ValueF, ps[2].ValueF, ps[3].ValueF);
       //if (ps.Length == 4)
         actor.LookAt(vec);
       //else
       //  actor.LookAt(vec, Convert.ToBoolean(ps[4].ToString()));
 
-      return true;
+      return Val.TRUE;
     }
 
-    public static object GetChildren(Context context, params object[] ps)
+    public static Val GetChildren(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return new int[] { };
+        return new Val(new int[0]);
 
-      return actor.Children;
+      List<int> ret = new List<int>();
+      foreach (ActorInfo a in actor.Children)
+        ret.Add(a.ID);
+
+      return new Val(ret.ToArray());
     }
 
-    public static object GetProperty(Context context, params object[] ps)
+    public static Val GetProperty(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return null;
+        return new Val();
 
-      object result = null;
-      ConfigureActorProperty(context.Engine, actor, ps[1].ToString(), false, ref result);
+      Val result = new Val();
+      ConfigureActorProperty(context.Engine, actor, ps[1].ValueS, false, ref result);
       return result;
     }
 
-    public static object SetProperty(Context context, params object[] ps)
+    public static Val SetProperty(Context context, params Val[] ps)
     {
-      int id = Convert.ToInt32(ps[0].ToString());
+      int id = ps[0].ValueI;
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return null;
+        return new Val();
 
-      ConfigureActorProperty(context.Engine, actor, ps[1].ToString(), true, ref ps[2]);
+      ConfigureActorProperty(context.Engine, actor, ps[1].ValueS, true, ref ps[2]);
       return ps[2];
     }
 
-    private static void ConfigureActorProperty(Engine engine, ActorInfo actor, string key, bool setValue, ref object newValue)
+    private static void ConfigureActorProperty(Engine engine, ActorInfo actor, string key, bool setValue, ref Val newValue)
     {
       switch (key)
       {
@@ -339,127 +331,127 @@ namespace SWEndor.Scenarios.Scripting.Functions
         //  return;
         //case "NoRegen":
         //  if (setValue)
-        //    engine.ActorDataSet.RegenData[actor.dataID].NoRegen = Convert.ToBoolean(newValue);
+        //    engine.ActorDataSet.RegenData[actor.dataID].NoRegen = newValue.ValueB;
         //  else
         //    newValue = engine.ActorDataSet.RegenData[actor.dataID].NoRegen;
         //  return;
         case "ApplyZBalance":
           if (setValue)
-            actor.MoveData.ApplyZBalance = Convert.ToBoolean(newValue);
+            actor.MoveData.ApplyZBalance = newValue.ValueB;
           else
-            newValue = actor.MoveData.ApplyZBalance;
+            newValue = new Val(actor.MoveData.ApplyZBalance);
           return;
           /*
         case "CamDeathCircleHeight":
           if (setValue)
-            actor.TypeInfo.DeathCamera.Height = Convert.ToSingle(newValue);
+            actor.TypeInfo.DeathCamera.Height = newValue.ValueF;
           else
             newValue = actor.TypeInfo.DeathCamera.Height;
           return;
         case "CamDeathCirclePeriod":
           if (setValue)
-            actor.TypeInfo.DeathCamera.Period = Convert.ToSingle(newValue);
+            actor.TypeInfo.DeathCamera.Period = newValue.ValueF;
           else
             newValue = actor.TypeInfo.DeathCamera.Period;
           return;
         case "CamDeathCircleRadius":
           if (setValue)
-            actor.TypeInfo.DeathCamera.Radius = Convert.ToSingle(newValue);
+            actor.TypeInfo.DeathCamera.Radius = newValue.ValueF;
           else
             newValue = actor.TypeInfo.DeathCamera.Radius;
           return;
           */
         case "CanEvade":
           if (setValue)
-            actor.CanEvade = Convert.ToBoolean(newValue);
+            actor.CanEvade = newValue.ValueB;
           else
-            newValue = actor.CanEvade;
+            newValue = new Val(actor.CanEvade);
           return;
         case "CanRetaliate":
           if (setValue)
-            actor.CanRetaliate = Convert.ToBoolean(newValue);
+            actor.CanRetaliate = newValue.ValueB;
           else
-            newValue = actor.CanRetaliate;
+            newValue = new Val(actor.CanRetaliate);
           return;
         //case "ChildRegenRate":
         //  if (setValue)
-        //    engine.ActorDataSet.RegenData[actor.dataID].ChildRegenRate = Convert.ToSingle(newValue);
+        //    engine.ActorDataSet.RegenData[actor.dataID].ChildRegenRate = newValue.ValueF;
         //  else
         //    newValue = engine.ActorDataSet.RegenData[actor.dataID].ChildRegenRate;
         //  return;
         case "DamageModifier":
           if (setValue)
-            actor.SetArmor(DamageType.NORMAL, Convert.ToSingle(newValue));
+            actor.SetArmor(DamageType.NORMAL, newValue.ValueF);
           else
-            newValue = actor.GetArmor(DamageType.NORMAL);
+            newValue = new Val(actor.GetArmor(DamageType.NORMAL));
           return;
         case "HuntWeight":
           if (setValue)
-            actor.HuntWeight = Convert.ToInt32(newValue);
+            actor.HuntWeight = newValue.ValueI;
           else
-            newValue = actor.HuntWeight;
+            newValue = new Val(actor.HuntWeight);
           return;
         case "IsCombatObject":
           if (setValue)
-            engine.ActorDataSet.CombatData[actor.dataID].IsCombatObject = Convert.ToBoolean(newValue);
+            engine.ActorDataSet.CombatData[actor.dataID].IsCombatObject = newValue.ValueB;
           else
-            newValue = engine.ActorDataSet.CombatData[actor.dataID].IsCombatObject;
+            newValue = new Val(engine.ActorDataSet.CombatData[actor.dataID].IsCombatObject);
           return;
         case "MaxSpeed":
           if (setValue)
-            actor.MoveData.MaxSpeed = Convert.ToSingle(newValue);
+            actor.MoveData.MaxSpeed = newValue.ValueF;
           else
-            newValue = actor.MoveData.MaxSpeed;
+            newValue = new Val(actor.MoveData.MaxSpeed);
           return;
         case "MaxSpeedChangeRate":
           if (setValue)
-            actor.MoveData.MaxSpeedChangeRate = Convert.ToSingle(newValue);
+            actor.MoveData.MaxSpeedChangeRate = newValue.ValueF;
           else
-            newValue = actor.MoveData.MaxSpeedChangeRate;
+            newValue = new Val(actor.MoveData.MaxSpeedChangeRate);
           return;
         case "MaxStrength":
           if (setValue)
-            actor.MaxHP = Convert.ToSingle(newValue);
+            actor.MaxHP = newValue.ValueF;
           else
-            newValue = actor.MaxHP;
+            newValue = new Val(actor.MaxHP);
           return;
         case "MaxTurnRate":
           if (setValue)
-            actor.MoveData.MaxTurnRate = Convert.ToSingle(newValue);
+            actor.MoveData.MaxTurnRate = newValue.ValueF;
           else
-            newValue = actor.MoveData.MaxTurnRate;
+            newValue = new Val(actor.MoveData.MaxTurnRate);
           return;
         case "MinSpeed":
           if (setValue)
-            actor.MoveData.MinSpeed = Convert.ToSingle(newValue);
+            actor.MoveData.MinSpeed = newValue.ValueF;
           else
-            newValue = actor.MoveData.MinSpeed;
+            newValue = new Val(actor.MoveData.MinSpeed);
           return;
         case "SideBarName":
           if (setValue)
-            actor.SideBarName = newValue.ToString();
+            actor.SideBarName = newValue.ValueS;
           else
-            newValue = actor.SideBarName;
+            newValue = new Val(actor.SideBarName);
           return;
         case "SetSpawnerEnable":
           if (setValue)
-            actor.SetSpawnerEnable(Convert.ToBoolean(newValue));
+            actor.SetSpawnerEnable(newValue.ValueB);
           else
-            newValue = actor.SpawnerInfo?.Enabled ?? false;
+            newValue = new Val(actor.SpawnerInfo?.Enabled ?? false);
           return;
         case "Strength":
           if (setValue)
-            actor.HP = Convert.ToSingle(newValue); 
+            actor.HP = newValue.ValueF; 
           else
-            newValue = actor.HP;
+            newValue = new Val(actor.HP);
           return;
         case "Scale":
           if (setValue)
           {
-            actor.Scale = Convert.ToSingle(newValue);
+            actor.Scale = newValue.ValueF;
           }
           else
-            newValue = actor.Scale;
+            newValue = new Val(actor.Scale);
           return;
       }
     }

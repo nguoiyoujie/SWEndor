@@ -25,7 +25,7 @@
       return _expression;
     }
 
-    public override object Evaluate(Context context)
+    public override Val Evaluate(Context context)
     {
       return _expression.Evaluate(context);
     }

@@ -32,7 +32,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
           _child = new HexLiteral(lexer).Get();
           break;
         case TokenEnum.REALLITERAL:
-          _child = new DoubleLiteral(lexer).Get();
+          _child = new SingleLiteral(lexer).Get();
           break;
         case TokenEnum.STRINGLITERAL:
           _child = new StringLiteral(lexer).Get();
@@ -48,7 +48,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       return _child;
     }
 
-    public override object Evaluate(Context context)
+    public override Val Evaluate(Context context)
     {
       return _child.Evaluate(context);
     }

@@ -27,17 +27,17 @@ namespace SWEndor.Scenarios.Scripting.Expressions
                                                                               , eval.Position
                                                                               , reason)) { }
 
-    internal EvalException(ITracker eval, string opname, object target, Exception ex) : base("Unable to perform '{0}' operation on {1} at line {2}:{3} \nReason: {4}"
+    internal EvalException(ITracker eval, string opname, Val v, Exception ex) : base("Unable to perform '{0}' operation on {1} at line {2}:{3} \nReason: {4}"
                                                                               .F(opname
-                                                                              , target?.ToString() ?? "<null>"
+                                                                              , v.Value?.ToString() ?? "<null>"
                                                                               , eval.LineNumber
                                                                               , eval.Position
                                                                               , ex.Message)) { }
 
-    internal EvalException(ITracker eval, string opname, object target, object target2, Exception ex) : base("Unable to perform '{0}' operation between {1} and {2} at line {3}:{4} \nReason: {5}"
+    internal EvalException(ITracker eval, string opname, Val v1, Val v2, Exception ex) : base("Unable to perform '{0}' operation between {1} and {2} at line {3}:{4} \nReason: {5}"
                                                                               .F(opname
-                                                                              , target?.ToString() ?? "<null>"
-                                                                              , target2?.ToString() ?? "<null>"
+                                                                              , v1.Value?.ToString() ?? "<null>"
+                                                                              , v2.Value?.ToString() ?? "<null>"
                                                                               , eval.LineNumber
                                                                               , eval.Position
                                                                               , ex.Message)) { }

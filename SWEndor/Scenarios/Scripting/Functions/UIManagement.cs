@@ -6,43 +6,43 @@ namespace SWEndor.Scenarios.Scripting.Functions
 {
   public static class UIManagement
   {
-    public static object SetUILine1Color(Context context, object[] ps)
+    public static Val SetUILine1Color(Context context, Val[] ps)
     {
-      TV_COLOR color = new TV_COLOR(Convert.ToSingle(ps[0].ToString()), Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), 1);
+      TV_COLOR color = new TV_COLOR(ps[0].ValueF, ps[1].ValueF, ps[2].ValueF, 1);
       context.Engine.GameScenarioManager.Line1Color = color;
-      return true;
+      return Val.TRUE;
     }
 
-    public static object SetUILine2Color(Context context, object[] ps)
+    public static Val SetUILine2Color(Context context, Val[] ps)
     {
-      TV_COLOR color = new TV_COLOR(Convert.ToSingle(ps[0].ToString()), Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), 1);
+      TV_COLOR color = new TV_COLOR(ps[0].ValueF, ps[1].ValueF, ps[2].ValueF, 1);
       context.Engine.GameScenarioManager.Line2Color = color;
-      return true;
+      return Val.TRUE;
     }
 
-    public static object SetUILine3Color(Context context, object[] ps)
+    public static Val SetUILine3Color(Context context, Val[] ps)
     {
-      TV_COLOR color = new TV_COLOR(Convert.ToSingle(ps[0].ToString()), Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()), 1);
+      TV_COLOR color = new TV_COLOR(ps[0].ValueF, ps[1].ValueF, ps[2].ValueF, 1);
       context.Engine.GameScenarioManager.Line3Color = color;
-      return true;
+      return Val.TRUE;
     }
 
-    public static object SetUILine1Text(Context context, object[] ps)
+    public static Val SetUILine1Text(Context context, Val[] ps)
     {
-      context.Engine.GameScenarioManager.Line1Text = ps[0].ToString();
-      return true;
+      context.Engine.GameScenarioManager.Line1Text = ps[0].ValueS;
+      return Val.TRUE;
     }
 
-    public static object SetUILine2Text(Context context, object[] ps)
+    public static Val SetUILine2Text(Context context, Val[] ps)
     {
-      context.Engine.GameScenarioManager.Line2Text = ps[0].ToString();
-      return true;
+      context.Engine.GameScenarioManager.Line2Text = ps[0].ValueS;
+      return Val.TRUE;
     }
 
-    public static object SetUILine3Text(Context context, object[] ps)
+    public static Val SetUILine3Text(Context context, Val[] ps)
     {
-      context.Engine.GameScenarioManager.Line3Text = ps[0].ToString();
-      return true;
+      context.Engine.GameScenarioManager.Line3Text = ps[0].ValueS;
+      return Val.TRUE;
     }
   }
 }

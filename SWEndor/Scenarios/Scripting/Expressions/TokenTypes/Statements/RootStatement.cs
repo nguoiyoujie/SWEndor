@@ -1,10 +1,11 @@
 ﻿using SWEndor.Primitives;
+using System.Collections.Generic;
 
 namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Statements
 {
   public class RootStatement : CStatement
   {
-    public ThreadSafeList<CStatement> Statements = new ThreadSafeList<CStatement>();
+    public List<CStatement> Statements = new List<CStatement>();
 
     internal RootStatement(Lexer lexer) : base(lexer)
     {
@@ -18,7 +19,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Statements
 
     public override void Evaluate(Context context)
     {
-      foreach (Statement s in Statements.GetList())
+      foreach (Statement s in Statements)
       {
         s.Evaluate(context);
       }

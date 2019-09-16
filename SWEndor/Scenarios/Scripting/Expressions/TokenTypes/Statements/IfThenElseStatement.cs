@@ -76,7 +76,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 
     public override void Evaluate(Context context)
     {
-      if (_condition == null || (bool)(_condition.Evaluate(context)))
+      if (_condition == null || _condition.Evaluate(context).IsTrue)
       {
         foreach (CStatement s in _actionIfTrue)
           s.Evaluate(context);

@@ -4,17 +4,17 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions.Literal
 {
   public class IntLiteral : CLiteral
   {
-    private long _value;
+    private int _value;
 
     internal IntLiteral(Lexer lexer) : base(lexer)
     {
-      _value = Convert.ToInt64(lexer.TokenContents);
+      _value = Convert.ToInt32(lexer.TokenContents);
       lexer.Next();
     }
 
-    public override object Evaluate(Context context)
+    public override Val Evaluate(Context context)
     {
-      return _value;
+      return new Val(_value);
     }
   }
 }

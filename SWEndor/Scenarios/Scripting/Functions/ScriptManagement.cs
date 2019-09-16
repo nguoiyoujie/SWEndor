@@ -5,24 +5,26 @@ namespace SWEndor.Scenarios.Scripting.Functions
 {
   public static class ScriptManagement
   {
-    public static object CallScript(Context context, object[] ps)
+    public static Val CallScript(Context context, Val[] ps)
     {
-      Script scr = Script.Registry.Get(ps[0].ToString());
+      Script scr = Script.Registry.Get(ps[0].ValueS);
       if (scr != null)
       {
         scr.Run(context);
-        return true;
+        return Val.TRUE;
       }
-      return false;
+      return Val.FALSE;
     }
 
-    public static object GetArrayElement(Context context, object[] ps)
+    public static Val GetArrayElement(Context context, Val[] ps)
     {
-      if (!(ps[0] is Array))
-        return null;
+      if (ps[0].Type == ValType.INT_ARRAY)
+        return new Val (ps[0].ArrayI[ps[1].ValueI]);
 
-      return ((Array)ps[0]).GetValue(Convert.ToInt32(ps[1].ToString()));
+      if (ps[0].Type == ValType.FLOAT_ARRAY)
+        return new Val(ps[0].ArrayF[ps[1].ValueI]);
+
+      return Val.NULL;
     }
-
   }
 }

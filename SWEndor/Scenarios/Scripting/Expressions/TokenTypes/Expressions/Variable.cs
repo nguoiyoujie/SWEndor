@@ -10,9 +10,9 @@
       lexer.Next();
     }
 
-    public override object Evaluate(Context context)
+    public override Val Evaluate(Context context)
     {
-      return context.Variables.Get(varName)?.Value; // can be null.
+      return context.Variables.Get(varName)?.Value ?? Val.NULL; // can be null.
     }
   }
 }

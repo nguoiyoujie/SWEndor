@@ -2,7 +2,7 @@
 
 namespace SWEndor.Scenarios.Scripting.Expressions
 {
-  public delegate object FunctionDelegate(Context context, object[] param);
+  public delegate Val FunctionDelegate(Context context, Val[] param);
 
   public class Context
   {
@@ -18,10 +18,10 @@ namespace SWEndor.Scenarios.Scripting.Expressions
     public class ContextVariable
     {
       public ContextVariable(string name) { Name = name; }
-      public ContextVariable(string name, dynamic value) { Value = value; }
+      public ContextVariable(string name, Val value) { Value = value; }
 
       public string Name { get; set; }
-      public dynamic Value { get; set; }
+      public Val Value { get; set; }
     }
 
     public virtual void Reset()

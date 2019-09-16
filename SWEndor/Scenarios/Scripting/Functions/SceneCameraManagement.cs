@@ -6,10 +6,10 @@ namespace SWEndor.Scenarios.Scripting.Functions
 {
   public static class SceneCameraManagement
   {
-    public static object SetSceneCameraAsActive(Context context, object[] ps)
+    public static Val SetSceneCameraAsActive(Context context, Val[] ps)
     {
-      context.Engine.GameScenarioManager.MaxBounds = new TV_3DVECTOR(Convert.ToSingle(ps[0].ToString()), Convert.ToSingle(ps[1].ToString()), Convert.ToSingle(ps[2].ToString()));
-      return true;
+      context.Engine.GameScenarioManager.MaxBounds = new TV_3DVECTOR(ps[0].ValueF, ps[1].ValueF, ps[2].ValueF);
+      return Val.TRUE;
     }
   }
 }
