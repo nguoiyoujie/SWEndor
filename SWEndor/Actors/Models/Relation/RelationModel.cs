@@ -12,7 +12,7 @@ namespace SWEndor.Actors
       public ActorInfo Parent { get; private set; }
       public ActorInfo ParentForCoords { get { return UseParentCoords ? Parent : null; } }
       public bool UseParentCoords { get; set; }
-      private LinkedList<ActorInfo> list;
+      private List<ActorInfo> list;
       public ChildEnumerable Children;
 
       public void Init()
@@ -21,7 +21,7 @@ namespace SWEndor.Actors
         UseParentCoords = false;
         if (list == null)
         {
-          list = new LinkedList<ActorInfo>();
+          list = new List<ActorInfo>();
           Children = new ChildEnumerable(list);
         }
         else
@@ -54,7 +54,7 @@ namespace SWEndor.Actors
         child.Relation.Parent = self;
 
         if (list != null && !list.Contains(child))
-          list.AddLast(child);
+          list.Add(child);
       }
 
       internal void RemoveChild(ActorInfo self, ActorInfo child)
@@ -84,20 +84,20 @@ namespace SWEndor.Actors
 
       public struct ChildEnumerable
       {
-        readonly LinkedList<ActorInfo> L;
-        public ChildEnumerable(LinkedList<ActorInfo> list) { L = list; }
+        readonly List<ActorInfo> L;
+        public ChildEnumerable(List<ActorInfo> list) { L = list; }
         public ChildEnumerator GetEnumerator() { return new ChildEnumerator(L); }
       }
       
       public struct ChildEnumerator
       {
-        readonly LinkedList<ActorInfo> L;
-        LinkedListNode<ActorInfo> current;
-        public ChildEnumerator(LinkedList<ActorInfo> list) { L = list; current = null; }
+        readonly List<ActorInfo> L;
+        int current;
+        public ChildEnumerator(List<ActorInfo> list) { L = list; current = -1; }
 
-        public void Reset() { current = null; }
-        public bool MoveNext() { return (current = (current == null) ? L?.First : current?.Next) != null; }
-        public ActorInfo Current { get { return current?.Value; } }
+        public void Reset() { current = -1; }
+        public bool MoveNext() { return ++current < L.Count; }
+        public ActorInfo Current { get { return L[current]; } }
         public void Dispose() { }
       }
     }
