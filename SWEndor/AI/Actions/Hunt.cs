@@ -3,7 +3,6 @@ using SWEndor.ActorTypes;
 using SWEndor.Primitives;
 using SWEndor.Weapons;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace SWEndor.AI.Actions
@@ -59,10 +58,11 @@ namespace SWEndor.AI.Actions
        }
      );
 
+    List<ActorInfo> targets = new List<ActorInfo>(50);
     public override void Process(Engine engine, ActorInfo actor)
     {
       ActorInfo currtarget = null;
-      List<ActorInfo> targets = new List<ActorInfo>(50);
+      targets.Clear();
 
       engine.ActorFactory.DoEach(getTargets, actor, targets, m_TargetType);
 
