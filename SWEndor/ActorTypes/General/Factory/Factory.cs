@@ -119,6 +119,7 @@ namespace SWEndor.ActorTypes
         Register(new TowerGunATI(this));
         Register(new TowerGunAdvATI(this));
         Register(new TowerGunSuperATI(this));
+        Register(new SurfaceVentATI(this));
 
         // lasers
         Register(new RedLaserATI(this));
