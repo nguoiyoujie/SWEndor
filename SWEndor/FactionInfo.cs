@@ -188,7 +188,7 @@ namespace SWEndor
 
       if (ShipLimitIncludesAllies)
         foreach (FactionInfo fi in Allies)
-          for (int i = 0; i < f.Count; i++)
+          for (int i = 0; i < fi._wings.Count; i++)
             yield return fi._wings[i];
     }
 
@@ -200,7 +200,7 @@ namespace SWEndor
 
       if (ShipLimitIncludesAllies)
         foreach (FactionInfo fi in Allies)
-          for (int i = 0; i < f.Count; i++)
+          for (int i = 0; i < fi._ships.Count; i++)
             yield return fi._ships[i];
     }
 
@@ -212,7 +212,7 @@ namespace SWEndor
 
       if (ShipLimitIncludesAllies)
         foreach (FactionInfo fi in Allies)
-          for (int i = 0; i < f.Count; i++)
+          for (int i = 0; i < fi._structures.Count; i++)
             yield return fi._structures[i];
     }
 

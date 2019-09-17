@@ -13,6 +13,7 @@ namespace SWEndor.Actors
     DONT_CREATE_ON_LOWFPS = 0x1,
     ONLY_WHEN_DYINGTIME_NOT_EXPIRED = 0x2,
     CREATE_ON_MESHVERTICES = 0x4,
+    ATTACH_TO_ACTOR = 0x8,
     ON_NORMAL = 0x10,
     ON_DYING = 0x20,
     ON_DEATH = 0x40,
@@ -104,15 +105,15 @@ namespace SWEndor.Actors
                 _types[i] = engine.ActorTypeFactory.Get(exp.ActorType);
 
               if (exp.Trigger.Has(ExplodeTrigger.CREATE_ON_MESHVERTICES))
-                CreateOnMeshVertices(engine, a, i, rate, size);
+                CreateOnMeshVertices(engine, a, i, rate, size, exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_ACTOR));
               else
-                CreateOnMeshCenter(engine, a, i, rate, size);
+                CreateOnMeshCenter(engine, a, i, rate, size, exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_ACTOR));
             }
           }
         }
       }
 
-      private void CreateOnMeshVertices(Engine engine, ActorInfo a, int i, float rate, float size)
+      private void CreateOnMeshVertices(Engine engine, ActorInfo a, int i, float rate, float size, bool attach)
       {
         while (_time[i] < engine.Game.GameTime && a.GetVertexCount() > 0)
         {
@@ -121,22 +122,32 @@ namespace SWEndor.Actors
           TV_3DVECTOR vert = a.GetVertex(vertID);
 
           TV_3DVECTOR v = a.GetRelativePositionXYZ(vert.x * a.Scale, vert.y * a.Scale, vert.z * a.Scale);
-          MakeExplosion(_types[i], v, size);
+          ActorInfo e = MakeExplosion(_types[i], v, size);
+          if (attach)
+          {
+            a.AddChild(e);
+            e.UseParentCoords = true;
+          }
         }
       }
 
-      private void CreateOnMeshCenter(Engine engine, ActorInfo a, int i, float rate, float size)
+      private void CreateOnMeshCenter(Engine engine, ActorInfo a, int i, float rate, float size, bool attach)
       {
         _time[i] = engine.Game.GameTime + rate;
-        MakeExplosion(_types[i], a.GetPrevGlobalPosition(), size);
+        ActorInfo e = MakeExplosion(_types[i], a.GetPrevGlobalPosition(), size);
+        if (attach)
+        {
+          a.AddChild(e);
+          e.UseParentCoords = true;
+        }
       }
 
-      private static void MakeExplosion(ActorTypeInfo type, TV_3DVECTOR globalPosition, float explSize)
+      private static ActorInfo MakeExplosion(ActorTypeInfo type, TV_3DVECTOR globalPosition, float explSize)
       {
         ActorCreationInfo acinfo = new ActorCreationInfo(type);
         acinfo.Position = globalPosition;
         acinfo.InitialScale = explSize;
-        Globals.Engine.ActorFactory.Create(acinfo);
+        return Globals.Engine.ActorFactory.Create(acinfo);
       }
     }
 

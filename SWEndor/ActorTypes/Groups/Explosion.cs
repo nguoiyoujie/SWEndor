@@ -22,15 +22,12 @@ namespace SWEndor.ActorTypes.Groups
 
     public override void ProcessState(ActorInfo ainfo)
     {
-      if (!ainfo.IsDyingOrDead)
-      {
         TV_3DVECTOR pos = ainfo.GetEngine().PlayerCameraInfo.Camera.GetWorldPosition(new TV_3DVECTOR(0, 0, -1000));
         ainfo.LookAt(pos);
 
         int k = texanimframes.Length - 1 - (int)(ainfo.CycleInfo.CycleTime / ainfo.CycleInfo.CyclePeriod * texanimframes.Length);
         if (k >= 0 && k < texanimframes.Length)
           ainfo.SetTexture(texanimframes[k]);
-      }
     }
   }
 }
