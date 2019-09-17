@@ -121,12 +121,17 @@ namespace SWEndor.Actors
           int vertID = engine.Random.Next(0, a.GetVertexCount());
           TV_3DVECTOR vert = a.GetVertex(vertID);
 
-          TV_3DVECTOR v = a.GetRelativePositionXYZ(vert.x * a.Scale, vert.y * a.Scale, vert.z * a.Scale);
-          ActorInfo e = MakeExplosion(_types[i], v, size);
+
           if (attach)
           {
+            ActorInfo e = MakeExplosion(_types[i], vert, size);
             a.AddChild(e);
             e.UseParentCoords = true;
+          }
+          else
+          {
+            TV_3DVECTOR v = a.GetRelativePositionXYZ(vert.x * a.Scale, vert.y * a.Scale, vert.z * a.Scale);
+            ActorInfo e = MakeExplosion(_types[i], v, size);
           }
         }
       }
@@ -134,12 +139,14 @@ namespace SWEndor.Actors
       private void CreateOnMeshCenter(Engine engine, ActorInfo a, int i, float rate, float size, bool attach)
       {
         _time[i] = engine.Game.GameTime + rate;
-        ActorInfo e = MakeExplosion(_types[i], a.GetPrevGlobalPosition(), size);
         if (attach)
         {
+          ActorInfo e = MakeExplosion(_types[i], default(TV_3DVECTOR), size);
           a.AddChild(e);
           e.UseParentCoords = true;
         }
+        else
+          MakeExplosion(_types[i], a.GetPrevGlobalPosition(), size);
       }
 
       private static ActorInfo MakeExplosion(ActorTypeInfo type, TV_3DVECTOR globalPosition, float explSize)
