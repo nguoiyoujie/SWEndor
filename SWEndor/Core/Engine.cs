@@ -207,7 +207,6 @@ namespace SWEndor
       GameScenarioManager.Scenario.Unload();
       Game.PrepExit();
       Form.Exit();
-      //Dispose();
     }
   }
 }

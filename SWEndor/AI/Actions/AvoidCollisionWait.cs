@@ -35,7 +35,10 @@ namespace SWEndor.AI.Actions
       actor.AIData.AdjustSpeed(actor);
 
       if (CheckImminentCollision(actor))
+      {
         CollisionSystem.CreateAvoidAction(engine, actor);
+        Complete = true;
+      }
 
       Complete |= (ResumeTime < engine.Game.GameTime);
     }
