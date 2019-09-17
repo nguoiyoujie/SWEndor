@@ -15,8 +15,9 @@ namespace SWEndor.ActorTypes.Groups
         new ExplodeInfo("ExpL00", 1, 5, ExplodeTrigger.ON_DEATH)
       };
 
-      RenderData.CullDistance = 10000;
+      DyingMoveData.Kill();
 
+      RenderData.CullDistance = 10000;
       RenderData.RadarSize = 1.5f;
 
       AIData.TargetType = TargetType.ADDON | TargetType.STRUCTURE;
