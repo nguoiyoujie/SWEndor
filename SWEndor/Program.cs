@@ -33,6 +33,8 @@ namespace SWEndor
         Settings.SaveSettings(engine);
 
         Application.Run(new UI.Forms.BackgroundForm(engine));
+
+        engine.Dispose();
       }
       catch (Exception ex)
       {
