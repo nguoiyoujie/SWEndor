@@ -31,10 +31,10 @@ namespace SWEndor.ActorTypes.Instances
       SoundSources = new SoundSourceData[] { new SoundSourceData("engine_big", 500f, new TV_3DVECTOR(0, 0, -200), true) };
       AddOns = new AddOnData[]
       {
-        new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(-35, 15, 110), new TV_3DVECTOR(-90, 0, 10), true)
-        , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(-35, 15, 80), new TV_3DVECTOR(-90, 0, 10), true)
-        , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(35, 15, 110), new TV_3DVECTOR(-90, 0, -10), true)
-        , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(35, 15, 80), new TV_3DVECTOR(-90, 0, -10), true)
+        new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(-35, 15, 110), new TV_3DVECTOR(-80, -90, 0), true)
+        , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(-35, 15, 80), new TV_3DVECTOR(-80, -90, 0), true)
+        , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(35, 15, 110), new TV_3DVECTOR(-80, 90, 0), true)
+        , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(35, 15, 80), new TV_3DVECTOR(-80, 90, 0), true)
         , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(0, -45, 150), new TV_3DVECTOR(90, 0, 0), true)
         , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(0, 45, 150), new TV_3DVECTOR(-90, 0, 0), true)
       };

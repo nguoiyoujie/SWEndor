@@ -46,8 +46,8 @@ namespace SWEndor.ActorTypes.Instances
         , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(0, 10, 610), new TV_3DVECTOR(-90, 0, 0), true)
 
         // Top
-        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(145, 42, 70), new TV_3DVECTOR(-90, 0, -15), true)
-        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(-145, 42, 70), new TV_3DVECTOR(-90, 0, 15), true)
+        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(145, 42, 70), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(-145, 42, 70), new TV_3DVECTOR(-75, -90, 0), true)
       };
     }
   }
