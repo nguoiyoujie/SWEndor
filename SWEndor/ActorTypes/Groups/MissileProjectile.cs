@@ -28,13 +28,6 @@ namespace SWEndor.ActorTypes.Groups
 
       TrackerDummyWeapon = true;
     }
-
-    public override void ProcessState(ActorInfo ainfo)
-    {
-      base.ProcessState(ainfo);
-      if (ainfo.CurrentAction == null || ainfo.CurrentAction is Idle)
-        ainfo.SetState_Dead();
-    }
   }
 }
 

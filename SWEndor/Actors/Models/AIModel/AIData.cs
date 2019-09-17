@@ -115,7 +115,7 @@ namespace SWEndor.Actors.Models
         TV_3DVECTOR truechg = new TV_3DVECTOR(chgrot.x, chgrot.y, chgrot.z);
 
         // increased responsiveness
-        chgrot *= responsiveness; //isAvoidCollision ? 9999 : 10;
+        chgrot *= responsiveness;
 
         chgrot.x = chgrot.x.Clamp(-owner.TypeInfo.MoveLimitData.MaxTurnRate, owner.TypeInfo.MoveLimitData.MaxTurnRate);
         chgrot.y = chgrot.y.Clamp(-owner.TypeInfo.MoveLimitData.MaxTurnRate, owner.TypeInfo.MoveLimitData.MaxTurnRate);
@@ -135,13 +135,7 @@ namespace SWEndor.Actors.Models
         TV_3DVECTOR vec = new TV_3DVECTOR();
         TV_3DVECTOR dir = owner.GetGlobalDirection();
         owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, tgtdir);
-        float delta = owner.GetEngine().TrueVision.TVMathLibrary.ACos(owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
-
-        //if (owner.IsPlayer)
-        //  owner.GetEngine().Screen2D.MessageSecondaryText(string.Concat("DELTA: ", delta.ToString("0.000")), 1.5f, new TV_COLOR(0.5f, 0.5f, 1, 1), 0);
-        if (owner.TypeInfo is ActorTypes.Instances.TowerGunSuperATI)
-        { }
-        return delta;
+        return owner.GetEngine().TrueVision.TVMathLibrary.ACos(owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
       }
     }
 
