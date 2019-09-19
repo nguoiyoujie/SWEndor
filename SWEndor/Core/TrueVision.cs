@@ -26,7 +26,9 @@ namespace SWEndor
     internal TVScreen2DImmediate TVScreen2DImmediate { get; private set; }
     internal TVParticleSystem TVParticleSystem { get; private set; }
     internal TVGlobals TVGlobals { get; private set; }
-    
+
+    internal TVRenderSurface TargetRenderSurface;
+
     public void Init(IntPtr handle)
     {
       if (Handle == null)
@@ -118,6 +120,11 @@ namespace SWEndor
         TVScene.SetRenderMode(CONST_TV_RENDERMODE.TV_SOLID);
         TVScene.SetTextureFilter(CONST_TV_TEXTUREFILTER.TV_FILTER_ANISOTROPIC);
         TVScene.SetBackgroundColor(0f, 0f, 0f);
+
+        TargetRenderSurface = TVScene.CreateAlphaRenderSurface(256, 256);
+        TargetRenderSurface.SetBackgroundColor(new TV_COLOR(0, 0, 0, 0).GetIntColor());
+        TargetRenderSurface.SetCamera(0, 0, 0, 0, 0, 100);
+        TargetRenderSurface.GetCamera().SetViewFrustum(60, 650000);
       }
     }
 

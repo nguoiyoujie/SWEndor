@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.UI;
 using SWEndor.UI.Menu;
 using SWEndor.UI.Widgets;
@@ -44,6 +45,9 @@ namespace SWEndor
     public TV_3DVECTOR Box3D_min = new TV_3DVECTOR();
     public TV_3DVECTOR Box3D_max = new TV_3DVECTOR();
     public TV_COLOR Box3D_color = new TV_COLOR(1, 1, 1, 1);
+
+    // Target
+    public ActorInfo TargetActor;
 
     Primitives.ThreadSafeList<Widget> m_Widgets = new Primitives.ThreadSafeList<Widget>();
 

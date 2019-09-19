@@ -289,6 +289,10 @@ namespace SWEndor
             if (!IsPaused)
               using (Engine.PerfManager.Create("render_camera"))
                 Engine.PlayerCameraInfo.Update();
+
+            // unused
+            //using (Engine.PerfManager.Create("render_occ"))
+            //  Engine.ProcessRender();
           }
           isProcessingRender = false;
         }

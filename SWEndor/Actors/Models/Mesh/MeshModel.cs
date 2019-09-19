@@ -51,7 +51,7 @@ namespace SWEndor.Actors
 
           Mesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 8);
           FarMesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 8);
-        }        
+        }
       }
 
       public void Dispose()
@@ -149,6 +149,7 @@ namespace SWEndor.Actors
         TV_3DMATRIX mat = actor.GetMatrix();
         bool collide = actor.Mask.Has(ComponentMask.CAN_BECOLLIDED) && actor.Active && !actor.IsAggregateMode;
         bool render = actor.Mask.Has(ComponentMask.CAN_RENDER) && actor.Active && !actor.IsAggregateMode && (!actor.IsPlayer || actor.PlayerCameraInfo.CameraMode != CameraMode.FREEROTATION);
+        //bool render = !occluded && actor.Mask.Has(ComponentMask.CAN_RENDER) && actor.Active && !actor.IsAggregateMode && (!actor.IsPlayer || actor.PlayerCameraInfo.CameraMode != CameraMode.FREEROTATION);
         bool far = actor.IsFarMode;
         bool collidefar = collide && far;
         bool renderfar = render && far;
@@ -161,6 +162,7 @@ namespace SWEndor.Actors
             Mesh.SetMatrix(mat);
             FarMesh.SetMatrix(mat);
 
+            
             if (prev_render != render)
             {
               prev_render = render;
@@ -174,7 +176,7 @@ namespace SWEndor.Actors
               using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
                 FarMesh.Enable(renderfar);
             }
-
+            
             if (prev_collide != collide)
             {
               prev_collide = collide;
@@ -190,6 +192,57 @@ namespace SWEndor.Actors
             }
           }
       }
+
+      bool occluded;
+      public void UpdateRender(ActorInfo actor)
+      {
+        // revise
+        /*
+        bool render = actor.Mask.Has(ComponentMask.CAN_RENDER) && actor.Active && !actor.IsAggregateMode && (!actor.IsPlayer || actor.PlayerCameraInfo.CameraMode != CameraMode.FREEROTATION);
+        
+        if (render)
+        {
+          TVCamera c = actor.PlayerCameraInfo.Camera;
+          int q = c.OccQuery_Begin();
+          TV_3DVECTOR bMin = new TV_3DVECTOR();
+          TV_3DVECTOR bMax = new TV_3DVECTOR();
+          actor.Meshes.FarMesh.GetBoundingBox(ref bMin, ref bMax, false);
+          c.OccQuery_DrawBox(bMin, bMax);
+
+          //BoundingBox b = GetBoundingBox(false);
+          //c.OccQuery_DrawBox(new TV_3DVECTOR(b.X.Min, b.Y.Min, b.Z.Min), new TV_3DVECTOR(b.X.Max, b.Y.Max, b.Z.Max));
+          c.OccQuery_End();
+          occluded = c.OccQuery_GetData(q, true) == 0;
+        }
+        */
+      }
+
+      public void UpdateRenderLine(ActorInfo actor)
+      {
+        if (Mesh == null)
+          return;
+
+        TV_3DVECTOR p = actor.PlayerCameraInfo.Camera.GetPosition();
+        BoundingSphere sph = actor.GetBoundingSphere(false);
+        TV_3DVECTOR d2 = new TV_3DVECTOR();
+        TVCamera c = actor.TrueVision.TargetRenderSurface.GetCamera();
+        c.SetPosition(p.x, p.y, p.z);
+        c.LookAtMesh(Mesh);
+        c.SetPosition(sph.Position.x, sph.Position.y, sph.Position.z);
+        d2 = c.GetFrontPosition((actor.TypeInfo.MeshData.MinDimensions.z - actor.TypeInfo.MeshData.MaxDimensions.z) * 2); // - sph.Radius * 3);
+        c.SetPosition(d2.x, d2.y, d2.z);
+
+        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        {
+          actor.TrueVision.TargetRenderSurface.StartRender(false);
+          //actor.TrueVision.TVScene.SetRenderMode(CONST_TV_RENDERMODE.TV_LINE);
+          //FarMesh?.Render();
+          actor.TrueVision.TVScene.RenderAllMeshes(true);
+
+          actor.TrueVision.TargetRenderSurface.EndRender();
+          //actor.TrueVision.TVScene.SetRenderMode(CONST_TV_RENDERMODE.TV_SOLID);
+        }
+      }
     }
 
     public BoundingBox GetBoundingBox(bool uselocal) { return Meshes.GetBoundingBox(uselocal); }
@@ -198,5 +251,6 @@ namespace SWEndor.Actors
     public TV_3DVECTOR GetVertex(int vertexID) { return Meshes.GetVertex(vertexID); }
     public int GetVertexCount() { return Meshes.GetVertexCount(); }
     public void Render(bool renderfar) { Meshes.Render(renderfar); }
+    public void UpdateRenderLine() { Meshes.UpdateRenderLine(this); }
   }
 }

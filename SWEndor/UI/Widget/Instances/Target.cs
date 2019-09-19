@@ -9,7 +9,7 @@ namespace SWEndor.UI.Widgets
 {
   public class Target : Widget
   {
-    private ActorInfo m_target;
+    private ActorInfo m_target { get { return Screen2D.TargetActor; } set { Screen2D.TargetActor = value; } }
     private float m_targetX = 0;
     private float m_targetY = 0;
     private float m_targetSize = 5;
@@ -182,6 +182,21 @@ namespace SWEndor.UI.Widgets
         TVScreen2DImmediate.Action_End2D();
       }
       //}
+
+      TVScreen2DImmediate.Action_Begin2D();
+      int tex = Engine.TrueVision.TargetRenderSurface.GetTexture();
+      int w = Engine.TrueVision.TargetRenderSurface.GetWidth() / 2;
+      int h = Engine.TrueVision.TargetRenderSurface.GetHeight() / 2;
+      TVScreen2DImmediate.Draw_Texture(tex
+                                , Engine.ScreenWidth / 2 - w 
+                                , Engine.ScreenHeight / 2 - h + 200
+                                , Engine.ScreenWidth / 2 + w
+                                , Engine.ScreenHeight / 2 + h + 200
+                                , acolor.GetIntColor()
+                                , acolor.GetIntColor()
+                                , acolor.GetIntColor()
+                                , acolor.GetIntColor());
+      TVScreen2DImmediate.Action_End2D();
     }
 
     float bestlimit = 9999;

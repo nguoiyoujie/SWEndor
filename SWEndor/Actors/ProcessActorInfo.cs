@@ -27,6 +27,23 @@ namespace SWEndor.Actors
       }
     }
 
+    internal static void ProcessRender(Engine engine, ActorInfo actor)
+    {
+#if DEBUG
+      if (actor == null)
+        throw new ArgumentNullException("actor");
+#endif
+
+      using (ScopeCounterManager.Acquire(actor.Scope))
+      {
+        if (!actor.Active)
+          return;
+
+        if (!actor.IsDead)
+          actor.Meshes.UpdateRender(actor);
+      }
+    }
+
     internal static void ProcessAI(Engine engine, ActorInfo actor)
     {
 #if DEBUG

@@ -58,6 +58,8 @@ namespace SWEndor
     internal GameScenarioManager GameScenarioManager { get; private set; }
     internal Scenarios.Scripting.Expressions.Context ScriptContext { get; private set; }
 
+    private TVRenderSurface OccRender;
+
     public void Init()
     {
       MaskDataSet = new MaskDataSet();
@@ -88,6 +90,10 @@ namespace SWEndor
       AtmosphereInfo = new AtmosphereInfo(this);
       LandInfo = new LandInfo(this);
       Screen2D = new Screen2D(this);
+
+      OccRender = TrueVision.TVScene.CreateRenderSurface(ScreenWidth / 4, ScreenHeight / 4);
+      OccRender.SetNewCamera(PlayerCameraInfo.Camera);
+      PlayerCameraInfo.Camera.OccQuery_Init(3);
     }
 
     public void Dispose()
@@ -135,9 +141,11 @@ namespace SWEndor
     }
 
     Action<Engine, ActorInfo> process = ActorInfo.Process;
+    Action<Engine, ActorInfo> processRender = ActorInfo.ProcessRender;
     Action<Engine, ActorInfo> processAI = ActorInfo.ProcessAI;
     Action<Engine, ActorInfo> processCollision = ActorInfo.ProcessCollision;
     public void Process() { ActorFactory.DoEach(process); }
+    public void ProcessRender() { ActorFactory.DoEach(processRender); }
     public void ProcessAI() { ActorFactory.DoEach(processAI); } //may ParallelDoEach
     public void ProcessCollision() { ActorFactory.DoEach(processCollision); }
 
@@ -170,6 +178,10 @@ namespace SWEndor
 
     public void Render()
     {
+      ActorInfo a = Screen2D.TargetActor?.ParentForCoords ?? Screen2D.TargetActor;
+      if (a != null)
+        a.UpdateRenderLine();
+
       TrueVision.TVEngine.Clear();
 
       AtmosphereInfo.Render();
@@ -180,6 +192,7 @@ namespace SWEndor
         TrueVision.TVScene.FinalizeShadows();
         TrueVision.TVScene.RenderAllMeshes(true); //RenderAll(true);
       }
+
       Screen2D.Draw();
       Screen2D.CurrentPage?.RenderTick();
 
