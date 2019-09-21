@@ -14,7 +14,10 @@ namespace SWEndor.ActorTypes.Instances
 
       RenderData.RadarSize = 5;
       RenderData.CullDistance = -1;
-      MeshData = MeshDataDecorator.CreateBillboardAnimation(Name, 100, "explosion/large", ref texanimframes);
+
+      atlasX = 4;
+      atlasY = 4;
+      MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Name, 100, "explosion/large/tex.jpg", atlasX, atlasY);
 
       InitialSoundSources = new SoundSourceData[] { new SoundSourceData("exp_resto", 500) };
     }

@@ -7,7 +7,8 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class Explosion : ActorTypeInfo
   {
-    protected int[] texanimframes = new int[0];
+    protected int atlasX = 1;
+    protected int atlasY = 1;
 
     internal Explosion(Factory owner, string name): base(owner, name)
     {
@@ -22,12 +23,16 @@ namespace SWEndor.ActorTypes.Groups
 
     public override void ProcessState(ActorInfo ainfo)
     {
-        TV_3DVECTOR pos = ainfo.GetEngine().PlayerCameraInfo.Camera.GetWorldPosition(new TV_3DVECTOR(0, 0, -1000));
-        ainfo.LookAt(pos);
+      TV_3DVECTOR pos = ainfo.GetEngine().PlayerCameraInfo.Camera.GetWorldPosition(new TV_3DVECTOR(0, 0, -1000));
+      ainfo.LookAt(pos);
 
-        int k = texanimframes.Length - 1 - (int)(ainfo.CycleInfo.CycleTime / ainfo.CycleInfo.CyclePeriod * texanimframes.Length);
-        if (k >= 0 && k < texanimframes.Length)
-          ainfo.SetTexture(texanimframes[k]);
+      int frames = atlasX * atlasY;
+      int k = frames - 1 - (int)(ainfo.CycleInfo.CycleTime / ainfo.CycleInfo.CyclePeriod * frames);
+      float su = 1f / atlasX;
+      float sv = 1f / atlasY;
+      float u = (k % atlasX) * su;
+      float v = (k / atlasX) * sv;
+      ainfo.SetTexMod(u, v, su, sv);
     }
   }
 }

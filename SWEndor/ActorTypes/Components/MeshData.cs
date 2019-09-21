@@ -30,38 +30,44 @@ namespace SWEndor.ActorTypes.Components
       MaxDimensions = new TV_3DVECTOR();
 
       // create SourceMesh and SourceFarMesh
-        SourceMesh = tv.TVGlobals.GetMesh(name);
-        if (SourceMesh == null)
+      SourceMesh = tv.TVGlobals.GetMesh(name);
+      if (SourceMesh == null)
+      {
+        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
         {
-          using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
-            SourceMesh = tv.TVScene.CreateMeshBuilder(name);
+          SourceMesh = tv.TVScene.CreateMeshBuilder(name);
 
           if (srcMesh != null)
             SourceMesh.LoadXFile(Path.Combine(Globals.ModelPath, srcMesh), true);
           SourceMesh.Enable(false);
           SourceMesh.SetCollisionEnable(false);
-          SourceMesh.WeldVertices();
+          //SourceMesh.CompactMesh();
+          SourceMesh.WeldVertices(0.001f, 0.001f);
           SourceMesh.ComputeBoundings();
           SourceMesh.GetBoundingBox(ref MinDimensions, ref MaxDimensions);
         }
+      }
 
-        SourceFarMesh = tv.TVGlobals.GetMesh(farname);
-        if (SourceFarMesh == null)
+      SourceFarMesh = tv.TVGlobals.GetMesh(farname);
+      if (SourceFarMesh == null)
+      {
+        if (srcFarMesh != null)
         {
-          if (srcFarMesh != null)
+          using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
           {
-            using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
-              SourceFarMesh = tv.TVScene.CreateMeshBuilder(farname);
+            SourceFarMesh = tv.TVScene.CreateMeshBuilder(farname);
 
             SourceFarMesh.LoadXFile(Path.Combine(Globals.ModelPath, srcFarMesh), true);
             SourceFarMesh.Enable(false);
-            SourceMesh.SetCollisionEnable(false);
-            SourceFarMesh.WeldVertices();
+            SourceFarMesh.SetCollisionEnable(false);
+            //SourceFarMesh.CompactMesh();
+            SourceFarMesh.WeldVertices(0.01f, 0.01f);
             SourceFarMesh.ComputeBoundings();
           }
-          else
-            SourceFarMesh = SourceMesh; //.Duplicate();
         }
+        else
+          SourceFarMesh = SourceMesh; //.Duplicate();
+      }
     }
 
     public MeshData(string name, TVMesh mesh)
@@ -198,6 +204,23 @@ namespace SWEndor.ActorTypes.Components
           m = tv.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, size, size, name, true);
         m.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
         m.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
+      }
+      return new MeshData(name, m);
+    }
+
+    public static MeshData CreateBillboardAtlasAnimation(string name, float size, string texname, int columns, int rows)
+    {
+      TVMesh m = tv.TVGlobals.GetMesh(name);
+      if (m == null)
+      {
+        string texpath = Path.Combine(Globals.ImagePath, texname);
+        int i = LoadAlphaTexture(texname, texpath);
+        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+          m = tv.TVScene.CreateBillboard(i, 0, 0, 0, size, size, name, true);
+        m.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
+        m.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
+        m.SetTextureModEnable(true);
+        m.SetTextureModTranslationScale(1f / columns, 1f / rows);
       }
       return new MeshData(name, m);
     }

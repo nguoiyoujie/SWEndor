@@ -114,6 +114,20 @@ namespace SWEndor.Actors
             Mesh.SetTexture(iTexture);
       }
 
+      public void EnableTexMod(bool enable)
+      {
+        using (ScopeCounterManager.Acquire(meshScope))
+          if (ScopeCounterManager.IsZero(disposeScope))
+            Mesh.SetTextureModEnable(enable);
+      }
+
+      public void SetTexMod(float u, float v, float su, float sv)
+      {
+        using (ScopeCounterManager.Acquire(meshScope))
+          if (ScopeCounterManager.IsZero(disposeScope))
+            Mesh.SetTextureModTranslationScale(u, v, su, sv);
+      }
+
       public TV_3DVECTOR GetVertex(int vertexID)
       {
         float x = 0;
@@ -193,7 +207,7 @@ namespace SWEndor.Actors
           }
       }
 
-      bool occluded;
+      //bool occluded;
       public void UpdateRender(ActorInfo actor)
       {
         // revise
@@ -248,6 +262,8 @@ namespace SWEndor.Actors
     public BoundingBox GetBoundingBox(bool uselocal) { return Meshes.GetBoundingBox(uselocal); }
     public BoundingSphere GetBoundingSphere(bool uselocal) { return Meshes.GetBoundingSphere(uselocal); }
     public void SetTexture(int iTexture) { Meshes.SetTexture(iTexture); }
+    public void EnableTexMod(bool enable) { Meshes.EnableTexMod(enable); }
+    public void SetTexMod(float u, float v, float su, float sv) { Meshes.SetTexMod(u, v, su, sv); }
     public TV_3DVECTOR GetVertex(int vertexID) { return Meshes.GetVertex(vertexID); }
     public int GetVertexCount() { return Meshes.GetVertexCount(); }
     public void Render(bool renderfar) { Meshes.Render(renderfar); }

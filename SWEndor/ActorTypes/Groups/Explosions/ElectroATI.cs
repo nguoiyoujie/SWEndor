@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using System;
 
@@ -15,10 +14,12 @@ namespace SWEndor.ActorTypes.Instances
 
       RenderData.RadarSize = 0;
 
-      MeshData = MeshDataDecorator.CreateBillboardAnimation(Name, 40, "electro", ref texanimframes);
+      atlasX = 2;
+      atlasY = 2;
+      MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Name, 40, "electro/tex.jpg", atlasX, atlasY);
     }
 
-    Action<ActorInfo> persist = (a) =>
+    private static Action<ActorInfo> persist = (a) =>
     {
       a.SetState_Normal();
       a.DyingTimerSet(a.TypeInfo.TimedLifeData.TimedLife, true);

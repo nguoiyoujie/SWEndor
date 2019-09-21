@@ -62,9 +62,10 @@ namespace SWEndor.ActorTypes.Instances
             }
           }
           ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
-          acinfo.Position = child.GetGlobalPosition();
+          //acinfo.Position = child.GetGlobalPosition();
           ActorInfo electro = ActorFactory.Create(acinfo);
           child.AddChild(electro);
+          electro.UseParentCoords = true;
           electro.CycleInfo.CyclesRemaining = empduration / electro.CycleInfo.CyclePeriod;
         }
       }

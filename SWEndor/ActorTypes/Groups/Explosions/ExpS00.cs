@@ -1,4 +1,5 @@
-﻿using SWEndor.Actors;
+﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 
@@ -13,7 +14,9 @@ namespace SWEndor.ActorTypes.Instances
 
       RenderData.RadarSize = 2;
 
-      MeshData = MeshDataDecorator.CreateBillboardAnimation(Name, 10, "explosion/small", ref texanimframes);
+      atlasX = 4;
+      atlasY = 2;
+      MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Name, 10, "explosion/small/tex.jpg", atlasX, atlasY);
     }
 
     public override void Initialize(ActorInfo ainfo)
@@ -22,6 +25,7 @@ namespace SWEndor.ActorTypes.Instances
       ainfo.CycleInfo.CyclePeriod = 0.5f;
       PlayerCameraInfo.ProximityShake(5, 100, ainfo.Position);
     }
+
   }
 }
 
