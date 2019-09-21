@@ -94,9 +94,8 @@ namespace SWEndor
         if (pt_current.TryGetValue(id, out list) && list.Count > 0)
         {
           StringBuilder sb = sbpool.GetNew();
-          //sb.Clear();
           sb.Append(list[list.Count - 1].Name);
-          sb.Append('`');
+          sb.Append(delimiter);
           sb.Append(name);
           e.Name = sb.ToString();
           sbpool.Return(sb);
@@ -166,6 +165,7 @@ namespace SWEndor
         Refresh();
     }
 
+    private static char[] delimiter = new char[] { '`' };
     public void PrintPerf()
     {
       if (!Enabled)
@@ -201,7 +201,7 @@ namespace SWEndor
         newElements.Sort(new PerfComparer());
         foreach (PerfToken e in newElements)
         {
-          string[] div = e.Name.Split('`');
+          string[] div = e.Name.Split(delimiter);
           string name = (div.Length > 0) ? new string('-', div.Length - 1) + div[div.Length - 1] : div[div.Length - 1];
           name = (name.Length > 30) ? name.Remove(27) + "..." : name;
           sb.AppendLine("{0,-30} : [{1,6}] {2,7:0.000}  {3,7:0.00}  {4,7:0.00}".F(
