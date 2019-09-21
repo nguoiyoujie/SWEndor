@@ -46,7 +46,7 @@ namespace SWEndor.FileFormat.INI
             {
               if (line.Length > inhpos)
               {
-                string[] headers = line.Substring(inhpos + 1).Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] headers = line.Substring(inhpos + 1).Split(INIFile.DefaultDelimiter, StringSplitOptions.RemoveEmptyEntries);
                 Inherits = new string[headers.Length];
                 for (int i = 0; i < headers.Length; i++)
                   Inherits[i] = headers[i].Trim();

@@ -6,6 +6,8 @@ namespace SWEndor.FileFormat.INI
 {
   public partial class INIFile
   {
+    public static char[] DefaultDelimiter = new char[] { ',' };
+
     public string GetStringValue(string section, string key, string defaultValue = "")
     {
       return GetStringValue(section, key, defaultValue, section);
@@ -93,8 +95,12 @@ namespace SWEndor.FileFormat.INI
       return defaultValue;
     }
 
+    public int[] GetIntList(string section, string key, int[] defaultList)
+    {
+      return GetIntList(section, key, defaultList, DefaultDelimiter);
+    }
 
-    public int[] GetIntList(string section, string key, int[] defaultList, char delimiter = ',')
+    public int[] GetIntList(string section, string key, int[] defaultList, char[] delimiter)
     {
       string str = GetStringValue(section, key, "");
       if (str == "")
@@ -108,7 +114,12 @@ namespace SWEndor.FileFormat.INI
       return ret;
     }
 
-    public uint[] GetUIntList(string section, string key, uint[] defaultList, char delimiter = ',')
+    public uint[] GetUIntList(string section, string key, uint[] defaultList)
+    {
+      return GetUIntList(section, key, defaultList, DefaultDelimiter);
+    }
+
+    public uint[] GetUIntList(string section, string key, uint[] defaultList, char[] delimiter)
     {
       string str = GetStringValue(section, key, "");
       if (str == "")
@@ -122,8 +133,12 @@ namespace SWEndor.FileFormat.INI
       return ret;
     }
 
+    public float[] GetFloatList(string section, string key, float[] defaultList)
+    {
+      return GetFloatList(section, key, defaultList, DefaultDelimiter);
+    }
 
-    public float[] GetFloatList(string section, string key, float[] defaultList, char delimiter = ',')
+    public float[] GetFloatList(string section, string key, float[] defaultList, char[] delimiter)
     {
       string str = GetStringValue(section, key, "");
       if (str == "")
@@ -138,7 +153,12 @@ namespace SWEndor.FileFormat.INI
       return ret;
     }
 
-    public double[] GetDoubleList(string section, string key, double[] defaultList, char delimiter = ',')
+    public double[] GetDoubleList(string section, string key, double[] defaultList)
+    {
+      return GetDoubleList(section, key, defaultList, DefaultDelimiter);
+    }
+
+    public double[] GetDoubleList(string section, string key, double[] defaultList, char[] delimiter)
     {
       string str = GetStringValue(section, key, "");
       if (str == "")
@@ -163,7 +183,12 @@ namespace SWEndor.FileFormat.INI
       return defaultValue;
     }
 
-    public bool[] GetBoolList(string section, string key, bool[] defaultList, char delimiter = ',')
+    public bool[] GetBoolList(string section, string key, bool[] defaultList)
+    {
+      return GetBoolList(section, key, defaultList, DefaultDelimiter);
+    }
+
+    public bool[] GetBoolList(string section, string key, bool[] defaultList, char[] delimiter)
     {
       string str = GetStringValue(section, key, "");
       if (str == "")
@@ -183,7 +208,12 @@ namespace SWEndor.FileFormat.INI
       return ret;
     }
 
-    public string[] GetStringList(string section, string key, string[] defaultList, char delimiter = ',')
+    public string[] GetStringList(string section, string key, string[] defaultList)
+    {
+      return GetStringList(section, key, defaultList, DefaultDelimiter);
+    }
+
+    public string[] GetStringList(string section, string key, string[] defaultList, char[] delimiter)
     {
       string str = GetStringValue(section, key, "");
       if (str == "")
@@ -193,7 +223,12 @@ namespace SWEndor.FileFormat.INI
       return tokens;
     }
 
-    public StringBuilder[] GetStringBuilderList(string section, string key, StringBuilder[] defaultList, char delimiter = ',')
+    public StringBuilder[] GetStringBuilderList(string section, string key, StringBuilder[] defaultList)
+    {
+      return GetStringBuilderList(section, key, defaultList, DefaultDelimiter);
+    }
+
+    public StringBuilder[] GetStringBuilderList(string section, string key, StringBuilder[] defaultList, char[] delimiter)
     {
       string[] tokens = GetStringList(section, key, null, delimiter);
       if (tokens == null)
