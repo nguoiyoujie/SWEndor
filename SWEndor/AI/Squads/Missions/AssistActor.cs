@@ -17,12 +17,15 @@ namespace SWEndor.AI.Squads.Missions
       ActorInfo target = engine.ActorFactory.Get(Target_ActorID);
 
       // eliminate threats
-      if (target != null && target.Squad.IsNull)
-        return new Actions.AttackActor(target.Squad.GetThreatFirst(engine)?.ID ?? -1);
+      if (target != null)
+      {
+        if (target.Squad.IsNull)
+          return new Actions.AttackActor(target.Squad.GetThreatFirst(engine)?.ID ?? -1);
 
-      // help attack
-      if (target.CurrentAction is AI.Actions.AttackActor)
-        return new Actions.AttackActor(((AI.Actions.AttackActor)target.CurrentAction).Target_ActorID);
+        // help attack
+        if (target.CurrentAction is AI.Actions.AttackActor)
+          return new Actions.AttackActor(((AI.Actions.AttackActor)target.CurrentAction).Target_ActorID);
+      }
 
       // follow
       return new Actions.FollowActor(Target_ActorID);
