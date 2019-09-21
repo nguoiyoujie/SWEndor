@@ -104,7 +104,8 @@ namespace SWEndor.Scenarios
       }
       */
 
-      SoundManager.SetMusicDyn("CHAL-IN");
+      Mood = 1;
+      SoundManager.SetMusicDyn("TRO-IN");
       //SoundManager.SetMusic("dynamic\\CONF-01", false, 1657);
       Manager.IsCutsceneMode = true;
     }
@@ -609,7 +610,9 @@ namespace SWEndor.Scenarios
                                      , new HyperspaceIn(v)
                                      //, new SetMood(-11, true)
                                      , new Rotate(new TV_3DVECTOR(0, 0, 0), 1)
-                                     , new Wait(3f+10f)}
+                                     , new Wait(3f+10f)
+                                     , new SetMood(0, true)
+                                     }
         }.Spawn(this);
 
         ainfo.MoveData.MinSpeed = 1;
@@ -700,7 +703,7 @@ namespace SWEndor.Scenarios
           a.SetArmor(DamageType.ALL, 0.25f);
       }
 
-      Mood = -12;
+      Mood = -32;
     }
 
     public void Empire_StarDestroyer_01()
