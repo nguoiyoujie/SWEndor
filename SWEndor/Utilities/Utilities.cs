@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,9 +8,12 @@ namespace SWEndor
 {
   public static class Utilities
   {
+    public static string[] NewLines = new string[] { "\r\n", "\r", "\n" };
+    public static char[] Spaces = new char[] { ' ' };
+
     public static string Multiline(string input, int maxLineLength)
     {
-      string[] lines = input.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+      string[] lines = input.Split(NewLines, StringSplitOptions.None);
       for (int i = 0; i < lines.Length; i++)
         lines[i] = string.Join("\n", SplitToLines(lines[i], maxLineLength));
 
@@ -18,7 +22,7 @@ namespace SWEndor
 
     public static IEnumerable<string> SplitToLines(string stringToSplit, int maxLineLength)
     {
-      string[] words = stringToSplit.Split(' ');
+      string[] words = stringToSplit.Split(Spaces);
       StringBuilder line = new StringBuilder();
       foreach (string word in words)
       {
@@ -40,7 +44,8 @@ namespace SWEndor
             yield return overflow.Substring(0, maxLineLength);
             overflow = overflow.Substring(maxLineLength);
           }
-          line.Append(overflow + " ");
+          line.Append(overflow);
+          line.Append(" ");
         }
       }
       yield return line.ToString().Trim();
@@ -63,9 +68,9 @@ namespace SWEndor
       return new TV_3DVECTOR(x, y, z);
     }
 
-    public static string ToString(TV_3DVECTOR vector)
+    public static string ToString(this TV_3DVECTOR vector)
     {
-      return string.Format("(VEC:{0},{1},{2})", vector.x, vector.y, vector.z);
+      return "(VEC:{0},{1},{2})".F(vector.x, vector.y, vector.z);
     }
 
     public static float Clamp(this float value, float min, float max)

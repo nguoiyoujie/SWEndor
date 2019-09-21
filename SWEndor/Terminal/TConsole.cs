@@ -28,10 +28,11 @@ namespace SWEndor.Terminal
     {
       return m_Lines.ToArray();
     }
-    
+
+    static char[] NewLine = new char[] { '\n', '\r' };
     public static void Print(string line)
     {
-      string[] lns = line.Split('\n', '\r');
+      string[] lns = line.Split(NewLine);
       foreach (string s in lns)
       {
         m_Lines.Add(s);
@@ -58,7 +59,7 @@ namespace SWEndor.Terminal
         TCommandFeedback feedback = TCommandParser.Execute(input);
         if (feedback.Content != null)
         {
-          string[] feedbacklines = feedback.Content.ToString().Split('\n');
+          string[] feedbacklines = feedback.Content.ToString().Split(NewLine);
           foreach (string f in feedbacklines)
           {
             Print("  ~  " + f);
