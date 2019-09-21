@@ -149,7 +149,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
             }
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), 6, ps.Length));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), "6", ps.Length.ToString()));
           break;
 
         case "forcedmove":
@@ -173,7 +173,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
             }
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), 6, ps.Length));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), "6", ps.Length.ToString()));
           break;
 
         case "rotate":
@@ -197,7 +197,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
             }
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), 6, ps.Length));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), "6", ps.Length.ToString()));
           break;
 
         case "hyperspacein":
@@ -207,7 +207,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
             action = new HyperspaceIn(dest);
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), 5, ps.Length));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), "5", ps.Length.ToString()));
           break;
 
         case "hyperspaceout":
@@ -243,7 +243,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
             }
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), 3, ps.Length));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), "3", ps.Length.ToString()));
           break;
 
         case "followactor":
@@ -269,7 +269,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
             }
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), 3, ps.Length));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), "3", ps.Length.ToString()));
           break;
 
         case "avoidcollisionrotate":
@@ -290,7 +290,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
             }
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[0].ValueS.ToLower(), 8, ps.Length));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[0].ValueS.ToLower(), "8", ps.Length.ToString()));
           break;
 
         case "setgamestateb":
@@ -299,7 +299,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
             action = new SetGameStateB(ps[2].ValueS,ps[3].ValueB);
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), 4, ps.Length));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ps[1].ValueS.ToLower(), "4", ps.Length.ToString()));
           break;
 
       }

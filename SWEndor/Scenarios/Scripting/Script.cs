@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SWEndor.Scenarios.Scripting.Expressions;
 using SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Statements;
+using SWEndor.Primitives;
 
 namespace SWEndor.Scenarios.Scripting
 {
@@ -13,9 +14,9 @@ namespace SWEndor.Scenarios.Scripting
     public Script(string filepath, string scriptname)
     {
       if (!File.Exists(filepath))
-        throw new FileNotFoundException("Script file '" + Path.GetFullPath(filepath) + "' is not found!");
+        throw new FileNotFoundException("Script file '".C(Path.GetFullPath(filepath)).C("' is not found!"));
 
-      Globals.Engine.Screen2D.LoadingTextLines.Add("loading script:" + scriptname);
+      Globals.Engine.Screen2D.LoadingTextLines.Add("loading script:".C(scriptname));
       Globals.Engine.Screen2D.LoadingTextLines.RemoveAt(0);
       Name = scriptname;
       Registry.Add(scriptname, this);

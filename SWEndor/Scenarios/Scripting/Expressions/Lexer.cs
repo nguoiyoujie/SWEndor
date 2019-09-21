@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SWEndor.Primitives;
+using System;
 using System.IO;
 
 namespace SWEndor.Scenarios.Scripting.Expressions
@@ -78,7 +79,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions
           return matched;
         }
       }
-      throw new Exception(string.Format("Unable to match against any tokens at line {0} position {1} \"{2}\"",
+      throw new Exception("Unable to match against any tokens at line {0} position {1} \"{2}\"".F(
                                         LineNumber, Position, lineRemaining));
     }
 

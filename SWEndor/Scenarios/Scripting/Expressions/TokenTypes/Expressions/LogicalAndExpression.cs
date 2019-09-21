@@ -37,8 +37,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
         return _first.Evaluate(context);
 
       Val result = _first.Evaluate(context);
-      //try { result = (bool)(result as IConvertible); } catch (Exception ex) { throw new EvalException(this, "bool cast", result, ex); }
-      if (result.Type != ValType.BOOL) throw new EvalException(this, "Non-boolean value {0} found at start of conditional expression".F(result.Value) );
+      if (result.Type != ValType.BOOL) throw new EvalException(this, "Non-boolean value {0} found at start of conditional expression".F(result.Value));
       if (result.ValueB)
       {
         foreach (CExpression _expr in _set)
