@@ -21,13 +21,15 @@ namespace SWEndor.AI.Actions
 
     public override string ToString()
     {
-      return "{0},{1},{2},{3},{4},{5}".F(Name
-                          , Target_ActorID
-                          , FollowDistance
-                          , SpeedAdjustmentDistanceRange
-                          , CanInterrupt
-                          , Complete
-                          );
+      return string.Join(",", new string[]
+      {
+          Name
+        , Target_ActorID.ToString()
+        , FollowDistance.ToString()
+        , SpeedAdjustmentDistanceRange.ToString()
+        , CanInterrupt.ToString()
+        , Complete.ToString()
+      });
     }
 
     public override void Process(Engine engine, ActorInfo actor)

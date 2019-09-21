@@ -26,12 +26,14 @@ namespace SWEndor.AI.Actions
 
     public override string ToString()
     {
-      return "{0},{1},{2},{3},{4}".F(Name
-                          , Utilities.ToString(Impact_Position)
-                          , Utilities.ToString(Normal)
-                          , CloseEnoughAngle
-                          , Complete
-                          );
+      return string.Join(",", new string[]
+        {
+          Name
+        , Utilities.ToString(Impact_Position)
+        , Utilities.ToString(Normal)
+        , CloseEnoughAngle.ToString()
+        , Complete.ToString()
+        });
     }
 
     public override void Process(Engine engine, ActorInfo actor)

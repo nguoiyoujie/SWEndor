@@ -17,10 +17,12 @@ namespace SWEndor.AI.Actions
 
     public override string ToString()
     {
-      return "{0},{1},{2}".F(Name
-                          , ResumeTime - Globals.Engine.Game.GameTime
-                          , Complete
-                          );
+      return string.Join(",", new string[]
+      {
+          Name
+        , (ResumeTime - Globals.Engine.Game.GameTime).ToString()
+        , Complete.ToString()
+      });
     }
 
     public override void Process(Engine engine, ActorInfo actor)

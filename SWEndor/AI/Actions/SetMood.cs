@@ -17,11 +17,13 @@ namespace SWEndor.AI.Actions
 
     public override string ToString()
     {
-      return string.Format("{0},{1},{2}"
-                          , Name
-                          , Mood
-                          , SquadLeaderOnly
-                          );
+      return string.Join(",", new string[]
+      {
+          Name
+        , Mood.ToString()
+        , SquadLeaderOnly.ToString()
+        , Complete.ToString()
+      });
     }
 
     public override void Process(Engine engine, ActorInfo actor)

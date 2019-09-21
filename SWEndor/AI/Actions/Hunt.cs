@@ -18,10 +18,12 @@ namespace SWEndor.AI.Actions
 
     public override string ToString()
     {
-      return "{0},{1},{2}".F(Name
-                          , m_TargetType
-                          , Complete
-                          );
+      return string.Join(",", new string[]
+      {
+          Name
+        , m_TargetType.ToString()
+        , Complete.ToString()
+      });
     }
 
     Action<Engine, ActorInfo, ActorInfo, List<ActorInfo>, TargetType> getTargets = new Action<Engine, ActorInfo, ActorInfo, List<ActorInfo>, TargetType>(
