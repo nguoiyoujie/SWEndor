@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Primitives;
 using System;
 
 namespace SWEndor.UI.Widgets
@@ -43,14 +44,14 @@ namespace SWEndor.UI.Widgets
 
       //Health Bar
       DrawSingleBar(0
-                    , string.Format("HP [{0}%]", Math.Ceiling(PlayerInfo.StrengthFrac * 100))
+                    , "HP [{0}%]".F(Math.Ceiling(PlayerInfo.StrengthFrac * 100))
                     , PlayerInfo.StrengthFrac
                     , PlayerInfo.StrengthColor
                     );
 
       //Speed Bar
       DrawSingleBar(1
-            , string.Format("SPEED ")
+            , "SPEED "
             , p.MoveData.Speed / p.MoveData.MaxSpeed
             , new TV_COLOR(0.7f, 0.8f, 0.4f, 1)
             );

@@ -14,12 +14,13 @@ namespace SWEndor.UI.Widgets
       }
     }
 
+    public static char[] Lines = new char[] { '\n' };
     public override void Draw()
     {
       string perftext = Engine.PerfManager.Report;
 
       TV_2DVECTOR loc = new TV_2DVECTOR(10, 215);
-      int lines = perftext.Split('\n').Length;
+      int lines = perftext.Split(Lines).Length;
 
       TVScreen2DImmediate.Action_Begin2D();
       TVScreen2DImmediate.Draw_FilledBox(loc.x - 5, loc.y - 5, loc.x + 405, loc.y + 40 / 3 * lines + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());

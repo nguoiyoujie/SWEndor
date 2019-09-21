@@ -93,7 +93,7 @@ namespace SWEndor.UI.Widgets
 
         // StageNumber
         TVScreen2DText.TextureFont_DrawText(string.Format("STAGE: {0}"
-          , GameScenarioManager.Scenario.StageNumber
+          , GameScenarioManager.Scenario.StageNumber.ToString()
           )
           , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop

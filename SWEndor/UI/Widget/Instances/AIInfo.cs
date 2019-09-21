@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.AI.Actions;
+using System.Collections.Generic;
 
 namespace SWEndor.UI.Widgets
 {
@@ -21,6 +22,7 @@ namespace SWEndor.UI.Widgets
       }
     }
 
+    List<string> actiontext = new List<string>();
     public override void Draw()
     {
       ActorInfo p = PlayerInfo.Actor;
@@ -31,14 +33,14 @@ namespace SWEndor.UI.Widgets
 
       ActionInfo action = p.CurrentAction;
       string name = (action != null) ? action.Name.ToUpper() : "NULL";
-      string actiontext = "";
+      actiontext.Clear();
       while (action != null)
       {
-        actiontext += "\n" + action.ToString();
+        actiontext.Add(action.ToString());
         action = action.NextAction;
       }
 
-      int lines = actiontext.Split('\n').Length;
+      int lines = actiontext.Count;
 
       TVScreen2DImmediate.Action_Begin2D();
 
@@ -56,7 +58,7 @@ namespace SWEndor.UI.Widgets
       TVScreen2DImmediate.Action_End2D();
 
       TVScreen2DText.Action_BeginText();
-      TVScreen2DText.TextureFont_DrawText(actiontext
+      TVScreen2DText.TextureFont_DrawText(string.Join("\n", actiontext)
         , loc.x, loc.y, new TV_COLOR(0.6f, 0.8f, 0.6f, 1).GetIntColor(), FontFactory.Get(Font.T08).ID);
 
       TVScreen2DText.TextureFont_DrawText("AI"

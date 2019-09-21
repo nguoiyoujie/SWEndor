@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Primitives;
 using System;
 
 namespace SWEndor.UI.Menu.Pages
@@ -25,8 +26,10 @@ namespace SWEndor.UI.Menu.Pages
       MainText.TextColor = new TV_COLOR(0.8f, 0.2f, 0.2f, 1);
       MainText.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 - 200, Globals.Engine.ScreenHeight / 2 - 180);
 
-      Instructions.Text = "A fatal error has been encountered and the program needs to close.\nPlease see " + errorfilename + " in the /Log folder for the error message.\n\n" 
-        + Utilities.Multiline("Error: " + exception.Message, 72);
+      Instructions.Text = "A fatal error has been encountered and the program needs to close.\nPlease see "
+        .C(errorfilename)
+        .C(" in the /Log folder for the error message.\n\n")
+        .C(Utilities.Multiline("Error: ".C(exception.Message), 72));
       Instructions.TextFont = FontFactory.Get(Font.T12).ID;
       Instructions.TextColor = new TV_COLOR(0.8f, 0.2f, 0.2f, 1);
       Instructions.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 - 250, Globals.Engine.ScreenHeight / 2 - 130);
