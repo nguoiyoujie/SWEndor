@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Components
 {
   public struct MoveBehavior
   {
-    public delegate void MoveAction(ActorInfo actor, ref MoveData data);
+    public delegate void MoveAction(ActorInfo actor, ref MoveData data, float time);
     public MoveAction Move;
 
     public void Load(ActorTypeInfo atype)

@@ -9,10 +9,8 @@ namespace SWEndor.ActorTypes.Components
   /// </summary>
   public static class RotateOnly
   {
-    public static void Move(ActorInfo actor, ref MoveData data)
+    public static void Move(ActorInfo actor, ref MoveData data, float time)
     {
-      float time = actor.Game.TimeSinceRender;
-
       // Control rotation
       if (data.ApplyZBalance)
       {

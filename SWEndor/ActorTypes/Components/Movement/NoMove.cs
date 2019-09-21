@@ -8,6 +8,6 @@ namespace SWEndor.ActorTypes.Components
   /// </summary>
   public static class NoMove
   {
-    public static void Move(ActorInfo actor, ref MoveData data) { }
+    public static void Move(ActorInfo actor, ref MoveData data, float time) { }
   }
 }

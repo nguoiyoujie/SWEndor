@@ -386,7 +386,7 @@ namespace SWEndor.Actors
         {
           CollisionSystem.CheckCollision(Engine, this);
         }
-        TypeInfo.MoveBehavior.Move(this, ref MoveData);
+        TypeInfo.MoveBehavior.Move(this, ref MoveData, Game.TimeSinceRender);
       }
       else
         Delete();

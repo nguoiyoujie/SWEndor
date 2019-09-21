@@ -8,7 +8,7 @@ namespace SWEndor.ActorTypes.Components
   /// </summary>
   public static class MoveLaser
   {
-    public static void Move(ActorInfo actor, ref MoveData data)
+    public static void Move(ActorInfo actor, ref MoveData data, float time)
     {
       actor.MoveRelative(Globals.LaserSpeed * actor.Game.TimeSinceRender, 0, 0);
     }
