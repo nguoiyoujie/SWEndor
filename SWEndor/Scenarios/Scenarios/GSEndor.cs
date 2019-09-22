@@ -5,6 +5,7 @@ using SWEndor.ActorTypes.Instances;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
+using SWEndor.Sound;
 using SWEndor.Weapons;
 using System;
 using System.Collections.Generic;
@@ -2275,7 +2276,7 @@ namespace SWEndor.Scenarios
     {
       PlayerCameraInfo.Shake(150);
       SoundManager.SetSoundStop("ds_beam");
-      SoundManager.SetSound("exp_nave", false, 1, false);
+      SoundManager.SetSound(SoundGlobals.ExpLg, false, 1, false);
     }
     #endregion
   }

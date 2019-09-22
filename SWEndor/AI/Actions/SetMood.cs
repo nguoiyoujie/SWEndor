@@ -1,10 +1,11 @@
 ﻿using SWEndor.Actors;
+using SWEndor.Scenarios;
 
 namespace SWEndor.AI.Actions
 {
   public class SetMood : ActionInfo
   {
-    public SetMood(int mood, bool squadLeaderOnly) : base("SetMood")
+    public SetMood(MoodStates mood, bool squadLeaderOnly) : base("SetMood")
     {
       Mood = mood;
       CanInterrupt = false;
@@ -12,7 +13,7 @@ namespace SWEndor.AI.Actions
     }
 
     // parameters
-    public int Mood = 0;
+    public MoodStates Mood = 0;
     public bool SquadLeaderOnly = false;
 
     public override string ToString()

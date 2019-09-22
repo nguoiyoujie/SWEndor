@@ -2,6 +2,7 @@
 using SWEndor.ActorTypes;
 using SWEndor.Primitives;
 using SWEndor.Scenarios;
+using SWEndor.Sound;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -119,7 +120,7 @@ namespace SWEndor.UI.Menu.Pages
       Engine.Game.IsPaused = true;
       GameScenarioManager.Reset();
 
-      Engine.SoundManager.SetSound("r23");
+      Engine.SoundManager.SetSound(SoundGlobals.Ready);
       Thread.Sleep(1200);
 
       SelectedScenario.Launch();

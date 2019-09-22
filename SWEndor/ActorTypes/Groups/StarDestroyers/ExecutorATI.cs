@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Sound;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -36,7 +37,7 @@ namespace SWEndor.ActorTypes.Instances
         new LookData(new TV_3DVECTOR(0, 325, -840), new TV_3DVECTOR(0, 325, 2000)),
         };
       DeathCamera = new DeathCameraData(3000, 600, 40);
-      SoundSources = new SoundSourceData[] { new SoundSourceData("engine_big", 2500.0f, new TV_3DVECTOR(0, 0, -800), true) };
+      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 2500.0f, new TV_3DVECTOR(0, 0, -800), true) };
       AddOns = new AddOnData[]
       {
         new AddOnData("Executor Super Star Destroyer Turbolaser Tower", new TV_3DVECTOR(500, 55, -450), new TV_3DVECTOR(-90, 0, 0), true)

@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Sound;
 
 namespace SWEndor.Input.Functions.Gameplay.Weapon
 {
@@ -17,7 +18,7 @@ namespace SWEndor.Input.Functions.Gameplay.Weapon
         engine.PlayerInfo.AimTargetID = -1;
         engine.PlayerInfo.AssistTargetID = -1;
         Globals.Engine.Screen2D.MessageSecondaryText("Target cleared.", 5, new TV_COLOR(0.5f, 0.5f, 1, 1));
-        engine.SoundManager.SetSound("button_1");
+        engine.SoundManager.SetSound(SoundGlobals.Button1);
       }
     }
   }

@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Sound;
 using SWEndor.Terminal;
 using System.Collections.Generic;
 
@@ -14,7 +15,7 @@ namespace SWEndor.Input.Context
       if (keydata.Pressed > 0)
       {
         if (Engine.Screen2D.CurrentPage?.OnKeyPress((CONST_TV_KEY)keydata.Key) ?? false)
-          Engine.SoundManager.SetSound("button_1");
+          Engine.SoundManager.SetSound(SoundGlobals.Button1);
 
         // Terminal
         if (Engine.InputManager.CTRL && keydata.Key.Equals((int)CONST_TV_KEY.TV_KEY_T))

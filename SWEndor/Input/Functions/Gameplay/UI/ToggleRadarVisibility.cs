@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Sound;
 
 namespace SWEndor.Input.Functions.Gameplay.UI
 {
@@ -13,7 +14,7 @@ namespace SWEndor.Input.Functions.Gameplay.UI
     public override void Process(Engine engine)
     {
       engine.Screen2D.ShowRadar = !engine.Screen2D.ShowRadar;
-      engine.SoundManager.SetSound("button_1");
+      engine.SoundManager.SetSound(SoundGlobals.Button1);
     }
   }
 }

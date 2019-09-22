@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Sound;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -29,7 +30,7 @@ namespace SWEndor.ActorTypes.Instances
         new LookData(new TV_3DVECTOR(0, 300, -385), new TV_3DVECTOR(0, 300, 2000)),
         };
       DeathCamera = new DeathCameraData(1750, 400, 30);
-      SoundSources = new SoundSourceData[] { new SoundSourceData("engine_big", 1500f, new TV_3DVECTOR(0, -100, -400), true) };
+      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500f, new TV_3DVECTOR(0, -100, -400), true) };
       AddOns = new AddOnData[]
       {
         // Front

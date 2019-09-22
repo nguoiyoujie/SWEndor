@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Sound;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -20,6 +21,7 @@ namespace SWEndor.ActorTypes.Instances
       RegenData = new RegenData(false, 0.08f, 0, 0, 0);
 
       MeshData = new MeshData(Name, @"xwing\xwing.x");
+      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineXWing, 200f, new TV_3DVECTOR(0, 0, -30), true) };
 
       Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 3, 25), new TV_3DVECTOR(0, 3, 2000)),

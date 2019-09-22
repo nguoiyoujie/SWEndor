@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Sound;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -26,6 +27,8 @@ namespace SWEndor.ActorTypes.Instances
         new LookData(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
         new LookData(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
      };
+
+      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineAWing, 200f, new TV_3DVECTOR(0, 0, -30), true) };
 
       Loadouts = new string[] { "A_WG_TORP", "A_WG_MISL", "A_WG_LASR" };
     }

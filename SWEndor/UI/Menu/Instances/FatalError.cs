@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Primitives;
+using SWEndor.Sound;
 using System;
 
 namespace SWEndor.UI.Menu.Pages
@@ -55,7 +56,7 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        Engine.SoundManager.SetSound("r23");
+        Engine.SoundManager.SetSound(SoundGlobals.Exit);
         Engine.SoundManager.SetMusicStop();
         Engine.BeginExit();
         return true;

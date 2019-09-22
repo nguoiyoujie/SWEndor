@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Sound;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -28,7 +29,7 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Name, @"falcon\falcon.x");
 
-      SoundSources = new SoundSourceData[] { new SoundSourceData("falcon_engine", 200f, new TV_3DVECTOR(0, 0, -30), true) };
+      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineFalcon, 200f, new TV_3DVECTOR(0, 0, -30), true) };
       AddOns = new AddOnData[] { new AddOnData("Invisible Rebel Turbo Laser", new TV_3DVECTOR(0, 7, 20), new TV_3DVECTOR(90, 0, 0), true) };
 
       Cameras = new LookData[] {

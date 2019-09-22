@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Sound;
 using System.Collections.Generic;
 
 namespace SWEndor.UI.Menu.Pages
@@ -136,7 +137,7 @@ namespace SWEndor.UI.Menu.Pages
       if (key == CONST_TV_KEY.TV_KEY_LEFT || key == CONST_TV_KEY.TV_KEY_RIGHT)
       {
         Globals.Engine.SoundManager.MasterSFXVolume = float.Parse(ButtonSFXVol.ToggleButtonsValues[ButtonSFXVol.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
-        Globals.Engine.SoundManager.SetSound("shieldlow");
+        Globals.Engine.SoundManager.SetSound(SoundGlobals.LostShip);
         Settings.SaveSettings(Engine);
       }
       return false;

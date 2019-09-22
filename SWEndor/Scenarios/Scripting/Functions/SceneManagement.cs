@@ -6,6 +6,15 @@ namespace SWEndor.Scenarios.Scripting.Functions
 {
   public static class SceneManagement
   {
+    public static Val SetMood(Context context, params Val[] ps)
+    {
+      if (context.Engine.GameScenarioManager.Scenario == null)
+        return Val.FALSE;
+
+      context.Engine.GameScenarioManager.Scenario.Mood = (MoodStates)ps[0].ValueI;
+      return Val.TRUE;
+    }
+
     public static Val SetMaxBounds(Context context, params Val[] ps)
     {
       context.Engine.GameScenarioManager.MaxBounds = new TV_3DVECTOR(ps[0].ValueF, ps[1].ValueF, ps[2].ValueF);

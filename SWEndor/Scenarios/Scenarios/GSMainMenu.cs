@@ -60,53 +60,9 @@ namespace SWEndor.Scenarios
       PlayerInfo.Lives = 2;
       PlayerInfo.ScorePerLife = 9999999;
       PlayerInfo.ScoreForNextLife = 9999999;
-
-      //SoundManager.SetMusic("battle_1_1", false, 18600);
-      //SoundManager.SetMusic("battle_1_1", false, 71250);
-      //SoundManager.SetMusic("battle_1_1", false, 191000);
-      //SoundManager.SetMusicLoop("battle_3_4");
-
-      /*
-      switch (sceneid)
-      {
-        // Endor reportorie
-        case 0:
-        default:
-          SoundManager.SetMusic("credits_3_1");
-          SoundManager.SetMusicLoop("battle_3_4");
-          break;
-        case 1:
-          SoundManager.SetMusic("credits_3_1");
-          SoundManager.SetMusicLoop("battle_3_3");
-          break;
-        case 2:
-          SoundManager.SetMusic("credits_3_1");
-          SoundManager.SetMusicLoop("battle_3_4");
-          break;
-        // Yavin reportorie
-        case 3:
-          SoundManager.SetMusic("credits_1_1");
-          SoundManager.SetMusicLoop("battle_1_1", 18600);
-          break;
-        case 4:
-          SoundManager.SetMusic("credits_1_1");
-          SoundManager.SetMusicLoop("battle_1_4");
-          break;
-        // Hoth reportorie
-        case 5:
-          SoundManager.SetMusic("credits_2_1");
-          SoundManager.SetMusicLoop("battle_2_1");
-          break;
-        case 6:
-          SoundManager.SetMusic("credits_2_1");
-          SoundManager.SetMusicLoop("battle_2_2");
-          break;
-      }
-      */
-
-      Mood = 1;
-      SoundManager.SetMusicDyn("TRO-IN");
-      //SoundManager.SetMusic("dynamic\\CONF-01", false, 1657);
+      
+      Mood = MoodStates.AMBIENT;
+      SoundManager.SetMusicDyn("TRO-3IN");
       Manager.IsCutsceneMode = true;
     }
     public override void Unload()
@@ -456,7 +412,7 @@ namespace SWEndor.Scenarios
 
       Manager.AddEvent(Game.GameTime + 25, Empire_StarDestroyer_02);
       Manager.AddEvent(Game.GameTime + 50, Rebel_HyperspaceIn3);
-      Mood = -22;
+      Mood = MoodStates.ENEMY_SHIP_ARRIVED;
     }
 
     public void Rebel_HyperspaceIn3()
@@ -522,7 +478,7 @@ namespace SWEndor.Scenarios
       spawninfo.TypeInfo = ActorTypeFactory.Get("Y-Wing");
       spawninfo.HuntTargetType = TargetType.SHIELDGENERATOR | TargetType.SHIP;
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
-      Mood = -22;
+      Mood = MoodStates.ENEMY_SHIP_ARRIVED;
     }
 
 
@@ -550,7 +506,7 @@ namespace SWEndor.Scenarios
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
       spawninfo.TypeInfo = ActorTypeFactory.Get("Y-Wing");
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
-      Mood = -21;
+      Mood = MoodStates.ENEMY_FIGHTER_ARRIVED;
     }
 
     public void Rebel_BeginBattle()
@@ -611,7 +567,7 @@ namespace SWEndor.Scenarios
                                      //, new SetMood(-11, true)
                                      , new Rotate(new TV_3DVECTOR(0, 0, 0), 1)
                                      , new Wait(3f+10f)
-                                     , new SetMood(0, true)
+                                     , new SetMood(MoodStates.ENGAGEMENT, true)
                                      }
         }.Spawn(this);
 
@@ -639,7 +595,7 @@ namespace SWEndor.Scenarios
 
         ainfo = new ActorSpawnInfo
         {
-          Type = ActorTypeFactory.Get("TIE Avenger"),
+          Type = ActorTypeFactory.Get("TIE Advanced"),
           Name = "",
           SidebarName = "",
           SpawnTime = 0,
@@ -650,7 +606,7 @@ namespace SWEndor.Scenarios
                                      , new Rotate(v, 0)
                                      , new Wait(12.5f)
                                      , new HyperspaceIn(v)
-                                     , new SetMood(-11, true)
+                                     , new SetMood(MoodStates.ALLY_FIGHTER_ARRIVED, true)
                                      , new Rotate(new TV_3DVECTOR(0, 0, 0), 40)
                                      , new Wait(3f)
                                      }
@@ -703,7 +659,7 @@ namespace SWEndor.Scenarios
           a.SetArmor(DamageType.ALL, 0.25f);
       }
 
-      Mood = -32;
+      Mood = MoodStates.NEUTRAL_SHIP_ARRIVED;
     }
 
     public void Empire_StarDestroyer_01()
@@ -736,7 +692,7 @@ namespace SWEndor.Scenarios
                                      //, new HyperspaceIn(v + hyperspaceInOffset + new TV_3DVECTOR(0, 0, 100000))
                                      //, new HyperspaceIn(v + hyperspaceInOffset)
                                      , new HyperspaceIn(v)
-                                     , new SetMood(-12, true)
+                                     , new SetMood(MoodStates.ALLY_SHIP_ARRIVED, true)
                                      , new EnableSpawn(true)
                                      , new Move(new TV_3DVECTOR(v.x * 0.2f, v.y, -1000), ActorTypeFactory.Get("Imperial-I Star Destroyer").MoveLimitData.MaxSpeed / 2)
                                      , new Rotate(new TV_3DVECTOR(-1600, -120, 6300), 0)
@@ -765,7 +721,7 @@ namespace SWEndor.Scenarios
           ActorTypeFactory.Get("TIE Bomber"),
           ActorTypeFactory.Get("TIE Bomber"),
           ActorTypeFactory.Get("TIE Bomber"),
-          ActorTypeFactory.Get("TIE Avenger"),
+          ActorTypeFactory.Get("TIE Advanced"),
           ActorTypeFactory.Get("TIE Defender"),
         };
 

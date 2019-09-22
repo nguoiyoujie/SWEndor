@@ -129,12 +129,12 @@ namespace SWEndor.Sound
 
     public void Load()
     {
-      string[] soundfiles = Directory.GetFiles(Globals.SoundPath, "*.wav", SearchOption.TopDirectoryOnly);
+      string[] soundfiles = Directory.GetFiles(Globals.SoundPath, "*.wav", SearchOption.AllDirectories);
       int i = 0;
       //bool rpt = false;
       foreach (string sdfl in soundfiles)
       {
-        string sdname = Path.GetFileNameWithoutExtension(sdfl);
+        string sdname = Path.Combine(Path.GetDirectoryName(sdfl), Path.GetFileNameWithoutExtension(sdfl)).Replace(Globals.SoundPath, "");
         Log.Write(Log.DEBUG, LogType.ASSET_SOUND_LOAD, sdname);
 
         if (i >= soundgrps.Count)
@@ -391,7 +391,7 @@ namespace SWEndor.Sound
       if (p == null)
         return null;
 
-      int mood = Engine.GameScenarioManager.Scenario?.Mood ?? 0; // get mood from somewhere...
+      int mood = (int)(Engine.GameScenarioManager.Scenario?.Mood); // get mood from somewhere...
 
       string next = null;
       if (p.MoodTransitions != null

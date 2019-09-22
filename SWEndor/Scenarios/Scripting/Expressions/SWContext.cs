@@ -12,6 +12,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions
     public void AddFunctions()
     {
       // Scene Management
+      Functions.Add("SetMood".ToLowerInvariant(), SceneManagement.SetMood);
       Functions.Add("SetMaxBounds".ToLowerInvariant(), SceneManagement.SetMaxBounds);
       Functions.Add("SetMinBounds".ToLowerInvariant(), SceneManagement.SetMinBounds);
       Functions.Add("SetMaxAIBounds".ToLowerInvariant(), SceneManagement.SetMaxAIBounds);

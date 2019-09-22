@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Sound;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -33,6 +34,8 @@ namespace SWEndor.ActorTypes.Instances
         new DebrisSpawnerData("BWing_Top_WingATI", new TV_3DVECTOR(0, 0, 0), -10, 10, -10, 10, -25, 25, 0.5f),
         new DebrisSpawnerData("BWing_Bottom_WingATI", new TV_3DVECTOR(0, -70, 0), -10, 10, -10, 10, -25, 25, 0.5f)
         };
+
+      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineXWing, 200f, new TV_3DVECTOR(0, 0, -30), true) };
 
       Loadouts = new string[] { "B_WG_TORP", "B_WG_ION", "B_WG_LASR" };
     }

@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Sound;
 
 namespace SWEndor.Input.Functions.Gameplay.Weapon
 {
@@ -13,7 +14,7 @@ namespace SWEndor.Input.Functions.Gameplay.Weapon
     public override void Process(Engine engine)
     {
       engine.PlayerInfo.NextSecondaryWeapon();
-      engine.SoundManager.SetSound("button_1");
+      engine.SoundManager.SetSound(SoundGlobals.Button1);
     }
   }
 }

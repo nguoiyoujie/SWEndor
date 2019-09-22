@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Sound;
 
 namespace SWEndor.Input.Functions.Gameplay.Special
 {
@@ -13,7 +14,7 @@ namespace SWEndor.Input.Functions.Gameplay.Special
     public override void Process(Engine engine)
     {
       engine.PlayerInfo.Lives++;
-      engine.SoundManager.SetSound("button_4");
+      engine.SoundManager.SetSound(SoundGlobals.Button4);
     }
   }
 }

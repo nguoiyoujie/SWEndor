@@ -5,7 +5,7 @@ namespace SWEndor.ActorTypes.Components
 {
   public struct SoundSourceData
   {
-    public readonly string Sound;
+    public readonly string[] Sound;
     public readonly TV_3DVECTOR RelativeLocation;
     public readonly float Distance;
     public readonly bool Loop;
@@ -13,7 +13,16 @@ namespace SWEndor.ActorTypes.Components
 
     public SoundSourceData(string sound, float dist, TV_3DVECTOR position = default(TV_3DVECTOR), bool loop = false, bool playInCutscene = false)
     {
-      Sound = sound;
+      Sound = new string[] { sound };
+      RelativeLocation = position;
+      Distance = dist;
+      Loop = loop;
+      PlayInCutscene = playInCutscene;
+    }
+
+    public SoundSourceData(string[] sounds, float dist, TV_3DVECTOR position = default(TV_3DVECTOR), bool loop = false, bool playInCutscene = false)
+    {
+      Sound = sounds;
       RelativeLocation = position;
       Distance = dist;
       Loop = loop;
@@ -25,20 +34,36 @@ namespace SWEndor.ActorTypes.Components
       if (!PlayInCutscene || !actor.GameScenarioManager.IsCutsceneMode)
       {
         TV_3DVECTOR engineloc = actor.GetRelativePositionXYZ(RelativeLocation.x, RelativeLocation.y, RelativeLocation.z);
-        Play(actor, actor.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.PlayerInfo.Position, engineloc));
+        Play(actor, engineloc);
       }
     }
 
-    public void Play(ActorInfo actor, float dist)
+    public void Play(ActorInfo actor, TV_3DVECTOR pos)
     {
-      if (dist < Distance)
+      Play(actor, pos, Distance, Sound, Loop);
+    }
+
+    public static void Play(ActorInfo actor, TV_3DVECTOR pos, float maxDistance, string[] sound, bool loop)
+    {
+      if (sound == null || sound.Length == 0)
+        return;
+
+      float df = actor.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.PlayerInfo.Position, pos) / maxDistance;
+
+      if (df < 1)
       {
+        string sd = null;
+        if (sound.Length == 1)
+          sd = sound[0];
+        else if (sound.Length > 1)
+          sd = sound[actor.Engine.Random.Next(0, sound.Length)];
+
         float vol = 1;
         if (actor.MoveData.MaxSpeed > 0)
           vol = (actor.MoveData.Speed / actor.MoveData.MaxSpeed).Clamp(0, 1);
-        vol -= dist / Distance;
+        vol -= df;
         if (vol > 0)
-          actor.SoundManager.SetSound(Sound, false, vol, Loop);
+          actor.SoundManager.SetSound(sd, false, vol, loop);
       }
     }
   }

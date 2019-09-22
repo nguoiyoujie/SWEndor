@@ -231,7 +231,7 @@ namespace SWEndor.Scenarios
       //ActionInfo[] actions;
 
       List<ActionInfo> actionlist = new List<ActionInfo>();
-      if (spawninfo.IntermissionMood != 0) actionlist.Add(new SetMood(spawninfo.IntermissionMood, true));
+      if (spawninfo.IntermissionMood != 0) actionlist.Add(new SetMood((MoodStates)spawninfo.IntermissionMood, true));
       if (spawninfo.HyperspaceIn) actionlist.Add(new HyperspaceIn(position));
       if (spawninfo.EnableSpawn) actionlist.Add(new EnableSpawn(true));
       actionlist.Add(new Move(targetposition, spawninfo.TypeInfo.MoveLimitData.MaxSpeed));

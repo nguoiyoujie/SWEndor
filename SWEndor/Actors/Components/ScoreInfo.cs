@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Primitives;
+using SWEndor.Scenarios;
 
 namespace SWEndor
 {
@@ -84,9 +85,9 @@ namespace SWEndor
       Kills++;
 
       if (victim.TypeInfo is ActorTypes.Groups.Fighter)
-        engine.GameScenarioManager.Scenario.Mood = -1;
+        engine.GameScenarioManager.Scenario.Mood = MoodStates.DESTROY_FIGHTER;
       else if (victim.TypeInfo is ActorTypes.Groups.LargeShip)
-        engine.GameScenarioManager.Scenario.Mood = -3;
+        engine.GameScenarioManager.Scenario.Mood = MoodStates.DESTROY_SHIP;
 
       if (engine.PlayerInfo.Actor != null)
         engine.Screen2D.MessageSystemsText("[{0}] destroyed.".F(victim.Name), 2, new TV_COLOR(0.5f, 0.5f, 1, 1));
@@ -104,7 +105,7 @@ namespace SWEndor
     public void AddDeath(Engine engine, ActorInfo killedby)
     {
       Deaths++;
-      engine.GameScenarioManager.Scenario.Mood = -2;
+      //engine.GameScenarioManager.Scenario.Mood = -2;
       Increment(KilledByName, killedby.Name, 1);
     }
   }

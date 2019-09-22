@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Player;
 using SWEndor.Primitives;
+using SWEndor.Sound;
 using SWEndor.Weapons;
 using System;
 
@@ -99,7 +100,7 @@ namespace SWEndor.UI.Widgets
       {
         if (!PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && prev_target != m_target)
         {
-          SoundManager.SetSound("button_3");
+          SoundManager.SetSound(SoundGlobals.Button3);
           m_targetBigSize = 15;
         }
         if (m_targetBigSize > m_targetSize)
@@ -157,7 +158,7 @@ namespace SWEndor.UI.Widgets
         TVScreen2DImmediate.Action_Begin2D();
         foreach (ActorInfo s in m_target.Squad.Members)
         {
-          if (s != m_target && PlayerCameraInfo.Camera.IsPointVisible(s.GetGlobalPosition()))
+          if (s != m_target && !s.IsPlayer && PlayerCameraInfo.Camera.IsPointVisible(s.GetGlobalPosition()))
           {
             float sx = 0;
             float sy = 0;

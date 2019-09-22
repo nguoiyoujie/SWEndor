@@ -1,4 +1,6 @@
-﻿namespace SWEndor.Input.Functions.Gameplay.Weapon
+﻿using SWEndor.Sound;
+
+namespace SWEndor.Input.Functions.Gameplay.Weapon
 {
   public class PrevSecondary : InputFunction
   {
@@ -11,7 +13,7 @@
     public override void Process(Engine engine)
     {
       engine.PlayerInfo.PrevSecondaryWeapon();
-      engine.SoundManager.SetSound("button_1");
+      engine.SoundManager.SetSound(SoundGlobals.Button1);
     }
   }
 }

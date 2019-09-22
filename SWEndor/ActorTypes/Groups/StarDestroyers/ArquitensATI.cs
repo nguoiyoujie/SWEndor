@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Sound;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -32,7 +33,7 @@ namespace SWEndor.ActorTypes.Instances
       Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 80, -45), new TV_3DVECTOR(0, 80, 2000)),
         };
-      SoundSources = new SoundSourceData[] { new SoundSourceData("engine_big", 500.0f, new TV_3DVECTOR(0, 0, -180), true) };
+      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500.0f, new TV_3DVECTOR(0, 0, -180), true) };
       AddOns = new AddOnData[]
       {
         // Sides

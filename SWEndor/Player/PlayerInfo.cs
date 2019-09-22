@@ -4,6 +4,7 @@ using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Primitives;
+using SWEndor.Sound;
 using SWEndor.Weapons;
 
 namespace SWEndor.Player
@@ -52,8 +53,7 @@ namespace SWEndor.Player
     public float ScoreForNextLife = 50000;
 
     // should set as configurable?
-    public string StrengthLowSound = "shieldlow";
-    public string[] DamagedReportSound = new string[] { }; // "r25", "r24", "r23", "r22", "r21", "r20" };
+    public string[] DamagedReportSound = SoundGlobals.DmgSounds;
 
     // weapons
     public WeaponShotInfo PrimaryWeapon
@@ -109,7 +109,7 @@ namespace SWEndor.Player
       {
         Lives++;
         ScoreForNextLife += ScorePerLife;
-        Engine.SoundManager.SetSound("button_4");
+        Engine.SoundManager.SetSound(SoundGlobals.Button4);
       }
 
       // this should be moved elsewhere
@@ -117,7 +117,7 @@ namespace SWEndor.Player
       {
         if (m_LowAlarmSoundTime < Engine.Game.GameTime)
         {
-          Engine.SoundManager.SetSound("shieldlow");
+          Engine.SoundManager.SetSound(SoundGlobals.LowHP);
           m_LowAlarmSoundTime = Engine.Game.GameTime + 0.5f;
         }
       }
@@ -309,7 +309,7 @@ namespace SWEndor.Player
     {
       if (Actor.TypeInfo is ActorTypes.Groups.Fighter)
       {
-        Engine.SoundManager.SetSound("hit");
+        Engine.SoundManager.SetSound(SoundGlobals.ExpHit);
         Engine.TrueVision.TVGraphicEffect.Flash(color.r, color.g, color.b, 200);
 
         if (Actor.HP > 0 && DamagedReportSound != null && DamagedReportSound.Length > 0)

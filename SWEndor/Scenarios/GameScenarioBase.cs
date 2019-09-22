@@ -18,15 +18,15 @@ namespace SWEndor.Scenarios
 
     public string Difficulty { get; set; }
     public int StageNumber { get; set; }
-    private int m_mood = 0;
-    public int Mood
+    private MoodStates m_mood = MoodStates.AMBIENT;
+    public MoodStates Mood
     {
       get { return m_mood; }
       set
       {
         if (value < 0)
         {
-          SoundManager.TriggerInterruptMood(value);
+          SoundManager.TriggerInterruptMood((int)value);
         }
         else
           m_mood = value;
@@ -120,6 +120,7 @@ namespace SWEndor.Scenarios
     public virtual void Launch()
     {
       Manager.Scenario = this;
+      Manager.IsCutsceneMode = false;
       PlayerInfo.Score.Reset();
       LoadFactions();
       LoadScene();
@@ -162,7 +163,7 @@ namespace SWEndor.Scenarios
       Screen2D.Box3D_Enable = false;
 
       LandInfo.Enabled = false;
-      Mood = 0;
+      Mood = MoodStates.AMBIENT;
       SoundManager.Clear();
 
       // clear sounds
@@ -170,6 +171,7 @@ namespace SWEndor.Scenarios
       SoundManager.SetMusicStop();
 
       Game.GameTime = 0;
+      Manager.IsCutsceneMode = false;
 
       // deleted many things, and this function is called when the game is not active. Probably safe to force GC
       GC.Collect();
@@ -297,7 +299,7 @@ namespace SWEndor.Scenarios
     {
       if (!Manager.IsCutsceneMode)
       {
-        SoundManager.SetSound("beep-22", true);
+        SoundManager.SetSound(SoundGlobals.LostShip, true);
       }
     }
 

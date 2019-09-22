@@ -10,6 +10,7 @@ using SWEndor.Primitives;
 using SWEndor.ActorTypes.Instances;
 using SWEndor.AI;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Sound;
 
 namespace SWEndor.Scenarios
 {
@@ -396,7 +397,7 @@ namespace SWEndor.Scenarios
               }
               if (last_sound_distX < player.GetGlobalPosition().x && !Manager.IsCutsceneMode)
               {
-                SoundManager.SetSound("button_3");
+                SoundManager.SetSound(SoundGlobals.Button3);
                 last_sound_distX = player.GetGlobalPosition().x + 250;
               }
               Screen2D.TargetingRadar_text = string.Format("{0:00000000}", (target_distX - player.GetGlobalPosition().x) * 30);
@@ -435,7 +436,7 @@ namespace SWEndor.Scenarios
 
               if (last_sound_distX < player.GetGlobalPosition().x && !Manager.IsCutsceneMode)
               {
-                SoundManager.SetSound("button_3");
+                SoundManager.SetSound(SoundGlobals.Button3);
                 last_sound_distX = player.GetGlobalPosition().x + 250;
               }
 

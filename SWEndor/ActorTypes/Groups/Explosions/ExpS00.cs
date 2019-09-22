@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -17,6 +18,8 @@ namespace SWEndor.ActorTypes.Instances
       atlasX = 4;
       atlasY = 2;
       MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Name, 10, "explosion/small/tex.jpg", atlasX, atlasY);
+
+      InitialSoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.ExpSm, 500) };
     }
 
     public override void Initialize(ActorInfo ainfo)

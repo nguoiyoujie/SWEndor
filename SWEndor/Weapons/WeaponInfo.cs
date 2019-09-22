@@ -4,6 +4,7 @@ using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Groups;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
+using SWEndor.Player;
 
 namespace SWEndor.Weapons
 {
@@ -210,12 +211,20 @@ namespace SWEndor.Weapons
           }
           burstremaining--;
         }
-        if (fired && owner.IsPlayer)
+        ActorInfo p = engine.PlayerInfo.Actor;
+        if (fired)
         {
-          if (FireSound.Length == 1)
-            engine.SoundManager.SetSound(FireSound[0]);
-          else if (FireSound.Length > 1)
-            engine.SoundManager.SetSound(FireSound[engine.Random.Next(0, FireSound.Length)]);
+          if (owner.IsPlayer)
+          {
+            if (FireSound.Length == 1)
+              engine.SoundManager.SetSound(FireSound[0]);
+            else if (FireSound.Length > 1)
+              engine.SoundManager.SetSound(FireSound[engine.Random.Next(0, FireSound.Length)]);
+          }
+          else if (p != null)
+          {
+            ActorTypes.Components.SoundSourceData.Play(p, owner.GetGlobalPosition(), 1000, FireSound, false);
+          }
         }
       }
       return fired;

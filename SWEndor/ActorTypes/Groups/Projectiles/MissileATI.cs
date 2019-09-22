@@ -1,5 +1,7 @@
-﻿using SWEndor.Actors.Data;
+﻿using MTV3D65;
+using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Sound;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -19,6 +21,7 @@ namespace SWEndor.ActorTypes.Instances
       Scale = 2.5f;
 
       MeshData = new MeshData(Name, @"projectiles\missile.x");
+      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineMissile, 200f, new TV_3DVECTOR(0, 0, -30), true) };
     }
   }
 }
