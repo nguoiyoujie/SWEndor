@@ -67,6 +67,7 @@ namespace SWEndor.ActorTypes
         Register(new TIE_A_ATI(this));
         Register(new TIE_X1_ATI(this));
         Register(new TIE_sa_ATI(this));
+        Register(new AssaultGunboatATI(this));
         Register(new MissileBoatATI(this));
 
         // ships

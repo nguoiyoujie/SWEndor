@@ -36,9 +36,10 @@
 	----------------
 	Scenario
 	----------------
-	Endor						Nguoi You Jie				Hardcoded to Game Engine
-	Yavin						Nguoi You Jie				Hardcoded to Game Engine
-	Hoth (WIP)					Nguoi You Jie				Hardcoded to Game Engine
+	Main Menu 					Nguoi You Jie				
+	Endor (WIP)					Nguoi You Jie / Bruno R. Marcos		Inspired by Battle of Endor
+	Yavin (WIP)					Nguoi You Jie / Bruno R. Marcos		Inspired by Battle of Yavin
+	Hoth (WIP)					Nguoi You Jie / Bruno R. Marcos		Inspired by Escape from Hoth preview
 
 	----------------
 	Images
@@ -78,7 +79,7 @@
 	TIE/X1 Advanced X1				Master_Syrus				STARWARS Graphic Update
 	TIE/sa Bomber					Nguoi You Jie / Master_Syrus		Modified TIE/X1 Advanced X1
 	TIE/D Defender					Nguoi You Jie / Master_Syrus		Modified TIE/IN Interceptor
-	[P] TIE/A Avenger				Master_Syrus				[Placeholder] TIE/X1 Advanced X1
+	TIE/A Advanced					Nguoi You Jie / Master_Syrus		Modified TIE/IN Interceptor
 	[P] Missile Boat				Master_Syrus				[Placeholder] TIE/X1 Advanced X1
 
 	Z-95 Headhunter					Nguoi You Jie / Master_Syrus		Modified X-Wing
@@ -129,12 +130,13 @@
 	----------------
 	beep24						https://www.soundjay.com/beep-sounds-3.html
 	beep22						https://www.soundjay.com/beep-sounds-3.html
+	TIE Fighter In-Game Sounds 			http://sites.google.com/site/stephen1297/latracks, game-rip, unpacked with the help of MikeG621's LfdReader https://github.com/MikeG621/TieSoundEditor
 
 	----------------
 	Music
 	----------------
-	
-	TIE Fighter In-Game Music (MIDI, self-rendered)	http://sites.google.com/site/stephen1297/latracks, direct from game.
+	Star Wars Movie Soundtrack (Epsiode 4, 5, 6)
+	TIE Fighter In-Game Music (MIDI, self-rendered)	http://sites.google.com/site/stephen1297/latracks, game-rip.
 	
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -157,11 +159,41 @@
 	----------------
 	Modelling
 	----------------
-	Milkshape 3D 1.8.5 				Processing, conversion to .x format
+	Milkshape 3D 1.8.5 				Processing, conversion to .x format used by TrueVision 3D engine
 	http://www.meshconvert.com/ 			Conversion to .obj format (can be imported by Milkshape 3D) 
+	http://www.greentoken.de/onlineconv/		Conversion to .x format 
+
+	------------------------
+	Asset Sources
+	------------------------
+	http://sites.google.com/site/stephen1297/latracks	TIE Fighter game
+	https://space.frieger.com/				Asteroid models
+	https://3dwarehouse.sketchup.com			Models
+	https://www.soundjay.com/				Misc. sounds
+	https://www.thingiverse.com/				Models
+
+___________
+Prototypes:
+
+	Assault Gunboat - Coulden P.
+	https://3dwarehouse.sketchup.com/model/f607ecc5-d4a0-4416-8bf8-4bf61c30a375/XG-1-StarWing-assault-gunboat
+//https://www.thingiverse.com/thing:2519718
+
+	Missile Boat
+	https://www.thingiverse.com/thing:2027374
+
+	XQ Platforms
+	https://www.thingiverse.com/thing:1972994
 
 
 
 
+	https://3dwarehouse.sketchup.com/model/a270559b-83e4-4fa7-8633-19fe4f867c33/Omega-class-freighter
+https://3dwarehouse.sketchup.com/model/0b44c76b-23ba-4507-aa22-c4f0cb3249a6/Carrack-class-light-cruiser
+https://3dwarehouse.sketchup.com/model/d1a8a5e1-9157-4a96-9c24-57bba905ea48/Ivalice-class-light-cruiser
+https://3dwarehouse.sketchup.com/model/b8029529-b2b4-4354-abe4-8ba6ed6c158f/Latrator-class-escort-frigate
+https://3dwarehouse.sketchup.com/model/5f321b3e-4535-4c3f-9efe-a7c039b9abe4/Carnifex-class-light-cruiser
 
+	Lambda-class Shuttle
+	https://3dwarehouse.sketchup.com/model/e2615723-1855-44ed-8082-e35c814191d2/Lambda-class-shuttle
 

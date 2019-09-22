@@ -8,11 +8,7 @@ load:
 	SetMinBounds(-10000, -1500, -20000);
 	SetMaxAIBounds(10000, 1500, 15000);
 	SetMinAIBounds(-10000, -1500, -20000);
-	
-	SetMusic("battle_4_1");
-	SetMusicDyn("PANIC-06");
-	//SetMusicLoop("battle_4_2");
-	
+
 	Player.SetLives(5);
 	Player.SetScorePerLife(1000000);
 	Player.SetScoreForNextLife(1000000);
@@ -21,6 +17,7 @@ load:
 	SetUILine1Color(0, 0.8, 0);
 	SetUILine2Color(0.4, 0.5, 0.9);
 	
+  CallScript("engagemusic");	
 	CallScript("spawnreset");	
 	CallScript("makeimperials");
 	CallScript("makeplayer");
@@ -132,6 +129,10 @@ getchildren:
 	corvusshd1 = GetArrayElement(corvusc, 18);
 	corvusshd2 = GetArrayElement(corvusc, 19);
 
+engagemusic:
+	SetMood(1);
+	SetMusicDyn("PANIC-06");
+
 makeplayer:
 	Player.DecreaseLives();
 	if (respawn) 
@@ -161,17 +162,17 @@ respawn:
 	Actor.AddToSquad(Player.GetActor(), tiea3);
 
 makeimperials:
-	tiea1 = Actor.Spawn("TIE Avenger", "Alpha-2", "", "", 0, "Empire", 700, -620, 10500, 0, -180, 0);
+	tiea1 = Actor.Spawn(GetPlayerActorType(), "Alpha-2", "", "", 0, "Empire", 700, -620, 10500, 0, -180, 0);
 	Actor.SetProperty(tiea1, "DamageModifier", 0.25);
 	Actor.QueueLast(tiea1, "wait", 2.5);
 	Actor.AddToSquad(Player.GetActor(), tiea1);
 
-	tiea2 = Actor.Spawn("TIE Avenger", "Alpha-3", "", "", 4, "Empire", 6000, 300, -500, 0, -90, 0);
+	tiea2 = Actor.Spawn("TIE Advanced", "Alpha-3", "", "", 4, "Empire", 6000, 300, -500, 0, -90, 0);
 	Actor.SetProperty(tiea2, "DamageModifier", 0.25);
 	Actor.QueueLast(tiea2, "wait", 2.5);
 	Actor.AddToSquad(Player.GetActor(), tiea2);
 
-	tiea3 = Actor.Spawn("TIE Avenger", "Alpha-4", "", "", 4, "Empire", 6500, 600, -750, 0, -90, 0);
+	tiea3 = Actor.Spawn("TIE Advanced", "Alpha-4", "", "", 4, "Empire", 6500, 600, -750, 0, -90, 0);
 	Actor.SetProperty(tiea3, "DamageModifier", 0.25);
 	Actor.QueueLast(tiea3, "wait", 2.5);
 	Actor.AddToSquad(Player.GetActor(), tiea3);
@@ -370,7 +371,7 @@ spawnenemybombers:
 	spawnX = -25000;
 	spawnY = 300;
 	spawnZ = -23500;
-	spawntype = "TIE Avenger";
+	spawntype = "TIE Advanced";
 	spawntarget = corvusshd1;
 	CallScript("spawn1");
 
@@ -430,7 +431,7 @@ spawnenemybombers3:
 	spawnX = -11000;
 	spawnY = 650;
 	spawnZ = -13500;
-	spawntype = "Y-Wing";
+	spawntype = "Assault Gunboat";
 	spawntarget = greywolf;
 	CallScript("spawn3");
 
@@ -487,7 +488,7 @@ spawnenemy2:
 	spawnX = -12500;
 	spawnY = -50;
 	spawnZ = -25000;
-	spawntype = "TIE Avenger";
+	spawntype = "TIE Advanced";
 	CallScript("spawn1");
 
 	spawnX = -5000;

@@ -13,10 +13,10 @@ namespace SWEndor
       SpawnInterval = 5;
       SpawnsRemaining = 60;
 
-      SpawnLocations = new TV_3DVECTOR[]{ new TV_3DVECTOR(25, 0, -25)
-                                               , new TV_3DVECTOR(25, 0, 25)
-                                               , new TV_3DVECTOR(-25, 0, -25)
-                                               , new TV_3DVECTOR(-25, 0, 25)
+      SpawnLocations = new TV_3DVECTOR[]{ new TV_3DVECTOR(50, 0, -50)
+                                               , new TV_3DVECTOR(50, 0, 50)
+                                               , new TV_3DVECTOR(-50, 0, -50)
+                                               , new TV_3DVECTOR(-50, 0, 50)
                                                };
 
       SpawnSpeed = -1;
