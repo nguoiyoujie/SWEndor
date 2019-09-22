@@ -77,6 +77,7 @@ namespace SWEndor.UI.Widgets
     public void Draw(ActorInfo p, ActorInfo s)
     {
       if (!s.Active
+          || s == p
           || s.IsDyingOrDead
           || !Engine.ActorDataSet.CombatData[s.dataID].IsCombatObject
           || !PlayerCameraInfo.Camera.IsPointVisible(s.GetGlobalPosition()))
