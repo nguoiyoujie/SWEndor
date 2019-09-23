@@ -27,8 +27,6 @@ namespace SWEndor.Actors.Data
     public float ZNormFrac;
     public bool ApplyZBalance;
 
-    // iterates Z rotation decay, uses a while loop... the algorithm should be replaced
-    public float Zdiv;
 
     public void Init(ActorTypeInfo atype, ActorCreationInfo acreate)
     {
@@ -45,7 +43,6 @@ namespace SWEndor.Actors.Data
       ZTilt = atype.MoveLimitData.ZTilt;
       ZNormFrac = atype.MoveLimitData.ZNormFrac;
       ApplyZBalance = true;
-      Zdiv = 0;
     }
 
     public void Reset()
@@ -62,7 +59,6 @@ namespace SWEndor.Actors.Data
       ZTilt = 0;
       ZNormFrac = 0;
       ApplyZBalance = true;
-      Zdiv = 0;
     }
 
     public void ResetTurn()

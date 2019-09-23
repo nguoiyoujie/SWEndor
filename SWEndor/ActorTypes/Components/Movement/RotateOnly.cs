@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
+using System;
 
 namespace SWEndor.ActorTypes.Components
 {
@@ -19,12 +20,7 @@ namespace SWEndor.ActorTypes.Components
         data.ZRoll -= data.YTurnAngle * data.ZTilt * time;
 
         // Z rotation decay.
-        data.Zdiv += time / 0.005f;
-        while (data.Zdiv > 0 && !float.IsInfinity(data.Zdiv))
-        {
-          data.ZRoll *= 1 - data.ZNormFrac;
-          data.Zdiv--;
-        }
+        data.ZRoll *= (float)(Math.Pow(1 - data.ZNormFrac, time / 0.002f));
 
         float rotX2 = vec.x + data.XTurnAngle * time;
         rotX2 = rotX2.Clamp(-actor.TypeInfo.MoveLimitData.XLimit, actor.TypeInfo.MoveLimitData.XLimit);
