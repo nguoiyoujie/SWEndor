@@ -195,6 +195,7 @@
     <Compile Include="ActorTypes\Groups\ShieldGenerators.cs" />
     <Compile Include="ActorTypes\Groups\GroundSurface.cs" />
     <Compile Include="ActorTypes\Groups\SurfaceGun.cs" />
+    <Compile Include="ActorTypes\Groups\TIEs\AssaultGunboatATI.cs" />
     <Compile Include="ActorTypes\Groups\Turbolasers.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\MissilePods\NebulonBMissilePodATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\MissilePods\SDMissilePodATI.cs" />
@@ -438,6 +439,7 @@
     <Compile Include="Primitives\TimeControl.cs" />
     <Compile Include="Scenarios\ActorSpawnInfo.cs" />
     <Compile Include="Scenarios\GSFunctions.cs" />
+    <Compile Include="Scenarios\MoodStates.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\Val.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\SWContext.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\Context.cs" />
@@ -500,6 +502,7 @@
     <Compile Include="Sound\Piece\Factory\Factory.cs" />
     <Compile Include="Sound\Piece\Factory\Parser.cs" />
     <Compile Include="Sound\Piece\Piece.cs" />
+    <Compile Include="Sound\SoundGlobals.cs" />
     <Compile Include="UI\Font\Factory\Factory.cs" />
     <Compile Include="UI\Font\Font.cs" />
     <Compile Include="UI\Forms\BackgroundForm.cs">
@@ -564,9 +567,6 @@
     <Compile Include="UI\Widget\Instances\WarningText.cs" />
     <Compile Include="UI\Widget\Instances\Page.cs" />
     <Compile Include="UI\Widget\Instances\AIInfo.cs" />
-    <Compile Include="UI\Widget\Instances\Debug_SelectInfo.cs" />
-    <Compile Include="UI\Widget\Instances\Debug_ObjectInfo.cs" />
-    <Compile Include="UI\Widget\Instances\Debug_GeneralInfo.cs" />
     <Compile Include="UI\Widget\Instances\Box3D.cs" />
     <Compile Include="UI\Widget\Instances\LargeShipSystems.cs" />
     <Compile Include="UI\Widget\Instances\Terminal.cs" />

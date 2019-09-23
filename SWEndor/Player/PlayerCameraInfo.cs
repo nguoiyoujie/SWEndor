@@ -226,10 +226,37 @@ namespace SWEndor.Player
         UpdateFromActor(Engine, actor);
         Position = actor.GetGlobalPosition();
         Rotation = actor.GetGlobalRotation();
+
+        UpdateViewFrustum(actor);
       }
 
       Look.Update(Engine, Camera, Position, Rotation);
       ApplyShake();
+    }
+
+    float spdf = 0; // avoid expensive calculations
+    float fov = 60; // avoid expensive calls
+    const float farplane = 650000; // const
+    public void UpdateViewFrustum(ActorInfo actor)
+    {
+      float sf = actor.MoveData.Speed / actor.MoveData.MaxSpeed;
+      if (!(sf - spdf < 0.001f && sf - spdf > 0.001f))
+      {
+        spdf = sf;
+        float f = (Engine.TrueVision.TVMathLibrary.ATan(sf) / 45);
+        f--;
+        f /= 2;
+        if (f > 0)
+          f /= 2;
+        f++;
+        f *= 60;
+        f = f.Clamp(45, 175);
+        if (!(f - fov < 0.001f && f - fov > 0.001f))
+        {
+          fov = f;
+          Camera.SetViewFrustum(fov, farplane);
+        }
+      }
     }
 
     public void UpdateFromActor(Engine engine, ActorInfo actor)
@@ -272,6 +299,7 @@ namespace SWEndor.Player
         {
           Look.SetPosition_Actor(actor.ID, displacementRelative: location);
           Look.SetTarget_LookAtActor(actor.ID, displacementRelative: target);
+          Look.SetRotationMult(1);
         }
         else if (LookAtActor >= 0) // cutscene to actor view
         {
