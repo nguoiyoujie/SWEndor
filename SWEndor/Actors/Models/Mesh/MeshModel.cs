@@ -250,8 +250,8 @@ namespace SWEndor.Actors
         {
           actor.TrueVision.TargetRenderSurface.StartRender(false);
           //actor.TrueVision.TVScene.SetRenderMode(CONST_TV_RENDERMODE.TV_LINE);
-          //FarMesh?.Render();
-          actor.TrueVision.TVScene.RenderAllMeshes(true);
+          FarMesh?.Render();
+          //actor.TrueVision.TVScene.RenderAllMeshes(true);
 
           actor.TrueVision.TargetRenderSurface.EndRender();
           //actor.TrueVision.TVScene.SetRenderMode(CONST_TV_RENDERMODE.TV_SOLID);
