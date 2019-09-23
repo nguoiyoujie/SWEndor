@@ -39,7 +39,7 @@ namespace SWEndor.AI.Squads
       if (Mission != null)
       {
         Mission.Process(engine, this);
-        if (Mission.Complete)
+        if (!Mission.Complete)
           return Mission.GetNewAction(engine, this);
       }
 
