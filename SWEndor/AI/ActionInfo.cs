@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Components;
 using SWEndor.Primitives;
 using System;
 
@@ -18,10 +17,6 @@ namespace SWEndor.AI.Actions
     public bool Complete = false;
     public bool CanInterrupt = true;
     public ActionInfo NextAction = null;
-
-    // collision avoidance
-    private float m_collisioncheck_time = 0;
-
 
     public override string ToString()
     {

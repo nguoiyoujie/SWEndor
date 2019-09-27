@@ -679,7 +679,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Actors\Events\" />
-    <Folder Include="AI\AI\" />
     <Folder Include="Data\ActorTypes\" />
   </ItemGroup>
   <ItemGroup>

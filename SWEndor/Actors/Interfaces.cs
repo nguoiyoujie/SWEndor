@@ -3,7 +3,7 @@ using SWEndor.Primitives;
 
 namespace SWEndor.Actors
 {
-  public interface ILinked<T> //where T : Linked<T>
+  public interface ILinked<T>
   {
     T Prev { get; set; }
     T Next { get; set; }
