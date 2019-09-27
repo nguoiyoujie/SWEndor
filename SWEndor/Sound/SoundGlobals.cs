@@ -26,7 +26,9 @@
     public const string LowHP = @"dmg\low";
     public static string[] DmgSounds = new string[] { @"dmg\d1", @"dmg\d2", @"dmg\d3", @"dmg\d4" };
 
-    public const string LostShip = @"scene\shiplost";
+    public const string MissileAlert = @"warn\mislalert";
+
+    public const string LostShip = @"warn\shiplost";
 
   }
 }

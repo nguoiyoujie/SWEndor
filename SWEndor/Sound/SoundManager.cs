@@ -261,6 +261,13 @@ namespace SWEndor.Sound
 
       SoundStartInfo s;
       while (m_musicQueue.TryDequeue(out s)) { }
+
+      SetSoundStopAll();
+      SetMusicStop();
+      interruptActive = false;
+      //m_currMusic = null;
+      m_prevDynMusic = null;
+      m_musicLoop = new SoundStartInfo();
     }
 
     private int lastInterrupt = 0;
@@ -402,6 +409,12 @@ namespace SWEndor.Sound
         next = p.MoodTransitions[mood][Engine.Random.Next(0, p.MoodTransitions[mood].Length)];
       }
       return next;
+    }
+
+    public bool SetSoundSingle(string name, bool interrupt = true, float volume = 1.0f, bool loop = true)//, uint position = 0)
+    {
+      m_queuedInstructions.Enqueue(new InstPlaySoundSingle { Name = name, Loop = loop, Interrupt = interrupt, Volume = volume });
+      return true;
     }
 
     public bool SetSound(string name, bool interrupt = true, float volume = 1.0f, bool loop = true)//, uint position = 0)

@@ -4,7 +4,7 @@ namespace SWEndor.Sound
 {
   public partial class SoundManager
   {
-    private class InstPlaySound : InstBase
+    private class InstPlaySoundSingle : InstBase
     {
       public string Name;
       public bool Interrupt;
@@ -13,7 +13,6 @@ namespace SWEndor.Sound
 
       public void Process(SoundManager s)
       {
-        /*
         ChannelGroup soundgrp = s.soundgrps[Name];
 
         Channel fmodchannel;
@@ -29,10 +28,6 @@ namespace SWEndor.Sound
           fmodchannel.stop();
           s.fmodsystem.playSound(s.sounds[Name], soundgrp, false, out fmodchannel);
         }
-        */
-        Channel fmodchannel;
-        ChannelGroup soundgrp = s.soundgrps[Name];
-        s.fmodsystem.playSound(s.sounds[Name], null, false, out fmodchannel);
       }
     }
   }

@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Primitives;
+using SWEndor.Sound;
 
 namespace SWEndor.UI.Widgets
 {
@@ -34,6 +35,7 @@ namespace SWEndor.UI.Widgets
     }
 
     int warn = 0;
+    int prev_warn = 0;
     float dist = -1;
     public override void Draw()
     {
@@ -43,7 +45,15 @@ namespace SWEndor.UI.Widgets
       Engine.ActorFactory.DoUntil(Check);
 
       if (warn == 0)
+      {
+        prev_warn = 0;
         return;
+      }
+
+      if (prev_warn == 0)
+        SoundManager.SetSound(SoundGlobals.MissileAlert);
+
+      prev_warn = warn;
 
       string text = "MISSILE WARNING x{0} [{1:0000.00}]".F(warn, dist);
       int fntID = FontFactory.Get(Font.T12).ID;
