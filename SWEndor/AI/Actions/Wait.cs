@@ -33,7 +33,7 @@ namespace SWEndor.AI.Actions
       actor.AIData.AdjustRotation(actor);
 
       if (CheckImminentCollision(actor))
-        CollisionSystem.CreateAvoidAction(engine, actor);
+        CreateAvoidAction(actor);
 
       Complete |= (ResumeTime < engine.Game.GameTime);
     }

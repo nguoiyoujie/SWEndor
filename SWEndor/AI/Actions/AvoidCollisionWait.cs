@@ -38,7 +38,7 @@ namespace SWEndor.AI.Actions
 
       if (CheckImminentCollision(actor))
       {
-        CollisionSystem.CreateAvoidAction(engine, actor);
+        CreateAvoidAction(actor);
         Complete = true;
       }
 

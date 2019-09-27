@@ -1,10 +1,9 @@
-﻿
-using MTV3D65;
+﻿using MTV3D65;
 using SWEndor.ActorTypes;
 using SWEndor.Primitives;
 using System;
 
-namespace SWEndor.Actors
+namespace SWEndor.Actors.Models
 {
   [Flags]
   public enum ExplodeTrigger : byte
@@ -40,124 +39,127 @@ namespace SWEndor.Actors
     }
   }
 
-  public partial class ActorInfo
+  public struct ExplodeModel
   {
-    private struct ExplodeModel
+    private ExplodeInfo[] _data;
+    private ActorTypeInfo[] _types;
+    private float[] _time;
+
+    public void Init(ActorTypeInfo type, ActorCreationInfo acinfo)
     {
-      private ExplodeInfo[] _data;
-      private ActorTypeInfo[] _types;
-      private float[] _time;
+      _data = type.Explodes;
+      _types = new ActorTypeInfo[type.Explodes.Length];
+      _time = new float[type.Explodes.Length];
 
-      public void Init(ActorTypeInfo type, ActorCreationInfo acinfo)
-      {
-        _data = type.Explodes;
-        _types = new ActorTypeInfo[type.Explodes.Length];
-        _time = new float[type.Explodes.Length];
+      //fill time
+      for (int i = 0; i < type.Explodes.Length; i++)
+        _time[i] = acinfo.CreationTime;
+    }
 
-        //fill time
-        for (int i = 0; i < type.Explodes.Length; i++)
-          _time[i] = acinfo.CreationTime;
-      }
+    public void Tick(ActorInfo self, float time) { Process(self); }
 
-      public void Tick(ActorInfo self, float time) { Process(self); }
+    private bool Check(Engine engine, ActorInfo a, ExplodeInfo exp)
+    {
+      int comparand = 0x10 << (-(int)a.ActorState); // hack to map ActorState to ExplodeTrigger, should probably revert
 
-      private bool Check(Engine engine, ActorInfo a, ExplodeInfo exp)
-      {
-        int comparand = 0x10 << (-(int)a.ActorState); // hack to map ActorState to ExplodeTrigger, should probably revert
-        
-        return
-          (!engine.Game.IsLowFPS() || !exp.Trigger.Has(ExplodeTrigger.DONT_CREATE_ON_LOWFPS))
-          && (((ExplodeTrigger)comparand & exp.Trigger) > 0)
-          && ((a.DyingTimer.TimeRemaining > 0) || !exp.Trigger.Has(ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED));
-
-        /*
       return
         (!engine.Game.IsLowFPS() || !exp.Trigger.Has(ExplodeTrigger.DONT_CREATE_ON_LOWFPS))
-        && ((!a.IsDyingOrDead && exp.Trigger.Has(ExplodeTrigger.ON_NORMAL))
-            || (a.IsDying && exp.Trigger.Has(ExplodeTrigger.ON_DYING))
-            || (a.IsDead && exp.Trigger.Has(ExplodeTrigger.ON_DEATH)))
-        && (!exp.Trigger.Has(ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED) || (a.DyingTimer.TimeRemaining > 0));
-        */
-      }
+        && (((ExplodeTrigger)comparand & exp.Trigger) > 0)
+        && ((a.DyingTimeRemaining > 0) || !exp.Trigger.Has(ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED));
 
-      private void Process(ActorInfo a)
+      /*
+    return
+      (!engine.Game.IsLowFPS() || !exp.Trigger.Has(ExplodeTrigger.DONT_CREATE_ON_LOWFPS))
+      && ((!a.IsDyingOrDead && exp.Trigger.Has(ExplodeTrigger.ON_NORMAL))
+          || (a.IsDying && exp.Trigger.Has(ExplodeTrigger.ON_DYING))
+          || (a.IsDead && exp.Trigger.Has(ExplodeTrigger.ON_DEATH)))
+      && (!exp.Trigger.Has(ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED) || (a.DyingTimer.TimeRemaining > 0));
+      */
+    }
+
+    private void Process(ActorInfo a)
+    {
+      if (a.DisposingOrDisposed)
+        return;
+
+      Engine engine = a.Engine;
+
+      for (int i = 0; i < _data.Length; i++)
       {
-        if (a.DisposingOrDisposed)
-          return;
-
-        Engine engine = a.Engine;
-
-        for (int i = 0; i < _data.Length; i++)
+        ExplodeInfo exp = _data[i];
+        if (Check(engine, a, exp))
         {
-          ExplodeInfo exp = _data[i];
-          if (Check(engine, a, exp))
+          if (_time[i] < engine.Game.GameTime - 5f) // skip explosion effects that are delayed after more than 5 secs
+            _time[i] = engine.Game.GameTime;
+
+          if (_time[i] <= engine.Game.GameTime)
           {
-            if (_time[i] < engine.Game.GameTime - 5f) // skip explosion effects that are delayed after more than 5 secs
-              _time[i] = engine.Game.GameTime;
+            float rate = (exp.Rate <= 0) ? 1 : exp.Rate;
+            float size = exp.Size * a.Scale;
+            if (size == 0)
+              size = 1;
+            if (_types[i] == null)
+              _types[i] = engine.ActorTypeFactory.Get(exp.ActorType);
 
-            if (_time[i] <= engine.Game.GameTime)
-            {
-              float rate = (exp.Rate <= 0) ? 1 : exp.Rate;
-              float size = exp.Size * a.Scale;
-              if (size == 0)
-                size = 1;
-              if (_types[i] == null)
-                _types[i] = engine.ActorTypeFactory.Get(exp.ActorType);
-
-              if (exp.Trigger.Has(ExplodeTrigger.CREATE_ON_MESHVERTICES))
-                CreateOnMeshVertices(engine, a, i, rate, size, exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_ACTOR));
-              else
-                CreateOnMeshCenter(engine, a, i, rate, size, exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_ACTOR));
-            }
+            if (exp.Trigger.Has(ExplodeTrigger.CREATE_ON_MESHVERTICES))
+              CreateOnMeshVertices(engine, a, i, rate, size, exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_ACTOR));
+            else
+              CreateOnMeshCenter(engine, a, i, rate, size, exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_ACTOR));
           }
         }
       }
+    }
 
-      private void CreateOnMeshVertices(Engine engine, ActorInfo a, int i, float rate, float size, bool attach)
+    private void CreateOnMeshVertices(Engine engine, ActorInfo a, int i, float rate, float size, bool attach)
+    {
+      while (_time[i] < engine.Game.GameTime && a.GetVertexCount() > 0)
       {
-        while (_time[i] < engine.Game.GameTime && a.GetVertexCount() > 0)
-        {
-          _time[i] += (float)engine.Random.NextDouble() * rate;
-          int vertID = engine.Random.Next(0, a.GetVertexCount());
-          TV_3DVECTOR vert = a.GetVertex(vertID);
+        _time[i] += (float)engine.Random.NextDouble() * rate;
+        int vertID = engine.Random.Next(0, a.GetVertexCount());
+        TV_3DVECTOR vert = a.GetVertex(vertID);
 
 
-          if (attach)
-          {
-            ActorInfo e = MakeExplosion(_types[i], vert, size);
-            a.AddChild(e);
-            e.UseParentCoords = true;
-          }
-          else
-          {
-            TV_3DVECTOR v = a.GetRelativePositionXYZ(vert.x * a.Scale, vert.y * a.Scale, vert.z * a.Scale);
-            ActorInfo e = MakeExplosion(_types[i], v, size);
-          }
-        }
-      }
-
-      private void CreateOnMeshCenter(Engine engine, ActorInfo a, int i, float rate, float size, bool attach)
-      {
-        _time[i] = engine.Game.GameTime + rate;
         if (attach)
         {
-          ActorInfo e = MakeExplosion(_types[i], default(TV_3DVECTOR), size);
+          ActorInfo e = MakeExplosion(_types[i], vert, size);
           a.AddChild(e);
           e.UseParentCoords = true;
         }
         else
-          MakeExplosion(_types[i], a.GetPrevGlobalPosition(), size);
-      }
-
-      private static ActorInfo MakeExplosion(ActorTypeInfo type, TV_3DVECTOR globalPosition, float explSize)
-      {
-        ActorCreationInfo acinfo = new ActorCreationInfo(type);
-        acinfo.Position = globalPosition;
-        acinfo.InitialScale = explSize;
-        return Globals.Engine.ActorFactory.Create(acinfo);
+        {
+          TV_3DVECTOR v = a.GetRelativePositionXYZ(vert.x * a.Scale, vert.y * a.Scale, vert.z * a.Scale);
+          ActorInfo e = MakeExplosion(_types[i], v, size);
+        }
       }
     }
 
+    private void CreateOnMeshCenter(Engine engine, ActorInfo a, int i, float rate, float size, bool attach)
+    {
+      _time[i] = engine.Game.GameTime + rate;
+      if (attach)
+      {
+        ActorInfo e = MakeExplosion(_types[i], default(TV_3DVECTOR), size);
+        a.AddChild(e);
+        e.UseParentCoords = true;
+      }
+      else
+        MakeExplosion(_types[i], a.GetPrevGlobalPosition(), size);
+    }
+
+    private static ActorInfo MakeExplosion(ActorTypeInfo type, TV_3DVECTOR globalPosition, float explSize)
+    {
+      ActorCreationInfo acinfo = new ActorCreationInfo(type);
+      acinfo.Position = globalPosition;
+      acinfo.InitialScale = explSize;
+      return Globals.Engine.ActorFactory.Create(acinfo);
+    }
+  }
+}
+
+namespace SWEndor.Actors
+{
+  public partial class ActorInfo
+  {
     public void TickExplosions()
     {
       using (ScopeCounterManager.Acquire(Scope))

@@ -4,7 +4,7 @@
   {
     internal static void Deactivate(Engine engine, ActorInfo actor)
     {
-      engine.ActorDataSet.CombatData[actor.dataID].IsCombatObject = false;
+      actor.CombatData.IsCombatObject = false;
     }
   }
 }

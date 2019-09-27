@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 
@@ -71,7 +72,7 @@ namespace SWEndor.ActorTypes.Instances
       if (owner == null || hitby == null)
         return;
 
-      if (!Engine.MaskDataSet[hitby].Has(ComponentMask.IS_DAMAGE) && owner.HP_Frac < 0.5f)
+      if (!hitby.Mask.Has(ComponentMask.IS_DAMAGE) && owner.HP_Frac < 0.5f)
       {
         owner.SetState_Dying();
         hitby.DestroyedEvents = null;

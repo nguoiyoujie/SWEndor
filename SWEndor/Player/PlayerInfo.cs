@@ -187,7 +187,7 @@ namespace SWEndor.Player
     {
       if (IsMovementControlsEnabled && !PlayerAIEnabled)
       {
-        ActorInfo.FireWeapon(Engine, Actor, AimTarget, weapon);
+        ActorInfo.FireWeapon(Engine, Actor, TargetActor, weapon);
       }
     }
 
@@ -269,22 +269,26 @@ namespace SWEndor.Player
         return;
       }
 
-      if (AssistTarget != null)
+      ActorInfo t = TargetActor;
+      if (t != null)
       {
-        Engine.Screen2D.MessageSecondaryText("Directing squad to assist {0}.".F(AssistTarget.TopParent.Name), 5, FactionColor);
-        Actor.Squad.Mission = new AI.Squads.Missions.AssistActor(AssistTarget.TopParent);
-      }
-
-      if (AimTarget != null)
-      {
-        Engine.Screen2D.MessageSecondaryText("Directing squad to attack {0}.".F(AimTarget.Name), 5, FactionColor);
-        Actor.Squad.Mission = new AI.Squads.Missions.AttackActor(AimTarget, 99999);
-        foreach (ActorInfo c in Actor.Children)
+        if (Actor.Faction.IsAlliedWith(t.Faction))
         {
-          if (c.UseParentCoords)
+          Engine.Screen2D.MessageSecondaryText("Directing squad to assist {0}.".F(t.TopParent.Name), 5, FactionColor);
+          Actor.Squad.Mission = new AI.Squads.Missions.AssistActor(t.TopParent);
+        }
+        else
+        {
+          Engine.Screen2D.MessageSecondaryText("Directing squad to attack {0}.".F(t.Name), 5, FactionColor);
+          Actor.Squad.Mission = new AI.Squads.Missions.AttackActor(t, 99999);
+          // add ons attack immediately
+          foreach (ActorInfo c in Actor.Children)
           {
-            c.ClearQueue();
-            c.QueueFirst(new AttackActor(AimTargetID));
+            if (c.UseParentCoords)
+            {
+              c.ClearQueue();
+              c.QueueFirst(new AttackActor(t.ID));
+            }
           }
         }
       }
@@ -337,11 +341,9 @@ namespace SWEndor.Player
           || (SecondaryWeapon.Weapon.Type == WeaponType.TORPEDO);
       }
     }
-    public int AimTargetID = -1;
-    public ActorInfo AimTarget { get { return Engine.ActorFactory.Get(AimTargetID); } }
-
-    public int AssistTargetID = -1;
-    public ActorInfo AssistTarget { get { return Engine.ActorFactory.Get(AssistTargetID); } }
+    public int TargetActorID = -1;
+    public ActorInfo TargetActor { get { return Engine.ActorFactory.Get(TargetActorID); } }
+    public bool LockTarget = false;
 
     public bool PlayerAIEnabled = false;
   }

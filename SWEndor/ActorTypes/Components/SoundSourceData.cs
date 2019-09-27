@@ -63,7 +63,7 @@ namespace SWEndor.ActorTypes.Components
           vol = (actor.MoveData.Speed / actor.MoveData.MaxSpeed).Clamp(0, 1);
         vol -= df;
         if (vol > 0)
-          actor.SoundManager.SetSound(sd, false, vol, loop);
+          actor.SoundManager.SetSoundSingle(sd, false, vol, loop);
       }
     }
   }

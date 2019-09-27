@@ -79,7 +79,7 @@ namespace SWEndor.AI.Actions
           if (actor.TypeInfo.AIData.AggressiveTracker)
             AggressiveTracking(engine, actor.ID);
 
-          if (!engine.MaskDataSet[actor].Has(ComponentMask.CAN_MOVE)) // can't move to you, I give up
+          if (!actor.Mask.Has(ComponentMask.CAN_MOVE)) // can't move to you, I give up
             Complete = true;
         }
 
@@ -106,7 +106,7 @@ namespace SWEndor.AI.Actions
 
       if (CheckImminentCollision(actor))
       {
-        CollisionSystem.CreateAvoidAction(engine, actor);
+        CreateAvoidAction(actor);
       }
       else
       {
@@ -148,7 +148,7 @@ namespace SWEndor.AI.Actions
               && c.ID != a.ID
               && a.Active
               && !a.IsDyingOrDead
-              && e.ActorDataSet.CombatData[c.dataID].IsCombatObject
+              && c.CombatData.IsCombatObject
               && !c.Faction.IsAlliedWith(a.Faction))
         {
           float dist = ActorDistanceInfo.GetDistance(a, c, c.WeaponDefinitions.GetWeaponRange());

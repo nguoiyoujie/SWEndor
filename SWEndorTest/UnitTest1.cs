@@ -65,16 +65,16 @@ namespace SWEndorTest
         d.Position = t1;
         d.Rotation = r1;
 
-        m = d.GetMatrix();
+        m = d.GetWorldMatrix();
 
         d.Position = t2;
         d.Rotation = r2;
 
-        m2 = d.GetMatrix();
+        m2 = d.GetWorldMatrix();
         Assert.AreEqual(m, m2);
 
         Globals.Engine.Game.GameTime += .5f;
-        m2 = d.GetMatrix();
+        m2 = d.GetWorldMatrix();
         Assert.AreNotEqual(m, m2);
         Globals.Engine.Game.GameTime += .5f;
       }

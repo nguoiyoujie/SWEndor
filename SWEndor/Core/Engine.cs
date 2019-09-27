@@ -27,10 +27,6 @@ namespace SWEndor
     public int ScreenHeight { get; internal set; }
     public Random Random { get; } = new Random();
 
-    // Data sets
-    internal MaskDataSet MaskDataSet { get; private set; }
-    internal ActorDataSet ActorDataSet { get; private set; }
-
     // Engine parts
     internal Game Game { get; private set; }
     internal SoundManager SoundManager { get; private set; }
@@ -49,7 +45,7 @@ namespace SWEndor
 
     // Factories and Registries
     internal Font.Factory FontFactory { get; private set; }
-    internal ActorInfo.Factory ActorFactory { get; private set; }
+    internal ActorInfo.Factory<ActorInfo> ActorFactory { get; private set; }
     internal ActorTypeInfo.Factory ActorTypeFactory { get; private set; }
     internal Squadron.Factory SquadronFactory { get; private set; }
 
@@ -62,13 +58,10 @@ namespace SWEndor
 
     public void Init()
     {
-      MaskDataSet = new MaskDataSet();
-      ActorDataSet = new ActorDataSet();
-
       Game = new Game(this);
       SoundManager = new SoundManager(this);
       PerfManager = new PerfManager(this);
-      ActorFactory = new ActorInfo.Factory(this);
+      ActorFactory = new ActorInfo.Factory<ActorInfo>(this, (f, n, m, i) => { return new ActorInfo(f, n, m, i); });
       ActorTypeFactory = new ActorTypeInfo.Factory(this);
       SquadronFactory = new Squadron.Factory();
       PlayerInfo = new PlayerInfo(this);
@@ -178,9 +171,10 @@ namespace SWEndor
 
     public void Render()
     {
-      ActorInfo a = Screen2D.TargetActor?.ParentForCoords ?? Screen2D.TargetActor;
-      if (a != null)
-        a.UpdateRenderLine();
+      ActorInfo t = PlayerInfo.TargetActor;
+      t = t?.ParentForCoords ?? t;
+      if (t != null)
+        t.UpdateRenderLine();
 
       TrueVision.TVEngine.Clear();
 

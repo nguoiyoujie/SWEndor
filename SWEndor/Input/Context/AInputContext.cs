@@ -18,7 +18,7 @@ namespace SWEndor.Input.Context
     public Game Game { get { return Engine.Game; } }
     public GameScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
     public TrueVision TrueVision { get { return Engine.TrueVision; } }
-    public ActorInfo.Factory ActorFactory { get { return Engine.ActorFactory; } }
+    public ActorInfo.Factory<ActorInfo> ActorFactory { get { return Engine.ActorFactory; } }
     public ActorTypeInfo.Factory ActorTypeFactory { get { return Engine.ActorTypeFactory; } }
     public LandInfo LandInfo { get { return Engine.LandInfo; } }
     public AtmosphereInfo AtmosphereInfo { get { return Engine.AtmosphereInfo; } }

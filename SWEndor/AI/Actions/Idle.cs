@@ -27,7 +27,7 @@ namespace SWEndor.AI.Actions
         TV_3DVECTOR vImpact = new TV_3DVECTOR();
         if (CheckImminentCollision(actor))
         {
-          CollisionSystem.CreateAvoidAction(engine, actor);
+          CreateAvoidAction(actor);
         }
       }
     }

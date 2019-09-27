@@ -95,7 +95,7 @@ namespace SWEndor.Scenarios
     public Engine Engine { get { return Manager.Engine; } }
     public Game Game { get { return Engine.Game; } }
     public TrueVision TrueVision { get { return Engine.TrueVision; } }
-    public ActorInfo.Factory ActorFactory { get { return Engine.ActorFactory; } }
+    public ActorInfo.Factory<ActorInfo> ActorFactory { get { return Engine.ActorFactory; } }
     public ActorTypeInfo.Factory ActorTypeFactory { get { return Engine.ActorTypeFactory; } }
     public SoundManager SoundManager { get { return Engine.SoundManager; } }
     public LandInfo LandInfo { get { return Engine.LandInfo; } }
@@ -165,10 +165,6 @@ namespace SWEndor.Scenarios
       LandInfo.Enabled = false;
       Mood = MoodStates.AMBIENT;
       SoundManager.Clear();
-
-      // clear sounds
-      SoundManager.SetSoundStopAll();
-      SoundManager.SetMusicStop();
 
       Game.GameTime = 0;
       Manager.IsCutsceneMode = false;

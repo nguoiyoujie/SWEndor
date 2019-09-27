@@ -46,9 +46,6 @@ namespace SWEndor
     public TV_3DVECTOR Box3D_max = new TV_3DVECTOR();
     public TV_COLOR Box3D_color = new TV_COLOR(1, 1, 1, 1);
 
-    // Target
-    public ActorInfo TargetActor;
-
     Primitives.ThreadSafeList<Widget> m_Widgets = new Primitives.ThreadSafeList<Widget>();
 
     internal Screen2D(Engine engine)

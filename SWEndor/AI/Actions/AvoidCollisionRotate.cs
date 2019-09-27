@@ -44,7 +44,7 @@ namespace SWEndor.AI.Actions
         return;
       }
 
-      Process(engine, actor, ref engine.ActorDataSet.CollisionData[actor.dataID]);
+      Process(engine, actor, ref actor.CollisionData);
     }
 
 

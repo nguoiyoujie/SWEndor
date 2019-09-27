@@ -10,7 +10,7 @@ namespace SWEndor.UI.Widgets
 {
   public class Target : Widget
   {
-    private ActorInfo m_target { get { return Screen2D.TargetActor; } set { Screen2D.TargetActor = value; } }
+    private int m_targetID = -1;
     private float m_targetX = 0;
     private float m_targetY = 0;
     private float m_targetSize = 5;
@@ -37,17 +37,30 @@ namespace SWEndor.UI.Widgets
       if (p == null || !p.Active)
         return;
 
-      ActorInfo prev_target = m_target;
+      ActorInfo prev_target = ActorFactory.Get(m_targetID);
 
-      if (p.TypeInfo is ActorTypes.Groups.LargeShip)
-        PickTargetLargeShip();
+      if (PlayerInfo.PlayerAIEnabled)
+      {
+        ActorInfo t = p.AIData.GetTargetActor(p);
+        m_targetID = t?.ID ?? -1;
+        PlayerInfo.LockTarget = true;
+      }
       else
-        PickTargetFighter(!PlayerInfo.IsTorpedoMode);
+      {
+        if (!PlayerInfo.LockTarget)
+        {
+          if (p.TypeInfo is ActorTypes.Groups.LargeShip)
+            PickTargetLargeShip();
+          else
+            PickTargetFighter(!PlayerInfo.IsTorpedoMode);
+        }
+      }
 
+      ActorInfo m_target = ActorFactory.Get(m_targetID);
       if (m_target == null)
       {
-        PlayerInfo.AimTargetID = -1;
-        PlayerInfo.AssistTargetID = -1;
+        PlayerInfo.TargetActorID = -1;
+        PlayerInfo.LockTarget = false;
       }
       else
       {
@@ -59,46 +72,49 @@ namespace SWEndor.UI.Widgets
         if (limit < 250)
           limit = 250;
 
-        if (Check(p, x, y, limit, dist, prev_target))
+        if (Check(p, x, y, limit, dist, m_target))
         {
-          m_target = null;
-          PlayerInfo.AimTargetID = -1;
+          m_targetID = -1;
+          PlayerInfo.TargetActorID = -1;
+          PlayerInfo.LockTarget = false;
         }
         else
         {
-          Draw(p, x, y, dist, prev_target);
+          Draw(p, x, y, dist, m_target, prev_target);
         }
       }
     }
 
-    private bool Check(ActorInfo p, float x, float y, float limit, float dist, ActorInfo prev_target)
+    private bool Check(ActorInfo p, float x, float y, float limit, float dist, ActorInfo target)
     {
       if (p.TypeInfo is ActorTypes.Groups.LargeShip)
       {
-        return !m_target.Active
-        || m_target.IsDyingOrDead
-        || !Engine.ActorDataSet.CombatData[m_target.dataID].IsCombatObject
-        || !PlayerCameraInfo.Camera.IsPointVisible(m_target.GetGlobalPosition());
+        return !target.Active
+        || target.IsDyingOrDead
+        || !target.CombatData.IsCombatObject
+        || !PlayerCameraInfo.Camera.IsPointVisible(target.GetGlobalPosition());
       }
       else
-        return !m_target.Active
-        || m_target.IsDyingOrDead
-        || !Engine.ActorDataSet.CombatData[m_target.dataID].IsCombatObject
-        || dist > 7500
+        return !target.Active
+        || target.IsDyingOrDead
+        || !target.CombatData.IsCombatObject
+        || (PlayerInfo.Actor.Faction.IsAlliedWith(target.Faction) && PlayerInfo.IsTorpedoMode)
+        || dist > Globals.AcquisitionRange
+        || !PlayerInfo.LockTarget
+         && (!PlayerCameraInfo.Camera.IsPointVisible(target.GetGlobalPosition())
         || Math.Abs(x - Engine.ScreenWidth / 2) > limit
         || Math.Abs(y - Engine.ScreenHeight / 2) > limit
-        || (PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && PlayerInfo.IsTorpedoMode)
-        || !PlayerCameraInfo.Camera.IsPointVisible(m_target.GetGlobalPosition());
+        );
     }
 
-    private void Draw(ActorInfo p, float x, float y, float dist, ActorInfo prev_target)
+    private void Draw(ActorInfo p, float x, float y, float dist, ActorInfo target, ActorInfo prev_target)
     {
-      TV_COLOR acolor = (m_target.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : m_target.Faction.Color;
-      string name = m_target.Name;
+      TV_COLOR acolor = target.Faction.Color;
+      string name = target.Name;
       TVScreen2DImmediate.Action_Begin2D();
       if (PlayerInfo.IsTorpedoMode)
       {
-        if (!PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && prev_target != m_target)
+        if (!PlayerInfo.Actor.Faction.IsAlliedWith(target.Faction) && prev_target != target)
         {
           SoundManager.SetSound(SoundGlobals.Button3);
           m_targetBigSize = 15;
@@ -126,22 +142,21 @@ namespace SWEndor.UI.Widgets
       TVScreen2DImmediate.Action_End2D();
 
       TVScreen2DText.Action_BeginText();
-      TVScreen2DText.TextureFont_DrawText(string.Format("{0}\nDamage: {1}%", name, (100 - m_target.HP_Perc).ToString("0"))
+      TVScreen2DText.TextureFont_DrawText(string.Format("{0}\nDamage: {1}%", name, (100 - target.HP_Perc).ToString("0"))
         , x, y + m_targetSize + 10, acolor.GetIntColor()
         , FontFactory.Get(Font.T10).ID
         );
       TVScreen2DText.Action_EndText();
 
-      PlayerInfo.AimTargetID = PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) ? -1 : m_target.ID;
-      PlayerInfo.AssistTargetID = PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) ? m_target.ID : -1;
+      PlayerInfo.TargetActorID = target.ID;
 
-      if (!PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && !PlayerInfo.IsTorpedoMode)
+      if (!PlayerInfo.Actor.Faction.IsAlliedWith(target.Faction) && !PlayerInfo.IsTorpedoMode)
       {
         // Targeting cross
         // Anticipate
         float d = dist / Globals.LaserSpeed; // Laser Speed
-        TV_3DVECTOR target = m_target.GetRelativePositionXYZ(0, 0, m_target.MoveData.Speed * d);
-        TVScreen2DImmediate.Math_3DPointTo2D(target, ref x, ref y);
+        TV_3DVECTOR t = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d);
+        TVScreen2DImmediate.Math_3DPointTo2D(t, ref x, ref y);
 
         TVScreen2DImmediate.Action_Begin2D();
         TVScreen2DImmediate.Draw_Line(x - m_targetSize, y, x + m_targetSize, y, acolor.GetIntColor());
@@ -149,23 +164,20 @@ namespace SWEndor.UI.Widgets
         TVScreen2DImmediate.Action_End2D();
       }
 
-      //if (m_target.TypeInfo is ActorTypes.Groups.Fighter)
-      //if (PlayerInfo.Actor.Faction.IsAlliedWith(m_target.Faction) && m_target.TypeInfo is ActorTypes.Groups.Fighter)
-      //{
       // Squad diamond
-      if (!m_target.Squad.IsNull)
+      if (!target.Squad.IsNull)
       {
         TVScreen2DImmediate.Action_Begin2D();
-        foreach (ActorInfo s in m_target.Squad.Members)
+        foreach (ActorInfo s in target.Squad.Members)
         {
-          if (s != m_target && !s.IsPlayer && PlayerCameraInfo.Camera.IsPointVisible(s.GetGlobalPosition()))
+          if (s != target && !s.IsPlayer && PlayerCameraInfo.Camera.IsPointVisible(s.GetGlobalPosition()))
           {
             float sx = 0;
             float sy = 0;
             TVScreen2DImmediate.Math_3DPointTo2D(s.GetGlobalPosition(), ref sx, ref sy);
 
             float m2 = m_targetSizeDiamond + 5;
-            if (s == m_target.Squad.Leader)
+            if (s == target.Squad.Leader)
             {
               TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy + m2, acolor.GetIntColor());
               TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy - m2, acolor.GetIntColor());
@@ -209,7 +221,7 @@ namespace SWEndor.UI.Widgets
           && !a.IsPlayer
           && a.Active
           && !a.IsDyingOrDead
-          && e.MaskDataSet[a].Has(ComponentMask.CAN_BETARGETED)
+          && a.Mask.Has(ComponentMask.CAN_BETARGETED)
           && (b || !p0.Faction.IsAlliedWith(a.Faction))
           && e.PlayerCameraInfo.Camera.IsPointVisible(a.GetGlobalPosition())
           )
@@ -235,7 +247,7 @@ namespace SWEndor.UI.Widgets
             if (x < limit && y < limit && x + y < t.bestlimit)
             {
               t.bestlimit = x + y;
-              t.m_target = a;
+              t.m_targetID = a.ID;
               t.m_targetX = x;
               t.m_targetY = y;
             }
@@ -268,14 +280,14 @@ namespace SWEndor.UI.Widgets
         TVMesh mesh = tvcres.GetCollisionMesh();
         if (mesh != null)
         {
-          int n = ActorInfo.MeshModel.GetID(mesh.GetIndex());
+          int n = MeshModel.GetID(mesh.GetIndex());
           if (n != -1)
           {
             ActorInfo a = Engine.ActorFactory.Get(n);
 
             if (a != null) //&& a.TypeInfo.CollisionEnabled)
             {
-              m_target = a;
+              m_targetID = a.ID;
               m_targetX = Engine.InputManager.MOUSE_X;
               m_targetY = Engine.InputManager.MOUSE_Y;
               ret = true;

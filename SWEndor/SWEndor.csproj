@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actors\ActorCreationInfo.cs" />
+    <Compile Include="Actors\Interfaces.cs" />
     <Compile Include="Actors\Models\AIModel\AIData.cs" />
     <Compile Include="Actors\Models\ArmorModel\ArmorModel.cs" />
     <Compile Include="Actors\Models\Collision\CollisionResultData.cs" />
@@ -158,7 +159,6 @@
     <Compile Include="Actors\Models\Mesh\MeshModel.cs" />
     <Compile Include="Actors\Enums\ComponentMask.cs" />
     <Compile Include="Actors\ProcessActorInfo.cs" />
-    <Compile Include="Actors\Components\CollisionSystem.cs" />
     <Compile Include="Actors\Components\WeaponData.cs" />
     <Compile Include="Actors\Components\CycleInfo.cs" />
     <Compile Include="ActorTypes\Components\Movement\MoveNormal.cs" />
@@ -395,7 +395,7 @@
     <Compile Include="Input\Functions\Gameplay\UI\ToggleSquadVisibility.cs" />
     <Compile Include="Input\Functions\Gameplay\Weapon\SquadFree.cs" />
     <Compile Include="Input\Functions\Gameplay\Weapon\SquadAssist.cs" />
-    <Compile Include="Input\Functions\Gameplay\Weapon\RemoveLockOn.cs" />
+    <Compile Include="Input\Functions\Gameplay\Weapon\ToggleLockOn.cs" />
     <Compile Include="Input\Functions\Gameplay\Weapon\NextSecondary.cs" />
     <Compile Include="Input\Functions\Gameplay\Weapon\PrevSecondary.cs" />
     <Compile Include="Input\Functions\Gameplay\Weapon\PrevPrimary.cs" />
@@ -436,6 +436,7 @@
     <Compile Include="Primitives\Scope.cs" />
     <Compile Include="Primitives\StateMachines\StaticStateMachine.cs" />
     <Compile Include="Primitives\StateMachines\StateMachine.cs" />
+    <Compile Include="Primitives\StaticEnumerators.cs" />
     <Compile Include="Primitives\TimeControl.cs" />
     <Compile Include="Scenarios\ActorSpawnInfo.cs" />
     <Compile Include="Scenarios\GSFunctions.cs" />
@@ -491,6 +492,7 @@
     <Compile Include="Settings\TextLocalization.cs" />
     <Compile Include="Sound\Instructions\InstAddSyncPoint.cs" />
     <Compile Include="Sound\Instructions\InstPauseMusic.cs" />
+    <Compile Include="Sound\Instructions\InstPlaySoundSingle.cs" />
     <Compile Include="Sound\Instructions\InstPrepMusic.cs" />
     <Compile Include="Sound\Instructions\InstPlaySound.cs" />
     <Compile Include="Sound\Instructions\InstResumeMusic.cs" />

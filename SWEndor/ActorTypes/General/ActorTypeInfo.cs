@@ -33,8 +33,7 @@ namespace SWEndor.ActorTypes
     public Game Game { get { return Engine.Game; } }
     public GameScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
     public TrueVision TrueVision { get { return Engine.TrueVision; } }
-    public ActorDataSet ActorDataSet { get { return Engine.ActorDataSet; } }
-    public ActorInfo.Factory ActorFactory { get { return Engine.ActorFactory; } }
+    public ActorInfo.Factory<ActorInfo> ActorFactory { get { return Engine.ActorFactory; } }
     public LandInfo LandInfo { get { return Engine.LandInfo; } }
     public AtmosphereInfo AtmosphereInfo { get { return Engine.AtmosphereInfo; } }
     public PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }
@@ -79,7 +78,7 @@ namespace SWEndor.ActorTypes
     public AddOnData[] AddOns = new AddOnData[0];
 
     // Explosionf
-    public ExplodeInfo[] Explodes = new ExplodeInfo[0];
+    public Actors.Models.ExplodeInfo[] Explodes = new Actors.Models.ExplodeInfo[0];
 
     // Weapons
     public string[] Loadouts = new string[0];
@@ -180,10 +179,10 @@ namespace SWEndor.ActorTypes
         return;
 
       if (owner.IsDying 
-        && ActorDataSet.CombatData[owner.dataID].HitWhileDyingLeadsToDeath)
+        && owner.CombatData.HitWhileDyingLeadsToDeath)
         owner.SetState_Dead();
       
-      if (Engine.MaskDataSet[hitby].Has(ComponentMask.IS_DAMAGE))
+      if (hitby.Mask.Has(ComponentMask.IS_DAMAGE))
       {
         if (!owner.IsDyingOrDead)
         {
@@ -232,7 +231,7 @@ namespace SWEndor.ActorTypes
                     {
                       if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
                       {
-                        ActorInfo b = attacker.Squad.Members.ToArray().Random(Engine);
+                        ActorInfo b = attacker.Squad.MembersCopy.Random(Engine);
                         if (b != null)
                         {
                           a.ClearQueue();
@@ -278,7 +277,7 @@ namespace SWEndor.ActorTypes
         hitby.Position = new TV_3DVECTOR(impact.x, impact.y, impact.z);
         hitby.SetState_Dead(); // projectiles die on impact
       }
-      else if (Engine.MaskDataSet[owner].Has(ComponentMask.IS_DAMAGE))
+      else if (owner.Mask.Has(ComponentMask.IS_DAMAGE))
       {
       }
       else
@@ -286,7 +285,7 @@ namespace SWEndor.ActorTypes
         // Collision
         owner.InflictDamage(hitby, hitby.TypeInfo.ImpactDamage, DamageType.COLLISION, impact);
         if (owner.HP > 0
-          && Engine.MaskDataSet[owner].Has(ComponentMask.CAN_MOVE)
+          && owner.Mask.Has(ComponentMask.CAN_MOVE)
           && owner.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
         {
           float repel = -owner.MoveData.Speed * 0.25f;

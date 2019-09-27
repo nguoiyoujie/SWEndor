@@ -1,6 +1,7 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
+using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Groups
@@ -44,7 +45,7 @@ namespace SWEndor.ActorTypes.Groups
 
       ainfo.MoveData.ApplyZBalance = false;
 
-      if (ainfo.Parent != null || (ainfo.ActorDataSet.CombatData[ainfo.dataID].HitWhileDyingLeadsToDeath && Engine.Random.NextDouble() < 0.3f))
+      if (ainfo.Parent != null || (ainfo.CombatData.HitWhileDyingLeadsToDeath && Engine.Random.NextDouble() < 0.3f))
         ainfo.DyingTimerSet(0.1f, true);
       else
         ainfo.DyingTimerSet(5, true);

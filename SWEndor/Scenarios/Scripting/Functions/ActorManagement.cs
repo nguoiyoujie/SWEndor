@@ -393,9 +393,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
           return;
         case "IsCombatObject":
           if (setValue)
-            engine.ActorDataSet.CombatData[actor.dataID].IsCombatObject = newValue.ValueB;
+            actor.CombatData.IsCombatObject = newValue.ValueB;
           else
-            newValue = new Val(engine.ActorDataSet.CombatData[actor.dataID].IsCombatObject);
+            newValue = new Val(actor.CombatData.IsCombatObject);
           return;
         case "MaxSpeed":
           if (setValue)

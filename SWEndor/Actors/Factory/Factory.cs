@@ -2,38 +2,39 @@
 using SWEndor.Primitives;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace SWEndor.Actors
 {
   public partial class ActorInfo
   {
-    public class Factory : Primitives.Factories.Registry<int, ActorInfo>
+    public class Factory<T> : Primitives.Factories.Registry<int, T> where T : class, ILinked<T>, IScoped, IActor
     {
       public readonly Engine Engine;
-      internal Factory(Engine engine)
+      internal Factory(Engine engine, Func<Factory<T>, int, int, ActorCreationInfo, T> createfunc)
       {
         Engine = engine;
         Actors = new ActorEnumerable(this);
+        create = createfunc;
       }
 
       private int counter = 0;
-      private ConcurrentQueue<ActorInfo> planned = new ConcurrentQueue<ActorInfo>();
-      private ConcurrentQueue<ActorInfo> prepool = new ConcurrentQueue<ActorInfo>();
-      private ConcurrentQueue<ActorInfo> pool = new ConcurrentQueue<ActorInfo>();
-      private ConcurrentQueue<ActorInfo> dead = new ConcurrentQueue<ActorInfo>();
+      private ConcurrentQueue<T> planned = new ConcurrentQueue<T>();
+      private ConcurrentQueue<T> prepool = new ConcurrentQueue<T>();
+      private ConcurrentQueue<T> pool = new ConcurrentQueue<T>();
+      private ConcurrentQueue<T> dead = new ConcurrentQueue<T>();
 
       // temp holding pools
-      private ConcurrentQueue<ActorInfo> redo = new ConcurrentQueue<ActorInfo>();
-      private ConcurrentQueue<ActorInfo> nextplan = new ConcurrentQueue<ActorInfo>();
-      private ConcurrentQueue<ActorInfo> nextdead = new ConcurrentQueue<ActorInfo>();
+      private ConcurrentQueue<T> redo = new ConcurrentQueue<T>();
+      private ConcurrentQueue<T> nextplan = new ConcurrentQueue<T>();
+      private ConcurrentQueue<T> nextdead = new ConcurrentQueue<T>();
 
       int lastdataid = 0;
 
-      private ActorInfo First;
-      private ActorInfo Last;
+      private T First;
+      private T Last;
       private object creationLock = new object();
+
+      private readonly Func<Factory<T>, int, int, ActorCreationInfo, T> create;
 
       private int GetNewDataID()
       {
@@ -44,9 +45,9 @@ namespace SWEndor.Actors
         return lastdataid++;
       }
 
-      public ActorInfo Create(ActorCreationInfo acinfo)
+      public T Create(ActorCreationInfo acinfo)
       {
-        ActorInfo actor = null;
+        T actor = null;
         if (acinfo.ActorTypeInfo == null)
           throw new Exception("Attempted to register actor with null ActorTypeInfo!");
 
@@ -55,20 +56,19 @@ namespace SWEndor.Actors
           int id = counter++;
           if (pool.TryDequeue(out actor))
           {
-            actor.ID = id;
-            actor.Rebuild(acinfo);
+            actor.Rebuild(id, acinfo);
           }
           else
           {
-            actor = new ActorInfo(this, id, GetNewDataID(), acinfo);
+            actor = create(this, id, GetNewDataID(), acinfo);
           }
 
           using (ScopeCounterManager.Acquire(actor.Scope))
           {
             planned.Enqueue(actor);
             Add(id, actor);
-            if (actor.Logged)
-              Log.Write(Log.DEBUG, LogType.ACTOR_CREATED, actor);
+            //if (actor.Logged)
+            //  Log.Write(Log.DEBUG, LogType.ACTOR_CREATED, actor);
 
             if (First == null)
             {
@@ -91,7 +91,7 @@ namespace SWEndor.Actors
 
       public void ActivatePlanned()
       {
-        ActorInfo actor = null;
+        T actor = null;
         while (planned.TryDequeue(out actor))
         {
           using (ScopeCounterManager.Acquire(actor.Scope))
@@ -108,14 +108,14 @@ namespace SWEndor.Actors
           planned.Enqueue(actor);
       }
 
-      public void MakeDead(ActorInfo a)
+      public void MakeDead(T a)
       {
         dead.Enqueue(a);
       }
 
       public void DestroyDead()
       {
-        ActorInfo a;
+        T a;
         while (dead.TryDequeue(out a))
           if (a.Scope.Count == 0)
             a.Destroy();
@@ -128,7 +128,7 @@ namespace SWEndor.Actors
 
       public void ReturnToPool()
       {
-        ActorInfo a;
+        T a;
 
         while (prepool.TryDequeue(out a))
           if (a.Scope.Count == 0)
@@ -145,55 +145,55 @@ namespace SWEndor.Actors
         return list.Count;
       }
 
-      public void DoUntil(Func<Engine, ActorInfo, bool> action)
+      public void DoUntil(Func<Engine, T, bool> action)
       {
-        foreach (ActorInfo a in Actors)
+        foreach (T a in Actors)
           if (!action.Invoke(a.Engine, a))
             break;
       }
 
-      public void DoUntil<T>(Func<Engine, ActorInfo, T, bool> action, T cmp)
+      public void DoUntil<T1>(Func<Engine, T, T1, bool> action, T1 cmp)
       {
-        foreach (ActorInfo a in Actors)
+        foreach (T a in Actors)
           if (!action.Invoke(a.Engine, a, cmp))
             break;
       }
 
-      public void DoUntil<T1, T2>(Func<Engine, ActorInfo, T1, T2, bool> action, T1 c1, T2 c2)
+      public void DoUntil<T1, T2>(Func<Engine, T, T1, T2, bool> action, T1 c1, T2 c2)
       {
-        foreach (ActorInfo a in Actors)
+        foreach (T a in Actors)
           if (!action.Invoke(a.Engine, a, c1, c2))
             break;
       }
 
-      public void DoUntil<T1, T2, T3>(Func<Engine, ActorInfo, T1, T2, T3, bool> action, T1 c1, T2 c2, T3 c3)
+      public void DoUntil<T1, T2, T3>(Func<Engine, T, T1, T2, T3, bool> action, T1 c1, T2 c2, T3 c3)
       {
-        foreach (ActorInfo a in Actors)
+        foreach (T a in Actors)
           if (!action.Invoke(a.Engine, a, c1, c2, c3))
             break;
       }
 
-      public void DoEach(Action<Engine, ActorInfo> action)
+      public void DoEach(Action<Engine, T> action)
       {
-        foreach (ActorInfo a in Actors)
+        foreach (T a in Actors)
           action.Invoke(a.Engine, a);
       }
 
-      public void DoEach<T>(Action<Engine, ActorInfo, T> action, T cmp)
+      public void DoEach<T1>(Action<Engine, T, T1> action, T1 cmp)
       {
-        foreach (ActorInfo a in Actors)
+        foreach (T a in Actors)
           action.Invoke(a.Engine, a, cmp);
       }
 
-      public void DoEach<T1, T2>(Action<Engine, ActorInfo, T1, T2> action, T1 c1, T2 c2)
+      public void DoEach<T1, T2>(Action<Engine, T, T1, T2> action, T1 c1, T2 c2)
       {
-        foreach (ActorInfo a in Actors)
+        foreach (T a in Actors)
           action.Invoke(a.Engine, a, c1, c2);
       }
 
-      public void DoEach<T1, T2, T3>(Action<Engine, ActorInfo, T1, T2, T3> action, T1 c1, T2 c2, T3 c3)
+      public void DoEach<T1, T2, T3>(Action<Engine, T, T1, T2, T3> action, T1 c1, T2 c2, T3 c3)
       {
-        foreach (ActorInfo a in Actors)
+        foreach (T a in Actors)
           action.Invoke(a.Engine, a, c1, c2, c3);
       }
 
@@ -201,23 +201,23 @@ namespace SWEndor.Actors
 
       public struct ActorEnumerable
       {
-        readonly Factory F;
-        public ActorEnumerable(Factory f) { F = f; }
+        readonly Factory<T> F;
+        public ActorEnumerable(Factory<T> f) { F = f; }
         public ActorEnumerator GetEnumerator() { return new ActorEnumerator(F); }
       }
 
       public struct ActorEnumerator
       {
-        readonly Factory F;
-        ActorInfo current;
-        public ActorEnumerator(Factory f) { F = f; current = null; }
+        readonly Factory<T> F;
+        T current;
+        public ActorEnumerator(Factory<T> f) { F = f; current = null; }
         public bool MoveNext() { return (current = (current == null) ? F.First : current?.Next) != null; }
-        public ActorInfo Current { get { return current; } }
+        public T Current { get { return current; } }
       }
 
       public new void Remove(int id)
       {
-        ActorInfo actor = Get(id);
+        T actor = Get(id);
         if (actor != null)
         {
           lock (creationLock)
@@ -250,17 +250,17 @@ namespace SWEndor.Actors
         }
       }
 
-      Action<Engine, ActorInfo> destroy = (e, a) => { a?.Delete(); };
+      Action<Engine, T> destroy = (e, a) => { a?.Delete(); };
       public void Reset()
       {
         DoEach(destroy);
         DestroyDead();
 
         list.Clear();
-        planned = new ConcurrentQueue<ActorInfo>();
-        dead = new ConcurrentQueue<ActorInfo>();
-        prepool = new ConcurrentQueue<ActorInfo>();
-        pool = new ConcurrentQueue<ActorInfo>();
+        planned = new ConcurrentQueue<T>();
+        dead = new ConcurrentQueue<T>();
+        prepool = new ConcurrentQueue<T>();
+        pool = new ConcurrentQueue<T>();
         First = null;
         Last = null;
 

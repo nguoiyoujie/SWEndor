@@ -1,4 +1,5 @@
 ﻿using SWEndor.Actors;
+using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
 using System.IO;
 

@@ -12,19 +12,18 @@ using SWEndor.Sound;
 
 namespace SWEndor.Actors
 {
-  public partial class ActorInfo
+  public partial class ActorInfo : ILinked<ActorInfo>, IScoped, IActor
   {
     public ActorTypeInfo TypeInfo { get; private set; }
     public SpawnerInfo SpawnerInfo { get; set; }
 
-    public readonly Factory ActorFactory;
+    public readonly Factory<ActorInfo> ActorFactory;
     public Engine Engine { get { return ActorFactory.Engine; } }
 
     public Game Game { get { return Engine.Game; } }
     public GameScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
     public TrueVision TrueVision { get { return Engine.TrueVision; } }
 
-    public ActorDataSet ActorDataSet { get { return Engine.ActorDataSet; } }
     public ActorTypeInfo.Factory ActorTypeFactory { get { return Engine.ActorTypeFactory; } }
     public LandInfo LandInfo { get { return Engine.LandInfo; } }
     public AtmosphereInfo AtmosphereInfo { get { return Engine.AtmosphereInfo; } }
@@ -49,18 +48,10 @@ namespace SWEndor.Actors
     }
 
     // Faction
-    private FactionInfo _faction;
+    private FactionInfo _faction = FactionInfo.Neutral;
     public FactionInfo Faction
     {
-      get
-      {
-        if (_faction == null)
-        {
-          _faction = FactionInfo.Neutral;
-          _faction.RegisterActor(this);
-        }
-        return _faction;
-      }
+      get { return _faction; }
       set
       {
         _faction?.UnregisterActor(this);
@@ -70,18 +61,10 @@ namespace SWEndor.Actors
     }
 
     // Squad
-    private Squadron _squad;
+    private Squadron _squad = Squadron.Neutral;
     public Squadron Squad
     {
-      get
-      {
-        if (_squad == null)
-        {
-          _squad = Squadron.Neutral;
-          _squad.Add(this);
-        }
-        return _squad;
-      }
+      get { return _squad; }
       set
       {
         _squad?.Remove(this);
@@ -94,27 +77,29 @@ namespace SWEndor.Actors
     internal CycleInfo<ActorInfo> CycleInfo;
 
     // Delegate Events
-    public ActorEvent TickEvents;
-    public ActorEvent CreatedEvents;
-    public ActorEvent DestroyedEvents;
-    public ActorStateChangeEvent ActorStateChangeEvents;
-    public HitEvent HitEvents;
+    internal ActorEvent TickEvents;
+    internal ActorEvent CreatedEvents;
+    internal ActorEvent DestroyedEvents;
+    internal ActorStateChangeEvent ActorStateChangeEvents;
+    internal HitEvent HitEvents;
 
     // AI
-    public ActionInfo CurrentAction = null;
-    public bool CanEvade = true;
-    public bool CanRetaliate = true;
-    public int HuntWeight = 1;
+    internal ActionInfo CurrentAction = null;
+    internal bool CanEvade = true;
+    internal bool CanRetaliate = true;
+    internal int HuntWeight = 1;
 
     // Data (structs)
-    public WeaponData WeaponDefinitions;
-    public MoveData MoveData;
-    public AIData AIData;
+    internal CollisionData CollisionData;
+    internal CombatData CombatData;
+    internal WeaponData WeaponDefinitions;
+    internal MoveData MoveData;
+    internal AIData AIData;
 
     // Traits/Model (structs)
     private MeshModel Meshes;
     private RelationModel Relation;
-    private TimerModel DyingTimer; 
+    private TimerModel DyingTimer;
     private StateModel State;
     private HealthModel Health;
     private TransformModel Transform;
@@ -126,8 +111,8 @@ namespace SWEndor.Actors
 
 
     // Ownership
-    public ActorInfo Prev;
-    public ActorInfo Next;
+    public ActorInfo Prev { get; set; }
+    public ActorInfo Next { get; set; }
 
     // Log
     public bool Logged
@@ -139,12 +124,12 @@ namespace SWEndor.Actors
     }
 
     // Scope counter
-    public readonly ScopeCounterManager.ScopeCounter Scope = new ScopeCounterManager.ScopeCounter();
+    public ScopeCounterManager.ScopeCounter Scope { get; } = new ScopeCounterManager.ScopeCounter();
 
 
     #region Creation Methods
 
-    private ActorInfo(Factory owner, int id, int dataid, ActorCreationInfo acinfo)
+    internal ActorInfo(Factory<ActorInfo> owner, int id, int dataid, ActorCreationInfo acinfo)
     {
       ActorFactory = owner;
       ID = id;
@@ -164,11 +149,9 @@ namespace SWEndor.Actors
       Regen.Init(TypeInfo);
 
       MoveData.Init(TypeInfo, acinfo);
-      ActorDataSet.CollisionData[dataID].Init();
-      ActorDataSet.CombatData[dataID].CopyFrom(TypeInfo.CombatData);
+      CollisionData.Init();
+      CombatData.CopyFrom(TypeInfo.CombatData);
       WeaponDefinitions.Init(TypeInfo);
-
-      Engine.MaskDataSet[this] = TypeInfo.Mask;
 
       State.Init(this, TypeInfo, acinfo);
 
@@ -179,11 +162,11 @@ namespace SWEndor.Actors
       TypeInfo.Initialize(this);
     }
 
-    private void Rebuild(ActorCreationInfo acinfo)
+    public void Rebuild(int id, ActorCreationInfo acinfo)
     {
       // Clear past resources
       //Destroy(); // redundant
-
+      ID = id;
       TypeInfo = acinfo.ActorTypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
@@ -198,11 +181,9 @@ namespace SWEndor.Actors
       Regen.Init(TypeInfo);
 
       MoveData.Init(TypeInfo, acinfo);
-      ActorDataSet.CollisionData[dataID].Init();
-      ActorDataSet.CombatData[dataID] = TypeInfo.CombatData;
+      CollisionData.Init();
+      CombatData = TypeInfo.CombatData;
       WeaponDefinitions.Init(TypeInfo);
-
-      Engine.MaskDataSet[this] = TypeInfo.Mask;
 
       // Creation
       State.Init(this, TypeInfo, acinfo);
@@ -285,7 +266,7 @@ namespace SWEndor.Actors
       get
       {
         float distcheck = TypeInfo.RenderData.CullDistance * Game.PerfCullModifier;
-        
+
         return (!IsPlayer
           && TypeInfo.RenderData.EnableDistanceCull
           && ActorDistanceInfo.GetRoughDistance(GetGlobalPosition(), PlayerCameraInfo.Camera.GetPosition()) > distcheck);
@@ -366,8 +347,8 @@ namespace SWEndor.Actors
 
       // Kill data
       MoveData.Reset();
-      ActorDataSet.CollisionData[dataID].Reset();
-      ActorDataSet.CombatData[dataID].Reset();
+      CollisionData.Reset();
+      CombatData.Reset();
 
       Meshes.Dispose();
 
@@ -381,10 +362,10 @@ namespace SWEndor.Actors
       TypeInfo.ProcessState(this);
       if (!IsDead)
       {
-        if (Engine.MaskDataSet[this].Has(ComponentMask.CAN_BECOLLIDED)
+        if (Mask.Has(ComponentMask.CAN_BECOLLIDED)
         || TypeInfo is ActorTypes.Groups.Projectile)
         {
-          CollisionSystem.CheckCollision(Engine, this);
+          CollisionData.CheckCollision(Engine, this);
         }
         TypeInfo.MoveBehavior.Move(this, ref MoveData, Game.TimeSinceRender);
       }

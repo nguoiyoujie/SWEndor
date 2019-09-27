@@ -291,7 +291,7 @@ namespace SWEndor.Weapons
         a.Faction = owner.Faction;
         owner.AddChild(a);
 
-        if (engine.MaskDataSet[a].Has(ComponentMask.HAS_AI))
+        if (a.Mask.Has(ComponentMask.HAS_AI))
         {
           a.QueueLast(new Wait(ProjectileWaitBeforeHoming));
           a.QueueLast(new ProjectileAttackActor(target));
@@ -351,7 +351,7 @@ namespace SWEndor.Weapons
         owner.AddChild(a);
         a.Faction = owner.Faction;
 
-        if (engine.MaskDataSet[a].Has(ComponentMask.HAS_AI))
+        if (a.Mask.Has(ComponentMask.HAS_AI))
         {
           a.QueueLast(new Wait(ProjectileWaitBeforeHoming));
           a.QueueLast(new ProjectileAttackActor(target));

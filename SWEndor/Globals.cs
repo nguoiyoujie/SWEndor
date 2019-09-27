@@ -28,6 +28,7 @@ namespace SWEndor
     public const float LaserSpeed = 3000f;
     public const int ActorLimit = 1000;
     public const float ImminentCollisionFactor = 1.5f;
+    public const float AcquisitionRange = 7500;
 
 
     // Directories

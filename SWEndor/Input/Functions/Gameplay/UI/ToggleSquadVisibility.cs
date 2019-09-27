@@ -16,7 +16,7 @@ namespace SWEndor.Input.Functions.Gameplay.UI
     public override void Process(Engine engine)
     {
       Globals.Engine.Screen2D.ShowSquad = (Screen2D.ShowSquadMode)((((int)Globals.Engine.Screen2D.ShowSquad) + 1) % Enum.GetValues(typeof(Screen2D.ShowSquadMode)).Length);
-      Globals.Engine.Screen2D.MessageSecondaryText("Squad Indicator: {0}".F(Globals.Engine.Screen2D.ShowSquad), 5, new TV_COLOR(0.5f, 0.5f, 1, 1));
+      Globals.Engine.Screen2D.MessageSecondaryText("Squad Indicator: {0}".F(Globals.Engine.Screen2D.ShowSquad), 2.5f, new TV_COLOR(0.5f, 0.5f, 1, 1));
 
       Globals.Engine.SoundManager.SetSound(SoundGlobals.Button1);
     }

@@ -6,6 +6,7 @@ using SWEndor.Actors;
 using SWEndor.Actors.Data;
 using SWEndor.AI;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Actors.Models;
 
 namespace SWEndor.ActorTypes.Instances
 {

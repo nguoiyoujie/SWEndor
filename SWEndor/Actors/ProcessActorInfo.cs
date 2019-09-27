@@ -53,7 +53,7 @@ namespace SWEndor.Actors
 
       using (ScopeCounterManager.Acquire(actor.Scope))
       {
-        if (!engine.MaskDataSet[actor].Has(ComponentMask.HAS_AI)
+        if (!actor.Mask.Has(ComponentMask.HAS_AI)
         || !actor.Active
         || actor.IsDyingOrDead
         || (actor.IsPlayer && !engine.PlayerInfo.PlayerAIEnabled)
@@ -73,7 +73,7 @@ namespace SWEndor.Actors
 #endif
 
       using (ScopeCounterManager.Acquire(actor.Scope))
-        CollisionSystem.TestCollision(engine, actor);
+        actor.CollisionData.TestCollision(engine, actor);
     }
 
     internal static void FireWeapon(Engine engine, ActorInfo actor, ActorInfo target, WeaponShotInfo weapon)

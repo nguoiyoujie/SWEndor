@@ -2,13 +2,10 @@
 using SWEndor.ActorTypes;
 using SWEndor.Primitives;
 using SWEndor.Player;
-using System;
 using System.Collections.Generic;
 
 namespace SWEndor.Actors
 {
-  public partial class ActorInfo
-  {
     public struct MeshModel
     {
       private static Dictionary<int, int> m_ids = new Dictionary<int, int>();
@@ -160,7 +157,7 @@ namespace SWEndor.Actors
 
       public void Update(ActorInfo actor)
       {
-        TV_3DMATRIX mat = actor.GetMatrix();
+        TV_3DMATRIX mat = actor.GetWorldMatrix();
         bool collide = actor.Mask.Has(ComponentMask.CAN_BECOLLIDED) && actor.Active && !actor.IsAggregateMode;
         bool render = actor.Mask.Has(ComponentMask.CAN_RENDER) && actor.Active && !actor.IsAggregateMode && (!actor.IsPlayer || actor.PlayerCameraInfo.CameraMode != CameraMode.FREEROTATION);
         //bool render = !occluded && actor.Mask.Has(ComponentMask.CAN_RENDER) && actor.Active && !actor.IsAggregateMode && (!actor.IsPlayer || actor.PlayerCameraInfo.CameraMode != CameraMode.FREEROTATION);
@@ -249,16 +246,14 @@ namespace SWEndor.Actors
         using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
         {
           actor.TrueVision.TargetRenderSurface.StartRender(false);
-          //actor.TrueVision.TVScene.SetRenderMode(CONST_TV_RENDERMODE.TV_LINE);
           FarMesh?.Render();
-          //actor.TrueVision.TVScene.RenderAllMeshes(true);
-
           actor.TrueVision.TargetRenderSurface.EndRender();
-          //actor.TrueVision.TVScene.SetRenderMode(CONST_TV_RENDERMODE.TV_SOLID);
         }
       }
     }
 
+  public partial class ActorInfo
+  {
     public BoundingBox GetBoundingBox(bool uselocal) { return Meshes.GetBoundingBox(uselocal); }
     public BoundingSphere GetBoundingSphere(bool uselocal) { return Meshes.GetBoundingSphere(uselocal); }
     public void SetTexture(int iTexture) { Meshes.SetTexture(iTexture); }

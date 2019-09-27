@@ -35,7 +35,7 @@ namespace SWEndor.AI.Actions
       Complete = true;
     }
 
-    protected bool CheckBounds(ActorInfo owner)
+    protected static bool CheckBounds(ActorInfo owner)
     {
       float boundmult = 0.99f;
       if (!(owner.TypeInfo is ActorTypes.Groups.Projectile) 
@@ -61,12 +61,12 @@ namespace SWEndor.AI.Actions
       return true;
     }
 
-    protected bool CheckImminentCollision(ActorInfo owner)
+    protected static bool CheckImminentCollision(ActorInfo owner)
     {
       if (!owner.TypeInfo.AIData.CanCheckCollisionAhead)
         return false;
 
-      if (!owner.Engine.MaskDataSet[owner].Has(ComponentMask.CAN_BECOLLIDED))
+      if (!owner.Mask.Has(ComponentMask.CAN_BECOLLIDED))
         return false;
 
       float dist = owner.MoveData.Speed * Globals.ImminentCollisionFactor * (1 + (Math.Abs(owner.MoveData.XTurnAngle) + Math.Abs(owner.MoveData.YTurnAngle)) / 30f) ; // turning plays a role
@@ -74,7 +74,15 @@ namespace SWEndor.AI.Actions
       if (dist <= 0)
         return false;
 
-      return CollisionSystem.ActivateImminentCollisionCheck(owner.Engine, owner, ref m_collisioncheck_time, dist);
+      owner.CollisionData.ProspectiveCollisionScanDistance = dist;
+      owner.CollisionData.IsTestingProspectiveCollision = true;
+      return owner.CollisionData.IsInProspectiveCollision;
+    }
+
+    protected static void CreateAvoidAction(ActorInfo actor)
+    {
+      actor.QueueFirst(new AvoidCollisionWait(2.5f)); // 2nd action
+      actor.QueueFirst(new AvoidCollisionRotate(actor.CollisionData.ProspectiveCollision.Impact, actor.CollisionData.ProspectiveCollision.Normal));
     }
 
     public void Dispose()
