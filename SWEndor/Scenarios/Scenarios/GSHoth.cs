@@ -5,6 +5,7 @@ using SWEndor.ActorTypes.Instances;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
+using SWEndor.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -209,12 +210,12 @@ namespace SWEndor.Scenarios
       if (StageNumber == 1)
       {
         if (Manager.Scenario.TimeSinceLostWing < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
-          Manager.Line1Text = string.Format("WINGS: {0}", MainAllyFaction.WingCount);
+          Manager.Line1Text = "WINGS: {0}".F(MainAllyFaction.WingCount.ToString());
         else
           Manager.Line1Text = "";
 
         if (!Manager.GetGameStateB("Stage1End"))
-          Manager.Line2Text = string.Format("DIST: {0:00000}", transport_currentZpos - transport_hyperspaceZpos);
+          Manager.Line2Text = "DIST: {0}".F((transport_currentZpos - transport_hyperspaceZpos).ToString("00000"));
         else
           Manager.Line2Text = "";
       }
@@ -223,7 +224,7 @@ namespace SWEndor.Scenarios
         if (TIEsLeft > 0)
         {
           Manager.Line1Text = "Destroy TIEs";
-          Manager.Line2Text = string.Format("TIEs: {0}", TIEsLeft);
+          Manager.Line2Text = string.Format("TIEs: {0}", TIEsLeft.ToString());
         }
         else if (!Manager.GetGameStateB("Stage2End"))
         {

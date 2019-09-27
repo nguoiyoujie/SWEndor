@@ -37,7 +37,7 @@ namespace SWEndor.UI.Widgets
 
       WeaponInfo weap = PlayerInfo.PrimaryWeapon.Weapon;
       int burst = PlayerInfo.PrimaryWeapon.Burst;
-      TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;
+      TV_COLOR pcolor = p.Faction.Color;
 
       if (weap != null)
       {

@@ -46,7 +46,7 @@ namespace SWEndor.UI.Widgets
                                     , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
       TVScreen2DImmediate.Action_End2D();
 
-      TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;
+      TV_COLOR pcolor = p.Faction.Color;
 
       TVScreen2DText.Action_BeginText();
       TVScreen2DText.TextureFont_DrawText(string.Format("LIVES: {0,8:0}\nSCORE: {1,8:00000000}\nKILLS: {2,8:0}\nHITS:  {3,8:0}"

@@ -63,18 +63,11 @@ namespace SWEndor.Input.Functions
         }
       }
 
-      public static IEnumerable<InputFunction> Functions
+      public static InputFunction[] Functions
       {
         get
         {
-          int i = 0;
-          while (i < fns.Length)
-          {
-            InputFunction fn = fns[i];
-            if (fn != null)
-              yield return fn;
-            i++;
-          }
+          return fns;
         }
       }
 
@@ -109,52 +102,53 @@ namespace SWEndor.Input.Functions
       public static void GenerateDefault()
       {
         // hardcoded...
-        fns = new InputFunction[100];
+        List<InputFunction> f = new List<InputFunction>(100);
 
-        int i = 0;
-
-        fns[i++] = new PauseToMenu();
-        fns[i++] = new ShowMap();
+        f.Add(new PauseToMenu());
+        f.Add(new ShowMap());
 
         // gameplay
-        fns[i++] = new Up();
-        fns[i++] = new Down();
-        fns[i++] = new NextPrimary();
-        fns[i++] = new PrevPrimary();
-        fns[i++] = new NextSecondary();
-        fns[i++] = new PrevSecondary();
-        fns[i++] = new RemoveLockOn();
-        fns[i++] = new SquadCommand();
-        fns[i++] = new SquadCancelCommand();
+        f.Add(new Up());
+        f.Add(new Down());
+        f.Add(new NextPrimary());
+        f.Add(new PrevPrimary());
+        f.Add(new NextSecondary());
+        f.Add(new PrevSecondary());
+        f.Add(new ToggleLockOn());
+        f.Add(new SquadCommand());
+        f.Add(new SquadCancelCommand());
 
         // gameplay: camera
-        fns[i++] = new NextCameraMode();
-        fns[i++] = new PrevCameraMode();
-        fns[i++] = new MoveCameraForward();
-        fns[i++] = new MoveCameraBackward();
-        fns[i++] = new MoveCameraUpward();
-        fns[i++] = new MoveCameraDownward();
-        fns[i++] = new MoveCameraLeftward();
-        fns[i++] = new MoveCameraRightward();
+        f.Add(new NextCameraMode());
+        f.Add(new PrevCameraMode());
+        f.Add(new MoveCameraForward());
+        f.Add(new MoveCameraBackward());
+        f.Add(new MoveCameraUpward());
+        f.Add(new MoveCameraDownward());
+        f.Add(new MoveCameraLeftward());
+        f.Add(new MoveCameraRightward());
 
         // gameplay: UI toggles
-        fns[i++] = new ToggleUIVisibility();
-        fns[i++] = new ToggleSquadVisibility();
-        fns[i++] = new ToggleStatusVisibility();
-        fns[i++] = new ToggleRadarVisibility();
-        fns[i++] = new ToggleScoreVisibility();
+        f.Add(new ToggleUIVisibility());
+        f.Add(new ToggleSquadVisibility());
+        f.Add(new ToggleStatusVisibility());
+        f.Add(new ToggleRadarVisibility());
+        f.Add(new ToggleScoreVisibility());
 
         // gameply: debug
-        fns[i++] = new AddLife();
-        fns[i++] = new AllEnemiesDead();
-        fns[i++] = new AllEnemiesDying();
-        fns[i++] = new TimeFast();
-        fns[i++] = new TimeSlow();
-        fns[i++] = new TimeReset();
-        fns[i++] = new TimeJump();
-        fns[i++] = new ToggleCameraStates();
-        fns[i++] = new ToggleMovementLock();
-        fns[i++] = new TogglePlayerAI();
+        f.Add(new AddLife());
+        f.Add(new AllEnemiesDead());
+        f.Add(new AllEnemiesDying());
+        f.Add(new TimeFast());
+        f.Add(new TimeSlow());
+        f.Add(new TimeReset());
+        f.Add(new TimeJump());
+        f.Add(new ToggleCameraStates());
+        f.Add(new ToggleMovementLock());
+        f.Add(new TogglePlayerAI());
+
+        fns = f.ToArray();
+        
       }
     }
   }

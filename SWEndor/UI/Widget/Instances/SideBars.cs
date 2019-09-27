@@ -40,7 +40,7 @@ namespace SWEndor.UI.Widgets
       if (p == null || !p.Active)
         return;
 
-      TV_COLOR pcolor = (p.Faction == null) ? new TV_COLOR(1, 1, 1, 1) : p.Faction.Color;
+      TV_COLOR pcolor = p.Faction.Color;
 
       //Health Bar
       DrawSingleBar(0
