@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Core;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -20,9 +21,9 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = MeshDataDecorator.CreateAlphaTexturedWall(Name, 20000, "deathstar/deathstar.bmp", "deathstar/deathstaralpha.bmp");
     }
 
-    public override void Dying(ActorInfo ainfo)
+    public override void Dying(Engine engine, ActorInfo ainfo)
     {
-      base.Dying(ainfo);
+      base.Dying(engine, ainfo);
 
       ainfo.DyingTimerSet(5, true);
       CombatSystem.Deactivate(Engine, ainfo);

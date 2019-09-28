@@ -1,10 +1,11 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
+using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Sound;
 
-namespace SWEndor.ActorTypes.Instances
+namespace SWEndor.ExplosionTypes.Instances
 {
   public class ExpL02 : Groups.Explosion
   {

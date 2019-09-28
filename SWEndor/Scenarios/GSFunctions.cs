@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
+using SWEndor.Core;
 using System.Collections.Generic;
 
 namespace SWEndor.Scenarios
@@ -338,8 +339,7 @@ namespace SWEndor.Scenarios
       };
 
       ActorInfo a = asi.Spawn(scenario);
-      if (a.SpawnerInfo != null)
-        a.SpawnerInfo.SpawnsRemaining = spawninfo.CarrierSpawns;
+      a.SpawnerInfo.SpawnsRemaining = spawninfo.CarrierSpawns;
       return a;
     }
 

@@ -2,6 +2,7 @@
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Core;
 using System.Collections.Generic;
 using System.IO;
 
@@ -26,17 +27,17 @@ namespace SWEndor.ActorTypes.Instances
       //AddOns = new AddOnInfo[] { new AddOnInfo("Death Star Laser Source", new TV_3DVECTOR(-1300, 2000, -0.04f * size), new TV_3DVECTOR(0, 0, 0), true) };
     }
 
-    public override void Dying(ActorInfo ainfo)
+    public override void Dying(Engine engine, ActorInfo ainfo)
     {
-      base.Dying(ainfo);
+      base.Dying(engine, ainfo);
 
       ainfo.DyingTimerSet(5, true);
       CombatSystem.Deactivate(Engine, ainfo);
     }
 
-    public override void ProcessState(ActorInfo ainfo)
+    public override void ProcessState(Engine engine, ActorInfo ainfo)
     {
-      base.ProcessState(ainfo);
+      base.ProcessState(engine, ainfo);
       if (ainfo.IsDying)
       {
         int k = texanimframes.Length - 1 - (int)(ainfo.CycleInfo.CycleTime / ainfo.CycleInfo.CyclePeriod * texanimframes.Length);

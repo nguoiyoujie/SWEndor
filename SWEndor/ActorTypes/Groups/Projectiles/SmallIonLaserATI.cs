@@ -2,6 +2,9 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Core;
+using SWEndor.Explosions;
+using SWEndor.ExplosionTypes;
 using SWEndor.Weapons;
 using System.Collections.Generic;
 using System.IO;
@@ -24,12 +27,12 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Name, @"projectiles\ion_sm_laser.x");
     }
 
-    public override void ProcessHit(ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(Engine engine, ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
       if (owner == null || hitby == null)
         return;
 
-      base.ProcessHit(owner, hitby, impact, normal);
+      base.ProcessHit(engine, owner, hitby, impact, normal);
 
       List<ActorInfo> children = new List<ActorInfo>(); // hitby.Children);
       foreach (ActorInfo c in hitby.Children)
@@ -53,20 +56,20 @@ namespace SWEndor.ActorTypes.Instances
             if (child.WeaponDefinitions.Weapons[i].WeaponCooldown < Game.GameTime + empduration + 2)
               child.WeaponDefinitions.Weapons[i].WeaponCooldown = Game.GameTime + empduration + 2;
 
+          /*
           foreach (ActorInfo child2 in child.Children)
           {
             if (child2.TypeInfo is ElectroATI)
             {
-              child2.CycleInfo.CyclesRemaining = empduration / child2.CycleInfo.CyclePeriod;
+              child2.CycleInfo.CyclesRemaining = empduration / child2.TypeInfo.TimedLifeData.TimedLife;
               return;
             }
           }
-          ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
-          //acinfo.Position = child.GetGlobalPosition();
-          ActorInfo electro = ActorFactory.Create(acinfo);
-          child.AddChild(electro);
-          electro.UseParentCoords = true;
-          electro.CycleInfo.CyclesRemaining = empduration / electro.CycleInfo.CyclePeriod;
+          */
+          ExplosionCreationInfo acinfo = new ExplosionCreationInfo(engine.ExplosionTypeFactory.Get("Electro"));
+          ExplosionInfo electro = engine.ExplosionFactory.Create(acinfo);
+          electro.AttachedActorID = child.ID;
+          electro.CycleInfo.CyclesRemaining = empduration / electro.TypeInfo.TimedLifeData.TimedLife;
         }
       }
     }

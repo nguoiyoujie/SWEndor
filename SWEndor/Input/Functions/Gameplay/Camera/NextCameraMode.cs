@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Core;
 
 namespace SWEndor.Input.Functions.Gameplay.Camera
 {
@@ -13,6 +14,10 @@ namespace SWEndor.Input.Functions.Gameplay.Camera
     public override void Process(Engine engine)
     {
       engine.PlayerCameraInfo.CameraMode = engine.GameScenarioManager.Scenario.NextCameraMode();
+      engine.Screen2D.MessageSecondaryText(string.Format("CAMERA: {0}", engine.PlayerCameraInfo.CameraMode)
+                                                 , 2.5f
+                                                 , new TV_COLOR(0.5f, 0.5f, 1, 1)
+                                                 , 1);
     }
   }
 }

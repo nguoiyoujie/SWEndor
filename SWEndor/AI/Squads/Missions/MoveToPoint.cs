@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.AI.Actions;
+using SWEndor.Core;
 
 namespace SWEndor.AI.Squads.Missions
 {

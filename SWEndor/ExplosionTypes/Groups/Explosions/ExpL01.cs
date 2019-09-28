@@ -1,10 +1,13 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
+using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Core;
+using SWEndor.Explosions;
 using SWEndor.Sound;
 
-namespace SWEndor.ActorTypes.Instances
+namespace SWEndor.ExplosionTypes.Instances
 {
   public class ExpL01 : Groups.Explosion
   {
@@ -24,9 +27,9 @@ namespace SWEndor.ActorTypes.Instances
       InitialSoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.ExpLg, 3000) };
     }
 
-    public override void Initialize(ActorInfo ainfo)
+    public override void Initialize(Engine engine, ExplosionInfo ainfo)
     {
-      base.Initialize(ainfo);
+      base.Initialize(engine, ainfo);
       PlayerCameraInfo.ProximityShake(80, 2000, ainfo.Position);
     }
   }

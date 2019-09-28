@@ -9,13 +9,14 @@ using SWEndor.Weapons;
 using SWEndor.ActorTypes;
 using SWEndor.Player;
 using SWEndor.UI.Forms;
-using SWEndor.Actors.Data;
 using System.Text;
 using SWEndor.AI.Squads;
 using SWEndor.Primitives;
 using System.Threading;
+using SWEndor.ExplosionTypes;
+using SWEndor.Explosions;
 
-namespace SWEndor
+namespace SWEndor.Core
 {
   public class Engine
   {
@@ -28,7 +29,7 @@ namespace SWEndor
     public Random Random { get; } = new Random();
 
     // Engine parts
-    internal Game Game { get; private set; }
+    internal Session Game { get; private set; }
     internal SoundManager SoundManager { get; private set; }
     internal PerfManager PerfManager { get; private set; }
     internal PlayerInfo PlayerInfo { get; private set; }
@@ -46,7 +47,9 @@ namespace SWEndor
     // Factories and Registries
     internal Font.Factory FontFactory { get; private set; }
     internal ActorInfo.Factory<ActorInfo> ActorFactory { get; private set; }
+    internal ExplosionInfo.Factory<ExplosionInfo> ExplosionFactory { get; private set; }
     internal ActorTypeInfo.Factory ActorTypeFactory { get; private set; }
+    internal ExplosionTypeInfo.Factory ExplosionTypeFactory { get; private set; }
     internal Squadron.Factory SquadronFactory { get; private set; }
 
     // Engine pars to be loaded late
@@ -54,22 +57,22 @@ namespace SWEndor
     internal GameScenarioManager GameScenarioManager { get; private set; }
     internal Scenarios.Scripting.Expressions.Context ScriptContext { get; private set; }
 
-    private TVRenderSurface OccRender;
-
     public void Init()
     {
-      Game = new Game(this);
+      Game = new Session(this);
       SoundManager = new SoundManager(this);
       PerfManager = new PerfManager(this);
-      ActorFactory = new ActorInfo.Factory<ActorInfo>(this, (f, n, m, i) => { return new ActorInfo(f, n, m, i); });
+      ActorFactory = new ActorInfo.Factory<ActorInfo>(this, (e, f, n, m, i) => { return new ActorInfo(e, f, n, m, i); });
+      ExplosionFactory = new ExplosionInfo.Factory<ExplosionInfo>(this, (e, f, n, m, i) => { return new ExplosionInfo(e, f, n, m, i); });
       ActorTypeFactory = new ActorTypeInfo.Factory(this);
+      ExplosionTypeFactory = new ExplosionTypeInfo.Factory(this);
       SquadronFactory = new Squadron.Factory();
       PlayerInfo = new PlayerInfo(this);
 
       FontFactory = new Font.Factory();
     }
 
-    public void InitTrueVision()
+    public void InitTV()
     {
       if (Handle == null)
         throw new Exception("Engine is not attached to a window form!");
@@ -83,10 +86,6 @@ namespace SWEndor
       AtmosphereInfo = new AtmosphereInfo(this);
       LandInfo = new LandInfo(this);
       Screen2D = new Screen2D(this);
-
-      OccRender = TrueVision.TVScene.CreateRenderSurface(ScreenWidth / 4, ScreenHeight / 4);
-      OccRender.SetNewCamera(PlayerCameraInfo.Camera);
-      PlayerCameraInfo.Camera.OccQuery_Init(3);
     }
 
     public void Dispose()
@@ -101,8 +100,8 @@ namespace SWEndor
     {
       Screen2D.LoadingTextLines.Add(Globals.LoadingFlavourTexts[Random.Next(0, Globals.LoadingFlavourTexts.Count)]);
       ActorTypeFactory.RegisterBase();
+      ExplosionTypeFactory.RegisterBase();
 
-      
       //Screen2D.LoadingTextLines.Add("Loading other actor definitions...");
       //ActorTypeFactory.LoadFromINI(Globals.ActorTypeINIPath);
 
@@ -124,6 +123,7 @@ namespace SWEndor
 
       // late ActorType bindings...
       ActorTypeFactory.Initialise();
+      ExplosionTypeFactory.Initialise();
 
       Screen2D.LoadingTextLines.Add("Loading scenario engine...");
       GameScenarioManager = new GameScenarioManager(this);
@@ -134,12 +134,12 @@ namespace SWEndor
     }
 
     Action<Engine, ActorInfo> process = ActorInfo.Process;
-    Action<Engine, ActorInfo> processRender = ActorInfo.ProcessRender;
+    Action<Engine, ExplosionInfo> processExpl = ExplosionInfo.ProcessExp;
     Action<Engine, ActorInfo> processAI = ActorInfo.ProcessAI;
     Action<Engine, ActorInfo> processCollision = ActorInfo.ProcessCollision;
     public void Process() { ActorFactory.DoEach(process); }
-    public void ProcessRender() { ActorFactory.DoEach(processRender); }
-    public void ProcessAI() { ActorFactory.DoEach(processAI); } //may ParallelDoEach
+    public void ProcessExpl() { ExplosionFactory.DoEach(processExpl); }
+    public void ProcessAI() { ActorFactory.DoEach(processAI); }
     public void ProcessCollision() { ActorFactory.DoEach(processCollision); }
 
     public void PreRender()

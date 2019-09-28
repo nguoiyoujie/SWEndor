@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.AI.Actions;
+using SWEndor.Core;
 
 namespace SWEndor.AI.Squads.Missions
 {

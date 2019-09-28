@@ -1,6 +1,7 @@
 ﻿using SWEndor.Actors;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
+using SWEndor.Core;
 using SWEndor.Weapons;
 
 namespace SWEndor.ActorTypes.Instances
@@ -20,25 +21,25 @@ namespace SWEndor.ActorTypes.Instances
       Mask &= ~(ComponentMask.CAN_BECOLLIDED | ComponentMask.CAN_BETARGETED);
     }
 
-    public override void Initialize(ActorInfo ainfo)
+    public override void Initialize(Engine engine, ActorInfo ainfo)
     {
-      base.Initialize(ainfo);
+      base.Initialize(engine, ainfo);
 
       laser = new WeaponShotInfo(WeaponFactory.Get("DSTAR_LSR"), 1);
 
       ainfo.QueueNext(new Lock());
     }
 
-    public override void ProcessState(ActorInfo ainfo)
+    public override void ProcessState(Engine engine, ActorInfo ainfo)
     {
-      base.ProcessState(ainfo);
+      base.ProcessState(engine, ainfo);
       
       if (ainfo.CurrentAction != null && ainfo.CurrentAction is AttackActor)
       {
         ActorInfo target = ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
         if (target != null && target.Active)
         {
-          FireWeapon(ainfo, target, laser);
+          FireWeapon(engine, ainfo, target, laser);
         }
       }
     }

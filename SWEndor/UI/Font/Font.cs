@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SWEndor.Core;
+using System;
 
 namespace SWEndor.UI
 {

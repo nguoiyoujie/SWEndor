@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Core;
 using System.Collections.Generic;
 using System.IO;
 
@@ -21,9 +22,9 @@ namespace SWEndor.ActorTypes.Groups
       Mask = ComponentMask.EXPLOSION;
     }
 
-    public override void ProcessState(ActorInfo ainfo)
+    public override void ProcessState(Engine engine, ActorInfo ainfo)
     {
-      TV_3DVECTOR pos = ainfo.GetEngine().PlayerCameraInfo.Camera.GetWorldPosition(new TV_3DVECTOR(0, 0, -1000));
+      TV_3DVECTOR pos = ainfo.Engine.PlayerCameraInfo.Camera.GetWorldPosition(new TV_3DVECTOR(0, 0, -1000));
       ainfo.LookAt(pos);
 
       int frames = atlasX * atlasY;

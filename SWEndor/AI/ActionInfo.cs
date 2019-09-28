@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Core;
 using SWEndor.Primitives;
 using System;
 
@@ -34,12 +35,12 @@ namespace SWEndor.AI.Actions
     {
       float boundmult = 0.99f;
       if (!(owner.TypeInfo is ActorTypes.Groups.Projectile) 
-        && owner.IsOutOfBounds(owner.GetEngine().GameScenarioManager.MinAIBounds * boundmult, owner.GetEngine().GameScenarioManager.MaxAIBounds * boundmult) 
+        && owner.IsOutOfBounds(owner.Engine.GameScenarioManager.MinAIBounds * boundmult, owner.Engine.GameScenarioManager.MaxAIBounds * boundmult) 
         && owner.AIData.EnteredCombatZone)
       {
-        float x = owner.GetEngine().Random.Next((int)(owner.GetEngine().GameScenarioManager.MinAIBounds.x * 0.65f), (int)(owner.GetEngine().GameScenarioManager.MaxAIBounds.x * 0.65f));
-        float y = owner.GetEngine().Random.Next(-200, 200);
-        float z = owner.GetEngine().Random.Next((int)(owner.GetEngine().GameScenarioManager.MinAIBounds.z * 0.65f), (int)(owner.GetEngine().GameScenarioManager.MaxAIBounds.z * 0.65f));
+        float x = owner.Engine.Random.Next((int)(owner.Engine.GameScenarioManager.MinAIBounds.x * 0.65f), (int)(owner.Engine.GameScenarioManager.MaxAIBounds.x * 0.65f));
+        float y = owner.Engine.Random.Next(-200, 200);
+        float z = owner.Engine.Random.Next((int)(owner.Engine.GameScenarioManager.MinAIBounds.z * 0.65f), (int)(owner.Engine.GameScenarioManager.MaxAIBounds.z * 0.65f));
 
         if (owner.CurrentAction is Move)
           owner.CurrentAction.Complete = true;
@@ -48,7 +49,7 @@ namespace SWEndor.AI.Actions
       }
       else
       {
-        if (!owner.IsOutOfBounds(owner.GetEngine().GameScenarioManager.MinAIBounds * boundmult, owner.GetEngine().GameScenarioManager.MaxAIBounds * boundmult))
+        if (!owner.IsOutOfBounds(owner.Engine.GameScenarioManager.MinAIBounds * boundmult, owner.Engine.GameScenarioManager.MaxAIBounds * boundmult))
         {
           owner.AIData.EnteredCombatZone = true;
         }

@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Core;
 
 namespace SWEndor.AI.Actions
 {
@@ -49,7 +50,7 @@ namespace SWEndor.AI.Actions
         if (!poschecked)
         {
           poschecked = true;
-          if (actor.IsNearlyOutOfBounds())
+          if (actor.IsNearlyOutOfBounds(engine.GameScenarioManager))
             // TO-DO: use the center of the Bound volume or a designated center point instead of origin.
             actor.AIData.SetTarget(new TV_3DVECTOR());
           else
@@ -57,7 +58,7 @@ namespace SWEndor.AI.Actions
         }
 
         actor.AIData.SetTargetSpeed(actor.MoveData.MaxSpeed);
-        float delta_angle = actor.AIData.AdjustRotation(actor, 20);
+        float delta_angle = actor.AIData.AdjustRotation(engine, actor, 20);
         float delta_speed = actor.AIData.AdjustSpeed(actor);
 
         Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle && delta_speed == 0);

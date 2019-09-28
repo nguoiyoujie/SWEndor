@@ -140,7 +140,6 @@
     <Compile Include="Actors\Models\HealthModel\DamageInfo.cs" />
     <Compile Include="Actors\Models\HealthModel\DamageType.cs" />
     <Compile Include="Actors\Models\HealthModel\HealthModel.cs" />
-    <Compile Include="Actors\Models\ActorDataSet.cs" />
     <Compile Include="Actors\Models\Collision\CollisionData.cs" />
     <Compile Include="Actors\Models\Relation\RelationModel.cs" />
     <Compile Include="Actors\Models\StateModel\StateModel.cs" />
@@ -177,17 +176,12 @@
     <Compile Include="ActorTypes\Components\LookData.cs" />
     <Compile Include="ActorTypes\Components\RegenData.cs" />
     <Compile Include="ActorTypes\Components\UnfixedWeaponData.cs" />
-    <Compile Include="ActorTypes\General\ActorSpawner\NebBSpawner.cs" />
-    <Compile Include="ActorTypes\General\ActorSpawner\MCLSpawner.cs" />
-    <Compile Include="ActorTypes\General\ActorSpawner\PlayerSpawner.cs" />
+    <Compile Include="ActorTypes\General\ActorSpawner\SpawnerInfoDecorator.cs" />
     <Compile Include="ActorTypes\General\Enums\RadarType.cs" />
     <Compile Include="ActorTypes\General\Enums\TargetType.cs" />
     <Compile Include="ActorTypes\Components\AddOnData.cs" />
     <Compile Include="ActorTypes\Components\SoundSourceData.cs" />
     <Compile Include="ActorTypes\Components\DebrisSpawnerData.cs" />
-    <Compile Include="ActorTypes\General\ActorSpawner\MC90Spawner.cs" />
-    <Compile Include="ActorTypes\General\ActorSpawner\SDSpawnerII.cs" />
-    <Compile Include="ActorTypes\General\ActorSpawner\SDSpawner.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\SpawnerInfo.cs" />
     <Compile Include="ActorTypes\General\Factory\Parser.cs" />
     <Compile Include="ActorTypes\Groups\MissileProjectile.cs" />
@@ -230,9 +224,6 @@
     <Compile Include="ActorTypes\Groups\Debris\Transport_Box4ATI.cs" />
     <Compile Include="ActorTypes\Groups\Debris\Transport_Box2ATI.cs" />
     <Compile Include="ActorTypes\Groups\Debris\Transport_Box1ATI.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExpL02.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExpW02.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExpW01.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\FalconATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\SmallIonLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\MissileATI.cs" />
@@ -307,12 +298,10 @@
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\CorellianTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\ShieldGenerators\ISDShieldGeneratorATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\SDTurboLaserATI.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExpL01.cs" />
     <Compile Include="ActorTypes\General\Factory\Factory.cs" />
     <Compile Include="Actors\Factory\Factory.cs" />
     <Compile Include="Actors\ActorInfo.cs" />
     <Compile Include="ActorTypes\General\ActorTypeInfo.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ElectroATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOn.cs" />
     <Compile Include="ActorTypes\Groups\Explosion.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\MC90TurboLaserATI.cs" />
@@ -327,8 +316,6 @@
     <Compile Include="ActorTypes\Groups\Warship.cs" />
     <Compile Include="ActorTypes\Groups\Fighter.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene\DeathStar2ATI.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExpL00.cs" />
-    <Compile Include="ActorTypes\Groups\Explosions\ExpS00.cs" />
     <Compile Include="ActorTypes\Groups\Warships\TransportATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\GreenLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\RedLaserATI.cs" />
@@ -364,6 +351,24 @@
     <Compile Include="AI\Squads\Squadron.cs" />
     <Compile Include="Build.cs" />
     <Compile Include="Core\TrueVision.cs" />
+    <Compile Include="Explosions\ExplosionInfo.cs" />
+    <Compile Include="Explosions\Factory\Factory.cs" />
+    <Compile Include="Explosions\Models\Mesh\MeshModel.cs" />
+    <Compile Include="Explosions\Models\StateModel\StateModel.cs" />
+    <Compile Include="Explosions\Models\TimedLife\DyingTimer.cs" />
+    <Compile Include="Explosions\Models\Transform\TransformModel.cs" />
+    <Compile Include="Explosions\ProcessExplosionInfo.cs" />
+    <Compile Include="ExplosionTypes\General\ExplosionCreationInfo.cs" />
+    <Compile Include="ExplosionTypes\General\ExplosionTypeInfo.cs" />
+    <Compile Include="ExplosionTypes\General\Factory\Factory.cs" />
+    <Compile Include="ExplosionTypes\Groups\Explosion.cs" />
+    <Compile Include="ExplosionTypes\Groups\Explosions\ElectroATI.cs" />
+    <Compile Include="ExplosionTypes\Groups\Explosions\ExpL00.cs" />
+    <Compile Include="ExplosionTypes\Groups\Explosions\ExpL01.cs" />
+    <Compile Include="ExplosionTypes\Groups\Explosions\ExpL02.cs" />
+    <Compile Include="ExplosionTypes\Groups\Explosions\ExpS00.cs" />
+    <Compile Include="ExplosionTypes\Groups\Explosions\ExpW01.cs" />
+    <Compile Include="ExplosionTypes\Groups\Explosions\ExpW02.cs" />
     <Compile Include="FileFormat\INI\Helpers\SetValues.cs" />
     <Compile Include="FileFormat\INI\Helpers\GetValues.cs" />
     <Compile Include="GameEvent\GameEvent.cs" />
@@ -542,7 +547,7 @@
     <Compile Include="Scenarios\Scripting\Script.cs" />
     <Compile Include="Actors\Components\ScoreInfo.cs" />
     <Compile Include="FactionInfo.cs" />
-    <Compile Include="Core\Game.cs" />
+    <Compile Include="Core\Session.cs" />
     <Compile Include="ActorTypes\Groups\Warships\NebulonBATI.cs" />
     <Compile Include="ActorTypes\Groups\Warships\MC90ATI.cs" />
     <Compile Include="ActorTypes\Groups\Warships\CorellianATI.cs" />
@@ -598,7 +603,6 @@
     <Compile Include="UI\Widget\Instances\CrossHair.cs" />
     <Compile Include="UI\Widget\TextInfo.cs" />
     <Compile Include="UI\Widget\UIWidget.cs" />
-    <Compile Include="Utilities\Navigation.cs" />
     <Compile Include="Utilities\Utilities.cs" />
     <Compile Include="Weapons\NullWeapon.cs" />
     <Compile Include="Weapons\TrackerDummyWeapon.cs" />
@@ -678,7 +682,7 @@
     <Content Include="SWEndor.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Actors\Events\" />
+    <Folder Include="ActorTypes\Groups\Explosions\" />
     <Folder Include="Data\ActorTypes\" />
   </ItemGroup>
   <ItemGroup>

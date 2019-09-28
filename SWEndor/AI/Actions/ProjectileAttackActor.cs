@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Core;
 using SWEndor.Primitives;
 
 namespace SWEndor.AI.Actions
@@ -38,8 +39,8 @@ namespace SWEndor.AI.Actions
         return;
       }
 
-      actor.AIData.SetTarget(actor, target, true);
-      actor.AIData.AdjustRotation(actor);
+      actor.AIData.SetTarget(engine, actor, target, true);
+      actor.AIData.AdjustRotation(engine, actor);
       actor.AIData.SetTargetSpeed(actor.MoveData.MaxSpeed);
       actor.AIData.AdjustSpeed(actor);
 

@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Core;
 using SWEndor.Primitives;
 
 namespace SWEndor.AI.Actions
@@ -30,7 +31,7 @@ namespace SWEndor.AI.Actions
         ResumeTime = engine.Game.GameTime + WaitTime;
 
       actor.AIData.SetTarget(actor.GetRelativePositionXYZ(0, 0, 1000));
-      actor.AIData.AdjustRotation(actor);
+      actor.AIData.AdjustRotation(engine, actor);
 
       if (CheckImminentCollision(actor))
         CreateAvoidAction(actor);

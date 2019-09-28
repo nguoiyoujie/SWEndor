@@ -38,7 +38,7 @@ namespace SWEndor.ActorTypes.Instances
         new DebrisSpawnerData("Transport Box 4", new TV_3DVECTOR(-60, -30, 1), -10, 10, -20, 20, -25, 25, 0.5f),
       };
 
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500.0f, new TV_3DVECTOR(0, 0, -150), true) };
+      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500.0f, new TV_3DVECTOR(0, 0, -150), true, isEngineSound: true) };
       AddOns = new AddOnData[]
       {
         new AddOnData("Transport Turbolaser Tower", new TV_3DVECTOR(0, 70, 200), new TV_3DVECTOR(-90, 0, 0), true)

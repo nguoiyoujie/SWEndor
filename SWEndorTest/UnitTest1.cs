@@ -17,7 +17,7 @@ namespace SWEndorTest
       Globals.PreInit();
       Globals.InitEngine();
       Globals.Engine.LinkHandle(new IntPtr(0));
-      Globals.Engine.InitTrueVision();
+      Globals.Engine.InitTV();
 
       Globals.Engine.ActorTypeFactory.RegisterBase();
       //Globals.Engine.ActorTypeFactory.Initialise();

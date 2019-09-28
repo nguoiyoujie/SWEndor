@@ -7,6 +7,7 @@ using SWEndor.Primitives;
 using System.Threading;
 using SWEndor.Primitives.Factories;
 using SWEndor.Primitives.Collections;
+using SWEndor.Core;
 
 namespace SWEndor
 {

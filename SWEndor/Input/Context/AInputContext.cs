@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
+using SWEndor.Core;
 using SWEndor.Input.Functions;
 using SWEndor.Player;
 using SWEndor.Scenarios;
@@ -15,7 +16,7 @@ namespace SWEndor.Input.Context
     InputManager Manager;
     public Engine Engine { get { return Manager.Engine; } }
 
-    public Game Game { get { return Engine.Game; } }
+    public Session Game { get { return Engine.Game; } }
     public GameScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
     public TrueVision TrueVision { get { return Engine.TrueVision; } }
     public ActorInfo.Factory<ActorInfo> ActorFactory { get { return Engine.ActorFactory; } }

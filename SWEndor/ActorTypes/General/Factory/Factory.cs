@@ -1,4 +1,5 @@
 ﻿using SWEndor.ActorTypes.Instances;
+using SWEndor.Core;
 using SWEndor.FileFormat.INI;
 using SWEndor.Primitives.Factories;
 using System;
@@ -42,14 +43,16 @@ namespace SWEndor.ActorTypes
         Register(new Transport_Box4ATI(this));
 
         // explosions
+        /*
         Register(new ExpS00(this));
         Register(new ExpL00(this));
         Register(new ExpL01(this));
         Register(new ExpL02(this));
         Register(new ExpW01(this));
         Register(new ExpW02(this));
-        Register(new ElectroATI(this));
-
+        */
+        //Register(new ElectroATI(this));
+        
         // fighters
         Register(new Z95ATI(this));
         Register(new XWingATI(this));

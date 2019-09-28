@@ -5,32 +5,25 @@ using SWEndor.Actors.Models;
 using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
 using SWEndor.AI.Squads;
+using SWEndor.Core;
 using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.Scenarios;
-using SWEndor.Sound;
 
 namespace SWEndor.Actors
 {
   public partial class ActorInfo : ILinked<ActorInfo>, IScoped, IActor
   {
     public ActorTypeInfo TypeInfo { get; private set; }
-    public SpawnerInfo SpawnerInfo { get; set; }
+    internal SpawnerInfo SpawnerInfo;
 
     public readonly Factory<ActorInfo> ActorFactory;
     public Engine Engine { get { return ActorFactory.Engine; } }
 
-    public Game Game { get { return Engine.Game; } }
-    public GameScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
-    public TrueVision TrueVision { get { return Engine.TrueVision; } }
+    public Session Game { get { return Engine.Game; } }
 
-    public ActorTypeInfo.Factory ActorTypeFactory { get { return Engine.ActorTypeFactory; } }
-    public LandInfo LandInfo { get { return Engine.LandInfo; } }
-    public AtmosphereInfo AtmosphereInfo { get { return Engine.AtmosphereInfo; } }
-    public SoundManager SoundManager { get { return Engine.SoundManager; } }
     public PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }
     public PlayerCameraInfo PlayerCameraInfo { get { return Engine.PlayerCameraInfo; } }
-    public Screen2D Screen2D { get { return Engine.Screen2D; } }
 
     // Identifiers
     private string _name = "New Actor";
@@ -115,6 +108,7 @@ namespace SWEndor.Actors
     public ActorInfo Next { get; set; }
 
     // Log
+#if DEBUG
     public bool Logged
     {
       get
@@ -122,6 +116,7 @@ namespace SWEndor.Actors
         return !(TypeInfo is ActorTypes.Groups.Projectile || TypeInfo is ActorTypes.Groups.Debris || TypeInfo is ActorTypes.Groups.Explosion);
       }
     }
+#endif
 
     // Scope counter
     public ScopeCounterManager.ScopeCounter Scope { get; } = new ScopeCounterManager.ScopeCounter();
@@ -129,7 +124,7 @@ namespace SWEndor.Actors
 
     #region Creation Methods
 
-    internal ActorInfo(Factory<ActorInfo> owner, int id, int dataid, ActorCreationInfo acinfo)
+    internal ActorInfo(Engine engine, Factory<ActorInfo> owner, int id, int dataid, ActorCreationInfo acinfo)
     {
       ActorFactory = owner;
       ID = id;
@@ -159,10 +154,10 @@ namespace SWEndor.Actors
 
       HuntWeight = TypeInfo.AIData.HuntWeight;
 
-      TypeInfo.Initialize(this);
+      TypeInfo.Initialize(engine, this);
     }
 
-    public void Rebuild(int id, ActorCreationInfo acinfo)
+    public void Rebuild(Engine engine, int id, ActorCreationInfo acinfo)
     {
       // Clear past resources
       //Destroy(); // redundant
@@ -191,23 +186,22 @@ namespace SWEndor.Actors
       Faction = acinfo.Faction;
 
       HuntWeight = TypeInfo.AIData.HuntWeight;
-      TypeInfo.Initialize(this);
+      TypeInfo.Initialize(engine, this);
     }
 
-    public void Initialize()
+    public void Initialize(Engine engine)
     {
       SetGenerated();
       Update();
       OnCreatedEvent();
 
-      TypeInfo.GenerateAddOns(this);
+      TypeInfo.GenerateAddOns(engine, this);
     }
     #endregion
 
     public void SetSpawnerEnable(bool value)
     {
-      if (SpawnerInfo != null)
-        SpawnerInfo.Enabled = value;
+      SpawnerInfo.Enabled = value;
     }
 
     // replace
@@ -250,15 +244,15 @@ namespace SWEndor.Actors
           || (pos.z > maxbounds.z);
     }
 
-    public bool IsNearlyOutOfBounds(float dx = 1000, float dy = 250, float dz = 1000)
+    public bool IsNearlyOutOfBounds(GameScenarioManager mgr, float dx = 1000, float dy = 250, float dz = 1000)
     {
       TV_3DVECTOR pos = GetGlobalPosition();
-      return (pos.x < GameScenarioManager.MinBounds.x + dx)
-          || (pos.x > GameScenarioManager.MaxBounds.x - dx)
-          || (pos.y < GameScenarioManager.MinBounds.y + dy)
-          || (pos.y > GameScenarioManager.MaxBounds.y - dy)
-          || (pos.z < GameScenarioManager.MinBounds.z + dz)
-          || (pos.z > GameScenarioManager.MaxBounds.z - dz);
+      return (pos.x < mgr.MinBounds.x + dx)
+          || (pos.x > mgr.MaxBounds.x - dx)
+          || (pos.y < mgr.MinBounds.y + dy)
+          || (pos.y > mgr.MaxBounds.y - dy)
+          || (pos.z < mgr.MinBounds.z + dz)
+          || (pos.z > mgr.MaxBounds.z - dz);
     }
 
     public bool IsAggregateMode
@@ -286,6 +280,8 @@ namespace SWEndor.Actors
     }
 
     public bool IsPlayer { get { return PlayerInfo.ActorID == ID; } }
+
+    public void SetPlayer() { PlayerInfo.ActorID = ID; }
 
     public bool IsScenePlayer { get { return IsPlayer || PlayerInfo.TempActorID == ID; } }
 
@@ -336,14 +332,14 @@ namespace SWEndor.Actors
       ActorStateChangeEvents = null;
 
       // Player
-      if (this == PlayerInfo.Actor)
-        PlayerInfo.ActorID = -1;
-      else if (this == PlayerInfo.TempActor)
-        PlayerInfo.TempActorID = -1;
+      //if (IsPlayer)
+      //  engine.PlayerInfo.ActorID = -1;
+      //else if (IsScenePlayer)
+      //  engine.PlayerInfo.TempActorID = -1;
 
       // Final dispose
       Faction.UnregisterActor(this);
-      Engine.ActorFactory.Remove(ID);
+      ActorFactory.Remove(ID);
 
       // Kill data
       MoveData.Reset();
@@ -356,18 +352,18 @@ namespace SWEndor.Actors
       SetDisposed();
     }
 
-    public void Tick(float time)
+    public void Tick(Engine engine, float time)
     {
       CycleInfo.Process(this);
-      TypeInfo.ProcessState(this);
+      TypeInfo.ProcessState(engine, this);
       if (!IsDead)
       {
         if (Mask.Has(ComponentMask.CAN_BECOLLIDED)
         || TypeInfo is ActorTypes.Groups.Projectile)
         {
-          CollisionData.CheckCollision(Engine, this);
+          CollisionData.CheckCollision(engine, this);
         }
-        TypeInfo.MoveBehavior.Move(this, ref MoveData, Game.TimeSinceRender);
+        TypeInfo.MoveBehavior.Move(engine, this, ref MoveData, Game.TimeSinceRender);
       }
       else
         Delete();

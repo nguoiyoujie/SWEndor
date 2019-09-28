@@ -1,4 +1,5 @@
 ﻿using SWEndor.ActorTypes;
+using SWEndor.Core;
 using SWEndor.Primitives;
 using System;
 using System.Collections.Concurrent;
@@ -10,7 +11,7 @@ namespace SWEndor.Actors
     public class Factory<T> : Primitives.Factories.Registry<int, T> where T : class, ILinked<T>, IScoped, IActor
     {
       public readonly Engine Engine;
-      internal Factory(Engine engine, Func<Factory<T>, int, int, ActorCreationInfo, T> createfunc)
+      internal Factory(Engine engine, Func<Engine, Factory<T>, int, int, ActorCreationInfo, T> createfunc)
       {
         Engine = engine;
         Actors = new ActorEnumerable(this);
@@ -34,7 +35,7 @@ namespace SWEndor.Actors
       private T Last;
       private object creationLock = new object();
 
-      private readonly Func<Factory<T>, int, int, ActorCreationInfo, T> create;
+      private readonly Func<Engine, Factory<T>, int, int, ActorCreationInfo, T> create;
 
       private int GetNewDataID()
       {
@@ -56,11 +57,11 @@ namespace SWEndor.Actors
           int id = counter++;
           if (pool.TryDequeue(out actor))
           {
-            actor.Rebuild(id, acinfo);
+            actor.Rebuild(Engine, id, acinfo);
           }
           else
           {
-            actor = create(this, id, GetNewDataID(), acinfo);
+            actor = create(Engine, this, id, GetNewDataID(), acinfo);
           }
 
           using (ScopeCounterManager.Acquire(actor.Scope))
@@ -89,7 +90,7 @@ namespace SWEndor.Actors
         return actor;
       }
 
-      public void ActivatePlanned()
+      internal void ActivatePlanned()
       {
         T actor = null;
         while (planned.TryDequeue(out actor))
@@ -98,7 +99,7 @@ namespace SWEndor.Actors
           {
             if (!actor.DisposingOrDisposed)
               if (actor.CreationTime < Engine.Game.GameTime)
-                actor.Initialize();
+                actor.Initialize(Engine);
               else
                 nextplan.Enqueue(actor);
           }
@@ -108,12 +109,12 @@ namespace SWEndor.Actors
           planned.Enqueue(actor);
       }
 
-      public void MakeDead(T a)
+      internal void MakeDead(T a)
       {
         dead.Enqueue(a);
       }
 
-      public void DestroyDead()
+      internal void DestroyDead()
       {
         T a;
         while (dead.TryDequeue(out a))
@@ -126,7 +127,7 @@ namespace SWEndor.Actors
           dead.Enqueue(a);
       }
 
-      public void ReturnToPool()
+      internal void ReturnToPool()
       {
         T a;
 

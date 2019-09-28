@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.AI.Actions;
+using SWEndor.Core;
 using SWEndor.Primitives;
 using System;
 using System.Collections.Generic;

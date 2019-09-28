@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Core;
 using SWEndor.Sound;
 using System.IO;
 
@@ -38,7 +39,7 @@ namespace SWEndor.ActorTypes.Instances
         new LookData(new TV_3DVECTOR(0, 300, -385), new TV_3DVECTOR(0, 300, 2000)),
         };
       DeathCamera = new DeathCameraData(1750, 400, 30);
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500f, new TV_3DVECTOR(0, -100, -400), true) };
+      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500f, new TV_3DVECTOR(0, -100, -400), true, isEngineSound: true) };
       AddOns = new AddOnData[]
      {
         // Front
@@ -97,10 +98,10 @@ namespace SWEndor.ActorTypes.Instances
      };
     }
 
-    public override void Initialize(ActorInfo ainfo)
+    public override void Initialize(Engine engine, ActorInfo ainfo)
     {
-      base.Initialize(ainfo);
-      ainfo.SpawnerInfo = new SDSpawnerII(ainfo);
+      base.Initialize(engine, ainfo);
+      ainfo.SpawnerInfo = SpawnerInfoDecorator.SDII_Default;
     }
   }
 }

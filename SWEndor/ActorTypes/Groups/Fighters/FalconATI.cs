@@ -29,7 +29,7 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Name, @"falcon\falcon.x");
 
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineFalcon, 200f, new TV_3DVECTOR(0, 0, -30), true) };
+      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineFalcon, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };
       AddOns = new AddOnData[] { new AddOnData("Invisible Rebel Turbo Laser", new TV_3DVECTOR(0, 7, 20), new TV_3DVECTOR(90, 0, 0), true) };
 
       Cameras = new LookData[] {

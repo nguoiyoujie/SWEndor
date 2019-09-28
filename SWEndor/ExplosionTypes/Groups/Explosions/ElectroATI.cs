@@ -1,9 +1,11 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Core;
+using SWEndor.Explosions;
 using System;
 
-namespace SWEndor.ActorTypes.Instances
+namespace SWEndor.ExplosionTypes.Instances
 {
   public class ElectroATI : Groups.Explosion
   {
@@ -19,19 +21,27 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Name, 40, "electro/tex.jpg", atlasX, atlasY);
     }
 
-    private static Action<ActorInfo> persist = (a) =>
+    private static Action<ExplosionInfo> persist = (a) =>
     {
       a.SetState_Normal();
       a.DyingTimerSet(a.TypeInfo.TimedLifeData.TimedLife, true);
     };
 
-    public override void Initialize(ActorInfo ainfo)
+    public override void Initialize(Engine engine, ExplosionInfo ainfo)
     {
-      base.Initialize(ainfo);
+      base.Initialize(engine, ainfo);
       ainfo.CycleInfo.Action = persist;
 
       ainfo.CycleInfo.CyclesRemaining = 99;
       ainfo.CycleInfo.CyclePeriod = 0.25f;
+    }
+
+    public override void ProcessState(Engine engine, ExplosionInfo ainfo)
+    {
+      base.ProcessState(engine, ainfo);
+      ActorInfo p = engine.ActorFactory.Get(ainfo.AttachedActorID);
+      if (p == null)
+        ainfo.SetState_Dead();
     }
   }
 }

@@ -26,6 +26,7 @@ namespace SWEndor
     SCENARIO_STATE_CHANGE,
 
     // Actor
+#if DEBUG
     ACTOR_CREATED,
     ACTOR_CREATIONSTATECHANGED,
     ACTOR_ACTORSTATECHANGED,
@@ -42,6 +43,7 @@ namespace SWEndor
 
     // Weapon
     WEAPON_FIRED,
+#endif
   }
 
   internal static class LogDecorator
@@ -59,6 +61,7 @@ namespace SWEndor
         { LogType.ASSET_SOUND_LOAD, "{0} loading..." },
         { LogType.ASSET_SOUND_LOADED, "{0} loaded." },
 
+#if DEBUG
         { LogType.ACTOR_CREATED, "{0} was created." },
         { LogType.ACTOR_CREATIONSTATECHANGED, "{0} creation state changed to {1}." },
         { LogType.ACTOR_ACTORSTATECHANGED, "{0} actor state changed to {1}." },
@@ -69,7 +72,7 @@ namespace SWEndor
         { LogType.ACTOR_KILLED, "{0} was killed." },
         { LogType.ACTOR_KILLED_BY, "{0} was killed by {1}." },
         { LogType.ACTOR_DISPOSED, "{0} was disposed." },
-
+#endif
 
 
 

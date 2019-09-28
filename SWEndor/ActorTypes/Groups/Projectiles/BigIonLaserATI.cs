@@ -7,6 +7,9 @@ using SWEndor.Actors.Data;
 using SWEndor.AI;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Actors.Models;
+using SWEndor.Core;
+using SWEndor.ExplosionTypes;
+using SWEndor.Explosions;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -33,12 +36,12 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Name, @"projectiles\ion_sm_laser.x");
     }
 
-    public override void ProcessHit(ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(Engine engine, ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
       if (owner == null || hitby == null)
         return;
 
-      base.ProcessHit(owner, hitby, impact, normal);
+      base.ProcessHit(engine, owner, hitby, impact, normal);
       foreach (ActorInfo child in hitby.Children)
       {
         child.InflictDamage(hitby, 0.5f * child.HP, DamageType.NORMAL, child.GetGlobalPosition());
@@ -50,6 +53,7 @@ namespace SWEndor.ActorTypes.Instances
           if (child.WeaponDefinitions.Weapons[i].WeaponCooldown < Game.GameTime + empduration + 2)
             child.WeaponDefinitions.Weapons[i].WeaponCooldown = Game.GameTime + empduration + 2;
 
+        /*
         foreach (ActorInfo child2 in child.Children)
         {
           if (child2.TypeInfo is ElectroATI)
@@ -58,11 +62,10 @@ namespace SWEndor.ActorTypes.Instances
             return;
           }
         }
-        ActorCreationInfo acinfo = new ActorCreationInfo(ActorTypeFactory.Get("Electro"));
-        //acinfo.Position = child.GetGlobalPosition();
-        ActorInfo electro = ActorFactory.Create(acinfo);
-        child.AddChild(electro);
-        electro.UseParentCoords = true;
+        */
+        ExplosionCreationInfo acinfo = new ExplosionCreationInfo(engine.ExplosionTypeFactory.Get("Electro"));
+        ExplosionInfo electro = engine.ExplosionFactory.Create(acinfo);
+        electro.AttachedActorID = child.ID;
         electro.CycleInfo.CyclesRemaining = empduration / electro.TypeInfo.TimedLifeData.TimedLife;
       }
 

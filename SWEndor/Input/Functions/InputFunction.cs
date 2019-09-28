@@ -1,4 +1,5 @@
-﻿using SWEndor.Input.Functions.Gameplay;
+﻿using SWEndor.Core;
+using SWEndor.Input.Functions.Gameplay;
 using SWEndor.Input.Functions.Gameplay.Camera;
 using SWEndor.Input.Functions.Gameplay.Special;
 using SWEndor.Input.Functions.Gameplay.Speed;

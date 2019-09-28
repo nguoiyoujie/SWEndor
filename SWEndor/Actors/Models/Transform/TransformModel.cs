@@ -214,16 +214,12 @@ namespace SWEndor.Actors.Models
     public TV_3DVECTOR GetGlobalDirection(ActorInfo self, float time)
     {
       TV_3DVECTOR dir = Utilities.GetDirection(GetGlobalRotation(self, time));
-      //TV_3DVECTOR dir = new TV_3DVECTOR();
-      //mlib.TVVec3Normalize(ref dir, ret);
       return dir;
     }
 
     public TV_3DVECTOR GetPrevGlobalDirection(ActorInfo self, float time)
     {
       TV_3DVECTOR dir = Utilities.GetDirection(GetPrevGlobalRotation(self, time));
-      //TV_3DVECTOR dir = new TV_3DVECTOR();
-      //mlib.TVVec3Normalize(ref dir, ret);
       return dir;
     }
 

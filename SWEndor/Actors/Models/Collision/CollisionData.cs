@@ -1,6 +1,9 @@
-﻿using MTV3D65;
+﻿using System;
+using MTV3D65;
 using SWEndor.ActorTypes;
+using SWEndor.Core;
 using SWEndor.Primitives;
+using SWEndor.Actors.Models;
 
 namespace SWEndor.Actors.Data
 {
@@ -64,8 +67,8 @@ namespace SWEndor.Actors.Data
               return;
             }
 
-            a.TypeInfo.ProcessHit(a, actor, Collision.Impact, Collision.Normal);
-            actor.TypeInfo.ProcessHit(actor, a, Collision.Impact, -1 * Collision.Normal);
+            a.TypeInfo.ProcessHit(engine, a, actor, Collision.Impact, Collision.Normal);
+            actor.TypeInfo.ProcessHit(engine, actor, a, Collision.Impact, -1 * Collision.Normal);
           }
           Collision.ActorID = -1;
         }

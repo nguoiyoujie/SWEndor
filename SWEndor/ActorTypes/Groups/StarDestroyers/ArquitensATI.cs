@@ -34,7 +34,7 @@ namespace SWEndor.ActorTypes.Instances
       Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 80, -45), new TV_3DVECTOR(0, 80, 2000)),
         };
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500.0f, new TV_3DVECTOR(0, 0, -180), true) };
+      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500.0f, new TV_3DVECTOR(0, 0, -180), true, isEngineSound: true) };
       AddOns = new AddOnData[]
       {
         // Sides

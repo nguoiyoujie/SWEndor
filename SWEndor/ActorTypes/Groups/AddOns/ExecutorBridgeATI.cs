@@ -4,6 +4,7 @@ using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
 using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Core;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -35,9 +36,9 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Name, @"executor\executor_bridge.x");
     }
 
-    public override void ProcessState(ActorInfo ainfo)
+    public override void ProcessState(Engine engine, ActorInfo ainfo)
     {
-      base.ProcessState(ainfo);
+      base.ProcessState(engine, ainfo);
 
       if (ainfo.Active)
       {
@@ -53,9 +54,9 @@ namespace SWEndor.ActorTypes.Instances
       }
     }
 
-    public override void Dying(ActorInfo ainfo)
+    public override void Dying(Engine engine, ActorInfo ainfo)
     {
-      base.Dying(ainfo);
+      base.Dying(engine, ainfo);
 
       if (ainfo.IsDyingOrDead)
       {
@@ -66,9 +67,9 @@ namespace SWEndor.ActorTypes.Instances
       }
     }
 
-    public override void ProcessHit(ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(Engine engine, ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      base.ProcessHit(owner, hitby, impact, normal);
+      base.ProcessHit(engine, owner, hitby, impact, normal);
       if (owner == null || hitby == null)
         return;
 

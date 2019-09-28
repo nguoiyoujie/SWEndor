@@ -5,6 +5,7 @@ using SWEndor.Actors.Data;
 using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
 using SWEndor.AI.Actions;
+using SWEndor.Core;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -35,9 +36,9 @@ namespace SWEndor.ActorTypes.Groups
 
     public float ImpactCloseEnoughDistance = 0;
 
-    public override void ProcessState(ActorInfo ainfo)
+    public override void ProcessState(Engine engine, ActorInfo ainfo)
     {
-      base.ProcessState(ainfo);
+      base.ProcessState(engine, ainfo);
       if (!ainfo.IsDyingOrDead)
       {
         float impdist = ImpactCloseEnoughDistance;
@@ -54,8 +55,8 @@ namespace SWEndor.ActorTypes.Groups
 
             if (dist < impdist)
             {
-              target.TypeInfo.ProcessHit(target, ainfo, target.GetGlobalPosition(), new TV_3DVECTOR());
-              ainfo.TypeInfo.ProcessHit(ainfo, target, target.GetGlobalPosition(), new TV_3DVECTOR());
+              target.TypeInfo.ProcessHit(engine, target, ainfo, target.GetGlobalPosition(), new TV_3DVECTOR());
+              ainfo.TypeInfo.ProcessHit(engine, ainfo, target, target.GetGlobalPosition(), new TV_3DVECTOR());
 
               ainfo.OnHitEvent(target);
               target.OnHitEvent(ainfo);

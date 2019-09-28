@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Core;
 using System;
 
 namespace SWEndor.Actors.Models
@@ -23,17 +24,16 @@ namespace SWEndor.Actors.Models
     public float FollowDistance { get; private set; }
     public void SetFollowDistance(ActorInfo owner, float value) { FollowDistance = value < 0 ? owner.TypeInfo.AIData.Move_CloseEnough : value; }
 
-    public TV_3DVECTOR GetTargetPos(ActorInfo owner)
+    public TV_3DVECTOR GetTargetPos(Engine e, ActorInfo owner)
     {
       if (targetMode == TargetMode.ACTOR)
       {
-        ActorInfo a = owner.Engine.ActorFactory.Get(targetActor);
+        ActorInfo a = e.ActorFactory.Get(targetActor);
         if (a != null)
           return a.GetGlobalPosition();
       }
       else if (targetMode == TargetMode.ACTOR_SMARTPREDICTION)
       {
-        Engine e = owner.Engine;
         ActorInfo a = e.ActorFactory.Get(targetActor);
         if (a != null)
         {
@@ -49,7 +49,7 @@ namespace SWEndor.Actors.Models
       return targetPos;
     }
 
-    public void UpdateTargetPos(ActorInfo owner) { targetPos = GetTargetPos(owner); }
+    public void UpdateTargetPos(Engine engine, ActorInfo owner) { targetPos = GetTargetPos(engine, owner); }
 
     public ActorInfo GetTargetActor(ActorInfo owner)
     {
@@ -59,11 +59,10 @@ namespace SWEndor.Actors.Models
       return null;
     }
 
-    public float GetDistanceToTargetActor(ActorInfo owner)
+    public float GetDistanceToTargetActor(Engine e, ActorInfo owner)
     {
       if (targetMode != TargetMode.POINT)
       {
-        Engine e = owner.Engine;
         ActorInfo a = e.ActorFactory.Get(targetActor);
         if (a != null)
           return ActorDistanceInfo.GetDistance(owner, a);
@@ -77,12 +76,12 @@ namespace SWEndor.Actors.Models
       targetPos = pos;
     }
 
-    public void SetTarget(ActorInfo owner, ActorInfo target, bool prediction)
+    public void SetTarget(Engine engine, ActorInfo owner, ActorInfo target, bool prediction)
     {
       targetMode = prediction ? TargetMode.ACTOR_SMARTPREDICTION : TargetMode.ACTOR;
       targetActor = target.ID;
-      UpdateTargetPos(owner);
-      targetSpeed = GetDistanceToTargetActor(owner) - FollowDistance;
+      UpdateTargetPos(engine, owner);
+      targetSpeed = GetDistanceToTargetActor(engine, owner) - FollowDistance;
     }
 
     public void SetTargetSpeed(float speed)
@@ -90,9 +89,12 @@ namespace SWEndor.Actors.Models
       targetSpeed = speed;
     }
 
-    internal float AdjustRotation(ActorInfo owner, float responsiveness = 10)
+    internal float AdjustRotation(Engine engine, ActorInfo owner, float responsiveness = 10)
     {
-      UpdateTargetPos(owner);
+      UpdateTargetPos(engine, owner);
+
+      if (owner.TypeInfo.MoveLimitData.MaxTurnRate == 0) // Cannot turn
+        return 0;
 
       if (owner.TypeInfo.AIData.AlwaysAccurateRotation)
       {
@@ -100,43 +102,36 @@ namespace SWEndor.Actors.Models
         return 0;
       }
 
-      if (owner.TypeInfo.MoveLimitData.MaxTurnRate == 0) // Cannot turn
-      {
-        return 0;
-      }
+      TV_3DVECTOR tgtdir = targetPos - owner.GetGlobalPosition();
+      TV_3DVECTOR chgrot = Utilities.GetRotation(tgtdir) - owner.GetGlobalRotation();
+
+      chgrot.x = chgrot.x.Modulus(-180, 180);
+      chgrot.y = chgrot.y.Modulus(-180, 180);
+
+      TV_3DVECTOR truechg = new TV_3DVECTOR(chgrot.x, chgrot.y, chgrot.z);
+
+      // increased responsiveness
+      chgrot *= responsiveness;
+
+      chgrot.x = chgrot.x.Clamp(-owner.TypeInfo.MoveLimitData.MaxTurnRate, owner.TypeInfo.MoveLimitData.MaxTurnRate);
+      chgrot.y = chgrot.y.Clamp(-owner.TypeInfo.MoveLimitData.MaxTurnRate, owner.TypeInfo.MoveLimitData.MaxTurnRate);
+
+      // limit abrupt changes
+      float limit = owner.TypeInfo.MoveLimitData.MaxTurnRate * owner.TypeInfo.MoveLimitData.MaxSecondOrderTurnRateFrac;
+      if (Math.Abs(owner.MoveData.XTurnAngle - chgrot.x) > limit)
+        owner.MoveData.XTurnAngle += limit * ((owner.MoveData.XTurnAngle > chgrot.x) ? -1 : 1);
       else
-      {
-        TV_3DVECTOR tgtdir = targetPos - owner.GetGlobalPosition();
-        TV_3DVECTOR chgrot = Utilities.GetRotation(tgtdir) - owner.GetGlobalRotation();
+        owner.MoveData.XTurnAngle = chgrot.x;
 
-        chgrot.x = chgrot.x.Modulus(-180, 180);
-        chgrot.y = chgrot.y.Modulus(-180, 180);
+      if (Math.Abs(owner.MoveData.YTurnAngle - chgrot.y) > limit)
+        owner.MoveData.YTurnAngle += limit * ((owner.MoveData.YTurnAngle > chgrot.y) ? -1 : 1);
+      else
+        owner.MoveData.YTurnAngle = chgrot.y;
 
-        TV_3DVECTOR truechg = new TV_3DVECTOR(chgrot.x, chgrot.y, chgrot.z);
-
-        // increased responsiveness
-        chgrot *= responsiveness;
-
-        chgrot.x = chgrot.x.Clamp(-owner.TypeInfo.MoveLimitData.MaxTurnRate, owner.TypeInfo.MoveLimitData.MaxTurnRate);
-        chgrot.y = chgrot.y.Clamp(-owner.TypeInfo.MoveLimitData.MaxTurnRate, owner.TypeInfo.MoveLimitData.MaxTurnRate);
-
-        // limit abrupt changes
-        float limit = owner.TypeInfo.MoveLimitData.MaxTurnRate * owner.TypeInfo.MoveLimitData.MaxSecondOrderTurnRateFrac;
-        if (Math.Abs(owner.MoveData.XTurnAngle - chgrot.x) > limit)
-          owner.MoveData.XTurnAngle += limit * ((owner.MoveData.XTurnAngle > chgrot.x) ? -1 : 1);
-        else
-          owner.MoveData.XTurnAngle = chgrot.x;
-
-        if (Math.Abs(owner.MoveData.YTurnAngle - chgrot.y) > limit)
-          owner.MoveData.YTurnAngle += limit * ((owner.MoveData.YTurnAngle > chgrot.y) ? -1 : 1);
-        else
-          owner.MoveData.YTurnAngle = chgrot.y;
-
-        TV_3DVECTOR vec = new TV_3DVECTOR();
-        TV_3DVECTOR dir = owner.GetGlobalDirection();
-        owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, tgtdir);
-        return owner.GetEngine().TrueVision.TVMathLibrary.ACos(owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
-      }
+      TV_3DVECTOR vec = new TV_3DVECTOR();
+      TV_3DVECTOR dir = owner.GetGlobalDirection();
+      owner.Engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, tgtdir);
+      return owner.Engine.TrueVision.TVMathLibrary.ACos(owner.Engine.TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
     }
 
     internal float AdjustSpeed(ActorInfo owner)
@@ -146,13 +141,13 @@ namespace SWEndor.Actors.Models
 
       if (owner.MoveData.Speed > targetSpeed)
       {
-        owner.MoveData.Speed -= owner.MoveData.MaxSpeedChangeRate * owner.GetEngine().Game.TimeSinceRender;
+        owner.MoveData.Speed -= owner.MoveData.MaxSpeedChangeRate * owner.Engine.Game.TimeSinceRender;
         if (owner.MoveData.Speed < targetSpeed)
           owner.MoveData.Speed = targetSpeed;
       }
       else
       {
-        owner.MoveData.Speed += owner.MoveData.MaxSpeedChangeRate * owner.GetEngine().Game.TimeSinceRender;
+        owner.MoveData.Speed += owner.MoveData.MaxSpeedChangeRate * owner.Engine.Game.TimeSinceRender;
         if (owner.MoveData.Speed > targetSpeed)
           owner.MoveData.Speed = targetSpeed;
       }

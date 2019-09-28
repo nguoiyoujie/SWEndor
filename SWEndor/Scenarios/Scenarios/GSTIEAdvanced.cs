@@ -332,7 +332,7 @@ namespace SWEndor.Scenarios
             Registries = null
           }.Spawn(this);
 
-          PlayerInfo.ActorID = ainfo.ID;
+          ainfo.SetPlayer();
         }
       }
       Manager.AddEvent(Game.GameTime + 0.1f, Rebel_RemoveTorps);

@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Core;
 using SWEndor.UI;
 using SWEndor.UI.Menu;
 using SWEndor.UI.Widgets;

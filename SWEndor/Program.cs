@@ -1,4 +1,5 @@
-﻿using SWEndor.Input.Functions;
+﻿using SWEndor.Core;
+using SWEndor.Input.Functions;
 using SWEndor.Primitives;
 using System;
 using System.Windows.Forms;
@@ -20,7 +21,6 @@ namespace SWEndor
 
     static void Init()
     {
-      //Log.Init();
       try
       {
         Log.Write(Log.DEBUG, LogType.SYS_INIT, Application.ProductName, Globals.Version);

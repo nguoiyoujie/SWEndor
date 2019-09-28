@@ -31,19 +31,17 @@ namespace SWEndor.Actors.Models
                         .On(ActorStateCommand.DYING).Goto(ActorState.DYING)
                         .On(ActorStateCommand.DEAD).Goto(ActorState.DEAD)
                         .On(ActorStateCommand.ADVANCE_DEATH_ONE_LEVEL).Goto(ActorState.DYING);
-        In(ActorState.DYING).ExecuteOnEntry((a, __) => { a.TypeInfo.Dying(a); a.OnStateChangeEvent(); })
+        In(ActorState.DYING).ExecuteOnEntry((a, __) => { a.TypeInfo.Dying(a.Engine, a); a.OnStateChangeEvent(); })
                         //.On(ActorStateCommand.NORMAL).Goto(ActorState.NORMAL)
                         .On(ActorStateCommand.DYING).Goto(ActorState.DYING)
                         .On(ActorStateCommand.DEAD).Goto(ActorState.DEAD)
                         .On(ActorStateCommand.ADVANCE_DEATH_ONE_LEVEL).Goto(ActorState.DEAD);
-        In(ActorState.DEAD).ExecuteOnEntry((a, __) => { a.TypeInfo.Dead(a); a.OnStateChangeEvent(); })
+        In(ActorState.DEAD).ExecuteOnEntry((a, __) => { a.TypeInfo.Dead(a.Engine, a); a.OnStateChangeEvent(); })
                         .On(ActorStateCommand.NORMAL).Goto(ActorState.NORMAL)
                         //.On(ActorStateCommand.DYING).Goto(ActorState.DYING)
                         .On(ActorStateCommand.DEAD).Goto(ActorState.DEAD)
                         .On(ActorStateCommand.ADVANCE_DEATH_ONE_LEVEL).Goto(ActorState.DEAD);
       }
-
-      //public new void Fire(ActorInfo actor, ActorStateCommand command, ref ActorState state) { base.Fire(actor, command, ref state); }
     }
 
     private class CreationStateMachine : StaticStateMachine<ActorInfo, CreationState, CreationStateCommand>
@@ -118,17 +116,79 @@ namespace SWEndor.Actors
 
     public ComponentMask Mask { get { return State.ComponentMask; } }
 
-    public void AdvanceDeathOneLevel() { State.AdvanceDeathOneLevel(this); if (Logged) Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState); }
+    public void AdvanceDeathOneLevel()
+    {
+      State.AdvanceDeathOneLevel(this);
+#if DEBUG
+      if (Logged)
+        Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
+#endif
+    }
 
-    public void SetGenerated() { State.SetGenerated(); if (Logged) Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState); }
-    public void SetActivated() { State.SetActivated(); if (Logged) Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState); }
-    public void SetDisposing() { State.SetDisposing(); if (Logged) Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState); }
-    public void SetDisposed() { State.SetDisposed(); if (Logged) Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState); }
-    public void ResetPlanned() { State.ResetPlanned(); if (Logged) Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState); }
+    public void SetGenerated()
+    {
+      State.SetGenerated();
+#if DEBUG
+  if (Logged)
+        Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState); 
+#endif
+    }
 
-    public void SetState_Dead() { State.MakeDead(this); if (Logged) Log.Write(Log.DEBUG, LogType.ACTOR_ACTORSTATECHANGED, this, State.ActorState); }
-    public void SetState_Dying() { State.MakeDying(this); if (Logged) Log.Write(Log.DEBUG, LogType.ACTOR_ACTORSTATECHANGED, this, State.ActorState); }
-    public void SetState_Normal() { State.MakeNormal(this); if (Logged) Log.Write(Log.DEBUG, LogType.ACTOR_ACTORSTATECHANGED, this, State.ActorState); }
+    public void SetActivated() { State.SetActivated();
+#if DEBUG
+     if (Logged)
+        Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
+#endif
+    }
+
+    public void SetDisposing() { State.SetDisposing();
+#if DEBUG
+      if (Logged)
+        Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
+#endif
+    }
+
+    public void SetDisposed() { State.SetDisposed();
+#if DEBUG
+      if (Logged)
+        Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
+#endif
+    }
+
+    public void ResetPlanned() { State.ResetPlanned();
+#if DEBUG
+     if (Logged)
+        Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
+#endif
+    }
+
+    public void SetState_Dead()
+    {
+      State.MakeDead(this);
+#if DEBUG
+    if (Logged)
+        Log.Write(Log.DEBUG, LogType.ACTOR_ACTORSTATECHANGED, this, State.ActorState);
+#endif
+    }
+
+    public void SetState_Dying()
+    {
+      State.MakeDying(this);
+#if DEBUG
+    if (Logged)
+        Log.Write(Log.DEBUG, LogType.ACTOR_ACTORSTATECHANGED, this, State.ActorState);
+#endif
+    }
+
+    public void SetState_Normal()
+    {
+      State.MakeNormal(this);
+#if DEBUG
+      if (Logged)
+        Log.Write(Log.DEBUG, LogType.ACTOR_ACTORSTATECHANGED, this, State.ActorState);
+#endif
+    }
+
 
     public ActorState ActorState { get { return State.ActorState; } }
     public bool IsDying { get { return State.IsDying; } }

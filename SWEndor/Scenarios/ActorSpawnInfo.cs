@@ -33,7 +33,7 @@ namespace SWEndor.Scenarios
       acinfo.CreationTime = SpawnTime;
       acinfo.Position = Position;
       acinfo.Rotation = Rotation;
-      ainfo = scenario.GetEngine().ActorFactory.Create(acinfo);
+      ainfo = scenario.Engine.ActorFactory.Create(acinfo);
       ainfo.SideBarName = SidebarName;
 
       if (Actions != null)

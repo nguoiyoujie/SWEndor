@@ -11,6 +11,7 @@ using SWEndor.ActorTypes.Instances;
 using SWEndor.AI;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Sound;
+using SWEndor.Core;
 
 namespace SWEndor.Scenarios
 {
@@ -287,7 +288,7 @@ namespace SWEndor.Scenarios
           {
             ActorInfo actor = ActorFactory.Get(actorID);
             if (actor != null)
-              enemystrength += actor.HP_Frac * 100 + (actor.SpawnerInfo != null ? actor.SpawnerInfo.SpawnsRemaining : 0);
+              enemystrength += actor.HP_Frac * 100 + (actor.SpawnerInfo.SpawnsRemaining);
           }
 
           if (!Manager.GetGameStateB("Stage1B"))
@@ -507,31 +508,31 @@ namespace SWEndor.Scenarios
       {
         if (StageNumber < 2)
         {
-          float x_yv = (PlayerInfo.Position.y > 0) ? (PlayerInfo.Position.y / 6f) - 18000.0f : (PlayerInfo.Position.y / 2.5f) - 18000.0f;
-          float y_yv = PlayerInfo.Position.x / 1.2f;
-          float z_yv = PlayerInfo.Position.z / 1.2f;
+          float x_yv = (PlayerCameraInfo.Position.y > 0) ? (PlayerCameraInfo.Position.y / 6f) - 18000.0f : (PlayerCameraInfo.Position.y / 2.5f) - 18000.0f;
+          float y_yv = PlayerCameraInfo.Position.x / 1.2f;
+          float z_yv = PlayerCameraInfo.Position.z / 1.2f;
           m_AYavin.Position = new TV_3DVECTOR(x_yv, y_yv, z_yv);
         }
         else
         {
-          float x_yv = PlayerInfo.Position.x / 1.2f;
+          float x_yv = PlayerCameraInfo.Position.x / 1.2f;
           float y_yv = 20000.0f;
-          float z_yv = PlayerInfo.Position.z / 1.2f;
+          float z_yv = PlayerCameraInfo.Position.z / 1.2f;
           m_AYavin.Position = new TV_3DVECTOR(x_yv, y_yv, z_yv);
         }
       }
       if (m_AYavin4 != null && m_AYavin4.Active)
       {
-        float x_y4 = PlayerInfo.Position.x / 10f;
-        float y_y4 = PlayerInfo.Position.y / 2f;
-        float z_y4 = (PlayerInfo.Position.z > 0) ? PlayerInfo.Position.z / 1.5f + 30000f : PlayerInfo.Position.z / 100f + 30000f;
+        float x_y4 = PlayerCameraInfo.Position.x / 10f;
+        float y_y4 = PlayerCameraInfo.Position.y / 2f;
+        float z_y4 = (PlayerCameraInfo.Position.z > 0) ? PlayerCameraInfo.Position.z / 1.5f + 30000f : PlayerCameraInfo.Position.z / 100f + 30000f;
         m_AYavin4.Position = new TV_3DVECTOR(x_y4, y_y4, z_y4);
       }
       if (m_ADS != null && m_ADS.Active)
       {
-        float x_ds = PlayerInfo.Position.x / 5f;
-        float y_ds = (PlayerInfo.Position.y / 1.5f) + 3200.0f;
-        float z_ds = (PlayerInfo.Position.z > 0) ? PlayerInfo.Position.z / 1.5f - 30000f : PlayerInfo.Position.z / 100f - 30000f;
+        float x_ds = PlayerCameraInfo.Position.x / 5f;
+        float y_ds = (PlayerCameraInfo.Position.y / 1.5f) + 3200.0f;
+        float z_ds = (PlayerCameraInfo.Position.z > 0) ? PlayerCameraInfo.Position.z / 1.5f - 30000f : PlayerCameraInfo.Position.z / 100f - 30000f;
         m_ADS.Position = new TV_3DVECTOR(x_ds, y_ds, z_ds);
       }
     }
@@ -765,7 +766,7 @@ namespace SWEndor.Scenarios
             Registries = null
           }.Spawn(this);
 
-          PlayerInfo.ActorID = ainfo.ID;
+          ainfo.SetPlayer();
         }
       }
       m_PlayerID = PlayerInfo.ActorID;
@@ -1374,8 +1375,7 @@ namespace SWEndor.Scenarios
       }.Spawn(this);
 
       ainfo.SetSpawnerEnable(true);
-      if (ainfo.SpawnerInfo != null)
-          ainfo.SpawnerInfo.NextSpawnTime = Game.GameTime + 3f;
+      ainfo.SpawnerInfo.SpawnMoveTime = Game.GameTime + 3f;
 
       StageNumber = 4;
       PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(1000, 30, -2000));
@@ -1568,7 +1568,7 @@ namespace SWEndor.Scenarios
           TrenchTurrets[i] = new List<ActorInfo>();
       }
 
-      int counter = (int)(PlayerInfo.Position.x - 8000) / 1000 - 7;
+      int counter = (int)(PlayerCameraInfo.Position.x - 8000) / 1000 - 7;
       if (counter < 0)
         counter = 0;
 

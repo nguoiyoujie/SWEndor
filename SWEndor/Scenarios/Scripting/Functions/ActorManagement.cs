@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Groups;
+using SWEndor.Core;
 using SWEndor.Scenarios.Scripting.Expressions;
 using System;
 using System.Collections.Generic;
@@ -437,7 +438,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
           if (setValue)
             actor.SetSpawnerEnable(newValue.ValueB);
           else
-            newValue = new Val(actor.SpawnerInfo?.Enabled ?? false);
+            newValue = new Val(actor.SpawnerInfo.Enabled);
           return;
         case "Strength":
           if (setValue)

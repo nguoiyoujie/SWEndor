@@ -5,6 +5,7 @@ using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
+using SWEndor.Core;
 using SWEndor.FileFormat.INI;
 using SWEndor.Player;
 using SWEndor.Primitives;
@@ -30,7 +31,7 @@ namespace SWEndor.ActorTypes
     public readonly Factory ActorTypeFactory;
     public Engine Engine { get { return ActorTypeFactory.Engine; } }
 
-    public Game Game { get { return Engine.Game; } }
+    public Session Game { get { return Engine.Game; } }
     public GameScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
     public TrueVision TrueVision { get { return Engine.TrueVision; } }
     public ActorInfo.Factory<ActorInfo> ActorFactory { get { return Engine.ActorFactory; } }
@@ -127,29 +128,28 @@ namespace SWEndor.ActorTypes
       MoveBehavior.Load(this);
     }
 
-    public virtual void Initialize(ActorInfo ainfo)
+    public virtual void Initialize(Engine engine, ActorInfo ainfo)
     {
       // AI
       ainfo.CanEvade = AIData.CanEvade;
       ainfo.CanRetaliate = AIData.CanRetaliate;
 
       // Sound
-      if (!(GameScenarioManager?.Scenario is GSMainMenu))
-        foreach (SoundSourceData assi in InitialSoundSources)
-          assi.Process(ainfo);
+      foreach (SoundSourceData assi in InitialSoundSources)
+        assi.Process(engine, ainfo);
     }
 
-    public void GenerateAddOns(ActorInfo ainfo)
+    public void GenerateAddOns(Engine engine, ActorInfo ainfo)
     {
       foreach (AddOnData addon in AddOns)
-        addon.Create(Engine, ainfo);
+        addon.Create(engine, ainfo);
     }
 
-    public virtual void ProcessState(ActorInfo ainfo)
+    public virtual void ProcessState(Engine engine, ActorInfo ainfo)
     {
       // weapons
       foreach (WeaponInfo w in ainfo.WeaponDefinitions.Weapons)
-        w.Reload(Engine);
+        w.Reload(engine);
 
       // regeneration
       ainfo.Regenerate(Game.TimeSinceRender);
@@ -162,15 +162,14 @@ namespace SWEndor.ActorTypes
       // sound
       if (PlayerInfo.Actor != null
         && ainfo.Active 
-        && !ainfo.IsScenePlayer
-        && !(GameScenarioManager?.Scenario is GSMainMenu))
+        && !ainfo.IsScenePlayer)
       {
         foreach (SoundSourceData assi in SoundSources)
-          assi.Process(ainfo);
+          assi.Process(engine, ainfo);
       }
     }
 
-    public virtual void ProcessHit(ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public virtual void ProcessHit(Engine engine, ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
       if (owner == null || hitby == null)
         return;
@@ -199,7 +198,7 @@ namespace SWEndor.ActorTypes
           if (attacker.IsScenePlayer)
           {
             if (!attacker.Faction.IsAlliedWith(owner.Faction))
-              AddScore(PlayerInfo.Score, hitby, owner);
+              AddScore(engine, PlayerInfo.Score, hitby, owner);
             else
               Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", owner.Name, PlayerInfo.Name)
                                               , 5
@@ -210,10 +209,10 @@ namespace SWEndor.ActorTypes
 
           if (owner.IsScenePlayer)
           {
-            PlayerInfo.Score.AddDamage(Engine, attacker, hitby.TypeInfo.ImpactDamage * owner.GetArmor(DamageType.NORMAL));
+            PlayerInfo.Score.AddDamage(engine, attacker, hitby.TypeInfo.ImpactDamage * owner.GetArmor(DamageType.NORMAL));
 
             if (owner.IsDyingOrDead)
-              PlayerInfo.Score.AddDeath(Engine, attacker);
+              PlayerInfo.Score.AddDeath(engine, attacker);
           }
 
           if (attacker != null && !attacker.Faction.IsAlliedWith(owner.Faction))
@@ -231,7 +230,7 @@ namespace SWEndor.ActorTypes
                     {
                       if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
                       {
-                        ActorInfo b = attacker.Squad.MembersCopy.Random(Engine);
+                        ActorInfo b = attacker.Squad.MembersCopy.Random(engine);
                         if (b != null)
                         {
                           a.ClearQueue();
@@ -296,7 +295,7 @@ namespace SWEndor.ActorTypes
         if (attacker.IsScenePlayer)
         {
           if (!attacker.Faction.IsAlliedWith(owner.Faction))
-            AddScore(PlayerInfo.Score, attacker, owner);
+            AddScore(engine, PlayerInfo.Score, attacker, owner);
           else
             Screen2D.MessageText(string.Format("{0}: {1}, watch it!", owner.Name, PlayerInfo.Name)
                                             , 5
@@ -309,27 +308,27 @@ namespace SWEndor.ActorTypes
         {
           owner.SetState_Dead();
           if (owner.IsScenePlayer)
-            PlayerInfo.Score.AddDeath(Engine, attacker);
+            PlayerInfo.Score.AddDeath(engine, attacker);
         }
       }
 
       hitby.OnHitEvent(owner);
     }
 
-    private void AddScore(ScoreInfo score, ActorInfo proj, ActorInfo victim)
+    private void AddScore(Engine engine, ScoreInfo score, ActorInfo proj, ActorInfo victim)
     {
       if (!victim.IsDyingOrDead)
       {
-        score.AddHit(Engine, victim, proj.TypeInfo.ImpactDamage * victim.GetArmor(DamageType.NORMAL));
+        score.AddHit(engine, victim, proj.TypeInfo.ImpactDamage * victim.GetArmor(DamageType.NORMAL));
       }
 
       if (victim.IsDyingOrDead)
       {
-        score.AddKill(Engine, victim);
+        score.AddKill(engine, victim);
       }
     }
 
-    public virtual bool FireWeapon(ActorInfo owner, ActorInfo target, WeaponShotInfo sweapon)
+    public virtual bool FireWeapon(Engine engine, ActorInfo owner, ActorInfo target, WeaponShotInfo sweapon)
     {
       if (owner == null)
         return false;
@@ -338,12 +337,12 @@ namespace SWEndor.ActorTypes
       if (EqualityComparer<WeaponShotInfo>.Default.Equals(sweapon, WeaponShotInfo.Automatic))
       {
         foreach (WeaponShotInfo ws in owner.WeaponDefinitions.AIWeapons)
-          if (FireWeapon(owner, target, ws))
+          if (FireWeapon(engine, owner, target, ws))
             return true;
       }
       else
       {
-        return sweapon.Fire(Engine, owner, target);
+        return sweapon.Fire(engine, owner, target);
       }
       
       return false;
@@ -366,7 +365,7 @@ namespace SWEndor.ActorTypes
         target.InflictDamage(owner, weapontype.ImpactDamage, DamageType.NORMAL, target.GetGlobalPosition());
     }
 
-    public virtual void Dying(ActorInfo ainfo)
+    public virtual void Dying(Engine engine, ActorInfo ainfo)
     {
       if (ainfo == null)
         throw new ArgumentNullException("ainfo");
@@ -375,16 +374,16 @@ namespace SWEndor.ActorTypes
 
       if (ainfo.IsPlayer)
       {
-        PlayerInfo.ActorID = -1;
-        PlayerCameraInfo.Look.SetPosition_Actor(ainfo.ID);
-        PlayerCameraInfo.Look.SetModeDeathCircle(DeathCamera);
+        engine.PlayerInfo.ActorID = -1;
+        engine.PlayerCameraInfo.Look.SetPosition_Actor(ainfo.ID);
+        engine.PlayerCameraInfo.Look.SetModeDeathCircle(DeathCamera);
 
-        ainfo.TickEvents += GameScenarioManager.Scenario.ProcessPlayerDying;
-        ainfo.DestroyedEvents += GameScenarioManager.Scenario.ProcessPlayerKilled;
+        ainfo.TickEvents += engine.GameScenarioManager.Scenario.ProcessPlayerDying;
+        ainfo.DestroyedEvents += engine.GameScenarioManager.Scenario.ProcessPlayerKilled;
       }
     }
 
-    public virtual void Dead(ActorInfo ainfo)
+    public virtual void Dead(Engine engine, ActorInfo ainfo)
     {
       if (ainfo == null)
         throw new ArgumentNullException("ainfo");
@@ -395,19 +394,19 @@ namespace SWEndor.ActorTypes
       // Debris
       if (!ainfo.IsAggregateMode && !Game.IsLowFPS())
         foreach (DebrisSpawnerData ds in Debris)
-          ds.Process(ainfo);
+          ds.Process(engine, ainfo);
 
       if (ainfo.IsPlayer)
       {
-        PlayerInfo.ActorID = -1;
-        PlayerCameraInfo.Look.SetPosition_Actor(ainfo.ID);
-        PlayerCameraInfo.Look.SetModeDeathCircle(DeathCamera);
-        ainfo.DestroyedEvents += GameScenarioManager.Scenario.ProcessPlayerKilled;
+        engine.PlayerInfo.ActorID = -1;
+        engine.PlayerCameraInfo.Look.SetPosition_Actor(ainfo.ID);
+        engine.PlayerCameraInfo.Look.SetModeDeathCircle(DeathCamera);
+        ainfo.DestroyedEvents += engine.GameScenarioManager.Scenario.ProcessPlayerKilled;
       }
       else
       {
         if (ainfo.UseParentCoords && ainfo.TopParent.IsPlayer)
-          Screen2D.MessageSystemsText("WARNING: Subsystem [{0}] lost.".F(ainfo.Name), 3, new TV_COLOR(1, 0.2f, 0.2f, 1));
+          engine.Screen2D.MessageSystemsText("WARNING: Subsystem [{0}] lost.".F(ainfo.Name), 3, new TV_COLOR(1, 0.2f, 0.2f, 1));
       }
     }
   }

@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Core;
 using SWEndor.Primitives;
 
 namespace SWEndor.AI.Actions
@@ -32,9 +33,9 @@ namespace SWEndor.AI.Actions
 
     public override void Process(Engine engine, ActorInfo actor) { }
 
-    public void ApplyMove(ActorInfo owner)
+    public void ApplyMove(Engine engine, ActorInfo owner)
     {
-      float dist = owner.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetGlobalPosition(), Target_Position);
+      float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetGlobalPosition(), Target_Position);
 
       if (dist <= CloseEnoughDistance || prevdist < dist)
       {

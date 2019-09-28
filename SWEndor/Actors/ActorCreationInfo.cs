@@ -3,7 +3,7 @@ using SWEndor.Actors;
 
 namespace SWEndor.ActorTypes
 {
-  public struct ActorCreationInfo
+  public struct ActorCreationInfo : ICreate<ActorInfo>
   {
     public FactionInfo Faction;
     public ActorTypeInfo ActorTypeInfo;

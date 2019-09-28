@@ -1,37 +1,181 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
+using SWEndor.AI;
+using SWEndor.AI.Actions;
+using SWEndor.AI.Squads;
+using SWEndor.Core;
 
 namespace SWEndor
 {
-  public class SpawnerInfo
+  public struct SpawnerInfo
   {
-    public SpawnerInfo(ActorInfo a)
-    {
-      Owner = a;
-      SpawnMoveTime = Owner.GetEngine().Game.GameTime;
-      NextSpawnTime = Owner.GetEngine().Game.GameTime + 1f;
-    }
+    public bool Enabled;
 
-    public bool Enabled = false;
-
-    public readonly ActorInfo Owner = null;
     public float SpawnMoveTime;
     public float NextSpawnTime;
 
-    public ActorTypeInfo[] SpawnTypes = new ActorTypeInfo[0];
-    public float SpawnMoveDelay = 4;
-    public float SpawnInterval = 5;
-    public float SpawnPlayerDelay = 10;
-    public int SpawnsRemaining = 30;
+    public string[] SpawnTypes;
+    public float SpawnMoveDelay;
+    public float SpawnInterval;
+    public float SpawnPlayerDelay;
+    public int SpawnsRemaining;
 
-    public TV_3DVECTOR[] SpawnLocations = new TV_3DVECTOR[0];
-    public TV_3DVECTOR PlayerSpawnLocation = new TV_3DVECTOR();
+    public TV_3DVECTOR[] SpawnLocations;
+    public TV_3DVECTOR PlayerSpawnLocation;
 
-    public float SpawnSpeed = -1; // -1 means follow spawner, -2 means maxSpeed of spawned
-    public TV_3DVECTOR SpawnRotation = new TV_3DVECTOR();
-    public TV_3DVECTOR SpawnManualPositioningMult = new TV_3DVECTOR();
-    public TV_3DVECTOR SpawnSpeedPositioningMult = new TV_3DVECTOR();
+    public float SpawnSpeed; // -1 means follow spawner, -2 means maxSpeed of spawned
+    public TV_3DVECTOR SpawnRotation;
+    public TV_3DVECTOR SpawnManualPositioningMult;
+    public TV_3DVECTOR SpawnSpeedPositioningMult;
 
+    public static SpawnerInfo Default = new SpawnerInfo
+    {
+      Enabled = false,
+      SpawnTypes = new string[0],
+      SpawnMoveDelay = 4,
+      SpawnInterval = 5,
+      SpawnPlayerDelay = 10,
+      SpawnsRemaining = 30,
+      SpawnLocations = new TV_3DVECTOR[0],
+      SpawnSpeed = -1,
+    };
+
+    private bool SpawnPlayer(Engine engine, ActorInfo ainfo)
+    {
+      if (!engine.PlayerInfo.RequestSpawn)
+        return false;
+
+      if (NextSpawnTime < engine.Game.GameTime + SpawnPlayerDelay)
+        NextSpawnTime = engine.Game.GameTime + SpawnPlayerDelay;
+
+      engine.PlayerInfo.IsMovementControlsEnabled = false;
+
+      ActorCreationInfo acinfo = new ActorCreationInfo(engine.PlayerInfo.ActorType);
+
+      float scale = ainfo.Scale;
+      acinfo.Position = ainfo.GetRelativePositionXYZ(PlayerSpawnLocation.x * scale, PlayerSpawnLocation.y * scale, PlayerSpawnLocation.z * scale);
+      acinfo.Rotation = ainfo.GetGlobalRotation();
+      acinfo.Rotation += SpawnRotation;
+
+      acinfo.FreeSpeed = true;
+      acinfo.Faction = ainfo.Faction;
+      ActorInfo a = engine.ActorFactory.Create(acinfo);
+      ainfo.AddChild(a);
+      a.QueueNext(new Lock());
+
+      a.SetPlayer();
+
+      if (a.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER) && a.Faction.WingLimit >= 0)
+        a.Faction.WingLimit++;
+
+      if (a.TypeInfo.AIData.TargetType.Has(TargetType.SHIP) && a.Faction.ShipLimit >= 0)
+        a.Faction.ShipLimit++;
+
+      engine.PlayerInfo.RequestSpawn = false;
+
+      SpawnMoveTime = engine.Game.GameTime + SpawnMoveDelay;
+      return true;
+    }
+
+    private bool SpawnFighter(Engine engine, ActorInfo ainfo)
+    {
+      if (NextSpawnTime < engine.Game.GameTime
+       && SpawnsRemaining > 0
+       && SpawnTypes != null
+       && SpawnTypes.Length > 0)
+      {
+        ActorTypeInfo spawntype = engine.ActorTypeFactory.Get(SpawnTypes[engine.Random.Next(0, SpawnTypes.Length)]);
+        if ((spawntype.AIData.TargetType.Has(TargetType.FIGHTER)
+          && (ainfo.Faction.WingSpawnLimit < 0 || ainfo.Faction.WingCount < ainfo.Faction.WingSpawnLimit)
+          && (ainfo.Faction.WingLimit < 0 || ainfo.Faction.WingCount < ainfo.Faction.WingLimit)
+          )
+        || (spawntype.AIData.TargetType.Has(TargetType.SHIP)
+          && (ainfo.Faction.ShipSpawnLimit < 0 || ainfo.Faction.WingCount < ainfo.Faction.ShipSpawnLimit))
+          && (ainfo.Faction.ShipLimit < 0 || ainfo.Faction.WingCount < ainfo.Faction.ShipLimit)
+          )
+        {
+          NextSpawnTime = engine.Game.GameTime + SpawnInterval;
+          SpawnsRemaining--;
+
+          Squadron squad = ainfo.Engine.SquadronFactory.Create();
+          foreach (TV_3DVECTOR sv in SpawnLocations)
+          {
+            ActorCreationInfo acinfo = new ActorCreationInfo(spawntype);
+
+            float scale = ainfo.Scale;
+            acinfo.Position = ainfo.GetRelativePositionXYZ(sv.x * scale, sv.y * scale, sv.z * scale);
+            acinfo.Rotation = ainfo.GetGlobalRotation();
+            acinfo.Rotation += SpawnRotation;
+
+            acinfo.FreeSpeed = true;
+            acinfo.Faction = ainfo.Faction;
+            ActorInfo a = engine.ActorFactory.Create(acinfo);
+            a.Squad = squad;
+            ainfo.AddChild(a);
+            engine.GameScenarioManager.Scenario?.RegisterEvents(a);
+            a.QueueFirst(new Lock());
+          }
+          SpawnMoveTime = engine.Game.GameTime + SpawnMoveDelay;
+        }
+      }
+      return true;
+    }
+
+    internal void MoveSpawns(Engine engine, ActorInfo a, ActorInfo p)
+    {
+      if (SpawnSpeed == -2)
+        a.MoveData.Speed = a.MoveData.MaxSpeed;
+      else if (SpawnSpeed == -1)
+        a.MoveData.Speed = p.MoveData.Speed;
+      else
+        a.MoveData.Speed = SpawnSpeed;
+
+      a.Rotation += p.Rotation - p.PrevRotation;
+      a.Position += p.Position - p.PrevPosition;
+
+      float m1 = p.MoveData.Speed * engine.Game.TimeSinceRender * p.Scale;
+      float m2 = engine.Game.TimeSinceRender * p.Scale;
+      a.MoveRelative(SpawnSpeedPositioningMult.x * m1
+                   , SpawnSpeedPositioningMult.y * m1
+                   , SpawnSpeedPositioningMult.z * m1);
+
+      a.MoveRelative(SpawnManualPositioningMult.x * m2
+                   , SpawnManualPositioningMult.y * m2
+                   , SpawnManualPositioningMult.z * m2);
+
+      if (a.IsPlayer)
+        engine.PlayerInfo.IsMovementControlsEnabled = false;
+    }
+
+    internal void UnlockSpawns(Engine engine, ActorInfo ainfo, ActorInfo p)
+    {
+      if (Enabled
+       && !p.IsDead
+       && !(p.CurrentAction is HyperspaceIn || p.CurrentAction is HyperspaceOut)
+       && p.Active
+       )
+      {
+        if (SpawnMoveTime < engine.Game.GameTime)
+        {
+          foreach (ActorInfo a in ainfo.Children)
+          {
+            a.MoveData.FreeSpeed = false;
+            a.UnlockOne();
+
+            if (a.IsPlayer)
+              engine.PlayerInfo.IsMovementControlsEnabled = true;
+
+            ainfo.RemoveChild(a);
+          }
+        }
+
+        if (!p.IsDying)
+        {
+          SpawnPlayer(engine, ainfo);
+          SpawnFighter(engine, ainfo);
+        }
+      }
+    }
   }
 }

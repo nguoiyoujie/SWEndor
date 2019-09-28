@@ -29,7 +29,7 @@ namespace SWEndor.ActorTypes.Instances
         new LookData(new TV_3DVECTOR(0, 55, -35), new TV_3DVECTOR(0, 55, 2000)),
         new LookData(new TV_3DVECTOR(0, 300, -800), new TV_3DVECTOR(0, 0, 2000))
         };
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500f, new TV_3DVECTOR(0, 0, -200), true) };
+      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500f, new TV_3DVECTOR(0, 0, -200), true, isEngineSound: true) };
       AddOns = new AddOnData[]
       {
         new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(-35, 15, 110), new TV_3DVECTOR(-80, -90, 0), true)

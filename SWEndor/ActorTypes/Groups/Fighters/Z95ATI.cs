@@ -19,7 +19,7 @@ namespace SWEndor.ActorTypes.Instances
       ScoreData = new ScoreData(400, 2000);
       RegenData = new RegenData(false, 0.06f, 0, 0, 0);
       MeshData = new MeshData(Name, @"xwing\z95.x");
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineXWing, 200f, new TV_3DVECTOR(0, 0, -30), true) };
+      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineXWing, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };
 
       Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 3, 25), new TV_3DVECTOR(0, 3, 2000)),

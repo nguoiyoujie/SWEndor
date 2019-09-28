@@ -2,9 +2,11 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Core;
+using SWEndor.Explosions;
 using SWEndor.Sound;
 
-namespace SWEndor.ActorTypes.Instances
+namespace SWEndor.ExplosionTypes.Instances
 {
   public class ExpS00 : Groups.Explosion
   {
@@ -22,9 +24,9 @@ namespace SWEndor.ActorTypes.Instances
       InitialSoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.ExpSm, 500) };
     }
 
-    public override void Initialize(ActorInfo ainfo)
+    public override void Initialize(Engine engine, ExplosionInfo ainfo)
     {
-      base.Initialize(ainfo);
+      base.Initialize(engine, ainfo);
       ainfo.CycleInfo.CyclePeriod = 0.5f;
       PlayerCameraInfo.ProximityShake(5, 100, ainfo.Position);
     }

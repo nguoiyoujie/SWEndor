@@ -1,4 +1,5 @@
-﻿using SWEndor.Sound;
+﻿using SWEndor.Core;
+using SWEndor.Sound;
 
 namespace SWEndor.Input.Functions.Gameplay.Weapon
 {

@@ -432,7 +432,7 @@ namespace SWEndor.Scenarios
           ainfo.SetArmor(DamageType.ALL, 0.1f);
           ainfo.HitEvents += Rebel_PlayerHit;
 
-          PlayerInfo.ActorID = ainfo.ID;
+          ainfo.SetPlayer();
         }
       }
       m_PlayerID = PlayerInfo.ActorID;

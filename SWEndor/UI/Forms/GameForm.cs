@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SWEndor.Core;
+using System;
 using System.Windows.Forms;
 
 namespace SWEndor.UI.Forms
@@ -23,7 +24,7 @@ namespace SWEndor.UI.Forms
       Engine.Game.StartLoad();
       Engine.LinkForm(this);
       Engine.LinkHandle(pbGame.Handle);
-      Engine.InitTrueVision();
+      Engine.InitTV();
       Engine.Game.Run();
     }
 

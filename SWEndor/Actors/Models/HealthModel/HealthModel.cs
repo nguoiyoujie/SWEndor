@@ -41,11 +41,10 @@ namespace SWEndor.Actors.Models
 
     public void InflictDamage(ActorInfo self, DamageInfo dmg)
     {
-      if (IsDead)
+      if (HP <= 0)
         return;
 
       float mod = self.GetArmor(dmg.Type);
-
       float d = dmg.Value * mod;
       HP = (HP - d).Clamp(-1, MaxHP);
 
@@ -56,15 +55,17 @@ namespace SWEndor.Actors.Models
         Log.Write(Log.DEBUG, LogType.ACTOR_HEALED, target, dmg.Source, -d, HP);
       */
 
-      if (HP <= 0)
+      if (HP <= 0 && !self.IsDyingOrDead) // TO-DO: improve atomicity of ActorState, still may have threading issues
       {
         self.SetState_Dying();
 
+#if DEBUG
         if (self.Logged)
           if (dmg.Source == null)
             Log.Write(Log.DEBUG, LogType.ACTOR_KILLED, self);
           else
             Log.Write(Log.DEBUG, LogType.ACTOR_KILLED_BY, self, dmg.Source.TopParent);
+#endif
       }
     }
 
@@ -80,12 +81,14 @@ namespace SWEndor.Actors.Models
 
       HP = value.Clamp(-1, MaxHP);
 
-      if (HP <= 0)
+      if (HP <= 0 && !self.IsDyingOrDead) // TO-DO: improve atomicity of ActorState, still may have threading issues
       {
         self.SetState_Dying();
 
+#if DEBUG
         if (self.Logged)
           Log.Write(Log.DEBUG, LogType.ACTOR_KILLED_BY, self, "setting HP to 0");
+#endif
       }
     }
 

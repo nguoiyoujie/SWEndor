@@ -1,12 +1,13 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes;
+using SWEndor.Core;
 
 namespace SWEndor.ActorTypes.Components
 {
   public struct MoveBehavior
   {
-    public delegate void MoveAction(ActorInfo actor, ref MoveData data, float time);
+    public delegate void MoveAction(Engine engine, ActorInfo actor, ref MoveData data, float time);
     public MoveAction Move;
 
     public void Load(ActorTypeInfo atype)

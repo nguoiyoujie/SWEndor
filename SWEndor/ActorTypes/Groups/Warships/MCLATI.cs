@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Core;
 using SWEndor.Sound;
 using System.IO;
 
@@ -39,7 +40,7 @@ namespace SWEndor.ActorTypes.Instances
 
       Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 45, 660), new TV_3DVECTOR(0, 45, 2000)) };
       DeathCamera = new DeathCameraData(1500, 250, 30);
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500f, new TV_3DVECTOR(0, 0, -750), true) };
+      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500f, new TV_3DVECTOR(0, 0, -750), true, isEngineSound: true) };
       AddOns = new AddOnData[]
       {
         new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(0, 140, -630), new TV_3DVECTOR(-90, 0, 0), true)
@@ -62,10 +63,10 @@ namespace SWEndor.ActorTypes.Instances
       };
     }
 
-    public override void Initialize(ActorInfo ainfo)
+    public override void Initialize(Engine engine, ActorInfo ainfo)
     {
-      base.Initialize(ainfo);
-      ainfo.SpawnerInfo = new MCLSpawner(ainfo);
+      base.Initialize(engine, ainfo);
+      ainfo.SpawnerInfo = SpawnerInfoDecorator.MCL_Default;
     }
   }
 }

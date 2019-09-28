@@ -4,6 +4,7 @@ using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Groups;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
+using SWEndor.Core;
 using SWEndor.Player;
 
 namespace SWEndor.Weapons
@@ -118,8 +119,7 @@ namespace SWEndor.Weapons
     public float Range = 4500;
 
     // Misc
-    public string[] FireSound = null; // new string"laser_sf";
-
+    public string[] FireSound = null;
 
     public void Init()
     {
@@ -164,7 +164,6 @@ namespace SWEndor.Weapons
         CurrentPositionIndex = 0;
       }
       return FirePositions[CurrentPositionIndex];
-      //return (FirePositions[CurrentPositionIndex] >= owner.WeaponPositions.Count) ? owner.WeaponPositions[0] : owner.WeaponPositions[FirePositions[CurrentPositionIndex]];
     }
 
     public void Reload(Engine engine)
@@ -221,10 +220,8 @@ namespace SWEndor.Weapons
             else if (FireSound.Length > 1)
               engine.SoundManager.SetSound(FireSound[engine.Random.Next(0, FireSound.Length)]);
           }
-          else if (p != null)
-          {
-            ActorTypes.Components.SoundSourceData.Play(p, owner.GetGlobalPosition(), 1000, FireSound, false);
-          }
+
+          ActorTypes.Components.SoundSourceData.Play(engine, 1f, owner.GetGlobalPosition(), 750, FireSound, false, false);
         }
       }
       return fired;

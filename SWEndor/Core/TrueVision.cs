@@ -3,7 +3,7 @@ using MTV3D65;
 using System.IO;
 using SWEndor.Primitives;
 
-namespace SWEndor
+namespace SWEndor.Core
 {
   public class TrueVision
   {

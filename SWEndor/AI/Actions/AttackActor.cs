@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.ActorTypes;
+using SWEndor.Core;
 using SWEndor.Primitives;
 using SWEndor.Weapons;
 using System;
@@ -55,17 +56,17 @@ namespace SWEndor.AI.Actions
       if (!CheckBounds(actor))
         return;
 
-      actor.AIData.SetTarget(actor, target, true);
+      actor.AIData.SetTarget(engine, actor, target, true);
       actor.AIData.SetFollowDistance(actor, FollowDistance);
 
       if (TooCloseDistance < 0)
         TooCloseDistance = actor.MoveData.Speed * 0.75f;
 
-      float dist = actor.AIData.GetDistanceToTargetActor(actor);
+      float dist = actor.AIData.GetDistanceToTargetActor(engine, actor);
 
       if (dist > TooCloseDistance)
       {
-        float delta_angle = actor.AIData.AdjustRotation(actor);
+        float delta_angle = actor.AIData.AdjustRotation(engine, actor);
         actor.AIData.AdjustSpeed(actor);
 
         WeaponShotInfo w;

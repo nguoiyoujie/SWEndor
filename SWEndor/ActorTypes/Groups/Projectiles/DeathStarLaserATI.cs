@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Core;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -25,14 +26,14 @@ namespace SWEndor.ActorTypes.Instances
       ImpactCloseEnoughDistance = 200;
     }
 
-    public override void ProcessState(ActorInfo ainfo)
+    public override void ProcessState(Engine engine, ActorInfo ainfo)
     {
       // Override
     }
 
-    public override void ProcessHit(ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(Engine engine, ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      base.ProcessHit(owner, hitby, impact, normal);
+      base.ProcessHit(engine, owner, hitby, impact, normal);
       float time = 0.5f;
 
       if (hitby.DyingTimeRemaining > time)

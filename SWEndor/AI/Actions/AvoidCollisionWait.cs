@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Core;
 using SWEndor.Primitives;
 
 namespace SWEndor.AI.Actions
@@ -31,7 +32,7 @@ namespace SWEndor.AI.Actions
         ResumeTime = engine.Game.GameTime + WaitTime;
 
       actor.AIData.SetTarget(actor.GetRelativePositionXYZ(0, 0, 1000));
-      actor.AIData.AdjustRotation(actor, 0.5f);
+      actor.AIData.AdjustRotation(engine, actor, 0.5f);
 
       actor.AIData.SetTargetSpeed(actor.MoveData.MaxSpeed);
       actor.AIData.AdjustSpeed(actor);

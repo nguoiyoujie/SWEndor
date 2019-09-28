@@ -1,5 +1,8 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes;
+using SWEndor.Core;
+using SWEndor.Explosions;
+using SWEndor.ExplosionTypes;
 using SWEndor.Primitives;
 using System;
 
@@ -25,14 +28,14 @@ namespace SWEndor.Actors.Models
 
   public struct ExplodeInfo
   {
-    public string ActorType;
+    public string Type;
     public float Rate;
     public float Size;
     public ExplodeTrigger Trigger;
 
     public ExplodeInfo(string type, float rate, float size, ExplodeTrigger trigger)
     {
-      ActorType = type;
+      Type = type;
       Rate = rate;
       Size = size;
       Trigger = trigger;
@@ -42,13 +45,13 @@ namespace SWEndor.Actors.Models
   public struct ExplodeModel
   {
     private ExplodeInfo[] _data;
-    private ActorTypeInfo[] _types;
+    private ExplosionTypeInfo[] _types;
     private float[] _time;
 
     public void Init(ActorTypeInfo type, ActorCreationInfo acinfo)
     {
       _data = type.Explodes;
-      _types = new ActorTypeInfo[type.Explodes.Length];
+      _types = new ExplosionTypeInfo[type.Explodes.Length];
       _time = new float[type.Explodes.Length];
 
       //fill time
@@ -95,11 +98,11 @@ namespace SWEndor.Actors.Models
           if (_time[i] <= engine.Game.GameTime)
           {
             float rate = (exp.Rate <= 0) ? 1 : exp.Rate;
-            float size = exp.Size * a.Scale;
+            float size = exp.Size; // * a.Scale;
             if (size == 0)
               size = 1;
             if (_types[i] == null)
-              _types[i] = engine.ActorTypeFactory.Get(exp.ActorType);
+              _types[i] = engine.ExplosionTypeFactory.Get(exp.Type);
 
             if (exp.Trigger.Has(ExplodeTrigger.CREATE_ON_MESHVERTICES))
               CreateOnMeshVertices(engine, a, i, rate, size, exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_ACTOR));
@@ -112,23 +115,22 @@ namespace SWEndor.Actors.Models
 
     private void CreateOnMeshVertices(Engine engine, ActorInfo a, int i, float rate, float size, bool attach)
     {
-      while (_time[i] < engine.Game.GameTime && a.GetVertexCount() > 0)
+      int cnt = a.GetVertexCount();
+      while (_time[i] < engine.Game.GameTime && cnt > 0)
       {
         _time[i] += (float)engine.Random.NextDouble() * rate;
-        int vertID = engine.Random.Next(0, a.GetVertexCount());
+        int vertID = engine.Random.Next(0, cnt);
         TV_3DVECTOR vert = a.GetVertex(vertID);
-
 
         if (attach)
         {
-          ActorInfo e = MakeExplosion(_types[i], vert, size);
-          a.AddChild(e);
-          e.UseParentCoords = true;
+          ExplosionInfo e = MakeExplosion(engine, _types[i], vert * a.Scale, size);
+          e.AttachedActorID = a.ID;
         }
         else
         {
           TV_3DVECTOR v = a.GetRelativePositionXYZ(vert.x * a.Scale, vert.y * a.Scale, vert.z * a.Scale);
-          ActorInfo e = MakeExplosion(_types[i], v, size);
+          ExplosionInfo e = MakeExplosion(engine, _types[i], v, size);
         }
       }
     }
@@ -138,20 +140,19 @@ namespace SWEndor.Actors.Models
       _time[i] = engine.Game.GameTime + rate;
       if (attach)
       {
-        ActorInfo e = MakeExplosion(_types[i], default(TV_3DVECTOR), size);
-        a.AddChild(e);
-        e.UseParentCoords = true;
+        ExplosionInfo e = MakeExplosion(engine, _types[i], default(TV_3DVECTOR), size);
+        e.AttachedActorID = a.ID;
       }
       else
-        MakeExplosion(_types[i], a.GetPrevGlobalPosition(), size);
+        MakeExplosion(engine, _types[i], a.GetPrevGlobalPosition(), size);
     }
 
-    private static ActorInfo MakeExplosion(ActorTypeInfo type, TV_3DVECTOR globalPosition, float explSize)
+    private static ExplosionInfo MakeExplosion(Engine engine, ExplosionTypeInfo type, TV_3DVECTOR globalPosition, float explSize)
     {
-      ActorCreationInfo acinfo = new ActorCreationInfo(type);
+      ExplosionCreationInfo acinfo = new ExplosionCreationInfo(type);
       acinfo.Position = globalPosition;
       acinfo.InitialScale = explSize;
-      return Globals.Engine.ActorFactory.Create(acinfo);
+      return engine.ExplosionFactory.Create(acinfo);
     }
   }
 }

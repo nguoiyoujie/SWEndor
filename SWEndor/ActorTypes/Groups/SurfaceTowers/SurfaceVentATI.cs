@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Core;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -19,9 +20,9 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Name, @"surface\surface_vent.x");
     }
 
-    public override void ProcessHit(ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(Engine engine, ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      base.ProcessHit(owner, hitby, impact, normal);
+      base.ProcessHit(engine, owner, hitby, impact, normal);
 
       if (owner == null || hitby == null)
         return;

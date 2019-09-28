@@ -4,6 +4,7 @@ using SWEndor.Primitives;
 using SWEndor.Scenarios;
 using System.Collections.Generic;
 using System;
+using SWEndor.Core;
 
 namespace SWEndor
 {

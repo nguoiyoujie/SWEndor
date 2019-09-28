@@ -3,6 +3,7 @@ using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
 using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Core;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -33,9 +34,9 @@ namespace SWEndor.ActorTypes.Groups
       AIData.HuntWeight = 5;
     }
 
-    public override void Dying(ActorInfo ainfo)
+    public override void Dying(Engine engine, ActorInfo ainfo)
     {
-      base.Dying(ainfo);
+      base.Dying(engine, ainfo);
 
       ainfo.DyingTimerSet(25, true);
     }

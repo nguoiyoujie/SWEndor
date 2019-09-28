@@ -1,4 +1,6 @@
-﻿namespace SWEndor.Actors.Components
+﻿using SWEndor.Core;
+
+namespace SWEndor.Actors.Components
 {
   public class CombatSystem
   {

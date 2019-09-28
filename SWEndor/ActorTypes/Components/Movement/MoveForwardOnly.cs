@@ -1,6 +1,7 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Data;
 using SWEndor.AI.Actions;
+using SWEndor.Core;
 
 namespace SWEndor.ActorTypes.Components
 {
@@ -9,18 +10,18 @@ namespace SWEndor.ActorTypes.Components
   /// </summary>
   public static class MoveForwardOnly
   {
-    public static void Move(ActorInfo actor, ref MoveData data, float time)
+    public static void Move(Engine engine, ActorInfo actor, ref MoveData data, float time)
     {
       // Hyperspace special: AI loop may not be in sync
       if (actor.CurrentAction is HyperspaceIn)
       {
-        ((HyperspaceIn)actor.CurrentAction).ApplyMove(actor);
+        ((HyperspaceIn)actor.CurrentAction).ApplyMove(engine, actor);
         actor.MoveRelative(data.Speed * time);
         return;
       }
       else if (actor.CurrentAction is HyperspaceOut)
       {
-        ((HyperspaceOut)actor.CurrentAction).ApplyMove(actor);
+        ((HyperspaceOut)actor.CurrentAction).ApplyMove(engine, actor);
         actor.MoveRelative(data.Speed * time);
         return;
       }

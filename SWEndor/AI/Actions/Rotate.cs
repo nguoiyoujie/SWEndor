@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Core;
 using SWEndor.Primitives;
 
 namespace SWEndor.AI.Actions
@@ -44,7 +45,7 @@ namespace SWEndor.AI.Actions
       if (CheckBounds(actor))
       {
         actor.AIData.SetTarget(Target_Position);
-        float delta_angle = actor.AIData.AdjustRotation(actor);
+        float delta_angle = actor.AIData.AdjustRotation(engine, actor);
 
         actor.AIData.SetTargetSpeed(Target_Speed);
         float delta_speed = actor.AIData.AdjustSpeed(actor);

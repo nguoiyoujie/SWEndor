@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Core;
 
 namespace SWEndor.AI.Actions
 {
@@ -14,7 +15,7 @@ namespace SWEndor.AI.Actions
     {
       if (CheckBounds(actor))
       {
-        //AdjustRotation(actor, actor.GetGlobalPosition());
+        //AdjustRotation(engine, actor, actor.GetGlobalPosition());
         actor.AIData.SetTargetSpeed(actor.MoveData.MinSpeed);
         actor.AIData.AdjustSpeed(actor);
 

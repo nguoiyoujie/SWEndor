@@ -1,5 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Models;
+using SWEndor.Core;
 using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.Sound;
@@ -98,6 +100,7 @@ namespace SWEndor.UI.Widgets
         return !target.Active
         || target.IsDyingOrDead
         || !target.CombatData.IsCombatObject
+        || target.TopParent == p
         || (PlayerInfo.Actor.Faction.IsAlliedWith(target.Faction) && PlayerInfo.IsTorpedoMode)
         || dist > Globals.AcquisitionRange
         || !PlayerInfo.LockTarget

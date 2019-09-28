@@ -1,4 +1,5 @@
-﻿using SWEndor.Primitives.Factories;
+﻿using SWEndor.Core;
+using SWEndor.Primitives.Factories;
 
 namespace SWEndor.Scenarios.Scripting.Expressions
 {

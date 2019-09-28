@@ -2,6 +2,7 @@
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Core;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -19,9 +20,9 @@ namespace SWEndor.ActorTypes.Groups
       MoveLimitData.MinSpeed = 5;
     }
 
-    public override void Initialize(ActorInfo ainfo)
+    public override void Initialize(Engine engine, ActorInfo ainfo)
     {
-      base.Initialize(ainfo);
+      base.Initialize(engine, ainfo);
       ainfo.SetState_Dying();
     }
   }

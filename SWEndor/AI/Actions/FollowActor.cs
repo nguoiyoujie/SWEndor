@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Core;
 using SWEndor.Primitives;
 
 namespace SWEndor.AI.Actions
@@ -41,11 +42,11 @@ namespace SWEndor.AI.Actions
         return;
       }
 
-      actor.AIData.SetTarget(actor, target, false);
+      actor.AIData.SetTarget(engine, actor, target, false);
 
       if (CheckBounds(actor))
       {
-        actor.AIData.AdjustRotation(actor);
+        actor.AIData.AdjustRotation(engine, actor);
         float dist = ActorDistanceInfo.GetDistance(actor, target, FollowDistance + 1);
 
         actor.AIData.AdjustSpeed(actor);

@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Core;
 using System;
 
 namespace SWEndor.Player
@@ -200,7 +201,6 @@ namespace SWEndor.Player
 
     public readonly TVCamera Camera;
     public CameraMode CameraMode = CameraMode.FIRSTPERSON;
-    public CameraMode prevCameraMode = CameraMode.FIRSTPERSON;
     public CameraLook Look = CameraLook.Default;
     public int LookActor { get; private set; } = -1;
     private int LookAtActor = -1;
@@ -215,8 +215,6 @@ namespace SWEndor.Player
 
     public void Update()
     {
-      UpdateMode();
-
       ActorInfo actor = Engine.PlayerInfo.Actor;
       if (Engine.PlayerInfo.Actor == null)
         actor = Engine.ActorFactory.Get(Look.GetPosition_Actor());
@@ -226,8 +224,6 @@ namespace SWEndor.Player
         UpdateFromActor(Engine, actor);
         Position = actor.GetGlobalPosition();
         Rotation = actor.GetGlobalRotation();
-
-        UpdateViewFrustum(actor);
       }
 
       Look.Update(Engine, Camera, Position, Rotation);
@@ -313,19 +309,8 @@ namespace SWEndor.Player
           Look.SetTarget_LookAtActor(actor.ID, displacementRelative: target);
         }
       }
-    }
 
-    public void UpdateMode()
-    {
-      if (prevCameraMode != CameraMode)
-      {
-        prevCameraMode = CameraMode;
-        if (Engine.PlayerInfo.Actor != null && !Engine.GameScenarioManager.IsCutsceneMode)
-          Engine.Screen2D.MessageSecondaryText(string.Format("CAMERA: {0}", CameraMode)
-                                                        , 2.5f
-                                                        , new TV_COLOR(0.5f, 0.5f, 1, 1)
-                                                        , 1);
-      }
+      UpdateViewFrustum(actor);
     }
 
     public void Shake(float value)

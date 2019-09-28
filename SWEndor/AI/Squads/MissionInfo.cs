@@ -1,4 +1,5 @@
 ﻿using SWEndor.AI.Actions;
+using SWEndor.Core;
 
 namespace SWEndor.AI.Squads
 {

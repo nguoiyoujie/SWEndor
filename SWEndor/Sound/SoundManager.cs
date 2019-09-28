@@ -5,6 +5,7 @@ using System.Collections.Concurrent;
 using SWEndor.Primitives;
 using System.Text;
 using System.Collections.Generic;
+using SWEndor.Core;
 
 namespace SWEndor.Sound
 {
@@ -422,58 +423,6 @@ namespace SWEndor.Sound
       m_queuedInstructions.Enqueue(new InstPlaySound { Name = name, Loop = loop, Interrupt = interrupt, Volume = volume });
       return true;
     }
-
-
-    //else if (sound.name.startswith("update_vol_") && sounds.containskey(sound.name.substring(10)))
-    //{
-    //  channelgroup soundgrp = soundgrps[sound.name.substring(10)];
-    //  soundgrp.setvolume(sound.volume * mastersfxvolume);
-    //}
-    //else if (sound.name.startswith("update_vol+_") && sounds.containskey(sound.name.substring(11)))
-    //{
-    //  channelgroup soundgrp = soundgrps[sound.name.substring(11)];
-    //  float vol = 0;
-    //  soundgrp.getvolume(out vol);
-    //  if (vol > sound.volume * mastersfxvolume)
-    //    soundgrp.setvolume(sound.volume * mastersfxvolume);
-    //}
-    //else if (sound.name.startswith("update_vol-_") && sounds.containskey(sound.name.substring(11)))
-    //{
-    //  channelgroup soundgrp = soundgrps[sound.name.substring(11)];
-    //  float vol = 0;
-    //  soundgrp.getvolume(out vol);
-    //  if (vol < sound.volume * mastersfxvolume)
-    //    soundgrp.setvolume(sound.volume * mastersfxvolume);
-    //}
-
-    /*
-    public void SetSoundUpdateVolume(string name, float volume)
-    {
-      mu_queuedSounds.WaitOne();
-      m_queuedSounds.Enqueue(new SoundInfo { Name = "update_vol_" + name, Volume = volume });
-      mu_queuedSounds.ReleaseMutex();
-
-      //Update();
-    }
-
-    public void SetSoundIncreaseToVolume(string name, float volume)
-    {
-      mu_queuedSounds.WaitOne();
-      m_queuedSounds.Enqueue(new SoundInfo { Name = "update_vol+_" + name, Volume = volume });
-      mu_queuedSounds.ReleaseMutex();
-
-      //Update();
-    }
-
-    public void SetSoundDecreaseToVolume(string name, float volume)
-    {
-      mu_queuedSounds.WaitOne();
-      m_queuedSounds.Enqueue(new SoundInfo { Name = "update_vol-_" + name, Volume = volume });
-      mu_queuedSounds.ReleaseMutex();
-
-      //Update();
-    }
-    */
 
     public void SetSoundStop(string name)
     {

@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Data;
+using SWEndor.Core;
 
 namespace SWEndor.ActorTypes.Components
 {
@@ -8,6 +9,6 @@ namespace SWEndor.ActorTypes.Components
   /// </summary>
   public static class NoMove
   {
-    public static void Move(ActorInfo actor, ref MoveData data, float time) { }
+    public static void Move(Engine engine, ActorInfo actor, ref MoveData data, float time) { }
   }
 }

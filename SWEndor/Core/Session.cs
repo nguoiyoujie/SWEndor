@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
 
-namespace SWEndor
+namespace SWEndor.Core
 {
-  public class Game
+  public class Session
   {
     public readonly Engine Engine;
-    internal Game(Engine engine)
+    internal Session(Engine engine)
     {
       TimeSinceRender = 1;
       Engine = engine;
@@ -59,11 +59,11 @@ namespace SWEndor
     private readonly System.Timers.Timer tm_process;
     private readonly System.Timers.Timer tm_perf;
 
-    public float CurrentFPS { get { return TimeControl.FPS; } } //{ get; private set; }
+    public float CurrentFPS { get { return TimeControl.FPS; } }
 
     private bool septhread_sound = true;
     private bool septhread_ai = true;
-    private bool septhread_collision = true; // don't set to true, weird things happen if collision is out of sync
+    private bool septhread_collision = true;
     private bool septhread_render = false;
     private bool septhread_process = false;
 
@@ -72,15 +72,6 @@ namespace SWEndor
     private bool isProcessingCollision = false;
     private bool isProcessingRender = false;
     private bool isProcessingProcess = false;
-
-    public bool EnableSound = true;
-    public bool EnablePerf = true;
-    public bool EnableAI = true;
-    public bool EnableCollision = true;
-
-    public object renderLockA = new object();
-    public object renderLockC = new object();
-    public object renderLockP = new object();
 
     /// <summary>
     /// Checks if the current FPS is below the LowFPSLimit
@@ -321,6 +312,9 @@ namespace SWEndor
               using (Engine.PerfManager.Create("process_main"))
                 Engine.Process();
 
+              using (Engine.PerfManager.Create("process_expl"))
+                Engine.ProcessExpl();
+
               using (Engine.PerfManager.Create("process_player"))
                 Engine.PlayerInfo.Update();
             }
@@ -338,6 +332,15 @@ namespace SWEndor
 
               using (Engine.PerfManager.Create("process_destroyactor"))
                 Engine.ActorFactory.DestroyDead();
+
+              using (Engine.PerfManager.Create("process_returnexplpool"))
+                Engine.ExplosionFactory.ReturnToPool();
+
+              using (Engine.PerfManager.Create("process_activateexpl"))
+                Engine.ExplosionFactory.ActivatePlanned();
+
+              using (Engine.PerfManager.Create("process_destroyexpl"))
+                Engine.ExplosionFactory.DestroyDead();
 
               using (Engine.PerfManager.Create("process_scenario"))
                 Engine.GameScenarioManager.Update();
@@ -357,19 +360,17 @@ namespace SWEndor
     {
       try
       {
-        if (EnableAI)
-          if (!isProcessingAI && !IsPaused)
-          {
-            isProcessingAI = true;
-            using (Engine.PerfManager.Create("tick_ai"))
-              Engine.ProcessAI();
-            isProcessingAI = false;
-          }
+        if (!isProcessingAI && !IsPaused)
+        {
+          isProcessingAI = true;
+          using (Engine.PerfManager.Create("tick_ai"))
+            Engine.ProcessAI();
+          isProcessingAI = false;
+        }
       }
       catch (Exception ex)
       {
         GenerateFatalError(ex);
-        EnableAI = false;
       }
     }
 
@@ -377,15 +378,13 @@ namespace SWEndor
     {
       try
       {
-        if (EnableSound)
-          if (Engine.SoundManager.PendingUpdate)
-            using (Engine.PerfManager.Create("tick_sound"))
-              Engine.SoundManager.Update();
+        if (Engine.SoundManager.PendingUpdate)
+          using (Engine.PerfManager.Create("tick_sound"))
+            Engine.SoundManager.Update();
       }
       catch (Exception ex)
       {
         GenerateFatalError(ex);
-        EnableSound = false;
       }
     }
 
@@ -393,33 +392,30 @@ namespace SWEndor
     {
       try
       {
-        if (EnableCollision)
-          if (!isProcessingCollision && !IsPaused)
-          {
-            isProcessingCollision = true;
-            using (Engine.PerfManager.Create("tick_collision"))
-              Engine.ProcessCollision();
-            isProcessingCollision = false;
-          }
+        if (!isProcessingCollision && !IsPaused)
+        {
+          isProcessingCollision = true;
+          using (Engine.PerfManager.Create("tick_collision"))
+            Engine.ProcessCollision();
+          isProcessingCollision = false;
+        }
       }
       catch (Exception ex)
       {
         GenerateFatalError(ex);
-        EnableCollision = false;
       }
     }
 
     private void TickPerf()
     {
-      if (EnablePerf)
-        if (!isProcessingPerf)
-        {
-          isProcessingPerf = true;
-          using (Engine.PerfManager.Create("tick_perf"))
-            Engine.PerfManager.PrintPerf();
-          Thread.Sleep(1000);
-          isProcessingPerf = false;
-        }
+      if (!isProcessingPerf)
+      {
+        isProcessingPerf = true;
+        using (Engine.PerfManager.Create("tick_perf"))
+          Engine.PerfManager.PrintPerf();
+        Thread.Sleep(1000);
+        isProcessingPerf = false;
+      }
     }
     #endregion
   }

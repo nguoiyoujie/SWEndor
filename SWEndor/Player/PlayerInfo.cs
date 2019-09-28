@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
+using SWEndor.Core;
 using SWEndor.Primitives;
 using SWEndor.Sound;
 using SWEndor.Weapons;
@@ -91,16 +92,16 @@ namespace SWEndor.Player
 
     public void Update()
     {
-      UpdatePosition();
+      //UpdatePosition();
       UpdateStats();
       UpdateBounds();
     }
 
-    private void UpdatePosition()
-    {
-      if (Actor != null)
-        Position = Actor.GetGlobalPosition();
-    }
+    //private void UpdatePosition()
+    //{
+    //  if (Actor != null)
+    //    Position = Actor.GetGlobalPosition();
+    //}
 
     private void UpdateStats()
     {
@@ -329,7 +330,6 @@ namespace SWEndor.Player
       }
     }
 
-    public TV_3DVECTOR Position = new TV_3DVECTOR();
     public ScoreInfo Score;
 
     public bool IsMovementControlsEnabled = true;

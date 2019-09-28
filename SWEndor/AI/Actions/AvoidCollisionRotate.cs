@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
+using SWEndor.Core;
 using SWEndor.Primitives;
 using SWEndor.Weapons;
 
@@ -59,7 +60,7 @@ namespace SWEndor.AI.Actions
         float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetGlobalPosition(), Impact_Position);
 
         actor.AIData.SetTargetSpeed(actor.MoveData.MinSpeed);
-        float delta_angle = actor.AIData.AdjustRotation(actor, 9999);
+        float delta_angle = actor.AIData.AdjustRotation(engine, actor, 9999);
         float delta_speed = actor.AIData.AdjustSpeed(actor);
 
         ActorInfo target = actor.ActorFactory.Get(data.ProspectiveCollision.ActorID);
@@ -100,12 +101,12 @@ namespace SWEndor.AI.Actions
     {
       //get an orthogonal direction to travelling_vec on the xz plane
       TV_3DVECTOR xzdir = new TV_3DVECTOR();
-      owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Normalize(ref xzdir, new TV_3DVECTOR(travelling_vec.z, 0, -travelling_vec.x));
+      owner.Engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref xzdir, new TV_3DVECTOR(travelling_vec.z, 0, -travelling_vec.x));
 
       TV_3DVECTOR avoidvec = new TV_3DVECTOR();
-      owner.GetEngine().TrueVision.TVMathLibrary.TVVec3Normalize(ref avoidvec, impact_normal - owner.GetEngine().TrueVision.TVMathLibrary.VDotProduct(impact_normal, travelling_vec) * travelling_vec);
-      float val = owner.GetEngine().TrueVision.TVMathLibrary.VDotProduct(avoidvec, xzdir);
-      return owner.GetEngine().TrueVision.TVMathLibrary.ACos(val);
+      owner.Engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref avoidvec, impact_normal - owner.Engine.TrueVision.TVMathLibrary.VDotProduct(impact_normal, travelling_vec) * travelling_vec);
+      float val = owner.Engine.TrueVision.TVMathLibrary.VDotProduct(avoidvec, xzdir);
+      return owner.Engine.TrueVision.TVMathLibrary.ACos(val);
     }
   }
 }

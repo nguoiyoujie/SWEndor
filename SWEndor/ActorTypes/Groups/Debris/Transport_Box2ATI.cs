@@ -2,6 +2,7 @@
 using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Core;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -20,9 +21,9 @@ namespace SWEndor.ActorTypes.Instances
       DyingMoveData.Spin(100, 450);
     }
 
-    public override void ProcessState(ActorInfo ainfo)
+    public override void ProcessState(Engine engine, ActorInfo ainfo)
     {
-      base.ProcessState(ainfo);
+      base.ProcessState(engine, ainfo);
     }
   }
 }

@@ -1,5 +1,7 @@
 ﻿using SWEndor.Actors.Components;
 using SWEndor.AI;
+using SWEndor.Core;
+using SWEndor.Explosions;
 using SWEndor.Primitives;
 using SWEndor.Weapons;
 using System;
@@ -23,24 +25,7 @@ namespace SWEndor.Actors
         if (!actor.IsDead)
           actor.Update();
 
-        actor.Tick(engine.Game.TimeSinceRender);
-      }
-    }
-
-    internal static void ProcessRender(Engine engine, ActorInfo actor)
-    {
-#if DEBUG
-      if (actor == null)
-        throw new ArgumentNullException("actor");
-#endif
-
-      using (ScopeCounterManager.Acquire(actor.Scope))
-      {
-        if (!actor.Active)
-          return;
-
-        if (!actor.IsDead)
-          actor.Meshes.UpdateRender(actor);
+        actor.Tick(engine, engine.Game.TimeSinceRender);
       }
     }
 
@@ -82,7 +67,7 @@ namespace SWEndor.Actors
         return;
 
       if (!actor.IsDyingOrDead)
-        actor.TypeInfo.FireWeapon(actor, target, weapon);
+        actor.TypeInfo.FireWeapon(engine, actor, target, weapon);
     }
 
     private void Update()

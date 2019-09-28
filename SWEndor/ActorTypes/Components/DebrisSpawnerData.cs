@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Core;
 
 namespace SWEndor.ActorTypes.Components
 {
@@ -30,17 +31,17 @@ namespace SWEndor.ActorTypes.Components
       Chance = chance;
     }
 
-    public void Process(ActorInfo actor)
+    public void Process(Engine engine, ActorInfo actor)
     {
       if (_cache == null)
-        _cache = actor.ActorTypeFactory.Get(Type);
+        _cache = engine.ActorTypeFactory.Get(Type);
 
-      double d = actor.Engine.Random.NextDouble();
+      double d = engine.Random.NextDouble();
       if (d < Chance)
       {
-        float x = RotationXMin + (float)actor.Engine.Random.NextDouble() * (RotationXMax - RotationXMin);
-        float y = RotationYMin + (float)actor.Engine.Random.NextDouble() * (RotationYMax - RotationYMin);
-        float z = RotationZMin + (float)actor.Engine.Random.NextDouble() * (RotationZMax - RotationZMin);
+        float x = RotationXMin + (float)engine.Random.NextDouble() * (RotationXMax - RotationXMin);
+        float y = RotationYMin + (float)engine.Random.NextDouble() * (RotationYMax - RotationYMin);
+        float z = RotationZMin + (float)engine.Random.NextDouble() * (RotationZMax - RotationZMin);
 
         ActorCreationInfo acinfo = new ActorCreationInfo(_cache);
         acinfo.Position = actor.GetGlobalPosition() + SpawnPosition;

@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
+using SWEndor.Core;
 using SWEndor.Primitives;
 
 namespace SWEndor.AI.Actions
@@ -47,7 +48,7 @@ namespace SWEndor.AI.Actions
           CloseEnoughDistance = actor.TypeInfo.AIData.Move_CloseEnough;
 
         actor.AIData.SetTarget(Target_Position);
-        actor.AIData.AdjustRotation(actor);
+        actor.AIData.AdjustRotation(engine, actor);
 
         actor.AIData.SetTargetSpeed(Target_Speed);
         actor.AIData.AdjustSpeed(actor);

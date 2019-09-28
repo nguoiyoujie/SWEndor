@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Core;
 using SWEndor.Primitives;
 
 namespace SWEndor.Input.Functions.Gameplay.Special
@@ -14,11 +15,11 @@ namespace SWEndor.Input.Functions.Gameplay.Special
     public override void Process(Engine engine)
     {
       engine.Game.TimeControl.SpeedModifier /= 0.9f;
+      engine.Game.TimeControl.SpeedModifier = engine.Game.TimeControl.SpeedModifier.Clamp(0.01f, 10);
       engine.Screen2D.MessageSecondaryText("DEV: TIMEMULT = {0:0.00}".F(engine.Game.TimeControl.SpeedModifier)
                                                       , 1.5f
                                                       , new TV_COLOR(0.5f, 0.5f, 1, 1)
                                                       , 99);
-      engine.Game.TimeControl.SpeedModifier = engine.Game.TimeControl.SpeedModifier.Clamp(0.01f, 100);
     }
   }
 }

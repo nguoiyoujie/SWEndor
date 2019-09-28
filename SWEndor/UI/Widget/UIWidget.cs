@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
+using SWEndor.Core;
 using SWEndor.Player;
 using SWEndor.Scenarios;
 using SWEndor.Sound;
@@ -22,7 +23,7 @@ namespace SWEndor.UI
     public readonly Screen2D Owner;
     public Engine Engine { get { return Owner.Engine; } }
 
-    public Game Game { get { return Engine.Game; } }
+    public Session Game { get { return Engine.Game; } }
     public GameScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
     public TrueVision TrueVision { get { return Engine.TrueVision; } }
     public Font.Factory FontFactory { get { return Engine.FontFactory; } }
