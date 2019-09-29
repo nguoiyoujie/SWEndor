@@ -367,7 +367,8 @@ namespace SWEndor.Sound
       {
         // find next piece dynamically using Mood
         string next = GetDynNext(m_intrMusic);
-        if (next == null)
+        bool intr = next != null;
+        if (!intr)
         {
           next = GetDynNext(m_currMusic);
           if (next != null)
@@ -379,7 +380,10 @@ namespace SWEndor.Sound
         if (next != null)
         {
           Piece pnext = Piece.Factory.Get(next);
-          SetMusic(next, false, pnext?.EntryPosition ?? 0);
+          if (intr)
+            SetInterruptMusic(next, pnext?.EntryPosition ?? 0);
+          else
+            SetMusic(next, false, pnext?.EntryPosition ?? 0);
           PrepDynNext(next);
         }
       }

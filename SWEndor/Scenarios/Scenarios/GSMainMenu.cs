@@ -562,11 +562,9 @@ namespace SWEndor.Scenarios
           Rotation = new TV_3DVECTOR(),
           Actions = new ActionInfo[] { new Wait(7.5f)
                                      , new Rotate(v, 0)
-                                     , new Wait(2.5f)
                                      , new SetMood(MoodStates.AMBIENT_2, true)
+                                     , new Wait(2.5f)
                                      , new HyperspaceIn(v)
-                                     //, new SetMood(-11, true)
-                                     , new SetMood(MoodStates.AMBIENT_3, true)
                                      , new Rotate(new TV_3DVECTOR(0, 0, 0), 1)
                                      , new Wait(3f+10f)
                                      , new SetMood(MoodStates.AMBIENT_4, true)
@@ -609,6 +607,7 @@ namespace SWEndor.Scenarios
                                      , new Wait(12.5f)
                                      , new HyperspaceIn(v)
                                      , new SetMood(MoodStates.ALLY_FIGHTER_ARRIVED, true)
+                                     , new SetMood(MoodStates.AMBIENT_3, true)
                                      , new Rotate(new TV_3DVECTOR(0, 0, 0), 40)
                                      , new Wait(3f)
                                      }
@@ -641,8 +640,8 @@ namespace SWEndor.Scenarios
       sspawn.TypeInfo = ActorTypeFactory.Get("Arquitens Light Cruiser");
       SDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                           , new TV_3DVECTOR(800, -100, -6800)
-                                          , new TV_3DVECTOR(-1600, 250, -1200)
-                                          , new TV_3DVECTOR(0, 250, 0)
+                                          , new TV_3DVECTOR(-1600, 350, -1200)
+                                          , new TV_3DVECTOR(0, 350, 0)
                                           ));
 
       SDspawnlist.Add(new ShipSpawnEventArg(sspawn
