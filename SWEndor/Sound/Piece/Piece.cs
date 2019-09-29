@@ -6,7 +6,6 @@ namespace SWEndor.Sound
   {
     public partial class Piece
     {
-      //public bool CutIn;
       public string Name;
       public int[] IntermissionTransitions;
       public string SoundName;
@@ -14,6 +13,7 @@ namespace SWEndor.Sound
       public uint[] ExitPositions;
       public uint EndPosition;
       public string[][] MoodTransitions;
+      public string[][] OnInterruptTransitions;
 
       private void UpdateSound()
       {

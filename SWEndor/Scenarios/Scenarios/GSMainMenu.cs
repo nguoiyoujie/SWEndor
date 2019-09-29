@@ -62,7 +62,7 @@ namespace SWEndor.Scenarios
       PlayerInfo.ScoreForNextLife = 9999999;
       
       Mood = MoodStates.AMBIENT;
-      SoundManager.SetMusicDyn("TRO-3IN");
+      SoundManager.SetMusicDyn("TRO-IN");
       Manager.IsCutsceneMode = true;
     }
     public override void Unload()
@@ -563,11 +563,13 @@ namespace SWEndor.Scenarios
           Actions = new ActionInfo[] { new Wait(7.5f)
                                      , new Rotate(v, 0)
                                      , new Wait(2.5f)
+                                     , new SetMood(MoodStates.AMBIENT_2, true)
                                      , new HyperspaceIn(v)
                                      //, new SetMood(-11, true)
+                                     , new SetMood(MoodStates.AMBIENT_3, true)
                                      , new Rotate(new TV_3DVECTOR(0, 0, 0), 1)
                                      , new Wait(3f+10f)
-                                     , new SetMood(MoodStates.ENGAGEMENT, true)
+                                     , new SetMood(MoodStates.AMBIENT_4, true)
                                      }
         }.Spawn(this);
 
@@ -639,8 +641,8 @@ namespace SWEndor.Scenarios
       sspawn.TypeInfo = ActorTypeFactory.Get("Arquitens Light Cruiser");
       SDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                           , new TV_3DVECTOR(800, -100, -6800)
-                                          , new TV_3DVECTOR(-1600, -100, -1200)
-                                          , new TV_3DVECTOR(0, -150, 0)
+                                          , new TV_3DVECTOR(-1600, 250, -1200)
+                                          , new TV_3DVECTOR(0, 250, 0)
                                           ));
 
       SDspawnlist.Add(new ShipSpawnEventArg(sspawn
@@ -672,7 +674,7 @@ namespace SWEndor.Scenarios
       List<TV_3DVECTOR> positions = new List<TV_3DVECTOR>();
       List<float> createtime = new List<float>();
 
-      positions.Add(new TV_3DVECTOR(-6000, 110, Manager.MinBounds.z - 500));
+      positions.Add(new TV_3DVECTOR(-6000, 210, Manager.MinBounds.z - 500));
       createtime.Add(0);
 
       for (int i = 0; i < positions.Count; i++)
@@ -693,6 +695,7 @@ namespace SWEndor.Scenarios
                                      //, new HyperspaceIn(v + hyperspaceInOffset)
                                      , new HyperspaceIn(v)
                                      , new SetMood(MoodStates.ALLY_SHIP_ARRIVED, true)
+                                     , new SetMood(MoodStates.ENGAGEMENT, true)
                                      , new EnableSpawn(true)
                                      , new Move(new TV_3DVECTOR(v.x * 0.2f, v.y, -1000), ActorTypeFactory.Get("Imperial-I Star Destroyer").MoveLimitData.MaxSpeed / 2)
                                      , new Rotate(new TV_3DVECTOR(-1600, -120, 6300), 0)
@@ -751,18 +754,19 @@ namespace SWEndor.Scenarios
                                           , new TV_3DVECTOR(0, -500, 500)
                                           ));
 
+      sspawn.IntermissionMood = 0;
       sspawn.TypeInfo = ActorTypeFactory.Get("Acclamator Assault Ship");
       SDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                          , new TV_3DVECTOR(-3200, -300, -4800)
-                                          , new TV_3DVECTOR(3600, -300, 2200)
-                                          , new TV_3DVECTOR(5000, -300, 5000)
+                                          , new TV_3DVECTOR(-3200, -600, -4800)
+                                          , new TV_3DVECTOR(3600, -600, 2200)
+                                          , new TV_3DVECTOR(5000, -600, 5000)
                                           ));
 
       float delay = 0;
       foreach (ShipSpawnEventArg s in SDspawnlist)
       {
         ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, delay, s.Info);
-        delay += 3.5f;
+        delay += 2.5f;
         ship.SetArmor(DamageType.ALL, 0.5f);
         foreach (ActorInfo a in ship.Children)
           a.SetArmor(DamageType.ALL, 0.1f);

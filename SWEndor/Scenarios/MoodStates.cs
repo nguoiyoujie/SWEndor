@@ -3,9 +3,10 @@
   public enum MoodStates //: byte
   {
     AMBIENT = 0,
-    ENGAGEMENT = 1,
-    //SUCCESS = 10,
-    //FAILURE = 11,
+    AMBIENT_2 = 1,
+    AMBIENT_3 = 2,
+    AMBIENT_4 = 3,
+    ENGAGEMENT = 4,
 
     // Negative numbers represent interrupting states for intermittent tracks
     DESTROY_FIGHTER = -1,

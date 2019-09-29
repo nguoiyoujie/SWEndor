@@ -42,9 +42,11 @@ namespace SWEndor.Sound
 
           if (!isInterruptMusic)
             s.m_currMusic = Name;
+          else
+            s.m_intrMusic = Name;
 
-          if (isInterruptMusic)
-            s.interruptActive = true;
+          //if (isInterruptMusic)
+          //  s.interruptActive = true;
 
 /*          }
           else

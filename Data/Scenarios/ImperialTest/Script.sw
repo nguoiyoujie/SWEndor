@@ -130,7 +130,7 @@ getchildren:
 	corvusshd2 = GetArrayElement(corvusc, 19);
 
 engagemusic:
-	SetMood(1);
+	SetMood(4);
 	SetMusicDyn("PANIC-06");
 
 makeplayer:
