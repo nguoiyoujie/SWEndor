@@ -49,14 +49,11 @@ namespace SWEndor.Actors.Models
       return targetPos;
     }
 
-    public void UpdateTargetPos(Engine engine, ActorInfo owner) { targetPos = GetTargetPos(engine, owner); }
+    public void UpdateTargetPos(Engine e, ActorInfo owner) { targetPos = GetTargetPos(e, owner); }
 
-    public ActorInfo GetTargetActor(ActorInfo owner)
+    public ActorInfo GetTargetActor(Engine e, ActorInfo owner)
     {
-      if (targetMode != TargetMode.POINT)
-        return owner.Engine.ActorFactory.Get(targetActor);
-
-      return null;
+      return (targetMode != TargetMode.POINT) ? e.ActorFactory.Get(targetActor) : null;
     }
 
     public float GetDistanceToTargetActor(Engine e, ActorInfo owner)

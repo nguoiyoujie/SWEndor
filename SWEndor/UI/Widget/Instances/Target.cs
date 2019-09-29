@@ -43,7 +43,7 @@ namespace SWEndor.UI.Widgets
 
       if (PlayerInfo.PlayerAIEnabled)
       {
-        ActorInfo t = p.AIData.GetTargetActor(p);
+        ActorInfo t = p.AIData.GetTargetActor(Engine, p);
         m_targetID = t?.ID ?? -1;
         PlayerInfo.LockTarget = true;
       }

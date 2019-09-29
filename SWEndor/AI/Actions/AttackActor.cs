@@ -62,7 +62,7 @@ namespace SWEndor.AI.Actions
       if (TooCloseDistance < 0)
         TooCloseDistance = actor.MoveData.Speed * 0.75f;
 
-      float dist = actor.AIData.GetDistanceToTargetActor(engine, actor);
+      float dist = actor.AIData.GetDistanceToTargetActor(actor);
 
       if (dist > TooCloseDistance)
       {
