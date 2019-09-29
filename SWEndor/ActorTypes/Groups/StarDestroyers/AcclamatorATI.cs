@@ -28,6 +28,7 @@ namespace SWEndor.ActorTypes.Instances
       RenderData.CullDistance = 30000;
 
       ScoreData = new ScoreData(50, 5000);
+      Scale = 1.3f;
 
 
       MeshData = new MeshData(Name, @"acclamator\acclamator.x");

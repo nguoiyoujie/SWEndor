@@ -21,6 +21,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(15, 10000);
       RenderData.CullDistance = 30000;
+      Scale = 0.75f;
 
       RegenData = new RegenData(false, 0.2f, 0, 0, 0);
 

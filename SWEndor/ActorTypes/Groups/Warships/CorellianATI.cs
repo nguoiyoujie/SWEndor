@@ -20,6 +20,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.ZNormFrac = 0.015f;
 
       RenderData.CullDistance = 20000;
+      Scale = 0.6f;
 
       ScoreData = new ScoreData(10, 5000);
 

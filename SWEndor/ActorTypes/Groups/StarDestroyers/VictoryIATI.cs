@@ -20,7 +20,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxTurnRate = 1.2f;
 
       RenderData.CullDistance = 40000;
-      Scale = 0.9f;
+      Scale = 1.3f;
 
       ScoreData = new ScoreData(60, 10000);
 
