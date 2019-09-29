@@ -151,6 +151,9 @@ namespace SWEndor.Scenarios
     {
       Launched = false;
       Manager.Scenario = null;
+      Engine.PlayerInfo.ActorID = -1;
+      Engine.PlayerInfo.TempActorID = -1;
+      Engine.PlayerInfo.RequestSpawn = false;
 
       // Full reset
       Engine.ActorFactory.Reset();
@@ -158,11 +161,10 @@ namespace SWEndor.Scenarios
 
       Manager.ClearGameStates();
       Manager.ClearEvents();
-      Screen2D.ClearText();
-      PlayerInfo.RequestSpawn = false;
+      Engine.Screen2D.ClearText();
 
-      Screen2D.OverrideTargetingRadar = false;
-      Screen2D.Box3D_Enable = false;
+      Engine.Screen2D.OverrideTargetingRadar = false;
+      Engine.Screen2D.Box3D_Enable = false;
 
       LandInfo.Enabled = false;
       Mood = MoodStates.AMBIENT;
