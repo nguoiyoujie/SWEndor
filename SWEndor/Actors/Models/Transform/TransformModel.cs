@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Actors.Models
 {
@@ -192,7 +193,7 @@ namespace SWEndor.Actors.Models
       {
         TV_3DVECTOR dir = new TV_3DVECTOR();
         mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 100), GetWorldMatrix(self, time));
-        return Utilities.GetRotation(dir);
+        return dir.ConvertDirToRot();
       }
       else
         return currData.Rotation;
@@ -204,7 +205,7 @@ namespace SWEndor.Actors.Models
       {
         TV_3DVECTOR dir = new TV_3DVECTOR();
         mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 100), GetPrevWorldMatrix(self, time));
-        return Utilities.GetRotation(dir);
+        return dir.ConvertDirToRot();
       }
       else
         return currData.Rotation;
@@ -213,13 +214,13 @@ namespace SWEndor.Actors.Models
     // ?
     public TV_3DVECTOR GetGlobalDirection(ActorInfo self, float time)
     {
-      TV_3DVECTOR dir = Utilities.GetDirection(GetGlobalRotation(self, time));
+      TV_3DVECTOR dir = GetGlobalRotation(self, time).ConvertRotToDir();
       return dir;
     }
 
     public TV_3DVECTOR GetPrevGlobalDirection(ActorInfo self, float time)
     {
-      TV_3DVECTOR dir = Utilities.GetDirection(GetPrevGlobalRotation(self, time));
+      TV_3DVECTOR dir = GetPrevGlobalRotation(self, time).ConvertRotToDir();
       return dir;
     }
 

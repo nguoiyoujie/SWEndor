@@ -1,4 +1,5 @@
 ﻿using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using System;
 using System.Collections.Generic;
 
@@ -37,7 +38,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
         return _first.Evaluate(context);
 
       Val result = _first.Evaluate(context);
-      if (result.Type != ValType.BOOL) throw new EvalException(this, "Non-boolean value {0} found at start of conditional expression".F(result.Value));
+      if (result.Type != ValType.BOOL) throw new EvalException(this, TextLocalization.Get(TextLocalKeys.SCRIPT_UNEXPECTED_NONBOOL).F(result.Value));
       if (!result.ValueB)
       {
         foreach (CExpression _expr in _set)

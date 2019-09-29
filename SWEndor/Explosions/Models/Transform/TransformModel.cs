@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.ExplosionTypes;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Explosions.Models
 {
@@ -197,7 +198,7 @@ namespace SWEndor.Explosions.Models
       {
         TV_3DVECTOR dir = new TV_3DVECTOR();
         mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 100), GetWorldMatrix(f, self, time));
-        return Utilities.GetRotation(dir);
+        return dir.ConvertDirToRot();
       }
       else
         return currData.Rotation;
@@ -210,7 +211,7 @@ namespace SWEndor.Explosions.Models
       {
         TV_3DVECTOR dir = new TV_3DVECTOR();
         mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 100), GetPrevWorldMatrix(f, self, time));
-        return Utilities.GetRotation(dir);
+        return dir.ConvertDirToRot();
       }
       else
         return currData.Rotation;
@@ -219,13 +220,13 @@ namespace SWEndor.Explosions.Models
     // ?
     public TV_3DVECTOR GetGlobalDirection(ActorInfo.Factory<ActorInfo> f, ExplosionInfo self, float time)
     {
-      TV_3DVECTOR dir = Utilities.GetDirection(GetGlobalRotation(f, self, time));
+      TV_3DVECTOR dir = GetGlobalRotation(f, self, time).ConvertRotToDir();
       return dir;
     }
 
     public TV_3DVECTOR GetPrevGlobalDirection(ActorInfo.Factory<ActorInfo> f, ExplosionInfo self, float time)
     {
-      TV_3DVECTOR dir = Utilities.GetDirection(GetPrevGlobalRotation(f, self, time));
+      TV_3DVECTOR dir = GetPrevGlobalRotation(f, self, time).ConvertRotToDir();
       return dir;
     }
 

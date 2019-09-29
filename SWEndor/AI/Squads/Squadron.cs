@@ -2,6 +2,7 @@
 using SWEndor.AI.Actions;
 using SWEndor.Core;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using System;
 using System.Collections.Generic;
 //using System.Linq;

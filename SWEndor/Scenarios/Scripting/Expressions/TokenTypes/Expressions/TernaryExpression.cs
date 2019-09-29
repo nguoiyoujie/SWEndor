@@ -1,4 +1,5 @@
 ﻿using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using System;
 
 namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
@@ -42,7 +43,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
     public override Val Evaluate(Context context)
     {
       Val result = _question.Evaluate(context);
-      if (result.Type != ValType.BOOL) throw new EvalException(this, "Non-boolean value {0} found at start of conditional expression".F(result.Value));
+      if (result.Type != ValType.BOOL) throw new EvalException(this, TextLocalization.Get(TextLocalKeys.SCRIPT_UNEXPECTED_NONBOOL).F(result.Value));
       if (result.ValueB)
         return _true?.Evaluate(context) ?? new Val();
       else

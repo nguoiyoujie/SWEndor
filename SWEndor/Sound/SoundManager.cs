@@ -6,6 +6,7 @@ using SWEndor.Primitives;
 using System.Text;
 using System.Collections.Generic;
 using SWEndor.Core;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Sound
 {
@@ -94,7 +95,7 @@ namespace SWEndor.Sound
       RESULT res = FMOD.Factory.System_Create(out fmodsystem);
 
       if (res != RESULT.OK)
-        throw new Exception("FMOD Sound failed to initailize./n/nResult Code: {0}".F(res));
+        throw new Exception(TextLocalization.Get(TextLocalKeys.SOUND_INIT_ERROR).F(res));
 
       //Initialise FMOD
       fmodsystem.init(channels, INITFLAGS.NORMAL, (IntPtr)null);

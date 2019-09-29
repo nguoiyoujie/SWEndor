@@ -4,6 +4,7 @@ using SWEndor.Actors.Components;
 using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using SWEndor.Weapons;
 using System;
 
@@ -62,7 +63,7 @@ namespace SWEndor.AI.Actions
       if (TooCloseDistance < 0)
         TooCloseDistance = actor.MoveData.Speed * 0.75f;
 
-      float dist = actor.AIData.GetDistanceToTargetActor(actor);
+      float dist = actor.AIData.GetDistanceToTargetActor(engine, actor);
 
       if (dist > TooCloseDistance)
       {
@@ -136,7 +137,7 @@ namespace SWEndor.AI.Actions
         center.y += engine.Random.Next(-200, 200);
         center.z += (float)Math.Sin(xzAngle * Globals.PI / 180) * radius;
 
-        Utilities.Clamp(ref center, engine.GameScenarioManager.MinAIBounds * 0.75f, engine.GameScenarioManager.MaxAIBounds * 0.75f);
+        TV3DVecExts.Clamp(ref center, engine.GameScenarioManager.MinAIBounds * 0.75f, engine.GameScenarioManager.MaxAIBounds * 0.75f);
       }
       return center;
     }

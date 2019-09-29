@@ -2,6 +2,7 @@
 using SWEndor.Core;
 using SWEndor.ExplosionTypes.Instances;
 using SWEndor.FileFormat.INI;
+using SWEndor.Primitives.Extensions;
 using SWEndor.Primitives.Factories;
 using System;
 using System.IO;
@@ -52,7 +53,7 @@ namespace SWEndor.ExplosionTypes
       {
         ExplosionTypeInfo ret = base.Get(id);
         if (ret == null)
-          throw new Exception(string.Format("ExplosionTypeInfo '{0}' does not exist", id));
+          throw new Exception(TextLocalization.Get(TextLocalKeys.EXPLTYPE_INVALID_ERROR).F(id));
 
         return ret;
       }

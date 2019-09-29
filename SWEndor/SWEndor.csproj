@@ -430,7 +430,15 @@
     <Compile Include="Primitives\Collections\CircularQueue.cs" />
     <Compile Include="Primitives\Collections\ThreadSafeDictionary.cs" />
     <Compile Include="Primitives\Collections\ThreadSafeList.cs" />
-    <Compile Include="Primitives\Exts.cs" />
+    <Compile Include="Primitives\Extensions\TVKeyExts.cs" />
+    <Compile Include="Primitives\Extensions\TV3DVecExts.cs" />
+    <Compile Include="Primitives\Extensions\FloatExts.cs" />
+    <Compile Include="Primitives\Extensions\StringExts.cs" />
+    <Compile Include="Primitives\Extensions\ObjectExts.cs" />
+    <Compile Include="Primitives\Extensions\TypeExts.cs" />
+    <Compile Include="Primitives\Extensions\ArrayExts.cs" />
+    <Compile Include="Primitives\Extensions\DictionaryExts.cs" />
+    <Compile Include="Primitives\Extensions\ListExts.cs" />
     <Compile Include="Primitives\Factories\Factory.cs" />
     <Compile Include="Primitives\Factories\Interfaces.cs" />
     <Compile Include="Primitives\Factories\ObjectPool.cs" />

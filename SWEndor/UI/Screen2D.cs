@@ -47,44 +47,47 @@ namespace SWEndor
     public TV_3DVECTOR Box3D_max = new TV_3DVECTOR();
     public TV_COLOR Box3D_color = new TV_COLOR(1, 1, 1, 1);
 
-    Primitives.ThreadSafeList<Widget> m_Widgets = new Primitives.ThreadSafeList<Widget>();
+    Widget[] m_Widgets;
 
     internal Screen2D(Engine engine)
     {
       Engine = engine;
-      m_Widgets.Add(new SideBars(this));
-      m_Widgets.Add(new HitBar(this));
+      m_Widgets = new Widget[]
+        {
+          new SideBars(this),
+          new HitBar(this),
 
-      m_Widgets.Add(new Radar(this));
-      m_Widgets.Add(new LargeShipSystems(this));
+          new Radar(this),
+          new LargeShipSystems(this),
 
-      //m_Widgets.Add(new UIWidget_Score(this)); // Disabled
-      m_Widgets.Add(new AIInfo(this));
-      m_Widgets.Add(new ScenarioInfo(this));
-      m_Widgets.Add(new WidgetWeaponInfo(this));
-      m_Widgets.Add(new Steering(this));
-      m_Widgets.Add(new CrossHair(this));
-      m_Widgets.Add(new Target(this));
-      m_Widgets.Add(new Squad(this));
+          //new UIWidget_Score(this), // Disabled
+          new AIInfo(this),
+          new ScenarioInfo(this),
+          new WidgetWeaponInfo(this),
+          new Steering(this),
+          new CrossHair(this),
+          new Target(this),
+          new Squad(this),
 
-      m_Widgets.Add(new Box3D(this));
-      //m_Widgets.Add(new Debug_GeneralInfo(this));
-      //m_Widgets.Add(new Debug_ObjectInfo(this));
-      //m_Widgets.Add(new Debug_SelectInfo(this));
+          new Box3D(this),
+          //new Debug_GeneralInfo(this),
+          //new Debug_ObjectInfo(this),
+          //new Debug_SelectInfo(this),
 
-      m_Widgets.Add(new MessageText(this));
-      m_Widgets.Add(new WarningText(this));
+          new MessageText(this),
+          new WarningText(this),
 
-      m_Widgets.Add(new WidgetPage(this));
-      m_Widgets.Add(new PerfText(this));
-      m_Widgets.Add(new WidgetTerminal(this));
+          new WidgetPage(this),
+          new PerfText(this),
+          new WidgetTerminal(this),
 
-      m_Widgets.Add(new MouseLocation(this));
+          new MouseLocation(this)
+        };
     }
 
     public void Draw()
     {
-      foreach (Widget w in m_Widgets.GetList())
+      foreach (Widget w in m_Widgets)
       {
         if (w != null && w.Visible)
             w.Draw();

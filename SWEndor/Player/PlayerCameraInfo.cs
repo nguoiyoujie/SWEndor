@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
+using SWEndor.Primitives.Extensions;
 using System;
 
 namespace SWEndor.Player

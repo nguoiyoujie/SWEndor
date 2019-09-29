@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using SWEndor.Sound;
 
 namespace SWEndor.UI.Widgets

@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Actors
 {
@@ -26,10 +27,10 @@ namespace SWEndor.Actors
 
     public TV_3DVECTOR Direction
     {
-      get { return Utilities.GetDirection(new TV_3DVECTOR(Pitch, Yaw, Roll)); }
+      get { return new TV_3DVECTOR(Pitch, Yaw, Roll).ConvertRotToDir(); }
       set
       {
-        TV_3DVECTOR r = Utilities.GetRotation(value);
+        TV_3DVECTOR r = value.ConvertDirToRot();
         Pitch = r.x; Yaw = r.y; Roll = r.z;
       }
     }

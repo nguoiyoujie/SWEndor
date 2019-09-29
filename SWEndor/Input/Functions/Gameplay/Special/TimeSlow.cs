@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Core;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Input.Functions.Gameplay.Special
 {
@@ -15,7 +16,7 @@ namespace SWEndor.Input.Functions.Gameplay.Special
     {
       engine.Game.TimeControl.SpeedModifier *= 0.9f;
       engine.Game.TimeControl.SpeedModifier = engine.Game.TimeControl.SpeedModifier.Clamp(0.01f, 10);
-      engine.Screen2D.MessageSecondaryText(string.Format("DEV: TIMEMULT = {0:0.00}", engine.Game.TimeControl.SpeedModifier)
+      engine.Screen2D.MessageSecondaryText(TextLocalization.Get(TextLocalKeys.TIME_MULT).F(engine.Game.TimeControl.SpeedModifier)
                                                       , 1.5f
                                                       , new TV_COLOR(0.5f, 0.5f, 1, 1)
                                                       , 99);

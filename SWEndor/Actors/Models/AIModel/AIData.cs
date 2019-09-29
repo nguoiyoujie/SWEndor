@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Core;
+using SWEndor.Primitives.Extensions;
 using System;
 
 namespace SWEndor.Actors.Models
@@ -100,7 +101,7 @@ namespace SWEndor.Actors.Models
       }
 
       TV_3DVECTOR tgtdir = targetPos - owner.GetGlobalPosition();
-      TV_3DVECTOR chgrot = Utilities.GetRotation(tgtdir) - owner.GetGlobalRotation();
+      TV_3DVECTOR chgrot = tgtdir.ConvertDirToRot() - owner.GetGlobalRotation();
 
       chgrot.x = chgrot.x.Modulus(-180, 180);
       chgrot.y = chgrot.y.Modulus(-180, 180);

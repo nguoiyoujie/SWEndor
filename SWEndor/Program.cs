@@ -1,6 +1,7 @@
 ﻿using SWEndor.Core;
 using SWEndor.Input.Functions;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using System;
 using System.Windows.Forms;
 

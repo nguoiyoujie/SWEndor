@@ -6,6 +6,7 @@ using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Player;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -357,7 +358,7 @@ namespace SWEndor.Scenarios
         if (target != null)
         {
           TV_3DVECTOR dir = target.GetGlobalPosition() - position;
-          rotation = Utilities.GetRotation(dir);
+          rotation = dir.ConvertDirToRot();
         }
       }
 

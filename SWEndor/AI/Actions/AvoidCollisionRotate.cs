@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.Actors.Data;
 using SWEndor.Core;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using SWEndor.Weapons;
 
 namespace SWEndor.AI.Actions
@@ -30,8 +31,8 @@ namespace SWEndor.AI.Actions
       return string.Join(",", new string[]
         {
           Name
-        , Utilities.ToString(Impact_Position)
-        , Utilities.ToString(Normal)
+        , Impact_Position.Str()
+        , Normal.Str()
         , CloseEnoughAngle.ToString()
         , Complete.ToString()
         });

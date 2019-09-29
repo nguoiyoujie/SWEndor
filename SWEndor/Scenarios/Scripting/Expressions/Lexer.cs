@@ -1,4 +1,5 @@
 ﻿using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using System;
 using System.IO;
 
@@ -79,7 +80,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions
           return matched;
         }
       }
-      throw new Exception("Unable to match against any tokens at line {0} position {1} \"{2}\"".F(
+      throw new Exception(TextLocalization.Get(TextLocalKeys.SCRIPT_LEXER_INVALID).F(
                                         LineNumber, Position, lineRemaining));
     }
 

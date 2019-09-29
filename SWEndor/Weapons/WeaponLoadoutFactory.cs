@@ -1,5 +1,6 @@
 ﻿using SWEndor.FileFormat.INI;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace SWEndor.Weapons
     {
       WeaponLoadoutInfo wsi = list.Get(key);
       if (wsi == null)
-        throw new System.Exception("Weapon Loadout '{0}' is not found!".F(key));
+        throw new System.Exception(TextLocalization.Get(TextLocalKeys.WEAPONLOAD_NOTFOUND_ERROR).F(key));
       return wsi;
     }
 

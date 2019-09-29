@@ -6,6 +6,7 @@ using SWEndor.Explosions.Models;
 using SWEndor.ExplosionTypes;
 using SWEndor.Player;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Explosions
 {
@@ -61,7 +62,7 @@ namespace SWEndor.Explosions
       ID = id;
       dataID = dataid;
 
-      TypeInfo = acinfo.ActorTypeInfo;
+      TypeInfo = acinfo.ExplosionTypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
 
@@ -80,7 +81,7 @@ namespace SWEndor.Explosions
     {
       // Clear past resources
       ID = id;
-      TypeInfo = acinfo.ActorTypeInfo;
+      TypeInfo = acinfo.ExplosionTypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
 

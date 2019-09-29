@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using System;
 
 namespace SWEndor.Actors.Models

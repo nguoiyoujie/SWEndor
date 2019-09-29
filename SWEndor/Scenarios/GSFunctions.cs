@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
 using SWEndor.Core;
+using SWEndor.Primitives.Extensions;
 using System.Collections.Generic;
 
 namespace SWEndor.Scenarios
@@ -130,8 +131,8 @@ namespace SWEndor.Scenarios
     {
       TV_3DVECTOR[] ret = new TV_3DVECTOR[spawninfo.MemberCount];
       spawnpos = new TV_3DVECTOR[spawninfo.MemberCount];
-      TV_3DVECTOR dirs = Utilities.GetDirection(new TV_3DVECTOR(spawninfo.Rotation.x, spawninfo.Rotation.y + 90, spawninfo.Rotation.z));
-      TV_3DVECTOR dirf = Utilities.GetDirection(new TV_3DVECTOR(spawninfo.Rotation.x, spawninfo.Rotation.y, spawninfo.Rotation.z));
+      TV_3DVECTOR dirs = new TV_3DVECTOR(spawninfo.Rotation.x, spawninfo.Rotation.y + 90, spawninfo.Rotation.z).ConvertRotToDir();
+      TV_3DVECTOR dirf = new TV_3DVECTOR(spawninfo.Rotation.x, spawninfo.Rotation.y, spawninfo.Rotation.z).ConvertRotToDir();
 
       for (int m = 0; m < spawninfo.MemberCount; m++)
       {
@@ -347,7 +348,7 @@ namespace SWEndor.Scenarios
     {
       if (spawninfo.HyperspaceIn)
       {
-        TV_3DVECTOR dirf = Utilities.GetDirection(new TV_3DVECTOR(spawninfo.Rotation.x, spawninfo.Rotation.y, spawninfo.Rotation.z));
+        TV_3DVECTOR dirf = new TV_3DVECTOR(spawninfo.Rotation.x, spawninfo.Rotation.y, spawninfo.Rotation.z).ConvertRotToDir();
         return position - dirf * 50000;
       }
       else

@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.AI.Actions
 {
@@ -26,7 +27,7 @@ namespace SWEndor.AI.Actions
       return string.Join(",", new string[]
       {
           Name
-        , Utilities.ToString(Target_Position)
+        , Target_Position.Str()
         , Complete.ToString()
       });
     }

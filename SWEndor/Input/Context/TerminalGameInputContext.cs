@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Primitives.Extensions;
 using SWEndor.Terminal;
 
 namespace SWEndor.Input.Context
@@ -27,7 +28,7 @@ namespace SWEndor.Input.Context
             TConsole.InputLine = TConsole.InputLine.Substring(0, TConsole.InputLine.Length - 1);
             break;
           default:
-            char chr = Utilities.TVKeyToChar(Globals.Engine.InputManager.SHIFT, (CONST_TV_KEY)keydata.Key);
+            char chr = ((CONST_TV_KEY)keydata.Key).TVKeyToChar(Globals.Engine.InputManager.SHIFT);
             if (!char.IsControl(chr))
               TConsole.InputLine += chr;
             break;

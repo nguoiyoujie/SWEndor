@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SWEndor.Primitives.Extensions;
+using System;
 using System.Collections.Generic;
 
 namespace SWEndor.Primitives.StateMachines

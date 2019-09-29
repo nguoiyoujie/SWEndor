@@ -1,4 +1,6 @@
-﻿namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions.Literals
+﻿using SWEndor.Primitives.Extensions;
+
+namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions.Literals
 {
   public class BoolLiteral : CLiteral
   {

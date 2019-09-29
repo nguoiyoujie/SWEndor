@@ -5,6 +5,7 @@ using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Core;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using SWEndor.Sound;
 using SWEndor.Weapons;
 
@@ -53,7 +54,6 @@ namespace SWEndor.Player
     public float ScorePerLife = 50000;
     public float ScoreForNextLife = 50000;
 
-    // should set as configurable?
     public string[] DamagedReportSound = SoundGlobals.DmgSounds;
 
     // weapons
@@ -64,12 +64,11 @@ namespace SWEndor.Player
         if (Actor == null)
           return WeaponShotInfo.Default;
 
-        int i = PrimaryWeaponN;
-        foreach (WeaponShotInfo w in Actor.WeaponDefinitions.PrimaryWeapons)
-          if (i-- == 0)
-            return w;
+        WeaponShotInfo[] w = Actor.WeaponDefinitions.PrimaryWeapons;
+        if (PrimaryWeaponN >= w.Length)
+          return WeaponShotInfo.Default;
 
-        return WeaponShotInfo.Default;
+        return w[PrimaryWeaponN];
       }
     }
     public WeaponShotInfo SecondaryWeapon
@@ -79,12 +78,11 @@ namespace SWEndor.Player
         if (Actor == null)
           return WeaponShotInfo.Default;
 
-        int i = SecondaryWeaponN;
-        foreach (WeaponShotInfo w in Actor.WeaponDefinitions.SecondaryWeapons)
-          if (i-- == 0)
-            return w;
+        WeaponShotInfo[] w = Actor.WeaponDefinitions.SecondaryWeapons;
+        if (SecondaryWeaponN >= w.Length)
+          return WeaponShotInfo.Default;
 
-        return WeaponShotInfo.Default;
+        return w[SecondaryWeaponN];
       }
     }
     public int PrimaryWeaponN = 0;
@@ -113,7 +111,7 @@ namespace SWEndor.Player
         Engine.SoundManager.SetSound(SoundGlobals.Button4);
       }
 
-      // this should be moved elsewhere
+      // TO-DO: this should be moved elsewhere
       if (StrengthFrac > 0 && StrengthFrac < 0.1f)
       {
         if (m_LowAlarmSoundTime < Engine.Game.GameTime)
@@ -266,7 +264,7 @@ namespace SWEndor.Player
 
       if (Actor.Squad.Leader != Actor)
       {
-        Engine.Screen2D.MessageSecondaryText("You are not the squad leader. You cannot command your squad to perform attacks!", 5, FactionColor);
+        Engine.Screen2D.MessageSecondaryText(TextLocalization.Get(TextLocalKeys.SQUAD_NOACK), 5, FactionColor);
         return;
       }
 
@@ -275,12 +273,12 @@ namespace SWEndor.Player
       {
         if (Actor.Faction.IsAlliedWith(t.Faction))
         {
-          Engine.Screen2D.MessageSecondaryText("Directing squad to assist {0}.".F(t.TopParent.Name), 5, FactionColor);
+          Engine.Screen2D.MessageSecondaryText(TextLocalization.Get(TextLocalKeys.SQUAD_DEFEND_ACK).F(t.TopParent.Name), 5, FactionColor);
           Actor.Squad.Mission = new AI.Squads.Missions.AssistActor(t.TopParent);
         }
         else
         {
-          Engine.Screen2D.MessageSecondaryText("Directing squad to attack {0}.".F(t.Name), 5, FactionColor);
+          Engine.Screen2D.MessageSecondaryText(TextLocalization.Get(TextLocalKeys.SQUAD_ATTACK_ACK).F(t.Name), 5, FactionColor);
           Actor.Squad.Mission = new AI.Squads.Missions.AttackActor(t, 99999);
           // add ons attack immediately
           foreach (ActorInfo c in Actor.Children)
@@ -302,11 +300,11 @@ namespace SWEndor.Player
 
       if (Actor.Squad.Leader != Actor)
       {
-        Engine.Screen2D.MessageSecondaryText("You are not the squad leader. You cannot command your squad to perform attacks!", 5, FactionColor);
+        Engine.Screen2D.MessageSecondaryText(TextLocalization.Get(TextLocalKeys.SQUAD_NOACK), 5, FactionColor);
         return;
       }
 
-      Engine.Screen2D.MessageSecondaryText("Discarding squad orders.", 5, FactionColor);
+      Engine.Screen2D.MessageSecondaryText(TextLocalization.Get(TextLocalKeys.SQUAD_CLEAR_ACK), 5, FactionColor);
       Actor.Squad.Mission = null;
     }
 

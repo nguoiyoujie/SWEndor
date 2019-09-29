@@ -9,6 +9,7 @@ using SWEndor.Core;
 using SWEndor.FileFormat.INI;
 using SWEndor.Player;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using SWEndor.Scenarios;
 using SWEndor.Weapons;
 using System;
@@ -353,7 +354,7 @@ namespace SWEndor.ActorTypes
       float accuracy = 1;
 
       float d = ActorDistanceInfo.GetDistance(owner, target) / weapontype.MoveLimitData.MaxSpeed;
-      TV_3DVECTOR angle = Utilities.GetRotation(target.GetGlobalPosition() - owner.GetGlobalPosition()) - owner.GetGlobalRotation();
+      TV_3DVECTOR angle = (target.GetGlobalPosition() - owner.GetGlobalPosition()).ConvertDirToRot() - owner.GetGlobalRotation();
       angle.x -= (int)((angle.x + 180) / 360) * 360;
       angle.y -= (int)((angle.y + 180) / 360) * 360;
 
@@ -406,7 +407,16 @@ namespace SWEndor.ActorTypes
       else
       {
         if (ainfo.UseParentCoords && ainfo.TopParent.IsPlayer)
-          engine.Screen2D.MessageSystemsText("WARNING: Subsystem [{0}] lost.".F(ainfo.Name), 3, new TV_COLOR(1, 0.2f, 0.2f, 1));
+          engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.SUBSYSTEM_LOST).F(ainfo.Name), 3, new TV_COLOR(1, 0.2f, 0.2f, 1));
+        else
+        {
+          ActorInfo p = PlayerInfo.Actor;
+          if (p != null && !p.Squad.IsNull && ainfo.Squad == p.Squad && ainfo != p)
+          {
+            engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.SQUAD_MEMBER_LOST).F(ainfo.Name), 3, new TV_COLOR(1, 0.2f, 0.2f, 1));
+            engine.GameScenarioManager.Scenario.Mood = MoodStates.ALLY_FIGHTER_LOST;
+          }
+        }
       }
     }
   }

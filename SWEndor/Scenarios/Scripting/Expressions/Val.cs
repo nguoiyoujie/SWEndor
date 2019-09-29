@@ -1,4 +1,5 @@
 ﻿using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -378,7 +379,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions
     {
       Func<Val, Val> fn;
       if (!unaryops.TryGetValue(new Tuple<UOp, ValType>(op, v.Type), out fn))
-        throw new ArgumentException("Operation '{0}' incompatible with {1}".F(op, v.Type));
+        throw new ArgumentException(TextLocalization.Get(TextLocalKeys.SCRIPT_UNEXPECTED_UOP).F(op, v.Type));
 
       return fn.Invoke(v);
     }
@@ -387,7 +388,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions
     {
       Func<Val, Val, Val> fn;
       if (!binaryops.TryGetValue(new Tuple<BOp, ValType, ValType>(op, v1.Type, v2.Type), out fn))
-        throw new ArgumentException("Operation '{0}' incompatible between {1} and {2}".F(op, v1.Type, v2.Type));
+        throw new ArgumentException(TextLocalization.Get(TextLocalKeys.SCRIPT_UNEXPECTED_BOP).F(op, v1.Type, v2.Type));
 
       return fn.Invoke(v1, v2);
     }

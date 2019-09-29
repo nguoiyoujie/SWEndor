@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SWEndor.Primitives.Extensions;
+using System;
 
 namespace SWEndor.Primitives.Collections
 {

@@ -2,6 +2,7 @@
 using SWEndor.Core;
 using SWEndor.ExplosionTypes;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using System;
 using System.Collections.Concurrent;
 
@@ -42,7 +43,7 @@ namespace SWEndor.Explosions
       {
         // since Actors are reused, there is no need to count backwards
         if (lastdataid >= Globals.ActorLimit)
-          throw new Exception("Number of current actors exceeded limit of {0}!".F(Globals.ActorLimit));
+          throw new Exception(TextLocalization.Get(TextLocalKeys.EXPL_OVERFLOW_ERROR).F(Globals.ActorLimit));
 
         return lastdataid++;
       }
@@ -50,8 +51,8 @@ namespace SWEndor.Explosions
       public T Create(ExplosionCreationInfo acinfo)
       {
         T actor = null;
-        if (acinfo.ActorTypeInfo == null)
-          throw new Exception("Attempted to register actor with null ActorTypeInfo!");
+        if (acinfo.ExplosionTypeInfo == null)
+          throw new Exception(TextLocalization.Get(TextLocalKeys.EXPL_INVALID_ERROR));
 
         lock (creationLock)
         {

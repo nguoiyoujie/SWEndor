@@ -6,6 +6,7 @@ using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Core;
 using SWEndor.Player;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Weapons
 {
@@ -277,7 +278,7 @@ namespace SWEndor.Weapons
           else
             dir = target.GetGlobalPosition() + a2.GetRelativePositionXYZ(0, 0, a2.MoveData.Speed * d) - a2.GetGlobalPosition() - owner.GetGlobalPosition();
 
-          acinfo.Rotation = Utilities.GetRotation(dir);
+          acinfo.Rotation = dir.ConvertDirToRot();
         }
         else
         {
@@ -337,7 +338,7 @@ namespace SWEndor.Weapons
           else
             dir = target.GetGlobalPosition() + a2.GetRelativePositionXYZ(0, 0, a2.MoveData.Speed * d) - a2.GetGlobalPosition() - owner.GetGlobalPosition();
 
-          acinfo.Rotation = Utilities.GetRotation(dir);
+          acinfo.Rotation = dir.ConvertDirToRot();
         }
         else
         {

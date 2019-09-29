@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Explosions;
+using SWEndor.Primitives.Extensions;
 using SWEndor.Scenarios;
 
 namespace SWEndor.ActorTypes.Components

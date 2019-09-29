@@ -1,6 +1,7 @@
 ﻿using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using System;
 using System.Collections.Concurrent;
 
@@ -41,7 +42,7 @@ namespace SWEndor.Actors
       {
         // since Actors are reused, there is no need to count backwards
         if (lastdataid >= Globals.ActorLimit)
-          throw new Exception("Number of current actors exceeded limit of {0}!".F(Globals.ActorLimit));
+          throw new Exception(TextLocalization.Get(TextLocalKeys.ACTOR_OVERFLOW_ERROR).F(Globals.ActorLimit));
 
         return lastdataid++;
       }
@@ -50,7 +51,7 @@ namespace SWEndor.Actors
       {
         T actor = null;
         if (acinfo.ActorTypeInfo == null)
-          throw new Exception("Attempted to register actor with null ActorTypeInfo!");
+          throw new Exception(TextLocalization.Get(TextLocalKeys.ACTOR_INVALID_ERROR));
 
         lock (creationLock)
         {

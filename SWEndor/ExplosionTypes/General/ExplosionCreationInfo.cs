@@ -5,7 +5,7 @@ namespace SWEndor.ExplosionTypes
 {
   public struct ExplosionCreationInfo
   {
-    public ExplosionTypeInfo ActorTypeInfo;
+    public ExplosionTypeInfo ExplosionTypeInfo;
     public string Name;
     public float CreationTime;
     public ActorState InitialState;
@@ -17,7 +17,7 @@ namespace SWEndor.ExplosionTypes
     public ExplosionCreationInfo(ExplosionTypeInfo at)
     {
       // Load defaults from actortype
-      ActorTypeInfo = at;
+      ExplosionTypeInfo = at;
       Name = at.Name;
 
       CreationTime = 0;

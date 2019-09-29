@@ -8,6 +8,7 @@ using SWEndor.AI.Squads;
 using SWEndor.Core;
 using SWEndor.Player;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using SWEndor.Scenarios;
 
 namespace SWEndor.Actors
