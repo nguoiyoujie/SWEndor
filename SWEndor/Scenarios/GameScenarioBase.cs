@@ -153,7 +153,8 @@ namespace SWEndor.Scenarios
       Manager.Scenario = null;
 
       // Full reset
-      ActorFactory.Reset();
+      Engine.ActorFactory.Reset();
+      Engine.ExplosionFactory.Reset();
 
       Manager.ClearGameStates();
       Manager.ClearEvents();
