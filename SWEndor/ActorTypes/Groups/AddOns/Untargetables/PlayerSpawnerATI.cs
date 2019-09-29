@@ -28,12 +28,7 @@ namespace SWEndor.ActorTypes.Instances
       base.ProcessState(engine, ainfo);
 
       ActorInfo p = ainfo.TopParent;
-      SpawnerInfo s = p.SpawnerInfo;
-      s.UnlockSpawns(engine, ainfo, p);
-
-      foreach (ActorInfo a in ainfo.Children)
-        if (!a.UseParentCoords)
-          s.MoveSpawns(engine, a, p);
+      p.SpawnerInfo.Process(engine, ainfo, p);
     }
   }
 }

@@ -41,6 +41,15 @@ namespace SWEndor
       SpawnSpeed = -1,
     };
 
+    internal void Process(Engine engine, ActorInfo ainfo, ActorInfo p)
+    {
+      UnlockSpawns(engine, ainfo, p);
+
+      foreach (ActorInfo a in ainfo.Children)
+        if (!a.UseParentCoords)
+          MoveSpawns(engine, a, p);
+    }
+
     private bool SpawnPlayer(Engine engine, ActorInfo ainfo)
     {
       if (!engine.PlayerInfo.RequestSpawn)
@@ -122,7 +131,7 @@ namespace SWEndor
       return true;
     }
 
-    internal void MoveSpawns(Engine engine, ActorInfo a, ActorInfo p)
+    private void MoveSpawns(Engine engine, ActorInfo a, ActorInfo p)
     {
       if (SpawnSpeed == -2)
         a.MoveData.Speed = a.MoveData.MaxSpeed;
@@ -148,7 +157,7 @@ namespace SWEndor
         engine.PlayerInfo.IsMovementControlsEnabled = false;
     }
 
-    internal void UnlockSpawns(Engine engine, ActorInfo ainfo, ActorInfo p)
+    private void UnlockSpawns(Engine engine, ActorInfo ainfo, ActorInfo p)
     {
       if (Enabled
        && !p.IsDead
@@ -170,6 +179,7 @@ namespace SWEndor
           }
         }
 
+        // Spawn new
         if (!p.IsDying)
         {
           SpawnPlayer(engine, ainfo);
