@@ -1,5 +1,4 @@
-﻿using System;
-using MTV3D65;
+﻿using MTV3D65;
 using SWEndor.Core;
 
 namespace SWEndor

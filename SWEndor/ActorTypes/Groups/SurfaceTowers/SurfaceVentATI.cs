@@ -2,7 +2,6 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
-using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {

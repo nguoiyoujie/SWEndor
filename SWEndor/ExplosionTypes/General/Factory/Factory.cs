@@ -1,11 +1,8 @@
-﻿using SWEndor.ActorTypes.Instances;
-using SWEndor.Core;
+﻿using SWEndor.Core;
 using SWEndor.ExplosionTypes.Instances;
-using SWEndor.FileFormat.INI;
 using SWEndor.Primitives.Extensions;
 using SWEndor.Primitives.Factories;
 using System;
-using System.IO;
 
 namespace SWEndor.ExplosionTypes
 {

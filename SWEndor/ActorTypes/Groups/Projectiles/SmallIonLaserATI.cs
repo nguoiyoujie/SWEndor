@@ -1,13 +1,10 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using SWEndor.Explosions;
 using SWEndor.ExplosionTypes;
-using SWEndor.Weapons;
 using System.Collections.Generic;
-using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {

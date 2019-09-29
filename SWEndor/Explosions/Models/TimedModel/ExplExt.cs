@@ -1,6 +1,4 @@
-﻿using SWEndor.ExplosionTypes;
-
-namespace SWEndor.Explosions
+﻿namespace SWEndor.Explosions
 {
   public partial class ExplosionInfo
   {

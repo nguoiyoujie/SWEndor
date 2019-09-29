@@ -1,10 +1,7 @@
 ﻿using MTV3D65;
-using SWEndor.Actors;
-using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Player;
 using SWEndor.Scenarios;
-using SWEndor.Sound;
 
 namespace SWEndor.UI
 {

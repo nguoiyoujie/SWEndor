@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Input.Functions;
-using SWEndor.Player;
 using SWEndor.Input.Functions.Gameplay.UI;
 using SWEndor.Input.Functions.Gameplay;
 using SWEndor.Input.Functions.Gameplay.Camera;

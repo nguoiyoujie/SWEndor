@@ -1,9 +1,4 @@
-﻿using MTV3D65;
-using SWEndor.Actors;
-using SWEndor.ActorTypes.Groups;
-using SWEndor.AI;
-using SWEndor.AI.Actions;
-using SWEndor.AI.Squads;
+﻿using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Models;
 

@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
-using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {

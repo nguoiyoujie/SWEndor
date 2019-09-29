@@ -1,7 +1,4 @@
-﻿using MTV3D65;
-using SWEndor.Actors;
-using SWEndor.AI;
-using SWEndor.AI.Actions;
+﻿using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Models;
 

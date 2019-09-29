@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Sound;
-using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {

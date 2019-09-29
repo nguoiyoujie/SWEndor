@@ -1,9 +1,6 @@
 ﻿using SWEndor.Actors;
-using SWEndor.Actors.Components;
-using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
-using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {

@@ -1,6 +1,5 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Core;
-using SWEndor.Primitives;
 
 namespace SWEndor.AI.Actions
 {

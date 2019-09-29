@@ -1,8 +1,6 @@
 ﻿using MTV3D65;
-using SWEndor.Actors;
 using SWEndor.Sound;
 using SWEndor.Terminal;
-using System.Collections.Generic;
 
 namespace SWEndor.Input.Context
 {

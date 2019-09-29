@@ -1,12 +1,8 @@
 ﻿using MTV3D65;
 using SWEndor.AI.Actions;
-using System.IO;
-using SWEndor.Weapons;
 using SWEndor.Actors;
-using SWEndor.Actors.Data;
 using SWEndor.AI;
 using SWEndor.ActorTypes.Components;
-using SWEndor.Actors.Models;
 using SWEndor.Core;
 using SWEndor.ExplosionTypes;
 using SWEndor.Explosions;

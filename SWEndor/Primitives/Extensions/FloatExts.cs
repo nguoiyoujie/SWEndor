@@ -1,10 +1,7 @@
-﻿using SWEndor.Core;
-
-namespace SWEndor.Primitives.Extensions
+﻿namespace SWEndor.Primitives.Extensions
 {
   public static class FloatExts
   {
-
     public static float Clamp(this float value, float min, float max)
     {
       if (max == min)

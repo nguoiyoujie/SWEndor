@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Primitives;
 using System.Collections.Generic;
-using SWEndor.Core;
 using SWEndor.ExplosionTypes;
 
 namespace SWEndor.Explosions.Models

@@ -1,5 +1,4 @@
-﻿using SWEndor.Primitives;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Statements
 {

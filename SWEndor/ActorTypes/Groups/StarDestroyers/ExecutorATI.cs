@@ -1,12 +1,9 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Components;
-using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Sound;
-using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
 {

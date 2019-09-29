@@ -1,6 +1,4 @@
-﻿using SWEndor.Primitives;
-using SWEndor.Primitives.Extensions;
-using System;
+﻿using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 {

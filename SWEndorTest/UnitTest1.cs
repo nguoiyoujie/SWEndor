@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MTV3D65;
 using SWEndor;
-using SWEndor.Primitives;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.Scenarios.Scripting.Expressions;

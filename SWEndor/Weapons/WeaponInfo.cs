@@ -6,7 +6,6 @@ using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Core;
 using SWEndor.Models;
-using SWEndor.Player;
 using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Weapons

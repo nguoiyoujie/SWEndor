@@ -1,6 +1,4 @@
 ﻿using MTV3D65;
-using SWEndor.Core;
-using System;
 
 namespace SWEndor.Primitives.Extensions
 {

@@ -1,6 +1,4 @@
-﻿using MTV3D65;
-using SWEndor.ActorTypes;
-using System;
+﻿using System;
 
 namespace SWEndor.Models
 {

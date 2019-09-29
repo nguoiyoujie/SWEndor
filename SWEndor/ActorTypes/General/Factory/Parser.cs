@@ -1,8 +1,7 @@
 ﻿using SWEndor.FileFormat.INI;
-using System;
 
-  namespace SWEndor.ActorTypes
-  {
+namespace SWEndor.ActorTypes
+{
   public partial class ActorTypeInfo
   {
     public static class Parser

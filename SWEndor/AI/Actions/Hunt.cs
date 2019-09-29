@@ -1,7 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.Core;
-using SWEndor.Primitives;
 using SWEndor.Weapons;
 using System;
 using System.Collections.Generic;

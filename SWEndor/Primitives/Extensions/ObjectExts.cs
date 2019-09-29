@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SWEndor.Primitives.Extensions
+﻿namespace SWEndor.Primitives.Extensions
 {
   public static class ObjectExts
   {

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Diagnostics;
-using SWEndor.Primitives;
 using System.Threading;
 using SWEndor.Primitives.Factories;
 using SWEndor.Primitives.Collections;

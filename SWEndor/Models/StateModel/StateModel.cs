@@ -1,5 +1,4 @@
-﻿using SWEndor.Actors;
-using SWEndor.ActorTypes;
+﻿using SWEndor.ActorTypes;
 using SWEndor.ExplosionTypes;
 using SWEndor.Primitives.StateMachines;
 

@@ -4,7 +4,6 @@ using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Core;
-using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;
 using SWEndor.Sound;
 using SWEndor.Weapons;

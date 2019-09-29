@@ -1,8 +1,5 @@
 ﻿using MTV3D65;
-using SWEndor.ActorTypes;
-using SWEndor.ExplosionTypes;
 using SWEndor.Primitives;
-using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Actors
 {
