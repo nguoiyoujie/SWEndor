@@ -17,10 +17,10 @@ namespace SWEndor.ActorTypes.Instances
       CombatData = CombatData.DefaultShip;
       ArmorData = new ArmorData(1, 4);
 
-      Explodes = new ExplodeInfo[]
+      Explodes = new ExplodeData[]
       {
-        new ExplodeInfo("ExpL00", 0.5f, 5, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
-        new ExplodeInfo("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH)
+        new ExplodeData("ExpL00", 0.5f, 5, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeData("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
       MaxStrength = 600.0f;

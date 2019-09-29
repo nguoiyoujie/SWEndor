@@ -19,27 +19,27 @@ namespace SWEndor.UI.Menu.Pages
 
       sb.Clear();
       sb.Append("Score                                     ");
-      sb.Append(PlayerInfo.Score.Score.ToString(" 00000000"));
+      sb.Append(Engine.PlayerInfo.Score.Score.ToString(" 00000000"));
       sb.AppendLine();
       sb.AppendLine();
       sb.Append("Total Hits                                ");
-      sb.Append(PlayerInfo.Score.Hits.ToString(" #######0"));
+      sb.Append(Engine.PlayerInfo.Score.Hits.ToString(" #######0"));
       sb.AppendLine();
       //sb.Append("Total Hits on Fighters                     ");
       //sb.Append(PlayerInfo.Score.HitsOnFighters.ToString("00000000"));
       //sb.AppendLine();
       sb.Append("Damage Taken                              ");
-      sb.Append(PlayerInfo.Score.DamageTaken.ToString(" #######0"));
+      sb.Append(Engine.PlayerInfo.Score.DamageTaken.ToString(" #######0"));
       sb.AppendLine();
       sb.Append("Deaths                                    ");
-      sb.Append(PlayerInfo.Score.Deaths.ToString(" #######0"));
+      sb.Append(Engine.PlayerInfo.Score.Deaths.ToString(" #######0"));
       sb.AppendLine();
       sb.AppendLine();
       sb.Append("Kills                                     ");
-      sb.Append(PlayerInfo.Score.Kills.ToString(" #######0"));
+      sb.Append(Engine.PlayerInfo.Score.Kills.ToString(" #######0"));
       sb.AppendLine();
 
-      foreach (KeyValuePair<string, int> kvp in PlayerInfo.Score.KillsByName.GetList())
+      foreach (KeyValuePair<string, int> kvp in Engine.PlayerInfo.Score.KillsByName.GetList())
       {
         sb.Append((kvp.Key.Length > 42) ? kvp.Key.Remove(42) : kvp.Key.PadRight(42));
         sb.Append(kvp.Value.ToString(" #######0"));

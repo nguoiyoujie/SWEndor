@@ -14,11 +14,11 @@ namespace SWEndor.ActorTypes.Groups
     {
       CombatData = CombatData.DefaultShip;
       ArmorData = ArmorData.Default;
-      Explodes = new ExplodeInfo[]
+      Explodes = new ExplodeData[]
       {
-        new ExplodeInfo("ExpL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
-        new ExplodeInfo("ExpL01", 1, 2, ExplodeTrigger.ON_DEATH),
-        new ExplodeInfo("ExpW01", 1, 1, ExplodeTrigger.ON_DEATH)
+        new ExplodeData("ExpL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeData("ExpL01", 1, 2, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("ExpW01", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
       DyingMoveData.Sink(0.06f, 15f, 2.5f);

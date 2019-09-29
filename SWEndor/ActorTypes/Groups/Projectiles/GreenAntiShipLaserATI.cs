@@ -2,6 +2,7 @@
 using SWEndor.Actors.Data;
 using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Models;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -11,8 +12,8 @@ namespace SWEndor.ActorTypes.Instances
     internal GreenAntiShipLaserATI(Factory owner) : base(owner, "Green Anti-Ship Laser")
     {
       TimedLifeData = new TimedLifeData(true, 5);
-      Explodes = new ExplodeInfo[] {
-        new ExplodeInfo("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
+      Explodes = new ExplodeData[] {
+        new ExplodeData("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
       };
 
       ImpactDamage = 5;

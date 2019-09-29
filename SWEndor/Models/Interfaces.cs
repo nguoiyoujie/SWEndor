@@ -4,6 +4,14 @@ using SWEndor.Primitives;
 
 namespace SWEndor.Models
 {
+  public interface ICreationInfo<T, TType> where TType : ITypeInfo<T>
+  {
+    TType TypeInfo { get; }
+  }
+
+  public interface ITypeInfo<T>
+  { }
+
   public interface ILinked<T>
   {
     T Prev { get; set; }
@@ -15,9 +23,6 @@ namespace SWEndor.Models
     ScopeCounterManager.ScopeCounter Scope { get; }
   }
 
-  public interface ICreate<T>
-  { }
-
   public interface IActorDisposable
   {
     bool DisposingOrDisposed { get; }
@@ -26,12 +31,22 @@ namespace SWEndor.Models
     void Delete();
   }
 
-  public interface IActorCreateable<T>
+  public interface IEngineObject
   {
     Engine Engine { get; }
+    int ID { get; }
+  }
+
+  public interface IActorCreateable<T>
+  {
     float CreationTime { get; }
     void Rebuild(Engine engine, int id, T acinfo);
     void Initialize(Engine engine);
+  }
+
+  public interface IActorState
+  {
+    ActorState ActorState { get; }
   }
 
   public interface IParent<T>
@@ -47,9 +62,24 @@ namespace SWEndor.Models
     void OnDestroyedEvent();
   }
 
+  public interface IDyingTime
+  {
+    float DyingTimeRemaining { get; }
+  }
+
+  public interface IMeshRender
+  {
+    int GetVertexCount();
+    TV_3DVECTOR GetVertex(int vertID);
+    float Scale { get; }
+  }
+
   public interface ITransformable
   {
     TV_3DMATRIX GetWorldMatrix();
     TV_3DMATRIX GetPrevWorldMatrix();
+    TV_3DVECTOR GetGlobalPosition();
+    TV_3DVECTOR GetPrevGlobalPosition();
+    TV_3DVECTOR GetRelativePositionXYZ(float x, float y, float z, bool local = false);
   }
 }

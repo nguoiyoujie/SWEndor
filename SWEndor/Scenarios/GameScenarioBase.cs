@@ -96,15 +96,11 @@ namespace SWEndor.Scenarios
     public Engine Engine { get { return Manager.Engine; } }
     public Session Game { get { return Engine.Game; } }
     public TrueVision TrueVision { get { return Engine.TrueVision; } }
-    public ActorInfo.Factory<ActorInfo> ActorFactory { get { return Engine.ActorFactory; } }
     public ActorTypeInfo.Factory ActorTypeFactory { get { return Engine.ActorTypeFactory; } }
     public SoundManager SoundManager { get { return Engine.SoundManager; } }
-    public LandInfo LandInfo { get { return Engine.LandInfo; } }
-    public AtmosphereInfo AtmosphereInfo { get { return Engine.AtmosphereInfo; } }
     public PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }
     public PlayerCameraInfo PlayerCameraInfo { get { return Engine.PlayerCameraInfo; } }
     public Screen2D Screen2D { get { return Engine.Screen2D; } }
-    public Scripting.Expressions.Context ScriptContext { get { return Engine.ScriptContext; } }
 
     public GameScenarioBase(GameScenarioManager manager)
     {
@@ -166,9 +162,9 @@ namespace SWEndor.Scenarios
       Engine.Screen2D.OverrideTargetingRadar = false;
       Engine.Screen2D.Box3D_Enable = false;
 
-      LandInfo.Enabled = false;
+      Engine.LandInfo.Enabled = false;
       Mood = MoodStates.AMBIENT;
-      SoundManager.Clear();
+      Engine.SoundManager.Clear();
 
       Game.GameTime = 0;
       Manager.IsCutsceneMode = false;

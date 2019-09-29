@@ -132,11 +132,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actors\ActorCreationInfo.cs" />
+    <Compile Include="Actors\Models\ArmorModel\ActorExt.cs" />
+    <Compile Include="Models\ExplodeModel\ExplodeData.cs" />
+    <Compile Include="Actors\Models\Explosion\ActorExt.cs" />
+    <Compile Include="Models\ExplodeModel\ExplodeTrigger.cs" />
     <Compile Include="Models\Interfaces.cs" />
     <Compile Include="Actors\Models\AIModel\AIData.cs" />
     <Compile Include="Actors\Models\ArmorModel\ArmorModel.cs" />
     <Compile Include="Actors\Models\Collision\CollisionResultData.cs" />
-    <Compile Include="Actors\Models\Explosion\ExplodeModel.cs" />
+    <Compile Include="Models\ExplodeModel\ExplodeModel.cs" />
     <Compile Include="Actors\Models\HealthModel\DamageInfo.cs" />
     <Compile Include="Actors\Models\HealthModel\DamageType.cs" />
     <Compile Include="Actors\Models\HealthModel\HealthModel.cs" />
@@ -303,7 +307,7 @@
     <Compile Include="ActorTypes\Groups\AddOns\ShieldGenerators\ISDShieldGeneratorATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\SDTurboLaserATI.cs" />
     <Compile Include="ActorTypes\General\Factory\Factory.cs" />
-    <Compile Include="Actors\Factory\Factory.cs" />
+    <Compile Include="Models\Factory\Factory.cs" />
     <Compile Include="Actors\ActorInfo.cs" />
     <Compile Include="ActorTypes\General\ActorTypeInfo.cs" />
     <Compile Include="ActorTypes\Groups\AddOn.cs" />
@@ -356,7 +360,6 @@
     <Compile Include="Build.cs" />
     <Compile Include="Core\TrueVision.cs" />
     <Compile Include="Explosions\ExplosionInfo.cs" />
-    <Compile Include="Explosions\Factory\Factory.cs" />
     <Compile Include="Explosions\Models\Mesh\MeshModel.cs" />
     <Compile Include="Explosions\Models\StateModel\ExplExt.cs" />
     <Compile Include="Explosions\Models\TimedModel\ExplExt.cs" />

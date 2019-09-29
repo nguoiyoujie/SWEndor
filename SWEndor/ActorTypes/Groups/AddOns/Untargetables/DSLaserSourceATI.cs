@@ -37,7 +37,7 @@ namespace SWEndor.ActorTypes.Instances
       
       if (ainfo.CurrentAction != null && ainfo.CurrentAction is AttackActor)
       {
-        ActorInfo target = ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
+        ActorInfo target = engine.ActorFactory.Get(((AttackActor)ainfo.CurrentAction).Target_ActorID);
         if (target != null && target.Active)
         {
           FireWeapon(engine, ainfo, target, laser);

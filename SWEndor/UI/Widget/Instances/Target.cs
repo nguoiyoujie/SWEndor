@@ -40,7 +40,7 @@ namespace SWEndor.UI.Widgets
       if (p == null || !p.Active)
         return;
 
-      ActorInfo prev_target = ActorFactory.Get(m_targetID);
+      ActorInfo prev_target = Engine.ActorFactory.Get(m_targetID);
 
       if (PlayerInfo.PlayerAIEnabled)
       {
@@ -59,7 +59,7 @@ namespace SWEndor.UI.Widgets
         }
       }
 
-      ActorInfo m_target = ActorFactory.Get(m_targetID);
+      ActorInfo m_target = Engine.ActorFactory.Get(m_targetID);
       if (m_target == null)
       {
         PlayerInfo.TargetActorID = -1;
@@ -120,12 +120,12 @@ namespace SWEndor.UI.Widgets
       {
         if (!PlayerInfo.Actor.Faction.IsAlliedWith(target.Faction) && prev_target != target)
         {
-          SoundManager.SetSound(SoundGlobals.Button3);
+          Engine.SoundManager.SetSound(SoundGlobals.Button3);
           m_targetBigSize = 15;
         }
         if (m_targetBigSize > m_targetSize)
         {
-          m_targetBigSize -= 25 * Game.TimeSinceRender;
+          m_targetBigSize -= 25 * Engine.Game.TimeSinceRender;
           TVScreen2DImmediate.Draw_Box(x - m_targetBigSize, y - m_targetBigSize, x + m_targetBigSize, y + m_targetBigSize, acolor.GetIntColor());
         }
 
@@ -266,7 +266,7 @@ namespace SWEndor.UI.Widgets
       bestlimit = 9999;
 
       if (p != null || p.Active)
-        ActorFactory.DoEach(targetAction, this, pick_allies);
+        Engine.ActorFactory.DoEach(targetAction, this, pick_allies);
 
       return bestlimit < 9999;
     }

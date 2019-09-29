@@ -14,9 +14,9 @@ namespace SWEndor.ActorTypes.Groups
       // Combat
       CombatData = CombatData.DefaultFighter;
       ArmorData = ArmorData.Default;
-      Explodes = new ExplodeInfo[]
+      Explodes = new ExplodeData[]
       {
-        new ExplodeInfo("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
+        new ExplodeData("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
       };
 
       RenderData.CullDistance = 12000;

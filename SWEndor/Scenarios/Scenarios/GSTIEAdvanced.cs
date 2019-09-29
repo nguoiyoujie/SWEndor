@@ -474,7 +474,7 @@ namespace SWEndor.Scenarios
 
     public void Empire_TIEAdvanced_Control_AttackShip()
     {
-      ActorInfo m_X1 = ActorFactory.Get(m_X1ID);
+      ActorInfo m_X1 = Engine.ActorFactory.Get(m_X1ID);
       if (m_X1 != null)
       {
         m_X1.ForceClearQueue();
@@ -484,7 +484,7 @@ namespace SWEndor.Scenarios
 
     public void Empire_TIEAdvanced_Control_AttackFighter()
     {
-      ActorInfo m_X1 = ActorFactory.Get(m_X1ID);
+      ActorInfo m_X1 = Engine.ActorFactory.Get(m_X1ID);
       if (m_X1 != null)
       {
         m_X1.ForceClearQueue();

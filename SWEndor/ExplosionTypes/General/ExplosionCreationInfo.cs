@@ -1,11 +1,12 @@
 ﻿using MTV3D65;
+using SWEndor.Explosions;
 using SWEndor.Models;
 
 namespace SWEndor.ExplosionTypes
 {
-  public struct ExplosionCreationInfo
+  public struct ExplosionCreationInfo : ICreationInfo<ExplosionInfo, ExplosionTypeInfo>
   {
-    public ExplosionTypeInfo ExplosionTypeInfo;
+    public ExplosionTypeInfo TypeInfo { get; }
     public string Name;
     public float CreationTime;
     public ActorState InitialState;
@@ -17,7 +18,7 @@ namespace SWEndor.ExplosionTypes
     public ExplosionCreationInfo(ExplosionTypeInfo at)
     {
       // Load defaults from actortype
-      ExplosionTypeInfo = at;
+      TypeInfo = at;
       Name = at.Name;
 
       CreationTime = 0;

@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using SWEndor.AI;
@@ -9,18 +8,16 @@ using SWEndor.Core;
 using SWEndor.FileFormat.INI;
 using SWEndor.Models;
 using SWEndor.Player;
-using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;
 using SWEndor.Scenarios;
 using SWEndor.Weapons;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace SWEndor.ActorTypes
 {
-  public partial class ActorTypeInfo
+  public partial class ActorTypeInfo : ITypeInfo<ActorInfo>
   {
     public ActorTypeInfo(Factory owner, string name = "")
     {
@@ -33,15 +30,7 @@ namespace SWEndor.ActorTypes
     public readonly Factory ActorTypeFactory;
     public Engine Engine { get { return ActorTypeFactory.Engine; } }
 
-    public Session Game { get { return Engine.Game; } }
-    public GameScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
-    public TrueVision TrueVision { get { return Engine.TrueVision; } }
-    public ActorInfo.Factory<ActorInfo> ActorFactory { get { return Engine.ActorFactory; } }
-    public LandInfo LandInfo { get { return Engine.LandInfo; } }
-    public AtmosphereInfo AtmosphereInfo { get { return Engine.AtmosphereInfo; } }
     public PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }
-    public PlayerCameraInfo PlayerCameraInfo { get { return Engine.PlayerCameraInfo; } }
-    public Screen2D Screen2D { get { return Engine.Screen2D; } }
 
     // Basic Info
     public string Name;
@@ -81,7 +70,7 @@ namespace SWEndor.ActorTypes
     public AddOnData[] AddOns = new AddOnData[0];
 
     // Explosionf
-    public Actors.Models.ExplodeInfo[] Explodes = new Actors.Models.ExplodeInfo[0];
+    public ExplodeData[] Explodes = new ExplodeData[0];
 
     // Weapons
     public string[] Loadouts = new string[0];
@@ -154,12 +143,12 @@ namespace SWEndor.ActorTypes
         w.Reload(engine);
 
       // regeneration
-      ainfo.Regenerate(Game.TimeSinceRender);
+      ainfo.Regenerate(engine.Game.TimeSinceRender);
 
       ainfo.TickExplosions();
 
       if (ainfo.IsDying)
-        DyingMoveData.Update(ainfo, Game.TimeSinceRender);
+        DyingMoveData.Update(ainfo, engine.Game.TimeSinceRender);
 
       // sound
       if (PlayerInfo.Actor != null
@@ -202,7 +191,7 @@ namespace SWEndor.ActorTypes
             if (!attacker.Faction.IsAlliedWith(owner.Faction))
               AddScore(engine, PlayerInfo.Score, hitby, owner);
             else
-              Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", owner.Name, PlayerInfo.Name)
+              Engine.Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", owner.Name, PlayerInfo.Name)
                                               , 5
                                               , owner.Faction.Color
                                               , -1);
@@ -299,7 +288,7 @@ namespace SWEndor.ActorTypes
           if (!attacker.Faction.IsAlliedWith(owner.Faction))
             AddScore(engine, PlayerInfo.Score, attacker, owner);
           else
-            Screen2D.MessageText(string.Format("{0}: {1}, watch it!", owner.Name, PlayerInfo.Name)
+            Engine.Screen2D.MessageText(string.Format("{0}: {1}, watch it!", owner.Name, PlayerInfo.Name)
                                             , 5
                                             , owner.Faction.Color
                                             , -1);
@@ -394,7 +383,7 @@ namespace SWEndor.ActorTypes
       ainfo.TickExplosions();
 
       // Debris
-      if (!ainfo.IsAggregateMode && !Game.IsLowFPS())
+      if (!ainfo.IsAggregateMode && !engine.Game.IsLowFPS())
         foreach (DebrisSpawnerData ds in Debris)
           ds.Process(engine, ainfo);
 

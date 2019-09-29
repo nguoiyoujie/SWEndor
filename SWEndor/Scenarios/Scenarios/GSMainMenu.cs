@@ -25,12 +25,12 @@ namespace SWEndor.Scenarios
       base.Load(wing, difficulty);
 
       sceneid = Engine.Random.Next(0, 7);
-      LandInfo.Enabled = false;
-      AtmosphereInfo.LoadDefaults(true, true);
-      AtmosphereInfo.SetPos_Sun(new TV_3DVECTOR(-1000, 250, 0));
-      AtmosphereInfo.Enabled = true;
-      AtmosphereInfo.ShowSun = true;
-      AtmosphereInfo.ShowFlare = true;
+      Engine.LandInfo.Enabled = false;
+      Engine.AtmosphereInfo.LoadDefaults(true, true);
+      Engine.AtmosphereInfo.SetPos_Sun(new TV_3DVECTOR(-1000, 250, 0));
+      Engine.AtmosphereInfo.Enabled = true;
+      Engine.AtmosphereInfo.ShowSun = true;
+      Engine.AtmosphereInfo.ShowFlare = true;
     }
 
     public override void Launch()
@@ -110,7 +110,7 @@ namespace SWEndor.Scenarios
         acinfo.Position = new TV_3DVECTOR(0, -40000, 0);
         acinfo.Rotation = new TV_3DVECTOR(0, 180, 0);
         acinfo.InitialScale = 60;
-        m_APlanet = ActorFactory.Create(acinfo);
+        m_APlanet = Engine.ActorFactory.Create(acinfo);
       }
     }
 
@@ -119,7 +119,7 @@ namespace SWEndor.Scenarios
       base.GameTick();
       CalibrateSceneObjects();
 
-      ActorInfo tgt = ActorFactory.Get(PlayerCameraInfo.Look.GetPosition_Actor());
+      ActorInfo tgt = Engine.ActorFactory.Get(PlayerCameraInfo.Look.GetPosition_Actor());
 
       if (tgt == null || !tgt.Active)
       {
@@ -318,7 +318,7 @@ namespace SWEndor.Scenarios
     {
       foreach (int actorID in MainAllyFaction.GetShips())
       {
-        ActorInfo actor = ActorFactory.Get(actorID);
+        ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null
           && !actor.IsDyingOrDead)
         {

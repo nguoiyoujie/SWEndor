@@ -70,8 +70,8 @@ namespace SWEndor.UI.Widgets
         {
           TV_2DVECTOR posvec = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(apos.x, apos.z);
           float proty = p.GetGlobalRotation().y;
-          float dist = TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), posvec);
-          float angl = TrueVision.TVMathLibrary.Direction2Ang(posvec.x, posvec.y) - proty;
+          float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), posvec);
+          float angl = engine.TrueVision.TVMathLibrary.Direction2Ang(posvec.x, posvec.y) - proty;
           if (dist > radar_range)
             dist = radar_range;
 

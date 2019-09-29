@@ -51,11 +51,9 @@ namespace SWEndor.Scenarios
     public void LoadScripts()
     {
       Script.Registry.Clear();
-      ScriptContext.Reset();
+      Engine.ScriptContext.Reset();
       foreach (string scrfile in ScriptPaths)
-      {
-        ScriptFile f = new ScriptFile(scrfile);
-      }
+        new ScriptFile(scrfile);
     }
 
     public override void Load(ActorTypeInfo wing, string difficulty)
@@ -72,55 +70,36 @@ namespace SWEndor.Scenarios
     {
       base.Unload();
       Script.Registry.Clear();
-      ScriptContext.Reset();
+      Engine.ScriptContext.Reset();
     }
 
     public override void Launch()
     {
       // after scripts
       base.Launch();
-
-      Script scr = Script.Registry.Get(Fn_load);
-      if (scr != null)
-        scr.Run(ScriptContext);
-
-      MakePlayer = delegate ()
-      {
-        Script smk = Script.Registry.Get(Fn_makeplayer);
-        if (smk != null)
-          smk.Run(ScriptContext);
-      };
+      MakePlayer = fn_MakePlayer;
+      Script.Registry.Get(Fn_load)?.Run(Engine.ScriptContext);
     }
+
+    private void fn_MakePlayer() { Script.Registry.Get(Fn_makeplayer)?.Run(Engine.ScriptContext); }
 
     public override void LoadFactions()
     {
       base.LoadFactions();
-
-      Script scr = Script.Registry.Get(Fn_loadfaction);
-      if (scr != null)
-        scr.Run(ScriptContext);
+      Script.Registry.Get(Fn_loadfaction)?.Run(Engine.ScriptContext);
     }
 
     public override void LoadScene()
     {
       base.LoadScene();
-
-      Script scr = Script.Registry.Get(Fn_loadscene);
-      if (scr != null)
-        scr.Run(ScriptContext);
+      Script.Registry.Get(Fn_loadscene)?.Run(Engine.ScriptContext);
     }
 
     public override void GameTick()
     {
       base.GameTick();
-      //CalibrateSceneObjects();
-
       foreach (string s in Fns_gametick)
-      {
-        Script scr = Script.Registry.Get(s);
-        if (scr != null)
-          scr.Run(ScriptContext);
-      }
+        Script.Registry.Get(s)?.Run(Engine.ScriptContext);
     }
   }
 }

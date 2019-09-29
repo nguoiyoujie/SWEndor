@@ -1,9 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.ActorTypes;
 using SWEndor.Core;
-using SWEndor.Player;
-using SWEndor.Sound;
 using SWEndor.UI.Menu.Pages;
 using System.Collections.Generic;
 using System.IO;
@@ -13,31 +10,20 @@ namespace SWEndor.Scenarios
   public class GameScenarioManager
   {
     public readonly Engine Engine;
-    public Session Game { get { return Engine.Game; } }
-    public TrueVision TrueVision { get { return Engine.TrueVision; } }
-    public ActorInfo.Factory<ActorInfo> ActorFactory { get { return Engine.ActorFactory; } }
-    public ActorTypeInfo.Factory ActorTypeFactory { get { return Engine.ActorTypeFactory; } }
-    public SoundManager SoundManager { get { return Engine.SoundManager; } }
-    public LandInfo LandInfo { get { return Engine.LandInfo; } }
-    public AtmosphereInfo AtmosphereInfo { get { return Engine.AtmosphereInfo; } }
-    public PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }
-    public PlayerCameraInfo PlayerCameraInfo { get { return Engine.PlayerCameraInfo; } }
-    public Screen2D Screen2D { get { return Engine.Screen2D; } }
-    public Scripting.Expressions.Context ScriptContext { get { return Engine.ScriptContext; } }
 
     internal GameScenarioManager(Engine engine)
     {
       Engine = engine;
-      ScenarioList.Add(new Scenarios.GSEndor(this));
-      ScenarioList.Add(new Scenarios.GSYavin(this));
-      ScenarioList.Add(new Scenarios.GSHoth(this));
-      ScenarioList.Add(new Scenarios.GSTIEAdvanced(this));
-      ScenarioList.Add(new Scenarios.GSTestZone(this));
+      ScenarioList.Add(new GSEndor(this));
+      ScenarioList.Add(new GSYavin(this));
+      ScenarioList.Add(new GSHoth(this));
+      ScenarioList.Add(new GSTIEAdvanced(this));
+      ScenarioList.Add(new GSTestZone(this));
 
       // Add scripted scenarios?
       if (Directory.Exists(Globals.CustomScenarioPath))
         foreach (string path in Directory.GetFiles(Globals.CustomScenarioPath, "*.scen"))
-          ScenarioList.Add(new Scenarios.GSCustomScenario(this, path));
+          ScenarioList.Add(new GSCustomScenario(this, path));
     }
 
     public List<GameScenarioBase> ScenarioList = new List<GameScenarioBase>();
@@ -46,7 +32,6 @@ namespace SWEndor.Scenarios
     private Dictionary<string, string> GameStatesS = new Dictionary<string, string>();
     private Dictionary<string, bool> GameStatesB = new Dictionary<string, bool>();
 
-    //private Dictionary<float, GameEvent> GameEvents = new Dictionary<float, GameEvent>();
     public GameScenarioBase Scenario = null;
 
     public TV_3DVECTOR MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
@@ -80,8 +65,8 @@ namespace SWEndor.Scenarios
 
     public void LoadInitial()
     {
-      PlayerInfo.Score.Reset();
-      PlayerInfo.IsMovementControlsEnabled = false;
+      Engine.PlayerInfo.Score.Reset();
+      Engine.PlayerInfo.IsMovementControlsEnabled = false;
     }
 
     public void UpdateActorLists(HashSet<ActorInfo> list)

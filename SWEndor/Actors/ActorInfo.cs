@@ -14,19 +14,23 @@ using SWEndor.Scenarios;
 
 namespace SWEndor.Actors
 {
-  public partial class ActorInfo : 
+  public partial class ActorInfo :
+    IEngineObject,
     ILinked<ActorInfo>,
-    IScoped, 
+    IScoped,
+    IActorState,
     IActorCreateable<ActorCreationInfo>,
     IActorDisposable,
     INotify, 
+    IMeshRender,
+    IDyingTime,
     IParent<ActorInfo>, 
     ITransformable
   {
     public ActorTypeInfo TypeInfo { get; private set; }
     internal SpawnerInfo SpawnerInfo;
 
-    public readonly Factory<ActorInfo> ActorFactory;
+    public readonly Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo> ActorFactory;
     public Engine Engine { get { return ActorFactory.Engine; } }
 
     public Session Game { get { return Engine.Game; } }
@@ -106,7 +110,7 @@ namespace SWEndor.Actors
     private HealthModel Health;
     private TransformModel<ActorInfo, ActorInfo> Transform;
     private ArmorModel Armor;
-    private ExplodeModel Explosions;
+    private ExplodeModel<ActorInfo> Explosions;
     private RegenModel Regen;
 
     // Traits (classes)
@@ -133,13 +137,13 @@ namespace SWEndor.Actors
 
     #region Creation Methods
 
-    internal ActorInfo(Engine engine, Factory<ActorInfo> owner, int id, int dataid, ActorCreationInfo acinfo)
+    internal ActorInfo(Engine engine, Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo> owner, int id, int dataid, ActorCreationInfo acinfo)
     {
       ActorFactory = owner;
       ID = id;
       dataID = dataid;
 
-      TypeInfo = acinfo.ActorTypeInfo;
+      TypeInfo = acinfo.TypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
 
@@ -171,7 +175,7 @@ namespace SWEndor.Actors
       // Clear past resources
       //Destroy(); // redundant
       ID = id;
-      TypeInfo = acinfo.ActorTypeInfo;
+      TypeInfo = acinfo.TypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
 

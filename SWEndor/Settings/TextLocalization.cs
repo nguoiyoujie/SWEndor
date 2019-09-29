@@ -94,7 +94,7 @@ namespace SWEndor
 
       { TextLocalKeys.WEAPON_NOTFOUND_ERROR, "Weapon '{0}' is not found!" },
       { TextLocalKeys.WEAPONLOAD_NOTFOUND_ERROR, "Weapon loadout '{0}' is not found!" },
-      { TextLocalKeys.SCRIPT_NOTFOUND_ERROR, "Script file  '{0}' is not found!" },
+      { TextLocalKeys.SCRIPT_NOTFOUND_ERROR, "Script file '{0}' is not found!" },
 
       { TextLocalKeys.SCRIPT_LEXER_INVALID, "Unable to match against any tokens at line {0} position {1} \"{2}\"" },
       { TextLocalKeys.SCRIPT_PARSER_UNEXPECTED_TOKEN, "Unexpected token '{0}' found at line {1}:{2}.\nLine: {3}" },

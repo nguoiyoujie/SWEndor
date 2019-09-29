@@ -104,7 +104,7 @@ namespace SWEndor.UI.Widgets
       TVScreen2DImmediate.Draw_Circle(radar_center.x, radar_center.y, radar_radius + 2, 300, pcolor.GetIntColor());
       TVScreen2DImmediate.Draw_Circle(radar_center.x, radar_center.y, radar_radius - 2, 300, pcolor.GetIntColor());
 
-      ActorFactory.DoEach(DrawElement);
+      Engine.ActorFactory.DoEach(DrawElement);
       Engine.ExplosionFactory.DoEach(DrawElement);
 
       TVScreen2DImmediate.Action_End2D();

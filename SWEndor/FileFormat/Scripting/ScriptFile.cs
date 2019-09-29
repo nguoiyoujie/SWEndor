@@ -1,4 +1,5 @@
-﻿using SWEndor.Scenarios.Scripting;
+﻿using SWEndor.Primitives.Extensions;
+using SWEndor.Scenarios.Scripting;
 using System;
 using System.IO;
 using System.Text;
@@ -7,10 +8,12 @@ namespace SWEndor.FileFormat.Scripting
 {
   public class ScriptFile
   {
+    private static char[] seperator = new char[] { ':' };
+
     public ScriptFile(string filepath)
     {
       if (!File.Exists(filepath))
-        throw new FileNotFoundException("Script file '" + Path.GetFullPath(filepath) + "' is not found!");
+        throw new FileNotFoundException(TextLocalization.Get(TextLocalKeys.SCRIPT_NOTFOUND_ERROR).F(Path.GetFullPath(filepath)));
 
       FilePath = filepath;
       ReadFile();
@@ -36,7 +39,7 @@ namespace SWEndor.FileFormat.Scripting
               script.AddExpression(sb.ToString(), ref linenumber);
             }
 
-            line = line.TrimEnd(':').Trim();
+            line = line.TrimEnd(seperator).Trim();
             script = new Script(FilePath, line);
             sb.Clear();
           }

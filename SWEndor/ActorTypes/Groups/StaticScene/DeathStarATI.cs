@@ -4,6 +4,7 @@ using SWEndor.Actors.Components;
 using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
+using SWEndor.Models;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Instances
@@ -12,10 +13,10 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal DeathStarATI(Factory owner) : base(owner, "DeathStar")
     {
-      Explodes = new ExplodeInfo[]
+      Explodes = new ExplodeData[]
       {
-        new ExplodeInfo("ExpL02", 1, 1, ExplodeTrigger.ON_DEATH),
-        new ExplodeInfo("ExpW02", 1, 1, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("ExpL02", 1, 1, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("ExpW02", 1, 1, ExplodeTrigger.ON_DEATH),
       };
 
       MeshData = MeshDataDecorator.CreateAlphaTexturedWall(Name, 20000, "deathstar/deathstar.bmp", "deathstar/deathstaralpha.bmp");

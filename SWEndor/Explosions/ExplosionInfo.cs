@@ -1,6 +1,4 @@
-﻿using System;
-using MTV3D65;
-using SWEndor.Actors;
+﻿using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Core;
 using SWEndor.Explosions.Models;
@@ -13,17 +11,21 @@ using SWEndor.Primitives.Extensions;
 namespace SWEndor.Explosions
 {
   public partial class ExplosionInfo :
+    IEngineObject,
     ILinked<ExplosionInfo>,
     IScoped,
+    IActorState,
     IActorCreateable<ExplosionCreationInfo>,
     IActorDisposable,
     INotify,
+    IMeshRender,
+    IDyingTime,
     IParent<ActorInfo>,
     ITransformable
   {
     public ExplosionTypeInfo TypeInfo { get; private set; }
 
-    public readonly Factory<ExplosionInfo> ExplosionFactory;
+    public readonly Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> ExplosionFactory;
     public Engine Engine { get { return ExplosionFactory.Engine; } }
 
     public Session Game { get { return Engine.Game; } }
@@ -65,13 +67,13 @@ namespace SWEndor.Explosions
 
     #region Creation Methods
 
-    internal ExplosionInfo(Engine engine, Factory<ExplosionInfo> owner, int id, int dataid, ExplosionCreationInfo acinfo)
+    internal ExplosionInfo(Engine engine, Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> owner, int id, int dataid, ExplosionCreationInfo acinfo)
     {
       ExplosionFactory = owner;
       ID = id;
       dataID = dataid;
 
-      TypeInfo = acinfo.ExplosionTypeInfo;
+      TypeInfo = acinfo.TypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
 
@@ -90,7 +92,7 @@ namespace SWEndor.Explosions
     {
       // Clear past resources
       ID = id;
-      TypeInfo = acinfo.ExplosionTypeInfo;
+      TypeInfo = acinfo.TypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
 

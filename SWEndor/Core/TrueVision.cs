@@ -99,8 +99,6 @@ namespace SWEndor.Core
       else
         TVEngine.Init3DWindowed(Handle, true);
 
-      //TVEngine.SwitchWindowed();
-
       TVViewport port = TVEngine.GetViewport();
       Engine.ScreenWidth = port.GetWidth();
       Engine.ScreenHeight = port.GetHeight();
@@ -136,6 +134,7 @@ namespace SWEndor.Core
 
     private void InitLights()
     {
+      // TO-DO: Shift this to 'Globals', then make this configuable
       TVLightEngine.SetGlobalAmbient(0.75f, 0.75f, 0.75f);
 
       int tv_light0 = TVLightEngine.CreateDirectionalLight(new TV_3DVECTOR(-1.0f, -0.5f, 0.2f), 1f, 1f, 1f, "GlobalLight0", 0.9f);

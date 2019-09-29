@@ -4,6 +4,7 @@ using SWEndor.Actors.Components;
 using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
+using SWEndor.Models;
 using SWEndor.Sound;
 using System.IO;
 
@@ -13,11 +14,11 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ExecutorATI(Factory owner) : base(owner, "Executor Super Star Destroyer")
     {
-      Explodes = new ExplodeInfo[]
+      Explodes = new ExplodeData[]
       {
-        new ExplodeInfo("ExpL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
-        new ExplodeInfo("ExpL01", 1, 5, ExplodeTrigger.ON_DEATH),
-        new ExplodeInfo("ExpW01", 1, 5, ExplodeTrigger.ON_DEATH)
+        new ExplodeData("ExpL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeData("ExpL01", 1, 5, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("ExpW01", 1, 5, ExplodeTrigger.ON_DEATH)
       };
 
       MaxStrength = 3500.0f;

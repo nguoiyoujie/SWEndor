@@ -53,19 +53,9 @@ namespace SWEndor.ActorTypes.Instances
           float empduration = 12;
 
           for (int i = 0; i < child.WeaponDefinitions.Weapons.Length; i++)
-            if (child.WeaponDefinitions.Weapons[i].WeaponCooldown < Game.GameTime + empduration + 2)
-              child.WeaponDefinitions.Weapons[i].WeaponCooldown = Game.GameTime + empduration + 2;
+            if (child.WeaponDefinitions.Weapons[i].WeaponCooldown < engine.Game.GameTime + empduration + 2)
+              child.WeaponDefinitions.Weapons[i].WeaponCooldown = engine.Game.GameTime + empduration + 2;
 
-          /*
-          foreach (ActorInfo child2 in child.Children)
-          {
-            if (child2.TypeInfo is ElectroATI)
-            {
-              child2.CycleInfo.CyclesRemaining = empduration / child2.TypeInfo.TimedLifeData.TimedLife;
-              return;
-            }
-          }
-          */
           ExplosionCreationInfo acinfo = new ExplosionCreationInfo(engine.ExplosionTypeFactory.Get("Electro"));
           ExplosionInfo electro = engine.ExplosionFactory.Create(acinfo);
           electro.AttachedActorID = child.ID;

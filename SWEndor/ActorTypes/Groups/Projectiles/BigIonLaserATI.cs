@@ -10,6 +10,7 @@ using SWEndor.Actors.Models;
 using SWEndor.Core;
 using SWEndor.ExplosionTypes;
 using SWEndor.Explosions;
+using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -19,8 +20,8 @@ namespace SWEndor.ActorTypes.Instances
     {
       // Combat
       TimedLifeData = new TimedLifeData(true, 30);
-      Explodes = new ExplodeInfo[] {
-        new ExplodeInfo("ExpL00", 1, 10, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
+      Explodes = new ExplodeData[] {
+        new ExplodeData("ExpL00", 1, 10, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
       };
 
       ImpactDamage = 50;
@@ -45,24 +46,13 @@ namespace SWEndor.ActorTypes.Instances
       foreach (ActorInfo child in hitby.Children)
       {
         child.InflictDamage(hitby, 0.5f * child.HP, DamageType.NORMAL, child.GetGlobalPosition());
-        //CombatSystem.onNotify(Engine, child, CombatEventType.DAMAGE_FRAC, 0.5f);
 
         float empduration = 10000;
 
         for (int i = 0; i < child.WeaponDefinitions.Weapons.Length; i++)
-          if (child.WeaponDefinitions.Weapons[i].WeaponCooldown < Game.GameTime + empduration + 2)
-            child.WeaponDefinitions.Weapons[i].WeaponCooldown = Game.GameTime + empduration + 2;
+          if (child.WeaponDefinitions.Weapons[i].WeaponCooldown < engine.Game.GameTime + empduration + 2)
+            child.WeaponDefinitions.Weapons[i].WeaponCooldown = engine.Game.GameTime + empduration + 2;
 
-        /*
-        foreach (ActorInfo child2 in child.Children)
-        {
-          if (child2.TypeInfo is ElectroATI)
-          {
-            child2.CycleInfo.CyclesRemaining = empduration / child2.TypeInfo.TimedLifeData.TimedLife;
-            return;
-          }
-        }
-        */
         ExplosionCreationInfo acinfo = new ExplosionCreationInfo(engine.ExplosionTypeFactory.Get("Electro"));
         ExplosionInfo electro = engine.ExplosionFactory.Create(acinfo);
         electro.AttachedActorID = child.ID;

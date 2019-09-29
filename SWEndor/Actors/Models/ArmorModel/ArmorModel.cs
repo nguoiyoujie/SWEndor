@@ -3,7 +3,7 @@
 namespace SWEndor.Actors.Models
 {
   /// <summary>
-  /// A light implementation of an Armor system, replaces old Damage and CollisionDamage coefficients
+  /// A light implementation of an Armor system
   /// </summary>
   public struct ArmorModel
   {
@@ -51,14 +51,5 @@ namespace SWEndor.Actors.Models
           break;
       }
     }
-  }
-}
-
-namespace SWEndor.Actors
-{
-  public partial class ActorInfo
-  {
-    public void SetArmor(DamageType dmgtype, float value) { Armor.Set(dmgtype, value); }
-    public float GetArmor(DamageType dmgtype) { return Armor.Get(dmgtype); }
   }
 }

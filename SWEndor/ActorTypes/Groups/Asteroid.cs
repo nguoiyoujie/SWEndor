@@ -13,7 +13,7 @@ namespace SWEndor.ActorTypes.Groups
       // Combat
       CombatData = CombatData.Disabled;
       ArmorData = ArmorData.Immune;
-      Explodes = new ExplodeInfo[] { new ExplodeInfo("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH) };
+      Explodes = new ExplodeData[] { new ExplodeData("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH) };
 
       RenderData.CullDistance = 4500;
 

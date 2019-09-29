@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Models;
 using SWEndor.Sound;
 using System.IO;
 
@@ -12,10 +13,10 @@ namespace SWEndor.ActorTypes.Instances
     internal ArquitensATI(Factory owner) : base(owner, "Arquitens Light Cruiser")
     {
       // Combat
-      Explodes = new ExplodeInfo[] {
-        new ExplodeInfo("ExpL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
-        new ExplodeInfo("ExpL01", 1, 1.5f, ExplodeTrigger.ON_DEATH),
-        new ExplodeInfo("ExpW01", 1, 1, ExplodeTrigger.ON_DEATH)
+      Explodes = new ExplodeData[] {
+        new ExplodeData("ExpL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeData("ExpL01", 1, 1.5f, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("ExpW01", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
       MaxStrength = 450.0f;

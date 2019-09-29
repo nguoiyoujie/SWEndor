@@ -1,19 +1,14 @@
-﻿using MTV3D65;
-using SWEndor.Actors;
+﻿using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using SWEndor.Explosions;
-using SWEndor.FileFormat.INI;
+using SWEndor.Models;
 using SWEndor.Player;
-using SWEndor.Primitives;
 using SWEndor.Scenarios;
-using System;
-using System.Collections.Generic;
-using System.IO;
 
 namespace SWEndor.ExplosionTypes
 {
-  public partial class ExplosionTypeInfo
+  public partial class ExplosionTypeInfo : ITypeInfo<ExplosionInfo>
   {
     public ExplosionTypeInfo(Factory owner, string name = "")
     {
@@ -27,7 +22,6 @@ namespace SWEndor.ExplosionTypes
     public Session Game { get { return Engine.Game; } }
     public GameScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
     public TrueVision TrueVision { get { return Engine.TrueVision; } }
-    public ActorInfo.Factory<ActorInfo> ActorFactory { get { return Engine.ActorFactory; } }
     public LandInfo LandInfo { get { return Engine.LandInfo; } }
     public AtmosphereInfo AtmosphereInfo { get { return Engine.AtmosphereInfo; } }
     public PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }

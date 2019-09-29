@@ -46,8 +46,8 @@ namespace SWEndor.Core
 
     // Factories and Registries
     internal Font.Factory FontFactory { get; private set; }
-    internal ActorInfo.Factory<ActorInfo> ActorFactory { get; private set; }
-    internal ExplosionInfo.Factory<ExplosionInfo> ExplosionFactory { get; private set; }
+    internal Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo> ActorFactory { get; private set; }
+    internal Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> ExplosionFactory { get; private set; }
     internal ActorTypeInfo.Factory ActorTypeFactory { get; private set; }
     internal ExplosionTypeInfo.Factory ExplosionTypeFactory { get; private set; }
     internal Squadron.Factory SquadronFactory { get; private set; }
@@ -62,8 +62,8 @@ namespace SWEndor.Core
       Game = new Session(this);
       SoundManager = new SoundManager(this);
       PerfManager = new PerfManager(this);
-      ActorFactory = new ActorInfo.Factory<ActorInfo>(this, (e, f, n, m, i) => { return new ActorInfo(e, f, n, m, i); });
-      ExplosionFactory = new ExplosionInfo.Factory<ExplosionInfo>(this, (e, f, n, m, i) => { return new ExplosionInfo(e, f, n, m, i); });
+      ActorFactory = new Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>(this, (e, f, n, m, i) => { return new ActorInfo(e, f, n, m, i); });
+      ExplosionFactory = new Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> (this, (e, f, n, m, i) => { return new ExplosionInfo(e, f, n, m, i); });
       ActorTypeFactory = new ActorTypeInfo.Factory(this);
       ExplosionTypeFactory = new ExplosionTypeInfo.Factory(this);
       SquadronFactory = new Squadron.Factory();

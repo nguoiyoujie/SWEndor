@@ -3,6 +3,7 @@ using SWEndor.Actors.Components;
 using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
+using SWEndor.Models;
 using System.Collections.Generic;
 using System.IO;
 
@@ -14,10 +15,10 @@ namespace SWEndor.ActorTypes.Instances
 
     internal DeathStar2ATI(Factory owner) : base(owner, "DeathStar2")
     {
-      Explodes = new ExplodeInfo[]
+      Explodes = new ExplodeData[]
       {
-        new ExplodeInfo("ExpL02", 1, 1, ExplodeTrigger.ON_DEATH),
-        new ExplodeInfo("ExpW02", 1, 1, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("ExpL02", 1, 1, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("ExpW02", 1, 1, ExplodeTrigger.ON_DEATH),
       };
 
       int[] death = new int[] { 1, 10, 15, 16, 20, 21, 22, 23, 27, 28, 30, 31, 34, 35, 36 };

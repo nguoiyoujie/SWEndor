@@ -133,17 +133,17 @@ namespace SWEndor.Scenarios
         Rotation = new TV_3DVECTOR(-90, 0, 0),
         InitialScale =12
       };
-      ActorFactory.Create(aci_Hoth);
+      Engine.ActorFactory.Create(aci_Hoth);
     }
 
     public override void GameTick()
     {
       base.GameTick();
 
-      ActorInfo player = ActorFactory.Get(m_PlayerID);
-      ActorInfo trn1 = ActorFactory.Get(m_Transport1ID);
-      ActorInfo trn2 = ActorFactory.Get(m_Transport2ID);
-      ActorInfo trn3 = ActorFactory.Get(m_Transport3ID);
+      ActorInfo player = Engine.ActorFactory.Get(m_PlayerID);
+      ActorInfo trn1 = Engine.ActorFactory.Get(m_Transport1ID);
+      ActorInfo trn2 = Engine.ActorFactory.Get(m_Transport2ID);
+      ActorInfo trn3 = Engine.ActorFactory.Get(m_Transport3ID);
       if (player != null
           && !player.IsDyingOrDead)
       {
@@ -355,7 +355,7 @@ namespace SWEndor.Scenarios
       TV_3DVECTOR rotation = new TV_3DVECTOR(0, 180, 0);
       if (MainEnemyFaction.ShipCount > 0)
       {
-        ActorInfo target = ActorFactory.Get(MainEnemyFaction.GetShip(0));
+        ActorInfo target = Engine.ActorFactory.Get(MainEnemyFaction.GetShip(0));
         if (target != null)
         {
           TV_3DVECTOR dir = target.GetGlobalPosition() - position;
@@ -404,7 +404,7 @@ namespace SWEndor.Scenarios
             int count = 0;
             foreach (int enID in MainEnemyFaction.GetShips())
             {
-              ActorInfo en = ActorFactory.Get(enID);
+              ActorInfo en = Engine.ActorFactory.Get(enID);
               if (en != null)
               {
                 pos += en.Position;
@@ -444,7 +444,7 @@ namespace SWEndor.Scenarios
     {
       foreach (int actorID in MainAllyFaction.GetWings())
       {
-        ActorInfo actor = ActorFactory.Get(actorID);
+        ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
         {
           actor.UnlockOne();
@@ -461,14 +461,14 @@ namespace SWEndor.Scenarios
     {
       foreach (int actorID in MainAllyFaction.GetWings())
       {
-        ActorInfo actor = ActorFactory.Get(actorID);
+        ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor.IsPlayer)
           actor.Delete();
       }
 
       foreach (int actorID in MainAllyFaction.GetShips())
       {
-        ActorInfo actor = ActorFactory.Get(actorID);
+        ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor.IsPlayer)
           actor.Delete();
       }
@@ -779,7 +779,7 @@ namespace SWEndor.Scenarios
 
     public void Scene_EnterCutscene()
     {
-      ActorInfo player = ActorFactory.Get(m_PlayerID);
+      ActorInfo player = Engine.ActorFactory.Get(m_PlayerID);
       if (player != null)
       {
         m_Player_PrimaryWeaponN = PlayerInfo.PrimaryWeaponN;
@@ -796,7 +796,7 @@ namespace SWEndor.Scenarios
 
     public void Scene_ExitCutscene()
     {
-      ActorInfo player = ActorFactory.Get(m_PlayerID);
+      ActorInfo player = Engine.ActorFactory.Get(m_PlayerID);
       if (player != null)
       {
         PlayerInfo.ActorID = m_PlayerID;
@@ -835,7 +835,7 @@ namespace SWEndor.Scenarios
 
     public void Scene_02()
     {
-      ActorInfo player = ActorFactory.Get(m_PlayerID);
+      ActorInfo player = Engine.ActorFactory.Get(m_PlayerID);
 
       Manager.AddEvent(Game.GameTime + 0.1f, Scene_EnterCutscene);
       Manager.AddEvent(Game.GameTime + 7, Scene_ExitCutscene);
@@ -862,14 +862,14 @@ namespace SWEndor.Scenarios
 
       foreach (int actorID in MainEnemyFaction.GetWings())
       {
-        ActorInfo actor = ActorFactory.Get(actorID);
+        ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
           actor.Delete();
       }
 
       foreach (int actorID in MainAllyFaction.GetWings())
       {
-        ActorInfo actor = ActorFactory.Get(actorID);
+        ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
         {
           x = xn * Engine.Random.Next(200, 600);
@@ -889,9 +889,9 @@ namespace SWEndor.Scenarios
         }
       }
 
-      ActorInfo trn1 = ActorFactory.Get(m_Transport1ID);
-      ActorInfo trn2 = ActorFactory.Get(m_Transport2ID);
-      ActorInfo trn3 = ActorFactory.Get(m_Transport3ID);
+      ActorInfo trn1 = Engine.ActorFactory.Get(m_Transport1ID);
+      ActorInfo trn2 = Engine.ActorFactory.Get(m_Transport2ID);
+      ActorInfo trn3 = Engine.ActorFactory.Get(m_Transport3ID);
 
       trn1.SetArmor(DamageType.ALL, 0);
       trn2.SetArmor(DamageType.ALL, 0);
@@ -926,7 +926,7 @@ namespace SWEndor.Scenarios
       int en_ship = 0;
       foreach (int actorID in MainEnemyFaction.GetShips())
       {
-        ActorInfo actor = ActorFactory.Get(actorID);
+        ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
         {
           if (en_ship == 1)

@@ -4,10 +4,10 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes
 {
-  public struct ActorCreationInfo : ICreate<ActorInfo>
+  public struct ActorCreationInfo : ICreationInfo<ActorInfo, ActorTypeInfo>
   {
     public FactionInfo Faction;
-    public ActorTypeInfo ActorTypeInfo;
+    public ActorTypeInfo TypeInfo { get; }
     public string Name;
     public float CreationTime;
     public ActorState InitialState;
@@ -22,7 +22,7 @@ namespace SWEndor.ActorTypes
     public ActorCreationInfo(ActorTypeInfo at)
     {
       // Load defaults from actortype
-      ActorTypeInfo = at;
+      TypeInfo = at;
       Name = at.Name;
       InitialStrength = at.MaxStrength;
       InitialSpeed = at.MoveLimitData.MaxSpeed;

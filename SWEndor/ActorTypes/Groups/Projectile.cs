@@ -16,9 +16,9 @@ namespace SWEndor.ActorTypes.Groups
       // Combat
       CombatData = CombatData.Disabled;
       ArmorData = ArmorData.Immune;
-      Explodes = new ExplodeInfo[]
+      Explodes = new ExplodeData[]
       {
-        new ExplodeInfo("ExpS00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
+        new ExplodeData("ExpS00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
       };
       DyingMoveData.Kill();
 

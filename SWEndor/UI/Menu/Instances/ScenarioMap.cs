@@ -112,7 +112,7 @@ namespace SWEndor.UI.Menu.Pages
       base.RenderTick();
       TVScreen2DImmediate.Action_Begin2D();
       DrawGrid();
-      ActorFactory.DoEach(DrawElement);
+      Engine.ActorFactory.DoEach(DrawElement);
       TVScreen2DImmediate.Action_End2D(); 
     }
 
@@ -137,7 +137,7 @@ namespace SWEndor.UI.Menu.Pages
       //ActorInfo p = PlayerInfo.Actor;
       if (a != null)// && p != null)
       {
-        TV_3DVECTOR ppos = PlayerCameraInfo.Position * zoom_ratio;
+        TV_3DVECTOR ppos = Engine.PlayerCameraInfo.Position * zoom_ratio;
         TV_3DVECTOR apos = a.GetGlobalPosition() * zoom_ratio;
 
         float size = a.TypeInfo.RenderData.RadarSize * 3;
@@ -149,7 +149,7 @@ namespace SWEndor.UI.Menu.Pages
           && !a.UseParentCoords)
         {
           int acolor = a.Faction.Color.GetIntColor();
-          float proty = PlayerCameraInfo.Rotation.y;
+          float proty = Engine.PlayerCameraInfo.Rotation.y;
 
           XYCoord posvec = new XYCoord { X = ppos.x - apos.x, Y = ppos.z - apos.z };
           PolarCoord polar = posvec.ToPolarCoord;

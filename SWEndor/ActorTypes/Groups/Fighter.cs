@@ -15,11 +15,11 @@ namespace SWEndor.ActorTypes.Groups
       // Combat
       CombatData = CombatData.DefaultFighter;
       ArmorData = ArmorData.Default;
-      Explodes = new ExplodeInfo[]
+      Explodes = new ExplodeData[]
       {
-        new ExplodeInfo("Electro", 1, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.ATTACH_TO_ACTOR),
-        new ExplodeInfo("ExpS00", 0.75f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
-        new ExplodeInfo("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH)
+        new ExplodeData("Electro", 1, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.ATTACH_TO_ACTOR),
+        new ExplodeData("ExpS00", 0.75f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeData("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
       MoveLimitData.ZTilt = 2.5f;
