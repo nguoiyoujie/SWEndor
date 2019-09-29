@@ -269,15 +269,15 @@ namespace SWEndor.Player
         case CameraMode.FREEROTATION:
         case CameraMode.FREEMODE:
         case CameraMode.FIRSTPERSON:
-          location = new TV_3DVECTOR(0, 0, actor.TypeInfo.MeshData.MaxDimensions.z + 10);
+          location = new TV_3DVECTOR(0, 0, actor.MaxDimensions.z + 10);
           target = new TV_3DVECTOR(0, 0, 20000);
           break;
         case CameraMode.THIRDPERSON:
-          location = new TV_3DVECTOR(0, actor.TypeInfo.MeshData.MaxDimensions.y * 3, -actor.TypeInfo.MeshData.MaxDimensions.z * 8);
+          location = new TV_3DVECTOR(0, actor.MaxDimensions.y * 3, -actor.MaxDimensions.z * 8);
           target = new TV_3DVECTOR(0, 0, 20000);
           break;
         case CameraMode.THIRDREAR:
-          location = new TV_3DVECTOR(0, actor.TypeInfo.MeshData.MaxDimensions.y * 3, actor.TypeInfo.MeshData.MaxDimensions.z * 8);
+          location = new TV_3DVECTOR(0, actor.MaxDimensions.y * 3, actor.MaxDimensions.z * 8);
           target = new TV_3DVECTOR(0, 0, -20000);
           break;
       }

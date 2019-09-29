@@ -169,5 +169,8 @@ namespace SWEndor.Explosions
     public TV_3DVECTOR GetVertex(int vertexID) { return Meshes.GetVertex(vertexID); }
     public int GetVertexCount() { return Meshes.GetVertexCount(); }
     public void Render() { Meshes.Render(); }
+
+    public TV_3DVECTOR MaxDimensions { get { return TypeInfo.MeshData.MaxDimensions; } }
+    public TV_3DVECTOR MinDimensions { get { return TypeInfo.MeshData.MinDimensions; } }
   }
 }

@@ -244,5 +244,8 @@ namespace SWEndor.Actors
     public int GetVertexCount() { return Meshes.GetVertexCount(); }
     public void Render(bool renderfar) { Meshes.Render(renderfar); }
     public void UpdateRenderLine() { Meshes.UpdateRenderLine(Engine, this); }
+
+    public TV_3DVECTOR MaxDimensions { get { return TypeInfo.MeshData.MaxDimensions; } }
+    public TV_3DVECTOR MinDimensions { get { return TypeInfo.MeshData.MinDimensions; } }
   }
 }

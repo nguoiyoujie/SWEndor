@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Data;
 using SWEndor.Core;
+using SWEndor.Models;
 using SWEndor.Primitives.Extensions;
 using SWEndor.Weapons;
 
@@ -49,7 +50,7 @@ namespace SWEndor.AI.Actions
     }
 
 
-    private void Process(Engine engine, ActorInfo actor, ref CollisionData data)
+    private void Process(Engine engine, ActorInfo actor, ref CollisionData<ActorInfo> data)
     {
       if (CheckBounds(actor))
       {

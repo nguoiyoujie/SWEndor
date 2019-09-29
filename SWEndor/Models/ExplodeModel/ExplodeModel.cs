@@ -11,7 +11,7 @@ namespace SWEndor.Models
     IEngineObject, 
     IActorState, 
     IDyingTime,
-    IMeshRender, 
+    IMeshObject, 
     IActorDisposable,
     ITransformable
   {

@@ -22,10 +22,11 @@ namespace SWEndor.Actors
     IActorCreateable<ActorCreationInfo>,
     IActorDisposable,
     INotify, 
-    IMeshRender,
+    IMeshObject,
     IDyingTime,
     IParent<ActorInfo>, 
-    ITransformable
+    ITransformable,
+    ICollidable
   {
     public ActorTypeInfo TypeInfo { get; private set; }
     internal SpawnerInfo SpawnerInfo;
@@ -96,7 +97,7 @@ namespace SWEndor.Actors
     internal int HuntWeight = 1;
 
     // Data (structs)
-    internal CollisionData CollisionData;
+    internal CollisionData<ActorInfo> CollisionData;
     internal CombatData CombatData;
     internal WeaponData WeaponDefinitions;
     internal MoveData MoveData;

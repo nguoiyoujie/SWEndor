@@ -18,7 +18,7 @@ namespace SWEndor.Explosions
     IActorCreateable<ExplosionCreationInfo>,
     IActorDisposable,
     INotify,
-    IMeshRender,
+    IMeshObject,
     IDyingTime,
     IParent<ActorInfo>,
     ITransformable
