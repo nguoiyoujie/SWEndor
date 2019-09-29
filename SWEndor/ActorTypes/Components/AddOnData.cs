@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Core;
+using SWEndor.FileFormat.INI;
 using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Components
@@ -48,6 +49,23 @@ namespace SWEndor.ActorTypes.Components
         a.UseParentCoords = AttachToParent;
         a.JoinSquad(actor);
       }
+    }
+
+    public void LoadFromINI(INIFile f, string sectionname)
+    {
+      string type = f.GetStringValue(sectionname, "Type", Type);
+      TV_3DVECTOR pos = f.GetTV_3DVECTOR(sectionname, "Position", Position);
+      TV_3DVECTOR rot = f.GetTV_3DVECTOR(sectionname, "Rotation", Rotation);
+      bool attach = f.GetBoolValue(sectionname, "AttachToParent", AttachToParent);
+      this = new AddOnData(type, pos, rot, attach);
+    }
+
+    public void SaveToINI(INIFile f, string sectionname)
+    {
+      f.SetStringValue(sectionname, "Type", Type);
+      f.SetTV_3DVECTOR(sectionname, "Position", Position);
+      f.SetTV_3DVECTOR(sectionname, "Rotation", Rotation);
+      f.SetBoolValue(sectionname, "AttachToParent", AttachToParent);
     }
   }
 }

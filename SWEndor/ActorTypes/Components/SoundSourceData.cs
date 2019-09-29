@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Explosions;
+using SWEndor.FileFormat.INI;
 using SWEndor.Primitives.Extensions;
 using SWEndor.Scenarios;
 
@@ -94,6 +95,27 @@ namespace SWEndor.ActorTypes.Components
           else
             engine.SoundManager.SetSound(sd, false, vol, loop);
       }
+    }
+
+    public void LoadFromINI(INIFile f, string sectionname)
+    {
+      string[] sound = f.GetStringList(sectionname, "Sound", Sound);
+      TV_3DVECTOR rloc = f.GetTV_3DVECTOR(sectionname, "RelativeLocation", RelativeLocation);
+      float dist = f.GetFloatValue(sectionname, "Distance", Distance);
+      bool loop = f.GetBoolValue(sectionname, "Loop", Loop);
+      bool engs = f.GetBoolValue(sectionname, "IsEngineSound", IsEngineSound);
+      bool cuts = f.GetBoolValue(sectionname, "PlayInCutscene", PlayInCutscene);
+      this = new SoundSourceData(sound, dist, rloc, loop, cuts, engs);
+    }
+
+    public void SaveToINI(INIFile f, string sectionname)
+    {
+      f.SetStringList(sectionname, "Sound", Sound);
+      f.SetTV_3DVECTOR(sectionname, "RelativeLocation", RelativeLocation);
+      f.SetFloatValue(sectionname, "Distance", Distance);
+      f.SetBoolValue(sectionname, "Loop", Loop);
+      f.SetBoolValue(sectionname, "IsEngineSound", IsEngineSound);
+      f.SetBoolValue(sectionname, "PlayInCutscene", PlayInCutscene);
     }
   }
 }

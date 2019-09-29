@@ -16,7 +16,6 @@ namespace SWEndor.ActorTypes.Components
     public readonly TVMesh SourceFarMesh;
     public readonly TV_3DVECTOR MaxDimensions;
     public readonly TV_3DVECTOR MinDimensions;
-    //public TV_3DVECTOR Size { get { return MaxDimensions - MinDimensions; } }
 
     public readonly static MeshData Default = new MeshData("", tv.TVScene.CreateMeshBuilder());
 
