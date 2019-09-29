@@ -1,6 +1,6 @@
-﻿using SWEndor.Actors;
-using SWEndor.Core;
+﻿using SWEndor.Core;
 using SWEndor.ExplosionTypes;
+using SWEndor.Models;
 using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;
 using System;
@@ -10,7 +10,14 @@ namespace SWEndor.Explosions
 {
   public partial class ExplosionInfo
   {
-    public class Factory<T> : Primitives.Factories.Registry<int, T> where T : class, ILinked<T>, IScoped, IExplosion
+    public class Factory<T> : Primitives.Factories.Registry<int, T> 
+      where T :
+      class,
+      ILinked<T>,
+      IScoped,
+      IActorDisposable,
+      IActorCreateable<ExplosionCreationInfo>,
+      ITransformable
     {
       public readonly Engine Engine;
       internal Factory(Engine engine, Func<Engine, Factory<T>, int, int, ExplosionCreationInfo, T> createfunc)

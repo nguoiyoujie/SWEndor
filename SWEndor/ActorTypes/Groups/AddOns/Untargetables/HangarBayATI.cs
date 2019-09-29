@@ -5,6 +5,7 @@ using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.AI.Squads;
 using SWEndor.Core;
+using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Instances
 {

@@ -45,35 +45,6 @@ namespace SWEndor.Sound
           else
             s.m_intrMusic = Name;
 
-          //if (isInterruptMusic)
-          //  s.interruptActive = true;
-
-/*          }
-          else
-          {
-            s.interruptActive = true;
-            float duration = GetLength(s.music[Name]);
-            if (s.current_channel != null)
-            {
-              //s.musicgrp.getChannel(0, out fmodchannel);
-              DoFadeOut(s.current_channel);
-              DoFadeIn(s.current_channel, duration - FadeTime * 2);
-            }
-
-            s.fmodsystem.playSound(s.music[Name], s.interruptmusicgrp, true, out s.current_channel);
-
-            if (FadeTime > 0)
-              DoFadeIn(s.current_channel);
-
-            if (Position_ms > 0)
-              s.current_channel.setPosition(Position_ms, TIMEUNIT.MS);
-
-            DoFadeOut(s.current_channel, duration - FadeTime);
-
-            s.current_channel.setCallback(s.m_icb);
-            s.current_channel.setPaused(false);
-          }
-          */
         }
       }
 

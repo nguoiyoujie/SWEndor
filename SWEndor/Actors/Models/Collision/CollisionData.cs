@@ -4,6 +4,7 @@ using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Primitives;
 using SWEndor.Actors.Models;
+using SWEndor.Models;
 
 namespace SWEndor.Actors.Data
 {

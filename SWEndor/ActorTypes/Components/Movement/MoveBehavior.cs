@@ -2,6 +2,7 @@
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes;
 using SWEndor.Core;
+using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Components
 {

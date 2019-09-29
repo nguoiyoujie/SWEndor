@@ -132,7 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actors\ActorCreationInfo.cs" />
-    <Compile Include="Actors\Interfaces.cs" />
+    <Compile Include="Models\Interfaces.cs" />
     <Compile Include="Actors\Models\AIModel\AIData.cs" />
     <Compile Include="Actors\Models\ArmorModel\ArmorModel.cs" />
     <Compile Include="Actors\Models\Collision\CollisionResultData.cs" />
@@ -142,13 +142,17 @@
     <Compile Include="Actors\Models\HealthModel\HealthModel.cs" />
     <Compile Include="Actors\Models\Collision\CollisionData.cs" />
     <Compile Include="Actors\Models\Relation\RelationModel.cs" />
-    <Compile Include="Actors\Models\StateModel\StateModel.cs" />
-    <Compile Include="Actors\Models\TimedLife\DyingTimer.cs" />
+    <Compile Include="Actors\Models\StateModel\ActorExt.cs" />
+    <Compile Include="Actors\Models\Transform\ActorExt.cs" />
+    <Compile Include="Models\StateModel\StateModel.cs" />
+    <Compile Include="Actors\Models\TimedLife\ActorExt.cs" />
+    <Compile Include="Models\TimerModel\TimerStates.cs" />
+    <Compile Include="Models\TimerModel\TimerModel.cs" />
     <Compile Include="ActorTypes\Components\TimedLifeData.cs" />
     <Compile Include="Actors\Models\Combat\CombatData.cs" />
     <Compile Include="Actors\Models\Regeneration\RegenModel.cs" />
-    <Compile Include="Actors\Models\Transform\TransformModel.cs" />
-    <Compile Include="Actors\Models\Transform\TransformData.cs" />
+    <Compile Include="Models\TransformModel\TransformModel.cs" />
+    <Compile Include="Models\TransformModel\TransformData.cs" />
     <Compile Include="Actors\Models\Move\MoveData.cs" />
     <Compile Include="ActorTypes\Components\Movement\RotateOnly.cs" />
     <Compile Include="ActorTypes\Components\Movement\MoveBehavior.cs" />
@@ -156,14 +160,14 @@
     <Compile Include="ActorTypes\Components\Movement\MoveLaser.cs" />
     <Compile Include="ActorTypes\Components\Movement\NoMove.cs" />
     <Compile Include="Actors\Models\Mesh\MeshModel.cs" />
-    <Compile Include="Actors\Enums\ComponentMask.cs" />
+    <Compile Include="Models\Enums\ComponentMask.cs" />
     <Compile Include="Actors\ProcessActorInfo.cs" />
     <Compile Include="Actors\Components\WeaponData.cs" />
     <Compile Include="Actors\Components\CycleInfo.cs" />
     <Compile Include="ActorTypes\Components\Movement\MoveNormal.cs" />
     <Compile Include="Actors\Components\CombatSystem.cs" />
-    <Compile Include="Actors\Enums\ActorState.cs" />
-    <Compile Include="Actors\Enums\CreationState.cs" />
+    <Compile Include="Models\Enums\ActorState.cs" />
+    <Compile Include="Models\Enums\CreationState.cs" />
     <Compile Include="Actors\States\ActorDistanceInfo.cs" />
     <Compile Include="ActorTypes\Components\DyingMoveData.cs" />
     <Compile Include="ActorTypes\Components\MeshData.cs" />
@@ -354,9 +358,9 @@
     <Compile Include="Explosions\ExplosionInfo.cs" />
     <Compile Include="Explosions\Factory\Factory.cs" />
     <Compile Include="Explosions\Models\Mesh\MeshModel.cs" />
-    <Compile Include="Explosions\Models\StateModel\StateModel.cs" />
-    <Compile Include="Explosions\Models\TimedLife\DyingTimer.cs" />
-    <Compile Include="Explosions\Models\Transform\TransformModel.cs" />
+    <Compile Include="Explosions\Models\StateModel\ExplExt.cs" />
+    <Compile Include="Explosions\Models\TimedModel\ExplExt.cs" />
+    <Compile Include="Explosions\Models\Transform\ExplExt.cs" />
     <Compile Include="Explosions\ProcessExplosionInfo.cs" />
     <Compile Include="ExplosionTypes\General\ExplosionCreationInfo.cs" />
     <Compile Include="ExplosionTypes\General\ExplosionTypeInfo.cs" />

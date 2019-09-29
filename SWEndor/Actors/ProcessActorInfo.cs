@@ -2,6 +2,7 @@
 using SWEndor.AI;
 using SWEndor.Core;
 using SWEndor.Explosions;
+using SWEndor.Models;
 using SWEndor.Primitives;
 using SWEndor.Weapons;
 using System;

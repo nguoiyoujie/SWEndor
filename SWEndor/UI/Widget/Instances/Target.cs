@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Models;
 using SWEndor.Core;
+using SWEndor.Models;
 using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.Sound;

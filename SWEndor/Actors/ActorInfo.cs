@@ -6,6 +6,7 @@ using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
 using SWEndor.AI.Squads;
 using SWEndor.Core;
+using SWEndor.Models;
 using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;
@@ -13,7 +14,14 @@ using SWEndor.Scenarios;
 
 namespace SWEndor.Actors
 {
-  public partial class ActorInfo : ILinked<ActorInfo>, IScoped, IActor
+  public partial class ActorInfo : 
+    ILinked<ActorInfo>,
+    IScoped, 
+    IActorCreateable<ActorCreationInfo>,
+    IActorDisposable,
+    INotify, 
+    IParent<ActorInfo>, 
+    ITransformable
   {
     public ActorTypeInfo TypeInfo { get; private set; }
     internal SpawnerInfo SpawnerInfo;
@@ -94,9 +102,9 @@ namespace SWEndor.Actors
     private MeshModel Meshes;
     private RelationModel Relation;
     private TimerModel DyingTimer;
-    private StateModel State;
+    private StateModel<ActorInfo> State;
     private HealthModel Health;
-    private TransformModel Transform;
+    private TransformModel<ActorInfo, ActorInfo> Transform;
     private ArmorModel Armor;
     private ExplodeModel Explosions;
     private RegenModel Regen;
@@ -137,7 +145,7 @@ namespace SWEndor.Actors
 
       Meshes.Init(ID, TypeInfo);
       Relation.Init();
-      DyingTimer.InitAsDyingTimer(TypeInfo);
+      DyingTimer.InitAsDyingTimer(this, TypeInfo);
       Health.Init(TypeInfo, acinfo);
       Transform.Init(TypeInfo, acinfo);
       Armor.Init(TypeInfo);
@@ -149,7 +157,7 @@ namespace SWEndor.Actors
       CombatData.CopyFrom(TypeInfo.CombatData);
       WeaponDefinitions.Init(TypeInfo);
 
-      State.Init(this, TypeInfo, acinfo);
+      State.Init(TypeInfo, acinfo);
 
       Faction = acinfo.Faction;
 
@@ -169,7 +177,7 @@ namespace SWEndor.Actors
 
       Meshes.Init(ID, TypeInfo);
       Relation.Init();
-      DyingTimer.InitAsDyingTimer(TypeInfo);
+      DyingTimer.InitAsDyingTimer(this, TypeInfo);
       Health.Init(TypeInfo, acinfo);
       Transform.Init(TypeInfo, acinfo);
       Armor.Init(TypeInfo);
@@ -182,7 +190,7 @@ namespace SWEndor.Actors
       WeaponDefinitions.Init(TypeInfo);
 
       // Creation
-      State.Init(this, TypeInfo, acinfo);
+      State.Init(TypeInfo, acinfo);
 
       Faction = acinfo.Faction;
 
@@ -228,10 +236,17 @@ namespace SWEndor.Actors
     #region Event Methods
     public void OnTickEvent() { TickEvents?.Invoke(this); }
     public void OnHitEvent(ActorInfo victim) { HitEvents?.Invoke(this, victim); }
-    public void OnStateChangeEvent() { ActorStateChangeEvents?.Invoke(this, ActorState); }
+    public void OnStateChangeEvent()
+    {
+      if (ActorState == ActorState.DYING)
+        TypeInfo.Dying(Engine, this);
+      else if (ActorState == ActorState.DEAD)
+        TypeInfo.Dead(Engine, this);
+
+      ActorStateChangeEvents?.Invoke(this, ActorState);
+    }
     public void OnCreatedEvent() { CreatedEvents?.Invoke(this); }
     public void OnDestroyedEvent() { DestroyedEvents?.Invoke(this); }
-
     #endregion
 
     public bool IsOutOfBounds(TV_3DVECTOR minbounds, TV_3DVECTOR maxbounds)
@@ -369,7 +384,7 @@ namespace SWEndor.Actors
       else
         Delete();
 
-      DyingTimer.Tick(this, time);
+      DyingTimer.Tick(time);
       Health.Tick(time);
 
       OnTickEvent();

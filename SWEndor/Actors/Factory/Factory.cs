@@ -1,5 +1,6 @@
 ﻿using SWEndor.ActorTypes;
 using SWEndor.Core;
+using SWEndor.Models;
 using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;
 using System;
@@ -9,7 +10,14 @@ namespace SWEndor.Actors
 {
   public partial class ActorInfo
   {
-    public class Factory<T> : Primitives.Factories.Registry<int, T> where T : class, ILinked<T>, IScoped, IActor
+    public class Factory<T> : Primitives.Factories.Registry<int, T> 
+      where T : 
+      class, 
+      ILinked<T>,
+      IScoped,
+      IActorDisposable,
+      IActorCreateable<ActorCreationInfo>,
+      ITransformable
     {
       public readonly Engine Engine;
       internal Factory(Engine engine, Func<Engine, Factory<T>, int, int, ActorCreationInfo, T> createfunc)

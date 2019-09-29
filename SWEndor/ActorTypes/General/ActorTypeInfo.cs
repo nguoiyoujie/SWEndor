@@ -7,6 +7,7 @@ using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Core;
 using SWEndor.FileFormat.INI;
+using SWEndor.Models;
 using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;

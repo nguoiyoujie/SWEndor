@@ -125,9 +125,6 @@ namespace SWEndor
 
       { TextLocalKeys.TIME_MULT, "Game speed set to x{0:0.00}" },
 
-
-     
-
       { TextLocalKeys.SQUAD_ATTACK_ACK, "Directing squad to attack {0}." },
       { TextLocalKeys.SQUAD_DEFEND_ACK, "Directing squad to assist {0}." },
       { TextLocalKeys.SQUAD_CLEAR_ACK, "Discarding squad orders." },

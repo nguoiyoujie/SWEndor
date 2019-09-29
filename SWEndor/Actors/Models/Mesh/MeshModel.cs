@@ -4,11 +4,13 @@ using SWEndor.Primitives;
 using SWEndor.Player;
 using System.Collections.Generic;
 using SWEndor.Core;
+using SWEndor.Models;
 
 namespace SWEndor.Actors.Models
 {
   public struct MeshModel
   {
+    // TO-DO: Move out of 'static'
     private static Dictionary<int, int> m_ids = new Dictionary<int, int>();
     public static int GetID(int meshID)
     {
@@ -210,13 +212,13 @@ namespace SWEndor.Actors.Models
         return;
 
       TV_3DVECTOR p = engine.PlayerCameraInfo.Camera.GetPosition();
-      BoundingSphere sph = actor.GetBoundingSphere(false);
+      BoundingSphere sph = GetBoundingSphere(false);
       TV_3DVECTOR d2 = new TV_3DVECTOR();
       TVCamera c = engine.TrueVision.TargetRenderSurface.GetCamera();
       c.SetPosition(p.x, p.y, p.z);
       c.LookAtMesh(Mesh);
       c.SetPosition(sph.Position.x, sph.Position.y, sph.Position.z);
-      d2 = c.GetFrontPosition((actor.TypeInfo.MeshData.MinDimensions.z - actor.TypeInfo.MeshData.MaxDimensions.z) * 2); // - sph.Radius * 3);
+      d2 = c.GetFrontPosition(-sph.Radius * 2);
       c.SetPosition(d2.x, d2.y, d2.z);
 
       using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))

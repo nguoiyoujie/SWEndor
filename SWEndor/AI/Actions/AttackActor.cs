@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.ActorTypes;
 using SWEndor.Core;
+using SWEndor.Models;
 using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;
 using SWEndor.Weapons;

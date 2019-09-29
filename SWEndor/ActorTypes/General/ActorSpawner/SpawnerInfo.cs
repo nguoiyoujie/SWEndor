@@ -125,6 +125,7 @@ namespace SWEndor
             engine.GameScenarioManager.Scenario?.RegisterEvents(a);
             a.QueueFirst(new Lock());
           }
+
           SpawnMoveTime = engine.Game.GameTime + SpawnMoveDelay;
         }
       }

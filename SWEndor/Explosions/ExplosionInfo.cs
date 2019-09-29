@@ -1,16 +1,25 @@
-﻿using MTV3D65;
+﻿using System;
+using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Components;
 using SWEndor.Core;
 using SWEndor.Explosions.Models;
 using SWEndor.ExplosionTypes;
+using SWEndor.Models;
 using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Explosions
 {
-  public partial class ExplosionInfo : ILinked<ExplosionInfo>, IScoped, IExplosion
+  public partial class ExplosionInfo :
+    ILinked<ExplosionInfo>,
+    IScoped,
+    IActorCreateable<ExplosionCreationInfo>,
+    IActorDisposable,
+    INotify,
+    IParent<ActorInfo>,
+    ITransformable
   {
     public ExplosionTypeInfo TypeInfo { get; private set; }
 
@@ -40,8 +49,8 @@ namespace SWEndor.Explosions
     // Traits/Model (structs)
     private MeshModel Meshes;
     private TimerModel DyingTimer;
-    private StateModel State;
-    private TransformModel Transform;
+    private StateModel<ExplosionInfo> State;
+    private TransformModel<ExplosionInfo, ActorInfo> Transform;
 
     // special
     internal int AttachedActorID = -1;
@@ -67,10 +76,10 @@ namespace SWEndor.Explosions
       Key = "{0} {1}".F(_name, ID);
 
       Meshes.Init(ID, TypeInfo);
-      DyingTimer.InitAsDyingTimer(TypeInfo);
+      DyingTimer.InitAsDyingTimer(this, TypeInfo);
       Transform.Init(TypeInfo, acinfo);
 
-      State.Init(this, TypeInfo, acinfo);
+      State.Init(TypeInfo, acinfo);
 
       AttachedActorID = -1;
 
@@ -86,11 +95,11 @@ namespace SWEndor.Explosions
       Key = "{0} {1}".F(_name, ID);
 
       Meshes.Init(ID, TypeInfo);
-      DyingTimer.InitAsDyingTimer(TypeInfo);
+      DyingTimer.InitAsDyingTimer(this, TypeInfo);
       Transform.Init(TypeInfo, acinfo);
 
       // Creation
-      State.Init(this, TypeInfo, acinfo);
+      State.Init(TypeInfo, acinfo);
 
       AttachedActorID = -1;
 
@@ -102,6 +111,14 @@ namespace SWEndor.Explosions
       State.SetGenerated();
       Update();
     }
+    #endregion
+
+    #region Event Methods
+    public void OnTickEvent() { }
+    public void OnHitEvent(ActorInfo victim) { }
+    public void OnStateChangeEvent() { }
+    public void OnCreatedEvent() { }
+    public void OnDestroyedEvent() { }
     #endregion
 
     public bool IsAggregateMode
@@ -125,7 +142,9 @@ namespace SWEndor.Explosions
           && ActorDistanceInfo.GetRoughDistance(GetGlobalPosition(), PlayerCameraInfo.Camera.GetPosition()) > distcheck);
       }
     }
-    
+
+    public ActorInfo ParentForCoords { get { return Engine.ActorFactory.Get(AttachedActorID); } }
+
     public void Delete() { ExplosionFactory.MakeDead(this); }
 
 
@@ -142,7 +161,6 @@ namespace SWEndor.Explosions
 
       // Final dispose
       ExplosionFactory.Remove(ID);
-
       Meshes.Dispose();
 
       // Finally
@@ -156,7 +174,7 @@ namespace SWEndor.Explosions
       if (IsDead)
         Delete();
 
-      DyingTimer.Tick(this, time);
+      DyingTimer.Tick(time);
     }
   }
 }

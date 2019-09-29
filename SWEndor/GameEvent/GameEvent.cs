@@ -5,6 +5,7 @@ using SWEndor.Scenarios;
 using System.Collections.Generic;
 using System;
 using SWEndor.Core;
+using SWEndor.Models;
 
 namespace SWEndor
 {

@@ -4,7 +4,7 @@ namespace SWEndor.AI.Squads
 {
   public partial class Squadron
   {
-    public class Factory : Primitives.Factories.Registry<int, Squadron>
+    public class Factory : Registry<int, Squadron>
     {
       private int counter = 0;
       private object creationLock = new object();
