@@ -117,7 +117,7 @@ namespace SWEndor.Actors
     // Traits (classes)
 
 
-    // Ownership
+    // ILinked
     public ActorInfo Prev { get; set; }
     public ActorInfo Next { get; set; }
 
@@ -127,7 +127,7 @@ namespace SWEndor.Actors
     {
       get
       {
-        return !(TypeInfo is ActorTypes.Groups.Projectile || TypeInfo is ActorTypes.Groups.Debris || TypeInfo is ActorTypes.Groups.Explosion);
+        return !(TypeInfo is ActorTypes.Groups.Projectile || TypeInfo is ActorTypes.Groups.Debris);
       }
     }
 #endif

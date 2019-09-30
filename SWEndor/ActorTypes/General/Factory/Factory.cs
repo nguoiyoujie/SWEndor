@@ -41,17 +41,6 @@ namespace SWEndor.ActorTypes
         Register(new Transport_Box3ATI(this));
         Register(new Transport_Box4ATI(this));
 
-        // explosions
-        /*
-        Register(new ExpS00(this));
-        Register(new ExpL00(this));
-        Register(new ExpL01(this));
-        Register(new ExpL02(this));
-        Register(new ExpW01(this));
-        Register(new ExpW02(this));
-        */
-        //Register(new ElectroATI(this));
-        
         // fighters
         Register(new Z95ATI(this));
         Register(new XWingATI(this));
@@ -183,7 +172,7 @@ namespace SWEndor.ActorTypes
         {
           Add(atype.Name, atype);
         }
-        //atype.LoadFromINI();
+        //atype.LoadFromINI(atype.Name);
         Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
       }
 
@@ -201,21 +190,6 @@ namespace SWEndor.ActorTypes
 
         return ret;
       }
-
-      /*
-      public void LoadFromINI(string filepath)
-      {
-        if (File.Exists(filepath))
-        {
-          INIFile f = new INIFile(filepath);
-          foreach (string s in f.Sections)
-          {
-            if (s != INIFile.PreHeaderSectionName)
-              Register(Parser.Parse(this, f, s));
-          }
-        }
-      }
-      */
     }
   }
 }

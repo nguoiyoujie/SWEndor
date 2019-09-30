@@ -144,7 +144,6 @@ namespace SWEndor.UI.Menu.Pages
 
         if (a.Active
           && size > 0
-          && !(a.TypeInfo is ActorTypes.Groups.Explosion)
           && !(a.TypeInfo is ActorTypes.Groups.LaserProjectile)
           && !a.UseParentCoords)
         {

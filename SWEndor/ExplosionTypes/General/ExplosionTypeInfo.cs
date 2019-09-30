@@ -33,10 +33,6 @@ namespace SWEndor.ExplosionTypes
     // Data
     public TimedLifeData TimedLifeData;
     public RenderData RenderData = RenderData.Default;
-    
-    // Mesh Data
-    public float Scale = 1;
-    
     public MeshData MeshData = MeshData.Default;
     
     // Sound

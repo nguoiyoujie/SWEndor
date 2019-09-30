@@ -116,10 +116,7 @@ namespace SWEndor.UI.Widgets
 
     private int GetColor(ActorInfo actor)
     {
-      if (actor.TypeInfo is ActorTypes.Groups.Explosion)
-        return explColor;
-
-      else if (actor.TypeInfo is ActorTypes.Groups.Projectile)
+      if (actor.TypeInfo is ActorTypes.Groups.Projectile)
         return projColor;
 
       else if (actor.Faction != null)
