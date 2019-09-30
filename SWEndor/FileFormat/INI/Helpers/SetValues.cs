@@ -6,6 +6,9 @@ namespace SWEndor.FileFormat.INI
   {
     public void SetStringValue(string section, string key, string value)
     {
+      if (value == null)
+        return;
+
       if (!m_sections.ContainsKey(section))
         m_sections.Add(section, new INISection("[" + section + "]"));
 
