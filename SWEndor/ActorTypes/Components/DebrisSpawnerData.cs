@@ -45,15 +45,34 @@ namespace SWEndor.ActorTypes.Components
         float z = RotationZMin + (float)engine.Random.NextDouble() * (RotationZMax - RotationZMin);
 
         ActorCreationInfo acinfo = new ActorCreationInfo(_cache);
-        acinfo.Position = actor.GetGlobalPosition() + SpawnPosition;
+        acinfo.Position = actor.GetRelativePositionXYZ(SpawnPosition.x, SpawnPosition.y, SpawnPosition.z);
         acinfo.Rotation = actor.Rotation + new TV_3DVECTOR(x, y, z);
         acinfo.InitialSpeed = actor.MoveData.Speed;
-        //acinfo.InitialState = ActorState.DYING;
-        ActorInfo a = actor.ActorFactory.Create( acinfo);
+        ActorInfo a = actor.ActorFactory.Create(acinfo);
       }
     }
 
-    public void LoadFromINI(INIFile f, string sectionname)
+    public static void LoadFromINI(INIFile f, string sectionname, string sourcename, out DebrisSpawnerData[] dest)
+    {
+      string[] src = f.GetStringList(sectionname, sourcename, new string[0]);
+      dest = new DebrisSpawnerData[src.Length];
+      for (int i = 0; i < src.Length; i++)
+        dest[i].LoadFromINI(f, src[i]);
+    }
+
+    public static void SaveToINI(INIFile f, string sectionname, string sourcename, DebrisSpawnerData[] src)
+    {
+      string[] ss = new string[src.Length];
+      for (int i = 0; i < src.Length; i++)
+      {
+        string s = sourcename + i.ToString();
+        ss[i] = s;
+        src[i].SaveToINI(f, s);
+      }
+      f.SetStringList(sectionname, sourcename, ss);
+    }
+
+    private void LoadFromINI(INIFile f, string sectionname)
     {
       string type = f.GetStringValue(sectionname, "Type", Type);
       TV_3DVECTOR pos = f.GetTV_3DVECTOR(sectionname, "SpawnPosition", SpawnPosition);
@@ -67,7 +86,7 @@ namespace SWEndor.ActorTypes.Components
       this = new DebrisSpawnerData(type, pos, xMin, xMax, yMin, yMax, zMin, zMax, chance);
     }
 
-    public void SaveToINI(INIFile f, string sectionname)
+    private void SaveToINI(INIFile f, string sectionname)
     {
       f.SetStringValue(sectionname, "Type", Type);
       f.SetTV_3DVECTOR(sectionname, "SpawnPosition", SpawnPosition);

@@ -14,13 +14,33 @@ namespace SWEndor.ActorTypes.Components
       LookAt = to;
     }
 
-    public void LoadFromINI(INIFile f, string sectionname)
+    public static void LoadFromINI(INIFile f, string sectionname, string key, out LookData[] dest)
+    {
+      string[] src = f.GetStringList(sectionname, key, new string[0]);
+      dest = new LookData[src.Length];
+      for (int i = 0; i < src.Length; i++)
+        dest[i].LoadFromINI(f, src[i]);
+    }
+
+    public static void SaveToINI(INIFile f, string sectionname, string key, string membername, LookData[] src)
+    {
+      string[] ss = new string[src.Length];
+      for (int i = 0; i < src.Length; i++)
+      {
+        string s = membername + i.ToString();
+        ss[i] = s;
+        src[i].SaveToINI(f, s);
+      }
+      f.SetStringList(sectionname, key, ss);
+    }
+
+    private void LoadFromINI(INIFile f, string sectionname)
     {
       LookFrom = f.GetTV_3DVECTOR(sectionname, "LookFrom", LookFrom);
       LookAt = f.GetTV_3DVECTOR(sectionname, "LookAt", LookAt);
     }
 
-    public void SaveToINI(INIFile f, string sectionname)
+    private void SaveToINI(INIFile f, string sectionname)
     {
       f.SetTV_3DVECTOR(sectionname, "LookFrom", LookFrom);
       f.SetTV_3DVECTOR(sectionname, "LookAt", LookAt);

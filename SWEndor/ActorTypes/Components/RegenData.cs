@@ -19,13 +19,14 @@ namespace SWEndor.ActorTypes.Components
       SiblingRegenRate = sibling;
     }
 
-    public RegenData(INIFile f, string sectionname)
+    public void LoadFromINI(INIFile f, string sectionname)
     {
-      NoRegen = f.GetBoolValue(sectionname, "NoRegen", false);
-      SelfRegenRate = f.GetFloatValue(sectionname, "SelfRegenRate", 0);
-      ParentRegenRate = f.GetFloatValue(sectionname, "ParentRegenRate", 0);
-      ChildRegenRate = f.GetFloatValue(sectionname, "ChildRegenRate", 0);
-      SiblingRegenRate = f.GetFloatValue(sectionname, "SiblingRegenRate", 0);
+      bool noRegen = f.GetBoolValue(sectionname, "NoRegen", false);
+      float self = f.GetFloatValue(sectionname, "SelfRegenRate", 0);
+      float parent = f.GetFloatValue(sectionname, "ParentRegenRate", 0);
+      float child = f.GetFloatValue(sectionname, "ChildRegenRate", 0);
+      float sibling = f.GetFloatValue(sectionname, "SiblingRegenRate", 0);
+      this = new RegenData(noRegen, self, parent, child, sibling);
     }
 
     public void SaveToINI(INIFile f, string sectionname)

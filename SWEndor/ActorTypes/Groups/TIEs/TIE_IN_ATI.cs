@@ -26,8 +26,8 @@ namespace SWEndor.ActorTypes.Instances
       };
 
       Debris = new DebrisSpawnerData[] {
-        new DebrisSpawnerData("TIE_InterceptorWingATI", new TV_3DVECTOR(-30, 0, 0), -1000, 1000, 0, 3000, -2500, 2500, 0.5f),
-        new DebrisSpawnerData("TIE_InterceptorWingATI", new TV_3DVECTOR(30, 0, 0), -1000, 1000, -3000, 0, -2500, 2500, 0.5f),
+        new DebrisSpawnerData("TIE_InterceptorWingATI", new TV_3DVECTOR(-30, 0, 0), -10, 10, 0, 30, -25, 25, 0.5f),
+        new DebrisSpawnerData("TIE_InterceptorWingATI", new TV_3DVECTOR(30, 0, 0), -10, 10, -30, 0, -25, 25, 0.5f),
         };
 
       Loadouts = new string[] { "TIEI_LASR", "TIEI_LASR_AI" };

@@ -218,7 +218,7 @@ namespace SWEndor.Actors.Models
       c.SetPosition(p.x, p.y, p.z);
       c.LookAtMesh(Mesh);
       c.SetPosition(sph.Position.x, sph.Position.y, sph.Position.z);
-      d2 = c.GetFrontPosition(-sph.Radius * 2);
+      d2 = c.GetFrontPosition(-sph.Radius * 2.5f);
       c.SetPosition(d2.x, d2.y, d2.z);
 
       using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))

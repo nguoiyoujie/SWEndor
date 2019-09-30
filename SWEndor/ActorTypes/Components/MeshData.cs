@@ -1,33 +1,54 @@
 ﻿using MTV3D65;
 using SWEndor.Core;
+using SWEndor.FileFormat.INI;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using System.Collections.Generic;
 using System.IO;
 
 namespace SWEndor.ActorTypes.Components
 {
+  public enum MeshMode : byte
+  {
+    NONE, 
+    NORMAL,
+    HORIZON,
+    TexturedModel,
+    AlphaTexturedWall,
+    AlphaTexturedFlickerWall,
+    BillboardAtlasAnimation
+  }
+
   public struct MeshData
   {
     private static TrueVision tv = Globals.Engine.TrueVision;
 
+    public readonly string Name;
     public readonly string SourceMeshPath;
     public readonly string SourceFarMeshPath;
     public readonly TVMesh SourceMesh;
     public readonly TVMesh SourceFarMesh;
     public readonly TV_3DVECTOR MaxDimensions;
     public readonly TV_3DVECTOR MinDimensions;
+    public readonly float Scale;
+    public readonly MeshMode Mode;
 
-    public readonly static MeshData Default = new MeshData("", tv.TVScene.CreateMeshBuilder());
+    public readonly static MeshData Default = new MeshData("", tv.TVScene.CreateMeshBuilder(), 1, MeshMode.NONE, null);
 
-    public MeshData(string name, string srcMesh) : this(name, srcMesh, null) { }
+    public MeshData(string name, string srcMesh) : this(name, srcMesh, null, 1) { }
 
-    public MeshData(string name, string srcMesh, string srcFarMesh)
+    public MeshData(string name, string srcMesh, float scale) : this(name, srcMesh, null, scale) { }
+
+    public MeshData(string name, string srcMesh, string srcFarMesh, float scale)
     {
+      Name = name;
       string farname = name + "_far";
       SourceMeshPath = srcMesh;
       SourceFarMeshPath = srcFarMesh;
       MinDimensions = new TV_3DVECTOR();
       MaxDimensions = new TV_3DVECTOR();
+      Scale = scale;
+      Mode = MeshMode.NORMAL;
 
       // create SourceMesh and SourceFarMesh
       SourceMesh = tv.TVGlobals.GetMesh(name);
@@ -70,12 +91,15 @@ namespace SWEndor.ActorTypes.Components
       }
     }
 
-    public MeshData(string name, TVMesh mesh)
+    public MeshData(string name, TVMesh mesh, float scale, MeshMode mode, string data)
     {
-      SourceMeshPath = null;
+      Name = name;
+      SourceMeshPath = data;
       SourceFarMeshPath = null;
       MinDimensions = new TV_3DVECTOR();
       MaxDimensions = new TV_3DVECTOR();
+      Scale = scale;
+      Mode = mode;
 
       SourceMesh = mesh;
       SourceFarMesh = mesh;
@@ -86,6 +110,95 @@ namespace SWEndor.ActorTypes.Components
       SourceMesh.GetBoundingBox(ref MinDimensions, ref MaxDimensions);
     }
 
+    public void LoadFromINI(INIFile f, string sectionname)
+    {
+      MeshMode mode = f.GetEnumValue(sectionname, "Mode", Mode);
+      string name = f.GetStringValue(sectionname, "Name", Name);
+      float scale = f.GetFloatValue(sectionname, "Scale", Scale);
+
+      switch (mode)
+      {
+        case MeshMode.NONE:
+          this = Default;
+          break;
+
+        case MeshMode.NORMAL:
+          {
+            string srcMesh = f.GetStringValue(sectionname, "SourceMeshPath", SourceMeshPath);
+            string srcFarMesh = f.GetStringValue(sectionname, "SourceFarMeshPath", SourceFarMeshPath);
+            this = new MeshData(name, srcMesh, srcFarMesh, scale);
+          }
+          break;
+
+        case MeshMode.HORIZON:
+          {
+            string data = f.GetStringValue(sectionname, "Data", SourceMeshPath);
+            if (data != null)
+              this = MeshDataDecorator.CreateHorizon(name, scale, data);
+          }
+          break;
+
+        case MeshMode.AlphaTexturedWall:
+          {
+            string[] data = f.GetStringList(sectionname, "Data", null);
+            if (data != null && data.Length >= 2)
+              this = MeshDataDecorator.CreateAlphaTexturedWall(name, scale, data[0], data[1]);
+          }
+          break;
+
+        case MeshMode.BillboardAtlasAnimation:
+          {
+            string[] data = f.GetStringList(sectionname, "Data", null);
+            int columns = 1;
+            int rows = 1;
+            if (data != null 
+              && data.Length >= 3
+              && int.TryParse(data[1], out columns)
+              && int.TryParse(data[2], out rows)
+              )
+              this = MeshDataDecorator.CreateBillboardAtlasAnimation(name, scale, data[0], columns, rows);
+          }
+          break;
+      }
+    }
+
+    public void SaveToINI(INIFile f, string sectionname)
+    {
+      f.SetEnumValue(sectionname, "Mode", Mode);
+      f.SetStringValue(sectionname, "Name", Name);
+      f.SetFloatValue(sectionname, "Scale", Scale);
+
+      switch (Mode)
+      {
+        case MeshMode.NONE:
+          break;
+
+        case MeshMode.NORMAL:
+          {
+            f.SetStringValue(sectionname, "SourceMeshPath", SourceMeshPath);
+            f.SetStringValue(sectionname, "SourceFarMeshPath", SourceFarMeshPath);
+          }
+          break;
+
+        case MeshMode.HORIZON:
+          {
+            f.SetStringValue(sectionname, "Data", SourceMeshPath);
+          }
+          break;
+
+        case MeshMode.AlphaTexturedWall:
+          {
+            f.SetStringValue(sectionname, "Data", SourceMeshPath);
+          }
+          break;
+
+        case MeshMode.BillboardAtlasAnimation:
+          {
+            f.SetStringValue(sectionname, "Data", SourceMeshPath);
+          }
+          break;
+      }
+    }
   }
 
   public static class MeshDataDecorator
@@ -107,7 +220,7 @@ namespace SWEndor.ActorTypes.Components
         m.SetCullMode(CONST_TV_CULLING.TV_DOUBLESIDED);
         m.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
       }
-      return new MeshData(name, m);
+      return new MeshData(name, m, 1, MeshMode.HORIZON, texname);
     }
 
     public static MeshData CreateTexturedModel(string name, string modelpath, string texname)
@@ -122,7 +235,7 @@ namespace SWEndor.ActorTypes.Components
         m.LoadXFile(Path.Combine(Globals.ModelPath, modelpath), true);
         m.SetTexture(itex);
       }
-      return new MeshData(name, m);
+      return new MeshData(name, m, 1, MeshMode.TexturedModel, "{0},{1}".F(modelpath, texname));
     }
 
     public static MeshData CreateAlphaTexturedWall(string name, float size, string texname, string alphatexname)
@@ -148,9 +261,8 @@ namespace SWEndor.ActorTypes.Components
         m.AddWall(tex, -size / 2, 0, size / 2, 0, size, -size / 2);
         m.SetTexture(tex);
       }
-      return new MeshData(name, m);
+      return new MeshData(name, m, 1, MeshMode.AlphaTexturedWall, "{0},{1}".F(texname, alphatexname));
     }
-
 
     public static MeshData CreateAlphaTexturedFlickerWall(string name, float size, string texname, string texdname, string alphatexname, int frames, int[] flickerframes, ref int[] texanimframes)
     {
@@ -191,21 +303,7 @@ namespace SWEndor.ActorTypes.Components
         m.AddWall(texanimframes[0], -size / 2, 0, size / 2, 0, size, -size / 2);
         m.SetTexture(texanimframes[0]);
       }
-      return new MeshData(name, m);
-    }
-
-    public static MeshData CreateBillboardAnimation(string name, float size, string texfolder, ref int[] texanimframes)
-    {
-      TVMesh m = tv.TVGlobals.GetMesh(name);
-      if (m == null)
-      {
-        LoadAlphaTextureFromFolder(ref texanimframes, Globals.ImagePath, texfolder);
-        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
-          m = tv.TVScene.CreateBillboard(texanimframes[0], 0, 0, 0, size, size, name, true);
-        m.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
-        m.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
-      }
-      return new MeshData(name, m);
+      return new MeshData(name, m, 1, MeshMode.AlphaTexturedFlickerWall, null);
     }
 
     public static MeshData CreateBillboardAtlasAnimation(string name, float size, string texname, int columns, int rows)
@@ -222,10 +320,10 @@ namespace SWEndor.ActorTypes.Components
         m.SetTextureModEnable(true);
         m.SetTextureModTranslationScale(1f / columns, 1f / rows);
       }
-      return new MeshData(name, m);
+      return new MeshData(name, m, 1, MeshMode.BillboardAtlasAnimation, "{0},{1},{2}".F(texname, columns, rows));
     }
 
-    public static int LoadAlphaTexture(string name, string texpath, string alphatexpath = null)
+    private static int LoadAlphaTexture(string name, string texpath, string alphatexpath = null)
     {
       using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
@@ -240,7 +338,7 @@ namespace SWEndor.ActorTypes.Components
       }
     }
 
-    public static int LoadTexture(string name, string texpath)
+    private static int LoadTexture(string name, string texpath)
     {
       using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
@@ -251,7 +349,7 @@ namespace SWEndor.ActorTypes.Components
       }
     }
 
-    public static void LoadAlphaTextureFromFolder(ref int[] texanimframes, string mainPath, string subPath)
+    private static void LoadAlphaTextureFromFolder(ref int[] texanimframes, string mainPath, string subPath)
     {
       List<int> frames = new List<int>();
       string folderPath = Path.Combine(mainPath, subPath);
@@ -263,7 +361,7 @@ namespace SWEndor.ActorTypes.Components
       texanimframes = frames.ToArray();
     }
 
-    public static void LoadTextureFromFolder(ref int[] texanimframes, string mainPath, string subPath)
+    private static void LoadTextureFromFolder(ref int[] texanimframes, string mainPath, string subPath)
     {
       List<int> frames = new List<int>();
       string folderPath = Path.Combine(mainPath, subPath);

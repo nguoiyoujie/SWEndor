@@ -2,6 +2,7 @@
 using SWEndor.Actors.Data;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
+using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
 {
@@ -11,8 +12,12 @@ namespace SWEndor.ActorTypes.Groups
     {
       CombatData = CombatData.Disabled;
       ArmorData = ArmorData.Immune;
-      TimedLifeData = new TimedLifeData(true, 5);
+      Explodes = new ExplodeData[]
+      {
+        new ExplodeData("ExpS00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+      };
 
+      TimedLifeData = new TimedLifeData(true, 5);
       DyingMoveData.Spin(120, 270);
 
       MoveLimitData.MaxSpeed = 500;

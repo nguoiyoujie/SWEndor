@@ -192,7 +192,6 @@
     <Compile Include="ActorTypes\Components\SoundSourceData.cs" />
     <Compile Include="ActorTypes\Components\DebrisSpawnerData.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\SpawnerInfo.cs" />
-    <Compile Include="ActorTypes\General\Factory\Parser.cs" />
     <Compile Include="ActorTypes\Groups\MissileProjectile.cs" />
     <Compile Include="ActorTypes\Groups\LaserProjectile.cs" />
     <Compile Include="ActorTypes\Groups\ShieldGenerators.cs" />
@@ -312,7 +311,6 @@
     <Compile Include="Actors\ActorInfo.cs" />
     <Compile Include="ActorTypes\General\ActorTypeInfo.cs" />
     <Compile Include="ActorTypes\Groups\AddOn.cs" />
-    <Compile Include="ActorTypes\Groups\Explosion.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\MC90TurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\Projectiles\YellowLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\StarDestroyers\ExecutorATI.cs" />
@@ -698,7 +696,6 @@
     <Content Include="SWEndor.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ActorTypes\Groups\Explosions\" />
     <Folder Include="Data\ActorTypes\" />
   </ItemGroup>
   <ItemGroup>

@@ -10,8 +10,6 @@ namespace SWEndor.Models
     where T : 
     IScoped, 
     IParent<U>
-    //IActorDisposable,
-    //ITransformable
     where U :
     IScoped,
     IActorDisposable,
@@ -32,7 +30,7 @@ namespace SWEndor.Models
       Rotation = acinfo.Rotation;
       PrevPosition = Position;
       PrevRotation = Rotation;
-      Scale = type.Scale * acinfo.InitialScale;
+      Scale = type.MeshData.Scale * acinfo.InitialScale;
     }
 
     public void Init(ExplosionTypeInfo type, ExplosionCreationInfo acinfo)
@@ -41,7 +39,7 @@ namespace SWEndor.Models
       Rotation = acinfo.Rotation;
       PrevPosition = Position;
       PrevRotation = Rotation;
-      Scale = type.Scale * acinfo.InitialScale;
+      Scale = type.MeshData.Scale * acinfo.InitialScale;
     }
 
     public float Scale

@@ -1,4 +1,6 @@
-﻿namespace SWEndor.Actors.Data
+﻿using SWEndor.FileFormat.INI;
+
+namespace SWEndor.Actors.Data
 {
   public struct CombatData
   {
@@ -25,6 +27,18 @@
     {
       IsCombatObject = false;
       HitWhileDyingLeadsToDeath = false;
+    }
+
+    public void LoadFromINI(INIFile f, string sectionname)
+    {
+      IsCombatObject = f.GetBoolValue(sectionname, "IsCombatObject", IsCombatObject);
+      HitWhileDyingLeadsToDeath = f.GetBoolValue(sectionname, "HitWhileDyingLeadsToDeath", HitWhileDyingLeadsToDeath);
+    }
+
+    public void SaveToINI(INIFile f, string sectionname)
+    {
+      f.SetBoolValue(sectionname, "IsCombatObject", IsCombatObject);
+      f.SetBoolValue(sectionname, "HitWhileDyingLeadsToDeath", HitWhileDyingLeadsToDeath);
     }
   }
 }

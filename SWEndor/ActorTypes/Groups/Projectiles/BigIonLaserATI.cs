@@ -25,12 +25,11 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MinSpeed = Globals.LaserSpeed * 2f;
 
       IsLaser = false; // not the same speed
-      Scale = 4;
 
       // Projectile
       ImpactCloseEnoughDistance = 150;
 
-      MeshData = new MeshData(Name, @"projectiles\ion_sm_laser.x");
+      MeshData = new MeshData(Name, @"projectiles\ion_sm_laser.x", 4);
     }
 
     public override void ProcessHit(Engine engine, ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)

@@ -19,11 +19,9 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.ZNormFrac = 0.015f;
 
       RenderData.CullDistance = 20000;
-      Scale = 0.6f;
-
       ScoreData = new ScoreData(10, 5000);
 
-      MeshData = new MeshData(Name, @"corellian\corellian.x");
+      MeshData = new MeshData(Name, @"corellian\corellian.x", 0.6f);
 
       Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 55, -35), new TV_3DVECTOR(0, 55, 2000)),

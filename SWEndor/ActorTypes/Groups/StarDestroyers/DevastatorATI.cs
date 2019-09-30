@@ -26,11 +26,10 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxTurnRate = 1.2f;
 
       RenderData.CullDistance = 40000;
-      Scale = 2.4f;
 
       ScoreData = new ScoreData(70, 20000);
 
-      MeshData = new MeshData(Name, @"stardestroyer\star_destroyer.x");
+      MeshData = new MeshData(Name, @"stardestroyer\star_destroyer.x", 2.4f);
       DyingMoveData.Sink(0.005f, 5f, 0.8f);
 
       Cameras = new LookData[] {

@@ -11,14 +11,13 @@ namespace SWEndor.ActorTypes.Instances
       RenderData.RadarSize = 2;
 
       RenderData.CullDistance = 30000;
-      Scale = 0.9f;
 
       AIData.TargetType |= TargetType.SHIELDGENERATOR;
       RenderData.RadarType = RadarType.HOLLOW_CIRCLE_M;
 
       RegenData = new RegenData(true, 0, 3.5f, 0, 0.3f);
 
-      MeshData = new MeshData(Name, @"stardestroyer\star_destroyer_energy_pod.x");
+      MeshData = new MeshData(Name, @"stardestroyer\star_destroyer_energy_pod.x", 0.9f);
       DyingMoveData.Kill();
     }
   }

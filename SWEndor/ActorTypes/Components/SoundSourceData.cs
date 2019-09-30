@@ -97,7 +97,27 @@ namespace SWEndor.ActorTypes.Components
       }
     }
 
-    public void LoadFromINI(INIFile f, string sectionname)
+    public static void LoadFromINI(INIFile f, string sectionname, string key, out SoundSourceData[] dest)
+    {
+      string[] src = f.GetStringList(sectionname, key, new string[0]);
+      dest = new SoundSourceData[src.Length];
+      for (int i = 0; i < src.Length; i++)
+        dest[i].LoadFromINI(f, src[i]);
+    }
+
+    public static void SaveToINI(INIFile f, string sectionname, string key, string membername, SoundSourceData[] src)
+    {
+      string[] ss = new string[src.Length];
+      for (int i = 0; i < src.Length; i++)
+      {
+        string s = membername + i.ToString();
+        ss[i] = s;
+        src[i].SaveToINI(f, s);
+      }
+      f.SetStringList(sectionname, key, ss);
+    }
+
+    private void LoadFromINI(INIFile f, string sectionname)
     {
       string[] sound = f.GetStringList(sectionname, "Sound", Sound);
       TV_3DVECTOR rloc = f.GetTV_3DVECTOR(sectionname, "RelativeLocation", RelativeLocation);
@@ -108,7 +128,7 @@ namespace SWEndor.ActorTypes.Components
       this = new SoundSourceData(sound, dist, rloc, loop, cuts, engs);
     }
 
-    public void SaveToINI(INIFile f, string sectionname)
+    private void SaveToINI(INIFile f, string sectionname)
     {
       f.SetStringList(sectionname, "Sound", Sound);
       f.SetTV_3DVECTOR(sectionname, "RelativeLocation", RelativeLocation);

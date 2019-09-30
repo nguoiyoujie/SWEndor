@@ -7,9 +7,7 @@ namespace SWEndor.ActorTypes.Instances
     internal Surface001_00ATI(Factory owner) : base(owner, "Surface001_00ATI")
     {
       RenderData.CullDistance = 20000;
-      Scale = 4;
-
-      MeshData = new MeshData(Name, @"surface\surface001_00.x");
+      MeshData = new MeshData(Name, @"surface\surface001_00.x", 4);
     }
   }
 }

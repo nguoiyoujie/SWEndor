@@ -27,13 +27,11 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.ZTilt = 2.2f; // low number so fighters come out properly when mothership is rotating
 
       RenderData.CullDistance = 30000;
-      Scale = 1.8f;
-
       ScoreData = new ScoreData(20, 20000);
 
       RegenData = new RegenData(false, 0.35f, 0, 0, 0);
 
-      MeshData = new MeshData(Name, @"mc90\mc90.x");
+      MeshData = new MeshData(Name, @"mc90\mc90.x", 1.8f);
       DyingMoveData.Sink(0.01f, 2.5f, 0.4f);
 
       Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 45, 660), new TV_3DVECTOR(0, 45, 2000)) };

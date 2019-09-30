@@ -24,14 +24,12 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.ZNormFrac = 0.006f;
       MoveLimitData.ZTilt = 3.5f;
 
-      Scale = 1.8f;
-
       ScoreData = new ScoreData(20, 20000);
       RenderData.CullDistance = 40000;
 
       RegenData = new RegenData(false, 0.3f, 0, 0, 0);
 
-      MeshData = new MeshData(Name, @"mc90\mc80b.x");
+      MeshData = new MeshData(Name, @"mc90\mc80b.x", 1.8f);
       DyingMoveData.Sink(0.01f, 2.5f, 0.4f);
 
       Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 45, 660), new TV_3DVECTOR(0, 45, 2000)) };
