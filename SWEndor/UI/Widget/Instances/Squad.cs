@@ -79,7 +79,7 @@ namespace SWEndor.UI.Widgets
       if (!s.Active
           || s == p
           || s.IsDyingOrDead
-          || !s.CombatData.IsCombatObject
+          || !s.InCombat
           || !PlayerCameraInfo.Camera.IsPointVisible(s.GetGlobalPosition()))
           return;
 

@@ -8,8 +8,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal TransportATI(Factory owner) : base(owner, "TRAN", "Transport")
     {
-      MaxStrength = 250.0f;
-      ImpactDamage = 60.0f;
+      CombatData.MaxStrength = 250.0f;
+      CombatData.ImpactDamage = 60.0f;
       MoveLimitData.MaxSpeed = 40.0f;
       MoveLimitData.MinSpeed = 0.0f;
       MoveLimitData.MaxSpeedChangeRate = 5.0f;

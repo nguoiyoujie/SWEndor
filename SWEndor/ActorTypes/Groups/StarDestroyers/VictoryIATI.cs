@@ -10,8 +10,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal VictoryIATI(Factory owner) : base(owner, "VICT", "Victory-I Star Destroyer")
     {
-      MaxStrength = 600.0f;
-      ImpactDamage = 60.0f;
+      CombatData.MaxStrength = 600.0f;
+      CombatData.ImpactDamage = 60.0f;
       MoveLimitData.MaxSpeed = 70.0f;
       MoveLimitData.MinSpeed = 0.0f;
       MoveLimitData.MaxSpeedChangeRate = 5.0f;

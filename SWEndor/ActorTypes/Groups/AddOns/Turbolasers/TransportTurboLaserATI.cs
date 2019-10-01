@@ -6,8 +6,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal TransportTurboLaserATI(Factory owner) : base(owner, "TRANLSR", "Transport Turbolaser Tower")
     {
-      MaxStrength = 80;
-      ImpactDamage = 16;
+      CombatData.MaxStrength = 80;
+      CombatData.ImpactDamage = 16;
 
       MeshData = new MeshData(Name, @"turbotowers\transport_turbolaser.x");
       DyingMoveData.Kill();

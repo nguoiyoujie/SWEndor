@@ -20,14 +20,14 @@ namespace SWEndor.ActorTypes.Instances
         new ExplodeData("EXPL00", 1, 10, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
       };
 
-      ImpactDamage = 50;
+      CombatData.ImpactDamage = 50;
       MoveLimitData.MaxSpeed = Globals.LaserSpeed * 2f;
       MoveLimitData.MinSpeed = Globals.LaserSpeed * 2f;
 
-      IsLaser = false; // not the same speed
+      CombatData.IsLaser = false; // not the same speed
 
       // Projectile
-      AIData.ImpactCloseEnoughDistance = 150;
+      CombatData.ImpactCloseEnoughDistance = 150;
 
       MeshData = new MeshData(Name, @"projectiles\ion_sm_laser.x", 4);
     }

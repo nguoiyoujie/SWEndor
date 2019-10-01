@@ -7,8 +7,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal TIE_LN_ATI(Factory owner) : base(owner, "TIE", "TIE")
     {
-      MaxStrength = 4;
-      ImpactDamage = 16;
+      CombatData.MaxStrength = 4;
+      CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 350;
       MoveLimitData.MinSpeed = 175;
       MoveLimitData.MaxSpeedChangeRate = 200;

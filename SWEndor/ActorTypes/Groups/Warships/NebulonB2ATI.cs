@@ -8,8 +8,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal NebulonB2ATI(Factory owner) : base(owner, "NEB2", "Nebulon-B2 Frigate")
     {
-      MaxStrength = 1350.0f;
-      ImpactDamage = 60.0f;
+      CombatData.MaxStrength = 1350.0f;
+      CombatData.ImpactDamage = 60.0f;
       MoveLimitData.MaxSpeed = 36.0f;
       MoveLimitData.MinSpeed = 0.0f;
       MoveLimitData.MaxSpeedChangeRate = 10.0f;

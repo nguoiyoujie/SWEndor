@@ -9,7 +9,7 @@ namespace SWEndor.ActorTypes.Instances
       // Combat
       TimedLifeData = new TimedLifeData(true, 25);
 
-      ImpactDamage = 12;
+      CombatData.ImpactDamage = 12;
       MoveLimitData.MaxSpeed = 850;
       MoveLimitData.MinSpeed = 850;
       MoveLimitData.MaxTurnRate = 75;

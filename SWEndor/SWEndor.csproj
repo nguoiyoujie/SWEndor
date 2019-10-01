@@ -131,6 +131,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActorTypes\Components\CombatData.cs" />
     <Compile Include="ActorTypes\General\ActorCreationInfo.cs" />
     <Compile Include="Actors\Models\ArmorModel\ActorExt.cs" />
     <Compile Include="Actors\Models\Collision\ActorExt.cs" />
@@ -154,7 +155,6 @@
     <Compile Include="Models\TimerModel\TimerStates.cs" />
     <Compile Include="Models\TimerModel\TimerModel.cs" />
     <Compile Include="ActorTypes\Components\TimedLifeData.cs" />
-    <Compile Include="Actors\Models\Combat\CombatData.cs" />
     <Compile Include="Actors\Models\Regeneration\RegenModel.cs" />
     <Compile Include="Models\TransformModel\TransformModel.cs" />
     <Compile Include="Models\TransformModel\TransformData.cs" />
@@ -170,7 +170,6 @@
     <Compile Include="Actors\Components\WeaponData.cs" />
     <Compile Include="Actors\Components\CycleInfo.cs" />
     <Compile Include="ActorTypes\Components\Movement\MoveNormal.cs" />
-    <Compile Include="Actors\Components\CombatSystem.cs" />
     <Compile Include="Models\Enums\ActorState.cs" />
     <Compile Include="Models\Enums\CreationState.cs" />
     <Compile Include="Actors\States\ActorDistanceInfo.cs" />
@@ -696,7 +695,7 @@
     <Content Include="SWEndor.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\ActorTypes\" />
+    <Folder Include="Actors\Models\Combat\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

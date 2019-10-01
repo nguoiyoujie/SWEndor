@@ -7,8 +7,8 @@ namespace SWEndor.ActorTypes.Instances
     internal ExecutorShieldGeneratorATI(Factory owner) : base(owner, "EXECSHD", "Shield Generator")
     {
       // Combat
-      MaxStrength = 150.0f;
-      ImpactDamage = 500.0f;
+      CombatData.MaxStrength = 150.0f;
+      CombatData.ImpactDamage = 500.0f;
       RenderData.RadarSize = 2;
 
       RenderData.CullDistance = 30000;

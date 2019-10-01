@@ -44,9 +44,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       base.Dying(engine, ainfo);
 
-      ainfo.MoveData.ApplyZBalance = false;
-
-      if (ainfo.Parent != null || (ainfo.CombatData.HitWhileDyingLeadsToDeath && Engine.Random.NextDouble() < 0.3f))
+      if (ainfo.Parent != null || (ainfo.TypeInfo.CombatData.HitWhileDyingLeadsToDeath && Engine.Random.NextDouble() < 0.3f))
         ainfo.DyingTimerSet(0.1f, true);
       else
         ainfo.DyingTimerSet(5, true);

@@ -16,7 +16,7 @@ namespace SWEndor.ActorTypes.Components
       if (atype.Mask.Has(ComponentMask.CAN_MOVE | ComponentMask.CAN_ROTATE))
         Move = MoveNormal.Move;
 
-      else if (atype.IsLaser)
+      else if (atype.CombatData.IsLaser)
         Move = MoveLaser.Move;
 
       else if (atype.Mask.Has(ComponentMask.CAN_MOVE))

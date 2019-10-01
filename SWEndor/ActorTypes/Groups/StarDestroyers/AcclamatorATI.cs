@@ -16,8 +16,8 @@ namespace SWEndor.ActorTypes.Instances
         new ExplodeData("EXPW01", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
-      MaxStrength = 650.0f;
-      ImpactDamage = 60.0f;
+      CombatData.MaxStrength = 650.0f;
+      CombatData.ImpactDamage = 60.0f;
       MoveLimitData.MaxSpeed = 110.0f;
       MoveLimitData.MinSpeed = 0.0f;
       MoveLimitData.MaxSpeedChangeRate = 8.0f;

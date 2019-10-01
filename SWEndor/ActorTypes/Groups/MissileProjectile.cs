@@ -20,7 +20,7 @@ namespace SWEndor.ActorTypes.Groups
       RenderData.CullDistance = 12000;
 
       // Projectile
-      AIData.ImpactCloseEnoughDistance = 100;
+      CombatData.ImpactCloseEnoughDistance = 100;
       AIData.TargetType = TargetType.MUNITION;
       RenderData.RadarType = RadarType.TRAILLINE;
 

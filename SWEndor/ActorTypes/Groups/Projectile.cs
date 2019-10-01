@@ -32,7 +32,7 @@ namespace SWEndor.ActorTypes.Groups
       MoveLimitData.MaxSecondOrderTurnRateFrac = 0.5f;
 
       Mask = ComponentMask.LASER_PROJECTILE;
-      DamageType = DamageType.NORMAL;
+      CombatData.DamageType = DamageType.NORMAL;
     }
 
     public override void ProcessState(Engine engine, ActorInfo ainfo)
@@ -40,14 +40,14 @@ namespace SWEndor.ActorTypes.Groups
       base.ProcessState(engine, ainfo);
       if (!ainfo.IsDyingOrDead)
       {
-        float impdist = AIData.ImpactCloseEnoughDistance;
+        float impdist = CombatData.ImpactCloseEnoughDistance;
         if (impdist > 0 && ainfo.CurrentAction != null && ainfo.CurrentAction is ProjectileAttackActor)
         {
           ActorInfo target = ((ProjectileAttackActor)ainfo.CurrentAction).Target_Actor;
           if (target != null)
           {
             if (target.TypeInfo.AIData.TargetType.Has(TargetType.LASER | TargetType.MUNITION))
-              impdist += target.TypeInfo.AIData.ImpactCloseEnoughDistance;
+              impdist += target.TypeInfo.CombatData.ImpactCloseEnoughDistance;
 
             // Anticipate
             float dist = ActorDistanceInfo.GetDistance(engine, ainfo, target, impdist + 1);

@@ -392,11 +392,11 @@ namespace SWEndor.Scenarios.Scripting.Functions
           else
             newValue = new Val(actor.HuntWeight);
           return;
-        case "IsCombatObject":
+        case "InCombat":
           if (setValue)
-            actor.CombatData.IsCombatObject = newValue.ValueB;
+            actor.InCombat = newValue.ValueB;
           else
-            newValue = new Val(actor.CombatData.IsCombatObject);
+            newValue = new Val(actor.InCombat);
           return;
         case "MaxSpeed":
           if (setValue)

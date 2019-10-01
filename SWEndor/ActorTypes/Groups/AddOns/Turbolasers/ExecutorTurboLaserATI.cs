@@ -6,8 +6,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ExecutorTurboLaserATI(Factory owner) : base(owner, "EXECLSR", "Executor Super Star Destroyer Turbolaser Tower")
     {
-      MaxStrength = 105;
-      ImpactDamage = 16;
+      CombatData.MaxStrength = 105;
+      CombatData.ImpactDamage = 16;
 
       ScoreData = new ScoreData(300, 2500);
       DyingMoveData.Kill();

@@ -39,14 +39,10 @@ namespace SWEndor.ActorTypes
 
     // Data
     public ComponentMask Mask = ComponentMask.NONE;
-    public float MaxStrength = 1.0f;
-    public float ImpactDamage = 1.0f;
-    public DamageType DamageType = DamageType.COLLISION;
-    public bool IsLaser = false;
 
     // Data (structs)
-    public RegenData RegenData;
     public CombatData CombatData;
+    public RegenData RegenData;
     public TimedLifeData TimedLifeData;
     public ArmorData ArmorData;
     public MoveLimitData MoveLimitData = MoveLimitData.Default;
@@ -90,15 +86,12 @@ namespace SWEndor.ActorTypes
         INIFile f = new INIFile(filepath);
         Name = f.GetStringValue("General", "Name", Name);
         Mask = f.GetEnumValue("General", "Mask", Mask);
-        MaxStrength = f.GetFloatValue("General", "MaxStrength", MaxStrength);
-        ImpactDamage = f.GetFloatValue("General", "ImpactDamage", ImpactDamage);
-        DamageType = f.GetEnumValue("General", "DamageType", DamageType);
-        IsLaser = f.GetBoolValue("General", "IsLaser", IsLaser);
+
         Loadouts = f.GetStringList("General", "Loadouts", Loadouts);
         TrackerDummyWeapon = f.GetBoolValue("General", "TrackerDummyWeapon", TrackerDummyWeapon);
 
-        RegenData.LoadFromINI(f, "RegenData");
         CombatData.LoadFromINI(f, "CombatData");
+        RegenData.LoadFromINI(f, "RegenData");
         TimedLifeData.LoadFromINI(f, "TimedLifeData");
         ArmorData.LoadFromINI(f, "ArmorData");
         MoveLimitData.LoadFromINI(f, "MoveLimitData");
@@ -128,15 +121,12 @@ namespace SWEndor.ActorTypes
 
       f.SetStringValue("General", "Name", Name);
       f.SetEnumValue("General", "Mask", Mask);
-      f.SetFloatValue("General", "MaxStrength", MaxStrength);
-      f.SetFloatValue("General", "ImpactDamage", ImpactDamage);
-      f.SetEnumValue("General", "DamageType", DamageType);
-      f.SetBoolValue("General", "IsLaser", IsLaser);
+
       f.SetStringList("General", "Loadouts", Loadouts);
       f.SetBoolValue("General", "TrackerDummyWeapon", TrackerDummyWeapon);
 
-      RegenData.SaveToINI(f, "RegenData");
       CombatData.SaveToINI(f, "CombatData");
+      RegenData.SaveToINI(f, "RegenData");
       TimedLifeData.SaveToINI(f, "TimedLifeData");
       ArmorData.SaveToINI(f, "ArmorData");
       MoveLimitData.SaveToINI(f, "MoveLimitData");
@@ -207,11 +197,11 @@ namespace SWEndor.ActorTypes
       if (owner == null || hitby == null)
         return;
 
-      if (hitby.TypeInfo.ImpactDamage == 0)
+      if (hitby.TypeInfo.CombatData.ImpactDamage == 0)
         return;
 
       if (owner.IsDying 
-        && owner.CombatData.HitWhileDyingLeadsToDeath)
+        && owner.TypeInfo.CombatData.HitWhileDyingLeadsToDeath)
         owner.SetState_Dead();
       
       if (hitby.Mask.Has(ComponentMask.IS_DAMAGE))
@@ -219,7 +209,7 @@ namespace SWEndor.ActorTypes
         if (!owner.IsDyingOrDead)
         {
           float p_hp = owner.HP;
-          owner.InflictDamage(hitby, hitby.TypeInfo.ImpactDamage, DamageType.NORMAL, impact);
+          owner.InflictDamage(hitby, hitby.TypeInfo.CombatData.ImpactDamage, DamageType.NORMAL, impact);
           float hp = owner.HP;
 
           if (owner.IsPlayer)
@@ -242,7 +232,7 @@ namespace SWEndor.ActorTypes
 
           if (owner.IsScenePlayer)
           {
-            PlayerInfo.Score.AddDamage(engine, attacker, hitby.TypeInfo.ImpactDamage * owner.GetArmor(DamageType.NORMAL));
+            PlayerInfo.Score.AddDamage(engine, attacker, hitby.TypeInfo.CombatData.ImpactDamage * owner.GetArmor(DamageType.NORMAL));
 
             if (owner.IsDyingOrDead)
               PlayerInfo.Score.AddDeath(engine, attacker);
@@ -315,7 +305,7 @@ namespace SWEndor.ActorTypes
       else
       {
         // Collision
-        owner.InflictDamage(hitby, hitby.TypeInfo.ImpactDamage, DamageType.COLLISION, impact);
+        owner.InflictDamage(hitby, hitby.TypeInfo.CombatData.ImpactDamage, DamageType.COLLISION, impact);
         if (owner.HP > 0
           && owner.Mask.Has(ComponentMask.CAN_MOVE)
           && owner.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
@@ -352,7 +342,7 @@ namespace SWEndor.ActorTypes
     {
       if (!victim.IsDyingOrDead)
       {
-        score.AddHit(engine, victim, proj.TypeInfo.ImpactDamage * victim.GetArmor(DamageType.NORMAL));
+        score.AddHit(engine, victim, proj.TypeInfo.CombatData.ImpactDamage * victim.GetArmor(DamageType.NORMAL));
       }
 
       if (victim.IsDyingOrDead)
@@ -395,7 +385,7 @@ namespace SWEndor.ActorTypes
       accuracy /= (Math.Abs(angle.y) + 1);
 
       if (Engine.Random.NextDouble() < accuracy)
-        target.InflictDamage(owner, weapontype.ImpactDamage, DamageType.NORMAL, target.GetGlobalPosition());
+        target.InflictDamage(owner, weapontype.CombatData.ImpactDamage, DamageType.NORMAL, target.GetGlobalPosition());
     }
 
     public virtual void Dying(Engine engine, ActorInfo ainfo)

@@ -7,8 +7,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal Tower04ATI(Factory owner) : base(owner, "SUPT", "Super Deflector Tower")
     {
-      MaxStrength = 100;
-      ImpactDamage = 120;
+      CombatData.MaxStrength = 100;
+      CombatData.ImpactDamage = 120;
 
       ScoreData = new ScoreData(50, 5000);
 

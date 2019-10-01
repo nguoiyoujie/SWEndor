@@ -20,7 +20,7 @@ namespace SWEndor.ActorTypes.Groups
       MoveLimitData.MinSpeed = Globals.LaserSpeed;
       AIData.TargetType = TargetType.LASER;
 
-      IsLaser = true;
+      CombatData.IsLaser = true;
       Mask = ComponentMask.LASER_PROJECTILE;
     }
   }

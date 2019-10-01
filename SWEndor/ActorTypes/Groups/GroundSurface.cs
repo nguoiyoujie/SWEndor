@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Groups
   {
     internal GroundSurface(Factory owner, string id, string name) : base(owner, id, name)
     {
-      ImpactDamage = 200;
+      CombatData.ImpactDamage = 200;
 
       Mask = ComponentMask.STATIC_ACTOR;
     }

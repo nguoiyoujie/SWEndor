@@ -13,8 +13,8 @@ namespace SWEndor.ActorTypes.Instances
 
     internal DSLaserSourceATI(Factory owner) : base(owner, "DSLSRSRC", "Death Star Laser Source")
     {
-      MaxStrength = 1500.0f;
-      ImpactDamage = 4000.0f;
+      CombatData.MaxStrength = 1500.0f;
+      CombatData.ImpactDamage = 4000.0f;
 
       AIData.TargetType = TargetType.NULL;
       RenderData.RadarType = RadarType.NULL;

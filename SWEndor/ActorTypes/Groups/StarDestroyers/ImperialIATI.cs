@@ -10,8 +10,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ImperialIATI(Factory owner) : base(owner, "IMPL", "Imperial-I Star Destroyer")
     {
-      MaxStrength = 850.0f;
-      ImpactDamage = 60.0f;
+      CombatData.MaxStrength = 850.0f;
+      CombatData.ImpactDamage = 60.0f;
       MoveLimitData.MaxSpeed = 75.0f;
       MoveLimitData.MinSpeed = 0.0f;
       MoveLimitData.MaxSpeedChangeRate = 5.0f;

@@ -14,12 +14,12 @@ namespace SWEndor.ActorTypes.Instances
     {
       TimedLifeData = new TimedLifeData(true, 5);
 
-      ImpactDamage = 5;
+      CombatData.ImpactDamage = 5;
       MoveLimitData.MaxSpeed = Globals.LaserSpeed * 0.6f;
       MoveLimitData.MinSpeed = Globals.LaserSpeed * 0.6f;
 
-      AIData.ImpactCloseEnoughDistance = 75;
-      IsLaser = false; // not the same speed
+      CombatData.ImpactCloseEnoughDistance = 75;
+      CombatData.IsLaser = false; // not the same speed
 
       MeshData = new MeshData(Name, @"projectiles\ion_sm_laser.x");
     }

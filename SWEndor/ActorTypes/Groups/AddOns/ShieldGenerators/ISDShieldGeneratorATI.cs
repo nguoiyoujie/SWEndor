@@ -6,8 +6,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ISDShieldGeneratorATI(Factory owner) : base(owner, "IMPLSHD", "Shield Generator")
     {
-      MaxStrength = 105;
-      ImpactDamage = 300.0f;
+      CombatData.MaxStrength = 105;
+      CombatData.ImpactDamage = 300.0f;
       RenderData.RadarSize = 2;
 
       RenderData.CullDistance = 30000;

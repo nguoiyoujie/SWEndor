@@ -6,8 +6,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal mc90TurbolaserATI(Factory owner) : base(owner, "MC90LSR", "MC90 Turbolaser Tower")
     {
-      MaxStrength = 200;
-      ImpactDamage = 16;
+      CombatData.MaxStrength = 200;
+      CombatData.ImpactDamage = 16;
       MoveLimitData.MaxTurnRate = 50f;
 
       MeshData = new MeshData(Name, @"turbotowers\mc90_turbolaser.x");

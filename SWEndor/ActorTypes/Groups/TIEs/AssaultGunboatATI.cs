@@ -7,8 +7,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal AssaultGunboatATI(Factory owner) : base(owner, "GUN", "Assault Gunboat")
     {
-      MaxStrength = 24;
-      ImpactDamage = 16;
+      CombatData.MaxStrength = 24;
+      CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 550;
       MoveLimitData.MinSpeed = 200;
       MoveLimitData.MaxSpeedChangeRate = 300;

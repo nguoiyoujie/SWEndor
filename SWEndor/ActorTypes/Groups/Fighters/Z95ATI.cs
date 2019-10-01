@@ -8,8 +8,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal Z95ATI(Factory owner) : base(owner, "Z95", "Z-95")
     {
-      MaxStrength = 15;
-      ImpactDamage = 16;
+      CombatData.MaxStrength = 15;
+      CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 400;
       MoveLimitData.MinSpeed = 175;
       MoveLimitData.MaxSpeedChangeRate = 200;

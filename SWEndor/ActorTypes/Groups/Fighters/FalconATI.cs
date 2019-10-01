@@ -13,8 +13,8 @@ namespace SWEndor.ActorTypes.Instances
       CombatData = CombatData.DefaultShip;
       ArmorData = ArmorData.Default;
 
-      MaxStrength = 50;
-      ImpactDamage = 10;
+      CombatData.MaxStrength = 50;
+      CombatData.ImpactDamage = 10;
       MoveLimitData.MaxSpeed = 500;
       MoveLimitData.MinSpeed = 250;
       MoveLimitData.MaxSpeedChangeRate = 250;

@@ -22,8 +22,8 @@ namespace SWEndor.ActorTypes.Instances
         new ExplodeData("EXPL00", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
-      MaxStrength = 600.0f;
-      ImpactDamage = 200.0f;
+      CombatData.MaxStrength = 600.0f;
+      CombatData.ImpactDamage = 200.0f;
       RenderData.RadarSize = -1;
 
       RenderData.CullDistance = 30000;
@@ -58,13 +58,8 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Dying(engine, ainfo);
 
-      if (ainfo.IsDyingOrDead)
-      {
-        ainfo.DyingTimerSet(2000, true);
-        CombatSystem.Deactivate(Engine, ainfo);
-
-        ainfo.TopParent?.SetState_Dying();
-      }
+      ainfo.DyingTimerSet(2000, true);
+      ainfo.TopParent?.SetState_Dying();
     }
 
     public override void ProcessHit(Engine engine, ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)

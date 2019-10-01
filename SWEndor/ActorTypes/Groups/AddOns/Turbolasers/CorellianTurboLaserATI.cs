@@ -6,8 +6,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal CorellianTurboLaserATI(Factory owner) : base(owner, "CORLLSR", "Corellian Turbolaser Tower")
     {
-      MaxStrength = 105;
-      ImpactDamage = 16;
+      CombatData.MaxStrength = 105;
+      CombatData.ImpactDamage = 16;
 
       MeshData = new MeshData(Name, @"turbotowers\corellian_turbolaser.x");
       DyingMoveData.Kill();

@@ -12,8 +12,8 @@ namespace SWEndor.ActorTypes.Instances
         new ExplodeData("EXPL00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
       };
 
-      ImpactDamage = 5;
-      AIData.ImpactCloseEnoughDistance = 100;
+      CombatData.ImpactDamage = 5;
+      CombatData.ImpactCloseEnoughDistance = 100;
 
       MeshData = new MeshData(Name, @"projectiles\green3_laser.x");
     }

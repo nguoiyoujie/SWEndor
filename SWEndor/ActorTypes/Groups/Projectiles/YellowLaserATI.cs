@@ -6,12 +6,12 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal YellowLaserATI(Factory owner) : base(owner, "LSR_Y", "Yellow Laser")
     {
-      ImpactDamage = 1;
+      CombatData.ImpactDamage = 1;
       MoveLimitData.MaxSpeed = Globals.LaserSpeed * 0.75f;
       MoveLimitData.MinSpeed = Globals.LaserSpeed * 0.75f;
 
-      AIData.ImpactCloseEnoughDistance = 35;
-      IsLaser = false; // not the same speed
+      CombatData.ImpactCloseEnoughDistance = 35;
+      CombatData.IsLaser = false; // not the same speed
 
       MeshData = new MeshData(Name, @"projectiles\yellow_laser.x");
     }

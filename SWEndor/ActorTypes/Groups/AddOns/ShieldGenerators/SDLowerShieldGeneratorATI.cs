@@ -6,8 +6,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal SDLowerShieldGeneratorATI(Factory owner) : base(owner, "LSHD", "Shield Generator")
     {
-      MaxStrength = 90;
-      ImpactDamage = 300.0f;
+      CombatData.MaxStrength = 90;
+      CombatData.ImpactDamage = 300.0f;
       RenderData.RadarSize = 2.5f;
       DyingMoveData.Kill();
 

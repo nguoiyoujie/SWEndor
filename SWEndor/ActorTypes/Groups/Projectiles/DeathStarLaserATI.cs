@@ -12,17 +12,17 @@ namespace SWEndor.ActorTypes.Instances
       // Combat
       TimedLifeData = new TimedLifeData(true, 10);
 
-      ImpactDamage = 99999;
+      CombatData.ImpactDamage = 99999;
       MoveLimitData.MaxSpeed = Globals.LaserSpeed * 85f;
       MoveLimitData.MinSpeed = Globals.LaserSpeed * 85f;
 
-      IsLaser = false; // not the same speed
+      CombatData.IsLaser = false; // not the same speed
 
       RenderData.CullDistance = -1;
 
       MeshData = new MeshData(Name, @"projectiles\death_laser");
 
-      AIData.ImpactCloseEnoughDistance = 200;
+      CombatData.ImpactCloseEnoughDistance = 200;
     }
 
     public override void ProcessState(Engine engine, ActorInfo ainfo)

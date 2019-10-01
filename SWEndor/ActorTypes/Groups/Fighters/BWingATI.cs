@@ -8,8 +8,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal BWingATI(Factory owner) : base(owner, "BWING", "B-Wing")
     {
-      MaxStrength = 45;
-      ImpactDamage = 16;
+      CombatData.MaxStrength = 45;
+      CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 400;
       MoveLimitData.MinSpeed = 200;
       MoveLimitData.MaxSpeedChangeRate = 200;

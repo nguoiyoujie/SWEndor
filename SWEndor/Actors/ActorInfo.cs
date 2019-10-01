@@ -98,7 +98,6 @@ namespace SWEndor.Actors
 
     // Data (structs)
     internal CollisionData<ActorInfo> CollisionData;
-    internal CombatData CombatData;
     internal WeaponData WeaponDefinitions;
     internal MoveData MoveData;
     internal AIData AIData;
@@ -116,6 +115,9 @@ namespace SWEndor.Actors
 
     // Traits (classes)
 
+
+    // Standalone
+    internal bool InCombat = false;
 
     // ILinked
     public ActorInfo Prev { get; set; }
@@ -159,8 +161,9 @@ namespace SWEndor.Actors
 
       MoveData.Init(TypeInfo, acinfo);
       CollisionData.Init();
-      CombatData.CopyFrom(TypeInfo.CombatData);
       WeaponDefinitions.Init(TypeInfo);
+
+      InCombat = TypeInfo.CombatData.IsCombatObject;
 
       State.Init(TypeInfo, acinfo);
 
@@ -191,8 +194,9 @@ namespace SWEndor.Actors
 
       MoveData.Init(TypeInfo, acinfo);
       CollisionData.Init();
-      CombatData = TypeInfo.CombatData;
       WeaponDefinitions.Init(TypeInfo);
+
+      InCombat = TypeInfo.CombatData.IsCombatObject;
 
       // Creation
       State.Init(TypeInfo, acinfo);
@@ -365,9 +369,9 @@ namespace SWEndor.Actors
       // Kill data
       MoveData.Reset();
       CollisionData.Reset();
-      CombatData.Reset();
-
       Meshes.Dispose();
+
+      InCombat = false;
 
       // Finally
       SetDisposed();

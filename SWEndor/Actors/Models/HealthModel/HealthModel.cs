@@ -20,8 +20,8 @@ namespace SWEndor.Actors.Models
 
     public void Init(ActorTypeInfo type, ActorCreationInfo acinfo)
     {
-      MaxHP = type.MaxStrength;
-      HP = (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : type.MaxStrength;
+      MaxHP = type.CombatData.MaxStrength;
+      HP = (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : type.CombatData.MaxStrength;
     }
 
     public TV_COLOR Color

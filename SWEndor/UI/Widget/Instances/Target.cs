@@ -95,13 +95,13 @@ namespace SWEndor.UI.Widgets
       {
         return !target.Active
         || target.IsDyingOrDead
-        || !target.CombatData.IsCombatObject
+        || !target.InCombat
         || !PlayerCameraInfo.Camera.IsPointVisible(target.GetGlobalPosition());
       }
       else
         return !target.Active
         || target.IsDyingOrDead
-        || !target.CombatData.IsCombatObject
+        || !target.InCombat
         || target.TopParent == p
         || (PlayerInfo.Actor.Faction.IsAlliedWith(target.Faction) && PlayerInfo.IsTorpedoMode)
         || dist > Globals.AcquisitionRange

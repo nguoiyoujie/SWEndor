@@ -28,9 +28,7 @@ namespace SWEndor.ActorTypes.Instances
     public override void Dying(Engine engine, ActorInfo ainfo)
     {
       base.Dying(engine, ainfo);
-
       ainfo.DyingTimerSet(5, true);
-      CombatSystem.Deactivate(Engine, ainfo);
     }
 
     public override void ProcessState(Engine engine, ActorInfo ainfo)

@@ -150,7 +150,7 @@ namespace SWEndor.AI.Actions
               && c.ID != a.ID
               && a.Active
               && !a.IsDyingOrDead
-              && c.CombatData.IsCombatObject
+              && c.InCombat
               && !c.Faction.IsAlliedWith(a.Faction))
         {
           float dist = ActorDistanceInfo.GetDistance(e, a, c, c.WeaponDefinitions.GetWeaponRange());
