@@ -80,14 +80,15 @@ namespace SWEndor.ActorTypes
     public MoveBehavior MoveBehavior;
     internal UnfixedWeaponData cachedWeaponData;
 
-    public void LoadFromINI(string name)
+    public void LoadFromINI(string id)
     {
-      Name = name;
-      string filepath = Path.Combine(Globals.ActorTypeINIDirectory, name + ".ini");
+      ID = id;
+      string filepath = Path.Combine(Globals.ActorTypeINIDirectory, id + ".ini");
 
       if (File.Exists(filepath))
       {
         INIFile f = new INIFile(filepath);
+        Name = f.GetStringValue("General", "Name", Name);
         Mask = f.GetEnumValue("General", "Mask", Mask);
         MaxStrength = f.GetFloatValue("General", "MaxStrength", MaxStrength);
         ImpactDamage = f.GetFloatValue("General", "ImpactDamage", ImpactDamage);
@@ -115,38 +116,43 @@ namespace SWEndor.ActorTypes
         SoundSourceData.LoadFromINI(f, "SoundSourceData", "InitialSoundSources", out InitialSoundSources);
         SoundSourceData.LoadFromINI(f, "SoundSourceData", "SoundSources", out SoundSources);
       }
-      else
-      {
-        File.Create(filepath).Close();
-        INIFile f = new INIFile(filepath);
+    }
 
-        f.SetEnumValue("General", "Mask", Mask);
-        f.SetFloatValue("General", "MaxStrength", MaxStrength);
-        f.SetFloatValue("General", "ImpactDamage", ImpactDamage);
-        f.SetEnumValue("General", "DamageType", DamageType);
-        f.SetBoolValue("General", "IsLaser", IsLaser);
-        f.SetStringList("General", "Loadouts", Loadouts);
-        f.SetBoolValue("General", "TrackerDummyWeapon", TrackerDummyWeapon);
+    public void SaveToINI(string id)
+    {
+      ID = id;
+      string filepath = Path.Combine(Globals.ExplosionTypeINIDirectory, id + ".ini");
 
-        RegenData.SaveToINI(f, "RegenData");
-        CombatData.SaveToINI(f, "CombatData");
-        TimedLifeData.SaveToINI(f, "TimedLifeData");
-        ArmorData.SaveToINI(f, "ArmorData");
-        MoveLimitData.SaveToINI(f, "MoveLimitData");
-        RenderData.SaveToINI(f, "RenderData");
-        AIData.SaveToINI(f, "AIData");
-        MeshData.SaveToINI(f, "MeshData");
-        DyingMoveData.SaveToINI(f, "DyingMoveData");
-        ScoreData.SaveToINI(f, "ScoreData");
+      if (!File.Exists(filepath))
+        File.Create(filepath).Close(); INIFile f = new INIFile(filepath);
 
-        AddOnData.SaveToINI(f, "AddOnData", "AddOns", "ADD", AddOns);
-        ExplodeData.SaveToINI(f, "ExplodeData", "Explodes", "EXP", Explodes);
-        LookData.SaveToINI(f, "Cameras", "Cameras", "CAM", Cameras);
-        DeathCamera.SaveToINI(f, "DeathCamera");
-        SoundSourceData.SaveToINI(f, "SoundSourceData", "InitialSoundSources", "ISN", InitialSoundSources);
-        SoundSourceData.SaveToINI(f, "SoundSourceData", "SoundSources", "SND", SoundSources);
-        f.SaveFile(filepath);
-      }
+      f.SetStringValue("General", "Name", Name);
+      f.SetEnumValue("General", "Mask", Mask);
+      f.SetFloatValue("General", "MaxStrength", MaxStrength);
+      f.SetFloatValue("General", "ImpactDamage", ImpactDamage);
+      f.SetEnumValue("General", "DamageType", DamageType);
+      f.SetBoolValue("General", "IsLaser", IsLaser);
+      f.SetStringList("General", "Loadouts", Loadouts);
+      f.SetBoolValue("General", "TrackerDummyWeapon", TrackerDummyWeapon);
+
+      RegenData.SaveToINI(f, "RegenData");
+      CombatData.SaveToINI(f, "CombatData");
+      TimedLifeData.SaveToINI(f, "TimedLifeData");
+      ArmorData.SaveToINI(f, "ArmorData");
+      MoveLimitData.SaveToINI(f, "MoveLimitData");
+      RenderData.SaveToINI(f, "RenderData");
+      AIData.SaveToINI(f, "AIData");
+      MeshData.SaveToINI(f, "MeshData");
+      DyingMoveData.SaveToINI(f, "DyingMoveData");
+      ScoreData.SaveToINI(f, "ScoreData");
+
+      AddOnData.SaveToINI(f, "AddOnData", "AddOns", "ADD", AddOns);
+      ExplodeData.SaveToINI(f, "ExplodeData", "Explodes", "EXP", Explodes);
+      LookData.SaveToINI(f, "Cameras", "Cameras", "CAM", Cameras);
+      DeathCamera.SaveToINI(f, "DeathCamera");
+      SoundSourceData.SaveToINI(f, "SoundSourceData", "InitialSoundSources", "ISN", InitialSoundSources);
+      SoundSourceData.SaveToINI(f, "SoundSourceData", "SoundSources", "SND", SoundSources);
+      f.SaveFile(filepath);
     }
 
     public void Init()
@@ -245,7 +251,7 @@ namespace SWEndor.ActorTypes
           if (attacker != null && !attacker.Faction.IsAlliedWith(owner.Faction))
           {
             // Fighter AI
-            if ((owner.TypeInfo is Groups.Fighter))
+            if ((owner.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER)))
             {
               if (owner.CanRetaliate && (owner.CurrentAction == null || owner.CurrentAction.CanInterrupt))
               {
@@ -331,7 +337,7 @@ namespace SWEndor.ActorTypes
         }
 
         // Fighter Collision
-        if ((owner.TypeInfo is Groups.Fighter && owner.IsDyingOrDead))
+        if ((owner.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER) && owner.IsDyingOrDead))
         {
           owner.SetState_Dead();
           if (owner.IsScenePlayer)

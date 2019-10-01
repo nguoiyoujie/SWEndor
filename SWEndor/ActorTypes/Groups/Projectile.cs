@@ -28,27 +28,26 @@ namespace SWEndor.ActorTypes.Groups
       RenderData.RadarSize = 1;
 
       AIData.Move_CloseEnough = 0;
+      AIData.TargetType = TargetType.LASER;
       MoveLimitData.MaxSecondOrderTurnRateFrac = 0.5f;
 
       Mask = ComponentMask.LASER_PROJECTILE;
       DamageType = DamageType.NORMAL;
-  }
-
-    public float ImpactCloseEnoughDistance = 0;
+    }
 
     public override void ProcessState(Engine engine, ActorInfo ainfo)
     {
       base.ProcessState(engine, ainfo);
       if (!ainfo.IsDyingOrDead)
       {
-        float impdist = ImpactCloseEnoughDistance;
+        float impdist = AIData.ImpactCloseEnoughDistance;
         if (impdist > 0 && ainfo.CurrentAction != null && ainfo.CurrentAction is ProjectileAttackActor)
         {
           ActorInfo target = ((ProjectileAttackActor)ainfo.CurrentAction).Target_Actor;
           if (target != null)
           {
-            if (target.TypeInfo is Projectile)
-              impdist += ((Projectile)target.TypeInfo).ImpactCloseEnoughDistance;
+            if (target.TypeInfo.AIData.TargetType.Has(TargetType.LASER | TargetType.MUNITION))
+              impdist += target.TypeInfo.AIData.ImpactCloseEnoughDistance;
 
             // Anticipate
             float dist = ActorDistanceInfo.GetDistance(engine, ainfo, target, impdist + 1);

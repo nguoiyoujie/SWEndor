@@ -127,7 +127,7 @@ namespace SWEndor.Actors
     {
       get
       {
-        return !(TypeInfo is ActorTypes.Groups.Projectile || TypeInfo is ActorTypes.Groups.Debris);
+        return !(TypeInfo.AIData.TargetType.Has(TargetType.LASER | TargetType.MUNITION | TargetType.FLOATING));
       }
     }
 #endif
@@ -145,7 +145,7 @@ namespace SWEndor.Actors
       dataID = dataid;
 
       TypeInfo = acinfo.TypeInfo;
-      if (acinfo.ID?.Length > 0) { _name = acinfo.ID; }
+      if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
 
       Meshes.Init(ID, TypeInfo);
@@ -177,7 +177,7 @@ namespace SWEndor.Actors
       //Destroy(); // redundant
       ID = id;
       TypeInfo = acinfo.TypeInfo;
-      if (acinfo.ID?.Length > 0) { _name = acinfo.ID; }
+      if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
 
       Meshes.Init(ID, TypeInfo);
@@ -380,7 +380,7 @@ namespace SWEndor.Actors
       if (!IsDead)
       {
         if (Mask.Has(ComponentMask.CAN_BECOLLIDED)
-        || TypeInfo is ActorTypes.Groups.Projectile)
+        || TypeInfo.AIData.TargetType.Has(TargetType.LASER | TargetType.MUNITION))
         {
           CollisionData.CheckCollision(engine, this);
         }

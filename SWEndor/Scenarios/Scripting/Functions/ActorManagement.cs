@@ -134,7 +134,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
-      return new Val(actor.TypeInfo is Fighter);
+      return new Val(actor.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER));
     }
 
     public static Val IsLargeShip(Context context, params Val[] ps)
@@ -144,7 +144,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
-      return new Val(actor.TypeInfo is LargeShip);
+      return new Val(actor.TypeInfo.AIData.TargetType.Has(TargetType.SHIP));
     }
 
     public static Val IsAlive(Context context, params Val[] ps)

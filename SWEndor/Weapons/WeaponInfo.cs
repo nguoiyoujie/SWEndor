@@ -22,7 +22,7 @@ namespace SWEndor.Weapons
   public class WeaponInfo
   {
     public static readonly WeaponInfo[] NullArrayCache = new WeaponInfo[0];
-    public static Projectile NullProj = new Projectile(Globals.Engine.ActorTypeFactory, "$PROJ_NULL", "Null Projectile");
+    public static ActorTypeInfo NullProj = new ActorTypeInfo(Globals.Engine.ActorTypeFactory, "$PROJ_NULL", "Null Projectile");
 
     public WeaponInfo(string name, string weapproj)
     {
@@ -30,7 +30,7 @@ namespace SWEndor.Weapons
       DisplayName = name;
 
       // TO-DO: Dedicated Projectile class that need no casting 
-      Projectile = (weapproj != null) ? (Projectile)Globals.Engine.ActorTypeFactory.Get(weapproj) : NullProj;
+      Projectile = (weapproj != null) ? Globals.Engine.ActorTypeFactory.Get(weapproj) : NullProj;
     }
 
     public WeaponInfo(Engine engine, WeaponStatInfo stat)
@@ -75,7 +75,7 @@ namespace SWEndor.Weapons
       FireSound = stat.FireSound;
 
       if (stat.WeaponProjectile != null)
-        Projectile = (Projectile)engine.ActorTypeFactory.Get(stat.WeaponProjectile);
+        Projectile = engine.ActorTypeFactory.Get(stat.WeaponProjectile);
 
       Init();
     }
@@ -83,7 +83,7 @@ namespace SWEndor.Weapons
     public readonly string Name = "Null Weapon";
     public readonly string DisplayName = "null";
 
-    private readonly Projectile Projectile = null; // cache
+    private readonly ActorTypeInfo Projectile = null; // cache
     public float WeaponCooldown = 0;
     public float WeaponCooldownRate = 1;
     public float WeaponCooldownRateRandom = 0;

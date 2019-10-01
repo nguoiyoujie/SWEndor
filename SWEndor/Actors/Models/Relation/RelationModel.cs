@@ -34,7 +34,7 @@ namespace SWEndor.Actors.Models
       foreach (ActorInfo c in list.ToArray()) // use new list as members are deleted from the IEnumerable
       {
         using (ScopeCounterManager.Acquire(c.Scope))
-          if (c.TypeInfo is ActorTypes.Groups.AddOn || c.UseParentCoords)
+          if (c.UseParentCoords)
             c.Destroy();
           else
             self.RemoveChild(c);

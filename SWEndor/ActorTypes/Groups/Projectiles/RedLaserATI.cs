@@ -7,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
     internal RedLaserATI(Factory owner) : base(owner, "LSR_R", "Red Laser")
     {
       ImpactDamage = 1;
-      ImpactCloseEnoughDistance = 25;
+      AIData.ImpactCloseEnoughDistance = 25;
 
       MeshData = new MeshData(Name, @"projectiles\red_laser.x");
     }

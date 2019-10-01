@@ -1,6 +1,8 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.ActorTypes;
 using SWEndor.Core;
+using SWEndor.Models;
 using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;
 using SWEndor.Scenarios;
@@ -86,9 +88,9 @@ namespace SWEndor
     {
       Kills++;
 
-      if (victim.TypeInfo is ActorTypes.Groups.Fighter)
+      if (victim.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
         engine.GameScenarioManager.Scenario.Mood = MoodStates.DESTROY_FIGHTER;
-      else if (victim.TypeInfo is ActorTypes.Groups.LargeShip)
+      else if (victim.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
         engine.GameScenarioManager.Scenario.Mood = MoodStates.DESTROY_SHIP;
 
       if (engine.PlayerInfo.Actor != null)

@@ -18,6 +18,7 @@ namespace SWEndor.ActorTypes.Groups
 
       MoveLimitData.MaxSpeed = Globals.LaserSpeed;
       MoveLimitData.MinSpeed = Globals.LaserSpeed;
+      AIData.TargetType = TargetType.LASER;
 
       IsLaser = true;
       Mask = ComponentMask.LASER_PROJECTILE;

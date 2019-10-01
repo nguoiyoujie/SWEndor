@@ -116,7 +116,7 @@ namespace SWEndor.UI.Widgets
 
     private int GetColor(ActorInfo actor)
     {
-      if (actor.TypeInfo is ActorTypes.Groups.Projectile)
+      if (actor.TypeInfo.AIData.TargetType.Has(TargetType.LASER | TargetType.MUNITION))
         return projColor;
 
       else if (actor.Faction != null)

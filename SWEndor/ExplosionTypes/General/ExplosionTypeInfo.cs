@@ -1,9 +1,11 @@
 ﻿using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using SWEndor.Explosions;
+using SWEndor.FileFormat.INI;
 using SWEndor.Models;
 using SWEndor.Player;
 using SWEndor.Scenarios;
+using System.IO;
 
 namespace SWEndor.ExplosionTypes
 {
@@ -41,24 +43,44 @@ namespace SWEndor.ExplosionTypes
     public SoundSourceData[] InitialSoundSources = new SoundSourceData[0];
     public SoundSourceData[] SoundSources = new SoundSourceData[0];
 
-    public void LoadFromINI()
+    public void LoadFromINI(string id)
     {
-      /*
-      string filepath = Path.Combine(Globals.ActorTypeINIDirectory, Name + ".ini");
+      ID = id;
+      string filepath = Path.Combine(Globals.ExplosionTypeINIDirectory, id + ".ini");
 
       if (File.Exists(filepath))
       {
         INIFile f = new INIFile(filepath);
+        Name = f.GetStringValue("General", "Name", Name);
+
+        TimedLifeData.LoadFromINI(f, "TimedLifeData");
         RenderData.LoadFromINI(f, "RenderData");
+        MeshData.LoadFromINI(f, "MeshData");
+
+        SoundSourceData.LoadFromINI(f, "SoundSourceData", "InitialSoundSources", out InitialSoundSources);
+        SoundSourceData.LoadFromINI(f, "SoundSourceData", "SoundSources", out SoundSources);
       }
-      else
-      {
+    }
+
+    public void SaveToINI(string id)
+    {
+      ID = id;
+      string filepath = Path.Combine(Globals.ExplosionTypeINIDirectory, id + ".ini");
+
+      if (!File.Exists(filepath))
         File.Create(filepath).Close();
-        INIFile f = new INIFile(filepath);
-        RenderData.SaveToINI(f, "RenderData");
-        f.SaveFile(filepath);
-      }
-      */
+
+      INIFile f = new INIFile(filepath);
+
+      f.SetStringValue("General", "Name", Name);
+
+      TimedLifeData.SaveToINI(f, "TimedLifeData");
+      RenderData.SaveToINI(f, "RenderData");
+      MeshData.SaveToINI(f, "MeshData");
+
+      SoundSourceData.SaveToINI(f, "SoundSourceData", "InitialSoundSources", "ISN", InitialSoundSources);
+      SoundSourceData.SaveToINI(f, "SoundSourceData", "SoundSources", "SND", SoundSources);
+      f.SaveFile(filepath);
     }
 
     public void Init()

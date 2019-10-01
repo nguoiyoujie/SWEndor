@@ -13,7 +13,7 @@ namespace SWEndor.ActorTypes.Instances
       };
 
       ImpactDamage = 5;
-      ImpactCloseEnoughDistance = 100;
+      AIData.ImpactCloseEnoughDistance = 100;
 
       MeshData = new MeshData(Name, @"projectiles\green3_laser.x");
     }

@@ -20,6 +20,10 @@ namespace SWEndor.ActorTypes.Components
     public TargetType TargetType;
     public int HuntWeight;
 
+    // Projectiles
+
+    public float ImpactCloseEnoughDistance;
+
     public readonly static AIData Default = 
       new AIData
         {
@@ -45,6 +49,8 @@ namespace SWEndor.ActorTypes.Components
 
       TargetType = f.GetEnumValue(sectionname, "TargetType", TargetType);
       HuntWeight = f.GetIntValue(sectionname, "HuntWeight", HuntWeight);
+
+      Move_CloseEnough = f.GetFloatValue(sectionname, "ImpactCloseEnoughDistance", ImpactCloseEnoughDistance);
     }
 
     public void SaveToINI(INIFile f, string sectionname)
@@ -62,6 +68,8 @@ namespace SWEndor.ActorTypes.Components
 
       f.SetEnumValue(sectionname, "TargetType", TargetType);
       f.SetIntValue(sectionname, "HuntWeight", HuntWeight);
+
+      f.SetFloatValue(sectionname, "ImpactCloseEnoughDistance", ImpactCloseEnoughDistance);
     }
   }
 }

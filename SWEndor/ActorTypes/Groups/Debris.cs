@@ -13,6 +13,8 @@ namespace SWEndor.ActorTypes.Groups
       ArmorData = ArmorData.Immune;
       RenderData.CullDistance = 4500f;
 
+      AIData.TargetType = TargetType.FLOATING;
+
       Mask = ComponentMask.DEBRIS;
     }
   }

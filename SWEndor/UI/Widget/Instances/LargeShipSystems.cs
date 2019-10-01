@@ -37,9 +37,8 @@ namespace SWEndor.UI.Widgets
       ActorInfo p = PlayerInfo.Actor;
       if (p == null
         || !p.Active
-        || !(p.TypeInfo is ActorTypes.Groups.StarDestroyer
-          || p.TypeInfo is ActorTypes.Groups.Warship
-        ))
+        || !p.TypeInfo.AIData.TargetType.Has(TargetType.SHIP)
+        )
         return;
 
       DrawRadar();

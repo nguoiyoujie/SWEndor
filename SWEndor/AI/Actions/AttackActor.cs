@@ -100,7 +100,7 @@ namespace SWEndor.AI.Actions
           float evadeduration = 2000 / (target.GetTrueSpeed() + 500);
           actor.QueueFirst(new Evade(evadeduration));
         }
-        else if (!(target.TypeInfo is ActorTypes.Groups.Projectile))
+        else if (!(target.TypeInfo.AIData.TargetType.Has(TargetType.LASER | TargetType.MUNITION)))
         {
           actor.QueueFirst(new Move(MakeAltPosition(engine, actor, target.Parent), actor.MoveData.MaxSpeed));
         }

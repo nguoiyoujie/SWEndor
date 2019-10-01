@@ -21,8 +21,8 @@ namespace SWEndor.ActorTypes.Instances
       RenderData.CullDistance = -1;
 
       MeshData = new MeshData(Name, @"projectiles\death_laser");
-        
-      ImpactCloseEnoughDistance = 200;
+
+      AIData.ImpactCloseEnoughDistance = 200;
     }
 
     public override void ProcessState(Engine engine, ActorInfo ainfo)

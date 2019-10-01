@@ -3,6 +3,7 @@ using SWEndor.ExplosionTypes.Instances;
 using SWEndor.Primitives.Extensions;
 using SWEndor.Primitives.Factories;
 using System;
+using System.IO;
 
 namespace SWEndor.ExplosionTypes
 {
@@ -36,8 +37,20 @@ namespace SWEndor.ExplosionTypes
         {
           Add(atype.ID, atype);
         }
-        //atype.LoadFromINI();
+        //atype.SaveToINI(atype.ID);
         Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
+      }
+
+      public void Load()
+      {
+        foreach (string fp in Directory.GetFiles(Globals.ExplosionTypeINIDirectory, "*.ini", SearchOption.AllDirectories))
+        {
+          string f = Path.GetFileNameWithoutExtension(fp);
+          if (Contains(f))
+            throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.EXPLTYPE_INITWICE_ERROR).F(f));
+          ExplosionTypeInfo t = new ExplosionTypeInfo(this, f, f);
+          t.LoadFromINI(f);
+        }
       }
 
       public void Initialise()

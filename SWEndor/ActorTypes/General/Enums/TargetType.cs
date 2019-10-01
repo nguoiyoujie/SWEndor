@@ -10,35 +10,51 @@ namespace SWEndor.ActorTypes
   {
     NULL = 0,
 
+    // Projectiles
+
+    /// <summary>
+    /// Actor is a laser
+    /// </summary>
+    LASER = 0x0001,
+
     /// <summary>
     /// Actor is a munition
     /// </summary>
-    MUNITION = 0x0001,
+    MUNITION = 0x0002,
+
+    // Crafts
+
+    /// <summary>
+    /// Actor is a non-combat object
+    /// </summary>
+    FLOATING = 0x0010,
 
     /// <summary>
     /// Actor is a fighter
     /// </summary>
-    FIGHTER = 0x0002,
+    FIGHTER = 0x0020,
 
     /// <summary>
     /// Actor is a large vessel
     /// </summary>
-    SHIP = 0x0004,
-
-    /// <summary>
-    /// Actor is a dedicated add-on to another actor
-    /// </summary>
-    ADDON = 0x0008,
-
-    /// <summary>
-    /// Actor is a shield generator
-    /// </summary>
-    SHIELDGENERATOR = 0x0010,
+    SHIP = 0x0040,
 
     /// <summary>
     /// Actor is a 'structure' (think towers)
     /// </summary>
-    STRUCTURE = SHIP | SHIELDGENERATOR, // recheck, see if we can place it in a seperate category
+    STRUCTURE = 0x0080, // recheck, see if we can place it in a seperate category
+
+    // Addons
+
+    /// <summary>
+    /// Actor is a dedicated add-on to another actor
+    /// </summary>
+    ADDON = 0x0100,
+
+    /// <summary>
+    /// Actor is a shield generator (special add on)
+    /// </summary>
+    SHIELDGENERATOR = 0x0200,
 
     /// <summary>
     /// Actor is considered a member of all targetable types.

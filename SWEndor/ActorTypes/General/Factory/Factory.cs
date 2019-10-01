@@ -3,6 +3,7 @@ using SWEndor.Core;
 using SWEndor.Primitives.Extensions;
 using SWEndor.Primitives.Factories;
 using System;
+using System.IO;
 
 namespace SWEndor.ActorTypes
 {
@@ -172,8 +173,20 @@ namespace SWEndor.ActorTypes
         {
           Add(atype.ID, atype);
         }
-        //atype.LoadFromINI(atype.ID);
+        //atype.SaveToINI(atype.ID);
         Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
+      }
+
+      public void Load()
+      {
+        foreach (string fp in Directory.GetFiles(Globals.ActorTypeINIDirectory, "*.ini", SearchOption.AllDirectories))
+        {
+          string f = Path.GetFileNameWithoutExtension(fp);
+          if (Contains(f))
+            throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.ACTORTYPE_INITWICE_ERROR).F(f));
+          ActorTypeInfo t = new ActorTypeInfo(this, f, f);
+          t.LoadFromINI(f);
+        }
       }
 
       public void Initialise()

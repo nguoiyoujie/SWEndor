@@ -18,7 +18,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxSpeed = Globals.LaserSpeed * 0.6f;
       MoveLimitData.MinSpeed = Globals.LaserSpeed * 0.6f;
 
-      ImpactCloseEnoughDistance = 75;
+      AIData.ImpactCloseEnoughDistance = 75;
       IsLaser = false; // not the same speed
 
       MeshData = new MeshData(Name, @"projectiles\ion_sm_laser.x");

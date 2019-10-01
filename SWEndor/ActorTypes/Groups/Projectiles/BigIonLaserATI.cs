@@ -27,7 +27,7 @@ namespace SWEndor.ActorTypes.Instances
       IsLaser = false; // not the same speed
 
       // Projectile
-      ImpactCloseEnoughDistance = 150;
+      AIData.ImpactCloseEnoughDistance = 150;
 
       MeshData = new MeshData(Name, @"projectiles\ion_sm_laser.x", 4);
     }

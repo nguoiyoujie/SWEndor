@@ -309,7 +309,7 @@ namespace SWEndor.Player
 
     public void FlashHit(TV_COLOR color)
     {
-      if (Actor.TypeInfo is ActorTypes.Groups.Fighter)
+      if (Actor.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
       {
         Engine.SoundManager.SetSound(SoundGlobals.ExpHit);
         Engine.TrueVision.TVGraphicEffect.Flash(color.r, color.g, color.b, 200);

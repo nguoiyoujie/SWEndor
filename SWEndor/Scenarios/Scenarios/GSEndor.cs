@@ -737,7 +737,7 @@ namespace SWEndor.Scenarios
         int huntw = 5;
         creationTime += creationDelay;
         position = (TV_3DVECTOR)spawn[0];
-        if (type is ActorTypes.Groups.Fighter)
+        if (type.AIData.TargetType.Has(TargetType.FIGHTER))
         {
           actions = new ActionInfo[] { new HyperspaceIn(position)
                                  , new Lock()

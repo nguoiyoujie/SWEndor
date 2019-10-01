@@ -7,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
     internal Yellow2LaserATI(Factory owner) : base(owner, "LSR_Y2", "Yellow Double Laser")
     {
       ImpactDamage = 1.5f;
-      ImpactCloseEnoughDistance = 50;
+      AIData.ImpactCloseEnoughDistance = 50;
 
       MeshData = new MeshData(Name, @"projectiles\yellow2_laser.x");
     }

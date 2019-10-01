@@ -3,6 +3,7 @@ using SWEndor.Core;
 using SWEndor.Primitives;
 using SWEndor.Actors.Models;
 using SWEndor.Actors;
+using SWEndor.ActorTypes;
 
 namespace SWEndor.Models
 {
@@ -192,8 +193,9 @@ namespace SWEndor.Models
             if (checkID != -1)
             {
               ActorInfo checkActor = engine.ActorFactory.Get(checkID);
-              if (!(checkActor?.TypeInfo is ActorTypes.Groups.Fighter))
-                CollisionActorID = checkID;
+              if (checkActor != null)
+                if (!(checkActor.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER)))
+                  CollisionActorID = checkID;
             }
           }
         }

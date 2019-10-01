@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Models;
+using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Player;
@@ -52,7 +53,7 @@ namespace SWEndor.UI.Widgets
       {
         if (!PlayerInfo.LockTarget)
         {
-          if (p.TypeInfo is ActorTypes.Groups.LargeShip)
+          if (p.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
             PickTargetLargeShip();
           else
             PickTargetFighter(!PlayerInfo.IsTorpedoMode);
@@ -90,7 +91,7 @@ namespace SWEndor.UI.Widgets
 
     private bool Check(ActorInfo p, float x, float y, float limit, float dist, ActorInfo target)
     {
-      if (p.TypeInfo is ActorTypes.Groups.LargeShip)
+      if (p.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
       {
         return !target.Active
         || target.IsDyingOrDead
