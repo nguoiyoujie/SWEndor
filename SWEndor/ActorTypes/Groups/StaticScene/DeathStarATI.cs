@@ -17,12 +17,7 @@ namespace SWEndor.ActorTypes.Instances
       };
 
       MeshData = MeshDataDecorator.CreateAlphaTexturedWall(Name, 20000, "deathstar/deathstar.bmp", "deathstar/deathstaralpha.bmp");
-    }
-
-    public override void Dying(Engine engine, ActorInfo ainfo)
-    {
-      base.Dying(engine, ainfo);
-      ainfo.DyingTimerSet(5, true);
+      TimedLifeData = new TimedLifeData(false, 5);
     }
   }
 }

@@ -25,6 +25,7 @@ namespace SWEndor.ActorTypes.Groups
       MoveLimitData.ZNormFrac = 0.01f;
       RenderData.RadarSize = 2;
       DyingMoveData.Spin(180, 270);
+      TimedLifeData = new TimedLifeData(false, 5);
 
       RenderData.CullDistance = 7500;
 
@@ -40,6 +41,7 @@ namespace SWEndor.ActorTypes.Groups
       AIData.HuntWeight = 5;
     }
 
+    /*
     public override void Dying(Engine engine, ActorInfo ainfo)
     {
       base.Dying(engine, ainfo);
@@ -49,6 +51,7 @@ namespace SWEndor.ActorTypes.Groups
       else
         ainfo.DyingTimerSet(5, true);
     }
+    */
   }
 }
 

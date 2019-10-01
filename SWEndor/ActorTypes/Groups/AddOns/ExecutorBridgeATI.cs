@@ -25,8 +25,8 @@ namespace SWEndor.ActorTypes.Instances
       CombatData.MaxStrength = 600.0f;
       CombatData.ImpactDamage = 200.0f;
       RenderData.RadarSize = -1;
-
       RenderData.CullDistance = 30000;
+      TimedLifeData = new TimedLifeData(false, 2000);
 
       ScoreData = new ScoreData(75, 100000);
 
@@ -57,8 +57,6 @@ namespace SWEndor.ActorTypes.Instances
     public override void Dying(Engine engine, ActorInfo ainfo)
     {
       base.Dying(engine, ainfo);
-
-      ainfo.DyingTimerSet(2000, true);
       ainfo.TopParent?.SetState_Dying();
     }
 

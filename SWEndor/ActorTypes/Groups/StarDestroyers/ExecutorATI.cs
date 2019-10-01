@@ -26,7 +26,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxTurnRate = 2f;
 
       RenderData.CullDistance = 60000;
-
+      TimedLifeData = new TimedLifeData(false, 2000);
       ScoreData = new ScoreData(75, 100000);
 
       MeshData = new MeshData(Name, @"executor\executor.x", 2.5f);
@@ -85,11 +85,6 @@ namespace SWEndor.ActorTypes.Instances
 
         , new AddOnData("EXERBRID", new TV_3DVECTOR(0, 325, -845), new TV_3DVECTOR(0, 0, 0), true)
       };
-    }
-
-    public override void Dying(Engine engine, ActorInfo ainfo)
-    {
-      ainfo.DyingTimerSet(2000, true);
     }
   }
 }

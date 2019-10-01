@@ -26,19 +26,13 @@ namespace SWEndor.ActorTypes.Groups
       MoveLimitData.ZTilt = 5f;
       MoveLimitData.ZNormFrac = 0.008f;
       RenderData.RadarSize = 10;
+      TimedLifeData = new TimedLifeData(false, 25);
 
       AIData.TargetType = TargetType.SHIP;
       RenderData.RadarType = RadarType.RECTANGLE_GIANT;
 
       Mask = ComponentMask.ACTOR;
       AIData.HuntWeight = 5;
-    }
-
-    public override void Dying(Engine engine, ActorInfo ainfo)
-    {
-      base.Dying(engine, ainfo);
-
-      ainfo.DyingTimerSet(25, true);
     }
   }
 }

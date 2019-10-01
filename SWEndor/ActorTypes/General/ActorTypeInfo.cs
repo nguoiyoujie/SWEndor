@@ -394,6 +394,7 @@ namespace SWEndor.ActorTypes
         throw new ArgumentNullException("ainfo");
 
       DyingMoveData.Initialize(ainfo);
+      ainfo.DyingTimerStart();
 
       if (ainfo.IsPlayer)
       {
