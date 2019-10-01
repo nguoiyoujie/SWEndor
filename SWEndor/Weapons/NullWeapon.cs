@@ -6,7 +6,7 @@ namespace SWEndor.Weapons.Types
   {
     public static readonly NullWeapon Instance = new NullWeapon();
 
-    private NullWeapon() : base("Null", "Red Laser")
+    private NullWeapon() : base("Null", null)
     {
       //WeaponCooldown = Globals.Engine.Game.GameTime + 9999999;
       WeaponCooldownRate = 999999999;

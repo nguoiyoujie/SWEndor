@@ -22,16 +22,15 @@ namespace SWEndor.Weapons
   public class WeaponInfo
   {
     public static readonly WeaponInfo[] NullArrayCache = new WeaponInfo[0];
+    public static Projectile NullProj = new Projectile(Globals.Engine.ActorTypeFactory, "$PROJ_NULL", "Null Projectile");
 
     public WeaponInfo(string name, string weapproj)
     {
       Name = name;
       DisplayName = name;
 
-      if (weapproj != null)
-      {
-        Projectile = (Projectile)Globals.Engine.ActorTypeFactory.Get(weapproj); //!
-      }
+      // TO-DO: Dedicated Projectile class that need no casting 
+      Projectile = (weapproj != null) ? (Projectile)Globals.Engine.ActorTypeFactory.Get(weapproj) : NullProj;
     }
 
     public WeaponInfo(Engine engine, WeaponStatInfo stat)
