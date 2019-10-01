@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class CorellianATI : Groups.Warship
   {
-    internal CorellianATI(Factory owner) : base(owner, "Corellian Corvette")
+    internal CorellianATI(Factory owner) : base(owner, "CORV", "Corellian Corvette")
     {
       MaxStrength = 575.0f;
       ImpactDamage = 60.0f;
@@ -30,12 +30,12 @@ namespace SWEndor.ActorTypes.Instances
       SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500f, new TV_3DVECTOR(0, 0, -200), true, isEngineSound: true) };
       AddOns = new AddOnData[]
       {
-        new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(-35, 15, 110), new TV_3DVECTOR(-80, -90, 0), true)
-        , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(-35, 15, 80), new TV_3DVECTOR(-80, -90, 0), true)
-        , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(35, 15, 110), new TV_3DVECTOR(-80, 90, 0), true)
-        , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(35, 15, 80), new TV_3DVECTOR(-80, 90, 0), true)
-        , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(0, -45, 150), new TV_3DVECTOR(90, 0, 0), true)
-        , new AddOnData("Corellian Turbolaser Tower", new TV_3DVECTOR(0, 45, 150), new TV_3DVECTOR(-90, 0, 0), true)
+        new AddOnData("CORLLSR", new TV_3DVECTOR(-35, 15, 110), new TV_3DVECTOR(-80, -90, 0), true)
+        , new AddOnData("CORLLSR", new TV_3DVECTOR(-35, 15, 80), new TV_3DVECTOR(-80, -90, 0), true)
+        , new AddOnData("CORLLSR", new TV_3DVECTOR(35, 15, 110), new TV_3DVECTOR(-80, 90, 0), true)
+        , new AddOnData("CORLLSR", new TV_3DVECTOR(35, 15, 80), new TV_3DVECTOR(-80, 90, 0), true)
+        , new AddOnData("CORLLSR", new TV_3DVECTOR(0, -45, 150), new TV_3DVECTOR(90, 0, 0), true)
+        , new AddOnData("CORLLSR", new TV_3DVECTOR(0, 45, 150), new TV_3DVECTOR(-90, 0, 0), true)
       };
     }
   }

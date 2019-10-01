@@ -7,14 +7,14 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class SurfaceGun : ActorTypeInfo
   {
-    internal SurfaceGun(Factory owner, string name) : base(owner, name)
+    internal SurfaceGun(Factory owner, string id, string name) : base(owner, id, name)
     {
       // Combat
       CombatData = CombatData.DefaultShip;
       ArmorData = ArmorData.Default;
 
       Explodes = new ExplodeData[] {
-        new ExplodeData("ExpL00", 1, 5, ExplodeTrigger.ON_DEATH)
+        new ExplodeData("EXPL00", 1, 5, ExplodeTrigger.ON_DEATH)
       };
 
       DyingMoveData.Kill();

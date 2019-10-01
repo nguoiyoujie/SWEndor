@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class Debris : ActorTypeInfo
   {
-    internal Debris(Factory owner, string name) : base(owner, name)
+    internal Debris(Factory owner, string id, string name) : base(owner, id, name)
     {
       // Combat
       CombatData = CombatData.Disabled;

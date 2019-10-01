@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class MissileATI : Groups.MissileProjectile
   {
-    internal MissileATI(Factory owner) : base(owner, "Missile")
+    internal MissileATI(Factory owner) : base(owner, "PROJ_MISL", "Missile")
     {
       // Combat
       TimedLifeData = new TimedLifeData(true, 35);

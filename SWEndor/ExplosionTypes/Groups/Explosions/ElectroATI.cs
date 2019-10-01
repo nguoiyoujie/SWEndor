@@ -8,7 +8,7 @@ namespace SWEndor.ExplosionTypes.Instances
 {
   public class ElectroATI : Groups.Explosion
   {
-    internal ElectroATI(Factory owner) : base(owner, "Electro")
+    internal ElectroATI(Factory owner) : base(owner, "ELECTRO", "Electro")
     {
       // Combat
       TimedLifeData = new TimedLifeData(true, 0.5f);

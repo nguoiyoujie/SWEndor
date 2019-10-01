@@ -21,15 +21,15 @@ namespace SWEndor.Scenarios
       Description = "The Rebel fleet, amassed on Sullust, prepares to move to Endor "
                   + "where the Emperor is overseeing the construction of the second "
                   + "Death Star.";
-      AllowedWings = new List<ActorTypeInfo> { ActorTypeFactory.Get("X-Wing")
-                                               , ActorTypeFactory.Get("Y-Wing")
-                                               , ActorTypeFactory.Get("A-Wing")
-                                               , ActorTypeFactory.Get("B-Wing")
-                                               , ActorTypeFactory.Get("Millennium Falcon")
-                                               , ActorTypeFactory.Get("Corellian Corvette")
-                                               , ActorTypeFactory.Get("Victory-I Star Destroyer")
-                                               , ActorTypeFactory.Get("Imperial-I Star Destroyer")
-                                               , ActorTypeFactory.Get("TIE Advanced X1")
+      AllowedWings = new List<ActorTypeInfo> { ActorTypeFactory.Get("XWING")
+                                               , ActorTypeFactory.Get("YWING")
+                                               , ActorTypeFactory.Get("AWING")
+                                               , ActorTypeFactory.Get("BWING")
+                                               , ActorTypeFactory.Get("FALC")
+                                               , ActorTypeFactory.Get("CORV")
+                                               , ActorTypeFactory.Get("VICT")
+                                               , ActorTypeFactory.Get("IMPL")
+                                               , ActorTypeFactory.Get("TIEX")
                                               };
 
       AllowedDifficulties = new List<string> { "easy"
@@ -183,7 +183,7 @@ namespace SWEndor.Scenarios
       base.LoadScene();
 
       // Create Endor
-      ActorCreationInfo aci_Endor = new ActorCreationInfo(ActorTypeFactory.Get("Endor"))
+      ActorCreationInfo aci_Endor = new ActorCreationInfo(ActorTypeFactory.Get("ENDOR"))
       {
         Position = new TV_3DVECTOR(0, -40000, 0),
         Rotation = new TV_3DVECTOR(0, 180, 0),
@@ -192,7 +192,7 @@ namespace SWEndor.Scenarios
       Engine.ActorFactory.Create(aci_Endor);
 
       // Create DeathStar
-      ActorCreationInfo aci_DS = new ActorCreationInfo(ActorTypeFactory.Get("DeathStar2"))
+      ActorCreationInfo aci_DS = new ActorCreationInfo(ActorTypeFactory.Get("DSTAR2"))
       {
         Position = new TV_3DVECTOR(0, 5600, 50000),
         Rotation = new TV_3DVECTOR(0, 0, 5),
@@ -203,7 +203,7 @@ namespace SWEndor.Scenarios
 
 
       // Create DeathStarLaser
-      ActorCreationInfo aci_DSLS = new ActorCreationInfo(ActorTypeFactory.Get("Death Star Laser"))
+      ActorCreationInfo aci_DSLS = new ActorCreationInfo(ActorTypeFactory.Get("DSLSRSRC"))
       {
         Position = new TV_3DVECTOR(650, 1000, 10000),
         Rotation = new TV_3DVECTOR(0, 0, 5),
@@ -505,8 +505,8 @@ namespace SWEndor.Scenarios
       FactionInfo faction;
 
       // Millennium Falcon
-      type = ActorTypeFactory.Get("Millennium Falcon (Lando)");
-      name = "Millennium Falcon (Lando)";
+      type = ActorTypeFactory.Get("LANDO");
+      name = "LANDO";
       sidebar_name = "FALCON";
       creationTime += creationDelay;
       faction = FactionInfo.Factory.Get("Rebels_Falcon");
@@ -540,8 +540,8 @@ namespace SWEndor.Scenarios
       m_FalconID = ainfo.ID;
 
       // Wedge X-Wing
-      type = ActorTypeFactory.Get("X-Wing (Wedge)");
-      name = "X-Wing (Wedge)";
+      type = ActorTypeFactory.Get("WEDGE");
+      name = "WEDGE";
       sidebar_name = "WEDGE";
       creationTime += creationDelay;
       faction = FactionInfo.Factory.Get("Rebels_Wedge");
@@ -576,23 +576,23 @@ namespace SWEndor.Scenarios
 
       // Player X-Wing
       position = new TV_3DVECTOR(0, 0, -25);
-      if (PlayerInfo.ActorType == ActorTypeFactory.Get("X-Wing"))
+      if (PlayerInfo.ActorType == ActorTypeFactory.Get("XWING"))
       {
         position = new TV_3DVECTOR(0, 0, -25);
       }
-      else if (PlayerInfo.ActorType == ActorTypeFactory.Get("Y-Wing"))
+      else if (PlayerInfo.ActorType == ActorTypeFactory.Get("YWING"))
       {
         position = new TV_3DVECTOR(-250, 60, -520);
       }
-      else if (PlayerInfo.ActorType == ActorTypeFactory.Get("A-Wing"))
+      else if (PlayerInfo.ActorType == ActorTypeFactory.Get("AWING"))
       {
         position = new TV_3DVECTOR(100, 70, -720);
       }
-      else if (PlayerInfo.ActorType == ActorTypeFactory.Get("B-Wing"))
+      else if (PlayerInfo.ActorType == ActorTypeFactory.Get("BWING"))
       {
         position = new TV_3DVECTOR(-80, 20, -50);
       }
-      else if (PlayerInfo.ActorType == ActorTypeFactory.Get("Corellian Corvette"))
+      else if (PlayerInfo.ActorType == ActorTypeFactory.Get("CORV"))
       {
         position = new TV_3DVECTOR(-20, -420, -30);
       }
@@ -628,7 +628,7 @@ namespace SWEndor.Scenarios
       PlayerCameraInfo.Look.SetTarget_LookAtActor(ainfo.ID);
 
       // Mon Calamari (HomeOne)
-      type = ActorTypeFactory.Get("Mon Calamari Capital Ship");
+      type = ActorTypeFactory.Get("MC90");
       name = "Mon Calamari (Home One)";
       sidebar_name = "HOME ONE";
       faction = MainAllyFaction;
@@ -673,63 +673,63 @@ namespace SWEndor.Scenarios
       float nvd = 6000;
       List<object[]> spawns = new List<object[]>();
       // X-Wings x6
-      spawns.Add(new object[] { new TV_3DVECTOR(60, 30, -390), ActorTypeFactory.Get("X-Wing") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-20, -50, -320), ActorTypeFactory.Get("X-Wing") });
-      spawns.Add(new object[] { new TV_3DVECTOR(110, 20, -340), ActorTypeFactory.Get("X-Wing") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-40, 50, -360), ActorTypeFactory.Get("X-Wing") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-120, 20, -380), ActorTypeFactory.Get("X-Wing") });
-      spawns.Add(new object[] { new TV_3DVECTOR(70, -20, -400), ActorTypeFactory.Get("X-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(60, 30, -390), ActorTypeFactory.Get("XWING") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-20, -50, -320), ActorTypeFactory.Get("XWING") });
+      spawns.Add(new object[] { new TV_3DVECTOR(110, 20, -340), ActorTypeFactory.Get("XWING") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-40, 50, -360), ActorTypeFactory.Get("XWING") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-120, 20, -380), ActorTypeFactory.Get("XWING") });
+      spawns.Add(new object[] { new TV_3DVECTOR(70, -20, -400), ActorTypeFactory.Get("XWING") });
 
       // A-Wings x4
-      spawns.Add(new object[] { new TV_3DVECTOR(200, -10, -750), ActorTypeFactory.Get("A-Wing") });
-      spawns.Add(new object[] { new TV_3DVECTOR(80, 20, -800), ActorTypeFactory.Get("A-Wing") });
-      spawns.Add(new object[] { new TV_3DVECTOR(270, 40, -850), ActorTypeFactory.Get("A-Wing") });
-      spawns.Add(new object[] { new TV_3DVECTOR(65, 65, -900), ActorTypeFactory.Get("A-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(200, -10, -750), ActorTypeFactory.Get("AWING") });
+      spawns.Add(new object[] { new TV_3DVECTOR(80, 20, -800), ActorTypeFactory.Get("AWING") });
+      spawns.Add(new object[] { new TV_3DVECTOR(270, 40, -850), ActorTypeFactory.Get("AWING") });
+      spawns.Add(new object[] { new TV_3DVECTOR(65, 65, -900), ActorTypeFactory.Get("AWING") });
 
       // B-Wings x4
-      spawns.Add(new object[] { new TV_3DVECTOR(-150, 50, -250), ActorTypeFactory.Get("B-Wing") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-290, 80, -280), ActorTypeFactory.Get("B-Wing") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-20, 100, -350), ActorTypeFactory.Get("B-Wing") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-200, 65, -400), ActorTypeFactory.Get("B-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-150, 50, -250), ActorTypeFactory.Get("BWING") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-290, 80, -280), ActorTypeFactory.Get("BWING") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-20, 100, -350), ActorTypeFactory.Get("BWING") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-200, 65, -400), ActorTypeFactory.Get("BWING") });
 
       // Y-Wings x6
-      spawns.Add(new object[] { new TV_3DVECTOR(-10, 100, -350), ActorTypeFactory.Get("Y-Wing") });
-      spawns.Add(new object[] { new TV_3DVECTOR(50, 80, -380), ActorTypeFactory.Get("Y-Wing") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-40, 90, -420), ActorTypeFactory.Get("Y-Wing") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-90, 100, -440), ActorTypeFactory.Get("Y-Wing") });
-      spawns.Add(new object[] { new TV_3DVECTOR(75, 110, -450), ActorTypeFactory.Get("Y-Wing") });
-      spawns.Add(new object[] { new TV_3DVECTOR(100, 85, -500), ActorTypeFactory.Get("Y-Wing") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-10, 100, -350), ActorTypeFactory.Get("YWING") });
+      spawns.Add(new object[] { new TV_3DVECTOR(50, 80, -380), ActorTypeFactory.Get("YWING") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-40, 90, -420), ActorTypeFactory.Get("YWING") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-90, 100, -440), ActorTypeFactory.Get("YWING") });
+      spawns.Add(new object[] { new TV_3DVECTOR(75, 110, -450), ActorTypeFactory.Get("YWING") });
+      spawns.Add(new object[] { new TV_3DVECTOR(100, 85, -500), ActorTypeFactory.Get("YWING") });
 
       // Corellian x9 (5 forward, 4 rear)
-      spawns.Add(new object[] { new TV_3DVECTOR(-1600, -120, 1300), ActorTypeFactory.Get("Corellian Corvette"), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(1400, -320, 400), ActorTypeFactory.Get("Corellian Corvette"), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-2400, 150, 1500), ActorTypeFactory.Get("Corellian Corvette"), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(2500, 470, 850), ActorTypeFactory.Get("Corellian Corvette"), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(100, 300, 200), ActorTypeFactory.Get("Corellian Corvette"), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(600, 70, -150), ActorTypeFactory.Get("Corellian Corvette"), 5500 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-700, -150, -600), ActorTypeFactory.Get("Corellian Corvette"), 5500 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-600, 250, -1200), ActorTypeFactory.Get("Corellian Corvette"), 5500 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-1600, 200, -1200), ActorTypeFactory.Get("Corellian Corvette"), 5500 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-1600, -120, 1300), ActorTypeFactory.Get("CORV"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(1400, -320, 400), ActorTypeFactory.Get("CORV"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-2400, 150, 1500), ActorTypeFactory.Get("CORV"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(2500, 470, 850), ActorTypeFactory.Get("CORV"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(100, 300, 200), ActorTypeFactory.Get("CORV"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(600, 70, -150), ActorTypeFactory.Get("CORV"), 5500 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-700, -150, -600), ActorTypeFactory.Get("CORV"), 5500 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-600, 250, -1200), ActorTypeFactory.Get("CORV"), 5500 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-1600, 200, -1200), ActorTypeFactory.Get("CORV"), 5500 });
 
       // Mon Calamari x2 (not including HomeOne)
-      spawns.Add(new object[] { new TV_3DVECTOR(4500, -120, -500), ActorTypeFactory.Get("Mon Calamari Capital Ship"), 7200 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-2000, 550, -1500), ActorTypeFactory.Get("Mon Calamari Capital Ship"), 7200 });
+      spawns.Add(new object[] { new TV_3DVECTOR(4500, -120, -500), ActorTypeFactory.Get("MC90"), 7200 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-2000, 550, -1500), ActorTypeFactory.Get("MC90"), 7200 });
 
       // Nebulon B x3
-      spawns.Add(new object[] { new TV_3DVECTOR(-2700, 320, -1850), ActorTypeFactory.Get("Nebulon-B Frigate"), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(1800, -280, -900), ActorTypeFactory.Get("Nebulon-B Frigate"), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(2500, 850, -150), ActorTypeFactory.Get("Nebulon-B Frigate"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-2700, 320, -1850), ActorTypeFactory.Get("NEBL"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(1800, -280, -900), ActorTypeFactory.Get("NEBL"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(2500, 850, -150), ActorTypeFactory.Get("NEBL"), 8000 });
 
       // Transport x9
-      spawns.Add(new object[] { new TV_3DVECTOR(1200, 550, -750), ActorTypeFactory.Get("Transport"), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(1750, 350, 150), ActorTypeFactory.Get("Transport"), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(3500, 280, -1200), ActorTypeFactory.Get("Transport"), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(4000, 280, -800), ActorTypeFactory.Get("Transport"), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-500, -175, -1600), ActorTypeFactory.Get("Transport"), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-1650, -230, -800), ActorTypeFactory.Get("Transport"), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-2000, 450, 0), ActorTypeFactory.Get("Transport"), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-3500, -280, -1200), ActorTypeFactory.Get("Transport"), 8000 });
-      spawns.Add(new object[] { new TV_3DVECTOR(-900, 10, -400), ActorTypeFactory.Get("Transport"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(1200, 550, -750), ActorTypeFactory.Get("TRAN"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(1750, 350, 150), ActorTypeFactory.Get("TRAN"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(3500, 280, -1200), ActorTypeFactory.Get("TRAN"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(4000, 280, -800), ActorTypeFactory.Get("TRAN"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-500, -175, -1600), ActorTypeFactory.Get("TRAN"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-1650, -230, -800), ActorTypeFactory.Get("TRAN"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-2000, 450, 0), ActorTypeFactory.Get("TRAN"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-3500, -280, -1200), ActorTypeFactory.Get("TRAN"), 8000 });
+      spawns.Add(new object[] { new TV_3DVECTOR(-900, 10, -400), ActorTypeFactory.Get("TRAN"), 8000 });
 
       foreach (object[] spawn in spawns)
       {
@@ -1263,7 +1263,7 @@ namespace SWEndor.Scenarios
                                                                           , null);
 
       GSFunctions.MultipleSquadron_Spawn(Engine, this, sets, box, 1.5f, spawninfo);
-      spawninfo.TypeInfo = ActorTypeFactory.Get("TIE Interceptor");
+      spawninfo.TypeInfo = ActorTypeFactory.Get("TIEI");
       GSFunctions.MultipleSquadron_Spawn(Engine, this, setI, box, 1.5f, spawninfo);
     }
 
@@ -1271,7 +1271,7 @@ namespace SWEndor.Scenarios
     {
       GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -500, Manager.MinBounds.z - 2500), new TV_3DVECTOR(2500, 500, Manager.MinBounds.z - 3500));
       GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
-                                                                          , ActorTypeFactory.Get("TIE Interceptor")
+                                                                          , ActorTypeFactory.Get("TIEI")
                                                                           , MainEnemyFaction
                                                                           , 4
                                                                           , 18
@@ -1289,7 +1289,7 @@ namespace SWEndor.Scenarios
     {
       GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -500, Manager.MinBounds.z - 2500), new TV_3DVECTOR(2500, 500, Manager.MinBounds.z - 3500));
       GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
-                                                                          , ActorTypeFactory.Get("TIE Defender")
+                                                                          , ActorTypeFactory.Get("TIED")
                                                                           , MainEnemyFaction
                                                                           , 2
                                                                           , 8
@@ -1325,7 +1325,7 @@ namespace SWEndor.Scenarios
     {
       GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -500, Manager.MinBounds.z - 2500), new TV_3DVECTOR(2500, 500, Manager.MinBounds.z - 3500));
       GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
-                                                                          , ActorTypeFactory.Get("TIE Bomber")
+                                                                          , ActorTypeFactory.Get("TIESA")
                                                                           , MainEnemyFaction
                                                                           , 4
                                                                           , 18
@@ -1350,24 +1350,24 @@ namespace SWEndor.Scenarios
       string name;
 
       List<object[]> spawns = new List<object[]>();
-      spawns.Add(new object[] { new TV_3DVECTOR(0, 50, -33500), ActorTypeFactory.Get("Executor Static") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-1500, 180, -32500), ActorTypeFactory.Get("Imperial-I Static") });
-      spawns.Add(new object[] { new TV_3DVECTOR(1500, 180, -32500), ActorTypeFactory.Get("Imperial-I Static") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-3500, 280, -27500), ActorTypeFactory.Get("Imperial-I Static") });
-      spawns.Add(new object[] { new TV_3DVECTOR(5500, 280, -27500), ActorTypeFactory.Get("Imperial-I Static") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-5500, -30, -29500), ActorTypeFactory.Get("Imperial-I Static") });
-      spawns.Add(new object[] { new TV_3DVECTOR(3500, -30, -29500), ActorTypeFactory.Get("Imperial-I Static") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-7500, 130, -31000), ActorTypeFactory.Get("Imperial-I Static") });
-      spawns.Add(new object[] { new TV_3DVECTOR(7500, 130, -31000), ActorTypeFactory.Get("Imperial-I Static") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-11500, -80, -29000), ActorTypeFactory.Get("Imperial-I Static") });
-      spawns.Add(new object[] { new TV_3DVECTOR(11500, -80, -29000), ActorTypeFactory.Get("Imperial-I Static") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-14500, 80, -27500), ActorTypeFactory.Get("Imperial-I Static") });
-      spawns.Add(new object[] { new TV_3DVECTOR(14500, 80, -27500), ActorTypeFactory.Get("Imperial-I Static") });
+      spawns.Add(new object[] { new TV_3DVECTOR(0, 50, -33500), ActorTypeFactory.Get("EXECSTS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-1500, 180, -32500), ActorTypeFactory.Get("IMPLSTS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(1500, 180, -32500), ActorTypeFactory.Get("IMPLSTS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-3500, 280, -27500), ActorTypeFactory.Get("IMPLSTS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(5500, 280, -27500), ActorTypeFactory.Get("IMPLSTS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-5500, -30, -29500), ActorTypeFactory.Get("IMPLSTS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(3500, -30, -29500), ActorTypeFactory.Get("IMPLSTS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-7500, 130, -31000), ActorTypeFactory.Get("IMPLSTS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(7500, 130, -31000), ActorTypeFactory.Get("IMPLSTS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-11500, -80, -29000), ActorTypeFactory.Get("IMPLSTS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(11500, -80, -29000), ActorTypeFactory.Get("IMPLSTS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-14500, 80, -27500), ActorTypeFactory.Get("IMPLSTS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(14500, 80, -27500), ActorTypeFactory.Get("IMPLSTS") });
 
       foreach (object[] spawn in spawns)
       {
         type = (ActorTypeInfo)spawn[1];
-        name = type.Name;
+        name = type.ID;
         position = (TV_3DVECTOR)spawn[0];
 
         ActorSpawnInfo asi = new ActorSpawnInfo
@@ -1402,7 +1402,7 @@ namespace SWEndor.Scenarios
 
       m_Enemy_pull = 8000;
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
-                                                                    , ActorTypeFactory.Get("Imperial-I Star Destroyer")
+                                                                    , ActorTypeFactory.Get("IMPL")
                                                                     , MainEnemyFaction
                                                                     , true
                                                                     , new TV_3DVECTOR()
@@ -1415,14 +1415,14 @@ namespace SWEndor.Scenarios
       switch (Difficulty.ToLower())
       {
         case "easy":
-          sspawn.TypeInfo = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(0, 110, -17500)
                                                         , new TV_3DVECTOR(0, 110, -9000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Arquitens Light Cruiser");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ARQT");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-2500, -250, -19500)
                                                         , new TV_3DVECTOR(-2500, -250, -9500)
@@ -1431,14 +1431,14 @@ namespace SWEndor.Scenarios
 
           break;
         case "mental":
-          sspawn.TypeInfo = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(0, 110, -17500)
                                                         , new TV_3DVECTOR(0, 110, -9000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Arquitens Light Cruiser");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ARQT");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-750, -50, -19000)
                                                         , new TV_3DVECTOR(-750, -50, -6500)
@@ -1451,7 +1451,7 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Acclamator Assault Ship");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-1500, 150, -18500)
                                                         , new TV_3DVECTOR(-1000, 210, -7500)
@@ -1464,7 +1464,7 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Arquitens Light Cruiser");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ARQT");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-2250, -50, -19000)
                                                         , new TV_3DVECTOR(-1250, -50, -6500)
@@ -1481,14 +1481,14 @@ namespace SWEndor.Scenarios
         case "hard":
         case "normal":
         default:
-          sspawn.TypeInfo = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(0, 110, -17500)
                                                         , new TV_3DVECTOR(0, 110, -9000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Acclamator Assault Ship");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(2500, -250, -19500)
                                                         , new TV_3DVECTOR(2000, 110, -9500)
@@ -1501,7 +1501,7 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Arquitens Light Cruiser");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ARQT");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-1500, 150, -18500)
                                                         , new TV_3DVECTOR(-1000, 210, -7500)
@@ -1525,7 +1525,7 @@ namespace SWEndor.Scenarios
 
       m_Enemy_pull = 12000;
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
-                                                              , ActorTypeFactory.Get("Imperial-I Star Destroyer")
+                                                              , ActorTypeFactory.Get("IMPL")
                                                               , MainEnemyFaction
                                                               , true
                                                               , new TV_3DVECTOR()
@@ -1538,14 +1538,14 @@ namespace SWEndor.Scenarios
       switch (Difficulty.ToLower())
       {
         case "easy":
-          sspawn.TypeInfo = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(0, 60, -22500)
                                                         , new TV_3DVECTOR(0, 60, -12000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Acclamator Assault Ship");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-1500, 150, -18500)
                                                         , new TV_3DVECTOR(-1000, 210, -7500)
@@ -1558,7 +1558,7 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-7500, 60, -24500)
                                                         , new TV_3DVECTOR(-2000, 60, -12500)
@@ -1567,14 +1567,14 @@ namespace SWEndor.Scenarios
 
           break;
         case "mental":
-          sspawn.TypeInfo = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(0, 60, -22500)
                                                         , new TV_3DVECTOR(0, 60, -12000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Arquitens Light Cruiser");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ARQT");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                       , new TV_3DVECTOR(-1500, 150, -24500), new TV_3DVECTOR(-1000, 150, -10500)
                                                       , new TV_3DVECTOR(0, 0, 99999)
@@ -1595,7 +1595,7 @@ namespace SWEndor.Scenarios
                                                       , new TV_3DVECTOR(0, 0, 99999)
                                                       ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Acclamator Assault Ship");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-4500, 150, -26500), new TV_3DVECTOR(-3000, 100, -10500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
@@ -1606,19 +1606,19 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-10000, -300, -23500), new TV_3DVECTOR(-1250, -300, -10500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Devastator Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("DEVA");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(0, 120, -24500), new TV_3DVECTOR(0, 120, -11500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Arquitens Light Cruiser");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ARQT");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                       , new TV_3DVECTOR(-2500, 150, -24500), new TV_3DVECTOR(-2000, 150, -10500)
                                                       , new TV_3DVECTOR(0, 0, 99999)
@@ -1639,7 +1639,7 @@ namespace SWEndor.Scenarios
                                                       , new TV_3DVECTOR(0, 0, 99999)
                                                       ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Acclamator Assault Ship");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(10000, -300, -23500), new TV_3DVECTOR(1250, -300, -10500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
@@ -1647,14 +1647,14 @@ namespace SWEndor.Scenarios
 
           break;
         case "hard":
-          sspawn.TypeInfo = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(0, 60, -22500)
                                                         , new TV_3DVECTOR(0, 60, -12000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Arquitens Light Cruiser");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ARQT");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                       , new TV_3DVECTOR(1500, 150, -24500), new TV_3DVECTOR(1000, 150, -10500)
                                                       , new TV_3DVECTOR(0, 0, 99999)
@@ -1665,7 +1665,7 @@ namespace SWEndor.Scenarios
                                                       , new TV_3DVECTOR(0, 0, 99999)
                                                       ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Acclamator Assault Ship");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                       , new TV_3DVECTOR(-1500, 150, -24500), new TV_3DVECTOR(-1000, 150, -10500)
                                                       , new TV_3DVECTOR(0, 0, 99999)
@@ -1676,13 +1676,13 @@ namespace SWEndor.Scenarios
                                                       , new TV_3DVECTOR(0, 0, 99999)
                                                       ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-2500, -100, -24500), new TV_3DVECTOR(-2000, -100, -12500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Arquitens Light Cruiser");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ARQT");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                       , new TV_3DVECTOR(-4500, 150, -26500), new TV_3DVECTOR(-3000, 100, -10500)
                                                       , new TV_3DVECTOR(0, 0, 99999)
@@ -1693,7 +1693,7 @@ namespace SWEndor.Scenarios
                                                       , new TV_3DVECTOR(0, 0, 99999)
                                                       ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Acclamator Assault Ship");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                       , new TV_3DVECTOR(-500, 150, -26500), new TV_3DVECTOR(-500, 100, -10500)
                                                       , new TV_3DVECTOR(0, 0, 99999)
@@ -1712,14 +1712,14 @@ namespace SWEndor.Scenarios
           break;
         case "normal":
         default:
-          sspawn.TypeInfo = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(0, 60, -22500)
                                                         , new TV_3DVECTOR(0, 60, -12000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Arquitens Light Cruiser");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ARQT");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                       , new TV_3DVECTOR(1500, 150, -24500), new TV_3DVECTOR(1000, 150, -10500)
                                                       , new TV_3DVECTOR(0, 0, 99999)
@@ -1730,7 +1730,7 @@ namespace SWEndor.Scenarios
                                                       , new TV_3DVECTOR(0, 0, 99999)
                                                       ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Acclamator Assault Ship");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                       , new TV_3DVECTOR(-2500, -100, -24500), new TV_3DVECTOR(-2000, -100, -12500)
                                                       , new TV_3DVECTOR(0, 0, 99999)
@@ -1746,19 +1746,19 @@ namespace SWEndor.Scenarios
                                                       , new TV_3DVECTOR(0, 0, 99999)
                                                       ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-2500, -100, -24500), new TV_3DVECTOR(-2000, -100, -12500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Arquitens Light Cruiser");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ARQT");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                       , new TV_3DVECTOR(500, 150, -26500), new TV_3DVECTOR(500, 100, -10500)
                                                       , new TV_3DVECTOR(0, 0, 99999)
                                                       ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Acclamator Assault Ship");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                       , new TV_3DVECTOR(4500, 150, -26500), new TV_3DVECTOR(3000, 100, -10500)
                                                       , new TV_3DVECTOR(0, 0, 99999)
@@ -1781,7 +1781,7 @@ namespace SWEndor.Scenarios
       float creationTime = Game.GameTime;
 
       TV_3DVECTOR position = new TV_3DVECTOR(0, -950, -20000);
-      ActorTypeInfo atinfo = ActorTypeFactory.Get("Executor Super Star Destroyer");
+      ActorTypeInfo atinfo = ActorTypeFactory.Get("EXEC");
 
       ActorSpawnInfo asi = new ActorSpawnInfo
       {
@@ -1808,7 +1808,7 @@ namespace SWEndor.Scenarios
 
       // SD
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
-                                                        , ActorTypeFactory.Get("Imperial-I Star Destroyer")
+                                                        , ActorTypeFactory.Get("IMPL")
                                                         , MainEnemyFaction
                                                         , true
                                                         , new TV_3DVECTOR()
@@ -1826,7 +1826,7 @@ namespace SWEndor.Scenarios
         case "mental":
           Manager.AddEvent(0, Empire_TIEWave_0D, 2);
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-2500, -80, -21000), new TV_3DVECTOR(-550, 80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
@@ -1837,7 +1837,7 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Acclamator Assault Ship");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-3500, 120, -20500), new TV_3DVECTOR(-1500, 90, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
@@ -1848,13 +1848,13 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-2000, -80, -24000), new TV_3DVECTOR(-2000, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Acclamator Assault Ship");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-4500, 120, -20500), new TV_3DVECTOR(-3500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
@@ -1865,13 +1865,13 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(2000, -80, -24000), new TV_3DVECTOR(2000, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Acclamator Assault Ship");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(4500, 120, -20500), new TV_3DVECTOR(3500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
@@ -1886,13 +1886,13 @@ namespace SWEndor.Scenarios
           Manager.AddEvent(0, Empire_TIEWave_0D, 1);
           Manager.AddEvent(0, Empire_TIEWave_TIEsvsShips, 5);
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-2500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Acclamator Assault Ship");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-4500, 120, -20500), new TV_3DVECTOR(-3500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
@@ -1908,13 +1908,13 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(2500, -80, -21000), new TV_3DVECTOR(2500, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Acclamator Assault Ship");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(4500, 120, -20500), new TV_3DVECTOR(3500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
@@ -1935,13 +1935,13 @@ namespace SWEndor.Scenarios
         default:
           Manager.AddEvent(0, Empire_TIEWave_TIEsvsShips, 10);
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-2500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("Acclamator Assault Ship");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(4500, 120, -20500), new TV_3DVECTOR(3500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
@@ -1996,17 +1996,17 @@ namespace SWEndor.Scenarios
 
     public void Empire_DeathStarAttack_01()
     {
-      Empire_DeathStarAttack(ActorTypeFactory.Get("Corellian Corvette"));
+      Empire_DeathStarAttack(ActorTypeFactory.Get("CORV"));
     }
 
     public void Empire_DeathStarAttack_02()
     {
-      Empire_DeathStarAttack(ActorTypeFactory.Get("Transport"));
+      Empire_DeathStarAttack(ActorTypeFactory.Get("TRAN"));
     }
 
     public void Empire_DeathStarAttack_03()
     {
-      Empire_DeathStarAttack(ActorTypeFactory.Get("Mon Calamari Capital Ship"));
+      Empire_DeathStarAttack(ActorTypeFactory.Get("MC90"));
     }
 
     private void Empire_DeathStarAttack(ActorTypeInfo type)

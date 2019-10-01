@@ -1,4 +1,5 @@
-﻿using SWEndor.FileFormat.INI;
+﻿using SWEndor.ExplosionTypes;
+using SWEndor.FileFormat.INI;
 
 namespace SWEndor.Models
 {

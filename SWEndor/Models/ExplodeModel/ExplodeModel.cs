@@ -16,13 +16,13 @@ namespace SWEndor.Models
     ITransformable
   {
     private ExplodeData[] _data;
-    private ExplosionTypeInfo[] _types;
+    private ExplosionTypeInfo[] _typecache;
     private float[] _time;
 
     public void Init(ActorTypeInfo type, ActorCreationInfo acinfo)
     {
       _data = type.Explodes;
-      _types = new ExplosionTypeInfo[type.Explodes.Length];
+      _typecache = new ExplosionTypeInfo[type.Explodes.Length];
       _time = new float[type.Explodes.Length];
 
       //fill time
@@ -72,8 +72,8 @@ namespace SWEndor.Models
             float size = exp.Size;
             if (size == 0)
               size = 1;
-            if (_types[i] == null)
-              _types[i] = engine.ExplosionTypeFactory.Get(exp.Type);
+            if (_typecache[i] == null)
+              _typecache[i] = engine.ExplosionTypeFactory.Get(exp.Type);
 
             if (exp.Trigger.Has(ExplodeTrigger.CREATE_ON_MESHVERTICES))
               CreateOnMeshVertices(engine, a, i, rate, size, exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_ACTOR));
@@ -95,13 +95,13 @@ namespace SWEndor.Models
 
         if (attach)
         {
-          ExplosionInfo e = MakeExplosion(engine, _types[i], vert * a.Scale, size);
+          ExplosionInfo e = MakeExplosion(engine, _typecache[i], vert * a.Scale, size);
           e.AttachedActorID = a.ID;
         }
         else
         {
           TV_3DVECTOR v = a.GetRelativePositionXYZ(vert.x * a.Scale, vert.y * a.Scale, vert.z * a.Scale);
-          ExplosionInfo e = MakeExplosion(engine, _types[i], v, size);
+          ExplosionInfo e = MakeExplosion(engine, _typecache[i], v, size);
         }
       }
     }
@@ -111,11 +111,11 @@ namespace SWEndor.Models
       _time[i] = engine.Game.GameTime + rate;
       if (attach)
       {
-        ExplosionInfo e = MakeExplosion(engine, _types[i], default(TV_3DVECTOR), size);
+        ExplosionInfo e = MakeExplosion(engine, _typecache[i], default(TV_3DVECTOR), size);
         e.AttachedActorID = a.ID;
       }
       else
-        MakeExplosion(engine, _types[i], a.GetPrevGlobalPosition(), size);
+        MakeExplosion(engine, _typecache[i], a.GetPrevGlobalPosition(), size);
     }
 
     private static ExplosionInfo MakeExplosion(Engine engine, ExplosionTypeInfo type, TV_3DVECTOR globalPosition, float explSize)

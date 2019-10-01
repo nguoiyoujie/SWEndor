@@ -8,7 +8,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class ImperialIATI : Groups.StarDestroyer
   {
-    internal ImperialIATI(Factory owner) : base(owner, "Imperial-I Star Destroyer")
+    internal ImperialIATI(Factory owner) : base(owner, "IMPL", "Imperial-I Star Destroyer")
     {
       MaxStrength = 850.0f;
       ImpactDamage = 60.0f;
@@ -31,58 +31,58 @@ namespace SWEndor.ActorTypes.Instances
       AddOns = new AddOnData[]
       {
         // Front
-        new AddOnData("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(0, -40, 1040), new TV_3DVECTOR(0, 0, 0), true)
+        new AddOnData("IMPLLSR", new TV_3DVECTOR(0, -40, 1040), new TV_3DVECTOR(0, 0, 0), true)
 
         // Sides
-        , new AddOnData("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(360, -40, -100), new TV_3DVECTOR(0, 72, 0), true)
-        , new AddOnData("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(240, -40, 320), new TV_3DVECTOR(0, 72, 0), true)
-        , new AddOnData("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(210, -40, 410), new TV_3DVECTOR(0, 72, 0), true)
-        , new AddOnData("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(180, -40, 500), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnData("IMPLLSR", new TV_3DVECTOR(360, -40, -100), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnData("IMPLLSR", new TV_3DVECTOR(240, -40, 320), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(210, -40, 410), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnData("IMPLLSR", new TV_3DVECTOR(180, -40, 500), new TV_3DVECTOR(0, 72, 0), true)
 
-        , new AddOnData("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-360, -40, -100), new TV_3DVECTOR(0, -72, 0), true)
-        , new AddOnData("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-240, -40, 320), new TV_3DVECTOR(0, -72, 0), true)
-        , new AddOnData("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(-210, -40, 410), new TV_3DVECTOR(0, -72, 0), true)
-        , new AddOnData("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-180, -40, 500), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnData("IMPLLSR", new TV_3DVECTOR(-360, -40, -100), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnData("IMPLLSR", new TV_3DVECTOR(-240, -40, 320), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(-210, -40, 410), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnData("IMPLLSR", new TV_3DVECTOR(-180, -40, 500), new TV_3DVECTOR(0, -72, 0), true)
         
         // Top
-        , new AddOnData("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(100, 20, 320), new TV_3DVECTOR(-75, 90, 0), true)
-        , new AddOnData("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(72, 20, 420), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(100, 20, 320), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("IMPLLSR", new TV_3DVECTOR(72, 20, 420), new TV_3DVECTOR(-75, 90, 0), true)
 
-        , new AddOnData("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(-100, 20, 320), new TV_3DVECTOR(-75, -90, 0), true)
-        , new AddOnData("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-72, 20, 420), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(-100, 20, 320), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("IMPLLSR", new TV_3DVECTOR(-72, 20, 420), new TV_3DVECTOR(-75, -90, 0), true)
 
         // Top Middle
-        , new AddOnData("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(72, 35, 75), new TV_3DVECTOR(-75, 90, 0), true)
-        , new AddOnData("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(70, 35, 170), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(72, 35, 75), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("IMPLLSR", new TV_3DVECTOR(70, 35, 170), new TV_3DVECTOR(-75, 90, 0), true)
 
-        , new AddOnData("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(-72, 35, 75), new TV_3DVECTOR(-75, -90, 0), true)
-        , new AddOnData("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-70, 35, 170), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(-72, 35, 75), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("IMPLLSR", new TV_3DVECTOR(-70, 35, 170), new TV_3DVECTOR(-75, -90, 0), true)
 
         // Top Rear
-        , new AddOnData("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(290, 16, -230), new TV_3DVECTOR(-75, 90, 0), true)
-        , new AddOnData("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(290, 18, -283), new TV_3DVECTOR(-75, 90, 0), true)
-        , new AddOnData("Star Destroyer Missile Pod", new TV_3DVECTOR(290, 20, -336), new TV_3DVECTOR(-75, 90, 0), true)
-        , new AddOnData("Star Destroyer Missile Pod", new TV_3DVECTOR(290, 22, -389), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(290, 16, -230), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(290, 18, -283), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("IMPLMPOD", new TV_3DVECTOR(290, 20, -336), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("IMPLMPOD", new TV_3DVECTOR(290, 22, -389), new TV_3DVECTOR(-75, 90, 0), true)
 
-        , new AddOnData("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(-290, 16, -230), new TV_3DVECTOR(-75, -90, 0), true)
-        , new AddOnData("Star Destroyer Heavy Turbolaser Tower", new TV_3DVECTOR(-290, 18, -283), new TV_3DVECTOR(-75, -90, 0), true)
-        , new AddOnData("Star Destroyer Missile Pod", new TV_3DVECTOR(-290, 20, -336), new TV_3DVECTOR(-75, -90, 0), true)
-        , new AddOnData("Star Destroyer Missile Pod", new TV_3DVECTOR(-290, 22, -389), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(-290, 16, -230), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(-290, 18, -283), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("IMPLMPOD", new TV_3DVECTOR(-290, 20, -336), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("IMPLMPOD", new TV_3DVECTOR(-290, 22, -389), new TV_3DVECTOR(-75, -90, 0), true)
 
         // Bottom
-        , new AddOnData("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-120, -105, 180), new TV_3DVECTOR(65, -90, 0), true)
-        , new AddOnData("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(-360, -100, -400), new TV_3DVECTOR(65, -90, 0), true)
+        , new AddOnData("IMPLLSR", new TV_3DVECTOR(-120, -105, 180), new TV_3DVECTOR(65, -90, 0), true)
+        , new AddOnData("IMPLLSR", new TV_3DVECTOR(-360, -100, -400), new TV_3DVECTOR(65, -90, 0), true)
 
-        , new AddOnData("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(120, -105, 180), new TV_3DVECTOR(65, 90, 0), true)
-        , new AddOnData("Star Destroyer Turbolaser Tower", new TV_3DVECTOR(360, -100, -425), new TV_3DVECTOR(65, 90, 0), true)
+        , new AddOnData("IMPLLSR", new TV_3DVECTOR(120, -105, 180), new TV_3DVECTOR(65, 90, 0), true)
+        , new AddOnData("IMPLLSR", new TV_3DVECTOR(360, -100, -425), new TV_3DVECTOR(65, 90, 0), true)
 
         // Hangar Bay
-        , new AddOnData("Hangar Bay", new TV_3DVECTOR(0, -80, 105), new TV_3DVECTOR(0, 0, 0), true)
+        , new AddOnData("HANGAR", new TV_3DVECTOR(0, -80, 105), new TV_3DVECTOR(0, 0, 0), true)
 
         //Shield Generators
-        , new AddOnData("Imperial Star Destroyer Shield Generator", new TV_3DVECTOR(-120, 360, -415), new TV_3DVECTOR(0, 0, 0), true)
-        , new AddOnData("Imperial Star Destroyer Shield Generator", new TV_3DVECTOR(120, 360, -415), new TV_3DVECTOR(0, 0, 0), true)
-        //, new AddOnInfo("Star Destroyer Lower Shield Generator", new TV_3DVECTOR(0, -180, -250), new TV_3DVECTOR(0, 0, 0), true)
+        , new AddOnData("IMPLSHD", new TV_3DVECTOR(-120, 360, -415), new TV_3DVECTOR(0, 0, 0), true)
+        , new AddOnData("IMPLSHD", new TV_3DVECTOR(120, 360, -415), new TV_3DVECTOR(0, 0, 0), true)
+        //, new AddOnInfo("LSHD", new TV_3DVECTOR(0, -180, -250), new TV_3DVECTOR(0, 0, 0), true)
       };
     }
 

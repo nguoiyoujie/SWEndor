@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class Tower03ATI : Groups.SurfaceTower
   {
-    internal Tower03ATI(Factory owner) : base(owner, "Radar Tower")
+    internal Tower03ATI(Factory owner) : base(owner, "RDRT", "Radar Tower")
     {
       MaxStrength = 75;
       ImpactDamage = 120;

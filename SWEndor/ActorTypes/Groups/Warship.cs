@@ -2,7 +2,7 @@
 {
   public class Warship : LargeShip
   {
-    internal Warship(Factory owner, string name): base(owner, name)
+    internal Warship(Factory owner, string id, string name) : base(owner, id, name)
     {
       MoveLimitData.ZTilt = 7.5f;
       MoveLimitData.ZNormFrac = 0.005f;

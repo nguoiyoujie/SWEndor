@@ -12,12 +12,12 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class BigIonLaserATI : Groups.LaserProjectile
   {
-    internal BigIonLaserATI(Factory owner) : base(owner, "Large Ion Laser")
+    internal BigIonLaserATI(Factory owner) : base(owner, "LSR_IONBIG", "Large Ion Laser")
     {
       // Combat
       TimedLifeData = new TimedLifeData(true, 30);
       Explodes = new ExplodeData[] {
-        new ExplodeData("ExpL00", 1, 10, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
+        new ExplodeData("EXPL00", 1, 10, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
       };
 
       ImpactDamage = 50;
@@ -48,7 +48,7 @@ namespace SWEndor.ActorTypes.Instances
           if (child.WeaponDefinitions.Weapons[i].WeaponCooldown < engine.Game.GameTime + empduration + 2)
             child.WeaponDefinitions.Weapons[i].WeaponCooldown = engine.Game.GameTime + empduration + 2;
 
-        ExplosionCreationInfo acinfo = new ExplosionCreationInfo(engine.ExplosionTypeFactory.Get("Electro"));
+        ExplosionCreationInfo acinfo = new ExplosionCreationInfo(engine.ExplosionTypeFactory.Get("ELECTRO"));
         ExplosionInfo electro = engine.ExplosionFactory.Create(acinfo);
         electro.AttachedActorID = child.ID;
         electro.CycleInfo.CyclesRemaining = empduration / electro.TypeInfo.TimedLifeData.TimedLife;

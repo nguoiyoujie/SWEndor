@@ -5,11 +5,11 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class GreenAntiShipLaserATI : Groups.LaserProjectile
   {
-    internal GreenAntiShipLaserATI(Factory owner) : base(owner, "Green Anti-Ship Laser")
+    internal GreenAntiShipLaserATI(Factory owner) : base(owner, "LSR_G3", "Green Anti-Ship Laser")
     {
       TimedLifeData = new TimedLifeData(true, 5);
       Explodes = new ExplodeData[] {
-        new ExplodeData("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
+        new ExplodeData("EXPL00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
       };
 
       ImpactDamage = 5;

@@ -5,7 +5,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class TIE_A_ATI : Groups.TIE
   {
-    internal TIE_A_ATI(Factory owner) : base(owner, "TIE Advanced")
+    internal TIE_A_ATI(Factory owner) : base(owner, "TIEA", "TIE Advanced")
     {
       MaxStrength = 15;
       ImpactDamage = 16;

@@ -7,7 +7,7 @@ namespace SWEndor.ExplosionTypes.Instances
 {
   public class ExpW02 : Groups.Explosion
   {
-    internal ExpW02(Factory owner) : base(owner, "ExpW02")
+    internal ExpW02(Factory owner) : base(owner, "EXPL02", "ExpW02")
     {
       // Combat
       TimedLifeData = new TimedLifeData(true, 2);

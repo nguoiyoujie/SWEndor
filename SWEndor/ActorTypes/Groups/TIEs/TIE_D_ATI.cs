@@ -5,7 +5,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class TIE_D_ATI : Groups.TIE
   {
-    internal TIE_D_ATI(Factory owner) : base(owner, "TIE Defender")
+    internal TIE_D_ATI(Factory owner) : base(owner, "TIED", "TIE Defender")
     {
       MaxStrength = 24;
       ImpactDamage = 16;
@@ -31,8 +31,8 @@ namespace SWEndor.ActorTypes.Instances
       };
 
       Debris = new DebrisSpawnerData[] {
-        new DebrisSpawnerData("TIE_InterceptorWingATI", new TV_3DVECTOR(-30, 0, 0), -10, 10, 0, 30, -25, 25, 0.5f),
-        new DebrisSpawnerData("TIE_InterceptorWingATI", new TV_3DVECTOR(30, 0, 0), -10, 10, -30, 0, -25, 25, 0.5f),
+        new DebrisSpawnerData("TIEIWING", new TV_3DVECTOR(-30, 0, 0), -10, 10, 0, 30, -25, 25, 0.5f),
+        new DebrisSpawnerData("TIEIWING", new TV_3DVECTOR(30, 0, 0), -10, 10, -30, 0, -25, 25, 0.5f),
         };
 
       Loadouts = new string[] { "TIED_LASR" };

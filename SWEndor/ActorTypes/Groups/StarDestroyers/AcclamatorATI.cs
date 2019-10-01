@@ -7,13 +7,13 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class AcclamatorATI : Groups.StarDestroyer
   {
-    internal AcclamatorATI(Factory owner) : base(owner, "Acclamator Assault Ship")
+    internal AcclamatorATI(Factory owner) : base(owner, "ACCL", "Acclamator Assault Ship")
     {
       // Combat
       Explodes = new ExplodeData[] {
-        new ExplodeData("ExpL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
-        new ExplodeData("ExpL01", 1, 1.5f, ExplodeTrigger.ON_DEATH),
-        new ExplodeData("ExpW01", 1, 1, ExplodeTrigger.ON_DEATH)
+        new ExplodeData("EXPL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeData("EXPL01", 1, 1.5f, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("EXPW01", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
       MaxStrength = 650.0f;
@@ -34,19 +34,19 @@ namespace SWEndor.ActorTypes.Instances
       AddOns = new AddOnData[]
       {
         // Sides
-        new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(101, 10, 460), new TV_3DVECTOR(0, 72, 0), true)
-        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(150, 10, 360), new TV_3DVECTOR(0, 72, 0), true)
-        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(198, 10, 260), new TV_3DVECTOR(0, 72, 0), true)
-        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(-101, 10, 460), new TV_3DVECTOR(0, -72, 0), true)
-        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(-150, 10, 360), new TV_3DVECTOR(0, -72, 0), true)
-        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(-198, 10, 260), new TV_3DVECTOR(0, -72, 0), true)
+        new AddOnData("ACCLLSR", new TV_3DVECTOR(101, 10, 460), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnData("ACCLLSR", new TV_3DVECTOR(150, 10, 360), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnData("ACCLLSR", new TV_3DVECTOR(198, 10, 260), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnData("ACCLLSR", new TV_3DVECTOR(-101, 10, 460), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnData("ACCLLSR", new TV_3DVECTOR(-150, 10, 360), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnData("ACCLLSR", new TV_3DVECTOR(-198, 10, 260), new TV_3DVECTOR(0, -72, 0), true)
         
         // Front
-        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(0, 10, 610), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("ACCLLSR", new TV_3DVECTOR(0, 10, 610), new TV_3DVECTOR(-90, 0, 0), true)
 
         // Top
-        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(145, 42, 70), new TV_3DVECTOR(-75, 90, 0), true)
-        , new AddOnData("Acclamator Turbolaser Tower", new TV_3DVECTOR(-145, 42, 70), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("ACCLLSR", new TV_3DVECTOR(145, 42, 70), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("ACCLLSR", new TV_3DVECTOR(-145, 42, 70), new TV_3DVECTOR(-75, -90, 0), true)
       };
     }
   }

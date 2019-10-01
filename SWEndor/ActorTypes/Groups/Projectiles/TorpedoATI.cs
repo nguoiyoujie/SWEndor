@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class TorpedoATI : Groups.MissileProjectile
   {
-    internal TorpedoATI(Factory owner) : base(owner, "Torpedo")
+    internal TorpedoATI(Factory owner) : base(owner, "PROJ_TORP", "Torpedo")
     {
       // Combat
       TimedLifeData = new TimedLifeData(true, 25);

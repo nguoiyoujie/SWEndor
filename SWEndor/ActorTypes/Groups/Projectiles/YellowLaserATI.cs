@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class YellowLaserATI : Groups.LaserProjectile
   {
-    internal YellowLaserATI(Factory owner) : base(owner, "Yellow Laser")
+    internal YellowLaserATI(Factory owner) : base(owner, "LSR_Y", "Yellow Laser")
     {
       ImpactDamage = 1;
       MoveLimitData.MaxSpeed = Globals.LaserSpeed * 0.75f;

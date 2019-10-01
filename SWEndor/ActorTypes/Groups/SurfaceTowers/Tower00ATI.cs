@@ -5,7 +5,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class Tower00ATI : Groups.SurfaceTower
   {
-    internal Tower00ATI(Factory owner) : base(owner, "Advanced Turbolaser Tower")
+    internal Tower00ATI(Factory owner) : base(owner, "ADVT", "Advanced Turbolaser Tower")
     {
       MaxStrength = 120;
       ImpactDamage = 120;
@@ -18,8 +18,8 @@ namespace SWEndor.ActorTypes.Instances
 
       AddOns = new AddOnData[] 
       {
-        new AddOnData("Turbolaser Turret", new TV_3DVECTOR(95, 155, 0), new TV_3DVECTOR(0, 0, 0), true)
-        , new AddOnData("Turbolaser Turret", new TV_3DVECTOR(-95, 155, 0), new TV_3DVECTOR(0, 0, 0), true)
+        new AddOnData("TGUN", new TV_3DVECTOR(95, 155, 0), new TV_3DVECTOR(0, 0, 0), true)
+        , new AddOnData("TGUN", new TV_3DVECTOR(-95, 155, 0), new TV_3DVECTOR(0, 0, 0), true)
       };
     }
   }

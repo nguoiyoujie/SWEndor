@@ -19,10 +19,11 @@ namespace SWEndor.ActorTypes
 {
   public partial class ActorTypeInfo : ITypeInfo<ActorInfo>
   {
-    public ActorTypeInfo(Factory owner, string name = "")
+    public ActorTypeInfo(Factory owner, string id, string name)
     {
       ActorTypeFactory = owner;
-      if (name.Length > 0) { Name = name; }
+      if (id?.Length > 0) { ID = id; }
+      if (name?.Length > 0) { Name = name; }
 
       CombatData.Reset();
     }
@@ -33,6 +34,7 @@ namespace SWEndor.ActorTypes
     public PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }
 
     // Basic Info
+    public string ID;
     public string Name;
 
     // Data

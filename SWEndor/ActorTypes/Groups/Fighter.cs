@@ -9,16 +9,16 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class Fighter : ActorTypeInfo
   {
-    internal Fighter(Factory owner, string name) : base(owner, name)
+    internal Fighter(Factory owner, string id, string name) : base(owner, id, name)
     {
       // Combat
       CombatData = CombatData.DefaultFighter;
       ArmorData = ArmorData.Default;
       Explodes = new ExplodeData[]
       {
-        new ExplodeData("Electro", 1, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.ATTACH_TO_ACTOR),
-        new ExplodeData("ExpS00", 0.75f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
-        new ExplodeData("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH)
+        new ExplodeData("ELECTRO", 1, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.ATTACH_TO_ACTOR),
+        new ExplodeData("EXPS00", 0.75f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeData("EXPL00", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
       MoveLimitData.ZTilt = 2.5f;

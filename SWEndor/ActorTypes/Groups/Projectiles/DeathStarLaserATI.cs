@@ -7,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class DeathStarLaserATI : Groups.LaserProjectile
   {
-    internal DeathStarLaserATI(Factory owner) : base(owner, "Death Star Laser")
+    internal DeathStarLaserATI(Factory owner) : base(owner, "LSR_DS", "Death Star Laser")
     {
       // Combat
       TimedLifeData = new TimedLifeData(true, 10);

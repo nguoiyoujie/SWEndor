@@ -10,7 +10,7 @@ namespace SWEndor.ExplosionTypes.Groups
     protected int atlasX = 1;
     protected int atlasY = 1;
 
-    internal Explosion(Factory owner, string name): base(owner, name)
+    internal Explosion(Factory owner, string id, string name) : base(owner, id, name)
     {
       // Combat
       RenderData.CullDistance = 12500f;

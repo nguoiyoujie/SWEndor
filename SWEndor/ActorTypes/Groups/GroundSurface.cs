@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class GroundSurface : ActorTypeInfo
   {
-    internal GroundSurface(Factory owner, string name) : base(owner, name)
+    internal GroundSurface(Factory owner, string id, string name) : base(owner, id, name)
     {
       ImpactDamage = 200;
 

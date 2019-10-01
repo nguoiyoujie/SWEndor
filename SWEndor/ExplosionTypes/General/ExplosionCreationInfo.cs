@@ -7,7 +7,7 @@ namespace SWEndor.ExplosionTypes
   public struct ExplosionCreationInfo : ICreationInfo<ExplosionInfo, ExplosionTypeInfo>
   {
     public ExplosionTypeInfo TypeInfo { get; }
-    public string Name;
+    public string ID;
     public float CreationTime;
     public ActorState InitialState;
     public float InitialScale;
@@ -19,7 +19,7 @@ namespace SWEndor.ExplosionTypes
     {
       // Load defaults from actortype
       TypeInfo = at;
-      Name = at.Name;
+      ID = at.ID;
 
       CreationTime = 0;
       InitialState = ActorState.NORMAL;

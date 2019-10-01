@@ -17,7 +17,7 @@ namespace SWEndor.Scenarios
     public GSHoth(GameScenarioManager manager) : base(manager)
     {
       Name = "Escape from Hoth (WIP up to Stage 02) [Maintenance]";
-      AllowedWings = new List<ActorTypeInfo> { ActorTypeFactory.Get("Millennium Falcon")
+      AllowedWings = new List<ActorTypeInfo> { ActorTypeFactory.Get("FALC")
                                               };
 
       AllowedDifficulties = new List<string> { "normal"
@@ -125,7 +125,7 @@ namespace SWEndor.Scenarios
       base.LoadScene();
 
       // Create Hoth
-      ActorCreationInfo aci_Hoth = new ActorCreationInfo(ActorTypeFactory.Get("Hoth"))
+      ActorCreationInfo aci_Hoth = new ActorCreationInfo(ActorTypeFactory.Get("HOTH"))
       {
         CreationTime = -1,
         Position = new TV_3DVECTOR(0, 0, 36000),
@@ -292,7 +292,7 @@ namespace SWEndor.Scenarios
 
         ainfo = new ActorSpawnInfo
         {
-          Type = ActorTypeFactory.Get("X-Wing"),
+          Type = ActorTypeFactory.Get("XWING"),
           Name = "",
           SidebarName = "",
           SpawnTime = Game.GameTime,
@@ -318,9 +318,9 @@ namespace SWEndor.Scenarios
 
         ainfo = new ActorSpawnInfo
         {
-          Type = ActorTypeFactory.Get("Transport"),
+          Type = ActorTypeFactory.Get("TRAN"),
           Name = "",
-          SidebarName = "TRANSPORT",
+          SidebarName = "TRAN",
           SpawnTime = Game.GameTime,
           Faction = FactionInfo.Factory.Get("Rebels"),
           Position = v,
@@ -364,7 +364,7 @@ namespace SWEndor.Scenarios
 
       new ActorSpawnInfo
       {
-        Type = ActorTypeFactory.Get("Large Ion Laser"),
+        Type = ActorTypeFactory.Get("LSR_IONBIG"),
         Name = "",
         SidebarName = "",
         SpawnTime = Game.GameTime,
@@ -566,7 +566,7 @@ namespace SWEndor.Scenarios
     public void Empire_FirstWave()
     {
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
-                                                              , ActorTypeFactory.Get("Imperial-I Star Destroyer")
+                                                              , ActorTypeFactory.Get("IMPL")
                                                               , MainEnemyFaction
                                                               , true
                                                               , new TV_3DVECTOR()
@@ -620,7 +620,7 @@ namespace SWEndor.Scenarios
     public void Empire_SecondWave()
     {
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
-                                                        , ActorTypeFactory.Get("Imperial-I Star Destroyer")
+                                                        , ActorTypeFactory.Get("IMPL")
                                                         , MainEnemyFaction
                                                         , true
                                                         , new TV_3DVECTOR()
@@ -958,7 +958,7 @@ namespace SWEndor.Scenarios
 
       ActorSpawnInfo asi = new ActorSpawnInfo
       {
-        Type = ActorTypeFactory.Get("Imperial-I Star Destroyer"),
+        Type = ActorTypeFactory.Get("IMPL"),
         Name = "",
         SidebarName = "",
         SpawnTime = Game.GameTime + 9,
@@ -966,7 +966,7 @@ namespace SWEndor.Scenarios
         Position = new TV_3DVECTOR(20000, -2000, -22000),
         Rotation = new TV_3DVECTOR(),
         Actions = new ActionInfo[] { new HyperspaceIn(new TV_3DVECTOR(2000, 100, -8000))
-                                    , new Move(new TV_3DVECTOR(1000, 100, 2000), ActorTypeFactory.Get("Imperial-I Star Destroyer").MoveLimitData.MaxSpeed * 0.25f, -1, false)
+                                    , new Move(new TV_3DVECTOR(1000, 100, 2000), ActorTypeFactory.Get("IMPL").MoveLimitData.MaxSpeed * 0.25f, -1, false)
                                     , new Rotate(new TV_3DVECTOR(2000, 100, -9000), 0, -1, false)
                                     , new Lock() },
         Registries = null
@@ -977,7 +977,7 @@ namespace SWEndor.Scenarios
       asi.SpawnTime = Game.GameTime + 9.25f;
       asi.Position = new TV_3DVECTOR(20000, -2000, -25000);
       asi.Actions = new ActionInfo[] { new HyperspaceIn(new TV_3DVECTOR(1500, -100, -10200))
-                                            , new Move(new TV_3DVECTOR(-6500, -100, 4000), ActorTypeFactory.Get("Imperial-I Star Destroyer").MoveLimitData.MaxSpeed * 0.25f, -1, false)
+                                            , new Move(new TV_3DVECTOR(-6500, -100, 4000), ActorTypeFactory.Get("IMPL").MoveLimitData.MaxSpeed * 0.25f, -1, false)
                                             , new Rotate(new TV_3DVECTOR(2000, -100, -10200), 0, -1, false)
                                             , new Lock() };
       newDest = asi.Spawn(this);

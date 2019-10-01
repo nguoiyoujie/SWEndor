@@ -9,9 +9,10 @@ namespace SWEndor.ExplosionTypes
 {
   public partial class ExplosionTypeInfo : ITypeInfo<ExplosionInfo>
   {
-    public ExplosionTypeInfo(Factory owner, string name = "")
+    public ExplosionTypeInfo(Factory owner, string id, string name)
     {
       ActorTypeFactory = owner;
+      if (id.Length > 0) { ID = id; }
       if (name.Length > 0) { Name = name; }
     }
 
@@ -28,6 +29,7 @@ namespace SWEndor.ExplosionTypes
     public Screen2D Screen2D { get { return Engine.Screen2D; } }
 
     // Basic Info
+    public string ID;
     public string Name;
 
     // Data

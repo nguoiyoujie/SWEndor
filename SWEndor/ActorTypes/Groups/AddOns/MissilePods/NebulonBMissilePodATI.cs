@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class NebulonBMissilePodATI : Groups.Turbolasers
   {
-    internal NebulonBMissilePodATI(Factory owner) : base(owner, "Nebulon B Missile Pod")
+    internal NebulonBMissilePodATI(Factory owner) : base(owner, "NEBLMPOD", "Nebulon B Missile Pod")
     {
       MaxStrength = 140; //32
       ImpactDamage = 16;

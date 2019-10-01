@@ -8,7 +8,7 @@ namespace SWEndor.ActorTypes
   {
     public FactionInfo Faction;
     public ActorTypeInfo TypeInfo { get; }
-    public string Name;
+    public string ID;
     public float CreationTime;
     public ActorState InitialState;
     public float InitialScale;
@@ -23,7 +23,7 @@ namespace SWEndor.ActorTypes
     {
       // Load defaults from actortype
       TypeInfo = at;
-      Name = at.Name;
+      ID = at.ID;
       InitialStrength = at.MaxStrength;
       InitialSpeed = at.MoveLimitData.MaxSpeed;
 

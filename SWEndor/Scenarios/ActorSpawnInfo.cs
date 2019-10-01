@@ -28,7 +28,7 @@ namespace SWEndor.Scenarios
 
       acinfo = new ActorCreationInfo(Type);
       if (Name != null && Name != "")
-        acinfo.Name = Name;
+        acinfo.ID = Name;
       acinfo.Faction = Faction;
       acinfo.InitialState = ActorState.NORMAL;
       acinfo.CreationTime = SpawnTime;

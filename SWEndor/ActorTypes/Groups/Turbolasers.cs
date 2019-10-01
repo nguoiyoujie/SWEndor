@@ -7,13 +7,13 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class Turbolasers : AddOn
   {
-    internal Turbolasers(Factory owner, string name) : base(owner, name)
+    internal Turbolasers(Factory owner, string id, string name) : base(owner, id, name)
     {
       // Combat
       CombatData = CombatData.DefaultShip;
       ArmorData = ArmorData.Default;
       Explodes = new ExplodeData[] {
-        new ExplodeData("ExpS00", 1, 5, ExplodeTrigger.ON_DEATH)
+        new ExplodeData("EXPS00", 1, 5, ExplodeTrigger.ON_DEATH)
       };
 
       ScoreData = new ScoreData(250, 1250);

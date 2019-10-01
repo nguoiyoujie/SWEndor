@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class SDAntiShipTurboLaserATI : Groups.Turbolasers
   {
-    internal SDAntiShipTurboLaserATI(Factory owner) : base(owner, "Star Destroyer Heavy Turbolaser Tower")
+    internal SDAntiShipTurboLaserATI(Factory owner) : base(owner, "IMPLHLSR", "Star Destroyer Heavy Turbolaser Tower")
     {
       MaxStrength = 12; //25
       ImpactDamage = 16;

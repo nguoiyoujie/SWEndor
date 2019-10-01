@@ -7,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class WedgeXWingATI : Groups.RebelWing
   {
-    internal WedgeXWingATI(Factory owner) : base(owner, "X-Wing (Wedge)")
+    internal WedgeXWingATI(Factory owner) : base(owner, "WEDGE", "X-Wing (Wedge)")
     {
       // Combat
       CombatData = CombatData.DefaultShip;

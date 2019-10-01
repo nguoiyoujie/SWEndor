@@ -10,19 +10,19 @@ namespace SWEndor.ActorTypes.Instances
   {
     int[] texanimframes;
 
-    internal DeathStar2ATI(Factory owner) : base(owner, "DeathStar2")
+    internal DeathStar2ATI(Factory owner) : base(owner, "DSTAR2", "DeathStar2")
     {
       Explodes = new ExplodeData[]
       {
-        new ExplodeData("ExpL02", 1, 1, ExplodeTrigger.ON_DEATH),
-        new ExplodeData("ExpW02", 1, 1, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("EXPL02", 1, 1, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("EXPW02", 1, 1, ExplodeTrigger.ON_DEATH),
       };
 
       int[] death = new int[] { 1, 10, 15, 16, 20, 21, 22, 23, 27, 28, 30, 31, 34, 35, 36 };
 
       MeshData = MeshDataDecorator.CreateAlphaTexturedFlickerWall(Name, 20000, "deathstar/deathstar2.bmp", "deathstar/deathstar2b.jpg", "deathstar/deathstar2alpha.bmp", 32, death, ref texanimframes);
 
-      //AddOns = new AddOnInfo[] { new AddOnInfo("Death Star Laser Source", new TV_3DVECTOR(-1300, 2000, -0.04f * size), new TV_3DVECTOR(0, 0, 0), true) };
+      //AddOns = new AddOnInfo[] { new AddOnInfo("DSLSRSRC", new TV_3DVECTOR(-1300, 2000, -0.04f * size), new TV_3DVECTOR(0, 0, 0), true) };
     }
 
     public override void Dying(Engine engine, ActorInfo ainfo)

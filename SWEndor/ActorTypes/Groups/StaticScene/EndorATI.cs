@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class EndorATI : Groups.StaticScene
   {
-    internal EndorATI(Factory owner) : base(owner, "Endor")
+    internal EndorATI(Factory owner) : base(owner, "ENDOR", "Endor")
     {
       MeshData = MeshDataDecorator.CreateTexturedModel(Name, "planet/endor.x", "planets/endor.jpg");
     }

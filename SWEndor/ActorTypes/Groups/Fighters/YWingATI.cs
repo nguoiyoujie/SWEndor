@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class YWingATI : Groups.RebelWing
   {
-    internal YWingATI(Factory owner) : base(owner, "Y-Wing")
+    internal YWingATI(Factory owner) : base(owner, "YWING", "Y-Wing")
     {
       MaxStrength = 36;
       ImpactDamage = 16;
@@ -29,8 +29,8 @@ namespace SWEndor.ActorTypes.Instances
       };
 
       Debris = new DebrisSpawnerData[] {
-        new DebrisSpawnerData("YWing_WingATI", new TV_3DVECTOR(-30, 0, 0), -10, 10, 0, 30, -25, 25, 0.5f),
-        new DebrisSpawnerData("YWing_WingATI", new TV_3DVECTOR(30, 0, 0), -10, 10, -30, 0, -25, 25, 0.5f),
+        new DebrisSpawnerData("YWWING", new TV_3DVECTOR(-30, 0, 0), -10, 10, 0, 30, -25, 25, 0.5f),
+        new DebrisSpawnerData("YWWING", new TV_3DVECTOR(30, 0, 0), -10, 10, -30, 0, -25, 25, 0.5f),
         };
 
       Loadouts = new string[] { "Y_WG_TORP", "Y_WG_ION", "Y_WG_LASR" };

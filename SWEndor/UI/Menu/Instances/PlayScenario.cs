@@ -56,7 +56,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonWing.HighlightBoxHeight = 30;
       ButtonWing.Selectable = true;
       ButtonWing.OnKeyPress += SelectWing;
-      //ButtonScenario.SecondaryText = "X-Wing";
+      //ButtonScenario.SecondaryText = "XWING";
       if (SelectedScenario.AllowedWings.Count > 0)
       {
         ButtonWing.SecondaryText = SelectedScenario.AllowedWings[0].Name.ToUpper();

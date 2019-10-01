@@ -5,10 +5,10 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class TowerGunSuperATI : Groups.SurfaceGun
   {
-    internal TowerGunSuperATI(Factory owner) : base(owner, "Super Turbolaser Turret")
+    internal TowerGunSuperATI(Factory owner) : base(owner, "SUPGUN", "Super Turbolaser Turret")
     {
       Explodes = new ExplodeData[] {
-        new ExplodeData("ExpL00", 1, 3, ExplodeTrigger.ON_DEATH)
+        new ExplodeData("EXPL00", 1, 3, ExplodeTrigger.ON_DEATH)
       };
 
       MaxStrength = 45;

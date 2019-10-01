@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class StaticScene : ActorTypeInfo
   {
-    internal StaticScene(Factory owner, string name) : base(owner, name)
+    internal StaticScene(Factory owner, string id, string name) : base(owner, id, name)
     {
       // Combat
       CombatData = CombatData.Disabled;

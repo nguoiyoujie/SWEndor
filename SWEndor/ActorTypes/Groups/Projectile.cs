@@ -11,14 +11,14 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class Projectile : ActorTypeInfo
   {
-    internal Projectile(Factory owner, string name) : base(owner, name)
+    internal Projectile(Factory owner, string id, string name) : base(owner, id, name)
     {
       // Combat
       CombatData = CombatData.Disabled;
       ArmorData = ArmorData.Immune;
       Explodes = new ExplodeData[]
       {
-        new ExplodeData("ExpS00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
+        new ExplodeData("EXPS00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
       };
       DyingMoveData.Kill();
 

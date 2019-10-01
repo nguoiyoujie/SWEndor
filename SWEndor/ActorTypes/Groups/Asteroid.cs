@@ -6,12 +6,12 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class Asteroid : ActorTypeInfo
   {
-    internal Asteroid(Factory owner, string name) : base(owner, name)
+    internal Asteroid(Factory owner, string id, string name) : base(owner, id, name)
     {
       // Combat
       CombatData = CombatData.Disabled;
       ArmorData = ArmorData.Immune;
-      Explodes = new ExplodeData[] { new ExplodeData("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH) };
+      Explodes = new ExplodeData[] { new ExplodeData("EXPL00", 1, 1, ExplodeTrigger.ON_DEATH) };
 
       RenderData.CullDistance = 4500;
 

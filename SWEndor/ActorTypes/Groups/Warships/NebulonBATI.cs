@@ -8,7 +8,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class NebulonBATI : Groups.Warship
   {
-    internal NebulonBATI(Factory owner) : base(owner, "Nebulon-B Frigate")
+    internal NebulonBATI(Factory owner) : base(owner, "NEBL", "Nebulon-B Frigate")
     {
       MaxStrength = 950.0f;
       ImpactDamage = 60.0f;
@@ -28,13 +28,13 @@ namespace SWEndor.ActorTypes.Instances
       SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500.0f, new TV_3DVECTOR(0, 100, -300), true, isEngineSound: true) };
       AddOns = new AddOnData[]
       {
-        new AddOnData("Nebulon B Turbolaser Tower", new TV_3DVECTOR(0, 40, 220), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnData("Nebulon B Turbolaser Tower", new TV_3DVECTOR(56, 90, -520), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnData("Nebulon B Turbolaser Tower", new TV_3DVECTOR(0, -180, -550), new TV_3DVECTOR(90, 0, 0), true)
-        , new AddOnData("Nebulon B Missile Pod", new TV_3DVECTOR(-80, -45, -485), new TV_3DVECTOR(0, 0, 0), true)
-        , new AddOnData("Nebulon B Missile Pod", new TV_3DVECTOR(80, -45, -485), new TV_3DVECTOR(0, 0, 0), true)
+        new AddOnData("NEBLLSR", new TV_3DVECTOR(0, 40, 220), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("NEBLLSR", new TV_3DVECTOR(56, 90, -520), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("NEBLLSR", new TV_3DVECTOR(0, -180, -550), new TV_3DVECTOR(90, 0, 0), true)
+        , new AddOnData("NEBLMPOD", new TV_3DVECTOR(-80, -45, -485), new TV_3DVECTOR(0, 0, 0), true)
+        , new AddOnData("NEBLMPOD", new TV_3DVECTOR(80, -45, -485), new TV_3DVECTOR(0, 0, 0), true)
 
-        , new AddOnData("Hangar Bay", new TV_3DVECTOR(10, -60, 192), new TV_3DVECTOR(0, 180, 0), true)
+        , new AddOnData("HANGAR", new TV_3DVECTOR(10, -60, 192), new TV_3DVECTOR(0, 180, 0), true)
       };
     }
 

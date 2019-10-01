@@ -74,7 +74,7 @@ namespace SWEndor.Explosions
       dataID = dataid;
 
       TypeInfo = acinfo.TypeInfo;
-      if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
+      if (acinfo.ID?.Length > 0) { _name = acinfo.ID; }
       Key = "{0} {1}".F(_name, ID);
 
       Meshes.Init(ID, TypeInfo);
@@ -93,7 +93,7 @@ namespace SWEndor.Explosions
       // Clear past resources
       ID = id;
       TypeInfo = acinfo.TypeInfo;
-      if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
+      if (acinfo.ID?.Length > 0) { _name = acinfo.ID; }
       Key = "{0} {1}".F(_name, ID);
 
       Meshes.Init(ID, TypeInfo);

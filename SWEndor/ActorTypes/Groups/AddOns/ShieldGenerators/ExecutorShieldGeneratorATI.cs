@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class ExecutorShieldGeneratorATI : Groups.ShieldGenerators
   {
-    internal ExecutorShieldGeneratorATI(Factory owner) : base(owner, "Executor Super Star Destroyer Shield Generator")
+    internal ExecutorShieldGeneratorATI(Factory owner) : base(owner, "EXECSHD", "Shield Generator")
     {
       // Combat
       MaxStrength = 150.0f;

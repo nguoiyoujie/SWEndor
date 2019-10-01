@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class InvisibleRebelTurboLaserATI : Groups.AddOn
   {
-    internal InvisibleRebelTurboLaserATI(Factory owner) : base(owner, "Invisible Rebel Turbo Laser")
+    internal InvisibleRebelTurboLaserATI(Factory owner) : base(owner, "INVLSR", "Invisible Rebel Turbo Laser")
     {
       RenderData.RadarSize = 0;
 

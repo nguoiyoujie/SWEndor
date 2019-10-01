@@ -8,13 +8,13 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class SpinningDebris : Debris
   {
-    internal SpinningDebris(Factory owner, string name) : base(owner, name)
+    internal SpinningDebris(Factory owner, string id, string name) : base(owner, id, name)
     {
       CombatData = CombatData.Disabled;
       ArmorData = ArmorData.Immune;
       Explodes = new ExplodeData[]
       {
-        new ExplodeData("ExpS00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeData("EXPS00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
       };
 
       TimedLifeData = new TimedLifeData(true, 5);

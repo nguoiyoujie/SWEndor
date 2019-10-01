@@ -7,12 +7,12 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class MC80BATI : Groups.Warship
   {
-    internal MC80BATI(Factory owner) : base(owner, "Mon Calamari 80B Capital Ship")
+    internal MC80BATI(Factory owner) : base(owner, "MONC80B", "Mon Calamari 80B Capital Ship")
     {
       Explodes = new ExplodeData[] {
-        new ExplodeData("ExpL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
-        new ExplodeData("ExpL01", 1, 3.5f, ExplodeTrigger.ON_DEATH),
-        new ExplodeData("ExpW01", 1, 1, ExplodeTrigger.ON_DEATH)
+        new ExplodeData("EXPL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeData("EXPL01", 1, 3.5f, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("EXPW01", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
       MaxStrength = 2800.0f;
@@ -37,20 +37,20 @@ namespace SWEndor.ActorTypes.Instances
       SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500f, new TV_3DVECTOR(0, 0, -750), true, isEngineSound: true) };
       AddOns = new AddOnData[]
       {
-        new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(0, 45, 1200), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(-120, 42, 950), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(120, 42, 950), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(-180, 48, 520), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(180, 48, 520), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(-180, -65, 410), new TV_3DVECTOR(90, 0, 0), true)
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(180, -65, 410), new TV_3DVECTOR(90, 0, 0), true)
+        new AddOnData("MC90LSR", new TV_3DVECTOR(0, 45, 1200), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(-120, 42, 950), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(120, 42, 950), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(-180, 48, 520), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(180, 48, 520), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(-180, -65, 410), new TV_3DVECTOR(90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(180, -65, 410), new TV_3DVECTOR(90, 0, 0), true)
 
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(-220, 52, 300), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(220, 52, 300), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(-210, -75, 150), new TV_3DVECTOR(90, 0, 0), true)
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(210, -75, 150), new TV_3DVECTOR(90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(-220, 52, 300), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(220, 52, 300), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(-210, -75, 150), new TV_3DVECTOR(90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(210, -75, 150), new TV_3DVECTOR(90, 0, 0), true)
 
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(0, 120, -225), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(0, 120, -225), new TV_3DVECTOR(-90, 0, 0), true)
       };
     }
   }

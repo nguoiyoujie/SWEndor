@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class XWingATI : Groups.RebelWing
   {
-    internal XWingATI(Factory owner) : base(owner, "X-Wing")
+    internal XWingATI(Factory owner) : base(owner, "XWING", "X-Wing")
     {
       MaxStrength = 30;
       ImpactDamage = 16;
@@ -29,10 +29,10 @@ namespace SWEndor.ActorTypes.Instances
        };
 
       Debris = new DebrisSpawnerData[] {
-        new DebrisSpawnerData("XWing_RU_LD_WingATI", new TV_3DVECTOR(-30, -30, 0), 0, 20, 0, 30, -25, 25, 0.5f),
-        new DebrisSpawnerData("XWing_RU_LD_WingATI", new TV_3DVECTOR(30, 30, 0), -20, 0, -30, 0, -25, 25, 0.5f),
-        new DebrisSpawnerData("XWing_RD_LU_WingATI", new TV_3DVECTOR(30, -30, 0), 0, 20, -30, 0, -25, 25, 0.5f),
-        new DebrisSpawnerData("XWing_RD_LU_WingATI", new TV_3DVECTOR(-30, 30, 0), -20, 0, 0, 30, -25, 25, 0.5f)
+        new DebrisSpawnerData("XWRULD", new TV_3DVECTOR(-30, -30, 0), 0, 20, 0, 30, -25, 25, 0.5f),
+        new DebrisSpawnerData("XWRULD", new TV_3DVECTOR(30, 30, 0), -20, 0, -30, 0, -25, 25, 0.5f),
+        new DebrisSpawnerData("XWRDLU", new TV_3DVECTOR(30, -30, 0), 0, 20, -30, 0, -25, 25, 0.5f),
+        new DebrisSpawnerData("XWRDLU", new TV_3DVECTOR(-30, 30, 0), -20, 0, 0, 30, -25, 25, 0.5f)
         };
 
       Loadouts = new string[] { "X_WG_TORP", "X_WG_LASR" };

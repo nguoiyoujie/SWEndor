@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class Yellow2LaserATI : Groups.LaserProjectile
   {
-    internal Yellow2LaserATI(Factory owner) : base(owner, "Yellow Double Laser")
+    internal Yellow2LaserATI(Factory owner) : base(owner, "LSR_Y2", "Yellow Double Laser")
     {
       ImpactDamage = 1.5f;
       ImpactCloseEnoughDistance = 50;

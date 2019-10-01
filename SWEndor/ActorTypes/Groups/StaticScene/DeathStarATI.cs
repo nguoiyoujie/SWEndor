@@ -8,12 +8,12 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class DeathStarATI : Groups.StaticScene
   {
-    internal DeathStarATI(Factory owner) : base(owner, "DeathStar")
+    internal DeathStarATI(Factory owner) : base(owner, "DSTAR", "DeathStar")
     {
       Explodes = new ExplodeData[]
       {
-        new ExplodeData("ExpL02", 1, 1, ExplodeTrigger.ON_DEATH),
-        new ExplodeData("ExpW02", 1, 1, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("EXPL02", 1, 1, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("EXPW02", 1, 1, ExplodeTrigger.ON_DEATH),
       };
 
       MeshData = MeshDataDecorator.CreateAlphaTexturedWall(Name, 20000, "deathstar/deathstar.bmp", "deathstar/deathstaralpha.bmp");

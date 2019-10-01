@@ -7,10 +7,10 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class AddOn : ActorTypeInfo
   {
-    internal AddOn(Factory owner, string name) : base(owner, name)
+    internal AddOn(Factory owner, string id, string name) : base(owner, id, name)
     {
       // Combat
-      Explodes = new ExplodeData[] { new ExplodeData("ExpL00", 1, 1, ExplodeTrigger.ON_DEATH) };
+      Explodes = new ExplodeData[] { new ExplodeData("EXPL00", 1, 1, ExplodeTrigger.ON_DEATH) };
       CombatData = CombatData.Disabled;
       ArmorData = ArmorData.Immune;
 

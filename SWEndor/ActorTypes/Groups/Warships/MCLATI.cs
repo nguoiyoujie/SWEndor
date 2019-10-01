@@ -9,12 +9,12 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class MCLATI : Groups.Warship
   {
-    internal MCLATI(Factory owner) : base(owner, "Mon Calamari Light Cruiser")
+    internal MCLATI(Factory owner) : base(owner, "MCL", "Mon Calamari Light Cruiser")
     {
       Explodes = new ExplodeData[] {
-        new ExplodeData("ExpL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
-        new ExplodeData("ExpL01", 1, 3.5f, ExplodeTrigger.ON_DEATH),
-        new ExplodeData("ExpW01", 1, 1, ExplodeTrigger.ON_DEATH)
+        new ExplodeData("EXPL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeData("EXPL01", 1, 3.5f, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("EXPW01", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
       MaxStrength = 1400.0f;
@@ -39,23 +39,23 @@ namespace SWEndor.ActorTypes.Instances
       SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500f, new TV_3DVECTOR(0, 0, -750), true, isEngineSound: true) };
       AddOns = new AddOnData[]
       {
-        new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(0, 140, -630), new TV_3DVECTOR(-90, 0, 0), true)
+        new AddOnData("MC90LSR", new TV_3DVECTOR(0, 140, -630), new TV_3DVECTOR(-90, 0, 0), true)
 
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(-70, 32, 450), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(70, 42, 450), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(-70, 32, 450), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(70, 42, 450), new TV_3DVECTOR(-90, 0, 0), true)
 
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(-100, 35, 230), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(100, 35, 230), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(-100, 35, 230), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(100, 35, 230), new TV_3DVECTOR(-90, 0, 0), true)
 
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(-90, -85, 175), new TV_3DVECTOR(90, 0, 0), true)
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(90, -85, 175), new TV_3DVECTOR(90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(-90, -85, 175), new TV_3DVECTOR(90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(90, -85, 175), new TV_3DVECTOR(90, 0, 0), true)
 
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(-80, 80, -335), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnData("MC90 Turbolaser Tower", new TV_3DVECTOR(80, 80, -335), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(-80, 80, -335), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("MC90LSR", new TV_3DVECTOR(80, 80, -335), new TV_3DVECTOR(-90, 0, 0), true)
 
         // Hangar Bay
-        , new AddOnData("Hangar Bay", new TV_3DVECTOR(95, -30, -200), new TV_3DVECTOR(0, 0, 0), true)
-        , new AddOnData("Hangar Bay", new TV_3DVECTOR(-95, -30, -200), new TV_3DVECTOR(0, 180, 0), true)
+        , new AddOnData("HANGAR", new TV_3DVECTOR(95, -30, -200), new TV_3DVECTOR(0, 0, 0), true)
+        , new AddOnData("HANGAR", new TV_3DVECTOR(-95, -30, -200), new TV_3DVECTOR(0, 180, 0), true)
       };
     }
 

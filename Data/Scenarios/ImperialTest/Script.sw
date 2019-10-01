@@ -59,20 +59,20 @@ loadfaction:
 	Faction.SetWingSpawnLimit("Traitors", 32);
 
 loadscene:
-	greywolf = Actor.Spawn("Imperial-I Star Destroyer", "ISD GREY WOLF (Thrawn)", "", "GREY WOLF", 0, "Empire", 1000, 400, 12000, 0, -180, 0, "CriticalAllies");
+	greywolf = Actor.Spawn("IMPL", "ISD GREY WOLF (Thrawn)", "", "GREY WOLF", 0, "Empire", 1000, 400, 12000, 0, -180, 0, "CriticalAllies");
 	Actor.SetProperty(greywolf, "DamageModifier", 0.8);
 	Actor.SetProperty(greywolf, "SetSpawnerEnable", true);
 	Actor.QueueLast(greywolf, "move", -1000, 400, -3000, 25);
 	Actor.QueueLast(greywolf, "rotate", -2000, 210, -20000, 0);
 	Actor.QueueLast(greywolf, "lock");
 
-	corvus = Actor.Spawn("Interdictor Star Destroyer", "INT CORVUS", "", "CORVUS", 0, "Empire", 3500, -500, 500, 0, -130, 0, "CriticalAllies");
+	corvus = Actor.Spawn("INTD", "INT CORVUS", "", "CORVUS", 0, "Empire", 3500, -500, 500, 0, -130, 0, "CriticalAllies");
 	Actor.SetProperty(corvus, "DamageModifier", 0.6);
 	Actor.QueueLast(corvus, "move", 2000, -500, -1500, 8);
 	Actor.QueueLast(corvus, "rotate", 0, -500, 4000, 0);
 	Actor.QueueLast(corvus, "lock");
 
-	ebolo = Actor.Spawn("Arquitens Light Cruiser", "EBOLO", "", "EBOLO", 0, "Empire", 3000, -120, 350, 0, -130, 45);
+	ebolo = Actor.Spawn("ARQT", "EBOLO", "", "EBOLO", 0, "Empire", 3000, -120, 350, 0, -130, 45);
 	Actor.SetProperty(ebolo, "DamageModifier", 0.4);
 	Actor.QueueLast(ebolo, "move", -400, 200, -350, 100);
 	Actor.QueueLast(ebolo, "move", 1000, 150, -3000, 100);
@@ -80,14 +80,14 @@ loadscene:
 	Actor.QueueLast(ebolo, "rotate", -2000, 210, -20000, 0);
 	Actor.QueueLast(ebolo, "lock");
 	
-	daring = Actor.Spawn("Arquitens Light Cruiser", "DARING", "", "DARING", 0, "Empire", 3200, -300, -1450, 0, -130, 45);
+	daring = Actor.Spawn("ARQT", "DARING", "", "DARING", 0, "Empire", 3200, -300, -1450, 0, -130, 45);
 	Actor.SetProperty(daring, "DamageModifier", 0.4);
 	Actor.QueueLast(daring, "move", -7780, -450, 450, 15);
 	Actor.QueueLast(daring, "move", -8470, -300, -350, 100);
 	Actor.QueueLast(daring, "rotate", -2000, 210, -20000, 0);
 	Actor.QueueLast(daring, "lock");
 
-	glory = Actor.Spawn("Devastator Imperial-I Star Destroyer", "ISD GLORY", "", "GLORY", 0, "Traitors", -6750, 0, -22000, 0, 40, 0, "CriticalEnemies");
+	glory = Actor.Spawn("DEVA", "ISD GLORY", "", "GLORY", 0, "Traitors", -6750, 0, -22000, 0, 40, 0, "CriticalEnemies");
 	Actor.SetProperty(glory, "SetSpawnerEnable", true);
 	Actor.SetProperty(glory, "DamageModifier", 0.75);
 	Actor.QueueLast(glory, "move", -1000, 100, -6000, 70);
@@ -95,28 +95,28 @@ loadscene:
 	Actor.QueueLast(glory, "rotate", 2000, 210, -20000, 0);
 	Actor.QueueLast(glory, "lock");
 
-	corv1 = Actor.Spawn("Corellian Corvette", "", "", "", 0, "Traitors", -7750, 250, -20000, 0, 20, 0);
+	corv1 = Actor.Spawn("CORV", "", "", "", 0, "Traitors", -7750, 250, -20000, 0, 20, 0);
 	Actor.QueueLast(corv1, "move", 0, 250, -3000, 70);
 	Actor.QueueLast(corv1, "move", 3000, 250, -5000, 10);
 	Actor.QueueLast(corv1, "rotate", 0, 500, 4000, 0);
 	Actor.QueueLast(corv1, "lock");
 
-	nebu = Actor.Spawn("Nebulon-B Frigate", "", "", "", 0, "Traitors", -3750, -450, -16000, 0, 30, 0);
+	nebu = Actor.Spawn("NEBL", "", "", "", 0, "Traitors", -3750, -450, -16000, 0, 30, 0);
 	Actor.QueueLast(nebu, "move", 6250, -450, -3200, 100);
 	Actor.QueueLast(nebu, "hyperspaceout");
 	Actor.QueueLast(nebu, "delete");
 
-	corv2 = Actor.Spawn("Corellian Corvette", "", "", "", 0, "Traitors", -8750, -100, -11000, 0, 75, 0);
+	corv2 = Actor.Spawn("CORV", "", "", "", 0, "Traitors", -8750, -100, -11000, 0, 75, 0);
 	Actor.QueueLast(corv2, "move", 1550, -200, -2200, 100);
 	Actor.QueueLast(corv2, "rotate", 0, 500, 4000, 0);
 	Actor.QueueLast(corv2, "lock");
 
-	corv3 = Actor.Spawn("Corellian Corvette", "", "", "", 0, "Traitors", -3750, 300, -12500, 0, 45, 0);
+	corv3 = Actor.Spawn("CORV", "", "", "", 0, "Traitors", -3750, 300, -12500, 0, 45, 0);
 	Actor.QueueLast(corv3, "move", 2750, -100, -800, 100);
 	Actor.QueueLast(corv3, "rotate", 0, 500, 4000, 0);
 	Actor.QueueLast(corv3, "lock");
 
-	corv4 = Actor.Spawn("Corellian Corvette", "", "", "", 0, "Traitors", -1750, 50, -14500, 0, 20, 0);
+	corv4 = Actor.Spawn("CORV", "", "", "", 0, "Traitors", -1750, 50, -14500, 0, 20, 0);
 	Actor.QueueLast(corv4, "move", -750, 100, -1400, 100);
 	Actor.QueueLast(corv4, "rotate", 0, 500, 4000, 0);
 	Actor.QueueLast(corv4, "lock");
@@ -167,21 +167,21 @@ makeimperials:
 	Actor.QueueLast(tiea1, "wait", 2.5);
 	Actor.AddToSquad(Player.GetActor(), tiea1);
 
-	tiea2 = Actor.Spawn("TIE Advanced", "Alpha-3", "", "", 4, "Empire", 6000, 300, -500, 0, -90, 0);
+	tiea2 = Actor.Spawn("TIEA", "Alpha-3", "", "", 4, "Empire", 6000, 300, -500, 0, -90, 0);
 	Actor.SetProperty(tiea2, "DamageModifier", 0.25);
 	Actor.QueueLast(tiea2, "wait", 2.5);
 	Actor.AddToSquad(Player.GetActor(), tiea2);
 
-	tiea3 = Actor.Spawn("TIE Advanced", "Alpha-4", "", "", 4, "Empire", 6500, 600, -750, 0, -90, 0);
+	tiea3 = Actor.Spawn("TIEA", "Alpha-4", "", "", 4, "Empire", 6500, 600, -750, 0, -90, 0);
 	Actor.SetProperty(tiea3, "DamageModifier", 0.25);
 	Actor.QueueLast(tiea3, "wait", 2.5);
 	Actor.AddToSquad(Player.GetActor(), tiea3);
 
-	tied1 = Actor.Spawn("TIE Defender", "Delta-1", "", "", 4, "Empire", 7000, 300, -500, 0, -90, 0);
+	tied1 = Actor.Spawn("TIED", "Delta-1", "", "", 4, "Empire", 7000, 300, -500, 0, -90, 0);
 	Actor.SetProperty(tied1, "DamageModifier", 0.25);
 	Actor.QueueLast(tied1, "wait", 2.5);
 
-	tied2 = Actor.Spawn("TIE Defender", "Delta-2", "", "", 4, "Empire", 7500, 600, -750, 0, -90, 0);
+	tied2 = Actor.Spawn("TIED", "Delta-2", "", "", 4, "Empire", 7500, 600, -750, 0, -90, 0);
 	Actor.SetProperty(tied2, "DamageModifier", 0.25);
 	Actor.QueueLast(tied2, "wait", 2.5);
 	Actor.AddToSquad(tied1, tied2);
@@ -190,7 +190,7 @@ makeimperials:
 	spawnfaction = "Empire";
 	damagemod = 0.25;
 	spawnwait = 3.5;
-	spawntype = "TIE Interceptor";
+	spawntype = "TIEI";
 	spawntarget = -1;
 	spawnX = 200;
 	spawnY = 0;
@@ -229,7 +229,7 @@ makeimperials:
 	spawnY = 0;
 	spawnZ = -3500;
 	spawntarget = corvus;
-	spawntype = "TIE Bomber";
+	spawntype = "TIESA";
 	CallScript("spawn4");
 
 	spawnX = -4600;
@@ -352,7 +352,7 @@ spawnenemybombers:
 	spawnRotX = 0;
 	spawnRotY = 0;
 	spawnRotZ = 0;
-	spawntype = "TIE Bomber";
+	spawntype = "TIESA";
 	spawntarget = corvusshd1;
 	CallScript("spawn1");
 
@@ -371,14 +371,14 @@ spawnenemybombers:
 	spawnX = -25000;
 	spawnY = 300;
 	spawnZ = -23500;
-	spawntype = "TIE Advanced";
+	spawntype = "TIEA";
 	spawntarget = corvusshd1;
 	CallScript("spawn1");
 
 	spawnX = -24000;
 	spawnY = 200;
 	spawnZ = -24500;
-	spawntype = "TIE Defender";
+	spawntype = "TIED";
 	spawntarget = corvus;
 	CallScript("spawn2");
 
@@ -404,7 +404,7 @@ spawnenemybombers2:
 	spawnX = -11000;
 	spawnY = 50;
 	spawnZ = -13500;
-	spawntype = "TIE Bomber";
+	spawntype = "TIESA";
 	spawntarget = corvus;
 	CallScript("spawn2");
 
@@ -418,7 +418,7 @@ spawnenemybombers3:
 	spawnRotX = 0;
 	spawnRotY = 0;
 	spawnRotZ = 0;
-	spawntype = "TIE Bomber";
+	spawntype = "TIESA";
 	spawntarget = greywolfshd1;
 	CallScript("spawn4");
 
@@ -431,7 +431,7 @@ spawnenemybombers3:
 	spawnX = -11000;
 	spawnY = 650;
 	spawnZ = -13500;
-	spawntype = "Assault Gunboat";
+	spawntype = "GUN";
 	spawntarget = greywolf;
 	CallScript("spawn3");
 
@@ -463,7 +463,7 @@ spawnenemy:
 	spawnX = -400;
 	CallScript("spawn4");
 
-	spawntype = "Z-95";
+	spawntype = "Z95";
 	spawnX = 300;
 	spawnZ = -21000;
 	CallScript("spawn3");
@@ -475,7 +475,7 @@ spawnenemy2:
 	spawnfaction = "Traitors";
 	damagemod = 1;
 	spawnwait = 0;
-	spawntype = "TIE Defender";
+	spawntype = "TIED";
 	spawntarget = -1;
 	spawnX = -5500;
 	spawnY = 0;
@@ -488,25 +488,25 @@ spawnenemy2:
 	spawnX = -12500;
 	spawnY = -50;
 	spawnZ = -25000;
-	spawntype = "TIE Advanced";
+	spawntype = "TIEA";
 	CallScript("spawn1");
 
 	spawnX = -5000;
 	spawnY = -50;
 	spawnZ = -21200;
-	spawntype = "X-Wing";
+	spawntype = "XWING";
 	CallScript("spawn2");
 
 	spawnX = -4800;
 	spawnY = 50;
 	spawnZ = -21100;
-	spawntype = "A-Wing";
+	spawntype = "AWING";
 	CallScript("spawn1");
 
 	spawnX = -5000;
 	spawnY = -50;
 	spawnZ = -22200;
-	spawntype = "Y-Wing";
+	spawntype = "YWING";
 	CallScript("spawn3");
 
 

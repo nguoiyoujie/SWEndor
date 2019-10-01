@@ -5,7 +5,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class Tower02ATI : Groups.SurfaceTower
   {
-    internal Tower02ATI(Factory owner) : base(owner, "Gun Tower")
+    internal Tower02ATI(Factory owner) : base(owner, "GUNT", "Gun Tower")
     {
       MaxStrength = 25;
       ImpactDamage = 120;
@@ -13,7 +13,7 @@ namespace SWEndor.ActorTypes.Instances
       ScoreData = new ScoreData(50, 5000);
 
       MeshData = new MeshData(Name, @"towers\tower_02.x");
-      AddOns = new AddOnData[] { new AddOnData("Turbolaser Turret", new TV_3DVECTOR(0, 50, 0), new TV_3DVECTOR(0, 0, 0), true) };
+      AddOns = new AddOnData[] { new AddOnData("TGUN", new TV_3DVECTOR(0, 50, 0), new TV_3DVECTOR(0, 0, 0), true) };
     }
   }
 }

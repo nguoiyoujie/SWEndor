@@ -145,7 +145,7 @@ namespace SWEndor.Actors
       dataID = dataid;
 
       TypeInfo = acinfo.TypeInfo;
-      if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
+      if (acinfo.ID?.Length > 0) { _name = acinfo.ID; }
       Key = "{0} {1}".F(_name, ID);
 
       Meshes.Init(ID, TypeInfo);
@@ -177,7 +177,7 @@ namespace SWEndor.Actors
       //Destroy(); // redundant
       ID = id;
       TypeInfo = acinfo.TypeInfo;
-      if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
+      if (acinfo.ID?.Length > 0) { _name = acinfo.ID; }
       Key = "{0} {1}".F(_name, ID);
 
       Meshes.Init(ID, TypeInfo);

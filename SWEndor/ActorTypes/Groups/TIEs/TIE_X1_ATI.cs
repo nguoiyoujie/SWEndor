@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class TIE_X1_ATI : Groups.TIE
   {
-    internal TIE_X1_ATI(Factory owner) : base(owner, "TIE Advanced X1")
+    internal TIE_X1_ATI(Factory owner) : base(owner, "TIEX", "TIE Advanced X1")
     {
       CombatData = CombatData.DefaultShip;
       ArmorData = ArmorData.Default;

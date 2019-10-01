@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class ACTurboLaserATI : Groups.Turbolasers
   {
-    internal ACTurboLaserATI(Factory owner) : base(owner, "Acclamator Turbolaser Tower")
+    internal ACTurboLaserATI(Factory owner) : base(owner, "ACCLLSR", "Acclamator Turbolaser Tower")
     {
       MaxStrength = 85;
       ImpactDamage = 16;

@@ -7,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class LandoFalconATI : Groups.RebelWing
   {
-    internal LandoFalconATI(Factory owner) : base(owner, "Millennium Falcon (Lando)")
+    internal LandoFalconATI(Factory owner) : base(owner, "LANDO", "Millennium Falcon (Lando)")
     {
       // Combat
       CombatData = CombatData.DefaultShip;
@@ -30,7 +30,7 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Name, @"falcon\falcon.x");
 
       SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineFalcon, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };
-      AddOns = new AddOnData[] { new AddOnData("Invisible Rebel Turbo Laser", new TV_3DVECTOR(0, 7, 20), new TV_3DVECTOR(90, 0, 0), true) };
+      AddOns = new AddOnData[] { new AddOnData("INVLSR", new TV_3DVECTOR(0, 7, 20), new TV_3DVECTOR(90, 0, 0), true) };
 
       Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 0, 50), new TV_3DVECTOR(0, 0, 2000)),

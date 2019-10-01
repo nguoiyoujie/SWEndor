@@ -5,7 +5,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class AssaultGunboatATI : Groups.TIE
   {
-    internal AssaultGunboatATI(Factory owner) : base(owner, "Assault Gunboat")
+    internal AssaultGunboatATI(Factory owner) : base(owner, "GUN", "Assault Gunboat")
     {
       MaxStrength = 24;
       ImpactDamage = 16;

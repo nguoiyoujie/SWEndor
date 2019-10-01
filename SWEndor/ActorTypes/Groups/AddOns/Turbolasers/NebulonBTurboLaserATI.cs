@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class NebulonBTurboLaserATI : Groups.Turbolasers
   {
-    internal NebulonBTurboLaserATI(Factory owner) : base(owner, "Nebulon B Turbolaser Tower")
+    internal NebulonBTurboLaserATI(Factory owner) : base(owner, "NEBLLSR", "Nebulon B Turbolaser Tower")
     {
       MaxStrength = 135;
       ImpactDamage = 16;

@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class HangarBayATI : Groups.AddOn
   {
-    internal HangarBayATI(Factory owner) : base(owner, "Hangar Bay")
+    internal HangarBayATI(Factory owner) : base(owner, "HANGAR", "Hangar Bay")
     {
       RenderData.RadarSize = 0;
 

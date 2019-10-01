@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class BWingATI : Groups.RebelWing
   {
-    internal BWingATI(Factory owner) : base(owner, "B-Wing")
+    internal BWingATI(Factory owner) : base(owner, "BWING", "B-Wing")
     {
       MaxStrength = 45;
       ImpactDamage = 16;
@@ -28,10 +28,10 @@ namespace SWEndor.ActorTypes.Instances
      };
 
       Debris = new DebrisSpawnerData[] {
-        new DebrisSpawnerData("BWing_WingATI", new TV_3DVECTOR(-30, -30, 0), -10, 10, 0, 30, -25, 25, 0.5f),
-        new DebrisSpawnerData("BWing_WingATI", new TV_3DVECTOR(30, -30, 0), -10, 10, -30, 0, -25, 25, 0.5f),
-        new DebrisSpawnerData("BWing_Top_WingATI", new TV_3DVECTOR(0, 0, 0), -10, 10, -10, 10, -25, 25, 0.5f),
-        new DebrisSpawnerData("BWing_Bottom_WingATI", new TV_3DVECTOR(0, -70, 0), -10, 10, -10, 10, -25, 25, 0.5f)
+        new DebrisSpawnerData("BWWING", new TV_3DVECTOR(-30, -30, 0), -10, 10, 0, 30, -25, 25, 0.5f),
+        new DebrisSpawnerData("BWWING", new TV_3DVECTOR(30, -30, 0), -10, 10, -30, 0, -25, 25, 0.5f),
+        new DebrisSpawnerData("BWWTOP", new TV_3DVECTOR(0, 0, 0), -10, 10, -10, 10, -25, 25, 0.5f),
+        new DebrisSpawnerData("BWWBOT", new TV_3DVECTOR(0, -70, 0), -10, 10, -10, 10, -25, 25, 0.5f)
         };
 
       SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineXWing, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };

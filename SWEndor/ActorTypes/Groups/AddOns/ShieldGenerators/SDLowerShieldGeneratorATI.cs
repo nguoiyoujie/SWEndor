@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class SDLowerShieldGeneratorATI : Groups.ShieldGenerators
   {
-    internal SDLowerShieldGeneratorATI(Factory owner) : base(owner, "Star Destroyer Lower Shield Generator")
+    internal SDLowerShieldGeneratorATI(Factory owner) : base(owner, "LSHD", "Shield Generator")
     {
       MaxStrength = 90;
       ImpactDamage = 300.0f;

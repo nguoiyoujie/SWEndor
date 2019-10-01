@@ -33,7 +33,7 @@ namespace SWEndor
       get
       {
         SpawnerInfo d = SpawnerInfo.Default;
-        d.SpawnTypes = new string[] { "TIE Interceptor" };
+        d.SpawnTypes = new string[] { "TIEI" };
         d.SpawnMoveDelay = 4;
         d.SpawnInterval = 5;
         d.SpawnsRemaining = 60;
@@ -67,7 +67,7 @@ namespace SWEndor
       get
       {
         SpawnerInfo d = SpawnerInfo.Default;
-        d.SpawnTypes = new string[] { "Z-95", "Y-Wing" };
+        d.SpawnTypes = new string[] { "Z95", "YWING" };
         d.SpawnMoveDelay = 2;
         d.SpawnInterval = 10;
         d.SpawnsRemaining = 99;
@@ -83,7 +83,7 @@ namespace SWEndor
       get
       {
         SpawnerInfo d = SpawnerInfo.Default;
-        d.SpawnTypes = new string[] { "X-Wing", "A-Wing", "Y-Wing", "B-Wing" };
+        d.SpawnTypes = new string[] { "XWING", "AWING", "YWING", "BWING" };
         d.SpawnMoveDelay = 2.5f;
         d.SpawnInterval = 10;
         d.SpawnsRemaining = 99;
@@ -99,7 +99,7 @@ namespace SWEndor
       get
       {
         SpawnerInfo d = SpawnerInfo.Default;
-        d.SpawnTypes = new string[] { "Z-95", "Y-Wing" };
+        d.SpawnTypes = new string[] { "Z95", "YWING" };
         d.SpawnMoveDelay = 2.5f;
         d.SpawnInterval = 15;
         d.SpawnsRemaining = 99;

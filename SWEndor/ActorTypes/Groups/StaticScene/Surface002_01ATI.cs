@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class Surface002_01ATI : Groups.GroundSurface
   {
-    internal Surface002_01ATI(Factory owner) : base(owner, "Surface002_01ATI")
+    internal Surface002_01ATI(Factory owner) : base(owner, "SURF00201", "SURF00201")
     {
       MeshData = new MeshData(Name, @"surface\surface002_01.x");
     }

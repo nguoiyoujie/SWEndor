@@ -7,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class SurfaceVentATI : Groups.SurfaceTower
   {
-    internal SurfaceVentATI(Factory owner) : base(owner, "Thermal Exhaust Port")
+    internal SurfaceVentATI(Factory owner) : base(owner, "VENT", "Thermal Exhaust Port")
     {
       MaxStrength = 12000;
       ImpactDamage = 120;

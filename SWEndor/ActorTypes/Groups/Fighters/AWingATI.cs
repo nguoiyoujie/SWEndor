@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class AWingATI : Groups.RebelWing
   {
-    internal AWingATI(Factory owner) : base(owner, "A-Wing")
+    internal AWingATI(Factory owner) : base(owner, "AWING", "A-Wing")
     {
       MaxStrength = 18;
       ImpactDamage = 16;

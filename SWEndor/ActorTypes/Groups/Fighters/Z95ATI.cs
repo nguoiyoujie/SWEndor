@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class Z95ATI : Groups.RebelWing
   {
-    internal Z95ATI(Factory owner) : base(owner, "Z-95")
+    internal Z95ATI(Factory owner) : base(owner, "Z95", "Z-95")
     {
       MaxStrength = 15;
       ImpactDamage = 16;
@@ -27,8 +27,8 @@ namespace SWEndor.ActorTypes.Instances
         };
 
       Debris = new DebrisSpawnerData[] {
-        new DebrisSpawnerData("XWing_RU_LD_WingATI", new TV_3DVECTOR(-30, -10, 0), 0, 20, 10, 10, -25, 25, 0.5f),
-        new DebrisSpawnerData("XWing_RD_LU_WingATI", new TV_3DVECTOR(30, -10, 0), -20, 0, -10, 10, -25, 25, 0.5f),
+        new DebrisSpawnerData("XWRULD", new TV_3DVECTOR(-30, -10, 0), 0, 20, 10, 10, -25, 25, 0.5f),
+        new DebrisSpawnerData("XWRDLU", new TV_3DVECTOR(30, -10, 0), -20, 0, -10, 10, -25, 25, 0.5f),
         };
 
       Loadouts = new string[] { "Z95__LASR" };

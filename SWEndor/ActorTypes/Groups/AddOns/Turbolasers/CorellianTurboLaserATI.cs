@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class CorellianTurboLaserATI : Groups.Turbolasers
   {
-    internal CorellianTurboLaserATI(Factory owner) : base(owner, "Corellian Turbolaser Tower")
+    internal CorellianTurboLaserATI(Factory owner) : base(owner, "CORLLSR", "Corellian Turbolaser Tower")
     {
       MaxStrength = 105;
       ImpactDamage = 16;

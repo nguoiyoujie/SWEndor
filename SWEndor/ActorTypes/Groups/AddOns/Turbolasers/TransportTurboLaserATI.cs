@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class TransportTurboLaserATI : Groups.Turbolasers
   {
-    internal TransportTurboLaserATI(Factory owner) : base(owner, "Transport Turbolaser Tower")
+    internal TransportTurboLaserATI(Factory owner) : base(owner, "TRANLSR", "Transport Turbolaser Tower")
     {
       MaxStrength = 80;
       ImpactDamage = 16;

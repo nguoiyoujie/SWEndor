@@ -12,12 +12,12 @@ namespace SWEndor.Scenarios
     public GSTestZone(GameScenarioManager manager) : base(manager)
     {
       Name = "Tower Test Zone [Maintenance]";
-      AllowedWings = new List<ActorTypeInfo> { Engine.ActorTypeFactory.Get("Advanced Turbolaser Tower")
-                                             , Engine.ActorTypeFactory.Get("Deflector Tower")
-                                             , Engine.ActorTypeFactory.Get("Gun Tower")
-                                             , Engine.ActorTypeFactory.Get("Radar Tower")
-                                             , Engine.ActorTypeFactory.Get("Super Deflector Tower")
-                                             , Engine.ActorTypeFactory.Get("Super Turbolaser Turret")
+      AllowedWings = new List<ActorTypeInfo> { Engine.ActorTypeFactory.Get("ADVT")
+                                             , Engine.ActorTypeFactory.Get("DEFT")
+                                             , Engine.ActorTypeFactory.Get("GUNT")
+                                             , Engine.ActorTypeFactory.Get("RDRT")
+                                             , Engine.ActorTypeFactory.Get("SUPT")
+                                             , Engine.ActorTypeFactory.Get("SUPGUN")
                                              };
 
       AllowedDifficulties = new List<string> { "normal"
@@ -135,11 +135,11 @@ namespace SWEndor.Scenarios
 
     public void Test_Towers01()
     {
-      List<ActorTypeInfo> towers = new List<ActorTypeInfo> { Engine.ActorTypeFactory.Get("Advanced Turbolaser Tower")
-                                             , Engine.ActorTypeFactory.Get("Deflector Tower")
-                                             , Engine.ActorTypeFactory.Get("Gun Tower")
-                                             , Engine.ActorTypeFactory.Get("Radar Tower")
-                                             , Engine.ActorTypeFactory.Get("Super Deflector Tower")
+      List<ActorTypeInfo> towers = new List<ActorTypeInfo> { Engine.ActorTypeFactory.Get("ADVT")
+                                             , Engine.ActorTypeFactory.Get("DEFT")
+                                             , Engine.ActorTypeFactory.Get("GUNT")
+                                             , Engine.ActorTypeFactory.Get("RDRT")
+                                             , Engine.ActorTypeFactory.Get("SUPT")
                                              };
 
       for (int x = -5; x <= 5; x++)
@@ -163,7 +163,7 @@ namespace SWEndor.Scenarios
     {
       GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -500, Manager.MaxBounds.z + 1500), new TV_3DVECTOR(2500, 500, Manager.MaxBounds.z + 1500));
       GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
-                                                                          , ActorTypeFactory.Get("Z-95")
+                                                                          , ActorTypeFactory.Get("Z95")
                                                                           , MainEnemyFaction
                                                                           , 3
                                                                           , 18
@@ -175,13 +175,13 @@ namespace SWEndor.Scenarios
                                                                           , null);
 
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 2, box, 1.5f, spawninfo);
-      spawninfo.TypeInfo = ActorTypeFactory.Get("X-Wing");
+      spawninfo.TypeInfo = ActorTypeFactory.Get("XWING");
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
-      spawninfo.TypeInfo = ActorTypeFactory.Get("Y-Wing");
+      spawninfo.TypeInfo = ActorTypeFactory.Get("YWING");
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
-      spawninfo.TypeInfo = ActorTypeFactory.Get("A-Wing");
+      spawninfo.TypeInfo = ActorTypeFactory.Get("AWING");
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
-      spawninfo.TypeInfo = ActorTypeFactory.Get("B-Wing");
+      spawninfo.TypeInfo = ActorTypeFactory.Get("BWING");
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
     }
   }

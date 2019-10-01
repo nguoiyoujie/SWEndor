@@ -10,7 +10,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class SmallIonLaserATI : Groups.LaserProjectile
   {
-    internal SmallIonLaserATI(Factory owner) : base(owner, "Ion Laser")
+    internal SmallIonLaserATI(Factory owner) : base(owner, "LSR_ION", "Ion Laser")
     {
       TimedLifeData = new TimedLifeData(true, 5);
 
@@ -53,7 +53,7 @@ namespace SWEndor.ActorTypes.Instances
             if (child.WeaponDefinitions.Weapons[i].WeaponCooldown < engine.Game.GameTime + empduration + 2)
               child.WeaponDefinitions.Weapons[i].WeaponCooldown = engine.Game.GameTime + empduration + 2;
 
-          ExplosionCreationInfo acinfo = new ExplosionCreationInfo(engine.ExplosionTypeFactory.Get("Electro"));
+          ExplosionCreationInfo acinfo = new ExplosionCreationInfo(engine.ExplosionTypeFactory.Get("ELECTRO"));
           ExplosionInfo electro = engine.ExplosionFactory.Create(acinfo);
           electro.AttachedActorID = child.ID;
           electro.CycleInfo.CyclesRemaining = empduration / electro.TypeInfo.TimedLifeData.TimedLife;

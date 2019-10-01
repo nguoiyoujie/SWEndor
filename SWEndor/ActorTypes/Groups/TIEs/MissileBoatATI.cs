@@ -5,7 +5,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class MissileBoatATI : Groups.TIE
   {
-    internal MissileBoatATI(Factory owner) : base(owner, "Missile Boat")
+    internal MissileBoatATI(Factory owner) : base(owner, "MISB", "Missile Boat")
     {
       MaxStrength = 12;
       ImpactDamage = 16;

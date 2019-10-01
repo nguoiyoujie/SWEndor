@@ -20,7 +20,7 @@ namespace SWEndor.Scenarios
     public GSYavin(GameScenarioManager manager) : base(manager)
     {
       Name = "Battle of Yavin (WIP) [Maintenance]";
-      AllowedWings = new List<ActorTypeInfo> { ActorTypeFactory.Get("X-Wing"), ActorTypeFactory.Get("Millennium Falcon") };
+      AllowedWings = new List<ActorTypeInfo> { ActorTypeFactory.Get("XWING"), ActorTypeFactory.Get("FALC") };
 
       AllowedDifficulties = new List<string> { "easy"
                                                , "normal"
@@ -244,7 +244,7 @@ namespace SWEndor.Scenarios
     {
       base.LoadScene();
       // Create Yavin
-      ActorCreationInfo aci_Yavin = new ActorCreationInfo(ActorTypeFactory.Get("Yavin"))
+      ActorCreationInfo aci_Yavin = new ActorCreationInfo(ActorTypeFactory.Get("YAVIN"))
       {
         Position = new TV_3DVECTOR(0, 0, 18000),
         Rotation = new TV_3DVECTOR(90, 90, 0),
@@ -253,7 +253,7 @@ namespace SWEndor.Scenarios
       m_AYavin = Engine.ActorFactory.Create(aci_Yavin);
 
       // Create Yavin 4
-      ActorCreationInfo aci_Yavin4 = new ActorCreationInfo(ActorTypeFactory.Get("Yavin4"))
+      ActorCreationInfo aci_Yavin4 = new ActorCreationInfo(ActorTypeFactory.Get("YAVIN4"))
       {
         Position = new TV_3DVECTOR(0, 800, -18000),
         Rotation = new TV_3DVECTOR(0, 0, 0),
@@ -261,7 +261,7 @@ namespace SWEndor.Scenarios
       m_AYavin4 = Engine.ActorFactory.Create(aci_Yavin4);
 
       // Create DeathStar
-      ActorCreationInfo aci_DS = new ActorCreationInfo(ActorTypeFactory.Get("DeathStar"))
+      ActorCreationInfo aci_DS = new ActorCreationInfo(ActorTypeFactory.Get("DSTAR"))
       {
         Position = new TV_3DVECTOR(0, 800, 28000),
         Rotation = new TV_3DVECTOR(0, 180, 0),
@@ -583,7 +583,7 @@ namespace SWEndor.Scenarios
         {
           ainfo = new ActorSpawnInfo
           {
-            Type = ActorTypeFactory.Get("X-Wing"),
+            Type = ActorTypeFactory.Get("XWING"),
             Name = names[i],
     
             SidebarName = names[i],
@@ -593,7 +593,7 @@ namespace SWEndor.Scenarios
             Rotation = new TV_3DVECTOR(0, 180, 0),
             Actions = new ActionInfo[] { new Lock()
                                        , new Move(new TV_3DVECTOR(v.x + Engine.Random.Next(-5, 5), v.y + Engine.Random.Next(-5, 5), v.z - 4500)
-                                       , ActorTypeFactory.Get("X-Wing").MoveLimitData.MaxSpeed)},
+                                       , ActorTypeFactory.Get("XWING").MoveLimitData.MaxSpeed)},
             Registries = null
           }.Spawn(this);
 
@@ -603,7 +603,7 @@ namespace SWEndor.Scenarios
         {
           ainfo = new ActorSpawnInfo
           {
-            Type = ActorTypeFactory.Get("Y-Wing"),
+            Type = ActorTypeFactory.Get("YWING"),
             Name = names[i],
     
             SidebarName = names[i],
@@ -613,7 +613,7 @@ namespace SWEndor.Scenarios
             Rotation = new TV_3DVECTOR(0, 180, 0),
             Actions = new ActionInfo[] { new Lock()
                                        , new Move(new TV_3DVECTOR(v.x + Engine.Random.Next(-5, 5), v.y + Engine.Random.Next(-5, 5), v.z - 4500)
-                                       , ActorTypeFactory.Get("Y-Wing").MoveLimitData.MaxSpeed)},
+                                       , ActorTypeFactory.Get("YWING").MoveLimitData.MaxSpeed)},
             Registries = null
           }.Spawn(this);
 
@@ -855,7 +855,7 @@ namespace SWEndor.Scenarios
     public void Empire_FirstWave()
     {
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
-                                                              , ActorTypeFactory.Get("Imperial-I Star Destroyer")
+                                                              , ActorTypeFactory.Get("IMPL")
                                                               , MainEnemyFaction
                                                               , true
                                                               , new TV_3DVECTOR()
@@ -914,7 +914,7 @@ namespace SWEndor.Scenarios
     public void Empire_SecondWave()
     {
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
-                                                        , ActorTypeFactory.Get("Imperial-I Star Destroyer")
+                                                        , ActorTypeFactory.Get("IMPL")
                                                         , MainEnemyFaction
                                                         , true
                                                         , new TV_3DVECTOR()
@@ -1058,7 +1058,7 @@ namespace SWEndor.Scenarios
     {
       ActorSpawnInfo asi = new ActorSpawnInfo
       {
-        Type = ActorTypeFactory.Get("Radar Tower"),
+        Type = ActorTypeFactory.Get("RDRT"),
         Name = "",
 
         SidebarName = "",
@@ -1071,7 +1071,7 @@ namespace SWEndor.Scenarios
       ActorInfo a = asi.Spawn(this);
       m_CriticalGroundObjects.Add(a);
 
-      asi.Type = ActorTypeFactory.Get("Gun Tower");
+      asi.Type = ActorTypeFactory.Get("GUNT");
       asi.Position = position + new TV_3DVECTOR(300, 0, 0);
       asi.Spawn(this);
       asi.Position = position + new TV_3DVECTOR(-300, 0, 0);
@@ -1086,7 +1086,7 @@ namespace SWEndor.Scenarios
     {
       ActorSpawnInfo asi = new ActorSpawnInfo
       {
-        Type = ActorTypeFactory.Get("Deflector Tower"),
+        Type = ActorTypeFactory.Get("DEFT"),
         Name = "",
 
         SidebarName = "",
@@ -1099,7 +1099,7 @@ namespace SWEndor.Scenarios
       ActorInfo a = asi.Spawn(this);
       m_CriticalGroundObjects.Add(a);
 
-      asi.Type = ActorTypeFactory.Get("Gun Tower");
+      asi.Type = ActorTypeFactory.Get("GUNT");
       asi.Position = position + new TV_3DVECTOR(500, 0, 0);
       asi.Spawn(this);
       asi.Position = position + new TV_3DVECTOR(-500, 0, 0);
@@ -1155,7 +1155,7 @@ namespace SWEndor.Scenarios
       float height = -175;
 
       for (int x = -6; x <= 6; x++)
-        Spawn_TrenchFormation(ActorTypeFactory.Get("Gun Tower"), new TV_3DVECTOR(x * dist, 30 + height, 0), 150);
+        Spawn_TrenchFormation(ActorTypeFactory.Get("GUNT"), new TV_3DVECTOR(x * dist, 30 + height, 0), 150);
     }
 
     #endregion
@@ -1255,7 +1255,7 @@ namespace SWEndor.Scenarios
 
       m_ADS_Surface = new ActorSpawnInfo
       {
-        Type = ActorTypeFactory.Get("Surface003_00ATI"),
+        Type = ActorTypeFactory.Get("SURF00300"),
         Name = "",
 
         SidebarName = "",
@@ -1267,7 +1267,7 @@ namespace SWEndor.Scenarios
 
       ActorSpawnInfo asi = new ActorSpawnInfo
       {
-        Type = ActorTypeFactory.Get("Surface003_00ATI"),
+        Type = ActorTypeFactory.Get("SURF00300"),
         Name = "",
 
         SidebarName = "",
@@ -1280,7 +1280,7 @@ namespace SWEndor.Scenarios
       for (int x = -5 ; x <= 5; x++ )
         for (int z = -5; z <= 5; z++)
         {
-          asi.Type = ((x + z) % 2 == 1) ? (ActorTypeInfo)ActorTypeFactory.Get("Surface001_00ATI") : ActorTypeFactory.Get("Surface001_01ATI");
+          asi.Type = ((x + z) % 2 == 1) ? (ActorTypeInfo)ActorTypeFactory.Get("SURF00100") : ActorTypeFactory.Get("SURF00101");
           asi.Position = new TV_3DVECTOR(x * 4000, -173, z * 4000);
           m_ADS_SurfaceParts.Add(asi.Spawn(this));
         }
@@ -1350,7 +1350,7 @@ namespace SWEndor.Scenarios
       Manager.AddEvent(Game.GameTime + 5f, Scene_ExitCutscene);
       Manager.AddEvent(Game.GameTime + 6.5f, Message_08_Target);
 
-      ActorTypeInfo type = ActorTypeFactory.Get("Imperial-I Star Destroyer");
+      ActorTypeInfo type = ActorTypeFactory.Get("IMPL");
       TV_3DVECTOR position = new TV_3DVECTOR(2000, 750, -8000);
       TV_3DVECTOR targetposition = new TV_3DVECTOR(-4000, 1050, 1000);
       TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(0, 0, -25000);
@@ -1415,7 +1415,7 @@ namespace SWEndor.Scenarios
 
       ActorSpawnInfo asi = new ActorSpawnInfo
       {
-        Type = ActorTypeFactory.Get("Surface003_00ATI"),
+        Type = ActorTypeFactory.Get("SURF00300"),
         Name = "",
 
         SidebarName = "",
@@ -1428,7 +1428,7 @@ namespace SWEndor.Scenarios
       for (int x = -5; x <= 5; x++)
         for (int z = 0; z <= 3; z++)
         {
-          asi.Type = ((x + z) % 2 == 1) ? (ActorTypeInfo)ActorTypeFactory.Get("Surface001_00ATI") : ActorTypeFactory.Get("Surface001_01ATI");
+          asi.Type = ((x + z) % 2 == 1) ? (ActorTypeInfo)ActorTypeFactory.Get("SURF00100") : ActorTypeFactory.Get("SURF00101");
           asi.Position = new TV_3DVECTOR(x * 4000, -173, 2250 + z * 4000);
           m_ADS_SurfaceParts.Add(asi.Spawn(this));
           asi.Position = new TV_3DVECTOR(x * 4000, -173, -2250 + -z * 4000);
@@ -1437,7 +1437,7 @@ namespace SWEndor.Scenarios
 
       for (int x = -20; x <= 20; x++)
       {
-        asi.Type = ActorTypeFactory.Get("Surface002_99ATI");
+        asi.Type = ActorTypeFactory.Get("SURF00299");
         asi.Position = new TV_3DVECTOR(x * 1000, -175, 0);
         m_ADS_SurfaceParts.Add(asi.Spawn(this));
       }
@@ -1496,7 +1496,7 @@ namespace SWEndor.Scenarios
     {
       new ActorSpawnInfo
       {
-        Type = ActorTypeFactory.Get("Thermal Exhaust Port"),
+        Type = ActorTypeFactory.Get("VENT"),
         Name = "",
 
         SidebarName = "",
@@ -1526,20 +1526,20 @@ namespace SWEndor.Scenarios
       }
     }
 
-    string[] TrenchTypes = new string[] { "Surface002_00ATI"
-                                        , "Surface002_01ATI"
-                                        , "Surface002_02ATI"
-                                        , "Surface002_03ATI"
-                                        , "Surface002_04ATI"
-                                        , "Surface002_05ATI"
-                                        , "Surface002_06ATI"
-                                        , "Surface002_07ATI"
-                                        , "Surface002_08ATI"
-                                        , "Surface002_09ATI"
-                                        , "Surface002_10ATI"
-                                        , "Surface002_11ATI"
-                                        , "Surface002_12ATI"
-                                        , "Surface002_99ATI"
+    string[] TrenchTypes = new string[] { "SURF00200"
+                                        , "SURF00201"
+                                        , "SURF00202"
+                                        , "SURF00203"
+                                        , "SURF00204"
+                                        , "SURF00205"
+                                        , "SURF00206"
+                                        , "SURF00207"
+                                        , "SURF00208"
+                                        , "SURF00209"
+                                        , "SURF00210"
+                                        , "SURF00211"
+                                        , "SURF00212"
+                                        , "SURF00299"
                                         };
     
     private int[] Trenches = new int[] { 13, 13, 13, 13, 13, 0, 0, 0, 0, 0
@@ -1632,16 +1632,16 @@ namespace SWEndor.Scenarios
             m_ADS_TrenchParts.Put(i, asi.Spawn(this));
 
             if (i < 100 && i > 0 && i % 35 == 0)
-              Spawn_TrenchFormation(ActorTypeFactory.Get("Deflector Tower"), new TV_3DVECTOR(7000 + i * 1000, 90 - 175, 0), 175, i);
+              Spawn_TrenchFormation(ActorTypeFactory.Get("DEFT"), new TV_3DVECTOR(7000 + i * 1000, 90 - 175, 0), 175, i);
             else if (i > 10 && i < 96 && i % 10 == 0 || (i > 50 && i < 55))
-              Spawn_TrenchFormation(ActorTypeFactory.Get("Gun Tower"), new TV_3DVECTOR(7000 + i * 1000, 30 - 175, 0), 150, i);
+              Spawn_TrenchFormation(ActorTypeFactory.Get("GUNT"), new TV_3DVECTOR(7000 + i * 1000, 30 - 175, 0), 150, i);
             else if (i == 100)
-              Spawn_TrenchFormation(ActorTypeFactory.Get("Radar Tower"), new TV_3DVECTOR(7000 + i * 1000, 90 - 175, 0), 170, i);
+              Spawn_TrenchFormation(ActorTypeFactory.Get("RDRT"), new TV_3DVECTOR(7000 + i * 1000, 90 - 175, 0), 170, i);
 
 
             asi = new ActorSpawnInfo
             {
-              Type = ActorTypeFactory.Get("Deflector Tower"),
+              Type = ActorTypeFactory.Get("DEFT"),
               Name = "",
       
               SidebarName = "",
@@ -1659,19 +1659,19 @@ namespace SWEndor.Scenarios
                 {
                   if (i > 50 && i % 5 < 2)
                   {
-                    asi.Type = ActorTypeFactory.Get("Deflector Tower");
+                    asi.Type = ActorTypeFactory.Get("DEFT");
                     asi.Position = new TV_3DVECTOR(7000 + i * 1000 - 140, 90 - 390, 40);
                     TrenchTurrets[i].Add(asi.Spawn(this));
                   }
                   else if (i % 3 < 2)
                   {
-                    asi.Type = ActorTypeFactory.Get("Gun Tower");
+                    asi.Type = ActorTypeFactory.Get("GUNT");
                     asi.Position = new TV_3DVECTOR(7000 + i * 1000 - 140, 30 - 390, 40);
                     TrenchTurrets[i].Add(asi.Spawn(this));
                   }
                   else if (i % 4 < 1)
                   {
-                    asi.Type = ActorTypeFactory.Get("Radar Tower");
+                    asi.Type = ActorTypeFactory.Get("RDRT");
                     asi.Position = new TV_3DVECTOR(7000 + i * 1000 - 140, 90 - 390, 40);
                     TrenchTurrets[i].Add(asi.Spawn(this));
                   }
@@ -1680,19 +1680,19 @@ namespace SWEndor.Scenarios
                 {
                   if (i > 50 && i % 5 < 2)
                   {
-                    asi.Type = ActorTypeFactory.Get("Deflector Tower");
+                    asi.Type = ActorTypeFactory.Get("DEFT");
                     asi.Position = new TV_3DVECTOR(7000 + i * 1000 - 40, 90 - 390, -40);
                     TrenchTurrets[i].Add(asi.Spawn(this));
                   }
                   else if (i % 3 < 2)
                   {
-                    asi.Type = ActorTypeFactory.Get("Gun Tower");
+                    asi.Type = ActorTypeFactory.Get("GUNT");
                     asi.Position = new TV_3DVECTOR(7000 + i * 1000 - 40, 30 - 390, -40);
                     TrenchTurrets[i].Add(asi.Spawn(this));
                   }
                   else if (i % 4 < 1)
                   {
-                    asi.Type = ActorTypeFactory.Get("Radar Tower");
+                    asi.Type = ActorTypeFactory.Get("RDRT");
                     asi.Position = new TV_3DVECTOR(7000 + i * 1000 - 40, 90 - 390, -40);
                     TrenchTurrets[i].Add(asi.Spawn(this));
                   }
@@ -1701,19 +1701,19 @@ namespace SWEndor.Scenarios
                 {
                   if (i > 50 && i % 5 < 2)
                   {
-                    asi.Type = ActorTypeFactory.Get("Deflector Tower");
+                    asi.Type = ActorTypeFactory.Get("DEFT");
                     asi.Position = new TV_3DVECTOR(7000 + i * 1000 - 320, 90 - 390, -40);
                     TrenchTurrets[i].Add(asi.Spawn(this));
                   }
                   else if (i % 3 < 2)
                   {
-                    asi.Type = ActorTypeFactory.Get("Gun Tower");
+                    asi.Type = ActorTypeFactory.Get("GUNT");
                     asi.Position = new TV_3DVECTOR(7000 + i * 1000 - 320, 30 - 390, -40);
                     TrenchTurrets[i].Add(asi.Spawn(this));
                   }
                   else if (i % 4 < 1)
                   {
-                    asi.Type = ActorTypeFactory.Get("Radar Tower");
+                    asi.Type = ActorTypeFactory.Get("RDRT");
                     asi.Position = new TV_3DVECTOR(7000 + i * 1000 - 320, 90 - 390, -40);
                     TrenchTurrets[i].Add(asi.Spawn(this));
                   }
@@ -1722,19 +1722,19 @@ namespace SWEndor.Scenarios
                 {
                   if (i > 50 && i % 5 < 2)
                   {
-                    asi.Type = ActorTypeFactory.Get("Deflector Tower");
+                    asi.Type = ActorTypeFactory.Get("DEFT");
                     asi.Position = new TV_3DVECTOR(7000 + i * 1000 - 260, 90 - 175, 0);
                     TrenchTurrets[i].Add(asi.Spawn(this));
                   }
                   else if (i % 3 < 2)
                   {
-                    asi.Type = ActorTypeFactory.Get("Gun Tower");
+                    asi.Type = ActorTypeFactory.Get("GUNT");
                     asi.Position = new TV_3DVECTOR(7000 + i * 1000 - 260, 30 - 175, 0);
                     TrenchTurrets[i].Add(asi.Spawn(this));
                   }
                   else if (i % 4 < 1)
                   {
-                    asi.Type = ActorTypeFactory.Get("Radar Tower");
+                    asi.Type = ActorTypeFactory.Get("RDRT");
                     asi.Position = new TV_3DVECTOR(7000 + i * 1000 - 260, 90 - 175, 0);
                     TrenchTurrets[i].Add(asi.Spawn(this));
                   }
@@ -1743,19 +1743,19 @@ namespace SWEndor.Scenarios
                 {
                   if (i > 50 && i % 5 < 2)
                   {
-                    asi.Type = ActorTypeFactory.Get("Deflector Tower");
+                    asi.Type = ActorTypeFactory.Get("DEFT");
                     asi.Position = new TV_3DVECTOR(7000 + i * 1000 - 340, 90 - 175, 0);
                     TrenchTurrets[i].Add(asi.Spawn(this));
                   }
                   else if (i % 3 < 2)
                   {
-                    asi.Type = ActorTypeFactory.Get("Gun Tower");
+                    asi.Type = ActorTypeFactory.Get("GUNT");
                     asi.Position = new TV_3DVECTOR(7000 + i * 1000 - 340, 30 - 175, 0);
                     TrenchTurrets[i].Add(asi.Spawn(this));
                   }
                   else if (i % 4 < 1)
                   {
-                    asi.Type = ActorTypeFactory.Get("Radar Tower");
+                    asi.Type = ActorTypeFactory.Get("RDRT");
                     asi.Position = new TV_3DVECTOR(7000 + i * 1000 - 340, 90 - 175, 0);
                     TrenchTurrets[i].Add(asi.Spawn(this));
                   }
@@ -1821,7 +1821,7 @@ namespace SWEndor.Scenarios
 
       m_VaderID = new ActorSpawnInfo
       {
-        Type = ActorTypeFactory.Get("TIE Advanced X1"),
+        Type = ActorTypeFactory.Get("TIEX"),
         Name = "",
 
         SidebarName = "",
@@ -1955,7 +1955,7 @@ namespace SWEndor.Scenarios
 
       ActorInfo falcon = new ActorSpawnInfo
       {
-        Type = ActorTypeFactory.Get("Millennium Falcon"),
+        Type = ActorTypeFactory.Get("FALC"),
         Name = "",
 
         SidebarName = "",

@@ -9,15 +9,15 @@ namespace SWEndor.ActorTypes.Groups
 {
   public class LargeShip : ActorTypeInfo
   {
-    internal LargeShip(Factory owner, string name) : base(owner, name)
+    internal LargeShip(Factory owner, string id, string name) : base(owner, id, name)
     {
       CombatData = CombatData.DefaultShip;
       ArmorData = ArmorData.Default;
       Explodes = new ExplodeData[]
       {
-        new ExplodeData("ExpL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
-        new ExplodeData("ExpL01", 1, 2, ExplodeTrigger.ON_DEATH),
-        new ExplodeData("ExpW01", 1, 1, ExplodeTrigger.ON_DEATH)
+        new ExplodeData("EXPL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeData("EXPL01", 1, 2, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("EXPW01", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
       DyingMoveData.Sink(0.06f, 15f, 2.5f);

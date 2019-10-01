@@ -28,13 +28,13 @@ namespace SWEndor.ExplosionTypes
 
       public void Register(ExplosionTypeInfo atype)
       {
-        if (Contains(atype.Name))
+        if (Contains(atype.ID))
         {
-          atype = GetX(atype.Name);
+          atype = GetX(atype.ID);
         }
         else
         {
-          Add(atype.Name, atype);
+          Add(atype.ID, atype);
         }
         //atype.LoadFromINI();
         Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));

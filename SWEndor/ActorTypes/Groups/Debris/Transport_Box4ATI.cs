@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class Transport_Box4ATI : Groups.SpinningDebris
   {
-    internal Transport_Box4ATI(Factory owner) : base(owner, "Transport Box 4")
+    internal Transport_Box4ATI(Factory owner) : base(owner, "BOX4", "Transport Box 4")
     {
       // Combat
       TimedLifeData = new TimedLifeData(true, 12);

@@ -7,13 +7,13 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class ArquitensATI : Groups.StarDestroyer
   {
-    internal ArquitensATI(Factory owner) : base(owner, "Arquitens Light Cruiser")
+    internal ArquitensATI(Factory owner) : base(owner, "ARQT", "Arquitens Light Cruiser")
     {
       // Combat
       Explodes = new ExplodeData[] {
-        new ExplodeData("ExpL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
-        new ExplodeData("ExpL01", 1, 1.5f, ExplodeTrigger.ON_DEATH),
-        new ExplodeData("ExpW01", 1, 1, ExplodeTrigger.ON_DEATH)
+        new ExplodeData("EXPL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeData("EXPL01", 1, 1.5f, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("EXPW01", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
       MaxStrength = 450.0f;
@@ -36,14 +36,14 @@ namespace SWEndor.ActorTypes.Instances
       AddOns = new AddOnData[]
       {
         // Sides
-        new AddOnData("Arquitens Turbolaser Tower", new TV_3DVECTOR(85, 22, 16), new TV_3DVECTOR(0, 72, 0), true)
-        , new AddOnData("Arquitens Turbolaser Tower", new TV_3DVECTOR(40, 22, 170), new TV_3DVECTOR(0, 72, 0), true)
-        , new AddOnData("Arquitens Turbolaser Tower", new TV_3DVECTOR(-85, 22, 16), new TV_3DVECTOR(0, -72, 0), true)
-        , new AddOnData("Arquitens Turbolaser Tower", new TV_3DVECTOR(-40, 22, 170), new TV_3DVECTOR(0, -72, 0), true)
+        new AddOnData("ARQTLSR", new TV_3DVECTOR(85, 22, 16), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnData("ARQTLSR", new TV_3DVECTOR(40, 22, 170), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnData("ARQTLSR", new TV_3DVECTOR(-85, 22, 16), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnData("ARQTLSR", new TV_3DVECTOR(-40, 22, 170), new TV_3DVECTOR(0, -72, 0), true)
 
         // Top
-        , new AddOnData("Arquitens Turbolaser Tower", new TV_3DVECTOR(38, 50, 16), new TV_3DVECTOR(-75, 90, 0), true)
-        , new AddOnData("Arquitens Turbolaser Tower", new TV_3DVECTOR(-38, 50, 16), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("ARQTLSR", new TV_3DVECTOR(38, 50, 16), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("ARQTLSR", new TV_3DVECTOR(-38, 50, 16), new TV_3DVECTOR(-75, -90, 0), true)
       };
     }
   }

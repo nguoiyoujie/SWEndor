@@ -13,8 +13,8 @@ namespace SWEndor.Scenarios
     public GSTIEAdvanced(GameScenarioManager manager) : base(manager)
     {
       Name = "TIE Advanced Challenge [Maintenance]";
-      AllowedWings = new List<ActorTypeInfo> { Engine.ActorTypeFactory.Get("X-Wing")
-                                               , Engine.ActorTypeFactory.Get("A-Wing")
+      AllowedWings = new List<ActorTypeInfo> { Engine.ActorTypeFactory.Get("XWING")
+                                               , Engine.ActorTypeFactory.Get("AWING")
                                               };
 
       AllowedDifficulties = new List<string> { "easy"
@@ -166,7 +166,7 @@ namespace SWEndor.Scenarios
       creationTime += 0.025f;
       ainfo = new ActorSpawnInfo
       {
-        Type = Engine.ActorTypeFactory.Get("TIE Advanced X1"),
+        Type = Engine.ActorTypeFactory.Get("TIEX"),
         Name = "(Player)",
 
         SidebarName = "",
@@ -195,11 +195,11 @@ namespace SWEndor.Scenarios
       for (int i = 0; i < positions.Count; i++)
       {
         TV_3DVECTOR v = positions[i];
-        ActorTypeInfo[] atypes = new ActorTypeInfo[] { Engine.ActorTypeFactory.Get("X-Wing")
-                                                      , Engine.ActorTypeFactory.Get("X-Wing")
-                                                      , Engine.ActorTypeFactory.Get("X-Wing")
-                                                      , Engine.ActorTypeFactory.Get("A-Wing")
-                                                      , Engine.ActorTypeFactory.Get("A-Wing")
+        ActorTypeInfo[] atypes = new ActorTypeInfo[] { Engine.ActorTypeFactory.Get("XWING")
+                                                      , Engine.ActorTypeFactory.Get("XWING")
+                                                      , Engine.ActorTypeFactory.Get("XWING")
+                                                      , Engine.ActorTypeFactory.Get("AWING")
+                                                      , Engine.ActorTypeFactory.Get("AWING")
                                                       };
 
         creationTime += 0.025f;
@@ -234,7 +234,7 @@ namespace SWEndor.Scenarios
 
         ainfo = new ActorSpawnInfo
         {
-          Type = Engine.ActorTypeFactory.Get("Corellian Corvette"),
+          Type = Engine.ActorTypeFactory.Get("CORV"),
           Name = "",
   
           SidebarName = "CORELLIAN",
@@ -265,10 +265,10 @@ namespace SWEndor.Scenarios
 
         ainfo = new ActorSpawnInfo
         {
-          Type = Engine.ActorTypeFactory.Get("Transport"),
+          Type = Engine.ActorTypeFactory.Get("TRAN"),
           Name = "",
   
-          SidebarName = "TRANSPORT",
+          SidebarName = "TRAN",
           SpawnTime = creationTime,
           Faction = MainAllyFaction,
           Position = v + hyperspaceInOffset,
@@ -391,7 +391,7 @@ namespace SWEndor.Scenarios
     {
       GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -500, -22500), new TV_3DVECTOR(2500, 500, -22500));
       GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
-                                                                          , ActorTypeFactory.Get("TIE Defender")
+                                                                          , ActorTypeFactory.Get("TIED")
                                                                           , MainEnemyFaction
                                                                           , 3
                                                                           , 8
@@ -409,7 +409,7 @@ namespace SWEndor.Scenarios
     {
       GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -500, -22500), new TV_3DVECTOR(2500, 500, -22500));
       GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
-                                                                          , ActorTypeFactory.Get("TIE Bomber")
+                                                                          , ActorTypeFactory.Get("TIESA")
                                                                           , MainEnemyFaction
                                                                           , 4
                                                                           , 18
@@ -447,7 +447,7 @@ namespace SWEndor.Scenarios
 
       m_X1ID = new ActorSpawnInfo
       {
-        Type = Engine.ActorTypeFactory.Get("TIE Advanced X1"),
+        Type = Engine.ActorTypeFactory.Get("TIEX"),
         Name = "",
 
         SidebarName = "TIE ADV. X1",
