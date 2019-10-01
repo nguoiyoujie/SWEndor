@@ -51,7 +51,7 @@ namespace SWEndor.ActorTypes.Groups
               impdist += ((Projectile)target.TypeInfo).ImpactCloseEnoughDistance;
 
             // Anticipate
-            float dist = ActorDistanceInfo.GetDistance(ainfo, target, impdist + 1);
+            float dist = ActorDistanceInfo.GetDistance(engine, ainfo, target, impdist + 1);
 
             if (dist < impdist)
             {

@@ -45,7 +45,7 @@ namespace SWEndor.AI.Actions
       if (CheckBounds(actor))
       {
         actor.AIData.AdjustRotation(engine, actor);
-        float dist = ActorDistanceInfo.GetDistance(actor, target, FollowDistance + 1);
+        float dist = ActorDistanceInfo.GetDistance(engine, actor, target, FollowDistance + 1);
 
         actor.AIData.AdjustSpeed(actor);
         Complete |= (!target.Active);

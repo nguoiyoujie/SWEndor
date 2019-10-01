@@ -40,7 +40,7 @@ namespace SWEndor.Player
       return ret;
     }
 
-    public void ApproachPosition(TV_3DVECTOR pos, float distance)
+    public void ApproachPosition(Engine engine, TV_3DVECTOR pos, float distance)
     {
       if (distance == 0 || TargetActorID > 0) // if locked to Actor, skip
         return;
@@ -48,7 +48,7 @@ namespace SWEndor.Player
       float dist = ActorDistanceInfo.GetDistance(pos, Position);
 
       if (dist != 0)
-        Position = ActorDistanceInfo.Lerp(Position, pos, (distance / dist).Clamp(-100, 1));
+        Position = ActorDistanceInfo.Lerp(engine, Position, pos, (distance / dist).Clamp(-100, 1));
     }
   }
 
@@ -166,7 +166,7 @@ namespace SWEndor.Player
     public void Update(Engine engine, TVCamera cam, TV_3DVECTOR position, TV_3DVECTOR rotation)
     {
       TV_3DVECTOR tgt = LookTo.GetGlobalPosition(engine);
-      LookFrom.ApproachPosition(tgt, ApproachSpeed * engine.Game.TimeSinceRender);
+      LookFrom.ApproachPosition(engine, tgt, ApproachSpeed * engine.Game.TimeSinceRender);
       TV_3DVECTOR pos = LookFrom.GetGlobalPosition(engine);
 
       if ((Mode & CamMode.CIRCLE_AROUND_TARGET) == CamMode.CIRCLE_AROUND_TARGET)

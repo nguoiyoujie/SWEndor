@@ -30,7 +30,7 @@ namespace SWEndorTest
       {
         if (_MockActorType == null)
         {
-          _MockActorType = new ActorTypeInfo(Globals.Engine.ActorTypeFactory, "dummy");
+          _MockActorType = new ActorTypeInfo(Globals.Engine.ActorTypeFactory, "dummy", "dummy");
           Globals.Engine.ActorTypeFactory.Register(_MockActorType);
         }
         return _MockActorType;

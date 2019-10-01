@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Core;
 using SWEndor.Primitives;
 using System;
 
@@ -18,9 +19,23 @@ namespace SWEndor.Actors
 
   public static class ActorDistanceInfo
   {
-    private static Cache<long, float, float, ActorInfo, ActorInfo> cache = new Cache<long, float, float, ActorInfo, ActorInfo>(); 
+    private struct EngineTime
+    {
+      public Engine Engine;
+      public float Time;
+
+      public EngineTime(Engine e)
+      {
+        Engine = e;
+        Time = e.Game.GameTime;
+      }
+
+      public bool Passed { get { return Engine == null || Time < Engine.Game.GameTime; } }
+    }
+
+    private static Cache<long, EngineTime, float, ActorInfo, ActorInfo> cache = new Cache<long, EngineTime, float, ActorInfo, ActorInfo>(); 
     private static float Cleartime = 0;
-    private static Func<float, bool> clearfunc = (f) => { return f < Globals.Engine.Game.GameTime; };
+    private static Func<EngineTime, bool> clearfunc = (f) => { return f.Passed; };
     private static Func<ActorInfo, ActorInfo, float> dofunc = (a, b) => { return CalculateDistance(a, b); };
 
     private static object locker = new object();
@@ -67,16 +82,16 @@ namespace SWEndor.Actors
       return dx + dy + dz;
     }
 
-    public static float GetDistance(ActorInfo a1, ActorInfo a2, float limit)
+    public static float GetDistance(Engine e, ActorInfo a1, ActorInfo a2, float limit)
     {
       float d = GetRoughDistance(a1, a2);
       if (d > limit)
         return limit;
       else
-        return GetDistance(a1, a2);
+        return GetDistance(e, a1, a2);
     }
 
-    public static float GetDistance(ActorInfo a1, ActorInfo a2)
+    public static float GetDistance(Engine e, ActorInfo a1, ActorInfo a2)
     {
       if (a1 == null || a2 == null)
         return float.MaxValue;
@@ -86,10 +101,10 @@ namespace SWEndor.Actors
 
       lock (locker)
       {
-        if (Cleartime < Globals.Engine.Game.GameTime)
+        if (Cleartime < e.Game.GameTime)
         {
           cache.Clear(clearfunc);
-          Cleartime = Globals.Engine.Game.GameTime + 5;
+          Cleartime = e.Game.GameTime + 5;
         }
 
         long hash;
@@ -105,7 +120,7 @@ namespace SWEndor.Actors
           hash = hash << 32;
           hash += a1.ID;
         }
-        return cache.GetOrDefine(hash, Globals.Engine.Game.GameTime, dofunc, a1, a2);
+        return cache.GetOrDefine(hash, new EngineTime(e), dofunc, a1, a2);
       }
     }
 
@@ -124,10 +139,10 @@ namespace SWEndor.Actors
       return Globals.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(first, second);
     }
 
-    public static TV_3DVECTOR Lerp(TV_3DVECTOR first, TV_3DVECTOR second, float frac)
+    public static TV_3DVECTOR Lerp(Engine e, TV_3DVECTOR first, TV_3DVECTOR second, float frac)
     {
       TV_3DVECTOR ret = new TV_3DVECTOR();
-      Globals.Engine.TrueVision.TVMathLibrary.TVVec3Lerp(ref ret, first, second, frac);
+      e.TrueVision.TVMathLibrary.TVVec3Lerp(ref ret, first, second, frac);
       return ret;
     }
   }

@@ -379,7 +379,7 @@ namespace SWEndor.ActorTypes
     {
       float accuracy = 1;
 
-      float d = ActorDistanceInfo.GetDistance(owner, target) / weapontype.MoveLimitData.MaxSpeed;
+      float d = ActorDistanceInfo.GetDistance(Engine, owner, target) / weapontype.MoveLimitData.MaxSpeed;
       TV_3DVECTOR angle = (target.GetGlobalPosition() - owner.GetGlobalPosition()).ConvertDirToRot() - owner.GetGlobalRotation();
       angle.x -= (int)((angle.x + 180) / 360) * 360;
       angle.y -= (int)((angle.y + 180) / 360) * 360;

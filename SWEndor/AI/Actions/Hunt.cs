@@ -42,7 +42,7 @@ namespace SWEndor.AI.Actions
            if (c.MoveData.MaxSpeed == 0) // stationary, can only target those in range
              {
              WeaponShotInfo w;
-             float dist = ActorDistanceInfo.GetDistance(c, a, c.WeaponDefinitions.GetWeaponRange());
+             float dist = ActorDistanceInfo.GetDistance(e, c, a, c.WeaponDefinitions.GetWeaponRange());
              c.WeaponDefinitions.SelectWeapon(e, c, a, 0, dist, out w);
 
              if (!w.IsNull)

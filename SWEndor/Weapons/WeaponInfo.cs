@@ -262,7 +262,7 @@ namespace SWEndor.Weapons
 
         if (EnablePlayerAutoAim && target != null)
         {
-          float dist = ActorDistanceInfo.GetDistance(owner, target);
+          float dist = ActorDistanceInfo.GetDistance(engine, owner, target);
 
           float d;
           if (AutoAimMaxDeviation == AutoAimMinDeviation)
@@ -322,7 +322,7 @@ namespace SWEndor.Weapons
 
         if (EnableAIAutoAim && target != null)
         {
-          float dist = ActorDistanceInfo.GetDistance(owner, target);
+          float dist = ActorDistanceInfo.GetDistance(engine, owner, target);
 
           float d;
           if (AutoAimMaxDeviation == AutoAimMinDeviation)

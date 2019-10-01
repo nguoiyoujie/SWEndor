@@ -27,7 +27,7 @@ namespace SWEndor.UI.Widgets
           if (((AI.Actions.ProjectileAttackActor)a.CurrentAction).Target_Actor != null && ((AI.Actions.ProjectileAttackActor)a.CurrentAction).Target_Actor.TopParent == PlayerInfo.Actor)
           {
             warn++;
-            float d = ActorDistanceInfo.GetDistance(PlayerInfo.Actor, a);
+            float d = ActorDistanceInfo.GetDistance(engine, PlayerInfo.Actor, a);
             if (dist < 0 || dist > d)
               dist = d;
             //return false;

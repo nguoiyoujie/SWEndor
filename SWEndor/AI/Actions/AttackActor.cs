@@ -153,7 +153,7 @@ namespace SWEndor.AI.Actions
               && c.CombatData.IsCombatObject
               && !c.Faction.IsAlliedWith(a.Faction))
         {
-          float dist = ActorDistanceInfo.GetDistance(a, c, c.WeaponDefinitions.GetWeaponRange());
+          float dist = ActorDistanceInfo.GetDistance(e, a, c, c.WeaponDefinitions.GetWeaponRange());
 
           TV_3DVECTOR vec = new TV_3DVECTOR();
           TV_3DVECTOR dir = c.Direction;
