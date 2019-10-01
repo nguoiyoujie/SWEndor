@@ -47,7 +47,7 @@ namespace SWEndor.Actors
     public string SideBarName { get { return (sidebar_name.Length == 0) ? _name : sidebar_name; } set { sidebar_name = value; } }
     public int ID { get; private set; }
     public int dataID = -1;
-    public string Key { get; private set; }//{ get { return _name + " " + ID; } }
+    public string Key { get; private set; }
 
     public override string ToString()
     {

@@ -17,16 +17,16 @@ namespace SWEndor.Primitives
         cache.Add(key, ret);
     }
 
-    public TValue Get(TKey key, Token token, Func<TParam1, TParam2, TValue> func, TParam1 p1, TParam2 p2)
+    public TValue Get(TKey key, Token token, Func<TParam1, TParam2, TValue> func, TParam1 p1, TParam2 p2, IEqualityComparer<Token> cmp)
     {
       CacheItem<Token, TValue, TParam1, TParam2> item;
       if (!cache.TryGetValue(key, out item))
         throw new InvalidOperationException("Attempted to get an non-existent key '{0}' from a cache.".F(key));
 
-      return item.Get(token, func, p1, p2);
+      return item.Get(token, func, p1, p2, cmp);
     }
 
-    public TValue GetOrDefine(TKey key, Token token, Func<TParam1, TParam2, TValue> func, TParam1 p1, TParam2 p2)
+    public TValue GetOrDefine(TKey key, Token token, Func<TParam1, TParam2, TValue> func, TParam1 p1, TParam2 p2, IEqualityComparer<Token> cmp)
     {
       CacheItem<Token, TValue, TParam1, TParam2> item;
       if (!cache.TryGetValue(key, out item))
@@ -34,7 +34,7 @@ namespace SWEndor.Primitives
         cache.Add(key, new CacheItem<Token, TValue, TParam1, TParam2>(default(Token)));
         item = cache[key];
       }
-      return item.Get(token, func, p1, p2);
+      return item.Get(token, func, p1, p2, cmp);
     }
 
     public void Clear(Func<Token, bool> func = null)
@@ -66,6 +66,16 @@ namespace SWEndor.Primitives
       public T Get(E token, Func<TP1, TP2, T> func, TP1 p1, TP2 p2)
       {
         if (!EqualityComparer<E>.Default.Equals(ExpiryToken, token))
+        {
+          val = func(p1, p2);
+          ExpiryToken = token;
+        }
+        return val;
+      }
+
+      public T Get(E token, Func<TP1, TP2, T> func, TP1 p1, TP2 p2, IEqualityComparer<E> cmp)
+      {
+        if (!cmp.Equals(ExpiryToken, token))
         {
           val = func(p1, p2);
           ExpiryToken = token;

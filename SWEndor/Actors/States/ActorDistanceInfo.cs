@@ -2,6 +2,7 @@
 using SWEndor.Core;
 using SWEndor.Primitives;
 using System;
+using System.Collections.Generic;
 
 namespace SWEndor.Actors
 {
@@ -28,6 +29,37 @@ namespace SWEndor.Actors
       {
         Engine = e;
         Time = e.Game.GameTime;
+      }
+
+      public class EqualityComparer : IEqualityComparer<EngineTime>
+      {
+        public static EqualityComparer Instance = new EqualityComparer();
+        public bool Equals(EngineTime a, EngineTime b)
+        {
+          return a.Time == b.Time;
+        }
+
+        public int GetHashCode(EngineTime o)
+        {
+          return o.GetHashCode();
+        }
+      }
+
+      public static bool operator ==(EngineTime a, EngineTime b)
+      {
+        return a.Time == b.Time;
+      }
+      public static bool operator !=(EngineTime a, EngineTime b)
+      {
+        return !(a.Time == b.Time);
+      }
+      public override bool Equals(object obj)
+      {
+        return obj is EngineTime && Time == ((EngineTime)obj).Time;
+      }
+      public override int GetHashCode()
+      {
+        return Time.GetHashCode();
       }
 
       public bool Passed { get { return Engine == null || Time < Engine.Game.GameTime; } }
@@ -120,7 +152,7 @@ namespace SWEndor.Actors
           hash = hash << 32;
           hash += a1.ID;
         }
-        return cache.GetOrDefine(hash, new EngineTime(e), dofunc, a1, a2);
+        return cache.GetOrDefine(hash, new EngineTime(e), dofunc, a1, a2, EngineTime.EqualityComparer.Instance);
       }
     }
 
