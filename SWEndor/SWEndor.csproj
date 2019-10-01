@@ -119,6 +119,7 @@
     <Reference Include="MTV3D65, Version=6.5.2823.21213, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dll\MTV3D65.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>

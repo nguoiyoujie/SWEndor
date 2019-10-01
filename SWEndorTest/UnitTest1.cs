@@ -42,7 +42,7 @@ namespace SWEndorTest
       return Globals.Engine.ActorFactory.Create(new ActorCreationInfo(MockActorType));
     }
 
-    int RunCount = 100000;
+    int RunCount = 10000;
     public const string TEST = "test";
 
     [TestMethod]
