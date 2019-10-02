@@ -65,7 +65,7 @@ namespace SWEndor.Actors
       public bool Passed { get { return Engine == null || Time < Engine.Game.GameTime; } }
     }
 
-    private static Cache<long, EngineTime, float, ActorInfo, ActorInfo> cache = new Cache<long, EngineTime, float, ActorInfo, ActorInfo>(); 
+    private static Cache<long, EngineTime, float, ActorInfo, ActorInfo> cache = new Cache<long, EngineTime, float, ActorInfo, ActorInfo>(8192); 
     private static float Cleartime = 0;
     private static Func<EngineTime, bool> clearfunc = (f) => { return f.Passed; };
     private static Func<ActorInfo, ActorInfo, float> dofunc = (a, b) => { return CalculateDistance(a, b); };

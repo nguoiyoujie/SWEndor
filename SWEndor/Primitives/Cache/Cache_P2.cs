@@ -6,7 +6,17 @@ namespace SWEndor.Primitives
 {
   public class Cache<TKey, Token, TValue, TParam1, TParam2> where Token : struct
   {
-    private readonly Dictionary<TKey, CacheItem<Token, TValue, TParam1, TParam2>> cache = new Dictionary<TKey, CacheItem<Token, TValue, TParam1, TParam2>>();
+    private readonly Dictionary<TKey, CacheItem<Token, TValue, TParam1, TParam2>> cache; //= new Dictionary<TKey, CacheItem<Token, TValue, TParam1, TParam2>>();
+
+    public Cache()
+    {
+      cache = new Dictionary<TKey, CacheItem<Token, TValue, TParam1, TParam2>>();
+    }
+
+    public Cache(int capacity)
+    {
+      cache = new Dictionary<TKey, CacheItem<Token, TValue, TParam1, TParam2>>(capacity);
+    }
 
     public void Define(TKey key, Token token, Func<TParam1, TParam2, TValue> func)
     {

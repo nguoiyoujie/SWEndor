@@ -15,6 +15,8 @@ namespace SWEndor.AI.Actions
     }
 
     private TargetType m_TargetType;
+    // TO-DO: Reduce allocation as Hunt is called often.
+    private List<ActorInfo> targets = new List<ActorInfo>(50);
 
     public override string ToString()
     {
@@ -60,7 +62,6 @@ namespace SWEndor.AI.Actions
        }
      );
 
-    List<ActorInfo> targets = new List<ActorInfo>(50);
     public override void Process(Engine engine, ActorInfo actor)
     {
       ActorInfo currtarget = null;
