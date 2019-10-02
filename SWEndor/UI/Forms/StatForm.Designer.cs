@@ -80,9 +80,16 @@
       this.lblExplPool_Prep = new System.Windows.Forms.Label();
       this.lblExplPool_Plan = new System.Windows.Forms.Label();
       this.label40 = new System.Windows.Forms.Label();
-      this.label13 = new System.Windows.Forms.Label();
       this.label16 = new System.Windows.Forms.Label();
       this.lblSquadPool = new System.Windows.Forms.Label();
+      this.lblCurrMusic = new System.Windows.Forms.Label();
+      this.label22 = new System.Windows.Forms.Label();
+      this.label24 = new System.Windows.Forms.Label();
+      this.lblInterruptMusic = new System.Windows.Forms.Label();
+      this.label28 = new System.Windows.Forms.Label();
+      this.lblPrevDynMusic = new System.Windows.Forms.Label();
+      this.label18 = new System.Windows.Forms.Label();
+      this.label26 = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // label1
@@ -119,7 +126,7 @@
       // 
       // label5
       // 
-      this.label5.Location = new System.Drawing.Point(46, 206);
+      this.label5.Location = new System.Drawing.Point(46, 290);
       this.label5.Name = "label5";
       this.label5.Size = new System.Drawing.Size(180, 15);
       this.label5.TabIndex = 4;
@@ -127,7 +134,7 @@
       // 
       // lblActorDistanceCache
       // 
-      this.lblActorDistanceCache.Location = new System.Drawing.Point(232, 206);
+      this.lblActorDistanceCache.Location = new System.Drawing.Point(232, 290);
       this.lblActorDistanceCache.Name = "lblActorDistanceCache";
       this.lblActorDistanceCache.Size = new System.Drawing.Size(50, 15);
       this.lblActorDistanceCache.TabIndex = 9;
@@ -221,7 +228,7 @@
       // 
       // lblDynPiece
       // 
-      this.lblDynPiece.Location = new System.Drawing.Point(232, 160);
+      this.lblDynPiece.Location = new System.Drawing.Point(232, 199);
       this.lblDynPiece.Name = "lblDynPiece";
       this.lblDynPiece.Size = new System.Drawing.Size(50, 15);
       this.lblDynPiece.TabIndex = 17;
@@ -229,11 +236,11 @@
       // 
       // label9
       // 
-      this.label9.Location = new System.Drawing.Point(46, 160);
+      this.label9.Location = new System.Drawing.Point(46, 199);
       this.label9.Name = "label9";
       this.label9.Size = new System.Drawing.Size(180, 15);
       this.label9.TabIndex = 16;
-      this.label9.Text = "Dynamic Music Piece";
+      this.label9.Text = "Pieces";
       // 
       // label6
       // 
@@ -253,7 +260,7 @@
       // 
       // label12
       // 
-      this.label12.Location = new System.Drawing.Point(12, 191);
+      this.label12.Location = new System.Drawing.Point(12, 275);
       this.label12.Name = "label12";
       this.label12.Size = new System.Drawing.Size(180, 15);
       this.label12.TabIndex = 20;
@@ -261,7 +268,7 @@
       // 
       // lblScopedPool
       // 
-      this.lblScopedPool.Location = new System.Drawing.Point(278, 251);
+      this.lblScopedPool.Location = new System.Drawing.Point(232, 335);
       this.lblScopedPool.Name = "lblScopedPool";
       this.lblScopedPool.Size = new System.Drawing.Size(40, 15);
       this.lblScopedPool.TabIndex = 22;
@@ -269,7 +276,7 @@
       // 
       // label14
       // 
-      this.label14.Location = new System.Drawing.Point(46, 251);
+      this.label14.Location = new System.Drawing.Point(46, 335);
       this.label14.Name = "label14";
       this.label14.Size = new System.Drawing.Size(180, 15);
       this.label14.TabIndex = 21;
@@ -277,7 +284,7 @@
       // 
       // label15
       // 
-      this.label15.Location = new System.Drawing.Point(12, 236);
+      this.label15.Location = new System.Drawing.Point(12, 320);
       this.label15.Name = "label15";
       this.label15.Size = new System.Drawing.Size(180, 15);
       this.label15.TabIndex = 23;
@@ -285,7 +292,7 @@
       // 
       // lblSquad
       // 
-      this.lblSquad.Location = new System.Drawing.Point(232, 266);
+      this.lblSquad.Location = new System.Drawing.Point(232, 160);
       this.lblSquad.Name = "lblSquad";
       this.lblSquad.Size = new System.Drawing.Size(40, 15);
       this.lblSquad.TabIndex = 25;
@@ -293,7 +300,7 @@
       // 
       // label17
       // 
-      this.label17.Location = new System.Drawing.Point(46, 266);
+      this.label17.Location = new System.Drawing.Point(46, 350);
       this.label17.Name = "label17";
       this.label17.Size = new System.Drawing.Size(180, 15);
       this.label17.TabIndex = 24;
@@ -301,7 +308,7 @@
       // 
       // lblActorsPool_Plan
       // 
-      this.lblActorsPool_Plan.Location = new System.Drawing.Point(232, 306);
+      this.lblActorsPool_Plan.Location = new System.Drawing.Point(232, 390);
       this.lblActorsPool_Plan.Name = "lblActorsPool_Plan";
       this.lblActorsPool_Plan.Size = new System.Drawing.Size(40, 15);
       this.lblActorsPool_Plan.TabIndex = 27;
@@ -309,7 +316,7 @@
       // 
       // label19
       // 
-      this.label19.Location = new System.Drawing.Point(46, 306);
+      this.label19.Location = new System.Drawing.Point(46, 390);
       this.label19.Name = "label19";
       this.label19.Size = new System.Drawing.Size(180, 15);
       this.label19.TabIndex = 26;
@@ -317,7 +324,7 @@
       // 
       // label20
       // 
-      this.label20.Location = new System.Drawing.Point(232, 291);
+      this.label20.Location = new System.Drawing.Point(232, 375);
       this.label20.Name = "label20";
       this.label20.Size = new System.Drawing.Size(40, 15);
       this.label20.TabIndex = 28;
@@ -325,7 +332,7 @@
       // 
       // label21
       // 
-      this.label21.Location = new System.Drawing.Point(278, 291);
+      this.label21.Location = new System.Drawing.Point(278, 375);
       this.label21.Name = "label21";
       this.label21.Size = new System.Drawing.Size(40, 15);
       this.label21.TabIndex = 30;
@@ -333,7 +340,7 @@
       // 
       // lblActorsPool_Prep
       // 
-      this.lblActorsPool_Prep.Location = new System.Drawing.Point(278, 306);
+      this.lblActorsPool_Prep.Location = new System.Drawing.Point(278, 390);
       this.lblActorsPool_Prep.Name = "lblActorsPool_Prep";
       this.lblActorsPool_Prep.Size = new System.Drawing.Size(40, 15);
       this.lblActorsPool_Prep.TabIndex = 29;
@@ -341,15 +348,15 @@
       // 
       // label23
       // 
-      this.label23.Location = new System.Drawing.Point(324, 291);
+      this.label23.Location = new System.Drawing.Point(324, 375);
       this.label23.Name = "label23";
       this.label23.Size = new System.Drawing.Size(40, 15);
       this.label23.TabIndex = 32;
-      this.label23.Text = "Main";
+      this.label23.Text = "Pool";
       // 
       // lblActorsPool_Main
       // 
-      this.lblActorsPool_Main.Location = new System.Drawing.Point(324, 306);
+      this.lblActorsPool_Main.Location = new System.Drawing.Point(324, 390);
       this.lblActorsPool_Main.Name = "lblActorsPool_Main";
       this.lblActorsPool_Main.Size = new System.Drawing.Size(40, 15);
       this.lblActorsPool_Main.TabIndex = 31;
@@ -357,7 +364,7 @@
       // 
       // label25
       // 
-      this.label25.Location = new System.Drawing.Point(370, 291);
+      this.label25.Location = new System.Drawing.Point(370, 375);
       this.label25.Name = "label25";
       this.label25.Size = new System.Drawing.Size(40, 15);
       this.label25.TabIndex = 34;
@@ -365,7 +372,7 @@
       // 
       // lblActorsPool_Dead
       // 
-      this.lblActorsPool_Dead.Location = new System.Drawing.Point(370, 306);
+      this.lblActorsPool_Dead.Location = new System.Drawing.Point(370, 390);
       this.lblActorsPool_Dead.Name = "lblActorsPool_Dead";
       this.lblActorsPool_Dead.Size = new System.Drawing.Size(40, 15);
       this.lblActorsPool_Dead.TabIndex = 33;
@@ -373,7 +380,7 @@
       // 
       // label27
       // 
-      this.label27.Location = new System.Drawing.Point(416, 291);
+      this.label27.Location = new System.Drawing.Point(416, 375);
       this.label27.Name = "label27";
       this.label27.Size = new System.Drawing.Size(40, 15);
       this.label27.TabIndex = 36;
@@ -381,7 +388,7 @@
       // 
       // lblActorsPool_TPrep
       // 
-      this.lblActorsPool_TPrep.Location = new System.Drawing.Point(416, 306);
+      this.lblActorsPool_TPrep.Location = new System.Drawing.Point(416, 390);
       this.lblActorsPool_TPrep.Name = "lblActorsPool_TPrep";
       this.lblActorsPool_TPrep.Size = new System.Drawing.Size(40, 15);
       this.lblActorsPool_TPrep.TabIndex = 35;
@@ -389,7 +396,7 @@
       // 
       // label29
       // 
-      this.label29.Location = new System.Drawing.Point(462, 291);
+      this.label29.Location = new System.Drawing.Point(462, 375);
       this.label29.Name = "label29";
       this.label29.Size = new System.Drawing.Size(40, 15);
       this.label29.TabIndex = 38;
@@ -397,7 +404,7 @@
       // 
       // lblActorsPool_TPlan
       // 
-      this.lblActorsPool_TPlan.Location = new System.Drawing.Point(462, 306);
+      this.lblActorsPool_TPlan.Location = new System.Drawing.Point(462, 390);
       this.lblActorsPool_TPlan.Name = "lblActorsPool_TPlan";
       this.lblActorsPool_TPlan.Size = new System.Drawing.Size(40, 15);
       this.lblActorsPool_TPlan.TabIndex = 37;
@@ -405,7 +412,7 @@
       // 
       // label31
       // 
-      this.label31.Location = new System.Drawing.Point(508, 291);
+      this.label31.Location = new System.Drawing.Point(508, 375);
       this.label31.Name = "label31";
       this.label31.Size = new System.Drawing.Size(52, 15);
       this.label31.TabIndex = 40;
@@ -413,7 +420,7 @@
       // 
       // lblActorsPool_TDead
       // 
-      this.lblActorsPool_TDead.Location = new System.Drawing.Point(508, 306);
+      this.lblActorsPool_TDead.Location = new System.Drawing.Point(508, 390);
       this.lblActorsPool_TDead.Name = "lblActorsPool_TDead";
       this.lblActorsPool_TDead.Size = new System.Drawing.Size(40, 15);
       this.lblActorsPool_TDead.TabIndex = 39;
@@ -421,7 +428,7 @@
       // 
       // lblExplPool_TDead
       // 
-      this.lblExplPool_TDead.Location = new System.Drawing.Point(508, 321);
+      this.lblExplPool_TDead.Location = new System.Drawing.Point(508, 405);
       this.lblExplPool_TDead.Name = "lblExplPool_TDead";
       this.lblExplPool_TDead.Size = new System.Drawing.Size(40, 15);
       this.lblExplPool_TDead.TabIndex = 48;
@@ -429,7 +436,7 @@
       // 
       // lblExplPool_TPlan
       // 
-      this.lblExplPool_TPlan.Location = new System.Drawing.Point(462, 321);
+      this.lblExplPool_TPlan.Location = new System.Drawing.Point(462, 405);
       this.lblExplPool_TPlan.Name = "lblExplPool_TPlan";
       this.lblExplPool_TPlan.Size = new System.Drawing.Size(40, 15);
       this.lblExplPool_TPlan.TabIndex = 47;
@@ -437,7 +444,7 @@
       // 
       // lblExplPool_TPrep
       // 
-      this.lblExplPool_TPrep.Location = new System.Drawing.Point(416, 321);
+      this.lblExplPool_TPrep.Location = new System.Drawing.Point(416, 405);
       this.lblExplPool_TPrep.Name = "lblExplPool_TPrep";
       this.lblExplPool_TPrep.Size = new System.Drawing.Size(40, 15);
       this.lblExplPool_TPrep.TabIndex = 46;
@@ -445,7 +452,7 @@
       // 
       // lblExplPool_Dead
       // 
-      this.lblExplPool_Dead.Location = new System.Drawing.Point(370, 321);
+      this.lblExplPool_Dead.Location = new System.Drawing.Point(370, 405);
       this.lblExplPool_Dead.Name = "lblExplPool_Dead";
       this.lblExplPool_Dead.Size = new System.Drawing.Size(40, 15);
       this.lblExplPool_Dead.TabIndex = 45;
@@ -453,7 +460,7 @@
       // 
       // lblExplPool_Main
       // 
-      this.lblExplPool_Main.Location = new System.Drawing.Point(324, 321);
+      this.lblExplPool_Main.Location = new System.Drawing.Point(324, 405);
       this.lblExplPool_Main.Name = "lblExplPool_Main";
       this.lblExplPool_Main.Size = new System.Drawing.Size(40, 15);
       this.lblExplPool_Main.TabIndex = 44;
@@ -461,7 +468,7 @@
       // 
       // lblExplPool_Prep
       // 
-      this.lblExplPool_Prep.Location = new System.Drawing.Point(278, 321);
+      this.lblExplPool_Prep.Location = new System.Drawing.Point(278, 405);
       this.lblExplPool_Prep.Name = "lblExplPool_Prep";
       this.lblExplPool_Prep.Size = new System.Drawing.Size(40, 15);
       this.lblExplPool_Prep.TabIndex = 43;
@@ -469,7 +476,7 @@
       // 
       // lblExplPool_Plan
       // 
-      this.lblExplPool_Plan.Location = new System.Drawing.Point(232, 321);
+      this.lblExplPool_Plan.Location = new System.Drawing.Point(232, 405);
       this.lblExplPool_Plan.Name = "lblExplPool_Plan";
       this.lblExplPool_Plan.Size = new System.Drawing.Size(40, 15);
       this.lblExplPool_Plan.TabIndex = 42;
@@ -477,23 +484,15 @@
       // 
       // label40
       // 
-      this.label40.Location = new System.Drawing.Point(46, 321);
+      this.label40.Location = new System.Drawing.Point(46, 405);
       this.label40.Name = "label40";
       this.label40.Size = new System.Drawing.Size(180, 15);
       this.label40.TabIndex = 41;
       this.label40.Text = "Explosions.Pool";
       // 
-      // label13
-      // 
-      this.label13.Location = new System.Drawing.Point(232, 236);
-      this.label13.Name = "label13";
-      this.label13.Size = new System.Drawing.Size(40, 15);
-      this.label13.TabIndex = 49;
-      this.label13.Text = "Main";
-      // 
       // label16
       // 
-      this.label16.Location = new System.Drawing.Point(278, 236);
+      this.label16.Location = new System.Drawing.Point(232, 320);
       this.label16.Name = "label16";
       this.label16.Size = new System.Drawing.Size(40, 15);
       this.label16.TabIndex = 50;
@@ -501,20 +500,91 @@
       // 
       // lblSquadPool
       // 
-      this.lblSquadPool.Location = new System.Drawing.Point(278, 266);
+      this.lblSquadPool.Location = new System.Drawing.Point(232, 350);
       this.lblSquadPool.Name = "lblSquadPool";
       this.lblSquadPool.Size = new System.Drawing.Size(40, 15);
       this.lblSquadPool.TabIndex = 51;
       this.lblSquadPool.Text = "0";
       // 
+      // lblCurrMusic
+      // 
+      this.lblCurrMusic.Location = new System.Drawing.Point(232, 214);
+      this.lblCurrMusic.Name = "lblCurrMusic";
+      this.lblCurrMusic.Size = new System.Drawing.Size(250, 15);
+      this.lblCurrMusic.TabIndex = 52;
+      this.lblCurrMusic.Text = "0";
+      // 
+      // label22
+      // 
+      this.label22.Location = new System.Drawing.Point(46, 214);
+      this.label22.Name = "label22";
+      this.label22.Size = new System.Drawing.Size(180, 15);
+      this.label22.TabIndex = 53;
+      this.label22.Text = "Current";
+      // 
+      // label24
+      // 
+      this.label24.Location = new System.Drawing.Point(46, 229);
+      this.label24.Name = "label24";
+      this.label24.Size = new System.Drawing.Size(180, 15);
+      this.label24.TabIndex = 55;
+      this.label24.Text = "Interrupt";
+      // 
+      // lblInterruptMusic
+      // 
+      this.lblInterruptMusic.Location = new System.Drawing.Point(232, 229);
+      this.lblInterruptMusic.Name = "lblInterruptMusic";
+      this.lblInterruptMusic.Size = new System.Drawing.Size(250, 15);
+      this.lblInterruptMusic.TabIndex = 54;
+      this.lblInterruptMusic.Text = "0";
+      // 
+      // label28
+      // 
+      this.label28.Location = new System.Drawing.Point(46, 244);
+      this.label28.Name = "label28";
+      this.label28.Size = new System.Drawing.Size(180, 15);
+      this.label28.TabIndex = 57;
+      this.label28.Text = "Prev Cache";
+      // 
+      // lblPrevDynMusic
+      // 
+      this.lblPrevDynMusic.Location = new System.Drawing.Point(232, 244);
+      this.lblPrevDynMusic.Name = "lblPrevDynMusic";
+      this.lblPrevDynMusic.Size = new System.Drawing.Size(250, 15);
+      this.lblPrevDynMusic.TabIndex = 56;
+      this.lblPrevDynMusic.Text = "0";
+      // 
+      // label18
+      // 
+      this.label18.Location = new System.Drawing.Point(12, 184);
+      this.label18.Name = "label18";
+      this.label18.Size = new System.Drawing.Size(180, 15);
+      this.label18.TabIndex = 58;
+      this.label18.Text = "Dynamic Music";
+      // 
+      // label26
+      // 
+      this.label26.Location = new System.Drawing.Point(46, 160);
+      this.label26.Name = "label26";
+      this.label26.Size = new System.Drawing.Size(180, 15);
+      this.label26.TabIndex = 59;
+      this.label26.Text = "Squadrons";
+      // 
       // StatForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(569, 365);
+      this.ClientSize = new System.Drawing.Size(569, 481);
+      this.Controls.Add(this.label26);
+      this.Controls.Add(this.label18);
+      this.Controls.Add(this.label28);
+      this.Controls.Add(this.lblPrevDynMusic);
+      this.Controls.Add(this.label24);
+      this.Controls.Add(this.lblInterruptMusic);
+      this.Controls.Add(this.label22);
+      this.Controls.Add(this.lblCurrMusic);
       this.Controls.Add(this.lblSquadPool);
       this.Controls.Add(this.label16);
-      this.Controls.Add(this.label13);
       this.Controls.Add(this.lblExplPool_TDead);
       this.Controls.Add(this.lblExplPool_TPlan);
       this.Controls.Add(this.lblExplPool_TPrep);
@@ -567,6 +637,7 @@
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "StatForm";
       this.Text = "Statistics";
+      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StatForm_FormClosing);
       this.ResumeLayout(false);
 
     }
@@ -623,9 +694,16 @@
     private System.Windows.Forms.Label lblExplPool_Prep;
     private System.Windows.Forms.Label lblExplPool_Plan;
     private System.Windows.Forms.Label label40;
-    private System.Windows.Forms.Label label13;
     private System.Windows.Forms.Label label16;
     private System.Windows.Forms.Label lblSquadPool;
+    private System.Windows.Forms.Label lblCurrMusic;
+    private System.Windows.Forms.Label label22;
+    private System.Windows.Forms.Label label24;
+    private System.Windows.Forms.Label lblInterruptMusic;
+    private System.Windows.Forms.Label label28;
+    private System.Windows.Forms.Label lblPrevDynMusic;
+    private System.Windows.Forms.Label label18;
+    private System.Windows.Forms.Label label26;
   }
 }
 

@@ -10,7 +10,7 @@ namespace SWEndor.Sound
 
       public void Process(SoundManager s)
       {
-        if (Name == s.m_currMusic)
+        if (Name == s.CurrMusic)
         {
           Name += "%";
         }

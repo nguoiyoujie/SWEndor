@@ -15,7 +15,7 @@ namespace SWEndor.Sound
 
       public void Process(SoundManager s)
       {
-        if (Name == s.m_currMusic)
+        if (Name == s.CurrMusic)
         {
             Name += "%";
         }
@@ -41,9 +41,9 @@ namespace SWEndor.Sound
             s.current_channel.setPaused(false);
 
           if (!isInterruptMusic)
-            s.m_currMusic = Name;
+            s.CurrMusic = Name;
           else
-            s.m_intrMusic = Name;
+            s.IntrMusic = Name;
 
         }
       }

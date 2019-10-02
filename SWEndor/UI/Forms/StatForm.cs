@@ -28,6 +28,9 @@ namespace SWEndor.UI.Forms
       lblExplosionTypes.Text = Engine.ExplosionTypeFactory.Count.ToString();
       lblExplosions.Text = Engine.ExplosionFactory.Count.ToString();
       lblDynPiece.Text = Sound.SoundManager.Piece.Factory.Count.ToString();
+      lblCurrMusic.Text = Engine.SoundManager.CurrMusic;
+      lblInterruptMusic.Text = Engine.SoundManager.IntrMusic;
+      lblPrevDynMusic.Text = Engine.SoundManager.PrevDynMusic;
 
       lblActorDistanceCache.Text = Actors.ActorDistanceInfo.CacheCount.ToString();
 
@@ -50,6 +53,11 @@ namespace SWEndor.UI.Forms
       lblExplPool_TPlan.Text = Engine.ExplosionFactory.TempPoolPlanCount.ToString();
       lblExplPool_TPrep.Text = Engine.ExplosionFactory.TempPoolRedoCount.ToString();
       lblExplPool_TDead.Text = Engine.ExplosionFactory.TempPoolDeadCount.ToString();
+    }
+
+    private void StatForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+      tmTick.Stop();
     }
   }
 }

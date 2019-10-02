@@ -46,9 +46,9 @@ namespace SWEndor.Sound
     private SoundStartInfo m_musicLoop = new SoundStartInfo();
     private ConcurrentQueue<SoundStartInfo> m_musicQueue = new ConcurrentQueue<SoundStartInfo>();
 
-    private string m_currMusic;
-    private string m_intrMusic;
-    private string m_prevDynMusic;
+    internal string CurrMusic { get; private set; }
+    internal string IntrMusic { get; private set; }
+    internal string PrevDynMusic { get; private set; }
 
     private float m_MasterMusicVolume = 1;
     private float m_MasterSFXVolume = 1;
@@ -194,7 +194,7 @@ namespace SWEndor.Sound
 
     public bool SetMusic(string name, bool loop = false, uint position_ms = 0, uint end_ms = 0)
     {
-      m_intrMusic = null;
+      IntrMusic = null;
       //interruptActive = false;
       m_queuedInstructions.Enqueue(new InstPlayMusic { Name = name, Loop = loop, Position_ms = position_ms, End_ms = end_ms });
       if (loop)
@@ -213,7 +213,7 @@ namespace SWEndor.Sound
 
     public void SetMusicDyn(string name)
     {
-      m_intrMusic = null;
+      IntrMusic = null;
       //interruptActive = false;
       Piece p = Piece.Factory.Get(name);
       SetMusic(p.SoundName, false, p.EntryPosition);
@@ -229,7 +229,7 @@ namespace SWEndor.Sound
 
     public void SetMusicStop()
     {
-      m_intrMusic = null;
+      IntrMusic = null;
       //interruptActive = false;
       m_queuedInstructions.Enqueue(new InstStopMusic());
     }
@@ -270,10 +270,10 @@ namespace SWEndor.Sound
 
       SetSoundStopAll();
       SetMusicStop();
-      m_intrMusic = null;
+      IntrMusic = null;
       //interruptActive = false;
       //m_currMusic = null;
-      m_prevDynMusic = null;
+      PrevDynMusic = null;
       m_musicLoop = new SoundStartInfo();
     }
 
@@ -298,7 +298,7 @@ namespace SWEndor.Sound
       switch (type)
       {
         case FMOD.CHANNELCONTROL_CALLBACK_TYPE.END:
-          if (m_intrMusic == null)
+          if (IntrMusic == null)
           {
             if (m_musicLoop.Name != null && m_musicLoop.Name.Length > 0)
               SetMusic(m_musicLoop.Name, false, m_musicLoop.Position);
@@ -309,13 +309,13 @@ namespace SWEndor.Sound
           }
           break;
         case FMOD.CHANNELCONTROL_CALLBACK_TYPE.SYNCPOINT:
-          if (m_intrMusic == null)
+          if (IntrMusic == null)
           {
             IntPtr syncp;
-            music[m_currMusic].getSyncPoint((int)commanddata1, out syncp);
+            music[CurrMusic].getSyncPoint((int)commanddata1, out syncp);
             StringBuilder name = new StringBuilder(5);
             uint offset;
-            music[m_currMusic].getSyncPointInfo(syncp, name, 5, out offset, TIMEUNIT.MS);
+            music[CurrMusic].getSyncPointInfo(syncp, name, 5, out offset, TIMEUNIT.MS);
 
             switch (name.ToString())
             {
@@ -346,7 +346,7 @@ namespace SWEndor.Sound
           break;
       }
 
-      m_intrMusic = null;
+      IntrMusic = null;
       lastInterrupt = 0;
       return FMOD.RESULT.OK;
     }
@@ -366,15 +366,15 @@ namespace SWEndor.Sound
       else if (autogenerate)
       {
         // find next piece dynamically using Mood
-        string next = GetDynNext(m_intrMusic);
+        string next = GetDynNext(IntrMusic);
         bool intr = next != null;
         if (!intr)
         {
-          next = GetDynNext(m_currMusic);
+          next = GetDynNext(CurrMusic);
           if (next != null)
-            m_prevDynMusic = m_currMusic;
+            PrevDynMusic = CurrMusic;
           else
-            next = GetDynNext(m_prevDynMusic);
+            next = GetDynNext(PrevDynMusic);
         }
 
         if (next != null)

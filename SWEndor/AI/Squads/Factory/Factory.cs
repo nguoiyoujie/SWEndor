@@ -25,6 +25,7 @@ namespace SWEndor.AI.Squads
         {
           int id = counter++;
           squad.ID = id;
+          Add(id, squad);
         }
         return squad;
       }
