@@ -22,6 +22,8 @@ namespace SWEndor.Primitives.Factories
     public virtual void Put(string id, T item) { lock (locker) list.Put(id, item); }
     public virtual void Remove(string id) { lock (locker) list.Remove(id); }
     public virtual void Clear() { lock (locker) list.Clear(); }
+
+    public int Count { get { lock (locker) return list.Count; } }
   }
 
   /// <summary>
@@ -43,5 +45,7 @@ namespace SWEndor.Primitives.Factories
     public virtual void Put(K key, T item) { lock (locker) list.Put(key, item); }
     public virtual void Remove(K key) { lock (locker) list.Remove(key); }
     public virtual void Clear() { lock (locker) list.Clear(); }
+
+    public int Count { get { lock (locker) return list.Count; } }
   }
 }

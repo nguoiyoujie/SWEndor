@@ -15,6 +15,8 @@ namespace SWEndor.Primitives.Factories
     internal Func<T> creator;
     internal Action<T> resetor;
 
+    public int Count { get { return list.Count; } }
+
     public T GetNew()
     {
       T ret;

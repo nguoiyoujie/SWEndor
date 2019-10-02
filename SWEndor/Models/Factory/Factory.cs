@@ -47,6 +47,15 @@ namespace SWEndor
 
     private readonly Func<Engine, Factory<T, TCreate, TType>, int, int, TCreate, T> create;
 
+    internal int PoolPlanCount { get { return planned.Count; } }
+    internal int PoolPrepCount { get { return prepool.Count; } }
+    internal int PoolMainCount { get { return pool.Count; } }
+    internal int PoolDeadCount { get { return dead.Count; } }
+    internal int TempPoolPlanCount { get { return nextplan.Count; } }
+    internal int TempPoolRedoCount { get { return redo.Count; } }
+    internal int TempPoolDeadCount { get { return nextdead.Count; } }
+
+
     private int GetNewDataID()
     {
       // since Actors are reused, there is no need to count backwards

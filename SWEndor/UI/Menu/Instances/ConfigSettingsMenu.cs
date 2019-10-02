@@ -9,7 +9,7 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement MainText = new SelectionElement();
     SelectionElement ButtonScreenResolution = new SelectionElement();
     SelectionElement ButtonFullScreen = new SelectionElement();
-    SelectionElement ButtonShowPerformanceStat = new SelectionElement();
+    SelectionElement ButtonGoToProfilerMenu = new SelectionElement();
     SelectionElement ButtonChangesComment = new SelectionElement();
     SelectionElement ButtonSaveAndExit = new SelectionElement();
     SelectionElement ButtonExit = new SelectionElement();
@@ -53,16 +53,14 @@ namespace SWEndor.UI.Menu.Pages
       ButtonFullScreen.Selectable = true;
       ButtonFullScreen.OnKeyPress += SelectFullScreen;
 
-      ButtonShowPerformanceStat.Text = "Show/Hide Performance Metrics";
-      ButtonShowPerformanceStat.TextPosition = new TV_2DVECTOR(x, y);
+      ButtonGoToProfilerMenu.Text = "Go To Profilers";
+      ButtonGoToProfilerMenu.TextPosition = new TV_2DVECTOR(x, y);
       y += height_gap;
-      ButtonShowPerformanceStat.HighlightBoxPosition = ButtonShowPerformanceStat.TextPosition - new TV_2DVECTOR(5, 5);
-      ButtonShowPerformanceStat.HighlightBoxWidth = 600;
-      ButtonShowPerformanceStat.HighlightBoxHeight = 30;
-      ButtonShowPerformanceStat.SecondaryText = Engine.PerfManager.Enabled.ToString();
-      ButtonShowPerformanceStat.SecondaryTextPosition = ButtonShowPerformanceStat.TextPosition + new TV_2DVECTOR(400, 0);
-      ButtonShowPerformanceStat.Selectable = true;
-      ButtonShowPerformanceStat.OnKeyPress += SelectPerformanceToggle;
+      ButtonGoToProfilerMenu.HighlightBoxPosition = ButtonGoToProfilerMenu.TextPosition - new TV_2DVECTOR(5, 5);
+      ButtonGoToProfilerMenu.HighlightBoxWidth = 600;
+      ButtonGoToProfilerMenu.HighlightBoxHeight = 30;
+      ButtonGoToProfilerMenu.Selectable = true;
+      ButtonGoToProfilerMenu.OnKeyPress += GoToProfilers;
 
       ButtonChangesComment.Text = "";
       ButtonChangesComment.TextColor = new TV_COLOR(1, 0.5f, 0.2f, 1);
@@ -95,7 +93,7 @@ namespace SWEndor.UI.Menu.Pages
 
       Elements.Add(ButtonScreenResolution);
       Elements.Add(ButtonFullScreen);
-      Elements.Add(ButtonShowPerformanceStat);
+      Elements.Add(ButtonGoToProfilerMenu);
       Elements.Add(ButtonChangesComment);
       Elements.Add(ButtonSaveAndExit);
       Elements.Add(ButtonExit);
@@ -137,12 +135,11 @@ namespace SWEndor.UI.Menu.Pages
       return false;
     }
 
-    private bool SelectPerformanceToggle(CONST_TV_KEY key)
+    private bool GoToProfilers(CONST_TV_KEY key)
     {
-      if (key == CONST_TV_KEY.TV_KEY_LEFT || key == CONST_TV_KEY.TV_KEY_RIGHT)
+      if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        Engine.PerfManager.Enabled = !Engine.PerfManager.Enabled;
-        ButtonShowPerformanceStat.SecondaryText = Engine.PerfManager.Enabled.ToString();
+        EnterPage(new ProfileSettingsMenu(Owner));
         return true;
       }
       return false;

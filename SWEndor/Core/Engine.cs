@@ -22,7 +22,7 @@ namespace SWEndor.Core
   {
     internal Engine() { }
 
-    private GameForm Form;
+    internal GameForm Form;
     private IntPtr Handle;
     public int ScreenWidth { get; internal set;}
     public int ScreenHeight { get; internal set; }

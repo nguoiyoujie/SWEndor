@@ -15,6 +15,8 @@ namespace SWEndor.AI.Squads
         pool = new ObjectPool<Squadron>(() => new Squadron(), (p) => p.Reset());
       }
 
+      internal int PoolCount { get { return pool.Count; } }
+
       public Squadron Create()
       {
         Squadron squad = pool.GetNew();

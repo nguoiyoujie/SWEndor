@@ -12,6 +12,7 @@ namespace SWEndor.Primitives
     }
 
     private static ObjectPool<ScopedItem> pool;
+    internal static int PoolCount { get { return pool.Count; } }
 
     public static ScopedItem Scope(T item)
     {

@@ -72,6 +72,14 @@ namespace SWEndor.Actors
 
     private static object locker = new object();
 
+    public static int CacheCount
+    {
+      get
+      {
+        return cache.Count;
+      }
+    }
+
     public static float GetRoughDistance(TV_3DVECTOR v1, TV_3DVECTOR v2)
     {
       float dx = v1.x - v2.x;

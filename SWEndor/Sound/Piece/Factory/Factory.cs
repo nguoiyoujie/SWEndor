@@ -14,6 +14,11 @@ namespace SWEndor.Sound
         private static Dictionary<string, string> soundnamelist = new Dictionary<string, string>();
         private static Dictionary<int, List<Piece>> tran_list = new Dictionary<int, List<Piece>>();
 
+        public static int Count
+        {
+          get { return list.Count; }
+        }
+
         private static void Register(Piece atype)
         {
           if (!list.ContainsKey(atype.SoundName))

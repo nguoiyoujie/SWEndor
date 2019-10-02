@@ -18,6 +18,8 @@ namespace SWEndor.Primitives
       cache = new Dictionary<TKey, CacheItem<Token, TValue, TParam1, TParam2>>(capacity);
     }
 
+    public int Count { get { return cache.Count; } }
+
     public void Define(TKey key, Token token, Func<TParam1, TParam2, TValue> func)
     {
       CacheItem<Token, TValue, TParam1, TParam2> ret = new CacheItem<Token, TValue, TParam1, TParam2>(token);

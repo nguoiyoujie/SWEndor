@@ -532,6 +532,13 @@
     <Compile Include="UI\Forms\BackgroundForm.Designer.cs">
       <DependentUpon>BackgroundForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\StatForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\StatForm.Designer.cs">
+      <DependentUpon>StatForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Menu\Instances\ProfileSettingsMenu.cs" />
     <Compile Include="UI\Menu\Instances\FatalError.cs" />
     <Compile Include="UI\Menu\Instances\GameWon.cs" />
     <Compile Include="UI\Menu\Instances\GameOver.cs" />
@@ -628,6 +635,10 @@
     <Compile Include="Weapons\WeaponInfo.cs" />
     <EmbeddedResource Include="UI\Forms\BackgroundForm.resx">
       <DependentUpon>BackgroundForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\StatForm.resx">
+      <DependentUpon>StatForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
