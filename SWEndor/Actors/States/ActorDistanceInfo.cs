@@ -72,6 +72,11 @@ namespace SWEndor.Actors
 
     private static object locker = new object();
 
+    public static void Reset()
+    {
+      Cleartime = 0;
+    }
+
     public static int CacheCount
     {
       get

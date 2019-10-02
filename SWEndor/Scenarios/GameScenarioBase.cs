@@ -165,6 +165,7 @@ namespace SWEndor.Scenarios
       Engine.LandInfo.Enabled = false;
       Mood = MoodStates.AMBIENT;
       Engine.SoundManager.Clear();
+      ActorDistanceInfo.Reset();
 
       Game.GameTime = 0;
       Manager.IsCutsceneMode = false;
