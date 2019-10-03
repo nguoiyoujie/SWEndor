@@ -1,7 +1,4 @@
-﻿using SWEndor.Actors;
-using SWEndor.ActorTypes;
-using SWEndor.Explosions;
-using SWEndor.ExplosionTypes;
+﻿using SWEndor.ActorTypes.Components;
 using System;
 
 namespace SWEndor.Models
@@ -17,19 +14,11 @@ namespace SWEndor.Models
     public Action<T> FireAction;
     private T _target;
 
-    public void InitAsDyingTimer(T a, ActorTypeInfo type)
+    public void InitAsDyingTimer(T a, ref TimedLifeData data)
     {
       _target = a;
-      TimeRemaining = type.TimedLifeData.TimedLife;
-      State = type.TimedLifeData.OnTimedLife ? TimerStates.ACTIVE : TimerStates.INACTIVE;
-      FireAction = (t) => { t.SetState_Dead(); };
-    }
-
-    public void InitAsDyingTimer(T expl, ExplosionTypeInfo type)
-    {
-      _target = expl;
-      TimeRemaining = type.TimedLifeData.TimedLife;
-      State = type.TimedLifeData.OnTimedLife ? TimerStates.ACTIVE : TimerStates.INACTIVE;
+      TimeRemaining = data.TimedLife;
+      State = data.OnTimedLife ? TimerStates.ACTIVE : TimerStates.INACTIVE;
       FireAction = (t) => { t.SetState_Dead(); };
     }
 

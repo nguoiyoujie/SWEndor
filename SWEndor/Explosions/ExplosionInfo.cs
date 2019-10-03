@@ -30,9 +30,6 @@ namespace SWEndor.Explosions
 
     public Session Game { get { return Engine.Game; } }
 
-    public PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }
-    public PlayerCameraInfo PlayerCameraInfo { get { return Engine.PlayerCameraInfo; } }
-
     // Identifiers
     private string _name = "New Actor";
     public string Name { get { return _name; } }
@@ -78,7 +75,7 @@ namespace SWEndor.Explosions
       Key = "{0} {1}".F(_name, ID);
 
       Meshes.Init(ID, TypeInfo);
-      DyingTimer.InitAsDyingTimer(this, TypeInfo);
+      DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
       Transform.Init(TypeInfo, acinfo);
 
       State.Init(TypeInfo, acinfo);
@@ -97,7 +94,7 @@ namespace SWEndor.Explosions
       Key = "{0} {1}".F(_name, ID);
 
       Meshes.Init(ID, TypeInfo);
-      DyingTimer.InitAsDyingTimer(this, TypeInfo);
+      DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
       Transform.Init(TypeInfo, acinfo);
 
       // Creation
@@ -130,7 +127,7 @@ namespace SWEndor.Explosions
         float distcheck = TypeInfo.RenderData.CullDistance * Game.PerfCullModifier;
 
         return (TypeInfo.RenderData.EnableDistanceCull
-          && ActorDistanceInfo.GetRoughDistance(GetGlobalPosition(), PlayerCameraInfo.Camera.GetPosition()) > distcheck);
+          && ActorDistanceInfo.GetRoughDistance(GetGlobalPosition(), Engine.PlayerCameraInfo.Camera.GetPosition()) > distcheck);
       }
     }
 
@@ -141,7 +138,7 @@ namespace SWEndor.Explosions
         float distcheck = TypeInfo.RenderData.CullDistance * 0.25f * Game.PerfCullModifier;
 
         return (TypeInfo.RenderData.EnableDistanceCull
-          && ActorDistanceInfo.GetRoughDistance(GetGlobalPosition(), PlayerCameraInfo.Camera.GetPosition()) > distcheck);
+          && ActorDistanceInfo.GetRoughDistance(GetGlobalPosition(), Engine.PlayerCameraInfo.Camera.GetPosition()) > distcheck);
       }
     }
 
