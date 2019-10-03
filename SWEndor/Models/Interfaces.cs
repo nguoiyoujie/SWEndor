@@ -49,6 +49,7 @@ namespace SWEndor.Models
   public interface IActorState
   {
     ActorState ActorState { get; }
+    void SetState_Dead();
   }
 
   public interface IParent<T>

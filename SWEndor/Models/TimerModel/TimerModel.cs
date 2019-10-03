@@ -6,26 +6,31 @@ using System;
 
 namespace SWEndor.Models
 {
-  public struct TimerModel
+  public struct TimerModel<T>
+    where T :
+    IActorState
   {
     public enum TimerStates { INACTIVE, ACTIVE, EXPIRED }
 
     public float TimeRemaining { get; private set; }
     public TimerStates State { get; private set; }
-    public Action FireAction;
+    public Action<T> FireAction;
+    private T _target;
 
-    public void InitAsDyingTimer(ActorInfo a, ActorTypeInfo type)
+    public void InitAsDyingTimer(T a, ActorTypeInfo type)
     {
+      _target = a;
       TimeRemaining = type.TimedLifeData.TimedLife;
       State = type.TimedLifeData.OnTimedLife ? TimerStates.ACTIVE : TimerStates.INACTIVE;
-      FireAction = () => { a.SetState_Dead(); };
+      FireAction = (t) => { t.SetState_Dead(); };
     }
 
-    public void InitAsDyingTimer(ExplosionInfo expl, ExplosionTypeInfo type)
+    public void InitAsDyingTimer(T expl, ExplosionTypeInfo type)
     {
+      _target = expl;
       TimeRemaining = type.TimedLifeData.TimedLife;
       State = type.TimedLifeData.OnTimedLife ? TimerStates.ACTIVE : TimerStates.INACTIVE;
-      FireAction = () => { expl.SetState_Dead(); };
+      FireAction = (t) => { t.SetState_Dead(); };
     }
 
     public void Start()
@@ -56,7 +61,7 @@ namespace SWEndor.Models
         if (TimeRemaining < 0)
         {
           State = TimerStates.EXPIRED;
-          FireAction?.Invoke();
+          FireAction?.Invoke(_target);
         }
       }
     }

@@ -105,7 +105,7 @@ namespace SWEndor.Actors
     // Traits/Model (structs)
     private MeshModel Meshes;
     private RelationModel Relation;
-    private TimerModel DyingTimer;
+    private TimerModel<ActorInfo> DyingTimer;
     private StateModel<ActorInfo> State;
     private HealthModel Health;
     private TransformModel<ActorInfo, ActorInfo> Transform;

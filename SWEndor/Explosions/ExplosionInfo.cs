@@ -50,7 +50,7 @@ namespace SWEndor.Explosions
 
     // Traits/Model (structs)
     private MeshModel Meshes;
-    private TimerModel DyingTimer;
+    private TimerModel<ExplosionInfo> DyingTimer;
     private StateModel<ExplosionInfo> State;
     private TransformModel<ExplosionInfo, ActorInfo> Transform;
 
