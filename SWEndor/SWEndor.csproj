@@ -153,7 +153,6 @@
     <Compile Include="Actors\Models\Transform\ActorExt.cs" />
     <Compile Include="Models\StateModel\StateModel.cs" />
     <Compile Include="Actors\Models\TimedLife\ActorExt.cs" />
-    <Compile Include="Models\TimerModel\TimerStates.cs" />
     <Compile Include="Models\TimerModel\TimerModel.cs" />
     <Compile Include="ActorTypes\Components\TimedLifeData.cs" />
     <Compile Include="Actors\Models\Regeneration\RegenModel.cs" />

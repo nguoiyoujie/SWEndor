@@ -8,6 +8,8 @@ namespace SWEndor.Models
 {
   public struct TimerModel
   {
+    public enum TimerStates { INACTIVE, ACTIVE, EXPIRED }
+
     public float TimeRemaining { get; private set; }
     public TimerStates State { get; private set; }
     public Action FireAction;
