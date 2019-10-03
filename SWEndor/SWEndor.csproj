@@ -456,6 +456,9 @@
     <Compile Include="Primitives\StateMachines\StateMachine.cs" />
     <Compile Include="Primitives\StaticEnumerators.cs" />
     <Compile Include="Primitives\TimeControl.cs" />
+    <Compile Include="ProjectileTypes\General\ProjectileCreationInfo.cs" />
+    <Compile Include="ProjectileTypes\General\ProjectileTypeInfo.cs" />
+    <Compile Include="ProjectileTypes\General\Factory\Factory.cs" />
     <Compile Include="Scenarios\ActorSpawnInfo.cs" />
     <Compile Include="Scenarios\GSFunctions.cs" />
     <Compile Include="Scenarios\MoodStates.cs" />
@@ -508,6 +511,8 @@
     <Compile Include="Scenarios\Scripting\Functions\SceneCameraManagement.cs" />
     <Compile Include="Scenarios\Scripting\Functions\SceneManagement.cs" />
     <Compile Include="Settings\TextLocalization.cs" />
+    <Compile Include="Shaders\Factory\Factory.cs" />
+    <Compile Include="Shaders\ShaderInfo.cs" />
     <Compile Include="Sound\Instructions\InstAddSyncPoint.cs" />
     <Compile Include="Sound\Instructions\InstPauseMusic.cs" />
     <Compile Include="Sound\Instructions\InstPlaySoundSingle.cs" />
@@ -657,9 +662,6 @@
     <None Include="Data\dynamicmusic.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\actortypes.ini">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Data\weaponloadouts.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -703,9 +705,14 @@
     <EmbeddedResource Include="costura32\TV3D65.dll" />
     <EmbeddedResource Include="costura32\MTV3D65.dll" />
     <EmbeddedResource Include="costura32\fmod.dll" />
+    <Content Include="Data\Shaders\BlinnPhong.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="SWEndor.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Projectiles\" />
+  </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
       <Visible>False</Visible>

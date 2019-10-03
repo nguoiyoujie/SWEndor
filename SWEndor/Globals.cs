@@ -47,6 +47,7 @@ namespace SWEndor
     public static string AtmospherePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\atmosphere\");
     public static string LandscapePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\landscape\");
     public static string DataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\");
+    public static string DataShadersPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\Shaders\");
 
     public static string CustomScenarioPath = Path.Combine(DataPath, @"Scenarios\");
 

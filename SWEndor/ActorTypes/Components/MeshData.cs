@@ -66,6 +66,7 @@ namespace SWEndor.ActorTypes.Components
           SourceMesh.WeldVertices(0.001f, 0.001f);
           SourceMesh.ComputeBoundings();
           SourceMesh.GetBoundingBox(ref MinDimensions, ref MaxDimensions);
+          //SourceMesh.SetShader(Globals.Engine.ShaderFactory.Get("BlinnPhong")?.Shader);
         }
       }
 
@@ -84,6 +85,7 @@ namespace SWEndor.ActorTypes.Components
             //SourceFarMesh.CompactMesh();
             SourceFarMesh.WeldVertices(0.01f, 0.01f);
             SourceFarMesh.ComputeBoundings();
+            //SourceFarMesh.SetShader(Globals.Engine.ShaderFactory.Get("BlinnPhong")?.Shader);
           }
         }
         else
@@ -105,9 +107,10 @@ namespace SWEndor.ActorTypes.Components
       SourceFarMesh = mesh;
       SourceFarMesh.Enable(false);
       SourceMesh.SetCollisionEnable(false);
-      SourceFarMesh.WeldVertices();
-      SourceFarMesh.ComputeBoundings();
+      SourceMesh.WeldVertices();
+      SourceMesh.ComputeBoundings();
       SourceMesh.GetBoundingBox(ref MinDimensions, ref MaxDimensions);
+      //SourceFarMesh.SetShader(Globals.Engine.ShaderFactory.Get("BlinnPhong")?.Shader);
     }
 
     public void LoadFromINI(INIFile f, string sectionname)

@@ -15,6 +15,7 @@ using SWEndor.Primitives;
 using System.Threading;
 using SWEndor.ExplosionTypes;
 using SWEndor.Explosions;
+using SWEndor.Shaders;
 
 namespace SWEndor.Core
 {
@@ -51,6 +52,7 @@ namespace SWEndor.Core
     internal ActorTypeInfo.Factory ActorTypeFactory { get; private set; }
     internal ExplosionTypeInfo.Factory ExplosionTypeFactory { get; private set; }
     internal Squadron.Factory SquadronFactory { get; private set; }
+    internal ShaderInfo.Factory ShaderFactory { get; private set; }
 
     // Engine pars to be loaded late
     // Requires ActorInfoType initialization
@@ -67,6 +69,7 @@ namespace SWEndor.Core
       ActorTypeFactory = new ActorTypeInfo.Factory(this);
       ExplosionTypeFactory = new ExplosionTypeInfo.Factory(this);
       SquadronFactory = new Squadron.Factory();
+      ShaderFactory = new ShaderInfo.Factory(this);
       PlayerInfo = new PlayerInfo(this);
 
       FontFactory = new Font.Factory();
@@ -86,6 +89,8 @@ namespace SWEndor.Core
       AtmosphereInfo = new AtmosphereInfo(this);
       LandInfo = new LandInfo(this);
       Screen2D = new Screen2D(this);
+
+      ShaderFactory.Load();
     }
 
     public void Dispose()
