@@ -5,6 +5,7 @@ using SWEndor.Player;
 using System.Collections.Generic;
 using SWEndor.Core;
 using SWEndor.Models;
+using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.Actors.Models
 {
@@ -24,7 +25,7 @@ namespace SWEndor.Actors.Models
     private ScopeCounterManager.ScopeCounter meshScope;
     private ScopeCounterManager.ScopeCounter disposeScope;
 
-    public void Init(int id, ActorTypeInfo atype)
+    public void Init(int id, ref MeshData data)
     {
       if (meshScope == null)
         meshScope = new ScopeCounterManager.ScopeCounter();
@@ -32,17 +33,17 @@ namespace SWEndor.Actors.Models
       if (disposeScope == null)
         disposeScope = new ScopeCounterManager.ScopeCounter();
 
-      GenerateMeshes(id, atype);
+      GenerateMeshes(id, ref data);
 
       ScopeCounterManager.Reset(disposeScope);
     }
 
-    private void GenerateMeshes(int id, ActorTypeInfo atype)
+    private void GenerateMeshes(int id, ref MeshData data)
     {
       using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
-        Mesh = atype.MeshData.SourceMesh.Duplicate();
-        FarMesh = atype.MeshData.SourceFarMesh == null ? atype.MeshData.SourceMesh.Duplicate() : atype.MeshData.SourceFarMesh.Duplicate();
+        Mesh = data.SourceMesh.Duplicate();
+        FarMesh = data.SourceFarMesh == null ? data.SourceMesh.Duplicate() : data.SourceFarMesh.Duplicate();
 
         m_ids[Mesh.GetIndex()] = id;
         m_ids[FarMesh.GetIndex()] = id;

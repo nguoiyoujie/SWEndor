@@ -1,4 +1,5 @@
 ﻿using SWEndor.ActorTypes;
+using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.Actors.Models
 {
@@ -16,10 +17,10 @@ namespace SWEndor.Actors.Models
     public static ArmorModel Immune { get { return new ArmorModel(); } }
     public static ArmorModel Default { get { return new ArmorModel { Light = 1, Hull = 1 }; } }
 
-    public void Init(ActorTypeInfo type)
+    public void Init(ref ArmorData data)
     {
-      Light = type.ArmorData.Light;
-      Hull = type.ArmorData.Hull;
+      Light = data.Light;
+      Hull = data.Hull;
     }
 
     public float Get(DamageType dmgtype)

@@ -24,13 +24,13 @@ namespace SWEndor.Models
     TV_3DMATRIX currMat;
     TV_3DMATRIX prevMat;
 
-    public void Init(ActorTypeInfo type, ActorCreationInfo acinfo)
+    public void Init(float scale, ActorCreationInfo acinfo)
     {
       Position = acinfo.Position;
       Rotation = acinfo.Rotation;
       PrevPosition = Position;
       PrevRotation = Rotation;
-      Scale = type.MeshData.Scale * acinfo.InitialScale;
+      Scale = scale * acinfo.InitialScale;
     }
 
     public void Init(ExplosionTypeInfo type, ExplosionCreationInfo acinfo)

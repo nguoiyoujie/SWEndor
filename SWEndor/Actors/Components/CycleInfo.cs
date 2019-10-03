@@ -1,5 +1,4 @@
 ﻿using SWEndor.Core;
-using SWEndor.Models;
 using System;
 
 namespace SWEndor.Actors.Components

@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes;
+using SWEndor.ActorTypes.Components;
 using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;
 using System;
@@ -18,10 +19,10 @@ namespace SWEndor.Actors.Models
     public float DisplayFrac { get { return DisplayHP / MaxHP; } }
     public float DisplayPerc { get { return DisplayFrac * 100; } }
 
-    public void Init(ActorTypeInfo type, ActorCreationInfo acinfo)
+    public void Init(ref CombatData data, ActorCreationInfo acinfo)
     {
-      MaxHP = type.CombatData.MaxStrength;
-      HP = (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : type.CombatData.MaxStrength;
+      MaxHP = data.MaxStrength;
+      HP = (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : MaxHP;
     }
 
     public TV_COLOR Color

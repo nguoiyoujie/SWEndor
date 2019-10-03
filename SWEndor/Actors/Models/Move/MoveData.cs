@@ -1,4 +1,5 @@
 ﻿using SWEndor.ActorTypes;
+using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.Actors.Data
 {
@@ -28,20 +29,20 @@ namespace SWEndor.Actors.Data
     public bool ApplyZBalance;
 
 
-    public void Init(ActorTypeInfo atype, ActorCreationInfo acreate)
+    public void Init(ref MoveLimitData data, ActorCreationInfo acreate)
     {
       FreeSpeed = acreate.FreeSpeed;
       Speed = acreate.InitialSpeed;
       XTurnAngle = 0;
       YTurnAngle = 0;
       ZRoll = 0;
-      MaxSpeed = atype.MoveLimitData.MaxSpeed;
-      MinSpeed = atype.MoveLimitData.MinSpeed;
-      MaxSpeedChangeRate = atype.MoveLimitData.MaxSpeedChangeRate;
-      MaxTurnRate = atype.MoveLimitData.MaxTurnRate;
-      MaxSecondOrderTurnRateFrac = atype.MoveLimitData.MaxSecondOrderTurnRateFrac;
-      ZTilt = atype.MoveLimitData.ZTilt;
-      ZNormFrac = atype.MoveLimitData.ZNormFrac;
+      MaxSpeed = data.MaxSpeed;
+      MinSpeed = data.MinSpeed;
+      MaxSpeedChangeRate = data.MaxSpeedChangeRate;
+      MaxTurnRate = data.MaxTurnRate;
+      MaxSecondOrderTurnRateFrac = data.MaxSecondOrderTurnRateFrac;
+      ZTilt = data.ZTilt;
+      ZNormFrac = data.ZNormFrac;
       ApplyZBalance = true;
     }
 

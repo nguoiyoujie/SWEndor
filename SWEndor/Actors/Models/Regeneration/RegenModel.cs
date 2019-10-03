@@ -1,4 +1,5 @@
 ﻿using SWEndor.ActorTypes;
+using SWEndor.ActorTypes.Components;
 using SWEndor.Primitives;
 
 namespace SWEndor.Actors.Models
@@ -20,13 +21,13 @@ namespace SWEndor.Actors.Models
       SiblingRegenRate = 0;
     }
 
-    public void Init(ActorTypeInfo atype)
+    public void Init(ref RegenData data)
     {
-      NoRegen = atype.RegenData.NoRegen;
-      SelfRegenRate = atype.RegenData.SelfRegenRate;
-      ParentRegenRate = atype.RegenData.ParentRegenRate;
-      ChildRegenRate = atype.RegenData.ChildRegenRate;
-      SiblingRegenRate = atype.RegenData.SiblingRegenRate;
+      NoRegen = data.NoRegen;
+      SelfRegenRate = data.SelfRegenRate;
+      ParentRegenRate = data.ParentRegenRate;
+      ChildRegenRate = data.ChildRegenRate;
+      SiblingRegenRate = data.SiblingRegenRate;
     }
 
     public void Process(ActorInfo a, float time)

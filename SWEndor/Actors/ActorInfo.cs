@@ -150,18 +150,18 @@ namespace SWEndor.Actors
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
 
-      Meshes.Init(ID, TypeInfo);
+      Meshes.Init(ID, ref TypeInfo.MeshData);
       Relation.Init();
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
-      Health.Init(TypeInfo, acinfo);
-      Transform.Init(TypeInfo, acinfo);
-      Armor.Init(TypeInfo);
-      Explosions.Init(TypeInfo, acinfo);
-      Regen.Init(TypeInfo);
+      Health.Init(ref TypeInfo.CombatData, acinfo);
+      Transform.Init(TypeInfo.MeshData.Scale, acinfo);
+      Armor.Init(ref TypeInfo.ArmorData);
+      Explosions.Init(TypeInfo.Explodes, acinfo);
+      Regen.Init(ref TypeInfo.RegenData);
 
-      MoveData.Init(TypeInfo, acinfo);
+      MoveData.Init(ref TypeInfo.MoveLimitData, acinfo);
       CollisionData.Init();
-      WeaponDefinitions.Init(TypeInfo);
+      WeaponDefinitions.Init(ref TypeInfo.cachedWeaponData);
 
       InCombat = TypeInfo.CombatData.IsCombatObject;
 
@@ -183,18 +183,18 @@ namespace SWEndor.Actors
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
 
-      Meshes.Init(ID, TypeInfo);
+      Meshes.Init(ID, ref TypeInfo.MeshData);
       Relation.Init();
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
-      Health.Init(TypeInfo, acinfo);
-      Transform.Init(TypeInfo, acinfo);
-      Armor.Init(TypeInfo);
-      Explosions.Init(TypeInfo, acinfo);
-      Regen.Init(TypeInfo);
+      Health.Init(ref TypeInfo.CombatData, acinfo);
+      Transform.Init(TypeInfo.MeshData.Scale, acinfo);
+      Armor.Init(ref TypeInfo.ArmorData);
+      Explosions.Init(TypeInfo.Explodes, acinfo);
+      Regen.Init(ref TypeInfo.RegenData);
 
-      MoveData.Init(TypeInfo, acinfo);
+      MoveData.Init(ref TypeInfo.MoveLimitData, acinfo);
       CollisionData.Init();
-      WeaponDefinitions.Init(TypeInfo);
+      WeaponDefinitions.Init(ref TypeInfo.cachedWeaponData);
 
       InCombat = TypeInfo.CombatData.IsCombatObject;
 

@@ -705,9 +705,7 @@
     <EmbeddedResource Include="costura32\fmod.dll" />
     <Content Include="SWEndor.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Actors\Models\Combat\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
       <Visible>False</Visible>
