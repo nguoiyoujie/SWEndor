@@ -168,7 +168,7 @@ namespace SWEndor.Explosions
 
     public void Tick(Engine engine, float time)
     {
-      CycleInfo.Process(this);
+      CycleInfo.Process(engine, this);
       TypeInfo.ProcessState(engine, this);
       if (IsDead)
         Delete();

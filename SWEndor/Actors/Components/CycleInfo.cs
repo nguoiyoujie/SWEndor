@@ -1,9 +1,10 @@
-﻿using SWEndor.Models;
+﻿using SWEndor.Core;
+using SWEndor.Models;
 using System;
 
 namespace SWEndor.Actors.Components
 {
-  public struct CycleInfo<T> where T : IEngineObject
+  public struct CycleInfo<T>
   {
     public float CyclesRemaining;
     public float CyclePeriod;
@@ -27,9 +28,9 @@ namespace SWEndor.Actors.Components
       CycleTime = 0;
     }
 
-    public void Process(T owner)
+    public void Process(Engine engine, T owner)
     {
-      CycleTime -= owner.Engine.Game.TimeSinceRender;
+      CycleTime -= engine.Game.TimeSinceRender;
       if (CyclesRemaining > 0)
       {
         if (CycleTime < 0)
