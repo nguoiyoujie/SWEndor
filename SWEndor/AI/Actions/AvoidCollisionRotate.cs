@@ -49,7 +49,7 @@ namespace SWEndor.AI.Actions
     }
 
 
-    private void Process(Engine engine, ActorInfo actor, ref CollisionData<ActorInfo> data)
+    private void Process(Engine engine, ActorInfo actor, ref CollisionModel<ActorInfo> data)
     {
       if (CheckBounds(actor))
       {

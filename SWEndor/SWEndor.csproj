@@ -147,7 +147,7 @@
     <Compile Include="Actors\Models\HealthModel\DamageInfo.cs" />
     <Compile Include="Actors\Models\HealthModel\DamageType.cs" />
     <Compile Include="Actors\Models\HealthModel\HealthModel.cs" />
-    <Compile Include="Models\CollisionModel\CollisionData.cs" />
+    <Compile Include="Models\CollisionModel\CollisionModel.cs" />
     <Compile Include="Actors\Models\Relation\RelationModel.cs" />
     <Compile Include="Actors\Models\StateModel\ActorExt.cs" />
     <Compile Include="Actors\Models\Transform\ActorExt.cs" />

@@ -97,7 +97,7 @@ namespace SWEndor.Actors
     internal int HuntWeight = 1;
 
     // Data (structs)
-    internal CollisionData<ActorInfo> CollisionData;
+    internal CollisionModel<ActorInfo> CollisionData;
     internal WeaponData WeaponDefinitions;
     internal MoveData MoveData;
     internal AIData AIData;

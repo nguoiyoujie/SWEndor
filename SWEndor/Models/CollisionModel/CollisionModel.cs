@@ -7,7 +7,7 @@ using SWEndor.ActorTypes;
 
 namespace SWEndor.Models
 {
-  public struct CollisionData<T>
+  public struct CollisionModel<T>
     where T :
     IMeshObject, 
     ITransformable,
