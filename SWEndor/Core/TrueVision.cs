@@ -21,7 +21,6 @@ namespace SWEndor.Core
     internal TVLightEngine TVLightEngine { get; private set; }
     internal TVMaterialFactory TVMaterialFactory { get; private set; }
     internal TVGraphicEffect TVGraphicEffect { get; private set; }
-    internal TVShader TVShader { get; private set; }
     internal TVScreen2DText TVScreen2DText { get; private set; }
     internal TVScreen2DImmediate TVScreen2DImmediate { get; private set; }
     internal TVParticleSystem TVParticleSystem { get; private set; }
@@ -41,7 +40,6 @@ namespace SWEndor.Core
       TVScene = new TVScene();
       TVScreen2DImmediate = new TVScreen2DImmediate();
       TVScreen2DText = new TVScreen2DText();
-      TVShader = new TVShader();
       TVCameraFactory = new TVCameraFactory();
       TVLightEngine = new TVLightEngine();
       TVTextureFactory = new TVTextureFactory();
@@ -67,7 +65,6 @@ namespace SWEndor.Core
       TVCameraFactory = null;
       TVScreen2DText = null;
       TVScreen2DImmediate = null;
-      TVShader = null;
       TVScene = null;
       TVMathLibrary = null;
       TVGlobals = null;

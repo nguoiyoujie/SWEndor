@@ -11,8 +11,6 @@ namespace SWEndor.ActorTypes
   {
     public class Factory : Registry<ActorTypeInfo>
     {
-      //private static Dictionary<string, ActorTypeInfo> list = new Dictionary<string, ActorTypeInfo>();
-
       public readonly Engine Engine;
       internal Factory(Engine engine)
       { Engine = engine; }
