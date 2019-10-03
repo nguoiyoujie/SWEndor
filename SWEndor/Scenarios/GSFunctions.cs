@@ -94,7 +94,7 @@ namespace SWEndor.Scenarios
       ActorInfo[] ret = new ActorInfo[spawninfo.MemberCount];
       TV_3DVECTOR[] spawnpos;
       TV_3DVECTOR[] poss = GetMemberPositions(position, spawninfo, out spawnpos);
-      AI.Squads.Squadron squad = engine.SquadronFactory.Create();
+      AI.Squads.Squadron squad = engine.SquadronFactory.Create(spawninfo.SquadName);
       for (int i = 0; i < poss.Length; i++)
       {
         ActionInfo[] actions;

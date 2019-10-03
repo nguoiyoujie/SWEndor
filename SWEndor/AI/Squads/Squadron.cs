@@ -5,21 +5,20 @@ using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;
 using System;
 using System.Collections.Generic;
-//using System.Linq;
 
 namespace SWEndor.AI.Squads
 {
   public partial class Squadron
   {
     public int ID;
-    //public string Name;
+    public string Name;
+    public bool IsNamedSquadron { get { return Name != null; } }
     private LinkedList<ActorInfo> _members = new LinkedList<ActorInfo>();
     private LinkedList<ActorInfo> _threats = new LinkedList<ActorInfo>();
     private object lockthreat = new object();
     private object lockmember = new object();
     public MissionInfo Mission;
 
-    //public Scenarios.GSFunctions.SquadFormation Formation = Scenarios.GSFunctions.SquadFormation.LINE;
     public static readonly Squadron Neutral = new Squadron();
     public bool IsNull { get { return this == Neutral; } }
 
@@ -100,6 +99,12 @@ namespace SWEndor.AI.Squads
 
       if (_members.Count == 0)
         a.Engine.SquadronFactory.Return(this);
+    }
+
+    public void Join(Squadron destination)
+    {
+      foreach (ActorInfo a in MembersCopy)
+        a.Squad = destination;
     }
 
     public void MakeLeader(ActorInfo a)

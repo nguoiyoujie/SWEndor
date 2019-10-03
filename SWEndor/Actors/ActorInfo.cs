@@ -324,6 +324,13 @@ namespace SWEndor.Actors
       Squad = other.Squad;
     }
 
+    public void JoinSquad(string squadname)
+    {
+      Squadron s = Engine.SquadronFactory.GetByName(squadname);
+      if (!s.IsNull)
+        JoinSquad(s.Leader);
+    }
+
     public void MakeSquadLeader()
     {
       if (Squad.IsNull)

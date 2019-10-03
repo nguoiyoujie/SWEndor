@@ -30,12 +30,27 @@ namespace SWEndor.AI.Squads
         return squad;
       }
 
+      public Squadron Create(string name)
+      {
+        Squadron squad = Create();
+        squad.Name = name;
+        return squad;
+      }
+
       public void Return(Squadron s)
       {
         lock (creationLock)
           Remove(s.ID);
 
         pool.Return(s);
+      }
+
+      public Squadron GetByName(string name)
+      {
+        foreach (Squadron s in GetAll())
+          if (s.Name == name)
+            return s;
+        return Neutral;
       }
 
       public void Reset()
