@@ -163,7 +163,7 @@ namespace SWEndor.Player
       DeathCamera = info;
     }
 
-    public void Update(Engine engine, TVCamera cam, TV_3DVECTOR position, TV_3DVECTOR rotation)
+    public void Update(Engine engine, TVCamera cam, TV_3DVECTOR position, TV_3DVECTOR rotation)//, bool upsidedown)
     {
       TV_3DVECTOR tgt = LookTo.GetGlobalPosition(engine);
       LookFrom.ApproachPosition(engine, tgt, ApproachSpeed * engine.Game.TimeSinceRender);
@@ -181,10 +181,28 @@ namespace SWEndor.Player
       else
       {
         cam.SetPosition(pos.x, pos.y, pos.z);
-        cam.SetLookAt(tgt.x, tgt.y, tgt.z);
 
-        TV_3DVECTOR rot = cam.GetRotation();
-        cam.SetRotation(rot.x, rot.y, rotation.z * RotationMultiplier);
+        // Lose the ability to track point tgt, but allow non-flipping rotation.
+        // TO-DO: Figure out a way to track point tgt while preserving rotation.z.
+        cam.SetRotation(rotation.x, rotation.y, rotation.z * RotationMultiplier);
+        // ---------------------------------
+
+        // Original
+        //cam.SetLookAt(tgt.x, tgt.y, tgt.z);
+        //TV_3DVECTOR rot = cam.GetRotation();
+        //cam.SetRotation(rot.x, rot.y, rotation.z * RotationMultiplier);
+        // ---------------------------------
+
+        //cam.SetLookAt(tgt.x, tgt.y, tgt.z);
+        //TV_3DVECTOR rot = cam.GetRotation();
+        //TV_2DVECTOR r2 = new TV_2DVECTOR(rot.x, rot.y);
+        //engine.TrueVision.TVMathLibrary.TVVec2Rotate(ref r2, new TV_2DVECTOR(rot.x, rot.y), 0, 0, -rotation.z * RotationMultiplier);
+        //cam.SetRotation(rot.x, rot.y, rotation.z * RotationMultiplier);
+        // ---------------------------------
+
+        //float z = rotation.z * RotationMultiplier;
+        //cam.SetRotation(rot.x, upsidedown ? -rot.y : rot.y, upsidedown ? (180 - z) : z);
+        //engine.TrueVision.TVMathLibrary.MoveAroundPoint()
       }
     }
   }
@@ -208,6 +226,7 @@ namespace SWEndor.Player
     private TV_3DVECTOR LookAtPos = new TV_3DVECTOR();
     public TV_3DVECTOR Position { get; private set; }
     public TV_3DVECTOR Rotation { get; private set; }
+    public bool UpsideDown;
 
     private float shake = 0;
     private float prev_shake_displacement_x = 0;
@@ -225,9 +244,10 @@ namespace SWEndor.Player
         UpdateFromActor(Engine, actor);
         Position = actor.GetGlobalPosition();
         Rotation = actor.GetGlobalRotation();
+        //UpsideDown = (Rotation.x % 360 > 90 && Rotation.x % 360 < 270) || (Rotation.x % 360 < -90 && Rotation.x % 360 > -270);
       }
 
-      Look.Update(Engine, Camera, Position, Rotation);
+      Look.Update(Engine, Camera, Position, Rotation);//, UpsideDown);
       ApplyShake();
     }
 
@@ -347,13 +367,14 @@ namespace SWEndor.Player
       shake *= 0.95f; // decay
     }
 
-    public void RotateCam(float aX, float aY)
+    public void RotateCam(float aX, float aY, int aZ)
     {
       PlayerInfo pl = Engine.PlayerInfo;
-      if (pl.IsMovementControlsEnabled)
+      if (pl.IsMovementControlsEnabled && !pl.PlayerAIEnabled)
       {
         float angleX = aY * Settings.SteeringSensitivity;
         float angleY = aX * Settings.SteeringSensitivity;
+        float angleZ = aZ * Settings.SteeringSensitivity / 20;
 
         /*
         if (CameraMode == CameraMode.FREEMODE 
@@ -378,15 +399,15 @@ namespace SWEndor.Player
           float maxT = a.TypeInfo.MoveLimitData.MaxTurnRate;
           angleX *= maxT;
           angleY *= maxT;
+          angleZ *= maxT;
 
-          if (!Engine.PlayerInfo.PlayerAIEnabled)
-          {
-            angleX = angleX.Clamp(-maxT, maxT);
-            angleY = angleY.Clamp(-maxT, maxT);
+          angleX = angleX.Clamp(-maxT, maxT);
+          angleY = angleY.Clamp(-maxT, maxT);
+          angleZ = angleZ.Clamp(-maxT / 20, maxT / 20);
 
-            a.MoveData.XTurnAngle = angleX;
-            a.MoveData.YTurnAngle = angleY;
-          }
+          a.MoveData.XTurnAngle = angleX;
+          a.MoveData.YTurnAngle = angleY;
+          a.MoveData.ZRoll += angleZ;
         }
       }
     }

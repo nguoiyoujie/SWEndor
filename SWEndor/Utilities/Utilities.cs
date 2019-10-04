@@ -21,5 +21,32 @@ namespace SWEndor
       ret += position;
       return ret;
     }
+
+    public static TV_3DVECTOR RotateXY(TV_3DVECTOR org, float x, float y)
+    {
+      // Hack: Using an existing object to perform rotation calculations, then restore it.
+      TVCamera cam = Globals.Engine.PlayerCameraInfo.Camera;
+      TV_3DVECTOR o = cam.GetRotation();
+      cam.SetRotation(org.x, org.y, org.z);
+      cam.RotateX(x);
+      cam.RotateY(y);
+      TV_3DVECTOR ret = cam.GetRotation();
+      cam.SetRotation(o.x, o.y, o.z);
+      return ret;
+    }
+
+    public static TV_3DVECTOR RotateXYZ(TV_3DVECTOR org, float x, float y, float z)
+    {
+      // Hack: Using an existing object to perform rotation calculations, then restore it.
+      TVCamera cam = Globals.Engine.PlayerCameraInfo.Camera;
+      TV_3DVECTOR o = cam.GetRotation();
+      cam.SetRotation(org.x, org.y, org.z);
+      cam.RotateX(x);
+      cam.RotateY(y);
+      cam.RotateZ(z);
+      TV_3DVECTOR ret = cam.GetRotation();
+      cam.SetRotation(o.x, o.y, o.z);
+      return ret;
+    }
   }
 }

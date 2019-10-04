@@ -79,7 +79,7 @@ namespace SWEndor.Input.Context
       if (button2)
         Engine.PlayerInfo.FireSecondaryWeapon();
 
-      Engine.PlayerCameraInfo.RotateCam(mouseX / (float)Engine.ScreenWidth * 2 - 1, mouseY / (float)Engine.ScreenHeight * 2 - 1);
+      Engine.PlayerCameraInfo.RotateCam(mouseX / (float)Engine.ScreenWidth * 2 - 1, mouseY / (float)Engine.ScreenHeight * 2 - 1, mouseScroll);
     }
   }
 }
