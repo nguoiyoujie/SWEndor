@@ -29,10 +29,13 @@ namespace SWEndor.UI.Widgets
       if (p == null || !p.Active)
         return;
 
-      TV_COLOR pcolor = p.Faction.Color;
+      int pcolor = p.Faction.Color.GetIntColor();
+      float xfrac = p.MoveData.YTurnAngle / p.MoveData.MaxTurnRate / 2;
+      float yfrac = p.MoveData.XTurnAngle / p.MoveData.MaxTurnRate / 2;
+      float zfrac = p.MoveData.ZRoll / p.MoveData.MaxTurnRate / 2;
 
       TVScreen2DImmediate.Action_Begin2D();
-
+      /*
       TVScreen2DImmediate.Draw_FilledBox(steering_position.x
                                                    , steering_position.y
                                                    , steering_position.x + steering_width
@@ -57,15 +60,52 @@ namespace SWEndor.UI.Widgets
                                                    , steering_position.y + steering_height / 2
                                                    , pcolor.GetIntColor());
 
-      float xfrac = p.MoveData.YTurnAngle / p.MoveData.MaxTurnRate / 2;
-      float yfrac = p.MoveData.XTurnAngle / p.MoveData.MaxTurnRate / 2;
       float size = 3;
+      float zspace = 3;
 
       TVScreen2DImmediate.Draw_Box(steering_position.x + steering_width * (xfrac + 0.5f) - size
                                                    , steering_position.y + steering_height * (yfrac + 0.5f) - size
                                                    , steering_position.x + steering_width * (xfrac + 0.5f) + size
                                                    , steering_position.y + steering_height * (yfrac + 0.5f) + size
                                                    , pcolor.GetIntColor());
+
+      TVScreen2DImmediate.Draw_Box(steering_position.x + zspace
+                                                   , steering_position.y + steering_height / 2
+                                                   , steering_position.x + zspace + size
+                                                   , steering_position.y + steering_height * (zfrac + 0.5f)
+                                                   , pcolor.GetIntColor());
+
+      TVScreen2DImmediate.Draw_Box(steering_position.x + steering_width - zspace
+                                                   , steering_position.y + steering_height / 2
+                                                   , steering_position.x + steering_width - zspace - size
+                                                   , steering_position.y + steering_height * (-zfrac + 0.5f)
+                                                   , pcolor.GetIntColor());
+      */
+
+
+      TVScreen2DImmediate.Draw_Box(Engine.ScreenWidth / 2 - 36
+                                             , Engine.ScreenHeight / 2 
+                                             , Engine.ScreenWidth / 2 - 33
+                                             , Engine.ScreenHeight / 2 + 32 * (yfrac + zfrac)
+                                             , pcolor);
+
+      TVScreen2DImmediate.Draw_Box(Engine.ScreenWidth / 2 + 36
+                                       , Engine.ScreenHeight / 2
+                                       , Engine.ScreenWidth / 2 + 33
+                                       , Engine.ScreenHeight / 2 + 32 * (yfrac - zfrac)
+                                       , pcolor);
+
+      TVScreen2DImmediate.Draw_Box(Engine.ScreenWidth / 2
+                                       , Engine.ScreenHeight / 2 - 36
+                                       , Engine.ScreenWidth / 2 + 32 * (xfrac + zfrac)
+                                       , Engine.ScreenHeight / 2 - 33
+                                       , pcolor);
+
+      TVScreen2DImmediate.Draw_Box(Engine.ScreenWidth / 2
+                                 , Engine.ScreenHeight / 2 + 36
+                                 , Engine.ScreenWidth / 2 + 32 * (xfrac - zfrac)
+                                 , Engine.ScreenHeight / 2 + 33
+                                 , pcolor);
 
       TVScreen2DImmediate.Action_End2D();
     }
