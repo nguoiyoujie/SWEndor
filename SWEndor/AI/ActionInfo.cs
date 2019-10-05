@@ -36,7 +36,7 @@ namespace SWEndor.AI.Actions
     protected static bool CheckBounds(ActorInfo owner)
     {
       float boundmult = 0.99f;
-      if (!(owner.TypeInfo.AIData.TargetType.Has(TargetType.LASER | TargetType.MUNITION)) 
+      if (!(owner.TypeInfo.AIData.TargetType.Contains(TargetType.LASER | TargetType.MUNITION)) 
         && owner.IsOutOfBounds(owner.Engine.GameScenarioManager.MinAIBounds * boundmult, owner.Engine.GameScenarioManager.MaxAIBounds * boundmult) 
         && owner.AIData.EnteredCombatZone)
       {

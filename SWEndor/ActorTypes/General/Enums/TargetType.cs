@@ -68,5 +68,10 @@ namespace SWEndor.ActorTypes
     {
       return (src & flag) == flag;
     }
+
+    public static bool Contains(this TargetType src, TargetType flag)
+    {
+      return (src & flag) != 0;
+    }
   }
 }

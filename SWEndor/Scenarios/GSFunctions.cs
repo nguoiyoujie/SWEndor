@@ -105,7 +105,7 @@ namespace SWEndor.Scenarios
         else
           actions = new ActionInfo[] { new Wait(spawninfo.WaitDelay), new Hunt(spawninfo.HuntTargetType) };
 
-        string name = (spawninfo.SquadName == null || spawninfo.SquadName == "") ? "" : string.Concat(spawninfo.SquadName, " ", i);
+        string name = (spawninfo.SquadName == null || spawninfo.SquadName == "") ? "" : string.Concat(spawninfo.SquadName, " ", i.ToString());
 
         ActorSpawnInfo asi = new ActorSpawnInfo
         {

@@ -46,7 +46,7 @@ namespace SWEndor.ActorTypes.Groups
           ActorInfo target = ((ProjectileAttackActor)ainfo.CurrentAction).Target_Actor;
           if (target != null)
           {
-            if (target.TypeInfo.AIData.TargetType.Has(TargetType.LASER | TargetType.MUNITION))
+            if (target.TypeInfo.AIData.TargetType.Contains(TargetType.LASER | TargetType.MUNITION))
               impdist += target.TypeInfo.CombatData.ImpactCloseEnoughDistance;
 
             // Anticipate

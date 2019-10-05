@@ -52,18 +52,14 @@ namespace SWEndor.Models
     internal void CheckCollision(Engine engine, T actor)
     {
       IsTestingCollision = false;
-      // only check player and projectiles
-      if (actor.CanCollide)
+      if (Collision.ActorID >= 0)
       {
-        if (Collision.ActorID >= 0)
-        {
-          ActorInfo a = engine.ActorFactory.Get(Collision.ActorID);
-          if (a != null)
-            actor.DoCollide(a, ref Collision);
-          Collision.ActorID = -1;
-        }
-        IsTestingCollision = true;
+        ActorInfo a = engine.ActorFactory.Get(Collision.ActorID);
+        if (a != null)
+          actor.DoCollide(a, ref Collision);
+        Collision.ActorID = -1;
       }
+      IsTestingCollision = true;
     }
 
     internal void TestCollision(Engine engine, T actor)

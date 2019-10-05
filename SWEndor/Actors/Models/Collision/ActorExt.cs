@@ -11,7 +11,7 @@ namespace SWEndor.Actors
       get
       {
         return (IsPlayer && !Engine.PlayerInfo.PlayerAIEnabled)
-            || TypeInfo.AIData.TargetType.Has(TargetType.LASER | TargetType.MUNITION)
+            || TypeInfo.AIData.TargetType.Contains(TargetType.LASER | TargetType.MUNITION)
             || (IsDying && TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER));
       }
     }
