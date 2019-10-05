@@ -256,22 +256,25 @@ namespace SWEndor.Player
     const float farplane = 650000; // const
     public void UpdateViewFrustum(ActorInfo actor)
     {
-      float sf = actor.MoveData.Speed / actor.MoveData.MaxSpeed;
-      if (!(sf - spdf < 0.001f && sf - spdf > 0.001f))
+      if (actor.MoveData.MaxSpeed > 0)
       {
-        spdf = sf;
-        float f = (Engine.TrueVision.TVMathLibrary.ATan(sf) / 45);
-        f--;
-        f /= 2;
-        if (f > 0)
-          f /= 2;
-        f++;
-        f *= 60;
-        f = f.Clamp(45, 175);
-        if (!(f - fov < 0.001f && f - fov > 0.001f))
+        float sf = actor.MoveData.Speed / actor.MoveData.MaxSpeed;
+        if (!(sf - spdf < 0.001f && sf - spdf > 0.001f))
         {
-          fov = f;
-          Camera.SetViewFrustum(fov, farplane);
+          spdf = sf;
+          float f = (Engine.TrueVision.TVMathLibrary.ATan(sf) / 45);
+          f--;
+          f /= 2;
+          if (f > 0)
+            f /= 2;
+          f++;
+          f *= 60;
+          f = f.Clamp(45, 175);
+          if (!(f - fov < 0.001f && f - fov > 0.001f))
+          {
+            fov = f;
+            Camera.SetViewFrustum(fov, farplane);
+          }
         }
       }
     }
