@@ -1,5 +1,4 @@
-﻿using SWEndor.Actors.Data;
-using SWEndor.ActorTypes.Components;
+﻿using SWEndor.ActorTypes.Components;
 using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
@@ -9,7 +8,7 @@ namespace SWEndor.ActorTypes.Groups
     internal LaserProjectile(Factory owner, string id, string name) : base(owner, id, name)
     {
       // Combat
-      TimedLifeData = new TimedLifeData(true, 1.6f);
+      TimedLifeData = new TimedLifeData(true, 2.5f);
       CombatData = CombatData.Disabled;
       ArmorData = ArmorData.Immune;
       Explodes = new ExplodeData[] {

@@ -29,7 +29,7 @@ namespace SWEndor.ActorTypes.Instances
       // Projectile
       CombatData.ImpactCloseEnoughDistance = 150;
 
-      MeshData = new MeshData(Name, @"projectiles\ion_sm_laser.x", 4);
+      MeshData = new MeshData(Name, @"projectiles\ion_sm_laser.x", 4, "Laser");
     }
 
     public override void ProcessHit(Engine engine, ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)

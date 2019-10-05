@@ -20,6 +20,7 @@ namespace SWEndor.Shaders
   public partial class ShaderInfo
   {
     public string Name;
+    public TVShader TVShader;
     public TVScene TVScene;
     private Dictionary<string, bool> ConstBool = new Dictionary<string, bool>();
     private Dictionary<string, float> ConstFloat = new Dictionary<string, float>();
@@ -28,6 +29,7 @@ namespace SWEndor.Shaders
     private Dictionary<string, int> ConstTex = new Dictionary<string, int>();
     private Dictionary<string, DynamicShaderDataSource> DynamicParam = new Dictionary<string, DynamicShaderDataSource>();
     private ObjectPool<TVShader> _pool;
+    private int _count;
 
     private ShaderInfo(Engine engine, string name)
     {
@@ -39,18 +41,30 @@ namespace SWEndor.Shaders
         LoadFromINI(engine, f);
       }
       TVScene = engine.TrueVision.TVScene;
-      _pool = new ObjectPool<TVShader>(GenerateShader, null);
+      if (DynamicParam.Count > 0)
+      {
+        _pool = new ObjectPool<TVShader>(GenerateShader, null);
+        int temp = _count;
+        _count = 0;
+        for (int i = 0; i < temp; i++)
+          _pool.Return(GenerateShader());
+      }
+      else
+      {
+        TVShader = GenerateShader();
+        _count = 1;
+      }
     }
 
     public TVShader GetOrCreate()
     {
-      return _pool.GetNew();
+      return _pool?.GetNew() ?? TVShader;
     }
 
     private TVShader GenerateShader()
     {
       string shaderText = File.ReadAllText(Path.Combine(Globals.DataShadersPath, Name + ".fx"));
-      TVShader shader = TVScene.CreateShader();
+      TVShader shader = TVScene.CreateShader(Name + (++_count).ToString());
       shader.CreateFromEffectString(shaderText);
       string err = shader.GetLastError();
       if (err != null && err.Length != 0)
@@ -79,7 +93,7 @@ namespace SWEndor.Shaders
 
     public void ReturnShader(TVShader shader)
     {
-      _pool.Return(shader);
+      _pool?.Return(shader);
     }
 
     public void LoadFromINI(Engine engine, INIFile f)
@@ -193,6 +207,8 @@ namespace SWEndor.Shaders
             }
           }
         }
+
+      _count = f.GetIntValue("General", "InitialCount", 0);
     }
 
     public void SetShaderParam<T, TCreate>(T obj, TVShader shader)

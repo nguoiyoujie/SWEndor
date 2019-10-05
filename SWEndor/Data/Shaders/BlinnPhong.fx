@@ -1,4 +1,7 @@
-﻿// Global-Level Semantics
+﻿// Reference Sample
+
+
+// Global-Level Semantics
 float4x4 matWorldViewProj : WORLDVIEWPROJECTION;
 float4x3 matWorldIT : WORLDINVERSETRANSPOSE;
 float4x4 matWorld : WORLD;

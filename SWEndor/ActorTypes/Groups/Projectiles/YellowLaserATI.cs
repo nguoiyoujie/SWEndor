@@ -13,7 +13,7 @@ namespace SWEndor.ActorTypes.Instances
       CombatData.ImpactCloseEnoughDistance = 35;
       CombatData.IsLaser = false; // not the same speed
 
-      MeshData = new MeshData(Name, @"projectiles\yellow_laser.x");
+      MeshData = new MeshData(Name, @"projectiles\yellow_laser.x", 1, "Laser");
     }
   }
 }

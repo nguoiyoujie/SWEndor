@@ -70,6 +70,7 @@ namespace SWEndor.ActorTypes.Components
           SourceMesh.WeldVertices(0.001f, 0.001f);
           SourceMesh.ComputeBoundings();
           SourceMesh.GetBoundingBox(ref MinDimensions, ref MaxDimensions);
+          SourceMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA);
         }
       }
 
@@ -88,6 +89,7 @@ namespace SWEndor.ActorTypes.Components
             //SourceFarMesh.CompactMesh();
             SourceFarMesh.WeldVertices(0.01f, 0.01f);
             SourceFarMesh.ComputeBoundings();
+            SourceFarMesh.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA);
           }
         }
         else

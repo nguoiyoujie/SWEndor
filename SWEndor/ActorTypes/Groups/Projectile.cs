@@ -22,7 +22,7 @@ namespace SWEndor.ActorTypes.Groups
       };
       DyingMoveData.Kill();
 
-      RenderData.CullDistance = 9000;
+      RenderData.CullDistance = 12000;
 
       RenderData.RadarType = RadarType.TRAILLINE;
       RenderData.RadarSize = 1;
