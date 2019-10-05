@@ -150,7 +150,7 @@ namespace SWEndor.Actors
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
 
-      Meshes.Init(ID, ref TypeInfo.MeshData);
+      Meshes.Init(Engine, ID, ref TypeInfo.MeshData);
       Relation.Init();
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
       Health.Init(ref TypeInfo.CombatData, acinfo);
@@ -183,7 +183,7 @@ namespace SWEndor.Actors
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
 
-      Meshes.Init(ID, ref TypeInfo.MeshData);
+      Meshes.Init(Engine, ID, ref TypeInfo.MeshData);
       Relation.Init();
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
       Health.Init(ref TypeInfo.CombatData, acinfo);

@@ -2,6 +2,9 @@
 using SWEndor.Primitives;
 using System.Collections.Generic;
 using SWEndor.ExplosionTypes;
+using SWEndor.Core;
+using SWEndor.Shaders;
+using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.Explosions.Models
 {
@@ -15,11 +18,13 @@ namespace SWEndor.Explosions.Models
     }
 
     private TVMesh Mesh;
+    private ShaderInfo ShaderInfo;
+    private TVShader Shader;
 
     private ScopeCounterManager.ScopeCounter meshScope;
     private ScopeCounterManager.ScopeCounter disposeScope;
 
-    public void Init(int id, ExplosionTypeInfo atype)
+    public void Init(Engine engine, int id, ref MeshData data)
     {
       if (meshScope == null)
         meshScope = new ScopeCounterManager.ScopeCounter();
@@ -27,17 +32,29 @@ namespace SWEndor.Explosions.Models
       if (disposeScope == null)
         disposeScope = new ScopeCounterManager.ScopeCounter();
 
-      GenerateMeshes(id, atype);
+      GenerateMeshes(engine, id, ref data);
 
       ScopeCounterManager.Reset(disposeScope);
     }
 
-    private void GenerateMeshes(int id, ExplosionTypeInfo atype)
+    private void GenerateMeshes(Engine engine, int id, ref MeshData data)
     {
       using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
-        Mesh = atype.MeshData.SourceMesh.Duplicate();
+        Mesh = data.SourceMesh.Duplicate();
         m_ids[Mesh.GetIndex()] = id;
+
+        string shdr = data.Shader;
+        if (shdr != null)
+        {
+          ShaderInfo = engine.ShaderFactory.Get(shdr);
+          if (ShaderInfo != null)
+          {
+            Shader = ShaderInfo.GenerateShader();
+            Mesh.SetShader(Shader);
+          }
+        }
+
         Mesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 8);
       }
     }
@@ -145,6 +162,7 @@ namespace SWEndor.Explosions.Models
         if (ScopeCounterManager.IsZero(disposeScope))
         {
           Mesh.SetMatrix(mat);
+          ShaderInfo?.SetShaderParam<ExplosionInfo, ExplosionCreationInfo>(actor, Shader);
 
           if (prev_render != render)
           {

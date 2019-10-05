@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal YWing_WingATI(Factory owner) : base(owner, "YWWING", "YWing_WingATI")
     {
-      MeshData = new MeshData(Name, @"ywing\ywing_right_left_wing.x");
+      MeshData = new MeshData(Name, @"ywing\ywing_right_left_wing.x", 1, "Burn");
     }
   }
 }

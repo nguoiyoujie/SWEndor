@@ -74,7 +74,7 @@ namespace SWEndor.Explosions
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
 
-      Meshes.Init(ID, TypeInfo);
+      Meshes.Init(Engine, ID, ref TypeInfo.MeshData);
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
       Transform.Init(TypeInfo, acinfo);
 
@@ -93,7 +93,7 @@ namespace SWEndor.Explosions
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
 
-      Meshes.Init(ID, TypeInfo);
+      Meshes.Init(Engine, ID, ref TypeInfo.MeshData);
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
       Transform.Init(TypeInfo, acinfo);
 

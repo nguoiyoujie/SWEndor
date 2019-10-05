@@ -12,7 +12,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxSpeed = 500;
       MoveLimitData.MinSpeed = 100;
 
-      MeshData = new MeshData(Name, @"transport\transport_box1.x");
+      MeshData = new MeshData(Name, @"transport\transport_box1.x", 1, "Burn");
       DyingMoveData.Spin(100, 450);
     }
   }

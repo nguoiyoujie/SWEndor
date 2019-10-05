@@ -708,6 +708,12 @@
     <Content Include="Data\Shaders\BlinnPhong.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Data\Shaders\Burn.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="Data\Shaders\Burn.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="SWEndor.ico" />
   </ItemGroup>
   <ItemGroup>

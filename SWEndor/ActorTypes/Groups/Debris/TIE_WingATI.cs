@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal TIE_WingATI(Factory owner) : base(owner, "TIEWING", "TIE_WingATI")
     {
-      MeshData = new MeshData(Name, @"tie\tie_right_left_wing.x");
+      MeshData = new MeshData(Name, @"tie\tie_right_left_wing.x", 1, "Burn");
     }
   }
 }
