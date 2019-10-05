@@ -7,6 +7,7 @@ using System.Text;
 using System.Collections.Generic;
 using SWEndor.Core;
 using SWEndor.Primitives.Extensions;
+using SWEndor.Scenarios;
 
 namespace SWEndor.Sound
 {
@@ -414,7 +415,10 @@ namespace SWEndor.Sound
       if (p == null)
         return null;
 
-      int mood = (int)(Engine.GameScenarioManager.Scenario?.Mood); // get mood from somewhere...
+      int mood = 0;
+      GameScenarioBase gsb = Engine.GameScenarioManager.Scenario;
+      if (gsb != null)
+        mood = (int)gsb.Mood;
 
       if (p.MoodTransitions != null
         && p.MoodTransitions.Length > mood

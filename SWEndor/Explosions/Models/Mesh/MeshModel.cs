@@ -50,7 +50,7 @@ namespace SWEndor.Explosions.Models
           ShaderInfo = engine.ShaderFactory.Get(shdr);
           if (ShaderInfo != null)
           {
-            Shader = ShaderInfo.GenerateShader();
+            Shader = ShaderInfo.GetOrCreate();
             Mesh.SetShader(Shader);
           }
         }
@@ -64,11 +64,16 @@ namespace SWEndor.Explosions.Models
       if (ScopeCounterManager.AcquireIfZero(disposeScope))
       {
         using (ScopeCounterManager.AcquireWhenZero(meshScope))
-        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE)) //ScopeGlobals.GLOBAL_COLLISION, ScopeGlobals.GLOBAL_RENDER);
+        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
         {
+          Mesh.SetShader(null);
           Mesh?.Destroy();
           m_ids.Remove(Mesh.GetIndex());
           Mesh = null;
+
+          ShaderInfo?.ReturnShader(Shader);
+          Shader = null;
+          ShaderInfo = null;
         }
       }
     }

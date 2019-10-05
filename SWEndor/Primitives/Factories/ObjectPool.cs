@@ -7,6 +7,11 @@ namespace SWEndor.Primitives.Factories
   {
     public ObjectPool(Func<T> createFn, Action<T> resetFn)
     {
+#if DEBUG
+      if (createFn == null)
+        throw new ArgumentNullException("createFn");
+#endif
+
       creator = createFn;
       resetor = resetFn;
     }
@@ -28,7 +33,7 @@ namespace SWEndor.Primitives.Factories
 
     public void Return(T item)
     {
-      resetor(item);
+      resetor?.Invoke(item);
       list.Enqueue(item);
     }
 

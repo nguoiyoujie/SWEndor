@@ -58,7 +58,7 @@ namespace SWEndor.Actors.Models
           ShaderInfo = engine.ShaderFactory.Get(shdr);
           if (ShaderInfo != null)
           {
-            Shader = ShaderInfo.GenerateShader();
+            Shader = ShaderInfo.GetOrCreate();
             Mesh.SetShader(Shader);
             FarMesh.SetShader(Shader);
           }
@@ -74,7 +74,7 @@ namespace SWEndor.Actors.Models
       if (ScopeCounterManager.AcquireIfZero(disposeScope))
       {
         using (ScopeCounterManager.AcquireWhenZero(meshScope))
-        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE)) //ScopeGlobals.GLOBAL_COLLISION, ScopeGlobals.GLOBAL_RENDER);
+        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
         {
           Mesh.SetShader(null);
           Mesh?.Destroy();
@@ -86,9 +86,8 @@ namespace SWEndor.Actors.Models
           m_ids.Remove(FarMesh.GetIndex());
           FarMesh = null;
 
-          Shader?.Destroy();
+          ShaderInfo?.ReturnShader(Shader);
           Shader = null;
-
           ShaderInfo = null;
         }
       }

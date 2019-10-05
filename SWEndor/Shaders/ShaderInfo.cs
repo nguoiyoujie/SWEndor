@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.FileFormat.INI;
 using SWEndor.Models;
+using SWEndor.Primitives.Factories;
 using System.Collections.Generic;
 using System.IO;
 
@@ -26,6 +27,7 @@ namespace SWEndor.Shaders
     private Dictionary<string, TV_3DVECTOR> ConstVec3 = new Dictionary<string, TV_3DVECTOR>();
     private Dictionary<string, int> ConstTex = new Dictionary<string, int>();
     private Dictionary<string, DynamicShaderDataSource> DynamicParam = new Dictionary<string, DynamicShaderDataSource>();
+    private ObjectPool<TVShader> _pool;
 
     private ShaderInfo(Engine engine, string name)
     {
@@ -37,9 +39,15 @@ namespace SWEndor.Shaders
         LoadFromINI(engine, f);
       }
       TVScene = engine.TrueVision.TVScene;
+      _pool = new ObjectPool<TVShader>(GenerateShader, null);
     }
 
-    public TVShader GenerateShader()
+    public TVShader GetOrCreate()
+    {
+      return _pool.GetNew();
+    }
+
+    private TVShader GenerateShader()
     {
       string shaderText = File.ReadAllText(Path.Combine(Globals.DataShadersPath, Name + ".fx"));
       TVShader shader = TVScene.CreateShader();
@@ -67,6 +75,11 @@ namespace SWEndor.Shaders
           shader.SetEffectParamTexture(s, ConstTex[s]);
       }
       return shader;
+    }
+
+    public void ReturnShader(TVShader shader)
+    {
+      _pool.Return(shader);
     }
 
     public void LoadFromINI(Engine engine, INIFile f)
