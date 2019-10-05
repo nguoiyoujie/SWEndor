@@ -5,9 +5,9 @@ namespace SWEndor.UI.Widgets
 {
   public class Steering: Widget
   {
-    private TV_2DVECTOR steering_position = new TV_2DVECTOR(10, 110);
-    private float steering_height = 60;
-    private float steering_width = 60;
+    //private TV_2DVECTOR steering_position = new TV_2DVECTOR(10, 110);
+    //private float steering_height = 60;
+    //private float steering_width = 60;
 
     public Steering(Screen2D owner) : base(owner, "steering") { }
 
@@ -97,13 +97,13 @@ namespace SWEndor.UI.Widgets
 
       TVScreen2DImmediate.Draw_Box(Engine.ScreenWidth / 2
                                        , Engine.ScreenHeight / 2 - 36
-                                       , Engine.ScreenWidth / 2 + 32 * (xfrac + zfrac)
+                                       , Engine.ScreenWidth / 2 + 32 * (xfrac - zfrac)
                                        , Engine.ScreenHeight / 2 - 33
                                        , pcolor);
 
       TVScreen2DImmediate.Draw_Box(Engine.ScreenWidth / 2
                                  , Engine.ScreenHeight / 2 + 36
-                                 , Engine.ScreenWidth / 2 + 32 * (xfrac - zfrac)
+                                 , Engine.ScreenWidth / 2 + 32 * (xfrac + zfrac)
                                  , Engine.ScreenHeight / 2 + 33
                                  , pcolor);
 
