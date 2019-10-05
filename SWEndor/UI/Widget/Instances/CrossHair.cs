@@ -9,7 +9,7 @@ namespace SWEndor.UI.Widgets
   {
     public CrossHair(Screen2D owner) : base(owner, "crosshair")
     {
-      tex = Engine.TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, "crosshair/Crosshair.png")
+      tex = Engine.TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, @"crosshair\Crosshair.png")
                                                                    , "Crosshair"
                                                                    , 64
                                                                    , 64
