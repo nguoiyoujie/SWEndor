@@ -72,7 +72,7 @@ loadscene:
 	Actor.QueueLast(corvus, "rotate", 0, -500, 4000, 0);
 	Actor.QueueLast(corvus, "lock");
 
-	ebolo = Actor.Spawn("ARQT", "EBOLO", "", "EBOLO", 0, "Empire", 3000, -120, 350, 0, -130, 45);
+	ebolo = Actor.Spawn("ARQT", "EBOLO", "", "EBOLO", 0, "Empire", 3000, -120, 350, 0, -150, 25);
 	Actor.SetProperty(ebolo, "DamageModifier", 0.4);
 	Actor.QueueLast(ebolo, "move", -400, 200, -350, 100);
 	Actor.QueueLast(ebolo, "move", 1000, 150, -3000, 100);
@@ -80,7 +80,7 @@ loadscene:
 	Actor.QueueLast(ebolo, "rotate", -2000, 210, -20000, 0);
 	Actor.QueueLast(ebolo, "lock");
 	
-	daring = Actor.Spawn("ARQT", "DARING", "", "DARING", 0, "Empire", 3200, -300, -1450, 0, -130, 45);
+	daring = Actor.Spawn("ARQT", "DARING", "", "DARING", 0, "Empire", 3200, -300, -1450, 0, -110, 25);
 	Actor.SetProperty(daring, "DamageModifier", 0.4);
 	Actor.QueueLast(daring, "move", -7780, -450, 450, 15);
 	Actor.QueueLast(daring, "move", -8470, -300, -350, 100);
