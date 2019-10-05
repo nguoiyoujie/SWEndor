@@ -168,13 +168,13 @@ namespace SWEndor.Weapons
 
     public void Reload(Engine engine)
     {
-      if (Ammo == MaxAmmo)
-      {
-        AmmoReloadCooldown = engine.Game.GameTime + AmmoReloadRate;
-      }
-
       if (MaxAmmo > 0 && AmmoReloadCooldown < engine.Game.GameTime && Ammo < MaxAmmo)
       {
+        if (Ammo == MaxAmmo)
+        {
+          AmmoReloadCooldown = engine.Game.GameTime + AmmoReloadRate;
+        }
+
         AmmoReloadCooldown = engine.Game.GameTime + AmmoReloadRate;
         if (AmmoReloadRateRandom != 0)
         {

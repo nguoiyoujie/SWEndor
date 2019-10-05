@@ -18,6 +18,7 @@ namespace SWEndor.Scenarios
                                              , Engine.ActorTypeFactory.Get("RDRT")
                                              , Engine.ActorTypeFactory.Get("SUPT")
                                              , Engine.ActorTypeFactory.Get("SUPGUN")
+                                             , Engine.ActorTypeFactory.Get("XQ1")
                                              };
 
       AllowedDifficulties = new List<string> { "normal"

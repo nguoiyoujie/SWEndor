@@ -95,6 +95,9 @@ loadscene:
 	Actor.QueueLast(glory, "rotate", 2000, 210, -20000, 0);
 	Actor.QueueLast(glory, "lock");
 
+	xq1 = Actor.Spawn("XQ1", "", "", "", 0, "Empire", -500, -300, -3500, 0, 0, 0, "");
+	Actor.SetProperty(xq1, "SetSpawnerEnable", true);
+
 	corv1 = Actor.Spawn("CORV", "", "", "", 0, "Traitors", -7750, 250, -20000, 0, 20, 0);
 	Actor.QueueLast(corv1, "move", 0, 250, -3000, 70);
 	Actor.QueueLast(corv1, "move", 3000, 250, -5000, 10);

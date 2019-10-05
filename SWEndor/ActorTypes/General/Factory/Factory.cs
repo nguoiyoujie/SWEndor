@@ -80,6 +80,9 @@ namespace SWEndor.ActorTypes
         Register(new ArquitensATI(this));
         Register(new ExecutorATI(this));
 
+        // Platforms
+        Register(new XQ1ATI(this));
+
         // surface
         Register(new Surface001_00ATI(this));
         Register(new Surface001_01ATI(this));
@@ -137,6 +140,7 @@ namespace SWEndor.ActorTypes
         Register(new NebulonBTurboLaserATI(this));
         Register(new NebulonBMissilePodATI(this));
         Register(new ACTurboLaserATI(this));
+        Register(new XQTurboLaserATI(this));
         Register(new ArqTurboLaserATI(this));
         Register(new SDAntiShipTurboLaserATI(this));
         Register(new SDTurboLaserATI(this));
