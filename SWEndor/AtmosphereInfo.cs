@@ -12,12 +12,6 @@ namespace SWEndor
       TexID = texturefactory.LoadTexture(texpath, Path.GetFileNameWithoutExtension(texpath), -1, -1, CONST_TV_COLORKEY.TV_COLORKEY_NO, true);
     }
 
-    //~FlareInfo()
-    //{
-      //if (Globals.Engine.TrueVision.TVTextureFactory != null)
-      //  Globals.Engine.TrueVision.TVTextureFactory.DeleteTexture(TexID);
-    //}
-
     public int TexID = -1;
     public float Size = 10;
     public float LinePosition = 40;
