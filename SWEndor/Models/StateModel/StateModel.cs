@@ -1,4 +1,5 @@
 ﻿using SWEndor.ActorTypes;
+using SWEndor.Core;
 using SWEndor.ExplosionTypes;
 using SWEndor.Primitives.StateMachines;
 
@@ -78,19 +79,19 @@ namespace SWEndor.Models
     public float CreationTime { get; private set; }
     public ComponentMask ComponentMask { get; set; }
 
-    public void Init(ActorTypeInfo type, ActorCreationInfo acinfo)
+    public void Init(Engine engine, ActorTypeInfo type, ActorCreationInfo acinfo)
     {
       _actorState = acinfo.InitialState;
       _creationState = CreationState.PLANNED;
-      CreationTime = acinfo.CreationTime;
+      CreationTime = acinfo.CreationTime > engine.Game.GameTime ? acinfo.CreationTime : engine.Game.GameTime;
       ComponentMask = type.Mask;
     }
 
-    public void Init(ExplosionTypeInfo type, ExplosionCreationInfo acinfo)
+    public void Init(Engine engine, ExplosionTypeInfo type, ExplosionCreationInfo acinfo)
     {
       _actorState = acinfo.InitialState;
       _creationState = CreationState.PLANNED;
-      CreationTime = acinfo.CreationTime;
+      CreationTime = acinfo.CreationTime > engine.Game.GameTime ? acinfo.CreationTime : engine.Game.GameTime;
       ComponentMask = ComponentMask.EXPLOSION;
     }
 

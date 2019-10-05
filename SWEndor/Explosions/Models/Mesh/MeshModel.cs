@@ -167,7 +167,7 @@ namespace SWEndor.Explosions.Models
         if (ScopeCounterManager.IsZero(disposeScope))
         {
           Mesh.SetMatrix(mat);
-          ShaderInfo?.SetShaderParam<ExplosionInfo, ExplosionCreationInfo>(actor, Shader);
+          ShaderInfo?.SetShaderParam<ExplosionInfo, ExplosionTypeInfo, ExplosionCreationInfo>(actor, Shader);
 
           if (prev_render != render)
           {

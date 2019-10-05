@@ -195,7 +195,7 @@ namespace SWEndor.Actors.Models
         {
           Mesh.SetMatrix(mat);
           FarMesh.SetMatrix(mat);
-          ShaderInfo?.SetShaderParam<ActorInfo, ActorCreationInfo>(actor, Shader);
+          ShaderInfo?.SetShaderParam<ActorInfo, ActorTypeInfo, ActorCreationInfo>(actor, Shader);
 
           if (prev_render != render)
           {

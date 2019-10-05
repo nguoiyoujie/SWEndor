@@ -17,6 +17,8 @@ namespace SWEndor.ActorTypes
 
       public void RegisterBase()
       {
+        Register(new Hyperspace(this));
+
         Register(new EndorATI(this));
         Register(new YavinATI(this));
         Register(new Yavin4ATI(this));

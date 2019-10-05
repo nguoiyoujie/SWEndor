@@ -12,9 +12,11 @@ namespace SWEndor.Shaders
   public enum DynamicShaderDataSource
   {
     GAME_TIME,
-    CREATE_TIME,
+    CREATION_TIME,
+    DYING_INTERVAL,
     DYING_TIME_REMAINING,
-    HP_FRAC
+    HP_FRAC,
+    SPEED
   }
 
   public partial class ShaderInfo
@@ -211,11 +213,14 @@ namespace SWEndor.Shaders
       _count = f.GetIntValue("General", "InitialCount", 0);
     }
 
-    public void SetShaderParam<T, TCreate>(T obj, TVShader shader)
+    public void SetShaderParam<T, TType, TCreate>(T obj, TVShader shader)
       where T :
-      IEngineObject, 
+      IEngineObject,
+      ITyped<TType>,
       IActorCreateable<TCreate>,
       IDyingTime
+      where TType : 
+      ITypeInfo<T>
     {
       if (shader == null)
         return;
@@ -228,8 +233,12 @@ namespace SWEndor.Shaders
             shader.SetEffectParamFloat(s, obj.Engine.Game.GameTime);
             break;
 
-          case DynamicShaderDataSource.CREATE_TIME:
+          case DynamicShaderDataSource.CREATION_TIME:
             shader.SetEffectParamFloat(s, obj.CreationTime);
+            break;
+
+          case DynamicShaderDataSource.DYING_INTERVAL:
+            shader.SetEffectParamFloat(s, obj.DyingDuration);
             break;
 
           case DynamicShaderDataSource.DYING_TIME_REMAINING:
@@ -237,10 +246,19 @@ namespace SWEndor.Shaders
             break;
 
           case DynamicShaderDataSource.HP_FRAC:
-            ActorInfo a = obj as ActorInfo;
-            if (a != null)
-              shader.SetEffectParamFloat(s, a.HP_Frac);
-            break;
+            {
+              ActorInfo a = obj as ActorInfo;
+              if (a != null)
+                shader.SetEffectParamFloat(s, a.HP_Frac);
+              break;
+            }
+          case DynamicShaderDataSource.SPEED:
+            {
+              ActorInfo a = obj as ActorInfo;
+              if (a != null)
+                shader.SetEffectParamFloat(s, a.MoveData.Speed);
+              break;
+            }
         }
       }
     }

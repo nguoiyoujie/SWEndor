@@ -7,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   public class MC80BATI : Groups.Warship
   {
-    internal MC80BATI(Factory owner) : base(owner, "MONC80B", "Mon Calamari 80B Capital Ship")
+    internal MC80BATI(Factory owner) : base(owner, "MC80B", "Mon Calamari 80B Capital Ship")
     {
       Explodes = new ExplodeData[] {
         new ExplodeData("EXPL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),

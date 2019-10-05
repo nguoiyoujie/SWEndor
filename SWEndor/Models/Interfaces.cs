@@ -19,6 +19,11 @@ namespace SWEndor.Models
     T Next { get; set; }
   }
 
+  public interface ITyped<TType>
+  {
+    TType TypeInfo { get; }
+  }
+
   public interface IScoped
   {
     ScopeCounterManager.ScopeCounter Scope { get; }
@@ -58,14 +63,12 @@ namespace SWEndor.Models
 
   public interface INotify
   {
-    void OnTickEvent();
     void OnStateChangeEvent();
-    void OnCreatedEvent();
-    void OnDestroyedEvent();
   }
 
   public interface IDyingTime
   {
+    float DyingDuration { get; }
     float DyingTimeRemaining { get; }
   }
 

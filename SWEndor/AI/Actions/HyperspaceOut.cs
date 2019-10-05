@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.ActorTypes;
 using SWEndor.Core;
 
 namespace SWEndor.AI.Actions
@@ -25,6 +26,14 @@ namespace SWEndor.AI.Actions
       {
         hyperspace = true;
         Origin_Position = owner.GetGlobalPosition();
+
+        if (owner.IsScenePlayer)
+        {
+          ActorCreationInfo ac = new ActorCreationInfo(engine.ActorTypeFactory.Get("HYPER"));
+          ActorInfo a = engine.ActorFactory.Create(ac);
+          owner.AddChild(a);
+          a.UseParentCoords = true;
+        }
       }
 
       owner.MoveData.Speed += Incre_Speed * owner.Game.TimeSinceRender;

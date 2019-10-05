@@ -347,21 +347,28 @@ namespace SWEndor.Scenarios
       sspawn.TypeInfo = ActorTypeFactory.Get("MC90");
       SDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                           , new TV_3DVECTOR(-1600, -120, 6300)
-                                          , new TV_3DVECTOR(3400, -120, 9300)
+                                          , new TV_3DVECTOR(-5400, -120, 3300)
                                           , new TV_3DVECTOR(-1200, -120, -1000)
                                           ));
+
+      //sspawn.TypeInfo = ActorTypeFactory.Get("MC80B");
+      //SDspawnlist.Add(new ShipSpawnEventArg(sspawn
+      //                                    , new TV_3DVECTOR(200, -620, 10300)
+      //                                    , new TV_3DVECTOR(-2400, -620, 7300)
+      //                                    , new TV_3DVECTOR(-1200, -420, 1000)
+      //                                    ));
 
       sspawn.TypeInfo = ActorTypeFactory.Get("CORV");
       SDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                           , new TV_3DVECTOR(1400, -320, 8400)
-                                          , new TV_3DVECTOR(4400, -320, 11400)
+                                          , new TV_3DVECTOR(-4400, -320, 5400)
                                           , new TV_3DVECTOR(-1200, -320, 1000)
                                           ));
 
       SDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                           , new TV_3DVECTOR(-2400, 350, 6500)
-                                          , new TV_3DVECTOR(1600, 350, 9500)
-                                          , new TV_3DVECTOR(-1200, -250, -5000)
+                                          , new TV_3DVECTOR(-1600, 350, 3500)
+                                          , new TV_3DVECTOR(-1200, 350, -5000)
                                           ));
 
       sspawn.TypeInfo = ActorTypeFactory.Get("MCL");
@@ -538,7 +545,7 @@ namespace SWEndor.Scenarios
     {
       // TID/D
       ActorInfo ainfo;
-      TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(-22000, 0, -100000);
+      TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(-22000, 0, -500000);
       TV_3DVECTOR plus = new TV_3DVECTOR(3500, 500, 2750);
 
       List<TV_3DVECTOR> positions = new List<TV_3DVECTOR>();
@@ -561,10 +568,12 @@ namespace SWEndor.Scenarios
           Position = v + hyperspaceInOffset + plus,
           Rotation = new TV_3DVECTOR(),
           Actions = new ActionInfo[] { new Wait(7.5f)
-                                     , new Rotate(v, 0)
+                                     , new Rotate(v, 0, 0.5f)
                                      , new SetMood(MoodStates.AMBIENT_2, true)
                                      , new Wait(2.5f)
+                                     , new HyperspaceOut()
                                      , new HyperspaceIn(v)
+                                     , new SetMood(MoodStates.NEUTRAL_SHIP_ARRIVED, true)
                                      , new Rotate(new TV_3DVECTOR(0, 0, 0), 1)
                                      , new Wait(3f+10f)
                                      , new SetMood(MoodStates.AMBIENT_4, true)
@@ -580,7 +589,7 @@ namespace SWEndor.Scenarios
     {
       // TID/A
       ActorInfo ainfo;
-      TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(-22000, 0, -100000);
+      TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(-22000, 0, -500000);
       TV_3DVECTOR plus = new TV_3DVECTOR(3500, 500, 2750);
 
       List<TV_3DVECTOR> positions = new List<TV_3DVECTOR>();
@@ -603,8 +612,9 @@ namespace SWEndor.Scenarios
           Position = v + hyperspaceInOffset + plus,
           Rotation = new TV_3DVECTOR(),
           Actions = new ActionInfo[] { new Wait(7.5f)
-                                     , new Rotate(v, 0)
+                                     , new Rotate(v, 0, 0.5f)
                                      , new Wait(12.5f)
+                                     , new HyperspaceOut()
                                      , new HyperspaceIn(v)
                                      , new SetMood(MoodStates.ALLY_FIGHTER_ARRIVED, true)
                                      , new SetMood(MoodStates.AMBIENT_3, true)
@@ -659,15 +669,13 @@ namespace SWEndor.Scenarios
         foreach (ActorInfo a in ship.Children)
           a.SetArmor(DamageType.ALL, 0.25f);
       }
-
-      Mood = MoodStates.NEUTRAL_SHIP_ARRIVED;
     }
 
     public void Empire_StarDestroyer_01()
     {
       // SD
       ActorInfo ainfo;
-      TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(-22000, 0, -100000);
+      TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(-22000, 0, -500000);
       float creationTime = Game.GameTime;
 
       List<TV_3DVECTOR> positions = new List<TV_3DVECTOR>();
@@ -692,6 +700,7 @@ namespace SWEndor.Scenarios
           Actions = new ActionInfo[] { new Wait(32f+10f)
                                      //, new HyperspaceIn(v + hyperspaceInOffset + new TV_3DVECTOR(0, 0, 100000))
                                      //, new HyperspaceIn(v + hyperspaceInOffset)
+                                     , new HyperspaceOut()
                                      , new HyperspaceIn(v)
                                      , new SetMood(MoodStates.ALLY_SHIP_ARRIVED, true)
                                      , new SetMood(MoodStates.ENGAGEMENT, true)

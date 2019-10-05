@@ -16,6 +16,7 @@ namespace SWEndor.Actors
 {
   public partial class ActorInfo :
     IEngineObject,
+    ITyped<ActorTypeInfo>,
     ILinked<ActorInfo>,
     IScoped,
     IActorState,
@@ -129,7 +130,7 @@ namespace SWEndor.Actors
     {
       get
       {
-        return !(TypeInfo.AIData.TargetType.Has(TargetType.LASER | TargetType.MUNITION | TargetType.FLOATING));
+        return !(TypeInfo.AIData.TargetType.Contains(TargetType.LASER | TargetType.MUNITION | TargetType.FLOATING));
       }
     }
 #endif
@@ -165,7 +166,7 @@ namespace SWEndor.Actors
 
       InCombat = TypeInfo.CombatData.IsCombatObject;
 
-      State.Init(TypeInfo, acinfo);
+      State.Init(Engine, TypeInfo, acinfo);
 
       Faction = acinfo.Faction;
 
@@ -199,7 +200,7 @@ namespace SWEndor.Actors
       InCombat = TypeInfo.CombatData.IsCombatObject;
 
       // Creation
-      State.Init(TypeInfo, acinfo);
+      State.Init(Engine, TypeInfo, acinfo);
 
       Faction = acinfo.Faction;
 
@@ -390,11 +391,9 @@ namespace SWEndor.Actors
       TypeInfo.ProcessState(engine, this);
       if (!IsDead)
       {
-        if (Mask.Has(ComponentMask.CAN_BECOLLIDED)
-        || TypeInfo.AIData.TargetType.Has(TargetType.LASER | TargetType.MUNITION))
-        {
+        if (CanCollide)
           CollisionData.CheckCollision(engine, this);
-        }
+
         TypeInfo.MoveBehavior.Move(engine, this, ref MoveData, Game.TimeSinceRender);
       }
       else

@@ -9,6 +9,7 @@ namespace SWEndor.Models
   {
     public enum TimerStates { INACTIVE, ACTIVE, EXPIRED }
 
+    public float Interval { get; private set; }
     public float TimeRemaining { get; private set; }
     public TimerStates State { get; private set; }
     public Action<T> FireAction;
@@ -17,6 +18,7 @@ namespace SWEndor.Models
     public void InitAsDyingTimer(T a, ref TimedLifeData data)
     {
       _target = a;
+      Interval = data.TimedLife;
       TimeRemaining = data.TimedLife;
       State = data.OnTimedLife ? TimerStates.ACTIVE : TimerStates.INACTIVE;
       FireAction = (t) => { t.SetState_Dead(); };
@@ -36,6 +38,7 @@ namespace SWEndor.Models
 
     public void Set(float time, bool startnow)
     {
+      Interval = time;
       TimeRemaining = time;
       if (startnow)
         Start();

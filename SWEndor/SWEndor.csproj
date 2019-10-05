@@ -136,6 +136,7 @@
     <Compile Include="ActorTypes\General\ActorCreationInfo.cs" />
     <Compile Include="Actors\Models\ArmorModel\ActorExt.cs" />
     <Compile Include="Actors\Models\Collision\ActorExt.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Hyperspace.cs" />
     <Compile Include="Models\ExplodeModel\ExplodeData.cs" />
     <Compile Include="Actors\Models\Explosion\ActorExt.cs" />
     <Compile Include="Models\ExplodeModel\ExplodeTrigger.cs" />
@@ -662,6 +663,9 @@
     <None Include="Data\dynamicmusic.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Shaders\Hyper.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Shaders\Laser.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -714,6 +718,9 @@
     <None Include="Data\Shaders\Burn.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="Data\Shaders\Hyper.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\Shaders\Laser.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

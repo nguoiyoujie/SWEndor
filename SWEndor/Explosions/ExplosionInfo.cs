@@ -12,6 +12,7 @@ namespace SWEndor.Explosions
 {
   public partial class ExplosionInfo :
     IEngineObject,
+    ITyped<ExplosionTypeInfo>,
     ILinked<ExplosionInfo>,
     IScoped,
     IActorState,
@@ -78,7 +79,7 @@ namespace SWEndor.Explosions
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
       Transform.Init(TypeInfo, acinfo);
 
-      State.Init(TypeInfo, acinfo);
+      State.Init(Engine, TypeInfo, acinfo);
 
       AttachedActorID = -1;
 
@@ -98,7 +99,7 @@ namespace SWEndor.Explosions
       Transform.Init(TypeInfo, acinfo);
 
       // Creation
-      State.Init(TypeInfo, acinfo);
+      State.Init(Engine, TypeInfo, acinfo);
 
       AttachedActorID = -1;
 
@@ -113,11 +114,7 @@ namespace SWEndor.Explosions
     #endregion
 
     #region Event Methods
-    public void OnTickEvent() { }
-    public void OnHitEvent(ActorInfo victim) { }
     public void OnStateChangeEvent() { }
-    public void OnCreatedEvent() { }
-    public void OnDestroyedEvent() { }
     #endregion
 
     public bool IsAggregateMode
