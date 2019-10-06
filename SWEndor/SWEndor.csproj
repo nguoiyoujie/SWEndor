@@ -737,14 +737,23 @@
     <Content Include="Data\Shaders\Burn.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Doc\Scenarios\script.txt" />
-    <Content Include="Doc\Scenarios\scen.txt" />
+    <Content Include="Doc\Scenarios\script.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Doc\Scenarios\scen.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Doc\Shaders\shader.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Doc\Sound\piece.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="SWEndor.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Doc\ActorTypes\" />
     <Folder Include="Doc\ExplosionTypes\" />
-    <Folder Include="Doc\Shaders\" />
     <Folder Include="Doc\Weapons\" />
     <Folder Include="Projectiles\" />
   </ItemGroup>

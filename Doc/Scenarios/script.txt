@@ -1,0 +1,197 @@
+﻿--------------------------------------------------------------------------------------------------------------------------------
+Script File Format
+--------------------------------------------------------------------------------------------------------------------------------
+
+Script files are used by the game to define programmable logic.
+They have a custom syntax that is interpreted by the game engine to generate behaviour. This way you can define your own 
+scenario without needing to modify the game program.
+
+--------------------------------------------------------------------------------------------------------------------------------
+Syntax
+--------------------------------------------------------------------------------------------------------------------------------
+
+Script files take a psuedo-C style language with minimal features.
+
+A script may look a bit like this:
+
+[Example ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+loadfaction:
+	AddFaction("Empire", 0, 0.8, 0);
+
+makeimperials:
+	tiea1 = Actor.Spawn(GetPlayerActorType(), "Alpha-2", "", "", 0, "Empire", 700, -620, 10500, 0, -180, 0);
+	Actor.SetProperty(tiea1, "DamageModifier", 0.25);
+	Actor.QueueLast(tiea1, "wait", 2.5);
+	Actor.AddToSquad(Player.GetActor(), tiea1);
+	 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ /Example]
+
+Translated into syntactic context is as follows:
+
+[Example ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
+SCRIPT:
+	FUNCTION(STRING, INT, FLOAT, INT);
+
+SCRIPT:
+	VARIABLE = FUNCTION(FUNCTION(), STRING, STRING, STRING, INT, STRING, INT, INT, INT, INT, INT, INT);
+	FUNCTION(VARIABLE, STRING, FLOAT);
+	FUNCTION(VARIABLE, STRING, FLOAT);
+	FUNCTION(FUNCTION(), VARIABLE);
+	 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ /Example]
+
+
+The base structure is as follows:
+SCRIPT:
+	STATEMENT;
+	STATEMENT;
+...
+
+SCRIPT:
+	STATEMENT;
+	STATEMENT;
+...
+
+etc.
+
+[SCRIPT] = The script indicator. Contains the name of the script, followed by the colon (':') sign.
+[STATEMENT] = A expression statement. It may span multiple times, but must be ended by the semicolon (';') sign.
+A [STATEMENT] usually comprises one or more [EXPRESSION] instances, which is a basic block of operations.
+An [EXPRESSION] usually comprises one or more [LITERAL] instances, and some operator or function block.
+
+A statement follows C-style lexicon. The following are possible:
+
+    [LITERAL] Keywords:
+        if              Used in a if-else-then syntatic structure
+        else            Used in a if-else-then syntatic structure
+        then            Used in a if-else-then syntatic structure
+        foreach         Used in a foreach-in syntatic structure
+        in              Used in a foreach-in syntatic structure
+
+    [LITERAL] Use of the following literals:
+        bool            Represented by (true|false)
+        int             Represented by both decimal format (10) and hexadecimal format (0x0100)
+        float           Represented by a decimal format (0.025)
+        string          Represented by quoted strings ("example")
+        variable        Represented by any unquoted string beginning with a character beginning with alphabet (A-Z, a-Z) or 
+                        an underscore (_). Keywords are reserved and cannot be used as variable names.
+                        Variables are weak-typed. You may assign an int value to a variable that was previously assigned to 
+                        a bool value. However, take care to feed the correct types to your operators and functions to avoid 
+                        runtime errors!
+
+    [EXPRESSION] Unary operator expressions: 
+        +x              Identity
+        -x              Negation. Use on numeric operands only.
+        !x              Logical Negation. Use on bool operands only.
+        ~x              Alias of [!x]
+
+    [EXPRESSION] Binary operator expressions: 
+        x + y           Returns the sum of x and y if both are numeric, or the concatenation of x and y if at least one of 
+                        them is a string. Does not work on bool or other formats.
+        x - y           Returns the difference of x and y if both are numeric, the result is negative if y is larger than x. 
+                        Does not work on bool, string or other formats.
+        x * y           Returns the multiplicative result of x and y if both are numeric. Does not work on bool, string or 
+                        other formats.
+        x / y           Returns the division result of x by y if both are numeric. Does not work on bool, string or other 
+                        formats.
+        x % y           Returns the modulus result of x and y if both are numeric. Does not work on bool, string or other 
+                        formats.
+        x || y          Returns the logical OR of x and y if both are bool. This operation performs lazy evaluation; y need 
+                        not be evaluated if x is true. Does not work on numeric, string or other formats.
+        x && y          Returns the logical AND of x and y if both are bool. This operation performs lazy evaluation; y need 
+                        not be evaluated if x is false. Does not work on numeric, string or other formats.
+        x == y          Returns true if x and y are equal. Incompatible types return false (float and int are compatible for 
+                        equality checks, but int and bool are not).
+        x != y          Returns false if x and y are equal. Incompatible types return true.
+        x <> y          Alias of [x != y]
+        x > y           Returns true if x is more than y, otherwise returns false.
+        x < y           Returns true if x is less than y, otherwise returns false.
+        x >= y          Returns true if x is more than or equal to y, otherwise returns false.
+        x <= y          Returns true if x is less than or equal to y, otherwise returns false.
+
+    [EXPRESSION] Ternary operator expressions: 
+        b ? x : y       Returns x if b evaluates to true, otherwise returns y. 
+                        Because variables are weak-typed, you are allowed to have x and y as different types.
+
+    [EXPRESSION] Function call expressions
+        f()             Calls function f with 0 parameter
+        f(x)            Calls function f with 1 parameter: x
+        f(x, y)         Calls function f with 2 parameters: x and y. Each function is seperated by a comma (',').
+        f(g(x), y)      Nested function calls. Function g(x) will be evaluated before passing the result to f()
+                        All functions accept any number of parameters. However, most functions perform checks and throw errors 
+                        if wrong types or wrong parameter numbers are supplied. Check the documentation for each function for 
+                        details.
+
+    [STATEMENT] Statement syntax
+        x = EXPRESSION  Simple assignment of the result of EXPRESSION to x
+        EXPRESSION      An expression. The output from this expression is disregarded.
+
+    [STATEMENT] Assignment operator statements
+        x += y          Alias of [x = x + y]
+        x -= y          Alias of [x = x - y]
+        x *= y          Alias of [x = x * y]
+        x /= y          Alias of [x = x / y]
+        x %= y          Alias of [x = x % y]
+        x |= y          Alias of [x = x || y]
+        x &= y          Alias of [x = x && y]
+
+    [STATEMENT] Multiple statement blocks
+        if-then-else block
+            Syntax:
+                if (EXPRESSION_BOOL) then {LIST_OF_STATEMENTS}
+            or  if (EXPRESSION_BOOL) then {LIST_OF_STATEMENTS} else {LIST_OF_STATEMENTS}
+            
+            Evaluates LIST_OF_STATEMENTS in the then block if EXPRESSION_BOOL evaluates to true.
+            Otherwise, evaluates LIST_OF_STATEMENTS in the else block, if available
+            
+            Context:
+                EXPRESSION_BOOL        An EXPRESSION that returns a bool
+                LIST_OF_STATEMENTS     A list of statements (each statement ending with (';'))
+                                       If only one statement is used, the encapsulating braces ('{' ... '}') is optional.
+
+        foreach-in block
+            Syntax:
+                foreach(VARIABLE in VARIABLE_LIST) {LIST_OF_STATEMENTS}
+
+            For each value in VARIABLE_LIST, assign this value to VARIABLE, then evaluate LIST_OF_STATEMENTS. 
+
+            Context:
+                VARIABLE               A variable used to contain each member of VARIABLE_LIST
+                VARIABLE_LIST          A variable assigned to an array structure. 
+                                       Array structures are currently not yet supported by literals. However, they can be returned
+                                       from a function.
+                LIST_OF_STATEMENTS     A list of statements (each statement ending with (';'))
+                                       If only one statement is used, the encapsulating braces ('{' ... '}') is optional.
+
+--------------------------------------------------------------------------------------------------------------------------------
+Execution
+--------------------------------------------------------------------------------------------------------------------------------
+
+The game, when loading a custom scenario, will load script files defined in its Scenario file.
+It will then execute the following functions in order:
+    - The script whose name is defined under Fn_loadfaction. If a script by this name is not found, this step is skipped.
+    - The script whose name is defined under Fn_loadscene. If a script by this name is not found, this step is skipped.
+    - The script whose name is defined under Fn_load. If a script by this name is not found, this step is skipped.
+
+When attempting to generate a player (at initialization or after player death), it will execute the following:
+    - The script whose name is defined under Fn_makeplayer. If a script by this name is not found, this step is skipped.
+
+Every game tick, the game will execute the following:
+    - The scripts whose names are defined under Fns_gametick. 
+
+In your script, you may link the execution of other scripts via one of two functions:
+    - CallScript function
+        CallScript("scriptname");
+      This jumps execution into the script "scriptname".
+
+    - AddEvent function
+        AddEvent(1.0, "scriptname");
+      This defers execution of script "scriptname" to 1.0 in-game seconds after the current time.
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+Functions
+--------------------------------------------------------------------------------------------------------------------------------
+
+The number of functions may be too many and too diverse to organize in a single document. 
+You may find them in each document named XXX_fns. (Example: intrinsic_fns).
+
+
