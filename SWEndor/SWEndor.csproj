@@ -136,7 +136,11 @@
     <Compile Include="ActorTypes\General\ActorCreationInfo.cs" />
     <Compile Include="Actors\Models\ArmorModel\ActorExt.cs" />
     <Compile Include="Actors\Models\Collision\ActorExt.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\T4ATurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\XQTurboLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\Fighters\T4AATI.cs" />
+    <Compile Include="ActorTypes\Groups\Fighters\CargoLgATI.cs" />
+    <Compile Include="ActorTypes\Groups\Fighters\CargoSmATI.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene\Hyperspace.cs" />
     <Compile Include="ActorTypes\Groups\Warships\XQ1ATI.cs" />
     <Compile Include="Models\ExplodeModel\ExplodeData.cs" />

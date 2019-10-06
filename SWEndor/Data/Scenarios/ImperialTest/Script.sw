@@ -248,6 +248,33 @@ makeimperials:
 	spawntarget = -1;
 	CallScript("spawn4");
 
+	spawnX = -6400;
+	spawnY = 400;
+	spawnZ = -4000;
+	spawntarget = -1;
+	spawntype = "CARGO_SM";
+	CallScript("spawn4");
+
+	spawnX = -6400;
+	spawnY = 250;
+	spawnZ = -4200;
+	spawntarget = -1;
+	spawntype = "CARGO_LG";
+	CallScript("spawn4");
+
+	spawnX = -6000;
+	spawnY = 300;
+	spawnZ = -4000;
+	spawntarget = -1;
+	spawntype = "T4A";
+	CallScript("spawn4");
+
+	spawnX = -6800;
+	spawnY = 300;
+	spawnZ = -4000;
+	spawntarget = -1;
+	spawntype = "T4A";
+	CallScript("spawn4");
 
 gametick:
 	SetUILine1Text("WINGS: " + Faction.GetWingCount("Empire"));
