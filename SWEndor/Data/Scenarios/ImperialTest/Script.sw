@@ -72,7 +72,7 @@ loadscene:
 	Actor.QueueLast(corvus, "rotate", 0, -500, 4000, 0);
 	Actor.QueueLast(corvus, "lock");
 
-	ebolo = Actor.Spawn("ARQT", "EBOLO", "", "EBOLO", 0, "Empire", 3000, -120, 350, 0, -150, 25);
+	ebolo = Actor.Spawn("ARQT", "EBOLO", "", "EBOLO", 0, "Empire", 3000, -120, 350, 0, -210, 25);
 	Actor.SetProperty(ebolo, "DamageModifier", 0.4);
 	Actor.QueueLast(ebolo, "move", -400, 200, -350, 100);
 	Actor.QueueLast(ebolo, "move", 1000, 150, -3000, 100);
@@ -80,7 +80,7 @@ loadscene:
 	Actor.QueueLast(ebolo, "rotate", -2000, 210, -20000, 0);
 	Actor.QueueLast(ebolo, "lock");
 	
-	daring = Actor.Spawn("ARQT", "DARING", "", "DARING", 0, "Empire", 3200, -300, -1450, 0, -110, 25);
+	daring = Actor.Spawn("ARQT", "DARING", "", "DARING", 0, "Empire", 3200, -300, -1450, 0, -150, 25);
 	Actor.SetProperty(daring, "DamageModifier", 0.4);
 	Actor.QueueLast(daring, "move", -7780, -450, 450, 15);
 	Actor.QueueLast(daring, "move", -8470, -300, -350, 100);
@@ -255,6 +255,13 @@ makeimperials:
 	spawntype = "CARGO_SM";
 	CallScript("spawn4");
 
+	spawnX = -6200;
+	spawnY = 300;
+	spawnZ = -4500;
+	spawntarget = -1;
+	spawntype = "CARGO_MD";
+	CallScript("spawn4");
+
 	spawnX = -6400;
 	spawnY = 250;
 	spawnZ = -4200;
@@ -274,6 +281,20 @@ makeimperials:
 	spawnZ = -4000;
 	spawntarget = -1;
 	spawntype = "T4A";
+	CallScript("spawn4");
+
+	spawnX = -7000;
+	spawnY = 600;
+	spawnZ = -4500;
+	spawntarget = -1;
+	spawntype = "JV7";
+	CallScript("spawn4");
+
+	spawnX = -5800;
+	spawnY = 600;
+	spawnZ = -4000;
+	spawntarget = -1;
+	spawntype = "JV7";
 	CallScript("spawn4");
 
 gametick:

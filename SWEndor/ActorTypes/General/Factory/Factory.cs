@@ -53,7 +53,9 @@ namespace SWEndor.ActorTypes
         Register(new WedgeXWingATI(this));
 
         Register(new T4AATI(this));
+        Register(new JV7ATI(this));
         Register(new CargoLgATI(this));
+        Register(new CargoMdATI(this));
         Register(new CargoSmATI(this));
 
 
@@ -146,7 +148,9 @@ namespace SWEndor.ActorTypes
         Register(new NebulonBMissilePodATI(this));
         Register(new ACTurboLaserATI(this));
         Register(new XQTurboLaserATI(this));
-        Register(new T4ATurboLaserATI(this));      
+        Register(new T4ATurboLaserATI(this));
+        Register(new JV7TurboLaserATI(this));
+        Register(new CargoTurboLaserATI(this));
         Register(new ArqTurboLaserATI(this));
         Register(new SDAntiShipTurboLaserATI(this));
         Register(new SDTurboLaserATI(this));

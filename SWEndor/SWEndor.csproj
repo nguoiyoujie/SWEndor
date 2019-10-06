@@ -136,8 +136,12 @@
     <Compile Include="ActorTypes\General\ActorCreationInfo.cs" />
     <Compile Include="Actors\Models\ArmorModel\ActorExt.cs" />
     <Compile Include="Actors\Models\Collision\ActorExt.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\JV7TurboLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\CargoTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\T4ATurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\XQTurboLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\Fighters\CargoMdATI.cs" />
+    <Compile Include="ActorTypes\Groups\Fighters\JV7ATI.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\T4AATI.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\CargoLgATI.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\CargoSmATI.cs" />
@@ -733,9 +737,15 @@
     <Content Include="Data\Shaders\Burn.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Doc\Scenarios\script.txt" />
+    <Content Include="Doc\Scenarios\scen.txt" />
     <Content Include="SWEndor.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Doc\ActorTypes\" />
+    <Folder Include="Doc\ExplosionTypes\" />
+    <Folder Include="Doc\Shaders\" />
+    <Folder Include="Doc\Weapons\" />
     <Folder Include="Projectiles\" />
   </ItemGroup>
   <ItemGroup>

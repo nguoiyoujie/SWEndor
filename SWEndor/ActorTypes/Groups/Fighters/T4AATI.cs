@@ -16,10 +16,11 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxTurnRate = 36;
 
       ScoreData = new ScoreData(200, 500);
+      DyingMoveData.Spin(90, 180);
 
       RegenData = new RegenData(false, 0.12f, 0, 0, 0);
 
-      MeshData = new MeshData(Name, @"cargo\shuttle.x");
+      MeshData = new MeshData(Name, @"shuttle\t4a.x");
 
       Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 2, 18), new TV_3DVECTOR(0, 2, 2000)),
@@ -28,7 +29,7 @@ namespace SWEndor.ActorTypes.Instances
      };
 
       //SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineAWing, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };
-      AddOns = new AddOnData[] { new AddOnData("T4ALSR", new TV_3DVECTOR(0, -2, -12), new TV_3DVECTOR(0, 0, 0), true) };
+      AddOns = new AddOnData[] { new AddOnData("T4ALSR", new TV_3DVECTOR(0, -2, -12), new TV_3DVECTOR(90, 0, 0), true) };
 
       //Loadouts = new string[] { "A_WG_TORP", "A_WG_MISL", "A_WG_LASR" };
     }

@@ -17,7 +17,8 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(100, 500);
 
-      RegenData = new RegenData(false, 0.04f, 0, 0, 0);
+      RegenData = new RegenData(false, 0.05f, 0, 0, 0);
+      DyingMoveData.Spin(90, 180);
 
       MeshData = new MeshData(Name, @"cargo\cargo1.x");
 
