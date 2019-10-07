@@ -21,11 +21,11 @@ namespace SWEndor.AI.Squads.Missions
       if (target != null)
       {
         if (target.Squad.IsNull)
-          return new Actions.AttackActor(target.Squad.GetThreatFirst(engine)?.ID ?? -1);
+          return Actions.AttackActor.GetOrCreate(target.Squad.GetThreatFirst(engine)?.ID ?? -1);
 
         // help attack
         if (target.CurrentAction is AI.Actions.AttackActor)
-          return new Actions.AttackActor(((AI.Actions.AttackActor)target.CurrentAction).Target_ActorID);
+          return Actions.AttackActor.GetOrCreate(((AI.Actions.AttackActor)target.CurrentAction).Target_ActorID);
       }
 
       // follow

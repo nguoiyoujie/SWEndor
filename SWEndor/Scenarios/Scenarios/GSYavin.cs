@@ -709,7 +709,7 @@ namespace SWEndor.Scenarios
               }
 
               actor.ClearQueue();
-              actor.QueueLast(new AttackActor(rsID, -1, -1, false));
+              actor.QueueLast(AttackActor.GetOrCreate(rsID, -1, -1, false));
             }
           }
         }
@@ -995,7 +995,7 @@ namespace SWEndor.Scenarios
             {
               case "mental":
               case "hard":
-                actions = new ActionInfo[] { new Hunt(TargetType.FIGHTER) };
+                actions = new ActionInfo[] { Hunt.GetOrCreate(TargetType.FIGHTER) };
                 break;
             }
 
@@ -1832,7 +1832,7 @@ namespace SWEndor.Scenarios
         Actions = new ActionInfo[] { new Move(new TV_3DVECTOR(vader_distX + 2000, -250, 0), 400)
                                              , new Rotate(new TV_3DVECTOR(vader_distX + 10000, -250, 0), 400)
                                              , new Wait(3)
-                                             , new AttackActor(m_PlayerID, 1500, 1, false, 9999) },
+                                             , AttackActor.GetOrCreate(m_PlayerID, 1500, 1, false, 9999) },
         Registries = null
       }.Spawn(this).ID;
 
@@ -1906,22 +1906,22 @@ namespace SWEndor.Scenarios
 
       ActorInfo m_Vader = Engine.ActorFactory.Get(m_VaderID);
       m_Vader.ForceClearQueue();
-      m_Vader.QueueNext(new AttackActor(m_PlayerID, -1, -1, false, 9999));
-      m_Vader.QueueNext(new AttackActor(m_PlayerID, -1, -1, false, 9999));
+      m_Vader.QueueNext(AttackActor.GetOrCreate(m_PlayerID, -1, -1, false, 9999));
+      m_Vader.QueueNext(AttackActor.GetOrCreate(m_PlayerID, -1, -1, false, 9999));
       m_Vader.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
       m_Vader.QueueNext(new Lock());
 
       ActorInfo m_VaderE1 = Engine.ActorFactory.Get(m_VaderEscort1ID);
       m_VaderE1.ForceClearQueue();
-      m_VaderE1.QueueNext(new AttackActor(m_PlayerID, -1, -1, false, 9999));
-      m_VaderE1.QueueNext(new AttackActor(m_PlayerID, -1, -1, false, 9999));
+      m_VaderE1.QueueNext(AttackActor.GetOrCreate(m_PlayerID, -1, -1, false, 9999));
+      m_VaderE1.QueueNext(AttackActor.GetOrCreate(m_PlayerID, -1, -1, false, 9999));
       m_VaderE1.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
       m_VaderE1.QueueNext(new Lock());
 
       ActorInfo m_VaderE2 = Engine.ActorFactory.Get(m_VaderEscort2ID);
       m_VaderE2.ForceClearQueue();
-      m_VaderE2.QueueNext(new AttackActor(m_PlayerID, -1, -1, false, 9999));
-      m_VaderE2.QueueNext(new AttackActor(m_PlayerID, -1, -1, false, 9999));
+      m_VaderE2.QueueNext(AttackActor.GetOrCreate(m_PlayerID, -1, -1, false, 9999));
+      m_VaderE2.QueueNext(AttackActor.GetOrCreate(m_PlayerID, -1, -1, false, 9999));
       m_VaderE2.QueueNext(new Rotate(new TV_3DVECTOR(vader_distX + 50000, -220, 0), 400));
       m_VaderE2.QueueNext(new Lock());
     }
@@ -1964,8 +1964,8 @@ namespace SWEndor.Scenarios
         Position = new TV_3DVECTOR(vaderend_distX + 2500, 185, 0),
         Rotation = new TV_3DVECTOR(0, -90, 0),
         Actions = new ActionInfo[] { new Move(new TV_3DVECTOR(vaderend_distX + 1300, 5, 0), 500, -1, false)
-                                       , new AttackActor(m_VaderEscort1ID, -1, -1, false, 9999)
-                                       , new AttackActor(m_VaderEscort2ID, -1, -1, false, 9999)
+                                       , AttackActor.GetOrCreate(m_VaderEscort1ID, -1, -1, false, 9999)
+                                       , AttackActor.GetOrCreate(m_VaderEscort2ID, -1, -1, false, 9999)
                                        , new Move(new TV_3DVECTOR(vaderend_distX - 5300, 315, 0), 500, -1, false)
                                        , new Delete() }
       }.Spawn(this);

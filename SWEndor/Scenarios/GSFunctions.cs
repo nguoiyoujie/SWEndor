@@ -99,11 +99,11 @@ namespace SWEndor.Scenarios
       {
         ActionInfo[] actions;
         if (spawninfo.HyperspaceIn)
-          actions = new ActionInfo[] { new HyperspaceIn(poss[i]), new Wait(spawninfo.WaitDelay), new Hunt(spawninfo.HuntTargetType) };
+          actions = new ActionInfo[] { new HyperspaceIn(poss[i]), new Wait(spawninfo.WaitDelay), Hunt.GetOrCreate(spawninfo.HuntTargetType) };
         else if (spawninfo.HuntTargetType == TargetType.ANY)
           actions = new ActionInfo[] { new Wait(spawninfo.WaitDelay) };
         else
-          actions = new ActionInfo[] { new Wait(spawninfo.WaitDelay), new Hunt(spawninfo.HuntTargetType) };
+          actions = new ActionInfo[] { new Wait(spawninfo.WaitDelay), Hunt.GetOrCreate(spawninfo.HuntTargetType) };
 
         string name = (spawninfo.SquadName == null || spawninfo.SquadName == "") ? "" : string.Concat(spawninfo.SquadName, " ", i.ToString());
 

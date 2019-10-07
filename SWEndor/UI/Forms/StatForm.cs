@@ -38,6 +38,11 @@ namespace SWEndor.UI.Forms
       lblSquad.Text = Engine.SquadronFactory.Count.ToString();
       lblSquadPool.Text = Engine.SquadronFactory.PoolCount.ToString();
 
+      lblActionHuntPool.Text = AI.Actions.Hunt._pool.Count.ToString();
+      lblActionHunt.Text = AI.Actions.Hunt._count.ToString();
+      lblActionAttackPool.Text = AI.Actions.AttackActor._pool.Count.ToString();
+      lblActionAttack.Text = AI.Actions.AttackActor._count.ToString();
+
       lblActorsPool_Plan.Text = Engine.ActorFactory.PoolPlanCount.ToString();
       lblActorsPool_Prep.Text = Engine.ActorFactory.PoolPrepCount.ToString();
       lblActorsPool_Main.Text = Engine.ActorFactory.PoolMainCount.ToString();

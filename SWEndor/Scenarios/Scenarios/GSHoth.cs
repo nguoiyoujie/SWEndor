@@ -715,7 +715,7 @@ namespace SWEndor.Scenarios
             {
               case "mental":
               case "hard":
-                actions = new ActionInfo[] { new Hunt(TargetType.FIGHTER) };
+                actions = new ActionInfo[] { Hunt.GetOrCreate(TargetType.FIGHTER) };
                 break;
             }
 

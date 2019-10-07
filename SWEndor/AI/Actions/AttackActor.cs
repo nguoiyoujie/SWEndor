@@ -5,6 +5,7 @@ using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;
+using SWEndor.Primitives.Factories;
 using SWEndor.Weapons;
 using System;
 
@@ -12,18 +13,26 @@ namespace SWEndor.AI.Actions
 {
   public class AttackActor : ActionInfo
   {
-    public AttackActor(int targetActorID, float follow_distance = -1, float too_close_distance = -1, bool can_interrupt = true, float hunt_interval = 15) : base("AttackActor")
-    {
-      Target_ActorID = targetActorID;
-      FollowDistance = follow_distance;
-      TooCloseDistance = too_close_distance;
-      CanInterrupt = can_interrupt;
+    internal static int _count = 0;
+    internal static ObjectPool<AttackActor> _pool = new ObjectPool<AttackActor>(() => { return new AttackActor(); }, (a) => { a.Reset(); });
 
-      ReHuntTime = Globals.Engine.Game.GameTime + hunt_interval; //!
+    private AttackActor() : base("AttackActor") { }
+
+    public static AttackActor GetOrCreate(int targetActorID, float follow_distance = -1, float too_close_distance = -1, bool can_interrupt = true, float hunt_interval = 15)
+    {
+      AttackActor h = _pool.GetNew();
+      _count++;
+      h.Target_ActorID = targetActorID;
+      h.FollowDistance = follow_distance;
+      h.TooCloseDistance = too_close_distance;
+      h.CanInterrupt = can_interrupt;
+      h.ReHuntTime = Globals.Engine.Game.GameTime + hunt_interval; //! Global usage
+      h.IsDisposed = false;
+      return h;
     }
 
     // parameters
-    public readonly int Target_ActorID = -1;
+    public int Target_ActorID = -1;
     public TV_3DVECTOR Target_Position = new TV_3DVECTOR();
     public float FollowDistance = -1;
     public float TooCloseDistance = -1;
@@ -88,7 +97,7 @@ namespace SWEndor.AI.Actions
         if (CanInterrupt && ReHuntTime < engine.Game.GameTime)
         {
           Complete = true;
-          actor.QueueNext(new Hunt());
+          actor.QueueNext(Hunt.GetOrCreate());
         }
         else
           Complete |= (!target.Active || target.IsDyingOrDead);
@@ -98,7 +107,7 @@ namespace SWEndor.AI.Actions
         if (target.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
         {
           float evadeduration = 2000 / (target.GetTrueSpeed() + 500);
-          actor.QueueFirst(new Evade(evadeduration));
+          actor.QueueFirst(Evade.GetOrCreate(evadeduration));
         }
         else if (!(target.TypeInfo.AIData.TargetType.Contains(TargetType.LASER | TargetType.MUNITION)))
         {
@@ -115,7 +124,7 @@ namespace SWEndor.AI.Actions
         ActorInfo leader = actor.Squad.Leader;
         if (leader != null && actor != leader && ActorDistanceInfo.GetRoughDistance(actor, leader) < leader.MoveData.Speed * 0.25f)
         {
-          actor.QueueFirst(new Evade(0.25f));
+          actor.QueueFirst(Evade.GetOrCreate(0.25f));
         }
       }
     }
@@ -176,6 +185,24 @@ namespace SWEndor.AI.Actions
     {
       ActorInfo actor = engine.ActorFactory.Get(actorID);
       engine.ActorFactory.DoUntil(aggressiveTracking, actor);
+    }
+
+    public override void Reset()
+    {
+      base.Reset();
+      Target_ActorID = -1;
+      Target_Position = new TV_3DVECTOR();
+      FollowDistance = -1;
+      TooCloseDistance = -1;
+      SpeedAdjustmentDistanceRange = 250;
+      ReHuntTime = 0;
+    }
+
+    public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
     }
   }
 }

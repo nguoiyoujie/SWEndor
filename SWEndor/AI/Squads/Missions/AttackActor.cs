@@ -19,7 +19,7 @@ namespace SWEndor.AI.Squads.Missions
 
     public override ActionInfo GetNewAction(Engine engine, Squadron squad)
     {
-      return new Actions.AttackActor(Target_ActorID, Speed, Close_enough_distance);
+      return Actions.AttackActor.GetOrCreate(Target_ActorID, Speed, Close_enough_distance);
     }
 
     public override void Process(Engine engine, Squadron squad)

@@ -3,19 +3,17 @@ using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Primitives.Extensions;
+using SWEndor.Primitives.Factories;
 using SWEndor.Weapons;
 
 namespace SWEndor.AI.Actions
 {
   public class AvoidCollisionRotate : ActionInfo
   {
-    public AvoidCollisionRotate(TV_3DVECTOR impact_position, TV_3DVECTOR normal_vec, float close_enough_angle = 0.1f) : base("AvoidCollisionRotate")
-    {
-      Impact_Position = impact_position;
-      Normal = normal_vec;
-      CloseEnoughAngle = close_enough_angle;
-      CanInterrupt = false;
-    }
+    internal static int _count = 0;
+    internal static ObjectPool<AvoidCollisionRotate> _pool = new ObjectPool<AvoidCollisionRotate>(() => { return new AvoidCollisionRotate(); }, (a) => { a.Reset(); });
+
+    private AvoidCollisionRotate() : base("AvoidCollisionRotate") { }
 
     // parameters
     public TV_3DVECTOR Impact_Position = new TV_3DVECTOR();
@@ -24,6 +22,17 @@ namespace SWEndor.AI.Actions
     private bool calcAvoidAngle = false;
     public float AvoidanceAngle = 90;
     public float CloseEnoughAngle = 0.1f;
+
+    public static AvoidCollisionRotate GetOrCreate(TV_3DVECTOR impact_position, TV_3DVECTOR normal_vec, float close_enough_angle = 0.1f)
+    {
+      AvoidCollisionRotate h = _pool.GetNew();
+      _count++;
+      h.Impact_Position = impact_position;
+      h.Normal = normal_vec;
+      h.CloseEnoughAngle = close_enough_angle;
+      h.CanInterrupt = false;
+      return h;
+    }
 
     public override string ToString()
     {
@@ -107,6 +116,24 @@ namespace SWEndor.AI.Actions
       owner.Engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref avoidvec, impact_normal - owner.Engine.TrueVision.TVMathLibrary.VDotProduct(impact_normal, travelling_vec) * travelling_vec);
       float val = owner.Engine.TrueVision.TVMathLibrary.VDotProduct(avoidvec, xzdir);
       return owner.Engine.TrueVision.TVMathLibrary.ACos(val);
+    }
+
+    public override void Reset()
+    {
+      base.Reset();
+      Impact_Position = new TV_3DVECTOR();
+      Target_Position = new TV_3DVECTOR();
+      Normal = new TV_3DVECTOR();
+      calcAvoidAngle = false;
+      AvoidanceAngle = 90;
+      CloseEnoughAngle = 0.1f;
+    }
+
+    public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
     }
   }
 }

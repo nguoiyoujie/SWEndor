@@ -90,6 +90,13 @@
       this.lblPrevDynMusic = new System.Windows.Forms.Label();
       this.label18 = new System.Windows.Forms.Label();
       this.label26 = new System.Windows.Forms.Label();
+      this.lblActionHuntPool = new System.Windows.Forms.Label();
+      this.label30 = new System.Windows.Forms.Label();
+      this.lblActionAttackPool = new System.Windows.Forms.Label();
+      this.label33 = new System.Windows.Forms.Label();
+      this.lblActionAttack = new System.Windows.Forms.Label();
+      this.lblActionHunt = new System.Windows.Forms.Label();
+      this.label36 = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // label1
@@ -308,7 +315,7 @@
       // 
       // lblActorsPool_Plan
       // 
-      this.lblActorsPool_Plan.Location = new System.Drawing.Point(232, 390);
+      this.lblActorsPool_Plan.Location = new System.Drawing.Point(232, 442);
       this.lblActorsPool_Plan.Name = "lblActorsPool_Plan";
       this.lblActorsPool_Plan.Size = new System.Drawing.Size(40, 15);
       this.lblActorsPool_Plan.TabIndex = 27;
@@ -316,7 +323,7 @@
       // 
       // label19
       // 
-      this.label19.Location = new System.Drawing.Point(46, 390);
+      this.label19.Location = new System.Drawing.Point(46, 442);
       this.label19.Name = "label19";
       this.label19.Size = new System.Drawing.Size(180, 15);
       this.label19.TabIndex = 26;
@@ -324,7 +331,7 @@
       // 
       // label20
       // 
-      this.label20.Location = new System.Drawing.Point(232, 375);
+      this.label20.Location = new System.Drawing.Point(232, 427);
       this.label20.Name = "label20";
       this.label20.Size = new System.Drawing.Size(40, 15);
       this.label20.TabIndex = 28;
@@ -332,7 +339,7 @@
       // 
       // label21
       // 
-      this.label21.Location = new System.Drawing.Point(278, 375);
+      this.label21.Location = new System.Drawing.Point(278, 427);
       this.label21.Name = "label21";
       this.label21.Size = new System.Drawing.Size(40, 15);
       this.label21.TabIndex = 30;
@@ -340,7 +347,7 @@
       // 
       // lblActorsPool_Prep
       // 
-      this.lblActorsPool_Prep.Location = new System.Drawing.Point(278, 390);
+      this.lblActorsPool_Prep.Location = new System.Drawing.Point(278, 442);
       this.lblActorsPool_Prep.Name = "lblActorsPool_Prep";
       this.lblActorsPool_Prep.Size = new System.Drawing.Size(40, 15);
       this.lblActorsPool_Prep.TabIndex = 29;
@@ -348,7 +355,7 @@
       // 
       // label23
       // 
-      this.label23.Location = new System.Drawing.Point(324, 375);
+      this.label23.Location = new System.Drawing.Point(324, 427);
       this.label23.Name = "label23";
       this.label23.Size = new System.Drawing.Size(40, 15);
       this.label23.TabIndex = 32;
@@ -356,7 +363,7 @@
       // 
       // lblActorsPool_Main
       // 
-      this.lblActorsPool_Main.Location = new System.Drawing.Point(324, 390);
+      this.lblActorsPool_Main.Location = new System.Drawing.Point(324, 442);
       this.lblActorsPool_Main.Name = "lblActorsPool_Main";
       this.lblActorsPool_Main.Size = new System.Drawing.Size(40, 15);
       this.lblActorsPool_Main.TabIndex = 31;
@@ -364,7 +371,7 @@
       // 
       // label25
       // 
-      this.label25.Location = new System.Drawing.Point(370, 375);
+      this.label25.Location = new System.Drawing.Point(370, 427);
       this.label25.Name = "label25";
       this.label25.Size = new System.Drawing.Size(40, 15);
       this.label25.TabIndex = 34;
@@ -372,7 +379,7 @@
       // 
       // lblActorsPool_Dead
       // 
-      this.lblActorsPool_Dead.Location = new System.Drawing.Point(370, 390);
+      this.lblActorsPool_Dead.Location = new System.Drawing.Point(370, 442);
       this.lblActorsPool_Dead.Name = "lblActorsPool_Dead";
       this.lblActorsPool_Dead.Size = new System.Drawing.Size(40, 15);
       this.lblActorsPool_Dead.TabIndex = 33;
@@ -380,7 +387,7 @@
       // 
       // label27
       // 
-      this.label27.Location = new System.Drawing.Point(416, 375);
+      this.label27.Location = new System.Drawing.Point(416, 427);
       this.label27.Name = "label27";
       this.label27.Size = new System.Drawing.Size(40, 15);
       this.label27.TabIndex = 36;
@@ -388,7 +395,7 @@
       // 
       // lblActorsPool_TPrep
       // 
-      this.lblActorsPool_TPrep.Location = new System.Drawing.Point(416, 390);
+      this.lblActorsPool_TPrep.Location = new System.Drawing.Point(416, 442);
       this.lblActorsPool_TPrep.Name = "lblActorsPool_TPrep";
       this.lblActorsPool_TPrep.Size = new System.Drawing.Size(40, 15);
       this.lblActorsPool_TPrep.TabIndex = 35;
@@ -396,7 +403,7 @@
       // 
       // label29
       // 
-      this.label29.Location = new System.Drawing.Point(462, 375);
+      this.label29.Location = new System.Drawing.Point(462, 427);
       this.label29.Name = "label29";
       this.label29.Size = new System.Drawing.Size(40, 15);
       this.label29.TabIndex = 38;
@@ -404,7 +411,7 @@
       // 
       // lblActorsPool_TPlan
       // 
-      this.lblActorsPool_TPlan.Location = new System.Drawing.Point(462, 390);
+      this.lblActorsPool_TPlan.Location = new System.Drawing.Point(462, 442);
       this.lblActorsPool_TPlan.Name = "lblActorsPool_TPlan";
       this.lblActorsPool_TPlan.Size = new System.Drawing.Size(40, 15);
       this.lblActorsPool_TPlan.TabIndex = 37;
@@ -412,7 +419,7 @@
       // 
       // label31
       // 
-      this.label31.Location = new System.Drawing.Point(508, 375);
+      this.label31.Location = new System.Drawing.Point(508, 427);
       this.label31.Name = "label31";
       this.label31.Size = new System.Drawing.Size(52, 15);
       this.label31.TabIndex = 40;
@@ -420,7 +427,7 @@
       // 
       // lblActorsPool_TDead
       // 
-      this.lblActorsPool_TDead.Location = new System.Drawing.Point(508, 390);
+      this.lblActorsPool_TDead.Location = new System.Drawing.Point(508, 442);
       this.lblActorsPool_TDead.Name = "lblActorsPool_TDead";
       this.lblActorsPool_TDead.Size = new System.Drawing.Size(40, 15);
       this.lblActorsPool_TDead.TabIndex = 39;
@@ -428,7 +435,7 @@
       // 
       // lblExplPool_TDead
       // 
-      this.lblExplPool_TDead.Location = new System.Drawing.Point(508, 405);
+      this.lblExplPool_TDead.Location = new System.Drawing.Point(508, 457);
       this.lblExplPool_TDead.Name = "lblExplPool_TDead";
       this.lblExplPool_TDead.Size = new System.Drawing.Size(40, 15);
       this.lblExplPool_TDead.TabIndex = 48;
@@ -436,7 +443,7 @@
       // 
       // lblExplPool_TPlan
       // 
-      this.lblExplPool_TPlan.Location = new System.Drawing.Point(462, 405);
+      this.lblExplPool_TPlan.Location = new System.Drawing.Point(462, 457);
       this.lblExplPool_TPlan.Name = "lblExplPool_TPlan";
       this.lblExplPool_TPlan.Size = new System.Drawing.Size(40, 15);
       this.lblExplPool_TPlan.TabIndex = 47;
@@ -444,7 +451,7 @@
       // 
       // lblExplPool_TPrep
       // 
-      this.lblExplPool_TPrep.Location = new System.Drawing.Point(416, 405);
+      this.lblExplPool_TPrep.Location = new System.Drawing.Point(416, 457);
       this.lblExplPool_TPrep.Name = "lblExplPool_TPrep";
       this.lblExplPool_TPrep.Size = new System.Drawing.Size(40, 15);
       this.lblExplPool_TPrep.TabIndex = 46;
@@ -452,7 +459,7 @@
       // 
       // lblExplPool_Dead
       // 
-      this.lblExplPool_Dead.Location = new System.Drawing.Point(370, 405);
+      this.lblExplPool_Dead.Location = new System.Drawing.Point(370, 457);
       this.lblExplPool_Dead.Name = "lblExplPool_Dead";
       this.lblExplPool_Dead.Size = new System.Drawing.Size(40, 15);
       this.lblExplPool_Dead.TabIndex = 45;
@@ -460,7 +467,7 @@
       // 
       // lblExplPool_Main
       // 
-      this.lblExplPool_Main.Location = new System.Drawing.Point(324, 405);
+      this.lblExplPool_Main.Location = new System.Drawing.Point(324, 457);
       this.lblExplPool_Main.Name = "lblExplPool_Main";
       this.lblExplPool_Main.Size = new System.Drawing.Size(40, 15);
       this.lblExplPool_Main.TabIndex = 44;
@@ -468,7 +475,7 @@
       // 
       // lblExplPool_Prep
       // 
-      this.lblExplPool_Prep.Location = new System.Drawing.Point(278, 405);
+      this.lblExplPool_Prep.Location = new System.Drawing.Point(278, 457);
       this.lblExplPool_Prep.Name = "lblExplPool_Prep";
       this.lblExplPool_Prep.Size = new System.Drawing.Size(40, 15);
       this.lblExplPool_Prep.TabIndex = 43;
@@ -476,7 +483,7 @@
       // 
       // lblExplPool_Plan
       // 
-      this.lblExplPool_Plan.Location = new System.Drawing.Point(232, 405);
+      this.lblExplPool_Plan.Location = new System.Drawing.Point(232, 457);
       this.lblExplPool_Plan.Name = "lblExplPool_Plan";
       this.lblExplPool_Plan.Size = new System.Drawing.Size(40, 15);
       this.lblExplPool_Plan.TabIndex = 42;
@@ -484,7 +491,7 @@
       // 
       // label40
       // 
-      this.label40.Location = new System.Drawing.Point(46, 405);
+      this.label40.Location = new System.Drawing.Point(46, 457);
       this.label40.Name = "label40";
       this.label40.Size = new System.Drawing.Size(180, 15);
       this.label40.TabIndex = 41;
@@ -570,11 +577,74 @@
       this.label26.TabIndex = 59;
       this.label26.Text = "Squadrons";
       // 
+      // lblActionHuntPool
+      // 
+      this.lblActionHuntPool.Location = new System.Drawing.Point(232, 365);
+      this.lblActionHuntPool.Name = "lblActionHuntPool";
+      this.lblActionHuntPool.Size = new System.Drawing.Size(40, 15);
+      this.lblActionHuntPool.TabIndex = 61;
+      this.lblActionHuntPool.Text = "0";
+      // 
+      // label30
+      // 
+      this.label30.Location = new System.Drawing.Point(46, 365);
+      this.label30.Name = "label30";
+      this.label30.Size = new System.Drawing.Size(180, 15);
+      this.label30.TabIndex = 60;
+      this.label30.Text = "Actions.Hunt.ObjectPool";
+      // 
+      // lblActionAttackPool
+      // 
+      this.lblActionAttackPool.Location = new System.Drawing.Point(232, 380);
+      this.lblActionAttackPool.Name = "lblActionAttackPool";
+      this.lblActionAttackPool.Size = new System.Drawing.Size(40, 15);
+      this.lblActionAttackPool.TabIndex = 63;
+      this.lblActionAttackPool.Text = "0";
+      // 
+      // label33
+      // 
+      this.label33.Location = new System.Drawing.Point(46, 380);
+      this.label33.Name = "label33";
+      this.label33.Size = new System.Drawing.Size(180, 15);
+      this.label33.TabIndex = 62;
+      this.label33.Text = "Actions.AttackActor.ObjectPool";
+      // 
+      // lblActionAttack
+      // 
+      this.lblActionAttack.Location = new System.Drawing.Point(278, 380);
+      this.lblActionAttack.Name = "lblActionAttack";
+      this.lblActionAttack.Size = new System.Drawing.Size(40, 15);
+      this.lblActionAttack.TabIndex = 65;
+      this.lblActionAttack.Text = "0";
+      // 
+      // lblActionHunt
+      // 
+      this.lblActionHunt.Location = new System.Drawing.Point(278, 365);
+      this.lblActionHunt.Name = "lblActionHunt";
+      this.lblActionHunt.Size = new System.Drawing.Size(40, 15);
+      this.lblActionHunt.TabIndex = 64;
+      this.lblActionHunt.Text = "0";
+      // 
+      // label36
+      // 
+      this.label36.Location = new System.Drawing.Point(278, 320);
+      this.label36.Name = "label36";
+      this.label36.Size = new System.Drawing.Size(40, 15);
+      this.label36.TabIndex = 66;
+      this.label36.Text = "In Use";
+      // 
       // StatForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(569, 481);
+      this.ClientSize = new System.Drawing.Size(569, 510);
+      this.Controls.Add(this.label36);
+      this.Controls.Add(this.lblActionAttack);
+      this.Controls.Add(this.lblActionHunt);
+      this.Controls.Add(this.lblActionAttackPool);
+      this.Controls.Add(this.label33);
+      this.Controls.Add(this.lblActionHuntPool);
+      this.Controls.Add(this.label30);
       this.Controls.Add(this.label26);
       this.Controls.Add(this.label18);
       this.Controls.Add(this.label28);
@@ -704,6 +774,13 @@
     private System.Windows.Forms.Label lblPrevDynMusic;
     private System.Windows.Forms.Label label18;
     private System.Windows.Forms.Label label26;
+    private System.Windows.Forms.Label lblActionHuntPool;
+    private System.Windows.Forms.Label label30;
+    private System.Windows.Forms.Label lblActionAttackPool;
+    private System.Windows.Forms.Label label33;
+    private System.Windows.Forms.Label lblActionAttack;
+    private System.Windows.Forms.Label lblActionHunt;
+    private System.Windows.Forms.Label label36;
   }
 }
 

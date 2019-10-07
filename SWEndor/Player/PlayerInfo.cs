@@ -285,7 +285,7 @@ namespace SWEndor.Player
             if (c.UseParentCoords)
             {
               c.ClearQueue();
-              c.QueueFirst(new AttackActor(t.ID));
+              c.QueueFirst(AttackActor.GetOrCreate(t.ID));
             }
           }
         }

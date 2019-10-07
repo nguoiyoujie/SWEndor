@@ -3,6 +3,7 @@ using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
 using SWEndor.Actors.Models;
 using SWEndor.ActorTypes;
+using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.AI.Squads;
 using SWEndor.Core;
@@ -349,7 +350,7 @@ namespace SWEndor.Actors
       Relation.Dispose(this);
 
       // Actions
-      CurrentAction = null;
+      this.ForceClearQueue();
       Squad = null;
 
       // Reset components

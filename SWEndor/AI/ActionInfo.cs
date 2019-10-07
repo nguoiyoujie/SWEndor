@@ -79,14 +79,29 @@ namespace SWEndor.AI.Actions
 
     protected static void CreateAvoidAction(ActorInfo actor)
     {
-      actor.QueueFirst(new AvoidCollisionWait(2.5f)); // 2nd action
-      actor.QueueFirst(new AvoidCollisionRotate(actor.CollisionData.ProspectiveCollision.Impact, actor.CollisionData.ProspectiveCollision.Normal));
+      actor.QueueFirst(AvoidCollisionWait.GetOrCreate(2.5f)); // 2nd action
+      actor.QueueFirst(AvoidCollisionRotate.GetOrCreate(actor.CollisionData.ProspectiveCollision.Impact, actor.CollisionData.ProspectiveCollision.Normal));
     }
 
+    public virtual void Return() { }
+
+    public virtual void Reset()
+    {
+      Complete = false;
+      CanInterrupt = true;
+      NextAction = null;
+    }
+
+    public bool IsDisposed = false;
     public void Dispose()
     {
+      if (IsDisposed)
+        return;
+
+      IsDisposed = true;
       NextAction = null;
       Complete = true;
+      Return();
     }
   }
 }

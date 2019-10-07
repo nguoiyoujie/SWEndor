@@ -35,7 +35,7 @@ namespace SWEndor.AI.Squads
     public ActionInfo GetNewAction(Engine engine)
     {
       if (IsNull)
-        return new Actions.Idle();
+        return new Idle();
 
       if (Mission != null)
       {
@@ -46,9 +46,9 @@ namespace SWEndor.AI.Squads
 
       lock (lockthreat)
         if (_threats.Count > 0)
-          return new Actions.AttackActor(_threats.First.Value.ID);
+          return AttackActor.GetOrCreate(_threats.First.Value.ID);
 
-      return new Actions.Idle();
+      return new Idle();
     }
 
     public ActorInfo GetThreatFirst(Engine engine)

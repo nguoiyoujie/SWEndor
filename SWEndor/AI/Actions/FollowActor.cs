@@ -62,7 +62,7 @@ namespace SWEndor.AI.Actions
         ActorInfo leader = actor.Squad.Leader;
         if (leader != null && actor != leader && ActorDistanceInfo.GetRoughDistance(actor, leader) < leader.MoveData.Speed * 0.5f)
         {
-          actor.QueueFirst(new Evade(0.5f));
+          actor.QueueFirst(Evade.GetOrCreate(0.5f));
         }
       }
     }

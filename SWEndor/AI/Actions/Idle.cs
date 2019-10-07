@@ -19,7 +19,7 @@ namespace SWEndor.AI.Actions
         actor.AIData.AdjustSpeed(actor);
 
         if (NextAction == null)
-          actor.QueueLast(new Hunt());
+          actor.QueueLast(Hunt.GetOrCreate());
 
         Complete = true;
 

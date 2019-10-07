@@ -937,7 +937,7 @@ namespace SWEndor.Scenarios
               }
 
               actor.ClearQueue();
-              actor.QueueLast(new AttackActor(rsID, -1, -1, false));
+              actor.QueueLast(AttackActor.GetOrCreate(rsID, -1, -1, false));
             }
           }
         }
@@ -1162,7 +1162,7 @@ namespace SWEndor.Scenarios
             {
               case "mental":
               case "hard":
-                actions = new ActionInfo[] { new Hunt(TargetType.FIGHTER) };
+                actions = new ActionInfo[] { Hunt.GetOrCreate(TargetType.FIGHTER) };
                 break;
             }
 
@@ -1204,7 +1204,7 @@ namespace SWEndor.Scenarios
             {
               case "mental":
               case "hard":
-                actions = new ActionInfo[] { new Hunt(TargetType.FIGHTER) };
+                actions = new ActionInfo[] { Hunt.GetOrCreate(TargetType.FIGHTER) };
                 break;
             }
 
@@ -2027,7 +2027,7 @@ namespace SWEndor.Scenarios
             m_ADS_targetID = tid;
 
             m_ADSLS.ForceClearQueue();
-            m_ADSLS.QueueNext(new AttackActor(tid));
+            m_ADSLS.QueueNext(AttackActor.GetOrCreate(tid));
             m_ADSLS.QueueNext(new Lock());
 
             t.DestroyedEvents += DeathStarKill_Effect;

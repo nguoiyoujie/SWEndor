@@ -99,7 +99,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
           break;
 
         case "hunt":
-          action = new Hunt();
+          action = Hunt.GetOrCreate();
           break;
 
         case "selfdestruct":
@@ -123,9 +123,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
 
         case "evade":
           if (ps.Length <= 2)
-            action = new Evade();
+            action = Evade.GetOrCreate();
           else
-            action = new Evade(ps[2].ValueF);
+            action = Evade.GetOrCreate(ps[2].ValueF);
           break;
 
         case "move":
@@ -225,20 +225,20 @@ namespace SWEndor.Scenarios.Scripting.Functions
             switch (ps.Length)
             {
               case 3:
-                action = new AttackActor(tgtid);
+                action = AttackActor.GetOrCreate(tgtid);
                 break;
               case 4:
-                action = new AttackActor(tgtid, ps[3].ValueF);
+                action = AttackActor.GetOrCreate(tgtid, ps[3].ValueF);
                 break;
               case 5:
-                action = new AttackActor(tgtid, ps[3].ValueF, ps[4].ValueF);
+                action = AttackActor.GetOrCreate(tgtid, ps[3].ValueF, ps[4].ValueF);
                 break;
               case 6:
-                action = new AttackActor(tgtid, ps[3].ValueF, ps[4].ValueF, ps[5].ValueB);
+                action = AttackActor.GetOrCreate(tgtid, ps[3].ValueF, ps[4].ValueF, ps[5].ValueB);
                 break;
               default:
               case 7:
-                action = new AttackActor(tgtid, ps[3].ValueF, ps[4].ValueF, ps[5].ValueB, ps[6].ValueF);
+                action = AttackActor.GetOrCreate(tgtid, ps[3].ValueF, ps[4].ValueF, ps[5].ValueB, ps[6].ValueF);
                 break;
             }
           }
@@ -281,11 +281,11 @@ namespace SWEndor.Scenarios.Scripting.Functions
             switch (ps.Length)
             {
               case 8:
-                action = new AvoidCollisionRotate(pos, rot);
+                action = AvoidCollisionRotate.GetOrCreate(pos, rot);
                 break;
               default:
               case 9:
-                action = new AvoidCollisionRotate(pos, rot, ps[8].ValueF);
+                action = AvoidCollisionRotate.GetOrCreate(pos, rot, ps[8].ValueF);
                 break;
             }
           }

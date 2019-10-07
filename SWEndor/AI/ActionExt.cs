@@ -25,7 +25,7 @@ namespace SWEndor.AI
       {
         ActionInfo aend = actor.CurrentAction;
         int limit = 99;
-        while (aend.NextAction != null && limit > 0)
+        while (aend?.NextAction != null && limit > 0)
         {
           if (aend.CanInterrupt)
           {
@@ -43,15 +43,16 @@ namespace SWEndor.AI
 
     public static void ForceClearQueue(this ActorInfo actor)
     {
-      if (actor != null)
+      ActionInfo action = actor.CurrentAction;
+      while (action != null)
       {
-        actor.CurrentAction = null;
+        action.Complete = true;
+        action = action.NextAction;
       }
     }
 
     public static void QueueFirst(this ActorInfo actor, ActionInfo action)
     {
-
       if (actor.CurrentAction == null)
         actor.CurrentAction = action;
       else
@@ -79,7 +80,7 @@ namespace SWEndor.AI
         ActionInfo amid = action;
         actor.CurrentAction.NextAction = action;
         int limit = 99;
-        while (amid.NextAction != null && limit > 0)
+        while (amid?.NextAction != null && limit > 0)
         {
           amid = amid.NextAction;
           limit--;
@@ -96,7 +97,7 @@ namespace SWEndor.AI
       {
         ActionInfo aend = actor.CurrentAction;
         int limit = 99;
-        while (aend.NextAction != null && limit > 0)
+        while (aend?.NextAction != null && limit > 0)
         {
           aend = aend.NextAction;
           limit--;
@@ -118,6 +119,7 @@ namespace SWEndor.AI
           if (action.NextAction == null)
           {
             actor.CurrentAction = actor.Squad.GetNewAction(actor.Engine) ?? new Idle();
+            action.Dispose();
           }
           else
           {

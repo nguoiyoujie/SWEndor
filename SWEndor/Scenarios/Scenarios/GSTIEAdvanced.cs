@@ -455,7 +455,7 @@ namespace SWEndor.Scenarios
         Faction = FactionInfo.Factory.Get("Empire_Advanced"),
         Position = new TV_3DVECTOR(fx, fy, -22500),
         Rotation = new TV_3DVECTOR(),
-        Actions = new ActionInfo[] { new Hunt(TargetType.SHIP) },
+        Actions = new ActionInfo[] { Hunt.GetOrCreate(TargetType.SHIP) },
         Registries = new string[] { "CriticalEnemies" }
       }.Spawn(this).ID;
 
@@ -478,7 +478,7 @@ namespace SWEndor.Scenarios
       if (m_X1 != null)
       {
         m_X1.ForceClearQueue();
-        m_X1.QueueLast(new Hunt(TargetType.SHIP));
+        m_X1.QueueLast(Hunt.GetOrCreate(TargetType.SHIP));
       }
     }
 
@@ -488,7 +488,7 @@ namespace SWEndor.Scenarios
       if (m_X1 != null)
       {
         m_X1.ForceClearQueue();
-        m_X1.QueueLast(new Hunt(TargetType.FIGHTER));
+        m_X1.QueueLast(Hunt.GetOrCreate(TargetType.FIGHTER));
       }
     }
 

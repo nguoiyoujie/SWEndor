@@ -257,7 +257,7 @@ namespace SWEndor.ActorTypes
                         if (b != null)
                         {
                           a.ClearQueue();
-                          a.QueueLast(new AttackActor(b.ID));
+                          a.QueueLast(AttackActor.GetOrCreate(b.ID));
                         }
                       }
                     }
@@ -269,7 +269,7 @@ namespace SWEndor.ActorTypes
                       if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
                       {
                         a.ClearQueue();
-                        a.QueueLast(new AttackActor(attacker.ID));
+                        a.QueueLast(AttackActor.GetOrCreate(attacker.ID));
                       }
                     }
                   }
@@ -277,12 +277,12 @@ namespace SWEndor.ActorTypes
                 else
                 {
                   owner.ClearQueue();
-                  owner.QueueLast(new AttackActor(attacker.ID));
+                  owner.QueueLast(AttackActor.GetOrCreate(attacker.ID));
                 }
               }
               else if (owner.CanEvade && !(owner.CurrentAction is Evade))
               {
-                owner.QueueFirst(new Evade());
+                owner.QueueFirst(Evade.GetOrCreate());
               }
 
               if (!owner.Squad.IsNull)

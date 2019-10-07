@@ -163,9 +163,14 @@ namespace SWEndor.Scenarios
       Engine.Screen2D.Box3D_Enable = false;
 
       Engine.LandInfo.Enabled = false;
+
       Mood = MoodStates.AMBIENT;
       Engine.SoundManager.Clear();
       ActorDistanceInfo.Reset();
+
+      // TO-DO: reset the live counters in a more graceful way
+      AI.Actions.Hunt._count = 0;
+      AI.Actions.AttackActor._count = 0;
 
       Game.GameTime = 0;
       Manager.IsCutsceneMode = false;

@@ -1,16 +1,16 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Core;
+using SWEndor.Primitives.Factories;
 
 namespace SWEndor.AI.Actions
 {
   public class Evade : ActionInfo
   {
-    public Evade(float time = 2.5f) : base("Evade")
-    {
-      WaitTime = time;
-      CanInterrupt = false;
-    }
+    internal static int _count = 0;
+    internal static ObjectPool<Evade> _pool = new ObjectPool<Evade>(() => { return new Evade(); }, (a) => { a.Reset(); });
+
+    private Evade() : base("Evade") { }
 
     // parameters
     public TV_3DVECTOR Target_Position = new TV_3DVECTOR();
@@ -20,6 +20,14 @@ namespace SWEndor.AI.Actions
     private float ResumeTime = 0;
     private bool poschecked = false;
 
+    public static Evade GetOrCreate(float time = 2.5f)
+    {
+      Evade h = _pool.GetNew();
+      _count++;
+      h.WaitTime = time;
+      h.CanInterrupt = false;
+      return h;
+    }
 
     public override string ToString()
     {
@@ -66,6 +74,24 @@ namespace SWEndor.AI.Actions
 
       if (CheckImminentCollision(actor))
         CreateAvoidAction(actor);
+    }
+
+    public override void Reset()
+    {
+      base.Reset();
+      Target_Position = new TV_3DVECTOR();
+      Target_Speed = 0;
+      CloseEnoughAngle = 0.1f;
+      WaitTime = 0;
+      ResumeTime = 0;
+      poschecked = false;
+    }
+
+    public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
     }
   }
 }
