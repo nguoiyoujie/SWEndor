@@ -52,7 +52,7 @@ namespace SWEndor.UI.Widgets
         return;
       }
 
-      if (prev_warn == 0)
+      if (warn > prev_warn)
         Engine.SoundManager.SetSound(SoundGlobals.MissileAlert);
 
       prev_warn = warn;
