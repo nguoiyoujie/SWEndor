@@ -1,21 +1,30 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Core;
+using SWEndor.Primitives.Factories;
 
 namespace SWEndor.AI.Actions
 {
   public class ProjectileAttackActor : ActionInfo
   {
-    public ProjectileAttackActor(ActorInfo targetActor) : base("ProjectileAttackActor")
+    internal static int _count = 0;
+    internal static ObjectPool<ProjectileAttackActor> _pool = new ObjectPool<ProjectileAttackActor>(() => { return new ProjectileAttackActor(); }, (a) => { a.Reset(); });
+
+    private ProjectileAttackActor() : base("ProjectileAttackActor") { }
+
+    public static ProjectileAttackActor GetOrCreate(ActorInfo targetActor)
     {
-      Target_Actor = targetActor;
-      ID = targetActor?.ID ?? -1;
-      CanInterrupt = false;
+      ProjectileAttackActor h = _pool.GetNew();
+      _count++;
+      h.Target_Actor = targetActor;
+      h.ID = targetActor?.ID ?? -1;
+      h.CanInterrupt = false;
+      return h;
     }
 
     // parameters
-    public readonly ActorInfo Target_Actor = null;
-    public readonly int ID;
+    public ActorInfo Target_Actor = null;
+    public int ID;
     public TV_3DVECTOR Target_Position = new TV_3DVECTOR();
 
     public override string ToString()
@@ -44,6 +53,22 @@ namespace SWEndor.AI.Actions
       actor.AIData.AdjustSpeed(actor);
 
       Complete |= (!target.Active || target.IsDyingOrDead);
+    }
+
+
+    public override void Reset()
+    {
+      base.Reset();
+      Target_Actor = null;
+      ID = -1;
+      Target_Position = new TV_3DVECTOR();
+    }
+
+  public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
     }
   }
 }
