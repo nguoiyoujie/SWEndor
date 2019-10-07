@@ -46,9 +46,10 @@ namespace SWEndor.AI
       ActionInfo action = actor.CurrentAction;
       while (action != null)
       {
-        action.Complete = true;
+        action.Dispose();
         action = action.NextAction;
       }
+      actor.CurrentAction = null;
     }
 
     public static void QueueFirst(this ActorInfo actor, ActionInfo action)
