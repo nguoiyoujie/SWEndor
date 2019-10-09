@@ -156,7 +156,7 @@ namespace SWEndor.AI.Squads
     }
 
     private ActorInfo[] _empty = new ActorInfo[0];
-    public LinkedListEnumerable<ActorInfo> Members { get { if (IsNull) return default(LinkedListEnumerable<ActorInfo>); else return new LinkedListEnumerable<ActorInfo>(_members); } }
+    public LinkedListEnumerable<ActorInfo> Members { get { if (IsNull) return LinkedListEnumerable<ActorInfo>.Empty; else return new LinkedListEnumerable<ActorInfo>(_members); } }
     public ActorInfo[] MembersCopy
     {
       get
@@ -174,7 +174,7 @@ namespace SWEndor.AI.Squads
         }
       }
     }
-    public LinkedListEnumerable<ActorInfo> Threats { get { if (IsNull) return default(LinkedListEnumerable<ActorInfo>); else return new LinkedListEnumerable<ActorInfo>(_threats); } }
+    public LinkedListEnumerable<ActorInfo> Threats { get { if (IsNull) return LinkedListEnumerable<ActorInfo>.Empty; else return new LinkedListEnumerable<ActorInfo>(_threats); } }
 
     public ActorInfo Leader { get { return (IsNull || _members.Count == 0) ? null : _members.First.Value; } }
   }

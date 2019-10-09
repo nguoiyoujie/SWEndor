@@ -55,7 +55,6 @@ namespace SWEndor.AI.Actions
       Complete |= (!target.Active || target.IsDyingOrDead);
     }
 
-
     public override void Reset()
     {
       base.Reset();

@@ -64,11 +64,19 @@ namespace SWEndor.AI.Actions
       }
       else
       {
-        ActorInfo leader = actor.Squad.Leader;
-        if (leader != null && actor != leader && ActorDistanceInfo.GetRoughDistance(actor, leader) < leader.MoveData.Speed * 0.5f)
+        foreach (ActorInfo l in actor.Squad.Members)
         {
-          actor.QueueFirst(Evade.GetOrCreate(0.5f));
+          if (l != null && actor != l && ActorDistanceInfo.GetRoughDistance(actor, l) < l.MoveData.Speed * 0.5f)
+          {
+            actor.QueueFirst(Evade.GetOrCreate(0.5f));
+            break;
+          }
+          else if (actor == l)
+            break;
         }
+        //ActorInfo leader = actor.Squad.Leader;
+        //if (leader != null && actor != leader && ActorDistanceInfo.GetRoughDistance(actor, leader) < leader.MoveData.Speed * 0.5f)
+        //actor.QueueFirst(Evade.GetOrCreate(0.5f));
       }
     }
   }
