@@ -26,7 +26,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       base.Initialize(engine, ainfo);
 
-      laser = new WeaponShotInfo(WeaponFactory.Get("DSTAR_LSR"), 1);
+      laser = new WeaponShotInfo(engine.WeaponFactory.Get("DSTAR_LSR"), 1);
 
       ainfo.QueueNext(new Lock());
     }

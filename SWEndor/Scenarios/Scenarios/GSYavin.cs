@@ -667,9 +667,9 @@ namespace SWEndor.Scenarios
           player.WeaponDefinitions.Reset();
 
           UnfixedWeaponData prew = new UnfixedWeaponData();
-          prew.InsertLoadout("X_WG_LASR");
-          prew.InsertLoadout("X_WG_TORP");
-          player.WeaponDefinitions.Load(prew);
+          prew.InsertLoadout(Engine.WeaponLoadoutFactory, "X_WG_LASR");
+          prew.InsertLoadout(Engine.WeaponLoadoutFactory, "X_WG_TORP");
+          player.WeaponDefinitions.Load(Engine.WeaponFactory, prew);
         }
         else if (Stage5StartRun)
         {
@@ -1873,9 +1873,9 @@ namespace SWEndor.Scenarios
       ActorInfo vaderE2 = Engine.ActorFactory.Get(m_VaderEscort2ID);
 
       UnfixedWeaponData prew = new UnfixedWeaponData();
-      prew.InsertLoadout("TIED_LASR");
-      prew.InsertLoadout("TIED_LASR");
-      vader.WeaponDefinitions.Load(prew);
+      prew.InsertLoadout(Engine.WeaponLoadoutFactory, "TIED_LASR");
+      prew.InsertLoadout(Engine.WeaponLoadoutFactory, "TIED_LASR");
+      vader.WeaponDefinitions.Load(Engine.WeaponFactory, prew);
 
       vader.MoveData.MaxSpeed = 400;
       vader.MoveData.MinSpeed = 400;

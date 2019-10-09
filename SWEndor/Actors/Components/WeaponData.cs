@@ -13,9 +13,9 @@ namespace SWEndor.Actors.Components
     public WeaponShotInfo[] SecondaryWeapons { get; private set; }
     public WeaponShotInfo[] AIWeapons { get; private set; }
 
-    public void Init(ref UnfixedWeaponData data)
+    public void Init(WeaponFactory wfact, ref UnfixedWeaponData data)
     {
-      this = data.Fix();
+      this = data.Fix(wfact);
     }
 
     public WeaponData(int weapons, int primary, int secondary, int ai)
@@ -26,7 +26,7 @@ namespace SWEndor.Actors.Components
       AIWeapons = new WeaponShotInfo[ai];
     }
 
-    public void Load(UnfixedWeaponData preinit) { this = preinit.Fix(); }
+    public void Load(WeaponFactory wfact, UnfixedWeaponData preinit) { this = preinit.Fix(wfact); }
     
     public void Reset()
     {
@@ -60,7 +60,7 @@ namespace SWEndor.Actors.Components
             && delta_angle > -ws.AngularRange)
             && (delta_distance < ws.Range
             && delta_distance > -ws.Range)
-            && ws.CanTarget(engine, actor, target)
+            && ((actor.IsPlayer && !engine.PlayerInfo.PlayerAIEnabled) || ws.CanTarget( actor, target))
             && (ws.MaxAmmo == -1 || ws.Ammo > 0))
           {
             weapon = new WeaponShotInfo(ws, wb.Burst);

@@ -1,4 +1,5 @@
 ﻿using SWEndor.Actors.Components;
+using SWEndor.Core;
 using SWEndor.Weapons;
 using SWEndor.Weapons.Types;
 using System.Collections.Generic;
@@ -28,24 +29,24 @@ namespace SWEndor.ActorTypes.Components
       }
     }
 
-    public void Load(ActorTypeInfo atype)
+    public void Load(Engine engine, ActorTypeInfo atype)
     {
       this = new UnfixedWeaponData();
       _weapons = new List<string>(4);
       _weaponclasses = new List<UnfixedWeapon>(8);
 
       foreach (string s in atype.Loadouts)
-        InsertLoadout(s);
+        InsertLoadout(engine.WeaponLoadoutFactory, s);
 
       if (atype.TrackerDummyWeapon)
         InsertDummyTrackerAILoadout();
     }
 
-    public WeaponData Fix()
+    public WeaponData Fix(WeaponFactory factory)
     {
       WeaponData d = new WeaponData(_weapons.Count, _primary, _secondary + 1, _ai);
       for (int i = 0; i < _weapons.Count; i++)
-        d.Weapons[i] = WeaponFactory.Get(_weapons[i]);
+        d.Weapons[i] = factory.Get(_weapons[i]);
 
       int p = 0;
       int s = 1;
@@ -70,9 +71,9 @@ namespace SWEndor.ActorTypes.Components
       return d;
     }
 
-    public void InsertLoadout(string wload)
+    public void InsertLoadout(WeaponLoadoutFactory factory, string wload)
     {
-      InsertLoadout(WeaponLoadoutFactory.Get(wload));
+      InsertLoadout(factory.Get(wload));
     }
 
     private void InsertLoadout(WeaponLoadoutInfo wload)

@@ -24,9 +24,9 @@ namespace SWEndor.Weapons
       Burst = burst;
     }
 
-    public static WeaponShotInfo Get(string name, int burst)
+    public static WeaponShotInfo Get(Engine engine, string name, int burst)
     {
-      return new WeaponShotInfo(WeaponFactory.Get(name), burst);
+      return new WeaponShotInfo(engine.WeaponFactory.Get(name), burst);
     }
 
     public static WeaponShotInfo GetFromSource(string name, int burst, Dictionary<string, WeaponInfo> source)

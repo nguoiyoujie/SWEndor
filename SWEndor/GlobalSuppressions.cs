@@ -75,3 +75,5 @@
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HeapAnalyzerStringConcatRule:Implicit string concatenation allocation", Justification = "<Pending>", Scope = "member", Target = "~M:SWEndor.Shaders.ShaderInfo.#ctor(SWEndor.Core.Engine,System.String)")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HeapAnalyzerStringConcatRule:Implicit string concatenation allocation", Justification = "<Pending>", Scope = "member", Target = "~M:SWEndor.Shaders.ShaderInfo.GenerateShader~MTV3D65.TVShader")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HeapAnalyzerStringConcatRule:Implicit string concatenation allocation", Justification = "<Pending>", Scope = "member", Target = "~M:SWEndor.ActorTypes.Components.AddOnData.SaveToINI(SWEndor.FileFormat.INI.INIFile,System.String,System.String,System.String,SWEndor.ActorTypes.Components.AddOnData[])")]
+

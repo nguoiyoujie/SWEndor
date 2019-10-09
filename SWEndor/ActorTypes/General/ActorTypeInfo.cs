@@ -147,7 +147,7 @@ namespace SWEndor.ActorTypes
 
     public void Init()
     {
-      cachedWeaponData.Load(this);
+      cachedWeaponData.Load(Engine, this);
       MoveBehavior.Load(this);
     }
 
@@ -177,8 +177,10 @@ namespace SWEndor.ActorTypes
       // regeneration
       ainfo.Regenerate(engine.Game.TimeSinceRender);
 
+      // explode
       ainfo.TickExplosions();
-
+      
+      // dying
       if (ainfo.IsDying)
         DyingMoveData.Update(ainfo, engine.Game.TimeSinceRender);
 
@@ -189,6 +191,36 @@ namespace SWEndor.ActorTypes
       {
         foreach (SoundSourceData assi in SoundSources)
           assi.Process(engine, ainfo);
+      }
+
+      // projectile
+      if (ainfo.TypeInfo.AIData.TargetType.Contains(TargetType.LASER | TargetType.MUNITION))
+      {
+        if (!ainfo.IsDyingOrDead)
+        {
+          float impdist = CombatData.ImpactCloseEnoughDistance;
+          if (impdist > 0 && ainfo.CurrentAction != null && ainfo.CurrentAction is ProjectileAttackActor)
+          {
+            ActorInfo target = ((ProjectileAttackActor)ainfo.CurrentAction).Target_Actor;
+            if (target != null)
+            {
+              if (target.TypeInfo.AIData.TargetType.Contains(TargetType.LASER | TargetType.MUNITION))
+                impdist += target.TypeInfo.CombatData.ImpactCloseEnoughDistance;
+
+              // Anticipate
+              float dist = ActorDistanceInfo.GetDistance(engine, ainfo, target, impdist + 1);
+
+              if (dist < impdist)
+              {
+                target.TypeInfo.ProcessHit(engine, target, ainfo, target.GetGlobalPosition(), new TV_3DVECTOR());
+                ainfo.TypeInfo.ProcessHit(engine, ainfo, target, target.GetGlobalPosition(), new TV_3DVECTOR());
+
+                ainfo.OnHitEvent(target);
+                target.OnHitEvent(ainfo);
+              }
+            }
+          }
+        }
       }
     }
 

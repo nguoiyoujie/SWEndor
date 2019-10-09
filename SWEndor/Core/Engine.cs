@@ -51,6 +51,8 @@ namespace SWEndor.Core
     internal Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> ExplosionFactory { get; private set; }
     internal ActorTypeInfo.Factory ActorTypeFactory { get; private set; }
     internal ExplosionTypeInfo.Factory ExplosionTypeFactory { get; private set; }
+    internal WeaponFactory WeaponFactory { get; private set; }
+    internal WeaponLoadoutFactory WeaponLoadoutFactory { get; private set; }
     internal Squadron.Factory SquadronFactory { get; private set; }
     internal ShaderInfo.Factory ShaderFactory { get; private set; }
 
@@ -68,6 +70,8 @@ namespace SWEndor.Core
       ExplosionFactory = new Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> (this, (e, f, n, m, i) => { return new ExplosionInfo(e, f, n, m, i); });
       ActorTypeFactory = new ActorTypeInfo.Factory(this);
       ExplosionTypeFactory = new ExplosionTypeInfo.Factory(this);
+      WeaponFactory = new WeaponFactory();
+      WeaponLoadoutFactory = new WeaponLoadoutFactory();
       SquadronFactory = new Squadron.Factory();
       ShaderFactory = new ShaderInfo.Factory(this);
       PlayerInfo = new PlayerInfo(this);

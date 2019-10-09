@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace SWEndor.Weapons
 {
-  public static class WeaponLoadoutFactory
+  public class WeaponLoadoutFactory
   {
-    private static ThreadSafeDictionary<string, WeaponLoadoutInfo> list = new ThreadSafeDictionary<string, WeaponLoadoutInfo>();
+    private ThreadSafeDictionary<string, WeaponLoadoutInfo> list = new ThreadSafeDictionary<string, WeaponLoadoutInfo>();
 
-    public static void Register(WeaponLoadoutInfo weapon)
+    public void Register(WeaponLoadoutInfo weapon)
     {
       list.Put(weapon.Name, weapon);
     }
 
-    public static WeaponLoadoutInfo Get(string key)
+    public WeaponLoadoutInfo Get(string key)
     {
       WeaponLoadoutInfo wsi = list.Get(key);
       if (wsi == null)
@@ -23,7 +23,7 @@ namespace SWEndor.Weapons
       return wsi;
     }
 
-    public static void LoadFromINI(string filepath)
+    public void LoadFromINI(string filepath)
     {
       if (File.Exists(filepath))
       {
