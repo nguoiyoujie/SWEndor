@@ -15,11 +15,12 @@ namespace SWEndor.AI.Actions
 
     // parameters
     private TV_3DVECTOR Target_Position = new TV_3DVECTOR();
-    private static float Max_Speed = 75000;
+    internal static float Max_Speed = 75000;
     private static float SpeedDistanceFactor = 15; //2.5f;
     private static float CloseEnoughDistance = 500;
     private bool hyperspace = false;
     private float prevdist = 9999999;
+    internal float distance;
 
     public override string ToString()
     {
@@ -35,9 +36,9 @@ namespace SWEndor.AI.Actions
 
     public void ApplyMove(Engine engine, ActorInfo owner)
     {
-      float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetGlobalPosition(), Target_Position);
+      distance = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetGlobalPosition(), Target_Position);
 
-      if (dist <= CloseEnoughDistance || prevdist < dist)
+      if (distance <= CloseEnoughDistance || prevdist < distance)
       {
         owner.MoveData.Speed = owner.MoveData.MaxSpeed;
         Complete = true;
@@ -50,12 +51,12 @@ namespace SWEndor.AI.Actions
           owner.LookAt(Target_Position);
         }
 
-        owner.MoveData.Speed = owner.MoveData.MaxSpeed + dist * SpeedDistanceFactor;
+        owner.MoveData.Speed = owner.MoveData.MaxSpeed + distance * SpeedDistanceFactor;
         if (owner.MoveData.Speed > Max_Speed)
           owner.MoveData.Speed = Max_Speed;
 
       }
-      prevdist = dist;
+      prevdist = distance;
     }
   }
 }

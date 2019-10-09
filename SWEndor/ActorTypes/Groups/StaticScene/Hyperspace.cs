@@ -11,7 +11,7 @@ namespace SWEndor.ActorTypes.Instances
     internal Hyperspace(Factory owner) : base(owner, "HYPER", "Hyperspace")
     {
       MeshData = new MeshData(Name, @"special\hyper.x", 15, "Hyper");
-      TimedLifeData = new TimedLifeData(false, 0.25f);
+      TimedLifeData = new TimedLifeData(false, 1);
     }
 
     public override void ProcessState(Engine engine, ActorInfo ainfo)
@@ -21,17 +21,18 @@ namespace SWEndor.ActorTypes.Instances
       if (player != null)
       {
         ActionInfo act = player.CurrentAction;
-        if (act is HyperspaceOut)
+        if (!(act is HyperspaceOut))
         {
-
-        }
-        else if (act is HyperspaceIn && player.MoveData.Speed < 50000 && !ainfo.IsDyingOrDead)
-        {
-          ainfo.SetState_Dying();
-        }
-        else if (!(act is HyperspaceIn) && !ainfo.IsDyingOrDead)
-        {
-          ainfo.SetState_Dying();
+          if (act is HyperspaceIn && !ainfo.IsDyingOrDead)
+          {
+            HyperspaceIn h = (HyperspaceIn)act;
+            if (h.distance < HyperspaceIn.Max_Speed)
+              ainfo.SetState_Dying();
+          }
+          else if (!(act is HyperspaceIn) && !ainfo.IsDyingOrDead)
+          {
+            ainfo.SetState_Dying();
+          }
         }
       }
       else
