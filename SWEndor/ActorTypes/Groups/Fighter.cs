@@ -1,8 +1,5 @@
-﻿using SWEndor.Actors;
-using SWEndor.Actors.Data;
-using SWEndor.Actors.Models;
+﻿using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
-using SWEndor.Core;
 using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
@@ -40,18 +37,6 @@ namespace SWEndor.ActorTypes.Groups
 
       AIData.HuntWeight = 5;
     }
-
-    /*
-    public override void Dying(Engine engine, ActorInfo ainfo)
-    {
-      base.Dying(engine, ainfo);
-
-      if (ainfo.Parent != null || (ainfo.TypeInfo.CombatData.HitWhileDyingLeadsToDeath && Engine.Random.NextDouble() < 0.3f))
-        ainfo.DyingTimerSet(0.1f, true);
-      else
-        ainfo.DyingTimerSet(5, true);
-    }
-    */
   }
 }
 

@@ -4,7 +4,6 @@ using SWEndor.Core;
 using SWEndor.Explosions.Models;
 using SWEndor.ExplosionTypes;
 using SWEndor.Models;
-using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;
 

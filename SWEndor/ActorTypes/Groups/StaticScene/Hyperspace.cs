@@ -2,7 +2,6 @@
 using SWEndor.ActorTypes.Components;
 using SWEndor.AI.Actions;
 using SWEndor.Core;
-using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Instances
 {

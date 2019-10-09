@@ -1,5 +1,4 @@
-﻿using SWEndor.ActorTypes;
-using SWEndor.ActorTypes.Components;
+﻿using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.Actors.Models
 {

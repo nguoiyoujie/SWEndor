@@ -1,21 +1,4 @@
-﻿using MTV3D65;
-using SWEndor.Actors;
-using SWEndor.Actors.Data;
-using SWEndor.ActorTypes;
-using SWEndor.ActorTypes.Components;
-using SWEndor.AI;
-using SWEndor.AI.Actions;
-using SWEndor.Core;
-using SWEndor.FileFormat.INI;
-using SWEndor.Models;
-using SWEndor.Player;
-using SWEndor.Primitives.Extensions;
-using SWEndor.Scenarios;
-using SWEndor.Weapons;
-using System;
-using System.Collections.Generic;
-using System.IO;
-/*
+﻿/*
 namespace SWEndor.ProjectileTypes
 {
   public partial class ProjectileTypeInfo : ITypeInfo<ActorInfo>
