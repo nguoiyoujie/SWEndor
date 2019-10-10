@@ -216,7 +216,7 @@ namespace SWEndor.ActorTypes
             impdist += target.TypeInfo.CombatData.ImpactCloseEnoughDistance;
 
           // Anticipate
-          float dist = ActorDistanceInfo.GetDistance(engine, proj, target, impdist + 1);
+          float dist = DistanceModel.GetDistance(engine, proj, target, impdist + 1);
 
           if (dist < impdist)
           {
@@ -443,7 +443,7 @@ namespace SWEndor.ActorTypes
     {
       float accuracy = 1;
 
-      float d = ActorDistanceInfo.GetDistance(Engine, owner, target) / weapontype.MoveLimitData.MaxSpeed;
+      float d = DistanceModel.GetDistance(Engine, owner, target) / weapontype.MoveLimitData.MaxSpeed;
       TV_3DVECTOR angle = (target.GetGlobalPosition() - owner.GetGlobalPosition()).ConvertDirToRot() - owner.GetGlobalRotation();
       angle.x -= (int)((angle.x + 180) / 360) * 360;
       angle.y -= (int)((angle.y + 180) / 360) * 360;

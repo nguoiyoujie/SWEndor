@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.AI.Actions;
 using SWEndor.Core;
+using SWEndor.Models;
 
 namespace SWEndor.AI.Squads.Missions
 {
@@ -27,7 +28,7 @@ namespace SWEndor.AI.Squads.Missions
     {
       foreach (ActorInfo a in squad.Members)
       {
-        float dist = ActorDistanceInfo.GetDistance(a.GetGlobalPosition(), Target_Position);
+        float dist = DistanceModel.GetDistance(a.GetGlobalPosition(), Target_Position);
         if (dist > Close_enough_distance)
           return;
       }

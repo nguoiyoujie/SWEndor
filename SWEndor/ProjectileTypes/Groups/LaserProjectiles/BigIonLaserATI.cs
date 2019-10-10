@@ -8,7 +8,6 @@ using SWEndor.ExplosionTypes;
 using SWEndor.Explosions;
 using SWEndor.Models;
 using SWEndor.Projectiles;
-using SWEndor.ActorTypes;
 
 namespace SWEndor.ProjectileTypes.Instances
 {

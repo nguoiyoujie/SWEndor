@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Primitives;
@@ -123,7 +122,7 @@ namespace SWEndor.AI.Actions
       {
         foreach (ActorInfo l in actor.Squad.Members)
         {
-          if (l != null && actor != l && ActorDistanceInfo.GetRoughDistance(actor, l) < l.MoveData.Speed * 0.5f)
+          if (l != null && actor != l && DistanceModel.GetRoughDistance(actor, l) < l.MoveData.Speed * 0.5f)
           {
             actor.QueueFirst(Evade.GetOrCreate(0.5f));
             break;
@@ -167,7 +166,7 @@ namespace SWEndor.AI.Actions
               && c.InCombat
               && !c.Faction.IsAlliedWith(a.Faction))
         {
-          float dist = ActorDistanceInfo.GetDistance(e, a, c, c.WeaponDefinitions.GetWeaponRange());
+          float dist = DistanceModel.GetDistance(e, a, c, c.WeaponDefinitions.GetWeaponRange());
 
           TV_3DVECTOR vec = new TV_3DVECTOR();
           TV_3DVECTOR dir = c.Direction;

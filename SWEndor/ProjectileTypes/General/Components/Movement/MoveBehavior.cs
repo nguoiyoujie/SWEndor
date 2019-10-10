@@ -1,6 +1,5 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Actors.Data;
-using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Projectiles;

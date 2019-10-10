@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.Core;
+using SWEndor.Models;
 using SWEndor.Scenarios.Scripting.Expressions;
 using System;
 using System.Collections.Generic;

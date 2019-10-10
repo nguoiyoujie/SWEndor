@@ -1,5 +1,4 @@
-﻿using SWEndor.Actors;
-using SWEndor.Actors.Data;
+﻿using SWEndor.Actors.Data;
 using SWEndor.Core;
 using SWEndor.Projectiles;
 

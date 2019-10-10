@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
 using SWEndor.Core;
+using SWEndor.Models;
 using SWEndor.Primitives.Extensions;
 using System.Collections.Generic;
 

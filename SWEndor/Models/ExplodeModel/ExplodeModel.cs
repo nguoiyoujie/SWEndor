@@ -1,5 +1,4 @@
 ﻿using MTV3D65;
-using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Explosions;
 using SWEndor.ExplosionTypes;

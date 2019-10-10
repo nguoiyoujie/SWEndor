@@ -1,6 +1,4 @@
 ﻿using SWEndor.Actors;
-using SWEndor.Actors.Models;
-using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Models;
 

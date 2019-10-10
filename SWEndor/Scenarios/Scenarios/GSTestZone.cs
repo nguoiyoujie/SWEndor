@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
+using SWEndor.Models;
 using SWEndor.Player;
 using System.Collections.Generic;
 

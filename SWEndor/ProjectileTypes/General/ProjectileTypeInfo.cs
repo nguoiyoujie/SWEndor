@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using SWEndor.FileFormat.INI;
@@ -145,7 +144,7 @@ namespace SWEndor.ProjectileTypes
           impdist += target.TypeInfo.CombatData.ImpactCloseEnoughDistance;
 
         // Anticipate
-        float dist = ActorDistanceInfo.GetDistance(engine, proj, target);
+        float dist = DistanceModel.GetDistance(engine, proj, target);
 
         if (dist < impdist)
         {

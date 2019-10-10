@@ -4,6 +4,7 @@ using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Instances;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
+using SWEndor.Models;
 using System.Collections.Generic;
 
 namespace SWEndor.Scenarios

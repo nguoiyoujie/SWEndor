@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Core;
+using SWEndor.Models;
 using SWEndor.Primitives.Extensions;
 using System;
 
@@ -45,7 +46,7 @@ namespace SWEndor.Actors.Models
         ActorInfo a = e.ActorFactory.Get(targetActor);
         if (a != null)
         {
-          float dist = ActorDistanceInfo.GetDistance(e, owner, a);
+          float dist = DistanceModel.GetDistance(e, owner, a);
           float d = dist / Globals.LaserSpeed + e.Game.TimeSinceRender;
           ActorInfo a2 = a.ParentForCoords;
           if (a2 == null)
@@ -70,7 +71,7 @@ namespace SWEndor.Actors.Models
       {
         ActorInfo a = e.ActorFactory.Get(targetActor);
         if (a != null)
-          return ActorDistanceInfo.GetDistance(e, owner, a);
+          return DistanceModel.GetDistance(e, owner, a);
       }
       return 0;
     }

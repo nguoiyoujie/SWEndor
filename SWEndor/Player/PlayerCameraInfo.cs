@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
+using SWEndor.Models;
 using SWEndor.Primitives.Extensions;
 using System;
 
@@ -45,10 +46,10 @@ namespace SWEndor.Player
       if (distance == 0 || TargetActorID > 0) // if locked to Actor, skip
         return;
 
-      float dist = ActorDistanceInfo.GetDistance(pos, Position);
+      float dist = DistanceModel.GetDistance(pos, Position);
 
       if (dist != 0)
-        Position = ActorDistanceInfo.Lerp(engine, Position, pos, (distance / dist).Clamp(-100, 1));
+        Position = DistanceModel.Lerp(engine, Position, pos, (distance / dist).Clamp(-100, 1));
     }
   }
 
@@ -344,7 +345,7 @@ namespace SWEndor.Player
 
     public void ProximityShake(float maxValue, float decayDistance, TV_3DVECTOR origin)
     {
-      float dist = ActorDistanceInfo.GetDistance(Position, origin);
+      float dist = DistanceModel.GetDistance(Position, origin);
       if (dist <= decayDistance)
         shake = maxValue * (decayDistance - dist) / decayDistance;
     }

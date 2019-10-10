@@ -3,7 +3,6 @@ using SWEndor.Core;
 using SWEndor.Primitives;
 using SWEndor.Actors.Models;
 using SWEndor.Actors;
-using SWEndor.ActorTypes;
 
 namespace SWEndor.Models
 {

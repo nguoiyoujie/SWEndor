@@ -1,5 +1,4 @@
 ﻿using SWEndor.Core;
-using SWEndor.Primitives;
 using System;
 using System.Windows.Forms;
 

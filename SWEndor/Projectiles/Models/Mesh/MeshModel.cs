@@ -1,5 +1,4 @@
 ﻿using MTV3D65;
-using SWEndor.ActorTypes;
 using SWEndor.Primitives;
 using System.Collections.Generic;
 using SWEndor.Core;

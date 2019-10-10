@@ -1,8 +1,8 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Explosions;
+using SWEndor.Models;
 using SWEndor.Primitives;
 using SWEndor.Projectiles;
 using System;
@@ -173,7 +173,7 @@ namespace SWEndor.UI.Widgets
 
         if (a.Active
           && a.TypeInfo.RenderData.RadarSize > 0
-          && (a.TypeInfo.RenderData.AlwaysShowInRadar || ActorDistanceInfo.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
+          && (a.TypeInfo.RenderData.AlwaysShowInRadar || DistanceModel.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
         {
           int acolor = GetColor(a);
           
@@ -260,7 +260,7 @@ namespace SWEndor.UI.Widgets
 
         if (a.Active
           && a.TypeInfo.RenderData.RadarSize > 0
-          && (a.TypeInfo.RenderData.AlwaysShowInRadar || ActorDistanceInfo.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
+          && (a.TypeInfo.RenderData.AlwaysShowInRadar || DistanceModel.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
         {
           int acolor = explColor;
 
@@ -329,7 +329,7 @@ namespace SWEndor.UI.Widgets
 
         if (a.Active
           && a.TypeInfo.RenderData.RadarSize > 0
-          && (a.TypeInfo.RenderData.AlwaysShowInRadar || ActorDistanceInfo.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
+          && (a.TypeInfo.RenderData.AlwaysShowInRadar || DistanceModel.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
         {
           int acolor = projColor;
 

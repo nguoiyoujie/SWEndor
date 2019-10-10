@@ -134,15 +134,6 @@ namespace SWEndor.Actors
         Health.InflictDamage(this, new DamageInfo(value));
     }
 
-    /*
-    public void Kill(ActorInfo attacker)
-    {
-      using (ScopeCounterManager.Acquire(Scope))
-      using (ScopeCounterManager.Acquire(attacker.Scope))
-        Health.Kill(this, attacker);
-    }
-    */
-
     public float HP { get { return Health.HP; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetHP(this, value); } }
     public float MaxHP { get { return Health.MaxHP; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetMaxHP(value, false); } }
     public float HP_Perc { get { return Health.Perc; } }

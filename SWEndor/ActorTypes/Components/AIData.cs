@@ -1,4 +1,5 @@
 ﻿using SWEndor.FileFormat.INI;
+using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Components
 {

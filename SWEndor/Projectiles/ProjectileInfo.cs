@@ -160,7 +160,7 @@ namespace SWEndor.Projectiles
         float distcheck = TypeInfo.RenderData.CullDistance * Game.PerfCullModifier;
 
         return (TypeInfo.RenderData.EnableDistanceCull
-          && ActorDistanceInfo.GetRoughDistance(GetGlobalPosition(), PlayerCameraInfo.Camera.GetPosition()) > distcheck);
+          && DistanceModel.GetRoughDistance(GetGlobalPosition(), PlayerCameraInfo.Camera.GetPosition()) > distcheck);
       }
     }
 

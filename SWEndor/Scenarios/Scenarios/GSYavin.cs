@@ -12,6 +12,7 @@ using SWEndor.AI;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Sound;
 using SWEndor.Core;
+using SWEndor.Models;
 
 namespace SWEndor.Scenarios
 {

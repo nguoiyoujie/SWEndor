@@ -134,6 +134,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actors\Models\Regeneration\ActorExt.cs" />
     <Compile Include="ActorTypes\Components\CombatData.cs" />
     <Compile Include="ActorTypes\General\ActorCreationInfo.cs" />
     <Compile Include="Actors\Models\ArmorModel\ActorExt.cs" />
@@ -188,7 +189,7 @@
     <Compile Include="ActorTypes\Components\Movement\MoveNormal.cs" />
     <Compile Include="Models\Enums\ActorState.cs" />
     <Compile Include="Models\Enums\CreationState.cs" />
-    <Compile Include="Actors\States\ActorDistanceInfo.cs" />
+    <Compile Include="Models\DistanceModel\DistanceModel.cs" />
     <Compile Include="ActorTypes\Components\DyingMoveData.cs" />
     <Compile Include="ActorTypes\Components\MeshData.cs" />
     <Compile Include="ActorTypes\Components\MoveLimitData.cs" />
@@ -201,8 +202,8 @@
     <Compile Include="ActorTypes\Components\RegenData.cs" />
     <Compile Include="ActorTypes\Components\UnfixedWeaponData.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\SpawnerInfoDecorator.cs" />
-    <Compile Include="ActorTypes\General\Enums\RadarType.cs" />
-    <Compile Include="ActorTypes\General\Enums\TargetType.cs" />
+    <Compile Include="Models\Enums\RadarType.cs" />
+    <Compile Include="Models\Enums\TargetType.cs" />
     <Compile Include="ActorTypes\Components\AddOnData.cs" />
     <Compile Include="ActorTypes\Components\SoundSourceData.cs" />
     <Compile Include="ActorTypes\Components\DebrisSpawnerData.cs" />
@@ -797,6 +798,8 @@
     <Content Include="SWEndor.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Actors\States\" />
+    <Folder Include="ActorTypes\General\Enums\" />
     <Folder Include="Doc\ActorTypes\" />
     <Folder Include="Doc\ExplosionTypes\" />
     <Folder Include="Doc\Weapons\" />

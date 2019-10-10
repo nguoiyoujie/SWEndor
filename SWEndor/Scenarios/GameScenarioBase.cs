@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.Core;
+using SWEndor.Models;
 using SWEndor.Player;
 using SWEndor.Sound;
 using SWEndor.UI.Menu.Pages;
@@ -167,7 +168,7 @@ namespace SWEndor.Scenarios
 
       Mood = MoodStates.AMBIENT;
       Engine.SoundManager.Clear();
-      ActorDistanceInfo.Reset();
+      DistanceModel.Reset();
 
       // TO-DO: reset the live counters in a more graceful way
       AI.Actions.Hunt._count = 0;

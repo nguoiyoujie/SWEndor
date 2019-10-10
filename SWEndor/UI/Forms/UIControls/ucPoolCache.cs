@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using SWEndor.Core;
 using SWEndor.Primitives;
 
@@ -21,7 +13,7 @@ namespace SWEndor.UI.Forms.UIControls
 
     public void Update(Engine engine)
     {
-      lblActorDistanceCache.Text = Actors.ActorDistanceInfo.CacheCount.ToString();
+      lblActorDistanceCache.Text = Models.DistanceModel.CacheCount.ToString();
 
       lblScopedPool.Text = ScopedManager<Actors.ActorInfo>.PoolCount.ToString();
       lblSquadPool.Text = engine.SquadronFactory.PoolCount.ToString();

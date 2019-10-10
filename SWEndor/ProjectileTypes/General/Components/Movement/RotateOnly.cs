@@ -1,5 +1,4 @@
 ﻿using MTV3D65;
-using SWEndor.Actors;
 using SWEndor.Actors.Data;
 using SWEndor.Core;
 using SWEndor.Projectiles;

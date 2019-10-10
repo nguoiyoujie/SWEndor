@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Models;
-using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Player;
@@ -71,7 +70,7 @@ namespace SWEndor.UI.Widgets
         float x = 0;
         float y = 0;
         TVScreen2DImmediate.Math_3DPointTo2D(m_target.GetGlobalPosition(), ref x, ref y);
-        float dist = ActorDistanceInfo.GetDistance(Engine, p, m_target, 7501);
+        float dist = DistanceModel.GetDistance(Engine, p, m_target, 7501);
         float limit = 0.05f * dist;
         if (limit < 250)
           limit = 250;
@@ -231,7 +230,7 @@ namespace SWEndor.UI.Widgets
           && e.PlayerCameraInfo.Camera.IsPointVisible(a.GetGlobalPosition())
           )
         {
-          float dist = ActorDistanceInfo.GetDistance(e, p0, a, 7501);
+          float dist = DistanceModel.GetDistance(e, p0, a, 7501);
           if (dist < 7500)
           {
             float x = 0;

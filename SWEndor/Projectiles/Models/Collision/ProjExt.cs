@@ -1,5 +1,4 @@
 ﻿using SWEndor.Actors;
-using SWEndor.ActorTypes;
 using SWEndor.Models;
 
 namespace SWEndor.Projectiles

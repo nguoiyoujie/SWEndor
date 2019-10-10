@@ -121,7 +121,7 @@ namespace SWEndor.Explosions
         float distcheck = TypeInfo.RenderData.CullDistance * Game.PerfCullModifier;
 
         return (TypeInfo.RenderData.EnableDistanceCull
-          && ActorDistanceInfo.GetRoughDistance(GetGlobalPosition(), Engine.PlayerCameraInfo.Camera.GetPosition()) > distcheck);
+          && DistanceModel.GetRoughDistance(GetGlobalPosition(), Engine.PlayerCameraInfo.Camera.GetPosition()) > distcheck);
       }
     }
 
@@ -132,7 +132,7 @@ namespace SWEndor.Explosions
         float distcheck = TypeInfo.RenderData.CullDistance * 0.25f * Game.PerfCullModifier;
 
         return (TypeInfo.RenderData.EnableDistanceCull
-          && ActorDistanceInfo.GetRoughDistance(GetGlobalPosition(), Engine.PlayerCameraInfo.Camera.GetPosition()) > distcheck);
+          && DistanceModel.GetRoughDistance(GetGlobalPosition(), Engine.PlayerCameraInfo.Camera.GetPosition()) > distcheck);
       }
     }
 

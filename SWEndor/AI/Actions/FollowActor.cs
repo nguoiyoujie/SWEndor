@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Core;
+using SWEndor.Models;
 
 namespace SWEndor.AI.Actions
 {
@@ -45,7 +46,7 @@ namespace SWEndor.AI.Actions
       if (CheckBounds(actor))
       {
         actor.AIData.AdjustRotation(engine, actor);
-        float dist = ActorDistanceInfo.GetDistance(engine, actor, target, FollowDistance + 1);
+        float dist = DistanceModel.GetDistance(engine, actor, target, FollowDistance + 1);
 
         actor.AIData.AdjustSpeed(actor);
         Complete |= (!target.Active);
@@ -61,7 +62,7 @@ namespace SWEndor.AI.Actions
       {
         foreach (ActorInfo l in actor.Squad.Members)
         {
-          if (l != null && actor != l && ActorDistanceInfo.GetRoughDistance(actor, l) < l.MoveData.Speed * 0.5f)
+          if (l != null && actor != l && DistanceModel.GetRoughDistance(actor, l) < l.MoveData.Speed * 0.5f)
           {
             actor.QueueFirst(Evade.GetOrCreate(0.5f));
             break;

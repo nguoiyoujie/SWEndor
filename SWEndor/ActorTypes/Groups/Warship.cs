@@ -1,4 +1,6 @@
-﻿namespace SWEndor.ActorTypes.Groups
+﻿using SWEndor.Models;
+
+namespace SWEndor.ActorTypes.Groups
 {
   public class Warship : LargeShip
   {

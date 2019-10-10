@@ -1,10 +1,10 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using SWEndor.Explosions;
 using SWEndor.ExplosionTypes;
+using SWEndor.Models;
 using SWEndor.Projectiles;
 using System.Collections.Generic;
 

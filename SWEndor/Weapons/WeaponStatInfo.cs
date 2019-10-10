@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
-using SWEndor.ActorTypes;
 using SWEndor.FileFormat.INI;
+using SWEndor.Models;
 
 namespace SWEndor.Weapons
 {
