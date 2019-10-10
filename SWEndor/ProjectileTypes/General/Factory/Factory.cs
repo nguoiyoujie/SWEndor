@@ -1,12 +1,16 @@
-﻿/*
+﻿using SWEndor.Core;
+using SWEndor.Primitives.Extensions;
+using SWEndor.Primitives.Factories;
+using SWEndor.ProjectileTypes.Instances;
+using System;
+using System.IO;
+
 namespace SWEndor.ProjectileTypes
 {
   public partial class ProjectileTypeInfo
   {
     public class Factory : Registry<ProjectileTypeInfo>
     {
-      //private static Dictionary<string, ActorTypeInfo> list = new Dictionary<string, ActorTypeInfo>();
-
       public readonly Engine Engine;
       internal Factory(Engine engine)
       { Engine = engine; }
@@ -26,8 +30,8 @@ namespace SWEndor.ProjectileTypes
         Register(new DeathStarLaserATI(this));
 
         // torps
-        Register(new MissileATI(this));
-        Register(new TorpedoATI(this));
+        //Register(new MissileATI(this));
+        //Register(new TorpedoATI(this));
       }
 
       public void Register(ProjectileTypeInfo atype)
@@ -47,12 +51,12 @@ namespace SWEndor.ProjectileTypes
       
       public void Load()
       {
-        foreach (string fp in Directory.GetFiles(Globals.ActorTypeINIDirectory, "*.ini", SearchOption.AllDirectories))
+        foreach (string fp in Directory.GetFiles(Globals.ProjectileTypeINIDirectory, "*.ini", SearchOption.AllDirectories))
         {
           string f = Path.GetFileNameWithoutExtension(fp);
           if (Contains(f))
             throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.ACTORTYPE_INITWICE_ERROR).F(f));
-          ActorTypeInfo t = new ActorTypeInfo(this, f, f);
+          ProjectileTypeInfo t = new ProjectileTypeInfo(this, f, f);
           t.LoadFromINI(f);
         }
       }
@@ -66,7 +70,7 @@ namespace SWEndor.ProjectileTypes
 
       public new ProjectileTypeInfo Get(string id)
       {
-        ActorTypeInfo ret = base.Get(id);
+        ProjectileTypeInfo ret = base.Get(id);
         if (ret == null)
           throw new Exception(TextLocalization.Get(TextLocalKeys.ACTORTYPE_INVALID_ERROR).F(id));
 
@@ -75,4 +79,4 @@ namespace SWEndor.ProjectileTypes
     }
   }
 }
-*/
+

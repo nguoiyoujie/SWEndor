@@ -1,10 +1,11 @@
-﻿using SWEndor.Actors.Models;
+﻿using SWEndor.Actors;
+using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
 {
-  public class MissileProjectile : Projectile
+  public class MissileProjectile : ActorTypeInfo
   {
     internal MissileProjectile(Factory owner, string id, string name) : base(owner, id, name)
     {
@@ -17,13 +18,19 @@ namespace SWEndor.ActorTypes.Groups
       };
 
       RenderData.CullDistance = 12000;
-
+      RenderData.RadarType = RadarType.TRAILLINE;
+      RenderData.RadarSize = 1;
+      
       // Projectile
       CombatData.ImpactCloseEnoughDistance = 100;
       AIData.TargetType = TargetType.MUNITION;
-      RenderData.RadarType = RadarType.TRAILLINE;
 
       Mask = ComponentMask.GUIDED_PROJECTILE;
+
+      AIData.Move_CloseEnough = 0;
+      MoveLimitData.MaxSecondOrderTurnRateFrac = 0.5f;
+
+      CombatData.DamageType = DamageType.NORMAL;
 
       TrackerDummyWeapon = true;
     }

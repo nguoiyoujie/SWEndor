@@ -8,8 +8,9 @@ namespace SWEndor.Explosions
     public bool Planned { get { return State.CreationState == CreationState.PLANNED; } }
     public bool Generated { get { return State.CreationState == CreationState.GENERATED; } }
     public bool Active { get { return State.CreationState == CreationState.ACTIVE; } }
+    public bool MarkedDisposing { get { return State.CreationState <= CreationState.PREDISPOSE; } }
     public bool Disposing { get { return State.CreationState == CreationState.DISPOSING; } }
-    public bool DisposingOrDisposed { get { return State.CreationState < 0; } }
+    public bool DisposingOrDisposed { get { return State.CreationState <= CreationState.DISPOSING; } }
     public bool Disposed { get { return State.CreationState == CreationState.DISPOSED; } }
 
     public ComponentMask Mask { get { return State.ComponentMask; } }
@@ -18,6 +19,7 @@ namespace SWEndor.Explosions
 
     public void SetGenerated() { State.SetGenerated(); }
     public void SetActivated() { State.SetActivated(); }
+    public void SetPreDispose() { State.SetPreDispose(); }
     public void SetDisposing() { State.SetDisposing(); }
     public void SetDisposed() { State.SetDisposed(); }
     public void ResetPlanned() { State.ResetPlanned(); }

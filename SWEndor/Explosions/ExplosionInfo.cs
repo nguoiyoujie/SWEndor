@@ -33,13 +33,12 @@ namespace SWEndor.Explosions
     // Identifiers
     private string _name = "New Actor";
     public string Name { get { return _name; } }
-    public int ID { get; private set; }
-    public int dataID = -1;
+    public short ID { get; private set; }
     public string Key { get; private set; }
 
     public override string ToString()
     {
-      return "[{0},{1}:{2}]".F(_name, ID, dataID);
+      return "[{0},{1}]".F(_name, ID);
     }
 
     // Components
@@ -64,11 +63,10 @@ namespace SWEndor.Explosions
 
     #region Creation Methods
 
-    internal ExplosionInfo(Engine engine, Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> owner, int id, int dataid, ExplosionCreationInfo acinfo)
+    internal ExplosionInfo(Engine engine, Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> owner, short id, ExplosionCreationInfo acinfo)
     {
       ExplosionFactory = owner;
       ID = id;
-      dataID = dataid;
 
       TypeInfo = acinfo.TypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
@@ -85,7 +83,7 @@ namespace SWEndor.Explosions
       TypeInfo.Initialize(engine, this);
     }
 
-    public void Rebuild(Engine engine, int id, ExplosionCreationInfo acinfo)
+    public void Rebuild(Engine engine, short id, ExplosionCreationInfo acinfo)
     {
       // Clear past resources
       ID = id;
@@ -140,7 +138,10 @@ namespace SWEndor.Explosions
 
     public ActorInfo ParentForCoords { get { return Engine.ActorFactory.Get(AttachedActorID); } }
 
-    public void Delete() { ExplosionFactory.MakeDead(this); }
+    public void Delete()
+    {
+      if (!MarkedDisposing) { SetPreDispose(); ExplosionFactory.MakeDead(this); }
+    }
 
 
     public void Destroy()
@@ -148,9 +149,12 @@ namespace SWEndor.Explosions
       if (DisposingOrDisposed)
         return;
 
-      State.SetDisposing();
+      Delete();
+      SetDisposing();
 
-       // Reset components
+      Transform.Reset();
+
+      // Reset components
       CycleInfo.Reset();
       AttachedActorID = -1;
 
@@ -159,7 +163,7 @@ namespace SWEndor.Explosions
       Meshes.Dispose();
 
       // Finally
-      State.SetDisposed();
+      SetDisposed();
     }
 
     public void Tick(Engine engine, float time)

@@ -20,8 +20,6 @@ namespace SWEndor.ActorTypes.Components
     public TargetType TargetType;
     public int HuntWeight;
 
-
-
     public readonly static AIData Default = 
       new AIData
         {

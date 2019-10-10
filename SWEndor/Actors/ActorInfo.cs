@@ -47,13 +47,12 @@ namespace SWEndor.Actors
 
     public string Name { get { return _name; } }
     public string SideBarName { get { return (sidebar_name.Length == 0) ? _name : sidebar_name; } set { sidebar_name = value; } }
-    public int ID { get; private set; }
-    public int dataID = -1;
+    public short ID { get; private set; }
     public string Key { get; private set; }
 
     public override string ToString()
     {
-      return "[{0},{1}:{2}]".F(_name, ID, dataID);
+      return "[{0},{1}]".F(_name, ID);
     }
 
     // Faction
@@ -131,7 +130,7 @@ namespace SWEndor.Actors
     {
       get
       {
-        return !(TypeInfo.AIData.TargetType.Contains(TargetType.LASER | TargetType.MUNITION | TargetType.FLOATING));
+        return !(TypeInfo.AIData.TargetType.Contains(TargetType.MUNITION | TargetType.FLOATING));
       }
     }
 #endif
@@ -142,11 +141,10 @@ namespace SWEndor.Actors
 
     #region Creation Methods
 
-    internal ActorInfo(Engine engine, Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo> owner, int id, int dataid, ActorCreationInfo acinfo)
+    internal ActorInfo(Engine engine, Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo> owner, short id, ActorCreationInfo acinfo)
     {
       ActorFactory = owner;
       ID = id;
-      dataID = dataid;
 
       TypeInfo = acinfo.TypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
@@ -158,10 +156,10 @@ namespace SWEndor.Actors
       Health.Init(ref TypeInfo.CombatData, acinfo);
       Transform.Init(TypeInfo.MeshData.Scale, acinfo);
       Armor.Init(ref TypeInfo.ArmorData);
-      Explosions.Init(TypeInfo.Explodes, acinfo);
+      Explosions.Init(TypeInfo.Explodes, acinfo.CreationTime);
       Regen.Init(ref TypeInfo.RegenData);
 
-      MoveData.Init(ref TypeInfo.MoveLimitData, acinfo);
+      MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
       CollisionData.Init();
       WeaponDefinitions.Init(Engine.WeaponFactory, ref TypeInfo.cachedWeaponData);
 
@@ -176,10 +174,9 @@ namespace SWEndor.Actors
       TypeInfo.Initialize(engine, this);
     }
 
-    public void Rebuild(Engine engine, int id, ActorCreationInfo acinfo)
+    public void Rebuild(Engine engine, short id, ActorCreationInfo acinfo)
     {
       // Clear past resources
-      //Destroy(); // redundant
       ID = id;
       TypeInfo = acinfo.TypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
@@ -191,10 +188,10 @@ namespace SWEndor.Actors
       Health.Init(ref TypeInfo.CombatData, acinfo);
       Transform.Init(TypeInfo.MeshData.Scale, acinfo);
       Armor.Init(ref TypeInfo.ArmorData);
-      Explosions.Init(TypeInfo.Explodes, acinfo);
+      Explosions.Init(TypeInfo.Explodes, acinfo.CreationTime);
       Regen.Init(ref TypeInfo.RegenData);
 
-      MoveData.Init(ref TypeInfo.MoveLimitData, acinfo);
+      MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
       CollisionData.Init();
       WeaponDefinitions.Init(Engine.WeaponFactory, ref TypeInfo.cachedWeaponData);
 
@@ -312,7 +309,10 @@ namespace SWEndor.Actors
 
     public bool IsScenePlayer { get { return IsPlayer || PlayerInfo.TempActorID == ID; } }
 
-    public void Delete() { ActorFactory.MakeDead(this); }
+    public void Delete()
+    {
+      if (!MarkedDisposing) { SetPreDispose(); ActorFactory.MakeDead(this); }
+    }
 
     public void CreateNewSquad()
     {
@@ -345,9 +345,12 @@ namespace SWEndor.Actors
       if (DisposingOrDisposed)
         return;
 
+      Delete();
       SetDisposing();
 
       Relation.Dispose(this);
+      Transform.Reset();
+      AIData.Reset();
 
       // Actions
       this.ForceClearQueue();

@@ -19,6 +19,7 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Name, @"surface\surface_vent.x");
     }
 
+    /*
     public override void ProcessHit(Engine engine, ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
       base.ProcessHit(engine, owner, hitby, impact, normal);
@@ -29,6 +30,7 @@ namespace SWEndor.ActorTypes.Instances
       if (hitby.TypeInfo is TorpedoATI) //hard code?
         owner.SetState_Dead();
     }
+    */
   }
 }
 

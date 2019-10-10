@@ -19,7 +19,7 @@ namespace SWEndor.Models
     private ExplosionTypeInfo[] _typecache;
     private float[] _time;
 
-    public void Init(ExplodeData[] data, ActorCreationInfo acinfo)
+    public void Init(ExplodeData[] data, float creationTime)
     {
       _data = data;
       _typecache = new ExplosionTypeInfo[data.Length];
@@ -27,7 +27,7 @@ namespace SWEndor.Models
 
       //fill time
       for (int i = 0; i < data.Length; i++)
-        _time[i] = acinfo.CreationTime;
+        _time[i] = creationTime;
     }
 
     public void Tick(T self, float time) { Process(self); }

@@ -1,11 +1,13 @@
-﻿
-/*
+﻿using MTV3D65;
+using SWEndor.Models;
+using SWEndor.Projectiles;
+
 namespace SWEndor.ProjectileTypes
 {
-  public struct ProjectileCreationInfo : ICreationInfo<ActorInfo, ActorTypeInfo>
+  public struct ProjectileCreationInfo : ICreationInfo<ProjectileInfo, ProjectileTypeInfo>
   {
     public FactionInfo Faction;
-    public ActorTypeInfo TypeInfo { get; }
+    public ProjectileTypeInfo TypeInfo { get; }
     public string Name;
     public float CreationTime;
     public ActorState InitialState;
@@ -17,7 +19,7 @@ namespace SWEndor.ProjectileTypes
     public float InitialSpeed;
     public bool FreeSpeed;
 
-    public ProjectileCreationInfo(ActorTypeInfo at)
+    public ProjectileCreationInfo(ProjectileTypeInfo at)
     {
       // Load defaults from actortype
       TypeInfo = at;
@@ -35,4 +37,4 @@ namespace SWEndor.ProjectileTypes
     }
   }
 }
-*/
+

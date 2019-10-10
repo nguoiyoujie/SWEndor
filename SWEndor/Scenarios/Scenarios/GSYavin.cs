@@ -1220,7 +1220,7 @@ namespace SWEndor.Scenarios
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
-          actor.InflictDamage(actor, -actor.MaxHP, DamageType.ALWAYS_100PERCENT);
+          actor.InflictDamage(-actor.MaxHP, DamageType.ALWAYS_100PERCENT);
       }
 
       foreach (int actorID in MainEnemyFaction.GetShips())
@@ -1316,7 +1316,7 @@ namespace SWEndor.Scenarios
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
-          actor.InflictDamage(actor, 0.35f * -actor.MaxHP, DamageType.ALWAYS_100PERCENT);
+          actor.InflictDamage(0.35f * -actor.MaxHP, DamageType.ALWAYS_100PERCENT);
       }
 
       Scene_ClearGroundObjects();
@@ -1387,7 +1387,7 @@ namespace SWEndor.Scenarios
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
-          actor.InflictDamage(actor, 0.35f * -actor.MaxHP, DamageType.ALWAYS_100PERCENT);
+          actor.InflictDamage(0.35f * -actor.MaxHP, DamageType.ALWAYS_100PERCENT);
       }
 
       Scene_ClearGroundObjects();

@@ -6,6 +6,8 @@ using SWEndor.AI.Actions;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Primitives.Extensions;
+using SWEndor.Projectiles;
+using SWEndor.ProjectileTypes;
 
 namespace SWEndor.Weapons
 {
@@ -21,15 +23,15 @@ namespace SWEndor.Weapons
   public class WeaponInfo
   {
     public static readonly WeaponInfo[] NullArrayCache = new WeaponInfo[0];
-    public static ActorTypeInfo NullProj = new ActorTypeInfo(Globals.Engine.ActorTypeFactory, "$PROJ_NULL", "Null Projectile");
 
-    public WeaponInfo(string name, string weapproj)
+    public WeaponInfo(string name)
     {
       Name = name;
       DisplayName = name;
 
       // TO-DO: Dedicated Projectile class that need no casting 
-      Projectile = (weapproj != null) ? Globals.Engine.ActorTypeFactory.Get(weapproj) : NullProj;
+      Projectile = ProjectileTypeInfo.Null;
+      //ActorProj = ActorTypeInfo.Null;
     }
 
     public WeaponInfo(Engine engine, WeaponStatInfo stat)
@@ -72,17 +74,28 @@ namespace SWEndor.Weapons
       Range = stat.Range;
 
       FireSound = stat.FireSound;
+      IsActor = stat.IsActor;
 
       if (stat.WeaponProjectile != null)
-        Projectile = engine.ActorTypeFactory.Get(stat.WeaponProjectile);
-
+        if (stat.IsActor)
+        {
+          ActorProj = engine.ActorTypeFactory.Get(stat.WeaponProjectile);
+          //Projectile = ProjectileTypeInfo.Null;
+        }
+        else
+        {
+          Projectile = engine.ProjectileTypeFactory.Get(stat.WeaponProjectile);
+          //ActorProj = ActorTypeInfo.Null;
+        }
       Init();
     }
 
     public readonly string Name = "Null Weapon";
     public readonly string DisplayName = "null";
 
-    private readonly ActorTypeInfo Projectile = null; // cache
+    private readonly ProjectileTypeInfo Projectile = null; // cache
+    private readonly ActorTypeInfo ActorProj = null; // cache
+    public bool IsActor = false;
     public float WeaponCooldown = 0;
     public float WeaponCooldownRate = 1;
     public float WeaponCooldownRateRandom = 0;
@@ -231,118 +244,129 @@ namespace SWEndor.Weapons
       return (target == null) ? AIAttackNull : (target.TypeInfo.AIData.TargetType & AIAttackTargets) != 0;
     }
 
+    private bool CreateProjectile(Engine engine, ActorInfo owner, ActorInfo target, bool IsPlayer)
+    {
+      if (Projectile == null)
+        return true;
+
+      if (!IsPlayer
+        && target != null
+        && (owner.IsAggregateMode && target.IsAggregateMode))
+      {
+        owner.TypeInfo.FireAggregation(owner, target, Projectile);
+        return true;
+      }
+
+      TV_3DVECTOR targetloc = GetFirePosition(owner);
+
+      ProjectileCreationInfo acinfo = new ProjectileCreationInfo(Projectile);
+      acinfo.Position = owner.GetRelativePositionXYZ(targetloc.x, targetloc.y, targetloc.z);
+
+      if (owner.MoveData.Speed > Projectile.MoveLimitData.MinSpeed)
+        acinfo.InitialSpeed = owner.MoveData.Speed;
+
+      if ((IsPlayer ? EnablePlayerAutoAim : EnableAIAutoAim) && target != null)
+      {
+        float dist = ActorDistanceInfo.GetDistance(engine, owner, target);
+
+        float d = (AutoAimMaxDeviation == AutoAimMinDeviation)
+                ? dist / Projectile.MoveLimitData.MaxSpeed * AutoAimMinDeviation
+                : dist / Projectile.MoveLimitData.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
+
+        ActorInfo a2 = target.ParentForCoords;
+        TV_3DVECTOR dir = (a2 == null)
+                        ? target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d) - owner.GetGlobalPosition()
+                        : target.GetGlobalPosition() + a2.GetRelativePositionXYZ(0, 0, a2.MoveData.Speed * d) - a2.GetGlobalPosition() - owner.GetGlobalPosition();
+
+        acinfo.Rotation = dir.ConvertDirToRot();
+      }
+      else
+      {
+        acinfo.Rotation = owner.GetGlobalRotation();
+      }
+
+      ProjectileInfo a = engine.ProjectileFactory.Create(acinfo);
+      a.Faction = owner.Faction;
+      a.OwnerID = owner?.ID ?? -1;
+      a.TargetID = target?.ID ?? -1;
+      return true;
+    }
+
     private bool CreateProjectile(Engine engine, ActorInfo owner, ActorInfo target)
     {
       if (owner == null)
         return false;
 
       if (owner.IsPlayer
-        && !engine.PlayerInfo.PlayerAIEnabled 
+        && !engine.PlayerInfo.PlayerAIEnabled
         && (!RequirePlayerTargetLock || target != null))
       { // Player
-        if (Projectile == null)
-          return true;
-
-        TV_3DVECTOR targetloc = GetFirePosition(owner);
-
-        ActorCreationInfo acinfo = new ActorCreationInfo(Projectile);
-        acinfo.Position = owner.GetRelativePositionXYZ(targetloc.x, targetloc.y, targetloc.z);
-
-        if (owner.MoveData.Speed > Projectile.MoveLimitData.MinSpeed)
-          acinfo.InitialSpeed = owner.MoveData.Speed;
-
-        if (EnablePlayerAutoAim && target != null)
-        {
-          float dist = ActorDistanceInfo.GetDistance(engine, owner, target);
-
-          float d = (AutoAimMaxDeviation == AutoAimMinDeviation)
-                  ? dist / Projectile.MoveLimitData.MaxSpeed * AutoAimMinDeviation
-                  : dist / Projectile.MoveLimitData.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
-
-          ActorInfo a2 = target.ParentForCoords;
-          TV_3DVECTOR dir = (a2 == null)
-                          ? target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d) - owner.GetGlobalPosition()
-                          : target.GetGlobalPosition() + a2.GetRelativePositionXYZ(0, 0, a2.MoveData.Speed * d) - a2.GetGlobalPosition() - owner.GetGlobalPosition();
-
-          acinfo.Rotation = dir.ConvertDirToRot();
-        }
+        if (IsActor)
+          return CreateActor(engine, owner, target, true);
         else
-        {
-          acinfo.Rotation = owner.GetGlobalRotation();
-        }
-
-        ActorInfo a = engine.ActorFactory.Create(acinfo);
-        a.Faction = owner.Faction;
-        owner.AddChild(a);
-
-        if (a.Mask.Has(ComponentMask.HAS_AI))
-        {
-          a.QueueLast(new Wait(ProjectileWaitBeforeHoming));
-          a.QueueLast(ProjectileAttackActor.GetOrCreate(target));
-          a.QueueLast(new Lock());
-        }
-        else // define CurrentAction.target
-          a.QueueLast(ProjectileAttackActor.GetOrCreate(target));
-
-        return true;
+          return CreateProjectile(engine, owner, target, true);
       }
 
       if ((target == null && AIAttackNull)
           || (target != null && (target.TypeInfo.AIData.TargetType & AIAttackTargets) != 0)
           )
       { // AI 
-        if (Projectile == null)
-          return true;
-
-        if (target != null && (owner.IsAggregateMode|| target.IsAggregateMode))
-        {
-          Projectile.FireAggregation(owner, target, Projectile);
-        }
-
-        TV_3DVECTOR targetloc = GetFirePosition(owner);
-
-        ActorCreationInfo acinfo = new ActorCreationInfo(Projectile);
-        acinfo.Position = owner.GetRelativePositionXYZ(targetloc.x, targetloc.y, targetloc.z);
-
-        if (owner.MoveData.Speed > Projectile.MoveLimitData.MinSpeed)
-          acinfo.InitialSpeed = owner.MoveData.Speed;
-
-        if (EnableAIAutoAim && target != null)
-        {
-          float dist = ActorDistanceInfo.GetDistance(engine, owner, target);
-
-          float d = (AutoAimMaxDeviation == AutoAimMinDeviation)
-                  ? dist / Projectile.MoveLimitData.MaxSpeed * AutoAimMinDeviation
-                  : dist / Projectile.MoveLimitData.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
-
-          ActorInfo a2 = target.ParentForCoords;
-          TV_3DVECTOR dir = (a2 == null)
-                          ? target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d) - owner.GetGlobalPosition()
-                          : target.GetGlobalPosition() + a2.GetRelativePositionXYZ(0, 0, a2.MoveData.Speed * d) - a2.GetGlobalPosition() - owner.GetGlobalPosition();
-
-          acinfo.Rotation = dir.ConvertDirToRot();
-        }
+        if (IsActor)
+          return CreateActor(engine, owner, target, false);
         else
-        {
-          acinfo.Rotation = owner.GetGlobalRotation();
-        }
-
-        ActorInfo a = engine.ActorFactory.Create(acinfo);
-        owner.AddChild(a);
-        a.Faction = owner.Faction;
-
-        if (a.Mask.Has(ComponentMask.HAS_AI))
-        {
-          a.QueueLast(new Wait(ProjectileWaitBeforeHoming));
-          a.QueueLast(ProjectileAttackActor.GetOrCreate(target));
-          a.QueueLast(new Lock());
-        }
-        else // define CurrentAction.target
-          a.QueueLast(ProjectileAttackActor.GetOrCreate(target));
-
-        return true;
+          return CreateProjectile(engine, owner, target, false);
       }
       return false;
+    }
+
+    private bool CreateActor(Engine engine, ActorInfo owner, ActorInfo target, bool IsPlayer)
+    {
+      if (ActorProj == null)
+        return true;
+
+      TV_3DVECTOR targetloc = GetFirePosition(owner);
+
+      ActorCreationInfo acinfo = new ActorCreationInfo(ActorProj);
+      acinfo.Position = owner.GetRelativePositionXYZ(targetloc.x, targetloc.y, targetloc.z);
+
+      if (owner.MoveData.Speed > ActorProj.MoveLimitData.MinSpeed)
+        acinfo.InitialSpeed = owner.MoveData.Speed;
+
+      if (EnablePlayerAutoAim && target != null)
+      {
+        float dist = ActorDistanceInfo.GetDistance(engine, owner, target);
+
+        float d = (AutoAimMaxDeviation == AutoAimMinDeviation)
+                ? dist / ActorProj.MoveLimitData.MaxSpeed * AutoAimMinDeviation
+                : dist / ActorProj.MoveLimitData.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
+
+        ActorInfo a2 = target.ParentForCoords;
+        TV_3DVECTOR dir = (a2 == null)
+                        ? target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d) - owner.GetGlobalPosition()
+                        : target.GetGlobalPosition() + a2.GetRelativePositionXYZ(0, 0, a2.MoveData.Speed * d) - a2.GetGlobalPosition() - owner.GetGlobalPosition();
+
+        acinfo.Rotation = dir.ConvertDirToRot();
+      }
+      else
+      {
+        acinfo.Rotation = owner.GetGlobalRotation();
+      }
+
+      ActorInfo a = engine.ActorFactory.Create(acinfo);
+      a.Faction = owner.Faction;
+      owner.AddChild(a);
+
+      if (a.Mask.Has(ComponentMask.HAS_AI))
+      {
+        a.QueueLast(new Wait(ProjectileWaitBeforeHoming));
+        a.QueueLast(ProjectileAttackActor.GetOrCreate(target));
+        a.QueueLast(new Lock());
+      }
+      else // define CurrentAction.target
+      {
+        a.QueueLast(ProjectileAttackActor.GetOrCreate(target));
+      }
+      return true;
     }
   }
 }

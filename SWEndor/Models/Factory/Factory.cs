@@ -1,7 +1,6 @@
 ﻿using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Primitives;
-using SWEndor.Primitives.Extensions;
 using System;
 using System.Collections.Concurrent;
 
@@ -21,14 +20,14 @@ namespace SWEndor
     ITypeInfo<T>
   {
     public readonly Engine Engine;
-    internal Factory(Engine engine, Func<Engine, Factory<T, TCreate, TType>, int, int, TCreate, T> createfunc)
+    internal Factory(Engine engine, Func<Engine, Factory<T, TCreate, TType>, short, TCreate, T> createfunc)
     {
       Engine = engine;
       Actors = new ActorEnumerable(this);
       create = createfunc;
     }
 
-    private int counter = 0;
+    private short counter = 0;
     private ConcurrentQueue<T> planned = new ConcurrentQueue<T>();
     private ConcurrentQueue<T> prepool = new ConcurrentQueue<T>();
     private ConcurrentQueue<T> pool = new ConcurrentQueue<T>();
@@ -39,13 +38,11 @@ namespace SWEndor
     private ConcurrentQueue<T> nextplan = new ConcurrentQueue<T>();
     private ConcurrentQueue<T> nextdead = new ConcurrentQueue<T>();
 
-    int lastdataid = 0;
-
     private T First;
     private T Last;
     private object creationLock = new object();
 
-    private readonly Func<Engine, Factory<T, TCreate, TType>, int, int, TCreate, T> create;
+    private readonly Func<Engine, Factory<T, TCreate, TType>, short, TCreate, T> create;
 
     internal int PoolPlanCount { get { return planned.Count; } }
     internal int PoolPrepCount { get { return prepool.Count; } }
@@ -55,7 +52,7 @@ namespace SWEndor
     internal int TempPoolRedoCount { get { return redo.Count; } }
     internal int TempPoolDeadCount { get { return nextdead.Count; } }
 
-
+    /*
     private int GetNewDataID()
     {
       // since Actors are reused, there is no need to count backwards
@@ -64,6 +61,7 @@ namespace SWEndor
 
       return lastdataid++;
     }
+    */
 
     public T Create(TCreate acinfo)
     {
@@ -73,14 +71,14 @@ namespace SWEndor
 
       lock (creationLock)
       {
-        int id = counter++;
+        short id = counter++;
         if (pool.TryDequeue(out actor))
         {
           actor.Rebuild(Engine, id, acinfo);
         }
         else
         {
-          actor = create(Engine, this, id, GetNewDataID(), acinfo);
+          actor = create(Engine, this, id, acinfo);
         }
 
         using (ScopeCounterManager.Acquire(actor.Scope))
@@ -126,6 +124,13 @@ namespace SWEndor
 
       while (nextplan.TryDequeue(out actor))
         planned.Enqueue(actor);
+    }
+
+    internal void DisposePlanned()
+    {
+      T actor = null;
+      while (planned.TryDequeue(out actor))
+        dead.Enqueue(actor);
     }
 
     internal void MakeDead(T a)
@@ -270,22 +275,24 @@ namespace SWEndor
       }
     }
 
-    Action<Engine, T> destroy = (e, a) => { a?.Delete(); };
+    Action<Engine, T> destroy = (e, a) => { a?.Delete(); }; //ScopeCounterManager.Reset(a.Scope); a?.Delete(); };
     public void Reset()
     {
+      DisposePlanned();
       DoEach(destroy);
       DestroyDead();
 
-      list.Clear();
-      planned = new ConcurrentQueue<T>();
-      dead = new ConcurrentQueue<T>();
-      prepool = new ConcurrentQueue<T>();
-      pool = new ConcurrentQueue<T>();
-      First = null;
-      Last = null;
+      // Do not purge items this way, let the engine collect them back to pool for reuse
+      //list.Clear();
+      //planned = new ConcurrentQueue<T>();
+      //dead = new ConcurrentQueue<T>();
+      //prepool = new ConcurrentQueue<T>();
+      //pool = new ConcurrentQueue<T>();
+      //First = null;
+      //Last = null;
 
-      lastdataid = 0;
-      counter = 0;
+      //lastdataid = 0;
+      //counter = 0;
     }
   }
 }

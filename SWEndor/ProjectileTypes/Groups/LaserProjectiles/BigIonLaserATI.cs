@@ -7,8 +7,10 @@ using SWEndor.Core;
 using SWEndor.ExplosionTypes;
 using SWEndor.Explosions;
 using SWEndor.Models;
+using SWEndor.Projectiles;
+using SWEndor.ActorTypes;
 
-namespace SWEndor.ActorTypes.Instances
+namespace SWEndor.ProjectileTypes.Instances
 {
   public class BigIonLaserATI : Groups.LaserProjectile
   {
@@ -32,15 +34,15 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Name, @"projectiles\ion_sm_laser.x", 4, "Laser");
     }
 
-    public override void ProcessHit(Engine engine, ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(Engine engine, ProjectileInfo owner, ActorInfo hitby, TV_3DVECTOR impact)
     {
       if (owner == null || hitby == null)
         return;
 
-      base.ProcessHit(engine, owner, hitby, impact, normal);
+      base.ProcessHit(engine, owner, hitby, impact);
       foreach (ActorInfo child in hitby.Children)
       {
-        child.InflictDamage(hitby, 0.5f * child.HP, DamageType.NORMAL, child.GetGlobalPosition());
+        child.InflictDamage(0.5f * child.HP, DamageType.NORMAL, child.GetGlobalPosition());
 
         float empduration = 10000;
 

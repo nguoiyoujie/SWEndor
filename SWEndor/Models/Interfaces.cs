@@ -40,13 +40,13 @@ namespace SWEndor.Models
   public interface IEngineObject
   {
     Engine Engine { get; }
-    int ID { get; }
+    short ID { get; }
   }
 
   public interface IActorCreateable<T>
   {
     float CreationTime { get; }
-    void Rebuild(Engine engine, int id, T acinfo);
+    void Rebuild(Engine engine, short id, T acinfo);
     void Initialize(Engine engine);
   }
 

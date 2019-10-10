@@ -1,6 +1,6 @@
 ﻿using SWEndor.ActorTypes.Components;
 
-namespace SWEndor.ActorTypes.Instances
+namespace SWEndor.ProjectileTypes.Instances
 {
   public class GreenLaserATI : Groups.LaserProjectile
   {

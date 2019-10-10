@@ -2,6 +2,7 @@
 using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Primitives.Factories;
+using SWEndor.Projectiles;
 using SWEndor.Weapons;
 using System;
 using System.Collections.Generic;

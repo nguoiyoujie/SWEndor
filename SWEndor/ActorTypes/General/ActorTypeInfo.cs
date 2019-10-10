@@ -8,6 +8,8 @@ using SWEndor.FileFormat.INI;
 using SWEndor.Models;
 using SWEndor.Player;
 using SWEndor.Primitives.Extensions;
+using SWEndor.Projectiles;
+using SWEndor.ProjectileTypes;
 using SWEndor.Scenarios;
 using SWEndor.Weapons;
 using System;
@@ -18,6 +20,8 @@ namespace SWEndor.ActorTypes
 {
   public partial class ActorTypeInfo : ITypeInfo<ActorInfo>
   {
+    public static ActorTypeInfo Null = new ActorTypeInfo(Globals.Engine.ActorTypeFactory, "$NULL", "Null");
+
     public ActorTypeInfo(Factory owner, string id, string name)
     {
       ActorTypeFactory = owner;
@@ -113,7 +117,7 @@ namespace SWEndor.ActorTypes
     public void SaveToINI(string id)
     {
       ID = id;
-      string filepath = Path.Combine(Globals.ExplosionTypeINIDirectory, id + ".ini");
+      string filepath = Path.Combine(Globals.ActorTypeINIDirectory, id + ".ini");
 
       if (!File.Exists(filepath))
         File.Create(filepath).Close(); INIFile f = new INIFile(filepath);
@@ -178,14 +182,14 @@ namespace SWEndor.ActorTypes
 
       // explode
       ainfo.TickExplosions();
-      
+
       // dying
       if (ainfo.IsDying)
         DyingMoveData.Update(ainfo, engine.Game.TimeSinceRender);
 
       // sound
       if (PlayerInfo.Actor != null
-        && ainfo.Active 
+        && ainfo.Active
         && !ainfo.IsScenePlayer)
       {
         foreach (SoundSourceData assi in SoundSources)
@@ -193,31 +197,34 @@ namespace SWEndor.ActorTypes
       }
 
       // projectile
-      if (ainfo.TypeInfo.AIData.TargetType.Contains(TargetType.LASER | TargetType.MUNITION))
+      if (ainfo.TypeInfo.AIData.TargetType.Contains(TargetType.MUNITION)
+        && !ainfo.IsDyingOrDead)
       {
-        if (!ainfo.IsDyingOrDead)
+        NearEnoughImpact(engine, ainfo);
+      }
+    }
+
+    public void NearEnoughImpact(Engine engine, ActorInfo proj)
+    {
+      float impdist = CombatData.ImpactCloseEnoughDistance;
+      if (impdist > 0 && proj.CurrentAction != null && proj.CurrentAction is ProjectileAttackActor)
+      {
+        ActorInfo target = ((ProjectileAttackActor)proj.CurrentAction).Target_Actor;
+        if (target != null)
         {
-          float impdist = CombatData.ImpactCloseEnoughDistance;
-          if (impdist > 0 && ainfo.CurrentAction != null && ainfo.CurrentAction is ProjectileAttackActor)
+          if (target.TypeInfo.AIData.TargetType.Contains(TargetType.MUNITION))
+            impdist += target.TypeInfo.CombatData.ImpactCloseEnoughDistance;
+
+          // Anticipate
+          float dist = ActorDistanceInfo.GetDistance(engine, proj, target, impdist + 1);
+
+          if (dist < impdist)
           {
-            ActorInfo target = ((ProjectileAttackActor)ainfo.CurrentAction).Target_Actor;
-            if (target != null)
-            {
-              if (target.TypeInfo.AIData.TargetType.Contains(TargetType.LASER | TargetType.MUNITION))
-                impdist += target.TypeInfo.CombatData.ImpactCloseEnoughDistance;
+            target.TypeInfo.ProcessHit(engine, target, proj, target.GetGlobalPosition(), new TV_3DVECTOR());
+            proj.TypeInfo.ProcessHit(engine, proj, target, target.GetGlobalPosition(), new TV_3DVECTOR());
 
-              // Anticipate
-              float dist = ActorDistanceInfo.GetDistance(engine, ainfo, target, impdist + 1);
-
-              if (dist < impdist)
-              {
-                target.TypeInfo.ProcessHit(engine, target, ainfo, target.GetGlobalPosition(), new TV_3DVECTOR());
-                ainfo.TypeInfo.ProcessHit(engine, ainfo, target, target.GetGlobalPosition(), new TV_3DVECTOR());
-
-                ainfo.OnHitEvent(target);
-                target.OnHitEvent(ainfo);
-              }
-            }
+            proj.OnHitEvent(target);
+            target.OnHitEvent(proj);
           }
         }
       }
@@ -225,8 +232,13 @@ namespace SWEndor.ActorTypes
 
     public virtual void ProcessHit(Engine engine, ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
     {
-      if (owner == null || hitby == null)
-        return;
+#if DEBUG
+      if (owner == null)
+        throw new ArgumentNullException("owner");
+
+      if (hitby == null)
+        throw new ArgumentNullException("hitby");
+#endif
 
       if (hitby.TypeInfo.CombatData.ImpactDamage == 0)
         return;
@@ -235,108 +247,16 @@ namespace SWEndor.ActorTypes
         && owner.TypeInfo.CombatData.HitWhileDyingLeadsToDeath)
         owner.SetState_Dead();
       
-      if (hitby.Mask.Has(ComponentMask.IS_DAMAGE))
-      {
-        if (!owner.IsDyingOrDead)
-        {
-          float p_hp = owner.HP;
-          owner.InflictDamage(hitby, hitby.TypeInfo.CombatData.ImpactDamage, DamageType.NORMAL, impact);
-          float hp = owner.HP;
-
-          if (owner.IsPlayer)
-            if (hp < (int)p_hp)
-              PlayerInfo.FlashHit(PlayerInfo.StrengthColor);
-
-          // scoring
-          ActorInfo attacker = hitby.TopParent;
-          if (attacker.IsScenePlayer)
-          {
-            if (!attacker.Faction.IsAlliedWith(owner.Faction))
-              AddScore(engine, PlayerInfo.Score, hitby, owner);
-            else
-              Engine.Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", owner.Name, PlayerInfo.Name)
-                                              , 5
-                                              , owner.Faction.Color
-                                              , -1);
-          }
-
-
-          if (owner.IsScenePlayer)
-          {
-            PlayerInfo.Score.AddDamage(engine, attacker, hitby.TypeInfo.CombatData.ImpactDamage * owner.GetArmor(DamageType.NORMAL));
-
-            if (owner.IsDyingOrDead)
-              PlayerInfo.Score.AddDeath(engine, attacker);
-          }
-
-          if (attacker != null && !attacker.Faction.IsAlliedWith(owner.Faction))
-          {
-            // Fighter AI
-            if ((owner.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER)))
-            {
-              if (owner.CanRetaliate && (owner.CurrentAction == null || owner.CurrentAction.CanInterrupt))
-              {
-                if (!owner.Squad.IsNull && owner.Squad.Mission == null)
-                {
-                  if (!attacker.Squad.IsNull)
-                  {
-                    foreach (ActorInfo a in owner.Squad.Members)
-                    {
-                      if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
-                      {
-                        ActorInfo b = attacker.Squad.MembersCopy.Random(engine);
-                        if (b != null)
-                        {
-                          a.ClearQueue();
-                          a.QueueLast(AttackActor.GetOrCreate(b.ID));
-                        }
-                      }
-                    }
-                  }
-                  else
-                  {
-                    foreach (ActorInfo a in owner.Squad.Members)
-                    {
-                      if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
-                      {
-                        a.ClearQueue();
-                        a.QueueLast(AttackActor.GetOrCreate(attacker.ID));
-                      }
-                    }
-                  }
-                }
-                else
-                {
-                  owner.ClearQueue();
-                  owner.QueueLast(AttackActor.GetOrCreate(attacker.ID));
-                }
-              }
-              else if (owner.CanEvade && !(owner.CurrentAction is Evade))
-              {
-                owner.QueueFirst(Evade.GetOrCreate());
-              }
-
-              if (!owner.Squad.IsNull)
-              {
-                if (owner.Squad.Leader == owner)
-                  owner.Squad.AddThreat(attacker, true);
-                else
-                  owner.Squad.AddThreat(attacker);
-              }
-            }
-          }
-        }
-
-        hitby.Position = new TV_3DVECTOR(impact.x, impact.y, impact.z);
-        hitby.SetState_Dead(); // projectiles die on impact
-      }
-      else if (owner.Mask.Has(ComponentMask.IS_DAMAGE))
-      {
-      }
-      else
-      {
+      //if (hitby.TypeInfo.AIData.TargetType.Has(TargetType.MUNITION))
+      //{
+      //}
+      //else if (owner.TypeInfo.AIData.TargetType.Has(TargetType.MUNITION))
+      //{
+      //}
+      //else
+      //{
         // Collision
-        owner.InflictDamage(hitby, hitby.TypeInfo.CombatData.ImpactDamage, DamageType.COLLISION, impact);
+        owner.InflictDamage(hitby.TypeInfo.CombatData.ImpactDamage, DamageType.COLLISION, impact);
         if (owner.HP > 0
           && owner.Mask.Has(ComponentMask.CAN_MOVE)
           && owner.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
@@ -364,9 +284,126 @@ namespace SWEndor.ActorTypes
           if (owner.IsScenePlayer)
             PlayerInfo.Score.AddDeath(engine, attacker);
         }
-      }
+      //}
 
       hitby.OnHitEvent(owner);
+      if (hitby.TypeInfo.AIData.TargetType.Has(TargetType.MUNITION))
+      {
+        hitby.Position = new TV_3DVECTOR(impact.x, impact.y, impact.z);
+        hitby.SetState_Dead(); // projectiles die on impact
+      }
+    }
+
+    public virtual void ProcessHit(Engine engine, ActorInfo owner, ProjectileInfo proj, TV_3DVECTOR impact)
+    {
+#if DEBUG
+      if (owner == null)
+        throw new ArgumentNullException("owner");
+
+      if (proj == null)
+        throw new ArgumentNullException("proj");
+#endif
+
+      if (proj.TypeInfo.CombatData.ImpactDamage == 0)
+        return;
+
+      if (owner.IsDying
+        && owner.TypeInfo.CombatData.HitWhileDyingLeadsToDeath)
+        owner.SetState_Dead();
+
+      if (!owner.IsDyingOrDead)
+      {
+        ActorInfo hitby = proj.Owner;
+
+        float p_hp = owner.HP;
+        owner.InflictDamage(proj.TypeInfo.CombatData.ImpactDamage, DamageType.NORMAL, impact);
+        float hp = owner.HP;
+
+        if (owner.IsPlayer)
+          if (hp < (int)p_hp)
+            PlayerInfo.FlashHit(PlayerInfo.StrengthColor);
+
+        // scoring
+        ActorInfo attacker = hitby?.TopParent;
+        if (attacker != null && attacker.IsScenePlayer)
+        {
+          if (!attacker.Faction.IsAlliedWith(owner.Faction))
+            AddScore(engine, PlayerInfo.Score, hitby, owner);
+          else
+            Engine.Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", owner.Name, PlayerInfo.Name)
+                                            , 5
+                                            , owner.Faction.Color
+                                            , -1);
+        }
+
+        if (owner.IsScenePlayer)
+        {
+          PlayerInfo.Score.AddDamage(engine, attacker, proj.TypeInfo.CombatData.ImpactDamage * owner.GetArmor(DamageType.NORMAL));
+
+          if (owner.IsDyingOrDead)
+            PlayerInfo.Score.AddDeath(engine, attacker);
+        }
+
+        if (attacker != null && !attacker.Faction.IsAlliedWith(owner.Faction))
+        {
+          // Fighter AI
+          if ((owner.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER)))
+          {
+            if (owner.CanRetaliate && (owner.CurrentAction == null || owner.CurrentAction.CanInterrupt))
+            {
+              if (!owner.Squad.IsNull && owner.Squad.Mission == null)
+              {
+                if (!attacker.Squad.IsNull)
+                {
+                  foreach (ActorInfo a in owner.Squad.Members)
+                  {
+                    if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
+                    {
+                      ActorInfo b = attacker.Squad.MembersCopy.Random(engine);
+                      if (b != null)
+                      {
+                        a.ClearQueue();
+                        a.QueueLast(AttackActor.GetOrCreate(b.ID));
+                      }
+                    }
+                  }
+                }
+                else
+                {
+                  foreach (ActorInfo a in owner.Squad.Members)
+                  {
+                    if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
+                    {
+                      a.ClearQueue();
+                      a.QueueLast(AttackActor.GetOrCreate(attacker.ID));
+                    }
+                  }
+                }
+              }
+              else
+              {
+                owner.ClearQueue();
+                owner.QueueLast(AttackActor.GetOrCreate(attacker.ID));
+              }
+            }
+            else if (owner.CanEvade && !(owner.CurrentAction is Evade))
+            {
+              owner.QueueFirst(Evade.GetOrCreate());
+            }
+
+            if (!owner.Squad.IsNull)
+            {
+              if (owner.Squad.Leader == owner)
+                owner.Squad.AddThreat(attacker, true);
+              else
+                owner.Squad.AddThreat(attacker);
+            }
+          }
+        }
+      }
+
+      proj.Position = new TV_3DVECTOR(impact.x, impact.y, impact.z);
+      proj.SetState_Dead(); // projectiles die on impact
     }
 
     private void AddScore(Engine engine, ScoreInfo score, ActorInfo proj, ActorInfo victim)
@@ -402,7 +439,7 @@ namespace SWEndor.ActorTypes
       return false;
     }
 
-    public virtual void FireAggregation(ActorInfo owner, ActorInfo target, ActorTypeInfo weapontype)
+    public virtual void FireAggregation(ActorInfo owner, ActorInfo target, ProjectileTypeInfo weapontype)
     {
       float accuracy = 1;
 
@@ -416,7 +453,7 @@ namespace SWEndor.ActorTypes
       accuracy /= (Math.Abs(angle.y) + 1);
 
       if (Engine.Random.NextDouble() < accuracy)
-        target.InflictDamage(owner, weapontype.CombatData.ImpactDamage, DamageType.NORMAL, target.GetGlobalPosition());
+        target.InflictDamage(weapontype.CombatData.ImpactDamage, DamageType.NORMAL, target.GetGlobalPosition());
     }
 
     public virtual void Dying(Engine engine, ActorInfo ainfo)

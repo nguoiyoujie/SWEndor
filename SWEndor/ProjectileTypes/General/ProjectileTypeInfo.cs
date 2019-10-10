@@ -1,8 +1,21 @@
-﻿/*
+﻿using MTV3D65;
+using SWEndor.Actors;
+using SWEndor.ActorTypes;
+using SWEndor.ActorTypes.Components;
+using SWEndor.Core;
+using SWEndor.FileFormat.INI;
+using SWEndor.Models;
+using SWEndor.Player;
+using SWEndor.Projectiles;
+using System;
+using System.IO;
+
 namespace SWEndor.ProjectileTypes
 {
-  public partial class ProjectileTypeInfo : ITypeInfo<ActorInfo>
+  public partial class ProjectileTypeInfo : ITypeInfo<ProjectileInfo>
   {
+    public static ProjectileTypeInfo Null = new ProjectileTypeInfo(Globals.Engine.ProjectileTypeFactory, "$NULL", "Null");
+
     public ProjectileTypeInfo(Factory owner, string id, string name)
     {
       ActorTypeFactory = owner;
@@ -26,38 +39,27 @@ namespace SWEndor.ProjectileTypes
 
     // Data (structs)
     public CombatData CombatData;
-    //public RegenData RegenData;
     public TimedLifeData TimedLifeData;
-    public ArmorData ArmorData;
     public MoveLimitData MoveLimitData = MoveLimitData.Default;
     public RenderData RenderData = RenderData.Default;
-    public AIData AIData = AIData.Default;
     public MeshData MeshData = MeshData.Default;
-    //public DyingMoveData DyingMoveData;
-    //public ScoreData ScoreData;
     
     // AddOns
-    //public AddOnData[] AddOns = new AddOnData[0];
 
     // Explosionf
     public ExplodeData[] Explodes = new ExplodeData[0];
-
-    // Weapons
-    public string[] Loadouts = new string[0];
-    public bool TrackerDummyWeapon = false;
 
     // Sound
     public SoundSourceData[] InitialSoundSources = new SoundSourceData[0];
     public SoundSourceData[] SoundSources = new SoundSourceData[0];
 
     // derived
-    public MoveBehavior MoveBehavior;
-    internal UnfixedWeaponData cachedWeaponData;
+    public ProjectileTypes.Components.MoveBehavior MoveBehavior;
 
     public void LoadFromINI(string id)
     {
       ID = id;
-      string filepath = Path.Combine(Globals.ActorTypeINIDirectory, id + ".ini");
+      string filepath = Path.Combine(Globals.ProjectileTypeINIDirectory, id + ".ini");
 
       if (File.Exists(filepath))
       {
@@ -65,15 +67,10 @@ namespace SWEndor.ProjectileTypes
         Name = f.GetStringValue("General", "Name", Name);
         Mask = f.GetEnumValue("General", "Mask", Mask);
 
-        Loadouts = f.GetStringList("General", "Loadouts", Loadouts);
-        TrackerDummyWeapon = f.GetBoolValue("General", "TrackerDummyWeapon", TrackerDummyWeapon);
-
         CombatData.LoadFromINI(f, "CombatData");
         TimedLifeData.LoadFromINI(f, "TimedLifeData");
-        ArmorData.LoadFromINI(f, "ArmorData");
         MoveLimitData.LoadFromINI(f, "MoveLimitData");
         RenderData.LoadFromINI(f, "RenderData");
-        AIData.LoadFromINI(f, "AIData");
         MeshData.LoadFromINI(f, "MeshData");
 
         ExplodeData.LoadFromINI(f, "ExplodeData", "Explodes", out Explodes);
@@ -85,7 +82,7 @@ namespace SWEndor.ProjectileTypes
     public void SaveToINI(string id)
     {
       ID = id;
-      string filepath = Path.Combine(Globals.ExplosionTypeINIDirectory, id + ".ini");
+      string filepath = Path.Combine(Globals.ProjectileTypeINIDirectory, id + ".ini");
 
       if (!File.Exists(filepath))
         File.Create(filepath).Close(); INIFile f = new INIFile(filepath);
@@ -93,15 +90,10 @@ namespace SWEndor.ProjectileTypes
       f.SetStringValue("General", "Name", Name);
       f.SetEnumValue("General", "Mask", Mask);
 
-      f.SetStringList("General", "Loadouts", Loadouts);
-      f.SetBoolValue("General", "TrackerDummyWeapon", TrackerDummyWeapon);
-
       CombatData.SaveToINI(f, "CombatData");
       TimedLifeData.SaveToINI(f, "TimedLifeData");
-      ArmorData.SaveToINI(f, "ArmorData");
       MoveLimitData.SaveToINI(f, "MoveLimitData");
       RenderData.SaveToINI(f, "RenderData");
-      AIData.SaveToINI(f, "AIData");
       MeshData.SaveToINI(f, "MeshData");
 
       ExplodeData.SaveToINI(f, "ExplodeData", "Explodes", "EXP", Explodes);
@@ -113,29 +105,18 @@ namespace SWEndor.ProjectileTypes
     public void Init()
     {
       //cachedWeaponData.Load(this);
-      //MoveBehavior.Load(this);
+      MoveBehavior.Load(this);
     }
 
-    public virtual void Initialize(Engine engine, ActorInfo ainfo)
+    public virtual void Initialize(Engine engine, ProjectileInfo ainfo)
     {
-      // AI
-      ainfo.CanEvade = AIData.CanEvade;
-      ainfo.CanRetaliate = AIData.CanRetaliate;
-
       // Sound
       foreach (SoundSourceData assi in InitialSoundSources)
         assi.Process(engine, ainfo);
     }
 
-    public virtual void ProcessState(Engine engine, ActorInfo ainfo)
+    public virtual void ProcessState(Engine engine, ProjectileInfo ainfo)
     {
-      // weapons
-      foreach (WeaponInfo w in ainfo.WeaponDefinitions.Weapons)
-        w.Reload(engine);
-
-      // regeneration
-      ainfo.Regenerate(engine.Game.TimeSinceRender);
-
       ainfo.TickExplosions();
 
       if (ainfo.IsDying)
@@ -143,121 +124,47 @@ namespace SWEndor.ProjectileTypes
 
       // sound
       if (PlayerInfo.Actor != null
-        && ainfo.Active 
-        && !ainfo.IsScenePlayer)
+        && ainfo.Active)
       {
         foreach (SoundSourceData assi in SoundSources)
           assi.Process(engine, ainfo);
       }
+
+      // projectile
+      if (!ainfo.IsDyingOrDead)
+        NearEnoughImpact(engine, ainfo, ainfo.Target);
     }
 
-    public virtual void ProcessHit(Engine engine, ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public void NearEnoughImpact(Engine engine, ProjectileInfo proj, ActorInfo target)
     {
-      if (owner == null || hitby == null)
-        return;
-
-      if (hitby.TypeInfo.CombatData.ImpactDamage == 0)
-        return;
-
-      if (owner.IsDying
-        && owner.TypeInfo.CombatData.HitWhileDyingLeadsToDeath)
-        owner.SetState_Dead();
-
-      if (!owner.IsDyingOrDead)
+      // projectile
+        float impdist = CombatData.ImpactCloseEnoughDistance;
+      if (target != null)
       {
-        float p_hp = owner.HP;
-        owner.InflictDamage(hitby, hitby.TypeInfo.CombatData.ImpactDamage, DamageType.NORMAL, impact);
-        float hp = owner.HP;
+        if (target.TypeInfo.AIData.TargetType.Contains(TargetType.MUNITION))
+          impdist += target.TypeInfo.CombatData.ImpactCloseEnoughDistance;
 
-        if (owner.IsPlayer)
-          if (hp < (int)p_hp)
-            PlayerInfo.FlashHit(PlayerInfo.StrengthColor);
+        // Anticipate
+        float dist = ActorDistanceInfo.GetDistance(engine, proj, target);
 
-        // scoring
-        ActorInfo attacker = hitby.TopParent;
-        if (attacker.IsScenePlayer)
+        if (dist < impdist)
         {
-          if (!attacker.Faction.IsAlliedWith(owner.Faction))
-            AddScore(engine, PlayerInfo.Score, hitby, owner);
-          else
-            Engine.Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", owner.Name, PlayerInfo.Name)
-                                            , 5
-                                            , owner.Faction.Color
-                                            , -1);
-        }
+          target.TypeInfo.ProcessHit(engine, target, proj, target.GetGlobalPosition());
+          proj.TypeInfo.ProcessHit(engine, proj, target, target.GetGlobalPosition());
 
-
-        if (owner.IsScenePlayer)
-        {
-          PlayerInfo.Score.AddDamage(engine, attacker, hitby.TypeInfo.CombatData.ImpactDamage * owner.GetArmor(DamageType.NORMAL));
-
-          if (owner.IsDyingOrDead)
-            PlayerInfo.Score.AddDeath(engine, attacker);
-        }
-
-        if (attacker != null && !attacker.Faction.IsAlliedWith(owner.Faction))
-        {
-          // Fighter AI
-          if ((owner.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER)))
+          ActorInfo o = proj.Owner;
+          if (o != null)
           {
-            if (owner.CanRetaliate && (owner.CurrentAction == null || owner.CurrentAction.CanInterrupt))
-            {
-              if (!owner.Squad.IsNull && owner.Squad.Mission == null)
-              {
-                if (!attacker.Squad.IsNull)
-                {
-                  foreach (ActorInfo a in owner.Squad.Members)
-                  {
-                    if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
-                    {
-                      ActorInfo b = attacker.Squad.MembersCopy.Random(engine);
-                      if (b != null)
-                      {
-                        a.ClearQueue();
-                        a.QueueLast(AttackActor.GetOrCreate(b.ID));
-                      }
-                    }
-                  }
-                }
-                else
-                {
-                  foreach (ActorInfo a in owner.Squad.Members)
-                  {
-                    if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
-                    {
-                      a.ClearQueue();
-                      a.QueueLast(AttackActor.GetOrCreate(attacker.ID));
-                    }
-                  }
-                }
-              }
-              else
-              {
-                owner.ClearQueue();
-                owner.QueueLast(AttackActor.GetOrCreate(attacker.ID));
-              }
-            }
-            else if (owner.CanEvade && !(owner.CurrentAction is Evade))
-            {
-              owner.QueueFirst(new Evade());
-            }
-
-            if (!owner.Squad.IsNull)
-            {
-              if (owner.Squad.Leader == owner)
-                owner.Squad.AddThreat(attacker, true);
-              else
-                owner.Squad.AddThreat(attacker);
-            }
+            o.OnHitEvent(target);
+            target.OnHitEvent(o);
           }
         }
       }
-
-      hitby.Position = new TV_3DVECTOR(impact.x, impact.y, impact.z);
-      hitby.SetState_Dead(); // projectiles die on impact
     }
 
-    private void AddScore(Engine engine, ScoreInfo score, ActorInfo proj, ActorInfo victim)
+    public virtual void ProcessHit(Engine engine, ProjectileInfo owner, ActorInfo hitby, TV_3DVECTOR impact) { }
+
+    private void AddScore(Engine engine, ScoreInfo score, ProjectileInfo proj, ActorInfo victim)
     {
       if (!victim.IsDyingOrDead)
       {
@@ -270,27 +177,7 @@ namespace SWEndor.ProjectileTypes
       }
     }
 
-    public virtual bool FireWeapon(Engine engine, ActorInfo owner, ActorInfo target, WeaponShotInfo sweapon)
-    {
-      if (owner == null)
-        return false;
-
-      // AI Determination
-      if (EqualityComparer<WeaponShotInfo>.Default.Equals(sweapon, WeaponShotInfo.Automatic))
-      {
-        foreach (WeaponShotInfo ws in owner.WeaponDefinitions.AIWeapons)
-          if (FireWeapon(engine, owner, target, ws))
-            return true;
-      }
-      else
-      {
-        return sweapon.Fire(engine, owner, target);
-      }
-      
-      return false;
-    }
-
-    public virtual void Dying(Engine engine, ActorInfo ainfo)
+    public virtual void Dying(Engine engine, ProjectileInfo ainfo)
     {
       if (ainfo == null)
         throw new ArgumentNullException("ainfo");
@@ -298,7 +185,7 @@ namespace SWEndor.ProjectileTypes
       ainfo.DyingTimerStart();
     }
 
-    public virtual void Dead(Engine engine, ActorInfo ainfo)
+    public virtual void Dead(Engine engine, ProjectileInfo ainfo)
     {
       if (ainfo == null)
         throw new ArgumentNullException("ainfo");
@@ -308,4 +195,3 @@ namespace SWEndor.ProjectileTypes
     }
   }
 }
-*/

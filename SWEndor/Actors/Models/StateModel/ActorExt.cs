@@ -8,8 +8,9 @@ namespace SWEndor.Actors
     public bool Planned { get { return State.CreationState == CreationState.PLANNED; } }
     public bool Generated { get { return State.CreationState == CreationState.GENERATED; } }
     public bool Active { get { return State.CreationState == CreationState.ACTIVE; } }
+    public bool MarkedDisposing { get { return State.CreationState <= CreationState.PREDISPOSE; } }
     public bool Disposing { get { return State.CreationState == CreationState.DISPOSING; } }
-    public bool DisposingOrDisposed { get { return State.CreationState < 0; } }
+    public bool DisposingOrDisposed { get { return State.CreationState <= CreationState.DISPOSING; } }
     public bool Disposed { get { return State.CreationState == CreationState.DISPOSED; } }
 
     public ComponentMask Mask { get { return State.ComponentMask; } }
@@ -35,6 +36,15 @@ namespace SWEndor.Actors
     public void SetActivated() { State.SetActivated();
 #if DEBUG
      if (Logged)
+        Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
+#endif
+    }
+
+    public void SetPreDispose()
+    {
+      State.SetPreDispose();
+#if DEBUG
+      if (Logged)
         Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
 #endif
     }

@@ -1,23 +1,13 @@
 ﻿using MTV3D65;
 using SWEndor.Core;
+using SWEndor.Models;
 using SWEndor.Primitives;
+using SWEndor.Projectiles;
 using System;
 using System.Collections.Generic;
 
 namespace SWEndor.Actors
 {
-  public struct int2
-  {
-    public int Value1;
-    public int Value2;
-
-    public int2(int v1, int v2)
-    {
-      Value1 = v1;
-      Value2 = v2;
-    }
-  }
-
   public static class ActorDistanceInfo
   {
     private struct EngineTime
@@ -65,10 +55,10 @@ namespace SWEndor.Actors
       public bool Passed { get { return Engine == null || Time < Engine.Game.GameTime; } }
     }
 
-    private static Cache<long, EngineTime, float, ActorInfo, ActorInfo> cache = new Cache<long, EngineTime, float, ActorInfo, ActorInfo>(8192); 
+    private static Cache<int, EngineTime, float, ITransformable, ITransformable> cache = new Cache<int, EngineTime, float, ITransformable, ITransformable>(8192); 
     private static float Cleartime = 0;
     private static Func<EngineTime, bool> clearfunc = (f) => { return f.Passed; };
-    private static Func<ActorInfo, ActorInfo, float> dofunc = (a, b) => { return CalculateDistance(a, b); };
+    private static Func<ITransformable, ITransformable, float> dofunc = (a, b) => { return CalculateDistance(a, b); };
 
     private static object locker = new object();
 
@@ -104,7 +94,7 @@ namespace SWEndor.Actors
     /// Gets a higher bound on the distance between Actors by taking the sum of the coordinate deltas.
     /// </summary>
     /// <returns></returns>
-    public static float GetRoughDistance(ActorInfo a1, ActorInfo a2)
+    public static float GetRoughDistance(ITransformable a1, ITransformable a2)
     {
       if (a1 == null || a2 == null)
         return float.MaxValue;
@@ -127,7 +117,9 @@ namespace SWEndor.Actors
       return dx + dy + dz;
     }
 
-    public static float GetDistance(Engine e, ActorInfo a1, ActorInfo a2, float limit)
+    public static float GetDistance<T1, T2>(Engine e, T1 a1, T2 a2, float limit)
+      where T1 : IEngineObject, ITransformable
+      where T2 : IEngineObject, ITransformable
     {
       float d = GetRoughDistance(a1, a2);
       if (d > limit)
@@ -136,12 +128,14 @@ namespace SWEndor.Actors
         return GetDistance(e, a1, a2);
     }
 
-    public static float GetDistance(Engine e, ActorInfo a1, ActorInfo a2)
+    public static float GetDistance<T1, T2>(Engine e, T1 a1, T2 a2)
+      where T1 : IEngineObject, ITransformable
+      where T2 : IEngineObject, ITransformable
     {
       if (a1 == null || a2 == null)
         return float.MaxValue;
 
-      if (a1 == a2)
+      if (a1.Equals(a2))
         return 0;
 
       lock (locker)
@@ -152,17 +146,25 @@ namespace SWEndor.Actors
           Cleartime = e.Game.GameTime + 5;
         }
 
-        long hash;
+        int hash;
         if (a1.ID > a2.ID)
         {
-          hash = a1.ID;
-          hash = hash << 32;
+          hash = (a1 is ActorInfo) ? 1 : (a1 is ProjectileInfo) ? 2 : 0;
+          hash <<= 2;
+          hash += a1.ID;
+          hash <<= 8;
+          hash += (a2 is ActorInfo) ? 1 : (a2 is ProjectileInfo) ? 2 : 0;
+          hash <<= 2;
           hash += a2.ID;
         }
         else
         {
-          hash = a2.ID;
-          hash = hash << 32;
+          hash = (a2 is ActorInfo) ? 1 : (a2 is ProjectileInfo) ? 2 : 0;
+          hash <<= 2;
+          hash += a2.ID;
+          hash <<= 8;
+          hash += (a1 is ActorInfo) ? 1 : (a1 is ProjectileInfo) ? 2 : 0;
+          hash <<= 2;
           hash += a1.ID;
         }
         return cache.GetOrDefine(hash, new EngineTime(e), dofunc, a1, a2, EngineTime.EqualityComparer.Instance);
@@ -174,7 +176,7 @@ namespace SWEndor.Actors
       return CalculateDistance(first, second);
     }
 
-    private static float CalculateDistance(ActorInfo first, ActorInfo second)
+    private static float CalculateDistance(ITransformable first, ITransformable second)
     {
       return CalculateDistance(first.GetGlobalPosition(), second.GetGlobalPosition());
     }

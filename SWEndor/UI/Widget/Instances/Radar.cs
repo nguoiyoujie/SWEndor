@@ -4,6 +4,7 @@ using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Explosions;
 using SWEndor.Primitives;
+using SWEndor.Projectiles;
 using System;
 using System.Collections.Generic;
 
@@ -116,7 +117,7 @@ namespace SWEndor.UI.Widgets
 
     private int GetColor(ActorInfo actor)
     {
-      if (actor.TypeInfo.AIData.TargetType.Contains(TargetType.LASER | TargetType.MUNITION))
+      if (actor.TypeInfo.AIData.TargetType.Contains(TargetType.MUNITION))
         return projColor;
 
       else if (actor.Faction != null)
@@ -231,7 +232,7 @@ namespace SWEndor.UI.Widgets
                 float gt = Engine.Game.GameTime * radar_blinkfreq;
                 if (a.HP_Frac > 0.1f || (gt - (int)gt > 0.5f))
                 {
-                  DrawRectGiant(a, posvec.X, posvec.Y, proty, acolor);
+                  DrawRectGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, posvec.X, posvec.Y, proty, acolor);
                 }
               }
               break;
@@ -240,7 +241,7 @@ namespace SWEndor.UI.Widgets
                 float gt = Engine.Game.GameTime * radar_blinkfreq;
                 if (a.HP_Frac > 0.1f || (gt - (int)gt > 0.5f))
                 {
-                  DrawTriangleGiant(a, posvec.X, posvec.Y, proty, acolor);
+                  DrawTriangleGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, posvec.X, posvec.Y, proty, acolor);
                 }
               }
               break;
@@ -318,6 +319,81 @@ namespace SWEndor.UI.Widgets
       }
     }
 
+    private void DrawElement(Engine engine, ProjectileInfo a)
+    {
+      ActorInfo p = PlayerInfo.Actor;
+      if (a != null)
+      {
+        TV_3DVECTOR ppos = p.GetGlobalPosition();
+        TV_3DVECTOR apos = a.GetGlobalPosition();
+
+        if (a.Active
+          && a.TypeInfo.RenderData.RadarSize > 0
+          && (a.TypeInfo.RenderData.AlwaysShowInRadar || ActorDistanceInfo.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
+        {
+          int acolor = projColor;
+
+          float proty = p.GetGlobalRotation().y;
+
+          XYCoord posvec = new XYCoord { X = ppos.x - apos.x, Y = ppos.z - apos.z };
+          PolarCoord polar = posvec.ToPolarCoord;
+          polar.Angle -= proty;
+          if (polar.Dist > radar_range)
+            polar.Dist = radar_range;
+
+          XYCoord xy = polar.ToXYCoord;
+          float x = radar_center.x - radar_radius * xy.X / radar_range;
+          float y = radar_center.y - radar_radius * xy.Y / radar_range;
+
+          switch (a.TypeInfo.RenderData.RadarType)
+          {
+            case RadarType.TRAILLINE:
+              TV_2DVECTOR prevtemp = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(a.PrevPosition.x, a.PrevPosition.z);
+              float prevdist = Engine.TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), prevtemp);
+              float prevangl = Engine.TrueVision.TVMathLibrary.Direction2Ang(prevtemp.x, prevtemp.y) - proty;
+              if (polar.Dist < radar_range && prevdist < radar_range)
+              {
+                float px = radar_center.x - radar_radius * prevdist / radar_range * (float)Math.Sin(prevangl * Globals.PI / 180);
+                float py = radar_center.y + radar_radius * prevdist / radar_range * (float)Math.Cos(prevangl * Globals.PI / 180);
+
+                DrawLine(x, y, px, py, acolor);
+              }
+              break;
+            case RadarType.HOLLOW_SQUARE:
+              DrawHollowSquare(x, y, a.TypeInfo.RenderData.RadarSize, acolor);
+              break;
+            case RadarType.FILLED_SQUARE:
+              DrawFilledSquare(x, y, a.TypeInfo.RenderData.RadarSize, acolor);
+              break;
+            case RadarType.HOLLOW_CIRCLE_S:
+              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 4, acolor);
+              break;
+            case RadarType.HOLLOW_CIRCLE_M:
+              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 12, acolor);
+              break;
+            case RadarType.HOLLOW_CIRCLE_L:
+              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 36, acolor);
+              break;
+            case RadarType.FILLED_CIRCLE_S:
+              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 4, acolor);
+              break;
+            case RadarType.FILLED_CIRCLE_M:
+              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 12, acolor);
+              break;
+            case RadarType.FILLED_CIRCLE_L:
+              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 36, acolor);
+              break;
+            case RadarType.RECTANGLE_GIANT:
+              DrawRectGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, posvec.X, posvec.Y, proty, acolor);
+              break;
+            case RadarType.TRIANGLE_GIANT:
+              DrawTriangleGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, posvec.X, posvec.Y, proty, acolor);
+              break;
+          }
+        }
+      }
+    }
+
     private void DrawLine(float x0, float y0, float x1, float y1, int color)
     {
       TVScreen2DImmediate.Draw_Line(x0, y0, x1, y1, color);
@@ -343,16 +419,13 @@ namespace SWEndor.UI.Widgets
       TVScreen2DImmediate.Draw_FilledCircle(x, y, size, points, color);
     }
 
-    private void DrawRectGiant(ActorInfo a, float x, float y, float proty, int color)
+    private void DrawRectGiant(BoundingBox box, float scale, float rot_y, float x, float y, float proty, int color)
     {
-      BoundingBox box = a.GetBoundingBox(true);
-      float scale = a.Scale;
-
       List<TV_2DVECTOR?> ts = new List<TV_2DVECTOR?>();
       float bx = box.X.Min * scale;
       float bz = box.Z.Min * scale;
       int i = 0;
-      float ang = a.GetGlobalRotation().y;
+      float ang = rot_y;
       while (i < 4)
       {
         TV_2DVECTOR temp = new TV_2DVECTOR(x, y);
@@ -421,16 +494,13 @@ namespace SWEndor.UI.Widgets
       }
     }
 
-    private void DrawTriangleGiant(ActorInfo a, float x, float y, float proty, int color)
+    private void DrawTriangleGiant(BoundingBox box, float scale, float rot_y, float x, float y, float proty, int color)
     {
-      BoundingBox box = a.GetBoundingBox(true);
-      float scale = a.Scale;
-
       List<TV_2DVECTOR?> ts = new List<TV_2DVECTOR?>();
       float bx = box.X.Min * scale;
       float bz = box.Z.Min * scale;
       int i = 0;
-      float ang = a.GetGlobalRotation().y;
+      float ang = rot_y;
       while (i < 3)
       {
         TV_2DVECTOR temp = new TV_2DVECTOR(x, y);

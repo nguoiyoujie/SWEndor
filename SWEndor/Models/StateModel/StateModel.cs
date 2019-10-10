@@ -2,6 +2,7 @@
 using SWEndor.Core;
 using SWEndor.ExplosionTypes;
 using SWEndor.Primitives.StateMachines;
+using SWEndor.ProjectileTypes;
 
 namespace SWEndor.Models
 {
@@ -19,6 +20,7 @@ namespace SWEndor.Models
     {
       GENERATE,
       ACTIVATE,
+      PRE_DISPOSE,
       BEGIN_DISPOSE,
       END_DISPOSE,
       REVIVE
@@ -52,13 +54,16 @@ namespace SWEndor.Models
       {
         In(CreationState.PLANNED)
                         .On(CreationStateCommand.GENERATE).Goto(CreationState.GENERATED)
-                        .On(CreationStateCommand.BEGIN_DISPOSE).Goto(CreationState.DISPOSING);
+                        .On(CreationStateCommand.PRE_DISPOSE).Goto(CreationState.PREDISPOSE);
 
         In(CreationState.GENERATED)
                         .On(CreationStateCommand.ACTIVATE).Goto(CreationState.ACTIVE)
-                        .On(CreationStateCommand.BEGIN_DISPOSE).Goto(CreationState.DISPOSING);
+                        .On(CreationStateCommand.PRE_DISPOSE).Goto(CreationState.PREDISPOSE);
 
         In(CreationState.ACTIVE)
+                        .On(CreationStateCommand.PRE_DISPOSE).Goto(CreationState.PREDISPOSE);
+
+        In(CreationState.PREDISPOSE)
                         .On(CreationStateCommand.BEGIN_DISPOSE).Goto(CreationState.DISPOSING);
 
         In(CreationState.DISPOSING)
@@ -95,6 +100,14 @@ namespace SWEndor.Models
       ComponentMask = ComponentMask.EXPLOSION;
     }
 
+    public void Init(Engine engine, ProjectileTypeInfo type, ProjectileCreationInfo acinfo)
+    {
+      _actorState = acinfo.InitialState;
+      _creationState = CreationState.PLANNED;
+      CreationTime = acinfo.CreationTime > engine.Game.GameTime ? acinfo.CreationTime : engine.Game.GameTime;
+      ComponentMask = ComponentMask.EXPLOSION;
+    }
+
     public void AdvanceDeathOneLevel(T actor) { ASM.Fire(actor, ActorStateCommand.ADVANCE_DEATH_ONE_LEVEL, ref _actorState); }
     public void MakeDead(T actor) { ASM.Fire(actor, ActorStateCommand.DEAD, ref _actorState); }
     public void MakeDying(T actor) { ASM.Fire(actor, ActorStateCommand.DYING, ref _actorState); }
@@ -106,6 +119,7 @@ namespace SWEndor.Models
     //Creation State
     public void SetGenerated() { CSM.Fire(null, CreationStateCommand.GENERATE, ref _creationState); }
     public void SetActivated() { CSM.Fire(null, CreationStateCommand.ACTIVATE, ref _creationState); }
+    public void SetPreDispose() { CSM.Fire(null, CreationStateCommand.PRE_DISPOSE, ref _creationState); }
     public void SetDisposing() { CSM.Fire(null, CreationStateCommand.BEGIN_DISPOSE, ref _creationState); }
     public void SetDisposed() { CSM.Fire(null, CreationStateCommand.END_DISPOSE, ref _creationState); }
     public void ResetPlanned() { CSM.Fire(null, CreationStateCommand.REVIVE, ref _creationState); }

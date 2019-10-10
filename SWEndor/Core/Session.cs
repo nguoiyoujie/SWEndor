@@ -316,6 +316,9 @@ namespace SWEndor.Core
               using (Engine.PerfManager.Create("process_expl"))
                 Engine.ProcessExpl();
 
+              using (Engine.PerfManager.Create("process_proj"))
+                Engine.ProcessProj();
+
               using (Engine.PerfManager.Create("process_player"))
                 Engine.PlayerInfo.Update();
             }
@@ -325,23 +328,26 @@ namespace SWEndor.Core
 
             if (!IsPaused)
             {
-              using (Engine.PerfManager.Create("process_returnactorpool"))
+              using (Engine.PerfManager.Create("process_actorpool"))
+              {
                 Engine.ActorFactory.ReturnToPool();
-
-              using (Engine.PerfManager.Create("process_activateactor"))
                 Engine.ActorFactory.ActivatePlanned();
-
-              using (Engine.PerfManager.Create("process_destroyactor"))
                 Engine.ActorFactory.DestroyDead();
+              }
 
-              using (Engine.PerfManager.Create("process_returnexplpool"))
+              using (Engine.PerfManager.Create("process_explpool"))
+              {
                 Engine.ExplosionFactory.ReturnToPool();
-
-              using (Engine.PerfManager.Create("process_activateexpl"))
                 Engine.ExplosionFactory.ActivatePlanned();
-
-              using (Engine.PerfManager.Create("process_destroyexpl"))
                 Engine.ExplosionFactory.DestroyDead();
+              }
+
+              using (Engine.PerfManager.Create("process_projpool"))
+              {
+                Engine.ProjectileFactory.ReturnToPool();
+                Engine.ProjectileFactory.ActivatePlanned();
+                Engine.ProjectileFactory.DestroyDead();
+              }
 
               using (Engine.PerfManager.Create("process_scenario"))
                 Engine.GameScenarioManager.Update();
@@ -398,6 +404,9 @@ namespace SWEndor.Core
           isProcessingCollision = true;
           using (Engine.PerfManager.Create("tick_collision"))
             Engine.ProcessCollision();
+
+          using (Engine.PerfManager.Create("tick_proj_collision"))
+            Engine.ProcessProjCollision();
           isProcessingCollision = false;
         }
       }

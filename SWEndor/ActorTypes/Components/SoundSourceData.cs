@@ -4,6 +4,7 @@ using SWEndor.Core;
 using SWEndor.Explosions;
 using SWEndor.FileFormat.INI;
 using SWEndor.Primitives.Extensions;
+using SWEndor.Projectiles;
 using SWEndor.Scenarios;
 
 namespace SWEndor.ActorTypes.Components
@@ -42,7 +43,22 @@ namespace SWEndor.ActorTypes.Components
       if (engine.GameScenarioManager.Scenario is GSMainMenu)
         return;
 
-      if (!PlayInCutscene || !actor.Engine.GameScenarioManager.IsCutsceneMode)
+      if (!PlayInCutscene || !engine.GameScenarioManager.IsCutsceneMode)
+      {
+        TV_3DVECTOR engineloc = actor.GetRelativePositionXYZ(RelativeLocation.x, RelativeLocation.y, RelativeLocation.z);
+        float volMax = 1;
+        if (actor.MoveData.MaxSpeed > 0)
+          volMax = (actor.MoveData.Speed / actor.MoveData.MaxSpeed).Clamp(0, 1);
+        Play(engine, volMax, engineloc);
+      }
+    }
+
+    public void Process(Engine engine, ProjectileInfo actor)
+    {
+      if (engine.GameScenarioManager.Scenario is GSMainMenu)
+        return;
+
+      if (!PlayInCutscene || !engine.GameScenarioManager.IsCutsceneMode)
       {
         TV_3DVECTOR engineloc = actor.GetRelativePositionXYZ(RelativeLocation.x, RelativeLocation.y, RelativeLocation.z);
         float volMax = 1;

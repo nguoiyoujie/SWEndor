@@ -52,7 +52,7 @@ namespace SWEndor.Actors.Models
     private void Regenerate(ActorInfo a, float amount)
     {
       if (!a.NoRegen && !a.IsDyingOrDead)
-        a.InflictDamage(a, -amount, DamageType.ALWAYS_100PERCENT);
+        a.InflictDamage(-amount, DamageType.ALWAYS_100PERCENT);
     }
   }
 }

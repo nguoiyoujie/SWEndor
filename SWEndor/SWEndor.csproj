@@ -124,12 +124,14 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing">
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Windows.Forms">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActorTypes\Components\CombatData.cs" />
@@ -145,6 +147,9 @@
     <Compile Include="ActorTypes\Groups\Fighters\T4AATI.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\CargoLgATI.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\CargoSmATI.cs" />
+    <Compile Include="ActorTypes\Groups\MissileProjectile.cs" />
+    <Compile Include="ActorTypes\Groups\MissileProjectiles\MissileATI.cs" />
+    <Compile Include="ActorTypes\Groups\MissileProjectiles\TorpedoATI.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene\Hyperspace.cs" />
     <Compile Include="ActorTypes\Groups\Warships\XQ1ATI.cs" />
     <Compile Include="Models\ExplodeModel\ExplodeData.cs" />
@@ -202,8 +207,23 @@
     <Compile Include="ActorTypes\Components\SoundSourceData.cs" />
     <Compile Include="ActorTypes\Components\DebrisSpawnerData.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\SpawnerInfo.cs" />
-    <Compile Include="ActorTypes\Groups\MissileProjectile.cs" />
-    <Compile Include="ActorTypes\Groups\LaserProjectile.cs" />
+    <Compile Include="Projectiles\Models\Collision\ProjExt.cs" />
+    <Compile Include="Projectiles\Models\Explosion\ProjExt.cs" />
+    <Compile Include="Projectiles\Models\Mesh\MeshModel.cs" />
+    <Compile Include="Projectiles\Models\Move\MoveData.cs" />
+    <Compile Include="Projectiles\Models\StateModel\ProjExt.cs" />
+    <Compile Include="Projectiles\Models\TimedLife\ProjExt.cs" />
+    <Compile Include="Projectiles\Models\Transform\ProjExt.cs" />
+    <Compile Include="Projectiles\ProjectileInfo.cs" />
+    <Compile Include="Projectiles\ProcessProjectileInfo.cs" />
+    <Compile Include="ProjectileTypes\General\Components\CombatData.cs" />
+    <Compile Include="ProjectileTypes\General\Components\Movement\MoveBehavior.cs" />
+    <Compile Include="ProjectileTypes\General\Components\Movement\MoveForwardOnly.cs" />
+    <Compile Include="ProjectileTypes\General\Components\Movement\MoveLaser.cs" />
+    <Compile Include="ProjectileTypes\General\Components\Movement\MoveNormal.cs" />
+    <Compile Include="ProjectileTypes\General\Components\Movement\NoMove.cs" />
+    <Compile Include="ProjectileTypes\General\Components\Movement\RotateOnly.cs" />
+    <Compile Include="ProjectileTypes\Groups\LaserProjectile.cs" />
     <Compile Include="ActorTypes\Groups\ShieldGenerators.cs" />
     <Compile Include="ActorTypes\Groups\GroundSurface.cs" />
     <Compile Include="ActorTypes\Groups\SurfaceGun.cs" />
@@ -243,11 +263,10 @@
     <Compile Include="ActorTypes\Groups\Debris\Transport_Box2ATI.cs" />
     <Compile Include="ActorTypes\Groups\Debris\Transport_Box1ATI.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\FalconATI.cs" />
-    <Compile Include="ActorTypes\Groups\Projectiles\SmallIonLaserATI.cs" />
-    <Compile Include="ActorTypes\Groups\Projectiles\MissileATI.cs" />
-    <Compile Include="ActorTypes\Groups\Projectiles\Yellow2LaserATI.cs" />
-    <Compile Include="ActorTypes\Groups\Projectiles\GreenAntiShipLaserATI.cs" />
-    <Compile Include="ActorTypes\Groups\Projectiles\Green2LaserATI.cs" />
+    <Compile Include="ProjectileTypes\Groups\LaserProjectiles\SmallIonLaserATI.cs" />
+    <Compile Include="ProjectileTypes\Groups\LaserProjectiles\Yellow2LaserATI.cs" />
+    <Compile Include="ProjectileTypes\Groups\LaserProjectiles\GreenAntiShipLaserATI.cs" />
+    <Compile Include="ProjectileTypes\Groups\LaserProjectiles\Green2LaserATI.cs" />
     <Compile Include="ActorTypes\Groups\StarDestroyers\InterdictorATI.cs" />
     <Compile Include="ActorTypes\Groups\StarDestroyers\VictoryIATI.cs" />
     <Compile Include="ActorTypes\Groups\SurfaceTower.cs" />
@@ -264,10 +283,9 @@
     <Compile Include="ActorTypes\Groups\Debris\XWing_RD_LU_WingATI.cs" />
     <Compile Include="ActorTypes\Groups\Debris\XWing_RU_LD_WingATI.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\WedgeXWingATI.cs" />
-    <Compile Include="ActorTypes\Groups\Projectiles\GreenLaserAdvancedATI.cs" />
-    <Compile Include="ActorTypes\Groups\Projectiles\DeathStarLaserATI.cs" />
-    <Compile Include="ActorTypes\Groups\Projectiles\TorpedoATI.cs" />
-    <Compile Include="ActorTypes\Groups\Projectiles\BigIonLaserATI.cs" />
+    <Compile Include="ProjectileTypes\Groups\LaserProjectiles\GreenLaserAdvancedATI.cs" />
+    <Compile Include="ProjectileTypes\Groups\LaserProjectiles\DeathStarLaserATI.cs" />
+    <Compile Include="ProjectileTypes\Groups\LaserProjectiles\BigIonLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene\ExecutorStaticATI.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene\Surface003_00ATI.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene\Surface002_99ATI.cs" />
@@ -322,11 +340,11 @@
     <Compile Include="ActorTypes\General\ActorTypeInfo.cs" />
     <Compile Include="ActorTypes\Groups\AddOn.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\MC90TurboLaserATI.cs" />
-    <Compile Include="ActorTypes\Groups\Projectiles\YellowLaserATI.cs" />
+    <Compile Include="ProjectileTypes\Groups\LaserProjectiles\YellowLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\StarDestroyers\ExecutorATI.cs" />
     <Compile Include="ActorTypes\Groups\StarDestroyers\ImperialIATI.cs" />
     <Compile Include="ActorTypes\Groups\TIE.cs" />
-    <Compile Include="ActorTypes\Groups\Projectile.cs" />
+    <Compile Include="ProjectileTypes\Groups\Projectile.cs" />
     <Compile Include="ActorTypes\Groups\StarDestroyer.cs" />
     <Compile Include="ActorTypes\Groups\TIEs\TIE_IN_ATI.cs" />
     <Compile Include="ActorTypes\Groups\TIEs\TIE_LN_ATI.cs" />
@@ -334,8 +352,8 @@
     <Compile Include="ActorTypes\Groups\Fighter.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene\DeathStar2ATI.cs" />
     <Compile Include="ActorTypes\Groups\Warships\TransportATI.cs" />
-    <Compile Include="ActorTypes\Groups\Projectiles\GreenLaserATI.cs" />
-    <Compile Include="ActorTypes\Groups\Projectiles\RedLaserATI.cs" />
+    <Compile Include="ProjectileTypes\Groups\LaserProjectiles\GreenLaserATI.cs" />
+    <Compile Include="ProjectileTypes\Groups\LaserProjectiles\RedLaserATI.cs" />
     <Compile Include="AI\ActionExt.cs" />
     <Compile Include="AI\Actions\AttackActor.cs" />
     <Compile Include="AI\Actions\EnableSpawn.cs" />
@@ -553,6 +571,24 @@
     <Compile Include="UI\Forms\StatForm.Designer.cs">
       <DependentUpon>StatForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\UIControls\ucPoolCache.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\UIControls\ucPoolCache.Designer.cs">
+      <DependentUpon>ucPoolCache.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\UIControls\ucSound.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\UIControls\ucSound.Designer.cs">
+      <DependentUpon>ucSound.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\UIControls\ucStatObjects.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\UIControls\ucStatObjects.Designer.cs">
+      <DependentUpon>ucStatObjects.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Menu\Instances\ProfileSettingsMenu.cs" />
     <Compile Include="UI\Menu\Instances\FatalError.cs" />
     <Compile Include="UI\Menu\Instances\GameWon.cs" />
@@ -669,6 +705,15 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UI\Forms\UIControls\ucPoolCache.resx">
+      <DependentUpon>ucPoolCache.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\UIControls\ucSound.resx">
+      <DependentUpon>ucSound.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\UIControls\ucStatObjects.resx">
+      <DependentUpon>ucStatObjects.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Data\dynamicmusic.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -755,7 +800,6 @@
     <Folder Include="Doc\ActorTypes\" />
     <Folder Include="Doc\ExplosionTypes\" />
     <Folder Include="Doc\Weapons\" />
-    <Folder Include="Projectiles\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

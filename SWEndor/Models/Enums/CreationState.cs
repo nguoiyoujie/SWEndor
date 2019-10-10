@@ -21,13 +21,18 @@
     ACTIVE = 2,
 
     /// <summary>
+    /// Actor is marked for clean-up
+    /// </summary>
+    PREDISPOSE = -1,
+
+    /// <summary>
     /// Actor is destroyed and awaits clean-up
     /// </summary>
-    DISPOSING = -1,
+    DISPOSING = -2,
 
     /// <summary>
     /// Actor is destroyed and awaits clean-up / reuse
     /// </summary>
-    DISPOSED = -2
+    DISPOSED = -3
   }
 }

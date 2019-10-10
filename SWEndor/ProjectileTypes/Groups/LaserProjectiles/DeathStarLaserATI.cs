@@ -2,8 +2,9 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
+using SWEndor.Projectiles;
 
-namespace SWEndor.ActorTypes.Instances
+namespace SWEndor.ProjectileTypes.Instances
 {
   public class DeathStarLaserATI : Groups.LaserProjectile
   {
@@ -25,14 +26,14 @@ namespace SWEndor.ActorTypes.Instances
       CombatData.ImpactCloseEnoughDistance = 200;
     }
 
-    public override void ProcessState(Engine engine, ActorInfo ainfo)
+    public override void ProcessState(Engine engine, ProjectileInfo ainfo)
     {
       // Override
     }
 
-    public override void ProcessHit(Engine engine, ActorInfo owner, ActorInfo hitby, TV_3DVECTOR impact, TV_3DVECTOR normal)
+    public override void ProcessHit(Engine engine, ProjectileInfo owner, ActorInfo hitby, TV_3DVECTOR impact)
     {
-      base.ProcessHit(engine, owner, hitby, impact, normal);
+      base.ProcessHit(engine, owner, hitby, impact);
       float time = 0.5f;
 
       if (hitby.DyingTimeRemaining > time)

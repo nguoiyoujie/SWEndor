@@ -15,6 +15,7 @@ namespace SWEndor.Weapons
     public readonly string DisplayName = "null";
 
     public string WeaponProjectile = null;
+    public bool IsActor = false;
     public float WeaponCooldown = 0;
     public float WeaponCooldownRate = 1;
     public float WeaponCooldownRateRandom = 0;
@@ -56,6 +57,7 @@ namespace SWEndor.Weapons
       DisplayName = file.GetStringValue(sectionname, "DisplayName", DisplayName);
 
       WeaponProjectile = file.GetStringValue(sectionname, "WeaponProjectile", WeaponProjectile);
+      IsActor = file.GetBoolValue(sectionname, "IsActor", IsActor);
       WeaponCooldown = file.GetFloatValue(sectionname, "WeaponCooldown", WeaponCooldown);
       WeaponCooldownRate = file.GetFloatValue(sectionname, "WeaponCooldownRate", WeaponCooldownRate);
       WeaponCooldownRateRandom = file.GetFloatValue(sectionname, "WeaponCooldownRateRandom", WeaponCooldownRateRandom);
@@ -83,7 +85,6 @@ namespace SWEndor.Weapons
 
       // Player Config
       RequirePlayerTargetLock = file.GetBoolValue(sectionname, "RequirePlayerTargetLock", RequirePlayerTargetLock);
-      //string typ = file.GetStringValue(sectionname, "WeaponType", Type.ToString());
       Type = file.GetEnumValue(sectionname, "WeaponType", Type);
 
       // AI Config

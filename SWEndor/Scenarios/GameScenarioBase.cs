@@ -152,8 +152,9 @@ namespace SWEndor.Scenarios
       Engine.PlayerInfo.RequestSpawn = false;
 
       // Full reset
-      Engine.ActorFactory.Reset();
+      Engine.ProjectileFactory.Reset();
       Engine.ExplosionFactory.Reset();
+      Engine.ActorFactory.Reset();
 
       Manager.ClearGameStates();
       Manager.ClearEvents();
@@ -171,6 +172,10 @@ namespace SWEndor.Scenarios
       // TO-DO: reset the live counters in a more graceful way
       AI.Actions.Hunt._count = 0;
       AI.Actions.AttackActor._count = 0;
+      AI.Actions.AvoidCollisionRotate._count = 0;
+      AI.Actions.AvoidCollisionWait._count = 0;
+      AI.Actions.Evade._count = 0;
+      AI.Actions.ProjectileAttackActor._count = 0;
 
       Game.GameTime = 0;
       Manager.IsCutsceneMode = false;

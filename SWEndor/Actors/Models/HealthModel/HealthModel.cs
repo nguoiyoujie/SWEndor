@@ -63,17 +63,14 @@ namespace SWEndor.Actors.Models
 
 #if DEBUG
         if (self.Logged)
-          if (dmg.Source == null)
-            Log.Write(Log.DEBUG, LogType.ACTOR_KILLED, self);
-          else
-            Log.Write(Log.DEBUG, LogType.ACTOR_KILLED_BY, self, dmg.Source.TopParent);
+          Log.Write(Log.DEBUG, LogType.ACTOR_KILLED, self);
 #endif
       }
     }
 
-    public void Kill(ActorInfo self, ActorInfo attacker)
+    public void Kill(ActorInfo self)
     {
-      InflictDamage(self, new DamageInfo(attacker, MaxHP, DamageType.ALWAYS_100PERCENT));
+      InflictDamage(self, new DamageInfo(MaxHP, DamageType.ALWAYS_100PERCENT));
     }
 
     public void SetHP(ActorInfo self, float value)
@@ -119,25 +116,22 @@ namespace SWEndor.Actors
 {
   public partial class ActorInfo
   {
-    public void InflictDamage(ActorInfo attacker, float value, DamageType type, TV_3DVECTOR position)
+    public void InflictDamage(float value, DamageType type, TV_3DVECTOR position)
     {
       using (ScopeCounterManager.Acquire(Scope))
-      using (ScopeCounterManager.Acquire(attacker.Scope))
-        Health.InflictDamage(this, new DamageInfo(attacker, value, type, position));
+        Health.InflictDamage(this, new DamageInfo(value, type, position));
     }
 
-    public void InflictDamage(ActorInfo attacker, float value, DamageType type)
+    public void InflictDamage(float value, DamageType type)
     {
       using (ScopeCounterManager.Acquire(Scope))
-      using (ScopeCounterManager.Acquire(attacker.Scope))
-        Health.InflictDamage(this, new DamageInfo(attacker, value, type));
+        Health.InflictDamage(this, new DamageInfo(value, type));
     }
 
-    public void InflictDamage(ActorInfo attacker, float value)
+    public void InflictDamage(float value)
     {
       using (ScopeCounterManager.Acquire(Scope))
-      using (ScopeCounterManager.Acquire(attacker.Scope))
-        Health.InflictDamage(this, new DamageInfo(attacker, value));
+        Health.InflictDamage(this, new DamageInfo(value));
     }
 
     /*

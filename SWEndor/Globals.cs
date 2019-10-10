@@ -55,7 +55,10 @@ namespace SWEndor
     // Files
     public static string ActorTypeINIDirectory = Path.Combine(DataPath, @"ActorTypes\");
     public static string ExplosionTypeINIDirectory = Path.Combine(DataPath, @"ExplosionTypes\");
+    public static string ProjectileTypeINIDirectory = Path.Combine(DataPath, @"ProjectileTypes\");
 
+
+    
     public static string DynamicMusicINIPath = Path.Combine(DataPath, @"dynamicmusic.ini");
     public static string WeaponStatINIPath = Path.Combine(DataPath, @"weapons.ini");
     public static string WeaponLoadoutStatINIPath = Path.Combine(DataPath, @"weaponloadouts.ini");
@@ -96,6 +99,7 @@ namespace SWEndor
 
       Directory.CreateDirectory(ActorTypeINIDirectory);
       Directory.CreateDirectory(ExplosionTypeINIDirectory);
+      Directory.CreateDirectory(ProjectileTypeINIDirectory);
     }
 
     public static void UnloadDlls()

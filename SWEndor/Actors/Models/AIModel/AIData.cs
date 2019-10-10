@@ -25,6 +25,13 @@ namespace SWEndor.Actors.Models
     public float FollowDistance { get; private set; }
     public void SetFollowDistance(ActorInfo owner, float value) { FollowDistance = value < 0 ? owner.TypeInfo.AIData.Move_CloseEnough : value; }
 
+    public void Reset()
+    {
+      EnteredCombatZone = false;
+      targetMode = TargetMode.POINT;
+      targetActor = -1;
+    }
+
     public TV_3DVECTOR GetTargetPos(Engine e, ActorInfo owner)
     {
       if (targetMode == TargetMode.ACTOR)

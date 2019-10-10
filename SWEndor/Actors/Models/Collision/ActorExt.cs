@@ -10,7 +10,7 @@ namespace SWEndor.Actors
       get
       {
         return (IsPlayer && !Engine.PlayerInfo.PlayerAIEnabled)
-            || TypeInfo.AIData.TargetType.Contains(TargetType.LASER | TargetType.MUNITION)
+            || TypeInfo.AIData.TargetType.Contains(TargetType.MUNITION)
             || (IsDying && TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER));
       }
     }

@@ -1,5 +1,4 @@
-﻿using SWEndor.ActorTypes;
-using SWEndor.ActorTypes.Components;
+﻿using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.Actors.Data
 {
@@ -29,10 +28,10 @@ namespace SWEndor.Actors.Data
     public bool ApplyZBalance;
 
 
-    public void Init(ref MoveLimitData data, ActorCreationInfo acreate)
+    public void Init(ref MoveLimitData data, bool freespeed, float initialspeed)
     {
-      FreeSpeed = acreate.FreeSpeed;
-      Speed = acreate.InitialSpeed;
+      FreeSpeed = freespeed;
+      Speed = initialspeed;
       XTurnAngle = 0;
       YTurnAngle = 0;
       ZRoll = 0;

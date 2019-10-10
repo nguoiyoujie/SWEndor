@@ -16,6 +16,8 @@ using System.Threading;
 using SWEndor.ExplosionTypes;
 using SWEndor.Explosions;
 using SWEndor.Shaders;
+using SWEndor.Projectiles;
+using SWEndor.ProjectileTypes;
 
 namespace SWEndor.Core
 {
@@ -49,8 +51,10 @@ namespace SWEndor.Core
     internal Font.Factory FontFactory { get; private set; }
     internal Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo> ActorFactory { get; private set; }
     internal Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> ExplosionFactory { get; private set; }
+    internal Factory<ProjectileInfo, ProjectileCreationInfo, ProjectileTypeInfo> ProjectileFactory { get; private set; }
     internal ActorTypeInfo.Factory ActorTypeFactory { get; private set; }
     internal ExplosionTypeInfo.Factory ExplosionTypeFactory { get; private set; }
+    internal ProjectileTypeInfo.Factory ProjectileTypeFactory { get; private set; }
     internal WeaponFactory WeaponFactory { get; private set; }
     internal WeaponLoadoutFactory WeaponLoadoutFactory { get; private set; }
     internal Squadron.Factory SquadronFactory { get; private set; }
@@ -66,10 +70,12 @@ namespace SWEndor.Core
       Game = new Session(this);
       SoundManager = new SoundManager(this);
       PerfManager = new PerfManager(this);
-      ActorFactory = new Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>(this, (e, f, n, m, i) => { return new ActorInfo(e, f, n, m, i); });
-      ExplosionFactory = new Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> (this, (e, f, n, m, i) => { return new ExplosionInfo(e, f, n, m, i); });
+      ActorFactory = new Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>(this, (e, f, n, i) => { return new ActorInfo(e, f, n, i); });
+      ExplosionFactory = new Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> (this, (e, f, n, i) => { return new ExplosionInfo(e, f, n, i); });
+      ProjectileFactory = new Factory<ProjectileInfo, ProjectileCreationInfo, ProjectileTypeInfo>(this, (e, f, n, i) => { return new ProjectileInfo(e, f, n, i); });
       ActorTypeFactory = new ActorTypeInfo.Factory(this);
       ExplosionTypeFactory = new ExplosionTypeInfo.Factory(this);
+      ProjectileTypeFactory = new ProjectileTypeInfo.Factory(this);
       WeaponFactory = new WeaponFactory();
       WeaponLoadoutFactory = new WeaponLoadoutFactory();
       SquadronFactory = new Squadron.Factory();
@@ -108,6 +114,7 @@ namespace SWEndor.Core
     public void Load()
     {
       Screen2D.LoadingTextLines.Add(Globals.LoadingFlavourTexts[Random.Next(0, Globals.LoadingFlavourTexts.Count)]);
+      ProjectileTypeFactory.RegisterBase();
       ActorTypeFactory.RegisterBase();
       ExplosionTypeFactory.RegisterBase();
 
@@ -131,6 +138,7 @@ namespace SWEndor.Core
       ScriptContext = new Scenarios.Scripting.Expressions.SWContext(this);
 
       // late ActorType bindings...
+      ProjectileTypeFactory.Initialise();
       ActorTypeFactory.Initialise();
       ExplosionTypeFactory.Initialise();
 
@@ -144,12 +152,17 @@ namespace SWEndor.Core
 
     Action<Engine, ActorInfo> process = ActorInfo.Process;
     Action<Engine, ExplosionInfo> processExpl = ExplosionInfo.ProcessExp;
+    Action<Engine, ProjectileInfo> processProj = ProjectileInfo.Process;
     Action<Engine, ActorInfo> processAI = ActorInfo.ProcessAI;
     Action<Engine, ActorInfo> processCollision = ActorInfo.ProcessCollision;
+    Action<Engine, ProjectileInfo> processProjCollision = ProjectileInfo.ProcessCollision;
+
     public void Process() { ActorFactory.DoEach(process); }
     public void ProcessExpl() { ExplosionFactory.DoEach(processExpl); }
+    public void ProcessProj() { ProjectileFactory.DoEach(processProj); }
     public void ProcessAI() { ActorFactory.DoEach(processAI); }
     public void ProcessCollision() { ActorFactory.DoEach(processCollision); }
+    public void ProcessProjCollision() { ProjectileFactory.DoEach(processProjCollision); }
 
     public void PreRender()
     {

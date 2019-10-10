@@ -125,6 +125,7 @@ namespace SWEndor.ActorTypes
         Register(new SurfaceVentATI(this));
 
         // lasers
+        /*
         Register(new RedLaserATI(this));
         Register(new GreenLaserATI(this));
         Register(new Green2LaserATI(this));
@@ -135,10 +136,12 @@ namespace SWEndor.ActorTypes
         Register(new SmallIonLaserATI(this));
         Register(new BigIonLaserATI(this));
         Register(new DeathStarLaserATI(this));
+        */
 
         // torps
         Register(new MissileATI(this));
         Register(new TorpedoATI(this));
+        
 
         // add ons
         Register(new mc90TurbolaserATI(this));

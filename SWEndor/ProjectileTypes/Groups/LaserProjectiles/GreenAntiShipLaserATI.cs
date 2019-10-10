@@ -1,7 +1,7 @@
 ﻿using SWEndor.ActorTypes.Components;
 using SWEndor.Models;
 
-namespace SWEndor.ActorTypes.Instances
+namespace SWEndor.ProjectileTypes.Instances
 {
   public class GreenAntiShipLaserATI : Groups.LaserProjectile
   {

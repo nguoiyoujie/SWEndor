@@ -3,6 +3,7 @@ using SWEndor.ActorTypes;
 using SWEndor.ExplosionTypes;
 using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;
+using SWEndor.ProjectileTypes;
 
 namespace SWEndor.Models
 {
@@ -40,6 +41,25 @@ namespace SWEndor.Models
       PrevPosition = Position;
       PrevRotation = Rotation;
       Scale = type.MeshData.Scale * acinfo.InitialScale;
+    }
+
+    public void Init(float scale, ProjectileCreationInfo acinfo)
+    {
+      Position = acinfo.Position;
+      Rotation = acinfo.Rotation;
+      PrevPosition = Position;
+      PrevRotation = Rotation;
+      Scale = scale * acinfo.InitialScale;
+    }
+
+    public void Reset()
+    {
+      currData = new TransformData();
+      prevData = new TransformData();
+      currTime = 0;
+      prevTime = 0;
+      currMat = default(TV_3DMATRIX);
+      prevMat = default(TV_3DMATRIX);
     }
 
     public float Scale
