@@ -102,14 +102,16 @@ namespace SWEndor
     public void AddDamage(Engine engine, ActorInfo hitby, float damage)
     {
       DamageTaken += damage;
-      Increment(DamageTakenByName, hitby.Name, damage);
+      if (hitby != null)
+        Increment(DamageTakenByName, hitby.Name, damage);
     }
 
     public void AddDeath(Engine engine, ActorInfo killedby)
     {
       Deaths++;
       //engine.GameScenarioManager.Scenario.Mood = -2;
-      Increment(KilledByName, killedby.Name, 1);
+      if (killedby != null)
+        Increment(KilledByName, killedby.Name, 1);
     }
   }
 }

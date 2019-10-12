@@ -15,7 +15,6 @@ namespace SWEndor.ProjectileTypes
     public TV_3DVECTOR Position;
     public TV_3DVECTOR Rotation;
 
-    public float InitialStrength;
     public float InitialSpeed;
     public bool FreeSpeed;
 
@@ -24,7 +23,6 @@ namespace SWEndor.ProjectileTypes
       // Load defaults from actortype
       TypeInfo = at;
       Name = at.Name;
-      InitialStrength = at.CombatData.MaxStrength;
       InitialSpeed = at.MoveLimitData.MaxSpeed;
 
       Faction = FactionInfo.Neutral;

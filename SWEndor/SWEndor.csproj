@@ -135,7 +135,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actors\Models\Regeneration\ActorExt.cs" />
+    <Compile Include="Actors\Models\SystemModel\ActorExt.cs" />
+    <Compile Include="Actors\Models\SystemModel\SystemModel.cs" />
     <Compile Include="ActorTypes\Components\CombatData.cs" />
+    <Compile Include="ActorTypes\Components\SystemData.cs" />
     <Compile Include="ActorTypes\General\ActorCreationInfo.cs" />
     <Compile Include="Actors\Models\ArmorModel\ActorExt.cs" />
     <Compile Include="Actors\Models\Collision\ActorExt.cs" />
@@ -217,7 +220,6 @@
     <Compile Include="Projectiles\Models\Transform\ProjExt.cs" />
     <Compile Include="Projectiles\ProjectileInfo.cs" />
     <Compile Include="Projectiles\ProcessProjectileInfo.cs" />
-    <Compile Include="ProjectileTypes\General\Components\CombatData.cs" />
     <Compile Include="ProjectileTypes\General\Components\Movement\MoveBehavior.cs" />
     <Compile Include="ProjectileTypes\General\Components\Movement\MoveForwardOnly.cs" />
     <Compile Include="ProjectileTypes\General\Components\Movement\MoveLaser.cs" />
@@ -644,6 +646,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Widget\Instances\Squad.cs" />
+    <Compile Include="UI\Widget\Instances\SystemIndicator.cs" />
     <Compile Include="UI\Widget\Instances\WarningText.cs" />
     <Compile Include="UI\Widget\Instances\Page.cs" />
     <Compile Include="UI\Widget\Instances\AIInfo.cs" />

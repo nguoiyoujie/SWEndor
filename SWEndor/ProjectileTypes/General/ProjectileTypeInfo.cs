@@ -167,7 +167,7 @@ namespace SWEndor.ProjectileTypes
     {
       if (!victim.IsDyingOrDead)
       {
-        score.AddHit(engine, victim, proj.TypeInfo.CombatData.ImpactDamage * victim.GetArmor(DamageType.NORMAL));
+        score.AddHit(engine, victim, proj.TypeInfo.CombatData.ImpactDamage * victim.GetArmor(proj.TypeInfo.CombatData.DamageType));
       }
 
       if (victim.IsDyingOrDead)

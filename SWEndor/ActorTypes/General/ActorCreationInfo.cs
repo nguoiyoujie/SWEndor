@@ -24,7 +24,7 @@ namespace SWEndor.ActorTypes
       // Load defaults from actortype
       TypeInfo = at;
       Name = at.Name;
-      InitialStrength = at.CombatData.MaxStrength;
+      InitialStrength = at.SystemData.MaxShield;
       InitialSpeed = at.MoveLimitData.MaxSpeed;
 
       Faction = FactionInfo.Neutral;

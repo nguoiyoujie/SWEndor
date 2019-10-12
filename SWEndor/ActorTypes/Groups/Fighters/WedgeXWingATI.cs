@@ -12,7 +12,8 @@ namespace SWEndor.ActorTypes.Instances
       CombatData = CombatData.DefaultShip;
       ArmorData = ArmorData.Default;
 
-      CombatData.MaxStrength = 200;
+      SystemData.MaxShield = 50;
+      SystemData.MaxHull = 150;
       CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 500;
       MoveLimitData.MinSpeed = 250;
@@ -25,7 +26,7 @@ namespace SWEndor.ActorTypes.Instances
 
       RenderData.AlwaysShowInRadar = true;
 
-      RegenData = new RegenData(false, 0.1f, 0, 0, 0);
+      RegenData = new RegenData(false, 0.2f, 0, 0, 0);
 
       MeshData = new MeshData(Name, @"xwing\xwing.x");
       SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineXWing, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };

@@ -6,7 +6,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal SDMissilePodATI(Factory owner) : base(owner, "IMPLMPOD", "Star Destroyer Missile Pod")
     {
-      CombatData.MaxStrength = 24; //32
+      SystemData.MaxShield = 10; //32
+      SystemData.MaxHull = 20;
       CombatData.ImpactDamage = 16;
 
       MeshData = new MeshData(Name, @"turbotowers\star_destroyer_missilepod.x");

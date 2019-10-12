@@ -56,7 +56,7 @@ namespace SWEndor.AI.Actions
     public override void Reset()
     {
       base.Reset();
-      float WaitTime = 0;
+      WaitTime = 0;
       ResumeTime = 0;
     }
 

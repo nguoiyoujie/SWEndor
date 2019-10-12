@@ -7,8 +7,10 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal TIE_IN_ATI(Factory owner) : base(owner, "TIEI", "TIE Interceptor")
     {
-      CombatData.MaxStrength = 8;
+      SystemData.MaxShield = 0;
+      SystemData.MaxHull = 8;
       CombatData.ImpactDamage = 16;
+
       MoveLimitData.MaxSpeed = 500;
       MoveLimitData.MinSpeed = 250;
       MoveLimitData.MaxSpeedChangeRate = 200;

@@ -8,7 +8,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal YWingATI(Factory owner) : base(owner, "YWING", "Y-Wing")
     {
-      CombatData.MaxStrength = 36;
+      SystemData.MaxShield = 16;
+      SystemData.MaxHull = 8;
       CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 300;
       MoveLimitData.MinSpeed = 150;
@@ -17,7 +18,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(400, 2000);
 
-      RegenData = new RegenData(false, 0.08f, 0, 0, 0);
+      RegenData = new RegenData(false, 0.16f, 0, 0, 0);
 
       MeshData = new MeshData(Name, @"ywing\ywing.x");
       SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineYWing, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };

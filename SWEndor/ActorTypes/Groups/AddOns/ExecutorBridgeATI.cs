@@ -20,7 +20,8 @@ namespace SWEndor.ActorTypes.Instances
         new ExplodeData("EXPL00", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
-      CombatData.MaxStrength = 600.0f;
+      SystemData.MaxShield = 300;
+      SystemData.MaxHull = 300;
       CombatData.ImpactDamage = 200.0f;
       RenderData.RadarSize = -1;
       RenderData.CullDistance = 30000;

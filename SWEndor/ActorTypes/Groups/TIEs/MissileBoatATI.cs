@@ -7,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal MissileBoatATI(Factory owner) : base(owner, "MISB", "Missile Boat")
     {
-      CombatData.MaxStrength = 12;
+      SystemData.MaxShield = 12;
       CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 475;
       MoveLimitData.MinSpeed = 175;
@@ -19,7 +19,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(800, 2000);
 
-      RegenData = new RegenData(false, 0.05f, 0, 0, 0);
+      RegenData = new RegenData(false, 0.25f, 0, 0, 0);
 
       MeshData = new MeshData(Name, @"tie_vader\tie_vader.x");
 

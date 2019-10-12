@@ -7,7 +7,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal T4AATI(Factory owner) : base(owner, "T4A", "T-4A Lambda-class Shuttle")
     {
-      CombatData.MaxStrength = 6;
+      SystemData.MaxShield = 6;
+      SystemData.MaxHull = 6;
       CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 300;
       MoveLimitData.MinSpeed = 50;
@@ -17,7 +18,7 @@ namespace SWEndor.ActorTypes.Instances
       ScoreData = new ScoreData(200, 500);
       DyingMoveData.Spin(90, 180);
 
-      RegenData = new RegenData(false, 0.12f, 0, 0, 0);
+      RegenData = new RegenData(false, 0.18f, 0, 0.1f, 0);
 
       MeshData = new MeshData(Name, @"shuttle\t4a.x");
 

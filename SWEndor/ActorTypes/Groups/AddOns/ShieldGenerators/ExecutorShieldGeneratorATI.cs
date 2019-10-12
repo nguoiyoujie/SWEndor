@@ -8,7 +8,8 @@ namespace SWEndor.ActorTypes.Instances
     internal ExecutorShieldGeneratorATI(Factory owner) : base(owner, "EXECSHD", "Shield Generator")
     {
       // Combat
-      CombatData.MaxStrength = 150.0f;
+      SystemData.MaxShield = 25;
+      SystemData.MaxHull = 125;
       CombatData.ImpactDamage = 500.0f;
       RenderData.RadarSize = 2;
 
@@ -20,7 +21,7 @@ namespace SWEndor.ActorTypes.Instances
       AIData.TargetType |= TargetType.SHIELDGENERATOR;
       RenderData.RadarType = RadarType.HOLLOW_CIRCLE_M;
 
-      RegenData = new RegenData(false, 0, 40, 0, 0.1f);
+      RegenData = new RegenData(false, 0, 40, 0, 0.3f);
       MeshData = new MeshData(Name, @"executor\executor_energy_pod.x");
     }
   }

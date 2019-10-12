@@ -10,7 +10,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal InterdictorATI(Factory owner) : base(owner, "INTD", "Interdictor Star Destroyer")
     {
-      CombatData.MaxStrength = 550.0f;
+      SystemData.MaxShield = 300;
+      SystemData.MaxHull = 450;
       CombatData.ImpactDamage = 60.0f;
       MoveLimitData.MaxSpeed = 60.0f;
       MoveLimitData.MinSpeed = 0.0f;
@@ -19,6 +20,7 @@ namespace SWEndor.ActorTypes.Instances
 
       RenderData.CullDistance = 40000;
       ScoreData = new ScoreData(60, 10000);
+      RegenData = new RegenData(false, 0.5f, 0, 0, 0);
 
       MeshData = new MeshData(Name, @"stardestroyer\interdictor_star_destroyer.x", 1.4f);
       DyingMoveData.Sink(0.005f, 5f, 0.8f);

@@ -7,7 +7,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal XQ1ATI(Factory owner) : base(owner, "XQ1", "XQ1-Platform")
     {
-      CombatData.MaxStrength = 1250.0f;
+      SystemData.MaxShield = 500;
+      SystemData.MaxHull = 750;
       CombatData.ImpactDamage = 60.0f;
       MoveLimitData.MaxSpeed = 0;
       MoveLimitData.MinSpeed = 0;
@@ -19,7 +20,7 @@ namespace SWEndor.ActorTypes.Instances
       DeathCamera = new DeathCameraData(1500, 250, 30);
 
       MeshData = new MeshData(Name, @"platform\xq1.x", 1.5f);
-      RegenData = new RegenData(false, 0.5f, 0, 0.25f, 0);
+      RegenData = new RegenData(false, 1, 0, 0.25f, 0);
 
       AddOns = new AddOnData[]
       {

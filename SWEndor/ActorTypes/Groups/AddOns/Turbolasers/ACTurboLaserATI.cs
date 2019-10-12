@@ -6,7 +6,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ACTurboLaserATI(Factory owner) : base(owner, "ACCLLSR", "Acclamator Turbolaser Tower")
     {
-      CombatData.MaxStrength = 85;
+      SystemData.MaxShield = 20;
+      SystemData.MaxHull = 50;
       CombatData.ImpactDamage = 16;
 
       MeshData = new MeshData(Name, @"turbotowers\acclamator_turbolaser.x");

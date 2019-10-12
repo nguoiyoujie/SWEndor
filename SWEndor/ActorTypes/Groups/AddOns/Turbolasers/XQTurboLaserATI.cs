@@ -6,7 +6,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal XQTurboLaserATI(Factory owner) : base(owner, "XQLSR", "Plaform Turbolaser Tower")
     {
-      CombatData.MaxStrength = 125;
+      SystemData.MaxShield = 50;
+      SystemData.MaxHull = 40;
       CombatData.ImpactDamage = 16;
 
       MeshData = new MeshData(Name, @"turbotowers\xq_turbolaser.x");

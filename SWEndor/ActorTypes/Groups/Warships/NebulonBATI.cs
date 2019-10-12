@@ -10,7 +10,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal NebulonBATI(Factory owner) : base(owner, "NEBL", "Nebulon-B Frigate")
     {
-      CombatData.MaxStrength = 950.0f;
+      SystemData.MaxShield = 400;
+      SystemData.MaxHull = 550;
       CombatData.ImpactDamage = 60.0f;
       MoveLimitData.MaxSpeed = 32.0f;
       MoveLimitData.MinSpeed = 0.0f;
@@ -19,7 +20,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(15, 10000);
       RenderData.CullDistance = 30000;
-      RegenData = new RegenData(false, 0.2f, 0, 0, 0);
+      RegenData = new RegenData(false, 0.4f, 0, 0, 0);
 
       MeshData = new MeshData(Name, @"nebulonb\nebulonb.x", 0.75f);
       DyingMoveData.Sink(0.02f, 5f, 0.8f);

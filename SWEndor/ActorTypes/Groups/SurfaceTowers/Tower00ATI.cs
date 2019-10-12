@@ -7,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal Tower00ATI(Factory owner) : base(owner, "ADVT", "Advanced Turbolaser Tower")
     {
-      CombatData.MaxStrength = 120;
+      SystemData.MaxShield = 120;
       CombatData.ImpactDamage = 120;
 
       RenderData.RadarSize = 2.5f;

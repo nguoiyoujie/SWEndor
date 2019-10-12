@@ -67,6 +67,7 @@ namespace SWEndor
           new CrossHair(this),
           new Target(this),
           new Squad(this),
+          new SystemIndicator(this),
 
           new Box3D(this),
           //new Debug_GeneralInfo(this),

@@ -28,6 +28,7 @@ namespace SWEndor.ActorTypes
       if (id?.Length > 0) { ID = id; }
       if (name?.Length > 0) { Name = name; }
 
+      SystemData.Reset();
       CombatData.Reset();
     }
 
@@ -44,6 +45,7 @@ namespace SWEndor.ActorTypes
     public ComponentMask Mask = ComponentMask.NONE;
 
     // Data (structs)
+    public SystemData SystemData;
     public CombatData CombatData;
     public RegenData RegenData;
     public TimedLifeData TimedLifeData;
@@ -243,20 +245,24 @@ namespace SWEndor.ActorTypes
       if (hitby.TypeInfo.CombatData.ImpactDamage == 0)
         return;
 
-      if (owner.IsDying 
+      if (owner.IsDying
         && owner.TypeInfo.CombatData.HitWhileDyingLeadsToDeath)
         owner.SetState_Dead();
-      
-      //if (hitby.TypeInfo.AIData.TargetType.Has(TargetType.MUNITION))
-      //{
-      //}
-      //else if (owner.TypeInfo.AIData.TargetType.Has(TargetType.MUNITION))
-      //{
-      //}
-      //else
-      //{
+
+      if (owner.TypeInfo.AIData.TargetType.Has(TargetType.MUNITION))
+      {
+        // do nothing
+      }
+      else if (hitby.TypeInfo.AIData.TargetType.Has(TargetType.MUNITION))
+      {
+        ProcessHit(engine, owner, hitby.TopParent, hitby.TypeInfo.CombatData, impact);
+        hitby.Position = new TV_3DVECTOR(impact.x, impact.y, impact.z);
+        hitby.SetState_Dead(); // projectiles die on impact
+      }
+      else
+      {
         // Collision
-        owner.InflictDamage(hitby.TypeInfo.CombatData.ImpactDamage, DamageType.COLLISION, impact);
+        owner.InflictDamage(hitby.TypeInfo.CombatData.ImpactDamage, hitby.TypeInfo.CombatData.DamageType, impact);
         if (owner.HP > 0
           && owner.Mask.Has(ComponentMask.CAN_MOVE)
           && owner.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
@@ -278,33 +284,26 @@ namespace SWEndor.ActorTypes
         }
 
         // Fighter Collision
-        if ((owner.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER) && owner.IsDyingOrDead))
+        if (owner.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER)
+          && owner.IsDyingOrDead)
         {
           owner.SetState_Dead();
           if (owner.IsScenePlayer)
             PlayerInfo.Score.AddDeath(engine, attacker);
         }
-      //}
 
-      hitby.OnHitEvent(owner);
-      if (hitby.TypeInfo.AIData.TargetType.Has(TargetType.MUNITION))
-      {
-        hitby.Position = new TV_3DVECTOR(impact.x, impact.y, impact.z);
-        hitby.SetState_Dead(); // projectiles die on impact
+        hitby.OnHitEvent(owner);
       }
     }
 
-    public virtual void ProcessHit(Engine engine, ActorInfo owner, ProjectileInfo proj, TV_3DVECTOR impact)
+    public void ProcessHit(Engine engine, ActorInfo owner, ActorInfo hitby, CombatData projData, TV_3DVECTOR impact)
     {
 #if DEBUG
       if (owner == null)
         throw new ArgumentNullException("owner");
 
-      if (proj == null)
-        throw new ArgumentNullException("proj");
 #endif
-
-      if (proj.TypeInfo.CombatData.ImpactDamage == 0)
+      if (projData.ImpactDamage == 0)
         return;
 
       if (owner.IsDying
@@ -313,15 +312,18 @@ namespace SWEndor.ActorTypes
 
       if (!owner.IsDyingOrDead)
       {
-        ActorInfo hitby = proj.Owner;
+        if (owner.TypeInfo.AIData.TargetType.Has(TargetType.MUNITION))
+          owner.SetState_Dead(); // projectiles die on impact
+        else
+        {
+          float p_hp = owner.HP;
+          owner.InflictDamage(projData.ImpactDamage, projData.DamageType, impact);
+          float hp = owner.HP;
 
-        float p_hp = owner.HP;
-        owner.InflictDamage(proj.TypeInfo.CombatData.ImpactDamage, DamageType.NORMAL, impact);
-        float hp = owner.HP;
-
-        if (owner.IsPlayer)
-          if (hp < (int)p_hp)
-            PlayerInfo.FlashHit(PlayerInfo.StrengthColor);
+          if (owner.IsPlayer)
+            if (hp < (int)p_hp)
+              PlayerInfo.FlashHit(PlayerInfo.StrengthColor);
+        }
 
         // scoring
         ActorInfo attacker = hitby?.TopParent;
@@ -338,7 +340,7 @@ namespace SWEndor.ActorTypes
 
         if (owner.IsScenePlayer)
         {
-          PlayerInfo.Score.AddDamage(engine, attacker, proj.TypeInfo.CombatData.ImpactDamage * owner.GetArmor(DamageType.NORMAL));
+          PlayerInfo.Score.AddDamage(engine, attacker, projData.ImpactDamage * owner.GetArmor(projData.DamageType));
 
           if (owner.IsDyingOrDead)
             PlayerInfo.Score.AddDeath(engine, attacker);
@@ -401,7 +403,18 @@ namespace SWEndor.ActorTypes
           }
         }
       }
+    }
 
+    public virtual void ProcessHit(Engine engine, ActorInfo owner, ProjectileInfo proj, TV_3DVECTOR impact)
+    {
+#if DEBUG
+      if (owner == null)
+        throw new ArgumentNullException("owner");
+
+      if (proj == null)
+        throw new ArgumentNullException("proj");
+#endif
+      ProcessHit(engine, owner, proj.Owner, proj.TypeInfo.CombatData, impact);
       proj.Position = new TV_3DVECTOR(impact.x, impact.y, impact.z);
       proj.SetState_Dead(); // projectiles die on impact
     }
@@ -410,7 +423,7 @@ namespace SWEndor.ActorTypes
     {
       if (!victim.IsDyingOrDead)
       {
-        score.AddHit(engine, victim, proj.TypeInfo.CombatData.ImpactDamage * victim.GetArmor(DamageType.NORMAL));
+        score.AddHit(engine, victim, proj.TypeInfo.CombatData.ImpactDamage * victim.GetArmor(proj.TypeInfo.CombatData.DamageType));
       }
 
       if (victim.IsDyingOrDead)
@@ -453,7 +466,7 @@ namespace SWEndor.ActorTypes
       accuracy /= (Math.Abs(angle.y) + 1);
 
       if (Engine.Random.NextDouble() < accuracy)
-        target.InflictDamage(weapontype.CombatData.ImpactDamage, DamageType.NORMAL, target.GetGlobalPosition());
+        target.InflictDamage(weapontype.CombatData.ImpactDamage, weapontype.CombatData.DamageType, target.GetGlobalPosition());
     }
 
     public virtual void Dying(Engine engine, ActorInfo ainfo)

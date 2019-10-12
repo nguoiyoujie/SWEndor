@@ -10,7 +10,8 @@ namespace SWEndor.ActorTypes.Instances
       CombatData = CombatData.DefaultShip;
       ArmorData = ArmorData.Default;
 
-      CombatData.MaxStrength = 275;
+      SystemData.MaxShield = 250;
+      SystemData.MaxHull = 25;
       CombatData.ImpactDamage = 100;
       MoveLimitData.MaxSpeed = 900;
       MoveLimitData.MinSpeed = 200;
@@ -29,7 +30,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(750, 10000);
 
-      RegenData = new RegenData(false, 0.06f, 0, 0, 0);
+      RegenData = new RegenData(false, 0.18f, 0, 0, 0);
 
       MeshData = new MeshData(Name, @"tie_vader\tie_vader.x");
       Cameras = new LookData[] 

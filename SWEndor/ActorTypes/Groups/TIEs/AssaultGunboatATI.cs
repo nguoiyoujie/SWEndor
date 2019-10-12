@@ -7,7 +7,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal AssaultGunboatATI(Factory owner) : base(owner, "GUN", "Assault Gunboat")
     {
-      CombatData.MaxStrength = 24;
+      SystemData.MaxShield = 16;
+      SystemData.MaxHull = 8;
       CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 550;
       MoveLimitData.MinSpeed = 200;
@@ -19,7 +20,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(800, 2000);
 
-      RegenData = new RegenData(false, 0.05f, 0, 0, 0);
+      RegenData = new RegenData(false, 0.25f, 0, 0, 0);
 
       MeshData = new MeshData(Name, @"gunboat\gunboat.x");
 

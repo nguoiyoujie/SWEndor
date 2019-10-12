@@ -10,7 +10,8 @@ namespace SWEndor.ActorTypes.Instances
       RenderData.RadarSize = 0;
       AIData.TargetType = TargetType.NULL;
 
-      CombatData.MaxStrength = 16;
+      SystemData.MaxShield = 10;
+      SystemData.MaxHull = 10;
       CombatData.ImpactDamage = 16;
       MeshData = new MeshData(Name, @"turbotowers\xq_turbolaser.x", 0.25f);
       DyingMoveData.Kill();

@@ -8,7 +8,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal CorellianATI(Factory owner) : base(owner, "CORV", "Corellian Corvette")
     {
-      CombatData.MaxStrength = 575.0f;
+      SystemData.MaxShield = 200;
+      SystemData.MaxHull = 375;
       CombatData.ImpactDamage = 60.0f;
       MoveLimitData.MaxSpeed = 100.0f;
       MoveLimitData.MinSpeed = 0.0f;

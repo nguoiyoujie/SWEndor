@@ -9,7 +9,7 @@ namespace SWEndor.ProjectileTypes.Groups
     internal Projectile(Factory owner, string id, string name) : base(owner, id, name)
     {
       // Combat
-      CombatData = CombatData.Disabled;
+      CombatData = CombatData.DefaultProjectile;
       Explodes = new ExplodeData[]
       {
         new ExplodeData("EXPS00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)

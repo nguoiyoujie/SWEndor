@@ -7,7 +7,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal CargoMdATI(Factory owner) : base(owner, "CARGO_MD", "Cargo Freighter")
     {
-      CombatData.MaxStrength = 18;
+      SystemData.MaxShield = 8;
+      SystemData.MaxHull = 10;
       CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 250;
       MoveLimitData.MinSpeed = 25;
@@ -16,7 +17,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(100, 500);
 
-      RegenData = new RegenData(false, 0.04f, 0, 0, 0);
+      RegenData = new RegenData(false, 0.08f, 0, 0, 0);
       DyingMoveData.Spin(90, 120);
 
       MeshData = new MeshData(Name, @"cargo\cargo2.x");

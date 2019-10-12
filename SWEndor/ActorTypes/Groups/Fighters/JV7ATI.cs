@@ -7,7 +7,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal JV7ATI(Factory owner) : base(owner, "JV7", "JV-7 Delta-class Shuttle")
     {
-      CombatData.MaxStrength = 10;
+      SystemData.MaxShield = 12;
+      SystemData.MaxHull = 8;
       CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 350;
       MoveLimitData.MinSpeed = 50;
@@ -16,7 +17,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(300, 600);
 
-      RegenData = new RegenData(false, 0.15f, 0, 0.1f, 0);
+      RegenData = new RegenData(false, 0.24f, 0, 0.2f, 0);
       DyingMoveData.Spin(90, 180);
 
       MeshData = new MeshData(Name, @"shuttle\jv7.x");

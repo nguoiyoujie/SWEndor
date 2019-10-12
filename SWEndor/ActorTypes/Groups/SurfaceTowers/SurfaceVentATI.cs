@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal SurfaceVentATI(Factory owner) : base(owner, "VENT", "Thermal Exhaust Port")
     {
-      CombatData.MaxStrength = 12000;
+      SystemData.MaxShield = 12000;
       CombatData.ImpactDamage = 120;
 
       RenderData.RadarSize = 2.5f;

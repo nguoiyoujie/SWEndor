@@ -7,7 +7,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal CargoSmATI(Factory owner) : base(owner, "CARGO_SM", "Cargo Ship")
     {
-      CombatData.MaxStrength = 12;
+      SystemData.MaxShield = 5;
+      SystemData.MaxHull = 7;
       CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 250;
       MoveLimitData.MinSpeed = 25;
@@ -16,7 +17,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(100, 500);
 
-      RegenData = new RegenData(false, 0.05f, 0, 0, 0);
+      RegenData = new RegenData(false, 0.1f, 0, 0, 0);
       DyingMoveData.Spin(90, 180);
 
       MeshData = new MeshData(Name, @"cargo\cargo1.x");

@@ -6,7 +6,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal SDTurboLaserATI(Factory owner) : base(owner, "IMPLLSR", "Star Destroyer Turbolaser Tower")
     {
-      CombatData.MaxStrength = 16; //32
+      SystemData.MaxShield = 10;
+      SystemData.MaxHull = 6;
       CombatData.ImpactDamage = 16;
 
       ScoreData = new ScoreData(250, 1250);

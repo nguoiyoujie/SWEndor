@@ -11,7 +11,7 @@ namespace SWEndor.ActorTypes.Groups
       CombatData = CombatData.Disabled;
       ArmorData = ArmorData.Immune;
 
-      CombatData.MaxStrength = 100000.0f;
+      SystemData.MaxShield = 100000.0f;
       MoveLimitData.MaxSpeed = 0.0f;
       MoveLimitData.MinSpeed = 0.0f;
       MoveLimitData.MaxSpeedChangeRate = 0.0f;

@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal Tower03ATI(Factory owner) : base(owner, "RDRT", "Radar Tower")
     {
-      CombatData.MaxStrength = 75;
+      SystemData.MaxShield = 75;
       CombatData.ImpactDamage = 120;
 
       ScoreData = new ScoreData(50, 5000);

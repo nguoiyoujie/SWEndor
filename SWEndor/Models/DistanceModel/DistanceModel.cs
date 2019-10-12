@@ -75,6 +75,10 @@ namespace SWEndor.Models
       }
     }
 
+    /// <summary>
+    /// Gets a higher bound on the distance between Actors by taking the Manhattan distance.
+    /// </summary>
+    /// <returns></returns>
     public static float GetRoughDistance(TV_3DVECTOR v1, TV_3DVECTOR v2)
     {
       float dx = v1.x - v2.x;
@@ -91,7 +95,7 @@ namespace SWEndor.Models
     }
 
     /// <summary>
-    /// Gets a higher bound on the distance between Actors by taking the sum of the coordinate deltas.
+    /// Gets a higher bound on the distance between Actors by taking the Manhattan distance.
     /// </summary>
     /// <returns></returns>
     public static float GetRoughDistance(ITransformable a1, ITransformable a2)
@@ -117,6 +121,10 @@ namespace SWEndor.Models
       return dx + dy + dz;
     }
 
+    /// <summary>
+    /// Gets the distance between two objects, up to a limit. Returns the distance or limit
+    /// </summary>
+    /// <returns></returns>
     public static float GetDistance<T1, T2>(Engine e, T1 a1, T2 a2, float limit)
       where T1 : IEngineObject, ITransformable
       where T2 : IEngineObject, ITransformable
@@ -128,6 +136,10 @@ namespace SWEndor.Models
         return GetDistance(e, a1, a2);
     }
 
+    /// <summary>
+    /// Gets the distance between two objects
+    /// </summary>
+    /// <returns></returns>
     public static float GetDistance<T1, T2>(Engine e, T1 a1, T2 a2)
       where T1 : IEngineObject, ITransformable
       where T2 : IEngineObject, ITransformable
@@ -171,6 +183,10 @@ namespace SWEndor.Models
       }
     }
 
+    /// <summary>
+    /// Gets the distance between two points
+    /// </summary>
+    /// <returns></returns>
     public static float GetDistance(TV_3DVECTOR first, TV_3DVECTOR second)
     {
       return CalculateDistance(first, second);

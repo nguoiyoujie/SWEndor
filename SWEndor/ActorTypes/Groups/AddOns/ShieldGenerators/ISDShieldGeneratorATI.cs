@@ -7,7 +7,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ISDShieldGeneratorATI(Factory owner) : base(owner, "IMPLSHD", "Shield Generator")
     {
-      CombatData.MaxStrength = 105;
+      SystemData.MaxShield = 25;
+      SystemData.MaxHull = 80;
       CombatData.ImpactDamage = 300.0f;
       RenderData.RadarSize = 2;
 
@@ -17,7 +18,7 @@ namespace SWEndor.ActorTypes.Instances
       AIData.TargetType |= TargetType.SHIELDGENERATOR;
       RenderData.RadarType = RadarType.HOLLOW_CIRCLE_M;
 
-      RegenData = new RegenData(true, 0, 12, 0, 0.5f);
+      RegenData = new RegenData(false, 0, 15, 0, 1);
 
 
       MeshData = new MeshData(Name, @"stardestroyer\star_destroyer_energy_pod.x");

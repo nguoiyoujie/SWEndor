@@ -8,7 +8,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal Z95ATI(Factory owner) : base(owner, "Z95", "Z-95")
     {
-      CombatData.MaxStrength = 15;
+      SystemData.MaxShield = 12;
+      SystemData.MaxHull = 4;
       CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 400;
       MoveLimitData.MinSpeed = 175;
@@ -16,7 +17,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxTurnRate = 42;
 
       ScoreData = new ScoreData(400, 2000);
-      RegenData = new RegenData(false, 0.06f, 0, 0, 0);
+      RegenData = new RegenData(false, 0.12f, 0, 0, 0);
       MeshData = new MeshData(Name, @"xwing\z95.x");
       SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineXWing, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };
 

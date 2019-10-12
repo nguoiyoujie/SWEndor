@@ -10,7 +10,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ImperialIATI(Factory owner) : base(owner, "IMPL", "Imperial-I Star Destroyer")
     {
-      CombatData.MaxStrength = 850.0f;
+      SystemData.MaxShield = 500;
+      SystemData.MaxHull = 750;
       CombatData.ImpactDamage = 60.0f;
       MoveLimitData.MaxSpeed = 75.0f;
       MoveLimitData.MinSpeed = 0.0f;
@@ -19,6 +20,7 @@ namespace SWEndor.ActorTypes.Instances
 
       RenderData.CullDistance = 40000;
       ScoreData = new ScoreData(60, 10000);
+      RegenData = new RegenData(false, 0.5f, 0, 0, 0);
 
       MeshData = new MeshData(Name, @"stardestroyer\star_destroyer.x", 2.4f);
       DyingMoveData.Sink(0.005f, 5f, 0.8f);

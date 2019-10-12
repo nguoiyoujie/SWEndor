@@ -8,7 +8,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal AWingATI(Factory owner) : base(owner, "AWING", "A-Wing")
     {
-      CombatData.MaxStrength = 18;
+      SystemData.MaxShield = 8;
+      SystemData.MaxHull = 10;
       CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 500;
       MoveLimitData.MinSpeed = 250;
@@ -17,7 +18,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(500, 2500);
 
-      RegenData = new RegenData(false, 0.08f, 0, 0, 0);
+      RegenData = new RegenData(false, 0.16f, 0, 0, 0);
 
       MeshData = new MeshData(Name, @"awing\awing.x");
 

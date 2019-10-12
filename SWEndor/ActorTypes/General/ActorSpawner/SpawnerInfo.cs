@@ -163,7 +163,7 @@ namespace SWEndor
     {
       if (Enabled
        && !p.IsDead
-       && !(p.CurrentAction is HyperspaceIn || p.CurrentAction is HyperspaceOut)
+       //&& !(p.CurrentAction is HyperspaceIn || p.CurrentAction is HyperspaceOut)
        && p.Active
        )
       {
@@ -182,7 +182,8 @@ namespace SWEndor
         }
 
         // Spawn new
-        if (!p.IsDying)
+        if (!p.IsDying
+          && !(p.CurrentAction is HyperspaceIn || p.CurrentAction is HyperspaceOut))
         {
           SpawnPlayer(engine, ainfo);
           SpawnFighter(engine, ainfo);

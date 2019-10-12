@@ -7,7 +7,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal TIE_D_ATI(Factory owner) : base(owner, "TIED", "TIE Defender")
     {
-      CombatData.MaxStrength = 24;
+      SystemData.MaxShield = 16;
+      SystemData.MaxHull = 8;
       CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 600;
       MoveLimitData.MinSpeed = 300;
@@ -19,7 +20,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(800, 2000);
 
-      RegenData = new RegenData(false, 0.075f, 0, 0, 0);
+      RegenData = new RegenData(false, 0.2f, 0, 0, 0);
 
       MeshData = new MeshData(Name, @"tie\tie_defender.x");
 

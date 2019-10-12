@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal NebulonBTurboLaserATI(Factory owner) : base(owner, "NEBLLSR", "Nebulon B Turbolaser Tower")
     {
-      CombatData.MaxStrength = 135;
+      SystemData.MaxShield = 135;
       CombatData.ImpactDamage = 16;
 
       MeshData = new MeshData(Name, @"turbotowers\nebulonb_turbolaser.x");

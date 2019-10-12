@@ -6,7 +6,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal NebulonBMissilePodATI(Factory owner) : base(owner, "NEBLMPOD", "Nebulon B Missile Pod")
     {
-      CombatData.MaxStrength = 140; //32
+      SystemData.MaxShield = 40; //32
+      SystemData.MaxHull = 100;
       CombatData.ImpactDamage = 16;
 
       MeshData = new MeshData(Name, @"turbotowers\nebulonb_missilepod.x");

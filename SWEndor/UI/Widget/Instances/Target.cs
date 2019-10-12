@@ -5,6 +5,7 @@ using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Player;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using SWEndor.Sound;
 using SWEndor.Weapons;
 using System;
@@ -214,6 +215,35 @@ namespace SWEndor.UI.Widgets
                                 , acolor.GetIntColor()
                                 , acolor.GetIntColor());
       TVScreen2DImmediate.Action_End2D();
+
+      ActorInfo tp = target.TopParent;
+      int fntID = FontFactory.Get(Font.T12).ID;
+      TVScreen2DText.Action_BeginText();
+      // Shields
+      TVScreen2DText.TextureFont_DrawText("SHD"
+                                              , Engine.ScreenWidth / 2 - w + 15
+                                              , Engine.ScreenHeight / 2 + (h * 0.5f) + 200
+                                              , acolor.GetIntColor()
+                                              , fntID);
+
+      TVScreen2DText.TextureFont_DrawText((tp.MaxShd == 0) ? "----" : "{0:0}%".F(tp.Shd_Perc)
+                                              , Engine.ScreenWidth / 2 - w + 15 + 40
+                                              , Engine.ScreenHeight / 2 + (h * 0.5f) + 200 
+                                              , ((tp.MaxShd == 0) ? new TV_COLOR(1, 1, 1, 0.4f) : tp.Shd_Color).GetIntColor()
+                                              , fntID);
+
+      // Hull
+      TVScreen2DText.TextureFont_DrawText("HULL"
+                                              , Engine.ScreenWidth / 2 - w + 15
+                                              , Engine.ScreenHeight / 2 + (h * 0.5f) + 200 + 25
+                                              , acolor.GetIntColor()
+                                              , fntID);
+
+      TVScreen2DText.TextureFont_DrawText((tp.MaxHull == 0) ? "100%" : "{0:0}%".F(tp.Hull_Perc)
+                                              , Engine.ScreenWidth / 2 - w + 15 + 40
+                                              , Engine.ScreenHeight / 2 + (h * 0.5f) + 200 + 25
+                                              , ((tp.MaxHull == 0) ? new TV_COLOR(0, 1, 0, 1) : tp.Hull_Color).GetIntColor()
+                                              , fntID);
     }
 
     float bestlimit = 9999;

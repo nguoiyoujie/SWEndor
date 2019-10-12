@@ -104,6 +104,7 @@ namespace SWEndor.Actors
     internal AIData AIData;
 
     // Traits/Model (structs)
+    private SystemModel Systems;
     private MeshModel Meshes;
     private RelationModel Relation;
     private TimerModel<ActorInfo> DyingTimer;
@@ -150,10 +151,11 @@ namespace SWEndor.Actors
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
 
+      Systems.Init(ref TypeInfo.SystemData);
       Meshes.Init(Engine, ID, ref TypeInfo.MeshData);
       Relation.Init();
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
-      Health.Init(ref TypeInfo.CombatData, acinfo);
+      Health.Init(ref TypeInfo.CombatData, ref TypeInfo.SystemData, acinfo);
       Transform.Init(TypeInfo.MeshData.Scale, acinfo);
       Armor.Init(ref TypeInfo.ArmorData);
       Explosions.Init(TypeInfo.Explodes, acinfo.CreationTime);
@@ -182,10 +184,11 @@ namespace SWEndor.Actors
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
 
+      Systems.Init(ref TypeInfo.SystemData);
       Meshes.Init(Engine, ID, ref TypeInfo.MeshData);
       Relation.Init();
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
-      Health.Init(ref TypeInfo.CombatData, acinfo);
+      Health.Init(ref TypeInfo.CombatData, ref TypeInfo.SystemData, acinfo);
       Transform.Init(TypeInfo.MeshData.Scale, acinfo);
       Armor.Init(ref TypeInfo.ArmorData);
       Explosions.Init(TypeInfo.Explodes, acinfo.CreationTime);
@@ -359,6 +362,7 @@ namespace SWEndor.Actors
       // Reset components
       CycleInfo.Reset();
       WeaponDefinitions.Reset();
+      Systems.Reset();
 
       // Events
       OnDestroyedEvent();
@@ -367,12 +371,6 @@ namespace SWEndor.Actors
       TickEvents = null;
       HitEvents = null;
       ActorStateChangeEvents = null;
-
-      // Player
-      //if (IsPlayer)
-      //  engine.PlayerInfo.ActorID = -1;
-      //else if (IsScenePlayer)
-      //  engine.PlayerInfo.TempActorID = -1;
 
       // Final dispose
       Faction.UnregisterActor(this);

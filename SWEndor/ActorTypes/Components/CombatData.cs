@@ -8,7 +8,6 @@ namespace SWEndor.ActorTypes.Components
     public bool IsCombatObject;
     public bool HitWhileDyingLeadsToDeath;
 
-    public float MaxStrength;
     public float ImpactDamage;
     public DamageType DamageType;
     public bool IsLaser;
@@ -16,17 +15,17 @@ namespace SWEndor.ActorTypes.Components
     // Projectiles
     public float ImpactCloseEnoughDistance;
 
-    public CombatData Disabled { get { return new CombatData(false, false); } }
-    public CombatData DefaultFighter { get { return new CombatData(true, true); } }
-    public CombatData DefaultShip { get { return new CombatData(true, false); } }
+    public CombatData Disabled { get { return new CombatData(false, false, DamageType.NONE); } }
+    public CombatData DefaultProjectile { get { return new CombatData(true, true, DamageType.NORMAL); } }
+    public CombatData DefaultFighter { get { return new CombatData(true, true, DamageType.COLLISION); } }
+    public CombatData DefaultShip { get { return new CombatData(true, false, DamageType.COLLISION); } }
 
-    public CombatData(bool enabled, bool hitdeath)
+    public CombatData(bool enabled, bool hitdeath, DamageType type)
     {
       IsCombatObject = enabled;
       HitWhileDyingLeadsToDeath = hitdeath;
-      MaxStrength = 1;
       ImpactDamage = 1;
-      DamageType = DamageType.COLLISION;
+      DamageType = type;
       IsLaser = false;
       ImpactCloseEnoughDistance = 0;
     }
@@ -48,7 +47,7 @@ namespace SWEndor.ActorTypes.Components
       IsCombatObject = f.GetBoolValue(sectionname, "IsCombatObject", IsCombatObject);
       HitWhileDyingLeadsToDeath = f.GetBoolValue(sectionname, "HitWhileDyingLeadsToDeath", HitWhileDyingLeadsToDeath);
 
-      MaxStrength = f.GetFloatValue(sectionname, "MaxStrength", MaxStrength);
+      //MaxShield = f.GetFloatValue(sectionname, "MaxStrength", MaxShield);
       ImpactDamage = f.GetFloatValue(sectionname, "ImpactDamage", ImpactDamage);
       DamageType = f.GetEnumValue(sectionname, "DamageType", DamageType);
       IsLaser = f.GetBoolValue(sectionname, "IsLaser", IsLaser);
@@ -61,7 +60,7 @@ namespace SWEndor.ActorTypes.Components
       f.SetBoolValue(sectionname, "IsCombatObject", IsCombatObject);
       f.SetBoolValue(sectionname, "HitWhileDyingLeadsToDeath", HitWhileDyingLeadsToDeath);
 
-      f.SetFloatValue(sectionname, "MaxStrength", MaxStrength);
+      //f.SetFloatValue(sectionname, "MaxStrength", MaxShield);
       f.SetFloatValue(sectionname, "ImpactDamage", ImpactDamage);
       f.SetEnumValue(sectionname, "DamageType", DamageType);
       f.SetBoolValue(sectionname, "IsLaser", IsLaser);

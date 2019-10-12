@@ -1,6 +1,8 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Core;
+using SWEndor.Player;
 using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;
 using System;
@@ -9,46 +11,66 @@ namespace SWEndor.Actors.Models
 {
   public struct HealthModel
   {
-    public float HP { get; private set; }
-    public float MaxHP { get; private set; }
+    // New model:
+    // HP -> Hull + Systems + Shields
+
+    internal float Hull;
+    internal float MaxHull;
+    internal float Shd;
+    internal float MaxShd;
+
+    public float HP { get { return Hull + Shd; } }
+    public float MaxHP { get { return MaxHull + MaxShd; } }
     public float DisplayHP { get; private set; }
 
-    public bool IsDead { get { return HP <= 0; } }
-    public float Frac { get { return HP / MaxHP; } }
-    public float Perc { get { return Frac * 100; } }
+    //public bool IsDead { get { return HP <= 0; } }
+    public float HP_Frac { get { return HP / MaxHP; } }
+    public float HP_Perc { get { return HP_Frac * 100; } }
     public float DisplayFrac { get { return DisplayHP / MaxHP; } }
     public float DisplayPerc { get { return DisplayFrac * 100; } }
 
-    public void Init(ref CombatData data, ActorCreationInfo acinfo)
+    public float Shd_Frac { get { return Shd / MaxShd; } }
+    public float Shd_Perc { get { return Shd_Frac * 100; } }
+
+    public float Hull_Frac { get { return Hull / MaxHull; } }
+    public float Hull_Perc { get { return Hull_Frac * 100; } }
+
+    public void Init(ref CombatData data, ref SystemData sdata, ActorCreationInfo acinfo)
     {
-      MaxHP = data.MaxStrength;
-      HP = (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : MaxHP;
+      MaxShd = sdata.MaxShield;
+      Shd = (acinfo.InitialStrength > 0) ? acinfo.InitialStrength : MaxShd;
+      Hull = sdata.MaxHull;
+      MaxHull = sdata.MaxHull;
     }
 
-    public TV_COLOR Color
+    public TV_COLOR HP_Color { get { return Color(HP_Frac); } }
+    public TV_COLOR Shd_Color { get { return Color(Shd_Frac); } }
+    public TV_COLOR Hull_Color { get { return Color(Hull_Frac); } }
+
+    private TV_COLOR Color(float frac)
     {
-      get
-      {
         double quad = 1.6708;
-        float sr = Frac;
-        float r = (float)Math.Cos(sr * quad);
-        float g = (float)Math.Sin(sr * quad);
+        float r = (float)Math.Cos(frac * quad);
+        float g = (float)Math.Sin(frac * quad);
         float b = 0;
         if (r < 0) r = 0;
         if (g < 0) g = 0;
         if (b < 0) b = 0;
         return new TV_COLOR(r, g, b, 1);
-      }
     }
+
 
     public void InflictDamage(ActorInfo self, DamageInfo dmg)
     {
-      if (HP <= 0)
+      if (self.IsDyingOrDead)
         return;
+
+      float prevHP = HP;
 
       float mod = self.GetArmor(dmg.Type);
       float d = dmg.Value * mod;
-      HP = (HP - d).Clamp(-1, MaxHP);
+      float d2 = d - Shd;
+      Shd = (Shd - d).Clamp(0, MaxShd);
 
       /*
       if (d > 0)
@@ -57,30 +79,42 @@ namespace SWEndor.Actors.Models
         Log.Write(Log.DEBUG, LogType.ACTOR_HEALED, target, dmg.Source, -d, HP);
       */
 
-      if (HP <= 0 && !self.IsDyingOrDead) // TO-DO: improve atomicity of ActorState, still may have threading issues
+      if (d > 0) // damage only
       {
-        self.SetState_Dying();
+        if (self.IsPlayer)
+          if (HP < (int)prevHP)
+            self.Engine.PlayerInfo.FlashHit(self.Engine.PlayerInfo.StrengthColor);
+
+        if (Shd <= 0 && !self.IsDyingOrDead) // TO-DO: improve atomicity of ActorState, still may have threading issues
+        {
+          Hull = (Hull - d2).Clamp(0, MaxHull);
+          self.DamageRandom();
+          if (Hull <= 0 && !self.IsDyingOrDead)
+          {
+             self.SetState_Dying();
 
 #if DEBUG
-        if (self.Logged)
-          Log.Write(Log.DEBUG, LogType.ACTOR_KILLED, self);
+            if (self.Logged)
+              Log.Write(Log.DEBUG, LogType.ACTOR_KILLED, self);
 #endif
+          }
+        }
       }
     }
 
     public void Kill(ActorInfo self)
     {
-      InflictDamage(self, new DamageInfo(MaxHP, DamageType.ALWAYS_100PERCENT));
+      InflictDamage(self, new DamageInfo(MaxShd, DamageType.ALWAYS_100PERCENT));
     }
 
     public void SetHP(ActorInfo self, float value)
     {
-      if (IsDead)
+      if (self.IsDyingOrDead)
         return;
 
-      HP = value.Clamp(-1, MaxHP);
+      Shd = value.Clamp(-1, MaxShd);
 
-      if (HP <= 0 && !self.IsDyingOrDead) // TO-DO: improve atomicity of ActorState, still may have threading issues
+      if (Shd <= 0 && !self.IsDyingOrDead) // TO-DO: improve atomicity of ActorState, still may have threading issues
       {
         self.SetState_Dying();
 
@@ -93,12 +127,12 @@ namespace SWEndor.Actors.Models
 
     public void SetMaxHP(float value, bool scaleHP)
     {
-      float f = Frac;
-      MaxHP = value;
+      float f = HP_Frac;
+      MaxShd = value;
       if (scaleHP)
-        HP = f * value;
+        Shd = f * value;
       else
-        HP = HP.Clamp(-1, MaxHP);
+        Shd = Shd.Clamp(-1, MaxShd);
     }
 
     public void Tick(float time)
@@ -136,9 +170,21 @@ namespace SWEndor.Actors
 
     public float HP { get { return Health.HP; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetHP(this, value); } }
     public float MaxHP { get { return Health.MaxHP; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetMaxHP(value, false); } }
-    public float HP_Perc { get { return Health.Perc; } }
-    public float HP_Frac { get { return Health.Frac; } }
-    public TV_COLOR HP_Color { get { return Health.Color; } }
+    public float HP_Perc { get { return Health.HP_Perc; } }
+    public float HP_Frac { get { return Health.HP_Frac; } }
+    public TV_COLOR HP_Color { get { return Health.HP_Color; } }
+
+    public float Shd { get { return Health.Shd; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetHP(this, value); } }
+    public float MaxShd { get { return Health.MaxShd; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetMaxHP(value, false); } }
+    public float Shd_Perc { get { return Health.Shd_Perc; } }
+    public float Shd_Frac { get { return Health.Shd_Frac; } }
+    public TV_COLOR Shd_Color { get { return Health.Shd_Color; } }
+
+    public float Hull { get { return Health.Hull; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetHP(this, value); } }
+    public float MaxHull { get { return Health.MaxHull; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetMaxHP(value, false); } }
+    public float Hull_Perc { get { return Health.Hull_Perc; } }
+    public float Hull_Frac { get { return Health.Hull_Frac; } }
+    public TV_COLOR Hull_Color { get { return Health.Hull_Color; } }
 
     public float DisplayHP { get { return Health.DisplayHP; } }
     public float DisplayHP_Perc { get { return Health.DisplayPerc; } }

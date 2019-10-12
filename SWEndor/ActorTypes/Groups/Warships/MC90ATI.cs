@@ -17,7 +17,8 @@ namespace SWEndor.ActorTypes.Instances
         new ExplodeData("EXPW01", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
-      CombatData.MaxStrength = 3200.0f;
+      SystemData.MaxShield = 2400;
+      SystemData.MaxHull = 800;
       CombatData.ImpactDamage = 60.0f;
       MoveLimitData.MaxSpeed = 30.0f;
       MoveLimitData.MinSpeed = 0.0f;
@@ -29,7 +30,7 @@ namespace SWEndor.ActorTypes.Instances
       RenderData.CullDistance = 30000;
       ScoreData = new ScoreData(20, 20000);
 
-      RegenData = new RegenData(false, 0.35f, 0, 0, 0);
+      RegenData = new RegenData(false, 0.7f, 0, 0, 0);
 
       MeshData = new MeshData(Name, @"mc90\mc90.x", 1.8f);
       DyingMoveData.Sink(0.01f, 2.5f, 0.4f);

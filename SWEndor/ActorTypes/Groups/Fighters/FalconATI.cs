@@ -12,7 +12,8 @@ namespace SWEndor.ActorTypes.Instances
       CombatData = CombatData.DefaultShip;
       ArmorData = ArmorData.Default;
 
-      CombatData.MaxStrength = 50;
+      SystemData.MaxShield = 25;
+      SystemData.MaxHull = 25;
       CombatData.ImpactDamage = 10;
       MoveLimitData.MaxSpeed = 500;
       MoveLimitData.MinSpeed = 250;
@@ -23,7 +24,7 @@ namespace SWEndor.ActorTypes.Instances
       ScoreData = new ScoreData(750, 10000);
 
 
-      RegenData = new RegenData(false, 0.1f, 0, 0, 0);
+      RegenData = new RegenData(false, 0.2f, 0, 0, 0);
 
       MeshData = new MeshData(Name, @"falcon\falcon.x");
 
