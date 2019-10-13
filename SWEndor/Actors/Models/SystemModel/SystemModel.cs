@@ -5,30 +5,6 @@ using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Actors.Models
 {
-  public enum SystemState : byte // 4 values 
-  {
-    ABSENT = 0,
-    DESTROYED = 1,
-    DISABLED = 2,
-    ACTIVE = 3
-  }
-
-  public enum SystemPart : byte // up to 64 / 4 = 16 values
-  {
-    ENGINE, // Allow speed changes
-    SIDE_THRUSTERS, // Allow steering 
-    SHIELD_GENERATOR, // required to regen shields
-    RADAR, // UI
-    SCANNER, // UI, required to show target info
-    TARGETING_SYSTEM, // UI, required for guided projectiles
-    COMLINK, // allow communication with squad
-    ENERGY_STORE, // stores 'energy'
-    ENERGY_CHARGER, // 'energy' income
-    LASER_WEAPONS, // required for laser projectiles
-    PROJECTILE_LAUNCHERS, // required for guided projectiles
-    HYPERDRIVE
-  }
-
   public struct SystemModel
   {
     private ulong State;

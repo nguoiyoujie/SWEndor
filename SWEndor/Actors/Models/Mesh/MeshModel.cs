@@ -303,6 +303,26 @@ namespace SWEndor.Actors.Models
                                               , h - 25
                                               , ((tp.MaxHull == 0) ? new TV_COLOR(0, 1, 0, 1) : tp.Hull_Color).GetIntColor()
                                               , fntID);
+
+      // Systems
+      int i = 0;
+      int maxpart = tp.TypeInfo.SystemData.Parts.Length;
+      fntID = engine.FontFactory.Get(Font.T08).ID;
+      foreach (SystemPart part in tp.TypeInfo.SystemData.Parts)
+      {
+        SystemState s = tp.GetStatus(part);
+        int scolor = s == SystemState.ACTIVE ? new TV_COLOR(0.3f, 1f, 0.3f, 1).GetIntColor() :
+               s == SystemState.DISABLED ? new TV_COLOR(0.2f, 0.2f, 0.6f, 1).GetIntColor() :
+               s == SystemState.DESTROYED ? new TV_COLOR(0.7f, 0.2f, 0.2f, 1).GetIntColor() :
+               new TV_COLOR(0.4f, 0.4f, 0.4f, 1).GetIntColor();
+        engine.TrueVision.TVScreen2DText.TextureFont_DrawText(part.GetShorthand()
+                                                      , w - 5 - 25 * (1 + i % 4)
+                                                      , h - 5 - 12 * (1 + maxpart / 4 - i / 4)
+                                                      , scolor
+                                                      , fntID);
+        i++;
+      }
+
       engine.TrueVision.TVScreen2DText.Action_EndText();
       engine.Surfaces.RS_Target.EndRender();
     }
