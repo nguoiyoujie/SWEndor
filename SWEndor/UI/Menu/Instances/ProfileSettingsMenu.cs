@@ -1,5 +1,5 @@
 ﻿using MTV3D65;
-using SWEndor.UI.Forms;
+using SWEndor.Core;
 using System;
 
 namespace SWEndor.UI.Menu.Pages
@@ -11,8 +11,6 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement ButtonObjCounter = new SelectionElement();
     SelectionElement ButtonShowPerformanceStat = new SelectionElement();
     SelectionElement ButtonExit = new SelectionElement();
-
-    StatForm statform;
 
     public ProfileSettingsMenu(Screen2D owner) : base(owner)
     {
@@ -71,13 +69,7 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        Globals.Engine.Form.Invoke(
-          new Action(() =>
-          {
-            if (statform == null || statform.IsDisposed)
-              statform = new StatForm(Engine);
-            statform.Show();
-            }));
+        Engine.Form.Invoke(new Action(() => { Globals.Engine.Form.ShowStats(); }));
         return true;
       }
       return false;

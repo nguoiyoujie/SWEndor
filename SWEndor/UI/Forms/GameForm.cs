@@ -13,6 +13,7 @@ namespace SWEndor.UI.Forms
     }
 
     private readonly Engine Engine;
+    private StatForm StatForm;
 
     private void GameForm_Load(object sender, EventArgs e)
     {
@@ -46,6 +47,13 @@ namespace SWEndor.UI.Forms
     private void pbGame_MouseEnter(object sender, EventArgs e)
     {
       Cursor.Hide();
+    }
+
+    public void ShowStats()
+    {
+      if (StatForm == null || StatForm.IsDisposed)
+        StatForm = new StatForm(Engine);
+      StatForm.Show();
     }
   }
 }
