@@ -8,7 +8,6 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal T4AATI(Factory owner) : base(owner, "T4A", "T-4A Lambda-class Shuttle")
     {
-      SystemData.Parts = new SystemPart[] { SystemPart.ENGINE, SystemPart.ENERGY_CHARGER, SystemPart.ENERGY_STORE, SystemPart.RADAR, SystemPart.SCANNER, SystemPart.TARGETING_SYSTEM, SystemPart.COMLINK, SystemPart.HYPERDRIVE, SystemPart.SHIELD_GENERATOR };
       SystemData.MaxShield = 6;
       SystemData.MaxHull = 6;
       CombatData.ImpactDamage = 16;

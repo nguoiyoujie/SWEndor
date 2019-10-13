@@ -15,7 +15,8 @@ namespace SWEndor.Actors.Models
 
   public enum SystemPart : byte // up to 64 / 4 = 16 values
   {
-    ENGINE, // Allow speed changes and rotation
+    ENGINE, // Allow speed changes
+    SIDE_THRUSTERS, // Allow steering 
     SHIELD_GENERATOR, // required to regen shields
     RADAR, // UI
     SCANNER, // UI, required to show target info

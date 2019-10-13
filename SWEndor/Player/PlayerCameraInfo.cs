@@ -402,8 +402,6 @@ namespace SWEndor.Player
         if (a != null && a.Active)
         {
           float maxT = a.TypeInfo.MoveLimitData.MaxTurnRate;
-          if (a.TypeInfo.SystemData.AllowSystemDamage && a.GetStatus(SystemPart.ENGINE) != SystemState.ACTIVE)
-            maxT /= 10;
 
           angleX *= maxT;
           angleY *= maxT;

@@ -1,5 +1,8 @@
-﻿using SWEndor.Actors.Models;
+﻿using SWEndor.Actors.Components;
+using SWEndor.Actors.Models;
+using SWEndor.Weapons;
 using System;
+using System.Collections.Generic;
 
 namespace SWEndor.ActorTypes.Components
 {
@@ -26,8 +29,6 @@ namespace SWEndor.ActorTypes.Components
     public float Energy_TransferRate;
     public bool AllowSystemDamage;
 
-
-
     private static SystemPart[] AllParts;
     private static SystemPart[] NoParts = new SystemPart[0];
     public void Reset()
@@ -48,6 +49,56 @@ namespace SWEndor.ActorTypes.Components
     public void GetAllParts()
     {
       Parts = AllParts;
+    }
+
+    /// <summary>
+    /// Automatically generate parts. Use after other systems have been initialized.
+    /// </summary>
+    /// <param name=""></param>
+    public void AutoParts(ActorTypeInfo atype)
+    {
+      List<SystemPart> parts = new List<SystemPart>(16);
+
+      if (atype.MoveLimitData.MaxSpeed > 0)
+      parts.Add(SystemPart.ENGINE);
+
+      if (atype.MoveLimitData.MaxTurnRate > 0)
+        parts.Add(SystemPart.SIDE_THRUSTERS);
+
+      if (Energy_Income > 0 && Energy_Income > Energy_NoChargerIncome)
+        parts.Add(SystemPart.ENERGY_CHARGER);
+
+      if (MaxEnergy_inStore > 0)
+        parts.Add(SystemPart.ENERGY_STORE);
+
+      WeaponData w = atype.cachedWeaponData.Fix(atype.Engine.WeaponFactory);
+      bool hasLaser = false;
+      bool hasProj = false;
+      foreach (WeaponInfo wi in w.Weapons)
+      {
+        hasLaser |= (wi.Type == WeaponType.LASER || wi.Type == WeaponType.ION);
+        hasProj |= (wi.Type == WeaponType.MISSILE || wi.Type == WeaponType.TORPEDO);
+      }
+
+      if (hasLaser)
+      parts.Add(SystemPart.LASER_WEAPONS);
+
+      if (hasProj)
+      parts.Add(SystemPart.PROJECTILE_LAUNCHERS);
+
+      if (MaxShield > 0)
+        parts.Add(SystemPart.SHIELD_GENERATOR);
+
+      // All ships have this
+      parts.Add(SystemPart.RADAR);
+      parts.Add(SystemPart.SCANNER);
+      parts.Add(SystemPart.TARGETING_SYSTEM);
+      parts.Add(SystemPart.COMLINK);
+
+      // TO-DO: Hyperdrive system
+      // parts.Add(SystemPart.HYPERDRIVE);
+
+      Parts = parts.ToArray();
     }
   }
 }

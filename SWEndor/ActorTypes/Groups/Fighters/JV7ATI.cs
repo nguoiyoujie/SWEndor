@@ -8,7 +8,6 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal JV7ATI(Factory owner) : base(owner, "JV7", "JV-7 Delta-class Shuttle")
     {
-      SystemData.Parts = new SystemPart[] { SystemPart.ENGINE, SystemPart.ENERGY_CHARGER, SystemPart.ENERGY_STORE, SystemPart.RADAR, SystemPart.SCANNER, SystemPart.TARGETING_SYSTEM, SystemPart.COMLINK, SystemPart.HYPERDRIVE, SystemPart.SHIELD_GENERATOR };
       SystemData.MaxShield = 12;
       SystemData.MaxHull = 8;
       CombatData.ImpactDamage = 16;

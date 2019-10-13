@@ -8,7 +8,6 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal TIE_A_ATI(Factory owner) : base(owner, "TIEA", "TIE Advanced")
     {
-      SystemData.Parts = new SystemPart[] { SystemPart.ENGINE, SystemPart.ENERGY_CHARGER, SystemPart.ENERGY_STORE, SystemPart.LASER_WEAPONS, SystemPart.PROJECTILE_LAUNCHERS, SystemPart.RADAR, SystemPart.SCANNER, SystemPart.TARGETING_SYSTEM, SystemPart.COMLINK, SystemPart.HYPERDRIVE, SystemPart.SHIELD_GENERATOR };
       SystemData.MaxShield = 8;
       SystemData.MaxHull = 8;
       CombatData.ImpactDamage = 16;

@@ -163,12 +163,6 @@ namespace SWEndor.Player
       if (IsMovementControlsEnabled && !PlayerAIEnabled && Actor != null)
       {
         float spd = Actor.TypeInfo.MoveLimitData.MaxSpeedChangeRate * Engine.Game.TimeSinceRender;
-        if (Actor.TypeInfo.SystemData.AllowSystemDamage && Actor.GetStatus(SystemPart.ENGINE) != SystemState.ACTIVE)
-        {
-          spd /= 10;
-          Actor.MoveData.Speed -= Engine.Game.TimeSinceRender;
-        }
-
         Actor.MoveData.Speed += frac * spd;
         Actor.MoveData.Speed = Actor.MoveData.Speed.Clamp(Actor.MoveData.MinSpeed, Actor.MoveData.MaxSpeed);
       }

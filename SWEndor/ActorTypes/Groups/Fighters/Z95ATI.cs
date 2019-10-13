@@ -9,7 +9,6 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal Z95ATI(Factory owner) : base(owner, "Z95", "Z-95")
     {
-      SystemData.Parts = new SystemPart[] { SystemPart.ENGINE, SystemPart.ENERGY_CHARGER, SystemPart.ENERGY_STORE, SystemPart.LASER_WEAPONS, SystemPart.RADAR, SystemPart.SCANNER, SystemPart.TARGETING_SYSTEM, SystemPart.COMLINK, SystemPart.HYPERDRIVE, SystemPart.SHIELD_GENERATOR };
       SystemData.MaxShield = 12;
       SystemData.MaxHull = 4;
       CombatData.ImpactDamage = 16;

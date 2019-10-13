@@ -9,7 +9,6 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal YWingATI(Factory owner) : base(owner, "YWING", "Y-Wing")
     {
-      SystemData.Parts = new SystemPart[] { SystemPart.ENGINE, SystemPart.ENERGY_CHARGER, SystemPart.ENERGY_STORE, SystemPart.LASER_WEAPONS, SystemPart.PROJECTILE_LAUNCHERS, SystemPart.RADAR, SystemPart.SCANNER, SystemPart.TARGETING_SYSTEM, SystemPart.COMLINK, SystemPart.HYPERDRIVE, SystemPart.SHIELD_GENERATOR };
       SystemData.MaxShield = 16;
       SystemData.MaxHull = 8;
       CombatData.ImpactDamage = 16;

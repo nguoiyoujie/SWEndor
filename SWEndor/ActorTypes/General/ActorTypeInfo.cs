@@ -154,6 +154,8 @@ namespace SWEndor.ActorTypes
     {
       cachedWeaponData.Load(Engine, this);
       MoveBehavior.Load(this);
+      if (SystemData.AllowSystemDamage && SystemData.Parts.Length == 0)
+        SystemData.AutoParts(this);
     }
 
     public virtual void Initialize(Engine engine, ActorInfo ainfo)

@@ -8,7 +8,6 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal MissileBoatATI(Factory owner) : base(owner, "MISB", "Missile Boat")
     {
-      SystemData.Parts = new SystemPart[] { SystemPart.ENGINE, SystemPart.ENERGY_CHARGER, SystemPart.ENERGY_STORE, SystemPart.LASER_WEAPONS, SystemPart.PROJECTILE_LAUNCHERS, SystemPart.RADAR, SystemPart.SCANNER, SystemPart.TARGETING_SYSTEM, SystemPart.COMLINK, SystemPart.HYPERDRIVE, SystemPart.SHIELD_GENERATOR };
       SystemData.MaxShield = 12;
       CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 475;

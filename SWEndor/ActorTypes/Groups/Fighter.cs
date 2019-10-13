@@ -37,7 +37,6 @@ namespace SWEndor.ActorTypes.Groups
 
       AIData.HuntWeight = 5;
 
-      SystemData.GetAllParts();
       SystemData.MaxHull = 4;
       SystemData.Energy_Income = 1;
       SystemData.Energy_NoChargerIncome = 0.2f;
