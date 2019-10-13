@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Models;
 using SWEndor.Core;
 using SWEndor.Explosions;
 using SWEndor.Models;
@@ -40,7 +41,8 @@ namespace SWEndor.UI.Widgets
           && p != null
           && !p.IsDyingOrDead
           && Owner.ShowUI
-          && Owner.ShowRadar);
+          && Owner.ShowRadar
+          && !Owner.OverrideTargetingRadar);
       }
     }
 
@@ -50,64 +52,30 @@ namespace SWEndor.UI.Widgets
       if (p == null || !p.Active)
         return;
 
-      if (Owner.OverrideTargetingRadar)
-        DrawTargetingRadar();
-      else
-        DrawRadar();
-    }
-
-    // We should move this to a separate class
-    private void DrawTargetingRadar()
-    {
-      float posX = targetingradar_center.x;
-      float posY = targetingradar_center.y;
-      float left = posX - targetingradar_radius;
-      float right = posX + targetingradar_radius;
-      float top = posY - targetingradar_radius;
-      float bottom = posY + targetingradar_radius;
-      float timefactor = Engine.Game.GameTime % 1;
-      float divisor = 1.75f;
-      while (timefactor + 1 / divisor < 1)
+      int icolor = pcolor.GetIntColor();
+      bool active = false;
+      bool showcircle = true;
+      if (p.GetStatus(SystemPart.RADAR) == SystemState.ACTIVE)
+        active = true;
+      else if (p.GetStatus(SystemPart.RADAR) == SystemState.DISABLED)
+        icolor = new TV_COLOR(0.6f, 0.6f, 0.6f, 0.6f).GetIntColor();
+      else if (p.GetStatus(SystemPart.RADAR) == SystemState.DESTROYED)
       {
-        timefactor += 1 / divisor;
+        icolor = new TV_COLOR(1, 0, 0, 1).GetIntColor();
+        showcircle = Engine.Game.GameTime % 2 > 1;
       }
-
-      TVScreen2DImmediate.Action_Begin2D();
-      TVScreen2DImmediate.Draw_FilledBox(left, top, right, bottom, new TV_COLOR(0, 0, 0, 0.25f).GetIntColor());
-      TVScreen2DImmediate.Draw_Box(left, top, right, bottom, pcolor.GetIntColor());
-      TVScreen2DImmediate.Draw_Box(posX - targetingradar_radius * 0.1f, posY - targetingradar_radius * 0.2f, posX + targetingradar_radius * 0.1f, posY + targetingradar_radius * 0.2f, pcolor.GetIntColor());
-      TVScreen2DImmediate.Draw_Line(left, top, posX - targetingradar_radius * 0.1f, posY - targetingradar_radius * 0.2f, pcolor.GetIntColor());
-      TVScreen2DImmediate.Draw_Line(left, bottom, posX - targetingradar_radius * 0.1f, posY + targetingradar_radius * 0.2f, pcolor.GetIntColor());
-      TVScreen2DImmediate.Draw_Line(right, top, posX + targetingradar_radius * 0.1f, posY - targetingradar_radius * 0.2f, pcolor.GetIntColor());
-      TVScreen2DImmediate.Draw_Line(right, bottom, posX + targetingradar_radius * 0.1f, posY + targetingradar_radius * 0.2f, pcolor.GetIntColor());
-
-      while (timefactor / divisor > 0.1f)
+      if (showcircle)
       {
-        float x = 0.1f + timefactor * 0.9f;
-        float y = 0.2f + timefactor * 0.8f;
-        TVScreen2DImmediate.Draw_Box(posX - targetingradar_radius * x, posY - targetingradar_radius * y, posX - targetingradar_radius * x, posY + targetingradar_radius * y, pcolor.GetIntColor());
-        TVScreen2DImmediate.Draw_Box(posX + targetingradar_radius * x, posY - targetingradar_radius * y, posX + targetingradar_radius * x, posY + targetingradar_radius * y, pcolor.GetIntColor());
-        TVScreen2DImmediate.Draw_Box(posX - targetingradar_radius * x, posY + targetingradar_radius * y, posX + targetingradar_radius * x, posY + targetingradar_radius * y, pcolor.GetIntColor());
-        timefactor /= divisor;
+        TVScreen2DImmediate.Action_Begin2D();
+        TVScreen2DImmediate.Draw_FilledCircle(radar_center.x, radar_center.y, radar_radius + 2, 300, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
+        TVScreen2DImmediate.Draw_Circle(radar_center.x, radar_center.y, radar_radius + 2, 300, icolor);
+        TVScreen2DImmediate.Draw_Circle(radar_center.x, radar_center.y, radar_radius - 2, 300, icolor);
       }
-      TVScreen2DImmediate.Action_End2D();
-
-      TVScreen2DText.Action_BeginText();
-      float letter_size = 4.5f;
-      TVScreen2DText.TextureFont_DrawText(Owner.TargetingRadar_text, posX - letter_size * 8, top + 5, pcolor.GetIntColor(), FontFactory.Get(Font.T12).ID);
-      TVScreen2DText.Action_EndText();
-    }
-
-    private void DrawRadar()
-    {
-      TVScreen2DImmediate.Action_Begin2D();
-      TVScreen2DImmediate.Draw_FilledCircle(radar_center.x, radar_center.y, radar_radius + 2, 300, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
-      TVScreen2DImmediate.Draw_Circle(radar_center.x, radar_center.y, radar_radius + 2, 300, pcolor.GetIntColor());
-      TVScreen2DImmediate.Draw_Circle(radar_center.x, radar_center.y, radar_radius - 2, 300, pcolor.GetIntColor());
-
-      Engine.ActorFactory.DoEach(DrawElement);
-      Engine.ExplosionFactory.DoEach(DrawElement);
-
+      if (active)
+      {
+        Engine.ActorFactory.DoEach(DrawElement);
+        Engine.ExplosionFactory.DoEach(DrawElement);
+      }
       TVScreen2DImmediate.Action_End2D();
     }
 

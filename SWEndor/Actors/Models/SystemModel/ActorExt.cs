@@ -7,7 +7,7 @@ namespace SWEndor.Actors
   {
     public SystemState GetStatus(SystemPart part)
     {
-      return Systems.Status(part);
+      return Systems.GetStatus(part);
     }
 
     public void SetStatus(SystemPart part, SystemState newstate)

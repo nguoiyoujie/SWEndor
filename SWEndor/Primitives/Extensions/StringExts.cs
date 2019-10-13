@@ -73,6 +73,21 @@ namespace SWEndor.Primitives.Extensions
     public static string F<T1, T2>(this string fmt, T1 o1, T2 o2) { return string.Format(fmt, o1, o2); }
     public static string F<T1, T2, T3>(this string fmt, T1 o1, T2 o2, T3 o3) { return string.Format(fmt, o1, o2, o3); }
 
+    public static string Scramble(this string str)
+    {
+      StringBuilder jumble = new StringBuilder(str);
+      int length = jumble.Length;
+      for (int i = length - 1; i > 0; i--)
+      {
+        int j = Globals.Engine.Random.Next(i);
+        char temp = jumble[j];
+        jumble[j] = jumble[i];
+        jumble[i] = temp;
+      }
+      return jumble.ToString();
+    }
+
+
     // avoiding params
     public static string C(this string s1, string s2) { return string.Concat(s1, s2); }
     public static string C(this string s1, string s2, string s3) { return string.Concat(s1, s2, s3); }

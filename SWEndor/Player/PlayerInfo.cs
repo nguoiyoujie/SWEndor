@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Models;
 using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
@@ -90,16 +91,10 @@ namespace SWEndor.Player
 
     public void Update()
     {
-      //UpdatePosition();
       UpdateStats();
       UpdateBounds();
     }
 
-    //private void UpdatePosition()
-    //{
-    //  if (Actor != null)
-    //    Position = Actor.GetGlobalPosition();
-    //}
 
     private void UpdateStats()
     {
@@ -167,7 +162,14 @@ namespace SWEndor.Player
         return;
       if (IsMovementControlsEnabled && !PlayerAIEnabled && Actor != null)
       {
-        Actor.MoveData.Speed += frac * Actor.TypeInfo.MoveLimitData.MaxSpeedChangeRate * Engine.Game.TimeSinceRender;
+        float spd = Actor.TypeInfo.MoveLimitData.MaxSpeedChangeRate * Engine.Game.TimeSinceRender;
+        if (Actor.TypeInfo.SystemData.AllowSystemDamage && Actor.GetStatus(SystemPart.ENGINE) != SystemState.ACTIVE)
+        {
+          spd /= 10;
+          Actor.MoveData.Speed -= Engine.Game.TimeSinceRender;
+        }
+
+        Actor.MoveData.Speed += frac * spd;
         Actor.MoveData.Speed = Actor.MoveData.Speed.Clamp(Actor.MoveData.MinSpeed, Actor.MoveData.MaxSpeed);
       }
     }

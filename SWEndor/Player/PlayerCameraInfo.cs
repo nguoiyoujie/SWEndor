@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using SWEndor.Models;
@@ -401,6 +402,9 @@ namespace SWEndor.Player
         if (a != null && a.Active)
         {
           float maxT = a.TypeInfo.MoveLimitData.MaxTurnRate;
+          if (a.TypeInfo.SystemData.AllowSystemDamage && a.GetStatus(SystemPart.ENGINE) != SystemState.ACTIVE)
+            maxT /= 10;
+
           angleX *= maxT;
           angleY *= maxT;
           angleZ *= maxT;

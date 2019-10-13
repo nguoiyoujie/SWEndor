@@ -24,6 +24,9 @@ namespace SWEndor.ActorTypes.Components
     public float MaxEnergy_inLasers;
     public float MaxEnergy_inShields;
     public float Energy_TransferRate;
+    public bool AllowSystemDamage;
+
+
 
     private static SystemPart[] AllParts;
     private static SystemPart[] NoParts = new SystemPart[0];
@@ -39,6 +42,7 @@ namespace SWEndor.ActorTypes.Components
       MaxEnergy_inLasers = 1;
       MaxEnergy_inShields = 1;
       Energy_TransferRate = 1;
+      AllowSystemDamage = false;
     }
 
     public void GetAllParts()

@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Models;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Primitives.Extensions;
@@ -15,8 +16,10 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
+        ActorInfo p = PlayerInfo.Actor;
         return !Owner.ShowPage
             && Owner.ShowUI;
+            //&& p.GetStatus(SystemPart.SCANNER) == SystemState.ACTIVE;
       }
     }
 
@@ -41,6 +44,7 @@ namespace SWEndor.UI.Widgets
     float dist = -1;
     public override void Draw()
     {
+      // TO-DO: Move missile detection out of Draw function
       // missile warning?
       warn = 0;
       dist = -1;

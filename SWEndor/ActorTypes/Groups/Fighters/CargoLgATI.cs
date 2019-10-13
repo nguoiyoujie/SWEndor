@@ -7,8 +7,8 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal CargoLgATI(Factory owner) : base(owner, "CARGO_LG", "Cargo Freighter")
     {
-      SystemData.MaxShield = 10;
-      SystemData.MaxHull = 15;
+      SystemData.MaxShield = 15;
+      SystemData.MaxHull = 10;
       CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 250;
       MoveLimitData.MinSpeed = 25;

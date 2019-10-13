@@ -31,7 +31,9 @@ namespace SWEndor.Actors.Models
 
     public void Process(ActorInfo a, float time)
     {
-      // Regen
+      if (a.TypeInfo.SystemData.AllowSystemDamage && a.GetStatus(SystemPart.SHIELD_GENERATOR) != SystemState.ACTIVE)
+        return;
+
       if (SelfRegenRate != 0)
         Regenerate(a, SelfRegenRate * time);
 

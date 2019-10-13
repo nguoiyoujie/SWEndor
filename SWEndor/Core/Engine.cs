@@ -46,6 +46,7 @@ namespace SWEndor.Core
     internal AtmosphereInfo AtmosphereInfo { get; private set; }
     internal LandInfo LandInfo { get; private set; }
     internal Screen2D Screen2D { get; private set; }
+    internal RenderSurfaces Surfaces { get; private set; }
 
     // Factories and Registries
     internal Font.Factory FontFactory { get; private set; }
@@ -99,6 +100,7 @@ namespace SWEndor.Core
       AtmosphereInfo = new AtmosphereInfo(this);
       LandInfo = new LandInfo(this);
       Screen2D = new Screen2D(this);
+      Surfaces = new RenderSurfaces(this);
 
       ShaderFactory.Load();
     }
@@ -193,10 +195,7 @@ namespace SWEndor.Core
 
     public void Render()
     {
-      ActorInfo t = PlayerInfo.TargetActor;
-      t = t?.ParentForCoords ?? t;
-      if (t != null)
-        t.UpdateRenderLine();
+      Surfaces.Render();
 
       TrueVision.TVEngine.Clear();
 

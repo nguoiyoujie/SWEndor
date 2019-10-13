@@ -38,7 +38,7 @@ namespace SWEndor.ActorTypes.Groups
       AIData.HuntWeight = 5;
 
       SystemData.GetAllParts();
-      SystemData.MaxHull = 3;
+      SystemData.MaxHull = 4;
       SystemData.Energy_Income = 1;
       SystemData.Energy_NoChargerIncome = 0.2f;
       SystemData.MaxEnergy_inStore = 25;
@@ -46,6 +46,7 @@ namespace SWEndor.ActorTypes.Groups
       SystemData.MaxEnergy_inLasers = 1;
       SystemData.MaxEnergy_inShields = 1;
       SystemData.Energy_TransferRate = 0.5f;
+      SystemData.AllowSystemDamage = true;
     }
   }
 }

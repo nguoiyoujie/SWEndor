@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
@@ -7,6 +8,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal TIE_LN_ATI(Factory owner) : base(owner, "TIE", "TIE")
     {
+      SystemData.Parts = new SystemPart[] { SystemPart.ENGINE, SystemPart.ENERGY_CHARGER, SystemPart.ENERGY_STORE, SystemPart.LASER_WEAPONS, SystemPart.RADAR, SystemPart.SCANNER, SystemPart.TARGETING_SYSTEM, SystemPart.COMLINK };
       SystemData.MaxShield = 0;
       SystemData.MaxHull = 4;
       CombatData.ImpactDamage = 16;

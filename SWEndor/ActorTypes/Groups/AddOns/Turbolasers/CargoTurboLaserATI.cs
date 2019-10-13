@@ -8,7 +8,7 @@ namespace SWEndor.ActorTypes.Instances
     internal CargoTurboLaserATI(Factory owner) : base(owner, "CRGLSR", "Laser Turret")
     {
       SystemData.MaxShield = 4;
-      SystemData.MaxHull = 3;
+      SystemData.MaxHull = 8;
       CombatData.ImpactDamage = 16;
       RenderData.RadarSize = 0;
       AIData.TargetType = TargetType.NULL;

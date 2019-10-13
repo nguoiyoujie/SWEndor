@@ -78,6 +78,7 @@ namespace SWEndor.Explosions.Models
       }
     }
 
+    /*
     public BoundingBox GetBoundingBox(bool uselocal)
     {
       TV_3DVECTOR minV = new TV_3DVECTOR();
@@ -101,6 +102,7 @@ namespace SWEndor.Explosions.Models
 
       return new BoundingSphere(p, r);
     }
+    */
 
     public int GetVertexCount()
     {
@@ -113,6 +115,7 @@ namespace SWEndor.Explosions.Models
       return ret;
     }
 
+    /*
     public void SetTexture(int iTexture)
     {
       using (ScopeCounterManager.Acquire(meshScope))
@@ -126,6 +129,7 @@ namespace SWEndor.Explosions.Models
         if (ScopeCounterManager.IsZero(disposeScope))
           Mesh.SetTextureModEnable(enable);
     }
+    */
 
     public void SetTexMod(float u, float v, float su, float sv)
     {
@@ -149,6 +153,7 @@ namespace SWEndor.Explosions.Models
       return new TV_3DVECTOR(x, y, z);
     }
 
+    /*
     public void Render()
     {
       using (ScopeCounterManager.Acquire(meshScope))
@@ -156,6 +161,7 @@ namespace SWEndor.Explosions.Models
           if (Mesh.IsVisible())
             Mesh.Render();
     }
+    */
 
     bool prev_render;
     public void Update(ExplosionInfo actor)
@@ -184,14 +190,14 @@ namespace SWEndor.Explosions
 {
   public partial class ExplosionInfo
   {
-    public BoundingBox GetBoundingBox(bool uselocal) { return Meshes.GetBoundingBox(uselocal); }
-    public BoundingSphere GetBoundingSphere(bool uselocal) { return Meshes.GetBoundingSphere(uselocal); }
-    public void SetTexture(int iTexture) { Meshes.SetTexture(iTexture); }
-    public void EnableTexMod(bool enable) { Meshes.EnableTexMod(enable); }
+    //public BoundingBox GetBoundingBox(bool uselocal) { return Meshes.GetBoundingBox(uselocal); }
+    //public BoundingSphere GetBoundingSphere(bool uselocal) { return Meshes.GetBoundingSphere(uselocal); }
+    //public void SetTexture(int iTexture) { Meshes.SetTexture(iTexture); }
+    //public void EnableTexMod(bool enable) { Meshes.EnableTexMod(enable); }
     public void SetTexMod(float u, float v, float su, float sv) { Meshes.SetTexMod(u, v, su, sv); }
     public TV_3DVECTOR GetVertex(int vertexID) { return Meshes.GetVertex(vertexID); }
     public int GetVertexCount() { return Meshes.GetVertexCount(); }
-    public void Render() { Meshes.Render(); }
+    //public void Render() { Meshes.Render(); }
 
     public TV_3DVECTOR MaxDimensions { get { return TypeInfo.MeshData.MaxDimensions; } }
     public TV_3DVECTOR MinDimensions { get { return TypeInfo.MeshData.MinDimensions; } }

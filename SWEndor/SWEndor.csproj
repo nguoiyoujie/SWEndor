@@ -156,6 +156,7 @@
     <Compile Include="ActorTypes\Groups\MissileProjectiles\TorpedoATI.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene\Hyperspace.cs" />
     <Compile Include="ActorTypes\Groups\Warships\XQ1ATI.cs" />
+    <Compile Include="Core\RenderSurfaces.cs" />
     <Compile Include="Models\ExplodeModel\ExplodeData.cs" />
     <Compile Include="Actors\Models\Explosion\ActorExt.cs" />
     <Compile Include="Models\ExplodeModel\ExplodeTrigger.cs" />
@@ -645,8 +646,10 @@
     <Compile Include="Player\PlayerInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Widget\Instances\TargetingRadar.cs" />
     <Compile Include="UI\Widget\Instances\Squad.cs" />
     <Compile Include="UI\Widget\Instances\SystemIndicator.cs" />
+    <Compile Include="UI\Widget\Instances\TargetInfo.cs" />
     <Compile Include="UI\Widget\Instances\WarningText.cs" />
     <Compile Include="UI\Widget\Instances\Page.cs" />
     <Compile Include="UI\Widget\Instances\AIInfo.cs" />

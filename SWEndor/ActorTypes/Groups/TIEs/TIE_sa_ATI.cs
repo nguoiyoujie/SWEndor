@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
@@ -7,13 +8,14 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal TIE_sa_ATI(Factory owner) : base(owner, "TIESA", "TIE Bomber")
     {
+      SystemData.Parts = new SystemPart[] { SystemPart.ENGINE, SystemPart.ENERGY_CHARGER, SystemPart.ENERGY_STORE, SystemPart.LASER_WEAPONS, SystemPart.PROJECTILE_LAUNCHERS, SystemPart.RADAR, SystemPart.SCANNER, SystemPart.TARGETING_SYSTEM, SystemPart.COMLINK };
       SystemData.MaxShield = 0;
-      SystemData.MaxHull = 6;
+      SystemData.MaxHull = 10;
       CombatData.ImpactDamage = 16;
       MoveLimitData.MaxSpeed = 300;
       MoveLimitData.MinSpeed = 150;
       MoveLimitData.MaxSpeedChangeRate = 200;
-      MoveLimitData.MaxTurnRate = 40;
+      MoveLimitData.MaxTurnRate = 44;
 
       ScoreData = new ScoreData(350, 500);
 

@@ -116,7 +116,7 @@ namespace SWEndor.Projectiles.Models
 
       return ret;
     }
-
+    /*
     public void SetTexture(int iTexture)
     {
       using (ScopeCounterManager.Acquire(meshScope))
@@ -137,7 +137,7 @@ namespace SWEndor.Projectiles.Models
         if (ScopeCounterManager.IsZero(disposeScope))
           Mesh.SetTextureModTranslationScale(u, v, su, sv);
     }
-
+    */
     public TV_3DVECTOR GetVertex(int vertexID)
     {
       float x = 0;
@@ -153,7 +153,7 @@ namespace SWEndor.Projectiles.Models
       return new TV_3DVECTOR(x, y, z);
     }
 
-    public void Render() { Render(Mesh); }
+    //public void Render() { Render(Mesh); }
 
     private void Render(TVMesh mesh)
     {
@@ -193,29 +193,6 @@ namespace SWEndor.Projectiles.Models
           }
         }
     }
-
-    public void UpdateRenderLine(Engine engine, ProjectileInfo actor)
-    {
-      if (Mesh == null)
-        return;
-
-      TV_3DVECTOR p = engine.PlayerCameraInfo.Camera.GetPosition();
-      BoundingSphere sph = GetBoundingSphere(false);
-      TV_3DVECTOR d2 = new TV_3DVECTOR();
-      TVCamera c = engine.TrueVision.TargetRenderSurface.GetCamera();
-      c.SetPosition(p.x, p.y, p.z);
-      c.LookAtMesh(Mesh);
-      c.SetPosition(sph.Position.x, sph.Position.y, sph.Position.z);
-      d2 = c.GetFrontPosition(-sph.Radius * 2.5f);
-      c.SetPosition(d2.x, d2.y, d2.z);
-
-      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
-      {
-        engine.TrueVision.TargetRenderSurface.StartRender(false);
-        Mesh?.Render();
-        engine.TrueVision.TargetRenderSurface.EndRender();
-      }
-    }
   }
 }
 
@@ -225,13 +202,12 @@ namespace SWEndor.Projectiles
   {
     public BoundingBox GetBoundingBox(bool uselocal) { return Meshes.GetBoundingBox(uselocal); }
     public BoundingSphere GetBoundingSphere(bool uselocal) { return Meshes.GetBoundingSphere(uselocal); }
-    public void SetTexture(int iTexture) { Meshes.SetTexture(iTexture); }
-    public void EnableTexMod(bool enable) { Meshes.EnableTexMod(enable); }
-    public void SetTexMod(float u, float v, float su, float sv) { Meshes.SetTexMod(u, v, su, sv); }
+    //public void SetTexture(int iTexture) { Meshes.SetTexture(iTexture); }
+    //public void EnableTexMod(bool enable) { Meshes.EnableTexMod(enable); }
+    //public void SetTexMod(float u, float v, float su, float sv) { Meshes.SetTexMod(u, v, su, sv); }
     public TV_3DVECTOR GetVertex(int vertexID) { return Meshes.GetVertex(vertexID); }
     public int GetVertexCount() { return Meshes.GetVertexCount(); }
-    public void Render() { Meshes.Render(); }
-    public void UpdateRenderLine() { Meshes.UpdateRenderLine(Engine, this); }
+    //public void Render() { Meshes.Render(); }
 
     public TV_3DVECTOR MaxDimensions { get { return TypeInfo.MeshData.MaxDimensions; } }
     public TV_3DVECTOR MinDimensions { get { return TypeInfo.MeshData.MinDimensions; } }

@@ -1,5 +1,9 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
+using SWEndor.Actors.Models;
 using SWEndor.Core;
+using SWEndor.Player;
+using SWEndor.Primitives.Extensions;
 using SWEndor.UI;
 using SWEndor.UI.Menu;
 using SWEndor.UI.Widgets;
@@ -66,6 +70,7 @@ namespace SWEndor
           new Steering(this),
           new CrossHair(this),
           new Target(this),
+          new TargetInfo(this),
           new Squad(this),
           new SystemIndicator(this),
 
@@ -99,6 +104,10 @@ namespace SWEndor
       if (PrimaryText.Priority <= priority || PrimaryText.ExpireTime < Engine.Game.GameTime)
       {
         PrimaryText.Priority = priority;
+        ActorInfo p = Globals.Engine.PlayerInfo.Actor;
+        if (p != null && (p.GetStatus(SystemPart.COMLINK) == SystemState.DISABLED || p.GetStatus(SystemPart.COMLINK) == SystemState.DESTROYED))
+          text = text.Scramble();
+
         PrimaryText.Text = text;
         PrimaryText.ExpireTime = Engine.Game.GameTime + expiretime;
         PrimaryText.Color = color;
@@ -110,6 +119,10 @@ namespace SWEndor
       if (SecondaryText.Priority <= priority || SecondaryText.ExpireTime < Engine.Game.GameTime)
       {
         SecondaryText.Priority = priority;
+        ActorInfo p = Globals.Engine.PlayerInfo.Actor;
+        if (p != null && (p.GetStatus(SystemPart.COMLINK) == SystemState.DISABLED || p.GetStatus(SystemPart.COMLINK) == SystemState.DESTROYED))
+          text = text.Scramble();
+
         SecondaryText.Text = text;
         SecondaryText.ExpireTime = Engine.Game.GameTime + expiretime;
         SecondaryText.Color = color;
@@ -121,6 +134,10 @@ namespace SWEndor
       if (SystemsText.Priority <= priority || SystemsText.ExpireTime < Engine.Game.GameTime)
       {
         SystemsText.Priority = priority;
+        ActorInfo p = Globals.Engine.PlayerInfo.Actor;
+        if (p != null && (p.GetStatus(SystemPart.COMLINK) == SystemState.DISABLED || p.GetStatus(SystemPart.COMLINK) == SystemState.DESTROYED))
+          text = text.Scramble();
+
         SystemsText.Text = text;
         SystemsText.ExpireTime = Engine.Game.GameTime + expiretime;
         SystemsText.Color = color;

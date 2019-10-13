@@ -1,4 +1,5 @@
-﻿using SWEndor.ActorTypes.Components;
+﻿using MTV3D65;
+using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using SWEndor.Primitives.Extensions;
 
@@ -14,12 +15,10 @@ namespace SWEndor.Actors.Models
 
   public enum SystemPart : byte // up to 64 / 4 = 16 values
   {
-    //COCKPIT, // Critical system, all controls
     ENGINE, // Allow speed changes and rotation
-    //RUDDERS, // Allow rotation
     SHIELD_GENERATOR, // required to regen shields
     RADAR, // UI
-    SCANNER, // UI, required for missile alert
+    SCANNER, // UI, required to show target info
     TARGETING_SYSTEM, // UI, required for guided projectiles
     COMLINK, // allow communication with squad
     ENERGY_STORE, // stores 'energy'
@@ -48,8 +47,6 @@ namespace SWEndor.Actors.Models
       foreach (SystemPart p in data.Parts)
         SetStatus(p, SystemState.ACTIVE);
 
-      //SetStatus(SystemPart.COCKPIT, SystemState.ACTIVE); // Always active
-
       Energy_inStore = 0; //data.MaxEnergy_inStore;
       Energy_inEngine = data.MaxEnergy_inEngine;
       SetPoint_Engine = data.MaxEnergy_inEngine;
@@ -71,7 +68,7 @@ namespace SWEndor.Actors.Models
       SetPoint_Lasers = 0;
     }
 
-    public SystemState Status(SystemPart part)
+    public SystemState GetStatus(SystemPart part)
     {
       ulong s = (State >> 2 * (byte)part) & 0x3; // 0-3
       return (SystemState)s;
@@ -88,11 +85,14 @@ namespace SWEndor.Actors.Models
         return;
 
       SystemPart p = data.Parts[engine.Random.Next(0, data.Parts.Length)];
-      if (Status(p) > SystemState.DESTROYED)
+      if (GetStatus(p) > SystemState.DESTROYED)
       {
         SetStatus(p, SystemState.DESTROYED);
         //if (p == SystemPart.COCKPIT) //critical
         //  actor.SetState_Dying();
+
+        if (actor.IsPlayer)
+          engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.SUBSYSTEM_LOST).F(p.ToString().Replace('_', ' ')), 3, new TV_COLOR(1, 0.2f, 0.2f, 1));
       }
     }
 
@@ -102,17 +102,17 @@ namespace SWEndor.Actors.Models
         return;
 
       SystemPart p = data.Parts[engine.Random.Next(0, data.Parts.Length)];
-      if (Status(p) > SystemState.DISABLED)
+      if (GetStatus(p) > SystemState.DISABLED)
         SetStatus(p, SystemState.DISABLED);
     }
 
     public void Distribute(ref SystemData data, float time)
     {
-      bool chargeActive = Status(SystemPart.ENERGY_CHARGER) == SystemState.ACTIVE;
-      bool engineActive = Status(SystemPart.ENGINE) == SystemState.ACTIVE;
-      bool shieldActive = Status(SystemPart.SHIELD_GENERATOR) == SystemState.ACTIVE;
-      bool laserActive = Status(SystemPart.LASER_WEAPONS) == SystemState.ACTIVE;
-      bool storeActive = Status(SystemPart.ENERGY_STORE) == SystemState.ACTIVE;
+      bool chargeActive = GetStatus(SystemPart.ENERGY_CHARGER) == SystemState.ACTIVE;
+      bool engineActive = GetStatus(SystemPart.ENGINE) == SystemState.ACTIVE;
+      bool shieldActive = GetStatus(SystemPart.SHIELD_GENERATOR) == SystemState.ACTIVE;
+      bool laserActive = GetStatus(SystemPart.LASER_WEAPONS) == SystemState.ACTIVE;
+      bool storeActive = GetStatus(SystemPart.ENERGY_STORE) == SystemState.ACTIVE;
 
       float engineDemand = engineActive ? (SetPoint_Engine - Energy_inEngine).Clamp(-data.Energy_TransferRate, data.Energy_TransferRate) : 0;
       float shieldDemand = shieldActive ? (SetPoint_Shields - Energy_inShields).Clamp(-data.Energy_TransferRate, data.Energy_TransferRate) : 0;

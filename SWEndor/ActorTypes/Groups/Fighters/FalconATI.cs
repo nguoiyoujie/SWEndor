@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Sound;
 
@@ -12,8 +13,9 @@ namespace SWEndor.ActorTypes.Instances
       CombatData = CombatData.DefaultShip;
       ArmorData = ArmorData.Default;
 
-      SystemData.MaxShield = 25;
-      SystemData.MaxHull = 25;
+      SystemData.Parts = new SystemPart[] { SystemPart.ENGINE, SystemPart.ENERGY_CHARGER, SystemPart.ENERGY_STORE, SystemPart.LASER_WEAPONS, SystemPart.PROJECTILE_LAUNCHERS, SystemPart.RADAR, SystemPart.SCANNER, SystemPart.TARGETING_SYSTEM, SystemPart.COMLINK, SystemPart.HYPERDRIVE, SystemPart.SHIELD_GENERATOR };
+      SystemData.MaxShield = 40;
+      SystemData.MaxHull = 10;
       CombatData.ImpactDamage = 10;
       MoveLimitData.MaxSpeed = 500;
       MoveLimitData.MinSpeed = 250;

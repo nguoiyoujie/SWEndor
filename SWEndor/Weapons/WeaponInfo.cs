@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Models;
 using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
@@ -296,6 +297,14 @@ namespace SWEndor.Weapons
     {
       if (owner == null)
         return false;
+
+      if ((Type == WeaponType.LASER || Type == WeaponType.ION)
+        && owner.GetStatus(SystemPart.LASER_WEAPONS) != SystemState.ACTIVE)
+        return false;
+      else if ((Type == WeaponType.MISSILE || Type == WeaponType.TORPEDO)
+        && owner.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) != SystemState.ACTIVE)
+        return false;
+
 
       if (owner.IsPlayer
         && !engine.PlayerInfo.PlayerAIEnabled

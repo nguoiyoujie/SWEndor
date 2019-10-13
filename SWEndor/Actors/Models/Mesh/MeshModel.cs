@@ -7,6 +7,8 @@ using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Shaders;
+using SWEndor.UI;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Actors.Models
 {
@@ -135,6 +137,7 @@ namespace SWEndor.Actors.Models
           Mesh.SetTexture(iTexture);
     }
 
+    /*
     public void EnableTexMod(bool enable)
     {
       using (ScopeCounterManager.Acquire(meshScope))
@@ -148,6 +151,7 @@ namespace SWEndor.Actors.Models
         if (ScopeCounterManager.IsZero(disposeScope))
           Mesh.SetTextureModTranslationScale(u, v, su, sv);
     }
+    */
 
     public TV_3DVECTOR GetVertex(int vertexID)
     {
@@ -164,7 +168,7 @@ namespace SWEndor.Actors.Models
       return new TV_3DVECTOR(x, y, z);
     }
 
-    public void Render(bool renderfar) { Render(renderfar ? FarMesh : Mesh); }
+    //public void Render(bool renderfar) { Render(renderfar ? FarMesh : Mesh); }
 
     private void Render(TVMesh mesh)
     {
@@ -235,19 +239,72 @@ namespace SWEndor.Actors.Models
       TV_3DVECTOR p = engine.PlayerCameraInfo.Camera.GetPosition();
       BoundingSphere sph = GetBoundingSphere(false);
       TV_3DVECTOR d2 = new TV_3DVECTOR();
-      TVCamera c = engine.TrueVision.TargetRenderSurface.GetCamera();
+      TVCamera c = engine.Surfaces.RS_PreTarget.GetCamera();
       c.SetPosition(p.x, p.y, p.z);
       c.LookAtMesh(Mesh);
       c.SetPosition(sph.Position.x, sph.Position.y, sph.Position.z);
       d2 = c.GetFrontPosition(-sph.Radius * 2.5f);
       c.SetPosition(d2.x, d2.y, d2.z);
 
+      engine.Surfaces.RS_PreTarget.StartRender(false);
       using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
-      {
-        engine.TrueVision.TargetRenderSurface.StartRender(false);
         FarMesh?.Render();
-        engine.TrueVision.TargetRenderSurface.EndRender();
-      }
+      engine.Surfaces.RS_PreTarget.EndRender();
+
+      // post process:
+      engine.Surfaces.RS_Target.StartRender(false);
+      int tex = engine.Surfaces.RS_PreTarget.GetTexture();
+      int acolor = actor.Faction.Color.GetIntColor();
+      int w = engine.Surfaces.RS_Target.GetWidth();
+      int h = engine.Surfaces.RS_Target.GetHeight();
+      engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
+      engine.TrueVision.TVScreen2DImmediate.Draw_Texture(tex
+                                , 0
+                                , 0
+                                , w
+                                , h
+                                , acolor);
+
+      engine.TrueVision.TVScreen2DImmediate.Draw_Box(2, 2, w - 2, h - 2, acolor);
+      engine.TrueVision.TVScreen2DImmediate.Action_End2D();
+
+      ActorInfo tp = actor.ParentForCoords ?? actor;
+      int fntID = engine.FontFactory.Get(Font.T12).ID;
+      engine.TrueVision.TVScreen2DText.Action_BeginText();
+      // Name
+      engine.TrueVision.TVScreen2DText.TextureFont_DrawText(tp.Name
+                                        , 10
+                                        , 10
+                                        , acolor
+                                        , fntID);
+
+      // Shields
+      engine.TrueVision.TVScreen2DText.TextureFont_DrawText("SHD"
+                                              , 15
+                                              , h - 45
+                                              , acolor
+                                              , fntID);
+
+      engine.TrueVision.TVScreen2DText.TextureFont_DrawText((tp.MaxShd == 0) ? "----" : "{0:0}%".F(tp.Shd_Perc)
+                                              , 15 + 40
+                                              , h - 45
+                                              , ((tp.MaxShd == 0) ? new TV_COLOR(1, 1, 1, 0.4f) : tp.Shd_Color).GetIntColor()
+                                              , fntID);
+
+      // Hull
+      engine.TrueVision.TVScreen2DText.TextureFont_DrawText("HULL"
+                                              , 15
+                                              , h - 25
+                                              , acolor
+                                              , fntID);
+
+      engine.TrueVision.TVScreen2DText.TextureFont_DrawText((tp.MaxHull == 0) ? "100%" : "{0:0}%".F(tp.Hull_Perc)
+                                              , 15 + 40
+                                              , h - 25
+                                              , ((tp.MaxHull == 0) ? new TV_COLOR(0, 1, 0, 1) : tp.Hull_Color).GetIntColor()
+                                              , fntID);
+      engine.TrueVision.TVScreen2DText.Action_EndText();
+      engine.Surfaces.RS_Target.EndRender();
     }
   }
 }
@@ -259,11 +316,11 @@ namespace SWEndor.Actors
     public BoundingBox GetBoundingBox(bool uselocal) { return Meshes.GetBoundingBox(uselocal); }
     public BoundingSphere GetBoundingSphere(bool uselocal) { return Meshes.GetBoundingSphere(uselocal); }
     public void SetTexture(int iTexture) { Meshes.SetTexture(iTexture); }
-    public void EnableTexMod(bool enable) { Meshes.EnableTexMod(enable); }
-    public void SetTexMod(float u, float v, float su, float sv) { Meshes.SetTexMod(u, v, su, sv); }
+    //public void EnableTexMod(bool enable) { Meshes.EnableTexMod(enable); }
+    //public void SetTexMod(float u, float v, float su, float sv) { Meshes.SetTexMod(u, v, su, sv); }
     public TV_3DVECTOR GetVertex(int vertexID) { return Meshes.GetVertex(vertexID); }
     public int GetVertexCount() { return Meshes.GetVertexCount(); }
-    public void Render(bool renderfar) { Meshes.Render(renderfar); }
+    //public void Render(bool renderfar) { Meshes.Render(renderfar); }
     public void UpdateRenderLine() { Meshes.UpdateRenderLine(Engine, this); }
 
     public TV_3DVECTOR MaxDimensions { get { return TypeInfo.MeshData.MaxDimensions; } }
