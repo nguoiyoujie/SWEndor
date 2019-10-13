@@ -38,8 +38,8 @@
     private static void UpdateUI()
     {
       Globals.Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
-      Globals.Engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(Globals.Engine.ScreenWidth / 2 - 80
-                                                          , Globals.Engine.ScreenWidth / 2 - 20
+      Globals.Engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(owner.ScreenCenter.x / 2 - 80
+                                                          , owner.ScreenCenter.y / 2 - 20
                                                           , Globals.Engine.ScreenWidth / 2 + 80
                                                           , Globals.Engine.ScreenWidth / 2 + 20
                                                           , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());

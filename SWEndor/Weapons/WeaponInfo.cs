@@ -299,10 +299,10 @@ namespace SWEndor.Weapons
         return false;
 
       if ((Type == WeaponType.LASER || Type == WeaponType.ION)
-        && owner.GetStatus(SystemPart.LASER_WEAPONS) != SystemState.ACTIVE)
+        && owner.TypeInfo.SystemData.AllowSystemDamage && owner.GetStatus(SystemPart.LASER_WEAPONS) != SystemState.ACTIVE)
         return false;
       else if ((Type == WeaponType.MISSILE || Type == WeaponType.TORPEDO)
-        && owner.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) != SystemState.ACTIVE)
+        && owner.TypeInfo.SystemData.AllowSystemDamage && owner.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) != SystemState.ACTIVE)
         return false;
 
 

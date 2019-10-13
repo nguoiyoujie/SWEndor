@@ -14,8 +14,8 @@ namespace SWEndor.UI.Menu.Pages
     public Credits(Screen2D owner) : base(owner)
     {
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
-      Cover.HighlightBoxWidth = Globals.Engine.ScreenWidth;
-      Cover.HighlightBoxHeight = Globals.Engine.ScreenHeight;
+      Cover.HighlightBoxWidth = owner.ScreenSize.x;
+      Cover.HighlightBoxHeight = owner.ScreenSize.y;
       Cover.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.3f);
 
       MainText.Text = "Credits";
@@ -39,7 +39,7 @@ namespace SWEndor.UI.Menu.Pages
       CreditText.HighlightBoxHeight = 350;
 
       ButtonExit.Text = "Back";
-      ButtonExit.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth - 200, Globals.Engine.ScreenHeight - 80);
+      ButtonExit.TextPosition = owner.ScreenSize + new TV_2DVECTOR(-200, -80);
       ButtonExit.HighlightBoxPosition = ButtonExit.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonExit.HighlightBoxWidth = 200;
       ButtonExit.HighlightBoxHeight = 30;

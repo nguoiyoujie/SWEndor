@@ -55,7 +55,7 @@ namespace SWEndor.UI.Widgets
       int icolor = pcolor.GetIntColor();
       bool active = false;
       bool showcircle = true;
-      if (p.GetStatus(SystemPart.RADAR) == SystemState.ACTIVE)
+      if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.RADAR) == SystemState.ACTIVE)
         active = true;
       else if (p.GetStatus(SystemPart.RADAR) == SystemState.DISABLED)
         icolor = new TV_COLOR(0.6f, 0.6f, 0.6f, 0.6f).GetIntColor();
@@ -64,10 +64,10 @@ namespace SWEndor.UI.Widgets
         icolor = new TV_COLOR(1, 0, 0, 1).GetIntColor();
         showcircle = Engine.Game.GameTime % 2 > 1;
       }
+      TVScreen2DImmediate.Action_Begin2D();
+      TVScreen2DImmediate.Draw_FilledCircle(radar_center.x, radar_center.y, radar_radius + 2, 300, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
       if (showcircle)
       {
-        TVScreen2DImmediate.Action_Begin2D();
-        TVScreen2DImmediate.Draw_FilledCircle(radar_center.x, radar_center.y, radar_radius + 2, 300, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
         TVScreen2DImmediate.Draw_Circle(radar_center.x, radar_center.y, radar_radius + 2, 300, icolor);
         TVScreen2DImmediate.Draw_Circle(radar_center.x, radar_center.y, radar_radius - 2, 300, icolor);
       }

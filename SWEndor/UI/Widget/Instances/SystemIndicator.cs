@@ -7,7 +7,16 @@ namespace SWEndor.UI.Widgets
 {
   public class SystemIndicator : Widget
   {
-    public SystemIndicator(Screen2D owner) : base(owner, "systemstatus") { }
+    private TV_2DVECTOR top_left;
+    private float dx;
+    private float dy;
+
+    public SystemIndicator(Screen2D owner) : base(owner, "systemstatus")
+    {
+      top_left = new TV_2DVECTOR(10, 500);
+      dx = 150;
+      dy = 12;
+    }
 
     public override bool Visible
     {
@@ -21,11 +30,6 @@ namespace SWEndor.UI.Widgets
       }
     }
 
-    float x1 = 10;
-    float iy = 500;
-    float x2 = 160;
-    float dy = 12;
-
     public override void Draw()
     {
       ActorInfo p = PlayerInfo.Actor;
@@ -34,20 +38,21 @@ namespace SWEndor.UI.Widgets
 
       int pcolor = p.Faction.Color.GetIntColor();
       int fntID = FontFactory.Get(Font.T10).ID;
-      float y = iy;
+      float y = top_left.y;
+      float x2 = top_left.x + dx;
 
       TVScreen2DImmediate.Action_Begin2D();
-      TVScreen2DImmediate.Draw_FilledBox(x1 - 2
-                                       , iy - 2
+      TVScreen2DImmediate.Draw_FilledBox(top_left.x - 2
+                                       , y - 2
                                        , x2 + 62
-                                       , iy + dy * (p.TypeInfo.SystemData.Parts.Length + 2) + 2
+                                       , y + dy * (p.TypeInfo.SystemData.Parts.Length + 2) + 2
                                        , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
       TVScreen2DImmediate.Action_End2D();
 
       TVScreen2DText.Action_BeginText();
       // Shields
       TVScreen2DText.TextureFont_DrawText("SHIELD"
-                                              , x1
+                                              , top_left.x
                                               , y
                                               , pcolor
                                               , fntID);
@@ -61,7 +66,7 @@ namespace SWEndor.UI.Widgets
 
       // Hull
       TVScreen2DText.TextureFont_DrawText("HULL"
-                                        , x1
+                                        , top_left.x
                                         , y
                                         , pcolor
                                         , fntID);
@@ -76,7 +81,7 @@ namespace SWEndor.UI.Widgets
       foreach (SystemPart part in p.TypeInfo.SystemData.Parts)
       {
         TVScreen2DText.TextureFont_DrawText(part.ToString().Replace('_', ' ')
-                                                      , x1
+                                                      , top_left.x
                                                       , y
                                                       , pcolor
                                                       , fntID);

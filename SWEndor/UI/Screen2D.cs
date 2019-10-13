@@ -20,6 +20,8 @@ namespace SWEndor
     }
 
     public readonly Engine Engine;
+    public readonly TV_2DVECTOR ScreenSize;
+    public readonly TV_2DVECTOR ScreenCenter;
 
     // Show toggles
     public bool ShowUI = true;
@@ -52,13 +54,16 @@ namespace SWEndor
 
     Widget[] m_Widgets;
 
+
     internal Screen2D(Engine engine)
     {
       Engine = engine;
+      ScreenSize = new TV_2DVECTOR(Engine.ScreenWidth, Engine.ScreenHeight);
+      ScreenCenter = ScreenSize / 2;
       m_Widgets = new Widget[]
         {
           new SideBars(this),
-          new HitBar(this),
+          //new HitBar(this),
 
           new Radar(this),
           new LargeShipSystems(this),

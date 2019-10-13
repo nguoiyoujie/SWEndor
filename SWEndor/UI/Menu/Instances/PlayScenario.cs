@@ -98,7 +98,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonPlay.OnKeyPress += SelectPlay;
 
       ButtonBack.Text = "Exit";
-      ButtonBack.TextPosition = new TV_2DVECTOR(x, Globals.Engine.ScreenHeight - 80);
+      ButtonBack.TextPosition = new TV_2DVECTOR(x, owner.ScreenSize.y - 80);
       ButtonBack.HighlightBoxPosition = ButtonBack.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonBack.HighlightBoxWidth = 150;
       ButtonBack.HighlightBoxHeight = 30;

@@ -33,7 +33,7 @@ namespace SWEndor.UI.Widgets
       int h = Engine.Surfaces.RS_Target.GetHeight();
       int tex = -1;
 
-      if (p.GetStatus(SystemPart.SCANNER) == SystemState.ACTIVE)
+      if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.SCANNER) == SystemState.ACTIVE)
       {
         if (PlayerInfo.TargetActor != null)
           tex = Engine.Surfaces.RS_Target.GetTexture();

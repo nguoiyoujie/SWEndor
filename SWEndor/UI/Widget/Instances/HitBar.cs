@@ -11,12 +11,15 @@ namespace SWEndor.UI.Widgets
     {
       get
       {
+        return false;
+        /*
         ActorInfo p = PlayerInfo.Actor;
         return (!Owner.ShowPage
           && p != null
           && !p.IsDyingOrDead
           && Owner.ShowUI
           && Owner.ShowStatus);
+          */
       }
     }
 

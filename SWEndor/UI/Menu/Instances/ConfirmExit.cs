@@ -12,13 +12,13 @@ namespace SWEndor.UI.Menu.Pages
     public ConfirmExit(Screen2D owner) : base(owner)
     {
       ConfirmText.Text = "Confirm Exit?";
-      ConfirmText.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 - 150, Globals.Engine.ScreenHeight / 2 - 80);
+      ConfirmText.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(-150, -80);
       ConfirmText.HighlightBoxPosition = ConfirmText.TextPosition - new TV_2DVECTOR(5, 5);
       ConfirmText.HighlightBoxWidth = 240;
       ConfirmText.HighlightBoxHeight = 30;
 
       ConfirmNo.Text = "NO";
-      ConfirmNo.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 + 60, Globals.Engine.ScreenHeight / 2 + 20);
+      ConfirmNo.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(60, 20);
       ConfirmNo.HighlightBoxPosition = ConfirmNo.TextPosition - new TV_2DVECTOR(5, 5);
       ConfirmNo.HighlightBoxWidth = 60;
       ConfirmNo.HighlightBoxHeight = 30;
@@ -26,7 +26,7 @@ namespace SWEndor.UI.Menu.Pages
       ConfirmNo.OnKeyPress += SelectNo;
 
       ConfirmYes.Text = "YES";
-      ConfirmYes.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 + 60, Globals.Engine.ScreenHeight / 2 + 60);
+      ConfirmYes.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(60, 60);
       ConfirmYes.HighlightBoxPosition = ConfirmYes.TextPosition - new TV_2DVECTOR(5, 5);
       ConfirmYes.HighlightBoxWidth = 60;
       ConfirmYes.HighlightBoxHeight = 30;

@@ -15,7 +15,7 @@ namespace SWEndor.UI.Widgets
 
     public LargeShipSystems(Screen2D owner) : base(owner, "largeshipsystems")
     {
-      radar_center = new TV_2DVECTOR(-Engine.ScreenWidth * 0.42f, Engine.ScreenHeight * 0.3f) + new TV_2DVECTOR(Engine.ScreenWidth / 2, Engine.ScreenHeight / 2);
+      radar_center = owner.ScreenCenter + new TV_2DVECTOR(-Engine.ScreenWidth * 0.42f, Engine.ScreenHeight * 0.3f);
       radar_radius = Engine.ScreenHeight * 0.25f;
       radar_range = 1500;
     }

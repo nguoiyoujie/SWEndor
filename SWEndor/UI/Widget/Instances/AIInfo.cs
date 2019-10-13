@@ -53,8 +53,8 @@ namespace SWEndor.UI.Widgets
       }
 
       TVScreen2DImmediate.Draw_FilledBox(loc.x - 5, loc.y - 5, loc.x + 405, loc.y + 40 / 3 * lines + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
-      TVScreen2DImmediate.Draw_FilledBox(Engine.ScreenWidth / 2 - 80, Engine.ScreenHeight / 2 - 25, Engine.ScreenWidth / 2 - 40, Engine.ScreenHeight / 2 + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
-      TVScreen2DImmediate.Draw_FilledBox(Engine.ScreenWidth / 2 + 45, Engine.ScreenHeight / 2 - 25, Engine.ScreenWidth / 2 + 55 + 10 * name.Length, Engine.ScreenHeight / 2 + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
+      TVScreen2DImmediate.Draw_FilledBox(Owner.ScreenCenter.x - 80, Owner.ScreenCenter.y - 25, Owner.ScreenCenter.x - 40, Owner.ScreenCenter.y + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
+      TVScreen2DImmediate.Draw_FilledBox(Owner.ScreenCenter.x + 45, Owner.ScreenCenter.y - 25, Owner.ScreenCenter.x + 55 + 10 * name.Length, Owner.ScreenCenter.y + 5, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
       TVScreen2DImmediate.Action_End2D();
 
       TVScreen2DText.Action_BeginText();
@@ -62,10 +62,10 @@ namespace SWEndor.UI.Widgets
         , loc.x, loc.y, new TV_COLOR(0.6f, 0.8f, 0.6f, 1).GetIntColor(), FontFactory.Get(Font.T08).ID);
 
       TVScreen2DText.TextureFont_DrawText("AI"
-        , Engine.ScreenWidth / 2 - 75, Engine.ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), FontFactory.Get(Font.T14).ID);
+        , Owner.ScreenCenter.x - 75, Owner.ScreenCenter.y - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), FontFactory.Get(Font.T14).ID);
 
       TVScreen2DText.TextureFont_DrawText(name
-        , Engine.ScreenWidth / 2 + 50, Engine.ScreenHeight / 2 - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), FontFactory.Get(Font.T14).ID);
+        , Owner.ScreenCenter.x + 50, Owner.ScreenCenter.y - 20, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor(), FontFactory.Get(Font.T14).ID);
       TVScreen2DText.Action_EndText();
 
     }

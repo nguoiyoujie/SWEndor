@@ -18,23 +18,23 @@ namespace SWEndor.UI.Menu.Pages
       Log.WriteErr(Log.ERROR, exception);
 
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
-      Cover.HighlightBoxWidth = Globals.Engine.ScreenWidth;
-      Cover.HighlightBoxHeight = Globals.Engine.ScreenHeight;
+      Cover.HighlightBoxWidth = owner.ScreenSize.x;
+      Cover.HighlightBoxHeight = owner.ScreenSize.y;
       Cover.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.6f);
 
       MainText.Text = TextLocalization.Get(TextLocalKeys.SYSTEM_DISP_FATAL_ERROR);
       MainText.TextFont = FontFactory.Get(Font.T24).ID;
       MainText.TextColor = new TV_COLOR(0.8f, 0.2f, 0.2f, 1);
-      MainText.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 - 200, Globals.Engine.ScreenHeight / 2 - 180);
+      MainText.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(-200, -180);
 
       Instructions.Text = TextLocalization.Get(TextLocalKeys.SYSTEM_TEXT_FATAL_ERROR).F(errorfilename)
         .C("Error: ".C(exception.Message).Multiline(72));
       Instructions.TextFont = FontFactory.Get(Font.T12).ID;
       Instructions.TextColor = new TV_COLOR(0.8f, 0.2f, 0.2f, 1);
-      Instructions.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 - 250, Globals.Engine.ScreenHeight / 2 - 130);
+      Instructions.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(-250, -130);
 
       ButtonReturn.Text = "Exit";
-      ButtonReturn.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 + 100, Globals.Engine.ScreenHeight / 2 + 60);
+      ButtonReturn.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(100, 60);
       ButtonReturn.HighlightBoxPosition = ButtonReturn.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonReturn.HighlightBoxWidth = 200;
       ButtonReturn.HighlightBoxHeight = 30;

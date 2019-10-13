@@ -15,7 +15,7 @@ namespace SWEndor.UI.Menu.Pages
     {
       MainText.Text = "MISSION ACCOMPLISHED!";
       MainText.TextFont = FontFactory.Get(Font.T36).ID;
-      MainText.TextPosition = new TV_2DVECTOR(Engine.ScreenWidth / 2 - 242, 60);
+      MainText.TextPosition = new TV_2DVECTOR(owner.ScreenCenter.x - 242, 60);
 
       sb.Clear();
       sb.Append("Score                                     ");
@@ -57,13 +57,13 @@ namespace SWEndor.UI.Menu.Pages
       Score.Text = sb.ToString();
 
       Score.TextFont = FontFactory.Get(Font.T12).ID;
-      Score.TextPosition = new TV_2DVECTOR(Engine.ScreenWidth / 2 - 242, 120);
-      Score.HighlightBoxPosition = new TV_2DVECTOR(Engine.ScreenWidth / 2 - 255, 55);
+      Score.TextPosition = new TV_2DVECTOR(owner.ScreenCenter.x - 242, 120);
+      Score.HighlightBoxPosition = new TV_2DVECTOR(owner.ScreenCenter.x - 255, 55);
       Score.HighlightBoxWidth = 255 * 2;
       Score.HighlightBoxHeight = Engine.ScreenHeight / 2 + 242 - 55;
 
       ButtonReturn.Text = "Return to Menu";
-      ButtonReturn.TextPosition = new TV_2DVECTOR(Engine.ScreenWidth / 2 + 60, Engine.ScreenHeight / 2 + 260);
+      ButtonReturn.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(60, 260);
       ButtonReturn.HighlightBoxPosition = ButtonReturn.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonReturn.HighlightBoxWidth = 200;
       ButtonReturn.HighlightBoxHeight = 30;

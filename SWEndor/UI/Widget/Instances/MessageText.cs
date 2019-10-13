@@ -5,7 +5,27 @@ namespace SWEndor.UI.Widgets
 {
   public class MessageText : Widget
   {
-    public MessageText(Screen2D owner) : base(owner, "message") { }
+    private float y0_t1;
+    private float y1_t1;
+    private float y0_t2;
+    private float y1_t2;
+    private float y0_t3;
+    private float y1_t3;
+    private int fntID;
+    private float letter_width;
+
+    public MessageText(Screen2D owner) : base(owner, "message")
+    {
+      y0_t1 = -60;
+      y1_t1 = -40;
+      y0_t2 = -90;
+      y1_t2 = -70;
+      y0_t3 = -120;
+      y1_t3 = -100;
+
+      fntID = FontFactory.Get(Font.T12).ID;
+      letter_width = 4.5f;
+    }
 
     public override bool Visible
     {
@@ -21,9 +41,7 @@ namespace SWEndor.UI.Widgets
       TextInfo t1 = Owner.PrimaryText;
       TextInfo t2 = Owner.SecondaryText;
       TextInfo ts = Owner.SystemsText;
-      int fntID = FontFactory.Get(Font.T12).ID;
 
-      float letter_width = 4.5f;
       float t1_opacity = (t1.ExpireTime - Engine.Game.GameTime).Clamp(0, 1);
       float t2_opacity = (t2.ExpireTime - Engine.Game.GameTime).Clamp(0, 1);
       float ts_opacity = (ts.ExpireTime - Engine.Game.GameTime).Clamp(0, 1);
@@ -32,28 +50,28 @@ namespace SWEndor.UI.Widgets
       TVScreen2DImmediate.Action_Begin2D();
       if (t1_opacity > 0 && t1.Text.Length > 0)
       {
-        TVScreen2DImmediate.Draw_FilledBox(Engine.ScreenWidth / 2 - 5 - letter_width * t1.Text.Length
-                                                           , Engine.ScreenHeight / 2 - 62
-                                                           , Engine.ScreenWidth / 2 + 5 + letter_width * t1.Text.Length
-                                                           , Engine.ScreenHeight / 2 - 38
+        TVScreen2DImmediate.Draw_FilledBox(Owner.ScreenCenter.x - 5 - letter_width * t1.Text.Length
+                                                           , Owner.ScreenCenter.y + y0_t1 - 2
+                                                           , Owner.ScreenCenter.x + 5 + letter_width * t1.Text.Length
+                                                           , Owner.ScreenCenter.y + y1_t1 + 2
                                                            , new TV_COLOR(0, 0, 0, 0.5f * t1_opacity).GetIntColor());
       }
 
       if (t2_opacity > 0 && t2.Text.Length > 0)
       {
-        TVScreen2DImmediate.Draw_FilledBox(Engine.ScreenWidth / 2 - 5 - letter_width * t2.Text.Length
-                                                           , Engine.ScreenHeight / 2 - 92
-                                                           , Engine.ScreenWidth / 2 + 5 + letter_width * t2.Text.Length
-                                                           , Engine.ScreenHeight / 2 - 68
+        TVScreen2DImmediate.Draw_FilledBox(Owner.ScreenCenter.x - 5 - letter_width * t2.Text.Length
+                                                           , Owner.ScreenCenter.y + y0_t2 - 2
+                                                           , Owner.ScreenCenter.x + 5 + letter_width * t2.Text.Length
+                                                           , Owner.ScreenCenter.y + y1_t2 + 2
                                                            , new TV_COLOR(0, 0, 0, 0.5f * t2_opacity).GetIntColor());
       }
 
       if (ts_opacity > 0 && ts.Text.Length > 0)
       {
-        TVScreen2DImmediate.Draw_FilledBox(Engine.ScreenWidth / 2 - 5 - letter_width * ts.Text.Length
-                                                           , Engine.ScreenHeight / 2 - 122
-                                                           , Engine.ScreenWidth / 2 + 5 + letter_width * ts.Text.Length
-                                                           , Engine.ScreenHeight / 2 - 98
+        TVScreen2DImmediate.Draw_FilledBox(Owner.ScreenCenter.x - 5 - letter_width * ts.Text.Length
+                                                           , Owner.ScreenCenter.y + y1_t2 - 2
+                                                           , Owner.ScreenCenter.x + 5 + letter_width * ts.Text.Length
+                                                           , Owner.ScreenCenter.y + y1_t2 + 2
                                                            , new TV_COLOR(0, 0, 0, 0.5f * ts_opacity).GetIntColor());
       }
       TVScreen2DImmediate.Action_End2D();
@@ -64,8 +82,8 @@ namespace SWEndor.UI.Widgets
       {
         t1.Color.a = t1_opacity;
         TVScreen2DText.TextureFont_DrawText(t1.Text
-                                                              , Engine.ScreenWidth / 2 - letter_width * t1.Text.Length
-                                                              , Engine.ScreenHeight / 2 - 60
+                                                              , Owner.ScreenCenter.x - letter_width * t1.Text.Length
+                                                              , Owner.ScreenCenter.y + y0_t1
                                                               , t1.Color.GetIntColor()
                                                               , fntID);
       }
@@ -74,8 +92,8 @@ namespace SWEndor.UI.Widgets
       {
         t2.Color.a = t2_opacity;
         TVScreen2DText.TextureFont_DrawText(t2.Text
-                                                              , Engine.ScreenWidth / 2 - letter_width * t2.Text.Length
-                                                              , Engine.ScreenHeight / 2 - 90
+                                                              , Owner.ScreenCenter.x - letter_width * t2.Text.Length
+                                                              , Owner.ScreenCenter.y + y0_t2
                                                               , t2.Color.GetIntColor()
                                                               , fntID);
       }
@@ -84,8 +102,8 @@ namespace SWEndor.UI.Widgets
       {
         ts.Color.a = ts_opacity;
         TVScreen2DText.TextureFont_DrawText(ts.Text
-                                                              , Engine.ScreenWidth / 2 - letter_width * ts.Text.Length
-                                                              , Engine.ScreenHeight / 2 - 120
+                                                              , Owner.ScreenCenter.x - letter_width * ts.Text.Length
+                                                              , Owner.ScreenCenter.y + y0_t3
                                                               , ts.Color.GetIntColor()
                                                               , fntID);
       }

@@ -43,7 +43,7 @@ namespace SWEndor.UI.Widgets
 
       ActorInfo prev_target = Engine.ActorFactory.Get(m_targetID);
 
-      if (p.GetStatus(SystemPart.TARGETING_SYSTEM) == SystemState.ACTIVE)
+      if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.TARGETING_SYSTEM) == SystemState.ACTIVE)
       { 
         if (PlayerInfo.PlayerAIEnabled)
         {
@@ -154,10 +154,16 @@ namespace SWEndor.UI.Widgets
       TVScreen2DImmediate.Action_End2D();
 
       TVScreen2DText.Action_BeginText();
-      TVScreen2DText.TextureFont_DrawText(string.Format("{0}\nDamage: {1}%", name, (100 - target.HP_Perc).ToString("0"))
-        , x, y + m_targetSize + 10, acolor.GetIntColor()
-        , FontFactory.Get(Font.T10).ID
-        );
+      string msg = "";
+      if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.SCANNER) == SystemState.ACTIVE)
+        msg = "{0}\nDamage: {1}%".F(name, (100 - target.HP_Perc).ToString("0"));
+      else
+        msg = name;
+
+        TVScreen2DText.TextureFont_DrawText(msg
+          , x, y + m_targetSize + 10, acolor.GetIntColor()
+          , FontFactory.Get(Font.T10).ID
+          );
       TVScreen2DText.Action_EndText();
 
       PlayerInfo.TargetActorID = target.ID;

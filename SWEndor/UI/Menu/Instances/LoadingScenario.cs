@@ -30,13 +30,13 @@ namespace SWEndor.UI.Menu.Pages
       SelectedDifficulty = selectedDifficulty;
 
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
-      Cover.HighlightBoxWidth = Engine.ScreenWidth;
-      Cover.HighlightBoxHeight = Engine.ScreenHeight;
+      Cover.HighlightBoxWidth = owner.ScreenSize.x;
+      Cover.HighlightBoxHeight = owner.ScreenSize.y;
       Cover.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.3f);
 
       Engine.Screen2D.LoadingTextLines = new List<string> { "" };
       LoadingText.Text = PrintLoadingText();
-      LoadingText.TextPosition = new TV_2DVECTOR(Engine.ScreenWidth * 0.2f, Engine.ScreenHeight * 0.35f);
+      LoadingText.TextPosition = new TV_2DVECTOR(owner.ScreenSize.x * 0.2f, owner.ScreenSize.y * 0.35f);
 
       float di = 0.04f;
       float dj = 0.03f;
@@ -44,9 +44,9 @@ namespace SWEndor.UI.Menu.Pages
         for (float j = 0.6f; j < 0.7f; j += dj)
         {
           SelectionElement sqi = new SelectionElement();
-          sqi.HighlightBoxPosition = new TV_2DVECTOR(Engine.ScreenWidth * (i + 0.005f), Engine.ScreenHeight * (j + 0.005f));
-          sqi.HighlightBoxWidth = Engine.ScreenWidth * (di - 0.01f);
-          sqi.HighlightBoxHeight = Engine.ScreenHeight * (dj - 0.01f);
+          sqi.HighlightBoxPosition = new TV_2DVECTOR(owner.ScreenSize.x * (i + 0.005f), owner.ScreenSize.y * (j + 0.005f));
+          sqi.HighlightBoxWidth = owner.ScreenSize.x * (di - 0.01f);
+          sqi.HighlightBoxHeight = owner.ScreenSize.y * (dj - 0.01f);
           sqi.UnHighlightBoxPositionColor = SquareColor1;
           Squares.Add(sqi);
           Vals.Add((float)Engine.Random.NextDouble());

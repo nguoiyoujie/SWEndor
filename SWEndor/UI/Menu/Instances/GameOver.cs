@@ -11,10 +11,10 @@ namespace SWEndor.UI.Menu.Pages
     {
       MainText.Text = "GAME OVER";
       MainText.TextFont = FontFactory.Get(Font.T36).ID;
-      MainText.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 - 150, Globals.Engine.ScreenHeight / 2 - 80);
+      MainText.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(-150, -80);
 
       ButtonReturn.Text = "Return to Menu";
-      ButtonReturn.TextPosition = new TV_2DVECTOR(Globals.Engine.ScreenWidth / 2 + 60, Globals.Engine.ScreenHeight / 2 + 60);
+      ButtonReturn.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(60, 60);
       ButtonReturn.HighlightBoxPosition = ButtonReturn.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonReturn.HighlightBoxWidth = 200;
       ButtonReturn.HighlightBoxHeight = 30;

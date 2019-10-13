@@ -19,8 +19,8 @@ namespace SWEndor.UI.Menu.Pages
       Globals.Engine.SoundManager.SetMusicPause();
 
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
-      Cover.HighlightBoxWidth = Globals.Engine.ScreenWidth;
-      Cover.HighlightBoxHeight = Globals.Engine.ScreenHeight;
+      Cover.HighlightBoxWidth = owner.ScreenSize.x;
+      Cover.HighlightBoxHeight = owner.ScreenSize.y;
       Cover.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.3f);
 
       MainText.Text = "Game Paused";

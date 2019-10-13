@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Actors.Models;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Primitives;
@@ -31,8 +32,8 @@ namespace SWEndor.UI.Menu.Pages
       SelectedScenario = selectedScenario;
 
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
-      Cover.HighlightBoxWidth = Engine.ScreenWidth;
-      Cover.HighlightBoxHeight = Engine.ScreenHeight;
+      Cover.HighlightBoxWidth = owner.ScreenSize.x;
+      Cover.HighlightBoxHeight = owner.ScreenSize.y;
       Cover.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.8f);
 
       BackText.Text = "Press Space to toggle names. \nDirectional arrows to scroll. \n[P] to reset position. \n[+] to zoom in. \n[-] to zoom out. \nBACKSPACE to reset zoom \nPress ESC to return to menu.";
@@ -113,23 +114,30 @@ namespace SWEndor.UI.Menu.Pages
       base.RenderTick();
       TVScreen2DImmediate.Action_Begin2D();
       DrawGrid();
-      Engine.ActorFactory.DoEach(DrawElement);
+      ActorInfo p = Engine.PlayerInfo.Actor;
+      if (p != null && p.Active)
+      {
+        if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.RADAR) == SystemState.ACTIVE)
+          Engine.ActorFactory.DoEach(DrawElement);
+        else
+          DrawElement(Engine, p);
+      }
       TVScreen2DImmediate.Action_End2D(); 
     }
 
     private void DrawGrid()
     {
-      TVScreen2DImmediate.Draw_Line(Engine.ScreenWidth / 2, 0, Engine.ScreenWidth / 2, Engine.ScreenHeight, GridColorMajor);
-      TVScreen2DImmediate.Draw_Line(0, Engine.ScreenHeight / 2, Engine.ScreenWidth, Engine.ScreenHeight / 2, GridColorMajor);
+      TVScreen2DImmediate.Draw_Line(Owner.ScreenCenter.x, 0, Owner.ScreenCenter.x, Owner.ScreenSize.y, GridColorMajor);
+      TVScreen2DImmediate.Draw_Line(0, Owner.ScreenCenter.y, Owner.ScreenSize.x, Owner.ScreenCenter.y, GridColorMajor);
 
       int z = (int)(10000 * zoom_ratio);
-      for (int i = z; i < Engine.ScreenWidth / 2 || i < Engine.ScreenHeight / 2; i += z)
+      for (int i = z; i < Owner.ScreenCenter.x || i < Owner.ScreenCenter.y; i += z)
       {
-        TVScreen2DImmediate.Draw_Line(Engine.ScreenWidth / 2 + i, 0, Engine.ScreenWidth / 2 + i, Engine.ScreenHeight, GridColorMinor);
-        TVScreen2DImmediate.Draw_Line(0, Engine.ScreenHeight / 2 + i, Engine.ScreenWidth, Engine.ScreenHeight / 2 + i, GridColorMinor);
+        TVScreen2DImmediate.Draw_Line(Owner.ScreenCenter.x + i, 0, Owner.ScreenCenter.x + i, Owner.ScreenSize.y, GridColorMinor);
+        TVScreen2DImmediate.Draw_Line(0, Owner.ScreenCenter.y + i, Owner.ScreenSize.x, Owner.ScreenCenter.y + i, GridColorMinor);
 
-        TVScreen2DImmediate.Draw_Line(Engine.ScreenWidth / 2 - i, 0, Engine.ScreenWidth / 2 - i, Engine.ScreenHeight, GridColorMinor);
-        TVScreen2DImmediate.Draw_Line(0, Engine.ScreenHeight / 2 - i, Engine.ScreenWidth, Engine.ScreenHeight / 2 - i, GridColorMinor);
+        TVScreen2DImmediate.Draw_Line(Owner.ScreenCenter.x - i, 0, Owner.ScreenCenter.x - i, Owner.ScreenSize.y, GridColorMinor);
+        TVScreen2DImmediate.Draw_Line(0, Owner.ScreenCenter.y - i, Owner.ScreenSize.x, Owner.ScreenCenter.y - i, GridColorMinor);
       }
     }
 
@@ -156,8 +164,8 @@ namespace SWEndor.UI.Menu.Pages
           polar.Angle -= proty;
 
           XYCoord xy = polar.ToXYCoord;
-          float x = Engine.ScreenWidth / 2 - xy.X - displacement.x;
-          float y = Engine.ScreenHeight / 2 - xy.Y - displacement.y;
+          float x = Owner.ScreenCenter.x - xy.X - displacement.x;
+          float y = Owner.ScreenCenter.y - xy.Y - displacement.y;
 
           switch (a.TypeInfo.RenderData.RadarType)
           {
@@ -218,8 +226,8 @@ namespace SWEndor.UI.Menu.Pages
           polar.Angle -= proty;
 
           XYCoord xy = polar.ToXYCoord;
-          float x = Engine.ScreenWidth / 2 - xy.X - displacement.x;
-          float y = Engine.ScreenHeight / 2 - xy.Y - displacement.y;
+          float x = Owner.ScreenCenter.x - xy.X - displacement.x;
+          float y = Owner.ScreenCenter.y - xy.Y - displacement.y;
 
           switch (a.TypeInfo.RenderData.RadarType)
           {
