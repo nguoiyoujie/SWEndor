@@ -31,7 +31,7 @@ namespace SWEndor.UI.Widgets
       if (p == null || !p.Active)
         return;
 
-      TV_COLOR pcolor = p.Faction.Color;
+      int pcolor = p.Faction.Color;
 
       Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
       Engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(leftinfo_left - 5
@@ -44,13 +44,13 @@ namespace SWEndor.UI.Widgets
                             , leftinfo_weapontop - 5
                             , leftinfo_left + leftinfo_weaponwidth
                             , leftinfo_weapontop + leftinfo_weaponheight + 5
-                            , pcolor.GetIntColor());
+                            , pcolor);
 
       Engine.TrueVision.TVScreen2DImmediate.Draw_Box(leftinfo_left + leftinfo_weaponwidth
                             , leftinfo_weapontop - 5
                             , leftinfo_left + leftinfo_weaponwidth * 2 + 5
                             , leftinfo_weapontop + leftinfo_weaponheight + 5
-                            , pcolor.GetIntColor());
+                            , pcolor);
       Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
 
 
@@ -59,14 +59,14 @@ namespace SWEndor.UI.Widgets
       Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(PlayerInfo.PrimaryWeapon.ToString()
       , leftinfo_left
       , leftinfo_weapontop + 20
-      , pcolor.GetIntColor()
+      , pcolor
       , FontFactory.Get(Font.T16).ID
       );
 
       Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(PlayerInfo.SecondaryWeapon.ToString()
       , leftinfo_left + leftinfo_weaponwidth + 5
       , leftinfo_weapontop + 20
-      , pcolor.GetIntColor()
+      , pcolor
       , FontFactory.Get(Font.T16).ID
       );
       Engine.TrueVision.TVScreen2DText.Action_EndText();

@@ -12,19 +12,19 @@ namespace SWEndor.UI
 
     public string Text = "";
     public TV_2DVECTOR TextPosition = new TV_2DVECTOR();
-    public TV_COLOR TextColor = new TV_COLOR(0.8f, 0.8f, 0, 1);
+    public int TextColor = ColorLocalization.Get(ColorLocalKeys.UI_TEXT);
     public int TextFont = -1;
 
     public string SecondaryText = "";
     public TV_2DVECTOR SecondaryTextPosition = new TV_2DVECTOR();
-    public TV_COLOR SecondaryTextColor = new TV_COLOR(0.8f, 0.8f, 0, 1);
+    public int SecondaryTextColor = ColorLocalization.Get(ColorLocalKeys.UI_TEXT);
     public int SecondaryTextFont = -1;
 
     public TV_2DVECTOR HighlightBoxPosition = new TV_2DVECTOR();
     public float HighlightBoxWidth = 0;
     public float HighlightBoxHeight = 0;
-    public TV_COLOR UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.8f);
-    public TV_COLOR HighlightBoxPositionColor = new TV_COLOR(0.05f, 0.2f, 0, 0.8f);
+    public int UnHighlightBoxColor = ColorLocalization.Get(ColorLocalKeys.UI_UNHIGHLIGHT_BACKGROUND);
+    public int HighlightBoxColor = ColorLocalization.Get(ColorLocalKeys.UI_HIGHLIGHT_BACKGROUND);
 
     public int ToggleButtonsNumber = 0;
     public int ToggleButtonsCurrentNumber = 0;
@@ -32,7 +32,7 @@ namespace SWEndor.UI
     public float ToggleButtonsHeight = 20;
     public float ToggleButtonsGapWidth = 5;
     public TV_2DVECTOR ToggleButtonsPosition = new TV_2DVECTOR();
-    public TV_COLOR ToggleButtonsColor = new TV_COLOR(0.8f, 0.8f, 0, 1);
+    public int ToggleButtonsColor = ColorLocalization.Get(ColorLocalKeys.UI_TEXT);
     public List<string> ToggleButtonsValues = new List<string>();
 
     public KeyEvent OnKeyPress;
@@ -47,7 +47,7 @@ namespace SWEndor.UI
                                        , HighlightBoxPosition.y
                                        , HighlightBoxPosition.x + HighlightBoxWidth
                                        , HighlightBoxPosition.y + HighlightBoxHeight
-                                       , (ishighlighted) ? HighlightBoxPositionColor.GetIntColor() : UnHighlightBoxPositionColor.GetIntColor());
+                                       , (ishighlighted) ? HighlightBoxColor : UnHighlightBoxColor);
 
       int n = 0;
       //bool lit = true;
@@ -61,7 +61,7 @@ namespace SWEndor.UI
                                                    , y
                                                    , x + ToggleButtonsWidth
                                                    , y + ToggleButtonsHeight
-                                                   , ToggleButtonsColor.GetIntColor());
+                                                   , ToggleButtonsColor);
         }
         else
         {
@@ -69,7 +69,7 @@ namespace SWEndor.UI
                                          , y
                                          , x + ToggleButtonsWidth
                                          , y + ToggleButtonsHeight
-                                         , ToggleButtonsColor.GetIntColor());
+                                         , ToggleButtonsColor);
         }
 
         x += ToggleButtonsWidth + ToggleButtonsGapWidth;
@@ -83,13 +83,13 @@ namespace SWEndor.UI
       engine.TrueVision.TVScreen2DText.TextureFont_DrawText(Text
                                                             , TextPosition.x
                                                             , TextPosition.y
-                                                            , TextColor.GetIntColor()
+                                                            , TextColor
                                                             , font);
 
       engine.TrueVision.TVScreen2DText.TextureFont_DrawText(SecondaryText
                                                       , SecondaryTextPosition.x
                                                       , SecondaryTextPosition.y
-                                                      , SecondaryTextColor.GetIntColor()
+                                                      , SecondaryTextColor
                                                       , font);
       engine.TrueVision.TVScreen2DText.Action_EndText();
     }

@@ -14,7 +14,7 @@ namespace SWEndor.UI.Menu.Pages
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
       Cover.HighlightBoxWidth = owner.ScreenSize.x;
       Cover.HighlightBoxHeight = owner.ScreenSize.y;
-      Cover.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.3f);
+      Cover.UnHighlightBoxColor = ColorLocalization.Get(ColorLocalKeys.UI_UNHIGHLIGHT_BACKGROUND);
 
       ConfirmText.Text = "Confirm Quit Scenario?";
       ConfirmText.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(-150, -80);

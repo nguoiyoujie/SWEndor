@@ -63,7 +63,9 @@ namespace SWEndor.UI.Widgets
 
       string text = "MISSILE WARNING x{0} [{1:0000.00}]".F(warn, dist);
       int fntID = FontFactory.Get(Font.T12).ID;
-      int colorint = Engine.Game.GameTime % 2 > 1 ? new TV_COLOR(1, 0.2f, 0.2f, 1).GetIntColor() : new TV_COLOR(1, 0.8f, 0.2f, 1).GetIntColor();
+      int colorint = Engine.Game.GameTime % 2 > 1 
+                        ? ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_MISSILE_WARNING_1) 
+                        : ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_MISSILE_WARNING_2);
 
       float letter_width = 4.5f;
 

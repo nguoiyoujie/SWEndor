@@ -65,10 +65,12 @@ namespace SWEndor.Core
       Tex_Target_Destroyed = Engine.TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, @"panel\broken.png"));
       int w = RS_Target_Destroyed.GetWidth();
       int h = RS_Target_Destroyed.GetHeight();
+      int warn_color = new TV_COLOR(1, 0, 0, 1).GetIntColor();
+      int neu_color = new TV_COLOR(0.6f, 0.6f, 0.6f, 0.6f).GetIntColor();
       RS_Target_Destroyed.StartRender(false);
       Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
       Engine.TrueVision.TVScreen2DImmediate.Draw_Texture(Tex_Target_Destroyed, 0, 0, w, h);
-      Engine.TrueVision.TVScreen2DImmediate.Draw_Box(2, 2, w - 2, h - 2, new TV_COLOR(1, 0, 0, 1).GetIntColor());
+      Engine.TrueVision.TVScreen2DImmediate.Draw_Box(2, 2, w - 2, h - 2, warn_color);
       Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
       RS_Target_Destroyed.EndRender();
 
@@ -78,7 +80,7 @@ namespace SWEndor.Core
       RS_Target_Disabled.StartRender(false);
       Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
       Engine.TrueVision.TVScreen2DImmediate.Draw_Texture(Tex_Target_Disabled, 0, 0, w, h);
-      Engine.TrueVision.TVScreen2DImmediate.Draw_Box(2, 2, w - 2, h - 2, new TV_COLOR(0.6f, 0.6f, 0.6f, 0.6f).GetIntColor());
+      Engine.TrueVision.TVScreen2DImmediate.Draw_Box(2, 2, w - 2, h - 2, neu_color);
       Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
       RS_Target_Disabled.EndRender();
 
@@ -86,7 +88,7 @@ namespace SWEndor.Core
       h = RS_Target_Null.GetHeight();
       RS_Target_Null.StartRender(false);
       Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
-      Engine.TrueVision.TVScreen2DImmediate.Draw_Box(2, 2, w - 2, h - 2, new TV_COLOR(0.6f, 0.6f, 0.6f, 0.6f).GetIntColor());
+      Engine.TrueVision.TVScreen2DImmediate.Draw_Box(2, 2, w - 2, h - 2, neu_color);
       Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
       RS_Target_Null.EndRender();
     }
@@ -102,14 +104,6 @@ namespace SWEndor.Core
         if (t != null)
           t.UpdateRenderLine();
       }
-
-      if (_playerType !=Engine.PlayerInfo.ActorType)
-      {
-
-
-        _playerType = Engine.PlayerInfo.ActorType;
-      }
-
     }
   }
 }

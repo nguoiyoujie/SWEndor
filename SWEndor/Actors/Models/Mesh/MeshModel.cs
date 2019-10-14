@@ -254,7 +254,7 @@ namespace SWEndor.Actors.Models
       // post process:
       engine.Surfaces.RS_Target.StartRender(false);
       int tex = engine.Surfaces.RS_PreTarget.GetTexture();
-      int acolor = actor.Faction.Color.GetIntColor();
+      int acolor = actor.Faction.Color;
       int w = engine.Surfaces.RS_Target.GetWidth();
       int h = engine.Surfaces.RS_Target.GetHeight();
       engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
@@ -288,7 +288,7 @@ namespace SWEndor.Actors.Models
       engine.TrueVision.TVScreen2DText.TextureFont_DrawText((tp.MaxShd == 0) ? "----" : "{0:0}%".F(tp.Shd_Perc)
                                               , 15 + 40
                                               , h - 45
-                                              , ((tp.MaxShd == 0) ? new TV_COLOR(1, 1, 1, 0.4f) : tp.Shd_Color).GetIntColor()
+                                              , ((tp.MaxShd == 0) ? new TV_COLOR(1, 1, 1, 0.4f).GetIntColor() : tp.Shd_Color)
                                               , fntID);
 
       // Hull
@@ -301,7 +301,7 @@ namespace SWEndor.Actors.Models
       engine.TrueVision.TVScreen2DText.TextureFont_DrawText((tp.MaxHull == 0) ? "100%" : "{0:0}%".F(tp.Hull_Perc)
                                               , 15 + 40
                                               , h - 25
-                                              , ((tp.MaxHull == 0) ? new TV_COLOR(0, 1, 0, 1) : tp.Hull_Color).GetIntColor()
+                                              , ((tp.MaxHull == 0) ? new TV_COLOR(0, 1, 0, 1).GetIntColor() : tp.Hull_Color)
                                               , fntID);
 
       // Systems
@@ -311,10 +311,12 @@ namespace SWEndor.Actors.Models
       foreach (SystemPart part in tp.TypeInfo.SystemData.Parts)
       {
         SystemState s = tp.GetStatus(part);
-        int scolor = s == SystemState.ACTIVE ? new TV_COLOR(0.3f, 1f, 0.3f, 1).GetIntColor() :
-               s == SystemState.DISABLED ? new TV_COLOR(0.2f, 0.2f, 0.6f, 1).GetIntColor() :
-               s == SystemState.DESTROYED ? new TV_COLOR(0.7f, 0.2f, 0.2f, 1).GetIntColor() :
-               new TV_COLOR(0.4f, 0.4f, 0.4f, 1).GetIntColor();
+        ColorLocalKeys k = s == SystemState.ACTIVE ? ColorLocalKeys.GAME_SYSTEMSTATE_ACTIVE :
+                           s == SystemState.DISABLED ? ColorLocalKeys.GAME_SYSTEMSTATE_DISABLED :
+                           s == SystemState.DESTROYED ? ColorLocalKeys.GAME_SYSTEMSTATE_DESTROYED :
+                                                        ColorLocalKeys.GAME_SYSTEMSTATE_NULL;
+        int scolor = ColorLocalization.Get(k);
+
         engine.TrueVision.TVScreen2DText.TextureFont_DrawText(part.GetShorthand()
                                                       , w - 5 - 25 * (1 + i % 4)
                                                       , h - 5 - 12 * (1 + maxpart / 4 - i / 4)

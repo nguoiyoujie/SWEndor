@@ -513,13 +513,17 @@ namespace SWEndor.ActorTypes
       else
       {
         if (ainfo.UseParentCoords && ainfo.TopParent.IsPlayer)
-          engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.SUBSYSTEM_LOST).F(ainfo.Name), 3, new TV_COLOR(1, 0.2f, 0.2f, 1));
+          engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.SUBSYSTEM_LOST).F(ainfo.Name)
+                                           , 3
+                                           , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_WARNING));
         else
         {
           ActorInfo p = PlayerInfo.Actor;
           if (p != null && !p.Squad.IsNull && ainfo.Squad == p.Squad && ainfo != p)
           {
-            engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.SQUAD_MEMBER_LOST).F(ainfo.Name), 3, new TV_COLOR(1, 0.2f, 0.2f, 1));
+            engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.SQUAD_MEMBER_LOST).F(ainfo.Name)
+                                             , 3
+                                             , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_WARNING));
             engine.GameScenarioManager.Scenario.Mood = MoodStates.ALLY_FIGHTER_LOST;
           }
         }

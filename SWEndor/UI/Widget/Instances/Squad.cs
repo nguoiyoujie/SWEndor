@@ -53,11 +53,11 @@ namespace SWEndor.UI.Widgets
         ActorInfo tgt = p.ActorFactory.Get(((AI.Squads.Missions.AttackActor)p.Squad.Mission).Target_ActorID);
         if (tgt != null)
         {
-          TV_COLOR tcolor = tgt.Faction.Color;
+          int tcolor = tgt.Faction.Color;
           float tx = 0;
           float ty = 0;
           TVScreen2DImmediate.Math_3DPointTo2D(tgt.GetGlobalPosition(), ref tx, ref ty);
-          DrawSquadMissionAttackTarget(tx, ty, m_targetSize, tcolor.GetIntColor());
+          DrawSquadMissionAttackTarget(tx, ty, m_targetSize, tcolor);
         }
       }
       else if (p.Squad.Mission is AI.Squads.Missions.AssistActor)
@@ -65,11 +65,11 @@ namespace SWEndor.UI.Widgets
         ActorInfo tgt = p.ActorFactory.Get(((AI.Squads.Missions.AssistActor)p.Squad.Mission).Target_ActorID);
         if (tgt != null)
         {
-          TV_COLOR tcolor = tgt.Faction.Color;
+          int tcolor = tgt.Faction.Color;
           float tx = 0;
           float ty = 0;
           TVScreen2DImmediate.Math_3DPointTo2D(tgt.GetGlobalPosition(), ref tx, ref ty);
-          DrawSquadMissionAssistTarget(tx, ty, m_targetSize, tcolor.GetIntColor());
+          DrawSquadMissionAssistTarget(tx, ty, m_targetSize, tcolor);
         }
       }
     }
@@ -83,15 +83,15 @@ namespace SWEndor.UI.Widgets
           || !PlayerCameraInfo.Camera.IsPointVisible(s.GetGlobalPosition()))
           return;
 
-        TV_COLOR scolor = s.Faction.Color;
+        int scolor = s.Faction.Color;
         float sx = 0;
         float sy = 0;
         TVScreen2DImmediate.Math_3DPointTo2D(s.GetGlobalPosition(), ref sx, ref sy);
 
         if (s == s.Squad.Leader)
-          DrawSquadLeader(sx, sy, m_targetSize, scolor.GetIntColor());
+          DrawSquadLeader(sx, sy, m_targetSize, scolor);
         else
-          DrawSquadMember(sx, sy, m_targetSize, scolor.GetIntColor());
+          DrawSquadMember(sx, sy, m_targetSize, scolor);
     }
 
     public void DrawSquadLeader(float x, float y, float iconsize, int color)

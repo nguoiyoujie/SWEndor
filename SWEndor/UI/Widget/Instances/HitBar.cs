@@ -7,6 +7,7 @@ namespace SWEndor.UI.Widgets
   {
     public HitBar(Screen2D owner) : base(owner, "hit") { }
 
+    // Obsolete
     public override bool Visible
     {
       get
@@ -25,6 +26,7 @@ namespace SWEndor.UI.Widgets
 
     public override void Draw()
     {
+      /*
       ActorInfo m_target = Engine.ActorFactory.Get(PlayerInfo.TargetActorID);
 
       if (m_target == null)
@@ -63,6 +65,7 @@ namespace SWEndor.UI.Widgets
                                         , tcolor.GetIntColor()
                                         , FontFactory.Get(Font.T12).ID);
       TVScreen2DText.Action_EndText();
+      */
     }
   }
 }

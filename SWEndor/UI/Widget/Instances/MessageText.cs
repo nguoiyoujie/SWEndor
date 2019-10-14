@@ -69,9 +69,9 @@ namespace SWEndor.UI.Widgets
       if (ts_opacity > 0 && ts.Text.Length > 0)
       {
         TVScreen2DImmediate.Draw_FilledBox(Owner.ScreenCenter.x - 5 - letter_width * ts.Text.Length
-                                                           , Owner.ScreenCenter.y + y1_t2 - 2
+                                                           , Owner.ScreenCenter.y + y0_t3 - 2
                                                            , Owner.ScreenCenter.x + 5 + letter_width * ts.Text.Length
-                                                           , Owner.ScreenCenter.y + y1_t2 + 2
+                                                           , Owner.ScreenCenter.y + y1_t3 + 2
                                                            , new TV_COLOR(0, 0, 0, 0.5f * ts_opacity).GetIntColor());
       }
       TVScreen2DImmediate.Action_End2D();
@@ -80,31 +80,28 @@ namespace SWEndor.UI.Widgets
       TVScreen2DText.Action_BeginText();
       if (t1_opacity > 0 && t1.Text.Length > 0)
       {
-        t1.Color.a = t1_opacity;
         TVScreen2DText.TextureFont_DrawText(t1.Text
                                                               , Owner.ScreenCenter.x - letter_width * t1.Text.Length
                                                               , Owner.ScreenCenter.y + y0_t1
-                                                              , t1.Color.GetIntColor()
+                                                              , t1.Color.SetA(t1_opacity)
                                                               , fntID);
       }
 
       if (t2_opacity > 0 && t2.Text.Length > 0)
       {
-        t2.Color.a = t2_opacity;
         TVScreen2DText.TextureFont_DrawText(t2.Text
                                                               , Owner.ScreenCenter.x - letter_width * t2.Text.Length
                                                               , Owner.ScreenCenter.y + y0_t2
-                                                              , t2.Color.GetIntColor()
+                                                              , t2.Color.SetA(t2_opacity)
                                                               , fntID);
       }
 
       if (ts_opacity > 0 && ts.Text.Length > 0)
       {
-        ts.Color.a = ts_opacity;
         TVScreen2DText.TextureFont_DrawText(ts.Text
                                                               , Owner.ScreenCenter.x - letter_width * ts.Text.Length
                                                               , Owner.ScreenCenter.y + y0_t3
-                                                              , ts.Color.GetIntColor()
+                                                              , ts.Color.SetA(ts_opacity)
                                                               , fntID);
       }
       TVScreen2DText.Action_EndText();

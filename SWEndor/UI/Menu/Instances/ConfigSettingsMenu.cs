@@ -26,7 +26,7 @@ namespace SWEndor.UI.Menu.Pages
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
       Cover.HighlightBoxWidth = owner.ScreenSize.x;
       Cover.HighlightBoxHeight = owner.ScreenSize.y;
-      Cover.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.3f);
+      Cover.UnHighlightBoxColor = ColorLocalization.Get(ColorLocalKeys.UI_UNHIGHLIGHT_BACKGROUND);
 
       MainText.Text = "Configuration Menu";
       MainText.TextPosition = new TV_2DVECTOR(40, 60);
@@ -63,7 +63,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonGoToProfilerMenu.OnKeyPress += GoToProfilers;
 
       ButtonChangesComment.Text = "";
-      ButtonChangesComment.TextColor = new TV_COLOR(1, 0.5f, 0.2f, 1);
+      ButtonChangesComment.TextColor = ColorLocalization.Get(ColorLocalKeys.UI_TEXT_ORANGE);
       ButtonChangesComment.TextFont = FontFactory.Get(Font.T12).ID;
       ButtonChangesComment.TextPosition = new TV_2DVECTOR(x, y);
       y += height_gap;

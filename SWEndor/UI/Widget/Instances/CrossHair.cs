@@ -37,7 +37,7 @@ namespace SWEndor.UI.Widgets
       if (p == null || !p.Active)
         return;
 
-      int pcolor = PlayerInfo.FactionColor.GetIntColor();
+      int pcolor = PlayerInfo.FactionColor;
 
       TVScreen2DImmediate.Action_Begin2D();
       TVScreen2DImmediate.Draw_Texture(tex
@@ -54,8 +54,8 @@ namespace SWEndor.UI.Widgets
       int burst = PlayerInfo.PrimaryWeapon.Burst;
       if (weap != null)
       {
-        int disabled_color = new TV_COLOR(0.4f, 0.5f, 1f, 0.4f).GetIntColor();
-        int destroyed_color = new TV_COLOR(1, 0, 0, 0.75f).GetIntColor();
+        int disabled_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DISABLED);
+        int destroyed_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DESTROYED);
         if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.LASER_WEAPONS) == SystemState.ACTIVE)
           DrawLaser(weap, burst, pcolor, disabled_color);
         else if (p.GetStatus(SystemPart.LASER_WEAPONS) == SystemState.DESTROYED)
@@ -71,8 +71,8 @@ namespace SWEndor.UI.Widgets
         if (weap.Type == WeaponType.TORPEDO
           || weap.Type == WeaponType.MISSILE)
         {
-          int disabled_color = new TV_COLOR(0.4f, 0.5f, 1f, 0.4f).GetIntColor();
-          int destroyed_color = new TV_COLOR(1, 0, 0, 0.75f).GetIntColor();
+          int disabled_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DISABLED);
+          int destroyed_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DESTROYED);
           if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) == SystemState.ACTIVE)
             DrawMissile(weap, true, weap.Ammo, pcolor);
           else if (p.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) == SystemState.DESTROYED)
@@ -82,9 +82,9 @@ namespace SWEndor.UI.Widgets
         }
         else if (weap.Type == WeaponType.ION) //weap.MaxAmmo > 0)
         {
-          int ion_color = new TV_COLOR(0.6f, 0.6f, 1, 1).GetIntColor();
-          int disabled_color = new TV_COLOR(0.4f, 0.5f, 1f, 0.4f).GetIntColor();
-          int destroyed_color = new TV_COLOR(1, 0, 0, 0.75f).GetIntColor();
+          int ion_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_ION);
+          int disabled_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DISABLED);
+          int destroyed_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DESTROYED);
           if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.LASER_WEAPONS) == SystemState.ACTIVE)
             DrawIon(weap, true, burst, ion_color, ion_color);
           else if (p.GetStatus(SystemPart.LASER_WEAPONS) == SystemState.DESTROYED)

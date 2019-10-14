@@ -7,21 +7,21 @@ namespace SWEndor.Scenarios.Scripting.Functions
   {
     public static Val SetUILine1Color(Context context, Val[] ps)
     {
-      TV_COLOR color = new TV_COLOR(ps[0].ValueF, ps[1].ValueF, ps[2].ValueF, 1);
+      int color = new TV_COLOR(ps[0].ValueF, ps[1].ValueF, ps[2].ValueF, 1).GetIntColor();
       context.Engine.GameScenarioManager.Line1Color = color;
       return Val.TRUE;
     }
 
     public static Val SetUILine2Color(Context context, Val[] ps)
     {
-      TV_COLOR color = new TV_COLOR(ps[0].ValueF, ps[1].ValueF, ps[2].ValueF, 1);
+      int color = new TV_COLOR(ps[0].ValueF, ps[1].ValueF, ps[2].ValueF, 1).GetIntColor();
       context.Engine.GameScenarioManager.Line2Color = color;
       return Val.TRUE;
     }
 
     public static Val SetUILine3Color(Context context, Val[] ps)
     {
-      TV_COLOR color = new TV_COLOR(ps[0].ValueF, ps[1].ValueF, ps[2].ValueF, 1);
+      int color = new TV_COLOR(ps[0].ValueF, ps[1].ValueF, ps[2].ValueF, 1).GetIntColor();
       context.Engine.GameScenarioManager.Line3Color = color;
       return Val.TRUE;
     }

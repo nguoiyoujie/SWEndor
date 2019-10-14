@@ -29,6 +29,6 @@ namespace SWEndor.UI
     public TVScreen2DText TVScreen2DText { get { return Engine.TrueVision.TVScreen2DText; } }
 
     // shortcut
-    protected TV_COLOR pcolor { get { return PlayerInfo.FactionColor; } }
+    protected int pcolor { get { return PlayerInfo.FactionColor; } }
   }
 }

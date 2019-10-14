@@ -48,8 +48,8 @@ namespace SWEndor.Player
     
     private float m_LowAlarmSoundTime = 0;
     public float StrengthFrac { get { return Actor?.HP_Frac ?? 0; } }
-    public TV_COLOR StrengthColor { get { return Actor?.HP_Color ?? new TV_COLOR(1, 1, 1, 1); } }
-    public TV_COLOR FactionColor { get { return Actor?.Faction?.Color ?? new TV_COLOR(1, 1, 1, 1); } }
+    public int StrengthColor { get { return Actor?.HP_Color ?? ColorLocalization.Get(ColorLocalKeys.WHITE); } }
+    public int FactionColor { get { return Actor?.Faction?.Color ?? ColorLocalization.Get(ColorLocalKeys.WHITE); } }
 
     public int Lives = 3;
     public float ScorePerLife = 50000;
@@ -152,7 +152,10 @@ namespace SWEndor.Player
         }
 
         if (announceOutOfBounds)
-          Engine.Screen2D.MessageText("You are going out of bounds! Return to the battle!", 5, new TV_COLOR(1, 1, 1, 1), 99);
+          Engine.Screen2D.MessageText("You are going out of bounds! Return to the battle!"
+                                     , 5
+                                     , ColorLocalization.Get(ColorLocalKeys.WHITE)
+                                     , 99);
       }
     }
 
@@ -304,12 +307,12 @@ namespace SWEndor.Player
       Actor.Squad.Mission = null;
     }
 
-    public void FlashHit(TV_COLOR color)
+    public void FlashHit(int color)
     {
       if (Actor.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
       {
         Engine.SoundManager.SetSound(SoundGlobals.ExpHit);
-        Engine.TrueVision.TVGraphicEffect.Flash(color.r, color.g, color.b, 200);
+        Engine.TrueVision.TVGraphicEffect.Flash(color.GetR(), color.GetG(), color.GetB(), 200);
 
         if (Actor.HP > 0 && DamagedReportSound != null && DamagedReportSound.Length > 0)
         {

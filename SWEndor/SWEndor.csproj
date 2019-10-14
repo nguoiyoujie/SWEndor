@@ -136,6 +136,8 @@
   <ItemGroup>
     <Compile Include="Actors\Models\Regeneration\ActorExt.cs" />
     <Compile Include="Actors\Models\SystemModel\ActorExt.cs" />
+    <Compile Include="Actors\Models\SystemModel\SystemPart.cs" />
+    <Compile Include="Actors\Models\SystemModel\SystemState.cs" />
     <Compile Include="Actors\Models\SystemModel\SystemModel.cs" />
     <Compile Include="ActorTypes\Components\CombatData.cs" />
     <Compile Include="ActorTypes\Components\SystemData.cs" />
@@ -543,6 +545,7 @@
     <Compile Include="Scenarios\Scripting\Functions\ActorManagement.cs" />
     <Compile Include="Scenarios\Scripting\Functions\SceneCameraManagement.cs" />
     <Compile Include="Scenarios\Scripting\Functions\SceneManagement.cs" />
+    <Compile Include="Settings\ColorLocalization.cs" />
     <Compile Include="Settings\TextLocalization.cs" />
     <Compile Include="Shaders\Factory\Factory.cs" />
     <Compile Include="Shaders\ShaderInfo.cs" />

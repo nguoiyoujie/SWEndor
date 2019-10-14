@@ -8,7 +8,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
   {
     public static Val AddFaction(Context context, Val[] ps)
     {
-      TV_COLOR color = new TV_COLOR(ps[1].ValueF, ps[2].ValueF, Convert.ToSingle(ps[3].ValueS), 1);
+      int color = new TV_COLOR(ps[1].ValueF, ps[2].ValueF, Convert.ToSingle(ps[3].ValueS), 1).GetIntColor();
       FactionInfo.Factory.Add(ps[0].ValueS, color);
       return Val.TRUE;
     }

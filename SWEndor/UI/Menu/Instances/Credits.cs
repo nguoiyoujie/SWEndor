@@ -16,7 +16,7 @@ namespace SWEndor.UI.Menu.Pages
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
       Cover.HighlightBoxWidth = owner.ScreenSize.x;
       Cover.HighlightBoxHeight = owner.ScreenSize.y;
-      Cover.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.3f);
+      Cover.UnHighlightBoxColor = ColorLocalization.Get(ColorLocalKeys.UI_UNHIGHLIGHT_BACKGROUND);
 
       MainText.Text = "Credits";
       MainText.TextPosition = new TV_2DVECTOR(40, 60);

@@ -61,9 +61,9 @@ namespace SWEndor.Scenarios
         Manager.AddEvent(Game.GameTime + 7.5f, Rebel_GiveControl);
       }
 
-      Manager.Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1);
-      Manager.Line2Color = new TV_COLOR(0.7f, 1f, 0.3f, 1);
-      Manager.Line3Color = new TV_COLOR(0.7f, 1f, 0.3f, 1);
+      Manager.Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
+      Manager.Line2Color = new TV_COLOR(0.7f, 1f, 0.3f, 1).GetIntColor();
+      Manager.Line3Color = new TV_COLOR(0.7f, 1f, 0.3f, 1).GetIntColor();
 
       Manager.IsCutsceneMode = false;
     }
@@ -129,10 +129,10 @@ namespace SWEndor.Scenarios
     {
       base.LoadFactions();
 
-      FactionInfo.Factory.Add("Rebels", new TV_COLOR(0.8f, 0, 0, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Rebels_Falcon", new TV_COLOR(0.8f, 0.8f, 0.8f, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Empire", new TV_COLOR(0, 0.8f, 0, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Empire_Advanced", new TV_COLOR(0.4f, 0.8f, 0.4f, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels", new TV_COLOR(0.8f, 0, 0, 1).GetIntColor()).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels_Falcon", new TV_COLOR(0.8f, 0.8f, 0.8f, 1).GetIntColor()).AutoAI = true;
+      FactionInfo.Factory.Add("Empire", new TV_COLOR(0, 0.8f, 0, 1).GetIntColor()).AutoAI = true;
+      FactionInfo.Factory.Add("Empire_Advanced", new TV_COLOR(0.4f, 0.8f, 0.4f, 1).GetIntColor()).AutoAI = true;
 
       FactionInfo.Factory.Get("Rebels").Allies.Add(FactionInfo.Factory.Get("Rebels_Falcon"));
       FactionInfo.Factory.Get("Rebels_Falcon").Allies.Add(FactionInfo.Factory.Get("Rebels"));
@@ -460,7 +460,7 @@ namespace SWEndor.Scenarios
         Registries = new string[] { "CriticalEnemies" }
       }.Spawn(this).ID;
 
-      Screen2D.MessageText("The TIE Advanced X1 has arrived.", 5, new TV_COLOR(1, 1, 1, 1));
+      Screen2D.MessageText("The TIE Advanced X1 has arrived.", 5, ColorLocalization.Get(ColorLocalKeys.WHITE));
     }
 
     public void Empire_TIEAdv_Control_TargetFighter()

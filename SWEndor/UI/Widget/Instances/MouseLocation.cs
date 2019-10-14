@@ -20,11 +20,11 @@ namespace SWEndor.UI.Widgets
       int mX = Engine.InputManager.MOUSE_X;
       int mY = Engine.InputManager.MOUSE_Y;
 
-      TV_COLOR color = new TV_COLOR(1, 1, 1, 0.5f);
-      if (PlayerInfo.Exists)
-        color = PlayerInfo.FactionColor;
+      int color = PlayerInfo.Exists 
+                    ? color = PlayerInfo.FactionColor 
+                    : ColorLocalization.Get(ColorLocalKeys.WHITE);
 
-      TVScreen2DImmediate.Draw_FilledBox(mX - 2, mY - 2, mX + 2, mY + 2, color.GetIntColor());
+      TVScreen2DImmediate.Draw_FilledBox(mX - 2, mY - 2, mX + 2, mY + 2, color);
 
       TVScreen2DImmediate.Action_End2D();
     }

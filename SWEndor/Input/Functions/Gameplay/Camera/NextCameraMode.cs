@@ -16,7 +16,7 @@ namespace SWEndor.Input.Functions.Gameplay.Camera
       engine.PlayerCameraInfo.CameraMode = engine.GameScenarioManager.Scenario.NextCameraMode();
       engine.Screen2D.MessageSecondaryText(string.Format("CAMERA: {0}", engine.PlayerCameraInfo.CameraMode)
                                                  , 2.5f
-                                                 , new TV_COLOR(0.5f, 0.5f, 1, 1)
+                                                 , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_NORMAL)
                                                  , 1);
     }
   }

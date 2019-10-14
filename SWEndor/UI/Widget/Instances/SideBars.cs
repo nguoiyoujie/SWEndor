@@ -40,7 +40,7 @@ namespace SWEndor.UI.Widgets
       if (p == null || !p.Active)
         return;
 
-      TV_COLOR pcolor = p.Faction.Color;
+      int pcolor = p.Faction.Color;
 
       //Health Bar
       DrawSingleBar(0
@@ -53,7 +53,7 @@ namespace SWEndor.UI.Widgets
       DrawSingleBar(1
             , "SPEED "
             , p.MoveData.Speed / p.MoveData.MaxSpeed
-            , new TV_COLOR(0.7f, 0.8f, 0.4f, 1)
+            , ColorLocalization.Get(ColorLocalKeys.GAME_STAT_SPEED)
             );
 
       int barnumber = 2;
@@ -64,7 +64,7 @@ namespace SWEndor.UI.Widgets
         DrawSingleBar(barnumber
             , a.SideBarName.PadRight(12).Remove(11)
             , a.DisplayHP_Frac
-            , new TV_COLOR(0, 0.8f, 0.6f, 1)
+            , ColorLocalization.Get(ColorLocalKeys.GAME_STAT_CRITICAL_ALLY)
             );
         barnumber++;
       }
@@ -75,7 +75,7 @@ namespace SWEndor.UI.Widgets
         DrawSingleBar(barnumber
             , a.SideBarName.PadRight(12).Remove(11)
             , a.DisplayHP_Frac
-            , new TV_COLOR(1f, 0, 0, 1)
+            , ColorLocalization.Get(ColorLocalKeys.GAME_STAT_CRITICAL_ENEMY)
             );
         barnumber++;
       }
@@ -94,7 +94,7 @@ namespace SWEndor.UI.Widgets
       */
     }
 
-    private void DrawSingleBar(int barnumber, string text, float barlengthfrac, TV_COLOR color)
+    private void DrawSingleBar(int barnumber, string text, float barlengthfrac, int color)
     {
       float h = barnumber * 1.2f;
       if (barlengthfrac < 0)
@@ -104,12 +104,13 @@ namespace SWEndor.UI.Widgets
 
       TVScreen2DImmediate.Action_Begin2D();
 
+      int bgcolor = ColorLocalization.Get(ColorLocalKeys.UI_BACKGROUND_DARK);
       // Background
       TVScreen2DImmediate.Draw_FilledBox(bar_topleft.x - 120
                                     , bar_topleft.y + bar_height * (h - 0.1f)
                                     , bar_topleft.x + bar_length + 5
                                     , bar_topleft.y + bar_height * (h + 1.1f)
-                                    , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
+                                    , bgcolor); 
       TVScreen2DImmediate.Action_End2D();
 
       // Bar Background
@@ -117,13 +118,13 @@ namespace SWEndor.UI.Widgets
                                           , bar_topleft.y + bar_height * (h + 0.6f) - bar_barheight / 2
                                           , bar_topleft.x + bar_length
                                           , bar_topleft.y + bar_height * (h + 0.6f) + bar_barheight / 2
-                                          , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
+                                          , bgcolor);
 
       TVScreen2DImmediate.Draw_FilledBox(bar_topleft.x
                                                   , bar_topleft.y + bar_height * (h + 0.6f) - bar_barheight / 2
                                                   , bar_topleft.x + bar_length * barlengthfrac
                                                   , bar_topleft.y + bar_height * (h + 0.6f) + bar_barheight / 2
-                                                  , color.GetIntColor());
+                                                  , color);
 
       TVScreen2DImmediate.Action_End2D();
 
@@ -133,7 +134,7 @@ namespace SWEndor.UI.Widgets
       TVScreen2DText.TextureFont_DrawText(text
         , bar_topleft.x - 115
         , bar_topleft.y + bar_height * h
-        , color.GetIntColor()
+        , color
         , FontFactory.Get(Font.T12).ID
         );
 

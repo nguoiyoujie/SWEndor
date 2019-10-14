@@ -15,8 +15,8 @@ namespace SWEndor.UI.Menu.Pages
   {
     SelectionElement Cover = new SelectionElement();
     SelectionElement BackText = new SelectionElement();
-    private static readonly int GridColorMajor = new TV_COLOR(1, 1, 0.2f, 0.6f).GetIntColor();
-    private static readonly int GridColorMinor = new TV_COLOR(1, 1, 0.2f, 0.3f).GetIntColor();
+    private static readonly int GridColorMajor = ColorLocalization.Get(ColorLocalKeys.GAME_MAP_GRID_MAJOR);
+    private static readonly int GridColorMinor = ColorLocalization.Get(ColorLocalKeys.GAME_MAP_GRID_MINOR);
     private static float zoom_ratio = 0.05f;
     private static float zoom_stepmult = 1.25f;
     private static float max_zoom_ratio = 2f;
@@ -34,15 +34,15 @@ namespace SWEndor.UI.Menu.Pages
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
       Cover.HighlightBoxWidth = owner.ScreenSize.x;
       Cover.HighlightBoxHeight = owner.ScreenSize.y;
-      Cover.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.8f);
+      Cover.UnHighlightBoxColor = ColorLocalization.Get(ColorLocalKeys.GAME_MAP_BACKGROUND);
 
       BackText.Text = "Press Space to toggle names. \nDirectional arrows to scroll. \n[P] to reset position. \n[+] to zoom in. \n[-] to zoom out. \nBACKSPACE to reset zoom \nPress ESC to return to menu.";
       BackText.TextFont = FontFactory.Get(Font.T12).ID;
       BackText.TextPosition = new TV_2DVECTOR(20, Engine.ScreenHeight - 140);
       BackText.Selectable = true;
       BackText.OnKeyPress += SelectExit;
-      BackText.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0);
-      BackText.HighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0);
+      BackText.UnHighlightBoxColor = ColorLocalization.Get(ColorLocalKeys.TRANSPARENT);
+      BackText.HighlightBoxColor = ColorLocalization.Get(ColorLocalKeys.TRANSPARENT);
 
       Elements.Add(Cover);
       Elements.Add(BackText);
@@ -156,7 +156,7 @@ namespace SWEndor.UI.Menu.Pages
           //&& !(a.TypeInfo is ActorTypes.Groups.LaserProjectile)
           && !a.UseParentCoords)
         {
-          int acolor = a.Faction.Color.GetIntColor();
+          int acolor = a.Faction.Color;
           float proty = Engine.PlayerCameraInfo.Rotation.y;
 
           XYCoord posvec = new XYCoord { X = ppos.x - apos.x, Y = ppos.z - apos.z };
@@ -218,7 +218,7 @@ namespace SWEndor.UI.Menu.Pages
           && size > 0
           && !(a.TypeInfo is ProjectileTypes.Groups.LaserProjectile))
         {
-          int acolor = a.Faction.Color.GetIntColor();
+          int acolor = a.Faction.Color;
           float proty = Engine.PlayerCameraInfo.Rotation.y;
 
           XYCoord posvec = new XYCoord { X = ppos.x - apos.x, Y = ppos.z - apos.z };

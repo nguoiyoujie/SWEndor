@@ -2,7 +2,6 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Models;
 using SWEndor.Core;
-using SWEndor.Player;
 using SWEndor.Primitives.Extensions;
 using SWEndor.UI;
 using SWEndor.UI.Menu;
@@ -31,7 +30,7 @@ namespace SWEndor
     public bool ShowScore = true;
 
     // PreRender Text
-    public System.Collections.Generic.List<string> LoadingTextLines = new System.Collections.Generic.List<string>(); 
+    public System.Collections.Generic.List<string> LoadingTextLines = new System.Collections.Generic.List<string>();
 
     // Page
     public bool ShowPage = false;
@@ -50,7 +49,7 @@ namespace SWEndor
     public bool Box3D_Enable = false;
     public TV_3DVECTOR Box3D_min = new TV_3DVECTOR();
     public TV_3DVECTOR Box3D_max = new TV_3DVECTOR();
-    public TV_COLOR Box3D_color = new TV_COLOR(1, 1, 1, 1);
+    public int Box3D_color = ColorLocalization.Get(ColorLocalKeys.WHITE);
 
     Widget[] m_Widgets;
 
@@ -63,7 +62,7 @@ namespace SWEndor
       m_Widgets = new Widget[]
         {
           new SideBars(this),
-          //new HitBar(this),
+          //new HitBar(this), // obsolete
 
           new Radar(this),
           new LargeShipSystems(this),
@@ -100,54 +99,40 @@ namespace SWEndor
       foreach (Widget w in m_Widgets)
       {
         if (w != null && w.Visible)
-            w.Draw();
+          w.Draw();
       }
     }
 
-    public void MessageText(string text, float expiretime, TV_COLOR color, int priority = 0)
+    public void MessageText(string text, float expiretime, int color, int priority = 0)
     {
-      if (PrimaryText.Priority <= priority || PrimaryText.ExpireTime < Engine.Game.GameTime)
+      MessageText(ref PrimaryText, text, expiretime, color, priority);
+    }
+
+    public void MessageSecondaryText(string text, float expiretime, int color, int priority = 0)
+    {
+      MessageText(ref SecondaryText, text, expiretime, color, priority);
+    }
+
+    public void MessageSystemsText(string text, float expiretime, int color, int priority = 0)
+    {
+      MessageText(ref SystemsText, text, expiretime, color, priority);
+    }
+
+    private void MessageText(ref TextInfo tinfo, string text, float expiretime, int color, int priority)
+    {
+      if (tinfo.Priority <= priority || tinfo.ExpireTime < Engine.Game.GameTime)
       {
-        PrimaryText.Priority = priority;
-        ActorInfo p = Globals.Engine.PlayerInfo.Actor;
+        tinfo.Priority = priority;
+        ActorInfo p = Engine.PlayerInfo.Actor;
         if (p != null && (p.GetStatus(SystemPart.COMLINK) == SystemState.DISABLED || p.GetStatus(SystemPart.COMLINK) == SystemState.DESTROYED))
           text = text.Scramble();
 
-        PrimaryText.Text = text;
-        PrimaryText.ExpireTime = Engine.Game.GameTime + expiretime;
-        PrimaryText.Color = color;
+        tinfo.Text = text;
+        tinfo.ExpireTime = Engine.Game.GameTime + expiretime;
+        tinfo.Color = color;
       }
     }
 
-    public void MessageSecondaryText(string text, float expiretime, TV_COLOR color, int priority = 0)
-    {
-      if (SecondaryText.Priority <= priority || SecondaryText.ExpireTime < Engine.Game.GameTime)
-      {
-        SecondaryText.Priority = priority;
-        ActorInfo p = Globals.Engine.PlayerInfo.Actor;
-        if (p != null && (p.GetStatus(SystemPart.COMLINK) == SystemState.DISABLED || p.GetStatus(SystemPart.COMLINK) == SystemState.DESTROYED))
-          text = text.Scramble();
-
-        SecondaryText.Text = text;
-        SecondaryText.ExpireTime = Engine.Game.GameTime + expiretime;
-        SecondaryText.Color = color;
-      }
-    }
-
-    public void MessageSystemsText(string text, float expiretime, TV_COLOR color, int priority = 0)
-    {
-      if (SystemsText.Priority <= priority || SystemsText.ExpireTime < Engine.Game.GameTime)
-      {
-        SystemsText.Priority = priority;
-        ActorInfo p = Globals.Engine.PlayerInfo.Actor;
-        if (p != null && (p.GetStatus(SystemPart.COMLINK) == SystemState.DISABLED || p.GetStatus(SystemPart.COMLINK) == SystemState.DESTROYED))
-          text = text.Scramble();
-
-        SystemsText.Text = text;
-        SystemsText.ExpireTime = Engine.Game.GameTime + expiretime;
-        SystemsText.Color = color;
-      }
-    }
 
     public void ClearText()
     {

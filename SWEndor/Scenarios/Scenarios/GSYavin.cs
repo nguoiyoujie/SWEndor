@@ -13,6 +13,7 @@ using SWEndor.ActorTypes.Components;
 using SWEndor.Sound;
 using SWEndor.Core;
 using SWEndor.Models;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Scenarios
 {
@@ -195,8 +196,8 @@ namespace SWEndor.Scenarios
       names.Add("Gold Seven (Gazdo Woolcob)");
       names.Add("Gold Eight");
 
-      Manager.Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1);
-      Manager.Line2Color = new TV_COLOR(1f, 1f, 0.3f, 1);
+      Manager.Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
+      Manager.Line2Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
       //Manager.Line3Color = new TV_COLOR(0.7f, 1f, 0.3f, 1);
 
       SoundManager.SetMusic("battle_1_1");
@@ -209,10 +210,10 @@ namespace SWEndor.Scenarios
     {
       base.LoadFactions();
 
-      FactionInfo.Factory.Add("Rebels", new TV_COLOR(0.8f, 0, 0, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Rebels_Gold", new TV_COLOR(0.8f, 0.3f, 0, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Empire", new TV_COLOR(0, 0.8f, 0, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Empire_DeathStarDefenses", new TV_COLOR(0.1f, 0.8f, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels", new TV_COLOR(0.8f, 0, 0, 1).GetIntColor()).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels_Gold", new TV_COLOR(0.8f, 0.3f, 0, 1).GetIntColor()).AutoAI = true;
+      FactionInfo.Factory.Add("Empire", new TV_COLOR(0, 0.8f, 0, 1).GetIntColor()).AutoAI = true;
+      FactionInfo.Factory.Add("Empire_DeathStarDefenses", new TV_COLOR(0.1f, 0.8f, 0, 1).GetIntColor()).AutoAI = true;
 
       FactionInfo.Factory.Get("Rebels").Allies.Add(FactionInfo.Factory.Get("Rebels_Gold"));
       FactionInfo.Factory.Get("Rebels_Gold").Allies.Add(FactionInfo.Factory.Get("Rebels"));
@@ -484,7 +485,7 @@ namespace SWEndor.Scenarios
       {
         if (Manager.Scenario.TimeSinceLostWing < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
         {
-          Manager.Line1Text = string.Format("WINGS: {0}", MainAllyFaction.WingCount);
+          Manager.Line1Text = "WINGS: {0}".F(MainAllyFaction.WingCount);
         }
         else
         {
@@ -496,10 +497,10 @@ namespace SWEndor.Scenarios
         Manager.Line1Text = Screen2D.TargetingRadar_text;
       }
 
-      Manager.Line2Text = string.Format("TIME: {0:00}:{1:00}", (int)(expiretime - Game.GameTime) / 60, (int)(expiretime - Game.GameTime) % 60);
+      Manager.Line2Text = "TIME: {0:00}:{1:00}".F((int)(expiretime - Game.GameTime) / 60, (int)(expiretime - Game.GameTime) % 60);
       if ((int)(expiretime - Game.GameTime) / 60 < 4)
       {
-        Manager.Line2Color = new TV_COLOR(1, 0.3f, 0.3f, 1);
+        Manager.Line2Color = new TV_COLOR(1, 0.3f, 0.3f, 1).GetIntColor();
       }
     }
 
@@ -2023,104 +2024,106 @@ namespace SWEndor.Scenarios
 
 
     #region Text
+    int color_outpost = new TV_COLOR(0.6f, 0.6f, 0.9f, 1).GetIntColor();
+
     public void Message_01_EnemyShipsInbound()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Enemy signals are approaching your position.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Enemy signals are approaching your position.", 5, color_outpost);
     }
 
     public void Message_02_MoreEnemyShipsInbound()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Another enemy signal are en route to your position.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Another enemy signal are en route to your position.", 5, color_outpost);
     }
 
     public void Message_03_Clear()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Area cleared. Resume your attack on the Death Star.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Area cleared. Resume your attack on the Death Star.", 5, color_outpost);
     }
 
     public void Message_04_Target()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Eliminate all Radar Towers.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Eliminate all Radar Towers.", 5, color_outpost);
     }
 
     public void Message_05_Clear()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Area cleared. Proceed to the next sector.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Area cleared. Proceed to the next sector.", 5, color_outpost);
     }
 
     public void Message_06_TIE()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Enemy fighters detected.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Enemy fighters detected.", 5, color_outpost);
     }
 
     public void Message_07_Clear()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Deflector Towers detected en route to the trench.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Deflector Towers detected en route to the trench.", 5, color_outpost);
     }
 
     public void Message_08_Target()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Destroy all Deflection Towers and Radar Towers.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Destroy all Deflection Towers and Radar Towers.", 5, color_outpost);
     }
 
     public void Message_09_Clear()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: The path to the trench line is clear.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: The path to the trench line is clear.", 5, color_outpost);
     }
 
     public void Message_10_BeginRun()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Luke, start your attack run.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Luke, start your attack run.", 5, color_outpost);
     }
 
     public void Message_100_RebelBaseInRange()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is in range of the Death Star.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is in range of the Death Star.", 5, color_outpost);
     }
 
     public void Message_101_RebelBase()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in ONE minute.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in ONE minute.", 5, color_outpost);
     }
 
     public void Message_102_RebelBase()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TWO minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TWO minutes.", 5, color_outpost);
     }
 
     public void Message_103_RebelBase()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in THREE minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in THREE minutes.", 5, color_outpost);
     }
 
     public void Message_105_RebelBase()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in FIVE minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in FIVE minutes.", 5, color_outpost);
     }
 
     public void Message_110_RebelBase()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TEN minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TEN minutes.", 5, color_outpost);
     }
 
     public void Message_115_RebelBase()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in FIFTEEN minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in FIFTEEN minutes.", 5, color_outpost);
     }
 
     public void Message_120_RebelBase()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TWENTY minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TWENTY minutes.", 5, color_outpost);
     }
 
     public void Message_125_RebelBase()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TWENTY-FIVE minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in TWENTY-FIVE minutes.", 5, color_outpost);
     }
 
     public void Message_130_RebelBase()
     {
-      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in THIRTY minutes.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("MASSASSI OUTPOST: Our Rebel Base is will be in range in THIRTY minutes.", 5, color_outpost);
     }
 
     #endregion

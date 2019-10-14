@@ -93,8 +93,8 @@ namespace SWEndor.Scenarios
 
       MakePlayer = Rebel_MakePlayer;
 
-      Manager.Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1);
-      Manager.Line2Color = new TV_COLOR(1f, 1f, 0.3f, 1);
+      Manager.Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
+      Manager.Line2Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
       //Manager.Line3Color = new TV_COLOR(0.7f, 1f, 0.3f, 1);
 
       SoundManager.SetMusic("battle_2_1");
@@ -107,9 +107,9 @@ namespace SWEndor.Scenarios
     {
       base.LoadFactions();
 
-      FactionInfo.Factory.Add("Rebels", new TV_COLOR(0.8f, 0, 0, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Rebels_Falcon", new TV_COLOR(0.8f, 0.8f, 0.8f, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Empire", new TV_COLOR(0, 0.8f, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels", new TV_COLOR(0.8f, 0, 0, 1).GetIntColor()).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels_Falcon", new TV_COLOR(0.8f, 0.8f, 0.8f, 1).GetIntColor()).AutoAI = true;
+      FactionInfo.Factory.Add("Empire", new TV_COLOR(0, 0.8f, 0, 1).GetIntColor()).AutoAI = true;
 
       FactionInfo.Factory.Get("Rebels").Allies.Add(FactionInfo.Factory.Get("Rebels_Falcon"));
       FactionInfo.Factory.Get("Rebels_Falcon").Allies.Add(FactionInfo.Factory.Get("Rebels"));
@@ -182,13 +182,13 @@ namespace SWEndor.Scenarios
 
           if (TIEsLeft < 1 && !Manager.GetGameStateB("Stage2b"))
           {
-            Manager.Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1);
-            Manager.Line2Color = new TV_COLOR(1f, 1f, 0.3f, 1);
+            Manager.Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
+            Manager.Line2Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
             Manager.Line1Text = "Proceed to";
             Manager.Line2Text = "Hyperspace Lane";
             Manager.SetGameStateB("Stage2b", true);
             Screen2D.Box3D_Enable = true;
-            Screen2D.Box3D_color = new TV_COLOR(1f, 1f, 0.3f, 1);
+            Screen2D.Box3D_color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
             Screen2D.Box3D_min = hyperspace_lane_min;
             Screen2D.Box3D_max = hyperspace_lane_max;
           }
@@ -811,8 +811,8 @@ namespace SWEndor.Scenarios
     public void Scene_02_Switch()
     {
       StageNumber = 2;
-      Manager.Line1Color = new TV_COLOR(0.7f, 1f, 0.3f, 1);
-      Manager.Line2Color = new TV_COLOR(0.7f, 1f, 0.3f, 1);
+      Manager.Line1Color = new TV_COLOR(0.7f, 1f, 0.3f, 1).GetIntColor();
+      Manager.Line2Color = new TV_COLOR(0.7f, 1f, 0.3f, 1).GetIntColor();
       switch (Difficulty.ToLower())
       {
         case "mental":
@@ -1011,119 +1011,125 @@ namespace SWEndor.Scenarios
     #endregion
 
     #region Text
+    int color_echobase = new TV_COLOR(0.6f, 0.6f, 0.9f, 1).GetIntColor();
+    int color_transport = new TV_COLOR(0.8f, 0.4f, 0.4f, 1).GetIntColor();
+    int color_xwing = new TV_COLOR(0.8f, 0, 0, 1).GetIntColor();
+    int color_solo = new TV_COLOR(0.8f, 0.8f, 0.9f, 1).GetIntColor();
+    int color_3cpo = new TV_COLOR(0.8f, 0.8f, 0.1f, 1).GetIntColor();
+
     public void Message_01_Leaving()
     {
-      Screen2D.MessageText("ECHO BASE: Escort the transports to the designated locations for hyperspace jump. ", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("ECHO BASE: Escort the transports to the designated locations for hyperspace jump. ", 5, color_echobase);
     }
 
     public void Message_02_Conditions()
     {
-      Screen2D.MessageText("ECHO BASE: All transports must survive.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("ECHO BASE: All transports must survive.", 5, color_echobase);
     }
 
     public void Message_03_Turbolasers()
     {
-      Screen2D.MessageText("TRANSPORT: The Heavy Turbolaser Towers on the Star Destroyers must be taken out.", 5, new TV_COLOR(0.8f, 0.4f, 0.4f, 1));
+      Screen2D.MessageText("TRANSPORT: The Heavy Turbolaser Towers on the Star Destroyers must be taken out.", 5, color_transport);
     }
 
     public void Message_04_TIEs()
     {
-      Screen2D.MessageText("X-WING: We will need to worry about the TIEs too.", 5, new TV_COLOR(0.8f, 0, 0, 1));
+      Screen2D.MessageText("X-WING: We will need to worry about the TIEs too.", 5, color_xwing);
     }
 
     public void Message_05()
     {
-      Screen2D.MessageText("SOLO: We will figure something out.", 5, new TV_COLOR(0.8f, 0.8f, 0.9f, 1));
+      Screen2D.MessageText("SOLO: We will figure something out.", 5, color_solo);
     }
 
     public void Message_06()
     {
-      Screen2D.MessageText("ECHO BASE: Ion Control, standby.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("ECHO BASE: Ion Control, standby.", 5, color_echobase);
     }
 
     public void Message_07()
     {
-      Screen2D.MessageText("ECHO BASE: Fire.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("ECHO BASE: Fire.", 5, color_echobase);
     }
 
     public void Message_08()
     {
-      Screen2D.MessageText("SOLO: Here's our opportunity.", 5, new TV_COLOR(0.8f, 0.8f, 0.9f, 1));
+      Screen2D.MessageText("SOLO: Here's our opportunity.", 5, color_solo);
     }
 
     public void Message_09()
     {
-      Screen2D.MessageText("X-WING: We will take care of the fighters.", 5, new TV_COLOR(0.8f, 0, 0, 1));
+      Screen2D.MessageText("X-WING: We will take care of the fighters.", 5, color_xwing);
     }
 
     public void Message_10()
     {
-      Screen2D.MessageText("X-WING: We need someone to take out the Heavy Turbolasers.", 5, new TV_COLOR(0.8f, 0, 0, 1));
+      Screen2D.MessageText("X-WING: We need someone to take out the Heavy Turbolasers.", 5, color_xwing);
     }
 
     public void Message_11()
     {
-      Screen2D.MessageText("SOLO: I can take care of that.", 5, new TV_COLOR(0.8f, 0.8f, 0.9f, 1));
+      Screen2D.MessageText("SOLO: I can take care of that.", 5, color_solo);
     }
 
     public void Message_12()
     {
-      Screen2D.MessageText("ECHO BASE: More Star Destroyers incoming.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("ECHO BASE: More Star Destroyers incoming.", 5, color_echobase);
     }
 
     public void Message_13()
     {
-      Screen2D.MessageText("SOLO: I see them. Two Star Destroyers here coming right at us.", 5, new TV_COLOR(0.8f, 0.8f, 0.9f, 1));
+      Screen2D.MessageText("SOLO: I see them. Two Star Destroyers here coming right at us.", 5, color_solo);
     }
 
     public void Message_14()
     {
-      Screen2D.MessageText("SOLO: [Use the secondary weapon toggle to switch between front and rear deflector shields.]", 5, new TV_COLOR(0.8f, 0.8f, 0.9f, 1));
+      Screen2D.MessageText("SOLO: [Use the secondary weapon toggle to switch between front and rear deflector shields.]", 5, color_solo);
     }
 
     public void Message_15()
     {
-      Screen2D.MessageText("SOLO: We can still out-manuever them.", 5, new TV_COLOR(0.8f, 0.8f, 0.9f, 1));
+      Screen2D.MessageText("SOLO: We can still out-manuever them.", 5, color_solo);
     }
 
     public void Message_16()
     {
-      Screen2D.MessageText("SOLO: Prepare to make the jump to lightspeed.", 5, new TV_COLOR(0.8f, 0.8f, 0.9f, 1));
+      Screen2D.MessageText("SOLO: Prepare to make the jump to lightspeed.", 5, color_solo);
     }
 
     public void Message_17()
     {
-      Screen2D.MessageText("SOLO: Watch this!", 5, new TV_COLOR(0.8f, 0.8f, 0.9f, 1));
+      Screen2D.MessageText("SOLO: Watch this!", 5, color_solo);
     }
 
     public void Message_18()
     {
-      Screen2D.MessageText("SOLO: ...", 5, new TV_COLOR(0.8f, 0.8f, 0.9f, 1));
+      Screen2D.MessageText("SOLO: ...", 5, color_solo);
     }
 
     public void Message_19()
     {
-      Screen2D.MessageText("SOLO: I think we are in trouble.", 5, new TV_COLOR(0.8f, 0.8f, 0.9f, 1));
+      Screen2D.MessageText("SOLO: I think we are in trouble.", 5, color_solo);
     }
 
     public void Message_20()
     {
-      Screen2D.MessageText("C3PO: The hyperdrive modulator has been damaged, sir.", 5, new TV_COLOR(0.8f, 0.8f, 0.1f, 1));
+      Screen2D.MessageText("C3PO: The hyperdrive modulator has been damaged, sir.", 5, color_3cpo);
     }
 
     public void Message_21()
     {
-      Screen2D.MessageText("C3PO: It is impossible to jump to lightspeed.", 5, new TV_COLOR(0.8f, 0.8f, 0.1f, 1));
+      Screen2D.MessageText("C3PO: It is impossible to jump to lightspeed.", 5, color_3cpo);
     }
 
     public void Message_22()
     {
-      Screen2D.MessageText("SOLO: We are in trouble!", 5, new TV_COLOR(0.8f, 0.8f, 0.9f, 1));
+      Screen2D.MessageText("SOLO: We are in trouble!", 5, color_solo);
     }
 
     public void Message_23()
     {
-      Screen2D.MessageText("LEIA: Han, get up here!", 5, new TV_COLOR(0.8f, 0.4f, 0.4f, 1));
+      Screen2D.MessageText("LEIA: Han, get up here!", 5, color_transport);
     }
     #endregion
   }

@@ -77,7 +77,7 @@ namespace SWEndor.UI.Widgets
           float x = radar_center.x - radar_radius * dist / radar_range * (float)Math.Sin(angl * Globals.PI / 180);
           float y = radar_center.y + radar_radius * dist / radar_range * (float)Math.Cos(angl * Globals.PI / 180);
           float scale = a.Scale;
-          int scolor = a.HP_Color.GetIntColor();
+          int scolor = a.HP_Color;
 
           switch (a.TypeInfo.RenderData.RadarType)
           {

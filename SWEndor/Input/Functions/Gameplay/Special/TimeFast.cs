@@ -18,7 +18,7 @@ namespace SWEndor.Input.Functions.Gameplay.Special
       engine.Game.TimeControl.SpeedModifier = engine.Game.TimeControl.SpeedModifier.Clamp(0.01f, 10);
       engine.Screen2D.MessageSecondaryText(TextLocalization.Get(TextLocalKeys.TIME_MULT).F(engine.Game.TimeControl.SpeedModifier)
                                                       , 1.5f
-                                                      , new TV_COLOR(0.5f, 0.5f, 1, 1)
+                                                      , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_NORMAL)
                                                       , 99);
     }
   }

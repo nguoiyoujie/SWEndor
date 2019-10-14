@@ -121,7 +121,7 @@ namespace SWEndor.UI.Widgets
 
     private void Draw(ActorInfo p, float x, float y, float dist, ActorInfo target, ActorInfo prev_target)
     {
-      TV_COLOR acolor = target.Faction.Color;
+      int acolor = target.Faction.Color;
       string name = target.Name;
       TVScreen2DImmediate.Action_Begin2D();
       if (PlayerInfo.IsTorpedoMode)
@@ -134,22 +134,22 @@ namespace SWEndor.UI.Widgets
         if (m_targetBigSize > m_targetSize)
         {
           m_targetBigSize -= 25 * Engine.Game.TimeSinceRender;
-          TVScreen2DImmediate.Draw_Box(x - m_targetBigSize, y - m_targetBigSize, x + m_targetBigSize, y + m_targetBigSize, acolor.GetIntColor());
+          TVScreen2DImmediate.Draw_Box(x - m_targetBigSize, y - m_targetBigSize, x + m_targetBigSize, y + m_targetBigSize, acolor);
         }
 
         WeaponInfo weap = PlayerInfo.SecondaryWeapon.Weapon;
         if (weap != null && weap.Ammo > 0)
         {
-          TVScreen2DImmediate.Draw_FilledBox(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());
+          TVScreen2DImmediate.Draw_FilledBox(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor);
         }
         else
         {
-          TVScreen2DImmediate.Draw_Box(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());
+          TVScreen2DImmediate.Draw_Box(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor);
         }
       }
       else
       {
-        TVScreen2DImmediate.Draw_Box(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor.GetIntColor());
+        TVScreen2DImmediate.Draw_Box(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, acolor);
       }
       TVScreen2DImmediate.Action_End2D();
 
@@ -161,7 +161,7 @@ namespace SWEndor.UI.Widgets
         msg = name;
 
         TVScreen2DText.TextureFont_DrawText(msg
-          , x, y + m_targetSize + 10, acolor.GetIntColor()
+          , x, y + m_targetSize + 10, acolor
           , FontFactory.Get(Font.T10).ID
           );
       TVScreen2DText.Action_EndText();
@@ -177,8 +177,8 @@ namespace SWEndor.UI.Widgets
         TVScreen2DImmediate.Math_3DPointTo2D(t, ref x, ref y);
 
         TVScreen2DImmediate.Action_Begin2D();
-        TVScreen2DImmediate.Draw_Line(x - m_targetSize, y, x + m_targetSize, y, acolor.GetIntColor());
-        TVScreen2DImmediate.Draw_Line(x, y - m_targetSize, x, y + m_targetSize, acolor.GetIntColor());
+        TVScreen2DImmediate.Draw_Line(x - m_targetSize, y, x + m_targetSize, y, acolor);
+        TVScreen2DImmediate.Draw_Line(x, y - m_targetSize, x, y + m_targetSize, acolor);
         TVScreen2DImmediate.Action_End2D();
       }
 
@@ -197,17 +197,17 @@ namespace SWEndor.UI.Widgets
             float m2 = m_targetSizeDiamond + 5;
             if (s == target.Squad.Leader)
             {
-              TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy + m2, acolor.GetIntColor());
-              TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy - m2, acolor.GetIntColor());
-              TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy + m2, acolor.GetIntColor());
-              TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy - m2, acolor.GetIntColor());
+              TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy + m2, acolor);
+              TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy - m2, acolor);
+              TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy + m2, acolor);
+              TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy - m2, acolor);
             }
 
             m2 = m_targetSizeDiamond;
-            TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy + m2, acolor.GetIntColor());
-            TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy - m2, acolor.GetIntColor());
-            TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy + m2, acolor.GetIntColor());
-            TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy - m2, acolor.GetIntColor());
+            TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy + m2, acolor);
+            TVScreen2DImmediate.Draw_Line(sx - m2, sy, sx, sy - m2, acolor);
+            TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy + m2, acolor);
+            TVScreen2DImmediate.Draw_Line(sx + m2, sy, sx, sy - m2, acolor);
           }
         }
         TVScreen2DImmediate.Action_End2D();

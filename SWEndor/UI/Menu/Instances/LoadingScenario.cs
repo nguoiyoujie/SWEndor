@@ -14,8 +14,8 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement LoadingText = new SelectionElement();
     List<float> Vals = new List<float>();
     List<SelectionElement> Squares = new List<SelectionElement>();
-    TV_COLOR SquareColor1 = new TV_COLOR(0, 0, 0, 0.7f);
-    TV_COLOR SquareColor2 = new TV_COLOR(0.8f, 0.8f, 0, 1);
+    int SquareColor1 = ColorLocalization.Get(ColorLocalKeys.GAME_LOAD_DARK);
+    int SquareColor2 = ColorLocalization.Get(ColorLocalKeys.GAME_LOAD_LIGHT);
 
     GameScenarioBase SelectedScenario = null;
     ActorTypeInfo SelectedActorTypeInfo = null;
@@ -32,7 +32,7 @@ namespace SWEndor.UI.Menu.Pages
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
       Cover.HighlightBoxWidth = owner.ScreenSize.x;
       Cover.HighlightBoxHeight = owner.ScreenSize.y;
-      Cover.UnHighlightBoxPositionColor = new TV_COLOR(0, 0, 0, 0.3f);
+      Cover.UnHighlightBoxColor = ColorLocalization.Get(ColorLocalKeys.UI_UNHIGHLIGHT_BACKGROUND);
 
       Engine.Screen2D.LoadingTextLines = new List<string> { "" };
       LoadingText.Text = PrintLoadingText();
@@ -47,7 +47,7 @@ namespace SWEndor.UI.Menu.Pages
           sqi.HighlightBoxPosition = new TV_2DVECTOR(owner.ScreenSize.x * (i + 0.005f), owner.ScreenSize.y * (j + 0.005f));
           sqi.HighlightBoxWidth = owner.ScreenSize.x * (di - 0.01f);
           sqi.HighlightBoxHeight = owner.ScreenSize.y * (dj - 0.01f);
-          sqi.UnHighlightBoxPositionColor = SquareColor1;
+          sqi.UnHighlightBoxColor = SquareColor1;
           Squares.Add(sqi);
           Vals.Add((float)Engine.Random.NextDouble());
         }
@@ -103,10 +103,10 @@ namespace SWEndor.UI.Menu.Pages
           Vals[i] -= Engine.Game.TimeSinceRender;
           if (Vals[i] < 0)
           {
-            if (Squares[i].UnHighlightBoxPositionColor.GetIntColor() == SquareColor1.GetIntColor())
-              Squares[i].UnHighlightBoxPositionColor = SquareColor2;
+            if (Squares[i].UnHighlightBoxColor == SquareColor1)
+              Squares[i].UnHighlightBoxColor = SquareColor2;
             else
-              Squares[i].UnHighlightBoxPositionColor = SquareColor1;
+              Squares[i].UnHighlightBoxColor = SquareColor1;
 
             Vals[i] += (float)Engine.Random.NextDouble();
           }

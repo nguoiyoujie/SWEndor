@@ -52,7 +52,7 @@ namespace SWEndor.UI.Widgets
       if (p == null || !p.Active)
         return;
 
-      int icolor = pcolor.GetIntColor();
+      int icolor = pcolor;
       bool active = false;
       bool showcircle = true;
       if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.RADAR) == SystemState.ACTIVE)
@@ -89,7 +89,7 @@ namespace SWEndor.UI.Widgets
         return projColor;
 
       else if (actor.Faction != null)
-        return actor.Faction.Color.GetIntColor();
+        return actor.Faction.Color;
 
       else
         return whitColor;

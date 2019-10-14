@@ -19,7 +19,7 @@ namespace SWEndor
         list = new Dictionary<string, FactionInfo>();
       }
 
-      public static FactionInfo Add(string name, TV_COLOR color)
+      public static FactionInfo Add(string name, int color)
       {
         if (!list.ContainsKey(name))
           list.Add(name, new FactionInfo(name, color));
@@ -27,9 +27,9 @@ namespace SWEndor
       }
     }
 
-    public static FactionInfo Neutral = new FactionInfo("Neutral", new TV_COLOR(1, 1, 1, 1));
+    public static FactionInfo Neutral = new FactionInfo("Neutral", ColorLocalization.Get(ColorLocalKeys.WHITE));
 
-    private FactionInfo(string name, TV_COLOR color)
+    private FactionInfo(string name, int color)
     {
       Name = name;
       Color = color;
@@ -41,7 +41,7 @@ namespace SWEndor
     }
 
     public readonly string Name;
-    public TV_COLOR Color = new TV_COLOR(1,1,1,1);
+    public int Color = ColorLocalization.Get(ColorLocalKeys.WHITE);
     public bool AutoAI = false;
 
     public int WingLimit = -1;

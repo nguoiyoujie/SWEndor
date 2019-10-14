@@ -80,7 +80,10 @@ namespace SWEndor
       Score += victim.TypeInfo.ScoreData.PerStrength * damage;
 
       if (engine.PlayerInfo.Actor != null)
-        engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.ENEMY_HIT), 0.5f, engine.PlayerInfo.FactionColor, -99);
+        engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.ENEMY_HIT)
+                                         , 0.5f
+                                         , engine.PlayerInfo.FactionColor
+                                         , -99);
     }
 
     public void AddKill(Engine engine, ActorInfo victim)
@@ -93,7 +96,9 @@ namespace SWEndor
         engine.GameScenarioManager.Scenario.Mood = MoodStates.DESTROY_SHIP;
 
       if (engine.PlayerInfo.Actor != null)
-        engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.ENEMY_DESTROYED).F(victim.Name), 2, new TV_COLOR(0.5f, 0.5f, 1, 1));
+        engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.ENEMY_DESTROYED).F(victim.Name)
+                                         , 2
+                                         , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_NORMAL));
 
       Increment(KillsByName, victim.Name, 1);
       Score += victim.TypeInfo.ScoreData.DestroyBonus;

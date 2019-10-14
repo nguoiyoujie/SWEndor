@@ -141,9 +141,9 @@ namespace SWEndor.Scenarios
         Manager.AddEvent(Game.GameTime + 45f, Empire_SpawnStatics);
       }
 
-      Manager.Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1);
-      Manager.Line2Color = new TV_COLOR(1f, 1f, 0.3f, 1);
-      Manager.Line3Color = new TV_COLOR(0.7f, 1f, 0.3f, 1);
+      Manager.Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
+      Manager.Line2Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
+      Manager.Line3Color = new TV_COLOR(0.7f, 1f, 0.3f, 1).GetIntColor();
 
       MainAllyFaction.WingLimit = 75;
 
@@ -154,11 +154,11 @@ namespace SWEndor.Scenarios
     {
       base.LoadFactions();
 
-      FactionInfo.Factory.Add("Rebels", new TV_COLOR(0.8f, 0, 0, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Rebels_Wedge", new TV_COLOR(0.8f, 0.4f, 0.4f, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Rebels_Falcon", new TV_COLOR(0.8f, 0.8f, 0.8f, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Empire", new TV_COLOR(0, 0.8f, 0, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Empire_Advanced", new TV_COLOR(0.4f, 0.8f, 0.4f, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels", new TV_COLOR(0.8f, 0, 0, 1).GetIntColor()).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels_Wedge", new TV_COLOR(0.8f, 0.4f, 0.4f, 1).GetIntColor()).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels_Falcon", new TV_COLOR(0.8f, 0.8f, 0.8f, 1).GetIntColor()).AutoAI = true;
+      FactionInfo.Factory.Add("Empire", new TV_COLOR(0, 0.8f, 0, 1).GetIntColor()).AutoAI = true;
+      FactionInfo.Factory.Add("Empire_Advanced", new TV_COLOR(0.4f, 0.8f, 0.4f, 1).GetIntColor()).AutoAI = true;
 
       FactionInfo.Factory.Get("Rebels").Allies.Add(FactionInfo.Factory.Get("Rebels_Wedge"));
       FactionInfo.Factory.Get("Rebels").Allies.Add(FactionInfo.Factory.Get("Rebels_Falcon"));
@@ -2041,144 +2041,151 @@ namespace SWEndor.Scenarios
     #endregion
 
     #region Text
+    int color_lando = new TV_COLOR(0.8f, 0.8f, 0.8f, 1).GetIntColor();
+    int color_wedge = new TV_COLOR(0.8f, 0.4f, 0.4f, 1).GetIntColor();
+    int color_ywing = new TV_COLOR(0.6f, 0.6f, 0.6f, 1).GetIntColor();
+    int color_bwing = new TV_COLOR(0.6f, 0.6f, 0.9f, 1).GetIntColor();
+    int color_awing = new TV_COLOR(0.4f, 0.8f, 0.4f, 1).GetIntColor();
+    int color_ackbar = new TV_COLOR(0.2f, 0.4f, 1, 1).GetIntColor();
+
     public void Message_01_AllWingsReport()
     {
-      Screen2D.MessageText("MILLIENNIUM FALCON: All wings report in.", 5, new TV_COLOR(0.8f, 0.8f, 0.8f, 1));
+      Screen2D.MessageText("MILLIENNIUM FALCON: All wings report in.", 5, color_lando);
     }
 
     public void Message_02_RedLeader()
     {
-      Screen2D.MessageText("X-WING (WEDGE): Red Leader standing by.", 5, new TV_COLOR(0.8f, 0.4f, 0.4f, 1));
+      Screen2D.MessageText("X-WING (WEDGE): Red Leader standing by.", 5, color_wedge);
     }
 
     public void Message_03_GoldLeader()
     {
-      Screen2D.MessageText("Y-WING: Gray Leader standing by.", 5, new TV_COLOR(0.6f, 0.6f, 0.6f, 1));
+      Screen2D.MessageText("Y-WING: Gray Leader standing by.", 5, color_ywing);
     }
 
     public void Message_04_BlueLeader()
     {
-      Screen2D.MessageText("B-WING: Blue Leader standing by.", 5, new TV_COLOR(0.6f, 0.6f, 0.9f, 1));
+      Screen2D.MessageText("B-WING: Blue Leader standing by.", 5, color_bwing);
     }
 
     public void Message_05_GreenLeader()
     {
-      Screen2D.MessageText("A-WING: Green Leader standing by.", 5, new TV_COLOR(0.4f, 0.8f, 0.4f, 1));
+      Screen2D.MessageText("A-WING: Green Leader standing by.", 5, color_awing);
     }
 
     public void Message_06_Force()
     {
-      Screen2D.MessageText("MON CALAMARI (HOME ONE): May the Force be with us.", 5, new TV_COLOR(0.2f, 0.4f, 1, 1));
+      Screen2D.MessageText("MON CALAMARI (HOME ONE): May the Force be with us.", 5, color_ackbar);
     }
 
     public void Message_07_Break()
     {
-      Screen2D.MessageText("MILLIENNIUM FALCON: Break off the attack!", 5, new TV_COLOR(0.8f, 0.8f, 0.8f, 1));
+      Screen2D.MessageText("MILLIENNIUM FALCON: Break off the attack!", 5, color_lando);
     }
 
     public void Message_08_Break()
     {
-      Screen2D.MessageText("MILLIENNIUM FALCON: The shield's still up!", 5, new TV_COLOR(0.8f, 0.8f, 0.8f, 1));
+      Screen2D.MessageText("MILLIENNIUM FALCON: The shield's still up!", 5, color_lando);
     }
 
     public void Message_09_Conf()
     {
-      Screen2D.MessageText("X-WING (WEDGE): I get no reading, are you sure?", 5, new TV_COLOR(0.8f, 0.4f, 0.4f, 1));
+      Screen2D.MessageText("X-WING (WEDGE): I get no reading, are you sure?", 5, color_wedge);
     }
 
     public void Message_10_Break()
     {
-      Screen2D.MessageText("MILLIENNIUM FALCON: All wings, pull up!", 5, new TV_COLOR(0.8f, 0.8f, 0.8f, 1));
+      Screen2D.MessageText("MILLIENNIUM FALCON: All wings, pull up!", 5, color_lando);
     }
 
     public void Message_11_Evasive()
     {
-      Screen2D.MessageText("MON CALAMARI (HOME ONE): Take evasive action!", 5, new TV_COLOR(0.2f, 0.4f, 1, 1));
+      Screen2D.MessageText("MON CALAMARI (HOME ONE): Take evasive action!", 5, color_ackbar);
     }
 
     public void Message_12_Trap()
     {
-      Screen2D.MessageText("MON CALAMARI (HOME ONE): It's a trap!", 5, new TV_COLOR(0.2f, 0.4f, 1, 1));
+      Screen2D.MessageText("MON CALAMARI (HOME ONE): It's a trap!", 5, color_ackbar);
     }
 
     public void Message_13_Fighters()
     {
-      Screen2D.MessageText("X-WING (WEDGE): Watch out for enemy fighters.", 5, new TV_COLOR(0.8f, 0.4f, 0.4f, 1));
+      Screen2D.MessageText("X-WING (WEDGE): Watch out for enemy fighters.", 5, color_wedge);
     }
 
     public void Message_14_Interceptors()
     {
-      Screen2D.MessageText("X-WING (WEDGE): TIE Interceptors inbound.", 5, new TV_COLOR(0.8f, 0.4f, 0.4f, 1));
+      Screen2D.MessageText("X-WING (WEDGE): TIE Interceptors inbound.", 5, color_wedge);
     }
 
     public void Message_15_Bombers()
     {
-      Screen2D.MessageText("MON CALAMARI (HOME ONE): We have bombers inbound. Keep them away from our cruisers!", 5, new TV_COLOR(0.2f, 0.4f, 1, 1));
+      Screen2D.MessageText("MON CALAMARI (HOME ONE): We have bombers inbound. Keep them away from our cruisers!", 5, color_ackbar);
     }
 
     public void Message_20_DeathStar()
     {
-      Screen2D.MessageText("MILLIENNIUM FALCON: That blast came from the Death Star...", 5, new TV_COLOR(0.8f, 0.8f, 0.8f, 1));
+      Screen2D.MessageText("MILLIENNIUM FALCON: That blast came from the Death Star...", 5, color_lando);
     }
 
     public void Message_21_Close()
     {
-      Screen2D.MessageText("MILLIENNIUM FALCON: Get us close to those Imperial Star Destroyers.", 5, new TV_COLOR(0.8f, 0.8f, 0.8f, 1));
+      Screen2D.MessageText("MILLIENNIUM FALCON: Get us close to those Imperial Star Destroyers.", 5, color_lando);
     }
 
     public void Message_22_PointBlank()
     {
-      Screen2D.MessageText("MILLIENNIUM FALCON: Closer! Get us closer, and engage them at point blank range.", 5, new TV_COLOR(0.8f, 0.8f, 0.8f, 1));
+      Screen2D.MessageText("MILLIENNIUM FALCON: Closer! Get us closer, and engage them at point blank range.", 5, color_lando);
     }
 
     public void Message_23_Take()
     {
-      Screen2D.MessageText("MILLIENNIUM FALCON: If they fire, we might even take a few of them with us.", 5, new TV_COLOR(0.8f, 0.8f, 0.8f, 1));
+      Screen2D.MessageText("MILLIENNIUM FALCON: If they fire, we might even take a few of them with us.", 5, color_lando);
     }
 
     public void Message_30_ShieldDown()
     {
-      Screen2D.MessageText("MON CALAMARI (HOME ONE): The shield is down.", 5, new TV_COLOR(0.2f, 0.4f, 1, 1));
+      Screen2D.MessageText("MON CALAMARI (HOME ONE): The shield is down.", 5, color_ackbar);
     }
 
     public void Message_31_ResumeAttack()
     {
-      Screen2D.MessageText("MON CALAMARI (HOME ONE): Commence your attack on the Death Star's main reactor", 5, new TV_COLOR(0.2f, 0.4f, 1, 1));
+      Screen2D.MessageText("MON CALAMARI (HOME ONE): Commence your attack on the Death Star's main reactor", 5, color_ackbar);
     }
 
     public void Message_32_Han()
     {
-      Screen2D.MessageText("MILLIENNIUM FALCON: I knew Han can do it!", 5, new TV_COLOR(0.8f, 0.8f, 0.8f, 1));
+      Screen2D.MessageText("MILLIENNIUM FALCON: I knew Han can do it!", 5, color_lando);
     }
 
     public void Message_33_Han()
     {
-      Screen2D.MessageText("MILLIENNIUM FALCON: Wedge, follow me.", 5, new TV_COLOR(0.8f, 0.8f, 0.8f, 1));
+      Screen2D.MessageText("MILLIENNIUM FALCON: Wedge, follow me.", 5, color_lando);
     }
 
     public void Message_34_Han()
     {
-      Screen2D.MessageText("X-WING (WEDGE): Copy, Gold Leader.", 5, new TV_COLOR(0.8f, 0.4f, 0.4f, 1));
+      Screen2D.MessageText("X-WING (WEDGE): Copy, Gold Leader.", 5, color_wedge);
     }
 
     public void Message_40_Focus()
     {
-      Screen2D.MessageText("MON CALAMARI (HOME ONE): Focus all firepower on that Super Star Destroyer!", 5, new TV_COLOR(0.2f, 0.4f, 1, 1));
+      Screen2D.MessageText("MON CALAMARI (HOME ONE): Focus all firepower on that Super Star Destroyer!", 5, color_ackbar);
     }
 
     public void Message_90_LostWedge()
     {
-      Screen2D.MessageText("X-WING (WEDGE): I can't hold them!", 5, new TV_COLOR(0.8f, 0.4f, 0.4f, 1));
+      Screen2D.MessageText("X-WING (WEDGE): I can't hold them!", 5, color_wedge);
     }
 
     public void Message_91_LostFalcon()
     {
-      Screen2D.MessageText("MILLIENNIUM FALCON: I can't hold them!", 5, new TV_COLOR(0.8f, 0.8f, 0.8f, 1));
+      Screen2D.MessageText("MILLIENNIUM FALCON: I can't hold them!", 5, color_lando);
     }
 
     public void Message_92_LostHomeOne()
     {
-      Screen2D.MessageText("MON CALAMARI (HOME ONE): We have no chance...", 15, new TV_COLOR(0.2f, 0.4f, 1, 1));
+      Screen2D.MessageText("MON CALAMARI (HOME ONE): We have no chance...", 15, color_ackbar);
     }
 
     #endregion
