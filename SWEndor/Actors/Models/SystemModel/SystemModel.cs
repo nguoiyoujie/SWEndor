@@ -68,7 +68,7 @@ namespace SWEndor.Actors.Models
         //if (p == SystemPart.COCKPIT) //critical
         //  actor.SetState_Dying();
 
-        if (actor.IsPlayer)
+        if (actor.IsPlayer && !actor.IsDyingOrDead)
           engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.SUBSYSTEM_LOST).F(p.ToString().Replace('_', ' ')), 3, new TV_COLOR(1, 0.2f, 0.2f, 1));
       }
     }
