@@ -1,4 +1,5 @@
-﻿using SWEndor.ActorTypes.Components;
+﻿using MTV3D65;
+using SWEndor.ActorTypes.Components;
 using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Instances
@@ -13,7 +14,7 @@ namespace SWEndor.ActorTypes.Instances
         new ExplodeData("EXPW02", 1, 1, ExplodeTrigger.ON_DEATH),
       };
 
-      MeshData = MeshDataDecorator.CreateAlphaTexturedWall(Name, 20000, "deathstar/deathstar.bmp", "deathstar/deathstaralpha.bmp");
+      MeshData = MeshDataDecorator.CreateAlphaTexturedWall(Name, 20000, "deathstar/deathstar.bmp", "deathstar/deathstaralpha.bmp", CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
       TimedLifeData = new TimedLifeData(false, 5);
     }
   }

@@ -1,4 +1,5 @@
-﻿using SWEndor.Actors;
+﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using SWEndor.Models;
@@ -19,7 +20,7 @@ namespace SWEndor.ActorTypes.Instances
 
       int[] death = new int[] { 1, 10, 15, 16, 20, 21, 22, 23, 27, 28, 30, 31, 34, 35, 36 };
 
-      MeshData = MeshDataDecorator.CreateAlphaTexturedFlickerWall(Name, 20000, "deathstar/deathstar2.bmp", "deathstar/deathstar2b.jpg", "deathstar/deathstar2alpha.bmp", 32, death, ref texanimframes);
+      MeshData = MeshDataDecorator.CreateAlphaTexturedFlickerWall(Name, 20000, "deathstar/deathstar2.bmp", "deathstar/deathstar2b.jpg", "deathstar/deathstar2alpha.bmp", CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, 32, death, ref texanimframes);
       TimedLifeData = new TimedLifeData(false, 5);
 
       //AddOns = new AddOnInfo[] { new AddOnInfo("DSLSRSRC", new TV_3DVECTOR(-1300, 2000, -0.04f * size), new TV_3DVECTOR(0, 0, 0), true) };

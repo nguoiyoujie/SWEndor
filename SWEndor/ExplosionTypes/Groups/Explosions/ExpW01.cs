@@ -1,4 +1,5 @@
-﻿using SWEndor.ActorTypes.Components;
+﻿using MTV3D65;
+using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using SWEndor.Explosions;
 using System.IO;
@@ -15,7 +16,7 @@ namespace SWEndor.ExplosionTypes.Instances
       RenderData.RadarSize = 0;
       RenderData.CullDistance = -1;
 
-      MeshData = MeshDataDecorator.CreateHorizon(Name, 50, Path.Combine("explosion", "wave", @"tex0000.jpg"));
+      MeshData = MeshDataDecorator.CreateHorizon(Name, 50, Path.Combine("explosion", "wave", @"tex0000.jpg"), CONST_TV_BLENDINGMODE.TV_BLEND_ADDALPHA);
     }
 
     public override void ProcessState(Engine engine, ExplosionInfo ainfo)

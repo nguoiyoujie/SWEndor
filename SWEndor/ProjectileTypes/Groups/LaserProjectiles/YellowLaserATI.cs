@@ -1,4 +1,5 @@
-﻿using SWEndor.ActorTypes.Components;
+﻿using MTV3D65;
+using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ProjectileTypes.Instances
 {
@@ -13,7 +14,7 @@ namespace SWEndor.ProjectileTypes.Instances
       CombatData.ImpactCloseEnoughDistance = 35;
       CombatData.IsLaser = false; // not the same speed
 
-      MeshData = new MeshData(Name, @"projectiles\yellow_laser.x", 1, "Laser");
+      MeshData = new MeshData(Name, @"projectiles\yellow_laser.x", 1, CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, "Laser");
     }
   }
 }

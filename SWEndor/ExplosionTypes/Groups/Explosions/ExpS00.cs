@@ -16,7 +16,7 @@ namespace SWEndor.ExplosionTypes.Instances
 
       atlasX = 4;
       atlasY = 2;
-      MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Name, 10, "explosion/small/tex.jpg", atlasX, atlasY);
+      MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Name, 10, "explosion/small/tex.jpg", MTV3D65.CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, atlasX, atlasY);
 
       InitialSoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.ExpSm, 500) };
     }

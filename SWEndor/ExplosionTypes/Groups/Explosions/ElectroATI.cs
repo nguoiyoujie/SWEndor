@@ -1,4 +1,5 @@
-﻿using SWEndor.Actors;
+﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using SWEndor.Explosions;
@@ -17,7 +18,7 @@ namespace SWEndor.ExplosionTypes.Instances
 
       atlasX = 2;
       atlasY = 2;
-      MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Name, 40, "electro/tex.jpg", atlasX, atlasY);
+      MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Name, 40, "electro/tex.jpg", CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, atlasX, atlasY);
     }
 
     private static Action<ExplosionInfo> persist = (a) =>

@@ -1,4 +1,5 @@
-﻿using SWEndor.ActorTypes.Components;
+﻿using MTV3D65;
+using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -6,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal Yavin4ATI(Factory owner) : base(owner, "YAVIN4", "Yavin4")
     {
-      MeshData = MeshDataDecorator.CreateAlphaTexturedWall(Name, 50000, "planets/yavin4.bmp", "planets/yavin4alpha.bmp");
+      MeshData = MeshDataDecorator.CreateAlphaTexturedWall(Name, 50000, "planets/yavin4.bmp", "planets/yavin4alpha.bmp", CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
     }
   }
 }

@@ -23,7 +23,7 @@ namespace SWEndor.ProjectileTypes.Instances
       CombatData.ImpactCloseEnoughDistance = 75;
       CombatData.IsLaser = false; // not the same speed
 
-      MeshData = new MeshData(Name, @"projectiles\ion_sm_laser.x", 1, "Laser");
+      MeshData = new MeshData(Name, @"projectiles\ion_sm_laser.x", 1, CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, "Laser");
     }
 
     public override void ProcessHit(Engine engine, ProjectileInfo owner, ActorInfo hitby, TV_3DVECTOR impact)
