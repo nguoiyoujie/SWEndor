@@ -8819,7 +8819,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0005.BMP";
+                    "TEX0005.dds";
                 }
             }
 
@@ -8832,7 +8832,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0006.BMP";
+                    "TEX0006.dds";
                 }
             }
 
@@ -8845,7 +8845,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0004.BMP";
+                    "TEX0004.dds";
                 }
             }
 
@@ -8858,7 +8858,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0003.BMP";
+                    "TEX0003.dds";
                 }
             }
 
@@ -8871,7 +8871,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0001.BMP";
+                    "TEX0001.dds";
                 }
             }
 
@@ -8884,7 +8884,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0002.BMP";
+                    "TEX0002.dds";
                 }
             }
 
@@ -8897,7 +8897,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0042.BMP";
+                    "TEX0042.dds";
                 }
             }
 
@@ -8910,7 +8910,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0040.BMP";
+                    "TEX0040.dds";
                 }
             }
 
@@ -8923,7 +8923,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0047.BMP";
+                    "TEX0047.dds";
                 }
             }
 
@@ -8936,7 +8936,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0048.BMP";
+                    "TEX0048.dds";
                 }
             }
 
@@ -8949,7 +8949,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0049.BMP";
+                    "TEX0049.dds";
                 }
             }
 
@@ -8962,7 +8962,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0050.BMP";
+                    "TEX0050.dds";
                 }
             }
 
@@ -8975,7 +8975,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0008.BMP";
+                    "TEX0008.dds";
                 }
             }
 
@@ -8988,7 +8988,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0010.BMP";
+                    "TEX0010.dds";
                 }
             }
 
@@ -9001,7 +9001,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0009.BMP";
+                    "TEX0009.dds";
                 }
             }
 
@@ -9014,7 +9014,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0054.BMP";
+                    "TEX0054.dds";
                 }
             }
 
@@ -9027,7 +9027,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0053.BMP";
+                    "TEX0053.dds";
                 }
             }
 
@@ -9040,7 +9040,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0052.BMP";
+                    "TEX0052.dds";
                 }
             }
 
@@ -9053,7 +9053,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0028.BMP";
+                    "TEX0028.dds";
                 }
             }
 
@@ -9066,7 +9066,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0007.BMP";
+                    "TEX0007.dds";
                 }
             }
 
@@ -9079,7 +9079,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0000.BMP";
+                    "TEX0000.dds";
                 }
             }
 
@@ -9092,7 +9092,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0031.BMP";
+                    "TEX0031.dds";
                 }
             }
 
@@ -9105,7 +9105,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0055.BMP";
+                    "TEX0055.dds";
                 }
             }
 
@@ -9118,7 +9118,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0033.BMP";
+                    "TEX0033.dds";
                 }
             }
 
@@ -9131,7 +9131,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0030.BMP";
+                    "TEX0030.dds";
                 }
             }
 
@@ -9144,7 +9144,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0046.BMP";
+                    "TEX0046.dds";
                 }
             }
 
@@ -9157,7 +9157,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0012.BMP";
+                    "TEX0012.dds";
                 }
             }
 
@@ -9170,7 +9170,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0011.BMP";
+                    "TEX0011.dds";
                 }
             }
 
@@ -9183,7 +9183,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0013.BMP";
+                    "TEX0013.dds";
                 }
             }
 
@@ -9196,7 +9196,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0014.BMP";
+                    "TEX0014.dds";
                 }
             }
 
@@ -9209,7 +9209,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0017.BMP";
+                    "TEX0017.dds";
                 }
             }
 
@@ -9222,7 +9222,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0016.BMP";
+                    "TEX0016.dds";
                 }
             }
 
@@ -9235,7 +9235,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0018.BMP";
+                    "TEX0018.dds";
                 }
             }
 
@@ -9248,7 +9248,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0019.BMP";
+                    "TEX0019.dds";
                 }
             }
 
@@ -9261,7 +9261,7 @@ Frame corellian_farFrame
 
                 TextureFileName
                 {
-                    "TEX0015.BMP";
+                    "TEX0015.dds";
                 }
             }
         }

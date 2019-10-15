@@ -2236,7 +2236,7 @@ Frame tie_right_left_wing_cabFrame
 
                 TextureFileName
                 {
-                    "TEX001.BMP";
+                    "TEX001.dds";
                 }
             }
         }

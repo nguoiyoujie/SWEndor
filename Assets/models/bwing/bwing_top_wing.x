@@ -5465,7 +5465,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0018.BMP";
+                    "TEX0018.dds";
                 }
             }
 
@@ -5478,7 +5478,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0026.BMP";
+                    "TEX0026.dds";
                 }
             }
 
@@ -5491,7 +5491,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0021.BMP";
+                    "TEX0021.dds";
                 }
             }
 
@@ -5504,7 +5504,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0022.BMP";
+                    "TEX0022.dds";
                 }
             }
 
@@ -5517,7 +5517,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0023.BMP";
+                    "TEX0023.dds";
                 }
             }
 
@@ -5530,7 +5530,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0027.BMP";
+                    "TEX0027.dds";
                 }
             }
 
@@ -5543,7 +5543,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0028.BMP";
+                    "TEX0028.dds";
                 }
             }
 
@@ -5556,7 +5556,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0001.BMP";
+                    "TEX0001.dds";
                 }
             }
 
@@ -5569,7 +5569,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0030.BMP";
+                    "TEX0030.dds";
                 }
             }
 
@@ -5582,7 +5582,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0029.BMP";
+                    "TEX0029.dds";
                 }
             }
 
@@ -5595,7 +5595,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0020.BMP";
+                    "TEX0020.dds";
                 }
             }
 
@@ -5608,7 +5608,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0031.BMP";
+                    "TEX0031.dds";
                 }
             }
 
@@ -5621,7 +5621,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0032.BMP";
+                    "TEX0032.dds";
                 }
             }
 
@@ -5634,7 +5634,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0032.BMP";
+                    "TEX0032.dds";
                 }
             }
 
@@ -5647,7 +5647,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0030.BMP";
+                    "TEX0030.dds";
                 }
             }
 
@@ -5660,7 +5660,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0033.BMP";
+                    "TEX0033.dds";
                 }
             }
 
@@ -5673,7 +5673,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0034.BMP";
+                    "TEX0034.dds";
                 }
             }
 
@@ -5686,7 +5686,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0034.BMP";
+                    "TEX0034.dds";
                 }
             }
 
@@ -5699,7 +5699,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0000.BMP";
+                    "TEX0000.dds";
                 }
             }
 
@@ -5712,7 +5712,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0001.BMP";
+                    "TEX0001.dds";
                 }
             }
 
@@ -5725,7 +5725,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0003.BMP";
+                    "TEX0003.dds";
                 }
             }
 
@@ -5738,7 +5738,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0011.BMP";
+                    "TEX0011.dds";
                 }
             }
 
@@ -5751,7 +5751,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0013.BMP";
+                    "TEX0013.dds";
                 }
             }
 
@@ -5764,7 +5764,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0016.BMP";
+                    "TEX0016.dds";
                 }
             }
 
@@ -5777,7 +5777,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0017.BMP";
+                    "TEX0017.dds";
                 }
             }
 
@@ -5790,7 +5790,7 @@ Frame bwing_top_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0015.BMP";
+                    "TEX0015.dds";
                 }
             }
         }

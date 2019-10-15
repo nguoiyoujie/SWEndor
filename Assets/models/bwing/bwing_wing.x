@@ -771,7 +771,7 @@ Frame bwing_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0001.BMP";
+                    "TEX0001.dds";
                 }
             }
 
@@ -784,7 +784,7 @@ Frame bwing_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0013.BMP";
+                    "TEX0013.dds";
                 }
             }
 
@@ -797,7 +797,7 @@ Frame bwing_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0012.BMP";
+                    "TEX0012.dds";
                 }
             }
 
@@ -810,7 +810,7 @@ Frame bwing_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0011.BMP";
+                    "TEX0011.dds";
                 }
             }
 
@@ -823,7 +823,7 @@ Frame bwing_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0009.BMP";
+                    "TEX0009.dds";
                 }
             }
 
@@ -836,7 +836,7 @@ Frame bwing_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0007.BMP";
+                    "TEX0007.dds";
                 }
             }
 
@@ -849,7 +849,7 @@ Frame bwing_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0008.BMP";
+                    "TEX0008.dds";
                 }
             }
         }

@@ -6393,7 +6393,7 @@ Frame mclFrame
 
                 TextureFileName
                 {
-                    "TEX0004.BMP";
+                    "TEX0004.dds";
                 }
             }
 
@@ -6406,7 +6406,7 @@ Frame mclFrame
 
                 TextureFileName
                 {
-                    "TEX0019.BMP";
+                    "TEX0019.dds";
                 }
             }
 
@@ -6419,7 +6419,7 @@ Frame mclFrame
 
                 TextureFileName
                 {
-                    "TEX0019.BMP";
+                    "TEX0019.dds";
                 }
             }
 
@@ -6432,7 +6432,7 @@ Frame mclFrame
 
                 TextureFileName
                 {
-                    "TEX0014.BMP";
+                    "TEX0014.dds";
                 }
             }
 
@@ -6445,7 +6445,7 @@ Frame mclFrame
 
                 TextureFileName
                 {
-                    "TEX0020.BMP";
+                    "TEX0020.dds";
                 }
             }
 
@@ -6458,7 +6458,7 @@ Frame mclFrame
 
                 TextureFileName
                 {
-                    "TEX0028.BMP";
+                    "TEX0028.dds";
                 }
             }
 
@@ -6471,7 +6471,7 @@ Frame mclFrame
 
                 TextureFileName
                 {
-                    "TEX0015.BMP";
+                    "TEX0015.dds";
                 }
             }
         }

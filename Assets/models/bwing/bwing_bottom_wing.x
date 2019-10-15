@@ -1796,7 +1796,7 @@ Frame bwing_bottom_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0019.BMP";
+                    "TEX0019.dds";
                 }
             }
 
@@ -1809,7 +1809,7 @@ Frame bwing_bottom_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0001.BMP";
+                    "TEX0001.dds";
                 }
             }
 
@@ -1822,7 +1822,7 @@ Frame bwing_bottom_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0014.BMP";
+                    "TEX0014.dds";
                 }
             }
 
@@ -1835,7 +1835,7 @@ Frame bwing_bottom_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0011.BMP";
+                    "TEX0011.dds";
                 }
             }
 
@@ -1848,7 +1848,7 @@ Frame bwing_bottom_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0024.BMP";
+                    "TEX0024.dds";
                 }
             }
 
@@ -1861,7 +1861,7 @@ Frame bwing_bottom_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0016.BMP";
+                    "TEX0016.dds";
                 }
             }
 
@@ -1874,7 +1874,7 @@ Frame bwing_bottom_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0013.BMP";
+                    "TEX0013.dds";
                 }
             }
 
@@ -1887,7 +1887,7 @@ Frame bwing_bottom_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0011.BMP";
+                    "TEX0011.dds";
                 }
             }
 
@@ -1900,7 +1900,7 @@ Frame bwing_bottom_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0017.BMP";
+                    "TEX0017.dds";
                 }
             }
 
@@ -1913,7 +1913,7 @@ Frame bwing_bottom_wingFrame
 
                 TextureFileName
                 {
-                    "TEX0025.BMP";
+                    "TEX0025.dds";
                 }
             }
         }

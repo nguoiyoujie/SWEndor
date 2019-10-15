@@ -124,7 +124,7 @@ Frame transport_box4Frame
 
                 TextureFileName
                 {
-                    "TEX0061.bmp";
+                    "TEX0061.dds";
                 }
             }
         }

@@ -2375,7 +2375,7 @@ Frame tie_interceptor_right_left_wing_cabFrame
 
                 TextureFileName
                 {
-                    "TEX000.BMP";
+                    "TEX000.dds";
                 }
             }
         }

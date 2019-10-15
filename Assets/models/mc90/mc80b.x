@@ -44560,7 +44560,7 @@ Frame mc80bFrame
 
                 TextureFileName
                 {
-                    "TEX0019.BMP";
+                    "TEX0019.dds";
                 }
             }
 
@@ -44573,7 +44573,7 @@ Frame mc80bFrame
 
                 TextureFileName
                 {
-                    "TEX0030.BMP";
+                    "TEX0030.dds";
                 }
             }
 
@@ -44586,7 +44586,7 @@ Frame mc80bFrame
 
                 TextureFileName
                 {
-                    "TEX0028.BMP";
+                    "TEX0028.dds";
                 }
             }
 
@@ -44599,7 +44599,7 @@ Frame mc80bFrame
 
                 TextureFileName
                 {
-                    "TEX0026.BMP";
+                    "TEX0026.dds";
                 }
             }
         }

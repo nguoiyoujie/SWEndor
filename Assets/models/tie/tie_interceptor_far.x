@@ -988,7 +988,7 @@ Frame tie_interceptor_farFrame
 
                 TextureFileName
                 {
-                    "TEX001.BMP";
+                    "TEX001.dds";
                 }
             }
         }

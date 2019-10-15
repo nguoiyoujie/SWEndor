@@ -99000,7 +99000,7 @@ Frame nebulonb_farFrame
 
                 TextureFileName
                 {
-                    "TEX0002.bmp";
+                    "TEX0002.dds";
                 }
             }
 
@@ -99013,7 +99013,7 @@ Frame nebulonb_farFrame
 
                 TextureFileName
                 {
-                    "TEX0004.bmp";
+                    "TEX0004.dds";
                 }
             }
 
@@ -99026,7 +99026,7 @@ Frame nebulonb_farFrame
 
                 TextureFileName
                 {
-                    "TEX0005.bmp";
+                    "TEX0005.dds";
                 }
             }
 
@@ -99039,7 +99039,7 @@ Frame nebulonb_farFrame
 
                 TextureFileName
                 {
-                    "TEX0006.bmp";
+                    "TEX0006.dds";
                 }
             }
 
@@ -99052,7 +99052,7 @@ Frame nebulonb_farFrame
 
                 TextureFileName
                 {
-                    "TEX0007.bmp";
+                    "TEX0007.dds";
                 }
             }
 
@@ -99065,7 +99065,7 @@ Frame nebulonb_farFrame
 
                 TextureFileName
                 {
-                    "TEX0008.bmp";
+                    "TEX0008.dds";
                 }
             }
 
@@ -99078,7 +99078,7 @@ Frame nebulonb_farFrame
 
                 TextureFileName
                 {
-                    "TEX0009.bmp";
+                    "TEX0009.dds";
                 }
             }
 
@@ -99091,7 +99091,7 @@ Frame nebulonb_farFrame
 
                 TextureFileName
                 {
-                    "TEX0010.bmp";
+                    "TEX0010.dds";
                 }
             }
 
@@ -99104,7 +99104,7 @@ Frame nebulonb_farFrame
 
                 TextureFileName
                 {
-                    "TEX0011.bmp";
+                    "TEX0011.dds";
                 }
             }
 
@@ -99117,7 +99117,7 @@ Frame nebulonb_farFrame
 
                 TextureFileName
                 {
-                    "TEX0012.bmp";
+                    "TEX0012.dds";
                 }
             }
 
@@ -99130,7 +99130,7 @@ Frame nebulonb_farFrame
 
                 TextureFileName
                 {
-                    "TEX0013.bmp";
+                    "TEX0013.dds";
                 }
             }
 
@@ -99143,7 +99143,7 @@ Frame nebulonb_farFrame
 
                 TextureFileName
                 {
-                    "TEX0001.bmp";
+                    "TEX0001.dds";
                 }
             }
 
@@ -99156,7 +99156,7 @@ Frame nebulonb_farFrame
 
                 TextureFileName
                 {
-                    "TEX0003.bmp";
+                    "TEX0003.dds";
                 }
             }
 
@@ -99169,7 +99169,7 @@ Frame nebulonb_farFrame
 
                 TextureFileName
                 {
-                    "TEX0014.bmp";
+                    "TEX0014.dds";
                 }
             }
         }

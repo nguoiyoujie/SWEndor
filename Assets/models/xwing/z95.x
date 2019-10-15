@@ -9982,7 +9982,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0006.bmp";
+                    "TEX0006.dds";
                 }
             }
 
@@ -9995,7 +9995,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0008.bmp";
+                    "TEX0008.dds";
                 }
             }
 
@@ -10008,7 +10008,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0009.bmp";
+                    "TEX0009.dds";
                 }
             }
 
@@ -10021,7 +10021,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0004.bmp";
+                    "TEX0004.dds";
                 }
             }
 
@@ -10034,7 +10034,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0003.bmp";
+                    "TEX0003.dds";
                 }
             }
 
@@ -10047,7 +10047,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0002.bmp";
+                    "TEX0002.dds";
                 }
             }
 
@@ -10060,7 +10060,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0001.bmp";
+                    "TEX0001.dds";
                 }
             }
 
@@ -10073,7 +10073,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0000.bmp";
+                    "TEX0000.dds";
                 }
             }
 
@@ -10086,7 +10086,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0011.bmp";
+                    "TEX0011.dds";
                 }
             }
 
@@ -10099,7 +10099,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0010.bmp";
+                    "TEX0010.dds";
                 }
             }
 
@@ -10112,7 +10112,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0005.bmp";
+                    "TEX0005.dds";
                 }
             }
 
@@ -10125,7 +10125,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0007.bmp";
+                    "TEX0007.dds";
                 }
             }
 
@@ -10138,7 +10138,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0012.bmp";
+                    "TEX0012.dds";
                 }
             }
 
@@ -10151,7 +10151,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0013.bmp";
+                    "TEX0013.dds";
                 }
             }
 
@@ -10164,7 +10164,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0014.bmp";
+                    "TEX0014.dds";
                 }
             }
 
@@ -10177,7 +10177,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0015.bmp";
+                    "TEX0015.dds";
                 }
             }
 
@@ -10190,7 +10190,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0016.bmp";
+                    "TEX0016.dds";
                 }
             }
 
@@ -10203,7 +10203,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0017.bmp";
+                    "TEX0017.dds";
                 }
             }
 
@@ -10216,7 +10216,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0018.bmp";
+                    "TEX0018.dds";
                 }
             }
 
@@ -10229,7 +10229,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0019.bmp";
+                    "TEX0019.dds";
                 }
             }
 
@@ -10242,7 +10242,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0021.bmp";
+                    "TEX0021.dds";
                 }
             }
 
@@ -10255,7 +10255,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0022.bmp";
+                    "TEX0022.dds";
                 }
             }
 
@@ -10268,7 +10268,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0023.bmp";
+                    "TEX0023.dds";
                 }
             }
 
@@ -10281,7 +10281,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0024.bmp";
+                    "TEX0024.dds";
                 }
             }
 
@@ -10294,7 +10294,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0025.bmp";
+                    "TEX0025.dds";
                 }
             }
 
@@ -10307,7 +10307,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0026.bmp";
+                    "TEX0026.dds";
                 }
             }
 
@@ -10320,7 +10320,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0027.bmp";
+                    "TEX0027.dds";
                 }
             }
 
@@ -10333,7 +10333,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0020.bmp";
+                    "TEX0020.dds";
                 }
             }
 
@@ -10346,7 +10346,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0027.bmp";
+                    "TEX0027.dds";
                 }
             }
 
@@ -10359,7 +10359,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0026.bmp";
+                    "TEX0026.dds";
                 }
             }
 
@@ -10372,7 +10372,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0024.bmp";
+                    "TEX0024.dds";
                 }
             }
 
@@ -10385,7 +10385,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0023.bmp";
+                    "TEX0023.dds";
                 }
             }
 
@@ -10398,7 +10398,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0021.bmp";
+                    "TEX0021.dds";
                 }
             }
 
@@ -10411,7 +10411,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0020.bmp";
+                    "TEX0020.dds";
                 }
             }
 
@@ -10424,7 +10424,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0019.bmp";
+                    "TEX0019.dds";
                 }
             }
 
@@ -10437,7 +10437,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0018.bmp";
+                    "TEX0018.dds";
                 }
             }
 
@@ -10450,7 +10450,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0017.bmp";
+                    "TEX0017.dds";
                 }
             }
 
@@ -10463,7 +10463,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0016.bmp";
+                    "TEX0016.dds";
                 }
             }
 
@@ -10476,7 +10476,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0030.bmp";
+                    "TEX0030.dds";
                 }
             }
 
@@ -10489,7 +10489,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0027.bmp";
+                    "TEX0027.dds";
                 }
             }
 
@@ -10502,7 +10502,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0026.bmp";
+                    "TEX0026.dds";
                 }
             }
 
@@ -10515,7 +10515,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0024.bmp";
+                    "TEX0024.dds";
                 }
             }
 
@@ -10528,7 +10528,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0023.bmp";
+                    "TEX0023.dds";
                 }
             }
 
@@ -10541,7 +10541,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0021.bmp";
+                    "TEX0021.dds";
                 }
             }
 
@@ -10554,7 +10554,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0020.bmp";
+                    "TEX0020.dds";
                 }
             }
 
@@ -10567,7 +10567,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0019.bmp";
+                    "TEX0019.dds";
                 }
             }
 
@@ -10580,7 +10580,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0018.bmp";
+                    "TEX0018.dds";
                 }
             }
 
@@ -10593,7 +10593,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0017.bmp";
+                    "TEX0017.dds";
                 }
             }
 
@@ -10606,7 +10606,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0016.bmp";
+                    "TEX0016.dds";
                 }
             }
 
@@ -10619,7 +10619,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0030.bmp";
+                    "TEX0030.dds";
                 }
             }
 
@@ -10632,7 +10632,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0012.bmp";
+                    "TEX0012.dds";
                 }
             }
 
@@ -10645,7 +10645,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0029.bmp";
+                    "TEX0029.dds";
                 }
             }
 
@@ -10658,7 +10658,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0027.bmp";
+                    "TEX0027.dds";
                 }
             }
 
@@ -10671,7 +10671,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0026.bmp";
+                    "TEX0026.dds";
                 }
             }
 
@@ -10684,7 +10684,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0025.bmp";
+                    "TEX0025.dds";
                 }
             }
 
@@ -10697,7 +10697,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0024.bmp";
+                    "TEX0024.dds";
                 }
             }
 
@@ -10710,7 +10710,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0023.bmp";
+                    "TEX0023.dds";
                 }
             }
 
@@ -10723,7 +10723,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0022.bmp";
+                    "TEX0022.dds";
                 }
             }
 
@@ -10736,7 +10736,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0021.bmp";
+                    "TEX0021.dds";
                 }
             }
 
@@ -10749,7 +10749,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0020.bmp";
+                    "TEX0020.dds";
                 }
             }
 
@@ -10762,7 +10762,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0019.bmp";
+                    "TEX0019.dds";
                 }
             }
 
@@ -10775,7 +10775,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0017.bmp";
+                    "TEX0017.dds";
                 }
             }
 
@@ -10788,7 +10788,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0016.bmp";
+                    "TEX0016.dds";
                 }
             }
 
@@ -10801,7 +10801,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0015.bmp";
+                    "TEX0015.dds";
                 }
             }
 
@@ -10814,7 +10814,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0014.bmp";
+                    "TEX0014.dds";
                 }
             }
 
@@ -10827,7 +10827,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0013.bmp";
+                    "TEX0013.dds";
                 }
             }
 
@@ -10840,7 +10840,7 @@ Frame z95Frame
 
                 TextureFileName
                 {
-                    "TEX0018.bmp";
+                    "TEX0018.dds";
                 }
             }
         }

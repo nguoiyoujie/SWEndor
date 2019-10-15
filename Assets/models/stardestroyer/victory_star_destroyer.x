@@ -18765,7 +18765,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00048.bmp";
+                    "TEX00048.dds";
                 }
             }
 
@@ -18778,7 +18778,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00047.bmp";
+                    "TEX00047.dds";
                 }
             }
 
@@ -18791,7 +18791,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00046.bmp";
+                    "TEX00046.dds";
                 }
             }
 
@@ -18804,7 +18804,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00045.bmp";
+                    "TEX00045.dds";
                 }
             }
 
@@ -18817,7 +18817,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00044.bmp";
+                    "TEX00044.dds";
                 }
             }
 
@@ -18830,7 +18830,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00015.bmp";
+                    "TEX00015.dds";
                 }
             }
 
@@ -18843,7 +18843,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00055.bmp";
+                    "TEX00055.dds";
                 }
             }
 
@@ -18856,7 +18856,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00007.bmp";
+                    "TEX00007.dds";
                 }
             }
 
@@ -18869,7 +18869,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00006.bmp";
+                    "TEX00006.dds";
                 }
             }
 
@@ -18882,7 +18882,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00005.bmp";
+                    "TEX00005.dds";
                 }
             }
 
@@ -18895,7 +18895,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00003.bmp";
+                    "TEX00003.dds";
                 }
             }
 
@@ -18908,7 +18908,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00004.bmp";
+                    "TEX00004.dds";
                 }
             }
 
@@ -18921,7 +18921,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00008.bmp";
+                    "TEX00008.dds";
                 }
             }
 
@@ -18934,7 +18934,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00065.bmp";
+                    "TEX00065.dds";
                 }
             }
 
@@ -18947,7 +18947,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00064.bmp";
+                    "TEX00064.dds";
                 }
             }
 
@@ -18960,7 +18960,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00066.bmp";
+                    "TEX00066.dds";
                 }
             }
 
@@ -18973,7 +18973,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00067.bmp";
+                    "TEX00067.dds";
                 }
             }
 
@@ -18986,7 +18986,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00068.bmp";
+                    "TEX00068.dds";
                 }
             }
 
@@ -18999,7 +18999,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00069.bmp";
+                    "TEX00069.dds";
                 }
             }
 
@@ -19012,7 +19012,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00070.bmp";
+                    "TEX00070.dds";
                 }
             }
 
@@ -19025,7 +19025,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00073.bmp";
+                    "TEX00073.dds";
                 }
             }
 
@@ -19038,7 +19038,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00072.bmp";
+                    "TEX00072.dds";
                 }
             }
 
@@ -19051,7 +19051,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00071.bmp";
+                    "TEX00071.dds";
                 }
             }
 
@@ -19064,7 +19064,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00076.bmp";
+                    "TEX00076.dds";
                 }
             }
 
@@ -19077,7 +19077,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00074.bmp";
+                    "TEX00074.dds";
                 }
             }
 
@@ -19090,7 +19090,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00082.bmp";
+                    "TEX00082.dds";
                 }
             }
 
@@ -19103,7 +19103,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00083.bmp";
+                    "TEX00083.dds";
                 }
             }
 
@@ -19116,7 +19116,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00084.bmp";
+                    "TEX00084.dds";
                 }
             }
 
@@ -19129,7 +19129,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00085.bmp";
+                    "TEX00085.dds";
                 }
             }
 
@@ -19142,7 +19142,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00086.bmp";
+                    "TEX00086.dds";
                 }
             }
 
@@ -19155,7 +19155,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00087.bmp";
+                    "TEX00087.dds";
                 }
             }
 
@@ -19168,7 +19168,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00088.bmp";
+                    "TEX00088.dds";
                 }
             }
 
@@ -19181,7 +19181,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00089.bmp";
+                    "TEX00089.dds";
                 }
             }
 
@@ -19194,7 +19194,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00081.bmp";
+                    "TEX00081.dds";
                 }
             }
 
@@ -19207,7 +19207,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00080.BMP";
+                    "TEX00080.dds";
                 }
             }
 
@@ -19220,7 +19220,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00078.bmp";
+                    "TEX00078.dds";
                 }
             }
 
@@ -19233,7 +19233,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00077.bmp";
+                    "TEX00077.dds";
                 }
             }
 
@@ -19246,7 +19246,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00079.bmp";
+                    "TEX00079.dds";
                 }
             }
 
@@ -19259,7 +19259,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00020.bmp";
+                    "TEX00020.dds";
                 }
             }
 
@@ -19272,7 +19272,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00019.bmp";
+                    "TEX00019.dds";
                 }
             }
 
@@ -19285,7 +19285,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00018.bmp";
+                    "TEX00018.dds";
                 }
             }
 
@@ -19298,7 +19298,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00017.bmp";
+                    "TEX00017.dds";
                 }
             }
 
@@ -19311,7 +19311,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00016.bmp";
+                    "TEX00016.dds";
                 }
             }
 
@@ -19324,7 +19324,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00014.bmp";
+                    "TEX00014.dds";
                 }
             }
 
@@ -19337,7 +19337,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00013.bmp";
+                    "TEX00013.dds";
                 }
             }
 
@@ -19350,7 +19350,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00012.bmp";
+                    "TEX00012.dds";
                 }
             }
 
@@ -19363,7 +19363,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00011.bmp";
+                    "TEX00011.dds";
                 }
             }
 
@@ -19376,7 +19376,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00009.bmp";
+                    "TEX00009.dds";
                 }
             }
 
@@ -19389,7 +19389,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00091.bmp";
+                    "TEX00091.dds";
                 }
             }
 
@@ -19402,7 +19402,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00093.bmp";
+                    "TEX00093.dds";
                 }
             }
 
@@ -19415,7 +19415,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00092.bmp";
+                    "TEX00092.dds";
                 }
             }
 
@@ -19428,7 +19428,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00031.bmp";
+                    "TEX00031.dds";
                 }
             }
 
@@ -19441,7 +19441,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00036.bmp";
+                    "TEX00036.dds";
                 }
             }
 
@@ -19454,7 +19454,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00035.bmp";
+                    "TEX00035.dds";
                 }
             }
 
@@ -19467,7 +19467,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00034.bmp";
+                    "TEX00034.dds";
                 }
             }
 
@@ -19480,7 +19480,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00033.bmp";
+                    "TEX00033.dds";
                 }
             }
 
@@ -19493,7 +19493,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00032.bmp";
+                    "TEX00032.dds";
                 }
             }
 
@@ -19506,7 +19506,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00051.bmp";
+                    "TEX00051.dds";
                 }
             }
 
@@ -19519,7 +19519,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00000.bmp";
+                    "TEX00000.dds";
                 }
             }
 
@@ -19532,7 +19532,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00021.bmp";
+                    "TEX00021.dds";
                 }
             }
 
@@ -19545,7 +19545,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00023.bmp";
+                    "TEX00023.dds";
                 }
             }
 
@@ -19558,7 +19558,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00024.bmp";
+                    "TEX00024.dds";
                 }
             }
 
@@ -19571,7 +19571,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00060.bmp";
+                    "TEX00060.dds";
                 }
             }
 
@@ -19584,7 +19584,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00062.bmp";
+                    "TEX00062.dds";
                 }
             }
 
@@ -19597,7 +19597,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00061.bmp";
+                    "TEX00061.dds";
                 }
             }
 
@@ -19610,7 +19610,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00063.bmp";
+                    "TEX00063.dds";
                 }
             }
 
@@ -19623,7 +19623,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00001.bmp";
+                    "TEX00001.dds";
                 }
             }
 
@@ -19636,7 +19636,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00039.bmp";
+                    "TEX00039.dds";
                 }
             }
 
@@ -19649,7 +19649,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00038.bmp";
+                    "TEX00038.dds";
                 }
             }
 
@@ -19662,7 +19662,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00037.bmp";
+                    "TEX00037.dds";
                 }
             }
 
@@ -19675,7 +19675,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00040.bmp";
+                    "TEX00040.dds";
                 }
             }
 
@@ -19688,7 +19688,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00041.bmp";
+                    "TEX00041.dds";
                 }
             }
 
@@ -19701,7 +19701,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00042.bmp";
+                    "TEX00042.dds";
                 }
             }
 
@@ -19714,7 +19714,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00043.bmp";
+                    "TEX00043.dds";
                 }
             }
 
@@ -19727,7 +19727,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00049.bmp";
+                    "TEX00049.dds";
                 }
             }
 
@@ -19740,7 +19740,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00050.bmp";
+                    "TEX00050.dds";
                 }
             }
 
@@ -19753,7 +19753,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00002.bmp";
+                    "TEX00002.dds";
                 }
             }
 
@@ -19766,7 +19766,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00018.bmp";
+                    "TEX00018.dds";
                 }
             }
 
@@ -19779,7 +19779,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00027.bmp";
+                    "TEX00027.dds";
                 }
             }
 
@@ -19792,7 +19792,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00028.bmp";
+                    "TEX00028.dds";
                 }
             }
 
@@ -19805,7 +19805,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00075.bmp";
+                    "TEX00075.dds";
                 }
             }
 
@@ -19818,7 +19818,7 @@ Frame victory_star_destroyerFrame
 
                 TextureFileName
                 {
-                    "TEX00090.BMP";
+                    "TEX00090.dds";
                 }
             }
         }

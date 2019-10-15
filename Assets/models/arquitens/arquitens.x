@@ -22773,7 +22773,7 @@ Frame arquitensFrame
 
                 TextureFileName
                 {
-                    "TEX00001.PNG";
+                    "TEX00001.dds";
                 }
             }
 
@@ -22786,7 +22786,7 @@ Frame arquitensFrame
 
                 TextureFileName
                 {
-                    "TEX00000.BMP";
+                    "TEX00000.dds";
                 }
             }
 
@@ -22799,7 +22799,7 @@ Frame arquitensFrame
 
                 TextureFileName
                 {
-                    "TEX00002.PNG";
+                    "TEX00002.dds";
                 }
             }
         }

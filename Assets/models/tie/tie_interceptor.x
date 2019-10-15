@@ -4295,7 +4295,7 @@ Frame tie_interceptorFrame
 
                 TextureFileName
                 {
-                    "TEX000.BMP";
+                    "TEX000.dds";
                 }
             }
         }

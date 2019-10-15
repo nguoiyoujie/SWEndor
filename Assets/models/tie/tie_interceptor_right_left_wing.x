@@ -1063,7 +1063,7 @@ Frame tie_interceptor_right_left_wingFrame
 
                 TextureFileName
                 {
-                    "TEX000.BMP";
+                    "TEX000.dds";
                 }
             }
         }

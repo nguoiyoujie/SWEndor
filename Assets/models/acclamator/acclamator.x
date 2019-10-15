@@ -2108,7 +2108,7 @@ Frame acclamatorFrame
 
                 TextureFileName
                 {
-                    "TEX00000.PNG";
+                    "TEX00000.dds";
                 }
             }
 
@@ -2121,7 +2121,7 @@ Frame acclamatorFrame
 
                 TextureFileName
                 {
-                    "TEX00000.PNG";
+                    "TEX00000.dds";
                 }
             }
         }

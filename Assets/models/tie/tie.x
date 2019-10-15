@@ -3809,7 +3809,7 @@ Frame tieFrame
 
                 TextureFileName
                 {
-                    "TEX000.BMP";
+                    "TEX000.dds";
                 }
             }
         }

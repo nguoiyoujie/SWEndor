@@ -69143,7 +69143,7 @@ Frame tie_bomberFrame
 
                 TextureFileName
                 {
-                    "TEX0001.png";
+                    "TEX0001.dds";
                 }
             }
 
@@ -69156,7 +69156,7 @@ Frame tie_bomberFrame
 
                 TextureFileName
                 {
-                    "TEX0003.BMP";
+                    "TEX0003.dds";
                 }
             }
 
@@ -69169,7 +69169,7 @@ Frame tie_bomberFrame
 
                 TextureFileName
                 {
-                    "TEX0001.png";
+                    "TEX0001.dds";
                 }
             }
 
@@ -69182,7 +69182,7 @@ Frame tie_bomberFrame
 
                 TextureFileName
                 {
-                    "TEX0003.BMP";
+                    "TEX0003.dds";
                 }
             }
 
@@ -69195,7 +69195,7 @@ Frame tie_bomberFrame
 
                 TextureFileName
                 {
-                    "TEX0003.BMP";
+                    "TEX0003.dds";
                 }
             }
 
@@ -69208,7 +69208,7 @@ Frame tie_bomberFrame
 
                 TextureFileName
                 {
-                    "TEX0003.BMP";
+                    "TEX0003.dds";
                 }
             }
 
@@ -69221,7 +69221,7 @@ Frame tie_bomberFrame
 
                 TextureFileName
                 {
-                    "TEX0004.BMP";
+                    "TEX0004.dds";
                 }
             }
 
@@ -69234,7 +69234,7 @@ Frame tie_bomberFrame
 
                 TextureFileName
                 {
-                    "TEX0005.BMP";
+                    "TEX0005.dds";
                 }
             }
 
@@ -69247,7 +69247,7 @@ Frame tie_bomberFrame
 
                 TextureFileName
                 {
-                    "TEX0003.BMP";
+                    "TEX0003.dds";
                 }
             }
         }

@@ -4633,7 +4633,7 @@ Frame tie_advFrame
 
                 TextureFileName
                 {
-                    "TEX000.BMP";
+                    "TEX000.dds";
                 }
             }
         }

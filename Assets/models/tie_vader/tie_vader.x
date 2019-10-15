@@ -83576,7 +83576,7 @@ Frame tie_vaderFrame
 
                 TextureFileName
                 {
-                    "TEX0000.BMP";
+                    "TEX0000.dds";
                 }
             }
 
@@ -83589,7 +83589,7 @@ Frame tie_vaderFrame
 
                 TextureFileName
                 {
-                    "TEX0002.png";
+                    "TEX0002.dds";
                 }
             }
 
@@ -83602,7 +83602,7 @@ Frame tie_vaderFrame
 
                 TextureFileName
                 {
-                    "TEX0001.png";
+                    "TEX0001.dds";
                 }
             }
 
@@ -83615,7 +83615,7 @@ Frame tie_vaderFrame
 
                 TextureFileName
                 {
-                    "TEX0002.png";
+                    "TEX0002.dds";
                 }
             }
 
@@ -83628,7 +83628,7 @@ Frame tie_vaderFrame
 
                 TextureFileName
                 {
-                    "TEX0002.png";
+                    "TEX0002.dds";
                 }
             }
 
@@ -83641,7 +83641,7 @@ Frame tie_vaderFrame
 
                 TextureFileName
                 {
-                    "TEX0002.png";
+                    "TEX0002.dds";
                 }
             }
 
@@ -83654,7 +83654,7 @@ Frame tie_vaderFrame
 
                 TextureFileName
                 {
-                    "TEX0003.BMP";
+                    "TEX0003.dds";
                 }
             }
 
@@ -83667,7 +83667,7 @@ Frame tie_vaderFrame
 
                 TextureFileName
                 {
-                    "TEX0002.png";
+                    "TEX0002.dds";
                 }
             }
 
@@ -83680,7 +83680,7 @@ Frame tie_vaderFrame
 
                 TextureFileName
                 {
-                    "TEX0004.BMP";
+                    "TEX0004.dds";
                 }
             }
 
@@ -83693,7 +83693,7 @@ Frame tie_vaderFrame
 
                 TextureFileName
                 {
-                    "TEX0005.BMP";
+                    "TEX0005.dds";
                 }
             }
         }

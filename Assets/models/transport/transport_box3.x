@@ -124,7 +124,7 @@ Frame transport_box3Frame
 
                 TextureFileName
                 {
-                    "TEX0060.bmp";
+                    "TEX0060.dds";
                 }
             }
         }

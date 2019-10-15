@@ -906,7 +906,7 @@ Frame star_destroyer_lower_energy_podFrame
 
                 TextureFileName
                 {
-                    "TEX00091.BMP";
+                    "TEX00091.dds";
                 }
             }
         }

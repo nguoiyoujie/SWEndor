@@ -10843,7 +10843,7 @@ Frame mc90_farFrame
 
                 TextureFileName
                 {
-                    "TEX0032.BMP";
+                    "TEX0032.dds";
                 }
             }
 
@@ -10856,7 +10856,7 @@ Frame mc90_farFrame
 
                 TextureFileName
                 {
-                    "TEX0035.BMP";
+                    "TEX0035.dds";
                 }
             }
 
@@ -10869,7 +10869,7 @@ Frame mc90_farFrame
 
                 TextureFileName
                 {
-                    "TEX0040.BMP";
+                    "TEX0040.dds";
                 }
             }
 
@@ -10882,7 +10882,7 @@ Frame mc90_farFrame
 
                 TextureFileName
                 {
-                    "TEX0041.BMP";
+                    "TEX0041.dds";
                 }
             }
 
@@ -10895,7 +10895,7 @@ Frame mc90_farFrame
 
                 TextureFileName
                 {
-                    "TEX0014.BMP";
+                    "TEX0014.dds";
                 }
             }
 
@@ -10908,7 +10908,7 @@ Frame mc90_farFrame
 
                 TextureFileName
                 {
-                    "TEX0015.BMP";
+                    "TEX0015.dds";
                 }
             }
 
@@ -10921,7 +10921,7 @@ Frame mc90_farFrame
 
                 TextureFileName
                 {
-                    "TEX0018.BMP";
+                    "TEX0018.dds";
                 }
             }
 
@@ -10934,7 +10934,7 @@ Frame mc90_farFrame
 
                 TextureFileName
                 {
-                    "TEX0020.BMP";
+                    "TEX0020.dds";
                 }
             }
 
@@ -10947,7 +10947,7 @@ Frame mc90_farFrame
 
                 TextureFileName
                 {
-                    "TEX0018.BMP";
+                    "TEX0018.dds";
                 }
             }
 
@@ -10960,7 +10960,7 @@ Frame mc90_farFrame
 
                 TextureFileName
                 {
-                    "TEX0021.BMP";
+                    "TEX0021.dds";
                 }
             }
 
@@ -10973,7 +10973,7 @@ Frame mc90_farFrame
 
                 TextureFileName
                 {
-                    "TEX0022.BMP";
+                    "TEX0022.dds";
                 }
             }
 
@@ -10986,7 +10986,7 @@ Frame mc90_farFrame
 
                 TextureFileName
                 {
-                    "TEX0023.BMP";
+                    "TEX0023.dds";
                 }
             }
 
@@ -10999,7 +10999,7 @@ Frame mc90_farFrame
 
                 TextureFileName
                 {
-                    "TEX0028.BMP";
+                    "TEX0028.dds";
                 }
             }
 
@@ -11012,7 +11012,7 @@ Frame mc90_farFrame
 
                 TextureFileName
                 {
-                    "TEX0029.BMP";
+                    "TEX0029.dds";
                 }
             }
 
@@ -11025,7 +11025,7 @@ Frame mc90_farFrame
 
                 TextureFileName
                 {
-                    "TEX0015.BMP";
+                    "TEX0015.dds";
                 }
             }
 
@@ -11038,7 +11038,7 @@ Frame mc90_farFrame
 
                 TextureFileName
                 {
-                    "TEX0019.BMP";
+                    "TEX0019.dds";
                 }
             }
         }
