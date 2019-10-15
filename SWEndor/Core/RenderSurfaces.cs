@@ -97,7 +97,11 @@ namespace SWEndor.Core
     {
       // RS_PreTarget
       // RS_Target
-      if (Engine.PlayerInfo.TargetActor != null)
+      if (Engine.PlayerInfo.TargetActor != null 
+        && !Engine.Screen2D.ShowPage
+          && Engine.PlayerInfo.Actor != null
+          && !Engine.PlayerInfo.Actor.IsDyingOrDead
+          && Engine.Screen2D.ShowUI)
       {
         ActorInfo t = Engine.PlayerInfo.TargetActor;
         t = t?.ParentForCoords ?? t;
