@@ -4,6 +4,7 @@ using SWEndor.Input.Functions.Gameplay.Camera;
 using SWEndor.Input.Functions.Gameplay.Speed;
 using SWEndor.Input.Functions.Gameplay.UI;
 using SWEndor.Input.Functions.Gameplay.Weapon;
+using SWEndor.Primitives;
 
 namespace SWEndor.UI.Menu.Pages
 {
@@ -199,7 +200,7 @@ namespace SWEndor.UI.Menu.Pages
       if (IsValidKeyBinding(key))
       {
         KeyToggleUI = key;
-        ButtonToggleUI.SecondaryText = KeyToggleUI.ToString().Replace("TV_KEY_", "").Replace("-1", "");
+        ButtonToggleUI.SecondaryText = KeyToggleUI.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
         return true;
       }
       return false;
@@ -210,7 +211,7 @@ namespace SWEndor.UI.Menu.Pages
       if (IsValidKeyBinding(key))
       {
         KeyToggleRadar = key;
-        ButtonToggleRadar.SecondaryText = KeyToggleRadar.ToString().Replace("TV_KEY_", "").Replace("-1", "");
+        ButtonToggleRadar.SecondaryText = KeyToggleRadar.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
         return true;
       }
       return false;
@@ -221,7 +222,7 @@ namespace SWEndor.UI.Menu.Pages
       if (IsValidKeyBinding(key))
       {
         KeyToggleScenarioInfo = key;
-        ButtonToggleScenarioInfo.SecondaryText = KeyToggleScenarioInfo.ToString().Replace("TV_KEY_", "").Replace("-1", "");
+        ButtonToggleScenarioInfo.SecondaryText = KeyToggleScenarioInfo.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
         return true;
       }
       return false;
@@ -232,7 +233,7 @@ namespace SWEndor.UI.Menu.Pages
       if (IsValidKeyBinding(key))
       {
         KeyToggleScoreboard = key;
-        ButtonToggleScoreboard.SecondaryText = KeyToggleScoreboard.ToString().Replace("TV_KEY_", "").Replace("-1", "");
+        ButtonToggleScoreboard.SecondaryText = KeyToggleScoreboard.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
         return true;
       }
       return false;
@@ -243,7 +244,7 @@ namespace SWEndor.UI.Menu.Pages
       if (IsValidKeyBinding(key))
       {
         KeyToggleCameraMode = key;
-        ButtonToggleCameraMode.SecondaryText = KeyToggleCameraMode.ToString().Replace("TV_KEY_", "").Replace("-1", "");
+        ButtonToggleCameraMode.SecondaryText = KeyToggleCameraMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
         return true;
       }
       return false;
@@ -254,7 +255,7 @@ namespace SWEndor.UI.Menu.Pages
       if (IsValidKeyBinding(key))
       {
         KeyToggleNextPrimaryWeaponMode = key;
-        ButtonToggleNextPrimaryWeaponMode.SecondaryText = KeyToggleNextPrimaryWeaponMode.ToString().Replace("TV_KEY_", "").Replace("-1", "");
+        ButtonToggleNextPrimaryWeaponMode.SecondaryText = KeyToggleNextPrimaryWeaponMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
         return true;
       }
       return false;
@@ -265,7 +266,7 @@ namespace SWEndor.UI.Menu.Pages
       if (IsValidKeyBinding(key))
       {
         KeyTogglePrevPrimaryWeaponMode = key;
-        ButtonTogglePrevPrimaryWeaponMode.SecondaryText = KeyTogglePrevPrimaryWeaponMode.ToString().Replace("TV_KEY_", "").Replace("-1", "");
+        ButtonTogglePrevPrimaryWeaponMode.SecondaryText = KeyTogglePrevPrimaryWeaponMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
         return true;
       }
       return false;
@@ -276,7 +277,7 @@ namespace SWEndor.UI.Menu.Pages
       if (IsValidKeyBinding(key))
       {
         KeyToggleNextSecondaryWeaponMode = key;
-        ButtonToggleNextSecondaryWeaponMode.SecondaryText = KeyToggleNextSecondaryWeaponMode.ToString().Replace("TV_KEY_", "").Replace("-1", "");
+        ButtonToggleNextSecondaryWeaponMode.SecondaryText = KeyToggleNextSecondaryWeaponMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
         return true;
       }
       return false;
@@ -287,7 +288,7 @@ namespace SWEndor.UI.Menu.Pages
       if (IsValidKeyBinding(key))
       {
         KeyTogglePrevSecondaryWeaponMode = key;
-        ButtonTogglePrevSecondaryWeaponMode.SecondaryText = KeyTogglePrevSecondaryWeaponMode.ToString().Replace("TV_KEY_", "").Replace("-1", "");
+        ButtonTogglePrevSecondaryWeaponMode.SecondaryText = KeyTogglePrevSecondaryWeaponMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
         return true;
       }
       return false;
@@ -298,7 +299,7 @@ namespace SWEndor.UI.Menu.Pages
       if (IsValidKeyBinding(key))
       {
         KeyToggleIncreaseSpeed = key;
-        ButtonToggleIncreaseSpeed.SecondaryText = KeyToggleIncreaseSpeed.ToString().Replace("TV_KEY_", "").Replace("-1", "");
+        ButtonToggleIncreaseSpeed.SecondaryText = KeyToggleIncreaseSpeed.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
         return true;
       }
       return false;
@@ -309,7 +310,7 @@ namespace SWEndor.UI.Menu.Pages
       if (IsValidKeyBinding(key))
       {
         KeyToggleDecreaseSpeed = key;
-        ButtonToggleDecreaseSpeed.SecondaryText = KeyToggleDecreaseSpeed.ToString().Replace("TV_KEY_", "").Replace("-1", "");
+        ButtonToggleDecreaseSpeed.SecondaryText = KeyToggleDecreaseSpeed.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
         return true;
       }
       return false;
@@ -450,17 +451,17 @@ namespace SWEndor.UI.Menu.Pages
       KeyToggleIncreaseSpeed = (CONST_TV_KEY)InputFunction.Registry.Get(Up.InternalName).Key;
       KeyToggleDecreaseSpeed = (CONST_TV_KEY)InputFunction.Registry.Get(Down.InternalName).Key;
 
-      ButtonToggleUI.SecondaryText = KeyToggleUI.ToString().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonToggleRadar.SecondaryText = KeyToggleRadar.ToString().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonToggleScenarioInfo.SecondaryText = KeyToggleScenarioInfo.ToString().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonToggleScoreboard.SecondaryText = KeyToggleScoreboard.ToString().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonToggleCameraMode.SecondaryText = KeyToggleCameraMode.ToString().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonToggleNextPrimaryWeaponMode.SecondaryText = KeyToggleNextPrimaryWeaponMode.ToString().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonTogglePrevPrimaryWeaponMode.SecondaryText = KeyTogglePrevPrimaryWeaponMode.ToString().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonToggleNextSecondaryWeaponMode.SecondaryText = KeyToggleNextSecondaryWeaponMode.ToString().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonTogglePrevSecondaryWeaponMode.SecondaryText = KeyTogglePrevSecondaryWeaponMode.ToString().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonToggleIncreaseSpeed.SecondaryText = KeyToggleIncreaseSpeed.ToString().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonToggleDecreaseSpeed.SecondaryText = KeyToggleDecreaseSpeed.ToString().Replace("TV_KEY_", "").Replace("-1", "");
+      ButtonToggleUI.SecondaryText = KeyToggleUI.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
+      ButtonToggleRadar.SecondaryText = KeyToggleRadar.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
+      ButtonToggleScenarioInfo.SecondaryText = KeyToggleScenarioInfo.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
+      ButtonToggleScoreboard.SecondaryText = KeyToggleScoreboard.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
+      ButtonToggleCameraMode.SecondaryText = KeyToggleCameraMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
+      ButtonToggleNextPrimaryWeaponMode.SecondaryText = KeyToggleNextPrimaryWeaponMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
+      ButtonTogglePrevPrimaryWeaponMode.SecondaryText = KeyTogglePrevPrimaryWeaponMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
+      ButtonToggleNextSecondaryWeaponMode.SecondaryText = KeyToggleNextSecondaryWeaponMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
+      ButtonTogglePrevSecondaryWeaponMode.SecondaryText = KeyTogglePrevSecondaryWeaponMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
+      ButtonToggleIncreaseSpeed.SecondaryText = KeyToggleIncreaseSpeed.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
+      ButtonToggleDecreaseSpeed.SecondaryText = KeyToggleDecreaseSpeed.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
     }
   }
 }

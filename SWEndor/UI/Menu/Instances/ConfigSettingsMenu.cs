@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Primitives;
 using System;
 
 namespace SWEndor.UI.Menu.Pages
@@ -37,7 +38,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonScreenResolution.HighlightBoxPosition = ButtonScreenResolution.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonScreenResolution.HighlightBoxWidth = 600;
       ButtonScreenResolution.HighlightBoxHeight = 30;
-      ButtonScreenResolution.SecondaryText = Settings.ResolutionMode.ToString().TrimStart(ResDelimiter);
+      ButtonScreenResolution.SecondaryText = Settings.ResolutionMode.GetEnumName().TrimStart(ResDelimiter);
       ButtonScreenResolution.SecondaryTextPosition = ButtonScreenResolution.TextPosition + new TV_2DVECTOR(400, 0);
       ButtonScreenResolution.Selectable = true;
       ButtonScreenResolution.OnKeyPress += SelectScreenResolution;
@@ -116,7 +117,7 @@ namespace SWEndor.UI.Menu.Pages
           mode++;
         }
         Settings.ResolutionMode = (ResolutionSettings)mode;
-        ButtonScreenResolution.SecondaryText = Settings.ResolutionMode.ToString().TrimStart(ResDelimiter);
+        ButtonScreenResolution.SecondaryText = Settings.ResolutionMode.GetEnumName().TrimStart(ResDelimiter);
         ButtonChangesComment.Text = "Changes to screen mode will be applied after restarting the application";
         return true;
       }

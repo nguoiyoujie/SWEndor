@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Primitives;
 using System;
 using System.Text;
 
@@ -277,7 +278,7 @@ namespace SWEndor.FileFormat.INI
 
     public T GetEnumValue<T>(string section, string key, T defaultValue) where T : struct
     {
-      string s = GetStringValue(section, key, defaultValue.ToString()).Replace("|", ","); ;
+      string s = GetStringValue(section, key, defaultValue.GetEnumName()).Replace("|", ","); ;
       T ret = defaultValue;
       Enum.TryParse<T>(s, out ret);
       return ret;

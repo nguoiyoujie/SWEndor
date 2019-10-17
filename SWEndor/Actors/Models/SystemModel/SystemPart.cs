@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SWEndor.Primitives;
+using System.Collections.Generic;
 
 namespace SWEndor.Actors.Models
 {
@@ -41,7 +42,7 @@ namespace SWEndor.Actors.Models
       string s;
       if (!_shorthand.TryGetValue(part, out s))
       {
-        s = part.ToString();
+        s = part.GetEnumName();
         if (s.Length > 3)
           s = s.Substring(0, 3);
       }

@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
+using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Actors.Models
@@ -69,7 +70,7 @@ namespace SWEndor.Actors.Models
         //  actor.SetState_Dying();
 
         if (actor.IsPlayer)
-          engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.SUBSYSTEM_LOST).F(p.ToString().Replace('_', ' '))
+          engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.SUBSYSTEM_LOST).F(p.GetEnumName().Replace('_', ' '))
                                            , 3
                                            , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_WARNING));
       }

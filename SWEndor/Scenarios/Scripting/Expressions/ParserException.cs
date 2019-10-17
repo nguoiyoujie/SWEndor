@@ -1,4 +1,5 @@
-﻿using SWEndor.Primitives.Extensions;
+﻿using SWEndor.Primitives;
+using SWEndor.Primitives.Extensions;
 using System;
 
 namespace SWEndor.Scenarios.Scripting.Expressions
@@ -16,7 +17,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions
                                                                             .F(lexer.TokenContents.Replace("\n", "")
                                                                             , lexer.LineNumber
                                                                             , lexer.Position
-                                                                            , expected.ToString()
+                                                                            , expected.GetEnumName()
                                                                             , lexer.LineText))
     { }
   }

@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Primitives;
 
 namespace SWEndor.FileFormat.INI
 {
@@ -27,6 +28,6 @@ namespace SWEndor.FileFormat.INI
     public void SetDoubleList(string section, string key, double[] list, char delimiter = ',') { SetStringValue(section, key, string.Join(delimiter.ToString(), ConvertToStringArray(list))); }
     public void SetBoolList(string section, string key, bool[] list, char delimiter = ',') { SetStringValue(section, key, string.Join(delimiter.ToString(), ConvertToStringArray(list))); }
     public void SetStringList(string section, string key, string[] list, char delimiter = ',') { SetStringValue(section, key, string.Join(delimiter.ToString(), list)); }
-    public void SetEnumValue<T>(string section, string key, T value) where T : struct { SetStringValue(section, key, value.ToString()); }
+    public void SetEnumValue<T>(string section, string key, T value) where T : struct { SetStringValue(section, key, value.GetEnumName()); }
   }
 }

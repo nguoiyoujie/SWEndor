@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Core;
+using SWEndor.Primitives;
 using SWEndor.Scenarios;
 
 namespace SWEndor.AI.Actions
@@ -22,7 +23,7 @@ namespace SWEndor.AI.Actions
       return string.Join(",", new string[]
       {
           Name
-        , Mood.ToString()
+        , Mood.GetEnumName()
         , SquadLeaderOnly.ToString()
         , Complete.ToString()
       });

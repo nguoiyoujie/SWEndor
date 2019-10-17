@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Models;
+using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.UI.Widgets
@@ -80,7 +81,7 @@ namespace SWEndor.UI.Widgets
 
       foreach (SystemPart part in p.TypeInfo.SystemData.Parts)
       {
-        TVScreen2DText.TextureFont_DrawText(part.ToString().Replace('_', ' ')
+        TVScreen2DText.TextureFont_DrawText(part.GetEnumName().Replace('_', ' ')
                                                       , top_left.x
                                                       , y
                                                       , pcolor
@@ -92,7 +93,7 @@ namespace SWEndor.UI.Widgets
                        s == SystemState.DESTROYED ? new TV_COLOR(0.7f, 0.2f, 0.2f, 1).GetIntColor() :
                        new TV_COLOR(0.4f, 0.4f, 0.4f, 1).GetIntColor();
 
-        TVScreen2DText.TextureFont_DrawText(s.ToString()
+        TVScreen2DText.TextureFont_DrawText(s.GetEnumName()
                                               , x2
                                               , y
                                               , scolor

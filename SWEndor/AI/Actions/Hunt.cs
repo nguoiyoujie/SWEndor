@@ -1,6 +1,7 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Models;
+using SWEndor.Primitives;
 using SWEndor.Primitives.Factories;
 using SWEndor.Weapons;
 using System;
@@ -32,7 +33,7 @@ namespace SWEndor.AI.Actions
       return string.Join(",", new string[]
       {
           Name
-        , m_TargetType.ToString()
+        , m_TargetType.GetEnumName()
         , Complete.ToString()
       });
     }

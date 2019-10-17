@@ -36,7 +36,7 @@ namespace SWEndor.Terminal.Commands.Actor
       if (gscenario == null)
         return new TCommandFeedback(TCommandFeedbackType.ERROR, "GameScenario is null!");
 
-      ActorTypeInfo atype = Globals.Engine.ActorTypeFactory.Get(param[0].ToString());
+      ActorTypeInfo atype = Globals.Engine.ActorTypeFactory.Get(param[0]);
       string unitname = param[1];
       string sidebarname = param[2];
       float spawntime = Convert.ToSingle(param[3]);
@@ -47,7 +47,7 @@ namespace SWEndor.Terminal.Commands.Actor
 
       for (int i = 11; i < param.Length; i++)
       {
-        registries.Add(param[i].ToString());
+        registries.Add(param[i]);
       }
 
       ActorInfo res = new ActorSpawnInfo

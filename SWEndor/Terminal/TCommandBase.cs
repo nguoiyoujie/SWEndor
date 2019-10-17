@@ -39,7 +39,7 @@ namespace SWEndor.Terminal
       TCommandFeedback ret = CheckParamCount(param.Length);
       if (ret.IsError())
         return ret;
-      if (param.Length == 1 && param[0].ToString().ToLower().Equals("help"))
+      if (param.Length == 1 && param[0].ToLower().Equals("help"))
         return GetHelp();
       return Evaluate(param);
     }
