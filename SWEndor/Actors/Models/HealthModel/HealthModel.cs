@@ -88,8 +88,6 @@ namespace SWEndor.Actors.Models
         if (Shd <= 0 && !self.IsDyingOrDead) // TO-DO: improve atomicity of ActorState, still may have threading issues
         {
           Hull = (Hull - d2).Clamp(0, MaxHull);
-          if (self.TypeInfo.SystemData.AllowSystemDamage)
-            self.DamageRandom();
           if (Hull <= 0 && !self.IsDyingOrDead)
           {
              self.SetState_Dying();
@@ -99,6 +97,8 @@ namespace SWEndor.Actors.Models
               Log.Write(Log.DEBUG, LogType.ACTOR_KILLED, self);
 #endif
           }
+          if (!self.IsDyingOrDead && self.TypeInfo.SystemData.AllowSystemDamage)
+            self.DamageRandom();
         }
       }
     }
