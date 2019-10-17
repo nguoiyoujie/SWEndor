@@ -255,8 +255,8 @@ namespace SWEndor.Actors.Models
       engine.Surfaces.RS_Target.StartRender(false);
       int tex = engine.Surfaces.RS_PreTarget.GetTexture();
       int acolor = actor.Faction.Color;
-      int w = engine.Surfaces.RS_Target.GetWidth();
-      int h = engine.Surfaces.RS_Target.GetHeight();
+      int w = engine.Surfaces.Target_width;
+      int h = engine.Surfaces.Target_height;
       engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
       engine.TrueVision.TVScreen2DImmediate.Draw_Texture(tex
                                 , 0
