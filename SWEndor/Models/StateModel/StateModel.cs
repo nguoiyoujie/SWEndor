@@ -26,7 +26,7 @@ namespace SWEndor.Models
       REVIVE
     }
 
-    private class ActorStateMachine : StaticStateMachine<T, ActorState, ActorStateCommand>
+    private class ActorStateMachine : StateMachine<T, ActorState, ActorStateCommand>
     {
       public ActorStateMachine()
       {
@@ -48,7 +48,7 @@ namespace SWEndor.Models
       }
     }
 
-    private class CreationStateMachine : StaticStateMachine<T, CreationState, CreationStateCommand>
+    private class CreationStateMachine : StateMachine<T, CreationState, CreationStateCommand>
     {
       public CreationStateMachine()
       {
