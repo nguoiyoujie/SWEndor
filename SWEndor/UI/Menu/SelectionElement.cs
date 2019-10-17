@@ -11,16 +11,16 @@ namespace SWEndor.UI
     public bool Selectable;
 
     public string Text = "";
-    public TV_2DVECTOR TextPosition = new TV_2DVECTOR();
+    public TV_2DVECTOR TextPosition;
     public int TextColor = ColorLocalization.Get(ColorLocalKeys.UI_TEXT);
     public int TextFont = -1;
 
     public string SecondaryText = "";
-    public TV_2DVECTOR SecondaryTextPosition = new TV_2DVECTOR();
+    public TV_2DVECTOR SecondaryTextPosition;
     public int SecondaryTextColor = ColorLocalization.Get(ColorLocalKeys.UI_TEXT);
     public int SecondaryTextFont = -1;
 
-    public TV_2DVECTOR HighlightBoxPosition = new TV_2DVECTOR();
+    public TV_2DVECTOR HighlightBoxPosition;
     public float HighlightBoxWidth = 0;
     public float HighlightBoxHeight = 0;
     public int UnHighlightBoxColor = ColorLocalization.Get(ColorLocalKeys.UI_UNHIGHLIGHT_BACKGROUND);
@@ -31,7 +31,7 @@ namespace SWEndor.UI
     public float ToggleButtonsWidth = 10;
     public float ToggleButtonsHeight = 20;
     public float ToggleButtonsGapWidth = 5;
-    public TV_2DVECTOR ToggleButtonsPosition = new TV_2DVECTOR();
+    public TV_2DVECTOR ToggleButtonsPosition;
     public int ToggleButtonsColor = ColorLocalization.Get(ColorLocalKeys.UI_TEXT);
     public List<string> ToggleButtonsValues = new List<string>();
 

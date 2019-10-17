@@ -12,7 +12,8 @@ namespace SWEndor.UI.Widgets
     private float y0_t3;
     private float y1_t3;
     private int fntID;
-    private float letter_width;
+    private Font fnt;
+    //private float letter_width;
 
     public MessageText(Screen2D owner) : base(owner, "message")
     {
@@ -23,8 +24,9 @@ namespace SWEndor.UI.Widgets
       y0_t3 = -120;
       y1_t3 = -100;
 
+      fnt = FontFactory.Get(Font.T12);
       fntID = FontFactory.Get(Font.T12).ID;
-      letter_width = 4.5f;
+      //letter_width = 4.5f;
     }
 
     public override bool Visible
@@ -45,32 +47,35 @@ namespace SWEndor.UI.Widgets
       float t1_opacity = (t1.ExpireTime - Engine.Game.GameTime).Clamp(0, 1);
       float t2_opacity = (t2.ExpireTime - Engine.Game.GameTime).Clamp(0, 1);
       float ts_opacity = (ts.ExpireTime - Engine.Game.GameTime).Clamp(0, 1);
+      float w1 = fnt.GetWidth(t1.Text) / 2;
+      float w2 = fnt.GetWidth(t2.Text) / 2;
+      float ws = fnt.GetWidth(ts.Text) / 2;
 
       // boxes
       TVScreen2DImmediate.Action_Begin2D();
       if (t1_opacity > 0 && t1.Text.Length > 0)
       {
-        TVScreen2DImmediate.Draw_FilledBox(Owner.ScreenCenter.x - 5 - letter_width * t1.Text.Length
+        TVScreen2DImmediate.Draw_FilledBox(Owner.ScreenCenter.x - 5 - w1
                                                            , Owner.ScreenCenter.y + y0_t1 - 2
-                                                           , Owner.ScreenCenter.x + 5 + letter_width * t1.Text.Length
+                                                           , Owner.ScreenCenter.x + 5 + w1
                                                            , Owner.ScreenCenter.y + y1_t1 + 2
                                                            , new TV_COLOR(0, 0, 0, 0.5f * t1_opacity).GetIntColor());
       }
 
       if (t2_opacity > 0 && t2.Text.Length > 0)
       {
-        TVScreen2DImmediate.Draw_FilledBox(Owner.ScreenCenter.x - 5 - letter_width * t2.Text.Length
+        TVScreen2DImmediate.Draw_FilledBox(Owner.ScreenCenter.x - 5 - w2
                                                            , Owner.ScreenCenter.y + y0_t2 - 2
-                                                           , Owner.ScreenCenter.x + 5 + letter_width * t2.Text.Length
+                                                           , Owner.ScreenCenter.x + 5 + w2
                                                            , Owner.ScreenCenter.y + y1_t2 + 2
                                                            , new TV_COLOR(0, 0, 0, 0.5f * t2_opacity).GetIntColor());
       }
 
       if (ts_opacity > 0 && ts.Text.Length > 0)
       {
-        TVScreen2DImmediate.Draw_FilledBox(Owner.ScreenCenter.x - 5 - letter_width * ts.Text.Length
+        TVScreen2DImmediate.Draw_FilledBox(Owner.ScreenCenter.x - 5 - ws
                                                            , Owner.ScreenCenter.y + y0_t3 - 2
-                                                           , Owner.ScreenCenter.x + 5 + letter_width * ts.Text.Length
+                                                           , Owner.ScreenCenter.x + 5 + ws
                                                            , Owner.ScreenCenter.y + y1_t3 + 2
                                                            , new TV_COLOR(0, 0, 0, 0.5f * ts_opacity).GetIntColor());
       }
@@ -81,7 +86,7 @@ namespace SWEndor.UI.Widgets
       if (t1_opacity > 0 && t1.Text.Length > 0)
       {
         TVScreen2DText.TextureFont_DrawText(t1.Text
-                                                              , Owner.ScreenCenter.x - letter_width * t1.Text.Length
+                                                              , Owner.ScreenCenter.x - w1
                                                               , Owner.ScreenCenter.y + y0_t1
                                                               , t1.Color.SetA(t1_opacity)
                                                               , fntID);
@@ -90,7 +95,7 @@ namespace SWEndor.UI.Widgets
       if (t2_opacity > 0 && t2.Text.Length > 0)
       {
         TVScreen2DText.TextureFont_DrawText(t2.Text
-                                                              , Owner.ScreenCenter.x - letter_width * t2.Text.Length
+                                                              , Owner.ScreenCenter.x - w2
                                                               , Owner.ScreenCenter.y + y0_t2
                                                               , t2.Color.SetA(t2_opacity)
                                                               , fntID);
@@ -99,7 +104,7 @@ namespace SWEndor.UI.Widgets
       if (ts_opacity > 0 && ts.Text.Length > 0)
       {
         TVScreen2DText.TextureFont_DrawText(ts.Text
-                                                              , Owner.ScreenCenter.x - letter_width * ts.Text.Length
+                                                              , Owner.ScreenCenter.x - ws
                                                               , Owner.ScreenCenter.y + y0_t3
                                                               , ts.Color.SetA(ts_opacity)
                                                               , fntID);
