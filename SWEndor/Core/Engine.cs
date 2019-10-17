@@ -71,9 +71,9 @@ namespace SWEndor.Core
       Game = new Session(this);
       SoundManager = new SoundManager(this);
       PerfManager = new PerfManager(this);
-      ActorFactory = new Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>(this, (e, f, n, i) => { return new ActorInfo(e, f, n, i); });
-      ExplosionFactory = new Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> (this, (e, f, n, i) => { return new ExplosionInfo(e, f, n, i); });
-      ProjectileFactory = new Factory<ProjectileInfo, ProjectileCreationInfo, ProjectileTypeInfo>(this, (e, f, n, i) => { return new ProjectileInfo(e, f, n, i); });
+      ActorFactory = new Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>(this, (e, f, n, i) => { return new ActorInfo(e, f, n, i); }, Globals.ActorLimit);
+      ExplosionFactory = new Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> (this, (e, f, n, i) => { return new ExplosionInfo(e, f, n, i); }, Globals.ActorLimit);
+      ProjectileFactory = new Factory<ProjectileInfo, ProjectileCreationInfo, ProjectileTypeInfo>(this, (e, f, n, i) => { return new ProjectileInfo(e, f, n, i); }, Globals.ActorLimit);
       ActorTypeFactory = new ActorTypeInfo.Factory(this);
       ExplosionTypeFactory = new ExplosionTypeInfo.Factory(this);
       ProjectileTypeFactory = new ProjectileTypeInfo.Factory(this);

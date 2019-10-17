@@ -20,7 +20,7 @@ namespace SWEndor
     ITypeInfo<T>
   {
     public readonly Engine Engine;
-    internal Factory(Engine engine, Func<Engine, Factory<T, TCreate, TType>, short, TCreate, T> createfunc)
+    internal Factory(Engine engine, Func<Engine, Factory<T, TCreate, TType>, short, TCreate, T> createfunc, int limit) : base(limit)
     {
       Engine = engine;
       Actors = new ActorEnumerable(this);

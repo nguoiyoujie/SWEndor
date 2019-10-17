@@ -10,7 +10,10 @@ namespace SWEndor.Primitives.Factories
   /// <typeparam name="T"></typeparam>
   public class Registry<T> : IRegistry<T>
   {
-    protected Dictionary<string, T> list = new Dictionary<string, T>();
+    public Registry() { list = new Dictionary<string, T>(); }
+    public Registry(int capacity) { list = new Dictionary<string, T>(capacity); }
+
+    protected Dictionary<string, T> list;
     public static T Default = default(T);
     private object locker = new object();
 
@@ -33,7 +36,10 @@ namespace SWEndor.Primitives.Factories
   /// <typeparam name="T"></typeparam>
   public class Registry<K, T> : IRegistry<K, T>
   {
-    protected Dictionary<K, T> list = new Dictionary<K, T>();
+    public Registry() { list = new Dictionary<K, T>(); }
+    public Registry(int capacity) { list = new Dictionary<K, T>(capacity); }
+
+    protected Dictionary<K, T> list;
     public static T Default = default(T);
     private object locker = new object();
 
