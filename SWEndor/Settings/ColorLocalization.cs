@@ -58,7 +58,7 @@ namespace SWEndor
 
       { ColorLocalKeys.UI_TEXT, new TV_COLOR(0.8f, 0.8f, 0, 1).GetIntColor() },
       { ColorLocalKeys.UI_TEXT_ORANGE, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor() },
-      { ColorLocalKeys.UI_UNHIGHLIGHT_BACKGROUND, new TV_COLOR(0, 0, 0, 0.3f).GetIntColor() },
+      { ColorLocalKeys.UI_UNHIGHLIGHT_BACKGROUND, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor() },
       { ColorLocalKeys.UI_HIGHLIGHT_BACKGROUND,  new TV_COLOR(0.05f, 0.2f, 0, 0.8f).GetIntColor() },
 
       { ColorLocalKeys.GAME_LOAD_LIGHT, new TV_COLOR(0.8f, 0.8f, 0, 1).GetIntColor() },
@@ -71,7 +71,6 @@ namespace SWEndor
       { ColorLocalKeys.GAME_STAT_SPEED, new TV_COLOR(0.7f, 0.8f, 0.4f, 1).GetIntColor() },
       { ColorLocalKeys.GAME_STAT_CRITICAL_ALLY, new TV_COLOR(0, 0.8f, 0.6f, 1).GetIntColor() },
       { ColorLocalKeys.GAME_STAT_CRITICAL_ENEMY, new TV_COLOR(1, 0, 0, 1).GetIntColor() },
-
       
       { ColorLocalKeys.GAME_MESSAGE_NORMAL, new TV_COLOR(0.5f, 0.5f, 1, 1).GetIntColor() },
       { ColorLocalKeys.GAME_MESSAGE_WARNING, new TV_COLOR(1, 0.2f, 0.2f, 1).GetIntColor() },
@@ -83,7 +82,6 @@ namespace SWEndor
       { ColorLocalKeys.GAME_SYSTEMSTATE_DISABLED, new TV_COLOR(0.2f, 0.2f, 0.6f, 1).GetIntColor() },
       { ColorLocalKeys.GAME_SYSTEMSTATE_DESTROYED, new TV_COLOR(0.7f, 0.2f, 0.2f, 1).GetIntColor() },
       { ColorLocalKeys.GAME_SYSTEMSTATE_NULL, new TV_COLOR(0.4f, 0.4f, 0.4f, 1).GetIntColor() },
-
 
       { ColorLocalKeys.GAME_SYSTEM_ION, new TV_COLOR(0.6f, 0.6f, 1, 1).GetIntColor() },
       { ColorLocalKeys.GAME_SYSTEM_DISABLED, new TV_COLOR(0.4f, 0.5f, 1, 0.4f).GetIntColor() },
