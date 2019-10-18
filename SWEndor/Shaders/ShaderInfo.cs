@@ -40,7 +40,7 @@ namespace SWEndor.Shaders
       if (File.Exists(dataFile))
       {
         INIFile f = new INIFile(dataFile);
-        LoadFromINI(engine, f);
+        Parser.LoadFromINI(engine, this, f);
       }
       TVScene = engine.TrueVision.TVScene;
       if (DynamicParam.Count > 0)
@@ -96,121 +96,6 @@ namespace SWEndor.Shaders
     public void ReturnShader(TVShader shader)
     {
       _pool?.Return(shader);
-    }
-
-    public void LoadFromINI(Engine engine, INIFile f)
-    {
-      string head = "BOOLEAN";
-      if (f.HasSection(head))
-        foreach (INIFile.INISection.INILine ln in f.GetSection(head).Lines)
-        {
-          if (ln.HasKey)
-          {
-            string key = ln.Key;
-            if (!ConstBool.ContainsKey(key))
-            {
-              bool val = f.GetBoolValue(head, ln.Key);
-              ConstBool.Add(key, val);
-            }
-          }
-        }
-
-      head = "FLOAT";
-      if (f.HasSection(head))
-        foreach (INIFile.INISection.INILine ln in f.GetSection(head).Lines)
-        {
-          if (ln.HasKey)
-          {
-            string key = ln.Key;
-            if (!ConstFloat.ContainsKey(key))
-            {
-              float val = f.GetFloatValue(head, ln.Key);
-              ConstFloat.Add(key, val);
-            }
-          }
-        }
-
-      head = "VEC2";
-      if (f.HasSection(head))
-        foreach (INIFile.INISection.INILine ln in f.GetSection(head).Lines)
-        {
-          if (ln.HasKey)
-          {
-            string key = ln.Key;
-            if (!ConstVec2.ContainsKey(key))
-            {
-              TV_2DVECTOR val = f.GetTV_2DVECTOR(head, ln.Key);
-              ConstVec2.Add(key, val);
-            }
-          }
-        }
-
-      head = "VEC3";
-      if (f.HasSection(head))
-        foreach (INIFile.INISection.INILine ln in f.GetSection(head).Lines)
-        {
-          if (ln.HasKey)
-          {
-            string key = ln.Key;
-            if (!ConstVec3.ContainsKey(key))
-            {
-              TV_3DVECTOR val = f.GetTV_3DVECTOR(head, ln.Key);
-              ConstVec3.Add(key, val);
-            }
-          }
-        }
-
-      head = "TEXTURE";
-      if (f.HasSection(head))
-        foreach (INIFile.INISection.INILine ln in f.GetSection(head).Lines)
-            {
-          if (ln.HasKey)
-          {
-            string key = ln.Key;
-            if (!ConstTex.ContainsKey(key))
-            {
-              string stex = f.GetStringValue(head, ln.Key);
-              int t = engine.TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, stex.Trim()));
-              ConstTex.Add(key, t);
-            }
-          }
-        }
-
-      head = "TEXTURE_RANDOM";
-      if (f.HasSection(head))
-        foreach (INIFile.INISection.INILine ln in f.GetSection(head).Lines)
-        {
-          if (ln.HasKey)
-          {
-            string key = ln.Key;
-            if (!ConstTex.ContainsKey(key))
-            {
-              string[] stex = f.GetStringList(head, ln.Key, new string[0]);
-              if (stex.Length >= 0)
-              {
-                int t = engine.TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, stex[engine.Random.Next(0, stex.Length)].Trim()));
-                ConstTex.Add(key, t);
-              }
-            }
-          }
-        }
-
-      head = "DYNAMIC";
-      if (f.HasSection(head))
-        foreach (INIFile.INISection.INILine ln in f.GetSection(head).Lines)
-        {
-          if (ln.HasKey)
-          {
-            string key = ln.Key;
-            if (!DynamicParam.ContainsKey(key))
-            {
-              DynamicShaderDataSource val = f.GetEnumValue(head, ln.Key, DynamicShaderDataSource.GAME_TIME);
-              DynamicParam.Add(key, val);
-            }
-          }
-        }
-
-      _count = f.GetIntValue("General", "InitialCount", 0);
     }
 
     public void SetShaderParam<T, TType, TCreate>(T obj, TVShader shader)

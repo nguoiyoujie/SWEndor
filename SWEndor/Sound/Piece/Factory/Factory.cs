@@ -73,7 +73,8 @@ namespace SWEndor.Sound
             {
               if (s != INIFile.PreHeaderSectionName)
               {
-                Piece p = Parser.Parse(f, s);
+                Piece p = new Piece();
+                Parser.LoadFromINI(f, p, s);
                 Register(p);
                 p.UpdateSound();
               }

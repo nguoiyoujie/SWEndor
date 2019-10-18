@@ -9,9 +9,8 @@ namespace SWEndor.Sound
     {
       public static class Parser
       {
-        public static Piece Parse(INIFile file, string sectionname)
+        public static void LoadFromINI(INIFile file, Piece p, string sectionname)
         {
-          Piece p = new Piece();
           p.Name = sectionname;
           p.SoundName = file.GetStringValue(sectionname, "Sound", "");
           p.EntryPosition = file.GetUIntValue(sectionname, "Entry", 0);
@@ -44,8 +43,6 @@ namespace SWEndor.Sound
           }
           for (int i = 0; i < maxmood; i++)
             p.MoodTransitions[i] = mt[i].ToArray();
-
-          return p;
         }
       }
     }
