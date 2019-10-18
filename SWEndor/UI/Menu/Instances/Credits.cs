@@ -1,4 +1,6 @@
 ﻿using MTV3D65;
+using SWEndor.Primitives.Extensions;
+using System.IO;
 using System.Text;
 
 namespace SWEndor.UI.Menu.Pages
@@ -21,18 +23,13 @@ namespace SWEndor.UI.Menu.Pages
       MainText.Text = "Credits";
       MainText.TextPosition = new TV_2DVECTOR(40, 60);
 
-      StringBuilder sb = new StringBuilder();
-      sb.AppendLine("Author: Nguoi You Jie (2018)");
-      sb.AppendLine();
-      sb.AppendLine("Inspired by an original game by Bruno R. Marcos");
-      sb.AppendLine("             (Battle of Endor, Battle of Yavin)");
-      sb.AppendLine("Models: Master_Syrus, Lurker, Hory, Trousers, ");
-      sb.AppendLine("        Yo-da-man (2007)");
-      sb.AppendLine();
-      sb.AppendLine("All copyrights regarding StarWars belong to ");
-      sb.AppendLine("whoever owns the franchise (LucasArts / Disney)");
+      string credit = "";
+      string path = Path.Combine(Globals.DataPath, "credits.txt");
+      if (File.Exists(path))
+        credit = File.ReadAllText(path).Multiline(60);
 
-      CreditText.Text = sb.ToString();
+      CreditText.Text = credit;
+      CreditText.TextFont = FontFactory.Get(Font.T12).ID;
       CreditText.TextPosition = new TV_2DVECTOR(75, 120);
       CreditText.HighlightBoxPosition = CreditText.TextPosition - new TV_2DVECTOR(5, 5);
       CreditText.HighlightBoxWidth = 660;
