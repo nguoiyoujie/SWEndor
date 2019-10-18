@@ -17,7 +17,7 @@ namespace SWEndor.FileFormat.INI
 
     public readonly string FilePath;
     private readonly Dictionary<string, INISection> m_sections = new Dictionary<string, INISection>();
-    public IEnumerable<string> Sections { get { return m_sections.Keys; } }
+    public Dictionary<string, INISection>.KeyCollection Sections { get { return m_sections.Keys; } }
 
     public void Reset()
     {
