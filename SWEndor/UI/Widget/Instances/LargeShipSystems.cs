@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Primitives;
+using SWEndor.Primitives.Geometry;
 using System;
 
 namespace SWEndor.UI.Widgets
@@ -92,7 +93,7 @@ namespace SWEndor.UI.Widgets
               break;
             case RadarType.RECTANGLE_GIANT:
               {
-                BoundingBox box = a.GetBoundingBox(true);
+                Box box = a.GetBoundingBox(true);
                 radar_range = (box.Z.Max - box.Z.Min) * scale;
 
                 TVScreen2DImmediate.Draw_Box(box.X.Min * scale * radar_radius / radar_range + radar_center.x
@@ -104,7 +105,7 @@ namespace SWEndor.UI.Widgets
               }
             case RadarType.TRIANGLE_GIANT:
               {
-                BoundingBox box = a.GetBoundingBox(true);
+                Box box = a.GetBoundingBox(true);
                 radar_range = (box.Z.Max - box.Z.Min) * scale;
 
                 TVScreen2DImmediate.Draw_Triangle(box.X.Min * scale * radar_radius / radar_range + radar_center.x

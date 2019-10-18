@@ -80,7 +80,7 @@ namespace SWEndor.UI.Widgets
           else if (p.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) == SystemState.DISABLED)
             DrawMissile(weap, false, 0, disabled_color);
         }
-        else if (weap.Type == WeaponType.ION) //weap.MaxAmmo > 0)
+        else if (weap.Type == WeaponType.ION)
         {
           int ion_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_ION);
           int disabled_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DISABLED);

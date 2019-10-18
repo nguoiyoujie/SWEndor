@@ -1,11 +1,11 @@
 ﻿namespace SWEndor.Primitives
 {
-  public struct BoundingValue
+  public struct BoundFloat
   {
-    public readonly float Min;
-    public readonly float Max;
+    public float Min { get; }
+    public float Max { get; }
 
-    public BoundingValue(float value1, float value2)
+    public BoundFloat(float value1, float value2)
     {
       if (value1 > value2)
       {
@@ -19,7 +19,7 @@
       }
     }
 
-    public bool ContainsValue(float val)
+    public bool Contains(float val)
     {
       return val <= Max && val >= Min;
     }

@@ -6,6 +6,7 @@ using SWEndor.Models;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Shaders;
 using SWEndor.ProjectileTypes;
+using SWEndor.Primitives.Geometry;
 
 namespace SWEndor.Projectiles.Models
 {
@@ -82,7 +83,7 @@ namespace SWEndor.Projectiles.Models
       }
     }
 
-    public BoundingBox GetBoundingBox(bool uselocal)
+    public Box GetBoundingBox(bool uselocal)
     {
       TV_3DVECTOR minV = new TV_3DVECTOR();
       TV_3DVECTOR maxV = new TV_3DVECTOR();
@@ -91,10 +92,10 @@ namespace SWEndor.Projectiles.Models
         if (ScopeCounterManager.IsZero(disposeScope))
           Mesh.GetBoundingBox(ref minV, ref maxV, uselocal);
 
-      return new BoundingBox(minV, maxV);
+      return new Box(minV, maxV);
     }
 
-    public BoundingSphere GetBoundingSphere(bool uselocal)
+    public Sphere GetBoundingSphere(bool uselocal)
     {
       TV_3DVECTOR p = new TV_3DVECTOR();
       float r = 0;
@@ -103,7 +104,7 @@ namespace SWEndor.Projectiles.Models
         if (ScopeCounterManager.IsZero(disposeScope))
           Mesh.GetBoundingSphere(ref p, ref r, uselocal);
 
-      return new BoundingSphere(p, r);
+      return new Sphere(p, r);
     }
 
     public int GetVertexCount()
@@ -200,8 +201,8 @@ namespace SWEndor.Projectiles
 {
   public partial class ProjectileInfo
   {
-    public BoundingBox GetBoundingBox(bool uselocal) { return Meshes.GetBoundingBox(uselocal); }
-    public BoundingSphere GetBoundingSphere(bool uselocal) { return Meshes.GetBoundingSphere(uselocal); }
+    public Box GetBoundingBox(bool uselocal) { return Meshes.GetBoundingBox(uselocal); }
+    public Sphere GetBoundingSphere(bool uselocal) { return Meshes.GetBoundingSphere(uselocal); }
     //public void SetTexture(int iTexture) { Meshes.SetTexture(iTexture); }
     //public void EnableTexMod(bool enable) { Meshes.EnableTexMod(enable); }
     //public void SetTexMod(float u, float v, float su, float sv) { Meshes.SetTexMod(u, v, su, sv); }

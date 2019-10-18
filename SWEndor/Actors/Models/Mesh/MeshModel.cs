@@ -9,6 +9,7 @@ using SWEndor.ActorTypes.Components;
 using SWEndor.Shaders;
 using SWEndor.UI;
 using SWEndor.Primitives.Extensions;
+using SWEndor.Primitives.Geometry;
 
 namespace SWEndor.Actors.Models
 {
@@ -95,7 +96,7 @@ namespace SWEndor.Actors.Models
       }
     }
 
-    public BoundingBox GetBoundingBox(bool uselocal)
+    public Box GetBoundingBox(bool uselocal)
     {
       TV_3DVECTOR minV = new TV_3DVECTOR();
       TV_3DVECTOR maxV = new TV_3DVECTOR();
@@ -104,10 +105,10 @@ namespace SWEndor.Actors.Models
         if (ScopeCounterManager.IsZero(disposeScope))
           Mesh.GetBoundingBox(ref minV, ref maxV, uselocal);
 
-      return new BoundingBox(minV, maxV);
+      return new Box(minV, maxV);
     }
 
-    public BoundingSphere GetBoundingSphere(bool uselocal)
+    public Sphere GetBoundingSphere(bool uselocal)
     {
       TV_3DVECTOR p = new TV_3DVECTOR();
       float r = 0;
@@ -116,7 +117,7 @@ namespace SWEndor.Actors.Models
         if (ScopeCounterManager.IsZero(disposeScope))
           Mesh.GetBoundingSphere(ref p, ref r, uselocal);
 
-      return new BoundingSphere(p, r);
+      return new Sphere(p, r);
     }
 
     public int GetVertexCount()
@@ -237,13 +238,12 @@ namespace SWEndor.Actors.Models
         return;
 
       TV_3DVECTOR p = engine.PlayerCameraInfo.Camera.GetPosition();
-      BoundingSphere sph = GetBoundingSphere(false);
-      TV_3DVECTOR d2 = new TV_3DVECTOR();
+      TV_3DVECTOR r = engine.PlayerCameraInfo.Camera.GetRotation();
+      Sphere sph = GetBoundingSphere(false);
       TVCamera c = engine.Surfaces.RS_PreTarget.GetCamera();
-      c.SetPosition(p.x, p.y, p.z);
-      c.LookAtMesh(Mesh);
-      c.SetPosition(sph.Position.x, sph.Position.y, sph.Position.z);
-      d2 = c.GetFrontPosition(-sph.Radius * 2.5f);
+      c.SetRotation(r.x, r.y, r.z);
+      c.SetPosition(sph.X, sph.Y, sph.Z);
+      TV_3DVECTOR d2 = c.GetFrontPosition(-sph.R * 2.5f);
       c.SetPosition(d2.x, d2.y, d2.z);
 
       engine.Surfaces.RS_PreTarget.StartRender(false);
@@ -335,8 +335,8 @@ namespace SWEndor.Actors
 {
   public partial class ActorInfo
   {
-    public BoundingBox GetBoundingBox(bool uselocal) { return Meshes.GetBoundingBox(uselocal); }
-    public BoundingSphere GetBoundingSphere(bool uselocal) { return Meshes.GetBoundingSphere(uselocal); }
+    public Box GetBoundingBox(bool uselocal) { return Meshes.GetBoundingBox(uselocal); }
+    public Sphere GetBoundingSphere(bool uselocal) { return Meshes.GetBoundingSphere(uselocal); }
     public void SetTexture(int iTexture) { Meshes.SetTexture(iTexture); }
     //public void EnableTexMod(bool enable) { Meshes.EnableTexMod(enable); }
     //public void SetTexMod(float u, float v, float su, float sv) { Meshes.SetTexMod(u, v, su, sv); }

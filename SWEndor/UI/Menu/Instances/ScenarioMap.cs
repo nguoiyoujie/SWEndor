@@ -3,8 +3,7 @@ using SWEndor.Actors;
 using SWEndor.Actors.Models;
 using SWEndor.Core;
 using SWEndor.Models;
-using SWEndor.Primitives;
-using SWEndor.Projectiles;
+using SWEndor.Primitives.Geometry;
 using SWEndor.Scenarios;
 using System;
 using static SWEndor.UI.Widgets.Radar;
@@ -204,69 +203,6 @@ namespace SWEndor.UI.Menu.Pages
       }
     }
 
-    private void DrawElement(Engine engine, ProjectileInfo a)
-    {
-      //ActorInfo p = PlayerInfo.Actor;
-      if (a != null)// && p != null)
-      {
-        TV_3DVECTOR ppos = Engine.PlayerCameraInfo.Position * zoom_ratio;
-        TV_3DVECTOR apos = a.GetGlobalPosition() * zoom_ratio;
-
-        float size = a.TypeInfo.RenderData.RadarSize * 3;
-
-        if (a.Active
-          && size > 0
-          && !(a.TypeInfo is ProjectileTypes.Groups.LaserProjectile))
-        {
-          int acolor = a.Faction.Color;
-          float proty = Engine.PlayerCameraInfo.Rotation.y;
-
-          XYCoord posvec = new XYCoord { X = ppos.x - apos.x, Y = ppos.z - apos.z };
-          PolarCoord polar = posvec.ToPolarCoord;
-          polar.Angle -= proty;
-
-          XYCoord xy = polar.ToXYCoord;
-          float x = Owner.ScreenCenter.x - xy.X - displacement.x;
-          float y = Owner.ScreenCenter.y - xy.Y - displacement.y;
-
-          switch (a.TypeInfo.RenderData.RadarType)
-          {
-            case RadarType.TRAILLINE:
-              float ang = a.GetGlobalRotation().y - proty;
-              PolarCoord pang = new PolarCoord { Angle = ang, Dist = 50 * zoom_ratio };
-              XYCoord pxy = pang.ToXYCoord;
-              float px = x - pxy.X;
-              float py = y - pxy.Y;
-              DrawLine(x, y, px, py, acolor);
-              break;
-            case RadarType.HOLLOW_SQUARE:
-            case RadarType.FILLED_SQUARE:
-              DrawSquare(x, y, size, acolor);
-              if (showtext) DrawText(a.Name, x, y + size + 2, acolor);
-              break;
-            case RadarType.HOLLOW_CIRCLE_S:
-            case RadarType.HOLLOW_CIRCLE_M:
-            case RadarType.HOLLOW_CIRCLE_L:
-            case RadarType.FILLED_CIRCLE_S:
-            case RadarType.FILLED_CIRCLE_M:
-            case RadarType.FILLED_CIRCLE_L:
-              DrawTriangleGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, x, y, proty, acolor);
-              if (showtext) DrawText(a.Name, x, y + size + 2, acolor);
-              break;
-            case RadarType.RECTANGLE_GIANT:
-              DrawRectGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, x, y, proty, acolor);
-              if (showtext) DrawText(a.Name, x, y, acolor);
-              break;
-            case RadarType.TRIANGLE_GIANT:
-              DrawTriangleGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, x, y, proty, acolor);
-              if (showtext) DrawText(a.Name, x, y, acolor);
-              break;
-          }
-        }
-      }
-    }
-
-
     private void DrawLine(float x0, float y0, float x1, float y1, int color)
     {
       TVScreen2DImmediate.Draw_Line(x0, y0, x1, y1, color);
@@ -290,7 +226,7 @@ namespace SWEndor.UI.Menu.Pages
       TVScreen2DImmediate.Draw_FilledCircle(x, y, size, points, color);
     }
 
-    private void DrawRectGiant(BoundingBox box, float scale, float rot_y, float x, float y, float proty, int color)
+    private void DrawRectGiant(Box box, float scale, float rot_y, float x, float y, float proty, int color)
     {
       scale *= zoom_ratio;
 
@@ -321,7 +257,7 @@ namespace SWEndor.UI.Menu.Pages
       DrawLine(pt4.x, pt4.y, pt1.x, pt1.y, color);
     }
 
-    private void DrawTriangleGiant(BoundingBox box, float scale, float rot_y, float x, float y, float proty, int color)
+    private void DrawTriangleGiant(Box box, float scale, float rot_y, float x, float y, float proty, int color)
     {
       scale *= zoom_ratio;
 

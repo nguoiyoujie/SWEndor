@@ -5,6 +5,7 @@ using SWEndor.Models;
 using SWEndor.Primitives;
 using SWEndor.Primitives.Extensions;
 using SWEndor.Primitives.Factories;
+using SWEndor.Primitives.Geometry;
 using SWEndor.Weapons;
 using System;
 
@@ -87,7 +88,7 @@ namespace SWEndor.AI.Actions
         else
         {
           if (actor.TypeInfo.AIData.AggressiveTracker)
-            AggressiveTracking(engine, actor.ID);
+            AggressiveTracking(engine, actor);
 
           if (!actor.Mask.Has(ComponentMask.CAN_MOVE)) // can't move to you, I give up
             Complete = true;
@@ -133,16 +134,16 @@ namespace SWEndor.AI.Actions
       }
     }
 
-    private TV_3DVECTOR MakeAltPosition(Engine engine, ActorInfo actor, ActorInfo target)
+    private static TV_3DVECTOR MakeAltPosition(Engine engine, ActorInfo actor, ActorInfo target)
     {
       float radius = 0;
       TV_3DVECTOR center = new TV_3DVECTOR();
 
       if (target != null)
       {
-        BoundingSphere sph = target.GetBoundingSphere(true);
+        Sphere sph = target.GetBoundingSphere(true);
         center = sph.Position;
-        radius = sph.Radius + engine.Random.Next((int)(-4 * actor.TypeInfo.MoveLimitData.MaxSpeed), (int)(4 * actor.TypeInfo.MoveLimitData.MaxSpeed));
+        radius = sph.R + engine.Random.Next((int)(-4 * actor.TypeInfo.MoveLimitData.MaxSpeed), (int)(4 * actor.TypeInfo.MoveLimitData.MaxSpeed));
 
         float xzAngle = engine.Random.Next(0, 360);
 
@@ -156,7 +157,7 @@ namespace SWEndor.AI.Actions
     }
 
 
-    private Func<Engine, ActorInfo, ActorInfo, bool> aggressiveTracking = new Func<Engine, ActorInfo, ActorInfo, bool>(
+    private static Func<Engine, ActorInfo, ActorInfo, bool> aggressiveTracking = new Func<Engine, ActorInfo, ActorInfo, bool>(
       (e, a, c) =>
       {
         if (a != null
@@ -185,9 +186,8 @@ namespace SWEndor.AI.Actions
       }
     );
 
-    private void AggressiveTracking(Engine engine, int actorID)
+    private static void AggressiveTracking(Engine engine, ActorInfo actor)
     {
-      ActorInfo actor = engine.ActorFactory.Get(actorID);
       engine.ActorFactory.DoUntil(aggressiveTracking, actor);
     }
 

@@ -59,7 +59,7 @@ namespace SWEndor.Core
     internal void RenderOnce()
     {
       // RS_Target_Destroyed
-      Tex_Target_Destroyed = Engine.TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, @"panel\broken.png"));
+      Tex_Target_Destroyed = Engine.TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, @"panel\broken.png", "texTARGETER_DESTROYED"));
       int w = Target_width;
       int h = Target_height;
       int warn_color = new TV_COLOR(1, 0, 0, 1).GetIntColor();
@@ -72,7 +72,7 @@ namespace SWEndor.Core
       RS_Target_Destroyed.EndRender();
 
       // RS_Target_Disabled
-      Tex_Target_Disabled = Engine.TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, @"panel\disabled.png"));
+      Tex_Target_Disabled = Engine.TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, @"panel\disabled.png", "texTARGETER_DISABLED"));
       RS_Target_Disabled.StartRender(false);
       Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
       Engine.TrueVision.TVScreen2DImmediate.Draw_Texture(Tex_Target_Disabled, 0, 0, w, h);

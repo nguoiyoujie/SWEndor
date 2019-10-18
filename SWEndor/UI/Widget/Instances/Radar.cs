@@ -4,7 +4,7 @@ using SWEndor.Actors.Models;
 using SWEndor.Core;
 using SWEndor.Explosions;
 using SWEndor.Models;
-using SWEndor.Primitives;
+using SWEndor.Primitives.Geometry;
 using SWEndor.Projectiles;
 using System;
 using System.Collections.Generic;
@@ -75,6 +75,7 @@ namespace SWEndor.UI.Widgets
       {
         Engine.ActorFactory.DoEach(DrawElement);
         Engine.ExplosionFactory.DoEach(DrawElement);
+        Engine.ProjectileFactory.DoEach(DrawElement);
       }
       TVScreen2DImmediate.Action_End2D();
     }
@@ -387,7 +388,7 @@ namespace SWEndor.UI.Widgets
       TVScreen2DImmediate.Draw_FilledCircle(x, y, size, points, color);
     }
 
-    private void DrawRectGiant(BoundingBox box, float scale, float rot_y, float x, float y, float proty, int color)
+    private void DrawRectGiant(Box box, float scale, float rot_y, float x, float y, float proty, int color)
     {
       List<TV_2DVECTOR?> ts = new List<TV_2DVECTOR?>();
       float bx = box.X.Min * scale;
@@ -462,7 +463,7 @@ namespace SWEndor.UI.Widgets
       }
     }
 
-    private void DrawTriangleGiant(BoundingBox box, float scale, float rot_y, float x, float y, float proty, int color)
+    private void DrawTriangleGiant(Box box, float scale, float rot_y, float x, float y, float proty, int color)
     {
       List<TV_2DVECTOR?> ts = new List<TV_2DVECTOR?>();
       float bx = box.X.Min * scale;
