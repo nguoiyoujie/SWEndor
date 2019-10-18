@@ -13,9 +13,7 @@ struct VS_INPUT {
 };
 
 struct VS_OUTPUT {
-	float4 position : POSITION;
-	float2 texCoord : TEXCOORD0;
-	float3 worldPos : TEXCOORD3;
+	float4 color : TEXCOORD;
 };
 #define	PS_INPUT VS_OUTPUT
 
@@ -23,21 +21,18 @@ struct VS_OUTPUT {
 VS_OUTPUT VS(VS_INPUT IN) {
 	VS_OUTPUT OUT;
 
-	OUT.position = mul(IN.position, matWorldViewProj);
-	OUT.texCoord = IN.texCoord;
-	OUT.worldPos = mul(IN.position, matWorld).xyz;
+	//OUT.position = mul(IN.position, matWorldViewProj);
+	float3 wPos = mul(IN.position, matWorld).xyz;
+	float dist = distance(wPos, viewPosition);
+	OUT.color.rgb = emissive;
+	OUT.color.a = 1.0 - (dist - non_decay_dist) / decay_dist;
 	return OUT;
 }
 
 // Pixel Shader Function
 float4 PS(PS_INPUT IN) : COLOR {
-	float2 texCoord = IN.texCoord;
-	float dist = distance(IN.worldPos.xyz, viewPosition);
-	clip(non_decay_dist + decay_dist - dist);
-
-	float alpha = 1.0 - (dist - non_decay_dist) / decay_dist;
-	float3 color = emissive;
-	return float4(color, alpha);
+	clip(IN.color.a);
+	return IN.color;
 }
 
 technique TSM3 {
