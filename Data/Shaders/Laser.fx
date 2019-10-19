@@ -13,7 +13,8 @@ struct VS_INPUT {
 };
 
 struct VS_OUTPUT {
-	float4 color : TEXCOORD;
+	float4 position : POSITION;
+	float4 color : TEXCOORD3;
 };
 #define	PS_INPUT VS_OUTPUT
 
@@ -21,7 +22,7 @@ struct VS_OUTPUT {
 VS_OUTPUT VS(VS_INPUT IN) {
 	VS_OUTPUT OUT;
 
-	//OUT.position = mul(IN.position, matWorldViewProj);
+	OUT.position = mul(IN.position, matWorldViewProj);
 	float3 wPos = mul(IN.position, matWorld).xyz;
 	float dist = distance(wPos, viewPosition);
 	OUT.color.rgb = emissive;
