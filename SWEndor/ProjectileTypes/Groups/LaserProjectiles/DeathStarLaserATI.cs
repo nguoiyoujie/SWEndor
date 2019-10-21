@@ -14,22 +14,22 @@ namespace SWEndor.ProjectileTypes.Instances
       TimedLifeData = new TimedLifeData(true, 10);
 
       CombatData.ImpactDamage = 99999;
-      MoveLimitData.MaxSpeed = Globals.LaserSpeed * 85f;
-      MoveLimitData.MinSpeed = Globals.LaserSpeed * 85f;
+      MoveLimitData.MaxSpeed = Globals.LaserSpeed * 15f;
+      MoveLimitData.MinSpeed = Globals.LaserSpeed * 15f;
 
       CombatData.IsLaser = false; // not the same speed
 
       RenderData.CullDistance = -1;
 
-      MeshData = new MeshData(Name, @"projectiles\death_laser");
+      MeshData = new MeshData(Name, @"projectiles\death_laser.x");
 
       CombatData.ImpactCloseEnoughDistance = 200;
     }
 
-    public override void ProcessState(Engine engine, ProjectileInfo ainfo)
-    {
+    //public override void ProcessState(Engine engine, ProjectileInfo ainfo)
+    //{
       // Override
-    }
+    //}
 
     public override void ProcessHit(Engine engine, ProjectileInfo owner, ActorInfo hitby, TV_3DVECTOR impact)
     {
