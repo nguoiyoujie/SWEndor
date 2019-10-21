@@ -18,6 +18,7 @@ namespace SWEndor.Projectiles
     public void DoCollide(ActorInfo target, ref CollisionResultData data)
     {
       target.TypeInfo.ProcessHit(Engine, target, this, data.Impact);
+      TypeInfo.ProcessHit(Engine, this, target, data.Impact);
     }
   }
 }
