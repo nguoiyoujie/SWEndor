@@ -71,8 +71,15 @@ namespace SWEndor
 
     public static void Add(float time, GameEvent method)
     {
+      GameEventObject geo = new GameEventObject(time, method);
+      while (list.Contains(geo))
+      {
+        time += 0.0001f;
+        geo = new GameEventObject(time, method);
+      }
+
       using (ScopeCounterManager.Acquire(_scope))
-        list.Add(new GameEventObject(time, method));
+        list.Add(geo);
     }
 
     public static void Clear()
