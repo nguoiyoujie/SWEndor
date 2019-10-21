@@ -94,14 +94,18 @@ namespace SWEndor.Shaders
             if (ln.HasKey)
             {
               string key = ln.Key;
-              if (!s.ConstTex.ContainsKey(key))
+              if (!s.RandTex.ContainsKey(key))
               {
                 string[] stexs = f.GetStringList(head, ln.Key, new string[0]);
                 if (stexs.Length >= 0)
                 {
-                  string stex = stexs[engine.Random.Next(0, stexs.Length)];
-                  int t = engine.TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, stex.Trim()), stex);
-                  s.ConstTex.Add(key, t);
+                  int[] ts = new int[stexs.Length];
+                  for (int i = 0; i < stexs.Length; i++)
+                  {
+                    string stex = stexs[i];
+                    ts[i] = engine.TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, stex.Trim()), stex);
+                  }
+                  s.RandTex.Add(key, ts);
                 }
               }
             }

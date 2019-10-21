@@ -29,6 +29,7 @@ namespace SWEndor.Shaders
     private Dictionary<string, TV_2DVECTOR> ConstVec2 = new Dictionary<string, TV_2DVECTOR>();
     private Dictionary<string, TV_3DVECTOR> ConstVec3 = new Dictionary<string, TV_3DVECTOR>();
     private Dictionary<string, int> ConstTex = new Dictionary<string, int>();
+    private Dictionary<string, int[]> RandTex = new Dictionary<string, int[]>();
     private Dictionary<string, DynamicShaderDataSource> DynamicParam = new Dictionary<string, DynamicShaderDataSource>();
     private ObjectPool<TVShader> _pool;
     private int _count;
@@ -109,6 +110,9 @@ namespace SWEndor.Shaders
     {
       if (shader == null)
         return;
+
+      foreach (string s in RandTex.Keys)
+        shader.SetEffectParamTexture(s, RandTex[s][obj.Engine.Random.Next(0, RandTex[s].Length)]);
 
       foreach (string s in DynamicParam.Keys)
       {
