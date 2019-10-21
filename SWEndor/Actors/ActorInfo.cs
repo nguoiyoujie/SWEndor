@@ -62,9 +62,14 @@ namespace SWEndor.Actors
       get { return _faction; }
       set
       {
-        _faction?.UnregisterActor(this);
-        _faction = value ?? FactionInfo.Neutral;
-        _faction.RegisterActor(this);
+        if (_faction != value)
+        {
+          if (_faction != FactionInfo.Neutral)
+            _faction?.UnregisterActor(this);
+          _faction = value ?? FactionInfo.Neutral;
+          if (_faction != FactionInfo.Neutral)
+            _faction.RegisterActor(this);
+        }
       }
     }
 
@@ -89,7 +94,7 @@ namespace SWEndor.Actors
     internal ActorEvent CreatedEvents;
     internal ActorEvent DestroyedEvents;
     internal ActorStateChangeEvent ActorStateChangeEvents;
-    internal HitEvent HitEvents;
+    internal ActorEvent HitEvents;
 
     // AI
     internal ActionInfo CurrentAction = null;
