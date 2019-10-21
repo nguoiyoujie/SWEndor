@@ -115,27 +115,27 @@ namespace SWEndor.Scenarios
       }
     }
 
+    int TgtID;
     public override void GameTick()
     {
       base.GameTick();
       CalibrateSceneObjects();
 
-      ActorInfo tgt = Engine.ActorFactory.Get(PlayerCameraInfo.Look.GetPosition_Actor());
+      ActorInfo tgt = Engine.ActorFactory.Get(TgtID);
 
       if (tgt == null || !tgt.Active)
       {
-        List<int> list = new List<int>(MainEnemyFaction.GetWings());
-        //list.AddRange(MainAllyFaction.GetWings());
-        if (list.Count > 0)
-          PlayerCameraInfo.Look.SetPosition_Actor(list[Engine.Random.Next(0, list.Count)]);
+        TgtID = MainEnemyFaction.GetRandom(Engine, TargetType.FIGHTER);
+        //PlayerCameraInfo.SceneLook.SetPosition_Actor(TgtID);
       }
 
       if (tgt != null && tgt.Active)
       {
         PlayerInfo.TempActorID = tgt.ID;
-        PlayerCameraInfo.Look.SetPosition_Actor(tgt.ID, new TV_3DVECTOR(0, 25, 0), new TV_3DVECTOR(0, 0, -100));
-        PlayerCameraInfo.Look.SetTarget_LookAtActor(tgt.ID, new TV_3DVECTOR(0, 30, 0), new TV_3DVECTOR(0, 0, 20000));
-        PlayerCameraInfo.Look.SetRotationMult(0.2f);
+        PlayerCameraInfo.SceneLook.SetPosition_Actor(tgt.ID, new TV_3DVECTOR(0, 25, 0), new TV_3DVECTOR(0, 0, -100));
+        PlayerCameraInfo.SceneLook.SetTarget_LookAtActor(tgt.ID, new TV_3DVECTOR(0, 30, 0), new TV_3DVECTOR(0, 0, 20000));
+        PlayerCameraInfo.SceneLook.SetRotationMult(1);
+        PlayerCameraInfo.SetSceneLook();
       }
 
       if (Manager.GetGameStateB("in_battle"))
@@ -317,7 +317,7 @@ namespace SWEndor.Scenarios
 
     private void Rebel_HyperspaceOut()
     {
-      foreach (int actorID in MainAllyFaction.GetShips())
+      foreach (int actorID in MainAllyFaction.GetActors(TargetType.SHIP, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null

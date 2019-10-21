@@ -84,7 +84,7 @@ namespace SWEndor.Scenarios
 
       int tie_d = 0;
       int tie_sa = 0;
-      foreach (int actorID in MainEnemyFaction.GetWings())
+      foreach (int actorID in MainEnemyFaction.GetActors(TargetType.FIGHTER, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
@@ -159,7 +159,7 @@ namespace SWEndor.Scenarios
       TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(0, 0, 5000);
       float creationTime = Game.GameTime;
 
-      PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(350, 100, 1300));
+      PlayerCameraInfo.SceneLook.SetPosition_Point(new TV_3DVECTOR(350, 100, 1300));
 
       // Player X-Wing
       pos = new TV_3DVECTOR(0, 0, -150);
@@ -180,7 +180,8 @@ namespace SWEndor.Scenarios
         Registries = null
       }.Spawn(this);
 
-      PlayerCameraInfo.Look.SetTarget_LookAtActor(ainfo.ID);
+      PlayerCameraInfo.SceneLook.SetTarget_LookAtActor(ainfo.ID);
+      PlayerCameraInfo.SetSceneLook();
       PlayerInfo.TempActorID = ainfo.ID;
 
       // Wings x(45-1)
@@ -244,9 +245,8 @@ namespace SWEndor.Scenarios
           Position = v + hyperspaceInOffset,
           Rotation = new TV_3DVECTOR(),
           Actions = new ActionInfo[] { new HyperspaceIn(v)
-                                           , new Lock()
                                            , new Move(nv, ainfo.MoveData.MaxSpeed)
-                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), ainfo.MoveData.MinSpeed)
+                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), 0)
                                            , new Lock() },
           Registries = new string[] { "CriticalAllies" }
         }.Spawn(this);
@@ -275,9 +275,8 @@ namespace SWEndor.Scenarios
           Position = v + hyperspaceInOffset,
           Rotation = new TV_3DVECTOR(),
           Actions = new ActionInfo[] { new HyperspaceIn(v)
-                                           , new Lock()
                                            , new Move(nv, ainfo.MoveData.MaxSpeed)
-                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), ainfo.MoveData.MinSpeed)
+                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), 0)
                                            , new Lock() },
           Registries = new string[] { "CriticalAllies" }
         }.Spawn(this);
@@ -287,7 +286,7 @@ namespace SWEndor.Scenarios
     public void Rebel_RemoveTorps()
     {
       /*
-      foreach (int actorID in MainAllyFaction.GetWings())
+      foreach (int actorID in MainAllyFaction.GetActors(TargetType.FIGHTER, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
@@ -304,6 +303,7 @@ namespace SWEndor.Scenarios
     public void Rebel_MakePlayer()
     {
       PlayerInfo.ActorID = PlayerInfo.TempActorID;
+      PlayerCameraInfo.SetPlayerLook();
 
       if (PlayerInfo.Actor == null || PlayerInfo.Actor.Disposed)
       {
@@ -313,7 +313,7 @@ namespace SWEndor.Scenarios
           TV_3DVECTOR pos = new TV_3DVECTOR(0, -200, 500);
           if (MainAllyFaction.ShipCount > 0)
           {
-            int rid = MainAllyFaction.GetShip(0);
+            int rid = MainAllyFaction.GetFirst(TargetType.SHIP);
             ActorInfo rs = Engine.ActorFactory.Get(rid);
             if (rs != null)
               pos += rs.GetGlobalPosition();
@@ -341,7 +341,7 @@ namespace SWEndor.Scenarios
 
     public void Rebel_GiveControl()
     {
-      foreach (int actorID in MainAllyFaction.GetAll())
+      foreach (int actorID in MainAllyFaction.GetActors(TargetType.ANY, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)

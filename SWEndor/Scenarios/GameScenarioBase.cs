@@ -124,8 +124,7 @@ namespace SWEndor.Scenarios
       LoadScene();
       Launched = true;
       PlayerCameraInfo.CameraMode = CameraMode.FIRSTPERSON;
-      PlayerCameraInfo.Look.ResetPosition();
-      PlayerCameraInfo.Look.ResetTarget();
+      PlayerCameraInfo.SetPlayerLook(); 
     }
 
     public virtual void LoadFactions()
@@ -216,13 +215,14 @@ namespace SWEndor.Scenarios
         }
 
         MakePlayer?.Invoke();
+        PlayerCameraInfo.SetPlayerLook();
 
         FadeIn();
         Manager.IsCutsceneMode = false;
       }
       else
       {
-         Manager.AddEvent(Game.GameTime + 0.01f, FadeInterim);
+         Manager.AddEvent(Game.GameTime + 0.0001f, FadeInterim);
       }
     }
 
@@ -240,7 +240,7 @@ namespace SWEndor.Scenarios
       Screen2D.CurrentPage = new GameOver(Screen2D);
       Screen2D.ShowPage = true;
       Game.IsPaused = true;
-      SoundManager.SetMusic("battle_3_2"); // make modifiable
+      SoundManager.SetMusic("battle_3_2"); // TO-DO: make configurable
     }
 
     public void LostWing()
@@ -324,21 +324,9 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void RegisterEvents(ActorInfo actor)
-    {
-     // actor.HitEvents += ProcessHit;
-    }
-
     public virtual void ProcessPlayerDying(ActorInfo a)
     {
-      if (a != null)
-      {
-        PlayerInfo.TempActorID = a.ID;
 
-        //if (PlayerInfo.Actor.TypeInfo is DeathCameraATI)
-        //  if (PlayerInfo.Actor.Active)
-        //    PlayerInfo.Actor.Position = new TV_3DVECTOR(ainfo.Position.x, ainfo.Position.y, ainfo.Position.z);
-      }
     }
 
     public virtual void ProcessPlayerKilled(ActorInfo a)

@@ -215,6 +215,7 @@
     <Compile Include="ActorTypes\Components\DebrisSpawnerData.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\SpawnerInfo.cs" />
     <Compile Include="Primitives\Cache\EnumNames.cs" />
+    <Compile Include="Primitives\Extensions\BitExt.cs" />
     <Compile Include="Projectiles\Models\Collision\ProjExt.cs" />
     <Compile Include="Projectiles\Models\Explosion\ProjExt.cs" />
     <Compile Include="Projectiles\Models\Mesh\MeshModel.cs" />
@@ -463,9 +464,9 @@
     <Compile Include="Log\Log.cs" />
     <Compile Include="Log\LogType.cs" />
     <Compile Include="Player\PlayerCameraInfo.cs" />
-    <Compile Include="Primitives\BoundingBox.cs" />
-    <Compile Include="Primitives\BoundingSphere.cs" />
-    <Compile Include="Primitives\BoundingValue.cs" />
+    <Compile Include="Primitives\Geometry\Box.cs" />
+    <Compile Include="Primitives\Geometry\Sphere.cs" />
+    <Compile Include="Primitives\Geometry\BoundFloat.cs" />
     <Compile Include="Primitives\Cache\Cache.cs" />
     <Compile Include="Primitives\Cache\Cache_P2.cs" />
     <Compile Include="Primitives\Collections\CircularQueue.cs" />
@@ -548,6 +549,7 @@
     <Compile Include="Settings\ColorLocalization.cs" />
     <Compile Include="Settings\TextLocalization.cs" />
     <Compile Include="Shaders\Factory\Factory.cs" />
+    <Compile Include="Shaders\Factory\Parser.cs" />
     <Compile Include="Shaders\ShaderInfo.cs" />
     <Compile Include="Sound\Instructions\InstAddSyncPoint.cs" />
     <Compile Include="Sound\Instructions\InstPauseMusic.cs" />
@@ -737,6 +739,9 @@
     <None Include="Data\weaponloadouts.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="Data\credits.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Data\weapons.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

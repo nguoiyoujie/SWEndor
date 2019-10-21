@@ -251,7 +251,7 @@ namespace SWEndor.Actors
 
     #region Event Methods
     public void OnTickEvent() { TickEvents?.Invoke(this); }
-    public void OnHitEvent(ActorInfo victim) { HitEvents?.Invoke(this, victim); }
+    public void OnHitEvent() { HitEvents?.Invoke(this); }
     public void OnStateChangeEvent()
     {
       if (ActorState == ActorState.DYING)

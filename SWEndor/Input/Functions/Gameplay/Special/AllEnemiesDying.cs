@@ -16,10 +16,10 @@ namespace SWEndor.Input.Functions.Gameplay.Special
     {
       if (engine.GameScenarioManager.Scenario != null)
       {
-        foreach (int actorID in engine.GameScenarioManager.Scenario.MainEnemyFaction.GetAll())
+        foreach (int actorID in engine.GameScenarioManager.Scenario.MainEnemyFaction.GetActors(Models.TargetType.ANY, true))
         {
           ActorInfo actor = engine.ActorFactory.Get(actorID);
-          if (actor != null)
+          if (actor != null && !actor.IsDyingOrDead)
             actor.SetState_Dying();
         }
       }

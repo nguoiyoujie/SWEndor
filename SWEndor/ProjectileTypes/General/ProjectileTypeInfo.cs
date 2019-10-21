@@ -154,8 +154,8 @@ namespace SWEndor.ProjectileTypes
           ActorInfo o = proj.Owner;
           if (o != null)
           {
-            o.OnHitEvent(target);
-            target.OnHitEvent(o);
+            o.OnHitEvent();
+            target.OnHitEvent();
           }
         }
       }

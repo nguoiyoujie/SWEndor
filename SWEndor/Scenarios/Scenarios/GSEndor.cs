@@ -6,6 +6,7 @@ using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Models;
 using SWEndor.Player;
+using SWEndor.Primitives.Extensions;
 using SWEndor.Sound;
 using SWEndor.Weapons;
 using System;
@@ -266,10 +267,12 @@ namespace SWEndor.Scenarios
         // TIE spawn
         if (TIESpawnTime < Game.GameTime)
         {
-          if ((MainEnemyFaction.WingCount < 36 && MainEnemyFaction.ShipCount == 0 && StageNumber == 1)
-            || (MainEnemyFaction.WingCount < 32 && MainEnemyFaction.ShipCount == 0 && StageNumber == 3)
-            || (MainEnemyFaction.WingCount < 28 && MainEnemyFaction.ShipCount == 0)
-            || (MainEnemyFaction.WingCount < 14 && MainEnemyFaction.ShipCount > 0))
+          int tie = MainEnemyFaction.GetCount(TargetType.FIGHTER, false);
+          int sdest = MainEnemyFaction.GetCount(TargetType.SHIP, false);
+          if ((tie < 36 && sdest == 0 && StageNumber == 1)
+            || (tie < 32 && sdest == 0 && StageNumber == 3)
+            || (tie < 28 && sdest == 0)
+            || (tie < 14 && sdest > 0))
           {
             TIESpawnTime = Game.GameTime + 10f;
 
@@ -418,7 +421,7 @@ namespace SWEndor.Scenarios
         if (m_Enemy_pull > 0)
         {
           m_Enemy_pull -= Game.TimeSinceRender * m_Enemy_pullrate;
-          foreach (int enemyshipID in MainEnemyFaction.GetShips())
+          foreach (int enemyshipID in MainEnemyFaction.GetActors(TargetType.SHIP, true))
           {
             ActorInfo enemyship = Engine.ActorFactory.Get(enemyshipID);
             if (enemyship != null)
@@ -469,7 +472,7 @@ namespace SWEndor.Scenarios
 
       if (Manager.Scenario.TimeSinceLostWing < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
       {
-        Manager.Line1Text = string.Format("WINGS: {0}", MainAllyFaction.WingLimit);
+        Manager.Line1Text = "WINGS: {0}".F(MainAllyFaction.WingLimit);
       }
       else
       {
@@ -478,7 +481,7 @@ namespace SWEndor.Scenarios
 
       if (Manager.Scenario.TimeSinceLostShip < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
       {
-        Manager.Line2Text = string.Format("SHIPS: {0}", MainAllyFaction.ShipLimit);
+        Manager.Line2Text = "SHIPS: {0}".F(MainAllyFaction.ShipLimit);
       }
       else
       {
@@ -624,8 +627,9 @@ namespace SWEndor.Scenarios
 
       m_rebelPosition.Add(ainfo.ID, position);
       PlayerInfo.TempActorID = ainfo.ID;
-      PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(10, -20, 1500));
-      PlayerCameraInfo.Look.SetTarget_LookAtActor(ainfo.ID);
+      PlayerCameraInfo.SceneLook.SetPosition_Point(new TV_3DVECTOR(10, -20, 1500));
+      PlayerCameraInfo.SceneLook.SetTarget_LookAtActor(ainfo.ID);
+      PlayerCameraInfo.SetSceneLook();
 
       // Mon Calamari (HomeOne)
       type = ActorTypeFactory.Get("MC90");
@@ -813,7 +817,7 @@ namespace SWEndor.Scenarios
 
     private void Rebel_HyperspaceOut()
     {
-      foreach (int actorID in MainAllyFaction.GetWings())
+      foreach (int actorID in MainAllyFaction.GetActors(TargetType.FIGHTER, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
@@ -826,7 +830,7 @@ namespace SWEndor.Scenarios
           actor.QueueLast(new Delete());
         }
       }
-      foreach (int actorID in MainAllyFaction.GetShips())
+      foreach (int actorID in MainAllyFaction.GetActors(TargetType.SHIP, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
@@ -844,13 +848,14 @@ namespace SWEndor.Scenarios
     public void Rebel_MakePlayer()
     {
       PlayerInfo.ActorID = PlayerInfo.TempActorID;
+      PlayerCameraInfo.SetPlayerLook();
 
       if (PlayerInfo.Actor != null && !PlayerInfo.Actor.Disposed)
       {
         // m_Player = Player.Actor;
         if (!Manager.GetGameStateB("in_battle"))
         {
-          foreach (int actorID in MainAllyFaction.GetShips())
+          foreach (int actorID in MainAllyFaction.GetActors(TargetType.SHIP, true))
           {
             ActorInfo actor = Engine.ActorFactory.Get(actorID);
             if (actor != null)
@@ -860,7 +865,7 @@ namespace SWEndor.Scenarios
             }
           }
 
-          foreach (int actorID in MainAllyFaction.GetWings())
+          foreach (int actorID in MainAllyFaction.GetActors(TargetType.FIGHTER, true))
           {
             ActorInfo actor = Engine.ActorFactory.Get(actorID);
             if (actor != null)
@@ -884,7 +889,7 @@ namespace SWEndor.Scenarios
 
     public void Rebel_ShipsForward()
     {
-      foreach (int actorID in MainAllyFaction.GetShips())
+      foreach (int actorID in MainAllyFaction.GetActors(TargetType.SHIP, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
@@ -899,7 +904,7 @@ namespace SWEndor.Scenarios
 
     public void Rebel_ShipsForward_2()
     {
-      foreach (int actorID in MainAllyFaction.GetShips())
+      foreach (int actorID in MainAllyFaction.GetActors(TargetType.SHIP, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
@@ -918,19 +923,19 @@ namespace SWEndor.Scenarios
     {
       if (MainEnemyFaction.ShipCount > 0)
       {
-        foreach (int actorID in MainAllyFaction.GetWings())
+        foreach (int actorID in MainAllyFaction.GetActors(TargetType.FIGHTER, true))
         {
           ActorInfo actor = Engine.ActorFactory.Get(actorID);
           if (actor != null)
           {
             if (actor.TypeInfo is YWingATI || actor.TypeInfo is BWingATI)
             {
-              int rsID = MainEnemyFaction.GetShip(Engine.Random.Next(0, MainEnemyFaction.ShipCount));
+              int rsID = MainEnemyFaction.GetRandom(Engine, TargetType.SHIP);
               ActorInfo rs = Engine.ActorFactory.Get(actorID);
               {
                 foreach (ActorInfo c in rs.Children)
                 {
-                  if (c.TypeInfo.AIData.TargetType.Has(TargetType.SHIELDGENERATOR))
+                  if (c.TypeInfo.AIData.TargetType.Contains(TargetType.SHIELDGENERATOR))
                     if (Engine.Random.NextDouble() > 0.4f)
                       rsID = c.ID;
                 }
@@ -980,12 +985,12 @@ namespace SWEndor.Scenarios
 
       ActorInfo wedge = Engine.ActorFactory.Get(m_WedgeID);
       wedge.UnlockOne();
-      wedge.QueueFirst(new Wait(2.5f));
+      wedge.QueueFirst(new Wait(0.5f));
       wedge.MoveData.FreeSpeed = false;
       wedge.MoveData.Speed = wedge.MoveData.MaxSpeed;
 
-      float time = 5f;
-      foreach (int actorID in MainAllyFaction.GetWings())
+      float time = 3f;
+      foreach (int actorID in MainAllyFaction.GetActors(TargetType.FIGHTER, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
 
@@ -993,10 +998,10 @@ namespace SWEndor.Scenarios
         actor.QueueFirst(new Wait(time));
         actor.MoveData.FreeSpeed = false;
         actor.MoveData.Speed = actor.MoveData.MaxSpeed;
-        time += 2.5f;
+        time = (float)Engine.Random.NextDouble() * 3f;
       }
 
-      foreach (int actorID in MainAllyFaction.GetShips())
+      foreach (int actorID in MainAllyFaction.GetActors(TargetType.SHIP, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
 
@@ -1016,7 +1021,7 @@ namespace SWEndor.Scenarios
 
     private void Rebel_GoBack(float chance)
     {
-      foreach (int actorID in MainAllyFaction.GetWings())
+      foreach (int actorID in MainAllyFaction.GetActors(TargetType.FIGHTER, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
@@ -1036,7 +1041,7 @@ namespace SWEndor.Scenarios
 
     public void Rebel_RemoveTorps()
     {
-      foreach (int actorID in MainAllyFaction.GetWings())
+      foreach (int actorID in MainAllyFaction.GetActors(TargetType.FIGHTER, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
@@ -1056,37 +1061,37 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void Rebel_CriticalUnitHit(ActorInfo aa, ActorInfo av)
+    public void Rebel_CriticalUnitHit(ActorInfo actor)
     {
-      if (av != null
-        && av.HP_Frac < 0.8f
+      if (actor != null
+        && actor.HP_Frac < 0.8f
         && MainAllyFaction.ShipCount > 0)
       {
         ActorInfo homeone = Engine.ActorFactory.Get(m_HomeOneID);
 
-        av.ClearQueue();
-        av.QueueLast(new Move(homeone.GetGlobalPosition() + new TV_3DVECTOR(Engine.Random.Next(-2500, 2500)
+        actor.ClearQueue();
+        actor.QueueLast(new Move(homeone.GetGlobalPosition() + new TV_3DVECTOR(Engine.Random.Next(-2500, 2500)
                     , Engine.Random.Next(-50, 50)
                     , Engine.Random.Next(-2500, 2500))
-                    , av.MoveData.MaxSpeed));
+                    , actor.MoveData.MaxSpeed));
       }
     }
 
-    public void Rebel_CriticalUnitDanger(ActorInfo aa, ActorInfo av)
+    public void Rebel_CriticalUnitDanger(ActorInfo actor)
     {
-      float f = av.HP_Frac;
+      float f = actor.HP_Frac;
       if (f < 0.67f && f >= 0.33f)
       {
-        Screen2D.MessageText(string.Format("{0}: {1}, I need cover!", av.Name, PlayerInfo.Name)
+        Screen2D.MessageText(string.Format("{0}: {1}, I need cover!", actor.Name, PlayerInfo.Name)
                                             , 5
-                                            , av.Faction.Color
+                                            , actor.Faction.Color
                                             , 100);
       }
       else if (f < 0.33f)
       {
-        Screen2D.MessageText(string.Format("{0}: {1}, Get those TIEs off me!", av.Name, PlayerInfo.Name)
+        Screen2D.MessageText(string.Format("{0}: {1}, Get those TIEs off me!", actor.Name, PlayerInfo.Name)
                                             , 5
-                                            , av.Faction.Color
+                                            , actor.Faction.Color
                                             , 100);
       }
     }
@@ -1108,8 +1113,8 @@ namespace SWEndor.Scenarios
         Manager.IsCutsceneMode = true;
 
         PlayerInfo.ActorID = -1;
-        PlayerCameraInfo.Look.SetPosition_Actor(actor.ID);
-        PlayerCameraInfo.Look.SetModeDeathCircle(actor.TypeInfo.DeathCamera);
+        PlayerCameraInfo.DeathLook.SetPosition_Actor(actor.ID, actor.TypeInfo.DeathCamera);
+        PlayerCameraInfo.SetDeathLook();
 
         if (actor.IsDying)
         {
@@ -1971,8 +1976,8 @@ namespace SWEndor.Scenarios
         Manager.IsCutsceneMode = true;
 
         PlayerInfo.ActorID = -1;
-        PlayerCameraInfo.Look.SetPosition_Actor(actor.ID);
-        PlayerCameraInfo.Look.SetModeDeathCircle(actor.TypeInfo.DeathCamera);
+        PlayerCameraInfo.DeathLook.SetPosition_Actor(actor.ID, actor.TypeInfo.DeathCamera);
+        PlayerCameraInfo.SetDeathLook();
 
         if (actor.IsDying)
         {
@@ -2014,10 +2019,7 @@ namespace SWEndor.Scenarios
       if (m_ADSLS != null
         && m_ADSLS.Active)
       {
-        List<int> tgt = new List<int>(MainAllyFaction.GetShips());
-        tgt.Reverse();
-
-        foreach (int tid in tgt)
+        foreach (int tid in MainAllyFaction.GetActors(TargetType.SHIP, true))
         {
           ActorInfo t = Engine.ActorFactory.Get(tid);
           if (t != null
@@ -2207,7 +2209,7 @@ namespace SWEndor.Scenarios
         homeone.SetArmor(DamageType.ALL, 0);
 
       m_PlayerID = PlayerInfo.ActorID;
-      ActorInfo player = Engine.ActorFactory.Get(m_PlayerID);
+      ActorInfo player = PlayerInfo.Actor;
       if (player != null)
       {
         m_Player_pos = player.Position;
@@ -2218,7 +2220,8 @@ namespace SWEndor.Scenarios
         player.SetArmor(DamageType.ALL, 0);
       }
 
-      PlayerInfo.ActorID = -1; // Manager.SceneCameraID;
+      PlayerInfo.ActorID = -1;
+      PlayerInfo.TempActorID = -1;
       Manager.IsCutsceneMode = true;
     }
 
@@ -2250,8 +2253,7 @@ namespace SWEndor.Scenarios
       }
 
       Manager.IsCutsceneMode = false;
-      PlayerCameraInfo.Look.ResetPosition();
-      PlayerCameraInfo.Look.ResetTarget();
+      PlayerCameraInfo.SetPlayerLook();
     }
 
     public void Scene_DeathStarCam()
@@ -2274,8 +2276,9 @@ namespace SWEndor.Scenarios
         else if (target.TypeInfo is MC90ATI)
           pos += new TV_3DVECTOR(-850, -400, 2500);
 
-        PlayerCameraInfo.Look.SetPosition_Point(pos, 50);
-        PlayerCameraInfo.Look.SetTarget_LookAtActor(target.ID);
+        PlayerCameraInfo.SceneLook.SetPosition_Point(pos, 50);
+        PlayerCameraInfo.SceneLook.SetTarget_LookAtActor(target.ID);
+        PlayerCameraInfo.SetSceneLook();
         Manager.AddEvent(Game.GameTime + 5f, Scene_ExitCutscene);
       }
     }

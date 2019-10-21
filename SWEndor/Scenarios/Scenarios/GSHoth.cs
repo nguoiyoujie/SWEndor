@@ -146,9 +146,9 @@ namespace SWEndor.Scenarios
       if (player != null
           && !player.IsDyingOrDead)
       {
-        MainEnemyFaction.WingLimit = 6 + MainAllyFaction.WingCount * 2;
-        if (MainEnemyFaction.WingLimit > 12)
-          MainEnemyFaction.WingLimit = 12;
+        MainEnemyFaction.WingSpawnLimit = 6 + MainAllyFaction.WingCount * 2;
+        if (MainEnemyFaction.WingSpawnLimit > 12)
+          MainEnemyFaction.WingSpawnLimit = 12;
 
         if (StageNumber == 0)
         {
@@ -249,7 +249,7 @@ namespace SWEndor.Scenarios
       ActorInfo ainfo;
       //ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
       //cam.Position = new TV_3DVECTOR(200, 350, Manager.MaxBounds.z - 1500);
-      PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(200, 350, Manager.MaxBounds.z - 1500));
+      PlayerCameraInfo.SceneLook.SetPosition_Point(new TV_3DVECTOR(200, 350, Manager.MaxBounds.z - 1500));
 
       // Player Falcon
       ainfo = new ActorSpawnInfo
@@ -268,7 +268,8 @@ namespace SWEndor.Scenarios
       //ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "front", "rear" };
       ainfo.SetArmor(DamageType.ALL, 0.1f);
       ainfo.HitEvents += Rebel_PlayerHit;
-      PlayerCameraInfo.Look.SetTarget_LookAtActor(ainfo.ID);
+      PlayerCameraInfo.SceneLook.SetTarget_LookAtActor(ainfo.ID);
+      PlayerCameraInfo.SetSceneLook();
       PlayerInfo.TempActorID = ainfo.ID;
 
       // X-Wings x12
@@ -354,7 +355,7 @@ namespace SWEndor.Scenarios
       TV_3DVECTOR rotation = new TV_3DVECTOR(0, 180, 0);
       if (MainEnemyFaction.ShipCount > 0)
       {
-        ActorInfo target = Engine.ActorFactory.Get(MainEnemyFaction.GetShip(0));
+        ActorInfo target = Engine.ActorFactory.Get(MainEnemyFaction.GetFirst(TargetType.SHIP));
         if (target != null)
         {
           TV_3DVECTOR dir = target.GetGlobalPosition() - position;
@@ -362,6 +363,7 @@ namespace SWEndor.Scenarios
         }
       }
 
+      // need to switch to ProjectileType
       new ActorSpawnInfo
       {
         Type = ActorTypeFactory.Get("LSR_IONBIG"),
@@ -379,6 +381,7 @@ namespace SWEndor.Scenarios
     public void Rebel_MakePlayer()
     {
       PlayerInfo.ActorID = PlayerInfo.TempActorID;
+      PlayerCameraInfo.SetPlayerLook();
 
       if (PlayerInfo.Actor == null || PlayerInfo.Actor.Disposed)
       {
@@ -401,7 +404,7 @@ namespace SWEndor.Scenarios
           {
             TV_3DVECTOR pos = new TV_3DVECTOR();
             int count = 0;
-            foreach (int enID in MainEnemyFaction.GetShips())
+            foreach (int enID in MainEnemyFaction.GetActors(TargetType.SHIP, true))
             {
               ActorInfo en = Engine.ActorFactory.Get(enID);
               if (en != null)
@@ -441,7 +444,7 @@ namespace SWEndor.Scenarios
 
     public void Rebel_GiveControl()
     {
-      foreach (int actorID in MainAllyFaction.GetWings())
+      foreach (int actorID in MainAllyFaction.GetActors(TargetType.FIGHTER, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
@@ -458,14 +461,14 @@ namespace SWEndor.Scenarios
 
     public void Rebel_Delete()
     {
-      foreach (int actorID in MainAllyFaction.GetWings())
+      foreach (int actorID in MainAllyFaction.GetActors(TargetType.FIGHTER, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor.IsPlayer)
           actor.Delete();
       }
 
-      foreach (int actorID in MainAllyFaction.GetShips())
+      foreach (int actorID in MainAllyFaction.GetActors(TargetType.SHIP, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor.IsPlayer)
@@ -473,7 +476,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-    public void Rebel_PlayerHit(ActorInfo attacker, ActorInfo player)
+    public void Rebel_PlayerHit(ActorInfo player)
     {
 
       /* DISABLED until new Shield implementation is found
@@ -530,8 +533,8 @@ namespace SWEndor.Scenarios
         Manager.IsCutsceneMode = true;
 
         PlayerInfo.ActorID = -1;
-        PlayerCameraInfo.Look.SetPosition_Actor(actor.ID);
-        PlayerCameraInfo.Look.SetModeDeathCircle(actor.TypeInfo.DeathCamera);
+        PlayerCameraInfo.DeathLook.SetPosition_Actor(actor.ID, actor.TypeInfo.DeathCamera);
+        PlayerCameraInfo.SetDeathLook();
 
         if (actor.IsDying)
         {
@@ -805,6 +808,7 @@ namespace SWEndor.Scenarios
         player.SetArmor(DamageType.ALL, m_Player_DamageModifier);
         player.ForceClearQueue();
       }
+      PlayerCameraInfo.SetPlayerLook();
       Manager.IsCutsceneMode = false;
     }
 
@@ -847,10 +851,12 @@ namespace SWEndor.Scenarios
 
       //cam.MoveData.MaxSpeed = 50;
       //cam.MoveData.Speed = 50;
-      PlayerCameraInfo.Look.SetPosition_Point(new TV_3DVECTOR(400, 130, -1800));
+      PlayerCameraInfo.SceneLook.SetPosition_Point(new TV_3DVECTOR(400, 130, -1800));
       //PlayerCameraInfo.LookAtPosition = new TV_3DVECTOR(200, 350, Manager.MaxBounds.z - 1500);
 
-      PlayerCameraInfo.Look.SetTarget_LookAtActor(m_PlayerID);
+      PlayerCameraInfo.SceneLook.SetTarget_LookAtActor(m_PlayerID);
+      PlayerCameraInfo.SetSceneLook();
+
       PlayerInfo.TempActorID = m_PlayerID;
 
       int counter = 0;
@@ -859,14 +865,14 @@ namespace SWEndor.Scenarios
       int y = 0;
       int z = -1400;
 
-      foreach (int actorID in MainEnemyFaction.GetWings())
+      foreach (int actorID in MainEnemyFaction.GetActors(TargetType.FIGHTER, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
           actor.Delete();
       }
 
-      foreach (int actorID in MainAllyFaction.GetWings())
+      foreach (int actorID in MainAllyFaction.GetActors(TargetType.FIGHTER, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
@@ -923,7 +929,7 @@ namespace SWEndor.Scenarios
       
 
       int en_ship = 0;
-      foreach (int actorID in MainEnemyFaction.GetShips())
+      foreach (int actorID in MainEnemyFaction.GetActors(TargetType.SHIP, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)

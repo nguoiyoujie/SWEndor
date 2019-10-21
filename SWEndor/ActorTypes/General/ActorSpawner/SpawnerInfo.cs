@@ -75,6 +75,7 @@ namespace SWEndor
       a.QueueNext(new Lock());
 
       a.SetPlayer();
+      engine.PlayerCameraInfo.SetPlayerLook();
 
       if (a.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER) && a.Faction.WingLimit >= 0)
         a.Faction.WingLimit++;
@@ -123,7 +124,6 @@ namespace SWEndor
             ActorInfo a = engine.ActorFactory.Create(acinfo);
             a.Squad = squad;
             ainfo.AddChild(a);
-            engine.GameScenarioManager.Scenario?.RegisterEvents(a);
             a.QueueFirst(new Lock());
           }
 

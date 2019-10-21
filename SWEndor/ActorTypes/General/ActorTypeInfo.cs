@@ -227,8 +227,8 @@ namespace SWEndor.ActorTypes
             target.TypeInfo.ProcessHit(engine, target, proj, target.GetGlobalPosition(), new TV_3DVECTOR());
             proj.TypeInfo.ProcessHit(engine, proj, target, target.GetGlobalPosition(), new TV_3DVECTOR());
 
-            proj.OnHitEvent(target);
-            target.OnHitEvent(proj);
+            proj.OnHitEvent();
+            target.OnHitEvent();
           }
         }
       }
@@ -294,7 +294,7 @@ namespace SWEndor.ActorTypes
             PlayerInfo.Score.AddDeath(engine, attacker);
         }
 
-        hitby.OnHitEvent(owner);
+        hitby.OnHitEvent();
       }
     }
 
@@ -482,8 +482,8 @@ namespace SWEndor.ActorTypes
       if (ainfo.IsPlayer)
       {
         engine.PlayerInfo.ActorID = -1;
-        engine.PlayerCameraInfo.Look.SetPosition_Actor(ainfo.ID);
-        engine.PlayerCameraInfo.Look.SetModeDeathCircle(DeathCamera);
+        engine.PlayerCameraInfo.DeathLook.SetPosition_Actor(ainfo.ID, DeathCamera);
+        engine.PlayerCameraInfo.SetDeathLook();
 
         ainfo.TickEvents += engine.GameScenarioManager.Scenario.ProcessPlayerDying;
         ainfo.DestroyedEvents += engine.GameScenarioManager.Scenario.ProcessPlayerKilled;
@@ -506,8 +506,10 @@ namespace SWEndor.ActorTypes
       if (ainfo.IsPlayer)
       {
         engine.PlayerInfo.ActorID = -1;
-        engine.PlayerCameraInfo.Look.SetPosition_Actor(ainfo.ID);
-        engine.PlayerCameraInfo.Look.SetModeDeathCircle(DeathCamera);
+
+        engine.PlayerCameraInfo.DeathLook.SetPosition_Actor(ainfo.ID, DeathCamera);
+        engine.PlayerCameraInfo.SetDeathLook();
+
         ainfo.DestroyedEvents += engine.GameScenarioManager.Scenario.ProcessPlayerKilled;
       }
       else

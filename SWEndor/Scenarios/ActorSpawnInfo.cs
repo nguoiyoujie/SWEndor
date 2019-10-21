@@ -51,7 +51,6 @@ namespace SWEndor.Scenarios
         }
       }
 
-      scenario.RegisterEvents(ainfo);
       return ainfo;
     }
   }
