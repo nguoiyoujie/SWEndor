@@ -1,7 +1,10 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Core;
 using SWEndor.Models;
+using SWEndor.Primitives.Extensions;
 using SWEndor.Scenarios;
+using System;
 using System.Collections.Generic;
 
 namespace SWEndor
@@ -27,12 +30,29 @@ namespace SWEndor
       }
     }
 
-    public static FactionInfo Neutral = new FactionInfo("Neutral", ColorLocalization.Get(ColorLocalKeys.WHITE));
+    public static FactionInfo Neutral;
 
     private FactionInfo(string name, int color)
     {
       Name = name;
       Color = color;
+
+      //Array a = Enum.GetValues(typeof(TargetType));
+      int len = 32; // a.Length;
+      _first = new int[len];
+      _cnt = new int[len];
+      _limit = new int[len];
+      _flush = new Queue<int>(124);
+      //_enumerables = new Dictionary<ActorEnumerableParam, ActorEnumerable>(len);
+      for (int i = 0; i < len; i++)
+      {
+        _first[i] = -1;
+        _limit[i] = -1;
+        //TargetType t = (TargetType)(1 << i); // a.GetValue(i);
+
+        //_enumerables.Add(new ActorEnumerableParam(t, true), new ActorEnumerable(_map, this, t, true));
+        //_enumerables.Add(new ActorEnumerableParam(t, false), new ActorEnumerable(_map, this, t, false));
+      }
     }
 
     public bool IsAlliedWith(FactionInfo faction)
@@ -43,6 +63,41 @@ namespace SWEndor
     public readonly string Name;
     public int Color = ColorLocalization.Get(ColorLocalKeys.WHITE);
     public bool AutoAI = false;
+
+    private static Dictionary<int, int> _map;
+    //private static Dictionary<TargetType, int[]> _types;
+
+    private int[] _first;
+    private int[] _cnt;
+    private int _cnttotal;
+    private Queue<int> _flush;
+
+    //private Dictionary<ActorEnumerableParam, ActorEnumerable> _enumerables;
+
+    static FactionInfo()
+    {
+      //Array a = Enum.GetValues(typeof(TargetType));
+      //int len = 32; // a.Length;
+      _map = new Dictionary<int, int>(Globals.ActorLimit);
+      /*_types = new Dictionary<TargetType, int[]>(len);
+      for (int i = 0; i < len; i++)
+      {
+        TargetType t = (TargetType)(1 << i);//a.GetValue(i);
+        List<int> r = new List<int>(len);
+        for (int j = 0; j < len; j++)
+        {
+          TargetType tj = (TargetType)a.GetValue(j);
+          if ((t & tj) == tj && tj != 0)
+            r.Add(j);
+        }
+        _types.Add(t, r.ToArray());
+      }
+      */
+      Neutral = new FactionInfo("Neutral", ColorLocalization.Get(ColorLocalKeys.WHITE));
+    }
+
+    private int[] _limit;
+
 
     public int WingLimit = -1;
     public int WingSpawnLimit = -1;
@@ -61,46 +116,51 @@ namespace SWEndor
 
     public List<FactionInfo> Allies = new List<FactionInfo>();
 
-    public int WingCount { get { return _wings.Count; } }
-    public int ShipCount { get { return _ships.Count; } }
-    public int StructureCount { get { return _structures.Count; } }
+    public int WingCount { get { return GetCount(TargetType.FIGHTER, false); } }
+    public int ShipCount { get { return GetCount(TargetType.SHIP, false); } }
+    public int StructureCount { get { return GetCount(TargetType.STRUCTURE, false); } }
 
-    public int AlliedWingCount
+    public override string ToString()
     {
-      get
-      {
-        int ret = _wings.Count;
-        foreach (FactionInfo fi in Allies)
-          ret += fi.WingCount;
-        return ret;
-      }
+      return "(F:{0})".F(Name);
     }
 
-    public int AlliedShipCount
+    public void RegisterActor(ActorInfo ainfo)
     {
-      get
-      {
-        int ret = _ships.Count;
-        foreach (FactionInfo fi in Allies)
-          ret += fi.ShipCount;
-        return ret;
-      }
-    }
+      RegActor(ainfo);
 
-    public int AlliedStructureCount
-    {
-      get
+      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
       {
-        int ret = _structures.Count;
-        foreach (FactionInfo fi in Allies)
-          ret += fi.StructureCount;
-        return ret;
+        int wc = WingCount;
+        if (WingLimit != -1 && WingLimit < wc)
+          WingLimit = wc;
+      }
+
+      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
+      {
+        int wc = ShipCount;
+        if (ShipLimit != -1 && ShipLimit < wc)
+          ShipLimit = wc;
+      }
+
+      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.STRUCTURE))
+      {
+        int wc = StructureCount;
+        if (StructureLimit != -1 && StructureLimit < StructureCount)
+          StructureLimit = StructureCount;
       }
     }
 
     public void UnregisterActor(ActorInfo ainfo)
     {
-      if (_wings.Remove(ainfo.ID))
+      RemActor(ainfo);
+
+      // flush
+      if (_flush.Count > 100)
+        for (int i = 80; i >= 0; i--)
+          _map.Remove(_flush.Dequeue());
+
+      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
       {
         if (ainfo.DisposingOrDisposed)
         {
@@ -114,7 +174,7 @@ namespace SWEndor
         }
       }
 
-      if (_ships.Remove(ainfo.ID))
+      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
       {
         if (ainfo.DisposingOrDisposed)
         {
@@ -128,7 +188,7 @@ namespace SWEndor
         }
       }
 
-      if (_structures.Remove(ainfo.ID))
+      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.STRUCTURE))
       {
         if (ainfo.DisposingOrDisposed)
         {
@@ -143,88 +203,205 @@ namespace SWEndor
       }
     }
 
-    public void RegisterActor(ActorInfo ainfo)
+    private void RegActor(ActorInfo actor)
     {
-      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER) && !_wings.Contains(ainfo.ID))
+      int id = actor.ID;
+      TargetType type = actor.TypeInfo.AIData.TargetType;
+      foreach (int i in ((uint)type).GetUniqueBits())//_types[type])
       {
-        _wings.Add(ainfo.ID);
-        if (WingLimit != -1 && WingLimit < _wings.Count)
-          WingLimit = _wings.Count;
+        _map[id] = _first[i];
+        _first[i] = id;
+        _cnt[i]++;
+        if (_limit[i] != -1 && _limit[i] < _cnt[i])
+          _limit[i] = _cnt[i];
       }
+      _cnttotal++;
+    }
 
-      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.SHIP) && !_ships.Contains(ainfo.ID))
+    private void RemActor(ActorInfo actor)
+    {
+      int id = actor.ID;
+      TargetType type = actor.TypeInfo.AIData.TargetType;
+      foreach (int i in ((uint)type).GetUniqueBits())
       {
-        _ships.Add(ainfo.ID);
-        if (ShipLimit != -1 && ShipLimit < _ships.Count)
-          ShipLimit = _ships.Count;
-      }
+        int curr = _first[i];
+        int prev = -1;
+        while (curr != -1)
+        {
+          if (curr == id)
+          {
+            int next = _map[curr];
+            if (prev >= 0)
+              _map[prev] = next;
 
-      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.STRUCTURE) && !_structures.Contains(ainfo.ID))
+            if (_first[i] == curr)
+              _first[i] = next;
+
+            _flush.Enqueue(curr);
+            _cnt[i]--;
+            _limit[i]--;
+            break;
+          }
+          prev = curr;
+          if (!_map.TryGetValue(curr, out curr))
+            break;
+        }
+      }
+      _cnttotal--;
+    }
+
+    public ActorEnumerable GetActors(TargetType type, bool includeAllies)
+    {
+      return new ActorEnumerable(_map, this, type, includeAllies);
+      //return _enumerables[new ActorEnumerableParam(type, includeAllies)];
+    }
+
+    public int GetRandom(Engine engine, TargetType type)
+    {
+      int curr = -1;
+      int[] l = new int[32];
+      int i = 0;
+      int cnt = 0;
+      foreach (int u in ((uint)type).GetUniqueBits())
       {
-        _structures.Add(ainfo.ID);
-        if (StructureLimit != -1 && StructureLimit < _structures.Count)
-          StructureLimit = _structures.Count;
+        l[i++] = u;
+        cnt += _cnt[u];
+      }
+      l[i++] = -1;
+
+      if (cnt > 0)
+      {
+        int r = engine.Random.Next(0, cnt);
+
+        for (int li = 0; r > 0 && li < l.Length; li++)
+        {
+          int x = l[li];
+          curr = _first[x];
+          //int prev = -1;
+          for (; r > 0 && _map[curr] > -1; r--)
+            curr = _map[curr];
+          // in case chain is broken, but something would be wrong
+          //if (!_map.TryGetValue(curr, out curr))
+          //  return prev;
+          //else
+          //  prev = curr;
+        }
+      }
+      return curr;
+    }
+
+    public int GetFirst(TargetType type)
+    {
+      int curr = _first[((uint)type).GetMostSignificantBit()];
+      while (_map[curr] != -1)
+        curr = _map[curr];
+      return curr;
+    }
+
+    public int GetLast(TargetType type)
+    {
+      return _first[((uint)type).GetMostSignificantBit()];
+    }
+
+    public int GetCount(TargetType type, bool includeAllies)
+    {
+      if (type == TargetType.ANY)
+        return GetTotalCount(includeAllies);
+
+      int count = _cnt[((uint)type).GetMostSignificantBit()];
+
+      if (includeAllies)
+        foreach (FactionInfo fi in Allies)
+          count += fi.GetCount(type, false);
+      return count;
+    }
+
+    public int GetLimit(TargetType type, bool includeAllies)
+    {
+      int limit = _limit[((uint)type).GetMostSignificantBit()];
+
+      if (includeAllies)
+        foreach (FactionInfo fi in Allies)
+          limit += fi.GetLimit(type, false);
+      return limit;
+    }
+
+    public void SetLimit(TargetType type, int value)
+    {
+      _limit[((uint)type).GetMostSignificantBit()] = value;
+    }
+
+    public int GetTotalCount(bool includeAllies)
+    {
+      int count = _cnttotal;
+
+      if (includeAllies)
+        foreach (FactionInfo fi in Allies)
+          count += fi.GetTotalCount(false);
+      return count;
+    }
+    
+    private struct ActorEnumerableParam
+    {
+      TargetType T;
+      bool inclAlly;
+      public ActorEnumerableParam(TargetType t, bool ally)
+      {
+        T = t;
+        inclAlly = ally;
       }
     }
 
-    public List<int> GetAll()
+    public struct ActorEnumerable
     {
-      List<int> ret = new List<int>(WingCount + ShipCount + StructureCount);
-      ret.AddRange(GetWings());
-      ret.AddRange(GetShips());
-      ret.AddRange(GetStructures());
-      return ret;
+      readonly Dictionary<int, int> _map;
+      readonly FactionInfo F;
+      readonly uint T;
+      bool inclAlly;
+      public ActorEnumerable(Dictionary<int, int> map, FactionInfo f, TargetType t, bool ally)
+      {
+        _map = map;
+        F = f;
+        T = ((uint)t).GetMostSignificantBit();
+        inclAlly = ally;
+      }
+      public ActorEnumerator GetEnumerator() { return new ActorEnumerator(_map, F, T, inclAlly); }
     }
 
-    public int GetWing(int index) { return _wings[index]; }
-    public int GetShip(int index) { return _ships[index]; }
-    public int GetStructure(int index) { return _structures[index]; }
-
-    public IEnumerable<int> GetWings()
+    public struct ActorEnumerator
     {
-      List<int> f = _wings;
-      for (int i = 0; i < f.Count; i++)
-        yield return f[i];
+      readonly Dictionary<int, int> _map;
+      readonly FactionInfo F;
+      readonly uint T;
+      int curr;
+      FactionInfo currF;
+      int intF;
+      bool inclAlly;
+      public ActorEnumerator(Dictionary<int, int> map, FactionInfo f, uint t, bool ally)
+      {
+        _map = map;
+        F = f;
+        currF = f;
+        T = t;
+        curr = -2;
+        intF = 0;
+        inclAlly = ally;
+      }
+      public bool MoveNext()
+      {
+        if (curr == -2)
+          curr = F._first[T];
+        else
+        {
+          if (_map[curr] == -1 && inclAlly && F.Allies.Count > 0 && F.Allies.Count <= intF)
+            curr = (currF = F.Allies[intF++])._first[T];
+          else
+            curr = _map[curr];
+        }
 
-      if (ShipLimitIncludesAllies)
-        foreach (FactionInfo fi in Allies)
-          for (int i = 0; i < fi._wings.Count; i++)
-            yield return fi._wings[i];
+        return curr != -1;
+      }
+      public int Current { get { return curr; } }
     }
-
-    public IEnumerable<int> GetShips()
-    {
-      List<int> f = _ships;
-      for (int i = 0; i < f.Count; i++)
-        yield return f[i];
-
-      if (ShipLimitIncludesAllies)
-        foreach (FactionInfo fi in Allies)
-          for (int i = 0; i < fi._ships.Count; i++)
-            yield return fi._ships[i];
-    }
-
-    public IEnumerable<int> GetStructures()
-    {
-      List<int> f = _structures;
-      for (int i = 0; i < f.Count; i++)
-        yield return f[i];
-
-      if (ShipLimitIncludesAllies)
-        foreach (FactionInfo fi in Allies)
-          for (int i = 0; i < fi._structures.Count; i++)
-            yield return fi._structures[i];
-    }
-
-    /*
-    public List<int> GetStructures()
-    {
-      List<int> ret = new List<int>(_structures.ToArray());
-      if (StructureLimitIncludesAllies)
-        foreach (FactionInfo fi in Allies)
-          ret.AddRange(fi._structures);
-      return ret;
-    }
-    */
   }
 }
