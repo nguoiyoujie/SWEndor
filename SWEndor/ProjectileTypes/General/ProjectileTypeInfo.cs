@@ -84,7 +84,9 @@ namespace SWEndor.ProjectileTypes
       string filepath = Path.Combine(Globals.ProjectileTypeINIDirectory, id + ".ini");
 
       if (!File.Exists(filepath))
-        File.Create(filepath).Close(); INIFile f = new INIFile(filepath);
+        File.Create(filepath).Close();
+
+      INIFile f = new INIFile(filepath);
 
       f.SetStringValue("General", "Name", Name);
       f.SetEnumValue("General", "Mask", Mask);

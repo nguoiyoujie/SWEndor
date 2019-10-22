@@ -5,6 +5,7 @@ using SWEndor.Input.Functions.Gameplay.Speed;
 using SWEndor.Input.Functions.Gameplay.UI;
 using SWEndor.Input.Functions.Gameplay.Weapon;
 using SWEndor.Primitives;
+using System.Collections.Generic;
 
 namespace SWEndor.UI.Menu.Pages
 {
@@ -26,18 +27,6 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement ButtonSaveAndExit = new SelectionElement();
     SelectionElement ButtonExit = new SelectionElement();
 
-    CONST_TV_KEY KeyToggleUI;
-    CONST_TV_KEY KeyToggleRadar;
-    CONST_TV_KEY KeyToggleScenarioInfo;
-    CONST_TV_KEY KeyToggleScoreboard;
-    CONST_TV_KEY KeyToggleCameraMode;
-    CONST_TV_KEY KeyToggleNextPrimaryWeaponMode;
-    CONST_TV_KEY KeyTogglePrevPrimaryWeaponMode;
-    CONST_TV_KEY KeyToggleNextSecondaryWeaponMode;
-    CONST_TV_KEY KeyTogglePrevSecondaryWeaponMode;
-    CONST_TV_KEY KeyToggleIncreaseSpeed;
-    CONST_TV_KEY KeyToggleDecreaseSpeed;
-    
     public KeyboardControls(Screen2D owner) : base(owner)
     {
       float height_gap = 40;
@@ -192,128 +181,76 @@ namespace SWEndor.UI.Menu.Pages
       Elements.Add(ButtonExit);
       SelectedElementID = Elements.IndexOf(ButtonToggleUI);
 
+      DefineBindings();
       LoadBindings();
+    }
+
+
+    private bool Select(SelectionElement sel, CONST_TV_KEY key)
+    {
+      if (IsValidKeyBinding(key))
+      {
+        _bindvals[sel] = key;
+        sel.SecondaryText = key.GetEnumName()?.Replace("TV_KEY_", "") ?? "";
+        return true;
+      }
+      return false;
     }
 
     private bool SelectToggleUI(CONST_TV_KEY key)
     {
-      if (IsValidKeyBinding(key))
-      {
-        KeyToggleUI = key;
-        ButtonToggleUI.SecondaryText = KeyToggleUI.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-        return true;
-      }
-      return false;
+      return Select(ButtonToggleUI, key);
     }
 
     private bool SelectToggleRadar(CONST_TV_KEY key)
     {
-      if (IsValidKeyBinding(key))
-      {
-        KeyToggleRadar = key;
-        ButtonToggleRadar.SecondaryText = KeyToggleRadar.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-        return true;
-      }
-      return false;
+      return Select(ButtonToggleRadar, key);
     }
 
     private bool SelectToggleScenarioInfo(CONST_TV_KEY key)
     {
-      if (IsValidKeyBinding(key))
-      {
-        KeyToggleScenarioInfo = key;
-        ButtonToggleScenarioInfo.SecondaryText = KeyToggleScenarioInfo.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-        return true;
-      }
-      return false;
+      return Select(ButtonToggleScenarioInfo, key);
     }
 
     private bool SelectToggleScoreboard(CONST_TV_KEY key)
     {
-      if (IsValidKeyBinding(key))
-      {
-        KeyToggleScoreboard = key;
-        ButtonToggleScoreboard.SecondaryText = KeyToggleScoreboard.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-        return true;
-      }
-      return false;
+      return Select(ButtonToggleScoreboard, key);
     }
 
     private bool SelectToggleCameraMode(CONST_TV_KEY key)
     {
-      if (IsValidKeyBinding(key))
-      {
-        KeyToggleCameraMode = key;
-        ButtonToggleCameraMode.SecondaryText = KeyToggleCameraMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-        return true;
-      }
-      return false;
+      return Select(ButtonToggleCameraMode, key);
     }
 
     private bool SelectToggleNextPrimaryWeaponMode(CONST_TV_KEY key)
     {
-      if (IsValidKeyBinding(key))
-      {
-        KeyToggleNextPrimaryWeaponMode = key;
-        ButtonToggleNextPrimaryWeaponMode.SecondaryText = KeyToggleNextPrimaryWeaponMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-        return true;
-      }
-      return false;
+      return Select(ButtonToggleNextPrimaryWeaponMode, key);
     }
 
     private bool SelectTogglePrevPrimaryWeaponMode(CONST_TV_KEY key)
     {
-      if (IsValidKeyBinding(key))
-      {
-        KeyTogglePrevPrimaryWeaponMode = key;
-        ButtonTogglePrevPrimaryWeaponMode.SecondaryText = KeyTogglePrevPrimaryWeaponMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-        return true;
-      }
-      return false;
+      return Select(ButtonTogglePrevPrimaryWeaponMode, key);
     }
 
     private bool SelectToggleNextSecondaryWeaponMode(CONST_TV_KEY key)
     {
-      if (IsValidKeyBinding(key))
-      {
-        KeyToggleNextSecondaryWeaponMode = key;
-        ButtonToggleNextSecondaryWeaponMode.SecondaryText = KeyToggleNextSecondaryWeaponMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-        return true;
-      }
-      return false;
+      return Select(ButtonToggleNextSecondaryWeaponMode, key);
     }
 
     private bool SelectTogglePrevSecondaryWeaponMode(CONST_TV_KEY key)
     {
-      if (IsValidKeyBinding(key))
-      {
-        KeyTogglePrevSecondaryWeaponMode = key;
-        ButtonTogglePrevSecondaryWeaponMode.SecondaryText = KeyTogglePrevSecondaryWeaponMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-        return true;
-      }
-      return false;
+      return Select(ButtonTogglePrevSecondaryWeaponMode, key);
     }
 
     private bool SelectToggleIncreaseSpeed(CONST_TV_KEY key)
     {
-      if (IsValidKeyBinding(key))
-      {
-        KeyToggleIncreaseSpeed = key;
-        ButtonToggleIncreaseSpeed.SecondaryText = KeyToggleIncreaseSpeed.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-        return true;
-      }
-      return false;
+      return Select(ButtonToggleIncreaseSpeed, key);
     }
 
     private bool SelectToggleDecreaseSpeed(CONST_TV_KEY key)
     {
-      if (IsValidKeyBinding(key))
-      {
-        KeyToggleDecreaseSpeed = key;
-        ButtonToggleDecreaseSpeed.SecondaryText = KeyToggleDecreaseSpeed.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-        return true;
-      }
-      return false;
+      return Select(ButtonToggleDecreaseSpeed, key);
+
     }
 
     private bool SelectSave(CONST_TV_KEY key)
@@ -418,50 +355,41 @@ namespace SWEndor.UI.Menu.Pages
 
     private void SaveBindings()
     {
-      InputFunction.Registry.Get(ToggleUIVisibility.InternalName).Key = (int)KeyToggleUI;
-      InputFunction.Registry.Get(ToggleRadarVisibility.InternalName).Key = (int)KeyToggleRadar;
-      InputFunction.Registry.Get(ToggleStatusVisibility.InternalName).Key = (int)KeyToggleScenarioInfo;
-      InputFunction.Registry.Get(ToggleScoreVisibility.InternalName).Key = (int)KeyToggleScoreboard;
-
-      InputFunction.Registry.Get(NextCameraMode.InternalName).Key = (int)KeyToggleCameraMode;
-      InputFunction.Registry.Get(NextPrimary.InternalName).Key = (int)KeyToggleNextPrimaryWeaponMode;
-      InputFunction.Registry.Get(PrevPrimary.InternalName).Key = (int)KeyTogglePrevPrimaryWeaponMode;
-      InputFunction.Registry.Get(NextSecondary.InternalName).Key = (int)KeyToggleNextSecondaryWeaponMode;
-      InputFunction.Registry.Get(PrevSecondary.InternalName).Key = (int)KeyTogglePrevSecondaryWeaponMode;
-
-      InputFunction.Registry.Get(Up.InternalName).Key = (int)KeyToggleIncreaseSpeed;
-      InputFunction.Registry.Get(Down.InternalName).Key = (int)KeyToggleDecreaseSpeed;
+      foreach (SelectionElement e in _bindings.Keys)
+        InputFunction.Registry.Get(_bindings[e]).Key = (int)_bindvals[e];
 
       LoadBindings();
     }
 
+    private Dictionary<SelectionElement, string> _bindings = new Dictionary<SelectionElement, string>();
+    private Dictionary<SelectionElement, CONST_TV_KEY> _bindvals = new Dictionary<SelectionElement, CONST_TV_KEY>();
+
+    private void DefineBindings()
+    {
+      _bindings.Clear();
+      _bindings.Add(ButtonToggleUI, ToggleUIVisibility.InternalName);
+      _bindings.Add(ButtonToggleRadar, ToggleRadarVisibility.InternalName);
+      _bindings.Add(ButtonToggleScenarioInfo, ToggleStatusVisibility.InternalName);
+      _bindings.Add(ButtonToggleScoreboard, ToggleScoreVisibility.InternalName);
+      _bindings.Add(ButtonToggleCameraMode, NextCameraMode.InternalName);
+      _bindings.Add(ButtonToggleNextPrimaryWeaponMode, NextPrimary.InternalName);
+      _bindings.Add(ButtonTogglePrevPrimaryWeaponMode, PrevPrimary.InternalName);
+      _bindings.Add(ButtonToggleNextSecondaryWeaponMode, NextSecondary.InternalName);
+      _bindings.Add(ButtonTogglePrevSecondaryWeaponMode, PrevSecondary.InternalName);
+      _bindings.Add(ButtonToggleIncreaseSpeed, Up.InternalName);
+      _bindings.Add(ButtonToggleDecreaseSpeed, Down.InternalName);
+
+      foreach (SelectionElement e in _bindings.Keys)
+        _bindvals.Add(e, 0);
+    }
+
     private void LoadBindings()
     {
-      KeyToggleUI = (CONST_TV_KEY)InputFunction.Registry.Get(ToggleUIVisibility.InternalName).Key;
-      KeyToggleRadar = (CONST_TV_KEY)InputFunction.Registry.Get(ToggleRadarVisibility.InternalName).Key;
-      KeyToggleScenarioInfo = (CONST_TV_KEY)InputFunction.Registry.Get(ToggleStatusVisibility.InternalName).Key;
-      KeyToggleScoreboard = (CONST_TV_KEY)InputFunction.Registry.Get(ToggleScoreVisibility.InternalName).Key;
-
-      KeyToggleCameraMode = (CONST_TV_KEY)InputFunction.Registry.Get(NextCameraMode.InternalName).Key;
-      KeyToggleNextPrimaryWeaponMode = (CONST_TV_KEY)InputFunction.Registry.Get(NextPrimary.InternalName).Key;
-      KeyTogglePrevPrimaryWeaponMode = (CONST_TV_KEY)InputFunction.Registry.Get(PrevPrimary.InternalName).Key;
-      KeyToggleNextSecondaryWeaponMode = (CONST_TV_KEY)InputFunction.Registry.Get(NextSecondary.InternalName).Key;
-      KeyTogglePrevSecondaryWeaponMode = (CONST_TV_KEY)InputFunction.Registry.Get(PrevSecondary.InternalName).Key;
-
-      KeyToggleIncreaseSpeed = (CONST_TV_KEY)InputFunction.Registry.Get(Up.InternalName).Key;
-      KeyToggleDecreaseSpeed = (CONST_TV_KEY)InputFunction.Registry.Get(Down.InternalName).Key;
-
-      ButtonToggleUI.SecondaryText = KeyToggleUI.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonToggleRadar.SecondaryText = KeyToggleRadar.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonToggleScenarioInfo.SecondaryText = KeyToggleScenarioInfo.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonToggleScoreboard.SecondaryText = KeyToggleScoreboard.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonToggleCameraMode.SecondaryText = KeyToggleCameraMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonToggleNextPrimaryWeaponMode.SecondaryText = KeyToggleNextPrimaryWeaponMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonTogglePrevPrimaryWeaponMode.SecondaryText = KeyTogglePrevPrimaryWeaponMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonToggleNextSecondaryWeaponMode.SecondaryText = KeyToggleNextSecondaryWeaponMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonTogglePrevSecondaryWeaponMode.SecondaryText = KeyTogglePrevSecondaryWeaponMode.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonToggleIncreaseSpeed.SecondaryText = KeyToggleIncreaseSpeed.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
-      ButtonToggleDecreaseSpeed.SecondaryText = KeyToggleDecreaseSpeed.GetEnumName().Replace("TV_KEY_", "").Replace("-1", "");
+      foreach (SelectionElement e in _bindings.Keys)
+      {
+        _bindvals[e] = (CONST_TV_KEY)InputFunction.Registry.Get(_bindings[e]).Key;
+        e.SecondaryText = _bindvals[e].GetEnumName()?.Replace("TV_KEY_", "") ?? "";
+      }
     }
   }
 }
