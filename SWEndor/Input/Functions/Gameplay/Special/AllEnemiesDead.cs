@@ -16,6 +16,7 @@ namespace SWEndor.Input.Functions.Gameplay.Special
     {
       if (engine.GameScenarioManager.Scenario != null)
       {
+        // Broken. TO-DO: Fix
         foreach (int actorID in engine.GameScenarioManager.Scenario.MainEnemyFaction.GetActors(Models.TargetType.ANY, true))
         {
           ActorInfo actor = engine.ActorFactory.Get(actorID);
