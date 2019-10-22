@@ -37,7 +37,7 @@ namespace SWEndor.UI.Widgets
       if (p == null)
         return;
 
-      int pcolor = p.Faction.Color;
+      int icolor = pcolor.Value;
       int fntID = FontFactory.Get(Font.T10).ID;
       float y = top_left.y;
       float x2 = top_left.x + dx;
@@ -55,13 +55,13 @@ namespace SWEndor.UI.Widgets
       TVScreen2DText.TextureFont_DrawText("SHIELD"
                                               , top_left.x
                                               , y
-                                              , pcolor
+                                              , icolor
                                               , fntID);
 
       TVScreen2DText.TextureFont_DrawText((p.MaxShd == 0) ? "----" : "{0:0}%".F(p.Shd_Perc)
                                               , x2
                                               , y
-                                              , ((p.MaxShd == 0) ? new TV_COLOR(1, 1, 1, 0.4f).GetIntColor() : p.Shd_Color)
+                                              , ((p.MaxShd == 0) ? new COLOR(1, 1, 1, 0.4f) : p.Shd_Color).Value
                                               , fntID);
       y += dy;
 
@@ -69,13 +69,13 @@ namespace SWEndor.UI.Widgets
       TVScreen2DText.TextureFont_DrawText("HULL"
                                         , top_left.x
                                         , y
-                                        , pcolor
+                                        , icolor
                                         , fntID);
 
       TVScreen2DText.TextureFont_DrawText((p.MaxHull == 0) ? "100%" : "{0:0}%".F(p.Hull_Perc)
                                               , x2
                                               , y
-                                              , ((p.MaxHull == 0) ? new TV_COLOR(0, 1, 0, 1).GetIntColor() : p.Hull_Color)
+                                              , ((p.MaxHull == 0) ? new COLOR(0, 1, 0, 1) : p.Hull_Color).Value
                                               , fntID);
       y += dy;
 
@@ -84,7 +84,7 @@ namespace SWEndor.UI.Widgets
         TVScreen2DText.TextureFont_DrawText(part.GetEnumName().Replace('_', ' ')
                                                       , top_left.x
                                                       , y
-                                                      , pcolor
+                                                      , icolor
                                                       , fntID);
 
         SystemState s = p.GetStatus(part);

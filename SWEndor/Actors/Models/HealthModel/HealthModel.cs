@@ -43,11 +43,11 @@ namespace SWEndor.Actors.Models
       MaxHull = sdata.MaxHull;
     }
 
-    public int HP_Color { get { return Color(HP_Frac); } }
-    public int Shd_Color { get { return Color(Shd_Frac); } }
-    public int Hull_Color { get { return Color(Hull_Frac); } }
+    public COLOR HP_Color { get { return Color(HP_Frac); } }
+    public COLOR Shd_Color { get { return Color(Shd_Frac); } }
+    public COLOR Hull_Color { get { return Color(Hull_Frac); } }
 
-    private int Color(float frac)
+    private COLOR Color(float frac)
     {
         double quad = 1.6708;
         float r = (float)Math.Cos(frac * quad);
@@ -56,7 +56,7 @@ namespace SWEndor.Actors.Models
         if (r < 0) r = 0;
         if (g < 0) g = 0;
         if (b < 0) b = 0;
-        return new TV_COLOR(r, g, b, 1).GetIntColor();
+        return new COLOR(r, g, b, 1);
     }
 
 
@@ -173,19 +173,19 @@ namespace SWEndor.Actors
     public float MaxHP { get { return Health.MaxHP; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetMaxHP(value, false); } }
     public float HP_Perc { get { return Health.HP_Perc; } }
     public float HP_Frac { get { return Health.HP_Frac; } }
-    public int HP_Color { get { return Health.HP_Color; } }
+    public COLOR HP_Color { get { return Health.HP_Color; } }
 
     public float Shd { get { return Health.Shd; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetHP(this, value); } }
     public float MaxShd { get { return Health.MaxShd; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetMaxHP(value, false); } }
     public float Shd_Perc { get { return Health.Shd_Perc; } }
     public float Shd_Frac { get { return Health.Shd_Frac; } }
-    public int Shd_Color { get { return Health.Shd_Color; } }
+    public COLOR Shd_Color { get { return Health.Shd_Color; } }
 
     public float Hull { get { return Health.Hull; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetHP(this, value); } }
     public float MaxHull { get { return Health.MaxHull; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetMaxHP(value, false); } }
     public float Hull_Perc { get { return Health.Hull_Perc; } }
     public float Hull_Frac { get { return Health.Hull_Frac; } }
-    public int Hull_Color { get { return Health.Hull_Color; } }
+    public COLOR Hull_Color { get { return Health.Hull_Color; } }
 
     public float DisplayHP { get { return Health.DisplayHP; } }
     public float DisplayHP_Perc { get { return Health.DisplayPerc; } }

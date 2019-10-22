@@ -12,19 +12,19 @@ namespace SWEndor.UI
 
     public string Text = "";
     public TV_2DVECTOR TextPosition;
-    public int TextColor = ColorLocalization.Get(ColorLocalKeys.UI_TEXT);
+    public COLOR TextColor = ColorLocalization.Get(ColorLocalKeys.UI_TEXT);
     public int TextFont = -1;
 
     public string SecondaryText = "";
     public TV_2DVECTOR SecondaryTextPosition;
-    public int SecondaryTextColor = ColorLocalization.Get(ColorLocalKeys.UI_TEXT);
+    public COLOR SecondaryTextColor = ColorLocalization.Get(ColorLocalKeys.UI_TEXT);
     public int SecondaryTextFont = -1;
 
     public TV_2DVECTOR HighlightBoxPosition;
     public float HighlightBoxWidth = 0;
     public float HighlightBoxHeight = 0;
-    public int UnHighlightBoxColor = ColorLocalization.Get(ColorLocalKeys.UI_UNHIGHLIGHT_BACKGROUND);
-    public int HighlightBoxColor = ColorLocalization.Get(ColorLocalKeys.UI_HIGHLIGHT_BACKGROUND);
+    public COLOR UnHighlightBoxColor = ColorLocalization.Get(ColorLocalKeys.UI_UNHIGHLIGHT_BACKGROUND);
+    public COLOR HighlightBoxColor = ColorLocalization.Get(ColorLocalKeys.UI_HIGHLIGHT_BACKGROUND);
 
     public int ToggleButtonsNumber = 0;
     public int ToggleButtonsCurrentNumber = 0;
@@ -32,7 +32,7 @@ namespace SWEndor.UI
     public float ToggleButtonsHeight = 20;
     public float ToggleButtonsGapWidth = 5;
     public TV_2DVECTOR ToggleButtonsPosition;
-    public int ToggleButtonsColor = ColorLocalization.Get(ColorLocalKeys.UI_TEXT);
+    public COLOR ToggleButtonsColor = ColorLocalization.Get(ColorLocalKeys.UI_TEXT);
     public List<string> ToggleButtonsValues = new List<string>();
 
     public KeyEvent OnKeyPress;
@@ -47,7 +47,7 @@ namespace SWEndor.UI
                                        , HighlightBoxPosition.y
                                        , HighlightBoxPosition.x + HighlightBoxWidth
                                        , HighlightBoxPosition.y + HighlightBoxHeight
-                                       , (ishighlighted) ? HighlightBoxColor : UnHighlightBoxColor);
+                                       , ((ishighlighted) ? HighlightBoxColor : UnHighlightBoxColor).Value);
 
       int n = 0;
       //bool lit = true;
@@ -61,7 +61,7 @@ namespace SWEndor.UI
                                                    , y
                                                    , x + ToggleButtonsWidth
                                                    , y + ToggleButtonsHeight
-                                                   , ToggleButtonsColor);
+                                                   , ToggleButtonsColor.Value);
         }
         else
         {
@@ -69,7 +69,7 @@ namespace SWEndor.UI
                                          , y
                                          , x + ToggleButtonsWidth
                                          , y + ToggleButtonsHeight
-                                         , ToggleButtonsColor);
+                                         , ToggleButtonsColor.Value);
         }
 
         x += ToggleButtonsWidth + ToggleButtonsGapWidth;
@@ -83,13 +83,13 @@ namespace SWEndor.UI
       engine.TrueVision.TVScreen2DText.TextureFont_DrawText(Text
                                                             , TextPosition.x
                                                             , TextPosition.y
-                                                            , TextColor
+                                                            , TextColor.Value
                                                             , font);
 
       engine.TrueVision.TVScreen2DText.TextureFont_DrawText(SecondaryText
                                                       , SecondaryTextPosition.x
                                                       , SecondaryTextPosition.y
-                                                      , SecondaryTextColor
+                                                      , SecondaryTextColor.Value
                                                       , font);
       engine.TrueVision.TVScreen2DText.Action_EndText();
     }

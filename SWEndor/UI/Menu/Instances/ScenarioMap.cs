@@ -14,8 +14,8 @@ namespace SWEndor.UI.Menu.Pages
   {
     SelectionElement Cover = new SelectionElement();
     SelectionElement BackText = new SelectionElement();
-    private static readonly int GridColorMajor = ColorLocalization.Get(ColorLocalKeys.GAME_MAP_GRID_MAJOR);
-    private static readonly int GridColorMinor = ColorLocalization.Get(ColorLocalKeys.GAME_MAP_GRID_MINOR);
+    private static readonly COLOR GridColorMajor = ColorLocalization.Get(ColorLocalKeys.GAME_MAP_GRID_MAJOR);
+    private static readonly COLOR GridColorMinor = ColorLocalization.Get(ColorLocalKeys.GAME_MAP_GRID_MINOR);
     private static float zoom_ratio = 0.05f;
     private static float zoom_stepmult = 1.25f;
     private static float max_zoom_ratio = 2f;
@@ -126,17 +126,17 @@ namespace SWEndor.UI.Menu.Pages
 
     private void DrawGrid()
     {
-      TVScreen2DImmediate.Draw_Line(Owner.ScreenCenter.x, 0, Owner.ScreenCenter.x, Owner.ScreenSize.y, GridColorMajor);
-      TVScreen2DImmediate.Draw_Line(0, Owner.ScreenCenter.y, Owner.ScreenSize.x, Owner.ScreenCenter.y, GridColorMajor);
+      TVScreen2DImmediate.Draw_Line(Owner.ScreenCenter.x, 0, Owner.ScreenCenter.x, Owner.ScreenSize.y, GridColorMajor.Value);
+      TVScreen2DImmediate.Draw_Line(0, Owner.ScreenCenter.y, Owner.ScreenSize.x, Owner.ScreenCenter.y, GridColorMajor.Value);
 
       int z = (int)(10000 * zoom_ratio);
       for (int i = z; i < Owner.ScreenCenter.x || i < Owner.ScreenCenter.y; i += z)
       {
-        TVScreen2DImmediate.Draw_Line(Owner.ScreenCenter.x + i, 0, Owner.ScreenCenter.x + i, Owner.ScreenSize.y, GridColorMinor);
-        TVScreen2DImmediate.Draw_Line(0, Owner.ScreenCenter.y + i, Owner.ScreenSize.x, Owner.ScreenCenter.y + i, GridColorMinor);
+        TVScreen2DImmediate.Draw_Line(Owner.ScreenCenter.x + i, 0, Owner.ScreenCenter.x + i, Owner.ScreenSize.y, GridColorMinor.Value);
+        TVScreen2DImmediate.Draw_Line(0, Owner.ScreenCenter.y + i, Owner.ScreenSize.x, Owner.ScreenCenter.y + i, GridColorMinor.Value);
 
-        TVScreen2DImmediate.Draw_Line(Owner.ScreenCenter.x - i, 0, Owner.ScreenCenter.x - i, Owner.ScreenSize.y, GridColorMinor);
-        TVScreen2DImmediate.Draw_Line(0, Owner.ScreenCenter.y - i, Owner.ScreenSize.x, Owner.ScreenCenter.y - i, GridColorMinor);
+        TVScreen2DImmediate.Draw_Line(Owner.ScreenCenter.x - i, 0, Owner.ScreenCenter.x - i, Owner.ScreenSize.y, GridColorMinor.Value);
+        TVScreen2DImmediate.Draw_Line(0, Owner.ScreenCenter.y - i, Owner.ScreenSize.x, Owner.ScreenCenter.y - i, GridColorMinor.Value);
       }
     }
 
@@ -155,7 +155,7 @@ namespace SWEndor.UI.Menu.Pages
           //&& !(a.TypeInfo is ActorTypes.Groups.LaserProjectile)
           && !a.UseParentCoords)
         {
-          int acolor = a.Faction.Color;
+          int icolor = a.Faction.Color.Value;
           float proty = Engine.PlayerCameraInfo.Rotation.y;
 
           XYCoord posvec = new XYCoord { X = ppos.x - apos.x, Y = ppos.z - apos.z };
@@ -174,12 +174,12 @@ namespace SWEndor.UI.Menu.Pages
               XYCoord pxy = pang.ToXYCoord;
               float px = x - pxy.X;
               float py = y - pxy.Y;
-              DrawLine(x, y, px, py, acolor);
+              DrawLine(x, y, px, py, icolor);
               break;
             case RadarType.HOLLOW_SQUARE:
             case RadarType.FILLED_SQUARE:
-              DrawSquare(x, y, size, acolor);
-              if (showtext) DrawText(a.Name, x, y + size + 2, acolor);
+              DrawSquare(x, y, size, icolor);
+              if (showtext) DrawText(a.Name, x, y + size + 2, icolor);
               break;
             case RadarType.HOLLOW_CIRCLE_S:
             case RadarType.HOLLOW_CIRCLE_M:
@@ -187,16 +187,16 @@ namespace SWEndor.UI.Menu.Pages
             case RadarType.FILLED_CIRCLE_S:
             case RadarType.FILLED_CIRCLE_M:
             case RadarType.FILLED_CIRCLE_L:
-              DrawTriangleGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, x, y, proty, acolor);
-              if (showtext) DrawText(a.Name, x, y + size + 2, acolor);
+              DrawTriangleGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, x, y, proty, icolor);
+              if (showtext) DrawText(a.Name, x, y + size + 2, icolor);
               break;
             case RadarType.RECTANGLE_GIANT:
-              DrawRectGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, x, y, proty, acolor);
-              if (showtext) DrawText(a.Name, x, y, acolor);
+              DrawRectGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, x, y, proty, icolor);
+              if (showtext) DrawText(a.Name, x, y, icolor);
               break;
             case RadarType.TRIANGLE_GIANT:
-              DrawTriangleGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, x, y, proty, acolor);
-              if (showtext) DrawText(a.Name, x, y, acolor);
+              DrawTriangleGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, x, y, proty, icolor);
+              if (showtext) DrawText(a.Name, x, y, icolor);
               break;
           }
         }

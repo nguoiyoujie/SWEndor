@@ -254,7 +254,7 @@ namespace SWEndor.Actors.Models
       // post process:
       engine.Surfaces.RS_Target.StartRender(false);
       int tex = engine.Surfaces.RS_PreTarget.GetTexture();
-      int acolor = actor.Faction.Color;
+      int icolor = actor.Faction.Color.Value;
       int w = engine.Surfaces.Target_width;
       int h = engine.Surfaces.Target_height;
       engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
@@ -263,9 +263,9 @@ namespace SWEndor.Actors.Models
                                 , 0
                                 , w
                                 , h
-                                , acolor);
+                                , icolor);
 
-      engine.TrueVision.TVScreen2DImmediate.Draw_Box(2, 2, w - 2, h - 2, acolor);
+      engine.TrueVision.TVScreen2DImmediate.Draw_Box(2, 2, w - 2, h - 2, icolor);
       engine.TrueVision.TVScreen2DImmediate.Action_End2D();
 
       ActorInfo tp = actor.ParentForCoords ?? actor;
@@ -275,33 +275,33 @@ namespace SWEndor.Actors.Models
       engine.TrueVision.TVScreen2DText.TextureFont_DrawText(tp.Name
                                         , 10
                                         , 10
-                                        , acolor
+                                        , icolor
                                         , fntID);
 
       // Shields
       engine.TrueVision.TVScreen2DText.TextureFont_DrawText("SHD"
                                               , 15
                                               , h - 45
-                                              , acolor
+                                              , icolor
                                               , fntID);
 
       engine.TrueVision.TVScreen2DText.TextureFont_DrawText((tp.MaxShd == 0) ? "----" : "{0:0}%".F(tp.Shd_Perc)
                                               , 15 + 40
                                               , h - 45
-                                              , ((tp.MaxShd == 0) ? new TV_COLOR(1, 1, 1, 0.4f).GetIntColor() : tp.Shd_Color)
+                                              , ((tp.MaxShd == 0) ? new COLOR(1, 1, 1, 0.4f) : tp.Shd_Color).Value
                                               , fntID);
 
       // Hull
       engine.TrueVision.TVScreen2DText.TextureFont_DrawText("HULL"
                                               , 15
                                               , h - 25
-                                              , acolor
+                                              , icolor
                                               , fntID);
 
       engine.TrueVision.TVScreen2DText.TextureFont_DrawText((tp.MaxHull == 0) ? "100%" : "{0:0}%".F(tp.Hull_Perc)
                                               , 15 + 40
                                               , h - 25
-                                              , ((tp.MaxHull == 0) ? new TV_COLOR(0, 1, 0, 1).GetIntColor() : tp.Hull_Color)
+                                              , ((tp.MaxHull == 0) ? new COLOR(0, 1, 0, 1) : tp.Hull_Color).Value
                                               , fntID);
 
       // Systems
@@ -315,7 +315,7 @@ namespace SWEndor.Actors.Models
                            s == SystemState.DISABLED ? ColorLocalKeys.GAME_SYSTEMSTATE_DISABLED :
                            s == SystemState.DESTROYED ? ColorLocalKeys.GAME_SYSTEMSTATE_DESTROYED :
                                                         ColorLocalKeys.GAME_SYSTEMSTATE_NULL;
-        int scolor = ColorLocalization.Get(k);
+        int scolor = ColorLocalization.Get(k).Value;
 
         engine.TrueVision.TVScreen2DText.TextureFont_DrawText(part.GetShorthand()
                                                       , w - 5 - 25 * (1 + i % 4)

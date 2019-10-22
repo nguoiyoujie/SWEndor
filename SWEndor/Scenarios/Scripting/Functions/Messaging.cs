@@ -9,12 +9,12 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       string text = ps[0].ValueS;
       float expiretime = ps[1].ValueI;
-      int color = new TV_COLOR(ps[2].ValueF, ps[3].ValueF, ps[4].ValueF, ps[5].ValueF).GetIntColor();
+      COLOR color = new COLOR(ps[2].ValueF, ps[3].ValueF, ps[4].ValueF, ps[5].ValueF);
 
       if (ps.Length <= 6)
-        Globals.Engine.Screen2D.MessageText(text, expiretime, color);
+        context.Engine.Screen2D.MessageText(text, expiretime, color);
       else
-        Globals.Engine.Screen2D.MessageText(text, expiretime, color, ps[6].ValueI);
+        context.Engine.Screen2D.MessageText(text, expiretime, color, ps[6].ValueI);
       return Val.TRUE;
     }
   }

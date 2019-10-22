@@ -20,9 +20,9 @@ namespace SWEndor.UI.Widgets
       int mX = Engine.InputManager.MOUSE_X;
       int mY = Engine.InputManager.MOUSE_Y;
 
-      int color = PlayerInfo.Exists 
-                    ? color = PlayerInfo.FactionColor 
-                    : ColorLocalization.Get(ColorLocalKeys.WHITE);
+      int color = (PlayerInfo.Exists 
+                    ? PlayerInfo.FactionColor 
+                    : ColorLocalization.Get(ColorLocalKeys.WHITE)).Value;
 
       TVScreen2DImmediate.Draw_FilledBox(mX - 2, mY - 2, mX + 2, mY + 2, color);
 

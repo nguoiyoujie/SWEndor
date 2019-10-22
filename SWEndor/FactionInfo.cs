@@ -22,7 +22,7 @@ namespace SWEndor
         list = new Dictionary<string, FactionInfo>();
       }
 
-      public static FactionInfo Add(string name, int color)
+      public static FactionInfo Add(string name, COLOR color)
       {
         if (!list.ContainsKey(name))
           list.Add(name, new FactionInfo(name, color));
@@ -32,7 +32,7 @@ namespace SWEndor
 
     public static FactionInfo Neutral;
 
-    private FactionInfo(string name, int color)
+    private FactionInfo(string name, COLOR color)
     {
       Name = name;
       Color = color;
@@ -61,7 +61,7 @@ namespace SWEndor
     }
 
     public readonly string Name;
-    public int Color = ColorLocalization.Get(ColorLocalKeys.WHITE);
+    public COLOR Color = ColorLocalization.Get(ColorLocalKeys.WHITE);
     public bool AutoAI = false;
 
     private static Dictionary<int, int> _map;

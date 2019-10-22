@@ -53,7 +53,7 @@ namespace SWEndor.UI.Widgets
         ActorInfo tgt = p.ActorFactory.Get(((AI.Squads.Missions.AttackActor)p.Squad.Mission).Target_ActorID);
         if (tgt != null)
         {
-          int tcolor = tgt.Faction.Color;
+          COLOR tcolor = tgt.Faction.Color;
           float tx = 0;
           float ty = 0;
           TVScreen2DImmediate.Math_3DPointTo2D(tgt.GetGlobalPosition(), ref tx, ref ty);
@@ -65,7 +65,7 @@ namespace SWEndor.UI.Widgets
         ActorInfo tgt = p.ActorFactory.Get(((AI.Squads.Missions.AssistActor)p.Squad.Mission).Target_ActorID);
         if (tgt != null)
         {
-          int tcolor = tgt.Faction.Color;
+          COLOR tcolor = tgt.Faction.Color;
           float tx = 0;
           float ty = 0;
           TVScreen2DImmediate.Math_3DPointTo2D(tgt.GetGlobalPosition(), ref tx, ref ty);
@@ -81,40 +81,40 @@ namespace SWEndor.UI.Widgets
           || s.IsDyingOrDead
           || !s.InCombat
           || !PlayerCameraInfo.Camera.IsPointVisible(s.GetGlobalPosition()))
-          return;
+        return;
 
-        int scolor = s.Faction.Color;
-        float sx = 0;
-        float sy = 0;
-        TVScreen2DImmediate.Math_3DPointTo2D(s.GetGlobalPosition(), ref sx, ref sy);
+      COLOR scolor = s.Faction.Color;
+      float sx = 0;
+      float sy = 0;
+      TVScreen2DImmediate.Math_3DPointTo2D(s.GetGlobalPosition(), ref sx, ref sy);
 
-        if (s == s.Squad.Leader)
-          DrawSquadLeader(sx, sy, m_targetSize, scolor);
-        else
-          DrawSquadMember(sx, sy, m_targetSize, scolor);
+      if (s == s.Squad.Leader)
+        DrawSquadLeader(sx, sy, m_targetSize, scolor);
+      else
+        DrawSquadMember(sx, sy, m_targetSize, scolor);
     }
 
-    public void DrawSquadLeader(float x, float y, float iconsize, int color)
+    private void DrawSquadLeader(float x, float y, float iconsize, COLOR color)
     {
-      TVScreen2DImmediate.Draw_Circle(x, y, iconsize + 5, 6, color);
-      TVScreen2DImmediate.Draw_Circle(x, y, iconsize, 6, color);
+      TVScreen2DImmediate.Draw_Circle(x, y, iconsize + 5, 6, color.Value);
+      TVScreen2DImmediate.Draw_Circle(x, y, iconsize, 6, color.Value);
     }
 
-    public void DrawSquadMember(float x, float y, float iconsize, int color)
+    public void DrawSquadMember(float x, float y, float iconsize, COLOR color)
     {
-      TVScreen2DImmediate.Draw_Circle(x, y, iconsize, 6, color);
+      TVScreen2DImmediate.Draw_Circle(x, y, iconsize, 6, color.Value);
     }
 
-    public void DrawSquadMissionAttackTarget(float x, float y, float iconsize, int color)
+    public void DrawSquadMissionAttackTarget(float x, float y, float iconsize, COLOR color)
     {
-      TVScreen2DImmediate.Draw_Circle(x, y, iconsize, 6, color);
-      TVScreen2DImmediate.Draw_Line(x - iconsize, y, x + iconsize, y, color);
-      TVScreen2DImmediate.Draw_Line(x, y - iconsize, x, y + iconsize, color);
+      TVScreen2DImmediate.Draw_Circle(x, y, iconsize, 6, color.Value);
+      TVScreen2DImmediate.Draw_Line(x - iconsize, y, x + iconsize, y, color.Value);
+      TVScreen2DImmediate.Draw_Line(x, y - iconsize, x, y + iconsize, color.Value);
     }
 
-    public void DrawSquadMissionAssistTarget(float x, float y, float iconsize, int color)
+    public void DrawSquadMissionAssistTarget(float x, float y, float iconsize, COLOR color)
     {
-      TVScreen2DImmediate.Draw_Triangle(x, y + iconsize, x + iconsize / 2, y, x - iconsize / 2, y, color);
+      TVScreen2DImmediate.Draw_Triangle(x, y + iconsize, x + iconsize / 2, y, x - iconsize / 2, y, color.Value);
     }
   }
 }

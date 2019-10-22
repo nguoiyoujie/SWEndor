@@ -14,8 +14,8 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement LoadingText = new SelectionElement();
     List<float> Vals = new List<float>();
     List<SelectionElement> Squares = new List<SelectionElement>();
-    int SquareColor1 = ColorLocalization.Get(ColorLocalKeys.GAME_LOAD_DARK);
-    int SquareColor2 = ColorLocalization.Get(ColorLocalKeys.GAME_LOAD_LIGHT);
+    COLOR SquareColor1 = ColorLocalization.Get(ColorLocalKeys.GAME_LOAD_DARK);
+    COLOR SquareColor2 = ColorLocalization.Get(ColorLocalKeys.GAME_LOAD_LIGHT);
 
     GameScenarioBase SelectedScenario = null;
     ActorTypeInfo SelectedActorTypeInfo = null;
@@ -103,7 +103,7 @@ namespace SWEndor.UI.Menu.Pages
           Vals[i] -= Engine.Game.TimeSinceRender;
           if (Vals[i] < 0)
           {
-            if (Squares[i].UnHighlightBoxColor == SquareColor1)
+            if (Squares[i].UnHighlightBoxColor.Value == SquareColor1.Value)
               Squares[i].UnHighlightBoxColor = SquareColor2;
             else
               Squares[i].UnHighlightBoxColor = SquareColor1;

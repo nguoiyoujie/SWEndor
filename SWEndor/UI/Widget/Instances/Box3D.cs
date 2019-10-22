@@ -22,7 +22,7 @@ namespace SWEndor.UI.Widgets
     public override void Draw()
     {
       Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
-      Engine.TrueVision.TVScreen2DImmediate.Draw_Box3D(Globals.Engine.Screen2D.Box3D_min, Globals.Engine.Screen2D.Box3D_max, Globals.Engine.Screen2D.Box3D_color);
+      Engine.TrueVision.TVScreen2DImmediate.Draw_Box3D(Owner.Box3D_min, Owner.Box3D_max, Owner.Box3D_color.Value);
       Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
     }
   }

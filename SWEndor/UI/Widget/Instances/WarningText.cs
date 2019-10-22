@@ -63,9 +63,9 @@ namespace SWEndor.UI.Widgets
 
       string text = "MISSILE WARNING x{0} [{1:0000.00}]".F(warn, dist);
       int fntID = FontFactory.Get(Font.T12).ID;
-      int colorint = Engine.Game.GameTime % 2 > 1 
+      int icolor = (Engine.Game.GameTime % 2 > 1 
                         ? ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_MISSILE_WARNING_1) 
-                        : ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_MISSILE_WARNING_2);
+                        : ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_MISSILE_WARNING_2)).Value;
 
       float letter_width = 4.5f;
 
@@ -83,7 +83,7 @@ namespace SWEndor.UI.Widgets
       TVScreen2DText.TextureFont_DrawText(text
                                                             , Engine.ScreenWidth / 2 - letter_width * text.Length
                                                             , Engine.ScreenHeight / 2 - 150
-                                                            , colorint
+                                                            , icolor
                                                             , fntID);
       TVScreen2DText.Action_EndText();
     }

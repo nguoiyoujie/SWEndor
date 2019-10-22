@@ -48,8 +48,8 @@ namespace SWEndor.Player
     
     private float m_LowAlarmSoundTime = 0;
     public float StrengthFrac { get { return Actor?.HP_Frac ?? 0; } }
-    public int StrengthColor { get { return Actor?.HP_Color ?? ColorLocalization.Get(ColorLocalKeys.WHITE); } }
-    public int FactionColor { get { return Actor?.Faction?.Color ?? ColorLocalization.Get(ColorLocalKeys.WHITE); } }
+    public COLOR StrengthColor { get { return Actor?.HP_Color ?? ColorLocalization.Get(ColorLocalKeys.WHITE); } }
+    public COLOR FactionColor { get { return Actor?.Faction?.Color ?? ColorLocalization.Get(ColorLocalKeys.WHITE); } }
 
     public int Lives = 3;
     public float ScorePerLife = 50000;
@@ -307,12 +307,12 @@ namespace SWEndor.Player
       Actor.Squad.Mission = null;
     }
 
-    public void FlashHit(int color)
+    public void FlashHit(COLOR color)
     {
       if (Actor.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
       {
         Engine.SoundManager.SetSound(SoundGlobals.ExpHit);
-        Engine.TrueVision.TVGraphicEffect.Flash(color.GetR(), color.GetG(), color.GetB(), 200);
+        Engine.TrueVision.TVGraphicEffect.Flash(color.fR, color.fG, color.fB, 200);
 
         if (Actor.HP > 0 && DamagedReportSound != null && DamagedReportSound.Length > 0)
         {

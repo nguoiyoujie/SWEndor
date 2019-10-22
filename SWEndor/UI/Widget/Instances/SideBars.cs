@@ -40,20 +40,18 @@ namespace SWEndor.UI.Widgets
       if (p == null || !p.Active)
         return;
 
-      int pcolor = p.Faction.Color;
-
       //Health Bar
       DrawSingleBar(0
                     , "HP [{0}%]".F(Math.Ceiling(PlayerInfo.StrengthFrac * 100))
                     , PlayerInfo.StrengthFrac
-                    , PlayerInfo.StrengthColor
+                    , PlayerInfo.StrengthColor.Value
                     );
 
       //Speed Bar
       DrawSingleBar(1
             , "SPEED "
             , p.MoveData.Speed / p.MoveData.MaxSpeed
-            , ColorLocalization.Get(ColorLocalKeys.GAME_STAT_SPEED)
+            , ColorLocalization.Get(ColorLocalKeys.GAME_STAT_SPEED).Value
             );
 
       int barnumber = 2;
@@ -64,7 +62,7 @@ namespace SWEndor.UI.Widgets
         DrawSingleBar(barnumber
             , a.SideBarName.PadRight(12).Remove(11)
             , a.DisplayHP_Frac
-            , ColorLocalization.Get(ColorLocalKeys.GAME_STAT_CRITICAL_ALLY)
+            , ColorLocalization.Get(ColorLocalKeys.GAME_STAT_CRITICAL_ALLY).Value
             );
         barnumber++;
       }
@@ -75,7 +73,7 @@ namespace SWEndor.UI.Widgets
         DrawSingleBar(barnumber
             , a.SideBarName.PadRight(12).Remove(11)
             , a.DisplayHP_Frac
-            , ColorLocalization.Get(ColorLocalKeys.GAME_STAT_CRITICAL_ENEMY)
+            , ColorLocalization.Get(ColorLocalKeys.GAME_STAT_CRITICAL_ENEMY).Value
             );
         barnumber++;
       }
@@ -104,7 +102,7 @@ namespace SWEndor.UI.Widgets
 
       TVScreen2DImmediate.Action_Begin2D();
 
-      int bgcolor = ColorLocalization.Get(ColorLocalKeys.UI_BACKGROUND_DARK);
+      int bgcolor = ColorLocalization.Get(ColorLocalKeys.UI_BACKGROUND_DARK).Value;
       // Background
       TVScreen2DImmediate.Draw_FilledBox(bar_topleft.x - 120
                                     , bar_topleft.y + bar_height * (h - 0.1f)

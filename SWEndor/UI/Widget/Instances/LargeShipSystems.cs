@@ -78,18 +78,18 @@ namespace SWEndor.UI.Widgets
           float x = radar_center.x - radar_radius * dist / radar_range * (float)Math.Sin(angl * Globals.PI / 180);
           float y = radar_center.y + radar_radius * dist / radar_range * (float)Math.Cos(angl * Globals.PI / 180);
           float scale = a.Scale;
-          int scolor = a.HP_Color;
+          int icolor = a.HP_Color.Value;
 
           switch (a.TypeInfo.RenderData.RadarType)
           {
             case RadarType.HOLLOW_CIRCLE_S:
-              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RenderData.RadarSize * 2, 4, scolor);
+              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RenderData.RadarSize * 2, 4, icolor);
               break;
             case RadarType.HOLLOW_CIRCLE_M:
-              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RenderData.RadarSize * 2, 12, scolor);
+              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RenderData.RadarSize * 2, 12, icolor);
               break;
             case RadarType.HOLLOW_CIRCLE_L:
-              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RenderData.RadarSize * 2, 36, scolor);
+              TVScreen2DImmediate.Draw_Circle(x, y, a.TypeInfo.RenderData.RadarSize * 2, 36, icolor);
               break;
             case RadarType.RECTANGLE_GIANT:
               {
@@ -100,7 +100,7 @@ namespace SWEndor.UI.Widgets
                                            , box.Z.Min * scale * radar_radius / radar_range + radar_center.y
                                            , box.X.Max * scale * radar_radius / radar_range + radar_center.x
                                            , box.Z.Max * scale * radar_radius / radar_range + radar_center.y
-                                           , scolor);
+                                           , icolor);
                 break;
               }
             case RadarType.TRIANGLE_GIANT:
@@ -114,7 +114,7 @@ namespace SWEndor.UI.Widgets
                                                 , -box.Z.Max * scale * radar_radius / radar_range + radar_center.y
                                                 , box.X.Max * scale * radar_radius / radar_range + radar_center.x
                                                 , -box.Z.Min * scale * radar_radius / radar_range + radar_center.y
-                                                , scolor);
+                                                , icolor);
 
                 break;
               }

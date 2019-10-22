@@ -142,9 +142,9 @@ namespace SWEndor.Scenarios
         Manager.AddEvent(Game.GameTime + 45f, Empire_SpawnStatics);
       }
 
-      Manager.Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
-      Manager.Line2Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
-      Manager.Line3Color = new TV_COLOR(0.7f, 1f, 0.3f, 1).GetIntColor();
+      Manager.Line1Color = new COLOR(1f, 1f, 0.3f, 1);
+      Manager.Line2Color = new COLOR(1f, 1f, 0.3f, 1);
+      Manager.Line3Color = new COLOR(0.7f, 1f, 0.3f, 1);
 
       MainAllyFaction.WingLimit = 75;
 
@@ -155,11 +155,11 @@ namespace SWEndor.Scenarios
     {
       base.LoadFactions();
 
-      FactionInfo.Factory.Add("Rebels", new TV_COLOR(0.8f, 0, 0, 1).GetIntColor()).AutoAI = true;
-      FactionInfo.Factory.Add("Rebels_Wedge", new TV_COLOR(0.8f, 0.4f, 0.4f, 1).GetIntColor()).AutoAI = true;
-      FactionInfo.Factory.Add("Rebels_Falcon", new TV_COLOR(0.8f, 0.8f, 0.8f, 1).GetIntColor()).AutoAI = true;
-      FactionInfo.Factory.Add("Empire", new TV_COLOR(0, 0.8f, 0, 1).GetIntColor()).AutoAI = true;
-      FactionInfo.Factory.Add("Empire_Advanced", new TV_COLOR(0.4f, 0.8f, 0.4f, 1).GetIntColor()).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels", new COLOR(0.8f, 0, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels_Wedge", new COLOR(0.8f, 0.4f, 0.4f, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels_Falcon", new COLOR(0.8f, 0.8f, 0.8f, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Empire", new COLOR(0, 0.8f, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Empire_Advanced", new COLOR(0.4f, 0.8f, 0.4f, 1)).AutoAI = true;
 
       FactionInfo.Factory.Get("Rebels").Allies.Add(FactionInfo.Factory.Get("Rebels_Wedge"));
       FactionInfo.Factory.Get("Rebels").Allies.Add(FactionInfo.Factory.Get("Rebels_Falcon"));
@@ -2043,12 +2043,12 @@ namespace SWEndor.Scenarios
     #endregion
 
     #region Text
-    int color_lando = new TV_COLOR(0.8f, 0.8f, 0.8f, 1).GetIntColor();
-    int color_wedge = new TV_COLOR(0.8f, 0.4f, 0.4f, 1).GetIntColor();
-    int color_ywing = new TV_COLOR(0.6f, 0.6f, 0.6f, 1).GetIntColor();
-    int color_bwing = new TV_COLOR(0.6f, 0.6f, 0.9f, 1).GetIntColor();
-    int color_awing = new TV_COLOR(0.4f, 0.8f, 0.4f, 1).GetIntColor();
-    int color_ackbar = new TV_COLOR(0.2f, 0.4f, 1, 1).GetIntColor();
+    COLOR color_lando = new COLOR(0.8f, 0.8f, 0.8f, 1);
+    COLOR color_wedge = new COLOR(0.8f, 0.4f, 0.4f, 1);
+    COLOR color_ywing = new COLOR(0.6f, 0.6f, 0.6f, 1);
+    COLOR color_bwing = new COLOR(0.6f, 0.6f, 0.9f, 1);
+    COLOR color_awing = new COLOR(0.4f, 0.8f, 0.4f, 1);
+    COLOR color_ackbar = new COLOR(0.2f, 0.4f, 1, 1);
 
     public void Message_01_AllWingsReport()
     {

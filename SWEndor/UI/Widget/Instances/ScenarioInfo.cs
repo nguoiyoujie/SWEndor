@@ -46,7 +46,7 @@ namespace SWEndor.UI.Widgets
                                     , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
       TVScreen2DImmediate.Action_End2D();
 
-      int pcolor = p.Faction.Color;
+      int icolor = pcolor.Value;
 
       TVScreen2DText.Action_BeginText();
       TVScreen2DText.TextureFont_DrawText(string.Format("LIVES: {0,8:0}\nSCORE: {1,8:00000000}\nKILLS: {2,8:0}\nHITS:  {3,8:0}"
@@ -57,7 +57,7 @@ namespace SWEndor.UI.Widgets
       )
       , Engine.ScreenWidth / 2 - infomiddlegap - infowidth_left
       , infotop
-      , pcolor
+      , icolor
       , FontFactory.Get(Font.T12).ID
       );
       TVScreen2DText.Action_EndText();
@@ -87,7 +87,7 @@ namespace SWEndor.UI.Widgets
           )
           , leftinfo_left
           , leftinfo_stagetop
-          , pcolor
+          , icolor
           , FontFactory.Get(Font.T12).ID
           );
 
@@ -97,28 +97,28 @@ namespace SWEndor.UI.Widgets
           )
           , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop
-          , pcolor
+          , icolor
           , FontFactory.Get(Font.T12).ID
           );
 
         TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line1Text
           , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop + infoheight
-          , GameScenarioManager.Line1Color
+          , GameScenarioManager.Line1Color.Value
           , FontFactory.Get(Font.T12).ID
           );
 
         TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line2Text
           , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop + infoheight * 2
-          , GameScenarioManager.Line2Color
+          , GameScenarioManager.Line2Color.Value
           , FontFactory.Get(Font.T12).ID
           );
 
         TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line3Text
           , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop + infoheight * 3
-          , GameScenarioManager.Line3Color
+          , GameScenarioManager.Line3Color.Value
           , FontFactory.Get(Font.T12).ID
           );
 

@@ -49,7 +49,7 @@ namespace SWEndor
     public bool Box3D_Enable = false;
     public TV_3DVECTOR Box3D_min = new TV_3DVECTOR();
     public TV_3DVECTOR Box3D_max = new TV_3DVECTOR();
-    public int Box3D_color = ColorLocalization.Get(ColorLocalKeys.WHITE);
+    public COLOR Box3D_color = ColorLocalization.Get(ColorLocalKeys.WHITE);
 
     Widget[] m_Widgets;
 
@@ -103,22 +103,22 @@ namespace SWEndor
       }
     }
 
-    public void MessageText(string text, float expiretime, int color, int priority = 0)
+    public void MessageText(string text, float expiretime, COLOR color, int priority = 0)
     {
       MessageText(ref PrimaryText, text, expiretime, color, priority);
     }
 
-    public void MessageSecondaryText(string text, float expiretime, int color, int priority = 0)
+    public void MessageSecondaryText(string text, float expiretime, COLOR color, int priority = 0)
     {
       MessageText(ref SecondaryText, text, expiretime, color, priority);
     }
 
-    public void MessageSystemsText(string text, float expiretime, int color, int priority = 0)
+    public void MessageSystemsText(string text, float expiretime, COLOR color, int priority = 0)
     {
       MessageText(ref SystemsText, text, expiretime, color, priority);
     }
 
-    private void MessageText(ref TextInfo tinfo, string text, float expiretime, int color, int priority)
+    private void MessageText(ref TextInfo tinfo, string text, float expiretime, COLOR color, int priority)
     {
       if (tinfo.Priority <= priority || tinfo.ExpireTime < Engine.Game.GameTime)
       {

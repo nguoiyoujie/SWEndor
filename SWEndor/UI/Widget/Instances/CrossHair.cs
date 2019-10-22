@@ -37,7 +37,8 @@ namespace SWEndor.UI.Widgets
       if (p == null || !p.Active)
         return;
 
-      int pcolor = PlayerInfo.FactionColor;
+      COLOR pcolor = PlayerInfo.FactionColor;
+      int icolor = pcolor.Value;
 
       TVScreen2DImmediate.Action_Begin2D();
       TVScreen2DImmediate.Draw_Texture(tex
@@ -45,17 +46,17 @@ namespace SWEndor.UI.Widgets
                                , Owner.ScreenCenter.y - 32
                                , Owner.ScreenCenter.x + 32
                                , Owner.ScreenCenter.y + 32
-                               , pcolor
-                               , pcolor
-                               , pcolor
-                               , pcolor);
+                               , icolor
+                               , icolor
+                               , icolor
+                               , icolor);
 
       WeaponInfo weap = PlayerInfo.PrimaryWeapon.Weapon;
       int burst = PlayerInfo.PrimaryWeapon.Burst;
       if (weap != null)
       {
-        int disabled_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DISABLED);
-        int destroyed_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DESTROYED);
+        COLOR disabled_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DISABLED);
+        COLOR destroyed_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DESTROYED);
         if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.LASER_WEAPONS) == SystemState.ACTIVE)
           DrawLaser(weap, burst, pcolor, disabled_color);
         else if (p.GetStatus(SystemPart.LASER_WEAPONS) == SystemState.DESTROYED)
@@ -71,8 +72,8 @@ namespace SWEndor.UI.Widgets
         if (weap.Type == WeaponType.TORPEDO
           || weap.Type == WeaponType.MISSILE)
         {
-          int disabled_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DISABLED);
-          int destroyed_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DESTROYED);
+          COLOR disabled_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DISABLED);
+          COLOR destroyed_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DESTROYED);
           if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) == SystemState.ACTIVE)
             DrawMissile(weap, true, weap.Ammo, pcolor);
           else if (p.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) == SystemState.DESTROYED)
@@ -82,9 +83,9 @@ namespace SWEndor.UI.Widgets
         }
         else if (weap.Type == WeaponType.ION)
         {
-          int ion_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_ION);
-          int disabled_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DISABLED);
-          int destroyed_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DESTROYED);
+          COLOR ion_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_ION);
+          COLOR disabled_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DISABLED);
+          COLOR destroyed_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DESTROYED);
           if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.LASER_WEAPONS) == SystemState.ACTIVE)
             DrawIon(weap, true, burst, ion_color, ion_color);
           else if (p.GetStatus(SystemPart.LASER_WEAPONS) == SystemState.DESTROYED)
@@ -96,7 +97,7 @@ namespace SWEndor.UI.Widgets
       }
     }
 
-    private void DrawLaser(WeaponInfo weap, int burst, int pcolor, int color2)
+    private void DrawLaser(WeaponInfo weap, int burst, COLOR pcolor, COLOR color2)
     {
       for (int i = 0; i < weap?.UIFirePositions?.Length; i++)
       {
@@ -116,7 +117,7 @@ namespace SWEndor.UI.Widgets
                                             , y - 2 + Owner.ScreenCenter.y
                                             , x + 2 + Owner.ScreenCenter.x
                                             , y + 2 + Owner.ScreenCenter.y
-                                            , pcolor);
+                                            , pcolor.Value);
           }
           else
           {
@@ -124,13 +125,13 @@ namespace SWEndor.UI.Widgets
                                             , y - 2 + Owner.ScreenCenter.y
                                             , x + 2 + Owner.ScreenCenter.x
                                             , y + 2 + Owner.ScreenCenter.y
-                                            , color2);
+                                            , color2.Value);
           }
         }
       }
     }
 
-    private void DrawIon(WeaponInfo weap, bool enabled, int burst, int pcolor, int color2)
+    private void DrawIon(WeaponInfo weap, bool enabled, int burst, COLOR pcolor, COLOR color2)
     {
       for (int i = 0; i < weap?.UIFirePositions?.Length; i++)
       {
@@ -150,7 +151,7 @@ namespace SWEndor.UI.Widgets
                                             , y - 2 + Owner.ScreenCenter.y
                                             , x + 2 + Owner.ScreenCenter.x
                                             , y + 2 + Owner.ScreenCenter.y
-                                            , pcolor);
+                                            , pcolor.Value);
           }
           else
           {
@@ -158,7 +159,7 @@ namespace SWEndor.UI.Widgets
                                             , y - 2 + Owner.ScreenCenter.y
                                             , x + 2 + Owner.ScreenCenter.x
                                             , y + 2 + Owner.ScreenCenter.y
-                                            , color2);
+                                            , color2.Value);
           }
         }
       }
@@ -178,7 +179,7 @@ namespace SWEndor.UI.Widgets
                                       , p1_y + Owner.ScreenCenter.y
                                       , p2_x + Owner.ScreenCenter.x
                                       , p2_y + Owner.ScreenCenter.y
-                                      , pcolor);
+                                      , pcolor.Value);
 
       TVScreen2DImmediate.Action_End2D();
       TVScreen2DText.Action_BeginText();
@@ -188,7 +189,7 @@ namespace SWEndor.UI.Widgets
         TVScreen2DText.TextureFont_DrawText("{0}: {1}".F(weap.DisplayName, (enabled ? weap.Ammo.ToString() : "---"))
                                   , p1_x + Owner.ScreenCenter.x + 5
                                   , p1_y + Owner.ScreenCenter.y + 2
-                                  , pcolor
+                                  , pcolor.Value
                                   , FontFactory.Get(Font.T10).ID);
       }
 
@@ -216,7 +217,7 @@ namespace SWEndor.UI.Widgets
                                                 */
     }
 
-    private void DrawMissile(WeaponInfo weap, bool enabled, int ammo, int pcolor)
+    private void DrawMissile(WeaponInfo weap, bool enabled, int ammo, COLOR pcolor)
     {
       float p1_x = -40;
       float p1_y = 42;
@@ -233,7 +234,7 @@ namespace SWEndor.UI.Widgets
                                       , p1_y + Owner.ScreenCenter.y
                                       , p2_x + Owner.ScreenCenter.x
                                       , p2_y + Owner.ScreenCenter.y
-                                      , pcolor);
+                                      , pcolor.Value);
 
       TVScreen2DImmediate.Action_End2D();
       TVScreen2DText.Action_BeginText();
@@ -241,7 +242,7 @@ namespace SWEndor.UI.Widgets
       TVScreen2DText.TextureFont_DrawText("{0}: {1}".F(weap.DisplayName, (enabled ? ammo.ToString() : "---"))
                                 , p1_x + Owner.ScreenCenter.x + 5
                                 , p1_y + Owner.ScreenCenter.y + 2
-                                , pcolor
+                                , pcolor.Value
                                 , FontFactory.Get(Font.T10).ID);
 
       TVScreen2DText.Action_EndText();

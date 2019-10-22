@@ -47,9 +47,9 @@ namespace SWEndor.Scenarios
     public string Line2Text = "";
     public string Line3Text = "";
 
-    public int Line1Color = ColorLocalization.Get(ColorLocalKeys.WHITE);
-    public int Line2Color = ColorLocalization.Get(ColorLocalKeys.WHITE);
-    public int Line3Color = ColorLocalization.Get(ColorLocalKeys.WHITE);
+    public COLOR Line1Color = ColorLocalization.Get(ColorLocalKeys.WHITE);
+    public COLOR Line2Color = ColorLocalization.Get(ColorLocalKeys.WHITE);
+    public COLOR Line3Color = ColorLocalization.Get(ColorLocalKeys.WHITE);
 
     public bool IsCutsceneMode = false;
 

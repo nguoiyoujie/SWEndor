@@ -61,9 +61,9 @@ namespace SWEndor.Scenarios
         Manager.AddEvent(Game.GameTime + 7.5f, Rebel_GiveControl);
       }
 
-      Manager.Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
-      Manager.Line2Color = new TV_COLOR(0.7f, 1f, 0.3f, 1).GetIntColor();
-      Manager.Line3Color = new TV_COLOR(0.7f, 1f, 0.3f, 1).GetIntColor();
+      Manager.Line1Color = new COLOR(1f, 1f, 0.3f, 1);
+      Manager.Line2Color = new COLOR(0.7f, 1f, 0.3f, 1);
+      Manager.Line3Color = new COLOR(0.7f, 1f, 0.3f, 1);
 
       Manager.IsCutsceneMode = false;
     }
@@ -129,10 +129,10 @@ namespace SWEndor.Scenarios
     {
       base.LoadFactions();
 
-      FactionInfo.Factory.Add("Rebels", new TV_COLOR(0.8f, 0, 0, 1).GetIntColor()).AutoAI = true;
-      FactionInfo.Factory.Add("Rebels_Falcon", new TV_COLOR(0.8f, 0.8f, 0.8f, 1).GetIntColor()).AutoAI = true;
-      FactionInfo.Factory.Add("Empire", new TV_COLOR(0, 0.8f, 0, 1).GetIntColor()).AutoAI = true;
-      FactionInfo.Factory.Add("Empire_Advanced", new TV_COLOR(0.4f, 0.8f, 0.4f, 1).GetIntColor()).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels", new COLOR(0.8f, 0, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels_Falcon", new COLOR(0.8f, 0.8f, 0.8f, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Empire", new COLOR(0, 0.8f, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Empire_Advanced", new COLOR(0.4f, 0.8f, 0.4f, 1)).AutoAI = true;
 
       FactionInfo.Factory.Get("Rebels").Allies.Add(FactionInfo.Factory.Get("Rebels_Falcon"));
       FactionInfo.Factory.Get("Rebels_Falcon").Allies.Add(FactionInfo.Factory.Get("Rebels"));

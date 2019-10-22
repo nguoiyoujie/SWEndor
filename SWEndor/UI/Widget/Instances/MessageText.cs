@@ -85,28 +85,31 @@ namespace SWEndor.UI.Widgets
       TVScreen2DText.Action_BeginText();
       if (t1_opacity > 0 && t1.Text.Length > 0)
       {
+        t1.Color.fA = t1_opacity;
         TVScreen2DText.TextureFont_DrawText(t1.Text
                                                               , Owner.ScreenCenter.x - w1
                                                               , Owner.ScreenCenter.y + y0_t1
-                                                              , t1.Color.SetA(t1_opacity)
+                                                              , t1.Color.Value
                                                               , fntID);
       }
 
       if (t2_opacity > 0 && t2.Text.Length > 0)
       {
+        t2.Color.fA = t2_opacity;
         TVScreen2DText.TextureFont_DrawText(t2.Text
                                                               , Owner.ScreenCenter.x - w2
                                                               , Owner.ScreenCenter.y + y0_t2
-                                                              , t2.Color.SetA(t2_opacity)
+                                                              , t2.Color.Value
                                                               , fntID);
       }
 
       if (ts_opacity > 0 && ts.Text.Length > 0)
       {
+        ts.Color.fA = ts_opacity;
         TVScreen2DText.TextureFont_DrawText(ts.Text
                                                               , Owner.ScreenCenter.x - ws
                                                               , Owner.ScreenCenter.y + y0_t3
-                                                              , ts.Color.SetA(ts_opacity)
+                                                              , ts.Color.Value
                                                               , fntID);
       }
       TVScreen2DText.Action_EndText();

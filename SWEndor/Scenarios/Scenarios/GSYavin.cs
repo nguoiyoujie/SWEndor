@@ -196,8 +196,8 @@ namespace SWEndor.Scenarios
       names.Add("Gold Seven (Gazdo Woolcob)");
       names.Add("Gold Eight");
 
-      Manager.Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
-      Manager.Line2Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
+      Manager.Line1Color = new COLOR(1f, 1f, 0.3f, 1);
+      Manager.Line2Color = new COLOR(1f, 1f, 0.3f, 1);
       //Manager.Line3Color = new TV_COLOR(0.7f, 1f, 0.3f, 1);
 
       SoundManager.SetMusic("battle_1_1");
@@ -210,10 +210,10 @@ namespace SWEndor.Scenarios
     {
       base.LoadFactions();
 
-      FactionInfo.Factory.Add("Rebels", new TV_COLOR(0.8f, 0, 0, 1).GetIntColor()).AutoAI = true;
-      FactionInfo.Factory.Add("Rebels_Gold", new TV_COLOR(0.8f, 0.3f, 0, 1).GetIntColor()).AutoAI = true;
-      FactionInfo.Factory.Add("Empire", new TV_COLOR(0, 0.8f, 0, 1).GetIntColor()).AutoAI = true;
-      FactionInfo.Factory.Add("Empire_DeathStarDefenses", new TV_COLOR(0.1f, 0.8f, 0, 1).GetIntColor()).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels", new COLOR(0.8f, 0, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels_Gold", new COLOR(0.8f, 0.3f, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Empire", new COLOR(0, 0.8f, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Empire_DeathStarDefenses", new COLOR(0.1f, 0.8f, 0, 1)).AutoAI = true;
 
       FactionInfo.Factory.Get("Rebels").Allies.Add(FactionInfo.Factory.Get("Rebels_Gold"));
       FactionInfo.Factory.Get("Rebels_Gold").Allies.Add(FactionInfo.Factory.Get("Rebels"));
@@ -500,7 +500,7 @@ namespace SWEndor.Scenarios
       Manager.Line2Text = "TIME: {0:00}:{1:00}".F((int)(expiretime - Game.GameTime) / 60, (int)(expiretime - Game.GameTime) % 60);
       if ((int)(expiretime - Game.GameTime) / 60 < 4)
       {
-        Manager.Line2Color = new TV_COLOR(1, 0.3f, 0.3f, 1).GetIntColor();
+        Manager.Line2Color = new COLOR(1, 0.3f, 0.3f, 1);
       }
     }
 
@@ -2020,7 +2020,7 @@ namespace SWEndor.Scenarios
 
 
     #region Text
-    int color_outpost = new TV_COLOR(0.6f, 0.6f, 0.9f, 1).GetIntColor();
+    COLOR color_outpost = new COLOR(0.6f, 0.6f, 0.9f, 1);
 
     public void Message_01_EnemyShipsInbound()
     {

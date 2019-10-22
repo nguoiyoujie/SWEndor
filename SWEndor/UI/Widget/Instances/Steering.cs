@@ -25,7 +25,7 @@ namespace SWEndor.UI.Widgets
       if (p == null || !p.Active)
         return;
 
-      int pcolor = p.Faction.Color;
+      int pcolor = p.Faction.Color.Value;
       float xfrac = p.MoveData.YTurnAngle / p.MoveData.MaxTurnRate / 2;
       float yfrac = p.MoveData.XTurnAngle / p.MoveData.MaxTurnRate / 2;
       float zfrac = p.MoveData.ZRoll / p.MoveData.MaxTurnRate / 2;

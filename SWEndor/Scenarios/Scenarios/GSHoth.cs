@@ -93,8 +93,8 @@ namespace SWEndor.Scenarios
 
       MakePlayer = Rebel_MakePlayer;
 
-      Manager.Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
-      Manager.Line2Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
+      Manager.Line1Color = new COLOR(1f, 1f, 0.3f, 1);
+      Manager.Line2Color = new COLOR(1f, 1f, 0.3f, 1);
       //Manager.Line3Color = new TV_COLOR(0.7f, 1f, 0.3f, 1);
 
       SoundManager.SetMusic("battle_2_1");
@@ -107,9 +107,9 @@ namespace SWEndor.Scenarios
     {
       base.LoadFactions();
 
-      FactionInfo.Factory.Add("Rebels", new TV_COLOR(0.8f, 0, 0, 1).GetIntColor()).AutoAI = true;
-      FactionInfo.Factory.Add("Rebels_Falcon", new TV_COLOR(0.8f, 0.8f, 0.8f, 1).GetIntColor()).AutoAI = true;
-      FactionInfo.Factory.Add("Empire", new TV_COLOR(0, 0.8f, 0, 1).GetIntColor()).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels", new COLOR(0.8f, 0, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels_Falcon", new COLOR(0.8f, 0.8f, 0.8f, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Empire", new COLOR(0, 0.8f, 0, 1)).AutoAI = true;
 
       FactionInfo.Factory.Get("Rebels").Allies.Add(FactionInfo.Factory.Get("Rebels_Falcon"));
       FactionInfo.Factory.Get("Rebels_Falcon").Allies.Add(FactionInfo.Factory.Get("Rebels"));
@@ -182,13 +182,13 @@ namespace SWEndor.Scenarios
 
           if (TIEsLeft < 1 && !Manager.GetGameStateB("Stage2b"))
           {
-            Manager.Line1Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
-            Manager.Line2Color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
+            Manager.Line1Color = new COLOR(1f, 1f, 0.3f, 1);
+            Manager.Line2Color = new COLOR(1f, 1f, 0.3f, 1);
             Manager.Line1Text = "Proceed to";
             Manager.Line2Text = "Hyperspace Lane";
             Manager.SetGameStateB("Stage2b", true);
             Screen2D.Box3D_Enable = true;
-            Screen2D.Box3D_color = new TV_COLOR(1f, 1f, 0.3f, 1).GetIntColor();
+            Screen2D.Box3D_color = new COLOR(1f, 1f, 0.3f, 1);
             Screen2D.Box3D_min = hyperspace_lane_min;
             Screen2D.Box3D_max = hyperspace_lane_max;
           }
@@ -816,8 +816,8 @@ namespace SWEndor.Scenarios
     public void Scene_02_Switch()
     {
       StageNumber = 2;
-      Manager.Line1Color = new TV_COLOR(0.7f, 1f, 0.3f, 1).GetIntColor();
-      Manager.Line2Color = new TV_COLOR(0.7f, 1f, 0.3f, 1).GetIntColor();
+      Manager.Line1Color = new COLOR(0.7f, 1f, 0.3f, 1);
+      Manager.Line2Color = new COLOR(0.7f, 1f, 0.3f, 1);
       switch (Difficulty.ToLower())
       {
         case "mental":
@@ -1018,11 +1018,11 @@ namespace SWEndor.Scenarios
     #endregion
 
     #region Text
-    int color_echobase = new TV_COLOR(0.6f, 0.6f, 0.9f, 1).GetIntColor();
-    int color_transport = new TV_COLOR(0.8f, 0.4f, 0.4f, 1).GetIntColor();
-    int color_xwing = new TV_COLOR(0.8f, 0, 0, 1).GetIntColor();
-    int color_solo = new TV_COLOR(0.8f, 0.8f, 0.9f, 1).GetIntColor();
-    int color_3cpo = new TV_COLOR(0.8f, 0.8f, 0.1f, 1).GetIntColor();
+    COLOR color_echobase = new COLOR(0.6f, 0.6f, 0.9f, 1);
+    COLOR color_transport = new COLOR(0.8f, 0.4f, 0.4f, 1);
+    COLOR color_xwing = new COLOR(0.8f, 0, 0, 1);
+    COLOR color_solo = new COLOR(0.8f, 0.8f, 0.9f, 1);
+    COLOR color_3cpo = new COLOR(0.8f, 0.8f, 0.1f, 1);
 
     public void Message_01_Leaving()
     {

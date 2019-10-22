@@ -52,24 +52,24 @@ namespace SWEndor.UI.Widgets
       if (p == null || !p.Active)
         return;
 
-      int icolor = pcolor;
+      COLOR c = pcolor;
       bool active = false;
       bool showcircle = true;
       if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.RADAR) == SystemState.ACTIVE)
         active = true;
       else if (p.GetStatus(SystemPart.RADAR) == SystemState.DISABLED)
-        icolor = new TV_COLOR(0.6f, 0.6f, 0.6f, 0.6f).GetIntColor();
+        c = new COLOR(0.6f, 0.6f, 0.6f, 0.6f);
       else if (p.GetStatus(SystemPart.RADAR) == SystemState.DESTROYED)
       {
-        icolor = new TV_COLOR(1, 0, 0, 1).GetIntColor();
+        c = new COLOR(1, 0, 0, 1);
         showcircle = Engine.Game.GameTime % 2 > 1;
       }
       TVScreen2DImmediate.Action_Begin2D();
       TVScreen2DImmediate.Draw_FilledCircle(radar_center.x, radar_center.y, radar_radius + 2, 300, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
       if (showcircle)
       {
-        TVScreen2DImmediate.Draw_Circle(radar_center.x, radar_center.y, radar_radius + 2, 300, icolor);
-        TVScreen2DImmediate.Draw_Circle(radar_center.x, radar_center.y, radar_radius - 2, 300, icolor);
+        TVScreen2DImmediate.Draw_Circle(radar_center.x, radar_center.y, radar_radius + 2, 300, c.Value);
+        TVScreen2DImmediate.Draw_Circle(radar_center.x, radar_center.y, radar_radius - 2, 300, c.Value);
       }
       if (active)
       {
@@ -80,11 +80,11 @@ namespace SWEndor.UI.Widgets
       TVScreen2DImmediate.Action_End2D();
     }
 
-    private static int explColor = new TV_COLOR(0.75f, 0.75f, 0, 0.75f).GetIntColor();
-    private static int projColor = new TV_COLOR(0.8f, 0.5f, 0, 0.6f).GetIntColor();
-    private static int whitColor = new TV_COLOR(1, 1, 1, 1).GetIntColor();
+    private static COLOR explColor = new COLOR(0.75f, 0.75f, 0, 0.75f);
+    private static COLOR projColor = new COLOR(0.8f, 0.5f, 0, 0.6f);
+    private static COLOR whitColor = new COLOR(1, 1, 1, 1);
 
-    private int GetColor(ActorInfo actor)
+    private COLOR GetColor(ActorInfo actor)
     {
       if (actor.TypeInfo.AIData.TargetType.Contains(TargetType.MUNITION))
         return projColor;
@@ -144,7 +144,7 @@ namespace SWEndor.UI.Widgets
           && a.TypeInfo.RenderData.RadarSize > 0
           && (a.TypeInfo.RenderData.AlwaysShowInRadar || DistanceModel.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
         {
-          int acolor = GetColor(a);
+          int icolor = GetColor(a).Value;
           
           float proty = p.GetGlobalRotation().y;
 
@@ -169,39 +169,39 @@ namespace SWEndor.UI.Widgets
                 float px = radar_center.x - radar_radius * prevdist / radar_range * (float)Math.Sin(prevangl * Globals.PI / 180);
                 float py = radar_center.y + radar_radius * prevdist / radar_range * (float)Math.Cos(prevangl * Globals.PI / 180);
 
-                DrawLine(x, y, px, py, acolor);
+                DrawLine(x, y, px, py, icolor);
               }
               break;
             case RadarType.HOLLOW_SQUARE:
-              DrawHollowSquare(x, y, a.TypeInfo.RenderData.RadarSize, acolor);
+              DrawHollowSquare(x, y, a.TypeInfo.RenderData.RadarSize, icolor);
               break;
             case RadarType.FILLED_SQUARE:
-              DrawFilledSquare(x, y, a.TypeInfo.RenderData.RadarSize, acolor);
+              DrawFilledSquare(x, y, a.TypeInfo.RenderData.RadarSize, icolor);
               break;
             case RadarType.HOLLOW_CIRCLE_S:
-              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 4, acolor);
+              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 4, icolor);
               break;
             case RadarType.HOLLOW_CIRCLE_M:
-              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 12, acolor);
+              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 12, icolor);
               break;
             case RadarType.HOLLOW_CIRCLE_L:
-              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 36, acolor);
+              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 36, icolor);
               break;
             case RadarType.FILLED_CIRCLE_S:
-              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 4, acolor);
+              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 4, icolor);
               break;
             case RadarType.FILLED_CIRCLE_M:
-              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 12, acolor);
+              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 12, icolor);
               break;
             case RadarType.FILLED_CIRCLE_L:
-              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 36, acolor);
+              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 36, icolor);
               break;
             case RadarType.RECTANGLE_GIANT:
               {
                 float gt = Engine.Game.GameTime * radar_blinkfreq;
                 if (a.HP_Frac > 0.1f || (gt - (int)gt > 0.5f))
                 {
-                  DrawRectGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, posvec.X, posvec.Y, proty, acolor);
+                  DrawRectGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, posvec.X, posvec.Y, proty, icolor);
                 }
               }
               break;
@@ -210,7 +210,7 @@ namespace SWEndor.UI.Widgets
                 float gt = Engine.Game.GameTime * radar_blinkfreq;
                 if (a.HP_Frac > 0.1f || (gt - (int)gt > 0.5f))
                 {
-                  DrawTriangleGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, posvec.X, posvec.Y, proty, acolor);
+                  DrawTriangleGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, posvec.X, posvec.Y, proty, icolor);
                 }
               }
               break;
@@ -231,7 +231,7 @@ namespace SWEndor.UI.Widgets
           && a.TypeInfo.RenderData.RadarSize > 0
           && (a.TypeInfo.RenderData.AlwaysShowInRadar || DistanceModel.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
         {
-          int acolor = explColor;
+          int icolor = explColor.Value;
 
           float proty = p.GetGlobalRotation().y;
 
@@ -256,32 +256,32 @@ namespace SWEndor.UI.Widgets
                 float px = radar_center.x - radar_radius * prevdist / radar_range * (float)Math.Sin(prevangl * Globals.PI / 180);
                 float py = radar_center.y + radar_radius * prevdist / radar_range * (float)Math.Cos(prevangl * Globals.PI / 180);
 
-                DrawLine(x, y, px, py, acolor);
+                DrawLine(x, y, px, py, icolor);
               }
               break;
             case RadarType.HOLLOW_SQUARE:
-              DrawHollowSquare(x, y, a.TypeInfo.RenderData.RadarSize, acolor);
+              DrawHollowSquare(x, y, a.TypeInfo.RenderData.RadarSize, icolor);
               break;
             case RadarType.FILLED_SQUARE:
-              DrawFilledSquare(x, y, a.TypeInfo.RenderData.RadarSize, acolor);
+              DrawFilledSquare(x, y, a.TypeInfo.RenderData.RadarSize, icolor);
               break;
             case RadarType.HOLLOW_CIRCLE_S:
-              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 4, acolor);
+              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 4, icolor);
               break;
             case RadarType.HOLLOW_CIRCLE_M:
-              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 12, acolor);
+              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 12, icolor);
               break;
             case RadarType.HOLLOW_CIRCLE_L:
-              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 36, acolor);
+              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 36, icolor);
               break;
             case RadarType.FILLED_CIRCLE_S:
-              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 4, acolor);
+              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 4, icolor);
               break;
             case RadarType.FILLED_CIRCLE_M:
-              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 12, acolor);
+              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 12, icolor);
               break;
             case RadarType.FILLED_CIRCLE_L:
-              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 36, acolor);
+              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 36, icolor);
               break;
           }
         }
@@ -300,7 +300,7 @@ namespace SWEndor.UI.Widgets
           && a.TypeInfo.RenderData.RadarSize > 0
           && (a.TypeInfo.RenderData.AlwaysShowInRadar || DistanceModel.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
         {
-          int acolor = projColor;
+          int icolor = projColor.Value;
 
           float proty = p.GetGlobalRotation().y;
 
@@ -325,38 +325,38 @@ namespace SWEndor.UI.Widgets
                 float px = radar_center.x - radar_radius * prevdist / radar_range * (float)Math.Sin(prevangl * Globals.PI / 180);
                 float py = radar_center.y + radar_radius * prevdist / radar_range * (float)Math.Cos(prevangl * Globals.PI / 180);
 
-                DrawLine(x, y, px, py, acolor);
+                DrawLine(x, y, px, py, icolor);
               }
               break;
             case RadarType.HOLLOW_SQUARE:
-              DrawHollowSquare(x, y, a.TypeInfo.RenderData.RadarSize, acolor);
+              DrawHollowSquare(x, y, a.TypeInfo.RenderData.RadarSize, icolor);
               break;
             case RadarType.FILLED_SQUARE:
-              DrawFilledSquare(x, y, a.TypeInfo.RenderData.RadarSize, acolor);
+              DrawFilledSquare(x, y, a.TypeInfo.RenderData.RadarSize, icolor);
               break;
             case RadarType.HOLLOW_CIRCLE_S:
-              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 4, acolor);
+              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 4, icolor);
               break;
             case RadarType.HOLLOW_CIRCLE_M:
-              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 12, acolor);
+              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 12, icolor);
               break;
             case RadarType.HOLLOW_CIRCLE_L:
-              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 36, acolor);
+              DrawHollowCircle(x, y, a.TypeInfo.RenderData.RadarSize, 36, icolor);
               break;
             case RadarType.FILLED_CIRCLE_S:
-              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 4, acolor);
+              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 4, icolor);
               break;
             case RadarType.FILLED_CIRCLE_M:
-              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 12, acolor);
+              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 12, icolor);
               break;
             case RadarType.FILLED_CIRCLE_L:
-              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 36, acolor);
+              DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 36, icolor);
               break;
             case RadarType.RECTANGLE_GIANT:
-              DrawRectGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, posvec.X, posvec.Y, proty, acolor);
+              DrawRectGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, posvec.X, posvec.Y, proty, icolor);
               break;
             case RadarType.TRIANGLE_GIANT:
-              DrawTriangleGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, posvec.X, posvec.Y, proty, acolor);
+              DrawTriangleGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, posvec.X, posvec.Y, proty, icolor);
               break;
           }
         }

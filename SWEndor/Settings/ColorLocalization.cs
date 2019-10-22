@@ -47,78 +47,125 @@ namespace SWEndor
 
   public static class ColorLocalization
   {
-    static Dictionary<ColorLocalKeys, int> keys = new Dictionary<ColorLocalKeys, int>
+    static Dictionary<ColorLocalKeys, COLOR> keys = new Dictionary<ColorLocalKeys, COLOR>
     {
-      { ColorLocalKeys.TRANSPARENT, new TV_COLOR(0, 0, 0, 0).GetIntColor() },
-      { ColorLocalKeys.WHITE, new TV_COLOR(1, 1, 1, 1).GetIntColor() },
+      { ColorLocalKeys.TRANSPARENT, new COLOR(0, 0, 0, 0) },
+      { ColorLocalKeys.WHITE, new COLOR(1, 1, 1, 1) },
 
-      { ColorLocalKeys.SYSTEM_FATAL, new TV_COLOR(0.8f, 0.2f, 0.2f, 1).GetIntColor() },
-      { ColorLocalKeys.SYSTEM_FATAL_BACKGROUND, new TV_COLOR(0.8f, 0.2f, 0.2f, 0.3f).GetIntColor() },
-      { ColorLocalKeys.UI_BACKGROUND_DARK, new TV_COLOR(0, 0, 0, 0.6f).GetIntColor() },
+      { ColorLocalKeys.SYSTEM_FATAL, new COLOR(0.8f, 0.2f, 0.2f, 1) },
+      { ColorLocalKeys.SYSTEM_FATAL_BACKGROUND, new COLOR(0.8f, 0.2f, 0.2f, 0.3f) },
+      { ColorLocalKeys.UI_BACKGROUND_DARK, new COLOR(0, 0, 0, 0.6f) },
 
-      { ColorLocalKeys.UI_TEXT, new TV_COLOR(0.8f, 0.8f, 0, 1).GetIntColor() },
-      { ColorLocalKeys.UI_TEXT_ORANGE, new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor() },
-      { ColorLocalKeys.UI_UNHIGHLIGHT_BACKGROUND, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor() },
-      { ColorLocalKeys.UI_HIGHLIGHT_BACKGROUND,  new TV_COLOR(0.05f, 0.2f, 0, 0.8f).GetIntColor() },
+      { ColorLocalKeys.UI_TEXT, new COLOR(0.8f, 0.8f, 0, 1) },
+      { ColorLocalKeys.UI_TEXT_ORANGE, new COLOR(1, 0.5f, 0.2f, 1) },
+      { ColorLocalKeys.UI_UNHIGHLIGHT_BACKGROUND, new COLOR(0, 0, 0, 0.5f) },
+      { ColorLocalKeys.UI_HIGHLIGHT_BACKGROUND,  new COLOR(0.05f, 0.2f, 0, 0.8f) },
 
-      { ColorLocalKeys.GAME_LOAD_LIGHT, new TV_COLOR(0.8f, 0.8f, 0, 1).GetIntColor() },
-      { ColorLocalKeys.GAME_LOAD_DARK, new TV_COLOR(0, 0, 0, 0.6f).GetIntColor() },
+      { ColorLocalKeys.GAME_LOAD_LIGHT, new COLOR(0.8f, 0.8f, 0, 1) },
+      { ColorLocalKeys.GAME_LOAD_DARK, new COLOR(0, 0, 0, 0.6f) },
 
-      { ColorLocalKeys.GAME_MAP_GRID_MAJOR, new TV_COLOR(1, 1, 0.2f, 0.6f).GetIntColor() },
-      { ColorLocalKeys.GAME_MAP_GRID_MINOR, new TV_COLOR(1, 1, 0.2f, 0.3f).GetIntColor() },
-      { ColorLocalKeys.GAME_MAP_BACKGROUND, new TV_COLOR(0, 0, 0, 0.8f).GetIntColor() },
+      { ColorLocalKeys.GAME_MAP_GRID_MAJOR, new COLOR(1, 1, 0.2f, 0.6f) },
+      { ColorLocalKeys.GAME_MAP_GRID_MINOR, new COLOR(1, 1, 0.2f, 0.3f) },
+      { ColorLocalKeys.GAME_MAP_BACKGROUND, new COLOR(0, 0, 0, 0.8f) },
 
-      { ColorLocalKeys.GAME_STAT_SPEED, new TV_COLOR(0.7f, 0.8f, 0.4f, 1).GetIntColor() },
-      { ColorLocalKeys.GAME_STAT_CRITICAL_ALLY, new TV_COLOR(0, 0.8f, 0.6f, 1).GetIntColor() },
-      { ColorLocalKeys.GAME_STAT_CRITICAL_ENEMY, new TV_COLOR(1, 0, 0, 1).GetIntColor() },
+      { ColorLocalKeys.GAME_STAT_SPEED, new COLOR(0.7f, 0.8f, 0.4f, 1) },
+      { ColorLocalKeys.GAME_STAT_CRITICAL_ALLY, new COLOR(0, 0.8f, 0.6f, 1) },
+      { ColorLocalKeys.GAME_STAT_CRITICAL_ENEMY, new COLOR(1, 0, 0, 1) },
 
-      { ColorLocalKeys.GAME_MESSAGE_NORMAL, new TV_COLOR(0.5f, 0.5f, 1, 1).GetIntColor() },
-      { ColorLocalKeys.GAME_MESSAGE_WARNING, new TV_COLOR(1, 0.2f, 0.2f, 1).GetIntColor() },
-      { ColorLocalKeys.GAME_MESSAGE_BACKGROUND, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor() },
-      { ColorLocalKeys.GAME_MESSAGE_MISSILE_WARNING_1, new TV_COLOR(1, 0.2f, 0.2f, 1).GetIntColor() },
-      { ColorLocalKeys.GAME_MESSAGE_MISSILE_WARNING_2, new TV_COLOR(1, 0.8f, 0.2f, 1).GetIntColor() },
+      { ColorLocalKeys.GAME_MESSAGE_NORMAL, new COLOR(0.5f, 0.5f, 1, 1) },
+      { ColorLocalKeys.GAME_MESSAGE_WARNING, new COLOR(1, 0.2f, 0.2f, 1) },
+      { ColorLocalKeys.GAME_MESSAGE_BACKGROUND, new COLOR(0, 0, 0, 0.5f) },
+      { ColorLocalKeys.GAME_MESSAGE_MISSILE_WARNING_1, new COLOR(1, 0.2f, 0.2f, 1) },
+      { ColorLocalKeys.GAME_MESSAGE_MISSILE_WARNING_2, new COLOR(1, 0.8f, 0.2f, 1) },
 
-      { ColorLocalKeys.GAME_SYSTEMSTATE_ACTIVE, new TV_COLOR(0.3f, 1, 0.3f, 1).GetIntColor() },
-      { ColorLocalKeys.GAME_SYSTEMSTATE_DISABLED, new TV_COLOR(0.2f, 0.2f, 0.6f, 1).GetIntColor() },
-      { ColorLocalKeys.GAME_SYSTEMSTATE_DESTROYED, new TV_COLOR(0.7f, 0.2f, 0.2f, 1).GetIntColor() },
-      { ColorLocalKeys.GAME_SYSTEMSTATE_NULL, new TV_COLOR(0.4f, 0.4f, 0.4f, 1).GetIntColor() },
+      { ColorLocalKeys.GAME_SYSTEMSTATE_ACTIVE, new COLOR(0.3f, 1, 0.3f, 1) },
+      { ColorLocalKeys.GAME_SYSTEMSTATE_DISABLED, new COLOR(0.2f, 0.2f, 0.6f, 1) },
+      { ColorLocalKeys.GAME_SYSTEMSTATE_DESTROYED, new COLOR(0.7f, 0.2f, 0.2f, 1) },
+      { ColorLocalKeys.GAME_SYSTEMSTATE_NULL, new COLOR(0.4f, 0.4f, 0.4f, 1) },
 
-      { ColorLocalKeys.GAME_SYSTEM_ION, new TV_COLOR(0.6f, 0.6f, 1, 1).GetIntColor() },
-      { ColorLocalKeys.GAME_SYSTEM_DISABLED, new TV_COLOR(0.4f, 0.5f, 1, 0.4f).GetIntColor() },
-      { ColorLocalKeys.GAME_SYSTEM_DESTROYED, new TV_COLOR(1, 0, 0, 0.75f).GetIntColor() },
+      { ColorLocalKeys.GAME_SYSTEM_ION, new COLOR(0.6f, 0.6f, 1, 1) },
+      { ColorLocalKeys.GAME_SYSTEM_DISABLED, new COLOR(0.4f, 0.5f, 1, 0.4f) },
+      { ColorLocalKeys.GAME_SYSTEM_DESTROYED, new COLOR(1, 0, 0, 0.75f) },
     };
 
-    public static int Get(ColorLocalKeys key)
+    public static COLOR Get(ColorLocalKeys key)
     {
       if (!keys.ContainsKey(key))
-        return 0;
+        return new COLOR();
 
       return keys[key];
     }
+  }
 
-    // TV_COLOR is 0xAARRGGBB
-    public static float GetA(this int color) { return ((color & unchecked((int)0xFF000000)) >> 24) / 255f; }
+  public struct COLOR
+  {
+    public COLOR(float r, float g, float b, float a)
+    {
+      Value = 0;
+      fA = a;
+      fR = r;
+      fG = g;
+      fB = b;
+    }
 
-    public static float GetR(this int color) { return ((color & 0xFF0000) >> 16) / 255f; }
+    public COLOR(byte r, byte g, byte b, byte a)
+    {
+      Value = 0;
+      bA = a;
+      bR = r;
+      bG = g;
+      bB = b;
+    }
 
-    public static float GetG(this int color) { return ((color & 0xFF00) >> 8) / 255f; }
+    public int Value;
 
-    public static float GetB(this int color) { return (color & 0xFF) / 255f; }
+    public float fA
+    {
+      get { return ((Value & unchecked((int)0xFF000000)) >> 24) / 255f; }
+      set { Value = Value & 0x00FFFFFF | (unchecked((int)(value * 255u)) << 24); }
+    }
 
-    public static int SetA(this int color, byte a) { return color & 0x00FFFFFF | (a << 24); }
+    public float fR
+    {
+      get { return ((Value & 0xFF0000) >> 16) / 255f; }
+      set { Value = Value & unchecked((int)0xFF00FFFF) | (unchecked((int)(value * 255u)) << 16); }
+    }
 
-    public static int SetR(this int color, byte r) { return color & unchecked((int)0xFF00FFFF) | (r << 16); }
+    public float fG
+    {
+      get { return ((Value & 0xFF00) >> 8) / 255f; }
+      set { Value = Value & unchecked((int)0xFFFF00FF) | (unchecked((int)(value * 255u)) << 8); }
+    }
 
-    public static int SetG(this int color, byte g) { return color & unchecked((int)0xFFFF00FF) | (g << 8); }
+    public float fB
+    {
+      get { return (Value & 0xFF) / 255f; }
+      set { Value = Value & unchecked((int)0xFFFFFF00) | unchecked((int)(value * 255u)); }
+    }
 
-    public static int SetB(this int color, byte b) { return color & unchecked((int)0xFFFFFF00) | b; }
 
-    public static int SetA(this int color, float a) { return color & 0x00FFFFFF | (unchecked((int)(a * 255u)) << 24); }
+    public byte bA
+    {
+      get { return (byte)((Value & unchecked((int)0xFF000000)) >> 24); }
+      set { Value = Value & 0x00FFFFFF | (value << 24); }
+    }
 
-    public static int SetR(this int color, float r) { return color & unchecked((int)0xFF00FFFF) | (unchecked((int)(r * 255u)) << 16); }
+    public byte bR
+    {
+      get { return (byte)((Value & 0xFF0000) >> 16); }
+      set { Value = Value & unchecked((int)0xFF00FFFF) | (value << 16); }
+    }
 
-    public static int SetG(this int color, float g) { return color & unchecked((int)0xFFFF00FF) | (unchecked((int)(g * 255u)) << 8); }
+    public byte bG
+    {
+      get { return (byte)((Value & 0xFF00) >> 8); }
+      set { Value = Value & unchecked((int)0xFFFF00FF) | (value << 8); }
+    }
 
-    public static int SetB(this int color, float b) { return color & unchecked((int)0xFFFFFF00) | unchecked((int)(b * 255u)); }
+    public byte bB
+    {
+      get { return (byte)(Value & 0xFF); }
+      set { Value = Value & unchecked((int)0xFFFFFF00) | value; }
+    }
   }
 }
