@@ -134,7 +134,17 @@ namespace SWEndor.Player
 
     public void SetPosition_Actor(int actorID, DeathCameraData data)
     {
+      LookFrom.Position = new TV_3DVECTOR();
+      LookFrom.PositionRelative = new TV_3DVECTOR();
       LookFrom.TargetActorID = actorID;
+      DeathCamera = data;
+    }
+
+    public void SetPosition_Point(TV_3DVECTOR position, DeathCameraData data)
+    {
+      LookFrom.Position = position;
+      LookFrom.PositionRelative = new TV_3DVECTOR();
+      LookFrom.TargetActorID = -1;
       DeathCamera = data;
     }
 

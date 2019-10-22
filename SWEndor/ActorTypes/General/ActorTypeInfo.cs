@@ -507,7 +507,7 @@ namespace SWEndor.ActorTypes
       {
         engine.PlayerInfo.ActorID = -1;
 
-        engine.PlayerCameraInfo.DeathLook.SetPosition_Actor(ainfo.ID, DeathCamera);
+        engine.PlayerCameraInfo.DeathLook.SetPosition_Point(ainfo.GetGlobalPosition(), DeathCamera);
         engine.PlayerCameraInfo.SetDeathLook();
 
         ainfo.DestroyedEvents += engine.GameScenarioManager.Scenario.ProcessPlayerKilled;

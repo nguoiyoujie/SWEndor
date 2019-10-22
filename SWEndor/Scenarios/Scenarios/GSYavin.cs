@@ -1293,9 +1293,7 @@ namespace SWEndor.Scenarios
       m_AYavin.Rotation = new TV_3DVECTOR(0, 0, 180);
       m_AYavin4.Delete();
 
-      //cam.MoveData.MaxSpeed = 450;
-      //cam.MoveData.Speed = 450;
-      PlayerCameraInfo.SceneLook.SetPosition_Point(new TV_3DVECTOR(-550, -130, Manager.MaxBounds.z - 1500));
+      PlayerCameraInfo.SceneLook.SetPosition_Point(new TV_3DVECTOR(-550, -130, Manager.MaxBounds.z - 1500), 450);
       PlayerCameraInfo.SceneLook.SetTarget_LookAtActor(m_PlayerID);
       PlayerCameraInfo.SetSceneLook();
 
@@ -1384,9 +1382,7 @@ namespace SWEndor.Scenarios
 
       StageNumber = 4;
       PlayerCameraInfo.SceneLook.SetPosition_Point(new TV_3DVECTOR(1000, 30, -2000), 750);
-      //cam.MoveData.MaxSpeed = 750;
-      //cam.MoveData.Speed = 750;
-      PlayerCameraInfo.SceneLook.SetTarget_LookAtActor(m_PlayerID);
+      PlayerCameraInfo.SceneLook.SetTarget_LookAtActor(ainfo.ID);
       PlayerCameraInfo.SetSceneLook();
 
       foreach (int actorID in MainAllyFaction.GetActors(TargetType.FIGHTER, true))

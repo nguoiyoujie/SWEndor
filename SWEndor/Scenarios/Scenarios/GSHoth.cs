@@ -533,18 +533,19 @@ namespace SWEndor.Scenarios
         Manager.IsCutsceneMode = true;
 
         PlayerInfo.ActorID = -1;
-        PlayerCameraInfo.DeathLook.SetPosition_Actor(actor.ID, actor.TypeInfo.DeathCamera);
-        PlayerCameraInfo.SetDeathLook();
 
         if (actor.IsDying)
         {
           actor.TickEvents += ProcessPlayerDying;
           actor.DestroyedEvents += ProcessPlayerKilled;
+          PlayerCameraInfo.DeathLook.SetPosition_Actor(actor.ID, actor.TypeInfo.DeathCamera);
         }
         else
         {
           actor.DestroyedEvents += ProcessPlayerKilled;
+          PlayerCameraInfo.DeathLook.SetPosition_Point(actor.GetGlobalPosition(), actor.TypeInfo.DeathCamera);
         }
+        PlayerCameraInfo.SetDeathLook();
 
         if (actor.TypeInfo is TransportATI)
         {
