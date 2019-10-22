@@ -1,4 +1,5 @@
-﻿using SWEndor.Actors;
+﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 
@@ -14,7 +15,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxSpeed = 500;
       MoveLimitData.MinSpeed = 100;
 
-      MeshData = new MeshData(Name, @"transport\transport_box2.x", 1, "Burn");
+      MeshData = new MeshData(Name, @"transport\transport_box2.x", 1, CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, "Burn");
       DyingMoveData.Spin(100, 450);
     }
 

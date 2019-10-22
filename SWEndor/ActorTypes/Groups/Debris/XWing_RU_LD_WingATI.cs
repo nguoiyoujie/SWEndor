@@ -1,4 +1,5 @@
-﻿using SWEndor.ActorTypes.Components;
+﻿using MTV3D65;
+using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -6,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal XWing_RU_LD_WingATI(Factory owner) : base(owner, "XWRULD", "XWing_RU_LD_WingATI")
     {
-      MeshData = new MeshData(Name, @"xwing\xwing_rightup_leftdown_wing.x", 1, "Burn");
+      MeshData = new MeshData(Name, @"xwing\xwing_rightup_leftdown_wing.x", 1, CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, "Burn");
     }
   }
 }
