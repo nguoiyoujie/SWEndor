@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Core;
+using SWEndor.FileFormat.INI;
 using SWEndor.Input.Functions;
 using System.IO;
 using System.Windows.Forms;
@@ -66,15 +67,40 @@ namespace SWEndor
 
     public static void LoadSettings(Engine engine)
     {
-      if (File.Exists(Path.Combine(Globals.SettingsPath, "settings.ini")))
+      string path = Path.Combine(Globals.DataPath, "settings.ini");
+      if (File.Exists(path))
       {
-        using (StreamReader sr = new StreamReader(Path.Combine(Globals.SettingsPath, "settings.ini")))
+        INIFile f = new INIFile(path);
+        ResolutionMode = f.GetEnumValue("General", "Resolution", ResolutionMode);
+        GameDebug = f.GetBoolValue("General", "Debug", GameDebug);
+        FullScreenMode = f.GetBoolValue("General", "FullScreen", FullScreenMode);
+        ShowPerformance = f.GetBoolValue("General", "ShowPerformance", ShowPerformance);
+
+        engine.SoundManager.MasterMusicVolume = f.GetFloatValue("Audio", "MusicVol", 1);
+        engine.SoundManager.MasterSFXVolume = f.GetFloatValue("Audio", "SFXVol", 1);
+
+        SteeringSensitivity = f.GetFloatValue("Controls", "SteeringSensitivity", SteeringSensitivity);
+
+        if (f.HasSection("Keyboard"))
         {
-          while (!sr.EndOfStream)
+          foreach (INIFile.INISection.INILine ln in f.GetSection("Keyboard").Lines)
           {
-            ProcessLine(engine, sr.ReadLine());
+            if (ln.HasKey)
+            {
+              InputFunction fn = InputFunction.Registry.Get(ln.Key);
+              if (fn != null)
+              {
+                int fkey = f.GetIntValue("Keyboard", ln.Key, -2);
+                if (fkey != -2)
+                  fn.Key = fkey;
+              }
+            }
           }
         }
+
+        //using (StreamReader sr = new StreamReader(Path.Combine(Globals.DataPath, "settings.ini")))
+        //  while (!sr.EndOfStream)
+        //    ProcessLine(engine, sr.ReadLine());
       }
 
       ResolutionX = (int)GetResolution.x;
@@ -83,6 +109,29 @@ namespace SWEndor
 
     public static void SaveSettings(Engine engine)
     {
+      string filepath = Path.Combine(Globals.DataPath, "settings.ini");
+
+      if (!File.Exists(filepath))
+        File.Create(filepath).Close();
+
+      INIFile f = new INIFile(filepath);
+      f.Reset();
+      f.SetEnumValue("General", "Resolution", ResolutionMode);
+      f.SetBoolValue("General", "Debug", GameDebug);
+      f.SetBoolValue("General", "FullScreen", FullScreenMode);
+      f.SetBoolValue("General", "ShowPerformance", ShowPerformance);
+
+      f.SetFloatValue("Audio", "MusicVol", engine.SoundManager.MasterMusicVolume);
+      f.SetFloatValue("Audio", "SFXVol", engine.SoundManager.MasterSFXVolume);
+
+      f.SetFloatValue("Controls", "SteeringSensitivity", SteeringSensitivity);
+
+      foreach (InputFunction fn in InputFunction.Registry.Functions)
+        if (fn.Name != null && fn.Name.Length > 0)
+          f.SetIntValue("Keyboard", fn.Name, fn.Key);
+
+      f.SaveFile(filepath);
+      /*
       using (StreamWriter sr = new StreamWriter(Path.Combine(Globals.SettingsPath, "settings.ini"), false))
       {
         sr.WriteLine(string.Format("ResolutionMode={0}", (int)ResolutionMode));
@@ -98,6 +147,7 @@ namespace SWEndor
            sr.WriteLine(string.Format("FuncKey:{0}={1}", fn.Name, fn.Key));
         sr.Flush();
       }
+      */
     }
 
     private static void ProcessLine(Engine engine, string line)
