@@ -730,6 +730,9 @@
     <None Include="Data\dynamicmusic.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\settings.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Shaders\Hyper.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -776,7 +779,6 @@
     <None Include="Data\Scenarios\SmugglersTest\Script.sw">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Settings\settings.ini" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="costura32\TV3D65.dll" />

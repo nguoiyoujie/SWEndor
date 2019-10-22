@@ -50,7 +50,7 @@ namespace SWEndor
     static Dictionary<ColorLocalKeys, int> keys = new Dictionary<ColorLocalKeys, int>
     {
       { ColorLocalKeys.TRANSPARENT, new TV_COLOR(0, 0, 0, 0).GetIntColor() },
-      { ColorLocalKeys.WHITE, new TV_COLOR(0, 0, 0, 0).GetIntColor() },
+      { ColorLocalKeys.WHITE, new TV_COLOR(1, 1, 1, 1).GetIntColor() },
 
       { ColorLocalKeys.SYSTEM_FATAL, new TV_COLOR(0.8f, 0.2f, 0.2f, 1).GetIntColor() },
       { ColorLocalKeys.SYSTEM_FATAL_BACKGROUND, new TV_COLOR(0.8f, 0.2f, 0.2f, 0.3f).GetIntColor() },
@@ -71,7 +71,7 @@ namespace SWEndor
       { ColorLocalKeys.GAME_STAT_SPEED, new TV_COLOR(0.7f, 0.8f, 0.4f, 1).GetIntColor() },
       { ColorLocalKeys.GAME_STAT_CRITICAL_ALLY, new TV_COLOR(0, 0.8f, 0.6f, 1).GetIntColor() },
       { ColorLocalKeys.GAME_STAT_CRITICAL_ENEMY, new TV_COLOR(1, 0, 0, 1).GetIntColor() },
-      
+
       { ColorLocalKeys.GAME_MESSAGE_NORMAL, new TV_COLOR(0.5f, 0.5f, 1, 1).GetIntColor() },
       { ColorLocalKeys.GAME_MESSAGE_WARNING, new TV_COLOR(1, 0.2f, 0.2f, 1).GetIntColor() },
       { ColorLocalKeys.GAME_MESSAGE_BACKGROUND, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor() },
