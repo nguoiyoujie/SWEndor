@@ -15,7 +15,8 @@ namespace SWEndor.Primitives
       for (int i = 0; i < a.Length; i++)
       {
         object o = a.GetValue(i);
-        _dict.Add((T)o, o.ToString());
+        if (!_dict.ContainsKey((T)o))
+          _dict.Add((T)o, o.ToString());
       }
     }
 
