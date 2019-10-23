@@ -26,7 +26,7 @@ namespace SWEndor.ActorTypes.Instances
           if (act is HyperspaceIn && !ainfo.IsDyingOrDead)
           {
             HyperspaceIn h = (HyperspaceIn)act;
-            if (h.distance < HyperspaceIn.Max_Speed)
+            if (h.distance < HyperspaceIn.Max_Speed * 0.75f)
               ainfo.SetState_Dying();
           }
           else if (!(act is HyperspaceIn) && !ainfo.IsDyingOrDead)
