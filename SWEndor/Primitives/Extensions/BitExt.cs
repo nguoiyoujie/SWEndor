@@ -18,12 +18,11 @@ namespace SWEndor.Primitives.Extensions
       return 32 - r;
     }
 
-    public static BitEnumerable GetUniqueBits(this uint value) // Replace IEnumerable
+    public static BitEnumerable GetUniqueBits(this uint value) 
     {
       // index 0 = int 1
       // index 1 = int 2
       // index 2 = int 4 etc.
-
       return new BitEnumerable(value);
     }
 
