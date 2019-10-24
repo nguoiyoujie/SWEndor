@@ -59,8 +59,8 @@ loadfaction:
 	AddFaction("Traitors", 0.4, 0.5, 0.9);
 	AddFaction("Rebels", 0.8, 0, 0);
 	Faction.MakeAlly("Traitors", "Rebels");
-	Faction.SetWingSpawnLimit("Empire", 26);
-	Faction.SetWingSpawnLimit("Traitors", 18);
+	Faction.SetWingSpawnLimit("Empire", 30);
+	Faction.SetWingSpawnLimit("Traitors", 24);
 
 loadscene:
 	greywolf = Actor.Spawn("IMPL", "ISD GREY WOLF (Thrawn)", "", "GREY WOLF", 0, "Empire", 1000, 400, 12000, 0, -180, 0, "CriticalAllies");
@@ -334,11 +334,11 @@ start:
 	Player.SetMovementEnabled(true);
 
 corvusbeginspawn:
-	Faction.SetWingSpawnLimit("Empire", 32);
+	Faction.SetWingSpawnLimit("Empire", 36);
 	Actor.SetProperty(corvus, "SetSpawnerEnable", true);
 
 enemybeginspawn:
-	Faction.SetWingSpawnLimit("Traitors", 24);
+	Faction.SetWingSpawnLimit("Traitors", 28);
 	Actor.SetProperty(nebu, "SetSpawnerEnable", true);
 
 spawnenemybombers:
@@ -455,6 +455,9 @@ spawn_allyGUN:
 	spawnX = 2400;
 	spawnY = 500;
 	spawnZ = 10000;
+	spawnRotX = 0;
+	spawnRotY = 180;
+	spawnRotZ = 0;
 	CallScript("spawn4");
 	SetMood(-11);
 	CallScript("message_allyGUN");
@@ -470,6 +473,9 @@ spawn_allyTIEA:
 	spawnX = 2400;
 	spawnY = 500;
 	spawnZ = 10000;
+	spawnRotX = 0;
+	spawnRotY = 180;
+	spawnRotZ = 0;
 	CallScript("spawn4");
 	SetMood(-11);
 	CallScript("message_allyTIEA");
@@ -486,7 +492,10 @@ spawn_traitorZ95:
 	spawnX = 300;
 	spawnY = 0;
 	spawnZ = -15000;
-	CallScript("spawn4");
+	spawnRotX = 0;
+	spawnRotY = 0;
+	spawnRotZ = 0;
+		CallScript("spawn4");
 	SetMood(-21);
 	CallScript("message_traitorZ95");
 
@@ -502,6 +511,9 @@ spawn_traitorXWING:
 	spawnX = -1000;
 	spawnY = 0;
 	spawnZ = -12500;
+	spawnRotX = 0;
+	spawnRotY = 0;
+	spawnRotZ = 0;
 	CallScript("spawn3");
 	SetMood(-21);
 	CallScript("message_traitorXWING");
@@ -518,6 +530,9 @@ spawn_traitorXWING:
 	spawnX = -3000;
 	spawnY = 0;
 	spawnZ = -16000;
+	spawnRotX = 0;
+	spawnRotY = 0;
+	spawnRotZ = 0;
 	CallScript("spawn3");
 
 	SetMood(-21);
@@ -535,6 +550,9 @@ spawn_traitorAWING:
 	spawnX = -2500;
 	spawnY = 0;
 	spawnZ = -14000;
+	spawnRotX = 0;
+	spawnRotY = 0;
+	spawnRotZ = 0;
 	CallScript("spawn3");
 
 	SetMood(-21);
@@ -552,6 +570,9 @@ spawn_traitorTIED:
 	spawnX = -1600;
 	spawnY = 0;
 	spawnZ = -17000;
+	spawnRotX = 0;
+	spawnRotY = 0;
+	spawnRotZ = 0;
 	CallScript("spawn2");
 
 	SetMood(-21);
@@ -569,6 +590,9 @@ spawn_traitorTIEA:
 	spawnX = -4200;
 	spawnY = 0;
 	spawnZ = -17000;
+	spawnRotX = 0;
+	spawnRotY = 0;
+	spawnRotZ = 0;
 	CallScript("spawn2");
 
 	SetMood(-21);

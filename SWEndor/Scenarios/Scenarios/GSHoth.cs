@@ -43,6 +43,9 @@ namespace SWEndor.Scenarios
     private int m_Player_PrimaryWeaponN;
     private int m_Player_SecondaryWeaponN;
 
+    public FactionInfo MainAllyFaction = FactionInfo.Neutral;
+    public FactionInfo MainEnemyFaction = FactionInfo.Neutral;
+
     public override void Load(ActorTypeInfo wing, string difficulty)
     {
       base.Load(wing, difficulty);

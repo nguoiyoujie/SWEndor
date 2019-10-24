@@ -64,6 +64,8 @@ namespace SWEndor.Scenarios
     private int TIEWaves = 0;
     private int SDWaves = 0;
 
+    public FactionInfo MainAllyFaction = FactionInfo.Neutral;
+    public FactionInfo MainEnemyFaction = FactionInfo.Neutral;
 
     public override void Load(ActorTypeInfo wing, string difficulty)
     {
@@ -173,6 +175,8 @@ namespace SWEndor.Scenarios
 
       MainAllyFaction = FactionInfo.Factory.Get("Rebels");
       MainEnemyFaction = FactionInfo.Factory.Get("Empire");
+      InformLostWing = true;
+      InformLostShip = true;
 
       MainAllyFaction.WingLimitIncludesAllies = true;
       MainAllyFaction.WingSpawnLimit = 22;

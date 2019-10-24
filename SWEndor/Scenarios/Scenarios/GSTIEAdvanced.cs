@@ -26,6 +26,8 @@ namespace SWEndor.Scenarios
     }
 
     private int m_X1ID = -1;
+    public FactionInfo MainAllyFaction = FactionInfo.Neutral;
+    public FactionInfo MainEnemyFaction = FactionInfo.Neutral;
 
     public override void Load(ActorTypeInfo wing, string difficulty)
     {
@@ -142,6 +144,9 @@ namespace SWEndor.Scenarios
 
       MainAllyFaction = FactionInfo.Factory.Get("Rebels");
       MainEnemyFaction = FactionInfo.Factory.Get("Empire");
+
+      InformLostWing = true;
+      InformLostShip = true;
     }
 
     public override void LoadScene()

@@ -37,21 +37,15 @@ namespace SWEndor
       Name = name;
       Color = color;
 
-      //Array a = Enum.GetValues(typeof(TargetType));
       int len = 32; // a.Length;
       _first = new int[len];
       _cnt = new int[len];
       _limit = new int[len];
       _flush = new Queue<int>(124);
-      //_enumerables = new Dictionary<ActorEnumerableParam, ActorEnumerable>(len);
       for (int i = 0; i < len; i++)
       {
         _first[i] = -1;
         _limit[i] = -1;
-        //TargetType t = (TargetType)(1 << i); // a.GetValue(i);
-
-        //_enumerables.Add(new ActorEnumerableParam(t, true), new ActorEnumerable(_map, this, t, true));
-        //_enumerables.Add(new ActorEnumerableParam(t, false), new ActorEnumerable(_map, this, t, false));
       }
     }
 
@@ -65,34 +59,15 @@ namespace SWEndor
     public bool AutoAI = false;
 
     private static Dictionary<int, int> _map;
-    //private static Dictionary<TargetType, int[]> _types;
 
     private int[] _first;
     private int[] _cnt;
     private int _cnttotal;
     private Queue<int> _flush;
 
-    //private Dictionary<ActorEnumerableParam, ActorEnumerable> _enumerables;
-
     static FactionInfo()
     {
-      //Array a = Enum.GetValues(typeof(TargetType));
-      //int len = 32; // a.Length;
       _map = new Dictionary<int, int>(Globals.ActorLimit);
-      /*_types = new Dictionary<TargetType, int[]>(len);
-      for (int i = 0; i < len; i++)
-      {
-        TargetType t = (TargetType)(1 << i);//a.GetValue(i);
-        List<int> r = new List<int>(len);
-        for (int j = 0; j < len; j++)
-        {
-          TargetType tj = (TargetType)a.GetValue(j);
-          if ((t & tj) == tj && tj != 0)
-            r.Add(j);
-        }
-        _types.Add(t, r.ToArray());
-      }
-      */
       Neutral = new FactionInfo("Neutral", ColorLocalization.Get(ColorLocalKeys.WHITE));
     }
 
@@ -160,45 +135,45 @@ namespace SWEndor
         for (int i = 80; i >= 0; i--)
           _map.Remove(_flush.Dequeue());
 
-      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
+      if (ainfo.DisposingOrDisposed)
       {
-        if (ainfo.DisposingOrDisposed)
-        {
+        if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
           if (WingLimit > 0)
             WingLimit--;
-          GameScenarioBase b = ainfo.Engine.GameScenarioManager.Scenario;
-          if (b != null
-             && (this == b.MainAllyFaction
-              || (b.MainAllyFaction.WingLimitIncludesAllies && b.MainAllyFaction.IsAlliedWith(this))))
-            b.LostWing();
-        }
-      }
 
-      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
-      {
-        if (ainfo.DisposingOrDisposed)
-        {
+        if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
           if (ShipLimit > 0)
             ShipLimit--;
-          GameScenarioBase b = ainfo.Engine.GameScenarioManager.Scenario;
-          if (b != null
-             && (this == b.MainAllyFaction
-              || (b.MainAllyFaction.WingLimitIncludesAllies && b.MainAllyFaction.IsAlliedWith(this))))
-            b.LostShip();
-        }
-      }
 
-      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.STRUCTURE))
-      {
-        if (ainfo.DisposingOrDisposed)
-        {
+        if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.STRUCTURE))
           if (StructureLimit > 0)
             StructureLimit--;
+
+
+        if (ainfo.IsDead)
+        {
+          FactionInfo p = ainfo.Engine.PlayerInfo.Actor?.Faction ?? Neutral;
           GameScenarioBase b = ainfo.Engine.GameScenarioManager.Scenario;
-          if (b != null
-             && (this == b.MainAllyFaction
-              || (b.MainAllyFaction.WingLimitIncludesAllies && b.MainAllyFaction.IsAlliedWith(this))))
-            b.LostStructure();
+          if (p != Neutral)
+          {
+            if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER)
+              && b.InformLostWing
+              && (p == this || p.WingLimitIncludesAllies && p.IsAlliedWith(this))
+              )
+              b.LostWing();
+
+            if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.SHIP)
+              && b.InformLostShip
+              && (p == this || p.ShipLimitIncludesAllies && p.IsAlliedWith(this))
+              )
+              b.LostShip();
+
+            if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.STRUCTURE)
+              && b.InformLostStructure
+              && (p == this || p.StructureLimitIncludesAllies && p.IsAlliedWith(this))
+              )
+              b.LostStructure();
+          }
         }
       }
     }

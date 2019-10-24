@@ -20,6 +20,8 @@ namespace SWEndor.Scenarios
     private int sceneid;
     private float RebelSpawnTime = 0;
     private float TIESpawnTime = 0;
+    public FactionInfo MainAllyFaction = FactionInfo.Neutral;
+    public FactionInfo MainEnemyFaction = FactionInfo.Neutral;
 
     public override void Load(ActorTypeInfo wing, string difficulty)
     {

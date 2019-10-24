@@ -214,6 +214,12 @@
     <Compile Include="ActorTypes\Components\SoundSourceData.cs" />
     <Compile Include="ActorTypes\Components\DebrisSpawnerData.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\SpawnerInfo.cs" />
+    <Compile Include="Player\Camera\CameraMode.cs" />
+    <Compile Include="Player\Camera\Look\PlayerCameraLook.cs" />
+    <Compile Include="Player\Camera\Look\SceneCameraLook.cs" />
+    <Compile Include="Player\Camera\Look\DeathCameraLook.cs" />
+    <Compile Include="Player\Camera\TargetPosition.cs" />
+    <Compile Include="Player\Camera\Look\ICameraLook.cs" />
     <Compile Include="Primitives\Cache\EnumNames.cs" />
     <Compile Include="Primitives\Extensions\BitExt.cs" />
     <Compile Include="Projectiles\Models\Collision\ProjExt.cs" />
@@ -463,7 +469,7 @@
     <Compile Include="FileFormat\Scripting\ScriptFile.cs" />
     <Compile Include="Log\Log.cs" />
     <Compile Include="Log\LogType.cs" />
-    <Compile Include="Player\PlayerCameraInfo.cs" />
+    <Compile Include="Player\Camera\PlayerCameraInfo.cs" />
     <Compile Include="Primitives\Geometry\Box.cs" />
     <Compile Include="Primitives\Geometry\Sphere.cs" />
     <Compile Include="Primitives\Geometry\BoundFloat.cs" />
@@ -614,7 +620,6 @@
     <Compile Include="UI\Menu\Instances\MainMenu.cs" />
     <Compile Include="UI\Menu\Instances\ConfirmExit.cs" />
     <Compile Include="UI\Menu\Page.cs" />
-    <Compile Include="Parser\GameSaver.cs" />
     <Compile Include="AtmosphereInfo.cs" />
     <Compile Include="Scenarios\GameScenarioBase.cs" />
     <Compile Include="Scenarios\Scenarios\GSCustomScenario.cs" />

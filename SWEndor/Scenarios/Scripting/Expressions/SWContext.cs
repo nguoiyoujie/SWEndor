@@ -95,8 +95,8 @@ namespace SWEndor.Scenarios.Scripting.Expressions
 
       // Faction
       Functions.Add("AddFaction".ToLowerInvariant(), FactionManagement.AddFaction);
-      Functions.Add("Faction.SetAsMainAllyFaction".ToLowerInvariant(), FactionManagement.SetAsMainAllyFaction);
-      Functions.Add("Faction.SetAsMainEnemyFaction".ToLowerInvariant(), FactionManagement.SetAsMainEnemyFaction);
+      //Functions.Add("Faction.SetAsMainAllyFaction".ToLowerInvariant(), FactionManagement.SetAsMainAllyFaction);
+      //Functions.Add("Faction.SetAsMainEnemyFaction".ToLowerInvariant(), FactionManagement.SetAsMainEnemyFaction);
       Functions.Add("Faction.MakeAlly".ToLowerInvariant(), FactionManagement.MakeAlly);
       Functions.Add("Faction.MakeEnemy".ToLowerInvariant(), FactionManagement.MakeEnemy);
       Functions.Add("Faction.GetWingCount".ToLowerInvariant(), FactionManagement.GetWingCount);

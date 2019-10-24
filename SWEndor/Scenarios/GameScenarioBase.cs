@@ -4,6 +4,7 @@ using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Player;
+using SWEndor.Primitives.Extensions;
 using SWEndor.Sound;
 using SWEndor.UI.Menu.Pages;
 using System;
@@ -84,9 +85,13 @@ namespace SWEndor.Scenarios
     }
 
     public GameEvent MakePlayer;
+    public bool InformLostWing = false;
+    public bool InformLostShip = false;
+    public bool InformLostStructure = false;
     public float TimeSinceLostWing = -100;
     public float TimeSinceLostShip = -100;
     public float TimeSinceLostStructure = -100;
+    private float LastLostSoundTime = 0;
     public bool Launched = false;
 
     public FactionInfo MainAllyFaction = FactionInfo.Neutral;
@@ -130,8 +135,8 @@ namespace SWEndor.Scenarios
     public virtual void LoadFactions()
     {
       FactionInfo.Factory.Clear();
-      MainAllyFaction = FactionInfo.Neutral;
-      MainEnemyFaction = FactionInfo.Neutral;
+      //MainAllyFaction = FactionInfo.Neutral;
+      //MainEnemyFaction = FactionInfo.Neutral;
     }
 
     public virtual void LoadScene()
@@ -146,7 +151,6 @@ namespace SWEndor.Scenarios
     public virtual void Unload()
     {
       Launched = false;
-      Manager.Scenario = null;
       Engine.PlayerInfo.ActorID = -1;
       Engine.PlayerInfo.TempActorID = -1;
       Engine.PlayerInfo.RequestSpawn = false;
@@ -179,6 +183,16 @@ namespace SWEndor.Scenarios
 
       Game.GameTime = 0;
       Manager.IsCutsceneMode = false;
+
+      InformLostWing = false;
+      InformLostShip = false;
+      InformLostStructure = false;
+      TimeSinceLostWing = -100;
+      TimeSinceLostShip = -100;
+      TimeSinceLostStructure = -100;
+      LastLostSoundTime = 0;
+
+      Manager.Scenario = null;
 
       // deleted many things, and this function is called when the game is not active. Probably safe to force GC
       GC.Collect();
@@ -246,69 +260,46 @@ namespace SWEndor.Scenarios
     public void LostWing()
     {
       float t = Game.GameTime;
-      if (TimeSinceLostWing > Game.GameTime)
-        t = TimeSinceLostWing;
-
-      if (TimeSinceLostShip > Game.GameTime)
-        t = TimeSinceLostShip;
-
-      if (TimeSinceLostStructure > Game.GameTime)
-        t = TimeSinceLostStructure;
-
-      while (t < Game.GameTime + 3f)
+      float t2 = Game.GameTime + 3;
+      while (t < t2)
       {
-          Manager.AddEvent(t, LostSound);
+        Manager.AddEvent(t, LostSound);
         t += 0.2f;
       }
-      TimeSinceLostWing = Game.GameTime + 3f;
+      TimeSinceLostWing = t2;
+      LastLostSoundTime = t2;
     }
 
     public void LostShip()
     {
       float t = Game.GameTime;
-      if (TimeSinceLostWing > Game.GameTime)
-        t = TimeSinceLostWing;
-
-      if (TimeSinceLostShip > Game.GameTime)
-        t = TimeSinceLostShip;
-
-      if (TimeSinceLostStructure > Game.GameTime)
-        t = TimeSinceLostStructure;
-
-      while (t < Game.GameTime + 3f)
+      float t2 = Game.GameTime + 3;
+      while (t < t2)
       {
         Manager.AddEvent(t, LostSound);
         t += 0.2f;
       }
-      TimeSinceLostShip = Game.GameTime + 3f;
+      TimeSinceLostShip = t2;
+      LastLostSoundTime = t2;
     }
 
     public void LostStructure()
     {
       float t = Game.GameTime;
-      if (TimeSinceLostWing > Game.GameTime)
-        t = TimeSinceLostWing;
-
-      if (TimeSinceLostShip > Game.GameTime)
-        t = TimeSinceLostShip;
-
-      if (TimeSinceLostStructure > Game.GameTime)
-        t = TimeSinceLostStructure;
-
-      while (t < Game.GameTime + 3f)
+      float t2 = Game.GameTime + 3;
+      while (t < t2)
       {
         Manager.AddEvent(t, LostSound);
         t += 0.2f;
       }
-      TimeSinceLostShip = Game.GameTime + 3f;
+      TimeSinceLostStructure = t2;
+      LastLostSoundTime = t2;
     }
 
     public void LostSound()
     {
       if (!Manager.IsCutsceneMode)
-      {
         SoundManager.SetSound(SoundGlobals.LostShip, true);
-      }
     }
 
     public HashSet<ActorInfo> GetRegister(string key)
@@ -335,27 +326,6 @@ namespace SWEndor.Scenarios
       Manager.AddEvent(Game.GameTime + 3f, FadeOut);
       if (PlayerInfo.Lives == 0)
         Manager.SetGameStateB("GameOver", true);
-    }
-
-    public virtual void ProcessHit(ActorInfo aa, ActorInfo av)
-    {
-      /*
-      if (PlayerInfo.Actor == aa.TopParent)
-      {
-        if (av.Faction.IsAlliedWith(PlayerInfo.Actor.Faction))
-        {
-          Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", av.Name, PlayerInfo.Name)
-                                                      , 5
-                                                      , av.Faction.Color
-                                                      , -1);
-        }
-      }
-      */
-    }
-
-    public virtual void PlayCutsceneSequence()
-    {
-
     }
 
     public virtual void GameWonSequence()

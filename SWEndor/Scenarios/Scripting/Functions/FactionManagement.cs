@@ -13,6 +13,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.TRUE;
     }
 
+    /*
     public static Val SetAsMainAllyFaction(Context context, Val[] ps)
     {
       FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
@@ -34,7 +35,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       }
       return Val.FALSE;
     }
-
+    */
     public static Val MakeAlly(Context context, Val[] ps)
     {
       FactionInfo f1 = FactionInfo.Factory.Get(ps[0].ValueS);

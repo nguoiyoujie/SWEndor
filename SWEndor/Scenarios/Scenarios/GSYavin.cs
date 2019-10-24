@@ -63,6 +63,9 @@ namespace SWEndor.Scenarios
     private bool Stage6VaderAttacking = false;
     private bool Stage6VaderEnd = false;
 
+    public FactionInfo MainAllyFaction = FactionInfo.Neutral;
+    public FactionInfo MainEnemyFaction = FactionInfo.Neutral;
+
     public override void Load(ActorTypeInfo wing, string difficulty)
     {
       base.Load(wing, difficulty);
@@ -240,6 +243,8 @@ namespace SWEndor.Scenarios
           MainEnemyFaction.WingSpawnLimit = 16;
           break;
       }
+
+      InformLostWing = true;
     }
 
     public override void LoadScene()
@@ -627,6 +632,7 @@ namespace SWEndor.Scenarios
 
     public void Rebel_RemoveTorps()
     {
+      return;
       foreach (int actorID in MainAllyFaction.GetActors(TargetType.FIGHTER, true))
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
@@ -1182,7 +1188,7 @@ namespace SWEndor.Scenarios
       //PlayerCameraInfo.SetSceneLook();
 
       //PlayerInfo.ActorID = Manager.SceneCameraID;
-
+      PlayerInfo.ActorID = -1;
       Manager.IsCutsceneMode = true;
     }
 
@@ -1372,6 +1378,7 @@ namespace SWEndor.Scenarios
                      {
                                    new HyperspaceIn(position)
                                    , new Move(targetposition, type.MoveLimitData.MaxSpeed)
+                                   , new EnableSpawn(false)
                                    , new HyperspaceOut()
                                    , new Delete()
                      }

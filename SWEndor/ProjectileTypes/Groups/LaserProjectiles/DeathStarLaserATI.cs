@@ -14,8 +14,8 @@ namespace SWEndor.ProjectileTypes.Instances
       TimedLifeData = new TimedLifeData(true, 10);
 
       CombatData.ImpactDamage = 99999;
-      MoveLimitData.MaxSpeed = Globals.LaserSpeed * 15f;
-      MoveLimitData.MinSpeed = Globals.LaserSpeed * 15f;
+      MoveLimitData.MaxSpeed = Globals.LaserSpeed * 5f;
+      MoveLimitData.MinSpeed = Globals.LaserSpeed * 5f;
 
       CombatData.IsLaser = false; // not the same speed
 
@@ -26,10 +26,10 @@ namespace SWEndor.ProjectileTypes.Instances
       CombatData.ImpactCloseEnoughDistance = 200;
     }
 
-    //public override void ProcessState(Engine engine, ProjectileInfo ainfo)
-    //{
+    public override void ProcessState(Engine engine, ProjectileInfo ainfo)
+    {
       // Override
-    //}
+    }
 
     public override void ProcessHit(Engine engine, ProjectileInfo owner, ActorInfo hitby, TV_3DVECTOR impact)
     {

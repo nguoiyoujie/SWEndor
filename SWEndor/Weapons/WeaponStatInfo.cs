@@ -38,8 +38,15 @@ namespace SWEndor.Weapons
     public float AutoAimMaxDeviation = 1;
 
     // Player Config
-    public bool RequirePlayerTargetLock = false;
     public WeaponType Type = WeaponType.NONE;
+
+    // Targeter
+    public bool RequirePlayerTargetLock = false;
+    public bool RequireAITargetLock = false;
+    public float TargetLock_TimeRequired = 0; 
+
+    public TargetAcqType PlayerTargetAcqType = TargetAcqType.ANY;
+    public TargetAcqType AITargetAcqType = TargetAcqType.ENEMIES;
 
     // AI Config
     public TargetType AIAttackTargets = TargetType.ANY;
@@ -84,9 +91,16 @@ namespace SWEndor.Weapons
       AutoAimMaxDeviation = file.GetFloatValue(sectionname, "AutoAimMaxDeviation", AutoAimMaxDeviation);
 
       // Player Config
-      RequirePlayerTargetLock = file.GetBoolValue(sectionname, "RequirePlayerTargetLock", RequirePlayerTargetLock);
       Type = file.GetEnumValue(sectionname, "WeaponType", Type);
 
+      // Targeter
+      RequirePlayerTargetLock = file.GetBoolValue(sectionname, "RequirePlayerTargetLock", RequirePlayerTargetLock);
+      RequireAITargetLock = file.GetBoolValue(sectionname, "RequireAITargetLock", RequireAITargetLock);
+      TargetLock_TimeRequired = file.GetFloatValue(sectionname, "TargetLock_TimeRequired", TargetLock_TimeRequired);
+
+      PlayerTargetAcqType = file.GetEnumValue(sectionname, "PlayerTargetAcqType ", PlayerTargetAcqType);
+      AITargetAcqType = file.GetEnumValue(sectionname, "AITargetAcqType", AITargetAcqType);
+      
       // AI Config
       AIAttackTargets = file.GetEnumValue(sectionname, "AIAttackTargets", AIAttackTargets);
       AIAttackNull = file.GetBoolValue(sectionname, "AIAttackNull", AIAttackNull);

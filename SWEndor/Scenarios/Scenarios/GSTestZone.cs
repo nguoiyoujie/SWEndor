@@ -27,6 +27,8 @@ namespace SWEndor.Scenarios
     }
 
     private ActorInfo m_Player = null;
+    public FactionInfo MainAllyFaction = FactionInfo.Neutral;
+    public FactionInfo MainEnemyFaction = FactionInfo.Neutral;
 
     public override void Load(ActorTypeInfo wing, string difficulty)
     {

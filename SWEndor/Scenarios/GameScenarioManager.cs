@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.UI.Menu.Pages;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -78,7 +79,12 @@ namespace SWEndor.Scenarios
 
     public void Update()
     {
-      if (Scenario != null && Scenario.Launched)
+#if DEBUG
+      if (Scenario == null)
+        throw new InvalidOperationException("Unexpected null Scenario");
+#endif
+
+      if (Scenario.Launched)
         Scenario.GameTick();
 
       UpdateActorLists(CriticalAllies);

@@ -5,8 +5,6 @@ using SWEndor.Primitives;
 using SWEndor.Primitives.Factories;
 using SWEndor.Weapons;
 using System;
-using System.Collections.Generic;
-
 namespace SWEndor.AI.Actions
 {
   public class Hunt : ActionInfo
@@ -17,7 +15,19 @@ namespace SWEndor.AI.Actions
     private Hunt() : base("Hunt") { }
 
     private TargetType m_TargetType;
-    private List<ActorInfo> targets = new List<ActorInfo>(50);
+    private ActorWeight[] targets = new ActorWeight[124]; // assumed to sufficient selection choices
+
+    public struct ActorWeight
+    {
+      public int ID;
+      public int Weight;
+
+      public ActorWeight(int id, int weight)
+      {
+        ID = id;
+        Weight = weight;
+      }
+    }
 
     public static Hunt GetOrCreate(TargetType targetType = TargetType.ANY)
     {
@@ -38,51 +48,87 @@ namespace SWEndor.AI.Actions
       });
     }
 
-    Action<Engine, ActorInfo, ActorInfo, List<ActorInfo>, TargetType> getTargets = new Action<Engine, ActorInfo, ActorInfo, List<ActorInfo>, TargetType>(
+    Func<Engine, ActorInfo, ActorInfo, ActorWeight[], TargetType, bool> getTargetsStationary = new Func<Engine, ActorInfo, ActorInfo, ActorWeight[], TargetType, bool>(
        (e, a, c, t, mt) =>
        {
+         if (t[0].ID >= t.Length - 1)
+           return false;
+
          if (a != null
+           && a.HuntWeight > 0
            && c.ID != a.ID
            && a.Active
            && !a.IsDyingOrDead
            && a.InCombat
            && a.TypeInfo.AIData.TargetType.Contains(mt)
            && !a.IsOutOfBounds(e.GameScenarioManager.MinAIBounds, e.GameScenarioManager.MaxAIBounds)
-           && !c.Faction.IsAlliedWith(a.Faction) // enemy
+           && !c.IsAlliedWith(a) // enemy
            )
          {
-           if (c.MoveData.MaxSpeed == 0) // stationary, can only target those in range
-           {
-             WeaponShotInfo w;
-             float dist = DistanceModel.GetDistance(e, c, a, c.WeaponDefinitions.GetWeaponRange());
-             c.WeaponDefinitions.SelectWeapon(e, c, a, 0, dist, out w);
+           // stationary, can only target those in range
+           WeaponShotInfo w;
+           float dist = DistanceModel.GetDistance(e, c, a, c.WeaponDefinitions.GetWeaponRange());
+           c.WeaponDefinitions.SelectWeapon(e, c, a, 0, dist, out w);
 
-             if (!w.IsNull)
-             {
-               for (int i = a.HuntWeight; i > 0; i--)
-                 t.Add(a);
-             }
-           }
-           else
+           if (!w.IsNull)
            {
-             for (int i = a.HuntWeight; i > 0; i--)
-               t.Add(a);
+             t[0].ID++;
+             t[0].Weight += a.HuntWeight;
+             t[t[0].ID] = new ActorWeight(a.ID, a.HuntWeight);
            }
          }
+         return true;
+       }
+     );
+
+    Func<Engine, ActorInfo, ActorInfo, ActorWeight[], TargetType, bool> getTargets = new Func<Engine, ActorInfo, ActorInfo, ActorWeight[], TargetType, bool>(
+       (e, a, c, t, mt) =>
+       {
+         if (t[0].ID >= t.Length - 1)
+           return false;
+
+         if (a != null
+           && a.HuntWeight > 0
+           && c.ID != a.ID
+           && a.Active
+           && !a.IsDyingOrDead
+           && a.InCombat
+           && a.TypeInfo.AIData.TargetType.Contains(mt)
+           && !a.IsOutOfBounds(e.GameScenarioManager.MinAIBounds, e.GameScenarioManager.MaxAIBounds)
+           && !c.IsAlliedWith(a) // enemy
+           )
+         {
+           t[0].ID++;
+           t[0].Weight += a.HuntWeight;
+           t[t[0].ID] = new ActorWeight(a.ID, a.HuntWeight);
+         }
+         return true;
        }
      );
 
     public override void Process(Engine engine, ActorInfo actor)
     {
       ActorInfo currtarget = null;
-      targets.Clear();
+      targets[0] = new ActorWeight(0, 0);
 
-      engine.ActorFactory.DoEach(getTargets, actor, targets, m_TargetType);
+      engine.ActorFactory.DoUntil(
+        (actor.MoveData.MaxSpeed == 0) ? getTargetsStationary : getTargets
+        , actor
+        , targets
+        , m_TargetType);
 
-      if (targets.Count > 0)
+      if (targets[0].ID >= 1)
       {
-        int w = engine.Random.Next(0, targets.Count);
-        currtarget = targets[w];
+        int w = engine.Random.Next(0, targets[0].Weight);
+        for (int i = 1; i < targets[0].ID; i++)
+        {
+          w -= targets[i].Weight;
+          if (w <= 0)
+          {
+            currtarget = engine.ActorFactory.Get(targets[i].ID);
+            break;
+          }
+        }
       }
 
       if (currtarget != null)
@@ -97,7 +143,6 @@ namespace SWEndor.AI.Actions
     {
       base.Reset();
       m_TargetType = TargetType.ANY;
-      targets.Clear();
     }
 
     public override void Return()

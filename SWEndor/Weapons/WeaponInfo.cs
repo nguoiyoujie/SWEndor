@@ -9,6 +9,7 @@ using SWEndor.Models;
 using SWEndor.Primitives.Extensions;
 using SWEndor.Projectiles;
 using SWEndor.ProjectileTypes;
+using System;
 
 namespace SWEndor.Weapons
 {
@@ -19,6 +20,14 @@ namespace SWEndor.Weapons
     ION,
     MISSILE,
     TORPEDO
+  }
+
+  public enum TargetAcqType
+  {
+    NONE = -1,
+    ANY = 0,
+    ENEMIES = 1,
+    FRIENDS = 2
   }
 
   public class WeaponInfo
@@ -121,8 +130,15 @@ namespace SWEndor.Weapons
     public float AutoAimMinDeviation = 1;
     public float AutoAimMaxDeviation = 1;
 
-    // Player Config
+    // Targeter
     public bool RequirePlayerTargetLock = false;
+    public bool RequireAITargetLock = false; // TO-DO: Implement logic
+    public float TargetLock_TimeRequired = 0; // TO-DO: Implement logic
+
+    public TargetAcqType PlayerTargetAcqType = TargetAcqType.ANY; // TO-DO: Implement logic
+    public TargetAcqType AITargetAcqType = TargetAcqType.ENEMIES; // TO-DO: Implement logic
+
+    // Player Config
     public WeaponType Type = WeaponType.NONE;
 
     // AI Config
@@ -287,7 +303,6 @@ namespace SWEndor.Weapons
       }
 
       ProjectileInfo a = engine.ProjectileFactory.Create(acinfo);
-      a.Faction = owner.Faction;
       a.OwnerID = owner?.ID ?? -1;
       a.TargetID = target?.ID ?? -1;
       return true;
