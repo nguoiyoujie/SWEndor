@@ -56,6 +56,8 @@ namespace SWEndor
       if (!engine.PlayerInfo.RequestSpawn)
         return false;
 
+      ReleaseSpawns(engine, ainfo);
+
       if (NextSpawnTime < engine.Game.GameTime + SpawnPlayerDelay)
         NextSpawnTime = engine.Game.GameTime + SpawnPlayerDelay;
 
@@ -159,27 +161,29 @@ namespace SWEndor
         engine.PlayerInfo.IsMovementControlsEnabled = false;
     }
 
+    private void ReleaseSpawns(Engine engine, ActorInfo ainfo)
+    {
+      foreach (ActorInfo a in ainfo.Children)
+      {
+        a.MoveData.FreeSpeed = false;
+        a.UnlockOne();
+
+        if (a.IsPlayer)
+          engine.PlayerInfo.IsMovementControlsEnabled = true;
+
+        ainfo.RemoveChild(a);
+      }
+    }
+
     private void UnlockSpawns(Engine engine, ActorInfo ainfo, ActorInfo p)
     {
       if (Enabled
        && !p.IsDead
-       //&& !(p.CurrentAction is HyperspaceIn || p.CurrentAction is HyperspaceOut)
        && p.Active
        )
       {
         if (SpawnMoveTime < engine.Game.GameTime)
-        {
-          foreach (ActorInfo a in ainfo.Children)
-          {
-            a.MoveData.FreeSpeed = false;
-            a.UnlockOne();
-
-            if (a.IsPlayer)
-              engine.PlayerInfo.IsMovementControlsEnabled = true;
-
-            ainfo.RemoveChild(a);
-          }
-        }
+          ReleaseSpawns(engine,  ainfo);
 
         // Spawn new
         if (!p.IsDying
