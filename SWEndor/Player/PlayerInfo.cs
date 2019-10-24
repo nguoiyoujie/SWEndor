@@ -270,7 +270,7 @@ namespace SWEndor.Player
       ActorInfo t = TargetActor;
       if (t != null)
       {
-        if (Actor.Faction.IsAlliedWith(t.Faction))
+        if (Actor.IsAlliedWith(t))
         {
           Engine.Screen2D.MessageSecondaryText(TextLocalization.Get(TextLocalKeys.SQUAD_DEFEND_ACK).F(t.TopParent.Name), 5, FactionColor);
           Actor.Squad.Mission = new AI.Squads.Missions.AssistActor(t.TopParent);

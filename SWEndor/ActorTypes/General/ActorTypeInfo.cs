@@ -276,7 +276,7 @@ namespace SWEndor.ActorTypes
         ActorInfo attacker = hitby.TopParent;
         if (attacker.IsScenePlayer)
         {
-          if (!attacker.Faction.IsAlliedWith(owner.Faction))
+          if (!attacker.IsAlliedWith(owner))
             AddScore(engine, PlayerInfo.Score, attacker, owner);
           else
             Engine.Screen2D.MessageText(string.Format("{0}: {1}, watch it!", owner.Name, PlayerInfo.Name)
@@ -331,7 +331,7 @@ namespace SWEndor.ActorTypes
         ActorInfo attacker = hitby?.TopParent;
         if (attacker != null && attacker.IsScenePlayer)
         {
-          if (!attacker.Faction.IsAlliedWith(owner.Faction))
+          if (!attacker.IsAlliedWith(owner))
             AddScore(engine, PlayerInfo.Score, hitby, owner);
           else
             Engine.Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", owner.Name, PlayerInfo.Name)
@@ -348,7 +348,7 @@ namespace SWEndor.ActorTypes
             PlayerInfo.Score.AddDeath(engine, attacker);
         }
 
-        if (attacker != null && !attacker.Faction.IsAlliedWith(owner.Faction))
+        if (attacker != null && !attacker.IsAlliedWith(owner))
         {
           // Fighter AI
           if ((owner.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER)))

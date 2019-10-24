@@ -110,7 +110,7 @@ namespace SWEndor.UI.Widgets
         || target.IsDyingOrDead
         || !target.InCombat
         || target.TopParent == p
-        || (PlayerInfo.Actor.Faction.IsAlliedWith(target.Faction) && PlayerInfo.IsTorpedoMode)
+        || (PlayerInfo.Actor.IsAlliedWith(target) && PlayerInfo.IsTorpedoMode)
         || dist > Globals.AcquisitionRange
         || !PlayerInfo.LockTarget
          && (!PlayerCameraInfo.Camera.IsPointVisible(target.GetGlobalPosition())
@@ -126,7 +126,7 @@ namespace SWEndor.UI.Widgets
       TVScreen2DImmediate.Action_Begin2D();
       if (PlayerInfo.IsTorpedoMode)
       {
-        if (!PlayerInfo.Actor.Faction.IsAlliedWith(target.Faction) && prev_target != target)
+        if (!PlayerInfo.Actor.IsAlliedWith(target) && prev_target != target)
         {
           Engine.SoundManager.SetSound(SoundGlobals.Button3);
           m_targetBigSize = m_targetSize * 3;
@@ -168,7 +168,7 @@ namespace SWEndor.UI.Widgets
 
       PlayerInfo.TargetActorID = target.ID;
 
-      if (!PlayerInfo.Actor.Faction.IsAlliedWith(target.Faction) && !PlayerInfo.IsTorpedoMode)
+      if (!PlayerInfo.Actor.IsAlliedWith(target) && !PlayerInfo.IsTorpedoMode)
       {
         // Targeting cross
         // Anticipate
@@ -224,7 +224,7 @@ namespace SWEndor.UI.Widgets
           && a.Active
           && !a.IsDyingOrDead
           && a.Mask.Has(ComponentMask.CAN_BETARGETED)
-          && (b || !p0.Faction.IsAlliedWith(a.Faction))
+          && (b || !p0.IsAlliedWith(a))
           && e.PlayerCameraInfo.Camera.IsPointVisible(a.GetGlobalPosition())
           )
         {

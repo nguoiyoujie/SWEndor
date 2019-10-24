@@ -49,17 +49,6 @@ namespace SWEndor.Projectiles
       return "[{0},{1}]".F(_name, ID);
     }
 
-    // Faction
-    private FactionInfo _faction = FactionInfo.Neutral;
-    public FactionInfo Faction
-    {
-      get { return _faction; }
-      set
-      {
-        _faction = value ?? FactionInfo.Neutral;
-      }
-    }
-
     // Data (structs)
     internal CollisionModel<ProjectileInfo> CollisionData;
     internal MoveData MoveData;
@@ -80,17 +69,6 @@ namespace SWEndor.Projectiles
     // ILinked
     public ProjectileInfo Prev { get; set; }
     public ProjectileInfo Next { get; set; }
-
-    // Log
-#if DEBUG
-    public bool Logged
-    {
-      get
-      {
-        return false;
-      }
-    }
-#endif
 
     // Scope counter
     public ScopeCounterManager.ScopeCounter Scope { get; } = new ScopeCounterManager.ScopeCounter();

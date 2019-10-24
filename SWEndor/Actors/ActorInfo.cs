@@ -317,6 +317,10 @@ namespace SWEndor.Actors
 
     public bool IsScenePlayer { get { return IsPlayer || PlayerInfo.TempActorID == ID; } }
 
+    public bool IsAlliedWith(FactionInfo faction) { return Faction.IsAlliedWith(faction); }
+
+    public bool IsAlliedWith(ActorInfo actor) { return Faction.IsAlliedWith(actor.Faction); }
+
     public void Delete()
     {
       if (!MarkedDisposing) { SetPreDispose(); ActorFactory.MakeDead(this); }

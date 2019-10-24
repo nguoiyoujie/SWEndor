@@ -57,7 +57,7 @@ namespace SWEndor.AI.Actions
     public override void Process(Engine engine, ActorInfo actor)
     {
       ActorInfo target = engine.ActorFactory.Get(Target_ActorID);
-      if (target == null || target.Faction.IsAlliedWith(actor.Faction))
+      if (target == null || target.IsAlliedWith(actor))
       {
         Complete = true;
         return;
@@ -165,7 +165,7 @@ namespace SWEndor.AI.Actions
               && a.Active
               && !a.IsDyingOrDead
               && c.InCombat
-              && !c.Faction.IsAlliedWith(a.Faction))
+              && !c.IsAlliedWith(a))
         {
           float dist = DistanceModel.GetDistance(e, a, c, c.WeaponDefinitions.GetWeaponRange());
 
