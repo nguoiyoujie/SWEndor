@@ -107,8 +107,8 @@ namespace SWEndor.UI.Widgets
         {
           return new XYCoord
           {
-            X = -Dist * (float)Math.Sin(Angle * Globals.PI / 180),
-            Y = Dist * (float)Math.Cos(Angle * Globals.PI / 180)
+            X = -Dist * (float)Math.Sin(Angle * Globals.Deg2Rad),
+            Y = Dist * (float)Math.Cos(Angle * Globals.Deg2Rad)
           };
         }
       }
@@ -125,7 +125,7 @@ namespace SWEndor.UI.Widgets
         {
           return new PolarCoord
           {
-            Angle = (float)Math.Atan2(X, Y) * 180 / Globals.PI + 180,
+            Angle = (float)Math.Atan2(X, Y) * Globals.Rad2Deg + 180,
             Dist = (float)Math.Sqrt(X * X + Y * Y)
           };
         }
@@ -166,8 +166,8 @@ namespace SWEndor.UI.Widgets
               float prevangl = Engine.TrueVision.TVMathLibrary.Direction2Ang(prevtemp.x, prevtemp.y) - proty;
               if (polar.Dist < radar_range && prevdist < radar_range)
               {
-                float px = radar_center.x - radar_radius * prevdist / radar_range * (float)Math.Sin(prevangl * Globals.PI / 180);
-                float py = radar_center.y + radar_radius * prevdist / radar_range * (float)Math.Cos(prevangl * Globals.PI / 180);
+                float px = radar_center.x - radar_radius * prevdist / radar_range * (float)Math.Sin(prevangl * Globals.Deg2Rad);
+                float py = radar_center.y + radar_radius * prevdist / radar_range * (float)Math.Cos(prevangl * Globals.Deg2Rad);
 
                 DrawLine(x, y, px, py, icolor);
               }
@@ -253,8 +253,8 @@ namespace SWEndor.UI.Widgets
               float prevangl = Engine.TrueVision.TVMathLibrary.Direction2Ang(prevtemp.x, prevtemp.y) - proty;
               if (polar.Dist < radar_range && prevdist < radar_range)
               {
-                float px = radar_center.x - radar_radius * prevdist / radar_range * (float)Math.Sin(prevangl * Globals.PI / 180);
-                float py = radar_center.y + radar_radius * prevdist / radar_range * (float)Math.Cos(prevangl * Globals.PI / 180);
+                float px = radar_center.x - radar_radius * prevdist / radar_range * (float)Math.Sin(prevangl * Globals.Deg2Rad);
+                float py = radar_center.y + radar_radius * prevdist / radar_range * (float)Math.Cos(prevangl * Globals.Deg2Rad);
 
                 DrawLine(x, y, px, py, icolor);
               }
@@ -322,8 +322,8 @@ namespace SWEndor.UI.Widgets
               float prevangl = Engine.TrueVision.TVMathLibrary.Direction2Ang(prevtemp.x, prevtemp.y) - proty;
               if (polar.Dist < radar_range && prevdist < radar_range)
               {
-                float px = radar_center.x - radar_radius * prevdist / radar_range * (float)Math.Sin(prevangl * Globals.PI / 180);
-                float py = radar_center.y + radar_radius * prevdist / radar_range * (float)Math.Cos(prevangl * Globals.PI / 180);
+                float px = radar_center.x - radar_radius * prevdist / radar_range * (float)Math.Sin(prevangl * Globals.Deg2Rad);
+                float py = radar_center.y + radar_radius * prevdist / radar_range * (float)Math.Cos(prevangl * Globals.Deg2Rad);
 
                 DrawLine(x, y, px, py, icolor);
               }
@@ -398,8 +398,8 @@ namespace SWEndor.UI.Widgets
       while (i < 4)
       {
         TV_2DVECTOR temp = new TV_2DVECTOR(x, y);
-        temp -= new TV_2DVECTOR(bx * (float)Math.Cos(ang * Globals.PI / 180) + bz * (float)Math.Sin(ang * Globals.PI / 180),
-                                bz * (float)Math.Cos(ang * Globals.PI / 180) - bx * (float)Math.Sin(ang * Globals.PI / 180));
+        temp -= new TV_2DVECTOR(bx * (float)Math.Cos(ang * Globals.Deg2Rad) + bz * (float)Math.Sin(ang * Globals.Deg2Rad),
+                                bz * (float)Math.Cos(ang * Globals.Deg2Rad) - bx * (float)Math.Sin(ang * Globals.Deg2Rad));
         float tdist = Engine.TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), temp);
         float tangl = Engine.TrueVision.TVMathLibrary.Direction2Ang(temp.x, temp.y) - proty;
         if (tdist > radar_range)
@@ -407,8 +407,8 @@ namespace SWEndor.UI.Widgets
           tdist = radar_range;
           ts.Add(null);
         }
-        float tx = radar_center.x - radar_radius * tdist / radar_range * (float)Math.Sin(tangl * Globals.PI / 180);
-        float ty = radar_center.y + radar_radius * tdist / radar_range * (float)Math.Cos(tangl * Globals.PI / 180);
+        float tx = radar_center.x - radar_radius * tdist / radar_range * (float)Math.Sin(tangl * Globals.Deg2Rad);
+        float ty = radar_center.y + radar_radius * tdist / radar_range * (float)Math.Cos(tangl * Globals.Deg2Rad);
         if (ts.Count > 1 && ts[ts.Count - 1] != null && ts[ts.Count - 2] != null)
           ts[ts.Count - 1] = new TV_2DVECTOR(tx, ty);
         else
@@ -473,8 +473,8 @@ namespace SWEndor.UI.Widgets
       while (i < 3)
       {
         TV_2DVECTOR temp = new TV_2DVECTOR(x, y);
-        temp -= new TV_2DVECTOR(bx * (float)Math.Cos(ang * Globals.PI / 180) + bz * (float)Math.Sin(ang * Globals.PI / 180),
-                                bz * (float)Math.Cos(ang * Globals.PI / 180) - bx * (float)Math.Sin(ang * Globals.PI / 180));
+        temp -= new TV_2DVECTOR(bx * (float)Math.Cos(ang * Globals.Deg2Rad) + bz * (float)Math.Sin(ang * Globals.Deg2Rad),
+                                bz * (float)Math.Cos(ang * Globals.Deg2Rad) - bx * (float)Math.Sin(ang * Globals.Deg2Rad));
         float tdist = Engine.TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), temp);
         float tangl = Engine.TrueVision.TVMathLibrary.Direction2Ang(temp.x, temp.y) - proty;
         if (tdist > radar_range)
@@ -482,8 +482,8 @@ namespace SWEndor.UI.Widgets
           tdist = radar_range;
           ts.Add(null);
         }
-        float tx = radar_center.x - radar_radius * tdist / radar_range * (float)Math.Sin(tangl * Globals.PI / 180);
-        float ty = radar_center.y + radar_radius * tdist / radar_range * (float)Math.Cos(tangl * Globals.PI / 180);
+        float tx = radar_center.x - radar_radius * tdist / radar_range * (float)Math.Sin(tangl * Globals.Deg2Rad);
+        float ty = radar_center.y + radar_radius * tdist / radar_range * (float)Math.Cos(tangl * Globals.Deg2Rad);
         if (ts.Count > 1 && ts[ts.Count - 1] != null && ts[ts.Count - 2] != null)
           ts[ts.Count - 1] = new TV_2DVECTOR(tx, ty);
         else

@@ -75,8 +75,8 @@ namespace SWEndor.UI.Widgets
           if (dist > radar_range)
             dist = radar_range;
 
-          float x = radar_center.x - radar_radius * dist / radar_range * (float)Math.Sin(angl * Globals.PI / 180);
-          float y = radar_center.y + radar_radius * dist / radar_range * (float)Math.Cos(angl * Globals.PI / 180);
+          float x = radar_center.x - radar_radius * dist / radar_range * (float)Math.Sin(angl * Globals.Deg2Rad);
+          float y = radar_center.y + radar_radius * dist / radar_range * (float)Math.Cos(angl * Globals.Deg2Rad);
           float scale = a.Scale;
           int icolor = a.HP_Color.Value;
 

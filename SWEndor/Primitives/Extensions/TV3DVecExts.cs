@@ -20,9 +20,9 @@ namespace SWEndor.Primitives.Extensions
 
     public static TV_3DVECTOR ConvertRotToDir(this TV_3DVECTOR rotation)
     {
-      float x = (float)(Math.Cos(rotation.x / 180 * Globals.PI) * Math.Sin(rotation.y / 180 * Globals.PI));
-      float y = -(float)Math.Sin(rotation.x / 180 * Globals.PI);
-      float z = (float)(Math.Cos(rotation.x / 180 * Globals.PI) * Math.Cos(rotation.y / 180 * Globals.PI));
+      float x = (float)(Math.Cos(rotation.x * Globals.Deg2Rad) * Math.Sin(rotation.y * Globals.Deg2Rad));
+      float y = -(float)Math.Sin(rotation.x * Globals.Deg2Rad);
+      float z = (float)(Math.Cos(rotation.x * Globals.Deg2Rad) * Math.Cos(rotation.y * Globals.Deg2Rad));
 
       return new TV_3DVECTOR(x, y, z);
     }

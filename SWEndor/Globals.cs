@@ -24,8 +24,8 @@ namespace SWEndor
 
     // Constant
     public const float PI = 3.1415f;
-    public const float Rad2Deg = 180 / 3.1415f;
-    public const float Deg2Rad = 3.1415f / 180;
+    public const float Rad2Deg = 180 / PI;
+    public const float Deg2Rad = PI / 180;
     public const float LaserSpeed = 3000f;
     public const int ActorLimit = 1000;
     public const float ImminentCollisionFactor = 1.5f;
