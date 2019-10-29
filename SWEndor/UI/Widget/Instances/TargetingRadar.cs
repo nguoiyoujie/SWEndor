@@ -1,12 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Core;
-using SWEndor.Explosions;
-using SWEndor.Models;
-using SWEndor.Primitives;
-using SWEndor.Projectiles;
-using System;
-using System.Collections.Generic;
 
 namespace SWEndor.UI.Widgets
 {
@@ -14,9 +8,7 @@ namespace SWEndor.UI.Widgets
   {
     private TV_2DVECTOR radar_center;
     private float radar_radius;
-    private float radar_range;
-    private float radar_blinkfreq;
-    private float radar_bigshiprenderunit;
+
     private TV_2DVECTOR targetingradar_center;
     private float targetingradar_radius;
 
@@ -24,9 +16,7 @@ namespace SWEndor.UI.Widgets
     {
       radar_center = new TV_2DVECTOR(Engine.ScreenWidth * 0.34f, Engine.ScreenHeight * 0.24f) + new TV_2DVECTOR(Engine.ScreenWidth / 2, Engine.ScreenHeight / 2);
       radar_radius = Engine.ScreenHeight * 0.16f; //100;
-      radar_range = 4000;
-      radar_blinkfreq = 2.5f;
-      radar_bigshiprenderunit = 50;
+
       targetingradar_center = new TV_2DVECTOR(Engine.ScreenWidth / 2, Engine.ScreenHeight * 0.28f);
       targetingradar_radius = Engine.ScreenHeight * 0.12f; //100;
     }

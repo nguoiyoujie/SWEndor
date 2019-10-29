@@ -5,6 +5,7 @@ using SWEndor.ActorTypes.Instances;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Models;
+using SWEndor.Primitives.Extensions;
 using System.Collections.Generic;
 
 namespace SWEndor.Scenarios
@@ -100,10 +101,10 @@ namespace SWEndor.Scenarios
 
       if (tie_d > 0)
       {
-        Manager.Line2Text = string.Format("TIE/D: {0}", tie_d);
+        Manager.Line2Text = "TIE/D: {0}".F(tie_d);
         if (tie_sa > 0)
         {
-          Manager.Line3Text = string.Format("TIE/SA:{0}", tie_sa);
+          Manager.Line3Text = "TIE/SA:{0}".F(tie_sa);
         }
         else
         {
@@ -112,7 +113,7 @@ namespace SWEndor.Scenarios
       }
       else if (tie_sa > 0)
       {
-        Manager.Line2Text = string.Format("TIE/SA:{0}", tie_sa);
+        Manager.Line2Text = "TIE/SA:{0}".F(tie_sa);
         Manager.Line3Text = "";
       }
       else

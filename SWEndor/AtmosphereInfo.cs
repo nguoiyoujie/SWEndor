@@ -211,7 +211,7 @@ namespace SWEndor
           List<FlareInfo> fset = new List<FlareInfo>(); 
           for (int i = 1; i <= 4; i++)
           {
-            FlareInfo finfo = new FlareInfo(Engine.TrueVision.TVTextureFactory, Path.Combine(Globals.AtmospherePath, @"flare" + i + ".jpg"));
+            FlareInfo finfo = new FlareInfo(Engine.TrueVision.TVTextureFactory, Path.Combine(Globals.AtmospherePath, @"flare" + i.ToString() + ".jpg"));
             switch (i)
             {
               case 1:
