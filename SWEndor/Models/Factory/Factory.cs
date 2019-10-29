@@ -222,6 +222,35 @@ namespace SWEndor
         action.Invoke(a.Engine, a, c1, c2, c3);
     }
 
+    public void StaggeredDoEach(int stagger, Action<Engine, T> action)
+    {
+      foreach (T a in Actors)
+        if (a.ID % stagger == Engine.Game.GameFrame % stagger)
+        action.Invoke(a.Engine, a);
+    }
+
+    public void StaggeredDoEach<T1>(int stagger, Action<Engine, T, T1> action, T1 cmp)
+    {
+      foreach (T a in Actors)
+        if (a.ID % stagger == Engine.Game.GameFrame % stagger)
+          action.Invoke(a.Engine, a, cmp);
+    }
+
+    public void StaggeredDoEach<T1, T2>(int stagger, Action<Engine, T, T1, T2> action, T1 c1, T2 c2)
+    {
+      foreach (T a in Actors)
+        if (a.ID % stagger == Engine.Game.GameFrame % stagger)
+          action.Invoke(a.Engine, a, c1, c2);
+    }
+
+    public void StaggeredDoEach<T1, T2, T3>(int stagger, Action<Engine, T, T1, T2, T3> action, T1 c1, T2 c2, T3 c3)
+    {
+      foreach (T a in Actors)
+        if (a.ID % stagger == Engine.Game.GameFrame % stagger)
+          action.Invoke(a.Engine, a, c1, c2, c3);
+    }
+
+
     public ActorEnumerable Actors;
 
     public struct ActorEnumerable

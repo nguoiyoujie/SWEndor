@@ -42,6 +42,7 @@ namespace SWEndor.Core
     public TimeControl TimeControl;
 
     public float GameTime { get; internal set; }
+    public float GameFrame { get; internal set; }
 
     private enum RunState { STOPPED, LOADING, RUNNING }
     private RunState State { get; set; } = RunState.STOPPED;
@@ -63,8 +64,8 @@ namespace SWEndor.Core
     public float CurrentFPS { get { return TimeControl.FPS; } }
 
     private bool septhread_sound = true;
-    private bool septhread_ai = true;
-    private bool septhread_collision = true;
+    private bool septhread_ai = false;
+    private bool septhread_collision = false;
     private bool septhread_render = false;
     private bool septhread_process = false;
 
@@ -188,7 +189,10 @@ namespace SWEndor.Core
                 TickRender();
 
               if (!IsPaused)
+              {
                 GameTime += TimeSinceRender;
+                GameFrame++;
+              }
             }
           }
           catch (Exception ex)
