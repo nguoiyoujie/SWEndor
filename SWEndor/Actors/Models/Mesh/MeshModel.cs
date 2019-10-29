@@ -328,6 +328,19 @@ namespace SWEndor.Actors.Models
       engine.TrueVision.TVScreen2DText.Action_EndText();
       engine.Surfaces.RS_Target.EndRender();
     }
+
+  
+    public bool Collision(Engine engine, ActorInfo actor, TV_3DVECTOR start, TV_3DVECTOR end)
+    {
+      TVMesh m = actor.IsFarMode ? FarMesh : Mesh;
+      return m.Collision(start, end);
+    }
+
+    public bool AdvancedCollision(Engine engine, ActorInfo actor, TV_3DVECTOR start, TV_3DVECTOR end, ref TV_COLLISIONRESULT result)
+    {
+      TVMesh m = actor.IsFarMode ? FarMesh : Mesh;
+      return m.AdvancedCollision(start, end, ref result);
+    }
   }
 }
 
@@ -344,6 +357,7 @@ namespace SWEndor.Actors
     public int GetVertexCount() { return Meshes.GetVertexCount(); }
     //public void Render(bool renderfar) { Meshes.Render(renderfar); }
     public void UpdateRenderLine() { Meshes.UpdateRenderLine(Engine, this); }
+    public bool AdvancedCollision(TV_3DVECTOR start, TV_3DVECTOR end, ref TV_COLLISIONRESULT result) { return Meshes.AdvancedCollision(Engine, this, start, end, ref result); }
 
     public TV_3DVECTOR MaxDimensions { get { return TypeInfo.MeshData.MaxDimensions; } }
     public TV_3DVECTOR MinDimensions { get { return TypeInfo.MeshData.MinDimensions; } }

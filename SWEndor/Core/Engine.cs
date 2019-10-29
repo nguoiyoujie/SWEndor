@@ -18,6 +18,7 @@ using SWEndor.Explosions;
 using SWEndor.Shaders;
 using SWEndor.Projectiles;
 using SWEndor.ProjectileTypes;
+using SWEndor.Primitives.Geometry;
 
 namespace SWEndor.Core
 {
@@ -207,6 +208,18 @@ namespace SWEndor.Core
         TrueVision.TVScene.FinalizeShadows();
         TrueVision.TVScene.RenderAllMeshes(true); //RenderAll(true);
       }
+
+      // test
+      //foreach (ActorInfo a in ActorFactory.GetAll())
+      //{
+      //ActorInfo a = PlayerInfo.TargetActor;
+      //  if (a != null)
+      //{
+      //  GameScenarioManager.Octree.GetId(a.GetBoundingBox(false), ref a.OctID);
+      //  Box b = GameScenarioManager.Octree.GetBox(a.OctID);
+      //  TrueVision.TVScreen2DImmediate.Draw_Box3D(new TV_3DVECTOR(b.X.Min, b.Y.Min, b.Z.Min), new TV_3DVECTOR(b.X.Max, b.Y.Max, b.Z.Max), new TV_COLOR(1, 1, 0, 1).GetIntColor());
+      //}
+      //}
 
       Screen2D.Draw();
       Screen2D.CurrentPage?.RenderTick();

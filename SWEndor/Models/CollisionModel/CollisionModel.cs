@@ -14,11 +14,13 @@ namespace SWEndor.Models
   {
     public bool IsTestingCollision;
     public CollisionResultData Collision;
+    public TV_3DVECTOR prevCollisionStart;
 
     public bool IsTestingProspectiveCollision;
     public bool IsInProspectiveCollision;
 
     public CollisionResultData ProspectiveCollision;
+    public TV_3DVECTOR prevProspectiveCollisionStart;
 
     public TV_3DVECTOR ProspectiveCollisionSafe;
     public float ProspectiveCollisionScanDistance;
@@ -36,11 +38,13 @@ namespace SWEndor.Models
       IsTestingCollision = false;
 
       Collision.Reset();
+      prevCollisionStart = new TV_3DVECTOR();
 
       IsTestingProspectiveCollision = false;
       IsInProspectiveCollision = false;
 
       ProspectiveCollision.Reset();
+      prevProspectiveCollisionStart = new TV_3DVECTOR();
 
       ProspectiveCollisionSafe = new TV_3DVECTOR();
       ProspectiveCollisionScanDistance = 1000;
@@ -65,8 +69,13 @@ namespace SWEndor.Models
     {
       if (IsTestingCollision)
       {
+        if (prevCollisionStart.x == 0 && prevCollisionStart.y == 0 && prevCollisionStart.z == 0)
+          prevCollisionStart = actor.GetRelativePositionXYZ(0, 0, actor.MinDimensions.z, false) - (actor.GetGlobalPosition() - actor.GetPrevGlobalPosition());
+
         TV_3DVECTOR vmin = actor.GetRelativePositionXYZ(0, 0, actor.MaxDimensions.z, false);
-        TV_3DVECTOR vmax = actor.GetRelativePositionXYZ(0, 0, actor.MinDimensions.z, false) - (actor.GetGlobalPosition() - actor.GetPrevGlobalPosition());
+        TV_3DVECTOR vmax = prevCollisionStart;
+        prevCollisionStart = actor.GetRelativePositionXYZ(0, 0, actor.MinDimensions.z, false) - (actor.GetGlobalPosition() - actor.GetPrevGlobalPosition());
+
 
         TestCollision(engine, actor, vmin, vmax, false, out Collision.Impact, out Collision.Normal, out Collision.ActorID);
         IsTestingCollision = false;
@@ -75,8 +84,12 @@ namespace SWEndor.Models
       {
         int dummy;
 
+        if (prevProspectiveCollisionStart.x == 0 && prevProspectiveCollisionStart.y == 0 && prevProspectiveCollisionStart.z == 0)
+          prevProspectiveCollisionStart = actor.GetRelativePositionXYZ(0, 0, actor.MaxDimensions.z + 10 + ProspectiveCollisionScanDistance);
+
         TV_3DVECTOR prostart = actor.GetRelativePositionXYZ(0, 0, actor.MaxDimensions.z + 10);
-        TV_3DVECTOR proend0 = actor.GetRelativePositionXYZ(0, 0, actor.MaxDimensions.z + 10 + ProspectiveCollisionScanDistance);
+        TV_3DVECTOR proend0 = prevProspectiveCollisionStart; 
+        prevProspectiveCollisionStart = actor.GetRelativePositionXYZ(0, 0, actor.MaxDimensions.z + 10 + ProspectiveCollisionScanDistance);
 
         TV_3DVECTOR proImpact = new TV_3DVECTOR();
         TV_3DVECTOR proNormal = new TV_3DVECTOR();
@@ -159,10 +172,27 @@ namespace SWEndor.Models
         vNormal = new TV_3DVECTOR();
 
         TV_COLLISIONRESULT tvcres = new TV_COLLISIONRESULT();
-
         bool result = false;
+
+        /* // Octree filtering (still slower than TrueVision TVScene!)
+        string oid = "";
+        engine.GameScenarioManager.Octree.GetId(start, end, ref oid);
+
+        foreach (ActorInfo a in engine.GameScenarioManager.Octree.Search(oid))
+        {
+          if (//engine.GameScenarioManager.Octree.Contains(sb, a.OctID)
+             a.Mask.Has(ComponentMask.CAN_BECOLLIDED) 
+            && a.Active 
+            && !a.IsAggregateMode)
+            //using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+              result = a.AdvancedCollision(start, end, ref tvcres);
+          if (result)
+            break;
+        }
+        */
+
         using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
-          result = engine.TrueVision.TVScene.AdvancedCollision(start, end, ref tvcres);
+          result = engine.TrueVision.TVScene.AdvancedCollision(start, end, ref tvcres, (int)CONST_TV_OBJECT_TYPE.TV_OBJECT_MESH, CONST_TV_TESTTYPE.TV_TESTTYPE_ACCURATETESTING);
 
         if (result)
         {

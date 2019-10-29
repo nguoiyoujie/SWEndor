@@ -75,6 +75,8 @@ namespace SWEndor.Actors
 
       if (Generated)
         SetActivated();
+
+      Engine.GameScenarioManager.Octree.Update(this);
     }
   }
 }

@@ -40,6 +40,8 @@ namespace SWEndor.Scenarios
     public TV_3DVECTOR MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
     public TV_3DVECTOR MinAIBounds = new TV_3DVECTOR(-20000, -1500, -20000);
 
+    public Octree_String Octree = new Octree_String(new TV_3DVECTOR(), 100000, 10);
+
     // Actor Registers
     public HashSet<ActorInfo> CriticalAllies = new HashSet<ActorInfo>();
     public HashSet<ActorInfo> CriticalEnemies = new HashSet<ActorInfo>();
