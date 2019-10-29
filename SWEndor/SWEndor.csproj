@@ -139,6 +139,8 @@
     <Compile Include="Actors\Models\SystemModel\SystemPart.cs" />
     <Compile Include="Actors\Models\SystemModel\SystemState.cs" />
     <Compile Include="Actors\Models\SystemModel\SystemModel.cs" />
+    <Compile Include="Actors\Octree\Octree_String.cs" />
+    <Compile Include="Actors\Octree\Octree.cs" />
     <Compile Include="ActorTypes\Components\CombatData.cs" />
     <Compile Include="ActorTypes\Components\SystemData.cs" />
     <Compile Include="ActorTypes\General\ActorCreationInfo.cs" />
