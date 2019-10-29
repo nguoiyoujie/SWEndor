@@ -37,7 +37,6 @@ load:
 
 loadfaction:
 	AddFaction("Smugglers", 0.6, 0.6, 0);
-	Faction.SetAsMainAllyFaction("Smugglers");
 	AddFaction("Empire", 0, 0.8, 0);
 	AddFaction("Rebels", 0.8, 0, 0);
 	Faction.SetWingSpawnLimit("Empire", 24);
