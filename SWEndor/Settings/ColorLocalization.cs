@@ -31,7 +31,7 @@ namespace SWEndor
     GAME_MESSAGE_NORMAL,
     GAME_MESSAGE_WARNING,
     GAME_MESSAGE_BACKGROUND,
-    GAME_MESSAGE_MISSILE_WARNING_1f,
+    GAME_MESSAGE_MISSILE_WARNING_1,
     GAME_MESSAGE_MISSILE_WARNING_2,
 
     GAME_SYSTEMSTATE_ACTIVE,
@@ -75,7 +75,7 @@ namespace SWEndor
       { ColorLocalKeys.GAME_MESSAGE_NORMAL, new COLOR(0.5f, 0.5f, 1f, 1f) },
       { ColorLocalKeys.GAME_MESSAGE_WARNING, new COLOR(1f, 0.2f, 0.2f, 1f) },
       { ColorLocalKeys.GAME_MESSAGE_BACKGROUND, new COLOR(0, 0, 0, 0.5f) },
-      { ColorLocalKeys.GAME_MESSAGE_MISSILE_WARNING_1f, new COLOR(1f, 0.2f, 0.2f, 1f) },
+      { ColorLocalKeys.GAME_MESSAGE_MISSILE_WARNING_1, new COLOR(1f, 0.2f, 0.2f, 1f) },
       { ColorLocalKeys.GAME_MESSAGE_MISSILE_WARNING_2, new COLOR(1f, 0.8f, 0.2f, 1f) },
 
       { ColorLocalKeys.GAME_SYSTEMSTATE_ACTIVE, new COLOR(0.3f, 1f, 0.3f, 1f) },
