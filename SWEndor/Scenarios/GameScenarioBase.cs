@@ -94,9 +94,6 @@ namespace SWEndor.Scenarios
     private float LastLostSoundTime = 0;
     public bool Launched = false;
 
-    public FactionInfo MainAllyFaction = FactionInfo.Neutral;
-    public FactionInfo MainEnemyFaction = FactionInfo.Neutral;
-
     public readonly GameScenarioManager Manager;
 
     public Engine Engine { get { return Manager.Engine; } }

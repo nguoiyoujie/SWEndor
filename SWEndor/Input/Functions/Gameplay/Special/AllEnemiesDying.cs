@@ -14,12 +14,17 @@ namespace SWEndor.Input.Functions.Gameplay.Special
 
     public override void Process(Engine engine)
     {
-      // Broken. TO-DO: Fix
-      foreach (int actorID in engine.GameScenarioManager.Scenario.MainEnemyFaction.GetActors(Models.TargetType.ANY, true))
+      ActorInfo p = engine.PlayerInfo.Actor;
+      if (p != null)
       {
-        ActorInfo actor = engine.ActorFactory.Get(actorID);
-        if (actor != null && !actor.IsDyingOrDead)
-          actor.SetState_Dying();
+        foreach (ActorInfo actor in engine.ActorFactory.GetAll())
+        {
+          if (actor != null
+            && !actor.IsDyingOrDead
+            && actor.Faction != FactionInfo.Neutral
+            && !actor.IsAlliedWith(p))
+            actor.SetState_Dying();
+        }
       }
     }
   }
