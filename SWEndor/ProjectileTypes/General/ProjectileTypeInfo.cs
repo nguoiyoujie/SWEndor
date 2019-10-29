@@ -153,12 +153,7 @@ namespace SWEndor.ProjectileTypes
           target.TypeInfo.ProcessHit(engine, target, proj, target.GetGlobalPosition());
           proj.TypeInfo.ProcessHit(engine, proj, target, target.GetGlobalPosition());
 
-          ActorInfo o = proj.Owner;
-          if (o != null)
-          {
-            o.OnHitEvent();
-            target.OnHitEvent();
-          }
+          target.OnHitEvent();
         }
       }
     }
