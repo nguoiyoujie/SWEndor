@@ -21,6 +21,10 @@ namespace SWEndor.UI.Forms
       lblFPS.Text = Engine.Game.CurrentFPS.ToString();
       lblGameTime.Text = Engine.Game.GameTime.ToString();
       lblRenderTime.Text = Engine.Game.TimeSinceRender.ToString();
+      lblGameFrame.Text = Engine.Game.GameFrame.ToString();
+      lblCollisionFrame.Text = Engine.Game.CollisionTickCount.ToString();
+      lblAIFrame.Text = Engine.Game.AITickCount.ToString();
+
 
       if (tabControl1.SelectedTab == tpObjects)
         ucStatObjects1.Update(Engine);

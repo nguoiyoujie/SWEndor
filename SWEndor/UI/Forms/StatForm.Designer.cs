@@ -40,11 +40,17 @@
       this.label6 = new System.Windows.Forms.Label();
       this.tabControl1 = new System.Windows.Forms.TabControl();
       this.tpObjects = new System.Windows.Forms.TabPage();
-      this.tpSound = new System.Windows.Forms.TabPage();
-      this.tpPool = new System.Windows.Forms.TabPage();
       this.ucStatObjects1 = new SWEndor.UI.Forms.UIControls.ucStatObjects();
+      this.tpSound = new System.Windows.Forms.TabPage();
       this.ucSound1 = new SWEndor.UI.Forms.UIControls.ucSound();
+      this.tpPool = new System.Windows.Forms.TabPage();
       this.ucPoolCache1 = new SWEndor.UI.Forms.UIControls.ucPoolCache();
+      this.lblAIFrame = new System.Windows.Forms.Label();
+      this.label2 = new System.Windows.Forms.Label();
+      this.lblCollisionFrame = new System.Windows.Forms.Label();
+      this.label4 = new System.Windows.Forms.Label();
+      this.lblGameFrame = new System.Windows.Forms.Label();
+      this.label9 = new System.Windows.Forms.Label();
       this.tabControl1.SuspendLayout();
       this.tpObjects.SuspendLayout();
       this.tpSound.SuspendLayout();
@@ -135,6 +141,14 @@
       this.tpObjects.Text = "Objects";
       this.tpObjects.UseVisualStyleBackColor = true;
       // 
+      // ucStatObjects1
+      // 
+      this.ucStatObjects1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.ucStatObjects1.Location = new System.Drawing.Point(3, 3);
+      this.ucStatObjects1.Name = "ucStatObjects1";
+      this.ucStatObjects1.Size = new System.Drawing.Size(586, 368);
+      this.ucStatObjects1.TabIndex = 0;
+      // 
       // tpSound
       // 
       this.tpSound.Controls.Add(this.ucSound1);
@@ -145,6 +159,14 @@
       this.tpSound.TabIndex = 1;
       this.tpSound.Text = "Sounds";
       this.tpSound.UseVisualStyleBackColor = true;
+      // 
+      // ucSound1
+      // 
+      this.ucSound1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.ucSound1.Location = new System.Drawing.Point(3, 3);
+      this.ucSound1.Name = "ucSound1";
+      this.ucSound1.Size = new System.Drawing.Size(586, 368);
+      this.ucSound1.TabIndex = 0;
       // 
       // tpPool
       // 
@@ -157,22 +179,6 @@
       this.tpPool.Text = "Pool / Cache";
       this.tpPool.UseVisualStyleBackColor = true;
       // 
-      // ucStatObjects1
-      // 
-      this.ucStatObjects1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.ucStatObjects1.Location = new System.Drawing.Point(3, 3);
-      this.ucStatObjects1.Name = "ucStatObjects1";
-      this.ucStatObjects1.Size = new System.Drawing.Size(586, 368);
-      this.ucStatObjects1.TabIndex = 0;
-      // 
-      // ucSound1
-      // 
-      this.ucSound1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.ucSound1.Location = new System.Drawing.Point(3, 3);
-      this.ucSound1.Name = "ucSound1";
-      this.ucSound1.Size = new System.Drawing.Size(586, 368);
-      this.ucSound1.TabIndex = 0;
-      // 
       // ucPoolCache1
       // 
       this.ucPoolCache1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -181,11 +187,65 @@
       this.ucPoolCache1.Size = new System.Drawing.Size(586, 368);
       this.ucPoolCache1.TabIndex = 0;
       // 
+      // lblAIFrame
+      // 
+      this.lblAIFrame.Location = new System.Drawing.Point(474, 57);
+      this.lblAIFrame.Name = "lblAIFrame";
+      this.lblAIFrame.Size = new System.Drawing.Size(50, 15);
+      this.lblAIFrame.TabIndex = 73;
+      this.lblAIFrame.Text = "0";
+      // 
+      // label2
+      // 
+      this.label2.Location = new System.Drawing.Point(288, 57);
+      this.label2.Name = "label2";
+      this.label2.Size = new System.Drawing.Size(180, 15);
+      this.label2.TabIndex = 72;
+      this.label2.Text = "AI Frame";
+      // 
+      // lblCollisionFrame
+      // 
+      this.lblCollisionFrame.Location = new System.Drawing.Point(474, 42);
+      this.lblCollisionFrame.Name = "lblCollisionFrame";
+      this.lblCollisionFrame.Size = new System.Drawing.Size(50, 15);
+      this.lblCollisionFrame.TabIndex = 71;
+      this.lblCollisionFrame.Text = "0";
+      // 
+      // label4
+      // 
+      this.label4.Location = new System.Drawing.Point(288, 42);
+      this.label4.Name = "label4";
+      this.label4.Size = new System.Drawing.Size(180, 15);
+      this.label4.TabIndex = 70;
+      this.label4.Text = "Collision Frame";
+      // 
+      // lblGameFrame
+      // 
+      this.lblGameFrame.Location = new System.Drawing.Point(474, 27);
+      this.lblGameFrame.Name = "lblGameFrame";
+      this.lblGameFrame.Size = new System.Drawing.Size(50, 15);
+      this.lblGameFrame.TabIndex = 69;
+      this.lblGameFrame.Text = "0";
+      // 
+      // label9
+      // 
+      this.label9.Location = new System.Drawing.Point(288, 27);
+      this.label9.Name = "label9";
+      this.label9.Size = new System.Drawing.Size(180, 15);
+      this.label9.TabIndex = 68;
+      this.label9.Text = "Game Frame";
+      // 
       // StatForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(628, 510);
+      this.Controls.Add(this.lblAIFrame);
+      this.Controls.Add(this.label2);
+      this.Controls.Add(this.lblCollisionFrame);
+      this.Controls.Add(this.label4);
+      this.Controls.Add(this.lblGameFrame);
+      this.Controls.Add(this.label9);
       this.Controls.Add(this.tabControl1);
       this.Controls.Add(this.label6);
       this.Controls.Add(this.lblRenderTime);
@@ -222,6 +282,12 @@
     private UIControls.ucStatObjects ucStatObjects1;
     private UIControls.ucSound ucSound1;
     private UIControls.ucPoolCache ucPoolCache1;
+    private System.Windows.Forms.Label lblAIFrame;
+    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.Label lblCollisionFrame;
+    private System.Windows.Forms.Label label4;
+    private System.Windows.Forms.Label lblGameFrame;
+    private System.Windows.Forms.Label label9;
   }
 }
 
