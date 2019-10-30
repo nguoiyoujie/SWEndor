@@ -383,6 +383,7 @@ namespace SWEndor.Actors
 
       // Final dispose
       Faction.UnregisterActor(this);
+      Faction = FactionInfo.Neutral;
       ActorFactory.Remove(ID);
 
       // Kill data

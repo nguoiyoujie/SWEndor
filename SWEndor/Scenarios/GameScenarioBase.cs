@@ -179,6 +179,9 @@ namespace SWEndor.Scenarios
       AI.Actions.ProjectileAttackActor._count = 0;
 
       Game.GameTime = 0;
+      Game.GameFrame = 0;
+      Game.CollisionTickCount = 0;
+      Game.AITickCount = 0;
       Manager.IsCutsceneMode = false;
 
       InformLostWing = false;
