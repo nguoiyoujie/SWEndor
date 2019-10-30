@@ -6,7 +6,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
   {
     public static Val AssignActor(Context context, Val[] ps)
     {
-      int id = ps[0].ValueI;
+      int id = ps[0].vI;
       if (id < 0)
       {
         context.Engine.PlayerInfo.ActorID = -1;
@@ -33,21 +33,21 @@ namespace SWEndor.Scenarios.Scripting.Functions
 
     public static Val SetMovementEnabled(Context context, Val[] ps)
     {
-      bool enabled = ps[0].ValueB;
+      bool enabled = ps[0].vB;
       context.Engine.PlayerInfo.IsMovementControlsEnabled = enabled;
       return Val.TRUE;
     }
 
     public static Val SetAI(Context context, Val[] ps)
     {
-      bool enabled = ps[0].ValueB;
+      bool enabled = ps[0].vB;
       context.Engine.PlayerInfo.PlayerAIEnabled = enabled;
       return Val.TRUE;
     }
 
     public static Val SetLives(Context context, Val[] ps)
     {
-      context.Engine.PlayerInfo.Lives = ps[0].ValueI;
+      context.Engine.PlayerInfo.Lives = ps[0].vI;
       return Val.TRUE;
     }
 
@@ -59,13 +59,13 @@ namespace SWEndor.Scenarios.Scripting.Functions
 
     public static Val SetScorePerLife(Context context, Val[] ps)
     {
-      context.Engine.PlayerInfo.ScorePerLife = ps[0].ValueF;
+      context.Engine.PlayerInfo.ScorePerLife = ps[0].vF;
       return Val.TRUE;
     }
 
     public static Val SetScoreForNextLife(Context context, Val[] ps)
     {
-      context.Engine.PlayerInfo.ScoreForNextLife = ps[0].ValueF;
+      context.Engine.PlayerInfo.ScoreForNextLife = ps[0].vF;
       return Val.TRUE;
     }
 

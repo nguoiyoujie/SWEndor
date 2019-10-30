@@ -14,7 +14,20 @@ namespace SWEndor.Scenarios.Scripting.Expressions
         // white space collector
         new TokenDefinition(@"\s+", TokenEnum.WHITESPACE, RegexOption),
 
+        // type keywords
+        new TokenDefinition(@"bool\b", TokenEnum.DECL_BOOL, RegexOption),
+        new TokenDefinition(@"float\b", TokenEnum.DECL_FLOAT, RegexOption),
+        new TokenDefinition(@"int\b", TokenEnum.DECL_INT, RegexOption),
+        new TokenDefinition(@"string\b", TokenEnum.DECL_STRING, RegexOption),
+        new TokenDefinition(@"float2\b", TokenEnum.DECL_FLOAT2, RegexOption),
+        new TokenDefinition(@"float3\b", TokenEnum.DECL_FLOAT3, RegexOption),
+        new TokenDefinition(@"float4\b", TokenEnum.DECL_FLOAT4, RegexOption),
+        new TokenDefinition(@"bool\[\]", TokenEnum.DECL_BOOL_ARRAY, RegexOption),
+        new TokenDefinition(@"float\[\]", TokenEnum.DECL_FLOAT_ARRAY, RegexOption),
+        new TokenDefinition(@"int\[\]", TokenEnum.DECL_INT_ARRAY, RegexOption),
+
         // keywords
+        //new TokenDefinition(@"new\b", TokenEnum.NEW, RegexOption),
         new TokenDefinition(@"if\b", TokenEnum.IF, RegexOption),
         new TokenDefinition(@"then\b", TokenEnum.THEN, RegexOption),
         new TokenDefinition(@"else\b", TokenEnum.ELSE, RegexOption),
@@ -24,20 +37,21 @@ namespace SWEndor.Scenarios.Scripting.Expressions
         // literals
         new TokenDefinition(@"(true|false)\b", TokenEnum.BOOLEANLITERAL, RegexOption),
         new TokenDefinition(@"[a-zA-Z_][a-zA-Z0-9_\.]*(?=\s*\()", TokenEnum.FUNCTION, RegexOption),
+        //new TokenDefinition(@"[a-zA-Z_][a-zA-Z0-9_\.]*(?=\s*\[)", TokenEnum.INDEXED_VARIABLE, RegexOption),
+        //new TokenDefinition(@"[a-zA-Z_][a-zA-Z0-9_\.]*(?!\s*(\(|\[))", TokenEnum.VARIABLE, RegexOption),
         new TokenDefinition(@"[a-zA-Z_][a-zA-Z0-9_\.]*(?!\s*\()", TokenEnum.VARIABLE, RegexOption),
         new TokenDefinition(@"\""(\""\""|[^\""])*\""", TokenEnum.STRINGLITERAL, RegexOption),
         new TokenDefinition(@"([0-9]+\.[0-9]+([eE][+-]?[0-9]+)?([fFdDMm]?)?)|(\.[0-9]+([eE][+-]?[0-9]+)?([fFdDMm]?)?)|([0-9]+([eE][+-]?[0-9]+)([fFdDMm]?)?)|([0-9]+([fFdDMm]?))", TokenEnum.REALLITERAL, RegexOption),
         new TokenDefinition(@"0(x|X)[0-9a-fA-F]+", TokenEnum.HEXINTEGERLITERAL, RegexOption),
-        new TokenDefinition(@"[0-9]+(UL|Ul|uL|ul|LU|Lu|lU|lu|U|u|L|l)?", TokenEnum.DECIMALINTEGERLITERAL, RegexOption),
-
-        //?
-        //new TokenDefinition(@"(?i)pi|e", TokenEnum.CONSTANT, RegexOption),
+        new TokenDefinition(@"[0-9]+", TokenEnum.DECIMALINTEGERLITERAL, RegexOption),
 
         // Brackets
         new TokenDefinition(@"{\s*", TokenEnum.BRACEOPEN, RegexOption),
         new TokenDefinition(@"\s*}", TokenEnum.BRACECLOSE, RegexOption),
         new TokenDefinition(@"\(\s*", TokenEnum.BRACKETOPEN, RegexOption),
         new TokenDefinition(@"\s*\)", TokenEnum.BRACKETCLOSE, RegexOption),
+        new TokenDefinition(@"\[\s*", TokenEnum.SQBRACKETOPEN, RegexOption),
+        new TokenDefinition(@"\s*\]", TokenEnum.SQBRACKETCLOSE, RegexOption),
 
         // Comment
         new TokenDefinition(@"//.*", TokenEnum.COMMENT, RegexOption),

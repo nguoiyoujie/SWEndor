@@ -8,8 +8,8 @@ namespace SWEndor.Scenarios.Scripting.Functions
   {
     public static Val AddFaction(Context context, Val[] ps)
     {
-      COLOR color = new COLOR(ps[1].ValueF, ps[2].ValueF, ps[3].ValueF, 1);
-      FactionInfo.Factory.Add(ps[0].ValueS, color);
+      COLOR color = new COLOR(ps[1].vF, ps[2].vF, ps[3].vF, 1);
+      FactionInfo.Factory.Add(ps[0].vS, color);
       return Val.TRUE;
     }
 
@@ -38,8 +38,8 @@ namespace SWEndor.Scenarios.Scripting.Functions
     */
     public static Val MakeAlly(Context context, Val[] ps)
     {
-      FactionInfo f1 = FactionInfo.Factory.Get(ps[0].ValueS);
-      FactionInfo f2 = FactionInfo.Factory.Get(ps[1].ValueS);
+      FactionInfo f1 = FactionInfo.Factory.Get(ps[0].vS);
+      FactionInfo f2 = FactionInfo.Factory.Get(ps[1].vS);
       if (f1 != null && f2 != null)
       {
         if (!f1.Allies.Contains(f2))
@@ -54,8 +54,8 @@ namespace SWEndor.Scenarios.Scripting.Functions
 
     public static Val MakeEnemy(Context context, Val[] ps)
     {
-      FactionInfo f1 = FactionInfo.Factory.Get(ps[0].ValueS);
-      FactionInfo f2 = FactionInfo.Factory.Get(ps[1].ValueS);
+      FactionInfo f1 = FactionInfo.Factory.Get(ps[0].vS);
+      FactionInfo f2 = FactionInfo.Factory.Get(ps[1].vS);
       if (f1 != null && f2 != null)
       {
         if (f1.Allies.Contains(f2))
@@ -70,103 +70,103 @@ namespace SWEndor.Scenarios.Scripting.Functions
 
     public static Val GetWingCount(Context context, Val[] ps)
     {
-      FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].vS);
       return new Val((f != null) ? f.WingCount : 0);
     }
 
     public static Val GetShipCount(Context context, Val[] ps)
     {
-      FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].vS);
       return new Val((f != null) ? f.ShipCount : 0);
     }
 
     public static Val GetStructureCount(Context context, Val[] ps)
     {
-      FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].vS);
       return new Val((f != null) ? f.StructureCount : 0);
     }
 
     public static Val GetWingLimit(Context context, Val[] ps)
     {
-      FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].vS);
       return new Val((f != null) ? f.WingLimit : 0);
     }
 
     public static Val GetShipLimit(Context context, Val[] ps)
     {
-      FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].vS);
       return new Val((f != null) ? f.ShipLimit : 0);
     }
 
     public static Val GetStructureLimit(Context context, Val[] ps)
     {
-      FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].vS);
       return new Val((f != null) ? f.StructureLimit : 0);
     }
 
     public static Val SetWingLimit(Context context, Val[] ps)
     {
-      FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].vS);
       if (f != null)
-        f.WingLimit = Convert.ToInt32(ps[1].ValueS);
+        f.WingLimit = Convert.ToInt32(ps[1].vS);
       return Val.TRUE;
     }
 
     public static Val SetShipLimit(Context context, Val[] ps)
     {
-      FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].vS);
       if (f != null)
-        f.ShipLimit = Convert.ToInt32(ps[1].ValueS);
+        f.ShipLimit = Convert.ToInt32(ps[1].vS);
       return Val.TRUE;
     }
 
     public static Val SetStructureLimit(Context context, Val[] ps)
     {
-      FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].vS);
       if (f != null)
-        f.StructureLimit = Convert.ToInt32(ps[1].ValueS);
+        f.StructureLimit = Convert.ToInt32(ps[1].vS);
       return Val.TRUE;
     }
 
     public static Val GetWingSpawnLimit(Context context, Val[] ps)
     {
-      FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].vS);
       return new Val((f != null) ? f.WingSpawnLimit : 0);
     }
 
     public static Val GetShipSpawnLimit(Context context, Val[] ps)
     {
-      FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].vS);
       return new Val((f != null) ? f.ShipSpawnLimit : 0);
     }
 
     public static Val GetStructureSpawnLimit(Context context, Val[] ps)
     {
-      FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].vS);
       return new Val((f != null) ? f.StructureSpawnLimit : 0);
     }
 
     public static Val SetWingSpawnLimit(Context context, Val[] ps)
     {
-      FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].vS);
       if (f != null)
-        f.WingSpawnLimit = Convert.ToInt32(ps[1].ValueS);
+        f.WingSpawnLimit = Convert.ToInt32(ps[1].vS);
       return Val.TRUE;
     }
 
     public static Val SetShipSpawnLimit(Context context, Val[] ps)
     {
-      FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].vS);
       if (f != null)
-        f.ShipSpawnLimit = Convert.ToInt32(ps[1].ValueS);
+        f.ShipSpawnLimit = Convert.ToInt32(ps[1].vS);
       return Val.TRUE;
     }
 
     public static Val SetStructureSpawnLimit(Context context, Val[] ps)
     {
-      FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
+      FactionInfo f = FactionInfo.Factory.Get(ps[0].vS);
       if (f != null)
-        f.StructureSpawnLimit = Convert.ToInt32(ps[1].ValueS);
+        f.StructureSpawnLimit = Convert.ToInt32(ps[1].vS);
       return Val.TRUE;
     }
   }

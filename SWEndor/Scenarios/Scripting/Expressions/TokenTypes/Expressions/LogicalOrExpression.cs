@@ -38,14 +38,14 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 
       Val result = _first.Evaluate(context);
       if (result.Type != ValType.BOOL) throw new EvalException(this, TextLocalization.Get(TextLocalKeys.SCRIPT_UNEXPECTED_NONBOOL).F(result.Value));
-      if (!result.ValueB)
+      if (!result.vB)
       {
         foreach (CExpression _expr in _set)
         {
           Val adden = _expr.Evaluate(context);
 
           try { result = Ops.Do(BOp.LOGICAL_OR, result, adden); } catch (Exception ex) { throw new EvalException(this, "||", result, adden, ex); }
-          if (result.ValueB)
+          if (result.vB)
             break;
         }
       }

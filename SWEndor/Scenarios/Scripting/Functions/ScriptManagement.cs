@@ -6,7 +6,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
   {
     public static Val CallScript(Context context, Val[] ps)
     {
-      Script scr = Script.Registry.Get(ps[0].ValueS);
+      Script scr = Script.Registry.Get(ps[0].vS);
       if (scr != null)
       {
         scr.Run(context);
@@ -18,10 +18,10 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static Val GetArrayElement(Context context, Val[] ps)
     {
       if (ps[0].Type == ValType.INT_ARRAY)
-        return new Val (ps[0].ArrayI[ps[1].ValueI]);
+        return new Val (ps[0].aI[ps[1].vI]);
 
       if (ps[0].Type == ValType.FLOAT_ARRAY)
-        return new Val(ps[0].ArrayF[ps[1].ValueI]);
+        return new Val(ps[0].aF[ps[1].vI]);
 
       return Val.NULL;
     }

@@ -87,19 +87,19 @@ namespace SWEndorTest
     {
       Val v = new Val(true);
       Assert.AreEqual(v.Type, ValType.BOOL);
-      Assert.AreEqual(v.ValueB, true);
+      Assert.AreEqual(v.vB, true);
 
       v = new Val(2);
       Assert.AreEqual(v.Type, ValType.INT);
-      Assert.AreEqual(v.ValueI, 2);
+      Assert.AreEqual(v.vI, 2);
 
       v = new Val(2.5f);
       Assert.AreEqual(v.Type, ValType.FLOAT);
-      Assert.AreEqual(v.ValueF, 2.5f);
+      Assert.AreEqual(v.vF, 2.5f);
 
       v = new Val("test");
       Assert.AreEqual(v.Type, ValType.STRING);
-      Assert.AreEqual(v.ValueS, "test");
+      Assert.AreEqual(v.vS, "test");
     }
   }
 }

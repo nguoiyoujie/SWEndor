@@ -1,4 +1,6 @@
-﻿using SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions.Literals;
+﻿using SWEndor.Primitives.Extensions;
+using SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions.Literals;
+using System;
 
 namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 {
@@ -8,7 +10,8 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 
     internal PrimaryExpression(Lexer lexer) : base(lexer)
     {
-      switch (lexer.TokenType)
+      TokenEnum t = lexer.TokenType;
+      switch (t)
       {
         case TokenEnum.BRACKETOPEN:
           _child = new ParenthesizedExpression(lexer).Get();
@@ -37,6 +40,9 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
         case TokenEnum.STRINGLITERAL:
           _child = new StringLiteral(lexer).Get();
           break;
+        case TokenEnum.BRACEOPEN:
+          _child = new ArrayLiteral(lexer).Get();
+          break;
 
         default:
           throw new ParseException(lexer);
@@ -53,5 +59,4 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       return _child.Evaluate(context);
     }
   }
-
 }

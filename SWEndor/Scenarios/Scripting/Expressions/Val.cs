@@ -12,6 +12,10 @@ namespace SWEndor.Scenarios.Scripting.Expressions
     INT,
     FLOAT,
     STRING,
+    FLOAT2,
+    FLOAT3,
+    FLOAT4,
+    BOOL_ARRAY,
     INT_ARRAY,
     FLOAT_ARRAY
   }
@@ -45,75 +49,78 @@ namespace SWEndor.Scenarios.Scripting.Expressions
   {
     [FieldOffset(0)]
     public readonly ValType Type;
-    [FieldOffset(sizeof(ValType))] // 2
-    public readonly bool ValueB;
-    [FieldOffset(sizeof(ValType))] // 2
-    private readonly int valueI;
-    [FieldOffset(sizeof(ValType))] // 2
-    private readonly float valueF;
+    [FieldOffset(sizeof(ValType))]
+    public readonly bool vB;
+    [FieldOffset(sizeof(ValType))]
+    private readonly int _vI;
+    [FieldOffset(sizeof(ValType))]
+    private readonly float _vF;
     [FieldOffset(8)]
-    private readonly string valueS;
+    private readonly string _vS;
     [FieldOffset(8)]
-    public readonly int[] ArrayI;
+    public readonly bool[] aB;
     [FieldOffset(8)]
-    public readonly float[] ArrayF;
+    public readonly int[] aI;
+    [FieldOffset(8)]
+    public readonly float[] aF;
 
-    public int ValueI
+    public int vI
     {
       get
       {
         switch (Type)
         {
           case ValType.BOOL:
-            return ValueB ? 1 : 0;
+            return vB ? 1 : 0;
           case ValType.INT:
-            return valueI;
+            return _vI;
           case ValType.FLOAT:
-            return (int)valueF;
+            return (int)_vF;
           case ValType.STRING:
-            return Convert.ToInt32(valueS);
+            return Convert.ToInt32(_vS);
           default:
-            return 0;
+            throw new InvalidCastException("Attempted to read int value from a {0}".F(Type));
         }
       }
     }
 
-    public float ValueF
+    public float vF
     {
       get
       {
         switch (Type)
         {
           case ValType.BOOL:
-            return ValueB ? 1 : 0;
+            return vB ? 1 : 0;
           case ValType.INT:
-            return valueI;
+            return _vI;
           case ValType.FLOAT:
-            return valueF;
+            return _vF;
           case ValType.STRING:
-            return Convert.ToSingle(valueS);
+            return Convert.ToSingle(_vS);
           default:
-            return 0;
+            throw new InvalidCastException("Attempted to read float value from a {0}".F(Type));
         }
       }
     }
 
-    public string ValueS
+    public string vS
     {
       get
       {
         switch (Type)
         {
           case ValType.BOOL:
-            return ValueB.ToString();
+            return vB.ToString();
           case ValType.INT:
-            return valueI.ToString();
+            return _vI.ToString();
           case ValType.FLOAT:
-            return valueF.ToString();
+            return _vF.ToString();
           case ValType.STRING:
-            return valueS;
+            return _vS;
           default:
-            return string.Empty;
+            return "({0})".F(Type);
+            //throw new InvalidCastException("Attempted to read string value from a {0}".F(Type));
         }
       }
     }
@@ -125,13 +132,13 @@ namespace SWEndor.Scenarios.Scripting.Expressions
         switch (Type)
         {
           case ValType.BOOL:
-            return ValueB;
+            return vB;
           case ValType.INT:
-            return ValueI;
+            return vI;
           case ValType.FLOAT:
-            return ValueF;
+            return vF;
           case ValType.STRING:
-            return ValueS;
+            return vS;
           default:
             return null;
         }
@@ -141,67 +148,85 @@ namespace SWEndor.Scenarios.Scripting.Expressions
     public Val(bool val)
     {
       Type = ValType.BOOL;
-      ArrayI = null;
-      ArrayF = null;
-      valueI = 0;
-      valueF = 0;
-      valueS = string.Empty;
-      ValueB = val;
+      aB = null;
+      aI = null;
+      aF = null;
+      _vI = 0;
+      _vF = 0;
+      _vS = string.Empty;
+      vB = val;
     }
 
     public Val(int val)
     {
       Type = ValType.INT;
-      ArrayI = null;
-      ArrayF = null;
-      ValueB = false;
-      valueF = 0;
-      valueS = string.Empty;
-      valueI = val;
+      aB = null;
+      aI = null;
+      aF = null;
+      vB = false;
+      _vF = 0;
+      _vS = string.Empty;
+      _vI = val;
     }
 
     public Val(float val)
     {
       Type = ValType.FLOAT;
-      ArrayI = null;
-      ArrayF = null;
-      ValueB = false;
-      valueI = 0;
-      valueS = string.Empty;
-      valueF = val;
+      aB = null;
+      aI = null;
+      aF = null;
+      vB = false;
+      _vI = 0;
+      _vS = string.Empty;
+      _vF = val;
     }
 
     public Val(string val)
     {
       Type = ValType.STRING;
-      ArrayI = null;
-      ArrayF = null;
-      ValueB = false;
-      valueI = 0;
-      valueF = 0;
-      valueS = val ?? string.Empty;
+      aB = null;
+      aI = null;
+      aF = null;
+      vB = false;
+      _vI = 0;
+      _vF = 0;
+      _vS = val ?? string.Empty;
+    }
+
+    public Val(bool[] val)
+    {
+      Type = ValType.INT_ARRAY;
+      aI = null;
+      aF = null;
+      vB = false;
+      _vI = 0;
+      _vF = 0;
+      _vS = string.Empty;
+      aB = val;
     }
 
     public Val(int[] val)
     {
       Type = ValType.INT_ARRAY;
-      ArrayF = null;
-      ValueB = false;
-      valueI = 0;
-      valueF = 0;
-      valueS = string.Empty;
-      ArrayI = val;
+      aB = null;
+      aF = null;
+      vB = false;
+      _vI = 0;
+      _vF = 0;
+      _vS = string.Empty;
+      aI = val;
     }
 
     public Val(float[] val)
     {
       Type = ValType.FLOAT_ARRAY;
-      ArrayI = null;
-      ValueB = false;
-      valueI = 0;
-      valueF = 0;
-      valueS = string.Empty;
-      ArrayF = val;
+      aB = null;
+      aI = null;
+      vB = false;
+      _vI = 0;
+      _vF = 0;
+      _vS = string.Empty;
+      aF = val;
     }
 
     public static readonly Val NULL = new Val();
@@ -209,19 +234,19 @@ namespace SWEndor.Scenarios.Scripting.Expressions
     public static readonly Val FALSE = new Val(false);
 
     public bool IsNull { get { return Type == ValType.NULL; } }
-    public bool IsTrue { get { return Type == ValType.BOOL && ValueB == true; } }
-    public bool IsFalse { get { return Type == ValType.BOOL && ValueB == false; } }
+    public bool IsTrue { get { return Type == ValType.BOOL && vB == true; } }
+    public bool IsFalse { get { return Type == ValType.BOOL && vB == false; } }
 
-    public bool IsArray { get { return Type == ValType.FLOAT_ARRAY || Type == ValType.INT_ARRAY; } }
+    public bool IsArray { get { return Type == ValType.BOOL_ARRAY || Type == ValType.FLOAT_ARRAY || Type == ValType.INT_ARRAY; } }
 
     public Array Array
     {
       get
       {
         if (Type == ValType.INT_ARRAY)
-          return ArrayI;
+          return aI;
         if (Type == ValType.FLOAT_ARRAY)
-          return ArrayF;
+          return aF;
         return null;
       }
     }
@@ -230,154 +255,169 @@ namespace SWEndor.Scenarios.Scripting.Expressions
 
   public static class Ops
   {
-    public static Dictionary<Tuple<UOp, ValType>, Func<Val, Val>> unaryops
-      = new Dictionary<Tuple<UOp, ValType>, Func<Val, Val>>
+    public struct Pair<T,U>
+    {
+      T _t;
+      U _u;
+      public Pair(T t, U u) { _t = t;  _u = u; }
+    }
+
+    public struct Triple<T, U, V>
+    {
+      T _t;
+      U _u;
+      V _v;
+      public Triple(T t, U u, V v) { _t = t; _u = u; _v = v; }
+    }
+
+    public static Dictionary<Pair<UOp, ValType>, Func<Val, Val>> unaryops
+      = new Dictionary<Pair<UOp, ValType>, Func<Val, Val>>
       {
         // IDENTITY
-        { new Tuple<UOp, ValType>(UOp.IDENTITY, ValType.BOOL), (a) => { return a; } },
-        { new Tuple<UOp, ValType>(UOp.IDENTITY, ValType.INT), (a) => { return a; } },
-        { new Tuple<UOp, ValType>(UOp.IDENTITY, ValType.FLOAT), (a) => { return a; } },
-        { new Tuple<UOp, ValType>(UOp.IDENTITY, ValType.STRING), (a) => { return a; } },
+        { new Pair<UOp, ValType>(UOp.IDENTITY, ValType.BOOL), (a) => { return a; } },
+        { new Pair<UOp, ValType>(UOp.IDENTITY, ValType.INT), (a) => { return a; } },
+        { new Pair<UOp, ValType>(UOp.IDENTITY, ValType.FLOAT), (a) => { return a; } },
+        { new Pair<UOp, ValType>(UOp.IDENTITY, ValType.STRING), (a) => { return a; } },
 
         // NEGATION
-        { new Tuple<UOp, ValType>(UOp.LOGICAL_NOT, ValType.BOOL), (a) => { return new Val(!a.ValueB); }},
+        { new Pair<UOp, ValType>(UOp.LOGICAL_NOT, ValType.BOOL), (a) => { return new Val(!a.vB); }},
 
         // INVERSE
-        { new Tuple<UOp, ValType>(UOp.NEGATION, ValType.INT), (a) => { return  new Val(-a.ValueI); }},
-        { new Tuple<UOp, ValType>(UOp.NEGATION, ValType.FLOAT), (a) => { return  new Val(-a.ValueF); }},
+        { new Pair<UOp, ValType>(UOp.NEGATION, ValType.INT), (a) => { return  new Val(-a.vI); }},
+        { new Pair<UOp, ValType>(UOp.NEGATION, ValType.FLOAT), (a) => { return  new Val(-a.vF); }},
       };
 
-    public static Dictionary<Tuple<BOp, ValType, ValType>, Func<Val, Val, Val>> binaryops
-      = new Dictionary<Tuple<BOp, ValType, ValType>, Func<Val, Val, Val>>
+    public static Dictionary<Triple<BOp, ValType, ValType>, Func<Val, Val, Val>> binaryops
+      = new Dictionary<Triple<BOp, ValType, ValType>, Func<Val, Val, Val>>
       {
         // ADD
-        {new Tuple<BOp, ValType, ValType>(BOp.ADD, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI + b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.ADD, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.ValueI + b.ValueF); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.ADD, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.ValueF + b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.ADD, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.ValueF + b.ValueF); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.ADD, ValType.INT, ValType.STRING), (a,b) => { return new Val(a.ValueI + b.ValueS); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.ADD, ValType.STRING, ValType.INT), (a,b) => { return new Val(a.ValueS + b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.ADD, ValType.STRING, ValType.STRING), (a,b) => { return new Val(a.ValueS + b.ValueS); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.ADD, ValType.FLOAT, ValType.STRING), (a,b) => { return new Val(a.ValueF + b.ValueS); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.ADD, ValType.STRING, ValType.FLOAT), (a,b) => { return new Val(a.ValueS + b.ValueF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI + b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI + b.vF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF + b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF + b.vF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.INT, ValType.STRING), (a,b) => { return new Val(a.vI + b.vS); }},
+        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.STRING, ValType.INT), (a,b) => { return new Val(a.vS + b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.STRING, ValType.STRING), (a,b) => { return new Val(a.vS + b.vS); }},
+        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.FLOAT, ValType.STRING), (a,b) => { return new Val(a.vF + b.vS); }},
+        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.STRING, ValType.FLOAT), (a,b) => { return new Val(a.vS + b.vF); }},
 
         // SUBTRACT
-        {new Tuple<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI - b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.ValueI - b.ValueF); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.ValueF - b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.ValueF - b.ValueF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI - b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI - b.vF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF - b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF - b.vF); }},
 
         // MULTIPLY
-        {new Tuple<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI * b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.ValueI * b.ValueF); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.ValueF * b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.ValueF * b.ValueF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI * b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI * b.vF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF * b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF * b.vF); }},
 
         // DIVIDE
-        {new Tuple<BOp, ValType, ValType>(BOp.DIVIDE, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI / b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.DIVIDE, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.ValueI / b.ValueF); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.DIVIDE, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.ValueF / b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.DIVIDE, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.ValueF / b.ValueF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.DIVIDE, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI / b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.DIVIDE, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI / b.vF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.DIVIDE, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF / b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.DIVIDE, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF / b.vF); }},
 
         // MODULUS
-        {new Tuple<BOp, ValType, ValType>(BOp.MODULUS, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI % b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.MODULUS, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.ValueI % b.ValueF); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.MODULUS, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.ValueF % b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.MODULUS, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.ValueF % b.ValueF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.MODULUS, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI % b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.MODULUS, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI % b.vF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.MODULUS, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF % b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.MODULUS, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF % b.vF); }},
 
         // LOGICAL_OR
-        {new Tuple<BOp, ValType, ValType>(BOp.LOGICAL_OR, ValType.BOOL, ValType.BOOL), (a,b) => { return new Val(a.ValueB || b.ValueB); }},
-        //{new Tuple<BOp, ValType, ValType>(BOp.LOGICAL_OR, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI | b.ValueI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.LOGICAL_OR, ValType.BOOL, ValType.BOOL), (a,b) => { return new Val(a.vB || b.vB); }},
+        //{new Triple<BOp, ValType, ValType>(BOp.LOGICAL_OR, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI | b.ValueI); }},
 
         // LOGICAL_AND
-        {new Tuple<BOp, ValType, ValType>(BOp.LOGICAL_AND, ValType.BOOL, ValType.BOOL), (a,b) => { return new Val(a.ValueB & b.ValueB); }},
-        //{new Tuple<BOp, ValType, ValType>(BOp.LOGICAL_AND, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI & b.ValueI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.LOGICAL_AND, ValType.BOOL, ValType.BOOL), (a,b) => { return new Val(a.vB & b.vB); }},
+        //{new Triple<BOp, ValType, ValType>(BOp.LOGICAL_AND, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI & b.ValueI); }},
 
         // EQUAL_TO
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.NULL), (a,b) => { return new Val(false); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.NULL), (a,b) => { return new Val(false); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.NULL), (a,b) => { return new Val(false); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.NULL), (a,b) => { return new Val(a.ValueS == null); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.NULL), (a,b) => { return new Val(true); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.BOOL), (a,b) => { return new Val(false); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.INT), (a,b) => { return new Val(false); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.FLOAT), (a,b) => { return new Val(false); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.STRING), (a,b) => { return new Val(b.ValueS == null); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.NULL), (a,b) => { return new Val(false); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.NULL), (a,b) => { return new Val(false); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.NULL), (a,b) => { return new Val(false); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.NULL), (a,b) => { return new Val(a.vS == null); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.NULL), (a,b) => { return new Val(true); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.BOOL), (a,b) => { return new Val(false); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.INT), (a,b) => { return new Val(false); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.FLOAT), (a,b) => { return new Val(false); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.STRING), (a,b) => { return new Val(b.vS == null); }},
 
-        { new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.BOOL), (a,b) => { return new Val(a.ValueB == b.ValueB); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.INT), (a,b) => { return new Val(false); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.BOOL), (a,b) => { return new Val(false); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI == b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.FLOAT), (a,b) => { return new Val(false); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.BOOL), (a,b) => { return new Val(false); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.ValueI == b.ValueF); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.ValueF == b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.ValueF == b.ValueF); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.STRING), (a,b) => { return new Val(false); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.BOOL), (a,b) => { return new Val(false); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.STRING), (a,b) => { return new Val(false); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.INT), (a,b) => { return new Val(false); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.STRING), (a,b) => { return new Val(a.ValueS == b.ValueS); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.STRING), (a,b) => { return new Val(false); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.FLOAT), (a,b) => { return new Val(false); }},
+        { new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.BOOL), (a,b) => { return new Val(a.vB == b.vB); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.INT), (a,b) => { return new Val(false); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.BOOL), (a,b) => { return new Val(false); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI == b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.FLOAT), (a,b) => { return new Val(false); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.BOOL), (a,b) => { return new Val(false); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI == b.vF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF == b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF == b.vF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.STRING), (a,b) => { return new Val(false); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.BOOL), (a,b) => { return new Val(false); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.STRING), (a,b) => { return new Val(false); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.INT), (a,b) => { return new Val(false); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.STRING), (a,b) => { return new Val(a.vS == b.vS); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.STRING), (a,b) => { return new Val(false); }},
+        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.FLOAT), (a,b) => { return new Val(false); }},
 
         // NOT_EQUAL_TO
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.NULL), (a,b) => { return new Val(true); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.NULL), (a,b) => { return new Val(true); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.NULL), (a,b) => { return new Val(true); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.NULL), (a,b) => { return new Val(a.ValueS != null); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.NULL), (a,b) => { return new Val(true); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.BOOL), (a,b) => { return new Val(true); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.INT), (a,b) => { return new Val(true); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.FLOAT), (a,b) => { return new Val(true); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.STRING), (a,b) => { return new Val(b.ValueS != null); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.NULL), (a,b) => { return new Val(true); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.NULL), (a,b) => { return new Val(true); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.NULL), (a,b) => { return new Val(true); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.NULL), (a,b) => { return new Val(a.vS != null); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.NULL), (a,b) => { return new Val(true); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.BOOL), (a,b) => { return new Val(true); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.INT), (a,b) => { return new Val(true); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.FLOAT), (a,b) => { return new Val(true); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.STRING), (a,b) => { return new Val(b.vS != null); }},
 
-        { new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.BOOL), (a,b) => { return new Val(a.ValueB != b.ValueB); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.INT), (a,b) => { return new Val(true); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.BOOL), (a,b) => { return new Val(true); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI != b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.FLOAT), (a,b) => { return new Val(true); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.BOOL), (a,b) => { return new Val(true); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.ValueI != b.ValueF); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.ValueF != b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.ValueF != b.ValueF); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.STRING), (a,b) => { return new Val(true); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.BOOL), (a,b) => { return new Val(true); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.STRING), (a,b) => { return new Val(true); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.INT), (a,b) => { return new Val(true); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.STRING), (a,b) => { return new Val(a.ValueS != b.ValueS); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.STRING), (a,b) => { return new Val(true); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.FLOAT), (a,b) => { return new Val(true); }},
+        { new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.BOOL), (a,b) => { return new Val(a.vB != b.vB); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.INT), (a,b) => { return new Val(true); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.BOOL), (a,b) => { return new Val(true); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI != b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.FLOAT), (a,b) => { return new Val(true); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.BOOL), (a,b) => { return new Val(true); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI != b.vF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF != b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF != b.vF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.STRING), (a,b) => { return new Val(true); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.BOOL), (a,b) => { return new Val(true); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.STRING), (a,b) => { return new Val(true); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.INT), (a,b) => { return new Val(true); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.STRING), (a,b) => { return new Val(a.vS != b.vS); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.STRING), (a,b) => { return new Val(true); }},
+        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.FLOAT), (a,b) => { return new Val(true); }},
 
         // MORE_THAN
-        {new Tuple<BOp, ValType, ValType>(BOp.MORE_THAN, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI > b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.MORE_THAN, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.ValueI > b.ValueF); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.MORE_THAN, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.ValueF > b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.MORE_THAN, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.ValueF > b.ValueF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.MORE_THAN, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI > b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.MORE_THAN, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI > b.vF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.MORE_THAN, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF > b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.MORE_THAN, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF > b.vF); }},
 
         // MORE_THAN_OR_EQUAL_TO
-        {new Tuple<BOp, ValType, ValType>(BOp.MORE_THAN_OR_EQUAL_TO, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI >= b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.MORE_THAN_OR_EQUAL_TO, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.ValueI >= b.ValueF); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.MORE_THAN_OR_EQUAL_TO, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.ValueF >= b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.MORE_THAN_OR_EQUAL_TO, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.ValueF >= b.ValueF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.MORE_THAN_OR_EQUAL_TO, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI >= b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.MORE_THAN_OR_EQUAL_TO, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI >= b.vF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.MORE_THAN_OR_EQUAL_TO, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF >= b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.MORE_THAN_OR_EQUAL_TO, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF >= b.vF); }},
 
         // LESS_THAN
-        {new Tuple<BOp, ValType, ValType>(BOp.LESS_THAN, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI < b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.LESS_THAN, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.ValueI < b.ValueF); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.LESS_THAN, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.ValueF < b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.LESS_THAN, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.ValueF < b.ValueF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.LESS_THAN, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI < b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.LESS_THAN, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI < b.vF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.LESS_THAN, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF < b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.LESS_THAN, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF < b.vF); }},
 
         // LESS_THAN_OR_EQUAL_TO
-        {new Tuple<BOp, ValType, ValType>(BOp.LESS_THAN_OR_EQUAL_TO, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI <= b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.LESS_THAN_OR_EQUAL_TO, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.ValueI <= b.ValueF); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.LESS_THAN_OR_EQUAL_TO, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.ValueF <= b.ValueI); }},
-        {new Tuple<BOp, ValType, ValType>(BOp.LESS_THAN_OR_EQUAL_TO, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.ValueF <= b.ValueF); } }
+        {new Triple<BOp, ValType, ValType>(BOp.LESS_THAN_OR_EQUAL_TO, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI <= b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.LESS_THAN_OR_EQUAL_TO, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI <= b.vF); }},
+        {new Triple<BOp, ValType, ValType>(BOp.LESS_THAN_OR_EQUAL_TO, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF <= b.vI); }},
+        {new Triple<BOp, ValType, ValType>(BOp.LESS_THAN_OR_EQUAL_TO, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF <= b.vF); } }
       };
 
     public static Val Do(UOp op, Val v)
     {
       Func<Val, Val> fn;
-      if (!unaryops.TryGetValue(new Tuple<UOp, ValType>(op, v.Type), out fn))
+      if (!unaryops.TryGetValue(new Pair<UOp, ValType>(op, v.Type), out fn))
         throw new ArgumentException(TextLocalization.Get(TextLocalKeys.SCRIPT_UNEXPECTED_UOP).F(op, v.Type));
 
       return fn.Invoke(v);
@@ -386,7 +426,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions
     public static Val Do(BOp op, Val v1, Val v2)
     {
       Func<Val, Val, Val> fn;
-      if (!binaryops.TryGetValue(new Tuple<BOp, ValType, ValType>(op, v1.Type, v2.Type), out fn))
+      if (!binaryops.TryGetValue(new Triple<BOp, ValType, ValType>(op, v1.Type, v2.Type), out fn))
         throw new ArgumentException(TextLocalization.Get(TextLocalKeys.SCRIPT_UNEXPECTED_BOP).F(op, v1.Type, v2.Type));
 
       return fn.Invoke(v1, v2);

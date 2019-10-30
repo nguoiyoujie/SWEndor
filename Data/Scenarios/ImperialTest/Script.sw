@@ -128,11 +128,11 @@ loadscene:
 
 getchildren:
 	greywolfc = Actor.GetChildren(greywolf);
-	greywolfshd1 = GetArrayElement(greywolfc, 30);
-	greywolfshd2 = GetArrayElement(greywolfc, 31);
+	greywolfshd1 = greywolfc[30]; //GetArrayElement(greywolfc, 30);
+	greywolfshd2 = greywolfc[31]; //GetArrayElement(greywolfc, 31);
 	corvusc = Actor.GetChildren(corvus);
-	corvusshd1 = GetArrayElement(corvusc, 18);
-	corvusshd2 = GetArrayElement(corvusc, 19);
+	corvusshd1 = corvusc[18]; //GetArrayElement(corvusc, 18);
+	corvusshd2 = corvusc[19]; //GetArrayElement(corvusc, 19);
 
 engagemusic:
 	SetMood(4);

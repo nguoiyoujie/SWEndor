@@ -67,7 +67,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
         Val array = _enumerable.Evaluate(context);
         if (array.Type == ValType.INT_ARRAY)
         {
-          foreach (int v in array.ArrayI)
+          foreach (int v in array.aI)
           {
             context.Variables.Put(_var.varName, new Context.ContextVariable(_var.varName, new Val(v))); 
             foreach (CStatement s in _actions)
@@ -77,7 +77,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
         }
         else if (array.Type == ValType.INT_ARRAY)
         {
-          foreach (float v in array.ArrayF)
+          foreach (float v in array.aF)
           {
             context.Variables.Put(_var.varName, new Context.ContextVariable(_var.varName, new Val(v)));
             foreach (CStatement s in _actions)

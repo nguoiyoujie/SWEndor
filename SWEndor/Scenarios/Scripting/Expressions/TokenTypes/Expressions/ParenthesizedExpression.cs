@@ -5,19 +5,26 @@
     private CExpression _expression;
 
     internal ParenthesizedExpression(Lexer lexer) : base(lexer)
-    { 
-      // ( EXPR )
+    {
+      // ( TERN_EXPR )
       // ^
 
-      if (lexer.TokenType != TokenEnum.BRACKETOPEN)
-        throw new ParseException(lexer, TokenEnum.BRACKETOPEN);
-      lexer.Next();
+      bool parans = false;
+      if (lexer.TokenType == TokenEnum.BRACKETOPEN)
+      {
+        parans = true;
+        lexer.Next(); // BRACKETOPEN
+      }
 
       _expression = new Expression(lexer).Get();
 
-      if (lexer.TokenType != TokenEnum.BRACKETCLOSE)
-        throw new ParseException(lexer, TokenEnum.BRACKETCLOSE);
-      lexer.Next();
+      if (parans)
+      {
+        if (lexer.TokenType != TokenEnum.BRACKETCLOSE)
+          throw new ParseException(lexer, TokenEnum.BRACKETCLOSE);
+        else
+          lexer.Next(); // BRACKETCLOSE
+      }
     }
 
     public override CExpression Get()
