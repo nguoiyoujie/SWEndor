@@ -163,9 +163,9 @@ namespace SWEndor.Core
     public void Process() { ActorFactory.DoEach(process); }
     public void ProcessExpl() { ExplosionFactory.DoEach(processExpl); }
     public void ProcessProj() { ProjectileFactory.DoEach(processProj); }
-    public void ProcessAI() { ActorFactory.StaggeredDoEach(2, processAI); }
-    public void ProcessCollision() { ActorFactory.StaggeredDoEach(5, processCollision); }
-    public void ProcessProjCollision() { ProjectileFactory.StaggeredDoEach(5, processProjCollision); }
+    public void ProcessAI() { ActorFactory.StaggeredDoEach(2, ref Game.AITickCount, processAI); }
+    public void ProcessCollision() { ActorFactory.StaggeredDoEach(5, ref Game.CollisionTickCount, processCollision); }
+    public void ProcessProjCollision() { ProjectileFactory.StaggeredDoEach(5, ref Game.CollisionTickCount, processProjCollision); }
 
     public void PreRender()
     {

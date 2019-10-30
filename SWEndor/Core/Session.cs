@@ -64,8 +64,8 @@ namespace SWEndor.Core
     public float CurrentFPS { get { return TimeControl.FPS; } }
 
     private bool septhread_sound = true;
-    private bool septhread_ai = false;
-    private bool septhread_collision = false;
+    private bool septhread_ai = true;
+    private bool septhread_collision = true;
     private bool septhread_render = false;
     private bool septhread_process = false;
 
@@ -74,6 +74,9 @@ namespace SWEndor.Core
     private bool isProcessingCollision = false;
     private bool isProcessingRender = false;
     private bool isProcessingProcess = false;
+
+    internal int CollisionTickCount;
+    internal int AITickCount;
 
     /// <summary>
     /// Checks if the current FPS is below the LowFPSLimit
@@ -374,6 +377,7 @@ namespace SWEndor.Core
         if (!isProcessingAI && !IsPaused)
         {
           isProcessingAI = true;
+          AITickCount = unchecked(AITickCount + 1);
           using (Engine.PerfManager.Create("tick_ai"))
             Engine.ProcessAI();
           isProcessingAI = false;
@@ -406,6 +410,7 @@ namespace SWEndor.Core
         if (!isProcessingCollision && !IsPaused)
         {
           isProcessingCollision = true;
+          CollisionTickCount = unchecked(CollisionTickCount + 1);
           using (Engine.PerfManager.Create("tick_collision"))
             Engine.ProcessCollision();
 

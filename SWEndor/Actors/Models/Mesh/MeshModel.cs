@@ -329,7 +329,12 @@ namespace SWEndor.Actors.Models
       engine.Surfaces.RS_Target.EndRender();
     }
 
-  
+    public void EnableCollision(bool enable)
+    {
+      Mesh.SetCollisionEnable(enable);
+      FarMesh.SetCollisionEnable(enable);
+    }
+
     public bool Collision(Engine engine, ActorInfo actor, TV_3DVECTOR start, TV_3DVECTOR end)
     {
       TVMesh m = actor.IsFarMode ? FarMesh : Mesh;
@@ -357,6 +362,7 @@ namespace SWEndor.Actors
     public int GetVertexCount() { return Meshes.GetVertexCount(); }
     //public void Render(bool renderfar) { Meshes.Render(renderfar); }
     public void UpdateRenderLine() { Meshes.UpdateRenderLine(Engine, this); }
+    public void EnableCollision(bool enable) { Meshes.EnableCollision(enable); }
     public bool AdvancedCollision(TV_3DVECTOR start, TV_3DVECTOR end, ref TV_COLLISIONRESULT result) { return Meshes.AdvancedCollision(Engine, this, start, end, ref result); }
 
     public TV_3DVECTOR MaxDimensions { get { return TypeInfo.MeshData.MaxDimensions; } }

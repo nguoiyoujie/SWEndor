@@ -96,5 +96,6 @@ namespace SWEndor.Models
     bool CanCollide { get; }
     bool CanCollideWith(ActorInfo checkActor);
     void DoCollide(ActorInfo target, ref CollisionResultData data);
+    void EnableCollision(bool enable);
   }
 }

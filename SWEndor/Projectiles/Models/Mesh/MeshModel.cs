@@ -194,6 +194,11 @@ namespace SWEndor.Projectiles.Models
           }
         }
     }
+
+    public void EnableCollision(bool enable)
+    {
+      Mesh.SetCollisionEnable(enable);
+    }
   }
 }
 
@@ -208,6 +213,8 @@ namespace SWEndor.Projectiles
     //public void SetTexMod(float u, float v, float su, float sv) { Meshes.SetTexMod(u, v, su, sv); }
     public TV_3DVECTOR GetVertex(int vertexID) { return Meshes.GetVertex(vertexID); }
     public int GetVertexCount() { return Meshes.GetVertexCount(); }
+    public void EnableCollision(bool enable) { Meshes.EnableCollision(enable); }
+
     //public void Render() { Meshes.Render(); }
 
     public TV_3DVECTOR MaxDimensions { get { return TypeInfo.MeshData.MaxDimensions; } }
