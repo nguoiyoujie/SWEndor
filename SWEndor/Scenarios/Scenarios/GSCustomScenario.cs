@@ -32,7 +32,6 @@ namespace SWEndor.Scenarios
       Fn_loadfaction = f.GetStringValue("Script", "Fn_loadfaction", Fn_loadfaction);
       Fn_loadscene = f.GetStringValue("Script", "Fn_loadscene", Fn_loadscene);
       Fn_makeplayer = f.GetStringValue("Script", "Fn_makeplayer", Fn_makeplayer);
-      //Fn_calibratescene = f.GetStringValue("Script", "Fn_calibratescene", Fn_calibratescene);
       Fns_gametick = f.GetStringList("Script", "Fns_gametick", new string[0]);
     }
 
@@ -54,6 +53,8 @@ namespace SWEndor.Scenarios
       Engine.ScriptContext.Reset();
       foreach (string scrfile in ScriptPaths)
         new ScriptFile(scrfile);
+
+      Script.Registry.Global.Run(Engine.ScriptContext);
     }
 
     public override void Load(ActorTypeInfo wing, string difficulty)

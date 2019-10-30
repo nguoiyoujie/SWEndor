@@ -11,11 +11,10 @@ namespace SWEndor.Scenarios.Scripting
     private List<RootStatement> m_statements = new List<RootStatement>();
 
     public readonly string Name;
-    public Script(string filepath, string scriptname)
-    {
-      if (!File.Exists(filepath))
-        throw new FileNotFoundException(TextLocalization.Get(TextLocalKeys.SCRIPT_NOTFOUND_ERROR).F(Path.GetFullPath(filepath)));
+    internal Script() { }
 
+    public Script(string scriptname)
+    {
       Globals.Engine.Screen2D.LoadingTextLines.Add("loading script:".C(scriptname));
       Globals.Engine.Screen2D.LoadingTextLines.RemoveAt(0);
       Name = scriptname;

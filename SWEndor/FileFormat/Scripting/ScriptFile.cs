@@ -23,7 +23,7 @@ namespace SWEndor.FileFormat.Scripting
 
     public void ReadFile()
     {
-      Script script = null;
+      Script script = Script.Registry.Global;
       StringBuilder sb = new StringBuilder();
       int linenumber = 1;
       using (StreamReader sr = new StreamReader(FilePath))
@@ -40,7 +40,7 @@ namespace SWEndor.FileFormat.Scripting
             }
 
             line = line.TrimEnd(seperator).Trim();
-            script = new Script(FilePath, line);
+            script = new Script(line);
             sb.Clear();
           }
           else
@@ -49,6 +49,10 @@ namespace SWEndor.FileFormat.Scripting
             {
               sb.Append(line);
               sb.Append(Environment.NewLine);
+            }
+            else // Globals
+            {
+              
             }
           }
         }
