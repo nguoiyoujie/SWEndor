@@ -108,16 +108,6 @@ namespace SWEndor
       fB = b;
     }
 
-    /*
-    public COLOR(byte r, byte g, byte b, byte a)
-    {
-      Value = 0;
-      bA = a;
-      bR = r;
-      bG = g;
-      bB = b;
-    }
-    */
     public int Value;
 
     public float fA
@@ -143,7 +133,6 @@ namespace SWEndor
       get { return (Value & 0xFF) / 255f; }
       set { Value = Value & unchecked((int)0xFFFFFF00) | unchecked((int)(value * 255u)); }
     }
-
 
     public byte bA
     {

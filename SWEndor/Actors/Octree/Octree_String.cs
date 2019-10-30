@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Primitives.Factories;
 using SWEndor.Primitives.Geometry;
-using SWEndor.Scenarios;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,31 +19,27 @@ namespace SWEndor.Actors
      * OctID is encoded as a string
      * octree-space:
      *    a string of characters '0' to '7', of any length. Each character represents the successive octant the object is in.
-     * If the object cannot be fit to any octant, a 0-length string is represented.
-     * All length of divisions is supported, however it is recommended to still limit the length to reasonable levels.
+     * If the object cannot fit inside any octant, a 0-length string is represented.
+     * All length of divisions is supported, however it is recommended to still limit the length to reasonable levels. 
+     * This is controlled by R_Minimum; the length is limited to the number of times it takes to divide the Radius to R_Minimum
     */
 
     public TV_3DVECTOR Center;
     public float Radius;
-    public float TrueMinimum;
-    private List<ActorInfo> list = new List<ActorInfo>(Globals.ActorLimit);
-    private List<string> slist = new List<string>(Globals.ActorLimit);
+    public float R_Minimum;
+    private List<ActorInfo> list;
+    private List<string> slist;
     private object locker = new object();
     private ObjectPool<StringBuilder> sbpool;
 
-    public Octree_String(TV_3DVECTOR center, float radius, float minimum)
+    public Octree_String(TV_3DVECTOR center, float radius, float minimum, int initialCapacity = Globals.ActorLimit)
     {
       Center = center;
       Radius = radius;
-      TrueMinimum = minimum;
+      R_Minimum = minimum;
+      list = new List<ActorInfo>(initialCapacity);
+      slist = new List<string>(initialCapacity);
       sbpool = new ObjectPool<StringBuilder>(() => new StringBuilder(16), (p) => p.Clear());
-    }
-
-    public Octree_String(GameScenarioManager mgr)
-    {
-      Center = (mgr.MaxBounds + mgr.MinBounds) * 0.5f;
-      TV_3DVECTOR v = (mgr.MaxBounds - mgr.MinBounds) * 0.5f;
-      Radius = Math.Max(Math.Max(v.x, v.y), v.z);
     }
 
     public void GetId(TV_3DVECTOR pos, float minSize, ref string oid)
@@ -53,7 +48,7 @@ namespace SWEndor.Actors
       TV_3DVECTOR p = pos - Center;
       StringBuilder sb = sbpool.GetNew();
       while (r > minSize
-         && r > TrueMinimum
+         && r > R_Minimum
          && p.x - minSize >= -r
          && p.x + minSize < r
          && p.y - minSize >= -r
@@ -66,7 +61,7 @@ namespace SWEndor.Actors
         r *= 0.5f;
         p -= new TV_3DVECTOR((p.x > 0) ? r : -r, (p.y > 0) ? r : -r, (p.z > 0) ? r : -r);
       }
-      if (!StringEquals(sb, oid))
+      if (!StringEquals(sb, oid)) // if same, avoid string allocation
         oid = sb.ToString();
       sbpool.Return(sb);
     }
@@ -82,7 +77,7 @@ namespace SWEndor.Actors
       TV_3DVECTOR p = p0 - Center;
       TV_3DVECTOR pd = p1 - Center;
       StringBuilder sb = sbpool.GetNew();
-      while (r > TrueMinimum)
+      while (r > R_Minimum)
       {
         uint c0 = ((p.x > 0) ? 4u : 0) + ((p.y > 0) ? 2u : 0) + ((p.z > 0) ? 1u : 0);
         uint c1 = ((pd.x > 0) ? 4u : 0) + ((pd.y > 0) ? 2u : 0) + ((pd.z > 0) ? 1u : 0);
@@ -159,7 +154,7 @@ namespace SWEndor.Actors
       return first.StartsWith(sub);
     }
 
-    private string[] head = new string[] { " x", "0x", "1x", "2x", "3x", "4x", "5x", "6x" };
+    //private string[] head = new string[] { " x", "0x", "1x", "2x", "3x", "4x", "5x", "6x" };
 
     public ActorEnumerable Search(string sub)
     {
