@@ -7,8 +7,9 @@ The list is not absolute, however it provides an estimate for what work needs to
 
 --------------------------------------------------------------------------------------------------------------------------------
 Legend:
-    Formally, the version number is [MajorVersion].[MinorVersion].[Date in yyyy.MMdd.HHmm]-[Debug/Release]
+    Formally, the version number is [MajorVersion].[MinorVersion].[Build Date in yyyy.MMdd.HHmm]-[Debug/Release]
 
+	Bullet characters:
 	 - '?' = Unconfirmed item
 	 - 'C' = Confirmed item, pending work
 	 - 'W' = Work In Progress
@@ -17,6 +18,11 @@ Legend:
 	 - 'E' = Excluded, intend to complete in future version
 	 - 'S' = Scrapped, do not intend to complete
 
+	Intended workflow:
+	 '?' -> 'C' -> 'W' -> '@' -> '-'
+	 If a previously completed item requires rework due to bug / design changes, '-' -> 'W' -> '@'
+	 If a previously completed item requires minor adjustments due to refactoring, '-' -> '@'
+	 
 --------------------------------------------------------------------------------------------------------------------------------
 v0.1
 First Release: N/A
@@ -40,10 +46,10 @@ Gameplay Mechanics:
  - [2019.10.29] Radar
  - [2019.10.29] Scanner
  - [2019.10.29] Player death 'view'
- - [2019.10.29] Basic factions
+ W [2019.10.30] Basic factions [WIP: To resolve bugs introduced due to redesign of internal object counters]
  - [2019.10.29] Squadron system
- - [2019.10.29] Actor addons
- - [2019.10.29] Subsystems
+ - [2019.10.29] Actor addons (large craft)
+ - [2019.10.29] Subsystems (fighter craft)
 
  
 Support Mechanics:
@@ -143,8 +149,20 @@ Configuration Support:
 Performance Target:
  @ [2019.10.29] Consistent > 55 FPS in [Main Menu], [Smuggler Custom Test I], [Imperial Custom Test I] scenario (~200 actors, ~200 projectiles, <5 very large ships)
  @ [2019.10.29] Consistent > 40 FPS in [Battle of Endor]/Mental scenario (~10 very large ships)
- @ [2019.10.29] Exclude performance drop when handling large amounts of actor spawns (revisit in future versions)
+ @ [2019.10.29] Exclude performance drop when handling large amounts of actor creation in a single frame (revisit in future versions)
  
+ 
+Documentation:
+ C [2019.10.30] How to setup
+ C [2019.10.30] Basic gameplay description 
+ C [2019.10.30] Data file definitions
+	 C [2019.10.29] Configuration settings		[INI]
+	 C [2019.10.29] X Models					[X]
+	 C [2019.10.29] Images for textures			[PNG,JPG,BMP,DDS,etc.]
+	 C [2019.10.29] Shaders						[FX,INI]
+	 C [2019.10.29] Weapons and loadouts		[INI]
+	 C [2019.10.29] Music (dynamic only)		[MP3,INI]
+	 C [2019.10.29] Scenario scripts			[SCEN,INI]
 
 --------------------------------------------------------------------------------------------------------------------------------
 v0.2
@@ -204,4 +222,4 @@ Configuration Support:
 Performance Target:
  @ [2019.10.29] Consistent > 55 FPS in a typical scenario.
  @ [2019.10.29] Consistent > 40 FPS in a heavy scenario. E.g. [Battle of Endor]/Mental
- @ [2019.10.29] Exclude performance drop when handling large amounts of actor spawns (revisit in future versions)
+ @ [2019.10.29] Exclude performance drop when handling large amounts of actor creation in a single frame (revisit in future versions)
