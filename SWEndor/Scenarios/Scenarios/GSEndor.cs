@@ -76,6 +76,10 @@ namespace SWEndor.Scenarios
       Engine.AtmosphereInfo.ShowFlare = false;
       m_rebelPosition = new Dictionary<int, TV_3DVECTOR>();
       m_pendingSDspawnlist = new List<ShipSpawnEventArg>();
+
+      TIESpawnTime = 0;
+      TIEWaves = 0;
+      SDWaves = 0;
     }
 
     public override void Unload()
@@ -202,7 +206,6 @@ namespace SWEndor.Scenarios
         Position = new TV_3DVECTOR(0, 5600, 50000),
         Rotation = new TV_3DVECTOR(0, 0, 5),
         InitialScale = 1,
-        Faction = MainEnemyFaction
       };
       m_ADS = Engine.ActorFactory.Create(aci_DS);
 
@@ -210,7 +213,7 @@ namespace SWEndor.Scenarios
       // Create DeathStarLaser
       ActorCreationInfo aci_DSLS = new ActorCreationInfo(ActorTypeFactory.Get("DSLSRSRC"))
       {
-        Position = new TV_3DVECTOR(650, 1000, 10000),
+        Position = new TV_3DVECTOR(-1300, 2000, 10000),
         Rotation = new TV_3DVECTOR(0, 0, 5),
         InitialScale = 1,
         Faction = MainEnemyFaction
@@ -589,11 +592,11 @@ namespace SWEndor.Scenarios
       }
       else if (PlayerInfo.ActorType == ActorTypeFactory.Get("YWING"))
       {
-        position = new TV_3DVECTOR(-250, 60, -520);
+        position = new TV_3DVECTOR(-250, 60, -420);
       }
       else if (PlayerInfo.ActorType == ActorTypeFactory.Get("AWING"))
       {
-        position = new TV_3DVECTOR(100, 70, -720);
+        position = new TV_3DVECTOR(100, 70, -570);
       }
       else if (PlayerInfo.ActorType == ActorTypeFactory.Get("BWING"))
       {
