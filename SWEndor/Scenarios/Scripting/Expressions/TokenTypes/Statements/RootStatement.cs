@@ -6,21 +6,21 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Statements
   {
     public List<CStatement> Statements = new List<CStatement>();
 
-    internal RootStatement(Lexer lexer) : base(lexer)
+    internal RootStatement(Script local, Lexer lexer) : base(local, lexer)
     {
       // STATEMENT STATEMENT ...
 
       while (!lexer.EndOfStream)
       {
-        Statements.Add(new Statement(lexer).Get());
+        Statements.Add(new Statement(local, lexer).Get());
       }
     }
 
-    public override void Evaluate(Context context)
+    public override void Evaluate(Script local, Context context)
     {
       foreach (Statement s in Statements)
       {
-        s.Evaluate(context);
+        s.Evaluate(local, context);
       }
     }
   }

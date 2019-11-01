@@ -15,13 +15,13 @@ namespace SWEndor.Scenarios.Scripting.Expressions
         new TokenDefinition(@"\s+", TokenEnum.WHITESPACE, RegexOption),
 
         // type keywords
-        new TokenDefinition(@"bool\b", TokenEnum.DECL_BOOL, RegexOption),
-        new TokenDefinition(@"float\b", TokenEnum.DECL_FLOAT, RegexOption),
-        new TokenDefinition(@"int\b", TokenEnum.DECL_INT, RegexOption),
-        new TokenDefinition(@"string\b", TokenEnum.DECL_STRING, RegexOption),
-        new TokenDefinition(@"float2\b", TokenEnum.DECL_FLOAT2, RegexOption),
-        new TokenDefinition(@"float3\b", TokenEnum.DECL_FLOAT3, RegexOption),
-        new TokenDefinition(@"float4\b", TokenEnum.DECL_FLOAT4, RegexOption),
+        new TokenDefinition(@"bool\b(?!\[)", TokenEnum.DECL_BOOL, RegexOption),
+        new TokenDefinition(@"float\b(?!\[)", TokenEnum.DECL_FLOAT, RegexOption),
+        new TokenDefinition(@"int\b(?!\[)", TokenEnum.DECL_INT, RegexOption),
+        new TokenDefinition(@"string\b(?!\[)", TokenEnum.DECL_STRING, RegexOption),
+        //new TokenDefinition(@"float2\b(?!\[)", TokenEnum.DECL_FLOAT2, RegexOption),
+        //new TokenDefinition(@"float3\b(?!\[)", TokenEnum.DECL_FLOAT3, RegexOption),
+        //new TokenDefinition(@"float4\b(?!\[)", TokenEnum.DECL_FLOAT4, RegexOption),
         new TokenDefinition(@"bool\[\]", TokenEnum.DECL_BOOL_ARRAY, RegexOption),
         new TokenDefinition(@"float\[\]", TokenEnum.DECL_FLOAT_ARRAY, RegexOption),
         new TokenDefinition(@"int\[\]", TokenEnum.DECL_INT_ARRAY, RegexOption),
@@ -33,6 +33,8 @@ namespace SWEndor.Scenarios.Scripting.Expressions
         new TokenDefinition(@"else\b", TokenEnum.ELSE, RegexOption),
         new TokenDefinition(@"foreach\b", TokenEnum.FOREACH, RegexOption),
         new TokenDefinition(@"in\b", TokenEnum.IN, RegexOption),
+        new TokenDefinition(@"for\b", TokenEnum.FOR, RegexOption),
+        new TokenDefinition(@"while\b", TokenEnum.WHILE, RegexOption),
 
         // literals
         new TokenDefinition(@"(true|false)\b", TokenEnum.BOOLEANLITERAL, RegexOption),
@@ -41,9 +43,9 @@ namespace SWEndor.Scenarios.Scripting.Expressions
         //new TokenDefinition(@"[a-zA-Z_][a-zA-Z0-9_\.]*(?!\s*(\(|\[))", TokenEnum.VARIABLE, RegexOption),
         new TokenDefinition(@"[a-zA-Z_][a-zA-Z0-9_\.]*(?!\s*\()", TokenEnum.VARIABLE, RegexOption),
         new TokenDefinition(@"\""(\""\""|[^\""])*\""", TokenEnum.STRINGLITERAL, RegexOption),
-        new TokenDefinition(@"([0-9]+\.[0-9]+([eE][+-]?[0-9]+)?([fFdDMm]?)?)|(\.[0-9]+([eE][+-]?[0-9]+)?([fFdDMm]?)?)|([0-9]+([eE][+-]?[0-9]+)([fFdDMm]?)?)|([0-9]+([fFdDMm]?))", TokenEnum.REALLITERAL, RegexOption),
         new TokenDefinition(@"0(x|X)[0-9a-fA-F]+", TokenEnum.HEXINTEGERLITERAL, RegexOption),
-        new TokenDefinition(@"[0-9]+", TokenEnum.DECIMALINTEGERLITERAL, RegexOption),
+        new TokenDefinition(@"[0-9]+(?![fFdDMmeE\.])", TokenEnum.DECIMALINTEGERLITERAL, RegexOption),
+        new TokenDefinition(@"([0-9]+\.[0-9]+([eE][+-]?[0-9]+)?([fFdDMm]?)?)|(\.[0-9]+([eE][+-]?[0-9]+)?([fFdDMm]?)?)|([0-9]+([eE][+-]?[0-9]+)([fFdDMm]?)?)|([0-9]+([fFdDMm]?))", TokenEnum.REALLITERAL, RegexOption),
 
         // Brackets
         new TokenDefinition(@"{\s*", TokenEnum.BRACEOPEN, RegexOption),
@@ -96,22 +98,22 @@ namespace SWEndor.Scenarios.Scripting.Expressions
     //internal readonly RootStatement Root;
     //internal readonly Expression RootExpr;
 
-    public static void Parse(string text, out RootStatement result, ref int linenumber)
+    public static void Parse(Script local, string text, out RootStatement result, ref int linenumber)
     {
       using (StringReader reader = new StringReader(text))
       {
         Lexer lex = new Lexer(reader, Definitions, linenumber);
-        result = new RootStatement(lex);
+        result = new RootStatement(local, lex);
         linenumber = lex.LineNumber;
       }
     }
 
-    public static void Parse(string text, out Expression result, ref int linenumber)
+    public static void Parse(Script local, string text, out Expression result, ref int linenumber)
     {
       using (StringReader reader = new StringReader(text))
       {
         Lexer lex = new Lexer(reader, Definitions, linenumber);
-        result = new Expression(lex);
+        result = new Expression(local, lex);
         linenumber = lex.LineNumber;
       }
     }
@@ -126,9 +128,9 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       }
     }
 
-    public void Evaluate(Context context)
+    public void Evaluate(Script local, Context context)
     {
-      Root.Evaluate(context);
+      Root.Evaluate(local, context);
     }
     */
   }

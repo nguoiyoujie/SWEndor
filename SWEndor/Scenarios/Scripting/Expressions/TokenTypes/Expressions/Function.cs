@@ -7,7 +7,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
     private string _funcName;
     private List<CExpression> _param = new List<CExpression>();
 
-    internal Function(Lexer lexer) : base(lexer)
+    internal Function(Script local, Lexer lexer) : base(local, lexer)
     {
       // FUNCNAME ( PARAM , PARAM , PARAM , ...)
       //  ^
@@ -22,24 +22,24 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 
       while (lexer.TokenType != TokenEnum.BRACKETCLOSE)
       {
-        _param.Add(new Expression(lexer).Get());
+        _param.Add(new Expression(local, lexer).Get());
 
         while (lexer.TokenType == TokenEnum.COMMA)
         {
           lexer.Next(); //COMMA
-          _param.Add(new Expression(lexer).Get());
+          _param.Add(new Expression(local, lexer).Get());
         }
       }
 
       lexer.Next(); //BRACKETCLOSE
     }
 
-    public override Val Evaluate(Context context)
+    public override Val Evaluate(Script local, Context context)
     {
       List<Val> parsed = new List<Val>();
       foreach (CExpression expr in _param)
       {
-        parsed.Add(expr.Evaluate(context));
+        parsed.Add(expr.Evaluate(local, context));
       }
       FunctionDelegate fd = context.Functions.Get(_funcName.ToLower());
       if (fd == null)

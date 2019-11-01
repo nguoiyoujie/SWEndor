@@ -1,8 +1,35 @@
+// Globals
+
+bool respawn;
+bool triggerwinlose;
+bool triggerdangergreywolf;
+bool triggerdangercorvus;
+bool playerisship;
+
+int greywolf;
+int corvus;
+int ebolo;
+int daring;
+
+int glory;
+int nebu;
+int corv1;
+int corv2;
+int corv3;
+int corv4;
+
+int greywolfshd1;
+int greywolfshd2;
+int corvusshd1;
+int corvusshd2;
+
+int tiea2;
+int tiea3;
+int tiea4;
+int tied1;
+int tied2;
+
 load:
-	respawn = false;
-	triggerwinlose = false;
-	triggerdangergreywolf = false;
-	triggerdangercorvus = false;
 
 	SetMaxBounds(10000, 1500, 15000);
 	SetMinBounds(-10000, -1500, -20000);
@@ -127,12 +154,12 @@ loadscene:
 	Actor.QueueLast(corv4, "lock");
 
 getchildren:
-	greywolfc = Actor.GetChildren(greywolf);
-	greywolfshd1 = greywolfc[30]; //GetArrayElement(greywolfc, 30);
-	greywolfshd2 = greywolfc[31]; //GetArrayElement(greywolfc, 31);
-	corvusc = Actor.GetChildren(corvus);
-	corvusshd1 = corvusc[18]; //GetArrayElement(corvusc, 18);
-	corvusshd2 = corvusc[19]; //GetArrayElement(corvusc, 19);
+	int[] greywolfc = Actor.GetChildren(greywolf);
+	greywolfshd1 = greywolfc[30];
+	greywolfshd2 = greywolfc[31];
+	int[] corvusc = Actor.GetChildren(corvus);
+	corvusshd1 = corvusc[18];
+	corvusshd2 = corvusc[19];
 
 engagemusic:
 	SetMood(4);
@@ -151,7 +178,6 @@ makeplayer:
 	AddEvent(5, "setupplayer");
 
 setupplayer:
-	//Actor.SetProperty(Player.GetActor(), "DamageModifier", 0.25);
 	Actor.RegisterEvents(Player.GetActor());
 	playerisship = Actor.IsLargeShip(Player.GetActor());
 	if (respawn) 
@@ -162,25 +188,25 @@ firstspawn:
 	respawn = true;
 
 respawn:
-	Actor.AddToSquad(Player.GetActor(), tiea1);
 	Actor.AddToSquad(Player.GetActor(), tiea2);
 	Actor.AddToSquad(Player.GetActor(), tiea3);
+	Actor.AddToSquad(Player.GetActor(), tiea4);
 
 makeimperials:
-	tiea1 = Actor.Spawn("TIEA", "Alpha-2", "", "", 0, "Empire", 700, -620, 10500, 0, -180, 0);
-	Actor.SetProperty(tiea1, "DamageModifier", 0.25);
-	Actor.QueueLast(tiea1, "wait", 2.5);
-	Actor.AddToSquad(Player.GetActor(), tiea1);
-
-	tiea2 = Actor.Spawn("TIEA", "Alpha-3", "", "", 4, "Empire", 6000, 300, -500, 0, -90, 0);
+	tiea2 = Actor.Spawn("TIEA", "Alpha-2", "", "", 0, "Empire", 700, -620, 10500, 0, -180, 0);
 	Actor.SetProperty(tiea2, "DamageModifier", 0.25);
 	Actor.QueueLast(tiea2, "wait", 2.5);
 	Actor.AddToSquad(Player.GetActor(), tiea2);
 
-	tiea3 = Actor.Spawn("TIEA", "Alpha-4", "", "", 4, "Empire", 6500, 600, -750, 0, -90, 0);
+	tiea3 = Actor.Spawn("TIEA", "Alpha-3", "", "", 4, "Empire", 6000, 300, -500, 0, -90, 0);
 	Actor.SetProperty(tiea3, "DamageModifier", 0.25);
 	Actor.QueueLast(tiea3, "wait", 2.5);
 	Actor.AddToSquad(Player.GetActor(), tiea3);
+
+	tiea4 = Actor.Spawn("TIEA", "Alpha-4", "", "", 4, "Empire", 6500, 600, -750, 0, -90, 0);
+	Actor.SetProperty(tiea4, "DamageModifier", 0.25);
+	Actor.QueueLast(tiea4, "wait", 2.5);
+	Actor.AddToSquad(Player.GetActor(), tiea4);
 
 	tied1 = Actor.Spawn("TIED", "Delta-1", "", "", 4, "Empire", 7000, 300, -500, 0, -90, 0);
 	Actor.SetProperty(tied1, "DamageModifier", 0.25);
@@ -255,15 +281,15 @@ gametick:
 	SetUILine1Text("WINGS: " + Faction.GetWingCount("Empire"));
 	SetUILine2Text("ENEMY: " + Faction.GetWingCount("Traitors"));
 	
-	hp = Actor.GetProperty(greywolf, "Strength");
-	if ((hp == null || hp <= 0) && !triggerwinlose) 
+	float hp = Actor.GetProperty(greywolf, "Strength");
+	if (hp <= 0 && !triggerwinlose) 
 		CallScript("losegreywolf");
 	
 	if (!triggerwinlose && !triggerdangergreywolf && hp < 450) 
 		CallScript("dangergreywolf");
 
 	hp = Actor.GetProperty(corvus, "Strength");
-	if ((hp == null || hp <= 0) && !triggerwinlose) 
+	if (hp <= 0 && !triggerwinlose) 
 		CallScript("losecorvus");
 	
 	if (!triggerwinlose && !triggerdangercorvus && hp < 300) 
@@ -280,23 +306,11 @@ win:
 
 dangergreywolf:
 	triggerdangergreywolf = true;
-	AddEvent(0.0, "dangergreywolfmsgG");
-	AddEvent(0.2, "dangergreywolfmsgY");
-	AddEvent(0.4, "dangergreywolfmsgG");
-	AddEvent(0.6, "dangergreywolfmsgY");
-	AddEvent(0.8, "dangergreywolfmsgG");
-	AddEvent(1.0, "dangergreywolfmsgY");
-	AddEvent(1.2, "dangergreywolfmsgG");
-	AddEvent(1.4, "dangergreywolfmsgY");
-	AddEvent(1.6, "dangergreywolfmsgG");
-	AddEvent(1.8, "dangergreywolfmsgY");
-	AddEvent(2.0, "dangergreywolfmsgG");
-	AddEvent(2.2, "dangergreywolfmsgY");
-	AddEvent(2.4, "dangergreywolfmsgG");
-	AddEvent(2.6, "dangergreywolfmsgY");
-	AddEvent(2.8, "dangergreywolfmsgG");
-	AddEvent(3.0, "dangergreywolfmsgY");
-
+	for (float time = 0; time < 3; time += 0.4)
+	{
+		AddEvent(time, "dangergreywolfmsgG");
+		AddEvent(time + 0.2, "dangergreywolfmsgY");
+	}
 
 losegreywolf:
 	triggerwinlose = true;
@@ -306,22 +320,14 @@ losegreywolf:
 
 dangercorvus:
 	triggerdangercorvus = true;
-	AddEvent(0.0, "dangercorvusmsgG");
-	AddEvent(0.2, "dangercorvusmsgY");
-	AddEvent(0.4, "dangercorvusmsgG");
-	AddEvent(0.6, "dangercorvusmsgY");
-	AddEvent(0.8, "dangercorvusmsgG");
-	AddEvent(1.0, "dangercorvusmsgY");
-	AddEvent(1.2, "dangercorvusmsgG");
-	AddEvent(1.4, "dangercorvusmsgY");
-	AddEvent(1.6, "dangercorvusmsgG");
-	AddEvent(1.8, "dangercorvusmsgY");
-	AddEvent(2.0, "dangercorvusmsgG");
-	AddEvent(2.2, "dangercorvusmsgY");
-	AddEvent(2.4, "dangercorvusmsgG");
-	AddEvent(2.6, "dangercorvusmsgY");
-	AddEvent(2.8, "dangercorvusmsgG");
-	AddEvent(3.0, "dangercorvusmsgY");
+	float time = 0;
+	while (time < 3)
+	{
+		AddEvent(time, "dangercorvusmsgG");
+		AddEvent(time + 0.2, "dangercorvusmsgY");
+		time += 0.4;
+	}
+
 
 
 losecorvus:

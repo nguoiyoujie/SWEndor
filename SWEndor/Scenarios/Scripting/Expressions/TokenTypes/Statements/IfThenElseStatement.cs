@@ -9,7 +9,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
     private List<CStatement> _actionIfTrue = new List<CStatement>();
     private List<CStatement> _actionIfFalse = new List<CStatement>();
 
-    internal IfThenElseStatement(Lexer lexer) : base(lexer)
+    internal IfThenElseStatement(Script local, Lexer lexer) : base(local, lexer)
     {
       // IF ( EXPR ) STATEMENT ELSE STATEMENT
       // IF ( EXPR ) { STATEMENT STATEMENT STATEMENT ... } ELSE { STATEMENT ... }
@@ -23,7 +23,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
           throw new ParseException(lexer, TokenEnum.BRACKETOPEN);
         lexer.Next(); //BRACKETOPEN
 
-        _condition = new Expression(lexer).Get();
+        _condition = new Expression(local, lexer).Get();
 
         if (lexer.TokenType != TokenEnum.BRACKETCLOSE)
           throw new ParseException(lexer, TokenEnum.BRACKETCLOSE);
@@ -37,12 +37,12 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
         {
           lexer.Next(); //BRACEOPEN
           while (lexer.TokenType != TokenEnum.BRACECLOSE)
-            _actionIfTrue.Add(new Statement(lexer).Get());
+            _actionIfTrue.Add(new Statement(local, lexer).Get());
           lexer.Next(); //BRACECLOSE
         }
         else
         {
-          _actionIfTrue.Add(new Statement(lexer).Get());
+          _actionIfTrue.Add(new Statement(local, lexer).Get());
         }
 
         if (lexer.TokenType == TokenEnum.ELSE)
@@ -52,18 +52,18 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
           {
             lexer.Next(); //BRACEOPEN
             while (lexer.TokenType != TokenEnum.BRACECLOSE)
-              _actionIfFalse.Add(new Statement(lexer).Get());
+              _actionIfFalse.Add(new Statement(local, lexer).Get());
             lexer.Next(); //BRACECLOSE
           }
           else
           {
-            _actionIfFalse.Add(new Statement(lexer).Get());
+            _actionIfFalse.Add(new Statement(local, lexer).Get());
           }
         }
       }
       else
       {
-        _actionIfTrue.Add(new AssignmentStatement(lexer).Get());
+        _actionIfTrue.Add(new SingleStatement(local, lexer).Get());
       }
     }
 
@@ -74,17 +74,17 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       return this;
     }
 
-    public override void Evaluate(Context context)
+    public override void Evaluate(Script local, Context context)
     {
-      if (_condition == null || _condition.Evaluate(context).IsTrue)
+      if (_condition == null || _condition.Evaluate(local, context).IsTrue)
       {
         foreach (CStatement s in _actionIfTrue)
-          s.Evaluate(context);
+          s.Evaluate(local, context);
       }
       else
       {
         foreach (CStatement s in _actionIfFalse)
-          s.Evaluate(context);
+          s.Evaluate(local, context);
       }
     }
   }

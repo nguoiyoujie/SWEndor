@@ -17,7 +17,7 @@ namespace SWEndor.Scenarios.Scripting
       public static void Clear()
       {
         m_registry.Clear();
-        Global.m_statements.Clear();
+        Global.Clear();
       }
 
       public static Script Get(string id)

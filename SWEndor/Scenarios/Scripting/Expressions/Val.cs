@@ -145,6 +145,18 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       }
     }
 
+    public Val(ValType type)
+    {
+      Type = type;
+      aB = null;
+      aI = null;
+      aF = null;
+      _vI = 0;
+      _vF = 0;
+      _vS = string.Empty;
+      vB = false;
+    }
+
     public Val(bool val)
     {
       Type = ValType.BOOL;

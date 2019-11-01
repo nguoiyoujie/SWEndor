@@ -4,9 +4,9 @@
   {
     private CExpression _expr;
 
-    internal Expression(Lexer lexer) : base(lexer)
+    internal Expression(Script local, Lexer lexer) : base(local, lexer)
     {
-      _expr = new IndexedExpression(lexer).Get();
+      _expr = new IndexedExpression(local, lexer).Get();
     }
 
     public override CExpression Get()
@@ -14,9 +14,9 @@
       return _expr;
     }
 
-    public override Val Evaluate(Context context)
+    public override Val Evaluate(Script local, Context context)
     {
-      return _expr.Evaluate(context);
+      return _expr.Evaluate(local, context);
     }
   }
 

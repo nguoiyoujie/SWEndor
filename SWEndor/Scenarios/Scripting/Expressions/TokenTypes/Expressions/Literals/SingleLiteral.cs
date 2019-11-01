@@ -6,13 +6,13 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions.Literal
   {
     private float _value;
 
-    internal SingleLiteral(Lexer lexer) : base(lexer)
+    internal SingleLiteral(Script local, Lexer lexer) : base(local, lexer)
     {
       _value = Convert.ToSingle(lexer.TokenContents);
-      lexer.Next();
+      lexer.Next(); //FLOAT
     }
 
-    public override Val Evaluate(Context context)
+    public override Val Evaluate(Script local, Context context)
     {
       return new Val(_value);
     }

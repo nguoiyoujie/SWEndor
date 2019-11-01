@@ -12,7 +12,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions.Literal
     float[] fL;
     int[] iL;
 
-    internal ArrayLiteral(Lexer lexer) : base(lexer)
+    internal ArrayLiteral(Script local, Lexer lexer) : base(local, lexer)
     {
       if (lexer.TokenType != TokenEnum.BRACEOPEN)
         throw new ParseException(lexer, TokenEnum.BRACEOPEN);
@@ -20,12 +20,12 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions.Literal
 
       while (lexer.TokenType != TokenEnum.BRACECLOSE)
       {
-        _param.Add(new Expression(lexer).Get());
+        _param.Add(new Expression(local, lexer).Get());
 
         while (lexer.TokenType == TokenEnum.COMMA)
         {
           lexer.Next(); //COMMA
-          _param.Add(new Expression(lexer).Get());
+          _param.Add(new Expression(local, lexer).Get());
         }
       }
 
@@ -35,12 +35,12 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions.Literal
       lexer.Next(); //BRACECLOSE
     }
 
-    public override Val Evaluate(Context context)
+    public override Val Evaluate(Script local, Context context)
     {
       ValType t = ValType.NULL;
       for (int i = 0; i < _param.Count; i++)
       {
-        vL[i] = _param[i].Evaluate(context);
+        vL[i] = _param[i].Evaluate(local, context);
         if (t == ValType.NULL)
           t = vL[i].Type;
         else if (t != vL[i].Type)

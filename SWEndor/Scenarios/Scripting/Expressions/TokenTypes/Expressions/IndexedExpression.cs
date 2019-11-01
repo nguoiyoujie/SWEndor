@@ -8,18 +8,18 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
     private CExpression _expression;
     private CExpression _index;
 
-    internal IndexedExpression(Lexer lexer) : base(lexer)
+    internal IndexedExpression(Script local, Lexer lexer) : base(local, lexer)
     {
       // EXPR[EXPR]
       // ^
 
-      _expression = new TernaryExpression(lexer).Get();
+      _expression = new TernaryExpression(local, lexer).Get();
 
       // indexer
       if (lexer.TokenType == TokenEnum.SQBRACKETOPEN)
       {
         lexer.Next(); // SQBRACKETOPEN
-        _index = new Expression(lexer).Get();
+        _index = new Expression(local, lexer).Get();
 
         if (lexer.TokenType != TokenEnum.SQBRACKETCLOSE)
           throw new ParseException(lexer, TokenEnum.SQBRACKETCLOSE);
@@ -32,13 +32,13 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       return (_index == null) ? _expression : this;
     }
 
-    public override Val Evaluate(Context context)
+    public override Val Evaluate(Script local, Context context)
     {
-      Val c = _expression.Evaluate(context);
+      Val c = _expression.Evaluate(local, context);
       if (_index == null)
         return c;
 
-      Val i = _index.Evaluate(context);
+      Val i = _index.Evaluate(local, context);
       if (!(i.Type == ValType.INT || (i.Type == ValType.FLOAT && i.vF == i.vI)))
         throw new EvalException(this, "Attempted to index an array with a non-integer!");
 

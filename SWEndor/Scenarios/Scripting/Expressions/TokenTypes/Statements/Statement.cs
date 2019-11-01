@@ -6,14 +6,13 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Statements
   {
     private CStatement _statement;
 
-    internal Statement(Lexer lexer) : base(lexer)
+    internal Statement(Script local, Lexer lexer) : base(local, lexer)
     {
       // IFTHENELSE
-      // dont grab semicolons here becuase IfThenElse is multiple statements
 
       if (lexer.TokenType != TokenEnum.NOTHING && lexer.TokenType != TokenEnum.COMMENT)
       {
-        _statement = new ForEachStatement(lexer).Get();
+        _statement = new WhileStatement(local, lexer).Get();
 
         // comment (eliminated by lexer)
         //if (lexer.TokenType == TokenEnum.COMMENT)
@@ -21,9 +20,9 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Statements
       }
     }
 
-    public override void Evaluate(Context context)
+    public override void Evaluate(Script local, Context context)
     {
-      _statement.Evaluate(context);
+      _statement.Evaluate(local, context);
     }
   }
 }

@@ -9,10 +9,10 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
     private Variable _var;
     private List<CStatement> _actions = new List<CStatement>();
 
-    internal ForEachStatement(Lexer lexer) : base(lexer)
+    internal ForEachStatement(Script local, Lexer lexer) : base(local, lexer)
     {
-      // FOREACH ( VAR IN EXPR ) STATEMENT 
-      // FOREACH ( VAR IN EXPR ) { STATEMENT STATEMENT STATEMENT ... } 
+      // FOREACH ( DECL VAR IN EXPR ) STATEMENT 
+      // FOREACH ( DECL VAR IN EXPR ) { STATEMENT STATEMENT STATEMENT ... } 
       // or
       // ASSIGNMENTEXPR
 
@@ -23,13 +23,13 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
           throw new ParseException(lexer, TokenEnum.BRACKETOPEN);
         lexer.Next(); //BRACKETOPEN
 
-        _var = (Variable)(new Variable(lexer).Get());
+        _var = (DeclVariable)(new DeclVariable(local, lexer).Get());
 
         if (lexer.TokenType != TokenEnum.IN)
           throw new ParseException(lexer, TokenEnum.IN);
         lexer.Next(); //IN
 
-        _enumerable = new Expression(lexer).Get();
+        _enumerable = new Expression(local, lexer).Get();
 
         if (lexer.TokenType != TokenEnum.BRACKETCLOSE)
           throw new ParseException(lexer, TokenEnum.BRACKETCLOSE);
@@ -39,17 +39,17 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
         {
           lexer.Next(); //BRACEOPEN
           while (lexer.TokenType != TokenEnum.BRACECLOSE)
-            _actions.Add(new Statement(lexer).Get());
+            _actions.Add(new Statement(local, lexer).Get());
           lexer.Next(); //BRACECLOSE
         }
         else
         {
-          _actions.Add(new Statement(lexer).Get());
+          _actions.Add(new Statement(local, lexer).Get());
         }
       }
       else
       {
-        _actions.Add(new IfThenElseStatement(lexer).Get());
+        _actions.Add(new IfThenElseStatement(local, lexer).Get());
       }
     }
 
@@ -60,35 +60,46 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       return this;
     }
 
-    public override void Evaluate(Context context)
+    public override void Evaluate(Script local, Context context)
     {
       if (_enumerable != null)
       {
-        Val array = _enumerable.Evaluate(context);
-        if (array.Type == ValType.INT_ARRAY)
+        Val array = _enumerable.Evaluate(local, context);
+
+        if (array.Type == ValType.BOOL_ARRAY)
         {
-          foreach (int v in array.aI)
+          foreach (bool v in array.aB)
           {
-            context.Variables.Put(_var.varName, new Context.ContextVariable(_var.varName, new Val(v))); 
+            local.SetVar(_var.varName, new Val(v));
             foreach (CStatement s in _actions)
-              s.Evaluate(context);
+              s.Evaluate(local, context);
           }
           return;
         }
         else if (array.Type == ValType.INT_ARRAY)
         {
+          foreach (int v in array.aI)
+          {
+            local.SetVar(_var.varName, new Val(v));
+            foreach (CStatement s in _actions)
+              s.Evaluate(local, context);
+          }
+          return;
+        }
+        else if (array.Type == ValType.FLOAT_ARRAY)
+        {
           foreach (float v in array.aF)
           {
-            context.Variables.Put(_var.varName, new Context.ContextVariable(_var.varName, new Val(v)));
+            local.SetVar(_var.varName, new Val(v));
             foreach (CStatement s in _actions)
-              s.Evaluate(context);
+              s.Evaluate(local, context);
           }
           return;
         }
       }
 
       foreach (CStatement s in _actions)
-        s.Evaluate(context);
+        s.Evaluate(local, context);
     }
   }
 }

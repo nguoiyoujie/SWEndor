@@ -6,13 +6,13 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions.Literal
   {
     private int _value;
 
-    internal HexLiteral(Lexer lexer) : base(lexer)
+    internal HexLiteral(Script local, Lexer lexer) : base(local, lexer)
     {
       _value = Convert.ToInt32(lexer.TokenContents.Substring(2, lexer.TokenContents.Length - 2));
-      lexer.Next();
+      lexer.Next(); //HEXINT
     }
 
-    public override Val Evaluate(Context context)
+    public override Val Evaluate(Script local, Context context)
     {
       return new Val(_value);
     }

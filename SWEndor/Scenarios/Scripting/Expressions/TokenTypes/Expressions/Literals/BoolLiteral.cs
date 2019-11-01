@@ -7,13 +7,13 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions.Literal
     // true or false
     private bool _value;
 
-    internal BoolLiteral(Lexer lexer) : base(lexer)
+    internal BoolLiteral(Script local, Lexer lexer) : base(local, lexer)
     {
       _value = lexer.TokenContents.ToBool();
-      lexer.Next();
+      lexer.Next(); //BOOL
     }
 
-    public override Val Evaluate(Context context)
+    public override Val Evaluate(Script local, Context context)
     {
       return new Val(_value);
     }

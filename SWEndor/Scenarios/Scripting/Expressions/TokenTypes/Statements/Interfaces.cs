@@ -2,9 +2,9 @@
 {
   public class CStatement : IStatement, ITracker
   {
-    internal CStatement(Lexer lexer) { LineNumber = lexer.LineNumber; Position = lexer.Position; }
+    internal CStatement(Script local, Lexer lexer) { LineNumber = lexer.LineNumber; Position = lexer.Position; }
     public virtual CStatement Get() { return this; }
-    public virtual void Evaluate(Context context) { }
+    public virtual void Evaluate(Script local, Context context) { }
 
     public int LineNumber { get; }
     public int Position { get; }
@@ -13,6 +13,6 @@
   public interface IStatement
   {
     CStatement Get();
-    void Evaluate(Context context);
+    void Evaluate(Script local, Context context);
   }
 }

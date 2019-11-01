@@ -8,14 +8,14 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
     private TokenEnum _type = TokenEnum.NOTHING;
     private CExpression _second;
 
-    internal RelationalExpression(Lexer lexer) : base(lexer)
+    internal RelationalExpression(Script local, Lexer lexer) : base(local, lexer)
     {
       // ADDEXPR < ADDEXPR
       // ADDEXPR > ADDEXPR
       // ADDEXPR <= ADDEXPR
       // ADDEXPR <= ADDEXPR
 
-      _first = new AddExpression(lexer).Get();
+      _first = new AddExpression(local, lexer).Get();
 
       _type = lexer.TokenType;
       if (_type == TokenEnum.LESSTHAN // <
@@ -24,8 +24,8 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
         || _type == TokenEnum.GREATEREQUAL // >=
         )
       {
-        lexer.Next();
-        _second = new AddExpression(lexer).Get();
+        lexer.Next(); //LESSTHAN / GREATERTHAN / LESSEQUAL / GREATEREQUAL
+        _second = new AddExpression(local, lexer).Get();
       }
       else
       {
@@ -40,10 +40,10 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       return this;
     }
 
-    public override Val Evaluate(Context context)
+    public override Val Evaluate(Script local, Context context)
     {
-      Val v1 = _first.Evaluate(context);
-      Val v2 = _second.Evaluate(context);
+      Val v1 = _first.Evaluate(local, context);
+      Val v2 = _second.Evaluate(local, context);
 
       switch (_type)
       {

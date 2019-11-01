@@ -4,7 +4,7 @@
   {
     private CExpression _expression;
 
-    internal ParenthesizedExpression(Lexer lexer) : base(lexer)
+    internal ParenthesizedExpression(Script local, Lexer lexer) : base(local, lexer)
     {
       // ( TERN_EXPR )
       // ^
@@ -16,7 +16,7 @@
         lexer.Next(); // BRACKETOPEN
       }
 
-      _expression = new Expression(lexer).Get();
+      _expression = new Expression(local, lexer).Get();
 
       if (parans)
       {
@@ -32,9 +32,9 @@
       return _expression;
     }
 
-    public override Val Evaluate(Context context)
+    public override Val Evaluate(Script local, Context context)
     {
-      return _expression.Evaluate(context);
+      return _expression.Evaluate(local, context);
     }
   }
 }

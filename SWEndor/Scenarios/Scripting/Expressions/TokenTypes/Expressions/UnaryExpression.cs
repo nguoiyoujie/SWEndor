@@ -7,7 +7,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
     private CExpression _primary;
     private TokenEnum _type;
 
-    internal UnaryExpression(Lexer lexer) : base(lexer)
+    internal UnaryExpression(Script local, Lexer lexer) : base(local, lexer)
     {
       // + PRIAMRY
       // - PRIAMRY
@@ -21,12 +21,12 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
         || _type == TokenEnum.NOT // !
         )
       {
-        lexer.Next();
-        _primary = new PrimaryExpression(lexer).Get();
+        lexer.Next(); // PLUS / MINUS / NOT
+        _primary = new PrimaryExpression(local, lexer).Get();
       }
       else
       {
-        _primary = new PrimaryExpression(lexer).Get();
+        _primary = new PrimaryExpression(local, lexer).Get();
         _type = TokenEnum.NOTHING;
       }
     }
@@ -38,9 +38,9 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       return this;
     }
 
-    public override Val Evaluate(Context context)
+    public override Val Evaluate(Script local, Context context)
     {
-      Val result = _primary.Evaluate(context);
+      Val result = _primary.Evaluate(local, context);
       switch (_type)
       {
         default:

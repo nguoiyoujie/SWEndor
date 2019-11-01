@@ -9,18 +9,18 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
     private CExpression _first;
     private List<CExpression> _set = new List<CExpression>();
 
-    internal LogicalOrExpression(Lexer lexer) : base(lexer)
+    internal LogicalOrExpression(Script local, Lexer lexer) : base(local, lexer)
     {
       // ANDEXPR || ANDEXPR ...
 
-      _first = new LogicalAndExpression(lexer).Get();
+      _first = new LogicalAndExpression(local, lexer).Get();
 
       while (lexer.TokenType == TokenEnum.PIPEPIPE // ||
         )
       {
         TokenEnum _type = lexer.TokenType;
-        lexer.Next();
-        _set.Add(new LogicalAndExpression(lexer).Get());
+        lexer.Next(); //PIPEPIPE
+        _set.Add(new LogicalAndExpression(local, lexer).Get());
       }
     }
 
@@ -31,18 +31,18 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       return this;
     }
 
-    public override Val Evaluate(Context context)
+    public override Val Evaluate(Script local, Context context)
     {
       if (_set.Count == 0)
-        return _first.Evaluate(context);
+        return _first.Evaluate(local, context);
 
-      Val result = _first.Evaluate(context);
+      Val result = _first.Evaluate(local, context);
       if (result.Type != ValType.BOOL) throw new EvalException(this, TextLocalization.Get(TextLocalKeys.SCRIPT_UNEXPECTED_NONBOOL).F(result.Value));
       if (!result.vB)
       {
         foreach (CExpression _expr in _set)
         {
-          Val adden = _expr.Evaluate(context);
+          Val adden = _expr.Evaluate(local, context);
 
           try { result = Ops.Do(BOp.LOGICAL_OR, result, adden); } catch (Exception ex) { throw new EvalException(this, "||", result, adden, ex); }
           if (result.vB)

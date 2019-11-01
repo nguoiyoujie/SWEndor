@@ -2,14 +2,14 @@
 {
   public class CLiteral : CExpression
   {
-    internal CLiteral(Lexer lexer) : base(lexer) { }
+    internal CLiteral(Script local, Lexer lexer) : base(local, lexer) { }
   }
 
   public class CExpression : IExpression, ITracker
   {
-    internal CExpression(Lexer lexer) { LineNumber = lexer.LineNumber; Position = lexer.Position; }
+    internal CExpression(Script local, Lexer lexer) { LineNumber = lexer.LineNumber; Position = lexer.Position; }
     public virtual CExpression Get() { return this; }
-    public virtual Val Evaluate(Context context) { return default(Val); }
+    public virtual Val Evaluate(Script local, Context context) { return default(Val); }
 
     public int LineNumber { get; }
     public int Position { get; }
@@ -18,6 +18,6 @@
   public interface IExpression
   {
     CExpression Get();
-    Val Evaluate(Context context);
+    Val Evaluate(Script local, Context context);
   }
 }

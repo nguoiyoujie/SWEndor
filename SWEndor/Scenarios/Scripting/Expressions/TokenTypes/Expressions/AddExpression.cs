@@ -8,20 +8,20 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
     private CExpression _first;
     private Dictionary<CExpression, TokenEnum> _set = new Dictionary<CExpression, TokenEnum>();
 
-    internal AddExpression(Lexer lexer) : base(lexer)
+    internal AddExpression(Script local, Lexer lexer) : base(local, lexer)
     {
       // MULTIEXPR + MULTIEXPR ...
       // MULTIEXPR - MULTIEXPR ...
 
-      _first = new MultiplyExpression(lexer).Get();
+      _first = new MultiplyExpression(local, lexer).Get();
 
       while (lexer.TokenType == TokenEnum.PLUS // +
         || lexer.TokenType == TokenEnum.MINUS // -
         )
       {
         TokenEnum _type = lexer.TokenType;
-        lexer.Next();
-        _set.Add(new MultiplyExpression(lexer).Get(), _type);
+        lexer.Next(); //PLUS / MINUS
+        _set.Add(new MultiplyExpression(local, lexer).Get(), _type);
       }
     }
 
@@ -32,12 +32,12 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       return this;
     }
 
-    public override Val Evaluate(Context context)
+    public override Val Evaluate(Script local, Context context)
     {
-      Val result = _first.Evaluate(context);
+      Val result = _first.Evaluate(local, context);
       foreach (CExpression _expr in _set.Keys)
       {
-        Val adden = _expr.Evaluate(context);
+        Val adden = _expr.Evaluate(local, context);
         switch (_set[_expr])
         {
           case TokenEnum.PLUS:

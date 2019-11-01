@@ -8,21 +8,21 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
     private CExpression _true;
     private CExpression _false;
 
-    internal TernaryExpression(Lexer lexer) : base(lexer)
+    internal TernaryExpression(Script local, Lexer lexer) : base(local, lexer)
     {
       // OREXPR ? EXPR : EXPR 
 
-      _question = new LogicalOrExpression(lexer).Get();
+      _question = new LogicalOrExpression(local, lexer).Get();
 
       if (lexer.TokenType == TokenEnum.QUESTIONMARK)
       {
-        lexer.Next();
-        _true = new Expression(lexer).Get();
+        lexer.Next(); // QUESTIONMARK
+        _true = new Expression(local, lexer).Get();
 
         if (lexer.TokenType == TokenEnum.COLON)
         {
-          lexer.Next();
-          _false = new Expression(lexer).Get();
+          lexer.Next(); // COLON
+          _false = new Expression(local, lexer).Get();
         }
         else
         {
@@ -38,14 +38,14 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       return this;
     }
 
-    public override Val Evaluate(Context context)
+    public override Val Evaluate(Script local, Context context)
     {
-      Val result = _question.Evaluate(context);
+      Val result = _question.Evaluate(local, context);
       if (result.Type != ValType.BOOL) throw new EvalException(this, TextLocalization.Get(TextLocalKeys.SCRIPT_UNEXPECTED_NONBOOL).F(result.Value));
       if (result.vB)
-        return _true?.Evaluate(context) ?? new Val();
+        return _true?.Evaluate(local, context) ?? new Val();
       else
-        return _false?.Evaluate(context) ?? new Val();
+        return _false?.Evaluate(local, context) ?? new Val();
     }
   }
 }

@@ -8,13 +8,13 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
     private CExpression _first;
     private Dictionary<CExpression, TokenEnum> _set = new Dictionary<CExpression, TokenEnum>();
 
-    internal MultiplyExpression(Lexer lexer) : base(lexer)
+    internal MultiplyExpression(Script local, Lexer lexer) : base(local, lexer)
     {
       // UNARYEXPR * UNARYEXPR ...
       // UNARYEXPR / UNARYEXPR ...
       // UNARYEXPR % UNARYEXPR ...
 
-      _first = new UnaryExpression(lexer).Get();
+      _first = new UnaryExpression(local, lexer).Get();
 
       while (lexer.TokenType == TokenEnum.ASTERISK // *
         || lexer.TokenType == TokenEnum.SLASH // /
@@ -22,8 +22,8 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
         )
       {
         TokenEnum _type = lexer.TokenType;
-        lexer.Next();
-        _set.Add(new UnaryExpression(lexer).Get(), _type);
+        lexer.Next(); //ASTERISK / SLASH / PERCENT
+        _set.Add(new UnaryExpression(local, lexer).Get(), _type);
       }
     }
 
@@ -34,12 +34,12 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       return this;
     }
 
-    public override Val Evaluate(Context context)
+    public override Val Evaluate(Script local, Context context)
     {
-      Val result = _first.Evaluate(context);
+      Val result = _first.Evaluate(local, context);
       foreach (CExpression _expr in _set.Keys)
       {
-        Val adden = _expr.Evaluate(context);
+        Val adden = _expr.Evaluate(local, context);
 
         switch (_set[_expr])
         {

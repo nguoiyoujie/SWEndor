@@ -37,10 +37,10 @@
     public object Evaluate(Context context)
     {
       if (_incre == 0)
-        return _child.Evaluate(context);
+        return _child.Evaluate(local, context);
 
       // find a way to assign to current variable..
-      return (dynamic)_child.Evaluate(context) + _incre;
+      return (dynamic)_child.Evaluate(local, context) + _incre;
     }
   }
   */

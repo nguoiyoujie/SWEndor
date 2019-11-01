@@ -9,26 +9,26 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
     private CExpression _first;
     private List<CExpression> _set = new List<CExpression>();
 
-    internal EqualityExpression(Lexer lexer) : base(lexer)
+    internal EqualityExpression(Script local, Lexer lexer) : base(local, lexer)
     {
       // RELATEEXPR == RELATEEXPR ...
       // RELATEEXPR != RELATEEXPR ...
 
-      _first = new RelationalExpression(lexer).Get();
+      _first = new RelationalExpression(local, lexer).Get();
 
       TokenEnum _type = lexer.TokenType;
       if (_type == TokenEnum.EQUAL // ==
         )
       {
-        lexer.Next();
-        _set.Add(new RelationalExpression(lexer).Get());
+        lexer.Next(); //EQUAL
+        _set.Add(new RelationalExpression(local, lexer).Get());
       }
       else if (_type == TokenEnum.NOTEQUAL // !=
       )
       {
-        lexer.Next();
+        lexer.Next(); //NOTEQUAL
         isUnequal = true;
-        _set.Add(new RelationalExpression(lexer).Get());
+        _set.Add(new RelationalExpression(local, lexer).Get());
       }
     }
 
@@ -39,12 +39,12 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       return this;
     }
 
-    public override Val Evaluate(Context context)
+    public override Val Evaluate(Script local, Context context)
     {
-      Val result = _first.Evaluate(context);
+      Val result = _first.Evaluate(local, context);
       foreach (CExpression _expr in _set)
       {
-        Val adden = _expr.Evaluate(context);
+        Val adden = _expr.Evaluate(local, context);
         if (isUnequal)
           try { result = Ops.Do(BOp.NOT_EQUAL_TO, result, adden); } catch (Exception ex) { throw new EvalException(this, "!=", result, adden, ex); }
         else

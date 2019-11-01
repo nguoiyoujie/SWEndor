@@ -26,6 +26,8 @@
     ELSE,
     FOREACH,
     IN,
+    FOR,
+    WHILE,
 
     // Literals
     BOOLEANLITERAL,

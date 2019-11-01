@@ -2,17 +2,19 @@
 {
   public class Variable : CExpression
   {
-    public string varName { get; private set; }
+    public string varName { get; protected set; }
 
-    internal Variable(Lexer lexer) : base(lexer)
+    internal Variable(Script local, Lexer lexer, int skip) : base(local, lexer) { }
+
+    internal Variable(Script local, Lexer lexer) : base(local, lexer)
     {
       varName = lexer.TokenContents;
-      lexer.Next();
+      lexer.Next(); // VARIABLE
     }
 
-    public override Val Evaluate(Context context)
+    public override Val Evaluate(Script local, Context context)
     {
-      return context.Variables.Get(varName)?.Value ?? Val.NULL; // can be null.
+      return local.GetVar(varName);
     }
   }
 }
