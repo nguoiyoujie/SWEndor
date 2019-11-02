@@ -90,6 +90,9 @@ namespace SWEndor.Shaders
 
         foreach (string s in ConstTex.Keys)
           shader.SetEffectParamTexture(s, ConstTex[s]);
+
+        foreach (string s in RandTex.Keys)
+          shader.SetEffectParamTexture(s, RandTex[s][Globals.Engine.Random.Next(0, RandTex[s].Length)]);
       }
       return shader;
     }
@@ -110,9 +113,6 @@ namespace SWEndor.Shaders
     {
       if (shader == null)
         return;
-
-      foreach (string s in RandTex.Keys)
-        shader.SetEffectParamTexture(s, RandTex[s][obj.Engine.Random.Next(0, RandTex[s].Length)]);
 
       foreach (string s in DynamicParam.Keys)
       {
