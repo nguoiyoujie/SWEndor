@@ -277,7 +277,7 @@ namespace SWEndor.ActorTypes
         if (attacker.IsScenePlayer)
         {
           if (!attacker.IsAlliedWith(owner))
-            AddScore(engine, PlayerInfo.Score, attacker, owner);
+            AddScore(engine, PlayerInfo.Score, attacker.TypeInfo.CombatData, owner);
           else
             Engine.Screen2D.MessageText(string.Format("{0}: {1}, watch it!", owner.Name, PlayerInfo.Name)
                                             , 5
@@ -332,7 +332,7 @@ namespace SWEndor.ActorTypes
         if (attacker != null && attacker.IsScenePlayer)
         {
           if (!attacker.IsAlliedWith(owner))
-            AddScore(engine, PlayerInfo.Score, hitby, owner);
+            AddScore(engine, PlayerInfo.Score, projData, owner);
           else
             Engine.Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", owner.Name, PlayerInfo.Name)
                                             , 5
@@ -421,17 +421,13 @@ namespace SWEndor.ActorTypes
       proj.SetState_Dead(); // projectiles die on impact
     }
 
-    private void AddScore(Engine engine, ScoreInfo score, ActorInfo proj, ActorInfo victim)
+    private void AddScore(Engine engine, ScoreInfo score, CombatData projData, ActorInfo victim)
     {
       if (!victim.IsDyingOrDead)
-      {
-        score.AddHit(engine, victim, proj.TypeInfo.CombatData.ImpactDamage * victim.GetArmor(proj.TypeInfo.CombatData.DamageType));
-      }
+        score.AddHit(engine, victim, projData.ImpactDamage * victim.GetArmor(projData.DamageType));
 
       if (victim.IsDyingOrDead)
-      {
         score.AddKill(engine, victim);
-      }
     }
 
     public virtual bool FireWeapon(Engine engine, ActorInfo owner, ActorInfo target, WeaponShotInfo sweapon)
