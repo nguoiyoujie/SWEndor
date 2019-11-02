@@ -18,7 +18,7 @@ namespace SWEndor.Primitives.Factories
     private object locker = new object();
 
     public bool Contains(string id) { lock (locker) return list.ContainsKey(id); }
-    public T Get(string id) { lock (locker) return (list.ContainsKey(id)) ? list[id] : Default; }
+    public T Get(string id) { lock (locker) { T t; if (!list.TryGetValue(id, out t)) return Default; return t; } }
     public T GetX(string id) { lock (locker) return list[id]; }
     public T[] GetAll() { lock (locker) return list.Values.ToArray(); }
     public virtual void Add(string id, T item) { lock (locker) list.Add(id, item); }
