@@ -197,7 +197,7 @@ namespace SWEndor.Projectiles.Models
 
     public void EnableCollision(bool enable)
     {
-      Mesh.SetCollisionEnable(enable);
+      Mesh?.SetCollisionEnable(enable);
     }
   }
 }

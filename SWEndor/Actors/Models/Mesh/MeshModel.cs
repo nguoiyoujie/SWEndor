@@ -331,8 +331,8 @@ namespace SWEndor.Actors.Models
 
     public void EnableCollision(bool enable)
     {
-      Mesh.SetCollisionEnable(enable);
-      FarMesh.SetCollisionEnable(enable);
+      Mesh?.SetCollisionEnable(enable);
+      FarMesh?.SetCollisionEnable(enable);
     }
 
     public bool Collision(Engine engine, ActorInfo actor, TV_3DVECTOR start, TV_3DVECTOR end)
