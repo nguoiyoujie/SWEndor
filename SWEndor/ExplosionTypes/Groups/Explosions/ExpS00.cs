@@ -1,4 +1,5 @@
-﻿using SWEndor.ActorTypes.Components;
+﻿using SWEndor.Actors;
+using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using SWEndor.Explosions;
 using SWEndor.Sound;
@@ -25,7 +26,9 @@ namespace SWEndor.ExplosionTypes.Instances
     {
       base.Initialize(engine, ainfo);
       ainfo.CycleInfo.CyclePeriod = 0.5f;
-      PlayerCameraInfo.ProximityShake(5, 100, ainfo.Position);
+      ActorInfo p = PlayerInfo.Actor;
+      if (p != null && !p.IsDyingOrDead)
+        PlayerCameraInfo.ProximityShake(5, 100, ainfo.Position);
     }
 
   }

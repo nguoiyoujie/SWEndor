@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using SWEndor.Explosions;
@@ -26,7 +27,9 @@ namespace SWEndor.ExplosionTypes.Instances
     public override void Initialize(Engine engine, ExplosionInfo ainfo)
     {
       base.Initialize(engine, ainfo);
-      PlayerCameraInfo.ProximityShake(25, 300, ainfo.Position);
+      ActorInfo p = PlayerInfo.Actor;
+      if (p != null && !p.IsDyingOrDead)
+        PlayerCameraInfo.ProximityShake(25, 300, ainfo.Position);
     }
   }
 }
