@@ -42,7 +42,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
     {
       Val result = _question.Evaluate(local, context);
       if (result.Type != ValType.BOOL) throw new EvalException(this, TextLocalization.Get(TextLocalKeys.SCRIPT_UNEXPECTED_NONBOOL).F(result.Value));
-      if (result.vB)
+      if ((bool)result)
         return _true?.Evaluate(local, context) ?? new Val();
       else
         return _false?.Evaluate(local, context) ?? new Val();

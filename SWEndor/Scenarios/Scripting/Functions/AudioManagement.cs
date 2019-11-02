@@ -7,25 +7,25 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static Val SetMusic(Context context, Val[] ps)
     {
       if (ps.Length == 1)
-        return new Val(Globals.Engine.SoundManager.SetMusic(ps[0].vS));
+        return new Val(Globals.Engine.SoundManager.SetMusic((string)ps[0]));
       else if (ps.Length == 2)
-        return new Val(Globals.Engine.SoundManager.SetMusic(ps[0].vS, ps[1].vB));
+        return new Val(Globals.Engine.SoundManager.SetMusic((string)ps[0], (bool)ps[1]));
       else
-        return new Val(Globals.Engine.SoundManager.SetMusic(ps[0].vS, ps[1].vB, (uint)ps[2].vI));
+        return new Val(Globals.Engine.SoundManager.SetMusic((string)ps[0], (bool)ps[1], (uint)(int)ps[2]));
     }
 
     public static Val SetMusicLoop(Context context, Val[] ps)
     {
       if (ps.Length == 1)
-        Globals.Engine.SoundManager.SetMusicLoop(ps[0].vS);
+        Globals.Engine.SoundManager.SetMusicLoop((string)ps[0]);
       else
-        Globals.Engine.SoundManager.SetMusicLoop(ps[0].vS, (uint)ps[1].vI);
+        Globals.Engine.SoundManager.SetMusicLoop((string)ps[0], (uint)(int)ps[1]);
       return Val.TRUE;
     }
 
     public static Val SetMusicDyn(Context context, Val[] ps)
     {
-      Globals.Engine.SoundManager.SetMusicDyn(ps[0].vS);
+      Globals.Engine.SoundManager.SetMusicDyn((string)ps[0]);
       return Val.TRUE;
     }
 

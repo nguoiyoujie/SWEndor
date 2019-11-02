@@ -80,11 +80,11 @@ namespace SWEndor.Scenarios.Scripting
 
       // float can accept int
       else if (t == ValType.FLOAT && val.Type == ValType.INT)
-        m_variables[name] = new Val(val.vF);
+        m_variables[name] = new Val((float)val);
 
       // int can accept float
       else if (t == ValType.INT && val.Type == ValType.FLOAT)
-        m_variables[name] = new Val(val.vI);
+        m_variables[name] = new Val((int)val);
 
       else
         throw new InvalidOperationException("Attempted assignment of value of type '{0}' to variable '{1} {2}'".F(val.Type, name, t));

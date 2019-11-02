@@ -1,128 +1,143 @@
 ﻿using SWEndor.Primitives.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace SWEndor.Scenarios.Scripting.Expressions
 {
-  public enum ValType : byte
+  [StructLayout(LayoutKind.Explicit)]
+  internal struct ValObj
   {
-    NULL,
-    BOOL,
-    INT,
-    FLOAT,
-    STRING,
-    FLOAT2,
-    FLOAT3,
-    FLOAT4,
-    BOOL_ARRAY,
-    INT_ARRAY,
-    FLOAT_ARRAY
-  }
+    [FieldOffset(0)]
+    internal readonly string vS;
+    [FieldOffset(0)]
+    internal readonly bool[] aB;
+    [FieldOffset(0)]
+    internal readonly int[] aI;
+    [FieldOffset(0)]
+    internal readonly float[] aF;
 
-  public enum UOp : byte
-  {
-    IDENTITY, // nothing
-    LOGICAL_NOT, // !a
-    NEGATION, // -a
-  }
 
-  public enum BOp : byte
-  {
-    LOGICAL_OR, // a || b
-    LOGICAL_AND, // a && b
-    ADD, // a + b
-    SUBTRACT, // a - b
-    MULTIPLY, // a * b
-    MODULUS, // a % b
-    DIVIDE, // a / b
-    EQUAL_TO, // a == b
-    NOT_EQUAL_TO, // a != b
-    MORE_THAN, // a > b
-    MORE_THAN_OR_EQUAL_TO, // a >= b
-    LESS_THAN, // a < b
-    LESS_THAN_OR_EQUAL_TO, // a <= b
+    public ValObj(string val)
+    {
+      aB = null;
+      aI = null;
+      aF = null;
+      vS = val ?? string.Empty;
+    }
+
+    public ValObj(bool[] val)
+    {
+      vS = null;
+      aI = null;
+      aF = null;
+      aB = val;
+    }
+
+    public ValObj(int[] val)
+    {
+      vS = null;
+      aB = null;
+      aF = null;
+      aI = val;
+    }
+
+    public ValObj(float[] val)
+    {
+      vS = null;
+      aB = null;
+      aI = null;
+      aF = val;
+    }
   }
 
   [StructLayout(LayoutKind.Explicit)]
   public struct Val
   {
     [FieldOffset(0)]
-    public readonly ValType Type;
+    internal readonly ValType Type;
     [FieldOffset(sizeof(ValType))]
-    public readonly bool vB;
+    private readonly bool _vB; // size 1
     [FieldOffset(sizeof(ValType))]
-    private readonly int _vI;
+    private readonly int _vI; // size 4
     [FieldOffset(sizeof(ValType))]
-    private readonly float _vF;
+    private readonly float _vF; // size 4
     [FieldOffset(8)]
-    private readonly string _vS;
-    [FieldOffset(8)]
-    public readonly bool[] aB;
-    [FieldOffset(8)]
-    public readonly int[] aI;
-    [FieldOffset(8)]
-    public readonly float[] aF;
+    private readonly ValObj _obj;
 
-    public int vI
+    public static explicit operator bool(Val a)
     {
-      get
+      switch (a.Type)
       {
-        switch (Type)
-        {
-          case ValType.BOOL:
-            return vB ? 1 : 0;
-          case ValType.INT:
-            return _vI;
-          case ValType.FLOAT:
-            return (int)_vF;
-          case ValType.STRING:
-            return Convert.ToInt32(_vS);
-          default:
-            throw new InvalidCastException("Attempted to read int value from a {0}".F(Type));
-        }
+        case ValType.BOOL:
+          return a._vB;
+        default:
+          throw new InvalidCastException("Attempted to read bool value from a {0}".F(a.Type));
       }
     }
 
-    public float vF
+    public static explicit operator int(Val a)
     {
-      get
+      switch (a.Type)
       {
-        switch (Type)
-        {
-          case ValType.BOOL:
-            return vB ? 1 : 0;
-          case ValType.INT:
-            return _vI;
-          case ValType.FLOAT:
-            return _vF;
-          case ValType.STRING:
-            return Convert.ToSingle(_vS);
-          default:
-            throw new InvalidCastException("Attempted to read float value from a {0}".F(Type));
-        }
+        case ValType.INT:
+          return a._vI;
+        case ValType.FLOAT:
+          return (int)a._vF;
+        case ValType.STRING:
+          return Convert.ToInt32(a._obj.vS);
+        default:
+          throw new InvalidCastException("Attempted to read int value from a {0}".F(a.Type));
       }
     }
 
-    public string vS
+    public static explicit operator float(Val a)
     {
-      get
+      switch (a.Type)
       {
-        switch (Type)
-        {
-          case ValType.BOOL:
-            return vB.ToString();
-          case ValType.INT:
-            return _vI.ToString();
-          case ValType.FLOAT:
-            return _vF.ToString();
-          case ValType.STRING:
-            return _vS;
-          default:
-            return "({0})".F(Type);
-            //throw new InvalidCastException("Attempted to read string value from a {0}".F(Type));
-        }
+        case ValType.INT:
+          return a._vI;
+        case ValType.FLOAT:
+          return a._vF;
+        case ValType.STRING:
+          return Convert.ToSingle(a._obj.vS);
+        default:
+          throw new InvalidCastException("Attempted to read float value from a {0}".F(a.Type));
       }
+    }
+
+    public static explicit operator string(Val a)
+    {
+      switch (a.Type)
+      {
+        case ValType.BOOL:
+          return a._vB.ToString();
+        case ValType.INT:
+          return a._vI.ToString();
+        case ValType.FLOAT:
+          return a._vF.ToString();
+        case ValType.STRING:
+          return a._obj.vS;
+        default:
+          return "({0})".F(a.Type);
+      }
+    }
+
+    public static explicit operator bool[](Val a)
+    {
+      try { return a._obj.aB; }
+      catch { throw new InvalidCastException("Attempted to read bool[] value from a {0}".F(a.Type)); }
+    }
+
+    public static explicit operator int[] (Val a)
+    {
+      try { return a._obj.aI; }
+      catch { throw new InvalidCastException("Attempted to read int[] value from a {0}".F(a.Type)); }
+    }
+
+    public static explicit operator float[] (Val a)
+    {
+      try { return a._obj.aF; }
+      catch { throw new InvalidCastException("Attempted to read float[] value from a {0}".F(a.Type)); }
     }
 
     public object Value
@@ -132,13 +147,19 @@ namespace SWEndor.Scenarios.Scripting.Expressions
         switch (Type)
         {
           case ValType.BOOL:
-            return vB;
+            return _vB;
           case ValType.INT:
-            return vI;
+            return _vI;
           case ValType.FLOAT:
-            return vF;
+            return _vF;
           case ValType.STRING:
-            return vS;
+            return _obj.vS;
+          case ValType.BOOL_ARRAY:
+            return _obj.aB;
+          case ValType.INT_ARRAY:
+            return _obj.aI;
+          case ValType.FLOAT_ARRAY:
+            return _obj.aF;
           default:
             return null;
         }
@@ -148,97 +169,75 @@ namespace SWEndor.Scenarios.Scripting.Expressions
     public Val(ValType type)
     {
       Type = type;
-      aB = null;
-      aI = null;
-      aF = null;
+
+      _obj = new ValObj();
       _vI = 0;
       _vF = 0;
-      _vS = string.Empty;
-      vB = false;
+      _vB = false;
     }
 
     public Val(bool val)
     {
       Type = ValType.BOOL;
-      aB = null;
-      aI = null;
-      aF = null;
+      _obj = new ValObj();
       _vI = 0;
       _vF = 0;
-      _vS = string.Empty;
-      vB = val;
+      _vB = val;
     }
 
     public Val(int val)
     {
       Type = ValType.INT;
-      aB = null;
-      aI = null;
-      aF = null;
-      vB = false;
+      _obj = new ValObj();
+      _vB = false;
       _vF = 0;
-      _vS = string.Empty;
       _vI = val;
     }
 
     public Val(float val)
     {
       Type = ValType.FLOAT;
-      aB = null;
-      aI = null;
-      aF = null;
-      vB = false;
+      _obj = new ValObj();
+      _vB = false;
       _vI = 0;
-      _vS = string.Empty;
       _vF = val;
     }
 
     public Val(string val)
     {
       Type = ValType.STRING;
-      aB = null;
-      aI = null;
-      aF = null;
-      vB = false;
+      _vB = false;
       _vI = 0;
       _vF = 0;
-      _vS = val ?? string.Empty;
+      _obj = new ValObj(val ?? string.Empty);
     }
 
     public Val(bool[] val)
     {
       Type = ValType.INT_ARRAY;
-      aI = null;
-      aF = null;
-      vB = false;
+      _vB = false;
       _vI = 0;
       _vF = 0;
-      _vS = string.Empty;
-      aB = val;
+      _obj = new ValObj(val);
     }
 
     public Val(int[] val)
     {
       Type = ValType.INT_ARRAY;
-      aB = null;
-      aF = null;
-      vB = false;
+      _vB = false;
       _vI = 0;
       _vF = 0;
-      _vS = string.Empty;
-      aI = val;
+      _obj = new ValObj(val);
     }
 
     public Val(float[] val)
     {
       Type = ValType.FLOAT_ARRAY;
-      aB = null;
-      aI = null;
-      vB = false;
+      _obj = new ValObj();
+      _vB = false;
       _vI = 0;
       _vF = 0;
-      _vS = string.Empty;
-      aF = val;
+      _obj = new ValObj(val);
     }
 
     public static readonly Val NULL = new Val();
@@ -246,202 +245,9 @@ namespace SWEndor.Scenarios.Scripting.Expressions
     public static readonly Val FALSE = new Val(false);
 
     public bool IsNull { get { return Type == ValType.NULL; } }
-    public bool IsTrue { get { return Type == ValType.BOOL && vB == true; } }
-    public bool IsFalse { get { return Type == ValType.BOOL && vB == false; } }
+    public bool IsTrue { get { return Type == ValType.BOOL && _vB == true; } }
+    public bool IsFalse { get { return Type == ValType.BOOL && _vB == false; } }
 
     public bool IsArray { get { return Type == ValType.BOOL_ARRAY || Type == ValType.FLOAT_ARRAY || Type == ValType.INT_ARRAY; } }
-
-    public Array Array
-    {
-      get
-      {
-        if (Type == ValType.INT_ARRAY)
-          return aI;
-        if (Type == ValType.FLOAT_ARRAY)
-          return aF;
-        return null;
-      }
-    }
-
-  }
-
-  public static class Ops
-  {
-    public struct Pair<T,U>
-    {
-      T _t;
-      U _u;
-      public Pair(T t, U u) { _t = t;  _u = u; }
-    }
-
-    public struct Triple<T, U, V>
-    {
-      T _t;
-      U _u;
-      V _v;
-      public Triple(T t, U u, V v) { _t = t; _u = u; _v = v; }
-    }
-
-    public static Dictionary<Pair<UOp, ValType>, Func<Val, Val>> unaryops
-      = new Dictionary<Pair<UOp, ValType>, Func<Val, Val>>
-      {
-        // IDENTITY
-        { new Pair<UOp, ValType>(UOp.IDENTITY, ValType.BOOL), (a) => { return a; } },
-        { new Pair<UOp, ValType>(UOp.IDENTITY, ValType.INT), (a) => { return a; } },
-        { new Pair<UOp, ValType>(UOp.IDENTITY, ValType.FLOAT), (a) => { return a; } },
-        { new Pair<UOp, ValType>(UOp.IDENTITY, ValType.STRING), (a) => { return a; } },
-
-        // NEGATION
-        { new Pair<UOp, ValType>(UOp.LOGICAL_NOT, ValType.BOOL), (a) => { return new Val(!a.vB); }},
-
-        // INVERSE
-        { new Pair<UOp, ValType>(UOp.NEGATION, ValType.INT), (a) => { return  new Val(-a.vI); }},
-        { new Pair<UOp, ValType>(UOp.NEGATION, ValType.FLOAT), (a) => { return  new Val(-a.vF); }},
-      };
-
-    public static Dictionary<Triple<BOp, ValType, ValType>, Func<Val, Val, Val>> binaryops
-      = new Dictionary<Triple<BOp, ValType, ValType>, Func<Val, Val, Val>>
-      {
-        // ADD
-        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI + b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI + b.vF); }},
-        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF + b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF + b.vF); }},
-        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.INT, ValType.STRING), (a,b) => { return new Val(a.vI + b.vS); }},
-        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.STRING, ValType.INT), (a,b) => { return new Val(a.vS + b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.STRING, ValType.STRING), (a,b) => { return new Val(a.vS + b.vS); }},
-        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.FLOAT, ValType.STRING), (a,b) => { return new Val(a.vF + b.vS); }},
-        {new Triple<BOp, ValType, ValType>(BOp.ADD, ValType.STRING, ValType.FLOAT), (a,b) => { return new Val(a.vS + b.vF); }},
-
-        // SUBTRACT
-        {new Triple<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI - b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI - b.vF); }},
-        {new Triple<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF - b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF - b.vF); }},
-
-        // MULTIPLY
-        {new Triple<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI * b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI * b.vF); }},
-        {new Triple<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF * b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF * b.vF); }},
-
-        // DIVIDE
-        {new Triple<BOp, ValType, ValType>(BOp.DIVIDE, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI / b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.DIVIDE, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI / b.vF); }},
-        {new Triple<BOp, ValType, ValType>(BOp.DIVIDE, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF / b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.DIVIDE, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF / b.vF); }},
-
-        // MODULUS
-        {new Triple<BOp, ValType, ValType>(BOp.MODULUS, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI % b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.MODULUS, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI % b.vF); }},
-        {new Triple<BOp, ValType, ValType>(BOp.MODULUS, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF % b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.MODULUS, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF % b.vF); }},
-
-        // LOGICAL_OR
-        {new Triple<BOp, ValType, ValType>(BOp.LOGICAL_OR, ValType.BOOL, ValType.BOOL), (a,b) => { return new Val(a.vB || b.vB); }},
-        //{new Triple<BOp, ValType, ValType>(BOp.LOGICAL_OR, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI | b.ValueI); }},
-
-        // LOGICAL_AND
-        {new Triple<BOp, ValType, ValType>(BOp.LOGICAL_AND, ValType.BOOL, ValType.BOOL), (a,b) => { return new Val(a.vB & b.vB); }},
-        //{new Triple<BOp, ValType, ValType>(BOp.LOGICAL_AND, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI & b.ValueI); }},
-
-        // EQUAL_TO
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.NULL), (a,b) => { return new Val(false); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.NULL), (a,b) => { return new Val(false); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.NULL), (a,b) => { return new Val(false); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.NULL), (a,b) => { return new Val(a.vS == null); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.NULL), (a,b) => { return new Val(true); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.BOOL), (a,b) => { return new Val(false); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.INT), (a,b) => { return new Val(false); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.FLOAT), (a,b) => { return new Val(false); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.STRING), (a,b) => { return new Val(b.vS == null); }},
-
-        { new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.BOOL), (a,b) => { return new Val(a.vB == b.vB); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.INT), (a,b) => { return new Val(false); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.BOOL), (a,b) => { return new Val(false); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI == b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.FLOAT), (a,b) => { return new Val(false); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.BOOL), (a,b) => { return new Val(false); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI == b.vF); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF == b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF == b.vF); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.STRING), (a,b) => { return new Val(false); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.BOOL), (a,b) => { return new Val(false); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.STRING), (a,b) => { return new Val(false); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.INT), (a,b) => { return new Val(false); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.STRING), (a,b) => { return new Val(a.vS == b.vS); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.STRING), (a,b) => { return new Val(false); }},
-        {new Triple<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.FLOAT), (a,b) => { return new Val(false); }},
-
-        // NOT_EQUAL_TO
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.NULL), (a,b) => { return new Val(true); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.NULL), (a,b) => { return new Val(true); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.NULL), (a,b) => { return new Val(true); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.NULL), (a,b) => { return new Val(a.vS != null); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.NULL), (a,b) => { return new Val(true); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.BOOL), (a,b) => { return new Val(true); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.INT), (a,b) => { return new Val(true); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.FLOAT), (a,b) => { return new Val(true); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.STRING), (a,b) => { return new Val(b.vS != null); }},
-
-        { new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.BOOL), (a,b) => { return new Val(a.vB != b.vB); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.INT), (a,b) => { return new Val(true); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.BOOL), (a,b) => { return new Val(true); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI != b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.FLOAT), (a,b) => { return new Val(true); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.BOOL), (a,b) => { return new Val(true); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI != b.vF); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF != b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF != b.vF); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.STRING), (a,b) => { return new Val(true); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.BOOL), (a,b) => { return new Val(true); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.STRING), (a,b) => { return new Val(true); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.INT), (a,b) => { return new Val(true); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.STRING), (a,b) => { return new Val(a.vS != b.vS); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.STRING), (a,b) => { return new Val(true); }},
-        {new Triple<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.FLOAT), (a,b) => { return new Val(true); }},
-
-        // MORE_THAN
-        {new Triple<BOp, ValType, ValType>(BOp.MORE_THAN, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI > b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.MORE_THAN, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI > b.vF); }},
-        {new Triple<BOp, ValType, ValType>(BOp.MORE_THAN, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF > b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.MORE_THAN, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF > b.vF); }},
-
-        // MORE_THAN_OR_EQUAL_TO
-        {new Triple<BOp, ValType, ValType>(BOp.MORE_THAN_OR_EQUAL_TO, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI >= b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.MORE_THAN_OR_EQUAL_TO, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI >= b.vF); }},
-        {new Triple<BOp, ValType, ValType>(BOp.MORE_THAN_OR_EQUAL_TO, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF >= b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.MORE_THAN_OR_EQUAL_TO, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF >= b.vF); }},
-
-        // LESS_THAN
-        {new Triple<BOp, ValType, ValType>(BOp.LESS_THAN, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI < b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.LESS_THAN, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI < b.vF); }},
-        {new Triple<BOp, ValType, ValType>(BOp.LESS_THAN, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF < b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.LESS_THAN, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF < b.vF); }},
-
-        // LESS_THAN_OR_EQUAL_TO
-        {new Triple<BOp, ValType, ValType>(BOp.LESS_THAN_OR_EQUAL_TO, ValType.INT, ValType.INT), (a,b) => { return new Val(a.vI <= b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.LESS_THAN_OR_EQUAL_TO, ValType.INT, ValType.FLOAT), (a,b) => { return new Val(a.vI <= b.vF); }},
-        {new Triple<BOp, ValType, ValType>(BOp.LESS_THAN_OR_EQUAL_TO, ValType.FLOAT, ValType.INT), (a,b) => { return new Val(a.vF <= b.vI); }},
-        {new Triple<BOp, ValType, ValType>(BOp.LESS_THAN_OR_EQUAL_TO, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val(a.vF <= b.vF); } }
-      };
-
-    public static Val Do(UOp op, Val v)
-    {
-      Func<Val, Val> fn;
-      if (!unaryops.TryGetValue(new Pair<UOp, ValType>(op, v.Type), out fn))
-        throw new ArgumentException(TextLocalization.Get(TextLocalKeys.SCRIPT_UNEXPECTED_UOP).F(op, v.Type));
-
-      return fn.Invoke(v);
-    }
-
-    public static Val Do(BOp op, Val v1, Val v2)
-    {
-      Func<Val, Val, Val> fn;
-      if (!binaryops.TryGetValue(new Triple<BOp, ValType, ValType>(op, v1.Type, v2.Type), out fn))
-        throw new ArgumentException(TextLocalization.Get(TextLocalKeys.SCRIPT_UNEXPECTED_BOP).F(op, v1.Type, v2.Type));
-
-      return fn.Invoke(v1, v2);
-    }
   }
 }

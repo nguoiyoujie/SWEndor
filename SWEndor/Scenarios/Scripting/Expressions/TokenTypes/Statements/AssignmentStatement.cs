@@ -19,7 +19,6 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       // VARIABLE &= EXPR;
       // VARIABLE |= EXPR;
       // TO DO: VARIABLE++/--;
-      // TO DO: ++/--VARIABLE;
       // or
       // EXPR;
 

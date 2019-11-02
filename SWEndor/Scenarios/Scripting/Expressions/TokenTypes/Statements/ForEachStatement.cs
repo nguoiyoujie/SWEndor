@@ -68,7 +68,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 
         if (array.Type == ValType.BOOL_ARRAY)
         {
-          foreach (bool v in array.aB)
+          foreach (bool v in (bool[])array)
           {
             local.SetVar(_var.varName, new Val(v));
             foreach (CStatement s in _actions)
@@ -78,7 +78,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
         }
         else if (array.Type == ValType.INT_ARRAY)
         {
-          foreach (int v in array.aI)
+          foreach (int v in (int[])array)
           {
             local.SetVar(_var.varName, new Val(v));
             foreach (CStatement s in _actions)
@@ -88,7 +88,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
         }
         else if (array.Type == ValType.FLOAT_ARRAY)
         {
-          foreach (float v in array.aF)
+          foreach (float v in (float[])array)
           {
             local.SetVar(_var.varName, new Val(v));
             foreach (CStatement s in _actions)

@@ -29,6 +29,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions.Literal
         }
       }
 
+      vL = new Val[_param.Count];
       bL = new bool[_param.Count];
       fL = new float[_param.Count];
       iL = new int[_param.Count];
@@ -47,6 +48,8 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions.Literal
         {
           if (t == ValType.INT && vL[i].Type == ValType.FLOAT)
             t = ValType.FLOAT;
+          else if (t == ValType.FLOAT && vL[i].Type == ValType.INT)
+            continue;
           else
             throw new EvalException(this, "Incompatible types detected in array: {0}, {1}".F(t, vL[i].Type));
         }
@@ -56,17 +59,17 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions.Literal
       {
         case ValType.BOOL:
           for (int i = 0; i < bL.Length; i++)
-            bL[i] = vL[i].vB;
+            bL[i] = (bool)vL[i];
           return new Val(bL);
 
         case ValType.INT:
           for (int i = 0; i < iL.Length; i++)
-            iL[i] = vL[i].vI;
+            iL[i] = (int)vL[i];
           return new Val(iL);
 
         case ValType.FLOAT:
           for (int i = 0; i < fL.Length; i++)
-            fL[i] = vL[i].vF;
+            fL[i] = (float)vL[i];
           return new Val(fL);
 
         default:

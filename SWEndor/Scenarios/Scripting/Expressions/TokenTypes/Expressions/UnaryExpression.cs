@@ -13,6 +13,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       // - PRIAMRY
       // ! PRIAMRY
       // ~ PRIAMRY // not supported yet
+      // TO DO: ++/-- PRIMARY;
       // ^
 
       _type = lexer.TokenType;

@@ -7,14 +7,14 @@ namespace SWEndor.Scenarios.Scripting.Functions
   {
     public static Val MessageText(Context context, params Val[] ps)
     {
-      string text = ps[0].vS;
-      float expiretime = ps[1].vI;
-      COLOR color = new COLOR(ps[2].vF, ps[3].vF, ps[4].vF, ps[5].vF);
+      string text = (string)ps[0];
+      float expiretime = (int)ps[1];
+      COLOR color = new COLOR((float)ps[2], (float)ps[3], (float)ps[4], (float)ps[5]);
 
       if (ps.Length <= 6)
         context.Engine.Screen2D.MessageText(text, expiretime, color);
       else
-        context.Engine.Screen2D.MessageText(text, expiretime, color, ps[6].vI);
+        context.Engine.Screen2D.MessageText(text, expiretime, color, (int)ps[6]);
       return Val.TRUE;
     }
   }

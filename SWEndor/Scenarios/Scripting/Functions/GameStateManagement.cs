@@ -10,42 +10,42 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static Val GetGameStateB(Context context, Val[] ps)
     {
       if (ps.Length == 1)
-        return new Val(context.Engine.GameScenarioManager.GetGameStateB(ps[0].vS));
+        return new Val(context.Engine.GameScenarioManager.GetGameStateB((string)ps[0]));
       else
-        return new Val(context.Engine.GameScenarioManager.GetGameStateB(ps[0].vS, ps[1].vB));
+        return new Val(context.Engine.GameScenarioManager.GetGameStateB((string)ps[0], (bool)ps[1]));
     }
 
     public static Val SetGameStateB(Context context, Val[] ps)
     {
-      context.Engine.GameScenarioManager.SetGameStateB(ps[0].vS, ps[1].vB);
+      context.Engine.GameScenarioManager.SetGameStateB((string)ps[0], (bool)ps[1]);
       return Val.TRUE;
     }
 
     public static Val GetGameStateF(Context context, Val[] ps)
     {
       if (ps.Length == 1)
-        return new Val(context.Engine.GameScenarioManager.GetGameStateF(ps[0].vS));
+        return new Val(context.Engine.GameScenarioManager.GetGameStateF((string)ps[0]));
       else
-        return new Val(context.Engine.GameScenarioManager.GetGameStateF(ps[0].vS, ps[1].vF));
+        return new Val(context.Engine.GameScenarioManager.GetGameStateF((string)ps[0], (float)ps[1]));
     }
 
     public static Val SetGameStateF(Context context, Val[] ps)
     {
-      context.Engine.GameScenarioManager.SetGameStateF(ps[0].vS, ps[1].vF);
+      context.Engine.GameScenarioManager.SetGameStateF((string)ps[0], (float)ps[1]);
       return Val.TRUE;
     }
 
     public static Val GetGameStateS(Context context, Val[] ps)
     {
       if (ps.Length == 1)
-        return new Val(context.Engine.GameScenarioManager.GetGameStateS(ps[0].vS));
+        return new Val(context.Engine.GameScenarioManager.GetGameStateS((string)ps[0]));
       else
-        return new Val(context.Engine.GameScenarioManager.GetGameStateS(ps[0].vS, ps[1].vS));
+        return new Val(context.Engine.GameScenarioManager.GetGameStateS((string)ps[0], (string)ps[1]));
     }
 
     public static Val SetGameStateS(Context context, Val[] ps)
     {
-      context.Engine.GameScenarioManager.SetGameStateS(ps[0].vS, ps[1].vS);
+      context.Engine.GameScenarioManager.SetGameStateS((string)ps[0], (string)ps[1]);
       return Val.TRUE;
     }
 
@@ -85,7 +85,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null)
         return Val.FALSE;
 
-      context.Engine.GameScenarioManager.Scenario.StageNumber = ps[0].vI;
+      context.Engine.GameScenarioManager.Scenario.StageNumber = (int)ps[0];
       return Val.TRUE;
     }
 
@@ -94,7 +94,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null)
         return new Val(0);
 
-      HashSet<ActorInfo> reg = context.Engine.GameScenarioManager.Scenario.GetRegister(ps[0].vS);
+      HashSet<ActorInfo> reg = context.Engine.GameScenarioManager.Scenario.GetRegister((string)ps[0]);
       if (reg == null)
         return new Val(0);
       return new Val(reg.Count);
@@ -118,15 +118,15 @@ namespace SWEndor.Scenarios.Scripting.Functions
 
     public static Val AddEvent(Context context, Val[] ps)
     {
-      Script s = Script.Registry.Get(ps[1].vS);
-      if (s != null)
-        context.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + ps[0].vF
-        , () => s.Run(context));
+      Script script = Script.Registry.Get((string)ps[1]);
+      if (script != null)
+        context.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + (float)ps[0]
+        , (c, s) => s.Run(c), context, script);
       else
       {
         // core events // implement this elsewhere
         GameEvent g = null;
-        switch (ps[1].vS.ToLower())
+        switch (((string)ps[1]).ToLower())
         {
           case "common.fadein":
             g = context.Engine.GameScenarioManager.Scenario.FadeIn;
@@ -137,9 +137,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
             break;
         }
         if (g != null)
-          context.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + ps[0].vF, g);
+          context.Engine.GameScenarioManager.AddEvent(Globals.Engine.Game.GameTime + (float)ps[0], g);
         else
-          throw new InvalidOperationException(string.Format("Script event '{0}' does not exist!", ps[1].vS));
+          throw new InvalidOperationException(string.Format("Script event '{0}' does not exist!", (string)ps[1]));
       }
 
       return Val.TRUE;

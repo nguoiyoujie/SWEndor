@@ -39,49 +39,49 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
         return c;
 
       Val i = _index.Evaluate(local, context);
-      if (!(i.Type == ValType.INT || (i.Type == ValType.FLOAT && i.vF == i.vI)))
+      if (!(i.Type == ValType.INT || (i.Type == ValType.FLOAT && (float)i == (int)i)))
         throw new EvalException(this, "Attempted to index an array with a non-integer!");
 
-      int x = i.vI;
+      int x = (int)i;
       try
       {
         switch (c.Type)
         {
           case ValType.BOOL_ARRAY:
-            return new Val(c.aB[x]);
+            return new Val(((bool[])c)[x]);
           case ValType.INT_ARRAY:
-            return new Val(c.aI[x]);
+            return new Val(((int[])c)[x]);
           case ValType.FLOAT2:
           case ValType.FLOAT3:
           case ValType.FLOAT4:
           case ValType.FLOAT_ARRAY:
-            return new Val(c.aF[x]);
+            return new Val(((float[])c)[x]);
           case ValType.STRING:
-            return new Val(c.vS[x]);
+            return new Val(((string)c)[x]);
 
           default:
             throw new EvalException(this, "Attempted to index a non-array: {0}".F(c));
         }
       }
-      catch (IndexOutOfRangeException ex)
+      catch (IndexOutOfRangeException)
       {
         int len = 0;
         switch (c.Type)
         {
           case ValType.BOOL_ARRAY:
-            len = c.aB.Length;
+            len = ((bool[])c).Length;
             break;
           case ValType.INT_ARRAY:
-            len = c.aI.Length;
+            len = ((int[])c).Length;
             break;
           case ValType.FLOAT2:
           case ValType.FLOAT3:
           case ValType.FLOAT4:
           case ValType.FLOAT_ARRAY:
-            len = c.aF.Length;
+            len = ((float[])c).Length;
             break;
           case ValType.STRING:
-            len = c.vS.Length;
+            len = ((string)c).Length;
             break;
         }
         throw new EvalException(this, "Index ({0}) for an array (length: {1}) is out of range!".F(x, len));

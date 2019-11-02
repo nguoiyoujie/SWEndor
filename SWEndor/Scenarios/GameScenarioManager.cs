@@ -113,6 +113,16 @@ namespace SWEndor.Scenarios
       GameEventQueue.Add(time, gevent, arg);
     }
 
+    public void AddEvent<T1, T2>(float time, GameEvent<T1, T2> gevent, T1 a1, T2 a2)
+    {
+      GameEventQueue.Add(time, gevent, a1, a2);
+    }
+
+    public void AddEvent<T1, T2, T3>(float time, GameEvent<T1, T2, T3> gevent, T1 a1, T2 a2, T3 a3)
+    {
+      GameEventQueue.Add(time, gevent, a1, a2, a3);
+    }
+
     public void ClearEvents()
     {
       GameEventQueue.Clear();
