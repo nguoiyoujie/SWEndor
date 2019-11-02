@@ -508,6 +508,10 @@
     <Compile Include="Scenarios\MoodStates.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\TokenTypes\Expressions\Literals\ArrayLiteral.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\TokenTypes\Expressions\IndexedExpression.cs" />
+    <Compile Include="Scenarios\Scripting\Expressions\TokenTypes\Expressions\DeclVariable.cs" />
+    <Compile Include="Scenarios\Scripting\Expressions\TokenTypes\Statements\SingleStatement.cs" />
+    <Compile Include="Scenarios\Scripting\Expressions\TokenTypes\Statements\WhileStatement.cs" />
+    <Compile Include="Scenarios\Scripting\Expressions\TokenTypes\Statements\ForStatement.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\Val.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\SWContext.cs" />
     <Compile Include="Scenarios\Scripting\Expressions\Context.cs" />
