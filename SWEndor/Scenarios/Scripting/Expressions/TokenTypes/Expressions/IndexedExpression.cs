@@ -79,8 +79,14 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
             len = ((int[])c).Length;
             break;
           case ValType.FLOAT2:
+            len = 2;
+            break;
           case ValType.FLOAT3:
+            len = 3;
+            break;
           case ValType.FLOAT4:
+            len = 4;
+            break;
           case ValType.FLOAT_ARRAY:
             len = ((float[])c).Length;
             break;
