@@ -1,4 +1,5 @@
 ﻿using SWEndor.Primitives.Extensions;
+using SWEndor.Scenarios.Scripting.Expressions.Primitives;
 using System;
 
 namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
@@ -52,8 +53,11 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
           case ValType.INT_ARRAY:
             return new Val(((int[])c)[x]);
           case ValType.FLOAT2:
+            return new Val(((float2)c)[x]);
           case ValType.FLOAT3:
+            return new Val(((float3)c)[x]);
           case ValType.FLOAT4:
+            return new Val(((float4)c)[x]);
           case ValType.FLOAT_ARRAY:
             return new Val(((float[])c)[x]);
           case ValType.STRING:

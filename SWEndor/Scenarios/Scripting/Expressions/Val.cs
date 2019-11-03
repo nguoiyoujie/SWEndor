@@ -1,4 +1,5 @@
 ﻿using SWEndor.Primitives.Extensions;
+using SWEndor.Scenarios.Scripting.Expressions.Primitives;
 using System;
 using System.Runtime.InteropServices;
 
@@ -16,13 +17,36 @@ namespace SWEndor.Scenarios.Scripting.Expressions
     [FieldOffset(0)]
     internal readonly float[] aF;
 
-
     public ValObj(string val)
     {
       aB = null;
       aI = null;
       aF = null;
       vS = val ?? string.Empty;
+    }
+
+    public ValObj(float2 val)
+    {
+      vS = null;
+      aB = null;
+      aI = null;
+      aF = val.ToArray();
+    }
+
+    public ValObj(float3 val)
+    {
+      vS = null;
+      aB = null;
+      aI = null;
+      aF = val.ToArray();
+    }
+
+    public ValObj(float4 val)
+    {
+      vS = null;
+      aB = null;
+      aI = null;
+      aF = val.ToArray();
     }
 
     public ValObj(bool[] val)
@@ -122,6 +146,48 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       }
     }
 
+    public static explicit operator float2 (Val a)
+    {
+      switch (a.Type)
+      {
+        case ValType.FLOAT2:
+        case ValType.FLOAT_ARRAY:
+          return float2.FromArray(a._obj.aF);
+        case ValType.INT_ARRAY:
+          return float2.FromArray(a._obj.aI);
+        default:
+          throw new InvalidCastException("Attempted to read float2 value from a {0}".F(a.Type));
+      }
+    }
+
+    public static explicit operator float3(Val a)
+    {
+      switch (a.Type)
+      {
+        case ValType.FLOAT3:
+        case ValType.FLOAT_ARRAY:
+          return float3.FromArray(a._obj.aF);
+        case ValType.INT_ARRAY:
+          return float3.FromArray(a._obj.aI);
+        default:
+          throw new InvalidCastException("Attempted to read float3 value from a {0}".F(a.Type));
+      }
+    }
+
+    public static explicit operator float4(Val a)
+    {
+      switch (a.Type)
+      {
+        case ValType.FLOAT4:
+        case ValType.FLOAT_ARRAY:
+          return float4.FromArray(a._obj.aF);
+        case ValType.INT_ARRAY:
+          return float4.FromArray(a._obj.aI);
+        default:
+          throw new InvalidCastException("Attempted to read float4 value from a {0}".F(a.Type));
+      }
+    }
+
     public static explicit operator bool[](Val a)
     {
       try { return a._obj.aB; }
@@ -158,6 +224,9 @@ namespace SWEndor.Scenarios.Scripting.Expressions
             return _obj.aB;
           case ValType.INT_ARRAY:
             return _obj.aI;
+          case ValType.FLOAT2:
+          case ValType.FLOAT3:
+          case ValType.FLOAT4:
           case ValType.FLOAT_ARRAY:
             return _obj.aF;
           default:
@@ -212,6 +281,33 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       _obj = new ValObj(val ?? string.Empty);
     }
 
+    public Val(float2 val)
+    {
+      Type = ValType.FLOAT2;
+      _vB = false;
+      _vI = 0;
+      _vF = 0;
+      _obj = new ValObj(val);
+    }
+
+    public Val(float3 val)
+    {
+      Type = ValType.FLOAT3;
+      _vB = false;
+      _vI = 0;
+      _vF = 0;
+      _obj = new ValObj(val);
+    }
+
+    public Val(float4 val)
+    {
+      Type = ValType.FLOAT4;
+      _vB = false;
+      _vI = 0;
+      _vF = 0;
+      _obj = new ValObj(val);
+    }
+
     public Val(bool[] val)
     {
       Type = ValType.INT_ARRAY;
@@ -233,7 +329,6 @@ namespace SWEndor.Scenarios.Scripting.Expressions
     public Val(float[] val)
     {
       Type = ValType.FLOAT_ARRAY;
-      _obj = new ValObj();
       _vB = false;
       _vI = 0;
       _vF = 0;

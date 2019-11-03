@@ -4,6 +4,7 @@ using SWEndor.Scenarios.Scripting.Expressions;
 using SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Statements;
 using SWEndor.Primitives.Extensions;
 using System;
+using SWEndor.Scenarios.Scripting.Expressions.Primitives;
 
 namespace SWEndor.Scenarios.Scripting
 {
@@ -85,6 +86,67 @@ namespace SWEndor.Scenarios.Scripting
       // int can accept float
       else if (t == ValType.INT && val.Type == ValType.FLOAT)
         m_variables[name] = new Val((int)val);
+
+      // float2/3/4 can accept float_array/int_array of same or smaller length
+      else if (t == ValType.FLOAT2 && val.Type == ValType.FLOAT_ARRAY)
+      {
+        float[] fv = (float[])val;
+        int len = fv.Length;
+        if (len == 2)
+          m_variables[name] = new Val(float2.FromArray(fv));
+        else
+          throw new InvalidOperationException("Attempted assignment of an array of length {0} to variable '{1} {2}'".F(len, name, t));
+      }
+
+      else if (t == ValType.FLOAT3 && val.Type == ValType.FLOAT_ARRAY)
+      {
+        float[] fv = (float[])val;
+        int len = fv.Length;
+        if (len == 3)
+          m_variables[name] = new Val(float3.FromArray(fv));
+        else
+          throw new InvalidOperationException("Attempted assignment of an array of length {0} to variable '{1} {2}'".F(len, name, t));
+      }
+
+      else if (t == ValType.FLOAT4 && val.Type == ValType.FLOAT_ARRAY)
+      {
+        float[] fv = (float[])val;
+        int len = fv.Length;
+        if (len == 4)
+          m_variables[name] = new Val(float4.FromArray(fv));
+        else
+          throw new InvalidOperationException("Attempted assignment of an array of length {0} to variable '{1} {2}'".F(len, name, t));
+      }
+
+      else if (t == ValType.FLOAT2 && val.Type == ValType.INT_ARRAY)
+      {
+        int[] fv = (int[])val;
+        int len = fv.Length;
+        if (len == 2)
+          m_variables[name] = new Val(float2.FromArray(fv));
+        else
+          throw new InvalidOperationException("Attempted assignment of an array of length {0} to variable '{1} {2}'".F(len, name, t));
+      }
+
+      else if (t == ValType.FLOAT3 && val.Type == ValType.INT_ARRAY)
+      {
+        int[] fv = (int[])val;
+        int len = fv.Length;
+        if (len == 3)
+          m_variables[name] = new Val(float3.FromArray(fv));
+        else
+          throw new InvalidOperationException("Attempted assignment of an array of length {0} to variable '{1} {2}'".F(len, name, t));
+      }
+
+      else if (t == ValType.FLOAT4 && val.Type == ValType.INT_ARRAY)
+      {
+        int[] fv = (int[])val;
+        int len = fv.Length;
+        if (len == 4)
+          m_variables[name] = new Val(float4.FromArray(fv));
+        else
+          throw new InvalidOperationException("Attempted assignment of an array of length {0} to variable '{1} {2}'".F(len, name, t));
+      }
 
       else
         throw new InvalidOperationException("Attempted assignment of value of type '{0}' to variable '{1} {2}'".F(val.Type, name, t));

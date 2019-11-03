@@ -41,8 +41,11 @@ load:
 	Player.SetScoreForNextLife(1000000);
 	Player.ResetScore();
 	
-	SetUILine1Color(0, 0.8, 0);
-	SetUILine2Color(0.4, 0.5, 0.9);
+	float3 c1 = { 0, 0.8, 0 };
+	float4 c2 = { 1, 0.4, 0.5, 0.9 };
+
+	SetUILine1Color(c1[0], c1[1], c1[2]);
+	SetUILine2Color(c2[1], c2[2], c2[3]);
 	
   CallScript("engagemusic");	
 	CallScript("spawnreset");	
