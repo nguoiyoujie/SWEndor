@@ -53,8 +53,8 @@ Gameplay Mechanics:
 
  
 Support Mechanics:
- - [2019.10.29] Actor Far Mode (switch to lower-poly model)
- - [2019.10.29] Aggregate Mode (indirect combat simulation)
+ - [2019.10.29] Actor Far Mode (switch to lower-poly model, for performance savings)
+ - [2019.10.29] Aggregate Mode (indirect combat simulation, for performance savings)
  
 
 Game Object Internals:
@@ -102,20 +102,20 @@ Scenario:
 
 	 
 Scripting:
- C [2019.10.29] Convert syntax to support strong typing
- C [2019.10.29] Supported types to include: 
+ - [2019.10.29] Convert syntax to support strong typing
+ - [2019.10.29] Supported types to include: 
      - [2019.10.29] bool
      - [2019.10.29] int
 	 - [2019.10.29] float
 	 - [2019.10.29] string
-	 C [2019.10.29] float2 (TV2D_VECTOR will alias to this)
-	 C [2019.10.29] float3 (TV3D_VECTOR will alias to this)
-	 C [2019.10.29] float4 (COLOR will alias to this)
-	 C [2019.10.29] bool array (bool[])
+	 @ [2019.10.29] float2 (TV2D_VECTOR will alias to this)
+	 @ [2019.10.29] float3 (TV3D_VECTOR will alias to this)
+	 @ [2019.10.29] float4 (COLOR will alias to this)
+	 - [2019.10.29] bool array (bool[])
 	 - [2019.10.29] int array (int[])
 	 - [2019.10.29] float array (float[])
 	 
- W [2019.10.29] Allow global variable definitions, and local variable definitions
+ @ [2019.10.29] Allow global variable definitions, and local variable definitions
  W [2019.10.29] Support interaction with game globals
  
 
