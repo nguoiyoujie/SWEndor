@@ -1,4 +1,5 @@
-﻿using SWEndor.Primitives.Extensions;
+﻿using MTV3D65;
+using SWEndor.Primitives.Extensions;
 using System;
 
 namespace SWEndor.Scenarios.Scripting.Expressions.Primitives
@@ -26,6 +27,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions.Primitives
     }
 
     public float[] ToArray() { return new float[] { x, y, z }; }
+    public TV_3DVECTOR ToVec3() { return new TV_3DVECTOR(x, y, z); }
     public static float3 FromArray(float[] array)
     {
       if (array == null)

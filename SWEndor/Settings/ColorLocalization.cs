@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Scenarios.Scripting.Expressions.Primitives;
 using System.Collections.Generic;
 
 namespace SWEndor
@@ -106,6 +107,24 @@ namespace SWEndor
       fR = r;
       fG = g;
       fB = b;
+    }
+
+    public COLOR(float3 f)
+    {
+      Value = 0;
+      fA = 1;
+      fR = f[0];
+      fG = f[1];
+      fB = f[2];
+    }
+
+    public COLOR(float4 f)
+    {
+      Value = 0;
+      fA = f[3];
+      fR = f[0];
+      fG = f[1];
+      fB = f[2];
     }
 
     public int Value;

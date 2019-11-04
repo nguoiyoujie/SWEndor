@@ -1,63 +1,63 @@
 // Global controls
 
-string spawnfaction;
+string spawn_type; 
+string spawn_name;
+string spawn_faction;
+
+// positioning
+bool spawn_hyperspace;
+float3 spawn_pos;
+float3 spawn_rot;
+
+// ai
+float spawn_wait;
+int spawn_target;
+
 float damagemod;
-bool spawnhyperspace;
-string spawntype; 
-int spawntarget;
-float spawnwait;
-float spawnX;
-float spawnY;
-float spawnZ;
-float spawnRotX;
-float spawnRotY;
-float spawnRotZ;
 
 spawnreset:
-	spawnfaction = "Empire";
+	spawn_name = "";
+	spawn_type = "";
+	spawn_faction = "Empire";
+	spawn_hyperspace = true;
+	spawn_pos = { 0, 0, 0 };
+	spawn_rot = { 0, 0, 0 };
+	spawn_wait = 0;
+	spawn_target = -1;
 	damagemod = 1;
-	spawnhyperspace = true;
-	spawntype = ""; 
-	spawntarget = -1;
-	spawnwait = 0;
-	spawnX = 0;
-	spawnY = 0;
-	spawnZ = 0;
-	spawnRotX = 0;
-	spawnRotY = 0;
-	spawnRotZ = 0;
+
 
 spawn1:
-	int spawnunit = Actor.Spawn(spawntype, "", "", "", 0, spawnfaction, spawnX, spawnY, spawnZ, spawnRotX, spawnRotY, spawnRotZ);
+	int spawnunit = Actor.Spawn(spawn_type, spawn_name, spawn_faction, "", 0, spawn_pos, spawn_rot);
 	Actor.SetProperty(spawnunit, "DamageModifier", damagemod);
-	Actor.QueueLast(spawnunit, "wait", spawnwait);
-	if (spawntarget >= 0)
-		Actor.QueueLast(spawnunit, "attackactor", spawntarget, -1, -1, false);
+	Actor.QueueLast(spawnunit, "wait", spawn_wait);
+	if (spawn_target >= 0)
+		Actor.QueueLast(spawnunit, "attackactor", spawn_target, -1, -1, false);
 
 spawn2:
-	int[] spawnsquad = Actor.Squadron_Spawn("", spawntype, spawnfaction, 3, spawnwait, "ANY", spawnhyperspace, "LINE", spawnRotX, spawnRotY, spawnRotZ, 200, 0, spawnX, spawnY, spawnZ);
+	int[] spawnsquad = Actor.Squadron_Spawn(spawn_type, spawn_name, spawn_faction, 2, 0, spawn_hyperspace, spawn_pos, spawn_rot, "LINE", 200, spawn_wait, "ANY");
 	foreach(int spawnunit in spawnsquad)
 	{
 		Actor.SetProperty(spawnunit, "DamageModifier", damagemod);
-		if (spawntarget >= 0)
-			Actor.QueueLast(spawnunit, "attackactor", spawntarget, -1, -1, false);
+		if (spawn_target >= 0)
+			Actor.QueueLast(spawnunit, "attackactor", spawn_target, -1, -1, false);
 	}
 
 spawn3:
-	int[] spawnsquad = Actor.Squadron_Spawn("", spawntype, spawnfaction, 3, spawnwait, "ANY", spawnhyperspace, "VSHAPE", spawnRotX, spawnRotY, spawnRotZ, 200, 0, spawnX, spawnY, spawnZ);
+	int[] spawnsquad = Actor.Squadron_Spawn(spawn_type, spawn_name, spawn_faction, 3, 0, spawn_hyperspace, spawn_pos, spawn_rot, "VSHAPE", 200, spawn_wait, "ANY");
 	foreach(int spawnunit in spawnsquad)
 	{
 		Actor.SetProperty(spawnunit, "DamageModifier", damagemod);
-		if (spawntarget >= 0)
-			Actor.QueueLast(spawnunit, "attackactor", spawntarget, -1, -1, false);
+		if (spawn_target >= 0)
+			Actor.QueueLast(spawnunit, "attackactor", spawn_target, -1, -1, false);
 	}
 
 spawn4:
-	int[] spawnsquad = Actor.Squadron_Spawn("", spawntype, spawnfaction, 4, spawnwait, "ANY", spawnhyperspace, "VERTICAL_SQUARE", spawnRotX, spawnRotY, spawnRotZ, 200, 0, spawnX, spawnY, spawnZ);
+	int[] spawnsquad = Actor.Squadron_Spawn(spawn_type, spawn_name, spawn_faction, 4, 0, spawn_hyperspace, spawn_pos, spawn_rot, "VERTICAL_SQUARE", 200, spawn_wait, "ANY");
 	foreach(int spawnunit in spawnsquad)
 	{
 		Actor.SetProperty(spawnunit, "DamageModifier", damagemod);
-		if (spawntarget >= 0)
-			Actor.QueueLast(spawnunit, "attackactor", spawntarget, -1, -1, false);
+		if (spawn_target >= 0)
+			Actor.QueueLast(spawnunit, "attackactor", spawn_target, -1, -1, false);
 	}
 
