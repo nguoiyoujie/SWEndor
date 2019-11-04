@@ -4,6 +4,7 @@ using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
 using SWEndor.Models;
 using SWEndor.Player;
+using SWEndor.Primitives.Geometry;
 using System.Collections.Generic;
 
 namespace SWEndor.Scenarios
@@ -165,15 +166,15 @@ namespace SWEndor.Scenarios
 
     public void Test_EnemyWave()
     {
-      GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -500, Manager.MaxBounds.z + 1500), new TV_3DVECTOR(2500, 500, Manager.MaxBounds.z + 1500));
-      GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
+      Box box = new Box(new TV_3DVECTOR(-2500, -500, Manager.MaxBounds.z + 1500), new TV_3DVECTOR(2500, 500, Manager.MaxBounds.z + 1500));
+      SquadSpawnInfo spawninfo = new SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("Z95")
                                                                           , MainEnemyFaction
                                                                           , 3
                                                                           , 18
                                                                           , TargetType.FIGHTER
                                                                           , true
-                                                                          , GSFunctions.SquadFormation.VSHAPE
+                                                                          , SquadFormation.VSHAPE
                                                                           , new TV_3DVECTOR(0, 180, 0)
                                                                           , 400
                                                                           , null);

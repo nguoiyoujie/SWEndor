@@ -5,82 +5,71 @@ using SWEndor.AI.Actions;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Primitives.Extensions;
+using SWEndor.Primitives.Geometry;
 using System.Collections.Generic;
 
 namespace SWEndor.Scenarios
 {
+  public enum SquadFormation
+  {
+    LINE,
+    VSHAPE,
+    HORIZONTAL_SQUARE,
+    VERTICAL_SQUARE
+  }
+
+  public struct SquadSpawnInfo
+  {
+    public string SquadName;
+    public ActorTypeInfo TypeInfo;
+    public FactionInfo Faction;
+    public int MemberCount;
+    public float WaitDelay;
+    public TargetType HuntTargetType;
+    public bool HyperspaceIn;
+    public SquadFormation Formation;
+    public TV_3DVECTOR Rotation;
+    public float FormationDistance;
+    public string[] Registries;
+
+    public SquadSpawnInfo(string squadName,
+                          ActorTypeInfo typeInfo,
+                          FactionInfo faction,
+                          int memberCount,
+                          float waitDelay,
+                          TargetType huntTargetType,
+                          bool hyperspaceIn,
+                          SquadFormation formation,
+                          TV_3DVECTOR rotation,
+                          float formationDistance,
+                          string[] registries
+                          )
+    {
+      SquadName = squadName;
+      TypeInfo = typeInfo;
+      Faction = faction;
+      MemberCount = memberCount;
+      WaitDelay = waitDelay;
+      HuntTargetType = huntTargetType;
+      HyperspaceIn = hyperspaceIn;
+      Formation = formation;
+      Rotation = rotation;
+      FormationDistance = formationDistance;
+      Registries = registries;
+    }
+  }
+
   public static class GSFunctions
   {
-    public enum SquadFormation
-    {
-      LINE,
-      VSHAPE,
-      HORIZONTAL_SQUARE,
-      VERTICAL_SQUARE
-    }
-
-    public struct SquadSpawnInfo
-    {
-      public string SquadName;
-      public ActorTypeInfo TypeInfo;
-      public FactionInfo Faction;
-      public int MemberCount;
-      public float WaitDelay;
-      public TargetType HuntTargetType;
-      public bool HyperspaceIn;
-      public SquadFormation Formation;
-      public TV_3DVECTOR Rotation;
-      public float FormationDistance;
-      public string[] Registries;
-
-      public SquadSpawnInfo(string squadName,
-                            ActorTypeInfo typeInfo,
-                            FactionInfo faction,
-                            int memberCount,
-                            float waitDelay,
-                            TargetType huntTargetType,
-                            bool hyperspaceIn,
-                            SquadFormation formation,
-                            TV_3DVECTOR rotation,
-                            float formationDistance,
-                            string[] registries
-                            )
-      {
-        SquadName = squadName;
-        TypeInfo = typeInfo;
-        Faction = faction;
-        MemberCount = memberCount;
-        WaitDelay = waitDelay;
-        HuntTargetType = huntTargetType;
-        HyperspaceIn = hyperspaceIn;
-        Formation = formation;
-        Rotation = rotation;
-        FormationDistance = formationDistance;
-        Registries = registries;
-      }
-    }
-
-    public struct BoxInfo
-    {
-      public readonly TV_3DVECTOR Min;
-      public readonly TV_3DVECTOR Max;
-
-      public BoxInfo(TV_3DVECTOR min, TV_3DVECTOR max)
-      {
-        Min = min;
-        Max = max;
-      } 
-    }
-
-    public static ActorInfo[] MultipleSquadron_Spawn(Engine engine, GameScenarioBase scenario, int sets, BoxInfo spawn_vol, float spawndelay, SquadSpawnInfo spawninfo)
+    public static ActorInfo[] MultipleSquadron_Spawn(Engine engine, GameScenarioBase scenario, int sets, Box spawn_vol, float spawndelay, SquadSpawnInfo spawninfo)
     {
       ActorInfo[] ret = new ActorInfo[sets * spawninfo.MemberCount];
       float time = engine.Game.GameTime;
       for (int k = 0; k < sets; k++)
       {
-        float fx = (spawn_vol.Min.x == spawn_vol.Max.x) ? spawn_vol.Min.x : spawn_vol.Min.x + (float)engine.Random.NextDouble() * (spawn_vol.Max.x - spawn_vol.Min.x);
-        float fy = (spawn_vol.Min.y == spawn_vol.Max.y) ? spawn_vol.Min.y : spawn_vol.Min.y + (float)engine.Random.NextDouble() * (spawn_vol.Max.y - spawn_vol.Min.y);
-        float fz = (spawn_vol.Min.z == spawn_vol.Max.z) ? spawn_vol.Min.z : spawn_vol.Min.z + (float)engine.Random.NextDouble() * (spawn_vol.Max.z - spawn_vol.Min.z);
+        float fx = (spawn_vol.X.Min == spawn_vol.X.Max) ? spawn_vol.X.Min : spawn_vol.X.Min + (float)engine.Random.NextDouble() * (spawn_vol.X.Max - spawn_vol.X.Min);
+        float fy = (spawn_vol.Y.Min == spawn_vol.Y.Max) ? spawn_vol.Y.Min : spawn_vol.Y.Min + (float)engine.Random.NextDouble() * (spawn_vol.Y.Max - spawn_vol.Y.Min);
+        float fz = (spawn_vol.Z.Min == spawn_vol.Z.Max) ? spawn_vol.Z.Min : spawn_vol.Z.Min + (float)engine.Random.NextDouble() * (spawn_vol.Z.Max - spawn_vol.Z.Min);
 
         ActorInfo[] r = Squadron_Spawn(engine, scenario, new TV_3DVECTOR(fx, fy, fz), time, spawninfo);
         for (int i = 0; i < spawninfo.MemberCount; i++)

@@ -5,6 +5,7 @@ using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Models;
 using SWEndor.Player;
+using SWEndor.Primitives.Geometry;
 using System.Collections.Generic;
 
 namespace SWEndor.Scenarios
@@ -396,15 +397,15 @@ namespace SWEndor.Scenarios
           ship.SetArmor(DamageType.ALL, 0.1f);
       }
 
-      GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-4000, 500, 7300), new TV_3DVECTOR(-5500, 0, 8000));
-      GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
+      Box box = new Box(new TV_3DVECTOR(-4000, 500, 7300), new TV_3DVECTOR(-5500, 0, 8000));
+      SquadSpawnInfo spawninfo = new SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("Z95")
                                                                           , MainAllyFaction
                                                                           , 3
                                                                           , 3
                                                                           , TargetType.FIGHTER
                                                                           , true
-                                                                          , GSFunctions.SquadFormation.VSHAPE
+                                                                          , SquadFormation.VSHAPE
                                                                           , new TV_3DVECTOR(0, -135, 0)
                                                                           , 400
                                                                           , null);
@@ -465,15 +466,15 @@ namespace SWEndor.Scenarios
         ship.SetSpawnerEnable(true);
       }
 
-      GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-4000, 500, 7300), new TV_3DVECTOR(-5500, 0, 8000));
-      GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
+      Box box = new Box(new TV_3DVECTOR(-4000, 500, 7300), new TV_3DVECTOR(-5500, 0, 8000));
+      SquadSpawnInfo spawninfo = new SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("Z95")
                                                                           , MainAllyFaction
                                                                           , 3
                                                                           , 3
                                                                           , TargetType.FIGHTER
                                                                           , true
-                                                                          , GSFunctions.SquadFormation.VSHAPE
+                                                                          , SquadFormation.VSHAPE
                                                                           , new TV_3DVECTOR(0, -135, 0)
                                                                           , 400
                                                                           , null);
@@ -494,15 +495,15 @@ namespace SWEndor.Scenarios
 
     public void Rebel_Wave()
     {
-      GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -1000, Manager.MaxBounds.z + 1500), new TV_3DVECTOR(2500, 1000, -1500));
-      GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
+      Box box = new Box(new TV_3DVECTOR(-2500, -1000, Manager.MaxBounds.z + 1500), new TV_3DVECTOR(2500, 1000, -1500));
+      SquadSpawnInfo spawninfo = new SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("Z95")
                                                                           , MainAllyFaction
                                                                           , 3
                                                                           , 3
                                                                           , TargetType.FIGHTER
                                                                           , true
-                                                                          , GSFunctions.SquadFormation.VSHAPE
+                                                                          , SquadFormation.VSHAPE
                                                                           , new TV_3DVECTOR(0, 180, 0)
                                                                           , 400
                                                                           , null);
@@ -528,15 +529,15 @@ namespace SWEndor.Scenarios
 
     public void Empire_TIEWave_01(int sets)
     {
-      GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -500, Manager.MinBounds.z - 8000), new TV_3DVECTOR(2500, 500, Manager.MinBounds.z - 9000));
-      GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
+      Box box = new Box(new TV_3DVECTOR(-2500, -500, Manager.MinBounds.z - 8000), new TV_3DVECTOR(2500, 500, Manager.MinBounds.z - 9000));
+      SquadSpawnInfo spawninfo = new SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("TIE")
                                                                           , MainEnemyFaction
                                                                           , 4
                                                                           , 18
                                                                           , TargetType.FIGHTER
                                                                           , false
-                                                                          , GSFunctions.SquadFormation.VERTICAL_SQUARE
+                                                                          , SquadFormation.VERTICAL_SQUARE
                                                                           , new TV_3DVECTOR()
                                                                           , 200
                                                                           , null);

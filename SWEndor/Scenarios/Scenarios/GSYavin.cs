@@ -14,6 +14,7 @@ using SWEndor.Sound;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Primitives.Extensions;
+using SWEndor.Primitives.Geometry;
 
 namespace SWEndor.Scenarios
 {
@@ -1028,15 +1029,15 @@ namespace SWEndor.Scenarios
 
     public void Empire_TIEWave(int sets)
     {
-      GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -200, Manager.MinBounds.z - 5000), new TV_3DVECTOR(2500, 800, Manager.MinBounds.z - 5000));
-      GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
+      Box box = new Box(new TV_3DVECTOR(-2500, -200, Manager.MinBounds.z - 5000), new TV_3DVECTOR(2500, 800, Manager.MinBounds.z - 5000));
+      SquadSpawnInfo spawninfo = new SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("TIE")
                                                                           , MainEnemyFaction
                                                                           , 4
                                                                           , 15
                                                                           , TargetType.FIGHTER
                                                                           , false
-                                                                          , GSFunctions.SquadFormation.VERTICAL_SQUARE
+                                                                          , SquadFormation.VERTICAL_SQUARE
                                                                           , new TV_3DVECTOR()
                                                                           , 200
                                                                           , null);

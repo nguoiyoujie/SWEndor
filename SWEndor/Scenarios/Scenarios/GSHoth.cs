@@ -7,6 +7,7 @@ using SWEndor.AI.Actions;
 using SWEndor.Models;
 using SWEndor.Player;
 using SWEndor.Primitives.Extensions;
+using SWEndor.Primitives.Geometry;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -745,15 +746,15 @@ namespace SWEndor.Scenarios
 
     public void Empire_TIEWave(int sets)
     {
-      GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -200, Manager.MinBounds.z - 5000), new TV_3DVECTOR(2500, 800, Manager.MinBounds.z - 5000));
-      GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
+      Box box = new Box(new TV_3DVECTOR(-2500, -200, Manager.MinBounds.z - 5000), new TV_3DVECTOR(2500, 800, Manager.MinBounds.z - 5000));
+      SquadSpawnInfo spawninfo = new SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("TIE")
                                                                           , MainEnemyFaction
                                                                           , 4
                                                                           , 15
                                                                           , TargetType.FIGHTER
                                                                           , false
-                                                                          , GSFunctions.SquadFormation.VERTICAL_SQUARE
+                                                                          , SquadFormation.VERTICAL_SQUARE
                                                                           , new TV_3DVECTOR()
                                                                           , 200
                                                                           , null);
@@ -763,15 +764,15 @@ namespace SWEndor.Scenarios
 
     public void Empire_TIEWave_TIEsvsShips(int sets)
     {
-      GSFunctions.BoxInfo box = new GSFunctions.BoxInfo(new TV_3DVECTOR(-2500, -200, Manager.MinBounds.z - 2500), new TV_3DVECTOR(2500, 800, Manager.MinBounds.z - 2500));
-      GSFunctions.SquadSpawnInfo spawninfo = new GSFunctions.SquadSpawnInfo(null
+      Box box = new Box(new TV_3DVECTOR(-2500, -200, Manager.MinBounds.z - 2500), new TV_3DVECTOR(2500, 800, Manager.MinBounds.z - 2500));
+      SquadSpawnInfo spawninfo = new SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("TIE")
                                                                           , MainEnemyFaction
                                                                           , 4
                                                                           , 15
                                                                           , TargetType.SHIP
                                                                           , false
-                                                                          , GSFunctions.SquadFormation.VERTICAL_SQUARE
+                                                                          , SquadFormation.VERTICAL_SQUARE
                                                                           , new TV_3DVECTOR()
                                                                           , 200
                                                                           , null);

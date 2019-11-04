@@ -97,8 +97,7 @@ namespace SWEndor.Scenarios
 
     public void Reset()
     {
-      if (Scenario != null)
-        Scenario.Unload();
+      Scenario?.Unload();
 
       LoadInitial();
     }
