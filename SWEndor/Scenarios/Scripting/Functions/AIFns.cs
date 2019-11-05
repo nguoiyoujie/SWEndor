@@ -7,7 +7,7 @@ using System;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
-  public static class AI
+  public static class AIFns
   {
     public static Val QueueFirst(Context context, params Val[] ps)
     {

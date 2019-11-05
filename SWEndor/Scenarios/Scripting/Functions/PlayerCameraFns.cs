@@ -3,7 +3,7 @@ using SWEndor.Scenarios.Scripting.Expressions;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
-  public static class PlayerCamera
+  public static class PlayerCameraFns
   {
     public static Val SetSceneCameraAsActive(Context context, Val[] ps)
     {

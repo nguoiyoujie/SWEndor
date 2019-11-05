@@ -13,135 +13,132 @@ namespace SWEndor.Scenarios.Scripting.Expressions
     public void AddFunctions()
     {
       // Scene Management
-      Functions.Add("SetMood".ToLowerInvariant(), Scene.SetMood);
-      Functions.Add("SetMaxBounds".ToLowerInvariant(), Scene.SetMaxBounds);
-      Functions.Add("SetMinBounds".ToLowerInvariant(), Scene.SetMinBounds);
-      Functions.Add("SetMaxAIBounds".ToLowerInvariant(), Scene.SetMaxAIBounds);
-      Functions.Add("SetMinAIBounds".ToLowerInvariant(), Scene.SetMinAIBounds);
-      Functions.Add("FadeOut".ToLowerInvariant(), Scene.FadeOut);
+      Functions.Add("Scene.SetMaxBounds", SceneFns.SetMaxBounds);
+      Functions.Add("Scene.SetMinBounds", SceneFns.SetMinBounds);
+      Functions.Add("Scene.SetMaxAIBounds", SceneFns.SetMaxAIBounds);
+      Functions.Add("Scene.SetMinAIBounds", SceneFns.SetMinAIBounds);
+      Functions.Add("Scene.FadeOut", SceneFns.FadeOut);
 
       // Scene Camera Management
-      //Functions.Add("Scene.SetSceneCameraAsActive".ToLowerInvariant(), SceneCameraManagement.SetSceneCameraAsActive);
+      //Functions.Add("Scene.SetSceneCameraAsActive", SceneCameraManagement.SetSceneCameraAsActive);
 
       // Actor Management
-      Functions.Add("Actor.Squadron_Spawn".ToLowerInvariant(), Actor.Squadron_Spawn);
-      Functions.Add("Actor.AddToSquad".ToLowerInvariant(), Actor.AddToSquad);
-      Functions.Add("Actor.RemoveFromSquad".ToLowerInvariant(), Actor.RemoveFromSquad);
-      Functions.Add("Actor.MakeSquadLeader".ToLowerInvariant(), Actor.MakeSquadLeader);
+      Functions.Add("Actor.Squadron_Spawn", ActorFns.Squadron_Spawn);
+      Functions.Add("Actor.AddToSquad", ActorFns.AddToSquad);
+      Functions.Add("Actor.RemoveFromSquad", ActorFns.RemoveFromSquad);
+      Functions.Add("Actor.MakeSquadLeader", ActorFns.MakeSquadLeader);
 
-      Functions.Add("Actor.Spawn".ToLowerInvariant(), Actor.Spawn);
-      //Functions.Add("Actor.SetActive".ToLowerInvariant(), ActorManagement.SetActive);
-      Functions.Add("Actor.GetActorType".ToLowerInvariant(), Actor.GetActorType);
-      Functions.Add("Actor.IsFighter".ToLowerInvariant(), Actor.IsFighter);
-      Functions.Add("Actor.IsLargeShip".ToLowerInvariant(), Actor.IsLargeShip);
-      Functions.Add("Actor.IsAlive".ToLowerInvariant(), Actor.IsAlive);
-      Functions.Add("Actor.RegisterEvents".ToLowerInvariant(), Actor.RegisterEvents);
-      Functions.Add("Actor.GetLocalPosition".ToLowerInvariant(), Actor.GetLocalPosition);
-      //Functions.Add("Actor.GetGlobalPosition".ToLowerInvariant(), ActorManagement.GetGlobalPosition);
-      Functions.Add("Actor.GetLocalRotation".ToLowerInvariant(), Actor.GetLocalRotation);
-      //Functions.Add("Actor.GetGlobalRotation = new TV_3DVECTOR".ToLowerInvariant(), ActorManagement.GetGlobalRotation = new TV_3DVECTOR);
-      Functions.Add("Actor.GetLocalDirection".ToLowerInvariant(), Actor.GetLocalDirection);
-      //Functions.Add("Actor.GetGlobalDirection = new TV_3DVECTOR".ToLowerInvariant(), ActorManagement.GetGlobalDirection = new TV_3DVECTOR);
-      Functions.Add("Actor.GetPosition".ToLowerInvariant(), Actor.GetPosition);
-      Functions.Add("Actor.GetRotation".ToLowerInvariant(), Actor.GetRotation);
-      //Functions.Add("Actor.SetRotation".ToLowerInvariant(), ActorManagement.SetRotation);
-      Functions.Add("Actor.GetDirection".ToLowerInvariant(), Actor.GetDirection);
-      //Functions.Add("Actor.SetDirection".ToLowerInvariant(), ActorManagement.SetDirection);
-      Functions.Add("Actor.LookAtPoint".ToLowerInvariant(), Actor.LookAtPoint);
-      Functions.Add("Actor.GetChildren".ToLowerInvariant(), Actor.GetChildren);
-      Functions.Add("Actor.GetProperty".ToLowerInvariant(), Actor.GetProperty);
-      Functions.Add("Actor.SetProperty".ToLowerInvariant(), Actor.SetProperty);
+      Functions.Add("Actor.Spawn", ActorFns.Spawn);
+      //Functions.Add("Actor.SetActive", ActorManagement.SetActive);
+      Functions.Add("Actor.GetActorType", ActorFns.GetActorType);
+      Functions.Add("Actor.IsFighter", ActorFns.IsFighter);
+      Functions.Add("Actor.IsLargeShip", ActorFns.IsLargeShip);
+      Functions.Add("Actor.IsAlive", ActorFns.IsAlive);
+      Functions.Add("Actor.RegisterEvents", ActorFns.RegisterEvents);
+      Functions.Add("Actor.GetLocalPosition", ActorFns.GetLocalPosition);
+      //Functions.Add("Actor.GetGlobalPosition", ActorManagement.GetGlobalPosition);
+      Functions.Add("Actor.GetLocalRotation", ActorFns.GetLocalRotation);
+      //Functions.Add("Actor.GetGlobalRotation = new TV_3DVECTOR", ActorManagement.GetGlobalRotation = new TV_3DVECTOR);
+      Functions.Add("Actor.GetLocalDirection", ActorFns.GetLocalDirection);
+      //Functions.Add("Actor.GetGlobalDirection = new TV_3DVECTOR", ActorManagement.GetGlobalDirection = new TV_3DVECTOR);
+      Functions.Add("Actor.GetPosition", ActorFns.GetPosition);
+      Functions.Add("Actor.GetRotation", ActorFns.GetRotation);
+      //Functions.Add("Actor.SetRotation", ActorManagement.SetRotation);
+      Functions.Add("Actor.GetDirection", ActorFns.GetDirection);
+      //Functions.Add("Actor.SetDirection", ActorManagement.SetDirection);
+      Functions.Add("Actor.LookAtPoint", ActorFns.LookAtPoint);
+      Functions.Add("Actor.GetChildren", ActorFns.GetChildren);
+      Functions.Add("Actor.GetProperty", ActorFns.GetProperty);
+      Functions.Add("Actor.SetProperty", ActorFns.SetProperty);
 
       // Message Box
-      Functions.Add("Message".ToLowerInvariant(), Messaging.MessageText);
+      Functions.Add("Message", MessagingFns.MessageText);
 
       // Action Management
-      Functions.Add("Actor.QueueFirst".ToLowerInvariant(), Scripting.Functions.AI.QueueFirst);
-      Functions.Add("Actor.QueueNext".ToLowerInvariant(), Scripting.Functions.AI.QueueNext);
-      Functions.Add("Actor.QueueLast".ToLowerInvariant(), Scripting.Functions.AI.QueueLast);
-      Functions.Add("Actor.UnlockActor".ToLowerInvariant(), Scripting.Functions.AI.UnlockActor);
-      Functions.Add("Actor.ClearQueue".ToLowerInvariant(), Scripting.Functions.AI.ClearQueue);
-      Functions.Add("Actor.ForceClearQueue".ToLowerInvariant(), Scripting.Functions.AI.ForceClearQueue);
+      Functions.Add("AI.QueueFirst", AIFns.QueueFirst);
+      Functions.Add("AI.QueueNext", AIFns.QueueNext);
+      Functions.Add("AI.QueueLast", AIFns.QueueLast);
+      Functions.Add("AI.UnlockActor", AIFns.UnlockActor);
+      Functions.Add("AI.ClearQueue", AIFns.ClearQueue);
+      Functions.Add("AI.ForceClearQueue", AIFns.ForceClearQueue);
 
       // Game states
-      Functions.Add("GetGameTime".ToLowerInvariant(), Game.GetGameTime);
-      Functions.Add("GetLastFrameTime".ToLowerInvariant(), Game.GetLastFrameTime);
-      Functions.Add("GetDifficulty".ToLowerInvariant(), Game.GetDifficulty);
-      Functions.Add("GetPlayerActorType".ToLowerInvariant(), Game.GetPlayerActorType);
-      Functions.Add("GetStageNumber".ToLowerInvariant(), Game.GetStageNumber);
-      Functions.Add("SetStageNumber".ToLowerInvariant(), Game.SetStageNumber);
-      Functions.Add("GetGameStateB".ToLowerInvariant(), Game.GetGameStateB);
-      Functions.Add("SetGameStateB".ToLowerInvariant(), Game.SetGameStateB);
-      Functions.Add("GetGameStateF".ToLowerInvariant(), Game.GetGameStateF);
-      Functions.Add("SetGameStateF".ToLowerInvariant(), Game.SetGameStateF);
-      Functions.Add("GetGameStateS".ToLowerInvariant(), Game.GetGameStateS);
-      Functions.Add("SetGameStateS".ToLowerInvariant(), Game.SetGameStateS);
-      Functions.Add("GetRegisterCount".ToLowerInvariant(), Game.GetRegisterCount);
-      Functions.Add("GetTimeSinceLostWing".ToLowerInvariant(), Game.GetTimeSinceLostWing);
-      Functions.Add("GetTimeSinceLostShip".ToLowerInvariant(), Game.GetTimeSinceLostShip);
-      Functions.Add("AddEvent".ToLowerInvariant(), Game.AddEvent);
+      Functions.Add("GetGameTime", GameFns.GetGameTime);
+      Functions.Add("GetLastFrameTime", GameFns.GetLastFrameTime);
+      Functions.Add("GetDifficulty", GameFns.GetDifficulty);
+      Functions.Add("GetPlayerActorType", GameFns.GetPlayerActorType);
+      Functions.Add("GetStageNumber", GameFns.GetStageNumber);
+      Functions.Add("SetStageNumber", GameFns.SetStageNumber);
+      Functions.Add("GetGameStateB", GameFns.GetGameStateB);
+      Functions.Add("SetGameStateB", GameFns.SetGameStateB);
+      Functions.Add("GetGameStateF", GameFns.GetGameStateF);
+      Functions.Add("SetGameStateF", GameFns.SetGameStateF);
+      Functions.Add("GetGameStateS", GameFns.GetGameStateS);
+      Functions.Add("SetGameStateS", GameFns.SetGameStateS);
+      Functions.Add("GetRegisterCount", GameFns.GetRegisterCount);
+      Functions.Add("GetTimeSinceLostWing", GameFns.GetTimeSinceLostWing);
+      Functions.Add("GetTimeSinceLostShip", GameFns.GetTimeSinceLostShip);
+      Functions.Add("AddEvent", GameFns.AddEvent);
 
       // Player Management
-      Functions.Add("Player.AssignActor".ToLowerInvariant(), Scripting.Functions.Player.AssignActor);
-      Functions.Add("Player.GetActor".ToLowerInvariant(), Scripting.Functions.Player.GetActor);
-      Functions.Add("Player.RequestSpawn".ToLowerInvariant(), Scripting.Functions.Player.RequestSpawn);
-      Functions.Add("Player.SetMovementEnabled".ToLowerInvariant(), Scripting.Functions.Player.SetMovementEnabled);
-      Functions.Add("Player.SetAI".ToLowerInvariant(), Scripting.Functions.Player.SetAI);
-      Functions.Add("Player.SetLives".ToLowerInvariant(), Scripting.Functions.Player.SetLives);
-      Functions.Add("Player.DecreaseLives".ToLowerInvariant(), Scripting.Functions.Player.DecreaseLives);
-      Functions.Add("Player.SetScorePerLife".ToLowerInvariant(), Scripting.Functions.Player.SetScorePerLife);
-      Functions.Add("Player.SetScoreForNextLife".ToLowerInvariant(), Scripting.Functions.Player.SetScoreForNextLife);
-      Functions.Add("Player.ResetScore".ToLowerInvariant(), Scripting.Functions.Player.ResetScore);
+      Functions.Add("Player.AssignActor", PlayerFns.AssignActor);
+      Functions.Add("Player.GetActor", PlayerFns.GetActor);
+      Functions.Add("Player.RequestSpawn", PlayerFns.RequestSpawn);
+      Functions.Add("Player.SetMovementEnabled", PlayerFns.SetMovementEnabled);
+      Functions.Add("Player.SetAI", PlayerFns.SetAI);
+      Functions.Add("Player.SetLives", PlayerFns.SetLives);
+      Functions.Add("Player.DecreaseLives", PlayerFns.DecreaseLives);
+
+      Functions.Add("Player.SetScorePerLife", ScoreFns.SetScorePerLife);
+      Functions.Add("Player.SetScoreForNextLife", ScoreFns.SetScoreForNextLife);
+      Functions.Add("Player.ResetScore", ScoreFns.ResetScore);
 
       // Faction
-      Functions.Add("AddFaction".ToLowerInvariant(), Faction.AddFaction);
-      //Functions.Add("Faction.SetAsMainAllyFaction".ToLowerInvariant(), FactionManagement.SetAsMainAllyFaction);
-      //Functions.Add("Faction.SetAsMainEnemyFaction".ToLowerInvariant(), FactionManagement.SetAsMainEnemyFaction);
-      Functions.Add("Faction.MakeAlly".ToLowerInvariant(), Faction.MakeAlly);
-      Functions.Add("Faction.MakeEnemy".ToLowerInvariant(), Faction.MakeEnemy);
-      Functions.Add("Faction.GetWingCount".ToLowerInvariant(), Faction.GetWingCount);
-      Functions.Add("Faction.GetShipCount".ToLowerInvariant(), Faction.GetShipCount);
-      Functions.Add("Faction.GetStructureCount".ToLowerInvariant(), Faction.GetStructureCount);
-      Functions.Add("Faction.GetWingLimit".ToLowerInvariant(), Faction.GetWingLimit);
-      Functions.Add("Faction.GetShipLimit".ToLowerInvariant(), Faction.GetShipLimit);
-      Functions.Add("Faction.GetStructureLimit".ToLowerInvariant(), Faction.GetStructureLimit);
-      Functions.Add("Faction.SetWingLimit".ToLowerInvariant(), Faction.SetWingLimit);
-      Functions.Add("Faction.SetShipLimit".ToLowerInvariant(), Faction.SetShipLimit);
-      Functions.Add("Faction.SetStructureLimit".ToLowerInvariant(), Faction.SetStructureLimit);
-      Functions.Add("Faction.GetWingSpawnLimit".ToLowerInvariant(), Faction.GetWingSpawnLimit);
-      Functions.Add("Faction.GetShipSpawnLimit".ToLowerInvariant(), Faction.GetShipSpawnLimit);
-      Functions.Add("Faction.GetStructureSpawnLimit".ToLowerInvariant(), Faction.GetStructureSpawnLimit);
-      Functions.Add("Faction.SetWingSpawnLimit".ToLowerInvariant(), Faction.SetWingSpawnLimit);
-      Functions.Add("Faction.SetShipSpawnLimit".ToLowerInvariant(), Faction.SetShipSpawnLimit);
-      Functions.Add("Faction.SetStructureSpawnLimit".ToLowerInvariant(), Faction.SetStructureSpawnLimit);
+      Functions.Add("Faction.Add", FactionFns.AddFaction);
+      //Functions.Add("Faction.SetAsMainAllyFaction", FactionManagement.SetAsMainAllyFaction);
+      //Functions.Add("Faction.SetAsMainEnemyFaction", FactionManagement.SetAsMainEnemyFaction);
+      Functions.Add("Faction.MakeAlly", FactionFns.MakeAlly);
+      Functions.Add("Faction.MakeEnemy", FactionFns.MakeEnemy);
+      Functions.Add("Faction.GetWingCount", FactionFns.GetWingCount);
+      Functions.Add("Faction.GetShipCount", FactionFns.GetShipCount);
+      Functions.Add("Faction.GetStructureCount", FactionFns.GetStructureCount);
+      Functions.Add("Faction.GetWingLimit", FactionFns.GetWingLimit);
+      Functions.Add("Faction.GetShipLimit", FactionFns.GetShipLimit);
+      Functions.Add("Faction.GetStructureLimit", FactionFns.GetStructureLimit);
+      Functions.Add("Faction.SetWingLimit", FactionFns.SetWingLimit);
+      Functions.Add("Faction.SetShipLimit", FactionFns.SetShipLimit);
+      Functions.Add("Faction.SetStructureLimit", FactionFns.SetStructureLimit);
+      Functions.Add("Faction.GetWingSpawnLimit", FactionFns.GetWingSpawnLimit);
+      Functions.Add("Faction.GetShipSpawnLimit", FactionFns.GetShipSpawnLimit);
+      Functions.Add("Faction.GetStructureSpawnLimit", FactionFns.GetStructureSpawnLimit);
+      Functions.Add("Faction.SetWingSpawnLimit", FactionFns.SetWingSpawnLimit);
+      Functions.Add("Faction.SetShipSpawnLimit", FactionFns.SetShipSpawnLimit);
+      Functions.Add("Faction.SetStructureSpawnLimit", FactionFns.SetStructureSpawnLimit);
 
       // Sounds and Music
-      Functions.Add("SetMusic".ToLowerInvariant(), Audio.SetMusic);
-      Functions.Add("SetMusicDyn".ToLowerInvariant(), Audio.SetMusicDyn);
-      Functions.Add("SetMusicLoop".ToLowerInvariant(), Audio.SetMusicLoop);
-      Functions.Add("SetMusicPause".ToLowerInvariant(), Audio.SetMusicPause);
-      Functions.Add("SetMusicResume".ToLowerInvariant(), Audio.SetMusicResume);
-      Functions.Add("SetMusicStop".ToLowerInvariant(), Audio.SetMusicStop);
+      Functions.Add("Audio.SetMood", SceneFns.SetMood);
+      Functions.Add("Audio.SetMusic", AudioFns.SetMusic);
+      Functions.Add("Audio.SetMusicDyn", AudioFns.SetMusicDyn);
+      Functions.Add("Audio.SetMusicLoop", AudioFns.SetMusicLoop);
+      Functions.Add("Audio.SetMusicPause", AudioFns.SetMusicPause);
+      Functions.Add("Audio.SetMusicResume", AudioFns.SetMusicResume);
+      Functions.Add("Audio.SetMusicStop", AudioFns.SetMusicStop);
 
       // UI
-      Functions.Add("SetUILine1Color".ToLowerInvariant(), Scripting.Functions.UI.SetUILine1Color);
-      Functions.Add("SetUILine2Color".ToLowerInvariant(), Scripting.Functions.UI.SetUILine2Color);
-      Functions.Add("SetUILine3Color".ToLowerInvariant(), Scripting.Functions.UI.SetUILine3Color);
-      Functions.Add("SetUILine1Text".ToLowerInvariant(), Scripting.Functions.UI.SetUILine1Text);
-      Functions.Add("SetUILine2Text".ToLowerInvariant(), Scripting.Functions.UI.SetUILine2Text);
-      Functions.Add("SetUILine3Text".ToLowerInvariant(), Scripting.Functions.UI.SetUILine3Text);
+      Functions.Add("UI.SetLine1Color", UIFns.SetUILine1Color);
+      Functions.Add("UI.SetLine2Color", UIFns.SetUILine2Color);
+      Functions.Add("UI.SetLine3Color", UIFns.SetUILine3Color);
+      Functions.Add("UI.SetLine1Text", UIFns.SetUILine1Text);
+      Functions.Add("UI.SetLine2Text", UIFns.SetUILine2Text);
+      Functions.Add("UI.SetLine3Text", UIFns.SetUILine3Text);
 
       // Script flow
-      Functions.Add("CallScript".ToLowerInvariant(), Scripting.Functions.Scripting.CallScript);
+      Functions.Add("Script.Call", ScriptingFns.CallScript);
+      Functions.Add("Script.CallX", ScriptingFns.CallScriptX);
 
       // Misc
-      Functions.Add("IsNull".ToLowerInvariant(), IsNull);
-      Functions.Add("GetArrayElement".ToLowerInvariant(), Scripting.Functions.Scripting.GetArrayElement);
-    }
-
-    public Val IsNull(Context c, Val[] ps)
-    {
-      return new Val(ps[0].IsNull);
+      Functions.Add("IsNull", MiscFns.IsNull);
+      Functions.Add("GetArrayElement", MiscFns.GetArrayElement);
     }
   }
 }

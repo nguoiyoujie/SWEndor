@@ -5,7 +5,7 @@ using System;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
-  public static class Faction
+  public static class FactionFns
   {
     /// <summary>
     /// Creates a faction. This function does nothing if a faction of the same name already exists.

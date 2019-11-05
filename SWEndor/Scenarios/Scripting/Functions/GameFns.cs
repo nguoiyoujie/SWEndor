@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
-  public static class Game
+  public static class GameFns
   {
     public static Val GetGameStateB(Context context, Val[] ps)
     {

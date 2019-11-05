@@ -4,7 +4,7 @@ using SWEndor.Scenarios.Scripting.Expressions.Primitives;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
-  public static class UI
+  public static class UIFns
   {
     /// <summary>
     /// Sets the color of line 1 of the scenario UI

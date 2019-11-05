@@ -5,7 +5,7 @@ using System;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
-  public static class Scene
+  public static class SceneFns
   {
     /// <summary>
     /// Triggers the audio Mood

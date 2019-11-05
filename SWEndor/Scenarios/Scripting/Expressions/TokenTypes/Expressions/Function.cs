@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SWEndor.Primitives.Extensions;
+using System.Collections.Generic;
 
 namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
 {
@@ -41,9 +42,9 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
       {
         parsed.Add(expr.Evaluate(local, context));
       }
-      FunctionDelegate fd = context.Functions.Get(_funcName.ToLower());
+      FunctionDelegate fd = context.Functions.Get(_funcName);
       if (fd == null)
-        throw new EvalException(this, "The function '" + _funcName + "' does not exist!");
+        throw new EvalException(this, "The function '{0}' does not exist!".F(_funcName));
       return fd.Invoke(context, parsed.ToArray());
     }
   }

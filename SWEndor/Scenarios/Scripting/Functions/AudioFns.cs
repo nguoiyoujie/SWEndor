@@ -2,7 +2,7 @@
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
-  public static class Audio
+  public static class AudioFns
   {
     public static Val SetMusic(Context context, Val[] ps)
     {

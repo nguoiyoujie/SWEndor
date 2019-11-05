@@ -4,7 +4,7 @@ using SWEndor.Scenarios.Scripting.Expressions.Primitives;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
-  public static class Messaging
+  public static class MessagingFns
   {
     /// <summary>
     /// Prints a message text on the center of the screen

@@ -36,23 +36,23 @@ float3 faction_rebel_color = { 0.8, 0, 0 };
 
 load:
 
-	SetMaxBounds({10000, 1500, 15000});
-	SetMinBounds({-10000, -1500, -20000});
-	SetMaxAIBounds({10000, 1500, 15000});
-	SetMinAIBounds({-10000, -1500, -20000});
+	Scene.SetMaxBounds({10000, 1500, 15000});
+	Scene.SetMinBounds({-10000, -1500, -20000});
+	Scene.SetMaxAIBounds({10000, 1500, 15000});
+	Scene.SetMinAIBounds({-10000, -1500, -20000});
 
 	Player.SetLives(5);
 	Player.SetScorePerLife(1000000);
 	Player.SetScoreForNextLife(1000000);
 	Player.ResetScore();
 
-	SetUILine1Color(faction_empire_color);
-	SetUILine2Color(faction_traitor_color);
+	UI.SetLine1Color(faction_empire_color);
+	UI.SetLine2Color(faction_traitor_color);
 	
-  CallScript("engagemusic");	
-	CallScript("spawnreset");	
-	CallScript("makeimperials");
-	CallScript("makeplayer");
+  Script.CallX("engagemusic");	
+	Script.CallX("spawnreset");	
+	Script.CallX("makeimperials");
+	Script.CallX("makeplayer");
 	AddEvent(2, "getchildren");
 	AddEvent(3, "start");
 	AddEvent(5, "spawnenemybombers");
@@ -85,9 +85,9 @@ load:
 
 
 loadfaction:
-	AddFaction("Empire", faction_empire_color);
-	AddFaction("Traitors", faction_traitor_color);
-	AddFaction("Rebels", faction_rebel_color);
+	Faction.Add("Empire", faction_empire_color);
+	Faction.Add("Traitors", faction_traitor_color);
+	Faction.Add("Rebels", faction_rebel_color);
 	Faction.MakeAlly("Traitors", "Rebels");
 	Faction.SetWingSpawnLimit("Empire", 30);
 	Faction.SetWingSpawnLimit("Traitors", 24);
@@ -96,65 +96,65 @@ loadscene:
 	greywolf = Actor.Spawn("IMPL", "ISD GREY WOLF (Thrawn)", "Empire", "GREY WOLF", 0, { 1000, 400, 12000 }, { 0, -180, 0 }, "CriticalAllies");
 	Actor.SetProperty(greywolf, "DamageModifier", 0.8);
 	Actor.SetProperty(greywolf, "SetSpawnerEnable", true);
-	Actor.QueueLast(greywolf, "move", -1000, 400, -3000, 25);
-	Actor.QueueLast(greywolf, "rotate", -2000, 210, -20000, 0);
-	Actor.QueueLast(greywolf, "lock");
+	AI.QueueLast(greywolf, "move", {-1000, 400, -3000}, 25);
+	AI.QueueLast(greywolf, "rotate", {-2000, 210, -20000}, 0);
+	AI.QueueLast(greywolf, "lock");
 
 	corvus = Actor.Spawn("INTD", "INT CORVUS", "Empire", "CORVUS", 0, { 3500, -500, 500 }, { 0, -130, 0 }, "CriticalAllies");
 	Actor.SetProperty(corvus, "DamageModifier", 0.6);
-	Actor.QueueLast(corvus, "move", 2400, -500, -1000, 12);
-	Actor.QueueLast(corvus, "move", 0, -500, 4000, 20);
-	Actor.QueueLast(corvus, "rotate", -2400, -500, 7000, 0);
-	Actor.QueueLast(corvus, "lock");
+	AI.QueueLast(corvus, "move", {2400, -500, -1000}, 12);
+	AI.QueueLast(corvus, "move", {0, -500, 4000}, 20);
+	AI.QueueLast(corvus, "rotate", {-2400, -500, 7000}, 0);
+	AI.QueueLast(corvus, "lock");
 
 	ebolo = Actor.Spawn("ARQT", "EBOLO", "Empire", "EBOLO", 0, { 3000, -120, 350 }, { 0, -210, 25 });
 	Actor.SetProperty(ebolo, "DamageModifier", 0.4);
-	Actor.QueueLast(ebolo, "move", -400, 200, -350, 50);
-	Actor.QueueLast(ebolo, "move", 1000, 150, -3000, 25);
-	Actor.QueueLast(ebolo, "move", -8470, -300, -350, 100);
-	Actor.QueueLast(ebolo, "rotate", -2000, 210, -20000, 0);
-	Actor.QueueLast(ebolo, "lock");
+	AI.QueueLast(ebolo, "move", {-400, 200, -350}, 50);
+	AI.QueueLast(ebolo, "move", {1000, 150, -3000}, 25);
+	AI.QueueLast(ebolo, "move", {-8470, -300, -350}, 100);
+	AI.QueueLast(ebolo, "rotate", {-2000, 210, -20000}, 0);
+	AI.QueueLast(ebolo, "lock");
 	
 	daring = Actor.Spawn("ARQT", "DARING", "Empire", "DARING", 0, { 3200, -300, -1450 }, { 0, -150, 25 });
 	Actor.SetProperty(daring, "DamageModifier", 0.4);
-	Actor.QueueLast(daring, "move", -7780, -450, 450, 15);
-	Actor.QueueLast(daring, "move", -8470, -300, -350, 100);
-	Actor.QueueLast(daring, "rotate", -2000, 210, -20000, 0);
-	Actor.QueueLast(daring, "lock");
+	AI.QueueLast(daring, "move", {-7780, -450, 450}, 15);
+	AI.QueueLast(daring, "move", {-8470, -300, -350}, 100);
+	AI.QueueLast(daring, "rotate", {-2000, 210, -20000}, 0);
+	AI.QueueLast(daring, "lock");
 
 	glory = Actor.Spawn("DEVA", "ISD GLORY", "Traitors", "GLORY", 0, { -6750, 0, -22000 }, { 0, 40, 0 }, "CriticalEnemies");
 	Actor.SetProperty(glory, "SetSpawnerEnable", true);
 	Actor.SetProperty(glory, "DamageModifier", 0.75);
-	Actor.QueueLast(glory, "move", -1000, 100, -6000, 70);
-	Actor.QueueLast(glory, "move", 4000, 200, -10000, 10);
-	Actor.QueueLast(glory, "rotate", 2000, 210, -20000, 0);
-	Actor.QueueLast(glory, "lock");
+	AI.QueueLast(glory, "move", {-1000, 100, -6000}, 70);
+	AI.QueueLast(glory, "move", {4000, 200, -10000}, 10);
+	AI.QueueLast(glory, "rotate", {2000, 210, -20000}, 0);
+	AI.QueueLast(glory, "lock");
 
 	corv1 = Actor.Spawn("CORV", "", "Traitors", "", 0, { -7750, 250, -20000 }, { 0, 20, 0 });
-	Actor.QueueLast(corv1, "move", 0, 250, -3000, 70);
-	Actor.QueueLast(corv1, "move", 3000, 250, -5000, 10);
-	Actor.QueueLast(corv1, "rotate", 0, 500, 4000, 0);
-	Actor.QueueLast(corv1, "lock");
+	AI.QueueLast(corv1, "move", {0, 250, -3000}, 70);
+	AI.QueueLast(corv1, "move", {3000, 250, -5000}, 10);
+	AI.QueueLast(corv1, "rotate", {0, 500, 4000}, 0);
+	AI.QueueLast(corv1, "lock");
 
 	nebu = Actor.Spawn("NEBL", "", "Traitors", "", 0, { -3750, -450, -16000 }, { 0, 30, 0 });
-	Actor.QueueLast(nebu, "move", 6250, -450, -3200, 100);
-	Actor.QueueLast(nebu, "hyperspaceout");
-	Actor.QueueLast(nebu, "delete");
+	AI.QueueLast(nebu, "move", {6250, -450, -3200}, 100);
+	AI.QueueLast(nebu, "hyperspaceout");
+	AI.QueueLast(nebu, "delete");
 
 	corv2 = Actor.Spawn("CORV", "", "Traitors", "", 0, { -8750, -100, -11000 }, { 0, 75, 0 });
-	Actor.QueueLast(corv2, "move", 1550, 200, -2200, 100);
-	Actor.QueueLast(corv2, "rotate", 0, 500, 4000, 0);
-	Actor.QueueLast(corv2, "lock");
+	AI.QueueLast(corv2, "move", {1550, 200, -2200}, 100);
+	AI.QueueLast(corv2, "rotate", {0, 500, 4000}, 0);
+	AI.QueueLast(corv2, "lock");
 
 	corv3 = Actor.Spawn("CORV", "", "Traitors", "", 0, { -3750, 300, -12500 }, { 0, 45, 0 });
-	Actor.QueueLast(corv3, "move", 2750, -100, -800, 100);
-	Actor.QueueLast(corv3, "rotate", 0, 500, 4000, 0);
-	Actor.QueueLast(corv3, "lock");
+	AI.QueueLast(corv3, "move", {2750, -100, -800}, 100);
+	AI.QueueLast(corv3, "rotate", {0, 500, 4000}, 0);
+	AI.QueueLast(corv3, "lock");
 
 	corv4 = Actor.Spawn("CORV", "", "Traitors", "", 0, { -1750, 50, -14500 }, { 0, 20, 0 });
-	Actor.QueueLast(corv4, "move", -750, 100, -1400, 100);
-	Actor.QueueLast(corv4, "rotate", 0, 500, 4000, 0);
-	Actor.QueueLast(corv4, "lock");
+	AI.QueueLast(corv4, "move", {-750, 100, -1400}, 100);
+	AI.QueueLast(corv4, "rotate", {0, 500, 4000}, 0);
+	AI.QueueLast(corv4, "lock");
 
 getchildren:
 	int[] greywolfc = Actor.GetChildren(greywolf);
@@ -165,8 +165,8 @@ getchildren:
 	corvusshd2 = corvusc[19];
 
 engagemusic:
-	SetMood(4);
-	SetMusicDyn("PANIC-06");
+	Audio.SetMood(4);
+	Audio.SetMusicDyn("PANIC-06");
 
 makeplayer:
 	Player.DecreaseLives();
@@ -176,7 +176,7 @@ makeplayer:
 		else
 			Player.AssignActor(Actor.Spawn(GetPlayerActorType(), "(Player)", "Empire", "", 0, { 7000, -300, 0 }, { 0, -120, 0 }));
 	else 
-		CallScript("firstspawn");
+		Script.CallX("firstspawn");
 	
 	AddEvent(5, "setupplayer");
 
@@ -184,7 +184,7 @@ setupplayer:
 	Actor.RegisterEvents(Player.GetActor());
 	playerisship = Actor.IsLargeShip(Player.GetActor());
 	if (respawn) 
-		CallScript("respawn");
+		Script.CallX("respawn");
 
 firstspawn:
 	Player.AssignActor(Actor.Spawn(GetPlayerActorType(), "(Player)", "Empire", "", 0, { 500, -300, 12500 }, { 0, -180, 0 }));
@@ -198,26 +198,26 @@ respawn:
 makeimperials:
 	tiea2 = Actor.Spawn("TIEA", "Alpha-2", "Empire", "", 0, { 700, -620, 10500 }, { 0, -180, 0 });
 	Actor.SetProperty(tiea2, "DamageModifier", 0.25);
-	Actor.QueueLast(tiea2, "wait", 2.5);
+	AI.QueueLast(tiea2, "wait", 2.5);
 	Actor.AddToSquad(Player.GetActor(), tiea2);
 
 	tiea3 = Actor.Spawn("TIEA", "Alpha-3", "Empire", "", 4, { 6000, 300, -500 }, { 0, -90, 0 });
 	Actor.SetProperty(tiea3, "DamageModifier", 0.25);
-	Actor.QueueLast(tiea3, "wait", 2.5);
+	AI.QueueLast(tiea3, "wait", 2.5);
 	Actor.AddToSquad(Player.GetActor(), tiea3);
 
 	tiea4 = Actor.Spawn("TIEA", "Alpha-4", "Empire", "", 4, { 6500, 600, -750 }, { 0, -90, 0 });
 	Actor.SetProperty(tiea4, "DamageModifier", 0.25);
-	Actor.QueueLast(tiea4, "wait", 2.5);
+	AI.QueueLast(tiea4, "wait", 2.5);
 	Actor.AddToSquad(Player.GetActor(), tiea4);
 
 	tied1 = Actor.Spawn("TIED", "Delta-1", "Empire", "", 4, { 7000, 300, -500 }, { 0, -90, 0 });
 	Actor.SetProperty(tied1, "DamageModifier", 0.25);
-	Actor.QueueLast(tied1, "wait", 2.5);
+	AI.QueueLast(tied1, "wait", 2.5);
 
 	tied2 = Actor.Spawn("TIED", "Delta-2", "Empire", "", 4, { 7500, 600, -750 }, { 0, -90, 0 });
 	Actor.SetProperty(tied2, "DamageModifier", 0.25);
-	Actor.QueueLast(tied2, "wait", 2.5);
+	AI.QueueLast(tied2, "wait", 2.5);
 	Actor.AddToSquad(tied1, tied2);
 
 	spawn_hyperspace = false;
@@ -228,12 +228,12 @@ makeimperials:
 	spawn_target = -1;
 	spawn_pos = { 200,0,8000 };
 	spawn_rot = { 0, -180, 0 };
-	CallScript("spawn4");
+	Script.CallX("spawn4");
 
 	spawn_pos = { 1300, 150, 11000 };
 	spawn_rot = { 0, -180, 0 };
 
-	CallScript("spawn4");
+	Script.CallX("spawn4");
 
 	spawn_faction = "Traitors";
 	damagemod = 0.5;
@@ -241,55 +241,55 @@ makeimperials:
 	spawn_pos = { 400, 0, -2000 };
 	spawn_rot = { 0, 0, 0 };
 	spawn_type = "TIE";
-	CallScript("spawn4");
+	Script.CallX("spawn4");
 
 	spawn_pos = { -400, 0, -2000 };
-	CallScript("spawn4");
+	Script.CallX("spawn4");
 
 	spawn_pos = { -2000, 0, -3500 };
 	spawn_target = corvus;
 	spawn_type = "TIESA";
-	CallScript("spawn4");
+	Script.CallX("spawn4");
 
 	spawn_pos = { -4600, 0, -3000 };
 	spawn_target = corvus;
 	spawn_type = "TIE";
-	CallScript("spawn4");
+	Script.CallX("spawn4");
 
 	spawn_pos = { -5400, 0, -3000 };
 	spawn_target = -1;
-	CallScript("spawn4");
+	Script.CallX("spawn4");
 
 
 gametick:
-	SetUILine1Text("WINGS: " + Faction.GetWingCount("Empire"));
-	SetUILine2Text("ENEMY: " + Faction.GetWingCount("Traitors"));
+	UI.SetLine1Text("WINGS: " + Faction.GetWingCount("Empire"));
+	UI.SetLine2Text("ENEMY: " + Faction.GetWingCount("Traitors"));
 	
 	float hp = Actor.GetProperty(greywolf, "Strength");
 	if (hp <= 0 && !triggerwinlose) 
-		CallScript("losegreywolf");
+		Script.CallX("losegreywolf");
 	
 	if (!triggerwinlose && !triggerdangergreywolf && hp < 450) 
-		CallScript("dangergreywolf");
+		Script.CallX("dangergreywolf");
 
 	hp = Actor.GetProperty(corvus, "Strength");
 	if (hp <= 0 && !triggerwinlose) 
-		CallScript("losecorvus");
+		Script.CallX("losecorvus");
 	
 	if (!triggerwinlose && !triggerdangercorvus && hp < 300) 
-		CallScript("dangercorvus");
+		Script.CallX("dangercorvus");
 
 	if (Faction.GetShipCount("Traitors") < 1 && !triggerwinlose) 
-		CallScript("win");
+		Script.CallX("win");
 
 win:
 	triggerwinlose = true;
-	CallScript("messagewin");
+	Script.CallX("messagewin");
 	SetGameStateB("GameWon",true);
 	AddEvent(3, "fadeout");
 
 fadeout:
-	FadeOut();
+	Scene.FadeOut();
 
 dangergreywolf:
 	triggerdangergreywolf = true;
@@ -301,7 +301,7 @@ dangergreywolf:
 
 losegreywolf:
 	triggerwinlose = true;
-	CallScript("messagelosegreywolf");
+	Script.CallX("messagelosegreywolf");
 	SetGameStateB("GameOver",true);
 	AddEvent(3, "fadeout");
 
@@ -317,7 +317,7 @@ dangercorvus:
 
 losecorvus:
 	triggerwinlose = true;
-	CallScript("messagelosecorvus");
+	Script.CallX("messagelosecorvus");
 	SetGameStateB("GameOver",true);
 	AddEvent(3, "fadeout");
 
@@ -340,25 +340,25 @@ spawnenemybombers:
 	spawn_rot = { 0, 0 ,0 };
 	spawn_type = "TIESA";
 	spawn_target = corvusshd1;
-	CallScript("spawn1");
+	Script.CallX("spawn1");
 
 	spawn_pos = { -4000, 50,-12000 };
 	spawn_target = corvusshd2;
-	CallScript("spawn2");
+	Script.CallX("spawn2");
 
 	spawn_pos = { -5000,-150,-24500 };
 	spawn_target = corvus;
-	CallScript("spawn4");
+	Script.CallX("spawn4");
 
 	spawn_pos = { -25000,300,-23500 };
 	spawn_type = "TIEI";
 	spawn_target = corvusshd1;
-	CallScript("spawn1");
+	Script.CallX("spawn1");
 
 	spawn_pos = { -24000, 200, 24500 };
 	spawn_type = "TIE";
 	spawn_target = corvus;
-	CallScript("spawn2");
+	Script.CallX("spawn2");
 
 spawnenemybombers2:
 	damagemod = 1;
@@ -367,16 +367,16 @@ spawnenemybombers2:
 	spawn_rot = { 0, 0 ,0 };
 	spawn_type = "TIE";
 	spawn_target = corvusshd1;
-	CallScript("spawn2");
+	Script.CallX("spawn2");
 
 	spawn_pos = { -11000, 150 , 13500 };
 	spawn_target = corvusshd2;
-	CallScript("spawn2");
+	Script.CallX("spawn2");
 
 	spawn_pos = { -11000, 50 , 13500 };
 	spawn_type = "TIESA";
 	spawn_target = corvus;
-	CallScript("spawn2");
+	Script.CallX("spawn2");
 
 spawnenemybombers3:
 	//spawn_faction = "Traitors";
@@ -386,23 +386,23 @@ spawnenemybombers3:
 	spawn_rot = { 0, 0 ,0 };
 	spawn_type = "TIESA";
 	spawn_target = greywolfshd1;
-	CallScript("spawn4");
+	Script.CallX("spawn4");
 
 	spawn_pos = { -11000, 450,-13500 };
 	spawn_target = greywolfshd2;
-	CallScript("spawn4");
+	Script.CallX("spawn4");
 
 	spawn_pos = { -11000,650,-13500 };
 	spawn_type = "GUN";
 	spawn_target = greywolf;
-	CallScript("spawn3");
+	Script.CallX("spawn3");
 
 	spawn_pos = { -12000,150,-13500 };
 	spawn_type = "TIE";
-	CallScript("spawn4");
+	Script.CallX("spawn4");
 
 	spawn_pos = { -10000,150,-13500 };
-	CallScript("spawn4");
+	Script.CallX("spawn4");
 
 spawn_allyGUN:
 	spawn_faction = "Empire";
@@ -413,9 +413,9 @@ spawn_allyGUN:
 	spawn_target = corv2;
 	spawn_pos = { 2400,500,10000 };
 	spawn_rot = { 0, 180 ,0 };
-	CallScript("spawn4");
-	SetMood(-11);
-	CallScript("message_allyGUN");
+	Script.CallX("spawn4");
+	Audio.SetMood(-11);
+	Script.CallX("message_allyGUN");
 
 
 spawn_allyTIEA:
@@ -427,9 +427,9 @@ spawn_allyTIEA:
 	spawn_target = corv4;
 	spawn_pos = { 2400,500,10000 };
 	spawn_rot = { 0, 180 ,0 };
-	CallScript("spawn4");
-	SetMood(-11);
-	CallScript("message_allyTIEA");
+	Script.CallX("spawn4");
+	Audio.SetMood(-11);
+	Script.CallX("message_allyTIEA");
 
 
 spawn_traitorZ95:
@@ -442,9 +442,9 @@ spawn_traitorZ95:
 	spawn_type = "Z95";
 	spawn_pos = { 300,0,-15000 };
 	spawn_rot = { 0, 0 ,0 };
-	CallScript("spawn4");
-	SetMood(-21);
-	CallScript("message_traitorZ95");
+	Script.CallX("spawn4");
+	Audio.SetMood(-21);
+	Script.CallX("message_traitorZ95");
 
 
 spawn_traitorXWING:
@@ -457,9 +457,9 @@ spawn_traitorXWING:
 	spawn_type = "XWING";
 	spawn_pos = { -1000,0,-12500 };
 	spawn_rot = { 0, 0 ,0 };
-	CallScript("spawn3");
-	SetMood(-21);
-	CallScript("message_traitorXWING");
+	Script.CallX("spawn3");
+	Audio.SetMood(-21);
+	Script.CallX("message_traitorXWING");
 
 
 	spawn_traitorYWING:
@@ -472,10 +472,10 @@ spawn_traitorXWING:
 	spawn_type = "YWING";
 	spawn_pos = { -3000,0,-16000 };
 	spawn_rot = { 0, 0 ,0 };
-	CallScript("spawn3");
+	Script.CallX("spawn3");
 
-	SetMood(-21);
-	CallScript("message_traitorYWING");
+	Audio.SetMood(-21);
+	Script.CallX("message_traitorYWING");
 
 
 spawn_traitorAWING:
@@ -488,10 +488,10 @@ spawn_traitorAWING:
 	spawn_type = "AWING";
 	spawn_pos = { -2500,0,-14000 };
 	spawn_rot = { 0, 0 ,0 };
-	CallScript("spawn3");
+	Script.CallX("spawn3");
 
-	SetMood(-21);
-	CallScript("message_traitorAWING");
+	Audio.SetMood(-21);
+	Script.CallX("message_traitorAWING");
 
 
 spawn_traitorTIED:
@@ -505,10 +505,10 @@ spawn_traitorTIED:
 	spawn_pos = { -1600,0,-17000 };
 	spawn_rot = { 0, 0 ,0 };
 
-	CallScript("spawn2");
+	Script.CallX("spawn2");
 
-	SetMood(-21);
-	CallScript("message_traitorTIED");
+	Audio.SetMood(-21);
+	Script.CallX("message_traitorTIED");
 
 
 spawn_traitorTIEA:
@@ -521,18 +521,8 @@ spawn_traitorTIEA:
 	spawn_type = "TIEA";
 	spawn_pos = { -4200,0,-17000 };
 	spawn_rot = { 0, 0 ,0 };
-	CallScript("spawn2");
+	Script.CallX("spawn2");
 
-	SetMood(-21);
-	CallScript("message_traitorTIEA");
+	Audio.SetMood(-21);
+	Script.CallX("message_traitorTIEA");
 
-
-
-stage1:
-	SetStageNumber(1);
-
-
-stage2:
-	SetStageNumber(2);
-		
-	

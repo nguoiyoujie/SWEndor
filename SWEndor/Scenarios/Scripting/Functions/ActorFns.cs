@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
-  public static class Actor
+  public static class ActorFns
   {
     /// <summary>
     /// Spawns a group of actors and assigns them to a single squadron
