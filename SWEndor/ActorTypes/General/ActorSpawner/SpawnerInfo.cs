@@ -91,7 +91,7 @@ namespace SWEndor
       return true;
     }
 
-    private bool SpawnFighter(Engine engine, ActorInfo ainfo)
+    private bool SpawnFighter(Engine engine, ActorInfo ainfo, ActorInfo p)
     {
       if (NextSpawnTime < engine.Game.GameTime
        && SpawnsRemaining > 0
@@ -127,6 +127,14 @@ namespace SWEndor
             a.Squad = squad;
             ainfo.AddChild(a);
             a.QueueFirst(new Lock());
+
+            float m1 = p.MoveData.Speed * SpawnMoveDelay * p.Scale;
+            float m2 = SpawnMoveDelay * p.Scale;
+            TV_3DVECTOR v = a.GetRelativePositionFUR(SpawnSpeedPositioningMult.x * m1 + SpawnManualPositioningMult.x * m2
+                                                   , SpawnSpeedPositioningMult.y * m1 + SpawnManualPositioningMult.y * m2
+                                                   , SpawnSpeedPositioningMult.z * m1 + SpawnManualPositioningMult.z * m2);
+
+            a.QueueNext(new Move(v, a.TypeInfo.MoveLimitData.MinSpeed));
           }
 
           SpawnMoveTime = engine.Game.GameTime + SpawnMoveDelay;
@@ -190,7 +198,7 @@ namespace SWEndor
           && !(p.CurrentAction is HyperspaceIn || p.CurrentAction is HyperspaceOut))
         {
           SpawnPlayer(engine, ainfo);
-          SpawnFighter(engine, ainfo);
+          SpawnFighter(engine, ainfo, p);
         }
       }
     }
