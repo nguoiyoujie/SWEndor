@@ -44,20 +44,6 @@ namespace SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions
           _child = new ArrayLiteral(local, lexer).Get();
           break;
 
-        //Decl
-        case TokenEnum.DECL_BOOL:
-        case TokenEnum.DECL_INT:
-        case TokenEnum.DECL_FLOAT:
-        case TokenEnum.DECL_FLOAT2:
-        case TokenEnum.DECL_FLOAT3:
-        case TokenEnum.DECL_FLOAT4:
-        case TokenEnum.DECL_STRING:
-        case TokenEnum.DECL_BOOL_ARRAY:
-        case TokenEnum.DECL_INT_ARRAY:
-        case TokenEnum.DECL_FLOAT_ARRAY:
-          _child = new DeclVariable(local, lexer).Get();
-          break;
-
         default:
           throw new ParseException(lexer);
       }

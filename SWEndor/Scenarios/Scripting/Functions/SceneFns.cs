@@ -92,6 +92,66 @@ namespace SWEndor.Scenarios.Scripting.Functions
     }
 
     /// <summary>
+    /// Enables/disables lost fighter notifications
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <param name="ps">
+    ///   Parameters: 
+    ///     NONE
+    /// </param>
+    /// <returns>NULL</returns>
+    public static Val EnableInformLostWing(Context context, params Val[] ps)
+    {
+#if DEBUG
+      if (context.Engine.GameScenarioManager.Scenario == null)
+        throw new InvalidOperationException("Attempted script function with null Scenario");
+#endif
+
+      context.Engine.GameScenarioManager.Scenario.InformLostWing = (bool)ps[0];
+      return Val.NULL;
+    }
+
+    /// <summary>
+    /// Enables/disables lost ship notifications
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <param name="ps">
+    ///   Parameters: 
+    ///     NONE
+    /// </param>
+    /// <returns>NULL</returns>
+    public static Val EnableInformLostShip(Context context, params Val[] ps)
+    {
+#if DEBUG
+      if (context.Engine.GameScenarioManager.Scenario == null)
+        throw new InvalidOperationException("Attempted script function with null Scenario");
+#endif
+
+      context.Engine.GameScenarioManager.Scenario.InformLostShip = (bool)ps[0];
+      return Val.NULL;
+    }
+
+    /// <summary>
+    /// Enables/disables lost structure notifications
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <param name="ps">
+    ///   Parameters: 
+    ///     NONE
+    /// </param>
+    /// <returns>NULL</returns>
+    public static Val EnableInformLostStructure(Context context, params Val[] ps)
+    {
+#if DEBUG
+      if (context.Engine.GameScenarioManager.Scenario == null)
+        throw new InvalidOperationException("Attempted script function with null Scenario");
+#endif
+
+      context.Engine.GameScenarioManager.Scenario.InformLostStructure = (bool)ps[0];
+      return Val.NULL;
+    }
+
+    /// <summary>
     /// Begin screen fade out.
     /// </summary>
     /// <param name="context">The game context</param>

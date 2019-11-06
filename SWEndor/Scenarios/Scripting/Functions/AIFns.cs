@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Scenarios.Scripting.Expressions;
+using SWEndor.Scenarios.Scripting.Expressions.Primitives;
 using System;
 
 namespace SWEndor.Scenarios.Scripting.Functions
@@ -129,85 +130,85 @@ namespace SWEndor.Scenarios.Scripting.Functions
           break;
 
         case "move":
-          if (ps.Length >= 6)
+          if (ps.Length >= 4)
           {
-            TV_3DVECTOR dest = new TV_3DVECTOR((float)ps[2], (float)ps[3], (float)ps[4]);
-            float speed = (float)ps[5];
+            TV_3DVECTOR dest = ((float3)ps[2]).ToVec3();
+            float speed = (float)ps[3];
 
             switch (ps.Length)
             {
-              case 6:
+              case 4:
                 action = new Move(dest, speed);
                 break;
-              case 7:
-                action = new Move(dest, speed, (float)ps[6]);
+              case 5:
+                action = new Move(dest, speed, (float)ps[4]);
                 break;
               default:
-              case 8:
-                action = new Move(dest, speed, (float)ps[6], (bool)ps[7]);
+              case 6:
+                action = new Move(dest, speed, (float)ps[4], (bool)ps[5]);
                 break;
             }
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ((string)ps[1]).ToLower(), "6", ps.Length.ToString()));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ((string)ps[1]).ToLower(), "4", ps.Length.ToString()));
           break;
 
         case "forcedmove":
-          if (ps.Length >= 6)
+          if (ps.Length >= 4)
           {
-            TV_3DVECTOR dest = new TV_3DVECTOR((float)ps[2], (float)ps[3], (float)ps[4]);
-            float speed = (float)ps[5];
+            TV_3DVECTOR dest = ((float3)ps[2]).ToVec3();
+            float speed = (float)ps[3];
 
             switch (ps.Length)
             {
-              case 6:
+              case 4:
                 action = new ForcedMove(dest, speed);
                 break;
-              case 7:
-                action = new ForcedMove(dest, speed, (float)ps[6]);
+              case 5:
+                action = new ForcedMove(dest, speed, (float)ps[4]);
                 break;
               default:
-              case 8:
-                action = new ForcedMove(dest, speed, (float)ps[6], (float)ps[7]);
+              case 6:
+                action = new ForcedMove(dest, speed, (float)ps[4], (float)ps[5]);
                 break;
             }
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ((string)ps[1]).ToLower(), "6", ps.Length.ToString()));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ((string)ps[1]).ToLower(), "4", ps.Length.ToString()));
           break;
 
         case "rotate":
-          if (ps.Length >= 6)
+          if (ps.Length >= 4)
           {
-            TV_3DVECTOR dest = new TV_3DVECTOR((float)ps[2], (float)ps[3], (float)ps[4]);
-            float speed = (float)ps[5];
+            TV_3DVECTOR dest = ((float3)ps[2]).ToVec3();
+            float speed = (float)ps[3];
 
             switch (ps.Length)
             {
-              case 6:
+              case 4:
                 action = new Rotate(dest, speed);
                 break;
-              case 7:
-                action = new Rotate(dest, speed, (float)ps[6]);
+              case 5:
+                action = new Rotate(dest, speed, (float)ps[4]);
                 break;
               default:
-              case 8:
-                action = new Rotate(dest, speed, (float)ps[6], (bool)ps[7]);
+              case 6:
+                action = new Rotate(dest, speed, (float)ps[4], (bool)ps[5]);
                 break;
             }
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ((string)ps[1]).ToLower(), "6", ps.Length.ToString()));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ((string)ps[1]).ToLower(), "4", ps.Length.ToString()));
           break;
 
         case "hyperspacein":
-          if (ps.Length >= 5)
+          if (ps.Length >= 3)
           {
-            TV_3DVECTOR dest = new TV_3DVECTOR((float)ps[2], (float)ps[3], (float)ps[4]);
+            TV_3DVECTOR dest = ((float3)ps[2]).ToVec3();
             action = new HyperspaceIn(dest);
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ((string)ps[1]).ToLower(), "5", ps.Length.ToString()));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ((string)ps[1]).ToLower(), "3", ps.Length.ToString()));
           break;
 
         case "hyperspaceout":
@@ -273,24 +274,24 @@ namespace SWEndor.Scenarios.Scripting.Functions
           break;
 
         case "avoidcollisionrotate":
-          if (ps.Length >= 8)
+          if (ps.Length >= 4)
           {
-            TV_3DVECTOR pos = new TV_3DVECTOR((float)ps[2], (float)ps[3], (float)ps[4]);
-            TV_3DVECTOR rot = new TV_3DVECTOR((float)ps[5], (float)ps[6], (float)ps[7]);
+            TV_3DVECTOR pos = ((float3)ps[2]).ToVec3();
+            TV_3DVECTOR rot = ((float3)ps[3]).ToVec3();
 
             switch (ps.Length)
             {
-              case 8:
+              case 4:
                 action = AvoidCollisionRotate.GetOrCreate(pos, rot);
                 break;
               default:
-              case 9:
-                action = AvoidCollisionRotate.GetOrCreate(pos, rot, (float)ps[8]);
+              case 5:
+                action = AvoidCollisionRotate.GetOrCreate(pos, rot, (float)ps[4]);
                 break;
             }
           }
           else
-            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ((string)ps[0]).ToLower(), "8", ps.Length.ToString()));
+            throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ((string)ps[0]).ToLower(), "4", ps.Length.ToString()));
           break;
 
         case "setgamestateb":
