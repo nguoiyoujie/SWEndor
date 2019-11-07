@@ -20,3 +20,16 @@
 /Primrose/obj
 /Primrose/bin/x86/Debug
 /Fmod.Wrapper/bin/x86/Debug
+/src/Primrose/bin
+/src/Primrose/obj
+/src/SWEndor/obj/Debug
+/src/SWEndor/obj/x64/Debug/Costura
+/src/SWEndor/obj/x64/Debug/TempPE
+/src/SWEndor/obj/Debug
+/src/SWEndor/obj/x86
+/src/SWEndor/obj/x64/Debug/Costura
+/src/SWEndor/obj/x64/Debug/TempPE
+/src/SWEndor/obj/x86/Release
+/src/SWEndor/obj/x86/Debug/TempPE
+/src/SWEndor/obj/x86
+/src/SWEndorTest/obj

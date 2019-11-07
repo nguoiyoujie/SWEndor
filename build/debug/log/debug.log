@@ -1,0 +1,1022 @@
+2019-11-07T14:46:42	0	SWEndor initalizing, version v0.0.2019.1107.1446-Debug.
+2019-11-07T14:46:56	6	beep-24 loading...
+2019-11-07T14:46:56	7	beep-24 loaded.
+2019-11-07T14:46:56	6	bomb-2b loading...
+2019-11-07T14:46:56	7	bomb-2b loaded.
+2019-11-07T14:46:56	6	cannon-1 loading...
+2019-11-07T14:46:56	7	cannon-1 loaded.
+2019-11-07T14:46:56	6	cannon-2 loading...
+2019-11-07T14:46:56	7	cannon-2 loaded.
+2019-11-07T14:46:56	6	ds_beam loading...
+2019-11-07T14:46:56	7	ds_beam loaded.
+2019-11-07T14:46:56	6	falcon_laser loading...
+2019-11-07T14:46:56	7	falcon_laser loaded.
+2019-11-07T14:46:56	6	ion-aa-1 loading...
+2019-11-07T14:46:56	7	ion-aa-1 loaded.
+2019-11-07T14:46:56	6	ion-sp-2 loading...
+2019-11-07T14:46:56	7	ion-sp-2 loaded.
+2019-11-07T14:46:56	6	laser_sf loading...
+2019-11-07T14:46:56	7	laser_sf loaded.
+2019-11-07T14:46:56	6	reb-ls-2 loading...
+2019-11-07T14:46:56	7	reb-ls-2 loaded.
+2019-11-07T14:46:56	6	reb-ls-4 loading...
+2019-11-07T14:46:56	7	reb-ls-4 loaded.
+2019-11-07T14:46:56	6	reb-ls-7 loading...
+2019-11-07T14:46:56	7	reb-ls-7 loaded.
+2019-11-07T14:46:56	6	shieldlow loading...
+2019-11-07T14:46:56	7	shieldlow loaded.
+2019-11-07T14:46:56	6	tl-big-a loading...
+2019-11-07T14:46:56	7	tl-big-a loaded.
+2019-11-07T14:46:56	6	tl-big-b loading...
+2019-11-07T14:46:56	7	tl-big-b loaded.
+2019-11-07T14:46:56	6	tl-med-1 loading...
+2019-11-07T14:46:56	7	tl-med-1 loaded.
+2019-11-07T14:46:56	6	tl-sht-1 loading...
+2019-11-07T14:46:56	7	tl-sht-1 loaded.
+2019-11-07T14:46:56	6	torpedo loading...
+2019-11-07T14:46:56	7	torpedo loaded.
+2019-11-07T14:46:56	6	trpedo-2 loading...
+2019-11-07T14:46:56	7	trpedo-2 loaded.
+2019-11-07T14:46:56	6	w-lasr-3 loading...
+2019-11-07T14:46:56	7	w-lasr-3 loaded.
+2019-11-07T14:46:56	6	button\button_1 loading...
+2019-11-07T14:46:56	7	button\button_1 loaded.
+2019-11-07T14:46:56	6	button\button_2 loading...
+2019-11-07T14:46:56	7	button\button_2 loaded.
+2019-11-07T14:46:56	6	button\button_3 loading...
+2019-11-07T14:46:56	7	button\button_3 loaded.
+2019-11-07T14:46:56	6	button\button_4 loading...
+2019-11-07T14:46:56	7	button\button_4 loaded.
+2019-11-07T14:46:56	6	button\exit loading...
+2019-11-07T14:46:56	7	button\exit loaded.
+2019-11-07T14:46:56	6	button\ready loading...
+2019-11-07T14:46:56	7	button\ready loaded.
+2019-11-07T14:46:56	6	dmg\d1 loading...
+2019-11-07T14:46:56	7	dmg\d1 loaded.
+2019-11-07T14:46:56	6	dmg\d2 loading...
+2019-11-07T14:46:56	7	dmg\d2 loaded.
+2019-11-07T14:46:56	6	dmg\d3 loading...
+2019-11-07T14:46:56	7	dmg\d3 loaded.
+2019-11-07T14:46:56	6	dmg\d4 loading...
+2019-11-07T14:46:56	7	dmg\d4 loaded.
+2019-11-07T14:46:56	6	dmg\low loading...
+2019-11-07T14:46:56	7	dmg\low loaded.
+2019-11-07T14:46:56	6	dmg\unused\r20 loading...
+2019-11-07T14:46:56	7	dmg\unused\r20 loaded.
+2019-11-07T14:46:56	6	dmg\unused\r21 loading...
+2019-11-07T14:46:56	7	dmg\unused\r21 loaded.
+2019-11-07T14:46:56	6	dmg\unused\r22 loading...
+2019-11-07T14:46:56	7	dmg\unused\r22 loaded.
+2019-11-07T14:46:56	6	dmg\unused\r23 loading...
+2019-11-07T14:46:56	7	dmg\unused\r23 loaded.
+2019-11-07T14:46:56	6	dmg\unused\r24 loading...
+2019-11-07T14:46:56	7	dmg\unused\r24 loaded.
+2019-11-07T14:46:56	6	dmg\unused\r25 loading...
+2019-11-07T14:46:56	7	dmg\unused\r25 loaded.
+2019-11-07T14:46:56	6	eng\aw loading...
+2019-11-07T14:46:56	7	eng\aw loaded.
+2019-11-07T14:46:56	6	eng\falcon loading...
+2019-11-07T14:46:56	7	eng\falcon loaded.
+2019-11-07T14:46:56	6	eng\misl loading...
+2019-11-07T14:46:56	7	eng\misl loaded.
+2019-11-07T14:46:56	6	eng\ship loading...
+2019-11-07T14:46:56	7	eng\ship loaded.
+2019-11-07T14:46:56	6	eng\tie loading...
+2019-11-07T14:46:56	7	eng\tie loaded.
+2019-11-07T14:46:56	6	eng\xw loading...
+2019-11-07T14:46:56	7	eng\xw loaded.
+2019-11-07T14:46:56	6	eng\yw loading...
+2019-11-07T14:46:56	7	eng\yw loaded.
+2019-11-07T14:46:56	6	eng\unused\tie_old loading...
+2019-11-07T14:46:56	7	eng\unused\tie_old loaded.
+2019-11-07T14:46:56	6	eng\unused\wing loading...
+2019-11-07T14:46:56	7	eng\unused\wing loaded.
+2019-11-07T14:46:56	6	exp\hit loading...
+2019-11-07T14:46:56	7	exp\hit loaded.
+2019-11-07T14:46:56	6	exp\lg loading...
+2019-11-07T14:46:56	7	exp\lg loaded.
+2019-11-07T14:46:56	6	exp\med1 loading...
+2019-11-07T14:46:56	7	exp\med1 loaded.
+2019-11-07T14:46:56	6	exp\med2 loading...
+2019-11-07T14:46:56	7	exp\med2 loaded.
+2019-11-07T14:46:56	6	exp\med3 loading...
+2019-11-07T14:46:56	7	exp\med3 loaded.
+2019-11-07T14:46:56	6	exp\sm1 loading...
+2019-11-07T14:46:56	7	exp\sm1 loaded.
+2019-11-07T14:46:56	6	exp\sm2 loading...
+2019-11-07T14:46:56	7	exp\sm2 loaded.
+2019-11-07T14:46:56	6	exp\sm3 loading...
+2019-11-07T14:46:56	7	exp\sm3 loaded.
+2019-11-07T14:46:56	6	exp\sm4 loading...
+2019-11-07T14:46:56	7	exp\sm4 loaded.
+2019-11-07T14:46:56	6	exp\unused\hit loading...
+2019-11-07T14:46:56	7	exp\unused\hit loaded.
+2019-11-07T14:46:56	6	warn\mislalert loading...
+2019-11-07T14:46:56	7	warn\mislalert loaded.
+2019-11-07T14:46:56	6	warn\shiplost loading...
+2019-11-07T14:46:56	7	warn\shiplost loaded.
+2019-11-07T14:46:56	6	battle_1_1 loading...
+2019-11-07T14:46:56	7	battle_1_1 loaded.
+2019-11-07T14:46:56	6	battle_1_2 loading...
+2019-11-07T14:46:56	7	battle_1_2 loaded.
+2019-11-07T14:46:56	6	battle_1_3 loading...
+2019-11-07T14:46:56	7	battle_1_3 loaded.
+2019-11-07T14:46:56	6	battle_1_4 loading...
+2019-11-07T14:46:56	7	battle_1_4 loaded.
+2019-11-07T14:46:56	6	battle_2_1 loading...
+2019-11-07T14:46:56	7	battle_2_1 loaded.
+2019-11-07T14:46:56	6	battle_2_2 loading...
+2019-11-07T14:46:56	7	battle_2_2 loaded.
+2019-11-07T14:46:56	6	battle_2_3 loading...
+2019-11-07T14:46:56	7	battle_2_3 loaded.
+2019-11-07T14:46:56	6	battle_3_1 loading...
+2019-11-07T14:46:56	7	battle_3_1 loaded.
+2019-11-07T14:46:56	6	battle_3_2 loading...
+2019-11-07T14:46:56	7	battle_3_2 loaded.
+2019-11-07T14:46:56	6	battle_3_3 loading...
+2019-11-07T14:46:56	7	battle_3_3 loaded.
+2019-11-07T14:46:56	6	battle_3_4 loading...
+2019-11-07T14:46:56	7	battle_3_4 loaded.
+2019-11-07T14:46:56	6	battle_4_1 loading...
+2019-11-07T14:46:56	7	battle_4_1 loaded.
+2019-11-07T14:46:56	6	battle_4_2 loading...
+2019-11-07T14:46:56	7	battle_4_2 loaded.
+2019-11-07T14:46:56	6	battle_4_3 loading...
+2019-11-07T14:46:56	7	battle_4_3 loaded.
+2019-11-07T14:46:56	6	credits_1_1 loading...
+2019-11-07T14:46:56	7	credits_1_1 loaded.
+2019-11-07T14:46:56	6	credits_2_1 loading...
+2019-11-07T14:46:56	7	credits_2_1 loaded.
+2019-11-07T14:46:56	6	credits_3_1 loading...
+2019-11-07T14:46:56	7	credits_3_1 loaded.
+2019-11-07T14:46:56	6	ds_end_1_1 loading...
+2019-11-07T14:46:56	7	ds_end_1_1 loaded.
+2019-11-07T14:46:56	6	ds_end_3_1 loading...
+2019-11-07T14:46:56	7	ds_end_3_1 loaded.
+2019-11-07T14:46:56	6	executorend loading...
+2019-11-07T14:46:56	7	executorend loaded.
+2019-11-07T14:46:56	6	finale_1_1 loading...
+2019-11-07T14:46:56	7	finale_1_1 loaded.
+2019-11-07T14:46:56	6	finale_3_1 loading...
+2019-11-07T14:46:56	7	finale_3_1 loaded.
+2019-11-07T14:46:56	6	main_1_1 loading...
+2019-11-07T14:46:56	7	main_1_1 loaded.
+2019-11-07T14:46:56	6	main_3_1 loading...
+2019-11-07T14:46:56	7	main_3_1 loaded.
+2019-11-07T14:46:56	6	dynamic\S-EJECT loading...
+2019-11-07T14:46:56	7	dynamic\S-EJECT loaded.
+2019-11-07T14:46:56	6	dynamic\S-EMP-LG loading...
+2019-11-07T14:46:57	7	dynamic\S-EMP-LG loaded.
+2019-11-07T14:46:57	6	dynamic\S-EMP-SM loading...
+2019-11-07T14:46:57	7	dynamic\S-EMP-SM loaded.
+2019-11-07T14:46:57	6	dynamic\S-HYPER loading...
+2019-11-07T14:46:57	7	dynamic\S-HYPER loaded.
+2019-11-07T14:46:57	6	dynamic\S-LOS-LG loading...
+2019-11-07T14:46:57	7	dynamic\S-LOS-LG loaded.
+2019-11-07T14:46:57	6	dynamic\S-LOS-SM loading...
+2019-11-07T14:46:57	7	dynamic\S-LOS-SM loaded.
+2019-11-07T14:46:57	6	dynamic\S-NEU-LG loading...
+2019-11-07T14:46:57	7	dynamic\S-NEU-LG loaded.
+2019-11-07T14:46:57	6	dynamic\S-NEU-SM loading...
+2019-11-07T14:46:57	7	dynamic\S-NEU-SM loaded.
+2019-11-07T14:46:57	6	dynamic\S-OB1-FA loading...
+2019-11-07T14:46:57	7	dynamic\S-OB1-FA loaded.
+2019-11-07T14:46:57	6	dynamic\S-OB1-PA loading...
+2019-11-07T14:46:57	7	dynamic\S-OB1-PA loaded.
+2019-11-07T14:46:57	6	dynamic\S-OB2-FA loading...
+2019-11-07T14:46:57	7	dynamic\S-OB2-FA loaded.
+2019-11-07T14:46:57	6	dynamic\S-OB2-PA loading...
+2019-11-07T14:46:57	7	dynamic\S-OB2-PA loaded.
+2019-11-07T14:46:57	6	dynamic\S-OB3-PA loading...
+2019-11-07T14:46:57	7	dynamic\S-OB3-PA loaded.
+2019-11-07T14:46:57	6	dynamic\S-REB-LG loading...
+2019-11-07T14:46:57	7	dynamic\S-REB-LG loaded.
+2019-11-07T14:46:57	6	dynamic\S-REB-SM loading...
+2019-11-07T14:46:57	7	dynamic\S-REB-SM loaded.
+2019-11-07T14:46:57	6	dynamic\S-WIN-1 loading...
+2019-11-07T14:46:57	7	dynamic\S-WIN-1 loaded.
+2019-11-07T14:46:57	6	dynamic\S-WIN-2 loading...
+2019-11-07T14:46:57	7	dynamic\S-WIN-2 loaded.
+2019-11-07T14:46:57	6	dynamic\S-WIN-3 loading...
+2019-11-07T14:46:57	7	dynamic\S-WIN-3 loaded.
+2019-11-07T14:46:57	6	dynamic\S-WIN-4 loading...
+2019-11-07T14:46:57	7	dynamic\S-WIN-4 loaded.
+2019-11-07T14:46:57	6	dynamic\S-WIN-LG loading...
+2019-11-07T14:46:57	7	dynamic\S-WIN-LG loaded.
+2019-11-07T14:46:57	6	dynamic\CHAL\01 loading...
+2019-11-07T14:46:57	7	dynamic\CHAL\01 loaded.
+2019-11-07T14:46:57	6	dynamic\CHAL\02 loading...
+2019-11-07T14:46:57	7	dynamic\CHAL\02 loaded.
+2019-11-07T14:46:57	6	dynamic\CHAL\03 loading...
+2019-11-07T14:46:57	7	dynamic\CHAL\03 loaded.
+2019-11-07T14:46:57	6	dynamic\CHAL\04 loading...
+2019-11-07T14:46:57	7	dynamic\CHAL\04 loaded.
+2019-11-07T14:46:57	6	dynamic\CHAL\05 loading...
+2019-11-07T14:46:57	7	dynamic\CHAL\05 loaded.
+2019-11-07T14:46:57	6	dynamic\CHAL\06 loading...
+2019-11-07T14:46:57	7	dynamic\CHAL\06 loaded.
+2019-11-07T14:46:57	6	dynamic\CHAL\07 loading...
+2019-11-07T14:46:57	7	dynamic\CHAL\07 loaded.
+2019-11-07T14:46:57	6	dynamic\CHAL\08 loading...
+2019-11-07T14:46:57	7	dynamic\CHAL\08 loaded.
+2019-11-07T14:46:57	6	dynamic\CHAL\09 loading...
+2019-11-07T14:46:57	7	dynamic\CHAL\09 loaded.
+2019-11-07T14:46:57	6	dynamic\CHAL\10 loading...
+2019-11-07T14:46:57	7	dynamic\CHAL\10 loaded.
+2019-11-07T14:46:57	6	dynamic\CHAL\11 loading...
+2019-11-07T14:46:57	7	dynamic\CHAL\11 loaded.
+2019-11-07T14:46:57	6	dynamic\CHAL\12 loading...
+2019-11-07T14:46:57	7	dynamic\CHAL\12 loaded.
+2019-11-07T14:46:57	6	dynamic\CHAL\13 loading...
+2019-11-07T14:46:57	7	dynamic\CHAL\13 loaded.
+2019-11-07T14:46:57	6	dynamic\CHAL\14 loading...
+2019-11-07T14:46:57	7	dynamic\CHAL\14 loaded.
+2019-11-07T14:46:57	6	dynamic\CHAL\15 loading...
+2019-11-07T14:46:57	7	dynamic\CHAL\15 loaded.
+2019-11-07T14:46:57	6	dynamic\CHAL\16 loading...
+2019-11-07T14:46:57	7	dynamic\CHAL\16 loaded.
+2019-11-07T14:46:57	6	dynamic\CHAL\IN loading...
+2019-11-07T14:46:57	7	dynamic\CHAL\IN loaded.
+2019-11-07T14:46:57	6	dynamic\CLIM\01 loading...
+2019-11-07T14:46:57	7	dynamic\CLIM\01 loaded.
+2019-11-07T14:46:57	6	dynamic\CLIM\02 loading...
+2019-11-07T14:46:57	7	dynamic\CLIM\02 loaded.
+2019-11-07T14:46:57	6	dynamic\CLIM\03 loading...
+2019-11-07T14:46:57	7	dynamic\CLIM\03 loaded.
+2019-11-07T14:46:57	6	dynamic\CLIM\04 loading...
+2019-11-07T14:46:57	7	dynamic\CLIM\04 loaded.
+2019-11-07T14:46:57	6	dynamic\CLIM\05 loading...
+2019-11-07T14:46:57	7	dynamic\CLIM\05 loaded.
+2019-11-07T14:46:57	6	dynamic\CLIM\06 loading...
+2019-11-07T14:46:57	7	dynamic\CLIM\06 loaded.
+2019-11-07T14:46:57	6	dynamic\CLIM\07 loading...
+2019-11-07T14:46:57	7	dynamic\CLIM\07 loaded.
+2019-11-07T14:46:57	6	dynamic\CONF\01 loading...
+2019-11-07T14:46:57	7	dynamic\CONF\01 loaded.
+2019-11-07T14:46:57	6	dynamic\CONF\02 loading...
+2019-11-07T14:46:57	7	dynamic\CONF\02 loaded.
+2019-11-07T14:46:57	6	dynamic\CONF\03 loading...
+2019-11-07T14:46:57	7	dynamic\CONF\03 loaded.
+2019-11-07T14:46:57	6	dynamic\CONF\04 loading...
+2019-11-07T14:46:57	7	dynamic\CONF\04 loaded.
+2019-11-07T14:46:57	6	dynamic\CONF\05 loading...
+2019-11-07T14:46:57	7	dynamic\CONF\05 loaded.
+2019-11-07T14:46:57	6	dynamic\CONF\06 loading...
+2019-11-07T14:46:57	7	dynamic\CONF\06 loaded.
+2019-11-07T14:46:57	6	dynamic\CONF\07 loading...
+2019-11-07T14:46:57	7	dynamic\CONF\07 loaded.
+2019-11-07T14:46:57	6	dynamic\CONF\08 loading...
+2019-11-07T14:46:57	7	dynamic\CONF\08 loaded.
+2019-11-07T14:46:57	6	dynamic\CONF\09 loading...
+2019-11-07T14:46:57	7	dynamic\CONF\09 loaded.
+2019-11-07T14:46:57	6	dynamic\CONF\10 loading...
+2019-11-07T14:46:57	7	dynamic\CONF\10 loaded.
+2019-11-07T14:46:57	6	dynamic\CONF\11 loading...
+2019-11-07T14:46:57	7	dynamic\CONF\11 loaded.
+2019-11-07T14:46:57	6	dynamic\CONF\12 loading...
+2019-11-07T14:46:57	7	dynamic\CONF\12 loaded.
+2019-11-07T14:46:57	6	dynamic\CONF\13 loading...
+2019-11-07T14:46:57	7	dynamic\CONF\13 loaded.
+2019-11-07T14:46:57	6	dynamic\CONF\14 loading...
+2019-11-07T14:46:57	7	dynamic\CONF\14 loaded.
+2019-11-07T14:46:57	6	dynamic\FAIL\01 loading...
+2019-11-07T14:46:57	7	dynamic\FAIL\01 loaded.
+2019-11-07T14:46:57	6	dynamic\FAIL\02 loading...
+2019-11-07T14:46:57	7	dynamic\FAIL\02 loaded.
+2019-11-07T14:46:57	6	dynamic\FAIL\03 loading...
+2019-11-07T14:46:57	7	dynamic\FAIL\03 loaded.
+2019-11-07T14:46:57	6	dynamic\FAIL\04 loading...
+2019-11-07T14:46:57	7	dynamic\FAIL\04 loaded.
+2019-11-07T14:46:57	6	dynamic\FAIL\05 loading...
+2019-11-07T14:46:57	7	dynamic\FAIL\05 loaded.
+2019-11-07T14:46:57	6	dynamic\FAIL\06 loading...
+2019-11-07T14:46:57	7	dynamic\FAIL\06 loaded.
+2019-11-07T14:46:57	6	dynamic\FAIL\07 loading...
+2019-11-07T14:46:57	7	dynamic\FAIL\07 loaded.
+2019-11-07T14:46:57	6	dynamic\FAIL\IN loading...
+2019-11-07T14:46:57	7	dynamic\FAIL\IN loaded.
+2019-11-07T14:46:57	6	dynamic\FAIL\OUT loading...
+2019-11-07T14:46:57	7	dynamic\FAIL\OUT loaded.
+2019-11-07T14:46:57	6	dynamic\INTR\01 loading...
+2019-11-07T14:46:57	7	dynamic\INTR\01 loaded.
+2019-11-07T14:46:57	6	dynamic\INTR\02 loading...
+2019-11-07T14:46:57	7	dynamic\INTR\02 loaded.
+2019-11-07T14:46:57	6	dynamic\INTR\03 loading...
+2019-11-07T14:46:57	7	dynamic\INTR\03 loaded.
+2019-11-07T14:46:57	6	dynamic\INTR\04 loading...
+2019-11-07T14:46:57	7	dynamic\INTR\04 loaded.
+2019-11-07T14:46:57	6	dynamic\INTR\05 loading...
+2019-11-07T14:46:57	7	dynamic\INTR\05 loaded.
+2019-11-07T14:46:57	6	dynamic\INTR\06 loading...
+2019-11-07T14:46:57	7	dynamic\INTR\06 loaded.
+2019-11-07T14:46:57	6	dynamic\INTR\07 loading...
+2019-11-07T14:46:57	7	dynamic\INTR\07 loaded.
+2019-11-07T14:46:57	6	dynamic\INTR\08 loading...
+2019-11-07T14:46:57	7	dynamic\INTR\08 loaded.
+2019-11-07T14:46:57	6	dynamic\INTR\09 loading...
+2019-11-07T14:46:57	7	dynamic\INTR\09 loaded.
+2019-11-07T14:46:57	6	dynamic\INTR\10 loading...
+2019-11-07T14:46:57	7	dynamic\INTR\10 loaded.
+2019-11-07T14:46:57	6	dynamic\PANIC\01 loading...
+2019-11-07T14:46:57	7	dynamic\PANIC\01 loaded.
+2019-11-07T14:46:57	6	dynamic\PANIC\02 loading...
+2019-11-07T14:46:57	7	dynamic\PANIC\02 loaded.
+2019-11-07T14:46:57	6	dynamic\PANIC\03 loading...
+2019-11-07T14:46:57	7	dynamic\PANIC\03 loaded.
+2019-11-07T14:46:57	6	dynamic\PANIC\04 loading...
+2019-11-07T14:46:57	7	dynamic\PANIC\04 loaded.
+2019-11-07T14:46:57	6	dynamic\PANIC\05 loading...
+2019-11-07T14:46:57	7	dynamic\PANIC\05 loaded.
+2019-11-07T14:46:57	6	dynamic\PANIC\06 loading...
+2019-11-07T14:46:57	7	dynamic\PANIC\06 loaded.
+2019-11-07T14:46:57	6	dynamic\PANIC\07 loading...
+2019-11-07T14:46:57	7	dynamic\PANIC\07 loaded.
+2019-11-07T14:46:57	6	dynamic\PANIC\08 loading...
+2019-11-07T14:46:57	7	dynamic\PANIC\08 loaded.
+2019-11-07T14:46:57	6	dynamic\PANIC\09 loading...
+2019-11-07T14:46:57	7	dynamic\PANIC\09 loaded.
+2019-11-07T14:46:57	6	dynamic\PANIC\10 loading...
+2019-11-07T14:46:57	7	dynamic\PANIC\10 loaded.
+2019-11-07T14:46:57	6	dynamic\PANIC\11 loading...
+2019-11-07T14:46:57	7	dynamic\PANIC\11 loaded.
+2019-11-07T14:46:57	6	dynamic\PANIC\12 loading...
+2019-11-07T14:46:57	7	dynamic\PANIC\12 loaded.
+2019-11-07T14:46:57	6	dynamic\POL\01 loading...
+2019-11-07T14:46:57	7	dynamic\POL\01 loaded.
+2019-11-07T14:46:57	6	dynamic\POL\02 loading...
+2019-11-07T14:46:57	7	dynamic\POL\02 loaded.
+2019-11-07T14:46:57	6	dynamic\POL\03 loading...
+2019-11-07T14:46:57	7	dynamic\POL\03 loaded.
+2019-11-07T14:46:57	6	dynamic\POL\04 loading...
+2019-11-07T14:46:57	7	dynamic\POL\04 loaded.
+2019-11-07T14:46:57	6	dynamic\POL\05 loading...
+2019-11-07T14:46:57	7	dynamic\POL\05 loaded.
+2019-11-07T14:46:57	6	dynamic\POL\06 loading...
+2019-11-07T14:46:57	7	dynamic\POL\06 loaded.
+2019-11-07T14:46:57	6	dynamic\POL\07 loading...
+2019-11-07T14:46:57	7	dynamic\POL\07 loaded.
+2019-11-07T14:46:57	6	dynamic\POL\08 loading...
+2019-11-07T14:46:57	7	dynamic\POL\08 loaded.
+2019-11-07T14:46:57	6	dynamic\POL\09 loading...
+2019-11-07T14:46:57	7	dynamic\POL\09 loaded.
+2019-11-07T14:46:57	6	dynamic\REB\01 loading...
+2019-11-07T14:46:57	7	dynamic\REB\01 loaded.
+2019-11-07T14:46:57	6	dynamic\REB\02 loading...
+2019-11-07T14:46:57	7	dynamic\REB\02 loaded.
+2019-11-07T14:46:57	6	dynamic\REB\03 loading...
+2019-11-07T14:46:57	7	dynamic\REB\03 loaded.
+2019-11-07T14:46:57	6	dynamic\REB\04 loading...
+2019-11-07T14:46:57	7	dynamic\REB\04 loaded.
+2019-11-07T14:46:57	6	dynamic\REB\05 loading...
+2019-11-07T14:46:57	7	dynamic\REB\05 loaded.
+2019-11-07T14:46:57	6	dynamic\REB\06 loading...
+2019-11-07T14:46:57	7	dynamic\REB\06 loaded.
+2019-11-07T14:46:57	6	dynamic\REB\07 loading...
+2019-11-07T14:46:57	7	dynamic\REB\07 loaded.
+2019-11-07T14:46:57	6	dynamic\REB\08 loading...
+2019-11-07T14:46:57	7	dynamic\REB\08 loaded.
+2019-11-07T14:46:57	6	dynamic\REB\09 loading...
+2019-11-07T14:46:57	7	dynamic\REB\09 loaded.
+2019-11-07T14:46:57	6	dynamic\REB\10 loading...
+2019-11-07T14:46:57	7	dynamic\REB\10 loaded.
+2019-11-07T14:46:57	6	dynamic\REB\11 loading...
+2019-11-07T14:46:57	7	dynamic\REB\11 loaded.
+2019-11-07T14:46:57	6	dynamic\REB\12 loading...
+2019-11-07T14:46:57	7	dynamic\REB\12 loaded.
+2019-11-07T14:46:57	6	dynamic\REB\13 loading...
+2019-11-07T14:46:57	7	dynamic\REB\13 loaded.
+2019-11-07T14:46:57	6	dynamic\REB\14 loading...
+2019-11-07T14:46:57	7	dynamic\REB\14 loaded.
+2019-11-07T14:46:57	6	dynamic\SUCC\01 loading...
+2019-11-07T14:46:57	7	dynamic\SUCC\01 loaded.
+2019-11-07T14:46:57	6	dynamic\SUCC\02 loading...
+2019-11-07T14:46:57	7	dynamic\SUCC\02 loaded.
+2019-11-07T14:46:57	6	dynamic\SUCC\03 loading...
+2019-11-07T14:46:57	7	dynamic\SUCC\03 loaded.
+2019-11-07T14:46:57	6	dynamic\SUCC\04 loading...
+2019-11-07T14:46:57	7	dynamic\SUCC\04 loaded.
+2019-11-07T14:46:57	6	dynamic\SUCC\05 loading...
+2019-11-07T14:46:57	7	dynamic\SUCC\05 loaded.
+2019-11-07T14:46:57	6	dynamic\SUCC\06 loading...
+2019-11-07T14:46:57	7	dynamic\SUCC\06 loaded.
+2019-11-07T14:46:57	6	dynamic\SUCC\07 loading...
+2019-11-07T14:46:57	7	dynamic\SUCC\07 loaded.
+2019-11-07T14:46:57	6	dynamic\SUCC\08 loading...
+2019-11-07T14:46:57	7	dynamic\SUCC\08 loaded.
+2019-11-07T14:46:57	6	dynamic\SUCC\IN loading...
+2019-11-07T14:46:57	7	dynamic\SUCC\IN loaded.
+2019-11-07T14:46:57	6	dynamic\SUCC\OUT loading...
+2019-11-07T14:46:57	7	dynamic\SUCC\OUT loaded.
+2019-11-07T14:46:57	6	dynamic\TRO\01 loading...
+2019-11-07T14:46:57	7	dynamic\TRO\01 loaded.
+2019-11-07T14:46:57	6	dynamic\TRO\02 loading...
+2019-11-07T14:46:57	7	dynamic\TRO\02 loaded.
+2019-11-07T14:46:57	6	dynamic\TRO\03 loading...
+2019-11-07T14:46:57	7	dynamic\TRO\03 loaded.
+2019-11-07T14:46:57	6	dynamic\TRO\04 loading...
+2019-11-07T14:46:57	7	dynamic\TRO\04 loaded.
+2019-11-07T14:46:57	6	dynamic\TRO\05 loading...
+2019-11-07T14:46:57	7	dynamic\TRO\05 loaded.
+2019-11-07T14:46:57	6	dynamic\TRO\06 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\06 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\07 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\07 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\08 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\08 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\11 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\11 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\12 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\12 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\13 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\13 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\14 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\14 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\15 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\15 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\16 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\16 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\17 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\17 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\18 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\18 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\21 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\21 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\22 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\22 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\23 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\23 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\24 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\24 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\25 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\25 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\26 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\26 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\27 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\27 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\28 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\28 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\31 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\31 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\32 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\32 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\33 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\33 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\34 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\34 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\35 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\35 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\36 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\36 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\37 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\37 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\38 loading...
+2019-11-07T14:46:58	7	dynamic\TRO\38 loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\3IN loading...
+2019-11-07T14:46:58	7	dynamic\TRO\3IN loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\IN loading...
+2019-11-07T14:46:58	7	dynamic\TRO\IN loaded.
+2019-11-07T14:46:58	6	dynamic\TRO\OUT loading...
+2019-11-07T14:46:58	7	dynamic\TRO\OUT loaded.
+2019-11-07T14:46:58	6	dynamic\WAIT\01 loading...
+2019-11-07T14:46:58	7	dynamic\WAIT\01 loaded.
+2019-11-07T14:46:58	6	dynamic\WAIT\02 loading...
+2019-11-07T14:46:58	7	dynamic\WAIT\02 loaded.
+2019-11-07T14:46:58	6	dynamic\WAIT\03 loading...
+2019-11-07T14:46:58	7	dynamic\WAIT\03 loaded.
+2019-11-07T14:46:58	6	dynamic\WAIT\04 loading...
+2019-11-07T14:46:58	7	dynamic\WAIT\04 loaded.
+2019-11-07T14:46:58	6	dynamic\WAIT\05 loading...
+2019-11-07T14:46:58	7	dynamic\WAIT\05 loaded.
+2019-11-07T14:46:58	6	dynamic\WAIT\06 loading...
+2019-11-07T14:46:58	7	dynamic\WAIT\06 loaded.
+2019-11-07T14:46:58	6	dynamic\WAIT\IN loading...
+2019-11-07T14:46:58	7	dynamic\WAIT\IN loaded.
+2019-11-07T14:46:58	6	dynamic\WAIT\OUT loading...
+2019-11-07T14:46:58	7	dynamic\WAIT\OUT loaded.
+2019-11-07T14:46:58	6	dynamic\WAIT\SEQ loading...
+2019-11-07T14:46:58	7	dynamic\WAIT\SEQ loaded.
+2019-11-07T14:46:58	e	[Endor,0] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Endor,0] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Imperial-I Star Destroyer,1] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Imperial-I Star Destroyer,1] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[TIE Defender,2] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[TIE Defender,2] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[TIE Defender,3] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[TIE Defender,3] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[TIE Defender,4] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[TIE Defender,4] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Z-95,5] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Z-95,5] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Z-95,6] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Z-95,6] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Z-95,7] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Z-95,7] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Z-95,8] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Z-95,8] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[X-Wing,9] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[X-Wing,9] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[X-Wing,10] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[X-Wing,10] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[A-Wing,11] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[A-Wing,11] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[A-Wing,12] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[A-Wing,12] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Y-Wing,13] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Y-Wing,13] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Y-Wing,14] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Y-Wing,14] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[B-Wing,15] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[B-Wing,15] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[B-Wing,16] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[B-Wing,16] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Z-95,17] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Z-95,17] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Z-95,18] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Z-95,18] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Z-95,19] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Z-95,19] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Nebulon-B Frigate,20] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Nebulon-B Frigate,20] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Corvette,21] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Corvette,21] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Corvette,22] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Corvette,22] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Corvette,23] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Corvette,23] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Transport,24] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Transport,24] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Transport,25] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Transport,25] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Transport,26] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Transport,26] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Transport,27] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Transport,27] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,28] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,28] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,29] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,29] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,30] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,30] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,31] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,31] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,32] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,32] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,33] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,33] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,34] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,34] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,35] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,35] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,36] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,36] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,37] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,37] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,38] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,38] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,39] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,39] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,40] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,40] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,41] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,41] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,42] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,42] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,43] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,43] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,44] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,44] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,45] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,45] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,46] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,46] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Missile Pod,47] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Missile Pod,47] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Missile Pod,48] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Missile Pod,48] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,49] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,49] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,50] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Heavy Turbolaser Tower,50] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Missile Pod,51] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Missile Pod,51] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Missile Pod,52] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Missile Pod,52] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,53] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,53] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,54] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,54] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,55] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,55] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,56] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Star Destroyer Turbolaser Tower,56] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Hangar Bay,57] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Hangar Bay,57] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Shield Generator,58] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Shield Generator,58] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Shield Generator,59] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Shield Generator,59] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Nebulon B Turbolaser Tower,60] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Nebulon B Turbolaser Tower,60] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Nebulon B Turbolaser Tower,61] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Nebulon B Turbolaser Tower,61] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Nebulon B Turbolaser Tower,62] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Nebulon B Turbolaser Tower,62] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Nebulon B Missile Pod,63] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Nebulon B Missile Pod,63] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Nebulon B Missile Pod,64] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Nebulon B Missile Pod,64] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Hangar Bay,65] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Hangar Bay,65] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,66] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,66] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,67] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,67] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,68] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,68] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,69] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,69] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,70] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,70] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,71] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,71] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,72] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,72] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,73] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,73] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,74] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,74] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,75] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,75] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,76] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,76] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,77] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,77] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,78] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,78] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,79] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,79] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,80] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,80] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,81] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,81] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,82] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,82] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,83] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Corellian Turbolaser Tower,83] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Transport Turbolaser Tower,84] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Transport Turbolaser Tower,84] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Transport Turbolaser Tower,85] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Transport Turbolaser Tower,85] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Transport Turbolaser Tower,86] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Transport Turbolaser Tower,86] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Transport Turbolaser Tower,87] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Transport Turbolaser Tower,87] creation state changed to ACTIVE.
+2019-11-07T14:46:58	e	[Z-95,88] creation state changed to GENERATED.
+2019-11-07T14:46:58	e	[Z-95,88] creation state changed to ACTIVE.
+2019-11-07T14:46:59	e	[TIE Advanced,89] creation state changed to GENERATED.
+2019-11-07T14:46:59	e	[TIE Advanced,89] creation state changed to ACTIVE.
+2019-11-07T14:46:59	e	[TIE Advanced,90] creation state changed to GENERATED.
+2019-11-07T14:46:59	e	[TIE Advanced,90] creation state changed to ACTIVE.
+2019-11-07T14:46:59	e	[TIE Advanced,91] creation state changed to GENERATED.
+2019-11-07T14:46:59	e	[TIE Advanced,91] creation state changed to ACTIVE.
+2019-11-07T14:46:59	e	[TIE,92] creation state changed to GENERATED.
+2019-11-07T14:46:59	e	[TIE,92] creation state changed to ACTIVE.
+2019-11-07T14:46:59	e	[TIE,93] creation state changed to GENERATED.
+2019-11-07T14:46:59	e	[TIE,93] creation state changed to ACTIVE.
+2019-11-07T14:46:59	e	[TIE,94] creation state changed to GENERATED.
+2019-11-07T14:46:59	e	[TIE,94] creation state changed to ACTIVE.
+2019-11-07T14:46:59	e	[TIE,95] creation state changed to GENERATED.
+2019-11-07T14:46:59	e	[TIE,95] creation state changed to ACTIVE.
+2019-11-07T14:47:01	e	[TIE,96] creation state changed to GENERATED.
+2019-11-07T14:47:01	e	[TIE,96] creation state changed to ACTIVE.
+2019-11-07T14:47:01	e	[TIE,97] creation state changed to GENERATED.
+2019-11-07T14:47:01	e	[TIE,97] creation state changed to ACTIVE.
+2019-11-07T14:47:01	e	[TIE,98] creation state changed to GENERATED.
+2019-11-07T14:47:01	e	[TIE,98] creation state changed to ACTIVE.
+2019-11-07T14:47:01	e	[TIE,99] creation state changed to GENERATED.
+2019-11-07T14:47:01	e	[TIE,99] creation state changed to ACTIVE.
+2019-11-07T14:47:03	e	[Endor,0] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Imperial-I Star Destroyer,1] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE Defender,2] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE Defender,3] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE Defender,4] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Z-95,5] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Z-95,6] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Z-95,7] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Z-95,8] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[X-Wing,9] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[X-Wing,10] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[A-Wing,11] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[A-Wing,12] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Y-Wing,13] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Y-Wing,14] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[B-Wing,15] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[B-Wing,16] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Z-95,17] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Z-95,18] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Z-95,19] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Nebulon-B Frigate,20] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Corvette,21] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Corvette,22] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Corvette,23] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Transport,24] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Transport,25] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Transport,26] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Transport,27] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,28] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,29] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,30] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,31] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,32] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,33] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,34] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,35] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,36] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,37] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,38] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,39] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,40] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,41] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,42] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,43] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,44] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,45] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,46] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Missile Pod,47] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Missile Pod,48] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,49] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,50] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Missile Pod,51] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Missile Pod,52] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,53] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,54] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,55] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,56] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Hangar Bay,57] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Shield Generator,58] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Shield Generator,59] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Nebulon B Turbolaser Tower,60] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Nebulon B Turbolaser Tower,61] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Nebulon B Turbolaser Tower,62] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Nebulon B Missile Pod,63] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Nebulon B Missile Pod,64] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Hangar Bay,65] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,66] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,67] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,68] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,69] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,70] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,71] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,72] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,73] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,74] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,75] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,76] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,77] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,78] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,79] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,80] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,81] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,82] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,83] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Transport Turbolaser Tower,84] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Transport Turbolaser Tower,85] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Transport Turbolaser Tower,86] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Transport Turbolaser Tower,87] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[Z-95,88] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE Advanced,89] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE Advanced,90] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE Advanced,91] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE,92] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE,93] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE,94] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE,95] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE,96] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE,97] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE,98] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE,99] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE,100] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE,101] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE,102] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE,103] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE,104] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE,105] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE,106] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE,107] creation state changed to PREDISPOSE.
+2019-11-07T14:47:03	e	[TIE,100] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE,100] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE,101] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE,101] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE,102] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE,102] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE,103] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE,103] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE,104] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE,104] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE,105] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE,105] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE,106] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE,106] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE,107] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE,107] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Endor,0] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Endor,0] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Imperial-I Star Destroyer,1] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,28] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,28] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,29] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,29] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,30] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,30] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,31] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,31] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,32] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,32] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,33] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,33] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,34] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,34] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,35] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,35] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,36] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,36] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,37] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,37] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,38] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,38] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,39] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,39] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,40] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,40] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,41] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,41] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,42] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,42] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,43] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,43] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,44] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,44] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,45] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,45] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,46] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,46] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Missile Pod,47] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Missile Pod,47] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Missile Pod,48] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Missile Pod,48] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,49] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,49] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,50] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Heavy Turbolaser Tower,50] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Missile Pod,51] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Missile Pod,51] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Missile Pod,52] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Missile Pod,52] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,53] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,53] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,54] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,54] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,55] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,55] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,56] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Star Destroyer Turbolaser Tower,56] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Hangar Bay,57] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Hangar Bay,57] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Shield Generator,58] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Shield Generator,58] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Shield Generator,59] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Shield Generator,59] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Imperial-I Star Destroyer,1] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE Defender,2] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE Defender,2] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE Defender,3] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE Defender,3] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE Defender,4] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE Defender,4] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Z-95,5] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Z-95,5] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Z-95,6] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Z-95,6] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Z-95,7] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Z-95,7] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Z-95,8] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Z-95,8] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[X-Wing,9] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[X-Wing,9] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[X-Wing,10] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[X-Wing,10] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[A-Wing,11] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[A-Wing,11] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[A-Wing,12] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[A-Wing,12] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Y-Wing,13] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Y-Wing,13] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Y-Wing,14] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Y-Wing,14] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[B-Wing,15] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[B-Wing,15] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[B-Wing,16] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[B-Wing,16] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Z-95,17] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Z-95,17] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Z-95,18] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Z-95,18] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Z-95,19] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Z-95,19] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Nebulon-B Frigate,20] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Nebulon B Turbolaser Tower,60] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Nebulon B Turbolaser Tower,60] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Nebulon B Turbolaser Tower,61] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Nebulon B Turbolaser Tower,61] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Nebulon B Turbolaser Tower,62] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Nebulon B Turbolaser Tower,62] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Nebulon B Missile Pod,63] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Nebulon B Missile Pod,63] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Nebulon B Missile Pod,64] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Nebulon B Missile Pod,64] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Hangar Bay,65] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Hangar Bay,65] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Nebulon-B Frigate,20] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Corvette,21] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,66] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,66] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,67] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,67] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,68] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,68] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,69] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,69] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,70] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,70] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,71] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,71] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Corvette,21] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Corvette,22] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,72] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,72] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,73] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,73] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,74] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,74] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,75] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,75] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,76] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,76] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,77] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,77] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Corvette,22] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Corvette,23] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,78] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,78] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,79] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,79] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,80] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,80] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,81] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,81] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,82] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,82] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,83] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Corellian Turbolaser Tower,83] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Corellian Corvette,23] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Transport,24] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Transport Turbolaser Tower,84] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Transport Turbolaser Tower,84] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Transport,24] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Transport,25] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Transport Turbolaser Tower,85] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Transport Turbolaser Tower,85] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Transport,25] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Transport,26] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Transport Turbolaser Tower,86] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Transport Turbolaser Tower,86] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Transport,26] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Transport,27] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Transport Turbolaser Tower,87] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Transport Turbolaser Tower,87] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Transport,27] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[Z-95,88] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[Z-95,88] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE Advanced,89] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE Advanced,89] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE Advanced,90] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE Advanced,90] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE Advanced,91] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE Advanced,91] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE,92] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE,92] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE,93] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE,93] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE,94] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE,94] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE,95] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE,95] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE,96] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE,96] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE,97] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE,97] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE,98] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE,98] creation state changed to DISPOSED.
+2019-11-07T14:47:03	e	[TIE,99] creation state changed to DISPOSING.
+2019-11-07T14:47:03	e	[TIE,99] creation state changed to DISPOSED.
+2019-11-07T14:47:04	1	SWEndor exiting.
