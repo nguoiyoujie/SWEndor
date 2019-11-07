@@ -1,4 +1,4 @@
-﻿namespace SWEndor.Primitives
+﻿namespace Primrose.Primitives
 {
   /// <summary>
   /// Implements an ID object

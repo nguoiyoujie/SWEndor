@@ -3,11 +3,12 @@ using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Models;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 using SWEndor.Scenarios.Scripting.Expressions;
 using SWEndor.Scenarios.Scripting.Expressions.Primitives;
 using System;
 using System.Collections.Generic;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {

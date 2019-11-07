@@ -1,6 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Core;
-using SWEndor.Primitives;
+using Primrose.Primitives;
 using SWEndor.Scenarios;
 
 namespace SWEndor.AI.Actions

@@ -1,8 +1,8 @@
-﻿using SWEndor.Primitives.Factories;
+﻿using Primrose.Primitives.Factories;
 using System;
 using System.Collections.Concurrent;
 
-namespace SWEndor.Primitives
+namespace Primrose.Primitives
 {
   public static class ScopedManager<T> where T : class
   {

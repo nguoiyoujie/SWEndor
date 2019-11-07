@@ -4,8 +4,8 @@ using SWEndor.Core;
 using SWEndor.Explosions.Models;
 using SWEndor.ExplosionTypes;
 using SWEndor.Models;
-using SWEndor.Primitives;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives;
+using Primrose.Primitives.Extensions;
 
 namespace SWEndor.Explosions
 {

@@ -1,7 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Core;
-using SWEndor.Primitives.Factories;
+using Primrose.Primitives.Factories;
 
 namespace SWEndor.AI.Actions
 {

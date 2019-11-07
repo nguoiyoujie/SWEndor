@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SWEndor.Primitives.Factories
+namespace Primrose.Primitives.Factories
 {
   public interface IFactory<T> : IRegistry<T>
   {

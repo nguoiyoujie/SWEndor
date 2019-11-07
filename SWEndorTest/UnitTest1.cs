@@ -5,7 +5,7 @@ using SWEndor;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.Scenarios.Scripting.Expressions;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 
 namespace SWEndorTest
 {

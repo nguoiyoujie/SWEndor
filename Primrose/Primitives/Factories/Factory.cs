@@ -1,4 +1,4 @@
-﻿namespace SWEndor.Primitives.Factories
+﻿namespace Primrose.Primitives.Factories
 {
   /// <summary>
   /// Allows creation of objects and stores them automatically. Limited to objects with parameterless constructors; for others, use Registry

@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 
-namespace SWEndor.Primitives.Geometry
+namespace Primrose.Primitives.Geometry
 {
   public struct Sphere
   {

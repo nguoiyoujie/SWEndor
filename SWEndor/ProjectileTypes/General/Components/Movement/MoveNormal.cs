@@ -1,7 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors.Data;
 using SWEndor.Core;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 using SWEndor.Projectiles;
 using System;
 

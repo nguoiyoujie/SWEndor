@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 using System;
 
 namespace SWEndor.UI.Widgets

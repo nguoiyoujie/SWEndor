@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace SWEndor.Primitives.Pipelines
+namespace Primrose.Primitives.Pipelines
 {
   /// <summary>
   /// Maintains and executes an ordered queue. Useful for linear procedures like UI modifications.

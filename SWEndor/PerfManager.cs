@@ -4,10 +4,10 @@ using System.IO;
 using System.Text;
 using System.Diagnostics;
 using System.Threading;
-using SWEndor.Primitives.Factories;
-using SWEndor.Primitives.Collections;
+using Primrose.Primitives.Factories;
+using Primrose.Primitives.Collections;
 using SWEndor.Core;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 
 namespace SWEndor
 {

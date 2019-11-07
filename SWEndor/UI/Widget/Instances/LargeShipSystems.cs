@@ -2,8 +2,8 @@
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Models;
-using SWEndor.Primitives;
-using SWEndor.Primitives.Geometry;
+using Primrose.Primitives;
+using Primrose.Primitives.Geometry;
 using System;
 
 namespace SWEndor.UI.Widgets

@@ -4,7 +4,7 @@ using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Player;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 using SWEndor.Sound;
 using SWEndor.UI.Menu.Pages;
 using System;

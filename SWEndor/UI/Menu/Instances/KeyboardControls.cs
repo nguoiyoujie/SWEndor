@@ -4,7 +4,7 @@ using SWEndor.Input.Functions.Gameplay.Camera;
 using SWEndor.Input.Functions.Gameplay.Speed;
 using SWEndor.Input.Functions.Gameplay.UI;
 using SWEndor.Input.Functions.Gameplay.Weapon;
-using SWEndor.Primitives;
+using Primrose.Primitives;
 using System.Collections.Generic;
 
 namespace SWEndor.UI.Menu.Pages

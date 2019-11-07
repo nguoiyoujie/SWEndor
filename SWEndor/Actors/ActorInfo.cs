@@ -9,8 +9,8 @@ using SWEndor.AI.Squads;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Player;
-using SWEndor.Primitives;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives;
+using Primrose.Primitives.Extensions;
 using SWEndor.Scenarios;
 
 namespace SWEndor.Actors

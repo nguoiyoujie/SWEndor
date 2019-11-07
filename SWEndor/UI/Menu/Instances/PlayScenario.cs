@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 using SWEndor.Scenarios;
 
 namespace SWEndor.UI.Menu.Pages

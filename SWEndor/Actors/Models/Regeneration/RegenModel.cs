@@ -1,5 +1,5 @@
 ﻿using SWEndor.ActorTypes.Components;
-using SWEndor.Primitives;
+using Primrose.Primitives;
 
 namespace SWEndor.Actors.Models
 {

@@ -4,9 +4,10 @@ using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
 using SWEndor.Core;
 using SWEndor.Models;
-using SWEndor.Primitives.Extensions;
-using SWEndor.Primitives.Geometry;
+using Primrose.Primitives.Extensions;
+using Primrose.Primitives.Geometry;
 using System.Collections.Generic;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Scenarios
 {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SWEndor.Primitives
+namespace Primrose.Primitives
 {
   public struct LinkedListEnumerable<T>
   {

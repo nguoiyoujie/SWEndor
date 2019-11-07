@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace SWEndor.Primitives
+namespace Primrose.Primitives
 {
   public static class ScopeGlobals
   {

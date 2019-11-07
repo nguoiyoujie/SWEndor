@@ -7,7 +7,7 @@ using SWEndor.Core;
 using SWEndor.FileFormat.INI;
 using SWEndor.Models;
 using SWEndor.Player;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 using SWEndor.Projectiles;
 using SWEndor.ProjectileTypes;
 using SWEndor.Scenarios;
@@ -15,6 +15,7 @@ using SWEndor.Weapons;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.ActorTypes
 {

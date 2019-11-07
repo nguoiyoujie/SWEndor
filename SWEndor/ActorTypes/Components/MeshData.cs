@@ -1,8 +1,8 @@
 ﻿using MTV3D65;
 using SWEndor.Core;
 using SWEndor.FileFormat.INI;
-using SWEndor.Primitives;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives;
+using Primrose.Primitives.Extensions;
 using System.Collections.Generic;
 using System.IO;
 

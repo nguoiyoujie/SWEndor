@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 
-namespace SWEndor.Primitives.Factories
+namespace Primrose.Primitives.Factories
 {
   public class ObjectPool<T>
   {

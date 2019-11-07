@@ -1,8 +1,8 @@
-﻿using SWEndor.Primitives.Extensions;
+﻿using Primrose.Primitives.Extensions;
 using System;
 using System.Collections.Generic;
 
-namespace SWEndor.Primitives
+namespace Primrose.Primitives
 {
   /// <summary>
   /// Provides a basic thread-safe paired list interface for multithreaded updates  

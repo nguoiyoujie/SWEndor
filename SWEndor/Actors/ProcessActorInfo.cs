@@ -1,7 +1,7 @@
 ﻿using SWEndor.AI;
 using SWEndor.Core;
 using SWEndor.Models;
-using SWEndor.Primitives;
+using Primrose.Primitives;
 using SWEndor.Weapons;
 using System;
 

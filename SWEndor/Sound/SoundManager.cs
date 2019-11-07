@@ -2,11 +2,11 @@
 using System.IO;
 using FMOD;
 using System.Collections.Concurrent;
-using SWEndor.Primitives;
+using Primrose.Primitives;
 using System.Text;
 using System.Collections.Generic;
 using SWEndor.Core;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 using SWEndor.Scenarios;
 
 namespace SWEndor.Sound

@@ -1,6 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Core;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 using SWEndor.Weapons.Types;
 using System.Collections.Generic;
 

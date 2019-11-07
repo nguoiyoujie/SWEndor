@@ -1,8 +1,8 @@
-﻿using SWEndor.Primitives.Extensions;
+﻿using Primrose.Primitives.Extensions;
 using System;
 using System.Collections.Generic;
 
-namespace SWEndor.Primitives.StateMachines
+namespace Primrose.Primitives.StateMachines
 {
   public class StateMachine<O, T, U> 
     where T : struct 

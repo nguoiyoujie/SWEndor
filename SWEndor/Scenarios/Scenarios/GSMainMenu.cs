@@ -5,7 +5,7 @@ using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Models;
 using SWEndor.Player;
-using SWEndor.Primitives.Geometry;
+using Primrose.Primitives.Geometry;
 using System.Collections.Generic;
 
 namespace SWEndor.Scenarios

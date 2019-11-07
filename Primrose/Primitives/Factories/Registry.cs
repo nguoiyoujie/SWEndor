@@ -1,8 +1,8 @@
-﻿using SWEndor.Primitives.Extensions;
+﻿using Primrose.Primitives.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SWEndor.Primitives.Factories
+namespace Primrose.Primitives.Factories
 {
   /// <summary>
   /// Maintains a typed registry of objects.

@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Models;
+using Primrose.Primitives.Extensions;
 using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.AI.Actions

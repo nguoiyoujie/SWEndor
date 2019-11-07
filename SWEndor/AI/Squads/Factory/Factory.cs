@@ -1,4 +1,4 @@
-﻿using SWEndor.Primitives.Factories;
+﻿using Primrose.Primitives.Factories;
 
 namespace SWEndor.AI.Squads
 {

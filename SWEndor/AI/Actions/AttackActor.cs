@@ -2,12 +2,13 @@
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Models;
-using SWEndor.Primitives;
-using SWEndor.Primitives.Extensions;
-using SWEndor.Primitives.Factories;
-using SWEndor.Primitives.Geometry;
+using Primrose.Primitives;
+using Primrose.Primitives.Extensions;
+using Primrose.Primitives.Factories;
+using Primrose.Primitives.Geometry;
 using SWEndor.Weapons;
 using System;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.AI.Actions
 {

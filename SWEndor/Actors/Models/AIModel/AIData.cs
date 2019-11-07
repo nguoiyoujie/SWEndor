@@ -1,8 +1,9 @@
 ﻿using MTV3D65;
 using SWEndor.Core;
 using SWEndor.Models;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 using System;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Actors.Models
 {

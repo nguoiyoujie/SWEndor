@@ -1,5 +1,5 @@
 ﻿using SWEndor.Core;
-using SWEndor.Primitives.Factories;
+using Primrose.Primitives.Factories;
 
 
 namespace SWEndor.Scenarios.Scripting.Expressions

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using SWEndor.Scenarios.Scripting.Expressions;
 using SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Statements;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 using System;
 using SWEndor.Scenarios.Scripting.Expressions.Primitives;
 

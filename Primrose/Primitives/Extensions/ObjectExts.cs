@@ -1,4 +1,4 @@
-﻿namespace SWEndor.Primitives.Extensions
+﻿namespace Primrose.Primitives.Extensions
 {
   public static class ObjectExts
   {

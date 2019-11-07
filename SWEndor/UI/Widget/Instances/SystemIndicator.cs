@@ -1,8 +1,8 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Actors.Models;
-using SWEndor.Primitives;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives;
+using Primrose.Primitives.Extensions;
 
 namespace SWEndor.UI.Widgets
 {

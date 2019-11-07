@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Core;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 
 namespace SWEndor.Input.Functions.Gameplay.Special
 {

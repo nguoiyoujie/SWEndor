@@ -3,8 +3,8 @@ using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using SWEndor.Player;
-using SWEndor.Primitives;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives;
+using Primrose.Primitives.Extensions;
 using System;
 
 namespace SWEndor.Actors.Models

@@ -1,4 +1,4 @@
-﻿using SWEndor.Primitives.Extensions;
+﻿using Primrose.Primitives.Extensions;
 using SWEndor.Scenarios.Scripting.Expressions.TokenTypes.Expressions.Literals;
 using System;
 

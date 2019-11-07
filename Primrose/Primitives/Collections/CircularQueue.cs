@@ -1,7 +1,7 @@
-﻿using SWEndor.Primitives.Extensions;
+﻿using Primrose.Primitives.Extensions;
 using System;
 
-namespace SWEndor.Primitives.Collections
+namespace Primrose.Primitives.Collections
 {
   public class CircularQueue<T>
   {

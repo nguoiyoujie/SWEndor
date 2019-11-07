@@ -6,10 +6,11 @@ using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Models;
 using SWEndor.Player;
-using SWEndor.Primitives.Extensions;
-using SWEndor.Primitives.Geometry;
+using Primrose.Primitives.Extensions;
+using Primrose.Primitives.Geometry;
 using System.Collections.Generic;
 using System.Linq;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Scenarios
 {

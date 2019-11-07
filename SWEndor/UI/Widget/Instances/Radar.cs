@@ -4,7 +4,7 @@ using SWEndor.Actors.Models;
 using SWEndor.Core;
 using SWEndor.Explosions;
 using SWEndor.Models;
-using SWEndor.Primitives.Geometry;
+using Primrose.Primitives.Geometry;
 using SWEndor.Projectiles;
 using System;
 using System.Collections.Generic;

@@ -1,12 +1,12 @@
 ﻿using SWEndor.Core;
 using SWEndor.Models;
-using SWEndor.Primitives;
+using Primrose.Primitives;
 using System;
 using System.Collections.Concurrent;
 
 namespace SWEndor
 {
-  public class Factory<T, TCreate, TType> : Primitives.Factories.Registry<int, T>
+  public class Factory<T, TCreate, TType> : Primrose.Primitives.Factories.Registry<int, T>
     where T :
     class,
     IEngineObject,

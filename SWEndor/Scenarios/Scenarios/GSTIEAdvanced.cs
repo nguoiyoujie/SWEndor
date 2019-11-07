@@ -5,8 +5,8 @@ using SWEndor.ActorTypes.Instances;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Models;
-using SWEndor.Primitives.Extensions;
-using SWEndor.Primitives.Geometry;
+using Primrose.Primitives.Extensions;
+using Primrose.Primitives.Geometry;
 using System.Collections.Generic;
 
 namespace SWEndor.Scenarios

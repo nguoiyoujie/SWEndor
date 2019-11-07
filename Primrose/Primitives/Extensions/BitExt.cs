@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SWEndor.Primitives.Extensions
+namespace Primrose.Primitives.Extensions
 {
   public static class BitExts
   {

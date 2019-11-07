@@ -1,8 +1,8 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Models;
-using SWEndor.Primitives;
-using SWEndor.Primitives.Factories;
+using Primrose.Primitives;
+using Primrose.Primitives.Factories;
 using SWEndor.Weapons;
 using System;
 namespace SWEndor.AI.Actions

@@ -1,4 +1,4 @@
-﻿namespace SWEndor.Primitives
+﻿namespace Primrose.Primitives
 {
   public struct BoundFloat
   {

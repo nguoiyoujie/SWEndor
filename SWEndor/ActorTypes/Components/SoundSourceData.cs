@@ -3,7 +3,7 @@ using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Explosions;
 using SWEndor.FileFormat.INI;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 using SWEndor.Projectiles;
 using SWEndor.Scenarios;
 

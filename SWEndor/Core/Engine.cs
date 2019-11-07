@@ -11,14 +11,14 @@ using SWEndor.Player;
 using SWEndor.UI.Forms;
 using System.Text;
 using SWEndor.AI.Squads;
-using SWEndor.Primitives;
+using Primrose.Primitives;
 using System.Threading;
 using SWEndor.ExplosionTypes;
 using SWEndor.Explosions;
 using SWEndor.Shaders;
 using SWEndor.Projectiles;
 using SWEndor.ProjectileTypes;
-using SWEndor.Primitives.Geometry;
+using Primrose.Primitives.Geometry;
 
 namespace SWEndor.Core
 {

@@ -6,10 +6,11 @@ using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Core;
 using SWEndor.Models;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 using SWEndor.Projectiles;
 using SWEndor.ProjectileTypes;
 using System;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Weapons
 {

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 using SWEndor.Core;
-using SWEndor.Primitives;
+using Primrose.Primitives;
 
 namespace SWEndor.UI.Forms.UIControls
 {

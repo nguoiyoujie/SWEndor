@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SWEndor.Primitives.Extensions
+namespace Primrose.Primitives.Extensions
 {
   public static class StringExts
   {

@@ -2,7 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.Actors.Models;
 using SWEndor.Core;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 using SWEndor.UI;
 using SWEndor.UI.Menu;
 using SWEndor.UI.Widgets;

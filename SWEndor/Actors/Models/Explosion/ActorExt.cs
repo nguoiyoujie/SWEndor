@@ -1,4 +1,4 @@
-﻿using SWEndor.Primitives;
+﻿using Primrose.Primitives;
 
 namespace SWEndor.Actors
 {

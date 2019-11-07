@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
-using SWEndor.Primitives.Factories;
-using SWEndor.Primitives.Geometry;
+using Primrose.Primitives.Factories;
+using Primrose.Primitives.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Text;

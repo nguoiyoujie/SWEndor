@@ -1,7 +1,7 @@
 ﻿using SWEndor.Core;
 using SWEndor.ExplosionTypes.Instances;
-using SWEndor.Primitives.Extensions;
-using SWEndor.Primitives.Factories;
+using Primrose.Primitives.Extensions;
+using Primrose.Primitives.Factories;
 using System;
 using System.IO;
 

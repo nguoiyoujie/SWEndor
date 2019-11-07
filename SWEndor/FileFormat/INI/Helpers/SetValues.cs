@@ -1,5 +1,5 @@
 ﻿using MTV3D65;
-using SWEndor.Primitives;
+using Primrose.Primitives;
 
 namespace SWEndor.FileFormat.INI
 {

@@ -3,7 +3,7 @@ using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.FileFormat.INI;
 using SWEndor.Models;
-using SWEndor.Primitives.Factories;
+using Primrose.Primitives.Factories;
 using System.Collections.Generic;
 using System.IO;
 

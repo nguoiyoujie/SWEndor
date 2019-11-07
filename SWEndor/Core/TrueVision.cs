@@ -1,7 +1,7 @@
 ﻿using System;
 using MTV3D65;
 using System.IO;
-using SWEndor.Primitives;
+using Primrose.Primitives;
 
 namespace SWEndor.Core
 {

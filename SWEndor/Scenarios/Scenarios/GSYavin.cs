@@ -6,15 +6,15 @@ using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
 using SWEndor.Weapons;
 using SWEndor.Player;
-using SWEndor.Primitives;
+using Primrose.Primitives;
 using SWEndor.ActorTypes.Instances;
 using SWEndor.AI;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Sound;
 using SWEndor.Core;
 using SWEndor.Models;
-using SWEndor.Primitives.Extensions;
-using SWEndor.Primitives.Geometry;
+using Primrose.Primitives.Extensions;
+using Primrose.Primitives.Geometry;
 
 namespace SWEndor.Scenarios
 {

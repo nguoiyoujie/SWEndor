@@ -4,7 +4,7 @@ using SWEndor.Actors.Data;
 using SWEndor.Actors.Models;
 using SWEndor.AI.Actions;
 using SWEndor.Core;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 using System;
 
 namespace SWEndor.ActorTypes.Components

@@ -1,6 +1,6 @@
 ﻿using SWEndor.Actors.Data;
 using SWEndor.Core;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 using SWEndor.Projectiles;
 
 namespace SWEndor.ProjectileTypes.Components

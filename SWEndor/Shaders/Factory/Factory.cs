@@ -1,5 +1,5 @@
 ﻿using SWEndor.Core;
-using SWEndor.Primitives.Factories;
+using Primrose.Primitives.Factories;
 using System.IO;
 
 namespace SWEndor.Shaders

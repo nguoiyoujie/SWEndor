@@ -1,6 +1,6 @@
 ﻿using SWEndor.FileFormat.INI;
-using SWEndor.Primitives;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives;
+using Primrose.Primitives.Extensions;
 using System.IO;
 using System.Threading.Tasks;
 

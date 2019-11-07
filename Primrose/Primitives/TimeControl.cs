@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Threading;
 
-namespace SWEndor.Primitives
+namespace Primrose.Primitives
 {
   public class TimeControl
   {

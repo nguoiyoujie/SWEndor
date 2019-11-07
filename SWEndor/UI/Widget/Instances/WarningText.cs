@@ -3,7 +3,7 @@ using SWEndor.Actors;
 using SWEndor.Actors.Models;
 using SWEndor.Core;
 using SWEndor.Models;
-using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Extensions;
 using SWEndor.Sound;
 
 namespace SWEndor.UI.Widgets

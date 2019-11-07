@@ -3,7 +3,7 @@ using SWEndor.Actors;
 using SWEndor.Actors.Models;
 using SWEndor.Core;
 using SWEndor.Models;
-using SWEndor.Primitives.Geometry;
+using Primrose.Primitives.Geometry;
 using SWEndor.Scenarios;
 using System;
 using static SWEndor.UI.Widgets.Radar;

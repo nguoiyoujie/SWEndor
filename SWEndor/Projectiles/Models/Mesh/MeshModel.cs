@@ -1,12 +1,12 @@
 ﻿using MTV3D65;
-using SWEndor.Primitives;
+using Primrose.Primitives;
 using System.Collections.Generic;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Shaders;
 using SWEndor.ProjectileTypes;
-using SWEndor.Primitives.Geometry;
+using Primrose.Primitives.Geometry;
 
 namespace SWEndor.Projectiles.Models
 {

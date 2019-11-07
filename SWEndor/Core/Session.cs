@@ -1,5 +1,5 @@
-﻿using SWEndor.Primitives;
-using SWEndor.Primitives.Extensions;
+﻿using Primrose.Primitives;
+using Primrose.Primitives.Extensions;
 using SWEndor.UI.Menu.Pages;
 using System;
 using System.Threading;
