@@ -70,7 +70,7 @@ namespace SWEndor.AI.Squads
 
       lock (lockthreat)
         if (_threats.Count > 0)
-          return _threats.Random(engine);
+          return _threats.Random(engine.Random);
 
       return null;
     }

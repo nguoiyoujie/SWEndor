@@ -222,8 +222,12 @@
     <Compile Include="Player\Camera\Look\DeathCameraLook.cs" />
     <Compile Include="Player\Camera\TargetPosition.cs" />
     <Compile Include="Player\Camera\Look\ICameraLook.cs" />
-    <Compile Include="Primitives\Cache\EnumNames.cs" />
-    <Compile Include="Primitives\Extensions\BitExt.cs" />
+    <Compile Include="Primitives\Extensions\float_mExts.cs" />
+    <Compile Include="Primitives\Extensions\TV3DVecExts.cs" />
+    <Compile Include="Primitives\Extensions\TVKeyExts.cs" />
+    <Compile Include="Primitives\Geometry\BoundFloat.cs" />
+    <Compile Include="Primitives\Geometry\Box.cs" />
+    <Compile Include="Primitives\Geometry\Sphere.cs" />
     <Compile Include="Projectiles\Models\Collision\ProjExt.cs" />
     <Compile Include="Projectiles\Models\Explosion\ProjExt.cs" />
     <Compile Include="Projectiles\Models\Mesh\MeshModel.cs" />
@@ -472,34 +476,6 @@
     <Compile Include="Log\Log.cs" />
     <Compile Include="Log\LogType.cs" />
     <Compile Include="Player\Camera\PlayerCameraInfo.cs" />
-    <Compile Include="Primitives\Geometry\Box.cs" />
-    <Compile Include="Primitives\Geometry\Sphere.cs" />
-    <Compile Include="Primitives\Geometry\BoundFloat.cs" />
-    <Compile Include="Primitives\Cache\Cache.cs" />
-    <Compile Include="Primitives\Cache\Cache_P2.cs" />
-    <Compile Include="Primitives\Collections\CircularQueue.cs" />
-    <Compile Include="Primitives\Collections\ThreadSafeDictionary.cs" />
-    <Compile Include="Primitives\Collections\ThreadSafeList.cs" />
-    <Compile Include="Primitives\Extensions\TVKeyExts.cs" />
-    <Compile Include="Primitives\Extensions\TV3DVecExts.cs" />
-    <Compile Include="Primitives\Extensions\FloatExts.cs" />
-    <Compile Include="Primitives\Extensions\StringExts.cs" />
-    <Compile Include="Primitives\Extensions\ObjectExts.cs" />
-    <Compile Include="Primitives\Extensions\TypeExts.cs" />
-    <Compile Include="Primitives\Extensions\ArrayExts.cs" />
-    <Compile Include="Primitives\Extensions\DictionaryExts.cs" />
-    <Compile Include="Primitives\Extensions\ListExts.cs" />
-    <Compile Include="Primitives\Factories\Factory.cs" />
-    <Compile Include="Primitives\Factories\Interfaces.cs" />
-    <Compile Include="Primitives\Factories\ObjectPool.cs" />
-    <Compile Include="Primitives\Factories\Registry.cs" />
-    <Compile Include="Primitives\Interfaces.cs" />
-    <Compile Include="Primitives\Pipelines\Pipeline.cs" />
-    <Compile Include="Primitives\ScopedItem.cs" />
-    <Compile Include="Primitives\Scope.cs" />
-    <Compile Include="Primitives\StateMachines\StateMachine.cs" />
-    <Compile Include="Primitives\StaticEnumerators.cs" />
-    <Compile Include="Primitives\TimeControl.cs" />
     <Compile Include="ProjectileTypes\General\ProjectileCreationInfo.cs" />
     <Compile Include="ProjectileTypes\General\ProjectileTypeInfo.cs" />
     <Compile Include="ProjectileTypes\General\Factory\Factory.cs" />
@@ -566,9 +542,6 @@
     <Compile Include="Scenarios\Scripting\Functions\ActorFns.cs" />
     <Compile Include="Scenarios\Scripting\Functions\PlayerCameraFns.cs" />
     <Compile Include="Scenarios\Scripting\Functions\SceneFns.cs" />
-    <Compile Include="Scenarios\Scripting\Primitives\float2.cs" />
-    <Compile Include="Scenarios\Scripting\Primitives\float3.cs" />
-    <Compile Include="Scenarios\Scripting\Primitives\float4.cs" />
     <Compile Include="Settings\ColorLocalization.cs" />
     <Compile Include="Settings\TextLocalization.cs" />
     <Compile Include="Shaders\Factory\Factory.cs" />
@@ -696,9 +669,6 @@
     <Compile Include="UI\Screen2D.cs" />
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Sound\SoundManager.cs" />
-    <Compile Include="Sound\fmod\fmod.cs" />
-    <Compile Include="Sound\fmod\fmod_dsp.cs" />
-    <Compile Include="Sound\fmod\fmod_errors.cs" />
     <Compile Include="PerfManager.cs" />
     <Compile Include="UI\Menu\SelectionElement.cs" />
     <Compile Include="Terminal\Commands\Actor\Spawn.cs" />
@@ -839,6 +809,7 @@
     <Folder Include="Doc\ActorTypes\" />
     <Folder Include="Doc\ExplosionTypes\" />
     <Folder Include="Doc\Weapons\" />
+    <Folder Include="Scenarios\Scripting\Primitives\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -854,6 +825,16 @@
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\ClrHeapAllocationAnalyzer.1.0.0.8\analyzers\dotnet\cs\ClrHeapAllocationAnalyzer.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fmod.Wrapper\Fmod.Wrapper.csproj">
+      <Project>{805428ff-a413-48da-993c-99d9083b9a45}</Project>
+      <Name>Fmod.Wrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Primrose\Primrose.csproj">
+      <Project>{6127267c-e6d9-4b1a-a22a-0f3ae7ff3eee}</Project>
+      <Name>Primrose</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

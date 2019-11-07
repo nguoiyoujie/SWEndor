@@ -363,7 +363,7 @@ namespace SWEndor.ActorTypes
                   {
                     if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
                     {
-                      ActorInfo b = attacker.Squad.MembersCopy.Random(engine);
+                      ActorInfo b = attacker.Squad.MembersCopy.Random(engine.Random);
                       if (b != null)
                       {
                         a.ClearQueue();

@@ -2,6 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
+using SWEndor.Primitives.Extensions;
 using SWEndor.Scenarios.Scripting.Expressions;
 using SWEndor.Scenarios.Scripting.Expressions.Primitives;
 using System;

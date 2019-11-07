@@ -13,3 +13,10 @@
 /Log
 /packages/ClrHeapAllocationAnalyzer.1.0.0.8
 
+/Fmod.Wrapper/obj
+/Primrose/bin/Debug
+/FMOD/bin/Debug
+/FMOD/obj/Debug
+/Primrose/obj
+/Primrose/bin/x86/Debug
+/Fmod.Wrapper/bin/x86/Debug

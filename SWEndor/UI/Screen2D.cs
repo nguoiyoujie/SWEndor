@@ -125,7 +125,7 @@ namespace SWEndor
         tinfo.Priority = priority;
         ActorInfo p = Engine.PlayerInfo.Actor;
         if (p != null && (p.GetStatus(SystemPart.COMLINK) == SystemState.DISABLED || p.GetStatus(SystemPart.COMLINK) == SystemState.DESTROYED))
-          text = text.Scramble();
+          text = text.Scramble(Engine.Random);
 
         tinfo.Text = text;
         tinfo.ExpireTime = Engine.Game.GameTime + expiretime;

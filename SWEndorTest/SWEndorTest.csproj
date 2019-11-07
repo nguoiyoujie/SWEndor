@@ -97,6 +97,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Primrose\Primrose.csproj">
+      <Project>{6127267c-e6d9-4b1a-a22a-0f3ae7ff3eee}</Project>
+      <Name>Primrose</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SWEndor\SWEndor.csproj">
       <Project>{38b23038-2cb8-4d0b-b97f-bd9af261dc02}</Project>
       <Name>SWEndor</Name>

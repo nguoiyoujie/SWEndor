@@ -3,6 +3,7 @@ using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Models;
+using SWEndor.Primitives.Extensions;
 using SWEndor.Scenarios.Scripting.Expressions;
 using SWEndor.Scenarios.Scripting.Expressions.Primitives;
 using System;
