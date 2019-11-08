@@ -1,4 +1,5 @@
-﻿using SWEndor.Scenarios.Scripting.Expressions;
+﻿using Primrose.Expressions;
+using SWEndor.Scenarios.Scripting.Expressions;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
@@ -13,7 +14,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     BOOL[]/INT[]/FLOAT[] array
     /// </param>
     /// <returns>BOOL/INT/FLOAT, depending on the input</returns>
-    public static Val IsNull(Context c, Val[] ps)
+    public static Val IsNull(AContext c, Val[] ps)
     {
       return new Val(ps[0].IsNull);
     }

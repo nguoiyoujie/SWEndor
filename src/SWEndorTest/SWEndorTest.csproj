@@ -97,6 +97,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Primrose.Expressions\Primrose.Expressions.csproj">
+      <Project>{4e45e1ad-89de-404a-b867-1fb251eee1a4}</Project>
+      <Name>Primrose.Expressions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Primrose\Primrose.csproj">
       <Project>{6127267c-e6d9-4b1a-a22a-0f3ae7ff3eee}</Project>
       <Name>Primrose</Name>

@@ -1,0 +1,214 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Primrose</name>
+    </assembly>
+    <members>
+        <member name="T:Primrose.Primitives.ThreadSafeDictionary`2">
+            <summary>
+            Provides a basic thread-safe paired list interface for multithreaded updates  
+            </summary>
+            <typeparam name="T">The item type to be stored as keys in this list</typeparam>
+            <typeparam name="U">The item type to be stored as values in this list</typeparam>
+        </member>
+        <member name="F:Primrose.Primitives.ThreadSafeDictionary`2.ExplicitUpdateOnly">
+            <summary>
+            Defines whether updates should be triggered explicitly. If true, call SetDirty() to update.
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.GetList">
+            <summary>
+            Obtains last updated collection
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Primrose.Primitives.ThreadSafeDictionary`2.Keys">
+            <summary>
+            Obtains last updated keys
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Primrose.Primitives.ThreadSafeDictionary`2.Values">
+            <summary>
+            Obtains last updated values
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.Get(`0)">
+            <summary>
+            Retrieves the value associated with this key
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.SetDirty">
+            <summary>
+            Explicity triggers the list for update
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.Refresh">
+            <summary>
+            Forces a refresh
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.Add(`0,`1)">
+            <summary>
+            Adds an item to the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.Set(`0,`1)">
+            <summary>
+            Sets an item to the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.Put(`0,`1)">
+            <summary>
+            Adds or Sets an item to the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.Clear">
+            <summary>
+            Clears the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.Remove(`0)">
+            <summary>
+            Removes an item from the collection
+            </summary>
+        </member>
+        <member name="T:Primrose.Primitives.ThreadSafeList`1">
+            <summary>
+            Provides a basic thread-safe list interface for multithreaded updates  
+            </summary>
+            <typeparam name="T">The item type to be stored in this list</typeparam>
+        </member>
+        <member name="F:Primrose.Primitives.ThreadSafeList`1.ExplicitUpdateOnly">
+            <summary>
+            Defines whether updates should be triggered explicitly. If true, call SetDirty() to update.
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.GetList">
+            <summary>
+            Obtains last updated collection
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.SetDirty">
+            <summary>
+            Explicity triggers the list for update
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.Get(System.Int32)">
+            <summary>
+            Gets an item to the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.Insert(System.Int32,`0)">
+            <summary>
+            Inserts an item at a specified index in the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.Add(`0)">
+            <summary>
+            Adds an item to the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.AddUnique(`0)">
+            <summary>
+            Adds an item to the collection only if this item is not already in the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.Set(System.Int32,`0)">
+            <summary>
+            Sets an item to the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.Clear">
+            <summary>
+            Clears the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.Remove(`0)">
+            <summary>
+            Removes the first instance of an item from the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.RemoveRange(System.Int32,System.Int32)">
+            <summary>
+            Removes a range of items from the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.RemoveAt(System.Int32)">
+            <summary>
+            Removes the first instance of an item from the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.RemoveAllItem(`0)">
+            <summary>
+            Removes all instances of an item from the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.Sort(System.Collections.Generic.IComparer{`0})">
+            <summary>
+            Sorts the list using a comparer
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.ObjectExts.ToBool(System.Object)">
+            <summary>
+            Checks if a value evaluates to True or False
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.Factory`1">
+            <summary>
+            Allows creation of objects and stores them automatically. Limited to objects with parameterless constructors; for others, use Registry
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.Registry`1">
+            <summary>
+            Maintains a typed registry of objects.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.Registry`2">
+            <summary>
+            Maintains a typed registry of objects.
+            </summary>
+            <typeparam name="K"></typeparam>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:Primrose.Primitives.IIdentity">
+            <summary>
+            Implements an ID object
+            </summary>
+        </member>
+        <member name="T:Primrose.Primitives.INamedObject">
+            <summary>
+            Implements a named object
+            </summary>
+        </member>
+        <member name="T:Primrose.Primitives.Pipelines.Pipeline`1">
+            <summary>
+            Maintains and executes an ordered queue. Useful for linear procedures like UI modifications.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.float2">
+            <summary>
+            A float2 pair
+            </summary>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.float3">
+            <summary>
+            A float3 triple
+            </summary>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.float4">
+            <summary>
+            A float4 quad
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -2,11 +2,11 @@
 using SWEndor.Actors;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
-using Primrose.Primitives.Extensions;
 using SWEndor.Scenarios.Scripting.Expressions;
 using Primrose.Primitives.ValueTypes;
 using System;
 using SWEndor.Primitives.Extensions;
+using Primrose.Expressions;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {

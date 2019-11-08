@@ -1,4 +1,5 @@
-﻿using Primrose.Primitives.Extensions;
+﻿using Primrose.Expressions;
+using Primrose.Primitives.Extensions;
 using SWEndor.Scenarios.Scripting.Expressions;
 using System;
 

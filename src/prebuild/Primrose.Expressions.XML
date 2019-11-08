@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Primrose.Expressions</name>
+    </assembly>
+    <members>
+        <member name="M:Primrose.Expressions.IMatcher.Match(System.String)">
+            <summary>
+            Return the number of characters that this "regex" or equivalent
+            matches.
+            </summary>
+            <param name="text">The text to be matched</param>
+            <returns>The number of characters that matched</returns>
+        </member>
+        <member name="T:Primrose.Expressions.ValObj">
+            <summary>
+            A value holder for reference types.
+            </summary>
+            <comment>
+            Since the Val object that contains this struct is internal for use as the expression value only, 
+            it should be constrained to supported types. If the expression tree is to support generics, then
+            swtiching to a single 'object' field
+            </comment>
+        </member>
+    </members>
+</doc>

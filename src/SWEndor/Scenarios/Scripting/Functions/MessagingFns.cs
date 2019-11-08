@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Scenarios.Scripting.Expressions;
 using Primrose.Primitives.ValueTypes;
+using Primrose.Expressions;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {

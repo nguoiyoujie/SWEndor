@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4E45E1AD-89DE-404A-B867-1FB251EEE1A4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Primrose.Expressions</RootNamespace>
+    <AssemblyName>Primrose.Expressions</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\prebuild\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\prebuild\Primrose.Expressions.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\prebuild\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\prebuild\Primrose.Expressions.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\prebuild\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\prebuild\Primrose.Expressions.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\prebuild\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\prebuild\Primrose.Expressions.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\prebuild\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\prebuild\Primrose.Expressions.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>..\prebuild\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\prebuild\Primrose.Expressions.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BOp.cs" />
+    <Compile Include="Context.cs" />
+    <Compile Include="Exceptions\ParserException.cs" />
+    <Compile Include="Ops.cs" />
+    <Compile Include="Parsing\Interfaces.cs" />
+    <Compile Include="Parsing\Lexer.cs" />
+    <Compile Include="Parsing\Parser.cs" />
+    <Compile Include="Parsing\RegexMatcher.cs" />
+    <Compile Include="Parsing\TokenDefinition.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registry.cs" />
+    <Compile Include="Script.cs" />
+    <Compile Include="TokenEnum.cs" />
+    <Compile Include="Tree\Expressions\AddExpression.cs" />
+    <Compile Include="Tree\Expressions\DeclVariable.cs" />
+    <Compile Include="Tree\Expressions\EqualityExpression.cs" />
+    <Compile Include="Tree\Expressions\Expression.cs" />
+    <Compile Include="Tree\Expressions\Function.cs" />
+    <Compile Include="Tree\Expressions\IndexedExpression.cs" />
+    <Compile Include="Tree\Expressions\Interfaces.cs" />
+    <Compile Include="Tree\Expressions\Literals\ArrayLiteral.cs" />
+    <Compile Include="Tree\Expressions\Literals\BoolLiteral.cs" />
+    <Compile Include="Tree\Expressions\Literals\HexLiteral.cs" />
+    <Compile Include="Tree\Expressions\Literals\IntLiteral.cs" />
+    <Compile Include="Tree\Expressions\Literals\SingleLiteral.cs" />
+    <Compile Include="Tree\Expressions\Literals\StringLiteral.cs" />
+    <Compile Include="Tree\Expressions\LogicalAndExpression.cs" />
+    <Compile Include="Tree\Expressions\LogicalOrExpression.cs" />
+    <Compile Include="Tree\Expressions\MultiplyExpression.cs" />
+    <Compile Include="Tree\Expressions\ParenthesizedExpression.cs" />
+    <Compile Include="Tree\Expressions\PostfixIncrement.cs" />
+    <Compile Include="Tree\Expressions\PrefixIncrement.cs" />
+    <Compile Include="Tree\Expressions\PrimaryExpression.cs" />
+    <Compile Include="Tree\Expressions\RelationalExpression.cs" />
+    <Compile Include="Tree\Expressions\TernaryExpression.cs" />
+    <Compile Include="Tree\Expressions\UnaryExpression.cs" />
+    <Compile Include="Tree\Expressions\Variable.cs" />
+    <Compile Include="Tree\Statements\AssignmentStatement.cs" />
+    <Compile Include="Tree\Statements\ForEachStatement.cs" />
+    <Compile Include="Tree\Statements\ForStatement.cs" />
+    <Compile Include="Tree\Statements\IfThenElseStatement.cs" />
+    <Compile Include="Tree\Statements\Interfaces.cs" />
+    <Compile Include="Tree\Statements\RootStatement.cs" />
+    <Compile Include="Tree\Statements\SingleStatement.cs" />
+    <Compile Include="Tree\Statements\Statement.cs" />
+    <Compile Include="Tree\Statements\WhileStatement.cs" />
+    <Compile Include="UOp.cs" />
+    <Compile Include="Val.cs" />
+    <Compile Include="ValType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Primrose\Primrose.csproj">
+      <Project>{6127267c-e6d9-4b1a-a22a-0f3ae7ff3eee}</Project>
+      <Name>Primrose</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,4 +1,5 @@
-﻿using SWEndor.Scenarios.Scripting.Expressions;
+﻿using Primrose.Expressions;
+using SWEndor.Scenarios.Scripting.Expressions;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {

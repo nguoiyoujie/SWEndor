@@ -40,16 +40,18 @@ namespace SWEndor
     SCRIPT_NOTFOUND_ERROR,
 
     // SCRIPTING
+    /*
     SCRIPT_LEXER_INVALID,
     SCRIPT_PARSER_UNEXPECTED_TOKEN,
     SCRIPT_PARSER_UNEXPECTED_TOKEN_2,
     SCRIPT_EVAL_INVALID,
     SCRIPT_EVAL_INVALID_OP,
     SCRIPT_EVAL_INVALID_BOP,
-
+    
     SCRIPT_UNEXPECTED_UOP,
     SCRIPT_UNEXPECTED_BOP,
     SCRIPT_UNEXPECTED_NONBOOL,
+    */
 
     // PLAYER FEEDBACK
     PLAYER_OUTOFBOUNDS,
@@ -110,17 +112,18 @@ namespace SWEndor
       { TextLocalKeys.WEAPONLOAD_NOTFOUND_ERROR, "Weapon loadout '{0}' is not found!" },
       { TextLocalKeys.SCRIPT_NOTFOUND_ERROR, "Script file '{0}' is not found!" },
 
+      /*
       { TextLocalKeys.SCRIPT_LEXER_INVALID, "Unable to match against any tokens at line {0} position {1} \"{2}\"" },
       { TextLocalKeys.SCRIPT_PARSER_UNEXPECTED_TOKEN, "Unexpected token '{0}' found at line {1}:{2}.\nLine: {3}" },
       { TextLocalKeys.SCRIPT_PARSER_UNEXPECTED_TOKEN_2, "Unexpected token '{0}' found at line {1}:{2}. Expected: {3}.\nLine: {4}" },
       { TextLocalKeys.SCRIPT_EVAL_INVALID, "Unable to execute script at line {0}:{1} \nReason: {2} \n" },
       { TextLocalKeys.SCRIPT_EVAL_INVALID_OP, "Unable to perform '{0}' operation on {1} at line {2}:{3} \nReason: {4}" },
       { TextLocalKeys.SCRIPT_EVAL_INVALID_BOP, "Unable to perform '{0}' operation between {1} and {2} at line {3}:{4} \nReason: {5}" },
-
+      
       { TextLocalKeys.SCRIPT_UNEXPECTED_UOP, "Operation '{0}' incompatible with {1}" },
       { TextLocalKeys.SCRIPT_UNEXPECTED_BOP, "Operation '{0}' incompatible between {1} and {2}" },
       { TextLocalKeys.SCRIPT_UNEXPECTED_NONBOOL, "Non-boolean value {0} found at start of conditional expression" },
-
+      */
       
 
       { TextLocalKeys.PLAYER_OUTOFBOUNDS, "You are going out of bounds! Return to the battle!" },

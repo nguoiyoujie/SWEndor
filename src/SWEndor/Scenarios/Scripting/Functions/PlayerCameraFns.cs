@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using Primrose.Expressions;
 using SWEndor.Scenarios.Scripting.Expressions;
 
 namespace SWEndor.Scenarios.Scripting.Functions

@@ -1,7 +1,7 @@
-﻿using SWEndor.ActorTypes;
+﻿using Primrose.Expressions;
+using SWEndor.ActorTypes;
 using SWEndor.FileFormat.INI;
 using SWEndor.FileFormat.Scripting;
-using SWEndor.Scenarios.Scripting;
 using System.Collections.Generic;
 using System.IO;
 
@@ -53,7 +53,7 @@ namespace SWEndor.Scenarios
       Script.Registry.Clear();
       Engine.ScriptContext.Reset();
       foreach (string scrfile in ScriptPaths)
-        new ScriptFile(Path.Combine(Globals.CustomScenarioPath, scrfile));
+        new ScriptFile(Path.Combine(Globals.CustomScenarioPath, scrfile.Trim()));
 
       Script.Registry.Global.Run(Engine.ScriptContext);
     }

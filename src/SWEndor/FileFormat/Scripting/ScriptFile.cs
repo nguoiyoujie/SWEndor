@@ -1,5 +1,5 @@
-﻿using Primrose.Primitives.Extensions;
-using SWEndor.Scenarios.Scripting;
+﻿using Primrose.Expressions;
+using Primrose.Primitives.Extensions;
 using System;
 using System.IO;
 using System.Text;
@@ -40,6 +40,11 @@ namespace SWEndor.FileFormat.Scripting
             }
 
             line = line.TrimEnd(seperator).Trim();
+
+            // write
+            Globals.Engine.Screen2D.LoadingTextLines.Add("loading script:".C(line));
+            Globals.Engine.Screen2D.LoadingTextLines.RemoveAt(0);
+
             script = new Script(line);
             sb.Clear();
           }

@@ -4,6 +4,7 @@ using SWEndor.Primitives.Extensions;
 using SWEndor.Scenarios.Scripting.Expressions;
 using Primrose.Primitives.ValueTypes;
 using System;
+using Primrose.Expressions;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {

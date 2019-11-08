@@ -18,7 +18,6 @@ using SWEndor.Explosions;
 using SWEndor.Shaders;
 using SWEndor.Projectiles;
 using SWEndor.ProjectileTypes;
-using Primrose.Primitives.Geometry;
 
 namespace SWEndor.Core
 {
@@ -138,7 +137,7 @@ namespace SWEndor.Core
       AtmosphereInfo.LoadDefaults(true, true);
       LandInfo.LoadDefaults();
 
-      ScriptContext = new Scenarios.Scripting.Expressions.SWContext(this);
+      ScriptContext = new Scenarios.Scripting.Expressions.Context(this);
 
       // late ActorType bindings...
       ProjectileTypeFactory.Initialise();

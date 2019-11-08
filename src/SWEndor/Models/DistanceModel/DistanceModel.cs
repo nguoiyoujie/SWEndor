@@ -5,6 +5,7 @@ using Primrose.Primitives;
 using SWEndor.Projectiles;
 using System;
 using System.Collections.Generic;
+using Primrose.Primitives.ValueTypes;
 
 namespace SWEndor.Models
 {
@@ -55,10 +56,10 @@ namespace SWEndor.Models
       public bool Passed { get { return Engine == null || Time < Engine.Game.GameTime; } }
     }
 
-    private static Cache<int, EngineTime, float, ITransformable, ITransformable> cache = new Cache<int, EngineTime, float, ITransformable, ITransformable>(8192); 
+    private static Cache<int, EngineTime, float, Pair<ITransformable, ITransformable>> cache = new Cache<int, EngineTime, float, Pair<ITransformable, ITransformable>>(8192); 
     private static float Cleartime = 0;
     private static Func<EngineTime, bool> clearfunc = (f) => { return f.Passed; };
-    private static Func<ITransformable, ITransformable, float> dofunc = (a, b) => { return CalculateDistance(a, b); };
+    private static Func<Pair<ITransformable, ITransformable>, float> dofunc = (o) => { return CalculateDistance(o.t, o.u); };
 
     private static object locker = new object();
 
@@ -179,7 +180,7 @@ namespace SWEndor.Models
           hash <<= 2;
           hash += a1.ID;
         }
-        return cache.GetOrDefine(hash, new EngineTime(e), dofunc, a1, a2, EngineTime.EqualityComparer.Instance);
+        return cache.GetOrDefine(hash, new EngineTime(e), dofunc, new Pair<ITransformable, ITransformable>(a1, a2), EngineTime.EqualityComparer.Instance);
       }
     }
 

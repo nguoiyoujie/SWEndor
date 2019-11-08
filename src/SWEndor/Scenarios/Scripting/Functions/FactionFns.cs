@@ -2,6 +2,7 @@
 using SWEndor.Scenarios.Scripting.Expressions;
 using Primrose.Primitives.ValueTypes;
 using System;
+using Primrose.Expressions;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
@@ -26,7 +27,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     }
 
     /*
-    public static Val SetAsMainAllyFaction(Context context, Val[] ps)
+    public static Val SetAsMainAllyFaction(SWContext context, Val[] ps)
     {
       FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
       if (f != null && context.Engine.GameScenarioManager.Scenario != null)
@@ -37,7 +38,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.FALSE;
     }
 
-    public static Val SetAsMainEnemyFaction(Context context, Val[] ps)
+    public static Val SetAsMainEnemyFaction(SWContext context, Val[] ps)
     {
       FactionInfo f = FactionInfo.Factory.Get(ps[0].ValueS);
       if (f != null && context.Engine.GameScenarioManager.Scenario != null)
