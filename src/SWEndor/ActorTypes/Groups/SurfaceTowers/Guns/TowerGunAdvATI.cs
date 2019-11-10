@@ -3,7 +3,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class TowerGunAdvATI : Groups.SurfaceGun
+  internal class TowerGunAdvATI : Groups.SurfaceGun
   {
     internal TowerGunAdvATI(Factory owner) : base(owner, "ADVGUN", "Advanced Turbolaser Turret")
     {

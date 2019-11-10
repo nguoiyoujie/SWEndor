@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Components
 {
-  public struct ScoreData
+  internal struct ScoreData
   {
     public int PerStrength;
     public int DestroyBonus;
@@ -15,14 +15,14 @@ namespace SWEndor.ActorTypes.Components
 
     public void LoadFromINI(INIFile f, string sectionname)
     {
-      PerStrength = f.GetIntValue(sectionname, "PerStrength", PerStrength);
-      DestroyBonus = f.GetIntValue(sectionname, "DestroyBonus", DestroyBonus);
+      PerStrength = f.GetInt(sectionname, "PerStrength", PerStrength);
+      DestroyBonus = f.GetInt(sectionname, "DestroyBonus", DestroyBonus);
     }
 
     public void SaveToINI(INIFile f, string sectionname)
     {
-      f.SetIntValue(sectionname, "PerStrength", PerStrength);
-      f.SetIntValue(sectionname, "DestroyBonus", DestroyBonus);
+      f.SetInt(sectionname, "PerStrength", PerStrength);
+      f.SetInt(sectionname, "DestroyBonus", DestroyBonus);
     }
   }
 }

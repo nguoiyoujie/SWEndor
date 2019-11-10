@@ -1,11 +1,13 @@
 ﻿using MTV3D65;
+using Primrose.Primitives.ValueTypes;
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.FileFormat.INI;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.ActorTypes.Components
 {
-  public struct DebrisSpawnerData
+  internal struct DebrisSpawnerData
   {
     public readonly string Type;
     private ActorTypeInfo _cache;
@@ -54,7 +56,7 @@ namespace SWEndor.ActorTypes.Components
 
     public static void LoadFromINI(INIFile f, string sectionname, string sourcename, out DebrisSpawnerData[] dest)
     {
-      string[] src = f.GetStringList(sectionname, sourcename, new string[0]);
+      string[] src = f.GetStringArray(sectionname, sourcename, new string[0]);
       dest = new DebrisSpawnerData[src.Length];
       for (int i = 0; i < src.Length; i++)
         dest[i].LoadFromINI(f, src[i]);
@@ -69,34 +71,34 @@ namespace SWEndor.ActorTypes.Components
         ss[i] = s;
         src[i].SaveToINI(f, s);
       }
-      f.SetStringList(sectionname, sourcename, ss);
+      f.SetStringArray(sectionname, sourcename, ss);
     }
 
     private void LoadFromINI(INIFile f, string sectionname)
     {
-      string type = f.GetStringValue(sectionname, "Type", Type);
+      string type = f.GetString(sectionname, "Type", Type);
       TV_3DVECTOR pos = f.GetTV_3DVECTOR(sectionname, "SpawnPosition", SpawnPosition);
-      float xMin = f.GetFloatValue(sectionname, "RotationXMin", RotationXMin);
-      float xMax = f.GetFloatValue(sectionname, "RotationXMax", RotationXMax);
-      float yMin = f.GetFloatValue(sectionname, "RotationYMin", RotationYMin);
-      float yMax = f.GetFloatValue(sectionname, "RotationYMax", RotationYMax);
-      float zMin = f.GetFloatValue(sectionname, "RotationZMin", RotationZMin);
-      float zMax = f.GetFloatValue(sectionname, "RotationZMax", RotationZMax);
-      float chance = f.GetFloatValue(sectionname, "Chance", Chance);
+      float xMin = f.GetFloat(sectionname, "RotationXMin", RotationXMin);
+      float xMax = f.GetFloat(sectionname, "RotationXMax", RotationXMax);
+      float yMin = f.GetFloat(sectionname, "RotationYMin", RotationYMin);
+      float yMax = f.GetFloat(sectionname, "RotationYMax", RotationYMax);
+      float zMin = f.GetFloat(sectionname, "RotationZMin", RotationZMin);
+      float zMax = f.GetFloat(sectionname, "RotationZMax", RotationZMax);
+      float chance = f.GetFloat(sectionname, "Chance", Chance);
       this = new DebrisSpawnerData(type, pos, xMin, xMax, yMin, yMax, zMin, zMax, chance);
     }
 
     private void SaveToINI(INIFile f, string sectionname)
     {
-      f.SetStringValue(sectionname, "Type", Type);
-      f.SetTV_3DVECTOR(sectionname, "SpawnPosition", SpawnPosition);
-      f.SetFloatValue(sectionname, "RotationXMin", RotationXMin);
-      f.SetFloatValue(sectionname, "RotationXMax", RotationXMax);
-      f.SetFloatValue(sectionname, "RotationYMin", RotationYMin);
-      f.SetFloatValue(sectionname, "RotationYMax", RotationYMax);
-      f.SetFloatValue(sectionname, "RotationZMin", RotationZMin);
-      f.SetFloatValue(sectionname, "RotationZMax", RotationZMax);
-      f.SetFloatValue(sectionname, "Chance", Chance);
+      f.SetString(sectionname, "Type", Type);
+      f.GetTV_3DVECTOR(sectionname, "SpawnPosition", SpawnPosition);
+      f.SetFloat(sectionname, "RotationXMin", RotationXMin);
+      f.SetFloat(sectionname, "RotationXMax", RotationXMax);
+      f.SetFloat(sectionname, "RotationYMin", RotationYMin);
+      f.SetFloat(sectionname, "RotationYMax", RotationYMax);
+      f.SetFloat(sectionname, "RotationZMin", RotationZMin);
+      f.SetFloat(sectionname, "RotationZMax", RotationZMax);
+      f.SetFloat(sectionname, "Chance", Chance);
     }
   }
 }

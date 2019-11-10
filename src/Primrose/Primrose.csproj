@@ -96,8 +96,8 @@
     <Compile Include="Primitives\Factories\Registry.cs" />
     <Compile Include="Primitives\Interfaces.cs" />
     <Compile Include="Primitives\Pipelines\Pipeline.cs" />
+    <Compile Include="Primitives\ScopeCounter.cs" />
     <Compile Include="Primitives\Scope.cs" />
-    <Compile Include="Primitives\ScopedItem.cs" />
     <Compile Include="Primitives\StateMachines\StateMachine.cs" />
     <Compile Include="Primitives\StaticEnumerators.cs" />
     <Compile Include="Primitives\TimeControl.cs" />

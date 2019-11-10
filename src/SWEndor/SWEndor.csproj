@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actors\Models\Regeneration\ActorExt.cs" />
+    <Compile Include="Actors\Models\Relation\ActorExt.cs" />
     <Compile Include="Actors\Models\SystemModel\ActorExt.cs" />
     <Compile Include="Actors\Models\SystemModel\SystemPart.cs" />
     <Compile Include="Actors\Models\SystemModel\SystemState.cs" />
@@ -165,10 +166,27 @@
     <Compile Include="ActorTypes\Groups\StaticScene\Hyperspace.cs" />
     <Compile Include="ActorTypes\Groups\Warships\XQ1ATI.cs" />
     <Compile Include="Core\RenderSurfaces.cs" />
+    <Compile Include="ExplosionTypes\Components\ExplRenderData.cs" />
+    <Compile Include="ExplosionTypes\Components\ShakeData.cs" />
+    <Compile Include="Models\Interfaces\IActorState.cs" />
+    <Compile Include="Models\Interfaces\ITransformable.cs" />
+    <Compile Include="Models\Interfaces\IParent.cs" />
+    <Compile Include="Models\Interfaces\INotify.cs" />
+    <Compile Include="Models\Interfaces\IDyingTime.cs" />
+    <Compile Include="Models\Interfaces\IMeshObject.cs" />
+    <Compile Include="Models\Interfaces\ICreationInfo.cs" />
+    <Compile Include="Models\Interfaces\ILinked.cs" />
+    <Compile Include="Models\Interfaces\IActorDisposable.cs" />
+    <Compile Include="Models\Interfaces\IEngineObject.cs" />
+    <Compile Include="Models\Interfaces\IActorCreateable.cs" />
+    <Compile Include="Models\Interfaces\IScoped.cs" />
+    <Compile Include="Models\Interfaces\ITyped.cs" />
+    <Compile Include="Models\Interfaces\ITypeInfo.cs" />
+    <Compile Include="Primitives\Extensions\INIFileExts.cs" />
     <Compile Include="Models\ExplodeModel\ExplodeData.cs" />
     <Compile Include="Actors\Models\Explosion\ActorExt.cs" />
     <Compile Include="Models\ExplodeModel\ExplodeTrigger.cs" />
-    <Compile Include="Models\Interfaces.cs" />
+    <Compile Include="Models\Interfaces\ICollidable.cs" />
     <Compile Include="Actors\Models\AIModel\AIData.cs" />
     <Compile Include="Actors\Models\ArmorModel\ArmorModel.cs" />
     <Compile Include="Models\CollisionModel\CollisionResultData.cs" />
@@ -693,7 +711,7 @@
     <Content Include="SWEndor.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ActorTypes\General\Enums\" />
+    <Folder Include="ProjectileTypes\Components\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

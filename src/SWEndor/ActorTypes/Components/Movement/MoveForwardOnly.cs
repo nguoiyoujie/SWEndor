@@ -9,9 +9,9 @@ namespace SWEndor.ActorTypes.Components
   /// <summary>
   /// Implementation of Move behavior that moves forward only
   /// </summary>
-  public static class MoveForwardOnly
+  internal static class MoveForwardOnly
   {
-    public static void Move(Engine engine, ActorInfo actor, ref MoveData data, float time)
+    internal static void Move(Engine engine, ActorInfo actor, ref MoveData data, float time)
     {
       // Hyperspace special: AI loop may not be in sync
       if (actor.CurrentAction is HyperspaceIn)

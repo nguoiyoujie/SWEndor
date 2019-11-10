@@ -4,7 +4,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class HangarBayATI : Groups.AddOn
+  internal class HangarBayATI : Groups.AddOn
   {
     internal HangarBayATI(Factory owner) : base(owner, "HANGAR", "Hangar Bay")
     {

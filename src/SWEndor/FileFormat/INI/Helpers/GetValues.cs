@@ -1,5 +1,6 @@
-﻿using MTV3D65;
+﻿//using MTV3D65;
 using Primrose.Primitives;
+using Primrose.Primitives.ValueTypes;
 using System;
 using System.Text;
 
@@ -7,14 +8,24 @@ namespace SWEndor.FileFormat.INI
 {
   public partial class INIFile
   {
-    public static char[] DefaultDelimiter = new char[] { ',' };
+    /// <summary>
+    /// The default delimiter referenced for use in the INIFile class
+    /// </summary>
+    public static readonly char[] DefaultDelimiter = new char[] { ',' };
 
-    public string GetStringValue(string section, string key, string defaultValue = "")
+    /// <summary>
+    /// Gets a string value from the INIFile 
+    /// </summary>
+    /// <param name="section">The section containing the key-value pair</param>
+    /// <param name="key">The key containing the value</param>
+    /// <param name="defaultValue">The default value</param>
+    /// <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+    public string GetString(string section, string key, string defaultValue = "")
     {
-      return GetStringValue(section, key, defaultValue, section);
+      return GetString(section, key, defaultValue, section);
     }
 
-    private string GetStringValue(string section, string key, string defaultValue, string firstsection)
+    private string GetString(string section, string key, string defaultValue, string firstsection)
     {
       if (m_sections.ContainsKey(section))
       {
@@ -28,7 +39,7 @@ namespace SWEndor.FileFormat.INI
             && val == defaultValue
             && m_sections.ContainsKey(inherit))
           {
-            val = GetStringValue(inherit, key, defaultValue, firstsection);
+            val = GetString(inherit, key, defaultValue, firstsection);
           }
         }
         return val;
@@ -36,74 +47,130 @@ namespace SWEndor.FileFormat.INI
       return defaultValue;
     }
 
-    public int GetIntValue(string section, string key, int defaultValue = 0)
+    /// <summary>
+    /// Gets an int value from the INIFile 
+    /// </summary>
+    /// <param name="section">The section containing the key-value pair</param>
+    /// <param name="key">The key containing the value</param>
+    /// <param name="defaultValue">The default value</param>
+    /// <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+    public int GetInt(string section, string key, int defaultValue = 0)
     {
       int ret = defaultValue;
-      string s = GetStringValue(section, key, defaultValue.ToString());
+      string s = GetString(section, key, defaultValue.ToString());
       if (s != null && int.TryParse(s, out ret))
         return ret;
       return defaultValue;
     }
 
-    public uint GetUIntValue(string section, string key, uint defaultValue = 0)
+    /// <summary>
+    /// Gets a uint value from the INIFile 
+    /// </summary>
+    /// <param name="section">The section containing the key-value pair</param>
+    /// <param name="key">The key containing the value</param>
+    /// <param name="defaultValue">The default value</param>
+    /// <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+    public uint GetUInt(string section, string key, uint defaultValue = 0)
     {
       uint ret = defaultValue;
-      string s = GetStringValue(section, key, defaultValue.ToString());
+      string s = GetString(section, key, defaultValue.ToString());
       if (s != null && uint.TryParse(s, out ret))
         return ret;
       return defaultValue;
     }
 
-    public float GetFloatValue(string section, string key, float defaultValue = 0)
+    /// <summary>
+    /// Gets a float value from the INIFile 
+    /// </summary>
+    /// <param name="section">The section containing the key-value pair</param>
+    /// <param name="key">The key containing the value</param>
+    /// <param name="defaultValue">The default value</param>
+    /// <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+    public float GetFloat(string section, string key, float defaultValue = 0)
     {
       float ret = defaultValue;
-      string s = GetStringValue(section, key, defaultValue.ToString());
+      string s = GetString(section, key, defaultValue.ToString());
       if (s != null && float.TryParse(s, out ret))
         return ret;
       return defaultValue;
     }
 
-    public double GetDoubleValue(string section, string key, double defaultValue = 0)
+    /// <summary>
+    /// Gets a double value from the INIFile 
+    /// </summary>
+    /// <param name="section">The section containing the key-value pair</param>
+    /// <param name="key">The key containing the value</param>
+    /// <param name="defaultValue">The default value</param>
+    /// <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+    public double GetDouble(string section, string key, double defaultValue = 0)
     {
       double ret = defaultValue;
-      string s = GetStringValue(section, key, defaultValue.ToString());
+      string s = GetString(section, key, defaultValue.ToString());
       if (s != null && double.TryParse(s, out ret))
         return ret;
       return defaultValue;
     }
 
-    public TV_2DVECTOR GetTV_2DVECTOR(string section, string key, TV_2DVECTOR defaultValue = default(TV_2DVECTOR))
+    /// <summary>
+    /// Gets a float2 value from the INIFile 
+    /// </summary>
+    /// <param name="section">The section containing the key-value pair</param>
+    /// <param name="key">The key containing the value</param>
+    /// <param name="defaultValue">The default value</param>
+    /// <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+    public float2 GetFloat2(string section, string key, float2 defaultValue = default(float2))
     {
-      float[] list = GetFloatList(section, key, new float[0]);
+      float[] list = GetFloatArray(section, key, new float[0]);
       if (list.Length >= 2)
-        return new TV_2DVECTOR(list[0], list[1]);
+        return new float2(list[0], list[1]);
       return defaultValue;
     }
 
-    public TV_3DVECTOR GetTV_3DVECTOR(string section, string key, TV_3DVECTOR defaultValue = default(TV_3DVECTOR))
+    /// <summary>
+    /// Gets a float3 value from the INIFile 
+    /// </summary>
+    /// <param name="section">The section containing the key-value pair</param>
+    /// <param name="key">The key containing the value</param>
+    /// <param name="defaultValue">The default value</param>
+    /// <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+    public float3 GetFloat3(string section, string key, float3 defaultValue = default(float3))
     {
-      float[] list = GetFloatList(section, key, new float[0]);
+      float[] list = GetFloatArray(section, key, new float[0]);
       if (list.Length >= 3)
-        return new TV_3DVECTOR(list[0], list[1], list[2]);
+        return new float3(list[0], list[1], list[2]);
       return defaultValue;
     }
 
-    public TV_COLOR GetTV_COLOR(string section, string key, TV_COLOR defaultValue = default(TV_COLOR))
+    /// <summary>
+    /// Gets a float4 value from the INIFile 
+    /// </summary>
+    /// <param name="section">The section containing the key-value pair</param>
+    /// <param name="key">The key containing the value</param>
+    /// <param name="defaultValue">The default value</param>
+    /// <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+    public float4 GetFloat4(string section, string key, float4 defaultValue = default(float4))
     {
-      float[] list = GetFloatList(section, key, new float[0]);
+      float[] list = GetFloatArray(section, key, new float[0]);
       if (list.Length >= 4)
-        return new TV_COLOR(list[0], list[1], list[2], list[3]);
+        return new float4(list[0], list[1], list[2], list[3]);
       return defaultValue;
     }
 
-    public int[] GetIntList(string section, string key, int[] defaultList)
+    /// <summary>
+    /// Gets an int[] array from the INIFile 
+    /// </summary>
+    /// <param name="section">The section containing the key-value pair</param>
+    /// <param name="key">The key containing the value</param>
+    /// <param name="defaultList">The default array</param>
+    /// <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+    public int[] GetIntArray(string section, string key, int[] defaultList)
     {
-      return GetIntList(section, key, defaultList, DefaultDelimiter);
+      return GetIntArray(section, key, defaultList, DefaultDelimiter);
     }
 
-    public int[] GetIntList(string section, string key, int[] defaultList, char[] delimiter)
+    private int[] GetIntArray(string section, string key, int[] defaultList, char[] delimiter)
     {
-      string str = GetStringValue(section, key, "");
+      string str = GetString(section, key, "");
       if (str == "")
         return defaultList;
 
@@ -115,14 +182,14 @@ namespace SWEndor.FileFormat.INI
       return ret;
     }
 
-    public uint[] GetUIntList(string section, string key, uint[] defaultList)
+    public uint[] GetUIntArray(string section, string key, uint[] defaultList)
     {
-      return GetUIntList(section, key, defaultList, DefaultDelimiter);
+      return GetUIntArray(section, key, defaultList, DefaultDelimiter);
     }
 
-    public uint[] GetUIntList(string section, string key, uint[] defaultList, char[] delimiter)
+    public uint[] GetUIntArray(string section, string key, uint[] defaultList, char[] delimiter)
     {
-      string str = GetStringValue(section, key, "");
+      string str = GetString(section, key, "");
       if (str == "")
         return defaultList;
 
@@ -134,14 +201,14 @@ namespace SWEndor.FileFormat.INI
       return ret;
     }
 
-    public float[] GetFloatList(string section, string key, float[] defaultList)
+    public float[] GetFloatArray(string section, string key, float[] defaultList)
     {
-      return GetFloatList(section, key, defaultList, DefaultDelimiter);
+      return GetFloatArray(section, key, defaultList, DefaultDelimiter);
     }
 
-    public float[] GetFloatList(string section, string key, float[] defaultList, char[] delimiter)
+    public float[] GetFloatArray(string section, string key, float[] defaultList, char[] delimiter)
     {
-      string str = GetStringValue(section, key, "");
+      string str = GetString(section, key, "");
       if (str == "")
         return defaultList;
 
@@ -154,14 +221,14 @@ namespace SWEndor.FileFormat.INI
       return ret;
     }
 
-    public double[] GetDoubleList(string section, string key, double[] defaultList)
+    public double[] GetDoubleArray(string section, string key, double[] defaultList)
     {
-      return GetDoubleList(section, key, defaultList, DefaultDelimiter);
+      return GetDoubleArray(section, key, defaultList, DefaultDelimiter);
     }
 
-    public double[] GetDoubleList(string section, string key, double[] defaultList, char[] delimiter)
+    public double[] GetDoubleArray(string section, string key, double[] defaultList, char[] delimiter)
     {
-      string str = GetStringValue(section, key, "");
+      string str = GetString(section, key, "");
       if (str == "")
         return defaultList;
 
@@ -174,9 +241,9 @@ namespace SWEndor.FileFormat.INI
       return ret;
     }
 
-    public bool GetBoolValue(string section, string key, bool defaultValue = false)
+    public bool GetBool(string section, string key, bool defaultValue = false)
     {
-      string s = GetStringValue(section, key, "").ToLower().Trim();
+      string s = GetString(section, key, "").ToLower().Trim();
       if (s.Equals("0") || s.Trim().Equals("false") || s.Equals("no"))
         return false;
       else if (s.Equals("1") || s.Equals("true") || s.Equals("yes"))
@@ -184,14 +251,14 @@ namespace SWEndor.FileFormat.INI
       return defaultValue;
     }
 
-    public bool[] GetBoolList(string section, string key, bool[] defaultList)
+    public bool[] GetBoolArray(string section, string key, bool[] defaultList)
     {
-      return GetBoolList(section, key, defaultList, DefaultDelimiter);
+      return GetBoolArray(section, key, defaultList, DefaultDelimiter);
     }
 
-    public bool[] GetBoolList(string section, string key, bool[] defaultList, char[] delimiter)
+    public bool[] GetBoolArray(string section, string key, bool[] defaultList, char[] delimiter)
     {
-      string str = GetStringValue(section, key, "");
+      string str = GetString(section, key, "");
       if (str == "")
         return defaultList;
 
@@ -200,7 +267,7 @@ namespace SWEndor.FileFormat.INI
 
       for (int i = 0; i < tokens.Length; i++)
       {
-        string s = GetStringValue(section, key, "").ToLower().Trim();
+        string s = GetString(section, key, "").ToLower().Trim();
         if (s.Equals("0") || s.Trim().Equals("false") || s.Equals("no"))
           ret[i] = false;
         else if (s.Equals("1") || s.Equals("true") || s.Equals("yes"))
@@ -209,14 +276,14 @@ namespace SWEndor.FileFormat.INI
       return ret;
     }
 
-    public string[] GetStringList(string section, string key, string[] defaultList)
+    public string[] GetStringArray(string section, string key, string[] defaultList)
     {
-      return GetStringList(section, key, defaultList, DefaultDelimiter);
+      return GetStringArray(section, key, defaultList, DefaultDelimiter);
     }
 
-    public string[] GetStringList(string section, string key, string[] defaultList, char[] delimiter)
+    public string[] GetStringArray(string section, string key, string[] defaultList, char[] delimiter)
     {
-      string str = GetStringValue(section, key, "");
+      string str = GetString(section, key, "");
       if (str == "")
         return defaultList;
 
@@ -224,14 +291,14 @@ namespace SWEndor.FileFormat.INI
       return tokens;
     }
 
-    public StringBuilder[] GetStringBuilderList(string section, string key, StringBuilder[] defaultList)
+    public StringBuilder[] GetStringBuilderArray(string section, string key, StringBuilder[] defaultList)
     {
-      return GetStringBuilderList(section, key, defaultList, DefaultDelimiter);
+      return GetStringBuilderArray(section, key, defaultList, DefaultDelimiter);
     }
 
-    public StringBuilder[] GetStringBuilderList(string section, string key, StringBuilder[] defaultList, char[] delimiter)
+    public StringBuilder[] GetStringBuilderArray(string section, string key, StringBuilder[] defaultList, char[] delimiter)
     {
-      string[] tokens = GetStringList(section, key, null, delimiter);
+      string[] tokens = GetStringArray(section, key, null, delimiter);
       if (tokens == null)
         return defaultList;
 
@@ -249,7 +316,7 @@ namespace SWEndor.FileFormat.INI
       return ret;
     }
 
-    private string[] ConvertToStringArray(TV_2DVECTOR v)
+    private string[] ConvertToStringArray(float2 v)
     {
       string[] ret = new string[2];
       ret[0] = v.x.ToString();
@@ -257,7 +324,7 @@ namespace SWEndor.FileFormat.INI
       return ret;
     }
 
-    private string[] ConvertToStringArray(TV_3DVECTOR v)
+    private string[] ConvertToStringArray(float3 v)
     {
       string[] ret = new string[3];
       ret[0] = v.x.ToString();
@@ -266,19 +333,19 @@ namespace SWEndor.FileFormat.INI
       return ret;
     }
     
-    private string[] ConvertToStringArray(TV_COLOR v)
+    private string[] ConvertToStringArray(float4 v)
     {
       string[] ret = new string[4];
-      ret[0] = v.r.ToString();
-      ret[1] = v.g.ToString();
-      ret[2] = v.b.ToString();
-      ret[3] = v.a.ToString();
+      ret[0] = v.x.ToString();
+      ret[1] = v.y.ToString();
+      ret[2] = v.z.ToString();
+      ret[3] = v.w.ToString();
       return ret;
     }
 
     public T GetEnumValue<T>(string section, string key, T defaultValue) where T : struct
     {
-      string s = GetStringValue(section, key, defaultValue.GetEnumName()).Replace("|", ","); ;
+      string s = GetString(section, key, defaultValue.GetEnumName()).Replace("|", ","); ;
       T ret = defaultValue;
       Enum.TryParse<T>(s, out ret);
       return ret;

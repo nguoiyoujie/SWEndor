@@ -15,7 +15,6 @@ namespace SWEndor.UI.Forms.UIControls
     {
       lblActorDistanceCache.Text = Models.DistanceModel.CacheCount.ToString();
 
-      lblScopedPool.Text = ScopedManager<Actors.ActorInfo>.PoolCount.ToString();
       lblSquadPool.Text = engine.SquadronFactory.PoolCount.ToString();
 
       lblActionHuntPool.Text = AI.Actions.Hunt._pool.Count.ToString();

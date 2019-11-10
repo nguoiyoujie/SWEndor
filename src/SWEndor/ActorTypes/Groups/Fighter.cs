@@ -4,7 +4,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
 {
-  public class Fighter : ActorTypeInfo
+  internal class Fighter : ActorTypeInfo
   {
     internal Fighter(Factory owner, string id, string name) : base(owner, id, name)
     {

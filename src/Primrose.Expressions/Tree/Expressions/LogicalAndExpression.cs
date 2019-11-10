@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Primrose.Expressions.Tree.Expressions
 {
-  public class LogicalAndExpression : CExpression
+  internal class LogicalAndExpression : CExpression
   {
     private CExpression _first;
     private List<CExpression> _set = new List<CExpression>();

@@ -4,7 +4,7 @@ using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class AssaultGunboatATI : Groups.TIE
+  internal class AssaultGunboatATI : Groups.TIE
   {
     internal AssaultGunboatATI(Factory owner) : base(owner, "GUN", "Assault Gunboat")
     {

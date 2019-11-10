@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Core;
 using SWEndor.FileFormat.INI;
+using SWEndor.Primitives.Extensions;
 using System.IO;
 
 namespace SWEndor.Shaders
@@ -20,7 +21,7 @@ namespace SWEndor.Shaders
               string key = ln.Key;
               if (!s.ConstBool.ContainsKey(key))
               {
-                bool val = f.GetBoolValue(head, ln.Key);
+                bool val = f.GetBool(head, ln.Key);
                 s.ConstBool.Add(key, val);
               }
             }
@@ -35,7 +36,7 @@ namespace SWEndor.Shaders
               string key = ln.Key;
               if (!s.ConstFloat.ContainsKey(key))
               {
-                float val = f.GetFloatValue(head, ln.Key);
+                float val = f.GetFloat(head, ln.Key);
                 s.ConstFloat.Add(key, val);
               }
             }
@@ -50,7 +51,7 @@ namespace SWEndor.Shaders
               string key = ln.Key;
               if (!s.ConstVec2.ContainsKey(key))
               {
-                TV_2DVECTOR val = f.GetTV_2DVECTOR(head, ln.Key);
+                TV_2DVECTOR val = f.GetFloat2(head, ln.Key).ToVec2();
                 s.ConstVec2.Add(key, val);
               }
             }
@@ -65,7 +66,7 @@ namespace SWEndor.Shaders
               string key = ln.Key;
               if (!s.ConstVec3.ContainsKey(key))
               {
-                TV_3DVECTOR val = f.GetTV_3DVECTOR(head, ln.Key);
+                TV_3DVECTOR val = f.GetFloat3(head, ln.Key).ToVec3();
                 s.ConstVec3.Add(key, val);
               }
             }
@@ -80,7 +81,7 @@ namespace SWEndor.Shaders
               string key = ln.Key;
               if (!s.ConstTex.ContainsKey(key))
               {
-                string stex = f.GetStringValue(head, ln.Key);
+                string stex = f.GetString(head, ln.Key);
                 int t = engine.TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, stex.Trim()), stex);
                 s.ConstTex.Add(key, t);
               }
@@ -96,7 +97,7 @@ namespace SWEndor.Shaders
               string key = ln.Key;
               if (!s.RandTex.ContainsKey(key))
               {
-                string[] stexs = f.GetStringList(head, ln.Key, new string[0]);
+                string[] stexs = f.GetStringArray(head, ln.Key, new string[0]);
                 if (stexs.Length >= 0)
                 {
                   int[] ts = new int[stexs.Length];
@@ -126,7 +127,7 @@ namespace SWEndor.Shaders
             }
           }
 
-        s._count = f.GetIntValue("General", "InitialCount", 0);
+        s._count = f.GetInt("General", "InitialCount", 0);
       }
 
     }

@@ -1,12 +1,11 @@
-﻿using MTV3D65;
-using SWEndor.ActorTypes.Components;
+﻿using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 
 namespace SWEndor.Actors.Models
 {
-  public struct SystemModel
+  internal struct SystemModel
   {
     private ulong State;
     public float Energy_inStore;

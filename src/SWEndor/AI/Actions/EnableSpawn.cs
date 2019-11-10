@@ -3,7 +3,7 @@ using SWEndor.Core;
 
 namespace SWEndor.AI.Actions
 {
-  public class EnableSpawn : ActionInfo
+  internal class EnableSpawn : ActionInfo
   {
     public EnableSpawn(bool enabled) : base("Enable Spawn")
     {
@@ -15,7 +15,7 @@ namespace SWEndor.AI.Actions
 
     public override void Process(Engine engine, ActorInfo actor)
     {
-      actor.SetSpawnerEnable(Enabled);
+      actor.SpawnerInfo.Enabled = Enabled;
       Complete = true;
     }
   }

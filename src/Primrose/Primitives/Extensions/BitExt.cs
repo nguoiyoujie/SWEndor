@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
-
-namespace Primrose.Primitives.Extensions
+﻿namespace Primrose.Primitives.Extensions
 {
+  /// <summary>
+  /// Provides extension methods for bit manipulation functions
+  /// </summary>
   public static class BitExts
   {
+    /// <summary>Retrieves the most significant bit of a value</summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public static uint GetMostSignificantBit(this uint value)
     {
       if (value == 0) return 0;
@@ -18,6 +22,9 @@ namespace Primrose.Primitives.Extensions
       return 32 - r;
     }
 
+    /// <summary>Enumerates the bits of a value by position</summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public static BitEnumerable GetUniqueBits(this uint value) 
     {
       // index 0 = int 1
@@ -26,27 +33,33 @@ namespace Primrose.Primitives.Extensions
       return new BitEnumerable(value);
     }
 
+    /// <summary>Represents an enumeration of bit positions</summary>
     public struct BitEnumerable
     {
       readonly uint T;
+      /// <summary>Creates the enumerable</summary>
       public BitEnumerable(uint value)
       {
         T = value;
       }
+      /// <summary>Gets the enumerator</summary>
       public BitEnumerator GetEnumerator() { return new BitEnumerator(T); }
     }
 
+    /// <summary>Represents an enumerator of bit positions</summary>
     public struct BitEnumerator
     {
       readonly uint T;
       uint V;
       int curr;
+      /// <summary>Creates the enumerator</summary>
       public BitEnumerator(uint value)
       {
         T = value;
         V = 1;
         curr = 0;
       }
+      /// <summary>Retrieves the next bit position</summary>
       public bool MoveNext()
       {
         while (V <= T)
@@ -65,6 +78,7 @@ namespace Primrose.Primitives.Extensions
         curr++;
         return false;
       }
+      /// <summary>Retrieves the current bit position</summary>
       public int Current { get { return curr; } }
     }
   }

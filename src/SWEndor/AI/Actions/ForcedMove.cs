@@ -1,12 +1,11 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Core;
-using Primrose.Primitives.Extensions;
 using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.AI.Actions
 {
-  public class ForcedMove : ActionInfo
+  internal class ForcedMove : ActionInfo
   {
     public ForcedMove(TV_3DVECTOR target_position, float speed, float close_enough_distance = -1, float expire_time = 999999) : base("ForcedMove")
     {

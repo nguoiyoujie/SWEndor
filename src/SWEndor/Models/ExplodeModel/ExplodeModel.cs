@@ -1,13 +1,15 @@
 ﻿using MTV3D65;
+using Primrose.Primitives;
 using SWEndor.Core;
 using SWEndor.Explosions;
 using SWEndor.ExplosionTypes;
 
 namespace SWEndor.Models
 {
-  public struct ExplodeModel<T> 
+  internal struct ExplodeModel<T> 
     where T : 
     IEngineObject, 
+    IIdentity,
     IActorState, 
     IDyingTime,
     IMeshObject, 

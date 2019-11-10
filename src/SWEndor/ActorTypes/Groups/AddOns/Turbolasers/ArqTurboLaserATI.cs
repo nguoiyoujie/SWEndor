@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class ArqTurboLaserATI : Groups.Turbolasers
+  internal class ArqTurboLaserATI : Groups.Turbolasers
   {
     internal ArqTurboLaserATI(Factory owner) : base(owner, "ARQTLSR", "Arquitens Turbolaser Tower")
     {

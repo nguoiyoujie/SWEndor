@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Groups
 {
-  public class Warship : LargeShip
+  internal class Warship : LargeShip
   {
     internal Warship(Factory owner, string id, string name) : base(owner, id, name)
     {

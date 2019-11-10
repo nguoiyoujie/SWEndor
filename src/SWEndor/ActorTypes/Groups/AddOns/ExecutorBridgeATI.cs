@@ -7,7 +7,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class ExecutorBridgeATI : Groups.AddOn
+  internal class ExecutorBridgeATI : Groups.AddOn
   {
     internal ExecutorBridgeATI(Factory owner) : base(owner, "EXERBRID", "Executor Super Star Destroyer Bridge")
     {

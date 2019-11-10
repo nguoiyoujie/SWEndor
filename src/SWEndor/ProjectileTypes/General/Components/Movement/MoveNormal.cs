@@ -10,7 +10,7 @@ namespace SWEndor.ProjectileTypes.Components
   /// <summary>
   /// Implementation of Move behavior with full range of movement
   /// </summary>
-  public static class MoveNormal
+  internal static class MoveNormal
   {
     public static void Move(Engine engine, ProjectileInfo actor, ref MoveData data, float time)
     {

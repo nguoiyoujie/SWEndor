@@ -15,25 +15,25 @@ namespace SWEndor.Scenarios
       INIFile f = new INIFile(masterfilepath);
 
       // [General]
-      Name = f.GetStringValue("General", "Name", Name);
-      PlayerName = f.GetStringValue("General", "PlayerName", PlayerName);
+      Name = f.GetString("General", "Name", Name);
+      PlayerName = f.GetString("General", "PlayerName", PlayerName);
 
-      Description = f.GetStringValue("General", "Description", Description).Replace('|', '\n');
+      Description = f.GetString("General", "Description", Description).Replace('|', '\n');
 
       AllowedWings = new List<ActorTypeInfo>();
-      foreach (string wing in f.GetStringList("General", "Wings", new string[0]))
+      foreach (string wing in f.GetStringArray("General", "Wings", new string[0]))
         AllowedWings.Add(ActorTypeFactory.Get(wing.Trim()));
 
-      AllowedDifficulties = new List<string>(f.GetStringList("General", "Difficulties", new string[] { "Normal" }));
+      AllowedDifficulties = new List<string>(f.GetStringArray("General", "Difficulties", new string[] { "Normal" }));
 
       // [Script]
-      ScriptPaths = f.GetStringList("Script", "Paths", new string[0]);
+      ScriptPaths = f.GetStringArray("Script", "Paths", new string[0]);
 
-      Fn_load = f.GetStringValue("Script", "Fn_load", Fn_load);
-      Fn_loadfaction = f.GetStringValue("Script", "Fn_loadfaction", Fn_loadfaction);
-      Fn_loadscene = f.GetStringValue("Script", "Fn_loadscene", Fn_loadscene);
-      Fn_makeplayer = f.GetStringValue("Script", "Fn_makeplayer", Fn_makeplayer);
-      Fns_gametick = f.GetStringList("Script", "Fns_gametick", new string[0]);
+      Fn_load = f.GetString("Script", "Fn_load", Fn_load);
+      Fn_loadfaction = f.GetString("Script", "Fn_loadfaction", Fn_loadfaction);
+      Fn_loadscene = f.GetString("Script", "Fn_loadscene", Fn_loadscene);
+      Fn_makeplayer = f.GetString("Script", "Fn_makeplayer", Fn_makeplayer);
+      Fns_gametick = f.GetStringArray("Script", "Fns_gametick", new string[0]);
     }
 
     public readonly string PlayerName = "Pilot";
@@ -41,14 +41,14 @@ namespace SWEndor.Scenarios
     public readonly string[] ScriptPaths;
 
     // major functions
-    public string Fn_load = "load";
-    public string Fn_loadfaction = "loadfaction";
-    public string Fn_loadscene = "loadscene";
-    public string Fn_makeplayer = "makeplayer";
-    public string Fn_calibratescene = "calibratescene";
-    public string[] Fns_gametick;
+    internal string Fn_load = "load";
+    internal string Fn_loadfaction = "loadfaction";
+    internal string Fn_loadscene = "loadscene";
+    internal string Fn_makeplayer = "makeplayer";
+    internal string Fn_calibratescene = "calibratescene";
+    internal string[] Fns_gametick;
 
-    public void LoadScripts()
+    internal void LoadScripts()
     {
       Script.Registry.Clear();
       Engine.ScriptContext.Reset();
@@ -85,13 +85,13 @@ namespace SWEndor.Scenarios
 
     private void fn_MakePlayer() { Script.Registry.Get(Fn_makeplayer)?.Run(Engine.ScriptContext); }
 
-    public override void LoadFactions()
+    internal override void LoadFactions()
     {
       base.LoadFactions();
       Script.Registry.Get(Fn_loadfaction)?.Run(Engine.ScriptContext);
     }
 
-    public override void LoadScene()
+    internal override void LoadScene()
     {
       base.LoadScene();
       Script.Registry.Get(Fn_loadscene)?.Run(Engine.ScriptContext);

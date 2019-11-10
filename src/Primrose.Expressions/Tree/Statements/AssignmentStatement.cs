@@ -2,7 +2,7 @@
 
 namespace Primrose.Expressions.Tree.Statements
 {
-  public class AssignmentStatement: CStatement
+  internal class AssignmentStatement: CStatement
   {
     private Variable _variable;
     private TokenEnum _assigntype;

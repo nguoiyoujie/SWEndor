@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Groups
 {
-  public class StarDestroyer : LargeShip
+  internal class StarDestroyer : LargeShip
   {
     internal StarDestroyer(Factory owner, string id, string name) : base(owner, id, name)
     {

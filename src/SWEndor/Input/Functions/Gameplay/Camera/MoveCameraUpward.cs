@@ -18,7 +18,7 @@ namespace SWEndor.Input.Functions.Gameplay
       {
         float rate = engine.InputManager.SHIFT ? 2500 : 500;
         TVCamera tvc = engine.PlayerCameraInfo.Camera;
-        rate *= engine.Game.TimeControl.RenderInterval;
+        rate *= engine.Game.TimeControl.UpdateInterval;
         tvc.MoveRelative(0, rate, 0);
       }
     }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace SWEndor.ProjectileTypes.Instances
 {
-  public class SmallIonLaserATI : Groups.LaserProjectile
+  internal class SmallIonLaserATI : Groups.LaserProjectile
   {
     internal SmallIonLaserATI(Factory owner) : base(owner, "LSR_ION", "Ion Laser")
     {

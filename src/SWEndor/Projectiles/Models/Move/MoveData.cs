@@ -3,7 +3,7 @@ using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.Projectiles.Data
 {
-  public struct MoveData
+  internal struct MoveData
   {
     // General
     public float Speed;

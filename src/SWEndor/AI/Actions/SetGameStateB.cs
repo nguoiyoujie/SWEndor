@@ -3,7 +3,7 @@ using SWEndor.Core;
 
 namespace SWEndor.AI.Actions
 {
-  public class SetGameStateB : ActionInfo
+  internal class SetGameStateB : ActionInfo
   {
     public SetGameStateB(string key, bool state) : base("SetGameStateB")
     {

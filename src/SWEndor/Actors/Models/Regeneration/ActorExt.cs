@@ -6,7 +6,7 @@ namespace SWEndor.Actors
   {
     public void Regenerate(float time)
     {
-      using (ScopeCounterManager.Acquire(Scope))
+      using (ScopeCounters.Acquire(Scope))
         Regen.Process(this, time);
     }
 

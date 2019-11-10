@@ -36,7 +36,7 @@ namespace SWEndor.FileFormat.Scripting
           {
             if (script != null)
             {
-              script.AddExpression(sb.ToString(), ref linenumber);
+              script.AddStatements(sb.ToString(), ref linenumber);
             }
 
             line = line.TrimEnd(seperator).Trim();
@@ -63,7 +63,7 @@ namespace SWEndor.FileFormat.Scripting
         }
         if (script != null) // last script
         {
-          script.AddExpression(sb.ToString(), ref linenumber);
+          script.AddStatements(sb.ToString(), ref linenumber);
         }
       }
     }

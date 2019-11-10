@@ -6,10 +6,11 @@ using SWEndor.FileFormat.INI;
 using Primrose.Primitives.Extensions;
 using SWEndor.Projectiles;
 using SWEndor.Scenarios;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.ActorTypes.Components
 {
-  public struct SoundSourceData
+  internal struct SoundSourceData
   {
     public readonly string[] Sound;
     public readonly TV_3DVECTOR RelativeLocation;
@@ -115,7 +116,7 @@ namespace SWEndor.ActorTypes.Components
 
     public static void LoadFromINI(INIFile f, string sectionname, string key, out SoundSourceData[] dest)
     {
-      string[] src = f.GetStringList(sectionname, key, new string[0]);
+      string[] src = f.GetStringArray(sectionname, key, new string[0]);
       dest = new SoundSourceData[src.Length];
       for (int i = 0; i < src.Length; i++)
         dest[i].LoadFromINI(f, src[i]);
@@ -130,28 +131,28 @@ namespace SWEndor.ActorTypes.Components
         ss[i] = s;
         src[i].SaveToINI(f, s);
       }
-      f.SetStringList(sectionname, key, ss);
+      f.SetStringArray(sectionname, key, ss);
     }
 
     private void LoadFromINI(INIFile f, string sectionname)
     {
-      string[] sound = f.GetStringList(sectionname, "Sound", Sound);
+      string[] sound = f.GetStringArray(sectionname, "Sound", Sound);
       TV_3DVECTOR rloc = f.GetTV_3DVECTOR(sectionname, "RelativeLocation", RelativeLocation);
-      float dist = f.GetFloatValue(sectionname, "Distance", Distance);
-      bool loop = f.GetBoolValue(sectionname, "Loop", Loop);
-      bool engs = f.GetBoolValue(sectionname, "IsEngineSound", IsEngineSound);
-      bool cuts = f.GetBoolValue(sectionname, "PlayInCutscene", PlayInCutscene);
+      float dist = f.GetFloat(sectionname, "Distance", Distance);
+      bool loop = f.GetBool(sectionname, "Loop", Loop);
+      bool engs = f.GetBool(sectionname, "IsEngineSound", IsEngineSound);
+      bool cuts = f.GetBool(sectionname, "PlayInCutscene", PlayInCutscene);
       this = new SoundSourceData(sound, dist, rloc, loop, cuts, engs);
     }
 
     private void SaveToINI(INIFile f, string sectionname)
     {
-      f.SetStringList(sectionname, "Sound", Sound);
+      f.SetStringArray(sectionname, "Sound", Sound);
       f.SetTV_3DVECTOR(sectionname, "RelativeLocation", RelativeLocation);
-      f.SetFloatValue(sectionname, "Distance", Distance);
-      f.SetBoolValue(sectionname, "Loop", Loop);
-      f.SetBoolValue(sectionname, "IsEngineSound", IsEngineSound);
-      f.SetBoolValue(sectionname, "PlayInCutscene", PlayInCutscene);
+      f.SetFloat(sectionname, "Distance", Distance);
+      f.SetBool(sectionname, "Loop", Loop);
+      f.SetBool(sectionname, "IsEngineSound", IsEngineSound);
+      f.SetBool(sectionname, "PlayInCutscene", PlayInCutscene);
     }
   }
 }

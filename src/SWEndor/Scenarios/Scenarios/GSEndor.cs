@@ -158,7 +158,7 @@ namespace SWEndor.Scenarios
       Manager.IsCutsceneMode = false;
     }
 
-    public override void LoadFactions()
+    internal override void LoadFactions()
     {
       base.LoadFactions();
 
@@ -188,7 +188,7 @@ namespace SWEndor.Scenarios
       MainEnemyFaction.WingSpawnLimit = 32;
     }
 
-    public override void LoadScene()
+    internal override void LoadScene()
     {
       base.LoadScene();
 
@@ -1016,7 +1016,7 @@ namespace SWEndor.Scenarios
         actor.UnlockOne();
         actor.MoveData.FreeSpeed = false;
         actor.MoveData.Speed = actor.MoveData.MaxSpeed;
-        actor.SetSpawnerEnable(true);
+        actor.SpawnerInfo.Enabled = true;
       }
       PlayerInfo.IsMovementControlsEnabled = true;
 

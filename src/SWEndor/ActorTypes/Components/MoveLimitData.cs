@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Components
 {
-  public struct MoveLimitData
+  internal struct MoveLimitData
   {
     public float MaxSpeed;
     public float MinSpeed;
@@ -23,26 +23,26 @@ namespace SWEndor.ActorTypes.Components
 
     public void LoadFromINI(INIFile f, string sectionname)
     {
-      MaxSpeed = f.GetFloatValue(sectionname, "MaxSpeed", MaxSpeed);
-      MinSpeed = f.GetFloatValue(sectionname, "MinSpeed", MinSpeed);
-      MaxSpeedChangeRate = f.GetFloatValue(sectionname, "MaxSpeedChangeRate", MaxSpeedChangeRate);
-      MaxTurnRate = f.GetFloatValue(sectionname, "MaxTurnRate", MaxTurnRate);
-      MaxSecondOrderTurnRateFrac = f.GetFloatValue(sectionname, "MaxSecondOrderTurnRateFrac", MaxSecondOrderTurnRateFrac);
-      XLimit = f.GetFloatValue(sectionname, "XLimit", XLimit);
-      ZTilt = f.GetFloatValue(sectionname, "ZTilt", ZTilt);
-      ZNormFrac = f.GetFloatValue(sectionname, "ZNormFrac", ZNormFrac);
+      MaxSpeed = f.GetFloat(sectionname, "MaxSpeed", MaxSpeed);
+      MinSpeed = f.GetFloat(sectionname, "MinSpeed", MinSpeed);
+      MaxSpeedChangeRate = f.GetFloat(sectionname, "MaxSpeedChangeRate", MaxSpeedChangeRate);
+      MaxTurnRate = f.GetFloat(sectionname, "MaxTurnRate", MaxTurnRate);
+      MaxSecondOrderTurnRateFrac = f.GetFloat(sectionname, "MaxSecondOrderTurnRateFrac", MaxSecondOrderTurnRateFrac);
+      XLimit = f.GetFloat(sectionname, "XLimit", XLimit);
+      ZTilt = f.GetFloat(sectionname, "ZTilt", ZTilt);
+      ZNormFrac = f.GetFloat(sectionname, "ZNormFrac", ZNormFrac);
     }
 
     public void SaveToINI(INIFile f, string sectionname)
     {
-      f.SetFloatValue(sectionname, "MaxSpeed", MaxSpeed);
-      f.SetFloatValue(sectionname, "MinSpeed", MinSpeed);
-      f.SetFloatValue(sectionname, "MaxSpeedChangeRate", MaxSpeedChangeRate);
-      f.SetFloatValue(sectionname, "MaxTurnRate", MaxTurnRate);
-      f.SetFloatValue(sectionname, "MaxSecondOrderTurnRateFrac", MaxSecondOrderTurnRateFrac);
-      f.SetFloatValue(sectionname, "XLimit", XLimit);
-      f.SetFloatValue(sectionname, "ZTilt", ZTilt);
-      f.SetFloatValue(sectionname, "ZNormFrac", ZNormFrac);
+      f.SetFloat(sectionname, "MaxSpeed", MaxSpeed);
+      f.SetFloat(sectionname, "MinSpeed", MinSpeed);
+      f.SetFloat(sectionname, "MaxSpeedChangeRate", MaxSpeedChangeRate);
+      f.SetFloat(sectionname, "MaxTurnRate", MaxTurnRate);
+      f.SetFloat(sectionname, "MaxSecondOrderTurnRateFrac", MaxSecondOrderTurnRateFrac);
+      f.SetFloat(sectionname, "XLimit", XLimit);
+      f.SetFloat(sectionname, "ZTilt", ZTilt);
+      f.SetFloat(sectionname, "ZNormFrac", ZNormFrac);
     }
   }
 }

@@ -8,7 +8,7 @@ using SWEndor.Scenarios;
 
 namespace SWEndor
 {
-  public class ScoreInfo
+  internal class ScoreInfo
   {
     public static readonly ScoreInfo Player = new ScoreInfo();
 

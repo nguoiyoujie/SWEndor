@@ -61,54 +61,54 @@ namespace SWEndor.Weapons
     public WeaponStatInfo(INIFile file, string sectionname)
     {
       Name = sectionname;
-      DisplayName = file.GetStringValue(sectionname, "DisplayName", DisplayName);
+      DisplayName = file.GetString(sectionname, "DisplayName", DisplayName);
 
-      WeaponProjectile = file.GetStringValue(sectionname, "WeaponProjectile", WeaponProjectile);
-      IsActor = file.GetBoolValue(sectionname, "IsActor", IsActor);
-      WeaponCooldown = file.GetFloatValue(sectionname, "WeaponCooldown", WeaponCooldown);
-      WeaponCooldownRate = file.GetFloatValue(sectionname, "WeaponCooldownRate", WeaponCooldownRate);
-      WeaponCooldownRateRandom = file.GetFloatValue(sectionname, "WeaponCooldownRateRandom", WeaponCooldownRateRandom);
+      WeaponProjectile = file.GetString(sectionname, "WeaponProjectile", WeaponProjectile);
+      IsActor = file.GetBool(sectionname, "IsActor", IsActor);
+      WeaponCooldown = file.GetFloat(sectionname, "WeaponCooldown", WeaponCooldown);
+      WeaponCooldownRate = file.GetFloat(sectionname, "WeaponCooldownRate", WeaponCooldownRate);
+      WeaponCooldownRateRandom = file.GetFloat(sectionname, "WeaponCooldownRateRandom", WeaponCooldownRateRandom);
 
-      Burst = file.GetIntValue(sectionname, "Burst", Burst);
-      MaxAmmo = file.GetIntValue(sectionname, "MaxAmmo", MaxAmmo);
-      AmmoReloadCooldown = file.GetFloatValue(sectionname, "AmmoReloadCooldown", AmmoReloadCooldown);
-      AmmoReloadRate = file.GetFloatValue(sectionname, "AmmoReloadRate", AmmoReloadRate);
-      AmmoReloadRateRandom = file.GetFloatValue(sectionname, "AmmoReloadRateRandom", AmmoReloadRateRandom);
-      AmmoReloadAmount = file.GetIntValue(sectionname, "AmmoReloadAmount", AmmoReloadAmount);
-      ProjectileWaitBeforeHoming = file.GetFloatValue(sectionname, "ProjectileWaitBeforeHoming", ProjectileWaitBeforeHoming);
+      Burst = file.GetInt(sectionname, "Burst", Burst);
+      MaxAmmo = file.GetInt(sectionname, "MaxAmmo", MaxAmmo);
+      AmmoReloadCooldown = file.GetFloat(sectionname, "AmmoReloadCooldown", AmmoReloadCooldown);
+      AmmoReloadRate = file.GetFloat(sectionname, "AmmoReloadRate", AmmoReloadRate);
+      AmmoReloadRateRandom = file.GetFloat(sectionname, "AmmoReloadRateRandom", AmmoReloadRateRandom);
+      AmmoReloadAmount = file.GetInt(sectionname, "AmmoReloadAmount", AmmoReloadAmount);
+      ProjectileWaitBeforeHoming = file.GetFloat(sectionname, "ProjectileWaitBeforeHoming", ProjectileWaitBeforeHoming);
 
-      float[] fpos = file.GetFloatList(sectionname, "FirePositions", new float[0]);
+      float[] fpos = file.GetFloatArray(sectionname, "FirePositions", new float[0]);
       FirePositions = new TV_3DVECTOR[fpos.Length / 3];
       for (int p = 0; p + 2 < fpos.Length; p += 3)
         FirePositions[p / 3] = new TV_3DVECTOR(fpos[p], fpos[p + 1], fpos[p + 2]);
 
-      CurrentPositionIndex = file.GetIntValue(sectionname, "CurrentPositionIndex", CurrentPositionIndex);
+      CurrentPositionIndex = file.GetInt(sectionname, "CurrentPositionIndex", CurrentPositionIndex);
 
       // Auto Aim Bot
-      EnablePlayerAutoAim = file.GetBoolValue(sectionname, "EnablePlayerAutoAim", EnablePlayerAutoAim);
-      EnableAIAutoAim = file.GetBoolValue(sectionname, "EnableAIAutoAim", EnableAIAutoAim);
-      AutoAimMinDeviation = file.GetFloatValue(sectionname, "AutoAimMinDeviation", AutoAimMinDeviation);
-      AutoAimMaxDeviation = file.GetFloatValue(sectionname, "AutoAimMaxDeviation", AutoAimMaxDeviation);
+      EnablePlayerAutoAim = file.GetBool(sectionname, "EnablePlayerAutoAim", EnablePlayerAutoAim);
+      EnableAIAutoAim = file.GetBool(sectionname, "EnableAIAutoAim", EnableAIAutoAim);
+      AutoAimMinDeviation = file.GetFloat(sectionname, "AutoAimMinDeviation", AutoAimMinDeviation);
+      AutoAimMaxDeviation = file.GetFloat(sectionname, "AutoAimMaxDeviation", AutoAimMaxDeviation);
 
       // Player Config
       Type = file.GetEnumValue(sectionname, "WeaponType", Type);
 
       // Targeter
-      RequirePlayerTargetLock = file.GetBoolValue(sectionname, "RequirePlayerTargetLock", RequirePlayerTargetLock);
-      RequireAITargetLock = file.GetBoolValue(sectionname, "RequireAITargetLock", RequireAITargetLock);
-      TargetLock_TimeRequired = file.GetFloatValue(sectionname, "TargetLock_TimeRequired", TargetLock_TimeRequired);
+      RequirePlayerTargetLock = file.GetBool(sectionname, "RequirePlayerTargetLock", RequirePlayerTargetLock);
+      RequireAITargetLock = file.GetBool(sectionname, "RequireAITargetLock", RequireAITargetLock);
+      TargetLock_TimeRequired = file.GetFloat(sectionname, "TargetLock_TimeRequired", TargetLock_TimeRequired);
 
       PlayerTargetAcqType = file.GetEnumValue(sectionname, "PlayerTargetAcqType ", PlayerTargetAcqType);
       AITargetAcqType = file.GetEnumValue(sectionname, "AITargetAcqType", AITargetAcqType);
       
       // AI Config
       AIAttackTargets = file.GetEnumValue(sectionname, "AIAttackTargets", AIAttackTargets);
-      AIAttackNull = file.GetBoolValue(sectionname, "AIAttackNull", AIAttackNull);
+      AIAttackNull = file.GetBool(sectionname, "AIAttackNull", AIAttackNull);
 
-      AngularRange = file.GetFloatValue(sectionname, "AngularRange", AngularRange);
-      Range = file.GetFloatValue(sectionname, "Range", Range);
+      AngularRange = file.GetFloat(sectionname, "AngularRange", AngularRange);
+      Range = file.GetFloat(sectionname, "Range", Range);
 
-      FireSound = file.GetStringList(sectionname, "FireSound", FireSound);
+      FireSound = file.GetStringArray(sectionname, "FireSound", FireSound);
     }
   }
 }

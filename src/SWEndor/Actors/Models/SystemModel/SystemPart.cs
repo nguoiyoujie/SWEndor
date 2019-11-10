@@ -3,22 +3,51 @@ using System.Collections.Generic;
 
 namespace SWEndor.Actors.Models
 {
+  /// <summary>
+  /// Defines subsystem parts
+  /// </summary>
   public enum SystemPart : byte // up to 64 / 4 = 16 values
   {
-    ENGINE, // Allow speed changes
-    SIDE_THRUSTERS, // Allow steering 
-    SHIELD_GENERATOR, // required to regen shields
-    RADAR, // UI
-    SCANNER, // UI, required to show target info
-    TARGETING_SYSTEM, // UI, required for guided projectiles
-    COMLINK, // allow communication with squad
-    ENERGY_STORE, // stores 'energy'
-    ENERGY_CHARGER, // 'energy' income
-    LASER_WEAPONS, // required for laser projectiles
-    PROJECTILE_LAUNCHERS, // required for guided projectiles
+    /// <summary>Allows speed changes</summary>
+    ENGINE,
+
+    /// <summary>Allows steering</summary>
+    SIDE_THRUSTERS,
+
+    /// <summary>Allows regeneration of shields</summary>
+    SHIELD_GENERATOR, // required to 
+
+    /// <summary>Reveals the in-game map and radar</summary>
+    RADAR,
+
+    /// <summary>Reveals information about the target</summary>
+    SCANNER,
+
+    /// <summary>Allows targeting, required for guided projectiles</summary>
+    TARGETING_SYSTEM,
+
+    /// <summary>Allows communication with squad and mission</summary>
+    COMLINK,
+
+    /// <summary>Allows accumulation of energy</summary>
+    ENERGY_STORE,
+
+    /// <summary>Converts fuel into energy</summary>
+    ENERGY_CHARGER,
+
+    /// <summary>Fires laser projectiles</summary>
+    LASER_WEAPONS,
+
+    /// <summary>Launches ordinance projectiles</summary>
+    PROJECTILE_LAUNCHERS,
+
+    /// <summary>Allow hyperdrive (TO-DO)</summary>
     HYPERDRIVE
   }
 
+  /// <summary>
+  /// Provides extension methods for a SystemPart
+  /// </summary>
   public static class SystemPartExt
   {
     private static Dictionary<SystemPart, string> _shorthand = new Dictionary<SystemPart, string>
@@ -37,7 +66,12 @@ namespace SWEndor.Actors.Models
       { SystemPart.HYPERDRIVE, "HYP"}
     };
 
-    public static string GetShorthand(this SystemPart part)
+    /// <summary>
+    /// Retrieves the short name for a system part
+    /// </summary>
+    /// <param name="part">The system part</param>
+    /// <returns>The cached short name of this part</returns>
+    public static string GetShortName(this SystemPart part)
     {
       string s;
       if (!_shorthand.TryGetValue(part, out s))

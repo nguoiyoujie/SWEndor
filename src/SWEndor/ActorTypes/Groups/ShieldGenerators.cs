@@ -3,7 +3,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
 {
-  public class ShieldGenerators : AddOn
+  internal class ShieldGenerators : AddOn
   {
     internal ShieldGenerators(Factory owner, string id, string name) : base(owner, id, name)
     {

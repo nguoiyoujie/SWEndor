@@ -3,7 +3,7 @@ using SWEndor.Core;
 
 namespace SWEndor.AI.Actions
 {
-  public class PlaySound : ActionInfo
+  internal class PlaySound : ActionInfo
   {
     public PlaySound(string name, bool squadLeaderOnly, bool interrupt = true) : base("PlaySound")
     {

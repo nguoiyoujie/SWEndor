@@ -3,7 +3,7 @@ using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class CargoLgATI : Groups.RebelWing
+  internal class CargoLgATI : Groups.RebelWing
   {
     internal CargoLgATI(Factory owner) : base(owner, "CARGO_LG", "Cargo Freighter")
     {

@@ -10,6 +10,7 @@ namespace SWEndor
     where T :
     class,
     IEngineObject,
+    IIdentity,
     ILinked<T>,
     IScoped,
     IActorDisposable,
@@ -19,6 +20,7 @@ namespace SWEndor
     where TType :
     ITypeInfo<T>
   {
+    /// <summary>The game engine</summary>
     public readonly Engine Engine;
     internal Factory(Engine engine, Func<Engine, Factory<T, TCreate, TType>, short, TCreate, T> createfunc, int limit) : base(limit)
     {
@@ -81,7 +83,7 @@ namespace SWEndor
           actor = create(Engine, this, id, acinfo);
         }
 
-        using (ScopeCounterManager.Acquire(actor.Scope))
+        using (ScopeCounters.Acquire(actor.Scope))
         {
           planned.Enqueue(actor);
           Add(id, actor);
@@ -112,7 +114,7 @@ namespace SWEndor
       T actor = null;
       while (planned.TryDequeue(out actor))
       {
-        using (ScopeCounterManager.Acquire(actor.Scope))
+        using (ScopeCounters.Acquire(actor.Scope))
         {
           if (!actor.DisposingOrDisposed)
             if (actor.CreationTime < Engine.Game.GameTime)

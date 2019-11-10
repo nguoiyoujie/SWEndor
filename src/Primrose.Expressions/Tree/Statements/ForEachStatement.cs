@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Primrose.Expressions.Tree.Statements
 {
-  public class ForEachStatement : CStatement
+  internal class ForEachStatement : CStatement
   {
     private CExpression _enumerable;
     private Variable _var;

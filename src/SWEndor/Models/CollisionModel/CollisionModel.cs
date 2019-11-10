@@ -177,7 +177,7 @@ namespace SWEndor.Models
         }
         */
 
-        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
         {
           actor.EnableCollision(false);
           result = engine.TrueVision.TVScene.AdvancedCollision(vData.Start, vData.End, ref tvcres, (int)CONST_TV_OBJECT_TYPE.TV_OBJECT_MESH, CONST_TV_TESTTYPE.TV_TESTTYPE_ACCURATETESTING);

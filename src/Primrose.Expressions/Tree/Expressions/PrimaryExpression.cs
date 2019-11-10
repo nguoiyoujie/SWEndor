@@ -2,7 +2,7 @@
 
 namespace Primrose.Expressions.Tree.Expressions
 {
-  public class PrimaryExpression : CExpression
+  internal class PrimaryExpression : CExpression
   {
     private CExpression _child;
 

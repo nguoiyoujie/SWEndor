@@ -10,22 +10,22 @@ namespace SWEndor.Actors
       return Systems.GetStatus(part);
     }
 
-    public void SetStatus(SystemPart part, SystemState newstate)
+    internal void SetStatus(SystemPart part, SystemState newstate)
     {
       Systems.SetStatus(part, newstate);
     }
 
-    public void DamageRandom()
+    internal void DamageRandom()
     {
       Systems.DamageRandom(Engine, this, ref TypeInfo.SystemData);
     }
 
-    public void DisableRandom()
+    internal void DisableRandom()
     {
       Systems.DisableRandom(Engine, this, ref TypeInfo.SystemData);
     }
 
-    public void Distribute(ref SystemData data, float time)
+    internal void Distribute(ref SystemData data, float time)
     {
       Systems.Distribute(ref TypeInfo.SystemData, Engine.Game.TimeSinceRender);
     }

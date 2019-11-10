@@ -4,10 +4,11 @@ namespace SWEndor.Projectiles
 {
   public partial class ProjectileInfo
   {
+    /// <summary>Processes the explosions once</summary>
     public void TickExplosions()
     {
-      using (ScopeCounterManager.Acquire(Scope))
-        Explosions.Tick(this, Game.GameTime);
+      using (ScopeCounters.Acquire(Scope))
+        Explosions.Tick(this, Engine.Game.GameTime);
     }
   }
 }

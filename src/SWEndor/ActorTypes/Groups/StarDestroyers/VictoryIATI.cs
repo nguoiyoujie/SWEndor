@@ -6,7 +6,7 @@ using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class VictoryIATI : Groups.StarDestroyer
+  internal class VictoryIATI : Groups.StarDestroyer
   {
     internal VictoryIATI(Factory owner) : base(owner, "VICT", "Victory-I Star Destroyer")
     {

@@ -5,7 +5,7 @@ using Primrose.Primitives.Factories;
 
 namespace SWEndor.AI.Actions
 {
-  public class ProjectileAttackActor : ActionInfo
+  internal class ProjectileAttackActor : ActionInfo
   {
     internal static int _count = 0;
     internal static ObjectPool<ProjectileAttackActor> _pool = new ObjectPool<ProjectileAttackActor>(() => { return new ProjectileAttackActor(); }, (a) => { a.Reset(); });

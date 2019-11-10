@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Primrose.Expressions.Tree.Expressions
 {
-  public class AddExpression : CExpression
+  internal class AddExpression : CExpression
   {
     private CExpression _first;
     private Dictionary<CExpression, TokenEnum> _set = new Dictionary<CExpression, TokenEnum>();

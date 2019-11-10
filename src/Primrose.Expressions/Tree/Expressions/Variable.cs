@@ -1,6 +1,6 @@
 ﻿namespace Primrose.Expressions.Tree.Expressions
 {
-  public class Variable : CExpression
+  internal class Variable : CExpression
   {
     public string varName { get; protected set; }
 

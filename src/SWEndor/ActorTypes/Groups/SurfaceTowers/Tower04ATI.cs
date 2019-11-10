@@ -3,7 +3,7 @@ using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class Tower04ATI : Groups.SurfaceTower
+  internal class Tower04ATI : Groups.SurfaceTower
   {
     internal Tower04ATI(Factory owner) : base(owner, "SUPT", "Super Deflector Tower")
     {

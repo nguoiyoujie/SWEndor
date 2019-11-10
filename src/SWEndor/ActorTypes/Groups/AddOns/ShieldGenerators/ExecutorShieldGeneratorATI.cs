@@ -3,7 +3,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class ExecutorShieldGeneratorATI : Groups.ShieldGenerators
+  internal class ExecutorShieldGeneratorATI : Groups.ShieldGenerators
   {
     internal ExecutorShieldGeneratorATI(Factory owner) : base(owner, "EXECSHD", "Shield Generator")
     {

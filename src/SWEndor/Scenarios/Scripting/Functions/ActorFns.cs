@@ -495,7 +495,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
           return;
         case "SetSpawnerEnable":
           if (setValue)
-            actor.SetSpawnerEnable((bool)newValue);
+            actor.SpawnerInfo.Enabled = (bool)newValue;
           else
             newValue = new Val(actor.SpawnerInfo.Enabled);
           return;

@@ -3,7 +3,7 @@ using SWEndor.Core;
 
 namespace SWEndor.AI.Actions
 {
-  public class Wait : ActionInfo
+  internal class Wait : ActionInfo
   {
     public Wait(float time = 5) : base("Wait")
     {

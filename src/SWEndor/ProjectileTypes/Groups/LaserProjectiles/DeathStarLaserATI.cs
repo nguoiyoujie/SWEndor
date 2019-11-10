@@ -6,7 +6,7 @@ using SWEndor.Projectiles;
 
 namespace SWEndor.ProjectileTypes.Instances
 {
-  public class DeathStarLaserATI : Groups.LaserProjectile
+  internal class DeathStarLaserATI : Groups.LaserProjectile
   {
     internal DeathStarLaserATI(Factory owner) : base(owner, "LSR_DS", "Death Star Laser")
     {

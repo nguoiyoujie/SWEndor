@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class NebulonBMissilePodATI : Groups.Turbolasers
+  internal class NebulonBMissilePodATI : Groups.Turbolasers
   {
     internal NebulonBMissilePodATI(Factory owner) : base(owner, "NEBLMPOD", "Nebulon B Missile Pod")
     {

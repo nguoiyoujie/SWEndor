@@ -1,6 +1,6 @@
 ﻿namespace Primrose.Expressions
 {
-  public enum TokenEnum
+  internal enum TokenEnum
   {
     NOTHING,
 

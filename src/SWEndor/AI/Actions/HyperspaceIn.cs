@@ -1,12 +1,11 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Core;
-using Primrose.Primitives.Extensions;
 using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.AI.Actions
 {
-  public class HyperspaceIn : ActionInfo
+  internal class HyperspaceIn : ActionInfo
   {
     public HyperspaceIn(TV_3DVECTOR target_position) : base("HyperspaceIn")
     {

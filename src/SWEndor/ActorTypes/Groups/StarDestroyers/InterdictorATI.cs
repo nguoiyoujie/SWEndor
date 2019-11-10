@@ -6,7 +6,7 @@ using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class InterdictorATI : Groups.StarDestroyer
+  internal class InterdictorATI : Groups.StarDestroyer
   {
     internal InterdictorATI(Factory owner) : base(owner, "INTD", "Interdictor Star Destroyer")
     {

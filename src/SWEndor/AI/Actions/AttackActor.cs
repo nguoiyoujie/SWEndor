@@ -2,8 +2,6 @@
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Models;
-using Primrose.Primitives;
-using Primrose.Primitives.Extensions;
 using Primrose.Primitives.Factories;
 using Primrose.Primitives.Geometry;
 using SWEndor.Weapons;
@@ -12,7 +10,7 @@ using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.AI.Actions
 {
-  public class AttackActor : ActionInfo
+  internal class AttackActor : ActionInfo
   {
     internal static int _count = 0;
     internal static ObjectPool<AttackActor> _pool = new ObjectPool<AttackActor>(() => { return new AttackActor(); }, (a) => { a.Reset(); });
@@ -107,7 +105,7 @@ namespace SWEndor.AI.Actions
       {
         if (target.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
         {
-          float evadeduration = 2000 / (target.GetTrueSpeed() + 500);
+          float evadeduration = 2000 / (target.MoveData.Speed + 500);
           actor.QueueFirst(Evade.GetOrCreate(evadeduration));
         }
         else if (!(target.TypeInfo.AIData.TargetType.Contains(TargetType.MUNITION)))

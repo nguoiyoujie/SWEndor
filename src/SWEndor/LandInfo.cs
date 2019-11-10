@@ -11,7 +11,7 @@ namespace SWEndor
     internal LandInfo(Engine engine)
     {
       Engine = engine;
-      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+      using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
         m_land = Engine.TrueVision.TVScene.CreateLandscape("Land");
     }
 
@@ -85,7 +85,7 @@ namespace SWEndor
     {
       m_land.Enable(false);
       m_land.Destroy();
-      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+      using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
         m_land = Engine.TrueVision.TVScene.CreateLandscape("Land");
     }
 

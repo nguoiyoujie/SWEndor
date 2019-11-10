@@ -7,7 +7,7 @@ using System;
 
 namespace SWEndor.ExplosionTypes.Instances
 {
-  public class ElectroATI : Groups.Explosion
+  internal class ElectroATI : Groups.Explosion
   {
     internal ElectroATI(Factory owner) : base(owner, "ELECTRO", "Electro")
     {
@@ -16,9 +16,8 @@ namespace SWEndor.ExplosionTypes.Instances
 
       RenderData.RadarSize = 0;
 
-      atlasX = 2;
-      atlasY = 2;
-      MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Name, 40, "electro/tex.jpg", CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, atlasX, atlasY);
+      ExplRenderData = new ExplRenderData(2, 2, 0);
+      MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Name, 40, "electro/tex.jpg", CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, ExplRenderData.AtlasX, ExplRenderData.AtlasY);
     }
 
     private static Action<ExplosionInfo> persist = (a) =>

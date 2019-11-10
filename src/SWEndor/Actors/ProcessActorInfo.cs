@@ -16,7 +16,7 @@ namespace SWEndor.Actors
         throw new ArgumentNullException("actor");
 #endif
 
-      using (ScopeCounterManager.Acquire(actor.Scope))
+      using (ScopeCounters.Acquire(actor.Scope))
       {
         if (!actor.Active)
           return;
@@ -35,7 +35,7 @@ namespace SWEndor.Actors
         throw new ArgumentNullException("actor");
 #endif
 
-      using (ScopeCounterManager.Acquire(actor.Scope))
+      using (ScopeCounters.Acquire(actor.Scope))
       {
         if (!actor.Mask.Has(ComponentMask.HAS_AI)
         || !actor.Active
@@ -56,7 +56,7 @@ namespace SWEndor.Actors
         throw new ArgumentNullException("actor");
 #endif
 
-      using (ScopeCounterManager.Acquire(actor.Scope))
+      using (ScopeCounters.Acquire(actor.Scope))
         actor.CollisionData.TestCollision(engine, actor);
     }
 

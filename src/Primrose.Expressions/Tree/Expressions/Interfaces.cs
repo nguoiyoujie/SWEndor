@@ -1,11 +1,11 @@
 ﻿namespace Primrose.Expressions.Tree.Expressions
 {
-  public class CLiteral : CExpression
+  internal class CLiteral : CExpression
   {
     internal CLiteral(Script local, Lexer lexer) : base(local, lexer) { }
   }
 
-  public class CExpression : IExpression, ITracker
+  internal class CExpression : IExpression, ITracker
   {
     internal CExpression(Script local, Lexer lexer) { LineNumber = lexer.LineNumber; Position = lexer.Position; }
     public virtual CExpression Get() { return this; }
@@ -15,7 +15,7 @@
     public int Position { get; }
   }
 
-  public interface IExpression
+  internal interface IExpression
   {
     CExpression Get();
     Val Evaluate(Script local, AContext context);

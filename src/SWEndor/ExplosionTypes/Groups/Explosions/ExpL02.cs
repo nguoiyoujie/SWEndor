@@ -5,7 +5,7 @@ using SWEndor.Sound;
 
 namespace SWEndor.ExplosionTypes.Instances
 {
-  public class ExpL02 : Groups.Explosion
+  internal class ExpL02 : Groups.Explosion
   {
     internal ExpL02(Factory owner) : base(owner, "EXPL02", "ExpL02")
     {
@@ -16,9 +16,8 @@ namespace SWEndor.ExplosionTypes.Instances
       RenderData.RadarType = RadarType.FILLED_CIRCLE_L;
       RenderData.CullDistance = -1;
 
-      atlasX = 4;
-      atlasY = 4;
-      MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Name, 25000, "explosion/large/tex.jpg", CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, atlasX, atlasY);
+      ExplRenderData = new ExplRenderData(4, 4, 0);
+      MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Name, 25000, "explosion/large/tex.jpg", CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, ExplRenderData.AtlasX, ExplRenderData.AtlasY);
 
       InitialSoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.ExpLg, 999999) };
     }

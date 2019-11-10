@@ -2,12 +2,11 @@
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Models;
-using Primrose.Primitives.Extensions;
 using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.AI.Actions
 {
-  public class Move : ActionInfo
+  internal class Move : ActionInfo
   {
     public Move(TV_3DVECTOR target_position, float speed, float close_enough_distance = -1, bool can_interrupt = true) : base("Move")
     {

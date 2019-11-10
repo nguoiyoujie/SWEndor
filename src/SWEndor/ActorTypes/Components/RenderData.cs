@@ -3,7 +3,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Components
 {
-  public struct RenderData
+  internal struct RenderData
   {
     // AI
     public bool EnableDistanceCull { get { return CullDistance > 0; } }
@@ -21,18 +21,18 @@ namespace SWEndor.ActorTypes.Components
 
     public void LoadFromINI(INIFile f, string sectionname)
     {
-      CullDistance = f.GetFloatValue(sectionname, "CullDistance", CullDistance);
-      RadarSize = f.GetFloatValue(sectionname, "RadarSize", RadarSize);
+      CullDistance = f.GetFloat(sectionname, "CullDistance", CullDistance);
+      RadarSize = f.GetFloat(sectionname, "RadarSize", RadarSize);
       RadarType = f.GetEnumValue(sectionname, "RadarType", RadarType);
-      AlwaysShowInRadar = f.GetBoolValue(sectionname, "AlwaysShowInRadar", AlwaysShowInRadar);
+      AlwaysShowInRadar = f.GetBool(sectionname, "AlwaysShowInRadar", AlwaysShowInRadar);
     }
 
     public void SaveToINI(INIFile f, string sectionname)
     {
-      f.SetFloatValue(sectionname, "CullDistance", CullDistance);
-      f.SetFloatValue(sectionname, "RadarSize", RadarSize);
-      f.SetEnumValue(sectionname, "RadarType", RadarType);
-      f.SetBoolValue(sectionname, "AlwaysShowInRadar", AlwaysShowInRadar);
+      f.SetFloat(sectionname, "CullDistance", CullDistance);
+      f.SetFloat(sectionname, "RadarSize", RadarSize);
+      f.SetEnum(sectionname, "RadarType", RadarType);
+      f.SetBool(sectionname, "AlwaysShowInRadar", AlwaysShowInRadar);
     }
   }
 }

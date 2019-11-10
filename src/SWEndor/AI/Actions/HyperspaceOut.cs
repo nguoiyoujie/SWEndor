@@ -5,7 +5,7 @@ using SWEndor.Core;
 
 namespace SWEndor.AI.Actions
 {
-  public class HyperspaceOut : ActionInfo
+  internal class HyperspaceOut : ActionInfo
   {
     public HyperspaceOut() : base("HyperspaceOut")
     {

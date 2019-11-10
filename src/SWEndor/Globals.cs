@@ -5,11 +5,26 @@ using System.IO;
 
 namespace SWEndor
 {
+  /// <summary>
+  /// Defines the global scopes
+  /// </summary>
+  public static class ScopeGlobals
+  {
+    internal const byte GLOBAL_TVSCENE = 113;
+  }
+
+  /// <summary>
+  /// Defines the global values
+  /// </summary>
   public static class Globals
   {
+    /// <summary>The major version of the application</summary>
     public const int MajorVersion = 0;
+
+    /// <summary>The minor version of the application</summary>
     public const int MinorVersion = 0;
 
+    /// <summary>The application version</summary>
     public static string Version = 
         string.Format("v{0}.{1}.{2}-{3}"
         , MajorVersion
@@ -22,62 +37,71 @@ namespace SWEndor
 #endif
         );
 
-    // Constant
+    /// <summary>The value of PI</summary>
     public const float PI = 3.1415f;
+
+    /// <summary>The conversion ratio from radian measure to degree measure</summary>
     public const float Rad2Deg = 180 / PI;
+
+    /// <summary>The conversion ratio from degree measure to radian measure</summary>
     public const float Deg2Rad = PI / 180;
+
+    /// <summary>The laser speed</summary>
     public const float LaserSpeed = 3000f;
+
+    /// <summary>The factory object limit</summary>
     public const int ActorLimit = 1000;
+
+    /// <summary>The collision factor as a multipler to object speed</summary>
     public const float ImminentCollisionFactor = 1.5f;
+
+    /// <summary>The targeter acquisition range</summary>
     public const float AcquisitionRange = 7500;
 
 
     // Directories
-    public static string BasePath = AppDomain.CurrentDomain.BaseDirectory;
-    public static string LogPath = Path.Combine(BasePath, @"log\");
+    internal static string BasePath = AppDomain.CurrentDomain.BaseDirectory;
+    internal static string LogPath = Path.Combine(BasePath, @"log\");
 
-    public static string FontPath = Path.Combine(BasePath, @"assets\fonts\");
-    public static string ImagePath = Path.Combine(BasePath, @"assets\images\");
-    public static string ModelPath = Path.Combine(BasePath, @"assets\models\");
-    public static string MusicPath = Path.Combine(BasePath, @"assets\music\");
-    public static string SoundPath = Path.Combine(BasePath, @"assets\sounds\");
-    public static string AtmospherePath = Path.Combine(BasePath, @"assets\atmosphere\");
-    public static string LandscapePath = Path.Combine(BasePath, @"assets\landscape\");
+    internal static string FontPath = Path.Combine(BasePath, @"assets\fonts\");
+    internal static string ImagePath = Path.Combine(BasePath, @"assets\images\");
+    internal static string ModelPath = Path.Combine(BasePath, @"assets\models\");
+    internal static string MusicPath = Path.Combine(BasePath, @"assets\music\");
+    internal static string SoundPath = Path.Combine(BasePath, @"assets\sounds\");
+    internal static string AtmospherePath = Path.Combine(BasePath, @"assets\atmosphere\");
+    internal static string LandscapePath = Path.Combine(BasePath, @"assets\landscape\");
 
-    public static string DataPath = Path.Combine(BasePath, @"data\");
-    public static string DataShadersPath = Path.Combine(BasePath, @"data\shaders\");
+    internal static string DataPath = Path.Combine(BasePath, @"data\");
+    internal static string DataShadersPath = Path.Combine(BasePath, @"data\shaders\");
 
-    public static string CustomScenarioPath = Path.Combine(DataPath, @"scenarios\");
+    internal static string CustomScenarioPath = Path.Combine(DataPath, @"scenarios\");
 
+    internal static string ActorTypeINIDirectory = Path.Combine(DataPath, @"actor\");
+    internal static string ExplosionTypeINIDirectory = Path.Combine(DataPath, @"explosion\");
+    internal static string ProjectileTypeINIDirectory = Path.Combine(DataPath, @"projectile\");
 
     // Files
-    public static string ActorTypeINIDirectory = Path.Combine(DataPath, @"actor\");
-    public static string ExplosionTypeINIDirectory = Path.Combine(DataPath, @"explosion\");
-    public static string ProjectileTypeINIDirectory = Path.Combine(DataPath, @"projectile\");
+    internal static string DynamicMusicINIPath = Path.Combine(DataPath, @"dynamicmusic.ini");
+    internal static string WeaponStatINIPath = Path.Combine(DataPath, @"weapons.ini");
+    internal static string WeaponLoadoutStatINIPath = Path.Combine(DataPath, @"weaponloadouts.ini");
 
-
-    
-    public static string DynamicMusicINIPath = Path.Combine(DataPath, @"dynamicmusic.ini");
-    public static string WeaponStatINIPath = Path.Combine(DataPath, @"weapons.ini");
-    public static string WeaponLoadoutStatINIPath = Path.Combine(DataPath, @"weaponloadouts.ini");
-    
     // Game Engine
-    public static Engine Engine;
+    internal static Engine Engine;
 
 
-    public static void PreInit()
+    internal static void PreInit()
     {
       CreateDirectories();
     }
 
-    public static Engine InitEngine()
+    internal static Engine InitEngine()
     {
       Engine = new Engine();
       Engine.Init();
       return Engine;
     }
 
-    public static void CreateDirectories()
+    internal static void CreateDirectories()
     { 
       Directory.CreateDirectory(ImagePath);
       Directory.CreateDirectory(AtmospherePath);
@@ -93,7 +117,7 @@ namespace SWEndor
       Directory.CreateDirectory(ProjectileTypeINIDirectory);
     }
 
-    public static List<string> LoadingFlavourTexts = new List<string> {
+    internal static List<string> LoadingFlavourTexts = new List<string> {
                                                                        "Learning the secrets of hyperdrive travel...",
                                                                        "Teaching a youngling Force Hyperdrive",
                                                                        "Attempting to configure hyperspace...",

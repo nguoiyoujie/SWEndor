@@ -5,7 +5,7 @@ using SWEndor.Scenarios;
 
 namespace SWEndor.AI.Actions
 {
-  public class SetMood : ActionInfo
+  internal class SetMood : ActionInfo
   {
     public SetMood(MoodStates mood, bool squadLeaderOnly) : base("SetMood")
     {

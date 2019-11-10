@@ -18,20 +18,39 @@ namespace SWEndor.Player
       Look = PlayerLook;
     }
 
-    public readonly TVCamera Camera;
+    internal readonly TVCamera Camera;
     public CameraMode CameraMode = CameraMode.FIRSTPERSON;
-    public readonly PlayerCameraLook PlayerLook = new PlayerCameraLook();
-    public readonly DeathCameraLook DeathLook = new DeathCameraLook();
-    public readonly SceneCameraLook SceneLook = new SceneCameraLook();
+    internal readonly PlayerCameraLook PlayerLook = new PlayerCameraLook();
+    internal readonly DeathCameraLook DeathLook = new DeathCameraLook();
+    internal readonly SceneCameraLook SceneLook = new SceneCameraLook();
 
     private ICameraLook Look;
 
+    /// <summary>
+    /// Sets the view camera to use the player actor view
+    /// </summary>
     public void SetPlayerLook() { Look = PlayerLook; }
+
+    /// <summary>
+    /// Sets the view camera to use the player death view
+    /// </summary>
     public void SetDeathLook() { Look = DeathLook; }
+
+    /// <summary>
+    /// Sets the view camera to use the scene (no actor) view
+    /// </summary>
     public void SetSceneLook() { Look = SceneLook; }
 
     private TV_3DVECTOR LookAtPos = new TV_3DVECTOR();
+
+    /// <summary>
+    /// The view camera position
+    /// </summary>
     public TV_3DVECTOR Position { get; private set; }
+
+    /// <summary>
+    /// The view camera rotation
+    /// </summary>
     public TV_3DVECTOR Rotation { get; private set; }
 
     private float shake = 0;

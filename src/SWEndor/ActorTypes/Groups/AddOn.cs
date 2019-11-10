@@ -4,7 +4,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
 {
-  public class AddOn : ActorTypeInfo
+  internal class AddOn : ActorTypeInfo
   {
     internal AddOn(Factory owner, string id, string name) : base(owner, id, name)
     {

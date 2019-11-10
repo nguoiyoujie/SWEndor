@@ -2,7 +2,7 @@
 
 namespace Primrose.Expressions.Tree.Statements
 {
-  public class RootStatement : CStatement
+  internal class RootStatement : CStatement
   {
     public List<CStatement> Statements = new List<CStatement>();
 

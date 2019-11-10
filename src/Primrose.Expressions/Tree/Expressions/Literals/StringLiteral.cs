@@ -1,6 +1,6 @@
 ﻿namespace Primrose.Expressions.Tree.Expressions.Literals
 {
-  public class StringLiteral : CLiteral
+  internal class StringLiteral : CLiteral
   {
     private string _value;
 

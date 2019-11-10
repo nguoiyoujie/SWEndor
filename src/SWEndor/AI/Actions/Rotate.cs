@@ -1,12 +1,11 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Core;
-using Primrose.Primitives.Extensions;
 using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.AI.Actions
 {
-  public class Rotate : ActionInfo
+  internal class Rotate : ActionInfo
   {
     public Rotate(TV_3DVECTOR target_position, float speed, float close_enough_angle = 0.1f, bool can_interrupt = true) : base("Rotate")
     {

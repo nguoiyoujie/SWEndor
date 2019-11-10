@@ -4,7 +4,7 @@ using System;
 
 namespace SWEndor.AI.Actions
 {
-  public class CustomAction : ActionInfo
+  internal class CustomAction : ActionInfo
   {
     public CustomAction(Action action) : base("Custom Action")
     {

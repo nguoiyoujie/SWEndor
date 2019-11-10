@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class ExecutorStaticATI : Groups.StaticScene
+  internal class ExecutorStaticATI : Groups.StaticScene
   {
     internal ExecutorStaticATI(Factory owner) : base(owner, "EXECSTS", "Executor Static")
     {

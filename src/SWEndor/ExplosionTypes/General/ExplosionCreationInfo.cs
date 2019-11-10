@@ -14,7 +14,6 @@ namespace SWEndor.ExplosionTypes
     public TV_3DVECTOR Position;
     public TV_3DVECTOR Rotation;
 
-
     public ExplosionCreationInfo(ExplosionTypeInfo at)
     {
       // Load defaults from actortype

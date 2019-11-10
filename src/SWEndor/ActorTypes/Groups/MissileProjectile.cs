@@ -5,7 +5,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
 {
-  public class MissileProjectile : ActorTypeInfo
+  internal class MissileProjectile : ActorTypeInfo
   {
     internal MissileProjectile(Factory owner, string id, string name) : base(owner, id, name)
     {

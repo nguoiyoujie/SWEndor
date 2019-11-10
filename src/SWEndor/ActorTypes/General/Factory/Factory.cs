@@ -124,20 +124,6 @@ namespace SWEndor.ActorTypes
         Register(new TowerGunSuperATI(this));
         Register(new SurfaceVentATI(this));
 
-        // lasers
-        /*
-        Register(new RedLaserATI(this));
-        Register(new GreenLaserATI(this));
-        Register(new Green2LaserATI(this));
-        Register(new GreenAntiShipLaserATI(this));
-        Register(new GreenLaserAdvancedATI(this));
-        Register(new YellowLaserATI(this));
-        Register(new Yellow2LaserATI(this));
-        Register(new SmallIonLaserATI(this));
-        Register(new BigIonLaserATI(this));
-        Register(new DeathStarLaserATI(this));
-        */
-
         // torps
         Register(new MissileATI(this));
         Register(new TorpedoATI(this));
@@ -203,6 +189,7 @@ namespace SWEndor.ActorTypes
             throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.ACTORTYPE_INITWICE_ERROR).F(f));
           ActorTypeInfo t = new ActorTypeInfo(this, f, f);
           t.LoadFromINI(f);
+          Register(t);
         }
       }
 

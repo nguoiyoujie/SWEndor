@@ -210,7 +210,7 @@ namespace SWEndor.Scenarios
       Manager.IsCutsceneMode = false;
     }
 
-    public override void LoadFactions()
+    internal override void LoadFactions()
     {
       base.LoadFactions();
 
@@ -248,7 +248,7 @@ namespace SWEndor.Scenarios
       InformLostWing = true;
     }
 
-    public override void LoadScene()
+    internal override void LoadScene()
     {
       base.LoadScene();
       // Create Yavin
@@ -1385,7 +1385,7 @@ namespace SWEndor.Scenarios
                      }
       }.Spawn(this);
 
-      ainfo.SetSpawnerEnable(true);
+      ainfo.SpawnerInfo.Enabled = true;
       ainfo.SpawnerInfo.SpawnMoveTime = Game.GameTime + 3f;
 
       StageNumber = 4;

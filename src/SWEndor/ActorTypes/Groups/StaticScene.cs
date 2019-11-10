@@ -3,7 +3,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
 {
-  public class StaticScene : ActorTypeInfo
+  internal class StaticScene : ActorTypeInfo
   {
     internal StaticScene(Factory owner, string id, string name) : base(owner, id, name)
     {

@@ -3,7 +3,7 @@ using Primrose.Primitives;
 
 namespace SWEndor.Actors.Models
 {
-  public struct RegenModel
+  internal struct RegenModel
   {
     public bool NoRegen;
     public float SelfRegenRate;
@@ -42,12 +42,12 @@ namespace SWEndor.Actors.Models
 
       if (ChildRegenRate != 0)
         foreach (ActorInfo c in a.Children)
-          using (ScopeCounterManager.Acquire(c.Scope))
+          using (ScopeCounters.Acquire(c.Scope))
             Regenerate(c, ChildRegenRate * time);
 
       if (SiblingRegenRate != 0)
         foreach (ActorInfo r in a.Siblings)
-          using (ScopeCounterManager.Acquire(r.Scope))
+          using (ScopeCounters.Acquire(r.Scope))
             Regenerate(r, SiblingRegenRate * time);
     }
 

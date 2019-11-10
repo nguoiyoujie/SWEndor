@@ -3,13 +3,22 @@ using System;
 
 namespace Primrose.Primitives.Collections
 {
+  /// <summary>
+  /// Provides a queue based on circular linkage
+  /// </summary>
+  /// <typeparam name="T">The item type stored in the queue</typeparam>
   public class CircularQueue<T>
   {
-    readonly T[] nodes;
-    int current;
-    int emptySpot;
-    readonly bool errifexceed;
+    private readonly T[] nodes;
+    private int current;
+    private int emptySpot;
+    private readonly bool errifexceed;
 
+    /// <summary>
+    /// Creates a queue.
+    /// </summary>
+    /// <param name="size">The size of the queue</param>
+    /// <param name="errifexceed">Whether an exception is thrown if the queue is full</param>
     public CircularQueue(int size, bool errifexceed)
     {
       this.nodes = new T[size];
@@ -18,6 +27,7 @@ namespace Primrose.Primitives.Collections
       this.errifexceed = errifexceed;
     }
 
+    /// <summary>Retrieves the number of elements in the queue</summary>
     public int Count
     {
       get
@@ -27,6 +37,9 @@ namespace Primrose.Primitives.Collections
       }
     }
 
+    /// <summary>Enqueues an item from the queue</summary>
+    /// <param name="value">The item to be enqueued</param>
+    /// <exception cref="InvalidOperationException">Attempted to enqueue an item into the queue that has reached capacity limit.</exception>
     public void Enqueue(T value)
     {
       if (Count == nodes.Length - 1)
@@ -42,6 +55,8 @@ namespace Primrose.Primitives.Collections
         emptySpot = 0;
     }
 
+    /// <summary>Dequeues an item from the queue</summary>
+    /// <returns></returns>
     public T Dequeue()
     {
       int ret = current;

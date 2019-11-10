@@ -2,7 +2,7 @@
 
 namespace Primrose.Expressions.Tree.Expressions
 {
-  public class RelationalExpression : CExpression
+  internal class RelationalExpression : CExpression
   {
     private CExpression _first;
     private TokenEnum _type = TokenEnum.NOTHING;

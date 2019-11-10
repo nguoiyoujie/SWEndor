@@ -4,7 +4,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ProjectileTypes.Instances
 {
-  public class GreenAntiShipLaserATI : Groups.LaserProjectile
+  internal class GreenAntiShipLaserATI : Groups.LaserProjectile
   {
     internal GreenAntiShipLaserATI(Factory owner) : base(owner, "LSR_G3", "Green Anti-Ship Laser")
     {

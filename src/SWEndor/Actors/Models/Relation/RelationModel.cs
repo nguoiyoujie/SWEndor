@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SWEndor.Actors.Models
 {
-  public struct RelationModel
+  internal struct RelationModel
   {
     public ActorInfo Parent { get; internal set; }
     public ActorInfo ParentForCoords { get { return UseParentCoords ? Parent : null; } }
@@ -33,7 +33,7 @@ namespace SWEndor.Actors.Models
       // Destroy Children
       foreach (ActorInfo c in list.ToArray()) // use new list as members are deleted from the IEnumerable
       {
-        using (ScopeCounterManager.Acquire(c.Scope))
+        using (ScopeCounters.Acquire(c.Scope))
           if (c.UseParentCoords)
             c.Destroy();
           else
@@ -97,39 +97,5 @@ namespace SWEndor.Actors.Models
       public ActorInfo Current { get { return L[current]; } }
       public void Dispose() { }
     }
-  }
-}
-
-namespace SWEndor.Actors
-{
-  public partial class ActorInfo
-  {
-    public void AddChild(ActorInfo a)
-    {
-      using (ScopeCounterManager.Acquire(Scope))
-      using (ScopeCounterManager.Acquire(a.Scope))
-        Relation.AddChild(this, a);
-    }
-
-    public void RemoveChild(ActorInfo a)
-    {
-      using (ScopeCounterManager.Acquire(Scope))
-      using (ScopeCounterManager.Acquire(a.Scope))
-        Relation.RemoveChild(this, a);
-    }
-
-    public Models.RelationModel.ChildEnumerable Children { get { return Relation.Children; } }
-    public ActorInfo Parent { get { return Relation.Parent; } internal set { Relation.Parent = value; } }
-    public ActorInfo TopParent
-    {
-      get
-      {
-        using (ScopeCounterManager.Acquire(Scope))
-          return Relation.GetTopParent(this);
-      }
-    }
-    public Models.RelationModel.ChildEnumerable Siblings { get { return Relation.Siblings; } }
-    public ActorInfo ParentForCoords { get { return Relation.ParentForCoords; } }
-    public bool UseParentCoords { get { return Relation.UseParentCoords; } set { Relation.UseParentCoords = value; } }
   }
 }

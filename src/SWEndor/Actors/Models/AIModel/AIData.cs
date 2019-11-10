@@ -7,13 +7,13 @@ using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Actors.Models
 {
-  public enum TargetMode { POINT, ACTOR, ACTOR_SMARTPREDICTION }
-
   /// <summary>
   /// Storage of AI states per actor, transferrable across actions
   /// </summary>
-  public struct AIData
+  internal struct AIData
   {
+    internal enum TargetMode { POINT, ACTOR, ACTOR_SMARTPREDICTION }
+
     // CombatZone // TO-DO: Change this to int when multiple Combat Zones is possible
     public bool EnteredCombatZone;
 

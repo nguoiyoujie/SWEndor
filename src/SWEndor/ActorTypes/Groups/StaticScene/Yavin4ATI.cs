@@ -3,7 +3,7 @@ using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class Yavin4ATI : Groups.StaticScene
+  internal class Yavin4ATI : Groups.StaticScene
   {
     internal Yavin4ATI(Factory owner) : base(owner, "YAVIN4", "Yavin4")
     {

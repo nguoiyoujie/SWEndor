@@ -5,7 +5,7 @@ using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class AcclamatorATI : Groups.StarDestroyer
+  internal class AcclamatorATI : Groups.StarDestroyer
   {
     internal AcclamatorATI(Factory owner) : base(owner, "ACCL", "Acclamator Assault Ship")
     {

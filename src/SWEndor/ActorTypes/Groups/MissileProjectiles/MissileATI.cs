@@ -4,7 +4,7 @@ using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class MissileATI : Groups.MissileProjectile
+  internal class MissileATI : Groups.MissileProjectile
   {
     internal MissileATI(Factory owner) : base(owner, "PROJ_MISL", "Missile")
     {

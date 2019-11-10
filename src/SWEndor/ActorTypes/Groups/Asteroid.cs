@@ -3,7 +3,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
 {
-  public class Asteroid : ActorTypeInfo
+  internal class Asteroid : ActorTypeInfo
   {
     internal Asteroid(Factory owner, string id, string name) : base(owner, id, name)
     {

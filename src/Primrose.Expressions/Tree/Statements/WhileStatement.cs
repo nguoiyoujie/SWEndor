@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Primrose.Expressions.Tree.Statements
 {
-  public class WhileStatement : CStatement
+  internal class WhileStatement : CStatement
   {
     private CExpression _condition;
     private List<CStatement> _action = new List<CStatement>();

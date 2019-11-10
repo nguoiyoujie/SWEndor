@@ -39,7 +39,7 @@ namespace SWEndor
   {
     private static SortedSet<GameEventObject> list = new SortedSet<GameEventObject>(new GameEventObject.Comparer());
     private static Queue<GameEventObject> queue = new Queue<GameEventObject>();
-    private static ScopeCounterManager.ScopeCounter _scope = new ScopeCounterManager.ScopeCounter();
+    private static ScopeCounters.ScopeCounter _scope = new ScopeCounters.ScopeCounter();
 
     internal struct GameEventObject
     {
@@ -90,20 +90,20 @@ namespace SWEndor
         geo = new GameEventObject(time, method);
       }
 
-      using (ScopeCounterManager.Acquire(_scope))
+      using (ScopeCounters.Acquire(_scope))
         list.Add(geo);
     }
 
     public static void Clear()
     {
-      using (ScopeCounterManager.AcquireWhenZero(_scope))
+      using (ScopeCounters.AcquireWhenZero(_scope))
         list.Clear();
     }
 
     private static Predicate<GameEventObject> _expire = (a) => { return a.Time < Globals.Engine.Game.GameTime; };
     public static void Process(Engine engine)
     {
-      using (ScopeCounterManager.AcquireWhenZero(_scope))
+      using (ScopeCounters.AcquireWhenZero(_scope))
       {
         foreach (var l in list)
         {

@@ -12,11 +12,11 @@ namespace SWEndor.Sound
         public static void LoadFromINI(INIFile file, Piece p, string sectionname)
         {
           p.Name = sectionname;
-          p.SoundName = file.GetStringValue(sectionname, "Sound", "");
-          p.EntryPosition = file.GetUIntValue(sectionname, "Entry", 0);
-          p.ExitPositions = file.GetUIntList(sectionname, "Exit", new uint[0]);
-          p.EndPosition = file.GetUIntValue(sectionname, "End", 0);
-          p.IntermissionTransitions = file.GetIntList(sectionname, "Intermission", new int[0]);
+          p.SoundName = file.GetString(sectionname, "Sound", "");
+          p.EntryPosition = file.GetUInt(sectionname, "Entry", 0);
+          p.ExitPositions = file.GetUIntArray(sectionname, "Exit", new uint[0]);
+          p.EndPosition = file.GetUInt(sectionname, "End", 0);
+          p.IntermissionTransitions = file.GetIntArray(sectionname, "Intermission", new int[0]);
 
           int maxmood = 16; // TO-DO: formalize maximum mood support
           p.MoodTransitions = new string[maxmood][];

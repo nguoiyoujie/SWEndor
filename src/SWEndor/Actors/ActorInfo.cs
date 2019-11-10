@@ -17,6 +17,8 @@ namespace SWEndor.Actors
 {
   public partial class ActorInfo :
     IEngineObject,
+    IIdentity,
+    INamedObject,
     ITyped<ActorTypeInfo>,
     ILinked<ActorInfo>,
     IScoped,
@@ -30,26 +32,36 @@ namespace SWEndor.Actors
     ITransformable,
     ICollidable
   {
+    /// <summary>The instance type of this instance</summary>
     public ActorTypeInfo TypeInfo { get; private set; }
-    internal SpawnerInfo SpawnerInfo;
 
+    /// <summary>The source factory that created this instance</summary>
     public readonly Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo> ActorFactory;
+
+    /// <summary>The game engine</summary>
     public Engine Engine { get { return ActorFactory.Engine; } }
 
-    public Session Game { get { return Engine.Game; } }
-
-    public PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }
-    public PlayerCameraInfo PlayerCameraInfo { get { return Engine.PlayerCameraInfo; } }
+    internal Session Game { get { return Engine.Game; } }
+    internal PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }
+    internal PlayerCameraInfo PlayerCameraInfo { get { return Engine.PlayerCameraInfo; } }
 
     // Identifiers
     private string _name = "New Actor";
     private string sidebar_name = "";
 
+    /// <summary>The instance name</summary>
     public string Name { get { return _name; } }
+
+    /// <summary>The short name as displayed on the side bar</summary>
     public string SideBarName { get { return (sidebar_name.Length == 0) ? _name : sidebar_name; } set { sidebar_name = value; } }
+
+    /// <summary>The instance ID</summary>
     public short ID { get; private set; }
+
+    /// <summary>The instance unique identifier</summary>
     public string Key { get; private set; }
 
+    /// <summary>The instance unique string representation</summary>
     public override string ToString()
     {
       return "[{0},{1}]".F(_name, ID);
@@ -57,6 +69,8 @@ namespace SWEndor.Actors
 
     // Faction
     private FactionInfo _faction = FactionInfo.Neutral;
+
+    /// <summary>The faction the instance belongs to</summary>
     public FactionInfo Faction
     {
       get { return _faction; }
@@ -75,6 +89,8 @@ namespace SWEndor.Actors
 
     // Squad
     private Squadron _squad = Squadron.Neutral;
+
+    /// <summary>The squad the instance belongs to</summary>
     public Squadron Squad
     {
       get { return _squad; }
@@ -120,19 +136,22 @@ namespace SWEndor.Actors
     private ExplodeModel<ActorInfo> Explosions;
     private RegenModel Regen;
 
-    // Traits (classes)
+    internal SpawnerInfo SpawnerInfo;
 
+    // Traits (classes)
 
     // Standalone
     internal bool InCombat = false;
 
     // ILinked
+    /// <summary>The previous linked instance</summary>
     public ActorInfo Prev { get; set; }
+    /// <summary>The next linked instance</summary>
     public ActorInfo Next { get; set; }
 
     // Log
 #if DEBUG
-    public bool Logged
+    internal bool Logged
     {
       get
       {
@@ -142,7 +161,8 @@ namespace SWEndor.Actors
 #endif
 
     // Scope counter
-    public ScopeCounterManager.ScopeCounter Scope { get; } = new ScopeCounterManager.ScopeCounter();
+    /// <summary>A scope counter determining whether the object is still in scope or safe to dispose</summary>
+    public ScopeCounters.ScopeCounter Scope { get; } = new ScopeCounters.ScopeCounter();
 
 
     #region Creation Methods
@@ -181,6 +201,12 @@ namespace SWEndor.Actors
       TypeInfo.Initialize(engine, this);
     }
 
+    /// <summary>
+    /// Rebuilds the instance
+    /// </summary>
+    /// <param name="engine">The game engine</param>
+    /// <param name="id">The new ID</param>
+    /// <param name="acinfo">The instance creation data</param>
     public void Rebuild(Engine engine, short id, ActorCreationInfo acinfo)
     {
       // Clear past resources
@@ -214,6 +240,10 @@ namespace SWEndor.Actors
       TypeInfo.Initialize(engine, this);
     }
 
+    /// <summary>
+    /// Initializes the game object instance
+    /// </summary>
+    /// <param name="engine">The game engine</param>
     public void Initialize(Engine engine)
     {
       SetGenerated();
@@ -223,31 +253,6 @@ namespace SWEndor.Actors
       TypeInfo.GenerateAddOns(engine, this);
     }
     #endregion
-
-    public void SetSpawnerEnable(bool value)
-    {
-      SpawnerInfo.Enabled = value;
-    }
-
-    // replace
-    public float GetTrueSpeed()
-    {
-      float ret = MoveData.Speed;
-      if (Relation.UseParentCoords)
-      {
-        using (var v = ScopedManager<ActorInfo>.Scope(Relation.Parent))
-        {
-          if (v.Value != null)
-            ret += v.Value.GetTrueSpeed();
-        }
-      }
-      return ret;
-    }
-
-    public void Rotate(float x, float y, float z)
-    {
-      Transform.Rotation += new TV_3DVECTOR(x, y, z);
-    }
 
     #region Event Methods
     public void OnTickEvent() { TickEvents?.Invoke(this); }
@@ -265,27 +270,6 @@ namespace SWEndor.Actors
     public void OnDestroyedEvent() { DestroyedEvents?.Invoke(this); }
     #endregion
 
-    public bool IsOutOfBounds(TV_3DVECTOR minbounds, TV_3DVECTOR maxbounds)
-    {
-      TV_3DVECTOR pos = GetGlobalPosition();
-      return (pos.x < minbounds.x)
-          || (pos.x > maxbounds.x)
-          || (pos.y < minbounds.y)
-          || (pos.y > maxbounds.y)
-          || (pos.z < minbounds.z)
-          || (pos.z > maxbounds.z);
-    }
-
-    public bool IsNearlyOutOfBounds(GameScenarioManager mgr, float dx = 1000, float dy = 250, float dz = 1000)
-    {
-      TV_3DVECTOR pos = GetGlobalPosition();
-      return (pos.x < mgr.MinBounds.x + dx)
-          || (pos.x > mgr.MaxBounds.x - dx)
-          || (pos.y < mgr.MinBounds.y + dy)
-          || (pos.y > mgr.MaxBounds.y - dy)
-          || (pos.z < mgr.MinBounds.z + dz)
-          || (pos.z > mgr.MaxBounds.z - dz);
-    }
 
     public bool IsAggregateMode
     {
@@ -311,26 +295,34 @@ namespace SWEndor.Actors
       }
     }
 
+    /// <summary>Checks if the object is the player</summary>
     public bool IsPlayer { get { return PlayerInfo.ActorID == ID; } }
 
+    /// <summary>Sets the object as the player</summary>
     public void SetPlayer() { PlayerInfo.ActorID = ID; }
 
+    /// <summary>Checks if the object is the player or the designated camera target</summary>
     public bool IsScenePlayer { get { return IsPlayer || PlayerInfo.TempActorID == ID; } }
 
+    /// <summary>Checks if the object is allied with a faction</summary>
     public bool IsAlliedWith(FactionInfo faction) { return Faction.IsAlliedWith(faction); }
 
+    /// <summary>Checks if the object is allied with another object</summary>
     public bool IsAlliedWith(ActorInfo actor) { return Faction.IsAlliedWith(actor.Faction); }
 
+    /// <summary>Mark the object for disposal</summary>
     public void Delete()
     {
       if (!MarkedDisposing) { SetPreDispose(); ActorFactory.MakeDead(this); }
     }
 
+    /// <summary>Creates a new squad with the object as its first member</summary>
     public void CreateNewSquad()
     {
       Squad = Engine.SquadronFactory.Create();
     }
 
+    /// <summary>Joins another squad</summary>
     public void JoinSquad(ActorInfo other)
     {
       if (other.Squad.IsNull)
@@ -338,6 +330,7 @@ namespace SWEndor.Actors
       Squad = other.Squad;
     }
 
+    /// <summary>Joins another squad</summary>
     public void JoinSquad(string squadname)
     {
       Squadron s = Engine.SquadronFactory.GetByName(squadname);
@@ -345,6 +338,7 @@ namespace SWEndor.Actors
         JoinSquad(s.Leader);
     }
 
+    /// <summary>Makes this object the squad leader</summary>
     public void MakeSquadLeader()
     {
       if (Squad.IsNull)
@@ -352,6 +346,7 @@ namespace SWEndor.Actors
       Squad.MakeLeader(this);
     }
 
+    /// <summary>Disposes the object</summary>
     public void Destroy()
     {
       if (DisposingOrDisposed)
@@ -397,6 +392,11 @@ namespace SWEndor.Actors
       SetDisposed();
     }
 
+    /// <summary>
+    /// Processes the object for one game tick
+    /// </summary>
+    /// <param name="engine">The game engine</param>
+    /// <param name="time">The game time</param>
     public void Tick(Engine engine, float time)
     {
       CycleInfo.Process(engine, this);

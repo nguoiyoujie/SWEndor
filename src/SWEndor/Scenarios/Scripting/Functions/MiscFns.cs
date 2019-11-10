@@ -14,7 +14,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     BOOL[]/INT[]/FLOAT[] array
     /// </param>
     /// <returns>BOOL/INT/FLOAT, depending on the input</returns>
-    public static Val IsNull(AContext c, Val[] ps)
+    public static Val IsNull(AContext context, Val[] ps)
     {
       return new Val(ps[0].IsNull);
     }

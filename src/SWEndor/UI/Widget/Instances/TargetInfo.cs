@@ -277,7 +277,7 @@ namespace SWEndor.UI.Widgets
       if (p != null || p.Active)
       {
         TVCollisionResult tvcres;
-        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
           tvcres = Engine.TrueVision.TVScene.MousePick(Engine.InputManager.MOUSE_X, Engine.InputManager.MOUSE_Y);
         TVMesh mesh = tvcres.GetCollisionMesh();
         if (mesh != null)

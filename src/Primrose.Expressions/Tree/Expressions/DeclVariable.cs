@@ -1,6 +1,6 @@
 ﻿namespace Primrose.Expressions.Tree.Expressions
 {
-  public class DeclVariable : Variable
+  internal class DeclVariable : Variable
   {
     internal DeclVariable(Script local, Lexer lexer) : base(local, lexer, 0)
     {

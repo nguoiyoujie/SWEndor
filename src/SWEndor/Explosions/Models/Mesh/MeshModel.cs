@@ -8,7 +8,7 @@ using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.Explosions.Models
 {
-  public struct MeshModel
+  internal struct MeshModel
   {
     private static Dictionary<int, int> m_ids = new Dictionary<int, int>();
     public static int GetID(int meshID)
@@ -21,25 +21,25 @@ namespace SWEndor.Explosions.Models
     private ShaderInfo ShaderInfo;
     private TVShader Shader;
 
-    private ScopeCounterManager.ScopeCounter meshScope;
-    private ScopeCounterManager.ScopeCounter disposeScope;
+    private ScopeCounters.ScopeCounter meshScope;
+    private ScopeCounters.ScopeCounter disposeScope;
 
     public void Init(Engine engine, int id, ref MeshData data)
     {
       if (meshScope == null)
-        meshScope = new ScopeCounterManager.ScopeCounter();
+        meshScope = new ScopeCounters.ScopeCounter();
 
       if (disposeScope == null)
-        disposeScope = new ScopeCounterManager.ScopeCounter();
+        disposeScope = new ScopeCounters.ScopeCounter();
 
       GenerateMeshes(engine, id, ref data);
 
-      ScopeCounterManager.Reset(disposeScope);
+      ScopeCounters.Reset(disposeScope);
     }
 
     private void GenerateMeshes(Engine engine, int id, ref MeshData data)
     {
-      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+      using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
         Mesh = data.SourceMesh.Duplicate();
         m_ids[Mesh.GetIndex()] = id;
@@ -61,10 +61,10 @@ namespace SWEndor.Explosions.Models
 
     public void Dispose()
     {
-      if (ScopeCounterManager.AcquireIfZero(disposeScope))
+      if (ScopeCounters.AcquireIfZero(disposeScope))
       {
-        using (ScopeCounterManager.AcquireWhenZero(meshScope))
-        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        using (ScopeCounters.AcquireWhenZero(meshScope))
+        using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
         {
           Mesh.SetShader(null);
           Mesh?.Destroy();
@@ -108,8 +108,8 @@ namespace SWEndor.Explosions.Models
     {
       int ret = 0;
 
-      using (ScopeCounterManager.Acquire(meshScope))
-        if (ScopeCounterManager.IsZero(disposeScope))
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
           ret = Mesh.GetVertexCount();
 
       return ret;
@@ -133,8 +133,8 @@ namespace SWEndor.Explosions.Models
 
     public void SetTexMod(float u, float v, float su, float sv)
     {
-      using (ScopeCounterManager.Acquire(meshScope))
-        if (ScopeCounterManager.IsZero(disposeScope))
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
           Mesh.SetTextureModTranslationScale(u, v, su, sv);
     }
 
@@ -146,8 +146,8 @@ namespace SWEndor.Explosions.Models
       float dummy = 0;
       int dumint = 0;
 
-      using (ScopeCounterManager.Acquire(meshScope))
-        if (ScopeCounterManager.IsZero(disposeScope))
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
           Mesh.GetVertex(vertexID, ref x, ref y, ref z, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dumint);
 
       return new TV_3DVECTOR(x, y, z);
@@ -169,8 +169,8 @@ namespace SWEndor.Explosions.Models
       TV_3DMATRIX mat = actor.GetWorldMatrix();
       bool render = actor.Active && !actor.IsAggregateMode;
 
-      using (ScopeCounterManager.Acquire(meshScope))
-        if (ScopeCounterManager.IsZero(disposeScope))
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
         {
           Mesh.SetMatrix(mat);
           ShaderInfo?.SetShaderParam<ExplosionInfo, ExplosionTypeInfo, ExplosionCreationInfo>(actor, Shader);
@@ -178,7 +178,7 @@ namespace SWEndor.Explosions.Models
           if (prev_render != render)
           {
             prev_render = render;
-            using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+            using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
               Mesh.Enable(render);
           }
         }

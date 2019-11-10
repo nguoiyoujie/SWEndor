@@ -4,7 +4,7 @@ using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes.Groups
 {
-  public class TIE : Fighter
+  internal class TIE : Fighter
   {
     internal TIE(Factory owner, string id, string name) : base(owner, id, name)
     {

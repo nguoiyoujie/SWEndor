@@ -4,6 +4,117 @@
         <name>Primrose.Expressions</name>
     </assembly>
     <members>
+        <member name="T:Primrose.Expressions.BOp">
+            <summary>
+            An enumeration of binary operators
+            </summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.LOGICAL_OR">
+            <summary>The logical OR operator (a || b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.LOGICAL_AND">
+            <summary>The logical AND operator (a &amp;&amp; b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.ADD">
+            <summary>The numerical addition or string concatenation operator (a + b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.SUBTRACT">
+            <summary>The numerical subtraction operator (a - b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.MULTIPLY">
+            <summary>The numerical multiplication operator (a * b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.MODULUS">
+            <summary>The numerical modulus operator (a % b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.DIVIDE">
+            <summary>The numerical division operator (a / b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.EQUAL_TO">
+            <summary>The equality comparer (a == b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.NOT_EQUAL_TO">
+            <summary>The inequality comparer (a != b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.MORE_THAN">
+            <summary>The numerical greater than comparer (a &gt; b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.MORE_THAN_OR_EQUAL_TO">
+            <summary>The numerical greater than and equality comparer (a &gt;= b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.LESS_THAN">
+            <summary>The numerical less than comparer (a &lt; b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.LESS_THAN_OR_EQUAL_TO">
+            <summary>The numerical less than and equality comparer (a &lt;= b)</summary>
+        </member>
+        <member name="T:Primrose.Expressions.AContext">
+            <summary>
+            Provides a context for the script
+            </summary>
+        </member>
+        <member name="M:Primrose.Expressions.AContext.RunFunction(Primrose.Expressions.ITracker,System.String,Primrose.Expressions.Val[])">
+            <summary>
+            Runs a user defined function. An EvalException should be thrown if errors arise from the function.
+            </summary>
+            <param name="caller">The script object that called this function</param>
+            <param name="fnname">The function name</param>
+            <param name="param">The list of parameters</param>
+            <returns></returns>
+        </member>
+        <member name="T:Primrose.Expressions.EvalException">
+            <summary>
+            Provides script evaluation exceptions
+            </summary>
+        </member>
+        <member name="M:Primrose.Expressions.EvalException.#ctor(Primrose.Expressions.ITracker,System.String)">
+            <summary>
+            Represents an exception produced when running the script
+            </summary>
+            <param name="eval">The object that produced the exception</param>
+            <param name="reason">The message of the exception</param>
+        </member>
+        <member name="M:Primrose.Expressions.EvalException.#ctor(Primrose.Expressions.ITracker,System.String,Primrose.Expressions.Val,System.Exception)">
+            <summary>
+            Represents an exception produced when attempting to process an operation during script evaluation
+            </summary>
+            <param name="eval">The object that produced the exception</param>
+            <param name="opname">The operation being attempted</param>
+            <param name="v">The value in the operation</param>
+            <param name="ex">The inner exception message</param>
+        </member>
+        <member name="M:Primrose.Expressions.EvalException.#ctor(Primrose.Expressions.ITracker,System.String,Primrose.Expressions.Val,Primrose.Expressions.Val,System.Exception)">
+            <summary>
+            Represents an exception produced when attempting to process an operation during script evaluation
+            </summary>
+            <param name="eval">The object that produced the exception</param>
+            <param name="opname">The operation being attempted</param>
+            <param name="v1">The first value in the operation</param>
+            <param name="v2">The second value in the operation</param>
+            <param name="ex">The inner exception message</param>
+        </member>
+        <member name="T:Primrose.Expressions.Ops">
+            <summary>
+            The operation class
+            </summary>
+        </member>
+        <member name="M:Primrose.Expressions.Ops.Do(Primrose.Expressions.UOp,Primrose.Expressions.Val)">
+            <summary>
+            Performs an unary operation 
+            </summary>
+            <param name="op">The operator</param>
+            <param name="v">The value</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Expressions.Ops.Do(Primrose.Expressions.BOp,Primrose.Expressions.Val,Primrose.Expressions.Val)">
+            <summary>
+            Performs a binary operation 
+            </summary>
+            <param name="op">The operator</param>
+            <param name="v1">The first value</param>
+            <param name="v2">The second value</param>
+            <returns></returns>
+        </member>
         <member name="M:Primrose.Expressions.IMatcher.Match(System.String)">
             <summary>
             Return the number of characters that this "regex" or equivalent
@@ -11,6 +122,100 @@
             </summary>
             <param name="text">The text to be matched</param>
             <returns>The number of characters that matched</returns>
+        </member>
+        <member name="T:Primrose.Expressions.ITracker">
+            <summary>
+            Provides tracking for line and position
+            </summary>
+        </member>
+        <member name="P:Primrose.Expressions.ITracker.LineNumber">
+            <summary>The line number</summary>
+        </member>
+        <member name="P:Primrose.Expressions.ITracker.Position">
+            <summary>The character position in the line</summary>
+        </member>
+        <member name="T:Primrose.Expressions.Script">
+            <summary>
+            Represents a set of parsable statements
+            </summary>
+        </member>
+        <member name="T:Primrose.Expressions.Script.Registry">
+            <summary>
+            Represents a registry of scripts
+            </summary>
+        </member>
+        <member name="F:Primrose.Expressions.Script.Registry.Global">
+            <summary>The global script</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Script.Registry.Add(System.String,Primrose.Expressions.Script)">
+            <summary>
+            Adds a script to the registry
+            </summary>
+            <param name="id">The unique script identifier</param>
+            <param name="script">The script to be added</param>
+        </member>
+        <member name="M:Primrose.Expressions.Script.Registry.Clear">
+            <summary>
+            Clears all script data, including the global script
+            </summary>
+        </member>
+        <member name="M:Primrose.Expressions.Script.Registry.Get(System.String)">
+            <summary>
+            Retrieves a script from the registry
+            </summary>
+            <param name="id">The script identifier</param>
+            <returns>The script associated with the id, or null if no script is found</returns>
+        </member>
+        <member name="F:Primrose.Expressions.Script.Name">
+            <summary>The name of the script</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Script.#ctor(System.String)">
+            <summary>Creates a script</summary>
+            <param name="scriptname">The name of the script</param>
+        </member>
+        <member name="M:Primrose.Expressions.Script.AddStatements(System.String,System.Int32@)">
+            <summary>Adds one or more statements to the script.</summary>
+            <param name="text">The string text to be parsed</param>
+            <param name="linenumber">The current line number</param>
+        </member>
+        <member name="M:Primrose.Expressions.Script.Clear">
+            <summary>Clears the script of information</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Script.Run(Primrose.Expressions.AContext)">
+            <summary>Evaluates the script</summary>
+            <param name="context">The script context</param>
+        </member>
+        <member name="M:Primrose.Expressions.Script.DeclVar(System.String,Primrose.Expressions.ValType)">
+            <summary>Declares a variable</summary>
+            <param name="name">The variable name</param>
+            <param name="type">The variable type</param>
+            <exception cref="T:System.InvalidOperationException">Duplicate declaration of a variable in the same scope</exception>
+        </member>
+        <member name="M:Primrose.Expressions.Script.GetVar(System.String)">
+            <summary>Retrieves the value of a variable</summary>
+            <param name="name">The variable name</param>
+            <returns>The Val object containing the value of the variable</returns>
+            <exception cref="T:System.InvalidOperationException">Attempted to get the value from an undeclared variable</exception>
+        </member>
+        <member name="M:Primrose.Expressions.Script.SetVar(System.String,Primrose.Expressions.Val)">
+            <summary>Set the value of a variable</summary>
+            <param name="name">The variable name</param>
+            <param name="val">The Val object containing the value of the variable</param>
+            <exception cref="T:System.InvalidOperationException">Attempted to set the value of an undeclared variable</exception>
+        </member>
+        <member name="T:Primrose.Expressions.UOp">
+            <summary>
+            An enumeration of unary operators
+            </summary>
+        </member>
+        <member name="F:Primrose.Expressions.UOp.IDENTITY">
+            <summary>The identiy operator. Does nothing</summary>
+        </member>
+        <member name="F:Primrose.Expressions.UOp.LOGICAL_NOT">
+            <summary>The logical not operator (!a)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.UOp.NEGATION">
+            <summary>The numerical negation operator (-a)</summary>
         </member>
         <member name="T:Primrose.Expressions.ValObj">
             <summary>
@@ -21,6 +226,139 @@
             it should be constrained to supported types. If the expression tree is to support generics, then
             swtiching to a single 'object' field
             </comment>
+        </member>
+        <member name="T:Primrose.Expressions.Val">
+            <summary>
+            Represents a script value
+            </summary>
+        </member>
+        <member name="F:Primrose.Expressions.Val.Type">
+            <summary>
+            The type of the value
+            </summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~System.Boolean">
+            <summary>Retrieves the boolean value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~System.Int32">
+            <summary>Retrieves the integer value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~System.Single">
+            <summary>Retrieves the floating point value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~System.String">
+            <summary>Retrieves the string value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~Primrose.Primitives.ValueTypes.float2">
+            <summary>Retrieves a float2 value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~Primrose.Primitives.ValueTypes.float3">
+            <summary>Retrieves a float3 value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~Primrose.Primitives.ValueTypes.float4">
+            <summary>Retrieves a float4 value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~System.Boolean[]">
+            <summary>Retrieves a boolean array</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~System.Int32[]">
+            <summary>Retrieves an integer array</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~System.Single[]">
+            <summary>Retrieves a floating point array</summary>
+        </member>
+        <member name="P:Primrose.Expressions.Val.Value">
+            <summary>Retrieves the value as an object</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.#ctor(Primrose.Expressions.ValType)">
+            <summary>Defines a value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.#ctor(System.Boolean)">
+            <summary>Defines a value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.#ctor(System.Int32)">
+            <summary>Defines a value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.#ctor(System.Single)">
+            <summary>Defines a value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.#ctor(System.String)">
+            <summary>Defines a value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.#ctor(Primrose.Primitives.ValueTypes.float2)">
+            <summary>Defines a value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.#ctor(Primrose.Primitives.ValueTypes.float3)">
+            <summary>Defines a value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.#ctor(Primrose.Primitives.ValueTypes.float4)">
+            <summary>Defines a value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.#ctor(System.Boolean[])">
+            <summary>Defines a value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.#ctor(System.Int32[])">
+            <summary>Defines a value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.#ctor(System.Single[])">
+            <summary>Defines a value</summary>
+        </member>
+        <member name="F:Primrose.Expressions.Val.NULL">
+            <summary>Represents a null value</summary>
+        </member>
+        <member name="F:Primrose.Expressions.Val.TRUE">
+            <summary>Represents a boolean true value</summary>
+        </member>
+        <member name="F:Primrose.Expressions.Val.FALSE">
+            <summary>Represents a boolean false value</summary>
+        </member>
+        <member name="P:Primrose.Expressions.Val.IsNull">
+            <summary>Determines if a value is null</summary>
+        </member>
+        <member name="P:Primrose.Expressions.Val.IsTrue">
+            <summary>Determines if a value is true</summary>
+        </member>
+        <member name="P:Primrose.Expressions.Val.IsFalse">
+            <summary>Determines if a value is false</summary>
+        </member>
+        <member name="P:Primrose.Expressions.Val.IsArray">
+            <summary>Determines if a value is an array</summary>
+        </member>
+        <member name="T:Primrose.Expressions.ValType">
+            <summary>Represents a value type</summary>
+        </member>
+        <member name="F:Primrose.Expressions.ValType.NULL">
+            <summary>Represents a null value</summary>
+        </member>
+        <member name="F:Primrose.Expressions.ValType.BOOL">
+            <summary>Represents a boolean value</summary>
+        </member>
+        <member name="F:Primrose.Expressions.ValType.INT">
+            <summary>Represents a 32-bit integer value</summary>
+        </member>
+        <member name="F:Primrose.Expressions.ValType.FLOAT">
+            <summary>Represents a 32-bit floating point value</summary>
+        </member>
+        <member name="F:Primrose.Expressions.ValType.STRING">
+            <summary>Represents a string value</summary>
+        </member>
+        <member name="F:Primrose.Expressions.ValType.FLOAT2">
+            <summary>Represents two floating point values</summary>
+        </member>
+        <member name="F:Primrose.Expressions.ValType.FLOAT3">
+            <summary>Represents three floating point values</summary>
+        </member>
+        <member name="F:Primrose.Expressions.ValType.FLOAT4">
+            <summary>Represents four floating point values</summary>
+        </member>
+        <member name="F:Primrose.Expressions.ValType.BOOL_ARRAY">
+            <summary>Represents an array of boolean values</summary>
+        </member>
+        <member name="F:Primrose.Expressions.ValType.INT_ARRAY">
+            <summary>Represents an array of integer values</summary>
+        </member>
+        <member name="F:Primrose.Expressions.ValType.FLOAT_ARRAY">
+            <summary>Represents an array of floating point values</summary>
         </member>
     </members>
 </doc>

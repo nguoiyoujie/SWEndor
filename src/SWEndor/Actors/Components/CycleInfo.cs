@@ -3,7 +3,7 @@ using System;
 
 namespace SWEndor.Actors.Components
 {
-  public struct CycleInfo<T>
+  internal struct CycleInfo<T>
   {
     public float CyclesRemaining;
     public float CyclePeriod;

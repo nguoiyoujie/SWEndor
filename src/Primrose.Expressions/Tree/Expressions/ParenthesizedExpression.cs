@@ -1,6 +1,6 @@
 ﻿namespace Primrose.Expressions.Tree.Expressions
 {
-  public class ParenthesizedExpression : CExpression
+  internal class ParenthesizedExpression : CExpression
   {
     private CExpression _expression;
 

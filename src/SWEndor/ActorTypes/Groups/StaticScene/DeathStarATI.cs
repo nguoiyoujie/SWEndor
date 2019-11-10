@@ -4,7 +4,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class DeathStarATI : Groups.StaticScene
+  internal class DeathStarATI : Groups.StaticScene
   {
     internal DeathStarATI(Factory owner) : base(owner, "DSTAR", "DeathStar")
     {

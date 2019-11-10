@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class Tower03_RuinsATI : Groups.Debris
+  internal class Tower03_RuinsATI : Groups.Debris
   {
     internal Tower03_RuinsATI(Factory owner) : base(owner, "RUINS3", "Turbolaser Tower 03 Ruins")
     {

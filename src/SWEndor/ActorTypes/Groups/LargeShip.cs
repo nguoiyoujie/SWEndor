@@ -4,7 +4,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
 {
-  public class LargeShip : ActorTypeInfo
+  internal class LargeShip : ActorTypeInfo
   {
     internal LargeShip(Factory owner, string id, string name) : base(owner, id, name)
     {

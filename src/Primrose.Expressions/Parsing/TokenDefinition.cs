@@ -3,7 +3,7 @@
 namespace Primrose.Expressions
 {
   // Reference https://stackoverflow.com/questions/673113/poor-mans-lexer-for-c-sharp
-  public sealed class TokenDefinition
+  internal sealed class TokenDefinition
   {
     internal readonly IMatcher Matcher;
     public readonly TokenEnum Token;

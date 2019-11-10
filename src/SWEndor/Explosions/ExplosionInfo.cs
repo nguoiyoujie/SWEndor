@@ -11,6 +11,8 @@ namespace SWEndor.Explosions
 {
   public partial class ExplosionInfo :
     IEngineObject,
+    IIdentity,
+    INamedObject,
     ITyped<ExplosionTypeInfo>,
     ILinked<ExplosionInfo>,
     IScoped,
@@ -23,19 +25,30 @@ namespace SWEndor.Explosions
     IParent<ActorInfo>,
     ITransformable
   {
+    /// <summary>The instance type of this instance</summary>
     public ExplosionTypeInfo TypeInfo { get; private set; }
 
+    /// <summary>The source factory that created this instance</summary>
     public readonly Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> ExplosionFactory;
+
+    /// <summary>The game engine</summary>
     public Engine Engine { get { return ExplosionFactory.Engine; } }
 
-    public Session Game { get { return Engine.Game; } }
+    internal Session Game { get { return Engine.Game; } }
 
     // Identifiers
     private string _name = "New Actor";
+
+    /// <summary>The instance name</summary>
     public string Name { get { return _name; } }
+
+    /// <summary>The instance ID</summary>
     public short ID { get; private set; }
+
+    /// <summary>The instance unique identifier</summary>
     public string Key { get; private set; }
 
+    /// <summary>The instance unique string representation</summary>
     public override string ToString()
     {
       return "[{0},{1}]".F(_name, ID);
@@ -54,11 +67,14 @@ namespace SWEndor.Explosions
     internal int AttachedActorID = -1;
 
     // Ownership
+    /// <summary>The previous linked instance</summary>
     public ExplosionInfo Prev { get; set; }
+    /// <summary>The next linked instance</summary>
     public ExplosionInfo Next { get; set; }
 
     // Scope counter
-    public ScopeCounterManager.ScopeCounter Scope { get; } = new ScopeCounterManager.ScopeCounter();
+    /// <summary>A scope counter determining whether the object is still in scope or safe to dispose</summary>
+    public ScopeCounters.ScopeCounter Scope { get; } = new ScopeCounters.ScopeCounter();
 
 
     #region Creation Methods
@@ -83,6 +99,12 @@ namespace SWEndor.Explosions
       TypeInfo.Initialize(engine, this);
     }
 
+    /// <summary>
+    /// Rebuilds the instance
+    /// </summary>
+    /// <param name="engine">The game engine</param>
+    /// <param name="id">The new ID</param>
+    /// <param name="acinfo">The instance creation data</param>
     public void Rebuild(Engine engine, short id, ExplosionCreationInfo acinfo)
     {
       // Clear past resources
@@ -103,6 +125,10 @@ namespace SWEndor.Explosions
       TypeInfo.Initialize(engine, this);
     }
 
+    /// <summary>
+    /// Initializes the game object instance
+    /// </summary>
+    /// <param name="engine">The game engine</param>
     public void Initialize(Engine engine)
     {
       State.SetGenerated();
@@ -136,14 +162,16 @@ namespace SWEndor.Explosions
       }
     }
 
+    /// <summary>The parent of this object when considering coordinate positions</summary>
     public ActorInfo ParentForCoords { get { return Engine.ActorFactory.Get(AttachedActorID); } }
 
+    /// <summary>Mark the object for disposal</summary>
     public void Delete()
     {
       if (!MarkedDisposing) { SetPreDispose(); ExplosionFactory.MakeDead(this); }
     }
 
-
+    /// <summary>Disposes the object</summary>
     public void Destroy()
     {
       if (DisposingOrDisposed)
@@ -166,6 +194,11 @@ namespace SWEndor.Explosions
       SetDisposed();
     }
 
+    /// <summary>
+    /// Processes the object for one game tick
+    /// </summary>
+    /// <param name="engine">The game engine</param>
+    /// <param name="time">The game time</param>
     public void Tick(Engine engine, float time)
     {
       CycleInfo.Process(engine, this);

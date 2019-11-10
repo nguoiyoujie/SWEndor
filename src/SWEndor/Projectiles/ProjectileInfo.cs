@@ -3,7 +3,6 @@ using SWEndor.Actors;
 using SWEndor.Actors.Data;
 using SWEndor.Core;
 using SWEndor.Models;
-using SWEndor.Player;
 using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using SWEndor.ProjectileTypes;
@@ -12,6 +11,8 @@ namespace SWEndor.Projectiles
 {
   public partial class ProjectileInfo :
     IEngineObject,
+    IIdentity,
+    INamedObject,
     ITyped<ProjectileTypeInfo>,
     ILinked<ProjectileInfo>,
     IScoped,
@@ -25,25 +26,32 @@ namespace SWEndor.Projectiles
     ITransformable,
     ICollidable
   {
+    /// <summary>The instance type of this instance</summary>
     public ProjectileTypeInfo TypeInfo { get; private set; }
 
+    /// <summary>The source factory that created this instance</summary>
     public readonly Factory<ProjectileInfo, ProjectileCreationInfo, ProjectileTypeInfo> ProjectileFactory;
+
+    /// <summary>The game engine</summary>
     public Engine Engine { get { return ProjectileFactory.Engine; } }
-
-    public Session Game { get { return Engine.Game; } }
-
-    public PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }
-    public PlayerCameraInfo PlayerCameraInfo { get { return Engine.PlayerCameraInfo; } }
 
     // Identifiers
     private string _name = "New Actor";
     private string sidebar_name = "";
 
+    /// <summary>The instance name</summary>
     public string Name { get { return _name; } }
+
+    /// <summary>The short name as displayed on the side bar</summary>
     public string SideBarName { get { return (sidebar_name.Length == 0) ? _name : sidebar_name; } set { sidebar_name = value; } }
+
+    /// <summary>The instance ID</summary>
     public short ID { get; private set; }
+
+    /// <summary>The instance unique identifier</summary>
     public string Key { get; private set; }
 
+    /// <summary>The instance unique string representation</summary>
     public override string ToString()
     {
       return "[{0},{1}]".F(_name, ID);
@@ -67,11 +75,14 @@ namespace SWEndor.Projectiles
     internal bool InCombat = false;
 
     // ILinked
+    /// <summary>The previous linked instance</summary>
     public ProjectileInfo Prev { get; set; }
+    /// <summary>The next linked instance</summary>
     public ProjectileInfo Next { get; set; }
 
     // Scope counter
-    public ScopeCounterManager.ScopeCounter Scope { get; } = new ScopeCounterManager.ScopeCounter();
+    /// <summary>A scope counter determining whether the object is still in scope or safe to dispose</summary>
+    public ScopeCounters.ScopeCounter Scope { get; } = new ScopeCounters.ScopeCounter();
 
 
     #region Creation Methods
@@ -100,6 +111,12 @@ namespace SWEndor.Projectiles
       TypeInfo.Initialize(engine, this);
     }
 
+    /// <summary>
+    /// Rebuilds the instance
+    /// </summary>
+    /// <param name="engine">The game engine</param>
+    /// <param name="id">The new ID</param>
+    /// <param name="acinfo">The instance creation data</param>
     public void Rebuild(Engine engine, short id, ProjectileCreationInfo acinfo)
     {
       // Clear past resources
@@ -124,6 +141,10 @@ namespace SWEndor.Projectiles
       TypeInfo.Initialize(engine, this);
     }
 
+    /// <summary>
+    /// Initializes the game object instance
+    /// </summary>
+    /// <param name="engine">The game engine</param>
     public void Initialize(Engine engine)
     {
       SetGenerated();
@@ -135,17 +156,11 @@ namespace SWEndor.Projectiles
     {
       get
       {
-        float distcheck = TypeInfo.RenderData.CullDistance * Game.PerfCullModifier;
+        float distcheck = TypeInfo.RenderData.CullDistance * Engine.Game.PerfCullModifier;
 
         return (TypeInfo.RenderData.EnableDistanceCull
-          && DistanceModel.GetRoughDistance(GetGlobalPosition(), PlayerCameraInfo.Camera.GetPosition()) > distcheck);
+          && DistanceModel.GetRoughDistance(GetGlobalPosition(), Engine.PlayerCameraInfo.Camera.GetPosition()) > distcheck);
       }
-    }
-
-
-    public void Rotate(float x, float y, float z)
-    {
-      Transform.Rotation += new TV_3DVECTOR(x, y, z);
     }
 
     #region Event Methods
@@ -164,12 +179,15 @@ namespace SWEndor.Projectiles
     public ActorInfo Owner { get { return Engine.ActorFactory.Get(OwnerID); } }
     public ActorInfo Target { get { return Engine.ActorFactory.Get(TargetID); } }
 
+    /// <summary>The parent of this object when considering coordinate positions</summary>
     public ActorInfo ParentForCoords { get { return null; } }
 
+    /// <summary>Mark the object for disposal</summary>
     public void Delete() {
       if (!MarkedDisposing) { SetPreDispose(); ProjectileFactory.MakeDead(this); }
     }
 
+    /// <summary>Disposes the object</summary>
     public void Destroy()
     {
       if (DisposingOrDisposed)
@@ -196,6 +214,11 @@ namespace SWEndor.Projectiles
       SetDisposed();
     }
 
+    /// <summary>
+    /// Processes the object for one game tick
+    /// </summary>
+    /// <param name="engine">The game engine</param>
+    /// <param name="time">The game time</param>
     public void Tick(Engine engine, float time)
     {
       TypeInfo.ProcessState(engine, this);
@@ -204,7 +227,7 @@ namespace SWEndor.Projectiles
         if (CanCollide)
           CollisionData.CheckCollision(engine, this);
 
-        TypeInfo.MoveBehavior.Move(engine, this, ref MoveData, Game.TimeSinceRender);
+        TypeInfo.MoveBehavior.Move(engine, this, ref MoveData, engine.Game.TimeSinceRender);
       }
       else
         Delete();

@@ -3,10 +3,11 @@ using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.FileFormat.INI;
 using SWEndor.Models;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.ActorTypes.Components
 {
-  public struct AddOnData
+  internal struct AddOnData
   {
     public readonly string Type;
     private ActorTypeInfo _cache;
@@ -53,7 +54,7 @@ namespace SWEndor.ActorTypes.Components
 
     public static void LoadFromINI(INIFile f, string sectionname, string key, out AddOnData[] dest)
     {
-      string[] src = f.GetStringList(sectionname, key, new string[0]);
+      string[] src = f.GetStringArray(sectionname, key, new string[0]);
       dest = new AddOnData[src.Length];
       for (int i = 0; i < src.Length; i++)
         dest[i].LoadFromINI(f, src[i]);
@@ -68,24 +69,24 @@ namespace SWEndor.ActorTypes.Components
         ss[i] = s;
         src[i].SaveToINI(f, s);
       }
-      f.SetStringList(sectionname, key, ss);
+      f.SetStringArray(sectionname, key, ss);
     }
 
     private void LoadFromINI(INIFile f, string sectionname)
     {
-      string type = f.GetStringValue(sectionname, "Type", Type);
+      string type = f.GetString(sectionname, "Type", Type);
       TV_3DVECTOR pos = f.GetTV_3DVECTOR(sectionname, "Position", Position);
       TV_3DVECTOR rot = f.GetTV_3DVECTOR(sectionname, "Rotation", Rotation);
-      bool attach = f.GetBoolValue(sectionname, "AttachToParent", AttachToParent);
+      bool attach = f.GetBool(sectionname, "AttachToParent", AttachToParent);
       this = new AddOnData(type, pos, rot, attach);
     }
 
     private void SaveToINI(INIFile f, string sectionname)
     {
-      f.SetStringValue(sectionname, "Type", Type);
+      f.SetString(sectionname, "Type", Type);
       f.SetTV_3DVECTOR(sectionname, "Position", Position);
       f.SetTV_3DVECTOR(sectionname, "Rotation", Rotation);
-      f.SetBoolValue(sectionname, "AttachToParent", AttachToParent);
+      f.SetBool(sectionname, "AttachToParent", AttachToParent);
     }
   }
 }

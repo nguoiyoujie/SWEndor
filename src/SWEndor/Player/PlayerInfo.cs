@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
-using SWEndor.Actors.Models;
 using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
@@ -327,7 +326,7 @@ namespace SWEndor.Player
       }
     }
 
-    public ScoreInfo Score;
+    internal ScoreInfo Score;
 
     public bool IsMovementControlsEnabled = true;
     public bool IsTorpedoMode

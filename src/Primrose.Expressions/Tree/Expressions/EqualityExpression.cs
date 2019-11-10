@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Primrose.Expressions.Tree.Expressions
 {
-  public class EqualityExpression : CExpression
+  internal class EqualityExpression : CExpression
   {
     private bool isUnequal = false;
     private CExpression _first;

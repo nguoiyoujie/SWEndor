@@ -37,7 +37,7 @@ namespace SWEndor.ExplosionTypes
         {
           Add(atype.ID, atype);
         }
-        //atype.SaveToINI(atype.ID);
+        atype.SaveToINI(atype.ID);
         Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
       }
 
@@ -50,6 +50,7 @@ namespace SWEndor.ExplosionTypes
             throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.EXPLTYPE_INITWICE_ERROR).F(f));
           ExplosionTypeInfo t = new ExplosionTypeInfo(this, f, f);
           t.LoadFromINI(f);
+          Register(t);
         }
       }
 

@@ -13,7 +13,7 @@ using Primrose.Primitives.Geometry;
 
 namespace SWEndor.Actors.Models
 {
-  public struct MeshModel
+  internal struct MeshModel
   {
     // TO-DO: Move out of 'static'
     private static Dictionary<int, int> m_ids = new Dictionary<int, int>();
@@ -28,25 +28,25 @@ namespace SWEndor.Actors.Models
     private ShaderInfo ShaderInfo;
     private TVShader Shader;
 
-    private ScopeCounterManager.ScopeCounter meshScope;
-    private ScopeCounterManager.ScopeCounter disposeScope;
+    private ScopeCounters.ScopeCounter meshScope;
+    private ScopeCounters.ScopeCounter disposeScope;
 
     public void Init(Engine engine, int id, ref MeshData data)
     {
       if (meshScope == null)
-        meshScope = new ScopeCounterManager.ScopeCounter();
+        meshScope = new ScopeCounters.ScopeCounter();
 
       if (disposeScope == null)
-        disposeScope = new ScopeCounterManager.ScopeCounter();
+        disposeScope = new ScopeCounters.ScopeCounter();
 
       GenerateMeshes(engine, id, ref data);
 
-      ScopeCounterManager.Reset(disposeScope);
+      ScopeCounters.Reset(disposeScope);
     }
 
     private void GenerateMeshes(Engine engine, int id, ref MeshData data)
     {
-      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+      using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
         Mesh = data.SourceMesh.Duplicate();
         FarMesh = data.SourceFarMesh == null ? data.SourceMesh.Duplicate() : data.SourceFarMesh.Duplicate();
@@ -74,10 +74,10 @@ namespace SWEndor.Actors.Models
 
     public void Dispose()
     {
-      if (ScopeCounterManager.AcquireIfZero(disposeScope))
+      if (ScopeCounters.AcquireIfZero(disposeScope))
       {
-        using (ScopeCounterManager.AcquireWhenZero(meshScope))
-        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        using (ScopeCounters.AcquireWhenZero(meshScope))
+        using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
         {
           Mesh.SetShader(null);
           Mesh?.Destroy();
@@ -101,8 +101,8 @@ namespace SWEndor.Actors.Models
       TV_3DVECTOR minV = new TV_3DVECTOR();
       TV_3DVECTOR maxV = new TV_3DVECTOR();
 
-      using (ScopeCounterManager.Acquire(meshScope))
-        if (ScopeCounterManager.IsZero(disposeScope))
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
           Mesh.GetBoundingBox(ref minV, ref maxV, uselocal);
 
       return new Box(minV, maxV);
@@ -113,8 +113,8 @@ namespace SWEndor.Actors.Models
       TV_3DVECTOR p = new TV_3DVECTOR();
       float r = 0;
 
-      using (ScopeCounterManager.Acquire(meshScope))
-        if (ScopeCounterManager.IsZero(disposeScope))
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
           Mesh.GetBoundingSphere(ref p, ref r, uselocal);
 
       return new Sphere(p, r);
@@ -124,8 +124,8 @@ namespace SWEndor.Actors.Models
     {
       int ret = 0;
 
-      using (ScopeCounterManager.Acquire(meshScope))
-        if (ScopeCounterManager.IsZero(disposeScope))
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
           ret = Mesh.GetVertexCount();
 
       return ret;
@@ -133,8 +133,8 @@ namespace SWEndor.Actors.Models
 
     public void SetTexture(int iTexture)
     {
-      using (ScopeCounterManager.Acquire(meshScope))
-        if (ScopeCounterManager.IsZero(disposeScope))
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
           Mesh.SetTexture(iTexture);
     }
 
@@ -162,8 +162,8 @@ namespace SWEndor.Actors.Models
       float dummy = 0;
       int dumint = 0;
 
-      using (ScopeCounterManager.Acquire(meshScope))
-        if (ScopeCounterManager.IsZero(disposeScope))
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
           Mesh.GetVertex(vertexID, ref x, ref y, ref z, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dumint);
 
       return new TV_3DVECTOR(x, y, z);
@@ -173,8 +173,8 @@ namespace SWEndor.Actors.Models
 
     private void Render(TVMesh mesh)
     {
-      using (ScopeCounterManager.Acquire(meshScope))
-        if (ScopeCounterManager.IsZero(disposeScope))
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
           if (mesh.IsVisible())
             mesh.Render();
     }
@@ -195,8 +195,8 @@ namespace SWEndor.Actors.Models
       collide &= !far;
       render &= !far;
 
-      using (ScopeCounterManager.Acquire(meshScope))
-        if (ScopeCounterManager.IsZero(disposeScope))
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
         {
           Mesh.SetMatrix(mat);
           FarMesh.SetMatrix(mat);
@@ -205,28 +205,28 @@ namespace SWEndor.Actors.Models
           if (prev_render != render)
           {
             prev_render = render;
-            using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+            using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
               Mesh.Enable(render);
           }
 
           if (prev_renderfar != renderfar)
           {
             prev_renderfar = renderfar;
-            using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+            using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
               FarMesh.Enable(renderfar);
           }
 
           if (prev_collide != collide)
           {
             prev_collide = collide;
-            using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+            using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
               Mesh.SetCollisionEnable(collide);
           }
 
           if (prev_collidefar != collidefar)
           {
             prev_collidefar = collidefar;
-            using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+            using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
               FarMesh.SetCollisionEnable(collidefar);
           }
         }
@@ -247,7 +247,7 @@ namespace SWEndor.Actors.Models
       c.SetPosition(d2.x, d2.y, d2.z);
 
       engine.Surfaces.RS_PreTarget.StartRender(false);
-      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+      using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
         FarMesh?.Render();
       engine.Surfaces.RS_PreTarget.EndRender();
 
@@ -317,7 +317,7 @@ namespace SWEndor.Actors.Models
                                                         ColorLocalKeys.GAME_SYSTEMSTATE_NULL;
         int scolor = ColorLocalization.Get(k).Value;
 
-        engine.TrueVision.TVScreen2DText.TextureFont_DrawText(part.GetShorthand()
+        engine.TrueVision.TVScreen2DText.TextureFont_DrawText(part.GetShortName()
                                                       , w - 5 - 25 * (1 + i % 4)
                                                       , h - 5 - 12 * (1 + maxpart / 4 - i / 4)
                                                       , scolor

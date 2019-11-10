@@ -6,7 +6,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class DeathStar2ATI : Groups.StaticScene
+  internal class DeathStar2ATI : Groups.StaticScene
   {
     int[] texanimframes;
 

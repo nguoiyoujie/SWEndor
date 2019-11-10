@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class Asteroid01ATI : Groups.Asteroid
+  internal class Asteroid01ATI : Groups.Asteroid
   {
     internal Asteroid01ATI(Factory owner) : base(owner, "ASTR1", "Asteroid 01")
     {

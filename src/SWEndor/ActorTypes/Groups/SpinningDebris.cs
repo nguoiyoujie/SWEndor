@@ -5,7 +5,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
 {
-  public class SpinningDebris : Debris
+  internal class SpinningDebris : Debris
   {
     internal SpinningDebris(Factory owner, string id, string name) : base(owner, id, name)
     {

@@ -3,14 +3,36 @@ using System.Threading;
 
 namespace Primrose.Primitives
 {
+  /// <summary>
+  /// Represents a time control 
+  /// </summary>
   public class TimeControl
   {
-    //private Engine _engine;
     private uint _targetFPS;
+    private int _FPScounter;
+    private float _FPScountTime;
+    private float _FPSrefreshInterval = 0.2f;
+    private object waitlock = new object();
+    private Stopwatch stopwatch = Stopwatch.StartNew();
+
+    /// <summary>
+    /// Initializes a time control
+    /// </summary>
+    public TimeControl() { TargetFPS = 60; }
+
+    /// <summary>Defines the minimum desirable FPS</summary>
     public uint MinimumFPS { get; set; } = 15;
+
+    /// <summary>Defines the maximum desirable FPS</summary>
     public uint MaximumFPS { get; set; } = 90;
+
+    /// <summary>Defines the FPS where performance savings should be triggered</summary>
     public uint PerformanceSavingFPS { get; set; } = 25;
+
+    /// <summary>The current FPS</summary>
     public float FPS { get; private set; }
+
+    /// <summary>The target FPS</summary>
     public uint TargetFPS
     {
       get
@@ -25,30 +47,27 @@ namespace Primrose.Primitives
       }
     }
 
-    public TimeControl() { TargetFPS = 60; }
+    /// <summary>A multiplier to world time</summary>
+    public float SpeedModifier = 1;
 
-    private object waitlock = new object();
-    private Stopwatch stopwatch = Stopwatch.StartNew();
-
-    public float SpeedModifier = 0.66f; // test
-
+    /// <summary>The world time</summary>
     public float WorldTime { get; private set; } = 0;
 
-    public float RenderInterval { get; private set; }
-    public float WorldInterval { get { return RenderInterval * SpeedModifier; } }
+    /// <summary>A interval between two successive updates</summary>
+    public float UpdateInterval { get; private set; }
+    
+    /// <summary>The interval in world time</summary>
+    public float WorldInterval { get { return UpdateInterval * SpeedModifier; } }
 
-    private int _FPScounter;
-    private float _FPScountTime;
-    private float _FPSrefreshInterval = 0.2f;
-
+    /// <summary>Updates the time</summary>
     public void Update()
     {
-      RenderInterval = (float)stopwatch.Elapsed.TotalSeconds;
-      if (RenderInterval < 1f / MaximumFPS)
-        RenderInterval = 1f / MaximumFPS;
+      UpdateInterval = (float)stopwatch.Elapsed.TotalSeconds;
+      if (UpdateInterval < 1f / MaximumFPS)
+        UpdateInterval = 1f / MaximumFPS;
 
-      if (RenderInterval > 1f / MinimumFPS)
-        RenderInterval = 1f / MinimumFPS;
+      if (UpdateInterval > 1f / MinimumFPS)
+        UpdateInterval = 1f / MinimumFPS;
 
       stopwatch.Restart();
       if (_FPScountTime > _FPSrefreshInterval)
@@ -60,15 +79,18 @@ namespace Primrose.Primitives
       }
 
       _FPScounter++;
-      _FPScountTime += RenderInterval;
+      _FPScountTime += UpdateInterval;
       WorldTime += WorldInterval;
     }
 
+    /// <summary>Performs a time skip to increment the time</summary>
+    /// <param name="worldtime"></param>
     public void AddTime(float worldtime)
     {
       WorldTime += worldtime;
     }
 
+    /// <summary>Performs a wait to suspend process until the target FPS is reached</summary>
     public void Wait()
     {
       long target = 1000 / TargetFPS;

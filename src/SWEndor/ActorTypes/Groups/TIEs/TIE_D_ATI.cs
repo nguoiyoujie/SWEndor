@@ -4,7 +4,7 @@ using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class TIE_D_ATI : Groups.TIE
+  internal class TIE_D_ATI : Groups.TIE
   {
     internal TIE_D_ATI(Factory owner) : base(owner, "TIED", "TIE Defender")
     {

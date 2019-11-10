@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Groups
 {
-  public class GroundSurface : ActorTypeInfo
+  internal class GroundSurface : ActorTypeInfo
   {
     internal GroundSurface(Factory owner, string id, string name) : base(owner, id, name)
     {

@@ -1,9 +1,10 @@
 ﻿using MTV3D65;
 using SWEndor.FileFormat.INI;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.ActorTypes.Components
 {
-  public struct LookData
+  internal struct LookData
   {
     public TV_3DVECTOR LookFrom;
     public TV_3DVECTOR LookAt;
@@ -16,7 +17,7 @@ namespace SWEndor.ActorTypes.Components
 
     public static void LoadFromINI(INIFile f, string sectionname, string key, out LookData[] dest)
     {
-      string[] src = f.GetStringList(sectionname, key, new string[0]);
+      string[] src = f.GetStringArray(sectionname, key, new string[0]);
       dest = new LookData[src.Length];
       for (int i = 0; i < src.Length; i++)
         dest[i].LoadFromINI(f, src[i]);
@@ -31,7 +32,7 @@ namespace SWEndor.ActorTypes.Components
         ss[i] = s;
         src[i].SaveToINI(f, s);
       }
-      f.SetStringList(sectionname, key, ss);
+      f.SetStringArray(sectionname, key, ss);
     }
 
     private void LoadFromINI(INIFile f, string sectionname)

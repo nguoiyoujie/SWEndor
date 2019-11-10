@@ -5,7 +5,7 @@ using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class WedgeXWingATI : Groups.RebelWing
+  internal class WedgeXWingATI : Groups.RebelWing
   {
     internal WedgeXWingATI(Factory owner) : base(owner, "WEDGE", "X-Wing (Wedge)")
     {

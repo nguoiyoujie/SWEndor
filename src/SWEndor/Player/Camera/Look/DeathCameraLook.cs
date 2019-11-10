@@ -5,7 +5,7 @@ using System;
 
 namespace SWEndor.Player
 {
-  public class DeathCameraLook : ICameraLook
+  internal class DeathCameraLook : ICameraLook
   {
     private TargetPosition LookFrom;
     private DeathCameraData DeathCamera;

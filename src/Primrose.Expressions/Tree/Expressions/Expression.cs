@@ -1,6 +1,6 @@
 ﻿namespace Primrose.Expressions.Tree.Expressions
 {
-  public class Expression : CExpression
+  internal class Expression : CExpression
   {
     private CExpression _expr;
 

@@ -2,7 +2,7 @@
 
 namespace Primrose.Expressions.Tree.Expressions.Literals
 {
-  public class BoolLiteral : CLiteral
+  internal class BoolLiteral : CLiteral
   {
     // true or false
     private bool _value;

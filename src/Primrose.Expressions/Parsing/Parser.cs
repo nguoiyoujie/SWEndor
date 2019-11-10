@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Primrose.Expressions
 {
-  public class Parser
+  internal class Parser
   {
     public static RegexOptions RegexOption = RegexOptions.CultureInvariant;
     public static TokenDefinition[] Definitions =

@@ -3,7 +3,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Components
 {
-  public struct AIData
+  internal struct AIData
   {
     // AI
     public float Attack_AngularDelta;
@@ -33,37 +33,37 @@ namespace SWEndor.ActorTypes.Components
 
     public void LoadFromINI(INIFile f, string sectionname)
     {
-      Attack_AngularDelta = f.GetFloatValue(sectionname, "Attack_AngularDelta", Attack_AngularDelta);
-      Attack_HighAccuracyAngularDelta = f.GetFloatValue(sectionname, "Attack_HighAccuracyAngularDelta", Attack_HighAccuracyAngularDelta);
-      Move_CloseEnough = f.GetFloatValue(sectionname, "Move_CloseEnough", Move_CloseEnough);
+      Attack_AngularDelta = f.GetFloat(sectionname, "Attack_AngularDelta", Attack_AngularDelta);
+      Attack_HighAccuracyAngularDelta = f.GetFloat(sectionname, "Attack_HighAccuracyAngularDelta", Attack_HighAccuracyAngularDelta);
+      Move_CloseEnough = f.GetFloat(sectionname, "Move_CloseEnough", Move_CloseEnough);
 
-      AggressiveTracker = f.GetBoolValue(sectionname, "AggressiveTracker", AggressiveTracker);
-      AlwaysAccurateRotation = f.GetBoolValue(sectionname, "AlwaysAccurateRotation", AlwaysAccurateRotation);
+      AggressiveTracker = f.GetBool(sectionname, "AggressiveTracker", AggressiveTracker);
+      AlwaysAccurateRotation = f.GetBool(sectionname, "AlwaysAccurateRotation", AlwaysAccurateRotation);
 
-      CanEvade = f.GetBoolValue(sectionname, "CanEvade", CanEvade);
-      CanRetaliate = f.GetBoolValue(sectionname, "CanRetaliate", CanRetaliate);
-      CanCheckCollisionAhead = f.GetBoolValue(sectionname, "CanCheckCollisionAhead", CanCheckCollisionAhead);
+      CanEvade = f.GetBool(sectionname, "CanEvade", CanEvade);
+      CanRetaliate = f.GetBool(sectionname, "CanRetaliate", CanRetaliate);
+      CanCheckCollisionAhead = f.GetBool(sectionname, "CanCheckCollisionAhead", CanCheckCollisionAhead);
 
       TargetType = f.GetEnumValue(sectionname, "TargetType", TargetType);
-      HuntWeight = f.GetIntValue(sectionname, "HuntWeight", HuntWeight);
+      HuntWeight = f.GetInt(sectionname, "HuntWeight", HuntWeight);
 
     }
 
     public void SaveToINI(INIFile f, string sectionname)
     {
-      f.SetFloatValue(sectionname, "Attack_AngularDelta", Attack_AngularDelta);
-      f.SetFloatValue(sectionname, "Attack_HighAccuracyAngularDelta", Attack_HighAccuracyAngularDelta);
-      f.SetFloatValue(sectionname, "Move_CloseEnough", Move_CloseEnough);
+      f.SetFloat(sectionname, "Attack_AngularDelta", Attack_AngularDelta);
+      f.SetFloat(sectionname, "Attack_HighAccuracyAngularDelta", Attack_HighAccuracyAngularDelta);
+      f.SetFloat(sectionname, "Move_CloseEnough", Move_CloseEnough);
 
-      f.SetBoolValue(sectionname, "AggressiveTracker", AggressiveTracker);
-      f.SetBoolValue(sectionname, "AlwaysAccurateRotation", AlwaysAccurateRotation);
+      f.SetBool(sectionname, "AggressiveTracker", AggressiveTracker);
+      f.SetBool(sectionname, "AlwaysAccurateRotation", AlwaysAccurateRotation);
 
-      f.SetBoolValue(sectionname, "CanEvade", CanEvade);
-      f.SetBoolValue(sectionname, "CanRetaliate", CanRetaliate);
-      f.SetBoolValue(sectionname, "CanCheckCollisionAhead", CanCheckCollisionAhead);
+      f.SetBool(sectionname, "CanEvade", CanEvade);
+      f.SetBool(sectionname, "CanRetaliate", CanRetaliate);
+      f.SetBool(sectionname, "CanCheckCollisionAhead", CanCheckCollisionAhead);
 
-      f.SetEnumValue(sectionname, "TargetType", TargetType);
-      f.SetIntValue(sectionname, "HuntWeight", HuntWeight);
+      f.SetEnum(sectionname, "TargetType", TargetType);
+      f.SetInt(sectionname, "HuntWeight", HuntWeight);
     }
   }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Primrose.Expressions.Tree.Statements
 {
-  public class CStatement : IStatement, ITracker
+  internal class CStatement : IStatement, ITracker
   {
     internal CStatement(Script local, Lexer lexer) { LineNumber = lexer.LineNumber; Position = lexer.Position; }
     public virtual CStatement Get() { return this; }
@@ -10,7 +10,7 @@
     public int Position { get; }
   }
 
-  public interface IStatement
+  internal interface IStatement
   {
     CStatement Get();
     void Evaluate(Script local, AContext context);

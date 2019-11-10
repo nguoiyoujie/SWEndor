@@ -108,7 +108,7 @@ namespace SWEndor.Scenarios
       Manager.IsCutsceneMode = false;
     }
 
-    public override void LoadFactions()
+    internal override void LoadFactions()
     {
       base.LoadFactions();
 
@@ -125,7 +125,7 @@ namespace SWEndor.Scenarios
       MainAllyFaction.WingLimitIncludesAllies = true;
     }
 
-    public override void LoadScene()
+    internal override void LoadScene()
     {
       base.LoadScene();
 

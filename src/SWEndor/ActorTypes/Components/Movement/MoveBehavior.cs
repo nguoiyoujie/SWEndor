@@ -5,10 +5,10 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Components
 {
-  public struct MoveBehavior
+  internal struct MoveBehavior
   {
-    public delegate void MoveAction(Engine engine, ActorInfo actor, ref MoveData data, float time);
-    public MoveAction Move;
+    internal delegate void MoveAction(Engine engine, ActorInfo actor, ref MoveData data, float time);
+    internal MoveAction Move;
 
     public void Load(ActorTypeInfo atype)
     {

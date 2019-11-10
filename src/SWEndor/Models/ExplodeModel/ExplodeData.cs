@@ -2,7 +2,7 @@
 
 namespace SWEndor.Models
 {
-  public struct ExplodeData
+  internal struct ExplodeData
   {
     public string Type;
     public float Rate;
@@ -19,7 +19,7 @@ namespace SWEndor.Models
 
     public static void LoadFromINI(INIFile f, string sectionname, string key, out ExplodeData[] dest)
     {
-      string[] src = f.GetStringList(sectionname, key, new string[0]);
+      string[] src = f.GetStringArray(sectionname, key, new string[0]);
       dest = new ExplodeData[src.Length];
       for (int i = 0; i < src.Length; i++)
         dest[i].LoadFromINI(f, src[i]);
@@ -34,23 +34,23 @@ namespace SWEndor.Models
         ss[i] = s;
         src[i].SaveToINI(f, s);
       }
-      f.SetStringList(sectionname, key, ss);
+      f.SetStringArray(sectionname, key, ss);
     }
 
     private void LoadFromINI(INIFile f, string sectionname)
     {
-      Type = f.GetStringValue(sectionname, "Type", Type);
-      Rate = f.GetFloatValue(sectionname, "Rate", Rate);
-      Size = f.GetFloatValue(sectionname, "Size", Size);
+      Type = f.GetString(sectionname, "Type", Type);
+      Rate = f.GetFloat(sectionname, "Rate", Rate);
+      Size = f.GetFloat(sectionname, "Size", Size);
       Trigger = f.GetEnumValue<ExplodeTrigger>(sectionname, "Trigger", Trigger);
     }
 
     private void SaveToINI(INIFile f, string sectionname)
     {
-      f.SetStringValue(sectionname, "Type", Type);
-      f.SetFloatValue(sectionname, "Rate", Rate);
-      f.SetFloatValue(sectionname, "Size", Size);
-      f.SetEnumValue<ExplodeTrigger>(sectionname, "Trigger", Trigger);
+      f.SetString(sectionname, "Type", Type);
+      f.SetFloat(sectionname, "Rate", Rate);
+      f.SetFloat(sectionname, "Size", Size);
+      f.SetEnum<ExplodeTrigger>(sectionname, "Trigger", Trigger);
     }
   }
 }

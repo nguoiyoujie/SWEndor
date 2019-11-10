@@ -7,8 +7,8 @@ namespace SWEndor.ProjectileTypes.Components
   /// <summary>
   /// Implementation of Move behavior that does not move
   /// </summary>
-  public static class NoMove
+  internal static class NoMove
   {
-    public static void Move(Engine engine, ProjectileInfo actor, ref MoveData data, float time) { }
+    internal static void Move(Engine engine, ProjectileInfo actor, ref MoveData data, float time) { }
   }
 }

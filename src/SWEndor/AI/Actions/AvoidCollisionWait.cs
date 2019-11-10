@@ -4,7 +4,7 @@ using Primrose.Primitives.Factories;
 
 namespace SWEndor.AI.Actions
 {
-  public class AvoidCollisionWait : ActionInfo
+  internal class AvoidCollisionWait : ActionInfo
   {
     internal static int _count = 0;
     internal static ObjectPool<AvoidCollisionWait> _pool = new ObjectPool<AvoidCollisionWait>(() => { return new AvoidCollisionWait(); }, (a) => { a.Reset(); });

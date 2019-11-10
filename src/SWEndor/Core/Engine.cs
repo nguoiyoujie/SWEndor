@@ -116,9 +116,13 @@ namespace SWEndor.Core
     public void Load()
     {
       Screen2D.LoadingTextLines.Add(Globals.LoadingFlavourTexts[Random.Next(0, Globals.LoadingFlavourTexts.Count)]);
-      ProjectileTypeFactory.RegisterBase();
+      //ProjectileTypeFactory.RegisterBase();
       ActorTypeFactory.RegisterBase();
-      ExplosionTypeFactory.RegisterBase();
+      //ExplosionTypeFactory.RegisterBase();
+
+      ProjectileTypeFactory.Load();
+      //ActorTypeFactory.Load();
+      ExplosionTypeFactory.Load();
 
       //Screen2D.LoadingTextLines.Add("Loading other actor definitions...");
       //ActorTypeFactory.LoadFromINI(Globals.ActorTypeINIPath);
@@ -202,7 +206,7 @@ namespace SWEndor.Core
       AtmosphereInfo.Render();
       //LandInfo.Render();
 
-      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+      using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
         TrueVision.TVScene.FinalizeShadows();
         TrueVision.TVScene.RenderAllMeshes(true); //RenderAll(true);

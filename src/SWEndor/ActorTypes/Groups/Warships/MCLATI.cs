@@ -7,7 +7,7 @@ using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class MCLATI : Groups.Warship
+  internal class MCLATI : Groups.Warship
   {
     internal MCLATI(Factory owner) : base(owner, "MCL", "Mon Calamari Light Cruiser")
     {

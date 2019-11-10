@@ -3,7 +3,7 @@ using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class XQ1ATI : Groups.Warship
+  internal class XQ1ATI : Groups.Warship
   {
     internal XQ1ATI(Factory owner) : base(owner, "XQ1", "XQ1-Platform")
     {

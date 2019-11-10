@@ -4,7 +4,6 @@ using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Player;
-using Primrose.Primitives.Extensions;
 using SWEndor.Sound;
 using SWEndor.UI.Menu.Pages;
 using System;
@@ -129,14 +128,12 @@ namespace SWEndor.Scenarios
       PlayerCameraInfo.SetPlayerLook(); 
     }
 
-    public virtual void LoadFactions()
+    internal virtual void LoadFactions()
     {
       FactionInfo.Factory.Clear();
-      //MainAllyFaction = FactionInfo.Neutral;
-      //MainEnemyFaction = FactionInfo.Neutral;
     }
 
-    public virtual void LoadScene()
+    internal virtual void LoadScene()
     {
       TrueVision.TVGraphicEffect.FadeIn();
     }
@@ -257,7 +254,7 @@ namespace SWEndor.Scenarios
       SoundManager.SetMusic("battle_3_2"); // TO-DO: make configurable
     }
 
-    public void LostWing()
+    internal void LostWing()
     {
       float t = Game.GameTime;
       float t2 = Game.GameTime + 3;
@@ -270,7 +267,7 @@ namespace SWEndor.Scenarios
       LastLostSoundTime = t2;
     }
 
-    public void LostShip()
+    internal void LostShip()
     {
       float t = Game.GameTime;
       float t2 = Game.GameTime + 3;
@@ -283,7 +280,7 @@ namespace SWEndor.Scenarios
       LastLostSoundTime = t2;
     }
 
-    public void LostStructure()
+    internal void LostStructure()
     {
       float t = Game.GameTime;
       float t2 = Game.GameTime + 3;
@@ -296,7 +293,7 @@ namespace SWEndor.Scenarios
       LastLostSoundTime = t2;
     }
 
-    public void LostSound()
+    private void LostSound()
     {
       if (!Manager.IsCutsceneMode)
         SoundManager.SetSound(SoundGlobals.LostShip, true);

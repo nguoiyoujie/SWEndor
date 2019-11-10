@@ -35,7 +35,7 @@ namespace SWEndor.Core
       Target_width = 256;
       Target_height = 256;
 
-      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+      using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
         RS_PreTarget = Engine.TrueVision.TVScene.CreateAlphaRenderSurface(Target_width, Target_height);
         RS_PreTarget.SetBackgroundColor(new TV_COLOR(0, 0, 0, 0).GetIntColor());

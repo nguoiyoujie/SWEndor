@@ -46,40 +46,40 @@ namespace SWEndor.ActorTypes
     public ComponentMask Mask = ComponentMask.NONE;
 
     // Data (structs)
-    public SystemData SystemData;
-    public CombatData CombatData;
-    public RegenData RegenData;
-    public TimedLifeData TimedLifeData;
-    public ArmorData ArmorData;
-    public MoveLimitData MoveLimitData = MoveLimitData.Default;
-    public RenderData RenderData = RenderData.Default;
-    public AIData AIData = AIData.Default;
-    public MeshData MeshData = MeshData.Default;
-    public DyingMoveData DyingMoveData;
-    public ScoreData ScoreData;
-    
+    internal SystemData SystemData;
+    internal CombatData CombatData;
+    internal RegenData RegenData;
+    internal TimedLifeData TimedLifeData;
+    internal ArmorData ArmorData;
+    internal MoveLimitData MoveLimitData = MoveLimitData.Default;
+    internal RenderData RenderData = RenderData.Default;
+    internal AIData AIData = AIData.Default;
+    internal MeshData MeshData = MeshData.Default;
+    internal DyingMoveData DyingMoveData;
+    internal ScoreData ScoreData;
+
     // AddOns
-    public AddOnData[] AddOns = new AddOnData[0];
+    internal AddOnData[] AddOns = new AddOnData[0];
 
     // Explosionf
-    public ExplodeData[] Explodes = new ExplodeData[0];
+    internal ExplodeData[] Explodes = new ExplodeData[0];
 
     // Weapons
-    public string[] Loadouts = new string[0];
-    public bool TrackerDummyWeapon = false;
+    internal string[] Loadouts = new string[0];
+    internal bool TrackerDummyWeapon = false;
 
     // Debris
-    public DebrisSpawnerData[] Debris = new DebrisSpawnerData[0];
+    internal DebrisSpawnerData[] Debris = new DebrisSpawnerData[0];
 
-    public LookData[] Cameras = new LookData[0];
-    public DeathCameraData DeathCamera = new DeathCameraData(350, 25, 15);
+    internal LookData[] Cameras = new LookData[0];
+    internal DeathCameraData DeathCamera = new DeathCameraData(350, 25, 15);
 
     // Sound
-    public SoundSourceData[] InitialSoundSources = new SoundSourceData[0];
-    public SoundSourceData[] SoundSources = new SoundSourceData[0];
+    internal SoundSourceData[] InitialSoundSources = new SoundSourceData[0];
+    internal SoundSourceData[] SoundSources = new SoundSourceData[0];
 
     // derived
-    public MoveBehavior MoveBehavior;
+    internal MoveBehavior MoveBehavior;
     internal UnfixedWeaponData cachedWeaponData;
 
     public void LoadFromINI(string id)
@@ -90,11 +90,11 @@ namespace SWEndor.ActorTypes
       if (File.Exists(filepath))
       {
         INIFile f = new INIFile(filepath);
-        Name = f.GetStringValue("General", "Name", Name);
+        Name = f.GetString("General", "Name", Name);
         Mask = f.GetEnumValue("General", "Mask", Mask);
 
-        Loadouts = f.GetStringList("General", "Loadouts", Loadouts);
-        TrackerDummyWeapon = f.GetBoolValue("General", "TrackerDummyWeapon", TrackerDummyWeapon);
+        Loadouts = f.GetStringArray("General", "Loadouts", Loadouts);
+        TrackerDummyWeapon = f.GetBool("General", "TrackerDummyWeapon", TrackerDummyWeapon);
 
         CombatData.LoadFromINI(f, "CombatData");
         RegenData.LoadFromINI(f, "RegenData");
@@ -125,11 +125,11 @@ namespace SWEndor.ActorTypes
       if (!File.Exists(filepath))
         File.Create(filepath).Close(); INIFile f = new INIFile(filepath);
 
-      f.SetStringValue("General", "Name", Name);
-      f.SetEnumValue("General", "Mask", Mask);
+      f.SetString("General", "Name", Name);
+      f.SetEnum("General", "Mask", Mask);
 
-      f.SetStringList("General", "Loadouts", Loadouts);
-      f.SetBoolValue("General", "TrackerDummyWeapon", TrackerDummyWeapon);
+      f.SetStringArray("General", "Loadouts", Loadouts);
+      f.SetBool("General", "TrackerDummyWeapon", TrackerDummyWeapon);
 
       CombatData.SaveToINI(f, "CombatData");
       RegenData.SaveToINI(f, "RegenData");
@@ -299,7 +299,7 @@ namespace SWEndor.ActorTypes
       }
     }
 
-    public void ProcessHit(Engine engine, ActorInfo owner, ActorInfo hitby, CombatData projData, TV_3DVECTOR impact)
+    internal void ProcessHit(Engine engine, ActorInfo owner, ActorInfo hitby, CombatData projData, TV_3DVECTOR impact)
     {
 #if DEBUG
       if (owner == null)

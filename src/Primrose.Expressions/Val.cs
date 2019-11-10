@@ -82,12 +82,19 @@ namespace Primrose.Expressions
     }
   }
 
+  /// <summary>
+  /// Represents a script value
+  /// </summary>
   [StructLayout(LayoutKind.Explicit)]
   public struct Val
   {
+    /// <summary>
+    /// The type of the value
+    /// </summary>
     [FieldOffset(0)]
     public readonly ValType Type;
     [FieldOffset(sizeof(ValType))]
+
     private readonly bool _vB; // size 1
     [FieldOffset(sizeof(ValType))]
     private readonly int _vI; // size 4
@@ -96,6 +103,7 @@ namespace Primrose.Expressions
     [FieldOffset(8)]
     private readonly ValObj _obj;
 
+    /// <summary>Retrieves the boolean value</summary>
     public static explicit operator bool(Val a)
     {
       switch (a.Type)
@@ -107,6 +115,7 @@ namespace Primrose.Expressions
       }
     }
 
+    /// <summary>Retrieves the integer value</summary>
     public static explicit operator int(Val a)
     {
       switch (a.Type)
@@ -122,6 +131,7 @@ namespace Primrose.Expressions
       }
     }
 
+    /// <summary>Retrieves the floating point value</summary>
     public static explicit operator float(Val a)
     {
       switch (a.Type)
@@ -137,6 +147,7 @@ namespace Primrose.Expressions
       }
     }
 
+    /// <summary>Retrieves the string value</summary>
     public static explicit operator string(Val a)
     {
       switch (a.Type)
@@ -154,6 +165,7 @@ namespace Primrose.Expressions
       }
     }
 
+    /// <summary>Retrieves a float2 value</summary>
     public static explicit operator float2 (Val a)
     {
       switch (a.Type)
@@ -168,6 +180,7 @@ namespace Primrose.Expressions
       }
     }
 
+    /// <summary>Retrieves a float3 value</summary>
     public static explicit operator float3(Val a)
     {
       switch (a.Type)
@@ -182,6 +195,7 @@ namespace Primrose.Expressions
       }
     }
 
+    /// <summary>Retrieves a float4 value</summary>
     public static explicit operator float4(Val a)
     {
       switch (a.Type)
@@ -196,24 +210,28 @@ namespace Primrose.Expressions
       }
     }
 
+    /// <summary>Retrieves a boolean array</summary>
     public static explicit operator bool[](Val a)
     {
       try { return a._obj.aB; }
       catch { throw new InvalidCastException("Attempted to read bool[] value from a {0}".F(a.Type)); }
     }
 
+    /// <summary>Retrieves an integer array</summary>
     public static explicit operator int[] (Val a)
     {
       try { return a._obj.aI; }
       catch { throw new InvalidCastException("Attempted to read int[] value from a {0}".F(a.Type)); }
     }
 
+    /// <summary>Retrieves a floating point array</summary>
     public static explicit operator float[] (Val a)
     {
       try { return a._obj.aF; }
       catch { throw new InvalidCastException("Attempted to read float[] value from a {0}".F(a.Type)); }
     }
 
+    /// <summary>Retrieves the value as an object</summary>
     public object Value
     {
       get
@@ -243,6 +261,7 @@ namespace Primrose.Expressions
       }
     }
 
+    /// <summary>Defines a value</summary>
     public Val(ValType type)
     {
       Type = type;
@@ -253,6 +272,7 @@ namespace Primrose.Expressions
       _vB = false;
     }
 
+    /// <summary>Defines a value</summary>
     public Val(bool val)
     {
       Type = ValType.BOOL;
@@ -262,6 +282,7 @@ namespace Primrose.Expressions
       _vB = val;
     }
 
+    /// <summary>Defines a value</summary>
     public Val(int val)
     {
       Type = ValType.INT;
@@ -271,6 +292,7 @@ namespace Primrose.Expressions
       _vI = val;
     }
 
+    /// <summary>Defines a value</summary>
     public Val(float val)
     {
       Type = ValType.FLOAT;
@@ -280,6 +302,7 @@ namespace Primrose.Expressions
       _vF = val;
     }
 
+    /// <summary>Defines a value</summary>
     public Val(string val)
     {
       Type = ValType.STRING;
@@ -289,6 +312,7 @@ namespace Primrose.Expressions
       _obj = new ValObj(val ?? string.Empty);
     }
 
+    /// <summary>Defines a value</summary>
     public Val(float2 val)
     {
       Type = ValType.FLOAT2;
@@ -298,6 +322,7 @@ namespace Primrose.Expressions
       _obj = new ValObj(val);
     }
 
+    /// <summary>Defines a value</summary>
     public Val(float3 val)
     {
       Type = ValType.FLOAT3;
@@ -307,6 +332,7 @@ namespace Primrose.Expressions
       _obj = new ValObj(val);
     }
 
+    /// <summary>Defines a value</summary>
     public Val(float4 val)
     {
       Type = ValType.FLOAT4;
@@ -316,6 +342,7 @@ namespace Primrose.Expressions
       _obj = new ValObj(val);
     }
 
+    /// <summary>Defines a value</summary>
     public Val(bool[] val)
     {
       Type = ValType.INT_ARRAY;
@@ -325,6 +352,7 @@ namespace Primrose.Expressions
       _obj = new ValObj(val);
     }
 
+    /// <summary>Defines a value</summary>
     public Val(int[] val)
     {
       Type = ValType.INT_ARRAY;
@@ -334,6 +362,7 @@ namespace Primrose.Expressions
       _obj = new ValObj(val);
     }
 
+    /// <summary>Defines a value</summary>
     public Val(float[] val)
     {
       Type = ValType.FLOAT_ARRAY;
@@ -343,14 +372,25 @@ namespace Primrose.Expressions
       _obj = new ValObj(val);
     }
 
+    /// <summary>Represents a null value</summary>
     public static readonly Val NULL = new Val();
+
+    /// <summary>Represents a boolean true value</summary>
     public static readonly Val TRUE = new Val(true);
+
+    /// <summary>Represents a boolean false value</summary>
     public static readonly Val FALSE = new Val(false);
 
+    /// <summary>Determines if a value is null</summary>
     public bool IsNull { get { return Type == ValType.NULL; } }
+
+    /// <summary>Determines if a value is true</summary>
     public bool IsTrue { get { return Type == ValType.BOOL && _vB == true; } }
+
+    /// <summary>Determines if a value is false</summary>
     public bool IsFalse { get { return Type == ValType.BOOL && _vB == false; } }
 
+    /// <summary>Determines if a value is an array</summary>
     public bool IsArray { get { return Type == ValType.BOOL_ARRAY || Type == ValType.FLOAT_ARRAY || Type == ValType.INT_ARRAY; } }
   }
 }

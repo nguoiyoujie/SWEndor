@@ -3,7 +3,7 @@ using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ProjectileTypes.Instances
 {
-  public class Green2LaserATI : Groups.LaserProjectile
+  internal class Green2LaserATI : Groups.LaserProjectile
   {
     internal Green2LaserATI(Factory owner) : base(owner, "LSR_G2", "Green Double Laser")
     {

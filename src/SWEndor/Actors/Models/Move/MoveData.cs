@@ -2,7 +2,7 @@
 
 namespace SWEndor.Actors.Data
 {
-  public struct MoveData
+  internal struct MoveData
   {
     // General
     public float Speed;

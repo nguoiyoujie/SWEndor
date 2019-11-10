@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class ExecutorTurboLaserATI : Groups.Turbolasers
+  internal class ExecutorTurboLaserATI : Groups.Turbolasers
   {
     internal ExecutorTurboLaserATI(Factory owner) : base(owner, "EXECLSR", "Executor Super Star Destroyer Turbolaser Tower")
     {

@@ -9,6 +9,9 @@ using Primrose.Primitives.ValueTypes;
 
 namespace SWEndor.Models
 {
+  /// <summary>
+  /// Provides implementation for calculating distances and caching the result
+  /// </summary>
   public static class DistanceModel
   {
     private struct EngineTime
@@ -63,18 +66,11 @@ namespace SWEndor.Models
 
     private static object locker = new object();
 
-    public static void Reset()
-    {
-      Cleartime = 0;
-    }
+    /// <summary>Marks the cache to allow clearing</summary>
+    public static void Reset() { Cleartime = 0; }
 
-    public static int CacheCount
-    {
-      get
-      {
-        return cache.Count;
-      }
-    }
+    /// <summary>Returns the number of cached results</summary>
+    public static int CacheCount { get { return cache.Count; } }
 
     /// <summary>
     /// Gets a higher bound on the distance between Actors by taking the Manhattan distance.
@@ -96,9 +92,11 @@ namespace SWEndor.Models
     }
 
     /// <summary>
-    /// Gets a higher bound on the distance between Actors by taking the Manhattan distance.
+    /// Gets a higher bound on the distance between Actors by taking the Manhattan distance. This result is not cached.
     /// </summary>
-    /// <returns></returns>
+    /// <param name="a1">The first object</param>
+    /// <param name="a2">The second object</param>
+    /// <returns>The Manhattan distance between the two objects</returns>
     public static float GetRoughDistance(ITransformable a1, ITransformable a2)
     {
       if (a1 == null || a2 == null)
@@ -125,10 +123,16 @@ namespace SWEndor.Models
     /// <summary>
     /// Gets the distance between two objects, up to a limit. Returns the distance or limit
     /// </summary>
-    /// <returns></returns>
+    /// <typeparam name="T1">The type of the first transformable</typeparam>
+    /// <typeparam name="T2">The type of the second transformable</typeparam>
+    /// <param name="e">The game engine</param>
+    /// <param name="a1">The first object</param>
+    /// <param name="a2">The second object</param>
+    /// <param name="limit">The maximum returned value</param>
+    /// <returns>The distance between two objects, or limit if the distance exceeds the limit</returns>
     public static float GetDistance<T1, T2>(Engine e, T1 a1, T2 a2, float limit)
-      where T1 : IEngineObject, ITransformable
-      where T2 : IEngineObject, ITransformable
+      where T1 : IEngineObject, IIdentity, ITransformable
+      where T2 : IEngineObject, IIdentity, ITransformable
     {
       float d = GetRoughDistance(a1, a2);
       if (d > limit)
@@ -138,12 +142,17 @@ namespace SWEndor.Models
     }
 
     /// <summary>
-    /// Gets the distance between two objects
+    /// Gets the distance between two objects, up to a limit. Returns the distance or limit
     /// </summary>
-    /// <returns></returns>
+    /// <typeparam name="T1">The type of the first transformable</typeparam>
+    /// <typeparam name="T2">The type of the second transformable</typeparam>
+    /// <param name="e">The game engine</param>
+    /// <param name="a1">The first object</param>
+    /// <param name="a2">The second object</param>
+    /// <returns>The distance between two objects</returns>
     public static float GetDistance<T1, T2>(Engine e, T1 a1, T2 a2)
-      where T1 : IEngineObject, ITransformable
-      where T2 : IEngineObject, ITransformable
+      where T1 : IEngineObject, IIdentity, ITransformable
+      where T2 : IEngineObject, IIdentity, ITransformable
     {
       if (a1 == null || a2 == null)
         return float.MaxValue;
@@ -203,6 +212,14 @@ namespace SWEndor.Models
       return Globals.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(first, second);
     }
 
+    /// <summary>
+    /// Returns a linear interpolated position between two points
+    /// </summary>
+    /// <param name="e">The game engine</param>
+    /// <param name="first">The first point</param>
+    /// <param name="second">The first point</param>
+    /// <param name="frac">The fractional position between the two points.</param>
+    /// <returns></returns>
     public static TV_3DVECTOR Lerp(Engine e, TV_3DVECTOR first, TV_3DVECTOR second, float frac)
     {
       TV_3DVECTOR ret = new TV_3DVECTOR();

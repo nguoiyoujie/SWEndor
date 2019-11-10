@@ -10,7 +10,7 @@ using Primrose.Primitives.Geometry;
 
 namespace SWEndor.Projectiles.Models
 {
-  public struct MeshModel
+  internal struct MeshModel
   {
     // TO-DO: Move out of 'static'
     private static Dictionary<int, int> m_ids = new Dictionary<int, int>();
@@ -24,25 +24,25 @@ namespace SWEndor.Projectiles.Models
     private ShaderInfo ShaderInfo;
     private TVShader Shader;
 
-    private ScopeCounterManager.ScopeCounter meshScope;
-    private ScopeCounterManager.ScopeCounter disposeScope;
+    private ScopeCounters.ScopeCounter meshScope;
+    private ScopeCounters.ScopeCounter disposeScope;
 
     public void Init(Engine engine, int id, ref MeshData data)
     {
       if (meshScope == null)
-        meshScope = new ScopeCounterManager.ScopeCounter();
+        meshScope = new ScopeCounters.ScopeCounter();
 
       if (disposeScope == null)
-        disposeScope = new ScopeCounterManager.ScopeCounter();
+        disposeScope = new ScopeCounters.ScopeCounter();
 
       GenerateMeshes(engine, id, ref data);
 
-      ScopeCounterManager.Reset(disposeScope);
+      ScopeCounters.Reset(disposeScope);
     }
 
     private void GenerateMeshes(Engine engine, int id, ref MeshData data)
     {
-      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+      using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
         Mesh = data.SourceMesh.Duplicate();
 
@@ -66,10 +66,10 @@ namespace SWEndor.Projectiles.Models
 
     public void Dispose()
     {
-      if (ScopeCounterManager.AcquireIfZero(disposeScope))
+      if (ScopeCounters.AcquireIfZero(disposeScope))
       {
-        using (ScopeCounterManager.AcquireWhenZero(meshScope))
-        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        using (ScopeCounters.AcquireWhenZero(meshScope))
+        using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
         {
           Mesh.SetShader(null);
           Mesh?.Destroy();
@@ -88,8 +88,8 @@ namespace SWEndor.Projectiles.Models
       TV_3DVECTOR minV = new TV_3DVECTOR();
       TV_3DVECTOR maxV = new TV_3DVECTOR();
 
-      using (ScopeCounterManager.Acquire(meshScope))
-        if (ScopeCounterManager.IsZero(disposeScope))
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
           Mesh.GetBoundingBox(ref minV, ref maxV, uselocal);
 
       return new Box(minV, maxV);
@@ -100,8 +100,8 @@ namespace SWEndor.Projectiles.Models
       TV_3DVECTOR p = new TV_3DVECTOR();
       float r = 0;
 
-      using (ScopeCounterManager.Acquire(meshScope))
-        if (ScopeCounterManager.IsZero(disposeScope))
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
           Mesh.GetBoundingSphere(ref p, ref r, uselocal);
 
       return new Sphere(p, r);
@@ -111,8 +111,8 @@ namespace SWEndor.Projectiles.Models
     {
       int ret = 0;
 
-      using (ScopeCounterManager.Acquire(meshScope))
-        if (ScopeCounterManager.IsZero(disposeScope))
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
           ret = Mesh.GetVertexCount();
 
       return ret;
@@ -147,8 +147,8 @@ namespace SWEndor.Projectiles.Models
       float dummy = 0;
       int dumint = 0;
 
-      using (ScopeCounterManager.Acquire(meshScope))
-        if (ScopeCounterManager.IsZero(disposeScope))
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
           Mesh.GetVertex(vertexID, ref x, ref y, ref z, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dummy, ref dumint);
 
       return new TV_3DVECTOR(x, y, z);
@@ -158,8 +158,8 @@ namespace SWEndor.Projectiles.Models
 
     private void Render(TVMesh mesh)
     {
-      using (ScopeCounterManager.Acquire(meshScope))
-        if (ScopeCounterManager.IsZero(disposeScope))
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
           if (mesh.IsVisible())
             mesh.Render();
     }
@@ -173,8 +173,8 @@ namespace SWEndor.Projectiles.Models
       bool collide = actor.Mask.Has(ComponentMask.CAN_BECOLLIDED) && actor.Active && !actor.IsAggregateMode;
       bool render = actor.Mask.Has(ComponentMask.CAN_RENDER) && actor.Active && !actor.IsAggregateMode;
 
-      using (ScopeCounterManager.Acquire(meshScope))
-        if (ScopeCounterManager.IsZero(disposeScope))
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
         {
           Mesh.SetMatrix(mat);
           ShaderInfo?.SetShaderParam<ProjectileInfo, ProjectileTypeInfo, ProjectileCreationInfo>(actor, Shader);
@@ -182,14 +182,14 @@ namespace SWEndor.Projectiles.Models
           if (prev_render != render)
           {
             prev_render = render;
-            using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+            using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
               Mesh.Enable(render);
           }
 
           if (prev_collide != collide)
           {
             prev_collide = collide;
-            using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+            using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
               Mesh.SetCollisionEnable(collide);
           }
         }

@@ -2,7 +2,7 @@
 
 namespace Primrose.Expressions.Tree.Expressions.Literals
 {
-  public class IntLiteral : CLiteral
+  internal class IntLiteral : CLiteral
   {
     private int _value;
 

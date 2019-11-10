@@ -3,7 +3,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ProjectileTypes.Groups
 {
-  public class LaserProjectile : Projectile
+  internal class LaserProjectile : Projectile
   {
     internal LaserProjectile(Factory owner, string id, string name) : base(owner, id, name)
     {

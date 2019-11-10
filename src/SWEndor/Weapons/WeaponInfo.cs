@@ -6,10 +6,8 @@ using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Core;
 using SWEndor.Models;
-using Primrose.Primitives.Extensions;
 using SWEndor.Projectiles;
 using SWEndor.ProjectileTypes;
-using System;
 using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Weapons
@@ -33,7 +31,7 @@ namespace SWEndor.Weapons
 
   public class WeaponInfo
   {
-    public static readonly WeaponInfo[] NullArrayCache = new WeaponInfo[0];
+    internal static readonly WeaponInfo[] NullArrayCache = new WeaponInfo[0];
 
     public WeaponInfo(string name)
     {

@@ -5,7 +5,7 @@ using SWEndor.Models;
 
 namespace SWEndor.AI.Actions
 {
-  public class FollowActor : ActionInfo
+  internal class FollowActor : ActionInfo
   {
     public FollowActor(int targetActorID, float follow_distance = 500, bool can_interrupt = true) : base("FollowActor")
     {

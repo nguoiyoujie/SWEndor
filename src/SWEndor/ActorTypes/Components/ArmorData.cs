@@ -5,7 +5,7 @@ namespace SWEndor.ActorTypes.Components
   /// <summary>
   /// A light implementation of an Armor system, replaces old Damage and CollisionDamage coefficients
   /// </summary>
-  public struct ArmorData
+  internal struct ArmorData
   {
     public readonly float Light;
     //public readonly float Heavy;
@@ -24,15 +24,15 @@ namespace SWEndor.ActorTypes.Components
 
     public void LoadFromINI(INIFile f, string sectionname)
     {
-      float light = f.GetFloatValue(sectionname, "Light", 1);
-      float hull = f.GetFloatValue(sectionname, "Hull", 1);
+      float light = f.GetFloat(sectionname, "Light", 1);
+      float hull = f.GetFloat(sectionname, "Hull", 1);
       this = new ArmorData(light, hull);
     }
 
     public void SaveToINI(INIFile f, string sectionname)
     {
-      f.SetFloatValue(sectionname, "Light", Light);
-      f.SetFloatValue(sectionname, "Hull", Hull);
+      f.SetFloat(sectionname, "Light", Light);
+      f.SetFloat(sectionname, "Hull", Hull);
     }
   }
 }

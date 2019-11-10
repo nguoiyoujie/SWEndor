@@ -3,7 +3,7 @@ using System;
 
 namespace SWEndor.Models
 {
-  public struct TimerModel<T>
+  internal struct TimerModel<T>
     where T :
     IActorState
   {

@@ -3,7 +3,7 @@ using SWEndor.FileFormat.INI;
 
 namespace SWEndor.ActorTypes.Components
 {
-  public struct CombatData
+  internal struct CombatData
   {
     public bool IsCombatObject;
     public bool HitWhileDyingLeadsToDeath;
@@ -44,28 +44,28 @@ namespace SWEndor.ActorTypes.Components
 
     public void LoadFromINI(INIFile f, string sectionname)
     {
-      IsCombatObject = f.GetBoolValue(sectionname, "IsCombatObject", IsCombatObject);
-      HitWhileDyingLeadsToDeath = f.GetBoolValue(sectionname, "HitWhileDyingLeadsToDeath", HitWhileDyingLeadsToDeath);
+      IsCombatObject = f.GetBool(sectionname, "IsCombatObject", IsCombatObject);
+      HitWhileDyingLeadsToDeath = f.GetBool(sectionname, "HitWhileDyingLeadsToDeath", HitWhileDyingLeadsToDeath);
 
       //MaxShield = f.GetFloatValue(sectionname, "MaxStrength", MaxShield);
-      ImpactDamage = f.GetFloatValue(sectionname, "ImpactDamage", ImpactDamage);
+      ImpactDamage = f.GetFloat(sectionname, "ImpactDamage", ImpactDamage);
       DamageType = f.GetEnumValue(sectionname, "DamageType", DamageType);
-      IsLaser = f.GetBoolValue(sectionname, "IsLaser", IsLaser);
+      IsLaser = f.GetBool(sectionname, "IsLaser", IsLaser);
 
-      ImpactCloseEnoughDistance = f.GetFloatValue(sectionname, "ImpactCloseEnoughDistance", ImpactCloseEnoughDistance);
+      ImpactCloseEnoughDistance = f.GetFloat(sectionname, "ImpactCloseEnoughDistance", ImpactCloseEnoughDistance);
     }
 
     public void SaveToINI(INIFile f, string sectionname)
     {
-      f.SetBoolValue(sectionname, "IsCombatObject", IsCombatObject);
-      f.SetBoolValue(sectionname, "HitWhileDyingLeadsToDeath", HitWhileDyingLeadsToDeath);
+      f.SetBool(sectionname, "IsCombatObject", IsCombatObject);
+      f.SetBool(sectionname, "HitWhileDyingLeadsToDeath", HitWhileDyingLeadsToDeath);
 
       //f.SetFloatValue(sectionname, "MaxStrength", MaxShield);
-      f.SetFloatValue(sectionname, "ImpactDamage", ImpactDamage);
-      f.SetEnumValue(sectionname, "DamageType", DamageType);
-      f.SetBoolValue(sectionname, "IsLaser", IsLaser);
+      f.SetFloat(sectionname, "ImpactDamage", ImpactDamage);
+      f.SetEnum(sectionname, "DamageType", DamageType);
+      f.SetBool(sectionname, "IsLaser", IsLaser);
 
-      f.SetFloatValue(sectionname, "ImpactCloseEnoughDistance", ImpactCloseEnoughDistance);
+      f.SetFloat(sectionname, "ImpactCloseEnoughDistance", ImpactCloseEnoughDistance);
     }
   }
 }

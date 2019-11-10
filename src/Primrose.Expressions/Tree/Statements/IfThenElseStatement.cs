@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Primrose.Expressions.Tree.Statements
 {
-  public class IfThenElseStatement : CStatement
+  internal class IfThenElseStatement : CStatement
   {
     private CExpression _condition;
     private List<CStatement> _actionIfTrue = new List<CStatement>();

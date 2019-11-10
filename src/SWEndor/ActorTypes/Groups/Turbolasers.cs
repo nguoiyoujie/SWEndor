@@ -4,7 +4,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
 {
-  public class Turbolasers : AddOn
+  internal class Turbolasers : AddOn
   {
     internal Turbolasers(Factory owner, string id, string name) : base(owner, id, name)
     {

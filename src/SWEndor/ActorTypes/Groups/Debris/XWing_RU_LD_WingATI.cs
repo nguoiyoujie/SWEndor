@@ -3,7 +3,7 @@ using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class XWing_RU_LD_WingATI : Groups.SpinningDebris
+  internal class XWing_RU_LD_WingATI : Groups.SpinningDebris
   {
     internal XWing_RU_LD_WingATI(Factory owner) : base(owner, "XWRULD", "XWing_RU_LD_WingATI")
     {

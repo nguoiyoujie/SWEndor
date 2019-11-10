@@ -2,7 +2,7 @@
 
 namespace Primrose.Expressions.Tree.Expressions
 {
-  public class UnaryExpression : CExpression
+  internal class UnaryExpression : CExpression
   {
     private CExpression _primary;
     private TokenEnum _type;

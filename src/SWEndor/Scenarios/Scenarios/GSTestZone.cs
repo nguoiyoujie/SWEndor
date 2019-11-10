@@ -65,7 +65,7 @@ namespace SWEndor.Scenarios
       Manager.IsCutsceneMode = false;
     }
 
-    public override void LoadFactions()
+    internal override void LoadFactions()
     {
       base.LoadFactions();
 
@@ -76,7 +76,7 @@ namespace SWEndor.Scenarios
       MainEnemyFaction = FactionInfo.Factory.Get("Empire");
     }
 
-    public override void LoadScene()
+    internal override void LoadScene()
     {
       base.LoadScene();
     }

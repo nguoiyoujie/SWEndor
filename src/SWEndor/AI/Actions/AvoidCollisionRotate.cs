@@ -2,14 +2,13 @@
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Models;
-using Primrose.Primitives.Extensions;
 using Primrose.Primitives.Factories;
 using SWEndor.Weapons;
 using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.AI.Actions
 {
-  public class AvoidCollisionRotate : ActionInfo
+  internal class AvoidCollisionRotate : ActionInfo
   {
     internal static int _count = 0;
     internal static ObjectPool<AvoidCollisionRotate> _pool = new ObjectPool<AvoidCollisionRotate>(() => { return new AvoidCollisionRotate(); }, (a) => { a.Reset(); });

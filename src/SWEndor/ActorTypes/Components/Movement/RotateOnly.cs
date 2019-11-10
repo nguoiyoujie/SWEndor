@@ -10,9 +10,9 @@ namespace SWEndor.ActorTypes.Components
   /// <summary>
   /// Implementation of Move behavior that rotates only
   /// </summary>
-  public static class RotateOnly
+  internal static class RotateOnly
   {
-    public static void Move(Engine engine, ActorInfo actor, ref MoveData data, float time)
+    internal static void Move(Engine engine, ActorInfo actor, ref MoveData data, float time)
     {
       float dx = data.XTurnAngle;
       float dy = data.YTurnAngle;

@@ -4,7 +4,7 @@ using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class NebulonB2ATI : Groups.Warship
+  internal class NebulonB2ATI : Groups.Warship
   {
     internal NebulonB2ATI(Factory owner) : base(owner, "NEB2", "Nebulon-B2 Frigate")
     {

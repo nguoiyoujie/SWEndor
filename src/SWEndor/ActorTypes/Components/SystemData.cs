@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace SWEndor.ActorTypes.Components
 {
-  public struct SystemData
+  internal struct SystemData
   {
     static SystemData()
     {
@@ -54,7 +54,7 @@ namespace SWEndor.ActorTypes.Components
     /// <summary>
     /// Automatically generate parts. Use after other systems have been initialized.
     /// </summary>
-    /// <param name=""></param>
+    /// <param name="atype"></param>
     public void AutoParts(ActorTypeInfo atype)
     {
       List<SystemPart> parts = new List<SystemPart>(16);

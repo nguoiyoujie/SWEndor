@@ -21,9 +21,15 @@ namespace Primrose.Primitives
     /// </summary>
     public bool ExplicitUpdateOnly = false;
 
+    /// <summary>
+    /// Creates a thread-safe list
+    /// </summary>
+    /// <param name="items">The initial list source</param>
     public ThreadSafeList(IEnumerable<T> items = null) { if (items != null) _pending_list = new List<T>(items); }
 
-
+    /// <summary>
+    /// The number of elements in the list
+    /// </summary>
     public int Count
     {
       get
@@ -33,18 +39,33 @@ namespace Primrose.Primitives
       }
     }
 
+    /// <summary>
+    /// Returns whether the item exists in the dictionary
+    /// </summary>
+    /// <param name="item">The item to check</param>
+    /// <returns>True if the item exists, false otherwise</returns>
     public bool Contains(T item)
     {
       Update();
       return _list.Contains(item);
     }
 
+    /// <summary>
+    /// Returns the index of an item in the dictionary
+    /// </summary>
+    /// <param name="item">The item to check</param>
+    /// <returns>The zero-based index of the item, or -1 if the item is not found</returns>
     public int IndexOf(T item)
     {
       Update();
       return _list.IndexOf(item);
     }
 
+    /// <summary>
+    /// Retrieves a value using an index
+    /// </summary>
+    /// <param name="id">The index to check</param>
+    /// <returns>Returns the value associated with this index</returns>
     public T this[int id]
     {
       get { return Get(id); }

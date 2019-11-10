@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Components
 {
-  public struct TimedLifeData
+  internal struct TimedLifeData
   {
     public readonly bool OnTimedLife;
     public readonly float TimedLife;
@@ -15,15 +15,15 @@ namespace SWEndor.ActorTypes.Components
 
     public void LoadFromINI(INIFile f, string sectionname)
     {
-      float time = f.GetFloatValue(sectionname, "TimedLife", TimedLife);
-      bool enable = f.GetBoolValue(sectionname, "OnTimedLife", OnTimedLife);
+      float time = f.GetFloat(sectionname, "TimedLife", TimedLife);
+      bool enable = f.GetBool(sectionname, "OnTimedLife", OnTimedLife);
       this = new TimedLifeData(enable, time);
     }
 
     public void SaveToINI(INIFile f, string sectionname)
     {
-      f.SetFloatValue(sectionname, "TimedLife", TimedLife);
-      f.SetBoolValue(sectionname, "OnTimedLife", OnTimedLife);
+      f.SetFloat(sectionname, "TimedLife", TimedLife);
+      f.SetBool(sectionname, "OnTimedLife", OnTimedLife);
     }
   }
 }

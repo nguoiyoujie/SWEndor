@@ -22,8 +22,8 @@ message06:
 	Message("Rebel and Imperial reinforcements inbound!", 5, msg_color);
 
 messagewin:
-	Message("Our Transports have entered hyperspace. Let us leave this area.", 5, msg_color;
+	Message("Our Transports have entered hyperspace. Let us leave this area.", 5, msg_color);
 
 messagelose:
-	Message("All our Transports has been destroyed!", 5, msg_color;
+	Message("All our Transports has been destroyed!", 5, msg_color);
 

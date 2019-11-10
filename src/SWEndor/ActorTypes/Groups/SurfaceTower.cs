@@ -4,7 +4,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
 {
-  public class SurfaceTower : ActorTypeInfo
+  internal class SurfaceTower : ActorTypeInfo
   {
     internal SurfaceTower(Factory owner, string id, string name) : base(owner, id, name)
     {

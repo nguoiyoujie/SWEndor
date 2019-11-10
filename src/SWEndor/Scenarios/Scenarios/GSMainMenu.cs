@@ -69,12 +69,8 @@ namespace SWEndor.Scenarios
       SoundManager.SetMusicDyn("TRO-IN");
       Manager.IsCutsceneMode = true;
     }
-    public override void Unload()
-    {
-      base.Unload();
-    }
 
-    public override void LoadFactions()
+    internal override void LoadFactions()
     {
       base.LoadFactions();
 
@@ -88,7 +84,7 @@ namespace SWEndor.Scenarios
       MainEnemyFaction.WingSpawnLimit = 28;
     }
 
-    public override void LoadScene()
+    internal override void LoadScene()
     {
       base.LoadScene();
 
@@ -257,7 +253,7 @@ namespace SWEndor.Scenarios
                                            , new Lock()
                                             }
         }.Spawn(this);
-        ainfo.SetSpawnerEnable(true);
+        ainfo.SpawnerInfo.Enabled = true;
       }
 
       // Corellian x3
@@ -463,7 +459,7 @@ namespace SWEndor.Scenarios
       {
         ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, delay, s.Info);
         delay += 2.6f;
-        ship.SetSpawnerEnable(true);
+        ship.SpawnerInfo.Enabled = true;
       }
 
       Box box = new Box(new TV_3DVECTOR(-4000, 500, 7300), new TV_3DVECTOR(-5500, 0, 8000));

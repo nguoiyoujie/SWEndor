@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Primrose.Expressions.Tree.Expressions
 {
-  public class MultiplyExpression : CExpression
+  internal class MultiplyExpression : CExpression
   {
     private CExpression _first;
     private Dictionary<CExpression, TokenEnum> _set = new Dictionary<CExpression, TokenEnum>();

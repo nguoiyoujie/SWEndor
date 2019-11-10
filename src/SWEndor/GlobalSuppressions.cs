@@ -144,4 +144,5 @@
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HeapAnalyzerBoxingRule:Value type to reference type conversion causing boxing allocation", Justification = "<Pending>", Scope = "member", Target = "~M:SWEndor.Scenarios.Scripting.Script.WriteVar(System.String,SWEndor.Scenarios.Scripting.Expressions.Val)")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HeapAnalyzerBoxingRule:Value type to reference type conversion causing boxing allocation", Justification = "<Pending>", Scope = "member", Target = "~M:SWEndor.Scenarios.Scripting.Functions.Scripting.CallScriptX(SWEndor.Scenarios.Scripting.Expressions.Context,SWEndor.Scenarios.Scripting.Expressions.Val[])~SWEndor.Scenarios.Scripting.Expressions.Val")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HeapAnalyzerBoxingRule:Value type to reference type conversion causing boxing allocation", Justification = "<Pending>", Scope = "member", Target = "~M:SWEndor.Scenarios.Scripting.Functions.ActorFns.ConfigureActorProperty(SWEndor.Core.Engine,SWEndor.Actors.ActorInfo,System.String,System.Boolean,Primrose.Expressions.Val@)")]
 

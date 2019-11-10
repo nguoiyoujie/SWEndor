@@ -3,7 +3,7 @@ using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class EndorATI : Groups.StaticScene
+  internal class EndorATI : Groups.StaticScene
   {
     internal EndorATI(Factory owner) : base(owner, "ENDOR", "Endor")
     {

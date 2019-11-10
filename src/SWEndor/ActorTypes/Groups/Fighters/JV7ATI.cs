@@ -4,7 +4,7 @@ using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class JV7ATI : Groups.RebelWing
+  internal class JV7ATI : Groups.RebelWing
   {
     internal JV7ATI(Factory owner) : base(owner, "JV7", "JV-7 Delta-class Shuttle")
     {

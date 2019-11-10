@@ -107,7 +107,7 @@ namespace SWEndor.Core
 
     private void InitScene()
     {
-      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+      using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
         TVScene.SetShadeMode(CONST_TV_SHADEMODE.TV_SHADEMODE_GOURAUD);
         TVScene.SetRenderMode(CONST_TV_RENDERMODE.TV_SOLID);

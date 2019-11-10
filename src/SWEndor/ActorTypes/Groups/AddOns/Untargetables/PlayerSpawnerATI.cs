@@ -4,7 +4,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class PlayerSpawnerATI : Groups.AddOn
+  internal class PlayerSpawnerATI : Groups.AddOn
   {
     internal PlayerSpawnerATI(Factory owner) : base(owner, "SPAWN", "Player Spawner")
     {

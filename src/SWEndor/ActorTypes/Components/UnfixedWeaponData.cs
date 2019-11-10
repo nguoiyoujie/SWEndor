@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace SWEndor.ActorTypes.Components
 {
-  public struct UnfixedWeaponData
+  internal struct UnfixedWeaponData
   {
     private List<string> _weapons;
     private int _primary;

@@ -154,12 +154,12 @@ namespace SWEndor.Models
 
     private TV_3DMATRIX InnerGetWorldMatrix(T a, float time)
     {
-      using (ScopeCounterManager.Acquire(a.Scope))
+      using (ScopeCounters.Acquire(a.Scope))
       {
         U p = a.ParentForCoords;
         if (!p?.Disposed ?? false)
         {
-          using (ScopeCounterManager.Acquire(p.Scope))
+          using (ScopeCounters.Acquire(p.Scope))
           {
             TV_3DMATRIX m = new TV_3DMATRIX();
             mlib.TVMatrixMultiply(ref m, GetMat(ref currData), p.GetWorldMatrix());
@@ -172,12 +172,12 @@ namespace SWEndor.Models
 
     private TV_3DMATRIX InnerGetPrevWorldMatrix(T a, float time)
     {
-      using (ScopeCounterManager.Acquire(a.Scope))
+      using (ScopeCounters.Acquire(a.Scope))
       {
         U p = a.ParentForCoords;
         if (!p?.Disposed ?? false)
         {
-          using (ScopeCounterManager.Acquire(p.Scope))
+          using (ScopeCounters.Acquire(p.Scope))
           {
             TV_3DMATRIX m = new TV_3DMATRIX();
             mlib.TVMatrixMultiply(ref m, GetMat(ref prevData), p.GetPrevWorldMatrix());

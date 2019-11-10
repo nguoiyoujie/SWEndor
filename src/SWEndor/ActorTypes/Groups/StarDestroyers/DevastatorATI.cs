@@ -7,7 +7,7 @@ using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class DevastatorATI : Groups.StarDestroyer
+  internal class DevastatorATI : Groups.StarDestroyer
   {
     internal DevastatorATI(Factory owner) : base(owner, "DEVA", "Devastator Imperial-I Star Destroyer")
     {

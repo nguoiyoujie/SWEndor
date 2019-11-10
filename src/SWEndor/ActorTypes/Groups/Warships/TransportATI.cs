@@ -4,7 +4,7 @@ using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class TransportATI : Groups.Warship
+  internal class TransportATI : Groups.Warship
   {
     internal TransportATI(Factory owner) : base(owner, "TRAN", "Transport")
     {

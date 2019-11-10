@@ -90,7 +90,11 @@ namespace SWEndor.FileFormat.INI
               sw.WriteLine(section.HLine.ToString());
 
             foreach (INISection.INILine line in section.Lines)
-              sw.WriteLine(line.ToString());
+            {
+              string s = line.ToString();
+              if (s.Length != 1) // "="
+                sw.WriteLine(s);
+            }
 
             sw.WriteLine();
           }

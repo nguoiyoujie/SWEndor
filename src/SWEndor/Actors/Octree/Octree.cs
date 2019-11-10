@@ -8,13 +8,13 @@ using System.Threading;
 
 namespace SWEndor.Actors
 {
-  public partial class ActorInfo
-  {
+  //public partial class ActorInfo
+  //{
     //public ulong OctID = 0;
-  }
+  //}
 
-  public class Octree 
-  {
+  //public class Octree 
+  //{
     // Unused in favor of the simpler Octree_String, in future 64-bit Octree may be more performant
 
     /*
@@ -269,5 +269,5 @@ namespace SWEndor.Actors
       }
     }
     */
-  }
+  //}
 }

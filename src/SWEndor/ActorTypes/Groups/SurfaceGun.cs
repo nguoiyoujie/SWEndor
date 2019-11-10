@@ -4,7 +4,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
 {
-  public class SurfaceGun : ActorTypeInfo
+  internal class SurfaceGun : ActorTypeInfo
   {
     internal SurfaceGun(Factory owner, string id, string name) : base(owner, id, name)
     {

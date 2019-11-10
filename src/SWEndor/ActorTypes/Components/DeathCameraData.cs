@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Components
 {
-  public struct DeathCameraData
+  internal struct DeathCameraData
   {
     public readonly float Radius;
     public readonly float Height;
@@ -17,17 +17,17 @@ namespace SWEndor.ActorTypes.Components
 
     public void LoadFromINI(INIFile f, string sectionname)
     {
-      float radius = f.GetFloatValue(sectionname, "Radius", Radius);
-      float height = f.GetFloatValue(sectionname, "Height", Height);
-      float period = f.GetFloatValue(sectionname, "Period", Period);
+      float radius = f.GetFloat(sectionname, "Radius", Radius);
+      float height = f.GetFloat(sectionname, "Height", Height);
+      float period = f.GetFloat(sectionname, "Period", Period);
       this = new DeathCameraData(radius, height, period);
     }
 
     public void SaveToINI(INIFile f, string sectionname)
     {
-      f.SetFloatValue(sectionname, "Radius", Radius);
-      f.SetFloatValue(sectionname, "Height", Height);
-      f.SetFloatValue(sectionname, "Period", Period);
+      f.SetFloat(sectionname, "Radius", Radius);
+      f.SetFloat(sectionname, "Height", Height);
+      f.SetFloat(sectionname, "Period", Period);
     }
   }
 }

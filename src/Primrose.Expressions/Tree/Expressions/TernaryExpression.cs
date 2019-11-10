@@ -2,7 +2,7 @@
 
 namespace Primrose.Expressions.Tree.Expressions
 {
-  public class TernaryExpression : CExpression
+  internal class TernaryExpression : CExpression
   {
     private CExpression _question;
     private CExpression _true;

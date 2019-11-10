@@ -4,7 +4,7 @@ using System;
 
 namespace Primrose.Expressions.Tree.Expressions
 {
-  public class IndexedExpression : CExpression
+  internal class IndexedExpression : CExpression
   {
     private CExpression _expression;
     private CExpression _index;

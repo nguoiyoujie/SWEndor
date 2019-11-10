@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Primrose.Expressions.Tree.Expressions.Literals
 {
-  public class ArrayLiteral : CLiteral
+  internal class ArrayLiteral : CLiteral
   {
     // {x,y,z}
     private List<CExpression> _param = new List<CExpression>();

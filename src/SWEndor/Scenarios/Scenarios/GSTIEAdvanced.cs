@@ -75,7 +75,6 @@ namespace SWEndor.Scenarios
     public override void GameTick()
     {
       base.GameTick();
-      CalibrateSceneObjects();
 
       if (Manager.Scenario.TimeSinceLostWing < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
       {
@@ -124,12 +123,7 @@ namespace SWEndor.Scenarios
       }
     }
 
-
-    private void CalibrateSceneObjects()
-    {
-    }
-
-    public override void LoadFactions()
+    internal override void LoadFactions()
     {
       base.LoadFactions();
 
@@ -150,12 +144,6 @@ namespace SWEndor.Scenarios
       InformLostWing = true;
       InformLostShip = true;
     }
-
-    public override void LoadScene()
-    {
-      base.LoadScene();
-    }
-
 
     #region Rebellion spawns
 

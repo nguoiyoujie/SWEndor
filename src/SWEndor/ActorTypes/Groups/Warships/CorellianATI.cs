@@ -4,7 +4,7 @@ using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class CorellianATI : Groups.Warship
+  internal class CorellianATI : Groups.Warship
   {
     internal CorellianATI(Factory owner) : base(owner, "CORV", "Corellian Corvette")
     {

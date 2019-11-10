@@ -5,7 +5,7 @@ using Primrose.Primitives.Factories;
 
 namespace SWEndor.AI.Actions
 {
-  public class Evade : ActionInfo
+  internal class Evade : ActionInfo
   {
     internal static int _count = 0;
     internal static ObjectPool<Evade> _pool = new ObjectPool<Evade>(() => { return new Evade(); }, (a) => { a.Reset(); });
@@ -57,7 +57,10 @@ namespace SWEndor.AI.Actions
         if (!poschecked)
         {
           poschecked = true;
-          if (actor.IsNearlyOutOfBounds(engine.GameScenarioManager))
+          TV_3DVECTOR minb = engine.GameScenarioManager.MinAIBounds;
+          TV_3DVECTOR maxb = engine.GameScenarioManager.MaxAIBounds;
+
+          if (actor.IsOutOfBounds(minb, maxb))
             // TO-DO: use the center of the Bound volume or a designated center point instead of origin.
             actor.AIData.SetTarget(new TV_3DVECTOR());
           else

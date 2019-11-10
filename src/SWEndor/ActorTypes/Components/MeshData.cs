@@ -8,7 +8,7 @@ using System.IO;
 
 namespace SWEndor.ActorTypes.Components
 {
-  public enum MeshMode : byte
+  internal enum MeshMode : byte
   {
     NONE, 
     NORMAL,
@@ -19,7 +19,7 @@ namespace SWEndor.ActorTypes.Components
     BILLBOARD_ANIM
   }
 
-  public struct MeshData
+  internal struct MeshData
   {
     private static TrueVision tv = Globals.Engine.TrueVision;
 
@@ -64,7 +64,7 @@ namespace SWEndor.ActorTypes.Components
       SourceMesh = tv.TVGlobals.GetMesh(name);
       if (SourceMesh == null)
       {
-        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
         {
           SourceMesh = tv.TVScene.CreateMeshBuilder(name);
 
@@ -85,7 +85,7 @@ namespace SWEndor.ActorTypes.Components
       {
         if (srcFarMesh != null)
         {
-          using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+          using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
           {
             SourceFarMesh = tv.TVScene.CreateMeshBuilder(farname);
 
@@ -127,9 +127,9 @@ namespace SWEndor.ActorTypes.Components
     public void LoadFromINI(INIFile f, string sectionname)
     {
       MeshMode mode = f.GetEnumValue(sectionname, "Mode", Mode);
-      string name = f.GetStringValue(sectionname, "Name", Name);
-      float scale = f.GetFloatValue(sectionname, "Scale", Scale);
-      string shader = f.GetStringValue(sectionname, "Shader", Shader);
+      string name = f.GetString(sectionname, "Name", Name);
+      float scale = f.GetFloat(sectionname, "Scale", Scale);
+      string shader = f.GetString(sectionname, "Shader", Shader);
       CONST_TV_BLENDINGMODE blendmode = f.GetEnumValue(sectionname, "BlendMode", BlendMode);
 
       switch (mode)
@@ -140,39 +140,47 @@ namespace SWEndor.ActorTypes.Components
 
         case MeshMode.NORMAL:
           {
-            string srcMesh = f.GetStringValue(sectionname, "SourceMeshPath", SourceMeshPath);
-            string srcFarMesh = f.GetStringValue(sectionname, "SourceFarMeshPath", SourceFarMeshPath);
+            string srcMesh = f.GetString(sectionname, "SourceMeshPath", SourceMeshPath);
+            string srcFarMesh = f.GetString(sectionname, "SourceFarMeshPath", SourceFarMeshPath);
             this = new MeshData(name, srcMesh, srcFarMesh, scale, blendmode, shader);
           }
           break;
 
         case MeshMode.HORIZON:
           {
-            string data = f.GetStringValue(sectionname, "Data", SourceMeshPath);
-            if (data != null)
-              this = MeshDataDecorator.CreateHorizon(name, scale, data, blendmode, shader);
+            string[] data = f.GetStringArray(sectionname, "Data", null);
+            float size = 1;
+            if (data != null 
+              && data.Length >= 2
+              && float.TryParse(data[0], out size))
+              this = MeshDataDecorator.CreateHorizon(name, size, data[1], blendmode, shader);
           }
           break;
 
         case MeshMode.ALPHATEX_WALL:
           {
-            string[] data = f.GetStringList(sectionname, "Data", null);
-            if (data != null && data.Length >= 2)
-              this = MeshDataDecorator.CreateAlphaTexturedWall(name, scale, data[0], data[1], blendmode, shader);
+            string[] data = f.GetStringArray(sectionname, "Data", null);
+            float size = 1;
+            if (data != null 
+              && data.Length >= 3
+              && float.TryParse(data[0], out size))
+              this = MeshDataDecorator.CreateAlphaTexturedWall(name, size, data[1], data[2], blendmode, shader);
           }
           break;
 
         case MeshMode.BILLBOARD_ANIM:
           {
-            string[] data = f.GetStringList(sectionname, "Data", null);
+            string[] data = f.GetStringArray(sectionname, "Data", null);
+            float size = 1;
             int columns = 1;
             int rows = 1;
             if (data != null 
-              && data.Length >= 3
-              && int.TryParse(data[1], out columns)
-              && int.TryParse(data[2], out rows)
+              && data.Length >= 4
+              && float.TryParse(data[0], out size)
+              && int.TryParse(data[2], out columns)
+              && int.TryParse(data[3], out rows)
               )
-              this = MeshDataDecorator.CreateBillboardAtlasAnimation(name, scale, data[0], blendmode, columns, rows, shader);
+              this = MeshDataDecorator.CreateBillboardAtlasAnimation(name, size, data[1], blendmode, columns, rows, shader);
           }
           break;
       }
@@ -180,11 +188,11 @@ namespace SWEndor.ActorTypes.Components
 
     public void SaveToINI(INIFile f, string sectionname)
     {
-      f.SetEnumValue(sectionname, "Mode", Mode);
-      f.SetStringValue(sectionname, "Name", Name);
-      f.SetFloatValue(sectionname, "Scale", Scale);
-      f.SetStringValue(sectionname, "Shader", Shader);
-      f.SetEnumValue(sectionname, "BlendMode", BlendMode);
+      f.SetEnum(sectionname, "Mode", Mode);
+      f.SetString(sectionname, "Name", Name);
+      f.SetFloat(sectionname, "Scale", Scale);
+      f.SetString(sectionname, "Shader", Shader);
+      f.SetEnum(sectionname, "BlendMode", BlendMode);
 
       switch (Mode)
       {
@@ -193,33 +201,33 @@ namespace SWEndor.ActorTypes.Components
 
         case MeshMode.NORMAL:
           {
-            f.SetStringValue(sectionname, "SourceMeshPath", SourceMeshPath);
-            f.SetStringValue(sectionname, "SourceFarMeshPath", SourceFarMeshPath);
+            f.SetString(sectionname, "SourceMeshPath", SourceMeshPath);
+            f.SetString(sectionname, "SourceFarMeshPath", SourceFarMeshPath);
           }
           break;
 
         case MeshMode.HORIZON:
           {
-            f.SetStringValue(sectionname, "Data", SourceMeshPath);
+            f.SetString(sectionname, "Data", SourceMeshPath);
           }
           break;
 
         case MeshMode.ALPHATEX_WALL:
           {
-            f.SetStringValue(sectionname, "Data", SourceMeshPath);
+            f.SetString(sectionname, "Data", SourceMeshPath);
           }
           break;
 
         case MeshMode.BILLBOARD_ANIM:
           {
-            f.SetStringValue(sectionname, "Data", SourceMeshPath);
+            f.SetString(sectionname, "Data", SourceMeshPath);
           }
           break;
       }
     }
   }
 
-  public static class MeshDataDecorator
+  internal static class MeshDataDecorator
   {
     private static TrueVision tv = Globals.Engine.TrueVision;
 
@@ -238,7 +246,7 @@ namespace SWEndor.ActorTypes.Components
         m.SetCullMode(CONST_TV_CULLING.TV_DOUBLESIDED);
         //m.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
       }
-      return new MeshData(name, m, 1, MeshMode.HORIZON, blendmode, texname, shader);
+      return new MeshData(name, m, 1, MeshMode.HORIZON, blendmode, "{0},{1}".F(size, texname), shader);
     }
 
     public static MeshData CreateTexturedModel(string name, string modelpath, string texname, CONST_TV_BLENDINGMODE blendmode, string shader = null)
@@ -261,7 +269,7 @@ namespace SWEndor.ActorTypes.Components
       TVMesh m = tv.TVGlobals.GetMesh(name);
       if (m == null)
       {
-        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
           m = tv.TVScene.CreateMeshBuilder(name);
 
         // 1 texture
@@ -279,7 +287,7 @@ namespace SWEndor.ActorTypes.Components
         m.AddWall(tex, -size / 2, 0, size / 2, 0, size, -size / 2);
         m.SetTexture(tex);
       }
-      return new MeshData(name, m, 1, MeshMode.ALPHATEX_WALL, blendmode, "{0},{1}".F(texname, alphatexname), shader);
+      return new MeshData(name, m, 1, MeshMode.ALPHATEX_WALL, blendmode, "{0},{1},{2}".F(size, texname, alphatexname), shader);
     }
 
     public static MeshData CreateAlphaTexturedFlickerWall(string name, float size, string texname, string texdname, string alphatexname, CONST_TV_BLENDINGMODE blendmode, int frames, int[] flickerframes, ref int[] texanimframes)
@@ -287,7 +295,7 @@ namespace SWEndor.ActorTypes.Components
       TVMesh m = tv.TVGlobals.GetMesh(name);
       if (m == null)
       {
-        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
           m = tv.TVScene.CreateMeshBuilder(name);
 
         string texpath = Path.Combine(Globals.ImagePath, texname);
@@ -331,19 +339,19 @@ namespace SWEndor.ActorTypes.Components
       {
         string texpath = Path.Combine(Globals.ImagePath, texname);
         int i = LoadAlphaTexture(texname, texpath);
-        using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
           m = tv.TVScene.CreateBillboard(i, 0, 0, 0, size, size, name, true);
         m.SetBlendingMode(CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
         m.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
         m.SetTextureModEnable(true);
         m.SetTextureModTranslationScale(1f / columns, 1f / rows);
       }
-      return new MeshData(name, m, 1, MeshMode.BILLBOARD_ANIM, blendmode, "{0},{1},{2}".F(texname, columns, rows), shader);
+      return new MeshData(name, m, 1, MeshMode.BILLBOARD_ANIM, blendmode, "{0},{1},{2},{3}".F(size, texname, columns, rows), shader);
     }
 
     private static int LoadAlphaTexture(string name, string texpath, string alphatexpath = null)
     {
-      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+      using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
         int tex = tv.TVGlobals.GetTex(name);
         if (tex == 0)
@@ -358,7 +366,7 @@ namespace SWEndor.ActorTypes.Components
 
     private static int LoadTexture(string name, string texpath)
     {
-      using (ScopeCounterManager.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+      using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
         int tex = tv.TVGlobals.GetTex(name);
         if (tex == 0)

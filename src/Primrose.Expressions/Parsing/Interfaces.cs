@@ -12,9 +12,15 @@
     int Match(string text);
   }
 
+  /// <summary>
+  /// Provides tracking for line and position
+  /// </summary>
   public interface ITracker
   {
+    /// <summary>The line number</summary>
     int LineNumber { get; }
+
+    /// <summary>The character position in the line</summary>
     int Position { get; }
   }
 }

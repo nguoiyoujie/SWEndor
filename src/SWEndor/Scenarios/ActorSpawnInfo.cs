@@ -4,7 +4,6 @@ using SWEndor.ActorTypes;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Models;
-using System.Collections.Generic;
 
 namespace SWEndor.Scenarios
 {
@@ -42,14 +41,8 @@ namespace SWEndor.Scenarios
           ainfo.QueueLast(act);
 
       if (Registries != null)
-      {
         foreach (string s in Registries)
-        {
-          HashSet<ActorInfo> reg = scenario.GetRegister(s);
-          if (reg != null)
-            reg.Add(ainfo);
-        }
-      }
+          scenario.GetRegister(s)?.Add(ainfo);
 
       return ainfo;
     }

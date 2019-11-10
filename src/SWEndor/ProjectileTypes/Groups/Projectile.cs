@@ -4,7 +4,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ProjectileTypes.Groups
 {
-  public class Projectile : ProjectileTypeInfo
+  internal class Projectile : ProjectileTypeInfo
   {
     internal Projectile(Factory owner, string id, string name) : base(owner, id, name)
     {

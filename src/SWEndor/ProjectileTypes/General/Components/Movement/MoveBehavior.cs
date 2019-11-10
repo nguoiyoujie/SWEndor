@@ -1,15 +1,14 @@
-﻿using SWEndor.Actors;
-using SWEndor.Actors.Data;
+﻿using SWEndor.Actors.Data;
 using SWEndor.Core;
 using SWEndor.Models;
 using SWEndor.Projectiles;
 
 namespace SWEndor.ProjectileTypes.Components
 {
-  public struct MoveBehavior
+  internal struct MoveBehavior
   {
-    public delegate void MoveAction(Engine engine, ProjectileInfo actor, ref MoveData data, float time);
-    public MoveAction Move;
+    internal delegate void MoveAction(Engine engine, ProjectileInfo actor, ref MoveData data, float time);
+    internal MoveAction Move;
 
     public void Load(ProjectileTypeInfo atype)
     {

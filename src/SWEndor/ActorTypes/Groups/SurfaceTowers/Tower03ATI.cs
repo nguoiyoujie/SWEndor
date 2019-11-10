@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class Tower03ATI : Groups.SurfaceTower
+  internal class Tower03ATI : Groups.SurfaceTower
   {
     internal Tower03ATI(Factory owner) : base(owner, "RDRT", "Radar Tower")
     {

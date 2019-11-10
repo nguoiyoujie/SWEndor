@@ -10,7 +10,7 @@ namespace SWEndor.Actors
 {
   public partial class ActorInfo
   {
-    public string OctID = "x"; // init to invalid value to ensure first update
+    internal string OctID = "x"; // init to invalid value to ensure first update
   }
 
   public class Octree_String

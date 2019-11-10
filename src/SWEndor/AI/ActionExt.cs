@@ -3,8 +3,12 @@ using SWEndor.AI.Actions;
 
 namespace SWEndor.AI
 {
+  /// <summary>
+  /// Provides extension methods for feeding actions to an actor
+  /// </summary>
   public static class ActionExt
   {
+    /// <summary>Unblocks one Lock action</summary>
     public static void UnlockOne(this ActorInfo actor)
     {
       ActionInfo action = actor.CurrentAction;
@@ -19,6 +23,7 @@ namespace SWEndor.AI
       }
     }
 
+    /// <summary>Clears the actor's action queue, until an uninterruptible action is found</summary>
     public static void ClearQueue(this ActorInfo actor)
     {
       if (actor.CurrentAction != null)
@@ -41,6 +46,7 @@ namespace SWEndor.AI
       }
     }
 
+    /// <summary>Clears the actor's action queue regardless of whether the action is uninterruptible</summary>
     public static void ForceClearQueue(this ActorInfo actor)
     {
       ActionInfo action = actor.CurrentAction;
@@ -52,6 +58,7 @@ namespace SWEndor.AI
       actor.CurrentAction = null;
     }
 
+    /// <summary>Queues an action at the front of the action queue, replacing the current action</summary>
     public static void QueueFirst(this ActorInfo actor, ActionInfo action)
     {
       if (actor.CurrentAction == null)
@@ -71,6 +78,7 @@ namespace SWEndor.AI
       }
     }
 
+    /// <summary>Queues an action immediately after the current action</summary>
     public static void QueueNext(this ActorInfo actor, ActionInfo action)
     {
       if (actor.CurrentAction == null)
@@ -90,6 +98,7 @@ namespace SWEndor.AI
       }
     }
 
+    /// <summary>Queues an action at the back of the action queue</summary>
     public static void QueueLast(this ActorInfo actor, ActionInfo action)
     {
       if (actor.CurrentAction == null)
@@ -107,6 +116,7 @@ namespace SWEndor.AI
       }
     }
 
+    /// <summary>Processes the current action, moving to the next if the current action is complete</summary>
     public static void Run(this ActorInfo actor, ActionInfo action)
     {
       if (action == null)

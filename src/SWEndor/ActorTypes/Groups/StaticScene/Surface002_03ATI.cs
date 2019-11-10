@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class Surface002_03ATI : Groups.GroundSurface
+  internal class Surface002_03ATI : Groups.GroundSurface
   {
     internal Surface002_03ATI(Factory owner) : base(owner, "SURF00203", "SURF00203")
     {

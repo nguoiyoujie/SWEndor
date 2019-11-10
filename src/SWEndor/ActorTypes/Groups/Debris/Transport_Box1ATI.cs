@@ -3,7 +3,7 @@ using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class Transport_Box1ATI : Groups.SpinningDebris
+  internal class Transport_Box1ATI : Groups.SpinningDebris
   {
     internal Transport_Box1ATI(Factory owner) : base(owner, "BOX1", "Transport Box 1")
     {

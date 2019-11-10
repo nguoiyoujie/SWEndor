@@ -5,7 +5,7 @@ using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class ExecutorATI : Groups.StarDestroyer
+  internal class ExecutorATI : Groups.StarDestroyer
   {
     internal ExecutorATI(Factory owner) : base(owner, "EXEC", "EXEC")
     {

@@ -3,7 +3,7 @@ using SWEndor.Core;
 
 namespace SWEndor.AI.Actions
 {
-  public class Lock : ActionInfo
+  internal class Lock : ActionInfo
   {
     public Lock() : base("Lock")
     {

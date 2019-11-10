@@ -12,9 +12,9 @@ namespace SWEndor.ActorTypes.Components
   /// <summary>
   /// Implementation of Move behavior with full range of movement
   /// </summary>
-  public static class MoveNormal
+  internal static class MoveNormal
   {
-    public static void Move(Engine engine, ActorInfo actor, ref MoveData data, float time)
+    internal static void Move(Engine engine, ActorInfo actor, ref MoveData data, float time)
     {
       // Hyperspace special: AI loop may not be in sync
       if (actor.CurrentAction is HyperspaceIn)

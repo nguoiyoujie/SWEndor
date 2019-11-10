@@ -4,7 +4,7 @@ using SWEndor.Core;
 
 namespace SWEndor.AI.Actions
 {
-  public class Idle : ActionInfo
+  internal class Idle : ActionInfo
   {
     public Idle() : base("Idle")
     {

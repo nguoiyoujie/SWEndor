@@ -13,7 +13,7 @@ namespace SWEndor.Explosions
         throw new ArgumentNullException("expl");
 #endif
 
-      using (ScopeCounterManager.Acquire(expl.Scope))
+      using (ScopeCounters.Acquire(expl.Scope))
       {
         if (!expl.Active)
           return;

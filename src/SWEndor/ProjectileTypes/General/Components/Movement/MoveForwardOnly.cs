@@ -8,9 +8,9 @@ namespace SWEndor.ProjectileTypes.Components
   /// <summary>
   /// Implementation of Move behavior that moves forward only
   /// </summary>
-  public static class MoveForwardOnly
+  internal static class MoveForwardOnly
   {
-    public static void Move(Engine engine, ProjectileInfo actor, ref MoveData data, float time)
+    internal static void Move(Engine engine, ProjectileInfo actor, ref MoveData data, float time)
     {
       // Control speed
       if (!data.FreeSpeed)

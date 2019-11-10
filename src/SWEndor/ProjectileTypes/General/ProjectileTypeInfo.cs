@@ -4,18 +4,20 @@ using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using SWEndor.FileFormat.INI;
 using SWEndor.Models;
-using SWEndor.Player;
 using SWEndor.Projectiles;
 using System;
 using System.IO;
 
 namespace SWEndor.ProjectileTypes
 {
+  /// <summary>
+  /// Defines a type holding data to create projectile instances.
+  /// </summary>
   public partial class ProjectileTypeInfo : ITypeInfo<ProjectileInfo>
   {
-    public static ProjectileTypeInfo Null = new ProjectileTypeInfo(Globals.Engine.ProjectileTypeFactory, "$NULL", "Null");
+    internal static readonly ProjectileTypeInfo Null = new ProjectileTypeInfo(Globals.Engine.ProjectileTypeFactory, "$NULL", "Null");
 
-    public ProjectileTypeInfo(Factory owner, string id, string name)
+    internal ProjectileTypeInfo(Factory owner, string id, string name)
     {
       ActorTypeFactory = owner;
       if (id?.Length > 0) { ID = id; }
@@ -24,38 +26,36 @@ namespace SWEndor.ProjectileTypes
       CombatData.Reset();
     }
 
-    public readonly Factory ActorTypeFactory;
+    internal readonly Factory ActorTypeFactory;
+
+    /// <summary>The Engine that owns this object</summary>
     public Engine Engine { get { return ActorTypeFactory.Engine; } }
 
-    public PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }
-
-    // Basic Info
+    /// <summary>The ID of this object</summary>
     public string ID;
+
+    /// <summary>The given name of this object</summary>
     public string Name;
 
     // Data
-    public ComponentMask Mask = ComponentMask.NONE;
+    internal ComponentMask Mask = ComponentMask.NONE;
 
     // Data (structs)
-    public CombatData CombatData;
-    public TimedLifeData TimedLifeData;
-    public MoveLimitData MoveLimitData = MoveLimitData.Default;
-    public RenderData RenderData = RenderData.Default;
-    public MeshData MeshData = MeshData.Default;
-    
-    // AddOns
+    internal CombatData CombatData;
+    internal TimedLifeData TimedLifeData;
+    internal MoveLimitData MoveLimitData = MoveLimitData.Default;
+    internal RenderData RenderData = RenderData.Default;
+    internal MeshData MeshData = MeshData.Default;
 
-    // Explosionf
-    public ExplodeData[] Explodes = new ExplodeData[0];
+    // Data (struct arrays)
+    internal ExplodeData[] Explodes = new ExplodeData[0];
+    internal SoundSourceData[] InitialSoundSources = new SoundSourceData[0];
+    internal SoundSourceData[] SoundSources = new SoundSourceData[0];
 
-    // Sound
-    public SoundSourceData[] InitialSoundSources = new SoundSourceData[0];
-    public SoundSourceData[] SoundSources = new SoundSourceData[0];
+    // Derived (derived)
+    internal Components.MoveBehavior MoveBehavior;
 
-    // derived
-    public ProjectileTypes.Components.MoveBehavior MoveBehavior;
-
-    public void LoadFromINI(string id)
+    internal void LoadFromINI(string id)
     {
       ID = id;
       string filepath = Path.Combine(Globals.ProjectileTypeINIDirectory, id + ".ini");
@@ -63,7 +63,7 @@ namespace SWEndor.ProjectileTypes
       if (File.Exists(filepath))
       {
         INIFile f = new INIFile(filepath);
-        Name = f.GetStringValue("General", "Name", Name);
+        Name = f.GetString("General", "Name", Name);
         Mask = f.GetEnumValue("General", "Mask", Mask);
 
         CombatData.LoadFromINI(f, "CombatData");
@@ -78,7 +78,7 @@ namespace SWEndor.ProjectileTypes
       }
     }
 
-    public void SaveToINI(string id)
+    internal void SaveToINI(string id)
     {
       ID = id;
       string filepath = Path.Combine(Globals.ProjectileTypeINIDirectory, id + ".ini");
@@ -88,8 +88,8 @@ namespace SWEndor.ProjectileTypes
 
       INIFile f = new INIFile(filepath);
 
-      f.SetStringValue("General", "Name", Name);
-      f.SetEnumValue("General", "Mask", Mask);
+      f.SetString("General", "Name", Name);
+      f.SetEnum("General", "Mask", Mask);
 
       CombatData.SaveToINI(f, "CombatData");
       TimedLifeData.SaveToINI(f, "TimedLifeData");
@@ -103,12 +103,17 @@ namespace SWEndor.ProjectileTypes
       f.SaveFile(filepath);
     }
 
-    public void Init()
+    internal void Init()
     {
       //cachedWeaponData.Load(this);
       MoveBehavior.Load(this);
     }
 
+    /// <summary>
+    /// Initializes a projectile instance
+    /// </summary>
+    /// <param name="engine">The game engine</param>
+    /// <param name="ainfo">The instance to initialize</param>
     public virtual void Initialize(Engine engine, ProjectileInfo ainfo)
     {
       // Sound
@@ -116,6 +121,11 @@ namespace SWEndor.ProjectileTypes
         assi.Process(engine, ainfo);
     }
 
+    /// <summary>
+    /// Processes a projectile instance 
+    /// </summary>
+    /// <param name="engine">The game engine</param>
+    /// <param name="ainfo">The instance to process</param>
     public virtual void ProcessState(Engine engine, ProjectileInfo ainfo)
     {
       ainfo.TickExplosions();
@@ -124,22 +134,61 @@ namespace SWEndor.ProjectileTypes
         ainfo.SetState_Dead();
 
       // sound
-      if (PlayerInfo.Actor != null
-        && ainfo.Active)
-      {
+      if (engine.PlayerInfo.Actor != null && ainfo.Active)
         foreach (SoundSourceData assi in SoundSources)
           assi.Process(engine, ainfo);
-      }
 
       // projectile
       if (!ainfo.IsDyingOrDead)
         NearEnoughImpact(engine, ainfo, ainfo.Target);
     }
 
-    public void NearEnoughImpact(Engine engine, ProjectileInfo proj, ActorInfo target)
+    /// <summary>
+    /// Processes a projectile instance when a hit is registered
+    /// </summary>
+    /// <param name="engine">The game engine</param>
+    /// <param name="owner">The instance to process</param>
+    /// <param name="hitby">The actor instance that hit it</param>
+    /// <param name="impact">The impact location</param>
+    public virtual void ProcessHit(Engine engine, ProjectileInfo owner, ActorInfo hitby, TV_3DVECTOR impact) { }
+
+
+    /// <summary>
+    /// Processes a projectile instance when it enters the Dying state
+    /// </summary>
+    /// <param name="engine">The game engine</param>
+    /// <param name="ainfo">The instance to process</param>
+    public virtual void Dying(Engine engine, ProjectileInfo ainfo)
+    {
+#if DEBUG
+      if (ainfo == null)
+        throw new ArgumentNullException("ainfo");
+#endif
+
+      ainfo.DyingTimerStart();
+    }
+
+    /// <summary>
+    /// Processes a projectile instance when it enters the Dead state
+    /// </summary>
+    /// <param name="engine">The game engine</param>
+    /// <param name="ainfo">The instance to process</param>
+    public virtual void Dead(Engine engine, ProjectileInfo ainfo)
+    {
+#if DEBUG
+      if (ainfo == null)
+        throw new ArgumentNullException("ainfo");
+#endif
+
+      // Explode
+      ainfo.TickExplosions();
+    }
+
+
+    private void NearEnoughImpact(Engine engine, ProjectileInfo proj, ActorInfo target)
     {
       // projectile
-        float impdist = CombatData.ImpactCloseEnoughDistance;
+      float impdist = CombatData.ImpactCloseEnoughDistance;
       if (target != null)
       {
         if (target.TypeInfo.AIData.TargetType.Contains(TargetType.MUNITION))
@@ -158,36 +207,14 @@ namespace SWEndor.ProjectileTypes
       }
     }
 
-    public virtual void ProcessHit(Engine engine, ProjectileInfo owner, ActorInfo hitby, TV_3DVECTOR impact) { }
-
     private void AddScore(Engine engine, ScoreInfo score, ProjectileInfo proj, ActorInfo victim)
     {
       if (!victim.IsDyingOrDead)
-      {
         score.AddHit(engine, victim, proj.TypeInfo.CombatData.ImpactDamage * victim.GetArmor(proj.TypeInfo.CombatData.DamageType));
-      }
 
       if (victim.IsDyingOrDead)
-      {
         score.AddKill(engine, victim);
-      }
     }
 
-    public virtual void Dying(Engine engine, ProjectileInfo ainfo)
-    {
-      if (ainfo == null)
-        throw new ArgumentNullException("ainfo");
-
-      ainfo.DyingTimerStart();
-    }
-
-    public virtual void Dead(Engine engine, ProjectileInfo ainfo)
-    {
-      if (ainfo == null)
-        throw new ArgumentNullException("ainfo");
-
-      // Explode
-      ainfo.TickExplosions();
-    }
   }
 }

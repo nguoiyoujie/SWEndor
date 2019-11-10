@@ -41,8 +41,6 @@
       this.label19 = new System.Windows.Forms.Label();
       this.label17 = new System.Windows.Forms.Label();
       this.label15 = new System.Windows.Forms.Label();
-      this.lblScopedPool = new System.Windows.Forms.Label();
-      this.label14 = new System.Windows.Forms.Label();
       this.label12 = new System.Windows.Forms.Label();
       this.lblActorDistanceCache = new System.Windows.Forms.Label();
       this.label5 = new System.Windows.Forms.Label();
@@ -167,22 +165,6 @@
       this.label15.Size = new System.Drawing.Size(180, 15);
       this.label15.TabIndex = 72;
       this.label15.Text = "Pool Utilization";
-      // 
-      // lblScopedPool
-      // 
-      this.lblScopedPool.Location = new System.Drawing.Point(230, 70);
-      this.lblScopedPool.Name = "lblScopedPool";
-      this.lblScopedPool.Size = new System.Drawing.Size(40, 15);
-      this.lblScopedPool.TabIndex = 71;
-      this.lblScopedPool.Text = "0";
-      // 
-      // label14
-      // 
-      this.label14.Location = new System.Drawing.Point(44, 70);
-      this.label14.Name = "label14";
-      this.label14.Size = new System.Drawing.Size(180, 15);
-      this.label14.TabIndex = 70;
-      this.label14.Text = "ScopedItem<Actor>.ObjectPool";
       // 
       // label12
       // 
@@ -369,8 +351,6 @@
       this.Controls.Add(this.label19);
       this.Controls.Add(this.label17);
       this.Controls.Add(this.label15);
-      this.Controls.Add(this.lblScopedPool);
-      this.Controls.Add(this.label14);
       this.Controls.Add(this.label12);
       this.Controls.Add(this.lblActorDistanceCache);
       this.Controls.Add(this.label5);
@@ -395,8 +375,6 @@
     private System.Windows.Forms.Label label19;
     private System.Windows.Forms.Label label17;
     private System.Windows.Forms.Label label15;
-    private System.Windows.Forms.Label lblScopedPool;
-    private System.Windows.Forms.Label label14;
     private System.Windows.Forms.Label label12;
     private System.Windows.Forms.Label lblActorDistanceCache;
     private System.Windows.Forms.Label label5;

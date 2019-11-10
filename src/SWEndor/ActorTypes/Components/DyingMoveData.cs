@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.FileFormat.INI;
+using SWEndor.Primitives.Extensions;
 using System;
 
 namespace SWEndor.ActorTypes.Components
@@ -21,7 +22,7 @@ namespace SWEndor.ActorTypes.Components
     };
   }
 
-  public struct DyingMoveData
+  internal struct DyingMoveData
   {
     Action<ActorInfo> _init;
     Action<ActorInfo, TV_3DVECTOR, float> _update;
@@ -61,7 +62,7 @@ namespace SWEndor.ActorTypes.Components
     public void LoadFromINI(INIFile f, string sectionname)
     {
       TV_3DVECTOR d = f.GetTV_3DVECTOR(sectionname, "Data", _data);
-      string t = f.GetStringValue(sectionname, "Type", "");
+      string t = f.GetString(sectionname, "Type", "");
       if (t == "spin")
         Spin(d.y, d.z);
       else if (t == "sink")
@@ -78,7 +79,7 @@ namespace SWEndor.ActorTypes.Components
       else if (_update == DyingMoveMethod._sinkUpdt)
         t = "sink";
 
-      f.SetStringValue(sectionname, "Type", t);
+      f.SetString(sectionname, "Type", t);
       f.SetTV_3DVECTOR(sectionname, "Data", _data);
     }
   }

@@ -4,9 +4,10 @@ namespace SWEndor.Actors
 {
   public partial class ActorInfo
   {
+    /// <summary>Processes the explosions once</summary>
     public void TickExplosions()
     {
-      using (ScopeCounterManager.Acquire(Scope))
+      using (ScopeCounters.Acquire(Scope))
         Explosions.Tick(this, Game.GameTime);
     }
   }

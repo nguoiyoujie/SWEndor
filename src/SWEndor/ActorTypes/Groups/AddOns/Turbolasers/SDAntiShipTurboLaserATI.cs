@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class SDAntiShipTurboLaserATI : Groups.Turbolasers
+  internal class SDAntiShipTurboLaserATI : Groups.Turbolasers
   {
     internal SDAntiShipTurboLaserATI(Factory owner) : base(owner, "IMPLHLSR", "Star Destroyer Heavy Turbolaser Tower")
     {

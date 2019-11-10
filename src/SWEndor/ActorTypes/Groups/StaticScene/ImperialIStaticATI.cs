@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class ImperialIStaticATI : Groups.StaticScene
+  internal class ImperialIStaticATI : Groups.StaticScene
   {
     internal ImperialIStaticATI(Factory owner) : base(owner, "IMPLSTS", "Imperial-I Static")
     {

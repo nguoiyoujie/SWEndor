@@ -21,7 +21,7 @@ namespace SWEndor.Player
         if (tgt != null && tgt.Active)
           _lastPos = Position + Utilities.GetRelativePositionXYZ(engine, tgt.GetGlobalPosition(), tgt.GetGlobalRotation(), PositionRelative.x, PositionRelative.y, PositionRelative.z);
 
-        return new TV_3DVECTOR(_lastPos.x, _lastPos.y, _lastPos.z);
+        return _lastPos;
       }
       else
       {

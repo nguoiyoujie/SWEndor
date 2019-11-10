@@ -5,7 +5,7 @@ using SWEndor.Weapons;
 namespace SWEndor.Actors.Components
 {
   // TO-DO: Seperate Ammo, Cooldown and actor specific var from Weapons to ease assignment
-  public struct WeaponData
+  internal struct WeaponData
   {
     public WeaponInfo[] Weapons { get; private set; }
     public WeaponShotInfo[] PrimaryWeapons { get; private set; }

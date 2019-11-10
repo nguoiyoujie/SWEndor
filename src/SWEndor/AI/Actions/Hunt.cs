@@ -5,9 +5,10 @@ using Primrose.Primitives;
 using Primrose.Primitives.Factories;
 using SWEndor.Weapons;
 using System;
+
 namespace SWEndor.AI.Actions
 {
-  public class Hunt : ActionInfo
+  internal class Hunt : ActionInfo
   {
     internal static int _count = 0;
     internal static ObjectPool<Hunt> _pool = new ObjectPool<Hunt>(() => { return new Hunt(); }, (a) => { a.Reset(); });

@@ -2,7 +2,7 @@
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class TorpedoATI : Groups.MissileProjectile
+  internal class TorpedoATI : Groups.MissileProjectile
   {
     internal TorpedoATI(Factory owner) : base(owner, "PROJ_TORP", "Torpedo")
     {

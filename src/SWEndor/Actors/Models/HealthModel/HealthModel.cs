@@ -1,15 +1,13 @@
 ﻿using MTV3D65;
 using SWEndor.ActorTypes;
 using SWEndor.ActorTypes.Components;
-using SWEndor.Core;
-using SWEndor.Player;
 using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using System;
 
 namespace SWEndor.Actors.Models
 {
-  public struct HealthModel
+  internal struct HealthModel
   {
     // New model:
     // HP -> Hull + Systems + Shields
@@ -71,13 +69,6 @@ namespace SWEndor.Actors.Models
       float d = dmg.Value * mod;
       float d2 = d - Shd;
       Shd = (Shd - d).Clamp(0, MaxShd);
-
-      /*
-      if (d > 0)
-        Log.Write(Log.DEBUG, LogType.ACTOR_DAMAGED, target, dmg.Source, d, HP);
-      else if (d < 0)
-        Log.Write(Log.DEBUG, LogType.ACTOR_HEALED, target, dmg.Source, -d, HP);
-      */
 
       if (d > 0) // damage only
       {
@@ -153,36 +144,36 @@ namespace SWEndor.Actors
   {
     public void InflictDamage(float value, DamageType type, TV_3DVECTOR position)
     {
-      using (ScopeCounterManager.Acquire(Scope))
+      using (ScopeCounters.Acquire(Scope))
         Health.InflictDamage(this, new DamageInfo(value, type, position));
     }
 
     public void InflictDamage(float value, DamageType type)
     {
-      using (ScopeCounterManager.Acquire(Scope))
+      using (ScopeCounters.Acquire(Scope))
         Health.InflictDamage(this, new DamageInfo(value, type));
     }
 
     public void InflictDamage(float value)
     {
-      using (ScopeCounterManager.Acquire(Scope))
+      using (ScopeCounters.Acquire(Scope))
         Health.InflictDamage(this, new DamageInfo(value));
     }
 
-    public float HP { get { return Health.HP; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetHP(this, value); } }
-    public float MaxHP { get { return Health.MaxHP; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetMaxHP(value, false); } }
+    public float HP { get { return Health.HP; } set { using (ScopeCounters.Acquire(Scope)) Health.SetHP(this, value); } }
+    public float MaxHP { get { return Health.MaxHP; } set { using (ScopeCounters.Acquire(Scope)) Health.SetMaxHP(value, false); } }
     public float HP_Perc { get { return Health.HP_Perc; } }
     public float HP_Frac { get { return Health.HP_Frac; } }
     public COLOR HP_Color { get { return Health.HP_Color; } }
 
-    public float Shd { get { return Health.Shd; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetHP(this, value); } }
-    public float MaxShd { get { return Health.MaxShd; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetMaxHP(value, false); } }
+    public float Shd { get { return Health.Shd; } set { using (ScopeCounters.Acquire(Scope)) Health.SetHP(this, value); } }
+    public float MaxShd { get { return Health.MaxShd; } set { using (ScopeCounters.Acquire(Scope)) Health.SetMaxHP(value, false); } }
     public float Shd_Perc { get { return Health.Shd_Perc; } }
     public float Shd_Frac { get { return Health.Shd_Frac; } }
     public COLOR Shd_Color { get { return Health.Shd_Color; } }
 
-    public float Hull { get { return Health.Hull; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetHP(this, value); } }
-    public float MaxHull { get { return Health.MaxHull; } set { using (ScopeCounterManager.Acquire(Scope)) Health.SetMaxHP(value, false); } }
+    public float Hull { get { return Health.Hull; } set { using (ScopeCounters.Acquire(Scope)) Health.SetHP(this, value); } }
+    public float MaxHull { get { return Health.MaxHull; } set { using (ScopeCounters.Acquire(Scope)) Health.SetMaxHP(value, false); } }
     public float Hull_Perc { get { return Health.Hull_Perc; } }
     public float Hull_Frac { get { return Health.Hull_Frac; } }
     public COLOR Hull_Color { get { return Health.Hull_Color; } }

@@ -6,19 +6,38 @@ using SWEndor.Scenarios.Scripting.Functions;
 
 namespace SWEndor.Scenarios.Scripting.Expressions
 {
+  /// <summary>
+  /// Represents a function for the script language to interact with the game context
+  /// </summary>
+  /// <param name="context">The game context</param>
+  /// <param name="param">The list of parameters entering this function</param>
+  /// <returns>A Val value for further processing</returns>
   public delegate Val FunctionDelegate(Context context, Val[] param);
 
+  /// <summary>
+  /// Provides the game context for the script
+  /// </summary>
   public class Context : AContext
   {
+    /// <summary>The game engine</summary>
     public readonly Engine Engine;
+
+    /// <summary>The list of supported game functions</summary>
     public readonly Registry<FunctionDelegate> Functions = new Registry<FunctionDelegate>();
 
     internal Context(Engine engine)
     {
       Engine = engine;
-      AddFunctions();
+      DefineFunc();
     }
 
+    /// <summary>
+    /// Runs a user defined function. An EvalException should be thrown if errors arise from the function.
+    /// </summary>
+    /// <param name="caller">The script object that called this function</param>
+    /// <param name="_funcName">The function name</param>
+    /// <param name="param">The list of parameters</param>
+    /// <returns></returns>
     public override Val RunFunction(ITracker caller, string _funcName, Val[] param)
     {
       FunctionDelegate fd = Functions.Get(_funcName);
@@ -27,11 +46,11 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       return fd.Invoke(this, param);
     }
 
-    public override void Reset() { }
+    internal void Reset() { }
 
-
-    public void AddFunctions()
+    internal void DefineFunc()
     {
+      Functions.Clear();
       // Scene Management
       Functions.Add("Scene.SetMaxBounds", SceneFns.SetMaxBounds);
       Functions.Add("Scene.SetMinBounds", SceneFns.SetMinBounds);

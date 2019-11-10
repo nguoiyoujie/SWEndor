@@ -1,6 +1,6 @@
 ﻿namespace Primrose.Expressions.Tree.Statements
 {
-  public class SingleStatement : CStatement
+  internal class SingleStatement : CStatement
   {
     private CStatement _statement;
 

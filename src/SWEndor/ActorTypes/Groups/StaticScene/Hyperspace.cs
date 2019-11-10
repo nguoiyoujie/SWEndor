@@ -6,7 +6,7 @@ using SWEndor.Core;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class Hyperspace : Groups.StaticScene
+  internal class Hyperspace : Groups.StaticScene
   {
     internal Hyperspace(Factory owner) : base(owner, "HYPER", "Hyperspace")
     {

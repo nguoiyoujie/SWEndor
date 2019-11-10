@@ -2,7 +2,7 @@
 
 namespace Primrose.Expressions.Tree.Expressions.Literals
 {
-  public class SingleLiteral : CLiteral
+  internal class SingleLiteral : CLiteral
   {
     private float _value;
 

@@ -5,7 +5,7 @@ namespace SWEndor.Actors.Models
   /// <summary>
   /// A light implementation of an Armor system
   /// </summary>
-  public struct ArmorModel
+  internal struct ArmorModel
   {
     public float Light { get; private set; }
     //public float Heavy;

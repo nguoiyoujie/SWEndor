@@ -84,7 +84,7 @@ namespace SWEndor.UI
       for (int i = 0; i < num; i++)
       {
         TV_TEXTUREFONT_CHAR c = p[i];
-        f.SetFloatList(INIFile.PreHeaderSectionName, c.iAsciiChar.ToString(), new float[] { c.fX1, c.fX2, c.fY1, c.fY2 });
+        f.SetFloatArray(INIFile.PreHeaderSectionName, c.iAsciiChar.ToString(), new float[] { c.fX1, c.fX2, c.fY1, c.fY2 });
       }
     }
 
@@ -112,7 +112,7 @@ namespace SWEndor.UI
           int chr = 0;
           if (int.TryParse(ln.Key, out chr))
           {
-            float[] fs = f.GetFloatList(INIFile.PreHeaderSectionName, ln.Key, null);
+            float[] fs = f.GetFloatArray(INIFile.PreHeaderSectionName, ln.Key, null);
             if (fs != null && fs.Length >= 4)
             p[iNum++] = new TV_TEXTUREFONT_CHAR() { iAsciiChar = chr
                                                   , fX1 = fs[0]

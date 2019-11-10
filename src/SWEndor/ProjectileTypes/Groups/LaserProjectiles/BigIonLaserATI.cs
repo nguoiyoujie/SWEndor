@@ -11,7 +11,7 @@ using SWEndor.Projectiles;
 
 namespace SWEndor.ProjectileTypes.Instances
 {
-  public class BigIonLaserATI : Groups.LaserProjectile
+  internal class BigIonLaserATI : Groups.LaserProjectile
   {
     internal BigIonLaserATI(Factory owner) : base(owner, "LSR_IONBIG", "Large Ion Laser")
     {

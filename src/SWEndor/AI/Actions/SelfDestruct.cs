@@ -3,7 +3,7 @@ using SWEndor.Core;
 
 namespace SWEndor.AI.Actions
 {
-  public class SelfDestruct : ActionInfo
+  internal class SelfDestruct : ActionInfo
   {
     public SelfDestruct() : base("SelfDestruct")
     {

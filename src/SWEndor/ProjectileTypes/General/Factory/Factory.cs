@@ -9,7 +9,7 @@ namespace SWEndor.ProjectileTypes
 {
   public partial class ProjectileTypeInfo
   {
-    public class Factory : Registry<ProjectileTypeInfo>
+    internal class Factory : Registry<ProjectileTypeInfo>
     {
       public readonly Engine Engine;
       internal Factory(Engine engine)
@@ -28,10 +28,6 @@ namespace SWEndor.ProjectileTypes
         Register(new SmallIonLaserATI(this));
         Register(new BigIonLaserATI(this));
         Register(new DeathStarLaserATI(this));
-
-        // torps
-        //Register(new MissileATI(this));
-        //Register(new TorpedoATI(this));
       }
 
       public void Register(ProjectileTypeInfo atype)
@@ -44,7 +40,7 @@ namespace SWEndor.ProjectileTypes
         {
           Add(atype.ID, atype);
         }
-        //atype.SaveToINI(atype.ID);
+        atype.SaveToINI(atype.ID);
         Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
       }
 
@@ -58,6 +54,7 @@ namespace SWEndor.ProjectileTypes
             throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.ACTORTYPE_INITWICE_ERROR).F(f));
           ProjectileTypeInfo t = new ProjectileTypeInfo(this, f, f);
           t.LoadFromINI(f);
+          Register(t);
         }
       }
       

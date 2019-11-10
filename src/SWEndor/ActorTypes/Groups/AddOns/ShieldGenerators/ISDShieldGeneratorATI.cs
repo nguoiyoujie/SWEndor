@@ -3,7 +3,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class ISDShieldGeneratorATI : Groups.ShieldGenerators
+  internal class ISDShieldGeneratorATI : Groups.ShieldGenerators
   {
     internal ISDShieldGeneratorATI(Factory owner) : base(owner, "IMPLSHD", "Shield Generator")
     {

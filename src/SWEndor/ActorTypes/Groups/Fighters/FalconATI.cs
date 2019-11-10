@@ -5,7 +5,7 @@ using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  public class FalconATI : Groups.RebelWing
+  internal class FalconATI : Groups.RebelWing
   {
     internal FalconATI(Factory owner) : base(owner, "FALC", "Millennium Falcon")
     {

@@ -1,9 +1,8 @@
-﻿using Primrose.Primitives.Extensions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Primrose.Expressions.Tree.Expressions
 {
-  public class Function : CExpression
+  internal class Function : CExpression
   {
     private string _funcName;
     private List<CExpression> _param = new List<CExpression>();
