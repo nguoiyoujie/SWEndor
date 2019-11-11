@@ -6,6 +6,7 @@ using SWEndor.Models;
 using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using SWEndor.ProjectileTypes;
+using SWEndor.Projectiles.Models;
 
 namespace SWEndor.Projectiles
 {

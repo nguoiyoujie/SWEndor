@@ -13,7 +13,7 @@ namespace SWEndor.ExplosionTypes.Instances
 
       RenderData.RadarSize = 0;
       RenderData.CullDistance = -1;
-      ExplRenderData = new ExplRenderData(1, 1, 100);
+      ExplRenderData = new ExplRenderData(1, 1, 2, 100);
 
       MeshData = MeshDataDecorator.CreateHorizon(Name, 50, Path.Combine("explosion", "wave", @"tex0000.jpg"), CONST_TV_BLENDINGMODE.TV_BLEND_ADDALPHA);
     }

@@ -12,11 +12,11 @@ namespace SWEndor.ExplosionTypes.Instances
     internal ElectroATI(Factory owner) : base(owner, "ELECTRO", "Electro")
     {
       // Combat
-      TimedLifeData = new TimedLifeData(true, 0.5f);
+      TimedLifeData = new TimedLifeData(true, 10);
 
       RenderData.RadarSize = 0;
 
-      ExplRenderData = new ExplRenderData(2, 2, 0);
+      ExplRenderData = new ExplRenderData(2, 2, 0.25f, 0);
       MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Name, 40, "electro/tex.jpg", CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, ExplRenderData.AtlasX, ExplRenderData.AtlasY);
     }
 
@@ -29,12 +29,13 @@ namespace SWEndor.ExplosionTypes.Instances
     public override void Initialize(Engine engine, ExplosionInfo ainfo)
     {
       base.Initialize(engine, ainfo);
-      ainfo.CycleInfo.Action = persist;
+      ainfo.AnimInfo.Action = persist;
 
-      ainfo.CycleInfo.CyclesRemaining = 99;
-      ainfo.CycleInfo.CyclePeriod = 0.25f;
+      ainfo.AnimInfo.CyclesRemaining = 99;
+      ainfo.AnimInfo.CyclePeriod = 0.25f;
     }
 
+    /*
     public override void ProcessState(Engine engine, ExplosionInfo ainfo)
     {
       base.ProcessState(engine, ainfo);
@@ -42,5 +43,6 @@ namespace SWEndor.ExplosionTypes.Instances
       if (p == null)
         ainfo.SetState_Dead();
     }
+    */
   }
 }

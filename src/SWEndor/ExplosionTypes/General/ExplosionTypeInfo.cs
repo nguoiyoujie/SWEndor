@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using SWEndor.Explosions;
@@ -92,9 +93,9 @@ namespace SWEndor.ExplosionTypes
         assi.Process(engine, ainfo);
 
       // Anim
-      ainfo.CycleInfo.CyclePeriod = TimedLifeData.TimedLife;
+      ainfo.AnimInfo.CyclePeriod = (ExplRenderData.AnimDuration == 0) ? TimedLifeData.TimedLife : ExplRenderData.AnimDuration;
 
-      // 
+      // Shake
       ShakeData.Process(engine, ainfo.Position);
     }
 
@@ -111,6 +112,14 @@ namespace SWEndor.ExplosionTypes
 
       // anim
       ExplRenderData.Process(engine, ainfo);
+
+      // check parent
+      if (ainfo.AttachedActorID > -1)
+      {
+        ActorInfo p = engine.ActorFactory.Get(ainfo.AttachedActorID);
+        if (p == null)
+          ainfo.SetState_Dead();
+      }
     }
   }
 }

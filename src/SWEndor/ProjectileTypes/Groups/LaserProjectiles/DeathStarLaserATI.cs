@@ -20,12 +20,15 @@ namespace SWEndor.ProjectileTypes.Instances
       CombatData.IsLaser = false; // not the same speed
 
       RenderData.CullDistance = -1;
+      DamageSpecialData.NeverDisappear = true;
+      DamageSpecialData.ReduceDyingTimerTo = 0.5f;
 
       MeshData = new MeshData(Name, @"projectiles\death_laser.x");
 
       CombatData.ImpactCloseEnoughDistance = 200;
     }
 
+    /*
     public override void ProcessState(Engine engine, ProjectileInfo ainfo)
     {
       // Override
@@ -39,6 +42,7 @@ namespace SWEndor.ProjectileTypes.Instances
       if (hitby.DyingTimeRemaining > time)
         hitby.DyingTimerSet(time, false);
     }
+    */
   }
 }
 

@@ -60,7 +60,7 @@ namespace SWEndor.ActorTypes.Components
       List<SystemPart> parts = new List<SystemPart>(16);
 
       if (atype.MoveLimitData.MaxSpeed > 0)
-      parts.Add(SystemPart.ENGINE);
+        parts.Add(SystemPart.ENGINE);
 
       if (atype.MoveLimitData.MaxTurnRate > 0)
         parts.Add(SystemPart.SIDE_THRUSTERS);
@@ -81,10 +81,10 @@ namespace SWEndor.ActorTypes.Components
       }
 
       if (hasLaser)
-      parts.Add(SystemPart.LASER_WEAPONS);
+        parts.Add(SystemPart.LASER_WEAPONS);
 
       if (hasProj)
-      parts.Add(SystemPart.PROJECTILE_LAUNCHERS);
+        parts.Add(SystemPart.PROJECTILE_LAUNCHERS);
 
       if (MaxShield > 0)
         parts.Add(SystemPart.SHIELD_GENERATOR);

@@ -55,7 +55,7 @@ namespace SWEndor.Explosions
     }
 
     // Components
-    internal CycleInfo<ExplosionInfo> CycleInfo;
+    internal CycleInfo<ExplosionInfo> AnimInfo;
 
     // Traits/Model (structs)
     private MeshModel Meshes;
@@ -183,7 +183,7 @@ namespace SWEndor.Explosions
       Transform.Reset();
 
       // Reset components
-      CycleInfo.Reset();
+      AnimInfo.Reset();
       AttachedActorID = -1;
 
       // Final dispose
@@ -201,7 +201,7 @@ namespace SWEndor.Explosions
     /// <param name="time">The game time</param>
     public void Tick(Engine engine, float time)
     {
-      CycleInfo.Process(engine, this);
+      AnimInfo.Process(engine, this);
       TypeInfo.ProcessState(engine, this);
       if (IsDead)
         Delete();

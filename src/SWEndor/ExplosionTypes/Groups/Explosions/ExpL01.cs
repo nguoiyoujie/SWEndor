@@ -17,7 +17,7 @@ namespace SWEndor.ExplosionTypes.Instances
       RenderData.RadarType = RadarType.FILLED_CIRCLE_L;
       RenderData.CullDistance = -1;
 
-      ExplRenderData = new ExplRenderData(4, 4, 0);
+      ExplRenderData = new ExplRenderData(4, 4, 1, 0);
       MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Name, 1000, "explosion/large/tex.jpg", CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, ExplRenderData.AtlasX, ExplRenderData.AtlasY);
 
       InitialSoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.ExpLg, 3000) };

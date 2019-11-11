@@ -5,6 +5,7 @@ using SWEndor.Core;
 using SWEndor.FileFormat.INI;
 using SWEndor.Models;
 using SWEndor.Projectiles;
+using SWEndor.Projectiles.Components;
 using System;
 using System.IO;
 
@@ -46,6 +47,7 @@ namespace SWEndor.ProjectileTypes
     internal MoveLimitData MoveLimitData = MoveLimitData.Default;
     internal RenderData RenderData = RenderData.Default;
     internal MeshData MeshData = MeshData.Default;
+    internal DamageSpecialData DamageSpecialData;
 
     // Data (struct arrays)
     internal ExplodeData[] Explodes = new ExplodeData[0];
@@ -71,6 +73,7 @@ namespace SWEndor.ProjectileTypes
         MoveLimitData.LoadFromINI(f, "MoveLimitData");
         RenderData.LoadFromINI(f, "RenderData");
         MeshData.LoadFromINI(f, "MeshData");
+        DamageSpecialData.LoadFromINI(f, "DamageSpecialData");
 
         ExplodeData.LoadFromINI(f, "ExplodeData", "Explodes", out Explodes);
         SoundSourceData.LoadFromINI(f, "SoundSourceData", "InitialSoundSources", out InitialSoundSources);
@@ -96,6 +99,7 @@ namespace SWEndor.ProjectileTypes
       MoveLimitData.SaveToINI(f, "MoveLimitData");
       RenderData.SaveToINI(f, "RenderData");
       MeshData.SaveToINI(f, "MeshData");
+      DamageSpecialData.SaveToINI(f, "DamageSpecialData");
 
       ExplodeData.SaveToINI(f, "ExplodeData", "Explodes", "EXP", Explodes);
       SoundSourceData.SaveToINI(f, "SoundSourceData", "InitialSoundSources", "ISN", InitialSoundSources);
@@ -130,7 +134,7 @@ namespace SWEndor.ProjectileTypes
     {
       ainfo.TickExplosions();
 
-      if (ainfo.IsDying)
+      if (ainfo.IsDying && !DamageSpecialData.NeverDisappear)
         ainfo.SetState_Dead();
 
       // sound
@@ -150,7 +154,10 @@ namespace SWEndor.ProjectileTypes
     /// <param name="owner">The instance to process</param>
     /// <param name="hitby">The actor instance that hit it</param>
     /// <param name="impact">The impact location</param>
-    public virtual void ProcessHit(Engine engine, ProjectileInfo owner, ActorInfo hitby, TV_3DVECTOR impact) { }
+    public virtual void ProcessHit(Engine engine, ProjectileInfo owner, ActorInfo hitby, TV_3DVECTOR impact)
+    {
+      DamageSpecialData.ProcessHit(engine, hitby);
+    }
 
 
     /// <summary>
@@ -161,8 +168,8 @@ namespace SWEndor.ProjectileTypes
     public virtual void Dying(Engine engine, ProjectileInfo ainfo)
     {
 #if DEBUG
-      if (ainfo == null)
-        throw new ArgumentNullException("ainfo");
+      if (engine == null) throw new ArgumentNullException("engine");
+      if (ainfo == null) throw new ArgumentNullException("ainfo");
 #endif
 
       ainfo.DyingTimerStart();
@@ -176,14 +183,13 @@ namespace SWEndor.ProjectileTypes
     public virtual void Dead(Engine engine, ProjectileInfo ainfo)
     {
 #if DEBUG
-      if (ainfo == null)
-        throw new ArgumentNullException("ainfo");
+      if (engine == null) throw new ArgumentNullException("engine");
+      if (ainfo == null) throw new ArgumentNullException("ainfo");
 #endif
 
       // Explode
       ainfo.TickExplosions();
     }
-
 
     private void NearEnoughImpact(Engine engine, ProjectileInfo proj, ActorInfo target)
     {

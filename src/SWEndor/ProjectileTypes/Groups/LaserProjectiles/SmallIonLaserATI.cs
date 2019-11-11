@@ -23,9 +23,15 @@ namespace SWEndor.ProjectileTypes.Instances
       CombatData.ImpactCloseEnoughDistance = 75;
       CombatData.IsLaser = false; // not the same speed
 
+      DamageSpecialData.EMPAffectsChildren = 3;
+      DamageSpecialData.EMPDamage = 2.5f;
+      DamageSpecialData.EMPDamageRandom = 2.5f;
+      DamageSpecialData.EMPDuration = 12;
+
       MeshData = new MeshData(Name, @"projectiles\ion_sm_laser.x", 1, CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, "Laser");
     }
 
+    /*
     public override void ProcessHit(Engine engine, ProjectileInfo owner, ActorInfo hitby, TV_3DVECTOR impact)
     {
       if (owner == null || hitby == null)
@@ -62,6 +68,7 @@ namespace SWEndor.ProjectileTypes.Instances
         }
       }
     }
+    */
   }
 }
 
