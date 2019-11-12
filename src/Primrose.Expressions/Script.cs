@@ -32,7 +32,7 @@ namespace Primrose.Expressions
     public void AddStatements(string text, ref int linenumber)
     {
       RootStatement statement;
-      Parser.Parse(this, text, out statement, ref linenumber);
+      Parser.Parse(this, text, out statement, Name, ref linenumber);
       m_statements.Add(statement);
     }
 

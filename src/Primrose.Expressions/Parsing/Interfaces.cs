@@ -17,6 +17,9 @@
   /// </summary>
   public interface ITracker
   {
+    /// <summary>The name of the source</summary>
+    string SourceName { get; }
+
     /// <summary>The line number</summary>
     int LineNumber { get; }
 

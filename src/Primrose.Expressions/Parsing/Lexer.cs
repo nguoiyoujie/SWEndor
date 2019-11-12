@@ -9,12 +9,14 @@ namespace Primrose.Expressions
   {
     private readonly TextReader m_reader;
     private readonly TokenDefinition[] m_tokenDefinitions;
+    public string SourceName { get; }
     public string LineText { get; private set; }
 
     private string lineRemaining;
 
-    public Lexer(TextReader reader, TokenDefinition[] tokenDefinitions, int linenumber)
+    public Lexer(TextReader reader, TokenDefinition[] tokenDefinitions, string srcname, int linenumber)
     {
+      SourceName = srcname;
       m_reader = reader;
       m_tokenDefinitions = tokenDefinitions;
       LineNumber = linenumber;

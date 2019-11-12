@@ -40,8 +40,6 @@ namespace Primrose.Expressions
         // literals
         new TokenDefinition(@"(true|false)\b", TokenEnum.BOOLEANLITERAL, RegexOption),
         new TokenDefinition(@"[a-zA-Z_][a-zA-Z0-9_\.]*(?=\s*\()", TokenEnum.FUNCTION, RegexOption),
-        //new TokenDefinition(@"[a-zA-Z_][a-zA-Z0-9_\.]*(?=\s*\[)", TokenEnum.INDEXED_VARIABLE, RegexOption),
-        //new TokenDefinition(@"[a-zA-Z_][a-zA-Z0-9_\.]*(?!\s*(\(|\[))", TokenEnum.VARIABLE, RegexOption),
         new TokenDefinition(@"[a-zA-Z_][a-zA-Z0-9_\.]*(?!\s*\()", TokenEnum.VARIABLE, RegexOption),
         new TokenDefinition(@"\""(\""\""|[^\""])*\""", TokenEnum.STRINGLITERAL, RegexOption),
         new TokenDefinition(@"0(x|X)[0-9a-fA-F]+", TokenEnum.HEXINTEGERLITERAL, RegexOption),
@@ -99,21 +97,21 @@ namespace Primrose.Expressions
     //internal readonly RootStatement Root;
     //internal readonly Expression RootExpr;
 
-    public static void Parse(Script local, string text, out RootStatement result, ref int linenumber)
+    public static void Parse(Script local, string text, out RootStatement result, string srcname, ref int linenumber)
     {
       using (StringReader reader = new StringReader(text))
       {
-        Lexer lex = new Lexer(reader, Definitions, linenumber);
+        Lexer lex = new Lexer(reader, Definitions, srcname, linenumber);
         result = new RootStatement(local, lex);
         linenumber = lex.LineNumber;
       }
     }
 
-    public static void Parse(Script local, string text, out Expression result, ref int linenumber)
+    public static void Parse(Script local, string text, out Expression result, string srcname, ref int linenumber)
     {
       using (StringReader reader = new StringReader(text))
       {
-        Lexer lex = new Lexer(reader, Definitions, linenumber);
+        Lexer lex = new Lexer(reader, Definitions, srcname, linenumber);
         result = new Expression(local, lex);
         linenumber = lex.LineNumber;
       }

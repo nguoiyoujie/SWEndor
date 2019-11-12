@@ -68,7 +68,6 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       Functions.Add("Actor.MakeSquadLeader", ActorFns.MakeSquadLeader);
 
       Functions.Add("Actor.Spawn", ActorFns.Spawn);
-      //Functions.Add("Actor.SetActive", ActorManagement.SetActive);
       Functions.Add("Actor.GetActorType", ActorFns.GetActorType);
       Functions.Add("Actor.IsFighter", ActorFns.IsFighter);
       Functions.Add("Actor.IsLargeShip", ActorFns.IsLargeShip);
@@ -132,8 +131,6 @@ namespace SWEndor.Scenarios.Scripting.Expressions
 
       // Faction
       Functions.Add("Faction.Add", FactionFns.AddFaction);
-      //Functions.Add("Faction.SetAsMainAllyFaction", FactionManagement.SetAsMainAllyFaction);
-      //Functions.Add("Faction.SetAsMainEnemyFaction", FactionManagement.SetAsMainEnemyFaction);
       Functions.Add("Faction.MakeAlly", FactionFns.MakeAlly);
       Functions.Add("Faction.MakeEnemy", FactionFns.MakeEnemy);
       Functions.Add("Faction.GetWingCount", FactionFns.GetWingCount);
