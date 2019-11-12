@@ -56,12 +56,12 @@ namespace SWEndor.AI.Actions
            return false;
 
          if (a != null
-           && a.HuntWeight > 0
+           && a.AI.HuntWeight > 0
            && c.ID != a.ID
            && a.Active
            && !a.IsDyingOrDead
            && a.InCombat
-           && a.TypeInfo.AIData.TargetType.Contains(mt)
+           && a.TypeInfo.AIData.TargetType.Intersects(mt)
            && !a.IsOutOfBounds(e.GameScenarioManager.MinAIBounds, e.GameScenarioManager.MaxAIBounds)
            && !c.IsAlliedWith(a) // enemy
            )
@@ -74,8 +74,8 @@ namespace SWEndor.AI.Actions
            if (!w.IsNull)
            {
              t[0].ID++;
-             t[0].Weight += a.HuntWeight;
-             t[t[0].ID] = new ActorWeight(a.ID, a.HuntWeight);
+             t[0].Weight += a.AI.HuntWeight;
+             t[t[0].ID] = new ActorWeight(a.ID, a.AI.HuntWeight);
            }
          }
          return true;
@@ -89,19 +89,19 @@ namespace SWEndor.AI.Actions
            return false;
 
          if (a != null
-           && a.HuntWeight > 0
+           && a.AI.HuntWeight > 0
            && c.ID != a.ID
            && a.Active
            && !a.IsDyingOrDead
            && a.InCombat
-           && a.TypeInfo.AIData.TargetType.Contains(mt)
+           && a.TypeInfo.AIData.TargetType.Intersects(mt)
            && !a.IsOutOfBounds(e.GameScenarioManager.MinAIBounds, e.GameScenarioManager.MaxAIBounds)
            && !c.IsAlliedWith(a) // enemy
            )
          {
            t[0].ID++;
-           t[0].Weight += a.HuntWeight;
-           t[t[0].ID] = new ActorWeight(a.ID, a.HuntWeight);
+           t[0].Weight += a.AI.HuntWeight;
+           t[t[0].ID] = new ActorWeight(a.ID, a.AI.HuntWeight);
          }
          return true;
        }

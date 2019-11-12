@@ -47,10 +47,10 @@ namespace SWEndor.AI.Actions
         return;
       }
 
-      actor.AIData.SetTarget(engine, actor, target, true);
-      actor.AIData.AdjustRotation(engine, actor);
-      actor.AIData.SetTargetSpeed(actor.MoveData.MaxSpeed);
-      actor.AIData.AdjustSpeed(actor);
+      actor.AI.SetTarget(engine, actor, target, true);
+      actor.AI.AdjustRotation(engine, actor);
+      actor.AI.SetTargetSpeed(actor.MoveData.MaxSpeed);
+      actor.AI.AdjustSpeed(actor);
 
       Complete |= (!target.Active || target.IsDyingOrDead);
     }

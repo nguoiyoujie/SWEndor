@@ -63,14 +63,14 @@ namespace SWEndor.AI.Actions
       if (CheckBounds(actor))
       {
         if (data.ProspectiveCollisionLevel > 0 && data.ProspectiveCollisionLevel < 5)
-          actor.AIData.SetTarget(data.ProspectiveCollisionSafe);
+          actor.AI.SetTarget(data.ProspectiveCollisionSafe);
         else
-          actor.AIData.SetTarget(Impact_Position + Normal * 10000);
+          actor.AI.SetTarget(Impact_Position + Normal * 10000);
         float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetGlobalPosition(), Impact_Position);
 
-        actor.AIData.SetTargetSpeed(actor.MoveData.MinSpeed);
-        float delta_angle = actor.AIData.AdjustRotation(engine, actor, 9999);
-        float delta_speed = actor.AIData.AdjustSpeed(actor);
+        actor.AI.SetTargetSpeed(actor.MoveData.MinSpeed);
+        float delta_angle = actor.AI.AdjustRotation(engine, actor, 9999);
+        float delta_speed = actor.AI.AdjustSpeed(actor);
 
         ActorInfo target = actor.ActorFactory.Get(data.ProspectiveCollision.ActorID);
         if (target != null && !actor.IsAlliedWith(target))

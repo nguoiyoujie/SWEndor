@@ -43,7 +43,7 @@ namespace SWEndor.ActorTypes
     public string Name;
 
     // Data
-    public ComponentMask Mask = ComponentMask.NONE;
+    public ComponentMask Mask { get; set; } = ComponentMask.NONE;
 
     // Data (structs)
     internal SystemData SystemData;
@@ -161,10 +161,6 @@ namespace SWEndor.ActorTypes
 
     public virtual void Initialize(Engine engine, ActorInfo ainfo)
     {
-      // AI
-      ainfo.CanEvade = AIData.CanEvade;
-      ainfo.CanRetaliate = AIData.CanRetaliate;
-
       // Sound
       foreach (SoundSourceData assi in InitialSoundSources)
         assi.Process(engine, ainfo);
@@ -202,7 +198,7 @@ namespace SWEndor.ActorTypes
       }
 
       // projectile
-      if (ainfo.TypeInfo.AIData.TargetType.Contains(TargetType.MUNITION)
+      if (ainfo.TypeInfo.AIData.TargetType.Intersects(TargetType.MUNITION)
         && !ainfo.IsDyingOrDead)
       {
         NearEnoughImpact(engine, ainfo);
@@ -217,7 +213,7 @@ namespace SWEndor.ActorTypes
         ActorInfo target = ((ProjectileAttackActor)proj.CurrentAction).Target_Actor;
         if (target != null)
         {
-          if (target.TypeInfo.AIData.TargetType.Contains(TargetType.MUNITION))
+          if (target.TypeInfo.AIData.TargetType.Intersects(TargetType.MUNITION))
             impdist += target.TypeInfo.CombatData.ImpactCloseEnoughDistance;
 
           // Anticipate
@@ -354,7 +350,7 @@ namespace SWEndor.ActorTypes
           // Fighter AI
           if ((owner.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER)))
           {
-            if (owner.CanRetaliate && (owner.CurrentAction == null || owner.CurrentAction.CanInterrupt))
+            if (owner.AI.CanRetaliate && (owner.CurrentAction == null || owner.CurrentAction.CanInterrupt))
             {
               if (!owner.Squad.IsNull && owner.Squad.Mission == null)
               {
@@ -362,7 +358,7 @@ namespace SWEndor.ActorTypes
                 {
                   foreach (ActorInfo a in owner.Squad.Members)
                   {
-                    if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
+                    if (a.AI.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
                     {
                       ActorInfo b = attacker.Squad.MembersCopy.Random(engine.Random);
                       if (b != null)
@@ -377,7 +373,7 @@ namespace SWEndor.ActorTypes
                 {
                   foreach (ActorInfo a in owner.Squad.Members)
                   {
-                    if (a.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
+                    if (a.AI.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
                     {
                       a.ClearQueue();
                       a.QueueLast(AttackActor.GetOrCreate(attacker.ID));
@@ -391,7 +387,7 @@ namespace SWEndor.ActorTypes
                 owner.QueueLast(AttackActor.GetOrCreate(attacker.ID));
               }
             }
-            else if (owner.CanEvade && !(owner.CurrentAction is Evade))
+            else if (owner.AI.CanEvade && !(owner.CurrentAction is Evade))
             {
               owner.QueueFirst(Evade.GetOrCreate());
             }
@@ -418,8 +414,12 @@ namespace SWEndor.ActorTypes
         throw new ArgumentNullException("proj");
 #endif
       ProcessHit(engine, owner, proj.Owner, proj.TypeInfo.CombatData, impact);
-      proj.Position = new TV_3DVECTOR(impact.x, impact.y, impact.z);
-      proj.SetState_Dead(); // projectiles die on impact
+
+      if (!proj.TypeInfo.DamageSpecialData.NeverDisappear)
+      {
+        proj.Position = new TV_3DVECTOR(impact.x, impact.y, impact.z);
+        proj.SetState_Dead();
+      }
     }
 
     private void AddScore(Engine engine, ScoreInfo score, CombatData projData, ActorInfo victim)

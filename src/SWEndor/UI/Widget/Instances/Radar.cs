@@ -86,7 +86,7 @@ namespace SWEndor.UI.Widgets
 
     private COLOR GetColor(ActorInfo actor)
     {
-      if (actor.TypeInfo.AIData.TargetType.Contains(TargetType.MUNITION))
+      if (actor.TypeInfo.AIData.TargetType.Intersects(TargetType.MUNITION))
         return projColor;
 
       else if (actor.Faction != null)

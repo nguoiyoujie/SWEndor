@@ -96,6 +96,16 @@ namespace Primrose.Expressions.Tree.Statements
           }
           return;
         }
+        else if (array.Type == ValType.STRING_ARRAY)
+        {
+          foreach (string v in (string[])array)
+          {
+            local.SetVar(_var.varName, new Val(v));
+            foreach (CStatement s in _actions)
+              s.Evaluate(local, context);
+          }
+          return;
+        }
       }
 
       foreach (CStatement s in _actions)

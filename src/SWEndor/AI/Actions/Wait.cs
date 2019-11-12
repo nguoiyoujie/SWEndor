@@ -28,8 +28,8 @@ namespace SWEndor.AI.Actions
       if (ResumeTime == 0)
         ResumeTime = engine.Game.GameTime + WaitTime;
 
-      actor.AIData.SetTarget(actor.GetRelativePositionXYZ(0, 0, 1000));
-      actor.AIData.AdjustRotation(engine, actor);
+      actor.AI.SetTarget(actor.GetRelativePositionXYZ(0, 0, 1000));
+      actor.AI.AdjustRotation(engine, actor);
 
       if (CheckImminentCollision(actor))
         CreateAvoidAction(actor);

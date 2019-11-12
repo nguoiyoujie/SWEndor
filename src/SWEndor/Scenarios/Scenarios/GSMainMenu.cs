@@ -124,7 +124,7 @@ namespace SWEndor.Scenarios
 
       if (tgt == null || !tgt.Active)
       {
-        TgtID = MainEnemyFaction.GetRandom(Engine, TargetType.FIGHTER);
+        TgtID = MainEnemyFaction.GetRandomWing(Engine);
         //PlayerCameraInfo.SceneLook.SetPosition_Actor(TgtID);
       }
 
@@ -316,7 +316,7 @@ namespace SWEndor.Scenarios
 
     private void Rebel_HyperspaceOut()
     {
-      foreach (int actorID in MainAllyFaction.GetActors(TargetType.SHIP, true))
+      foreach (int actorID in MainAllyFaction.GetShips())
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null

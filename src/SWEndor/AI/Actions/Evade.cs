@@ -62,14 +62,14 @@ namespace SWEndor.AI.Actions
 
           if (actor.IsOutOfBounds(minb, maxb))
             // TO-DO: use the center of the Bound volume or a designated center point instead of origin.
-            actor.AIData.SetTarget(new TV_3DVECTOR());
+            actor.AI.SetTarget(new TV_3DVECTOR());
           else
-            actor.AIData.SetTarget(actor.GetRelativePositionXYZ(1000, engine.Random.Next(-500, 500), engine.Random.Next(-500, 500)));
+            actor.AI.SetTarget(actor.GetRelativePositionXYZ(1000, engine.Random.Next(-500, 500), engine.Random.Next(-500, 500)));
         }
 
-        actor.AIData.SetTargetSpeed(actor.MoveData.MaxSpeed);
-        float delta_angle = actor.AIData.AdjustRotation(engine, actor, 20);
-        float delta_speed = actor.AIData.AdjustSpeed(actor);
+        actor.AI.SetTargetSpeed(actor.MoveData.MaxSpeed);
+        float delta_angle = actor.AI.AdjustRotation(engine, actor, 20);
+        float delta_speed = actor.AI.AdjustSpeed(actor);
 
         Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle && delta_speed == 0);
         Complete |= (ResumeTime < engine.Game.GameTime);

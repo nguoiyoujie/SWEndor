@@ -20,6 +20,7 @@ namespace SWEndor.ExplosionTypes.Instances
       MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Name, 40, "electro/tex.jpg", CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, ExplRenderData.AtlasX, ExplRenderData.AtlasY);
     }
 
+    /*
     private static Action<ExplosionInfo> persist = (a) =>
     {
       a.SetState_Normal();
@@ -34,6 +35,7 @@ namespace SWEndor.ExplosionTypes.Instances
       ainfo.AnimInfo.CyclesRemaining = 99;
       ainfo.AnimInfo.CyclePeriod = 0.25f;
     }
+    */
 
     /*
     public override void ProcessState(Engine engine, ExplosionInfo ainfo)

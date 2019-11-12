@@ -1,5 +1,4 @@
-﻿using MTV3D65;
-using SWEndor.Actors.Components;
+﻿using SWEndor.Actors.Components;
 using SWEndor.Actors.Data;
 using SWEndor.Actors.Models;
 using SWEndor.ActorTypes;
@@ -11,7 +10,6 @@ using SWEndor.Models;
 using SWEndor.Player;
 using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
-using SWEndor.Scenarios;
 
 namespace SWEndor.Actors
 {
@@ -114,15 +112,12 @@ namespace SWEndor.Actors
 
     // AI
     internal ActionInfo CurrentAction = null;
-    internal bool CanEvade = true;
-    internal bool CanRetaliate = true;
-    internal int HuntWeight = 1;
 
     // Data (structs)
     internal CollisionModel<ActorInfo> CollisionData;
     internal WeaponData WeaponDefinitions;
     internal MoveData MoveData;
-    internal AIData AIData;
+    internal AIModel AI;
 
     // Traits/Model (structs)
     private SystemModel Systems;
@@ -155,7 +150,7 @@ namespace SWEndor.Actors
     {
       get
       {
-        return !(TypeInfo.AIData.TargetType.Contains(TargetType.MUNITION | TargetType.FLOATING));
+        return !(TypeInfo.AIData.TargetType.Intersects(TargetType.MUNITION | TargetType.FLOATING));
       }
     }
 #endif
@@ -185,7 +180,7 @@ namespace SWEndor.Actors
       Armor.Init(ref TypeInfo.ArmorData);
       Explosions.Init(TypeInfo.Explodes, acinfo.CreationTime);
       Regen.Init(ref TypeInfo.RegenData);
-
+      AI.Init(ref TypeInfo.AIData);
       MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
       CollisionData.Init();
       WeaponDefinitions.Init(Engine.WeaponFactory, ref TypeInfo.cachedWeaponData);
@@ -195,8 +190,6 @@ namespace SWEndor.Actors
       State.Init(Engine, TypeInfo, acinfo);
 
       Faction = acinfo.Faction;
-
-      HuntWeight = TypeInfo.AIData.HuntWeight;
 
       TypeInfo.Initialize(engine, this);
     }
@@ -224,7 +217,7 @@ namespace SWEndor.Actors
       Armor.Init(ref TypeInfo.ArmorData);
       Explosions.Init(TypeInfo.Explodes, acinfo.CreationTime);
       Regen.Init(ref TypeInfo.RegenData);
-
+      AI.Init(ref TypeInfo.AIData);
       MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
       CollisionData.Init();
       WeaponDefinitions.Init(Engine.WeaponFactory, ref TypeInfo.cachedWeaponData);
@@ -235,8 +228,6 @@ namespace SWEndor.Actors
       State.Init(Engine, TypeInfo, acinfo);
 
       Faction = acinfo.Faction;
-
-      HuntWeight = TypeInfo.AIData.HuntWeight;
       TypeInfo.Initialize(engine, this);
     }
 
@@ -357,7 +348,7 @@ namespace SWEndor.Actors
 
       Relation.Dispose(this);
       Transform.Reset();
-      AIData.Reset();
+      AI.Reset();
 
       // Actions
       this.ForceClearQueue();

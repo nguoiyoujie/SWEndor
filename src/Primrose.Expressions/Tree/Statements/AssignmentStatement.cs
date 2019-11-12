@@ -34,6 +34,7 @@ namespace Primrose.Expressions.Tree.Statements
         case TokenEnum.DECL_BOOL_ARRAY:
         case TokenEnum.DECL_INT_ARRAY:
         case TokenEnum.DECL_FLOAT_ARRAY:
+        case TokenEnum.DECL_STRING_ARRAY:
         case TokenEnum.VARIABLE:
           {
             if (lexer.TokenType == TokenEnum.VARIABLE)

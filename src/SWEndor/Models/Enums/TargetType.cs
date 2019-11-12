@@ -62,16 +62,21 @@ namespace SWEndor.Models
     ANY = 0xFFFF
   }
 
+  /// <summary>
+  /// Provides extension methods for TargetType enum
+  /// </summary>
   public static class TargetTypeExt
   {
-    public static bool Has(this TargetType src, TargetType flag)
-    {
-      return (src & flag) == flag;
-    }
+    /// <summary>Returns whether a target type contains a subset</summary>
+    /// <param name="mask">The mask to compare</param>
+    /// <param name="subset">The subset to compare</param>
+    /// <returns>Returns true if the mask contains all bits of the subset, false if otherwise</returns>
+    public static bool Has(this TargetType mask, TargetType subset) { return (mask & subset) == subset; }
 
-    public static bool Contains(this TargetType src, TargetType flag)
-    {
-      return (src & flag) != 0;
-    }
+    /// <summary>Returns whether a target type intersects a subset</summary>
+    /// <param name="mask">The mask to compare</param>
+    /// <param name="subset">The subset to compare</param>
+    /// <returns>Returns true if the mask contains any bit of the subset, false if otherwise</returns>
+    public static bool Intersects(this TargetType mask, TargetType subset) { return (mask & subset) != 0; }
   }
 }

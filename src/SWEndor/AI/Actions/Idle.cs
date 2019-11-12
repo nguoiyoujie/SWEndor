@@ -15,8 +15,8 @@ namespace SWEndor.AI.Actions
       if (CheckBounds(actor))
       {
         //AdjustRotation(engine, actor, actor.GetGlobalPosition());
-        actor.AIData.SetTargetSpeed(actor.MoveData.MinSpeed);
-        actor.AIData.AdjustSpeed(actor);
+        actor.AI.SetTargetSpeed(actor.MoveData.MinSpeed);
+        actor.AI.AdjustSpeed(actor);
 
         if (NextAction == null)
           actor.QueueLast(Hunt.GetOrCreate());

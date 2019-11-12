@@ -73,6 +73,11 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(context.Engine.PlayerInfo.ActorType.ID);
     }
 
+    public static Val GetPlayerName(Context context, Val[] ps)
+    {
+      return new Val(context.Engine.PlayerInfo.Name);
+    }
+
     public static Val GetStageNumber(Context context, Val[] ps)
     {
       if (context.Engine.GameScenarioManager.Scenario == null)

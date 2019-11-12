@@ -232,10 +232,10 @@ namespace SWEndor.Scenarios.Scripting.Functions
       int id = (int)ps[0];
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return new Val(new float[] { 0, 0, 0 });
+        return new Val(new float3(0, 0, 0));
 
       TV_3DVECTOR vec = actor.Position;
-      return new Val(new float[] { vec.x, vec.y, vec.z });
+      return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
     public static Val GetLocalRotation(Context context, params Val[] ps)
@@ -243,10 +243,10 @@ namespace SWEndor.Scenarios.Scripting.Functions
       int id = (int)ps[0];
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return new Val(new float[] { 0, 0, 0 });
+        return new Val(new float3( 0, 0, 0 ));
 
       TV_3DVECTOR vec = actor.Rotation;
-      return new Val(new float[] { vec.x, vec.y, vec.z });
+      return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
     public static Val GetLocalDirection(Context context, params Val[] ps)
@@ -254,43 +254,43 @@ namespace SWEndor.Scenarios.Scripting.Functions
       int id = (int)ps[0];
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return new Val(new float[] { 0, 0, 0 });
+        return new Val(new float3(0, 0, 0));
 
       TV_3DVECTOR vec = actor.Direction;
-      return new Val(new float[] { vec.x, vec.y, vec.z });
+      return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
-    public static Val GetPosition(Context context, params Val[] ps)
+    public static Val GetGlobalPosition(Context context, params Val[] ps)
     {
       int id = (int)ps[0];
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return new Val(new float[] { 0, 0, 0 });
+        return new Val(new float3(0, 0, 0));
 
       TV_3DVECTOR vec = actor.GetGlobalPosition();
-      return new Val(new float[] { vec.x, vec.y, vec.z });
+      return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
-    public static Val GetRotation(Context context, params Val[] ps)
+    public static Val GetGlobalRotation(Context context, params Val[] ps)
     {
       int id = (int)ps[0];
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return new Val(new float[] { 0, 0, 0 });
+        return new Val(new float3(0, 0, 0));
 
       TV_3DVECTOR vec = actor.GetGlobalRotation();
-      return new Val(new float[] { vec.x, vec.y, vec.z });
+      return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
-    public static Val GetDirection(Context context, params Val[] ps)
+    public static Val GetGlobalDirection(Context context, params Val[] ps)
     {
       int id = (int)ps[0];
       ActorInfo actor = context.Engine.ActorFactory.Get(id);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return new Val(new float[] { 0, 0, 0 });
+        return new Val(new float3(0, 0, 0));
 
       TV_3DVECTOR vec = actor.GetGlobalDirection();
-      return new Val(new float[] { vec.x, vec.y, vec.z });
+      return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
     public static Val SetLocalPosition(Context context, params Val[] ps)
@@ -423,15 +423,15 @@ namespace SWEndor.Scenarios.Scripting.Functions
           */
         case "CanEvade":
           if (setValue)
-            actor.CanEvade = (bool)newValue;
+            actor.AI.CanEvade = (bool)newValue;
           else
-            newValue = new Val(actor.CanEvade);
+            newValue = new Val(actor.AI.CanEvade);
           return;
         case "CanRetaliate":
           if (setValue)
-            actor.CanRetaliate = (bool)newValue;
+            actor.AI.CanRetaliate = (bool)newValue;
           else
-            newValue = new Val(actor.CanRetaliate);
+            newValue = new Val(actor.AI.CanRetaliate);
           return;
         //case "ChildRegenRate":
         //  if (setValue)
@@ -447,9 +447,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
           return;
         case "HuntWeight":
           if (setValue)
-            actor.HuntWeight = (int)newValue;
+            actor.AI.HuntWeight = (int)newValue;
           else
-            newValue = new Val(actor.HuntWeight);
+            newValue = new Val(actor.AI.HuntWeight);
           return;
         case "InCombat":
           if (setValue)
@@ -493,11 +493,17 @@ namespace SWEndor.Scenarios.Scripting.Functions
           else
             newValue = new Val(actor.SideBarName);
           return;
-        case "SetSpawnerEnable":
+        case "Spawner.Enabled":
           if (setValue)
             actor.SpawnerInfo.Enabled = (bool)newValue;
           else
             newValue = new Val(actor.SpawnerInfo.Enabled);
+          return;
+        case "Spawner.SpawnTypes":
+          if (setValue)
+            actor.SpawnerInfo.SpawnTypes = (string[])newValue;
+          else
+            newValue = new Val(actor.SpawnerInfo.SpawnTypes);
           return;
         case "Strength":
           if (setValue)

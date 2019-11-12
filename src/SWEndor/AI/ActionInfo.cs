@@ -34,10 +34,12 @@ namespace SWEndor.AI.Actions
 
     protected static bool CheckBounds(ActorInfo owner)
     {
+      if (owner.TypeInfo.AIData.TargetType.Intersects(TargetType.MUNITION))
+        return true;
+
       float boundmult = 0.99f;
-      if (!(owner.TypeInfo.AIData.TargetType.Contains(TargetType.MUNITION)) 
-        && owner.IsOutOfBounds(owner.Engine.GameScenarioManager.MinAIBounds * boundmult, owner.Engine.GameScenarioManager.MaxAIBounds * boundmult) 
-        && owner.AIData.EnteredCombatZone)
+      bool outofbounds = owner.IsOutOfBounds(owner.Engine.GameScenarioManager.MinAIBounds * boundmult, owner.Engine.GameScenarioManager.MaxAIBounds * boundmult);
+      if (outofbounds && owner.AI.EnteredCombatZone)
       {
         float x = owner.Engine.Random.Next((int)(owner.Engine.GameScenarioManager.MinAIBounds.x * 0.65f), (int)(owner.Engine.GameScenarioManager.MaxAIBounds.x * 0.65f));
         float y = owner.Engine.Random.Next(-200, 200);
@@ -49,12 +51,9 @@ namespace SWEndor.AI.Actions
         return false;
       }
       else
-      {
-        if (!owner.IsOutOfBounds(owner.Engine.GameScenarioManager.MinAIBounds * boundmult, owner.Engine.GameScenarioManager.MaxAIBounds * boundmult))
-        {
-          owner.AIData.EnteredCombatZone = true;
-        }
-      }
+        if (!owner.AI.EnteredCombatZone && !outofbounds)
+          owner.AI.EnteredCombatZone = true;
+
       return true;
     }
 

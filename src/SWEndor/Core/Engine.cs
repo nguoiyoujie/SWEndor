@@ -61,7 +61,7 @@ namespace SWEndor.Core
     internal Squadron.Factory SquadronFactory { get; private set; }
     internal ShaderInfo.Factory ShaderFactory { get; private set; }
 
-    // Engine pars to be loaded late
+    // Engine parts to be loaded late
     // Requires ActorInfoType initialization
     internal GameScenarioManager GameScenarioManager { get; private set; }
     internal Scenarios.Scripting.Expressions.Context ScriptContext { get; private set; }

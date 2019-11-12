@@ -14,6 +14,7 @@
     /// <returns>min if the value is less than min, max is the value is more than max, value otherwise</returns>
     public static float Clamp(this float value, float min, float max)
     {
+      /*
       if (max == min)
       {
         value = min;
@@ -25,13 +26,54 @@
         max = min;
         min = temp;
       }
+      */
 
-      if (value > max)
-        value = max;
-      else if (value < min)
-        value = min;
+      //if (value > max)
+      //  value = max;
+      //else if (value < min)
+      //  value = min;
 
-      return value;
+      return Max(Min(value, max), min);
+    }
+
+    /// <summary>
+    /// Returns the maximum of two values
+    /// </summary>
+    /// <param name="value1">The first value</param>
+    /// <param name="value2">The second value</param>
+    /// <returns>The greater of the two values</returns>
+    public static float Max(float value1, float value2)
+    {
+      return (value1 > value2)
+        ? value1 
+        : value2;
+    }
+
+    /// <summary>
+    /// Returns the minimum of two values
+    /// </summary>
+    /// <param name="value1"></param>
+    /// <param name="value2"></param>
+    /// <returns>The smaller of the two values</returns>
+    public static float Min(float value1, float value2)
+    {
+      return (value1 > value2) 
+        ? value2
+        : value1;
+    }
+
+    /// <summary>
+    /// Returns a value at most max_delta value closer to a target
+    /// </summary>
+    /// <param name="value">The starting value</param>
+    /// <param name="target">The target value</param>
+    /// <param name="max_delta">The max_delta</param>
+    /// <returns></returns>
+    public static float Creep(this float value, float target, float max_delta)
+    {
+      return (value < target)
+        ? Min(value + max_delta, target)
+        : Max(value - max_delta, target);
     }
 
     /// <summary>

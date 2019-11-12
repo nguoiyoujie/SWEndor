@@ -23,11 +23,11 @@ namespace Primrose.Expressions.Tree.Expressions
         )
       {
         lexer.Next(); // PLUS / MINUS / NOT
-        _primary = new PrimaryExpression(local, lexer).Get();
+        _primary = new IndexedExpression(local, lexer).Get();
       }
       else
       {
-        _primary = new PrimaryExpression(local, lexer).Get();
+        _primary = new IndexedExpression(local, lexer).Get();
         _type = TokenEnum.NOTHING;
       }
     }

@@ -114,12 +114,14 @@ namespace SWEndor.UI
           {
             float[] fs = f.GetFloatArray(INIFile.PreHeaderSectionName, ln.Key, null);
             if (fs != null && fs.Length >= 4)
-            p[iNum++] = new TV_TEXTUREFONT_CHAR() { iAsciiChar = chr
-                                                  , fX1 = fs[0]
-                                                  , fX2 = fs[1]
-                                                  , fY1 = fs[2]
-                                                  , fY2 = fs[3]
-                                                  };
+              p[iNum++] = new TV_TEXTUREFONT_CHAR()
+              {
+                iAsciiChar = chr,
+                fX1 = fs[0],
+                fX2 = fs[1],
+                fY1 = fs[2],
+                fY2 = fs[3]
+              };
           }
         }
       }
@@ -131,20 +133,34 @@ namespace SWEndor.UI
     }
   }
 
+  /// <summary>
+  /// Bitwise Font properties 
+  /// </summary>
   [Flags]
   public enum FontMode : byte
   {
+    /// <summary>The font is of the default format</summary>
     NONE = 0,
+
+    /// <summary>The font is bolded</summary>
     BOLD = 0x1,
+
+    /// <summary>The font is underlined</summary>
     UNDERLINED = 0x2,
+
+    /// <summary>The font is italicized</summary>
     ITALIC = 0x4,
   }
 
+  /// <summary>
+  /// Provides extension methods for FontMode enum
+  /// </summary>
   public static class FontModeExt
   {
-    public static bool Has(this FontMode src, FontMode flag)
-    {
-      return (src & flag) == flag;
-    }
+    /// <summary>Returns whether a font mask contains a subset</summary>
+    /// <param name="mask">The mask to compare</param>
+    /// <param name="subset">The subset to compare</param>
+    /// <returns>Returns true if the mask contains all bits of the subset, false if otherwise</returns>
+    public static bool Has(this FontMode mask, FontMode subset) { return (mask & subset) == subset; }
   }
 }

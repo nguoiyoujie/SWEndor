@@ -409,7 +409,7 @@ namespace SWEndor.Scenarios
           {
             TV_3DVECTOR pos = new TV_3DVECTOR();
             int count = 0;
-            foreach (int enID in MainEnemyFaction.GetActors(TargetType.SHIP, true))
+            foreach (int enID in MainEnemyFaction.GetShips())
             {
               ActorInfo en = Engine.ActorFactory.Get(enID);
               if (en != null)
@@ -449,7 +449,7 @@ namespace SWEndor.Scenarios
 
     public void Rebel_GiveControl()
     {
-      foreach (int actorID in MainAllyFaction.GetActors(TargetType.FIGHTER, true))
+      foreach (int actorID in MainAllyFaction.GetWings())
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
@@ -466,14 +466,14 @@ namespace SWEndor.Scenarios
 
     public void Rebel_Delete()
     {
-      foreach (int actorID in MainAllyFaction.GetActors(TargetType.FIGHTER, true))
+      foreach (int actorID in MainAllyFaction.GetWings())
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor.IsPlayer)
           actor.Delete();
       }
 
-      foreach (int actorID in MainAllyFaction.GetActors(TargetType.SHIP, true))
+      foreach (int actorID in MainAllyFaction.GetShips())
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor.IsPlayer)
@@ -568,7 +568,7 @@ namespace SWEndor.Scenarios
     {
       ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, 0, s.Info);
 
-      ship.HuntWeight = 1;
+      ship.AI.HuntWeight = 1;
       ship.SetArmor(DamageType.ALL, 0.1f);
     }
 
@@ -871,14 +871,14 @@ namespace SWEndor.Scenarios
       int y = 0;
       int z = -1400;
 
-      foreach (int actorID in MainEnemyFaction.GetActors(TargetType.FIGHTER, true))
+      foreach (int actorID in MainEnemyFaction.GetWings())
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
           actor.Delete();
       }
 
-      foreach (int actorID in MainAllyFaction.GetActors(TargetType.FIGHTER, true))
+      foreach (int actorID in MainAllyFaction.GetWings())
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
@@ -894,8 +894,8 @@ namespace SWEndor.Scenarios
           actor.Rotation = new TV_3DVECTOR(0, 180, 0);
           actor.MoveData.Speed = 450;
           actor.MoveData.ResetTurn();
-          actor.CanRetaliate = false;
-          actor.CanEvade = false;
+          actor.AI.CanRetaliate = false;
+          actor.AI.CanEvade = false;
           counter++;
         }
       }
@@ -935,7 +935,7 @@ namespace SWEndor.Scenarios
       
 
       int en_ship = 0;
-      foreach (int actorID in MainEnemyFaction.GetActors(TargetType.SHIP, true))
+      foreach (int actorID in MainEnemyFaction.GetShips())
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)

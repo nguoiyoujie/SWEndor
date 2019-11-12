@@ -38,11 +38,11 @@ namespace SWEndor.AI.Actions
       if (ResumeTime == 0)
         ResumeTime = engine.Game.GameTime + WaitTime;
 
-      actor.AIData.SetTarget(actor.GetRelativePositionXYZ(0, 0, 1000));
-      actor.AIData.AdjustRotation(engine, actor, 0.5f);
+      actor.AI.SetTarget(actor.GetRelativePositionXYZ(0, 0, 1000));
+      actor.AI.AdjustRotation(engine, actor, 0.5f);
 
-      actor.AIData.SetTargetSpeed(actor.MoveData.MaxSpeed);
-      actor.AIData.AdjustSpeed(actor);
+      actor.AI.SetTargetSpeed(actor.MoveData.MaxSpeed);
+      actor.AI.AdjustSpeed(actor);
 
       if (CheckImminentCollision(actor))
       {

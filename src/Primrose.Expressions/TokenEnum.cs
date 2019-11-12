@@ -18,6 +18,7 @@
     DECL_BOOL_ARRAY,
     DECL_FLOAT_ARRAY,
     DECL_INT_ARRAY,
+    DECL_STRING_ARRAY,
 
     // Keywords
     //NEW,

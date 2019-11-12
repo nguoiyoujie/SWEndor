@@ -39,7 +39,7 @@ namespace SWEndor.ProjectileTypes
     public string Name;
 
     // Data
-    internal ComponentMask Mask = ComponentMask.NONE;
+    public ComponentMask Mask { get; set; } = ComponentMask.NONE;
 
     // Data (structs)
     internal CombatData CombatData;
@@ -134,7 +134,7 @@ namespace SWEndor.ProjectileTypes
     {
       ainfo.TickExplosions();
 
-      if (ainfo.IsDying && !DamageSpecialData.NeverDisappear)
+      if (ainfo.IsDying)
         ainfo.SetState_Dead();
 
       // sound
@@ -197,7 +197,7 @@ namespace SWEndor.ProjectileTypes
       float impdist = CombatData.ImpactCloseEnoughDistance;
       if (target != null)
       {
-        if (target.TypeInfo.AIData.TargetType.Contains(TargetType.MUNITION))
+        if (target.TypeInfo.AIData.TargetType.Intersects(TargetType.MUNITION))
           impdist += target.TypeInfo.CombatData.ImpactCloseEnoughDistance;
 
         // Anticipate

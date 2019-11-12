@@ -9,8 +9,8 @@ namespace SWEndor.ProjectileTypes
     public FactionInfo Faction;
     public ProjectileTypeInfo TypeInfo { get; }
     public string Name;
-    public float CreationTime;
-    public ActorState InitialState;
+    public float CreationTime { get; set; }
+    public ActorState InitialState { get; set; }
     public float InitialScale;
     public TV_3DVECTOR Position;
     public TV_3DVECTOR Rotation;

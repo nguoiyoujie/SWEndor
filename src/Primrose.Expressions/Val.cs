@@ -24,12 +24,15 @@ namespace Primrose.Expressions
     internal readonly int[] aI;
     [FieldOffset(0)]
     internal readonly float[] aF;
+    [FieldOffset(0)]
+    internal readonly string[] aS;
 
     public ValObj(string val)
     {
       aB = null;
       aI = null;
       aF = null;
+      aS = null;
       vS = val ?? string.Empty;
     }
 
@@ -38,6 +41,7 @@ namespace Primrose.Expressions
       vS = null;
       aB = null;
       aI = null;
+      aS = null;
       aF = val.ToArray();
     }
 
@@ -46,6 +50,7 @@ namespace Primrose.Expressions
       vS = null;
       aB = null;
       aI = null;
+      aS = null;
       aF = val.ToArray();
     }
 
@@ -54,6 +59,7 @@ namespace Primrose.Expressions
       vS = null;
       aB = null;
       aI = null;
+      aS = null;
       aF = val.ToArray();
     }
 
@@ -62,6 +68,7 @@ namespace Primrose.Expressions
       vS = null;
       aI = null;
       aF = null;
+      aS = null;
       aB = val;
     }
 
@@ -70,6 +77,7 @@ namespace Primrose.Expressions
       vS = null;
       aB = null;
       aF = null;
+      aS = null;
       aI = val;
     }
 
@@ -78,7 +86,17 @@ namespace Primrose.Expressions
       vS = null;
       aB = null;
       aI = null;
+      aS = null;
       aF = val;
+    }
+
+    public ValObj(string[] val)
+    {
+      vS = null;
+      aB = null;
+      aI = null;
+      aF = null;
+      aS = val;
     }
   }
 
@@ -231,6 +249,13 @@ namespace Primrose.Expressions
       catch { throw new InvalidCastException("Attempted to read float[] value from a {0}".F(a.Type)); }
     }
 
+    /// <summary>Retrieves a string array</summary>
+    public static explicit operator string[] (Val a)
+    {
+      try { return a._obj.aS; }
+      catch { throw new InvalidCastException("Attempted to read string[] value from a {0}".F(a.Type)); }
+    }
+
     /// <summary>Retrieves the value as an object</summary>
     public object Value
     {
@@ -255,6 +280,8 @@ namespace Primrose.Expressions
           case ValType.FLOAT4:
           case ValType.FLOAT_ARRAY:
             return _obj.aF;
+          case ValType.STRING_ARRAY:
+            return _obj.aS;
           default:
             return null;
         }
@@ -372,6 +399,16 @@ namespace Primrose.Expressions
       _obj = new ValObj(val);
     }
 
+    /// <summary>Defines a value</summary>
+    public Val(string[] val)
+    {
+      Type = ValType.FLOAT_ARRAY;
+      _vB = false;
+      _vI = 0;
+      _vF = 0;
+      _obj = new ValObj(val);
+    }
+
     /// <summary>Represents a null value</summary>
     public static readonly Val NULL = new Val();
 
@@ -391,6 +428,11 @@ namespace Primrose.Expressions
     public bool IsFalse { get { return Type == ValType.BOOL && _vB == false; } }
 
     /// <summary>Determines if a value is an array</summary>
-    public bool IsArray { get { return Type == ValType.BOOL_ARRAY || Type == ValType.FLOAT_ARRAY || Type == ValType.INT_ARRAY; } }
+    public bool IsArray { get { return Type == ValType.BOOL_ARRAY 
+                                    || Type == ValType.FLOAT_ARRAY 
+                                    || Type == ValType.INT_ARRAY
+                                    || Type == ValType.STRING_ARRAY
+                                    ;
+      } }
   }
 }

@@ -11,6 +11,7 @@ namespace Primrose.Expressions.Tree.Expressions.Literals
     bool[] bL;
     float[] fL;
     int[] iL;
+    string[] sL;
 
     internal ArrayLiteral(Script local, Lexer lexer) : base(local, lexer)
     {
@@ -33,6 +34,7 @@ namespace Primrose.Expressions.Tree.Expressions.Literals
       bL = new bool[_param.Count];
       fL = new float[_param.Count];
       iL = new int[_param.Count];
+      sL = new string[_param.Count];
       lexer.Next(); //BRACECLOSE
     }
 
@@ -71,6 +73,11 @@ namespace Primrose.Expressions.Tree.Expressions.Literals
           for (int i = 0; i < fL.Length; i++)
             fL[i] = (float)vL[i];
           return new Val(fL);
+
+        case ValType.STRING:
+          for (int i = 0; i < sL.Length; i++)
+            sL[i] = (string)vL[i];
+          return new Val(sL);
 
         default:
           throw new EvalException(this, "Unsupported array member type: {0}".F(t));

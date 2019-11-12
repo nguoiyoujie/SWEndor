@@ -41,14 +41,14 @@ namespace SWEndor.AI.Actions
         return;
       }
 
-      actor.AIData.SetTarget(engine, actor, target, false);
+      actor.AI.SetTarget(engine, actor, target, false);
 
       if (CheckBounds(actor))
       {
-        actor.AIData.AdjustRotation(engine, actor);
+        actor.AI.AdjustRotation(engine, actor);
         float dist = DistanceModel.GetDistance(engine, actor, target, FollowDistance + 1);
 
-        actor.AIData.AdjustSpeed(actor);
+        actor.AI.AdjustSpeed(actor);
         Complete |= (!target.Active);
       }
 

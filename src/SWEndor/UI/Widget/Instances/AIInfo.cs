@@ -47,7 +47,7 @@ namespace SWEndor.UI.Widgets
       if (p.CurrentAction != null)
       {
         TV_3DVECTOR pos = p.GetRelativePositionXYZ(0, 0, p.MaxDimensions.z); //p.GetGlobalPosition(); // p.GetRelativePositionXYZ(0, 0, p.TypeInfo.max_dimensions.z + p.ProspectiveCollisionScanDistance);
-        TV_3DVECTOR targetpos = p.AIData.GetTargetPos(Engine, p);
+        TV_3DVECTOR targetpos = p.AI.GetTargetPos(Engine, p);
         TVScreen2DImmediate.Draw_Box3D(targetpos - new TV_3DVECTOR(25, 25, 25), targetpos + new TV_3DVECTOR(25, 25, 25), new TV_COLOR(1, 0.5f, 0.2f, 1).GetIntColor());
         TVScreen2DImmediate.Draw_Line3D(pos.x, pos.y, pos.z, targetpos.x, targetpos.y, targetpos.z, new TV_COLOR(1, 0, 0, 1).GetIntColor());
       }

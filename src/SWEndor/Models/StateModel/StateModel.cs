@@ -84,6 +84,17 @@ namespace SWEndor.Models
     public float CreationTime { get; private set; }
     public ComponentMask ComponentMask { get; set; }
 
+    public void Init<TType, TCreate>(Engine engine, TType type, TCreate acinfo)
+      where TType : ITypeInfo<T>
+      where TCreate : ICreationInfo<T, TType>
+    {
+      _actorState = acinfo.InitialState;
+      _creationState = CreationState.PLANNED;
+      CreationTime = acinfo.CreationTime > engine.Game.GameTime ? acinfo.CreationTime : engine.Game.GameTime;
+      ComponentMask = type.Mask;
+    }
+
+    /*
     public void Init(Engine engine, ActorTypeInfo type, ActorCreationInfo acinfo)
     {
       _actorState = acinfo.InitialState;
@@ -97,7 +108,7 @@ namespace SWEndor.Models
       _actorState = acinfo.InitialState;
       _creationState = CreationState.PLANNED;
       CreationTime = acinfo.CreationTime > engine.Game.GameTime ? acinfo.CreationTime : engine.Game.GameTime;
-      ComponentMask = ComponentMask.EXPLOSION;
+      ComponentMask = type.Mask;
     }
 
     public void Init(Engine engine, ProjectileTypeInfo type, ProjectileCreationInfo acinfo)
@@ -105,8 +116,9 @@ namespace SWEndor.Models
       _actorState = acinfo.InitialState;
       _creationState = CreationState.PLANNED;
       CreationTime = acinfo.CreationTime > engine.Game.GameTime ? acinfo.CreationTime : engine.Game.GameTime;
-      ComponentMask = ComponentMask.EXPLOSION;
+      ComponentMask = type.Mask;
     }
+    */
 
     public void AdvanceDeathOneLevel(T actor) { ASM.Fire(actor, ActorStateCommand.ADVANCE_DEATH_ONE_LEVEL, ref _actorState); }
     public void MakeDead(T actor) { ASM.Fire(actor, ActorStateCommand.DEAD, ref _actorState); }

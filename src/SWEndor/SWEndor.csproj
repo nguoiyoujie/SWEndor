@@ -144,6 +144,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actors\Models\AIModel\AIUpdate.cs" />
     <Compile Include="Actors\Models\Regeneration\ActorExt.cs" />
     <Compile Include="Actors\Models\Relation\ActorExt.cs" />
     <Compile Include="Actors\Models\SystemModel\ActorExt.cs" />
@@ -193,7 +194,7 @@
     <Compile Include="Actors\Models\Explosion\ActorExt.cs" />
     <Compile Include="Models\ExplodeModel\ExplodeTrigger.cs" />
     <Compile Include="Models\Interfaces\ICollidable.cs" />
-    <Compile Include="Actors\Models\AIModel\AIData.cs" />
+    <Compile Include="Actors\Models\AIModel\AIModel.cs" />
     <Compile Include="Actors\Models\ArmorModel\ArmorModel.cs" />
     <Compile Include="Models\CollisionModel\CollisionResultData.cs" />
     <Compile Include="Models\ExplodeModel\ExplodeModel.cs" />

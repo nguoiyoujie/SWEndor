@@ -34,6 +34,9 @@
     INT_ARRAY,
 
     /// <summary>Represents an array of floating point values</summary>
-    FLOAT_ARRAY
+    FLOAT_ARRAY,
+
+    /// <summary>Represents an array of strings</summary>
+    STRING_ARRAY
   }
 }

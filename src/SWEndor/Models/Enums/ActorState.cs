@@ -25,12 +25,18 @@
     DEAD = -2
   }
 
-  public static class ActorStateHelper
+  /// <summary>
+  /// Provides extension methods for ActorState enum
+  /// </summary>
+  public static class ActorStateExt
   {
+    /// <summary>Returns if the given state is DYING</summary>
     public static bool IsDying(this ActorState state) { return state == ActorState.DYING; }
 
+    /// <summary>Returns if the given state is DEAD</summary>
     public static bool IsDead(this ActorState state) { return state == ActorState.DEAD; }
 
+    /// <summary>Returns if the given state is either DYING or DEAD</summary>
     public static bool IsDyingOrDead(this ActorState state) { return state < 0; }
   }
 }

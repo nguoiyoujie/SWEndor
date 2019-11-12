@@ -40,7 +40,7 @@ namespace SWEndor.ProjectileTypes
         {
           Add(atype.ID, atype);
         }
-        atype.SaveToINI(atype.ID);
+        //atype.SaveToINI(atype.ID);
         Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
       }
 

@@ -34,6 +34,8 @@ namespace SWEndor.ExplosionTypes
     internal ExplRenderData ExplRenderData;
     internal MeshData MeshData = MeshData.Default;
 
+    public ComponentMask Mask { get; } = ComponentMask.EXPLOSION;
+
     // Sound
     internal SoundSourceData[] InitialSoundSources = new SoundSourceData[0];
     internal SoundSourceData[] SoundSources = new SoundSourceData[0];

@@ -24,6 +24,7 @@ namespace Primrose.Expressions
         new TokenDefinition(@"float4\b(?!\[)", TokenEnum.DECL_FLOAT4, RegexOption),
         new TokenDefinition(@"bool\[\]", TokenEnum.DECL_BOOL_ARRAY, RegexOption),
         new TokenDefinition(@"float\[\]", TokenEnum.DECL_FLOAT_ARRAY, RegexOption),
+        new TokenDefinition(@"string\[\]", TokenEnum.DECL_STRING_ARRAY, RegexOption),
         new TokenDefinition(@"int\[\]", TokenEnum.DECL_INT_ARRAY, RegexOption),
 
         // keywords

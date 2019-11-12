@@ -47,7 +47,6 @@ namespace SWEndor.ActorTypes.Components
       IsCombatObject = f.GetBool(sectionname, "IsCombatObject", IsCombatObject);
       HitWhileDyingLeadsToDeath = f.GetBool(sectionname, "HitWhileDyingLeadsToDeath", HitWhileDyingLeadsToDeath);
 
-      //MaxShield = f.GetFloatValue(sectionname, "MaxStrength", MaxShield);
       ImpactDamage = f.GetFloat(sectionname, "ImpactDamage", ImpactDamage);
       DamageType = f.GetEnumValue(sectionname, "DamageType", DamageType);
       IsLaser = f.GetBool(sectionname, "IsLaser", IsLaser);
@@ -60,7 +59,6 @@ namespace SWEndor.ActorTypes.Components
       f.SetBool(sectionname, "IsCombatObject", IsCombatObject);
       f.SetBool(sectionname, "HitWhileDyingLeadsToDeath", HitWhileDyingLeadsToDeath);
 
-      //f.SetFloatValue(sectionname, "MaxStrength", MaxShield);
       f.SetFloat(sectionname, "ImpactDamage", ImpactDamage);
       f.SetEnum(sectionname, "DamageType", DamageType);
       f.SetBool(sectionname, "IsLaser", IsLaser);

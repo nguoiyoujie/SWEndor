@@ -10,20 +10,32 @@ using System.Collections.Generic;
 
 namespace SWEndor.Input.Functions
 {
+  /// <summary>
+  /// Input option types
+  /// </summary>
   [Flags]
   public enum InputOptions
   {
+    /// <summary>This option does nothing</summary>
     NONE = 0,
+
+    /// <summary>Triggers once on a key press</summary>
     ONPRESS = 0x01,
+
+    /// <summary>Triggers every tick while the key remains in the pressed state</summary>
     WHILEPRESSED = 0x02
   }
 
+  /// <summary>
+  /// Provides extension methods for InputOptions enum
+  /// </summary>
   public static class InputOptionsExt
   {
-    public static bool Has(this InputOptions src, InputOptions flag)
-    {
-      return (src & flag) == flag;
-    }
+    /// <summary>Returns whether an input option contains a subset</summary>
+    /// <param name="mask">The mask to compare</param>
+    /// <param name="subset">The subset to compare</param>
+    /// <returns>Returns true if the mask contains all bits of the subset, false if otherwise</returns>
+    public static bool Has(this InputOptions mask, InputOptions subset) { return (mask & subset) == subset; }
   }
 
   public abstract class InputFunction

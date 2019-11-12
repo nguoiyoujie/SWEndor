@@ -87,7 +87,7 @@ namespace SWEndor.Scenarios
 
       int tie_d = 0;
       int tie_sa = 0;
-      foreach (int actorID in MainEnemyFaction.GetActors(TargetType.FIGHTER, true))
+      foreach (int actorID in MainEnemyFaction.GetWings())
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
@@ -281,7 +281,7 @@ namespace SWEndor.Scenarios
     public void Rebel_RemoveTorps()
     {
       /*
-      foreach (int actorID in MainAllyFaction.GetActors(TargetType.FIGHTER, true))
+      foreach (int actorID in MainAllyFaction.GetWings())
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
@@ -336,7 +336,7 @@ namespace SWEndor.Scenarios
 
     public void Rebel_GiveControl()
     {
-      foreach (int actorID in MainAllyFaction.GetActors(TargetType.ANY, true))
+      foreach (int actorID in MainAllyFaction.GetWings())
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)

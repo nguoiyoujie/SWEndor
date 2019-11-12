@@ -49,7 +49,7 @@ load:
 	UI.SetLine1Color(faction_empire_color);
 	UI.SetLine2Color(faction_traitor_color);
 	
-  Script.CallX("engagemusic");	
+	Script.CallX("engagemusic");	
 	Script.CallX("spawnreset");	
 	Script.CallX("makeimperials");
 	Script.CallX("makeplayer");

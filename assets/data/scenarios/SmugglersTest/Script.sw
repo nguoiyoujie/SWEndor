@@ -62,63 +62,63 @@ setupplayer:
 
 makesmugglers:
 	int pspawner = Actor.Spawn("SPAWN", "", "Smugglers", "", 0, { 9500, -900, 0 }, { -15, -90, 0 });
-	Actor.SetProperty(pspawner, "SetSpawnerEnable", true);
+	Actor.SetProperty(pspawner, "Spawner.Enabled", true);
 
-	int falcon1 = Actor.Spawn("FALC", "YT-1300", "Smugglers", "", 0, { 8600, -1020, -500 }, { -15, -90, 0 }, "CriticalAllies");
+	int falcon1 = Actor.Spawn("FALC", "YT-1300", "Smugglers", "", 0, { 8600, -1020, -500 }, { -5, -90, 0 }, "CriticalAllies");
 	Actor.SetProperty(falcon1, "DamageModifier", 0.15);
 	AI.QueueLast(falcon1, "wait", 5);
 	AI.QueueLast(falcon1, "rotate", { 0, 0, 0 }, 0);
 	AI.QueueLast(falcon1, "wait", 5);
 	
-	int falcon2 = Actor.Spawn("FALC", "YT-1300", "Smugglers", "", 0, { 8650, -960, 500 }, { -15, -90, 0 }, "CriticalAllies");
+	int falcon2 = Actor.Spawn("FALC", "YT-1300", "Smugglers", "", 0, { 8650, -960, 500 }, { -5, -90, 0 }, "CriticalAllies");
 	Actor.SetProperty(falcon2, "DamageModifier", 0.15);
 	AI.QueueLast(falcon2, "wait", 5);
 	AI.QueueLast(falcon2, "rotate", { 0, 0, 0 }, 0);
 	AI.QueueLast(falcon2, "wait", 5);
 
-	int falcon3 = Actor.Spawn("FALC", "YT-1300", "Smugglers", "", 0, { 10250, -1040, 750 }, { -15, -90, 0 }, "CriticalAllies");
+	int falcon3 = Actor.Spawn("FALC", "YT-1300", "Smugglers", "", 0, { 10250, -1040, 750 }, { -5, -90, 0 }, "CriticalAllies");
 	Actor.SetProperty(falcon3, "DamageModifier", 0.15);
 	AI.QueueLast(falcon3, "wait", 5);
 	AI.QueueLast(falcon3, "rotate", { 0, 0, 0 }, 0);
 	AI.QueueLast(falcon3, "wait", 5);
 
-	int falcon4 = Actor.Spawn("FALC", "YT-1300", "Smugglers", "", 0, { 10050, -940, -750 }, { -15, -90, 0 }, "CriticalAllies");
+	int falcon4 = Actor.Spawn("FALC", "YT-1300", "Smugglers", "", 0, { 10050, -940, -750 }, { -5, -90, 0 }, "CriticalAllies");
 	Actor.SetProperty(falcon4, "DamageModifier", 0.15);
 	AI.QueueLast(falcon4, "wait", 5);
 	AI.QueueLast(falcon4, "rotate", { 0, 0, 0 }, 0);
 	AI.QueueLast(falcon4, "wait", 5);
 
-	int trn0 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 8750, -1200, 0 }, { -15, -90, 0 }, "CriticalAllies");
+	int trn0 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 8750, -1200, 0 }, { -5, -90, 0 }, "CriticalAllies");
 	AI.QueueLast(trn0, "move", { -8750, -200, 0 }, 50);
 	AI.QueueLast(trn0, "hyperspaceout");
 	AI.QueueLast(trn0, "setgamestateb","TransportExit",true);
 	AI.QueueLast(trn0, "delete");
 	
-	int trn1 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 9250, -1350, -350 }, { -15, -90, 0 }, "CriticalAllies");
+	int trn1 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 9250, -1350, -350 }, { -5, -90, 0 }, "CriticalAllies");
 	AI.QueueLast(trn1, "move", { -8260, -350, -350 }, 50);
 	AI.QueueLast(trn1, "hyperspaceout");
 	AI.QueueLast(trn1, "setgamestateb","TransportExit",true);
 	AI.QueueLast(trn1, "delete");
 	
-	int trn2 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 9050, -1300, 350 }, { -15, -90, 0 }, "CriticalAllies");
+	int trn2 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 9050, -1300, 350 }, { -5, -90, 0 }, "CriticalAllies");
 	AI.QueueLast(trn2, "move", { -8470, -300, 350 }, 50);
 	AI.QueueLast(trn2, "hyperspaceout");
 	AI.QueueLast(trn2, "setgamestateb","TransportExit",true);
 	AI.QueueLast(trn2, "delete");
 	
-	int trn3 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 9750, -1450, -250 }, { -15, -90, 0 }, "CriticalAllies");
+	int trn3 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 9750, -1450, -250 }, { -5, -90, 0 }, "CriticalAllies");
 	AI.QueueLast(trn3, "move", { -7780, -450, -450 }, 50);
 	AI.QueueLast(trn3, "hyperspaceout");
 	AI.QueueLast(trn3, "setgamestateb","TransportExit",true);
 	AI.QueueLast(trn3, "delete");
 
-	int trn4 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 9850, -1400, 150 }, { -15, -90, 0 }, "CriticalAllies");
+	int trn4 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 9850, -1400, 150 }, { -5, -90, 0 }, "CriticalAllies");
 	AI.QueueLast(trn4, "move", { -7690, -400, 150 }, 50);
 	AI.QueueLast(trn4, "hyperspaceout");
 	AI.QueueLast(trn4, "setgamestateb","TransportExit",true);
 	AI.QueueLast(trn4, "delete");
 	
-	int trn5 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 10650, -1350, -50 }, { -15, -90, 0 }, "CriticalAllies");
+	int trn5 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 10650, -1350, -50 }, { -5, -90, 0 }, "CriticalAllies");
 	AI.QueueLast(trn5, "move", { -6900, -350, -50 }, 50);
 	AI.QueueLast(trn5, "hyperspaceout");
 	AI.QueueLast(trn5, "setgamestateb","TransportExit",true);
@@ -254,7 +254,7 @@ stage2:
 	AI.QueueLast(corv5, "hyperspaceout");
 	
 	int monc = Actor.Spawn("MC90", "", "Rebels", "", 0, { 7750, -600, 45000 }, { 0, 180, 0 });
-	Actor.SetProperty(monc, "SetSpawnerEnable", true);
+	Actor.SetProperty(monc, "Spawner.Enabled", true);
 	AI.QueueLast(monc, "hyperspacein", { -1750, -600, 4000 });
 	AI.QueueLast(monc, "move", { -750, -200, -9500 }, 12);
 	AI.QueueLast(monc, "hyperspaceout");
@@ -265,7 +265,7 @@ stage2:
 	AI.QueueLast(arqt, "hyperspaceout");
 	
 	int vict = Actor.Spawn("VICT", "", "Empire", "", 0, { -8750, -400, -45000 }, { 0, 0, 0 });
-	Actor.SetProperty(vict, "SetSpawnerEnable", true);
+	Actor.SetProperty(vict, "Spawner.Enabled", true);
 	AI.QueueLast(vict, "hyperspacein", { -3750, -50, -4800 });
 	AI.QueueLast(vict, "move", { 1750, 100, 9500 }, 12);
 	AI.QueueLast(vict, "hyperspaceout");

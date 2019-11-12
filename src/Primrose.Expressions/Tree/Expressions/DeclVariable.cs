@@ -47,6 +47,10 @@
           varType = ValType.FLOAT_ARRAY;
           break;
 
+        case TokenEnum.DECL_STRING_ARRAY:
+          varType = ValType.STRING_ARRAY;
+          break;
+
         default:
           throw new ParseException(lexer);
       }

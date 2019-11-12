@@ -75,15 +75,12 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       Functions.Add("Actor.IsAlive", ActorFns.IsAlive);
       Functions.Add("Actor.RegisterEvents", ActorFns.RegisterEvents);
       Functions.Add("Actor.GetLocalPosition", ActorFns.GetLocalPosition);
-      //Functions.Add("Actor.GetGlobalPosition", ActorManagement.GetGlobalPosition);
       Functions.Add("Actor.GetLocalRotation", ActorFns.GetLocalRotation);
-      //Functions.Add("Actor.GetGlobalRotation = new TV_3DVECTOR", ActorManagement.GetGlobalRotation = new TV_3DVECTOR);
       Functions.Add("Actor.GetLocalDirection", ActorFns.GetLocalDirection);
-      //Functions.Add("Actor.GetGlobalDirection = new TV_3DVECTOR", ActorManagement.GetGlobalDirection = new TV_3DVECTOR);
-      Functions.Add("Actor.GetPosition", ActorFns.GetPosition);
-      Functions.Add("Actor.GetRotation", ActorFns.GetRotation);
+      Functions.Add("Actor.GetGlobalPosition", ActorFns.GetGlobalPosition);
+      Functions.Add("Actor.GetGlobalRotation", ActorFns.GetGlobalRotation);
+      Functions.Add("Actor.GetGlobalDirection", ActorFns.GetGlobalDirection);
       //Functions.Add("Actor.SetRotation", ActorManagement.SetRotation);
-      Functions.Add("Actor.GetDirection", ActorFns.GetDirection);
       //Functions.Add("Actor.SetDirection", ActorManagement.SetDirection);
       Functions.Add("Actor.LookAtPoint", ActorFns.LookAtPoint);
       Functions.Add("Actor.GetChildren", ActorFns.GetChildren);
@@ -106,6 +103,7 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       Functions.Add("GetLastFrameTime", GameFns.GetLastFrameTime);
       Functions.Add("GetDifficulty", GameFns.GetDifficulty);
       Functions.Add("GetPlayerActorType", GameFns.GetPlayerActorType);
+      Functions.Add("GetPlayerName", GameFns.GetPlayerName);
       Functions.Add("GetStageNumber", GameFns.GetStageNumber);
       Functions.Add("SetStageNumber", GameFns.SetStageNumber);
       Functions.Add("GetGameStateB", GameFns.GetGameStateB);

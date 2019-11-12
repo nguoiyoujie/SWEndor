@@ -7,5 +7,11 @@
   {
     /// <summary>The instance type of this instance</summary>
     TType TypeInfo { get; }
+
+    /// <summary>The creation time of this instance</summary>
+    float CreationTime { get; }
+
+    /// <summary>The initial state of this instance</summary>
+    ActorState InitialState { get; }
   }
 }

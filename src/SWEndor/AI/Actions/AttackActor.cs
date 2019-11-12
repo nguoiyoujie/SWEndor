@@ -65,18 +65,18 @@ namespace SWEndor.AI.Actions
       if (!CheckBounds(actor))
         return;
 
-      actor.AIData.SetTarget(engine, actor, target, true);
-      actor.AIData.SetFollowDistance(actor, FollowDistance);
+      actor.AI.SetTarget(engine, actor, target, true);
+      actor.AI.SetFollowDistance(actor, FollowDistance);
 
       if (TooCloseDistance < 0)
         TooCloseDistance = actor.MoveData.Speed * 0.75f;
 
-      float dist = actor.AIData.GetDistanceToTargetActor(engine, actor);
+      float dist = actor.AI.GetDistanceToTargetActor(engine, actor);
 
       if (dist > TooCloseDistance)
       {
-        float delta_angle = actor.AIData.AdjustRotation(engine, actor);
-        actor.AIData.AdjustSpeed(actor);
+        float delta_angle = actor.AI.AdjustRotation(engine, actor);
+        actor.AI.AdjustSpeed(actor);
 
         WeaponShotInfo w;
         actor.WeaponDefinitions.SelectWeapon(engine, actor, target, delta_angle, dist, out w);
@@ -108,7 +108,7 @@ namespace SWEndor.AI.Actions
           float evadeduration = 2000 / (target.MoveData.Speed + 500);
           actor.QueueFirst(Evade.GetOrCreate(evadeduration));
         }
-        else if (!(target.TypeInfo.AIData.TargetType.Contains(TargetType.MUNITION)))
+        else if (!(target.TypeInfo.AIData.TargetType.Intersects(TargetType.MUNITION)))
         {
           actor.QueueFirst(new Move(MakeAltPosition(engine, actor, target.Parent), actor.MoveData.MaxSpeed));
         }

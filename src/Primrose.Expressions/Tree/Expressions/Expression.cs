@@ -6,7 +6,7 @@
 
     internal Expression(Script local, Lexer lexer) : base(local, lexer)
     {
-      _expr = new IndexedExpression(local, lexer).Get();
+      _expr = new TernaryExpression(local, lexer).Get();
     }
 
     public override CExpression Get()

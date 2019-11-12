@@ -42,7 +42,7 @@ namespace SWEndor.Models
       Type = f.GetString(sectionname, "Type", Type);
       Rate = f.GetFloat(sectionname, "Rate", Rate);
       Size = f.GetFloat(sectionname, "Size", Size);
-      Trigger = f.GetEnumValue<ExplodeTrigger>(sectionname, "Trigger", Trigger);
+      Trigger = f.GetEnumValue(sectionname, "Trigger", Trigger);
     }
 
     private void SaveToINI(INIFile f, string sectionname)
@@ -50,7 +50,7 @@ namespace SWEndor.Models
       f.SetString(sectionname, "Type", Type);
       f.SetFloat(sectionname, "Rate", Rate);
       f.SetFloat(sectionname, "Size", Size);
-      f.SetEnum<ExplodeTrigger>(sectionname, "Trigger", Trigger);
+      f.SetEnum(sectionname, "Trigger", Trigger);
     }
   }
 }

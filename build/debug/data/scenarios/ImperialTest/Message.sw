@@ -21,6 +21,9 @@ message05:
 message06:
 	Message("GRAND ADM. THRAWN: The Empire's future lies in your performance.", 5, faction_empire_color, 1);
 
+messageescape:
+	Message("GRAND ADM. THRAWN: The traitor is trying to escape. Do not let him escape!", 5, faction_empire_color, 1);
+
 messagewin:
 	Message("GRAND ADM. THRAWN: Such is the fate of the enemies of the Empire.", 5, faction_empire_color, 1);
 
@@ -49,6 +52,10 @@ messagelosegreywolf:
 messagelosecorvus:
 	Message("MISSION FAILED: INT CORVUS has been destroyed!", 5, msg_fail_red, 99);
 
+messageloseescaped:
+	Message("MISSION FAILED: The traitor has escaped!", 5, msg_fail_red, 99);
+	
+	
 message_allyGUN:
 	Message("ASSAULT GUNSHIPS have arrived to reinforce the CORVUS.", 5, faction_empire_color);
 

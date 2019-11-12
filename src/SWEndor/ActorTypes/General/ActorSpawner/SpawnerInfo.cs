@@ -56,7 +56,7 @@ namespace SWEndor
       if (!engine.PlayerInfo.RequestSpawn)
         return false;
 
-      ReleaseSpawns(engine, ainfo);
+      //ReleaseSpawns(engine, ainfo);
 
       if (NextSpawnTime < engine.Game.GameTime + SpawnPlayerDelay)
         NextSpawnTime = engine.Game.GameTime + SpawnPlayerDelay;
@@ -70,6 +70,7 @@ namespace SWEndor
       acinfo.Rotation = ainfo.GetGlobalRotation();
       acinfo.Rotation += SpawnRotation;
 
+      acinfo.Name = engine.PlayerInfo.Name;
       acinfo.FreeSpeed = true;
       acinfo.Faction = ainfo.Faction;
       ActorInfo a = engine.ActorFactory.Create(acinfo);
@@ -128,13 +129,13 @@ namespace SWEndor
             ainfo.AddChild(a);
             a.QueueFirst(new Lock());
 
-            float m1 = p.MoveData.Speed * SpawnMoveDelay * p.Scale;
-            float m2 = SpawnMoveDelay * p.Scale;
-            TV_3DVECTOR v = a.GetRelativePositionFUR(SpawnSpeedPositioningMult.x * m1 + SpawnManualPositioningMult.x * m2
-                                                   , SpawnSpeedPositioningMult.y * m1 + SpawnManualPositioningMult.y * m2
-                                                   , SpawnSpeedPositioningMult.z * m1 + SpawnManualPositioningMult.z * m2);
+            //float m1 = p.MoveData.Speed * SpawnMoveDelay * p.Scale;
+            //float m2 = SpawnMoveDelay * p.Scale;
+            //TV_3DVECTOR v = a.GetRelativePositionFUR(SpawnSpeedPositioningMult.x * m1 + SpawnManualPositioningMult.x * m2
+            //                                       , SpawnSpeedPositioningMult.y * m1 + SpawnManualPositioningMult.y * m2
+            //                                       , SpawnSpeedPositioningMult.z * m1 + SpawnManualPositioningMult.z * m2);
 
-            a.QueueNext(new Move(v, a.TypeInfo.MoveLimitData.MinSpeed));
+            //a.QueueNext(new Move(v, a.TypeInfo.MoveLimitData.MinSpeed));
           }
 
           SpawnMoveTime = engine.Game.GameTime + SpawnMoveDelay;

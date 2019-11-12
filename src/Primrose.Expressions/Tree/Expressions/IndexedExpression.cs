@@ -14,7 +14,7 @@ namespace Primrose.Expressions.Tree.Expressions
       // EXPR[EXPR]
       // ^
 
-      _expression = new TernaryExpression(local, lexer).Get();
+      _expression = new PrimaryExpression(local, lexer).Get();
 
       // indexer
       if (lexer.TokenType == TokenEnum.SQBRACKETOPEN)
@@ -62,6 +62,8 @@ namespace Primrose.Expressions.Tree.Expressions
             return new Val(((float[])c)[x]);
           case ValType.STRING:
             return new Val(((string)c)[x]);
+          case ValType.STRING_ARRAY:
+            return new Val(((string[])c)[x]);
 
           default:
             throw new EvalException(this, "Attempted to index a non-array: {0}".F(c));
