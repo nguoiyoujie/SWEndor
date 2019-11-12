@@ -41,6 +41,9 @@ namespace Primrose.Primitives.ValueTypes
       }
     }
 
+    /// <summary>Returns the string representation of this value</summary>
+    public override string ToString() { return "{{{0},{1},{2},{3}}}".F(x, y, z, w); }
+
     /// <summary>Creates a float[] array from this value</summary>
     /// <returns>An array of length 4 with identical indexed values</returns>
     public float[] ToArray() { return new float[] { x, y, z, w }; }
