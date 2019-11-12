@@ -215,18 +215,6 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(!actor.IsDead);
     }
 
-    // TO-DO: Remove function from scripts
-    public static Val RegisterEvents(Context context, params Val[] ps)
-    {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
-        return Val.FALSE;
-
-      //context.Engine.GameScenarioManager.Scenario.RegisterEvents(actor);
-      return Val.TRUE;
-    }
-
     public static Val GetLocalPosition(Context context, params Val[] ps)
     {
       int id = (int)ps[0];

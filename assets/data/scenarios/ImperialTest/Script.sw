@@ -191,7 +191,6 @@ makeplayer:
 
 	
 setupplayer:
-	Actor.RegisterEvents(Player.GetActor());
 	playerisship = Actor.IsLargeShip(Player.GetActor());
 	if (respawn) 
 		Script.CallX("respawn");

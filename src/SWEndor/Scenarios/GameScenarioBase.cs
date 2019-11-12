@@ -18,7 +18,6 @@ namespace SWEndor.Scenarios
     public List<ActorTypeInfo> AllowedWings = new List<ActorTypeInfo>();
     public List<string> AllowedDifficulties = new List<string> { "normal" };
 
-
     public string Difficulty { get; set; }
     public int StageNumber { get; set; }
     private MoodStates m_mood = MoodStates.AMBIENT;

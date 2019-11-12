@@ -59,7 +59,13 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       Functions.Add("Scene.FadeOut", SceneFns.FadeOut);
 
       // Scene Camera Management
-      //Functions.Add("Scene.SetSceneCameraAsActive", SceneCameraManagement.SetSceneCameraAsActive);
+      Functions.Add("Camera.SetPlayerLook", PlayerCameraFns.SetPlayerLook);
+      Functions.Add("Camera.SetSceneLook", PlayerCameraFns.SetSceneLook);
+      Functions.Add("Camera.SetDeathLook", PlayerCameraFns.SetDeathLook);
+      Functions.Add("Camera.SetSceneLook_LookAtActor", PlayerCameraFns.SetSceneLook_LookAtActor);
+      Functions.Add("Camera.SetSceneLook_LookAtPoint", PlayerCameraFns.SetSceneLook_LookAtPoint);
+      Functions.Add("Camera.SetSceneLook_LookFromActor", PlayerCameraFns.SetSceneLook_LookFromActor);
+      Functions.Add("Camera.SetSceneLook_LookFromPoint", PlayerCameraFns.SetSceneLook_LookFromPoint);
 
       // Actor Management
       Functions.Add("Actor.Squadron_Spawn", ActorFns.Squadron_Spawn);
@@ -72,15 +78,14 @@ namespace SWEndor.Scenarios.Scripting.Expressions
       Functions.Add("Actor.IsFighter", ActorFns.IsFighter);
       Functions.Add("Actor.IsLargeShip", ActorFns.IsLargeShip);
       Functions.Add("Actor.IsAlive", ActorFns.IsAlive);
-      Functions.Add("Actor.RegisterEvents", ActorFns.RegisterEvents);
       Functions.Add("Actor.GetLocalPosition", ActorFns.GetLocalPosition);
       Functions.Add("Actor.GetLocalRotation", ActorFns.GetLocalRotation);
       Functions.Add("Actor.GetLocalDirection", ActorFns.GetLocalDirection);
       Functions.Add("Actor.GetGlobalPosition", ActorFns.GetGlobalPosition);
       Functions.Add("Actor.GetGlobalRotation", ActorFns.GetGlobalRotation);
       Functions.Add("Actor.GetGlobalDirection", ActorFns.GetGlobalDirection);
-      //Functions.Add("Actor.SetRotation", ActorManagement.SetRotation);
-      //Functions.Add("Actor.SetDirection", ActorManagement.SetDirection);
+      //Functions.Add("Actor.SetRotation", ActorFns.SetRotation);
+      //Functions.Add("Actor.SetDirection", ActorFns.SetDirection);
       Functions.Add("Actor.LookAtPoint", ActorFns.LookAtPoint);
       Functions.Add("Actor.GetChildren", ActorFns.GetChildren);
       Functions.Add("Actor.GetProperty", ActorFns.GetProperty);
