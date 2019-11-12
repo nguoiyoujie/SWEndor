@@ -14,13 +14,13 @@ namespace SWEndor.Input.Functions.Gameplay
 
     public override void Process(Engine engine)
     {
-      if (engine.PlayerCameraInfo.CameraMode == CameraMode.FREEMODE)
-      {
-        float rate = engine.InputManager.SHIFT ? 2500 : 500;
-        TVCamera tvc = engine.PlayerCameraInfo.Camera;
-        rate *= engine.Game.TimeControl.UpdateInterval;
-        tvc.MoveRelative(rate, 0, 0);
-      }
+      //if (engine.PlayerCameraInfo.CameraMode == CameraMode.FREEMODE)
+      //{
+      //  float rate = engine.InputManager.SHIFT ? 2500 : 500;
+      //  TVCamera tvc = engine.PlayerCameraInfo.Camera;
+      //  rate *= engine.Game.TimeControl.UpdateInterval;
+      //  tvc.MoveRelative(rate, 0, 0);
+      //}
     }
   }
 }

@@ -26,8 +26,8 @@ namespace SWEndor.Player
 
       switch (cmode) // should replace
       {
-        case CameraMode.FREEROTATION:
-        case CameraMode.FREEMODE:
+        //case CameraMode.FREEROTATION:
+        //case CameraMode.FREEMODE:
         case CameraMode.FIRSTPERSON:
           location = new TV_3DVECTOR(0, 0, actor.MaxDimensions.z + 10) * actor.Scale;
           target = new TV_3DVECTOR(0, 0, 20000);

@@ -18,6 +18,7 @@ namespace SWEndor.Scenarios
     public List<ActorTypeInfo> AllowedWings = new List<ActorTypeInfo>();
     public List<string> AllowedDifficulties = new List<string> { "normal" };
 
+
     public string Difficulty { get; set; }
     public int StageNumber { get; set; }
     private MoodStates m_mood = MoodStates.AMBIENT;
@@ -27,15 +28,12 @@ namespace SWEndor.Scenarios
       set
       {
         if (value < 0)
-        {
           SoundManager.TriggerInterruptMood((int)value);
-        }
         else
           m_mood = value;
       }
     }
 
-    //public DeathCamMode DeathCamMode = DeathCamMode.CIRCLE;
     private CameraMode[] m_PlayerCameraModes = new CameraMode[] { CameraMode.FIRSTPERSON };
     private int m_PlayerModeNum = 0;
     public CameraMode[] PlayerCameraModes

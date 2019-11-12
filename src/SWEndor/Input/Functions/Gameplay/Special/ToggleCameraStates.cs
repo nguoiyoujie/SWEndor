@@ -14,10 +14,10 @@ namespace SWEndor.Input.Functions.Gameplay.Special
 
     public override void Process(Engine engine)
     {
-      if (engine.PlayerCameraInfo.CameraMode == CameraMode.FREEMODE) // last camera mode
-        engine.PlayerCameraInfo.CameraMode = 0;
-      else
-        engine.PlayerCameraInfo.CameraMode++;
+      //if (engine.PlayerCameraInfo.CameraMode == CameraMode.FREEMODE) // last camera mode
+      //  engine.PlayerCameraInfo.CameraMode = 0;
+      //else
+      //  engine.PlayerCameraInfo.CameraMode++;
     }
   }
 }

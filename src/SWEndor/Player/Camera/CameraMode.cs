@@ -6,7 +6,7 @@
     FIRSTPERSON = 0,
     THIRDPERSON = 1,
     THIRDREAR = 2,
-    FREEROTATION = 3,
-    FREEMODE = 4
+    //FREEROTATION = 3,
+    //FREEMODE = 4
   }
 }
