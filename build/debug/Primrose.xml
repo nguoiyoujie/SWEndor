@@ -1372,6 +1372,9 @@
             <summary>The value indexer</summary>
             <exception cref="T:System.IndexOutOfRangeException">The array is accessed with an invalid index</exception>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.ToString">
+            <summary>Returns the string representation of this value</summary>
+        </member>
         <member name="M:Primrose.Primitives.ValueTypes.float2.ToArray">
             <summary>Creates a float[] array from this value</summary>
             <returns>An array of length 3 with identical indexed values</returns>
@@ -1439,6 +1442,9 @@
         <member name="P:Primrose.Primitives.ValueTypes.float3.Item(System.Int32)">
             <summary>The value indexer</summary>
             <exception cref="T:System.IndexOutOfRangeException">The array is accessed with an invalid index</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.ToString">
+            <summary>Returns the string representation of this value</summary>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.float3.ToArray">
             <summary>Creates a float[] array from this value</summary>
@@ -1511,6 +1517,9 @@
         <member name="P:Primrose.Primitives.ValueTypes.float4.Item(System.Int32)">
             <summary>The value indexer</summary>
             <exception cref="T:System.IndexOutOfRangeException">The array is accessed with an invalid index</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.ToString">
+            <summary>Returns the string representation of this value</summary>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.float4.ToArray">
             <summary>Creates a float[] array from this value</summary>

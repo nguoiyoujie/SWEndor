@@ -58,7 +58,6 @@ makeplayer:
 
 setupplayer:
 	Actor.SetProperty(Player.GetActor(), "DamageModifier", 0.25);
-	Actor.RegisterEvents(Player.GetActor());
 
 makesmugglers:
 	int pspawner = Actor.Spawn("SPAWN", "", "Smugglers", "", 0, { 9500, -900, 0 }, { -15, -90, 0 });

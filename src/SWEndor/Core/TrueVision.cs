@@ -78,7 +78,7 @@ namespace SWEndor.Core
       //TVEngine.SetDebugMode(true, true);
       TVEngine.SetDebugFile(Path.Combine(Globals.LogPath, @"truevision_debug.txt"));
 
-      TVEngine.SetAntialiasing(true, CONST_TV_MULTISAMPLE_TYPE.TV_MULTISAMPLE_2_SAMPLES);
+      TVEngine.SetAntialiasing(true, CONST_TV_MULTISAMPLE_TYPE.TV_MULTISAMPLE_16_SAMPLES);
       TVEngine.DisplayFPS(true);
       //TVEngine.EnableProfiler(true);
       TVEngine.EnableSmoothTime(true);

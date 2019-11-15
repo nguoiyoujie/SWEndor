@@ -141,23 +141,20 @@ namespace SWEndor
     {
       if (ainfo.DisposingOrDisposed)
       {
-        if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
+        if (_wings.Remove(ainfo.ID))
         {
-          _wings.Remove(ainfo.ID);
           if (WingLimit > 0)
             WingLimit--;
         }
 
-        if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
+        if (_ships.Remove(ainfo.ID))
         {
-          _ships.Remove(ainfo.ID);
           if (ShipLimit > 0)
             ShipLimit--;
         }
 
-        if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.STRUCTURE))
+        if (_structures.Remove(ainfo.ID))
         {
-          _structures.Remove(ainfo.ID);
           if (StructureLimit > 0)
             StructureLimit--;
         }

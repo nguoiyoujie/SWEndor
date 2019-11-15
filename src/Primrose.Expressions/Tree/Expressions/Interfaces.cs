@@ -7,10 +7,11 @@
 
   internal class CExpression : IExpression, ITracker
   {
-    internal CExpression(Script local, Lexer lexer) { LineNumber = lexer.LineNumber; Position = lexer.Position; }
+    internal CExpression(Script local, Lexer lexer) { SourceName = lexer.SourceName; LineNumber = lexer.LineNumber; Position = lexer.Position; }
     public virtual CExpression Get() { return this; }
     public virtual Val Evaluate(Script local, AContext context) { return default(Val); }
 
+    public string SourceName { get; }
     public int LineNumber { get; }
     public int Position { get; }
   }

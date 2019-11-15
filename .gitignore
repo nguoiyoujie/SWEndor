@@ -41,3 +41,4 @@
 /src/.vs/SWEndor/v14
 /src/Fmod.Wrapper/obj/x86/Release
 /build/release/log
+/build/debug/SWEndor.vshost.exe.manifest
