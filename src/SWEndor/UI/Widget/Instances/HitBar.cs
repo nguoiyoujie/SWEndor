@@ -1,7 +1,4 @@
-﻿using MTV3D65;
-using SWEndor.Actors;
-
-namespace SWEndor.UI.Widgets
+﻿namespace SWEndor.UI.Widgets
 {
   public class HitBar : Widget
   {

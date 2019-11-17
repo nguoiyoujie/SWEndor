@@ -3,7 +3,6 @@ using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using SWEndor.Core;
 using SWEndor.Models;
-using SWEndor.Scenarios.Scripting.Expressions;
 using Primrose.Primitives.ValueTypes;
 using System;
 using System.Collections.Generic;
@@ -83,12 +82,10 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(ret);
     }
 
-    public static Val AddToSquad(Context context, params Val[] ps)
+    public static Val AddToSquad(Context context, int actorID1, int actorID2)
     {
-      int id1 = (int)ps[0];
-      int id2 = (int)ps[1];
-      ActorInfo a1 = context.Engine.ActorFactory.Get(id1);
-      ActorInfo a2 = context.Engine.ActorFactory.Get(id2);
+      ActorInfo a1 = context.Engine.ActorFactory.Get(actorID1);
+      ActorInfo a2 = context.Engine.ActorFactory.Get(actorID2);
       if (context.Engine.GameScenarioManager.Scenario == null || a1 == null || a2 == null)
         return Val.FALSE;
 
@@ -96,10 +93,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.TRUE;
     }
 
-    public static Val RemoveFromSquad(Context context, params Val[] ps)
+    public static Val RemoveFromSquad(Context context, int actorID)
     {
-      int id1 = (int)ps[0];
-      ActorInfo a1 = context.Engine.ActorFactory.Get(id1);
+      ActorInfo a1 = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || a1 == null)
         return Val.FALSE;
 
@@ -108,10 +104,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.TRUE;
     }
 
-    public static Val MakeSquadLeader(Context context, params Val[] ps)
+    public static Val MakeSquadLeader(Context context, int actorID)
     {
-      int id1 = (int)ps[0];
-      ActorInfo a1 = context.Engine.ActorFactory.Get(id1);
+      ActorInfo a1 = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || a1 == null)
         return Val.FALSE;
 
@@ -175,50 +170,45 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(res.ID);
     }
 
-    public static Val GetActorType(Context context, params Val[] ps)
+    public static Val GetActorType(Context context, int actorID)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new Val();
 
       return new Val(actor.TypeInfo.Name);
     }
 
-    public static Val IsFighter(Context context, params Val[] ps)
+    public static Val IsFighter(Context context, int actorID)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
       return new Val(actor.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER));
     }
 
-    public static Val IsLargeShip(Context context, params Val[] ps)
+    public static Val IsLargeShip(Context context, int actorID)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
       return new Val(actor.TypeInfo.AIData.TargetType.Has(TargetType.SHIP));
     }
 
-    public static Val IsAlive(Context context, params Val[] ps)
+    public static Val IsAlive(Context context, int actorID)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
       return new Val(!actor.IsDead);
     }
 
-    public static Val GetLocalPosition(Context context, params Val[] ps)
+    public static Val GetLocalPosition(Context context, int actorID)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new Val(new float3(0, 0, 0));
 
@@ -226,10 +216,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
-    public static Val GetLocalRotation(Context context, params Val[] ps)
+    public static Val GetLocalRotation(Context context, int actorID)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new Val(new float3( 0, 0, 0 ));
 
@@ -237,10 +226,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
-    public static Val GetLocalDirection(Context context, params Val[] ps)
+    public static Val GetLocalDirection(Context context, int actorID)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new Val(new float3(0, 0, 0));
 
@@ -248,10 +236,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
-    public static Val GetGlobalPosition(Context context, params Val[] ps)
+    public static Val GetGlobalPosition(Context context, int actorID)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new Val(new float3(0, 0, 0));
 
@@ -259,10 +246,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
-    public static Val GetGlobalRotation(Context context, params Val[] ps)
+    public static Val GetGlobalRotation(Context context, int actorID)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new Val(new float3(0, 0, 0));
 
@@ -270,10 +256,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
-    public static Val GetGlobalDirection(Context context, params Val[] ps)
+    public static Val GetGlobalDirection(Context context, int actorID)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new Val(new float3(0, 0, 0));
 
@@ -281,59 +266,51 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
-    public static Val SetLocalPosition(Context context, params Val[] ps)
+    public static Val SetLocalPosition(Context context, int actorID, float3 point)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
-      actor.Position= new TV_3DVECTOR((float)ps[1], (float)ps[2], (float)ps[3]);
+      actor.Position = point.ToVec3();
       return Val.TRUE;
     }
 
-    public static Val SetLocalRotation(Context context, params Val[] ps)
+    public static Val SetLocalRotation(Context context, int actorID, float3 point)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
-      actor.Rotation= new TV_3DVECTOR((float)ps[1], (float)ps[2], (float)ps[3]);
+      actor.Rotation = point.ToVec3();
       return Val.TRUE;
     }
 
-    public static Val SetLocalDirection(Context context, params Val[] ps)
+    public static Val SetLocalDirection(Context context, int actorID, float3 point)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
-      actor.Direction= new TV_3DVECTOR((float)ps[1], (float)ps[2], (float)ps[3]);
+      actor.Direction = point.ToVec3();
       return Val.TRUE;
     }
     
-    public static Val LookAtPoint(Context context, params Val[] ps)
+    public static Val LookAtPoint(Context context, int actorID, float3 point)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
-      TV_3DVECTOR vec= new TV_3DVECTOR((float)ps[1], (float)ps[2], (float)ps[3]);
-      //if (ps.Length == 4)
-        actor.LookAt(vec);
-      //else
-      //  actor.LookAt(vec, Convert.ToBoolean(ps[4].ToString()));
+      TV_3DVECTOR vec = point.ToVec3();
+      actor.LookAt(vec);
 
       return Val.TRUE;
     }
 
-    public static Val GetChildren(Context context, params Val[] ps)
+    public static Val GetChildren(Context context, int actorID)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new Val(new int[0]);
 
@@ -344,15 +321,14 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(ret.ToArray());
     }
 
-    public static Val GetProperty(Context context, params Val[] ps)
+    public static Val GetProperty(Context context, int actorID, string property)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new Val();
 
       Val result = new Val();
-      ConfigureActorProperty(context.Engine, actor, (string)ps[1], false, ref result);
+      ConfigureActorProperty(context.Engine, actor, property, false, ref result);
       return result;
     }
 

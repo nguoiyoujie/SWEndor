@@ -526,6 +526,17 @@
     <Compile Include="Scenarios\Scripting\Functions\ActorFns.cs" />
     <Compile Include="Scenarios\Scripting\Functions\PlayerCameraFns.cs" />
     <Compile Include="Scenarios\Scripting\Functions\SceneFns.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\IValFunc.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc_T8.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc_T7.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc_T6.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc_T5.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc_T4.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc_T3.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc_T2.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc_T.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValParamContract.cs" />
     <Compile Include="Settings\ColorLocalization.cs" />
     <Compile Include="Settings\TextLocalization.cs" />
     <Compile Include="Shaders\Factory\Factory.cs" />

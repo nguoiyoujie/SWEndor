@@ -2,7 +2,6 @@
 using Primrose.Primitives.ValueTypes;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 namespace Primrose.Expressions
 {

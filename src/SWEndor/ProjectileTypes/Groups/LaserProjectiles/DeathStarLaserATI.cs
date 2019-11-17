@@ -1,8 +1,4 @@
-﻿using MTV3D65;
-using SWEndor.Actors;
-using SWEndor.ActorTypes.Components;
-using SWEndor.Core;
-using SWEndor.Projectiles;
+﻿using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ProjectileTypes.Instances
 {

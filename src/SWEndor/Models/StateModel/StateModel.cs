@@ -1,8 +1,5 @@
-﻿using SWEndor.ActorTypes;
-using SWEndor.Core;
-using SWEndor.ExplosionTypes;
+﻿using SWEndor.Core;
 using Primrose.Primitives.StateMachines;
-using SWEndor.ProjectileTypes;
 
 namespace SWEndor.Models
 {

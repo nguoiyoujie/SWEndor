@@ -46,7 +46,7 @@ Gameplay Mechanics:
  - [2019.10.29] Radar
  - [2019.10.29] Scanner
  - [2019.10.29] Player death 'view'
- W [2019.10.30] Basic factions [WIP: To resolve bugs introduced due to redesign of internal object counters]
+ - [2019.10.30] Basic factions [WIP: To resolve bugs introduced due to redesign of internal object counters]
  - [2019.10.29] Squadron system
  - [2019.10.29] Actor addons (large craft)
  - [2019.10.29] Subsystems (fighter craft)

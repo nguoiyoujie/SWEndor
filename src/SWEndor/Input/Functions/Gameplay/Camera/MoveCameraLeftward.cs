@@ -1,6 +1,5 @@
 ﻿using MTV3D65;
 using SWEndor.Core;
-using SWEndor.Player;
 
 namespace SWEndor.Input.Functions.Gameplay
 {

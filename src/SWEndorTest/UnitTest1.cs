@@ -4,7 +4,6 @@ using MTV3D65;
 using SWEndor;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
-using SWEndor.Scenarios.Scripting.Expressions;
 using Primrose.Primitives.Extensions;
 using Primrose.Expressions;
 

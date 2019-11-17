@@ -5,8 +5,6 @@ using SWEndor.Core;
 using SWEndor.Explosions;
 using SWEndor.FileFormat.INI;
 using SWEndor.Models;
-using SWEndor.Player;
-using SWEndor.Scenarios;
 using System.IO;
 
 namespace SWEndor.ExplosionTypes

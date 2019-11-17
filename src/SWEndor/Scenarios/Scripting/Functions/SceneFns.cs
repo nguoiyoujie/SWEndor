@@ -1,7 +1,4 @@
-﻿using MTV3D65;
-using Primrose.Primitives.Extensions;
-using SWEndor.Primitives.Extensions;
-using SWEndor.Scenarios.Scripting.Expressions;
+﻿using SWEndor.Primitives.Extensions;
 using Primrose.Primitives.ValueTypes;
 using System;
 using Primrose.Expressions;
@@ -19,14 +16,14 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     INT mood
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetMood(Context context, params Val[] ps)
+    public static Val SetMood(Context context, int state)
     {
 #if DEBUG
       if (context.Engine.GameScenarioManager.Scenario == null)
         throw new InvalidOperationException("Attempted script function with null Scenario");
 #endif
 
-      context.Engine.GameScenarioManager.Scenario.Mood = (MoodStates)(int)ps[0];
+      context.Engine.GameScenarioManager.Scenario.Mood = (MoodStates)state;
       return Val.NULL;
     }
 
@@ -34,15 +31,11 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// Max the maximum scene boundaries for the player
     /// </summary>
     /// <param name="context">The game context</param>
-    /// <param name="ps">
-    ///   Parameters: 
-    ///     FLOAT3 bounds
-    /// </param>
+    /// <param name="value">The bound value</param>
     /// <returns>NULL</returns>
-    public static Val SetMaxBounds(Context context, params Val[] ps)
+    public static Val SetMaxBounds(Context context, float3 value)
     {
-      float3 bounds = (float3)ps[0];
-      context.Engine.GameScenarioManager.MaxBounds = bounds.ToVec3();
+      context.Engine.GameScenarioManager.MaxBounds = value.ToVec3();
       return Val.NULL;
     }
 
@@ -50,15 +43,11 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// Max the minimum scene boundaries for the player
     /// </summary>
     /// <param name="context">The game context</param>
-    /// <param name="ps">
-    ///   Parameters: 
-    ///     FLOAT3 bounds
-    /// </param>
+    /// <param name="value">The bound value</param>
     /// <returns>NULL</returns>    
-    public static Val SetMinBounds(Context context, params Val[] ps)
+    public static Val SetMinBounds(Context context, float3 value)
     {
-      float3 bounds = (float3)ps[0];
-      context.Engine.GameScenarioManager.MinBounds = bounds.ToVec3();
+      context.Engine.GameScenarioManager.MinBounds = value.ToVec3();
       return Val.NULL;
     }
 
@@ -66,15 +55,11 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// Max the maximum scene boundaries for the AI
     /// </summary>
     /// <param name="context">The game context</param>
-    /// <param name="ps">
-    ///   Parameters: 
-    ///     FLOAT3 bounds
-    /// </param>
+    /// <param name="value">The bound value</param>
     /// <returns>NULL</returns>
-    public static Val SetMaxAIBounds(Context context, params Val[] ps)
+    public static Val SetMaxAIBounds(Context context, float3 value)
     {
-      float3 bounds = (float3)ps[0];
-      context.Engine.GameScenarioManager.MaxAIBounds = bounds.ToVec3();
+      context.Engine.GameScenarioManager.MaxAIBounds = value.ToVec3();
       return Val.NULL;
     }
 
@@ -82,15 +67,11 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// Max the minimum scene boundaries for the AI
     /// </summary>
     /// <param name="context">The game context</param>
-    /// <param name="ps">
-    ///   Parameters: 
-    ///     FLOAT3 bounds
-    /// </param>
+    /// <param name="value">The bound value</param>
     /// <returns>NULL</returns>
-    public static Val SetMinAIBounds(Context context, params Val[] ps)
+    public static Val SetMinAIBounds(Context context, float3 value)
     {
-      float3 bounds = (float3)ps[0];
-      context.Engine.GameScenarioManager.MinAIBounds = bounds.ToVec3();
+      context.Engine.GameScenarioManager.MinAIBounds = value.ToVec3();
       return Val.NULL;
     }
 
@@ -98,19 +79,16 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// Enables/disables lost fighter notifications
     /// </summary>
     /// <param name="context">The game context</param>
-    /// <param name="ps">
-    ///   Parameters: 
-    ///     NONE
-    /// </param>
+    /// <param name="enable">The enable flag</param>
     /// <returns>NULL</returns>
-    public static Val EnableInformLostWing(Context context, params Val[] ps)
+    public static Val EnableInformLostWing(Context context, bool enable)
     {
 #if DEBUG
       if (context.Engine.GameScenarioManager.Scenario == null)
         throw new InvalidOperationException("Attempted script function with null Scenario");
 #endif
 
-      context.Engine.GameScenarioManager.Scenario.InformLostWing = (bool)ps[0];
+      context.Engine.GameScenarioManager.Scenario.InformLostWing = enable;
       return Val.NULL;
     }
 
@@ -118,19 +96,16 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// Enables/disables lost ship notifications
     /// </summary>
     /// <param name="context">The game context</param>
-    /// <param name="ps">
-    ///   Parameters: 
-    ///     NONE
-    /// </param>
+    /// <param name="enable">The enable flag</param>
     /// <returns>NULL</returns>
-    public static Val EnableInformLostShip(Context context, params Val[] ps)
+    public static Val EnableInformLostShip(Context context, bool enable)
     {
 #if DEBUG
       if (context.Engine.GameScenarioManager.Scenario == null)
         throw new InvalidOperationException("Attempted script function with null Scenario");
 #endif
 
-      context.Engine.GameScenarioManager.Scenario.InformLostShip = (bool)ps[0];
+      context.Engine.GameScenarioManager.Scenario.InformLostShip = enable;
       return Val.NULL;
     }
 
@@ -138,19 +113,16 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// Enables/disables lost structure notifications
     /// </summary>
     /// <param name="context">The game context</param>
-    /// <param name="ps">
-    ///   Parameters: 
-    ///     NONE
-    /// </param>
+    /// <param name="enable">The enable flag</param>
     /// <returns>NULL</returns>
-    public static Val EnableInformLostStructure(Context context, params Val[] ps)
+    public static Val EnableInformLostStructure(Context context, bool enable)
     {
 #if DEBUG
       if (context.Engine.GameScenarioManager.Scenario == null)
         throw new InvalidOperationException("Attempted script function with null Scenario");
 #endif
 
-      context.Engine.GameScenarioManager.Scenario.InformLostStructure = (bool)ps[0];
+      context.Engine.GameScenarioManager.Scenario.InformLostStructure = enable;
       return Val.NULL;
     }
 
@@ -158,12 +130,8 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// Begin screen fade out.
     /// </summary>
     /// <param name="context">The game context</param>
-    /// <param name="ps">
-    ///   Parameters: 
-    ///     NONE
-    /// </param>
     /// <returns>NULL</returns>
-    public static Val FadeOut(Context context, params Val[] ps)
+    public static Val FadeOut(Context context)
     {
 #if DEBUG
       if (context.Engine.GameScenarioManager.Scenario == null)

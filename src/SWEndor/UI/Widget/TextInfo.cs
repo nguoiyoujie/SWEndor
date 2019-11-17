@@ -1,6 +1,4 @@
-﻿using MTV3D65;
-
-namespace SWEndor.UI
+﻿namespace SWEndor.UI
 {
   public class TextInfo
   {

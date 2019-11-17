@@ -128,6 +128,9 @@
             Provides tracking for line and position
             </summary>
         </member>
+        <member name="P:Primrose.Expressions.ITracker.SourceName">
+            <summary>The name of the source</summary>
+        </member>
         <member name="P:Primrose.Expressions.ITracker.LineNumber">
             <summary>The line number</summary>
         </member>
@@ -267,6 +270,9 @@
         <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~System.Single[]">
             <summary>Retrieves a floating point array</summary>
         </member>
+        <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~System.String[]">
+            <summary>Retrieves a string array</summary>
+        </member>
         <member name="P:Primrose.Expressions.Val.Value">
             <summary>Retrieves the value as an object</summary>
         </member>
@@ -301,6 +307,9 @@
             <summary>Defines a value</summary>
         </member>
         <member name="M:Primrose.Expressions.Val.#ctor(System.Single[])">
+            <summary>Defines a value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.#ctor(System.String[])">
             <summary>Defines a value</summary>
         </member>
         <member name="F:Primrose.Expressions.Val.NULL">
@@ -359,6 +368,9 @@
         </member>
         <member name="F:Primrose.Expressions.ValType.FLOAT_ARRAY">
             <summary>Represents an array of floating point values</summary>
+        </member>
+        <member name="F:Primrose.Expressions.ValType.STRING_ARRAY">
+            <summary>Represents an array of strings</summary>
         </member>
     </members>
 </doc>

@@ -64,7 +64,7 @@ namespace SWEndor.Core
     // Engine parts to be loaded late
     // Requires ActorInfoType initialization
     internal GameScenarioManager GameScenarioManager { get; private set; }
-    internal Scenarios.Scripting.Expressions.Context ScriptContext { get; private set; }
+    internal Scenarios.Scripting.Context ScriptContext { get; private set; }
 
     public void Init()
     {
@@ -141,7 +141,7 @@ namespace SWEndor.Core
       AtmosphereInfo.LoadDefaults(true, true);
       LandInfo.LoadDefaults();
 
-      ScriptContext = new Scenarios.Scripting.Expressions.Context(this);
+      ScriptContext = new Scenarios.Scripting.Context(this);
 
       // late ActorType bindings...
       ProjectileTypeFactory.Initialise();

@@ -1,6 +1,5 @@
 ﻿using Primrose.Expressions;
 using Primrose.Primitives.Extensions;
-using SWEndor.Scenarios.Scripting.Expressions;
 using System;
 
 namespace SWEndor.Scenarios.Scripting.Functions
@@ -16,9 +15,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     STRING script_name
     /// </param>
     /// <returns>TRUE if a script is found, FALSE otherwise</returns>
-    public static Val CallScript(Context context, Val[] ps)
+    public static Val CallScript(Context context, string script_name)
     {
-      Script scr = Script.Registry.Get((string)ps[0]);
+      Script scr = Script.Registry.Get(script_name);
       if (scr != null)
       {
         scr.Run(context);
@@ -36,12 +35,11 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     STRING script_name
     /// </param>
     /// <returns>NULL. Throws an exception if no script is found.</returns>
-    public static Val CallScriptX(Context context, Val[] ps)
+    public static Val CallScriptX(Context context, string script_name)
     {
-      string name = (string)ps[0];
-      Script scr = Script.Registry.Get(name);
+      Script scr = Script.Registry.Get(script_name);
       if (scr == null)
-        throw new InvalidOperationException("Attempted to call non-existent script '{0}'".F(name));
+        throw new InvalidOperationException("Attempted to call non-existent script '{0}'".F(script_name));
 
       scr.Run(context);
       return Val.NULL;

@@ -1,5 +1,4 @@
 ﻿using MTV3D65;
-using SWEndor.Actors.Models;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Sound;
 

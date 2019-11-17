@@ -1,5 +1,4 @@
 ﻿using Primrose.Expressions;
-using SWEndor.Scenarios.Scripting.Expressions;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
@@ -11,22 +10,21 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <param name="context">The game context</param>
     /// <param name="ps">
     ///   Parameters: 
-    ///     INT actor_id
+    ///     INT actorID
     /// </param>
-    /// <returns>TRUE if the assignment is successful, otherwise (i.e. there is no actor having this ID) returns FALSE. If the actor_id is negative, always returns TRUE.</returns>
-    public static Val AssignActor(Context context, Val[] ps)
+    /// <returns>TRUE if the assignment is successful, otherwise (i.e. there is no actor having this ID) returns FALSE. If the actorID is negative, always returns TRUE.</returns>
+    public static Val AssignActor(Context context, int actorID)
     {
-      int id = (int)ps[0];
-      if (id < 0)
+      if (actorID < 0)
       {
         context.Engine.PlayerInfo.ActorID = -1;
         return Val.TRUE;
       }
 
-      if (context.Engine.ActorFactory.Get(id) == null)
+      if (context.Engine.ActorFactory.Get(actorID) == null)
         return Val.FALSE;
 
-      context.Engine.PlayerInfo.ActorID = id;
+      context.Engine.PlayerInfo.ActorID = actorID;
       return Val.TRUE;
     }
 
@@ -34,12 +32,8 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// Returns the player actor ID
     /// </summary>
     /// <param name="context">The game context</param>
-    /// <param name="ps">
-    ///   Parameters: 
-    ///     NONE
-    /// </param>
     /// <returns>INT representing the actor's ID if an actor is found, otherwise returns -1</returns>
-    public static Val GetActor(Context context, Val[] ps)
+    public static Val GetActor(Context context)
     {
       return new Val(context.Engine.PlayerInfo.Actor?.ID ?? -1);
     }
@@ -48,12 +42,8 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// Toggles a request to spawn the player. If a spawner belonging to the player's faction exists, it will respawn the player. Otherwise, this has no effect.
     /// </summary>
     /// <param name="context">The game context</param>
-    /// <param name="ps">
-    ///   Parameters: 
-    ///     NONE
-    /// </param>
     /// <returns>NULL</returns>
-    public static Val RequestSpawn(Context context, Val[] ps)
+    public static Val RequestSpawn(Context context)
     {
       context.Engine.PlayerInfo.RequestSpawn = true;
       return Val.NULL;
@@ -68,9 +58,8 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     BOOL enabled
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetMovementEnabled(Context context, Val[] ps)
+    public static Val SetMovementEnabled(Context context, bool enabled)
     {
-      bool enabled = (bool)ps[0];
       context.Engine.PlayerInfo.IsMovementControlsEnabled = enabled;
       return Val.NULL;
     }
@@ -84,9 +73,8 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     BOOL enabled
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetAI(Context context, Val[] ps)
+    public static Val SetAI(Context context, bool enabled)
     {
-      bool enabled = (bool)ps[0];
       context.Engine.PlayerInfo.PlayerAIEnabled = enabled;
       return Val.NULL;
     }
@@ -100,9 +88,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     INT lives
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetLives(Context context, Val[] ps)
+    public static Val SetLives(Context context, int lives)
     {
-      context.Engine.PlayerInfo.Lives = (int)ps[0];
+      context.Engine.PlayerInfo.Lives = lives;
       return Val.NULL;
     }
 
@@ -110,12 +98,8 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// Decrements 1 life from the player
     /// </summary>
     /// <param name="context">The game context</param>
-    /// <param name="ps">
-    ///   Parameters: 
-    ///     NONE
-    /// </param>
     /// <returns>NULL</returns>
-    public static Val DecreaseLives(Context context, Val[] ps)
+    public static Val DecreaseLives(Context context)
     {
       context.Engine.PlayerInfo.Lives--;
       return Val.NULL;

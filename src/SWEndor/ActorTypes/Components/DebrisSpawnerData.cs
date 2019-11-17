@@ -1,5 +1,4 @@
 ﻿using MTV3D65;
-using Primrose.Primitives.ValueTypes;
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.FileFormat.INI;

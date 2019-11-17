@@ -2,7 +2,6 @@
 using SWEndor.Actors;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
-using SWEndor.Scenarios.Scripting.Expressions;
 using Primrose.Primitives.ValueTypes;
 using System;
 using SWEndor.Primitives.Extensions;
@@ -57,10 +56,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.TRUE;
     }
 
-    public static Val UnlockActor(Context context, params Val[] ps)
+    public static Val UnlockActor(Context context, int actorID)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
@@ -68,10 +66,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.TRUE;
     }
 
-    public static Val ClearQueue(Context context, params Val[] ps)
+    public static Val ClearQueue(Context context, int actorID)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
@@ -79,10 +76,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.TRUE;
     }
 
-    public static Val ForceClearQueue(Context context, params Val[] ps)
+    public static Val ForceClearQueue(Context context, int actorID)
     {
-      int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 

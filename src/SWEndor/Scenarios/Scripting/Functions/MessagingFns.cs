@@ -1,6 +1,4 @@
-﻿using MTV3D65;
-using SWEndor.Scenarios.Scripting.Expressions;
-using Primrose.Primitives.ValueTypes;
+﻿using Primrose.Primitives.ValueTypes;
 using Primrose.Expressions;
 
 namespace SWEndor.Scenarios.Scripting.Functions
@@ -11,27 +9,29 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// Prints a message text on the center of the screen
     /// </summary>
     /// <param name="context">The game context</param>
-    /// <param name="ps">
-    ///   Parameters: 
-    ///     STRING text, 
-    ///     INT expiretime, 
-    ///     FLOAT3 color,
-    ///     optional INT priority
-    /// </param>
+    /// <param name="text"></param>
+    /// <param name="expireTime"></param>
+    /// <param name="vec_color"></param>
     /// <returns>NULL</returns>
-    public static Val MessageText(Context context, params Val[] ps)
+    public static Val MessageText(Context context, string text, float expireTime, float3 vec_color)
     {
-      string text = (string)ps[0];
-      float expiretime = (int)ps[1];
-      COLOR color = new COLOR((float3)ps[2]);
+      COLOR color = new COLOR(vec_color);
+      context.Engine.Screen2D.MessageText(text, expireTime, color);
+      return Val.NULL;
+    }
 
-      if (ps.Length <= 3)
-        context.Engine.Screen2D.MessageText(text, expiretime, color);
-      else
-      {
-        int priority = (int)ps[3];
-        context.Engine.Screen2D.MessageText(text, expiretime, color, priority);
-      }
+    /// <summary>
+    /// Prints a message text on the center of the screen
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <param name="text"></param>
+    /// <param name="expireTime"></param>
+    /// <param name="vec_color"></param>
+    /// <returns>NULL</returns>
+    public static Val MessageText(Context context, string text, float expireTime, float3 vec_color, int priority)
+    {
+      COLOR color = new COLOR(vec_color);
+      context.Engine.Screen2D.MessageText(text, expireTime, color, priority);
       return Val.NULL;
     }
   }

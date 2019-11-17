@@ -2,7 +2,6 @@
 using SWEndor.ActorTypes;
 using SWEndor.ExplosionTypes;
 using Primrose.Primitives;
-using Primrose.Primitives.Extensions;
 using SWEndor.ProjectileTypes;
 using SWEndor.Primitives.Extensions;
 

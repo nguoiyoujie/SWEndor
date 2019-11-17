@@ -1,13 +1,6 @@
 ﻿using MTV3D65;
-using SWEndor.AI.Actions;
-using SWEndor.Actors;
-using SWEndor.AI;
 using SWEndor.ActorTypes.Components;
-using SWEndor.Core;
-using SWEndor.ExplosionTypes;
-using SWEndor.Explosions;
 using SWEndor.Models;
-using SWEndor.Projectiles;
 
 namespace SWEndor.ProjectileTypes.Instances
 {

@@ -1,5 +1,4 @@
 ﻿using Primrose.Expressions;
-using SWEndor.Scenarios.Scripting.Expressions;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
@@ -14,9 +13,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     FLOAT score
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetScorePerLife(Context context, Val[] ps)
+    public static Val SetScorePerLife(Context context, float score)
     {
-      context.Engine.PlayerInfo.ScorePerLife = (float)ps[0];
+      context.Engine.PlayerInfo.ScorePerLife = score;
       return Val.NULL;
     }
 
@@ -29,9 +28,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     FLOAT score
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetScoreForNextLife(Context context, Val[] ps)
+    public static Val SetScoreForNextLife(Context context, float score)
     {
-      context.Engine.PlayerInfo.ScoreForNextLife = (float)ps[0];
+      context.Engine.PlayerInfo.ScoreForNextLife = score;
       return Val.NULL;
     }
 
@@ -44,7 +43,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     NONE
     /// </param>
     /// <returns>NULL</returns>
-    public static Val ResetScore(Context context, Val[] ps)
+    public static Val ResetScore(Context context)
     {
       context.Engine.PlayerInfo.Score.Reset();
       return Val.NULL;

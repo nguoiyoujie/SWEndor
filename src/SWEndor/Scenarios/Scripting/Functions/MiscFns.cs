@@ -1,5 +1,4 @@
 ﻿using Primrose.Expressions;
-using SWEndor.Scenarios.Scripting.Expressions;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
@@ -9,14 +8,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// Gets the element of an array. This is functionally equivalent to the indexer 'array[i]', except that this function cannot be used on float2/float3/float4
     /// </summary>
     /// <param name="context">The game context</param>
-    /// <param name="ps">
-    ///   Parameters: 
-    ///     BOOL[]/INT[]/FLOAT[] array
-    /// </param>
-    /// <returns>BOOL/INT/FLOAT, depending on the input</returns>
-    public static Val IsNull(AContext context, Val[] ps)
+    public static Val IsNull(AContext context, Val value)
     {
-      return new Val(ps[0].IsNull);
+      return new Val(value.IsNull);
     }
 
     /// <summary>
@@ -41,5 +35,10 @@ namespace SWEndor.Scenarios.Scripting.Functions
 
       return Val.NULL;
     }
+
+    public static Val GetArrayElement(Context context, bool[] array, int index) { return new Val(array[index]); }
+    public static Val GetArrayElement(Context context, int[] array, int index) { return new Val(array[index]); }
+    public static Val GetArrayElement(Context context, float[] array, int index) { return new Val(array[index]); }
+    public static Val GetArrayElement(Context context, string[] array, int index) { return new Val(array[index]); }
   }
 }

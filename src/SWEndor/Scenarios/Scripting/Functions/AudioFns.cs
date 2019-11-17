@@ -1,48 +1,60 @@
 ﻿using Primrose.Expressions;
-using SWEndor.Scenarios.Scripting.Expressions;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
   public static class AudioFns
   {
-    public static Val SetMusic(Context context, Val[] ps)
+    public static Val SetMusic(Context context, string piece_name)
     {
-      if (ps.Length == 1)
-        return new Val(Globals.Engine.SoundManager.SetMusic((string)ps[0]));
-      else if (ps.Length == 2)
-        return new Val(Globals.Engine.SoundManager.SetMusic((string)ps[0], (bool)ps[1]));
-      else
-        return new Val(Globals.Engine.SoundManager.SetMusic((string)ps[0], (bool)ps[1], (uint)(int)ps[2]));
+      return new Val(Globals.Engine.SoundManager.SetMusic(piece_name));
     }
 
-    public static Val SetMusicLoop(Context context, Val[] ps)
+    public static Val SetMusic(Context context, string piece_name, bool loop)
     {
-      if (ps.Length == 1)
-        Globals.Engine.SoundManager.SetMusicLoop((string)ps[0]);
-      else
-        Globals.Engine.SoundManager.SetMusicLoop((string)ps[0], (uint)(int)ps[1]);
-      return Val.TRUE;
+      return new Val(Globals.Engine.SoundManager.SetMusic(piece_name, loop));
     }
 
-    public static Val SetMusicDyn(Context context, Val[] ps)
+    public static Val SetMusic(Context context, string piece_name, bool loop, int position_ms)
     {
-      Globals.Engine.SoundManager.SetMusicDyn((string)ps[0]);
-      return Val.TRUE;
+      return new Val(Globals.Engine.SoundManager.SetMusic(piece_name, loop, (uint)position_ms));
     }
 
-    public static Val SetMusicStop(Context context, Val[] ps)
+    public static Val SetMusic(Context context, string piece_name, bool loop, int position_ms, int end_ms)
+    {
+      return new Val(Globals.Engine.SoundManager.SetMusic(piece_name, loop, (uint)position_ms, (uint)end_ms));
+    }
+
+    public static Val SetMusicLoop(Context context, string piece_name)
+    {
+      Globals.Engine.SoundManager.SetMusicLoop(piece_name);
+      return Val.NULL;
+    }
+
+    public static Val SetMusicLoop(Context context, string piece_name, int position_ms)
+    {
+      Globals.Engine.SoundManager.SetMusicLoop(piece_name, (uint)position_ms);
+      return Val.NULL;
+    }
+
+    public static Val SetMusicDyn(Context context, string piece_name)
+    {
+      Globals.Engine.SoundManager.SetMusicDyn(piece_name);
+      return Val.NULL;
+    }
+
+    public static Val SetMusicStop(Context context)
     {
       Globals.Engine.SoundManager.SetMusicStop();
       return Val.NULL;
     }
 
-    public static Val SetMusicPause(Context context, Val[] ps)
+    public static Val SetMusicPause(Context context)
     {
       Globals.Engine.SoundManager.SetMusicPause();
       return Val.NULL;
     }
 
-    public static Val SetMusicResume(Context context, Val[] ps)
+    public static Val SetMusicResume(Context context)
     {
       Globals.Engine.SoundManager.SetMusicResume();
       return Val.NULL;

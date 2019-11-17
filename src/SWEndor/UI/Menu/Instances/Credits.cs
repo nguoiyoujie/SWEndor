@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using Primrose.Primitives.Extensions;
 using System.IO;
-using System.Text;
 
 namespace SWEndor.UI.Menu.Pages
 {

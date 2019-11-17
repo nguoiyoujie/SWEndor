@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SWEndor.Actors
+﻿namespace SWEndor.Actors
 {
   public enum DamageType : byte
   {
