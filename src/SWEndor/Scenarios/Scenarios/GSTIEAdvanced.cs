@@ -170,8 +170,8 @@ namespace SWEndor.Scenarios
         Faction = MainAllyFaction,
         Position = pos + hyperspaceInOffset,
         Rotation = new TV_3DVECTOR(),
-        Actions = new ActionInfo[] { new HyperspaceIn(pos)
-                                           , new Lock() },
+        Actions = new ActionInfo[] { HyperspaceIn.GetOrCreate(pos)
+                                   , Lock.GetOrCreate() },
         Registries = null
       }.Spawn(this);
 
@@ -211,9 +211,9 @@ namespace SWEndor.Scenarios
           Faction = MainAllyFaction,
           Position = v + hyperspaceInOffset,
           Rotation = new TV_3DVECTOR(),
-          Actions = new ActionInfo[] { new HyperspaceIn(v)
-                                           , new Lock()
-                                           , new Wait(15f) },
+          Actions = new ActionInfo[] { HyperspaceIn.GetOrCreate(v)
+                                       , Lock.GetOrCreate()
+                                       , Wait.GetOrCreate(15f) },
           Registries = null
         }.Spawn(this);
       }
@@ -239,10 +239,10 @@ namespace SWEndor.Scenarios
           Faction = MainAllyFaction,
           Position = v + hyperspaceInOffset,
           Rotation = new TV_3DVECTOR(),
-          Actions = new ActionInfo[] { new HyperspaceIn(v)
-                                           , new Move(nv, ainfo.MoveData.MaxSpeed)
-                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), 0)
-                                           , new Lock() },
+          Actions = new ActionInfo[] { HyperspaceIn.GetOrCreate(v)
+                                           , Move.GetOrCreate(nv, ainfo.MoveData.MaxSpeed)
+                                           , Rotate.GetOrCreate(nv - new TV_3DVECTOR(0, 0, 20000), 0)
+                                           , Lock.GetOrCreate() },
           Registries = new string[] { "CriticalAllies" }
         }.Spawn(this);
       }
@@ -269,10 +269,10 @@ namespace SWEndor.Scenarios
           Faction = MainAllyFaction,
           Position = v + hyperspaceInOffset,
           Rotation = new TV_3DVECTOR(),
-          Actions = new ActionInfo[] { new HyperspaceIn(v)
-                                           , new Move(nv, ainfo.MoveData.MaxSpeed)
-                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), 0)
-                                           , new Lock() },
+          Actions = new ActionInfo[] { HyperspaceIn.GetOrCreate(v)
+                                           , Move.GetOrCreate(nv, ainfo.MoveData.MaxSpeed)
+                                           , Rotate.GetOrCreate(nv - new TV_3DVECTOR(0, 0, 20000), 0)
+                                           , Lock.GetOrCreate() },
           Registries = new string[] { "CriticalAllies" }
         }.Spawn(this);
       }

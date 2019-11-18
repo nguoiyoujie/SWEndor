@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using Primrose.Primitives.Factories;
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Primitives.Extensions;
@@ -7,13 +8,33 @@ namespace SWEndor.AI.Actions
 {
   internal class ForcedMove : ActionInfo
   {
-    public ForcedMove(TV_3DVECTOR target_position, float speed, float close_enough_distance = -1, float expire_time = 999999) : base("ForcedMove")
+    internal static int _count = 0;
+    internal static ObjectPool<ForcedMove> _pool = new ObjectPool<ForcedMove>(() => { return new ForcedMove(); }, (a) => { a.Reset(); });
+
+    private ForcedMove() : base("ForcedMove") { CanInterrupt = false; }
+
+    public static ForcedMove GetOrCreate(TV_3DVECTOR target_position, float speed, float close_enough_distance = -1, float expire_time = 999999)
     {
-      Target_Position = target_position;
-      Target_Speed = speed;
-      CloseEnoughDistance = close_enough_distance;
-      WaitTime = expire_time;
-      CanInterrupt = false;
+      ForcedMove h = _pool.GetNew();
+      _count++;
+      h.Target_Position = target_position;
+      h.Target_Speed = speed;
+      h.CloseEnoughDistance = close_enough_distance;
+      h.WaitTime = expire_time;
+      h.IsDisposed = false;
+      return h;
+    }
+
+    public override void Reset()
+    {
+      base.Reset();
+    }
+
+    public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
     }
 
     // parameters

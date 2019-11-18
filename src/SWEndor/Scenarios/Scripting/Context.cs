@@ -15,13 +15,6 @@ namespace SWEndor.Scenarios.Scripting
   /// <returns>A Val value for further processing</returns>
   public delegate Val FunctionDelegate(Context context, Val[] param);
 
-
-
-
-
-
-
-
   /// <summary>
   /// Provides the game context for the script
   /// </summary>
@@ -60,7 +53,6 @@ namespace SWEndor.Scenarios.Scripting
 
         return vfs.Execute(caller, _funcName, this, param);
       }
-      //throw new EvalException(caller, "The function '{0}' does not exist!".F(_funcName));
       return fd.Invoke(this, param);
     }
 
@@ -218,12 +210,7 @@ namespace SWEndor.Scenarios.Scripting
 
       // Misc
       AddFunc("IsNull", new ValFunc<Val>(MiscFns.IsNull));
-      Functions.Add("GetArrayElement", MiscFns.GetArrayElement);
-
-      //AddFunc("GetArrayElement", new ValFunc<bool[], int>(MiscFns.GetArrayElement));
-      //AddFunc("GetArrayElement", new ValFunc<int[], int>(MiscFns.GetArrayElement));
-      //AddFunc("GetArrayElement", new ValFunc<float[], int>(MiscFns.GetArrayElement));
-      //AddFunc("GetArrayElement", new ValFunc<string[], int>(MiscFns.GetArrayElement));
+      AddFunc("GetArrayElement", new ValFunc<Val, int>(MiscFns.GetArrayElement));
     }
   }
 }

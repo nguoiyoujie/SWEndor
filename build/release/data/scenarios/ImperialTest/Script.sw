@@ -380,7 +380,7 @@ enemybeginspawn:
 	
 enemybeginspawn2:
 	Actor.SetProperty(glory, "Spawner.SpawnTypes", {"TIESA"});
-	AddEvent(10, "enemybeginspawn2");
+	AddEvent(10, "enemybeginspawn3");
 
 	
 enemybeginspawn3:
@@ -591,7 +591,7 @@ spawn_escapeCORV:
 	float3 pos = Actor.GetGlobalPosition(gloryhangar);
 	float3 rot = Actor.GetGlobalRotation(glory);
 	rot = {rot[0] + 45, rot[1], rot[2]};
-	int esccorv = Actor.Spawn("CORV", "CRV Vorknkx", "Traitors", "CRV VORKNKX", 0, pos, rot, "CriticalEnemies");
+	int esccorv = Actor.Spawn("CORV", "CRV VORKNKX", "Traitors", "VORKNKX", 0, pos, rot, "CriticalEnemies");
 	Actor.SetProperty(esccorv, "DamageModifier", 0.5);
 	Actor.SetProperty(greywolf, "Spawner.SpawnTypes", {"TIE","TIE","TIEI","TIESA","TIESA"});
 	AI.QueueLast(esccorv, "wait", 2.5);

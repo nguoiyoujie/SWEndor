@@ -1,14 +1,35 @@
-﻿using SWEndor.Actors;
+﻿using Primrose.Primitives.Factories;
+using SWEndor.Actors;
 using SWEndor.Core;
 
 namespace SWEndor.AI.Actions
 {
   internal class EnableSpawn : ActionInfo
   {
-    public EnableSpawn(bool enabled) : base("Enable Spawn")
+    internal static int _count = 0;
+    internal static ObjectPool<EnableSpawn> _pool = new ObjectPool<EnableSpawn>(() => { return new EnableSpawn(); }, (a) => { a.Reset(); });
+
+    private EnableSpawn() : base("EnableSpawn") { CanInterrupt = false; }
+
+    public static EnableSpawn GetOrCreate(bool enabled)
     {
-      Enabled = enabled;
-      CanInterrupt = false;
+      EnableSpawn h = _pool.GetNew();
+      _count++;
+      h.Enabled = enabled;
+      h.IsDisposed = false;
+      return h;
+    }
+
+    public override void Reset()
+    {
+      base.Reset();
+    }
+
+    public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
     }
 
     private bool Enabled;

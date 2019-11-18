@@ -1,4 +1,5 @@
 ﻿using Primrose.Expressions;
+using System;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
@@ -22,23 +23,19 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     BOOL[]/INT[]/FLOAT[] array
     /// </param>
     /// <returns>BOOL/INT/FLOAT, depending on the input</returns>
-    public static Val GetArrayElement(Context context, Val[] ps)
+    public static Val GetArrayElement(Context context, Val array, int index)
     {
-      if (ps[0].Type == ValType.BOOL_ARRAY)
-        return new Val(((bool[])ps[0])[(int)ps[1]]);
+      if (array.Type == ValType.BOOL_ARRAY)
+        return new Val(((bool[])array)[index]);
+      else if (array.Type == ValType.INT_ARRAY)
+        return new Val(((int[])array)[index]);
+      else if (array.Type == ValType.FLOAT_ARRAY)
+        return new Val(((float[])array)[index]);
+      else if (array.Type == ValType.STRING_ARRAY)
+        return new Val(((string[])array)[index]);
 
-      if (ps[0].Type == ValType.INT_ARRAY)
-        return new Val(((int[])ps[0])[(int)ps[1]]);
-
-      if (ps[0].Type == ValType.FLOAT_ARRAY)
-        return new Val(((float[])ps[0])[(int)ps[1]]);
-
-      return Val.NULL;
+      else
+        throw new Exception("Attempted to apply GetArrayElement on an non-array object.");
     }
-
-    public static Val GetArrayElement(Context context, bool[] array, int index) { return new Val(array[index]); }
-    public static Val GetArrayElement(Context context, int[] array, int index) { return new Val(array[index]); }
-    public static Val GetArrayElement(Context context, float[] array, int index) { return new Val(array[index]); }
-    public static Val GetArrayElement(Context context, string[] array, int index) { return new Val(array[index]); }
   }
 }

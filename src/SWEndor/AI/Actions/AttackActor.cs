@@ -110,7 +110,7 @@ namespace SWEndor.AI.Actions
         }
         else if (!(target.TypeInfo.AIData.TargetType.Intersects(TargetType.MUNITION)))
         {
-          actor.QueueFirst(new Move(MakeAltPosition(engine, actor, target.Parent), actor.MoveData.MaxSpeed));
+          actor.QueueFirst(Move.GetOrCreate(MakeAltPosition(engine, actor, target.Parent), actor.MoveData.MaxSpeed));
         }
       }
 

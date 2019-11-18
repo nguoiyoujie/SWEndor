@@ -75,7 +75,7 @@ namespace SWEndor
       acinfo.Faction = ainfo.Faction;
       ActorInfo a = engine.ActorFactory.Create(acinfo);
       ainfo.AddChild(a);
-      a.QueueNext(new Lock());
+      a.QueueNext(Lock.GetOrCreate());
 
       a.SetPlayer();
       engine.PlayerCameraInfo.SetPlayerLook();
@@ -127,7 +127,7 @@ namespace SWEndor
             ActorInfo a = engine.ActorFactory.Create(acinfo);
             a.Squad = squad;
             ainfo.AddChild(a);
-            a.QueueFirst(new Lock());
+            a.QueueFirst(Lock.GetOrCreate());
 
             //float m1 = p.MoveData.Speed * SpawnMoveDelay * p.Scale;
             //float m2 = SpawnMoveDelay * p.Scale;
@@ -135,7 +135,7 @@ namespace SWEndor
             //                                       , SpawnSpeedPositioningMult.y * m1 + SpawnManualPositioningMult.y * m2
             //                                       , SpawnSpeedPositioningMult.z * m1 + SpawnManualPositioningMult.z * m2);
 
-            //a.QueueNext(new Move(v, a.TypeInfo.MoveLimitData.MinSpeed));
+            //a.QueueNext(Move.GetOrCreate(v, a.TypeInfo.MoveLimitData.MinSpeed));
           }
 
           SpawnMoveTime = engine.Game.GameTime + SpawnMoveDelay;

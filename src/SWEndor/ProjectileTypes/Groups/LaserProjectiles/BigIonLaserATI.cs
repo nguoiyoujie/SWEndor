@@ -57,8 +57,8 @@ namespace SWEndor.ProjectileTypes.Instances
       if (hitby.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
       {
         hitby.ForceClearQueue();
-        hitby.QueueNext(new Rotate(hitby.GetRelativePositionFUR(1000, -800, -200), hitby.MoveData.MaxSpeed, 0.1f, false));
-        hitby.QueueNext(new Lock());
+        hitby.QueueNext(Rotate.GetOrCreate(hitby.GetRelativePositionFUR(1000, -800, -200), hitby.MoveData.MaxSpeed, 0.1f, false));
+        hitby.QueueNext(Lock.GetOrCreate());
       }
     }
     */

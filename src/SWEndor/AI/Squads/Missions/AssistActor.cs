@@ -29,7 +29,7 @@ namespace SWEndor.AI.Squads.Missions
       }
 
       // follow
-      return new Actions.FollowActor(Target_ActorID);
+      return Actions.FollowActor.GetOrCreate(Target_ActorID);
     }
 
     public override void Process(Engine engine, Squadron squad)

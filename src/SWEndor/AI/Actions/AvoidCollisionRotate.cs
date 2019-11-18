@@ -34,6 +34,24 @@ namespace SWEndor.AI.Actions
       return h;
     }
 
+    public override void Reset()
+    {
+      base.Reset();
+      Impact_Position = new TV_3DVECTOR();
+      Target_Position = new TV_3DVECTOR();
+      Normal = new TV_3DVECTOR();
+      calcAvoidAngle = false;
+      AvoidanceAngle = 90;
+      CloseEnoughAngle = 0.1f;
+    }
+
+    public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
+    }
+
     public override string ToString()
     {
       return string.Join(",", new string[]
@@ -116,24 +134,6 @@ namespace SWEndor.AI.Actions
       owner.Engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref avoidvec, impact_normal - owner.Engine.TrueVision.TVMathLibrary.VDotProduct(impact_normal, travelling_vec) * travelling_vec);
       float val = owner.Engine.TrueVision.TVMathLibrary.VDotProduct(avoidvec, xzdir);
       return owner.Engine.TrueVision.TVMathLibrary.ACos(val);
-    }
-
-    public override void Reset()
-    {
-      base.Reset();
-      Impact_Position = new TV_3DVECTOR();
-      Target_Position = new TV_3DVECTOR();
-      Normal = new TV_3DVECTOR();
-      calcAvoidAngle = false;
-      AvoidanceAngle = 90;
-      CloseEnoughAngle = 0.1f;
-    }
-
-    public override void Return()
-    {
-      base.Return();
-      _pool.Return(this);
-      _count--;
     }
   }
 }

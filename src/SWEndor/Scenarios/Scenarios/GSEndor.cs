@@ -518,9 +518,9 @@ namespace SWEndor.Scenarios
       creationTime += creationDelay;
       faction = FactionInfo.Factory.Get("Rebels_Falcon");
       position = new TV_3DVECTOR(0, -10, 350);
-      actions = new ActionInfo[] { new HyperspaceIn(position)
-                                 , new Lock()
-                                 , new Move(new TV_3DVECTOR(position.x +Engine.Random.Next(-5, 5), position.y +Engine.Random.Next(-5, 5), -position.z - 1500)
+      actions = new ActionInfo[] { HyperspaceIn.GetOrCreate(position)
+                                 , Lock.GetOrCreate()
+                                 , Move.GetOrCreate(new TV_3DVECTOR(position.x +Engine.Random.Next(-5, 5), position.y +Engine.Random.Next(-5, 5), -position.z - 1500)
                                                                   , type.MoveLimitData.MaxSpeed
                                                                   , type.AIData.Move_CloseEnough)
                                  };
@@ -553,9 +553,9 @@ namespace SWEndor.Scenarios
       creationTime += creationDelay;
       faction = FactionInfo.Factory.Get("Rebels_Wedge");
       position = new TV_3DVECTOR(70, 20, 250);
-      actions = new ActionInfo[] { new HyperspaceIn(position)
-                                 , new Lock()
-                                 , new Move(new TV_3DVECTOR(position.x +Engine.Random.Next(-5, 5), position.y +Engine.Random.Next(-5, 5), -position.z - 1500)
+      actions = new ActionInfo[] { HyperspaceIn.GetOrCreate(position)
+                                 , Lock.GetOrCreate()
+                                 , Move.GetOrCreate(new TV_3DVECTOR(position.x +Engine.Random.Next(-5, 5), position.y +Engine.Random.Next(-5, 5), -position.z - 1500)
                                                                   , type.MoveLimitData.MaxSpeed
                                                                   , type.AIData.Move_CloseEnough)
                                  };
@@ -609,9 +609,9 @@ namespace SWEndor.Scenarios
       sidebar_name = "";
       creationTime += creationDelay;
       faction = MainAllyFaction;
-      actions = new ActionInfo[] { new HyperspaceIn(position)
-                                 , new Lock()
-                                 , new Move(new TV_3DVECTOR(position.x +Engine.Random.Next(-5, 5), position.y +Engine.Random.Next(-5, 5), -position.z - 1500)
+      actions = new ActionInfo[] { HyperspaceIn.GetOrCreate(position)
+                                 , Lock.GetOrCreate()
+                                 , Move.GetOrCreate(new TV_3DVECTOR(position.x +Engine.Random.Next(-5, 5), position.y +Engine.Random.Next(-5, 5), -position.z - 1500)
                                                                   , type.MoveLimitData.MaxSpeed
                                                                   , type.AIData.Move_CloseEnough)
                                  };
@@ -642,17 +642,17 @@ namespace SWEndor.Scenarios
       faction = MainAllyFaction;
       position = new TV_3DVECTOR(1000, -300, 1000);
       TV_3DVECTOR nv = new TV_3DVECTOR(position.x + ((position.x > 0) ? 5 : -5), position.y, -position.z - 3000);
-      actions = new ActionInfo[] { new HyperspaceIn(position)
-                                 , new Lock()
-                                 , new Move(nv
+      actions = new ActionInfo[] { HyperspaceIn.GetOrCreate(position)
+                                 , Lock.GetOrCreate()
+                                 , Move.GetOrCreate(nv
                                                   , type.MoveLimitData.MaxSpeed
                                                   , type.AIData.Move_CloseEnough
                                                   , false)
-                                 , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000)
+                                 , Rotate.GetOrCreate(nv - new TV_3DVECTOR(0, 0, 20000)
                                                     , type.MoveLimitData.MinSpeed
                                                     , type.AIData.Move_CloseEnough
                                                     , false)
-                                 , new Lock()
+                                 , Lock.GetOrCreate()
                                  };
 
       registries = new string[] { "CriticalAllies" };
@@ -747,9 +747,9 @@ namespace SWEndor.Scenarios
         position = (TV_3DVECTOR)spawn[0];
         if (type.AIData.TargetType.Has(TargetType.FIGHTER))
         {
-          actions = new ActionInfo[] { new HyperspaceIn(position)
-                                 , new Lock()
-                                 , new Move(new TV_3DVECTOR(position.x +Engine.Random.Next(-5, 5), position.y +Engine.Random.Next(-5, 5), -position.z - 1500)
+          actions = new ActionInfo[] { HyperspaceIn.GetOrCreate(position)
+                                 , Lock.GetOrCreate()
+                                 , Move.GetOrCreate(new TV_3DVECTOR(position.x +Engine.Random.Next(-5, 5), position.y +Engine.Random.Next(-5, 5), -position.z - 1500)
                                                                   , type.MoveLimitData.MaxSpeed
                                                                   , type.AIData.Move_CloseEnough)
                                  };
@@ -766,17 +766,17 @@ namespace SWEndor.Scenarios
             nvd = (float)spawn[2];
 
           nv = new TV_3DVECTOR(position.x + ((position.x > 0) ? 5 : -5), position.y, -position.z - nvd);
-          actions = new ActionInfo[] { new HyperspaceIn(position)
-                                 , new Lock()
-                                 , new Move(nv
+          actions = new ActionInfo[] { HyperspaceIn.GetOrCreate(position)
+                                 , Lock.GetOrCreate()
+                                 , Move.GetOrCreate(nv
                                                   , type.MoveLimitData.MaxSpeed
                                                   , type.AIData.Move_CloseEnough
                                                   , false)
-                                 , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000)
+                                 , Rotate.GetOrCreate(nv - new TV_3DVECTOR(0, 0, 20000)
                                                     , type.MoveLimitData.MinSpeed
                                                     , type.AIData.Move_CloseEnough
                                                     , false)
-                                 , new Lock()
+                                 , Lock.GetOrCreate()
                                  };
 
           if (type is TransportATI)
@@ -837,11 +837,11 @@ namespace SWEndor.Scenarios
       if (a != null)
       {
         a.ForceClearQueue();
-        a.QueueLast(new Rotate(a.GetGlobalPosition() + new TV_3DVECTOR(500, 0, -20000)
+        a.QueueLast(Rotate.GetOrCreate(a.GetGlobalPosition() + new TV_3DVECTOR(500, 0, -20000)
                                               , a.MoveData.MaxSpeed
                                               , a.TypeInfo.AIData.Move_CloseEnough));
-        a.QueueLast(new HyperspaceOut());
-        a.QueueLast(new Delete());
+        a.QueueLast(HyperspaceOut.GetOrCreate());
+        a.QueueLast(Delete.GetOrCreate());
       }
     }
 
@@ -894,9 +894,9 @@ namespace SWEndor.Scenarios
         if (actor != null)
         {
           actor.ForceClearQueue();
-          actor.QueueLast(new Rotate(actor.GetGlobalPosition() - new TV_3DVECTOR(actor.GetGlobalPosition().x * 0.35f, 0, Math.Abs(actor.GetGlobalPosition().x) + 1500)
+          actor.QueueLast(Rotate.GetOrCreate(actor.GetGlobalPosition() - new TV_3DVECTOR(actor.GetGlobalPosition().x * 0.35f, 0, Math.Abs(actor.GetGlobalPosition().x) + 1500)
                                                     , actor.MoveData.MinSpeed));
-          actor.QueueLast(new Lock());
+          actor.QueueLast(Lock.GetOrCreate());
         }
       }
     }
@@ -909,11 +909,11 @@ namespace SWEndor.Scenarios
         if (actor != null)
         {
           actor.ForceClearQueue();
-          actor.QueueLast(new Move(actor.GetGlobalPosition() - new TV_3DVECTOR(actor.GetGlobalPosition().x * 0.35f, 0, Math.Abs(actor.GetGlobalPosition().x) + 1500)
+          actor.QueueLast(Move.GetOrCreate(actor.GetGlobalPosition() - new TV_3DVECTOR(actor.GetGlobalPosition().x * 0.35f, 0, Math.Abs(actor.GetGlobalPosition().x) + 1500)
                                                     , actor.MoveData.MaxSpeed));
-          actor.QueueLast(new Rotate(actor.GetGlobalPosition() - new TV_3DVECTOR(0, 0, 20000)
+          actor.QueueLast(Rotate.GetOrCreate(actor.GetGlobalPosition() - new TV_3DVECTOR(0, 0, 20000)
                                                     , actor.MoveData.MinSpeed));
-          actor.QueueLast(new Lock());
+          actor.QueueLast(Lock.GetOrCreate());
         }
       }
     }
@@ -957,9 +957,9 @@ namespace SWEndor.Scenarios
       {
         falcon.SetArmor(DamageType.ALL, 0);
         falcon.ForceClearQueue();
-        falcon.QueueLast(new ForcedMove(new TV_3DVECTOR(0, 0, 20000), falcon.MoveData.MaxSpeed, -1));
-        falcon.QueueLast(new HyperspaceOut());
-        falcon.QueueLast(new Delete());
+        falcon.QueueLast(ForcedMove.GetOrCreate(new TV_3DVECTOR(0, 0, 20000), falcon.MoveData.MaxSpeed, -1));
+        falcon.QueueLast(HyperspaceOut.GetOrCreate());
+        falcon.QueueLast(Delete.GetOrCreate());
         m_FalconID = -1;
       }
 
@@ -968,9 +968,9 @@ namespace SWEndor.Scenarios
       {
         wedge.SetArmor(DamageType.NORMAL, 0);
         wedge.ForceClearQueue();
-        wedge.QueueLast(new ForcedMove(new TV_3DVECTOR(0, 0, 20000), wedge.MoveData.MaxSpeed, -1));
-        wedge.QueueLast(new HyperspaceOut());
-        wedge.QueueLast(new Delete());
+        wedge.QueueLast(ForcedMove.GetOrCreate(new TV_3DVECTOR(0, 0, 20000), wedge.MoveData.MaxSpeed, -1));
+        wedge.QueueLast(HyperspaceOut.GetOrCreate());
+        wedge.QueueLast(Delete.GetOrCreate());
         m_WedgeID = -1;
       }
     }
@@ -984,7 +984,7 @@ namespace SWEndor.Scenarios
 
       ActorInfo wedge = Engine.ActorFactory.Get(m_WedgeID);
       wedge.UnlockOne();
-      wedge.QueueFirst(new Wait(0.5f));
+      wedge.QueueFirst(Wait.GetOrCreate(0.5f));
       wedge.MoveData.FreeSpeed = false;
       wedge.MoveData.Speed = wedge.MoveData.MaxSpeed;
 
@@ -994,7 +994,7 @@ namespace SWEndor.Scenarios
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
 
         actor.UnlockOne();
-        actor.QueueFirst(new Wait(time));
+        actor.QueueFirst(Wait.GetOrCreate(time));
         actor.MoveData.FreeSpeed = false;
         actor.MoveData.Speed = actor.MoveData.MaxSpeed;
         time = (float)Engine.Random.NextDouble() * 3f;
@@ -1031,7 +1031,7 @@ namespace SWEndor.Scenarios
             ActorInfo homeone = Engine.ActorFactory.Get(m_HomeOneID);
 
             actor.ClearQueue();
-            actor.QueueLast( new Move(homeone.GetGlobalPosition() + new TV_3DVECTOR(Engine.Random.Next(-2500, 2500), Engine.Random.Next(-50, 50), Engine.Random.Next(-2500, 2500))
+            actor.QueueLast( Move.GetOrCreate(homeone.GetGlobalPosition() + new TV_3DVECTOR(Engine.Random.Next(-2500, 2500), Engine.Random.Next(-50, 50), Engine.Random.Next(-2500, 2500))
                            , actor.MoveData.MaxSpeed));
           }
         }
@@ -1069,7 +1069,7 @@ namespace SWEndor.Scenarios
         ActorInfo homeone = Engine.ActorFactory.Get(m_HomeOneID);
 
         actor.ClearQueue();
-        actor.QueueLast(new Move(homeone.GetGlobalPosition() + new TV_3DVECTOR(Engine.Random.Next(-2500, 2500)
+        actor.QueueLast(Move.GetOrCreate(homeone.GetGlobalPosition() + new TV_3DVECTOR(Engine.Random.Next(-2500, 2500)
                     , Engine.Random.Next(-50, 50)
                     , Engine.Random.Next(-2500, 2500))
                     , actor.MoveData.MaxSpeed));
@@ -1798,10 +1798,10 @@ namespace SWEndor.Scenarios
         Rotation = new TV_3DVECTOR(),
         Actions = new ActionInfo[]
                            {
-                             new HyperspaceIn(position)
-                             , new Move(new TV_3DVECTOR(position.x, position.y, -4000), atinfo.MoveLimitData.MaxSpeed)
-                             , new Rotate(position + new TV_3DVECTOR(0, 0, 22500), atinfo.MoveLimitData.MinSpeed)
-                             , new Lock()
+                             HyperspaceIn.GetOrCreate(position)
+                             , Move.GetOrCreate(new TV_3DVECTOR(position.x, position.y, -4000), atinfo.MoveLimitData.MaxSpeed)
+                             , Rotate.GetOrCreate(position + new TV_3DVECTOR(0, 0, 22500), atinfo.MoveLimitData.MinSpeed)
+                             , Lock.GetOrCreate()
                            },
         Registries = new string[] { "CriticalEnemies" }
       };
@@ -2029,7 +2029,7 @@ namespace SWEndor.Scenarios
 
             m_ADSLS.ForceClearQueue();
             m_ADSLS.QueueNext(AttackActor.GetOrCreate(tid));
-            m_ADSLS.QueueNext(new Lock());
+            m_ADSLS.QueueNext(Lock.GetOrCreate());
 
             t.DestroyedEvents += DeathStarKill_Effect;
             Manager.AddEvent(0.1f, Scene_DeathStarCam);
@@ -2212,7 +2212,7 @@ namespace SWEndor.Scenarios
       if (player != null)
       {
         m_Player_pos = player.Position;
-        player.QueueFirst(new Lock());
+        player.QueueFirst(Lock.GetOrCreate());
         player.Position = new TV_3DVECTOR(30, 0, -100000);
         m_Player_PrimaryWeaponN = PlayerInfo.PrimaryWeaponN;
         m_Player_SecondaryWeaponN = PlayerInfo.SecondaryWeaponN;

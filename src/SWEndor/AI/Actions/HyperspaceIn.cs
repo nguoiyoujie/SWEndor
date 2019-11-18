@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using Primrose.Primitives.Factories;
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Primitives.Extensions;
@@ -7,10 +8,30 @@ namespace SWEndor.AI.Actions
 {
   internal class HyperspaceIn : ActionInfo
   {
-    public HyperspaceIn(TV_3DVECTOR target_position) : base("HyperspaceIn")
+    internal static int _count = 0;
+    internal static ObjectPool<HyperspaceIn> _pool = new ObjectPool<HyperspaceIn>(() => { return new HyperspaceIn(); }, (a) => { a.Reset(); });
+
+    private HyperspaceIn() : base("HyperspaceIn") { CanInterrupt = false; }
+
+    public static HyperspaceIn GetOrCreate(TV_3DVECTOR target_position)
     {
-      Target_Position = target_position;
-      CanInterrupt = false;
+      HyperspaceIn h = _pool.GetNew();
+      _count++;
+      h.Target_Position = target_position;
+      h.IsDisposed = false;
+      return h;
+    }
+
+    public override void Reset()
+    {
+      base.Reset();
+    }
+
+    public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
     }
 
     // parameters

@@ -39,6 +39,18 @@ namespace SWEndor.AI.Actions
       return h;
     }
 
+    public override void Reset()
+    {
+      base.Reset();
+    }
+
+    public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
+    }
+
     public override string ToString()
     {
       return string.Join(",", new string[]
@@ -135,22 +147,9 @@ namespace SWEndor.AI.Actions
       if (currtarget != null)
         actor.QueueLast(AttackActor.GetOrCreate(currtarget.ID));
       else
-        actor.QueueLast(new Wait(1));
+        actor.QueueLast(Wait.GetOrCreate(1));
 
       Complete = true;
-    }
-
-    public override void Reset()
-    {
-      base.Reset();
-      m_TargetType = TargetType.ANY;
-    }
-
-    public override void Return()
-    {
-      base.Return();
-      _pool.Return(this);
-      _count--;
     }
   }
 }

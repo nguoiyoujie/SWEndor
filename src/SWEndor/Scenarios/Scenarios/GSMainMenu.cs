@@ -224,7 +224,7 @@ namespace SWEndor.Scenarios
           Faction = MainAllyFaction,
           Position = v + new TV_3DVECTOR(0, 0, Manager.MaxBounds.z),
           Rotation = new TV_3DVECTOR(0, 180, 0),
-          Actions = new ActionInfo[]{ new Wait(18) }
+          Actions = new ActionInfo[]{ Wait.GetOrCreate(18) }
         }.Spawn(this);
 
       }
@@ -248,9 +248,9 @@ namespace SWEndor.Scenarios
           Faction = MainAllyFaction,
           Position = v + new TV_3DVECTOR(0, 0, Manager.MaxBounds.z),
           Rotation = new TV_3DVECTOR(0, 180, 0),
-          Actions = new ActionInfo[] { new Move(nv, at.MoveLimitData.MaxSpeed)
-                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), at.MoveLimitData.MinSpeed)
-                                           , new Lock()
+          Actions = new ActionInfo[] { Move.GetOrCreate(nv, at.MoveLimitData.MaxSpeed)
+                                           , Rotate.GetOrCreate(nv - new TV_3DVECTOR(0, 0, 20000), at.MoveLimitData.MinSpeed)
+                                           , Lock.GetOrCreate()
                                             }
         }.Spawn(this);
         ainfo.SpawnerInfo.Enabled = true;
@@ -277,9 +277,9 @@ namespace SWEndor.Scenarios
           Faction = MainAllyFaction,
           Position = v + new TV_3DVECTOR(0, 0, Manager.MaxBounds.z),
           Rotation = new TV_3DVECTOR(0, 180, 0),
-          Actions = new ActionInfo[] { new Move(nv, at.MoveLimitData.MaxSpeed)
-                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), at.MoveLimitData.MinSpeed)
-                                           , new Lock()
+          Actions = new ActionInfo[] { Move.GetOrCreate(nv, at.MoveLimitData.MaxSpeed)
+                                           , Rotate.GetOrCreate(nv - new TV_3DVECTOR(0, 0, 20000), at.MoveLimitData.MinSpeed)
+                                           , Lock.GetOrCreate()
                                             }
         }.Spawn(this);
       }
@@ -306,9 +306,9 @@ namespace SWEndor.Scenarios
           Faction = MainAllyFaction,
           Position = v + new TV_3DVECTOR(0, 0, Manager.MaxBounds.z),
           Rotation = new TV_3DVECTOR(0, 180, 0),
-          Actions = new ActionInfo[] { new Move(nv, at.MoveLimitData.MaxSpeed)
-                                           , new Rotate(nv - new TV_3DVECTOR(0, 0, 20000), at.MoveLimitData.MinSpeed)
-                                           , new Lock()
+          Actions = new ActionInfo[] { Move.GetOrCreate(nv, at.MoveLimitData.MaxSpeed)
+                                           , Rotate.GetOrCreate(nv - new TV_3DVECTOR(0, 0, 20000), at.MoveLimitData.MinSpeed)
+                                           , Lock.GetOrCreate()
                                             }
         }.Spawn(this);
       }
@@ -323,11 +323,11 @@ namespace SWEndor.Scenarios
           && !actor.IsDyingOrDead)
         {
           actor.ForceClearQueue();
-          actor.QueueLast(new Rotate(actor.GetGlobalPosition() + new TV_3DVECTOR(18000, 0, -20000)
+          actor.QueueLast(Rotate.GetOrCreate(actor.GetGlobalPosition() + new TV_3DVECTOR(18000, 0, -20000)
                                                 , actor.MoveData.Speed
                                                 , actor.TypeInfo.AIData.Move_CloseEnough));
-          actor.QueueLast(new HyperspaceOut());
-          actor.QueueLast(new Delete());
+          actor.QueueLast(HyperspaceOut.GetOrCreate());
+          actor.QueueLast(Delete.GetOrCreate());
         }
       }
     }
@@ -567,16 +567,16 @@ namespace SWEndor.Scenarios
           Faction = MainEnemyFaction,
           Position = v + hyperspaceInOffset + plus,
           Rotation = new TV_3DVECTOR(),
-          Actions = new ActionInfo[] { new Wait(7.5f)
-                                     , new Rotate(v, 0, 0.5f)
-                                     , new SetMood(MoodStates.AMBIENT_2, true)
-                                     , new Wait(2.5f)
-                                     , new HyperspaceOut()
-                                     , new HyperspaceIn(v)
-                                     , new SetMood(MoodStates.NEUTRAL_SHIP_ARRIVED, true)
-                                     , new Rotate(new TV_3DVECTOR(0, 0, 0), 1)
-                                     , new Wait(3f+10f)
-                                     , new SetMood(MoodStates.AMBIENT_4, true)
+          Actions = new ActionInfo[] { Wait.GetOrCreate(7.5f)
+                                     , Rotate.GetOrCreate(v, 0, 0.5f)
+                                     , SetMood.GetOrCreate(MoodStates.AMBIENT_2, true)
+                                     , Wait.GetOrCreate(2.5f)
+                                     , HyperspaceOut.GetOrCreate()
+                                     , HyperspaceIn.GetOrCreate(v)
+                                     , SetMood.GetOrCreate(MoodStates.NEUTRAL_SHIP_ARRIVED, true)
+                                     , Rotate.GetOrCreate(new TV_3DVECTOR(0, 0, 0), 1)
+                                     , Wait.GetOrCreate(3f+10f)
+                                     , SetMood.GetOrCreate(MoodStates.AMBIENT_4, true)
                                      }
         }.Spawn(this);
 
@@ -611,15 +611,15 @@ namespace SWEndor.Scenarios
           Faction = MainEnemyFaction,
           Position = v + hyperspaceInOffset + plus,
           Rotation = new TV_3DVECTOR(),
-          Actions = new ActionInfo[] { new Wait(7.5f)
-                                     , new Rotate(v, 0, 0.5f)
-                                     , new Wait(12.5f)
-                                     , new HyperspaceOut()
-                                     , new HyperspaceIn(v)
-                                     , new SetMood(MoodStates.ALLY_FIGHTER_ARRIVED, true)
-                                     , new SetMood(MoodStates.AMBIENT_3, true)
-                                     , new Rotate(new TV_3DVECTOR(0, 0, 0), 40)
-                                     , new Wait(3f)
+          Actions = new ActionInfo[] { Wait.GetOrCreate(7.5f)
+                                     , Rotate.GetOrCreate(v, 0, 0.5f)
+                                     , Wait.GetOrCreate(12.5f)
+                                     , HyperspaceOut.GetOrCreate()
+                                     , HyperspaceIn.GetOrCreate(v)
+                                     , SetMood.GetOrCreate(MoodStates.ALLY_FIGHTER_ARRIVED, true)
+                                     , SetMood.GetOrCreate(MoodStates.AMBIENT_3, true)
+                                     , Rotate.GetOrCreate(new TV_3DVECTOR(0, 0, 0), 40)
+                                     , Wait.GetOrCreate(3f)
                                      }
         }.Spawn(this);
 
@@ -697,17 +697,17 @@ namespace SWEndor.Scenarios
           Faction = MainEnemyFaction,
           Position = v + hyperspaceInOffset,
           Rotation = new TV_3DVECTOR(),
-          Actions = new ActionInfo[] { new Wait(32f+10f)
-                                     //, new HyperspaceIn(v + hyperspaceInOffset + new TV_3DVECTOR(0, 0, 100000))
-                                     //, new HyperspaceIn(v + hyperspaceInOffset)
-                                     , new HyperspaceOut()
-                                     , new HyperspaceIn(v)
-                                     , new SetMood(MoodStates.ALLY_SHIP_ARRIVED, true)
-                                     , new SetMood(MoodStates.ENGAGEMENT, true)
-                                     , new EnableSpawn(true)
-                                     , new Move(new TV_3DVECTOR(v.x * 0.2f, v.y, -1000), ActorTypeFactory.Get("IMPL").MoveLimitData.MaxSpeed / 2)
-                                     , new Rotate(new TV_3DVECTOR(-1600, -120, 6300), 0)
-                                     , new Lock() }
+          Actions = new ActionInfo[] { Wait.GetOrCreate(32f+10f)
+                                     //, HyperspaceIn.GetOrCreate(v + hyperspaceInOffset + new TV_3DVECTOR(0, 0, 100000))
+                                     //, HyperspaceIn.GetOrCreate(v + hyperspaceInOffset)
+                                     , HyperspaceOut.GetOrCreate()
+                                     , HyperspaceIn.GetOrCreate(v)
+                                     , SetMood.GetOrCreate(MoodStates.ALLY_SHIP_ARRIVED, true)
+                                     , SetMood.GetOrCreate(MoodStates.ENGAGEMENT, true)
+                                     , EnableSpawn.GetOrCreate(true)
+                                     , Move.GetOrCreate(new TV_3DVECTOR(v.x * 0.2f, v.y, -1000), ActorTypeFactory.Get("IMPL").MoveLimitData.MaxSpeed / 2)
+                                     , Rotate.GetOrCreate(new TV_3DVECTOR(-1600, -120, 6300), 0)
+                                     , Lock.GetOrCreate() }
         }.Spawn(this);
 
         ainfo.SpawnerInfo.SpawnsRemaining = 999;

@@ -1,13 +1,34 @@
-﻿using SWEndor.Actors;
+﻿using Primrose.Primitives.Factories;
+using SWEndor.Actors;
 using SWEndor.Core;
 
 namespace SWEndor.AI.Actions
 {
   internal class Lock : ActionInfo
   {
-    public Lock() : base("Lock")
+    internal static int _count = 0;
+    internal static ObjectPool<Lock> _pool = new ObjectPool<Lock>(() => { return Lock.GetOrCreate(); }, (a) => { a.Reset(); });
+
+    private Lock() : base("Lock") { CanInterrupt = false; }
+
+    public static Lock GetOrCreate()
     {
-      CanInterrupt = false;
+      Lock h = _pool.GetNew();
+      _count++;
+      h.IsDisposed = false;
+      return h;
+    }
+
+    public override void Reset()
+    {
+      base.Reset();
+    }
+
+    public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
     }
 
     public override void Process(Engine engine, ActorInfo actor)

@@ -1,13 +1,36 @@
-﻿using SWEndor.Actors;
+﻿using Primrose.Primitives.Factories;
+using SWEndor.Actors;
 using SWEndor.Core;
 
 namespace SWEndor.AI.Actions
 {
   internal class Wait : ActionInfo
   {
-    public Wait(float time = 5) : base("Wait")
+    internal static int _count = 0;
+    internal static ObjectPool<Wait> _pool = new ObjectPool<Wait>(() => { return Wait.GetOrCreate(); }, (a) => { a.Reset(); });
+
+    private Wait() : base("Wait") { }
+
+    public static Wait GetOrCreate(float time = 5)
     {
-      WaitTime = time;
+      Wait h = _pool.GetNew();
+      _count++;
+      h.WaitTime = time;
+      h.IsDisposed = false;
+      return h;
+    }
+
+    public override void Reset()
+    {
+      base.Reset();
+      ResumeTime = 0;
+    }
+
+    public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
     }
 
     private float WaitTime = 0;

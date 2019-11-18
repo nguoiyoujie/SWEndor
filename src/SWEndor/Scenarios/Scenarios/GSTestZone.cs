@@ -121,7 +121,7 @@ namespace SWEndor.Scenarios
             Faction = MainAllyFaction,
             Position = new TV_3DVECTOR(125, 0, 125),
             Rotation = new TV_3DVECTOR(),
-            Actions = new ActionInfo[] { new Wait(5) },
+            Actions = new ActionInfo[] { Wait.GetOrCreate(5) },
             Registries = null
           }.Spawn(this);
 

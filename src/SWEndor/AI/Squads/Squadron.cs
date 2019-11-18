@@ -35,7 +35,7 @@ namespace SWEndor.AI.Squads
     public ActionInfo GetNewAction(Engine engine)
     {
       if (IsNull)
-        return new Idle();
+        return Idle.GetOrCreate();
 
       if (Mission != null)
       {
@@ -48,7 +48,7 @@ namespace SWEndor.AI.Squads
         if (_threats.Count > 0)
           return AttackActor.GetOrCreate(_threats.First.Value.ID);
 
-      return new Idle();
+      return Idle.GetOrCreate();
     }
 
     public ActorInfo GetThreatFirst(Engine engine)

@@ -2,16 +2,37 @@
 using SWEndor.Core;
 using Primrose.Primitives;
 using SWEndor.Scenarios;
+using Primrose.Primitives.Factories;
 
 namespace SWEndor.AI.Actions
 {
   internal class SetMood : ActionInfo
   {
-    public SetMood(MoodStates mood, bool squadLeaderOnly) : base("SetMood")
+    internal static int _count = 0;
+    internal static ObjectPool<SetMood> _pool = new ObjectPool<SetMood>(() => { return new SetMood(); }, (a) => { a.Reset(); });
+
+    private SetMood() : base("SetMood") { CanInterrupt = false; }
+
+    public static SetMood GetOrCreate(MoodStates mood, bool squadLeaderOnly)
     {
-      Mood = mood;
-      CanInterrupt = false;
-      SquadLeaderOnly = squadLeaderOnly;
+      SetMood h = _pool.GetNew();
+      _count++;
+      h.Mood = mood;
+      h.SquadLeaderOnly = squadLeaderOnly;
+      h.IsDisposed = false;
+      return h;
+    }
+
+    public override void Reset()
+    {
+      base.Reset();
+    }
+
+    public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
     }
 
     // parameters

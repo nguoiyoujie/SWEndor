@@ -89,11 +89,11 @@ namespace SWEndor.Scenarios
       {
         ActionInfo[] actions;
         if (spawninfo.HyperspaceIn)
-          actions = new ActionInfo[] { new HyperspaceIn(poss[i]), new Wait(spawninfo.WaitDelay), Hunt.GetOrCreate(spawninfo.HuntTargetType) };
+          actions = new ActionInfo[] { HyperspaceIn.GetOrCreate(poss[i]), Wait.GetOrCreate(spawninfo.WaitDelay), Hunt.GetOrCreate(spawninfo.HuntTargetType) };
         else if (spawninfo.HuntTargetType == TargetType.ANY)
-          actions = new ActionInfo[] { new Wait(spawninfo.WaitDelay) };
+          actions = new ActionInfo[] { Wait.GetOrCreate(spawninfo.WaitDelay) };
         else
-          actions = new ActionInfo[] { new Wait(spawninfo.WaitDelay), Hunt.GetOrCreate(spawninfo.HuntTargetType) };
+          actions = new ActionInfo[] { Wait.GetOrCreate(spawninfo.WaitDelay), Hunt.GetOrCreate(spawninfo.HuntTargetType) };
 
         string name = (spawninfo.SquadName == null || spawninfo.SquadName == "") ? "" : string.Concat(spawninfo.SquadName, " ", i.ToString());
 
@@ -223,12 +223,12 @@ namespace SWEndor.Scenarios
       //ActionInfo[] actions;
 
       List<ActionInfo> actionlist = new List<ActionInfo>();
-      if (spawninfo.IntermissionMood != 0) actionlist.Add(new SetMood((MoodStates)spawninfo.IntermissionMood, true));
-      if (spawninfo.HyperspaceIn) actionlist.Add(new HyperspaceIn(position));
-      if (spawninfo.EnableSpawn) actionlist.Add(new EnableSpawn(true));
-      actionlist.Add(new Move(targetposition, spawninfo.TypeInfo.MoveLimitData.MaxSpeed));
-      actionlist.Add(new Rotate(facingposition, spawninfo.TypeInfo.MoveLimitData.MinSpeed));
-      actionlist.Add(new Lock());
+      if (spawninfo.IntermissionMood != 0) actionlist.Add(SetMood.GetOrCreate((MoodStates)spawninfo.IntermissionMood, true));
+      if (spawninfo.HyperspaceIn) actionlist.Add(HyperspaceIn.GetOrCreate(position));
+      if (spawninfo.EnableSpawn) actionlist.Add(EnableSpawn.GetOrCreate(true));
+      actionlist.Add(Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MoveLimitData.MaxSpeed));
+      actionlist.Add(Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MoveLimitData.MinSpeed));
+      actionlist.Add(Lock.GetOrCreate());
 
       /*
       if (spawninfo.IntermissionMood != 0)
@@ -236,41 +236,41 @@ namespace SWEndor.Scenarios
         if (spawninfo.HyperspaceIn && spawninfo.EnableSpawn)
         {
           actions = new ActionInfo[] {
-                                     new SetMood(spawninfo.IntermissionMood, true)
-                                   , new HyperspaceIn(position)
-                                   , new EnableSpawn(true)
-                                   , new Move(targetposition, spawninfo.TypeInfo.MaxSpeed)
-                                   , new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed)
-                                   , new Lock()
+                                     SetMood.GetOrCreate(spawninfo.IntermissionMood, true)
+                                   , HyperspaceIn.GetOrCreate(position)
+                                   , EnableSpawn.GetOrCreate(true)
+                                   , Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MaxSpeed)
+                                   , Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MinSpeed)
+                                   , Lock.GetOrCreate()
                                    };
         }
         else if (spawninfo.HyperspaceIn)
         {
           actions = new ActionInfo[] {
-                                     new SetMood(spawninfo.IntermissionMood, true)
-                                   , new HyperspaceIn(position)
-                                   , new Move(targetposition, spawninfo.TypeInfo.MaxSpeed)
-                                   , new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed)
-                                   , new Lock()
+                                     SetMood.GetOrCreate(spawninfo.IntermissionMood, true)
+                                   , HyperspaceIn.GetOrCreate(position)
+                                   , Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MaxSpeed)
+                                   , Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MinSpeed)
+                                   , Lock.GetOrCreate()
                                    };
         }
         else if (spawninfo.EnableSpawn)
         {
           actions = new ActionInfo[] {
-                                     new SetMood(spawninfo.IntermissionMood, true)
-                                   , new EnableSpawn(true)
-                                   , new Move(targetposition, spawninfo.TypeInfo.MaxSpeed)
-                                   , new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed)
-                                   , new Lock()
+                                     SetMood.GetOrCreate(spawninfo.IntermissionMood, true)
+                                   , EnableSpawn.GetOrCreate(true)
+                                   , Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MaxSpeed)
+                                   , Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MinSpeed)
+                                   , Lock.GetOrCreate()
                                    };
         }
         else
         {
           actions = new ActionInfo[] {
-                                     new SetMood(spawninfo.IntermissionMood, true)
-                                   , new Move(targetposition, spawninfo.TypeInfo.MaxSpeed)
-                                   , new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed)
-                                   , new Lock()
+                                     SetMood.GetOrCreate(spawninfo.IntermissionMood, true)
+                                   , Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MaxSpeed)
+                                   , Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MinSpeed)
+                                   , Lock.GetOrCreate()
                                    };
         }
       }
@@ -279,37 +279,37 @@ namespace SWEndor.Scenarios
         if (spawninfo.HyperspaceIn && spawninfo.EnableSpawn)
         {
           actions = new ActionInfo[] {
-                                     new HyperspaceIn(position)
-                                   , new EnableSpawn(true)
-                                   , new Move(targetposition, spawninfo.TypeInfo.MaxSpeed)
-                                   , new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed)
-                                   , new Lock()
+                                     HyperspaceIn.GetOrCreate(position)
+                                   , EnableSpawn.GetOrCreate(true)
+                                   , Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MaxSpeed)
+                                   , Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MinSpeed)
+                                   , Lock.GetOrCreate()
                                    };
         }
         else if (spawninfo.HyperspaceIn)
         {
           actions = new ActionInfo[] {
-                                     new HyperspaceIn(position)
-                                   , new Move(targetposition, spawninfo.TypeInfo.MaxSpeed)
-                                   , new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed)
-                                   , new Lock()
+                                     HyperspaceIn.GetOrCreate(position)
+                                   , Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MaxSpeed)
+                                   , Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MinSpeed)
+                                   , Lock.GetOrCreate()
                                    };
         }
         else if (spawninfo.EnableSpawn)
         {
           actions = new ActionInfo[] {
-                                     new EnableSpawn(true)
-                                   , new Move(targetposition, spawninfo.TypeInfo.MaxSpeed)
-                                   , new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed)
-                                   , new Lock()
+                                     EnableSpawn.GetOrCreate(true)
+                                   , Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MaxSpeed)
+                                   , Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MinSpeed)
+                                   , Lock.GetOrCreate()
                                    };
         }
         else
         {
           actions = new ActionInfo[] {
-                                    new Move(targetposition, spawninfo.TypeInfo.MaxSpeed)
-                                   , new Rotate(facingposition, spawninfo.TypeInfo.MinSpeed)
-                                   , new Lock()
+                                    Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MaxSpeed)
+                                   , Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MinSpeed)
+                                   , Lock.GetOrCreate()
                                    };
         }
       }

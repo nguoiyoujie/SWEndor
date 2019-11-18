@@ -23,6 +23,19 @@ namespace SWEndor.AI.Actions
       return h;
     }
 
+    public override void Reset()
+    {
+      base.Reset();
+      ResumeTime = 0;
+    }
+
+    public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
+    }
+
     public override string ToString()
     {
       return string.Join(",", new string[]
@@ -51,20 +64,6 @@ namespace SWEndor.AI.Actions
       }
 
       Complete |= (ResumeTime < engine.Game.GameTime);
-    }
-
-    public override void Reset()
-    {
-      base.Reset();
-      WaitTime = 0;
-      ResumeTime = 0;
-    }
-
-    public override void Return()
-    {
-      base.Return();
-      _pool.Return(this);
-      _count--;
     }
   }
 }

@@ -94,7 +94,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       switch (((string)ps[1]).ToLower())
       {
         case "idle":
-          action = new Idle();
+          action = Idle.GetOrCreate();
           break;
 
         case "hunt":
@@ -102,22 +102,22 @@ namespace SWEndor.Scenarios.Scripting.Functions
           break;
 
         case "selfdestruct":
-          action = new SelfDestruct();
+          action = SelfDestruct.GetOrCreate();
           break;
 
         case "delete":
-          action = new Delete();
+          action = Delete.GetOrCreate();
           break;
 
         case "lock":
-          action = new Lock();
+          action = Lock.GetOrCreate();
           break;
 
         case "wait":
           if (ps.Length <= 2)
-            action = new Wait();
+            action = Wait.GetOrCreate();
           else
-            action = new Wait((float)ps[2]);
+            action = Wait.GetOrCreate((float)ps[2]);
           break;
 
         case "evade":
@@ -136,14 +136,14 @@ namespace SWEndor.Scenarios.Scripting.Functions
             switch (ps.Length)
             {
               case 4:
-                action = new Move(dest, speed);
+                action = Move.GetOrCreate(dest, speed);
                 break;
               case 5:
-                action = new Move(dest, speed, (float)ps[4]);
+                action = Move.GetOrCreate(dest, speed, (float)ps[4]);
                 break;
               default:
               case 6:
-                action = new Move(dest, speed, (float)ps[4], (bool)ps[5]);
+                action = Move.GetOrCreate(dest, speed, (float)ps[4], (bool)ps[5]);
                 break;
             }
           }
@@ -160,14 +160,14 @@ namespace SWEndor.Scenarios.Scripting.Functions
             switch (ps.Length)
             {
               case 4:
-                action = new ForcedMove(dest, speed);
+                action = ForcedMove.GetOrCreate(dest, speed);
                 break;
               case 5:
-                action = new ForcedMove(dest, speed, (float)ps[4]);
+                action = ForcedMove.GetOrCreate(dest, speed, (float)ps[4]);
                 break;
               default:
               case 6:
-                action = new ForcedMove(dest, speed, (float)ps[4], (float)ps[5]);
+                action = ForcedMove.GetOrCreate(dest, speed, (float)ps[4], (float)ps[5]);
                 break;
             }
           }
@@ -184,14 +184,14 @@ namespace SWEndor.Scenarios.Scripting.Functions
             switch (ps.Length)
             {
               case 4:
-                action = new Rotate(dest, speed);
+                action = Rotate.GetOrCreate(dest, speed);
                 break;
               case 5:
-                action = new Rotate(dest, speed, (float)ps[4]);
+                action = Rotate.GetOrCreate(dest, speed, (float)ps[4]);
                 break;
               default:
               case 6:
-                action = new Rotate(dest, speed, (float)ps[4], (bool)ps[5]);
+                action = Rotate.GetOrCreate(dest, speed, (float)ps[4], (bool)ps[5]);
                 break;
             }
           }
@@ -203,14 +203,14 @@ namespace SWEndor.Scenarios.Scripting.Functions
           if (ps.Length >= 3)
           {
             TV_3DVECTOR dest = ((float3)ps[2]).ToVec3();
-            action = new HyperspaceIn(dest);
+            action = HyperspaceIn.GetOrCreate(dest);
           }
           else
             throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ((string)ps[1]).ToLower(), "3", ps.Length.ToString()));
           break;
 
         case "hyperspaceout":
-          action = new HyperspaceOut();
+          action = HyperspaceOut.GetOrCreate();
           break;
 
         case "attackactor":
@@ -256,14 +256,14 @@ namespace SWEndor.Scenarios.Scripting.Functions
             switch (ps.Length)
             {
               case 3:
-                action = new FollowActor(tgtid);
+                action = FollowActor.GetOrCreate(tgtid);
                 break;
               case 4:
-                action = new FollowActor(tgtid, (float)ps[3]);
+                action = FollowActor.GetOrCreate(tgtid, (float)ps[3]);
                 break;
               default:
               case 5:
-                action = new FollowActor(tgtid, (float)ps[3], (bool)ps[4]);
+                action = FollowActor.GetOrCreate(tgtid, (float)ps[3], (bool)ps[4]);
                 break;
             }
           }
@@ -295,7 +295,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
         case "setgamestateb":
           if (ps.Length >= 4)
           {
-            action = new SetGameStateB((string)ps[2], (bool)ps[3]);
+            action = SetGameStateB.GetOrCreate((string)ps[2], (bool)ps[3]);
           }
           else
             throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ((string)ps[1]).ToLower(), "4", ps.Length.ToString()));

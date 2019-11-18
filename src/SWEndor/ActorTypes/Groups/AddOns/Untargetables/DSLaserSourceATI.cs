@@ -28,7 +28,7 @@ namespace SWEndor.ActorTypes.Instances
 
       laser = new WeaponShotInfo(engine.WeaponFactory.Get("DSTAR_LSR"), 1);
 
-      ainfo.QueueNext(new Lock());
+      ainfo.QueueNext(Lock.GetOrCreate());
     }
 
     public override void ProcessState(Engine engine, ActorInfo ainfo)

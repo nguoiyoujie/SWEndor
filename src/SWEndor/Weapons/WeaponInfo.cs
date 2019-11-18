@@ -381,9 +381,9 @@ namespace SWEndor.Weapons
 
       if (a.Mask.Has(ComponentMask.HAS_AI))
       {
-        a.QueueLast(new Wait(ProjectileWaitBeforeHoming));
+        a.QueueLast(Wait.GetOrCreate(ProjectileWaitBeforeHoming));
         a.QueueLast(ProjectileAttackActor.GetOrCreate(target));
-        a.QueueLast(new Lock());
+        a.QueueLast(Lock.GetOrCreate());
       }
       else // define CurrentAction.target
       {

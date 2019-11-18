@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using Primrose.Primitives.Factories;
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Models;
@@ -7,11 +8,32 @@ namespace SWEndor.AI.Actions
 {
   internal class FollowActor : ActionInfo
   {
-    public FollowActor(int targetActorID, float follow_distance = 500, bool can_interrupt = true) : base("FollowActor")
+    internal static int _count = 0;
+    internal static ObjectPool<FollowActor> _pool = new ObjectPool<FollowActor>(() => { return new FollowActor(); }, (a) => { a.Reset(); });
+
+    private FollowActor() : base("FollowActor") { }
+
+    public static FollowActor GetOrCreate(int targetActorID, float follow_distance = 500, bool can_interrupt = true)
     {
-      Target_ActorID = targetActorID;
-      FollowDistance = follow_distance;
-      CanInterrupt = can_interrupt;
+      FollowActor h = _pool.GetNew();
+      _count++;
+      h.Target_ActorID = targetActorID;
+      h.FollowDistance = follow_distance;
+      h.CanInterrupt = can_interrupt;
+      h.IsDisposed = false;
+      return h;
+    }
+
+    public override void Reset()
+    {
+      base.Reset();
+    }
+
+    public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
     }
 
     // parameters

@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using Primrose.Primitives.Factories;
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Primitives.Extensions;
@@ -7,12 +8,33 @@ namespace SWEndor.AI.Actions
 {
   internal class Rotate : ActionInfo
   {
-    public Rotate(TV_3DVECTOR target_position, float speed, float close_enough_angle = 0.1f, bool can_interrupt = true) : base("Rotate")
+    internal static int _count = 0;
+    internal static ObjectPool<Rotate> _pool = new ObjectPool<Rotate>(() => { return new Rotate(); }, (a) => { a.Reset(); });
+
+    private Rotate() : base("Rotate") { CanInterrupt = false; }
+
+    public static Rotate GetOrCreate(TV_3DVECTOR target_position, float speed, float close_enough_angle = 0.1f, bool can_interrupt = true)
     {
-      Target_Position = target_position;
-      Target_Speed = speed;
-      CloseEnoughAngle = close_enough_angle;
-      CanInterrupt = can_interrupt;
+      Rotate h = _pool.GetNew();
+      _count++;
+      h.Target_Position = target_position;
+      h.Target_Speed = speed;
+      h.CloseEnoughAngle = close_enough_angle;
+      h.CanInterrupt = can_interrupt;
+      h.IsDisposed = false;
+      return h;
+    }
+
+    public override void Reset()
+    {
+      base.Reset();
+    }
+
+    public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
     }
 
     // parameters

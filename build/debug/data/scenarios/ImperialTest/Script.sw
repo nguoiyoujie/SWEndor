@@ -140,7 +140,7 @@ loadscene:
 	AI.QueueLast(corv1, "rotate", {0, 500, 4000}, 0);
 	AI.QueueLast(corv1, "lock");
 
-	corv2 = Actor.Spawn("CORV", "", "Traitors", "", 0, { -8750, -100, -11000 }, { 0, 75, 0 });
+	corv2 = Actor.Spawn("CORV", "CRV DIVINE WIND", "Traitors", "", 0, { -8750, -100, -11000 }, { 0, 75, 0 });
 	AI.QueueLast(corv2, "move", {1550, 200, -2200}, 100);
 	AI.QueueLast(corv2, "rotate", {0, 500, 4000}, 0);
 	AI.QueueLast(corv2, "lock");
@@ -374,11 +374,16 @@ enemybeginspawn:
 	Faction.SetWingSpawnLimit("Traitors", 34); //28
 	Actor.SetProperty(nebu, "Spawner.Enabled", true);
 	Actor.SetProperty(nebu, "Spawner.SpawnTypes", {"Z95","YWING"});
-	Actor.SetProperty(glory, "Spawner.SpawnTypes", {"TIESA"});
-	AddEvent(15, "enemybeginspawn2");
+	Actor.SetProperty(glory, "Spawner.SpawnTypes", {"TIED"});
+	AddEvent(5, "enemybeginspawn2");
 
-
+	
 enemybeginspawn2:
+	Actor.SetProperty(glory, "Spawner.SpawnTypes", {"TIESA"});
+	AddEvent(10, "enemybeginspawn3");
+
+	
+enemybeginspawn3:
 	Faction.SetWingSpawnLimit("Traitors", 36);
 	Actor.SetProperty(glory, "Spawner.SpawnTypes", {"TIE","TIE","TIEI","TIEI","JV7"});
 
@@ -586,7 +591,7 @@ spawn_escapeCORV:
 	float3 pos = Actor.GetGlobalPosition(gloryhangar);
 	float3 rot = Actor.GetGlobalRotation(glory);
 	rot = {rot[0] + 45, rot[1], rot[2]};
-	int esccorv = Actor.Spawn("CORV", "Escape Corvette", "Traitors", "", 0, pos, rot, "CriticalEnemies");
+	int esccorv = Actor.Spawn("CORV", "CRV VORKNKX", "Traitors", "VORKNKX", 0, pos, rot, "CriticalEnemies");
 	Actor.SetProperty(esccorv, "DamageModifier", 0.5);
 	Actor.SetProperty(greywolf, "Spawner.SpawnTypes", {"TIE","TIE","TIEI","TIESA","TIESA"});
 	AI.QueueLast(esccorv, "wait", 2.5);

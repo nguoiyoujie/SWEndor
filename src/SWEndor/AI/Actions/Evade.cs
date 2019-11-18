@@ -29,6 +29,24 @@ namespace SWEndor.AI.Actions
       return h;
     }
 
+    public override void Reset()
+    {
+      base.Reset();
+      Target_Position = new TV_3DVECTOR();
+      Target_Speed = 0;
+      CloseEnoughAngle = 0.1f;
+      WaitTime = 0;
+      ResumeTime = 0;
+      poschecked = false;
+    }
+
+    public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
+    }
+
     public override string ToString()
     {
       return string.Join(",", new string[]
@@ -77,24 +95,6 @@ namespace SWEndor.AI.Actions
 
       if (CheckImminentCollision(actor))
         CreateAvoidAction(actor);
-    }
-
-    public override void Reset()
-    {
-      base.Reset();
-      Target_Position = new TV_3DVECTOR();
-      Target_Speed = 0;
-      CloseEnoughAngle = 0.1f;
-      WaitTime = 0;
-      ResumeTime = 0;
-      poschecked = false;
-    }
-
-    public override void Return()
-    {
-      base.Return();
-      _pool.Return(this);
-      _count--;
     }
   }
 }

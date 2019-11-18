@@ -22,6 +22,21 @@ namespace SWEndor.AI.Actions
       return h;
     }
 
+    public override void Reset()
+    {
+      base.Reset();
+      Target_Actor = null;
+      ID = -1;
+      Target_Position = new TV_3DVECTOR();
+    }
+
+    public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
+    }
+
     // parameters
     public ActorInfo Target_Actor = null;
     public int ID;
@@ -53,21 +68,6 @@ namespace SWEndor.AI.Actions
       actor.AI.AdjustSpeed(actor);
 
       Complete |= (!target.Active || target.IsDyingOrDead);
-    }
-
-    public override void Reset()
-    {
-      base.Reset();
-      Target_Actor = null;
-      ID = -1;
-      Target_Position = new TV_3DVECTOR();
-    }
-
-  public override void Return()
-    {
-      base.Return();
-      _pool.Return(this);
-      _count--;
     }
   }
 }

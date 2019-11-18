@@ -1,16 +1,37 @@
-﻿using SWEndor.Actors;
+﻿using Primrose.Primitives.Factories;
+using SWEndor.Actors;
 using SWEndor.Core;
 
 namespace SWEndor.AI.Actions
 {
   internal class PlaySound : ActionInfo
   {
-    public PlaySound(string name, bool squadLeaderOnly, bool interrupt = true) : base("PlaySound")
+    internal static int _count = 0;
+    internal static ObjectPool<PlaySound> _pool = new ObjectPool<PlaySound>(() => { return new PlaySound(); }, (a) => { a.Reset(); });
+
+    private PlaySound() : base("PlaySound") { CanInterrupt = false; }
+
+    public static PlaySound GetOrCreate(string name, bool squadLeaderOnly, bool interrupt = true)
     {
-      SoundName = name;
-      CanInterrupt = false;
-      Interrupt = interrupt;
-      SquadLeaderOnly = squadLeaderOnly;
+      PlaySound h = _pool.GetNew();
+      _count++;
+      h.SoundName = name;
+      h.Interrupt = interrupt;
+      h.SquadLeaderOnly = squadLeaderOnly;
+      h.IsDisposed = false;
+      return h;
+    }
+
+    public override void Reset()
+    {
+      base.Reset();
+    }
+
+    public override void Return()
+    {
+      base.Return();
+      _pool.Return(this);
+      _count--;
     }
 
     // parameters
