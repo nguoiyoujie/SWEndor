@@ -9,26 +9,26 @@ namespace Primrose.Expressions.Tree.Expressions
     private CExpression _first;
     private List<CExpression> _set = new List<CExpression>();
 
-    internal EqualityExpression(Script local, Lexer lexer) : base(local, lexer)
+    internal EqualityExpression(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       // RELATEEXPR == RELATEEXPR ...
       // RELATEEXPR != RELATEEXPR ...
 
-      _first = new RelationalExpression(local, lexer).Get();
+      _first = new RelationalExpression(scope, lexer).Get();
 
       TokenEnum _type = lexer.TokenType;
       if (_type == TokenEnum.EQUAL // ==
         )
       {
         lexer.Next(); //EQUAL
-        _set.Add(new RelationalExpression(local, lexer).Get());
+        _set.Add(new RelationalExpression(scope, lexer).Get());
       }
       else if (_type == TokenEnum.NOTEQUAL // !=
       )
       {
         lexer.Next(); //NOTEQUAL
         isUnequal = true;
-        _set.Add(new RelationalExpression(local, lexer).Get());
+        _set.Add(new RelationalExpression(scope, lexer).Get());
       }
     }
 
@@ -39,12 +39,12 @@ namespace Primrose.Expressions.Tree.Expressions
       return this;
     }
 
-    public override Val Evaluate(Script local, AContext context)
+    public override Val Evaluate(AContext context)
     {
-      Val result = _first.Evaluate(local, context);
+      Val result = _first.Evaluate(context);
       foreach (CExpression _expr in _set)
       {
-        Val adden = _expr.Evaluate(local, context);
+        Val adden = _expr.Evaluate(context);
         if (isUnequal)
           try { result = Ops.Do(BOp.NOT_EQUAL_TO, result, adden); } catch (Exception ex) { throw new EvalException(this, "!=", result, adden, ex); }
         else

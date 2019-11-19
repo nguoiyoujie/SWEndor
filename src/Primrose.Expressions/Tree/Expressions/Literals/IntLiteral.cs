@@ -6,13 +6,13 @@ namespace Primrose.Expressions.Tree.Expressions.Literals
   {
     private int _value;
 
-    internal IntLiteral(Script local, Lexer lexer) : base(local, lexer)
+    internal IntLiteral(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       _value = Convert.ToInt32(lexer.TokenContents);
       lexer.Next(); //INT
     }
 
-    public override Val Evaluate(Script local, AContext context)
+    public override Val Evaluate(AContext context)
     {
       return new Val(_value);
     }

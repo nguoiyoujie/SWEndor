@@ -13,7 +13,7 @@ namespace Primrose.Expressions.Tree.Expressions.Literals
     int[] iL;
     string[] sL;
 
-    internal ArrayLiteral(Script local, Lexer lexer) : base(local, lexer)
+    internal ArrayLiteral(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       if (lexer.TokenType != TokenEnum.BRACEOPEN)
         throw new ParseException(lexer, TokenEnum.BRACEOPEN);
@@ -21,12 +21,12 @@ namespace Primrose.Expressions.Tree.Expressions.Literals
 
       while (lexer.TokenType != TokenEnum.BRACECLOSE)
       {
-        _param.Add(new Expression(local, lexer).Get());
+        _param.Add(new Expression(scope, lexer).Get());
 
         while (lexer.TokenType == TokenEnum.COMMA)
         {
           lexer.Next(); //COMMA
-          _param.Add(new Expression(local, lexer).Get());
+          _param.Add(new Expression(scope, lexer).Get());
         }
       }
 
@@ -38,12 +38,12 @@ namespace Primrose.Expressions.Tree.Expressions.Literals
       lexer.Next(); //BRACECLOSE
     }
 
-    public override Val Evaluate(Script local, AContext context)
+    public override Val Evaluate(AContext context)
     {
       ValType t = ValType.NULL;
       for (int i = 0; i < _param.Count; i++)
       {
-        vL[i] = _param[i].Evaluate(local, context);
+        vL[i] = _param[i].Evaluate(context);
         if (t == ValType.NULL)
           t = vL[i].Type;
         else if (t != vL[i].Type)

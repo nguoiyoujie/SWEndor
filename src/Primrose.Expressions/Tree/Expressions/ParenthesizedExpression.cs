@@ -2,9 +2,10 @@
 {
   internal class ParenthesizedExpression : CExpression
   {
+    private ContextScope _scope;
     private CExpression _expression;
 
-    internal ParenthesizedExpression(Script local, Lexer lexer) : base(local, lexer)
+    internal ParenthesizedExpression(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       // ( TERN_EXPR )
       // ^
@@ -13,10 +14,13 @@
       if (lexer.TokenType == TokenEnum.BRACKETOPEN)
       {
         parans = true;
+        _scope = scope.Next;
         lexer.Next(); // BRACKETOPEN
       }
+      else
+        _scope = scope;
 
-      _expression = new Expression(local, lexer).Get();
+      _expression = new Expression(_scope, lexer).Get();
 
       if (parans)
       {
@@ -32,9 +36,9 @@
       return _expression;
     }
 
-    public override Val Evaluate(Script local, AContext context)
+    public override Val Evaluate(AContext context)
     {
-      return _expression.Evaluate(local, context);
+      return _expression.Evaluate(context);
     }
   }
 }

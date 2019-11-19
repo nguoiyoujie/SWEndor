@@ -5,13 +5,13 @@ namespace Primrose.Expressions.Tree.Statements
   {
     private CStatement _statement;
 
-    internal Statement(Script local, Lexer lexer) : base(local, lexer)
+    internal Statement(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       // IFTHENELSE
 
       if (lexer.TokenType != TokenEnum.NOTHING && lexer.TokenType != TokenEnum.COMMENT)
       {
-        _statement = new WhileStatement(local, lexer).Get();
+        _statement = new WhileStatement(scope, lexer).Get();
 
         // comment (eliminated by lexer)
         //if (lexer.TokenType == TokenEnum.COMMENT)
@@ -19,9 +19,9 @@ namespace Primrose.Expressions.Tree.Statements
       }
     }
 
-    public override void Evaluate(Script local, AContext context)
+    public override void Evaluate(AContext context)
     {
-      _statement.Evaluate(local, context);
+      _statement.Evaluate(context);
     }
   }
 }

@@ -6,21 +6,21 @@ namespace Primrose.Expressions.Tree.Statements
   {
     public List<CStatement> Statements = new List<CStatement>();
 
-    internal RootStatement(Script local, Lexer lexer) : base(local, lexer)
+    internal RootStatement(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       // STATEMENT STATEMENT ...
 
       while (!lexer.EndOfStream)
       {
-        Statements.Add(new Statement(local, lexer).Get());
+        Statements.Add(new Statement(scope, lexer).Get());
       }
     }
 
-    public override void Evaluate(Script local, AContext context)
+    public override void Evaluate(AContext context)
     {
       foreach (Statement s in Statements)
       {
-        s.Evaluate(local, context);
+        s.Evaluate(context);
       }
     }
   }

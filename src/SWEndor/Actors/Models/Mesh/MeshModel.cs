@@ -187,7 +187,7 @@ namespace SWEndor.Actors.Models
     {
       TV_3DMATRIX mat = actor.GetWorldMatrix();
       bool collide = actor.Mask.Has(ComponentMask.CAN_BECOLLIDED) && actor.Active && !actor.IsAggregateMode;
-      bool render = actor.Mask.Has(ComponentMask.CAN_RENDER) && actor.Active && !actor.IsAggregateMode && (!actor.IsPlayer); //|| actor.PlayerCameraInfo.CameraMode != CameraMode.FREEROTATION);
+      bool render = actor.Mask.Has(ComponentMask.CAN_RENDER) && actor.Active && !actor.IsAggregateMode; //&& (!actor.IsPlayer); //|| actor.PlayerCameraInfo.CameraMode != CameraMode.FREEROTATION);
       bool far = actor.IsFarMode;
       bool collidefar = collide && far;
       bool renderfar = render && far;

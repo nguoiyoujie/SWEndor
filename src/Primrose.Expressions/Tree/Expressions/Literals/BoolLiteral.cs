@@ -7,13 +7,13 @@ namespace Primrose.Expressions.Tree.Expressions.Literals
     // true or false
     private bool _value;
 
-    internal BoolLiteral(Script local, Lexer lexer) : base(local, lexer)
+    internal BoolLiteral(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       _value = lexer.TokenContents.ToBool();
       lexer.Next(); //BOOL
     }
 
-    public override Val Evaluate(Script local, AContext context)
+    public override Val Evaluate(AContext context)
     {
       return new Val(_value);
     }

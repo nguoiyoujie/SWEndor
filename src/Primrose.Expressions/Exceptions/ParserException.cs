@@ -22,6 +22,14 @@ namespace Primrose.Expressions
                                                                               , expected.GetEnumName()
                                                                               , lexer.LineText))
     { }
+
+    internal ParseException(Lexer lexer, string message) : base("{0}\nFunction '{1}' at line {2}:{3}. \nLine: {4}"
+                                                                          .F(message
+                                                                          , lexer.SourceName
+                                                                          , lexer.LineNumber
+                                                                          , lexer.Position
+                                                                          , lexer.LineText))
+    { }
   }
 
   /// <summary>

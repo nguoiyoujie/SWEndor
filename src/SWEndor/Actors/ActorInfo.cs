@@ -10,6 +10,7 @@ using SWEndor.Models;
 using SWEndor.Player;
 using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
+using System.Collections.Concurrent;
 
 namespace SWEndor.Actors
 {
@@ -131,9 +132,9 @@ namespace SWEndor.Actors
     private ExplodeModel<ActorInfo> Explosions;
     private RegenModel Regen;
 
-    internal SpawnerInfo SpawnerInfo;
-
+    internal SpawnerInfo SpawnerInfo = SpawnerInfo.Default;
     // Traits (classes)
+    internal ConcurrentQueue<ActorInfo> SpawnQueue = new ConcurrentQueue<ActorInfo>();
 
     // Standalone
     internal bool InCombat = false;
@@ -347,6 +348,7 @@ namespace SWEndor.Actors
       SetDisposing();
 
       Relation.Dispose(this);
+      SpawnerInfo.DiscardQueuedFighters(this);
       Transform.Reset();
       AI.Reset();
 

@@ -5,11 +5,12 @@ namespace Primrose.Expressions.Tree.Statements
 {
   internal class ForEachStatement : CStatement
   {
+    private ContextScope _scope;
     private CExpression _enumerable;
     private Variable _var;
     private List<CStatement> _actions = new List<CStatement>();
 
-    internal ForEachStatement(Script local, Lexer lexer) : base(local, lexer)
+    internal ForEachStatement(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       // FOREACH ( DECL VAR IN EXPR ) STATEMENT 
       // FOREACH ( DECL VAR IN EXPR ) { STATEMENT STATEMENT STATEMENT ... } 
@@ -23,13 +24,14 @@ namespace Primrose.Expressions.Tree.Statements
           throw new ParseException(lexer, TokenEnum.BRACKETOPEN);
         lexer.Next(); //BRACKETOPEN
 
-        _var = (DeclVariable)(new DeclVariable(local, lexer).Get());
+        _scope = scope.Next;
+        _var = (DeclVariable)(new DeclVariable(_scope, lexer).Get());
 
         if (lexer.TokenType != TokenEnum.IN)
           throw new ParseException(lexer, TokenEnum.IN);
         lexer.Next(); //IN
 
-        _enumerable = new Expression(local, lexer).Get();
+        _enumerable = new Expression(_scope, lexer).Get();
 
         if (lexer.TokenType != TokenEnum.BRACKETCLOSE)
           throw new ParseException(lexer, TokenEnum.BRACKETCLOSE);
@@ -39,17 +41,17 @@ namespace Primrose.Expressions.Tree.Statements
         {
           lexer.Next(); //BRACEOPEN
           while (lexer.TokenType != TokenEnum.BRACECLOSE)
-            _actions.Add(new Statement(local, lexer).Get());
+            _actions.Add(new Statement(_scope, lexer).Get());
           lexer.Next(); //BRACECLOSE
         }
         else
         {
-          _actions.Add(new Statement(local, lexer).Get());
+          _actions.Add(new Statement(scope, lexer).Get());
         }
       }
       else
       {
-        _actions.Add(new IfThenElseStatement(local, lexer).Get());
+        _actions.Add(new IfThenElseStatement(scope, lexer).Get());
       }
     }
 
@@ -60,19 +62,19 @@ namespace Primrose.Expressions.Tree.Statements
       return this;
     }
 
-    public override void Evaluate(Script local, AContext context)
+    public override void Evaluate(AContext context)
     {
       if (_enumerable != null)
       {
-        Val array = _enumerable.Evaluate(local, context);
+        Val array = _enumerable.Evaluate(context);
 
         if (array.Type == ValType.BOOL_ARRAY)
         {
           foreach (bool v in (bool[])array)
           {
-            local.SetVar(_var.varName, new Val(v));
+            _scope.SetVar(this, _var.varName, new Val(v));
             foreach (CStatement s in _actions)
-              s.Evaluate(local, context);
+              s.Evaluate(context);
           }
           return;
         }
@@ -80,9 +82,9 @@ namespace Primrose.Expressions.Tree.Statements
         {
           foreach (int v in (int[])array)
           {
-            local.SetVar(_var.varName, new Val(v));
+            _scope.SetVar(this, _var.varName, new Val(v));
             foreach (CStatement s in _actions)
-              s.Evaluate(local, context);
+              s.Evaluate(context);
           }
           return;
         }
@@ -90,9 +92,9 @@ namespace Primrose.Expressions.Tree.Statements
         {
           foreach (float v in (float[])array)
           {
-            local.SetVar(_var.varName, new Val(v));
+            _scope.SetVar(this, _var.varName, new Val(v));
             foreach (CStatement s in _actions)
-              s.Evaluate(local, context);
+              s.Evaluate(context);
           }
           return;
         }
@@ -100,16 +102,16 @@ namespace Primrose.Expressions.Tree.Statements
         {
           foreach (string v in (string[])array)
           {
-            local.SetVar(_var.varName, new Val(v));
+            _scope.SetVar(this, _var.varName, new Val(v));
             foreach (CStatement s in _actions)
-              s.Evaluate(local, context);
+              s.Evaluate(context);
           }
           return;
         }
       }
 
       foreach (CStatement s in _actions)
-        s.Evaluate(local, context);
+        s.Evaluate(context);
     }
   }
 }

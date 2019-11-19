@@ -8,21 +8,21 @@ namespace Primrose.Expressions.Tree.Expressions
     private CExpression _true;
     private CExpression _false;
 
-    internal TernaryExpression(Script local, Lexer lexer) : base(local, lexer)
+    internal TernaryExpression(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       // OREXPR ? EXPR : EXPR 
 
-      _question = new LogicalOrExpression(local, lexer).Get();
+      _question = new LogicalOrExpression(scope, lexer).Get();
 
       if (lexer.TokenType == TokenEnum.QUESTIONMARK)
       {
         lexer.Next(); // QUESTIONMARK
-        _true = new Expression(local, lexer).Get();
+        _true = new Expression(scope, lexer).Get();
 
         if (lexer.TokenType == TokenEnum.COLON)
         {
           lexer.Next(); // COLON
-          _false = new Expression(local, lexer).Get();
+          _false = new Expression(scope, lexer).Get();
         }
         else
         {
@@ -38,14 +38,14 @@ namespace Primrose.Expressions.Tree.Expressions
       return this;
     }
 
-    public override Val Evaluate(Script local, AContext context)
+    public override Val Evaluate(AContext context)
     {
-      Val result = _question.Evaluate(local, context);
+      Val result = _question.Evaluate(context);
       if (result.Type != ValType.BOOL) throw new EvalException(this, "Non-boolean value {0} found at start of conditional expression".F(result.Value));
       if ((bool)result)
-        return _true?.Evaluate(local, context) ?? new Val();
+        return _true?.Evaluate(context) ?? new Val();
       else
-        return _false?.Evaluate(local, context) ?? new Val();
+        return _false?.Evaluate(context) ?? new Val();
     }
   }
 }

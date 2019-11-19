@@ -8,14 +8,14 @@ namespace Primrose.Expressions.Tree.Expressions
     private TokenEnum _type = TokenEnum.NOTHING;
     private CExpression _second;
 
-    internal RelationalExpression(Script local, Lexer lexer) : base(local, lexer)
+    internal RelationalExpression(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       // ADDEXPR < ADDEXPR
       // ADDEXPR > ADDEXPR
       // ADDEXPR <= ADDEXPR
       // ADDEXPR <= ADDEXPR
 
-      _first = new AddExpression(local, lexer).Get();
+      _first = new AddExpression(scope, lexer).Get();
 
       _type = lexer.TokenType;
       if (_type == TokenEnum.LESSTHAN // <
@@ -25,7 +25,7 @@ namespace Primrose.Expressions.Tree.Expressions
         )
       {
         lexer.Next(); //LESSTHAN / GREATERTHAN / LESSEQUAL / GREATEREQUAL
-        _second = new AddExpression(local, lexer).Get();
+        _second = new AddExpression(scope, lexer).Get();
       }
       else
       {
@@ -40,10 +40,10 @@ namespace Primrose.Expressions.Tree.Expressions
       return this;
     }
 
-    public override Val Evaluate(Script local, AContext context)
+    public override Val Evaluate(AContext context)
     {
-      Val v1 = _first.Evaluate(local, context);
-      Val v2 = _second.Evaluate(local, context);
+      Val v1 = _first.Evaluate(context);
+      Val v2 = _second.Evaluate(context);
 
       switch (_type)
       {

@@ -2,19 +2,21 @@
 {
   internal class Variable : CExpression
   {
+    private ContextScope _scope;
     public string varName { get; protected set; }
 
-    internal Variable(Script local, Lexer lexer, int skip) : base(local, lexer) { }
+    internal Variable(ContextScope scope, Lexer lexer, int skip) : base(scope, lexer) { }
 
-    internal Variable(Script local, Lexer lexer) : base(local, lexer)
+    internal Variable(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       varName = lexer.TokenContents;
+      _scope = scope;
       lexer.Next(); // VARIABLE
     }
 
-    public override Val Evaluate(Script local, AContext context)
+    public override Val Evaluate(AContext context)
     {
-      return local.GetVar(varName);
+      return _scope.GetVar(this, varName);
     }
   }
 }

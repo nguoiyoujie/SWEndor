@@ -8,13 +8,13 @@ namespace Primrose.Expressions.Tree.Expressions
     private CExpression _first;
     private Dictionary<CExpression, TokenEnum> _set = new Dictionary<CExpression, TokenEnum>();
 
-    internal MultiplyExpression(Script local, Lexer lexer) : base(local, lexer)
+    internal MultiplyExpression(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       // UNARYEXPR * UNARYEXPR ...
       // UNARYEXPR / UNARYEXPR ...
       // UNARYEXPR % UNARYEXPR ...
 
-      _first = new UnaryExpression(local, lexer).Get();
+      _first = new UnaryExpression(scope, lexer).Get();
 
       while (lexer.TokenType == TokenEnum.ASTERISK // *
         || lexer.TokenType == TokenEnum.SLASH // /
@@ -23,7 +23,7 @@ namespace Primrose.Expressions.Tree.Expressions
       {
         TokenEnum _type = lexer.TokenType;
         lexer.Next(); //ASTERISK / SLASH / PERCENT
-        _set.Add(new UnaryExpression(local, lexer).Get(), _type);
+        _set.Add(new UnaryExpression(scope, lexer).Get(), _type);
       }
     }
 
@@ -34,12 +34,12 @@ namespace Primrose.Expressions.Tree.Expressions
       return this;
     }
 
-    public override Val Evaluate(Script local, AContext context)
+    public override Val Evaluate(AContext context)
     {
-      Val result = _first.Evaluate(local, context);
+      Val result = _first.Evaluate(context);
       foreach (CExpression _expr in _set.Keys)
       {
-        Val adden = _expr.Evaluate(local, context);
+        Val adden = _expr.Evaluate(context);
 
         switch (_set[_expr])
         {

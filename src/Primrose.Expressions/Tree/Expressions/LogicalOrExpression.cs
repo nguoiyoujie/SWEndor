@@ -9,18 +9,18 @@ namespace Primrose.Expressions.Tree.Expressions
     private CExpression _first;
     private List<CExpression> _set = new List<CExpression>();
 
-    internal LogicalOrExpression(Script local, Lexer lexer) : base(local, lexer)
+    internal LogicalOrExpression(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       // ANDEXPR || ANDEXPR ...
 
-      _first = new LogicalAndExpression(local, lexer).Get();
+      _first = new LogicalAndExpression(scope, lexer).Get();
 
       while (lexer.TokenType == TokenEnum.PIPEPIPE // ||
         )
       {
         TokenEnum _type = lexer.TokenType;
         lexer.Next(); //PIPEPIPE
-        _set.Add(new LogicalAndExpression(local, lexer).Get());
+        _set.Add(new LogicalAndExpression(scope, lexer).Get());
       }
     }
 
@@ -31,18 +31,18 @@ namespace Primrose.Expressions.Tree.Expressions
       return this;
     }
 
-    public override Val Evaluate(Script local, AContext context)
+    public override Val Evaluate(AContext context)
     {
       if (_set.Count == 0)
-        return _first.Evaluate(local, context);
+        return _first.Evaluate(context);
 
-      Val result = _first.Evaluate(local, context);
+      Val result = _first.Evaluate(context);
       if (result.Type != ValType.BOOL) throw new EvalException(this, "Non-boolean value {0} found at start of conditional expression".F(result.Value));
       if (!(bool)result)
       {
         foreach (CExpression _expr in _set)
         {
-          Val adden = _expr.Evaluate(local, context);
+          Val adden = _expr.Evaluate(context);
 
           try { result = Ops.Do(BOp.LOGICAL_OR, result, adden); } catch (Exception ex) { throw new EvalException(this, "||", result, adden, ex); }
           if ((bool)result)

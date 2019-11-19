@@ -5,11 +5,14 @@ namespace Primrose.Expressions.Tree.Statements
 {
   internal class IfThenElseStatement : CStatement
   {
+    private ContextScope _scopeT;
+    private ContextScope _scopeF;
+
     private CExpression _condition;
     private List<CStatement> _actionIfTrue = new List<CStatement>();
     private List<CStatement> _actionIfFalse = new List<CStatement>();
 
-    internal IfThenElseStatement(Script local, Lexer lexer) : base(local, lexer)
+    internal IfThenElseStatement(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       // IF ( EXPR ) STATEMENT ELSE STATEMENT
       // IF ( EXPR ) { STATEMENT STATEMENT STATEMENT ... } ELSE { STATEMENT ... }
@@ -23,7 +26,7 @@ namespace Primrose.Expressions.Tree.Statements
           throw new ParseException(lexer, TokenEnum.BRACKETOPEN);
         lexer.Next(); //BRACKETOPEN
 
-        _condition = new Expression(local, lexer).Get();
+        _condition = new Expression(scope, lexer).Get();
 
         if (lexer.TokenType != TokenEnum.BRACKETCLOSE)
           throw new ParseException(lexer, TokenEnum.BRACKETCLOSE);
@@ -35,14 +38,15 @@ namespace Primrose.Expressions.Tree.Statements
 
         if (lexer.TokenType == TokenEnum.BRACEOPEN)
         {
+          _scopeT = scope.Next;
           lexer.Next(); //BRACEOPEN
           while (lexer.TokenType != TokenEnum.BRACECLOSE)
-            _actionIfTrue.Add(new Statement(local, lexer).Get());
+            _actionIfTrue.Add(new Statement(_scopeT, lexer).Get());
           lexer.Next(); //BRACECLOSE
         }
         else
         {
-          _actionIfTrue.Add(new Statement(local, lexer).Get());
+          _actionIfTrue.Add(new Statement(scope, lexer).Get());
         }
 
         if (lexer.TokenType == TokenEnum.ELSE)
@@ -50,20 +54,21 @@ namespace Primrose.Expressions.Tree.Statements
           lexer.Next(); //ELSE
           if (lexer.TokenType == TokenEnum.BRACEOPEN)
           {
+            _scopeF = scope.Next;
             lexer.Next(); //BRACEOPEN
             while (lexer.TokenType != TokenEnum.BRACECLOSE)
-              _actionIfFalse.Add(new Statement(local, lexer).Get());
+              _actionIfFalse.Add(new Statement(_scopeF, lexer).Get());
             lexer.Next(); //BRACECLOSE
           }
           else
           {
-            _actionIfFalse.Add(new Statement(local, lexer).Get());
+            _actionIfFalse.Add(new Statement(scope, lexer).Get());
           }
         }
       }
       else
       {
-        _actionIfTrue.Add(new SingleStatement(local, lexer).Get());
+        _actionIfTrue.Add(new SingleStatement(scope, lexer).Get());
       }
     }
 
@@ -74,17 +79,17 @@ namespace Primrose.Expressions.Tree.Statements
       return this;
     }
 
-    public override void Evaluate(Script local, AContext context)
+    public override void Evaluate(AContext context)
     {
-      if (_condition == null || _condition.Evaluate(local, context).IsTrue)
+      if (_condition == null || _condition.Evaluate(context).IsTrue)
       {
         foreach (CStatement s in _actionIfTrue)
-          s.Evaluate(local, context);
+          s.Evaluate(context);
       }
       else
       {
         foreach (CStatement s in _actionIfFalse)
-          s.Evaluate(local, context);
+          s.Evaluate(context);
       }
     }
   }

@@ -2,7 +2,7 @@
 {
   internal class DeclVariable : Variable
   {
-    internal DeclVariable(Script local, Lexer lexer) : base(local, lexer, 0)
+    internal DeclVariable(ContextScope scope, Lexer lexer) : base(scope, lexer, 0)
     {
       ValType varType;
       switch (lexer.TokenType)
@@ -60,12 +60,12 @@
         throw new ParseException(lexer, TokenEnum.VARIABLE);
 
       varName = lexer.TokenContents;
-      local.DeclVar(varName, varType);
+      scope.DeclVar(varName, varType, lexer);
       
       lexer.Next(); //VARIABLE
     }
 
-    public override Val Evaluate(Script local, AContext context)
+    public override Val Evaluate(AContext context)
     {
       return Val.NULL; 
     }

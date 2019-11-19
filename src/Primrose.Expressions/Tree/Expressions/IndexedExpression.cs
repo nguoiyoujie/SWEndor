@@ -9,18 +9,18 @@ namespace Primrose.Expressions.Tree.Expressions
     private CExpression _expression;
     private CExpression _index;
 
-    internal IndexedExpression(Script local, Lexer lexer) : base(local, lexer)
+    internal IndexedExpression(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       // EXPR[EXPR]
       // ^
 
-      _expression = new PrimaryExpression(local, lexer).Get();
+      _expression = new PrimaryExpression(scope, lexer).Get();
 
       // indexer
       if (lexer.TokenType == TokenEnum.SQBRACKETOPEN)
       {
         lexer.Next(); // SQBRACKETOPEN
-        _index = new Expression(local, lexer).Get();
+        _index = new Expression(scope, lexer).Get();
 
         if (lexer.TokenType != TokenEnum.SQBRACKETCLOSE)
           throw new ParseException(lexer, TokenEnum.SQBRACKETCLOSE);
@@ -33,13 +33,13 @@ namespace Primrose.Expressions.Tree.Expressions
       return (_index == null) ? _expression : this;
     }
 
-    public override Val Evaluate(Script local, AContext context)
+    public override Val Evaluate(AContext context)
     {
-      Val c = _expression.Evaluate(local, context);
+      Val c = _expression.Evaluate(context);
       if (_index == null)
         return c;
 
-      Val i = _index.Evaluate(local, context);
+      Val i = _index.Evaluate(context);
       if (!(i.Type == ValType.INT || (i.Type == ValType.FLOAT && (float)i == (int)i)))
         throw new EvalException(this, "Attempted to index an array with a non-integer!");
 

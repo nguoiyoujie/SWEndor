@@ -15,7 +15,7 @@ namespace SWEndor.Actors.Models
     SIDE_THRUSTERS,
 
     /// <summary>Allows regeneration of shields</summary>
-    SHIELD_GENERATOR, // required to 
+    SHIELD_GENERATOR,
 
     /// <summary>Reveals the in-game map and radar</summary>
     RADAR,

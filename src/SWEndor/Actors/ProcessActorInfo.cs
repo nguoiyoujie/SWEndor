@@ -73,7 +73,7 @@ namespace SWEndor.Actors
     {
       Meshes.Update(this);
 
-      if (Generated)
+      if (Generated || Reserved_Generated)
         SetActivated();
 
       Engine.GameScenarioManager.Scenario.State.Octree.Update(this);

@@ -170,6 +170,17 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(res.ID);
     }
 
+    public static Val QueueAtSpawn(Context context, int actorID, int spawnerID)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      ActorInfo spawner = context.Engine.ActorFactory.Get(spawnerID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null || spawner == null)
+        return new Val();
+
+      spawner.SpawnerInfo.QueueFighter(actor, spawner);
+      return Val.NULL;
+    }
+
     public static Val GetActorType(Context context, int actorID)
     {
       ActorInfo actor = context.Engine.ActorFactory.Get(actorID);

@@ -97,22 +97,22 @@ namespace Primrose.Expressions
     //internal readonly RootStatement Root;
     //internal readonly Expression RootExpr;
 
-    public static void Parse(Script local, string text, out RootStatement result, string srcname, ref int linenumber)
+    public static void Parse(ContextScope scope, string text, out RootStatement result, string srcname, ref int linenumber)
     {
       using (StringReader reader = new StringReader(text))
       {
         Lexer lex = new Lexer(reader, Definitions, srcname, linenumber);
-        result = new RootStatement(local, lex);
+        result = new RootStatement(scope, lex);
         linenumber = lex.LineNumber;
       }
     }
 
-    public static void Parse(Script local, string text, out Expression result, string srcname, ref int linenumber)
+    public static void Parse(ContextScope scope, string text, out Expression result, string srcname, ref int linenumber)
     {
       using (StringReader reader = new StringReader(text))
       {
         Lexer lex = new Lexer(reader, Definitions, srcname, linenumber);
-        result = new Expression(local, lex);
+        result = new Expression(scope, lex);
         linenumber = lex.LineNumber;
       }
     }
@@ -129,7 +129,7 @@ namespace Primrose.Expressions
 
     public void Evaluate(Script local, Context context)
     {
-      Root.Evaluate(local, context);
+      Root.Evaluate(context);
     }
     */
   }

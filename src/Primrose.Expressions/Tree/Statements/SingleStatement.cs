@@ -4,9 +4,9 @@
   {
     private CStatement _statement;
 
-    internal SingleStatement(Script local, Lexer lexer) : base(local, lexer)
+    internal SingleStatement(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
-      _statement = new AssignmentStatement(local, lexer).Get();
+      _statement = new AssignmentStatement(scope, lexer).Get();
 
       if (lexer.TokenType == TokenEnum.SEMICOLON)
         lexer.Next(); // SEMICOLON
@@ -19,9 +19,9 @@
       return _statement;
     }
 
-    public override void Evaluate(Script local, AContext context)
+    public override void Evaluate(AContext context)
     {
-      _statement.Evaluate(local, context);
+      _statement.Evaluate(context);
     }
   }
 }

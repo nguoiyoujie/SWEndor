@@ -2,7 +2,7 @@
 {
   internal class CStatement : IStatement, ITracker
   {
-    internal CStatement(Script local, Lexer lexer)
+    internal CStatement(ContextScope scope, Lexer lexer)
     {
       SourceName = lexer.SourceName;
       LineNumber = lexer.LineNumber;
@@ -10,7 +10,7 @@
     }
 
     public virtual CStatement Get() { return this; }
-    public virtual void Evaluate(Script local, AContext context) { }
+    public virtual void Evaluate(AContext context) { }
 
     public string SourceName { get; }
     public int LineNumber { get; }
@@ -20,6 +20,6 @@
   internal interface IStatement
   {
     CStatement Get();
-    void Evaluate(Script local, AContext context);
+    void Evaluate(AContext context);
   }
 }

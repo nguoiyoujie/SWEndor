@@ -48,6 +48,35 @@
         <member name="F:Primrose.Expressions.BOp.LESS_THAN_OR_EQUAL_TO">
             <summary>The numerical less than and equality comparer (a &lt;= b)</summary>
         </member>
+        <member name="T:Primrose.Expressions.ContextScope">
+            <summary>
+            Provides a context scope for the script
+            </summary>
+        </member>
+        <member name="P:Primrose.Expressions.ContextScope.Parent">
+            <summary>The parent of this scope. Evaluates to null if this is the global scope</summary>
+        </member>
+        <member name="P:Primrose.Expressions.ContextScope.Next">
+            <summary>Returns a child of this scope.</summary>
+        </member>
+        <member name="M:Primrose.Expressions.ContextScope.DeclVar(System.String,Primrose.Expressions.ValType)">
+            <summary>Declares a variable</summary>
+            <param name="name">The variable name</param>
+            <param name="type">The variable type</param>
+            <exception cref="T:System.InvalidOperationException">Duplicate declaration of a variable in the same scope</exception>
+        </member>
+        <member name="M:Primrose.Expressions.ContextScope.GetVar(System.String)">
+            <summary>Retrieves the value of a variable</summary>
+            <param name="name">The variable name</param>
+            <returns>The Val object containing the value of the variable</returns>
+            <exception cref="T:System.InvalidOperationException">Attempted to get the value from an undeclared variable</exception>
+        </member>
+        <member name="M:Primrose.Expressions.ContextScope.SetVar(System.String,Primrose.Expressions.Val)">
+            <summary>Set the value of a variable</summary>
+            <param name="name">The variable name</param>
+            <param name="val">The Val object containing the value of the variable</param>
+            <exception cref="T:System.InvalidOperationException">Attempted to set the value of an undeclared variable</exception>
+        </member>
         <member name="T:Primrose.Expressions.AContext">
             <summary>
             Provides a context for the script
@@ -188,23 +217,17 @@
             <summary>Evaluates the script</summary>
             <param name="context">The script context</param>
         </member>
-        <member name="M:Primrose.Expressions.Script.DeclVar(System.String,Primrose.Expressions.ValType)">
-            <summary>Declares a variable</summary>
-            <param name="name">The variable name</param>
-            <param name="type">The variable type</param>
-            <exception cref="T:System.InvalidOperationException">Duplicate declaration of a variable in the same scope</exception>
+        <member name="T:Primrose.Expressions.ScriptExpression">
+            <summary>
+            Represents a set of parsable statements
+            </summary>
         </member>
-        <member name="M:Primrose.Expressions.Script.GetVar(System.String)">
-            <summary>Retrieves the value of a variable</summary>
-            <param name="name">The variable name</param>
-            <returns>The Val object containing the value of the variable</returns>
-            <exception cref="T:System.InvalidOperationException">Attempted to get the value from an undeclared variable</exception>
+        <member name="M:Primrose.Expressions.ScriptExpression.#ctor(System.String)">
+            <summary>Creates a script expression</summary>
         </member>
-        <member name="M:Primrose.Expressions.Script.SetVar(System.String,Primrose.Expressions.Val)">
-            <summary>Set the value of a variable</summary>
-            <param name="name">The variable name</param>
-            <param name="val">The Val object containing the value of the variable</param>
-            <exception cref="T:System.InvalidOperationException">Attempted to set the value of an undeclared variable</exception>
+        <member name="M:Primrose.Expressions.ScriptExpression.Evaluate(Primrose.Expressions.AContext)">
+            <summary>Evaluates the script</summary>
+            <param name="context">The script context</param>
         </member>
         <member name="T:Primrose.Expressions.UOp">
             <summary>

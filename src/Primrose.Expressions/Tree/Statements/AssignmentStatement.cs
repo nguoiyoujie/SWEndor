@@ -4,11 +4,12 @@ namespace Primrose.Expressions.Tree.Statements
 {
   internal class AssignmentStatement: CStatement
   {
+    private ContextScope _scope;
     private Variable _variable;
     private TokenEnum _assigntype;
     private CExpression _value;
 
-    internal AssignmentStatement(Script local, Lexer lexer) : base(local, lexer)
+    internal AssignmentStatement(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       // VARIABLE = EXPR;
       // VARIABLE += EXPR;
@@ -22,6 +23,7 @@ namespace Primrose.Expressions.Tree.Statements
       // or
       // EXPR;
 
+      _scope = scope;
       switch (lexer.TokenType)
       {
         case TokenEnum.DECL_BOOL:
@@ -38,9 +40,9 @@ namespace Primrose.Expressions.Tree.Statements
         case TokenEnum.VARIABLE:
           {
             if (lexer.TokenType == TokenEnum.VARIABLE)
-              _variable = new Variable(local, lexer).Get() as Variable;
+              _variable = new Variable(scope, lexer).Get() as Variable;
             else
-              _variable = new DeclVariable(local, lexer).Get() as DeclVariable;
+              _variable = new DeclVariable(scope, lexer).Get() as DeclVariable;
 
             _assigntype = lexer.TokenType;
             if (_assigntype == TokenEnum.ASSIGN
@@ -55,7 +57,7 @@ namespace Primrose.Expressions.Tree.Statements
             {
               TokenEnum _type = lexer.TokenType;
               lexer.Next(); //ASSIGN
-              _value = new Expression(local, lexer).Get();
+              _value = new Expression(scope, lexer).Get();
             }
             else
             {
@@ -66,50 +68,50 @@ namespace Primrose.Expressions.Tree.Statements
         default:
           {
             _assigntype = TokenEnum.NOTHING;
-            _value = new Expression(local, lexer).Get();
+            _value = new Expression(scope, lexer).Get();
           }
           break;
       }
     }
 
-    public override void Evaluate(Script local, AContext context)
+    public override void Evaluate(AContext context)
     {
       if (_assigntype != TokenEnum.NOTHING)
       {
-        Val v = local.GetVar(_variable.varName);
+        Val v = _scope.GetVar(this, _variable.varName);
 
         switch (_assigntype)
         {
           case TokenEnum.ASSIGN:
-            v = _value?.Evaluate(local, context) ?? Val.NULL;
+            v = _value?.Evaluate(context) ?? Val.NULL;
             break;
           case TokenEnum.PLUSASSIGN:
-            v = Ops.Do(BOp.ADD, v, _value?.Evaluate(local, context) ?? Val.NULL); ;
+            v = Ops.Do(BOp.ADD, v, _value?.Evaluate(context) ?? Val.NULL); ;
             break;
           case TokenEnum.MINUSASSIGN:
-            v = Ops.Do(BOp.SUBTRACT, v, _value?.Evaluate(local, context) ?? Val.NULL); ;
+            v = Ops.Do(BOp.SUBTRACT, v, _value?.Evaluate(context) ?? Val.NULL); ;
             break;
           case TokenEnum.ASTERISKASSIGN:
-            v = Ops.Do(BOp.MULTIPLY, v, _value?.Evaluate(local, context) ?? Val.NULL); ;
+            v = Ops.Do(BOp.MULTIPLY, v, _value?.Evaluate(context) ?? Val.NULL); ;
             break;
           case TokenEnum.SLASHASSIGN:
-            v = Ops.Do(BOp.DIVIDE, v, _value?.Evaluate(local, context) ?? Val.NULL); ;
+            v = Ops.Do(BOp.DIVIDE, v, _value?.Evaluate(context) ?? Val.NULL); ;
             break;
           case TokenEnum.PERCENTASSIGN:
-            v = Ops.Do(BOp.MODULUS, v, _value?.Evaluate(local, context) ?? Val.NULL); ;
+            v = Ops.Do(BOp.MODULUS, v, _value?.Evaluate(context) ?? Val.NULL); ;
             break;
           case TokenEnum.AMPASSIGN:
-            v = Ops.Do(BOp.LOGICAL_AND, v, _value?.Evaluate(local, context) ?? Val.NULL); ;
+            v = Ops.Do(BOp.LOGICAL_AND, v, _value?.Evaluate(context) ?? Val.NULL); ;
             break;
           case TokenEnum.PIPEASSIGN:
-            v = Ops.Do(BOp.LOGICAL_OR, v, _value?.Evaluate(local, context) ?? Val.NULL); ;
+            v = Ops.Do(BOp.LOGICAL_OR, v, _value?.Evaluate(context) ?? Val.NULL); ;
             break;
         }
-        local.SetVar(_variable.varName, v);
+        _scope.SetVar(this, _variable.varName, v);
       }
       else
       {
-        _value?.Evaluate(local, context);
+        _value?.Evaluate(context);
       }
     }
   }

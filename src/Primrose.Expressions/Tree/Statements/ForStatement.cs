@@ -5,12 +5,13 @@ namespace Primrose.Expressions.Tree.Statements
 {
   internal class ForStatement : CStatement
   {
+    private ContextScope _scope;
     private CStatement _begin;
     private CExpression _condition;
     private CStatement _next;
     private List<CStatement> _actions = new List<CStatement>();
 
-    internal ForStatement(Script local, Lexer lexer) : base(local, lexer)
+    internal ForStatement(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       // FOR ( STATEMENT; CONDEXPR; EXPR ) STATEMENT 
       // FOR ( STATEMENT; CONDEXPR; EXPR ) { STATEMENT STATEMENT STATEMENT ... } 
@@ -24,15 +25,16 @@ namespace Primrose.Expressions.Tree.Statements
           throw new ParseException(lexer, TokenEnum.BRACKETOPEN);
         lexer.Next(); //BRACKETOPEN
 
-        _begin = new Statement(local, lexer).Get();
+        _scope = scope.Next;
+        _begin = new Statement(_scope, lexer).Get();
 
-        _condition = new Expression(local, lexer).Get();
+        _condition = new Expression(_scope, lexer).Get();
 
         if (lexer.TokenType != TokenEnum.SEMICOLON)
           throw new ParseException(lexer, TokenEnum.SEMICOLON);
         lexer.Next(); //SEMICOLON
 
-        _next = new AssignmentStatement(local, lexer).Get();
+        _next = new AssignmentStatement(_scope, lexer).Get();
 
         if (lexer.TokenType != TokenEnum.BRACKETCLOSE)
           throw new ParseException(lexer, TokenEnum.BRACKETCLOSE);
@@ -42,17 +44,17 @@ namespace Primrose.Expressions.Tree.Statements
         {
           lexer.Next(); //BRACEOPEN
           while (lexer.TokenType != TokenEnum.BRACECLOSE)
-            _actions.Add(new Statement(local, lexer).Get());
+            _actions.Add(new Statement(_scope, lexer).Get());
           lexer.Next(); //BRACECLOSE
         }
         else
         {
-          _actions.Add(new Statement(local, lexer).Get());
+          _actions.Add(new Statement(scope, lexer).Get());
         }
       }
       else
       {
-        _actions.Add(new ForEachStatement(local, lexer).Get());
+        _actions.Add(new ForEachStatement(scope, lexer).Get());
       }
     }
 
@@ -63,24 +65,24 @@ namespace Primrose.Expressions.Tree.Statements
       return this;
     }
 
-    public override void Evaluate(Script local, AContext context)
+    public override void Evaluate(AContext context)
     {
       if (_condition != null)
       {
-        _begin.Evaluate(local, context);
+        _begin.Evaluate(context);
 
-        while (_condition.Evaluate(local, context).IsTrue)
+        while (_condition.Evaluate(context).IsTrue)
         {
           foreach (CStatement s in _actions)
-            s.Evaluate(local, context);
+            s.Evaluate(context);
 
-          _next.Evaluate(local, context);
+          _next.Evaluate(context);
         }
         return;
       }
 
       foreach (CStatement s in _actions)
-        s.Evaluate(local, context);
+        s.Evaluate(context);
     }
   }
 }

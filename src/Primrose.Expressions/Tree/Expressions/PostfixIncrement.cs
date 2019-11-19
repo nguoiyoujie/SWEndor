@@ -34,7 +34,7 @@
     public object Evaluate(Context context)
     {
       if (_incre == 0)
-        return _child.Evaluate(local, context);
+        return _child.Evaluate(context);
 
       Context.ContextVariable var = context.Variables.Get(_child.varName);
       if (var == null)

@@ -7,7 +7,7 @@ namespace Primrose.Expressions.Tree.Expressions
     private CExpression _primary;
     private TokenEnum _type;
 
-    internal UnaryExpression(Script local, Lexer lexer) : base(local, lexer)
+    internal UnaryExpression(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       // + PRIAMRY
       // - PRIAMRY
@@ -23,11 +23,11 @@ namespace Primrose.Expressions.Tree.Expressions
         )
       {
         lexer.Next(); // PLUS / MINUS / NOT
-        _primary = new IndexedExpression(local, lexer).Get();
+        _primary = new IndexedExpression(scope, lexer).Get();
       }
       else
       {
-        _primary = new IndexedExpression(local, lexer).Get();
+        _primary = new IndexedExpression(scope, lexer).Get();
         _type = TokenEnum.NOTHING;
       }
     }
@@ -39,9 +39,9 @@ namespace Primrose.Expressions.Tree.Expressions
       return this;
     }
 
-    public override Val Evaluate(Script local, AContext context)
+    public override Val Evaluate(AContext context)
     {
-      Val result = _primary.Evaluate(local, context);
+      Val result = _primary.Evaluate(context);
       switch (_type)
       {
         default:

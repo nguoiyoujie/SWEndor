@@ -101,5 +101,18 @@ namespace SWEndorTest
       Assert.AreEqual(v.Type, ValType.STRING);
       Assert.AreEqual((string)v, "test");
     }
+
+    [TestMethod]
+    public void ExprTest()
+    {
+      ScriptExpression s;
+      
+      s = new ScriptExpression("1 + 1");
+      Assert.AreEqual(2, (float)s.Evaluate(null));
+
+      s = new ScriptExpression("2 * (2 + 3)");
+      Assert.AreEqual(10, (float)s.Evaluate(null));
+      
+    }
   }
 }

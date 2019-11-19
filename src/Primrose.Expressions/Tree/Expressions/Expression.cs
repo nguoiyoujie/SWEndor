@@ -4,9 +4,9 @@
   {
     private CExpression _expr;
 
-    internal Expression(Script local, Lexer lexer) : base(local, lexer)
+    internal Expression(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
-      _expr = new TernaryExpression(local, lexer).Get();
+      _expr = new TernaryExpression(scope, lexer).Get();
     }
 
     public override CExpression Get()
@@ -14,9 +14,9 @@
       return _expr;
     }
 
-    public override Val Evaluate(Script local, AContext context)
+    public override Val Evaluate(AContext context)
     {
-      return _expr.Evaluate(local, context);
+      return _expr.Evaluate(context);
     }
   }
 

@@ -94,12 +94,13 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc("Camera.SetSceneLook_LookFromPoint", new ValFunc<float3>(PlayerCameraFns.SetSceneLook_LookFromPoint));
 
       // Actor Management
-      Functions.Add("Actor.Squadron_Spawn", ActorFns.Squadron_Spawn);
-      AddFunc("Actor.AddToSquad", new ValFunc<int, int>(ActorFns.AddToSquad));
-      AddFunc("Actor.RemoveFromSquad", new ValFunc<int>(ActorFns.RemoveFromSquad));
-      AddFunc("Actor.MakeSquadLeader", new ValFunc<int>(ActorFns.MakeSquadLeader));
+      Functions.Add("Squad.Squadron_Spawn", ActorFns.Squadron_Spawn);
+      AddFunc("Squad.AddToSquad", new ValFunc<int, int>(ActorFns.AddToSquad));
+      AddFunc("Squad.RemoveFromSquad", new ValFunc<int>(ActorFns.RemoveFromSquad));
+      AddFunc("Squad.MakeSquadLeader", new ValFunc<int>(ActorFns.MakeSquadLeader));
 
       Functions.Add("Actor.Spawn", ActorFns.Spawn);
+      AddFunc("Actor.QueueAtSpawn", new ValFunc<int, int>(ActorFns.QueueAtSpawn));
       AddFunc("Actor.GetActorType", new ValFunc<int>(ActorFns.GetActorType));
       AddFunc("Actor.IsFighter", new ValFunc<int>(ActorFns.IsFighter));
       AddFunc("Actor.IsLargeShip", new ValFunc<int>(ActorFns.IsLargeShip));

@@ -6,6 +6,7 @@ using SWEndor.AI.Actions;
 using SWEndor.AI.Squads;
 using SWEndor.Core;
 using SWEndor.Models;
+using System.Collections.Concurrent;
 
 namespace SWEndor
 {
@@ -39,7 +40,7 @@ namespace SWEndor
       SpawnPlayerDelay = 10,
       SpawnsRemaining = 30,
       SpawnLocations = new TV_3DVECTOR[0],
-      SpawnSpeed = -1,
+      SpawnSpeed = -1
     };
 
     internal void Process(Engine engine, ActorInfo ainfo, ActorInfo p)
@@ -92,6 +93,19 @@ namespace SWEndor
       return true;
     }
 
+    public void QueueFighter(ActorInfo a, ActorInfo p)
+    {
+      a.SetReserved();
+        p.SpawnQueue.Enqueue(a);
+    }
+
+    public void DiscardQueuedFighters(ActorInfo p)
+    {
+      ActorInfo a;
+      while (p.SpawnQueue.TryDequeue(out a))
+        a.Delete();
+    }
+
     private bool SpawnFighter(Engine engine, ActorInfo ainfo, ActorInfo p)
     {
       if (NextSpawnTime < engine.Game.GameTime
@@ -100,7 +114,31 @@ namespace SWEndor
        && SpawnTypes.Length > 0)
       {
         ActorTypeInfo spawntype = engine.ActorTypeFactory.Get(SpawnTypes[engine.Random.Next(0, SpawnTypes.Length)]);
-        if ((spawntype.AIData.TargetType.Has(TargetType.FIGHTER)
+
+        if (p.SpawnQueue.Count > 0)
+        {
+          NextSpawnTime = engine.Game.GameTime + SpawnInterval;
+
+          Squadron squad = ainfo.Engine.SquadronFactory.Create();
+          foreach (TV_3DVECTOR sv in SpawnLocations)
+          {
+            ActorInfo a;
+            if (p.SpawnQueue.TryDequeue(out a))
+            {
+              float scale = ainfo.Scale;
+              a.Position = ainfo.GetRelativePositionXYZ(sv.x * scale, sv.y * scale, sv.z * scale);
+              a.Rotation = ainfo.GetGlobalRotation();
+              a.Rotation += SpawnRotation;
+              a.MoveData.FreeSpeed = true;
+              a.Squad = squad;
+              ainfo.AddChild(a);
+              a.QueueFirst(Lock.GetOrCreate());
+              a.SetUnreserved();
+            }
+          }
+          SpawnMoveTime = engine.Game.GameTime + SpawnMoveDelay;
+        }
+        else if ((spawntype.AIData.TargetType.Has(TargetType.FIGHTER)
           && (ainfo.Faction.WingSpawnLimit < 0 || ainfo.Faction.WingCount < ainfo.Faction.WingSpawnLimit)
           && (ainfo.Faction.WingLimit < 0 || ainfo.Faction.WingCount < ainfo.Faction.WingLimit)
           )
@@ -115,6 +153,7 @@ namespace SWEndor
           Squadron squad = ainfo.Engine.SquadronFactory.Create();
           foreach (TV_3DVECTOR sv in SpawnLocations)
           {
+            ActorInfo a;
             ActorCreationInfo acinfo = new ActorCreationInfo(spawntype);
 
             float scale = ainfo.Scale;
@@ -124,18 +163,11 @@ namespace SWEndor
 
             acinfo.FreeSpeed = true;
             acinfo.Faction = ainfo.Faction;
-            ActorInfo a = engine.ActorFactory.Create(acinfo);
+            a = engine.ActorFactory.Create(acinfo);
+
             a.Squad = squad;
             ainfo.AddChild(a);
             a.QueueFirst(Lock.GetOrCreate());
-
-            //float m1 = p.MoveData.Speed * SpawnMoveDelay * p.Scale;
-            //float m2 = SpawnMoveDelay * p.Scale;
-            //TV_3DVECTOR v = a.GetRelativePositionFUR(SpawnSpeedPositioningMult.x * m1 + SpawnManualPositioningMult.x * m2
-            //                                       , SpawnSpeedPositioningMult.y * m1 + SpawnManualPositioningMult.y * m2
-            //                                       , SpawnSpeedPositioningMult.z * m1 + SpawnManualPositioningMult.z * m2);
-
-            //a.QueueNext(Move.GetOrCreate(v, a.TypeInfo.MoveLimitData.MinSpeed));
           }
 
           SpawnMoveTime = engine.Game.GameTime + SpawnMoveDelay;

@@ -7,7 +7,7 @@ namespace Primrose.Expressions.Tree.Expressions
     private string _funcName;
     private List<CExpression> _param = new List<CExpression>();
 
-    internal Function(Script local, Lexer lexer) : base(local, lexer)
+    internal Function(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       // FUNCNAME ( PARAM , PARAM , PARAM , ...)
       //  ^
@@ -22,23 +22,23 @@ namespace Primrose.Expressions.Tree.Expressions
 
       while (lexer.TokenType != TokenEnum.BRACKETCLOSE)
       {
-        _param.Add(new Expression(local, lexer).Get());
+        _param.Add(new Expression(scope, lexer).Get());
 
         while (lexer.TokenType == TokenEnum.COMMA)
         {
           lexer.Next(); //COMMA
-          _param.Add(new Expression(local, lexer).Get());
+          _param.Add(new Expression(scope, lexer).Get());
         }
       }
 
       lexer.Next(); //BRACKETCLOSE
     }
 
-    public override Val Evaluate(Script local, AContext context)
+    public override Val Evaluate(AContext context)
     {
       List<Val> parsed = new List<Val>();
       foreach (CExpression expr in _param)
-        parsed.Add(expr.Evaluate(local, context));
+        parsed.Add(expr.Evaluate(context));
 
       return context.RunFunction(this, _funcName, parsed.ToArray());
     }

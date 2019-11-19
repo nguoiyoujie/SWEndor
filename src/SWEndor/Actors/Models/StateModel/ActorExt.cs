@@ -16,8 +16,14 @@ namespace SWEndor.Actors
     /// <summary>Returns whether the creation state is PLANNED</summary>
     public bool Planned { get { return State.CreationState == CreationState.PLANNED; } }
 
+    /// <summary>Returns whether the creation state is RESERVED_PLANNED</summary>
+    public bool Reserved_Planned { get { return State.CreationState == CreationState.RESERVED_PLANNED; } }
+
     /// <summary>Returns whether the creation state is GENERATED</summary>
     public bool Generated { get { return State.CreationState == CreationState.GENERATED; } }
+
+    /// <summary>Returns whether the creation state is RESERVED_GENERATED</summary>
+    public bool Reserved_Generated { get { return State.CreationState == CreationState.RESERVED_GENERATED; } }
 
     /// <summary>Returns whether the creation state is ACTIVE</summary>
     public bool Active { get { return State.CreationState == CreationState.ACTIVE; } }
@@ -33,6 +39,26 @@ namespace SWEndor.Actors
 
     /// <summary>Returns whether the creation state is DISPOSED</summary>
     public bool Disposed { get { return State.CreationState == CreationState.DISPOSED; } }
+
+    /// <summary>Removes RESERVED status on the creation state</summary>
+    public void SetUnreserved()
+    {
+      State.SetUnreserved();
+#if DEBUG
+      if (Logged)
+        Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
+#endif
+    }
+
+    /// <summary>Sets RESERVED status on the creation state</summary>
+    public void SetReserved()
+    {
+      State.SetReserved();
+#if DEBUG
+      if (Logged)
+        Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
+#endif
+    }
 
     /// <summary>Sets the creation state to GENERATED</summary>
     public void SetGenerated() { State.SetGenerated();

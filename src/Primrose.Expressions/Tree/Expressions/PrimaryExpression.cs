@@ -6,40 +6,40 @@ namespace Primrose.Expressions.Tree.Expressions
   {
     private CExpression _child;
 
-    internal PrimaryExpression(Script local, Lexer lexer) : base(local, lexer)
+    internal PrimaryExpression(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
       TokenEnum t = lexer.TokenType;
       switch (t)
       {
         case TokenEnum.BRACKETOPEN:
-          _child = new ParenthesizedExpression(local, lexer).Get();
+          _child = new ParenthesizedExpression(scope, lexer).Get();
           break;
         case TokenEnum.FUNCTION:
-          _child = new Function(local, lexer).Get();
+          _child = new Function(scope, lexer).Get();
           break;
 
         case TokenEnum.VARIABLE:
-          _child = new Variable(local, lexer).Get();
+          _child = new Variable(scope, lexer).Get();
           break;
 
         //Literals
         case TokenEnum.BOOLEANLITERAL:
-          _child = new BoolLiteral(local, lexer).Get();
+          _child = new BoolLiteral(scope, lexer).Get();
           break;
         case TokenEnum.DECIMALINTEGERLITERAL:
-          _child = new IntLiteral(local, lexer).Get();
+          _child = new IntLiteral(scope, lexer).Get();
           break;
         case TokenEnum.HEXINTEGERLITERAL:
-          _child = new HexLiteral(local, lexer).Get();
+          _child = new HexLiteral(scope, lexer).Get();
           break;
         case TokenEnum.REALLITERAL:
-          _child = new SingleLiteral(local, lexer).Get();
+          _child = new SingleLiteral(scope, lexer).Get();
           break;
         case TokenEnum.STRINGLITERAL:
-          _child = new StringLiteral(local, lexer).Get();
+          _child = new StringLiteral(scope, lexer).Get();
           break;
         case TokenEnum.BRACEOPEN:
-          _child = new ArrayLiteral(local, lexer).Get();
+          _child = new ArrayLiteral(scope, lexer).Get();
           break;
 
         default:
@@ -52,9 +52,9 @@ namespace Primrose.Expressions.Tree.Expressions
       return _child;
     }
 
-    public override Val Evaluate(Script local, AContext context)
+    public override Val Evaluate(AContext context)
     {
-      return _child.Evaluate(local, context);
+      return _child.Evaluate(context);
     }
   }
 }
