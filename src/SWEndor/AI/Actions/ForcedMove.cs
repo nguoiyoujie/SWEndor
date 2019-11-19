@@ -9,7 +9,8 @@ namespace SWEndor.AI.Actions
   internal class ForcedMove : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<ForcedMove> _pool = new ObjectPool<ForcedMove>(() => { return new ForcedMove(); }, (a) => { a.Reset(); });
+    private static ObjectPool<ForcedMove> _pool;
+    static ForcedMove() { _pool = ObjectPool<ForcedMove>.CreateStaticPool(() => { return new ForcedMove(); }, (a) => { a.Reset(); }); }
 
     private ForcedMove() : base("ForcedMove") { CanInterrupt = false; }
 

@@ -7,7 +7,8 @@ namespace SWEndor.AI.Actions
   internal class Wait : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<Wait> _pool = new ObjectPool<Wait>(() => { return new Wait(); }, (a) => { a.Reset(); });
+    private static ObjectPool<Wait> _pool;
+    static Wait() { _pool = ObjectPool<Wait>.CreateStaticPool(() => { return new Wait(); }, (a) => { a.Reset(); }); }
 
     private Wait() : base("Wait") { }
 

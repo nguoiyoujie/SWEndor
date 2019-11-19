@@ -15,7 +15,7 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement ButtonPlay = new SelectionElement();
     SelectionElement ButtonBack = new SelectionElement();
     int SelectedScenarioID = -1;
-    GameScenarioBase SelectedScenario = null;
+    ScenarioBase SelectedScenario = null;
     int SelectedActorTypeInfoID = -1;
     ActorTypeInfo SelectedActorTypeInfo = null;
     int SelectedDifficultyID = -1;
@@ -41,7 +41,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonScenario.OnKeyPress += SelectScenario;
       if (GameScenarioManager.ScenarioList.Count > 0)
       {
-        ButtonScenario.SecondaryText = GameScenarioManager.ScenarioList[0].Name.ToUpper();
+        ButtonScenario.SecondaryText = GameScenarioManager.ScenarioList[0].Info.Name.ToUpper();
         SelectedScenario = GameScenarioManager.ScenarioList[0];
         SelectedScenarioID = 0;
       }
@@ -57,10 +57,10 @@ namespace SWEndor.UI.Menu.Pages
       ButtonWing.Selectable = true;
       ButtonWing.OnKeyPress += SelectWing;
       //ButtonScenario.SecondaryText = "XWING";
-      if (SelectedScenario.AllowedWings.Count > 0)
+      if (SelectedScenario.Info.AllowedWings.Length > 0)
       {
-        ButtonWing.SecondaryText = SelectedScenario.AllowedWings[0].Name.ToUpper();
-        SelectedActorTypeInfo = SelectedScenario.AllowedWings[0];
+        ButtonWing.SecondaryText = SelectedScenario.Info.AllowedWings[0].Name.ToUpper();
+        SelectedActorTypeInfo = SelectedScenario.Info.AllowedWings[0];
         SelectedActorTypeInfoID = 0;
       }
 
@@ -73,14 +73,14 @@ namespace SWEndor.UI.Menu.Pages
       ButtonDifficulty.HighlightBoxHeight = 30;
       ButtonDifficulty.Selectable = true;
       ButtonDifficulty.OnKeyPress += SelectDifficulty;
-      if (SelectedScenario.AllowedDifficulties.Count > 0)
+      if (SelectedScenario.Info.AllowedDifficulties.Length > 0)
       {
-        ButtonDifficulty.SecondaryText = SelectedScenario.AllowedDifficulties[0].ToUpper();
-        SelectedDifficulty = SelectedScenario.AllowedDifficulties[0];
+        ButtonDifficulty.SecondaryText = SelectedScenario.Info.AllowedDifficulties[0].ToUpper();
+        SelectedDifficulty = SelectedScenario.Info.AllowedDifficulties[0];
         SelectedDifficultyID = 0;
       }
 
-      DescText.Text = SelectedScenario.Description.Multiline(64);
+      DescText.Text = SelectedScenario.Info.Description.Multiline(64);
       DescText.TextFont = FontFactory.Get(Font.T14).ID;
       DescText.TextPosition = new TV_2DVECTOR(x, y);
       y += 120 +  height_gap;
@@ -133,7 +133,7 @@ namespace SWEndor.UI.Menu.Pages
           if (newSelectedScenario < 0)
             newSelectedScenario = GameScenarioManager.ScenarioList.Count - 1;
 
-          ButtonScenario.SecondaryText = GameScenarioManager.ScenarioList[newSelectedScenario].Name.ToUpper();
+          ButtonScenario.SecondaryText = GameScenarioManager.ScenarioList[newSelectedScenario].Info.Name.ToUpper();
           SelectedScenario = GameScenarioManager.ScenarioList[newSelectedScenario];
           SelectedScenarioID = newSelectedScenario;
 
@@ -143,7 +143,7 @@ namespace SWEndor.UI.Menu.Pages
           SelectedDifficultyID = 1;
           SelectDifficulty(CONST_TV_KEY.TV_KEY_LEFT);
 
-          DescText.Text = SelectedScenario.Description.Multiline(64);
+          DescText.Text = SelectedScenario.Info.Description.Multiline(64);
 
           return true;
         }
@@ -155,7 +155,7 @@ namespace SWEndor.UI.Menu.Pages
           if (newSelectedScenario >= GameScenarioManager.ScenarioList.Count)
             newSelectedScenario = 0;
 
-          ButtonScenario.SecondaryText = GameScenarioManager.ScenarioList[newSelectedScenario].Name.ToUpper();
+          ButtonScenario.SecondaryText = GameScenarioManager.ScenarioList[newSelectedScenario].Info.Name.ToUpper();
           SelectedScenario = GameScenarioManager.ScenarioList[newSelectedScenario];
           SelectedScenarioID = newSelectedScenario;
 
@@ -165,7 +165,7 @@ namespace SWEndor.UI.Menu.Pages
           SelectedDifficultyID = 1;
           SelectDifficulty(CONST_TV_KEY.TV_KEY_LEFT);
 
-          DescText.Text = SelectedScenario.Description.Multiline(64);
+          DescText.Text = SelectedScenario.Info.Description.Multiline(64);
 
           return true;
         }
@@ -181,7 +181,7 @@ namespace SWEndor.UI.Menu.Pages
         return true;
       }
 
-      if (SelectedScenario != null && SelectedScenario.AllowedWings.Count > 0)
+      if (SelectedScenario != null && SelectedScenario.Info.AllowedWings.Length > 0)
       {
         if (key == CONST_TV_KEY.TV_KEY_LEFT)
         {
@@ -189,10 +189,10 @@ namespace SWEndor.UI.Menu.Pages
 
           newSelectedWing--;
           if (newSelectedWing < 0)
-            newSelectedWing = SelectedScenario.AllowedWings.Count - 1;
+            newSelectedWing = SelectedScenario.Info.AllowedWings.Length - 1;
 
-          ButtonWing.SecondaryText = SelectedScenario.AllowedWings[newSelectedWing].Name.ToUpper();
-          SelectedActorTypeInfo = SelectedScenario.AllowedWings[newSelectedWing];
+          ButtonWing.SecondaryText = SelectedScenario.Info.AllowedWings[newSelectedWing].Name.ToUpper();
+          SelectedActorTypeInfo = SelectedScenario.Info.AllowedWings[newSelectedWing];
           SelectedActorTypeInfoID = newSelectedWing;
 
           return true;
@@ -202,11 +202,11 @@ namespace SWEndor.UI.Menu.Pages
           int newSelectedWing = SelectedActorTypeInfoID;
 
           newSelectedWing++;
-          if (newSelectedWing >= SelectedScenario.AllowedWings.Count)
+          if (newSelectedWing >= SelectedScenario.Info.AllowedWings.Length)
             newSelectedWing = 0;
 
-          ButtonWing.SecondaryText = SelectedScenario.AllowedWings[newSelectedWing].Name.ToUpper();
-          SelectedActorTypeInfo = SelectedScenario.AllowedWings[newSelectedWing];
+          ButtonWing.SecondaryText = SelectedScenario.Info.AllowedWings[newSelectedWing].Name.ToUpper();
+          SelectedActorTypeInfo = SelectedScenario.Info.AllowedWings[newSelectedWing];
           SelectedActorTypeInfoID = newSelectedWing;
 
           return true;
@@ -223,7 +223,7 @@ namespace SWEndor.UI.Menu.Pages
         return true;
       }
 
-      if (SelectedScenario != null && SelectedScenario.AllowedWings.Count > 0)
+      if (SelectedScenario != null && SelectedScenario.Info.AllowedWings.Length > 0)
       {
         if (key == CONST_TV_KEY.TV_KEY_LEFT)
         {
@@ -231,10 +231,10 @@ namespace SWEndor.UI.Menu.Pages
 
           newSelectedDiff--;
           if (newSelectedDiff < 0)
-            newSelectedDiff = SelectedScenario.AllowedDifficulties.Count - 1;
+            newSelectedDiff = SelectedScenario.Info.AllowedDifficulties.Length - 1;
 
-          ButtonDifficulty.SecondaryText = SelectedScenario.AllowedDifficulties[newSelectedDiff].ToUpper();
-          SelectedDifficulty = SelectedScenario.AllowedDifficulties[newSelectedDiff];
+          ButtonDifficulty.SecondaryText = SelectedScenario.Info.AllowedDifficulties[newSelectedDiff].ToUpper();
+          SelectedDifficulty = SelectedScenario.Info.AllowedDifficulties[newSelectedDiff];
           SelectedDifficultyID = newSelectedDiff;
 
           return true;
@@ -244,11 +244,11 @@ namespace SWEndor.UI.Menu.Pages
           int newSelectedDiff = SelectedDifficultyID;
 
           newSelectedDiff++;
-          if (newSelectedDiff >= SelectedScenario.AllowedDifficulties.Count)
+          if (newSelectedDiff >= SelectedScenario.Info.AllowedDifficulties.Length)
             newSelectedDiff = 0;
 
-          ButtonDifficulty.SecondaryText = SelectedScenario.AllowedDifficulties[newSelectedDiff].ToUpper();
-          SelectedDifficulty = SelectedScenario.AllowedDifficulties[newSelectedDiff];
+          ButtonDifficulty.SecondaryText = SelectedScenario.Info.AllowedDifficulties[newSelectedDiff].ToUpper();
+          SelectedDifficulty = SelectedScenario.Info.AllowedDifficulties[newSelectedDiff];
           SelectedDifficultyID = newSelectedDiff;
 
           return true;

@@ -7,7 +7,8 @@ namespace SWEndor.AI.Actions
   internal class SetGameStateB : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<SetGameStateB> _pool = new ObjectPool<SetGameStateB>(() => { return new SetGameStateB(); }, (a) => { a.Reset(); });
+    private static ObjectPool<SetGameStateB> _pool;
+    static SetGameStateB() { _pool = ObjectPool<SetGameStateB>.CreateStaticPool(() => { return new SetGameStateB(); }, (a) => { a.Reset(); }); }
 
     private SetGameStateB() : base("SetGameStateB") { CanInterrupt = false; }
 
@@ -38,7 +39,7 @@ namespace SWEndor.AI.Actions
 
     public override void Process(Engine engine, ActorInfo actor)
     {
-      engine.GameScenarioManager.SetGameStateB(m_key, m_state);
+      engine.GameScenarioManager.Scenario.State.SetGameStateB(m_key, m_state);
       Complete = true;
     }
   }

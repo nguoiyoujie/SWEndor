@@ -36,7 +36,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <returns>INT[] containing the IDs of the spawned actors</returns>
     public static Val Squadron_Spawn(Context context, params Val[] ps)
     {
-      GameScenarioBase gscenario = context.Engine.GameScenarioManager.Scenario;
+      ScenarioBase gscenario = context.Engine.GameScenarioManager.Scenario;
 
       string actorType = (string)ps[0];
       string squadName = (string)ps[1];
@@ -132,7 +132,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <returns>INT: the ID of the spawned actor. If the spawn failed, returns -1</returns>
     public static Val Spawn(Context context, params Val[] ps)
     {
-      GameScenarioBase gscenario = context.Engine.GameScenarioManager.Scenario;
+      ScenarioBase gscenario = context.Engine.GameScenarioManager.Scenario;
       if (gscenario == null)
         return new Val("-1");
 

@@ -9,7 +9,8 @@ namespace SWEndor.AI.Actions
   internal class Rotate : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<Rotate> _pool = new ObjectPool<Rotate>(() => { return new Rotate(); }, (a) => { a.Reset(); });
+    private static ObjectPool<Rotate> _pool;
+    static Rotate() { _pool = ObjectPool<Rotate>.CreateStaticPool(() => { return new Rotate(); }, (a) => { a.Reset(); }); }
 
     private Rotate() : base("Rotate") { CanInterrupt = false; }
 

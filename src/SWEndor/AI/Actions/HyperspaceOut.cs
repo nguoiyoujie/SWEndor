@@ -9,7 +9,8 @@ namespace SWEndor.AI.Actions
   internal class HyperspaceOut : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<HyperspaceOut> _pool = new ObjectPool<HyperspaceOut>(() => { return new HyperspaceOut(); }, (a) => { a.Reset(); });
+    private static ObjectPool<HyperspaceOut> _pool;
+    static HyperspaceOut() { _pool = ObjectPool<HyperspaceOut>.CreateStaticPool(() => { return new HyperspaceOut(); }, (a) => { a.Reset(); }); }
 
     private HyperspaceOut() : base("HyperspaceOut") { CanInterrupt = false; }
 
@@ -24,6 +25,8 @@ namespace SWEndor.AI.Actions
     public override void Reset()
     {
       base.Reset();
+      Origin_Position = new TV_3DVECTOR();
+      hyperspace = false;
     }
 
     public override void Return()

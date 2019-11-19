@@ -523,7 +523,7 @@ namespace SWEndor.ActorTypes
             engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.SQUAD_MEMBER_LOST).F(ainfo.Name)
                                              , 3
                                              , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_WARNING));
-            engine.GameScenarioManager.Scenario.Mood = MoodStates.ALLY_FIGHTER_LOST;
+            engine.SoundManager.Mood = MoodStates.ALLY_FIGHTER_LOST;
           }
         }
       }

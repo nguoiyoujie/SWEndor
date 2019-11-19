@@ -90,6 +90,19 @@ namespace SWEndor.Sound
       }
     }
 
+    private MoodStates m_mood = MoodStates.AMBIENT;
+    public MoodStates Mood
+    {
+      get { return m_mood; }
+      set
+      {
+        if (value < 0)
+          TriggerInterruptMood((int)value);
+        else
+          m_mood = value;
+      }
+    }
+
 
     public void Initialize()
     {
@@ -415,10 +428,7 @@ namespace SWEndor.Sound
       if (p == null)
         return null;
 
-      int mood = 0;
-      GameScenarioBase gsb = Engine.GameScenarioManager.Scenario;
-      if (gsb != null)
-        mood = (int)gsb.Mood;
+      int mood = (int)Engine.SoundManager.Mood;
 
       if (p.MoodTransitions != null
         && p.MoodTransitions.Length > mood

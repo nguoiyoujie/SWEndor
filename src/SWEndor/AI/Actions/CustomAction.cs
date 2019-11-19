@@ -8,7 +8,8 @@ namespace SWEndor.AI.Actions
   internal class CustomAction : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<CustomAction> _pool = new ObjectPool<CustomAction>(() => { return new CustomAction(); }, (a) => { a.Reset(); });
+    private static ObjectPool<CustomAction> _pool;
+    static CustomAction() { _pool = ObjectPool<CustomAction>.CreateStaticPool(() => { return new CustomAction(); }, (a) => { a.Reset(); }); }
 
     private CustomAction() : base("CustomAction") { CanInterrupt = false; }
 

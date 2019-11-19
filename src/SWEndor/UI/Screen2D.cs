@@ -41,6 +41,10 @@ namespace SWEndor
     public TextInfo SecondaryText = new TextInfo();
     public TextInfo SystemsText = new TextInfo();
 
+    public TopTextInfo Line1 = new TopTextInfo();
+    public TopTextInfo Line2 = new TopTextInfo();
+    public TopTextInfo Line3 = new TopTextInfo();
+
     // Radar
     public bool OverrideTargetingRadar = false;
     public string TargetingRadar_text = "";

@@ -32,7 +32,7 @@ namespace SWEndor.Terminal.Commands.Actor
 
     protected override TCommandFeedback Evaluate(string[] param)
     {
-      GameScenarioBase gscenario = Globals.Engine.GameScenarioManager.Scenario;
+      ScenarioBase gscenario = Globals.Engine.GameScenarioManager.Scenario;
       if (gscenario == null)
         return new TCommandFeedback(TCommandFeedbackType.ERROR, "GameScenario is null!");
 

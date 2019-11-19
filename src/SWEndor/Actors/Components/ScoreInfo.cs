@@ -90,9 +90,9 @@ namespace SWEndor
       Kills++;
 
       if (victim.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
-        engine.GameScenarioManager.Scenario.Mood = MoodStates.DESTROY_FIGHTER;
+        engine.SoundManager.Mood = MoodStates.DESTROY_FIGHTER;
       else if (victim.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
-        engine.GameScenarioManager.Scenario.Mood = MoodStates.DESTROY_SHIP;
+        engine.SoundManager.Mood = MoodStates.DESTROY_SHIP;
 
       if (engine.PlayerInfo.Actor != null)
         engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.ENEMY_DESTROYED).F(victim.Name)
@@ -113,7 +113,7 @@ namespace SWEndor
     public void AddDeath(Engine engine, ActorInfo killedby)
     {
       Deaths++;
-      //engine.GameScenarioManager.Scenario.Mood = -2;
+      //engine.SoundManager.Mood = -2;
       if (killedby != null)
         Increment(KilledByName, killedby.Name, 1);
     }

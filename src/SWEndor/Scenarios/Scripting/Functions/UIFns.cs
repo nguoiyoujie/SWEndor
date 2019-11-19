@@ -18,7 +18,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static Val SetUILine1Color(Context context, float3 c)
     {
       COLOR color = new COLOR(c);
-      context.Engine.GameScenarioManager.Line1Color = color;
+      context.Engine.Screen2D.Line1.Color = color;
       return Val.NULL;
     }
 
@@ -34,7 +34,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static Val SetUILine2Color(Context context, float3 c)
     {
       COLOR color = new COLOR(c);
-      context.Engine.GameScenarioManager.Line2Color = color;
+      context.Engine.Screen2D.Line2.Color = color;
       return Val.NULL;
     }
 
@@ -50,7 +50,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static Val SetUILine3Color(Context context, float3 c)
     {
       COLOR color = new COLOR(c);
-      context.Engine.GameScenarioManager.Line3Color = color;
+      context.Engine.Screen2D.Line3.Color = color;
       return Val.NULL;
     }
 
@@ -65,7 +65,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <returns>NULL</returns>
     public static Val SetUILine1Text(Context context, string text)
     {
-      context.Engine.GameScenarioManager.Line1Text = text;
+      context.Engine.Screen2D.Line1.Text = text;
       return Val.TRUE;
     }
 
@@ -80,7 +80,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <returns>NULL</returns>
     public static Val SetUILine2Text(Context context, string text)
     {
-      context.Engine.GameScenarioManager.Line2Text = text;
+      context.Engine.Screen2D.Line2.Text = text;
       return Val.TRUE;
     }
 
@@ -95,7 +95,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <returns>NULL</returns>
     public static Val SetUILine3Text(Context context, string text)
     {
-      context.Engine.GameScenarioManager.Line3Text = text;
+      context.Engine.Screen2D.Line3.Text = text;
       return Val.TRUE;
     }
   }

@@ -61,7 +61,7 @@ namespace SWEndor.Scenarios
 
   public static class GSFunctions
   {
-    public static ActorInfo[] MultipleSquadron_Spawn(Engine engine, GameScenarioBase scenario, int sets, Box spawn_vol, float spawndelay, SquadSpawnInfo spawninfo)
+    public static ActorInfo[] MultipleSquadron_Spawn(Engine engine, ScenarioBase scenario, int sets, Box spawn_vol, float spawndelay, SquadSpawnInfo spawninfo)
     {
       ActorInfo[] ret = new ActorInfo[sets * spawninfo.MemberCount];
       float time = engine.Game.GameTime;
@@ -79,7 +79,7 @@ namespace SWEndor.Scenarios
       return ret;
     }
 
-    public static ActorInfo[] Squadron_Spawn(Engine engine, GameScenarioBase scenario, TV_3DVECTOR position, float spawntime, SquadSpawnInfo spawninfo)
+    public static ActorInfo[] Squadron_Spawn(Engine engine, ScenarioBase scenario, TV_3DVECTOR position, float spawntime, SquadSpawnInfo spawninfo)
     {
       ActorInfo[] ret = new ActorInfo[spawninfo.MemberCount];
       TV_3DVECTOR[] spawnpos;
@@ -211,7 +211,7 @@ namespace SWEndor.Scenarios
     }
 
     public static ActorInfo Ship_Spawn(Engine engine
-                                    , GameScenarioBase scenario
+                                    , ScenarioBase scenario
                                     , TV_3DVECTOR position
                                     , TV_3DVECTOR targetposition
                                     , TV_3DVECTOR facingposition

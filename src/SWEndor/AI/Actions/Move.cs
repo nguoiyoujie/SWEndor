@@ -10,7 +10,8 @@ namespace SWEndor.AI.Actions
   internal class Move : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<Move> _pool = new ObjectPool<Move>(() => { return new Move(); }, (a) => { a.Reset(); });
+    private static ObjectPool<Move> _pool;
+    static Move() { _pool = ObjectPool<Move>.CreateStaticPool(() => { return new Move(); }, (a) => { a.Reset(); }); }
 
     private Move() : base("Move") { }
 

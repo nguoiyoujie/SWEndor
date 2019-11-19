@@ -5,6 +5,12 @@
     public int Priority = 0;
     public string Text = "";
     public float ExpireTime = 0;
-    public COLOR Color; // new TV_COLOR(1, 1, 1, 1).GetIntColor();
+    public COLOR Color;
+  }
+
+  public class TopTextInfo
+  {
+    public string Text = "";
+    public COLOR Color = ColorLocalization.Get(ColorLocalKeys.WHITE);
   }
 }

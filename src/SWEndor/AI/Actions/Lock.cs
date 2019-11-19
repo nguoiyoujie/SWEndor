@@ -7,7 +7,8 @@ namespace SWEndor.AI.Actions
   internal class Lock : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<Lock> _pool = new ObjectPool<Lock>(() => { return new Lock(); }, (a) => { a.Reset(); });
+    private static ObjectPool<Lock> _pool;
+    static Lock() { _pool = ObjectPool<Lock>.CreateStaticPool(() => { return new Lock(); }, (a) => { a.Reset(); }); }
 
     private Lock() : base("Lock") { CanInterrupt = false; }
 

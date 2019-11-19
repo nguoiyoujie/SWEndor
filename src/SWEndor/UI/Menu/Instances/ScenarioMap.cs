@@ -24,9 +24,9 @@ namespace SWEndor.UI.Menu.Pages
     private static bool showtext = true;
     private static TV_2DVECTOR displacement = new TV_2DVECTOR();
 
-    GameScenarioBase SelectedScenario = null;
+    ScenarioBase SelectedScenario = null;
 
-    public ScenarioMap(Screen2D owner, GameScenarioBase selectedScenario) : base(owner)
+    public ScenarioMap(Screen2D owner, ScenarioBase selectedScenario) : base(owner)
     {
       SelectedScenario = selectedScenario;
 

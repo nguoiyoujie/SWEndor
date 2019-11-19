@@ -24,6 +24,9 @@ namespace SWEndor.Player
     internal readonly DeathCameraLook DeathLook = new DeathCameraLook();
     internal readonly SceneCameraLook SceneLook = new SceneCameraLook();
 
+    internal CameraMode[] ScenarioModes = new CameraMode[] { CameraMode.FIRSTPERSON };
+    internal int ScenarioModeNum = 0;
+
     private ICameraLook Look;
 
     /// <summary>
@@ -144,7 +147,7 @@ namespace SWEndor.Player
           break;
       }
 
-      int cammode = (engine.GameScenarioManager.IsCutsceneMode) ? 0 : (int)CameraMode;
+      int cammode = (engine.GameScenarioIsCutsceneMode) ? 0 : (int)CameraMode;
 
       if (cammode < actor.TypeInfo.Cameras.Length)
       {
@@ -202,6 +205,30 @@ namespace SWEndor.Player
     private void ShakeDecay()
     {
       shake *= 0.95f; // decay
+    }
+
+    public CameraMode NextCameraMode()
+    {
+      if (ScenarioModes == null || ScenarioModes.Length == 0)
+        return CameraMode.FIRSTPERSON;
+
+      ScenarioModeNum++;
+      if (ScenarioModeNum >= ScenarioModes.Length)
+        ScenarioModeNum = 0;
+
+      return ScenarioModes[ScenarioModeNum];
+    }
+
+    public CameraMode PrevCameraMode()
+    {
+      if (ScenarioModes == null || ScenarioModes.Length == 0)
+        return CameraMode.FIRSTPERSON;
+
+      ScenarioModeNum--;
+      if (ScenarioModeNum < 0)
+        ScenarioModeNum = ScenarioModes.Length - 1;
+
+      return ScenarioModes[ScenarioModeNum];
     }
 
     internal void RotateCam(float aX, float aY, int aZ)

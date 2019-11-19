@@ -44,7 +44,7 @@ namespace SWEndor.ActorTypes.Components
       if (engine.GameScenarioManager.Scenario is GSMainMenu)
         return;
 
-      if (!PlayInCutscene || !engine.GameScenarioManager.IsCutsceneMode)
+      if (!PlayInCutscene || !engine.GameScenarioManager.Scenario.State.IsCutsceneMode)
       {
         TV_3DVECTOR engineloc = actor.GetRelativePositionXYZ(RelativeLocation.x, RelativeLocation.y, RelativeLocation.z);
         float volMax = 1;
@@ -59,7 +59,7 @@ namespace SWEndor.ActorTypes.Components
       if (engine.GameScenarioManager.Scenario is GSMainMenu)
         return;
 
-      if (!PlayInCutscene || !engine.GameScenarioManager.IsCutsceneMode)
+      if (!PlayInCutscene || !engine.GameScenarioManager.Scenario.State.IsCutsceneMode)
       {
         TV_3DVECTOR engineloc = actor.GetRelativePositionXYZ(RelativeLocation.x, RelativeLocation.y, RelativeLocation.z);
         float volMax = 1;
@@ -79,7 +79,7 @@ namespace SWEndor.ActorTypes.Components
       if (engine.GameScenarioManager.Scenario is GSMainMenu)
         return;
 
-      if (!PlayInCutscene || !expl.Engine.GameScenarioManager.IsCutsceneMode)
+      if (!PlayInCutscene || !expl.Engine.GameScenarioManager.Scenario.State.IsCutsceneMode)
       {
         TV_3DVECTOR engineloc = expl.GetRelativePositionXYZ(RelativeLocation.x, RelativeLocation.y, RelativeLocation.z);
         Play(engine, 1, engineloc, Distance, Sound, Loop, IsEngineSound);

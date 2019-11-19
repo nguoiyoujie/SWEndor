@@ -18,7 +18,7 @@ namespace SWEndor.UI.Menu
     public readonly Screen2D Owner;
     public Engine Engine { get { return Owner.Engine; } }
     public Session Game { get { return Engine.Game; } }
-    public GameScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
+    public ScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
     public Font.Factory FontFactory { get { return Engine.FontFactory; } }
 
     public TVScreen2DImmediate TVScreen2DImmediate { get { return Engine.TrueVision.TVScreen2DImmediate; } }

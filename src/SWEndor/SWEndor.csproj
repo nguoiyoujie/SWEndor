@@ -252,6 +252,7 @@
     <Compile Include="Player\Camera\TargetPosition.cs" />
     <Compile Include="Player\Camera\Look\ICameraLook.cs" />
     <Compile Include="Primitives\Extensions\float_mExts.cs" />
+    <Compile Include="Primitives\Extensions\HashSetExts.cs" />
     <Compile Include="Primitives\Extensions\TV3DVecExts.cs" />
     <Compile Include="Primitives\Extensions\TVKeyExts.cs" />
     <Compile Include="Primitives\Geometry\BoundFloat.cs" />
@@ -606,7 +607,7 @@
     <Compile Include="UI\Menu\Instances\ConfirmExit.cs" />
     <Compile Include="UI\Menu\Page.cs" />
     <Compile Include="AtmosphereInfo.cs" />
-    <Compile Include="Scenarios\GameScenarioBase.cs" />
+    <Compile Include="Scenarios\ScenarioBase.cs" />
     <Compile Include="Scenarios\Scenarios\GSCustomScenario.cs" />
     <Compile Include="Scenarios\Scenarios\GSTIEAdvanced.cs" />
     <Compile Include="Scenarios\Scenarios\GSMainMenu.cs" />
@@ -633,7 +634,7 @@
     <Compile Include="UI\Forms\GameForm.Designer.cs">
       <DependentUpon>GameForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Scenarios\GameScenarioManager.cs" />
+    <Compile Include="Scenarios\ScenarioManager.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="Player\PlayerInfo.cs" />

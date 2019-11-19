@@ -92,6 +92,7 @@
     <Compile Include="Primitives\Extensions\TypeExts.cs" />
     <Compile Include="Primitives\Factories\Factory.cs" />
     <Compile Include="Primitives\Factories\Interfaces.cs" />
+    <Compile Include="Primitives\Factories\ObjectPoolStatic.cs" />
     <Compile Include="Primitives\Factories\ObjectPool.cs" />
     <Compile Include="Primitives\Factories\Registry.cs" />
     <Compile Include="Primitives\Interfaces.cs" />

@@ -13,7 +13,8 @@ namespace SWEndor.AI.Actions
   internal class AttackActor : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<AttackActor> _pool = new ObjectPool<AttackActor>(() => { return new AttackActor(); }, (a) => { a.Reset(); });
+    private static ObjectPool<AttackActor> _pool;
+    static AttackActor() { _pool = ObjectPool<AttackActor>.CreateStaticPool(() => { return new AttackActor(); }, (a) => { a.Reset(); }); }
 
     private AttackActor() : base("AttackActor") { }
 
@@ -150,7 +151,7 @@ namespace SWEndor.AI.Actions
         center.y += engine.Random.Next(-200, 200);
         center.z += (float)Math.Sin(xzAngle * Globals.Deg2Rad) * radius;
 
-        TV3DVecExts.Clamp(ref center, engine.GameScenarioManager.MinAIBounds * 0.75f, engine.GameScenarioManager.MaxAIBounds * 0.75f);
+        TV3DVecExts.Clamp(ref center, engine.GameScenarioManager.Scenario.State.MinAIBounds * 0.75f, engine.GameScenarioManager.Scenario.State.MaxAIBounds * 0.75f);
       }
       return center;
     }

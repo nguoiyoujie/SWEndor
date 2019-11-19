@@ -38,12 +38,12 @@ namespace SWEndor.AI.Actions
         return true;
 
       float boundmult = 0.99f;
-      bool outofbounds = owner.IsOutOfBounds(owner.Engine.GameScenarioManager.MinAIBounds * boundmult, owner.Engine.GameScenarioManager.MaxAIBounds * boundmult);
+      bool outofbounds = owner.IsOutOfBounds(owner.Engine.GameScenarioManager.Scenario.State.MinAIBounds * boundmult, owner.Engine.GameScenarioManager.Scenario.State.MaxAIBounds * boundmult);
       if (outofbounds && owner.AI.EnteredCombatZone)
       {
-        float x = owner.Engine.Random.Next((int)(owner.Engine.GameScenarioManager.MinAIBounds.x * 0.65f), (int)(owner.Engine.GameScenarioManager.MaxAIBounds.x * 0.65f));
+        float x = owner.Engine.Random.Next((int)(owner.Engine.GameScenarioManager.Scenario.State.MinAIBounds.x * 0.65f), (int)(owner.Engine.GameScenarioManager.Scenario.State.MaxAIBounds.x * 0.65f));
         float y = owner.Engine.Random.Next(-200, 200);
-        float z = owner.Engine.Random.Next((int)(owner.Engine.GameScenarioManager.MinAIBounds.z * 0.65f), (int)(owner.Engine.GameScenarioManager.MaxAIBounds.z * 0.65f));
+        float z = owner.Engine.Random.Next((int)(owner.Engine.GameScenarioManager.Scenario.State.MinAIBounds.z * 0.65f), (int)(owner.Engine.GameScenarioManager.Scenario.State.MaxAIBounds.z * 0.65f));
 
         if (owner.CurrentAction is Move)
           owner.CurrentAction.Complete = true;

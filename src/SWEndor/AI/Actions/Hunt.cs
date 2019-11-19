@@ -11,7 +11,8 @@ namespace SWEndor.AI.Actions
   internal class Hunt : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<Hunt> _pool = new ObjectPool<Hunt>(() => { return new Hunt(); }, (a) => { a.Reset(); });
+    private static ObjectPool<Hunt> _pool;
+    static Hunt() { _pool = ObjectPool<Hunt>.CreateStaticPool(() => { return new Hunt(); }, (a) => { a.Reset(); }); }
 
     private Hunt() : base("Hunt") { }
 
@@ -74,7 +75,7 @@ namespace SWEndor.AI.Actions
            && !a.IsDyingOrDead
            && a.InCombat
            && a.TypeInfo.AIData.TargetType.Intersects(mt)
-           && !a.IsOutOfBounds(e.GameScenarioManager.MinAIBounds, e.GameScenarioManager.MaxAIBounds)
+           && !a.IsOutOfBounds(e.GameScenarioManager.Scenario.State.MinAIBounds, e.GameScenarioManager.Scenario.State.MaxAIBounds)
            && !c.IsAlliedWith(a) // enemy
            )
          {
@@ -107,7 +108,7 @@ namespace SWEndor.AI.Actions
            && !a.IsDyingOrDead
            && a.InCombat
            && a.TypeInfo.AIData.TargetType.Intersects(mt)
-           && !a.IsOutOfBounds(e.GameScenarioManager.MinAIBounds, e.GameScenarioManager.MaxAIBounds)
+           && !a.IsOutOfBounds(e.GameScenarioManager.Scenario.State.MinAIBounds, e.GameScenarioManager.Scenario.State.MaxAIBounds)
            && !c.IsAlliedWith(a) // enemy
            )
          {
@@ -133,7 +134,7 @@ namespace SWEndor.AI.Actions
       if (targets[0].ID >= 1)
       {
         int w = engine.Random.Next(0, targets[0].Weight);
-        for (int i = 1; i < targets[0].ID; i++)
+        for (int i = 1; i <= targets[0].ID; i++)
         {
           w -= targets[i].Weight;
           if (w <= 0)

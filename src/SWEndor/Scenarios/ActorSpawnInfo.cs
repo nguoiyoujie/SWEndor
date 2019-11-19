@@ -20,7 +20,7 @@ namespace SWEndor.Scenarios
     public ActionInfo[] Actions;
     public string[] Registries;
 
-    public ActorInfo Spawn(GameScenarioBase scenario)
+    public ActorInfo Spawn(ScenarioBase scenario)
     {
       ActorCreationInfo acinfo;
       ActorInfo ainfo;

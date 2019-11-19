@@ -122,31 +122,31 @@ namespace SWEndor.Player
       if (Actor != null)
       {
         TV_3DVECTOR pos = Actor.GetGlobalPosition();
-        if (pos.x < Engine.GameScenarioManager.MinBounds.x)
+        if (pos.x < Engine.GameScenarioManager.Scenario.State.MinBounds.x)
         {
-          Actor.Position = new TV_3DVECTOR(Engine.GameScenarioManager.MinBounds.x, pos.y, pos.z);
+          Actor.Position = new TV_3DVECTOR(Engine.GameScenarioManager.Scenario.State.MinBounds.x, pos.y, pos.z);
           announceOutOfBounds = true;
         }
-        else if (pos.x > Engine.GameScenarioManager.MaxBounds.x)
+        else if (pos.x > Engine.GameScenarioManager.Scenario.State.MaxBounds.x)
         {
-          Actor.Position = new TV_3DVECTOR(Engine.GameScenarioManager.MaxBounds.x, pos.y, pos.z);
+          Actor.Position = new TV_3DVECTOR(Engine.GameScenarioManager.Scenario.State.MaxBounds.x, pos.y, pos.z);
           announceOutOfBounds = true;
         }
 
-        if (pos.y < Engine.GameScenarioManager.MinBounds.y)
-          Actor.Position = new TV_3DVECTOR(pos.x, Engine.GameScenarioManager.MinBounds.y, pos.z);
-        else if (pos.y > Engine.GameScenarioManager.MaxBounds.y)
-          Actor.Position = new TV_3DVECTOR(pos.x, Engine.GameScenarioManager.MaxBounds.y, pos.z);
+        if (pos.y < Engine.GameScenarioManager.Scenario.State.MinBounds.y)
+          Actor.Position = new TV_3DVECTOR(pos.x, Engine.GameScenarioManager.Scenario.State.MinBounds.y, pos.z);
+        else if (pos.y > Engine.GameScenarioManager.Scenario.State.MaxBounds.y)
+          Actor.Position = new TV_3DVECTOR(pos.x, Engine.GameScenarioManager.Scenario.State.MaxBounds.y, pos.z);
 
 
-        if (pos.z < Engine.GameScenarioManager.MinBounds.z)
+        if (pos.z < Engine.GameScenarioManager.Scenario.State.MinBounds.z)
         {
-          Actor.Position = new TV_3DVECTOR(pos.x, pos.y, Engine.GameScenarioManager.MinBounds.z);
+          Actor.Position = new TV_3DVECTOR(pos.x, pos.y, Engine.GameScenarioManager.Scenario.State.MinBounds.z);
           announceOutOfBounds = true;
         }
-        else if (pos.z > Engine.GameScenarioManager.MaxBounds.z)
+        else if (pos.z > Engine.GameScenarioManager.Scenario.State.MaxBounds.z)
         {
-          Actor.Position = new TV_3DVECTOR(pos.x, pos.y, Engine.GameScenarioManager.MaxBounds.z);
+          Actor.Position = new TV_3DVECTOR(pos.x, pos.y, Engine.GameScenarioManager.Scenario.State.MaxBounds.z);
           announceOutOfBounds = true;
         }
 

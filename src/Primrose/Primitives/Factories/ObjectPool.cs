@@ -7,7 +7,7 @@ namespace Primrose.Primitives.Factories
   /// Provides a basic object pool for pooling objects for further use  
   /// </summary>
   /// <typeparam name="T">The item type to be pooled</typeparam>
-  public class ObjectPool<T> where T : class
+  public partial class ObjectPool<T> : IPool where T : class
   {
     /// <summary>
     /// Creates an object pool
@@ -31,6 +31,9 @@ namespace Primrose.Primitives.Factories
     /// <summary>Retrieves the number of elements in the pool</summary>
     public int Count { get { return list.Count; } }
 
+    /// <summary>Retrieves the number of generated elements in the pool that were not yet collected</summary>
+    public int UncollectedCount { get; private set; }
+
     /// <summary>Returns an instance of <typeparamref name="T"/> from the pool, or creates a new instance if the pool is empty</summary>
     /// <returns>An instance of <typeparamref name="T"/> from the pool, or created from the creator function if the pool is empty</returns>
     public T GetNew()
@@ -38,6 +41,7 @@ namespace Primrose.Primitives.Factories
       T ret;
       if (list.TryDequeue(out ret))
         return ret;
+      UncollectedCount++;
       return creator();
     }
 
@@ -47,6 +51,7 @@ namespace Primrose.Primitives.Factories
     {
       resetor?.Invoke(item);
       list.Enqueue(item);
+      UncollectedCount--;
     }
 
     /// <summary>Removes all instances from the pool</summary>

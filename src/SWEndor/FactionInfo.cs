@@ -161,23 +161,23 @@ namespace SWEndor
         if (ainfo.IsDead)
         {
           FactionInfo p = ainfo.Engine.PlayerInfo.Actor?.Faction ?? Neutral;
-          GameScenarioBase b = ainfo.Engine.GameScenarioManager.Scenario;
+          ScenarioBase b = ainfo.Engine.GameScenarioManager.Scenario;
           if (p != Neutral)
           {
             if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER)
-              && b.InformLostWing
+              && b.State.InformLostWing
               && (p == this || p.WingLimitIncludesAllies && p.IsAlliedWith(this))
               )
               b.LostWing();
 
             if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.SHIP)
-              && b.InformLostShip
+              && b.State.InformLostShip
               && (p == this || p.ShipLimitIncludesAllies && p.IsAlliedWith(this))
               )
               b.LostShip();
 
             if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.STRUCTURE)
-              && b.InformLostStructure
+              && b.State.InformLostStructure
               && (p == this || p.StructureLimitIncludesAllies && p.IsAlliedWith(this))
               )
               b.LostStructure();

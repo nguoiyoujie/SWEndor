@@ -8,7 +8,8 @@ namespace SWEndor.AI.Actions
   internal class ProjectileAttackActor : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<ProjectileAttackActor> _pool = new ObjectPool<ProjectileAttackActor>(() => { return new ProjectileAttackActor(); }, (a) => { a.Reset(); });
+    private static ObjectPool<ProjectileAttackActor> _pool;
+    static ProjectileAttackActor() { _pool = ObjectPool<ProjectileAttackActor>.CreateStaticPool(() => { return new ProjectileAttackActor(); }, (a) => { a.Reset(); }); }
 
     private ProjectileAttackActor() : base("ProjectileAttackActor") { }
 

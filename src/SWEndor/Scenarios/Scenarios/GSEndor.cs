@@ -15,15 +15,15 @@ using System.Collections.Generic;
 
 namespace SWEndor.Scenarios
 {
-  public class GSEndor : GameScenarioBase
+  public class GSEndor : ScenarioBase
   {
-    public GSEndor(GameScenarioManager manager) : base(manager)
+    public GSEndor(ScenarioManager manager) : base(manager)
     {
-      Name = "Battle of Endor [Maintenance]";
-      Description = "The Rebel fleet, amassed on Sullust, prepares to move to Endor "
+      Info.Name = "Battle of Endor [Maintenance]";
+      Info.Description = "The Rebel fleet, amassed on Sullust, prepares to move to Endor "
                   + "where the Emperor is overseeing the construction of the second "
                   + "Death Star.";
-      AllowedWings = new List<ActorTypeInfo> { ActorTypeFactory.Get("XWING")
+      Info.AllowedWings = new ActorTypeInfo[] { ActorTypeFactory.Get("XWING")
                                                , ActorTypeFactory.Get("YWING")
                                                , ActorTypeFactory.Get("AWING")
                                                , ActorTypeFactory.Get("BWING")
@@ -34,7 +34,7 @@ namespace SWEndor.Scenarios
                                                , ActorTypeFactory.Get("TIEX")
                                               };
 
-      AllowedDifficulties = new List<string> { "easy"
+      Info.AllowedDifficulties = new string[] { "easy"
                                                , "normal"
                                                , "hard"
                                                , "MENTAL"
@@ -96,16 +96,16 @@ namespace SWEndor.Scenarios
     {
       base.Launch();
 
-      Manager.MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
-      Manager.MinBounds = new TV_3DVECTOR(-20000, -1500, -10000);
-      Manager.MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
-      Manager.MinAIBounds = new TV_3DVECTOR(-20000, -1500, -10000);
+      State.MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
+      State.MinBounds = new TV_3DVECTOR(-20000, -1500, -10000);
+      State.MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
+      State.MinAIBounds = new TV_3DVECTOR(-20000, -1500, -10000);
 
       PlayerInfo.Lives = 4;
       PlayerInfo.ScorePerLife = 1000000;
       PlayerInfo.ScoreForNextLife = 1000000;
 
-      switch (Difficulty.ToLower())
+      switch (State.Difficulty.ToLower())
       {
         case "mental":
           m_SDLeftForShieldDown = 3;
@@ -122,40 +122,40 @@ namespace SWEndor.Scenarios
 
       MakePlayer = Rebel_MakePlayer;
 
-      if (!Manager.GetGameStateB("rebels_arrive"))
+      if (!State.GetGameStateB("rebels_arrive"))
       {
-        Manager.SetGameStateB("rebels_arrive", true);
+        State.SetGameStateB("rebels_arrive", true);
 
         SoundManager.SetMusic("battle_3_1");
         SoundManager.SetMusicLoop("battle_3_3");
 
-        Manager.AddEvent(Game.GameTime + 0.1f, Rebel_HyperspaceIn);
-        Manager.AddEvent(Game.GameTime + 8f, Rebel_SetPositions);
-        Manager.AddEvent(Game.GameTime + 8f, Rebel_MakePlayer);
-        Manager.AddEvent(Game.GameTime + 9f, Message_01_AllWingsReport);
-        Manager.AddEvent(Game.GameTime + 12f, Message_02_RedLeader);
-        Manager.AddEvent(Game.GameTime + 13.5f, Message_03_GoldLeader);
-        Manager.AddEvent(Game.GameTime + 15f, Message_04_BlueLeader);
-        Manager.AddEvent(Game.GameTime + 16.5f, Message_05_GreenLeader);
-        Manager.AddEvent(Game.GameTime + 19f, Message_06_Force);
-        Manager.AddEvent(Game.GameTime + 24f, Message_07_Break);
-        Manager.AddEvent(Game.GameTime + 25.2f, Message_08_Break);
-        Manager.AddEvent(Game.GameTime + 26.5f, Message_09_Conf);
-        Manager.AddEvent(Game.GameTime + 29.5f, Message_10_Break);
-        Manager.AddEvent(Game.GameTime + 30f, Rebel_GiveControl);
-        Manager.AddEvent(Game.GameTime + 38f, Message_11_Evasive);
-        Manager.AddEvent(Game.GameTime + 42f, Message_12_Trap);
-        Manager.AddEvent(Game.GameTime + 50f, Message_13_Fighters);
-        Manager.AddEvent(Game.GameTime + 45f, Empire_SpawnStatics);
+        EventQueue.Add(Game.GameTime + 0.1f, Rebel_HyperspaceIn);
+        EventQueue.Add(Game.GameTime + 8f, Rebel_SetPositions);
+        EventQueue.Add(Game.GameTime + 8f, Rebel_MakePlayer);
+        EventQueue.Add(Game.GameTime + 9f, Message_01_AllWingsReport);
+        EventQueue.Add(Game.GameTime + 12f, Message_02_RedLeader);
+        EventQueue.Add(Game.GameTime + 13.5f, Message_03_GoldLeader);
+        EventQueue.Add(Game.GameTime + 15f, Message_04_BlueLeader);
+        EventQueue.Add(Game.GameTime + 16.5f, Message_05_GreenLeader);
+        EventQueue.Add(Game.GameTime + 19f, Message_06_Force);
+        EventQueue.Add(Game.GameTime + 24f, Message_07_Break);
+        EventQueue.Add(Game.GameTime + 25.2f, Message_08_Break);
+        EventQueue.Add(Game.GameTime + 26.5f, Message_09_Conf);
+        EventQueue.Add(Game.GameTime + 29.5f, Message_10_Break);
+        EventQueue.Add(Game.GameTime + 30f, Rebel_GiveControl);
+        EventQueue.Add(Game.GameTime + 38f, Message_11_Evasive);
+        EventQueue.Add(Game.GameTime + 42f, Message_12_Trap);
+        EventQueue.Add(Game.GameTime + 50f, Message_13_Fighters);
+        EventQueue.Add(Game.GameTime + 45f, Empire_SpawnStatics);
       }
 
-      Manager.Line1Color = new COLOR(1f, 1f, 0.3f, 1);
-      Manager.Line2Color = new COLOR(1f, 1f, 0.3f, 1);
-      Manager.Line3Color = new COLOR(0.7f, 1f, 0.3f, 1);
+      Screen2D.Line1.Color = new COLOR(1f, 1f, 0.3f, 1);
+      Screen2D.Line2.Color = new COLOR(1f, 1f, 0.3f, 1);
+      Screen2D.Line3.Color = new COLOR(0.7f, 1f, 0.3f, 1);
 
       MainAllyFaction.WingLimit = 75;
 
-      Manager.IsCutsceneMode = false;
+      State.IsCutsceneMode = false;
     }
 
     internal override void LoadFactions()
@@ -176,8 +176,8 @@ namespace SWEndor.Scenarios
 
       MainAllyFaction = FactionInfo.Factory.Get("Rebels");
       MainEnemyFaction = FactionInfo.Factory.Get("Empire");
-      InformLostWing = true;
-      InformLostShip = true;
+      State.InformLostWing = true;
+      State.InformLostShip = true;
 
       MainAllyFaction.WingLimitIncludesAllies = true;
       MainAllyFaction.WingSpawnLimit = 22;
@@ -221,51 +221,51 @@ namespace SWEndor.Scenarios
     public override void GameTick()
     {
       base.GameTick();
-      if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled && Manager.GetGameStateB("in_battle"))
+      if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled && State.GetGameStateB("in_battle"))
       {
-        if (StageNumber == 0)
+        if (State.StageNumber == 0)
         {
-          StageNumber = 1;
+          State.StageNumber = 1;
         }
-        else if (TIEWaves > 5 && StageNumber == 1)
+        else if (TIEWaves > 5 && State.StageNumber == 1)
         {
-          StageNumber = 2;
+          State.StageNumber = 2;
         }
-        else if (SDWaves >= 1 && MainEnemyFaction.ShipCount == 0 && m_pendingSDspawnlist.Count == 0 && StageNumber == 2)
+        else if (SDWaves >= 1 && MainEnemyFaction.ShipCount == 0 && m_pendingSDspawnlist.Count == 0 && State.StageNumber == 2)
         {
-          StageNumber = 3;
-          Manager.AddEvent(Game.GameTime + 5.5f, Message_14_Interceptors);
+          State.StageNumber = 3;
+          EventQueue.Add(Game.GameTime + 5.5f, Message_14_Interceptors);
         }
-        else if (TIEWaves > 11 && StageNumber == 3)
+        else if (TIEWaves > 11 && State.StageNumber == 3)
         {
-          StageNumber = 4;
+          State.StageNumber = 4;
         }
-        else if (SDWaves >= 2 && MainEnemyFaction.ShipCount == 0 && m_pendingSDspawnlist.Count == 0 && StageNumber == 4)
+        else if (SDWaves >= 2 && MainEnemyFaction.ShipCount == 0 && m_pendingSDspawnlist.Count == 0 && State.StageNumber == 4)
         {
-          StageNumber = 5;
+          State.StageNumber = 5;
           SoundManager.SetMusic("battle_3_4");
           SoundManager.SetMusicLoop("battle_3_4");
-          Manager.AddEvent(Game.GameTime + 5.5f, Message_15_Bombers);
+          EventQueue.Add(Game.GameTime + 5.5f, Message_15_Bombers);
         }
-        else if (TIEWaves > 17 && StageNumber == 5)
+        else if (TIEWaves > 17 && State.StageNumber == 5)
         {
-          StageNumber = 6;
+          State.StageNumber = 6;
         }
 
         // Wedge and Falcon
-        if (!Manager.GetGameStateB("deathstar_noshield")
-          && StageNumber == 4
+        if (!State.GetGameStateB("deathstar_noshield")
+          && State.StageNumber == 4
           && SDWaves >= 2
           && (m_pendingSDspawnlist.Count + MainEnemyFaction.ShipCount) <= m_SDLeftForShieldDown)
         {
-          Manager.SetGameStateB("deathstar_noshield", true);
-          Manager.AddEvent(Game.GameTime + 3f, Message_30_ShieldDown);
-          Manager.AddEvent(Game.GameTime + 7f, Message_31_ResumeAttack);
-          Manager.AddEvent(Game.GameTime + 15f, Rebel_DeathStarGo);
-          Manager.AddEvent(Game.GameTime + 16f, Rebel_ShipsForward_2);
-          Manager.AddEvent(Game.GameTime + 12f, Message_32_Han);
-          Manager.AddEvent(Game.GameTime + 17f, Message_33_Han);
-          Manager.AddEvent(Game.GameTime + 20f, Message_34_Han);
+          State.SetGameStateB("deathstar_noshield", true);
+          EventQueue.Add(Game.GameTime + 3f, Message_30_ShieldDown);
+          EventQueue.Add(Game.GameTime + 7f, Message_31_ResumeAttack);
+          EventQueue.Add(Game.GameTime + 15f, Rebel_DeathStarGo);
+          EventQueue.Add(Game.GameTime + 16f, Rebel_ShipsForward_2);
+          EventQueue.Add(Game.GameTime + 12f, Message_32_Han);
+          EventQueue.Add(Game.GameTime + 17f, Message_33_Han);
+          EventQueue.Add(Game.GameTime + 20f, Message_34_Han);
         }
 
         // TIE spawn
@@ -273,139 +273,139 @@ namespace SWEndor.Scenarios
         {
           int tie = MainEnemyFaction.WingCount;
           int sdest = MainEnemyFaction.ShipCount;
-          if ((tie < 36 && sdest == 0 && StageNumber == 1)
-            || (tie < 32 && sdest == 0 && StageNumber == 3)
+          if ((tie < 36 && sdest == 0 && State.StageNumber == 1)
+            || (tie < 32 && sdest == 0 && State.StageNumber == 3)
             || (tie < 28 && sdest == 0)
             || (tie < 14 && sdest > 0))
           {
             TIESpawnTime = Game.GameTime + 10f;
 
-            if (StageNumber == 1 || StageNumber == 3 || StageNumber == 5)
+            if (State.StageNumber == 1 || State.StageNumber == 3 || State.StageNumber == 5)
             {
               TIEWaves++;
             }
 
-            if (StageNumber == 1 || StageNumber == 2)
+            if (State.StageNumber == 1 || State.StageNumber == 2)
             {
               Rebel_GoBack(0.7f);
-              switch (Difficulty.ToLower())
+              switch (State.Difficulty.ToLower())
               {
                 case "easy":
-                  Manager.AddEvent(0, Empire_TIEWave_01, 4);
+                  EventQueue.Add(0, Empire_TIEWave_01, 4);
                   break;
                 case "hard":
                   if (TIEWaves % 3 == 1)
                   {
-                    Manager.AddEvent(0, Empire_TIEWave_01, 5);
-                    Manager.AddEvent(0, Empire_TIEWave_TIEsvsShips, 1);
+                    EventQueue.Add(0, Empire_TIEWave_01, 5);
+                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 1);
                   }
                   else
                   {
-                    Manager.AddEvent(0, Empire_TIEWave_01, 4);
-                    Manager.AddEvent(0, Empire_TIEWave_TIEsvsShips, 2);
+                    EventQueue.Add(0, Empire_TIEWave_01, 4);
+                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 2);
                   }
                   break;
                 case "mental":
                   if (TIEWaves % 2 == 1)
                   {
-                    Manager.AddEvent(0, Empire_TIEWave_01, 7);
-                    Manager.AddEvent(0, Empire_TIEWave_TIEsvsShips, 2);
+                    EventQueue.Add(0, Empire_TIEWave_01, 7);
+                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 2);
                   }
                   else
                   {
-                    Manager.AddEvent(0, Empire_TIEWave_01, 5);
-                    Manager.AddEvent(0, Empire_TIEWave_TIEsvsShips, 3);
+                    EventQueue.Add(0, Empire_TIEWave_01, 5);
+                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 3);
                   }
                   break;
                 case "normal":
                 default:
-                  Manager.AddEvent(0, Empire_TIEWave_01, 5);
+                  EventQueue.Add(0, Empire_TIEWave_01, 5);
                   break;
               }
             }
-            else if (StageNumber == 3 || StageNumber == 4)
+            else if (State.StageNumber == 3 || State.StageNumber == 4)
             {
               Rebel_GoBack(0.3f);
-              switch (Difficulty.ToLower())
+              switch (State.Difficulty.ToLower())
               {
                 case "easy":
-                  Manager.AddEvent(0, Empire_TIEWave_02, 4);
+                  EventQueue.Add(0, Empire_TIEWave_02, 4);
                   break;
                 case "hard":
                   if (TIEWaves % 3 == 1)
                   {
-                    Manager.AddEvent(0, Empire_TIEWave_02, 5);
-                    Manager.AddEvent(0, Empire_TIEWave_TIEsvsShips, 1);
+                    EventQueue.Add(0, Empire_TIEWave_02, 5);
+                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 1);
                   }
                   else
                   {
-                    Manager.AddEvent(0, Empire_TIEWave_02, 4);
-                    Manager.AddEvent(0, Empire_TIEWave_TIEsvsShips, 2);
+                    EventQueue.Add(0, Empire_TIEWave_02, 4);
+                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 2);
                   }
 
                   break;
                 case "mental":
                   if (TIEWaves % 2 == 1)
                   {
-                    Manager.AddEvent(0, Empire_TIEWave_02, 6);
-                    Manager.AddEvent(0, Empire_TIEWave_TIEsvsShips, 2);
+                    EventQueue.Add(0, Empire_TIEWave_02, 6);
+                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 2);
                   }
                   else
                   {
-                    Manager.AddEvent(0, Empire_TIEWave_02, 5);
-                    Manager.AddEvent(0, Empire_TIEWave_TIEsvsShips, 3);
+                    EventQueue.Add(0, Empire_TIEWave_02, 5);
+                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 3);
                   }
                   break;
                 case "normal":
                 default:
-                  Manager.AddEvent(0, Empire_TIEWave_02, 5);
+                  EventQueue.Add(0, Empire_TIEWave_02, 5);
                   break;
               }
             }
-            else if (StageNumber == 5 || StageNumber == 6)
+            else if (State.StageNumber == 5 || State.StageNumber == 6)
             {
-              switch (Difficulty.ToLower())
+              switch (State.Difficulty.ToLower())
               {
                 case "easy":
-                  Manager.AddEvent(0, Empire_TIEWave_01, 2);
-                  Manager.AddEvent(0, Empire_TIEWave_03, 2);
-                  Manager.AddEvent(0, Empire_TIEBombers, 1);
+                  EventQueue.Add(0, Empire_TIEWave_01, 2);
+                  EventQueue.Add(0, Empire_TIEWave_03, 2);
+                  EventQueue.Add(0, Empire_TIEBombers, 1);
                   break;
                 case "hard":
                   if (TIEWaves % 3 == 1)
                   {
-                    Manager.AddEvent(0, Empire_TIEWave_02, 3);
-                    Manager.AddEvent(0, Empire_TIEWave_03, 2);
-                    Manager.AddEvent(0, Empire_TIEBombers, 2);
-                    Manager.AddEvent(0, Empire_TIEWave_TIEsvsShips, 1);
+                    EventQueue.Add(0, Empire_TIEWave_02, 3);
+                    EventQueue.Add(0, Empire_TIEWave_03, 2);
+                    EventQueue.Add(0, Empire_TIEBombers, 2);
+                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 1);
                   }
                   else
                   {
-                    Manager.AddEvent(0, Empire_TIEWave_02, 2);
-                    Manager.AddEvent(0, Empire_TIEWave_03, 3);
-                    Manager.AddEvent(0, Empire_TIEBombers, 2);
-                    Manager.AddEvent(0, Empire_TIEWave_TIEsvsShips, 2);
+                    EventQueue.Add(0, Empire_TIEWave_02, 2);
+                    EventQueue.Add(0, Empire_TIEWave_03, 3);
+                    EventQueue.Add(0, Empire_TIEBombers, 2);
+                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 2);
                   }
                   break;
                 case "mental":
                   if (TIEWaves % 2 == 1)
                   {
-                    Manager.AddEvent(0, Empire_TIEWave_03, 6);
-                    Manager.AddEvent(0, Empire_TIEBombers, 2);
-                    Manager.AddEvent(0, Empire_TIEWave_TIEsvsShips, 3);
+                    EventQueue.Add(0, Empire_TIEWave_03, 6);
+                    EventQueue.Add(0, Empire_TIEBombers, 2);
+                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 3);
                   }
                   else
                   {
-                    Manager.AddEvent(0, Empire_TIEWave_03, 5);
-                    Manager.AddEvent(0, Empire_TIEBombers, 2);
-                    Manager.AddEvent(0, Empire_TIEWave_TIEsvsShips, 3);
+                    EventQueue.Add(0, Empire_TIEWave_03, 5);
+                    EventQueue.Add(0, Empire_TIEBombers, 2);
+                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 3);
                   }
                   break;
                 case "normal":
                 default:
-                  Manager.AddEvent(0, Empire_TIEWave_02, 2);
-                  Manager.AddEvent(0, Empire_TIEWave_03, 3);
-                  Manager.AddEvent(0, Empire_TIEBombers, 2);
+                  EventQueue.Add(0, Empire_TIEWave_02, 2);
+                  EventQueue.Add(0, Empire_TIEWave_03, 3);
+                  EventQueue.Add(0, Empire_TIEBombers, 2);
                   break;
               }
             }
@@ -414,10 +414,10 @@ namespace SWEndor.Scenarios
 
         if (m_pendingSDspawnlist.Count > 0 && MainEnemyFaction.ShipCount < 8)
         {
-          if ((!(m_pendingSDspawnlist[0].Info.TypeInfo is ImperialIATI) || MainEnemyFaction.ShipCount < ((StageNumber == 6) ? 4 : 2))
+          if ((!(m_pendingSDspawnlist[0].Info.TypeInfo is ImperialIATI) || MainEnemyFaction.ShipCount < ((State.StageNumber == 6) ? 4 : 2))
             && (!(m_pendingSDspawnlist[0].Info.TypeInfo is DevastatorATI) || MainEnemyFaction.ShipCount < 2))
           {
-            Manager.AddEvent(0, Empire_StarDestroyer_Spawn, m_pendingSDspawnlist[0]);
+            EventQueue.Add(0, Empire_StarDestroyer_Spawn, m_pendingSDspawnlist[0]);
             m_pendingSDspawnlist.RemoveAt(0);
           }
         }
@@ -435,61 +435,61 @@ namespace SWEndor.Scenarios
 
         //Rebel_ForceAwayFromBounds();
 
-        if (StageNumber == 2 && !Manager.GetGameStateB("DS2"))
+        if (State.StageNumber == 2 && !State.GetGameStateB("DS2"))
         {
-          Manager.SetGameStateB("DS2", true);
-          Manager.AddEvent(Game.GameTime, Empire_DeathStarAttack_01);
-          Manager.AddEvent(Game.GameTime + 8f, Message_20_DeathStar);
-          Manager.AddEvent(Game.GameTime + 15f, Empire_StarDestroyer_01);
-          Manager.AddEvent(Game.GameTime + 20f, Message_21_Close);
-          Manager.AddEvent(Game.GameTime + 25f, Rebel_YWingsAttackScan);
-          Manager.MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
-          Manager.MinBounds = new TV_3DVECTOR(-20000, -1500, -17500);
-          Manager.MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
-          Manager.MinAIBounds = new TV_3DVECTOR(-20000, -1500, -17500);
+          State.SetGameStateB("DS2", true);
+          EventQueue.Add(Game.GameTime, Empire_DeathStarAttack_01);
+          EventQueue.Add(Game.GameTime + 8f, Message_20_DeathStar);
+          EventQueue.Add(Game.GameTime + 15f, Empire_StarDestroyer_01);
+          EventQueue.Add(Game.GameTime + 20f, Message_21_Close);
+          EventQueue.Add(Game.GameTime + 25f, Rebel_YWingsAttackScan);
+          State.MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
+          State.MinBounds = new TV_3DVECTOR(-20000, -1500, -17500);
+          State.MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
+          State.MinAIBounds = new TV_3DVECTOR(-20000, -1500, -17500);
         }
-        else if (StageNumber == 4 && !Manager.GetGameStateB("DS4"))
+        else if (State.StageNumber == 4 && !State.GetGameStateB("DS4"))
         {
-          Manager.SetGameStateB("DS4", true);
-          Manager.AddEvent(Game.GameTime, Empire_DeathStarAttack_02);
-          Manager.AddEvent(Game.GameTime + 16f, Rebel_ShipsForward);
-          Manager.AddEvent(Game.GameTime + 13f, Message_22_PointBlank);
-          Manager.AddEvent(Game.GameTime + 15f, Empire_StarDestroyer_02);
-          Manager.AddEvent(Game.GameTime + 18f, Message_23_Take);
-          Manager.MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
-          Manager.MinBounds = new TV_3DVECTOR(-20000, -1500, -22500);
-          Manager.MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
-          Manager.MinAIBounds = new TV_3DVECTOR(-20000, -1500, -22500);
+          State.SetGameStateB("DS4", true);
+          EventQueue.Add(Game.GameTime, Empire_DeathStarAttack_02);
+          EventQueue.Add(Game.GameTime + 16f, Rebel_ShipsForward);
+          EventQueue.Add(Game.GameTime + 13f, Message_22_PointBlank);
+          EventQueue.Add(Game.GameTime + 15f, Empire_StarDestroyer_02);
+          EventQueue.Add(Game.GameTime + 18f, Message_23_Take);
+          State.MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
+          State.MinBounds = new TV_3DVECTOR(-20000, -1500, -22500);
+          State.MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
+          State.MinAIBounds = new TV_3DVECTOR(-20000, -1500, -22500);
         }
-        else if (StageNumber == 6 && !Manager.GetGameStateB("DS6"))
+        else if (State.StageNumber == 6 && !State.GetGameStateB("DS6"))
         {
-          Manager.SetGameStateB("DS6", true);
-          Manager.AddEvent(Game.GameTime, Empire_DeathStarAttack_03);
-          Manager.AddEvent(Game.GameTime + 8f, Empire_Executor);
-          Manager.AddEvent(Game.GameTime + 13f, Message_40_Focus);
-          Manager.MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
-          Manager.MinBounds = new TV_3DVECTOR(-20000, -1500, -25000);
-          Manager.MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
-          Manager.MinAIBounds = new TV_3DVECTOR(-20000, -1500, -25000);
+          State.SetGameStateB("DS6", true);
+          EventQueue.Add(Game.GameTime, Empire_DeathStarAttack_03);
+          EventQueue.Add(Game.GameTime + 8f, Empire_Executor);
+          EventQueue.Add(Game.GameTime + 13f, Message_40_Focus);
+          State.MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
+          State.MinBounds = new TV_3DVECTOR(-20000, -1500, -25000);
+          State.MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
+          State.MinAIBounds = new TV_3DVECTOR(-20000, -1500, -25000);
         }
       }
 
-      if (Manager.Scenario.TimeSinceLostWing < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
+      if (State.TimeSinceLostWing < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
       {
-        Manager.Line1Text = "WINGS: {0}".F(MainAllyFaction.WingLimit);
+        Screen2D.Line1.Text = "WINGS: {0}".F(MainAllyFaction.WingLimit);
       }
       else
       {
-        Manager.Line1Text = "";
+        Screen2D.Line1.Text = "";
       }
 
-      if (Manager.Scenario.TimeSinceLostShip < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
+      if (State.TimeSinceLostShip < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
       {
-        Manager.Line2Text = "SHIPS: {0}".F(MainAllyFaction.ShipLimit);
+        Screen2D.Line2.Text = "SHIPS: {0}".F(MainAllyFaction.ShipLimit);
       }
       else
       {
-        Manager.Line2Text = "";
+        Screen2D.Line2.Text = "";
       }
     }
 
@@ -853,7 +853,7 @@ namespace SWEndor.Scenarios
       if (PlayerInfo.Actor != null && !PlayerInfo.Actor.Disposed)
       {
         // m_Player = Player.Actor;
-        if (!Manager.GetGameStateB("in_battle"))
+        if (!State.GetGameStateB("in_battle"))
         {
           foreach (int actorID in MainAllyFaction.GetShips())
             Rebel_FreeSpeed(actorID, 275);
@@ -947,7 +947,7 @@ namespace SWEndor.Scenarios
         }
       }
 
-      Manager.AddEvent(Game.GameTime + 5f, Rebel_YWingsAttackScan);
+      EventQueue.Add(Game.GameTime + 5f, Rebel_YWingsAttackScan);
     }
 
     public void Rebel_DeathStarGo()
@@ -1011,10 +1011,10 @@ namespace SWEndor.Scenarios
       }
       PlayerInfo.IsMovementControlsEnabled = true;
 
-      Manager.SetGameStateB("in_battle", true);
-      Manager.SetGameStateB("TIEs", true);
-      Manager.AddEvent(Game.GameTime + 10f, Empire_FirstTIEWave);
-      Manager.AddEvent(Game.GameTime + 45f, Empire_SecondTIEWave);
+      State.SetGameStateB("in_battle", true);
+      State.SetGameStateB("TIEs", true);
+      EventQueue.Add(Game.GameTime + 10f, Empire_FirstTIEWave);
+      EventQueue.Add(Game.GameTime + 45f, Empire_SecondTIEWave);
       Rebel_RemoveTorps();
     }
 
@@ -1097,10 +1097,10 @@ namespace SWEndor.Scenarios
 
     public void Rebel_CriticalUnitDying(ActorInfo actor, ActorState state)
     {
-      if (Manager.GetGameStateB("GameWon"))
+      if (State.GetGameStateB("GameWon"))
         return;
 
-      if (Manager.GetGameStateB("GameOver"))
+      if (State.GetGameStateB("GameOver"))
         return;
 
       if (actor != null
@@ -1108,8 +1108,8 @@ namespace SWEndor.Scenarios
       {
         PlayerInfo.TempActorID = actor.ID;
 
-        Manager.SetGameStateB("GameOver", true);
-        Manager.IsCutsceneMode = true;
+        State.SetGameStateB("GameOver", true);
+        State.IsCutsceneMode = true;
 
         PlayerInfo.ActorID = -1;
         PlayerCameraInfo.DeathLook.SetPosition_Actor(actor.ID, actor.TypeInfo.DeathCamera);
@@ -1127,17 +1127,17 @@ namespace SWEndor.Scenarios
 
         if (actor.TypeInfo is WedgeXWingATI)
         {
-          Manager.AddEvent(Game.GameTime, Message_90_LostWedge);
+          EventQueue.Add(Game.GameTime, Message_90_LostWedge);
         }
         else if (actor.TypeInfo is LandoFalconATI)
         {
-          Manager.AddEvent(Game.GameTime, Message_91_LostFalcon);
+          EventQueue.Add(Game.GameTime, Message_91_LostFalcon);
         }
         else if (actor.TypeInfo is MC90ATI)
         {
-          Manager.AddEvent(Game.GameTime + 15, Message_92_LostHomeOne);
+          EventQueue.Add(Game.GameTime + 15, Message_92_LostHomeOne);
           actor.DyingTimerSet(2000, true);
-          Manager.AddEvent(Game.GameTime + 25, FadeOut);
+          EventQueue.Add(Game.GameTime + 25, FadeOut);
         }
       }
     }
@@ -1162,7 +1162,7 @@ namespace SWEndor.Scenarios
           for (int y = 0; y <= 1; y++)
           {
             ActionInfo[] actions = null;
-            switch (Difficulty.ToLower())
+            switch (State.Difficulty.ToLower())
             {
               case "mental":
               case "hard":
@@ -1204,7 +1204,7 @@ namespace SWEndor.Scenarios
           for (int y = 0; y <= 1; y++)
           {
             ActionInfo[] actions = null;
-            switch (Difficulty.ToLower())
+            switch (State.Difficulty.ToLower())
             {
               case "mental":
               case "hard":
@@ -1233,7 +1233,7 @@ namespace SWEndor.Scenarios
 
     public void Empire_TIEWave_01(int sets)
     {
-      Box box = new Box(new TV_3DVECTOR(-2500, -500, Manager.MinBounds.z - 2500), new TV_3DVECTOR(2500, 500, Manager.MinBounds.z - 3500));
+      Box box = new Box(new TV_3DVECTOR(-2500, -500, State.MinBounds.z - 2500), new TV_3DVECTOR(2500, 500, State.MinBounds.z - 3500));
       SquadSpawnInfo spawninfo = new SquadSpawnInfo(null
                                                   , ActorTypeFactory.Get("TIE")
                                                   , MainEnemyFaction
@@ -1253,7 +1253,7 @@ namespace SWEndor.Scenarios
     {
       int setI = sets / 2;
       sets -= setI;
-      Box box = new Box(new TV_3DVECTOR(-2500, -500, Manager.MinBounds.z - 2500), new TV_3DVECTOR(2500, 500, Manager.MinBounds.z - 3500));
+      Box box = new Box(new TV_3DVECTOR(-2500, -500, State.MinBounds.z - 2500), new TV_3DVECTOR(2500, 500, State.MinBounds.z - 3500));
       SquadSpawnInfo spawninfo = new SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("TIE")
                                                                           , MainEnemyFaction
@@ -1273,7 +1273,7 @@ namespace SWEndor.Scenarios
 
     public void Empire_TIEWave_03(int sets)
     {
-      Box box = new Box(new TV_3DVECTOR(-2500, -500, Manager.MinBounds.z - 2500), new TV_3DVECTOR(2500, 500, Manager.MinBounds.z - 3500));
+      Box box = new Box(new TV_3DVECTOR(-2500, -500, State.MinBounds.z - 2500), new TV_3DVECTOR(2500, 500, State.MinBounds.z - 3500));
       SquadSpawnInfo spawninfo = new SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("TIEI")
                                                                           , MainEnemyFaction
@@ -1291,7 +1291,7 @@ namespace SWEndor.Scenarios
 
     public void Empire_TIEWave_0D(int sets)
     {
-      Box box = new Box(new TV_3DVECTOR(-2500, -500, Manager.MinBounds.z - 2500), new TV_3DVECTOR(2500, 500, Manager.MinBounds.z - 3500));
+      Box box = new Box(new TV_3DVECTOR(-2500, -500, State.MinBounds.z - 2500), new TV_3DVECTOR(2500, 500, State.MinBounds.z - 3500));
       SquadSpawnInfo spawninfo = new SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("TIED")
                                                                           , MainEnemyFaction
@@ -1309,7 +1309,7 @@ namespace SWEndor.Scenarios
 
     public void Empire_TIEWave_TIEsvsShips(int sets)
     {
-      Box box = new Box(new TV_3DVECTOR(-2500, -500, Manager.MinBounds.z - 2500), new TV_3DVECTOR(2500, 500, Manager.MinBounds.z - 3500));
+      Box box = new Box(new TV_3DVECTOR(-2500, -500, State.MinBounds.z - 2500), new TV_3DVECTOR(2500, 500, State.MinBounds.z - 3500));
       SquadSpawnInfo spawninfo = new SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("TIE")
                                                                           , MainEnemyFaction
@@ -1327,7 +1327,7 @@ namespace SWEndor.Scenarios
 
     public void Empire_TIEBombers(int sets)
     {
-      Box box = new Box(new TV_3DVECTOR(-2500, -500, Manager.MinBounds.z - 2500), new TV_3DVECTOR(2500, 500, Manager.MinBounds.z - 3500));
+      Box box = new Box(new TV_3DVECTOR(-2500, -500, State.MinBounds.z - 2500), new TV_3DVECTOR(2500, 500, State.MinBounds.z - 3500));
       SquadSpawnInfo spawninfo = new SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("TIESA")
                                                                           , MainEnemyFaction
@@ -1397,7 +1397,7 @@ namespace SWEndor.Scenarios
       ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, 0, s.Info);
 
       if (s.Info.TypeInfo is DevastatorATI)
-        Manager.AddEvent(0, Empire_TIEWave_0D, 2);
+        EventQueue.Add(0, Empire_TIEWave_0D, 2);
     }
 
     public void Empire_StarDestroyer_01()
@@ -1416,7 +1416,7 @@ namespace SWEndor.Scenarios
                                                                     , new string[] { "CriticalEnemies" }
                                                                     );
 
-      switch (Difficulty.ToLower())
+      switch (State.Difficulty.ToLower())
       {
         case "easy":
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
@@ -1539,7 +1539,7 @@ namespace SWEndor.Scenarios
                                                               , new string[] { "CriticalEnemies" }
                                                               );
 
-      switch (Difficulty.ToLower())
+      switch (State.Difficulty.ToLower())
       {
         case "easy":
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
@@ -1822,13 +1822,13 @@ namespace SWEndor.Scenarios
                                                         , new string[] { "CriticalEnemies" }
                                                         );
 
-      switch (Difficulty.ToLower())
+      switch (State.Difficulty.ToLower())
       {
         case "easy":
-          Manager.AddEvent(0, Empire_TIEWave_TIEsvsShips, 10);
+          EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 10);
           break;
         case "mental":
-          Manager.AddEvent(0, Empire_TIEWave_0D, 2);
+          EventQueue.Add(0, Empire_TIEWave_0D, 2);
 
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
@@ -1887,8 +1887,8 @@ namespace SWEndor.Scenarios
                                                         ));
           break;
         case "hard":
-          Manager.AddEvent(0, Empire_TIEWave_0D, 1);
-          Manager.AddEvent(0, Empire_TIEWave_TIEsvsShips, 5);
+          EventQueue.Add(0, Empire_TIEWave_0D, 1);
+          EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 5);
 
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
@@ -1937,7 +1937,7 @@ namespace SWEndor.Scenarios
           break;
         case "normal":
         default:
-          Manager.AddEvent(0, Empire_TIEWave_TIEsvsShips, 10);
+          EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 10);
 
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
@@ -1966,13 +1966,13 @@ namespace SWEndor.Scenarios
 
     public void Empire_ExecutorDestroyed(ActorInfo actor, ActorState state)
     {
-      if (Manager.GetGameStateB("GameOver"))
+      if (State.GetGameStateB("GameOver"))
         return;
 
       if (actor.IsDyingOrDead)
       {
-        Manager.SetGameStateB("GameWon", true);
-        Manager.IsCutsceneMode = true;
+        State.SetGameStateB("GameWon", true);
+        State.IsCutsceneMode = true;
 
         PlayerInfo.ActorID = -1;
         PlayerCameraInfo.DeathLook.SetPosition_Actor(actor.ID, actor.TypeInfo.DeathCamera);
@@ -1994,7 +1994,7 @@ namespace SWEndor.Scenarios
         ActorInfo homeone = Engine.ActorFactory.Get(m_HomeOneID);
         if (homeone != null)
           homeone.SetArmor(DamageType.ALL, 0);
-        Manager.AddEvent(Game.GameTime + 55, FadeOut);
+        EventQueue.Add(Game.GameTime + 55, FadeOut);
       }
     }
 
@@ -2032,7 +2032,7 @@ namespace SWEndor.Scenarios
             m_ADSLS.QueueNext(Lock.GetOrCreate());
 
             t.DestroyedEvents += DeathStarKill_Effect;
-            Manager.AddEvent(0.1f, Scene_DeathStarCam);
+            EventQueue.Add(0.1f, Scene_DeathStarCam);
             return;
           }
         }
@@ -2221,7 +2221,7 @@ namespace SWEndor.Scenarios
 
       PlayerInfo.ActorID = -1;
       PlayerInfo.TempActorID = -1;
-      Manager.IsCutsceneMode = true;
+      State.IsCutsceneMode = true;
     }
 
     public void Scene_ExitCutscene()
@@ -2251,7 +2251,7 @@ namespace SWEndor.Scenarios
         player.SetArmor(DamageType.ALL, 1);
       }
 
-      Manager.IsCutsceneMode = false;
+      State.IsCutsceneMode = false;
       PlayerCameraInfo.SetPlayerLook();
     }
 
@@ -2262,7 +2262,7 @@ namespace SWEndor.Scenarios
       if (target != null
         && target.Active)
       {
-        Manager.AddEvent(Game.GameTime + 0.1f, Scene_EnterCutscene);
+        EventQueue.Add(Game.GameTime + 0.1f, Scene_EnterCutscene);
         SoundManager.SetSound("ds_beam", false, 1, false);
 
         TV_3DVECTOR pos = target.GetGlobalPosition();
@@ -2278,7 +2278,7 @@ namespace SWEndor.Scenarios
         PlayerCameraInfo.SceneLook.SetPosition_Point(pos, 50);
         PlayerCameraInfo.SceneLook.SetTarget_LookAtActor(target.ID);
         PlayerCameraInfo.SetSceneLook();
-        Manager.AddEvent(Game.GameTime + 5f, Scene_ExitCutscene);
+        EventQueue.Add(Game.GameTime + 5f, Scene_ExitCutscene);
       }
     }
 

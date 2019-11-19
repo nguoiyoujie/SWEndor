@@ -7,7 +7,8 @@ namespace SWEndor.AI.Actions
   internal class SelfDestruct : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<SelfDestruct> _pool = new ObjectPool<SelfDestruct>(() => { return new SelfDestruct(); }, (a) => { a.Reset(); });
+    private static ObjectPool<SelfDestruct> _pool;
+    static SelfDestruct() { _pool = ObjectPool<SelfDestruct>.CreateStaticPool(() => { return new SelfDestruct(); }, (a) => { a.Reset(); }); }
 
     private SelfDestruct() : base("SelfDestruct") { CanInterrupt = false; }
    

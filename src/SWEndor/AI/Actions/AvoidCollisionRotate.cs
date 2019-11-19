@@ -11,7 +11,8 @@ namespace SWEndor.AI.Actions
   internal class AvoidCollisionRotate : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<AvoidCollisionRotate> _pool = new ObjectPool<AvoidCollisionRotate>(() => { return new AvoidCollisionRotate(); }, (a) => { a.Reset(); });
+    private static ObjectPool<AvoidCollisionRotate> _pool;
+    static AvoidCollisionRotate() { _pool = ObjectPool<AvoidCollisionRotate>.CreateStaticPool(() => { return new AvoidCollisionRotate(); }, (a) => { a.Reset(); }); }
 
     private AvoidCollisionRotate() : base("AvoidCollisionRotate") { }
 

@@ -42,7 +42,7 @@ namespace SWEndor.Player
           break;
       }
 
-      int cammode = (int)cmode;  // (engine.GameScenarioManager.IsCutsceneMode) ? 0 : (int)cmode;
+      int cammode = (int)cmode;  // (engine.GameScenarioIsCutsceneMode) ? 0 : (int)cmode;
 
       if (cammode < actor.TypeInfo.Cameras.Length)
       {

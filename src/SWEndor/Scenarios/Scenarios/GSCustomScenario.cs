@@ -7,24 +7,24 @@ using System.IO;
 
 namespace SWEndor.Scenarios
 {
-  public class GSCustomScenario : GameScenarioBase
+  public class GSCustomScenario : ScenarioBase
   {
-    public GSCustomScenario(GameScenarioManager manager, string masterfilepath) : base(manager)
+    public GSCustomScenario(ScenarioManager manager, string masterfilepath) : base(manager)
     {
       FilePath = masterfilepath;
       INIFile f = new INIFile(masterfilepath);
 
       // [General]
-      Name = f.GetString("General", "Name", Name);
+      Info.Name = f.GetString("General", "Name", "Untitled Custom Scenario");
       PlayerName = f.GetString("General", "PlayerName", PlayerName);
+      Info.Description = f.GetString("General", "Description", "").Replace('|', '\n');
 
-      Description = f.GetString("General", "Description", Description).Replace('|', '\n');
-
-      AllowedWings = new List<ActorTypeInfo>();
+      List<ActorTypeInfo> allowedWings = new List<ActorTypeInfo>();
       foreach (string wing in f.GetStringArray("General", "Wings", new string[0]))
-        AllowedWings.Add(ActorTypeFactory.Get(wing.Trim()));
+        allowedWings.Add(ActorTypeFactory.Get(wing.Trim()));
+      Info.AllowedWings = allowedWings.ToArray();
 
-      AllowedDifficulties = new List<string>(f.GetStringArray("General", "Difficulties", new string[] { "Normal" }));
+      Info.AllowedDifficulties = f.GetStringArray("General", "Difficulties", new string[] { "Normal" });
 
       // [Script]
       ScriptPaths = f.GetStringArray("Script", "Paths", new string[0]);
@@ -64,8 +64,8 @@ namespace SWEndor.Scenarios
       base.Load(wing, difficulty);
 
       PlayerInfo.Name = PlayerName;
-      Screen2D.LoadingTextLines.Add("starting game");
-      Screen2D.LoadingTextLines.RemoveAt(0);
+      Engine.Screen2D.LoadingTextLines.Add("starting game");
+      Engine.Screen2D.LoadingTextLines.RemoveAt(0);
     }
 
     public override void Unload()

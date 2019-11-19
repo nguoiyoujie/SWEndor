@@ -20,7 +20,7 @@ namespace SWEndor.UI
     public readonly Screen2D Owner;
     public Engine Engine { get { return Owner.Engine; } }
 
-    public GameScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
+    public ScenarioManager GameScenarioManager { get { return Engine.GameScenarioManager; } }
     public Font.Factory FontFactory { get { return Engine.FontFactory; } }
     public PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }
     public PlayerCameraInfo PlayerCameraInfo { get { return Engine.PlayerCameraInfo; } }

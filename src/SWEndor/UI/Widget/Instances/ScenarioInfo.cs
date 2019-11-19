@@ -82,8 +82,8 @@ namespace SWEndor.UI.Widgets
         TVScreen2DText.Action_BeginText();
         // Scenario Title, Difficulty
         TVScreen2DText.TextureFont_DrawText(string.Format("{0}: {1}"
-          , GameScenarioManager.Scenario.Name
-          , GameScenarioManager.Scenario.Difficulty
+          , GameScenarioManager.Scenario.Info.Name
+          , GameScenarioManager.Scenario.State.Difficulty
           )
           , leftinfo_left
           , leftinfo_stagetop
@@ -93,7 +93,7 @@ namespace SWEndor.UI.Widgets
 
         // StageNumber
         TVScreen2DText.TextureFont_DrawText(string.Format("STAGE: {0}"
-          , GameScenarioManager.Scenario.StageNumber.ToString()
+          , GameScenarioManager.Scenario.State.StageNumber.ToString()
           )
           , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop
@@ -101,24 +101,24 @@ namespace SWEndor.UI.Widgets
           , FontFactory.Get(Font.T12).ID
           );
 
-        TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line1Text
+        TVScreen2DText.TextureFont_DrawText(Owner.Line1.Text
           , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop + infoheight
-          , GameScenarioManager.Line1Color.Value
+          , Owner.Line1.Color.Value
           , FontFactory.Get(Font.T12).ID
           );
 
-        TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line2Text
+        TVScreen2DText.TextureFont_DrawText(Owner.Line2.Text
           , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop + infoheight * 2
-          , GameScenarioManager.Line2Color.Value
+          , Owner.Line2.Color.Value
           , FontFactory.Get(Font.T12).ID
           );
 
-        TVScreen2DText.TextureFont_DrawText(GameScenarioManager.Line3Text
+        TVScreen2DText.TextureFont_DrawText(Owner.Line3.Text
           , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop + infoheight * 3
-          , GameScenarioManager.Line3Color.Value
+          , Owner.Line3.Color.Value
           , FontFactory.Get(Font.T12).ID
           );
 

@@ -9,12 +9,12 @@ using System.Collections.Generic;
 
 namespace SWEndor.Scenarios
 {
-  public class GSTestZone : GameScenarioBase
+  public class GSTestZone : ScenarioBase
   {
-    public GSTestZone(GameScenarioManager manager) : base(manager)
+    public GSTestZone(ScenarioManager manager) : base(manager)
     {
-      Name = "Tower Test Zone [Maintenance]";
-      AllowedWings = new List<ActorTypeInfo> { Engine.ActorTypeFactory.Get("ADVT")
+      Info.Name = "Tower Test Zone [Maintenance]";
+      Info.AllowedWings = new ActorTypeInfo[] { Engine.ActorTypeFactory.Get("ADVT")
                                              , Engine.ActorTypeFactory.Get("DEFT")
                                              , Engine.ActorTypeFactory.Get("GUNT")
                                              , Engine.ActorTypeFactory.Get("RDRT")
@@ -23,7 +23,7 @@ namespace SWEndor.Scenarios
                                              , Engine.ActorTypeFactory.Get("XQ1")
                                              };
 
-      AllowedDifficulties = new List<string> { "normal"
+      Info.AllowedDifficulties = new string[] { "normal"
                                               };
     }
 
@@ -40,16 +40,16 @@ namespace SWEndor.Scenarios
     {
       base.Launch();
 
-      Manager.MaxBounds = new TV_3DVECTOR(2500, 200, 2500);
-      Manager.MinBounds = new TV_3DVECTOR(-2500, -200, -2500);
-      Manager.MaxAIBounds = new TV_3DVECTOR(2500, 200, 2500);
-      Manager.MinAIBounds = new TV_3DVECTOR(-2500, -200, -2500);
+      State.MaxBounds = new TV_3DVECTOR(2500, 200, 2500);
+      State.MinBounds = new TV_3DVECTOR(-2500, -200, -2500);
+      State.MaxAIBounds = new TV_3DVECTOR(2500, 200, 2500);
+      State.MinAIBounds = new TV_3DVECTOR(-2500, -200, -2500);
 
       PlayerCameraInfo.CameraMode = CameraMode.THIRDPERSON;
 
-      Manager.AddEvent(Game.GameTime + 0.1f, Test_SpawnPlayer);
-      Manager.AddEvent(Game.GameTime + 0.1f, Test_Towers01);
-      Manager.AddEvent(Game.GameTime + 5f, Test_EnemyWave);
+      EventQueue.Add(Game.GameTime + 0.1f, Test_SpawnPlayer);
+      EventQueue.Add(Game.GameTime + 0.1f, Test_Towers01);
+      EventQueue.Add(Game.GameTime + 5f, Test_EnemyWave);
 
       PlayerInfo.Lives = 2;
       PlayerInfo.ScorePerLife = 1000000;
@@ -57,12 +57,12 @@ namespace SWEndor.Scenarios
 
       MakePlayer = Test_SpawnPlayer;
       
-      Manager.Line1Color = new COLOR(1f, 1f, 0.3f, 1);
+      Screen2D.Line1.Color = new COLOR(1f, 1f, 0.3f, 1);
 
       SoundManager.SetMusic("battle_1_1");
       SoundManager.SetMusicLoop("battle_1_4");
 
-      Manager.IsCutsceneMode = false;
+      State.IsCutsceneMode = false;
     }
 
     internal override void LoadFactions()
@@ -85,13 +85,13 @@ namespace SWEndor.Scenarios
     {
       base.GameTick();
       CalibrateSceneObjects();
-      //if (Manager.GetGameStateB("in_battle"))
+      //if (GetGameStateB("in_battle"))
       //{
-        if (StageNumber == 0)
-          StageNumber = 1;
+        if (State.StageNumber == 0)
+        State.StageNumber = 1;
 
         if (MainEnemyFaction.WingCount < 10)
-          Manager.AddEvent(Game.GameTime, Test_EnemyWave);
+          EventQueue.Add(Game.GameTime, Test_EnemyWave);
 
       //}
     }
@@ -135,7 +135,7 @@ namespace SWEndor.Scenarios
     public void Test_GiveControl()
     {
       PlayerInfo.IsMovementControlsEnabled = true;
-      Manager.SetGameStateB("in_battle", true);
+      State.SetGameStateB("in_battle", true);
     }
 
     public void Test_Towers01()
@@ -166,7 +166,7 @@ namespace SWEndor.Scenarios
 
     public void Test_EnemyWave()
     {
-      Box box = new Box(new TV_3DVECTOR(-2500, -500, Manager.MaxBounds.z + 1500), new TV_3DVECTOR(2500, 500, Manager.MaxBounds.z + 1500));
+      Box box = new Box(new TV_3DVECTOR(-2500, -500, State.MaxBounds.z + 1500), new TV_3DVECTOR(2500, 500, State.MaxBounds.z + 1500));
       SquadSpawnInfo spawninfo = new SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("Z95")
                                                                           , MainEnemyFaction

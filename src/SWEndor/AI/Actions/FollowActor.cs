@@ -9,7 +9,8 @@ namespace SWEndor.AI.Actions
   internal class FollowActor : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<FollowActor> _pool = new ObjectPool<FollowActor>(() => { return new FollowActor(); }, (a) => { a.Reset(); });
+    private static ObjectPool<FollowActor> _pool;
+    static FollowActor() { _pool = ObjectPool<FollowActor>.CreateStaticPool(() => { return new FollowActor(); }, (a) => { a.Reset(); }); }
 
     private FollowActor() : base("FollowActor") { }
 

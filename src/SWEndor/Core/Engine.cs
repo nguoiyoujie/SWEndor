@@ -63,7 +63,7 @@ namespace SWEndor.Core
 
     // Engine parts to be loaded late
     // Requires ActorInfoType initialization
-    internal GameScenarioManager GameScenarioManager { get; private set; }
+    internal ScenarioManager GameScenarioManager { get; private set; }
     internal Scenarios.Scripting.Context ScriptContext { get; private set; }
 
     public void Init()
@@ -149,7 +149,7 @@ namespace SWEndor.Core
       ExplosionTypeFactory.Initialise();
 
       Screen2D.LoadingTextLines.Add("Loading scenario engine...");
-      GameScenarioManager = new GameScenarioManager(this);
+      GameScenarioManager = new ScenarioManager(this);
       GameScenarioManager.LoadInitial();
 
       Screen2D.LoadingTextLines.Add("Loading main menu...");

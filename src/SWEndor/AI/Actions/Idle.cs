@@ -8,7 +8,8 @@ namespace SWEndor.AI.Actions
   internal class Idle : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<Idle> _pool = new ObjectPool<Idle>(() => { return new Idle(); }, (a) => { a.Reset(); });
+    private static ObjectPool<Idle> _pool;
+    static Idle() { _pool = ObjectPool<Idle>.CreateStaticPool(() => { return new Idle(); }, (a) => { a.Reset(); }); }
 
     private Idle() : base("Idle") { }
 

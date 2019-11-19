@@ -35,6 +35,12 @@ namespace Primrose.Primitives.Factories
     /// <returns>The value associated with the key. If the registry does not contain this key, returns Default</returns>
     public T Get(string id) { lock (locker) { T t; if (!list.TryGetValue(id, out t)) return Default; return t; } }
 
+    /// <summary>Retrieves the value associated with a key</summary>
+    /// <param name="id">The identifier key to check</param>
+    /// <param name="defaultValue">The default value to return if the key is not found in the registry</param>
+    /// <returns>The value associated with the key. If the registry does not contain this key, returns Default</returns>
+    public T Get(string id, T defaultValue) { lock (locker) { T t; if (!list.TryGetValue(id, out t)) return defaultValue; return t; } }
+
     /// <summary>Strictly retrieves the value associated with a key</summary>
     /// <param name="id">The identifier key to check</param>
     /// <returns>The value associated with the key</returns>

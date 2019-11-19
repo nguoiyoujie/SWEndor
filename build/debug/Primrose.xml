@@ -772,11 +772,38 @@
         <member name="M:Primrose.Primitives.Factories.AFactoryObject`1.#ctor">
             <summary>Creates an instance of the object</summary>
         </member>
+        <member name="T:Primrose.Primitives.Factories.IPool">
+            <summary>
+            Provides a basic object pool for pooling objects for further use  
+            </summary>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.IPool.Count">
+            <summary>Retrieves the number of elements in the pool</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.IPool.UncollectedCount">
+            <summary>Retrieves the number of generated elements in the pool that were not yet collected</summary>
+        </member>
         <member name="T:Primrose.Primitives.Factories.ObjectPool`1">
             <summary>
             Provides a basic object pool for pooling objects for further use  
             </summary>
             <typeparam name="T">The item type to be pooled</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.CreateStaticPool(System.Func{`0},System.Action{`0})">
+            <summary>
+            Creates a static version of an object pool
+            </summary>
+            <param name="createFn">The function for creating new instances</param>
+            <param name="resetFn">The function for reseting instances that are returned to the pool</param>
+            <returns></returns>
+            <exception cref="T:System.InvalidOperationException">The background object pool has already been created.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.GetStaticPool">
+            <summary>
+            Retrieves the static version of the pool if created
+            </summary>
+            <returns></returns>
+            <exception cref="T:System.InvalidOperationException">The background object pool has not been created.</exception>
         </member>
         <member name="M:Primrose.Primitives.Factories.ObjectPool`1.#ctor(System.Func{`0},System.Action{`0})">
             <summary>
@@ -788,6 +815,9 @@
         </member>
         <member name="P:Primrose.Primitives.Factories.ObjectPool`1.Count">
             <summary>Retrieves the number of elements in the pool</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.ObjectPool`1.UncollectedCount">
+            <summary>Retrieves the number of generated elements in the pool that were not yet collected</summary>
         </member>
         <member name="M:Primrose.Primitives.Factories.ObjectPool`1.GetNew">
             <summary>Returns an instance of <typeparamref name="T"/> from the pool, or creates a new instance if the pool is empty</summary>
@@ -827,6 +857,12 @@
         <member name="M:Primrose.Primitives.Factories.Registry`1.Get(System.String)">
             <summary>Retrieves the value associated with a key</summary>
             <param name="id">The identifier key to check</param>
+            <returns>The value associated with the key. If the registry does not contain this key, returns Default</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`1.Get(System.String,`0)">
+            <summary>Retrieves the value associated with a key</summary>
+            <param name="id">The identifier key to check</param>
+            <param name="defaultValue">The default value to return if the key is not found in the registry</param>
             <returns>The value associated with the key. If the registry does not contain this key, returns Default</returns>
         </member>
         <member name="M:Primrose.Primitives.Factories.Registry`1.GetX(System.String)">

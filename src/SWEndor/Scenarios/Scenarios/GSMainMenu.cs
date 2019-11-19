@@ -10,11 +10,11 @@ using System.Collections.Generic;
 
 namespace SWEndor.Scenarios
 {
-  public class GSMainMenu : GameScenarioBase
+  public class GSMainMenu : ScenarioBase
   {
-    public GSMainMenu(GameScenarioManager manager) : base(manager)
+    public GSMainMenu(ScenarioManager manager) : base(manager)
     {
-      Name = "Main Menu";
+      Info.Name = "Main Menu";
     }
 
     private ActorInfo m_APlanet = null;
@@ -40,34 +40,34 @@ namespace SWEndor.Scenarios
     public override void Launch()
     {
       base.Launch();
-      if (Manager.GetGameStateB("in_menu"))
+      if (State.GetGameStateB("in_menu"))
         return;
 
-      Manager.SetGameStateB("in_menu", true);
+      State.SetGameStateB("in_menu", true);
 
       //ActorInfo cam = ActorFactory.Get(Manager.SceneCameraID);
       //cam.Position = new TV_3DVECTOR(100000, 0, 100000);
-      Manager.MaxBounds = new TV_3DVECTOR(15000, 1500, 5000);
-      Manager.MinBounds = new TV_3DVECTOR(-15000, -1500, -5000);
-      Manager.MaxAIBounds = new TV_3DVECTOR(15000, 1500, 10000);
-      Manager.MinAIBounds = new TV_3DVECTOR(-15000, -1500, -10000);
+      State.MaxBounds = new TV_3DVECTOR(15000, 1500, 5000);
+      State.MinBounds = new TV_3DVECTOR(-15000, -1500, -5000);
+      State.MaxAIBounds = new TV_3DVECTOR(15000, 1500, 10000);
+      State.MinAIBounds = new TV_3DVECTOR(-15000, -1500, -10000);
 
       PlayerCameraInfo.CameraMode = CameraMode.CUSTOM;
 
       Empire_StarDestroyer_01();
       Empire_TIEDefender();
       Rebel_HyperspaceIn();
-      Manager.AddEvent(Game.GameTime + 0.2f, Empire_TIEAvengers);
-      Manager.AddEvent(Game.GameTime + 0.5f, Rebel_BeginBattle);
-      Manager.AddEvent(Game.GameTime + 15, Empire_StarDestroyer_00);
+      EventQueue.Add(Game.GameTime + 0.2f, Empire_TIEAvengers);
+      EventQueue.Add(Game.GameTime + 0.5f, Rebel_BeginBattle);
+      EventQueue.Add(Game.GameTime + 15, Empire_StarDestroyer_00);
 
       PlayerInfo.Lives = 2;
       PlayerInfo.ScorePerLife = 9999999;
       PlayerInfo.ScoreForNextLife = 9999999;
-      
-      Mood = MoodStates.AMBIENT;
+
+      SoundManager.Mood = MoodStates.AMBIENT;
       SoundManager.SetMusicDyn("TRO-IN");
-      Manager.IsCutsceneMode = true;
+      State.IsCutsceneMode = true;
     }
 
     internal override void LoadFactions()
@@ -137,7 +137,7 @@ namespace SWEndor.Scenarios
         PlayerCameraInfo.SetSceneLook();
       }
 
-      if (Manager.GetGameStateB("in_battle"))
+      if (State.GetGameStateB("in_battle"))
       {
         // TIE spawn
         if (TIESpawnTime < Game.GameTime)
@@ -145,7 +145,7 @@ namespace SWEndor.Scenarios
           if (MainEnemyFaction.WingCount < 12)
           {
             TIESpawnTime = Game.GameTime + 10f;
-            Manager.AddEvent(0, Empire_TIEWave_01, 4);
+            EventQueue.Add(0, Empire_TIEWave_01, 4);
           }
         }
 
@@ -155,14 +155,14 @@ namespace SWEndor.Scenarios
           if (MainAllyFaction.WingCount < 8)
           {
             RebelSpawnTime = Game.GameTime + 10f;
-            Manager.AddEvent(0, Rebel_Wave);
+            EventQueue.Add(0, Rebel_Wave);
           }
         }
 
-        if (MainAllyFaction.ShipCount < 3 && !Manager.GetGameStateB("rebels_fled"))
+        if (MainAllyFaction.ShipCount < 3 && !State.GetGameStateB("rebels_fled"))
         {
-          Manager.SetGameStateB("rebels_fled", true);
-          Manager.AddEvent(Game.GameTime + 15f, Rebel_HyperspaceIn2);
+          State.SetGameStateB("rebels_fled", true);
+          EventQueue.Add(Game.GameTime + 15f, Rebel_HyperspaceIn2);
           Rebel_HyperspaceOut();
         }
       }
@@ -222,7 +222,7 @@ namespace SWEndor.Scenarios
           SidebarName = "",
           SpawnTime = creationTime,
           Faction = MainAllyFaction,
-          Position = v + new TV_3DVECTOR(0, 0, Manager.MaxBounds.z),
+          Position = v + new TV_3DVECTOR(0, 0, State.MaxBounds.z),
           Rotation = new TV_3DVECTOR(0, 180, 0),
           Actions = new ActionInfo[]{ Wait.GetOrCreate(18) }
         }.Spawn(this);
@@ -246,7 +246,7 @@ namespace SWEndor.Scenarios
           SidebarName = "",
           SpawnTime = creationTime,
           Faction = MainAllyFaction,
-          Position = v + new TV_3DVECTOR(0, 0, Manager.MaxBounds.z),
+          Position = v + new TV_3DVECTOR(0, 0, State.MaxBounds.z),
           Rotation = new TV_3DVECTOR(0, 180, 0),
           Actions = new ActionInfo[] { Move.GetOrCreate(nv, at.MoveLimitData.MaxSpeed)
                                            , Rotate.GetOrCreate(nv - new TV_3DVECTOR(0, 0, 20000), at.MoveLimitData.MinSpeed)
@@ -275,7 +275,7 @@ namespace SWEndor.Scenarios
           SidebarName = "",
           SpawnTime = creationTime,
           Faction = MainAllyFaction,
-          Position = v + new TV_3DVECTOR(0, 0, Manager.MaxBounds.z),
+          Position = v + new TV_3DVECTOR(0, 0, State.MaxBounds.z),
           Rotation = new TV_3DVECTOR(0, 180, 0),
           Actions = new ActionInfo[] { Move.GetOrCreate(nv, at.MoveLimitData.MaxSpeed)
                                            , Rotate.GetOrCreate(nv - new TV_3DVECTOR(0, 0, 20000), at.MoveLimitData.MinSpeed)
@@ -304,7 +304,7 @@ namespace SWEndor.Scenarios
           SidebarName = "",
           SpawnTime = creationTime,
           Faction = MainAllyFaction,
-          Position = v + new TV_3DVECTOR(0, 0, Manager.MaxBounds.z),
+          Position = v + new TV_3DVECTOR(0, 0, State.MaxBounds.z),
           Rotation = new TV_3DVECTOR(0, 180, 0),
           Actions = new ActionInfo[] { Move.GetOrCreate(nv, at.MoveLimitData.MaxSpeed)
                                            , Rotate.GetOrCreate(nv - new TV_3DVECTOR(0, 0, 20000), at.MoveLimitData.MinSpeed)
@@ -417,9 +417,9 @@ namespace SWEndor.Scenarios
       spawninfo.HuntTargetType = TargetType.SHIELDGENERATOR | TargetType.SHIP;
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
 
-      Manager.AddEvent(Game.GameTime + 25, Empire_StarDestroyer_02);
-      Manager.AddEvent(Game.GameTime + 50, Rebel_HyperspaceIn3);
-      Mood = MoodStates.ENEMY_SHIP_ARRIVED;
+      EventQueue.Add(Game.GameTime + 25, Empire_StarDestroyer_02);
+      EventQueue.Add(Game.GameTime + 50, Rebel_HyperspaceIn3);
+      SoundManager.Mood = MoodStates.ENEMY_SHIP_ARRIVED;
     }
 
     public void Rebel_HyperspaceIn3()
@@ -485,13 +485,13 @@ namespace SWEndor.Scenarios
       spawninfo.TypeInfo = ActorTypeFactory.Get("YWING");
       spawninfo.HuntTargetType = TargetType.SHIELDGENERATOR | TargetType.SHIP;
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
-      Mood = MoodStates.ENEMY_SHIP_ARRIVED;
+      SoundManager.Mood = MoodStates.ENEMY_SHIP_ARRIVED;
     }
 
 
     public void Rebel_Wave()
     {
-      Box box = new Box(new TV_3DVECTOR(-2500, -1000, Manager.MaxBounds.z + 1500), new TV_3DVECTOR(2500, 1000, -1500));
+      Box box = new Box(new TV_3DVECTOR(-2500, -1000, State.MaxBounds.z + 1500), new TV_3DVECTOR(2500, 1000, -1500));
       SquadSpawnInfo spawninfo = new SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("Z95")
                                                                           , MainAllyFaction
@@ -513,19 +513,19 @@ namespace SWEndor.Scenarios
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
       spawninfo.TypeInfo = ActorTypeFactory.Get("YWING");
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
-      Mood = MoodStates.ENEMY_FIGHTER_ARRIVED;
+      SoundManager.Mood = MoodStates.ENEMY_FIGHTER_ARRIVED;
     }
 
     public void Rebel_BeginBattle()
     {
-      Manager.SetGameStateB("in_battle", true);
+      State.SetGameStateB("in_battle", true);
       RebelSpawnTime = Game.GameTime + 30;
-      Manager.AddEvent(Game.GameTime + 10f, Empire_TIEWave_01, 8);
+      EventQueue.Add(Game.GameTime + 10f, Empire_TIEWave_01, 8);
     }
 
     public void Empire_TIEWave_01(int sets)
     {
-      Box box = new Box(new TV_3DVECTOR(-2500, -500, Manager.MinBounds.z - 8000), new TV_3DVECTOR(2500, 500, Manager.MinBounds.z - 9000));
+      Box box = new Box(new TV_3DVECTOR(-2500, -500, State.MinBounds.z - 8000), new TV_3DVECTOR(2500, 500, State.MinBounds.z - 9000));
       SquadSpawnInfo spawninfo = new SquadSpawnInfo(null
                                                                           , ActorTypeFactory.Get("TIE")
                                                                           , MainEnemyFaction
@@ -550,9 +550,9 @@ namespace SWEndor.Scenarios
 
       List<TV_3DVECTOR> positions = new List<TV_3DVECTOR>();
 
-      positions.Add(new TV_3DVECTOR(-10500, -1010, Manager.MinBounds.z - 7500));
-      positions.Add(new TV_3DVECTOR(-10250, -910, Manager.MinBounds.z - 7600));
-      positions.Add(new TV_3DVECTOR(-10750, -910, Manager.MinBounds.z - 7600));
+      positions.Add(new TV_3DVECTOR(-10500, -1010, State.MinBounds.z - 7500));
+      positions.Add(new TV_3DVECTOR(-10250, -910, State.MinBounds.z - 7600));
+      positions.Add(new TV_3DVECTOR(-10750, -910, State.MinBounds.z - 7600));
 
       for (int i = 0; i < positions.Count; i++)
       {
@@ -594,9 +594,9 @@ namespace SWEndor.Scenarios
 
       List<TV_3DVECTOR> positions = new List<TV_3DVECTOR>();
 
-      positions.Add(new TV_3DVECTOR(-9500, -560, Manager.MinBounds.z - 6500));
-      positions.Add(new TV_3DVECTOR(-9250, -660, Manager.MinBounds.z - 6600));
-      positions.Add(new TV_3DVECTOR(-9750, -660, Manager.MinBounds.z - 6600));
+      positions.Add(new TV_3DVECTOR(-9500, -560, State.MinBounds.z - 6500));
+      positions.Add(new TV_3DVECTOR(-9250, -660, State.MinBounds.z - 6600));
+      positions.Add(new TV_3DVECTOR(-9750, -660, State.MinBounds.z - 6600));
 
       for (int i = 0; i < positions.Count; i++)
       {
@@ -681,7 +681,7 @@ namespace SWEndor.Scenarios
       List<TV_3DVECTOR> positions = new List<TV_3DVECTOR>();
       List<float> createtime = new List<float>();
 
-      positions.Add(new TV_3DVECTOR(-6000, 210, Manager.MinBounds.z - 500));
+      positions.Add(new TV_3DVECTOR(-6000, 210, State.MinBounds.z - 500));
       createtime.Add(0);
 
       for (int i = 0; i < positions.Count; i++)

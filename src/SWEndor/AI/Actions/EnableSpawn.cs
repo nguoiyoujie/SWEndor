@@ -7,7 +7,8 @@ namespace SWEndor.AI.Actions
   internal class EnableSpawn : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<EnableSpawn> _pool = new ObjectPool<EnableSpawn>(() => { return new EnableSpawn(); }, (a) => { a.Reset(); });
+    private static ObjectPool<EnableSpawn> _pool;
+    static EnableSpawn() { _pool = ObjectPool<EnableSpawn>.CreateStaticPool(() => { return new EnableSpawn(); }, (a) => { a.Reset(); }); }
 
     private EnableSpawn() : base("EnableSpawn") { CanInterrupt = false; }
 

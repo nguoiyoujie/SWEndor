@@ -7,7 +7,8 @@ namespace SWEndor.AI.Actions
   internal class PlaySound : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<PlaySound> _pool = new ObjectPool<PlaySound>(() => { return new PlaySound(); }, (a) => { a.Reset(); });
+    private static ObjectPool<PlaySound> _pool;
+    static PlaySound() { _pool = ObjectPool<PlaySound>.CreateStaticPool(() => { return new PlaySound(); }, (a) => { a.Reset(); }); }
 
     private PlaySound() : base("PlaySound") { CanInterrupt = false; }
 

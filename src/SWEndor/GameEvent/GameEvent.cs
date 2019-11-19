@@ -35,11 +35,11 @@ namespace SWEndor
   public delegate void ShipSpawnEvent(ShipSpawnEventArg eventArg);
 
 
-  internal static class GameEventQueue
+  internal class GameEventQueue
   {
-    private static SortedSet<GameEventObject> list = new SortedSet<GameEventObject>(new GameEventObject.Comparer());
-    private static Queue<GameEventObject> queue = new Queue<GameEventObject>();
-    private static ScopeCounters.ScopeCounter _scope = new ScopeCounters.ScopeCounter();
+    private SortedSet<GameEventObject> list = new SortedSet<GameEventObject>(new GameEventObject.Comparer());
+    private Queue<GameEventObject> queue = new Queue<GameEventObject>();
+    private ScopeCounters.ScopeCounter _scope = new ScopeCounters.ScopeCounter();
 
     internal struct GameEventObject
     {
@@ -66,22 +66,22 @@ namespace SWEndor
       }
     }
 
-    public static void Add<T>(float time, GameEvent<T> method, T arg)
+    public void Add<T>(float time, GameEvent<T> method, T arg)
     {
       Add(time, () => method(arg));
     }
 
-    public static void Add<T1, T2>(float time, GameEvent<T1, T2> method, T1 a1, T2 a2)
+    public void Add<T1, T2>(float time, GameEvent<T1, T2> method, T1 a1, T2 a2)
     {
       Add(time, () => method(a1, a2));
     }
 
-    public static void Add<T1, T2, T3>(float time, GameEvent<T1, T2, T3> method, T1 a1, T2 a2, T3 a3)
+    public void Add<T1, T2, T3>(float time, GameEvent<T1, T2, T3> method, T1 a1, T2 a2, T3 a3)
     {
       Add(time, () => method(a1, a2, a3));
     }
 
-    public static void Add(float time, GameEvent method)
+    public void Add(float time, GameEvent method)
     {
       GameEventObject geo = new GameEventObject(time, method);
       while (list.Contains(geo))
@@ -94,14 +94,14 @@ namespace SWEndor
         list.Add(geo);
     }
 
-    public static void Clear()
+    public void Clear()
     {
       using (ScopeCounters.AcquireWhenZero(_scope))
         list.Clear();
     }
 
     private static Predicate<GameEventObject> _expire = (a) => { return a.Time < Globals.Engine.Game.GameTime; };
-    public static void Process(Engine engine)
+    public void Process(Engine engine)
     {
       using (ScopeCounters.AcquireWhenZero(_scope))
       {

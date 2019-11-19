@@ -17,13 +17,13 @@ namespace SWEndor.UI.Menu.Pages
     COLOR SquareColor1 = ColorLocalization.Get(ColorLocalKeys.GAME_LOAD_DARK);
     COLOR SquareColor2 = ColorLocalization.Get(ColorLocalKeys.GAME_LOAD_LIGHT);
 
-    GameScenarioBase SelectedScenario = null;
+    ScenarioBase SelectedScenario = null;
     ActorTypeInfo SelectedActorTypeInfo = null;
     string SelectedDifficulty = null;
     bool Loaded = false;
     Exception LoadException = null;
 
-    public LoadingScenario(Screen2D owner, GameScenarioBase selectedScenario, ActorTypeInfo selectedActorTypeInfo, string selectedDifficulty) : base(owner)
+    public LoadingScenario(Screen2D owner, ScenarioBase selectedScenario, ActorTypeInfo selectedActorTypeInfo, string selectedDifficulty) : base(owner)
     {
       SelectedScenario = selectedScenario;
       SelectedActorTypeInfo = selectedActorTypeInfo;

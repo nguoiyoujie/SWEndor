@@ -7,7 +7,8 @@ namespace SWEndor.AI.Actions
   internal class Delete : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<Delete> _pool = new ObjectPool<Delete>(() => { return new Delete(); }, (a) => { a.Reset(); });
+    private static ObjectPool<Delete> _pool;
+    static Delete() { _pool = ObjectPool<Delete>.CreateStaticPool(() => { return new Delete(); }, (a) => { a.Reset(); }); }
 
     private Delete() : base("Delete") { CanInterrupt = false; }
 

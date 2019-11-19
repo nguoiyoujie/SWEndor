@@ -13,7 +13,7 @@ namespace SWEndor.Input.Functions.Gameplay.Camera
 
     public override void Process(Engine engine)
     {
-      engine.PlayerCameraInfo.CameraMode = engine.GameScenarioManager.Scenario.PrevCameraMode();
+      engine.PlayerCameraInfo.CameraMode = engine.PlayerCameraInfo.PrevCameraMode();
       engine.Screen2D.MessageSecondaryText(string.Format("CAMERA: {0}", engine.PlayerCameraInfo.CameraMode)
                                                  , 2.5f
                                                  , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_NORMAL)

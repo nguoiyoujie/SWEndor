@@ -23,7 +23,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
         throw new InvalidOperationException("Attempted script function with null Scenario");
 #endif
 
-      context.Engine.GameScenarioManager.Scenario.Mood = (MoodStates)state;
+      context.Engine.SoundManager.Mood = (MoodStates)state;
       return Val.NULL;
     }
 
@@ -35,7 +35,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <returns>NULL</returns>
     public static Val SetMaxBounds(Context context, float3 value)
     {
-      context.Engine.GameScenarioManager.MaxBounds = value.ToVec3();
+      context.Engine.GameScenarioManager.Scenario.State.MaxBounds = value.ToVec3();
       return Val.NULL;
     }
 
@@ -47,7 +47,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <returns>NULL</returns>    
     public static Val SetMinBounds(Context context, float3 value)
     {
-      context.Engine.GameScenarioManager.MinBounds = value.ToVec3();
+      context.Engine.GameScenarioManager.Scenario.State.MinBounds = value.ToVec3();
       return Val.NULL;
     }
 
@@ -59,7 +59,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <returns>NULL</returns>
     public static Val SetMaxAIBounds(Context context, float3 value)
     {
-      context.Engine.GameScenarioManager.MaxAIBounds = value.ToVec3();
+      context.Engine.GameScenarioManager.Scenario.State.MaxAIBounds = value.ToVec3();
       return Val.NULL;
     }
 
@@ -71,7 +71,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <returns>NULL</returns>
     public static Val SetMinAIBounds(Context context, float3 value)
     {
-      context.Engine.GameScenarioManager.MinAIBounds = value.ToVec3();
+      context.Engine.GameScenarioManager.Scenario.State.MinAIBounds = value.ToVec3();
       return Val.NULL;
     }
 
@@ -88,7 +88,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
         throw new InvalidOperationException("Attempted script function with null Scenario");
 #endif
 
-      context.Engine.GameScenarioManager.Scenario.InformLostWing = enable;
+      context.Engine.GameScenarioManager.Scenario.State.InformLostWing = enable;
       return Val.NULL;
     }
 
@@ -105,7 +105,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
         throw new InvalidOperationException("Attempted script function with null Scenario");
 #endif
 
-      context.Engine.GameScenarioManager.Scenario.InformLostShip = enable;
+      context.Engine.GameScenarioManager.Scenario.State.InformLostShip = enable;
       return Val.NULL;
     }
 
@@ -122,7 +122,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
         throw new InvalidOperationException("Attempted script function with null Scenario");
 #endif
 
-      context.Engine.GameScenarioManager.Scenario.InformLostStructure = enable;
+      context.Engine.GameScenarioManager.Scenario.State.InformLostStructure = enable;
       return Val.NULL;
     }
 

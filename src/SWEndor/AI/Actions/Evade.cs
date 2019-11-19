@@ -8,7 +8,8 @@ namespace SWEndor.AI.Actions
   internal class Evade : ActionInfo
   {
     internal static int _count = 0;
-    internal static ObjectPool<Evade> _pool = new ObjectPool<Evade>(() => { return new Evade(); }, (a) => { a.Reset(); });
+    private static ObjectPool<Evade> _pool; 
+    static Evade() { _pool = ObjectPool<Evade>.CreateStaticPool(() => { return new Evade(); }, (a) => { a.Reset(); }); }
 
     private Evade() : base("Evade") { }
 
@@ -75,8 +76,8 @@ namespace SWEndor.AI.Actions
         if (!poschecked)
         {
           poschecked = true;
-          TV_3DVECTOR minb = engine.GameScenarioManager.MinAIBounds;
-          TV_3DVECTOR maxb = engine.GameScenarioManager.MaxAIBounds;
+          TV_3DVECTOR minb = engine.GameScenarioManager.Scenario.State.MinAIBounds;
+          TV_3DVECTOR maxb = engine.GameScenarioManager.Scenario.State.MaxAIBounds;
 
           if (actor.IsOutOfBounds(minb, maxb))
             // TO-DO: use the center of the Bound volume or a designated center point instead of origin.
