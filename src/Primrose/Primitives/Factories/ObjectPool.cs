@@ -39,9 +39,9 @@ namespace Primrose.Primitives.Factories
     public T GetNew()
     {
       T ret;
+      UncollectedCount++;
       if (list.TryDequeue(out ret))
         return ret;
-      UncollectedCount++;
       return creator();
     }
 

@@ -39,5 +39,10 @@ namespace SWEndor.UI.Forms
     {
       tmTick.Stop();
     }
+
+    private void StatForm_Load(object sender, EventArgs e)
+    {
+      ucPoolCache1.Init();
+    }
   }
 }

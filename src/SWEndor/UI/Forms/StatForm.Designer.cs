@@ -124,10 +124,11 @@
       this.tabControl1.Controls.Add(this.tpObjects);
       this.tabControl1.Controls.Add(this.tpSound);
       this.tabControl1.Controls.Add(this.tpPool);
-      this.tabControl1.Location = new System.Drawing.Point(12, 75);
+      this.tabControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
+      this.tabControl1.Location = new System.Drawing.Point(0, 75);
       this.tabControl1.Name = "tabControl1";
       this.tabControl1.SelectedIndex = 0;
-      this.tabControl1.Size = new System.Drawing.Size(600, 400);
+      this.tabControl1.Size = new System.Drawing.Size(628, 435);
       this.tabControl1.TabIndex = 67;
       // 
       // tpObjects
@@ -136,7 +137,7 @@
       this.tpObjects.Location = new System.Drawing.Point(4, 22);
       this.tpObjects.Name = "tpObjects";
       this.tpObjects.Padding = new System.Windows.Forms.Padding(3);
-      this.tpObjects.Size = new System.Drawing.Size(592, 374);
+      this.tpObjects.Size = new System.Drawing.Size(620, 409);
       this.tpObjects.TabIndex = 0;
       this.tpObjects.Text = "Objects";
       this.tpObjects.UseVisualStyleBackColor = true;
@@ -146,7 +147,7 @@
       this.ucStatObjects1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.ucStatObjects1.Location = new System.Drawing.Point(3, 3);
       this.ucStatObjects1.Name = "ucStatObjects1";
-      this.ucStatObjects1.Size = new System.Drawing.Size(586, 368);
+      this.ucStatObjects1.Size = new System.Drawing.Size(614, 403);
       this.ucStatObjects1.TabIndex = 0;
       // 
       // tpSound
@@ -258,6 +259,7 @@
       this.Name = "StatForm";
       this.Text = "Statistics";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StatForm_FormClosing);
+      this.Load += new System.EventHandler(this.StatForm_Load);
       this.tabControl1.ResumeLayout(false);
       this.tpObjects.ResumeLayout(false);
       this.tpSound.ResumeLayout(false);

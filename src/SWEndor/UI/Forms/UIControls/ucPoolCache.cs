@@ -4,7 +4,6 @@ using SWEndor.AI.Actions;
 using Primrose.Primitives.Factories;
 using System.Collections.Generic;
 using Primrose.Primitives.ValueTypes;
-using System;
 using Primrose.Primitives.Extensions;
 using MTV3D65;
 
@@ -15,7 +14,10 @@ namespace SWEndor.UI.Forms.UIControls
     public ucPoolCache()
     {
       InitializeComponent();
+    }
 
+    public void Init()
+    {
       AttackActor.GetOrCreate(0).Return();
       AvoidCollisionRotate.GetOrCreate(default(TV_3DVECTOR), default(TV_3DVECTOR)).Return();
       AvoidCollisionWait.GetOrCreate().Return();
@@ -38,7 +40,6 @@ namespace SWEndor.UI.Forms.UIControls
       SetGameStateB.GetOrCreate(null, Enabled).Return();
       SetMood.GetOrCreate(default(Scenarios.MoodStates), false).Return();
       Wait.GetOrCreate().Return();
-
 
       IPool[] pools = new IPool[]
       {
@@ -72,7 +73,7 @@ namespace SWEndor.UI.Forms.UIControls
         Label txt = new Label();
         txt.Location = new System.Drawing.Point(44, y);
         txt.Size = new System.Drawing.Size(180, 15);
-        txt.Text = "Actions.{0}".F(p.GetType().Name);
+        txt.Text = "Actions.{0}".F(p.GetType().GetGenericArguments()[0].Name);
         //44, 232, 276
 
         Label count1 = new Label();

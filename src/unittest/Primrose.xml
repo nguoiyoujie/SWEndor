@@ -791,7 +791,7 @@
         </member>
         <member name="M:Primrose.Primitives.Factories.ObjectPool`1.CreateStaticPool(System.Func{`0},System.Action{`0})">
             <summary>
-            Creates a static version of an object pool
+            Creates a static version of the object pool for global use
             </summary>
             <param name="createFn">The function for creating new instances</param>
             <param name="resetFn">The function for reseting instances that are returned to the pool</param>

@@ -17,10 +17,10 @@ namespace Primrose.Primitives.Factories
 
   public partial class ObjectPool<T> : IPool where T : class
   {
-    private static Registry<Type, object> _pools = new Registry<Type, object>();
+    private static ObjectPool<T> _staticpool;
 
     /// <summary>
-    /// Creates a static version of an object pool
+    /// Creates a static version of the object pool for global use
     /// </summary>
     /// <param name="createFn">The function for creating new instances</param>
     /// <param name="resetFn">The function for reseting instances that are returned to the pool</param>
@@ -28,15 +28,11 @@ namespace Primrose.Primitives.Factories
     /// <exception cref="InvalidOperationException">The background object pool has already been created.</exception>
     public static ObjectPool<T> CreateStaticPool(Func<T> createFn, Action<T> resetFn = null)
     {
-      Type t = typeof(T);
-      if (_pools.Contains(t))
-        throw new InvalidOperationException("There is already a background object pool for '{0}'".F(t.Name));
+      if (_staticpool != null)
+        throw new InvalidOperationException("There is already a background object pool for '{0}'".F(typeof(T).Name));
 
-      Type tp = typeof(ObjectPool<>).MakeGenericType(t);
-      ObjectPool<T> pool = (ObjectPool<T>)Activator.CreateInstance(tp, createFn, resetFn);
-      _pools.Add(t, pool);
-
-      return pool;
+      _staticpool = new ObjectPool<T>(createFn, resetFn);
+      return _staticpool;
     }
 
     /// <summary>
@@ -46,12 +42,10 @@ namespace Primrose.Primitives.Factories
     /// <exception cref="InvalidOperationException">The background object pool has not been created.</exception>
     public static ObjectPool<T> GetStaticPool()
     {
-      Type t = typeof(T);
-      
-      if (!_pools.Contains(t))
-        throw new InvalidOperationException("The background object pool for '{0}' has not been created.".F(t.Name));
+      if (_staticpool == null)
+        throw new InvalidOperationException("The background object pool for '{0}' has not been created.".F(typeof(T).Name));
 
-      return (ObjectPool<T>)_pools.Get(t);
+      return _staticpool;
     }
   }
 }
