@@ -8,7 +8,7 @@ namespace Primrose.Expressions.Tree.Expressions.Literals
 
     internal HexLiteral(ContextScope scope, Lexer lexer) : base(scope, lexer)
     {
-      _value = Convert.ToInt32(lexer.TokenContents.Substring(2, lexer.TokenContents.Length - 2));
+      _value = Convert.ToInt32(lexer.TokenContents.Substring(2, lexer.TokenContents.Length - 2), 16);
       lexer.Next(); //HEXINT
     }
 
