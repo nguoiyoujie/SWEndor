@@ -16,7 +16,7 @@ namespace SWEndor.UI.Menu.Pages
 
     public PauseMenu(Screen2D owner) : base(owner)
     {
-      Globals.Engine.SoundManager.SetMusicPause();
+      Engine.SoundManager.SetMusicPause();
 
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
       Cover.HighlightBoxWidth = owner.ScreenSize.x;
@@ -101,7 +101,7 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        EnterPage(new ScenarioMap(Owner, Globals.Engine.GameScenarioManager.Scenario));
+        EnterPage(new ScenarioMap(Owner, Engine.GameScenarioManager.Scenario));
         return true;
       }
       return false;
@@ -109,10 +109,10 @@ namespace SWEndor.UI.Menu.Pages
 
     private void ResumeGame()
     {
-      Globals.Engine.SoundManager.SetMusicResume();
-      Globals.Engine.Game.IsPaused = false;
-      Globals.Engine.Screen2D.CurrentPage = null;
-      Globals.Engine.Screen2D.ShowPage = false;
+      Engine.SoundManager.SetMusicResume();
+      Engine.Game.IsPaused = false;
+      Engine.Screen2D.CurrentPage = null;
+      Engine.Screen2D.ShowPage = false;
     }
 
     /*

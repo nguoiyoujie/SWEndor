@@ -59,10 +59,10 @@ namespace SWEndor.Models
       public bool Passed { get { return Engine == null || Time < Engine.Game.GameTime; } }
     }
 
-    private static Cache<int, EngineTime, float, Pair<ITransformable, ITransformable>> cache = new Cache<int, EngineTime, float, Pair<ITransformable, ITransformable>>(8192); 
+    private static Cache<int, EngineTime, float, Trip<TVMathLibrary, ITransformable, ITransformable>> cache = new Cache<int, EngineTime, float, Trip<TVMathLibrary, ITransformable, ITransformable>>(8192); 
     private static float Cleartime = 0;
     private static Func<EngineTime, bool> clearfunc = (f) => { return f.Passed; };
-    private static Func<Pair<ITransformable, ITransformable>, float> dofunc = (o) => { return CalculateDistance(o.t, o.u); };
+    private static Func<Trip<TVMathLibrary, ITransformable, ITransformable>, float> dofunc = (o) => { return CalculateDistance(o.t, o.u, o.v); };
 
     private static object locker = new object();
 
@@ -189,7 +189,7 @@ namespace SWEndor.Models
           hash <<= 2;
           hash += a1.ID;
         }
-        return cache.GetOrDefine(hash, new EngineTime(e), dofunc, new Pair<ITransformable, ITransformable>(a1, a2), EngineTime.EqualityComparer.Instance);
+        return cache.GetOrDefine(hash, new EngineTime(e), dofunc, new Trip<TVMathLibrary, ITransformable, ITransformable>(e.TrueVision.TVMathLibrary, a1, a2), EngineTime.EqualityComparer.Instance);
       }
     }
 
@@ -197,19 +197,19 @@ namespace SWEndor.Models
     /// Gets the distance between two points
     /// </summary>
     /// <returns></returns>
-    public static float GetDistance(TV_3DVECTOR first, TV_3DVECTOR second)
+    public static float GetDistance(TVMathLibrary math, TV_3DVECTOR first, TV_3DVECTOR second)
     {
-      return CalculateDistance(first, second);
+      return CalculateDistance(math, first, second);
     }
 
-    private static float CalculateDistance(ITransformable first, ITransformable second)
+    private static float CalculateDistance(TVMathLibrary math, ITransformable first, ITransformable second)
     {
-      return CalculateDistance(first.GetGlobalPosition(), second.GetGlobalPosition());
+      return CalculateDistance(math, first.GetGlobalPosition(), second.GetGlobalPosition());
     }
 
-    private static float CalculateDistance(TV_3DVECTOR first, TV_3DVECTOR second)
+    private static float CalculateDistance(TVMathLibrary math, TV_3DVECTOR first, TV_3DVECTOR second)
     {
-      return Globals.Engine.TrueVision.TVMathLibrary.GetDistanceVec3D(first, second);
+      return math.GetDistanceVec3D(first, second);
     }
 
     /// <summary>
@@ -220,10 +220,10 @@ namespace SWEndor.Models
     /// <param name="second">The first point</param>
     /// <param name="frac">The fractional position between the two points.</param>
     /// <returns></returns>
-    public static TV_3DVECTOR Lerp(Engine e, TV_3DVECTOR first, TV_3DVECTOR second, float frac)
+    public static TV_3DVECTOR Lerp(TVMathLibrary math, TV_3DVECTOR first, TV_3DVECTOR second, float frac)
     {
       TV_3DVECTOR ret = new TV_3DVECTOR();
-      e.TrueVision.TVMathLibrary.TVVec3Lerp(ref ret, first, second, frac);
+      math.TVVec3Lerp(ref ret, first, second, frac);
       return ret;
     }
   }

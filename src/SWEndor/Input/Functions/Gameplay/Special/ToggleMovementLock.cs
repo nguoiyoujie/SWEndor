@@ -14,7 +14,7 @@ namespace SWEndor.Input.Functions.Gameplay.Special
     public override void Process(Engine engine)
     {
       engine.PlayerInfo.IsMovementControlsEnabled = !engine.PlayerInfo.IsMovementControlsEnabled;
-      Globals.Engine.Screen2D.MessageSecondaryText(engine.PlayerInfo.IsMovementControlsEnabled ? "Movement Unlocked" : "Movement Locked"
+      engine.Screen2D.MessageSecondaryText(engine.PlayerInfo.IsMovementControlsEnabled ? "Movement Unlocked" : "Movement Locked"
                                                  , 2.5f
                                                  , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_NORMAL));
     }

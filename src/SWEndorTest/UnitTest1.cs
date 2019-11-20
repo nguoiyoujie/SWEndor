@@ -6,6 +6,7 @@ using SWEndor.Actors;
 using SWEndor.ActorTypes;
 using Primrose.Primitives.Extensions;
 using Primrose.Expressions;
+using SWEndor.Core;
 
 namespace SWEndorTest
 {
@@ -15,14 +16,15 @@ namespace SWEndorTest
     private void Init()
     {
       Globals.PreInit();
-      Globals.InitEngine();
-      Globals.Engine.LinkHandle(new IntPtr(0));
-      Globals.Engine.InitTV();
+      MockEngine = Globals.InitEngine();
+      MockEngine.LinkHandle(new IntPtr(0));
+      MockEngine.InitTV();
 
-      Globals.Engine.ActorTypeFactory.RegisterBase();
+      //MockEngine.ActorTypeFactory.RegisterBase();
       //Globals.Engine.ActorTypeFactory.Initialise();
     }
 
+    private Engine MockEngine;
     private ActorTypeInfo _MockActorType;
     private ActorTypeInfo MockActorType
     {
@@ -30,8 +32,8 @@ namespace SWEndorTest
       {
         if (_MockActorType == null)
         {
-          _MockActorType = new ActorTypeInfo(Globals.Engine.ActorTypeFactory, "dummy", "dummy");
-          Globals.Engine.ActorTypeFactory.Register(_MockActorType);
+          _MockActorType = new ActorTypeInfo(actortype_f, "$NULL", "Null");
+          actortype_f.Register(_MockActorType);
         }
         return _MockActorType;
       }
@@ -39,11 +41,13 @@ namespace SWEndorTest
 
     private ActorInfo CreateMockActor()
     {
-      return Globals.Engine.ActorFactory.Create(new ActorCreationInfo(MockActorType));
+      return actor_f.Create(new ActorCreationInfo(MockActorType));
     }
 
     int RunCount = 10000;
     public const string TEST = "test";
+    Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo> actor_f = new Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>(null, (e, f, n, i) => { return new ActorInfo(e, f, n, i); }, 10000);
+    ActorTypeInfo.Factory actortype_f = new ActorTypeInfo.Factory(null);
 
     //[TestMethod]
     public void TransformTest()
@@ -73,10 +77,10 @@ namespace SWEndorTest
         m2 = d.GetWorldMatrix();
         Assert.AreEqual(m, m2);
 
-        Globals.Engine.Game.GameTime += .5f;
+        MockEngine.Game.GameTime += .5f;
         m2 = d.GetWorldMatrix();
         Assert.AreNotEqual(m, m2);
-        Globals.Engine.Game.GameTime += .5f;
+        MockEngine.Game.GameTime += .5f;
       }
 
       Log.Write(TEST, "TransformTest end");

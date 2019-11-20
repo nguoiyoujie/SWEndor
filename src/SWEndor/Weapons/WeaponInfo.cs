@@ -294,7 +294,7 @@ namespace SWEndor.Weapons
                         ? target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d) - owner.GetGlobalPosition()
                         : target.GetGlobalPosition() + a2.GetRelativePositionXYZ(0, 0, a2.MoveData.Speed * d) - a2.GetGlobalPosition() - owner.GetGlobalPosition();
 
-        acinfo.Rotation = dir.ConvertDirToRot();
+        acinfo.Rotation = dir.ConvertDirToRot(engine.TrueVision.TVMathLibrary);
       }
       else
       {
@@ -368,7 +368,7 @@ namespace SWEndor.Weapons
                         ? target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d) - owner.GetGlobalPosition()
                         : target.GetGlobalPosition() + a2.GetRelativePositionXYZ(0, 0, a2.MoveData.Speed * d) - a2.GetGlobalPosition() - owner.GetGlobalPosition();
 
-        acinfo.Rotation = dir.ConvertDirToRot();
+        acinfo.Rotation = dir.ConvertDirToRot(engine.TrueVision.TVMathLibrary);
       }
       else
       {

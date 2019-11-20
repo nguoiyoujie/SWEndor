@@ -23,9 +23,9 @@ namespace SWEndor.ActorTypes.Groups
       MoveLimitData.MinSpeed = 5;
     }
 
-    public override void Initialize(Engine engine, ActorInfo ainfo)
+    public override void Initialize(ActorInfo ainfo)
     {
-      base.Initialize(engine, ainfo);
+      base.Initialize(ainfo);
       ainfo.SetState_Dying();
     }
   }

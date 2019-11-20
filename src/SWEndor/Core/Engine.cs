@@ -136,7 +136,7 @@ namespace SWEndor.Core
       SoundManager.Load();
 
       Screen2D.LoadingTextLines.Add("Loading dynamic music info...");
-      SoundManager.Piece.Factory.LoadFromINI(Globals.DynamicMusicINIPath);
+      SoundManager.Piece.Factory.LoadFromINI(SoundManager, Globals.DynamicMusicINIPath);
 
       AtmosphereInfo.LoadDefaults(true, true);
       LandInfo.LoadDefaults();

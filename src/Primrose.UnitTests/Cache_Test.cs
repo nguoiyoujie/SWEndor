@@ -17,6 +17,7 @@ namespace Primrose.UnitTests
       Assert.AreEqual(4, testcache.GetOrDefine("str1", 1, (s) => { return s.Length; }, "str1", EqualityComparer<int>.Default));
       Assert.AreEqual(4, testcache.GetOrDefine("str1", 1, (s) => { return s.Length; }, "str12", EqualityComparer<int>.Default));
       Assert.AreEqual(5, testcache.GetOrDefine("str1", 2, (s) => { return s.Length; }, "str12", EqualityComparer<int>.Default));
+      Assert.AreEqual(6, testcache.GetOrDefine("str1", 3, (s) => { return s.Length; }, "str123", EqualityComparer<int>.Default));
     }
   }
 }

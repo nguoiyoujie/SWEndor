@@ -15,6 +15,8 @@ namespace SWEndor.Scenarios
     internal ScenarioManager(Engine engine)
     {
       Engine = engine;
+      DesignatedMainMenuScenario = new GSMainMenu(this);
+
       ScenarioList.Add(new GSEndor(this));
       ScenarioList.Add(new GSYavin(this));
       ScenarioList.Add(new GSHoth(this));
@@ -29,16 +31,19 @@ namespace SWEndor.Scenarios
 
     public List<ScenarioBase> ScenarioList = new List<ScenarioBase>();
     public ScenarioBase Scenario = null;
+    public ScenarioBase DesignatedMainMenuScenario;
 
     public void LoadMainMenu()
     {
       Engine.Game.IsPaused = false;
       Engine.Screen2D.ShowPage = true;
       Engine.Screen2D.CurrentPage = new MainMenu(Engine.Screen2D);
-      Scenario = new GSMainMenu(this);
+      Scenario = DesignatedMainMenuScenario;
       Scenario.Load(null, "");
       Scenario.Launch();
     }
+
+    public bool IsMainMenu { get { return Scenario == DesignatedMainMenuScenario; } }
 
     public void LoadInitial()
     {

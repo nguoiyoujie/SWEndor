@@ -19,7 +19,7 @@ namespace SWEndor.Actors.Models
       }
 
       TV_3DVECTOR tgtdir = tPos - owner.GetGlobalPosition();
-      TV_3DVECTOR chgrot = tgtdir.ConvertDirToRot() - owner.GetGlobalRotation();
+      TV_3DVECTOR chgrot = tgtdir.ConvertDirToRot(engine.TrueVision.TVMathLibrary) - owner.GetGlobalRotation();
 
       chgrot.x = chgrot.x.Modulus(-180, 180);
       chgrot.y = chgrot.y.Modulus(-180, 180);

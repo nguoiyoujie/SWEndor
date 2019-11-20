@@ -42,7 +42,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonMusicVol.ToggleButtonsValues = new List<string> { "0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1" };
       ButtonMusicVol.ToggleButtonsCurrentNumber = 0;
       while (ButtonMusicVol.ToggleButtonsCurrentNumber < ButtonMusicVol.ToggleButtonsValues.Count 
-        && float.Parse(ButtonMusicVol.ToggleButtonsValues[ButtonMusicVol.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture) < Globals.Engine.SoundManager.MasterMusicVolume)
+        && float.Parse(ButtonMusicVol.ToggleButtonsValues[ButtonMusicVol.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture) < Engine.SoundManager.MasterMusicVolume)
       {
         ButtonMusicVol.ToggleButtonsCurrentNumber++;
       }
@@ -60,7 +60,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonSFXVol.ToggleButtonsValues = new List<string> { "0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1" };
       ButtonSFXVol.ToggleButtonsCurrentNumber = 0;
       while (ButtonSFXVol.ToggleButtonsCurrentNumber < ButtonSFXVol.ToggleButtonsValues.Count
-        && float.Parse(ButtonSFXVol.ToggleButtonsValues[ButtonSFXVol.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture) <= Globals.Engine.SoundManager.MasterSFXVolume)
+        && float.Parse(ButtonSFXVol.ToggleButtonsValues[ButtonSFXVol.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture) <= Engine.SoundManager.MasterSFXVolume)
       {
         ButtonSFXVol.ToggleButtonsCurrentNumber++;
       }
@@ -126,7 +126,7 @@ namespace SWEndor.UI.Menu.Pages
       if (key == CONST_TV_KEY.TV_KEY_LEFT || key == CONST_TV_KEY.TV_KEY_RIGHT)
       {
         //ButtonMusicVol.SecondaryText = ButtonMusicVol.ToggleButtonsCurrentNumber.ToString();
-        Globals.Engine.SoundManager.MasterMusicVolume = float.Parse(ButtonMusicVol.ToggleButtonsValues[ButtonMusicVol.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
+        Engine.SoundManager.MasterMusicVolume = float.Parse(ButtonMusicVol.ToggleButtonsValues[ButtonMusicVol.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
         Settings.SaveSettings(Engine);
       }
       return false;
@@ -136,8 +136,8 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_LEFT || key == CONST_TV_KEY.TV_KEY_RIGHT)
       {
-        Globals.Engine.SoundManager.MasterSFXVolume = float.Parse(ButtonSFXVol.ToggleButtonsValues[ButtonSFXVol.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
-        Globals.Engine.SoundManager.SetSound(SoundGlobals.LostShip);
+        Engine.SoundManager.MasterSFXVolume = float.Parse(ButtonSFXVol.ToggleButtonsValues[ButtonSFXVol.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
+        Engine.SoundManager.SetSound(SoundGlobals.LostShip);
         Settings.SaveSettings(Engine);
       }
       return false;

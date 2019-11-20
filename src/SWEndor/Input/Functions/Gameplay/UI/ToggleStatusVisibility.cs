@@ -14,8 +14,8 @@ namespace SWEndor.Input.Functions.Gameplay.UI
 
     public override void Process(Engine engine)
     {
-      Globals.Engine.Screen2D.ShowStatus = !Globals.Engine.Screen2D.ShowStatus;
-      Globals.Engine.SoundManager.SetSound(SoundGlobals.Button1);
+      engine.Screen2D.ShowStatus = !engine.Screen2D.ShowStatus;
+      engine.SoundManager.SetSound(SoundGlobals.Button1);
     }
   }
 }

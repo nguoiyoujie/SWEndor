@@ -177,7 +177,8 @@ namespace SWEndor.ActorTypes
           Add(atype.ID, atype);
         }
         //atype.SaveToINI(atype.ID);
-        Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
+
+        Engine?.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
       }
 
       public void Load()

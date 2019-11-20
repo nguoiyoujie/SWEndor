@@ -25,7 +25,7 @@ namespace SWEndor.ExplosionTypes.Instances
 
     public override void Initialize(Engine engine, ExplosionInfo ainfo)
     {
-      base.Initialize(engine, ainfo);
+      base.Initialize(ainfo);
       ainfo.AnimInfo.Action = persist;
 
       ainfo.AnimInfo.CyclesRemaining = 99;

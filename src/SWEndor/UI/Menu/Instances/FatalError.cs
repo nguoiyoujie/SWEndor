@@ -12,9 +12,12 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement Instructions = new SelectionElement();
     SelectionElement ButtonReturn = new SelectionElement();
     string errorfilename = @"error.txt";
+    bool exitGame = false;
 
     public FatalError(Screen2D owner, Exception exception) : base(owner)
     {
+      exitGame = GameScenarioManager.IsMainMenu;
+
       Log.WriteErr(Log.ERROR, exception);
 
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
@@ -33,7 +36,7 @@ namespace SWEndor.UI.Menu.Pages
       Instructions.TextColor = ColorLocalization.Get(ColorLocalKeys.SYSTEM_FATAL);
       Instructions.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(-250, -130);
 
-      ButtonReturn.Text = "Exit";
+      ButtonReturn.Text = exitGame ? "Exit" : "Return";
       ButtonReturn.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(100, 60);
       ButtonReturn.HighlightBoxPosition = ButtonReturn.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonReturn.HighlightBoxWidth = 200;
@@ -41,7 +44,10 @@ namespace SWEndor.UI.Menu.Pages
       ButtonReturn.TextColor = ColorLocalization.Get(ColorLocalKeys.SYSTEM_FATAL);
       ButtonReturn.HighlightBoxColor = ColorLocalization.Get(ColorLocalKeys.SYSTEM_FATAL_BACKGROUND);
       ButtonReturn.Selectable = true;
-      ButtonReturn.OnKeyPress += SelectReturn;
+      if (exitGame)
+        ButtonReturn.OnKeyPress += ProceedQuit;
+      else
+        ButtonReturn.OnKeyPress += ProceedMainMenu;
 
       Elements.Add(Cover);
       Elements.Add(MainText);
@@ -50,13 +56,25 @@ namespace SWEndor.UI.Menu.Pages
       SelectedElementID = Elements.IndexOf(ButtonReturn);
     }
 
-    private bool SelectReturn(CONST_TV_KEY key)
+    private bool ProceedQuit(CONST_TV_KEY key)
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
         Engine.SoundManager.SetSound(SoundGlobals.Exit);
         Engine.SoundManager.SetMusicStop();
         Engine.BeginExit();
+        return true;
+      }
+      return false;
+    }
+
+    private bool ProceedMainMenu(CONST_TV_KEY key)
+    {
+      if (key == CONST_TV_KEY.TV_KEY_RETURN)
+      {
+        GameScenarioManager.Reset();
+        GameScenarioManager.LoadMainMenu();
+        Engine.SoundManager.SetMusicResume();
         return true;
       }
       return false;

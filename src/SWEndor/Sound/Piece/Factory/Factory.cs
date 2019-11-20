@@ -64,7 +64,7 @@ namespace SWEndor.Sound
         }
         */
 
-        public static void LoadFromINI(string filepath)
+        public static void LoadFromINI(SoundManager manager, string filepath)
         {
           if (File.Exists(filepath))
           {
@@ -76,7 +76,7 @@ namespace SWEndor.Sound
                 Piece p = new Piece();
                 Parser.LoadFromINI(f, p, s);
                 Register(p);
-                p.UpdateSound();
+                p.UpdateSound(manager);
               }
             }
           }

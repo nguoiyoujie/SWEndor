@@ -192,7 +192,7 @@ namespace SWEndor.Actors
 
       Faction = acinfo.Faction;
 
-      TypeInfo.Initialize(engine, this);
+      TypeInfo.Initialize(this);
     }
 
     /// <summary>
@@ -229,7 +229,7 @@ namespace SWEndor.Actors
       State.Init(Engine, TypeInfo, acinfo);
 
       Faction = acinfo.Faction;
-      TypeInfo.Initialize(engine, this);
+      TypeInfo.Initialize(this);
     }
 
     /// <summary>

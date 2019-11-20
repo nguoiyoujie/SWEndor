@@ -41,7 +41,7 @@ namespace SWEndor.ActorTypes.Components
 
     public void Process(Engine engine, ActorInfo actor)
     {
-      if (engine.GameScenarioManager.Scenario is GSMainMenu)
+      if (engine.GameScenarioManager.IsMainMenu)
         return;
 
       if (!PlayInCutscene || !engine.GameScenarioManager.Scenario.State.IsCutsceneMode)
@@ -56,7 +56,7 @@ namespace SWEndor.ActorTypes.Components
 
     public void Process(Engine engine, ProjectileInfo actor)
     {
-      if (engine.GameScenarioManager.Scenario is GSMainMenu)
+      if (engine.GameScenarioManager.IsMainMenu)
         return;
 
       if (!PlayInCutscene || !engine.GameScenarioManager.Scenario.State.IsCutsceneMode)
@@ -76,7 +76,7 @@ namespace SWEndor.ActorTypes.Components
 
     public void Process(Engine engine, ExplosionInfo expl)
     {
-      if (engine.GameScenarioManager.Scenario is GSMainMenu)
+      if (engine.GameScenarioManager.IsMainMenu)
         return;
 
       if (!PlayInCutscene || !expl.Engine.GameScenarioManager.Scenario.State.IsCutsceneMode)
@@ -91,7 +91,7 @@ namespace SWEndor.ActorTypes.Components
       if (sound == null || sound.Length == 0)
         return;
 
-      if (engine.GameScenarioManager.Scenario is GSMainMenu)
+      if (engine.GameScenarioManager.IsMainMenu)
         return;
 
       float df = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(engine.PlayerCameraInfo.Position, pos) / maxDistance;

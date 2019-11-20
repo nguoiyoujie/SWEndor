@@ -15,7 +15,7 @@ namespace SWEndor.Input.Functions.Gameplay.UI
     public override void Process(Engine engine)
     {
       engine.Screen2D.CurrentPage = new ScenarioMap(engine.Screen2D, engine.GameScenarioManager.Scenario);
-      Globals.Engine.Screen2D.ShowPage = true;
+      engine.Screen2D.ShowPage = true;
     }
   }
 }

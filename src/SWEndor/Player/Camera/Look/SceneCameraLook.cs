@@ -58,7 +58,7 @@ namespace SWEndor.Player
     public void Update(Engine engine, TVCamera cam, float rotz)
     {
       TV_3DVECTOR tgt = LookTo.GetGlobalPosition(engine);
-      LookFrom.ApproachPosition(engine, tgt, ApproachSpeed * engine.Game.TimeSinceRender);
+      LookFrom.ApproachPosition(engine.TrueVision.TVMathLibrary, tgt, ApproachSpeed * engine.Game.TimeSinceRender);
       TV_3DVECTOR pos = LookFrom.GetGlobalPosition(engine);
 
       cam.SetPosition(pos.x, pos.y, pos.z);

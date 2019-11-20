@@ -181,7 +181,7 @@ namespace SWEndor.Player
 
     public void ProximityShake(float maxValue, float decayDistance, TV_3DVECTOR origin)
     {
-      float dist = DistanceModel.GetDistance(Position, origin);
+      float dist = DistanceModel.GetDistance(Engine.TrueVision.TVMathLibrary, Position, origin);
       if (dist <= decayDistance)
         shake = maxValue * (decayDistance - dist) / decayDistance;
     }

@@ -28,7 +28,7 @@ namespace SWEndor.AI.Squads.Missions
     {
       foreach (ActorInfo a in squad.Members)
       {
-        float dist = DistanceModel.GetDistance(a.GetGlobalPosition(), Target_Position);
+        float dist = DistanceModel.GetDistance(engine.TrueVision.TVMathLibrary, a.GetGlobalPosition(), Target_Position);
         if (dist > Close_enough_distance)
           return;
       }

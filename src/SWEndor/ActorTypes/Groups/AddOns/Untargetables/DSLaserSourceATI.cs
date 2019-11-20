@@ -22,11 +22,11 @@ namespace SWEndor.ActorTypes.Instances
       Mask &= ~(ComponentMask.CAN_BECOLLIDED | ComponentMask.CAN_BETARGETED);
     }
 
-    public override void Initialize(Engine engine, ActorInfo ainfo)
+    public override void Initialize(ActorInfo ainfo)
     {
-      base.Initialize(engine, ainfo);
+      base.Initialize(ainfo);
 
-      laser = new WeaponShotInfo(engine.WeaponFactory.Get("DSTAR_LSR"), 1);
+      laser = new WeaponShotInfo(ainfo.Engine.WeaponFactory.Get("DSTAR_LSR"), 1);
 
       ainfo.QueueNext(Lock.GetOrCreate());
     }

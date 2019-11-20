@@ -159,11 +159,11 @@ namespace SWEndor.ActorTypes
         SystemData.AutoParts(this);
     }
 
-    public virtual void Initialize(Engine engine, ActorInfo ainfo)
+    public virtual void Initialize(ActorInfo ainfo)
     {
       // Sound
       foreach (SoundSourceData assi in InitialSoundSources)
-        assi.Process(engine, ainfo);
+        assi.Process(ainfo.Engine, ainfo);
     }
 
     public void GenerateAddOns(Engine engine, ActorInfo ainfo)
@@ -456,7 +456,7 @@ namespace SWEndor.ActorTypes
       float accuracy = 1;
 
       float d = DistanceModel.GetDistance(Engine, owner, target) / weapontype.MoveLimitData.MaxSpeed;
-      TV_3DVECTOR angle = (target.GetGlobalPosition() - owner.GetGlobalPosition()).ConvertDirToRot() - owner.GetGlobalRotation();
+      TV_3DVECTOR angle = (target.GetGlobalPosition() - owner.GetGlobalPosition()).ConvertDirToRot(Engine.TrueVision.TVMathLibrary) - owner.GetGlobalRotation();
       angle.x -= (int)((angle.x + 180) / 360) * 360;
       angle.y -= (int)((angle.y + 180) / 360) * 360;
 

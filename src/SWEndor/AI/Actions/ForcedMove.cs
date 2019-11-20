@@ -53,7 +53,7 @@ namespace SWEndor.AI.Actions
         , Target_Position.Str()
         , Target_Speed.ToString()
         , CloseEnoughDistance.ToString()
-        , (ResumeTime - Globals.Engine.Game.GameTime).ToString()
+        , ResumeTime.ToString()
         , CanInterrupt.ToString()
         , Complete.ToString()
       });

@@ -97,7 +97,6 @@ namespace SWEndor.Core
       TVViewport port = TVEngine.GetViewport();
       Engine.ScreenWidth = port.GetWidth();
       Engine.ScreenHeight = port.GetHeight();
-      //TVEngine.GetViewport().SetAutoResize(true);
     }
 
     private void InitFonts()
@@ -114,12 +113,11 @@ namespace SWEndor.Core
         TVScene.SetTextureFilter(CONST_TV_TEXTUREFILTER.TV_FILTER_ANISOTROPIC);
         TVScene.SetBackgroundColor(0f, 0f, 0f);
       }
+
     }
 
     private void InitShaders()
     {
-      //TVShader = TVScene.CreateShader("common");
-      //TVShader.CreateFromEffectFile(Path.Combine(Globals.ShaderPath, "Common_shader"));
     }
 
     private void InitLights()

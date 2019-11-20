@@ -55,8 +55,8 @@ namespace SWEndor.UI.Menu.Pages
         case CONST_TV_KEY.TV_KEY_ESCAPE:
           if (!Back())
           {
-            Globals.Engine.Screen2D.CurrentPage = null;
-            Globals.Engine.Screen2D.ShowPage = false;
+            Engine.Screen2D.CurrentPage = null;
+            Engine.Screen2D.ShowPage = false;
           }
           return true;
         case CONST_TV_KEY.TV_KEY_MINUS:

@@ -1,4 +1,5 @@
 ﻿using Primrose.Expressions;
+using Primrose.Primitives.Extensions;
 using SWEndor.ActorTypes;
 using SWEndor.FileFormat.INI;
 using SWEndor.FileFormat.Scripting;
@@ -53,11 +54,20 @@ namespace SWEndor.Scenarios
       Script.Registry.Clear();
       Engine.ScriptContext.Reset();
       foreach (string scrfile in ScriptPaths)
-        new ScriptFile(Path.Combine(Globals.CustomScenarioPath, scrfile.Trim()));
-
+      {
+        ScriptFile f = new ScriptFile(Path.Combine(Globals.CustomScenarioPath, scrfile.Trim()));
+        f.ScriptReadDelegate = ReadScript;
+        f.ReadFile();
+      }
       Script.Registry.Global.Run(Engine.ScriptContext);
     }
 
+    public void ReadScript(string name)
+    {
+      Engine.Screen2D.LoadingTextLines.Add("loading script:".C(name));
+      Engine.Screen2D.LoadingTextLines.RemoveAt(0);
+    }
+    
     public override void Load(ActorTypeInfo wing, string difficulty)
     {
       LoadScripts();

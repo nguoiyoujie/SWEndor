@@ -29,15 +29,15 @@ namespace SWEndor.Player
       }
     }
 
-    public void ApproachPosition(Engine engine, TV_3DVECTOR pos, float distance)
+    public void ApproachPosition(TVMathLibrary math, TV_3DVECTOR pos, float distance)
     {
       if (distance == 0 || TargetActorID >= 0) // if locked to Actor, skip
         return;
 
-      float dist = DistanceModel.GetDistance(pos, Position);
+      float dist = DistanceModel.GetDistance(math, pos, Position);
 
       if (dist != 0)
-        Position = DistanceModel.Lerp(engine, Position, pos, (distance / dist).Clamp(-100, 1));
+        Position = DistanceModel.Lerp(math, Position, pos, (distance / dist).Clamp(-100, 1));
     }
   }
 }

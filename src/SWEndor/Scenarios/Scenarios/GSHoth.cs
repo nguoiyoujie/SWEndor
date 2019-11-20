@@ -363,7 +363,7 @@ namespace SWEndor.Scenarios
         if (target != null)
         {
           TV_3DVECTOR dir = target.GetGlobalPosition() - position;
-          rotation = dir.ConvertDirToRot();
+          rotation = dir.ConvertDirToRot(Engine.TrueVision.TVMathLibrary);
         }
       }
 

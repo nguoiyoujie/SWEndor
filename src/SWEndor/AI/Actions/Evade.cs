@@ -53,7 +53,7 @@ namespace SWEndor.AI.Actions
       return string.Join(",", new string[]
       {
           Name
-        , (ResumeTime - Globals.Engine.Game.GameTime).ToString()
+        , ResumeTime.ToString()
         , Complete.ToString()
       });
     }

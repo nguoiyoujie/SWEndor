@@ -8,7 +8,8 @@ using SWEndor.Primitives.Extensions;
 namespace SWEndor.Models
 {
   public struct TransformModel<T, U> 
-    where T : 
+    where T :
+    IEngineObject, 
     IScoped, 
     IParent<U>
     where U :
@@ -230,7 +231,7 @@ namespace SWEndor.Models
       {
         TV_3DVECTOR dir = new TV_3DVECTOR();
         mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 100), GetWorldMatrix(self, time));
-        return dir.ConvertDirToRot();
+        return dir.ConvertDirToRot(self.Engine.TrueVision.TVMathLibrary);
       }
       else
         return currData.Rotation;
@@ -242,7 +243,7 @@ namespace SWEndor.Models
       {
         TV_3DVECTOR dir = new TV_3DVECTOR();
         mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 100), GetPrevWorldMatrix(self, time));
-        return dir.ConvertDirToRot();
+        return dir.ConvertDirToRot(self.Engine.TrueVision.TVMathLibrary);
       }
       else
         return currData.Rotation;

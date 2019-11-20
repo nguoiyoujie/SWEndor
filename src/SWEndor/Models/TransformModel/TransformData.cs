@@ -30,7 +30,7 @@ namespace SWEndor.Models
       get { return new TV_3DVECTOR(Pitch, Yaw, Roll).ConvertRotToDir(); }
       set
       {
-        TV_3DVECTOR r = value.ConvertDirToRot();
+        TV_3DVECTOR r = value.ConvertDirToRot(Globals.Engine.TrueVision.TVMathLibrary);
         Pitch = r.x; Yaw = r.y; Roll = r.z;
       }
     }

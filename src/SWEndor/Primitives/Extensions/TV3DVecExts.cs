@@ -11,10 +11,14 @@ namespace SWEndor.Primitives.Extensions
       return "(VEC:{0},{1},{2})".F(vector.x, vector.y, vector.z);
     }
 
-    public static TV_3DVECTOR ConvertDirToRot(this TV_3DVECTOR direction)
+    public static TV_3DVECTOR ConvertDirToRot(this TV_3DVECTOR direction, TVMathLibrary math)
     {
-      float x = Globals.Engine.TrueVision.TVMathLibrary.Direction2Ang(-direction.y, Globals.Engine.TrueVision.TVMathLibrary.TVVec2Length(new TV_2DVECTOR(direction.z, direction.x)));
-      float y = Globals.Engine.TrueVision.TVMathLibrary.Direction2Ang(direction.x, direction.z);
+      float x = math.Direction2Ang(-direction.y, math.TVVec2Length(new TV_2DVECTOR(direction.z, direction.x)));
+      float y = math.Direction2Ang(direction.x, direction.z);
+
+      // Less performant alternative
+      //float x = (float)Math.Atan2(-direction.y, Math.Sqrt(direction.z * direction.z + direction.x * direction.x)) * Globals.Rad2Deg;
+      //float y = (float)Math.Atan2(direction.x, direction.z) * Globals.Rad2Deg;
 
       return new TV_3DVECTOR(x, y, 0);
     }

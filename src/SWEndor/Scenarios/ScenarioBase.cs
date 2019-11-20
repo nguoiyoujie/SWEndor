@@ -101,7 +101,7 @@ namespace SWEndor.Scenarios
   public class ScenarioBase
   {
     public readonly ScenarioManager Manager;
-    internal GameEventQueue EventQueue = new GameEventQueue();
+    internal GameEventQueue EventQueue;
     public ScenarioInfo Info = new ScenarioInfo().InitDefault();
     public ScenarioStates State = new ScenarioStates();
 
@@ -115,7 +115,11 @@ namespace SWEndor.Scenarios
 
     public GameEvent MakePlayer;
 
-    public ScenarioBase(ScenarioManager manager) { Manager = manager; }
+    public ScenarioBase(ScenarioManager manager)
+    {
+      Manager = manager;
+      EventQueue = new GameEventQueue(manager.Engine);
+    }
 
     public virtual void Load(ActorTypeInfo wing, string difficulty)
     {

@@ -60,9 +60,9 @@ namespace SWEndor.ActorTypes.Instances
       };
     }
 
-    public override void Initialize(Engine engine, ActorInfo ainfo)
+    public override void Initialize(ActorInfo ainfo)
     {
-      base.Initialize(engine, ainfo);
+      base.Initialize(ainfo);
       ainfo.SpawnerInfo = SpawnerInfoDecorator.MCL_Default;
     }
   }

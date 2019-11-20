@@ -37,18 +37,26 @@ namespace SWEndor
 
   internal class GameEventQueue
   {
+    private Engine _engine;
     private SortedSet<GameEventObject> list = new SortedSet<GameEventObject>(new GameEventObject.Comparer());
     private Queue<GameEventObject> queue = new Queue<GameEventObject>();
     private ScopeCounters.ScopeCounter _scope = new ScopeCounters.ScopeCounter();
 
+    public GameEventQueue(Engine engine)
+    {
+      _engine = engine;
+    }
+
     internal struct GameEventObject
     {
       public readonly float Time;
+      public readonly Engine Engine;
       private readonly GameEvent Method;
 
-      internal GameEventObject(float time, GameEvent gameEvent)
+      internal GameEventObject(Engine engine, float time, GameEvent gameEvent)
       {
         Time = time;
+        Engine = engine;
         Method = gameEvent;
       }
 
@@ -83,11 +91,11 @@ namespace SWEndor
 
     public void Add(float time, GameEvent method)
     {
-      GameEventObject geo = new GameEventObject(time, method);
+      GameEventObject geo = new GameEventObject(_engine, time, method);
       while (list.Contains(geo))
       {
         time += 0.0001f;
-        geo = new GameEventObject(time, method);
+        geo = new GameEventObject(_engine, time, method);
       }
 
       using (ScopeCounters.Acquire(_scope))
@@ -100,7 +108,7 @@ namespace SWEndor
         list.Clear();
     }
 
-    private static Predicate<GameEventObject> _expire = (a) => { return a.Time < Globals.Engine.Game.GameTime; };
+    private static Predicate<GameEventObject> _expire = (a) => { return a.Time < a.Engine.Game.GameTime; };
     public void Process(Engine engine)
     {
       using (ScopeCounters.AcquireWhenZero(_scope))

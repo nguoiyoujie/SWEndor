@@ -26,7 +26,7 @@ namespace SWEndor.AI.Actions
       h.FollowDistance = follow_distance;
       h.TooCloseDistance = too_close_distance;
       h.CanInterrupt = can_interrupt;
-      h.ReHuntTime = Globals.Engine.Game.GameTime + hunt_interval; //! Global usage
+      h.HuntInterval = hunt_interval;
       h.IsDisposed = false;
       return h;
     }
@@ -38,6 +38,7 @@ namespace SWEndor.AI.Actions
     public float TooCloseDistance = -1;
     public float SpeedAdjustmentDistanceRange = 250;
     private float ReHuntTime = 0;
+    private float HuntInterval = 0;
 
     public override string ToString()
     {
@@ -93,6 +94,9 @@ namespace SWEndor.AI.Actions
           if (!actor.Mask.Has(ComponentMask.CAN_MOVE)) // can't move to you, I give up
             Complete = true;
         }
+
+        if (ReHuntTime == 0)
+          ReHuntTime = engine.Game.GameTime + HuntInterval; //! Global usage
 
         if (CanInterrupt && ReHuntTime < engine.Game.GameTime)
         {
@@ -200,6 +204,7 @@ namespace SWEndor.AI.Actions
       TooCloseDistance = -1;
       SpeedAdjustmentDistanceRange = 250;
       ReHuntTime = 0;
+      HuntInterval = 0;
     }
 
     public override void Return()

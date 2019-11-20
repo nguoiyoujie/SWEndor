@@ -15,18 +15,18 @@ namespace SWEndor.Sound
       public string[][] MoodTransitions;
       public string[][] OnInterruptTransitions;
 
-      private void UpdateSound()
+      private void UpdateSound(SoundManager manager)
       {
         if (SoundName == null)
           return;
 
-        UpdateSound(SoundName);
-        UpdateSound(SoundName + "%");
+        UpdateSound(manager, SoundName);
+        UpdateSound(manager, SoundName + "%");
       }
 
-      private void UpdateSound(string soundname)
+      private void UpdateSound(SoundManager manager, string soundname)
       {
-        FMOD.Sound sound = Globals.Engine.SoundManager.music[soundname];
+        FMOD.Sound sound = manager.music[soundname];
 
         if (sound == null)
           return;

@@ -16,7 +16,7 @@ namespace SWEndor.ActorTypes.Instances
       Mask &= ~(ComponentMask.CAN_BECOLLIDED | ComponentMask.CAN_BETARGETED);
     }
 
-    public override void Initialize(Engine engine, ActorInfo ainfo)
+    public override void Initialize(ActorInfo ainfo)
     {
       ainfo.SpawnerInfo = SpawnerInfoDecorator.PlayerSpawn_Default;
     }

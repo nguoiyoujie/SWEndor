@@ -71,7 +71,7 @@ namespace SWEndor.Input
         if (Context != TerminalGameInputContext)
           Context = TerminalGameInputContext;
       }
-      else if (Globals.Engine.Screen2D.ShowPage && Globals.Engine.Screen2D.CurrentPage != null)
+      else if (Engine.Screen2D.ShowPage && Engine.Screen2D.CurrentPage != null)
       { // Handling Menu
         if (Context != MenuInputContext)
           Context = MenuInputContext;

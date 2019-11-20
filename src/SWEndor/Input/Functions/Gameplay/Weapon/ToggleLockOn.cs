@@ -19,7 +19,7 @@ namespace SWEndor.Input.Functions.Gameplay.Weapon
       if (a != null)
       {
         engine.PlayerInfo.LockTarget = !engine.PlayerInfo.LockTarget;
-        Globals.Engine.Screen2D.MessageSecondaryText(engine.PlayerInfo.LockTarget ? TextLocalization.Get(TextLocalKeys.TARGET_LOCKED).F(a.Name) : TextLocalization.Get(TextLocalKeys.TARGET_UNLOCKED)
+        engine.Screen2D.MessageSecondaryText(engine.PlayerInfo.LockTarget ? TextLocalization.Get(TextLocalKeys.TARGET_LOCKED).F(a.Name) : TextLocalization.Get(TextLocalKeys.TARGET_UNLOCKED)
                                                    , 2.5f
                                                    , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_NORMAL));
       }

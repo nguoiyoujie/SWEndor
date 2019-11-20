@@ -6,6 +6,8 @@ using System.Text;
 
 namespace SWEndor.FileFormat.Scripting
 {
+  public delegate void ScriptReadDelegate(string name);
+
   public class ScriptFile
   {
     private static char[] seperator = new char[] { ':' };
@@ -16,10 +18,10 @@ namespace SWEndor.FileFormat.Scripting
         throw new FileNotFoundException(TextLocalization.Get(TextLocalKeys.SCRIPT_NOTFOUND_ERROR).F(Path.GetFullPath(filepath)));
 
       FilePath = filepath;
-      ReadFile();
     }
 
     public readonly string FilePath;
+    public ScriptReadDelegate ScriptReadDelegate;
 
     public void ReadFile()
     {
@@ -41,10 +43,7 @@ namespace SWEndor.FileFormat.Scripting
 
             line = line.TrimEnd(seperator).Trim();
 
-            // write
-            Globals.Engine.Screen2D.LoadingTextLines.Add("loading script:".C(line));
-            Globals.Engine.Screen2D.LoadingTextLines.RemoveAt(0);
-
+            ScriptReadDelegate?.Invoke(line);
             script = new Script(line);
             sb.Clear();
           }
