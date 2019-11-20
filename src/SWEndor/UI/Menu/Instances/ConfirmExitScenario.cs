@@ -1,4 +1,6 @@
 ﻿using MTV3D65;
+using SWEndor.ActorTypes;
+using SWEndor.Scenarios;
 
 namespace SWEndor.UI.Menu.Pages
 {
@@ -8,6 +10,7 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement ConfirmText = new SelectionElement();
     SelectionElement ConfirmNo = new SelectionElement();
     SelectionElement ConfirmYes = new SelectionElement();
+    SelectionElement ConfirmRestart = new SelectionElement();
 
     public ConfirmExitScenario(Screen2D owner) : base(owner)
     {
@@ -23,12 +26,20 @@ namespace SWEndor.UI.Menu.Pages
       ConfirmText.HighlightBoxHeight = 30;
 
       ConfirmNo.Text = "NO";
-      ConfirmNo.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(60, 20);
+      ConfirmNo.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(60, -20);
       ConfirmNo.HighlightBoxPosition = ConfirmNo.TextPosition - new TV_2DVECTOR(5, 5);
       ConfirmNo.HighlightBoxWidth = 60;
       ConfirmNo.HighlightBoxHeight = 30;
       ConfirmNo.Selectable = true;
       ConfirmNo.OnKeyPress += SelectNo;
+
+      ConfirmRestart.Text = "RESTART";
+      ConfirmRestart.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(60, 20);
+      ConfirmRestart.HighlightBoxPosition = ConfirmRestart.TextPosition - new TV_2DVECTOR(5, 5);
+      ConfirmRestart.HighlightBoxWidth = 60;
+      ConfirmRestart.HighlightBoxHeight = 30;
+      ConfirmRestart.Selectable = true;
+      ConfirmRestart.OnKeyPress += SelectRestart;
 
       ConfirmYes.Text = "YES";
       ConfirmYes.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(60, 60);
@@ -41,6 +52,7 @@ namespace SWEndor.UI.Menu.Pages
       Elements.Add(Cover);
       Elements.Add(ConfirmText);
       Elements.Add(ConfirmNo);
+      Elements.Add(ConfirmRestart);
       Elements.Add(ConfirmYes);
       SelectedElementID = Elements.IndexOf(ConfirmNo);
     }
@@ -62,7 +74,20 @@ namespace SWEndor.UI.Menu.Pages
         GameScenarioManager.Reset();
         GameScenarioManager.LoadMainMenu();
         Engine.SoundManager.SetMusicResume();
+        return true;
+      }
+      return false;
+    }
 
+    private bool SelectRestart(CONST_TV_KEY key)
+    {
+      if (key == CONST_TV_KEY.TV_KEY_RETURN)
+      {
+        ScenarioBase b = GameScenarioManager.Scenario;
+        ActorTypeInfo a = Engine.PlayerInfo.ActorType;
+        string d = GameScenarioManager.Scenario.State.Difficulty;
+        GameScenarioManager.Reset();
+        EnterPage(new LoadingScenario(Owner, b, a, d));
         return true;
       }
       return false;
