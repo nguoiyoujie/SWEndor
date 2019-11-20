@@ -59,20 +59,26 @@
         <member name="P:Primrose.Expressions.ContextScope.Next">
             <summary>Returns a child of this scope.</summary>
         </member>
-        <member name="M:Primrose.Expressions.ContextScope.DeclVar(System.String,Primrose.Expressions.ValType)">
+        <member name="M:Primrose.Expressions.ContextScope.Clear">
+            <summary>Clears the context of information</summary>
+        </member>
+        <member name="M:Primrose.Expressions.ContextScope.DeclVar(System.String,Primrose.Expressions.ValType,Primrose.Expressions.Lexer)">
             <summary>Declares a variable</summary>
             <param name="name">The variable name</param>
             <param name="type">The variable type</param>
+            <param name="lexer">The lexer</param>
             <exception cref="T:System.InvalidOperationException">Duplicate declaration of a variable in the same scope</exception>
         </member>
-        <member name="M:Primrose.Expressions.ContextScope.GetVar(System.String)">
+        <member name="M:Primrose.Expressions.ContextScope.GetVar(Primrose.Expressions.ITracker,System.String)">
             <summary>Retrieves the value of a variable</summary>
+            <param name="eval">The expression object being evaluated</param>
             <param name="name">The variable name</param>
             <returns>The Val object containing the value of the variable</returns>
             <exception cref="T:System.InvalidOperationException">Attempted to get the value from an undeclared variable</exception>
         </member>
-        <member name="M:Primrose.Expressions.ContextScope.SetVar(System.String,Primrose.Expressions.Val)">
+        <member name="M:Primrose.Expressions.ContextScope.SetVar(Primrose.Expressions.ITracker,System.String,Primrose.Expressions.Val)">
             <summary>Set the value of a variable</summary>
+            <param name="eval">The expression object being evaluated</param>
             <param name="name">The variable name</param>
             <param name="val">The Val object containing the value of the variable</param>
             <exception cref="T:System.InvalidOperationException">Attempted to set the value of an undeclared variable</exception>

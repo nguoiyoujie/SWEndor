@@ -45,7 +45,7 @@ namespace SWEndorTest
     int RunCount = 10000;
     public const string TEST = "test";
 
-    [TestMethod]
+    //[TestMethod]
     public void TransformTest()
     {
       Log.Write(TEST, "TransformTest start");
@@ -80,39 +80,6 @@ namespace SWEndorTest
       }
 
       Log.Write(TEST, "TransformTest end");
-    }
-
-    [TestMethod]
-    public void ScriptValTest()
-    {
-      Val v = new Val(true);
-      Assert.AreEqual(v.Type, ValType.BOOL);
-      Assert.AreEqual((bool)v, true);
-
-      v = new Val(2);
-      Assert.AreEqual(v.Type, ValType.INT);
-      Assert.AreEqual((int)v, 2);
-
-      v = new Val(2.5f);
-      Assert.AreEqual(v.Type, ValType.FLOAT);
-      Assert.AreEqual((float)v, 2.5f);
-
-      v = new Val("test");
-      Assert.AreEqual(v.Type, ValType.STRING);
-      Assert.AreEqual((string)v, "test");
-    }
-
-    [TestMethod]
-    public void ExprTest()
-    {
-      ScriptExpression s;
-      
-      s = new ScriptExpression("1 + 1");
-      Assert.AreEqual(2, (float)s.Evaluate(null));
-
-      s = new ScriptExpression("2 * (2 + 3)");
-      Assert.AreEqual(10, (float)s.Evaluate(null));
-      
     }
   }
 }
