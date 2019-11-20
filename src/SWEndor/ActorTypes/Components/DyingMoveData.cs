@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
+using SWEndor.Core;
 using SWEndor.FileFormat.INI;
 using SWEndor.Primitives.Extensions;
 using System;
@@ -34,12 +35,12 @@ namespace SWEndor.ActorTypes.Components
       _update = null;
     }
 
-    public void Spin(float minRate, float maxRate)
+    public void Spin(Random r, float minRate, float maxRate)
     {
       _data.y = minRate;
       _data.z = maxRate;
-      _data.x = minRate + (float)Globals.Engine.Random.NextDouble() * (maxRate - minRate);
-      if (Globals.Engine.Random.NextDouble() > 0.5)
+      _data.x = minRate + (float)r.NextDouble() * (maxRate - minRate);
+      if (r.NextDouble() > 0.5)
         _data.x = -_data.x;
 
       _init = DyingMoveMethod._spinInit;
@@ -59,12 +60,12 @@ namespace SWEndor.ActorTypes.Components
     public void Initialize(ActorInfo actor) { _init?.Invoke(actor); }
     public void Update(ActorInfo actor, float time) { _update?.Invoke(actor, _data, time); }
 
-    public void LoadFromINI(INIFile f, string sectionname)
+    public void LoadFromINI(Engine engine, INIFile f, string sectionname)
     {
       TV_3DVECTOR d = f.GetTV_3DVECTOR(sectionname, "Data", _data);
       string t = f.GetString(sectionname, "Type", "");
       if (t == "spin")
-        Spin(d.y, d.z);
+        Spin(engine.Random, d.y, d.z);
       else if (t == "sink")
         Sink(d.x, d.y, d.z);
       else

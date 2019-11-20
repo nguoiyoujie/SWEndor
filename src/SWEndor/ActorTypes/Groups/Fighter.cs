@@ -20,7 +20,7 @@ namespace SWEndor.ActorTypes.Groups
       MoveLimitData.ZTilt = 2.5f;
       MoveLimitData.ZNormFrac = 0.01f;
       RenderData.RadarSize = 2;
-      DyingMoveData.Spin(180, 270);
+      DyingMoveData.Spin(Engine.Random, 180, 270);
       TimedLifeData = new TimedLifeData(false, 5);
 
       RenderData.CullDistance = 7500;

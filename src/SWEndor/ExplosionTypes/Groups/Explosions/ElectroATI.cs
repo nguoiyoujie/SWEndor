@@ -13,7 +13,7 @@ namespace SWEndor.ExplosionTypes.Instances
       RenderData.RadarSize = 0;
 
       ExplRenderData = new ExplRenderData(2, 2, 0.25f, 0);
-      MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Name, 40, "electro/tex.jpg", CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, ExplRenderData.AtlasX, ExplRenderData.AtlasY);
+      MeshData = MeshDataDecorator.CreateBillboardAtlasAnimation(Engine, Name, 40, "electro/tex.jpg", CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, ExplRenderData.AtlasX, ExplRenderData.AtlasY);
     }
 
     /*

@@ -45,7 +45,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       Script script = Script.Registry.Get(eventName);
       if (script != null)
-        context.Engine.GameScenarioManager.Scenario.EventQueue.Add(Globals.Engine.Game.GameTime + time
+        context.Engine.GameScenarioManager.Scenario.EventQueue.Add(context.Engine.Game.GameTime + time
         , (c, s) => s.Run(c), context, script);
       else
       {
@@ -62,7 +62,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
             break;
         }
         if (g != null)
-          context.Engine.GameScenarioManager.Scenario.EventQueue.Add(Globals.Engine.Game.GameTime + time, g);
+          context.Engine.GameScenarioManager.Scenario.EventQueue.Add(context.Engine.Game.GameTime + time, g);
         else
           throw new InvalidOperationException(string.Format("Script event '{0}' does not exist!", eventName));
       }

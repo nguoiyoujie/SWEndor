@@ -25,6 +25,7 @@ namespace SWEndor.Models
       set { Pitch = value.x; Yaw = value.y; Roll = value.z; }
     }
 
+    /*
     public TV_3DVECTOR Direction
     {
       get { return new TV_3DVECTOR(Pitch, Yaw, Roll).ConvertRotToDir(); }
@@ -34,5 +35,6 @@ namespace SWEndor.Models
         Pitch = r.x; Yaw = r.y; Roll = r.z;
       }
     }
+    */
   }
 }

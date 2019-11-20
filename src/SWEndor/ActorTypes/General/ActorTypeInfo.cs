@@ -103,8 +103,8 @@ namespace SWEndor.ActorTypes
         MoveLimitData.LoadFromINI(f, "MoveLimitData");
         RenderData.LoadFromINI(f, "RenderData");
         AIData.LoadFromINI(f, "AIData");
-        MeshData.LoadFromINI(f, "MeshData");
-        DyingMoveData.LoadFromINI(f, "DyingMoveData");
+        MeshData.LoadFromINI(Engine, f, "MeshData");
+        DyingMoveData.LoadFromINI(Engine, f, "DyingMoveData");
         ScoreData.LoadFromINI(f, "ScoreData");
 
         AddOnData.LoadFromINI(f, "AddOnData", "AddOns", out AddOns);

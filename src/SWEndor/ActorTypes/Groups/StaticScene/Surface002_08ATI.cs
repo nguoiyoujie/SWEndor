@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal Surface002_08ATI(Factory owner) : base(owner, "SURF00208", "SURF00208")
     {
-      MeshData = new MeshData(Name, @"surface\surface002_08.x");
+      MeshData = new MeshData(Engine, Name, @"surface\surface002_08.x");
     }
   }
 }

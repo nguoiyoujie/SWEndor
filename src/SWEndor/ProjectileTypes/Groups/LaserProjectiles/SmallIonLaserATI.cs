@@ -21,7 +21,7 @@ namespace SWEndor.ProjectileTypes.Instances
       DamageSpecialData.EMPDamageRandom = 2.5f;
       DamageSpecialData.EMPDuration = 12;
 
-      MeshData = new MeshData(Name, @"projectiles\ion_sm_laser.x", 1, CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, "Laser");
+      MeshData = new MeshData(Engine, Name, @"projectiles\ion_sm_laser.x", 1, CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, "Laser");
     }
 
     /*

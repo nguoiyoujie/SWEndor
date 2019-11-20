@@ -31,7 +31,7 @@ namespace SWEndor.ActorTypes.Components
         TV_3DVECTOR vec = actor.Rotation;
         if (actor.IsPlayer)
         {
-          vec = Utilities.RotateXYZ(vec, dx * time, dy * time, data.ZRoll * time);
+          vec = Utilities.RotateXYZ(engine, vec, dx * time, dy * time, data.ZRoll * time);
         }
         else
         {
@@ -44,7 +44,7 @@ namespace SWEndor.ActorTypes.Components
       else
       {
         TV_3DVECTOR vec = actor.Rotation;
-        vec = Utilities.RotateXY(vec, dx * time, dy * time);
+        vec = Utilities.RotateXY(engine, vec, dx * time, dy * time);
         actor.Rotation = vec;
       }
     }

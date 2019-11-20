@@ -69,7 +69,7 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        Engine.Form.Invoke(new Action(() => { Globals.Engine.Form.ShowStats(); }));
+        Engine.Form.Invoke(new Action(() => { Engine.Form.ShowStats(); }));
         return true;
       }
       return false;

@@ -22,7 +22,7 @@ namespace SWEndor.ActorTypes.Instances
 
       RegenData = new RegenData(false, 0.2f, 0, 0, 0);
 
-      MeshData = new MeshData(Name, @"tie\tie_defender.x");
+      MeshData = new MeshData(Engine, Name, @"tie\tie_defender.x");
 
       Cameras = new LookData[]
       {

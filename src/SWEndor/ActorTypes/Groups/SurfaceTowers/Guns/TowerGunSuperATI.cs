@@ -20,7 +20,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(100, 3500);
 
-      MeshData = new MeshData(Name, @"towers\tower_turbolaser.x");
+      MeshData = new MeshData(Engine, Name, @"towers\tower_turbolaser.x");
 
       Loadouts = new string[] { "TOWR_SLSR" };
     }

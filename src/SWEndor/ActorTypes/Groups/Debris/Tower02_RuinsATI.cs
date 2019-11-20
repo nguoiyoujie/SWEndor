@@ -7,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
     internal Tower02_RuinsATI(Factory owner) : base(owner, "RUINS2", "Turbolaser Tower 02 Ruins")
     {
       RenderData.CullDistance = 10000;
-      MeshData = new MeshData(Name, @"towers\tower_02_destroyed.x");
+      MeshData = new MeshData(Engine, Name, @"towers\tower_02_destroyed.x");
     }
   }
 }

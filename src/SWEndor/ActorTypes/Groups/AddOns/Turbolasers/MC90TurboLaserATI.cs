@@ -11,7 +11,7 @@ namespace SWEndor.ActorTypes.Instances
       CombatData.ImpactDamage = 16;
       MoveLimitData.MaxTurnRate = 50f;
 
-      MeshData = new MeshData(Name, @"turbotowers\mc90_turbolaser.x");
+      MeshData = new MeshData(Engine, Name, @"turbotowers\mc90_turbolaser.x");
       DyingMoveData.Kill();
 
       Loadouts = new string[] { "MC90_LASR" };

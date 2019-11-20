@@ -33,7 +33,7 @@ namespace SWEndor.ProjectileTypes.Components
       else
       {
         TV_3DVECTOR vec = actor.Rotation;
-        vec = Utilities.RotateXY(vec, data.XTurnAngle * time, data.YTurnAngle * time);
+        vec = Utilities.RotateXY(engine, vec, data.XTurnAngle * time, data.YTurnAngle * time);
         actor.Rotation = vec;
       }
     }

@@ -26,7 +26,7 @@ namespace SWEndor.ActorTypes.Instances
 
       RegenData = new RegenData(false, 0.2f, 0, 0, 0);
 
-      MeshData = new MeshData(Name, @"falcon\falcon.x");
+      MeshData = new MeshData(Engine, Name, @"falcon\falcon.x");
 
       SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineFalcon, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };
       AddOns = new AddOnData[] { new AddOnData("INVLSR", new TV_3DVECTOR(0, 7, 20), new TV_3DVECTOR(90, 0, 0), true) };

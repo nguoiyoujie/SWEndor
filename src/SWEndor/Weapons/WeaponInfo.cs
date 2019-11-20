@@ -38,7 +38,6 @@ namespace SWEndor.Weapons
       Name = name;
       DisplayName = name;
 
-      // TO-DO: Dedicated Projectile class that need no casting 
       Projectile = ProjectileTypeInfo.Null;
       //ActorProj = ActorTypeInfo.Null;
     }

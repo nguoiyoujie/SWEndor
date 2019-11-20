@@ -13,7 +13,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(50, 5000);
 
-      MeshData = new MeshData(Name, @"surface\surface_vent.x");
+      MeshData = new MeshData(Engine, Name, @"surface\surface_vent.x");
     }
   }
 }

@@ -10,7 +10,7 @@ namespace SWEndor.ProjectileTypes.Instances
       CombatData.ImpactDamage = 2;
       CombatData.ImpactCloseEnoughDistance = 35;
 
-      MeshData = new MeshData(Name, @"projectiles\green2_laser.x", 1, CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, "Laser");
+      MeshData = new MeshData(Engine, Name, @"projectiles\green2_laser.x", 1, CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, "Laser");
     }
   }
 }

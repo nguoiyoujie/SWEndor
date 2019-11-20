@@ -28,7 +28,7 @@ namespace SWEndor.Input.Context
             TConsole.InputLine = TConsole.InputLine.Substring(0, TConsole.InputLine.Length - 1);
             break;
           default:
-            char chr = ((CONST_TV_KEY)keydata.Key).TVKeyToChar(Globals.Engine.InputManager.SHIFT);
+            char chr = ((CONST_TV_KEY)keydata.Key).TVKeyToChar(Manager.SHIFT);
             if (!char.IsControl(chr))
               TConsole.InputLine += chr;
             break;

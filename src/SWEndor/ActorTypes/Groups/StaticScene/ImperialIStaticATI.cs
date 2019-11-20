@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ImperialIStaticATI(Factory owner) : base(owner, "IMPLSTS", "Imperial-I Static")
     {
-      MeshData = new MeshData(Name, @"stardestroyer\star_destroyer_static.x");
+      MeshData = new MeshData(Engine, Name, @"stardestroyer\star_destroyer_static.x");
     }
   }
 }

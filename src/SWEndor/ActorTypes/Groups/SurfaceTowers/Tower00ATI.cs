@@ -14,7 +14,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(50, 5000);
 
-      MeshData = new MeshData(Name, @"towers\tower_00.x");
+      MeshData = new MeshData(Engine, Name, @"towers\tower_00.x");
 
       AddOns = new AddOnData[] 
       {

@@ -20,7 +20,7 @@ namespace SWEndor.ActorTypes.Instances
 
       RegenData = new RegenData(false, 0.16f, 0, 0, 0);
 
-      MeshData = new MeshData(Name, @"awing\awing.x");
+      MeshData = new MeshData(Engine, Name, @"awing\awing.x");
 
       Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 2, 20), new TV_3DVECTOR(0, 2, 2000)),

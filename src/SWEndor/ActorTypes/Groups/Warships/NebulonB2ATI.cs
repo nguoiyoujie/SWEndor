@@ -20,7 +20,7 @@ namespace SWEndor.ActorTypes.Instances
       ScoreData = new ScoreData(15, 10000);
       RegenData = new RegenData(false, 0.5f, 0, 0, 0);
 
-      MeshData = new MeshData(Name, @"nebulonb\nebulonb2.x", 0.75f);
+      MeshData = new MeshData(Engine, Name, @"nebulonb\nebulonb2.x", 0.75f);
       DyingMoveData.Sink(0.02f, 5f, 0.8f);
 
       Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 120, -300), new TV_3DVECTOR(0, 120, 2000)) };

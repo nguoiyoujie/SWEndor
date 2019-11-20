@@ -29,7 +29,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(50, 5000);
 
-      MeshData = new MeshData(Name, @"acclamator\acclamator.x", 1.3f);
+      MeshData = new MeshData(Engine, Name, @"acclamator\acclamator.x", 1.3f);
 
       Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 143, 65), new TV_3DVECTOR(0, 143, 2000)) };
       SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500.0f, new TV_3DVECTOR(0, 0, -100), true, isEngineSound: true) };

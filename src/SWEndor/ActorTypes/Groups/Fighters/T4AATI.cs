@@ -16,11 +16,11 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxTurnRate = 36;
 
       ScoreData = new ScoreData(200, 500);
-      DyingMoveData.Spin(90, 180);
+      DyingMoveData.Spin(Engine.Random, 90, 180);
 
       RegenData = new RegenData(false, 0.18f, 0, 0.1f, 0);
 
-      MeshData = new MeshData(Name, @"shuttle\t4a.x");
+      MeshData = new MeshData(Engine, Name, @"shuttle\t4a.x");
 
       Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 2, 18), new TV_3DVECTOR(0, 2, 2000)),

@@ -3,12 +3,20 @@ using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using System.IO;
 using System.Threading.Tasks;
+using System;
+using SWEndor.Core;
 
 namespace SWEndor.Weapons
 {
   public class WeaponFactory
   {
     private ThreadSafeDictionary<string, WeaponStatInfo> list = new ThreadSafeDictionary<string, WeaponStatInfo>();
+    internal Engine Engine;
+
+    public WeaponFactory(Engine engine)
+    {
+      Engine = engine;
+    }
 
     public void Register(WeaponStatInfo weapon)
     {
@@ -19,8 +27,8 @@ namespace SWEndor.Weapons
     {
       WeaponStatInfo wsi = list.Get(key);
       if (wsi == null)
-        throw new System.Exception(TextLocalization.Get(TextLocalKeys.WEAPON_NOTFOUND_ERROR).F(key));
-      return new WeaponInfo(Globals.Engine, wsi);
+        throw new Exception(TextLocalization.Get(TextLocalKeys.WEAPON_NOTFOUND_ERROR).F(key));
+      return new WeaponInfo(Engine, wsi);
     }
 
     public void LoadFromINI(string filepath)

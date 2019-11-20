@@ -7,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal Yavin4ATI(Factory owner) : base(owner, "YAVIN4", "Yavin4")
     {
-      MeshData = MeshDataDecorator.CreateAlphaTexturedWall(Name, 50000, "planets/yavin4.bmp", "planets/yavin4alpha.bmp", CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
+      MeshData = MeshDataDecorator.CreateAlphaTexturedWall(Engine, Name, 50000, "planets/yavin4.bmp", "planets/yavin4alpha.bmp", CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
     }
   }
 }

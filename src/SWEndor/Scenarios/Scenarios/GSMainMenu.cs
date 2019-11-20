@@ -28,7 +28,11 @@ namespace SWEndor.Scenarios
     {
       base.Load(wing, difficulty);
 
+      m_APlanet = null;
       sceneid = Engine.Random.Next(0, 7);
+      RebelSpawnTime = 0;
+      TIESpawnTime = 0;
+
       Engine.LandInfo.Enabled = false;
       Engine.AtmosphereInfo.LoadDefaults(true, true);
       Engine.AtmosphereInfo.SetPos_Sun(new TV_3DVECTOR(-1000, 250, 0));

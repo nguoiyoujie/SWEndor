@@ -19,7 +19,7 @@ namespace SWEndor.ProjectileTypes.Instances
       DamageSpecialData.NeverDisappear = true;
       DamageSpecialData.ReduceDyingTimerTo = 0.5f;
 
-      MeshData = new MeshData(Name, @"projectiles\death_laser.x");
+      MeshData = new MeshData(Engine, Name, @"projectiles\death_laser.x");
 
       CombatData.ImpactCloseEnoughDistance = 200;
     }

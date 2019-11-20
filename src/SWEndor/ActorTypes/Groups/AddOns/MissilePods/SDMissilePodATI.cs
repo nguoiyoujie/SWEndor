@@ -10,7 +10,7 @@ namespace SWEndor.ActorTypes.Instances
       SystemData.MaxHull = 20;
       CombatData.ImpactDamage = 16;
 
-      MeshData = new MeshData(Name, @"turbotowers\star_destroyer_missilepod.x");
+      MeshData = new MeshData(Engine, Name, @"turbotowers\star_destroyer_missilepod.x");
       DyingMoveData.Kill();
 
       Loadouts = new string[] { "IMPL_MISL" };

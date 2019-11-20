@@ -4,6 +4,7 @@ using SWEndor.ExplosionTypes;
 using Primrose.Primitives;
 using SWEndor.ProjectileTypes;
 using SWEndor.Primitives.Extensions;
+using SWEndor.Core;
 
 namespace SWEndor.Models
 {
@@ -17,7 +18,7 @@ namespace SWEndor.Models
     IActorDisposable,
     ITransformable
   {
-    private static TVMathLibrary mlib { get { return Globals.Engine.TrueVision.TVMathLibrary; } }
+    TVMathLibrary math; //{ get { return Globals.Engine.TrueVision.TVMathLibrary; } }
 
     TransformData currData;
     TransformData prevData;
@@ -26,31 +27,34 @@ namespace SWEndor.Models
     TV_3DMATRIX currMat;
     TV_3DMATRIX prevMat;
 
-    public void Init(float scale, ActorCreationInfo acinfo)
+    public void Init(Engine engine, float scale, ActorCreationInfo acinfo)
     {
       Position = acinfo.Position;
       Rotation = acinfo.Rotation;
       PrevPosition = Position;
       PrevRotation = Rotation;
       Scale = scale * acinfo.InitialScale;
+      math = engine.TrueVision.TVMathLibrary;
     }
 
-    public void Init(ExplosionTypeInfo type, ExplosionCreationInfo acinfo)
-    {
-      Position = acinfo.Position;
-      Rotation = acinfo.Rotation;
-      PrevPosition = Position;
-      PrevRotation = Rotation;
-      Scale = type.MeshData.Scale * acinfo.InitialScale;
-    }
-
-    public void Init(float scale, ProjectileCreationInfo acinfo)
+    public void Init(Engine engine, float scale, ExplosionCreationInfo acinfo)
     {
       Position = acinfo.Position;
       Rotation = acinfo.Rotation;
       PrevPosition = Position;
       PrevRotation = Rotation;
       Scale = scale * acinfo.InitialScale;
+      math = engine.TrueVision.TVMathLibrary;
+    }
+
+    public void Init(Engine engine, float scale, ProjectileCreationInfo acinfo)
+    {
+      Position = acinfo.Position;
+      Rotation = acinfo.Rotation;
+      PrevPosition = Position;
+      PrevRotation = Rotation;
+      Scale = scale * acinfo.InitialScale;
+      math = engine.TrueVision.TVMathLibrary;
     }
 
     public void Reset()
@@ -83,14 +87,14 @@ namespace SWEndor.Models
 
     public TV_3DVECTOR Direction
     {
-      get { return currData.Direction; }
-      set { prevData.Direction = currData.Direction; currData.Direction = value; }
+      get { return currData.Rotation.ConvertRotToDir(); }
+      set { prevData.Rotation = currData.Rotation; currData.Rotation = value.ConvertDirToRot(math); }
     }
 
     public TV_3DVECTOR PrevDirection
     {
-      get { return prevData.Direction; }
-      private set { prevData.Direction = value; }
+      get { return prevData.Rotation.ConvertRotToDir(); }
+      private set { prevData.Rotation = value.ConvertDirToRot(math); }
     }
 
     public TV_3DVECTOR Rotation
@@ -110,7 +114,7 @@ namespace SWEndor.Models
     private TV_3DMATRIX GetMatR(ref TransformData data)
     {
       TV_3DMATRIX matrix = new TV_3DMATRIX();
-      mlib.TVMatrixRotationYawPitchRoll(ref matrix, data.Yaw, data.Pitch, data.Roll);
+      math.TVMatrixRotationYawPitchRoll(ref matrix, data.Yaw, data.Pitch, data.Roll);
       return matrix;
     }
 
@@ -119,7 +123,7 @@ namespace SWEndor.Models
     private TV_3DMATRIX GetMatT(ref TransformData data)
     {
       TV_3DMATRIX matrix = new TV_3DMATRIX();
-      mlib.TVMatrixTranslation(ref matrix, data.X, data.Y, data.Z);
+      math.TVMatrixTranslation(ref matrix, data.X, data.Y, data.Z);
       return matrix;
     }
 
@@ -128,7 +132,7 @@ namespace SWEndor.Models
     private TV_3DMATRIX GetMatS(ref TransformData data)
     {
       TV_3DMATRIX matrix = new TV_3DMATRIX();
-      mlib.TVMatrixScaling(ref matrix, data.Scale, data.Scale, data.Scale);
+      math.TVMatrixScaling(ref matrix, data.Scale, data.Scale, data.Scale);
       return matrix;
     }
 
@@ -162,7 +166,7 @@ namespace SWEndor.Models
           using (ScopeCounters.Acquire(p.Scope))
           {
             TV_3DMATRIX m = new TV_3DMATRIX();
-            mlib.TVMatrixMultiply(ref m, GetMat(ref currData), p.GetWorldMatrix());
+            math.TVMatrixMultiply(ref m, GetMat(ref currData), p.GetWorldMatrix());
             return m;
           }
         }
@@ -180,7 +184,7 @@ namespace SWEndor.Models
           using (ScopeCounters.Acquire(p.Scope))
           {
             TV_3DMATRIX m = new TV_3DMATRIX();
-            mlib.TVMatrixMultiply(ref m, GetMat(ref prevData), p.GetPrevWorldMatrix());
+            math.TVMatrixMultiply(ref m, GetMat(ref prevData), p.GetPrevWorldMatrix());
             return m;
           }
         }
@@ -192,8 +196,8 @@ namespace SWEndor.Models
     {
       TV_3DMATRIX mSR = new TV_3DMATRIX();
       TV_3DMATRIX mSRT = new TV_3DMATRIX();
-      mlib.TVMatrixMultiply(ref mSR, GetMatS(ref currData), GetMatR(ref currData));
-      mlib.TVMatrixMultiply(ref mSRT, mSR, GetMatT(ref currData));
+      math.TVMatrixMultiply(ref mSR, GetMatS(ref currData), GetMatR(ref currData));
+      math.TVMatrixMultiply(ref mSRT, mSR, GetMatT(ref currData));
       return mSRT;
     }
 
@@ -204,7 +208,7 @@ namespace SWEndor.Models
         TV_3DQUATERNION qR = new TV_3DQUATERNION();
         TV_3DVECTOR vT = new TV_3DVECTOR();
         TV_3DVECTOR vS = new TV_3DVECTOR();
-        mlib.TVMatrixDecompose(ref vS, ref qR, ref vT, GetWorldMatrix(self, time));
+        math.TVMatrixDecompose(ref vS, ref qR, ref vT, GetWorldMatrix(self, time));
         return vT;
       }
       else
@@ -218,7 +222,7 @@ namespace SWEndor.Models
         TV_3DQUATERNION qR = new TV_3DQUATERNION();
         TV_3DVECTOR vT = new TV_3DVECTOR();
         TV_3DVECTOR vS = new TV_3DVECTOR();
-        mlib.TVMatrixDecompose(ref vS, ref qR, ref vT, GetPrevWorldMatrix(self, time));
+        math.TVMatrixDecompose(ref vS, ref qR, ref vT, GetPrevWorldMatrix(self, time));
         return vT;
       }
       else
@@ -230,7 +234,7 @@ namespace SWEndor.Models
       if (!self.ParentForCoords?.Disposed ?? false)
       {
         TV_3DVECTOR dir = new TV_3DVECTOR();
-        mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 100), GetWorldMatrix(self, time));
+        math.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 100), GetWorldMatrix(self, time));
         return dir.ConvertDirToRot(self.Engine.TrueVision.TVMathLibrary);
       }
       else
@@ -242,7 +246,7 @@ namespace SWEndor.Models
       if (!self.ParentForCoords?.Disposed ?? false)
       {
         TV_3DVECTOR dir = new TV_3DVECTOR();
-        mlib.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 100), GetPrevWorldMatrix(self, time));
+        math.TVVec3TransformNormal(ref dir, new TV_3DVECTOR(0, 0, 100), GetPrevWorldMatrix(self, time));
         return dir.ConvertDirToRot(self.Engine.TrueVision.TVMathLibrary);
       }
       else
@@ -268,7 +272,7 @@ namespace SWEndor.Models
       TV_3DVECTOR rot = local ? Rotation : GetGlobalRotation(self, time);
       TV_3DVECTOR ret = new TV_3DVECTOR();
 
-      mlib.TVVec3Rotate(ref ret, new TV_3DVECTOR(right, up, forward), rot.y, rot.x, rot.z);
+      math.TVVec3Rotate(ref ret, new TV_3DVECTOR(right, up, forward), rot.y, rot.x, rot.z);
       ret += pos;
       return ret;
     }
@@ -279,7 +283,7 @@ namespace SWEndor.Models
       TV_3DVECTOR rot = local ? Rotation : GetGlobalRotation(self, time);
       TV_3DVECTOR ret = new TV_3DVECTOR();
 
-      mlib.TVVec3Rotate(ref ret, new TV_3DVECTOR(x, y, z), rot.y, rot.x, rot.z);
+      math.TVVec3Rotate(ref ret, new TV_3DVECTOR(x, y, z), rot.y, rot.x, rot.z);
       ret += pos;
       return ret;
     }

@@ -14,7 +14,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MinSpeed = 850;
       MoveLimitData.MaxTurnRate = 75;
 
-      MeshData = new MeshData(Name, @"projectiles\torpedo.x");
+      MeshData = new MeshData(Engine, Name, @"projectiles\torpedo.x");
     }
   }
 }

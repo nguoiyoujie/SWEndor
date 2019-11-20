@@ -177,7 +177,7 @@ namespace SWEndor.Actors
       Relation.Init();
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
       Health.Init(ref TypeInfo.CombatData, ref TypeInfo.SystemData, acinfo);
-      Transform.Init(TypeInfo.MeshData.Scale, acinfo);
+      Transform.Init(Engine, TypeInfo.MeshData.Scale, acinfo);
       Armor.Init(ref TypeInfo.ArmorData);
       Explosions.Init(TypeInfo.Explodes, acinfo.CreationTime);
       Regen.Init(ref TypeInfo.RegenData);
@@ -214,7 +214,7 @@ namespace SWEndor.Actors
       Relation.Init();
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
       Health.Init(ref TypeInfo.CombatData, ref TypeInfo.SystemData, acinfo);
-      Transform.Init(TypeInfo.MeshData.Scale, acinfo);
+      Transform.Init(Engine, TypeInfo.MeshData.Scale, acinfo);
       Armor.Init(ref TypeInfo.ArmorData);
       Explosions.Init(TypeInfo.Explodes, acinfo.CreationTime);
       Regen.Init(ref TypeInfo.RegenData);

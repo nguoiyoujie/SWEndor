@@ -10,7 +10,7 @@ namespace SWEndor.ActorTypes.Instances
       SystemData.MaxHull = 45;
       CombatData.ImpactDamage = 16;
 
-      MeshData = new MeshData(Name, @"turbotowers\corellian_turbolaser.x");
+      MeshData = new MeshData(Engine, Name, @"turbotowers\corellian_turbolaser.x");
       DyingMoveData.Kill();
 
       Loadouts = new string[] { "CRLN_LASR" };

@@ -90,7 +90,7 @@ namespace SWEndor.Explosions
 
       Meshes.Init(Engine, ID, ref TypeInfo.MeshData);
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
-      Transform.Init(TypeInfo, acinfo);
+      Transform.Init(Engine, TypeInfo.MeshData.Scale, acinfo);
 
       State.Init(Engine, TypeInfo, acinfo);
 
@@ -115,7 +115,7 @@ namespace SWEndor.Explosions
 
       Meshes.Init(Engine, ID, ref TypeInfo.MeshData);
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
-      Transform.Init(TypeInfo, acinfo);
+      Transform.Init(Engine, TypeInfo.MeshData.Scale, acinfo);
 
       // Creation
       State.Init(Engine, TypeInfo, acinfo);

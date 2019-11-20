@@ -29,7 +29,7 @@ namespace SWEndor.ActorTypes.Instances
       TimedLifeData = new TimedLifeData(false, 2000);
       ScoreData = new ScoreData(75, 100000);
 
-      MeshData = new MeshData(Name, @"executor\executor.x", 2.5f);
+      MeshData = new MeshData(Engine, Name, @"executor\executor.x", 2.5f);
       DyingMoveData.Sink(0.00025f, 1.3f, 0.2f);
 
       Cameras = new LookData[] {

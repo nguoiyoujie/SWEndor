@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal Asteroid05ATI(Factory owner) : base(owner, "ASTR5", "Asteroid 05")
     {
-      MeshData = new MeshData(Name, @"asteroids\asteroid05.x");
+      MeshData = new MeshData(Engine, Name, @"asteroids\asteroid05.x");
     }
   }
 }

@@ -29,7 +29,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(50, 5000);
 
-      MeshData = new MeshData(Name, @"arquitens\arquitens.x");
+      MeshData = new MeshData(Engine, Name, @"arquitens\arquitens.x");
 
       Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 80, -45), new TV_3DVECTOR(0, 80, 2000)),

@@ -22,10 +22,10 @@ namespace SWEndor
       return ret;
     }
 
-    public static TV_3DVECTOR RotateXY(TV_3DVECTOR org, float x, float y)
+    public static TV_3DVECTOR RotateXY(Engine engine, TV_3DVECTOR org, float x, float y)
     {
       // Hack: Using an existing object to perform rotation calculations, then restore it.
-      TVCamera cam = Globals.Engine.PlayerCameraInfo.Camera;
+      TVCamera cam = engine.PlayerCameraInfo.Camera;
       TV_3DVECTOR o = cam.GetRotation();
       cam.SetRotation(org.x, org.y, org.z);
       cam.RotateX(x);
@@ -35,10 +35,10 @@ namespace SWEndor
       return ret;
     }
 
-    public static TV_3DVECTOR RotateXYZ(TV_3DVECTOR org, float x, float y, float z)
+    public static TV_3DVECTOR RotateXYZ(Engine engine, TV_3DVECTOR org, float x, float y, float z)
     {
       // Hack: Using an existing object to perform rotation calculations, then restore it.
-      TVCamera cam = Globals.Engine.PlayerCameraInfo.Camera;
+      TVCamera cam = engine.PlayerCameraInfo.Camera;
       TV_3DVECTOR o = cam.GetRotation();
       cam.SetRotation(org.x, org.y, org.z);
       cam.RotateX(x);

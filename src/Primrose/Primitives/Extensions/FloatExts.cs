@@ -42,7 +42,7 @@
     /// <param name="value1">The first value</param>
     /// <param name="value2">The second value</param>
     /// <returns>The greater of the two values</returns>
-    public static float Max(float value1, float value2)
+    public static float Max(this float value1, float value2)
     {
       return (value1 > value2)
         ? value1 
@@ -55,7 +55,7 @@
     /// <param name="value1"></param>
     /// <param name="value2"></param>
     /// <returns>The smaller of the two values</returns>
-    public static float Min(float value1, float value2)
+    public static float Min(this float value1, float value2)
     {
       return (value1 > value2) 
         ? value2

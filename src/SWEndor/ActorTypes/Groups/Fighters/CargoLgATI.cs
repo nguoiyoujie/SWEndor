@@ -18,9 +18,9 @@ namespace SWEndor.ActorTypes.Instances
       ScoreData = new ScoreData(200, 500);
 
       RegenData = new RegenData(false, 0.08f, 0, 0, 0);
-      DyingMoveData.Spin(30, 90);
+      DyingMoveData.Spin(Engine.Random, 30, 90);
 
-      MeshData = new MeshData(Name, @"cargo\cargo3.x");
+      MeshData = new MeshData(Engine, Name, @"cargo\cargo3.x");
 
       Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 5, 48), new TV_3DVECTOR(0, 2, 2000)),

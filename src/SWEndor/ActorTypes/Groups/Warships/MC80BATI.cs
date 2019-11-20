@@ -30,7 +30,7 @@ namespace SWEndor.ActorTypes.Instances
 
       RegenData = new RegenData(false, 0.6f, 0, 0, 0);
 
-      MeshData = new MeshData(Name, @"mc90\mc80b.x", 1.8f);
+      MeshData = new MeshData(Engine, Name, @"mc90\mc80b.x", 1.8f);
       DyingMoveData.Sink(0.01f, 2.5f, 0.4f);
 
       Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 45, 660), new TV_3DVECTOR(0, 45, 2000)) };

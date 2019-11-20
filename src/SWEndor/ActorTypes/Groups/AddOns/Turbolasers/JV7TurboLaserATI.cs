@@ -13,7 +13,7 @@ namespace SWEndor.ActorTypes.Instances
       RenderData.RadarSize = 0;
       AIData.TargetType = TargetType.NULL;
 
-      MeshData = new MeshData(Name, @"turbotowers\xq_turbolaser.x", 0.25f);
+      MeshData = new MeshData(Engine, Name, @"turbotowers\xq_turbolaser.x", 0.25f);
       DyingMoveData.Kill();
 
       Loadouts = new string[] { "JV7_LASR" };

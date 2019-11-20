@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ExecutorStaticATI(Factory owner) : base(owner, "EXECSTS", "Executor Static")
     {
-      MeshData = new MeshData(Name, @"executor\executor_static.x");
+      MeshData = new MeshData(Engine, Name, @"executor\executor_static.x");
     }
   }
 }

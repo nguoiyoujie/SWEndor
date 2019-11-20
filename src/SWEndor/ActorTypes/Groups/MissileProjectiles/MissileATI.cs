@@ -16,7 +16,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MinSpeed = 700;
       MoveLimitData.MaxTurnRate = 120;
 
-      MeshData = new MeshData(Name, @"projectiles\missile.x", 1.5f);
+      MeshData = new MeshData(Engine, Name, @"projectiles\missile.x", 1.5f);
       SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineMissile, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };
     }
   }

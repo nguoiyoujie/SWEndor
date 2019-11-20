@@ -72,7 +72,7 @@ namespace SWEndor.ProjectileTypes
         TimedLifeData.LoadFromINI(f, "TimedLifeData");
         MoveLimitData.LoadFromINI(f, "MoveLimitData");
         RenderData.LoadFromINI(f, "RenderData");
-        MeshData.LoadFromINI(f, "MeshData");
+        MeshData.LoadFromINI(Engine, f, "MeshData");
         DamageSpecialData.LoadFromINI(f, "DamageSpecialData");
 
         ExplodeData.LoadFromINI(f, "ExplodeData", "Explodes", out Explodes);

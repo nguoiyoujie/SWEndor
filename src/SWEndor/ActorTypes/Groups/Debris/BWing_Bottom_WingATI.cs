@@ -7,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal BWing_Bottom_WingATI(Factory owner) : base(owner, "BWWBOT", "BWing_Bottom_WingATI")
     {
-      MeshData = new MeshData(Name, @"bwing\bwing_bottom_wing.x", 1, CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, "Burn");
+      MeshData = new MeshData(Engine, Name, @"bwing\bwing_bottom_wing.x", 1, CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, "Burn");
     }
   }
 }

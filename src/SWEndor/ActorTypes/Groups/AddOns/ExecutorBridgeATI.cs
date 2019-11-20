@@ -31,7 +31,7 @@ namespace SWEndor.ActorTypes.Instances
       AIData.TargetType = TargetType.ADDON;
       RenderData.RadarType = RadarType.NULL;
 
-      MeshData = new MeshData(Name, @"executor\executor_bridge.x");
+      MeshData = new MeshData(Engine, Name, @"executor\executor_bridge.x");
     }
 
     public override void ProcessState(Engine engine, ActorInfo ainfo)

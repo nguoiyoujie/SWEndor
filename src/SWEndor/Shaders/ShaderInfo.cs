@@ -22,6 +22,7 @@ namespace SWEndor.Shaders
   public partial class ShaderInfo
   {
     public string Name;
+    public Engine Engine;
     public TVShader TVShader;
     public TVScene TVScene;
     private Dictionary<string, bool> ConstBool = new Dictionary<string, bool>();
@@ -43,6 +44,7 @@ namespace SWEndor.Shaders
         INIFile f = new INIFile(dataFile);
         Parser.LoadFromINI(engine, this, f);
       }
+      Engine = engine;
       TVScene = engine.TrueVision.TVScene;
       if (DynamicParam.Count > 0)
       {
@@ -92,7 +94,7 @@ namespace SWEndor.Shaders
           shader.SetEffectParamTexture(s, ConstTex[s]);
 
         foreach (string s in RandTex.Keys)
-          shader.SetEffectParamTexture(s, RandTex[s][Globals.Engine.Random.Next(0, RandTex[s].Length)]);
+          shader.SetEffectParamTexture(s, RandTex[s][Engine.Random.Next(0, RandTex[s].Length)]);
       }
       return shader;
     }

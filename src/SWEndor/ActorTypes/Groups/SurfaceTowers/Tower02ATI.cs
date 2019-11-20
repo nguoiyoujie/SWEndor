@@ -12,7 +12,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(50, 5000);
 
-      MeshData = new MeshData(Name, @"towers\tower_02.x");
+      MeshData = new MeshData(Engine, Name, @"towers\tower_02.x");
       AddOns = new AddOnData[] { new AddOnData("TGUN", new TV_3DVECTOR(0, 50, 0), new TV_3DVECTOR(0, 0, 0), true) };
     }
   }

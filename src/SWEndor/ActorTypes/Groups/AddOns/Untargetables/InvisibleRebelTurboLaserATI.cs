@@ -13,7 +13,7 @@ namespace SWEndor.ActorTypes.Instances
       SystemData.MaxShield = 10;
       SystemData.MaxHull = 10;
       CombatData.ImpactDamage = 16;
-      MeshData = new MeshData(Name, @"turbotowers\xq_turbolaser.x", 0.25f);
+      MeshData = new MeshData(Engine, Name, @"turbotowers\xq_turbolaser.x", 0.25f);
       DyingMoveData.Kill();
 
       //Mask &= ~(ComponentMask.CAN_BECOLLIDED | ComponentMask.CAN_BETARGETED);

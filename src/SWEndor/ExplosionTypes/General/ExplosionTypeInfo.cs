@@ -52,7 +52,7 @@ namespace SWEndor.ExplosionTypes
         ShakeData.LoadFromINI(f, "ShakeData");
         RenderData.LoadFromINI(f, "RenderData");
         ExplRenderData.LoadFromINI(f, "ExplRenderData");
-        MeshData.LoadFromINI(f, "MeshData");
+        MeshData.LoadFromINI(Engine, f, "MeshData");
 
         SoundSourceData.LoadFromINI(f, "SoundSourceData", "InitialSoundSources", out InitialSoundSources);
         SoundSourceData.LoadFromINI(f, "SoundSourceData", "SoundSources", out SoundSources);

@@ -22,7 +22,7 @@ namespace SWEndor.ActorTypes.Instances
 
       RegenData = new RegenData(false, 0.25f, 0, 0, 0);
 
-      MeshData = new MeshData(Name, @"gunboat\gunboat.x");
+      MeshData = new MeshData(Engine, Name, @"gunboat\gunboat.x");
 
       Cameras = new LookData[]
       {

@@ -8,7 +8,7 @@ namespace SWEndor.Input.Context
   {
     protected AInputContext(InputManager manager) { Manager = manager; }
 
-    InputManager Manager;
+    protected InputManager Manager;
     public Engine Engine { get { return Manager.Engine; } }
 
     public virtual void Set()

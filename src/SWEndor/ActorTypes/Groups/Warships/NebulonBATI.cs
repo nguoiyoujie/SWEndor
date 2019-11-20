@@ -22,7 +22,7 @@ namespace SWEndor.ActorTypes.Instances
       RenderData.CullDistance = 30000;
       RegenData = new RegenData(false, 0.4f, 0, 0, 0);
 
-      MeshData = new MeshData(Name, @"nebulonb\nebulonb.x", 0.75f);
+      MeshData = new MeshData(Engine, Name, @"nebulonb\nebulonb.x", 0.75f);
       DyingMoveData.Sink(0.02f, 5f, 0.8f);
 
       Cameras = new LookData[] { new LookData(new TV_3DVECTOR(66, 78, -480), new TV_3DVECTOR(0, 75, 2000)) };

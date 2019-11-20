@@ -3,6 +3,8 @@ using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 using SWEndor.AI.Actions;
 using SWEndor.Core;
+using System;
+using System.Collections.Generic;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -10,7 +12,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal Hyperspace(Factory owner) : base(owner, "HYPER", "Hyperspace")
     {
-      MeshData = new MeshData(Name, @"special\hyper.x", 15, CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, "Hyper");
+      MeshData = new MeshData(Engine, Name, @"special\hyper.x", 15, CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, "Hyper");
       TimedLifeData = new TimedLifeData(false, 1);
     }
 

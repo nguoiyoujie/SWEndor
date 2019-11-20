@@ -15,8 +15,8 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxSpeed = 500;
       MoveLimitData.MinSpeed = 100;
 
-      MeshData = new MeshData(Name, @"transport\transport_box2.x", 1, CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, "Burn");
-      DyingMoveData.Spin(100, 450);
+      MeshData = new MeshData(Engine, Name, @"transport\transport_box2.x", 1, CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, "Burn");
+      DyingMoveData.Spin(Engine.Random, 100, 450);
     }
 
     public override void ProcessState(Engine engine, ActorInfo ainfo)

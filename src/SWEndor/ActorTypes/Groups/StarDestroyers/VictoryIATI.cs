@@ -22,7 +22,7 @@ namespace SWEndor.ActorTypes.Instances
       ScoreData = new ScoreData(60, 10000);
       RegenData = new RegenData(false, 0.5f, 0, 0, 0);
 
-      MeshData = new MeshData(Name, @"stardestroyer\victory_star_destroyer.x", 1.1f);
+      MeshData = new MeshData(Engine, Name, @"stardestroyer\victory_star_destroyer.x", 1.1f);
       DyingMoveData.Sink(0.005f, 5f, 0.8f);
 
       Cameras = new LookData[] {

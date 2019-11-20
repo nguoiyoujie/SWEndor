@@ -22,7 +22,7 @@ namespace SWEndor.ActorTypes.Instances
       RenderData.CullDistance = 20000;
       ScoreData = new ScoreData(10, 5000);
 
-      MeshData = new MeshData(Name, @"corellian\corellian.x", 0.6f);
+      MeshData = new MeshData(Engine, Name, @"corellian\corellian.x", 0.6f);
 
       Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 55, -35), new TV_3DVECTOR(0, 55, 2000)),

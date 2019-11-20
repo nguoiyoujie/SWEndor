@@ -15,7 +15,7 @@ namespace SWEndor.ActorTypes.Instances
 
       RenderData.AlwaysShowInRadar = true;
 
-      MeshData = new MeshData(Name, @"towers\tower_03.x");
+      MeshData = new MeshData(Engine, Name, @"towers\tower_03.x");
     }
   }
 }

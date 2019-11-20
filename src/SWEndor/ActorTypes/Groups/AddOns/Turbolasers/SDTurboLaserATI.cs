@@ -12,7 +12,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(250, 1250);
 
-      MeshData = new MeshData(Name, @"turbotowers\star_destroyer_turbolaser.x");
+      MeshData = new MeshData(Engine, Name, @"turbotowers\star_destroyer_turbolaser.x");
 
       Loadouts = new string[] { "IMPL_LASR" };
       DyingMoveData.Kill();

@@ -7,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal EndorATI(Factory owner) : base(owner, "ENDOR", "Endor")
     {
-      MeshData = MeshDataDecorator.CreateTexturedModel(Name, "planet/endor.x", "planets/endor.jpg", CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
+      MeshData = MeshDataDecorator.CreateTexturedModel(Engine, Name, "planet/endor.x", "planets/endor.jpg", CONST_TV_BLENDINGMODE.TV_BLEND_ADD);
     }
   }
 }

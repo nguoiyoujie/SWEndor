@@ -10,7 +10,7 @@ namespace SWEndor.ActorTypes.Instances
       SystemData.MaxHull = 40;
       CombatData.ImpactDamage = 16;
 
-      MeshData = new MeshData(Name, @"turbotowers\acclamator_turbolaser.x");
+      MeshData = new MeshData(Engine, Name, @"turbotowers\acclamator_turbolaser.x");
       DyingMoveData.Kill();
 
       Loadouts = new string[] { "ARQT_LASR" };

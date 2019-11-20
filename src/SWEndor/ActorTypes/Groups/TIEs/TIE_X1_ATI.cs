@@ -32,7 +32,7 @@ namespace SWEndor.ActorTypes.Instances
 
       RegenData = new RegenData(false, 0.18f, 0, 0, 0);
 
-      MeshData = new MeshData(Name, @"tie_vader\tie_vader.x");
+      MeshData = new MeshData(Engine, Name, @"tie_vader\tie_vader.x");
       Cameras = new LookData[] 
       {
         new LookData(new TV_3DVECTOR(0, 0, 12), new TV_3DVECTOR(0, 0, 2000)),

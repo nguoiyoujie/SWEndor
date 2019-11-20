@@ -17,7 +17,7 @@ namespace SWEndor.ActorTypes.Groups
       };
 
       TimedLifeData = new TimedLifeData(true, 5);
-      DyingMoveData.Spin(120, 270);
+      DyingMoveData.Spin(Engine.Random, 120, 270);
 
       MoveLimitData.MaxSpeed = 500;
       MoveLimitData.MinSpeed = 5;

@@ -18,6 +18,8 @@ using SWEndor.Explosions;
 using SWEndor.Shaders;
 using SWEndor.Projectiles;
 using SWEndor.ProjectileTypes;
+using SWEndor.AI.Actions;
+using Primrose.Primitives.Extensions;
 
 namespace SWEndor.Core
 {
@@ -77,7 +79,7 @@ namespace SWEndor.Core
       ActorTypeFactory = new ActorTypeInfo.Factory(this);
       ExplosionTypeFactory = new ExplosionTypeInfo.Factory(this);
       ProjectileTypeFactory = new ProjectileTypeInfo.Factory(this);
-      WeaponFactory = new WeaponFactory();
+      WeaponFactory = new WeaponFactory(this);
       WeaponLoadoutFactory = new WeaponLoadoutFactory();
       SquadronFactory = new Squadron.Factory();
       ShaderFactory = new ShaderInfo.Factory(this);

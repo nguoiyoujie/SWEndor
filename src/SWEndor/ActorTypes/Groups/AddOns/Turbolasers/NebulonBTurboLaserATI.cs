@@ -9,7 +9,7 @@ namespace SWEndor.ActorTypes.Instances
       SystemData.MaxShield = 135;
       CombatData.ImpactDamage = 16;
 
-      MeshData = new MeshData(Name, @"turbotowers\nebulonb_turbolaser.x");
+      MeshData = new MeshData(Engine, Name, @"turbotowers\nebulonb_turbolaser.x");
 
       Loadouts = new string[] { "NEBL_LASR" };
       DyingMoveData.Kill();

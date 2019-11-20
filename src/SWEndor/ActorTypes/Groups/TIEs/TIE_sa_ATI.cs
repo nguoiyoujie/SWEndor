@@ -17,7 +17,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(350, 500);
 
-      MeshData = new MeshData(Name, @"tie_vader\tie_bomber.x");
+      MeshData = new MeshData(Engine, Name, @"tie_vader\tie_bomber.x");
 
       Cameras = new LookData[]
       {

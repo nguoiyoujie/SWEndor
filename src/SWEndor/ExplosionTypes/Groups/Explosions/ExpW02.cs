@@ -14,7 +14,7 @@ namespace SWEndor.ExplosionTypes.Instances
       RenderData.CullDistance = -1;
       ExplRenderData = new ExplRenderData(1, 1, 2, 7500);
 
-      MeshData = MeshDataDecorator.CreateHorizon(Name, 50, Path.Combine("explosion", "wave", @"tex0000.jpg"), CONST_TV_BLENDINGMODE.TV_BLEND_ADDALPHA);
+      MeshData = MeshDataDecorator.CreateHorizon(Engine, Name, 50, Path.Combine("explosion", "wave", @"tex0000.jpg"), CONST_TV_BLENDINGMODE.TV_BLEND_ADDALPHA);
     }
   }
 }

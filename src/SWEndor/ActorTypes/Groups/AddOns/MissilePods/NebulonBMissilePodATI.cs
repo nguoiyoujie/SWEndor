@@ -10,7 +10,7 @@ namespace SWEndor.ActorTypes.Instances
       SystemData.MaxHull = 100;
       CombatData.ImpactDamage = 16;
 
-      MeshData = new MeshData(Name, @"turbotowers\nebulonb_missilepod.x");
+      MeshData = new MeshData(Engine, Name, @"turbotowers\nebulonb_missilepod.x");
       DyingMoveData.Kill();
 
       Loadouts = new string[] { "NEBL_MISL" };
