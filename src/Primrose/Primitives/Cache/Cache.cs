@@ -96,7 +96,7 @@ namespace Primrose.Primitives
             cache.Remove(k);
     }
 
-    private struct CacheItem<E, T, TP> where E : struct
+    private class CacheItem<E, T, TP> where E : struct
     {
       internal E ExpiryToken;
       private T val;
