@@ -6,7 +6,7 @@ namespace SWEndor.AI.Actions
 {
   internal class EnableSpawn : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<EnableSpawn> _pool;
     static EnableSpawn() { _pool = ObjectPool<EnableSpawn>.CreateStaticPool(() => { return new EnableSpawn(); }, (a) => { a.Reset(); }); }
 
@@ -15,7 +15,7 @@ namespace SWEndor.AI.Actions
     public static EnableSpawn GetOrCreate(bool enabled)
     {
       EnableSpawn h = _pool.GetNew();
-      _count++;
+
       h.Enabled = enabled;
       h.IsDisposed = false;
       return h;
@@ -30,7 +30,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     private bool Enabled;

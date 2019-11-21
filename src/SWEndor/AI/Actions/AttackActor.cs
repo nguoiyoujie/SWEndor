@@ -12,7 +12,7 @@ namespace SWEndor.AI.Actions
 {
   internal class AttackActor : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<AttackActor> _pool;
     static AttackActor() { _pool = ObjectPool<AttackActor>.CreateStaticPool(() => { return new AttackActor(); }, (a) => { a.Reset(); }); }
 
@@ -21,7 +21,7 @@ namespace SWEndor.AI.Actions
     public static AttackActor GetOrCreate(int targetActorID, float follow_distance = -1, float too_close_distance = -1, bool can_interrupt = true, float hunt_interval = 15)
     {
       AttackActor h = _pool.GetNew();
-      _count++;
+
       h.Target_ActorID = targetActorID;
       h.FollowDistance = follow_distance;
       h.TooCloseDistance = too_close_distance;
@@ -211,7 +211,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
   }
 }

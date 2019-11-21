@@ -10,7 +10,7 @@ namespace SWEndor.AI.Actions
 {
   internal class AvoidCollisionRotate : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<AvoidCollisionRotate> _pool;
     static AvoidCollisionRotate() { _pool = ObjectPool<AvoidCollisionRotate>.CreateStaticPool(() => { return new AvoidCollisionRotate(); }, (a) => { a.Reset(); }); }
 
@@ -27,7 +27,7 @@ namespace SWEndor.AI.Actions
     public static AvoidCollisionRotate GetOrCreate(TV_3DVECTOR impact_position, TV_3DVECTOR normal_vec, float close_enough_angle = 0.1f)
     {
       AvoidCollisionRotate h = _pool.GetNew();
-      _count++;
+
       h.Impact_Position = impact_position;
       h.Normal = normal_vec;
       h.CloseEnoughAngle = close_enough_angle;
@@ -50,7 +50,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     public override string ToString()

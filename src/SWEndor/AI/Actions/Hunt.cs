@@ -10,7 +10,7 @@ namespace SWEndor.AI.Actions
 {
   internal class Hunt : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<Hunt> _pool;
     static Hunt() { _pool = ObjectPool<Hunt>.CreateStaticPool(() => { return new Hunt(); }, (a) => { a.Reset(); }); }
 
@@ -34,7 +34,7 @@ namespace SWEndor.AI.Actions
     public static Hunt GetOrCreate(TargetType targetType = TargetType.ANY)
     {
       Hunt h = _pool.GetNew();
-      _count++;
+
       h.m_TargetType = targetType;
       h.IsDisposed = false;
       return h;
@@ -49,7 +49,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     public override string ToString()

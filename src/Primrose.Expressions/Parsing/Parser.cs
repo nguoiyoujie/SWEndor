@@ -93,10 +93,6 @@ namespace Primrose.Expressions
         new TokenDefinition(@":", TokenEnum.COLON, RegexOption)
       };
 
-    //internal readonly Lexer Lexer;
-    //internal readonly RootStatement Root;
-    //internal readonly Expression RootExpr;
-
     public static void Parse(ContextScope scope, string text, out RootStatement result, string srcname, ref int linenumber)
     {
       using (StringReader reader = new StringReader(text))

@@ -8,7 +8,7 @@ namespace SWEndor.AI.Actions
 {
   internal class SetMood : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<SetMood> _pool;
     static SetMood() { _pool = ObjectPool<SetMood>.CreateStaticPool(() => { return new SetMood(); }, (a) => { a.Reset(); }); }
 
@@ -17,7 +17,7 @@ namespace SWEndor.AI.Actions
     public static SetMood GetOrCreate(MoodStates mood, bool squadLeaderOnly)
     {
       SetMood h = _pool.GetNew();
-      _count++;
+
       h.Mood = mood;
       h.SquadLeaderOnly = squadLeaderOnly;
       h.IsDisposed = false;
@@ -33,7 +33,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     // parameters

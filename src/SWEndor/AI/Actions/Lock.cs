@@ -6,7 +6,7 @@ namespace SWEndor.AI.Actions
 {
   internal class Lock : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<Lock> _pool;
     static Lock() { _pool = ObjectPool<Lock>.CreateStaticPool(() => { return new Lock(); }, (a) => { a.Reset(); }); }
 
@@ -15,7 +15,7 @@ namespace SWEndor.AI.Actions
     public static Lock GetOrCreate()
     {
       Lock h = _pool.GetNew();
-      _count++;
+
       h.IsDisposed = false;
       return h;
     }
@@ -29,7 +29,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     public override void Process(Engine engine, ActorInfo actor)

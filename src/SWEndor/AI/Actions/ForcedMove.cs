@@ -8,7 +8,7 @@ namespace SWEndor.AI.Actions
 {
   internal class ForcedMove : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<ForcedMove> _pool;
     static ForcedMove() { _pool = ObjectPool<ForcedMove>.CreateStaticPool(() => { return new ForcedMove(); }, (a) => { a.Reset(); }); }
 
@@ -17,7 +17,7 @@ namespace SWEndor.AI.Actions
     public static ForcedMove GetOrCreate(TV_3DVECTOR target_position, float speed, float close_enough_distance = -1, float expire_time = 999999)
     {
       ForcedMove h = _pool.GetNew();
-      _count++;
+
       h.Target_Position = target_position;
       h.Target_Speed = speed;
       h.CloseEnoughDistance = close_enough_distance;
@@ -35,7 +35,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     // parameters

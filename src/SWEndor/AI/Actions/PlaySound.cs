@@ -6,7 +6,7 @@ namespace SWEndor.AI.Actions
 {
   internal class PlaySound : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<PlaySound> _pool;
     static PlaySound() { _pool = ObjectPool<PlaySound>.CreateStaticPool(() => { return new PlaySound(); }, (a) => { a.Reset(); }); }
 
@@ -15,7 +15,7 @@ namespace SWEndor.AI.Actions
     public static PlaySound GetOrCreate(string name, bool squadLeaderOnly, bool interrupt = true)
     {
       PlaySound h = _pool.GetNew();
-      _count++;
+
       h.SoundName = name;
       h.Interrupt = interrupt;
       h.SquadLeaderOnly = squadLeaderOnly;
@@ -32,7 +32,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     // parameters

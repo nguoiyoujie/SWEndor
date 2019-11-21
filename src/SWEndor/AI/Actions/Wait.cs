@@ -6,7 +6,7 @@ namespace SWEndor.AI.Actions
 {
   internal class Wait : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<Wait> _pool;
     static Wait() { _pool = ObjectPool<Wait>.CreateStaticPool(() => { return new Wait(); }, (a) => { a.Reset(); }); }
 
@@ -15,7 +15,7 @@ namespace SWEndor.AI.Actions
     public static Wait GetOrCreate(float time = 5)
     {
       Wait h = _pool.GetNew();
-      _count++;
+
       h.WaitTime = time;
       h.IsDisposed = false;
       return h;
@@ -31,7 +31,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     private float WaitTime = 0;

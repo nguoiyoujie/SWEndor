@@ -7,7 +7,7 @@ namespace SWEndor.AI.Actions
 {
   internal class Idle : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<Idle> _pool;
     static Idle() { _pool = ObjectPool<Idle>.CreateStaticPool(() => { return new Idle(); }, (a) => { a.Reset(); }); }
 
@@ -16,7 +16,7 @@ namespace SWEndor.AI.Actions
     public static Idle GetOrCreate()
     {
       Idle h = _pool.GetNew();
-      _count++;
+
       h.IsDisposed = false;
       return h;
     }
@@ -30,7 +30,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     public override void Process(Engine engine, ActorInfo actor)

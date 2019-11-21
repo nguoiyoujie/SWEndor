@@ -204,14 +204,11 @@ namespace SWEndor.Player
     {
       if (shake > 1)
       {
-        //if (Engine.PlayerInfo.StrengthFrac > 0)
-        //{
-          int dispx = Engine.Random.Next(-(int)shake, (int)shake);
-          int dispy = Engine.Random.Next(-(int)shake, (int)shake);
-          Camera.MoveRelative(0, dispx - prev_shake_displacement_x, dispy - prev_shake_displacement_y, true);
-          prev_shake_displacement_x = dispx;
-          prev_shake_displacement_y = dispy;
-        //}
+        int dispx = Engine.Random.Next(-(int)shake, (int)shake);
+        int dispy = Engine.Random.Next(-(int)shake, (int)shake);
+        Camera.MoveRelative(0, dispx - prev_shake_displacement_x, dispy - prev_shake_displacement_y, true);
+        prev_shake_displacement_x = dispx;
+        prev_shake_displacement_y = dispy;
         ShakeDecay();
       }
     }
@@ -255,13 +252,13 @@ namespace SWEndor.Player
       if (IsFreeLook)
       {
         float rate = Engine.Game.TimeControl.UpdateInterval;
-        angleX *= 100;
-        angleY *= 100;
-        angleZ *= 10;
+        angleX *= 100 * rate;
+        angleY *= 100 * rate;
+        angleZ *= rate;
 
-        Camera.RotateX(angleX * rate);
-        Camera.RotateY(angleY * rate);
-        Camera.RotateZ(angleZ * rate);
+        Camera.RotateX(angleX);
+        Camera.RotateY(angleY);
+        Camera.RotateZ(angleZ);
         return; // don't control the player craft when in free look
       }
 

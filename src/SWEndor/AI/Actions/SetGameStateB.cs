@@ -6,7 +6,7 @@ namespace SWEndor.AI.Actions
 {
   internal class SetGameStateB : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<SetGameStateB> _pool;
     static SetGameStateB() { _pool = ObjectPool<SetGameStateB>.CreateStaticPool(() => { return new SetGameStateB(); }, (a) => { a.Reset(); }); }
 
@@ -15,7 +15,7 @@ namespace SWEndor.AI.Actions
     public static SetGameStateB GetOrCreate(string key, bool state)
     {
       SetGameStateB h = _pool.GetNew();
-      _count++;
+
       h.m_key = key;
       h.m_state = state;
       h.IsDisposed = false;
@@ -31,7 +31,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     private string m_key;

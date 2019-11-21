@@ -8,7 +8,7 @@ namespace SWEndor.AI.Actions
 {
   internal class HyperspaceOut : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<HyperspaceOut> _pool;
     static HyperspaceOut() { _pool = ObjectPool<HyperspaceOut>.CreateStaticPool(() => { return new HyperspaceOut(); }, (a) => { a.Reset(); }); }
 
@@ -17,7 +17,7 @@ namespace SWEndor.AI.Actions
     public static HyperspaceOut GetOrCreate()
     {
       HyperspaceOut h = _pool.GetNew();
-      _count++;
+
       h.IsDisposed = false;
       return h;
     }
@@ -33,7 +33,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     // parameters

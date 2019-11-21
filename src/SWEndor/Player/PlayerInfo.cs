@@ -151,7 +151,7 @@ namespace SWEndor.Player
         }
 
         if (announceOutOfBounds)
-          Engine.Screen2D.MessageText("You are going out of bounds! Return to the battle!"
+          Engine.Screen2D.MessageSecondaryText("You are going out of bounds! Return to the battle!"
                                      , 5
                                      , ColorLocalization.Get(ColorLocalKeys.WHITE)
                                      , 99);

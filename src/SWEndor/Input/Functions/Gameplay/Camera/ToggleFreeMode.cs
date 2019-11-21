@@ -14,10 +14,22 @@ namespace SWEndor.Input.Functions.Gameplay
     public override void Process(Engine engine)
     {
       engine.PlayerCameraInfo.IsFreeLook = !engine.PlayerCameraInfo.IsFreeLook;
+
       if (engine.PlayerCameraInfo.IsFreeLook)
       {
         engine.PlayerCameraInfo.FreeLook.Position = engine.PlayerCameraInfo.Position;
         engine.PlayerCameraInfo.FreeLook.Rotation = engine.PlayerCameraInfo.Rotation;
+        engine.Screen2D.MessageSecondaryText("CAMERA: FREEMODE"
+                                           , 2.5f
+                                           , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_NORMAL)
+                                           , 1);
+      }
+      else
+      {
+        engine.Screen2D.MessageSecondaryText(string.Format("CAMERA: {0}", engine.PlayerCameraInfo.CameraMode)
+                                           , 2.5f
+                                           , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_NORMAL)
+                                           , 1);
       }
     }
   }

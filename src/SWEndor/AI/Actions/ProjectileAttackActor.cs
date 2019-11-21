@@ -7,7 +7,7 @@ namespace SWEndor.AI.Actions
 {
   internal class ProjectileAttackActor : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<ProjectileAttackActor> _pool;
     static ProjectileAttackActor() { _pool = ObjectPool<ProjectileAttackActor>.CreateStaticPool(() => { return new ProjectileAttackActor(); }, (a) => { a.Reset(); }); }
 
@@ -16,7 +16,7 @@ namespace SWEndor.AI.Actions
     public static ProjectileAttackActor GetOrCreate(ActorInfo targetActor)
     {
       ProjectileAttackActor h = _pool.GetNew();
-      _count++;
+
       h.Target_Actor = targetActor;
       h.ID = targetActor?.ID ?? -1;
       h.CanInterrupt = false;
@@ -35,7 +35,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     // parameters

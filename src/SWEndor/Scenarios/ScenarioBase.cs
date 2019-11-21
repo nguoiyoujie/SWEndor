@@ -178,14 +178,7 @@ namespace SWEndor.Scenarios
       SoundManager.Mood = MoodStates.AMBIENT;
       Engine.SoundManager.Clear();
       DistanceModel.Reset();
-
-      // TO-DO: reset the live counters in a more graceful way
-      AI.Actions.Hunt._count = 0;
-      AI.Actions.AttackActor._count = 0;
-      AI.Actions.AvoidCollisionRotate._count = 0;
-      AI.Actions.AvoidCollisionWait._count = 0;
-      AI.Actions.Evade._count = 0;
-      AI.Actions.ProjectileAttackActor._count = 0;
+      PlayerCameraInfo.Shake(0);
 
       Game.GameTime = 0;
       Game.GameFrame = 0;

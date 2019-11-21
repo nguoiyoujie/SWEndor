@@ -8,7 +8,7 @@ namespace SWEndor.AI.Actions
 {
   internal class FollowActor : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<FollowActor> _pool;
     static FollowActor() { _pool = ObjectPool<FollowActor>.CreateStaticPool(() => { return new FollowActor(); }, (a) => { a.Reset(); }); }
 
@@ -17,7 +17,7 @@ namespace SWEndor.AI.Actions
     public static FollowActor GetOrCreate(int targetActorID, float follow_distance = 500, bool can_interrupt = true)
     {
       FollowActor h = _pool.GetNew();
-      _count++;
+
       h.Target_ActorID = targetActorID;
       h.FollowDistance = follow_distance;
       h.CanInterrupt = can_interrupt;
@@ -34,7 +34,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     // parameters

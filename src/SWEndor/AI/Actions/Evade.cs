@@ -7,7 +7,7 @@ namespace SWEndor.AI.Actions
 {
   internal class Evade : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<Evade> _pool; 
     static Evade() { _pool = ObjectPool<Evade>.CreateStaticPool(() => { return new Evade(); }, (a) => { a.Reset(); }); }
 
@@ -24,7 +24,7 @@ namespace SWEndor.AI.Actions
     public static Evade GetOrCreate(float time = 2.5f)
     {
       Evade h = _pool.GetNew();
-      _count++;
+
       h.WaitTime = time;
       h.CanInterrupt = false;
       return h;
@@ -45,7 +45,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     public override string ToString()

@@ -6,7 +6,7 @@ namespace SWEndor.AI.Actions
 {
   internal class AvoidCollisionWait : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<AvoidCollisionWait> _pool;
     static AvoidCollisionWait() { _pool = ObjectPool<AvoidCollisionWait>.CreateStaticPool(() => { return new AvoidCollisionWait(); }, (a) => { a.Reset(); }); }
 
@@ -18,7 +18,7 @@ namespace SWEndor.AI.Actions
     public static AvoidCollisionWait GetOrCreate(float time = 5)
     {
       AvoidCollisionWait h = _pool.GetNew();
-      _count++;
+
       h.WaitTime = time;
       h.CanInterrupt = false;
       return h;
@@ -34,7 +34,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     public override string ToString()

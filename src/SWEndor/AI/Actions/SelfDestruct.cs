@@ -6,7 +6,7 @@ namespace SWEndor.AI.Actions
 {
   internal class SelfDestruct : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<SelfDestruct> _pool;
     static SelfDestruct() { _pool = ObjectPool<SelfDestruct>.CreateStaticPool(() => { return new SelfDestruct(); }, (a) => { a.Reset(); }); }
 
@@ -15,7 +15,7 @@ namespace SWEndor.AI.Actions
     public static SelfDestruct GetOrCreate()
     {
       SelfDestruct h = _pool.GetNew();
-      _count++;
+
       h.IsDisposed = false;
       return h;
     }
@@ -29,7 +29,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     public override void Process(Engine engine, ActorInfo actor)

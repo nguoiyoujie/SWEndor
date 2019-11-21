@@ -9,7 +9,7 @@ namespace SWEndor.AI.Actions
 {
   internal class Move : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<Move> _pool;
     static Move() { _pool = ObjectPool<Move>.CreateStaticPool(() => { return new Move(); }, (a) => { a.Reset(); }); }
 
@@ -18,7 +18,7 @@ namespace SWEndor.AI.Actions
     public static Move GetOrCreate(TV_3DVECTOR target_position, float speed, float close_enough_distance = -1, bool can_interrupt = true)
     {
       Move h = _pool.GetNew();
-      _count++;
+
       h.Target_Position = target_position;
       h.Target_Speed = speed;
       h.CloseEnoughDistance = close_enough_distance;
@@ -36,7 +36,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     // parameters

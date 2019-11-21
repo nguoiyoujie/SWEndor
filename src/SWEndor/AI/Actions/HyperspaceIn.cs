@@ -8,7 +8,7 @@ namespace SWEndor.AI.Actions
 {
   internal class HyperspaceIn : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<HyperspaceIn> _pool;
     static HyperspaceIn() { _pool = ObjectPool<HyperspaceIn>.CreateStaticPool(() => { return new HyperspaceIn(); }, (a) => { a.Reset(); }); }
 
@@ -17,7 +17,7 @@ namespace SWEndor.AI.Actions
     public static HyperspaceIn GetOrCreate(TV_3DVECTOR target_position)
     {
       HyperspaceIn h = _pool.GetNew();
-      _count++;
+
       h.Target_Position = target_position;
       h.IsDisposed = false;
       return h;
@@ -35,7 +35,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     // parameters

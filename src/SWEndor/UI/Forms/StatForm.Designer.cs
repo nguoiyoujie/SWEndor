@@ -51,10 +51,15 @@
       this.label4 = new System.Windows.Forms.Label();
       this.lblGameFrame = new System.Windows.Forms.Label();
       this.label9 = new System.Windows.Forms.Label();
+      this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.tabControl1.SuspendLayout();
       this.tpObjects.SuspendLayout();
       this.tpSound.SuspendLayout();
       this.tpPool.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+      this.splitContainer1.Panel1.SuspendLayout();
+      this.splitContainer1.Panel2.SuspendLayout();
+      this.splitContainer1.SuspendLayout();
       this.SuspendLayout();
       // 
       // tmTick
@@ -65,7 +70,7 @@
       // 
       // lblFPS
       // 
-      this.lblFPS.Location = new System.Drawing.Point(232, 27);
+      this.lblFPS.Location = new System.Drawing.Point(226, 28);
       this.lblFPS.Name = "lblFPS";
       this.lblFPS.Size = new System.Drawing.Size(50, 15);
       this.lblFPS.TabIndex = 11;
@@ -73,7 +78,7 @@
       // 
       // label7
       // 
-      this.label7.Location = new System.Drawing.Point(46, 27);
+      this.label7.Location = new System.Drawing.Point(40, 28);
       this.label7.Name = "label7";
       this.label7.Size = new System.Drawing.Size(180, 15);
       this.label7.TabIndex = 10;
@@ -81,7 +86,7 @@
       // 
       // lblGameTime
       // 
-      this.lblGameTime.Location = new System.Drawing.Point(232, 42);
+      this.lblGameTime.Location = new System.Drawing.Point(226, 43);
       this.lblGameTime.Name = "lblGameTime";
       this.lblGameTime.Size = new System.Drawing.Size(50, 15);
       this.lblGameTime.TabIndex = 13;
@@ -89,7 +94,7 @@
       // 
       // label8
       // 
-      this.label8.Location = new System.Drawing.Point(46, 42);
+      this.label8.Location = new System.Drawing.Point(40, 43);
       this.label8.Name = "label8";
       this.label8.Size = new System.Drawing.Size(180, 15);
       this.label8.TabIndex = 12;
@@ -97,7 +102,7 @@
       // 
       // lblRenderTime
       // 
-      this.lblRenderTime.Location = new System.Drawing.Point(232, 57);
+      this.lblRenderTime.Location = new System.Drawing.Point(226, 58);
       this.lblRenderTime.Name = "lblRenderTime";
       this.lblRenderTime.Size = new System.Drawing.Size(50, 15);
       this.lblRenderTime.TabIndex = 15;
@@ -105,7 +110,7 @@
       // 
       // label10
       // 
-      this.label10.Location = new System.Drawing.Point(46, 57);
+      this.label10.Location = new System.Drawing.Point(40, 58);
       this.label10.Name = "label10";
       this.label10.Size = new System.Drawing.Size(180, 15);
       this.label10.TabIndex = 14;
@@ -113,7 +118,7 @@
       // 
       // label6
       // 
-      this.label6.Location = new System.Drawing.Point(12, 9);
+      this.label6.Location = new System.Drawing.Point(6, 10);
       this.label6.Name = "label6";
       this.label6.Size = new System.Drawing.Size(180, 15);
       this.label6.TabIndex = 18;
@@ -124,11 +129,11 @@
       this.tabControl1.Controls.Add(this.tpObjects);
       this.tabControl1.Controls.Add(this.tpSound);
       this.tabControl1.Controls.Add(this.tpPool);
-      this.tabControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.tabControl1.Location = new System.Drawing.Point(0, 75);
+      this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tabControl1.Location = new System.Drawing.Point(0, 0);
       this.tabControl1.Name = "tabControl1";
       this.tabControl1.SelectedIndex = 0;
-      this.tabControl1.Size = new System.Drawing.Size(628, 435);
+      this.tabControl1.Size = new System.Drawing.Size(628, 426);
       this.tabControl1.TabIndex = 67;
       // 
       // tpObjects
@@ -137,7 +142,7 @@
       this.tpObjects.Location = new System.Drawing.Point(4, 22);
       this.tpObjects.Name = "tpObjects";
       this.tpObjects.Padding = new System.Windows.Forms.Padding(3);
-      this.tpObjects.Size = new System.Drawing.Size(620, 409);
+      this.tpObjects.Size = new System.Drawing.Size(620, 400);
       this.tpObjects.TabIndex = 0;
       this.tpObjects.Text = "Objects";
       this.tpObjects.UseVisualStyleBackColor = true;
@@ -147,7 +152,7 @@
       this.ucStatObjects1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.ucStatObjects1.Location = new System.Drawing.Point(3, 3);
       this.ucStatObjects1.Name = "ucStatObjects1";
-      this.ucStatObjects1.Size = new System.Drawing.Size(614, 403);
+      this.ucStatObjects1.Size = new System.Drawing.Size(614, 394);
       this.ucStatObjects1.TabIndex = 0;
       // 
       // tpSound
@@ -156,7 +161,7 @@
       this.tpSound.Location = new System.Drawing.Point(4, 22);
       this.tpSound.Name = "tpSound";
       this.tpSound.Padding = new System.Windows.Forms.Padding(3);
-      this.tpSound.Size = new System.Drawing.Size(592, 374);
+      this.tpSound.Size = new System.Drawing.Size(620, 409);
       this.tpSound.TabIndex = 1;
       this.tpSound.Text = "Sounds";
       this.tpSound.UseVisualStyleBackColor = true;
@@ -166,7 +171,7 @@
       this.ucSound1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.ucSound1.Location = new System.Drawing.Point(3, 3);
       this.ucSound1.Name = "ucSound1";
-      this.ucSound1.Size = new System.Drawing.Size(586, 368);
+      this.ucSound1.Size = new System.Drawing.Size(614, 403);
       this.ucSound1.TabIndex = 0;
       // 
       // tpPool
@@ -175,7 +180,7 @@
       this.tpPool.Location = new System.Drawing.Point(4, 22);
       this.tpPool.Name = "tpPool";
       this.tpPool.Padding = new System.Windows.Forms.Padding(3);
-      this.tpPool.Size = new System.Drawing.Size(592, 374);
+      this.tpPool.Size = new System.Drawing.Size(620, 409);
       this.tpPool.TabIndex = 2;
       this.tpPool.Text = "Pool / Cache";
       this.tpPool.UseVisualStyleBackColor = true;
@@ -185,12 +190,12 @@
       this.ucPoolCache1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.ucPoolCache1.Location = new System.Drawing.Point(3, 3);
       this.ucPoolCache1.Name = "ucPoolCache1";
-      this.ucPoolCache1.Size = new System.Drawing.Size(586, 368);
+      this.ucPoolCache1.Size = new System.Drawing.Size(614, 403);
       this.ucPoolCache1.TabIndex = 0;
       // 
       // lblAIFrame
       // 
-      this.lblAIFrame.Location = new System.Drawing.Point(474, 57);
+      this.lblAIFrame.Location = new System.Drawing.Point(468, 58);
       this.lblAIFrame.Name = "lblAIFrame";
       this.lblAIFrame.Size = new System.Drawing.Size(50, 15);
       this.lblAIFrame.TabIndex = 73;
@@ -198,7 +203,7 @@
       // 
       // label2
       // 
-      this.label2.Location = new System.Drawing.Point(288, 57);
+      this.label2.Location = new System.Drawing.Point(282, 58);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(180, 15);
       this.label2.TabIndex = 72;
@@ -206,7 +211,7 @@
       // 
       // lblCollisionFrame
       // 
-      this.lblCollisionFrame.Location = new System.Drawing.Point(474, 42);
+      this.lblCollisionFrame.Location = new System.Drawing.Point(468, 43);
       this.lblCollisionFrame.Name = "lblCollisionFrame";
       this.lblCollisionFrame.Size = new System.Drawing.Size(50, 15);
       this.lblCollisionFrame.TabIndex = 71;
@@ -214,7 +219,7 @@
       // 
       // label4
       // 
-      this.label4.Location = new System.Drawing.Point(288, 42);
+      this.label4.Location = new System.Drawing.Point(282, 43);
       this.label4.Name = "label4";
       this.label4.Size = new System.Drawing.Size(180, 15);
       this.label4.TabIndex = 70;
@@ -222,7 +227,7 @@
       // 
       // lblGameFrame
       // 
-      this.lblGameFrame.Location = new System.Drawing.Point(474, 27);
+      this.lblGameFrame.Location = new System.Drawing.Point(468, 28);
       this.lblGameFrame.Name = "lblGameFrame";
       this.lblGameFrame.Size = new System.Drawing.Size(50, 15);
       this.lblGameFrame.TabIndex = 69;
@@ -230,31 +235,50 @@
       // 
       // label9
       // 
-      this.label9.Location = new System.Drawing.Point(288, 27);
+      this.label9.Location = new System.Drawing.Point(282, 28);
       this.label9.Name = "label9";
       this.label9.Size = new System.Drawing.Size(180, 15);
       this.label9.TabIndex = 68;
       this.label9.Text = "Game Frame";
+      // 
+      // splitContainer1
+      // 
+      this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.splitContainer1.IsSplitterFixed = true;
+      this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+      this.splitContainer1.Name = "splitContainer1";
+      this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+      // 
+      // splitContainer1.Panel1
+      // 
+      this.splitContainer1.Panel1.Controls.Add(this.label6);
+      this.splitContainer1.Panel1.Controls.Add(this.lblAIFrame);
+      this.splitContainer1.Panel1.Controls.Add(this.label7);
+      this.splitContainer1.Panel1.Controls.Add(this.label2);
+      this.splitContainer1.Panel1.Controls.Add(this.lblFPS);
+      this.splitContainer1.Panel1.Controls.Add(this.lblCollisionFrame);
+      this.splitContainer1.Panel1.Controls.Add(this.label8);
+      this.splitContainer1.Panel1.Controls.Add(this.label4);
+      this.splitContainer1.Panel1.Controls.Add(this.lblGameTime);
+      this.splitContainer1.Panel1.Controls.Add(this.lblGameFrame);
+      this.splitContainer1.Panel1.Controls.Add(this.label10);
+      this.splitContainer1.Panel1.Controls.Add(this.label9);
+      this.splitContainer1.Panel1.Controls.Add(this.lblRenderTime);
+      this.splitContainer1.Panel1MinSize = 80;
+      // 
+      // splitContainer1.Panel2
+      // 
+      this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
+      this.splitContainer1.Size = new System.Drawing.Size(628, 510);
+      this.splitContainer1.SplitterDistance = 80;
+      this.splitContainer1.TabIndex = 4;
       // 
       // StatForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(628, 510);
-      this.Controls.Add(this.lblAIFrame);
-      this.Controls.Add(this.label2);
-      this.Controls.Add(this.lblCollisionFrame);
-      this.Controls.Add(this.label4);
-      this.Controls.Add(this.lblGameFrame);
-      this.Controls.Add(this.label9);
-      this.Controls.Add(this.tabControl1);
-      this.Controls.Add(this.label6);
-      this.Controls.Add(this.lblRenderTime);
-      this.Controls.Add(this.label10);
-      this.Controls.Add(this.lblGameTime);
-      this.Controls.Add(this.label8);
-      this.Controls.Add(this.lblFPS);
-      this.Controls.Add(this.label7);
+      this.Controls.Add(this.splitContainer1);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "StatForm";
       this.Text = "Statistics";
@@ -264,6 +288,10 @@
       this.tpObjects.ResumeLayout(false);
       this.tpSound.ResumeLayout(false);
       this.tpPool.ResumeLayout(false);
+      this.splitContainer1.Panel1.ResumeLayout(false);
+      this.splitContainer1.Panel2.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+      this.splitContainer1.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -290,6 +318,7 @@
     private System.Windows.Forms.Label label4;
     private System.Windows.Forms.Label lblGameFrame;
     private System.Windows.Forms.Label label9;
+    private System.Windows.Forms.SplitContainer splitContainer1;
   }
 }
 

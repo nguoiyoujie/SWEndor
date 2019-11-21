@@ -8,7 +8,7 @@ namespace SWEndor.AI.Actions
 {
   internal class Rotate : ActionInfo
   {
-    internal static int _count = 0;
+
     private static ObjectPool<Rotate> _pool;
     static Rotate() { _pool = ObjectPool<Rotate>.CreateStaticPool(() => { return new Rotate(); }, (a) => { a.Reset(); }); }
 
@@ -17,7 +17,7 @@ namespace SWEndor.AI.Actions
     public static Rotate GetOrCreate(TV_3DVECTOR target_position, float speed, float close_enough_angle = 0.1f, bool can_interrupt = true)
     {
       Rotate h = _pool.GetNew();
-      _count++;
+
       h.Target_Position = target_position;
       h.Target_Speed = speed;
       h.CloseEnoughAngle = close_enough_angle;
@@ -35,7 +35,7 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-      _count--;
+
     }
 
     // parameters
