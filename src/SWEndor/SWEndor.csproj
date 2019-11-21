@@ -175,6 +175,7 @@
     <Compile Include="Core\RenderSurfaces.cs" />
     <Compile Include="ExplosionTypes\Components\ExplRenderData.cs" />
     <Compile Include="ExplosionTypes\Components\ShakeData.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\ToggleFreeMode.cs" />
     <Compile Include="Models\Interfaces\IActorState.cs" />
     <Compile Include="Models\Interfaces\ITransformable.cs" />
     <Compile Include="Models\Interfaces\IParent.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Models\Interfaces\IScoped.cs" />
     <Compile Include="Models\Interfaces\ITyped.cs" />
     <Compile Include="Models\Interfaces\ITypeInfo.cs" />
+    <Compile Include="Player\Camera\Look\FreeLook.cs" />
     <Compile Include="Primitives\Extensions\INIFileExts.cs" />
     <Compile Include="Models\ExplodeModel\ExplodeData.cs" />
     <Compile Include="Actors\Models\Explosion\ActorExt.cs" />

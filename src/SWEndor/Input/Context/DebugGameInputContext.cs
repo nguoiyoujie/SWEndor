@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Input.Functions;
+using SWEndor.Input.Functions.Gameplay;
 using SWEndor.Input.Functions.Gameplay.Special;
 
 namespace SWEndor.Input.Context
@@ -20,7 +21,9 @@ namespace SWEndor.Input.Context
 
       ToggleCameraStates.InternalName,
       ToggleMovementLock.InternalName,
-      TogglePlayerAI.InternalName
+      TogglePlayerAI.InternalName,
+      ToggleFreeMode.InternalName
+
     };
 
     public override void Set()

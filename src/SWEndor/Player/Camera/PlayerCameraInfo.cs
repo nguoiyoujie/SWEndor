@@ -15,34 +15,45 @@ namespace SWEndor.Player
       Camera = Engine.TrueVision.TVEngine.GetCamera();
       Camera.SetCamera(0, 0, 0, 0, 0, 100);
       Camera.SetViewFrustum(60, 650000);
-      Look = PlayerLook;
+      _look = PlayerLook;
     }
 
     internal readonly TVCamera Camera;
     public CameraMode CameraMode = CameraMode.FIRSTPERSON;
+    internal readonly FreeLook FreeLook = new FreeLook();
     internal readonly PlayerCameraLook PlayerLook = new PlayerCameraLook();
     internal readonly DeathCameraLook DeathLook = new DeathCameraLook();
     internal readonly SceneCameraLook SceneLook = new SceneCameraLook();
+    internal bool IsFreeLook = false;
 
     internal CameraMode[] ScenarioModes = new CameraMode[] { CameraMode.FIRSTPERSON };
     internal int ScenarioModeNum = 0;
 
-    private ICameraLook Look;
+    private ICameraLook _look;
+    internal ICameraLook Look { get { return IsFreeLook ? FreeLook : _look; } }
 
     /// <summary>
     /// Sets the view camera to use the player actor view
     /// </summary>
-    public void SetPlayerLook() { Look = PlayerLook; }
+    public void SetPlayerLook() { _look = PlayerLook; IsFreeLook = false; }
 
     /// <summary>
     /// Sets the view camera to use the player death view
     /// </summary>
-    public void SetDeathLook() { Look = DeathLook; }
+    public void SetDeathLook() { _look = DeathLook; IsFreeLook = false; }
 
     /// <summary>
     /// Sets the view camera to use the scene (no actor) view
     /// </summary>
-    public void SetSceneLook() { Look = SceneLook; }
+    public void SetSceneLook() { _look = SceneLook; IsFreeLook = false; }
+
+    /// <summary>
+    /// Toggles the use of the free look mode
+    /// </summary>
+    public void SetSceneLook(bool enable)
+    {
+      IsFreeLook = enable;
+    }
 
     private TV_3DVECTOR LookAtPos = new TV_3DVECTOR();
 
@@ -96,6 +107,9 @@ namespace SWEndor.Player
 
     private void Update(Engine engine)
     {
+      if (IsFreeLook)
+        return;
+
       ActorInfo actor = Engine.PlayerInfo.Actor; //?? Engine.ActorFactory.Get(Look.GetPosition_Actor());
       if (actor != null && actor.Active)
       {
@@ -234,29 +248,25 @@ namespace SWEndor.Player
     internal void RotateCam(float aX, float aY, int aZ)
     {
       PlayerInfo pl = Engine.PlayerInfo;
+      float angleX = aY * Settings.SteeringSensitivity;
+      float angleY = aX * Settings.SteeringSensitivity;
+      float angleZ = aZ * Settings.SteeringSensitivity / 20;
+
+      if (IsFreeLook)
+      {
+        float rate = Engine.Game.TimeControl.UpdateInterval;
+        angleX *= 100;
+        angleY *= 100;
+        angleZ *= 10;
+
+        Camera.RotateX(angleX * rate);
+        Camera.RotateY(angleY * rate);
+        Camera.RotateZ(angleZ * rate);
+        return; // don't control the player craft when in free look
+      }
+
       if (pl.IsMovementControlsEnabled && !pl.PlayerAIEnabled)
       {
-        float angleX = aY * Settings.SteeringSensitivity;
-        float angleY = aX * Settings.SteeringSensitivity;
-        float angleZ = aZ * Settings.SteeringSensitivity / 20;
-
-        /*
-        if (CameraMode == CameraMode.FREEMODE 
-         || CameraMode == CameraMode.FREEROTATION)
-        {
-          float rate = Engine.Game.TimeControl.RenderInterval;
-          angleX *= 100;
-          angleY *= 100;
-
-          Camera.RotateX(angleX * rate); //Engine.Game.TimeSinceRender / Engine.Game.TimeControl.SpeedModifier);
-          Camera.RotateY(angleY * rate);
-
-          TV_3DVECTOR rot = Camera.GetRotation();
-          rot.x = rot.x.Clamp(-75, 75);
-          Camera.Rotation = new TV_3DVECTOR(rot.x, rot.y, rot.z);
-        }
-        else */
-
         ActorInfo a = pl.Actor;
         if (a != null && a.Active)
         {

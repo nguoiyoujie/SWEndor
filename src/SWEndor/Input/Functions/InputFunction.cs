@@ -134,6 +134,7 @@ namespace SWEndor.Input.Functions
         // gameplay: camera
         f.Add(new NextCameraMode());
         f.Add(new PrevCameraMode());
+        f.Add(new ToggleFreeMode());
         f.Add(new MoveCameraForward());
         f.Add(new MoveCameraBackward());
         f.Add(new MoveCameraUpward());
