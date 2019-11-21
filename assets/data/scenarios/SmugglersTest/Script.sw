@@ -23,9 +23,9 @@ load:
 	UI.SetLine1Color({ 0.6, 0.6, 0 });
 	UI.SetLine2Color({ 0.6, 0.6, 0 });
 
-	Script.CallX("spawnreset");	
-	Script.CallX("makesmugglers");
-	Script.CallX("makeplayer");
+	Script.Call("spawnreset");	
+	Script.Call("makesmugglers");
+	Script.Call("makeplayer");
 	AddEvent(7, "stage1");
 	AddEvent(12, "message01");
 	AddEvent(17, "message02");
@@ -132,13 +132,13 @@ gametick:
 	time2 = time2 + gframe;
 	
 	if (starttime < 0 && !started) 
-		Script.CallX("start");
+		Script.Call("start");
 	
 	if (time > interval) 
-		Script.CallX("spawntie"); 
+		Script.Call("spawntie"); 
 	
 	if (time2 > interval2) 
-		Script.CallX("spawnwing"); 
+		Script.Call("spawnwing"); 
 	
 	if (GetTimeSinceLostWing() < gtime || gtime % 0.2 > 0.1)
 		UI.SetLine1Text("WINGS: " + Faction.GetWingCount("Smugglers")); 
@@ -151,23 +151,23 @@ gametick:
 		UI.SetLine2Text("");
 	
 	if (GetGameStateB("TransportExit") && !triggerwinlose) 
-		Script.CallX("win");
+		Script.Call("win");
 	
 	if (Faction.GetShipCount("Smugglers") < 1 && !triggerwinlose) 
 		SetGameStateB("TransportDead",true);
 	
 	if (GetGameStateB("TransportDead") && !triggerwinlose) 
-		Script.CallX("lose");
+		Script.Call("lose");
 
 win:
 	triggerwinlose = true;
-	Script.CallX("messagewin");
+	Script.Call("messagewin");
 	SetGameStateB("GameWon",true);
 	AddEvent(3, "fadeout");
 
 lose:
 	triggerwinlose = true;
-	Script.CallX("messagelose");
+	Script.Call("messagelose");
 	SetGameStateB("GameOver",true);
 	AddEvent(3, "fadeout");
 
@@ -178,7 +178,7 @@ fadeout:
 start:
 	started = true;
 	Player.SetMovementEnabled(true);
-	Script.CallX("message00");
+	Script.Call("message00");
 
 spawntie:
 	time = time - interval;
@@ -189,13 +189,13 @@ spawntie:
 	spawn_pos = { 400, 0, -10000 };
 	spawn_rot = { 0, 0, 0 };
 
-	Script.CallX("spawn4");
+	Script.Call("spawn4");
 	spawn_pos = { -400, 0, -10000 };
-	Script.CallX("spawn4");
+	Script.Call("spawn4");
 
 	spawn_pos = { 0, 0, -10200 };
 	spawn_type = "TIEI";
-	Script.CallX("spawn2");
+	Script.Call("spawn2");
 
 spawnwing:
 	time2 = time2 - interval2;
@@ -276,9 +276,9 @@ stage2:
 	spawn_rot = { 0, 0, 0 };
 
 	spawn_type = "TIED";
-	Script.CallX("spawn3");
+	Script.Call("spawn3");
 	spawn_pos = { 300, 0, -10200 };
-	Script.CallX("spawn3");
+	Script.Call("spawn3");
 
 	int wing = Actor.Spawn("AWING", "", "Rebels", "", 0, { 7000, 0, 47000 }, { 0, 180, 0 });
 	AI.QueueLast(wing, "hyperspacein", { 0, 150, 5500 });

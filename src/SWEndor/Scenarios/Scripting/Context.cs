@@ -93,12 +93,13 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc("Camera.SetSceneLook_LookFromActor", new ValFunc<int, float3, float3>(PlayerCameraFns.SetSceneLook_LookFromActor));
       AddFunc("Camera.SetSceneLook_LookFromPoint", new ValFunc<float3>(PlayerCameraFns.SetSceneLook_LookFromPoint));
 
-      // Actor Management
+      // Squad Management
       Functions.Add("Squad.Squadron_Spawn", ActorFns.Squadron_Spawn);
       AddFunc("Squad.AddToSquad", new ValFunc<int, int>(ActorFns.AddToSquad));
       AddFunc("Squad.RemoveFromSquad", new ValFunc<int>(ActorFns.RemoveFromSquad));
       AddFunc("Squad.MakeSquadLeader", new ValFunc<int>(ActorFns.MakeSquadLeader));
 
+      // Actor Management
       Functions.Add("Actor.Spawn", ActorFns.Spawn);
       AddFunc("Actor.QueueAtSpawn", new ValFunc<int, int>(ActorFns.QueueAtSpawn));
       AddFunc("Actor.GetActorType", new ValFunc<int>(ActorFns.GetActorType));
@@ -163,7 +164,6 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc("Player.SetAI", new ValFunc<bool>(PlayerFns.SetAI));
       AddFunc("Player.SetLives", new ValFunc<int>(PlayerFns.SetLives));
       AddFunc("Player.DecreaseLives", new ValFunc(PlayerFns.DecreaseLives));
-
       AddFunc("Player.SetScorePerLife", new ValFunc<float>(ScoreFns.SetScorePerLife));
       AddFunc("Player.SetScoreForNextLife", new ValFunc<float>(ScoreFns.SetScoreForNextLife));
       AddFunc("Player.ResetScore", new ValFunc(ScoreFns.ResetScore));
@@ -196,6 +196,16 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc("Audio.SetMusicPause", new ValFunc(AudioFns.SetMusicPause));
       AddFunc("Audio.SetMusicResume", new ValFunc(AudioFns.SetMusicResume));
       AddFunc("Audio.SetMusicStop", new ValFunc(AudioFns.SetMusicStop));
+      AddFunc("Audio.SetSound", new ValFunc<string>(AudioFns.SetSound));
+      AddFunc("Audio.SetSound", new ValFunc<string, bool>(AudioFns.SetSound));
+      AddFunc("Audio.SetSound", new ValFunc<string, bool, float>(AudioFns.SetSound));
+      AddFunc("Audio.SetSound", new ValFunc<string, bool, float, bool>(AudioFns.SetSound));
+      AddFunc("Audio.SetSoundSingle", new ValFunc<string>(AudioFns.SetSoundSingle));
+      AddFunc("Audio.SetSoundSingle", new ValFunc<string, bool>(AudioFns.SetSoundSingle));
+      AddFunc("Audio.SetSoundSingle", new ValFunc<string, bool, float>(AudioFns.SetSoundSingle));
+      AddFunc("Audio.SetSoundSingle", new ValFunc<string, bool, float, bool>(AudioFns.SetSoundSingle));
+      AddFunc("Audio.SetSoundStop", new ValFunc<string>(AudioFns.SetSoundStop));
+      AddFunc("Audio.SetSoundStopAll", new ValFunc(AudioFns.SetSoundStopAll));
 
       // UI
       AddFunc("UI.SetLine1Color", new ValFunc<float3>(UIFns.SetUILine1Color));
@@ -206,8 +216,8 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc("UI.SetLine3Text", new ValFunc<string>(UIFns.SetUILine3Text));
 
       // Script flow
-      AddFunc("Script.Call", new ValFunc<string>(ScriptingFns.CallScript));
-      AddFunc("Script.CallX", new ValFunc<string>(ScriptingFns.CallScriptX));
+      AddFunc("Script.TryCall", new ValFunc<string>(ScriptingFns.TryCall));
+      AddFunc("Script.Call", new ValFunc<string>(ScriptingFns.Call));
 
       // Misc
       AddFunc("IsNull", new ValFunc<Val>(MiscFns.IsNull));

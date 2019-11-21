@@ -5,12 +5,13 @@ using System.IO;
 using System.Threading.Tasks;
 using System;
 using SWEndor.Core;
+using Primrose.Primitives.Factories;
 
 namespace SWEndor.Weapons
 {
   public class WeaponFactory
   {
-    private ThreadSafeDictionary<string, WeaponStatInfo> list = new ThreadSafeDictionary<string, WeaponStatInfo>();
+    private Registry<WeaponStatInfo> list = new Registry<WeaponStatInfo>();
     internal Engine Engine;
 
     public WeaponFactory(Engine engine)

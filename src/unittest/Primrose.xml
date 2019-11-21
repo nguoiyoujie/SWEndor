@@ -854,6 +854,10 @@
             <param name="id">The identifier key to check</param>
             <returns>True if the registry contains this key, False if otherwise</returns>
         </member>
+        <member name="P:Primrose.Primitives.Factories.Registry`1.Item(System.String)">
+            <summary>Retrieves the value associated with a key index</summary>
+            <param name="id">The identifier key to check</param>
+        </member>
         <member name="M:Primrose.Primitives.Factories.Registry`1.Get(System.String)">
             <summary>Retrieves the value associated with a key</summary>
             <param name="id">The identifier key to check</param>
@@ -870,6 +874,10 @@
             <param name="id">The identifier key to check</param>
             <returns>The value associated with the key</returns>
             <exception cref="T:System.Collections.Generic.KeyNotFoundException">The registry does not contain this key.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`1.GetKeys">
+            <summary>Retrives an array of all the keys in the registry</summary>
+            <returns></returns>
         </member>
         <member name="M:Primrose.Primitives.Factories.Registry`1.GetAll">
             <summary>Retrives an array of all the values in the registry</summary>
@@ -920,6 +928,10 @@
             <param name="key">The identifier key to check</param>
             <returns>True if the registry contains this key, False if otherwise</returns>
         </member>
+        <member name="P:Primrose.Primitives.Factories.Registry`2.Item(`0)">
+            <summary>Retrieves the value associated with a key index</summary>
+            <param name="id">The identifier key to check</param>
+        </member>
         <member name="M:Primrose.Primitives.Factories.Registry`2.Get(`0)">
             <summary>Retrieves the value associated with a key</summary>
             <param name="key">The identifier key to check</param>
@@ -930,6 +942,10 @@
             <param name="key">The identifier key to check</param>
             <returns>The value associated with the key</returns>
             <exception cref="T:System.Collections.Generic.KeyNotFoundException">The registry does not contain this key.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.GetKeys">
+            <summary>Retrives an array of all the keys in the registry</summary>
+            <returns></returns>
         </member>
         <member name="M:Primrose.Primitives.Factories.Registry`2.GetAll">
             <summary>Retrives an array of all the values in the registry</summary>

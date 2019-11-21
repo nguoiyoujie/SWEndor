@@ -13,7 +13,7 @@ namespace SWEndor.Sound
 
       public void Process(SoundManager s)
       {
-        if (s.music.ContainsKey(Name) && Position_ms > 0)
+        if (s.music.Contains(Name) && Position_ms > 0)
         {
           IntPtr ptr;
           s.music[Name].addSyncPoint(Position_ms, TIMEUNIT.MS, Label, out ptr);

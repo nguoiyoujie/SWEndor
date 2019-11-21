@@ -8,7 +8,7 @@ namespace SWEndor.Sound
     {
       public void Process(SoundManager s)
       {
-        foreach (string name in s.sounds.Keys)
+        foreach (string name in s.sounds.GetKeys())
         {
           ChannelGroup soundgrp = s.soundgrps[name];
 

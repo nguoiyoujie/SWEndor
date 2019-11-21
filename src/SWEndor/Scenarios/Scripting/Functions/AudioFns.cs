@@ -60,5 +60,64 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.NULL;
     }
 
+    public static Val SetSound(Context context, string sound_name)
+    {
+      context.Engine.SoundManager.SetSound(sound_name);
+      return Val.NULL;
+    }
+
+    public static Val SetSound(Context context, string sound_name, bool interrupt)
+    {
+      context.Engine.SoundManager.SetSound(sound_name, interrupt);
+      return Val.NULL;
+    }
+
+    public static Val SetSound(Context context, string sound_name, bool interrupt, float volume)
+    {
+      context.Engine.SoundManager.SetSound(sound_name, interrupt, volume);
+      return Val.NULL;
+    }
+
+    public static Val SetSound(Context context, string sound_name, bool interrupt, float volume, bool loop)
+    {
+      context.Engine.SoundManager.SetSound(sound_name, interrupt, volume, loop);
+      return Val.NULL;
+    }
+
+    public static Val SetSoundSingle(Context context, string sound_name)
+    {
+      context.Engine.SoundManager.SetSoundSingle(sound_name);
+      return Val.NULL;
+    }
+
+    public static Val SetSoundSingle(Context context, string sound_name, bool interrupt)
+    {
+      context.Engine.SoundManager.SetSoundSingle(sound_name, interrupt);
+      return Val.NULL;
+    }
+
+    public static Val SetSoundSingle(Context context, string sound_name, bool interrupt, float volume)
+    {
+      context.Engine.SoundManager.SetSoundSingle(sound_name, interrupt, volume);
+      return Val.NULL;
+    }
+
+    public static Val SetSoundSingle(Context context, string sound_name, bool interrupt, float volume, bool loop)
+    {
+      context.Engine.SoundManager.SetSoundSingle(sound_name, interrupt, volume, loop);
+      return Val.NULL;
+    }
+
+    public static Val SetSoundStop(Context context, string sound_name)
+    {
+      context.Engine.SoundManager.SetSoundStop(sound_name);
+      return Val.NULL;
+    }
+
+    public static Val SetSoundStopAll(Context context)
+    {
+      context.Engine.SoundManager.SetSoundStopAll();
+      return Val.NULL;
+    }
   }
 }

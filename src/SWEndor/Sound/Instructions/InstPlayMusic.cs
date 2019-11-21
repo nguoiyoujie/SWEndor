@@ -17,10 +17,11 @@ namespace SWEndor.Sound
       {
         if (Name == s.CurrMusic)
         {
+
             Name += "%";
         }
 
-        if (s.music.ContainsKey(Name))
+        if (s.music.Contains(Name))
         {
           //if (!isInterruptMusic)
           //{

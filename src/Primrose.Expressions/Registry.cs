@@ -1,4 +1,5 @@
 ﻿using Primrose.Primitives;
+using Primrose.Primitives.Factories;
 
 namespace Primrose.Expressions
 {
@@ -11,7 +12,7 @@ namespace Primrose.Expressions
     {
       /// <summary>The global script</summary>
       public static Script Global = new Script();
-      private static ThreadSafeDictionary<string, Script> m_registry = new ThreadSafeDictionary<string, Script>();
+      private static Registry<Script> m_registry = new Registry<Script>();
 
       /// <summary>
       /// Adds a script to the registry

@@ -30,6 +30,10 @@ namespace Primrose.Primitives.Factories
     /// <returns>True if the registry contains this key, False if otherwise</returns>
     public bool Contains(string id) { lock (locker) return list.ContainsKey(id); }
 
+    /// <summary>Retrieves the value associated with a key index</summary>
+    /// <param name="id">The identifier key to check</param>
+    public T this[string id] { get { return Get(id); } set { Put(id, value); } }
+
     /// <summary>Retrieves the value associated with a key</summary>
     /// <param name="id">The identifier key to check</param>
     /// <returns>The value associated with the key. If the registry does not contain this key, returns Default</returns>
@@ -46,6 +50,10 @@ namespace Primrose.Primitives.Factories
     /// <returns>The value associated with the key</returns>
     /// <exception cref="KeyNotFoundException">The registry does not contain this key.</exception>
     public T GetX(string id) { lock (locker) return list[id]; }
+
+    /// <summary>Retrives an array of all the keys in the registry</summary>
+    /// <returns></returns>
+    public string[] GetKeys() { lock (locker) return list.Keys.ToArray(); }
 
     /// <summary>Retrives an array of all the values in the registry</summary>
     /// <returns></returns>
@@ -99,6 +107,10 @@ namespace Primrose.Primitives.Factories
     /// <returns>True if the registry contains this key, False if otherwise</returns>
     public bool Contains(K key) { lock (locker) return list.ContainsKey(key); }
 
+    /// <summary>Retrieves the value associated with a key index</summary>
+    /// <param name="id">The identifier key to check</param>
+    public T this[K id] { get { return Get(id); } set { Put(id, value); } }
+
     /// <summary>Retrieves the value associated with a key</summary>
     /// <param name="key">The identifier key to check</param>
     /// <returns>The value associated with the key. If the registry does not contain this key, returns Default</returns>
@@ -109,6 +121,10 @@ namespace Primrose.Primitives.Factories
     /// <returns>The value associated with the key</returns>
     /// <exception cref="KeyNotFoundException">The registry does not contain this key.</exception>
     public T GetX(K key) { lock (locker) return list[key]; }
+
+    /// <summary>Retrives an array of all the keys in the registry</summary>
+    /// <returns></returns>
+    public K[] GetKeys() { lock (locker) return list.Keys.ToArray(); }
 
     /// <summary>Retrives an array of all the values in the registry</summary>
     /// <returns></returns>

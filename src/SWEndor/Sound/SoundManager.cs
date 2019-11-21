@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using SWEndor.Core;
 using Primrose.Primitives.Extensions;
 using SWEndor.Scenarios;
+using Primrose.Primitives.Factories;
 
 namespace SWEndor.Sound
 {
@@ -33,11 +34,10 @@ namespace SWEndor.Sound
     private int channels = 32; // 0 = music. 1-31 = sounds. ?
     private ChannelGroup musicgrp;
     private ChannelGroup interruptmusicgrp;
-    //private bool interruptActive;
-    private ThreadSafeDictionary<string, ChannelGroup> soundgrps = new ThreadSafeDictionary<string, ChannelGroup>();
+    private Registry<ChannelGroup> soundgrps = new Registry<ChannelGroup>();
 
-    private ThreadSafeDictionary<string, FMOD.Sound> music = new ThreadSafeDictionary<string, FMOD.Sound>();
-    private ThreadSafeDictionary<string, FMOD.Sound> sounds = new ThreadSafeDictionary<string, FMOD.Sound>();
+    private Registry<FMOD.Sound> music = new Registry<FMOD.Sound>();
+    private Registry<FMOD.Sound> sounds = new Registry<FMOD.Sound>();
     private Channel current_channel;
 
     // keep callback references alive
@@ -75,7 +75,7 @@ namespace SWEndor.Sound
       set
       {
         m_MasterSFXVolume = value;
-        foreach (ChannelGroup soundgrp in soundgrps.Values)
+        foreach (ChannelGroup soundgrp in soundgrps.GetAll())
           soundgrp.setVolume(m_MasterSFXVolume * m_MasterSFXVolumeScenario);
       }
     }
@@ -85,7 +85,7 @@ namespace SWEndor.Sound
       set
       {
         m_MasterSFXVolumeScenario = value;
-        foreach (ChannelGroup soundgrp in soundgrps.Values)
+        foreach (ChannelGroup soundgrp in soundgrps.GetAll())
           soundgrp.setVolume(m_MasterSFXVolume * m_MasterSFXVolumeScenario);
       }
     }
@@ -193,11 +193,6 @@ namespace SWEndor.Sound
 
         Log.Write(Log.DEBUG, LogType.ASSET_SOUND_LOADED, muname);
       }
-    }
-
-    public IEnumerable<string> GetMusicNames()
-    {
-      return music.Keys;
     }
 
     public bool PreloadMusic(string name)

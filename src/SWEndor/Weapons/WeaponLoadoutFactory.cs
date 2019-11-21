@@ -3,12 +3,13 @@ using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using System.IO;
 using System.Threading.Tasks;
+using Primrose.Primitives.Factories;
 
 namespace SWEndor.Weapons
 {
   public class WeaponLoadoutFactory
   {
-    private ThreadSafeDictionary<string, WeaponLoadoutInfo> list = new ThreadSafeDictionary<string, WeaponLoadoutInfo>();
+    private Registry<WeaponLoadoutInfo> list = new Registry<WeaponLoadoutInfo>();
 
     public void Register(WeaponLoadoutInfo weapon)
     {

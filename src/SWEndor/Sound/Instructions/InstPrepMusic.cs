@@ -15,7 +15,7 @@ namespace SWEndor.Sound
           Name += "%";
         }
 
-        if (s.music.ContainsKey(Name))
+        if (s.music.Contains(Name))
         {
           Channel dummy = null;
           s.fmodsystem.playSound(s.music[Name], s.musicgrp, true, out dummy);

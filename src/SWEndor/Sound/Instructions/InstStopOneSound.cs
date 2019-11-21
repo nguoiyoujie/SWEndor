@@ -10,7 +10,7 @@ namespace SWEndor.Sound
 
       public void Process(SoundManager s)
       {
-        if (s.sounds.ContainsKey(Name))
+        if (s.sounds.Contains(Name))
         {
           ChannelGroup soundgrp = s.soundgrps[Name];
 
