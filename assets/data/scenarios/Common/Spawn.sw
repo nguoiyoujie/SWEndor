@@ -39,7 +39,7 @@ spawn1:
 
 spawn2:
 	string formation = (spawn_formation == "") ? "LINE" : spawn_formation;
-	int[] spawnsquad = Squad.Squadron_Spawn(spawn_type, spawn_name, spawn_faction, 2, 0, spawn_hyperspace, spawn_pos, spawn_rot, formation, spawn_spacing, spawn_wait, "ANY");
+	int[] spawnsquad = Squad.Spawn(spawn_type, spawn_name, spawn_faction, 2, 0, spawn_hyperspace, spawn_pos, spawn_rot, formation, spawn_spacing, spawn_wait, "ANY");
 	foreach(int spawnunit in spawnsquad)
 	{
 		Actor.SetProperty(spawnunit, "DamageModifier", damagemod);
@@ -49,7 +49,7 @@ spawn2:
 
 spawn3:
 	string formation = (spawn_formation == "") ? "VSHAPE" : spawn_formation;
-	int[] spawnsquad = Squad.Squadron_Spawn(spawn_type, spawn_name, spawn_faction, 3, 0, spawn_hyperspace, spawn_pos, spawn_rot, formation, spawn_spacing, spawn_wait, "ANY");
+	int[] spawnsquad = Squad.Spawn(spawn_type, spawn_name, spawn_faction, 3, 0, spawn_hyperspace, spawn_pos, spawn_rot, formation, spawn_spacing, spawn_wait, "ANY");
 	foreach(int spawnunit in spawnsquad)
 	{
 		Actor.SetProperty(spawnunit, "DamageModifier", damagemod);
@@ -59,7 +59,7 @@ spawn3:
 
 spawn4:
 	string formation = (spawn_formation == "") ? "VERTICAL_SQUARE" : spawn_formation;
-	int[] spawnsquad = Squad.Squadron_Spawn(spawn_type, spawn_name, spawn_faction, 4, 0, spawn_hyperspace, spawn_pos, spawn_rot, formation, spawn_spacing, spawn_wait, "ANY");
+	int[] spawnsquad = Squad.Spawn(spawn_type, spawn_name, spawn_faction, 4, 0, spawn_hyperspace, spawn_pos, spawn_rot, formation, spawn_spacing, spawn_wait, "ANY");
 	foreach(int spawnunit in spawnsquad)
 	{
 		Actor.SetProperty(spawnunit, "DamageModifier", damagemod);

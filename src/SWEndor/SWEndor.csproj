@@ -516,6 +516,8 @@
     <Compile Include="Scenarios\GSFunctions.cs" />
     <Compile Include="Scenarios\MoodStates.cs" />
     <Compile Include="Scenarios\Scripting\Context.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\SpawnFns.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\SquadFns.cs" />
     <Compile Include="Scenarios\Scripting\Functions\AIFns.cs" />
     <Compile Include="Scenarios\Scripting\Functions\MiscFns.cs" />
     <Compile Include="Scenarios\Scripting\Functions\ScoreFns.cs" />

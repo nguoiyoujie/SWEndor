@@ -80,10 +80,11 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc("Scene.SetMinAIBounds", new ValFunc<float3>(SceneFns.SetMinAIBounds));
       AddFunc("Scene.FadeOut", new ValFunc(SceneFns.FadeOut));
 
-      // Scene Camera Management
+      // Camera Management
       AddFunc("Camera.SetPlayerLook", new ValFunc(PlayerCameraFns.SetPlayerLook));
       AddFunc("Camera.SetSceneLook", new ValFunc(PlayerCameraFns.SetSceneLook));
       AddFunc("Camera.SetDeathLook", new ValFunc(PlayerCameraFns.SetDeathLook));
+      AddFunc("Camera.EnableFreeLook", new ValFunc<bool>(PlayerCameraFns.EnableFreeLook));
       AddFunc("Camera.SetSceneLook_LookAtActor", new ValFunc<int>(PlayerCameraFns.SetSceneLook_LookAtActor));
       AddFunc("Camera.SetSceneLook_LookAtActor", new ValFunc<int, float3>(PlayerCameraFns.SetSceneLook_LookAtActor));
       AddFunc("Camera.SetSceneLook_LookAtActor", new ValFunc<int, float3, float3>(PlayerCameraFns.SetSceneLook_LookAtActor));
@@ -93,15 +94,17 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc("Camera.SetSceneLook_LookFromActor", new ValFunc<int, float3, float3>(PlayerCameraFns.SetSceneLook_LookFromActor));
       AddFunc("Camera.SetSceneLook_LookFromPoint", new ValFunc<float3>(PlayerCameraFns.SetSceneLook_LookFromPoint));
 
+      // Spawn Management
+      Functions.Add("Squad.Spawn", SpawnFns.Squadron_Spawn);
+      Functions.Add("Actor.Spawn", SpawnFns.Spawn);
+      AddFunc("Actor.QueueAtSpawner", new ValFunc<int, int>(SpawnFns.QueueAtSpawner));
+
       // Squad Management
-      Functions.Add("Squad.Squadron_Spawn", ActorFns.Squadron_Spawn);
-      AddFunc("Squad.AddToSquad", new ValFunc<int, int>(ActorFns.AddToSquad));
-      AddFunc("Squad.RemoveFromSquad", new ValFunc<int>(ActorFns.RemoveFromSquad));
-      AddFunc("Squad.MakeSquadLeader", new ValFunc<int>(ActorFns.MakeSquadLeader));
+      AddFunc("Squad.AddToSquad", new ValFunc<int, int>(SquadFns.AddToSquad));
+      AddFunc("Squad.RemoveFromSquad", new ValFunc<int>(SquadFns.RemoveFromSquad));
+      AddFunc("Squad.MakeSquadLeader", new ValFunc<int>(SquadFns.MakeSquadLeader));
 
       // Actor Management
-      Functions.Add("Actor.Spawn", ActorFns.Spawn);
-      AddFunc("Actor.QueueAtSpawn", new ValFunc<int, int>(ActorFns.QueueAtSpawn));
       AddFunc("Actor.GetActorType", new ValFunc<int>(ActorFns.GetActorType));
       AddFunc("Actor.IsFighter", new ValFunc<int>(ActorFns.IsFighter));
       AddFunc("Actor.IsLargeShip", new ValFunc<int>(ActorFns.IsLargeShip));
@@ -129,7 +132,7 @@ namespace SWEndor.Scenarios.Scripting
       Functions.Add("AI.QueueFirst", AIFns.QueueFirst);
       Functions.Add("AI.QueueNext", AIFns.QueueNext);
       Functions.Add("AI.QueueLast", AIFns.QueueLast);
-      AddFunc("AI.UnlockActor", new ValFunc<int>(AIFns.UnlockActor));
+      AddFunc("AI.UnlockOne", new ValFunc<int>(AIFns.UnlockOne));
       AddFunc("AI.ClearQueue", new ValFunc<int>(AIFns.ClearQueue));
       AddFunc("AI.ForceClearQueue", new ValFunc<int>(AIFns.ForceClearQueue));
 
@@ -164,9 +167,11 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc("Player.SetAI", new ValFunc<bool>(PlayerFns.SetAI));
       AddFunc("Player.SetLives", new ValFunc<int>(PlayerFns.SetLives));
       AddFunc("Player.DecreaseLives", new ValFunc(PlayerFns.DecreaseLives));
-      AddFunc("Player.SetScorePerLife", new ValFunc<float>(ScoreFns.SetScorePerLife));
-      AddFunc("Player.SetScoreForNextLife", new ValFunc<float>(ScoreFns.SetScoreForNextLife));
-      AddFunc("Player.ResetScore", new ValFunc(ScoreFns.ResetScore));
+
+      // Score Management
+      AddFunc("Score.SetScorePerLife", new ValFunc<float>(ScoreFns.SetScorePerLife));
+      AddFunc("Score.SetScoreForNextLife", new ValFunc<float>(ScoreFns.SetScoreForNextLife));
+      AddFunc("Score.Reset", new ValFunc(ScoreFns.ResetScore));
 
       // Faction
       AddFunc("Faction.Add", new ValFunc<string, float3>(FactionFns.AddFaction));

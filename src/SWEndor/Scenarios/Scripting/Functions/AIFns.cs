@@ -56,7 +56,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.TRUE;
     }
 
-    public static Val UnlockActor(Context context, int actorID)
+    public static Val UnlockOne(Context context, int actorID)
     {
       ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)

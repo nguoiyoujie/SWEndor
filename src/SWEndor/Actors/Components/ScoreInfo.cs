@@ -4,6 +4,8 @@ using SWEndor.Models;
 using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using SWEndor.Scenarios;
+using System.Collections.Generic;
+using Primrose.Primitives.Factories;
 
 namespace SWEndor
 {
@@ -17,10 +19,10 @@ namespace SWEndor
     public float DamageDealt { get; private set; }
     public int Deaths { get; private set; }
     public float DamageTaken { get; private set; }
-    public ThreadSafeDictionary<string, float> DamageDealtByName { get; private set; }
-    public ThreadSafeDictionary<string, int> KillsByName { get; private set; }
-    public ThreadSafeDictionary<string, float> DamageTakenByName { get; private set; }
-    public ThreadSafeDictionary<string, int> KilledByName { get; private set; }
+    public Registry<float> DamageDealtByName { get; private set; }
+    public Registry<int> KillsByName { get; private set; }
+    public Registry<float> DamageTakenByName { get; private set; }
+    public Registry<int> KilledByName { get; private set; }
 
     public ScoreInfo()
     {
@@ -30,10 +32,10 @@ namespace SWEndor
       DamageDealt = 0;
       Deaths = 0;
       DamageTaken = 0;
-      DamageDealtByName = new ThreadSafeDictionary<string, float>();
-      KillsByName = new ThreadSafeDictionary<string, int>();
-      DamageTakenByName = new ThreadSafeDictionary<string, float>();
-      KilledByName = new ThreadSafeDictionary<string, int>();
+      DamageDealtByName = new Registry<float>();
+      KillsByName = new Registry<int>();
+      DamageTakenByName = new Registry<float>();
+      KilledByName = new Registry<int>();
     }
 
     public void Reset()
@@ -50,17 +52,17 @@ namespace SWEndor
       KilledByName.Clear();
     }
 
-    private void Increment(ThreadSafeDictionary<string, float> data, string key, float value)
+    private void Increment(Registry<float> data, string key, float value)
     {
-      if (!data.ContainsKey(key))
+      if (!data.Contains(key))
         data.Add(key, value);
       else
         data[key] += value;
     }
 
-    private void Increment(ThreadSafeDictionary<string, int> data, string key, int value)
+    private void Increment(Registry<int> data, string key, int value)
     {
-      if (!data.ContainsKey(key))
+      if (!data.Contains(key))
         data.Add(key, value);
       else
         data[key] += value;

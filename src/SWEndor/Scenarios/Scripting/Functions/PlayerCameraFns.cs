@@ -24,6 +24,12 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.NULL;
     }
 
+    public static Val EnableFreeLook(Context context, bool enabled)
+    {
+      context.Engine.PlayerCameraInfo.IsFreeLook = enabled;
+      return Val.NULL;
+    }
+
     public static Val SetSceneLook_LookAtActor(Context context, int actorID)
     {
       context.Engine.PlayerCameraInfo.SceneLook.SetTarget_LookAtActor(actorID);

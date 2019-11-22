@@ -46,9 +46,9 @@ load:
 	Scene.SetMinAIBounds({-10000, -2500, -20000});
 
 	Player.SetLives(5);
-	Player.SetScorePerLife(1000000);
-	Player.SetScoreForNextLife(1000000);
-	Player.ResetScore();
+	Score.SetScorePerLife(1000000);
+	Score.SetScoreForNextLife(1000000);
+	Score.Reset();
 
 	UI.SetLine1Color(faction_empire_color);
 	UI.SetLine2Color(faction_traitor_color);
@@ -153,7 +153,7 @@ make_ships:
 
 	// Empire
 	
-	greywolf = Actor.Spawn("IMPL", "ISD GREY WOLF (Thrawn)", "Empire", "GREY WOLF", 0, { 1000, 400, 12000 }, { 0, -180, 0 }, "CriticalAllies");
+	greywolf = Actor.Spawn("IMPL", "ISD GREY WOLF (Thrawn)", "Empire", "GREY WOLF", 0, { 1000, 400, 12000 }, { 0, -180, 0 }, { "CriticalAllies" });
 	Actor.SetProperty(greywolf, "DamageModifier", 0.8);
 	Actor.SetProperty(greywolf, "Spawner.Enabled", true);
 	Actor.SetProperty(greywolf, "Spawner.SpawnTypes", {"TIE","TIE","TIE","TIEI","TIESA"});
@@ -161,7 +161,7 @@ make_ships:
 	AI.QueueLast(greywolf, "rotate", {-2000, 210, -20000}, 0);
 	AI.QueueLast(greywolf, "lock");
 
-	corvus = Actor.Spawn("INTD", "INT CORVUS", "Empire", "CORVUS", 0, { 3500, -500, 500 }, { 0, -130, 0 }, "CriticalAllies");
+	corvus = Actor.Spawn("INTD", "INT CORVUS", "Empire", "CORVUS", 0, { 3500, -500, 500 }, { 0, -130, 0 }, { "CriticalAllies" });
 	Actor.SetProperty(corvus, "DamageModifier", 0.5);
 	AI.QueueLast(corvus, "move", {2400, -500, -1000}, 12);
 	AI.QueueLast(corvus, "move", {0, -600, 4000}, 20);
@@ -185,7 +185,7 @@ make_ships:
 	
 	// Traitors
 	
-	glory = Actor.Spawn("IMPL", "ISD GLORY", "Traitors", "GLORY", 0, { -6750, 0, -22000 }, { 0, 40, 0 }, "CriticalEnemies");
+	glory = Actor.Spawn("IMPL", "ISD GLORY", "Traitors", "GLORY", 0, { -6750, 0, -22000 }, { 0, 40, 0 }, { "CriticalEnemies" });
 	Actor.SetProperty(glory, "Spawner.Enabled", true);
 	Actor.SetProperty(glory, "Spawner.SpawnTypes", {"TIE","TIEI","TIEI","TIEI"});
 	Actor.SetProperty(glory, "DamageModifier", 0.6);
@@ -295,69 +295,69 @@ make_fighters:
 	// Empire spawn reserves
 	
 	for (int i = 1; i <= 8; i += 1)
-		Actor.QueueAtSpawn(Actor.Spawn("TIE", "", "Empire", "", 0, _d, _d), greywolf);
+		Actor.QueueAtSpawner(Actor.Spawn("TIE", "", "Empire", "", 0, _d, _d), greywolf);
 	
 	for (int i = 1; i <= 4; i += 1)
 	{
 		_a = Actor.Spawn("TIEI", "Eta-" + i, "Empire", "", 0, _d, _d);
 		Actor.SetProperty(_a, "DamageModifier", 0.2);
-		Actor.QueueAtSpawn(_a, greywolf);
+		Actor.QueueAtSpawner(_a, greywolf);
 	}
 
 	for (int i = 1; i <= 4; i += 1)
-		Actor.QueueAtSpawn(Actor.Spawn("TIE", "", "Empire", "", 0, _d, _d), greywolf);
+		Actor.QueueAtSpawner(Actor.Spawn("TIE", "", "Empire", "", 0, _d, _d), greywolf);
 	
 	_a = Actor.Spawn("TIESA", "Beta-1", "Empire", "", 0, _d, _d);
 	Actor.SetProperty(_a, "DamageModifier", 0.25);
 	AI.QueueLast(_a, "attackactor", glory, -1, -1, false, 40);
-	Actor.QueueAtSpawn(_a, greywolf);
+	Actor.QueueAtSpawner(_a, greywolf);
 
 	_a = Actor.Spawn("TIESA", "Beta-2", "Empire", "", 0, _d, _d);
 	Actor.SetProperty(_a, "DamageModifier", 0.25);
 	AI.QueueLast(_a, "attackactor", glory, -1, -1, false, 40);
-	Actor.QueueAtSpawn(_a, greywolf);
+	Actor.QueueAtSpawner(_a, greywolf);
 	
 	_a = Actor.Spawn("TIESA", "Beta-3", "Empire", "", 0, _d, _d);
 	Actor.SetProperty(_a, "DamageModifier", 0.25);
 	AI.QueueLast(_a, "attackactor", glory, -1, -1, false, 40);
-	Actor.QueueAtSpawn(_a, greywolf);
+	Actor.QueueAtSpawner(_a, greywolf);
 	
-	Actor.QueueAtSpawn(Actor.Spawn("TIE", "", "Empire", "", 0, _d, _d), greywolf);
+	Actor.QueueAtSpawner(Actor.Spawn("TIE", "", "Empire", "", 0, _d, _d), greywolf);
 
 	_a = Actor.Spawn("TIESA", "Beta-4", "Empire", "", 0, _d, _d);
 	Actor.SetProperty(_a, "DamageModifier", 0.25);
 	AI.QueueLast(_a, "attackactor", nebu, -1, -1, false, 45);
-	Actor.QueueAtSpawn(_a, greywolf);
+	Actor.QueueAtSpawner(_a, greywolf);
 
 	_a = Actor.Spawn("TIESA", "Beta-5", "Empire", "", 0, _d, _d);
 	Actor.SetProperty(_a, "DamageModifier", 0.25);
 	AI.QueueLast(_a, "attackactor", nebu, -1, -1, false, 45);
-	Actor.QueueAtSpawn(_a, greywolf);
+	Actor.QueueAtSpawner(_a, greywolf);
 	
 	_a = Actor.Spawn("TIESA", "Beta-6", "Empire", "", 0, _d, _d);
 	Actor.SetProperty(_a, "DamageModifier", 0.25);
 	AI.QueueLast(_a, "attackactor", nebu, -1, -1, false, 45);
-	Actor.QueueAtSpawn(_a, greywolf);
+	Actor.QueueAtSpawner(_a, greywolf);
 	
-	Actor.QueueAtSpawn(Actor.Spawn("TIE", "", "Empire", "", 0, _d, _d), greywolf);
+	Actor.QueueAtSpawner(Actor.Spawn("TIE", "", "Empire", "", 0, _d, _d), greywolf);
 
 	// Traitor spawn reserves
 	
 	for (int i = 1; i <= 4; i += 1)
-		Actor.QueueAtSpawn(Actor.Spawn("TIEI", "", "Traitors", "", 0, _d, _d), glory);
+		Actor.QueueAtSpawner(Actor.Spawn("TIEI", "", "Traitors", "", 0, _d, _d), glory);
 	
 	for (int i = 1; i <= 4; i += 1)
 	{
 		_a = Actor.Spawn("TIED", "Delta-" + i, "Traitors", "", 0, _d, _d);
 		AI.QueueLast(_a, "attackactor", daring, -1, -1, false);
-		Actor.QueueAtSpawn(_a, glory);
+		Actor.QueueAtSpawner(_a, glory);
 	}
 	
 	for (int i = 1; i <= 4; i += 1)
 	{
 		_a = Actor.Spawn("TIESA", "", "Traitors", "", 0, _d, _d);
 		AI.QueueLast(_a, "attackactor", corvus, -1, -1, false, 30);
-		Actor.QueueAtSpawn(_a, glory);
+		Actor.QueueAtSpawner(_a, glory);
 	}
 
 
@@ -464,18 +464,18 @@ enemybeginspawn:
 	Actor.SetProperty(nebu, "Spawner.SpawnTypes", {"Z95","YWING"});
 	Actor.SetProperty(glory, "Spawner.SpawnTypes", {"TIE","TIE","TIEI","TIEI","JV7"});
 	
-	Actor.QueueAtSpawn(Actor.Spawn("TIED", "Iota-1", "Traitors", "", 0, _d, _d), glory);
-	Actor.QueueAtSpawn(Actor.Spawn("TIED", "Iota-2", "Traitors", "", 0, _d, _d), glory);
-	Actor.QueueAtSpawn(Actor.Spawn("TIESA", "", "Traitors", "", 0, _d, _d), glory);
-	Actor.QueueAtSpawn(Actor.Spawn("TIESA", "", "Traitors", "", 0, _d, _d), glory);
-	Actor.QueueAtSpawn(Actor.Spawn("TIED", "Iota-3", "Traitors", "", 0, _d, _d), glory);
-	Actor.QueueAtSpawn(Actor.Spawn("TIED", "Iota-4", "Traitors", "", 0, _d, _d), glory);
-	Actor.QueueAtSpawn(Actor.Spawn("TIESA", "", "Traitors", "", 0, _d, _d), glory);
-	Actor.QueueAtSpawn(Actor.Spawn("TIESA", "", "Traitors", "", 0, _d, _d), glory);
-	Actor.QueueAtSpawn(Actor.Spawn("TIED", "Iota-5", "Traitors", "", 0, _d, _d), glory);
-	Actor.QueueAtSpawn(Actor.Spawn("TIED", "Iota-6", "Traitors", "", 0, _d, _d), glory);
-	Actor.QueueAtSpawn(Actor.Spawn("TIEI", "", "Traitors", "", 0, _d, _d), glory);
-	Actor.QueueAtSpawn(Actor.Spawn("TIEI", "", "Traitors", "", 0, _d, _d), glory);
+	Actor.QueueAtSpawner(Actor.Spawn("TIED", "Iota-1", "Traitors", "", 0, _d, _d), glory);
+	Actor.QueueAtSpawner(Actor.Spawn("TIED", "Iota-2", "Traitors", "", 0, _d, _d), glory);
+	Actor.QueueAtSpawner(Actor.Spawn("TIESA", "", "Traitors", "", 0, _d, _d), glory);
+	Actor.QueueAtSpawner(Actor.Spawn("TIESA", "", "Traitors", "", 0, _d, _d), glory);
+	Actor.QueueAtSpawner(Actor.Spawn("TIED", "Iota-3", "Traitors", "", 0, _d, _d), glory);
+	Actor.QueueAtSpawner(Actor.Spawn("TIED", "Iota-4", "Traitors", "", 0, _d, _d), glory);
+	Actor.QueueAtSpawner(Actor.Spawn("TIESA", "", "Traitors", "", 0, _d, _d), glory);
+	Actor.QueueAtSpawner(Actor.Spawn("TIESA", "", "Traitors", "", 0, _d, _d), glory);
+	Actor.QueueAtSpawner(Actor.Spawn("TIED", "Iota-5", "Traitors", "", 0, _d, _d), glory);
+	Actor.QueueAtSpawner(Actor.Spawn("TIED", "Iota-6", "Traitors", "", 0, _d, _d), glory);
+	Actor.QueueAtSpawner(Actor.Spawn("TIEI", "", "Traitors", "", 0, _d, _d), glory);
+	Actor.QueueAtSpawner(Actor.Spawn("TIEI", "", "Traitors", "", 0, _d, _d), glory);
 
 	
 spawnenemybombers:
@@ -681,7 +681,7 @@ spawn_escapeCORV:
 	float3 pos = Actor.GetGlobalPosition(gloryhangar);
 	float3 rot = Actor.GetGlobalRotation(glory);
 	rot = {rot[0] + 45, rot[1], rot[2]};
-	int esccorv = Actor.Spawn("CORV", "CRV VORKNKX", "Traitors", "VORKNKX", 0, pos, rot, "CriticalEnemies");
+	int esccorv = Actor.Spawn("CORV", "CRV VORKNKX", "Traitors", "VORKNKX", 0, pos, rot, { "CriticalEnemies" });
 	Actor.SetProperty(esccorv, "DamageModifier", 0.5);
 	Actor.SetProperty(greywolf, "Spawner.SpawnTypes", {"TIE","TIE","TIEI","TIESA","TIESA"});
 	AI.QueueLast(esccorv, "wait", 2.5);

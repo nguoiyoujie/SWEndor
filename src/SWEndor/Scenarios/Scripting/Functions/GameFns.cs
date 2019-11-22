@@ -31,7 +31,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
 
     public static Val GetRegisterCount(Context context, string register)
     {
-      HashSet<ActorInfo> reg = context.Engine.GameScenarioManager.Scenario.GetRegister((string)register);
+      HashSet<ActorInfo> reg = context.Engine.GameScenarioManager.Scenario.GetRegister(register);
       if (reg == null)
         return new Val(0);
       return new Val(reg.Count);

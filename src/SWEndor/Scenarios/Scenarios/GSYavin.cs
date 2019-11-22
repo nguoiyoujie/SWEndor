@@ -16,6 +16,7 @@ using SWEndor.Models;
 using Primrose.Primitives.Extensions;
 using Primrose.Primitives.Geometry;
 using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.Factories;
 
 namespace SWEndor.Scenarios
 {
@@ -38,7 +39,7 @@ namespace SWEndor.Scenarios
     private ActorInfo m_ADS = null;
     private ActorInfo m_ADS_Surface = null;
     private List<ActorInfo> m_ADS_SurfaceParts;
-    private ThreadSafeDictionary<int, ActorInfo> m_ADS_TrenchParts;
+    private Registry<int, ActorInfo> m_ADS_TrenchParts;
     //private ActorInfo m_AStar = null;
     private List<ShipSpawnEventArg> m_pendingSDspawnlist;
     private HashSet<ActorInfo> m_CriticalGroundObjects;
@@ -75,7 +76,7 @@ namespace SWEndor.Scenarios
       PlayerInfo.Name = "Red Five";
 
       m_ADS_SurfaceParts = new List<ActorInfo>();
-      m_ADS_TrenchParts = new ThreadSafeDictionary<int, ActorInfo>();
+      m_ADS_TrenchParts = new Registry<int, ActorInfo>();
       m_pendingSDspawnlist = new List<ShipSpawnEventArg>();
       m_CriticalGroundObjects = new HashSet<ActorInfo>();
     }
