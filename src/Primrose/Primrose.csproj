@@ -85,6 +85,7 @@
     <Compile Include="Primitives\Extensions\ArrayExts.cs" />
     <Compile Include="Primitives\Extensions\BitExt.cs" />
     <Compile Include="Primitives\Extensions\DictionaryExts.cs" />
+    <Compile Include="Primitives\Extensions\IntExts.cs" />
     <Compile Include="Primitives\Extensions\FloatExts.cs" />
     <Compile Include="Primitives\Extensions\ListExts.cs" />
     <Compile Include="Primitives\Extensions\ObjectExts.cs" />

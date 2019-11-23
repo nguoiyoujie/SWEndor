@@ -63,7 +63,21 @@ namespace SWEndor.Scenarios
 
     public Octree_String Octree = new Octree_String(new TV_3DVECTOR(), 100000, 10);
 
+    public List<MessageLog> MessageLogs = new List<MessageLog>();
 
+    public struct MessageLog
+    {
+      public float Time;
+      public string Text;
+      public COLOR Color;
+
+      public MessageLog(float time, string text, COLOR color)
+      {
+        Time = time;
+        Text = text;
+        Color = color;
+      }
+    }
 
     public bool GetGameStateB(string key) { return GameStatesB.Get(key); }
     public float GetGameStateF(string key) { return GameStatesF.Get(key); }
@@ -90,6 +104,7 @@ namespace SWEndor.Scenarios
       TimeSinceLostStructure = -100;
       LastLostSoundTime = 0;
 
+      MessageLogs.Clear();
       GameStatesF.Clear();
       GameStatesB.Clear();
       GameStatesS.Clear();

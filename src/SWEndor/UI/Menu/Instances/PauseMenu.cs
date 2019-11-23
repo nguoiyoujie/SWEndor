@@ -8,8 +8,7 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement MainText = new SelectionElement();
     SelectionElement ButtonResume = new SelectionElement();
     SelectionElement ButtonMap = new SelectionElement();
-    //UISelectionElement ButtonSave = new UISelectionElement();
-    //UISelectionElement ButtonLoad = new UISelectionElement();
+    SelectionElement ButtonMsgLog = new SelectionElement();
     SelectionElement ButtonOptions = new SelectionElement();
     SelectionElement ButtonQuit = new SelectionElement();
 
@@ -26,50 +25,45 @@ namespace SWEndor.UI.Menu.Pages
       MainText.Text = "Game Paused";
       MainText.TextPosition = new TV_2DVECTOR(100, 80);
 
+      float y = 200;
       ButtonResume.Text = "Resume";
-      ButtonResume.TextPosition = new TV_2DVECTOR(200, 200);
+      ButtonResume.TextPosition = new TV_2DVECTOR(200, y);
       ButtonResume.HighlightBoxPosition = ButtonResume.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonResume.HighlightBoxWidth = 200;
       ButtonResume.HighlightBoxHeight = 30;
       ButtonResume.Selectable = true;
       ButtonResume.OnKeyPress += SelectResume;
 
+      y += 40;
       ButtonMap.Text = "Map";
-      ButtonMap.TextPosition = new TV_2DVECTOR(200, 240);
+      ButtonMap.TextPosition = new TV_2DVECTOR(200, y);
       ButtonMap.HighlightBoxPosition = ButtonMap.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonMap.HighlightBoxWidth = 200;
       ButtonMap.HighlightBoxHeight = 30;
       ButtonMap.Selectable = true;
       ButtonMap.OnKeyPress += SelectMap;
 
-      /*
-      ButtonSave.Text = "Save Scenario";
-      ButtonSave.TextPosition = new TV_2DVECTOR(200, 240);
-      ButtonSave.HighlightBoxPosition = ButtonSave.TextPosition - new TV_2DVECTOR(5, 5);
-      ButtonSave.HighlightBoxWidth = 200;
-      ButtonSave.HighlightBoxHeight = 30;
-      ButtonSave.Selectable = true;
-      ButtonSave.OnKeyPress += SelectSave;
+      y += 40;
+      ButtonMsgLog.Text = "Message Log";
+      ButtonMsgLog.TextPosition = new TV_2DVECTOR(200, y);
+      ButtonMsgLog.HighlightBoxPosition = ButtonMsgLog.TextPosition - new TV_2DVECTOR(5, 5);
+      ButtonMsgLog.HighlightBoxWidth = 200;
+      ButtonMsgLog.HighlightBoxHeight = 30;
+      ButtonMsgLog.Selectable = true;
+      ButtonMsgLog.OnKeyPress += SelectMsgLog;
 
-      ButtonLoad.Text = "Load Scenario";
-      ButtonLoad.TextPosition = new TV_2DVECTOR(200, 280);
-      ButtonLoad.HighlightBoxPosition = ButtonLoad.TextPosition - new TV_2DVECTOR(5, 5);
-      ButtonLoad.HighlightBoxWidth = 200;
-      ButtonLoad.HighlightBoxHeight = 30;
-      ButtonLoad.Selectable = true;
-      ButtonLoad.OnKeyPress += SelectLoad;
-      */
-
+      y += 40;
       ButtonOptions.Text = "Options";
-      ButtonOptions.TextPosition = new TV_2DVECTOR(200, 320);
+      ButtonOptions.TextPosition = new TV_2DVECTOR(200, y);
       ButtonOptions.HighlightBoxPosition = ButtonOptions.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonOptions.HighlightBoxWidth = 200;
       ButtonOptions.HighlightBoxHeight = 30;
       ButtonOptions.Selectable = true;
       ButtonOptions.OnKeyPress += SelectOptions;
 
+      y += 40;
       ButtonQuit.Text = "Quit";
-      ButtonQuit.TextPosition = new TV_2DVECTOR(200, 360);
+      ButtonQuit.TextPosition = new TV_2DVECTOR(200, y);
       ButtonQuit.HighlightBoxPosition = ButtonQuit.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonQuit.HighlightBoxWidth = 200;
       ButtonQuit.HighlightBoxHeight = 30;
@@ -80,8 +74,7 @@ namespace SWEndor.UI.Menu.Pages
       Elements.Add(MainText);
       Elements.Add(ButtonResume);
       Elements.Add(ButtonMap);
-      //Elements.Add(ButtonSave);
-      //Elements.Add(ButtonLoad);
+      Elements.Add(ButtonMsgLog);
       Elements.Add(ButtonOptions);
       Elements.Add(ButtonQuit);
       SelectedElementID = Elements.IndexOf(ButtonResume);
@@ -102,6 +95,16 @@ namespace SWEndor.UI.Menu.Pages
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
         EnterPage(new ScenarioMap(Owner, Engine.GameScenarioManager.Scenario));
+        return true;
+      }
+      return false;
+    }
+
+    private bool SelectMsgLog(CONST_TV_KEY key)
+    {
+      if (key == CONST_TV_KEY.TV_KEY_RETURN)
+      {
+        EnterPage(new ScenarioMessageLog(Owner, Engine.GameScenarioManager.Scenario));
         return true;
       }
       return false;

@@ -110,6 +110,7 @@ namespace SWEndor
     public void MessageText(string text, float expiretime, COLOR color, int priority = 0)
     {
       MessageText(ref PrimaryText, text, expiretime, color, priority);
+      Engine.GameScenarioManager.Scenario.State.MessageLogs.Add(new Scenarios.ScenarioStates.MessageLog(Engine.Game.GameTime + expiretime, text, color));
     }
 
     public void MessageSecondaryText(string text, float expiretime, COLOR color, int priority = 0)
