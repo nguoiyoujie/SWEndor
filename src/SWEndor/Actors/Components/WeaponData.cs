@@ -40,8 +40,8 @@ namespace SWEndor.Actors.Components
       float ret = 0;
       foreach (WeaponInfo w in Weapons)
       {
-        if (ret < w.Range)
-          ret = w.Range;
+        if (ret < w.Targeter.Range)
+          ret = w.Targeter.Range;
       }
       return ret;
     }
@@ -55,12 +55,12 @@ namespace SWEndor.Actors.Components
 
         if (!wb.IsNull)
         {
-          if ((delta_angle < ws.AngularRange
-            && delta_angle > -ws.AngularRange)
-            && (delta_distance < ws.Range
-            && delta_distance > -ws.Range)
+          if ((delta_angle < ws.Targeter.AngularRange
+            && delta_angle > -ws.Targeter.AngularRange)
+            && (delta_distance < ws.Targeter.Range
+            && delta_distance > -ws.Targeter.Range)
             && ((actor.IsPlayer && !engine.PlayerInfo.PlayerAIEnabled) || ws.CanTarget( actor, target))
-            && (ws.MaxAmmo == -1 || ws.Ammo > 0))
+            && (ws.Ammo.Max == -1 || ws.Ammo.Count > 0))
           {
             weapon = new WeaponShotInfo(ws, wb.Burst);
             return true;

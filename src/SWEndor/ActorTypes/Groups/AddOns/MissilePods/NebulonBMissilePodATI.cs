@@ -13,7 +13,7 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Engine, Name, @"turbotowers\nebulonb_missilepod.x");
       DyingMoveData.Kill();
 
-      Loadouts = new string[] { "NEBL_MISL" };
+      Loadouts = new WeapData[] { new WeapData("", "AI", "NO_AUTOAIM", "NEBL_MISL", "DEFAULT", "ADDON_MISL", "ADDON_MISSILE") };
     }
   }
 }

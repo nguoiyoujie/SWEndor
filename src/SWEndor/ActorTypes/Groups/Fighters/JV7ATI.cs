@@ -31,7 +31,11 @@ namespace SWEndor.ActorTypes.Instances
       //SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineAWing, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };
       AddOns = new AddOnData[] { new AddOnData("JV7LSR", new TV_3DVECTOR(0, -2, -12), new TV_3DVECTOR(90, 0, 0), true) };
 
-      Loadouts = new string[] { "JV7_MISL", "JV7_LASR" };
+      Loadouts = new WeapData[]
+      {
+        new WeapData("MISL", "SEC_1_AI", "NO_AUTOAIM", "JV7_MISL", "JV7_MISL", "WING_MISL", "WING_MISL"),
+        new WeapData("LASR", "PRI_1_AI", "NO_AUTOAIM", "DEFAULT", "JV7_LASR", "WING_LSR_G", "WING_LASER"),
+      };
     }
   }
 }

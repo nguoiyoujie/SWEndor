@@ -16,16 +16,16 @@ load:
 	Audio.SetMusicLoop("battle_2_2");
 	
 	Player.SetLives(3);
-	Player.SetScorePerLife(1000000);
-	Player.SetScoreForNextLife(1000000);
-	Player.ResetScore();
+	Score.SetScorePerLife(1000000);
+	Score.SetScoreForNextLife(1000000);
+	Score.Reset();
 	
 	UI.SetLine1Color({ 0.6, 0.6, 0 });
 	UI.SetLine2Color({ 0.6, 0.6, 0 });
 
-	Script.CallX("spawnreset");	
-	Script.CallX("makesmugglers");
-	Script.CallX("makeplayer");
+	Script.Call("spawnreset");	
+	Script.Call("makesmugglers");
+	Script.Call("makeplayer");
 	AddEvent(7, "stage1");
 	AddEvent(12, "message01");
 	AddEvent(17, "message02");
@@ -63,61 +63,61 @@ makesmugglers:
 	int pspawner = Actor.Spawn("SPAWN", "", "Smugglers", "", 0, { 9500, -900, 0 }, { -15, -90, 0 });
 	Actor.SetProperty(pspawner, "Spawner.Enabled", true);
 
-	int falcon1 = Actor.Spawn("FALC", "YT-1300", "Smugglers", "", 0, { 8600, -1020, -500 }, { -5, -90, 0 }, "CriticalAllies");
+	int falcon1 = Actor.Spawn("FALC", "YT-1300", "Smugglers", "", 0, { 8600, -1020, -500 }, { -5, -90, 0 }, { "CriticalAllies" });
 	Actor.SetProperty(falcon1, "DamageModifier", 0.15);
 	AI.QueueLast(falcon1, "wait", 5);
 	AI.QueueLast(falcon1, "rotate", { 0, 0, 0 }, 0);
 	AI.QueueLast(falcon1, "wait", 5);
 	
-	int falcon2 = Actor.Spawn("FALC", "YT-1300", "Smugglers", "", 0, { 8650, -960, 500 }, { -5, -90, 0 }, "CriticalAllies");
+	int falcon2 = Actor.Spawn("FALC", "YT-1300", "Smugglers", "", 0, { 8650, -960, 500 }, { -5, -90, 0 }, { "CriticalAllies" });
 	Actor.SetProperty(falcon2, "DamageModifier", 0.15);
 	AI.QueueLast(falcon2, "wait", 5);
 	AI.QueueLast(falcon2, "rotate", { 0, 0, 0 }, 0);
 	AI.QueueLast(falcon2, "wait", 5);
 
-	int falcon3 = Actor.Spawn("FALC", "YT-1300", "Smugglers", "", 0, { 10250, -1040, 750 }, { -5, -90, 0 }, "CriticalAllies");
+	int falcon3 = Actor.Spawn("FALC", "YT-1300", "Smugglers", "", 0, { 10250, -1040, 750 }, { -5, -90, 0 }, { "CriticalAllies" });
 	Actor.SetProperty(falcon3, "DamageModifier", 0.15);
 	AI.QueueLast(falcon3, "wait", 5);
 	AI.QueueLast(falcon3, "rotate", { 0, 0, 0 }, 0);
 	AI.QueueLast(falcon3, "wait", 5);
 
-	int falcon4 = Actor.Spawn("FALC", "YT-1300", "Smugglers", "", 0, { 10050, -940, -750 }, { -5, -90, 0 }, "CriticalAllies");
+	int falcon4 = Actor.Spawn("FALC", "YT-1300", "Smugglers", "", 0, { 10050, -940, -750 }, { -5, -90, 0 }, { "CriticalAllies" });
 	Actor.SetProperty(falcon4, "DamageModifier", 0.15);
 	AI.QueueLast(falcon4, "wait", 5);
 	AI.QueueLast(falcon4, "rotate", { 0, 0, 0 }, 0);
 	AI.QueueLast(falcon4, "wait", 5);
 
-	int trn0 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 8750, -1200, 0 }, { -5, -90, 0 }, "CriticalAllies");
+	int trn0 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 8750, -1200, 0 }, { -5, -90, 0 }, { "CriticalAllies" });
 	AI.QueueLast(trn0, "move", { -8750, -200, 0 }, 50);
 	AI.QueueLast(trn0, "hyperspaceout");
 	AI.QueueLast(trn0, "setgamestateb","TransportExit",true);
 	AI.QueueLast(trn0, "delete");
 	
-	int trn1 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 9250, -1350, -350 }, { -5, -90, 0 }, "CriticalAllies");
+	int trn1 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 9250, -1350, -350 }, { -5, -90, 0 }, { "CriticalAllies" });
 	AI.QueueLast(trn1, "move", { -8260, -350, -350 }, 50);
 	AI.QueueLast(trn1, "hyperspaceout");
 	AI.QueueLast(trn1, "setgamestateb","TransportExit",true);
 	AI.QueueLast(trn1, "delete");
 	
-	int trn2 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 9050, -1300, 350 }, { -5, -90, 0 }, "CriticalAllies");
+	int trn2 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 9050, -1300, 350 }, { -5, -90, 0 }, { "CriticalAllies" });
 	AI.QueueLast(trn2, "move", { -8470, -300, 350 }, 50);
 	AI.QueueLast(trn2, "hyperspaceout");
 	AI.QueueLast(trn2, "setgamestateb","TransportExit",true);
 	AI.QueueLast(trn2, "delete");
 	
-	int trn3 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 9750, -1450, -250 }, { -5, -90, 0 }, "CriticalAllies");
+	int trn3 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 9750, -1450, -250 }, { -5, -90, 0 }, { "CriticalAllies" });
 	AI.QueueLast(trn3, "move", { -7780, -450, -450 }, 50);
 	AI.QueueLast(trn3, "hyperspaceout");
 	AI.QueueLast(trn3, "setgamestateb","TransportExit",true);
 	AI.QueueLast(trn3, "delete");
 
-	int trn4 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 9850, -1400, 150 }, { -5, -90, 0 }, "CriticalAllies");
+	int trn4 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 9850, -1400, 150 }, { -5, -90, 0 }, { "CriticalAllies" });
 	AI.QueueLast(trn4, "move", { -7690, -400, 150 }, 50);
 	AI.QueueLast(trn4, "hyperspaceout");
 	AI.QueueLast(trn4, "setgamestateb","TransportExit",true);
 	AI.QueueLast(trn4, "delete");
 	
-	int trn5 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 10650, -1350, -50 }, { -5, -90, 0 }, "CriticalAllies");
+	int trn5 = Actor.Spawn("TRAN", "", "Smugglers", "TRANSPORT", 0, { 10650, -1350, -50 }, { -5, -90, 0 }, { "CriticalAllies" });
 	AI.QueueLast(trn5, "move", { -6900, -350, -50 }, 50);
 	AI.QueueLast(trn5, "hyperspaceout");
 	AI.QueueLast(trn5, "setgamestateb","TransportExit",true);
@@ -132,13 +132,13 @@ gametick:
 	time2 = time2 + gframe;
 	
 	if (starttime < 0 && !started) 
-		Script.CallX("start");
+		Script.Call("start");
 	
 	if (time > interval) 
-		Script.CallX("spawntie"); 
+		Script.Call("spawntie"); 
 	
 	if (time2 > interval2) 
-		Script.CallX("spawnwing"); 
+		Script.Call("spawnwing"); 
 	
 	if (GetTimeSinceLostWing() < gtime || gtime % 0.2 > 0.1)
 		UI.SetLine1Text("WINGS: " + Faction.GetWingCount("Smugglers")); 
@@ -151,23 +151,23 @@ gametick:
 		UI.SetLine2Text("");
 	
 	if (GetGameStateB("TransportExit") && !triggerwinlose) 
-		Script.CallX("win");
+		Script.Call("win");
 	
 	if (Faction.GetShipCount("Smugglers") < 1 && !triggerwinlose) 
 		SetGameStateB("TransportDead",true);
 	
 	if (GetGameStateB("TransportDead") && !triggerwinlose) 
-		Script.CallX("lose");
+		Script.Call("lose");
 
 win:
 	triggerwinlose = true;
-	Script.CallX("messagewin");
+	Script.Call("messagewin");
 	SetGameStateB("GameWon",true);
 	AddEvent(3, "fadeout");
 
 lose:
 	triggerwinlose = true;
-	Script.CallX("messagelose");
+	Script.Call("messagelose");
 	SetGameStateB("GameOver",true);
 	AddEvent(3, "fadeout");
 
@@ -178,7 +178,7 @@ fadeout:
 start:
 	started = true;
 	Player.SetMovementEnabled(true);
-	Script.CallX("message00");
+	Script.Call("message00");
 
 spawntie:
 	time = time - interval;
@@ -189,13 +189,13 @@ spawntie:
 	spawn_pos = { 400, 0, -10000 };
 	spawn_rot = { 0, 0, 0 };
 
-	Script.CallX("spawn4");
+	Script.Call("spawn4");
 	spawn_pos = { -400, 0, -10000 };
-	Script.CallX("spawn4");
+	Script.Call("spawn4");
 
 	spawn_pos = { 0, 0, -10200 };
 	spawn_type = "TIEI";
-	Script.CallX("spawn2");
+	Script.Call("spawn2");
 
 spawnwing:
 	time2 = time2 - interval2;
@@ -276,9 +276,9 @@ stage2:
 	spawn_rot = { 0, 0, 0 };
 
 	spawn_type = "TIED";
-	Script.CallX("spawn3");
+	Script.Call("spawn3");
 	spawn_pos = { 300, 0, -10200 };
-	Script.CallX("spawn3");
+	Script.Call("spawn3");
 
 	int wing = Actor.Spawn("AWING", "", "Rebels", "", 0, { 7000, 0, 47000 }, { 0, 180, 0 });
 	AI.QueueLast(wing, "hyperspacein", { 0, 150, 5500 });

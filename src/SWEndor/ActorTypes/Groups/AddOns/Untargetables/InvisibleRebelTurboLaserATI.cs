@@ -18,7 +18,7 @@ namespace SWEndor.ActorTypes.Instances
 
       //Mask &= ~(ComponentMask.CAN_BECOLLIDED | ComponentMask.CAN_BETARGETED);
 
-      Loadouts = new string[] { "FALC_GLSR" };
+      Loadouts = new WeapData[] { new WeapData("", "AI", "FALC_GLSR", "FALC_GLSR", "FALC_GLSR", "ADDON_LSR_R", "ADDON_TURBOLASER") };
     }
   }
 }

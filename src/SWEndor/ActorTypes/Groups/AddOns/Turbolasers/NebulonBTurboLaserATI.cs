@@ -10,9 +10,9 @@ namespace SWEndor.ActorTypes.Instances
       CombatData.ImpactDamage = 16;
 
       MeshData = new MeshData(Engine, Name, @"turbotowers\nebulonb_turbolaser.x");
-
-      Loadouts = new string[] { "NEBL_LASR" };
       DyingMoveData.Kill();
+
+      Loadouts = new WeapData[] { new WeapData("", "AI", "ADDON_TURBOLASER", "NEBL_LASR", "DEFAULT", "ADDON_LSR_R", "ADDON_TURBOLASER") };
     }
   }
 }

@@ -39,10 +39,10 @@ namespace SWEndor.UI.Menu.Pages
       sb.Append(Engine.PlayerInfo.Score.Kills.ToString(" #######0"));
       sb.AppendLine();
 
-      foreach (KeyValuePair<string, int> kvp in Engine.PlayerInfo.Score.KillsByName.GetList())
+      foreach (string key in Engine.PlayerInfo.Score.KillsByName.GetKeys())
       {
-        sb.Append((kvp.Key.Length > 42) ? kvp.Key.Remove(42) : kvp.Key.PadRight(42));
-        sb.Append(kvp.Value.ToString(" #######0"));
+        sb.Append((key.Length > 42) ? key.Remove(42) : key.PadRight(42));
+        sb.Append(Engine.PlayerInfo.Score.KillsByName[key].ToString(" #######0"));
         sb.AppendLine();
       }
       /*

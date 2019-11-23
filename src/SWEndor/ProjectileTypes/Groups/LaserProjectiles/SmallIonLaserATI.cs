@@ -51,8 +51,8 @@ namespace SWEndor.ProjectileTypes.Instances
           float empduration = 12;
 
           for (int i = 0; i < child.WeaponDefinitions.Weapons.Length; i++)
-            if (child.WeaponDefinitions.Weapons[i].WeaponCooldown < engine.Game.GameTime + empduration + 2)
-              child.WeaponDefinitions.Weapons[i].WeaponCooldown = engine.Game.GameTime + empduration + 2;
+            if (child.WeaponDefinitions.Weapons[i].Port.Cooldown < engine.Game.GameTime + empduration + 2)
+              child.WeaponDefinitions.Weapons[i].Port.Cooldown = engine.Game.GameTime + empduration + 2;
 
           ExplosionCreationInfo acinfo = new ExplosionCreationInfo(engine.ExplosionTypeFactory.Get("ELECTRO"));
           ExplosionInfo electro = engine.ExplosionFactory.Create(acinfo);

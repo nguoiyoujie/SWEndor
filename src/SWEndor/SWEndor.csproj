@@ -155,6 +155,7 @@
     <Compile Include="Actors\Octree\Octree.cs" />
     <Compile Include="ActorTypes\Components\CombatData.cs" />
     <Compile Include="ActorTypes\Components\SystemData.cs" />
+    <Compile Include="ActorTypes\Components\WeapData.cs" />
     <Compile Include="ActorTypes\General\ActorCreationInfo.cs" />
     <Compile Include="Actors\Models\ArmorModel\ActorExt.cs" />
     <Compile Include="Actors\Models\Collision\ActorExt.cs" />
@@ -678,8 +679,17 @@
     <Compile Include="UI\Widget\TextInfo.cs" />
     <Compile Include="UI\Widget\UIWidget.cs" />
     <Compile Include="Utilities\Utilities.cs" />
-    <Compile Include="Weapons\NullWeapon.cs" />
-    <Compile Include="Weapons\TrackerDummyWeapon.cs" />
+    <Compile Include="Weapons\Components\WeapLoadInfo.cs" />
+    <Compile Include="Weapons\Components\WeapRegistry.cs" />
+    <Compile Include="Weapons\Instances\NullWeapon.cs" />
+    <Compile Include="Weapons\Instances\TrackerDummyWeapon.cs" />
+    <Compile Include="Weapons\Enum\TargetAcqType.cs" />
+    <Compile Include="Weapons\Components\WeapAmmoInfo.cs" />
+    <Compile Include="Weapons\Components\WeapPortInfo.cs" />
+    <Compile Include="Weapons\Components\WeapProjInfo.cs" />
+    <Compile Include="Weapons\Components\WeapAimInfo.cs" />
+    <Compile Include="Weapons\Components\WeapTgtInfo.cs" />
+    <Compile Include="Weapons\Enum\WeaponType.cs" />
     <Compile Include="Weapons\WeaponLoadoutFactory.cs" />
     <Compile Include="Weapons\WeaponFactory.cs" />
     <Compile Include="Weapons\WeaponLoadoutInfo.cs" />

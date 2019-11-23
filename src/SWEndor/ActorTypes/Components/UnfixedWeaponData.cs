@@ -8,7 +8,7 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct UnfixedWeaponData
   {
-    private List<string> _weapons;
+    private List<WeapData> _weapons;
     private int _primary;
     private int _secondary;
     private int _ai;
@@ -32,11 +32,14 @@ namespace SWEndor.ActorTypes.Components
     public void Load(Engine engine, ActorTypeInfo atype)
     {
       this = new UnfixedWeaponData();
-      _weapons = new List<string>(4);
+      _weapons = new List<WeapData>(4);
       _weaponclasses = new List<UnfixedWeapon>(8);
 
-      foreach (string s in atype.Loadouts)
-        InsertLoadout(engine.WeaponLoadoutFactory, s);
+      foreach (WeapData s in atype.Loadouts)
+      {
+        //InsertLoadout(engine.WeaponLoadoutFactory, s);
+        InsertLoadout(engine, s);
+      }
 
       if (atype.TrackerDummyWeapon)
         InsertDummyTrackerAILoadout();
@@ -46,7 +49,7 @@ namespace SWEndor.ActorTypes.Components
     {
       WeaponData d = new WeaponData(_weapons.Count, _primary, _secondary + 1, _ai);
       for (int i = 0; i < _weapons.Count; i++)
-        d.Weapons[i] = factory.Get(_weapons[i]);
+        d.Weapons[i] = factory.Engine.WeaponRegistry.BuildWeapon(_weapons[i]); // factory.Get(_weapons[i]);
 
       int p = 0;
       int s = 1;
@@ -71,6 +74,7 @@ namespace SWEndor.ActorTypes.Components
       return d;
     }
 
+    /*
     public void InsertLoadout(WeaponLoadoutFactory factory, string wload)
     {
       InsertLoadout(factory.Get(wload));
@@ -80,6 +84,32 @@ namespace SWEndor.ActorTypes.Components
     {
       int c = _weapons.Count;
       _weapons.Add(wload.WeaponName);
+      foreach (int p in wload.Primary)
+      {
+        _primary++;
+        _weaponclasses.Add(new UnfixedWeapon(c, WeaponClass.PRIMARY, p));
+      }
+
+      foreach (int p in wload.Secondary)
+      {
+        _secondary++;
+        _weaponclasses.Add(new UnfixedWeapon(c, WeaponClass.SECONDARY, p));
+      }
+
+      foreach (int p in wload.AI)
+      {
+        _ai++;
+        _weaponclasses.Add(new UnfixedWeapon(c, WeaponClass.AI, p));
+      }
+    }
+    */
+    public void InsertLoadout(Engine engine, WeapData wdata)
+    {
+      WeapLoadInfo wload;
+      engine.WeaponRegistry.Get(wdata.Load, out wload);
+
+      int c = _weapons.Count;
+      _weapons.Add(wdata);
       foreach (int p in wload.Primary)
       {
         _primary++;

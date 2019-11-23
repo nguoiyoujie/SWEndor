@@ -54,7 +54,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       TargetType targetType = (TargetType)Enum.Parse(typeof(TargetType), (string)ps[11], true);
 
       // registries // TO-DO: Remove, replace registries
-      string[] registries = (string[])ps[12];
+      string[] registries = (ps.Length > 12) ? (string[])ps[12] : null;
 
       SquadSpawnInfo sinfo = new SquadSpawnInfo(
         squadName,
@@ -111,7 +111,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       TV_3DVECTOR rotation = ((float3)ps[6]).ToVec3();
 
       // TO-DO: Remove, replace registries
-      string[] registries = (string[])ps[7];
+      string[] registries = (ps.Length > 7) ? (string[])ps[7] : null;
 
       ActorSpawnInfo asi = new ActorSpawnInfo
       {

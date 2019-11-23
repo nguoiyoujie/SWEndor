@@ -76,14 +76,23 @@ namespace SWEndor
 
     internal static string CustomScenarioPath = Path.Combine(DataPath, @"scenarios\");
 
-    internal static string ActorTypeINIDirectory = Path.Combine(DataPath, @"actor\");
-    internal static string ExplosionTypeINIDirectory = Path.Combine(DataPath, @"explosion\");
-    internal static string ProjectileTypeINIDirectory = Path.Combine(DataPath, @"projectile\");
+    internal static string ActorTypeINIDirectory = Path.Combine(DataPath, @"actors\");
+    internal static string ExplosionTypeINIDirectory = Path.Combine(DataPath, @"explosions\");
+    internal static string ProjectileTypeINIDirectory = Path.Combine(DataPath, @"projectiles\");
+    internal static string WeaponINIDirectory = Path.Combine(DataPath, @"weapons\");
 
     // Files
     internal static string DynamicMusicINIPath = Path.Combine(DataPath, @"dynamicmusic.ini");
     internal static string WeaponStatINIPath = Path.Combine(DataPath, @"weapons.ini");
     internal static string WeaponLoadoutStatINIPath = Path.Combine(DataPath, @"weaponloadouts.ini");
+
+    internal static string WeapAimINIPath = Path.Combine(WeaponINIDirectory, @"aim.ini");
+    internal static string WeapAmmoINIPath = Path.Combine(WeaponINIDirectory, @"ammo.ini");
+    internal static string WeapLoadINIPath = Path.Combine(WeaponINIDirectory, @"load.ini");
+    internal static string WeapPortINIPath = Path.Combine(WeaponINIDirectory, @"port.ini");
+    internal static string WeapProjINIPath = Path.Combine(WeaponINIDirectory, @"proj.ini");
+    internal static string WeapTgtINIPath = Path.Combine(WeaponINIDirectory, @"tgt.ini");
+
 
     // Game Engine
     internal static Engine Engine;
@@ -115,6 +124,7 @@ namespace SWEndor
       Directory.CreateDirectory(ActorTypeINIDirectory);
       Directory.CreateDirectory(ExplosionTypeINIDirectory);
       Directory.CreateDirectory(ProjectileTypeINIDirectory);
+      Directory.CreateDirectory(WeaponINIDirectory);
     }
 
     internal static List<string> LoadingFlavourTexts = new List<string> {

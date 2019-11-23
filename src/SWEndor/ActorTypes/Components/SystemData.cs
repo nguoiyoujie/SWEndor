@@ -76,8 +76,8 @@ namespace SWEndor.ActorTypes.Components
       bool hasProj = false;
       foreach (WeaponInfo wi in w.Weapons)
       {
-        hasLaser |= (wi.Type == WeaponType.LASER || wi.Type == WeaponType.ION);
-        hasProj |= (wi.Type == WeaponType.MISSILE || wi.Type == WeaponType.TORPEDO);
+        hasLaser |= (wi.Proj.Type == WeaponType.LASER || wi.Proj.Type == WeaponType.ION);
+        hasProj |= (wi.Proj.Type == WeaponType.MISSILE || wi.Proj.Type == WeaponType.TORPEDO);
       }
 
       if (hasLaser)

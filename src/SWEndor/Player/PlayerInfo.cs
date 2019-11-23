@@ -333,8 +333,8 @@ namespace SWEndor.Player
     {
       get
       {
-        return (PrimaryWeapon.Weapon.Type == WeaponType.TORPEDO) 
-          || (SecondaryWeapon.Weapon.Type == WeaponType.TORPEDO);
+        return (PrimaryWeapon.Weapon.Proj.Type == WeaponType.TORPEDO) 
+          || (SecondaryWeapon.Weapon.Proj.Type == WeaponType.TORPEDO);
       }
     }
     public int TargetActorID = -1;

@@ -216,6 +216,7 @@ namespace SWEndor.Scenarios
         Faction = MainEnemyFaction
       };
       m_ADSLS = Engine.ActorFactory.Create(aci_DSLS);
+      m_ADSLS.QueueNext(Lock.GetOrCreate());
     }
 
     public override void GameTick()
@@ -1049,10 +1050,10 @@ namespace SWEndor.Scenarios
           {
             foreach (WeaponInfo w in actor.WeaponDefinitions.Weapons)
             {
-              if (w.Type == WeaponType.TORPEDO)
+              if (w.Proj.Type == WeaponType.TORPEDO)
               {
-                w.Ammo = 2;
-                w.MaxAmmo = 2;
+                w.Ammo.Count = 2;
+                w.Ammo.Max = 2;
               }
             }
           }

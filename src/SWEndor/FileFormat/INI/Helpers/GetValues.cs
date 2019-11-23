@@ -3,6 +3,7 @@ using Primrose.Primitives;
 using Primrose.Primitives.ValueTypes;
 using System;
 using System.Text;
+using MTV3D65;
 
 namespace SWEndor.FileFormat.INI
 {
@@ -123,6 +124,9 @@ namespace SWEndor.FileFormat.INI
       float[] list = GetFloatArray(section, key, new float[0]);
       if (list.Length >= 2)
         return new float2(list[0], list[1]);
+      else if (list.Length == 1)
+        return new float2(list[0], defaultValue[1]);
+
       return defaultValue;
     }
 
@@ -138,6 +142,11 @@ namespace SWEndor.FileFormat.INI
       float[] list = GetFloatArray(section, key, new float[0]);
       if (list.Length >= 3)
         return new float3(list[0], list[1], list[2]);
+      else if (list.Length == 2)
+        return new float3(list[0], list[1], defaultValue[2]);
+      else if (list.Length == 1)
+        return new float3(list[0], defaultValue[1], defaultValue[2]);
+
       return defaultValue;
     }
 
@@ -153,6 +162,13 @@ namespace SWEndor.FileFormat.INI
       float[] list = GetFloatArray(section, key, new float[0]);
       if (list.Length >= 4)
         return new float4(list[0], list[1], list[2], list[3]);
+      else if (list.Length == 3)
+        return new float4(list[0], list[1], list[2], defaultValue[3]);
+      else if (list.Length == 2)
+        return new float4(list[0], list[1], defaultValue[2], defaultValue[3]);
+      else if (list.Length == 1)
+        return new float4(list[0], defaultValue[1], defaultValue[2], defaultValue[3]);
+
       return defaultValue;
     }
 

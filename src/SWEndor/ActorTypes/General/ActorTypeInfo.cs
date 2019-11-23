@@ -65,7 +65,7 @@ namespace SWEndor.ActorTypes
     internal ExplodeData[] Explodes = new ExplodeData[0];
 
     // Weapons
-    internal string[] Loadouts = new string[0];
+    internal WeapData[] Loadouts = new WeapData[0];
     internal bool TrackerDummyWeapon = false;
 
     // Debris
@@ -93,7 +93,7 @@ namespace SWEndor.ActorTypes
         Name = f.GetString("General", "Name", Name);
         Mask = f.GetEnumValue("General", "Mask", Mask);
 
-        Loadouts = f.GetStringArray("General", "Loadouts", Loadouts);
+        //Loadouts = f.GetStringArray("General", "Loadouts", Loadouts);
         TrackerDummyWeapon = f.GetBool("General", "TrackerDummyWeapon", TrackerDummyWeapon);
 
         CombatData.LoadFromINI(f, "CombatData");
@@ -112,6 +112,7 @@ namespace SWEndor.ActorTypes
         DebrisSpawnerData.LoadFromINI(f, "DebrisSpawnerData", "Debris", out Debris);
         LookData.LoadFromINI(f, "Cameras", "Cameras", out Cameras);
         DeathCamera.LoadFromINI(f, "DeathCamera");
+        WeapData.LoadFromINI(f, "WeapData", "Weapon", out Loadouts);
         SoundSourceData.LoadFromINI(f, "SoundSourceData", "InitialSoundSources", out InitialSoundSources);
         SoundSourceData.LoadFromINI(f, "SoundSourceData", "SoundSources", out SoundSources);
       }
@@ -128,7 +129,7 @@ namespace SWEndor.ActorTypes
       f.SetString("General", "Name", Name);
       f.SetEnum("General", "Mask", Mask);
 
-      f.SetStringArray("General", "Loadouts", Loadouts);
+      //f.SetStringArray("General", "Loadouts", Loadouts);
       f.SetBool("General", "TrackerDummyWeapon", TrackerDummyWeapon);
 
       CombatData.SaveToINI(f, "CombatData");

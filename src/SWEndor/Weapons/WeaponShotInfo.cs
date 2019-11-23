@@ -12,7 +12,7 @@ namespace SWEndor.Weapons
 
     public readonly WeaponInfo Weapon;
     public readonly int Burst;
-    public bool IsNull { get { return Weapon.MaxAmmo == 0; } }
+    public bool IsNull { get { return Weapon.Ammo.Max == 0; } }
 
     // special cases
     public readonly static WeaponShotInfo Default = new WeaponShotInfo(null, 0);

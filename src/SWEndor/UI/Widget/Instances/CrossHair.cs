@@ -69,19 +69,19 @@ namespace SWEndor.UI.Widgets
       burst = PlayerInfo.SecondaryWeapon.Burst;
       if (weap != null)
       {
-        if (weap.Type == WeaponType.TORPEDO
-          || weap.Type == WeaponType.MISSILE)
+        if (weap.Proj.Type == WeaponType.TORPEDO
+          || weap.Proj.Type == WeaponType.MISSILE)
         {
           COLOR disabled_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DISABLED);
           COLOR destroyed_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DESTROYED);
           if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) == SystemState.ACTIVE)
-            DrawMissile(weap, true, weap.Ammo, pcolor);
+            DrawMissile(weap, true, weap.Ammo.Count, pcolor);
           else if (p.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) == SystemState.DESTROYED)
             DrawMissile(weap, false, 0, destroyed_color);
           else if (p.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) == SystemState.DISABLED)
             DrawMissile(weap, false, 0, disabled_color);
         }
-        else if (weap.Type == WeaponType.ION)
+        else if (weap.Proj.Type == WeaponType.ION)
         {
           COLOR ion_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_ION);
           COLOR disabled_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DISABLED);
@@ -99,17 +99,17 @@ namespace SWEndor.UI.Widgets
 
     private void DrawLaser(WeaponInfo weap, int burst, COLOR pcolor, COLOR color2)
     {
-      for (int i = 0; i < weap?.UIFirePositions?.Length; i++)
+      for (int i = 0; i < weap?.Port.UIPos?.Length; i++)
       {
-        if (weap.UIFirePositions[i].x != 0 || weap.UIFirePositions[i].y != 0)
+        if (weap.Port.UIPos[i].x != 0 || weap.Port.UIPos[i].y != 0)
         {
-          int wpi = i - weap.CurrentPositionIndex;
+          int wpi = i - weap.Port.Index;
           if (wpi < 0)
-            wpi += weap.FirePositions.Length;
+            wpi += weap.Port.FirePos.Length;
           bool highlighted = (wpi >= 0 && wpi < burst);
 
-          float x = weap.UIFirePositions[i].x;
-          float y = -weap.UIFirePositions[i].y;
+          float x = weap.Port.UIPos[i].x;
+          float y = -weap.Port.UIPos[i].y;
 
           if (highlighted)
           {
@@ -133,17 +133,17 @@ namespace SWEndor.UI.Widgets
 
     private void DrawIon(WeaponInfo weap, bool enabled, int burst, COLOR pcolor, COLOR color2)
     {
-      for (int i = 0; i < weap?.UIFirePositions?.Length; i++)
+      for (int i = 0; i < weap?.Port.UIPos?.Length; i++)
       {
-        if (weap.UIFirePositions[i].x != 0 || weap.UIFirePositions[i].y != 0)
+        if (weap.Port.UIPos[i].x != 0 || weap.Port.UIPos[i].y != 0)
         {
-          int wpi = i - weap.CurrentPositionIndex;
+          int wpi = i - weap.Port.Index;
           if (wpi < 0)
-            wpi += weap.FirePositions.Length;
+            wpi += weap.Port.FirePos.Length;
           bool highlighted = (wpi >= 0 && wpi < burst);
 
-          float x = weap.UIFirePositions[i].x;
-          float y = -weap.UIFirePositions[i].y;
+          float x = weap.Port.UIPos[i].x;
+          float y = -weap.Port.UIPos[i].y;
 
           if (highlighted)
           {
@@ -184,7 +184,7 @@ namespace SWEndor.UI.Widgets
       TVScreen2DImmediate.Action_End2D();
       TVScreen2DText.Action_BeginText();
 
-      if (weap.Ammo > -1)
+      if (weap.Ammo.Count > -1)
       {
         TVScreen2DText.TextureFont_DrawText("{0}: {1}".F(weap.DisplayName, (enabled ? weap.Ammo.ToString() : "---"))
                                   , p1_x + Owner.ScreenCenter.x + 5

@@ -59,7 +59,8 @@ namespace SWEndor.Core
     internal ExplosionTypeInfo.Factory ExplosionTypeFactory { get; private set; }
     internal ProjectileTypeInfo.Factory ProjectileTypeFactory { get; private set; }
     internal WeaponFactory WeaponFactory { get; private set; }
-    internal WeaponLoadoutFactory WeaponLoadoutFactory { get; private set; }
+    //internal WeaponLoadoutFactory WeaponLoadoutFactory { get; private set; }
+    internal WeapRegistry WeaponRegistry { get; private set; }    
     internal Squadron.Factory SquadronFactory { get; private set; }
     internal ShaderInfo.Factory ShaderFactory { get; private set; }
 
@@ -80,7 +81,8 @@ namespace SWEndor.Core
       ExplosionTypeFactory = new ExplosionTypeInfo.Factory(this);
       ProjectileTypeFactory = new ProjectileTypeInfo.Factory(this);
       WeaponFactory = new WeaponFactory(this);
-      WeaponLoadoutFactory = new WeaponLoadoutFactory();
+      //WeaponLoadoutFactory = new WeaponLoadoutFactory();
+      WeaponRegistry = new WeapRegistry();
       SquadronFactory = new Squadron.Factory();
       ShaderFactory = new ShaderInfo.Factory(this);
       PlayerInfo = new PlayerInfo(this);
@@ -130,8 +132,9 @@ namespace SWEndor.Core
       //ActorTypeFactory.LoadFromINI(Globals.ActorTypeINIPath);
 
       Screen2D.LoadingTextLines.Add("Loading weapons...");
-      WeaponFactory.LoadFromINI(Globals.WeaponStatINIPath);
-      WeaponLoadoutFactory.LoadFromINI(Globals.WeaponLoadoutStatINIPath);
+      //WeaponFactory.LoadFromINI(Globals.WeaponStatINIPath);
+      //WeaponLoadoutFactory.LoadFromINI(Globals.WeaponLoadoutStatINIPath);
+      WeaponRegistry.LoadFromINI(this);
 
       Screen2D.LoadingTextLines.Add("Loading sounds...");
       SoundManager.Initialize();

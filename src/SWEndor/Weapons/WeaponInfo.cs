@@ -9,26 +9,10 @@ using SWEndor.Models;
 using SWEndor.Projectiles;
 using SWEndor.ProjectileTypes;
 using SWEndor.Primitives.Extensions;
+using Primrose.Primitives.ValueTypes;
 
 namespace SWEndor.Weapons
 {
-  public enum WeaponType
-  {
-    NONE,
-    LASER,
-    ION,
-    MISSILE,
-    TORPEDO
-  }
-
-  public enum TargetAcqType
-  {
-    NONE = -1,
-    ANY = 0,
-    ENEMIES = 1,
-    FRIENDS = 2
-  }
-
   public class WeaponInfo
   {
     internal static readonly WeaponInfo[] NullArrayCache = new WeaponInfo[0];
@@ -38,7 +22,7 @@ namespace SWEndor.Weapons
       Name = name;
       DisplayName = name;
 
-      Projectile = ProjectileTypeInfo.Null;
+      Proj.Projectile = ProjectileTypeInfo.Null;
       //ActorProj = ActorTypeInfo.Null;
     }
 
@@ -47,170 +31,71 @@ namespace SWEndor.Weapons
       Name = stat.Name ?? "Null";
       DisplayName = stat.DisplayName ?? "None";
 
-      WeaponCooldown = stat.WeaponCooldown;
-      WeaponCooldownRate = stat.WeaponCooldownRate;
-      WeaponCooldownRateRandom = stat.WeaponCooldownRateRandom;
+      //Ammo.Burst = stat.Burst;
+      Ammo.Max = stat.MaxAmmo;
+      Ammo.Count = stat.MaxAmmo;
+      Ammo.ReloadCooldown = stat.AmmoReloadCooldown;
+      Ammo.ReloadRate = new float2(stat.AmmoReloadRate, stat.AmmoReloadRateRandom);
+      Ammo.ReloadAmount = stat.AmmoReloadAmount;
 
-      Burst = stat.Burst;
-      MaxAmmo = stat.MaxAmmo;
-      Ammo = MaxAmmo;
-      AmmoReloadCooldown = stat.AmmoReloadCooldown;
-      AmmoReloadRate = stat.AmmoReloadRate;
-      AmmoReloadRateRandom = stat.AmmoReloadRateRandom;
-      AmmoReloadAmount = stat.AmmoReloadAmount;
-      ProjectileWaitBeforeHoming = stat.ProjectileWaitBeforeHoming;
+      Proj.ProjectileWaitBeforeHoming = stat.ProjectileWaitBeforeHoming;
+      Proj.Type = stat.Type;
+      Proj.FireSound = stat.FireSound;
+      Proj.IsActor = stat.IsActor;
 
-      FirePositions = stat.FirePositions;
-      CurrentPositionIndex = stat.CurrentPositionIndex;
+      Port.FirePos = stat.FirePositions;
+      Port.Index = stat.CurrentPositionIndex;
+      Port.CooldownRate = new float2(stat.WeaponCooldownRate, stat.WeaponCooldownRateRandom);
+      //Port.Cooldown = stat.WeaponCooldown;
 
-      // Auto Aim Bot
-      EnablePlayerAutoAim = stat.EnablePlayerAutoAim;
-      EnableAIAutoAim = stat.EnableAIAutoAim;
-      AutoAimMinDeviation = stat.AutoAimMinDeviation;
-      AutoAimMaxDeviation = stat.AutoAimMaxDeviation;
+      Aim.EnablePlayerAutoAim = stat.EnablePlayerAutoAim;
+      Aim.EnableAIAutoAim = stat.EnableAIAutoAim;
+      Aim.AutoAimMinDeviation = stat.AutoAimMinDeviation;
+      Aim.AutoAimMaxDeviation = stat.AutoAimMaxDeviation;
 
-      // Player Config
-      RequirePlayerTargetLock = stat.RequirePlayerTargetLock;
-      Type = stat.Type;
+      Targeter.RequirePlayerTargetLock = stat.RequirePlayerTargetLock;
+      Targeter.AIAttackTargets = stat.AIAttackTargets;
+      Targeter.AIAttackNull = stat.AIAttackNull;
+      Targeter.AngularRange = stat.AngularRange;
+      Targeter.Range = stat.Range;
 
-      // AI Config
-      AIAttackTargets = stat.AIAttackTargets;
-
-      AIAttackNull = stat.AIAttackNull;
-
-      AngularRange = stat.AngularRange;
-      Range = stat.Range;
-
-      FireSound = stat.FireSound;
-      IsActor = stat.IsActor;
 
       if (stat.WeaponProjectile != null)
         if (stat.IsActor)
-        {
-          ActorProj = engine.ActorTypeFactory.Get(stat.WeaponProjectile);
-          //Projectile = ProjectileTypeInfo.Null;
-        }
+          Proj.ActorProj = engine.ActorTypeFactory.Get(stat.WeaponProjectile);
         else
-        {
-          Projectile = engine.ProjectileTypeFactory.Get(stat.WeaponProjectile);
-          //ActorProj = ActorTypeInfo.Null;
-        }
+          Proj.Projectile = engine.ProjectileTypeFactory.Get(stat.WeaponProjectile);
       Init();
     }
 
     public readonly string Name = "Null Weapon";
     public readonly string DisplayName = "null";
 
-    private readonly ProjectileTypeInfo Projectile = null; // cache
-    private readonly ActorTypeInfo ActorProj = null; // cache
-    public bool IsActor = false;
-    public float WeaponCooldown = 0;
-    public float WeaponCooldownRate = 1;
-    public float WeaponCooldownRateRandom = 0;
+    internal WeapAmmoInfo Ammo = WeapAmmoInfo.Default;
+    internal WeapAimInfo Aim = WeapAimInfo.Default;
+    internal WeapTgtInfo Targeter = WeapTgtInfo.Default;
+    internal WeapProjInfo Proj = WeapProjInfo.Default;
+    internal WeapPortInfo Port = WeapPortInfo.Default;
 
-    public int Burst = 1;
-    public int Ammo = -1;
-    public int MaxAmmo = -1;
-    public float AmmoReloadCooldown = 1;
-    public float AmmoReloadRate = 1;
-    public float AmmoReloadRateRandom = 0;
-    public int AmmoReloadAmount = 1;
-    public float ProjectileWaitBeforeHoming = 0;
-
-    public TV_3DVECTOR[] FirePositions = null;
-    public TV_3DVECTOR[] UIFirePositions = null;
-
-    public int CurrentPositionIndex = 0;
-
-    // Auto Aim Bot
-    public bool EnablePlayerAutoAim = false;
-    public bool EnableAIAutoAim = false;
-    public float AutoAimMinDeviation = 1;
-    public float AutoAimMaxDeviation = 1;
-
-    // Targeter
-    public bool RequirePlayerTargetLock = false;
-    public bool RequireAITargetLock = false; // TO-DO: Implement logic
-    public float TargetLock_TimeRequired = 0; // TO-DO: Implement logic
-
-    public TargetAcqType PlayerTargetAcqType = TargetAcqType.ANY; // TO-DO: Implement logic
-    public TargetAcqType AITargetAcqType = TargetAcqType.ENEMIES; // TO-DO: Implement logic
-
-    // Player Config
-    public WeaponType Type = WeaponType.NONE;
-
-    // AI Config
-    public TargetType AIAttackTargets = TargetType.ANY;
-    public bool AIAttackNull = true;
-    public float AngularRange = 10;
-    public float Range = 4500;
-
-    // Misc
-    public string[] FireSound = null;
 
     public void Init()
     {
-      if (Range == 0 && Projectile != null)
-        Range = Projectile.MoveLimitData.MaxSpeed * Projectile.TimedLifeData.TimedLife;
+      if (Proj.Projectile != null)
+        Targeter.Init(Proj.Projectile);
+      else if (Proj.ActorProj != null)
+        Targeter.Init(Proj.ActorProj);
 
-      UIFirePositions = new TV_3DVECTOR[FirePositions.Length];
-
-      for (int i = 0; i < UIFirePositions.Length; i++)
-      {
-        float x = FirePositions[i].x;
-        float y = FirePositions[i].y;
-
-        if (x != 0 || y != 0)
-        {
-          float absX = (x > 0) ? x : -x;
-          float absY = (y > 0) ? y : -y;
-
-          if (absX > absY)
-          {
-            x *= 32 / absX;
-            y *= 32 / absX;
-          }
-          else
-          {
-            x *= 32 / absY;
-            y *= 32 / absY;
-          }
-        }
-        UIFirePositions[i].x = x;
-        UIFirePositions[i].y = y;
-      }
+      Port.Init();
     }
 
     private TV_3DVECTOR GetFirePosition(ActorInfo owner)
     {
-      if (FirePositions.Length == 0)
-        return new TV_3DVECTOR(0, 0, 0);
-
-      if (CurrentPositionIndex >= FirePositions.Length)
-      {
-        CurrentPositionIndex = 0;
-      }
-      return FirePositions[CurrentPositionIndex];
+      return Port.GetFirePos();
     }
 
     public void Reload(Engine engine)
     {
-      if (MaxAmmo > 0 && AmmoReloadCooldown < engine.Game.GameTime && Ammo < MaxAmmo)
-      {
-        if (Ammo == MaxAmmo)
-        {
-          AmmoReloadCooldown = engine.Game.GameTime + AmmoReloadRate;
-        }
-
-        AmmoReloadCooldown = engine.Game.GameTime + AmmoReloadRate;
-        if (AmmoReloadRateRandom != 0)
-        {
-          AmmoReloadCooldown += (float)engine.Random.NextDouble() * AmmoReloadRateRandom;
-        }
-        Ammo += AmmoReloadAmount;
-        if (Ammo > MaxAmmo)
-          Ammo = MaxAmmo;
-      }
+      Ammo.Reload(engine);
     }
 
     public bool Fire(Engine engine, ActorInfo owner, ActorInfo target, int burst)
@@ -218,22 +103,22 @@ namespace SWEndor.Weapons
       int burstremaining = burst;
       bool fired = false;
 
-      if (WeaponCooldown < engine.Game.GameTime && (Ammo > 0 || MaxAmmo < 0))
+      if (Port.Cooldown < engine.Game.GameTime && (Ammo.Count > 0 || Ammo.Max < 0))
       {
-        WeaponCooldown = engine.Game.GameTime;
+        Port.Cooldown = engine.Game.GameTime;
         while (burstremaining > 0)
         {
           if (CreateProjectile(engine, owner, target))
           {
-            WeaponCooldown += WeaponCooldownRate * burstremaining;
-            if (WeaponCooldownRateRandom != 0)
+            Port.Cooldown += Port.CooldownRate.x * burstremaining;
+            if (Port.CooldownRate.y != 0)
             {
-              WeaponCooldown += (float)engine.Random.NextDouble() * WeaponCooldownRateRandom * 4;
+              Port.Cooldown += (float)engine.Random.NextDouble() * Port.CooldownRate.y * 4;
             }
             fired = true;
-            CurrentPositionIndex++;
-            if (MaxAmmo > 0)
-              Ammo--;
+            Port.Next();
+            if (Ammo.Max > 0)
+              Ammo.Count--;
           }
           burstremaining--;
         }
@@ -242,13 +127,13 @@ namespace SWEndor.Weapons
         {
           if (owner.IsPlayer)
           {
-            if (FireSound.Length == 1)
-              engine.SoundManager.SetSound(FireSound[0]);
-            else if (FireSound.Length > 1)
-              engine.SoundManager.SetSound(FireSound[engine.Random.Next(0, FireSound.Length)]);
+            if (Proj.FireSound.Length == 1)
+              engine.SoundManager.SetSound(Proj.FireSound[0]);
+            else if (Proj.FireSound.Length > 1)
+              engine.SoundManager.SetSound(Proj.FireSound[engine.Random.Next(0, Proj.FireSound.Length)]);
           }
 
-          ActorTypes.Components.SoundSourceData.Play(engine, 1f, owner.GetGlobalPosition(), 750, FireSound, false, false);
+          ActorTypes.Components.SoundSourceData.Play(engine, 1f, owner.GetGlobalPosition(), 750, Proj.FireSound, false, false);
         }
       }
       return fired;
@@ -256,37 +141,37 @@ namespace SWEndor.Weapons
 
     public bool CanTarget(ActorInfo owner, ActorInfo target)
     {
-      return (target == null) ? AIAttackNull : (target.TypeInfo.AIData.TargetType & AIAttackTargets) != 0;
+      return (target == null) ? Targeter.AIAttackNull : (target.TypeInfo.AIData.TargetType & Targeter.AIAttackTargets) != 0;
     }
 
     private bool CreateProjectile(Engine engine, ActorInfo owner, ActorInfo target, bool IsPlayer)
     {
-      if (Projectile == null)
+      if (Proj.Projectile == null)
         return true;
 
       if (!IsPlayer
         && target != null
         && (owner.IsAggregateMode && target.IsAggregateMode))
       {
-        owner.TypeInfo.FireAggregation(owner, target, Projectile);
+        owner.TypeInfo.FireAggregation(owner, target, Proj.Projectile);
         return true;
       }
 
       TV_3DVECTOR targetloc = GetFirePosition(owner);
 
-      ProjectileCreationInfo acinfo = new ProjectileCreationInfo(Projectile);
+      ProjectileCreationInfo acinfo = new ProjectileCreationInfo(Proj.Projectile);
       acinfo.Position = owner.GetRelativePositionXYZ(targetloc.x, targetloc.y, targetloc.z);
 
-      if (owner.MoveData.Speed > Projectile.MoveLimitData.MinSpeed)
+      if (owner.MoveData.Speed > Proj.Projectile.MoveLimitData.MinSpeed)
         acinfo.InitialSpeed = owner.MoveData.Speed;
 
-      if ((IsPlayer ? EnablePlayerAutoAim : EnableAIAutoAim) && target != null)
+      if ((IsPlayer ? Aim.EnablePlayerAutoAim : Aim.EnableAIAutoAim) && target != null)
       {
         float dist = DistanceModel.GetDistance(engine, owner, target);
 
-        float d = (AutoAimMaxDeviation == AutoAimMinDeviation)
-                ? dist / Projectile.MoveLimitData.MaxSpeed * AutoAimMinDeviation
-                : dist / Projectile.MoveLimitData.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
+        float d = (Aim.AutoAimMaxDeviation == Aim.AutoAimMinDeviation)
+                ? dist / Proj.Projectile.MoveLimitData.MaxSpeed * Aim.AutoAimMinDeviation
+                : dist / Proj.Projectile.MoveLimitData.MaxSpeed * (Aim.AutoAimMinDeviation + (Aim.AutoAimMaxDeviation - Aim.AutoAimMinDeviation) * (float)engine.Random.NextDouble());
 
         ActorInfo a2 = target.ParentForCoords;
         TV_3DVECTOR dir = (a2 == null)
@@ -311,29 +196,29 @@ namespace SWEndor.Weapons
       if (owner == null)
         return false;
 
-      if ((Type == WeaponType.LASER || Type == WeaponType.ION)
+      if ((Proj.Type == WeaponType.LASER || Proj.Type == WeaponType.ION)
         && owner.TypeInfo.SystemData.AllowSystemDamage && owner.GetStatus(SystemPart.LASER_WEAPONS) != SystemState.ACTIVE)
         return false;
-      else if ((Type == WeaponType.MISSILE || Type == WeaponType.TORPEDO)
+      else if ((Proj.Type == WeaponType.MISSILE || Proj.Type == WeaponType.TORPEDO)
         && owner.TypeInfo.SystemData.AllowSystemDamage && owner.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) != SystemState.ACTIVE)
         return false;
 
 
       if (owner.IsPlayer
         && !engine.PlayerInfo.PlayerAIEnabled
-        && (!RequirePlayerTargetLock || target != null))
+        && (!Targeter.RequirePlayerTargetLock || target != null))
       { // Player
-        if (IsActor)
+        if (Proj.IsActor)
           return CreateActor(engine, owner, target, true);
         else
           return CreateProjectile(engine, owner, target, true);
       }
 
-      if ((target == null && AIAttackNull)
-          || (target != null && (target.TypeInfo.AIData.TargetType & AIAttackTargets) != 0)
+      if ((target == null && Targeter.AIAttackNull)
+          || (target != null && (target.TypeInfo.AIData.TargetType & Targeter.AIAttackTargets) != 0)
           )
       { // AI 
-        if (IsActor)
+        if (Proj.IsActor)
           return CreateActor(engine, owner, target, false);
         else
           return CreateProjectile(engine, owner, target, false);
@@ -343,24 +228,24 @@ namespace SWEndor.Weapons
 
     private bool CreateActor(Engine engine, ActorInfo owner, ActorInfo target, bool IsPlayer)
     {
-      if (ActorProj == null)
+      if (Proj.ActorProj == null)
         return true;
 
       TV_3DVECTOR targetloc = GetFirePosition(owner);
 
-      ActorCreationInfo acinfo = new ActorCreationInfo(ActorProj);
+      ActorCreationInfo acinfo = new ActorCreationInfo(Proj.ActorProj);
       acinfo.Position = owner.GetRelativePositionXYZ(targetloc.x, targetloc.y, targetloc.z);
 
-      if (owner.MoveData.Speed > ActorProj.MoveLimitData.MinSpeed)
+      if (owner.MoveData.Speed > Proj.ActorProj.MoveLimitData.MinSpeed)
         acinfo.InitialSpeed = owner.MoveData.Speed;
 
-      if (EnablePlayerAutoAim && target != null)
+      if (Aim.EnablePlayerAutoAim && target != null)
       {
         float dist = DistanceModel.GetDistance(engine, owner, target);
 
-        float d = (AutoAimMaxDeviation == AutoAimMinDeviation)
-                ? dist / ActorProj.MoveLimitData.MaxSpeed * AutoAimMinDeviation
-                : dist / ActorProj.MoveLimitData.MaxSpeed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
+        float d = (Aim.AutoAimMaxDeviation == Aim.AutoAimMinDeviation)
+                ? dist / Proj.ActorProj.MoveLimitData.MaxSpeed * Aim.AutoAimMinDeviation
+                : dist / Proj.ActorProj.MoveLimitData.MaxSpeed * (Aim.AutoAimMinDeviation + (Aim.AutoAimMaxDeviation - Aim.AutoAimMinDeviation) * (float)engine.Random.NextDouble());
 
         ActorInfo a2 = target.ParentForCoords;
         TV_3DVECTOR dir = (a2 == null)
@@ -380,7 +265,7 @@ namespace SWEndor.Weapons
 
       if (a.Mask.Has(ComponentMask.HAS_AI))
       {
-        a.QueueLast(Wait.GetOrCreate(ProjectileWaitBeforeHoming));
+        a.QueueLast(Wait.GetOrCreate(Proj.ProjectileWaitBeforeHoming));
         a.QueueLast(ProjectileAttackActor.GetOrCreate(target));
         a.QueueLast(Lock.GetOrCreate());
       }

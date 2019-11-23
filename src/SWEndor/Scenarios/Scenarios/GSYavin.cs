@@ -644,10 +644,10 @@ namespace SWEndor.Scenarios
         {
           foreach (WeaponInfo w in actor.WeaponDefinitions.Weapons)
           {
-            if (w.Type == WeaponType.TORPEDO)
+            if (w.Proj.Type == WeaponType.TORPEDO)
             {
-              w.Ammo = 1;
-              w.MaxAmmo = 1;
+              w.Ammo.Count = 1;
+              w.Ammo.Max = 1;
             }
           }
         }
@@ -660,10 +660,10 @@ namespace SWEndor.Scenarios
         {
           foreach (WeaponInfo w in actor.WeaponDefinitions.Weapons)
           {
-            if (w.Type == WeaponType.TORPEDO || w.Type == WeaponType.ION)
+            if (w.Proj.Type == WeaponType.TORPEDO || w.Proj.Type == WeaponType.ION)
             {
-              w.Ammo = 0;
-              w.MaxAmmo = 0;
+              w.Ammo.Count = 0;
+              w.Ammo.Max = 0;
             }
           }
         }
@@ -682,8 +682,8 @@ namespace SWEndor.Scenarios
           player.WeaponDefinitions.Reset();
 
           UnfixedWeaponData prew = new UnfixedWeaponData();
-          prew.InsertLoadout(Engine.WeaponLoadoutFactory, "X_WG_LASR");
-          prew.InsertLoadout(Engine.WeaponLoadoutFactory, "X_WG_TORP");
+          prew.InsertLoadout(Engine, new WeapData("TORP", "SEC_1_AI", "NO_AUTOAIM", "X_WG_TORP", "X_WG_TORP", "WING_TORP", "WING_TORP"));
+          prew.InsertLoadout(Engine, new WeapData("LASR", "PRI_124_AI", "NO_AUTOAIM", "DEFAULT", "X_WG_LASR", "WING_LSR_R", "WING_LASER"));
           player.WeaponDefinitions.Load(Engine.WeaponFactory, prew);
         }
         else if (Stage5StartRun)
@@ -1943,8 +1943,9 @@ namespace SWEndor.Scenarios
       ActorInfo vaderE2 = Engine.ActorFactory.Get(m_VaderEscort2ID);
 
       UnfixedWeaponData prew = new UnfixedWeaponData();
-      prew.InsertLoadout(Engine.WeaponLoadoutFactory, "TIED_LASR");
-      prew.InsertLoadout(Engine.WeaponLoadoutFactory, "TIED_LASR");
+      prew.InsertLoadout(Engine, new WeapData("LASR", "PRI_123_AI", "NO_AUTOAIM", "DEFAULT", "TIED_LASR", "WING_LSR_GADV", "WING_LASER"));
+      prew.InsertLoadout(Engine, new WeapData("LASR", "PRI_123_AI", "NO_AUTOAIM", "DEFAULT", "TIED_LASR", "WING_LSR_GADV", "WING_LASER"));
+
       vader.WeaponDefinitions.Load(Engine.WeaponFactory, prew);
 
       vader.MoveData.MaxSpeed = 400;

@@ -32,7 +32,11 @@ namespace SWEndor.ActorTypes.Instances
         new DebrisSpawnerData("TIEIWING", new TV_3DVECTOR(30, 0, 0), -10, 10, -30, 0, -25, 25, 0.5f),
         };
 
-      Loadouts = new string[] { "TIEI_LASR", "TIEI_LASR_AI" };
+      Loadouts = new WeapData[]
+      {
+        new WeapData("LASR", "PRI_124", "NO_AUTOAIM", "DEFAULT", "TIEI_LASR", "WING_LSR_G", "WING_LASER"),
+        new WeapData("LASR", "AI", "NO_AUTOAIM", "DEFAULT", "TIEI_LASR_AI", "WING_LSR_G2", "WING_LASER"),
+      };
     }
   }
 }

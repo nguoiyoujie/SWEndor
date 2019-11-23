@@ -46,8 +46,8 @@ namespace SWEndor.Projectiles.Components
               child.InflictDamage(dmg, DamageType.NORMAL, child.GetGlobalPosition());
 
               for (int i = 0; i < child.WeaponDefinitions.Weapons.Length; i++)
-                if (child.WeaponDefinitions.Weapons[i].WeaponCooldown < engine.Game.GameTime + EMPDuration + 2)
-                  child.WeaponDefinitions.Weapons[i].WeaponCooldown = engine.Game.GameTime + EMPDuration + 2;
+                if (child.WeaponDefinitions.Weapons[i].Port.Cooldown < engine.Game.GameTime + EMPDuration + 2)
+                  child.WeaponDefinitions.Weapons[i].Port.Cooldown = engine.Game.GameTime + EMPDuration + 2;
 
               // TO-DO: Replace this with configurable
               ExplosionCreationInfo acinfo = new ExplosionCreationInfo(engine.ExplosionTypeFactory.Get("ELECTRO"));
@@ -65,8 +65,8 @@ namespace SWEndor.Projectiles.Components
               child.InflictDamage(dmg, DamageType.NORMAL, child.GetGlobalPosition());
 
               for (int i = 0; i < child.WeaponDefinitions.Weapons.Length; i++)
-                if (child.WeaponDefinitions.Weapons[i].WeaponCooldown < engine.Game.GameTime + EMPDuration + 2)
-                  child.WeaponDefinitions.Weapons[i].WeaponCooldown = engine.Game.GameTime + EMPDuration + 2;
+                if (child.WeaponDefinitions.Weapons[i].Port.Cooldown < engine.Game.GameTime + EMPDuration + 2)
+                  child.WeaponDefinitions.Weapons[i].Port.Cooldown = engine.Game.GameTime + EMPDuration + 2;
 
               // TO-DO: Replace this with configurable
               ExplosionCreationInfo acinfo = new ExplosionCreationInfo(engine.ExplosionTypeFactory.Get("ELECTRO"));

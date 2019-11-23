@@ -37,7 +37,7 @@ namespace SWEndor.ActorTypes.Instances
         new LookData(new TV_3DVECTOR(0, 0, -50), new TV_3DVECTOR(0, 0, -2000))
      };
 
-      Loadouts = new string[] { "FALC_LASR" };
+      Loadouts = new WeapData[] { new WeapData("LASR", "PRI_1_AI", "NO_AUTOAIM", "DEFAULT", "FALC_LASR", "WING_LSR_R", "WING_LASER") };
     }
   }
 }

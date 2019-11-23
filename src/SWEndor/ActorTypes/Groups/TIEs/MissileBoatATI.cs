@@ -30,7 +30,12 @@ namespace SWEndor.ActorTypes.Instances
         new LookData(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
       };
 
-      Loadouts = new string[] { "MIS__TORP", "MIS__MISL", "MIS__LASR" };
+      Loadouts = new WeapData[]
+      {
+        new WeapData("TORP", "SEC_1_AI", "NO_AUTOAIM", "MIS__TORP", "MIS__TORP", "WING_TORP", "WING_TORP"),
+        new WeapData("MISL", "SEC_1_AI", "NO_AUTOAIM", "MIS__MISL", "MIS__MISL", "WING_MISL", "WING_MISL"),
+        new WeapData("LASR", "PRI_12_AI", "NO_AUTOAIM", "DEFAULT", "MIS__LASR", "WING_LSR_GADV", "WING_LASER"),
+      };
     }
   }
 }

@@ -22,7 +22,7 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Engine, Name, @"towers\tower_turbolaser.x");
 
-      Loadouts = new string[] { "TOWR_LASR" };
+      Loadouts = new WeapData[] { new WeapData("LASR", "PRI_1_AI", "NO_AUTOAIM", "DEFAULT", "TOWR_DLSR", "WING_LSR_G2", "WING_LASER") };
     }
   }
 }

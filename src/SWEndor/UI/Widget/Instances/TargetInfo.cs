@@ -138,7 +138,7 @@ namespace SWEndor.UI.Widgets
         }
 
         WeaponInfo weap = PlayerInfo.SecondaryWeapon.Weapon;
-        if (weap != null && weap.Ammo > 0)
+        if (weap != null && weap.Ammo.Count > 0)
         {
           TVScreen2DImmediate.Draw_FilledBox(x - m_targetSize, y - m_targetSize, x + m_targetSize, y + m_targetSize, icolor);
         }

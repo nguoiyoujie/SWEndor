@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using Primrose.Primitives.ValueTypes;
 using SWEndor.FileFormat.INI;
 using SWEndor.Models;
 
@@ -28,7 +29,7 @@ namespace SWEndor.Weapons
     public int AmmoReloadAmount = 1;
     public float ProjectileWaitBeforeHoming = 0;
 
-    public TV_3DVECTOR[] FirePositions = null;
+    public float3[] FirePositions = null;
     public int CurrentPositionIndex = 0;
 
     // Auto Aim Bot
@@ -78,9 +79,9 @@ namespace SWEndor.Weapons
       ProjectileWaitBeforeHoming = file.GetFloat(sectionname, "ProjectileWaitBeforeHoming", ProjectileWaitBeforeHoming);
 
       float[] fpos = file.GetFloatArray(sectionname, "FirePositions", new float[0]);
-      FirePositions = new TV_3DVECTOR[fpos.Length / 3];
+      FirePositions = new float3[fpos.Length / 3];
       for (int p = 0; p + 2 < fpos.Length; p += 3)
-        FirePositions[p / 3] = new TV_3DVECTOR(fpos[p], fpos[p + 1], fpos[p + 2]);
+        FirePositions[p / 3] = new float3(fpos[p], fpos[p + 1], fpos[p + 2]);
 
       CurrentPositionIndex = file.GetInt(sectionname, "CurrentPositionIndex", CurrentPositionIndex);
 

@@ -32,7 +32,7 @@ namespace SWEndor.ActorTypes.Instances
         new DebrisSpawnerData("XWRDLU", new TV_3DVECTOR(30, -10, 0), -20, 0, -10, 10, -25, 25, 0.5f),
         };
 
-      Loadouts = new string[] { "Z95__LASR" };
+      Loadouts = new WeapData[] { new WeapData("LASR", "PRI_1_AI", "NO_AUTOAIM", "DEFAULT", "Z95__LASR", "WING_LSR_R", "WING_LASER") };
     }
   }
 }
