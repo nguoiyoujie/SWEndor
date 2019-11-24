@@ -1,4 +1,6 @@
 ﻿using MTV3D65;
+using Primrose.Primitives.Extensions;
+using SWEndor.Scenarios;
 
 namespace SWEndor.UI.Menu.Pages
 {
@@ -6,12 +8,12 @@ namespace SWEndor.UI.Menu.Pages
   {
     SelectionElement Cover = new SelectionElement();
     SelectionElement MainText = new SelectionElement();
+    SelectionElement ScenarioText = new SelectionElement();
     SelectionElement ButtonResume = new SelectionElement();
     SelectionElement ButtonMap = new SelectionElement();
     SelectionElement ButtonMsgLog = new SelectionElement();
     SelectionElement ButtonOptions = new SelectionElement();
     SelectionElement ButtonQuit = new SelectionElement();
-
 
     public PauseMenu(Screen2D owner) : base(owner)
     {
@@ -24,6 +26,11 @@ namespace SWEndor.UI.Menu.Pages
 
       MainText.Text = "Game Paused";
       MainText.TextPosition = new TV_2DVECTOR(100, 80);
+
+      ScenarioBase sb = Engine.GameScenarioManager.Scenario;
+      ScenarioText.Text = "{0}: {1}".F(sb.Info.Name, sb.State.Difficulty);
+      ScenarioText.TextFont = FontFactory.Get(Font.T12).ID;
+      ScenarioText.TextPosition = new TV_2DVECTOR(50, owner.ScreenSize.y - 50);
 
       float y = 200;
       ButtonResume.Text = "Resume";
@@ -72,6 +79,7 @@ namespace SWEndor.UI.Menu.Pages
 
       Elements.Add(Cover);
       Elements.Add(MainText);
+      Elements.Add(ScenarioText);
       Elements.Add(ButtonResume);
       Elements.Add(ButtonMap);
       Elements.Add(ButtonMsgLog);
