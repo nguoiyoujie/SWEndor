@@ -71,7 +71,7 @@ namespace SWEndor.ActorTypes.Components
       if (MaxEnergy_inStore > 0)
         parts.Add(SystemPart.ENERGY_STORE);
 
-      WeaponData w = atype.cachedWeaponData.Fix(atype.Engine.WeaponFactory);
+      WeaponData w = atype.cachedWeaponData.Fix(atype.Engine.WeaponRegistry);
       bool hasLaser = false;
       bool hasProj = false;
       foreach (WeaponInfo wi in w.Weapons)

@@ -37,7 +37,6 @@ namespace SWEndor.ActorTypes.Components
 
       foreach (WeapData s in atype.Loadouts)
       {
-        //InsertLoadout(engine.WeaponLoadoutFactory, s);
         InsertLoadout(engine, s);
       }
 
@@ -45,11 +44,11 @@ namespace SWEndor.ActorTypes.Components
         InsertDummyTrackerAILoadout();
     }
 
-    public WeaponData Fix(WeaponFactory factory)
+    public WeaponData Fix(WeapRegistry registry)
     {
       WeaponData d = new WeaponData(_weapons.Count, _primary, _secondary + 1, _ai);
       for (int i = 0; i < _weapons.Count; i++)
-        d.Weapons[i] = factory.Engine.WeaponRegistry.BuildWeapon(_weapons[i]); // factory.Get(_weapons[i]);
+        d.Weapons[i] = registry.BuildWeapon(_weapons[i]);
 
       int p = 0;
       int s = 1;
@@ -74,35 +73,6 @@ namespace SWEndor.ActorTypes.Components
       return d;
     }
 
-    /*
-    public void InsertLoadout(WeaponLoadoutFactory factory, string wload)
-    {
-      InsertLoadout(factory.Get(wload));
-    }
-
-    private void InsertLoadout(WeaponLoadoutInfo wload)
-    {
-      int c = _weapons.Count;
-      _weapons.Add(wload.WeaponName);
-      foreach (int p in wload.Primary)
-      {
-        _primary++;
-        _weaponclasses.Add(new UnfixedWeapon(c, WeaponClass.PRIMARY, p));
-      }
-
-      foreach (int p in wload.Secondary)
-      {
-        _secondary++;
-        _weaponclasses.Add(new UnfixedWeapon(c, WeaponClass.SECONDARY, p));
-      }
-
-      foreach (int p in wload.AI)
-      {
-        _ai++;
-        _weaponclasses.Add(new UnfixedWeapon(c, WeaponClass.AI, p));
-      }
-    }
-    */
     public void InsertLoadout(Engine engine, WeapData wdata)
     {
       WeapLoadInfo wload;

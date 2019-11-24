@@ -9,7 +9,6 @@ using SWEndor.Models;
 using SWEndor.Projectiles;
 using SWEndor.ProjectileTypes;
 using SWEndor.Primitives.Extensions;
-using Primrose.Primitives.ValueTypes;
 
 namespace SWEndor.Weapons
 {
@@ -24,48 +23,6 @@ namespace SWEndor.Weapons
 
       Proj.Projectile = ProjectileTypeInfo.Null;
       //ActorProj = ActorTypeInfo.Null;
-    }
-
-    public WeaponInfo(Engine engine, WeaponStatInfo stat)
-    {
-      Name = stat.Name ?? "Null";
-      DisplayName = stat.DisplayName ?? "None";
-
-      //Ammo.Burst = stat.Burst;
-      Ammo.Max = stat.MaxAmmo;
-      Ammo.Count = stat.MaxAmmo;
-      Ammo.ReloadCooldown = stat.AmmoReloadCooldown;
-      Ammo.ReloadRate = new float2(stat.AmmoReloadRate, stat.AmmoReloadRateRandom);
-      Ammo.ReloadAmount = stat.AmmoReloadAmount;
-
-      Proj.ProjectileWaitBeforeHoming = stat.ProjectileWaitBeforeHoming;
-      Proj.Type = stat.Type;
-      Proj.FireSound = stat.FireSound;
-      Proj.IsActor = stat.IsActor;
-
-      Port.FirePos = stat.FirePositions;
-      Port.Index = stat.CurrentPositionIndex;
-      Port.CooldownRate = new float2(stat.WeaponCooldownRate, stat.WeaponCooldownRateRandom);
-      //Port.Cooldown = stat.WeaponCooldown;
-
-      Aim.EnablePlayerAutoAim = stat.EnablePlayerAutoAim;
-      Aim.EnableAIAutoAim = stat.EnableAIAutoAim;
-      Aim.AutoAimMinDeviation = stat.AutoAimMinDeviation;
-      Aim.AutoAimMaxDeviation = stat.AutoAimMaxDeviation;
-
-      Targeter.RequirePlayerTargetLock = stat.RequirePlayerTargetLock;
-      Targeter.AIAttackTargets = stat.AIAttackTargets;
-      Targeter.AIAttackNull = stat.AIAttackNull;
-      Targeter.AngularRange = stat.AngularRange;
-      Targeter.Range = stat.Range;
-
-
-      if (stat.WeaponProjectile != null)
-        if (stat.IsActor)
-          Proj.ActorProj = engine.ActorTypeFactory.Get(stat.WeaponProjectile);
-        else
-          Proj.Projectile = engine.ProjectileTypeFactory.Get(stat.WeaponProjectile);
-      Init();
     }
 
     public readonly string Name = "Null Weapon";

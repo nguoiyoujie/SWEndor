@@ -2,7 +2,6 @@
 using SWEndor.Core;
 using Primrose.Primitives.Extensions;
 using SWEndor.Weapons.Types;
-using System.Collections.Generic;
 
 namespace SWEndor.Weapons
 {
@@ -22,16 +21,6 @@ namespace SWEndor.Weapons
     {
       Weapon = weapon ?? NullWeapon.Instance;
       Burst = burst;
-    }
-
-    public static WeaponShotInfo Get(Engine engine, string name, int burst)
-    {
-      return new WeaponShotInfo(engine.WeaponFactory.Get(name), burst);
-    }
-
-    public static WeaponShotInfo GetFromSource(string name, int burst, Dictionary<string, WeaponInfo> source)
-    {
-      return new WeaponShotInfo(source[name], burst);
     }
 
     public bool Fire(Engine engine, ActorInfo owner, ActorInfo target)

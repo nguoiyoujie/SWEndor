@@ -684,7 +684,7 @@ namespace SWEndor.Scenarios
           UnfixedWeaponData prew = new UnfixedWeaponData();
           prew.InsertLoadout(Engine, new WeapData("TORP", "SEC_1_AI", "NO_AUTOAIM", "X_WG_TORP", "X_WG_TORP", "WING_TORP", "WING_TORP"));
           prew.InsertLoadout(Engine, new WeapData("LASR", "PRI_124_AI", "NO_AUTOAIM", "DEFAULT", "X_WG_LASR", "WING_LSR_R", "WING_LASER"));
-          player.WeaponDefinitions.Load(Engine.WeaponFactory, prew);
+          player.WeaponDefinitions.Load(Engine.WeaponRegistry, prew);
         }
         else if (Stage5StartRun)
         {
@@ -1946,7 +1946,7 @@ namespace SWEndor.Scenarios
       prew.InsertLoadout(Engine, new WeapData("LASR", "PRI_123_AI", "NO_AUTOAIM", "DEFAULT", "TIED_LASR", "WING_LSR_GADV", "WING_LASER"));
       prew.InsertLoadout(Engine, new WeapData("LASR", "PRI_123_AI", "NO_AUTOAIM", "DEFAULT", "TIED_LASR", "WING_LSR_GADV", "WING_LASER"));
 
-      vader.WeaponDefinitions.Load(Engine.WeaponFactory, prew);
+      vader.WeaponDefinitions.Load(Engine.WeaponRegistry, prew);
 
       vader.MoveData.MaxSpeed = 400;
       vader.MoveData.MinSpeed = 400;

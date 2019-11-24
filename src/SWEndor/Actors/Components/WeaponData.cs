@@ -12,9 +12,9 @@ namespace SWEndor.Actors.Components
     public WeaponShotInfo[] SecondaryWeapons { get; private set; }
     public WeaponShotInfo[] AIWeapons { get; private set; }
 
-    public void Init(WeaponFactory wfact, ref UnfixedWeaponData data)
+    public void Init(WeapRegistry wreg, ref UnfixedWeaponData data)
     {
-      this = data.Fix(wfact);
+      this = data.Fix(wreg);
     }
 
     public WeaponData(int weapons, int primary, int secondary, int ai)
@@ -25,7 +25,7 @@ namespace SWEndor.Actors.Components
       AIWeapons = new WeaponShotInfo[ai];
     }
 
-    public void Load(WeaponFactory wfact, UnfixedWeaponData preinit) { this = preinit.Fix(wfact); }
+    public void Load(WeapRegistry wreg, UnfixedWeaponData preinit) { this = preinit.Fix(wreg); }
     
     public void Reset()
     {

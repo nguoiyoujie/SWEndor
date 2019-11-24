@@ -184,7 +184,7 @@ namespace SWEndor.Actors
       AI.Init(ref TypeInfo.AIData);
       MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
       CollisionData.Init();
-      WeaponDefinitions.Init(Engine.WeaponFactory, ref TypeInfo.cachedWeaponData);
+      WeaponDefinitions.Init(Engine.WeaponRegistry, ref TypeInfo.cachedWeaponData);
 
       InCombat = TypeInfo.CombatData.IsCombatObject;
 
@@ -221,7 +221,7 @@ namespace SWEndor.Actors
       AI.Init(ref TypeInfo.AIData);
       MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
       CollisionData.Init();
-      WeaponDefinitions.Init(Engine.WeaponFactory, ref TypeInfo.cachedWeaponData);
+      WeaponDefinitions.Init(Engine.WeaponRegistry, ref TypeInfo.cachedWeaponData);
 
       InCombat = TypeInfo.CombatData.IsCombatObject;
 
