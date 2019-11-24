@@ -6,7 +6,6 @@ using SWEndor.ActorTypes;
 using SWEndor.AI.Actions;
 using SWEndor.Weapons;
 using SWEndor.Player;
-using Primrose.Primitives;
 using SWEndor.ActorTypes.Instances;
 using SWEndor.AI;
 using SWEndor.ActorTypes.Components;

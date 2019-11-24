@@ -3,7 +3,6 @@ using Primrose.Primitives;
 using Primrose.Primitives.ValueTypes;
 using System;
 using System.Text;
-using MTV3D65;
 
 namespace SWEndor.FileFormat.INI
 {

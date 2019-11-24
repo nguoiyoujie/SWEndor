@@ -1,10 +1,8 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Models;
-using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using SWEndor.Scenarios;
-using System.Collections.Generic;
 using Primrose.Primitives.Factories;
 
 namespace SWEndor

@@ -1,5 +1,4 @@
-﻿using Primrose.Primitives;
-using Primrose.Primitives.Factories;
+﻿using Primrose.Primitives.Factories;
 
 namespace Primrose.Expressions
 {

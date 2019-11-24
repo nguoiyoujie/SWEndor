@@ -1,5 +1,4 @@
-﻿using MTV3D65;
-using Primrose.Primitives.ValueTypes;
+﻿using Primrose.Primitives.ValueTypes;
 
 namespace SWEndor.Weapons.Types
 {

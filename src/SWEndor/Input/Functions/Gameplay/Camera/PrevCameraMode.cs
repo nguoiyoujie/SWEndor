@@ -1,5 +1,4 @@
-﻿using MTV3D65;
-using SWEndor.Core;
+﻿using SWEndor.Core;
 
 namespace SWEndor.Input.Functions.Gameplay.Camera
 {

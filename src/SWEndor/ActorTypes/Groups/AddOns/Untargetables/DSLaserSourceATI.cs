@@ -1,6 +1,4 @@
-﻿using SWEndor.Actors;
-using SWEndor.ActorTypes.Components;
-using SWEndor.AI;
+﻿using SWEndor.ActorTypes.Components;
 using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Instances

@@ -18,8 +18,6 @@ using SWEndor.Explosions;
 using SWEndor.Shaders;
 using SWEndor.Projectiles;
 using SWEndor.ProjectileTypes;
-using SWEndor.AI.Actions;
-using Primrose.Primitives.Extensions;
 
 namespace SWEndor.Core
 {

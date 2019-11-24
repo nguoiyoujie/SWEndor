@@ -3,8 +3,6 @@ using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 using SWEndor.AI.Actions;
 using SWEndor.Core;
-using System;
-using System.Collections.Generic;
 
 namespace SWEndor.ActorTypes.Instances
 {

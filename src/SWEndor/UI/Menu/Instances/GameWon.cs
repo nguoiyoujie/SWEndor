@@ -1,5 +1,4 @@
 ﻿using MTV3D65;
-using System.Collections.Generic;
 using System.Text;
 
 namespace SWEndor.UI.Menu.Pages

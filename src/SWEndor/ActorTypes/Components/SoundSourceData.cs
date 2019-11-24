@@ -5,7 +5,6 @@ using SWEndor.Explosions;
 using SWEndor.FileFormat.INI;
 using Primrose.Primitives.Extensions;
 using SWEndor.Projectiles;
-using SWEndor.Scenarios;
 using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.ActorTypes.Components
