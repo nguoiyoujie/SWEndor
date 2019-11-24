@@ -1,14 +1,11 @@
 ﻿using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 using SWEndor.AI;
-using SWEndor.AI.Actions;
-using SWEndor.Core;
 using SWEndor.Models;
-using SWEndor.Weapons;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  internal class DSLaserSourceATI : Groups.Turbolasers //ActorTypeInfo //: AddOnGroup
+  internal class DSLaserSourceATI : Groups.Turbolasers
   {
     internal DSLaserSourceATI(Factory owner) : base(owner, "DSLSRSRC", "Death Star Laser Source")
     {

@@ -603,6 +603,7 @@
     <Compile Include="UI\Menu\Instances\KeyboardControls.cs" />
     <Compile Include="UI\Menu\Instances\Credits.cs" />
     <Compile Include="UI\Menu\Instances\ConfigSettingsMenu.cs" />
+    <Compile Include="UI\Menu\Instances\ScenarioMessageLog.cs" />
     <Compile Include="UI\Menu\Instances\ScenarioMap.cs" />
     <Compile Include="UI\Menu\Instances\OptionsMenu.cs" />
     <Compile Include="UI\Menu\Instances\PauseMenu.cs" />
@@ -680,7 +681,7 @@
     <Compile Include="UI\Widget\UIWidget.cs" />
     <Compile Include="Utilities\Utilities.cs" />
     <Compile Include="Weapons\Components\WeapLoadInfo.cs" />
-    <Compile Include="Weapons\Components\WeapRegistry.cs" />
+    <Compile Include="Weapons\WeapRegistry.cs" />
     <Compile Include="Weapons\Instances\NullWeapon.cs" />
     <Compile Include="Weapons\Instances\TrackerDummyWeapon.cs" />
     <Compile Include="Weapons\Enum\TargetAcqType.cs" />
@@ -690,11 +691,7 @@
     <Compile Include="Weapons\Components\WeapAimInfo.cs" />
     <Compile Include="Weapons\Components\WeapTgtInfo.cs" />
     <Compile Include="Weapons\Enum\WeaponType.cs" />
-    <Compile Include="Weapons\WeaponLoadoutFactory.cs" />
-    <Compile Include="Weapons\WeaponFactory.cs" />
-    <Compile Include="Weapons\WeaponLoadoutInfo.cs" />
     <Compile Include="Weapons\WeaponShotInfo.cs" />
-    <Compile Include="Weapons\WeaponStatInfo.cs" />
     <Compile Include="Weapons\WeaponInfo.cs" />
     <EmbeddedResource Include="UI\Forms\BackgroundForm.resx">
       <DependentUpon>BackgroundForm.cs</DependentUpon>

@@ -14,25 +14,6 @@
     /// <returns>min if the value is less than min, max is the value is more than max, value otherwise</returns>
     public static float Clamp(this float value, float min, float max)
     {
-      /*
-      if (max == min)
-      {
-        value = min;
-        return value;
-      }
-      else if (max < min)
-      {
-        float temp = max;
-        max = min;
-        min = temp;
-      }
-      */
-
-      //if (value > max)
-      //  value = max;
-      //else if (value < min)
-      //  value = min;
-
       return Max(Min(value, max), min);
     }
 

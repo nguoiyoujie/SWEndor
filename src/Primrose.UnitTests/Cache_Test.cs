@@ -6,10 +6,10 @@ using System.Collections.Generic;
 namespace Primrose.UnitTests
 {
   [TestClass]
-  public class Cache_Test
+  public class Cache_Tests
   {
     [TestMethod]
-    public void Cache_Test1()
+    public void Cache_Test()
     {
       Cache<string, int, int, string> testcache = new Cache<string, int, int, string>();
 

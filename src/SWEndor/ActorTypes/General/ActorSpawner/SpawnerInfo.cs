@@ -6,7 +6,6 @@ using SWEndor.AI.Actions;
 using SWEndor.AI.Squads;
 using SWEndor.Core;
 using SWEndor.Models;
-using System.Collections.Concurrent;
 
 namespace SWEndor
 {

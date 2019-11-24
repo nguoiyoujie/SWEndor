@@ -83,8 +83,6 @@ namespace SWEndor
 
     // Files
     internal static string DynamicMusicINIPath = Path.Combine(DataPath, @"dynamicmusic.ini");
-    internal static string WeaponStatINIPath = Path.Combine(DataPath, @"weapons.ini");
-    internal static string WeaponLoadoutStatINIPath = Path.Combine(DataPath, @"weaponloadouts.ini");
 
     internal static string WeapAimINIPath = Path.Combine(WeaponINIDirectory, @"aim.ini");
     internal static string WeapAmmoINIPath = Path.Combine(WeaponINIDirectory, @"ammo.ini");
@@ -93,10 +91,8 @@ namespace SWEndor
     internal static string WeapProjINIPath = Path.Combine(WeaponINIDirectory, @"proj.ini");
     internal static string WeapTgtINIPath = Path.Combine(WeaponINIDirectory, @"tgt.ini");
 
-
     // Game Engine
     internal static Engine Engine;
-
 
     internal static void PreInit()
     {
