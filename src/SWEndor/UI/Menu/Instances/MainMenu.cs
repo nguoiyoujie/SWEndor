@@ -7,7 +7,6 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement MainMenuText = new SelectionElement();
     SelectionElement VersionText = new SelectionElement();
     SelectionElement ButtonPlay = new SelectionElement();
-    //UISelectionElement ButtonLoad = new UISelectionElement();
     SelectionElement ButtonOptions = new SelectionElement();
     SelectionElement ButtonCredits = new SelectionElement();
     SelectionElement ButtonExit = new SelectionElement();
@@ -15,7 +14,7 @@ namespace SWEndor.UI.Menu.Pages
 
     public MainMenu(Screen2D owner) : base(owner)
     {
-      MainMenuText.Text = "<Title>";
+      MainMenuText.Text = "SW Endor";
       MainMenuText.TextPosition = new TV_2DVECTOR(75, 60);
       MainMenuText.TextFont = FontFactory.Get(Font.T48).ID;
 
@@ -30,16 +29,6 @@ namespace SWEndor.UI.Menu.Pages
       ButtonPlay.HighlightBoxHeight = 30;
       ButtonPlay.Selectable = true;
       ButtonPlay.OnKeyPress += SelectPlay;
-
-      /*
-      ButtonLoad.Text = "Load Scenario";
-      ButtonLoad.TextPosition = owner.ScreenSize + new TV_2DVECTOR(-200, -260);
-      ButtonLoad.HighlightBoxPosition = ButtonLoad.TextPosition - new TV_2DVECTOR(5, 5);
-      ButtonLoad.HighlightBoxWidth = 200;
-      ButtonLoad.HighlightBoxHeight = 30;
-      ButtonLoad.Selectable = true;
-      ButtonLoad.OnKeyPress += SelectLoad;
-      */
 
       ButtonOptions.Text = "Options";
       ButtonOptions.TextPosition = owner.ScreenSize + new TV_2DVECTOR(-200, -220);
@@ -68,7 +57,6 @@ namespace SWEndor.UI.Menu.Pages
       Elements.Add(MainMenuText);
       Elements.Add(VersionText);
       Elements.Add(ButtonPlay);
-      //Elements.Add(ButtonLoad);
       Elements.Add(ButtonOptions);
       Elements.Add(ButtonCredits);
       Elements.Add(ButtonExit);
@@ -80,16 +68,6 @@ namespace SWEndor.UI.Menu.Pages
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
         EnterPage(new PlayScenario(Owner));
-        return true;
-      }
-      return false;
-    }
-
-    private bool SelectLoad(CONST_TV_KEY key)
-    {
-      if (key == CONST_TV_KEY.TV_KEY_RETURN)
-      {
-        //EnterPage(null);
         return true;
       }
       return false;
