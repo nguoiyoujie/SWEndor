@@ -1,5 +1,7 @@
 ﻿using MTV3D65;
+using Primrose.Primitives.Extensions;
 using SWEndor.Actors;
+using System;
 
 namespace SWEndor.UI.Widgets
 {
@@ -7,9 +9,9 @@ namespace SWEndor.UI.Widgets
   {
     // Left Info
     private float leftinfo_left = 20;
-    private float leftinfo_stagetop = 15;
+    private float leftinfo_stagetop = 25;
     private float leftinfo_stageheight = 30;
-    private float leftinfo_stagewidth = 260;
+    private float leftinfo_stagewidth = 60;
 
     // Middle Info
     private float infomiddlegap = 15;
@@ -81,10 +83,7 @@ namespace SWEndor.UI.Widgets
 
         TVScreen2DText.Action_BeginText();
         // Scenario Title, Difficulty
-        TVScreen2DText.TextureFont_DrawText(string.Format("{0}: {1}"
-          , GameScenarioManager.Scenario.Info.Name
-          , GameScenarioManager.Scenario.State.Difficulty
-          )
+        TVScreen2DText.TextureFont_DrawText("{0:mm\\:ss}".F(TimeSpan.FromSeconds(Engine.Game.GameTime))
           , leftinfo_left
           , leftinfo_stagetop
           , icolor
