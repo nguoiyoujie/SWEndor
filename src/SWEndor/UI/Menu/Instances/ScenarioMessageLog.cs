@@ -34,12 +34,14 @@ namespace SWEndor.UI.Menu.Pages
         LogText.Add(line);
         line.Text = "";
         line.TextPosition = new TV_2DVECTOR(20, y);
+        line.TextFont = FontFactory.Get(Font.T12).ID;
         line.UnHighlightBoxColor = ColorLocalization.Get(ColorLocalKeys.TRANSPARENT);
         line.HighlightBoxColor = ColorLocalization.Get(ColorLocalKeys.TRANSPARENT);
         line.SecondaryText = "";
+        line.SecondaryTextFont = FontFactory.Get(Font.T12).ID;
         line.SecondaryTextPosition = new TV_2DVECTOR(120, y);
         line.Selectable = false;
-        y += 40;
+        y += 30;
       }
       log = (SelectedScenario.State.MessageLogs.Count - LogText.Count).Max(0);
 
