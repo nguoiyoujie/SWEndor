@@ -5,7 +5,6 @@ namespace SWEndor.UI
   public partial class Font
   {
     public const string Consolas = "Consolas";
-    public const string Impact = "Impact";
 
     public const byte T08 = 8;
     public const byte T10 = 10;
@@ -30,9 +29,9 @@ namespace SWEndor.UI
         Create(engine, T14, "Consolas_14");
         Create(engine, T16, "Consolas_16");
         Create(engine, T24, "Consolas_24");
-        Create(engine, T36, "Impact_36");
-        Create(engine, T48, "Impact_48");
-
+        Create(engine, T36, "StdBitmap_36");
+        Create(engine, T48, "StdBitmap_48");
+        
         /*
         Create(engine, T08, Consolas, 8, FontMode.NONE);
         Create(engine, T10, Consolas, 10, FontMode.BOLD);

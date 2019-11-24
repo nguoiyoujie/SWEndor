@@ -25,6 +25,7 @@ namespace SWEndor.UI
                                                             , true);
 
       generateWidth(engine);
+      //SaveToFiles(engine, fontname + "_" + size.ToString(), CONST_TV_IMAGEFORMAT.TV_IMAGE_DDS);
     }
 
     private Font(Engine engine
@@ -86,6 +87,7 @@ namespace SWEndor.UI
         TV_TEXTUREFONT_CHAR c = p[i];
         f.SetFloatArray(INIFile.PreHeaderSectionName, c.iAsciiChar.ToString(), new float[] { c.fX1, c.fX2, c.fY1, c.fY2 });
       }
+      f.SaveFile(datapath);
     }
 
     public void Load(Engine engine, string name, out int iFnt)
