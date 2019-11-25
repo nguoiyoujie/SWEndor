@@ -57,7 +57,10 @@ namespace SWEndor.Actors
 #endif
 
       using (ScopeCounters.Acquire(actor.Scope))
+      {
         actor.CollisionData.TestCollision(engine, actor);
+        actor.CollisionData.TestProspectiveCollision(engine, actor, ref actor.AI);
+      }
     }
 
     internal static void FireWeapon(Engine engine, ActorInfo actor, ActorInfo target, WeaponShotInfo weapon)

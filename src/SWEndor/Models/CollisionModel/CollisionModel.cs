@@ -69,13 +69,13 @@ namespace SWEndor.Models
           Collision.End = actor.GetRelativePositionXYZ(0, 0, actor.MinDimensions.z, false) - (actor.GetGlobalPosition() - actor.GetPrevGlobalPosition());
 
         Collision.Start = actor.GetRelativePositionXYZ(0, 0, actor.MaxDimensions.z, false);
-        //TV_3DVECTOR vmin = 
-        //TV_3DVECTOR vmax = prevCollisionStart;
-        //prevCollisionStart = actor.GetRelativePositionXYZ(0, 0, actor.MinDimensions.z, false) - (actor.GetGlobalPosition() - actor.GetPrevGlobalPosition());
-
         TestCollision(engine, actor, false, ref Collision);
         IsTestingCollision = false;
       }
+    }
+
+    internal void TestProspectiveCollision(Engine engine, T actor, ref AIModel aimodel)
+    { 
       if (IsTestingProspectiveCollision)
       {
         ProspectiveCollision.Start = actor.GetRelativePositionXYZ(0, 0, actor.MaxDimensions.z + 10);
@@ -85,7 +85,6 @@ namespace SWEndor.Models
         TV_3DVECTOR proNormal = new TV_3DVECTOR();
 
         int count = 0;
-
         IsInProspectiveCollision = false;
 
         TestCollision(engine, actor, true, ref ProspectiveCollision);
@@ -145,6 +144,40 @@ namespace SWEndor.Models
           ProspectiveCollision.Impact = proImpact / count;
           ProspectiveCollision.Normal = proNormal / count;
         }
+        /*
+        ProspectiveCollisionLevel = 0;
+        ProspectiveCollision.Start = actor.GetRelativePositionXYZ(0, 0, actor.MaxDimensions.z + 10);
+        ProspectiveCollision.End = actor.GetRelativePositionXYZ(0, 0, actor.MaxDimensions.z + 10 + ProspectiveCollisionScanDistance);
+        IsInProspectiveCollision = false;
+        TestCollision(engine, actor, true, ref ProspectiveCollision);
+
+        if (ProspectiveCollision.ActorID >= 0)
+        {
+          IsInProspectiveCollision = true;
+          ProspectiveCollisionSafe = ProspectiveCollision.Impact + ProspectiveCollision.Normal * 10000;
+          ProspectiveCollisionLevel = 0;
+        }
+        else //if (actor is ActorInfo)
+        {
+          // level 2
+          TV_3DVECTOR tgt = aimodel.GetTargetPos(engine, (ActorInfo)(object)actor);
+          TV_3DVECTOR start = actor.GetRelativePositionXYZ(0, 0, actor.MaxDimensions.z + 10);
+          ProspectiveCollision.Start = start;
+          float dist = DistanceModel.GetDistance(engine.TrueVision.TVMathLibrary, ProspectiveCollision.Start, tgt);
+          ProspectiveCollision.End = DistanceModel.Lerp(engine.TrueVision.TVMathLibrary, ProspectiveCollision.Start, tgt, ProspectiveCollisionScanDistance / dist);
+          TV_3DVECTOR diff = ProspectiveCollision.End - ProspectiveCollision.Start;
+          TestCollision(engine, actor, true, ref ProspectiveCollision);
+
+          if (ProspectiveCollision.ActorID >= 0)
+          {
+            IsInProspectiveCollision = true;
+            TV_3DVECTOR vec = ProspectiveCollision.Impact - start;
+            float k = engine.TrueVision.TVMathLibrary.TVVec3Dot(vec, ProspectiveCollision.Normal);
+            ProspectiveCollisionSafe = ProspectiveCollision.Impact + (vec + k * ProspectiveCollision.Normal);
+            ProspectiveCollisionLevel = 1;
+          }
+        }
+        */
         IsTestingProspectiveCollision = false;
       }
     }
