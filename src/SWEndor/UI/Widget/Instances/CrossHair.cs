@@ -186,7 +186,7 @@ namespace SWEndor.UI.Widgets
 
       if (weap.Ammo.Count > -1)
       {
-        TVScreen2DText.TextureFont_DrawText("{0}: {1}".F(weap.DisplayName, (enabled ? weap.Ammo.ToString() : "---"))
+        TVScreen2DText.TextureFont_DrawText("{0}: {1}".F(weap.DisplayName, (enabled ? weap.Ammo.Count.ToString() : "---"))
                                   , p1_x + Owner.ScreenCenter.x + 5
                                   , p1_y + Owner.ScreenCenter.y + 2
                                   , pcolor.Value

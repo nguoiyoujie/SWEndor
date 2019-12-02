@@ -10,12 +10,14 @@ namespace SWEndor.UI.Widgets
   {
     private TV_2DVECTOR top_left;
     private float dx;
+    private float dx2;
     private float dy;
 
     public SystemIndicator(Screen2D owner) : base(owner, "systemstatus")
     {
-      top_left = new TV_2DVECTOR(10, 500);
+      top_left = new TV_2DVECTOR(20, Engine.ScreenHeight * 0.66f - 60);
       dx = 150;
+      dx2 = 60;
       dy = 12;
     }
 
@@ -45,7 +47,7 @@ namespace SWEndor.UI.Widgets
       TVScreen2DImmediate.Action_Begin2D();
       TVScreen2DImmediate.Draw_FilledBox(top_left.x - 2
                                        , y - 2
-                                       , x2 + 62
+                                       , x2 + dx2 + 2
                                        , y + dy * (p.TypeInfo.SystemData.Parts.Length + 2) + 2
                                        , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
       TVScreen2DImmediate.Action_End2D();

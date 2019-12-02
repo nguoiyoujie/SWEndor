@@ -18,18 +18,14 @@ namespace SWEndor.UI.Widgets
     private float radar_range;
     private float radar_blinkfreq;
     private float radar_bigshiprenderunit;
-    private TV_2DVECTOR targetingradar_center;
-    private float targetingradar_radius;
 
     public Radar(Screen2D owner) : base(owner, "radar")
     {
-      radar_center = new TV_2DVECTOR(Engine.ScreenWidth * 0.34f, Engine.ScreenHeight * 0.24f) + new TV_2DVECTOR(Engine.ScreenWidth / 2, Engine.ScreenHeight / 2);
-      radar_radius = Engine.ScreenHeight * 0.16f; //100;
+      radar_center = new TV_2DVECTOR(Engine.ScreenWidth - Engine.ScreenHeight * 0.18f - 25, Engine.ScreenHeight * 0.82f - 60);
+      radar_radius = Engine.ScreenHeight * 0.16f;
       radar_range = 4000;
       radar_blinkfreq = 2.5f;
       radar_bigshiprenderunit = 50;
-      targetingradar_center = new TV_2DVECTOR(Engine.ScreenWidth / 2, Engine.ScreenHeight * 0.28f);
-      targetingradar_radius = Engine.ScreenHeight * 0.12f; //100;
     }
 
   public override bool Visible

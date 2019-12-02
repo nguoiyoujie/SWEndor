@@ -97,8 +97,8 @@ namespace SWEndor.Core
 
       AtmosphereInfo = new AtmosphereInfo(this);
       LandInfo = new LandInfo(this);
-      Screen2D = new Screen2D(this);
       Surfaces = new RenderSurfaces(this);
+      Screen2D = new Screen2D(this);
 
       ShaderFactory.Load();
     }

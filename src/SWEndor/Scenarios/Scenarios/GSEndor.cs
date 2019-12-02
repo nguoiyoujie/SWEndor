@@ -122,32 +122,36 @@ namespace SWEndor.Scenarios
 
       MakePlayer = Rebel_MakePlayer;
 
-      if (!State.GetGameStateB("rebels_arrive"))
-      {
-        State.SetGameStateB("rebels_arrive", true);
+      SoundManager.SetMusic("battle_3_1");
+      SoundManager.SetMusicLoop("battle_3_3");
 
-        SoundManager.SetMusic("battle_3_1");
-        SoundManager.SetMusicLoop("battle_3_3");
+      EventQueue.Add(Game.GameTime + 0.1f, Rebel_HyperspaceIn);
+      EventQueue.Add(Game.GameTime + 8f, Rebel_SetPositions);
+      EventQueue.Add(Game.GameTime + 8f, Rebel_MakePlayer);
+      EventQueue.Add(Game.GameTime + 9f, Message_01_AllWingsReport);
+      EventQueue.Add(Game.GameTime + 12f, Message_02_RedLeader);
+      EventQueue.Add(Game.GameTime + 13.5f, Message_03_GoldLeader);
+      EventQueue.Add(Game.GameTime + 15f, Message_04_BlueLeader);
+      EventQueue.Add(Game.GameTime + 16.5f, Message_05_GreenLeader);
+      EventQueue.Add(Game.GameTime + 19f, Message_06_Force);
+      EventQueue.Add(Game.GameTime + 24f, Message_07_Break);
+      EventQueue.Add(Game.GameTime + 25.2f, Message_08_Break);
+      EventQueue.Add(Game.GameTime + 26.5f, Message_09_Conf);
+      EventQueue.Add(Game.GameTime + 29.5f, Message_10_Break);
+      EventQueue.Add(Game.GameTime + 30f, Rebel_GiveControl);
+      EventQueue.Add(Game.GameTime + 38f, Message_11_Evasive);
+      EventQueue.Add(Game.GameTime + 42f, Message_12_Trap);
+      EventQueue.Add(Game.GameTime + 50f, Message_13_Fighters);
+      EventQueue.Add(Game.GameTime + 45f, Empire_SpawnStatics);
 
-        EventQueue.Add(Game.GameTime + 0.1f, Rebel_HyperspaceIn);
-        EventQueue.Add(Game.GameTime + 8f, Rebel_SetPositions);
-        EventQueue.Add(Game.GameTime + 8f, Rebel_MakePlayer);
-        EventQueue.Add(Game.GameTime + 9f, Message_01_AllWingsReport);
-        EventQueue.Add(Game.GameTime + 12f, Message_02_RedLeader);
-        EventQueue.Add(Game.GameTime + 13.5f, Message_03_GoldLeader);
-        EventQueue.Add(Game.GameTime + 15f, Message_04_BlueLeader);
-        EventQueue.Add(Game.GameTime + 16.5f, Message_05_GreenLeader);
-        EventQueue.Add(Game.GameTime + 19f, Message_06_Force);
-        EventQueue.Add(Game.GameTime + 24f, Message_07_Break);
-        EventQueue.Add(Game.GameTime + 25.2f, Message_08_Break);
-        EventQueue.Add(Game.GameTime + 26.5f, Message_09_Conf);
-        EventQueue.Add(Game.GameTime + 29.5f, Message_10_Break);
-        EventQueue.Add(Game.GameTime + 30f, Rebel_GiveControl);
-        EventQueue.Add(Game.GameTime + 38f, Message_11_Evasive);
-        EventQueue.Add(Game.GameTime + 42f, Message_12_Trap);
-        EventQueue.Add(Game.GameTime + 50f, Message_13_Fighters);
-        EventQueue.Add(Game.GameTime + 45f, Empire_SpawnStatics);
-      }
+      StageTick.Clear();
+      StageTick.Add(0, new Action(TickStage0));
+      StageTick.Add(1, new Action(TickStage1));
+      StageTick.Add(2, new Action(TickStage2));
+      StageTick.Add(3, new Action(TickStage3));
+      StageTick.Add(4, new Action(TickStage4));
+      StageTick.Add(5, new Action(TickStage5));
+      StageTick.Add(6, new Action(TickStage6));
 
       Screen2D.Line1.Color = new COLOR(1f, 1f, 0.3f, 1);
       Screen2D.Line2.Color = new COLOR(1f, 1f, 0.3f, 1);
@@ -180,8 +184,8 @@ namespace SWEndor.Scenarios
       State.InformLostShip = true;
 
       MainAllyFaction.WingLimitIncludesAllies = true;
-      MainAllyFaction.WingSpawnLimit = 22;
-      MainEnemyFaction.WingSpawnLimit = 32;
+      MainAllyFaction.WingSpawnLimit = 22; //22
+      MainEnemyFaction.WingSpawnLimit = 32; //32
     }
 
     internal override void LoadScene()
@@ -219,43 +223,120 @@ namespace SWEndor.Scenarios
       m_ADSLS.QueueNext(Lock.GetOrCreate());
     }
 
-    public override void GameTick()
+    public void TickStage0()
     {
-      base.GameTick();
       if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled && State.GetGameStateB("in_battle"))
+        State.StageNumber = 1;
+    }
+
+    public void TickStage1()
+    {
+      if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled)
       {
-        if (State.StageNumber == 0)
-        {
-          State.StageNumber = 1;
-        }
-        else if (TIEWaves > 5 && State.StageNumber == 1)
-        {
+        if (TIEWaves > 5)
           State.StageNumber = 2;
+
+        if (TIESpawnTime < Game.GameTime)
+        {
+          int tie = MainEnemyFaction.WingCount;
+          int sdest = MainEnemyFaction.ShipCount;
+          if (tie < 36)
+          {
+            TIESpawnTime = Game.GameTime + 10f;
+            TIEWaves++;
+
+            Rebel_GoBack(0.7f);
+            TIESpawn_1_2();
+          }
         }
-        else if (SDWaves >= 1 && MainEnemyFaction.ShipCount == 0 && m_pendingSDspawnlist.Count == 0 && State.StageNumber == 2)
+      }
+    }
+
+    public void TickStage2()
+    {
+      if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled)
+      {
+        if (SDWaves >= 1 && MainEnemyFaction.ShipCount == 0 && m_pendingSDspawnlist.Count == 0)
         {
           State.StageNumber = 3;
           EventQueue.Add(Game.GameTime + 5.5f, Message_14_Interceptors);
         }
-        else if (TIEWaves > 11 && State.StageNumber == 3)
+
+        if (TIESpawnTime < Game.GameTime)
         {
-          State.StageNumber = 4;
+          int tie = MainEnemyFaction.WingCount;
+          int sdest = MainEnemyFaction.ShipCount;
+          if (tie < ((sdest == 0) ? 28 : 14))
+          {
+            TIESpawnTime = Game.GameTime + 10f;
+
+            Rebel_GoBack(0.7f);
+            TIESpawn_1_2();
+          }
         }
-        else if (SDWaves >= 2 && MainEnemyFaction.ShipCount == 0 && m_pendingSDspawnlist.Count == 0 && State.StageNumber == 4)
+
+        if (m_pendingSDspawnlist.Count > 0 && MainEnemyFaction.ShipCount < 8)
+        {
+          if (!(m_pendingSDspawnlist[0].Info.TypeInfo.ID == "IMPL") || MainEnemyFaction.ShipCount < 2)
+          {
+            EventQueue.Add(0, Empire_StarDestroyer_Spawn, m_pendingSDspawnlist[0]);
+            m_pendingSDspawnlist.RemoveAt(0);
+          }
+        }
+
+        if (!State.GetGameStateB("DS2"))
+        {
+          State.SetGameStateB("DS2", true);
+          EventQueue.Add(Game.GameTime, Empire_DeathStarAttack_01);
+          EventQueue.Add(Game.GameTime + 8f, Message_20_DeathStar);
+          EventQueue.Add(Game.GameTime + 15f, Empire_StarDestroyer_01);
+          EventQueue.Add(Game.GameTime + 20f, Message_21_Close);
+          EventQueue.Add(Game.GameTime + 25f, Rebel_YWingsAttackScan);
+          State.MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
+          State.MinBounds = new TV_3DVECTOR(-20000, -1500, -17500);
+          State.MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
+          State.MinAIBounds = new TV_3DVECTOR(-20000, -1500, -17500);
+        }
+      }
+    }
+
+    public void TickStage3()
+    {
+      if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled)
+      {
+        if (TIEWaves > 11)
+          State.StageNumber = 4;
+
+        if (TIESpawnTime < Game.GameTime)
+        {
+          int tie = MainEnemyFaction.WingCount;
+          int sdest = MainEnemyFaction.ShipCount;
+          if (tie < 32)
+          {
+            TIESpawnTime = Game.GameTime + 10f;
+            TIEWaves++;
+
+            Rebel_GoBack(0.3f);
+            TIESpawn_3_4();
+          }
+        }
+      }
+    }
+
+    public void TickStage4()
+    {
+      if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled)
+      {
+        if (SDWaves >= 2 && MainEnemyFaction.ShipCount == 0 && m_pendingSDspawnlist.Count == 0)
         {
           State.StageNumber = 5;
           SoundManager.SetMusic("battle_3_4");
           SoundManager.SetMusicLoop("battle_3_4");
           EventQueue.Add(Game.GameTime + 5.5f, Message_15_Bombers);
         }
-        else if (TIEWaves > 17 && State.StageNumber == 5)
-        {
-          State.StageNumber = 6;
-        }
 
         // Wedge and Falcon
         if (!State.GetGameStateB("deathstar_noshield")
-          && State.StageNumber == 4
           && SDWaves >= 2
           && (m_pendingSDspawnlist.Count + MainEnemyFaction.ShipCount) <= m_SDLeftForShieldDown)
         {
@@ -269,187 +350,27 @@ namespace SWEndor.Scenarios
           EventQueue.Add(Game.GameTime + 20f, Message_34_Han);
         }
 
-        // TIE spawn
         if (TIESpawnTime < Game.GameTime)
         {
           int tie = MainEnemyFaction.WingCount;
           int sdest = MainEnemyFaction.ShipCount;
-          if ((tie < 36 && sdest == 0 && State.StageNumber == 1)
-            || (tie < 32 && sdest == 0 && State.StageNumber == 3)
-            || (tie < 28 && sdest == 0)
-            || (tie < 14 && sdest > 0))
+          if (tie < ((sdest == 0) ? 28 : 14))
           {
             TIESpawnTime = Game.GameTime + 10f;
-
-            if (State.StageNumber == 1 || State.StageNumber == 3 || State.StageNumber == 5)
-            {
-              TIEWaves++;
-            }
-
-            if (State.StageNumber == 1 || State.StageNumber == 2)
-            {
-              Rebel_GoBack(0.7f);
-              switch (State.Difficulty.ToLower())
-              {
-                case "easy":
-                  EventQueue.Add(0, Empire_TIEWave_01, 4);
-                  break;
-                case "hard":
-                  if (TIEWaves % 3 == 1)
-                  {
-                    EventQueue.Add(0, Empire_TIEWave_01, 5);
-                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 1);
-                  }
-                  else
-                  {
-                    EventQueue.Add(0, Empire_TIEWave_01, 4);
-                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 2);
-                  }
-                  break;
-                case "mental":
-                  if (TIEWaves % 2 == 1)
-                  {
-                    EventQueue.Add(0, Empire_TIEWave_01, 7);
-                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 2);
-                  }
-                  else
-                  {
-                    EventQueue.Add(0, Empire_TIEWave_01, 5);
-                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 3);
-                  }
-                  break;
-                case "normal":
-                default:
-                  EventQueue.Add(0, Empire_TIEWave_01, 5);
-                  break;
-              }
-            }
-            else if (State.StageNumber == 3 || State.StageNumber == 4)
-            {
-              Rebel_GoBack(0.3f);
-              switch (State.Difficulty.ToLower())
-              {
-                case "easy":
-                  EventQueue.Add(0, Empire_TIEWave_02, 4);
-                  break;
-                case "hard":
-                  if (TIEWaves % 3 == 1)
-                  {
-                    EventQueue.Add(0, Empire_TIEWave_02, 5);
-                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 1);
-                  }
-                  else
-                  {
-                    EventQueue.Add(0, Empire_TIEWave_02, 4);
-                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 2);
-                  }
-
-                  break;
-                case "mental":
-                  if (TIEWaves % 2 == 1)
-                  {
-                    EventQueue.Add(0, Empire_TIEWave_02, 6);
-                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 2);
-                  }
-                  else
-                  {
-                    EventQueue.Add(0, Empire_TIEWave_02, 5);
-                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 3);
-                  }
-                  break;
-                case "normal":
-                default:
-                  EventQueue.Add(0, Empire_TIEWave_02, 5);
-                  break;
-              }
-            }
-            else if (State.StageNumber == 5 || State.StageNumber == 6)
-            {
-              switch (State.Difficulty.ToLower())
-              {
-                case "easy":
-                  EventQueue.Add(0, Empire_TIEWave_01, 2);
-                  EventQueue.Add(0, Empire_TIEWave_03, 2);
-                  EventQueue.Add(0, Empire_TIEBombers, 1);
-                  break;
-                case "hard":
-                  if (TIEWaves % 3 == 1)
-                  {
-                    EventQueue.Add(0, Empire_TIEWave_02, 3);
-                    EventQueue.Add(0, Empire_TIEWave_03, 2);
-                    EventQueue.Add(0, Empire_TIEBombers, 2);
-                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 1);
-                  }
-                  else
-                  {
-                    EventQueue.Add(0, Empire_TIEWave_02, 2);
-                    EventQueue.Add(0, Empire_TIEWave_03, 3);
-                    EventQueue.Add(0, Empire_TIEBombers, 2);
-                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 2);
-                  }
-                  break;
-                case "mental":
-                  if (TIEWaves % 2 == 1)
-                  {
-                    EventQueue.Add(0, Empire_TIEWave_03, 6);
-                    EventQueue.Add(0, Empire_TIEBombers, 2);
-                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 3);
-                  }
-                  else
-                  {
-                    EventQueue.Add(0, Empire_TIEWave_03, 5);
-                    EventQueue.Add(0, Empire_TIEBombers, 2);
-                    EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 3);
-                  }
-                  break;
-                case "normal":
-                default:
-                  EventQueue.Add(0, Empire_TIEWave_02, 2);
-                  EventQueue.Add(0, Empire_TIEWave_03, 3);
-                  EventQueue.Add(0, Empire_TIEBombers, 2);
-                  break;
-              }
-            }
+            TIESpawn_3_4();
           }
         }
 
         if (m_pendingSDspawnlist.Count > 0 && MainEnemyFaction.ShipCount < 8)
         {
-          if ((!(m_pendingSDspawnlist[0].Info.TypeInfo is ImperialIATI) || MainEnemyFaction.ShipCount < ((State.StageNumber == 6) ? 4 : 2))
-            && (!(m_pendingSDspawnlist[0].Info.TypeInfo is DevastatorATI) || MainEnemyFaction.ShipCount < 2))
+          if ((!(m_pendingSDspawnlist[0].Info.TypeInfo.ID == "IMPL") || MainEnemyFaction.ShipCount < 2))
           {
             EventQueue.Add(0, Empire_StarDestroyer_Spawn, m_pendingSDspawnlist[0]);
             m_pendingSDspawnlist.RemoveAt(0);
           }
         }
 
-        if (m_Enemy_pull > 0)
-        {
-          m_Enemy_pull -= Game.TimeSinceRender * m_Enemy_pullrate;
-          foreach (int enemyshipID in MainEnemyFaction.GetShips())
-          {
-            ActorInfo enemyship = Engine.ActorFactory.Get(enemyshipID);
-            if (enemyship != null)
-              enemyship.MoveAbsolute(0, 0, Game.TimeSinceRender * m_Enemy_pullrate);
-          }
-        }
-
-        //Rebel_ForceAwayFromBounds();
-
-        if (State.StageNumber == 2 && !State.GetGameStateB("DS2"))
-        {
-          State.SetGameStateB("DS2", true);
-          EventQueue.Add(Game.GameTime, Empire_DeathStarAttack_01);
-          EventQueue.Add(Game.GameTime + 8f, Message_20_DeathStar);
-          EventQueue.Add(Game.GameTime + 15f, Empire_StarDestroyer_01);
-          EventQueue.Add(Game.GameTime + 20f, Message_21_Close);
-          EventQueue.Add(Game.GameTime + 25f, Rebel_YWingsAttackScan);
-          State.MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
-          State.MinBounds = new TV_3DVECTOR(-20000, -1500, -17500);
-          State.MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
-          State.MinAIBounds = new TV_3DVECTOR(-20000, -1500, -17500);
-        }
-        else if (State.StageNumber == 4 && !State.GetGameStateB("DS4"))
+        if (!State.GetGameStateB("DS4"))
         {
           State.SetGameStateB("DS4", true);
           EventQueue.Add(Game.GameTime, Empire_DeathStarAttack_02);
@@ -462,36 +383,226 @@ namespace SWEndor.Scenarios
           State.MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
           State.MinAIBounds = new TV_3DVECTOR(-20000, -1500, -22500);
         }
-        else if (State.StageNumber == 6 && !State.GetGameStateB("DS6"))
+      }
+    }
+
+    public void TickStage5()
+    {
+      if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled)
+      {
+        if (TIEWaves > 17)
+          State.StageNumber = 6;
+
+        if (TIESpawnTime < Game.GameTime)
+        {
+          int tie = MainEnemyFaction.WingCount;
+          int sdest = MainEnemyFaction.ShipCount;
+          if (tie < 28)
+          {
+            TIESpawnTime = Game.GameTime + 10f;
+            TIEWaves++;
+            TIESpawn_5_6();
+          }
+        }
+      }
+    }
+
+    public void TickStage6()
+    {
+      if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled)
+      {
+        if (TIESpawnTime < Game.GameTime)
+        {
+          int tie = MainEnemyFaction.WingCount;
+          int sdest = MainEnemyFaction.ShipCount;
+          if (tie < 28)
+          {
+            TIESpawnTime = Game.GameTime + 10f;
+            TIEWaves++;
+
+            TIESpawn_5_6();
+          }
+        }
+
+        if (m_pendingSDspawnlist.Count > 0 && MainEnemyFaction.ShipCount < 8)
+        {
+          if ((!(m_pendingSDspawnlist[0].Info.TypeInfo.ID == "IMPL") || MainEnemyFaction.ShipCount < 4))
+          {
+            EventQueue.Add(0, Empire_StarDestroyer_Spawn, m_pendingSDspawnlist[0]);
+            m_pendingSDspawnlist.RemoveAt(0);
+          }
+        }
+
+        if (!State.GetGameStateB("DS6"))
         {
           State.SetGameStateB("DS6", true);
           EventQueue.Add(Game.GameTime, Empire_DeathStarAttack_03);
           EventQueue.Add(Game.GameTime + 8f, Empire_Executor);
           EventQueue.Add(Game.GameTime + 13f, Message_40_Focus);
-          State.MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
-          State.MinBounds = new TV_3DVECTOR(-20000, -1500, -25000);
-          State.MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
-          State.MinAIBounds = new TV_3DVECTOR(-20000, -1500, -25000);
+          State.MaxBounds = new TV_3DVECTOR(20000, 2500, 20000);
+          State.MinBounds = new TV_3DVECTOR(-20000, -2500, -45000);
+          State.MaxAIBounds = new TV_3DVECTOR(20000, 2500, 20000);
+          State.MinAIBounds = new TV_3DVECTOR(-20000, -2500, -45000);
         }
       }
+    }
 
-      if (State.TimeSinceLostWing < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
+    public void TIESpawn_1_2()
+    {
+      switch (State.Difficulty.ToLower())
       {
-        Screen2D.Line1.Text = "WINGS: {0}".F(MainAllyFaction.WingLimit);
+        case "easy":
+          EventQueue.Add(0, Empire_TIEWave_01, 4);
+          break;
+        case "hard":
+          if (TIEWaves % 3 == 1)
+          {
+            EventQueue.Add(0, Empire_TIEWave_01, 5);
+            EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 1);
+          }
+          else
+          {
+            EventQueue.Add(0, Empire_TIEWave_01, 4);
+            EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 2);
+          }
+          break;
+        case "mental":
+          if (TIEWaves % 2 == 1)
+          {
+            EventQueue.Add(0, Empire_TIEWave_01, 7);
+            EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 2);
+          }
+          else
+          {
+            EventQueue.Add(0, Empire_TIEWave_01, 5);
+            EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 3);
+          }
+          break;
+        case "normal":
+        default:
+          EventQueue.Add(0, Empire_TIEWave_01, 5);
+          break;
       }
-      else
+    }
+
+    public void TIESpawn_3_4()
+    {
+      switch (State.Difficulty.ToLower())
       {
-        Screen2D.Line1.Text = "";
+        case "easy":
+          EventQueue.Add(0, Empire_TIEWave_02, 4);
+          break;
+        case "hard":
+          if (TIEWaves % 3 == 1)
+          {
+            EventQueue.Add(0, Empire_TIEWave_02, 5);
+            EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 1);
+          }
+          else
+          {
+            EventQueue.Add(0, Empire_TIEWave_02, 4);
+            EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 2);
+          }
+
+          break;
+        case "mental":
+          if (TIEWaves % 2 == 1)
+          {
+            EventQueue.Add(0, Empire_TIEWave_02, 6);
+            EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 2);
+          }
+          else
+          {
+            EventQueue.Add(0, Empire_TIEWave_02, 5);
+            EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 3);
+          }
+          break;
+        case "normal":
+        default:
+          EventQueue.Add(0, Empire_TIEWave_02, 5);
+          break;
+      }
+    }
+
+    public void TIESpawn_5_6()
+    {
+      switch (State.Difficulty.ToLower())
+      {
+        case "easy":
+          EventQueue.Add(0, Empire_TIEWave_01, 2);
+          EventQueue.Add(0, Empire_TIEWave_03, 2);
+          EventQueue.Add(0, Empire_TIEBombers, 1);
+          break;
+        case "hard":
+          if (TIEWaves % 3 == 1)
+          {
+            EventQueue.Add(0, Empire_TIEWave_02, 3);
+            EventQueue.Add(0, Empire_TIEWave_03, 2);
+            EventQueue.Add(0, Empire_TIEBombers, 2);
+            EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 1);
+          }
+          else
+          {
+            EventQueue.Add(0, Empire_TIEWave_02, 2);
+            EventQueue.Add(0, Empire_TIEWave_03, 3);
+            EventQueue.Add(0, Empire_TIEBombers, 2);
+            EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 2);
+          }
+          break;
+        case "mental":
+          if (TIEWaves % 2 == 1)
+          {
+            EventQueue.Add(0, Empire_TIEWave_03, 6);
+            EventQueue.Add(0, Empire_TIEBombers, 2);
+            EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 3);
+          }
+          else
+          {
+            EventQueue.Add(0, Empire_TIEWave_03, 5);
+            EventQueue.Add(0, Empire_TIEBombers, 2);
+            EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 3);
+          }
+          break;
+        case "normal":
+        default:
+          EventQueue.Add(0, Empire_TIEWave_02, 2);
+          EventQueue.Add(0, Empire_TIEWave_03, 3);
+          EventQueue.Add(0, Empire_TIEBombers, 2);
+          break;
+      }
+    }
+
+    public Dictionary<int, Action> StageTick = new Dictionary<int, Action>();
+
+    public override void GameTick()
+    {
+      base.GameTick();
+
+      StageTick[State.StageNumber].Invoke();
+
+      if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled && State.GetGameStateB("in_battle"))
+      {
+        if (m_Enemy_pull > 0)
+        {
+          m_Enemy_pull -= Game.TimeSinceRender * m_Enemy_pullrate;
+          foreach (int enemyshipID in MainEnemyFaction.GetShips())
+          {
+            ActorInfo enemyship = Engine.ActorFactory.Get(enemyshipID);
+            if (enemyship != null)
+              enemyship.MoveAbsolute(0, 0, Game.TimeSinceRender * m_Enemy_pullrate);
+          }
+        }
+
+        //Rebel_ForceAwayFromBounds();
       }
 
-      if (State.TimeSinceLostShip < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
-      {
-        Screen2D.Line2.Text = "SHIPS: {0}".F(MainAllyFaction.ShipLimit);
-      }
-      else
-      {
-        Screen2D.Line2.Text = "";
-      }
+      Screen2D.Line1.Text = (State.TimeSinceLostWing < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
+        ? "WINGS: {0}".F(MainAllyFaction.WingLimit)
+        : "";
+
+      Screen2D.Line2.Text = (State.TimeSinceLostShip < Game.GameTime || Game.GameTime % 0.2f > 0.1f)
+        ? "SHIPS: {0}".F(MainAllyFaction.ShipLimit)
+        : "";
     }
 
     #region Rebellion spawns
@@ -590,11 +701,11 @@ namespace SWEndor.Scenarios
       }
       else if (PlayerInfo.ActorType == ActorTypeFactory.Get("YWING"))
       {
-        position = new TV_3DVECTOR(-250, 60, -420);
+        position = new TV_3DVECTOR(-250, 60, -220);
       }
       else if (PlayerInfo.ActorType == ActorTypeFactory.Get("AWING"))
       {
-        position = new TV_3DVECTOR(100, 70, -570);
+        position = new TV_3DVECTOR(100, 70, -670);
       }
       else if (PlayerInfo.ActorType == ActorTypeFactory.Get("BWING"))
       {
@@ -853,6 +964,7 @@ namespace SWEndor.Scenarios
 
       if (PlayerInfo.Actor != null && !PlayerInfo.Actor.Disposed)
       {
+        PlayerInfo.Actor.SetArmor(DamageType.ALL, 0);
         // m_Player = Player.Actor;
         if (!State.GetGameStateB("in_battle"))
         {
@@ -1613,7 +1725,7 @@ namespace SWEndor.Scenarios
 
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-10000, -300, -23500), new TV_3DVECTOR(-1250, -300, -10500)
+                                                        , new TV_3DVECTOR(-10000, -300, -23500), new TV_3DVECTOR(-2250, -300, -10500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
@@ -1785,7 +1897,7 @@ namespace SWEndor.Scenarios
       TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(0, 0, -10000);
       float creationTime = Game.GameTime;
 
-      TV_3DVECTOR position = new TV_3DVECTOR(0, -950, -20000);
+      TV_3DVECTOR position = new TV_3DVECTOR(0, -2100, -40000);
       ActorTypeInfo atinfo = ActorTypeFactory.Get("EXEC");
 
       ActorSpawnInfo asi = new ActorSpawnInfo
@@ -1833,57 +1945,57 @@ namespace SWEndor.Scenarios
 
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-2500, -80, -21000), new TV_3DVECTOR(-550, 80, -7000)
+                                                        , new TV_3DVECTOR(-4500, -80, -41000), new TV_3DVECTOR(-550, 80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(2500, -80, -21000), new TV_3DVECTOR(550, -160, -7000)
+                                                        , new TV_3DVECTOR(4500, -80, -41000), new TV_3DVECTOR(550, -160, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-3500, 120, -20500), new TV_3DVECTOR(-1500, 90, -6500)
+                                                        , new TV_3DVECTOR(-5500, 120, -40500), new TV_3DVECTOR(-1500, 90, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(3500, 120, -20500), new TV_3DVECTOR(1500, 90, -6500)
+                                                        , new TV_3DVECTOR(5500, 120, -40500), new TV_3DVECTOR(1500, 90, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-2000, -80, -24000), new TV_3DVECTOR(-2000, -80, -7000)
+                                                        , new TV_3DVECTOR(-4000, -80, -44000), new TV_3DVECTOR(-2000, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-4500, 120, -20500), new TV_3DVECTOR(-3500, 120, -6500)
+                                                        , new TV_3DVECTOR(-8500, 120, -40500), new TV_3DVECTOR(-3500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-500, 120, -20500), new TV_3DVECTOR(-500, 120, -6500)
+                                                        , new TV_3DVECTOR(-1500, 120, -40500), new TV_3DVECTOR(-500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(2000, -80, -24000), new TV_3DVECTOR(2000, -80, -7000)
+                                                        , new TV_3DVECTOR(4000, -80, -44000), new TV_3DVECTOR(2000, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(4500, 120, -20500), new TV_3DVECTOR(3500, 120, -6500)
+                                                        , new TV_3DVECTOR(8500, 120, -40500), new TV_3DVECTOR(3500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(500, 120, -20500), new TV_3DVECTOR(500, 120, -6500)
+                                                        , new TV_3DVECTOR(1500, 120, -40500), new TV_3DVECTOR(500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
           break;
@@ -1893,45 +2005,45 @@ namespace SWEndor.Scenarios
 
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-2500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000)
+                                                        , new TV_3DVECTOR(-4500, -80, -41000), new TV_3DVECTOR(-2500, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-4500, 120, -20500), new TV_3DVECTOR(-3500, 120, -6500)
+                                                        , new TV_3DVECTOR(-8500, 120, -40500), new TV_3DVECTOR(-3500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-500, 120, -20500), new TV_3DVECTOR(-500, 120, -6500)
+                                                        , new TV_3DVECTOR(-1500, 120, -40500), new TV_3DVECTOR(-500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-3500, 120, -20500), new TV_3DVECTOR(-2500, 120, -6500)
+                                                        , new TV_3DVECTOR(-6500, 120, -40500), new TV_3DVECTOR(-2500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(2500, -80, -21000), new TV_3DVECTOR(2500, -80, -7000)
+                                                        , new TV_3DVECTOR(4500, -80, -41000), new TV_3DVECTOR(2500, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(4500, 120, -20500), new TV_3DVECTOR(3500, 120, -6500)
+                                                        , new TV_3DVECTOR(8500, 120, -40500), new TV_3DVECTOR(3500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(500, 120, -20500), new TV_3DVECTOR(500, 120, -6500)
+                                                        , new TV_3DVECTOR(1500, 120, -40500), new TV_3DVECTOR(500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(3500, 120, -20500), new TV_3DVECTOR(2500, 120, -6500)
+                                                        , new TV_3DVECTOR(6500, 120, -40500), new TV_3DVECTOR(2500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
@@ -1942,23 +2054,23 @@ namespace SWEndor.Scenarios
 
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-2500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000)
+                                                        , new TV_3DVECTOR(-4500, -80, -41000), new TV_3DVECTOR(-2500, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(4500, 120, -20500), new TV_3DVECTOR(3500, 120, -6500)
+                                                        , new TV_3DVECTOR(8500, 120, -40500), new TV_3DVECTOR(3500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-500, 120, -20500), new TV_3DVECTOR(-500, 120, -6500)
+                                                        , new TV_3DVECTOR(-1500, 120, -40500), new TV_3DVECTOR(-500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(3500, 120, -20500), new TV_3DVECTOR(2500, 120, -6500)
+                                                        , new TV_3DVECTOR(6500, 120, -40500), new TV_3DVECTOR(2500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
           break;

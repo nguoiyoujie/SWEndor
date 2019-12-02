@@ -9,7 +9,12 @@ namespace SWEndor.UI.Widgets
 {
   public class TargetInfo : Widget
   {
-    public TargetInfo(Screen2D owner) : base(owner, "targetinfo") { }
+    private TV_2DVECTOR tgt_center;
+
+    public TargetInfo(Screen2D owner) : base(owner, "targetinfo")
+    {
+      tgt_center = new TV_2DVECTOR(Engine.ScreenWidth * 0.5f, Engine.ScreenHeight - Engine.Surfaces.Target_height * 0.5f - 50);
+    }
 
     public override bool Visible
     {
@@ -29,7 +34,6 @@ namespace SWEndor.UI.Widgets
       if (p == null || !p.Active)
         return;
 
-      int dy = 250;
       int w = Engine.Surfaces.Target_width;
       int h = Engine.Surfaces.Target_height;
       int tex = -1;
@@ -49,10 +53,10 @@ namespace SWEndor.UI.Widgets
 #endif
 
         TVScreen2DImmediate.Draw_Texture(tex
-                                  , Engine.ScreenWidth / 2 - w / 2
-                                  , Engine.ScreenHeight / 2 - h / 2 + dy
-                                  , Engine.ScreenWidth / 2 + w / 2
-                                  , Engine.ScreenHeight / 2 + h / 2 + dy);
+                                  , tgt_center.x - w / 2
+                                  , tgt_center.y - h / 2
+                                  , tgt_center.x + w / 2
+                                  , tgt_center.y + h / 2);
 
       TVScreen2DImmediate.Action_End2D();
     }
