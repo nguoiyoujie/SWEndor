@@ -11,7 +11,7 @@ namespace SWEndor.ActorTypes.Instances
     {
       Explodes = new ExplodeData[]
       {
-        new ExplodeData("EXPL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeData("EXPL00", 0.1f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
         new ExplodeData("EXPL01", 1, 5, ExplodeTrigger.ON_DEATH),
         new ExplodeData("EXPW01", 1, 5, ExplodeTrigger.ON_DEATH)
       };
@@ -29,13 +29,13 @@ namespace SWEndor.ActorTypes.Instances
       TimedLifeData = new TimedLifeData(false, 2000);
       ScoreData = new ScoreData(75, 100000);
 
-      MeshData = new MeshData(Engine, Name, @"executor\executor.x", 2.5f);
+      MeshData = new MeshData(Engine, Name, @"executor\executor.x", 5f);
       DyingMoveData.Sink(0.00025f, 1.3f, 0.2f);
 
       Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 325, -840), new TV_3DVECTOR(0, 325, 2000)),
         };
-      DeathCamera = new DeathCameraData(3000, 600, 40);
+      DeathCamera = new DeathCameraData(6000, 1200, 80);
       SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 2500.0f, new TV_3DVECTOR(0, 0, -800), true, isEngineSound: true) };
       AddOns = new AddOnData[]
       {

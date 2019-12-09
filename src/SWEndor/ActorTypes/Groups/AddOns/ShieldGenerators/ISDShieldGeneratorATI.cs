@@ -21,7 +21,7 @@ namespace SWEndor.ActorTypes.Instances
       RegenData = new RegenData(false, 0, 15, 0, 1);
 
 
-      MeshData = new MeshData(Engine, Name, @"stardestroyer\star_destroyer_energy_pod.x");
+      MeshData = new MeshData(Engine, Name, @"stardestroyer\star_destroyer_energy_pod.x", 0.6f);
     }
   }
 }

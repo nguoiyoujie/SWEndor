@@ -316,7 +316,7 @@
     <Compile Include="ActorTypes\Groups\Debris\Transport_Box4ATI.cs" />
     <Compile Include="ActorTypes\Groups\Debris\Transport_Box2ATI.cs" />
     <Compile Include="ActorTypes\Groups\Debris\Transport_Box1ATI.cs" />
-    <Compile Include="ActorTypes\Groups\Fighters\FalconATI.cs" />
+    <Compile Include="ActorTypes\Groups\Fighters\YT1300ATI.cs" />
     <Compile Include="ProjectileTypes\Groups\LaserProjectiles\SmallIonLaserATI.cs" />
     <Compile Include="ProjectileTypes\Groups\LaserProjectiles\Yellow2LaserATI.cs" />
     <Compile Include="ProjectileTypes\Groups\LaserProjectiles\GreenAntiShipLaserATI.cs" />
@@ -326,7 +326,6 @@
     <Compile Include="ActorTypes\Groups\SurfaceTower.cs" />
     <Compile Include="ActorTypes\Groups\StarDestroyers\ArquitensATI.cs" />
     <Compile Include="ActorTypes\Groups\StarDestroyers\AcclamatorATI.cs" />
-    <Compile Include="ActorTypes\Groups\StarDestroyers\DevastatorATI.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene.cs" />
     <Compile Include="ActorTypes\Groups\Debris\BWing_WingATI.cs" />
     <Compile Include="ActorTypes\Groups\Debris\BWing_Bottom_WingATI.cs" />
@@ -336,7 +335,6 @@
     <Compile Include="ActorTypes\Groups\Debris\TIE_WingATI.cs" />
     <Compile Include="ActorTypes\Groups\Debris\XWing_RD_LU_WingATI.cs" />
     <Compile Include="ActorTypes\Groups\Debris\XWing_RU_LD_WingATI.cs" />
-    <Compile Include="ActorTypes\Groups\Fighters\WedgeXWingATI.cs" />
     <Compile Include="ProjectileTypes\Groups\LaserProjectiles\GreenLaserAdvancedATI.cs" />
     <Compile Include="ProjectileTypes\Groups\LaserProjectiles\DeathStarLaserATI.cs" />
     <Compile Include="ProjectileTypes\Groups\LaserProjectiles\BigIonLaserATI.cs" />
@@ -627,7 +625,6 @@
     <Compile Include="ActorTypes\Groups\Warships\NebulonBATI.cs" />
     <Compile Include="ActorTypes\Groups\Warships\MC90ATI.cs" />
     <Compile Include="ActorTypes\Groups\Warships\CorellianATI.cs" />
-    <Compile Include="ActorTypes\Groups\Fighters\LandoFalconATI.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\BWingATI.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\AWingATI.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\YWingATI.cs" />

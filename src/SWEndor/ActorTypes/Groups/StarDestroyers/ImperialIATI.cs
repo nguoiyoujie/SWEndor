@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
+using SWEndor.Models;
 using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes.Instances
@@ -9,6 +10,12 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ImperialIATI(Factory owner) : base(owner, "IMPL", "Imperial-I Star Destroyer")
     {
+      Explodes = new ExplodeData[] {
+        new ExplodeData("EXPL00", 0.25f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeData("EXPL01", 1, 2.5f, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("EXPW01", 1, 1, ExplodeTrigger.ON_DEATH)
+      };
+
       SystemData.MaxShield = 500;
       SystemData.MaxHull = 750;
       CombatData.ImpactDamage = 60.0f;

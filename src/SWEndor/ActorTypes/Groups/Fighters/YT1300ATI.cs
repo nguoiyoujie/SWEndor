@@ -4,16 +4,16 @@ using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  internal class LandoFalconATI : Groups.RebelWing
+  internal class YT1300ATI : Groups.RebelWing
   {
-    internal LandoFalconATI(Factory owner) : base(owner, "LANDO", "Millennium Falcon (Lando)")
+    internal YT1300ATI(Factory owner) : base(owner, "YT1300", "YT-1300")
     {
       // Combat
       CombatData = CombatData.DefaultShip;
       ArmorData = ArmorData.Default;
 
-      SystemData.MaxShield = 50;
-      SystemData.MaxHull = 150;
+      SystemData.MaxShield = 40;
+      SystemData.MaxHull = 10;
       CombatData.ImpactDamage = 10;
       MoveLimitData.MaxSpeed = 500;
       MoveLimitData.MinSpeed = 250;
@@ -23,7 +23,6 @@ namespace SWEndor.ActorTypes.Instances
       AIData.AggressiveTracker = true;
       ScoreData = new ScoreData(750, 10000);
 
-      RenderData.AlwaysShowInRadar = true;
 
       RegenData = new RegenData(false, 0.2f, 0, 0, 0);
 
@@ -36,7 +35,7 @@ namespace SWEndor.ActorTypes.Instances
         new LookData(new TV_3DVECTOR(0, 0, 50), new TV_3DVECTOR(0, 0, 2000)),
         new LookData(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
         new LookData(new TV_3DVECTOR(0, 0, -50), new TV_3DVECTOR(0, 0, -2000))
-      };
+     };
 
       Loadouts = new WeapData[] { new WeapData("LASR", "PRI_1_AI", "NO_AUTOAIM", "DEFAULT", "FALC_LASR", "WING_LSR_R", "WING_LASER") };
     }

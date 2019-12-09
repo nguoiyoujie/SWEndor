@@ -48,9 +48,7 @@ namespace SWEndor.ActorTypes
         Register(new YWingATI(this));
         Register(new AWingATI(this));
         Register(new BWingATI(this));
-        Register(new FalconATI(this));
-        Register(new LandoFalconATI(this));
-        Register(new WedgeXWingATI(this));
+        Register(new YT1300ATI(this));
 
         Register(new T4AATI(this));
         Register(new JV7ATI(this));
@@ -80,7 +78,6 @@ namespace SWEndor.ActorTypes
 
         // Star Destroyers
         Register(new ImperialIATI(this));
-        Register(new DevastatorATI(this));
         Register(new InterdictorATI(this));
         Register(new VictoryIATI(this));
         Register(new AcclamatorATI(this));

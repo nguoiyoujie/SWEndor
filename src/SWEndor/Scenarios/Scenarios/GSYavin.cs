@@ -24,7 +24,7 @@ namespace SWEndor.Scenarios
     public GSYavin(ScenarioManager manager) : base(manager)
     {
       Info.Name = "Battle of Yavin (WIP) [Maintenance]";
-      Info.AllowedWings = new ActorTypeInfo[] { ActorTypeFactory.Get("XWING"), ActorTypeFactory.Get("FALC") };
+      Info.AllowedWings = new ActorTypeInfo[] { ActorTypeFactory.Get("XWING") };
 
       Info.AllowedDifficulties = new string[] { "easy"
                                         , "normal"
@@ -2019,8 +2019,8 @@ namespace SWEndor.Scenarios
 
       ActorInfo falcon = new ActorSpawnInfo
       {
-        Type = ActorTypeFactory.Get("FALC"),
-        Name = "",
+        Type = ActorTypeFactory.Get("YT1300"),
+        Name = "Millennium Falcon",
 
         SidebarName = "",
         SpawnTime = Game.GameTime,

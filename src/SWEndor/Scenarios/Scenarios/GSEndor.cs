@@ -27,7 +27,7 @@ namespace SWEndor.Scenarios
                                                , ActorTypeFactory.Get("YWING")
                                                , ActorTypeFactory.Get("AWING")
                                                , ActorTypeFactory.Get("BWING")
-                                               , ActorTypeFactory.Get("FALC")
+                                               , ActorTypeFactory.Get("YT1300")
                                                , ActorTypeFactory.Get("CORV")
                                                , ActorTypeFactory.Get("VICT")
                                                , ActorTypeFactory.Get("IMPL")
@@ -157,7 +157,7 @@ namespace SWEndor.Scenarios
       Screen2D.Line2.Color = new COLOR(1f, 1f, 0.3f, 1);
       Screen2D.Line3.Color = new COLOR(0.7f, 1f, 0.3f, 1);
 
-      MainAllyFaction.WingLimit = 75;
+      MainAllyFaction.WingLimit = 90;
 
       State.IsCutsceneMode = false;
     }
@@ -234,7 +234,19 @@ namespace SWEndor.Scenarios
       if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled)
       {
         if (TIEWaves > 5)
+        {
           State.StageNumber = 2;
+
+          EventQueue.Add(Game.GameTime, Empire_DeathStarAttack_01);
+          EventQueue.Add(Game.GameTime + 8f, Message_20_DeathStar);
+          EventQueue.Add(Game.GameTime + 15f, Empire_StarDestroyer_01);
+          EventQueue.Add(Game.GameTime + 20f, Message_21_Close);
+          EventQueue.Add(Game.GameTime + 25f, Rebel_YWingsAttackScan);
+          State.MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
+          State.MinBounds = new TV_3DVECTOR(-20000, -1500, -17500);
+          State.MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
+          State.MinAIBounds = new TV_3DVECTOR(-20000, -1500, -17500);
+        }
 
         if (TIESpawnTime < Game.GameTime)
         {
@@ -283,20 +295,6 @@ namespace SWEndor.Scenarios
             m_pendingSDspawnlist.RemoveAt(0);
           }
         }
-
-        if (!State.GetGameStateB("DS2"))
-        {
-          State.SetGameStateB("DS2", true);
-          EventQueue.Add(Game.GameTime, Empire_DeathStarAttack_01);
-          EventQueue.Add(Game.GameTime + 8f, Message_20_DeathStar);
-          EventQueue.Add(Game.GameTime + 15f, Empire_StarDestroyer_01);
-          EventQueue.Add(Game.GameTime + 20f, Message_21_Close);
-          EventQueue.Add(Game.GameTime + 25f, Rebel_YWingsAttackScan);
-          State.MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
-          State.MinBounds = new TV_3DVECTOR(-20000, -1500, -17500);
-          State.MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
-          State.MinAIBounds = new TV_3DVECTOR(-20000, -1500, -17500);
-        }
       }
     }
 
@@ -305,7 +303,19 @@ namespace SWEndor.Scenarios
       if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled)
       {
         if (TIEWaves > 11)
+        {
           State.StageNumber = 4;
+
+          EventQueue.Add(Game.GameTime, Empire_DeathStarAttack_02);
+          EventQueue.Add(Game.GameTime + 16f, Rebel_ShipsForward);
+          EventQueue.Add(Game.GameTime + 13f, Message_22_PointBlank);
+          EventQueue.Add(Game.GameTime + 15f, Empire_StarDestroyer_02);
+          EventQueue.Add(Game.GameTime + 18f, Message_23_Take);
+          State.MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
+          State.MinBounds = new TV_3DVECTOR(-20000, -1500, -22500);
+          State.MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
+          State.MinAIBounds = new TV_3DVECTOR(-20000, -1500, -22500);
+        }
 
         if (TIESpawnTime < Game.GameTime)
         {
@@ -364,24 +374,10 @@ namespace SWEndor.Scenarios
         if (m_pendingSDspawnlist.Count > 0 && MainEnemyFaction.ShipCount < 8)
         {
           if ((!(m_pendingSDspawnlist[0].Info.TypeInfo.ID == "IMPL") || MainEnemyFaction.ShipCount < 2))
-          {
+          { 
             EventQueue.Add(0, Empire_StarDestroyer_Spawn, m_pendingSDspawnlist[0]);
             m_pendingSDspawnlist.RemoveAt(0);
           }
-        }
-
-        if (!State.GetGameStateB("DS4"))
-        {
-          State.SetGameStateB("DS4", true);
-          EventQueue.Add(Game.GameTime, Empire_DeathStarAttack_02);
-          EventQueue.Add(Game.GameTime + 16f, Rebel_ShipsForward);
-          EventQueue.Add(Game.GameTime + 13f, Message_22_PointBlank);
-          EventQueue.Add(Game.GameTime + 15f, Empire_StarDestroyer_02);
-          EventQueue.Add(Game.GameTime + 18f, Message_23_Take);
-          State.MaxBounds = new TV_3DVECTOR(20000, 1500, 20000);
-          State.MinBounds = new TV_3DVECTOR(-20000, -1500, -22500);
-          State.MaxAIBounds = new TV_3DVECTOR(20000, 1500, 20000);
-          State.MinAIBounds = new TV_3DVECTOR(-20000, -1500, -22500);
         }
       }
     }
@@ -391,7 +387,17 @@ namespace SWEndor.Scenarios
       if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled)
       {
         if (TIEWaves > 17)
+        {
           State.StageNumber = 6;
+
+          EventQueue.Add(Game.GameTime, Empire_DeathStarAttack_03);
+          EventQueue.Add(Game.GameTime + 8f, Empire_Executor);
+          EventQueue.Add(Game.GameTime + 13f, Message_40_Focus);
+          State.MaxBounds = new TV_3DVECTOR(20000, 2500, 20000);
+          State.MinBounds = new TV_3DVECTOR(-20000, -2500, -45000);
+          State.MaxAIBounds = new TV_3DVECTOR(20000, 2500, 20000);
+          State.MinAIBounds = new TV_3DVECTOR(-20000, -2500, -45000);
+        }
 
         if (TIESpawnTime < Game.GameTime)
         {
@@ -431,18 +437,6 @@ namespace SWEndor.Scenarios
             EventQueue.Add(0, Empire_StarDestroyer_Spawn, m_pendingSDspawnlist[0]);
             m_pendingSDspawnlist.RemoveAt(0);
           }
-        }
-
-        if (!State.GetGameStateB("DS6"))
-        {
-          State.SetGameStateB("DS6", true);
-          EventQueue.Add(Game.GameTime, Empire_DeathStarAttack_03);
-          EventQueue.Add(Game.GameTime + 8f, Empire_Executor);
-          EventQueue.Add(Game.GameTime + 13f, Message_40_Focus);
-          State.MaxBounds = new TV_3DVECTOR(20000, 2500, 20000);
-          State.MinBounds = new TV_3DVECTOR(-20000, -2500, -45000);
-          State.MaxAIBounds = new TV_3DVECTOR(20000, 2500, 20000);
-          State.MinAIBounds = new TV_3DVECTOR(-20000, -2500, -45000);
         }
       }
     }
@@ -624,7 +618,7 @@ namespace SWEndor.Scenarios
       FactionInfo faction;
 
       // Millennium Falcon
-      type = ActorTypeFactory.Get("LANDO");
+      type = ActorTypeFactory.Get("YT1300");
       name = "LANDO";
       sidebar_name = "FALCON";
       creationTime += creationDelay;
@@ -656,10 +650,16 @@ namespace SWEndor.Scenarios
       ainfo.HitEvents += Rebel_CriticalUnitHit;
       ainfo.HitEvents += Rebel_CriticalUnitDanger;
       ainfo.ActorStateChangeEvents += Rebel_CriticalUnitDying;
+      ainfo.MaxShd = 50;
+      ainfo.Shd = 50;
+      ainfo.MaxHull = 150;
+      ainfo.Hull = 150;
+      ainfo.SelfRegenRate = 0.2f;
+      ainfo.AI.HuntWeight = 5;
       m_FalconID = ainfo.ID;
 
       // Wedge X-Wing
-      type = ActorTypeFactory.Get("WEDGE");
+      type = ActorTypeFactory.Get("XWING");
       name = "WEDGE";
       sidebar_name = "WEDGE";
       creationTime += creationDelay;
@@ -691,29 +691,37 @@ namespace SWEndor.Scenarios
       ainfo.HitEvents += Rebel_CriticalUnitHit;
       ainfo.HitEvents += Rebel_CriticalUnitDanger;
       ainfo.ActorStateChangeEvents += Rebel_CriticalUnitDying;
+      ainfo.MaxShd = 50;
+      ainfo.Shd = 50;
+      ainfo.MaxHull = 150;
+      ainfo.Hull = 150;
+      ainfo.SelfRegenRate = 0.2f;
+      ainfo.AI.HuntWeight = 5;
       m_WedgeID = ainfo.ID;
 
       // Player X-Wing
       position = new TV_3DVECTOR(0, 0, -25);
-      if (PlayerInfo.ActorType == ActorTypeFactory.Get("XWING"))
+      switch (PlayerInfo.ActorType.ID)
       {
-        position = new TV_3DVECTOR(0, 0, -25);
-      }
-      else if (PlayerInfo.ActorType == ActorTypeFactory.Get("YWING"))
-      {
-        position = new TV_3DVECTOR(-250, 60, -220);
-      }
-      else if (PlayerInfo.ActorType == ActorTypeFactory.Get("AWING"))
-      {
-        position = new TV_3DVECTOR(100, 70, -670);
-      }
-      else if (PlayerInfo.ActorType == ActorTypeFactory.Get("BWING"))
-      {
-        position = new TV_3DVECTOR(-80, 20, -50);
-      }
-      else if (PlayerInfo.ActorType == ActorTypeFactory.Get("CORV"))
-      {
-        position = new TV_3DVECTOR(-20, -420, -30);
+        case "XWING":
+          position = new TV_3DVECTOR(0, 0, -25);
+          break;
+
+        case "YWING":
+          position = new TV_3DVECTOR(-250, 60, -220);
+          break;
+
+        case "AWING":
+          position = new TV_3DVECTOR(100, 70, -670);
+          break;
+
+        case "BWING":
+          position = new TV_3DVECTOR(-80, 20, -50);
+          break;
+
+        case "CORV":
+          position = new TV_3DVECTOR(-20, -420, -30);
+          break;
       }
 
       type = PlayerInfo.ActorType;
@@ -865,10 +873,7 @@ namespace SWEndor.Scenarios
                                                                   , type.MoveLimitData.MaxSpeed
                                                                   , type.AIData.Move_CloseEnough)
                                  };
-          if (type is LandoFalconATI || type is WedgeXWingATI)
-            huntw = 5;
-          else
-            huntw = 10;
+          huntw = 10;
         }
         else
         {
@@ -964,7 +969,6 @@ namespace SWEndor.Scenarios
 
       if (PlayerInfo.Actor != null && !PlayerInfo.Actor.Disposed)
       {
-        PlayerInfo.Actor.SetArmor(DamageType.ALL, 0);
         // m_Player = Player.Actor;
         if (!State.GetGameStateB("in_battle"))
         {
@@ -1238,15 +1242,15 @@ namespace SWEndor.Scenarios
           actor.DestroyedEvents += ProcessPlayerKilled;
         }
 
-        if (actor.TypeInfo is WedgeXWingATI)
+        if (actor.ID == m_WedgeID) //.TypeInfo.ID == "XWING")
         {
           EventQueue.Add(Game.GameTime, Message_90_LostWedge);
         }
-        else if (actor.TypeInfo is LandoFalconATI)
+        else if (actor.ID == m_FalconID) //.TypeInfo.ID == "YT1300")
         {
           EventQueue.Add(Game.GameTime, Message_91_LostFalcon);
         }
-        else if (actor.TypeInfo is MC90ATI)
+        else if (actor.ID == m_HomeOneID) //.TypeInfo is MC90ATI)
         {
           EventQueue.Add(Game.GameTime + 15, Message_92_LostHomeOne);
           actor.DyingTimerSet(2000, true);
@@ -1509,8 +1513,16 @@ namespace SWEndor.Scenarios
     {
       ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, 0, s.Info);
 
-      if (s.Info.TypeInfo is DevastatorATI)
+      if (s.Info.ShipName == "DEVASTATOR")
+      {
         EventQueue.Add(0, Empire_TIEWave_0D, 2);
+        ship.MaxShd = 600;
+        ship.Shd = 600;
+        ship.MaxHull = 900;
+        ship.Hull = 900;
+        ship.SelfRegenRate = 0.5f;
+        ship.SpawnerInfo.SpawnTypes = new string[] { "TIEI" };
+      }
     }
 
     public void Empire_StarDestroyer_01()
@@ -1729,12 +1741,14 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("DEVA");
+          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.ShipName = "DEVASTATOR";
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(0, 120, -24500), new TV_3DVECTOR(0, 120, -11500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
+          sspawn.ShipName = null;
           sspawn.TypeInfo = ActorTypeFactory.Get("ARQT");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                       , new TV_3DVECTOR(-2500, 150, -24500), new TV_3DVECTOR(-2000, 150, -10500)
@@ -2361,7 +2375,7 @@ namespace SWEndor.Scenarios
         PlayerInfo.ActorID = m_PlayerID;
         PlayerInfo.PrimaryWeaponN = m_Player_PrimaryWeaponN;
         PlayerInfo.SecondaryWeaponN = m_Player_SecondaryWeaponN;
-        player.SetArmor(DamageType.ALL, 1);
+        player.SetArmor(DamageType.ALL, 0.001f); // 1
       }
 
       State.IsCutsceneMode = false;

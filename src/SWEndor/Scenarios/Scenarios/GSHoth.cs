@@ -19,7 +19,7 @@ namespace SWEndor.Scenarios
     public GSHoth(ScenarioManager manager) : base(manager)
     {
       Info.Name = "Escape from Hoth (WIP up to Stage 02) [Maintenance]";
-      Info.AllowedWings = new ActorTypeInfo[] { ActorTypeFactory.Get("FALC") };
+      Info.AllowedWings = new ActorTypeInfo[] { ActorTypeFactory.Get("YT1300") };
 
       Info.AllowedDifficulties = new string[] { "normal"
                                           , "hard"

@@ -15,7 +15,7 @@ namespace SWEndor.ActorTypes.Instances
 
       Explodes = new ExplodeData[]
       {
-        new ExplodeData("EXPL00", 0.5f, 5, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeData("EXPL00", 1.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
         new ExplodeData("EXPL00", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
