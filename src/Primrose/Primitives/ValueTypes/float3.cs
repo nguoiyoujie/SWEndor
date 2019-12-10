@@ -74,6 +74,13 @@ namespace Primrose.Primitives.ValueTypes
         return new float3(array[0], array[1], array[2]);
     }
 
+    /// <summary>Performs a memberwise negation of a float3 value</summary>
+    /// <param name="a"></param><returns></returns>
+    public static float3 operator -(float3 a)
+    {
+      return new float3(-a.x, -a.y, -a.z);
+    }
+
     /// <summary>Performs an addition operation between two float3 values</summary>
     /// <param name="a"></param><param name="b"></param><returns></returns>
     public static float3 operator +(float3 a, float3 b)

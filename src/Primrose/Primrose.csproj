@@ -82,6 +82,9 @@
     <Compile Include="Primitives\Collections\CircularQueue.cs" />
     <Compile Include="Primitives\Collections\ThreadSafeDictionary.cs" />
     <Compile Include="Primitives\Collections\ThreadSafeList.cs" />
+    <Compile Include="Primitives\Eventful\EventedRegistry.cs" />
+    <Compile Include="Primitives\Eventful\EventedList.cs" />
+    <Compile Include="Primitives\Eventful\EventedVal.cs" />
     <Compile Include="Primitives\Extensions\ArrayExts.cs" />
     <Compile Include="Primitives\Extensions\BitExt.cs" />
     <Compile Include="Primitives\Extensions\DictionaryExts.cs" />
@@ -103,6 +106,9 @@
     <Compile Include="Primitives\StateMachines\StateMachine.cs" />
     <Compile Include="Primitives\StaticEnumerators.cs" />
     <Compile Include="Primitives\TimeControl.cs" />
+    <Compile Include="Primitives\TriggerEvents\Condition.cs" />
+    <Compile Include="Primitives\TriggerEvents\Events.cs" />
+    <Compile Include="Primitives\TriggerEvents\Trigger.cs" />
     <Compile Include="Primitives\ValueTypes\float2.cs" />
     <Compile Include="Primitives\ValueTypes\float3.cs" />
     <Compile Include="Primitives\ValueTypes\float4.cs" />

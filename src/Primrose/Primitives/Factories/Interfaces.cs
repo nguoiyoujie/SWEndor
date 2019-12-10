@@ -33,6 +33,11 @@ namespace Primrose.Primitives.Factories
     /// <param name="item">The object to be associated with this key</param>
     void Add(string id, T item);
 
+    /// <summary>Updates or adds an object into the registry</summary>
+    /// <param name="id">The identifier key to add</param>
+    /// <param name="item">The object to be associated with this key</param>
+    void Put(string id, T item);
+
     /// <summary>Removes an object from the registry</summary>
     /// <param name="id">The identifier key to remove</param>
     void Remove(string id);
@@ -57,6 +62,11 @@ namespace Primrose.Primitives.Factories
     /// <param name="key">The identifier key to add</param>
     /// <param name="item">The object to be associated with this key</param>
     void Add(K key, T item);
+
+    /// <summary>Updates or adds an object into the registry</summary>
+    /// <param name="key">The identifier key to add</param>
+    /// <param name="item">The object to be associated with this key</param>
+    void Put(K key, T item);
 
     /// <summary>Removes an object from the registry</summary>
     /// <param name="key">The identifier key to remove</param>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace Primrose.Primitives
 {
@@ -6,7 +7,7 @@ namespace Primrose.Primitives
   /// Provides a basic thread-safe list interface for multithreaded updates  
   /// </summary>
   /// <typeparam name="T">The item type to be stored in this list</typeparam>
-  public class ThreadSafeList<T>
+  public class ThreadSafeList<T> : IList<T>
   {
     private object locker = new object();
     //private ObjectPool<List<T>> pool = new ObjectPool<List<T>>(() => new List<T>(), (t) => { t.Clear(); });
@@ -36,6 +37,17 @@ namespace Primrose.Primitives
       {
         Update();
         return _list.Count;
+      }
+    }
+
+    /// <summary>
+    /// Returns whether the list is read-only
+    /// </summary>
+    public bool IsReadOnly
+    {
+      get
+      {
+        return ((IList<T>)_list).IsReadOnly;
       }
     }
 
@@ -241,6 +253,34 @@ namespace Primrose.Primitives
 
       if (!ExplicitUpdateOnly)
         _dirty = true;
+    }
+
+    /// <summary>
+    /// Copies the elements of the list to an array
+    /// </summary>
+    /// <param name="array"></param>
+    /// <param name="arrayIndex"></param>
+    public void CopyTo(T[] array, int arrayIndex)
+    {
+      ((IList<T>)_list).CopyTo(array, arrayIndex);
+    }
+
+    /// <summary>
+    /// Returns an enumerator that iterates through the list.
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator<T> GetEnumerator()
+    {
+      return ((IList<T>)_list).GetEnumerator();
+    }
+
+    /// <summary>
+    /// Returns an enumerator that iterates through the list.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+      return ((IList<T>)_list).GetEnumerator();
     }
   }
 }

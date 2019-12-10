@@ -78,6 +78,13 @@ namespace Primrose.Primitives.ValueTypes
         return new float4(array[0], array[1], array[2], array[3]);
     }
 
+    /// <summary>Performs a memberwise negation of a float4 value</summary>
+    /// <param name="a"></param><returns></returns>
+    public static float4 operator -(float4 a)
+    {
+      return new float4(-a.x, -a.y, -a.z, -a.w);
+    }
+
     /// <summary>Performs an addition operation between two float4 values</summary>
     /// <param name="a"></param><param name="b"></param><returns></returns>
     public static float4 operator +(float4 a, float4 b)
