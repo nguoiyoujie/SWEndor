@@ -22,7 +22,7 @@ namespace SWEndor.ActorTypes.Instances
       RenderData.RadarType = RadarType.HOLLOW_CIRCLE_M;
 
       RegenData = new RegenData(false, 0, 40, 0, 0.3f);
-      MeshData = new MeshData(Engine, Name, @"executor\executor_energy_pod.x", 0.6f);
+      MeshData = new MeshData(Engine, Name, @"executor\executor_energy_pod.x", 0.75f);
     }
   }
 }

@@ -19,7 +19,7 @@ namespace SWEndor.ActorTypes.Instances
 
       RegenData = new RegenData(false, 0, 6, 0, 0.6f);
 
-      MeshData = new MeshData(Engine, Name, @"stardestroyer\star_destroyer_energy_pod.x", 0.9f);
+      MeshData = new MeshData(Engine, Name, @"stardestroyer\star_destroyer_energy_pod.x", 0.75f);
       DyingMoveData.Kill();
     }
   }

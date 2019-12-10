@@ -3,7 +3,7 @@ using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  internal class InvisibleRebelTurboLaserATI : Groups.AddOn
+  internal class InvisibleRebelTurboLaserATI : Groups.Turbolasers
   {
     internal InvisibleRebelTurboLaserATI(Factory owner) : base(owner, "INVLSR", "Laser Turret")
     {

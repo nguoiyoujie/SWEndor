@@ -82,6 +82,7 @@ namespace SWEndor.ActorTypes
         Register(new VictoryIATI(this));
         Register(new AcclamatorATI(this));
         Register(new ArquitensATI(this));
+        Register(new StrikeATI(this));
         Register(new ExecutorATI(this));
 
         // Platforms
@@ -125,7 +126,6 @@ namespace SWEndor.ActorTypes
         Register(new MissileATI(this));
         Register(new TorpedoATI(this));
         
-
         // add ons
         Register(new mc90TurbolaserATI(this));
         Register(new CorellianTurboLaserATI(this));
@@ -144,6 +144,9 @@ namespace SWEndor.ActorTypes
         Register(new ISDShieldGeneratorATI(this));
         Register(new SDShieldGeneratorATI(this));
         Register(new SDLowerShieldGeneratorATI(this));
+        Register(new StrikeTurboLaserATI(this));
+        Register(new StrikeHeavyTurboLaserATI(this));
+        Register(new StrikeMissilePodATI(this));
         Register(new ExecutorTurboLaserATI(this));
         Register(new ExecutorShieldGeneratorATI(this));
         Register(new ExecutorBridgeATI(this));
