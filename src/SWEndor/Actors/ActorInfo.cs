@@ -77,11 +77,9 @@ namespace SWEndor.Actors
       {
         if (_faction != value)
         {
-          if (_faction != FactionInfo.Neutral)
-            _faction?.UnregisterActor(this);
+          _faction?.UnregisterActor(this);
           _faction = value ?? FactionInfo.Neutral;
-          if (_faction != FactionInfo.Neutral)
-            _faction.RegisterActor(this);
+          _faction.RegisterActor(this);
         }
       }
     }

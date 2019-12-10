@@ -38,7 +38,7 @@ namespace SWEndor
 
     public bool IsAlliedWith(FactionInfo faction)
     {
-      return (this == faction || Allies.Contains(faction));
+      return (this == Neutral || faction == Neutral || this == faction || Allies.Contains(faction));
     }
 
     public readonly string Name;
@@ -111,6 +111,9 @@ namespace SWEndor
 
     public void RegisterActor(ActorInfo ainfo)
     {
+      if (this == Neutral)
+        return;
+
       if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
       {
         _wings.Add(ainfo.ID);
@@ -138,6 +141,9 @@ namespace SWEndor
 
     public void UnregisterActor(ActorInfo ainfo)
     {
+      if (this == Neutral)
+        return;
+
       if (ainfo.DisposingOrDisposed)
       {
         if (_wings.Remove(ainfo.ID))
