@@ -1072,7 +1072,7 @@ namespace SWEndor.Scenarios
       ActorInfo falcon = Engine.ActorFactory.Get(m_FalconID);
       if (falcon != null)
       {
-        falcon.SetArmor(DamageType.ALL, 0);
+        falcon.SetArmorAll(0);
         falcon.ForceClearQueue();
         falcon.QueueLast(ForcedMove.GetOrCreate(new TV_3DVECTOR(0, 0, 20000), falcon.MoveData.MaxSpeed, -1));
         falcon.QueueLast(HyperspaceOut.GetOrCreate());
@@ -1083,7 +1083,7 @@ namespace SWEndor.Scenarios
       ActorInfo wedge = Engine.ActorFactory.Get(m_WedgeID);
       if (wedge != null)
       {
-        wedge.SetArmor(DamageType.NORMAL, 0);
+        wedge.SetArmorAll(0);
         wedge.ForceClearQueue();
         wedge.QueueLast(ForcedMove.GetOrCreate(new TV_3DVECTOR(0, 0, 20000), wedge.MoveData.MaxSpeed, -1));
         wedge.QueueLast(HyperspaceOut.GetOrCreate());
@@ -2120,7 +2120,7 @@ namespace SWEndor.Scenarios
 
         ActorInfo homeone = Engine.ActorFactory.Get(m_HomeOneID);
         if (homeone != null)
-          homeone.SetArmor(DamageType.ALL, 0);
+          homeone.SetArmorAll(0);
         EventQueue.Add(Game.GameTime + 55, FadeOut);
       }
     }
@@ -2326,13 +2326,13 @@ namespace SWEndor.Scenarios
       ActorInfo homeone = Engine.ActorFactory.Get(m_HomeOneID);
 
       if (falcon != null)
-        falcon.SetArmor(DamageType.ALL, 0);
+        falcon.SetArmorAll(0);
 
       if (wedge != null)
-        wedge.SetArmor(DamageType.ALL, 0);
+        wedge.SetArmorAll(0);
 
       if (homeone != null)
-        homeone.SetArmor(DamageType.ALL, 0);
+        homeone.SetArmorAll(0);
 
       m_PlayerID = PlayerInfo.ActorID;
       ActorInfo player = PlayerInfo.Actor;
@@ -2343,7 +2343,7 @@ namespace SWEndor.Scenarios
         player.Position = new TV_3DVECTOR(30, 0, -100000);
         m_Player_PrimaryWeaponN = PlayerInfo.PrimaryWeaponN;
         m_Player_SecondaryWeaponN = PlayerInfo.SecondaryWeaponN;
-        player.SetArmor(DamageType.ALL, 0);
+        player.SetArmorAll(0);
       }
 
       PlayerInfo.ActorID = -1;
@@ -2358,13 +2358,13 @@ namespace SWEndor.Scenarios
       ActorInfo homeone = Engine.ActorFactory.Get(m_HomeOneID);
 
       if (falcon != null)
-        falcon.SetArmor(DamageType.ALL, 1);
+        falcon.SetArmorAll(1);
 
       if (wedge != null)
-        wedge.SetArmor(DamageType.ALL, 1);
+        wedge.SetArmorAll(1);
 
       if (homeone != null)
-        homeone.SetArmor(DamageType.ALL, 1);
+        homeone.SetArmorAll(1);
 
       ActorInfo player = Engine.ActorFactory.Get(m_PlayerID);
       if (player != null)
@@ -2375,7 +2375,7 @@ namespace SWEndor.Scenarios
         PlayerInfo.ActorID = m_PlayerID;
         PlayerInfo.PrimaryWeaponN = m_Player_PrimaryWeaponN;
         PlayerInfo.SecondaryWeaponN = m_Player_SecondaryWeaponN;
-        player.SetArmor(DamageType.ALL, 0.001f); // 1
+        player.SetArmorAll(0.001f); // 1
       }
 
       State.IsCutsceneMode = false;

@@ -1,4 +1,5 @@
-﻿using SWEndor.ActorTypes.Components;
+﻿using SWEndor.Actors;
+using SWEndor.ActorTypes.Components;
 using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
@@ -9,7 +10,9 @@ namespace SWEndor.ActorTypes.Groups
     {
       // Combat
       CombatData = CombatData.DefaultFighter;
-      ArmorData = new ArmorData(1, 100);
+      ArmorData = ArmorData.Default;
+      ArmorData.Data.Put(DamageType.HEAVY, 3);
+      ArmorData.Data.Put(DamageType.COLLISION, 100);
 
       ScoreData = new ScoreData(75, 2500);
 

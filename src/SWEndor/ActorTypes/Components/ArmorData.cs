@@ -1,4 +1,8 @@
-﻿using SWEndor.FileFormat.INI;
+﻿using Primrose.Primitives.Factories;
+using SWEndor.Actors;
+using SWEndor.FileFormat.INI;
+using System;
+using System.Collections.Generic;
 
 namespace SWEndor.ActorTypes.Components
 {
@@ -7,32 +11,50 @@ namespace SWEndor.ActorTypes.Components
   /// </summary>
   internal struct ArmorData
   {
-    public readonly float Light;
-    //public readonly float Heavy;
-    //public readonly float Bomb;
-    public readonly float Hull;
-    // float readonly Heal;
+    private static DamageType[] _dmgs;
 
-    public ArmorData(float light, float hull)
+    static ArmorData()
     {
-      Light = light;
-      Hull = hull;
+      Array a = Enum.GetValues(typeof(DamageType));
+      List<DamageType> ls = new List<DamageType>(a.Length);
+      for (int i = 0; i < a.Length; i++)
+      {
+        DamageType d = (DamageType)a.GetValue(i);
+        if (!ls.Contains(d) && d != DamageType.NONE && d != DamageType.ALWAYS_100PERCENT)
+          ls.Add(d);
+      }
+      _dmgs = ls.ToArray();
     }
 
-    public static ArmorData Immune { get { return new ArmorData(); } }
-    public static ArmorData Default { get { return new ArmorData(1, 1); } }
+    internal readonly Registry<DamageType, float> Data;
+    internal readonly float DefaultMult;
+
+    public ArmorData(float def)
+    {
+      Data = new Registry<DamageType, float>();
+      DefaultMult = def;
+    }
+
+    public static ArmorData Immune { get { return new ArmorData(0); } }
+    public static ArmorData Default { get { return new ArmorData(1); } }
 
     public void LoadFromINI(INIFile f, string sectionname)
     {
-      float light = f.GetFloat(sectionname, "Light", 1);
-      float hull = f.GetFloat(sectionname, "Hull", 1);
-      this = new ArmorData(light, hull);
+      this = Default;
+      if (f.HasSection(sectionname))
+        foreach (INIFile.INISection.INILine ln in f.GetSection(sectionname).Lines)
+          if (ln.HasKey)
+          {
+            DamageType d;
+            Enum.TryParse(ln.Key, out d);
+            Data.Put(d, f.GetFloat(sectionname, ln.Key));
+          }
     }
 
     public void SaveToINI(INIFile f, string sectionname)
     {
-      f.SetFloat(sectionname, "Light", Light);
-      f.SetFloat(sectionname, "Hull", Hull);
+      foreach (DamageType d in Data.GetKeys())
+        f.SetFloat(sectionname, d.ToString(), Data[d]);
     }
   }
 }

@@ -29,7 +29,7 @@ namespace SWEndor.ActorTypes.Groups
       AIData.Move_CloseEnough = 0;
       MoveLimitData.MaxSecondOrderTurnRateFrac = 0.5f;
 
-      CombatData.DamageType = DamageType.NORMAL;
+      CombatData.DamageType = DamageType.LIGHT;
 
       TrackerDummyWeapon = true;
     }

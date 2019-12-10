@@ -1,4 +1,5 @@
-﻿using SWEndor.ActorTypes.Components;
+﻿using SWEndor.Actors;
+using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
 {
@@ -13,6 +14,8 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxSpeed = 850;
       MoveLimitData.MinSpeed = 850;
       MoveLimitData.MaxTurnRate = 75;
+
+      CombatData.DamageType = DamageType.HEAVY;
 
       MeshData = new MeshData(Engine, Name, @"projectiles\torpedo.x");
     }

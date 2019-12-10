@@ -6,6 +6,7 @@ using Primrose.Primitives.ValueTypes;
 using System.Collections.Generic;
 using SWEndor.Primitives.Extensions;
 using Primrose.Expressions;
+using System;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
@@ -173,6 +174,47 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return result;
     }
 
+    public static Val GetArmor(Context context, int actorID, string sdmgtype)
+    {
+      DamageType dmgtype = (DamageType)Enum.Parse(typeof(DamageType), sdmgtype);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return Val.NULL;
+
+      return new Val(actor.GetArmor(dmgtype));
+    }
+
+    public static Val SetArmor(Context context, int actorID, string sdmgtype, float value)
+    {
+      DamageType dmgtype = (DamageType)Enum.Parse(typeof(DamageType), sdmgtype);
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return Val.NULL;
+
+      actor.SetArmor(dmgtype, value);
+      return Val.NULL;
+    }
+
+    public static Val SetArmorAll(Context context, int actorID, float value)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return Val.NULL;
+
+      actor.SetArmorAll(value);
+      return Val.NULL;
+    }
+
+    public static Val RestoreArmor(Context context, int actorID)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return Val.NULL;
+
+      actor.RestoreArmor();
+      return Val.NULL;
+    }
+
     public static Val SetProperty(Context context, params Val[] ps)
     {
       int id = (int)ps[0];
@@ -206,26 +248,6 @@ namespace SWEndor.Scenarios.Scripting.Functions
           else
             newValue = new Val(actor.MoveData.ApplyZBalance);
           return;
-          /*
-        case "CamDeathCircleHeight":
-          if (setValue)
-            actor.TypeInfo.DeathCamera.Height = newValue.ValueF;
-          else
-            newValue = actor.TypeInfo.DeathCamera.Height;
-          return;
-        case "CamDeathCirclePeriod":
-          if (setValue)
-            actor.TypeInfo.DeathCamera.Period = newValue.ValueF;
-          else
-            newValue = actor.TypeInfo.DeathCamera.Period;
-          return;
-        case "CamDeathCircleRadius":
-          if (setValue)
-            actor.TypeInfo.DeathCamera.Radius = newValue.ValueF;
-          else
-            newValue = actor.TypeInfo.DeathCamera.Radius;
-          return;
-          */
         case "CanEvade":
           if (setValue)
             actor.AI.CanEvade = (bool)newValue;
@@ -246,9 +268,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
         //  return;
         case "DamageModifier":
           if (setValue)
-            actor.SetArmor(DamageType.NORMAL, (float)newValue);
+            actor.SetArmor(DamageType.LASER, (float)newValue);
           else
-            newValue = new Val(actor.GetArmor(DamageType.NORMAL));
+            newValue = new Val(actor.GetArmor(DamageType.LASER));
           return;
         case "HuntWeight":
           if (setValue)

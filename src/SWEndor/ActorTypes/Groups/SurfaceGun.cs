@@ -1,4 +1,5 @@
-﻿using SWEndor.ActorTypes.Components;
+﻿using SWEndor.Actors;
+using SWEndor.ActorTypes.Components;
 using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
@@ -22,6 +23,9 @@ namespace SWEndor.ActorTypes.Groups
       RenderData.RadarSize = 0;
       AIData.TargetType = TargetType.ADDON;
       RenderData.RadarType = RadarType.NULL;
+
+      ArmorData.Data.Put(DamageType.LIGHT, 2);
+      ArmorData.Data.Put(DamageType.HEAVY, 1.5f);
 
       Mask = ComponentMask.ACTOR;
     }

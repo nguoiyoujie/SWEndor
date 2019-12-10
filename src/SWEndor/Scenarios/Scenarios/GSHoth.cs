@@ -40,7 +40,6 @@ namespace SWEndor.Scenarios
     private int m_Transport3ID = -1;
 
     private int m_PlayerID = -1;
-    private float m_Player_DamageModifier = 1;
     private int m_Player_PrimaryWeaponN;
     private int m_Player_SecondaryWeaponN;
 
@@ -170,9 +169,9 @@ namespace SWEndor.Scenarios
             && !State.GetGameStateB("GameOver"))
           {
             EventQueue.Add(Game.GameTime + 0.1f, Scene_02);
-            trn1.SetArmor(DamageType.ALL, 0);
-            trn2.SetArmor(DamageType.ALL, 0);
-            trn3.SetArmor(DamageType.ALL, 0);
+            trn1.SetArmorAll(0);
+            trn2.SetArmorAll(0);
+            trn3.SetArmorAll(0);
             State.SetGameStateB("Stage1End", true);
           }
         }
@@ -270,7 +269,7 @@ namespace SWEndor.Scenarios
       }.Spawn(this);
 
       //ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "front", "rear" };
-      ainfo.SetArmor(DamageType.ALL, 0.1f);
+      ainfo.SetArmorAll(0.1f);
       ainfo.HitEvents += Rebel_PlayerHit;
       PlayerCameraInfo.SceneLook.SetTarget_LookAtActor(ainfo.ID);
       PlayerCameraInfo.SetSceneLook();
@@ -308,7 +307,7 @@ namespace SWEndor.Scenarios
           Registries = null
         }.Spawn(this);
 
-        ainfo.SetArmor(DamageType.ALL, 0.85f);
+        ainfo.SetArmorAll(0.85f);
       }
 
       // Transport x3
@@ -334,7 +333,7 @@ namespace SWEndor.Scenarios
           Registries = new string[] { "CriticalAllies" }
         }.Spawn(this);
 
-        ainfo.SetArmor(DamageType.ALL, 0.6f);
+        ainfo.SetArmorAll(0.6f);
 
         switch (i)
         {
@@ -437,7 +436,7 @@ namespace SWEndor.Scenarios
           }.Spawn(this);
 
           //ainfo.WeaponSystemInfo.SecondaryWeapons = new string[] { "front", "rear" };
-          ainfo.SetArmor(DamageType.ALL, 0.1f);
+          ainfo.SetArmorAll(0.1f);
           ainfo.HitEvents += Rebel_PlayerHit;
 
           ainfo.SetPlayer();
@@ -568,7 +567,7 @@ namespace SWEndor.Scenarios
       ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, 0, s.Info);
 
       ship.AI.HuntWeight = 1;
-      ship.SetArmor(DamageType.ALL, 0.1f);
+      ship.SetArmorAll(0.1f);
     }
 
     public void Empire_FirstWave()
@@ -791,8 +790,7 @@ namespace SWEndor.Scenarios
       {
         m_Player_PrimaryWeaponN = PlayerInfo.PrimaryWeaponN;
         m_Player_SecondaryWeaponN = PlayerInfo.SecondaryWeaponN;
-        m_Player_DamageModifier = player.GetArmor(DamageType.ALL);
-        player.SetArmor(DamageType.ALL, 0);
+        player.SetArmorAll(0);
         player.ForceClearQueue();
         player.QueueNext(Lock.GetOrCreate());
       }
@@ -810,7 +808,7 @@ namespace SWEndor.Scenarios
         PlayerInfo.PrimaryWeaponN = m_Player_PrimaryWeaponN;
         PlayerInfo.SecondaryWeaponN = m_Player_SecondaryWeaponN;
 
-        player.SetArmor(DamageType.ALL, m_Player_DamageModifier);
+        player.RestoreArmor();
         player.ForceClearQueue();
       }
       PlayerCameraInfo.SetPlayerLook();
@@ -903,9 +901,9 @@ namespace SWEndor.Scenarios
       ActorInfo trn2 = Engine.ActorFactory.Get(m_Transport2ID);
       ActorInfo trn3 = Engine.ActorFactory.Get(m_Transport3ID);
 
-      trn1.SetArmor(DamageType.ALL, 0);
-      trn2.SetArmor(DamageType.ALL, 0);
-      trn3.SetArmor(DamageType.ALL, 0);
+      trn1.SetArmorAll(0);
+      trn2.SetArmorAll(0);
+      trn3.SetArmorAll(0);
 
       player.Position = new TV_3DVECTOR(0, 0, 500);
 
@@ -983,7 +981,7 @@ namespace SWEndor.Scenarios
         Registries = null
       };
       ActorInfo newDest = asi.Spawn(this);
-      newDest.SetArmor(DamageType.ALL, 0.1f);
+      newDest.SetArmorAll(0.1f);
 
       asi.SpawnTime = Game.GameTime + 9.25f;
       asi.Position = new TV_3DVECTOR(20000, -2000, -25000);
@@ -992,7 +990,7 @@ namespace SWEndor.Scenarios
                                             , Rotate.GetOrCreate(new TV_3DVECTOR(2000, -100, -10200), 0, -1, false)
                                             , Lock.GetOrCreate() };
       newDest = asi.Spawn(this);
-      newDest.SetArmor(DamageType.ALL, 0.1f);
+      newDest.SetArmorAll(0.1f);
     }
 
     public void Scene_02b_LightspeedFail()

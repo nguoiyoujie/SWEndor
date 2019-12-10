@@ -43,7 +43,7 @@ namespace SWEndor.Projectiles.Components
             foreach (ActorInfo child in children)
             {
               float dmg = EMPDamage * (float)(engine.Random.NextDouble() * EMPDamageRandom) + (EMPPercentDamage + (float)(engine.Random.NextDouble() * EMPPercentDamageRandom)) * child.HP;
-              child.InflictDamage(dmg, DamageType.NORMAL, child.GetGlobalPosition());
+              child.InflictDamage(dmg, DamageType.ALWAYS_100PERCENT, child.GetGlobalPosition());
 
               for (int i = 0; i < child.WeaponDefinitions.Weapons.Length; i++)
                 if (child.WeaponDefinitions.Weapons[i].Port.Cooldown < engine.Game.GameTime + EMPDuration + 2)
@@ -62,7 +62,7 @@ namespace SWEndor.Projectiles.Components
             {
               ActorInfo child = children[engine.Random.Next(0, children.Count)];
               float dmg = EMPDamage * (float)(engine.Random.NextDouble() * EMPDamageRandom) + (EMPPercentDamage + (float)(engine.Random.NextDouble() * EMPPercentDamageRandom)) * child.HP;
-              child.InflictDamage(dmg, DamageType.NORMAL, child.GetGlobalPosition());
+              child.InflictDamage(dmg, DamageType.ALWAYS_100PERCENT, child.GetGlobalPosition());
 
               for (int i = 0; i < child.WeaponDefinitions.Weapons.Length; i++)
                 if (child.WeaponDefinitions.Weapons[i].Port.Cooldown < engine.Game.GameTime + EMPDuration + 2)

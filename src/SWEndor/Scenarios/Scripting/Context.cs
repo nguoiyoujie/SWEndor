@@ -2,6 +2,7 @@
 using Primrose.Primitives.Extensions;
 using Primrose.Primitives.Factories;
 using Primrose.Primitives.ValueTypes;
+using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Scenarios.Scripting.Functions;
 
@@ -123,6 +124,12 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc("Actor.GetChildren", new ValFunc<int>(ActorFns.GetChildren));
       AddFunc("Actor.GetProperty", new ValFunc<int, string>(ActorFns.GetProperty));
       Functions.Add("Actor.SetProperty", ActorFns.SetProperty);
+      AddFunc("Actor.GetArmor", new ValFunc<int, string>(ActorFns.GetArmor));
+      AddFunc("Actor.SetArmor", new ValFunc<int, string, float>(ActorFns.SetArmor));
+      AddFunc("Actor.SetArmorAll", new ValFunc<int, float>(ActorFns.SetArmorAll));
+      AddFunc("Actor.RestoreArmor", new ValFunc<int>(ActorFns.RestoreArmor));
+
+
 
       // Message Box
       AddFunc("Message", new ValFunc<string, float, float3>(MessagingFns.MessageText));

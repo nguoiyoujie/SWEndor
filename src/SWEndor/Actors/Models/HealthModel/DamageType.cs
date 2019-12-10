@@ -2,11 +2,18 @@
 {
   public enum DamageType : byte
   {
+    // special
     NONE,
     ALWAYS_100PERCENT,
-    NORMAL,
+
+    // hull
     COLLISION,
 
-    ALL 
+    // laser
+    LASER,
+
+    // proj
+    LIGHT,
+    HEAVY,
   }
 }

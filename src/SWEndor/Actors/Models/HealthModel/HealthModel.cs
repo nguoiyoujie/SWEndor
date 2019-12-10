@@ -157,7 +157,7 @@ namespace SWEndor.Actors
     public void InflictDamage(float value)
     {
       using (ScopeCounters.Acquire(Scope))
-        Health.InflictDamage(this, new DamageInfo(value));
+        Health.InflictDamage(this, new DamageInfo(value, DamageType.ALWAYS_100PERCENT));
     }
 
     public float HP { get { return Health.HP; } set { using (ScopeCounters.Acquire(Scope)) Health.SetHP(this, value); } }

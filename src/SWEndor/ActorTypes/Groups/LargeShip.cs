@@ -1,4 +1,5 @@
-﻿using SWEndor.ActorTypes.Components;
+﻿using SWEndor.Actors;
+using SWEndor.ActorTypes.Components;
 using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
@@ -23,6 +24,9 @@ namespace SWEndor.ActorTypes.Groups
       MoveLimitData.ZNormFrac = 0.008f;
       RenderData.RadarSize = 10;
       TimedLifeData = new TimedLifeData(false, 25);
+
+      ArmorData.Data.Put(DamageType.LIGHT, 1.25f);
+      ArmorData.Data.Put(DamageType.HEAVY, 1.5f);
 
       AIData.TargetType = TargetType.SHIP;
       RenderData.RadarType = RadarType.RECTANGLE_GIANT;

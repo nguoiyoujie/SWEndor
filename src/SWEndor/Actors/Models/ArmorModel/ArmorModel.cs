@@ -1,4 +1,5 @@
-﻿using SWEndor.ActorTypes.Components;
+﻿using Primrose.Primitives.Factories;
+using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.Actors.Models
 {
@@ -7,31 +8,36 @@ namespace SWEndor.Actors.Models
   /// </summary>
   internal struct ArmorModel
   {
-    public float Light { get; private set; }
-    //public float Heavy;
-    //public float Bomb;
-    public float Hull { get; private set; }
-    // float Heal;
+    private Registry<DamageType, float> _list;
 
-    public static ArmorModel Immune { get { return new ArmorModel(); } }
-    public static ArmorModel Default { get { return new ArmorModel { Light = 1, Hull = 1 }; } }
+    public ArmorModel(float all)
+    {
+      _list = new Registry<DamageType, float>();
+      _list.Default = 1;
+    }
 
     public void Init(ref ArmorData data)
     {
-      Light = data.Light;
-      Hull = data.Hull;
+      if (_list == null)
+        _list = new Registry<DamageType, float>();
+      else
+        _list.Clear();
+
+      _list.Default = data.DefaultMult;
+      foreach (DamageType d in data.Data.GetKeys())
+        _list.Add(d, data.Data[d]);
     }
 
     public float Get(DamageType dmgtype)
     {
       switch (dmgtype)
       {
-        case DamageType.NORMAL:
-          return Light;
-        case DamageType.COLLISION:
-          return Hull;
-        default:
+        case DamageType.NONE:
+          return 0;
+        case DamageType.ALWAYS_100PERCENT:
           return 1;
+        default:
+          return _list.Get(dmgtype);
       }
     }
 
@@ -39,17 +45,20 @@ namespace SWEndor.Actors.Models
     {
       switch (dmgtype)
       {
-        case DamageType.NORMAL:
-          Light = value;
+        case DamageType.NONE:
+        case DamageType.ALWAYS_100PERCENT:
           break;
-        case DamageType.COLLISION:
-          Hull = value;
-          break;
-        case DamageType.ALL:
-          Light = value;
-          Hull = value;
+
+        default:
+          _list.Put(dmgtype, value);
           break;
       }
+    }
+
+    public void SetAll(float value)
+    {
+      _list.Clear();
+      _list.Default = value;
     }
   }
 }

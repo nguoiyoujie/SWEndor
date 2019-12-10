@@ -394,7 +394,7 @@ namespace SWEndor.Scenarios
         ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, delay, s.Info);
         delay += 0.7f;
         if  (ship.TypeInfo == ActorTypeFactory.Get("MC90"))
-          ship.SetArmor(DamageType.ALL, 0.1f);
+          ship.SetArmorAll(0.1f);
       }
 
       Box box = new Box(new TV_3DVECTOR(-4000, 500, 7300), new TV_3DVECTOR(-5500, 0, 8000));
@@ -669,9 +669,9 @@ namespace SWEndor.Scenarios
       {
         ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, delay, s.Info);
         delay += 1.2f;
-        ship.SetArmor(DamageType.ALL, 0.5f);
+        ship.SetArmorAll(0.5f);
         foreach (ActorInfo a in ship.Children)
-          a.SetArmor(DamageType.ALL, 0.25f);
+          a.SetArmorAll(0.25f);
       }
     }
 
@@ -740,9 +740,9 @@ namespace SWEndor.Scenarios
           "TIED",
         };
 
-        ainfo.SetArmor(DamageType.ALL, 0.01f);
+        ainfo.SetArmorAll(0.01f);
         foreach (ActorInfo a in ainfo.Children)
-          a.SetArmor(DamageType.ALL, 0.001f);
+          a.SetArmorAll(0.001f);
       }
     }
 
@@ -779,9 +779,9 @@ namespace SWEndor.Scenarios
       {
         ActorInfo ship = GSFunctions.Ship_Spawn(Engine, this, s.Position, s.TargetPosition, s.FacingPosition, delay, s.Info);
         delay += 2.5f;
-        ship.SetArmor(DamageType.ALL, 0.5f);
+        ship.SetArmorAll(0.5f);
         foreach (ActorInfo a in ship.Children)
-          a.SetArmor(DamageType.ALL, 0.1f);
+          a.SetArmorAll(0.1f);
       }
     }
   }

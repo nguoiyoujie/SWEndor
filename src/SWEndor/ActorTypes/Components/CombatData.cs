@@ -16,7 +16,7 @@ namespace SWEndor.ActorTypes.Components
     public float ImpactCloseEnoughDistance;
 
     public CombatData Disabled { get { return new CombatData(false, false, DamageType.NONE); } }
-    public CombatData DefaultProjectile { get { return new CombatData(true, true, DamageType.NORMAL); } }
+    public CombatData DefaultProjectile { get { return new CombatData(true, true, DamageType.LIGHT); } }
     public CombatData DefaultFighter { get { return new CombatData(true, true, DamageType.COLLISION); } }
     public CombatData DefaultShip { get { return new CombatData(true, false, DamageType.COLLISION); } }
 

@@ -50,7 +50,7 @@ namespace SWEndor.ActorTypes
     internal CombatData CombatData;
     internal RegenData RegenData;
     internal TimedLifeData TimedLifeData;
-    internal ArmorData ArmorData;
+    internal ArmorData ArmorData = ArmorData.Default;
     internal MoveLimitData MoveLimitData = MoveLimitData.Default;
     internal RenderData RenderData = RenderData.Default;
     internal AIData AIData = AIData.Default;

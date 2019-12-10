@@ -56,7 +56,6 @@ namespace SWEndor.Scenarios
     private int m_VaderID = -1;
     private int m_VaderEscort1ID = -1;
     private int m_VaderEscort2ID = -1;
-    private float m_Player_DamageModifier = 1;
     private int m_Player_PrimaryWeapon;
     private int m_Player_SecondaryWeapon;
 
@@ -372,7 +371,7 @@ namespace SWEndor.Scenarios
           ActorInfo player = Engine.ActorFactory.Get(m_PlayerID);
           if (player != null)
           {
-            player.SetArmor(DamageType.ALL, 0.75f);
+            player.SetArmorAll(0.75f);
 
             /*
             if (Player.Actor != null && !GetGameStateB("Stage5StartRun"))
@@ -433,9 +432,9 @@ namespace SWEndor.Scenarios
             if (!Stage6VaderEnd)
             {
               if (Screen2D.ShowRadar)
-                player.SetArmor(DamageType.ALL, 2.5f);
+                player.SetArmorAll(2.5f);
               else
-                player.SetArmor(DamageType.ALL, 1);
+                player.SetArmorAll(1);
             }
 
             if (player != null)
@@ -609,7 +608,7 @@ namespace SWEndor.Scenarios
             Registries = null
           }.Spawn(this);
 
-          ainfo.SetArmor(DamageType.ALL, 0.75f);
+          ainfo.SetArmorAll(0.75f);
         }
         else
         {
@@ -629,7 +628,7 @@ namespace SWEndor.Scenarios
             Registries = null
           }.Spawn(this);
 
-          ainfo.SetArmor(DamageType.ALL, 0.6f);
+          ainfo.SetArmorAll(0.6f);
         }
       }
     }
@@ -676,7 +675,7 @@ namespace SWEndor.Scenarios
           player.MoveData.MinSpeed = 400;
           player.MoveData.MaxSpeed = 400;
 
-          player.SetArmor(DamageType.ALL, 0.5f);
+          player.SetArmorAll(0.5f);
 
           player.WeaponDefinitions.Reset();
 
@@ -1204,8 +1203,7 @@ namespace SWEndor.Scenarios
       {
         m_Player_PrimaryWeapon = PlayerInfo.PrimaryWeaponN;
         m_Player_SecondaryWeapon = PlayerInfo.SecondaryWeaponN;
-        m_Player_DamageModifier = player.GetArmor(DamageType.NORMAL);
-        player.SetArmor(DamageType.ALL, 0);
+        player.SetArmorAll(0);
         player.ForceClearQueue();
         player.QueueNext(Lock.GetOrCreate());
       }
@@ -1225,7 +1223,7 @@ namespace SWEndor.Scenarios
         PlayerInfo.ActorID = m_PlayerID;
         PlayerInfo.PrimaryWeaponN = m_Player_PrimaryWeapon;
         PlayerInfo.SecondaryWeaponN = m_Player_SecondaryWeapon;
-        player.SetArmor(DamageType.ALL, m_Player_DamageModifier);
+        player.RestoreArmor();
         player.ForceClearQueue();
       }
       PlayerCameraInfo.SetPlayerLook();

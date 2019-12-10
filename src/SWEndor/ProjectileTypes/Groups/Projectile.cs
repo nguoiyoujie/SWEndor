@@ -24,7 +24,7 @@ namespace SWEndor.ProjectileTypes.Groups
       MoveLimitData.MaxSecondOrderTurnRateFrac = 0.5f;
 
       //Mask = ComponentMask.LASER_PROJECTILE;
-      CombatData.DamageType = DamageType.NORMAL;
+      CombatData.DamageType = DamageType.LASER;
     }
   }
 }

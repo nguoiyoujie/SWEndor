@@ -1,4 +1,5 @@
-﻿using SWEndor.ActorTypes.Components;
+﻿using SWEndor.Actors;
+using SWEndor.ActorTypes.Components;
 using SWEndor.Models;
 
 namespace SWEndor.ActorTypes.Groups
@@ -35,6 +36,9 @@ namespace SWEndor.ActorTypes.Groups
       AIData.CanCheckCollisionAhead = true;
 
       AIData.HuntWeight = 5;
+
+      ArmorData.Data.Put(DamageType.LIGHT, 1.1f);
+      ArmorData.Data.Put(DamageType.HEAVY, 0.8f);
 
       SystemData.MaxHull = 4;
       SystemData.Energy_Income = 1;
