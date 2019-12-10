@@ -204,6 +204,11 @@
             The number of elements in the list
             </summary>
         </member>
+        <member name="P:Primrose.Primitives.ThreadSafeList`1.IsReadOnly">
+            <summary>
+            Returns whether the list is read-only
+            </summary>
+        </member>
         <member name="M:Primrose.Primitives.ThreadSafeList`1.Contains(`0)">
             <summary>
             Returns whether the item exists in the dictionary
@@ -290,6 +295,155 @@
             <summary>
             Sorts the list using a comparer
             </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.CopyTo(`0[],System.Int32)">
+            <summary>
+            Copies the elements of the list to an array
+            </summary>
+            <param name="array"></param>
+            <param name="arrayIndex"></param>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the list.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the list.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Primrose.Primitives.Eventful.ChangeEventDelegate`1">
+            <summary>
+            A delegate representing a change in value
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="newValue">Represents the new value</param>
+            <param name="oldValue">Represents the old value</param>
+        </member>
+        <member name="T:Primrose.Primitives.Eventful.EventedRegistry`2">
+            <summary>
+            A wrapper for binding modification events to a registry
+            </summary>
+            <typeparam name="K">The encapsulated key type</typeparam>
+            <typeparam name="V">The encapsulated value type</typeparam>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedRegistry`2.RegistryChanged">
+            <summary>Represents the set of functions to be called when the registry is replaced</summary>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedRegistry`2.KeyAdded">
+            <summary>Represents the set of functions to be called when a key is added</summary>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedRegistry`2.KeyRemoved">
+            <summary>Represents the set of functions to be called when a key is removed</summary>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedRegistry`2.ValueChanged">
+            <summary>Represents the set of functions to be called when a value is changed</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedRegistry`2.#ctor(Primrose.Primitives.Factories.Registry{`0,`1})">
+            <summary>
+            Defines an event-bounded registry
+            </summary>
+            <param name="reg">The initial registry</param>
+        </member>
+        <member name="P:Primrose.Primitives.Eventful.EventedRegistry`2.Registry">
+            <summary>
+            The encapsulated registry
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedRegistry`2.Get(`0)">
+            <summary>Retrieves the value associated with a key</summary>
+            <param name="key">The identifier key to check</param>
+            <returns>The value associated with the key. If the registry does not contain this key, returns Default</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedRegistry`2.Add(`0,`1)">
+            <summary>Adds an object into the registry</summary>
+            <param name="key">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedRegistry`2.Put(`0,`1)">
+            <summary>Updates or adds an object into the registry</summary>
+            <param name="key">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedRegistry`2.Remove(`0)">
+            <summary>Removes an object from the registry</summary>
+            <param name="key">The identifier key to remove</param>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedRegistry`2.Clear">
+            <summary>Purges all data from the registry</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Eventful.EventedList`2">
+            <summary>
+            A wrapper for binding modification events to a list
+            </summary>
+            <typeparam name="TList">The encapsulated list type</typeparam>
+            <typeparam name="T">The encapsulated element type</typeparam>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedList`2.ListChanged">
+            <summary>Represents the set of functions to be called when the registry is replaced</summary>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedList`2.ItemAdded">
+            <summary>Represents the set of functions to be called when a key is added</summary>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedList`2.ItemRemoved">
+            <summary>Represents the set of functions to be called when a key is removed</summary>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedList`2.ItemChanged">
+            <summary>Represents the set of functions to be called when a value is changed</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Eventful.EventedList`2.Item(System.Int32)">
+            <summary>Gets or sets an element in the list, accessed by an index</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Eventful.EventedList`2.Count">
+            <summary>Gets the number of elements contained in the list</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Eventful.EventedList`2.IsReadOnly">
+            <summary>Gets a value indicating whether the list is read-only</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Eventful.EventedList`2.List">
+            <summary>
+            The encapsulated list
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedList`2.Add(`1)">
+            <summary>Adds an item to the list</summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedList`2.IndexOf(`1)">
+            <summary>Determines the index of a specific item in the list</summary>
+            <param name="item">The object to locate in the list</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedList`2.Insert(System.Int32,`1)">
+            <summary>Inserts an item to the list at the specified index.</summary>
+            <param name="index">The zero-based index at which item should be inserted</param>
+            <param name="item">The object to insert into the list</param>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedList`2.Remove(`1)">
+            <summary>Removes the first occurrence of a specific object from the list</summary>
+            <param name="item">The object to remove from the item</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedList`2.RemoveAt(System.Int32)">
+            <summary>Removes the item at the specified index.</summary>
+            <param name="index">The zero-based index of the item to remove.</param>
+        </member>
+        <member name="T:Primrose.Primitives.Eventful.EventedVal`1">
+            <summary>
+            A wrapper for binding modification events to a variable
+            </summary>
+            <typeparam name="T">The encapsulated type</typeparam>
+        </member>
+        <member name="P:Primrose.Primitives.Eventful.EventedVal`1.Value">
+            <summary>
+            The encapsulated value
+            </summary>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedVal`1.ValueChanged">
+            <summary>Represents the set of functions to be called when a value is changed</summary>
         </member>
         <member name="T:Primrose.Primitives.Extensions.ArrayExts">
             <summary>
@@ -759,6 +913,11 @@
             <param name="id">The identifier key to add</param>
             <param name="item">The object to be associated with this key</param>
         </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`1.Put(System.String,`0)">
+            <summary>Updates or adds an object into the registry</summary>
+            <param name="id">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
         <member name="M:Primrose.Primitives.Factories.IRegistry`1.Remove(System.String)">
             <summary>Removes an object from the registry</summary>
             <param name="id">The identifier key to remove</param>
@@ -780,6 +939,11 @@
         </member>
         <member name="M:Primrose.Primitives.Factories.IRegistry`2.Add(`0,`1)">
             <summary>Adds an object into the registry</summary>
+            <param name="key">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`2.Put(`0,`1)">
+            <summary>Updates or adds an object into the registry</summary>
             <param name="key">The identifier key to add</param>
             <param name="item">The object to be associated with this key</param>
         </member>
@@ -1475,6 +1639,10 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
             <exception cref="T:System.InvalidOperationException">Only an array of length 2 can be converted to a float2</exception>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.op_UnaryNegation(Primrose.Primitives.ValueTypes.float2)">
+            <summary>Performs a memberwise negation of a float2 value</summary>
+            <param name="a"></param><returns></returns>
+        </member>
         <member name="M:Primrose.Primitives.ValueTypes.float2.op_Addition(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
             <summary>Performs an addition operation between two float2 values</summary>
             <param name="a"></param><param name="b"></param><returns></returns>
@@ -1545,6 +1713,10 @@
             <returns>A float3 value</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
             <exception cref="T:System.InvalidOperationException">Only an array of length 3 can be converted to a float3</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.op_UnaryNegation(Primrose.Primitives.ValueTypes.float3)">
+            <summary>Performs a memberwise negation of a float3 value</summary>
+            <param name="a"></param><returns></returns>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.float3.op_Addition(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
             <summary>Performs an addition operation between two float3 values</summary>
@@ -1620,6 +1792,10 @@
             <returns>A float4 value</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
             <exception cref="T:System.InvalidOperationException">Only an array of length 4 can be converted to a float4</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.op_UnaryNegation(Primrose.Primitives.ValueTypes.float4)">
+            <summary>Performs a memberwise negation of a float4 value</summary>
+            <param name="a"></param><returns></returns>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.float4.op_Addition(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
             <summary>Performs an addition operation between two float4 values</summary>

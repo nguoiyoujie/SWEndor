@@ -159,6 +159,9 @@
     <Compile Include="ActorTypes\General\ActorCreationInfo.cs" />
     <Compile Include="Actors\Models\ArmorModel\ActorExt.cs" />
     <Compile Include="Actors\Models\Collision\ActorExt.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\MissilePods\StrikeMissilePodATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\StrikeHeavyTurboLaserATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\StrikeTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\JV7TurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\CargoTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\T4ATurboLaserATI.cs" />
@@ -171,6 +174,7 @@
     <Compile Include="ActorTypes\Groups\MissileProjectile.cs" />
     <Compile Include="ActorTypes\Groups\MissileProjectiles\MissileATI.cs" />
     <Compile Include="ActorTypes\Groups\MissileProjectiles\TorpedoATI.cs" />
+    <Compile Include="ActorTypes\Groups\StarDestroyers\StrikeATI.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene\Hyperspace.cs" />
     <Compile Include="ActorTypes\Groups\Warships\XQ1ATI.cs" />
     <Compile Include="Core\RenderSurfaces.cs" />

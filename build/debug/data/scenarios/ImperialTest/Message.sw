@@ -1,31 +1,33 @@
 
+float3 msg_thrawn = { 0.3, 0.5, 1 };
+
 float3 msg_warning_yellow = { 0.8, 0.8, 0 };
 float3 msg_warning_orange = { 1, 0.5, 0 };
 float3 msg_fail_red = { 0.8, 0, 0 };
 
 message01:
-	Message("GRAND ADM. THRAWN: Traitors will die today.", 5, faction_empire_color, 1);
+	Message("GRAND ADM. THRAWN: Traitors will die today.", 5, msg_thrawn, 1);
 
 message02:
-	Message("GRAND ADM. THRAWN: The Interdictor CORVUS has advanced far ahead and is in a vulnerable position.", 5, faction_empire_color, 1);
+	Message("GRAND ADM. THRAWN: The Interdictor CORVUS has advanced far ahead and is in a vulnerable position.", 5, msg_thrawn, 1);
 
 message03:
-	Message("GRAND ADM. THRAWN: The traitors are attempting to destroy it to facilitate their escape.", 5, faction_empire_color, 1);
+	Message("GRAND ADM. THRAWN: The traitors are attempting to destroy it to facilitate their escape.", 5, msg_thrawn, 1);
 
 message04:
-	Message("GRAND ADM. THRAWN: The Interdictor CORVUS  must survive.", 5, faction_empire_color, 1);
+	Message("GRAND ADM. THRAWN: The Interdictor CORVUS  must survive.", 5, msg_thrawn, 1);
 
 message05:
-	Message("GRAND ADM. THRAWN: Then destroy the cowering traitor in his Star Destroyer.", 5, faction_empire_color, 1);
+	Message("GRAND ADM. THRAWN: Then destroy the cowering traitor in his Star Destroyer.", 5, msg_thrawn, 1);
 
 message06:
-	Message("GRAND ADM. THRAWN: The Empire's future lies in your performance.", 5, faction_empire_color, 1);
+	Message("GRAND ADM. THRAWN: The Empire's future lies in your performance.", 5, msg_thrawn, 1);
 
 messageescape:
-	Message("GRAND ADM. THRAWN: The traitor is trying to escape. Do not let him escape!", 5, faction_empire_color, 1);
+	Message("Warning: The traitor is trying to escape aboard the VORKNKX. Do not let him escape!", 5, faction_empire_color, 1);
 
 messagewin:
-	Message("GRAND ADM. THRAWN: Such is the fate of the enemies of the Empire.", 5, faction_empire_color, 1);
+	Message("GRAND ADM. THRAWN: Such is the fate of the enemies of the Empire.", 5, msg_thrawn, 1);
 
 
 messagebombercorvus:
@@ -64,20 +66,27 @@ message_allyTIEA:
 
 
 message_traitorZ95:
-	Message("4x Z95 has entered the battlefield.", 5, faction_traitor_color);
+	Message("New craft alert: 4x Z95 has entered the battlefield.", 5, faction_traitor_color);
 
 message_traitorXWING:
-	Message("3x X-WING has entered the battlefield.", 5, faction_traitor_color);
+	Message("New craft alert: 3x X-WING has entered the battlefield.", 5, faction_traitor_color);
 
 message_traitorYWING:
-	Message("3x Y-WING has entered the battlefield.", 5, faction_traitor_color);
+	Message("New craft alert: 3x Y-WING has entered the battlefield.", 5, faction_traitor_color);
 
 message_traitorAWING:
-	Message("3x A-WING has entered the battlefield.", 5, faction_traitor_color);
+	Message("New craft alert: 3x A-WING has entered the battlefield.", 5, faction_traitor_color);
 
 message_traitorTIED:
-	Message("2x TIE-DEFENDER has entered the battlefield.", 5, faction_traitor_color);
+	Message("New craft alert: 2x TIE-DEFENDER has entered the battlefield.", 5, faction_traitor_color);
 
 message_traitorTIEA:
-	Message("2x TIE-ADVANCED has entered the battlefield.", 5, faction_traitor_color);
+	Message("New craft alert: 2x TIE-ADVANCED has entered the battlefield.", 5, faction_traitor_color);
+
+message_traitorDelta:
+	Message("New craft alert: TIE/D DELTA squadron has been launched from ISD GLORY.", 5, faction_traitor_color);
+
+message_traitorIota:
+	Message("New craft alert: TIE/D IOTA squadron has been launched from ISD GLORY.", 5, faction_traitor_color);
+
 

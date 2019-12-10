@@ -14,7 +14,7 @@ float spawn_spacing;
 float spawn_wait;
 int spawn_target;
 
-float damagemod;
+float spawn_dmgmod;
 
 spawnreset:
 	spawn_name = "";
@@ -27,12 +27,13 @@ spawnreset:
 	spawn_spacing = 300;
 	spawn_wait = 0;
 	spawn_target = -1;
-	damagemod = 1;
+	spawn_dmgmod = 1;
 
 
 spawn1:
 	int spawnunit = Actor.Spawn(spawn_type, spawn_name, spawn_faction, "", 0, spawn_pos, spawn_rot);
-	Actor.SetProperty(spawnunit, "DamageModifier", damagemod);
+	if (spawn_dmgmod >= 0)
+		Actor.SetArmorAll(spawnunit, spawn_dmgmod);
 	AI.QueueLast(spawnunit, "wait", spawn_wait);
 	if (spawn_target >= 0)
 		AI.QueueLast(spawnunit, "attackactor", spawn_target, -1, -1, false);
@@ -42,7 +43,8 @@ spawn2:
 	int[] spawnsquad = Squad.Spawn(spawn_type, spawn_name, spawn_faction, 2, 0, spawn_hyperspace, spawn_pos, spawn_rot, formation, spawn_spacing, spawn_wait, "ANY");
 	foreach(int spawnunit in spawnsquad)
 	{
-		Actor.SetProperty(spawnunit, "DamageModifier", damagemod);
+		if (spawn_dmgmod >= 0)
+			Actor.SetArmorAll(spawnunit, spawn_dmgmod);
 		if (spawn_target >= 0)
 			AI.QueueLast(spawnunit, "attackactor", spawn_target, -1, -1, false);
 	}
@@ -52,7 +54,8 @@ spawn3:
 	int[] spawnsquad = Squad.Spawn(spawn_type, spawn_name, spawn_faction, 3, 0, spawn_hyperspace, spawn_pos, spawn_rot, formation, spawn_spacing, spawn_wait, "ANY");
 	foreach(int spawnunit in spawnsquad)
 	{
-		Actor.SetProperty(spawnunit, "DamageModifier", damagemod);
+		if (spawn_dmgmod >= 0)
+			Actor.SetArmorAll(spawnunit, spawn_dmgmod);
 		if (spawn_target >= 0)
 			AI.QueueLast(spawnunit, "attackactor", spawn_target, -1, -1, false);
 	}
@@ -62,7 +65,8 @@ spawn4:
 	int[] spawnsquad = Squad.Spawn(spawn_type, spawn_name, spawn_faction, 4, 0, spawn_hyperspace, spawn_pos, spawn_rot, formation, spawn_spacing, spawn_wait, "ANY");
 	foreach(int spawnunit in spawnsquad)
 	{
-		Actor.SetProperty(spawnunit, "DamageModifier", damagemod);
+		if (spawn_dmgmod >= 0)
+			Actor.SetArmorAll(spawnunit, spawn_dmgmod);
 		if (spawn_target >= 0)
 			AI.QueueLast(spawnunit, "attackactor", spawn_target, -1, -1, false);
 	}

@@ -57,32 +57,32 @@ makeplayer:
 	AddEvent(5, "setupplayer");
 
 setupplayer:
-	Actor.SetProperty(Player.GetActor(), "DamageModifier", 0.25);
+	Actor.SetArmorAll(Player.GetActor(), 0.25);
 
 makesmugglers:
 	int pspawner = Actor.Spawn("SPAWN", "", "Smugglers", "", 0, { 9500, -900, 0 }, { -15, -90, 0 });
 	Actor.SetProperty(pspawner, "Spawner.Enabled", true);
 
 	int falcon1 = Actor.Spawn("YT1300", "YT-1300", "Smugglers", "", 0, { 8600, -1020, -500 }, { -5, -90, 0 }, { "CriticalAllies" });
-	Actor.SetProperty(falcon1, "DamageModifier", 0.15);
+	Actor.SetArmorAll(falcon1, 0.15);
 	AI.QueueLast(falcon1, "wait", 5);
 	AI.QueueLast(falcon1, "rotate", { 0, 0, 0 }, 0);
 	AI.QueueLast(falcon1, "wait", 5);
 	
 	int falcon2 = Actor.Spawn("YT1300", "YT-1300", "Smugglers", "", 0, { 8650, -960, 500 }, { -5, -90, 0 }, { "CriticalAllies" });
-	Actor.SetProperty(falcon2, "DamageModifier", 0.15);
+	Actor.SetArmorAll(falcon2, 0.15);
 	AI.QueueLast(falcon2, "wait", 5);
 	AI.QueueLast(falcon2, "rotate", { 0, 0, 0 }, 0);
 	AI.QueueLast(falcon2, "wait", 5);
 
 	int falcon3 = Actor.Spawn("YT1300", "YT-1300", "Smugglers", "", 0, { 10250, -1040, 750 }, { -5, -90, 0 }, { "CriticalAllies" });
-	Actor.SetProperty(falcon3, "DamageModifier", 0.15);
+	Actor.SetArmorAll(falcon3, 0.15);
 	AI.QueueLast(falcon3, "wait", 5);
 	AI.QueueLast(falcon3, "rotate", { 0, 0, 0 }, 0);
 	AI.QueueLast(falcon3, "wait", 5);
 
 	int falcon4 = Actor.Spawn("YT1300", "YT-1300", "Smugglers", "", 0, { 10050, -940, -750 }, { -5, -90, 0 }, { "CriticalAllies" });
-	Actor.SetProperty(falcon4, "DamageModifier", 0.15);
+	Actor.SetArmorAll(falcon4, 0.15);
 	AI.QueueLast(falcon4, "wait", 5);
 	AI.QueueLast(falcon4, "rotate", { 0, 0, 0 }, 0);
 	AI.QueueLast(falcon4, "wait", 5);
