@@ -133,6 +133,8 @@ setupplayer:
 	
 firstspawn:
 	Player.AssignActor(Actor.Spawn(GetPlayerActorType(), GetPlayerName(), "Empire", "", 0, { 4200, -950, 450 }, { 0, -130, 0 })); //{ 500, -300, 12500 }, { 0, -180, 0 }));
+	if (Actor.IsLargeShip(Player.GetActor()))
+		Actor.SetLocalPosition(Player.GetActor(), { 6000, -300, 0 });
 	respawn = true;
 
 	
@@ -190,7 +192,7 @@ make_ships:
 	AI.QueueLast(glory, "lock");
 
 	corv1 = Actor.Spawn("CORV", "", "Traitors", "", 0, { -7750, 250, -20000 }, { 0, 20, 0 });
-	Actor.SetArmorAll(corv1, 0.75);
+	Actor.SetArmorAll(corv1, 0.8);
 	AI.QueueLast(corv1, "move", {0, 250, -3000}, 70);
 	AI.QueueLast(corv1, "move", {3000, 250, -5000}, 10);
 	AI.QueueLast(corv1, "rotate", {0, 500, 4000}, 0);
@@ -207,12 +209,12 @@ make_ships:
 	AI.QueueLast(corv3, "rotate", {0, 500, 4000}, 0);
 	AI.QueueLast(corv3, "lock");
 
-	corv4 = Actor.Spawn("CORV", "", "Traitors", "", 0, { -1750, 50, -14500 }, { 0, 20, 0 });
+	corv4 = Actor.Spawn("STRK", "", "Traitors", "", 0, { -1750, 50, -14500 }, { 0, 20, 0 });
 	AI.QueueLast(corv4, "move", {-750, 100, -1400}, 100);
 	AI.QueueLast(corv4, "rotate", {0, 500, 4000}, 0);
 	AI.QueueLast(corv4, "lock");
 	
-	nebu = Actor.Spawn("NEBL", "", "Traitors", "", 0, { -3750, -450, -16000 }, { 0, 30, 0 });
+	nebu = Actor.Spawn("NEB2", "", "Traitors", "", 0, { -3750, -450, -16000 }, { 0, 30, 0 });
 	Actor.SetArmorAll(nebu, 0.5);
 	AI.QueueLast(nebu, "move", {6250, -450, -3200}, 100);
 	AI.QueueLast(nebu, "hyperspaceout");
@@ -486,7 +488,7 @@ spawnenemybombers:
 	spawn_pos = { -25000,300,-23500 };
 	spawn_type = "TIEI";
 	spawn_target = corvusshd1;
-	Script.Call("spawn1");qqqqqqqqqqqqqqqqqqxx
+	Script.Call("spawn1");
 
 	spawn_pos = { -24000, 200, 24500 };
 	spawn_type = "TIE";
@@ -661,12 +663,12 @@ spawn_escapeCORV:
 	AI.QueueLast(_a, "attackactor", esccorv, -1, -1, false, 40);
 	Actor.QueueAtSpawner(_a, greywolf);
 	
-	_a = Actor.Spawn("TIESA", "Epsilon-3", "Empire", "", 0, _d, _d);
+	_a = Actor.Spawn("TIEI", "Gamma-1", "Empire", "", 0, _d, _d);
 	Actor.SetArmorAll(_a, 0.25);
 	AI.QueueLast(_a, "attackactor", esccorv, -1, -1, false, 40);
 	Actor.QueueAtSpawner(_a, greywolf);
 	
-	_a = Actor.Spawn("TIESA", "Epsilon-4", "Empire", "", 0, _d, _d);
+	_a = Actor.Spawn("TIEI", "Gamma-2", "Empire", "", 0, _d, _d);
 	Actor.SetArmorAll(_a, 0.25);
 	AI.QueueLast(_a, "attackactor", esccorv, -1, -1, false, 40);
 	Actor.QueueAtSpawner(_a, greywolf);
