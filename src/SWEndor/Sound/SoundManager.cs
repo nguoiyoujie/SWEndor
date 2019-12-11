@@ -95,10 +95,13 @@ namespace SWEndor.Sound
       get { return m_mood; }
       set
       {
-        if (value < 0)
-          TriggerInterruptMood((int)value);
-        else
-          m_mood = value;
+        if (m_mood != value)
+        {
+          if (value < 0)
+            TriggerInterruptMood((int)value);
+          else
+            m_mood = value;
+        }
       }
     }
 
