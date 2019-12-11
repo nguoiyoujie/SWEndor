@@ -44,8 +44,8 @@ namespace SWEndor.ActorTypes.Instances
         , new AddOnData("STRKMPOD", new TV_3DVECTOR(0, 135, -550), new TV_3DVECTOR(-90, 0, 0), true)
 
         // Sides
-        , new AddOnData("STRKLSR", new TV_3DVECTOR(60, 43, 520), new TV_3DVECTOR(-50, 90, 0), true)
-        , new AddOnData("STRKLSR", new TV_3DVECTOR(-60, 43, 520), new TV_3DVECTOR(-50, -90, 0), true)
+        , new AddOnData("STRKLSR", new TV_3DVECTOR(60, 44, 520), new TV_3DVECTOR(-50, 75, 0), true)
+        , new AddOnData("STRKLSR", new TV_3DVECTOR(-60, 44, 520), new TV_3DVECTOR(-50, -75, 0), true)
         , new AddOnData("STRKHLSR", new TV_3DVECTOR(90, 60, 90), new TV_3DVECTOR(-50, 90, 0), true)
         , new AddOnData("STRKHLSR", new TV_3DVECTOR(-90, 60, 90), new TV_3DVECTOR(-50, -90, 0), true)
 

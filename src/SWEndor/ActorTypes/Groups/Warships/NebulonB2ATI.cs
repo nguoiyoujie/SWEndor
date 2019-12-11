@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Sound;
 
@@ -27,12 +28,23 @@ namespace SWEndor.ActorTypes.Instances
       SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500.0f, new TV_3DVECTOR(0, 100, -300), true, isEngineSound: true) };
       AddOns = new AddOnData[]
       {
-        new AddOnData("NEBLLSR", new TV_3DVECTOR(0, 40, 220), new TV_3DVECTOR(-90, 0, 0), true)
+         new AddOnData("NEBLLSR", new TV_3DVECTOR(0, 32, 300), new TV_3DVECTOR(-90, 0, 0), true)
         , new AddOnData("NEBLLSR", new TV_3DVECTOR(0, 95, -520), new TV_3DVECTOR(-90, 0, 0), true)
         , new AddOnData("NEBLLSR", new TV_3DVECTOR(0, -145, -550), new TV_3DVECTOR(90, 0, 0), true)
         , new AddOnData("NEBLMPOD", new TV_3DVECTOR(-80, -45, -485), new TV_3DVECTOR(0, 0, 0), true)
         , new AddOnData("NEBLMPOD", new TV_3DVECTOR(80, -45, -485), new TV_3DVECTOR(0, 0, 0), true)
+
+        , new AddOnData("NEBLLSR", new TV_3DVECTOR(240, -300, 225), new TV_3DVECTOR(45, -90, 0), true)
+        , new AddOnData("NEBLLSR", new TV_3DVECTOR(-240, -300, 225), new TV_3DVECTOR(45, 90, 0), true)
+
+        , new AddOnData("HANGAR", new TV_3DVECTOR(10, -24, 185), new TV_3DVECTOR(0, 180, 0), true)
       };
+    }
+
+    public override void Initialize(ActorInfo ainfo)
+    {
+      base.Initialize(ainfo);
+      ainfo.SpawnerInfo = SpawnerInfoDecorator.NebB_Default;
     }
   }
 }
