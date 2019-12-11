@@ -23,11 +23,10 @@ namespace SWEndor.Weapons
 
     public void Reload(Engine engine)
     {
-      if (Max > 0 && ReloadCooldown < engine.Game.GameTime && Count < Max)
+      if (Count == Max)
+        ReloadCooldown = engine.Game.GameTime + ReloadRate.x;
+      else if (Max > 0 && ReloadCooldown < engine.Game.GameTime && Count < Max)
       {
-        if (Count == Max)
-          ReloadCooldown = engine.Game.GameTime + ReloadRate.x;
-
         ReloadCooldown = engine.Game.GameTime + ReloadRate.x;
         if (ReloadRate.y != 0)
           ReloadCooldown += (float)engine.Random.NextDouble() * ReloadRate.y;
