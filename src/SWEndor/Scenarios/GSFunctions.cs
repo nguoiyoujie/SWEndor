@@ -220,8 +220,6 @@ namespace SWEndor.Scenarios
     {
       string name = spawninfo.ShipName ?? "";
 
-      //ActionInfo[] actions;
-
       List<ActionInfo> actionlist = new List<ActionInfo>();
       if (spawninfo.IntermissionMood != 0) actionlist.Add(SetMood.GetOrCreate((MoodStates)spawninfo.IntermissionMood, true));
       if (spawninfo.HyperspaceIn) actionlist.Add(HyperspaceIn.GetOrCreate(position));
@@ -229,91 +227,6 @@ namespace SWEndor.Scenarios
       actionlist.Add(Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MoveLimitData.MaxSpeed));
       actionlist.Add(Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MoveLimitData.MinSpeed));
       actionlist.Add(Lock.GetOrCreate());
-
-      /*
-      if (spawninfo.IntermissionMood != 0)
-      {
-        if (spawninfo.HyperspaceIn && spawninfo.EnableSpawn)
-        {
-          actions = new ActionInfo[] {
-                                     SetMood.GetOrCreate(spawninfo.IntermissionMood, true)
-                                   , HyperspaceIn.GetOrCreate(position)
-                                   , EnableSpawn.GetOrCreate(true)
-                                   , Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MaxSpeed)
-                                   , Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MinSpeed)
-                                   , Lock.GetOrCreate()
-                                   };
-        }
-        else if (spawninfo.HyperspaceIn)
-        {
-          actions = new ActionInfo[] {
-                                     SetMood.GetOrCreate(spawninfo.IntermissionMood, true)
-                                   , HyperspaceIn.GetOrCreate(position)
-                                   , Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MaxSpeed)
-                                   , Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MinSpeed)
-                                   , Lock.GetOrCreate()
-                                   };
-        }
-        else if (spawninfo.EnableSpawn)
-        {
-          actions = new ActionInfo[] {
-                                     SetMood.GetOrCreate(spawninfo.IntermissionMood, true)
-                                   , EnableSpawn.GetOrCreate(true)
-                                   , Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MaxSpeed)
-                                   , Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MinSpeed)
-                                   , Lock.GetOrCreate()
-                                   };
-        }
-        else
-        {
-          actions = new ActionInfo[] {
-                                     SetMood.GetOrCreate(spawninfo.IntermissionMood, true)
-                                   , Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MaxSpeed)
-                                   , Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MinSpeed)
-                                   , Lock.GetOrCreate()
-                                   };
-        }
-      }
-      else
-      {
-        if (spawninfo.HyperspaceIn && spawninfo.EnableSpawn)
-        {
-          actions = new ActionInfo[] {
-                                     HyperspaceIn.GetOrCreate(position)
-                                   , EnableSpawn.GetOrCreate(true)
-                                   , Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MaxSpeed)
-                                   , Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MinSpeed)
-                                   , Lock.GetOrCreate()
-                                   };
-        }
-        else if (spawninfo.HyperspaceIn)
-        {
-          actions = new ActionInfo[] {
-                                     HyperspaceIn.GetOrCreate(position)
-                                   , Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MaxSpeed)
-                                   , Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MinSpeed)
-                                   , Lock.GetOrCreate()
-                                   };
-        }
-        else if (spawninfo.EnableSpawn)
-        {
-          actions = new ActionInfo[] {
-                                     EnableSpawn.GetOrCreate(true)
-                                   , Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MaxSpeed)
-                                   , Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MinSpeed)
-                                   , Lock.GetOrCreate()
-                                   };
-        }
-        else
-        {
-          actions = new ActionInfo[] {
-                                    Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MaxSpeed)
-                                   , Rotate.GetOrCreate(facingposition, spawninfo.TypeInfo.MinSpeed)
-                                   , Lock.GetOrCreate()
-                                   };
-        }
-      }
-      */
 
       ActorSpawnInfo asi = new ActorSpawnInfo
       {
