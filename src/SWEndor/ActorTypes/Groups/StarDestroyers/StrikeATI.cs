@@ -6,9 +6,9 @@ using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  internal class StrikeATI : Groups.StarDestroyer
+  internal class StrikeATI : Groups.Warship
   {
-    internal StrikeATI(Factory owner) : base(owner, "STRK", "Strike Cruiser")
+    internal StrikeATI(Factory owner) : base(owner, "STRKC", "Strike Cruiser")
     {
       // Combat
       Explodes = new ExplodeData[] {
@@ -17,8 +17,8 @@ namespace SWEndor.ActorTypes.Instances
         new ExplodeData("EXPW01", 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
-      SystemData.MaxShield = 200;
-      SystemData.MaxHull = 320;
+      SystemData.MaxShield = 350;
+      SystemData.MaxHull = 420;
       CombatData.ImpactDamage = 60.0f;
       MoveLimitData.MaxSpeed = 105.0f;
       MoveLimitData.MinSpeed = 0.0f;

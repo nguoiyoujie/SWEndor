@@ -11,7 +11,7 @@ namespace SWEndor.ActorTypes.Instances
     internal ExecutorBridgeATI(Factory owner) : base(owner, "EXERBRID", "Executor Super Star Destroyer Bridge")
     {
       CombatData = CombatData.DefaultShip;
-      ArmorData.Data.Put(DamageType.HEAVY, 1.5f);
+      ArmorData.Data.Put(DamageType.HEAVY, 1.25f);
       ArmorData.Data.Put(DamageType.COLLISION, 4);
 
       Explodes = new ExplodeData[]

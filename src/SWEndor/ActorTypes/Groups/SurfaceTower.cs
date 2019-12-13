@@ -23,8 +23,8 @@ namespace SWEndor.ActorTypes.Groups
       AIData.TargetType = TargetType.ADDON | TargetType.STRUCTURE;
       RenderData.RadarType = RadarType.FILLED_SQUARE;
 
-      ArmorData.Data.Put(DamageType.LIGHT, 2);
-      ArmorData.Data.Put(DamageType.HEAVY, 2);
+      ArmorData.Data.Put(DamageType.LIGHT, 1.2f);
+      ArmorData.Data.Put(DamageType.HEAVY, 1.2f);
 
       Mask = ComponentMask.STATIC_ACTOR;
     }
