@@ -48,7 +48,7 @@ namespace SWEndor.ActorTypes.Groups
       SystemData.MaxEnergy_inLasers = 1;
       SystemData.MaxEnergy_inShields = 1;
       SystemData.Energy_TransferRate = 0.5f;
-      SystemData.AllowSystemDamage = true;
+      SystemData.AllowSystemDamage = false; // true;
     }
   }
 }
