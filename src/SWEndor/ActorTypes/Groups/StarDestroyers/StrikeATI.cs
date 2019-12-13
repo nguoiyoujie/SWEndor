@@ -41,7 +41,8 @@ namespace SWEndor.ActorTypes.Instances
       {
         // Top
         new AddOnData("STRKLSR", new TV_3DVECTOR(0, 95, 365), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnData("STRKMPOD", new TV_3DVECTOR(0, 135, -550), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("STRKMPOD", new TV_3DVECTOR(0, 90, -245), new TV_3DVECTOR(-10, 0, 0), true)
+        , new AddOnData("STRKLSR", new TV_3DVECTOR(0, 135, -550), new TV_3DVECTOR(-90, 0, 0), true)
 
         // Sides
         , new AddOnData("STRKLSR", new TV_3DVECTOR(60, 44, 520), new TV_3DVECTOR(-50, 75, 0), true)
@@ -54,9 +55,9 @@ namespace SWEndor.ActorTypes.Instances
 
         // Bottom
         , new AddOnData("STRKHLSR", new TV_3DVECTOR(125, -55, 200), new TV_3DVECTOR(90, 0, 0), true)
-        , new AddOnData("STRKHLSR", new TV_3DVECTOR(125, -55, 200), new TV_3DVECTOR(90, 0, 0), true)
+        , new AddOnData("STRKHLSR", new TV_3DVECTOR(-125, -55, 200), new TV_3DVECTOR(90, 0, 0), true)
         , new AddOnData("STRKHLSR", new TV_3DVECTOR(125, -55, 20), new TV_3DVECTOR(90, 0, 0), true)
-        , new AddOnData("STRKHLSR", new TV_3DVECTOR(125, -55, 20), new TV_3DVECTOR(90, 0, 0), true)
+        , new AddOnData("STRKHLSR", new TV_3DVECTOR(-125, -55, 20), new TV_3DVECTOR(90, 0, 0), true)
 
         , new AddOnData("STRKLSR", new TV_3DVECTOR(0, -125, -550), new TV_3DVECTOR(90, 0, 0), true)
       };
