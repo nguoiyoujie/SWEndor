@@ -25,7 +25,7 @@ namespace SWEndor.UI.Menu.Pages
       ConfirmText.HighlightBoxWidth = 320;
       ConfirmText.HighlightBoxHeight = 30;
 
-      ConfirmNo.Text = "CANCEL";
+      ConfirmNo.Text = "Cancel";
       ConfirmNo.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(60, -20);
       ConfirmNo.HighlightBoxPosition = ConfirmNo.TextPosition - new TV_2DVECTOR(5, 5);
       ConfirmNo.HighlightBoxWidth = 110;
@@ -33,7 +33,7 @@ namespace SWEndor.UI.Menu.Pages
       ConfirmNo.Selectable = true;
       ConfirmNo.OnKeyPress += SelectNo;
 
-      ConfirmRestart.Text = "RESTART";
+      ConfirmRestart.Text = "Restart";
       ConfirmRestart.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(60, 20);
       ConfirmRestart.HighlightBoxPosition = ConfirmRestart.TextPosition - new TV_2DVECTOR(5, 5);
       ConfirmRestart.HighlightBoxWidth = 110;
@@ -41,7 +41,7 @@ namespace SWEndor.UI.Menu.Pages
       ConfirmRestart.Selectable = true;
       ConfirmRestart.OnKeyPress += SelectRestart;
 
-      ConfirmYes.Text = "ABORT";
+      ConfirmYes.Text = "Abort";
       ConfirmYes.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(60, 60);
       ConfirmYes.HighlightBoxPosition = ConfirmYes.TextPosition - new TV_2DVECTOR(5, 5);
       ConfirmYes.HighlightBoxWidth = 110;
