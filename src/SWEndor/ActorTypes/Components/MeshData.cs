@@ -373,6 +373,7 @@ namespace SWEndor.ActorTypes.Components
       }
     }
 
+    /*
     private static void LoadAlphaTextureFromFolder(Engine engine, ref int[] texanimframes, string mainPath, string subPath)
     {
       List<int> frames = new List<int>();
@@ -396,6 +397,7 @@ namespace SWEndor.ActorTypes.Components
       }
       texanimframes = frames.ToArray();
     }
+    */
   }
 }
 
