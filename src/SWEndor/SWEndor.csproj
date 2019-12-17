@@ -159,6 +159,7 @@
     <Compile Include="ActorTypes\General\ActorCreationInfo.cs" />
     <Compile Include="Actors\Models\ArmorModel\ActorExt.cs" />
     <Compile Include="Actors\Models\Collision\ActorExt.cs" />
+    <Compile Include="ActorTypes\Groups\Mine.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\MissilePods\StrikeMissilePodATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\StrikeHeavyTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\StrikeTurboLaserATI.cs" />
@@ -171,10 +172,13 @@
     <Compile Include="ActorTypes\Groups\Fighters\T4AATI.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\CargoLgATI.cs" />
     <Compile Include="ActorTypes\Groups\Fighters\CargoSmATI.cs" />
+    <Compile Include="ActorTypes\Groups\Mines\Mine3ATI.cs" />
+    <Compile Include="ActorTypes\Groups\Mines\Mine2ATI.cs" />
+    <Compile Include="ActorTypes\Groups\Mines\Mine1ATI.cs" />
     <Compile Include="ActorTypes\Groups\MissileProjectile.cs" />
     <Compile Include="ActorTypes\Groups\MissileProjectiles\MissileATI.cs" />
     <Compile Include="ActorTypes\Groups\MissileProjectiles\TorpedoATI.cs" />
-    <Compile Include="ActorTypes\Groups\StarDestroyers\StrikeATI.cs" />
+    <Compile Include="ActorTypes\Groups\Warships\StrikeATI.cs" />
     <Compile Include="ActorTypes\Groups\StaticScene\Hyperspace.cs" />
     <Compile Include="ActorTypes\Groups\Warships\XQ1ATI.cs" />
     <Compile Include="Core\RenderSurfaces.cs" />
@@ -550,6 +554,7 @@
     <Compile Include="Shaders\Factory\Factory.cs" />
     <Compile Include="Shaders\Factory\Parser.cs" />
     <Compile Include="Shaders\ShaderInfo.cs" />
+    <Compile Include="Sound\Dynamic.cs" />
     <Compile Include="Sound\Instructions\InstAddSyncPoint.cs" />
     <Compile Include="Sound\Instructions\InstPauseMusic.cs" />
     <Compile Include="Sound\Instructions\InstPlaySoundSingle.cs" />
@@ -564,7 +569,10 @@
     <Compile Include="Sound\Piece\Factory\Factory.cs" />
     <Compile Include="Sound\Piece\Factory\Parser.cs" />
     <Compile Include="Sound\Piece\Piece.cs" />
+    <Compile Include="Sound\MusicCommands.cs" />
     <Compile Include="Sound\SoundGlobals.cs" />
+    <Compile Include="Sound\MusicGlobals.cs" />
+    <Compile Include="Sound\SoundCommands.cs" />
     <Compile Include="UI\Font\Factory\Factory.cs" />
     <Compile Include="UI\Font\Font.cs" />
     <Compile Include="UI\Forms\BackgroundForm.cs">

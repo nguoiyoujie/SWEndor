@@ -14,6 +14,9 @@ float spawn_spacing;
 float spawn_wait;
 int spawn_target;
 
+// calbacks
+int[] spawn_ids;
+
 float spawn_dmgmod;
 
 spawnreset:
@@ -37,6 +40,7 @@ spawn1:
 	AI.QueueLast(spawnunit, "wait", spawn_wait);
 	if (spawn_target >= 0)
 		AI.QueueLast(spawnunit, "attackactor", spawn_target, -1, -1, false);
+	spawn_ids = { spawnunit };
 
 spawn2:
 	string formation = (spawn_formation == "") ? "LINE" : spawn_formation;
@@ -48,6 +52,7 @@ spawn2:
 		if (spawn_target >= 0)
 			AI.QueueLast(spawnunit, "attackactor", spawn_target, -1, -1, false);
 	}
+	spawn_ids = spawnsquad;
 
 spawn3:
 	string formation = (spawn_formation == "") ? "VSHAPE" : spawn_formation;
@@ -59,6 +64,7 @@ spawn3:
 		if (spawn_target >= 0)
 			AI.QueueLast(spawnunit, "attackactor", spawn_target, -1, -1, false);
 	}
+	spawn_ids = spawnsquad;
 
 spawn4:
 	string formation = (spawn_formation == "") ? "VERTICAL_SQUARE" : spawn_formation;
@@ -70,4 +76,5 @@ spawn4:
 		if (spawn_target >= 0)
 			AI.QueueLast(spawnunit, "attackactor", spawn_target, -1, -1, false);
 	}
+	spawn_ids = spawnsquad;
 
