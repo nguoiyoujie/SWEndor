@@ -32,7 +32,6 @@ namespace SWEndor.Sound
     private FMOD.System fmodsystem = null;
     private int channels = 32; // 0 = music. 1-31 = sounds. ?
     private ChannelGroup musicgrp;
-    private ChannelGroup interruptmusicgrp;
     private Registry<ChannelGroup> soundgrps = new Registry<ChannelGroup>();
 
     private Registry<FMOD.Sound> music = new Registry<FMOD.Sound>();
@@ -61,10 +60,8 @@ namespace SWEndor.Sound
       get { return m_MasterMusicVolume; }
       set
       {
-        if (musicgrp != null)
-          musicgrp.setVolume(value);
-        if (interruptmusicgrp != null)
-          interruptmusicgrp.setVolume(value);
+        musicgrp?.setVolume(value);
+        //interruptmusicgrp?.setVolume(value);
         m_MasterMusicVolume = value;
       }
     }
@@ -89,22 +86,23 @@ namespace SWEndor.Sound
       }
     }
 
-    private MoodStates m_mood = MoodStates.AMBIENT;
-    public MoodStates Mood
+    private int m_mood = 0;
+    public int GetMood() { return m_mood; }
+    public void SetMood(MoodStates value)
     {
-      get { return m_mood; }
-      set
-      {
-        if (m_mood != value)
-        {
-          if (value < 0)
-            TriggerInterruptMood((int)value);
-          else
-            m_mood = value;
-        }
-      }
+      SetMood((int)value);
     }
 
+    public void SetMood(int value)
+    {
+      if (m_mood != value)
+      {
+        if (value < 0)
+          TriggerInterruptMood(value);
+        else
+          m_mood = value;
+      }
+    }
 
     public void Initialize()
     {
@@ -117,20 +115,15 @@ namespace SWEndor.Sound
       //Initialise FMOD
       fmodsystem.init(channels, INITFLAGS.NORMAL, (IntPtr)null);
       fmodsystem.createChannelGroup("music", out musicgrp);
-      fmodsystem.createChannelGroup("interruptmusic", out interruptmusicgrp);
 
       for (int i = 0; i < channels; i++)
       {
         Channel ch;
         if (fmodsystem.getChannel(i, out ch) == RESULT.OK)
         {
-          if (i == 0)
+          if (i <= 1)
           {
             ch.setChannelGroup(musicgrp);
-          }
-          else if (i == 1)
-          {
-            ch.setChannelGroup(interruptmusicgrp);
           }
           else
           {
@@ -148,7 +141,7 @@ namespace SWEndor.Sound
 
     public void Load()
     {
-      string[] soundfiles = Directory.GetFiles(Globals.SoundPath, "*.wav", SearchOption.AllDirectories);
+      string[] soundfiles = Directory.GetFiles(Globals.SoundPath, Globals.SoundExt, SearchOption.AllDirectories);
       int i = 0;
       //bool rpt = false;
       foreach (string sdfl in soundfiles)
@@ -177,7 +170,7 @@ namespace SWEndor.Sound
         Log.Write(Log.DEBUG, LogType.ASSET_SOUND_LOADED, sdname);
       }
 
-      string[] musicfiles = Directory.GetFiles(Globals.MusicPath, "*.mp3", SearchOption.AllDirectories);
+      string[] musicfiles = Directory.GetFiles(Globals.MusicPath, Globals.MusicExt, SearchOption.AllDirectories);
       foreach (string mufl in musicfiles)
       {
         string muname = Path.Combine(Path.GetDirectoryName(mufl), Path.GetFileNameWithoutExtension(mufl)).Replace(Globals.MusicPath, "");
@@ -196,79 +189,12 @@ namespace SWEndor.Sound
         Log.Write(Log.DEBUG, LogType.ASSET_SOUND_LOADED, muname);
       }
     }
-
-    public bool PreloadMusic(string name)
-    {
-      m_queuedInstructions.Enqueue(new InstPrepMusic { Name = name });
-      return true;
-    }
-
-    public bool SetMusic(string name, bool loop = false, uint position_ms = 0, uint end_ms = 0)
-    {
-      IntrMusic = null;
-      //interruptActive = false;
-      m_queuedInstructions.Enqueue(new InstPlayMusic { Name = name, Loop = loop, Position_ms = position_ms, End_ms = end_ms });
-      if (loop)
-      {
-        m_musicLoop.Name = name;
-        m_musicLoop.Position = position_ms;
-      }
-      return true;
-    }
-
-    public void SetMusicLoop(string name, uint position_ms = 0)
-    {
-      m_musicLoop.Name = name;
-      m_musicLoop.Position = position_ms;
-    }
-
-    public void SetMusicDyn(string name)
-    {
-      IntrMusic = null;
-      //interruptActive = false;
-      Piece p = Piece.Factory.Get(name);
-      SetMusic(p.SoundName, false, p.EntryPosition);
-      PrepDynNext(p.SoundName);
-    }
-
+    
     public void Update()
     {
       InstBase instr;
       while (m_queuedInstructions.TryDequeue(out instr))
         instr.Process(this);
-    }
-
-    public void SetMusicStop()
-    {
-      IntrMusic = null;
-      //interruptActive = false;
-      m_queuedInstructions.Enqueue(new InstStopMusic());
-    }
-
-    public void SetMusicPause()
-    {
-      m_queuedInstructions.Enqueue(new InstPauseMusic());
-    }
-
-    public void SetMusicResume()
-    {
-      m_queuedInstructions.Enqueue(new InstResumeMusic());
-    }
-
-    public void AddMusicSyncPoint(string name, string label, uint position_ms)
-    {
-      m_queuedInstructions.Enqueue(new InstAddSyncPoint { Name = name, Label = label, Position_ms = position_ms });
-    }
-
-    public void SetInterruptMusic(string name, uint position_ms = 0, uint end_ms = 0)
-    {
-      m_queuedInstructions.Enqueue(new InstPlayMusic { Name = name, isInterruptMusic = true, Position_ms = position_ms, End_ms = end_ms });
-    }
-
-    public void QueueInterruptMusic(string name, uint position_ms)
-    {
-      //if (!interruptActive)
-        m_musicQueue.Enqueue(new SoundStartInfo { Name = name, Position = position_ms, IsInterrupt = true });
     }
 
     public void Clear()
@@ -299,8 +225,8 @@ namespace SWEndor.Sound
       List<Piece> plist = new List<Piece>(Piece.Factory.GetPieces(mood));
       if (plist.Count > 0)
       {
-        Piece p = plist[Engine.Random.Next(0, plist.Count)];
-        Engine.SoundManager.QueueInterruptMusic(p.SoundName, p.EntryPosition);
+        Piece p = plist.Random(Engine.Random);
+        Engine.SoundManager.QueueInterruptMusic(p);
       }
     }
 
@@ -340,14 +266,11 @@ namespace SWEndor.Sound
           }
           break;
       }
-
-      //lastInterrupt = 0;
       return FMOD.RESULT.OK;
     }
 
     private RESULT InterruptMusiCallback(IntPtr channelraw, CHANNELCONTROL_TYPE controltype, CHANNELCONTROL_CALLBACK_TYPE type, IntPtr commanddata1, IntPtr commanddata2)
     {
-      //interruptActive = false;
       switch (type)
       {
         case FMOD.CHANNELCONTROL_CALLBACK_TYPE.END:
@@ -358,7 +281,7 @@ namespace SWEndor.Sound
       }
 
       IntrMusic = null;
-      lastInterrupt = 0;
+      //lastInterrupt = 0;
       return FMOD.RESULT.OK;
     }
 
@@ -372,93 +295,34 @@ namespace SWEndor.Sound
         else
           SetMusic(ssi2.Name, false, ssi2.Position);
 
-        PrepDynNext(ssi2.Name);
+        Dynamic.PrepDynNext(this, ssi2.Name);
       }
       else if (autogenerate)
       {
         // find next piece dynamically using Mood
-        string next = GetDynNext(IntrMusic);
-        bool intr = next != null;
-        if (!intr)
+        Piece next = Dynamic.GetDynNext(this, IntrMusic);
+        //bool intr = next != null;
+        if (next == null)
         {
-          next = GetDynNext(CurrMusic);
+          next = Dynamic.GetDynNext(this, CurrMusic);
           if (next != null)
             PrevDynMusic = CurrMusic;
           else
-            next = GetDynNext(PrevDynMusic);
+            next = Dynamic.GetDynNext(this, PrevDynMusic);
         }
 
         if (next != null)
         {
-          Piece pnext = Piece.Factory.Get(next);
-          if (intr)
-            SetInterruptMusic(next, pnext?.EntryPosition ?? 0);
+          if (next.IsInterrupt) // this is an intermission
+            SetInterruptMusic(next.SoundName, next?.EntryPosition ?? 0);
           else
-            SetMusic(next, false, pnext?.EntryPosition ?? 0);
-          PrepDynNext(next);
+          {
+            SetMusic(next.SoundName, false, next?.EntryPosition ?? 0);
+            //CurrMusic = next.SoundName;
+          }
+          Dynamic.PrepDynNext(this, next.SoundName);
         }
       }
-    }
-
-
-    private void PrepDynNext(string currentSound)
-    {
-      if (currentSound == null)
-        return;
-
-      Piece p = Piece.Factory.Get(currentSound);
-      if (p == null)
-        return;
-
-      if (p.MoodTransitions != null)
-        foreach (string[] m in p.MoodTransitions)
-          foreach (string s in m)
-            PreloadMusic(s);
-    }
-
-    private string GetDynNext(string currentSound)
-    {
-      if (currentSound == null)
-        return null;
-
-      Piece p = Piece.Factory.Get(currentSound);
-      if (p == null)
-        return null;
-
-      int mood = (int)Engine.SoundManager.Mood;
-
-      if (p.MoodTransitions != null
-        && p.MoodTransitions.Length > mood
-        && p.MoodTransitions[mood] != null
-        && p.MoodTransitions[mood].Length > 0)
-      {
-        string nextSound = p.MoodTransitions[mood][Engine.Random.Next(0, p.MoodTransitions[mood].Length)];
-        Piece pn = Piece.Factory.Get(nextSound);
-        return pn.SoundName;
-      }
-      return null;
-    }
-
-    public bool SetSoundSingle(string name, bool interrupt = true, float volume = 1.0f, bool loop = true)//, uint position = 0)
-    {
-      m_queuedInstructions.Enqueue(new InstPlaySoundSingle { Name = name, Loop = loop, Interrupt = interrupt, Volume = volume });
-      return true;
-    }
-
-    public bool SetSound(string name, bool interrupt = true, float volume = 1.0f, bool loop = true)//, uint position = 0)
-    {
-      m_queuedInstructions.Enqueue(new InstPlaySound { Name = name, Loop = loop, Interrupt = interrupt, Volume = volume });
-      return true;
-    }
-
-    public void SetSoundStop(string name)
-    {
-      m_queuedInstructions.Enqueue(new InstStopOneSound { Name = name });
-    }
-
-    public void SetSoundStopAll()
-    {
-      m_queuedInstructions.Enqueue(new InstStopAllSound());
     }
 
     public bool PendingUpdate

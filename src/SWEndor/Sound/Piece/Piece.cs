@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Primrose.Primitives.Factories;
+using System;
 
 namespace SWEndor.Sound
 {
@@ -9,11 +10,12 @@ namespace SWEndor.Sound
       public string Name;
       public int[] IntermissionTransitions;
       public string SoundName;
+      public bool IsInterrupt;
       public uint EntryPosition;
       public uint[] ExitPositions;
       public uint EndPosition;
-      public string[][] MoodTransitions;
-      public string[][] OnInterruptTransitions;
+      public Registry<int, string[]> MoodTransitions;
+      public Registry<int, int> ChangeMood;
 
       private void UpdateSound(SoundManager manager)
       {

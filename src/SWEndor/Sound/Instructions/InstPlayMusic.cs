@@ -17,7 +17,6 @@ namespace SWEndor.Sound
       {
         if (Name == s.CurrMusic)
         {
-
             Name += "%";
         }
 
@@ -37,12 +36,14 @@ namespace SWEndor.Sound
             if (End_ms > 0)
               DoFadeOut(s.current_channel, End_ms / 1000f);
 
-
             s.current_channel.setCallback(isInterruptMusic ? s.m_icb : s.m_cb);
             s.current_channel.setPaused(false);
 
           if (!isInterruptMusic)
+          {
+            s.lastInterrupt = 0;
             s.CurrMusic = Name;
+          }
           else
             s.IntrMusic = Name;
 

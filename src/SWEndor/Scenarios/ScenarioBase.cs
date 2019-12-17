@@ -21,6 +21,8 @@ namespace SWEndor.Scenarios
     public string Description;
     public ActorTypeInfo[] AllowedWings;
     public string[] AllowedDifficulties;
+    public string Music_Win;
+    public string Music_Lose;
 
     public ScenarioInfo InitDefault()
     {
@@ -28,6 +30,8 @@ namespace SWEndor.Scenarios
       Description = "";
       AllowedWings = _defaultAllowedWings;
       AllowedDifficulties = _defaultAllowedDifficulties;
+      Music_Win = MusicGlobals.DefaultWin;
+      Music_Lose = MusicGlobals.DefaultLose;
       return this;
     }
   }
@@ -190,7 +194,7 @@ namespace SWEndor.Scenarios
 
       Engine.LandInfo.Enabled = false;
 
-      SoundManager.Mood = MoodStates.AMBIENT;
+      SoundManager.SetMood(MoodStates.AMBIENT);
       Engine.SoundManager.Clear();
       DistanceModel.Reset();
       PlayerCameraInfo.Shake(0);
@@ -258,12 +262,12 @@ namespace SWEndor.Scenarios
     {
       Engine.TrueVision.TVGraphicEffect.FadeIn(2.5f);
 
-      SoundManager.SetSoundStopAll();
+      SoundManager.Clear();
 
       Engine.Screen2D.CurrentPage = new GameOver(Engine.Screen2D);
       Engine.Screen2D.ShowPage = true;
       Game.IsPaused = true;
-      SoundManager.SetMusic("battle_3_2"); // TO-DO: make configurable
+      SoundManager.SetMusic(Info.Music_Lose);
     }
 
     internal void LostWing()
@@ -341,13 +345,12 @@ namespace SWEndor.Scenarios
     {
       Engine.TrueVision.TVGraphicEffect.FadeIn(2.5f);
 
-      SoundManager.SetSoundStopAll();
+      SoundManager.Clear();
 
       Engine.Screen2D.CurrentPage = new GameWon(Engine.Screen2D);
       Engine.Screen2D.ShowPage = true;
       Game.IsPaused = true;
-      SoundManager.SetMusic("finale_3_1");
-      SoundManager.SetMusicLoop("credits_3_1");
+      SoundManager.SetMusic(Info.Music_Win);
     }
   }
 }

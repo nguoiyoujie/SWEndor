@@ -90,9 +90,9 @@ namespace SWEndor
       Kills++;
 
       if (victim.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
-        engine.SoundManager.Mood = MoodStates.DESTROY_FIGHTER;
+        engine.SoundManager.SetMood(MoodStates.DESTROY_FIGHTER);
       else if (victim.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
-        engine.SoundManager.Mood = MoodStates.DESTROY_SHIP;
+        engine.SoundManager.SetMood(MoodStates.DESTROY_SHIP);
 
       if (engine.PlayerInfo.Actor != null)
         engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.ENEMY_DESTROYED).F(victim.Name)

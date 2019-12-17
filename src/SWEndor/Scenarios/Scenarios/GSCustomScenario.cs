@@ -35,6 +35,9 @@ namespace SWEndor.Scenarios
       Fn_loadscene = f.GetString("Script", "Fn_loadscene", Fn_loadscene);
       Fn_makeplayer = f.GetString("Script", "Fn_makeplayer", Fn_makeplayer);
       Fns_gametick = f.GetStringArray("Script", "Fns_gametick", new string[0]);
+
+      Info.Music_Lose = f.GetString("Audio", "Lose", Info.Music_Lose);
+      Info.Music_Win = f.GetString("Audio", "Win", Info.Music_Win);
     }
 
     public readonly string PlayerName = "Pilot";

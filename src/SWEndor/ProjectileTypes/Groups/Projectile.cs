@@ -15,7 +15,7 @@ namespace SWEndor.ProjectileTypes.Groups
         new ExplodeData("EXPS00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
       };
 
-      RenderData.CullDistance = 12000;
+      RenderData.CullDistance = 15000;
 
       RenderData.RadarType = RadarType.TRAILLINE;
       RenderData.RadarSize = 1;

@@ -69,7 +69,7 @@ namespace SWEndor.Scenarios
       PlayerInfo.ScorePerLife = 9999999;
       PlayerInfo.ScoreForNextLife = 9999999;
 
-      SoundManager.Mood = MoodStates.AMBIENT;
+      SoundManager.SetMood(MoodStates.AMBIENT);
       SoundManager.SetMusicDyn("TRO-IN");
       State.IsCutsceneMode = true;
     }
@@ -423,7 +423,7 @@ namespace SWEndor.Scenarios
 
       EventQueue.Add(Game.GameTime + 25, Empire_StarDestroyer_02);
       EventQueue.Add(Game.GameTime + 50, Rebel_HyperspaceIn3);
-      SoundManager.Mood = MoodStates.ENEMY_SHIP_ARRIVED;
+      SoundManager.SetMood(MoodStates.ENEMY_SHIP_ARRIVED);
     }
 
     public void Rebel_HyperspaceIn3()
@@ -489,7 +489,7 @@ namespace SWEndor.Scenarios
       spawninfo.TypeInfo = ActorTypeFactory.Get("YWING");
       spawninfo.HuntTargetType = TargetType.SHIELDGENERATOR | TargetType.SHIP;
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
-      SoundManager.Mood = MoodStates.ENEMY_SHIP_ARRIVED;
+      SoundManager.SetMood(MoodStates.ENEMY_SHIP_ARRIVED);
     }
 
 
@@ -517,7 +517,7 @@ namespace SWEndor.Scenarios
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
       spawninfo.TypeInfo = ActorTypeFactory.Get("YWING");
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
-      SoundManager.Mood = MoodStates.ENEMY_FIGHTER_ARRIVED;
+      SoundManager.SetMood(MoodStates.ENEMY_FIGHTER_ARRIVED);
     }
 
     public void Rebel_BeginBattle()

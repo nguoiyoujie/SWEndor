@@ -23,7 +23,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
         throw new InvalidOperationException("Attempted script function with null Scenario");
 #endif
 
-      context.Engine.SoundManager.Mood = (MoodStates)state;
+      context.Engine.SoundManager.SetMood(state);
       return Val.NULL;
     }
 

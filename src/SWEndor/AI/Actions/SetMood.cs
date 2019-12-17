@@ -8,7 +8,6 @@ namespace SWEndor.AI.Actions
 {
   internal class SetMood : ActionInfo
   {
-
     private static ObjectPool<SetMood> _pool;
     static SetMood() { _pool = ObjectPool<SetMood>.CreateStaticPool(() => { return new SetMood(); }, (a) => { a.Reset(); }); }
 
@@ -54,7 +53,7 @@ namespace SWEndor.AI.Actions
     public override void Process(Engine engine, ActorInfo actor)
     {
       if (!SquadLeaderOnly || actor.Squad.IsNull || actor.Squad.Leader == actor)
-        engine.SoundManager.Mood = Mood;
+        engine.SoundManager.SetMood(Mood);
       Complete = true;
     }
   }
