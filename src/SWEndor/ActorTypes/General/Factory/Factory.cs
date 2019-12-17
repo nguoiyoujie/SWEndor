@@ -183,7 +183,7 @@ namespace SWEndor.ActorTypes
 
       public void Load()
       {
-        foreach (string fp in Directory.GetFiles(Globals.ActorTypeINIDirectory, "*.ini", SearchOption.AllDirectories))
+        foreach (string fp in Directory.GetFiles(Globals.ActorTypeINIDirectory, Globals.INIExt, SearchOption.AllDirectories))
         {
           string f = Path.GetFileNameWithoutExtension(fp);
           if (Contains(f))

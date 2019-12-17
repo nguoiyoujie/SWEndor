@@ -91,6 +91,13 @@ namespace SWEndor
     internal static string WeapProjINIPath = Path.Combine(WeaponINIDirectory, @"proj.ini");
     internal static string WeapTgtINIPath = Path.Combine(WeaponINIDirectory, @"tgt.ini");
 
+    // Extensions
+    internal static string CustomScenarioExt = "*.scen";
+    internal static string INIExt = "*.ini";
+    internal static string ShaderFxExt = "*.fx";
+    internal static string SoundExt = "*.wav";
+    internal static string MusicExt = "*.mp3";
+
     // Game Engine
     internal static Engine Engine;
 

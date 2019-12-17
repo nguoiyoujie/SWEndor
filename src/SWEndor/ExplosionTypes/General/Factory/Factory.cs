@@ -43,7 +43,7 @@ namespace SWEndor.ExplosionTypes
 
       public void Load()
       {
-        foreach (string fp in Directory.GetFiles(Globals.ExplosionTypeINIDirectory, "*.ini", SearchOption.AllDirectories))
+        foreach (string fp in Directory.GetFiles(Globals.ExplosionTypeINIDirectory, Globals.INIExt, SearchOption.AllDirectories))
         {
           string f = Path.GetFileNameWithoutExtension(fp);
           if (Contains(f))

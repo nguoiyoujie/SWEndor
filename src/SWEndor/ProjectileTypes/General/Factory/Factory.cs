@@ -47,7 +47,7 @@ namespace SWEndor.ProjectileTypes
       
       public void Load()
       {
-        foreach (string fp in Directory.GetFiles(Globals.ProjectileTypeINIDirectory, "*.ini", SearchOption.AllDirectories))
+        foreach (string fp in Directory.GetFiles(Globals.ProjectileTypeINIDirectory, Globals.INIExt, SearchOption.AllDirectories))
         {
           string f = Path.GetFileNameWithoutExtension(fp);
           if (Contains(f))

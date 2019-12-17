@@ -25,7 +25,7 @@ namespace SWEndor.Scenarios
 
       // Add scripted scenarios?
       if (Directory.Exists(Globals.CustomScenarioPath))
-        foreach (string path in Directory.GetFiles(Globals.CustomScenarioPath, "*.scen"))
+        foreach (string path in Directory.GetFiles(Globals.CustomScenarioPath, Globals.CustomScenarioExt))
           ScenarioList.Add(new GSCustomScenario(this, path));
     }
 
