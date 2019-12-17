@@ -10,7 +10,7 @@ namespace SWEndor.UI.Widgets
     // Left Info
     private float leftinfo_left = 20;
     private float leftinfo_stagetop = 25;
-    private float leftinfo_stageheight = 30;
+    private float leftinfo_stageheight = 20;
     private float leftinfo_stagewidth = 60;
 
     // Middle Info
@@ -69,9 +69,9 @@ namespace SWEndor.UI.Widgets
       {
         TVScreen2DImmediate.Action_Begin2D();
         TVScreen2DImmediate.Draw_FilledBox(leftinfo_left - 5
-                                      , leftinfo_stagetop - 5
+                                      , leftinfo_stagetop - 2
                                       , leftinfo_left + leftinfo_stagewidth + 5
-                                      , leftinfo_stageheight + 5
+                                      , leftinfo_stagetop + leftinfo_stageheight + 2
                                       , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
 
         TVScreen2DImmediate.Draw_FilledBox(Engine.ScreenWidth / 2 + infomiddlegap - 5

@@ -31,8 +31,9 @@ namespace SWEndor.UI.Menu.Pages
       MainText.TextPosition = new TV_2DVECTOR(40, 60);
 
       ButtonScenario.Text = "Scenario";
+      ButtonScenario.TextFont = FontFactory.Get(Font.T14).ID;
       ButtonScenario.TextPosition = new TV_2DVECTOR(x, y);
-      ButtonScenario.SecondaryTextPosition = new TV_2DVECTOR(x + 300, y);
+      ButtonScenario.SecondaryTextPosition = new TV_2DVECTOR(x + 250, y);
       y += height_gap;
       ButtonScenario.HighlightBoxPosition = ButtonScenario.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonScenario.HighlightBoxWidth = 650;
@@ -48,8 +49,9 @@ namespace SWEndor.UI.Menu.Pages
 
 
       ButtonWing.Text = "Choose your Fighter";
+      ButtonWing.TextFont = FontFactory.Get(Font.T14).ID;
       ButtonWing.TextPosition = new TV_2DVECTOR(x, y);
-      ButtonWing.SecondaryTextPosition = new TV_2DVECTOR(x + 300, y);
+      ButtonWing.SecondaryTextPosition = new TV_2DVECTOR(x + 250, y);
       y += height_gap;
       ButtonWing.HighlightBoxPosition = ButtonWing.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonWing.HighlightBoxWidth = 650;
@@ -65,8 +67,9 @@ namespace SWEndor.UI.Menu.Pages
       }
 
       ButtonDifficulty.Text = "Difficulty";
+      ButtonDifficulty.TextFont = FontFactory.Get(Font.T14).ID;
       ButtonDifficulty.TextPosition = new TV_2DVECTOR(x, y);
-      ButtonDifficulty.SecondaryTextPosition = new TV_2DVECTOR(x + 300, y);
+      ButtonDifficulty.SecondaryTextPosition = new TV_2DVECTOR(x + 250, y);
       y += height_gap;
       ButtonDifficulty.HighlightBoxPosition = ButtonDifficulty.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonDifficulty.HighlightBoxWidth = 650;
@@ -80,8 +83,8 @@ namespace SWEndor.UI.Menu.Pages
         SelectedDifficultyID = 0;
       }
 
-      DescText.Text = SelectedScenario.Info.Description.Multiline(64);
-      DescText.TextFont = FontFactory.Get(Font.T14).ID;
+      DescText.Text = SelectedScenario.Info.Description.Multiline(650 / 9); // font 12 width = 9
+      DescText.TextFont = FontFactory.Get(Font.T12).ID;
       DescText.TextPosition = new TV_2DVECTOR(x, y);
       y += 120 +  height_gap;
       DescText.HighlightBoxPosition = DescText.TextPosition - new TV_2DVECTOR(5, 5);

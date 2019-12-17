@@ -16,18 +16,18 @@ namespace SWEndor.UI.Menu.Pages
       MainText.TextFont = FontFactory.Get(Font.T36).ID;
       MainText.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(-150, -80);
 
-      ButtonRestart.Text = "Restart Scenario";
+      ButtonRestart.Text = "Restart";
       ButtonRestart.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(60, 20);
       ButtonRestart.HighlightBoxPosition = ButtonRestart.TextPosition - new TV_2DVECTOR(5, 5);
-      ButtonRestart.HighlightBoxWidth = 200;
+      ButtonRestart.HighlightBoxWidth = 110;
       ButtonRestart.HighlightBoxHeight = 30;
       ButtonRestart.Selectable = true;
       ButtonRestart.OnKeyPress += SelectRestart;
 
-      ButtonReturn.Text = "Return to Menu";
+      ButtonReturn.Text = "Quit";
       ButtonReturn.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(60, 60);
       ButtonReturn.HighlightBoxPosition = ButtonReturn.TextPosition - new TV_2DVECTOR(5, 5);
-      ButtonReturn.HighlightBoxWidth = 200;
+      ButtonReturn.HighlightBoxWidth = 110;
       ButtonReturn.HighlightBoxHeight = 30;
       ButtonReturn.Selectable = true;
       ButtonReturn.OnKeyPress += SelectReturn;
