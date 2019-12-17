@@ -18,7 +18,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return new Val();
 
-      return new Val(actor.TypeInfo.Name);
+      return new Val(actor.TypeInfo.ID);
     }
 
     public static Val IsFighter(Context context, int actorID)
@@ -163,6 +163,120 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(ret.ToArray());
     }
 
+    public static Val GetHP(Context context, int actorID)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return new Val(0);
+
+      return new Val(actor.HP);
+    }
+
+    public static Val GetShd(Context context, int actorID)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return new Val(0);
+
+      return new Val(actor.Shd);
+    }
+
+    public static Val GetHull(Context context, int actorID)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return new Val(0);
+
+      return new Val(actor.Hull);
+    }
+
+    public static Val GetMaxHP(Context context, int actorID)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return new Val(0);
+
+      return new Val(actor.MaxHP);
+    }
+
+    public static Val GetMaxShd(Context context, int actorID)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return new Val(0);
+
+      return new Val(actor.MaxShd);
+    }
+
+    public static Val GetMaxHull(Context context, int actorID)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return new Val(0);
+
+      return new Val(actor.MaxHull);
+    }
+
+    public static Val SetHP(Context context, int actorID, float value)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return Val.NULL;
+
+      actor.HP = value;
+      return Val.NULL;
+    }
+
+    public static Val SetShd(Context context, int actorID, float value)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return Val.NULL;
+
+      actor.Shd = value;
+      return Val.NULL;
+    }
+
+    public static Val SetHull(Context context, int actorID, float value)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return Val.NULL;
+
+      actor.Hull = value;
+      return Val.NULL;
+    }
+
+    public static Val SetMaxHP(Context context, int actorID, float value)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return Val.NULL;
+
+      actor.MaxHP = value;
+      return Val.NULL;
+    }
+
+    public static Val SetMaxShd(Context context, int actorID, float value)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return Val.NULL;
+
+      actor.MaxShd = value;
+      return Val.NULL;
+    }
+
+    public static Val SetMaxHull(Context context, int actorID, float value)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return Val.NULL;
+
+      actor.MaxHull = value;
+      return Val.NULL;
+    }
+
     public static Val GetProperty(Context context, int actorID, string property)
     {
       ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
@@ -236,12 +350,39 @@ namespace SWEndor.Scenarios.Scripting.Functions
         //  else
         //    newValue = actor.ActorState;
         //  return;
-        //case "NoRegen":
-        //  if (setValue)
-        //    engine.ActorDataSet.RegenData[actor.dataID].NoRegen = newValue.ValueB;
-        //  else
-        //    newValue = engine.ActorDataSet.RegenData[actor.dataID].NoRegen;
-        //  return;
+
+        // Regeneration
+        case "NoRegen":
+          if (setValue)
+            actor.NoRegen = (bool)newValue;
+          else
+            newValue = new Val(actor.NoRegen);
+          return;
+        case "SelfRegenRate":
+          if (setValue)
+            actor.SelfRegenRate = (float)newValue;
+          else
+            newValue = new Val(actor.SelfRegenRate);
+          return;
+        case "ChildRegenRate":
+          if (setValue)
+            actor.ChildRegenRate = (float)newValue;
+          else
+            newValue = new Val(actor.ChildRegenRate);
+          return;
+        case "ParentRegenRate":
+          if (setValue)
+            actor.ParentRegenRate = (float)newValue;
+          else
+            newValue = new Val(actor.ParentRegenRate);
+          return;
+        case "SiblingRegenRate":
+          if (setValue)
+            actor.SiblingRegenRate = (float)newValue;
+          else
+            newValue = new Val(actor.SiblingRegenRate);
+          return;
+
         case "ApplyZBalance":
           if (setValue)
             actor.MoveData.ApplyZBalance = (bool)newValue;
@@ -260,12 +401,6 @@ namespace SWEndor.Scenarios.Scripting.Functions
           else
             newValue = new Val(actor.AI.CanRetaliate);
           return;
-        //case "ChildRegenRate":
-        //  if (setValue)
-        //    engine.ActorDataSet.RegenData[actor.dataID].ChildRegenRate = newValue.ValueF;
-        //  else
-        //    newValue = engine.ActorDataSet.RegenData[actor.dataID].ChildRegenRate;
-        //  return;
         case "DamageModifier":
           if (setValue)
             actor.SetArmor(DamageType.LASER, (float)newValue);

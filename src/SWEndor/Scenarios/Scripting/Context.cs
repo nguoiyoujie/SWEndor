@@ -129,6 +129,20 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc("Actor.SetArmorAll", new ValFunc<int, float>(ActorFns.SetArmorAll));
       AddFunc("Actor.RestoreArmor", new ValFunc<int>(ActorFns.RestoreArmor));
 
+      AddFunc("Actor.GetHP", new ValFunc<int>(ActorFns.GetHP));
+      AddFunc("Actor.GetMaxHP", new ValFunc<int>(ActorFns.GetMaxHP));
+      AddFunc("Actor.SetHP", new ValFunc<int, float>(ActorFns.SetHP));
+      AddFunc("Actor.SetMaxHP", new ValFunc<int, float>(ActorFns.SetMaxHP));
+
+      AddFunc("Actor.GetHull", new ValFunc<int>(ActorFns.GetHull));
+      AddFunc("Actor.GetMaxHull", new ValFunc<int>(ActorFns.GetMaxHull));
+      AddFunc("Actor.SetHull", new ValFunc<int, float>(ActorFns.SetHull));
+      AddFunc("Actor.SetMaxHull", new ValFunc<int, float>(ActorFns.SetMaxHull));
+
+      AddFunc("Actor.GetShd", new ValFunc<int>(ActorFns.GetShd));
+      AddFunc("Actor.GetMaxShd", new ValFunc<int>(ActorFns.GetMaxShd));
+      AddFunc("Actor.SetShd", new ValFunc<int, float>(ActorFns.SetShd));
+      AddFunc("Actor.SetMaxShd", new ValFunc<int, float>(ActorFns.SetMaxShd));
 
 
       // Message Box
