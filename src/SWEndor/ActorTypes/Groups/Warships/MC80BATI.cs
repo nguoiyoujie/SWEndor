@@ -26,7 +26,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.ZTilt = 3.5f;
 
       ScoreData = new ScoreData(20, 20000);
-      RenderData.CullDistance = 40000;
+      RenderData.CullDistance = 60000;
 
       RegenData = new RegenData(false, 0.6f, 0, 0, 0);
 

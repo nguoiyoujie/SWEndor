@@ -13,7 +13,7 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Engine, Name, @"turbotowers\star_destroyer_anti-ship_turbolaser.x");
       DyingMoveData.Kill();
 
-      Loadouts = new WeapData[] { new WeapData("", "AI", "STRK_HLSR", "STRK_HLSR", "STRK_HLSR", "ADDON_LSR_G", "STRK_HLSR") };
+      Loadouts = new WeapData[] { new WeapData("", "AI", "STRK_HLSR", "STRK_HLSR", "STRK_HLSR", "ADDON_LSR_GH", "STRK_HLSR") };
     }
   }
 }

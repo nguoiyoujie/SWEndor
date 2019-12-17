@@ -24,7 +24,7 @@ namespace SWEndor.ActorTypes.Groups
       DyingMoveData.Spin(Engine.Random, 180, 270);
       TimedLifeData = new TimedLifeData(false, 5);
 
-      RenderData.CullDistance = 7500;
+      RenderData.CullDistance = 12500;
 
       AIData.TargetType = TargetType.FIGHTER;
       RenderData.RadarType = RadarType.FILLED_CIRCLE_S;

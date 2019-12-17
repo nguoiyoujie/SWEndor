@@ -26,7 +26,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.ZNormFrac = 0.006f;
       MoveLimitData.ZTilt = 1.8f; // low number so fighters come out properly when mothership is rotating
 
-      RenderData.CullDistance = 25000;
+      RenderData.CullDistance = 45000;
       ScoreData = new ScoreData(20, 20000);
 
       RegenData = new RegenData(false, 0.7f, 0, 0, 0);

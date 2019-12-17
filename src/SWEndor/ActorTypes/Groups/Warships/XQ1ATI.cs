@@ -13,7 +13,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxSpeed = 0;
       MoveLimitData.MinSpeed = 0;
 
-      RenderData.CullDistance = 40000;
+      RenderData.CullDistance = 80000;
       ScoreData = new ScoreData(10, 10000);
 
       Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 45, 660), new TV_3DVECTOR(0, 45, 2000)) };

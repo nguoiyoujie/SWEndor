@@ -13,7 +13,7 @@ namespace SWEndor.ActorTypes.Instances
       RenderData.RadarSize = 2.5f;
       DyingMoveData.Kill();
 
-      RenderData.CullDistance = 8000;
+      RenderData.CullDistance = 50000;
 
       AIData.TargetType |= TargetType.SHIELDGENERATOR;
       RenderData.RadarType = RadarType.HOLLOW_CIRCLE_M;

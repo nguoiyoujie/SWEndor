@@ -10,7 +10,7 @@ namespace SWEndor.ActorTypes.Groups
       // Combat
       CombatData = CombatData.Disabled;
       ArmorData = ArmorData.Immune;
-      RenderData.CullDistance = 4500f;
+      RenderData.CullDistance = 4500;
 
       AIData.TargetType = TargetType.FLOATING;
 

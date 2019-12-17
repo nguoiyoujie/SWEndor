@@ -10,7 +10,8 @@ namespace SWEndor.Weapons
     internal ProjectileTypeInfo Projectile; // cache
     internal ActorTypeInfo ActorProj; // cache
     public bool IsActor;
-    public float ProjectileWaitBeforeHoming;
+    public float HomingDelay;
+    public float LifeTime;
     public WeaponType Type;
     public string[] FireSound;
 
@@ -19,7 +20,8 @@ namespace SWEndor.Weapons
       Projectile = null,
       ActorProj = null,
       IsActor = false,
-      ProjectileWaitBeforeHoming = 0,
+      HomingDelay = 0,
+      LifeTime = -1,
       Type = WeaponType.NONE,
       FireSound = null
     };
@@ -28,7 +30,8 @@ namespace SWEndor.Weapons
     {
       this = Default;
       IsActor = f.GetBool(sectionname, "IsActor", IsActor);
-      ProjectileWaitBeforeHoming = f.GetFloat(sectionname, "ProjectileWaitBeforeHoming", ProjectileWaitBeforeHoming);
+      HomingDelay = f.GetFloat(sectionname, "HomingDelay", HomingDelay);
+      LifeTime = f.GetFloat(sectionname, "LifeTime", LifeTime);
       Type = f.GetEnumValue(sectionname, "WeaponType", Type);
       FireSound = f.GetStringArray(sectionname, "FireSound", FireSound);
 

@@ -17,7 +17,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxSpeedChangeRate = 10.0f;
       MoveLimitData.MaxTurnRate = 2.5f;
 
-      RenderData.CullDistance = 30000;
+      RenderData.CullDistance = 45000;
       ScoreData = new ScoreData(15, 10000);
       RegenData = new RegenData(false, 0.5f, 0, 0, 0);
 
@@ -28,14 +28,14 @@ namespace SWEndor.ActorTypes.Instances
       SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500.0f, new TV_3DVECTOR(0, 100, -300), true, isEngineSound: true) };
       AddOns = new AddOnData[]
       {
-         new AddOnData("NEBLLSR", new TV_3DVECTOR(0, 32, 300), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnData("NEBLLSR", new TV_3DVECTOR(0, 95, -520), new TV_3DVECTOR(-90, 0, 0), true)
-        , new AddOnData("NEBLLSR", new TV_3DVECTOR(0, -145, -550), new TV_3DVECTOR(90, 0, 0), true)
-        , new AddOnData("NEBLMPOD", new TV_3DVECTOR(-80, -45, -485), new TV_3DVECTOR(0, 0, 0), true)
-        , new AddOnData("NEBLMPOD", new TV_3DVECTOR(80, -45, -485), new TV_3DVECTOR(0, 0, 0), true)
+         new AddOnData("NEBLLSR", new TV_3DVECTOR(0, 37, 300), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("NEBLLSR", new TV_3DVECTOR(0, 80, -480), new TV_3DVECTOR(-90, 0, 0), true)
+        , new AddOnData("NEBLLSR", new TV_3DVECTOR(0, -140, -450), new TV_3DVECTOR(90, 0, 0), true)
+        , new AddOnData("NEBLMPOD", new TV_3DVECTOR(-80, -45, -345), new TV_3DVECTOR(0, 0, 0), true)
+        , new AddOnData("NEBLMPOD", new TV_3DVECTOR(80, -45, -345), new TV_3DVECTOR(0, 0, 0), true)
 
-        , new AddOnData("NEBLLSR", new TV_3DVECTOR(240, -300, 225), new TV_3DVECTOR(45, -90, 0), true)
-        , new AddOnData("NEBLLSR", new TV_3DVECTOR(-240, -300, 225), new TV_3DVECTOR(45, 90, 0), true)
+        , new AddOnData("NEBLLSR", new TV_3DVECTOR(240, -300, 225), new TV_3DVECTOR(45, 90, 0), true)
+        , new AddOnData("NEBLLSR", new TV_3DVECTOR(-240, -300, 225), new TV_3DVECTOR(-45, 90, 0), true)
 
         , new AddOnData("HANGAR", new TV_3DVECTOR(10, -24, 185), new TV_3DVECTOR(0, 180, 0), true)
       };

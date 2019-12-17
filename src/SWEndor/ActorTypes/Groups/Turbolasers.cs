@@ -15,6 +15,7 @@ namespace SWEndor.ActorTypes.Groups
       };
 
       ScoreData = new ScoreData(250, 1250);
+      RenderData.CullDistance = 5500;
 
       AIData.Attack_AngularDelta = 360f;
       AIData.Attack_HighAccuracyAngularDelta = 360f;

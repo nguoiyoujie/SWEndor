@@ -16,7 +16,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxSpeedChangeRate = 5.0f;
       MoveLimitData.MaxTurnRate = 3f;
 
-      RenderData.CullDistance = 20000;
+      RenderData.CullDistance = 25000;
       ScoreData = new ScoreData(8, 3000);
 
       MeshData = new MeshData(Engine, Name, @"transport\transport.x", 0.5f);

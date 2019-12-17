@@ -12,7 +12,7 @@ namespace SWEndor.ActorTypes.Groups
       ArmorData = ArmorData.Immune;
       Explodes = new ExplodeData[] { new ExplodeData("EXPL00", 1, 1, ExplodeTrigger.ON_DEATH) };
 
-      RenderData.CullDistance = 4500;
+      RenderData.CullDistance = 6000;
 
       RenderData.RadarType = RadarType.HOLLOW_CIRCLE_M;
 

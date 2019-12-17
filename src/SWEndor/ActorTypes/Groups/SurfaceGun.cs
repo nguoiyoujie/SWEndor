@@ -18,7 +18,7 @@ namespace SWEndor.ActorTypes.Groups
 
       DyingMoveData.Kill();
 
-      RenderData.CullDistance = 10000;
+      RenderData.CullDistance = 15000;
 
       RenderData.RadarSize = 0;
       AIData.TargetType = TargetType.ADDON;

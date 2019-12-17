@@ -24,7 +24,7 @@ namespace SWEndor.ActorTypes.Instances
       SystemData.MaxHull = 300;
       CombatData.ImpactDamage = 200.0f;
       RenderData.RadarSize = -1;
-      RenderData.CullDistance = 30000;
+      RenderData.CullDistance = 50000;
       TimedLifeData = new TimedLifeData(false, 2000);
 
       ScoreData = new ScoreData(75, 100000);

@@ -6,7 +6,6 @@ namespace SWEndor.ActorTypes.Groups
   {
     internal RebelWing(Factory owner, string id, string name) : base(owner, id, name)
     {
-      RenderData.CullDistance = 7500;
     }
   }
 }

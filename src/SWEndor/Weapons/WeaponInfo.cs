@@ -89,8 +89,8 @@ namespace SWEndor.Weapons
             else if (Proj.FireSound.Length > 1)
               engine.SoundManager.SetSound(Proj.FireSound[engine.Random.Next(0, Proj.FireSound.Length)]);
           }
-
-          ActorTypes.Components.SoundSourceData.Play(engine, 1f, owner.GetGlobalPosition(), 750, Proj.FireSound, false, false);
+          else
+            ActorTypes.Components.SoundSourceData.Play(engine, 0.75f, owner.GetGlobalPosition(), 750, Proj.FireSound, false, false);
         }
       }
       return fired;
@@ -145,6 +145,8 @@ namespace SWEndor.Weapons
       ProjectileInfo a = engine.ProjectileFactory.Create(acinfo);
       a.OwnerID = owner?.ID ?? -1;
       a.TargetID = target?.ID ?? -1;
+      if (Proj.LifeTime > 0)
+        a.DyingTimerSet(Proj.LifeTime, true);
       return true;
     }
 
@@ -222,7 +224,7 @@ namespace SWEndor.Weapons
 
       if (a.Mask.Has(ComponentMask.HAS_AI))
       {
-        a.QueueLast(Wait.GetOrCreate(Proj.ProjectileWaitBeforeHoming));
+        a.QueueLast(Wait.GetOrCreate(Proj.HomingDelay));
         a.QueueLast(ProjectileAttackActor.GetOrCreate(target));
         a.QueueLast(Lock.GetOrCreate());
       }
@@ -230,6 +232,9 @@ namespace SWEndor.Weapons
       {
         a.QueueLast(ProjectileAttackActor.GetOrCreate(target));
       }
+
+      if (Proj.LifeTime > 0)
+        a.DyingTimerSet(Proj.LifeTime, true);
       return true;
     }
   }

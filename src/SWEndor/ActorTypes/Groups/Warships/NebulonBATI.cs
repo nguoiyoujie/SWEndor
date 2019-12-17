@@ -18,7 +18,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxTurnRate = 2f;
 
       ScoreData = new ScoreData(15, 10000);
-      RenderData.CullDistance = 30000;
+      RenderData.CullDistance = 45000;
       RegenData = new RegenData(false, 0.4f, 0, 0, 0);
 
       MeshData = new MeshData(Engine, Name, @"nebulonb\nebulonb.x", 0.75f);

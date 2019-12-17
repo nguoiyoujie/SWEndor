@@ -19,7 +19,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.ZTilt = 5.5f;
       MoveLimitData.ZNormFrac = 0.015f;
 
-      RenderData.CullDistance = 20000;
+      RenderData.CullDistance = 30000;
       ScoreData = new ScoreData(10, 5000);
 
       MeshData = new MeshData(Engine, Name, @"corellian\corellian.x", 0.6f);

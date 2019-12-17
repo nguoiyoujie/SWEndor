@@ -13,7 +13,7 @@ namespace SWEndor.ActorTypes.Instances
       CombatData.ImpactDamage = 500.0f;
       RenderData.RadarSize = 2;
 
-      RenderData.CullDistance = 30000;
+      RenderData.CullDistance = 50000;
 
       ScoreData = new ScoreData(100, 5000);
       DyingMoveData.Kill();

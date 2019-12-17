@@ -12,7 +12,7 @@ namespace SWEndor.ActorTypes.Instances
       CombatData.ImpactDamage = 300.0f;
       RenderData.RadarSize = 2;
 
-      RenderData.CullDistance = 30000;
+      RenderData.CullDistance = 50000;
 
       AIData.TargetType |= TargetType.SHIELDGENERATOR;
       RenderData.RadarType = RadarType.HOLLOW_CIRCLE_M;

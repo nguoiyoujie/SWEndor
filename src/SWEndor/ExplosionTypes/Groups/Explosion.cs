@@ -7,7 +7,7 @@ namespace SWEndor.ExplosionTypes.Groups
     internal Explosion(Factory owner, string id, string name) : base(owner, id, name)
     {
       // Combat
-      RenderData.CullDistance = 12500f;
+      RenderData.CullDistance = 12500;
       RenderData.RadarSize = 1;
       RenderData.RadarType = RadarType.FILLED_CIRCLE_M;
     }
