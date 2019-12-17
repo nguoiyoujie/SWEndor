@@ -166,14 +166,14 @@ namespace SWEndor.Actors
     public float HP_Frac { get { return Health.HP_Frac; } }
     public COLOR HP_Color { get { return Health.HP_Color; } }
 
-    public float Shd { get { return Health.Shd; } set { using (ScopeCounters.Acquire(Scope)) Health.SetHP(this, value); } }
-    public float MaxShd { get { return Health.MaxShd; } set { using (ScopeCounters.Acquire(Scope)) Health.SetMaxHP(value, false); } }
+    public float Shd { get { return Health.Shd; } set { using (ScopeCounters.Acquire(Scope)) Health.Shd = value; } }
+    public float MaxShd { get { return Health.MaxShd; } set { using (ScopeCounters.Acquire(Scope)) Health.MaxShd = value; } }
     public float Shd_Perc { get { return Health.Shd_Perc; } }
     public float Shd_Frac { get { return Health.Shd_Frac; } }
     public COLOR Shd_Color { get { return Health.Shd_Color; } }
 
-    public float Hull { get { return Health.Hull; } set { using (ScopeCounters.Acquire(Scope)) Health.SetHP(this, value); } }
-    public float MaxHull { get { return Health.MaxHull; } set { using (ScopeCounters.Acquire(Scope)) Health.SetMaxHP(value, false); } }
+    public float Hull { get { return Health.Hull; } set { using (ScopeCounters.Acquire(Scope)) Health.Hull = value; } }
+    public float MaxHull { get { return Health.MaxHull; } set { using (ScopeCounters.Acquire(Scope)) Health.MaxHull = value; } }
     public float Hull_Perc { get { return Health.Hull_Perc; } }
     public float Hull_Frac { get { return Health.Hull_Frac; } }
     public COLOR Hull_Color { get { return Health.Hull_Color; } }
