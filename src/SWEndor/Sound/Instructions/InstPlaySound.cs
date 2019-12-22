@@ -7,7 +7,7 @@ namespace SWEndor.Sound
     private class InstPlaySound : InstBase
     {
       public string Name;
-      public bool Interrupt;
+      //public bool Interrupt;
       public bool Loop;
       public float Volume;
 
@@ -32,7 +32,9 @@ namespace SWEndor.Sound
         */
         Channel fmodchannel;
         ChannelGroup soundgrp = s.soundgrps[Name];
+        soundgrp.setVolume(Volume * s.MasterSFXVolume);
         s.fmodsystem.playSound(s.sounds[Name], null, false, out fmodchannel);
+        fmodchannel.setLoopCount((Loop) ? -1 : 0);
       }
     }
   }

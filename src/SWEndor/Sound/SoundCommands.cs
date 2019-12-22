@@ -8,18 +8,18 @@
       return true;
     }
 
-    public bool SetSound(string name, bool interrupt = true, float volume = 1.0f, bool loop = true)//, uint position = 0)
+    public bool SetSound(string name, float volume = 1.0f, bool loop = true)//, uint position = 0)
     {
-      m_queuedInstructions.Enqueue(new InstPlaySound { Name = name, Loop = loop, Interrupt = interrupt, Volume = volume });
+      m_queuedInstructions.Enqueue(new InstPlaySound { Name = name, Loop = loop, Volume = volume });
       return true;
     }
 
-    public void SetSoundStop(string name)
+    public void StopSound(string name)
     {
       m_queuedInstructions.Enqueue(new InstStopOneSound { Name = name });
     }
 
-    public void SetSoundStopAll()
+    public void StopAllSounds()
     {
       m_queuedInstructions.Enqueue(new InstStopAllSound());
     }

@@ -34,18 +34,18 @@
       Dynamic.PrepDynNext(this, p.SoundName);
     }
 
-    public void SetMusicStop()
+    public void StopMusic()
     {
       IntrMusic = null;
       m_queuedInstructions.Enqueue(new InstStopMusic());
     }
 
-    public void SetMusicPause()
+    public void PauseMusic()
     {
       m_queuedInstructions.Enqueue(new InstPauseMusic());
     }
 
-    public void SetMusicResume()
+    public void ResumeMusic()
     {
       m_queuedInstructions.Enqueue(new InstResumeMusic());
     }

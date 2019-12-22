@@ -205,8 +205,8 @@ namespace SWEndor.Sound
       SoundStartInfo s;
       while (m_musicQueue.TryDequeue(out s)) { }
 
-      SetSoundStopAll();
-      SetMusicStop();
+      StopAllSounds();
+      StopMusic();
       IntrMusic = null;
       //interruptActive = false;
       //m_currMusic = null;

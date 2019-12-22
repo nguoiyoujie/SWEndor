@@ -61,7 +61,7 @@ namespace SWEndor.UI.Menu.Pages
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
         Engine.SoundManager.SetSound(SoundGlobals.Exit);
-        Engine.SoundManager.SetMusicStop();
+        Engine.SoundManager.StopMusic();
         Engine.BeginExit();
         return true;
       }
@@ -74,7 +74,7 @@ namespace SWEndor.UI.Menu.Pages
       {
         GameScenarioManager.Reset();
         GameScenarioManager.LoadMainMenu();
-        Engine.SoundManager.SetMusicResume();
+        Engine.SoundManager.ResumeMusic();
         return true;
       }
       return false;

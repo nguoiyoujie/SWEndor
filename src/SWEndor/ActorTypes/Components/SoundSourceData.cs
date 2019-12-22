@@ -109,7 +109,7 @@ namespace SWEndor.ActorTypes.Components
           if (isEngineSound)
             engine.SoundManager.SetSoundSingle(sd, false, vol, loop);
           else
-            engine.SoundManager.SetSound(sd, false, vol, loop);
+            engine.SoundManager.SetSound(sd, vol, loop);
       }
     }
 

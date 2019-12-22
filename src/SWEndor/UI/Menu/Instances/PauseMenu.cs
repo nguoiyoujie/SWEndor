@@ -17,7 +17,7 @@ namespace SWEndor.UI.Menu.Pages
 
     public PauseMenu(Screen2D owner) : base(owner)
     {
-      Engine.SoundManager.SetMusicPause();
+      Engine.SoundManager.PauseMusic();
 
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
       Cover.HighlightBoxWidth = owner.ScreenSize.x;
@@ -120,7 +120,7 @@ namespace SWEndor.UI.Menu.Pages
 
     private void ResumeGame()
     {
-      Engine.SoundManager.SetMusicResume();
+      Engine.SoundManager.ResumeMusic();
       Engine.Game.IsPaused = false;
       Engine.Screen2D.CurrentPage = null;
       Engine.Screen2D.ShowPage = false;

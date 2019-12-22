@@ -42,21 +42,21 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.NULL;
     }
 
-    public static Val SetMusicStop(Context context)
+    public static Val StopMusic(Context context)
     {
-      context.Engine.SoundManager.SetMusicStop();
+      context.Engine.SoundManager.StopMusic();
       return Val.NULL;
     }
 
-    public static Val SetMusicPause(Context context)
+    public static Val PauseMusic(Context context)
     {
-      context.Engine.SoundManager.SetMusicPause();
+      context.Engine.SoundManager.PauseMusic();
       return Val.NULL;
     }
 
-    public static Val SetMusicResume(Context context)
+    public static Val ResumeMusic(Context context)
     {
-      context.Engine.SoundManager.SetMusicResume();
+      context.Engine.SoundManager.ResumeMusic();
       return Val.NULL;
     }
 
@@ -66,21 +66,15 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.NULL;
     }
 
-    public static Val SetSound(Context context, string sound_name, bool interrupt)
+    public static Val SetSound(Context context, string sound_name, float volume)
     {
-      context.Engine.SoundManager.SetSound(sound_name, interrupt);
+      context.Engine.SoundManager.SetSound(sound_name, volume);
       return Val.NULL;
     }
 
-    public static Val SetSound(Context context, string sound_name, bool interrupt, float volume)
+    public static Val SetSound(Context context, string sound_name, float volume, bool loop)
     {
-      context.Engine.SoundManager.SetSound(sound_name, interrupt, volume);
-      return Val.NULL;
-    }
-
-    public static Val SetSound(Context context, string sound_name, bool interrupt, float volume, bool loop)
-    {
-      context.Engine.SoundManager.SetSound(sound_name, interrupt, volume, loop);
+      context.Engine.SoundManager.SetSound(sound_name, volume, loop);
       return Val.NULL;
     }
 
@@ -108,15 +102,15 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.NULL;
     }
 
-    public static Val SetSoundStop(Context context, string sound_name)
+    public static Val StopSound(Context context, string sound_name)
     {
-      context.Engine.SoundManager.SetSoundStop(sound_name);
+      context.Engine.SoundManager.StopSound(sound_name);
       return Val.NULL;
     }
 
-    public static Val SetSoundStopAll(Context context)
+    public static Val StopAllSounds(Context context)
     {
-      context.Engine.SoundManager.SetSoundStopAll();
+      context.Engine.SoundManager.StopAllSounds();
       return Val.NULL;
     }
   }

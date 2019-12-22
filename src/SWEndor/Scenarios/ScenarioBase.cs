@@ -312,7 +312,7 @@ namespace SWEndor.Scenarios
     private void LostSound()
     {
       if (!State.IsCutsceneMode)
-        SoundManager.SetSound(SoundGlobals.LostShip, true);
+        SoundManager.SetSound(SoundGlobals.LostShip);
     }
 
     public HashSet<ActorInfo> GetRegister(string key)

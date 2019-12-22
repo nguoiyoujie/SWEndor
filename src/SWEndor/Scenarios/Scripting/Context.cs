@@ -5,6 +5,7 @@ using Primrose.Primitives.ValueTypes;
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Scenarios.Scripting.Functions;
+using System.Collections.Generic;
 
 namespace SWEndor.Scenarios.Scripting
 {
@@ -28,7 +29,7 @@ namespace SWEndor.Scenarios.Scripting
     public readonly Registry<FunctionDelegate> Functions = new Registry<FunctionDelegate>();
 
     public readonly Registry<Pair<string, int>, IValFunc> ValFuncs = new Registry<Pair<string, int>, IValFunc>();
-
+    public readonly List<string> ValFuncRef = new List<string>();
 
     internal Context(Engine engine)
     {
@@ -50,7 +51,10 @@ namespace SWEndor.Scenarios.Scripting
       {
         IValFunc vfs = ValFuncs.Get(new Pair<string, int>(_funcName, param.Length));
         if (vfs == null)
-          throw new EvalException(caller, "The function '{0}' does not exist!".F(_funcName));
+          if (ValFuncRef.Contains(_funcName))
+            throw new EvalException(caller, "Incorrect number/type of parameters supplied to function '{0}'!".F(_funcName));
+          else
+            throw new EvalException(caller, "The function '{0}' does not exist!".F(_funcName));
 
         return vfs.Execute(caller, _funcName, this, param);
       }
@@ -59,20 +63,21 @@ namespace SWEndor.Scenarios.Scripting
 
     internal void Reset() { }
 
-    private void AddFunc(string name, ValFunc fn) { ValFuncs.Add(new Pair<string, int>(name, 0), fn); }
-    private void AddFunc<T1>(string name, ValFunc<T1> fn) { ValFuncs.Add(new Pair<string, int>(name, 1), fn); }
-    private void AddFunc<T1, T2>(string name, ValFunc<T1, T2> fn) { ValFuncs.Add(new Pair<string, int>(name, 2), fn); }
-    private void AddFunc<T1, T2, T3>(string name, ValFunc<T1, T2, T3> fn) { ValFuncs.Add(new Pair<string, int>(name, 3), fn); }
-    private void AddFunc<T1, T2, T3, T4>(string name, ValFunc<T1, T2, T3, T4> fn) { ValFuncs.Add(new Pair<string, int>(name, 4), fn); }
-    private void AddFunc<T1, T2, T3, T4, T5>(string name, ValFunc<T1, T2, T3, T4, T5> fn) { ValFuncs.Add(new Pair<string, int>(name, 5), fn); }
-    private void AddFunc<T1, T2, T3, T4, T5, T6>(string name, ValFunc<T1, T2, T3, T4, T5, T6> fn) { ValFuncs.Add(new Pair<string, int>(name, 6), fn); }
-    private void AddFunc<T1, T2, T3, T4, T5, T6, T7>(string name, ValFunc<T1, T2, T3, T4, T5, T6, T7> fn) { ValFuncs.Add(new Pair<string, int>(name, 7), fn); }
-    private void AddFunc<T1, T2, T3, T4, T5, T6, T7, T8>(string name, ValFunc<T1, T2, T3, T4, T5, T6, T7, T8> fn) { ValFuncs.Add(new Pair<string, int>(name, 8), fn); }
+    private void AddFunc(string name, ValFunc fn) { ValFuncs.Add(new Pair<string, int>(name, 0), fn); if (!ValFuncRef.Contains(name)) ValFuncRef.Add(name); }
+    private void AddFunc<T1>(string name, ValFunc<T1> fn) { ValFuncs.Add(new Pair<string, int>(name, 1), fn); if (!ValFuncRef.Contains(name)) ValFuncRef.Add(name); }
+    private void AddFunc<T1, T2>(string name, ValFunc<T1, T2> fn) { ValFuncs.Add(new Pair<string, int>(name, 2), fn); if (!ValFuncRef.Contains(name)) ValFuncRef.Add(name); }
+    private void AddFunc<T1, T2, T3>(string name, ValFunc<T1, T2, T3> fn) { ValFuncs.Add(new Pair<string, int>(name, 3), fn); if (!ValFuncRef.Contains(name)) ValFuncRef.Add(name); }
+    private void AddFunc<T1, T2, T3, T4>(string name, ValFunc<T1, T2, T3, T4> fn) { ValFuncs.Add(new Pair<string, int>(name, 4), fn); if (!ValFuncRef.Contains(name)) ValFuncRef.Add(name); }
+    private void AddFunc<T1, T2, T3, T4, T5>(string name, ValFunc<T1, T2, T3, T4, T5> fn) { ValFuncs.Add(new Pair<string, int>(name, 5), fn); if (!ValFuncRef.Contains(name)) ValFuncRef.Add(name); }
+    private void AddFunc<T1, T2, T3, T4, T5, T6>(string name, ValFunc<T1, T2, T3, T4, T5, T6> fn) { ValFuncs.Add(new Pair<string, int>(name, 6), fn); if (!ValFuncRef.Contains(name)) ValFuncRef.Add(name); }
+    private void AddFunc<T1, T2, T3, T4, T5, T6, T7>(string name, ValFunc<T1, T2, T3, T4, T5, T6, T7> fn) { ValFuncs.Add(new Pair<string, int>(name, 7), fn); if (!ValFuncRef.Contains(name)) ValFuncRef.Add(name); }
+    private void AddFunc<T1, T2, T3, T4, T5, T6, T7, T8>(string name, ValFunc<T1, T2, T3, T4, T5, T6, T7, T8> fn) { ValFuncs.Add(new Pair<string, int>(name, 8), fn); if (!ValFuncRef.Contains(name)) ValFuncRef.Add(name); }
 
     internal void DefineFunc()
     {
       ValFuncs.Clear();
       Functions.Clear();
+      ValFuncRef.Clear();
 
       // Scene Management
       AddFunc("Scene.SetMaxBounds", new ValFunc<float3>(SceneFns.SetMaxBounds));
@@ -219,19 +224,18 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc("Audio.SetMusic", new ValFunc<string>(AudioFns.SetMusic));
       AddFunc("Audio.SetMusicDyn", new ValFunc<string>(AudioFns.SetMusicDyn));
       AddFunc("Audio.SetMusicLoop", new ValFunc<string>(AudioFns.SetMusicLoop));
-      AddFunc("Audio.SetMusicPause", new ValFunc(AudioFns.SetMusicPause));
-      AddFunc("Audio.SetMusicResume", new ValFunc(AudioFns.SetMusicResume));
-      AddFunc("Audio.SetMusicStop", new ValFunc(AudioFns.SetMusicStop));
+      AddFunc("Audio.PauseMusic", new ValFunc(AudioFns.PauseMusic));
+      AddFunc("Audio.ResumeMusic", new ValFunc(AudioFns.ResumeMusic));
+      AddFunc("Audio.StopMusic", new ValFunc(AudioFns.StopMusic));
       AddFunc("Audio.SetSound", new ValFunc<string>(AudioFns.SetSound));
-      AddFunc("Audio.SetSound", new ValFunc<string, bool>(AudioFns.SetSound));
-      AddFunc("Audio.SetSound", new ValFunc<string, bool, float>(AudioFns.SetSound));
-      AddFunc("Audio.SetSound", new ValFunc<string, bool, float, bool>(AudioFns.SetSound));
+      AddFunc("Audio.SetSound", new ValFunc<string, float>(AudioFns.SetSound));
+      AddFunc("Audio.SetSound", new ValFunc<string, float, bool>(AudioFns.SetSound));
       AddFunc("Audio.SetSoundSingle", new ValFunc<string>(AudioFns.SetSoundSingle));
       AddFunc("Audio.SetSoundSingle", new ValFunc<string, bool>(AudioFns.SetSoundSingle));
       AddFunc("Audio.SetSoundSingle", new ValFunc<string, bool, float>(AudioFns.SetSoundSingle));
       AddFunc("Audio.SetSoundSingle", new ValFunc<string, bool, float, bool>(AudioFns.SetSoundSingle));
-      AddFunc("Audio.SetSoundStop", new ValFunc<string>(AudioFns.SetSoundStop));
-      AddFunc("Audio.SetSoundStopAll", new ValFunc(AudioFns.SetSoundStopAll));
+      AddFunc("Audio.StopSound", new ValFunc<string>(AudioFns.StopSound));
+      AddFunc("Audio.StopAllSound", new ValFunc(AudioFns.StopAllSounds));
 
       // UI
       AddFunc("UI.SetLine1Color", new ValFunc<float3>(UIFns.SetUILine1Color));

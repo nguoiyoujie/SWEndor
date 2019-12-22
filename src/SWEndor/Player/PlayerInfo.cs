@@ -321,7 +321,7 @@ namespace SWEndor.Player
           int dmgst = (int)((dmgnum + 1) * Actor.HP_Frac);
           if (dmgst < DamagedReportSound.Length)
             if (r < 0.25f * (dmgnum - dmgst) / dmgnum)
-              Engine.SoundManager.SetSound(DamagedReportSound[dmgst], false);
+              Engine.SoundManager.SetSound(DamagedReportSound[dmgst]);
         }
       }
     }

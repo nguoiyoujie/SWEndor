@@ -73,7 +73,7 @@ namespace SWEndor.UI.Menu.Pages
       {
         GameScenarioManager.Reset();
         GameScenarioManager.LoadMainMenu();
-        Engine.SoundManager.SetMusicResume();
+        Engine.SoundManager.ResumeMusic();
         return true;
       }
       return false;

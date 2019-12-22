@@ -12,12 +12,11 @@ namespace SWEndor.AI.Actions
 
     private PlaySound() : base("PlaySound") { CanInterrupt = false; }
 
-    public static PlaySound GetOrCreate(string name, bool squadLeaderOnly, bool interrupt = true)
+    public static PlaySound GetOrCreate(string name, bool squadLeaderOnly)
     {
       PlaySound h = _pool.GetNew();
 
       h.SoundName = name;
-      h.Interrupt = interrupt;
       h.SquadLeaderOnly = squadLeaderOnly;
       h.IsDisposed = false;
       return h;
@@ -37,7 +36,6 @@ namespace SWEndor.AI.Actions
 
     // parameters
     public string SoundName;
-    public bool Interrupt;
     public bool SquadLeaderOnly = false;
 
     public override string ToString()
@@ -46,7 +44,6 @@ namespace SWEndor.AI.Actions
       {
           Name
         , SoundName
-        , Interrupt.ToString()
         , Complete.ToString()
       });
     }
@@ -54,7 +51,7 @@ namespace SWEndor.AI.Actions
     public override void Process(Engine engine, ActorInfo actor)
     {
       if (!SquadLeaderOnly || actor.Squad.IsNull || actor.Squad.Leader == actor)
-        engine.SoundManager.SetSound(SoundName, Interrupt);
+        engine.SoundManager.SetSound(SoundName);
       Complete = true;
     }
   }
