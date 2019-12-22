@@ -8,8 +8,11 @@ install:
   - echo "Removing Post-build events.."
   - find $TRAVIS_BUILD_DIR -type f -iname "*.csproj" -exec sh -c 'xmlstarlet ed --inplace -d "(/_:Project/_:PropertyGroup/_:PostBuildEvent)[1]/.." "{}"' \;
   - nuget restore SWEndor.sln
+  - cd ..
+  - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
 script:
+  - cd ./src
   - msbuild /p:Configuration=Debug SWEndor.sln
   - cd ../unittest
-  - mono ./testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe Primrose.UnitTests.dll
-  - mono ./testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe Primrose.Expressions.UnitTests.dll
+  - mono ../testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe Primrose.UnitTests.dll
+  - mono ../testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe Primrose.Expressions.UnitTests.dll
