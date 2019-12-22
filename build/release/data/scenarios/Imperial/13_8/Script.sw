@@ -59,8 +59,10 @@ load:
 	UI.SetLine1Color(faction_empire_color);
 	UI.SetLine2Color(faction_traitor_color);
 	
+	Script.Call("spawn_reset");
+	Script.Call("actorp_reset");
+	
 	Script.Call("engagemusic");	
-	Script.Call("spawnreset");	
 	Script.Call("make_ships");
 	Script.Call("make_fighters");
 	Script.Call("makeplayer");
@@ -155,10 +157,10 @@ make_ships:
 	// Empire
 	
 	greywolf = Actor.Spawn("IMPL", "ISD GREY WOLF (Thrawn)", "Empire", "GREY WOLF", 0, { 1000, 400, 12000 }, { 0, -180, 0 }, { "CriticalAllies" });
-	Actor.SetMaxShd(greywolf, 1.2 * Actor.GetMaxShd(greywolf));
-	Actor.SetMaxHull(greywolf, 1.2 * Actor.GetMaxHull(greywolf));
-	Actor.SetShd(greywolf, Actor.GetMaxShd(greywolf));
-	Actor.SetHull(greywolf, Actor.GetMaxHull(greywolf));
+	actorp_id = greywolf;
+	actorp_multiplier = 1.2;
+	Script.Call("actorp_multShd");
+	Script.Call("actorp_multHull");
 	Actor.SetProperty(greywolf, "Spawner.Enabled", true);
 	Actor.SetProperty(greywolf, "Spawner.SpawnTypes", {"TIE","TIE","TIE","TIEI"});
 	AI.QueueLast(greywolf, "move", {-1000, 400, -3000}, 15);
@@ -166,27 +168,29 @@ make_ships:
 	AI.QueueLast(greywolf, "lock");
 
 	corvus = Actor.Spawn("INTD", "INT CORVUS", "Empire", "CORVUS", 0, { 3500, -500, 500 }, { 0, -130, 0 }, { "CriticalAllies" });
-	Actor.SetMaxShd(corvus, 2 * Actor.GetMaxShd(corvus));
-	Actor.SetMaxHull(corvus, 2 * Actor.GetMaxHull(corvus));
-	Actor.SetShd(corvus, Actor.GetMaxShd(corvus));
-	Actor.SetHull(corvus, Actor.GetMaxHull(corvus));
+	actorp_id = corvus;
+	actorp_multiplier = 2;
+	Script.Call("actorp_multShd");
+	Script.Call("actorp_multHull");
 	AI.QueueLast(corvus, "move", {2400, -500, -1000}, 3);
 	AI.QueueLast(corvus, "lock");
 
 	ebolo = Actor.Spawn("STRKC", "EBOLO", "Empire", "EBOLO", 0, { 3000, -20, 350 }, { 0, -110, 25 });
-	Actor.SetMaxShd(ebolo, 2 * Actor.GetMaxShd(ebolo));
-	Actor.SetMaxHull(ebolo, 1.5 * Actor.GetMaxHull(ebolo));
-	Actor.SetShd(ebolo, Actor.GetMaxShd(ebolo));
-	Actor.SetHull(ebolo, Actor.GetMaxHull(ebolo));
+	actorp_id = ebolo;
+	actorp_multiplier = 2;
+	Script.Call("actorp_multShd");
+	actorp_multiplier = 1.5;
+	Script.Call("actorp_multHull");
 	AI.QueueLast(ebolo, "move", {-2470, 500, -7350}, 20);
 	AI.QueueLast(ebolo, "rotate", {-2000, 210, -20000}, 0);
 	AI.QueueLast(ebolo, "lock");
 	
 	daring = Actor.Spawn("STRKC", "DARING", "Empire", "DARING", 0, { 3200, -300, -1450 }, { 0, -150, 25 });
-	Actor.SetMaxShd(daring, 2 * Actor.GetMaxShd(daring));
-	Actor.SetMaxHull(daring, 1.5 * Actor.GetMaxHull(daring));
-	Actor.SetShd(daring, Actor.GetMaxShd(daring));
-	Actor.SetHull(daring, Actor.GetMaxHull(daring));
+	actorp_id = daring;
+	actorp_multiplier = 2;
+	Script.Call("actorp_multShd");
+	actorp_multiplier = 1.5;
+	Script.Call("actorp_multHull");
 	AI.QueueLast(daring, "move", {-3470, 300, -7350}, 10);
 	AI.QueueLast(daring, "rotate", {-2000, 210, -20000}, 0);
 	AI.QueueLast(daring, "lock");
@@ -196,20 +200,20 @@ make_ships:
 	glory = Actor.Spawn("IMPL", "ISD GLORY", "Traitors", "GLORY", 0, { -9750, 0, -32000 }, { 0, 40, 0 }, { "CriticalEnemies" });
 	Actor.SetProperty(glory, "Spawner.Enabled", true);
 	Actor.SetProperty(glory, "Spawner.SpawnTypes", {"TIE","TIEI","TIEI","TIEI"});
-	Actor.SetMaxShd(glory, 2 * Actor.GetMaxShd(glory));
-	Actor.SetMaxHull(glory, 2 * Actor.GetMaxHull(glory));
-	Actor.SetShd(glory, Actor.GetMaxShd(glory));
-	Actor.SetHull(glory, Actor.GetMaxHull(glory));
+	actorp_id = glory;
+	actorp_multiplier = 2;
+	Script.Call("actorp_multShd");
+	Script.Call("actorp_multHull");
 	AI.QueueLast(glory, "move", {-1000, 100, -6000}, 70);
 	AI.QueueLast(glory, "move", {4000, 200, -10000}, 10);
 	AI.QueueLast(glory, "rotate", {2000, 210, -20000}, 0);
 	AI.QueueLast(glory, "lock");
 
 	corv1 = Actor.Spawn("CORV", "", "Traitors", "", 0, { -10750, 250, -30000 }, { 0, 20, 0 });
-	Actor.SetMaxShd(corv1, 1.25 * Actor.GetMaxShd(corv1));
-	Actor.SetMaxHull(corv1, 1.25 * Actor.GetMaxHull(corv1));
-	Actor.SetShd(corv1, Actor.GetMaxShd(corv1));
-	Actor.SetHull(corv1, Actor.GetMaxHull(corv1));
+	actorp_id = corv1;
+	actorp_multiplier = 1.25;
+	Script.Call("actorp_multShd");
+	Script.Call("actorp_multHull");
 	AI.QueueLast(corv1, "move", {0, 250, -3000}, 70);
 	AI.QueueLast(corv1, "move", {3000, 250, -5000}, 10);
 	AI.QueueLast(corv1, "rotate", {0, 500, 4000}, 0);
@@ -221,10 +225,10 @@ make_ships:
 	AI.QueueLast(corv2, "lock");
 
 	corv3 = Actor.Spawn("CORV", "CRV Z-DIVINE WIND", "Traitors", "", 0, { -6750, 300, -17500 }, { 0, 45, 0 });
-	Actor.SetMaxShd(corv3, 2 * Actor.GetMaxShd(corv3));
-	Actor.SetMaxHull(corv3, 2 * Actor.GetMaxHull(corv3));
-	Actor.SetShd(corv3, Actor.GetMaxShd(corv3));
-	Actor.SetHull(corv3, Actor.GetMaxHull(corv3));
+	actorp_id = corv3;
+	actorp_multiplier = 2;
+	Script.Call("actorp_multShd");
+	Script.Call("actorp_multHull");
 	AI.QueueLast(corv3, "move", {750, -100, -800}, 100);
 	AI.QueueLast(corv3, "rotate", {0, 500, 4000}, 0);
 	AI.QueueLast(corv3, "lock");
@@ -244,34 +248,19 @@ make_fighters:
 	// Empire initial spawns
 	
 	tiea2 = Actor.Spawn("TIEA", "Alpha-2", "Empire", "", 0, { 700, -620, 10500 }, { 0, -180, 0 });
-	Actor.SetMaxShd(tiea2, 4 * Actor.GetMaxShd(tiea2));
-	Actor.SetShd(tiea2, Actor.GetMaxShd(tiea2));
-	AI.QueueLast(tiea2, "wait", 2.5);
-	Squad.AddToSquad(Player.GetActor(), tiea2);
-
 	tiea3 = Actor.Spawn("TIEA", "Alpha-3", "Empire", "", 0, { 6000, 300, -500 }, { 0, -90, 0 });
-	Actor.SetMaxShd(tiea3, 4 * Actor.GetMaxShd(tiea3));
-	Actor.SetShd(tiea3, Actor.GetMaxShd(tiea3));
-	AI.QueueLast(tiea3, "wait", 2.5);
-	Squad.AddToSquad(Player.GetActor(), tiea3);
-
 	tiea4 = Actor.Spawn("TIEA", "Alpha-4", "Empire", "", 0, { 6500, 600, -750 }, { 0, -90, 0 });
-	Actor.SetMaxShd(tiea4, 4 * Actor.GetMaxShd(tiea4));
-	Actor.SetShd(tiea4, Actor.GetMaxShd(tiea4));
-	AI.QueueLast(tiea4, "wait", 2.5);
-	Squad.AddToSquad(Player.GetActor(), tiea4);
-
 	tiea5 = Actor.Spawn("TIEA", "Alpha-5", "Empire", "", 0, { 7000, 300, -500 }, { 0, -90, 0 });
-	Actor.SetMaxShd(tiea5, 4 * Actor.GetMaxShd(tiea5));
-	Actor.SetShd(tiea5, Actor.GetMaxShd(tiea5));
-	AI.QueueLast(tiea5, "wait", 2.5);
-	Squad.AddToSquad(Player.GetActor(), tiea5);
-
 	tiea6 = Actor.Spawn("TIEA", "Alpha-6", "Empire", "", 0, { 7500, 600, -750 }, { 0, -90, 0 });
-	Actor.SetMaxShd(tiea6, 4 * Actor.GetMaxShd(tiea6));
-	Actor.SetShd(tiea6, Actor.GetMaxShd(tiea6));
-	AI.QueueLast(tiea6, "wait", 2.5);
-	Squad.AddToSquad(Player.GetActor(), tiea6);
+
+	foreach (int a in {tiea2, tiea3, tiea4, tiea5, tiea6})
+	{
+		actorp_id = a;
+		actorp_multiplier = 4;
+		Script.Call("actorp_multShd");
+		AI.QueueLast(a, "wait", 2.5);
+		Squad.AddToSquad(Player.GetActor(), a);
+	}
 	
 	spawn_hyperspace = false;
 	spawn_faction = "Empire";
@@ -299,18 +288,20 @@ make_fighters:
 	Script.Call("spawn4");
 	foreach (int a in spawn_ids)
 	{
-		Actor.SetMaxShd(a, z_tie_shd);
-		Actor.SetShd(a, Actor.GetMaxShd(a));
-		Actor.SetProperty(a, "SelfRegenRate", z_tie_shdregen);
+		actorp_id = a;
+		actorp_value = z_tie_shd;
+		Script.Call("actorp_setShd");
+		Actor.SetProperty(a, "Regen.Self", z_tie_shdregen);
 	}	
 	
 	spawn_pos = { -400, -400, -5200 };
 	Script.Call("spawn4");
 	foreach (int a in spawn_ids)
 	{
-		Actor.SetMaxShd(a, z_tie_shd);
-		Actor.SetShd(a, Actor.GetMaxShd(a));
-		Actor.SetProperty(a, "SelfRegenRate", z_tie_shdregen);
+		actorp_id = a;
+		actorp_value = z_tie_shd;
+		Script.Call("actorp_setShd");
+		Actor.SetProperty(a, "Regen.Self", z_tie_shdregen);
 	}	
 	
 	spawn_pos = { -2000, 0, -9500 };
@@ -319,9 +310,10 @@ make_fighters:
 	Script.Call("spawn2");
 	foreach (int a in spawn_ids)
 	{
-		Actor.SetMaxShd(a, z_tiesa_shd);
-		Actor.SetShd(a, Actor.GetMaxShd(a));
-		Actor.SetProperty(a, "SelfRegenRate", z_tie_shdregen);
+		actorp_id = a;
+		actorp_value = z_tiesa_shd;
+		Script.Call("actorp_setShd");
+		Actor.SetProperty(a, "Regen.Self", z_tie_shdregen);
 	}	
 	
 	spawn_pos = { -4600, 200, -7200 };
@@ -330,9 +322,10 @@ make_fighters:
 	Script.Call("spawn4");
 	foreach (int a in spawn_ids)
 	{
-		Actor.SetMaxShd(a, z_tie_shd);
-		Actor.SetShd(a, Actor.GetMaxShd(a));
-		Actor.SetProperty(a, "SelfRegenRate", z_tie_shdregen);
+		actorp_id = a;
+		actorp_value = z_tie_shd;
+		Script.Call("actorp_setShd");
+		Actor.SetProperty(a, "Regen.Self", z_tie_shdregen);
 	}	
 	
 	spawn_pos = { -5400, -150, -6600 };
@@ -340,9 +333,10 @@ make_fighters:
 	Script.Call("spawn4");
 	foreach (int a in spawn_ids)
 	{
-		Actor.SetMaxShd(a, z_tie_shd);
-		Actor.SetShd(a, Actor.GetMaxShd(a));
-		Actor.SetProperty(a, "SelfRegenRate", z_tie_shdregen);
+		actorp_id = a;
+		actorp_value = z_tie_shd;
+		Script.Call("actorp_setShd");
+		Actor.SetProperty(a, "Regen.Self", z_tie_shdregen);
 	}	
 	
 	// Empire spawn reserves
@@ -354,13 +348,12 @@ make_fighters:
 	
 	for (int i = 1; i <= 8; i += 1)
 	{
-		_a = Actor.Spawn("TIEI", "", "Traitors", "", 0, _d, _d);
-		Actor.SetMaxShd(_a, z_tiei_shd);
-		Actor.SetShd(_a, Actor.GetMaxShd(_a));
-		Actor.SetProperty(_a, "SelfRegenRate", z_tie_shdregen);
-		Actor.QueueAtSpawner(_a, glory);
-		
-		//Actor.QueueAtSpawner(Actor.Spawn("TIEI", "", "Traitors", "", 0, _d, _d), glory);
+		int a = Actor.Spawn("TIEI", "", "Traitors", "", 0, _d, _d);
+		actorp_id = a;
+		actorp_value = z_tiei_shd;
+		Script.Call("actorp_setShd");
+		Actor.SetProperty(a, "Regen.Self", z_tie_shdregen);
+		Actor.QueueAtSpawner(a, glory);
 	}
 
 gametick:
@@ -394,21 +387,24 @@ gametick:
 							string atype = Actor.GetActorType(sp);
 							if (atype == "TIE")
 							{
-								Actor.SetMaxShd(sp, z_tie_shd);
-								Actor.SetShd(sp, Actor.GetMaxShd(sp));
-								Actor.SetProperty(sp, "SelfRegenRate", z_tie_shdregen);
+								actorp_id = sp;
+								actorp_value = z_tie_shd;
+								Script.Call("actorp_setShd");
+								Actor.SetProperty(sp, "Regen.Self", z_tie_shdregen);
 							}
 							else if (atype == "TIEI")
 							{
-								Actor.SetMaxShd(sp, z_tiei_shd);
-								Actor.SetShd(sp, Actor.GetMaxShd(sp));
-								Actor.SetProperty(sp, "SelfRegenRate", z_tie_shdregen);
+								actorp_id = sp;
+								actorp_value = z_tiei_shd;
+								Script.Call("actorp_setShd");
+								Actor.SetProperty(sp, "Regen.Self", z_tie_shdregen);
 							}
 							else if (atype == "TIESA")
 							{
-								Actor.SetMaxShd(sp, z_tiesa_shd);
-								Actor.SetShd(sp, Actor.GetMaxShd(sp));
-								Actor.SetProperty(sp, "SelfRegenRate", z_tie_shdregen);
+								actorp_id = sp;
+								actorp_value = z_tiesa_shd;
+								Script.Call("actorp_setShd");
+								Actor.SetProperty(sp, "Regen.Self", z_tie_shdregen);
 							}
 						}
 					}
@@ -625,9 +621,10 @@ spawnenemybombers:
 	Script.Call("spawn1");
 	foreach (int a in spawn_ids)
 	{
-		Actor.SetMaxShd(a, z_tiesa_shd);
-		Actor.SetShd(a, Actor.GetMaxShd(a));
-		Actor.SetProperty(a, "SelfRegenRate", z_tie_shdregen);
+		actorp_id = a;
+		actorp_value = z_tiesa_shd;
+		Script.Call("actorp_setShd");
+		Actor.SetProperty(a, "Regen.Self", z_tie_shdregen);
 	}	
 	
 	spawn_pos = { -4500, 50, -16000 };
@@ -635,9 +632,10 @@ spawnenemybombers:
 	Script.Call("spawn2");
 	foreach (int a in spawn_ids)
 	{
-		Actor.SetMaxShd(a, z_tiesa_shd);
-		Actor.SetShd(a, Actor.GetMaxShd(a));
-		Actor.SetProperty(a, "SelfRegenRate", z_tie_shdregen);
+		actorp_id = a;
+		actorp_value = z_tiesa_shd;
+		Script.Call("actorp_setShd");
+		Actor.SetProperty(a, "Regen.Self", z_tie_shdregen);
 	}	
 	
 	spawn_pos = { -5000,-150,-24500 };
@@ -645,9 +643,10 @@ spawnenemybombers:
 	Script.Call("spawn2");
 	foreach (int a in spawn_ids)
 	{
-		Actor.SetMaxShd(a, z_tiesa_shd);
-		Actor.SetShd(a, Actor.GetMaxShd(a));
-		Actor.SetProperty(a, "SelfRegenRate", z_tie_shdregen);
+		actorp_id = a;
+		actorp_value = z_tiesa_shd;
+		Script.Call("actorp_setShd");
+		Actor.SetProperty(a, "Regen.Self", z_tie_shdregen);
 	}	
 	
 	spawn_pos = { -25000, 300, -23500 };
@@ -656,9 +655,10 @@ spawnenemybombers:
 	Script.Call("spawn1");
 	foreach (int a in spawn_ids)
 	{
-		Actor.SetMaxShd(a, z_tiei_shd);
-		Actor.SetShd(a, Actor.GetMaxShd(a));
-		Actor.SetProperty(a, "SelfRegenRate", z_tie_shdregen);
+		actorp_id = a;
+		actorp_value = z_tiei_shd;
+		Script.Call("actorp_setShd");
+		Actor.SetProperty(a, "Regen.Self", z_tie_shdregen);
 	}	
 	
 	spawn_pos = { -24000, 200, 24500 };
@@ -667,9 +667,10 @@ spawnenemybombers:
 	Script.Call("spawn2");
 	foreach (int a in spawn_ids)
 	{
-		Actor.SetMaxShd(a, z_tie_shd);
-		Actor.SetShd(a, Actor.GetMaxShd(a));
-		Actor.SetProperty(a, "SelfRegenRate", z_tie_shdregen);
+		actorp_id = a;
+		actorp_value = z_tie_shd;
+		Script.Call("actorp_setShd");
+		Actor.SetProperty(a, "Regen.Self", z_tie_shdregen);
 	}	
 	
 	
@@ -775,10 +776,9 @@ spawn_escapeCORV:
 	float3 rot = Actor.GetGlobalRotation(glory);
 	rot = {rot[0] + 45, rot[1], rot[2]};
 	vorknkx = Actor.Spawn("CORV", "CRV VORKNKX", "Traitors", "VORKNKX", 0, pos, rot, { "CriticalEnemies" });
-	Actor.SetMaxShd(vorknkx, 2 * Actor.GetMaxShd(vorknkx));
-	Actor.SetMaxHull(vorknkx, 2 * Actor.GetMaxHull(vorknkx));
-	Actor.SetShd(vorknkx, Actor.GetMaxShd(vorknkx));
-	Actor.SetHull(vorknkx, Actor.GetMaxHull(vorknkx));
+	actorp_id = vorknkx;
+	actorp_multiplier = 2;
+	Script.Call("actorp_multShd");
 	Actor.SetProperty(greywolf, "Spawner.SpawnTypes", {"TIE","TIE","TIEI","TIEI"});
 	AI.QueueLast(vorknkx, "wait", 2.5);
 	AI.QueueLast(vorknkx, "move", {-9750, 0, -22000}, 100);
@@ -812,12 +812,13 @@ spawn_allyEpsilon:
 spawn_allyEta:
 	for (int i = 1; i <= 4; i += 1)
 	{
-		_a = Actor.Spawn("TIEI", "Eta-" + i, "Empire", "", 0, _d, _d);
-		Actor.SetMaxHull(_a, 2 * Actor.GetMaxHull(_a));
-		Actor.SetHull(_a, Actor.GetMaxHull(_a));
-		Actor.QueueAtSpawner(_a, greywolf);
+		int a = Actor.Spawn("TIE", "Eta-" + i, "Empire", "", 0, _d, _d);
+		actorp_id = a;
+		actorp_multiplier = 2;
+		Script.Call("actorp_multShd");
+		Actor.QueueAtSpawner(a, greywolf);
 		if (i == 1)
-			AI.QueueLast(_a, "setgamestateb", "EtaSpawned", true);
+			AI.QueueLast(a, "setgamestateb", "EtaSpawned", true);
 	}
 	
 	

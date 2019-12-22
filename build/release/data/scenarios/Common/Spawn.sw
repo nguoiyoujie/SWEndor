@@ -19,7 +19,7 @@ int[] spawn_ids;
 
 float spawn_dmgmod;
 
-spawnreset:
+spawn_reset:
 	spawn_name = "";
 	spawn_type = "";
 	spawn_faction = "Empire";

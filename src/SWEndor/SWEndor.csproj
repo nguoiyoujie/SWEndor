@@ -185,6 +185,7 @@
     <Compile Include="ExplosionTypes\Components\ExplRenderData.cs" />
     <Compile Include="ExplosionTypes\Components\ShakeData.cs" />
     <Compile Include="Input\Functions\Gameplay\Camera\ToggleFreeMode.cs" />
+    <Compile Include="Input\Functions\Utility\Screen\SaveScreenshot.cs" />
     <Compile Include="Models\Interfaces\IActorState.cs" />
     <Compile Include="Models\Interfaces\ITransformable.cs" />
     <Compile Include="Models\Interfaces\IParent.cs" />
