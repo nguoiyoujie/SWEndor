@@ -5,6 +5,7 @@ using SWEndor.Input.Functions.Gameplay.Special;
 using SWEndor.Input.Functions.Gameplay.Speed;
 using SWEndor.Input.Functions.Gameplay.UI;
 using SWEndor.Input.Functions.Gameplay.Weapon;
+using SWEndor.Input.Functions.Utility.Screen;
 using System;
 using System.Collections.Generic;
 
@@ -160,6 +161,9 @@ namespace SWEndor.Input.Functions
         f.Add(new ToggleCameraStates());
         f.Add(new ToggleMovementLock());
         f.Add(new TogglePlayerAI());
+
+        // utility: screenshot
+        f.Add(new SaveScreenshot());
 
         fns = f.ToArray();
         

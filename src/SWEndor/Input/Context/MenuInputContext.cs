@@ -1,4 +1,6 @@
 ﻿using MTV3D65;
+using SWEndor.Input.Functions;
+using SWEndor.Input.Functions.Utility.Screen;
 using SWEndor.Sound;
 using SWEndor.Terminal;
 
@@ -8,8 +10,25 @@ namespace SWEndor.Input.Context
   {
     public MenuInputContext(InputManager manager) : base(manager) { }
 
+    public static string[] _functions = new string[]
+    {
+      SaveScreenshot.InternalName
+    };
+
+    public override void Set()
+    {
+      base.Set();
+      foreach (string s in _functions)
+      {
+        InputFunction fn = InputFunction.Registry.Get(s);
+        if (fn != null)
+          fn.Enabled = true;
+      }
+    }
+
     public override void HandleKeyBuffer(TV_KEYDATA keydata)
     {
+      base.HandleKeyBuffer(keydata);
       if (keydata.Pressed > 0)
       {
         if (Engine.Screen2D.CurrentPage?.OnKeyPress((CONST_TV_KEY)keydata.Key) ?? false)

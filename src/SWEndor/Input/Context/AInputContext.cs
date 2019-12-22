@@ -17,9 +17,18 @@ namespace SWEndor.Input.Context
         if (fn != null)
           fn.Enabled = false;
     }
-    
-    public virtual void HandleKeyBuffer(TV_KEYDATA keydata) { }
-    public virtual void HandleKeyState(byte[] keyPressedStates) { }
+
+    public virtual void HandleKeyBuffer(TV_KEYDATA keydata)
+    {
+      if (keydata.Pressed > 0)
+        InputFunction.Registry.ProcessOnPress(Engine, keydata.Key);
+    }
+
+    public virtual void HandleKeyState(byte[] keyPressedStates)
+    {
+      InputFunction.Registry.ProcessWhilePressed(Engine, keyPressedStates);
+    }
+
     public virtual void HandleMouse(int mouseX, int mouseY, bool button1, bool button2, bool button3, bool button4, int mouseScroll) { }
   }
 }

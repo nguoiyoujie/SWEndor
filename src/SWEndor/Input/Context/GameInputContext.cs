@@ -5,6 +5,7 @@ using SWEndor.Input.Functions.Gameplay;
 using SWEndor.Input.Functions.Gameplay.Camera;
 using SWEndor.Input.Functions.Gameplay.Speed;
 using SWEndor.Input.Functions.Gameplay.Weapon;
+using SWEndor.Input.Functions.Utility.Screen;
 
 namespace SWEndor.Input.Context
 {
@@ -43,6 +44,8 @@ namespace SWEndor.Input.Context
 
       Up.InternalName,
       Down.InternalName,
+
+      SaveScreenshot.InternalName
     };
 
     public override void Set()
@@ -54,19 +57,6 @@ namespace SWEndor.Input.Context
         if (fn != null)
           fn.Enabled = true;
       }
-    }
-
-    public override void HandleKeyBuffer(TV_KEYDATA keydata)
-    {
-      base.HandleKeyBuffer(keydata);
-      if (keydata.Pressed > 0)
-        InputFunction.Registry.ProcessOnPress(Engine, keydata.Key);
-    }
-
-    public override void HandleKeyState(byte[] keyPressedStates)
-    {
-      base.HandleKeyState(keyPressedStates);
-      InputFunction.Registry.ProcessWhilePressed(Engine, keyPressedStates);
     }
 
     public override void HandleMouse(int mouseX, int mouseY, bool button1, bool button2, bool button3, bool button4, int mouseScroll)

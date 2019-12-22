@@ -20,7 +20,20 @@ namespace SWEndor.Input
     private bool MOUSE_B3;
     private bool MOUSE_B4;
     private int MOUSE_SCROLL_NEW;
-    private AInputContext Context;
+    private AInputContext _context;
+
+    public AInputContext Context
+    {
+      get { return _context; }
+      set
+      {
+        if (_context != value)
+        {
+          _context = value;
+          _context.Set();
+        }
+      }
+    }
 
     public readonly Engine Engine;
 
@@ -68,26 +81,17 @@ namespace SWEndor.Input
     {
       if (Terminal.TConsole.Visible)
       { // Handling Terminal
-        if (Context != TerminalGameInputContext)
           Context = TerminalGameInputContext;
       }
       else if (Engine.Screen2D.ShowPage && Engine.Screen2D.CurrentPage != null)
       { // Handling Menu
-        if (Context != MenuInputContext)
           Context = MenuInputContext;
       }
       else
       { // Handling Game
-        if (Settings.GameDebug)
-        {
-          if (Context != DebugGameInputContext)
-            Context = DebugGameInputContext;
-        }
-        else
-          if (Context != GameInputContext)
-            Context = GameInputContext;
+        Context = Settings.GameDebug ? DebugGameInputContext : GameInputContext;
       }
-      
+
       INPUT_ENGINE.GetKeyBuffer(KEY_BUFFER, ref numkeybuffer);
       INPUT_ENGINE.GetKeyPressedArray(KEY_PRESSED);
       INPUT_ENGINE.GetMouseState(ref MOUSE_X, ref MOUSE_Y, ref MOUSE_B1, ref MOUSE_B2, ref MOUSE_B3, ref MOUSE_B4, ref MOUSE_SCROLL_NEW);
@@ -96,8 +100,6 @@ namespace SWEndor.Input
       SHIFT = (KEY_PRESSED[(int)CONST_TV_KEY.TV_KEY_LEFTSHIFT] != 0 || KEY_PRESSED[(int)CONST_TV_KEY.TV_KEY_RIGHTSHIFT] != 0);
       CTRL = (KEY_PRESSED[(int)CONST_TV_KEY.TV_KEY_LEFTCONTROL] != 0 || KEY_PRESSED[(int)CONST_TV_KEY.TV_KEY_RIGHTCONTROL] != 0);
       ALT = (KEY_PRESSED[(int)CONST_TV_KEY.TV_KEY_ALT_LEFT] != 0 || KEY_PRESSED[(int)CONST_TV_KEY.TV_KEY_ALT_RIGHT] != 0);
-
-      Context.Set();
 
       for (int n = 0; n < numkeybuffer; n++)
         Context.HandleKeyBuffer(KEY_BUFFER[n]);

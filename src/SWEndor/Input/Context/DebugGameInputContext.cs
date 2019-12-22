@@ -23,7 +23,6 @@ namespace SWEndor.Input.Context
       ToggleMovementLock.InternalName,
       TogglePlayerAI.InternalName,
       ToggleFreeMode.InternalName
-
     };
 
     public override void Set()
@@ -37,12 +36,10 @@ namespace SWEndor.Input.Context
       }
     }
 
-
+    /*
     public override void HandleKeyBuffer(TV_KEYDATA keydata)
     {
       base.HandleKeyBuffer(keydata);
-
-      /*
       if (keydata.Pressed > 0)
       {
         // Debug and Testing // 
@@ -77,7 +74,7 @@ namespace SWEndor.Input.Context
             break;
         }
       }
-      */
     }
+    */
   }
 }
