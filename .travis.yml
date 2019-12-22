@@ -5,6 +5,7 @@ install:
   - cd ./src
   - echo "Removing Pre-build events.."
   - find $TRAVIS_BUILD_DIR -type f -iname "*.csproj" -exec sh -c 'xmlstarlet ed --inplace -d "(/_:Project/_:PropertyGroup/_:PreBuildEvent)[1]/.." "{}"' \;
+  - find $TRAVIS_BUILD_DIR -type f -iname "*.csproj" -exec sh -c 'xmlstarlet ed --inplace -d "(/_:Project/_:PropertyGroup/_:PostBuildEvent)[1]/.." "{}"' \;
   - nuget restore SWEndor.sln
   - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
 script:
