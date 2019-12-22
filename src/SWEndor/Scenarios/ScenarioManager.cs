@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Core;
+using SWEndor.FileFormat.INI;
 using SWEndor.Primitives.Extensions;
 using SWEndor.UI.Menu.Pages;
 using System;
@@ -23,15 +24,33 @@ namespace SWEndor.Scenarios
       ScenarioList.Add(new GSTIEAdvanced(this));
       ScenarioList.Add(new GSTestZone(this));
 
-      // Add scripted scenarios?
-      if (Directory.Exists(Globals.CustomScenarioPath))
-        foreach (string path in Directory.GetFiles(Globals.CustomScenarioPath, Globals.CustomScenarioExt))
-          ScenarioList.Add(new GSCustomScenario(this, path));
+      LoadCustomScenarios();
     }
 
     public List<ScenarioBase> ScenarioList = new List<ScenarioBase>();
     public ScenarioBase Scenario = null;
     public ScenarioBase DesignatedMainMenuScenario;
+
+    public void LoadCustomScenarios()
+    {
+      if (Directory.Exists(Globals.CustomScenarioPath))
+      {
+        string fpath = Path.Combine(Globals.CustomScenarioPath, "scenarios.ini");
+        if (File.Exists(fpath))
+        {
+          INIFile f = new INIFile(fpath);
+
+          // [Scenarios]
+          //List<string> paths = new List<string>();
+          if (f.HasSection("Scenarios"))
+            foreach (INIFile.INISection.INILine ln in f.GetSection("Scenarios").Lines)
+              if (ln.HasKey)
+                ScenarioList.Add(new GSCustomScenario(this, Path.Combine(Globals.CustomScenarioPath, ln.Key)));
+        }
+      }
+    }
+
+
 
     public void LoadMainMenu()
     {

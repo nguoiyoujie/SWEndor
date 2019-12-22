@@ -62,6 +62,7 @@ namespace SWEndor
     // Directories
     internal static string BasePath = AppDomain.CurrentDomain.BaseDirectory;
     internal static string LogPath = Path.Combine(BasePath, @"log\");
+    internal static string ScreenshotsPath = Path.Combine(BasePath, @"screenshots\");
 
     internal static string FontPath = Path.Combine(BasePath, @"assets\fonts\");
     internal static string ImagePath = Path.Combine(BasePath, @"assets\images\");
@@ -75,11 +76,11 @@ namespace SWEndor
     internal static string DataShadersPath = Path.Combine(BasePath, @"data\shaders\");
 
     internal static string CustomScenarioPath = Path.Combine(DataPath, @"scenarios\");
-
     internal static string ActorTypeINIDirectory = Path.Combine(DataPath, @"actors\");
     internal static string ExplosionTypeINIDirectory = Path.Combine(DataPath, @"explosions\");
     internal static string ProjectileTypeINIDirectory = Path.Combine(DataPath, @"projectiles\");
     internal static string WeaponINIDirectory = Path.Combine(DataPath, @"weapons\");
+
 
     // Files
     internal static string DynamicMusicINIPath = Path.Combine(DataPath, @"dynamicmusic.ini");
@@ -92,7 +93,7 @@ namespace SWEndor
     internal static string WeapTgtINIPath = Path.Combine(WeaponINIDirectory, @"tgt.ini");
 
     // Extensions
-    internal static string CustomScenarioExt = "*.scen";
+    //internal static string CustomScenarioExt = "*.scen";
     internal static string INIExt = "*.ini";
     internal static string ShaderFxExt = "*.fx";
     internal static string SoundExt = "*.wav";
@@ -123,6 +124,7 @@ namespace SWEndor
       Directory.CreateDirectory(SoundPath);
       Directory.CreateDirectory(DataPath);
       Directory.CreateDirectory(LogPath);
+      Directory.CreateDirectory(ScreenshotsPath);
 
       Directory.CreateDirectory(ActorTypeINIDirectory);
       Directory.CreateDirectory(ExplosionTypeINIDirectory);

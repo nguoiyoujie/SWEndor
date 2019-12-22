@@ -33,9 +33,11 @@ namespace SWEndor.Scenarios.Scripting.Functions
         return new Val(((float[])array)[index]);
       else if (array.Type == ValType.STRING_ARRAY)
         return new Val(((string[])array)[index]);
+      else if (array.Type == ValType.STRING)
+        return new Val(((string)array)[index].ToString());
 
       else
-        throw new Exception("Attempted to apply GetArrayElement on an non-array object.");
+        throw new Exception("Attempted to apply GetArrayElement on a non-array object.");
     }
   }
 }

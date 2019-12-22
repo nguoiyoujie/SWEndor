@@ -32,7 +32,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       FactionInfo f1 = FactionInfo.Factory.Get(faction1);
       FactionInfo f2 = FactionInfo.Factory.Get(faction2);
       if (f1 == null || f2 == null)
-        throw new InvalidOperationException("At least one of the factions are not defined.");
+        throw new InvalidOperationException("At least one of the factions is not defined.");
 
       if (!f1.Allies.Contains(f2))
         f1.Allies.Add(f2);
@@ -53,7 +53,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       FactionInfo f1 = FactionInfo.Factory.Get(faction1);
       FactionInfo f2 = FactionInfo.Factory.Get(faction2);
       if (f1 == null || f2 == null)
-        throw new InvalidOperationException("At least one of the factions are not defined.");
+        throw new InvalidOperationException("At least one of the factions is not defined.");
 
       if (f1.Allies.Contains(f2))
         f1.Allies.Remove(f2);

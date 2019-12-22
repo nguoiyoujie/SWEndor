@@ -72,7 +72,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
-      actor.ForceClearQueue();
+      actor.ClearQueue();
       return Val.TRUE;
     }
 
@@ -98,7 +98,13 @@ namespace SWEndor.Scenarios.Scripting.Functions
           break;
 
         case "hunt":
-          action = Hunt.GetOrCreate();
+          if (ps.Length <= 2)
+            action = Hunt.GetOrCreate();
+          else
+          {
+            Models.TargetType tgttype = (Models.TargetType)Enum.Parse(typeof(Models.TargetType), (string)ps[2]);
+            action = Hunt.GetOrCreate(tgttype);
+          }
           break;
 
         case "selfdestruct":
@@ -271,6 +277,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
             throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ((string)ps[1]).ToLower(), "3", ps.Length.ToString()));
           break;
 
+          /*
         case "avoidcollisionrotate":
           if (ps.Length >= 4)
           {
@@ -291,6 +298,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
           else
             throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ((string)ps[0]).ToLower(), "4", ps.Length.ToString()));
           break;
+          */
 
         case "setgamestateb":
           if (ps.Length >= 4)

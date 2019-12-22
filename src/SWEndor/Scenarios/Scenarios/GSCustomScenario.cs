@@ -13,6 +13,7 @@ namespace SWEndor.Scenarios
     public GSCustomScenario(ScenarioManager manager, string masterfilepath) : base(manager)
     {
       FilePath = masterfilepath;
+      string folderpath = Path.GetDirectoryName(masterfilepath);
       INIFile f = new INIFile(masterfilepath);
 
       // [General]
@@ -27,15 +28,23 @@ namespace SWEndor.Scenarios
 
       Info.AllowedDifficulties = f.GetStringArray("General", "Difficulties", new string[] { "Normal" });
 
-      // [Script]
-      ScriptPaths = f.GetStringArray("Script", "Paths", new string[0]);
+      // [Scripts]
+      List<string> paths = new List<string>();
+      if (f.HasSection("Scripts"))
+        foreach (INIFile.INISection.INILine ln in f.GetSection("Scripts").Lines)
+          if (ln.HasKey)
+            paths.Add(Path.Combine(folderpath, ln.Key));
 
-      Fn_load = f.GetString("Script", "Fn_load", Fn_load);
-      Fn_loadfaction = f.GetString("Script", "Fn_loadfaction", Fn_loadfaction);
-      Fn_loadscene = f.GetString("Script", "Fn_loadscene", Fn_loadscene);
-      Fn_makeplayer = f.GetString("Script", "Fn_makeplayer", Fn_makeplayer);
-      Fns_gametick = f.GetStringArray("Script", "Fns_gametick", new string[0]);
+      ScriptPaths = paths.ToArray();
 
+      // [Bindings]
+      Fn_load = f.GetString("Bindings", "Fn_load", Fn_load);
+      Fn_loadfaction = f.GetString("Bindings", "Fn_loadfaction", Fn_loadfaction);
+      Fn_loadscene = f.GetString("Bindings", "Fn_loadscene", Fn_loadscene);
+      Fn_makeplayer = f.GetString("Bindings", "Fn_makeplayer", Fn_makeplayer);
+      Fns_gametick = f.GetStringArray("Bindings", "Fns_gametick", new string[0]);
+
+      // [Audio]
       Info.Music_Lose = f.GetString("Audio", "Lose", Info.Music_Lose);
       Info.Music_Win = f.GetString("Audio", "Win", Info.Music_Win);
     }
