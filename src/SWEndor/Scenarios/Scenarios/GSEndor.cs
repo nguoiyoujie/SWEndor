@@ -46,7 +46,7 @@ namespace SWEndor.Scenarios
     private int m_ExecutorStaticID = -1;
     private List<ShipSpawnEventArg> m_pendingSDspawnlist;
     private Dictionary<int, TV_3DVECTOR> m_rebelPosition;
-    private int m_SDLeftForShieldDown = 0;
+    private int m_SDLeftForShieldDown = 1;
 
     private float m_Enemy_pull = 0;
     private float m_Enemy_pullrate = 5;
@@ -2375,7 +2375,7 @@ namespace SWEndor.Scenarios
         PlayerInfo.ActorID = m_PlayerID;
         PlayerInfo.PrimaryWeaponN = m_Player_PrimaryWeaponN;
         PlayerInfo.SecondaryWeaponN = m_Player_SecondaryWeaponN;
-        player.SetArmorAll(0.001f); // 1
+        player.SetArmorAll(1); // 1
       }
 
       State.IsCutsceneMode = false;
@@ -2390,7 +2390,7 @@ namespace SWEndor.Scenarios
         && target.Active)
       {
         EventQueue.Add(Game.GameTime + 0.1f, Scene_EnterCutscene);
-        SoundManager.SetSound("ds_beam", false, 1, false);
+        SoundManager.SetSound("ds_beam", 1, false);
 
         TV_3DVECTOR pos = target.GetGlobalPosition();
         TV_3DVECTOR rot = target.GetGlobalRotation();
@@ -2412,8 +2412,8 @@ namespace SWEndor.Scenarios
     public void DeathStarKill_Effect(ActorInfo actor)
     {
       PlayerCameraInfo.Shake(150);
-      SoundManager.SetSoundStop("ds_beam");
-      SoundManager.SetSound(SoundGlobals.ExpLg, false, 1, false);
+      SoundManager.StopSound("ds_beam");
+      SoundManager.SetSound(SoundGlobals.ExpLg, 1, false);
     }
     #endregion
   }
