@@ -6,10 +6,10 @@ Wings = YT1300
 Difficulties = Normal
 
 [Scripts]
-Common\Spawn.sw
-Common\ActorHealth.sw
-SmugglersTest\Script.sw
-SmugglersTest\Message.sw
+..\..\Common\Spawn.sw
+..\..\Common\ActorHealth.sw
+Script.sw
+Message.sw
 
 [Bindings]
 Fn_load = load
