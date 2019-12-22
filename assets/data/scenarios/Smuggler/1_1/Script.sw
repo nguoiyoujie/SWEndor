@@ -23,7 +23,7 @@ load:
 	UI.SetLine1Color({ 0.6, 0.6, 0 });
 	UI.SetLine2Color({ 0.6, 0.6, 0 });
 
-	Script.Call("spawnreset");	
+	Script.Call("spawn_reset");	
 	Script.Call("makesmugglers");
 	Script.Call("makeplayer");
 	AddEvent(7, "stage1");

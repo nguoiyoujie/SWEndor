@@ -5,8 +5,13 @@ Description = Grand Admiral Thrawn's task force has successfully trapped Admiral
 Wings = TIEA, TIED, TIEX
 Difficulties = Hard
 
-[Script]
-Paths = Imperial\13_8\Script.sw, Imperial\13_8\Message.sw, Common\Spawn.sw
+[Scripts]
+..\..\Common\Spawn.sw
+..\..\Common\ActorHealth.sw
+Script.sw
+Message.sw
+
+[Bindings]
 Fn_load = load
 Fn_loadfaction = loadfaction
 Fn_loadscene = loadscene

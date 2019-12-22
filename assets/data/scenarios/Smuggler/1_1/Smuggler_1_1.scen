@@ -5,8 +5,13 @@ Description = We have a fleet of Transports to be escorted out to hyperspace. Th
 Wings = YT1300
 Difficulties = Normal
 
-[Script]
-Paths = SmugglersTest\Script.sw, SmugglersTest\Message.sw, Common\Spawn.sw
+[Scripts]
+..\..\Common\Spawn.sw
+..\..\Common\ActorHealth.sw
+Script.sw
+Message.sw
+
+[Bindings]
 Fn_load = load
 Fn_loadfaction = loadfaction
 Fn_loadscene = loadscene
