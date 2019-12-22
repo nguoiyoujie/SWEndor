@@ -1,0 +1,997 @@
+12-23-2019 01:18:02 | --------------------------------------------
+12-23-2019 01:18:02 | Truevision3D Debug/Log File
+12-23-2019 01:18:02 | --------------------------------------------
+12-23-2019 01:18:02 | Engine Version : 6.5
+12-23-2019 01:18:02 | ENGINE INFO : DLL Compilation time Sep 24 2007 12:45:04
+12-23-2019 01:18:02 | DEVICE INIT : Initialize Depth
+12-23-2019 01:18:02 | DEVICE INIT : Using Antialiasing with 8 samples
+12-23-2019 01:18:02 | DEVICE INIT : Initializing the device in windowed mode, with a render surface size of 1280x800, format 22, depthbuffer 75
+12-23-2019 01:18:02 | VIEWPORT MANAGER : Main viewport initialization
+12-23-2019 01:18:02 | VIEWPORT MANAGER : Main viewport initialized (1280x800)
+12-23-2019 01:18:02 | DEVICE INIT : Initialization successful !
+12-23-2019 01:18:02 | DEVICE INFO :  3D Card : NVIDIA GeForce 920MX  | Card ID : 4943 | Driver ID : 921134
+12-23-2019 01:18:02 | DEVICE INFO : Available texture memory : -8 MB
+12-23-2019 01:18:02 | DEVICE INFO : Vertex Shaders 3.0 supported in hardware.
+12-23-2019 01:18:02 | Debug info : vs fffe0300  ps ffff0300 
+12-23-2019 01:18:02 | DEVICE INFO : Pixel Shaders 3.0 supported in hardware.
+12-23-2019 01:18:02 | DEVICE INFO : Driver used is a DirectX9-level driver 'nvldumd.dll'. Excellent
+12-23-2019 01:18:02 | DEVICE INFO : Card Type Geforce6xxx/7xxx/8xxx/ATIRadeonX1xxx  Level card, third generation of programmable card
+12-23-2019 01:18:02 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\fonts\Consolas_8.dds' successful 'NONAME' on index 3 
+12-23-2019 01:18:02 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\fonts\Consolas_10.dds' successful 'NONAME' on index 4 
+12-23-2019 01:18:02 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\fonts\Consolas_12.dds' successful 'NONAME' on index 5 
+12-23-2019 01:18:02 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\fonts\Consolas_14.dds' successful 'NONAME' on index 6 
+12-23-2019 01:18:02 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\fonts\Consolas_16.dds' successful 'NONAME' on index 7 
+12-23-2019 01:18:02 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\fonts\Consolas_24.dds' successful 'NONAME' on index 8 
+12-23-2019 01:18:02 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\fonts\StdBitmap_36.dds' successful 'NONAME' on index 9 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\fonts\StdBitmap_48.dds' successful 'NONAME' on index 10 
+12-23-2019 01:18:03 | LANDSCAPE : Landscape object #0 has been initialized
+12-23-2019 01:18:03 | TEXTURE MANAGER : Successfully created a render surface 256x256 on slot 11
+12-23-2019 01:18:03 | TEXTURE MANAGER : Successfully created a render surface 256x256 on slot 12
+12-23-2019 01:18:03 | TEXTURE MANAGER : Successfully created a render surface 256x256 on slot 13
+12-23-2019 01:18:03 | TEXTURE MANAGER : Successfully created a render surface 256x256 on slot 14
+12-23-2019 01:18:03 | TEXTURE MANAGER : Successfully created a render surface 256x256 on slot 15
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\panel\broken.png' successful 'texTARGETER_DESTROYED' on index 16 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\panel\disabled.png' successful 'texTARGETER_DISABLED' on index 17 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\crosshair\Crosshair.png' successful 'Crosshair' on index 18 
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'BlinnPhong1' successfully created from string.
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\burn\ramp.png' successful 'burn\ramp.png' on index 19 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\burn\noise1.png' successful 'burn\noise1.png' on index 20 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\burn\noise2.png' successful ' burn\noise2.png' on index 21 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\burn\noise3.png' successful ' burn\noise3.png' on index 22 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\burn\noise4.png' successful ' burn\noise4.png' on index 23 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\burn\noise5.png' successful ' burn\noise5.png' on index 24 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\burn\noise6.png' successful ' burn\noise6.png' on index 25 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\burn\noise7.png' successful ' burn\noise7.png' on index 26 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\burn\noise8.png' successful ' burn\noise8.png' on index 27 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\burn\noise9.png' successful ' burn\noise9.png' on index 28 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\burn\noise10.png' successful ' burn\noise10.png' on index 29 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\burn\noise11.png' successful ' burn\noise11.png' on index 30 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\burn\noise12.png' successful ' burn\noise12.png' on index 31 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\burn\noise13.png' successful ' burn\noise13.png' on index 32 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\burn\noise14.png' successful ' burn\noise14.png' on index 33 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\burn\noise15.png' successful ' burn\noise15.png' on index 34 
+12-23-2019 01:18:03 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\burn\noise16.png' successful ' burn\noise16.png' on index 35 
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn1' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn2' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn3' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn4' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn5' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn6' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn7' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn8' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn9' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn10' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn11' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn12' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn13' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn14' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn15' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn16' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn17' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn18' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn19' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Burn20' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Hyper1' successfully created from string.
+12-23-2019 01:18:03 | SHADER MANAGER : Shader 'Laser1' successfully created from string.
+12-23-2019 01:18:04 | MESH MANAGER : WeldVertices : you can not use WeldVertices on an empty mesh or an invalid mesh !
+12-23-2019 01:18:04 | GLOBAL CLASS : GetMesh : Mesh 'Hyperspace' not found in the mesh collection.
+12-23-2019 01:18:04 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\special\hyper.png' successful 'hyper.png' on index 36 
+12-23-2019 01:18:04 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\special\hyper.x' succeeded in 47 ms ( 512 faces, 514 vertices ) ID 1
+12-23-2019 01:18:04 | GLOBAL CLASS : GetMesh : Mesh 'Hyperspace_far' not found in the mesh collection.
+12-23-2019 01:18:04 | GLOBAL CLASS : GetMesh : Mesh 'Endor' not found in the mesh collection.
+12-23-2019 01:18:04 | TEXTURE MANAGER : Couldn't find the texture 'planets/endor.jpg' in the texture list.
+12-23-2019 01:18:04 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\planets/endor.jpg' successful 'planets/endor.jpg' on index 37 
+12-23-2019 01:18:04 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\planet/endor.x' succeeded in 0 ms ( 32 faces, 33 vertices ) ID 2
+12-23-2019 01:18:04 | GLOBAL CLASS : GetMesh : Mesh 'Yavin' not found in the mesh collection.
+12-23-2019 01:18:04 | TEXTURE MANAGER : Couldn't find the texture 'planets/yavin.bmp' in the texture list.
+12-23-2019 01:18:05 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\planets/yavin.bmp' successful 'planets/yavin.bmp' on index 38 
+12-23-2019 01:18:05 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\planet/endor.x' succeeded in 0 ms ( 32 faces, 33 vertices ) ID 3
+12-23-2019 01:18:05 | GLOBAL CLASS : GetMesh : Mesh 'Yavin4' not found in the mesh collection.
+12-23-2019 01:18:05 | TEXTURE MANAGER : Couldn't find the texture 'planets/yavin4.bmp' in the texture list.
+12-23-2019 01:18:05 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\planets/yavin4.bmp' successful 'NONAME' on index 39 
+12-23-2019 01:18:05 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\planets/yavin4alpha.bmp' successful 'NONAME' on index 40 
+12-23-2019 01:18:05 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+12-23-2019 01:18:05 | GLOBAL CLASS : GetMesh : Mesh 'Hoth' not found in the mesh collection.
+12-23-2019 01:18:05 | TEXTURE MANAGER : Couldn't find the texture 'planets/hoth.bmp' in the texture list.
+12-23-2019 01:18:05 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\planets/hoth.bmp' successful 'planets/hoth.bmp' on index 42 
+12-23-2019 01:18:05 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\planet/endor.x' succeeded in 0 ms ( 32 faces, 33 vertices ) ID 5
+12-23-2019 01:18:05 | GLOBAL CLASS : GetMesh : Mesh 'DeathStar' not found in the mesh collection.
+12-23-2019 01:18:05 | TEXTURE MANAGER : Couldn't find the texture 'deathstar/deathstar.bmp' in the texture list.
+12-23-2019 01:18:06 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\deathstar/deathstar.bmp' successful 'NONAME' on index 43 
+12-23-2019 01:18:06 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\deathstar/deathstaralpha.bmp' successful 'NONAME' on index 44 
+12-23-2019 01:18:06 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+12-23-2019 01:18:06 | GLOBAL CLASS : GetMesh : Mesh 'DeathStar2' not found in the mesh collection.
+12-23-2019 01:18:06 | TEXTURE MANAGER : Couldn't find the texture 'deathstar/deathstar2.bmp' in the texture list.
+12-23-2019 01:18:06 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\deathstar/deathstar2.bmp' successful 'NONAME' on index 46 
+12-23-2019 01:18:06 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\deathstar/deathstar2alpha.bmp' successful 'NONAME' on index 47 
+12-23-2019 01:18:07 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+12-23-2019 01:18:07 | TEXTURE MANAGER : Couldn't find the texture 'deathstar/deathstar2b.jpg' in the texture list.
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\deathstar/deathstar2b.jpg' successful 'NONAME' on index 49 
+12-23-2019 01:18:07 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+12-23-2019 01:18:07 | GLOBAL CLASS : GetMesh : Mesh 'Imperial-I Static' not found in the mesh collection.
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00099.dds' successful 'stardestroyer\TEX00099.dds' on index 51 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00100.dds' successful 'stardestroyer\TEX00100.dds' on index 52 
+12-23-2019 01:18:07 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\star_destroyer_static.x' succeeded in 16 ms ( 748 faces, 2105 vertices ) ID 8
+12-23-2019 01:18:07 | GLOBAL CLASS : GetMesh : Mesh 'Imperial-I Static_far' not found in the mesh collection.
+12-23-2019 01:18:07 | GLOBAL CLASS : GetMesh : Mesh 'Executor Static' not found in the mesh collection.
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\executor\executor_bridge_window.bmp' successful 'executor_bridge_window.bmp' on index 53 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\executor\executor_engine_tube.bmp' successful 'executor_engine_tube.bmp' on index 54 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\executor\executor_lights.bmp' successful 'executor_lights.bmp' on index 55 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\executor\executor_plating.bmp' successful 'executor_plating.bmp' on index 56 
+12-23-2019 01:18:07 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\executor\executor_static.x' succeeded in 63 ms ( 1060 faces, 2630 vertices ) ID 9
+12-23-2019 01:18:07 | GLOBAL CLASS : GetMesh : Mesh 'Executor Static_far' not found in the mesh collection.
+12-23-2019 01:18:07 | GLOBAL CLASS : GetMesh : Mesh 'XWing_RD_LU_WingATI' not found in the mesh collection.
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0012.dds' successful 'TEX0012.dds' on index 57 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0029.dds' successful 'TEX0029.dds' on index 58 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0027.dds' successful 'TEX0027.dds' on index 59 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0026.dds' successful 'TEX0026.dds' on index 60 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0025.dds' successful 'TEX0025.dds' on index 61 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0024.dds' successful 'TEX0024.dds' on index 62 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0023.dds' successful 'TEX0023.dds' on index 63 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0022.dds' successful 'TEX0022.dds' on index 64 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0021.dds' successful 'TEX0021.dds' on index 65 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0020.dds' successful 'TEX0020.dds' on index 66 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0019.dds' successful 'TEX0019.dds' on index 67 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0017.dds' successful 'TEX0017.dds' on index 68 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0016.dds' successful 'TEX0016.dds' on index 69 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0015.dds' successful 'TEX0015.dds' on index 70 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0014.dds' successful 'TEX0014.dds' on index 71 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0013.dds' successful 'TEX0013.dds' on index 72 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0018.dds' successful 'TEX0018.dds' on index 73 
+12-23-2019 01:18:07 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\xwing_rightdown_leftup_wing.x' succeeded in 46 ms ( 503 faces, 1180 vertices ) ID 10
+12-23-2019 01:18:07 | GLOBAL CLASS : GetMesh : Mesh 'XWing_RD_LU_WingATI_far' not found in the mesh collection.
+12-23-2019 01:18:07 | GLOBAL CLASS : GetMesh : Mesh 'XWing_RU_LD_WingATI' not found in the mesh collection.
+12-23-2019 01:18:07 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\xwing_rightup_leftdown_wing.x' succeeded in 16 ms ( 503 faces, 1180 vertices ) ID 11
+12-23-2019 01:18:07 | GLOBAL CLASS : GetMesh : Mesh 'XWing_RU_LD_WingATI_far' not found in the mesh collection.
+12-23-2019 01:18:07 | GLOBAL CLASS : GetMesh : Mesh 'TIE_WingATI' not found in the mesh collection.
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\tie\TEX000.dds' successful 'TEX000.dds' on index 74 
+12-23-2019 01:18:07 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\tie\tie_right_left_wing.x' succeeded in 0 ms ( 109 faces, 265 vertices ) ID 12
+12-23-2019 01:18:07 | GLOBAL CLASS : GetMesh : Mesh 'TIE_WingATI_far' not found in the mesh collection.
+12-23-2019 01:18:07 | GLOBAL CLASS : GetMesh : Mesh 'TIE_InterceptorWingATI' not found in the mesh collection.
+12-23-2019 01:18:07 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\tie\tie_interceptor_right_left_wing.x' succeeded in 0 ms ( 146 faces, 339 vertices ) ID 13
+12-23-2019 01:18:07 | GLOBAL CLASS : GetMesh : Mesh 'TIE_InterceptorWingATI_far' not found in the mesh collection.
+12-23-2019 01:18:07 | GLOBAL CLASS : GetMesh : Mesh 'YWing_WingATI' not found in the mesh collection.
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0033.dds' successful 'TEX0033.dds' on index 75 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0032.dds' successful 'TEX0032.dds' on index 76 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0031.dds' successful 'TEX0031.dds' on index 77 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0021.dds' successful 'TEX0021.dds' on index 78 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0035.dds' successful 'TEX0035.dds' on index 79 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0034.dds' successful 'TEX0034.dds' on index 80 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0036.dds' successful 'TEX0036.dds' on index 81 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0009.dds' successful 'TEX0009.dds' on index 82 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0014.dds' successful 'TEX0014.dds' on index 83 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0013.dds' successful 'TEX0013.dds' on index 84 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0012.dds' successful 'TEX0012.dds' on index 85 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0010.dds' successful 'TEX0010.dds' on index 86 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0011.dds' successful 'TEX0011.dds' on index 87 
+12-23-2019 01:18:07 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\ywing_right_left_wing.x' succeeded in 16 ms ( 384 faces, 864 vertices ) ID 14
+12-23-2019 01:18:07 | GLOBAL CLASS : GetMesh : Mesh 'YWing_WingATI_far' not found in the mesh collection.
+12-23-2019 01:18:07 | GLOBAL CLASS : GetMesh : Mesh 'BWing_Top_WingATI' not found in the mesh collection.
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0018.dds' successful 'TEX0018.dds' on index 88 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0026.dds' successful 'TEX0026.dds' on index 89 
+12-23-2019 01:18:07 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0021.dds' successful 'TEX0021.dds' on index 90 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0022.dds' successful 'TEX0022.dds' on index 91 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0023.dds' successful 'TEX0023.dds' on index 92 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0027.dds' successful 'TEX0027.dds' on index 93 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0028.dds' successful 'TEX0028.dds' on index 94 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0001.dds' successful 'TEX0001.dds' on index 95 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0030.dds' successful 'TEX0030.dds' on index 96 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0029.dds' successful 'TEX0029.dds' on index 97 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0020.dds' successful 'TEX0020.dds' on index 98 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0031.dds' successful 'TEX0031.dds' on index 99 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0032.dds' successful 'TEX0032.dds' on index 100 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0033.dds' successful 'TEX0033.dds' on index 101 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0034.dds' successful 'TEX0034.dds' on index 102 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0000.dds' successful 'TEX0000.dds' on index 103 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0003.dds' successful 'TEX0003.dds' on index 104 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0011.dds' successful 'TEX0011.dds' on index 105 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0013.dds' successful 'TEX0013.dds' on index 106 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0016.dds' successful 'TEX0016.dds' on index 107 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0017.dds' successful 'TEX0017.dds' on index 108 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0015.dds' successful 'TEX0015.dds' on index 109 
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\bwing_top_wing.x' succeeded in 47 ms ( 959 faces, 2325 vertices ) ID 15
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'BWing_Top_WingATI_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'BWing_Bottom_WingATI' not found in the mesh collection.
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0019.dds' successful 'TEX0019.dds' on index 110 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0014.dds' successful 'TEX0014.dds' on index 111 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0024.dds' successful 'TEX0024.dds' on index 112 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0025.dds' successful 'TEX0025.dds' on index 113 
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\bwing_bottom_wing.x' succeeded in 15 ms ( 326 faces, 837 vertices ) ID 16
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'BWing_Bottom_WingATI_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'BWing_WingATI' not found in the mesh collection.
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0012.dds' successful 'TEX0012.dds' on index 114 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0009.dds' successful 'TEX0009.dds' on index 115 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0007.dds' successful 'TEX0007.dds' on index 116 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0008.dds' successful 'TEX0008.dds' on index 117 
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\bwing_wing.x' succeeded in 16 ms ( 132 faces, 290 vertices ) ID 17
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'BWing_WingATI_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'Transport Box 1' not found in the mesh collection.
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0058.dds' successful 'TEX0058.dds' on index 118 
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\transport_box1.x' succeeded in 0 ms ( 12 faces, 24 vertices ) ID 18
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'Transport Box 1_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'Transport Box 2' not found in the mesh collection.
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0059.dds' successful 'TEX0059.dds' on index 119 
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\transport_box2.x' succeeded in 16 ms ( 12 faces, 24 vertices ) ID 19
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'Transport Box 2_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'Transport Box 3' not found in the mesh collection.
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0060.dds' successful 'TEX0060.dds' on index 120 
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\transport_box3.x' succeeded in 0 ms ( 12 faces, 24 vertices ) ID 20
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'Transport Box 3_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'Transport Box 4' not found in the mesh collection.
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0061.dds' successful 'TEX0061.dds' on index 121 
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\transport_box4.x' succeeded in 0 ms ( 12 faces, 24 vertices ) ID 21
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'Transport Box 4_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'Z-95' not found in the mesh collection.
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0006.dds' successful 'TEX0006.dds' on index 122 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0008.dds' successful 'TEX0008.dds' on index 123 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0009.dds' successful 'TEX0009.dds' on index 124 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0004.dds' successful 'TEX0004.dds' on index 125 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0003.dds' successful 'TEX0003.dds' on index 126 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0002.dds' successful 'TEX0002.dds' on index 127 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0001.dds' successful 'TEX0001.dds' on index 128 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0000.dds' successful 'TEX0000.dds' on index 129 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0011.dds' successful 'TEX0011.dds' on index 130 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0010.dds' successful 'TEX0010.dds' on index 131 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0005.dds' successful 'TEX0005.dds' on index 132 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0007.dds' successful 'TEX0007.dds' on index 133 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0030.dds' successful 'TEX0030.dds' on index 134 
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\z95.x' succeeded in 47 ms ( 1782 faces, 1650 vertices ) ID 22
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'Z-95_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'X-Wing' not found in the mesh collection.
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0028.dds' successful 'TEX0028.dds' on index 135 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0031.dds' successful 'TEX0031.dds' on index 136 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0034.dds' successful 'TEX0034.dds' on index 137 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0035.dds' successful 'TEX0035.dds' on index 138 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0036.dds' successful 'TEX0036.dds' on index 139 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0037.dds' successful 'TEX0037.dds' on index 140 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0033.dds' successful 'TEX0033.dds' on index 141 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0032.dds' successful 'TEX0032.dds' on index 142 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\TEX0038.dds' successful 'TEX0038.dds' on index 143 
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\xwing\xwing.x' succeeded in 62 ms ( 2741 faces, 6627 vertices ) ID 23
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'X-Wing_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'Y-Wing' not found in the mesh collection.
+12-23-2019 01:18:08 | START UNLOAD
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0016.dds' successful 'TEX0016.dds' on index 144 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0002.dds' successful 'TEX0002.dds' on index 145 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0024.dds' successful 'TEX0024.dds' on index 146 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0007.dds' successful 'TEX0007.dds' on index 147 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0008.dds' successful 'TEX0008.dds' on index 148 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0000.dds' successful 'TEX0000.dds' on index 149 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0001.dds' successful 'TEX0001.dds' on index 150 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0006.dds' successful 'TEX0006.dds' on index 151 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0004.dds' successful 'TEX0004.dds' on index 152 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0003.dds' successful 'TEX0003.dds' on index 153 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0005.dds' successful 'TEX0005.dds' on index 154 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0015.dds' successful 'TEX0015.dds' on index 155 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0017.dds' successful 'TEX0017.dds' on index 156 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0019.dds' successful 'TEX0019.dds' on index 157 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0018.dds' successful 'TEX0018.dds' on index 158 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0025.dds' successful 'TEX0025.dds' on index 159 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0023.dds' successful 'TEX0023.dds' on index 160 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0022.dds' successful 'TEX0022.dds' on index 161 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0020.dds' successful 'TEX0020.dds' on index 162 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0026.dds' successful 'TEX0026.dds' on index 163 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0028.dds' successful 'TEX0028.dds' on index 164 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0029.dds' successful 'TEX0029.dds' on index 165 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0027.dds' successful 'TEX0027.dds' on index 166 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\TEX0030.dds' successful 'TEX0030.dds' on index 167 
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\ywing\ywing.x' succeeded in 125 ms ( 1646 faces, 3750 vertices ) ID 24
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'Y-Wing_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'A-Wing' not found in the mesh collection.
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0026.dds' successful 'TEX0026.dds' on index 168 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0022.dds' successful 'TEX0022.dds' on index 169 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0023.dds' successful 'TEX0023.dds' on index 170 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0024.dds' successful 'TEX0024.dds' on index 171 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0025.dds' successful 'TEX0025.dds' on index 172 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0027.dds' successful 'TEX0027.dds' on index 173 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0020.dds' successful 'TEX0020.dds' on index 174 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0003.dds' successful 'TEX0003.dds' on index 175 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0001.dds' successful 'TEX0001.dds' on index 176 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0000.dds' successful 'TEX0000.dds' on index 177 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0008.dds' successful 'TEX0008.dds' on index 178 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0007.dds' successful 'TEX0007.dds' on index 179 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0006.dds' successful 'TEX0006.dds' on index 180 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0005.dds' successful 'TEX0005.dds' on index 181 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0002.dds' successful 'TEX0002.dds' on index 182 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0009.dds' successful 'TEX0009.dds' on index 183 
+12-23-2019 01:18:08 | RESSOURCE MANAGER : Engine successfully unloaded
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0010.dds' successful 'TEX0010.dds' on index 184 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0012.dds' successful 'TEX0012.dds' on index 185 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0011.dds' successful 'TEX0011.dds' on index 186 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0013.dds' successful 'TEX0013.dds' on index 187 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0014.dds' successful 'TEX0014.dds' on index 188 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0015.dds' successful 'TEX0015.dds' on index 189 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0016.dds' successful 'TEX0016.dds' on index 190 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0017.dds' successful 'TEX0017.dds' on index 191 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0018.dds' successful 'TEX0018.dds' on index 192 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0019.dds' successful 'TEX0019.dds' on index 193 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\TEX0021.dds' successful 'TEX0021.dds' on index 194 
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\awing\awing.x' succeeded in 125 ms ( 2426 faces, 5569 vertices ) ID 25
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'A-Wing_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'B-Wing' not found in the mesh collection.
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0036.dds' successful 'TEX0036.dds' on index 195 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0035.dds' successful 'TEX0035.dds' on index 196 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0038.dds' successful 'TEX0038.dds' on index 197 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0037.dds' successful 'TEX0037.dds' on index 198 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0002.dds' successful 'TEX0002.dds' on index 199 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0006.dds' successful 'TEX0006.dds' on index 200 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0005.dds' successful 'TEX0005.dds' on index 201 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\TEX0004.dds' successful 'TEX0004.dds' on index 202 
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\bwing\bwing.x' succeeded in 63 ms ( 1817 faces, 4344 vertices ) ID 26
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'B-Wing_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'YT-1300' not found in the mesh collection.
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0012.dds' successful 'TEX0012.dds' on index 203 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0015.dds' successful 'TEX0015.dds' on index 204 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0029.dds' successful 'TEX0029.dds' on index 205 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0032.dds' successful 'TEX0032.dds' on index 206 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0034.dds' successful 'TEX0034.dds' on index 207 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0009.dds' successful 'TEX0009.dds' on index 208 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0033.dds' successful 'TEX0033.dds' on index 209 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0019.dds' successful 'TEX0019.dds' on index 210 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0013.dds' successful 'TEX0013.dds' on index 211 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0035.dds' successful 'TEX0035.dds' on index 212 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0038.dds' successful 'TEX0038.dds' on index 213 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0039.dds' successful 'TEX0039.dds' on index 214 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0024.dds' successful 'TEX0024.dds' on index 215 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0040.dds' successful 'TEX0040.dds' on index 216 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0036.dds' successful 'TEX0036.dds' on index 217 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0041.dds' successful 'TEX0041.dds' on index 218 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0037.dds' successful 'TEX0037.dds' on index 219 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0000.dds' successful 'TEX0000.dds' on index 220 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0042.dds' successful 'TEX0042.dds' on index 221 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0007.dds' successful 'TEX0007.dds' on index 222 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0006.dds' successful 'TEX0006.dds' on index 223 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0005.dds' successful 'TEX0005.dds' on index 224 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0004.dds' successful 'TEX0004.dds' on index 225 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0003.dds' successful 'TEX0003.dds' on index 226 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0001.dds' successful 'TEX0001.dds' on index 227 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0002.dds' successful 'TEX0002.dds' on index 228 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0008.dds' successful 'TEX0008.dds' on index 229 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0023.dds' successful 'TEX0023.dds' on index 230 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0022.dds' successful 'TEX0022.dds' on index 231 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0011.dds' successful 'TEX0011.dds' on index 232 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0010.dds' successful 'TEX0010.dds' on index 233 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0014.dds' successful 'TEX0014.dds' on index 234 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0018.dds' successful 'TEX0018.dds' on index 235 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0017.dds' successful 'TEX0017.dds' on index 236 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0016.dds' successful 'TEX0016.dds' on index 237 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0020.dds' successful 'TEX0020.dds' on index 238 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0021.dds' successful 'TEX0021.dds' on index 239 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0025.dds' successful 'TEX0025.dds' on index 240 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0027.dds' successful 'TEX0027.dds' on index 241 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0028.dds' successful 'TEX0028.dds' on index 242 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0026.dds' successful 'TEX0026.dds' on index 243 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0030.dds' successful 'TEX0030.dds' on index 244 
+12-23-2019 01:18:08 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\TEX0031.dds' successful 'TEX0031.dds' on index 245 
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\falcon\falcon.x' succeeded in 141 ms ( 3447 faces, 8578 vertices ) ID 27
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'YT-1300_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'T-4A Lambda-class Shuttle' not found in the mesh collection.
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\shuttle\t4a.x' succeeded in 0 ms ( 980 faces, 1608 vertices ) ID 28
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'T-4A Lambda-class Shuttle_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'JV-7 Delta-class Shuttle' not found in the mesh collection.
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\shuttle\jv7.x' succeeded in 0 ms ( 467 faces, 787 vertices ) ID 29
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'JV-7 Delta-class Shuttle_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'Cargo Freighter' not found in the mesh collection.
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\cargo\cargo3.x' succeeded in 0 ms ( 92 faces, 176 vertices ) ID 30
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'Cargo Freighter_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'Cargo Freighter_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'Cargo Ship' not found in the mesh collection.
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\cargo\cargo1.x' succeeded in 0 ms ( 76 faces, 144 vertices ) ID 31
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'Cargo Ship_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'TIE' not found in the mesh collection.
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\tie\tie.x' succeeded in 16 ms ( 574 faces, 1388 vertices ) ID 32
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'TIE_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'TIE Interceptor' not found in the mesh collection.
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\tie\tie_interceptor.x' succeeded in 16 ms ( 658 faces, 1554 vertices ) ID 33
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'TIE Interceptor_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'TIE Defender' not found in the mesh collection.
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\tie\tie_defender.x' succeeded in 15 ms ( 870 faces, 2043 vertices ) ID 34
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'TIE Defender_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'TIE Advanced' not found in the mesh collection.
+12-23-2019 01:18:08 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\tie\tie_advanced.x' succeeded in 0 ms ( 686 faces, 963 vertices ) ID 35
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'TIE Advanced_far' not found in the mesh collection.
+12-23-2019 01:18:08 | GLOBAL CLASS : GetMesh : Mesh 'TIE Advanced X1' not found in the mesh collection.
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\tie_vader\TEX0000.dds' successful 'TEX0000.dds' on index 246 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\tie_vader\TEX0002.dds' successful 'TEX0002.dds' on index 247 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\tie_vader\TEX0001.dds' successful 'TEX0001.dds' on index 248 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\tie_vader\TEX0003.dds' successful 'TEX0003.dds' on index 249 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\tie_vader\TEX0004.dds' successful 'TEX0004.dds' on index 250 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\tie_vader\TEX0005.dds' successful 'TEX0005.dds' on index 251 
+12-23-2019 01:18:09 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\tie_vader\tie_vader.x' succeeded in 218 ms ( 14528 faces, 13688 vertices ) ID 36
+12-23-2019 01:18:09 | GLOBAL CLASS : GetMesh : Mesh 'TIE Advanced X1_far' not found in the mesh collection.
+12-23-2019 01:18:09 | GLOBAL CLASS : GetMesh : Mesh 'TIE Bomber' not found in the mesh collection.
+12-23-2019 01:18:09 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\tie_vader\tie_bomber.x' succeeded in 187 ms ( 13051 faces, 10852 vertices ) ID 37
+12-23-2019 01:18:09 | GLOBAL CLASS : GetMesh : Mesh 'TIE Bomber_far' not found in the mesh collection.
+12-23-2019 01:18:09 | GLOBAL CLASS : GetMesh : Mesh 'Assault Gunboat' not found in the mesh collection.
+12-23-2019 01:18:09 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\gunboat\gunboat.x' succeeded in 47 ms ( 4944 faces, 4073 vertices ) ID 38
+12-23-2019 01:18:09 | GLOBAL CLASS : GetMesh : Mesh 'Assault Gunboat_far' not found in the mesh collection.
+12-23-2019 01:18:09 | GLOBAL CLASS : GetMesh : Mesh 'Missile Boat' not found in the mesh collection.
+12-23-2019 01:18:09 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\tie_vader\tie_vader.x' succeeded in 140 ms ( 14528 faces, 13688 vertices ) ID 39
+12-23-2019 01:18:09 | GLOBAL CLASS : GetMesh : Mesh 'Missile Boat_far' not found in the mesh collection.
+12-23-2019 01:18:09 | GLOBAL CLASS : GetMesh : Mesh 'Corellian Corvette' not found in the mesh collection.
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0032.dds' successful 'TEX0032.dds' on index 252 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0034.dds' successful 'TEX0034.dds' on index 253 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0035.dds' successful 'TEX0035.dds' on index 254 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0005.dds' successful 'TEX0005.dds' on index 255 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0006.dds' successful 'TEX0006.dds' on index 256 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0004.dds' successful 'TEX0004.dds' on index 257 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0003.dds' successful 'TEX0003.dds' on index 258 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0001.dds' successful 'TEX0001.dds' on index 259 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0002.dds' successful 'TEX0002.dds' on index 260 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0044.dds' successful 'TEX0044.dds' on index 261 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0043.dds' successful 'TEX0043.dds' on index 262 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0042.dds' successful 'TEX0042.dds' on index 263 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0041.dds' successful 'TEX0041.dds' on index 264 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0040.dds' successful 'TEX0040.dds' on index 265 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0045.dds' successful 'TEX0045.dds' on index 266 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0047.dds' successful 'TEX0047.dds' on index 267 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0048.dds' successful 'TEX0048.dds' on index 268 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0049.dds' successful 'TEX0049.dds' on index 269 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0050.dds' successful 'TEX0050.dds' on index 270 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0051.dds' successful 'TEX0051.dds' on index 271 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0008.dds' successful 'TEX0008.dds' on index 272 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0010.dds' successful 'TEX0010.dds' on index 273 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0009.dds' successful 'TEX0009.dds' on index 274 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0054.dds' successful 'TEX0054.dds' on index 275 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0053.dds' successful 'TEX0053.dds' on index 276 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0052.dds' successful 'TEX0052.dds' on index 277 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0020.dds' successful 'TEX0020.dds' on index 278 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0024.dds' successful 'TEX0024.dds' on index 279 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0026.dds' successful 'TEX0026.dds' on index 280 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0025.dds' successful 'TEX0025.dds' on index 281 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0028.dds' successful 'TEX0028.dds' on index 282 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0007.dds' successful 'TEX0007.dds' on index 283 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0000.dds' successful 'TEX0000.dds' on index 284 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0029.dds' successful 'TEX0029.dds' on index 285 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0031.dds' successful 'TEX0031.dds' on index 286 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0023.dds' successful 'TEX0023.dds' on index 287 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0055.dds' successful 'TEX0055.dds' on index 288 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0033.dds' successful 'TEX0033.dds' on index 289 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0030.dds' successful 'TEX0030.dds' on index 290 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0046.dds' successful 'TEX0046.dds' on index 291 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0012.dds' successful 'TEX0012.dds' on index 292 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0011.dds' successful 'TEX0011.dds' on index 293 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0013.dds' successful 'TEX0013.dds' on index 294 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0014.dds' successful 'TEX0014.dds' on index 295 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0021.dds' successful 'TEX0021.dds' on index 296 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0022.dds' successful 'TEX0022.dds' on index 297 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0027.dds' successful 'TEX0027.dds' on index 298 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0017.dds' successful 'TEX0017.dds' on index 299 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0016.dds' successful 'TEX0016.dds' on index 300 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0018.dds' successful 'TEX0018.dds' on index 301 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0019.dds' successful 'TEX0019.dds' on index 302 
+12-23-2019 01:18:09 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\TEX0015.dds' successful 'TEX0015.dds' on index 303 
+12-23-2019 01:18:09 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\corellian\corellian.x' succeeded in 109 ms ( 2124 faces, 2265 vertices ) ID 40
+12-23-2019 01:18:09 | GLOBAL CLASS : GetMesh : Mesh 'Corellian Corvette_far' not found in the mesh collection.
+12-23-2019 01:18:09 | GLOBAL CLASS : GetMesh : Mesh 'Nebulon-B Frigate' not found in the mesh collection.
+12-23-2019 01:18:10 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\TEX0000.dds' successful 'TEX0000.dds' on index 304 
+12-23-2019 01:18:10 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\TEX0002.dds' successful 'TEX0002.dds' on index 305 
+12-23-2019 01:18:10 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\TEX0003.dds' successful 'TEX0003.dds' on index 306 
+12-23-2019 01:18:10 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\TEX0004.dds' successful 'TEX0004.dds' on index 307 
+12-23-2019 01:18:10 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\TEX0005.dds' successful 'TEX0005.dds' on index 308 
+12-23-2019 01:18:10 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\TEX0006.dds' successful 'TEX0006.dds' on index 309 
+12-23-2019 01:18:10 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\TEX0007.dds' successful 'TEX0007.dds' on index 310 
+12-23-2019 01:18:10 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\TEX0008.dds' successful 'TEX0008.dds' on index 311 
+12-23-2019 01:18:11 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\TEX0009.dds' successful 'TEX0009.dds' on index 312 
+12-23-2019 01:18:11 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\TEX0010.dds' successful 'TEX0010.dds' on index 313 
+12-23-2019 01:18:11 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\TEX0011.dds' successful 'TEX0011.dds' on index 314 
+12-23-2019 01:18:11 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\TEX0012.dds' successful 'TEX0012.dds' on index 315 
+12-23-2019 01:18:11 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\TEX0013.dds' successful 'TEX0013.dds' on index 316 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\TEX0014.dds' successful 'TEX0014.dds' on index 317 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\TEX0001.dds' successful 'TEX0001.dds' on index 318 
+12-23-2019 01:18:12 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\nebulonb.x' succeeded in 2328 ms ( 25331 faces, 46710 vertices ) ID 41
+12-23-2019 01:18:12 | GLOBAL CLASS : GetMesh : Mesh 'Nebulon-B Frigate_far' not found in the mesh collection.
+12-23-2019 01:18:12 | GLOBAL CLASS : GetMesh : Mesh 'Nebulon-B2 Frigate' not found in the mesh collection.
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\TEX0001B2.dds' successful 'TEX0001B2.dds' on index 319 
+12-23-2019 01:18:12 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\nebulonb\nebulonb2.x' succeeded in 422 ms ( 33839 faces, 39022 vertices ) ID 42
+12-23-2019 01:18:12 | GLOBAL CLASS : GetMesh : Mesh 'Nebulon-B2 Frigate_far' not found in the mesh collection.
+12-23-2019 01:18:12 | GLOBAL CLASS : GetMesh : Mesh 'Mon Calamari Light Cruiser' not found in the mesh collection.
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0004.dds' successful 'TEX0004.dds' on index 320 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0019.dds' successful 'TEX0019.dds' on index 321 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0014.dds' successful 'TEX0014.dds' on index 322 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0020.dds' successful 'TEX0020.dds' on index 323 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0028.dds' successful 'TEX0028.dds' on index 324 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0015.dds' successful 'TEX0015.dds' on index 325 
+12-23-2019 01:18:12 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\mclc.x' succeeded in 32 ms ( 1196 faces, 950 vertices ) ID 43
+12-23-2019 01:18:12 | GLOBAL CLASS : GetMesh : Mesh 'Mon Calamari Light Cruiser_far' not found in the mesh collection.
+12-23-2019 01:18:12 | GLOBAL CLASS : GetMesh : Mesh 'Mon Calamari Capital Ship' not found in the mesh collection.
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0027.dds' successful 'mc90\TEX0027.dds' on index 327 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0025.dds' successful 'mc90\TEX0025.dds' on index 328 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0026.dds' successful 'mc90\TEX0026.dds' on index 329 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0011.dds' successful 'mc90\TEX0011.dds' on index 331 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0029.dds' successful 'mc90\TEX0029.dds' on index 332 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0000.dds' successful 'mc90\TEX0000.dds' on index 333 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0030.dds' successful 'mc90\TEX0030.dds' on index 339 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0001.dds' successful 'mc90\TEX0001.dds' on index 347 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0032.dds' successful 'mc90\TEX0032.dds' on index 352 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0031.dds' successful 'mc90\TEX0031.dds' on index 353 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0033.dds' successful 'mc90\TEX0033.dds' on index 354 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0035.dds' successful 'mc90\TEX0035.dds' on index 356 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0034.dds' successful 'mc90\TEX0034.dds' on index 358 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0036.dds' successful 'mc90\TEX0036.dds' on index 360 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0037.dds' successful 'mc90\TEX0037.dds' on index 362 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0003.dds' successful 'mc90\TEX0003.dds' on index 363 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0038.dds' successful 'mc90\TEX0038.dds' on index 364 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0002.dds' successful 'mc90\TEX0002.dds' on index 365 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0039.dds' successful 'mc90\TEX0039.dds' on index 366 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0040.dds' successful 'mc90\TEX0040.dds' on index 368 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0041.dds' successful 'mc90\TEX0041.dds' on index 369 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0007.dds' successful 'mc90\TEX0007.dds' on index 371 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0008.dds' successful 'mc90\TEX0008.dds' on index 372 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0009.dds' successful 'mc90\TEX0009.dds' on index 373 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0012.dds' successful 'mc90\TEX0012.dds' on index 374 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0013.dds' successful 'mc90\TEX0013.dds' on index 375 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0016.dds' successful 'mc90\TEX0016.dds' on index 378 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0017.dds' successful 'mc90\TEX0017.dds' on index 379 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0006.dds' successful 'mc90\TEX0006.dds' on index 380 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0005.dds' successful 'mc90\TEX0005.dds' on index 381 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0010.dds' successful 'mc90\TEX0010.dds' on index 382 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0018.dds' successful 'mc90\TEX0018.dds' on index 383 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0021.dds' successful 'mc90\TEX0021.dds' on index 386 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0022.dds' successful 'mc90\TEX0022.dds' on index 389 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0023.dds' successful 'mc90\TEX0023.dds' on index 390 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\TEX0024.dds' successful 'mc90\TEX0024.dds' on index 392 
+12-23-2019 01:18:12 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\mc90.x' succeeded in 109 ms ( 5374 faces, 14617 vertices ) ID 44
+12-23-2019 01:18:12 | GLOBAL CLASS : GetMesh : Mesh 'Mon Calamari Capital Ship_far' not found in the mesh collection.
+12-23-2019 01:18:12 | GLOBAL CLASS : GetMesh : Mesh 'Mon Calamari 80B Capital Ship' not found in the mesh collection.
+12-23-2019 01:18:12 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\mc90\mc80b.x' succeeded in 78 ms ( 9628 faces, 5306 vertices ) ID 45
+12-23-2019 01:18:12 | GLOBAL CLASS : GetMesh : Mesh 'Mon Calamari 80B Capital Ship_far' not found in the mesh collection.
+12-23-2019 01:18:12 | GLOBAL CLASS : GetMesh : Mesh 'Transport' not found in the mesh collection.
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0004.dds' successful 'TEX0004.dds' on index 398 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0000.dds' successful 'TEX0000.dds' on index 399 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0005.dds' successful 'TEX0005.dds' on index 400 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0001.dds' successful 'TEX0001.dds' on index 401 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0003.dds' successful 'TEX0003.dds' on index 402 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0029.dds' successful 'TEX0029.dds' on index 403 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0028.dds' successful 'TEX0028.dds' on index 404 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0026.dds' successful 'TEX0026.dds' on index 405 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0027.dds' successful 'TEX0027.dds' on index 406 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0030.dds' successful 'TEX0030.dds' on index 407 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0031.dds' successful 'TEX0031.dds' on index 408 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0032.dds' successful 'TEX0032.dds' on index 409 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0033.dds' successful 'TEX0033.dds' on index 410 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0034.dds' successful 'TEX0034.dds' on index 411 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0002.dds' successful 'TEX0002.dds' on index 412 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0035.dds' successful 'TEX0035.dds' on index 413 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0038.dds' successful 'TEX0038.dds' on index 414 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0037.dds' successful 'TEX0037.dds' on index 415 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0036.dds' successful 'TEX0036.dds' on index 416 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0039.dds' successful 'TEX0039.dds' on index 417 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0040.dds' successful 'TEX0040.dds' on index 418 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0044.dds' successful 'TEX0044.dds' on index 419 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0043.dds' successful 'TEX0043.dds' on index 420 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0042.dds' successful 'TEX0042.dds' on index 421 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0041.dds' successful 'TEX0041.dds' on index 422 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0050.dds' successful 'TEX0050.dds' on index 423 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0049.dds' successful 'TEX0049.dds' on index 424 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0048.dds' successful 'TEX0048.dds' on index 425 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0047.dds' successful 'TEX0047.dds' on index 426 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0045.dds' successful 'TEX0045.dds' on index 427 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0046.dds' successful 'TEX0046.dds' on index 428 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0051.dds' successful 'TEX0051.dds' on index 429 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0052.dds' successful 'TEX0052.dds' on index 430 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0053.dds' successful 'TEX0053.dds' on index 431 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0054.dds' successful 'TEX0054.dds' on index 432 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0055.dds' successful 'TEX0055.dds' on index 433 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0056.dds' successful 'TEX0056.dds' on index 434 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0057.dds' successful 'TEX0057.dds' on index 435 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0006.dds' successful 'TEX0006.dds' on index 436 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0007.dds' successful 'TEX0007.dds' on index 437 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0009.dds' successful 'TEX0009.dds' on index 438 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0008.dds' successful 'TEX0008.dds' on index 439 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0010.dds' successful 'TEX0010.dds' on index 440 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0011.dds' successful 'TEX0011.dds' on index 441 
+12-23-2019 01:18:12 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0012.dds' successful 'TEX0012.dds' on index 442 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0013.dds' successful 'TEX0013.dds' on index 443 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0025.dds' successful 'TEX0025.dds' on index 444 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0024.dds' successful 'TEX0024.dds' on index 445 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0023.dds' successful 'TEX0023.dds' on index 446 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0022.dds' successful 'TEX0022.dds' on index 447 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0021.dds' successful 'TEX0021.dds' on index 448 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0020.dds' successful 'TEX0020.dds' on index 449 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0019.dds' successful 'TEX0019.dds' on index 450 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0018.dds' successful 'TEX0018.dds' on index 451 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0017.dds' successful 'TEX0017.dds' on index 452 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0016.dds' successful 'TEX0016.dds' on index 453 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0014.dds' successful 'TEX0014.dds' on index 454 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\TEX0015.dds' successful 'TEX0015.dds' on index 455 
+12-23-2019 01:18:13 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\transport\transport.x' succeeded in 156 ms ( 4836 faces, 12459 vertices ) ID 46
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'Transport_far' not found in the mesh collection.
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'Imperial-I Star Destroyer' not found in the mesh collection.
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00048.dds' successful 'TEX00048.dds' on index 456 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00047.dds' successful 'TEX00047.dds' on index 457 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00046.dds' successful 'TEX00046.dds' on index 458 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00045.dds' successful 'TEX00045.dds' on index 459 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00044.dds' successful 'TEX00044.dds' on index 460 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00015.dds' successful 'TEX00015.dds' on index 461 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00055.dds' successful 'TEX00055.dds' on index 462 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00007.dds' successful 'TEX00007.dds' on index 463 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00006.dds' successful 'TEX00006.dds' on index 464 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00005.dds' successful 'TEX00005.dds' on index 465 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00003.dds' successful 'TEX00003.dds' on index 466 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00004.dds' successful 'TEX00004.dds' on index 467 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00008.dds' successful 'TEX00008.dds' on index 468 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00065.dds' successful 'TEX00065.dds' on index 469 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00064.dds' successful 'TEX00064.dds' on index 470 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00066.dds' successful 'TEX00066.dds' on index 471 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00067.dds' successful 'TEX00067.dds' on index 472 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00068.dds' successful 'TEX00068.dds' on index 473 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00069.dds' successful 'TEX00069.dds' on index 474 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00070.dds' successful 'TEX00070.dds' on index 475 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00073.dds' successful 'TEX00073.dds' on index 476 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00072.dds' successful 'TEX00072.dds' on index 477 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00071.dds' successful 'TEX00071.dds' on index 478 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00076.dds' successful 'TEX00076.dds' on index 479 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00074.dds' successful 'TEX00074.dds' on index 480 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00082.dds' successful 'TEX00082.dds' on index 481 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00083.dds' successful 'TEX00083.dds' on index 482 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00084.dds' successful 'TEX00084.dds' on index 483 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00085.dds' successful 'TEX00085.dds' on index 484 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00086.dds' successful 'TEX00086.dds' on index 485 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00087.dds' successful 'TEX00087.dds' on index 486 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00088.dds' successful 'TEX00088.dds' on index 487 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00089.dds' successful 'TEX00089.dds' on index 488 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00081.dds' successful 'TEX00081.dds' on index 489 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00080.dds' successful 'TEX00080.dds' on index 490 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00078.dds' successful 'TEX00078.dds' on index 491 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00077.dds' successful 'TEX00077.dds' on index 492 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00079.dds' successful 'TEX00079.dds' on index 493 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00020.dds' successful 'TEX00020.dds' on index 494 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00019.dds' successful 'TEX00019.dds' on index 495 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00018.dds' successful 'TEX00018.dds' on index 496 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00017.dds' successful 'TEX00017.dds' on index 497 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00016.dds' successful 'TEX00016.dds' on index 498 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00014.dds' successful 'TEX00014.dds' on index 499 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00013.dds' successful 'TEX00013.dds' on index 500 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00012.dds' successful 'TEX00012.dds' on index 501 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00011.dds' successful 'TEX00011.dds' on index 502 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00009.dds' successful 'TEX00009.dds' on index 503 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00091.dds' successful 'TEX00091.dds' on index 504 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00093.dds' successful 'TEX00093.dds' on index 505 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00094.dds' successful 'TEX00094.dds' on index 506 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00095.dds' successful 'TEX00095.dds' on index 507 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00096.dds' successful 'TEX00096.dds' on index 508 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00097.dds' successful 'TEX00097.dds' on index 509 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00098.dds' successful 'TEX00098.dds' on index 510 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00092.dds' successful 'TEX00092.dds' on index 511 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00031.dds' successful 'TEX00031.dds' on index 512 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00036.dds' successful 'TEX00036.dds' on index 513 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00035.dds' successful 'TEX00035.dds' on index 514 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00034.dds' successful 'TEX00034.dds' on index 515 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00033.dds' successful 'TEX00033.dds' on index 516 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00032.dds' successful 'TEX00032.dds' on index 517 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00051.dds' successful 'TEX00051.dds' on index 518 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00000.dds' successful 'TEX00000.dds' on index 519 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00021.dds' successful 'TEX00021.dds' on index 520 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00023.dds' successful 'TEX00023.dds' on index 521 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00024.dds' successful 'TEX00024.dds' on index 522 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00056.dds' successful 'TEX00056.dds' on index 523 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00057.dds' successful 'TEX00057.dds' on index 524 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00058.dds' successful 'TEX00058.dds' on index 525 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00059.dds' successful 'TEX00059.dds' on index 526 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00060.dds' successful 'TEX00060.dds' on index 527 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00062.dds' successful 'TEX00062.dds' on index 528 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00061.dds' successful 'TEX00061.dds' on index 529 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00063.dds' successful 'TEX00063.dds' on index 530 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00001.dds' successful 'TEX00001.dds' on index 531 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00039.dds' successful 'TEX00039.dds' on index 532 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00038.dds' successful 'TEX00038.dds' on index 533 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00037.dds' successful 'TEX00037.dds' on index 534 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00040.dds' successful 'TEX00040.dds' on index 535 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00041.dds' successful 'TEX00041.dds' on index 536 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00042.dds' successful 'TEX00042.dds' on index 537 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00043.dds' successful 'TEX00043.dds' on index 538 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00049.dds' successful 'TEX00049.dds' on index 539 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00050.dds' successful 'TEX00050.dds' on index 540 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00002.dds' successful 'TEX00002.dds' on index 541 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00027.dds' successful 'TEX00027.dds' on index 542 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00028.dds' successful 'TEX00028.dds' on index 543 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00075.dds' successful 'TEX00075.dds' on index 544 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00090.dds' successful 'TEX00090.dds' on index 545 
+12-23-2019 01:18:13 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\star_destroyer.x' succeeded in 172 ms ( 3425 faces, 4889 vertices ) ID 47
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'Imperial-I Star Destroyer_far' not found in the mesh collection.
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'Interdictor Star Destroyer' not found in the mesh collection.
+12-23-2019 01:18:13 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\interdictor_star_destroyer.x' succeeded in 78 ms ( 4295 faces, 5034 vertices ) ID 48
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'Interdictor Star Destroyer_far' not found in the mesh collection.
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'Victory-I Star Destroyer' not found in the mesh collection.
+12-23-2019 01:18:13 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\victory_star_destroyer.x' succeeded in 63 ms ( 2663 faces, 3906 vertices ) ID 49
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'Victory-I Star Destroyer_far' not found in the mesh collection.
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'Acclamator Assault Ship' not found in the mesh collection.
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\acclamator\TEX00000.dds' successful 'TEX00000.dds' on index 546 
+12-23-2019 01:18:13 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\acclamator\acclamator.x' succeeded in 15 ms ( 338 faces, 368 vertices ) ID 50
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'Acclamator Assault Ship_far' not found in the mesh collection.
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'Arquitens Light Cruiser' not found in the mesh collection.
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\arquitens\TEX00001.dds' successful 'TEX00001.dds' on index 547 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\arquitens\TEX00000.dds' successful 'TEX00000.dds' on index 548 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\arquitens\TEX00002.dds' successful 'TEX00002.dds' on index 549 
+12-23-2019 01:18:13 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\arquitens\arquitens.x' succeeded in 391 ms ( 3677 faces, 4091 vertices ) ID 51
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'Arquitens Light Cruiser_far' not found in the mesh collection.
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'Strike Cruiser' not found in the mesh collection.
+12-23-2019 01:18:13 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\strike\strike.x' succeeded in 32 ms ( 3386 faces, 2870 vertices ) ID 52
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'Strike Cruiser_far' not found in the mesh collection.
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'EXEC' not found in the mesh collection.
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\executor\executor_buildings_walls.bmp' successful 'executor_buildings_walls.bmp' on index 550 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\executor\executor_engine_main.bmp' successful 'executor_engine_main.bmp' on index 551 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\executor\executor_buildings_top.bmp' successful 'executor_buildings_top.bmp' on index 552 
+12-23-2019 01:18:13 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\executor\executor_engine_flame.bmp' successful 'executor_engine_flame.bmp' on index 553 
+12-23-2019 01:18:13 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\executor\executor.x' succeeded in 32 ms ( 5705 faces, 7417 vertices ) ID 53
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'EXEC_far' not found in the mesh collection.
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'XQ1-Platform' not found in the mesh collection.
+12-23-2019 01:18:13 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\platform\xq1.x' succeeded in 31 ms ( 2553 faces, 3925 vertices ) ID 54
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'XQ1-Platform_far' not found in the mesh collection.
+12-23-2019 01:18:13 | GLOBAL CLASS : GetMesh : Mesh 'SURF00100' not found in the mesh collection.
+12-23-2019 01:18:14 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface01.jpg' successful 'surface01.jpg' on index 554 
+12-23-2019 01:18:14 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface02.jpg' successful 'surface02.jpg' on index 555 
+12-23-2019 01:18:14 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface001_00.x' succeeded in 485 ms ( 2432 faces, 4864 vertices ) ID 55
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00100_far' not found in the mesh collection.
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00101' not found in the mesh collection.
+12-23-2019 01:18:14 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface001_01.x' succeeded in 32 ms ( 2432 faces, 4864 vertices ) ID 56
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00101_far' not found in the mesh collection.
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00200' not found in the mesh collection.
+12-23-2019 01:18:14 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\TEX00005.bmp' successful 'TEX00005.bmp' on index 556 
+12-23-2019 01:18:14 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\TEX00004.BMP' successful 'TEX00004.BMP' on index 557 
+12-23-2019 01:18:14 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\TEX00006.bmp' successful 'TEX00006.bmp' on index 558 
+12-23-2019 01:18:14 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface002_00.x' succeeded in 203 ms ( 226 faces, 431 vertices ) ID 57
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00200_far' not found in the mesh collection.
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00201' not found in the mesh collection.
+12-23-2019 01:18:14 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface002_01.x' succeeded in 0 ms ( 230 faces, 438 vertices ) ID 58
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00201_far' not found in the mesh collection.
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00202' not found in the mesh collection.
+12-23-2019 01:18:14 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface002_02.x' succeeded in 15 ms ( 226 faces, 432 vertices ) ID 59
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00202_far' not found in the mesh collection.
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00203' not found in the mesh collection.
+12-23-2019 01:18:14 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface002_03.x' succeeded in 0 ms ( 226 faces, 432 vertices ) ID 60
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00203_far' not found in the mesh collection.
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00204' not found in the mesh collection.
+12-23-2019 01:18:14 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface002_04.x' succeeded in 16 ms ( 226 faces, 431 vertices ) ID 61
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00204_far' not found in the mesh collection.
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00205' not found in the mesh collection.
+12-23-2019 01:18:14 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface002_05.x' succeeded in 0 ms ( 236 faces, 460 vertices ) ID 62
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00205_far' not found in the mesh collection.
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00206' not found in the mesh collection.
+12-23-2019 01:18:14 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface002_06.x' succeeded in 0 ms ( 236 faces, 460 vertices ) ID 63
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00206_far' not found in the mesh collection.
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00207' not found in the mesh collection.
+12-23-2019 01:18:14 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface002_07.x' succeeded in 15 ms ( 242 faces, 472 vertices ) ID 64
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00207_far' not found in the mesh collection.
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00208' not found in the mesh collection.
+12-23-2019 01:18:14 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface002_08.x' succeeded in 0 ms ( 242 faces, 472 vertices ) ID 65
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00208_far' not found in the mesh collection.
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00209' not found in the mesh collection.
+12-23-2019 01:18:14 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface002_09.x' succeeded in 0 ms ( 242 faces, 472 vertices ) ID 66
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00209_far' not found in the mesh collection.
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00210' not found in the mesh collection.
+12-23-2019 01:18:14 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface002_10.x' succeeded in 16 ms ( 248 faces, 484 vertices ) ID 67
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00210_far' not found in the mesh collection.
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00211' not found in the mesh collection.
+12-23-2019 01:18:14 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface002_11.x' succeeded in 0 ms ( 248 faces, 480 vertices ) ID 68
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00211_far' not found in the mesh collection.
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00212' not found in the mesh collection.
+12-23-2019 01:18:14 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface002_12.x' succeeded in 15 ms ( 146 faces, 271 vertices ) ID 69
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00212_far' not found in the mesh collection.
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00299' not found in the mesh collection.
+12-23-2019 01:18:14 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\TEX00007.bmp' successful 'TEX00007.bmp' on index 559 
+12-23-2019 01:18:14 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface002_99.x' succeeded in 110 ms ( 286 faces, 552 vertices ) ID 70
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00299_far' not found in the mesh collection.
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00300' not found in the mesh collection.
+12-23-2019 01:18:14 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\TEX00003.bmp' successful 'TEX00003.bmp' on index 560 
+12-23-2019 01:18:14 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface003.x' succeeded in 109 ms ( 32 faces, 33 vertices ) ID 71
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'SURF00300_far' not found in the mesh collection.
+12-23-2019 01:18:14 | GLOBAL CLASS : GetMesh : Mesh 'Advanced Turbolaser Tower' not found in the mesh collection.
+12-23-2019 01:18:14 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\TEX00012.BMP' successful 'TEX00012.BMP' on index 561 
+12-23-2019 01:18:14 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\TEX00002.BMP' successful 'TEX00002.BMP' on index 562 
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\TEX00004.BMP' successful 'TEX00004.BMP' on index 563 
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\TEX00001.BMP' successful 'TEX00001.BMP' on index 564 
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\TEX00005.BMP' successful 'TEX00005.BMP' on index 565 
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\tower_00.x' succeeded in 31 ms ( 420 faces, 840 vertices ) ID 72
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Advanced Turbolaser Tower_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Deflector Tower' not found in the mesh collection.
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\TEX00000.BMP' successful 'TEX00000.BMP' on index 566 
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\TEX00010.BMP' successful 'TEX00010.BMP' on index 567 
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\tower_01.x' succeeded in 0 ms ( 18 faces, 40 vertices ) ID 73
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Deflector Tower_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Gun Tower' not found in the mesh collection.
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\TEX00003.BMP' successful 'TEX00003.BMP' on index 568 
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\TEX00011.BMP' successful 'TEX00011.BMP' on index 569 
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\tower_02.x' succeeded in 0 ms ( 20 faces, 41 vertices ) ID 74
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Gun Tower_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Radar Tower' not found in the mesh collection.
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\TEX00015.BMP' successful 'TEX00015.BMP' on index 570 
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\TEX00016.BMP' successful 'TEX00016.BMP' on index 571 
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\tower_03.x' succeeded in 15 ms ( 168 faces, 260 vertices ) ID 75
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Radar Tower_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Super Deflector Tower' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\tower_01.x' succeeded in 0 ms ( 18 faces, 40 vertices ) ID 76
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Super Deflector Tower_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Turbolaser Tower 00 Ruins' not found in the mesh collection.
+12-23-2019 01:18:15 | STREAM MANAGER : Couldn't open file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\tower_00_destroyed.x'
+12-23-2019 01:18:15 | MESH MANAGER : Couldn't load the X model 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\tower_00_destroyed.x' File not found, error -1
+12-23-2019 01:18:15 | MESH MANAGER : WeldVertices : you can not use WeldVertices on an empty mesh or an invalid mesh !
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Turbolaser Tower 00 Ruins_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Turbolaser Tower 01 Ruins' not found in the mesh collection.
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\TEX00009.BMP' successful 'TEX00009.BMP' on index 572 
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\TEX00013.BMP' successful 'TEX00013.BMP' on index 573 
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\tower_01_destroyed.x' succeeded in 16 ms ( 14 faces, 28 vertices ) ID 78
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Turbolaser Tower 01 Ruins_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Turbolaser Tower 02 Ruins' not found in the mesh collection.
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\TEX00008.BMP' successful 'TEX00008.BMP' on index 574 
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\tower_02_destroyed.x' succeeded in 0 ms ( 16 faces, 29 vertices ) ID 79
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Turbolaser Tower 02 Ruins_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Turbolaser Tower 03 Ruins' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\tower_03_destroyed.x' succeeded in 0 ms ( 14 faces, 28 vertices ) ID 80
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Turbolaser Tower 03 Ruins_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Turbolaser Turret' not found in the mesh collection.
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\TEX00006.bmp' successful 'tower\TEX00006.bmp' on index 575 
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\TEX00007.bmp' successful 'tower\TEX00007.bmp' on index 576 
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\tower_turbolaser.x' succeeded in 0 ms ( 60 faces, 120 vertices ) ID 81
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Turbolaser Turret_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Advanced Turbolaser Turret' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\tower_turbolaser.x' succeeded in 0 ms ( 60 faces, 120 vertices ) ID 82
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Advanced Turbolaser Turret_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Super Turbolaser Turret' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\towers\tower_turbolaser.x' succeeded in 0 ms ( 60 faces, 120 vertices ) ID 83
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Super Turbolaser Turret_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Thermal Exhaust Port' not found in the mesh collection.
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\TEX00008.BMP' successful 'TEX00008.BMP' on index 577 
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\TEX00009.BMP' successful 'TEX00009.BMP' on index 578 
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\surface\surface_vent.x' succeeded in 16 ms ( 80 faces, 134 vertices ) ID 84
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Thermal Exhaust Port_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Missile' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\projectiles\missile.x' succeeded in 0 ms ( 20 faces, 16 vertices ) ID 85
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Missile_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Torpedo' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\projectiles\torpedo.x' succeeded in 0 ms ( 20 faces, 16 vertices ) ID 86
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Torpedo_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'MC90 Turbolaser Tower' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\turbotowers\mc90_turbolaser.x' succeeded in 15 ms ( 58 faces, 64 vertices ) ID 87
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'MC90 Turbolaser Tower_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Corellian Turbolaser Tower' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\turbotowers\corellian_turbolaser.x' succeeded in 0 ms ( 78 faces, 79 vertices ) ID 88
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Corellian Turbolaser Tower_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Transport Turbolaser Tower' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\turbotowers\transport_turbolaser.x' succeeded in 0 ms ( 78 faces, 79 vertices ) ID 89
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Transport Turbolaser Tower_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Nebulon B Turbolaser Tower' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\turbotowers\nebulonb_turbolaser.x' succeeded in 0 ms ( 58 faces, 52 vertices ) ID 90
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Nebulon B Turbolaser Tower_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Nebulon B Missile Pod' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\turbotowers\nebulonb_missilepod.x' succeeded in 0 ms ( 58 faces, 52 vertices ) ID 91
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Nebulon B Missile Pod_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Acclamator Turbolaser Tower' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\turbotowers\acclamator_turbolaser.x' succeeded in 0 ms ( 58 faces, 64 vertices ) ID 92
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Acclamator Turbolaser Tower_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Plaform Turbolaser Tower' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\turbotowers\xq_turbolaser.x' succeeded in 0 ms ( 58 faces, 64 vertices ) ID 93
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Plaform Turbolaser Tower_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Laser Turret' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\turbotowers\xq_turbolaser.x' succeeded in 0 ms ( 58 faces, 64 vertices ) ID 94
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Laser Turret_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Laser Turret_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Laser Turret_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Arquitens Turbolaser Tower' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\turbotowers\acclamator_turbolaser.x' succeeded in 0 ms ( 58 faces, 64 vertices ) ID 95
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Arquitens Turbolaser Tower_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Star Destroyer Heavy Turbolaser Tower' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\turbotowers\star_destroyer_anti-ship_turbolaser.x' succeeded in 0 ms ( 58 faces, 64 vertices ) ID 96
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Star Destroyer Heavy Turbolaser Tower_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Star Destroyer Turbolaser Tower' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\turbotowers\star_destroyer_turbolaser.x' succeeded in 16 ms ( 58 faces, 64 vertices ) ID 97
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Star Destroyer Turbolaser Tower_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Star Destroyer Missile Pod' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\turbotowers\star_destroyer_missilepod.x' succeeded in 0 ms ( 58 faces, 52 vertices ) ID 98
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Star Destroyer Missile Pod_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Shield Generator' not found in the mesh collection.
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00030.dds' successful 'TEX00030.dds' on index 579 
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\TEX00029.dds' successful 'TEX00029.dds' on index 580 
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\stardestroyer\star_destroyer_energy_pod.x' succeeded in 0 ms ( 110 faces, 330 vertices ) ID 99
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Shield Generator_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Shield Generator_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Shield Generator_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Strike-class Turbolaser Tower' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\turbotowers\acclamator_turbolaser.x' succeeded in 0 ms ( 58 faces, 64 vertices ) ID 100
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Strike-class Turbolaser Tower_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Strike-class Heavy Turbolaser Tower' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\turbotowers\star_destroyer_anti-ship_turbolaser.x' succeeded in 0 ms ( 58 faces, 64 vertices ) ID 101
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Strike-class Heavy Turbolaser Tower_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Strkie-class Missile Pod' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\turbotowers\star_destroyer_missilepod.x' succeeded in 0 ms ( 58 faces, 52 vertices ) ID 102
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Strkie-class Missile Pod_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Executor Super Star Destroyer Turbolaser Tower' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\turbotowers\executor_turbolaser.x' succeeded in 0 ms ( 12 faces, 24 vertices ) ID 103
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Executor Super Star Destroyer Turbolaser Tower_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Shield Generator_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Executor Super Star Destroyer Bridge' not found in the mesh collection.
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\executor\executor_bridge.bmp' successful 'executor_bridge.bmp' on index 581 
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\executor\executor_bridge.x' succeeded in 16 ms ( 16 faces, 27 vertices ) ID 104
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Executor Super Star Destroyer Bridge_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Laser Turret_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Asteroid 01' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\asteroids\asteroid01.x' succeeded in 16 ms ( 2036 faces, 1020 vertices ) ID 105
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Asteroid 01_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Asteroid 02' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\asteroids\asteroid02.x' succeeded in 15 ms ( 2040 faces, 1022 vertices ) ID 106
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Asteroid 02_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Asteroid 03' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\asteroids\asteroid03.x' succeeded in 16 ms ( 1140 faces, 572 vertices ) ID 107
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Asteroid 03_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Asteroid 04' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\asteroids\asteroid04.x' succeeded in 0 ms ( 1144 faces, 574 vertices ) ID 108
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Asteroid 04_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Asteroid 05' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\asteroids\asteroid05.x' succeeded in 0 ms ( 2032 faces, 1018 vertices ) ID 109
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Asteroid 05_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Asteroid 06' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\asteroids\asteroid06.x' succeeded in 16 ms ( 2039 faces, 1022 vertices ) ID 110
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Asteroid 06_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Asteroid 07' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\asteroids\asteroid07.x' succeeded in 15 ms ( 2040 faces, 1022 vertices ) ID 111
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Asteroid 07_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Asteroid 08' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\asteroids\asteroid08.x' succeeded in 16 ms ( 2034 faces, 1019 vertices ) ID 112
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Asteroid 08_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Death Star Laser' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\projectiles\death_laser.x' succeeded in 16 ms ( 12 faces, 24 vertices ) ID 113
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Death Star Laser_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Green Laser' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\projectiles\green_laser.x' succeeded in 0 ms ( 16 faces, 24 vertices ) ID 114
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Green Laser_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Green Double Laser' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\projectiles\green2_laser.x' succeeded in 0 ms ( 32 faces, 80 vertices ) ID 115
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Green Double Laser_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Green Anti-Ship Laser' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\projectiles\green3_laser.x' succeeded in 0 ms ( 48 faces, 120 vertices ) ID 116
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Green Anti-Ship Laser_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Green Laser Advanced' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\projectiles\green_laser.x' succeeded in 0 ms ( 16 faces, 24 vertices ) ID 117
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Green Laser Advanced_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Ion Laser' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\projectiles\ion_sm_laser.x' succeeded in 16 ms ( 216 faces, 564 vertices ) ID 118
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Ion Laser_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Large Ion Laser' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\projectiles\ion_sm_laser.x' succeeded in 0 ms ( 216 faces, 564 vertices ) ID 119
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Large Ion Laser_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Red Laser' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\projectiles\red_laser.x' succeeded in 0 ms ( 16 faces, 40 vertices ) ID 120
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Red Laser_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Yellow Laser' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\projectiles\yellow_laser.x' succeeded in 16 ms ( 16 faces, 24 vertices ) ID 121
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Yellow Laser_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Yellow Double Laser' not found in the mesh collection.
+12-23-2019 01:18:15 | MESH MANAGER : Loading of mesh file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\models\projectiles\yellow2_laser.x' succeeded in 0 ms ( 32 faces, 38 vertices ) ID 122
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Yellow Double Laser_far' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'Electro' not found in the mesh collection.
+12-23-2019 01:18:15 | TEXTURE MANAGER : Couldn't find the texture 'electro/tex.jpg' in the texture list.
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\electro/tex.jpg' successful 'NONAME' on index 582 
+12-23-2019 01:18:15 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'ExpL00' not found in the mesh collection.
+12-23-2019 01:18:15 | TEXTURE MANAGER : Couldn't find the texture 'explosion/large/tex.jpg' in the texture list.
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\explosion/large/tex.jpg' successful 'NONAME' on index 584 
+12-23-2019 01:18:15 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'ExpL01' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'ExpL02' not found in the mesh collection.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'ExpS00' not found in the mesh collection.
+12-23-2019 01:18:15 | TEXTURE MANAGER : Couldn't find the texture 'explosion/small/tex.jpg' in the texture list.
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\explosion/small/tex.jpg' successful 'NONAME' on index 586 
+12-23-2019 01:18:15 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'ExpW01' not found in the mesh collection.
+12-23-2019 01:18:15 | TEXTURE MANAGER : Couldn't find the texture 'explosion\wave\tex0000.jpg' in the texture list.
+12-23-2019 01:18:15 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\images\explosion\wave\tex0000.jpg' successful 'NONAME' on index 588 
+12-23-2019 01:18:15 | TEXTURE MANAGER : AddAlphaChannel succeeded.
+12-23-2019 01:18:15 | GLOBAL CLASS : GetMesh : Mesh 'ExpW02' not found in the mesh collection.
+12-23-2019 01:18:17 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\atmosphere\stars_big.bmp' successful 'NONAME' on index 590 
+12-23-2019 01:18:17 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\atmosphere\sun.jpg' successful 'NONAME' on index 591 
+12-23-2019 01:18:17 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\atmosphere\flare1.jpg' successful 'flare1' on index 592 
+12-23-2019 01:18:17 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\atmosphere\flare2.jpg' successful 'flare2' on index 593 
+12-23-2019 01:18:17 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\atmosphere\flare3.jpg' successful 'flare3' on index 594 
+12-23-2019 01:18:17 | TEXTURE MANAGER : Loading of 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\atmosphere\flare4.jpg' successful 'flare4' on index 595 
+12-23-2019 01:18:17 | STREAM MANAGER : Couldn't open file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\landscape\texmap.png'
+12-23-2019 01:18:17 | TEXTURE MANAGER : Couldn't find the texture file C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\landscape\texmap.png.
+12-23-2019 01:18:17 | LANDSCAPE : Generating landscape #0 from heightmap C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\landscape\heightmap.png
+12-23-2019 01:18:17 | STREAM MANAGER : Couldn't open file 'C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\landscape\heightmap.png'
+12-23-2019 01:18:17 | LANDSCAPE MANAGER : Couldnt open the heightmap file C:\Users\user\git\GitHub.OwnProjects\SWEndor\releases\v0.0_test\assets\landscape\heightmap.png. File not found
+12-23-2019 01:18:17 | LANDSCAPE : heightmap filename is a NULL ! Creating a empty terrain #0
+12-23-2019 01:18:17 | LANDSCAPE : 1x1 Landscape successfully generated with 289 vertices and 1734 indices in 0 milliseconds.
+12-23-2019 01:18:17 | LANDSCAPE : Quadtree created for the landscape in 0 milliseconds.
+12-23-2019 01:18:17 | LANDSCAPE : Landscape object #0 has been initialized
+12-23-2019 01:18:20 | START UNLOAD
+12-23-2019 01:18:21 | RESSOURCE MANAGER : Engine successfully unloaded

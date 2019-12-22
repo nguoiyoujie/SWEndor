@@ -1,0 +1,50 @@
+﻿--------------------------------------------------------------------------------------------------------------------------------
+Scenario File (*.scen)
+Format: INI File
+--------------------------------------------------------------------------------------------------------------------------------
+
+Scenario files link scripts together into a playable scenario.
+Each scenario file must be placed in the /Data/Scenarios directory for the game to recognize it.
+
+
+[General]
+--------------------------------------------------------------------------------------------------------------------------------
+Key             | Value Type      | Description
+--------------------------------------------------------------------------------------------------------------------------------
+Name              string            The name of the scenario. 
+                                    This will be displayed in the mission selection screen.
+
+PlayerName        string            The name other actors will call the player craft.
+
+Description       string            The description of the scenario.
+                                    This will be displayed in the mission selection screen.
+
+Wings             string[]          The list of craft IDs the player is allowed to choose for this mission.
+
+Difficulties      string[]          The list of difficulties the player is allowed to choose for this mission. 
+                                    The difficulty adjustment must be implemented by the scenario itself.
+
+[Script]
+--------------------------------------------------------------------------------------------------------------------------------
+Key             | Value Type      | Description
+--------------------------------------------------------------------------------------------------------------------------------
+Paths             string[]          The list of script files to load for the scenario.
+                                    Each entry is a relative path from the executable's location.
+                                    Each file must be in a script file format.
+
+Fn_load           string            The name of the load function. Defaults to 'load'.
+                                    This function is called at initialisation, after Fn_loadfaction and Fn_loadscene.
+
+Fn_loadfaction    string            The name of the loadfaction function. Defaults to 'loadfaction'.
+                                    This function is called at initialisation.
+
+Fn_loadscene      string            The name of the loadscene function. Defaults to 'loadscene'.
+                                    This function is called at initialisation, after Fn_loadfaction.
+
+Fn_makeplayer     string            The name of the makeplayer function. Defaults to 'makeplayer'.
+                                    This function is called every time a player is supposed to respawn, both initially and after 
+                                    each death. The actual respawn logic must be implemented by the scenario itself.
+
+Fns_gametick      string[]          The list of the tick functions.
+                                    This function is called every tick of the game.
+
