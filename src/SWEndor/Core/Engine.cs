@@ -147,7 +147,6 @@ namespace SWEndor.Core
 
       Screen2D.LoadingTextLines.Add("Loading scenario engine...");
       GameScenarioManager = new ScenarioManager(this);
-      GameScenarioManager.LoadInitial();
 
       Screen2D.LoadingTextLines.Add("Loading main menu...");
       GameScenarioManager.LoadMainMenu();

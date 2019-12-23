@@ -129,12 +129,12 @@ namespace SWEndor.Scenarios
         }
       }
       m_Player = PlayerInfo.Actor;
-      PlayerInfo.IsMovementControlsEnabled = true;
+      PlayerInfo.SystemLockMovement = false;
     }
 
     public void Test_GiveControl()
     {
-      PlayerInfo.IsMovementControlsEnabled = true;
+      PlayerInfo.SystemLockMovement = false;
       State.SetGameStateB("in_battle", true);
     }
 

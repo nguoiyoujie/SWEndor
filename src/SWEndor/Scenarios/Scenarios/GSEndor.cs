@@ -1126,7 +1126,7 @@ namespace SWEndor.Scenarios
         actor.MoveData.Speed = actor.MoveData.MaxSpeed;
         actor.SpawnerInfo.Enabled = true;
       }
-      PlayerInfo.IsMovementControlsEnabled = true;
+      PlayerInfo.SystemLockMovement = false;
 
       State.SetGameStateB("in_battle", true);
       State.SetGameStateB("TIEs", true);

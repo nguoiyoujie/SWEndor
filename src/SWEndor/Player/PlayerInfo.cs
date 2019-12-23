@@ -44,7 +44,7 @@ namespace SWEndor.Player
     public bool Exists { get { return Engine.ActorFactory.Contains(ActorID); } }
     public int TempActorID;
     public ActorInfo TempActor { get { return Engine.ActorFactory.Get(TempActorID); } }
-    
+
     private float m_LowAlarmSoundTime = 0;
     public float StrengthFrac { get { return Actor?.HP_Frac ?? 0; } }
     public COLOR StrengthColor { get { return Actor?.HP_Color ?? ColorLocalization.Get(ColorLocalKeys.WHITE); } }
@@ -190,7 +190,7 @@ namespace SWEndor.Player
 
     private void ParseWeapons()
     {
-      if (Actor != null) 
+      if (Actor != null)
       {
         if (PrimaryWeapon.IsNull)
           ResetPrimaryWeapon();
@@ -328,12 +328,14 @@ namespace SWEndor.Player
 
     internal ScoreInfo Score;
 
-    public bool IsMovementControlsEnabled = true;
+    public bool PlayerLockMovement = false;
+    public bool SystemLockMovement = false;
+    public bool IsMovementControlsEnabled { get { return !SystemLockMovement && !PlayerLockMovement; } }
     public bool IsTorpedoMode
     {
       get
       {
-        return (PrimaryWeapon.Weapon.Proj.Type == WeaponType.TORPEDO) 
+        return (PrimaryWeapon.Weapon.Proj.Type == WeaponType.TORPEDO)
           || (SecondaryWeapon.Weapon.Proj.Type == WeaponType.TORPEDO);
       }
     }

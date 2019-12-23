@@ -795,7 +795,7 @@ namespace SWEndor.Scenarios
       foreach (int actorID in AllyYWingFaction.GetWings())
         Rebel_GiveControl(actorID);
 
-      PlayerInfo.IsMovementControlsEnabled = true;
+      PlayerInfo.SystemLockMovement = false;
       State.SetGameStateB("in_battle", true);
     }
 

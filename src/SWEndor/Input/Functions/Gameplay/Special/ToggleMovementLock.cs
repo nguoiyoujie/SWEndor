@@ -13,10 +13,13 @@ namespace SWEndor.Input.Functions.Gameplay.Special
 
     public override void Process(Engine engine)
     {
-      engine.PlayerInfo.IsMovementControlsEnabled = !engine.PlayerInfo.IsMovementControlsEnabled;
-      engine.Screen2D.MessageSecondaryText(engine.PlayerInfo.IsMovementControlsEnabled ? "Movement Unlocked" : "Movement Locked"
-                                                 , 2.5f
-                                                 , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_NORMAL));
+      if (!engine.PlayerInfo.SystemLockMovement)
+      {
+        engine.PlayerInfo.PlayerLockMovement = !engine.PlayerInfo.PlayerLockMovement;
+        engine.Screen2D.MessageSecondaryText(engine.PlayerInfo.IsMovementControlsEnabled ? "Movement Unlocked" : "Movement Locked"
+                                                   , 2.5f
+                                                   , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_NORMAL));
+      }
     }
   }
 }

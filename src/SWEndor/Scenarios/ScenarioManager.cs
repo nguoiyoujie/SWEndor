@@ -64,12 +64,6 @@ namespace SWEndor.Scenarios
 
     public bool IsMainMenu { get { return Scenario == DesignatedMainMenuScenario; } }
 
-    public void LoadInitial()
-    {
-      Engine.PlayerInfo.Score.Reset();
-      Engine.PlayerInfo.IsMovementControlsEnabled = false;
-    }
-
     public void UpdateActorLists(HashSet<ActorInfo> list)
     {
       foreach (ActorInfo a in new List<ActorInfo>(list))
@@ -96,8 +90,6 @@ namespace SWEndor.Scenarios
     public void Reset()
     {
       Scenario?.Unload();
-
-      LoadInitial();
     }
   }
 }

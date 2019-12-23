@@ -60,7 +60,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <returns>NULL</returns>
     public static Val SetMovementEnabled(Context context, bool enabled)
     {
-      context.Engine.PlayerInfo.IsMovementControlsEnabled = enabled;
+      context.Engine.PlayerInfo.SystemLockMovement = !enabled;
       return Val.NULL;
     }
 

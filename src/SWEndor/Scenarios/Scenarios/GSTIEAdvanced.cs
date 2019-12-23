@@ -347,7 +347,7 @@ namespace SWEndor.Scenarios
         }
       }
 
-      PlayerInfo.IsMovementControlsEnabled = true;
+      PlayerInfo.SystemLockMovement = false;
 
       State.SetGameStateB("in_battle", true);
       Empire_TIEAdvanced();

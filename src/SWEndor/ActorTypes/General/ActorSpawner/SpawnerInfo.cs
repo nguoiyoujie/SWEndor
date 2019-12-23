@@ -61,7 +61,7 @@ namespace SWEndor
       if (NextSpawnTime < engine.Game.GameTime + SpawnPlayerDelay)
         NextSpawnTime = engine.Game.GameTime + SpawnPlayerDelay;
 
-      engine.PlayerInfo.IsMovementControlsEnabled = false;
+      engine.PlayerInfo.SystemLockMovement = true;
 
       ActorCreationInfo acinfo = new ActorCreationInfo(engine.PlayerInfo.ActorType);
 
@@ -198,7 +198,7 @@ namespace SWEndor
                    , SpawnManualPositioningMult.z * m2);
 
       if (a.IsPlayer)
-        engine.PlayerInfo.IsMovementControlsEnabled = false;
+        engine.PlayerInfo.SystemLockMovement = true;
     }
 
     private void ReleaseSpawns(Engine engine, ActorInfo ainfo)
@@ -209,7 +209,10 @@ namespace SWEndor
         a.UnlockOne();
 
         if (a.IsPlayer)
-          engine.PlayerInfo.IsMovementControlsEnabled = true;
+        {
+          engine.PlayerInfo.SystemLockMovement = false;
+          engine.PlayerInfo.PlayerLockMovement = false;
+        }
 
         ainfo.RemoveChild(a);
       }
