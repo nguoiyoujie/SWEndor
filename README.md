@@ -1,4 +1,4 @@
-
+[![Build Status](https://dev.azure.com/yjnguoi/SWEndor/_apis/build/status/SWEndor?branchName=master)](https://dev.azure.com/yjnguoi/SWEndor/_build/latest?definitionId=1&branchName=master)
 # SWEndor
 This is a remake of the free Star Wars games originally made by **Bruno. R. Marcos** back in the early 2000s. The [Battle of Endor](http://www.moddb.com/games/starwars-battle-of-endor) was the first of such game to be published by him, and the project name is thus named in this honor.
 
