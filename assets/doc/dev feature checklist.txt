@@ -91,10 +91,10 @@ Audio:
 
  
 Scenario:
- @ [2019.11.11] Functional [Main Menu] scenario.
+ - [2019.11.11] Functional [Main Menu] scenario.
  W [2019.10.29] Restore functionality to [Battle of Endor] scenario.
  @ [2019.11.11] Functional [Smuggler Custom Test I] custom scenario.
- @ [2019.11.11] Functional [Imperial Custom Test I] custom scenario.
+ - [2019.11.11] Functional [Imperial Custom Test I] custom scenario.
  - [2019.10.29] Definition of 'functional':
      - [2019.10.29] Support game over
      - [2019.10.29] Support win
@@ -115,8 +115,8 @@ Scripting:
 	 - [2019.10.29] int array (int[])
 	 - [2019.10.29] float array (float[])
 	 
- @ [2019.10.29] Allow global variable definitions, and local variable definitions
- W [2019.10.29] Support interaction with game globals
+ - [2019.10.29] Allow global variable definitions, and local variable definitions
+ - [2019.10.29] Support interaction with game globals
  
 
 UI:
@@ -149,14 +149,14 @@ Configuration Support:
  
 
 Performance Target:
- @ [2019.10.29] Consistent > 55 FPS in [Main Menu], [Smuggler Custom Test I], [Imperial Custom Test I] scenario (~200 actors, ~200 projectiles, <5 very large ships)
- @ [2019.10.29] Consistent > 40 FPS in [Battle of Endor]/Mental scenario (~10 very large ships)
- @ [2019.10.29] Exclude performance drop when handling large amounts of actor creation in a single frame (revisit in future versions)
+ - [2019.10.29] Consistent > 55 FPS in [Main Menu], [Smuggler Custom Test I], [Imperial Custom Test I] scenario (~200 actors, ~200 projectiles, <5 very large ships)
+ - [2019.10.29] Consistent > 40 FPS in [Battle of Endor]/Mental scenario (~10 very large ships)
+ - [2019.10.29] Exclude performance drop when handling large amounts of actor creation in a single frame (revisit in future versions)
  
  
 Documentation:
- C [2019.10.30] How to setup
- C [2019.10.30] Basic gameplay description 
+ - [2019.10.30] How to setup
+ - [2019.10.30] Basic gameplay description 
  C [2019.10.30] Data file definitions
 	 C [2019.10.29] Configuration settings		[INI]
 	 C [2019.10.29] X Models					[X]
