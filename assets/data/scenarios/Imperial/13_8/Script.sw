@@ -139,6 +139,7 @@ setupplayer:
 	
 firstspawn:
 	Player.AssignActor(Actor.Spawn(GetPlayerActorType(), GetPlayerName(), "Empire", "", 0, { 4200, -950, 450 }, { 0, -130, 0 })); //{ 500, -300, 12500 }, { 0, -180, 0 }));
+	Player.SetMovementEnabled(false);
 	if (Actor.IsLargeShip(Player.GetActor()))
 		Actor.SetLocalPosition(Player.GetActor(), { 6000, -300, 0 });
 	respawn = true;

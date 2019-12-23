@@ -2,7 +2,7 @@
 Name = Imperial: The Trap Is Sprung
 PlayerName = Alpha-1
 Description = Grand Admiral Thrawn's task force has successfully trapped Admiral Zaarin and the stolen corvette Vorknkx.||Destroy the traitorious forces while protecting our Interdictor cruiser Corvus from counterattack. If the traitor tries to escape with the Vorknkx, destroy it as well.
-Wings = TIEA, TIED, TIEX
+Wings = TIEA, TIED
 Difficulties = Hard
 
 [Scripts]
