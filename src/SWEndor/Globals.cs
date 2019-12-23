@@ -26,10 +26,11 @@ namespace SWEndor
 
     /// <summary>The application version</summary>
     public static string Version = 
-        string.Format("v{0}.{1}.{2}-{3}"
+        string.Format("v{0}.{1}.{2}.{3}-{4}"
         , MajorVersion
         , MinorVersion
-        , DateTime.Parse(Build.Time).ToString("yyyy.MMdd.HHmm")
+        , Build.BuildDate
+        , Build.Revision
 #if DEBUG
         , "Debug"
 #else
