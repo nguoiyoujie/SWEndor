@@ -52,18 +52,36 @@ namespace Primrose.Expressions
         {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.INT, ValType.FLOAT), (a,b) => { return new Val((int)a * (float)b); }},
         {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT, ValType.INT), (a,b) => { return new Val((float)a * (int)b); }},
         {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val((float)a * (float)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT2, ValType.FLOAT), (a,b) => { return new Val((float2)a * (float)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT3, ValType.FLOAT), (a,b) => { return new Val((float3)a * (float)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT4, ValType.FLOAT), (a,b) => { return new Val((float4)a * (float)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT2, ValType.INT), (a,b) => { return new Val((float2)a * (int)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT3, ValType.INT), (a,b) => { return new Val((float3)a * (int)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT4, ValType.INT), (a,b) => { return new Val((float4)a * (int)b); }},
 
         // DIVIDE
         {new Trip<BOp, ValType, ValType>(BOp.DIVIDE, ValType.INT, ValType.INT), (a,b) => { return new Val((int)a / (int)b); }},
         {new Trip<BOp, ValType, ValType>(BOp.DIVIDE, ValType.INT, ValType.FLOAT), (a,b) => { return new Val((int)a / (float)b); }},
         {new Trip<BOp, ValType, ValType>(BOp.DIVIDE, ValType.FLOAT, ValType.INT), (a,b) => { return new Val((float)a / (int)b); }},
         {new Trip<BOp, ValType, ValType>(BOp.DIVIDE, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val((float)a / (float)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT2, ValType.FLOAT), (a,b) => { return new Val((float2)a / (float)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT3, ValType.FLOAT), (a,b) => { return new Val((float3)a / (float)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT4, ValType.FLOAT), (a,b) => { return new Val((float4)a / (float)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT2, ValType.INT), (a,b) => { return new Val((float2)a / (int)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT3, ValType.INT), (a,b) => { return new Val((float3)a / (int)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT4, ValType.INT), (a,b) => { return new Val((float4)a / (int)b); }},
 
         // MODULUS
         {new Trip<BOp, ValType, ValType>(BOp.MODULUS, ValType.INT, ValType.INT), (a,b) => { return new Val((int)a % (int)b); }},
         {new Trip<BOp, ValType, ValType>(BOp.MODULUS, ValType.INT, ValType.FLOAT), (a,b) => { return new Val((int)a % (float)b); }},
         {new Trip<BOp, ValType, ValType>(BOp.MODULUS, ValType.FLOAT, ValType.INT), (a,b) => { return new Val((float)a % (int)b); }},
         {new Trip<BOp, ValType, ValType>(BOp.MODULUS, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val((float)a % (float)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT2, ValType.FLOAT), (a,b) => { return new Val((float2)a % (float)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT3, ValType.FLOAT), (a,b) => { return new Val((float3)a % (float)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT4, ValType.FLOAT), (a,b) => { return new Val((float4)a % (float)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT2, ValType.INT), (a,b) => { return new Val((float2)a % (int)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT3, ValType.INT), (a,b) => { return new Val((float3)a % (int)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.FLOAT4, ValType.INT), (a,b) => { return new Val((float4)a % (int)b); }},
 
         // LOGICAL_OR
         {new Trip<BOp, ValType, ValType>(BOp.LOGICAL_OR, ValType.BOOL, ValType.BOOL), (a,b) => { return new Val((bool)a || (bool)b); }},

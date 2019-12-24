@@ -122,5 +122,12 @@ namespace Primrose.Primitives.ValueTypes
     {
       return new float3(a.x / m, a.y / m, a.z / m);
     }
+
+    /// <summary>Performs a modulus operation between a float3 value and a float divisor</summary>
+    /// <param name="a"></param><param name="m"></param><returns></returns>
+    public static float3 operator %(float3 a, float m)
+    {
+      return new float3(a.x % m, a.y % m, a.z % m);
+    }
   }
 }

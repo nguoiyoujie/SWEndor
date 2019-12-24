@@ -118,5 +118,12 @@ namespace Primrose.Primitives.ValueTypes
     {
       return new float2(a.x / m, a.y / m);
     }
+
+    /// <summary>Performs a modulus operation between a float2 value and a float divisor</summary>
+    /// <param name="a"></param><param name="m"></param><returns></returns>
+    public static float2 operator %(float2 a, float m)
+    {
+      return new float2(a.x % m, a.y % m);
+    }
   }
 }
