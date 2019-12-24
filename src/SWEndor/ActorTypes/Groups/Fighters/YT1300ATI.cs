@@ -24,7 +24,7 @@ namespace SWEndor.ActorTypes.Instances
       ScoreData = new ScoreData(750, 10000);
 
 
-      RegenData = new RegenData(false, 0.2f, 0, 0, 0);
+      RegenData = new RegenData(false, 0.4f, 0, 0, 0);
 
       MeshData = new MeshData(Engine, Name, @"falcon\falcon.x");
 

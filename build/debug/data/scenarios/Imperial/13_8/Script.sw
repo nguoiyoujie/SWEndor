@@ -134,22 +134,23 @@ makeplayer:
 setupplayer:
 	playerisship = Actor.IsLargeShip(Player.GetActor());
 	if (respawn) 
-		Script.Call("respawn");
+		Script.Call("makesquad");
 
 	
 firstspawn:
 	Player.AssignActor(Actor.Spawn(GetPlayerActorType(), GetPlayerName(), "Empire", "", 0, { 4200, -950, 450 }, { 0, -130, 0 })); //{ 500, -300, 12500 }, { 0, -180, 0 }));
+	Player.SetMovementEnabled(false);
 	if (Actor.IsLargeShip(Player.GetActor()))
 		Actor.SetLocalPosition(Player.GetActor(), { 6000, -300, 0 });
 	respawn = true;
 
 	
-respawn:
+makesquad:
 	Squad.AddToSquad(Player.GetActor(), tiea2);
-	Squad.AddToSquad(Player.GetActor(), tiea3);
-	Squad.AddToSquad(Player.GetActor(), tiea4);
-	Squad.AddToSquad(Player.GetActor(), tiea5);
-	Squad.AddToSquad(Player.GetActor(), tiea6);
+	//Squad.AddToSquad(Player.GetActor(), tiea3);
+	//Squad.AddToSquad(Player.GetActor(), tiea4);
+	//Squad.AddToSquad(Player.GetActor(), tiea5);
+	//Squad.AddToSquad(Player.GetActor(), tiea6);
 
 	
 make_ships:
@@ -181,7 +182,9 @@ make_ships:
 	Script.Call("actorp_multShd");
 	actorp_multiplier = 1.5;
 	Script.Call("actorp_multHull");
-	AI.QueueLast(ebolo, "move", {-2470, 500, -7350}, 20);
+	AI.QueueLast(ebolo, "move", {200, 450, -3500}, 20);
+	AI.QueueLast(ebolo, "move", {-2470, 500, -7350}, 10);
+	AI.QueueLast(ebolo, "move", {3100, 500, -11350}, 8);
 	AI.QueueLast(ebolo, "rotate", {-2000, 210, -20000}, 0);
 	AI.QueueLast(ebolo, "lock");
 	
@@ -191,7 +194,9 @@ make_ships:
 	Script.Call("actorp_multShd");
 	actorp_multiplier = 1.5;
 	Script.Call("actorp_multHull");
-	AI.QueueLast(daring, "move", {-3470, 300, -7350}, 10);
+	AI.QueueLast(daring, "move", {-140, 350, -4250}, 10);
+	AI.QueueLast(daring, "move", {1470, 350, -7050}, 5);
+	AI.QueueLast(daring, "move", {5100, 300, -7350}, 5);
 	AI.QueueLast(daring, "rotate", {-2000, 210, -20000}, 0);
 	AI.QueueLast(daring, "lock");
 	
@@ -248,12 +253,12 @@ make_fighters:
 	// Empire initial spawns
 	
 	tiea2 = Actor.Spawn("TIEA", "Alpha-2", "Empire", "", 0, { 700, -620, 10500 }, { 0, -180, 0 });
-	tiea3 = Actor.Spawn("TIEA", "Alpha-3", "Empire", "", 0, { 6000, 300, -500 }, { 0, -90, 0 });
-	tiea4 = Actor.Spawn("TIEA", "Alpha-4", "Empire", "", 0, { 6500, 600, -750 }, { 0, -90, 0 });
-	tiea5 = Actor.Spawn("TIEA", "Alpha-5", "Empire", "", 0, { 7000, 300, -500 }, { 0, -90, 0 });
-	tiea6 = Actor.Spawn("TIEA", "Alpha-6", "Empire", "", 0, { 7500, 600, -750 }, { 0, -90, 0 });
+	//tiea3 = Actor.Spawn("TIEA", "Alpha-3", "Empire", "", 0, { 6000, 300, -500 }, { 0, -90, 0 });
+	//tiea4 = Actor.Spawn("TIEA", "Alpha-4", "Empire", "", 0, { 6500, 600, -750 }, { 0, -90, 0 });
+	//tiea5 = Actor.Spawn("TIEA", "Alpha-5", "Empire", "", 0, { 7000, 300, -500 }, { 0, -90, 0 });
+	//tiea6 = Actor.Spawn("TIEA", "Alpha-6", "Empire", "", 0, { 7500, 600, -750 }, { 0, -90, 0 });
 
-	foreach (int a in {tiea2, tiea3, tiea4, tiea5, tiea6})
+	foreach (int a in {tiea2}) //, tiea3, tiea4, tiea5, tiea6})
 	{
 		actorp_id = a;
 		actorp_multiplier = 4;

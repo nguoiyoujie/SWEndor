@@ -118,7 +118,7 @@ namespace SWEndor
         {
           NextSpawnTime = engine.Game.GameTime + SpawnInterval;
 
-          Squadron squad = ainfo.Engine.SquadronFactory.Create();
+          ActorInfo first = null;
           foreach (TV_3DVECTOR sv in SpawnLocations)
           {
             ActorInfo a;
@@ -129,7 +129,15 @@ namespace SWEndor
               a.Rotation = ainfo.GetGlobalRotation();
               a.Rotation += SpawnRotation;
               a.MoveData.FreeSpeed = true;
-              a.Squad = squad;
+              if (first == a)
+              {
+                first = a;
+                first.CreateNewSquad();
+              }
+              else
+              {
+                a.JoinSquad(first);
+              }
               ainfo.AddChild(a);
               a.QueueFirst(Lock.GetOrCreate());
               a.SetUnreserved();
@@ -149,7 +157,7 @@ namespace SWEndor
           NextSpawnTime = engine.Game.GameTime + SpawnInterval;
           SpawnsRemaining--;
 
-          Squadron squad = ainfo.Engine.SquadronFactory.Create();
+          ActorInfo first = null;
           foreach (TV_3DVECTOR sv in SpawnLocations)
           {
             ActorInfo a;
@@ -164,7 +172,15 @@ namespace SWEndor
             acinfo.Faction = ainfo.Faction;
             a = engine.ActorFactory.Create(acinfo);
 
-            a.Squad = squad;
+            if (first == a)
+            {
+              first = a;
+              first.CreateNewSquad();
+            }
+            else
+            {
+              a.JoinSquad(first);
+            }
             ainfo.AddChild(a);
             a.QueueFirst(Lock.GetOrCreate());
           }

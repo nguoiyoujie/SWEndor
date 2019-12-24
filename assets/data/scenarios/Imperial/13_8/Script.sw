@@ -27,10 +27,6 @@ int corvusshd2;
 int gloryhangar;
 
 int tiea2;
-int tiea3;
-int tiea4;
-int tiea5;
-int tiea6;
 
 float3 faction_empire_color = { 0, 0.8, 0 };
 float3 faction_traitor_color = { 0.4, 0.5, 0.9 };
@@ -134,7 +130,7 @@ makeplayer:
 setupplayer:
 	playerisship = Actor.IsLargeShip(Player.GetActor());
 	if (respawn) 
-		Script.Call("respawn");
+		Script.Call("make_squad");
 
 	
 firstspawn:
@@ -145,12 +141,8 @@ firstspawn:
 	respawn = true;
 
 	
-respawn:
+make_squad:
 	Squad.AddToSquad(Player.GetActor(), tiea2);
-	Squad.AddToSquad(Player.GetActor(), tiea3);
-	Squad.AddToSquad(Player.GetActor(), tiea4);
-	Squad.AddToSquad(Player.GetActor(), tiea5);
-	Squad.AddToSquad(Player.GetActor(), tiea6);
 
 	
 make_ships:
@@ -182,7 +174,9 @@ make_ships:
 	Script.Call("actorp_multShd");
 	actorp_multiplier = 1.5;
 	Script.Call("actorp_multHull");
-	AI.QueueLast(ebolo, "move", {-2470, 500, -7350}, 20);
+	AI.QueueLast(ebolo, "move", {200, 450, -3500}, 12);
+	AI.QueueLast(ebolo, "move", {-2470, 500, -7350}, 6);
+	AI.QueueLast(ebolo, "move", {3100, 500, -11350}, 4);
 	AI.QueueLast(ebolo, "rotate", {-2000, 210, -20000}, 0);
 	AI.QueueLast(ebolo, "lock");
 	
@@ -192,7 +186,9 @@ make_ships:
 	Script.Call("actorp_multShd");
 	actorp_multiplier = 1.5;
 	Script.Call("actorp_multHull");
-	AI.QueueLast(daring, "move", {-3470, 300, -7350}, 10);
+	AI.QueueLast(daring, "move", {-140, 350, -4250}, 6);
+	AI.QueueLast(daring, "move", {1470, 350, -7050}, 3);
+	AI.QueueLast(daring, "move", {5100, 300, -7350}, 3);
 	AI.QueueLast(daring, "rotate", {-2000, 210, -20000}, 0);
 	AI.QueueLast(daring, "lock");
 	
@@ -249,12 +245,13 @@ make_fighters:
 	// Empire initial spawns
 	
 	tiea2 = Actor.Spawn("TIEA", "Alpha-2", "Empire", "", 0, { 700, -620, 10500 }, { 0, -180, 0 });
-	tiea3 = Actor.Spawn("TIEA", "Alpha-3", "Empire", "", 0, { 6000, 300, -500 }, { 0, -90, 0 });
-	tiea4 = Actor.Spawn("TIEA", "Alpha-4", "Empire", "", 0, { 6500, 600, -750 }, { 0, -90, 0 });
-	tiea5 = Actor.Spawn("TIEA", "Alpha-5", "Empire", "", 0, { 7000, 300, -500 }, { 0, -90, 0 });
-	tiea6 = Actor.Spawn("TIEA", "Alpha-6", "Empire", "", 0, { 7500, 600, -750 }, { 0, -90, 0 });
 
-	foreach (int a in {tiea2, tiea3, tiea4, tiea5, tiea6})
+	Actor.Spawn("TIEI", "", "Empire", "", 0, { 6000, 300, -500 }, { 0, -90, 0 });
+	Actor.Spawn("TIEI", "", "Empire", "", 0, { 6500, 600, -750 }, { 0, -90, 0 });
+	Actor.Spawn("TIEI", "", "Empire", "", 0, { 7000, 300, -500 }, { 0, -90, 0 });
+	Actor.Spawn("TIEI", "", "Empire", "", 0, { 7500, 600, -750 }, { 0, -90, 0 });
+
+	foreach (int a in {tiea2})
 	{
 		actorp_id = a;
 		actorp_multiplier = 4;

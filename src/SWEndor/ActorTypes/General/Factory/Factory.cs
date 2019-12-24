@@ -143,7 +143,6 @@ namespace SWEndor.ActorTypes
         Register(new SDMissilePodATI(this));
         Register(new ISDShieldGeneratorATI(this));
         Register(new SDShieldGeneratorATI(this));
-        Register(new SDLowerShieldGeneratorATI(this));
         Register(new StrikeTurboLaserATI(this));
         Register(new StrikeHeavyTurboLaserATI(this));
         Register(new StrikeMissilePodATI(this));

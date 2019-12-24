@@ -22,6 +22,8 @@ namespace SWEndor.ActorTypes.Instances
       RenderData.CullDistance = 30000;
       ScoreData = new ScoreData(10, 5000);
 
+      RegenData = new RegenData(false, 0.75f, 0, 0, 0);
+
       MeshData = new MeshData(Engine, Name, @"corellian\corellian.x", 0.6f);
 
       Cameras = new LookData[] {

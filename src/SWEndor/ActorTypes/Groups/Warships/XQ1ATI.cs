@@ -20,7 +20,7 @@ namespace SWEndor.ActorTypes.Instances
       DeathCamera = new DeathCameraData(1500, 250, 30);
 
       MeshData = new MeshData(Engine, Name, @"platform\xq1.x", 1.5f);
-      RegenData = new RegenData(false, 1, 0, 0.25f, 0);
+      RegenData = new RegenData(false, 2.5f, 0, 0.25f, 0);
 
       AddOns = new AddOnData[]
       {

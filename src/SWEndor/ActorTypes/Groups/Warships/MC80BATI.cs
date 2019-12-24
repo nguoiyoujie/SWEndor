@@ -28,7 +28,7 @@ namespace SWEndor.ActorTypes.Instances
       ScoreData = new ScoreData(20, 20000);
       RenderData.CullDistance = 60000;
 
-      RegenData = new RegenData(false, 0.6f, 0, 0, 0);
+      RegenData = new RegenData(false, 3.2f, 0, 0, 0);
 
       MeshData = new MeshData(Engine, Name, @"mc90\mc80b.x", 1.8f);
       DyingMoveData.Sink(0.01f, 2.5f, 0.4f);

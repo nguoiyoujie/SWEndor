@@ -23,13 +23,13 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MinSpeed = 0.0f;
       MoveLimitData.MaxSpeedChangeRate = 2.0f;
       MoveLimitData.MaxTurnRate = 2f;
-      RegenData = new RegenData(false, 1, 0, 0, 0);
+      RegenData = new RegenData(false, 2, 0, 0, 0);
 
       RenderData.CullDistance = 100000;
       TimedLifeData = new TimedLifeData(false, 2000);
       ScoreData = new ScoreData(75, 100000);
 
-      MeshData = new MeshData(Engine, Name, @"executor\executor.x", 5f);
+      MeshData = new MeshData(Engine, Name, @"executor\executor.x", 2f);
       DyingMoveData.Sink(0.00025f, 1.3f, 0.2f);
 
       Cameras = new LookData[] {

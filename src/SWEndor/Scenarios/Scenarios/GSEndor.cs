@@ -157,7 +157,7 @@ namespace SWEndor.Scenarios
       Screen2D.Line2.Color = new COLOR(1f, 1f, 0.3f, 1);
       Screen2D.Line3.Color = new COLOR(0.7f, 1f, 0.3f, 1);
 
-      MainAllyFaction.WingLimit = 90;
+      MainAllyFaction.WingLimit = 120;
 
       State.IsCutsceneMode = false;
     }
@@ -233,7 +233,7 @@ namespace SWEndor.Scenarios
     {
       if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled)
       {
-        if (TIEWaves > 5)
+        if (TIEWaves > 2)
         {
           State.StageNumber = 2;
 
@@ -302,7 +302,7 @@ namespace SWEndor.Scenarios
     {
       if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled)
       {
-        if (TIEWaves > 11)
+        if (TIEWaves > 4)
         {
           State.StageNumber = 4;
 
@@ -386,7 +386,7 @@ namespace SWEndor.Scenarios
     {
       if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled)
       {
-        if (TIEWaves > 17)
+        if (TIEWaves > 7)
         {
           State.StageNumber = 6;
 
@@ -394,9 +394,9 @@ namespace SWEndor.Scenarios
           EventQueue.Add(Game.GameTime + 8f, Empire_Executor);
           EventQueue.Add(Game.GameTime + 13f, Message_40_Focus);
           State.MaxBounds = new TV_3DVECTOR(20000, 2500, 20000);
-          State.MinBounds = new TV_3DVECTOR(-20000, -2500, -45000);
+          State.MinBounds = new TV_3DVECTOR(-20000, -2500, -25000);
           State.MaxAIBounds = new TV_3DVECTOR(20000, 2500, 20000);
-          State.MinAIBounds = new TV_3DVECTOR(-20000, -2500, -45000);
+          State.MinAIBounds = new TV_3DVECTOR(-20000, -2500, -25000);
         }
 
         if (TIESpawnTime < Game.GameTime)
@@ -1911,7 +1911,7 @@ namespace SWEndor.Scenarios
       TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(0, 0, -10000);
       float creationTime = Game.GameTime;
 
-      TV_3DVECTOR position = new TV_3DVECTOR(0, -2100, -40000);
+      TV_3DVECTOR position = new TV_3DVECTOR(0, -1600, -20000);
       ActorTypeInfo atinfo = ActorTypeFactory.Get("EXEC");
 
       ActorSpawnInfo asi = new ActorSpawnInfo
@@ -1959,57 +1959,57 @@ namespace SWEndor.Scenarios
 
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-4500, -80, -41000), new TV_3DVECTOR(-550, 80, -7000)
+                                                        , new TV_3DVECTOR(-4500, -80, -21000), new TV_3DVECTOR(-1550, 80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(4500, -80, -41000), new TV_3DVECTOR(550, -160, -7000)
+                                                        , new TV_3DVECTOR(4500, -80, -21000), new TV_3DVECTOR(1550, -160, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-5500, 120, -40500), new TV_3DVECTOR(-1500, 90, -6500)
+                                                        , new TV_3DVECTOR(-5500, 120, -20500), new TV_3DVECTOR(-2500, 90, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(5500, 120, -40500), new TV_3DVECTOR(1500, 90, -6500)
+                                                        , new TV_3DVECTOR(5500, 120, -20500), new TV_3DVECTOR(2500, 90, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-4000, -80, -44000), new TV_3DVECTOR(-2000, -80, -7000)
+                                                        , new TV_3DVECTOR(-4000, -80, -24000), new TV_3DVECTOR(-2000, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-8500, 120, -40500), new TV_3DVECTOR(-3500, 120, -6500)
+                                                        , new TV_3DVECTOR(-8500, 120, -20500), new TV_3DVECTOR(-3500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-1500, 120, -40500), new TV_3DVECTOR(-500, 120, -6500)
+                                                        , new TV_3DVECTOR(-1500, 120, -20500), new TV_3DVECTOR(-500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(4000, -80, -44000), new TV_3DVECTOR(2000, -80, -7000)
+                                                        , new TV_3DVECTOR(4000, -80, -24000), new TV_3DVECTOR(2000, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(8500, 120, -40500), new TV_3DVECTOR(3500, 120, -6500)
+                                                        , new TV_3DVECTOR(8500, 120, -20500), new TV_3DVECTOR(3500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(1500, 120, -40500), new TV_3DVECTOR(500, 120, -6500)
+                                                        , new TV_3DVECTOR(1500, 120, -20500), new TV_3DVECTOR(500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
           break;
@@ -2019,45 +2019,45 @@ namespace SWEndor.Scenarios
 
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-4500, -80, -41000), new TV_3DVECTOR(-2500, -80, -7000)
+                                                        , new TV_3DVECTOR(-4500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-8500, 120, -40500), new TV_3DVECTOR(-3500, 120, -6500)
+                                                        , new TV_3DVECTOR(-8500, 120, -20500), new TV_3DVECTOR(-3500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-1500, 120, -40500), new TV_3DVECTOR(-500, 120, -6500)
+                                                        , new TV_3DVECTOR(-1500, 120, -20500), new TV_3DVECTOR(-500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-6500, 120, -40500), new TV_3DVECTOR(-2500, 120, -6500)
+                                                        , new TV_3DVECTOR(-6500, 120, -20500), new TV_3DVECTOR(-2500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(4500, -80, -41000), new TV_3DVECTOR(2500, -80, -7000)
+                                                        , new TV_3DVECTOR(4500, -80, -21000), new TV_3DVECTOR(2500, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(8500, 120, -40500), new TV_3DVECTOR(3500, 120, -6500)
+                                                        , new TV_3DVECTOR(8500, 120, -20500), new TV_3DVECTOR(3500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(1500, 120, -40500), new TV_3DVECTOR(500, 120, -6500)
+                                                        , new TV_3DVECTOR(1500, 120, -20500), new TV_3DVECTOR(500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(6500, 120, -40500), new TV_3DVECTOR(2500, 120, -6500)
+                                                        , new TV_3DVECTOR(6500, 120, -20500), new TV_3DVECTOR(2500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
@@ -2068,23 +2068,23 @@ namespace SWEndor.Scenarios
 
           sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-4500, -80, -41000), new TV_3DVECTOR(-2500, -80, -7000)
+                                                        , new TV_3DVECTOR(-4500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           sspawn.TypeInfo = ActorTypeFactory.Get("ACCL");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(8500, 120, -40500), new TV_3DVECTOR(3500, 120, -6500)
+                                                        , new TV_3DVECTOR(8500, 120, -20500), new TV_3DVECTOR(3500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(-1500, 120, -40500), new TV_3DVECTOR(-500, 120, -6500)
+                                                        , new TV_3DVECTOR(-1500, 120, -20500), new TV_3DVECTOR(-500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
-                                                        , new TV_3DVECTOR(6500, 120, -40500), new TV_3DVECTOR(2500, 120, -6500)
+                                                        , new TV_3DVECTOR(6500, 120, -20500), new TV_3DVECTOR(2500, 120, -6500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
           break;

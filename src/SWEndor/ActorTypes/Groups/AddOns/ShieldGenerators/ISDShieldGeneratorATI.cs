@@ -18,7 +18,7 @@ namespace SWEndor.ActorTypes.Instances
       AIData.TargetType |= TargetType.SHIELDGENERATOR;
       RenderData.RadarType = RadarType.HOLLOW_CIRCLE_M;
 
-      RegenData = new RegenData(false, 0, 15, 0, 1);
+      RegenData = new RegenData(false, 0, 12, 0, 1);
 
 
       MeshData = new MeshData(Engine, Name, @"stardestroyer\star_destroyer_energy_pod.x", 0.75f);

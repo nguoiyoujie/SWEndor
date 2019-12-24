@@ -19,7 +19,7 @@ namespace SWEndor.ActorTypes.Instances
 
       RenderData.CullDistance = 60000;
       ScoreData = new ScoreData(60, 10000);
-      RegenData = new RegenData(false, 0.5f, 0, 0, 0);
+      RegenData = new RegenData(false, 1.2f, 0, 0, 0);
 
       MeshData = new MeshData(Engine, Name, @"stardestroyer\victory_star_destroyer.x", 1.1f);
       DyingMoveData.Sink(0.005f, 5f, 0.8f);

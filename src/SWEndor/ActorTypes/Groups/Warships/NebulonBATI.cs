@@ -19,7 +19,7 @@ namespace SWEndor.ActorTypes.Instances
 
       ScoreData = new ScoreData(15, 10000);
       RenderData.CullDistance = 45000;
-      RegenData = new RegenData(false, 0.4f, 0, 0, 0);
+      RegenData = new RegenData(false, 1.2f, 0, 0, 0);
 
       MeshData = new MeshData(Engine, Name, @"nebulonb\nebulonb.x", 0.75f);
       DyingMoveData.Sink(0.02f, 5f, 0.8f);

@@ -158,6 +158,7 @@ namespace SWEndor.Scenarios
       PlayerCameraInfo.CameraMode = CameraMode.FIRSTPERSON;
       PlayerCameraInfo.SetPlayerLook();
       PlayerInfo.PlayerLockMovement = false;
+      PlayerInfo.SystemLockMovement = true;
     }
 
     internal virtual void LoadFactions()

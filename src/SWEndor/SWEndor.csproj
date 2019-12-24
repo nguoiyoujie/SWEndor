@@ -299,7 +299,6 @@
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\ACTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Untargetables\PlayerSpawnerATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Untargetables\HangarBayATI.cs" />
-    <Compile Include="ActorTypes\Groups\AddOns\ShieldGenerators\SDLowerShieldGeneratorATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\SDAntiShipTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\TransportTurboLaserATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\ExecutorBridgeATI.cs" />

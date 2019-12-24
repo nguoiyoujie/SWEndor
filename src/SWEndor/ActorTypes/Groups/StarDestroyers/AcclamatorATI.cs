@@ -25,7 +25,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MaxTurnRate = 1.6f;
 
       RenderData.CullDistance = 45000;
-      RegenData = new RegenData(false, 0.2f, 0, 0, 0);
+      RegenData = new RegenData(false, 0.6f, 0, 0, 0);
 
       ScoreData = new ScoreData(50, 5000);
 

@@ -19,6 +19,7 @@ namespace SWEndor.ActorTypes.Instances
       RenderData.CullDistance = 25000;
       ScoreData = new ScoreData(8, 3000);
 
+      RegenData = new RegenData(false, 0.5f, 0, 0, 0);
       MeshData = new MeshData(Engine, Name, @"transport\transport.x", 0.5f);
 
       Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 86, -150), new TV_3DVECTOR(0, 86, 2000)) };
