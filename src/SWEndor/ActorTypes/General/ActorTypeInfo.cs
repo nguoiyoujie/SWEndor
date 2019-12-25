@@ -276,11 +276,14 @@ namespace SWEndor.ActorTypes
         {
           if (!attacker.IsAlliedWith(owner))
             AddScore(engine, PlayerInfo.Score, attacker.TypeInfo.CombatData, owner);
-          else
-            Engine.Screen2D.MessageText(string.Format("{0}: {1}, watch it!", owner.Name, PlayerInfo.Name)
+          else if (owner.TypeInfo.AIData.TargetType != TargetType.MUNITION && !owner.IsDyingOrDead)
+          {
+            ActorInfo ownerp = owner.Parent ?? owner;
+            Engine.Screen2D.MessageText(string.Format("{0}: {1}, watch it!", ownerp.Name, PlayerInfo.Name)
                                             , 5
-                                            , owner.Faction.Color
+                                            , ownerp.Faction.Color
                                             , -1);
+          }
         }
 
         // Fighter Collision
@@ -331,11 +334,14 @@ namespace SWEndor.ActorTypes
         {
           if (!attacker.IsAlliedWith(owner))
             AddScore(engine, PlayerInfo.Score, projData, owner);
-          else
-            Engine.Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", owner.Name, PlayerInfo.Name)
+          else if (owner.TypeInfo.AIData.TargetType != TargetType.MUNITION && !owner.IsDyingOrDead)
+          {
+            ActorInfo ownerp = owner.Parent ?? owner;
+            Engine.Screen2D.MessageText(string.Format("{0}: {1}, watch your fire!", ownerp.Name, PlayerInfo.Name)
                                             , 5
-                                            , owner.Faction.Color
+                                            , ownerp.Faction.Color
                                             , -1);
+          }
         }
 
         if (owner.IsScenePlayer)

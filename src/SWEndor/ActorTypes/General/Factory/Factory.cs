@@ -141,6 +141,7 @@ namespace SWEndor.ActorTypes
         Register(new SDAntiShipTurboLaserATI(this));
         Register(new SDTurboLaserATI(this));
         Register(new SDMissilePodATI(this));
+        Register(new SDAntiFighterMissilePodATI(this));
         Register(new ISDShieldGeneratorATI(this));
         Register(new SDShieldGeneratorATI(this));
         Register(new StrikeTurboLaserATI(this));
@@ -153,6 +154,11 @@ namespace SWEndor.ActorTypes
         Register(new DSLaserSourceATI(this));
         Register(new HangarBayATI(this));
         Register(new PlayerSpawnerATI(this));
+
+        // mines
+        Register(new Mine1ATI(this));
+        Register(new Mine2ATI(this));
+        Register(new Mine3ATI(this));
 
         // asteroids
         Register(new Asteroid01ATI(this));

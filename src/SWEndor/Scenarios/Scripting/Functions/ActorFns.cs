@@ -163,6 +163,20 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(ret.ToArray());
     }
 
+    public static Val GetChildrenByType(Context context, int actorID, string actorType)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return new Val(new int[0]);
+
+      List<int> ret = new List<int>();
+      foreach (ActorInfo a in actor.Children)
+        if (a.TypeInfo.ID.Equals(actorType, StringComparison.InvariantCultureIgnoreCase))
+          ret.Add(a.ID);
+
+      return new Val(ret.ToArray());
+    }
+
     public static Val GetHP(Context context, int actorID)
     {
       ActorInfo actor = context.Engine.ActorFactory.Get(actorID);

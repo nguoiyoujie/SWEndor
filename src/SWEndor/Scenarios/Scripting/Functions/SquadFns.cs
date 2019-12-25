@@ -5,7 +5,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
 {
   public static class SquadFns
   {
-    public static Val AddToSquad(Context context, int actorID1, int actorID2)
+    public static Val JoinSquad(Context context, int actorID1, int actorID2)
     {
       ActorInfo a1 = context.Engine.ActorFactory.Get(actorID1);
       ActorInfo a2 = context.Engine.ActorFactory.Get(actorID2);

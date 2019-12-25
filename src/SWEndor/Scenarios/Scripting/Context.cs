@@ -106,7 +106,7 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc("Actor.QueueAtSpawner", new ValFunc<int, int>(SpawnFns.QueueAtSpawner));
 
       // Squad Management
-      AddFunc("Squad.AddToSquad", new ValFunc<int, int>(SquadFns.AddToSquad));
+      AddFunc("Squad.JoinSquad", new ValFunc<int, int>(SquadFns.JoinSquad));
       AddFunc("Squad.RemoveFromSquad", new ValFunc<int>(SquadFns.RemoveFromSquad));
       AddFunc("Squad.MakeSquadLeader", new ValFunc<int>(SquadFns.MakeSquadLeader));
 
@@ -127,6 +127,7 @@ namespace SWEndor.Scenarios.Scripting
 
       AddFunc("Actor.LookAtPoint", new ValFunc<int, float3>(ActorFns.LookAtPoint));
       AddFunc("Actor.GetChildren", new ValFunc<int>(ActorFns.GetChildren));
+      AddFunc("Actor.GetChildrenByType", new ValFunc<int, string>(ActorFns.GetChildrenByType));
       AddFunc("Actor.GetProperty", new ValFunc<int, string>(ActorFns.GetProperty));
       Functions.Add("Actor.SetProperty", ActorFns.SetProperty);
       AddFunc("Actor.GetArmor", new ValFunc<int, string>(ActorFns.GetArmor));
@@ -249,8 +250,16 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc("Script.TryCall", new ValFunc<string>(ScriptingFns.TryCall));
       AddFunc("Script.Call", new ValFunc<string>(ScriptingFns.Call));
 
+      // Math
+      AddFunc("Math.GetDistance", new ValFunc<float3, float3>(MathFns.GetDistance));
+      AddFunc("Math.GetActorDistance", new ValFunc<int, int>(MathFns.GetActorDistance));
+      AddFunc("Math.GetActorDistance", new ValFunc<int, int, float>(MathFns.GetActorDistance));
+
       // Misc
       AddFunc("IsNull", new ValFunc<Val>(MiscFns.IsNull));
+      AddFunc("Random", new ValFunc(MiscFns.Random));
+      AddFunc("Random", new ValFunc<int>(MiscFns.Random));
+      AddFunc("Random", new ValFunc<int, int>(MiscFns.Random));
       AddFunc("GetArrayElement", new ValFunc<Val, int>(MiscFns.GetArrayElement));
     }
   }

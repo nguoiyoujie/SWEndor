@@ -15,6 +15,36 @@ namespace SWEndor.Scenarios.Scripting.Functions
     }
 
     /// <summary>
+    /// Generates a random float value between 0 and 1.
+    /// </summary>
+    /// <param name="context">The game context</param>
+    public static Val Random(Context context)
+    {
+      return new Val((float)context.Engine.Random.NextDouble());
+    }
+
+    /// <summary>
+    /// Generates a random integer between 0 and an integer.
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <param name="max">The exclusive upper bound</param>
+    public static Val Random(Context context, int max)
+    {
+      return new Val((float)context.Engine.Random.Next(0, max));
+    }
+
+    /// <summary>
+    /// Generates a random integer between min and max.
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <param name="min">The inclusive lower bound</param>
+    /// <param name="max">The exclusive upper bound</param>
+    public static Val Random(Context context, int min, int max)
+    {
+      return new Val((float)context.Engine.Random.Next(min, max));
+    }
+
+    /// <summary>
     /// Gets the element of an array. This is functionally equivalent to the indexer 'array[i]', except that this function cannot be used on float2/float3/float4
     /// </summary>
     /// <param name="context">The game context</param>
