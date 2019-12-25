@@ -129,7 +129,7 @@ namespace SWEndor
               a.Rotation = ainfo.GetGlobalRotation();
               a.Rotation += SpawnRotation;
               a.MoveData.FreeSpeed = true;
-              if (first == a)
+              if (first == null)
               {
                 first = a;
                 first.CreateNewSquad();
@@ -172,7 +172,7 @@ namespace SWEndor
             acinfo.Faction = ainfo.Faction;
             a = engine.ActorFactory.Create(acinfo);
 
-            if (first == a)
+            if (first == null)
             {
               first = a;
               first.CreateNewSquad();
