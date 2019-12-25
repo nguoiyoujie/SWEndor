@@ -31,9 +31,10 @@ namespace SWEndor.Sound
         }
         */
         Channel fmodchannel;
-        ChannelGroup soundgrp = s.soundgrps[Name];
-        soundgrp.setVolume(Volume * s.MasterSFXVolume);
+        //ChannelGroup soundgrp = s.soundgrps[Name];
+        //soundgrp.setVolume(Volume * s.MasterSFXVolume);
         s.fmodsystem.playSound(s.sounds[Name], null, false, out fmodchannel);
+        fmodchannel.setVolume = Volume * s.MasterSFXVolume;
         fmodchannel.setLoopCount((Loop) ? -1 : 0);
       }
     }
