@@ -1667,6 +1667,10 @@
             <summary>Performs a division operation between a float2 value and a float divisor</summary>
             <param name="a"></param><param name="m"></param><returns></returns>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.op_Modulus(Primrose.Primitives.ValueTypes.float2,System.Single)">
+            <summary>Performs a modulus operation between a float2 value and a float divisor</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
         <member name="T:Primrose.Primitives.ValueTypes.float3">
             <summary>
             A float3 triple value
@@ -1740,6 +1744,10 @@
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.float3.op_Division(Primrose.Primitives.ValueTypes.float3,System.Single)">
             <summary>Performs a division operation between a float3 value and a float divisor</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.op_Modulus(Primrose.Primitives.ValueTypes.float3,System.Single)">
+            <summary>Performs a modulus operation between a float3 value and a float divisor</summary>
             <param name="a"></param><param name="m"></param><returns></returns>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.float4">
@@ -1819,6 +1827,10 @@
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.float4.op_Division(Primrose.Primitives.ValueTypes.float4,System.Single)">
             <summary>Performs a division operation between a float4 value and a float divisor</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.op_Modulus(Primrose.Primitives.ValueTypes.float4,System.Single)">
+            <summary>Performs a modulus operation between a float4 value and a float divisor</summary>
             <param name="a"></param><param name="m"></param><returns></returns>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.Trip`3">

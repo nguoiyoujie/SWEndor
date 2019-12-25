@@ -150,6 +150,22 @@
             <param name="v2">The second value</param>
             <returns></returns>
         </member>
+        <member name="M:Primrose.Expressions.Ops.IsEqual(Primrose.Expressions.Val,Primrose.Expressions.Val)">
+            <summary>
+            Performs an equal operation 
+            </summary>
+            <param name="v1">The first value</param>
+            <param name="v2">The second value</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Expressions.Ops.IsNotEqual(Primrose.Expressions.Val,Primrose.Expressions.Val)">
+            <summary>
+            Performs a not equal operation 
+            </summary>
+            <param name="v1">The first value</param>
+            <param name="v2">The second value</param>
+            <returns></returns>
+        </member>
         <member name="M:Primrose.Expressions.IMatcher.Match(System.String)">
             <summary>
             Return the number of characters that this "regex" or equivalent

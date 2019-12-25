@@ -7,6 +7,7 @@ using Primrose.Primitives.Geometry;
 using SWEndor.Scenarios;
 using System;
 using static SWEndor.UI.Widgets.Radar;
+using SWEndor.AI.Actions;
 
 namespace SWEndor.UI.Menu.Pages
 {
@@ -16,6 +17,7 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement BackText = new SelectionElement();
     private static readonly COLOR GridColorMajor = ColorLocalization.Get(ColorLocalKeys.GAME_MAP_GRID_MAJOR);
     private static readonly COLOR GridColorMinor = ColorLocalization.Get(ColorLocalKeys.GAME_MAP_GRID_MINOR);
+    private static readonly COLOR MapTargetLine = new COLOR(1, 0.8f, 0.6f, 0.2f);
     private static float zoom_ratio = 0.05f;
     private static float zoom_stepmult = 1.25f;
     private static float max_zoom_ratio = 2f;
@@ -199,6 +201,25 @@ namespace SWEndor.UI.Menu.Pages
               if (showtext) DrawText(a.Name, x, y, icolor);
               break;
           }
+
+          ActionInfo ai = a.CurrentAction;
+          if (ai is Move
+           || ai is ForcedMove
+           || ai is AttackActor
+           || ai is FollowActor
+           || ai is HyperspaceIn
+           )
+          {
+            TV_3DVECTOR vec = a.AI.GetTargetPos(engine, a) * zoom_ratio;
+            XYCoord aiposvec = new XYCoord { X = ppos.x - vec.x, Y = ppos.z - vec.z };
+            PolarCoord aipolar = aiposvec.ToPolarCoord;
+            aipolar.Angle -= proty;
+
+            XYCoord aixy = aipolar.ToXYCoord;
+            float aix = Owner.ScreenCenter.x - aixy.X - displacement.x;
+            float aiy = Owner.ScreenCenter.y - aixy.Y - displacement.y;
+            DrawLine(x, y, aix, aiy, MapTargetLine.Value);
+          } 
         }
       }
     }

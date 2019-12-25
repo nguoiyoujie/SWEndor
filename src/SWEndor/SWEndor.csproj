@@ -159,6 +159,7 @@
     <Compile Include="ActorTypes\General\ActorCreationInfo.cs" />
     <Compile Include="Actors\Models\ArmorModel\ActorExt.cs" />
     <Compile Include="Actors\Models\Collision\ActorExt.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\MissilePods\SDAntiFighterMissilePodATI.cs" />
     <Compile Include="ActorTypes\Groups\Mine.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\MissilePods\StrikeMissilePodATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\StrikeHeavyTurboLaserATI.cs" />
@@ -523,6 +524,7 @@
     <Compile Include="Scenarios\GSFunctions.cs" />
     <Compile Include="Scenarios\MoodStates.cs" />
     <Compile Include="Scenarios\Scripting\Context.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\MathFns.cs" />
     <Compile Include="Scenarios\Scripting\Functions\SpawnFns.cs" />
     <Compile Include="Scenarios\Scripting\Functions\SquadFns.cs" />
     <Compile Include="Scenarios\Scripting\Functions\AIFns.cs" />
