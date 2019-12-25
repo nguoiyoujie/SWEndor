@@ -69,13 +69,17 @@ namespace SWEndor.ActorTypes.Instances
         // Top Rear
         , new AddOnData("IMPLHLSR", new TV_3DVECTOR(290, 16, -230), new TV_3DVECTOR(-75, 90, 0), true)
         , new AddOnData("IMPLHLSR", new TV_3DVECTOR(290, 18, -283), new TV_3DVECTOR(-75, 90, 0), true)
-        , new AddOnData("IMPLMPOD", new TV_3DVECTOR(290, 20, -336), new TV_3DVECTOR(-75, 90, 0), true)
-        , new AddOnData("IMPLMPOD", new TV_3DVECTOR(290, 22, -389), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(290, 20, -336), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(290, 22, -389), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("IMPLMPOD", new TV_3DVECTOR(365, 15, -480), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("IMPLMPOD2", new TV_3DVECTOR(185, 115, -370), new TV_3DVECTOR(-75, 90, 0), true)
 
         , new AddOnData("IMPLHLSR", new TV_3DVECTOR(-290, 16, -230), new TV_3DVECTOR(-75, -90, 0), true)
         , new AddOnData("IMPLHLSR", new TV_3DVECTOR(-290, 18, -283), new TV_3DVECTOR(-75, -90, 0), true)
-        , new AddOnData("IMPLMPOD", new TV_3DVECTOR(-290, 20, -336), new TV_3DVECTOR(-75, -90, 0), true)
-        , new AddOnData("IMPLMPOD", new TV_3DVECTOR(-290, 22, -389), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(-290, 20, -336), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(-290, 22, -389), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("IMPLMPOD", new TV_3DVECTOR(-365, 15, -480), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("IMPLMPOD2", new TV_3DVECTOR(-185, 115, -370), new TV_3DVECTOR(-75, -90, 0), true)
 
         // Bottom
         , new AddOnData("IMPLLSR", new TV_3DVECTOR(-120, -105, 180), new TV_3DVECTOR(65, -90, 0), true)
@@ -90,7 +94,6 @@ namespace SWEndor.ActorTypes.Instances
         //Shield Generators
         , new AddOnData("IMPLSHD", new TV_3DVECTOR(-120, 360, -415), new TV_3DVECTOR(0, 0, 0), true)
         , new AddOnData("IMPLSHD", new TV_3DVECTOR(120, 360, -415), new TV_3DVECTOR(0, 0, 0), true)
-        //, new AddOnInfo("LSHD", new TV_3DVECTOR(0, -180, -250), new TV_3DVECTOR(0, 0, 0), true)
       };
     }
 

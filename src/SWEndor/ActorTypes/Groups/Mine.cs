@@ -14,16 +14,19 @@ namespace SWEndor.ActorTypes.Groups
 
       ScoreData = new ScoreData(0, 1000);
       RenderData.CullDistance = 5500;
+      DyingMoveData.Kill();
 
       AIData.Attack_AngularDelta = 360f;
       AIData.Attack_HighAccuracyAngularDelta = 360f;
 
-      AIData.TargetType |= TargetType.ADDON;
+      AIData.TargetType = TargetType.MUNITION;
       RenderData.RadarType = RadarType.HOLLOW_CIRCLE_S;
-
-      Mask |= ComponentMask.HAS_AI;
-
       RenderData.RadarSize = 1;
+
+      MoveLimitData.ZNormFrac = 0;
+
+      Mask = ComponentMask.ACTOR;
+      AIData.HuntWeight = 1;
     }
   }
 }
