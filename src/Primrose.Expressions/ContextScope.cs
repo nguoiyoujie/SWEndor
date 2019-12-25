@@ -76,7 +76,16 @@ namespace Primrose.Expressions
     private void WriteVar(string name, Val val)
     {
       ValType t = m_variables[name].Type;
+      try
+      {
+        m_variables[name] = Ops.Coerce(t, val);
+      }
+      catch (Exception ex)
+      {
+        throw new InvalidOperationException("Illegal assignment: {0}".F(ex.Message));
+      }
 
+      /*
       if (t == val.Type)
         m_variables[name] = val;
 
@@ -151,6 +160,7 @@ namespace Primrose.Expressions
 
       else
         throw new InvalidOperationException("Attempted assignment of value of type '{0}' to variable '{1} {2}'".F(val.Type, name, t));
+      */
     }
   }
 }

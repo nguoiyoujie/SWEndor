@@ -10,6 +10,18 @@ namespace Primrose.Expressions
   /// </summary>
   public static class Ops
   {
+    internal static List<Pair<ValType, ValType>> CoerceTypes
+      = new List<Pair<ValType, ValType>>
+      {
+        new Pair<ValType, ValType>(ValType.FLOAT2, ValType.FLOAT_ARRAY),
+        new Pair<ValType, ValType>(ValType.FLOAT3, ValType.FLOAT_ARRAY),
+        new Pair<ValType, ValType>(ValType.FLOAT4, ValType.FLOAT_ARRAY),
+        new Pair<ValType, ValType>(ValType.FLOAT2, ValType.INT_ARRAY),
+        new Pair<ValType, ValType>(ValType.FLOAT3, ValType.INT_ARRAY),
+        new Pair<ValType, ValType>(ValType.FLOAT4, ValType.INT_ARRAY),
+        new Pair<ValType, ValType>(ValType.FLOAT_ARRAY, ValType.INT_ARRAY),
+      };
+
     internal static Dictionary<Pair<UOp, ValType>, Func<Val, Val>> unaryops
       = new Dictionary<Pair<UOp, ValType>, Func<Val, Val>>
       {
@@ -40,12 +52,26 @@ namespace Primrose.Expressions
         {new Trip<BOp, ValType, ValType>(BOp.ADD, ValType.STRING, ValType.STRING), (a,b) => { return new Val((string)a + (string)b); }},
         {new Trip<BOp, ValType, ValType>(BOp.ADD, ValType.FLOAT, ValType.STRING), (a,b) => { return new Val((float)a + (string)b); }},
         {new Trip<BOp, ValType, ValType>(BOp.ADD, ValType.STRING, ValType.FLOAT), (a,b) => { return new Val((string)a + (float)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.ADD, ValType.FLOAT2, ValType.FLOAT2), (a,b) => { return new Val((float2)a + (float2)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.ADD, ValType.FLOAT3, ValType.FLOAT3), (a,b) => { return new Val((float3)a + (float3)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.ADD, ValType.FLOAT4, ValType.FLOAT4), (a,b) => { return new Val((float4)a + (float4)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.ADD, ValType.FLOAT_ARRAY, ValType.FLOAT_ARRAY), (a,b) => { return new Val(MemberwiseAdd((float[])a, (float[])b)); }},
+        {new Trip<BOp, ValType, ValType>(BOp.ADD, ValType.FLOAT_ARRAY, ValType.INT_ARRAY), (a,b) => { return new Val(MemberwiseAdd((float[])a, (int[])b)); }},
+        {new Trip<BOp, ValType, ValType>(BOp.ADD, ValType.INT_ARRAY, ValType.FLOAT_ARRAY), (a,b) => { return new Val(MemberwiseAdd((int[])a, (float[])b)); }},
+        {new Trip<BOp, ValType, ValType>(BOp.ADD, ValType.INT_ARRAY, ValType.INT_ARRAY), (a,b) => { return new Val(MemberwiseAdd((int[])a, (int[])b)); }},
 
         // SUBTRACT
         {new Trip<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.INT, ValType.INT), (a,b) => { return new Val((int)a - (int)b); }},
         {new Trip<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.INT, ValType.FLOAT), (a,b) => { return new Val((int)a - (float)b); }},
         {new Trip<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.FLOAT, ValType.INT), (a,b) => { return new Val((float)a - (int)b); }},
         {new Trip<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val((float)a - (float)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.FLOAT2, ValType.FLOAT2), (a,b) => { return new Val((float2)a - (float2)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.FLOAT3, ValType.FLOAT3), (a,b) => { return new Val((float3)a - (float3)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.FLOAT4, ValType.FLOAT4), (a,b) => { return new Val((float4)a - (float4)b); }},
+        {new Trip<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.FLOAT_ARRAY, ValType.FLOAT_ARRAY), (a,b) => { return new Val(MemberwiseSubstract((float[])a, (float[])b)); }},
+        {new Trip<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.FLOAT_ARRAY, ValType.INT_ARRAY), (a,b) => { return new Val(MemberwiseSubstract((float[])a, (int[])b)); }},
+        {new Trip<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.INT_ARRAY, ValType.FLOAT_ARRAY), (a,b) => { return new Val(MemberwiseSubstract((int[])a, (float[])b)); }},
+        {new Trip<BOp, ValType, ValType>(BOp.SUBTRACT, ValType.INT_ARRAY, ValType.INT_ARRAY), (a,b) => { return new Val(MemberwiseSubstract((int[])a, (int[])b)); }},
 
         // MULTIPLY
         {new Trip<BOp, ValType, ValType>(BOp.MULTIPLY, ValType.INT, ValType.INT), (a,b) => { return new Val((int)a * (int)b); }},
@@ -92,60 +118,10 @@ namespace Primrose.Expressions
         //{new Trip<BOp, ValType, ValType>(BOp.LOGICAL_AND, ValType.INT, ValType.INT), (a,b) => { return new Val(a.ValueI & b.ValueI); }},
 
         // EQUAL_TO
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.NULL), (a,b) => { return new Val(false); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.NULL), (a,b) => { return new Val(false); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.NULL), (a,b) => { return new Val(false); }},
         {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.NULL), (a,b) => { return new Val((string)a == null); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.NULL), (a,b) => { return new Val(true); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.BOOL), (a,b) => { return new Val(false); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.INT), (a,b) => { return new Val(false); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.FLOAT), (a,b) => { return new Val(false); }},
         {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.NULL, ValType.STRING), (a,b) => { return new Val((string)b == null); }},
-
-        { new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.BOOL), (a,b) => { return new Val((bool)a == (bool)b); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.INT), (a,b) => { return new Val(false); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.BOOL), (a,b) => { return new Val(false); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.INT), (a,b) => { return new Val((int)a == (int)b); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.FLOAT), (a,b) => { return new Val(false); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.BOOL), (a,b) => { return new Val(false); }},
         {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.FLOAT), (a,b) => { return new Val((int)a == (float)b); }},
         {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.INT), (a,b) => { return new Val((float)a == (int)b); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val((float)a == (float)b); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.BOOL, ValType.STRING), (a,b) => { return new Val(false); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.BOOL), (a,b) => { return new Val(false); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.INT, ValType.STRING), (a,b) => { return new Val(false); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.INT), (a,b) => { return new Val(false); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.STRING), (a,b) => { return new Val((string)a == (string)b); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.FLOAT, ValType.STRING), (a,b) => { return new Val(false); }},
-        {new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, ValType.STRING, ValType.FLOAT), (a,b) => { return new Val(false); }},
-
-        // NOT_EQUAL_TO
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.NULL), (a,b) => { return new Val(true); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.NULL), (a,b) => { return new Val(true); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.NULL), (a,b) => { return new Val(true); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.NULL), (a,b) => { return new Val((string)a != null); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.NULL), (a,b) => { return new Val(true); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.BOOL), (a,b) => { return new Val(true); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.INT), (a,b) => { return new Val(true); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.FLOAT), (a,b) => { return new Val(true); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.NULL, ValType.STRING), (a,b) => { return new Val((string)b != null); }},
-
-        { new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.BOOL), (a,b) => { return new Val((bool)a != (bool)b); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.INT), (a,b) => { return new Val(true); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.BOOL), (a,b) => { return new Val(true); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.INT), (a,b) => { return new Val((int)a != (int)b); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.FLOAT), (a,b) => { return new Val(true); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.BOOL), (a,b) => { return new Val(true); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.FLOAT), (a,b) => { return new Val((int)a != (float)b); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.INT), (a,b) => { return new Val((float)a != (int)b); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.FLOAT), (a,b) => { return new Val((float)a != (float)b); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.BOOL, ValType.STRING), (a,b) => { return new Val(true); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.BOOL), (a,b) => { return new Val(true); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.INT, ValType.STRING), (a,b) => { return new Val(true); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.INT), (a,b) => { return new Val(true); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.STRING), (a,b) => { return new Val((string)a != (string)b); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.FLOAT, ValType.STRING), (a,b) => { return new Val(true); }},
-        {new Trip<BOp, ValType, ValType>(BOp.NOT_EQUAL_TO, ValType.STRING, ValType.FLOAT), (a,b) => { return new Val(true); }},
 
         // MORE_THAN
         {new Trip<BOp, ValType, ValType>(BOp.MORE_THAN, ValType.INT, ValType.INT), (a,b) => { return new Val((int)a > (int)b); }},
@@ -197,10 +173,226 @@ namespace Primrose.Expressions
     public static Val Do(BOp op, Val v1, Val v2)
     {
       Func<Val, Val, Val> fn;
+      if (CoerceTypes.Contains(new Pair<ValType, ValType>(v1.Type, v2.Type)))
+        v2 = Coerce(v1.Type, v2);
+
       if (!binaryops.TryGetValue(new Trip<BOp, ValType, ValType>(op, v1.Type, v2.Type), out fn))
         throw new ArgumentException("Operation '{0}' incompatible between {1} and {2}".F(op, v1.Type, v2.Type));
 
       return fn.Invoke(v1, v2);
+    }
+
+    /// <summary>
+    /// Performs an equal operation 
+    /// </summary>
+    /// <param name="v1">The first value</param>
+    /// <param name="v2">The second value</param>
+    /// <returns></returns>
+    public static Val IsEqual(Val v1, Val v2)
+    {
+      Func<Val, Val, Val> fn;
+      if (CoerceTypes.Contains(new Pair<ValType, ValType>(v1.Type, v2.Type)))
+        v2 = Coerce(v1.Type, v2);
+
+      if (binaryops.TryGetValue(new Trip<BOp, ValType, ValType>(BOp.EQUAL_TO, v1.Type, v2.Type), out fn))
+        return fn.Invoke(v1, v2);
+
+      if (v1.Type == v2.Type)
+        return new Val(v1.Value?.Equals(v2.Value) ?? (v2.Value == null));
+
+      return new Val(false);
+    }
+
+    /// <summary>
+    /// Performs a not equal operation 
+    /// </summary>
+    /// <param name="v1">The first value</param>
+    /// <param name="v2">The second value</param>
+    /// <returns></returns>
+    public static Val IsNotEqual(Val v1, Val v2)
+    {
+      return new Val(!(bool)IsEqual(v1, v2));
+    }
+
+    private static float[] MemberwiseAdd(float[] v1, float[] v2)
+    {
+      if (v1.Length != v2.Length)
+        throw new InvalidOperationException("Attempted operation between two arrays of different length");
+
+      float[] ret = new float[v1.Length];
+      for (int i = 0; i < ret.Length; i++)
+        ret[i] = v1[i] + v2[i];
+
+      return ret;
+    }
+
+    private static float[] MemberwiseSubstract(float[] v1, float[] v2)
+    {
+      if (v1.Length != v2.Length)
+        throw new InvalidOperationException("Attempted operation between two arrays of different length");
+
+      float[] ret = new float[v1.Length];
+      for (int i = 0; i < ret.Length; i++)
+        ret[i] = v1[i] - v2[i];
+
+      return ret;
+    }
+
+    private static int[] MemberwiseAdd(int[] v1, int[] v2)
+    {
+      if (v1.Length != v2.Length)
+        throw new InvalidOperationException("Attempted operation between two arrays of different length");
+
+      int[] ret = new int[v1.Length];
+      for (int i = 0; i < ret.Length; i++)
+        ret[i] = v1[i] + v2[i];
+
+      return ret;
+    }
+
+    private static int[] MemberwiseSubstract(int[] v1, int[] v2)
+    {
+      if (v1.Length != v2.Length)
+        throw new InvalidOperationException("Attempted operation between two arrays of different length");
+
+      int[] ret = new int[v1.Length];
+      for (int i = 0; i < ret.Length; i++)
+        ret[i] = v1[i] - v2[i];
+
+      return ret;
+    }
+
+    private static float[] MemberwiseAdd(float[] v1, int[] v2)
+    {
+      if (v1.Length != v2.Length)
+        throw new InvalidOperationException("Attempted operation between two arrays of different length");
+
+      float[] ret = new float[v1.Length];
+      for (int i = 0; i < ret.Length; i++)
+        ret[i] = v1[i] + v2[i];
+
+      return ret;
+    }
+
+    private static float[] MemberwiseSubstract(float[] v1, int[] v2)
+    {
+      if (v1.Length != v2.Length)
+        throw new InvalidOperationException("Attempted operation between two arrays of different length");
+
+      float[] ret = new float[v1.Length];
+      for (int i = 0; i < ret.Length; i++)
+        ret[i] = v1[i] - v2[i];
+
+      return ret;
+    }
+
+    private static float[] MemberwiseAdd(int[] v1, float[] v2)
+    {
+      if (v1.Length != v2.Length)
+        throw new InvalidOperationException("Attempted operation between two arrays of different length");
+
+      float[] ret = new float[v1.Length];
+      for (int i = 0; i < ret.Length; i++)
+        ret[i] = v1[i] + v2[i];
+
+      return ret;
+    }
+
+    private static float[] MemberwiseSubstract(int[] v1, float[] v2)
+    {
+      if (v1.Length != v2.Length)
+        throw new InvalidOperationException("Attempted operation between two arrays of different length");
+
+      float[] ret = new float[v1.Length];
+      for (int i = 0; i < ret.Length; i++)
+        ret[i] = v1[i] - v2[i];
+
+      return ret;
+    }
+    internal static Val Coerce(ValType t, Val val)
+    {
+      if (t == val.Type)
+        return val;
+
+      // float can accept int
+      else if (t == ValType.FLOAT && val.Type == ValType.INT)
+        return new Val((float)val);
+
+      // int can accept float
+      else if (t == ValType.INT && val.Type == ValType.FLOAT)
+        return new Val((int)val);
+
+      // float_array can accept int_array of same length
+      else if (t == ValType.FLOAT_ARRAY && val.Type == ValType.INT_ARRAY)
+      {
+        int[] iv = (int[])val;
+        float[] ret = new float[iv.Length];
+        for (int i = 0; i < iv.Length; i++)
+          ret[i] = iv[i];
+        return new Val(ret);
+      }
+
+      // float2/3/4 can accept float_array/int_array of same length
+      else if (t == ValType.FLOAT2 && val.Type == ValType.FLOAT_ARRAY)
+      {
+        float[] fv = (float[])val;
+        int len = fv.Length;
+        if (len == 2)
+          return new Val(float2.FromArray(fv));
+        else
+          throw new InvalidOperationException("Attempted coercion of an array of length {0} to a type '{1}".F(len, t));
+      }
+
+      else if (t == ValType.FLOAT3 && val.Type == ValType.FLOAT_ARRAY)
+      {
+        float[] fv = (float[])val;
+        int len = fv.Length;
+        if (len == 3)
+          return new Val(float3.FromArray(fv));
+        else
+          throw new InvalidOperationException("Attempted coercion of an array of length {0} to a type '{1}".F(len, t));
+      }
+
+      else if (t == ValType.FLOAT4 && val.Type == ValType.FLOAT_ARRAY)
+      {
+        float[] fv = (float[])val;
+        int len = fv.Length;
+        if (len == 4)
+          return new Val(float4.FromArray(fv));
+        else
+          throw new InvalidOperationException("Attempted coercion of an array of length {0} to a type '{1}".F(len, t));
+      }
+
+      else if (t == ValType.FLOAT2 && val.Type == ValType.INT_ARRAY)
+      {
+        int[] fv = (int[])val;
+        int len = fv.Length;
+        if (len == 2)
+          return new Val(float2.FromArray(fv));
+        else
+          throw new InvalidOperationException("Attempted coercion of an array of length {0} to a type '{1}".F(len, t));
+      }
+
+      else if (t == ValType.FLOAT3 && val.Type == ValType.INT_ARRAY)
+      {
+        int[] fv = (int[])val;
+        int len = fv.Length;
+        if (len == 3)
+          return new Val(float3.FromArray(fv));
+        else
+          throw new InvalidOperationException("Attempted coercion of an array of length {0} to a type '{1}".F(len, t));
+      }
+
+      else if (t == ValType.FLOAT4 && val.Type == ValType.INT_ARRAY)
+      {
+        int[] fv = (int[])val;
+        int len = fv.Length;
+        if (len == 4)
+          return new Val(float4.FromArray(fv));
+        else
+          throw new InvalidOperationException("Attempted coercion of an array of length {0} to a type '{1}".F(len, t));
+      }
+      throw new InvalidOperationException("Attempted coercion of value of type '{0}' to a type '{1}'".F(val.Type, t));
     }
   }
 }

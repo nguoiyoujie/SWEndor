@@ -46,9 +46,9 @@ namespace Primrose.Expressions.Tree.Expressions
       {
         Val adden = _expr.Evaluate(context);
         if (isUnequal)
-          try { result = Ops.Do(BOp.NOT_EQUAL_TO, result, adden); } catch (Exception ex) { throw new EvalException(this, "!=", result, adden, ex); }
+          try { result = Ops.IsNotEqual(result, adden); } catch (Exception ex) { throw new EvalException(this, "!=", result, adden, ex); }
         else
-          try { result = Ops.Do(BOp.EQUAL_TO, result, adden); } catch (Exception ex) { throw new EvalException(this, "==", result, adden, ex); }
+          try { result = Ops.IsEqual(result, adden); } catch (Exception ex) { throw new EvalException(this, "==", result, adden, ex); }
       }
       return result;
     }
