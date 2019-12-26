@@ -309,6 +309,7 @@ namespace Primrose.Expressions
 
       return ret;
     }
+
     internal static Val Coerce(ValType t, Val val)
     {
       if (t == val.Type)

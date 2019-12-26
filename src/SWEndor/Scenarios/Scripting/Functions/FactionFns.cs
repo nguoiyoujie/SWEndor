@@ -1,6 +1,7 @@
 ﻿using Primrose.Primitives.ValueTypes;
 using System;
 using Primrose.Expressions;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
@@ -18,6 +19,26 @@ namespace SWEndor.Scenarios.Scripting.Functions
     {
       COLOR color = new COLOR(vec_color);
       FactionInfo.Factory.Add(name, color);
+      return Val.NULL;
+    }
+
+    public static Val GetColor(Context context, string faction)
+    {
+      FactionInfo f = FactionInfo.Factory.Get(faction);
+      if (f == null)
+        throw new InvalidOperationException("The faction is not defined.");
+
+      return new Val(f.Color.ToFloat3());
+    }
+
+    public static Val SetColor(Context context, string faction, float3 vec_color)
+    {
+      FactionInfo f = FactionInfo.Factory.Get(faction);
+      if (f == null)
+        throw new InvalidOperationException("The faction is not defined.");
+
+      COLOR color = new COLOR(vec_color);
+      f.Color = color;
       return Val.NULL;
     }
 

@@ -82,7 +82,7 @@ namespace Primrose.Expressions
       }
       catch (Exception ex)
       {
-        throw new InvalidOperationException("Illegal assignment: {0}".F(ex.Message));
+        throw new InvalidOperationException("Illegal assignment to '{0} {1}': {2}".F(t, name, ex.Message));
       }
 
       /*

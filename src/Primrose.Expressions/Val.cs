@@ -231,29 +231,52 @@ namespace Primrose.Expressions
     /// <summary>Retrieves a boolean array</summary>
     public static explicit operator bool[](Val a)
     {
-      try { return a._obj.aB; }
-      catch { throw new InvalidCastException("Attempted to read bool[] value from a {0}".F(a.Type)); }
+      switch (a.Type)
+      {
+        case ValType.BOOL_ARRAY:
+          return a._obj.aB;
+        default:
+          throw new InvalidCastException("Attempted to read bool[] value from a {0}".F(a.Type));
+      }
     }
 
     /// <summary>Retrieves an integer array</summary>
     public static explicit operator int[] (Val a)
     {
-      try { return a._obj.aI; }
-      catch { throw new InvalidCastException("Attempted to read int[] value from a {0}".F(a.Type)); }
+      switch (a.Type)
+      {
+        case ValType.INT_ARRAY:
+          return a._obj.aI;
+        default:
+          throw new InvalidCastException("Attempted to read int[] value from a {0}".F(a.Type));
+      }
     }
 
     /// <summary>Retrieves a floating point array</summary>
     public static explicit operator float[] (Val a)
     {
-      try { return a._obj.aF; }
-      catch { throw new InvalidCastException("Attempted to read float[] value from a {0}".F(a.Type)); }
+      switch (a.Type)
+      {
+        case ValType.FLOAT2:
+        case ValType.FLOAT3:
+        case ValType.FLOAT4:
+        case ValType.FLOAT_ARRAY:
+          return a._obj.aF;
+        default:
+          throw new InvalidCastException("Attempted to read float[] value from a {0}".F(a.Type));
+      }
     }
 
     /// <summary>Retrieves a string array</summary>
     public static explicit operator string[] (Val a)
     {
-      try { return a._obj.aS; }
-      catch { throw new InvalidCastException("Attempted to read string[] value from a {0}".F(a.Type)); }
+      switch (a.Type)
+      {
+        case ValType.STRING_ARRAY:
+          return a._obj.aS;
+        default:
+          throw new InvalidCastException("Attempted to read string[] value from a {0}".F(a.Type));
+      }
     }
 
     /// <summary>Retrieves the value as an object</summary>
@@ -402,7 +425,7 @@ namespace Primrose.Expressions
     /// <summary>Defines a value</summary>
     public Val(string[] val)
     {
-      Type = ValType.FLOAT_ARRAY;
+      Type = ValType.STRING_ARRAY;
       _vB = false;
       _vI = 0;
       _vF = 0;
@@ -419,7 +442,7 @@ namespace Primrose.Expressions
     public static readonly Val FALSE = new Val(false);
 
     /// <summary>Determines if a value is null</summary>
-    public bool IsNull { get { return Type == ValType.NULL; } }
+    public bool IsNull { get { return Type == ValType.NULL || Value == null; } }
 
     /// <summary>Determines if a value is true</summary>
     public bool IsTrue { get { return Type == ValType.BOOL && _vB == true; } }

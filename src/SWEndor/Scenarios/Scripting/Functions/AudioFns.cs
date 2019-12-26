@@ -1,9 +1,35 @@
 ﻿using Primrose.Expressions;
+using System;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
   public static class AudioFns
   {
+    /// <summary>
+    /// Gets the audio Mood
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <returns>The current mood</returns>
+    public static Val GetMood(Context context)
+    {
+      return new Val(context.Engine.SoundManager.GetMood());
+    }
+
+    /// <summary>
+    /// Triggers the audio Mood
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <param name="ps">
+    ///   Parameters: 
+    ///     INT mood
+    /// </param>
+    /// <returns>NULL</returns>
+    public static Val SetMood(Context context, int state)
+    {
+      context.Engine.SoundManager.SetMood(state);
+      return Val.NULL;
+    }
+
     public static Val SetMusic(Context context, string piece_name)
     {
       return new Val(context.Engine.SoundManager.SetMusic(piece_name));

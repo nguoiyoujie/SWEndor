@@ -115,6 +115,10 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc("Actor.IsFighter", new ValFunc<int>(ActorFns.IsFighter));
       AddFunc("Actor.IsLargeShip", new ValFunc<int>(ActorFns.IsLargeShip));
       AddFunc("Actor.IsAlive", new ValFunc<int>(ActorFns.IsAlive));
+      AddFunc("Actor.GetFaction", new ValFunc<int>(ActorFns.GetFaction));
+      AddFunc("Actor.SetFaction", new ValFunc<int, string>(ActorFns.SetFaction));
+      AddFunc("Actor.AddToRegister", new ValFunc<int, string>(ActorFns.AddToRegister));
+      AddFunc("Actor.RemoveFromRegister", new ValFunc<int, string>(ActorFns.RemoveFromRegister));
       AddFunc("Actor.GetLocalPosition", new ValFunc<int>(ActorFns.GetLocalPosition));
       AddFunc("Actor.GetLocalRotation", new ValFunc<int>(ActorFns.GetLocalRotation));
       AddFunc("Actor.GetLocalDirection", new ValFunc<int>(ActorFns.GetLocalDirection));
@@ -202,6 +206,8 @@ namespace SWEndor.Scenarios.Scripting
 
       // Faction
       AddFunc("Faction.Add", new ValFunc<string, float3>(FactionFns.AddFaction));
+      AddFunc("Faction.GetColor", new ValFunc<string>(FactionFns.GetColor));
+      AddFunc("Faction.SetColor", new ValFunc<string, float3>(FactionFns.SetColor));
       AddFunc("Faction.MakeAlly", new ValFunc<string, string>(FactionFns.MakeAlly));
       AddFunc("Faction.MakeEnemy", new ValFunc<string, string>(FactionFns.MakeEnemy));
       AddFunc("Faction.GetWingCount", new ValFunc<string>(FactionFns.GetWingCount));
@@ -221,7 +227,8 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc("Faction.SetStructureSpawnLimit", new ValFunc<string, int>(FactionFns.SetStructureSpawnLimit));
 
       // Sounds and Music
-      AddFunc("Audio.SetMood", new ValFunc<int>(SceneFns.SetMood));
+      AddFunc("Audio.GetMood", new ValFunc(AudioFns.GetMood));
+      AddFunc("Audio.SetMood", new ValFunc<int>(AudioFns.SetMood));
       AddFunc("Audio.SetMusic", new ValFunc<string>(AudioFns.SetMusic));
       AddFunc("Audio.SetMusicDyn", new ValFunc<string>(AudioFns.SetMusicDyn));
       AddFunc("Audio.SetMusicLoop", new ValFunc<string>(AudioFns.SetMusicLoop));

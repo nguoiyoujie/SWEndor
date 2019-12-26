@@ -48,6 +48,50 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(!actor.IsDead);
     }
 
+    public static Val GetFaction(Context context, int actorID)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return new Val(FactionInfo.Neutral.Name);
+
+      return new Val(actor.Faction.Name);
+    }
+
+    public static Val SetFaction(Context context, int actorID, string name)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return Val.NULL;
+
+      actor.Faction = FactionInfo.Factory.Get(name);
+      return Val.NULL;
+    }
+
+    public static Val AddToRegister(Context context, int actorID, string register)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return Val.NULL;
+
+      HashSet<ActorInfo> reg = context.Engine.GameScenarioManager.Scenario.GetRegister(register);
+      reg?.Add(actor);
+
+      return Val.NULL;
+    }
+
+    public static Val RemoveFromRegister(Context context, int actorID, string register)
+    {
+      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
+      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+        return Val.NULL;
+
+      HashSet<ActorInfo> reg = context.Engine.GameScenarioManager.Scenario.GetRegister(register);
+      reg?.Remove(actor);
+
+      return Val.NULL;
+    }
+
+
     public static Val GetLocalPosition(Context context, int actorID)
     {
       ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
@@ -540,7 +584,12 @@ namespace SWEndor.Scenarios.Scripting.Functions
           else
             newValue = new Val(actor.InCombat);
           return;
-
+        case "Name":
+          if (setValue)
+            actor.Name = (string)newValue;
+          else
+            newValue = new Val(actor.Name);
+          return;
         case "SideBarName":
           if (setValue)
             actor.SideBarName = (string)newValue;

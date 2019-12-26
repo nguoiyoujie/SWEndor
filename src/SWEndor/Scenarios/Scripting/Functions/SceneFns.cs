@@ -8,26 +8,6 @@ namespace SWEndor.Scenarios.Scripting.Functions
   public static class SceneFns
   {
     /// <summary>
-    /// Triggers the audio Mood
-    /// </summary>
-    /// <param name="context">The game context</param>
-    /// <param name="ps">
-    ///   Parameters: 
-    ///     INT mood
-    /// </param>
-    /// <returns>NULL</returns>
-    public static Val SetMood(Context context, int state)
-    {
-#if DEBUG
-      if (context.Engine.GameScenarioManager.Scenario == null)
-        throw new InvalidOperationException("Attempted script function with null Scenario");
-#endif
-
-      context.Engine.SoundManager.SetMood(state);
-      return Val.NULL;
-    }
-
-    /// <summary>
     /// Max the maximum scene boundaries for the player
     /// </summary>
     /// <param name="context">The game context</param>
