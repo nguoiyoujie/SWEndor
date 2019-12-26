@@ -49,7 +49,7 @@ namespace SWEndor.Actors
     private string sidebar_name = "";
 
     /// <summary>The instance name</summary>
-    public string Name { get { return _name; } }
+    public string Name { get { return _name; } set { _name = value; } }
 
     /// <summary>The short name as displayed on the side bar</summary>
     public string SideBarName { get { return (sidebar_name.Length == 0) ? _name : sidebar_name; } set { sidebar_name = value; } }
