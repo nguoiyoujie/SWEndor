@@ -7,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   internal class ExecutorATI : Groups.StarDestroyer
   {
-    internal ExecutorATI(Factory owner) : base(owner, "EXEC", "EXEC")
+    internal ExecutorATI(Factory owner) : base(owner, "EXEC", "Executor Super Star Destroyer")
     {
       Explodes = new ExplodeData[]
       {

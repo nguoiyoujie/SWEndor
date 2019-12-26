@@ -33,7 +33,7 @@ namespace SWEndor.ActorTypes.Instances
 
       Loadouts = new WeapData[]
       {
-        new WeapData("LASR", "PRI_12", "NO_AUTOAIM", "TIE__LASR", "TIE__LASR", "WING_LSR_G", "WING_LASER"),
+        new WeapData("LASR", "PRI_12", "NO_AUTOAIM", "DEFAULT", "TIE__LASR", "WING_LSR_G", "WING_LASER"),
         new WeapData("LASR", "AI", "NO_AUTOAIM", "DEFAULT", "TIE__LASR_AI", "WING_LSR_G2", "WING_LASER"),
       };
     }

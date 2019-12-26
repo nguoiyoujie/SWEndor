@@ -3,9 +3,9 @@ using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
 {
-  internal class JV7ATI : Groups.RebelWing
+  internal class JV7BATI : Groups.RebelWing
   {
-    internal JV7ATI(Factory owner) : base(owner, "JV7", "JV-7 Delta-class Shuttle")
+    internal JV7BATI(Factory owner) : base(owner, "JV7B", "JV-7 Delta-class Shuttle")
     {
       SystemData.MaxShield = 12;
       SystemData.MaxHull = 8;
@@ -33,6 +33,7 @@ namespace SWEndor.ActorTypes.Instances
 
       Loadouts = new WeapData[]
       {
+        new WeapData("MISL", "SEC_1_AI", "NO_AUTOAIM", "JV7_MISL", "JV7_MISL", "WING_MISL", "WING_MISL"),
         new WeapData("LASR", "PRI_1_AI", "NO_AUTOAIM", "DEFAULT", "JV7_LASR", "WING_LSR_G", "WING_LASER"),
       };
     }

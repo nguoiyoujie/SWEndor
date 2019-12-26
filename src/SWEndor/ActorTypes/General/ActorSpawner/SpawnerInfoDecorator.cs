@@ -28,23 +28,23 @@ namespace SWEndor
       }
     }
 
-    public static SpawnerInfo SDII_Default
+    public static SpawnerInfo XQ1_Default
     {
       get
       {
         SpawnerInfo d = SpawnerInfo.Default;
-        d.SpawnTypes = new string[] { "TIEI" };
+        d.SpawnTypes = new string[] { "TIE" };
         d.SpawnMoveDelay = 4;
         d.SpawnInterval = 5;
         d.SpawnsRemaining = 60;
-        d.SpawnLocations = new TV_3DVECTOR[]{ new TV_3DVECTOR(50, 0, -50)
-                                               , new TV_3DVECTOR(50, 0, 50)
-                                               , new TV_3DVECTOR(-50, 0, -50)
-                                               , new TV_3DVECTOR(-50, 0, 50)
+        d.SpawnLocations = new TV_3DVECTOR[]{ new TV_3DVECTOR(40, 0, -60)
+                                               , new TV_3DVECTOR(40, 0, 20)
+                                               , new TV_3DVECTOR(-40, 0, -60)
+                                               , new TV_3DVECTOR(-40, 0, 20)
                                                };
 
         d.SpawnSpeed = -1;
-        d.SpawnManualPositioningMult = new TV_3DVECTOR(0, -30, 0);
+        d.SpawnManualPositioningMult = new TV_3DVECTOR(10, 6, 0);
         return d;
       }
     }

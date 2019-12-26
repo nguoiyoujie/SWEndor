@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 
 namespace SWEndor.ActorTypes.Instances
@@ -19,7 +20,7 @@ namespace SWEndor.ActorTypes.Instances
       Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 45, 660), new TV_3DVECTOR(0, 45, 2000)) };
       DeathCamera = new DeathCameraData(1500, 250, 30);
 
-      MeshData = new MeshData(Engine, Name, @"platform\xq1.x", 1.5f);
+      MeshData = new MeshData(Engine, Name, @"platform\xq1.x", 3f);
       RegenData = new RegenData(false, 2.5f, 0, 0.25f, 0);
 
       AddOns = new AddOnData[]
@@ -35,9 +36,16 @@ namespace SWEndor.ActorTypes.Instances
         new AddOnData("XQLSR", new TV_3DVECTOR(384, 2, -48), new TV_3DVECTOR(-90, 0, -120), true),
         new AddOnData("XQLSR", new TV_3DVECTOR(-384, 2, -48), new TV_3DVECTOR(-90, 0, -120), true),
         new AddOnData("XQLSR", new TV_3DVECTOR(138, 2, 375), new TV_3DVECTOR(-90, 0, 0), true),
-        new AddOnData("XQLSR", new TV_3DVECTOR(-138, 2, 375), new TV_3DVECTOR(-90, 0, 0), true)
+        new AddOnData("XQLSR", new TV_3DVECTOR(-138, 2, 375), new TV_3DVECTOR(-90, 0, 0), true),
 
+        new AddOnData("HANGAR", new TV_3DVECTOR(0, -12, 40), new TV_3DVECTOR(0, 0, 0), true)
       };
+    }
+
+    public override void Initialize(ActorInfo ainfo)
+    {
+      base.Initialize(ainfo);
+      ainfo.SpawnerInfo = SpawnerInfoDecorator.XQ1_Default;
     }
   }
 }

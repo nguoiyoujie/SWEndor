@@ -52,6 +52,7 @@ namespace SWEndor.ActorTypes
 
         Register(new T4AATI(this));
         Register(new JV7ATI(this));
+        Register(new JV7BATI(this));
         Register(new CargoLgATI(this));
         Register(new CargoMdATI(this));
         Register(new CargoSmATI(this));
