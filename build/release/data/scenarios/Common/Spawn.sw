@@ -78,3 +78,15 @@ spawn4:
 	}
 	spawn_ids = spawnsquad;
 
+spawn5:
+	string formation = (spawn_formation == "") ? "VSHAPE" : spawn_formation;
+	int[] spawnsquad = Squad.Spawn(spawn_type, spawn_name, spawn_faction, 5, 0, spawn_hyperspace, spawn_pos, spawn_rot, formation, spawn_spacing, spawn_wait, "ANY");
+	foreach(int spawnunit in spawnsquad)
+	{
+		if (spawn_dmgmod >= 0)
+			Actor.SetArmorAll(spawnunit, spawn_dmgmod);
+		if (spawn_target >= 0)
+			AI.QueueLast(spawnunit, "attackactor", spawn_target, -1, -1, false);
+	}
+	spawn_ids = spawnsquad;
+

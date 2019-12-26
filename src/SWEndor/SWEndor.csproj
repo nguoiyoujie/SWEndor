@@ -160,6 +160,7 @@
     <Compile Include="Actors\Models\ArmorModel\ActorExt.cs" />
     <Compile Include="Actors\Models\Collision\ActorExt.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\MissilePods\SDAntiFighterMissilePodATI.cs" />
+    <Compile Include="ActorTypes\Groups\Fighters\JV7BATI.cs" />
     <Compile Include="ActorTypes\Groups\Mine.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\MissilePods\StrikeMissilePodATI.cs" />
     <Compile Include="ActorTypes\Groups\AddOns\Turbolasers\StrikeHeavyTurboLaserATI.cs" />

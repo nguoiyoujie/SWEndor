@@ -15,10 +15,15 @@ int daring;
 int glory;
 int nebu;
 int corv1;
+int corv1_mines = 12;
 int corv2;
+int corv2_mines = 12;
 int corv3;
+int corv3_mines = 12;
 int corv4;
+int corv4_mines = 12;
 int vorknkx;
+int vork_mines = 16;
 
 int greywolfshd1;
 int greywolfshd2;
@@ -27,10 +32,6 @@ int corvusshd2;
 int gloryhangar;
 
 int tiea2;
-int tiea3;
-int tiea4;
-int tiea5;
-int tiea6;
 
 float3 faction_empire_color = { 0, 0.8, 0 };
 float3 faction_traitor_color = { 0.4, 0.5, 0.9 };
@@ -103,14 +104,14 @@ loadscene:
 
 	
 getchildren:
-	int[] greywolfc = Actor.GetChildren(greywolf);
-	greywolfshd1 = greywolfc[30];
-	greywolfshd2 = greywolfc[31];
-	int[] corvusc = Actor.GetChildren(corvus);
-	corvusshd1 = corvusc[18];
-	corvusshd2 = corvusc[19];
-	int[] gloryc = Actor.GetChildren(glory);	
-	gloryhangar = gloryc[29];
+	int[] greywolfc = Actor.GetChildrenByType(greywolf, "IMPLSHD");
+	greywolfshd1 = greywolfc[0];
+	greywolfshd2 = greywolfc[1];
+	int[] corvusc = Actor.GetChildrenByType(corvus, "SHD");
+	corvusshd1 = corvusc[0];
+	corvusshd2 = corvusc[1];
+	int[] gloryc = Actor.GetChildrenByType(glory, "HANGAR");	
+	gloryhangar = gloryc[0];
 
 	
 engagemusic:
@@ -134,22 +135,20 @@ makeplayer:
 setupplayer:
 	playerisship = Actor.IsLargeShip(Player.GetActor());
 	if (respawn) 
-		Script.Call("respawn");
+		Script.Call("make_squad");
 
 	
 firstspawn:
 	Player.AssignActor(Actor.Spawn(GetPlayerActorType(), GetPlayerName(), "Empire", "", 0, { 4200, -950, 450 }, { 0, -130, 0 })); //{ 500, -300, 12500 }, { 0, -180, 0 }));
+	Player.SetMovementEnabled(false);
+	Actor.SetProperty(Player.GetActor(), "Movement.Speed", 30);
 	if (Actor.IsLargeShip(Player.GetActor()))
 		Actor.SetLocalPosition(Player.GetActor(), { 6000, -300, 0 });
 	respawn = true;
 
 	
-respawn:
-	Squad.AddToSquad(Player.GetActor(), tiea2);
-	Squad.AddToSquad(Player.GetActor(), tiea3);
-	Squad.AddToSquad(Player.GetActor(), tiea4);
-	Squad.AddToSquad(Player.GetActor(), tiea5);
-	Squad.AddToSquad(Player.GetActor(), tiea6);
+make_squad:
+	Squad.JoinSquad(Player.GetActor(), tiea2);
 
 	
 make_ships:
@@ -181,7 +180,9 @@ make_ships:
 	Script.Call("actorp_multShd");
 	actorp_multiplier = 1.5;
 	Script.Call("actorp_multHull");
-	AI.QueueLast(ebolo, "move", {-2470, 500, -7350}, 20);
+	AI.QueueLast(ebolo, "move", {200, 450, -3500}, 12);
+	AI.QueueLast(ebolo, "move", {-2470, 500, -7350}, 6);
+	AI.QueueLast(ebolo, "move", {3100, 500, -11350}, 4);
 	AI.QueueLast(ebolo, "rotate", {-2000, 210, -20000}, 0);
 	AI.QueueLast(ebolo, "lock");
 	
@@ -191,7 +192,9 @@ make_ships:
 	Script.Call("actorp_multShd");
 	actorp_multiplier = 1.5;
 	Script.Call("actorp_multHull");
-	AI.QueueLast(daring, "move", {-3470, 300, -7350}, 10);
+	AI.QueueLast(daring, "move", {-140, 350, -7250}, 6);
+	AI.QueueLast(daring, "move", {1470, 350, -10050}, 3);
+	AI.QueueLast(daring, "move", {5100, 300, -12350}, 3);
 	AI.QueueLast(daring, "rotate", {-2000, 210, -20000}, 0);
 	AI.QueueLast(daring, "lock");
 	
@@ -215,10 +218,11 @@ make_ships:
 	Script.Call("actorp_multShd");
 	Script.Call("actorp_multHull");
 	AI.QueueLast(corv1, "move", {0, 250, -3000}, 70);
+	AI.QueueLast(corv1, "setgamestateb", "BeginCorv1Mine", true);
 	AI.QueueLast(corv1, "move", {3000, 250, -5000}, 10);
 	AI.QueueLast(corv1, "rotate", {0, 500, 4000}, 0);
 	AI.QueueLast(corv1, "lock");
-
+	
 	corv2 = Actor.Spawn("CORV", "", "Traitors", "", 0, { -12750, -100, -16000 }, { 0, 75, 0 });
 	AI.QueueLast(corv2, "move", {1550, 200, -2200}, 100);
 	AI.QueueLast(corv2, "rotate", {0, 500, 4000}, 0);
@@ -242,24 +246,29 @@ make_ships:
 	AI.QueueLast(nebu, "move", {6250, -450, -3200}, 100);
 	AI.QueueLast(nebu, "lock");
 	
+	AddEvent(3, "spawn_traitorMines_corv2");
+	AddEvent(4, "spawn_traitorMines_corv3");
+	AddEvent(5, "spawn_traitorMines_corv4");
+
 	
 make_fighters:
 
 	// Empire initial spawns
 	
-	tiea2 = Actor.Spawn("TIEA", "Alpha-2", "Empire", "", 0, { 700, -620, 10500 }, { 0, -180, 0 });
-	tiea3 = Actor.Spawn("TIEA", "Alpha-3", "Empire", "", 0, { 6000, 300, -500 }, { 0, -90, 0 });
-	tiea4 = Actor.Spawn("TIEA", "Alpha-4", "Empire", "", 0, { 6500, 600, -750 }, { 0, -90, 0 });
-	tiea5 = Actor.Spawn("TIEA", "Alpha-5", "Empire", "", 0, { 7000, 300, -500 }, { 0, -90, 0 });
-	tiea6 = Actor.Spawn("TIEA", "Alpha-6", "Empire", "", 0, { 7500, 600, -750 }, { 0, -90, 0 });
+	tiea2 = Actor.Spawn("TIEA", "ALPHA 2", "Empire", "", 0, { 700, -620, 10500 }, { 0, -180, 0 });
 
-	foreach (int a in {tiea2, tiea3, tiea4, tiea5, tiea6})
+	Actor.Spawn("TIEI", "", "Empire", "", 0, { 6000, 300, -500 }, { 0, -90, 0 });
+	Actor.Spawn("TIEI", "", "Empire", "", 0, { 6500, 600, -750 }, { 0, -90, 0 });
+	Actor.Spawn("TIEI", "", "Empire", "", 0, { 7000, 300, -500 }, { 0, -90, 0 });
+	Actor.Spawn("TIEI", "", "Empire", "", 0, { 7500, 600, -750 }, { 0, -90, 0 });
+
+	foreach (int a in {tiea2})
 	{
 		actorp_id = a;
 		actorp_multiplier = 4;
 		Script.Call("actorp_multShd");
 		AI.QueueLast(a, "wait", 2.5);
-		Squad.AddToSquad(Player.GetActor(), a);
+		Squad.JoinSquad(Player.GetActor(), a);
 	}
 	
 	spawn_hyperspace = false;
@@ -468,6 +477,12 @@ gametick:
 			Audio.SetMood(-11);
 		}
 		
+		if (GetGameStateB("BeginCorv1Mine"))
+		{
+			SetGameStateB("BeginCorv1Mine", false);
+			AddEvent(3, "spawn_traitorMines_corv1");
+		}
+		
 		if (!GetGameStateB("EboloDestroyed"))
 		{
 			hp = Actor.GetHP(ebolo);
@@ -507,6 +522,7 @@ gametick:
 				}
 			}
 		}
+		
 		
 		if (!GetGameStateB("GloryDestroyed"))
 		{
@@ -681,7 +697,7 @@ spawn_allyGUN:
 	spawn_wait = 0;
 	spawn_type = "GUN";
 	spawn_target = corv2;
-	spawn_pos = { 2400,500,10000 };
+	spawn_pos = { 2400,500,8000 };
 	spawn_rot = { 0, 180 ,0 };
 	Script.Call("spawn4");
 	Audio.SetMood(-11);
@@ -695,7 +711,7 @@ spawn_allyTIEA:
 	spawn_wait = 0;
 	spawn_type = "TIEA";
 	spawn_target = corv4;
-	spawn_pos = { 2400,500,10000 };
+	spawn_pos = { 2400,500,8000 };
 	spawn_rot = { 0, 180 ,0 };
 	Script.Call("spawn4");
 	Audio.SetMood(-11);
@@ -705,7 +721,7 @@ spawn_allyTIEA:
 spawn_traitorZDelta:
 	for (int i = 1; i <= 6; i += 1)
 	{
-		_a = Actor.Spawn("TIED", "Z-Delta-" + i, "Traitors", "", 0, _d, _d);
+		_a = Actor.Spawn("TIED", "Z-DELTA " + i, "Traitors", "", 0, _d, _d);
 		if (i <= 4)
 			AI.QueueLast(_a, "attackactor", daring, -1, -1, false);
 		else
@@ -731,7 +747,7 @@ spawn_traitorZIota:
 	{
 		for (int i = 1; i <= 2; i += 1)
 		{
-			_a = Actor.Spawn("TIED", "Z-Iota-" + (k * 2 + i), "Traitors", "", 0, _d, _d);
+			_a = Actor.Spawn("TIED", "Z-IOTA " + (k * 2 + i), "Traitors", "", 0, _d, _d);
 			Actor.QueueAtSpawner(_a, glory);
 		}
 		
@@ -755,8 +771,10 @@ spawn_traitorZTheta:
 	{
 		for (int i = 1; i <= 2; i += 1)
 		{
-			_a = Actor.Spawn("TIED", "Z-Theta-" + (k * 2 + i), "Traitors", "", 0, _d, _d);
+			_a = Actor.Spawn("TIED", "Z-THETA " + (k * 2 + i), "Traitors", "", 0, _d, _d);
 			Actor.QueueAtSpawner(_a, glory);
+			if (i == 2)
+				Squad.JoinSquad(_a, glory);
 		}
 		
 		for (int i = 1; i <= 2; i += 1)
@@ -766,6 +784,7 @@ spawn_traitorZTheta:
 		}
 	}
 
+	
 	Audio.SetMood(-21);
 	Script.Call("message_traitorZTheta");
 
@@ -786,25 +805,105 @@ spawn_escapeCORV:
 	AI.QueueLast(vorknkx, "setgamestateb", "Escaped", true);
 	AI.QueueLast(vorknkx, "delete");
 	Script.Call("messageescape");
+	AddEvent(6, "spawn_traitorMines_vork");
 	AddEvent(10, "messageescape2");
 	AddEvent(17, "spawn_allyEpsilon");
 
 
+spawn_traitorMines_corv1:
+	if (Actor.IsAlive(corv1) && corv1_mines > 0)
+	{
+		float3 pos = Actor.GetGlobalPosition(corv1);
+		float3 fac = Actor.GetGlobalDirection(corv1);
+		pos -= fac * 57;
+		pos -= {Random(-20, 20), 55, Random(-20, 20)};
+		float3 rot = { Random(360), Random(360), Random(360)};
+		
+		Actor.Spawn("MINE2", "", "Traitors", "", 0, pos, rot);
+		corv1_mines -= 1;
+		AddEvent(5 + 10 * Random(), "spawn_traitorMines_corv1");
+	}
+
+
+spawn_traitorMines_corv2:
+	if (Actor.IsAlive(corv2) && corv2_mines > 0)
+	{
+		float3 pos = Actor.GetGlobalPosition(corv2);
+		float3 fac = Actor.GetGlobalDirection(corv2);
+		pos -= fac * 57;
+		pos -= {Random(-20, 20), 55, Random(-20, 20)};
+		float3 rot = { Random(360), Random(360), Random(360)};
+		
+		string type = (corv2_mines == 13) ? "MINE3" : "MINE1";
+		Actor.Spawn(type, "", "Traitors", "", 0, pos, rot);
+		corv2_mines -= 1;
+		AddEvent(5 + 10 * Random(), "spawn_traitorMines_corv2");
+	}
+
+
+	spawn_traitorMines_corv3:
+	if (Actor.IsAlive(corv3) && corv3_mines > 0)
+	{
+		float3 pos = Actor.GetGlobalPosition(corv3);
+		float3 fac = Actor.GetGlobalDirection(corv3);
+		pos -= fac * 57;
+		pos -= {Random(-20, 20), 55, Random(-20, 20)};
+		float3 rot = { Random(360), Random(360), Random(360)};
+		
+		string type = (corv3_mines == 12) ? "MINE3" : "MINE1";
+		Actor.Spawn(type, "", "Traitors", "", 0, pos, rot);
+		corv3_mines -= 1;
+		AddEvent(5 + 10 * Random(), "spawn_traitorMines_corv3");
+	}
+
+
+	spawn_traitorMines_corv4:
+	if (Actor.IsAlive(corv4) && corv4_mines > 0)
+	{
+		float3 pos = Actor.GetGlobalPosition(corv4);
+		float3 fac = Actor.GetGlobalDirection(corv4);
+		pos -= fac * 57;
+		pos -= {Random(-20, 20), 55, Random(-20, 20)};
+		float3 rot = { Random(360), Random(360), Random(360)};
+		
+		string type = (corv4_mines == 6) ? "MINE3" : "MINE2";
+		Actor.Spawn(type, "", "Traitors", "", 0, pos, rot);
+		corv4_mines -= 1;
+		AddEvent(5 + 10 * Random(), "spawn_traitorMines_corv4");
+	}
+
+
+spawn_traitorMines_vork:
+	if (Actor.IsAlive(vorknkx) && vork_mines > 0)
+	{
+		float3 pos = Actor.GetGlobalPosition(vorknkx);
+		float3 fac = Actor.GetGlobalDirection(vorknkx);
+		pos -= fac * 57;
+		pos -= {Random(-20, 20), 55, Random(-20, 20)};
+		float3 rot = { Random(360), Random(360), Random(360)};
+		
+		string type = (vork_mines == 4 || vork_mines == 11 || vork_mines == 12) ? "MINE3" : "MINE2";
+		Actor.Spawn(type, "", "Traitors", "", 0, pos, rot);
+		vork_mines -= 1;
+		AddEvent(1.5 + 4.5 * Random(), "spawn_traitorMines_vork");
+	}
+
+
 spawn_allyEpsilon:
-	_a = Actor.Spawn("TIESA", "Epsilon-1", "Empire", "", 0, _d, _d);
+	_a = Actor.Spawn("TIESA", "EPSILON 1", "Empire", "", 0, _d, _d);
 	Actor.QueueAtSpawner(_a, greywolf);
 	AI.QueueLast(_a, "setgamestateb", "EpsilonSpawned", true);
 	AI.QueueLast(_a, "attackactor", vorknkx, -1, -1, false, 40);
 
-	_a = Actor.Spawn("TIESA", "Epsilon-2", "Empire", "", 0, _d, _d);
+	_a = Actor.Spawn("TIESA", "EPSILON 2", "Empire", "", 0, _d, _d);
 	AI.QueueLast(_a, "attackactor", vorknkx, -1, -1, false, 40);
 	Actor.QueueAtSpawner(_a, greywolf);
 	
-	_a = Actor.Spawn("TIEI", "Gamma-1", "Empire", "", 0, _d, _d);
+	_a = Actor.Spawn("TIEI", "GAMMA 1", "Empire", "", 0, _d, _d);
 	AI.QueueLast(_a, "attackactor", vorknkx, -1, -1, false, 40);
 	Actor.QueueAtSpawner(_a, greywolf);
 	
-	_a = Actor.Spawn("TIEI", "Gamma-2", "Empire", "", 0, _d, _d);
+	_a = Actor.Spawn("TIEI", "GAMMA 2", "Empire", "", 0, _d, _d);
 	AI.QueueLast(_a, "attackactor", vorknkx, -1, -1, false, 40);
 	Actor.QueueAtSpawner(_a, greywolf);
 	
@@ -812,7 +911,7 @@ spawn_allyEpsilon:
 spawn_allyEta:
 	for (int i = 1; i <= 4; i += 1)
 	{
-		int a = Actor.Spawn("TIE", "Eta-" + i, "Empire", "", 0, _d, _d);
+		int a = Actor.Spawn("TIE", "TEA " + i, "Empire", "", 0, _d, _d);
 		actorp_id = a;
 		actorp_multiplier = 2;
 		Script.Call("actorp_multShd");
@@ -836,7 +935,7 @@ spawn_allyBeta:
 			}
 			else
 			{
-				_a = Actor.Spawn("TIESA", "Beta-" + (k * 3 + i), "Empire", "", 0, _d, _d);
+				_a = Actor.Spawn("TIESA", "BETA " + (k * 3 + i), "Empire", "", 0, _d, _d);
 				
 				Actor.QueueAtSpawner(_a, greywolf);
 				if (i == 1 && k == 0)

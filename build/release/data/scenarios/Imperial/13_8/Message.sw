@@ -76,7 +76,7 @@ message_allyBeta:
 	Message("TIE/SA BETA squadron has been launched from ISD GREY WOLF, targeting ISD GLORY.", 5, faction_empire_color, 1);
 
 message_allyBeta2:
-	Message("TIE/SA BETA-1: Heads up, BETA group engaging ISD GLORY.", 5, faction_empire_color, 1);
+	Message("TIE/SA BETA 1: Heads up, BETA group engaging ISD GLORY.", 5, faction_empire_color, 1);
 
 message_allyEpsilon:
 	Message("TIE/SA EPSILON squadron has been launched from ISD GREY WOLF, targeting CRV VORKNKX.", 5, faction_empire_color, 1);

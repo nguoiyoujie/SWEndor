@@ -141,6 +141,7 @@ setupplayer:
 firstspawn:
 	Player.AssignActor(Actor.Spawn(GetPlayerActorType(), GetPlayerName(), "Empire", "", 0, { 4200, -950, 450 }, { 0, -130, 0 })); //{ 500, -300, 12500 }, { 0, -180, 0 }));
 	Player.SetMovementEnabled(false);
+	Actor.SetProperty(Player.GetActor(), "Movement.Speed", 30);
 	if (Actor.IsLargeShip(Player.GetActor()))
 		Actor.SetLocalPosition(Player.GetActor(), { 6000, -300, 0 });
 	respawn = true;
@@ -254,7 +255,7 @@ make_fighters:
 
 	// Empire initial spawns
 	
-	tiea2 = Actor.Spawn("TIEA", "Alpha-2", "Empire", "", 0, { 700, -620, 10500 }, { 0, -180, 0 });
+	tiea2 = Actor.Spawn("TIEA", "ALPHA 2", "Empire", "", 0, { 700, -620, 10500 }, { 0, -180, 0 });
 
 	Actor.Spawn("TIEI", "", "Empire", "", 0, { 6000, 300, -500 }, { 0, -90, 0 });
 	Actor.Spawn("TIEI", "", "Empire", "", 0, { 6500, 600, -750 }, { 0, -90, 0 });
@@ -720,7 +721,7 @@ spawn_allyTIEA:
 spawn_traitorZDelta:
 	for (int i = 1; i <= 6; i += 1)
 	{
-		_a = Actor.Spawn("TIED", "Z-Delta-" + i, "Traitors", "", 0, _d, _d);
+		_a = Actor.Spawn("TIED", "Z-DELTA " + i, "Traitors", "", 0, _d, _d);
 		if (i <= 4)
 			AI.QueueLast(_a, "attackactor", daring, -1, -1, false);
 		else
@@ -746,7 +747,7 @@ spawn_traitorZIota:
 	{
 		for (int i = 1; i <= 2; i += 1)
 		{
-			_a = Actor.Spawn("TIED", "Z-Iota-" + (k * 2 + i), "Traitors", "", 0, _d, _d);
+			_a = Actor.Spawn("TIED", "Z-IOTA " + (k * 2 + i), "Traitors", "", 0, _d, _d);
 			Actor.QueueAtSpawner(_a, glory);
 		}
 		
@@ -770,7 +771,7 @@ spawn_traitorZTheta:
 	{
 		for (int i = 1; i <= 2; i += 1)
 		{
-			_a = Actor.Spawn("TIED", "Z-Theta-" + (k * 2 + i), "Traitors", "", 0, _d, _d);
+			_a = Actor.Spawn("TIED", "Z-THETA " + (k * 2 + i), "Traitors", "", 0, _d, _d);
 			Actor.QueueAtSpawner(_a, glory);
 			if (i == 2)
 				Squad.JoinSquad(_a, glory);
@@ -889,20 +890,20 @@ spawn_traitorMines_vork:
 
 
 spawn_allyEpsilon:
-	_a = Actor.Spawn("TIESA", "Epsilon-1", "Empire", "", 0, _d, _d);
+	_a = Actor.Spawn("TIESA", "EPSILON 1", "Empire", "", 0, _d, _d);
 	Actor.QueueAtSpawner(_a, greywolf);
 	AI.QueueLast(_a, "setgamestateb", "EpsilonSpawned", true);
 	AI.QueueLast(_a, "attackactor", vorknkx, -1, -1, false, 40);
 
-	_a = Actor.Spawn("TIESA", "Epsilon-2", "Empire", "", 0, _d, _d);
+	_a = Actor.Spawn("TIESA", "EPSILON 2", "Empire", "", 0, _d, _d);
 	AI.QueueLast(_a, "attackactor", vorknkx, -1, -1, false, 40);
 	Actor.QueueAtSpawner(_a, greywolf);
 	
-	_a = Actor.Spawn("TIEI", "Gamma-1", "Empire", "", 0, _d, _d);
+	_a = Actor.Spawn("TIEI", "GAMMA 1", "Empire", "", 0, _d, _d);
 	AI.QueueLast(_a, "attackactor", vorknkx, -1, -1, false, 40);
 	Actor.QueueAtSpawner(_a, greywolf);
 	
-	_a = Actor.Spawn("TIEI", "Gamma-2", "Empire", "", 0, _d, _d);
+	_a = Actor.Spawn("TIEI", "GAMMA 2", "Empire", "", 0, _d, _d);
 	AI.QueueLast(_a, "attackactor", vorknkx, -1, -1, false, 40);
 	Actor.QueueAtSpawner(_a, greywolf);
 	
@@ -910,7 +911,7 @@ spawn_allyEpsilon:
 spawn_allyEta:
 	for (int i = 1; i <= 4; i += 1)
 	{
-		int a = Actor.Spawn("TIE", "Eta-" + i, "Empire", "", 0, _d, _d);
+		int a = Actor.Spawn("TIE", "TEA " + i, "Empire", "", 0, _d, _d);
 		actorp_id = a;
 		actorp_multiplier = 2;
 		Script.Call("actorp_multShd");
@@ -934,7 +935,7 @@ spawn_allyBeta:
 			}
 			else
 			{
-				_a = Actor.Spawn("TIESA", "Beta-" + (k * 3 + i), "Empire", "", 0, _d, _d);
+				_a = Actor.Spawn("TIESA", "BETA " + (k * 3 + i), "Empire", "", 0, _d, _d);
 				
 				Actor.QueueAtSpawner(_a, greywolf);
 				if (i == 1 && k == 0)
