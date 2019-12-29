@@ -11,7 +11,7 @@ namespace SWEndor.ActorTypes.Groups
       // Combat
       CombatData = CombatData.DefaultFighter;
       ArmorData = ArmorData.Default;
-      ArmorData.Data.Put(DamageType.HEAVY, 1.1f);
+      ArmorData.Data.Put(DamageType.TORPEDO, 1.1f);
       ArmorData.Data.Put(DamageType.COLLISION, 100);
 
       ScoreData = new ScoreData(75, 2500);

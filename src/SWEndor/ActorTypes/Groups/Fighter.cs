@@ -37,8 +37,8 @@ namespace SWEndor.ActorTypes.Groups
 
       AIData.HuntWeight = 5;
 
-      ArmorData.Data.Put(DamageType.LIGHT, 1.1f);
-      ArmorData.Data.Put(DamageType.HEAVY, 0.8f);
+      ArmorData.Data.Put(DamageType.MISSILE, 1.1f);
+      ArmorData.Data.Put(DamageType.TORPEDO, 0.8f);
 
       SystemData.MaxHull = 4;
       SystemData.Energy_Income = 1;

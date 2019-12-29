@@ -13,7 +13,7 @@
     LASER,
 
     // proj
-    LIGHT,
-    HEAVY,
+    MISSILE,
+    TORPEDO,
   }
 }

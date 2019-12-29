@@ -15,7 +15,7 @@ namespace SWEndor.ActorTypes.Instances
       MoveLimitData.MinSpeed = 850;
       MoveLimitData.MaxTurnRate = 75;
 
-      CombatData.DamageType = DamageType.HEAVY;
+      CombatData.DamageType = DamageType.TORPEDO;
 
       MeshData = new MeshData(Engine, Name, @"projectiles\torpedo.x");
     }

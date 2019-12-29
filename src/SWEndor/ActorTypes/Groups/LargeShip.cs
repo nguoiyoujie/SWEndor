@@ -25,8 +25,8 @@ namespace SWEndor.ActorTypes.Groups
       RenderData.RadarSize = 10;
       TimedLifeData = new TimedLifeData(false, 25);
 
-      ArmorData.Data.Put(DamageType.LIGHT, 1.05f);
-      ArmorData.Data.Put(DamageType.HEAVY, 1.15f);
+      ArmorData.Data.Put(DamageType.MISSILE, 1.05f);
+      ArmorData.Data.Put(DamageType.TORPEDO, 1.15f);
 
       AIData.TargetType = TargetType.SHIP;
       RenderData.RadarType = RadarType.RECTANGLE_GIANT;
