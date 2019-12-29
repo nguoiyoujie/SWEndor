@@ -28,12 +28,12 @@ namespace SWEndor.Sound
       if (p == null)
         return null;
 
-      if (p.ChangeMood.Contains(mgr.GetMood()))
-        mgr.SetMood(p.ChangeMood[mgr.GetMood()]);
+      int mood = mgr.GetMood();
+
+      if (p.ChangeMood.Contains(mood))
+        mgr.SetMood(p.ChangeMood[mood]);
       else if (p.ChangeMood.Contains(-1))
         mgr.SetMood(p.ChangeMood[-1]);
-
-      int mood = mgr.GetMood();
 
       if (p.MoodTransitions.Contains(mood))
       {

@@ -17,9 +17,8 @@ namespace SWEndor.Sound
 
         Channel fmodchannel;
         soundgrp.getChannel(0, out fmodchannel);
-        soundgrp.setVolume(Volume * s.MasterSFXVolume);
+        soundgrp.setVolume(Volume * s.SFXVolume);
         fmodchannel.setLoopCount((Loop) ? -1 : 0);
-        //fmodchannel.setMode((sound.Loop) ? MODE.LOOP_NORMAL : MODE.LOOP_OFF);
 
         bool bp;
         soundgrp.isPlaying(out bp);

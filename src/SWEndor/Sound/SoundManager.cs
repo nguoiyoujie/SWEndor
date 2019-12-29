@@ -30,7 +30,7 @@ namespace SWEndor.Sound
 
 
     private FMOD.System fmodsystem = null;
-    private int channels = 32; // 0 = music. 1-31 = sounds. ?
+    private int channels = 64; // 0 = music. 1-63s = sounds. ?
     private ChannelGroup musicgrp;
     private Registry<ChannelGroup> soundgrps = new Registry<ChannelGroup>();
 
@@ -61,29 +61,23 @@ namespace SWEndor.Sound
       set
       {
         musicgrp?.setVolume(value);
-        //interruptmusicgrp?.setVolume(value);
         m_MasterMusicVolume = value;
       }
     }
+    public float SFXVolume
+    {
+      get { return m_MasterSFXVolume * m_MasterSFXVolumeScenario; }
+    }
+
     public float MasterSFXVolume
     {
       get { return m_MasterSFXVolume; }
-      set
-      {
-        m_MasterSFXVolume = value;
-        foreach (ChannelGroup soundgrp in soundgrps.GetAll())
-          soundgrp.setVolume(m_MasterSFXVolume * m_MasterSFXVolumeScenario);
-      }
+      set { m_MasterSFXVolume = value; }
     }
     public float MasterSFXVolumeScenario
     {
       get { return m_MasterSFXVolumeScenario; }
-      set
-      {
-        m_MasterSFXVolumeScenario = value;
-        foreach (ChannelGroup soundgrp in soundgrps.GetAll())
-          soundgrp.setVolume(m_MasterSFXVolume * m_MasterSFXVolumeScenario);
-      }
+      set { m_MasterSFXVolumeScenario = value; }
     }
 
     private int m_mood = 0;
@@ -124,13 +118,6 @@ namespace SWEndor.Sound
           if (i <= 1)
           {
             ch.setChannelGroup(musicgrp);
-          }
-          else
-          {
-            //ChannelGroup grp;
-            //fmodsystem.createChannelGroup(soundgrps.Count.ToString(), out grp);
-            //ch.setChannelGroup(grp);
-            //soundgrps.Add(grp);
           }
         }
       }
@@ -301,7 +288,6 @@ namespace SWEndor.Sound
       {
         // find next piece dynamically using Mood
         Piece next = Dynamic.GetDynNext(this, IntrMusic);
-        //bool intr = next != null;
         if (next == null)
         {
           next = Dynamic.GetDynNext(this, CurrMusic);
