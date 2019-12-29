@@ -35,8 +35,8 @@ namespace SWEndor.Input.Context
           Engine.SoundManager.SetSound(SoundGlobals.Button1);
 
         // Terminal
-        if (Engine.InputManager.CTRL && keydata.Key.Equals((int)CONST_TV_KEY.TV_KEY_T))
-          TConsole.Visible = true;
+        //if (Engine.InputManager.CTRL && keydata.Key.Equals((int)CONST_TV_KEY.TV_KEY_T))
+        //  TConsole.Visible = true;
       }
     }
   }
