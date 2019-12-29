@@ -144,26 +144,26 @@ namespace SWEndor
       if (this == Neutral)
         return;
 
+      if (_wings.Remove(ainfo.ID))
+      {
+        if (WingLimit > 0)
+          WingLimit--;
+      }
+
+      if (_ships.Remove(ainfo.ID))
+      {
+        if (ShipLimit > 0)
+          ShipLimit--;
+      }
+
+      if (_structures.Remove(ainfo.ID))
+      {
+        if (StructureLimit > 0)
+          StructureLimit--;
+      }
+
       if (ainfo.DisposingOrDisposed)
       {
-        if (_wings.Remove(ainfo.ID))
-        {
-          if (WingLimit > 0)
-            WingLimit--;
-        }
-
-        if (_ships.Remove(ainfo.ID))
-        {
-          if (ShipLimit > 0)
-            ShipLimit--;
-        }
-
-        if (_structures.Remove(ainfo.ID))
-        {
-          if (StructureLimit > 0)
-            StructureLimit--;
-        }
-
         if (ainfo.IsDead)
         {
           FactionInfo p = ainfo.Engine.PlayerInfo.Actor?.Faction ?? Neutral;
