@@ -7,7 +7,7 @@ The list is not absolute, however it provides an estimate for what work needs to
 
 --------------------------------------------------------------------------------------------------------------------------------
 Legend:
-    Formally, the version number is [MajorVersion].[MinorVersion].[Build Date in yyyy.MMdd.HHmm]-[Debug/Release]
+    Formally, the version number is [MajorVersion].[MinorVersion].[Build Date].[Revision]-[Debug/Release]
 
 	Bullet characters:
 	 - '?' = Unconfirmed item
@@ -92,9 +92,9 @@ Audio:
  
 Scenario:
  - [2019.11.11] Functional [Main Menu] scenario.
- W [2019.10.29] Restore functionality to [Battle of Endor] scenario.
- @ [2019.11.11] Functional [Smuggler Custom Test I] custom scenario.
- - [2019.11.11] Functional [Imperial Custom Test I] custom scenario.
+ - [2019.10.29] Restore functionality to [Battle of Endor] scenario.
+ - [2019.11.11] Functional custom scenarios.
+     - [2019.12.29] 3 Imperial scenarios, 1 Smuggler scenario.
  - [2019.10.29] Definition of 'functional':
      - [2019.10.29] Support game over
      - [2019.10.29] Support win
@@ -131,14 +131,14 @@ UI:
  
 Data File Support:
  - [2019.10.29] Configuration settings		[INI]
- - [2019.11.11] ProjectileTypes				[INI]
- - [2019.11.11] ExplosionTypes				[INI]
- - [2019.10.29] X Models					[X]
- - [2019.10.29] Images for textures			[PNG,JPG,BMP,DDS,etc.]
- - [2019.10.29] Shaders						[FX,INI]
+ - [2019.11.11] ProjectileTypes			[INI]
+ - [2019.11.11] ExplosionTypes			[INI]
+ - [2019.10.29] X Models			[X]
+ - [2019.10.29] Images for textures		[PNG,JPG,BMP,DDS,etc.]
+ - [2019.10.29] Shaders				[FX,INI]
  - [2019.10.29] Weapons and loadouts		[INI]
  - [2019.10.29] Music (dynamic only)		[MP3,INI]
- - [2019.10.29] Scenario scripts			[SCEN,INI]
+ - [2019.10.29] Campaign and Scenario scripts	[SCEN,INI]
  
  
 Configuration Support:
@@ -149,22 +149,22 @@ Configuration Support:
  
 
 Performance Target:
- - [2019.10.29] Consistent > 55 FPS in [Main Menu], [Smuggler Custom Test I], [Imperial Custom Test I] scenario (~200 actors, ~200 projectiles, <5 very large ships)
+ - [2019.10.29] Consistent > 55 FPS in [Main Menu], and custom scenarios (~200 actors, ~200 projectiles, <5 very large ships)
  - [2019.10.29] Consistent > 40 FPS in [Battle of Endor]/Mental scenario (~10 very large ships)
  - [2019.10.29] Exclude performance drop when handling large amounts of actor creation in a single frame (revisit in future versions)
  
  
 Documentation:
- - [2019.10.30] How to setup
- - [2019.10.30] Basic gameplay description 
+ - [2019.10.30] Basic manual for setup and gameplay
  C [2019.10.30] Data file definitions
 	 C [2019.10.29] Configuration settings		[INI]
-	 C [2019.10.29] X Models					[X]
-	 C [2019.10.29] Images for textures			[PNG,JPG,BMP,DDS,etc.]
-	 C [2019.10.29] Shaders						[FX,INI]
+	 C [2019.10.29] X Models			[X]
+	 C [2019.10.29] Images for textures		[PNG,JPG,BMP,DDS,etc.]
+	 C [2019.10.29] Shaders				[FX,INI]
 	 C [2019.10.29] Weapons and loadouts		[INI]
 	 C [2019.10.29] Music (dynamic only)		[MP3,INI]
-	 C [2019.10.29] Scenario scripts			[SCEN,INI]
+	 C [2019.10.29] Scenario scripts		[SCEN,INI]
+
 
 --------------------------------------------------------------------------------------------------------------------------------
 v0.2
