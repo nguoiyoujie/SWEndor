@@ -1,4 +1,4 @@
-@echo off
+﻿@echo off
 set TITLE=SWEndor
 set MAJORVERSION=0
 set MINORVERSION=0
@@ -29,7 +29,7 @@ if exist %VERSIONBAT% (
       )
     ) else if %%a==BUILDDATE (
       if not %%b==%BUILDDATE% (
-        set REVISION=0 
+        set REVISION=0
         set NEWDATE=1
       )
     )

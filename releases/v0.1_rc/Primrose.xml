@@ -1,0 +1,1912 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Primrose</name>
+    </assembly>
+    <members>
+        <member name="T:Primrose.Primitives.Cache`4">
+            <summary>
+            Provides a basic cache functionality in a dictionary-like lookup.
+            </summary>
+            <typeparam name="TKey">The key type.</typeparam>
+            <typeparam name="Token">The token type. The token is invalidated when the compared tokens are not equal</typeparam>
+            <typeparam name="TValue">The value type.</typeparam>
+            <typeparam name="TParam">A parameter type used to generate updated values when the cached value is invalidated</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Cache`4.#ctor">
+            <summary>Creates a cache</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Cache`4.#ctor(System.Int32)">
+            <summary>Creates a cache with an initial capacity</summary>
+            <param name="capacity"></param>
+        </member>
+        <member name="P:Primrose.Primitives.Cache`4.Count">
+            <summary>Retrieves the number of elements in the cache</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Cache`4.Define(`0,`1)">
+            <summary>
+            Defines a cache key if the key does not exist, otherwise flushes the key.
+            </summary>
+            <param name="key">The key containing the cached token and value</param>
+            <param name="token">The new token to be compared with the cached token</param>
+        </member>
+        <member name="M:Primrose.Primitives.Cache`4.Get(`0,`1,System.Func{`3,`2},`3,System.Collections.Generic.IEqualityComparer{`1})">
+            <summary>
+            Retrieves the value based on the cached key.
+            </summary>
+            <param name="key">The key containing the cached token and value</param>
+            <param name="token">The new token to be compared with the cached token</param>
+            <param name="func">The function used to generate the updated value</param>
+            <param name="p">The parameter value used to generate the updated value</param>
+            <param name="cmp">The token comparer</param>
+            <returns>If the tokens match, return the cached value, otherwise update this value with func(p) and returns the new value</returns>
+            <exception cref="T:System.InvalidOperationException">Attempted to get an non-existent key from a cache.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Cache`4.GetOrDefine(`0,`1,System.Func{`3,`2},`3,System.Collections.Generic.IEqualityComparer{`1})">
+            <summary>
+            Defines a cache key if the key does not exist, then retrieves the value.
+            </summary>
+            <param name="key">The key containing the cached token and value</param>
+            <param name="token">The new token to be compared with the cached token</param>
+            <param name="func">The function used to generate the updated value</param>
+            <param name="p">The parameter value used to generate the updated value</param>
+            <param name="cmp">The token comparer</param>
+            <returns>If the tokens match, return the cached value, otherwise update this value with func(p) and returns the new value</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Cache`4.Clear(System.Func{`1,System.Boolean})">
+            <summary>Clears the cache of entries depending on a conditional function.</summary>
+            <param name="func">The function that determines whether the entry should be cleared. Use null to clear the entire cache.</param>
+        </member>
+        <member name="T:Primrose.Primitives.EnumNames`1">
+            <summary>
+            Provides a cache for string names for enumerables. Improves runtime performance of name-based lookups.
+            </summary>
+            <typeparam name="T">The enumerable type</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.EnumNames`1.Get(`0)">
+            <summary>
+            Retrieves the name of an string enum value from the cached list.
+            </summary>
+            <param name="key">The enum value</param>
+            <returns>The cached ToString() result</returns>
+        </member>
+        <member name="T:Primrose.Primitives.EnumNamesExt">
+            <summary>
+            Provides extension methods for enumerable value types
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.EnumNamesExt.GetEnumName``1(``0)">
+            <summary>
+            Retrieves the name of an string enum value from a cached list.
+            </summary>
+            <typeparam name="T">The enumerable type</typeparam>
+            <param name="key">The enum value</param>
+            <returns></returns>
+        </member>
+        <member name="T:Primrose.Primitives.Collections.CircularQueue`1">
+            <summary>
+            Provides a queue based on circular linkage
+            </summary>
+            <typeparam name="T">The item type stored in the queue</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Collections.CircularQueue`1.#ctor(System.Int32,System.Boolean)">
+            <summary>
+            Creates a queue.
+            </summary>
+            <param name="size">The size of the queue</param>
+            <param name="errifexceed">Whether an exception is thrown if the queue is full</param>
+        </member>
+        <member name="P:Primrose.Primitives.Collections.CircularQueue`1.Count">
+            <summary>Retrieves the number of elements in the queue</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Collections.CircularQueue`1.Enqueue(`0)">
+            <summary>Enqueues an item from the queue</summary>
+            <param name="value">The item to be enqueued</param>
+            <exception cref="T:System.InvalidOperationException">Attempted to enqueue an item into the queue that has reached capacity limit.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Collections.CircularQueue`1.Dequeue">
+            <summary>Dequeues an item from the queue</summary>
+            <returns></returns>
+        </member>
+        <member name="T:Primrose.Primitives.ThreadSafeDictionary`2">
+            <summary>
+            Provides a basic thread-safe paired dictionary for multithreaded updates  
+            </summary>
+            <typeparam name="T">The item type to be stored as keys in this dictionary</typeparam>
+            <typeparam name="U">The item type to be stored as values in this dictionary</typeparam>
+        </member>
+        <member name="F:Primrose.Primitives.ThreadSafeDictionary`2.ExplicitUpdateOnly">
+            <summary>
+            Defines whether updates should be triggered explicitly. If true, call SetDirty() to update.
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.#ctor(System.Collections.Generic.IDictionary{`0,`1})">
+            <summary>
+            Creates a thread-safe dictionary
+            </summary>
+            <param name="dict">The initial dictionary source</param>
+        </member>
+        <member name="P:Primrose.Primitives.ThreadSafeDictionary`2.Count">
+            <summary>Retrieves the number of elements in the dictionary</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.ContainsKey(`0)">
+            <summary>Returns whether the key exists in the dictionary</summary>
+            <param name="key">The key to check</param>
+            <returns>True if the key exists, false otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.ContainsValue(`1)">
+            <summary>Returns whether the value exists in the dictionary</summary>
+            <param name="value">The value to check</param>
+            <returns>True if the value exists, false otherwise</returns>
+        </member>
+        <member name="P:Primrose.Primitives.ThreadSafeDictionary`2.Item(`0)">
+            <summary>Retrieves a value using a key</summary>
+            <param name="key">The key to check</param>
+            <returns>Returns the value associated with this key</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.GetList">
+            <summary>Obtains last updated collection</summary>
+            <returns></returns>
+        </member>
+        <member name="P:Primrose.Primitives.ThreadSafeDictionary`2.Keys">
+            <summary>Obtains last updated keys</summary>
+            <returns></returns>
+        </member>
+        <member name="P:Primrose.Primitives.ThreadSafeDictionary`2.Values">
+            <summary>Obtains last updated values</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.Get(`0)">
+            <summary>Retrieves the value associated with this key</summary>
+            <param name="key">The key to check</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.SetDirty">
+            <summary>Explicity triggers the list for update</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.Refresh">
+            <summary>Forces a refresh</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.Add(`0,`1)">
+            <summary>Adds an item to the collection</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.Set(`0,`1)">
+            <summary>Sets an item to the collection</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.Put(`0,`1)">
+            <summary>Adds or Sets an item to the collection</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.Clear">
+            <summary>Clears the collection</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeDictionary`2.Remove(`0)">
+            <summary>Removes an item from the collection</summary>
+        </member>
+        <member name="T:Primrose.Primitives.ThreadSafeList`1">
+            <summary>
+            Provides a basic thread-safe list interface for multithreaded updates  
+            </summary>
+            <typeparam name="T">The item type to be stored in this list</typeparam>
+        </member>
+        <member name="F:Primrose.Primitives.ThreadSafeList`1.ExplicitUpdateOnly">
+            <summary>
+            Defines whether updates should be triggered explicitly. If true, call SetDirty() to update.
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Creates a thread-safe list
+            </summary>
+            <param name="items">The initial list source</param>
+        </member>
+        <member name="P:Primrose.Primitives.ThreadSafeList`1.Count">
+            <summary>
+            The number of elements in the list
+            </summary>
+        </member>
+        <member name="P:Primrose.Primitives.ThreadSafeList`1.IsReadOnly">
+            <summary>
+            Returns whether the list is read-only
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.Contains(`0)">
+            <summary>
+            Returns whether the item exists in the dictionary
+            </summary>
+            <param name="item">The item to check</param>
+            <returns>True if the item exists, false otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.IndexOf(`0)">
+            <summary>
+            Returns the index of an item in the dictionary
+            </summary>
+            <param name="item">The item to check</param>
+            <returns>The zero-based index of the item, or -1 if the item is not found</returns>
+        </member>
+        <member name="P:Primrose.Primitives.ThreadSafeList`1.Item(System.Int32)">
+            <summary>
+            Retrieves a value using an index
+            </summary>
+            <param name="id">The index to check</param>
+            <returns>Returns the value associated with this index</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.GetList">
+            <summary>
+            Obtains last updated collection
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.SetDirty">
+            <summary>
+            Explicity triggers the list for update
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.Get(System.Int32)">
+            <summary>
+            Gets an item to the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.Insert(System.Int32,`0)">
+            <summary>
+            Inserts an item at a specified index in the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.Add(`0)">
+            <summary>
+            Adds an item to the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.AddUnique(`0)">
+            <summary>
+            Adds an item to the collection only if this item is not already in the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.Set(System.Int32,`0)">
+            <summary>
+            Sets an item to the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.Clear">
+            <summary>
+            Clears the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.Remove(`0)">
+            <summary>
+            Removes the first instance of an item from the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.RemoveRange(System.Int32,System.Int32)">
+            <summary>
+            Removes a range of items from the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.RemoveAt(System.Int32)">
+            <summary>
+            Removes the first instance of an item from the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.RemoveAllItem(`0)">
+            <summary>
+            Removes all instances of an item from the collection
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.Sort(System.Collections.Generic.IComparer{`0})">
+            <summary>
+            Sorts the list using a comparer
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.CopyTo(`0[],System.Int32)">
+            <summary>
+            Copies the elements of the list to an array
+            </summary>
+            <param name="array"></param>
+            <param name="arrayIndex"></param>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the list.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ThreadSafeList`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the list.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Primrose.Primitives.Eventful.ChangeEventDelegate`1">
+            <summary>
+            A delegate representing a change in value
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="newValue">Represents the new value</param>
+            <param name="oldValue">Represents the old value</param>
+        </member>
+        <member name="T:Primrose.Primitives.Eventful.EventedRegistry`2">
+            <summary>
+            A wrapper for binding modification events to a registry
+            </summary>
+            <typeparam name="K">The encapsulated key type</typeparam>
+            <typeparam name="V">The encapsulated value type</typeparam>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedRegistry`2.RegistryChanged">
+            <summary>Represents the set of functions to be called when the registry is replaced</summary>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedRegistry`2.KeyAdded">
+            <summary>Represents the set of functions to be called when a key is added</summary>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedRegistry`2.KeyRemoved">
+            <summary>Represents the set of functions to be called when a key is removed</summary>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedRegistry`2.ValueChanged">
+            <summary>Represents the set of functions to be called when a value is changed</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedRegistry`2.#ctor(Primrose.Primitives.Factories.Registry{`0,`1})">
+            <summary>
+            Defines an event-bounded registry
+            </summary>
+            <param name="reg">The initial registry</param>
+        </member>
+        <member name="P:Primrose.Primitives.Eventful.EventedRegistry`2.Registry">
+            <summary>
+            The encapsulated registry
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedRegistry`2.Get(`0)">
+            <summary>Retrieves the value associated with a key</summary>
+            <param name="key">The identifier key to check</param>
+            <returns>The value associated with the key. If the registry does not contain this key, returns Default</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedRegistry`2.Add(`0,`1)">
+            <summary>Adds an object into the registry</summary>
+            <param name="key">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedRegistry`2.Put(`0,`1)">
+            <summary>Updates or adds an object into the registry</summary>
+            <param name="key">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedRegistry`2.Remove(`0)">
+            <summary>Removes an object from the registry</summary>
+            <param name="key">The identifier key to remove</param>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedRegistry`2.Clear">
+            <summary>Purges all data from the registry</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Eventful.EventedList`2">
+            <summary>
+            A wrapper for binding modification events to a list
+            </summary>
+            <typeparam name="TList">The encapsulated list type</typeparam>
+            <typeparam name="T">The encapsulated element type</typeparam>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedList`2.ListChanged">
+            <summary>Represents the set of functions to be called when the registry is replaced</summary>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedList`2.ItemAdded">
+            <summary>Represents the set of functions to be called when a key is added</summary>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedList`2.ItemRemoved">
+            <summary>Represents the set of functions to be called when a key is removed</summary>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedList`2.ItemChanged">
+            <summary>Represents the set of functions to be called when a value is changed</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Eventful.EventedList`2.Item(System.Int32)">
+            <summary>Gets or sets an element in the list, accessed by an index</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Eventful.EventedList`2.Count">
+            <summary>Gets the number of elements contained in the list</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Eventful.EventedList`2.IsReadOnly">
+            <summary>Gets a value indicating whether the list is read-only</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Eventful.EventedList`2.List">
+            <summary>
+            The encapsulated list
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedList`2.Add(`1)">
+            <summary>Adds an item to the list</summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedList`2.IndexOf(`1)">
+            <summary>Determines the index of a specific item in the list</summary>
+            <param name="item">The object to locate in the list</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedList`2.Insert(System.Int32,`1)">
+            <summary>Inserts an item to the list at the specified index.</summary>
+            <param name="index">The zero-based index at which item should be inserted</param>
+            <param name="item">The object to insert into the list</param>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedList`2.Remove(`1)">
+            <summary>Removes the first occurrence of a specific object from the list</summary>
+            <param name="item">The object to remove from the item</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Eventful.EventedList`2.RemoveAt(System.Int32)">
+            <summary>Removes the item at the specified index.</summary>
+            <param name="index">The zero-based index of the item to remove.</param>
+        </member>
+        <member name="T:Primrose.Primitives.Eventful.EventedVal`1">
+            <summary>
+            A wrapper for binding modification events to a variable
+            </summary>
+            <typeparam name="T">The encapsulated type</typeparam>
+        </member>
+        <member name="P:Primrose.Primitives.Eventful.EventedVal`1.Value">
+            <summary>
+            The encapsulated value
+            </summary>
+        </member>
+        <member name="E:Primrose.Primitives.Eventful.EventedVal`1.ValueChanged">
+            <summary>Represents the set of functions to be called when a value is changed</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Extensions.ArrayExts">
+            <summary>
+            Provides extension methods for arrays
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.ArrayExts.Random``1(``0[],System.Random)">
+            <summary>Retrives a random object from an array of objects</summary>
+            <typeparam name="T">The member type</typeparam>
+            <param name="array">The array</param>
+            <param name="rand">The random object</param>
+            <returns>A random object from the array. If the array has no members, return the default value of the member type</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> and <paramref name="rand"/> cannot be null</exception>
+        </member>
+        <member name="T:Primrose.Primitives.Extensions.BitExts">
+            <summary>
+            Provides extension methods for bit manipulation functions
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.BitExts.GetMostSignificantBit(System.UInt32)">
+            <summary>Retrieves the most significant bit of a value</summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.BitExts.GetUniqueBits(System.UInt32)">
+            <summary>Enumerates the bits of a value by position</summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Primrose.Primitives.Extensions.BitExts.BitEnumerable">
+            <summary>Represents an enumeration of bit positions</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.BitExts.BitEnumerable.#ctor(System.UInt32)">
+            <summary>Creates the enumerable</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.BitExts.BitEnumerable.GetEnumerator">
+            <summary>Gets the enumerator</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Extensions.BitExts.BitEnumerator">
+            <summary>Represents an enumerator of bit positions</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.BitExts.BitEnumerator.#ctor(System.UInt32)">
+            <summary>Creates the enumerator</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.BitExts.BitEnumerator.MoveNext">
+            <summary>Retrieves the next bit position</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Extensions.BitExts.BitEnumerator.Current">
+            <summary>Retrieves the current bit position</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Extensions.DictionaryExts">
+            <summary>
+            Provides extension methods for Dictionaries
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.DictionaryExts.Put``2(System.Collections.Generic.Dictionary{``0,``1},``0,``1)">
+            <summary>
+            Adds or updates a key-value pair in a dictionary.
+            </summary>
+            <typeparam name="K"></typeparam>
+            <typeparam name="V"></typeparam>
+            <param name="d"></param>
+            <param name="k"></param>
+            <param name="v"></param>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.DictionaryExts.GetOrDefault``2(System.Collections.Generic.Dictionary{``0,``1},``0)">
+            <summary>
+            Retrieves a value from a dictionary, or a default(<typeparamref name="V"/>) if the key is not in the dictionary.
+            </summary>
+            <typeparam name="K"></typeparam>
+            <typeparam name="V"></typeparam>
+            <param name="d"></param>
+            <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.DictionaryExts.GetOrAdd``2(System.Collections.Generic.Dictionary{``0,``1},``0)">
+            <summary>
+            Retrieves a value from a dictionary, or adds a new instance of <typeparamref name="V"/> if the key is not in the dictionary.
+            </summary>
+            <typeparam name="K"></typeparam>
+            <typeparam name="V"></typeparam>
+            <param name="d"></param>
+            <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.DictionaryExts.GetOrAdd``2(System.Collections.Generic.Dictionary{``0,``1},``0,System.Func{``0,``1})">
+            <summary>
+            Retrieves a value from a dictionary, or adds a new instance of <typeparamref name="V"/> if the key is not in the dictionary.
+            </summary>
+            <typeparam name="K"></typeparam>
+            <typeparam name="V"></typeparam>
+            <param name="d"></param>
+            <param name="k"></param>
+            <param name="createFn">The function used to create the new instance of <typeparamref name="V"/></param>
+            <returns></returns>
+        </member>
+        <member name="T:Primrose.Primitives.Extensions.IntExts">
+            <summary>
+            Provides extension methods for int values
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.IntExts.Clamp(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Returns a value clamped between a minimum and a maximum
+            </summary>
+            <param name="value">The input value</param>
+            <param name="min">The minimum value</param>
+            <param name="max">The maximum value</param>
+            <returns>min if the value is less than min, max is the value is more than max, value otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.IntExts.Max(System.Int32,System.Int32)">
+            <summary>
+            Returns the maximum of two values
+            </summary>
+            <param name="value1">The first value</param>
+            <param name="value2">The second value</param>
+            <returns>The greater of the two values</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.IntExts.Min(System.Int32,System.Int32)">
+            <summary>
+            Returns the minimum of two values
+            </summary>
+            <param name="value1"></param>
+            <param name="value2"></param>
+            <returns>The smaller of the two values</returns>
+        </member>
+        <member name="T:Primrose.Primitives.Extensions.FloatExts">
+            <summary>
+            Provides extension methods for float values
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.FloatExts.Clamp(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns a value clamped between a minimum and a maximum
+            </summary>
+            <param name="value">The input value</param>
+            <param name="min">The minimum value</param>
+            <param name="max">The maximum value</param>
+            <returns>min if the value is less than min, max is the value is more than max, value otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.FloatExts.Max(System.Single,System.Single)">
+            <summary>
+            Returns the maximum of two values
+            </summary>
+            <param name="value1">The first value</param>
+            <param name="value2">The second value</param>
+            <returns>The greater of the two values</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.FloatExts.Min(System.Single,System.Single)">
+            <summary>
+            Returns the minimum of two values
+            </summary>
+            <param name="value1"></param>
+            <param name="value2"></param>
+            <returns>The smaller of the two values</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.FloatExts.Creep(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns a value at most max_delta value closer to a target
+            </summary>
+            <param name="value">The starting value</param>
+            <param name="target">The target value</param>
+            <param name="max_delta">The max_delta</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.FloatExts.Modulus(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns the result of (value % (max - min)), scaled so that lies between min and max
+            </summary>
+            <param name="value">The input value</param>
+            <param name="min">The minimum value</param>
+            <param name="max">The maximum value</param>
+            <returns>(value % (max - min)), scaled so that lies between min and max</returns>
+        </member>
+        <member name="T:Primrose.Primitives.Extensions.ListExts">
+            <summary>
+            Provides extension methods for Lists
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.ListExts.BinarySearchMany``1(System.Collections.Generic.List{``0},System.Int32)">
+            <summary>
+            Performs a binary search 
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+            <param name="searchFor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.ListExts.Random``1(System.Collections.Generic.List{``0},System.Random)">
+            <summary>Retrives a random object from a list of objects</summary>
+            <typeparam name="T">The member type</typeparam>
+            <param name="list">The array</param>
+            <param name="rand">The random object</param>
+            <returns>A random object from the array. If the array has no members, return the default value of the member type</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="list"/> and <paramref name="rand"/> cannot be null</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.ListExts.Random``1(System.Collections.Concurrent.ConcurrentBag{``0},System.Random)">
+            <summary>Retrives a random object from a list of objects</summary>
+            <typeparam name="T">The member type</typeparam>
+            <param name="list">The array</param>
+            <param name="rand">The random object</param>
+            <returns>A random object from the array. If the array has no members, return the default value of the member type</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="list"/> and <paramref name="rand"/> cannot be null</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.ListExts.RemoveAll``1(System.Collections.Generic.LinkedList{``0},System.Predicate{``0})">
+            <summary>
+            Removes items from a list based on a predicate
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+            <param name="match"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.ListExts.Random``1(System.Collections.Generic.LinkedList{``0},System.Random)">
+            <summary>Retrives a random object from a list of objects</summary>
+            <typeparam name="T">The member type</typeparam>
+            <param name="list">The array</param>
+            <param name="rand">The random object</param>
+            <returns>A random object from the array. If the array has no members, return the default value of the member type</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="list"/> and <paramref name="rand"/> cannot be null</exception>
+        </member>
+        <member name="T:Primrose.Primitives.Extensions.ObjectExts">
+            <summary>
+            Provides extension methods for object values
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.ObjectExts.ToBool(System.Object)">
+            <summary>
+            Checks if a value evaluates to True or False
+            </summary>
+            <param name="value">The object</param>
+            <returns>A boolean value</returns>
+        </member>
+        <member name="T:Primrose.Primitives.Extensions.StringExts">
+            <summary>
+            Provides extension methods for string values
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.Multiline(System.String,System.Int32)">
+            <summary>
+            Provides a multiline representation of a string
+            </summary>
+            <param name="input">The input string</param>
+            <param name="maxLineLength">The maximum length of each line</param>
+            <returns>A multiline representation of a string. Each new line is preceded by a newline "\n" character</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.Scramble(System.String,System.Random)">
+            <summary>
+            Scrambles a string by rearranging its characters in a random order.
+            </summary>
+            <param name="str">The input string</param>
+            <param name="rand">The random object</param>
+            <returns>A string with its characters scrambled</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="rand"/> cannot be null</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.F``1(System.String,``0)">
+            <summary>Replaces one or more format items in a specified string with the string representation of a specified object.</summary>
+            <typeparam name="T1"></typeparam>
+            <param name="fmt">A composite format string.</param>
+            <param name="o1">The object to format.</param>
+            <returns>A copy of format in which any format items are replaced by the string representation of the respective arguments</returns>
+            <exception cref="T:System.ArgumentNullException">format is null.</exception>
+            <exception cref="T:System.FormatException">The format item in format is invalid.-or- The index of a format item is not zero.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.F``2(System.String,``0,``1)">
+            <summary>Replaces one or more format items in a specified string with the string representation of a specified object.</summary>
+            <typeparam name="T1"></typeparam>
+            <typeparam name="T2"></typeparam>
+            <param name="fmt">A composite format string.</param>
+            <param name="o1">The object to format.</param>
+            <param name="o2">The object to format.</param>
+            <returns>A copy of format in which any format items are replaced by the string representation of the respective arguments</returns>
+            <exception cref="T:System.ArgumentNullException">format is null.</exception>
+            <exception cref="T:System.FormatException">The format item in format is invalid.-or- The index of a format item is not zero.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.F``3(System.String,``0,``1,``2)">
+            <summary>Replaces one or more format items in a specified string with the string representation of a specified object.</summary>
+            <typeparam name="T1"></typeparam>
+            <typeparam name="T2"></typeparam>
+            <typeparam name="T3"></typeparam>
+            <param name="fmt">A composite format string.</param>
+            <param name="o1">The object to format.</param>
+            <param name="o2">The object to format.</param>
+            <param name="o3">The object to format.</param>
+            <returns>A copy of format in which any format items are replaced by the string representation of the respective arguments</returns>
+            <exception cref="T:System.ArgumentNullException">format is null.</exception>
+            <exception cref="T:System.FormatException">The format item in format is invalid.-or- The index of a format item is not zero.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.F(System.String,System.Object)">
+            <summary>Replaces one or more format items in a specified string with the string representation of a specified object.</summary>
+            <param name="fmt">A composite format string.</param>
+            <param name="o1">The object to format.</param>
+            <returns>A copy of format in which any format items are replaced by the string representation of the respective arguments</returns>
+            <exception cref="T:System.ArgumentNullException">format is null.</exception>
+            <exception cref="T:System.FormatException">The format item in format is invalid.-or- The index of a format item is not zero.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.F(System.String,System.Object,System.Object)">
+            <summary>Replaces one or more format items in a specified string with the string representation of a specified object.</summary>
+            <param name="fmt">A composite format string.</param>
+            <param name="o1">The object to format.</param>
+            <param name="o2">The object to format.</param>
+            <returns>A copy of format in which any format items are replaced by the string representation of the respective arguments</returns>
+            <exception cref="T:System.ArgumentNullException">format is null.</exception>
+            <exception cref="T:System.FormatException">The format item in format is invalid.-or- The index of a format item is not zero.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.F(System.String,System.Object,System.Object,System.Object)">
+            <summary>Replaces one or more format items in a specified string with the string representation of a specified object.</summary>
+            <param name="fmt">A composite format string.</param>
+            <param name="o1">The object to format.</param>
+            <param name="o2">The object to format.</param>
+            <param name="o3">The object to format.</param>
+            <returns>A copy of format in which any format items are replaced by the string representation of the respective arguments</returns>
+            <exception cref="T:System.ArgumentNullException">format is null.</exception>
+            <exception cref="T:System.FormatException">The format item in format is invalid.-or- The index of a format item is not zero.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.F(System.String,System.Object[])">
+            <summary>Replaces one or more format items in a specified string with the string representation of a specified object.</summary>
+            <param name="fmt">A composite format string.</param>
+            <param name="args">The objects to format.</param>
+            <returns>A copy of format in which any format items are replaced by the string representation of the respective arguments</returns>
+            <exception cref="T:System.ArgumentNullException">format is null.</exception>
+            <exception cref="T:System.FormatException">The format item in format is invalid.-or- The index of a format item is not zero.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.C(System.String,System.String)">
+            <summary>Concatenates two specified instances of System.String.</summary>
+            <param name="s1">The first string to concatenate.</param>
+            <param name="s2">The second string to concatenate.</param>
+            <returns>The concatenation of the specified strings.</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.C(System.String,System.String,System.String)">
+            <summary>Concatenates two specified instances of System.String.</summary>
+            <param name="s1">The first string to concatenate.</param>
+            <param name="s2">The second string to concatenate.</param>
+            <param name="s3">The third string to concatenate.</param>
+            <returns>The concatenation of the specified strings.</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.C(System.String,System.String,System.String,System.String)">
+            <summary>Concatenates two specified instances of System.String.</summary>
+            <param name="s1">The first string to concatenate.</param>
+            <param name="s2">The second string to concatenate.</param>
+            <param name="s3">The third string to concatenate.</param>
+            <param name="s4">The fourth string to concatenate.</param>
+            <returns>The concatenation of the specified strings.</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.C(System.String,System.String,System.String,System.String,System.String)">
+            <summary>Concatenates two specified instances of System.String.</summary>
+            <param name="s1">The first string to concatenate.</param>
+            <param name="s2">The second string to concatenate.</param>
+            <param name="s3">The third string to concatenate.</param>
+            <param name="s4">The fourth string to concatenate.</param>
+            <param name="s5">The fifth string to concatenate.</param>
+            <returns>The concatenation of the specified strings.</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.C(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>Concatenates two specified instances of System.String.</summary>
+            <param name="s1">The first string to concatenate.</param>
+            <param name="s2">The second string to concatenate.</param>
+            <param name="s3">The third string to concatenate.</param>
+            <param name="s4">The fourth string to concatenate.</param>
+            <param name="s5">The fifth string to concatenate.</param>
+            <param name="s6">The sixth string to concatenate.</param>
+            <returns>The concatenation of the specified strings.</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.C(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>Concatenates two specified instances of System.String.</summary>
+            <param name="s1">The first string to concatenate.</param>
+            <param name="s2">The second string to concatenate.</param>
+            <param name="s3">The third string to concatenate.</param>
+            <param name="s4">The fourth string to concatenate.</param>
+            <param name="s5">The fifth string to concatenate.</param>
+            <param name="s6">The sixth string to concatenate.</param>
+            <param name="s7">The seventh string to concatenate.</param>
+            <returns>The concatenation of the specified strings.</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.C(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>Concatenates two specified instances of System.String.</summary>
+            <param name="s1">The first string to concatenate.</param>
+            <param name="s2">The second string to concatenate.</param>
+            <param name="s3">The third string to concatenate.</param>
+            <param name="s4">The fourth string to concatenate.</param>
+            <param name="s5">The fifth string to concatenate.</param>
+            <param name="s6">The sixth string to concatenate.</param>
+            <param name="s7">The seventh string to concatenate.</param>
+            <param name="s8">The eighth string to concatenate.</param>
+            <returns>The concatenation of the specified strings.</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.C(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>Concatenates two specified instances of System.String.</summary>
+            <param name="s1">The first string to concatenate.</param>
+            <param name="s2">The second string to concatenate.</param>
+            <param name="s3">The third string to concatenate.</param>
+            <param name="s4">The fourth string to concatenate.</param>
+            <param name="s5">The fifth string to concatenate.</param>
+            <param name="s6">The sixth string to concatenate.</param>
+            <param name="s7">The seventh string to concatenate.</param>
+            <param name="s8">The eighth string to concatenate.</param>
+            <param name="s9">The ninth string to concatenate.</param>
+            <returns>The concatenation of the specified strings.</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.C(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>Concatenates two specified instances of System.String.</summary>
+            <param name="s1">The first string to concatenate.</param>
+            <param name="s2">The second string to concatenate.</param>
+            <param name="s3">The third string to concatenate.</param>
+            <param name="s4">The fourth string to concatenate.</param>
+            <param name="s5">The fifth string to concatenate.</param>
+            <param name="s6">The sixth string to concatenate.</param>
+            <param name="s7">The seventh string to concatenate.</param>
+            <param name="s8">The eighth string to concatenate.</param>
+            <param name="s9">The ninth string to concatenate.</param>
+            <param name="s10">The tenth string to concatenate.</param>
+            <returns>The concatenation of the specified strings.</returns>
+        </member>
+        <member name="T:Primrose.Primitives.Extensions.TypeExts">
+            <summary>
+            Provides extension methods for Type values
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.TypeExts.BaseTypes(System.Type)">
+            <summary>
+            Enumerates of the base class types of a given type
+            </summary>
+            <param name="t">The type to be enumerated</param>
+            <returns>A enumeration of types that is inherited by <paramref name="t"/></returns>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.Factory`2">
+            <summary>
+            Allows creation of objects and stores them automatically. Limited to objects with parameterless constructors; for others, use Registry
+            </summary>
+            <typeparam name="K">The key type to be stored</typeparam>
+            <typeparam name="T">The object type to be stored</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Factory`2.Create(`0)">
+            <summary>
+            Creates a new object and stores its reference in its internal registry
+            </summary>
+            <param name="id">The identifier for the object</param>
+            <returns></returns>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.IFactory`2">
+            <summary>
+            Allows creation of objects and stores them automatically. Limited to objects with parameterless constructors; for others, use Registry
+            </summary>
+            <typeparam name="K">The key type to be stored</typeparam>
+            <typeparam name="T">The object type to be stored</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IFactory`2.Create(`0)">
+            <summary>
+            Creates a new object and stores its reference in its internal registry
+            </summary>
+            <param name="id">The identifier for the object</param>
+            <returns></returns>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.IRegistry`1">
+            <summary>
+            Maintains a typed registry of objects.
+            </summary>
+            <typeparam name="T">The type of the registered object</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`1.Get(System.String)">
+            <summary>Retrieves the value associated with a key</summary>
+            <param name="key">The identifier key to check</param>
+            <returns>The value associated with the key. If the registry does not contain this key, returns Default</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`1.Add(System.String,`0)">
+            <summary>Adds an object into the registry</summary>
+            <param name="id">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`1.Put(System.String,`0)">
+            <summary>Updates or adds an object into the registry</summary>
+            <param name="id">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`1.Remove(System.String)">
+            <summary>Removes an object from the registry</summary>
+            <param name="id">The identifier key to remove</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`1.Clear">
+            <summary>Purges all data from the registry</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.IRegistry`2">
+            <summary>
+            Maintains a typed registry of objects.
+            </summary>
+            <typeparam name="K">The type of the key</typeparam>
+            <typeparam name="T">The type of the registered object</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`2.Get(`0)">
+            <summary>Retrieves the value associated with a key</summary>
+            <param name="key">The identifier key to check</param>
+            <returns>The value associated with the key. If the registry does not contain this key, returns Default</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`2.Add(`0,`1)">
+            <summary>Adds an object into the registry</summary>
+            <param name="key">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`2.Put(`0,`1)">
+            <summary>Updates or adds an object into the registry</summary>
+            <param name="key">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`2.Remove(`0)">
+            <summary>Removes an object from the registry</summary>
+            <param name="key">The identifier key to remove</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`2.Clear">
+            <summary>Purges all data from the registry</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.AFactoryObject`1">
+            <summary>
+            Defines a Factory object>
+            </summary>
+            <typeparam name="K">The type of the associated key</typeparam>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.AFactoryObject`1.ID">
+            <summary>The unique identifier of the object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.AFactoryObject`1.#ctor">
+            <summary>Creates an instance of the object</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.IPool">
+            <summary>
+            Provides a basic object pool for pooling objects for further use  
+            </summary>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.IPool.Count">
+            <summary>Retrieves the number of elements in the pool</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.IPool.UncollectedCount">
+            <summary>Retrieves the number of generated elements in the pool that were not yet collected</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.ObjectPool`1">
+            <summary>
+            Provides a basic object pool for pooling objects for further use  
+            </summary>
+            <typeparam name="T">The item type to be pooled</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.CreateStaticPool(System.Func{`0},System.Action{`0})">
+            <summary>
+            Creates a static version of the object pool for global use
+            </summary>
+            <param name="createFn">The function for creating new instances</param>
+            <param name="resetFn">The function for reseting instances that are returned to the pool</param>
+            <returns></returns>
+            <exception cref="T:System.InvalidOperationException">The background object pool has already been created.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.GetStaticPool">
+            <summary>
+            Retrieves the static version of the pool if created
+            </summary>
+            <returns></returns>
+            <exception cref="T:System.InvalidOperationException">The background object pool has not been created.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.#ctor(System.Func{`0},System.Action{`0})">
+            <summary>
+            Creates an object pool
+            </summary>
+            <param name="createFn">The function for creating new instances</param>
+            <param name="resetFn">The function for reseting instances that are returned to the pool</param>
+            <exception cref="T:System.ArgumentNullException">createFn cannot be null</exception>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.ObjectPool`1.Count">
+            <summary>Retrieves the number of elements in the pool</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.ObjectPool`1.UncollectedCount">
+            <summary>Retrieves the number of generated elements in the pool that were not yet collected</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.GetNew">
+            <summary>Returns an instance of <typeparamref name="T"/> from the pool, or creates a new instance if the pool is empty</summary>
+            <returns>An instance of <typeparamref name="T"/> from the pool, or created from the creator function if the pool is empty</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.Return(`0)">
+            <summary>Returns an instance of <typeparamref name="T"/> to the pool.</summary>
+            <param name="item">The object to be returnedto the pool</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.Clear">
+            <summary>Removes all instances from the pool</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.Registry`1">
+            <summary>
+            Maintains a typed registry of objects.
+            </summary>
+            <typeparam name="T">The type of the registered object</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`1.#ctor">
+            <summary>Creates an object registry</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`1.#ctor(System.Int32)">
+            <summary>Creates an object registry with an initial capacity</summary>
+            <param name="capacity">The initial capacity of the registry</param>
+        </member>
+        <member name="F:Primrose.Primitives.Factories.Registry`1.list">
+            <summary>The container data source</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Factories.Registry`1.Default">
+            <summary>The default value returned</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`1.Contains(System.String)">
+            <summary>Determines whether the registry contains a key</summary>
+            <param name="id">The identifier key to check</param>
+            <returns>True if the registry contains this key, False if otherwise</returns>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.Registry`1.Item(System.String)">
+            <summary>Retrieves the value associated with a key index</summary>
+            <param name="id">The identifier key to check</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`1.Get(System.String)">
+            <summary>Retrieves the value associated with a key</summary>
+            <param name="id">The identifier key to check</param>
+            <returns>The value associated with the key. If the registry does not contain this key, returns Default</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`1.Get(System.String,`0)">
+            <summary>Retrieves the value associated with a key</summary>
+            <param name="id">The identifier key to check</param>
+            <param name="defaultValue">The default value to return if the key is not found in the registry</param>
+            <returns>The value associated with the key. If the registry does not contain this key, returns Default</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`1.GetX(System.String)">
+            <summary>Strictly retrieves the value associated with a key</summary>
+            <param name="id">The identifier key to check</param>
+            <returns>The value associated with the key</returns>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">The registry does not contain this key.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`1.GetKeys">
+            <summary>Retrives an array of all the keys in the registry</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`1.GetAll">
+            <summary>Retrives an array of all the values in the registry</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`1.Add(System.String,`0)">
+            <summary>Adds an object into the registry</summary>
+            <param name="id">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`1.Put(System.String,`0)">
+            <summary>Updates or adds an object into the registry</summary>
+            <param name="id">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`1.Remove(System.String)">
+            <summary>Removes an object from the registry</summary>
+            <param name="id">The identifier key to remove</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`1.Clear">
+            <summary>Purges all data from the registry</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.Registry`1.Count">
+            <summary>The number of elements in this registry</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.Registry`2">
+            <summary>
+            Maintains a typed registry of objects.
+            </summary>
+            <typeparam name="K">The type of the key</typeparam>
+            <typeparam name="T">The type of the registered object</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.#ctor">
+            <summary>Creates an object registry</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.#ctor(System.Int32)">
+            <summary>Creates an object registry with an initial capacity</summary>
+            <param name="capacity">The initial capacity of the registry</param>
+        </member>
+        <member name="F:Primrose.Primitives.Factories.Registry`2.list">
+            <summary>The container data source</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Factories.Registry`2.Default">
+            <summary>The default value returned</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.Contains(`0)">
+            <summary>Determines whether the registry contains a key</summary>
+            <param name="key">The identifier key to check</param>
+            <returns>True if the registry contains this key, False if otherwise</returns>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.Registry`2.Item(`0)">
+            <summary>Retrieves the value associated with a key index</summary>
+            <param name="id">The identifier key to check</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.Get(`0)">
+            <summary>Retrieves the value associated with a key</summary>
+            <param name="key">The identifier key to check</param>
+            <returns>The value associated with the key. If the registry does not contain this key, returns Default</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.GetX(`0)">
+            <summary>Strictly retrieves the value associated with a key</summary>
+            <param name="key">The identifier key to check</param>
+            <returns>The value associated with the key</returns>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">The registry does not contain this key.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.GetKeys">
+            <summary>Retrives an array of all the keys in the registry</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.GetAll">
+            <summary>Retrives an array of all the values in the registry</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.Add(`0,`1)">
+            <summary>Adds an object into the registry</summary>
+            <param name="key">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.Put(`0,`1)">
+            <summary>Updates or adds an object into the registry</summary>
+            <param name="key">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.Remove(`0)">
+            <summary>Removes an object from the registry</summary>
+            <param name="key">The identifier key to remove</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.Clear">
+            <summary>Purges all data from the registry</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.Registry`2.Count">
+            <summary>The number of elements in this registry</summary>
+        </member>
+        <member name="T:Primrose.Primitives.IIdentity">
+            <summary>
+            Implements an ID object
+            </summary>
+        </member>
+        <member name="P:Primrose.Primitives.IIdentity.ID">
+            <summary>The instance ID</summary>
+        </member>
+        <member name="T:Primrose.Primitives.INamedObject">
+            <summary>
+            Implements a named object
+            </summary>
+        </member>
+        <member name="P:Primrose.Primitives.INamedObject.Name">
+            <summary>The instance name</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Pipelines.Pipeline`1">
+            <summary>
+            Maintains and executes objects in an queue. Useful for FIFO procedures like UI modifications.
+            </summary>
+            <typeparam name="T">A piped object</typeparam>
+        </member>
+        <member name="F:Primrose.Primitives.Pipelines.Pipeline`1.MaxExecutionsPerRun">
+            <summary>The maximum number of piped objects to be executed per call to Run()</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Pipelines.Pipeline`1.#ctor(System.Int32)">
+            <summary>
+            Creates a pipeline
+            </summary>
+            <param name="maxExecutionsPerRun">The maximum number of piped objects to be executed per call to Run()</param>
+        </member>
+        <member name="M:Primrose.Primitives.Pipelines.Pipeline`1.Queue(`0)">
+            <summary>Queues an piped object into the pipeline</summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Primrose.Primitives.Pipelines.Pipeline`1.Run">
+            <summary>Runs the execution of queued objects, up to a limit defined by MaxExecutionsPerRun</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Pipelines.Pipeline`1.Clear">
+            <summary>Clears the queue without execution</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Pipelines.IPipedObject">
+            <summary>
+            Defines a piped object to be processed in a pipeline
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Pipelines.IPipedObject.Execute">
+            <summary>Provides execution entry point from the pipeline</summary>
+        </member>
+        <member name="T:Primrose.Primitives.ScopeCounters">
+            <summary>
+            Provides implementation for maintaining a reference counter for explicit management
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.Get(System.Byte)">
+            <summary>Gets the reference count of a global scope</summary>
+            <param name="global">The global scope</param>
+            <returns>The reference count of the scope</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.Get(Primrose.Primitives.ScopeCounters.ScopeCounter)">
+            <summary>Gets the reference count of a local scope</summary>
+            <param name="scope">The local scope</param>
+            <returns>The reference count of the scope</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.Acquire(System.Byte)">
+            <summary>Increments the reference count of a global scope, then returns the updated scope</summary>
+            <param name="global">The global scope</param>
+            <returns>The updated scope</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.Acquire(Primrose.Primitives.ScopeCounters.ScopeCounter)">
+            <summary>Increments the reference count of a local scope, then returns the updated scope</summary>
+            <param name="scope">The local scope</param>
+            <returns>The updated scope</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.Reset(System.Byte)">
+            <summary>Resets the reference count of a global scope to zero</summary>
+            <param name="global">The global scope</param>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.Reset(Primrose.Primitives.ScopeCounters.ScopeCounter)">
+            <summary>Resets the reference count of a global scope to zero</summary>
+            <param name="scope">The local scope</param>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.ReleaseOne(System.Byte)">
+            <summary>Decrements the reference count of a global scope</summary>
+            <param name="global">The global scope</param>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.ReleaseOne(Primrose.Primitives.ScopeCounters.ScopeCounter)">
+            <summary>Decrements the reference count of a local scope</summary>
+            <param name="scope">The local scope</param>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.ReleaseOne(Primrose.Primitives.ScopeCounters.ScopeGlobalCounter)">
+            <summary>Decrements the reference count of a global scope</summary>
+            <param name="scope">The global scope</param>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.AcquireIfZero(System.Byte)">
+            <summary>Increments the reference count of a global scope only if the count is zero</summary>
+            <param name="global">The global scope</param>
+            <returns>True if acquired, false otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.AcquireIfZero(Primrose.Primitives.ScopeCounters.ScopeCounter)">
+            <summary>Increments the reference count of a local scope only if the count is zero</summary>
+            <param name="scope">The local scope</param>
+            <returns>True if acquired, false otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.AcquireWhenZero(System.Byte)">
+            <summary>Performs a spinlock until the reference count of a global scope is zero, then increments the reference count</summary>
+            <param name="global">The global scope</param>
+            <returns>The updated scope</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.AcquireWhenZero(Primrose.Primitives.ScopeCounters.ScopeCounter)">
+            <summary>Performs a spinlock until the reference count of a local scope is zero, then increments the reference count</summary>
+            <param name="scope">The local scope</param>
+            <returns>The updated scope</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.IsZero(Primrose.Primitives.ScopeCounters.ScopeCounter)">
+            <summary>Returns if the reference count of a scope is zero</summary>
+            <param name="t1">The scope to check</param>
+            <returns>True if the reference count is zero, false otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.IsZero(System.Byte)">
+            <summary>Returns if the reference count of a scope is zero</summary>
+            <param name="t1">The scope to check</param>
+            <returns>True if the reference count is zero, false otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.IsZero(Primrose.Primitives.ScopeCounters.ScopeCounter,Primrose.Primitives.ScopeCounters.ScopeCounter)">
+            <summary>Returns if the reference count of all scopes is zero</summary>
+            <param name="t1">The first scope to check</param>
+            <param name="t2">The second scope to check</param>
+            <returns>True if all reference counts are zero, false otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.IsZero(Primrose.Primitives.ScopeCounters.ScopeCounter,System.Byte)">
+            <summary>Returns if the reference count of all scopes is zero</summary>
+            <param name="t1">The first scope to check</param>
+            <param name="t2">The second scope to check</param>
+            <returns>True if all reference counts are zero, false otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.IsZero(System.Byte,System.Byte)">
+            <summary>Returns if the reference count of all scopes is zero</summary>
+            <param name="t1">The first scope to check</param>
+            <param name="t2">The second scope to check</param>
+            <returns>True if all reference counts are zero, false otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.IsZero(Primrose.Primitives.ScopeCounters.ScopeCounter,Primrose.Primitives.ScopeCounters.ScopeCounter,Primrose.Primitives.ScopeCounters.ScopeCounter)">
+            <summary>Returns if the reference count of all scopes is zero</summary>
+            <param name="t1">The first scope to check</param>
+            <param name="t2">The second scope to check</param>
+            <param name="t3">The third scope to check</param>
+            <returns>True if all reference counts are zero, false otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.IsZero(Primrose.Primitives.ScopeCounters.ScopeCounter,Primrose.Primitives.ScopeCounters.ScopeCounter,System.Byte)">
+            <summary>Returns if the reference count of all scopes is zero</summary>
+            <param name="t1">The first scope to check</param>
+            <param name="t2">The second scope to check</param>
+            <param name="t3">The third scope to check</param>
+            <returns>True if all reference counts are zero, false otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.IsZero(Primrose.Primitives.ScopeCounters.ScopeCounter,System.Byte,System.Byte)">
+            <summary>Returns if the reference count of all scopes is zero</summary>
+            <param name="t1">The first scope to check</param>
+            <param name="t2">The second scope to check</param>
+            <param name="t3">The third scope to check</param>
+            <returns>True if all reference counts are zero, false otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.IsZero(System.Byte,System.Byte,System.Byte)">
+            <summary>Returns if the reference count of all scopes is zero</summary>
+            <param name="t1">The first scope to check</param>
+            <param name="t2">The second scope to check</param>
+            <param name="t3">The third scope to check</param>
+            <returns>True if all reference counts are zero, false otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.IsZero(Primrose.Primitives.ScopeCounters.ScopeCounter[])">
+            <summary>Returns if the reference count of all scopes is zero</summary>
+            <param name="ts">The list of scopes to check</param>
+            <returns>True if all reference counts are zero, false otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.IsZero(System.Byte[])">
+            <summary>Returns if the reference count of all scopes is zero</summary>
+            <param name="ts">The list of scopes to check</param>
+            <returns>True if all reference counts are zero, false otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.WaitForZero(Primrose.Primitives.ScopeCounters.ScopeCounter)">
+            <summary>Performs a spinlock until the reference count of a global scope is zero.</summary>
+            <param name="t1">The scope to check</param>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.WaitForZero(System.Byte)">
+            <summary>Performs a spinlock until the reference count of a global scope is zero.</summary>
+            <param name="t1">The scope to check</param>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.WaitForZero(Primrose.Primitives.ScopeCounters.ScopeCounter,Primrose.Primitives.ScopeCounters.ScopeCounter)">
+            <summary>Performs a spinlock until all reference counts are zero.</summary>
+            <param name="t1">The first scope to check</param>
+            <param name="t2">The second scope to check</param>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.WaitForZero(Primrose.Primitives.ScopeCounters.ScopeCounter,System.Byte)">
+            <summary>Performs a spinlock until all reference counts are zero.</summary>
+            <param name="t1">The first scope to check</param>
+            <param name="t2">The second scope to check</param>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.WaitForZero(System.Byte,System.Byte)">
+            <summary>Performs a spinlock until all reference counts are zero.</summary>
+            <param name="t1">The first scope to check</param>
+            <param name="t2">The second scope to check</param>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.WaitForZero(Primrose.Primitives.ScopeCounters.ScopeCounter,Primrose.Primitives.ScopeCounters.ScopeCounter,Primrose.Primitives.ScopeCounters.ScopeCounter)">
+            <summary>Performs a spinlock until all reference counts are zero.</summary>
+            <param name="t1">The first scope to check</param>
+            <param name="t2">The second scope to check</param>
+            <param name="t3">The third scope to check</param>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.WaitForZero(Primrose.Primitives.ScopeCounters.ScopeCounter,Primrose.Primitives.ScopeCounters.ScopeCounter,System.Byte)">
+            <summary>Performs a spinlock until all reference counts are zero.</summary>
+            <param name="t1">The first scope to check</param>
+            <param name="t2">The second scope to check</param>
+            <param name="t3">The third scope to check</param>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.WaitForZero(Primrose.Primitives.ScopeCounters.ScopeCounter,System.Byte,System.Byte)">
+            <summary>Performs a spinlock until all reference counts are zero.</summary>
+            <param name="t1">The first scope to check</param>
+            <param name="t2">The second scope to check</param>
+            <param name="t3">The third scope to check</param>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.WaitForZero(System.Byte,System.Byte,System.Byte)">
+            <summary>Performs a spinlock until all reference counts are zero.</summary>
+            <param name="t1">The first scope to check</param>
+            <param name="t2">The second scope to check</param>
+            <param name="t3">The third scope to check</param>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.WaitForZero(Primrose.Primitives.ScopeCounters.ScopeCounter[])">
+            <summary>Performs a spinlock until all reference counts are zero.</summary>
+            <param name="ts">The list of scopes to check</param>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.WaitForZero(System.Byte[])">
+            <summary>Performs a spinlock until all reference counts are zero.</summary>
+            <param name="ts">The list of scopes to check</param>
+        </member>
+        <member name="T:Primrose.Primitives.ScopeCounters.ScopeGlobalCounter">
+            <summary>
+            Represents a global scope reference counter
+            </summary>
+        </member>
+        <member name="F:Primrose.Primitives.ScopeCounters.ScopeGlobalCounter.Token">
+            <summary>The global scope reference value</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ScopeCounters.ScopeGlobalCounter.Count">
+            <summary>The global scope reference count</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.ScopeGlobalCounter.Dispose">
+            <summary>Decrements the reference count</summary>
+        </member>
+        <member name="T:Primrose.Primitives.ScopeCounters.ScopeCounter">
+            <summary>
+            Represents a local scope reference counter
+            </summary>
+        </member>
+        <member name="P:Primrose.Primitives.ScopeCounters.ScopeCounter.Count">
+            <summary>The global scope reference count</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.ScopeCounter.#ctor">
+            <summary>Creates a scope reference counter</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ScopeCounters.ScopeCounter.Dispose">
+            <summary>Decrements the reference count</summary>
+        </member>
+        <member name="T:Primrose.Primitives.ScopedManager`1">
+            <summary>
+            Attaches objects to a scope
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Primrose.Primitives.ScopedManager`1.PoolCount">
+            <summary>The number of scope objects in the pool</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ScopedManager`1.Scope(`0)">
+            <summary>
+            Attaches a scope to an item
+            </summary>
+            <param name="item">The item to be scoped</param>
+            <returns>The assigned scope</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ScopedManager`1.Check(`0)">
+            <summary>
+            Checks a scope to an item
+            </summary>
+            <param name="item">The item to be scoped</param>
+            <returns>The reference counter in the scope</returns>
+        </member>
+        <member name="T:Primrose.Primitives.ScopedManager`1.ScopedItem">
+            <summary>Represents a scope</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ScopedManager`1.ScopedItem.Value">
+            <summary>The item in scope</summary>
+        </member>
+        <member name="T:Primrose.Primitives.StateMachines.StateMachine`3">
+            <summary>
+            A programmable finite state machine, using commands to perform state changes and execute transition actions. This state machine itself does not store the state.
+            </summary>
+            <typeparam name="O">A parameterized object type that is passed into transition actions</typeparam>
+            <typeparam name="T">The state type</typeparam>
+            <typeparam name="U">The command type</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.StateMachines.StateMachine`3.Initialize(`0,`1)">
+            <summary>Initializes the state machine with an initial state</summary>
+            <param name="owner">The owner object</param>
+            <param name="state">The initial state</param>
+        </member>
+        <member name="M:Primrose.Primitives.StateMachines.StateMachine`3.In(`1)">
+            <summary></summary>
+            <param name="state">The state</param>
+            <returns>The finite state machine, now programmed with a state, awaiting further instructions</returns>
+        </member>
+        <member name="T:Primrose.Primitives.StateMachines.StateMachine`3.InStateMachine">
+            <summary>
+            Defines a programmable finite state machine, now programmed with a state.
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.StateMachines.StateMachine`3.InStateMachine.On(`2)">
+            <summary>Adds the state change command in the programming condition</summary>
+            <param name="command">The new command acting on this state</param>
+            <returns>The finite state machine, now programmed with the new state change command, awaiting further instructions</returns>
+        </member>
+        <member name="M:Primrose.Primitives.StateMachines.StateMachine`3.InStateMachine.ExecuteOnEntry(System.Action{`0,`1})">
+            <summary>Instructs the state machine to execute an action on entering this state, regardless of command</summary>
+            <param name="action">The action to be executed</param>
+            <returns>The same state machine, awaiting further instructions</returns>
+        </member>
+        <member name="M:Primrose.Primitives.StateMachines.StateMachine`3.InStateMachine.ExecuteOnExit(System.Action{`0,`1})">
+            <summary>Instructs the state machine to execute an action on exiting this state, regardless of command</summary>
+            <param name="action">The action to be executed</param>
+            <returns>The same state machine, awaiting further instructions</returns>
+        </member>
+        <member name="T:Primrose.Primitives.StateMachines.StateMachine`3.OutStateMachine">
+            <summary>
+            Defines a programmable finite state machine, now programmed with an initial state and a state change command.
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.StateMachines.StateMachine`3.OutStateMachine.On(`2)">
+            <summary>Switches the state change command</summary>
+            <param name="command">The new command acting on the initial state</param>
+            <returns>The finite state machine, now programmed with the new state change command</returns>
+        </member>
+        <member name="M:Primrose.Primitives.StateMachines.StateMachine`3.OutStateMachine.Goto(`1)">
+            <summary>Instructs the state machine to transit to a new state from this initial state and state change command</summary>
+            <param name="targetstate">The new state to transition into</param>
+            <returns>The same state machine, awaiting further instructions</returns>
+        </member>
+        <member name="M:Primrose.Primitives.StateMachines.StateMachine`3.OutStateMachine.Execute(System.Action{`0,`1})">
+            <summary>Instructs the state machine to execute a transition action from this initial state and state change command</summary>
+            <param name="action">The action to be executed</param>
+            <returns>The same state machine, awaiting further instructions</returns>
+        </member>
+        <member name="M:Primrose.Primitives.StateMachines.StateMachine`3.Fire(`0,`2,`1@)">
+            <summary>
+            Fires a command and performs any state changes or transition actions.
+            </summary>
+            <param name="owner">The parameterized owner object to be passed to any transition action that is executed by this command</param>
+            <param name="command">The command</param>
+            <param name="state">The state</param>
+        </member>
+        <member name="T:Primrose.Primitives.LinkedListEnumerable`1">
+            <summary>Represents an enumeration of items in a linked list</summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.LinkedListEnumerable`1.#ctor(System.Collections.Generic.LinkedList{`0})">
+            <summary>Creates the enumerable</summary>
+        </member>
+        <member name="M:Primrose.Primitives.LinkedListEnumerable`1.GetEnumerator">
+            <summary>Gets the enumerator</summary>
+        </member>
+        <member name="F:Primrose.Primitives.LinkedListEnumerable`1.Empty">
+            <summary>The enumerator for an empty list</summary>
+        </member>
+        <member name="T:Primrose.Primitives.LinkedListEnumerator`1">
+            <summary>Represents an enumerator of items in a linked list</summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.LinkedListEnumerator`1.#ctor(System.Collections.Generic.LinkedList{`0})">
+            <summary>Creates an enumerator</summary>
+        </member>
+        <member name="M:Primrose.Primitives.LinkedListEnumerator`1.MoveNext">
+            <summary>Retrieves the next item</summary>
+        </member>
+        <member name="P:Primrose.Primitives.LinkedListEnumerator`1.Current">
+            <summary>Retrieves the current item</summary>
+        </member>
+        <member name="T:Primrose.Primitives.TimeControl">
+            <summary>
+            Represents a time control 
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.TimeControl.#ctor">
+            <summary>
+            Initializes a time control
+            </summary>
+        </member>
+        <member name="P:Primrose.Primitives.TimeControl.MinimumFPS">
+            <summary>Defines the minimum desirable FPS</summary>
+        </member>
+        <member name="P:Primrose.Primitives.TimeControl.MaximumFPS">
+            <summary>Defines the maximum desirable FPS</summary>
+        </member>
+        <member name="P:Primrose.Primitives.TimeControl.PerformanceSavingFPS">
+            <summary>Defines the FPS where performance savings should be triggered</summary>
+        </member>
+        <member name="P:Primrose.Primitives.TimeControl.FPS">
+            <summary>The current FPS</summary>
+        </member>
+        <member name="P:Primrose.Primitives.TimeControl.TargetFPS">
+            <summary>The target FPS</summary>
+        </member>
+        <member name="F:Primrose.Primitives.TimeControl.SpeedModifier">
+            <summary>A multiplier to world time</summary>
+        </member>
+        <member name="P:Primrose.Primitives.TimeControl.WorldTime">
+            <summary>The world time</summary>
+        </member>
+        <member name="P:Primrose.Primitives.TimeControl.UpdateInterval">
+            <summary>A interval between two successive updates</summary>
+        </member>
+        <member name="P:Primrose.Primitives.TimeControl.WorldInterval">
+            <summary>The interval in world time</summary>
+        </member>
+        <member name="M:Primrose.Primitives.TimeControl.Update">
+            <summary>Updates the time</summary>
+        </member>
+        <member name="M:Primrose.Primitives.TimeControl.AddTime(System.Single)">
+            <summary>Performs a time skip to increment the time</summary>
+            <param name="worldtime"></param>
+        </member>
+        <member name="M:Primrose.Primitives.TimeControl.Wait">
+            <summary>Performs a wait to suspend process until the target FPS is reached</summary>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.float2">
+            <summary>
+            A float2 pair value
+            </summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float2.x">
+            <summary>The x or [0] value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float2.y">
+            <summary>The y or [1] value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.#ctor(System.Single,System.Single)">
+            <summary>
+            Creates a float2 value
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float2.Item(System.Int32)">
+            <summary>The value indexer</summary>
+            <exception cref="T:System.IndexOutOfRangeException">The array is accessed with an invalid index</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.ToString">
+            <summary>Returns the string representation of this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.ToArray">
+            <summary>Creates a float[] array from this value</summary>
+            <returns>An array of length 3 with identical indexed values</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.FromArray(System.Single[])">
+            <summary>Creates a float2 from an array</summary>
+            <param name="array">The array</param>
+            <returns>A float2 value</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
+            <exception cref="T:System.InvalidOperationException">Only an array of length 2 can be converted to a float2</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.FromArray(System.Int32[])">
+            <summary>Creates a float2 from an array</summary>
+            <param name="array">The array</param>
+            <returns>A float2 value</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
+            <exception cref="T:System.InvalidOperationException">Only an array of length 2 can be converted to a float2</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.op_UnaryNegation(Primrose.Primitives.ValueTypes.float2)">
+            <summary>Performs a memberwise negation of a float2 value</summary>
+            <param name="a"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.op_Addition(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>Performs an addition operation between two float2 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.op_Subtraction(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>Performs a subtraction operation between two float2 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.op_Multiply(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>Performs a memberwise multiplication operation between two float2 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.op_Division(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>Performs a memberwise division between two float2 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.op_Multiply(Primrose.Primitives.ValueTypes.float2,System.Single)">
+            <summary>Performs a multiplication operation between a float2 value and a float multiplier</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.op_Division(Primrose.Primitives.ValueTypes.float2,System.Single)">
+            <summary>Performs a division operation between a float2 value and a float divisor</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.op_Modulus(Primrose.Primitives.ValueTypes.float2,System.Single)">
+            <summary>Performs a modulus operation between a float2 value and a float divisor</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.float3">
+            <summary>
+            A float3 triple value
+            </summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float3.x">
+            <summary>The x or [0] value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float3.y">
+            <summary>The y or [1] value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float3.z">
+            <summary>The z or [2] value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.#ctor(System.Single,System.Single,System.Single)">
+            <summary>
+            Creates a float3 value
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float3.Item(System.Int32)">
+            <summary>The value indexer</summary>
+            <exception cref="T:System.IndexOutOfRangeException">The array is accessed with an invalid index</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.ToString">
+            <summary>Returns the string representation of this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.ToArray">
+            <summary>Creates a float[] array from this value</summary>
+            <returns>An array of length 3 with identical indexed values</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.FromArray(System.Single[])">
+            <summary>Creates a float3 from an array</summary>
+            <param name="array">The array</param>
+            <returns>A float3 value</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
+            <exception cref="T:System.InvalidOperationException">Only an array of length 3 can be converted to a float3</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.FromArray(System.Int32[])">
+            <summary>Creates a float3 from an array</summary>
+            <param name="array">The array</param>
+            <returns>A float3 value</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
+            <exception cref="T:System.InvalidOperationException">Only an array of length 3 can be converted to a float3</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.op_UnaryNegation(Primrose.Primitives.ValueTypes.float3)">
+            <summary>Performs a memberwise negation of a float3 value</summary>
+            <param name="a"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.op_Addition(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>Performs an addition operation between two float3 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.op_Subtraction(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>Performs a subtraction operation between two float3 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.op_Multiply(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>Performs a memberwise multiplication operation between two float3 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.op_Division(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>Performs a memberwise division between two float3 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.op_Multiply(Primrose.Primitives.ValueTypes.float3,System.Single)">
+            <summary>Performs a multiplication operation between a float3 value and a float multiplier</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.op_Division(Primrose.Primitives.ValueTypes.float3,System.Single)">
+            <summary>Performs a division operation between a float3 value and a float divisor</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.op_Modulus(Primrose.Primitives.ValueTypes.float3,System.Single)">
+            <summary>Performs a modulus operation between a float3 value and a float divisor</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.float4">
+            <summary>
+            A float4 quad value
+            </summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float4.x">
+            <summary>The x or [0] value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float4.y">
+            <summary>The y or [1] value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float4.z">
+            <summary>The z or [2] value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float4.w">
+            <summary>The w or [3] value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Creates a float4 value
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+            <param name="w"></param>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float4.Item(System.Int32)">
+            <summary>The value indexer</summary>
+            <exception cref="T:System.IndexOutOfRangeException">The array is accessed with an invalid index</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.ToString">
+            <summary>Returns the string representation of this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.ToArray">
+            <summary>Creates a float[] array from this value</summary>
+            <returns>An array of length 4 with identical indexed values</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.FromArray(System.Single[])">
+            <summary>Creates a float4 from an array</summary>
+            <param name="array">The array</param>
+            <returns>A float4 value</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
+            <exception cref="T:System.InvalidOperationException">Only an array of length 4 can be converted to a float4</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.FromArray(System.Int32[])">
+            <summary>Creates a float4 from an array</summary>
+            <param name="array">The array</param>
+            <returns>A float4 value</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
+            <exception cref="T:System.InvalidOperationException">Only an array of length 4 can be converted to a float4</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.op_UnaryNegation(Primrose.Primitives.ValueTypes.float4)">
+            <summary>Performs a memberwise negation of a float4 value</summary>
+            <param name="a"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.op_Addition(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>Performs an addition operation between two float4 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.op_Subtraction(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>Performs a subtraction operation between two float4 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.op_Multiply(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>Performs a memberwise multiplication operation between two float4 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.op_Division(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>Performs a memberwise division between two float4 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.op_Multiply(Primrose.Primitives.ValueTypes.float4,System.Single)">
+            <summary>Performs a multiplication operation between a float4 value and a float multiplier</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.op_Division(Primrose.Primitives.ValueTypes.float4,System.Single)">
+            <summary>Performs a division operation between a float4 value and a float divisor</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.op_Modulus(Primrose.Primitives.ValueTypes.float4,System.Single)">
+            <summary>Performs a modulus operation between a float4 value and a float divisor</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.Trip`3">
+            <summary>
+            A value triple
+            </summary>
+            <typeparam name="T">The type of the first value</typeparam>
+            <typeparam name="U">The type of the second value</typeparam>
+            <typeparam name="V">The type of the third value</typeparam>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.Trip`3.t">
+            <summary>The first value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.Trip`3.u">
+            <summary>The second value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.Trip`3.v">
+            <summary>The third value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Trip`3.#ctor(`0,`1,`2)">
+            <summary>
+            Creates a value triple with given values
+            </summary>
+            <param name="t">The first value</param>
+            <param name="u">The second value</param>
+            <param name="v">The third value</param>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.Quad`4">
+            <summary>
+            A value quad
+            </summary>
+            <typeparam name="T">The type of the first value</typeparam>
+            <typeparam name="U">The type of the second value</typeparam>
+            <typeparam name="V">The type of the third value</typeparam>
+            <typeparam name="W">The type of the fourth value</typeparam>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.Quad`4.t">
+            <summary>The first value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.Quad`4.u">
+            <summary>The second value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.Quad`4.v">
+            <summary>The third value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.Quad`4.w">
+            <summary>The fourth value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Quad`4.#ctor(`0,`1,`2,`3)">
+            <summary>
+            Creates a value triple with given values
+            </summary>
+            <param name="t">The first value</param>
+            <param name="u">The second value</param>
+            <param name="v">The third value</param>
+            <param name="w">The fourth value</param>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.Pair`2">
+            <summary>
+            A value pair
+            </summary>
+            <typeparam name="T">The type of the first value</typeparam>
+            <typeparam name="U">The type of the second value</typeparam>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.Pair`2.t">
+            <summary>The first value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.Pair`2.u">
+            <summary>The second value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Pair`2.#ctor(`0,`1)">
+            <summary>
+            Creates a value pair with given values
+            </summary>
+            <param name="t">The first value</param>
+            <param name="u">The second value</param>
+        </member>
+    </members>
+</doc>
