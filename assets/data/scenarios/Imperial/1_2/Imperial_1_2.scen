@@ -1,7 +1,7 @@
 [General]
-Name = Mission 1-1: Patrol Jump Point D-34
+Name = Mission 1-2: Red Alert!
 PlayerName = ALPHA 1
-Description = One TIE fighter from Alpha, Beta and Gamma group squadrons will be out on patrol around Outpost D-34. We are on the lookout for Rebel forces that are fleeing from their base on Hoth.
+Description = After interrogating the Rebel prisoners captured aboard the Mugaari freighter, we are sure that the Rebels plan to launch an assault on this outpost.||You must hold off the attacking forces until help arrives from the Imperial Star Destroyer Hammer.
 Wings = TIE
 Difficulties = easy,normal,hard
 

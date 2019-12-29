@@ -38,6 +38,9 @@ messagewarn_onece3_o:
 	Message("WARNING: ONECE 3 is in a critical state, we need the rebels alive!", 5, msg_warning_orange, 1);
 
 
+messagewin:
+	Message("Docking...", 10, faction_empire_color, 99);
+	
 messagelose_outpostlost:
 	Message("MISSION FAILED: Somehow, the unthinkable happened - Outpost D-34 is lost.", 5, msg_fail_red, 99);
 	
@@ -51,7 +54,7 @@ messagelose_onece3escaped:
 	Message("MISSION FAILED: We sought the capture of escaping rebels, but the freighter has escaped.", 5, msg_fail_red, 99);
 
 message_primaryobj_completed:
-	Message("OUTPOST D-34: You have completed your primary objectives. Transport SIGMA will take care of the rest.", 5, msg_outpost);
+	Message("OUTPOST D-34: Good work, Alpha 1. You have completed your primary objectives.", 5, msg_outpost);
 
 message_secondaryobj_completed:
 	Message("OUTPOST D-34: Outstanding work, ALPHA 1! You have taken the extra steps to ensure the security of this region.", 5, msg_outpost);
@@ -122,8 +125,12 @@ message_sigmaboarding:
 message_sigmaboardingcomplete:
 	Message("SIGMA 1: Boarding operation complete. Returning to base.", 5, faction_empire_trans_color);
 
+message_rebelscaptured:
+	Message("OUTPOST D-34: The rebels in ONECE 3 have been captured and taken into the outpost.", 5, msg_outpost);
+
+	
 message_glich_destroyed:
-	Message("OUTPOST D-34: Rebel transport Glich destroyed.", 5, msg_outpost);
+	Message("OUTPOST D-34: Rebel transport GLICH 1 destroyed.", 5, msg_outpost);
 
 	
 message_onece:
@@ -173,4 +180,4 @@ message_protect:
 
 	
 message_reinf:
-	Message("OUTPOST D-34: Dispatching additional TIEs to engage the threats.", 5, msg_outpost);
+	Message("OUTPOST D-34: We are dispatching additional TIEs to engage the threats.", 5, msg_outpost);

@@ -59,7 +59,8 @@ load:
 	Score.Reset();
 
 	UI.SetLine1Color(faction_empire_color);
-	UI.SetLine2Color(faction_empire_color);
+	UI.SetLine2Color(faction_neutral_color);
+	UI.SetLine3Color(faction_rebel_color);
 	
 	Script.Call("spawn_reset");
 	Script.Call("actorp_reset");
@@ -78,21 +79,21 @@ load:
 loadfaction:
 	Faction.Add("Empire", faction_empire_color);
 	Faction.Add("Empire_Trans", faction_empire_color);
-	Faction.Add("Neutral", faction_neutral_color);
+	Faction.Add("Neutral_Inspect", faction_neutral_color);
 	Faction.Add("Neutral_OK", faction_empire_trans_color);
 	Faction.Add("Neutral_Rebel", faction_neutral_rebel_color);
 	Faction.Add("Rebels", faction_rebel_color);
-	Faction.MakeAlly("Empire", "Neutral");
+	Faction.MakeAlly("Empire", "Neutral_Inspect");
 	Faction.MakeAlly("Empire", "Neutral_OK");
 	Faction.MakeAlly("Empire", "Neutral_Rebel");
 	Faction.MakeAlly("Empire", "Empire_Trans");
-	Faction.MakeAlly("Rebels", "Neutral");
+	Faction.MakeAlly("Rebels", "Neutral_Inspect");
 	Faction.MakeAlly("Rebels", "Neutral_OK");
 	Faction.MakeAlly("Rebels", "Neutral_Rebel");
 	Faction.MakeAlly("Rebels", "Empire_Trans");
-	Faction.MakeAlly("Empire_Trans", "Neutral");
+	Faction.MakeAlly("Empire_Trans", "Neutral_Inspect");
 	Faction.MakeAlly("Empire_Trans", "Neutral_OK");
-	Faction.MakeAlly("Neutral_Rebel", "Neutral");
+	Faction.MakeAlly("Neutral_Rebel", "Neutral_Inspect");
 	Faction.MakeAlly("Neutral_Rebel", "Neutral_OK");
 	Faction.MakeAlly("Empire_Trans", "Neutral_Rebel");
 
@@ -179,7 +180,23 @@ setup_outpost:
 
 gametick:
 	UI.SetLine1Text("WINGS: " + Faction.GetWingCount("Empire"));
-	//UI.SetLine2Text("ENEMY: " + Faction.GetWingCount("Rebels"));
+	
+	int neut = Faction.GetWingCount("Neutral_Inspect");
+	int rebel = Faction.GetWingCount("Rebels");
+
+	if (neut == 0)
+	{
+		UI.SetLine2Color(faction_rebel_color);
+		UI.SetLine2Text((rebel == 0) ? "" : "ENEMY: " + rebel);
+		UI.SetLine3Text("");
+	}
+	else
+	{
+		UI.SetLine2Color(faction_neutral_color);
+		UI.SetLine3Color(faction_rebel_color);
+		UI.SetLine2Text("INSPECT: " + neut);
+		UI.SetLine3Text((rebel == 0) ? "" : "ENEMY: " + rebel);
+	}
 	
 	if (!triggerwinlose)
 	{
@@ -218,7 +235,7 @@ gametick:
 					float3 fac = Actor.GetGlobalDirection(onece3);
 					pos += fac * 5000;
 					AI.ForceClearQueue(onece3);
-					AI.QueueLast(onece3, "rotate", pos, 0, 0.1, false);
+					AI.QueueLast(onece3, "rotate", pos, 0, 1, false);
 					AI.QueueLast(onece3, "lock");
 					Actor.RemoveFromRegister(onece3, "CriticalEnemies");
 					Actor.AddToRegister(onece3, "CriticalAllies");
@@ -249,6 +266,7 @@ gametick:
 						AddEvent(time, "messagewarn_sigma_o");
 						AddEvent(time + 0.2, "messagewarn_sigma_y");
 					}
+					Script.Call("respite");
 				}
 			}
 			
@@ -262,7 +280,7 @@ gametick:
 			}
 		}
 		
-		if (glich_arrived && !GetGameStateB("GlichDestroyed"))
+		if (glich_arrived && !GetGameStateB("GlichDestroyed") && !GetGameStateB("GlichEscaped"))
 		{
 			float hp = Actor.GetHP(glich);
 			if (hp <= 0) 
@@ -297,6 +315,12 @@ gametick:
 					}
 				}
 			}
+		}
+		
+		if (GetGameStateB("RebelsCaptured") && !GetGameStateB("RebelsCaptureAnnounced"))
+		{
+			SetGameStateB("RebelsCaptureAnnounced", true);
+			Script.Call("message_rebelscaptured");
 		}
 		
 		if (primary_completed)
@@ -343,10 +367,10 @@ inspection:
 			Script.Call("message_inspected_onece3");
 			insp_onece += 1;
 			
-			SetGameStateB("Onece3Discovered", true);
 			Squad.RemoveFromSquad(onece3);
 			Actor.AddToRegister(onece3, "CriticalEnemies");
 			Actor.SetFaction(onece3, "Neutral_Rebel");
+			AddEvent(0.2, "onece3_discovered");
 			AddEvent(9, "spawn_onece3_trans");
 			Audio.SetMood(-4);
 		}
@@ -507,7 +531,7 @@ inspection:
 
 	if (!GetGameStateB("SecondaryObsComplete"))
 	{
-		if (GetGameStateB("AllInspected")) //GetGameStateB("AllInspected") && GetGameStateB("GlichDestroyed") &&
+		if (GetGameStateB("AllInspected"))
 		{
 			SetGameStateB("SecondaryObsComplete", true);
 			Audio.SetMood(-5);
@@ -516,17 +540,32 @@ inspection:
 
 	if (!GetGameStateB("AllComplete"))
 	{
-		if (GetGameStateB("SecondaryObsComplete") && glich_arrived && Faction.GetWingCount("Rebels") == 0)
+		if (GetGameStateB("AllInspected") && GetGameStateB("GlichDestroyed") && glich_arrived && Faction.GetWingCount("Rebels") == 0)
 		{
-			Script.Call("announce_secondaryComplete");
+			Script.Call("announce_allComplete");
 			SetGameStateB("AllComplete", true);
 			Audio.SetMood(-6);
 		}
 	}
+	
+	if (!GetGameStateB("PriComplete") && !(GetGameStateB("AllComplete")))
+	{
+		if (GetGameStateB("RebelsCaptured") && glich_arrived && Faction.GetWingCount("Rebels") == 0)
+		{
+			Script.Call("announce_primaryComplete");
+			SetGameStateB("PriComplete", true);
+			Audio.SetMood(-4);
+		}
+	}
+
+
+onece3_discovered:
+	SetGameStateB("Onece3Discovered", true);
 
 
 avoidance:
 	bool combat = false;
+	bool dhard = GetDifficulty() == "hard";
 	if (!IsNull(ravtin_group))
 	{
 		foreach (int a in ravtin_group)
@@ -534,7 +573,7 @@ avoidance:
 			if (GetGameStateF("t" + a) < GetGameTime() + 10)
 			{
 				_a = a;
-				_f = 4500;
+				_f = dhard ? 4000 : 4500;
 				_d = { Random(-2000, 2000), Random(-600, 600), 7000 + Random(-1000, 1000) };
 				Script.Call("avoidance_logic");
 			}
@@ -551,7 +590,7 @@ avoidance:
 			if (GetGameStateF("t" + a) < GetGameTime() + 10)
 			{
 				_a = a;
-				_f = 4500;
+				_f = dhard ? 3500 :4500;
 				_d = { Random(-2000, 2000), Random(-600, 600), 7000 + Random(-1000, 1000) };
 				Script.Call("avoidance_logic");
 			}
@@ -568,7 +607,7 @@ avoidance:
 			if (GetGameStateF("t" + a) < GetGameTime() + 10)
 			{
 				_a = a;
-				_f = 5000;
+				_f = dhard ? 3500 :5000;
 				_d = { Random(-2000, 2000), Random(-600, 600), 7000 + Random(-1000, 2000) };
 				Script.Call("avoidance_logic");
 			}
@@ -581,7 +620,7 @@ avoidance:
 	if (!IsNull(ravtin_group))
 		if (combat && Audio.GetMood() != 4)
 			Audio.SetMood(4);
-		else if (!combat && Audio.GetMood() != 0)
+		else if (!combat && Audio.GetMood() != 0 && Audio.GetMood() != 5)
 			Audio.SetMood(0);
 
 
@@ -601,6 +640,48 @@ avoidance_logic:
 		Actor.SetProperty(_a, "AI.CanRetaliate", true);
 	}
 
+	
+respite:
+	float tm = 5;
+	if (GetDifficulty() == "hard")
+		tm = 2.5;
+	
+	if (!IsNull(ravtin_group))
+	{
+		foreach (int a in ravtin_group)
+		{
+			foreach (int chd in Actor.GetChildren(a))
+			{
+				AI.ForceClearQueue(a);
+				AI.QueueLast(a, "attackactor", outpost, 10, 10, true, 5);
+			}
+		}
+	}
+	
+	if (!IsNull(tough_group))
+	{
+		foreach (int a in tough_group)
+		{
+			foreach (int chd in Actor.GetChildren(a))
+			{
+				AI.ForceClearQueue(a);
+				AI.QueueLast(a, "attackactor", outpost, 10, 10, true, 5);
+			}
+		}
+	}
+	
+	if (!IsNull(stress_group))
+	{
+		foreach (int a in stress_group)
+		{
+			foreach (int chd in Actor.GetChildren(a))
+			{
+				AI.ForceClearQueue(a);
+				AI.QueueLast(a, "attackactor", outpost, 10, 10, true, 5);
+			}
+		}
+	}
+
 
 setmood4:
 	Audio.SetMood(4);
@@ -613,18 +694,22 @@ setmood0:
 win:
 	triggerwinlose = true;
 	SetGameStateB("GameWon",true);
+	Script.Call("messagewin");
 	AddEvent(1, "fadeout");
 	AddEvent(0.001, "slow");
 
 
 slow:
-	float minspd = Actor.GetProperty(Player.GetActor(), "Movement.MinSpeed") - 75 * GetLastFrameTime();
-	if (minspd <= 0)
-		minspd = 0;
-	float spd = Actor.GetProperty(Player.GetActor(), "Movement.Speed") - 200 * GetLastFrameTime();
-	Actor.SetProperty(Player.GetActor(), "Movement.MinSpeed", minspd);
-	Actor.SetProperty(Player.GetActor(), "Movement.Speed", (minspd > spd) ? minspd : spd);
-	AddEvent(0.001, "slow");
+	if (Actor.IsAlive(Player.GetActor()))
+	{
+		float minspd = Actor.GetProperty(Player.GetActor(), "Movement.MinSpeed") - 75 * GetLastFrameTime();
+		if (minspd <= 0)
+			minspd = 0;
+		float spd = Actor.GetProperty(Player.GetActor(), "Movement.Speed") - 200 * GetLastFrameTime();
+		Actor.SetProperty(Player.GetActor(), "Movement.MinSpeed", minspd);
+		Actor.SetProperty(Player.GetActor(), "Movement.Speed", (minspd > spd) ? minspd : spd);
+		AddEvent(0.001, "slow");
+	}
 
 	
 lose_outpostlost:
@@ -701,7 +786,7 @@ sigma_boarding:
 	float3 pos1 = pos + fac * 1000;
 	AI.ForceClearQueue(sigma);
 	AI.QueueLast(sigma, "move", Actor.GetGlobalPosition(onece3), 5, 200, false);
-	AI.QueueLast(sigma, "rotate", pos1, 0, 0.1, false);
+	AI.QueueLast(sigma, "rotate", pos1, 0, 1, false);
 	AI.QueueLast(sigma, "lock");
 
 
@@ -716,7 +801,7 @@ sigma_boardingcomplete:
 		float3 pos2 = pos + fac * 200 + {40, 25, 0};
 		AI.ForceClearQueue(sigma);
 		AI.QueueLast(sigma, "move", pos1, 100, 50, false);
-		AI.QueueLast(sigma, "rotate", pos2, 0, 0.1, false);
+		AI.QueueLast(sigma, "rotate", pos2, 0, 1, false);
 		AI.QueueLast(sigma, "move", pos2, 50, 10, false);
 		AI.QueueLast(sigma, "setgamestateb", "SigmaDispatched", false);
 		AI.QueueLast(sigma, "wait", 1);
@@ -726,7 +811,7 @@ sigma_boardingcomplete:
 		float3 poso2 = pos + fac * 200 + {-65, 25, 0};
 		AI.ForceClearQueue(onece3);
 		AI.QueueLast(onece3, "move", poso1, 100, 40, false);
-		AI.QueueLast(onece3, "rotate", poso2, 0, 0.1, false);
+		AI.QueueLast(onece3, "rotate", poso2, 0, 1, false);
 		AI.QueueLast(onece3, "move", poso2, 50, 8, false);
 		AI.QueueLast(onece3, "setgamestateb", "RebelsCaptured", true);
 		AI.QueueLast(onece3, "wait", 1);
@@ -815,7 +900,7 @@ unally2:
 
 
 spawn_onece:
-	spawn_faction = "Neutral";
+	spawn_faction = "Neutral_Inspect";
 	spawn_hyperspace = true;
 	spawn_wait = 3;
 	spawn_type = "CARGO_LG";
@@ -843,7 +928,7 @@ spawn_onece:
 		Actor.SetProperty(a, "Movement.MinSpeed", 0);
 		Actor.SetProperty(a, "AI.CanEvade", false);
 		Actor.SetProperty(a, "AI.CanRetaliate", false);
-		AI.QueueLast(a, "move", { 6000, 600, -8000 }, 75, 100, false);
+		AI.QueueLast(a, "move", { 6000, 600, -8000 }, 75, 500, false);
 		AI.QueueLast(a, "hyperspaceout");
 		if (a == onece3)
 			AI.QueueLast(a, "setgamestateb", "Onece3Escaped", true);
@@ -859,7 +944,7 @@ spawn_onece:
 
 	
 spawn_dayta:
-	spawn_faction = "Neutral";
+	spawn_faction = "Neutral_Inspect";
 	spawn_hyperspace = true;
 	spawn_wait = 3;
 	spawn_type = "CARGO_SM";
@@ -878,7 +963,7 @@ spawn_dayta:
 		Actor.SetProperty(a, "Movement.MinSpeed", 0);
 		Actor.SetProperty(a, "AI.CanEvade", false);
 		Actor.SetProperty(a, "AI.CanRetaliate", false);
-		AI.QueueLast(a, "move", { 6000, 400, -8000 }, 75, 100, false);
+		AI.QueueLast(a, "move", { 6000, 400, -8000 }, 75, 500, false);
 		AI.QueueLast(a, "hyperspaceout");
 		AI.QueueLast(a, "delete");
 	}	
@@ -887,7 +972,7 @@ spawn_dayta:
 
 
 spawn_yander:
-	spawn_faction = "Neutral";
+	spawn_faction = "Neutral_Inspect";
 	spawn_hyperspace = true;
 	spawn_wait = 3;
 	spawn_type = "YT1300";
@@ -907,7 +992,7 @@ spawn_yander:
 		Actor.SetProperty(a, "Movement.MinSpeed", 0);
 		Actor.SetProperty(a, "AI.CanEvade", false);
 		Actor.SetProperty(a, "AI.CanRetaliate", false);
-		AI.QueueLast(a, "move", { 6000, 600, -8000 }, 75, 100, false);
+		AI.QueueLast(a, "move", { 6000, 600, -8000 }, 75, 500, false);
 		AI.QueueLast(a, "hyperspaceout");
 		AI.QueueLast(a, "delete");
 	}	
@@ -917,7 +1002,7 @@ spawn_yander:
 
 
 spawn_taloos:
-	spawn_faction = "Neutral";
+	spawn_faction = "Neutral_Inspect";
 	spawn_hyperspace = true;
 	spawn_wait = 3;
 	spawn_type = "TRAN";
@@ -936,7 +1021,7 @@ spawn_taloos:
 		Actor.SetProperty(a, "Movement.MinSpeed", 0);
 		Actor.SetProperty(a, "AI.CanEvade", false);
 		Actor.SetProperty(a, "AI.CanRetaliate", false);
-		AI.QueueLast(a, "move", { 6000, 200, -8000 }, 75, 100, false);
+		AI.QueueLast(a, "move", { 6000, 200, -8000 }, 75, 500, false);
 		AI.QueueLast(a, "hyperspaceout");
 		AI.QueueLast(a, "delete");
 	}	
@@ -945,11 +1030,11 @@ spawn_taloos:
 
 
 spawn_glich:
-	spawn_faction = "Rebels";
+	spawn_faction = "Neutral_Rebel";
 	spawn_hyperspace = true;
 	spawn_wait = 3;
 	spawn_type = "CARGO_LG";
-	spawn_name = "GLICH-1";
+	spawn_name = "GLICH 1";
 	spawn_target = -1;
 	spawn_pos = { 0, -200, 9000 };
 	spawn_rot = { 0, 180 ,0 };
@@ -958,12 +1043,13 @@ spawn_glich:
 	Script.Call("message_glich");
 	AddEvent(4, "message_glich_2");
 
-	//AddEvent(0.5, "spawn_removechildren");
+	if (GetDifficulty() == "easy")
+		AddEvent(0.5, "spawn_removechildren");
 	foreach (int a in spawn_ids)
 	{
 		Actor.SetProperty(a, "Movement.MinSpeed", 0);
-		AI.QueueLast(a, "move", { 9000, -200, 3000 }, 75, 100, false);
-		AI.QueueLast(a, "move", { 6000, -200, -8000 }, 75, 100, false);
+		AI.QueueLast(a, "move", { 9000, -200, 3000 }, 75, 500, false);
+		AI.QueueLast(a, "move", { 6000, -200, -8000 }, 75, 500, false);
 		AI.QueueLast(a, "hyperspaceout");
 		AI.QueueLast(a, "setgamestateb", "GlichEscaped", true);
 		AI.QueueLast(a, "delete");
@@ -1008,6 +1094,7 @@ spawn_enemyES:
 	Audio.SetMood(-21);
 	Script.Call("message_enemyES");
 	AddEvent(10, "spawn_ally_reinf");
+	Script.Call("setmood4");
 	tough_group = spawn_ids;
 
 
@@ -1037,12 +1124,17 @@ spawn_removechildren:
 
 
 announce_primaryComplete:
-	primary_completed = true;
-	AddEvent(1, "message_primaryobj_completed");
-	AddEvent(5, "message_returntobase");
+	AddEvent(3, "message_primaryobj_completed");
+	AddEvent(7, "message_returntobase");
+	AddEvent(7.1, "setComplete");
 
 	
-announce_secondaryComplete:
+announce_allComplete:
 	primary_completed = true;
-	AddEvent(1, "message_secondaryobj_completed");
-	AddEvent(5, "message_returntobase");
+	AddEvent(3, "message_secondaryobj_completed");
+	AddEvent(7, "message_returntobase");
+	AddEvent(7.1, "setComplete");
+
+
+setComplete:
+	primary_completed = true;
