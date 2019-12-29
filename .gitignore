@@ -12,26 +12,8 @@
 /src/.vs
 /src/prebuild
 
-/src/Fmod.Wrapper/bin
-/src/Fmod.Wrapper/obj
-
-/src/Primrose/bin
-/src/Primrose/obj
-
-/src/Primrose.Expressions/bin
-/src/Primrose.Expressions/obj
-
-/src/Primrose.Expressions.UnitTests/bin
-/src/Primrose.Expressions.UnitTests/obj
-
-/src/Primrose.UnitTests/bin
-/src/Primrose.UnitTests/obj
-
-/src/SWEndor/bin
-/src/SWEndor/obj
-
-/src/SWEndorTest/bin
-/src/SWEndorTest/obj
+/src/*/bin
+/src/*/obj
 
 /unittest
 
