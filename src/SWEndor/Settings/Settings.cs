@@ -22,6 +22,8 @@ namespace SWEndor
     public static bool ShowPerformance = false;
     public static float SteeringSensitivity = 1.5f;
 
+    public static bool IsSmallResolution { get { return ResolutionMode == ResolutionSettings.R_800x600; } }
+
     public static TV_2DVECTOR GetResolution
     {
       get

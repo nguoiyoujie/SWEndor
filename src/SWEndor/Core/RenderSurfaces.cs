@@ -31,8 +31,17 @@ namespace SWEndor.Core
 
     private void Init()
     {
-      Target_width = 256;
-      Target_height = 256;
+      if (Settings.IsSmallResolution)
+      {
+        Target_width = 200;
+        Target_height = 200;
+      }
+      else
+      {
+        Target_width = 256;
+        Target_height = 256;
+      }
+
 
       using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {

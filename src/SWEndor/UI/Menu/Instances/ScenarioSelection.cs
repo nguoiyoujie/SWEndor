@@ -5,7 +5,7 @@ using SWEndor.Scenarios;
 
 namespace SWEndor.UI.Menu.Pages
 {
-  public class PlayScenario : Page
+  public class ScenarioSelection : Page
   {
     SelectionElement MainText = new SelectionElement();
     SelectionElement DescText = new SelectionElement();
@@ -14,6 +14,8 @@ namespace SWEndor.UI.Menu.Pages
     SelectionElement ButtonDifficulty = new SelectionElement();
     SelectionElement ButtonPlay = new SelectionElement();
     SelectionElement ButtonBack = new SelectionElement();
+
+    CampaignInfo Campaign;
     int SelectedScenarioID = -1;
     ScenarioBase SelectedScenario = null;
     int SelectedActorTypeInfoID = -1;
@@ -21,8 +23,10 @@ namespace SWEndor.UI.Menu.Pages
     int SelectedDifficultyID = -1;
     string SelectedDifficulty = null;
 
-    public PlayScenario(Screen2D owner) : base(owner)
+    public ScenarioSelection(Screen2D owner, CampaignInfo campaign) : base(owner)
     {
+      Campaign = campaign;
+
       float height_gap = 40;
       float x = 75;
       float y = 120;
@@ -40,13 +44,12 @@ namespace SWEndor.UI.Menu.Pages
       ButtonScenario.HighlightBoxHeight = 30;
       ButtonScenario.Selectable = true;
       ButtonScenario.OnKeyPress += SelectScenario;
-      if (GameScenarioManager.ScenarioList.Count > 0)
+      if (Campaign.Scenarios.Count > 0)
       {
-        ButtonScenario.SecondaryText = GameScenarioManager.ScenarioList[0].Info.Name.ToUpper();
-        SelectedScenario = GameScenarioManager.ScenarioList[0];
+        ButtonScenario.SecondaryText = Campaign.Scenarios[0].Info.Name.ToUpper();
+        SelectedScenario = Campaign.Scenarios[0];
         SelectedScenarioID = 0;
       }
-
 
       ButtonWing.Text = "Choose your Fighter";
       ButtonWing.TextFont = FontFactory.Get(Font.T14).ID;
@@ -83,13 +86,13 @@ namespace SWEndor.UI.Menu.Pages
         SelectedDifficultyID = 0;
       }
 
-      DescText.Text = SelectedScenario.Info.Description.Multiline(650 / 9); // font 12 width = 9
       DescText.TextFont = FontFactory.Get(Font.T12).ID;
       DescText.TextPosition = new TV_2DVECTOR(x, y);
       y += 120 +  height_gap;
       DescText.HighlightBoxPosition = DescText.TextPosition - new TV_2DVECTOR(5, 5);
       DescText.HighlightBoxWidth = 650;
       DescText.HighlightBoxHeight = 150;
+      DescText.Text = SelectedScenario.Info.Description.Multiline(((int)DescText.HighlightBoxWidth - 10) / 9); // font 12 width = 9
 
       ButtonPlay.Text = "Launch!";
       ButtonPlay.TextPosition = new TV_2DVECTOR(x, y);
@@ -100,7 +103,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonPlay.Selectable = true;
       ButtonPlay.OnKeyPress += SelectPlay;
 
-      ButtonBack.Text = "Exit";
+      ButtonBack.Text = "Back";
       ButtonBack.TextPosition = new TV_2DVECTOR(x, owner.ScreenSize.y - 80);
       ButtonBack.HighlightBoxPosition = ButtonBack.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonBack.HighlightBoxWidth = 150;
@@ -126,7 +129,7 @@ namespace SWEndor.UI.Menu.Pages
         return true;
       }
 
-      if (GameScenarioManager.ScenarioList.Count > 0)
+      if (Campaign.Scenarios.Count > 0)
       {
         if (key == CONST_TV_KEY.TV_KEY_LEFT)
         {
@@ -134,10 +137,10 @@ namespace SWEndor.UI.Menu.Pages
 
           newSelectedScenario--;
           if (newSelectedScenario < 0)
-            newSelectedScenario = GameScenarioManager.ScenarioList.Count - 1;
+            newSelectedScenario = Campaign.Scenarios.Count - 1;
 
-          ButtonScenario.SecondaryText = GameScenarioManager.ScenarioList[newSelectedScenario].Info.Name.ToUpper();
-          SelectedScenario = GameScenarioManager.ScenarioList[newSelectedScenario];
+          ButtonScenario.SecondaryText = Campaign.Scenarios[newSelectedScenario].Info.Name.ToUpper();
+          SelectedScenario = Campaign.Scenarios[newSelectedScenario];
           SelectedScenarioID = newSelectedScenario;
 
           SelectedActorTypeInfoID = 1;
@@ -146,7 +149,7 @@ namespace SWEndor.UI.Menu.Pages
           SelectedDifficultyID = 1;
           SelectDifficulty(CONST_TV_KEY.TV_KEY_LEFT);
 
-          DescText.Text = SelectedScenario.Info.Description.Multiline(64);
+          DescText.Text = SelectedScenario.Info.Description.Multiline(((int)DescText.HighlightBoxWidth - 10) / 9);
 
           return true;
         }
@@ -155,11 +158,11 @@ namespace SWEndor.UI.Menu.Pages
           int newSelectedScenario = SelectedScenarioID;
 
           newSelectedScenario++;
-          if (newSelectedScenario >= GameScenarioManager.ScenarioList.Count)
+          if (newSelectedScenario >= Campaign.Scenarios.Count)
             newSelectedScenario = 0;
 
-          ButtonScenario.SecondaryText = GameScenarioManager.ScenarioList[newSelectedScenario].Info.Name.ToUpper();
-          SelectedScenario = GameScenarioManager.ScenarioList[newSelectedScenario];
+          ButtonScenario.SecondaryText = Campaign.Scenarios[newSelectedScenario].Info.Name.ToUpper();
+          SelectedScenario = Campaign.Scenarios[newSelectedScenario];
           SelectedScenarioID = newSelectedScenario;
 
           SelectedActorTypeInfoID = 1;
@@ -168,7 +171,7 @@ namespace SWEndor.UI.Menu.Pages
           SelectedDifficultyID = 1;
           SelectDifficulty(CONST_TV_KEY.TV_KEY_LEFT);
 
-          DescText.Text = SelectedScenario.Info.Description.Multiline(64);
+          DescText.Text = SelectedScenario.Info.Description.Multiline(((int)DescText.HighlightBoxWidth - 10) / 9);
 
           return true;
         }

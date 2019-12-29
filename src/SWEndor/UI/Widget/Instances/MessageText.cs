@@ -24,9 +24,12 @@ namespace SWEndor.UI.Widgets
       y0_t3 = -120;
       y1_t3 = -100;
 
-      fnt = FontFactory.Get(Font.T12);
-      fntID = FontFactory.Get(Font.T12).ID;
-      //letter_width = 4.5f;
+      if (Settings.IsSmallResolution)
+        fnt = FontFactory.Get(Font.T10);
+      else
+        fnt = FontFactory.Get(Font.T12);
+
+      fntID = fnt.ID;
     }
 
     public override bool Visible

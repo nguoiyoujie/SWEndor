@@ -22,7 +22,7 @@ namespace SWEndor.UI.Menu.Pages
       VersionText.TextPosition = new TV_2DVECTOR(85, 150);
       VersionText.TextFont = FontFactory.Get(Font.T12).ID;
 
-      ButtonPlay.Text = "Play Scenario";
+      ButtonPlay.Text = "Play";
       ButtonPlay.TextPosition = owner.ScreenSize + new TV_2DVECTOR(-200, -300);
       ButtonPlay.HighlightBoxPosition = ButtonPlay.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonPlay.HighlightBoxWidth = 200;
@@ -67,7 +67,7 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        EnterPage(new PlayScenario(Owner));
+        EnterPage(new CampaignSelection(Owner));
         return true;
       }
       return false;

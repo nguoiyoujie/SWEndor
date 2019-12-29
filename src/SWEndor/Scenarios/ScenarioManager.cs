@@ -1,4 +1,5 @@
-﻿using SWEndor.Actors;
+﻿using Primrose.Primitives.Factories;
+using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.FileFormat.INI;
 using SWEndor.Primitives.Extensions;
@@ -18,39 +19,49 @@ namespace SWEndor.Scenarios
       Engine = engine;
       DesignatedMainMenuScenario = new GSMainMenu(this);
 
-      ScenarioList.Add(new GSEndor(this));
-      ScenarioList.Add(new GSYavin(this));
-      ScenarioList.Add(new GSHoth(this));
-      ScenarioList.Add(new GSTIEAdvanced(this));
-      ScenarioList.Add(new GSTestZone(this));
-
-      LoadCustomScenarios();
+      CreateMainCampaign();
+      LoadCampaigns();
     }
 
+    public List<CampaignInfo> CampaignList = new List<CampaignInfo>();
     public List<ScenarioBase> ScenarioList = new List<ScenarioBase>();
+
     public ScenarioBase Scenario = null;
     public ScenarioBase DesignatedMainMenuScenario;
 
-    public void LoadCustomScenarios()
+    public void CreateMainCampaign()
+    {
+      CampaignInfo c = new CampaignInfo(this);
+
+      c.Name = "Main Campaigns";
+      c.Description = "Play the main campaign.";
+
+      c.Scenarios.Add(new GSEndor(this));
+      //c.Scenarios.Add(new GSYavin(this));
+      //c.Scenarios.Add(new GSHoth(this));
+      //c.Scenarios.Add(new GSTIEAdvanced(this));
+      //c.Scenarios.Add(new GSTestZone(this));
+
+      CampaignList.Add(c);
+    }
+
+    public void LoadCampaigns()
     {
       if (Directory.Exists(Globals.CustomScenarioPath))
       {
-        string fpath = Path.Combine(Globals.CustomScenarioPath, "scenarios.ini");
+        string fpath = Path.Combine(Globals.CustomScenarioPath, "campaigns.ini");
         if (File.Exists(fpath))
         {
           INIFile f = new INIFile(fpath);
 
-          // [Scenarios]
-          //List<string> paths = new List<string>();
-          if (f.HasSection("Scenarios"))
-            foreach (INIFile.INISection.INILine ln in f.GetSection("Scenarios").Lines)
+          // [Campaigns]
+          if (f.HasSection("Campaigns"))
+            foreach (INIFile.INISection.INILine ln in f.GetSection("Campaigns").Lines)
               if (ln.HasKey)
-                ScenarioList.Add(new GSCustomScenario(this, Path.Combine(Globals.CustomScenarioPath, ln.Key)));
+                CampaignList.Add(new CampaignInfo(this, Path.Combine(Globals.CustomScenarioPath, ln.Key)));
         }
       }
     }
-
-
 
     public void LoadMainMenu()
     {

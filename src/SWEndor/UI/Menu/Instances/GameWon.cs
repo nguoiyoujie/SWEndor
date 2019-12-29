@@ -14,33 +14,33 @@ namespace SWEndor.UI.Menu.Pages
     {
       MainText.Text = "MISSION ACCOMPLISHED!";
       MainText.TextFont = FontFactory.Get(Font.T36).ID;
-      MainText.TextPosition = new TV_2DVECTOR(owner.ScreenCenter.x - 242, 60);
+      MainText.TextPosition = new TV_2DVECTOR(owner.ScreenCenter.x - 352, 60);
 
       sb.Clear();
-      sb.Append("Score                                     ");
+      sb.Append("Score                                               ");
       sb.Append(Engine.PlayerInfo.Score.Score.ToString(" 00000000"));
       sb.AppendLine();
       sb.AppendLine();
-      sb.Append("Total Hits                                ");
+      sb.Append("Total Hits                                          ");
       sb.Append(Engine.PlayerInfo.Score.Hits.ToString(" #######0"));
       sb.AppendLine();
-      //sb.Append("Total Hits on Fighters                     ");
+      //sb.Append("Total Hits on Fighters                               ");
       //sb.Append(PlayerInfo.Score.HitsOnFighters.ToString("00000000"));
       //sb.AppendLine();
-      sb.Append("Damage Taken                              ");
+      sb.Append("Damage Taken                                        ");
       sb.Append(Engine.PlayerInfo.Score.DamageTaken.ToString(" #######0"));
       sb.AppendLine();
-      sb.Append("Deaths                                    ");
+      sb.Append("Deaths                                              ");
       sb.Append(Engine.PlayerInfo.Score.Deaths.ToString(" #######0"));
       sb.AppendLine();
       sb.AppendLine();
-      sb.Append("Kills                                     ");
+      sb.Append("Kills                                               ");
       sb.Append(Engine.PlayerInfo.Score.Kills.ToString(" #######0"));
       sb.AppendLine();
 
       foreach (string key in Engine.PlayerInfo.Score.KillsByName.GetKeys())
       {
-        sb.Append((key.Length > 42) ? key.Remove(42) : key.PadRight(42));
+        sb.Append((key.Length > 52) ? (key.Remove(49) + "...") : key.PadRight(52));
         sb.Append(Engine.PlayerInfo.Score.KillsByName[key].ToString(" #######0"));
         sb.AppendLine();
       }
@@ -56,13 +56,13 @@ namespace SWEndor.UI.Menu.Pages
       Score.Text = sb.ToString();
 
       Score.TextFont = FontFactory.Get(Font.T12).ID;
-      Score.TextPosition = new TV_2DVECTOR(owner.ScreenCenter.x - 242, 120);
-      Score.HighlightBoxPosition = new TV_2DVECTOR(owner.ScreenCenter.x - 255, 55);
-      Score.HighlightBoxWidth = 255 * 2;
+      Score.TextPosition = new TV_2DVECTOR(owner.ScreenCenter.x - 292, 120);
+      Score.HighlightBoxPosition = new TV_2DVECTOR(owner.ScreenCenter.x - 365, 45);
+      Score.HighlightBoxWidth = 365 * 2;
       Score.HighlightBoxHeight = Engine.ScreenHeight / 2 + 242 - 55;
 
       ButtonReturn.Text = "Return to Menu";
-      ButtonReturn.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(60, 260);
+      ButtonReturn.TextPosition = new TV_2DVECTOR(owner.ScreenCenter.x - 292, owner.ScreenCenter.y + 260);
       ButtonReturn.HighlightBoxPosition = ButtonReturn.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonReturn.HighlightBoxWidth = 200;
       ButtonReturn.HighlightBoxHeight = 30;

@@ -15,6 +15,9 @@ namespace SWEndor.UI.Menu.Pages
       MainText.Text = "GAME OVER";
       MainText.TextFont = FontFactory.Get(Font.T36).ID;
       MainText.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(-150, -80);
+      MainText.HighlightBoxPosition = MainText.TextPosition - new TV_2DVECTOR(5, 5);
+      MainText.HighlightBoxWidth = 330;
+      MainText.HighlightBoxHeight = 50;
 
       ButtonRestart.Text = "Restart";
       ButtonRestart.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(60, 20);
@@ -24,7 +27,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonRestart.Selectable = true;
       ButtonRestart.OnKeyPress += SelectRestart;
 
-      ButtonReturn.Text = "Quit";
+      ButtonReturn.Text = "Abort";
       ButtonReturn.TextPosition = owner.ScreenCenter + new TV_2DVECTOR(60, 60);
       ButtonReturn.HighlightBoxPosition = ButtonReturn.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonReturn.HighlightBoxWidth = 110;
