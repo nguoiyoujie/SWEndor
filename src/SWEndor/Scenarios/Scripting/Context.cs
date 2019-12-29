@@ -261,6 +261,10 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc("Math.GetDistance", new ValFunc<float3, float3>(MathFns.GetDistance));
       AddFunc("Math.GetActorDistance", new ValFunc<int, int>(MathFns.GetActorDistance));
       AddFunc("Math.GetActorDistance", new ValFunc<int, int, float>(MathFns.GetActorDistance));
+      AddFunc("Math.Int", new ValFunc<float>(MathFns.Int));
+      AddFunc("Math.Max", new ValFunc<float, float>(MathFns.Max));
+      AddFunc("Math.Min", new ValFunc<float, float>(MathFns.Min));
+      AddFunc("Math.FormatAsTime", new ValFunc<float>(MathFns.FormatAsTime));
 
       // Misc
       AddFunc("IsNull", new ValFunc<Val>(MiscFns.IsNull));
