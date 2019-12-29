@@ -12,6 +12,7 @@ if defined ERR (
   goto :eof
 )
 
+echo.
 echo -------------------------------------
 echo Searching for latest version...
 if exist versions.txt (
@@ -33,6 +34,7 @@ echo Exiting...
 goto :eof
 
 :runfile
+echo. 
 echo Version: %GAMEPATH%
 echo Starting game...
 start /d %GAMEPATH% %EXE%
