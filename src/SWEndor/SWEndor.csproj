@@ -524,6 +524,7 @@
     <Compile Include="Scenarios\ActorSpawnInfo.cs" />
     <Compile Include="Scenarios\GSFunctions.cs" />
     <Compile Include="Scenarios\MoodStates.cs" />
+    <Compile Include="Scenarios\CampaignInfo.cs" />
     <Compile Include="Scenarios\Scripting\Context.cs" />
     <Compile Include="Scenarios\Scripting\Functions\MathFns.cs" />
     <Compile Include="Scenarios\Scripting\Functions\SpawnFns.cs" />
@@ -621,7 +622,8 @@
     <Compile Include="UI\Menu\Instances\OptionsMenu.cs" />
     <Compile Include="UI\Menu\Instances\PauseMenu.cs" />
     <Compile Include="UI\Menu\Instances\LoadingScenario.cs" />
-    <Compile Include="UI\Menu\Instances\PlayScenario.cs" />
+    <Compile Include="UI\Menu\Instances\CampaignSelection.cs" />
+    <Compile Include="UI\Menu\Instances\ScenarioSelection.cs" />
     <Compile Include="UI\Menu\Instances\MainMenu.cs" />
     <Compile Include="UI\Menu\Instances\ConfirmExit.cs" />
     <Compile Include="UI\Menu\Page.cs" />
