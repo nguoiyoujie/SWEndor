@@ -19,7 +19,7 @@ namespace SWEndor.Scenarios
   {
     public GSEndor(ScenarioManager manager) : base(manager)
     {
-      Info.Name = "Battle of Endor [Maintenance]";
+      Info.Name = "Battle of Endor";
       Info.Description = "The Rebel fleet, amassed on Sullust, prepares to move to Endor "
                   + "where the Emperor is overseeing the construction of the second "
                   + "Death Star.";
@@ -27,11 +27,6 @@ namespace SWEndor.Scenarios
                                                , ActorTypeFactory.Get("YWING")
                                                , ActorTypeFactory.Get("AWING")
                                                , ActorTypeFactory.Get("BWING")
-                                               , ActorTypeFactory.Get("YT1300")
-                                               , ActorTypeFactory.Get("CORV")
-                                               , ActorTypeFactory.Get("VICT")
-                                               , ActorTypeFactory.Get("IMPL")
-                                               , ActorTypeFactory.Get("TIEX")
                                               };
 
       Info.AllowedDifficulties = new string[] { "easy"
@@ -233,7 +228,7 @@ namespace SWEndor.Scenarios
     {
       if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled)
       {
-        if (TIEWaves > 2)
+        if (TIEWaves > 5)
         {
           State.StageNumber = 2;
 
@@ -302,7 +297,7 @@ namespace SWEndor.Scenarios
     {
       if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled)
       {
-        if (TIEWaves > 4)
+        if (TIEWaves > 11)
         {
           State.StageNumber = 4;
 
@@ -386,7 +381,7 @@ namespace SWEndor.Scenarios
     {
       if (PlayerInfo.Actor != null && PlayerInfo.IsMovementControlsEnabled)
       {
-        if (TIEWaves > 7)
+        if (TIEWaves > 16)
         {
           State.StageNumber = 6;
 
@@ -980,6 +975,8 @@ namespace SWEndor.Scenarios
 
           Rebel_FreeSpeed(m_WedgeID, 425);
           Rebel_FreeSpeed(m_FalconID, 425);
+
+          SoundManager.MasterSFXVolumeScenario = 0;
         }
       }
       else
@@ -1133,6 +1130,8 @@ namespace SWEndor.Scenarios
       EventQueue.Add(Game.GameTime + 10f, Empire_FirstTIEWave);
       EventQueue.Add(Game.GameTime + 45f, Empire_SecondTIEWave);
       Rebel_RemoveTorps();
+
+      SoundManager.MasterSFXVolumeScenario = 1;
     }
 
     private void Rebel_GoBack(float chance)
