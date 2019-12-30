@@ -14,7 +14,7 @@ namespace SWEndor.ActorTypes.Instances
       ArmorData.Data.Put(DamageType.TORPEDO, 1.25f);
       ArmorData.Data.Put(DamageType.COLLISION, 4);
 
-      Explodes = new ExplodeData[]
+      ExplodeSystemData.Explodes = new ExplodeData[]
       {
         new ExplodeData("EXPL00", 1.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
         new ExplodeData("EXPL00", 1, 1, ExplodeTrigger.ON_DEATH)

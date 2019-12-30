@@ -133,5 +133,13 @@ namespace SWEndor.FileFormat.INI
     /// <param name="key">The key that will contain the value</param>
     /// <param name="value">The value to be set</param>
     public void SetEnum<T>(string section, string key, T value) where T : struct { SetString(section, key, value.ToString().Replace(", ", "|")); }
+
+    /// <summary>
+    /// Sets an enum array in the INIFile 
+    /// </summary>
+    /// <param name="section">The section that will contain the key-value pair</param>
+    /// <param name="key">The key that will contain the value</param>
+    /// <param name="value">The value to be set</param>
+    public void SetEnumArray<T>(string section, string key, T[] list, char delimiter = ',') where T : struct { SetString(section, key, string.Join(delimiter.ToString(), list)); }
   }
 }

@@ -11,6 +11,13 @@ namespace SWEndor.ExplosionTypes
 {
   public partial class ExplosionTypeInfo : ITypeInfo<ExplosionInfo>
   {
+    private const string sTimedLife = "TimedLife";
+    private const string sShake = "Shake";
+    private const string sRender = "Render";
+    private const string sExplRender = "ExplRender";
+    private const string sMesh = "Mesh";
+    private const string sSound = "Sound";
+
     public ExplosionTypeInfo(Factory owner, string id, string name)
     {
       ActorTypeFactory = owner;
@@ -31,12 +38,9 @@ namespace SWEndor.ExplosionTypes
     internal RenderData RenderData = RenderData.Default;
     internal ExplRenderData ExplRenderData;
     internal MeshData MeshData = MeshData.Default;
+    internal SoundData SoundData = SoundData.Default;
 
     public ComponentMask Mask { get; } = ComponentMask.EXPLOSION;
-
-    // Sound
-    internal SoundSourceData[] InitialSoundSources = new SoundSourceData[0];
-    internal SoundSourceData[] SoundSources = new SoundSourceData[0];
 
     public void LoadFromINI(string id)
     {
@@ -48,14 +52,12 @@ namespace SWEndor.ExplosionTypes
         INIFile f = new INIFile(filepath);
         Name = f.GetString("General", "Name", Name);
 
-        TimedLifeData.LoadFromINI(f, "TimedLifeData");
-        ShakeData.LoadFromINI(f, "ShakeData");
-        RenderData.LoadFromINI(f, "RenderData");
-        ExplRenderData.LoadFromINI(f, "ExplRenderData");
-        MeshData.LoadFromINI(Engine, f, "MeshData");
-
-        SoundSourceData.LoadFromINI(f, "SoundSourceData", "InitialSoundSources", out InitialSoundSources);
-        SoundSourceData.LoadFromINI(f, "SoundSourceData", "SoundSources", out SoundSources);
+        TimedLifeData.LoadFromINI(f, sTimedLife);
+        ShakeData.LoadFromINI(f, sShake);
+        RenderData.LoadFromINI(f, sRender);
+        ExplRenderData.LoadFromINI(f, sExplRender);
+        MeshData.LoadFromINI(Engine, f, sMesh);
+        SoundData.LoadFromINI(f, sSound);
       }
     }
 
@@ -71,14 +73,13 @@ namespace SWEndor.ExplosionTypes
 
       f.SetString("General", "Name", Name);
 
-      TimedLifeData.SaveToINI(f, "TimedLifeData");
-      ShakeData.SaveToINI(f, "ShakeData");
-      RenderData.SaveToINI(f, "RenderData");
-      ExplRenderData.SaveToINI(f, "ExplRenderData");
-      MeshData.SaveToINI(f, "MeshData");
+      TimedLifeData.SaveToINI(f, sTimedLife);
+      ShakeData.SaveToINI(f, sShake);
+      RenderData.SaveToINI(f, sRender);
+      ExplRenderData.SaveToINI(f, sExplRender);
+      MeshData.SaveToINI(f, sMesh);
+      SoundData.SaveToINI(f, sSound);
 
-      SoundSourceData.SaveToINI(f, "SoundSourceData", "InitialSoundSources", "ISN", InitialSoundSources);
-      SoundSourceData.SaveToINI(f, "SoundSourceData", "SoundSources", "SND", SoundSources);
       f.SaveFile(filepath);
     }
 
@@ -89,8 +90,7 @@ namespace SWEndor.ExplosionTypes
     public virtual void Initialize(Engine engine, ExplosionInfo ainfo)
     {
       // Sound
-      foreach (SoundSourceData assi in InitialSoundSources)
-        assi.Process(engine, ainfo);
+      SoundData.ProcessInitial(engine, ainfo);
 
       // Anim
       ainfo.AnimInfo.CyclePeriod = (ExplRenderData.AnimDuration == 0) ? TimedLifeData.TimedLife : ExplRenderData.AnimDuration;
@@ -103,8 +103,7 @@ namespace SWEndor.ExplosionTypes
     {
       // sound
       if (engine.PlayerInfo.Actor != null && ainfo.Active)
-        foreach (SoundSourceData assi in SoundSources)
-          assi.Process(engine, ainfo);
+        SoundData.Process(engine, ainfo);
 
       // billboard
       TV_3DVECTOR pos = ainfo.Engine.PlayerCameraInfo.Camera.GetWorldPosition(new TV_3DVECTOR(0, 0, -1000));

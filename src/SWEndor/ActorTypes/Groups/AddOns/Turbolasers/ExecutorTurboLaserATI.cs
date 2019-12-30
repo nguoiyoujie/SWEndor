@@ -15,7 +15,7 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Engine, Name, @"turbotowers\executor_turbolaser.x");
 
-      Loadouts = new WeapData[] { new WeapData("", "AI", "ADDON_TURBOLASER", "EXEC_LASR", "EXEC_LASR", "ADDON_LSR_Y", "ADDON_TURBOLASER") };
+      WeapSystemData.Loadouts = new WeapData[] { new WeapData("", "AI", "ADDON_TURBOLASER", "EXEC_LASR", "EXEC_LASR", "ADDON_LSR_Y", "ADDON_TURBOLASER") };
     }
   }
 }

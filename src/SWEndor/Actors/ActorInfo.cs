@@ -177,7 +177,7 @@ namespace SWEndor.Actors
       Health.Init(ref TypeInfo.CombatData, ref TypeInfo.SystemData, acinfo);
       Transform.Init(Engine, TypeInfo.MeshData.Scale, acinfo);
       Armor.Init(ref TypeInfo.ArmorData);
-      Explosions.Init(TypeInfo.Explodes, acinfo.CreationTime);
+      Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, acinfo.CreationTime);
       Regen.Init(ref TypeInfo.RegenData);
       AI.Init(ref TypeInfo.AIData);
       MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
@@ -214,7 +214,7 @@ namespace SWEndor.Actors
       Health.Init(ref TypeInfo.CombatData, ref TypeInfo.SystemData, acinfo);
       Transform.Init(Engine, TypeInfo.MeshData.Scale, acinfo);
       Armor.Init(ref TypeInfo.ArmorData);
-      Explosions.Init(TypeInfo.Explodes, acinfo.CreationTime);
+      Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, acinfo.CreationTime);
       Regen.Init(ref TypeInfo.RegenData);
       AI.Init(ref TypeInfo.AIData);
       MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
@@ -240,7 +240,7 @@ namespace SWEndor.Actors
       Update();
       OnCreatedEvent();
 
-      TypeInfo.GenerateAddOns(engine, this);
+      TypeInfo.AddOnData.Create(engine, this);
     }
     #endregion
 

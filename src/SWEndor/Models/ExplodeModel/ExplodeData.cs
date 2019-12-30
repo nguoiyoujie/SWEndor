@@ -42,7 +42,7 @@ namespace SWEndor.Models
       Type = f.GetString(sectionname, "Type", Type);
       Rate = f.GetFloat(sectionname, "Rate", Rate);
       Size = f.GetFloat(sectionname, "Size", Size);
-      Trigger = f.GetEnumValue(sectionname, "Trigger", Trigger);
+      Trigger = f.GetEnum(sectionname, "Trigger", Trigger);
     }
 
     private void SaveToINI(INIFile f, string sectionname)

@@ -10,7 +10,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       CombatData = CombatData.DefaultShip;
       ArmorData = ArmorData.Default;
-      Explodes = new ExplodeData[]
+      ExplodeSystemData.Explodes = new ExplodeData[]
       {
         new ExplodeData("EXPL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
         new ExplodeData("EXPL01", 1, 2, ExplodeTrigger.ON_DEATH),

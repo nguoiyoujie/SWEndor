@@ -9,7 +9,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ExecutorATI(Factory owner) : base(owner, "EXEC", "Executor Super Star Destroyer")
     {
-      Explodes = new ExplodeData[]
+      ExplodeSystemData.Explodes = new ExplodeData[]
       {
         new ExplodeData("EXPL00", 0.1f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
         new ExplodeData("EXPL01", 1, 5, ExplodeTrigger.ON_DEATH),
@@ -32,12 +32,12 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Engine, Name, @"executor\executor.x", 2f);
       DyingMoveData.Sink(0.00025f, 1.3f, 0.2f);
 
-      Cameras = new LookData[] {
+      CameraData.Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 325, -840), new TV_3DVECTOR(0, 325, 2000)),
         };
-      DeathCamera = new DeathCameraData(6000, 1200, 80);
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 2500.0f, new TV_3DVECTOR(0, 0, -800), true, isEngineSound: true) };
-      AddOns = new AddOnData[]
+      CameraData.DeathCamera = new DeathCameraData(6000, 1200, 80);
+      SoundData.SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 2500.0f, new TV_3DVECTOR(0, 0, -800), true, isEngineSound: true) };
+      AddOnData.AddOns = new AddOnData[]
       {
         new AddOnData("EXECLSR", new TV_3DVECTOR(500, 55, -450), new TV_3DVECTOR(-90, 0, 0), true)
         , new AddOnData("EXECLSR", new TV_3DVECTOR(-500, 55, -450), new TV_3DVECTOR(-90, 0, 0), true)

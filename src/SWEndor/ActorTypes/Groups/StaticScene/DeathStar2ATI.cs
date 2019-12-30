@@ -12,7 +12,7 @@ namespace SWEndor.ActorTypes.Instances
 
     internal DeathStar2ATI(Factory owner) : base(owner, "DSTAR2", "DeathStar2")
     {
-      Explodes = new ExplodeData[]
+      ExplodeSystemData.Explodes = new ExplodeData[]
       {
         new ExplodeData("EXPL02", 1, 1, ExplodeTrigger.ON_DEATH),
         new ExplodeData("EXPW02", 1, 1, ExplodeTrigger.ON_DEATH),

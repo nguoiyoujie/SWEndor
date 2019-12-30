@@ -35,12 +35,12 @@ namespace SWEndor.ActorTypes.Components
       _weapons = new List<WeapData>(4);
       _weaponclasses = new List<UnfixedWeapon>(8);
 
-      foreach (WeapData s in atype.Loadouts)
+      foreach (WeapData s in atype.WeapSystemData.Loadouts)
       {
         InsertLoadout(engine, s);
       }
 
-      if (atype.TrackerDummyWeapon)
+      if (atype.WeapSystemData.TrackerDummyWeapon)
         InsertDummyTrackerAILoadout();
     }
 

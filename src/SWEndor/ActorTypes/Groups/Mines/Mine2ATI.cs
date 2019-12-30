@@ -13,7 +13,7 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Engine, Name, @"mines\mine2.x");
       DyingMoveData.Kill();
 
-      Loadouts = new WeapData[] { new WeapData("", "AI", "ADDON_TURBOLASER", "DEFAULT", "MIN2_LASR", "ADDON_LSR_Y", "ADDON_TURBOLASER") };
+      WeapSystemData.Loadouts = new WeapData[] { new WeapData("", "AI", "ADDON_TURBOLASER", "DEFAULT", "MIN2_LASR", "ADDON_LSR_Y", "ADDON_TURBOLASER") };
     }
   }
 }

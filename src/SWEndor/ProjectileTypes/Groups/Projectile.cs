@@ -10,7 +10,7 @@ namespace SWEndor.ProjectileTypes.Groups
     {
       // Combat
       CombatData = CombatData.DefaultProjectile;
-      Explodes = new ExplodeData[]
+      ExplodeSystemData.Explodes = new ExplodeData[]
       {
         new ExplodeData("EXPS00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
       };

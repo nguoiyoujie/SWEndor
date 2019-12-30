@@ -7,7 +7,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal TowerGunAdvATI(Factory owner) : base(owner, "ADVGUN", "Advanced Turbolaser Turret")
     {
-      Explodes = new ExplodeData[] {
+      ExplodeSystemData.Explodes = new ExplodeData[] {
         new ExplodeData("EXPL00", 1, 3, ExplodeTrigger.ON_DEATH)
       };
 
@@ -22,7 +22,7 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Engine, Name, @"towers\tower_turbolaser.x");
 
-      Loadouts = new WeapData[] { new WeapData("LASR", "PRI_1_AI", "NO_AUTOAIM", "DEFAULT", "TOWR_DLSR", "WING_LSR_G2", "WING_LASER") };
+      WeapSystemData.Loadouts = new WeapData[] { new WeapData("LASR", "PRI_1_AI", "NO_AUTOAIM", "DEFAULT", "TOWR_DLSR", "WING_LSR_G2", "WING_LASER") };
     }
   }
 }

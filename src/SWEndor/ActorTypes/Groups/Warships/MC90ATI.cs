@@ -10,7 +10,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal MC90ATI(Factory owner) : base(owner, "MC90", "Mon Calamari Capital Ship")
     {
-      Explodes = new ExplodeData[] {
+      ExplodeSystemData.Explodes = new ExplodeData[] {
         new ExplodeData("EXPL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
         new ExplodeData("EXPL01", 1, 3.5f, ExplodeTrigger.ON_DEATH),
         new ExplodeData("EXPW01", 1, 1, ExplodeTrigger.ON_DEATH)
@@ -34,10 +34,10 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Engine, Name, @"mc90\mc90.x", 1.8f);
       DyingMoveData.Sink(0.01f, 2.5f, 0.4f);
 
-      Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 45, 660), new TV_3DVECTOR(0, 45, 2000)) };
-      DeathCamera = new DeathCameraData(1500, 250, 30);
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500f, new TV_3DVECTOR(0, 0, -750), true, isEngineSound: true) };
-      AddOns = new AddOnData[]
+      CameraData.Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 45, 660), new TV_3DVECTOR(0, 45, 2000)) };
+      CameraData.DeathCamera = new DeathCameraData(1500, 250, 30);
+      SoundData.SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500f, new TV_3DVECTOR(0, 0, -750), true, isEngineSound: true) };
+      AddOnData.AddOns = new AddOnData[]
       {
         new AddOnData("MC90LSR", new TV_3DVECTOR(100, 75, 500), new TV_3DVECTOR(-80, 90, 0), true)
         , new AddOnData("MC90LSR", new TV_3DVECTOR(-100, 75, 500), new TV_3DVECTOR(-80, -90, 0), true)

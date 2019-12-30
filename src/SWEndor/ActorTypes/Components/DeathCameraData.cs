@@ -1,4 +1,5 @@
-﻿using SWEndor.FileFormat.INI;
+﻿using Primrose.Primitives.ValueTypes;
+using SWEndor.FileFormat.INI;
 
 namespace SWEndor.ActorTypes.Components
 {
@@ -17,17 +18,13 @@ namespace SWEndor.ActorTypes.Components
 
     public void LoadFromINI(INIFile f, string sectionname)
     {
-      float radius = f.GetFloat(sectionname, "Radius", Radius);
-      float height = f.GetFloat(sectionname, "Height", Height);
-      float period = f.GetFloat(sectionname, "Period", Period);
-      this = new DeathCameraData(radius, height, period);
+      float3 rhp = f.GetFloat3(sectionname, "DeathCam", new float3(Radius, Height, Period));
+      this = new DeathCameraData(rhp.x, rhp.y, rhp.z);
     }
 
     public void SaveToINI(INIFile f, string sectionname)
     {
-      f.SetFloat(sectionname, "Radius", Radius);
-      f.SetFloat(sectionname, "Height", Height);
-      f.SetFloat(sectionname, "Period", Period);
+      f.SetFloat3(sectionname, "DeathCam", new float3(Radius, Height, Period));
     }
   }
 }

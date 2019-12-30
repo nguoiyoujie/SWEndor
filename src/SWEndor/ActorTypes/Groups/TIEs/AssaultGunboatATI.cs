@@ -24,14 +24,14 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Engine, Name, @"gunboat\gunboat.x");
 
-      Cameras = new LookData[]
+      CameraData.Cameras = new LookData[]
       {
         new LookData(new TV_3DVECTOR(0, 7, 18), new TV_3DVECTOR(0, 0, 2000)),
         new LookData(new TV_3DVECTOR(0, 25, -150), new TV_3DVECTOR(0, 0, 2000)),
         new LookData(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
       };
 
-      Loadouts = new WeapData[]
+      WeapSystemData.Loadouts = new WeapData[]
       {
         new WeapData("TORP", "SEC_1_AI", "NO_AUTOAIM", "GUN__TORP", "GUN__TORP", "WING_TORP", "WING_TORP"),
         new WeapData("MISL", "SEC_1_AI", "NO_AUTOAIM", "GUN__MISL", "GUN__MISL", "WING_MISL", "WING_MISL"),

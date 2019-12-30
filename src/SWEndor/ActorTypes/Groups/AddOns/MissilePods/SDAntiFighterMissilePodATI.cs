@@ -13,7 +13,7 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Engine, Name, @"turbotowers\star_destroyer_anti-fighter_missilepod.x");
       DyingMoveData.Kill();
 
-      Loadouts = new WeapData[] { new WeapData("", "AI", "NO_AUTOAIM", "IMPL_MISL2", "IMPL_MISL2", "ADDON_MISL", "MISL_VS_ANY") };
+      WeapSystemData.Loadouts = new WeapData[] { new WeapData("", "AI", "NO_AUTOAIM", "IMPL_MISL2", "IMPL_MISL2", "ADDON_MISL", "MISL_VS_ANY") };
     }
   }
 }

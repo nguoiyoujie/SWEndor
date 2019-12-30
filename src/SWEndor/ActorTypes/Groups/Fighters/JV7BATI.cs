@@ -22,16 +22,16 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Engine, Name, @"shuttle\jv7.x");
 
-      Cameras = new LookData[] {
+      CameraData.Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 2, 18), new TV_3DVECTOR(0, 2, 2000)),
         new LookData(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
         new LookData(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
      };
 
       //SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineAWing, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };
-      AddOns = new AddOnData[] { new AddOnData("JV7LSR", new TV_3DVECTOR(0, -2, -12), new TV_3DVECTOR(90, 0, 0), true) };
+      AddOnData.AddOns = new AddOnData[] { new AddOnData("JV7LSR", new TV_3DVECTOR(0, -2, -12), new TV_3DVECTOR(90, 0, 0), true) };
 
-      Loadouts = new WeapData[]
+      WeapSystemData.Loadouts = new WeapData[]
       {
         new WeapData("MISL", "SEC_1_AI", "NO_AUTOAIM", "JV7_MISL", "JV7_MISL", "WING_MISL", "WING_MISL"),
         new WeapData("LASR", "PRI_1_AI", "NO_AUTOAIM", "DEFAULT", "JV7_LASR", "WING_LSR_G", "WING_LASER"),

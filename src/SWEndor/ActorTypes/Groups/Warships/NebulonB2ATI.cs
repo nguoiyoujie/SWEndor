@@ -24,9 +24,9 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Engine, Name, @"nebulonb\nebulonb2.x", 0.75f);
       DyingMoveData.Sink(0.02f, 5f, 0.8f);
 
-      Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 120, -300), new TV_3DVECTOR(0, 120, 2000)) };
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500.0f, new TV_3DVECTOR(0, 100, -300), true, isEngineSound: true) };
-      AddOns = new AddOnData[]
+      CameraData.Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 120, -300), new TV_3DVECTOR(0, 120, 2000)) };
+      SoundData.SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500.0f, new TV_3DVECTOR(0, 100, -300), true, isEngineSound: true) };
+      AddOnData.AddOns = new AddOnData[]
       {
          new AddOnData("NEBLLSR", new TV_3DVECTOR(0, 37, 300), new TV_3DVECTOR(-90, 0, 0), true)
         , new AddOnData("NEBLLSR", new TV_3DVECTOR(0, 80, -480), new TV_3DVECTOR(-90, 0, 0), true)

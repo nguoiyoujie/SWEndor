@@ -21,6 +21,25 @@ namespace SWEndor.ActorTypes
 {
   public partial class ActorTypeInfo : ITypeInfo<ActorInfo>
   {
+    private const string sSystem = "System";
+    private const string sCombat = "Combat";
+    private const string sRegen = "Regen";
+    private const string sTimedLife = "TimedLife";
+    private const string sArmor = "Armor";
+    private const string sMoveLimit = "MoveLimit";
+    private const string sDyingMove = "DyingMove";
+    private const string sRender = "Render";
+    private const string sAI = "AI";
+    private const string sMesh = "Mesh";
+    private const string sExplode = "Explode";
+    private const string sWeapon = "Weapon";
+    private const string sScore = "Score";
+    private const string sSound = "Sound";
+    private const string sAddOn = "AddOn";
+    private const string sDebris = "Debris";
+    private const string sCamera = "Camera";
+
+    
     public static ActorTypeInfo Null = new ActorTypeInfo(Globals.Engine.ActorTypeFactory, "$NULL", "Null");
 
     public ActorTypeInfo(Factory owner, string id, string name)
@@ -55,28 +74,14 @@ namespace SWEndor.ActorTypes
     internal RenderData RenderData = RenderData.Default;
     internal AIData AIData = AIData.Default;
     internal MeshData MeshData = MeshData.Default;
+    internal ExplodeSystemData ExplodeSystemData = ExplodeSystemData.Default;
+    internal WeapSystemData WeapSystemData = WeapSystemData.Default;
     internal DyingMoveData DyingMoveData;
     internal ScoreData ScoreData;
-
-    // AddOns
-    internal AddOnData[] AddOns = new AddOnData[0];
-
-    // Explosionf
-    internal ExplodeData[] Explodes = new ExplodeData[0];
-
-    // Weapons
-    internal WeapData[] Loadouts = new WeapData[0];
-    internal bool TrackerDummyWeapon = false;
-
-    // Debris
-    internal DebrisSpawnerData[] Debris = new DebrisSpawnerData[0];
-
-    internal LookData[] Cameras = new LookData[0];
-    internal DeathCameraData DeathCamera = new DeathCameraData(350, 25, 15);
-
-    // Sound
-    internal SoundSourceData[] InitialSoundSources = new SoundSourceData[0];
-    internal SoundSourceData[] SoundSources = new SoundSourceData[0];
+    internal SoundData SoundData = SoundData.Default;
+    internal AddOnSystemData AddOnData = AddOnSystemData.Default;
+    internal DebrisSystemData DebrisData = DebrisSystemData.Default;
+    internal CameraSystemData CameraData = CameraSystemData.Default;
 
     // derived
     internal MoveBehavior MoveBehavior;
@@ -91,30 +96,25 @@ namespace SWEndor.ActorTypes
       {
         INIFile f = new INIFile(filepath);
         Name = f.GetString("General", "Name", Name);
-        Mask = f.GetEnumValue("General", "Mask", Mask);
+        Mask = f.GetEnum("General", "Mask", Mask);
 
-        //Loadouts = f.GetStringArray("General", "Loadouts", Loadouts);
-        TrackerDummyWeapon = f.GetBool("General", "TrackerDummyWeapon", TrackerDummyWeapon);
-
-        CombatData.LoadFromINI(f, "CombatData");
-        RegenData.LoadFromINI(f, "RegenData");
-        TimedLifeData.LoadFromINI(f, "TimedLifeData");
-        ArmorData.LoadFromINI(f, "ArmorData");
-        MoveLimitData.LoadFromINI(f, "MoveLimitData");
-        RenderData.LoadFromINI(f, "RenderData");
-        AIData.LoadFromINI(f, "AIData");
-        MeshData.LoadFromINI(Engine, f, "MeshData");
-        DyingMoveData.LoadFromINI(Engine, f, "DyingMoveData");
-        ScoreData.LoadFromINI(f, "ScoreData");
-
-        AddOnData.LoadFromINI(f, "AddOnData", "AddOns", out AddOns);
-        ExplodeData.LoadFromINI(f, "ExplodeData", "Explodes", out Explodes);
-        DebrisSpawnerData.LoadFromINI(f, "DebrisSpawnerData", "Debris", out Debris);
-        LookData.LoadFromINI(f, "Cameras", "Cameras", out Cameras);
-        DeathCamera.LoadFromINI(f, "DeathCamera");
-        WeapData.LoadFromINI(f, "WeapData", "Weapon", out Loadouts);
-        SoundSourceData.LoadFromINI(f, "SoundSourceData", "InitialSoundSources", out InitialSoundSources);
-        SoundSourceData.LoadFromINI(f, "SoundSourceData", "SoundSources", out SoundSources);
+        SystemData.LoadFromINI(f, sSystem);
+        CombatData.LoadFromINI(f, sCombat);
+        RegenData.LoadFromINI(f, sRegen);
+        TimedLifeData.LoadFromINI(f, sTimedLife);
+        ArmorData.LoadFromINI(f, sArmor);
+        MoveLimitData.LoadFromINI(f, sMoveLimit);
+        RenderData.LoadFromINI(f, sRender);
+        AIData.LoadFromINI(f, sAI);
+        MeshData.LoadFromINI(Engine, f, sMesh);
+        ExplodeSystemData.LoadFromINI(f, sExplode);
+        WeapSystemData.LoadFromINI(f, sWeapon);
+        DyingMoveData.LoadFromINI(Engine, f, sDyingMove);
+        ScoreData.LoadFromINI(f, sScore);
+        SoundData.LoadFromINI(f, sSound);
+        AddOnData.LoadFromINI(f, sAddOn);
+        DebrisData.LoadFromINI(f, sDebris);
+        CameraData.LoadFromINI(f, sCamera);
       }
     }
 
@@ -129,26 +129,24 @@ namespace SWEndor.ActorTypes
       f.SetString("General", "Name", Name);
       f.SetEnum("General", "Mask", Mask);
 
-      //f.SetStringArray("General", "Loadouts", Loadouts);
-      f.SetBool("General", "TrackerDummyWeapon", TrackerDummyWeapon);
+      SystemData.SaveToINI(f, sSystem);
+      CombatData.SaveToINI(f, sCombat);
+      RegenData.SaveToINI(f, sRegen);
+      TimedLifeData.SaveToINI(f, sTimedLife);
+      ArmorData.SaveToINI(f, sArmor);
+      MoveLimitData.SaveToINI(f, sMoveLimit);
+      RenderData.SaveToINI(f, sRender);
+      AIData.SaveToINI(f, sAI);
+      MeshData.SaveToINI(f, sMesh);
+      ExplodeSystemData.SaveToINI(f, sExplode);
+      WeapSystemData.SaveToINI(f, sWeapon);
+      DyingMoveData.SaveToINI(f, sDyingMove);
+      ScoreData.SaveToINI(f, sScore);
+      SoundData.SaveToINI(f, sSound);
+      AddOnData.SaveToINI(f, sAddOn);
+      DebrisData.SaveToINI(f, sDebris);
+      CameraData.SaveToINI(f, sCamera);
 
-      CombatData.SaveToINI(f, "CombatData");
-      RegenData.SaveToINI(f, "RegenData");
-      TimedLifeData.SaveToINI(f, "TimedLifeData");
-      ArmorData.SaveToINI(f, "ArmorData");
-      MoveLimitData.SaveToINI(f, "MoveLimitData");
-      RenderData.SaveToINI(f, "RenderData");
-      AIData.SaveToINI(f, "AIData");
-      MeshData.SaveToINI(f, "MeshData");
-      DyingMoveData.SaveToINI(f, "DyingMoveData");
-      ScoreData.SaveToINI(f, "ScoreData");
-
-      AddOnData.SaveToINI(f, "AddOnData", "AddOns", "ADD", AddOns);
-      ExplodeData.SaveToINI(f, "ExplodeData", "Explodes", "EXP", Explodes);
-      LookData.SaveToINI(f, "Cameras", "Cameras", "CAM", Cameras);
-      DeathCamera.SaveToINI(f, "DeathCamera");
-      SoundSourceData.SaveToINI(f, "SoundSourceData", "InitialSoundSources", "ISN", InitialSoundSources);
-      SoundSourceData.SaveToINI(f, "SoundSourceData", "SoundSources", "SND", SoundSources);
       f.SaveFile(filepath);
     }
 
@@ -162,15 +160,7 @@ namespace SWEndor.ActorTypes
 
     public virtual void Initialize(ActorInfo ainfo)
     {
-      // Sound
-      foreach (SoundSourceData assi in InitialSoundSources)
-        assi.Process(ainfo.Engine, ainfo);
-    }
-
-    public void GenerateAddOns(Engine engine, ActorInfo ainfo)
-    {
-      foreach (AddOnData addon in AddOns)
-        addon.Create(engine, ainfo);
+      SoundData.ProcessInitial(ainfo.Engine, ainfo);
     }
 
     public virtual void ProcessState(Engine engine, ActorInfo ainfo)
@@ -194,8 +184,7 @@ namespace SWEndor.ActorTypes
         && ainfo.Active
         && !ainfo.IsScenePlayer)
       {
-        foreach (SoundSourceData assi in SoundSources)
-          assi.Process(engine, ainfo);
+        SoundData.Process(engine, ainfo);
       }
 
       // projectile
@@ -486,7 +475,7 @@ namespace SWEndor.ActorTypes
       if (ainfo.IsPlayer)
       {
         engine.PlayerInfo.ActorID = -1;
-        engine.PlayerCameraInfo.DeathLook.SetPosition_Actor(ainfo.ID, DeathCamera);
+        engine.PlayerCameraInfo.DeathLook.SetPosition_Actor(ainfo.ID, CameraData.DeathCamera);
         engine.PlayerCameraInfo.SetDeathLook();
 
         ainfo.TickEvents += engine.GameScenarioManager.Scenario.ProcessPlayerDying;
@@ -504,14 +493,13 @@ namespace SWEndor.ActorTypes
 
       // Debris
       if (!ainfo.IsAggregateMode && !engine.Game.IsLowFPS())
-        foreach (DebrisSpawnerData ds in Debris)
-          ds.Process(engine, ainfo);
+        DebrisData.Process(engine, ainfo);
 
       if (ainfo.IsPlayer)
       {
         engine.PlayerInfo.ActorID = -1;
 
-        engine.PlayerCameraInfo.DeathLook.SetPosition_Point(ainfo.GetGlobalPosition(), DeathCamera);
+        engine.PlayerCameraInfo.DeathLook.SetPosition_Point(ainfo.GetGlobalPosition(), CameraData.DeathCamera);
         engine.PlayerCameraInfo.SetDeathLook();
 
         ainfo.DestroyedEvents += engine.GameScenarioManager.Scenario.ProcessPlayerKilled;

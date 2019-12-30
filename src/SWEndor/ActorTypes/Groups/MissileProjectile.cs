@@ -11,7 +11,7 @@ namespace SWEndor.ActorTypes.Groups
       // Combat
       CombatData = CombatData.DefaultFighter;
       ArmorData = ArmorData.Default;
-      Explodes = new ExplodeData[]
+      ExplodeSystemData.Explodes = new ExplodeData[]
       {
         new ExplodeData("EXPL00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
       };
@@ -31,7 +31,7 @@ namespace SWEndor.ActorTypes.Groups
 
       CombatData.DamageType = DamageType.MISSILE;
 
-      TrackerDummyWeapon = true;
+      WeapSystemData.TrackerDummyWeapon = true;
     }
   }
 }

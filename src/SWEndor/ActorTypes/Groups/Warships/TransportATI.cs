@@ -22,8 +22,8 @@ namespace SWEndor.ActorTypes.Instances
       RegenData = new RegenData(false, 0.5f, 0, 0, 0);
       MeshData = new MeshData(Engine, Name, @"transport\transport.x", 0.5f);
 
-      Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 86, -150), new TV_3DVECTOR(0, 86, 2000)) };
-      Debris = new DebrisSpawnerData[] {
+      CameraData.Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 86, -150), new TV_3DVECTOR(0, 86, 2000)) };
+      DebrisData.Debris = new DebrisSpawnerData[] {
         new DebrisSpawnerData("BOX1", new TV_3DVECTOR(60, -30, 1), -10, 10, -20, 20, -25, 25, 0.5f),
         new DebrisSpawnerData("BOX1", new TV_3DVECTOR(0, -30, 1), -10, 10, -20, 20, -25, 25, 0.5f),
         new DebrisSpawnerData("BOX1", new TV_3DVECTOR(-60, -30, 1), -10, 10, -20, 20, -25, 25, 0.5f),
@@ -38,8 +38,8 @@ namespace SWEndor.ActorTypes.Instances
         new DebrisSpawnerData("BOX4", new TV_3DVECTOR(-60, -30, 1), -10, 10, -20, 20, -25, 25, 0.5f),
       };
 
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500.0f, new TV_3DVECTOR(0, 0, -150), true, isEngineSound: true) };
-      AddOns = new AddOnData[]
+      SoundData.SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500.0f, new TV_3DVECTOR(0, 0, -150), true, isEngineSound: true) };
+      AddOnData.AddOns = new AddOnData[]
       {
         new AddOnData("TRANLSR", new TV_3DVECTOR(0, 70, 200), new TV_3DVECTOR(-90, 0, 0), true)
       };

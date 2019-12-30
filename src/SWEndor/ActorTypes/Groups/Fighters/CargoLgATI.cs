@@ -22,14 +22,14 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Engine, Name, @"cargo\cargo3.x");
 
-      Cameras = new LookData[] {
+      CameraData.Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 5, 48), new TV_3DVECTOR(0, 2, 2000)),
         new LookData(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
         new LookData(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
      };
 
       //SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineAWing, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };
-      AddOns = new AddOnData[] { new AddOnData("CRGLSR", new TV_3DVECTOR(0, 9, -68), new TV_3DVECTOR(-90, 0, 0), true) };
+      AddOnData.AddOns = new AddOnData[] { new AddOnData("CRGLSR", new TV_3DVECTOR(0, 9, -68), new TV_3DVECTOR(-90, 0, 0), true) };
 
       //Loadouts = new string[] { "A_WG_TORP", "A_WG_MISL", "A_WG_LASR" };
     }

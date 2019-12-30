@@ -22,7 +22,7 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Engine, Name, @"cargo\cargo1.x");
 
-      Cameras = new LookData[] {
+      CameraData.Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 4, 35), new TV_3DVECTOR(0, 2, 2000)),
         new LookData(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
         new LookData(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))

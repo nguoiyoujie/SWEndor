@@ -10,7 +10,7 @@ namespace SWEndor.ActorTypes.Instances
     internal AcclamatorATI(Factory owner) : base(owner, "ACCL", "Acclamator Assault Ship")
     {
       // Combat
-      Explodes = new ExplodeData[] {
+      ExplodeSystemData.Explodes = new ExplodeData[] {
         new ExplodeData("EXPL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
         new ExplodeData("EXPL01", 1, 1.5f, ExplodeTrigger.ON_DEATH),
         new ExplodeData("EXPW01", 1, 1, ExplodeTrigger.ON_DEATH)
@@ -31,9 +31,9 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Engine, Name, @"acclamator\acclamator.x", 1.3f);
 
-      Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 143, 65), new TV_3DVECTOR(0, 143, 2000)) };
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500.0f, new TV_3DVECTOR(0, 0, -100), true, isEngineSound: true) };
-      AddOns = new AddOnData[]
+      CameraData.Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 143, 65), new TV_3DVECTOR(0, 143, 2000)) };
+      SoundData.SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500.0f, new TV_3DVECTOR(0, 0, -100), true, isEngineSound: true) };
+      AddOnData.AddOns = new AddOnData[]
       {
         // Sides
         new AddOnData("ACCLLSR", new TV_3DVECTOR(101, 10, 460), new TV_3DVECTOR(0, 72, 0), true)

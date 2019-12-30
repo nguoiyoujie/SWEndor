@@ -121,7 +121,7 @@ namespace SWEndor.Shaders
               string key = ln.Key;
               if (!s.DynamicParam.ContainsKey(key))
               {
-                DynamicShaderDataSource val = f.GetEnumValue(head, ln.Key, DynamicShaderDataSource.GAME_TIME);
+                DynamicShaderDataSource val = f.GetEnum(head, ln.Key, DynamicShaderDataSource.GAME_TIME);
                 s.DynamicParam.Add(key, val);
               }
             }

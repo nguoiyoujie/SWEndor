@@ -1228,7 +1228,7 @@ namespace SWEndor.Scenarios
         State.IsCutsceneMode = true;
 
         PlayerInfo.ActorID = -1;
-        PlayerCameraInfo.DeathLook.SetPosition_Actor(actor.ID, actor.TypeInfo.DeathCamera);
+        PlayerCameraInfo.DeathLook.SetPosition_Actor(actor.ID, actor.TypeInfo.CameraData.DeathCamera);
         PlayerCameraInfo.SetDeathLook();
 
         if (actor.IsDying)
@@ -2101,7 +2101,7 @@ namespace SWEndor.Scenarios
         State.IsCutsceneMode = true;
 
         PlayerInfo.ActorID = -1;
-        PlayerCameraInfo.DeathLook.SetPosition_Actor(actor.ID, actor.TypeInfo.DeathCamera);
+        PlayerCameraInfo.DeathLook.SetPosition_Actor(actor.ID, actor.TypeInfo.CameraData.DeathCamera);
         PlayerCameraInfo.SetDeathLook();
 
         if (actor.IsDying)

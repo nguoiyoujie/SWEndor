@@ -24,12 +24,12 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Engine, Name, @"stardestroyer\interdictor_star_destroyer.x", 1.4f);
       DyingMoveData.Sink(0.005f, 5f, 0.8f);
 
-      Cameras = new LookData[] {
+      CameraData.Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 300, -385), new TV_3DVECTOR(0, 300, 2000)),
         };
-      DeathCamera = new DeathCameraData(1750, 400, 30);
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500f, new TV_3DVECTOR(0, -100, -400), true, isEngineSound: true) };
-      AddOns = new AddOnData[]
+      CameraData.DeathCamera = new DeathCameraData(1750, 400, 30);
+      SoundData.SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500f, new TV_3DVECTOR(0, -100, -400), true, isEngineSound: true) };
+      AddOnData.AddOns = new AddOnData[]
       {
         // Front
         new AddOnData("IMPLLSR", new TV_3DVECTOR(0, -40, 1040), new TV_3DVECTOR(0, 0, 0), true)

@@ -44,10 +44,10 @@ namespace SWEndor.Player
 
       int cammode = (int)cmode;  // (engine.GameScenarioIsCutsceneMode) ? 0 : (int)cmode;
 
-      if (cammode < actor.TypeInfo.Cameras.Length)
+      if (cammode < actor.TypeInfo.CameraData.Cameras.Length)
       {
-        location = actor.TypeInfo.Cameras[cammode].LookFrom * actor.Scale;
-        target = actor.TypeInfo.Cameras[cammode].LookAt * actor.Scale;
+        location = actor.TypeInfo.CameraData.Cameras[cammode].LookFrom * actor.Scale;
+        target = actor.TypeInfo.CameraData.Cameras[cammode].LookAt * actor.Scale;
       }
       LookFrom.TargetActorID = actor.ID;
       LookFrom.PositionRelative = location;

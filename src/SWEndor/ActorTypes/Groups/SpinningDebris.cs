@@ -11,7 +11,7 @@ namespace SWEndor.ActorTypes.Groups
     {
       CombatData = CombatData.Disabled;
       ArmorData = ArmorData.Immune;
-      Explodes = new ExplodeData[]
+      ExplodeSystemData.Explodes = new ExplodeData[]
       {
         new ExplodeData("EXPS00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
       };

@@ -32,7 +32,7 @@ namespace SWEndor.Weapons
       IsActor = f.GetBool(sectionname, "IsActor", IsActor);
       HomingDelay = f.GetFloat(sectionname, "HomingDelay", HomingDelay);
       LifeTime = f.GetFloat(sectionname, "LifeTime", LifeTime);
-      Type = f.GetEnumValue(sectionname, "WeaponType", Type);
+      Type = f.GetEnum(sectionname, "WeaponType", Type);
       FireSound = f.GetStringArray(sectionname, "FireSound", FireSound);
 
       string proj = f.GetString(sectionname, "Projectile", null);

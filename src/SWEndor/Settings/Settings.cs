@@ -70,7 +70,7 @@ namespace SWEndor
       if (File.Exists(path))
       {
         INIFile f = new INIFile(path);
-        ResolutionMode = f.GetEnumValue("General", "Resolution", ResolutionMode);
+        ResolutionMode = f.GetEnum("General", "Resolution", ResolutionMode);
         GameDebug = f.GetBool("General", "Debug", GameDebug);
         FullScreenMode = f.GetBool("General", "FullScreen", FullScreenMode);
         ShowPerformance = f.GetBool("General", "ShowPerformance", ShowPerformance);

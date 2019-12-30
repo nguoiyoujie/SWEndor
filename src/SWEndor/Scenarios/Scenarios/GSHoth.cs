@@ -541,12 +541,12 @@ namespace SWEndor.Scenarios
         {
           actor.TickEvents += ProcessPlayerDying;
           actor.DestroyedEvents += ProcessPlayerKilled;
-          PlayerCameraInfo.DeathLook.SetPosition_Actor(actor.ID, actor.TypeInfo.DeathCamera);
+          PlayerCameraInfo.DeathLook.SetPosition_Actor(actor.ID, actor.TypeInfo.CameraData.DeathCamera);
         }
         else
         {
           actor.DestroyedEvents += ProcessPlayerKilled;
-          PlayerCameraInfo.DeathLook.SetPosition_Point(actor.GetGlobalPosition(), actor.TypeInfo.DeathCamera);
+          PlayerCameraInfo.DeathLook.SetPosition_Point(actor.GetGlobalPosition(), actor.TypeInfo.CameraData.DeathCamera);
         }
         PlayerCameraInfo.SetDeathLook();
 

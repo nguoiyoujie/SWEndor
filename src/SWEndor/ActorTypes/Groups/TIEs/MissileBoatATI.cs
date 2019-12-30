@@ -23,14 +23,14 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Engine, Name, @"tie_vader\tie_vader.x");
 
-      Cameras = new LookData[]
+      CameraData.Cameras = new LookData[]
       {
         new LookData(new TV_3DVECTOR(0, 0, 12), new TV_3DVECTOR(0, 0, 2000)),
         new LookData(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
         new LookData(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
       };
 
-      Loadouts = new WeapData[]
+      WeapSystemData.Loadouts = new WeapData[]
       {
         new WeapData("TORP", "SEC_1_AI", "NO_AUTOAIM", "MIS__TORP", "MIS__TORP", "WING_TORP", "WING_TORP"),
         new WeapData("MISL", "SEC_1_AI", "NO_AUTOAIM", "MIS__MISL", "MIS__MISL", "WING_MISL", "WING_MISL"),

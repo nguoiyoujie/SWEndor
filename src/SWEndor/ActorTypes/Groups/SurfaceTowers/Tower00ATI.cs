@@ -16,7 +16,7 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Engine, Name, @"towers\tower_00.x");
 
-      AddOns = new AddOnData[] 
+      AddOnData.AddOns = new AddOnData[] 
       {
         new AddOnData("TGUN", new TV_3DVECTOR(95, 155, 0), new TV_3DVECTOR(0, 0, 0), true)
         , new AddOnData("TGUN", new TV_3DVECTOR(-95, 155, 0), new TV_3DVECTOR(0, 0, 0), true)

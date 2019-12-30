@@ -19,19 +19,19 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Engine, Name, @"tie\tie.x");
 
-      Cameras = new LookData[]
+      CameraData.Cameras = new LookData[]
       {
         new LookData(new TV_3DVECTOR(0, 0, 5), new TV_3DVECTOR(0, 0, 2000)),
         new LookData(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
         new LookData(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
       };
 
-      Debris = new DebrisSpawnerData[] {
+      DebrisData.Debris = new DebrisSpawnerData[] {
         new DebrisSpawnerData("TIEWING", new TV_3DVECTOR(-30, 0, 0), -10, 10, 0, 30, -25, 25, 0.5f),
         new DebrisSpawnerData("TIEWING", new TV_3DVECTOR(30, 0, 0), -10, 10, -30, 0, -25, 25, 0.5f),
         };
 
-      Loadouts = new WeapData[]
+      WeapSystemData.Loadouts = new WeapData[]
       {
         new WeapData("LASR", "PRI_12", "NO_AUTOAIM", "DEFAULT", "TIE__LASR", "WING_LSR_G", "WING_LASER"),
         new WeapData("LASR", "AI", "NO_AUTOAIM", "DEFAULT", "TIE__LASR_AI", "WING_LSR_G2", "WING_LASER"),

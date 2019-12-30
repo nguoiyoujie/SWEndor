@@ -20,7 +20,7 @@ namespace SWEndor.ActorTypes.Instances
       CombatData.DamageType = DamageType.MISSILE;
 
       MeshData = new MeshData(Engine, Name, @"projectiles\missile.x", 1.5f);
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineMissile, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };
+      SoundData.SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineMissile, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };
     }
   }
 }

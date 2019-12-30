@@ -21,20 +21,20 @@ namespace SWEndor.ActorTypes.Instances
       RegenData = new RegenData(false, 0.16f, 0, 0, 0);
 
       MeshData = new MeshData(Engine, Name, @"ywing\ywing.x");
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineYWing, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };
+      SoundData.SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineYWing, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };
 
-      Cameras = new LookData[] {
+      CameraData.Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 4, 30), new TV_3DVECTOR(0, 0, 2000)),
         new LookData(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
         new LookData(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
       };
 
-      Debris = new DebrisSpawnerData[] {
+      DebrisData.Debris = new DebrisSpawnerData[] {
         new DebrisSpawnerData("YWWING", new TV_3DVECTOR(-30, 0, 0), -10, 10, 0, 30, -25, 25, 0.5f),
         new DebrisSpawnerData("YWWING", new TV_3DVECTOR(30, 0, 0), -10, 10, -30, 0, -25, 25, 0.5f),
         };
 
-      Loadouts = new WeapData[]
+      WeapSystemData.Loadouts = new WeapData[]
       {
         new WeapData("TORP", "SEC_1_AI", "NO_AUTOAIM", "Y_WG_TORP", "Y_WG_TORP", "WING_TORP", "WING_TORP"),
         new WeapData("ION", "SEC_1_AI", "NO_AUTOAIM", "Y_WG_ION", "Y_WG_ION", "WING_LSR_ION", "WING_ION"),

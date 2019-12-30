@@ -13,7 +13,7 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Engine, Name, @"turbotowers\acclamator_turbolaser.x");
       DyingMoveData.Kill();
 
-      Loadouts = new WeapData[] { new WeapData("", "AI", "ADDON_TURBOLASER", "ACCL_LASR", "ACCL_LASR", "ADDON_LSR_Y", "ADDON_TURBOLASER") };
+      WeapSystemData.Loadouts = new WeapData[] { new WeapData("", "AI", "ADDON_TURBOLASER", "ACCL_LASR", "ACCL_LASR", "ADDON_LSR_Y", "ADDON_TURBOLASER") };
     }
   }
 }

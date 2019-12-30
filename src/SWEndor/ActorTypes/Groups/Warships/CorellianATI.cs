@@ -26,12 +26,12 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Engine, Name, @"corellian\corellian.x", 0.6f);
 
-      Cameras = new LookData[] {
+      CameraData.Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 55, -35), new TV_3DVECTOR(0, 55, 2000)),
         new LookData(new TV_3DVECTOR(0, 300, -800), new TV_3DVECTOR(0, 0, 2000))
         };
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500f, new TV_3DVECTOR(0, 0, -200), true, isEngineSound: true) };
-      AddOns = new AddOnData[]
+      SoundData.SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500f, new TV_3DVECTOR(0, 0, -200), true, isEngineSound: true) };
+      AddOnData.AddOns = new AddOnData[]
       {
         new AddOnData("CORLLSR", new TV_3DVECTOR(-35, 15, 110), new TV_3DVECTOR(-80, -90, 0), true)
         , new AddOnData("CORLLSR", new TV_3DVECTOR(-35, 15, 80), new TV_3DVECTOR(-80, -90, 0), true)

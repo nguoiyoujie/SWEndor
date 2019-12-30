@@ -10,7 +10,7 @@ namespace SWEndor.ActorTypes.Instances
     internal ArquitensATI(Factory owner) : base(owner, "ARQT", "Arquitens Light Cruiser")
     {
       // Combat
-      Explodes = new ExplodeData[] {
+      ExplodeSystemData.Explodes = new ExplodeData[] {
         new ExplodeData("EXPL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
         new ExplodeData("EXPL01", 1, 1.5f, ExplodeTrigger.ON_DEATH),
         new ExplodeData("EXPW01", 1, 1, ExplodeTrigger.ON_DEATH)
@@ -31,11 +31,11 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Engine, Name, @"arquitens\arquitens.x");
 
-      Cameras = new LookData[] {
+      CameraData.Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 80, -45), new TV_3DVECTOR(0, 80, 2000)),
         };
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500.0f, new TV_3DVECTOR(0, 0, -180), true, isEngineSound: true) };
-      AddOns = new AddOnData[]
+      SoundData.SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500.0f, new TV_3DVECTOR(0, 0, -180), true, isEngineSound: true) };
+      AddOnData.AddOns = new AddOnData[]
       {
         // Sides
         new AddOnData("ARQTLSR", new TV_3DVECTOR(85, 22, 16), new TV_3DVECTOR(0, 72, 0), true)

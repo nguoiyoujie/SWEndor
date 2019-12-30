@@ -8,7 +8,7 @@ namespace SWEndor.ActorTypes.Groups
     internal Mine(Factory owner, string id, string name) : base(owner, id, name)
     {
       // Combat
-      Explodes = new ExplodeData[] { new ExplodeData("EXPL00", 1, 1, ExplodeTrigger.ON_DEATH) };
+      ExplodeSystemData.Explodes = new ExplodeData[] { new ExplodeData("EXPL00", 1, 1, ExplodeTrigger.ON_DEATH) };
       CombatData = CombatData.DefaultShip;
       ArmorData = ArmorData.Default;
 

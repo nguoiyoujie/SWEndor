@@ -48,7 +48,7 @@ namespace SWEndor.ActorTypes.Components
       HitWhileDyingLeadsToDeath = f.GetBool(sectionname, "HitWhileDyingLeadsToDeath", HitWhileDyingLeadsToDeath);
 
       ImpactDamage = f.GetFloat(sectionname, "ImpactDamage", ImpactDamage);
-      DamageType = f.GetEnumValue(sectionname, "DamageType", DamageType);
+      DamageType = f.GetEnum(sectionname, "DamageType", DamageType);
       IsLaser = f.GetBool(sectionname, "IsLaser", IsLaser);
 
       ImpactCloseEnoughDistance = f.GetFloat(sectionname, "ImpactCloseEnoughDistance", ImpactCloseEnoughDistance);

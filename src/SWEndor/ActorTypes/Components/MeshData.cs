@@ -124,11 +124,11 @@ namespace SWEndor.ActorTypes.Components
 
     public void LoadFromINI(Engine engine, INIFile f, string sectionname)
     {
-      MeshMode mode = f.GetEnumValue(sectionname, "Mode", Mode);
+      MeshMode mode = f.GetEnum(sectionname, "Mode", Mode);
       string name = f.GetString(sectionname, "Name", Name);
       float scale = f.GetFloat(sectionname, "Scale", Scale);
       string shader = f.GetString(sectionname, "Shader", Shader);
-      CONST_TV_BLENDINGMODE blendmode = f.GetEnumValue(sectionname, "BlendMode", BlendMode);
+      CONST_TV_BLENDINGMODE blendmode = f.GetEnum(sectionname, "BlendMode", BlendMode);
 
       switch (mode)
       {

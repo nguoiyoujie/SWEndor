@@ -98,7 +98,7 @@ namespace SWEndor.Projectiles
       Meshes.Init(Engine, ID, ref TypeInfo.MeshData);
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
       Transform.Init(Engine, TypeInfo.MeshData.Scale, acinfo);
-      Explosions.Init(TypeInfo.Explodes, acinfo.CreationTime);
+      Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, acinfo.CreationTime);
 
       MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
       CollisionData.Init();
@@ -127,7 +127,7 @@ namespace SWEndor.Projectiles
       Meshes.Init(Engine, ID, ref TypeInfo.MeshData);
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
       Transform.Init(Engine, TypeInfo.MeshData.Scale, acinfo);
-      Explosions.Init(TypeInfo.Explodes, acinfo.CreationTime);
+      Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, acinfo.CreationTime);
 
       MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
       CollisionData.Init();

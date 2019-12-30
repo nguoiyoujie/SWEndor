@@ -22,15 +22,15 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Engine, Name, @"awing\awing.x");
 
-      Cameras = new LookData[] {
+      CameraData.Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 2, 20), new TV_3DVECTOR(0, 2, 2000)),
         new LookData(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
         new LookData(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
      };
 
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineAWing, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };
+      SoundData.SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineAWing, 200f, new TV_3DVECTOR(0, 0, -30), true, isEngineSound: true) };
 
-      Loadouts = new WeapData[] 
+      WeapSystemData.Loadouts = new WeapData[] 
       {
         new WeapData("TORP", "SEC_1_AI", "NO_AUTOAIM", "A_WG_TORP", "A_WG_TORP", "WING_TORP", "WING_TORP"),
         new WeapData("MISL", "SEC_1_AI", "NO_AUTOAIM", "A_WG_MISL", "A_WG_MISL", "WING_MISL", "WING_MISL"),

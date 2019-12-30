@@ -10,7 +10,7 @@ namespace SWEndor.ActorTypes.Instances
   {
     internal ImperialIATI(Factory owner) : base(owner, "IMPL", "Imperial-I Star Destroyer")
     {
-      Explodes = new ExplodeData[] {
+      ExplodeSystemData.Explodes = new ExplodeData[] {
         new ExplodeData("EXPL00", 0.25f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
         new ExplodeData("EXPL01", 1, 2.5f, ExplodeTrigger.ON_DEATH),
         new ExplodeData("EXPW01", 1, 1, ExplodeTrigger.ON_DEATH)
@@ -31,12 +31,12 @@ namespace SWEndor.ActorTypes.Instances
       MeshData = new MeshData(Engine, Name, @"stardestroyer\star_destroyer.x", 2.4f);
       DyingMoveData.Sink(0.005f, 5f, 0.8f);
 
-      Cameras = new LookData[] {
+      CameraData.Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 300, -385), new TV_3DVECTOR(0, 300, 2000)),
         };
-      DeathCamera = new DeathCameraData(1750, 400, 30);
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500f, new TV_3DVECTOR(0, -100, -400), true, isEngineSound: true) };
-      AddOns = new AddOnData[]
+      CameraData.DeathCamera = new DeathCameraData(1750, 400, 30);
+      SoundData.SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 1500f, new TV_3DVECTOR(0, -100, -400), true, isEngineSound: true) };
+      AddOnData.AddOns = new AddOnData[]
       {
         // Front
         new AddOnData("IMPLLSR", new TV_3DVECTOR(0, -40, 1040), new TV_3DVECTOR(0, 0, 0), true)

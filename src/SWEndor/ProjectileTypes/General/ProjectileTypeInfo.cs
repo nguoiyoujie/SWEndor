@@ -16,6 +16,15 @@ namespace SWEndor.ProjectileTypes
   /// </summary>
   public partial class ProjectileTypeInfo : ITypeInfo<ProjectileInfo>
   {
+    private const string sCombat = "Combat";
+    private const string sTimedLife = "TimedLife";
+    private const string sMoveLimit = "MoveLimit";
+    private const string sRender = "Render";
+    private const string sMesh = "Mesh";
+    private const string sExplode = "Explode";
+    private const string sDamageSpecial = "DamageSpecial";
+    private const string sSound = "Sound";
+
     internal static readonly ProjectileTypeInfo Null = new ProjectileTypeInfo(Globals.Engine.ProjectileTypeFactory, "$NULL", "Null");
 
     internal ProjectileTypeInfo(Factory owner, string id, string name)
@@ -47,12 +56,9 @@ namespace SWEndor.ProjectileTypes
     internal MoveLimitData MoveLimitData = MoveLimitData.Default;
     internal RenderData RenderData = RenderData.Default;
     internal MeshData MeshData = MeshData.Default;
+    internal ExplodeSystemData ExplodeSystemData = ExplodeSystemData.Default;
     internal DamageSpecialData DamageSpecialData;
-
-    // Data (struct arrays)
-    internal ExplodeData[] Explodes = new ExplodeData[0];
-    internal SoundSourceData[] InitialSoundSources = new SoundSourceData[0];
-    internal SoundSourceData[] SoundSources = new SoundSourceData[0];
+    internal SoundData SoundData = SoundData.Default;
 
     // Derived (derived)
     internal Components.MoveBehavior MoveBehavior;
@@ -66,18 +72,17 @@ namespace SWEndor.ProjectileTypes
       {
         INIFile f = new INIFile(filepath);
         Name = f.GetString("General", "Name", Name);
-        Mask = f.GetEnumValue("General", "Mask", Mask);
+        Mask = f.GetEnum("General", "Mask", Mask);
 
-        CombatData.LoadFromINI(f, "CombatData");
-        TimedLifeData.LoadFromINI(f, "TimedLifeData");
-        MoveLimitData.LoadFromINI(f, "MoveLimitData");
-        RenderData.LoadFromINI(f, "RenderData");
-        MeshData.LoadFromINI(Engine, f, "MeshData");
-        DamageSpecialData.LoadFromINI(f, "DamageSpecialData");
+        CombatData.LoadFromINI(f, sCombat);
+        TimedLifeData.LoadFromINI(f, sTimedLife);
+        MoveLimitData.LoadFromINI(f, sMoveLimit);
+        RenderData.LoadFromINI(f, sRender);
+        MeshData.LoadFromINI(Engine, f, sMesh);
+        ExplodeSystemData.LoadFromINI(f, sExplode);
+        DamageSpecialData.LoadFromINI(f, sDamageSpecial);
+        SoundData.LoadFromINI(f, sSound);
 
-        ExplodeData.LoadFromINI(f, "ExplodeData", "Explodes", out Explodes);
-        SoundSourceData.LoadFromINI(f, "SoundSourceData", "InitialSoundSources", out InitialSoundSources);
-        SoundSourceData.LoadFromINI(f, "SoundSourceData", "SoundSources", out SoundSources);
       }
     }
 
@@ -94,16 +99,15 @@ namespace SWEndor.ProjectileTypes
       f.SetString("General", "Name", Name);
       f.SetEnum("General", "Mask", Mask);
 
-      CombatData.SaveToINI(f, "CombatData");
-      TimedLifeData.SaveToINI(f, "TimedLifeData");
-      MoveLimitData.SaveToINI(f, "MoveLimitData");
-      RenderData.SaveToINI(f, "RenderData");
-      MeshData.SaveToINI(f, "MeshData");
-      DamageSpecialData.SaveToINI(f, "DamageSpecialData");
+      CombatData.SaveToINI(f, sCombat);
+      TimedLifeData.SaveToINI(f, sTimedLife);
+      MoveLimitData.SaveToINI(f, sMoveLimit);
+      RenderData.SaveToINI(f, sRender);
+      MeshData.SaveToINI(f, sMesh);
+      ExplodeSystemData.SaveToINI(f, sExplode);
+      DamageSpecialData.SaveToINI(f, sDamageSpecial);
+      SoundData.SaveToINI(f, sSound);
 
-      ExplodeData.SaveToINI(f, "ExplodeData", "Explodes", "EXP", Explodes);
-      SoundSourceData.SaveToINI(f, "SoundSourceData", "InitialSoundSources", "ISN", InitialSoundSources);
-      SoundSourceData.SaveToINI(f, "SoundSourceData", "SoundSources", "SND", SoundSources);
       f.SaveFile(filepath);
     }
 
@@ -120,9 +124,7 @@ namespace SWEndor.ProjectileTypes
     /// <param name="ainfo">The instance to initialize</param>
     public virtual void Initialize(Engine engine, ProjectileInfo ainfo)
     {
-      // Sound
-      foreach (SoundSourceData assi in InitialSoundSources)
-        assi.Process(engine, ainfo);
+      SoundData.ProcessInitial(engine, ainfo);
     }
 
     /// <summary>
@@ -139,8 +141,7 @@ namespace SWEndor.ProjectileTypes
 
       // sound
       if (engine.PlayerInfo.Actor != null && ainfo.Active)
-        foreach (SoundSourceData assi in SoundSources)
-          assi.Process(engine, ainfo);
+        SoundData.Process(engine, ainfo);
 
       // projectile
       if (!ainfo.IsDyingOrDead)

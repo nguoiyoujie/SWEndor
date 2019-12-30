@@ -23,7 +23,7 @@ namespace SWEndor.ActorTypes.Components
     {
       CullDistance = f.GetFloat(sectionname, "CullDistance", CullDistance);
       RadarSize = f.GetFloat(sectionname, "RadarSize", RadarSize);
-      RadarType = f.GetEnumValue(sectionname, "RadarType", RadarType);
+      RadarType = f.GetEnum(sectionname, "RadarType", RadarType);
       AlwaysShowInRadar = f.GetBool(sectionname, "AlwaysShowInRadar", AlwaysShowInRadar);
     }
 

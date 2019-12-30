@@ -1,5 +1,6 @@
 ﻿using SWEndor.Actors.Components;
 using SWEndor.Actors.Models;
+using SWEndor.FileFormat.INI;
 using SWEndor.Weapons;
 using System;
 using System.Collections.Generic;
@@ -99,6 +100,36 @@ namespace SWEndor.ActorTypes.Components
       // parts.Add(SystemPart.HYPERDRIVE);
 
       Parts = parts.ToArray();
+    }
+
+    public void LoadFromINI(INIFile f, string sectionname)
+    {
+      MaxShield = f.GetFloat(sectionname, "MaxShield", MaxShield);
+      MaxHull = f.GetFloat(sectionname, "MaxHull", MaxHull);
+      Energy_Income = f.GetFloat(sectionname, "Energy_Income", Energy_Income);
+      Energy_NoChargerIncome = f.GetFloat(sectionname, "Energy_NoChargerIncome", Energy_NoChargerIncome);
+      MaxEnergy_inStore = f.GetFloat(sectionname, "MaxEnergy_inStore", MaxEnergy_inStore);
+      MaxEnergy_inEngine = f.GetFloat(sectionname, "MaxEnergy_inEngine", MaxEnergy_inEngine);
+      MaxEnergy_inLasers = f.GetFloat(sectionname, "MaxEnergy_inLasers", MaxEnergy_inLasers);
+      MaxEnergy_inShields = f.GetFloat(sectionname, "MaxEnergy_inShields", MaxEnergy_inShields);
+      Energy_TransferRate = f.GetFloat(sectionname, "Energy_TransferRate", Energy_TransferRate);
+      AllowSystemDamage = f.GetBool(sectionname, "AllowSystemDamage", AllowSystemDamage);
+      Parts = f.GetEnumArray(sectionname, "Parts", new SystemPart[0]);
+    }
+
+    public void SaveToINI(INIFile f, string sectionname)
+    {
+      f.SetFloat(sectionname, "MaxShield", MaxShield);
+      f.SetFloat(sectionname, "MaxHull", MaxHull);
+      f.SetFloat(sectionname, "Energy_Income", Energy_Income);
+      f.SetFloat(sectionname, "Energy_NoChargerIncome", Energy_NoChargerIncome);
+      f.SetFloat(sectionname, "MaxEnergy_inStore", MaxEnergy_inStore);
+      f.SetFloat(sectionname, "MaxEnergy_inEngine", MaxEnergy_inEngine);
+      f.SetFloat(sectionname, "MaxEnergy_inLasers", MaxEnergy_inLasers);
+      f.SetFloat(sectionname, "MaxEnergy_inShields", MaxEnergy_inShields);
+      f.SetFloat(sectionname, "Energy_TransferRate", Energy_TransferRate);
+      f.SetBool(sectionname, "AllowSystemDamage", AllowSystemDamage);
+      f.SetEnumArray(sectionname, "Parts", new SystemPart[0]);
     }
   }
 }

@@ -9,7 +9,7 @@ namespace SWEndor.ProjectileTypes.Instances
     internal GreenAntiShipLaserATI(Factory owner) : base(owner, "LSR_G3", "Green Anti-Ship Laser")
     {
       TimedLifeData = new TimedLifeData(true, 5);
-      Explodes = new ExplodeData[] {
+      ExplodeSystemData.Explodes = new ExplodeData[] {
         new ExplodeData("EXPL00", 1, 1, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
       };
 

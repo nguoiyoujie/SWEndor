@@ -24,14 +24,14 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Engine, Name, @"tie\tie_advanced.x");
 
-      Cameras = new LookData[]
+      CameraData.Cameras = new LookData[]
       {
         new LookData(new TV_3DVECTOR(0, 0, 5), new TV_3DVECTOR(0, 0, 2000)),
         new LookData(new TV_3DVECTOR(0, 25, -100), new TV_3DVECTOR(0, 0, 2000)),
         new LookData(new TV_3DVECTOR(0, 0, -40), new TV_3DVECTOR(0, 0, -2000))
       };
 
-      Loadouts = new WeapData[]
+      WeapSystemData.Loadouts = new WeapData[]
       {
         new WeapData("MISL", "SEC_1_AI", "NO_AUTOAIM", "TIEA_MISL", "TIEA_MISL", "WING_MISL", "WING_MISL"),
         new WeapData("LASR", "PRI_124_AI", "NO_AUTOAIM", "DEFAULT", "TIEA_LASR", "WING_LSR_GADV", "WING_LASER"),

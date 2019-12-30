@@ -17,13 +17,13 @@ namespace SWEndor.ActorTypes.Instances
       RenderData.CullDistance = 80000;
       ScoreData = new ScoreData(10, 10000);
 
-      Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 45, 660), new TV_3DVECTOR(0, 45, 2000)) };
-      DeathCamera = new DeathCameraData(1500, 250, 30);
+      CameraData.Cameras = new LookData[] { new LookData(new TV_3DVECTOR(0, 45, 660), new TV_3DVECTOR(0, 45, 2000)) };
+      CameraData.DeathCamera = new DeathCameraData(1500, 250, 30);
 
       MeshData = new MeshData(Engine, Name, @"platform\xq1.x", 3f);
       RegenData = new RegenData(false, 2.5f, 0, 0.25f, 0);
 
-      AddOns = new AddOnData[]
+      AddOnData.AddOns = new AddOnData[]
       {
         // roof
         new AddOnData("XQLSR", new TV_3DVECTOR(0, 35, 115), new TV_3DVECTOR(-90, 0, 0), true),

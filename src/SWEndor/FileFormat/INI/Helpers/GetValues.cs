@@ -358,11 +358,31 @@ namespace SWEndor.FileFormat.INI
       return ret;
     }
 
-    public T GetEnumValue<T>(string section, string key, T defaultValue) where T : struct
+    public T GetEnum<T>(string section, string key, T defaultValue) where T : struct
     {
       string s = GetString(section, key, defaultValue.GetEnumName()).Replace("|", ","); ;
       T ret = defaultValue;
       Enum.TryParse<T>(s, out ret);
+      return ret;
+    }
+
+    public T[] GetEnumArray<T>(string section, string key, T[] defaultList) where T : struct
+    {
+      return GetEnumArray(section, key, defaultList, DefaultDelimiter);
+    }
+
+    public T[] GetEnumArray<T>(string section, string key, T[] defaultList, char[] delimiter) where T : struct
+    {
+      string str = GetString(section, key, "");
+      if (str == "")
+        return defaultList;
+
+      string[] tokens = str.Split(delimiter);
+      T[] ret = new T[tokens.Length];
+
+      for (int i = 0; i < tokens.Length; i++)
+        Enum.TryParse(tokens[i], out ret[i]);
+
       return ret;
     }
   }

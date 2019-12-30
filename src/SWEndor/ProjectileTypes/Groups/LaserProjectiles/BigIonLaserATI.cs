@@ -10,7 +10,7 @@ namespace SWEndor.ProjectileTypes.Instances
     {
       // Combat
       TimedLifeData = new TimedLifeData(true, 30);
-      Explodes = new ExplodeData[] {
+      ExplodeSystemData.Explodes = new ExplodeData[] {
         new ExplodeData("EXPL00", 1, 10, ExplodeTrigger.ON_DEATH | ExplodeTrigger.ONLY_WHEN_DYINGTIME_NOT_EXPIRED)
       };
 

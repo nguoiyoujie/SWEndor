@@ -11,7 +11,7 @@ namespace SWEndor.ActorTypes.Instances
     internal StrikeATI(Factory owner) : base(owner, "STRKC", "Strike Cruiser")
     {
       // Combat
-      Explodes = new ExplodeData[] {
+      ExplodeSystemData.Explodes = new ExplodeData[] {
         new ExplodeData("EXPL00", 0.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
         new ExplodeData("EXPL01", 1, 1.5f, ExplodeTrigger.ON_DEATH),
         new ExplodeData("EXPW01", 1, 1, ExplodeTrigger.ON_DEATH)
@@ -32,12 +32,12 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = new MeshData(Engine, Name, @"strike\strike.x", 0.5f);
 
-      Cameras = new LookData[] {
+      CameraData.Cameras = new LookData[] {
         new LookData(new TV_3DVECTOR(0, 145, -130), new TV_3DVECTOR(0, 145, 2000)),
         };
-      DeathCamera = new DeathCameraData(1250, 200, 30);
-      SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500.0f, new TV_3DVECTOR(0, -60, -660), true, isEngineSound: true) };
-      AddOns = new AddOnData[]
+      CameraData.DeathCamera = new DeathCameraData(1250, 200, 30);
+      SoundData.SoundSources = new SoundSourceData[] { new SoundSourceData(SoundGlobals.EngineShip, 500.0f, new TV_3DVECTOR(0, -60, -660), true, isEngineSound: true) };
+      AddOnData.AddOns = new AddOnData[]
       {
         // Top
         new AddOnData("STRKLSR", new TV_3DVECTOR(0, 95, 365), new TV_3DVECTOR(-90, 0, 0), true)

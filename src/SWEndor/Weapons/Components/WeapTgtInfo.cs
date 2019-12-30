@@ -57,9 +57,9 @@ namespace SWEndor.Weapons
       RequirePlayerTargetLock = f.GetBool(sectionname, "RequirePlayerTargetLock", RequirePlayerTargetLock);
       RequireAITargetLock = f.GetBool(sectionname, "RequireAITargetLock", RequireAITargetLock);
       TargetLock_TimeRequired = f.GetFloat(sectionname, "TargetLock_TimeRequired", TargetLock_TimeRequired);
-      PlayerTargetAcqType = f.GetEnumValue(sectionname, "PlayerTargetAcqType", PlayerTargetAcqType);
-      AITargetAcqType = f.GetEnumValue(sectionname, "AITargetAcqType", AITargetAcqType);
-      AIAttackTargets = f.GetEnumValue(sectionname, "AIAttackTargets", AIAttackTargets);
+      PlayerTargetAcqType = f.GetEnum(sectionname, "PlayerTargetAcqType", PlayerTargetAcqType);
+      AITargetAcqType = f.GetEnum(sectionname, "AITargetAcqType", AITargetAcqType);
+      AIAttackTargets = f.GetEnum(sectionname, "AIAttackTargets", AIAttackTargets);
       AIAttackNull = f.GetBool(sectionname, "AIAttackNull", AIAttackNull);
       AngularRange = f.GetFloat(sectionname, "AngularRange", AngularRange);
       Range = f.GetFloat(sectionname, "Range", Range);

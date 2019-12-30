@@ -11,7 +11,7 @@ namespace SWEndor.ActorTypes.Groups
       // Combat
       CombatData = CombatData.DefaultFighter;
       ArmorData = ArmorData.Default;
-      Explodes = new ExplodeData[]
+      ExplodeSystemData.Explodes = new ExplodeData[]
       {
         new ExplodeData("ELECTRO", 1, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.ATTACH_TO_ACTOR),
         new ExplodeData("EXPS00", 0.75f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),

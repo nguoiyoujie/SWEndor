@@ -44,7 +44,7 @@ namespace SWEndor.ActorTypes.Components
       CanRetaliate = f.GetBool(sectionname, "CanRetaliate", CanRetaliate);
       CanCheckCollisionAhead = f.GetBool(sectionname, "CanCheckCollisionAhead", CanCheckCollisionAhead);
 
-      TargetType = f.GetEnumValue(sectionname, "TargetType", TargetType);
+      TargetType = f.GetEnum(sectionname, "TargetType", TargetType);
       HuntWeight = f.GetInt(sectionname, "HuntWeight", HuntWeight);
 
     }
