@@ -70,6 +70,24 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Scripting\Context.cs" />
+    <Compile Include="Scripting\Functions\ConsoleFns.cs" />
+    <Compile Include="Scripting\Functions\AssertFns.cs" />
+    <Compile Include="Scripting\Functions\MathFns.cs" />
+    <Compile Include="Scripting\Functions\MiscFns.cs" />
+    <Compile Include="Scripting\ParamContracts\IValFunc.cs" />
+    <Compile Include="Scripting\ParamContracts\ValFunc.cs" />
+    <Compile Include="Scripting\ParamContracts\ValFunc_T.cs" />
+    <Compile Include="Scripting\ParamContracts\ValFunc_T2.cs" />
+    <Compile Include="Scripting\ParamContracts\ValFunc_T3.cs" />
+    <Compile Include="Scripting\ParamContracts\ValFunc_T4.cs" />
+    <Compile Include="Scripting\ParamContracts\ValFunc_T5.cs" />
+    <Compile Include="Scripting\ParamContracts\ValFunc_T6.cs" />
+    <Compile Include="Scripting\ParamContracts\ValFunc_T7.cs" />
+    <Compile Include="Scripting\ParamContracts\ValFunc_T8.cs" />
+    <Compile Include="Scripting\ParamContracts\ValParamContract.cs" />
+    <Compile Include="Scripting\ScriptFile.cs" />
+    <Compile Include="Script_Test.cs" />
     <Compile Include="Operations_Test.cs" />
     <Compile Include="Literals_Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,6 +101,12 @@
       <Project>{6127267c-e6d9-4b1a-a22a-0f3ae7ff3eee}</Project>
       <Name>Primrose</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Scripts\test_ops.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

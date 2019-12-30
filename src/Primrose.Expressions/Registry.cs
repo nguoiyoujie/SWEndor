@@ -41,6 +41,15 @@ namespace Primrose.Expressions
       {
         return m_registry.Get(id);
       }
+
+      /// <summary>
+      /// Retrieves all scripts from the registry
+      /// </summary>
+      /// <returns>The array of all loaded scripts</returns>
+      public static Script[] GetAll()
+      {
+        return m_registry.GetAll();
+      }
     }
   }
 }
