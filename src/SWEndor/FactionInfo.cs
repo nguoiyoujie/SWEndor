@@ -235,9 +235,9 @@ namespace SWEndor
     }
     */
 
-    public int GetRandomWing(Engine engine) { return _wings.Random(engine.Random); }
-    public int GetRandomShip(Engine engine) { return _ships.Random(engine.Random); }
-    public int GetRandomStructure(Engine engine) { return _structures.Random(engine.Random); }
+    public int GetRandomWing(Engine engine) { return _wings.Count > 0 ? _wings.Random(engine.Random) : -1; }
+    public int GetRandomShip(Engine engine) { return _ships.Count > 0 ? _ships.Random(engine.Random) : -1; }
+    public int GetRandomStructure(Engine engine) { return _structures.Count > 0 ? _structures.Random(engine.Random) : -1; }
 
     public int GetFirst(TargetType type)
     {
