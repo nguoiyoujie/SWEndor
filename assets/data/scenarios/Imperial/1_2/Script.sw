@@ -7,7 +7,7 @@ bool primary_completed;
 bool scutz_arrived;
 bool hammer_arrived;
 
-float msg3_time = 14;
+float msg_time = 32;
 float hammer_time = 240;
 
 int outpost;
@@ -63,8 +63,10 @@ load:
 	AddEvent(3, "spawn_ywing1");
 	AddEvent(7, "message1");
 	AddEvent(10, "message2");
-	AddEvent(msg3_time, "message3");
+	AddEvent(14, "message3");
 	AddEvent(20, "spawn_ywing2");
+	AddEvent(28, "message4");
+	AddEvent(msg_time, "message_protect");
 	AddEvent(50, "spawn_xwing1");
 	AddEvent(67, "spawn_xwing2");
 	AddEvent(71, "spawn_ally_reinf");
@@ -195,7 +197,7 @@ gametick:
 	int wing_ham = Faction.GetWingCount("Empire_Hammer");
 	float tm = hammer_time - GetGameTime();
 	
-	if (tm >= 0 && GetGameTime() > msg3_time)
+	if (tm >= 0 && GetGameTime() > msg_time)
 	{
 		UI.SetLine1Color(faction_empire_hammer_color);
 		UI.SetLine2Color(faction_empire_color);
@@ -210,7 +212,7 @@ gametick:
 		UI.SetLine2Color(faction_rebel_color);
 		UI.SetLine1Text("WINGS: " + (wing_emp + wing_ham));
 		UI.SetLine2Text((wing_reb + wing_mug == 0) ? "" : "ENEMY: " + (wing_reb + wing_mug));
-		UI.SetLine3Text();
+		UI.SetLine3Text("");
 	}
 	
 	if (!triggerwinlose)
@@ -335,27 +337,18 @@ inspection:
 			
 			Actor.SetFaction(scutz, "Neutral_Rebel");
 			AddEvent(0.2, "scutz_discovered");
-			AddEvent(3, "spawn_mu");
-			AddEvent(4, "message_muapproach");
+			AddEvent(6, "message_located");
+			AddEvent(9, "spawn_mu");
+			AddEvent(10, "message_muapproach");
 			Audio.SetMood(-5);
 		}
 	}
 
-	if (!GetGameStateB("AllComplete"))
-	{
-		if (GetGameStateB("RebelsCaptured") && scutz_arrived && Faction.GetWingCount("Rebels") == 0)
-		{
-			Script.Call("announce_allComplete");
-			SetGameStateB("AllComplete", true);
-			Audio.SetMood(-6);
-		}
-	}
-	
-	if (!GetGameStateB("PriComplete") && !(GetGameStateB("AllComplete")))
+	if (!GetGameStateB("PriComplete"))
 	{
 		if (hammer_arrived)
 		{
-			Script.Call("announce_primaryComplete");
+			AddEvent(10, "announce_primaryComplete");
 			SetGameStateB("PriComplete", true);
 			Audio.SetMood(-4);
 		}
@@ -437,7 +430,8 @@ mu_boardingcomplete:
 		SetGameStateB("MuBoardingComplete", true);
 		Script.Call("message_muboardingcomplete");
 		AI.ForceClearQueue(mu);
-		AI.QueueLast(mu, "move", {2300, 100, 5000}, 200, 400, false);
+		AI.QueueLast(mu, "rotate", {2300, 100, 5000}, 200, 1, false);
+		AI.QueueLast(mu, "wait", 10);
 		AI.QueueLast(mu, "hyperspaceout");
 		AI.QueueLast(mu, "setgamestateb", "MuDispatched", false);
 		AI.QueueLast(mu, "setgamestateb", "RebelsCaptured", true);
@@ -647,13 +641,13 @@ spawn_scutz:
 		Actor.SetProperty(a, "Movement.MinSpeed", 0);
 		Actor.SetArmor(a, "MISSILE", 0.1);
 		actorp_id = a;
-		actorp_value = 20;
+		actorp_value = 10;
 		Script.Call("actorp_setShd");
 		actorp_value = 40;
 		Script.Call("actorp_setHull");
 		
-		AI.QueueLast(a, "move", { -9000, -200, 3000 }, 500, 500, false);
-		AI.QueueLast(a, "move", { -6000, -200, -8000 }, 500, 500, false);
+		AI.QueueLast(a, "move", { -9000, -200, 3000 }, 250, 500, false);
+		AI.QueueLast(a, "move", { -6000, -200, -8000 }, 250, 500, false);
 		AI.QueueLast(a, "hyperspaceout");
 		AI.QueueLast(a, "setgamestateb", "ScutzEscaped", true);
 		AI.QueueLast(a, "delete");
@@ -697,6 +691,7 @@ spawn_hammer:
 	Audio.SetMood(-12);
 	Script.Call("message_hammer");
 	AddEvent(0.1, "gethangar");
+	AddEvent(4, "message_hammer_2");
 	AddEvent(15, "ubote_retreat");
 
 
@@ -748,13 +743,6 @@ ubote_retreat:
 	
 announce_primaryComplete:
 	AddEvent(3, "message_primaryobj_completed");
-	AddEvent(7, "message_returntobase");
-	AddEvent(7.1, "setComplete");
-
-	
-announce_allComplete:
-	primary_completed = true;
-	AddEvent(3, "message_secondaryobj_completed");
 	AddEvent(7, "message_returntobase");
 	AddEvent(7.1, "setComplete");
 
