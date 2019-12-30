@@ -635,7 +635,7 @@ namespace SWEndor.Scenarios
     public void Empire_StarDestroyer_00()
     {
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
-                                                              , ActorTypeFactory.Get("IMPL")
+                                                              , ActorTypeFactory.Get("ISD")
                                                               , MainEnemyFaction
                                                               , true
                                                               , new TV_3DVECTOR()
@@ -644,7 +644,7 @@ namespace SWEndor.Scenarios
                                                               );
 
       List<ShipSpawnEventArg> SDspawnlist = new List<ShipSpawnEventArg>();
-      sspawn.TypeInfo = ActorTypeFactory.Get("VICT");
+      sspawn.TypeInfo = ActorTypeFactory.Get("VSD");
       SDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                           , new TV_3DVECTOR(1200, 850, -7000)
                                           , new TV_3DVECTOR(600, 720, -2000)
@@ -694,7 +694,7 @@ namespace SWEndor.Scenarios
 
         ainfo = new ActorSpawnInfo
         {
-          Type = ActorTypeFactory.Get("IMPL"),
+          Type = ActorTypeFactory.Get("ISD"),
           Name = "",
           SidebarName = "",
           SpawnTime = creationTime + createtime[i],
@@ -709,7 +709,7 @@ namespace SWEndor.Scenarios
                                      , SetMood.GetOrCreate(MoodStates.ALLY_SHIP_ARRIVED, true)
                                      , SetMood.GetOrCreate(MoodStates.ENGAGEMENT, true)
                                      , EnableSpawn.GetOrCreate(true)
-                                     , Move.GetOrCreate(new TV_3DVECTOR(v.x * 0.2f, v.y, -1000), ActorTypeFactory.Get("IMPL").MoveLimitData.MaxSpeed / 2)
+                                     , Move.GetOrCreate(new TV_3DVECTOR(v.x * 0.2f, v.y, -1000), ActorTypeFactory.Get("ISD").MoveLimitData.MaxSpeed / 2)
                                      , Rotate.GetOrCreate(new TV_3DVECTOR(-1600, -120, 6300), 0)
                                      , Lock.GetOrCreate() }
         }.Spawn(this);
@@ -749,7 +749,7 @@ namespace SWEndor.Scenarios
     public void Empire_StarDestroyer_02()
     {
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
-                                                              , ActorTypeFactory.Get("IMPL")
+                                                              , ActorTypeFactory.Get("ISD")
                                                               , MainEnemyFaction
                                                               , true
                                                               , new TV_3DVECTOR()

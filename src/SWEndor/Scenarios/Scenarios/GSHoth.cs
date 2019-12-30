@@ -573,7 +573,7 @@ namespace SWEndor.Scenarios
     public void Empire_FirstWave()
     {
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
-                                                              , ActorTypeFactory.Get("IMPL")
+                                                              , ActorTypeFactory.Get("ISD")
                                                               , MainEnemyFaction
                                                               , true
                                                               , new TV_3DVECTOR()
@@ -627,7 +627,7 @@ namespace SWEndor.Scenarios
     public void Empire_SecondWave()
     {
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
-                                                        , ActorTypeFactory.Get("IMPL")
+                                                        , ActorTypeFactory.Get("ISD")
                                                         , MainEnemyFaction
                                                         , true
                                                         , new TV_3DVECTOR()
@@ -967,7 +967,7 @@ namespace SWEndor.Scenarios
 
       ActorSpawnInfo asi = new ActorSpawnInfo
       {
-        Type = ActorTypeFactory.Get("IMPL"),
+        Type = ActorTypeFactory.Get("ISD"),
         Name = "",
         SidebarName = "",
         SpawnTime = Game.GameTime + 9,
@@ -975,7 +975,7 @@ namespace SWEndor.Scenarios
         Position = new TV_3DVECTOR(20000, -2000, -22000),
         Rotation = new TV_3DVECTOR(),
         Actions = new ActionInfo[] { HyperspaceIn.GetOrCreate(new TV_3DVECTOR(2000, 100, -8000))
-                                    , Move.GetOrCreate(new TV_3DVECTOR(1000, 100, 2000), ActorTypeFactory.Get("IMPL").MoveLimitData.MaxSpeed * 0.25f, -1, false)
+                                    , Move.GetOrCreate(new TV_3DVECTOR(1000, 100, 2000), ActorTypeFactory.Get("ISD").MoveLimitData.MaxSpeed * 0.25f, -1, false)
                                     , Rotate.GetOrCreate(new TV_3DVECTOR(2000, 100, -9000), 0, -1, false)
                                     , Lock.GetOrCreate() },
         Registries = null
@@ -986,7 +986,7 @@ namespace SWEndor.Scenarios
       asi.SpawnTime = Game.GameTime + 9.25f;
       asi.Position = new TV_3DVECTOR(20000, -2000, -25000);
       asi.Actions = new ActionInfo[] { HyperspaceIn.GetOrCreate(new TV_3DVECTOR(1500, -100, -10200))
-                                            , Move.GetOrCreate(new TV_3DVECTOR(-6500, -100, 4000), ActorTypeFactory.Get("IMPL").MoveLimitData.MaxSpeed * 0.25f, -1, false)
+                                            , Move.GetOrCreate(new TV_3DVECTOR(-6500, -100, 4000), ActorTypeFactory.Get("ISD").MoveLimitData.MaxSpeed * 0.25f, -1, false)
                                             , Rotate.GetOrCreate(new TV_3DVECTOR(2000, -100, -10200), 0, -1, false)
                                             , Lock.GetOrCreate() };
       newDest = asi.Spawn(this);

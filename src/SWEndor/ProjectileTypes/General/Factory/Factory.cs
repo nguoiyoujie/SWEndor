@@ -53,7 +53,7 @@ namespace SWEndor.ProjectileTypes
           if (Contains(f))
             throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.ACTORTYPE_INITWICE_ERROR).F(f));
           ProjectileTypeInfo t = new ProjectileTypeInfo(this, f, f);
-          t.LoadFromINI(f);
+          t.LoadFromINI(f, fp);
           Register(t);
         }
       }

@@ -38,8 +38,9 @@ namespace SWEndor.ActorTypes
     private const string sAddOn = "AddOn";
     private const string sDebris = "Debris";
     private const string sCamera = "Camera";
+    private const string sSpawner = "Spawner";
 
-    
+
     public static ActorTypeInfo Null = new ActorTypeInfo(Globals.Engine.ActorTypeFactory, "$NULL", "Null");
 
     public ActorTypeInfo(Factory owner, string id, string name)
@@ -82,16 +83,15 @@ namespace SWEndor.ActorTypes
     internal AddOnSystemData AddOnData = AddOnSystemData.Default;
     internal DebrisSystemData DebrisData = DebrisSystemData.Default;
     internal CameraSystemData CameraData = CameraSystemData.Default;
+    internal SpawnerData SpawnerData = SpawnerData.Default;
 
     // derived
     internal MoveBehavior MoveBehavior;
     internal UnfixedWeaponData cachedWeaponData;
 
-    public void LoadFromINI(string id)
+    public void LoadFromINI(string id, string filepath)
     {
       ID = id;
-      string filepath = Path.Combine(Globals.ActorTypeINIDirectory, id + ".ini");
-
       if (File.Exists(filepath))
       {
         INIFile f = new INIFile(filepath);
@@ -115,6 +115,7 @@ namespace SWEndor.ActorTypes
         AddOnData.LoadFromINI(f, sAddOn);
         DebrisData.LoadFromINI(f, sDebris);
         CameraData.LoadFromINI(f, sCamera);
+        SpawnerData.LoadFromINI(f, sSpawner);
       }
     }
 
@@ -146,6 +147,7 @@ namespace SWEndor.ActorTypes
       AddOnData.SaveToINI(f, sAddOn);
       DebrisData.SaveToINI(f, sDebris);
       CameraData.SaveToINI(f, sCamera);
+      SpawnerData.SaveToINI(f, sSpawner); 
 
       f.SaveFile(filepath);
     }

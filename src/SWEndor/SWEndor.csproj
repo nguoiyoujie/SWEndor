@@ -160,6 +160,7 @@
     <Compile Include="ActorTypes\Components\DebrisSystemData.cs" />
     <Compile Include="ActorTypes\Components\CombatData.cs" />
     <Compile Include="ActorTypes\Components\CameraSystemData.cs" />
+    <Compile Include="ActorTypes\Components\SpawnerData.cs" />
     <Compile Include="ActorTypes\Components\SystemData.cs" />
     <Compile Include="ActorTypes\Components\SoundData.cs" />
     <Compile Include="ActorTypes\Components\AddOnSystemData.cs" />
@@ -262,7 +263,6 @@
     <Compile Include="ActorTypes\Components\Elements\LookData.cs" />
     <Compile Include="ActorTypes\Components\RegenData.cs" />
     <Compile Include="ActorTypes\Components\UnfixedWeaponData.cs" />
-    <Compile Include="ActorTypes\General\ActorSpawner\SpawnerInfoDecorator.cs" />
     <Compile Include="Models\Enums\RadarType.cs" />
     <Compile Include="Models\Enums\TargetType.cs" />
     <Compile Include="ActorTypes\Components\Elements\AddOnData.cs" />

@@ -5,7 +5,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   internal class ISDShieldGeneratorATI : Groups.ShieldGenerators
   {
-    internal ISDShieldGeneratorATI(Factory owner) : base(owner, "IMPLSHD", "Shield Generator")
+    internal ISDShieldGeneratorATI(Factory owner) : base(owner, "ISD_SHD", "Shield Generator")
     {
       SystemData.MaxShield = 25;
       SystemData.MaxHull = 80;

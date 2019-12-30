@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.ActorTypes;
+using SWEndor.ActorTypes.Components;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.AI.Squads;
@@ -41,6 +42,23 @@ namespace SWEndor
       SpawnLocations = new TV_3DVECTOR[0],
       SpawnSpeed = -1
     };
+
+    internal void Init(ref SpawnerData data)
+    {
+      SpawnTypes = data.SpawnTypes;
+      SpawnMoveDelay = data.SpawnMoveDelay;
+      SpawnInterval = data.SpawnInterval;
+      SpawnPlayerDelay = data.SpawnPlayerDelay;
+      SpawnsRemaining = data.SpawnsRemaining;
+
+      SpawnLocations = data.SpawnLocations;
+      PlayerSpawnLocation = data.PlayerSpawnLocation;
+
+      SpawnSpeed = data.SpawnSpeed;
+      SpawnRotation = data.SpawnRotation;
+      SpawnManualPositioningMult = data.SpawnManualPositioningMult;
+      SpawnSpeedPositioningMult = data.SpawnSpeedPositioningMult;
+    }
 
     internal void Process(Engine engine, ActorInfo ainfo, ActorInfo p)
     {

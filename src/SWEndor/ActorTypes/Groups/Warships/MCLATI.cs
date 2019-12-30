@@ -57,12 +57,14 @@ namespace SWEndor.ActorTypes.Instances
         , new AddOnData("HANGAR", new TV_3DVECTOR(95, -30, -200), new TV_3DVECTOR(0, 0, 0), true)
         , new AddOnData("HANGAR", new TV_3DVECTOR(-95, -30, -200), new TV_3DVECTOR(0, 180, 0), true)
       };
-    }
 
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-      ainfo.SpawnerInfo = SpawnerInfoDecorator.MCL_Default;
+      SpawnerData.SpawnTypes = new string[] { "Z95", "YWING" };
+      SpawnerData.SpawnMoveDelay = 2.5f;
+      SpawnerData.SpawnInterval = 15;
+      SpawnerData.SpawnsRemaining = 99;
+      SpawnerData.SpawnLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(-20, 0, 0) };
+      SpawnerData.SpawnSpeed = 125;
+      SpawnerData.SpawnRotation = new TV_3DVECTOR(0, 90, 0);
     }
   }
 }

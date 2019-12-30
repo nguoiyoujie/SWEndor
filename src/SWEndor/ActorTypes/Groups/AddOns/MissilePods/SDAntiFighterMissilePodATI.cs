@@ -4,7 +4,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   internal class SDAntiFighterMissilePodATI : Groups.Turbolasers
   {
-    internal SDAntiFighterMissilePodATI(Factory owner) : base(owner, "IMPLMPOD2", "Star Destroyer Missile Pod")
+    internal SDAntiFighterMissilePodATI(Factory owner) : base(owner, "ISD_MPOD2", "Star Destroyer Missile Pod")
     {
       SystemData.MaxShield = 10; //32
       SystemData.MaxHull = 20;

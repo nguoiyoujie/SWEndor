@@ -49,7 +49,7 @@ namespace SWEndor.ExplosionTypes
           if (Contains(f))
             throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.EXPLTYPE_INITWICE_ERROR).F(f));
           ExplosionTypeInfo t = new ExplosionTypeInfo(this, f, f);
-          t.LoadFromINI(f);
+          t.LoadFromINI(f, fp);
           Register(t);
         }
       }

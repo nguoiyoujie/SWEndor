@@ -681,7 +681,7 @@ spawn_ubote:
 
 spawn_hammer:
 	hammer_arrived = true;
-	hammer = Actor.Spawn("IMPL", "HAMMER", "Empire_Hammer", "ISD HAMMER", 0, {10000,0,-100000}, {0,0,0}, {"CriticalAllies"});
+	hammer = Actor.Spawn("ISD", "HAMMER", "Empire_Hammer", "HAMMER", 0, {10000,0,-100000}, {0,0,0}, {"CriticalAllies"});
 	
 	Actor.SetProperty(hammer, "Spawner.Enabled", true);
 	Actor.SetProperty(hammer, "Spawner.SpawnTypes", {"TIE"});

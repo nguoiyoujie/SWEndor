@@ -42,11 +42,9 @@ namespace SWEndor.ExplosionTypes
 
     public ComponentMask Mask { get; } = ComponentMask.EXPLOSION;
 
-    public void LoadFromINI(string id)
+    public void LoadFromINI(string id, string filepath)
     {
       ID = id;
-      string filepath = Path.Combine(Globals.ExplosionTypeINIDirectory, id + ".ini");
-
       if (File.Exists(filepath))
       {
         INIFile f = new INIFile(filepath);

@@ -1,4 +1,5 @@
-﻿using SWEndor.Actors;
+﻿using MTV3D65;
+using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Models;
 
@@ -14,11 +15,11 @@ namespace SWEndor.ActorTypes.Instances
       RenderData.RadarType = RadarType.NULL;
 
       Mask &= ~(ComponentMask.CAN_BECOLLIDED | ComponentMask.CAN_BETARGETED);
-    }
 
-    public override void Initialize(ActorInfo ainfo)
-    {
-      ainfo.SpawnerInfo = SpawnerInfoDecorator.PlayerSpawn_Default;
+      SpawnerData.SpawnMoveDelay = 3;
+      SpawnerData.SpawnInterval = 5;
+      SpawnerData.SpawnsRemaining = 0;
+      SpawnerData.SpawnLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 0, 0) };
     }
 
     public override void ProcessState(Engine engine, ActorInfo ainfo)

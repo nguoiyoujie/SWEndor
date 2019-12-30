@@ -13,7 +13,7 @@ namespace SWEndor.ActorTypes.Components
     NONE, 
     NORMAL,
     HORIZON,
-    TEX_WALL,
+    TEX_MOD,
     ALPHATEX_WALL,
     ALPHATEX_FLICKERWALL,
     BILLBOARD_ANIM
@@ -155,6 +155,15 @@ namespace SWEndor.ActorTypes.Components
           }
           break;
 
+        case MeshMode.TEX_MOD:
+          {
+            string[] data = f.GetStringArray(sectionname, "Data", null);
+            if (data != null
+              && data.Length >= 2)
+              this = MeshDataDecorator.CreateTexturedModel(engine, name, data[0], data[1], blendmode, shader);
+          }
+          break;
+
         case MeshMode.ALPHATEX_WALL:
           {
             string[] data = f.GetStringArray(sectionname, "Data", null);
@@ -210,6 +219,12 @@ namespace SWEndor.ActorTypes.Components
           }
           break;
 
+        case MeshMode.TEX_MOD:
+          {
+            f.SetString(sectionname, "Data", SourceMeshPath);
+          }
+          break;
+
         case MeshMode.ALPHATEX_WALL:
           {
             f.SetString(sectionname, "Data", SourceMeshPath);
@@ -259,7 +274,7 @@ namespace SWEndor.ActorTypes.Components
         m.LoadXFile(Path.Combine(Globals.ModelPath, modelpath), true);
         m.SetTexture(itex);
       }
-      return new MeshData(name, m, 1, MeshMode.TEX_WALL, blendmode, "{0},{1}".F(modelpath, texname), shader);
+      return new MeshData(name, m, 1, MeshMode.TEX_MOD, blendmode, "{0},{1}".F(modelpath, texname), shader);
     }
 
     public static MeshData CreateAlphaTexturedWall(Engine engine, string name, float size, string texname, string alphatexname, CONST_TV_BLENDINGMODE blendmode, string shader = null)

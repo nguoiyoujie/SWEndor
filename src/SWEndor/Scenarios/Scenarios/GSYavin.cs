@@ -889,7 +889,7 @@ namespace SWEndor.Scenarios
     public void Empire_FirstWave()
     {
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
-                                                              , ActorTypeFactory.Get("IMPL")
+                                                              , ActorTypeFactory.Get("ISD")
                                                               , MainEnemyFaction
                                                               , true
                                                               , new TV_3DVECTOR()
@@ -948,7 +948,7 @@ namespace SWEndor.Scenarios
     public void Empire_SecondWave()
     {
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
-                                                        , ActorTypeFactory.Get("IMPL")
+                                                        , ActorTypeFactory.Get("ISD")
                                                         , MainEnemyFaction
                                                         , true
                                                         , new TV_3DVECTOR()
@@ -1397,7 +1397,7 @@ namespace SWEndor.Scenarios
       EventQueue.Add(Game.GameTime + 5f, Scene_ExitCutscene);
       EventQueue.Add(Game.GameTime + 6.5f, Message_08_Target);
 
-      ActorTypeInfo type = ActorTypeFactory.Get("IMPL");
+      ActorTypeInfo type = ActorTypeFactory.Get("ISD");
       TV_3DVECTOR position = new TV_3DVECTOR(2000, 750, -8000);
       TV_3DVECTOR targetposition = new TV_3DVECTOR(-4000, 1050, 1000);
       TV_3DVECTOR hyperspaceInOffset = new TV_3DVECTOR(0, 0, -25000);

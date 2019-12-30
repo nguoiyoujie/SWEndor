@@ -119,7 +119,7 @@ namespace SWEndor.Core
       //ExplosionTypeFactory.RegisterBase();
 
       ProjectileTypeFactory.Load();
-      //ActorTypeFactory.Load();
+      ActorTypeFactory.Load();
       ExplosionTypeFactory.Load();
 
       //Screen2D.LoadingTextLines.Add("Loading other actor definitions...");

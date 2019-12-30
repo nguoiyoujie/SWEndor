@@ -63,11 +63,9 @@ namespace SWEndor.ProjectileTypes
     // Derived (derived)
     internal Components.MoveBehavior MoveBehavior;
 
-    internal void LoadFromINI(string id)
+    internal void LoadFromINI(string id, string filepath)
     {
       ID = id;
-      string filepath = Path.Combine(Globals.ProjectileTypeINIDirectory, id + ".ini");
-
       if (File.Exists(filepath))
       {
         INIFile f = new INIFile(filepath);

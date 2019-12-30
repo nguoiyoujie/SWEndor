@@ -284,7 +284,7 @@ namespace SWEndor.Scenarios
 
         if (m_pendingSDspawnlist.Count > 0 && MainEnemyFaction.ShipCount < 8)
         {
-          if (!(m_pendingSDspawnlist[0].Info.TypeInfo.ID == "IMPL") || MainEnemyFaction.ShipCount < 2)
+          if (!(m_pendingSDspawnlist[0].Info.TypeInfo.ID == "ISD") || MainEnemyFaction.ShipCount < 2)
           {
             EventQueue.Add(0, Empire_StarDestroyer_Spawn, m_pendingSDspawnlist[0]);
             m_pendingSDspawnlist.RemoveAt(0);
@@ -368,7 +368,7 @@ namespace SWEndor.Scenarios
 
         if (m_pendingSDspawnlist.Count > 0 && MainEnemyFaction.ShipCount < 8)
         {
-          if ((!(m_pendingSDspawnlist[0].Info.TypeInfo.ID == "IMPL") || MainEnemyFaction.ShipCount < 2))
+          if ((!(m_pendingSDspawnlist[0].Info.TypeInfo.ID == "ISD") || MainEnemyFaction.ShipCount < 2))
           { 
             EventQueue.Add(0, Empire_StarDestroyer_Spawn, m_pendingSDspawnlist[0]);
             m_pendingSDspawnlist.RemoveAt(0);
@@ -427,7 +427,7 @@ namespace SWEndor.Scenarios
 
         if (m_pendingSDspawnlist.Count > 0 && MainEnemyFaction.ShipCount < 8)
         {
-          if ((!(m_pendingSDspawnlist[0].Info.TypeInfo.ID == "IMPL") || MainEnemyFaction.ShipCount < 4))
+          if ((!(m_pendingSDspawnlist[0].Info.TypeInfo.ID == "ISD") || MainEnemyFaction.ShipCount < 4))
           {
             EventQueue.Add(0, Empire_StarDestroyer_Spawn, m_pendingSDspawnlist[0]);
             m_pendingSDspawnlist.RemoveAt(0);
@@ -1471,18 +1471,18 @@ namespace SWEndor.Scenarios
 
       List<object[]> spawns = new List<object[]>();
       spawns.Add(new object[] { new TV_3DVECTOR(0, 50, -33500), ActorTypeFactory.Get("EXECSTS") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-1500, 180, -32500), ActorTypeFactory.Get("IMPLSTS") });
-      spawns.Add(new object[] { new TV_3DVECTOR(1500, 180, -32500), ActorTypeFactory.Get("IMPLSTS") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-3500, 280, -27500), ActorTypeFactory.Get("IMPLSTS") });
-      spawns.Add(new object[] { new TV_3DVECTOR(5500, 280, -27500), ActorTypeFactory.Get("IMPLSTS") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-5500, -30, -29500), ActorTypeFactory.Get("IMPLSTS") });
-      spawns.Add(new object[] { new TV_3DVECTOR(3500, -30, -29500), ActorTypeFactory.Get("IMPLSTS") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-7500, 130, -31000), ActorTypeFactory.Get("IMPLSTS") });
-      spawns.Add(new object[] { new TV_3DVECTOR(7500, 130, -31000), ActorTypeFactory.Get("IMPLSTS") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-11500, -80, -29000), ActorTypeFactory.Get("IMPLSTS") });
-      spawns.Add(new object[] { new TV_3DVECTOR(11500, -80, -29000), ActorTypeFactory.Get("IMPLSTS") });
-      spawns.Add(new object[] { new TV_3DVECTOR(-14500, 80, -27500), ActorTypeFactory.Get("IMPLSTS") });
-      spawns.Add(new object[] { new TV_3DVECTOR(14500, 80, -27500), ActorTypeFactory.Get("IMPLSTS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-1500, 180, -32500), ActorTypeFactory.Get("ISD_STS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(1500, 180, -32500), ActorTypeFactory.Get("ISD_STS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-3500, 280, -27500), ActorTypeFactory.Get("ISD_STS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(5500, 280, -27500), ActorTypeFactory.Get("ISD_STS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-5500, -30, -29500), ActorTypeFactory.Get("ISD_STS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(3500, -30, -29500), ActorTypeFactory.Get("ISD_STS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-7500, 130, -31000), ActorTypeFactory.Get("ISD_STS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(7500, 130, -31000), ActorTypeFactory.Get("ISD_STS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-11500, -80, -29000), ActorTypeFactory.Get("ISD_STS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(11500, -80, -29000), ActorTypeFactory.Get("ISD_STS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(-14500, 80, -27500), ActorTypeFactory.Get("ISD_STS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(14500, 80, -27500), ActorTypeFactory.Get("ISD_STS") });
 
       foreach (object[] spawn in spawns)
       {
@@ -1530,7 +1530,7 @@ namespace SWEndor.Scenarios
 
       m_Enemy_pull = 8000;
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
-                                                                    , ActorTypeFactory.Get("IMPL")
+                                                                    , ActorTypeFactory.Get("ISD")
                                                                     , MainEnemyFaction
                                                                     , true
                                                                     , new TV_3DVECTOR()
@@ -1543,7 +1543,7 @@ namespace SWEndor.Scenarios
       switch (State.Difficulty.ToLower())
       {
         case "easy":
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(0, 110, -17500)
                                                         , new TV_3DVECTOR(0, 110, -9000)
@@ -1559,7 +1559,7 @@ namespace SWEndor.Scenarios
 
           break;
         case "mental":
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(0, 110, -17500)
                                                         , new TV_3DVECTOR(0, 110, -9000)
@@ -1609,7 +1609,7 @@ namespace SWEndor.Scenarios
         case "hard":
         case "normal":
         default:
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(0, 110, -17500)
                                                         , new TV_3DVECTOR(0, 110, -9000)
@@ -1653,7 +1653,7 @@ namespace SWEndor.Scenarios
 
       m_Enemy_pull = 12000;
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
-                                                              , ActorTypeFactory.Get("IMPL")
+                                                              , ActorTypeFactory.Get("ISD")
                                                               , MainEnemyFaction
                                                               , true
                                                               , new TV_3DVECTOR()
@@ -1666,7 +1666,7 @@ namespace SWEndor.Scenarios
       switch (State.Difficulty.ToLower())
       {
         case "easy":
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(0, 60, -22500)
                                                         , new TV_3DVECTOR(0, 60, -12000)
@@ -1686,7 +1686,7 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-7500, 60, -24500)
                                                         , new TV_3DVECTOR(-2000, 60, -12500)
@@ -1695,7 +1695,7 @@ namespace SWEndor.Scenarios
 
           break;
         case "mental":
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(0, 60, -22500)
                                                         , new TV_3DVECTOR(0, 60, -12000)
@@ -1734,13 +1734,13 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-10000, -300, -23500), new TV_3DVECTOR(-2250, -300, -10500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           sspawn.ShipName = "DEVASTATOR";
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(0, 120, -24500), new TV_3DVECTOR(0, 120, -11500)
@@ -1777,7 +1777,7 @@ namespace SWEndor.Scenarios
 
           break;
         case "hard":
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(0, 60, -22500)
                                                         , new TV_3DVECTOR(0, 60, -12000)
@@ -1806,7 +1806,7 @@ namespace SWEndor.Scenarios
                                                       , new TV_3DVECTOR(0, 0, 99999)
                                                       ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-2500, -100, -24500), new TV_3DVECTOR(-2000, -100, -12500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
@@ -1842,7 +1842,7 @@ namespace SWEndor.Scenarios
           break;
         case "normal":
         default:
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(0, 60, -22500)
                                                         , new TV_3DVECTOR(0, 60, -12000)
@@ -1876,7 +1876,7 @@ namespace SWEndor.Scenarios
                                                       , new TV_3DVECTOR(0, 0, 99999)
                                                       ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-2500, -100, -24500), new TV_3DVECTOR(-2000, -100, -12500)
                                                         , new TV_3DVECTOR(0, 0, 99999)
@@ -1938,7 +1938,7 @@ namespace SWEndor.Scenarios
 
       // SD
       GSFunctions.ShipSpawnInfo sspawn = new GSFunctions.ShipSpawnInfo(null
-                                                        , ActorTypeFactory.Get("IMPL")
+                                                        , ActorTypeFactory.Get("ISD")
                                                         , MainEnemyFaction
                                                         , true
                                                         , new TV_3DVECTOR()
@@ -1956,7 +1956,7 @@ namespace SWEndor.Scenarios
         case "mental":
           EventQueue.Add(0, Empire_TIEWave_0D, 2);
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-4500, -80, -21000), new TV_3DVECTOR(-1550, 80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
@@ -1978,7 +1978,7 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-4000, -80, -24000), new TV_3DVECTOR(-2000, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
@@ -1995,7 +1995,7 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(4000, -80, -24000), new TV_3DVECTOR(2000, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
@@ -2016,7 +2016,7 @@ namespace SWEndor.Scenarios
           EventQueue.Add(0, Empire_TIEWave_0D, 1);
           EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 5);
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-4500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
@@ -2038,7 +2038,7 @@ namespace SWEndor.Scenarios
                                                         , new TV_3DVECTOR(0, 0, 99999)
                                                         ));
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(4500, -80, -21000), new TV_3DVECTOR(2500, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)
@@ -2065,7 +2065,7 @@ namespace SWEndor.Scenarios
         default:
           EventQueue.Add(0, Empire_TIEWave_TIEsvsShips, 10);
 
-          sspawn.TypeInfo = ActorTypeFactory.Get("IMPL");
+          sspawn.TypeInfo = ActorTypeFactory.Get("ISD");
           m_pendingSDspawnlist.Add(new ShipSpawnEventArg(sspawn
                                                         , new TV_3DVECTOR(-4500, -80, -21000), new TV_3DVECTOR(-2500, -80, -7000)
                                                         , new TV_3DVECTOR(0, 0, 99999)

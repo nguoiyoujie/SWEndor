@@ -40,12 +40,19 @@ namespace SWEndor.ActorTypes.Instances
 
         new AddOnData("HANGAR", new TV_3DVECTOR(0, -12, 40), new TV_3DVECTOR(0, 0, 0), true)
       };
-    }
 
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-      ainfo.SpawnerInfo = SpawnerInfoDecorator.XQ1_Default;
+      SpawnerData.SpawnTypes = new string[] { "TIE" };
+      SpawnerData.SpawnMoveDelay = 4;
+      SpawnerData.SpawnInterval = 5;
+      SpawnerData.SpawnsRemaining = 60;
+      SpawnerData.SpawnLocations = new TV_3DVECTOR[]{ new TV_3DVECTOR(40, 0, -60)
+                                               , new TV_3DVECTOR(40, 0, 20)
+                                               , new TV_3DVECTOR(-40, 0, -60)
+                                               , new TV_3DVECTOR(-40, 0, 20)
+                                               };
+
+      SpawnerData.SpawnSpeed = -1;
+      SpawnerData.SpawnManualPositioningMult = new TV_3DVECTOR(10, 6, 0);
     }
   }
 }

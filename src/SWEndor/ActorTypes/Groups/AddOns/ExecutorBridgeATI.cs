@@ -8,7 +8,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   internal class ExecutorBridgeATI : Groups.AddOn
   {
-    internal ExecutorBridgeATI(Factory owner) : base(owner, "EXERBRID", "Executor Super Star Destroyer Bridge")
+    internal ExecutorBridgeATI(Factory owner) : base(owner, "EXECBRID", "Executor Super Star Destroyer Bridge")
     {
       CombatData = CombatData.DefaultShip;
       ArmorData.Data.Put(DamageType.TORPEDO, 1.25f);

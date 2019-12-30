@@ -8,7 +8,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   internal class ImperialIATI : Groups.StarDestroyer
   {
-    internal ImperialIATI(Factory owner) : base(owner, "IMPL", "Imperial-I Star Destroyer")
+    internal ImperialIATI(Factory owner) : base(owner, "ISD", "Imperial-I Star Destroyer")
     {
       ExplodeSystemData.Explodes = new ExplodeData[] {
         new ExplodeData("EXPL00", 0.25f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
@@ -39,68 +39,75 @@ namespace SWEndor.ActorTypes.Instances
       AddOnData.AddOns = new AddOnData[]
       {
         // Front
-        new AddOnData("IMPLLSR", new TV_3DVECTOR(0, -40, 1040), new TV_3DVECTOR(0, 0, 0), true)
+        new AddOnData("ISD_LSR", new TV_3DVECTOR(0, -40, 1040), new TV_3DVECTOR(0, 0, 0), true)
 
         // Sides
-        , new AddOnData("IMPLLSR", new TV_3DVECTOR(360, -40, -100), new TV_3DVECTOR(0, 72, 0), true)
-        , new AddOnData("IMPLLSR", new TV_3DVECTOR(240, -40, 320), new TV_3DVECTOR(0, 72, 0), true)
-        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(210, -40, 410), new TV_3DVECTOR(0, 72, 0), true)
-        , new AddOnData("IMPLLSR", new TV_3DVECTOR(180, -40, 500), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnData("ISD_LSR", new TV_3DVECTOR(360, -40, -100), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnData("ISD_LSR", new TV_3DVECTOR(240, -40, 320), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnData("ISD_HLSR", new TV_3DVECTOR(210, -40, 410), new TV_3DVECTOR(0, 72, 0), true)
+        , new AddOnData("ISD_LSR", new TV_3DVECTOR(180, -40, 500), new TV_3DVECTOR(0, 72, 0), true)
 
-        , new AddOnData("IMPLLSR", new TV_3DVECTOR(-360, -40, -100), new TV_3DVECTOR(0, -72, 0), true)
-        , new AddOnData("IMPLLSR", new TV_3DVECTOR(-240, -40, 320), new TV_3DVECTOR(0, -72, 0), true)
-        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(-210, -40, 410), new TV_3DVECTOR(0, -72, 0), true)
-        , new AddOnData("IMPLLSR", new TV_3DVECTOR(-180, -40, 500), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnData("ISD_LSR", new TV_3DVECTOR(-360, -40, -100), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnData("ISD_LSR", new TV_3DVECTOR(-240, -40, 320), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnData("ISD_HLSR", new TV_3DVECTOR(-210, -40, 410), new TV_3DVECTOR(0, -72, 0), true)
+        , new AddOnData("ISD_LSR", new TV_3DVECTOR(-180, -40, 500), new TV_3DVECTOR(0, -72, 0), true)
         
         // Top
-        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(100, 20, 320), new TV_3DVECTOR(-75, 90, 0), true)
-        , new AddOnData("IMPLLSR", new TV_3DVECTOR(72, 20, 420), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("ISD_HLSR", new TV_3DVECTOR(100, 20, 320), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("ISD_LSR", new TV_3DVECTOR(72, 20, 420), new TV_3DVECTOR(-75, 90, 0), true)
 
-        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(-100, 20, 320), new TV_3DVECTOR(-75, -90, 0), true)
-        , new AddOnData("IMPLLSR", new TV_3DVECTOR(-72, 20, 420), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("ISD_HLSR", new TV_3DVECTOR(-100, 20, 320), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("ISD_LSR", new TV_3DVECTOR(-72, 20, 420), new TV_3DVECTOR(-75, -90, 0), true)
 
         // Top Middle
-        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(72, 35, 75), new TV_3DVECTOR(-75, 90, 0), true)
-        , new AddOnData("IMPLLSR", new TV_3DVECTOR(70, 35, 170), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("ISD_HLSR", new TV_3DVECTOR(72, 35, 75), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("ISD_LSR", new TV_3DVECTOR(70, 35, 170), new TV_3DVECTOR(-75, 90, 0), true)
 
-        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(-72, 35, 75), new TV_3DVECTOR(-75, -90, 0), true)
-        , new AddOnData("IMPLLSR", new TV_3DVECTOR(-70, 35, 170), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("ISD_HLSR", new TV_3DVECTOR(-72, 35, 75), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("ISD_LSR", new TV_3DVECTOR(-70, 35, 170), new TV_3DVECTOR(-75, -90, 0), true)
 
         // Top Rear
-        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(290, 16, -230), new TV_3DVECTOR(-75, 90, 0), true)
-        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(290, 18, -283), new TV_3DVECTOR(-75, 90, 0), true)
-        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(290, 20, -336), new TV_3DVECTOR(-75, 90, 0), true)
-        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(290, 22, -389), new TV_3DVECTOR(-75, 90, 0), true)
-        , new AddOnData("IMPLMPOD", new TV_3DVECTOR(365, 15, -480), new TV_3DVECTOR(-75, 90, 0), true)
-        , new AddOnData("IMPLMPOD2", new TV_3DVECTOR(185, 115, -370), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("ISD_HLSR", new TV_3DVECTOR(290, 16, -230), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("ISD_HLSR", new TV_3DVECTOR(290, 18, -283), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("ISD_HLSR", new TV_3DVECTOR(290, 20, -336), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("ISD_HLSR", new TV_3DVECTOR(290, 22, -389), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("ISD_MPOD", new TV_3DVECTOR(365, 15, -480), new TV_3DVECTOR(-75, 90, 0), true)
+        , new AddOnData("ISD_MPOD2", new TV_3DVECTOR(185, 115, -370), new TV_3DVECTOR(-75, 90, 0), true)
 
-        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(-290, 16, -230), new TV_3DVECTOR(-75, -90, 0), true)
-        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(-290, 18, -283), new TV_3DVECTOR(-75, -90, 0), true)
-        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(-290, 20, -336), new TV_3DVECTOR(-75, -90, 0), true)
-        , new AddOnData("IMPLHLSR", new TV_3DVECTOR(-290, 22, -389), new TV_3DVECTOR(-75, -90, 0), true)
-        , new AddOnData("IMPLMPOD", new TV_3DVECTOR(-365, 15, -480), new TV_3DVECTOR(-75, -90, 0), true)
-        , new AddOnData("IMPLMPOD2", new TV_3DVECTOR(-185, 115, -370), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("ISD_HLSR", new TV_3DVECTOR(-290, 16, -230), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("ISD_HLSR", new TV_3DVECTOR(-290, 18, -283), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("ISD_HLSR", new TV_3DVECTOR(-290, 20, -336), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("ISD_HLSR", new TV_3DVECTOR(-290, 22, -389), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("ISD_MPOD", new TV_3DVECTOR(-365, 15, -480), new TV_3DVECTOR(-75, -90, 0), true)
+        , new AddOnData("ISD_MPOD2", new TV_3DVECTOR(-185, 115, -370), new TV_3DVECTOR(-75, -90, 0), true)
 
         // Bottom
-        , new AddOnData("IMPLLSR", new TV_3DVECTOR(-120, -105, 180), new TV_3DVECTOR(65, -90, 0), true)
-        , new AddOnData("IMPLLSR", new TV_3DVECTOR(-360, -100, -400), new TV_3DVECTOR(65, -90, 0), true)
+        , new AddOnData("ISD_LSR", new TV_3DVECTOR(-120, -105, 180), new TV_3DVECTOR(65, -90, 0), true)
+        , new AddOnData("ISD_LSR", new TV_3DVECTOR(-360, -100, -400), new TV_3DVECTOR(65, -90, 0), true)
 
-        , new AddOnData("IMPLLSR", new TV_3DVECTOR(120, -105, 180), new TV_3DVECTOR(65, 90, 0), true)
-        , new AddOnData("IMPLLSR", new TV_3DVECTOR(360, -100, -425), new TV_3DVECTOR(65, 90, 0), true)
+        , new AddOnData("ISD_LSR", new TV_3DVECTOR(120, -105, 180), new TV_3DVECTOR(65, 90, 0), true)
+        , new AddOnData("ISD_LSR", new TV_3DVECTOR(360, -100, -425), new TV_3DVECTOR(65, 90, 0), true)
 
         // Hangar Bay
         , new AddOnData("HANGAR", new TV_3DVECTOR(0, -80, 105), new TV_3DVECTOR(0, 0, 0), true)
 
         //Shield Generators
-        , new AddOnData("IMPLSHD", new TV_3DVECTOR(-120, 360, -415), new TV_3DVECTOR(0, 0, 0), true)
-        , new AddOnData("IMPLSHD", new TV_3DVECTOR(120, 360, -415), new TV_3DVECTOR(0, 0, 0), true)
+        , new AddOnData("ISD_SHD", new TV_3DVECTOR(-120, 360, -415), new TV_3DVECTOR(0, 0, 0), true)
+        , new AddOnData("ISD_SHD", new TV_3DVECTOR(120, 360, -415), new TV_3DVECTOR(0, 0, 0), true)
       };
-    }
 
-    public override void Initialize(ActorInfo ainfo)
-    {
-      base.Initialize(ainfo);
-      ainfo.SpawnerInfo = SpawnerInfoDecorator.SD_Default;
+      SpawnerData.SpawnTypes = new string[] { "TIE" };
+      SpawnerData.SpawnMoveDelay = 4;
+      SpawnerData.SpawnInterval = 5;
+      SpawnerData.SpawnsRemaining = 60;
+      SpawnerData.SpawnLocations = new TV_3DVECTOR[]{ new TV_3DVECTOR(50, 0, -50)
+                                               , new TV_3DVECTOR(50, 0, 50)
+                                               , new TV_3DVECTOR(-50, 0, -50)
+                                               , new TV_3DVECTOR(-50, 0, 50)
+                                               };
+
+      SpawnerData.SpawnSpeed = -1;
+      SpawnerData.SpawnManualPositioningMult = new TV_3DVECTOR(0, -30, 0);
     }
   }
 }
