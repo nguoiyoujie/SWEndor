@@ -118,9 +118,13 @@
   <PropertyGroup>
     <ApplicationIcon>SWEndor.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Costura">
       <HintPath>..\packages\Costura.Fody.3.3.2\lib\net40\Costura.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp">
       <Private>False</Private>
@@ -153,9 +157,14 @@
     <Compile Include="Actors\Models\SystemModel\SystemModel.cs" />
     <Compile Include="Actors\Octree\Octree_String.cs" />
     <Compile Include="Actors\Octree\Octree.cs" />
+    <Compile Include="ActorTypes\Components\DebrisSystemData.cs" />
     <Compile Include="ActorTypes\Components\CombatData.cs" />
+    <Compile Include="ActorTypes\Components\CameraSystemData.cs" />
     <Compile Include="ActorTypes\Components\SystemData.cs" />
-    <Compile Include="ActorTypes\Components\WeapData.cs" />
+    <Compile Include="ActorTypes\Components\SoundData.cs" />
+    <Compile Include="ActorTypes\Components\AddOnSystemData.cs" />
+    <Compile Include="ActorTypes\Components\WeapSystemData.cs" />
+    <Compile Include="ActorTypes\Components\Elements\WeapData.cs" />
     <Compile Include="ActorTypes\General\ActorCreationInfo.cs" />
     <Compile Include="Actors\Models\ArmorModel\ActorExt.cs" />
     <Compile Include="Actors\Models\Collision\ActorExt.cs" />
@@ -188,6 +197,7 @@
     <Compile Include="ExplosionTypes\Components\ShakeData.cs" />
     <Compile Include="Input\Functions\Gameplay\Camera\ToggleFreeMode.cs" />
     <Compile Include="Input\Functions\Utility\Screen\SaveScreenshot.cs" />
+    <Compile Include="Models\ExplodeModel\ExplodeSystemData.cs" />
     <Compile Include="Models\Interfaces\IActorState.cs" />
     <Compile Include="Models\Interfaces\ITransformable.cs" />
     <Compile Include="Models\Interfaces\IParent.cs" />
@@ -249,15 +259,15 @@
     <Compile Include="ActorTypes\Components\AIData.cs" />
     <Compile Include="ActorTypes\Components\ArmorData.cs" />
     <Compile Include="ActorTypes\Components\DeathCameraData.cs" />
-    <Compile Include="ActorTypes\Components\LookData.cs" />
+    <Compile Include="ActorTypes\Components\Elements\LookData.cs" />
     <Compile Include="ActorTypes\Components\RegenData.cs" />
     <Compile Include="ActorTypes\Components\UnfixedWeaponData.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\SpawnerInfoDecorator.cs" />
     <Compile Include="Models\Enums\RadarType.cs" />
     <Compile Include="Models\Enums\TargetType.cs" />
-    <Compile Include="ActorTypes\Components\AddOnData.cs" />
-    <Compile Include="ActorTypes\Components\SoundSourceData.cs" />
-    <Compile Include="ActorTypes\Components\DebrisSpawnerData.cs" />
+    <Compile Include="ActorTypes\Components\Elements\AddOnData.cs" />
+    <Compile Include="ActorTypes\Components\Elements\SoundSourceData.cs" />
+    <Compile Include="ActorTypes\Components\Elements\DebrisSpawnerData.cs" />
     <Compile Include="ActorTypes\General\ActorSpawner\SpawnerInfo.cs" />
     <Compile Include="Player\Camera\CameraMode.cs" />
     <Compile Include="Player\Camera\Look\PlayerCameraLook.cs" />
@@ -789,7 +799,11 @@
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)
 call postbuild.bat
-xcopy ..\..\assets $(OutDir) /e /y /i</PostBuildEvent>
+cd ..\..\assets
+for /f "tokens=*" %25%25a in ('dir /b /ad') do (
+  echo Copying %25%25a to $(ProjectDir)$(OutDir)%25%25a
+  xcopy ".\%25%25a"  "$(ProjectDir)$(OutDir)%25%25a" /e /y /i /d
+)</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>cd $(ProjectDir)
