@@ -46,7 +46,7 @@ loadscene:
 	int planet = Actor.Spawn("HOTH", "", "", "", 0, { 0, -20000, 0 }, { 0, 180, 0 });
 	Actor.SetProperty(planet, "Scale", 10);
 	
-	int impSD1 = Actor.Spawn("IMPL", "", "Empire", "", 0, { 0, 500, -15000 }, { 0, 25, 0 });
+	int impSD1 = Actor.Spawn("ISD", "", "Empire", "", 0, { 0, 500, -15000 }, { 0, 25, 0 });
 	AI.QueueLast(impSD1, "move", { 0, 500, -12000 }, 2);
 	AI.QueueLast(impSD1, "rotate", { 0, 500, 12000 }, 0);
 	AI.QueueLast(impSD1, "lock");
@@ -60,7 +60,7 @@ setupplayer:
 	Actor.SetArmorAll(Player.GetActor(), 0.25);
 
 makesmugglers:
-	int pspawner = Actor.Spawn("SPAWN", "", "Smugglers", "", 0, { 9500, -900, 0 }, { -15, -90, 0 });
+	int pspawner = Actor.Spawn("SPAWN", "", "Smugglers", "", 0, { 9500, -900, 0 }, { 0, -90, 0 });
 	Actor.SetProperty(pspawner, "Spawner.Enabled", true);
 
 	int falcon1 = Actor.Spawn("YT1300", "YT-1300", "Smugglers", "", 0, { 8600, -1020, -500 }, { -5, -90, 0 }, { "CriticalAllies" });
@@ -263,7 +263,7 @@ stage2:
 	AI.QueueLast(arqt, "move", { 1350, 100, 9500 }, 20);
 	AI.QueueLast(arqt, "hyperspaceout");
 	
-	int vict = Actor.Spawn("VICT", "", "Empire", "", 0, { -8750, -400, -45000 }, { 0, 0, 0 });
+	int vict = Actor.Spawn("VSD", "", "Empire", "", 0, { -8750, -400, -45000 }, { 0, 0, 0 });
 	Actor.SetProperty(vict, "Spawner.Enabled", true);
 	AI.QueueLast(vict, "hyperspacein", { -3750, -50, -4800 });
 	AI.QueueLast(vict, "move", { 1750, 100, 9500 }, 12);

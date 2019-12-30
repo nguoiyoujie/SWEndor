@@ -104,7 +104,7 @@ loadscene:
 
 	
 getchildren:
-	int[] greywolfc = Actor.GetChildrenByType(greywolf, "IMPLSHD");
+	int[] greywolfc = Actor.GetChildrenByType(greywolf, "ISD_SHD");
 	greywolfshd1 = greywolfc[0];
 	greywolfshd2 = greywolfc[1];
 	int[] corvusc = Actor.GetChildrenByType(corvus, "SHD");
@@ -155,7 +155,7 @@ make_ships:
 
 	// Empire
 	
-	greywolf = Actor.Spawn("IMPL", "ISD GREY WOLF (Thrawn)", "Empire", "GREY WOLF", 0, { 1000, 400, 12000 }, { 0, -180, 0 }, { "CriticalAllies" });
+	greywolf = Actor.Spawn("ISD", "ISD GREY WOLF (Thrawn)", "Empire", "GREY WOLF", 0, { 1000, 400, 12000 }, { 0, -180, 0 }, { "CriticalAllies" });
 	actorp_id = greywolf;
 	actorp_multiplier = 1.2;
 	Script.Call("actorp_multShd");
@@ -200,7 +200,7 @@ make_ships:
 	
 	// Traitors
 	
-	glory = Actor.Spawn("IMPL", "ISD GLORY", "Traitors", "GLORY", 0, { -9750, 0, -32000 }, { 0, 40, 0 }, { "CriticalEnemies" });
+	glory = Actor.Spawn("ISD", "ISD GLORY", "Traitors", "GLORY", 0, { -9750, 0, -32000 }, { 0, 40, 0 }, { "CriticalEnemies" });
 	Actor.SetProperty(glory, "Spawner.Enabled", true);
 	Actor.SetProperty(glory, "Spawner.SpawnTypes", {"TIE","TIEI","TIEI","TIEI"});
 	actorp_id = glory;

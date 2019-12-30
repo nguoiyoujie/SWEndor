@@ -8,13 +8,19 @@ float3 msg_warning_orange = { 1, 0.5, 0 };
 float3 msg_fail_red = { 0.8, 0, 0 };
 
 message1:
-	Message("OUTPOST D-34: The Rebels have begun their attack.", 5, msg_outpost);
+	Message("OUTPOST D-34: Sector alert! There are unknown craft entering our area.", 5, msg_outpost);
 
 message2:
-	Message("OUTPOST D-34: ALPHA, BETA, GAMMA squadrons, engage the enemy bombers.", 5, msg_outpost);
+	Message("DELTA 1: BETA and GAMMA squadrons, engaging enemy forces.", 5, msg_delta);
 
 message3:
-	Message("OUTPOST D-34: Defend the outpost until the ISD HAMMER arrives to relieve defenses.", 5, msg_outpost);
+	Message("OUTPOST D-34: ALPHA squadron, join the attack and engage the enemy.", 5, msg_outpost);
+
+message4:
+	Message("OUTPOST D-34: Stop all Y-WINGs from making torpedo runs on D-34.", 5, msg_outpost);
+
+message_protect:
+	Message("OUTPOST D-34: Hold all attacks until reinforcements arrive to relieve defenses.", 5, msg_outpost);
 
 	
 messagewarn_outpost_1:
@@ -38,13 +44,10 @@ messagelose_hammerlost:
 
 
 message_primaryobj_completed:
-	Message("OUTPOST D-34: Good work, Alpha 1. You have completed your primary objectives.", 5, msg_outpost);
-
-message_secondaryobj_completed:
-	Message("OUTPOST D-34: Outstanding work, ALPHA 1! You have taken the extra steps to ensure the security of this region.", 5, msg_outpost);
+	Message("ISD HAMMER: The ISD HAMMER has arrived to recover station defense forces.", 5, msg_outpost);
 
 message_returntobase:
-	Message("ISD HAMMER: Return to the hangar for your next assignment.", 8, faction_empire_hammer_color);
+	Message("ISD HAMMER: ALPA 1, return to the HAMMER's hangar immediately.", 8, faction_empire_hammer_color);
 
 
 message_scutz:
@@ -53,11 +56,14 @@ message_scutz:
 message_inspected_scutz:
 	Message("Shuttle SHUTZ 1 has been identified to be carrying Rebel officers.", 5, msg_warning_yellow);
 
+message_located:
+	Message("OUTPOST D-34: We have located the shuttle with the rebel officers fleeing from Hoth.", 5, faction_empire_hammer_color);
+
 message_muapproach:
-	Message("MU 1: MU 1 has arrive to disable and capture the shuttle.", 5, faction_empire_hammer_color);
+	Message("OUTPOST D-34: Reinforcements will arrive shortly to disable and capture the shuttle.", 5, faction_empire_hammer_color);
 	
 message_scutz_disabled:
-	Message("MU 1: SHUTZ 1 has been disabled.", 5, faction_empire_hammer_color);
+	Message("MU 1: This is MU 1. Target disabled.", 5, faction_empire_hammer_color);
 
 
 message_muboarding:
@@ -104,8 +110,13 @@ message_enemyUbote:
 	Message("New craft alert: Rebel CORVETTE UBOTE group entering the area. Proceed with caution!", 5, faction_rebel_color);
 
 message_hammer:
-	Message("ISD HAMMER: The Imperial Star Destroyer has arrived to take command of the defence.", 5, msg_outpost);
+	Message("ISD HAMMER: The ISD HAMMER has arrived to take command of the battle.", 5, msg_outpost);
+
+message_hammer_2:
+	Message("ISD HAMMER: Good work. You have fought well in defending D-34 Outpost.", 5, msg_outpost);
+
 
 	
+
 message_reinf:
 	Message("OUTPOST D-34: We are dispatching additional TIEs to engage the threats.", 5, msg_outpost);
