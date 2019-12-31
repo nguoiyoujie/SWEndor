@@ -3,7 +3,7 @@
 namespace Primrose.Expressions
 {
   /// <summary>
-  /// Represents a set of parsable statements
+  /// Represents a set of parsable expressions
   /// </summary>
   public partial class ScriptExpression
   {

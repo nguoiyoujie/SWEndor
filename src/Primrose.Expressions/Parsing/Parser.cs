@@ -38,7 +38,8 @@ namespace Primrose.Expressions
         new TokenDefinition(@"while\b", TokenEnum.WHILE, RegexOption),
 
         // literals
-        new TokenDefinition(@"(true|false)\b", TokenEnum.BOOLEANLITERAL, RegexOption),
+        new TokenDefinition(@"(((N|n)ull)|NULL)\b", TokenEnum.NULLLITERAL, RegexOption),
+        new TokenDefinition(@"((T|t)rue|(F|f)alse|TRUE|FALSE)\b", TokenEnum.BOOLEANLITERAL, RegexOption),
         new TokenDefinition(@"[a-zA-Z_][a-zA-Z0-9_\.]*(?=\s*\()", TokenEnum.FUNCTION, RegexOption),
         new TokenDefinition(@"[a-zA-Z_][a-zA-Z0-9_\.]*(?!\s*\()", TokenEnum.VARIABLE, RegexOption),
         new TokenDefinition(@"\""(\""\""|[^\""])*\""", TokenEnum.STRINGLITERAL, RegexOption),

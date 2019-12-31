@@ -23,6 +23,9 @@ namespace Primrose.Expressions.Tree.Expressions
           break;
 
         //Literals
+        case TokenEnum.NULLLITERAL:
+          _child = new NullLiteral(scope, lexer).Get();
+          break;
         case TokenEnum.BOOLEANLITERAL:
           _child = new BoolLiteral(scope, lexer).Get();
           break;

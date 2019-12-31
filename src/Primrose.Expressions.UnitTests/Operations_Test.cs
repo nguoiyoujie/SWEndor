@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Primrose.Primitives.Extensions;
 using Primrose.Primitives.ValueTypes;
 using System.Collections.Generic;
+using Primrose.Expressions.UnitTests.Scripting;
 
 namespace Primrose.Expressions.UnitTests
 {
@@ -63,8 +64,6 @@ namespace Primrose.Expressions.UnitTests
     public void Operation_Compare()
     {
       ScriptExpression expr;
-
-      // logical OR
       Random r = new Random();
 
       List<Pair<string, Val>> test = new List<Pair<string, Val>>();
@@ -106,6 +105,52 @@ namespace Primrose.Expressions.UnitTests
         expr = new ScriptExpression(p.t);
         Console.Write("{0} = {1}".F(p.t, p.u.Value));
         Assert.AreEqual(p.u, expr.Evaluate(null));
+        Console.WriteLine(" ... OK!");
+      }
+    }
+
+    [TestMethod]
+    public void Operation_Branch()
+    {
+      Script script;
+      ScriptExpression expr;
+      Random r = new Random();
+
+      List<Pair<string, Val>> test = new List<Pair<string, Val>>();
+
+      for (int i = 0; i < 8; i++)
+      {
+        bool b1 = i % 2 == 1;
+        bool b2 = i % 4 >= 2;
+        bool b3 = i >= 4;
+
+        int i1 = r.Next(-10000, 10000);
+        int i2 = r.Next(-10000, 10000);
+
+        test.Add(new Pair<string, Val>("x = {2}; if ({0}) x = {1};".F(b1, i1, i2), new Val(b1 ? i1 : i2)));
+        test.Add(new Pair<string, Val>("x = {2}; if ({0}) {{ x = {1}; }}".F(b1, i1, i2), new Val(b1 ? i1 : i2)));
+        test.Add(new Pair<string, Val>("if ({0}) x = {1}; else x = {2};".F(b1, i1, i2), new Val(b1 ? i1 : i2)));
+        test.Add(new Pair<string, Val>("if ({0}) {{ x = {1}; }} else {{ x = {2};}}".F(b1, i1, i2), new Val(b1 ? i1 : i2)));
+
+        test.Add(new Pair<string, Val>("if ({0}) if ({1}) x = {2}; else x = -({2}); else x = {3};".F(b1, b2, i1, i2), new Val(b1 ? (b2 ? i1 : -i1) : i2)));
+      }
+
+      foreach (Pair<string, Val> p in test)
+      {
+        int n = 1;
+        script = new Script("test");
+        Context c = new Context();
+        script.AddStatements("int x;", ref n);
+        script.AddStatements(p.t, ref n);
+        Console.Write("{0}".F(p.t));
+
+        script.Run(c);
+        expr = new ScriptExpression("x");
+        Val res = script.Scope.GetVar(null, "x");
+
+        Console.Write(" [Expect x = {0}, Actual: {1}]".F(p.u.Value, res.Value));
+        Assert.AreEqual(p.u.Value, res.Value);
+
         Console.WriteLine(" ... OK!");
       }
     }

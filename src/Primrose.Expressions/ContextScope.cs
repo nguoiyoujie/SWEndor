@@ -42,7 +42,7 @@ namespace Primrose.Expressions
     /// <param name="name">The variable name</param>
     /// <returns>The Val object containing the value of the variable</returns>
     /// <exception cref="InvalidOperationException">Attempted to get the value from an undeclared variable</exception>
-    internal Val GetVar(ITracker eval, string name)
+    public Val GetVar(ITracker eval, string name)
     {
       Val ret;
       if (!m_variables.TryGetValue(name, out ret))

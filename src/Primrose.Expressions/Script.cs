@@ -9,7 +9,9 @@ namespace Primrose.Expressions
   public partial class Script
   {
     private List<RootStatement> m_statements = new List<RootStatement>();
-    internal ContextScope Scope;
+
+    /// <summary>The base context scope of the script</summary>
+    public ContextScope Scope;
 
     /// <summary>The name of the script</summary>
     public readonly string Name;
