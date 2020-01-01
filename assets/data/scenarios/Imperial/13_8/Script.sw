@@ -37,6 +37,9 @@ float3 faction_empire_color = { 0, 0.8, 0 };
 float3 faction_traitor_color = { 0.4, 0.5, 0.9 };
 float3 faction_rebel_color = { 0.8, 0, 0 };
 
+float3 faction_empire_laser_color = { 0.1, 1, 0.12 };
+float3 faction_rebel_laser_color = { 1, 0, 0 };
+
 float3 _d = { 0, 0, 0 };
 int _a = -1;
 
@@ -92,9 +95,9 @@ load:
 
 
 loadfaction:
-	Faction.Add("Empire", faction_empire_color);
-	Faction.Add("Traitors", faction_traitor_color);
-	Faction.Add("Rebels", faction_rebel_color);
+	Faction.Add("Empire", faction_empire_color, faction_empire_laser_color);
+	Faction.Add("Traitors", faction_traitor_color, faction_empire_laser_color);
+	Faction.Add("Rebels", faction_rebel_color, faction_rebel_laser_color);
 	Faction.MakeAlly("Traitors", "Rebels");
 	Faction.SetWingSpawnLimit("Empire", 24);
 	Faction.SetWingSpawnLimit("Traitors", 20);

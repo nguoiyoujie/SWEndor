@@ -32,6 +32,9 @@ float3 faction_neutral_rebel_color = { 0.8, 0.3, 0.3 };
 float3 faction_rebel_color = { 0.8, 0, 0 };
 float3 faction_mugaari_color = { 0.8, 0.1, 0.6 };
 
+float3 faction_empire_laser_color = { 0.1, 1, 0.12 };
+float3 faction_rebel_laser_color = { 1, 0, 0 };
+
 float3 _d = { 0, 0, 0 };
 int _a = -1;
 float _f = 0;
@@ -82,14 +85,14 @@ load:
 
 
 loadfaction:
-	Faction.Add("Empire", faction_empire_color);
-	Faction.Add("Empire_Hammer", faction_empire_hammer_color);
-	Faction.Add("Empire_Mu", faction_empire_hammer_color);
-	Faction.Add("Traitor", faction_empire_color);
+	Faction.Add("Empire", faction_empire_color, faction_empire_laser_color);
+	Faction.Add("Empire_Hammer", faction_empire_hammer_color, faction_empire_laser_color);
+	Faction.Add("Empire_Mu", faction_empire_hammer_color, faction_empire_laser_color);
+	Faction.Add("Traitor", faction_empire_color, faction_empire_laser_color);
 	Faction.Add("Neutral_Inspect", faction_neutral_color);
 	Faction.Add("Neutral_Rebel", faction_neutral_rebel_color);
-	Faction.Add("Rebels", faction_rebel_color);
-	Faction.Add("Mugaari", faction_mugaari_color);
+	Faction.Add("Rebels", faction_rebel_color, faction_rebel_laser_color);
+	Faction.Add("Mugaari", faction_mugaari_color, faction_rebel_laser_color);
 	Faction.MakeAlly("Empire", "Empire_Hammer");
 	Faction.MakeAlly("Empire", "Empire_Mu");
 	Faction.MakeAlly("Empire", "Neutral_Inspect");
