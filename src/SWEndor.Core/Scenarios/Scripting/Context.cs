@@ -31,7 +31,7 @@ namespace SWEndor.Scenarios.Scripting
     public readonly Registry<Pair<string, int>, IValFunc> ValFuncs = new Registry<Pair<string, int>, IValFunc>();
     public readonly List<string> ValFuncRef = new List<string>();
 
-    internal Context(Engine engine)
+    public Context(Engine engine)
     {
       Engine = engine;
       DefineFunc();
