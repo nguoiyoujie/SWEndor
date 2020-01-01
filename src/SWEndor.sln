@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Primrose.UnitTests", "Primr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Primrose.Expressions.UnitTests", "Primrose.Expressions.UnitTests\Primrose.Expressions.UnitTests.csproj", "{AAEFFDBE-80DC-4BFD-8F86-343A3672E329}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWEndor.ScenarioEditor", "SWEndor.ScenarioEditor\SWEndor.ScenarioEditor.csproj", "{CB3C11DA-081A-4BA5-9A37-30732BAD99C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWEndor.Core", "SWEndor.Core\SWEndor.Core.csproj", "{55637145-BFE1-46E7-9396-06890213192F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -50,6 +54,14 @@ Global
 		{AAEFFDBE-80DC-4BFD-8F86-343A3672E329}.Debug|x86.Build.0 = Debug|x86
 		{AAEFFDBE-80DC-4BFD-8F86-343A3672E329}.Release|x86.ActiveCfg = Release|x86
 		{AAEFFDBE-80DC-4BFD-8F86-343A3672E329}.Release|x86.Build.0 = Release|x86
+		{CB3C11DA-081A-4BA5-9A37-30732BAD99C5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CB3C11DA-081A-4BA5-9A37-30732BAD99C5}.Debug|x86.Build.0 = Debug|Any CPU
+		{CB3C11DA-081A-4BA5-9A37-30732BAD99C5}.Release|x86.ActiveCfg = Release|Any CPU
+		{CB3C11DA-081A-4BA5-9A37-30732BAD99C5}.Release|x86.Build.0 = Release|Any CPU
+		{55637145-BFE1-46E7-9396-06890213192F}.Debug|x86.ActiveCfg = Debug|x86
+		{55637145-BFE1-46E7-9396-06890213192F}.Debug|x86.Build.0 = Debug|x86
+		{55637145-BFE1-46E7-9396-06890213192F}.Release|x86.ActiveCfg = Release|x86
+		{55637145-BFE1-46E7-9396-06890213192F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

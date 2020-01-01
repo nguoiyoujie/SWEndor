@@ -1,0 +1,512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{55637145-BFE1-46E7-9396-06890213192F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SWEndor.Core</RootNamespace>
+    <AssemblyName>SWEndor.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\prebuild\debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\prebuild\release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualC" />
+    <Reference Include="MTV3D65">
+      <HintPath>..\dll\MTV3D65.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Actors\ActorInfo.cs" />
+    <Compile Include="Actors\Components\CycleInfo.cs" />
+    <Compile Include="Actors\Components\ScoreInfo.cs" />
+    <Compile Include="Actors\Components\WeaponData.cs" />
+    <Compile Include="Actors\Models\AIModel\AIModel.cs" />
+    <Compile Include="Actors\Models\AIModel\AIUpdate.cs" />
+    <Compile Include="Actors\Models\ArmorModel\ActorExt.cs" />
+    <Compile Include="Actors\Models\ArmorModel\ArmorModel.cs" />
+    <Compile Include="Actors\Models\Collision\ActorExt.cs" />
+    <Compile Include="Actors\Models\Explosion\ActorExt.cs" />
+    <Compile Include="Actors\Models\HealthModel\DamageInfo.cs" />
+    <Compile Include="Actors\Models\HealthModel\DamageType.cs" />
+    <Compile Include="Actors\Models\HealthModel\HealthModel.cs" />
+    <Compile Include="Actors\Models\Mesh\MeshModel.cs" />
+    <Compile Include="Actors\Models\Move\MoveData.cs" />
+    <Compile Include="Actors\Models\Regeneration\ActorExt.cs" />
+    <Compile Include="Actors\Models\Regeneration\RegenModel.cs" />
+    <Compile Include="Actors\Models\Relation\ActorExt.cs" />
+    <Compile Include="Actors\Models\Relation\RelationModel.cs" />
+    <Compile Include="Actors\Models\StateModel\ActorExt.cs" />
+    <Compile Include="Actors\Models\SystemModel\ActorExt.cs" />
+    <Compile Include="Actors\Models\SystemModel\SystemModel.cs" />
+    <Compile Include="Actors\Models\SystemModel\SystemPart.cs" />
+    <Compile Include="Actors\Models\SystemModel\SystemState.cs" />
+    <Compile Include="Actors\Models\TimedLife\ActorExt.cs" />
+    <Compile Include="Actors\Models\Transform\ActorExt.cs" />
+    <Compile Include="Actors\Octree\Octree.cs" />
+    <Compile Include="Actors\Octree\Octree_String.cs" />
+    <Compile Include="Actors\ProcessActorInfo.cs" />
+    <Compile Include="ActorTypes\Components\AddOnSystemData.cs" />
+    <Compile Include="ActorTypes\Components\AIData.cs" />
+    <Compile Include="ActorTypes\Components\ArmorData.cs" />
+    <Compile Include="ActorTypes\Components\CameraSystemData.cs" />
+    <Compile Include="ActorTypes\Components\CombatData.cs" />
+    <Compile Include="ActorTypes\Components\DeathCameraData.cs" />
+    <Compile Include="ActorTypes\Components\DebrisSystemData.cs" />
+    <Compile Include="ActorTypes\Components\DyingMoveData.cs" />
+    <Compile Include="ActorTypes\Components\Elements\AddOnData.cs" />
+    <Compile Include="ActorTypes\Components\Elements\DebrisSpawnerData.cs" />
+    <Compile Include="ActorTypes\Components\Elements\LookData.cs" />
+    <Compile Include="ActorTypes\Components\Elements\SoundSourceData.cs" />
+    <Compile Include="ActorTypes\Components\Elements\WeapData.cs" />
+    <Compile Include="ActorTypes\Components\MeshData.cs" />
+    <Compile Include="ActorTypes\Components\MoveLimitData.cs" />
+    <Compile Include="ActorTypes\Components\Movement\MoveBehavior.cs" />
+    <Compile Include="ActorTypes\Components\Movement\MoveForwardOnly.cs" />
+    <Compile Include="ActorTypes\Components\Movement\MoveLaser.cs" />
+    <Compile Include="ActorTypes\Components\Movement\MoveNormal.cs" />
+    <Compile Include="ActorTypes\Components\Movement\NoMove.cs" />
+    <Compile Include="ActorTypes\Components\Movement\RotateOnly.cs" />
+    <Compile Include="ActorTypes\Components\RegenData.cs" />
+    <Compile Include="ActorTypes\Components\RenderData.cs" />
+    <Compile Include="ActorTypes\Components\ScoreData.cs" />
+    <Compile Include="ActorTypes\Components\SoundData.cs" />
+    <Compile Include="ActorTypes\Components\SpawnerData.cs" />
+    <Compile Include="ActorTypes\Components\SystemData.cs" />
+    <Compile Include="ActorTypes\Components\TimedLifeData.cs" />
+    <Compile Include="ActorTypes\Components\UnfixedWeaponData.cs" />
+    <Compile Include="ActorTypes\Components\WeapSystemData.cs" />
+    <Compile Include="ActorTypes\General\ActorCreationInfo.cs" />
+    <Compile Include="ActorTypes\General\ActorSpawner\SpawnerInfo.cs" />
+    <Compile Include="ActorTypes\General\ActorTypeInfo.cs" />
+    <Compile Include="ActorTypes\General\Factory\Factory.cs" />
+    <Compile Include="ActorTypes\Groups\AddOn.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\ExecutorBridgeATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\Untargetables\HangarBayATI.cs" />
+    <Compile Include="ActorTypes\Groups\AddOns\Untargetables\PlayerSpawnerATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\DeathStar2ATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\DeathStarATI.cs" />
+    <Compile Include="ActorTypes\Groups\StaticScene\Hyperspace.cs" />
+    <Compile Include="AI\ActionExt.cs" />
+    <Compile Include="AI\ActionInfo.cs" />
+    <Compile Include="AI\Actions\AttackActor.cs" />
+    <Compile Include="AI\Actions\AvoidCollisionRotate.cs" />
+    <Compile Include="AI\Actions\AvoidCollisionWait.cs" />
+    <Compile Include="AI\Actions\CustomAction.cs" />
+    <Compile Include="AI\Actions\Delete.cs" />
+    <Compile Include="AI\Actions\EnableSpawn.cs" />
+    <Compile Include="AI\Actions\Evade.cs" />
+    <Compile Include="AI\Actions\FollowActor.cs" />
+    <Compile Include="AI\Actions\ForcedMove.cs" />
+    <Compile Include="AI\Actions\Hunt.cs" />
+    <Compile Include="AI\Actions\HyperspaceIn.cs" />
+    <Compile Include="AI\Actions\HyperspaceOut.cs" />
+    <Compile Include="AI\Actions\Idle.cs" />
+    <Compile Include="AI\Actions\Lock.cs" />
+    <Compile Include="AI\Actions\Move.cs" />
+    <Compile Include="AI\Actions\PlaySound.cs" />
+    <Compile Include="AI\Actions\ProjectileAttackActor.cs" />
+    <Compile Include="AI\Actions\Rotate.cs" />
+    <Compile Include="AI\Actions\SelfDestruct.cs" />
+    <Compile Include="AI\Actions\SetGameStateB.cs" />
+    <Compile Include="AI\Actions\SetMood.cs" />
+    <Compile Include="AI\Actions\Wait.cs" />
+    <Compile Include="AI\Squads\Factory\Factory.cs" />
+    <Compile Include="AI\Squads\MissionInfo.cs" />
+    <Compile Include="AI\Squads\Missions\AssistActor.cs" />
+    <Compile Include="AI\Squads\Missions\AttackActor.cs" />
+    <Compile Include="AI\Squads\Missions\MoveToPoint.cs" />
+    <Compile Include="AI\Squads\Squadron.cs" />
+    <Compile Include="AtmosphereInfo.cs" />
+    <Compile Include="Build.cs" />
+    <Compile Include="Core\Engine.cs" />
+    <Compile Include="Core\RenderSurfaces.cs" />
+    <Compile Include="Core\Session.cs" />
+    <Compile Include="Core\TrueVision.cs" />
+    <Compile Include="Explosions\ExplosionInfo.cs" />
+    <Compile Include="Explosions\Models\Mesh\MeshModel.cs" />
+    <Compile Include="Explosions\Models\StateModel\ExplExt.cs" />
+    <Compile Include="Explosions\Models\TimedModel\ExplExt.cs" />
+    <Compile Include="Explosions\Models\Transform\ExplExt.cs" />
+    <Compile Include="Explosions\ProcessExplosionInfo.cs" />
+    <Compile Include="ExplosionTypes\Components\ExplRenderData.cs" />
+    <Compile Include="ExplosionTypes\Components\ShakeData.cs" />
+    <Compile Include="ExplosionTypes\General\ExplosionCreationInfo.cs" />
+    <Compile Include="ExplosionTypes\General\ExplosionTypeInfo.cs" />
+    <Compile Include="ExplosionTypes\General\Factory\Factory.cs" />
+    <Compile Include="FactionInfo.cs" />
+    <Compile Include="FileFormat\INI\Components\INIHeaderLine.cs" />
+    <Compile Include="FileFormat\INI\Components\INILine.cs" />
+    <Compile Include="FileFormat\INI\Components\INISection.cs" />
+    <Compile Include="FileFormat\INI\Helpers\GetValues.cs" />
+    <Compile Include="FileFormat\INI\Helpers\SetValues.cs" />
+    <Compile Include="FileFormat\INI\INIFile.cs" />
+    <Compile Include="FileFormat\Scripting\ScriptFile.cs" />
+    <Compile Include="GameEvent\GameEvent.cs" />
+    <Compile Include="Globals.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Core\Init.cs" />
+    <Compile Include="Input\Context\AInputContext.cs" />
+    <Compile Include="Input\Context\DebugGameInputContext.cs" />
+    <Compile Include="Input\Context\GameInputContext.cs" />
+    <Compile Include="Input\Context\MenuInputContext.cs" />
+    <Compile Include="Input\Context\TerminalGameInputContext.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\MoveCameraBackward.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\MoveCameraDownward.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\MoveCameraForward.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\MoveCameraLeftward.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\MoveCameraRightward.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\MoveCameraUpward.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\NextCameraMode.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\PrevCameraMode.cs" />
+    <Compile Include="Input\Functions\Gameplay\Camera\ToggleFreeMode.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\AddLife.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\AllEnemiesDead.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\AllEnemiesDying.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\TimeFast.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\TimeJump.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\TimeReset.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\TimeSlow.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\ToggleCameraStates.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\ToggleMovementLock.cs" />
+    <Compile Include="Input\Functions\Gameplay\Special\TogglePlayerAI.cs" />
+    <Compile Include="Input\Functions\Gameplay\Speed\Down.cs" />
+    <Compile Include="Input\Functions\Gameplay\Speed\Up.cs" />
+    <Compile Include="Input\Functions\Gameplay\UI\PauseToMenu.cs" />
+    <Compile Include="Input\Functions\Gameplay\UI\ShowMap.cs" />
+    <Compile Include="Input\Functions\Gameplay\UI\ToggleRadarVisibility.cs" />
+    <Compile Include="Input\Functions\Gameplay\UI\ToggleScoreVisibility.cs" />
+    <Compile Include="Input\Functions\Gameplay\UI\ToggleSquadVisibility.cs" />
+    <Compile Include="Input\Functions\Gameplay\UI\ToggleStatusVisibility.cs" />
+    <Compile Include="Input\Functions\Gameplay\UI\ToggleUIVisibility.cs" />
+    <Compile Include="Input\Functions\Gameplay\Weapon\NextPrimary.cs" />
+    <Compile Include="Input\Functions\Gameplay\Weapon\NextSecondary.cs" />
+    <Compile Include="Input\Functions\Gameplay\Weapon\PrevPrimary.cs" />
+    <Compile Include="Input\Functions\Gameplay\Weapon\PrevSecondary.cs" />
+    <Compile Include="Input\Functions\Gameplay\Weapon\SquadAssist.cs" />
+    <Compile Include="Input\Functions\Gameplay\Weapon\SquadFree.cs" />
+    <Compile Include="Input\Functions\Gameplay\Weapon\ToggleLockOn.cs" />
+    <Compile Include="Input\Functions\InputFunction.cs" />
+    <Compile Include="Input\Functions\Utility\Screen\SaveScreenshot.cs" />
+    <Compile Include="Input\InputManager.cs" />
+    <Compile Include="LandInfo.cs" />
+    <Compile Include="Log\Log.cs" />
+    <Compile Include="Log\LogType.cs" />
+    <Compile Include="Models\CollisionModel\CollisionModel.cs" />
+    <Compile Include="Models\CollisionModel\CollisionResultData.cs" />
+    <Compile Include="Models\DistanceModel\DistanceModel.cs" />
+    <Compile Include="Models\Enums\ActorState.cs" />
+    <Compile Include="Models\Enums\ComponentMask.cs" />
+    <Compile Include="Models\Enums\CreationState.cs" />
+    <Compile Include="Models\Enums\RadarType.cs" />
+    <Compile Include="Models\Enums\TargetType.cs" />
+    <Compile Include="Models\ExplodeModel\ExplodeData.cs" />
+    <Compile Include="Models\ExplodeModel\ExplodeModel.cs" />
+    <Compile Include="Models\ExplodeModel\ExplodeSystemData.cs" />
+    <Compile Include="Models\ExplodeModel\ExplodeTrigger.cs" />
+    <Compile Include="Models\Factory\Factory.cs" />
+    <Compile Include="Models\Interfaces\IActorCreateable.cs" />
+    <Compile Include="Models\Interfaces\IActorDisposable.cs" />
+    <Compile Include="Models\Interfaces\IActorState.cs" />
+    <Compile Include="Models\Interfaces\ICollidable.cs" />
+    <Compile Include="Models\Interfaces\ICreationInfo.cs" />
+    <Compile Include="Models\Interfaces\IDyingTime.cs" />
+    <Compile Include="Models\Interfaces\IEngineObject.cs" />
+    <Compile Include="Models\Interfaces\ILinked.cs" />
+    <Compile Include="Models\Interfaces\IMeshObject.cs" />
+    <Compile Include="Models\Interfaces\INotify.cs" />
+    <Compile Include="Models\Interfaces\IParent.cs" />
+    <Compile Include="Models\Interfaces\IScoped.cs" />
+    <Compile Include="Models\Interfaces\ITransformable.cs" />
+    <Compile Include="Models\Interfaces\ITyped.cs" />
+    <Compile Include="Models\Interfaces\ITypeInfo.cs" />
+    <Compile Include="Models\StateModel\StateModel.cs" />
+    <Compile Include="Models\TimerModel\TimerModel.cs" />
+    <Compile Include="Models\TransformModel\TransformData.cs" />
+    <Compile Include="Models\TransformModel\TransformModel.cs" />
+    <Compile Include="PerfManager.cs" />
+    <Compile Include="Player\Camera\CameraMode.cs" />
+    <Compile Include="Player\Camera\Look\DeathCameraLook.cs" />
+    <Compile Include="Player\Camera\Look\FreeLook.cs" />
+    <Compile Include="Player\Camera\Look\ICameraLook.cs" />
+    <Compile Include="Player\Camera\Look\PlayerCameraLook.cs" />
+    <Compile Include="Player\Camera\Look\SceneCameraLook.cs" />
+    <Compile Include="Player\Camera\PlayerCameraInfo.cs" />
+    <Compile Include="Player\Camera\TargetPosition.cs" />
+    <Compile Include="Player\PlayerInfo.cs" />
+    <Compile Include="Primitives\Extensions\float_mExts.cs" />
+    <Compile Include="Primitives\Extensions\HashSetExts.cs" />
+    <Compile Include="Primitives\Extensions\INIFileExts.cs" />
+    <Compile Include="Primitives\Extensions\TV3DVecExts.cs" />
+    <Compile Include="Primitives\Extensions\TVKeyExts.cs" />
+    <Compile Include="Primitives\Geometry\BoundFloat.cs" />
+    <Compile Include="Primitives\Geometry\Box.cs" />
+    <Compile Include="Primitives\Geometry\Sphere.cs" />
+    <Compile Include="Projectiles\Models\Collision\ProjExt.cs" />
+    <Compile Include="Projectiles\Models\Explosion\ProjExt.cs" />
+    <Compile Include="Projectiles\Models\Mesh\MeshModel.cs" />
+    <Compile Include="Projectiles\Models\Move\MoveData.cs" />
+    <Compile Include="Projectiles\Models\StateModel\ProjExt.cs" />
+    <Compile Include="Projectiles\Models\TimedLife\ProjExt.cs" />
+    <Compile Include="Projectiles\Models\Transform\ProjExt.cs" />
+    <Compile Include="Projectiles\ProcessProjectileInfo.cs" />
+    <Compile Include="Projectiles\ProjectileInfo.cs" />
+    <Compile Include="ProjectileTypes\Components\DamageSpecialModel.cs" />
+    <Compile Include="ProjectileTypes\General\Components\Movement\MoveBehavior.cs" />
+    <Compile Include="ProjectileTypes\General\Components\Movement\MoveForwardOnly.cs" />
+    <Compile Include="ProjectileTypes\General\Components\Movement\MoveLaser.cs" />
+    <Compile Include="ProjectileTypes\General\Components\Movement\MoveNormal.cs" />
+    <Compile Include="ProjectileTypes\General\Components\Movement\NoMove.cs" />
+    <Compile Include="ProjectileTypes\General\Components\Movement\RotateOnly.cs" />
+    <Compile Include="ProjectileTypes\General\Factory\Factory.cs" />
+    <Compile Include="ProjectileTypes\General\ProjectileCreationInfo.cs" />
+    <Compile Include="ProjectileTypes\General\ProjectileTypeInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scenarios\ActorSpawnInfo.cs" />
+    <Compile Include="Scenarios\CampaignInfo.cs" />
+    <Compile Include="Scenarios\GSFunctions.cs" />
+    <Compile Include="Scenarios\MoodStates.cs" />
+    <Compile Include="Scenarios\ScenarioBase.cs" />
+    <Compile Include="Scenarios\ScenarioManager.cs" />
+    <Compile Include="Scenarios\Scenarios\GSCustomScenario.cs" />
+    <Compile Include="Scenarios\Scenarios\GSEndor.cs" />
+    <Compile Include="Scenarios\Scenarios\GSHoth.cs" />
+    <Compile Include="Scenarios\Scenarios\GSMainMenu.cs" />
+    <Compile Include="Scenarios\Scenarios\GSTestZone.cs" />
+    <Compile Include="Scenarios\Scenarios\GSTIEAdvanced.cs" />
+    <Compile Include="Scenarios\Scenarios\GSYavin.cs" />
+    <Compile Include="Scenarios\Scripting\Context.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\ActorFns.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\AIFns.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\AudioFns.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\FactionFns.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\GameFns.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\MathFns.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\MessagingFns.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\MiscFns.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\PlayerCameraFns.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\PlayerFns.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\SceneFns.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\ScoreFns.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\ScriptingFns.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\SpawnFns.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\SquadFns.cs" />
+    <Compile Include="Scenarios\Scripting\Functions\UIFns.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\IValFunc.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc_T.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc_T2.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc_T3.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc_T4.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc_T5.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc_T6.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc_T7.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValFunc_T8.cs" />
+    <Compile Include="Scenarios\Scripting\ParamContracts\ValParamContract.cs" />
+    <Compile Include="Settings\ColorLocalization.cs" />
+    <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Settings\TextLocalization.cs" />
+    <Compile Include="Shaders\Factory\Factory.cs" />
+    <Compile Include="Shaders\Factory\Parser.cs" />
+    <Compile Include="Shaders\ShaderInfo.cs" />
+    <Compile Include="Sound\Dynamic.cs" />
+    <Compile Include="Sound\Instructions\InstAddSyncPoint.cs" />
+    <Compile Include="Sound\Instructions\InstBase.cs" />
+    <Compile Include="Sound\Instructions\InstPauseMusic.cs" />
+    <Compile Include="Sound\Instructions\InstPlayMusic.cs" />
+    <Compile Include="Sound\Instructions\InstPlaySound.cs" />
+    <Compile Include="Sound\Instructions\InstPlaySoundSingle.cs" />
+    <Compile Include="Sound\Instructions\InstPrepMusic.cs" />
+    <Compile Include="Sound\Instructions\InstResumeMusic.cs" />
+    <Compile Include="Sound\Instructions\InstStopAllSound .cs" />
+    <Compile Include="Sound\Instructions\InstStopMusic.cs" />
+    <Compile Include="Sound\Instructions\InstStopOneSound.cs" />
+    <Compile Include="Sound\MusicCommands.cs" />
+    <Compile Include="Sound\MusicGlobals.cs" />
+    <Compile Include="Sound\Piece\Factory\Factory.cs" />
+    <Compile Include="Sound\Piece\Factory\Parser.cs" />
+    <Compile Include="Sound\Piece\Piece.cs" />
+    <Compile Include="Sound\SoundCommands.cs" />
+    <Compile Include="Sound\SoundGlobals.cs" />
+    <Compile Include="Sound\SoundManager.cs" />
+    <Compile Include="Terminal\Commands\Actor\Spawn.cs" />
+    <Compile Include="Terminal\TCommandBase.cs" />
+    <Compile Include="Terminal\TCommandFeedback.cs" />
+    <Compile Include="Terminal\TCommandParser.cs" />
+    <Compile Include="Terminal\TConsole.cs" />
+    <Compile Include="UI\Font\Factory\Factory.cs" />
+    <Compile Include="UI\Font\Font.cs" />
+    <Compile Include="UI\Forms\BackgroundForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\BackgroundForm.Designer.cs">
+      <DependentUpon>BackgroundForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\GameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\GameForm.Designer.cs">
+      <DependentUpon>GameForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\StatForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\StatForm.Designer.cs">
+      <DependentUpon>StatForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\UIControls\ucPoolCache.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\UIControls\ucPoolCache.Designer.cs">
+      <DependentUpon>ucPoolCache.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\UIControls\ucSound.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\UIControls\ucSound.Designer.cs">
+      <DependentUpon>ucSound.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Forms\UIControls\ucStatObjects.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\UIControls\ucStatObjects.Designer.cs">
+      <DependentUpon>ucStatObjects.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Menu\Instances\CampaignSelection.cs" />
+    <Compile Include="UI\Menu\Instances\ConfigSettingsMenu.cs" />
+    <Compile Include="UI\Menu\Instances\ConfirmExit.cs" />
+    <Compile Include="UI\Menu\Instances\ConfirmExitScenario.cs" />
+    <Compile Include="UI\Menu\Instances\Credits.cs" />
+    <Compile Include="UI\Menu\Instances\FatalError.cs" />
+    <Compile Include="UI\Menu\Instances\GameOver.cs" />
+    <Compile Include="UI\Menu\Instances\GameWon.cs" />
+    <Compile Include="UI\Menu\Instances\KeyboardControls.cs" />
+    <Compile Include="UI\Menu\Instances\LoadingScenario.cs" />
+    <Compile Include="UI\Menu\Instances\MainMenu.cs" />
+    <Compile Include="UI\Menu\Instances\OptionsMenu.cs" />
+    <Compile Include="UI\Menu\Instances\PauseMenu.cs" />
+    <Compile Include="UI\Menu\Instances\ProfileSettingsMenu.cs" />
+    <Compile Include="UI\Menu\Instances\ScenarioMap.cs" />
+    <Compile Include="UI\Menu\Instances\ScenarioMessageLog.cs" />
+    <Compile Include="UI\Menu\Instances\ScenarioSelection.cs" />
+    <Compile Include="UI\Menu\Page.cs" />
+    <Compile Include="UI\Menu\SelectionElement.cs" />
+    <Compile Include="UI\Screen2D.cs" />
+    <Compile Include="UI\Widget\Instances\AIInfo.cs" />
+    <Compile Include="UI\Widget\Instances\Box3D.cs" />
+    <Compile Include="UI\Widget\Instances\CrossHair.cs" />
+    <Compile Include="UI\Widget\Instances\HitBar.cs" />
+    <Compile Include="UI\Widget\Instances\LargeShipSystems.cs" />
+    <Compile Include="UI\Widget\Instances\MessageText.cs" />
+    <Compile Include="UI\Widget\Instances\MouseLocation.cs" />
+    <Compile Include="UI\Widget\Instances\Page.cs" />
+    <Compile Include="UI\Widget\Instances\PerfText.cs" />
+    <Compile Include="UI\Widget\Instances\Radar.cs" />
+    <Compile Include="UI\Widget\Instances\ScenarioInfo.cs" />
+    <Compile Include="UI\Widget\Instances\SideBars.cs" />
+    <Compile Include="UI\Widget\Instances\Squad.cs" />
+    <Compile Include="UI\Widget\Instances\Steering.cs" />
+    <Compile Include="UI\Widget\Instances\SystemIndicator.cs" />
+    <Compile Include="UI\Widget\Instances\Target.cs" />
+    <Compile Include="UI\Widget\Instances\TargetInfo.cs" />
+    <Compile Include="UI\Widget\Instances\TargetingRadar.cs" />
+    <Compile Include="UI\Widget\Instances\Terminal.cs" />
+    <Compile Include="UI\Widget\Instances\WarningText.cs" />
+    <Compile Include="UI\Widget\Instances\WeaponInfo.cs" />
+    <Compile Include="UI\Widget\TextInfo.cs" />
+    <Compile Include="UI\Widget\UIWidget.cs" />
+    <Compile Include="Utilities\Utilities.cs" />
+    <Compile Include="Weapons\Components\WeapAimInfo.cs" />
+    <Compile Include="Weapons\Components\WeapAmmoInfo.cs" />
+    <Compile Include="Weapons\Components\WeapLoadInfo.cs" />
+    <Compile Include="Weapons\Components\WeapPortInfo.cs" />
+    <Compile Include="Weapons\Components\WeapProjInfo.cs" />
+    <Compile Include="Weapons\Components\WeapTgtInfo.cs" />
+    <Compile Include="Weapons\Enum\TargetAcqType.cs" />
+    <Compile Include="Weapons\Enum\WeaponType.cs" />
+    <Compile Include="Weapons\Instances\NullWeapon.cs" />
+    <Compile Include="Weapons\Instances\TrackerDummyWeapon.cs" />
+    <Compile Include="Weapons\WeaponInfo.cs" />
+    <Compile Include="Weapons\WeaponShotInfo.cs" />
+    <Compile Include="Weapons\WeapRegistry.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fmod.Wrapper\Fmod.Wrapper.csproj">
+      <Project>{805428ff-a413-48da-993c-99d9083b9a45}</Project>
+      <Name>Fmod.Wrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Primrose.Expressions\Primrose.Expressions.csproj">
+      <Project>{4e45e1ad-89de-404a-b867-1fb251eee1a4}</Project>
+      <Name>Primrose.Expressions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Primrose\Primrose.csproj">
+      <Project>{6127267c-e6d9-4b1a-a22a-0f3ae7ff3eee}</Project>
+      <Name>Primrose</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UI\Forms\BackgroundForm.resx">
+      <DependentUpon>BackgroundForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\GameForm.resx">
+      <DependentUpon>GameForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\StatForm.resx">
+      <DependentUpon>StatForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\UIControls\ucPoolCache.resx">
+      <DependentUpon>ucPoolCache.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\UIControls\ucSound.resx">
+      <DependentUpon>ucSound.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\UIControls\ucStatObjects.resx">
+      <DependentUpon>ucStatObjects.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>cd $(ProjectDir)
+call prebuild.bat</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>cd $(ProjectDir)
+call postbuild.bat</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
