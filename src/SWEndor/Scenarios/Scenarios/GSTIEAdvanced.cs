@@ -92,9 +92,9 @@ namespace SWEndor.Scenarios
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
         {
-          if (actor.TypeInfo is TIE_D_ATI)
+          if (actor.TypeInfo.ID == "TIED")
             tie_d++;
-          else if (actor.TypeInfo is TIE_sa_ATI)
+          else if (actor.TypeInfo.ID == "TIESA")
             tie_sa++;
         }
       }
@@ -127,10 +127,10 @@ namespace SWEndor.Scenarios
     {
       base.LoadFactions();
 
-      FactionInfo.Factory.Add("Rebels", new COLOR(0.8f, 0, 0, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Rebels_Falcon", new COLOR(0.8f, 0.8f, 0.8f, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Empire", new COLOR(0, 0.8f, 0, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Empire_Advanced", new COLOR(0.4f, 0.8f, 0.4f, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels", new COLOR(0.8f, 0, 0, 1));
+      FactionInfo.Factory.Add("Rebels_Falcon", new COLOR(0.8f, 0.8f, 0.8f, 1));
+      FactionInfo.Factory.Add("Empire", new COLOR(0, 0.8f, 0, 1));
+      FactionInfo.Factory.Add("Empire_Advanced", new COLOR(0.4f, 0.8f, 0.4f, 1));
 
       FactionInfo.Factory.Get("Rebels").Allies.Add(FactionInfo.Factory.Get("Rebels_Falcon"));
       FactionInfo.Factory.Get("Rebels_Falcon").Allies.Add(FactionInfo.Factory.Get("Rebels"));

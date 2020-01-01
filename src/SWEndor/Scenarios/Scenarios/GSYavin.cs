@@ -215,10 +215,10 @@ namespace SWEndor.Scenarios
     {
       base.LoadFactions();
 
-      FactionInfo.Factory.Add("Rebels", new COLOR(0.8f, 0, 0, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Rebels_Gold", new COLOR(0.8f, 0.3f, 0, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Empire", new COLOR(0, 0.8f, 0, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Empire_DeathStarDefenses", new COLOR(0.1f, 0.8f, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels", new COLOR(0.8f, 0, 0, 1));
+      FactionInfo.Factory.Add("Rebels_Gold", new COLOR(0.8f, 0.3f, 0, 1));
+      FactionInfo.Factory.Add("Empire", new COLOR(0, 0.8f, 0, 1));
+      FactionInfo.Factory.Add("Empire_DeathStarDefenses", new COLOR(0.1f, 0.8f, 0, 1));
 
       FactionInfo.Factory.Get("Rebels").Allies.Add(FactionInfo.Factory.Get("Rebels_Gold"));
       FactionInfo.Factory.Get("Rebels_Gold").Allies.Add(FactionInfo.Factory.Get("Rebels"));
@@ -708,7 +708,7 @@ namespace SWEndor.Scenarios
           ActorInfo actor = Engine.ActorFactory.Get(actorID);
           if (actor != null)
           {
-            if (actor.TypeInfo is YWingATI || actor.TypeInfo is BWingATI)
+            if (actor.TypeInfo.ID == "YWING" || actor.TypeInfo.ID == "BWING")
             {
               int rsID = MainEnemyFaction.GetRandomShip(Engine);
               ActorInfo rs = Engine.ActorFactory.Get(actorID);

@@ -22,8 +22,6 @@ namespace SWEndor.ActorTypes.Instances
 
       MeshData = MeshDataDecorator.CreateAlphaTexturedFlickerWall(Engine, Name, 20000, "deathstar/deathstar2.bmp", "deathstar/deathstar2b.jpg", "deathstar/deathstar2alpha.bmp", CONST_TV_BLENDINGMODE.TV_BLEND_ALPHA, 32, death, ref texanimframes);
       TimedLifeData = new TimedLifeData(false, 5);
-
-      //AddOns = new AddOnInfo[] { new AddOnInfo("DSLSRSRC", new TV_3DVECTOR(-1300, 2000, -0.04f * size), new TV_3DVECTOR(0, 0, 0), true) };
     }
 
     public override void Dying(Engine engine, ActorInfo ainfo)

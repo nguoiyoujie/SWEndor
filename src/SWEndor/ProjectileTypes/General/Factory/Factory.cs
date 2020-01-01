@@ -1,7 +1,6 @@
 ﻿using SWEndor.Core;
 using Primrose.Primitives.Extensions;
 using Primrose.Primitives.Factories;
-using SWEndor.ProjectileTypes.Instances;
 using System;
 using System.IO;
 
@@ -15,21 +14,6 @@ namespace SWEndor.ProjectileTypes
       internal Factory(Engine engine)
       { Engine = engine; }
 
-      public void RegisterBase()
-      {
-        // lasers
-        Register(new RedLaserATI(this));
-        Register(new GreenLaserATI(this));
-        Register(new Green2LaserATI(this));
-        Register(new GreenAntiShipLaserATI(this));
-        Register(new GreenLaserAdvancedATI(this));
-        Register(new YellowLaserATI(this));
-        Register(new Yellow2LaserATI(this));
-        Register(new SmallIonLaserATI(this));
-        Register(new BigIonLaserATI(this));
-        Register(new DeathStarLaserATI(this));
-      }
-
       public void Register(ProjectileTypeInfo atype)
       {
         if (Contains(atype.ID))
@@ -40,10 +24,8 @@ namespace SWEndor.ProjectileTypes
         {
           Add(atype.ID, atype);
         }
-        //atype.SaveToINI(atype.ID);
         Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
       }
-
       
       public void Load()
       {

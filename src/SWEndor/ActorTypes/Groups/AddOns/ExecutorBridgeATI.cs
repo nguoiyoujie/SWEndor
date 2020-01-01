@@ -8,7 +8,7 @@ namespace SWEndor.ActorTypes.Instances
 {
   internal class ExecutorBridgeATI : Groups.AddOn
   {
-    internal ExecutorBridgeATI(Factory owner) : base(owner, "EXECBRID", "Executor Super Star Destroyer Bridge")
+    internal ExecutorBridgeATI(Factory owner) : base(owner, "EXEC_BRID", "Executor Super Star Destroyer Bridge")
     {
       CombatData = CombatData.DefaultShip;
       ArmorData.Data.Put(DamageType.TORPEDO, 1.25f);
@@ -32,7 +32,7 @@ namespace SWEndor.ActorTypes.Instances
       AIData.TargetType = TargetType.ADDON;
       RenderData.RadarType = RadarType.NULL;
 
-      MeshData = new MeshData(Engine, Name, @"executor\executor_bridge.x");
+      MeshData = new MeshData(Engine, ID, @"executor\executor_bridge.x");
     }
 
     public override void ProcessState(Engine engine, ActorInfo ainfo)
@@ -46,7 +46,7 @@ namespace SWEndor.ActorTypes.Instances
         {
           foreach (ActorInfo pn in parent.Children)
           {
-            if (pn?.TypeInfo is ExecutorShieldGeneratorATI)
+            if (pn?.TypeInfo.AIData.TargetType.Has(TargetType.SHIELDGENERATOR) ?? false)
               ainfo.InflictDamage(-ainfo.MaxHP, DamageType.ALWAYS_100PERCENT);
           }
         }

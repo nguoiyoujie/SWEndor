@@ -1,5 +1,4 @@
 ﻿using SWEndor.Core;
-using SWEndor.ExplosionTypes.Instances;
 using Primrose.Primitives.Extensions;
 using Primrose.Primitives.Factories;
 using System;
@@ -15,18 +14,6 @@ namespace SWEndor.ExplosionTypes
       internal Factory(Engine engine)
       { Engine = engine; }
 
-      public void RegisterBase()
-      {
-        // explosions
-        Register(new ExpS00(this));
-        Register(new ExpL00(this));
-        Register(new ExpL01(this));
-        Register(new ExpL02(this));
-        Register(new ExpW01(this));
-        Register(new ExpW02(this));
-        Register(new ElectroATI(this));
-      }
-
       public void Register(ExplosionTypeInfo atype)
       {
         if (Contains(atype.ID))
@@ -37,7 +24,6 @@ namespace SWEndor.ExplosionTypes
         {
           Add(atype.ID, atype);
         }
-        //atype.SaveToINI(atype.ID);
         Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
       }
 

@@ -161,10 +161,10 @@ namespace SWEndor.Scenarios
     {
       base.LoadFactions();
 
-      FactionInfo.Factory.Add("Rebels", new COLOR(0.8f, 0, 0, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Rebels_Wedge", new COLOR(0.8f, 0.4f, 0.4f, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Rebels_Falcon", new COLOR(0.8f, 0.8f, 0.8f, 1)).AutoAI = true;
-      FactionInfo.Factory.Add("Empire", new COLOR(0, 0.8f, 0, 1)).AutoAI = true;
+      FactionInfo.Factory.Add("Rebels", new COLOR(0.8f, 0, 0, 1));
+      FactionInfo.Factory.Add("Rebels_Wedge", new COLOR(0.8f, 0.4f, 0.4f, 1));
+      FactionInfo.Factory.Add("Rebels_Falcon", new COLOR(0.8f, 0.8f, 0.8f, 1));
+      FactionInfo.Factory.Add("Empire", new COLOR(0, 0.8f, 0, 1));
 
       FactionInfo.Factory.Get("Rebels").Allies.Add(FactionInfo.Factory.Get("Rebels_Wedge"));
       FactionInfo.Factory.Get("Rebels").Allies.Add(FactionInfo.Factory.Get("Rebels_Falcon"));
@@ -891,9 +891,9 @@ namespace SWEndor.Scenarios
                                  , Lock.GetOrCreate()
                                  };
 
-          if (type is TransportATI)
+          if (type.ID == "TRAN")
             huntw = 5;
-          else if (type is CorellianATI)
+          else if (type.ID == "CORV")
             huntw = 15;
           else
             huntw = 25;
@@ -1041,7 +1041,7 @@ namespace SWEndor.Scenarios
           ActorInfo actor = Engine.ActorFactory.Get(actorID);
           if (actor != null)
           {
-            if (actor.TypeInfo is YWingATI || actor.TypeInfo is BWingATI)
+            if (actor.TypeInfo.ID == "YWING" || actor.TypeInfo.ID == "BWING")
             {
               int rsID = MainEnemyFaction.GetRandomShip(Engine);
               ActorInfo rs = Engine.ActorFactory.Get(actorID);
@@ -1470,7 +1470,7 @@ namespace SWEndor.Scenarios
       string name;
 
       List<object[]> spawns = new List<object[]>();
-      spawns.Add(new object[] { new TV_3DVECTOR(0, 50, -33500), ActorTypeFactory.Get("EXECSTS") });
+      spawns.Add(new object[] { new TV_3DVECTOR(0, 50, -33500), ActorTypeFactory.Get("EXEC_STS") });
       spawns.Add(new object[] { new TV_3DVECTOR(-1500, 180, -32500), ActorTypeFactory.Get("ISD_STS") });
       spawns.Add(new object[] { new TV_3DVECTOR(1500, 180, -32500), ActorTypeFactory.Get("ISD_STS") });
       spawns.Add(new object[] { new TV_3DVECTOR(-3500, 280, -27500), ActorTypeFactory.Get("ISD_STS") });
@@ -1503,7 +1503,7 @@ namespace SWEndor.Scenarios
 
         ainfo = asi.Spawn(this);
 
-        if (ainfo.TypeInfo is ExecutorStaticATI)
+        if (ainfo.TypeInfo.ID == "EXEC_STS")
           m_ExecutorStaticID = ainfo.ID;
       }
     }
@@ -2394,11 +2394,11 @@ namespace SWEndor.Scenarios
         TV_3DVECTOR pos = target.GetGlobalPosition();
         TV_3DVECTOR rot = target.GetGlobalRotation();
 
-        if (target.TypeInfo is CorellianATI)
+        if (target.TypeInfo.ID == "CORV")
           pos += new TV_3DVECTOR(150, 120, -2000);
-        else if (target.TypeInfo is TransportATI)
+        else if (target.TypeInfo.ID == "TRAN")
           pos += new TV_3DVECTOR(300, 200, 700);
-        else if (target.TypeInfo is MC90ATI)
+        else if (target.TypeInfo.ID == "MC90")
           pos += new TV_3DVECTOR(-850, -400, 2500);
 
         PlayerCameraInfo.SceneLook.SetPosition_Point(pos, 50);
