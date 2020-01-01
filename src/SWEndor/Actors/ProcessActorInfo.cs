@@ -4,6 +4,7 @@ using SWEndor.Models;
 using Primrose.Primitives;
 using SWEndor.Weapons;
 using System;
+using Primrose.Primitives.Extensions;
 
 namespace SWEndor.Actors
 {
@@ -74,6 +75,9 @@ namespace SWEndor.Actors
 
     private void Update()
     {
+      if (TypeInfo.RenderData.ZEaseInTime > 0)
+        Transform.ZSqueeze = ((Engine.Game.GameTime - CreationTime - TypeInfo.RenderData.ZEaseInDelay) / TypeInfo.RenderData.ZEaseInTime).Clamp(0, 1);
+
       Meshes.Update(this);
 
       if (Generated || Reserved_Generated)

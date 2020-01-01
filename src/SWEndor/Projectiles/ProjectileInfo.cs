@@ -137,6 +137,11 @@ namespace SWEndor.Projectiles
       // Creation
       State.Init(Engine, TypeInfo, acinfo);
 
+      OwnerID = acinfo.OwnerID;
+      TargetID = acinfo.TargetID;
+      if (acinfo.LifeTime > 0)
+        DyingTimerSet(acinfo.LifeTime, true);
+
       TypeInfo.Initialize(engine, this);
     }
 

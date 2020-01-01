@@ -22,6 +22,14 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.NULL;
     }
 
+    public static Val AddFaction(Context context, string name, float3 vec_color, float3 laser_color)
+    {
+      COLOR color = new COLOR(vec_color);
+      COLOR lasercolor = new COLOR(laser_color);
+      FactionInfo.Factory.Add(name, color, lasercolor);
+      return Val.NULL;
+    }
+
     public static Val GetColor(Context context, string faction)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
@@ -39,6 +47,26 @@ namespace SWEndor.Scenarios.Scripting.Functions
 
       COLOR color = new COLOR(vec_color);
       f.Color = color;
+      return Val.NULL;
+    }
+
+    public static Val GetLaserColor(Context context, string faction)
+    {
+      FactionInfo f = FactionInfo.Factory.Get(faction);
+      if (f == null)
+        throw new InvalidOperationException("The faction is not defined.");
+
+      return new Val(f.LaserColor.ToFloat3());
+    }
+
+    public static Val SetLaserColor(Context context, string faction, float3 vec_color)
+    {
+      FactionInfo f = FactionInfo.Factory.Get(faction);
+      if (f == null)
+        throw new InvalidOperationException("The faction is not defined.");
+
+      COLOR color = new COLOR(vec_color);
+      f.LaserColor = color;
       return Val.NULL;
     }
 

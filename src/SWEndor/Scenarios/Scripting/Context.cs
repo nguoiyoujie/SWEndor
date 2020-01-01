@@ -206,8 +206,11 @@ namespace SWEndor.Scenarios.Scripting
 
       // Faction
       AddFunc("Faction.Add", new ValFunc<string, float3>(FactionFns.AddFaction));
+      AddFunc("Faction.Add", new ValFunc<string, float3, float3>(FactionFns.AddFaction));
       AddFunc("Faction.GetColor", new ValFunc<string>(FactionFns.GetColor));
       AddFunc("Faction.SetColor", new ValFunc<string, float3>(FactionFns.SetColor));
+      AddFunc("Faction.GetLaserColor", new ValFunc<string>(FactionFns.GetLaserColor));
+      AddFunc("Faction.SetLaserColor", new ValFunc<string, float3>(FactionFns.SetLaserColor));
       AddFunc("Faction.MakeAlly", new ValFunc<string, string>(FactionFns.MakeAlly));
       AddFunc("Faction.MakeEnemy", new ValFunc<string, string>(FactionFns.MakeEnemy));
       AddFunc("Faction.GetWingCount", new ValFunc<string>(FactionFns.GetWingCount));

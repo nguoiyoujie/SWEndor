@@ -142,11 +142,10 @@ namespace SWEndor.Weapons
         acinfo.Rotation = owner.GetGlobalRotation();
       }
 
+      acinfo.OwnerID = owner.ID;
+      acinfo.TargetID = target?.ID ?? -1;
+      acinfo.LifeTime = Proj.LifeTime;
       ProjectileInfo a = engine.ProjectileFactory.Create(acinfo);
-      a.OwnerID = owner?.ID ?? -1;
-      a.TargetID = target?.ID ?? -1;
-      if (Proj.LifeTime > 0)
-        a.DyingTimerSet(Proj.LifeTime, true);
       return true;
     }
 

@@ -6,7 +6,6 @@ namespace SWEndor.ProjectileTypes
 {
   public struct ProjectileCreationInfo : ICreationInfo<ProjectileInfo, ProjectileTypeInfo>
   {
-    public FactionInfo Faction;
     public ProjectileTypeInfo TypeInfo { get; }
     public string Name;
     public float CreationTime { get; set; }
@@ -14,6 +13,10 @@ namespace SWEndor.ProjectileTypes
     public float InitialScale;
     public TV_3DVECTOR Position;
     public TV_3DVECTOR Rotation;
+
+    public int OwnerID;
+    public int TargetID;
+    public float LifeTime;
 
     public float InitialSpeed;
     public bool FreeSpeed;
@@ -25,13 +28,15 @@ namespace SWEndor.ProjectileTypes
       Name = at.Name;
       InitialSpeed = at.MoveLimitData.MaxSpeed;
 
-      Faction = FactionInfo.Neutral;
       CreationTime = 0;
       InitialState = ActorState.NORMAL;
       InitialScale = 1;
       Position = new TV_3DVECTOR();
       Rotation = new TV_3DVECTOR();
       FreeSpeed = false;
+      OwnerID = -1;
+      TargetID = -1;
+      LifeTime = -1;
     }
   }
 }

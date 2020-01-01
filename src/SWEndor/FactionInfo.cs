@@ -26,6 +26,13 @@ namespace SWEndor
           list.Add(name, new FactionInfo(name, color));
         return list[name];
       }
+
+      public static FactionInfo Add(string name, COLOR color, COLOR lasercolor)
+      {
+        if (!list.ContainsKey(name))
+          list.Add(name, new FactionInfo(name, color, lasercolor));
+        return list[name];
+      }
     }
 
     public static FactionInfo Neutral;
@@ -36,6 +43,13 @@ namespace SWEndor
       Color = color;
     }
 
+    private FactionInfo(string name, COLOR color, COLOR lasercolor)
+    {
+      Name = name;
+      Color = color;
+      LaserColor = lasercolor;
+    }
+
     public bool IsAlliedWith(FactionInfo faction)
     {
       return (this == Neutral || faction == Neutral || this == faction || Allies.Contains(faction));
@@ -43,7 +57,7 @@ namespace SWEndor
 
     public readonly string Name;
     public COLOR Color = ColorLocalization.Get(ColorLocalKeys.WHITE);
-    public bool AutoAI = false;
+    public COLOR LaserColor = default(COLOR);
 
     static FactionInfo()
     {

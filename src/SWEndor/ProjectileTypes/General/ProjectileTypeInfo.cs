@@ -76,11 +76,10 @@ namespace SWEndor.ProjectileTypes
         TimedLifeData.LoadFromINI(f, sTimedLife);
         MoveLimitData.LoadFromINI(f, sMoveLimit);
         RenderData.LoadFromINI(f, sRender);
-        MeshData.LoadFromINI(Engine, f, sMesh);
+        MeshData.LoadFromINI(Engine, f, sMesh, ID);
         ExplodeSystemData.LoadFromINI(f, sExplode);
         DamageSpecialData.LoadFromINI(f, sDamageSpecial);
         SoundData.LoadFromINI(f, sSound);
-
       }
     }
 
@@ -111,7 +110,6 @@ namespace SWEndor.ProjectileTypes
 
     internal void Init()
     {
-      //cachedWeaponData.Load(this);
       MoveBehavior.Load(this);
     }
 
@@ -123,6 +121,10 @@ namespace SWEndor.ProjectileTypes
     public virtual void Initialize(Engine engine, ProjectileInfo ainfo)
     {
       SoundData.ProcessInitial(engine, ainfo);
+
+      if (RenderData.RemapLaserColor)
+        if (ainfo.Owner != null && ainfo.Owner.Faction.LaserColor.Value != 0)
+          ainfo.SetColor(ainfo.Owner.Faction.LaserColor.Value);
     }
 
     /// <summary>

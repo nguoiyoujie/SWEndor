@@ -106,7 +106,7 @@ namespace SWEndor.ActorTypes
         MoveLimitData.LoadFromINI(f, sMoveLimit);
         RenderData.LoadFromINI(f, sRender);
         AIData.LoadFromINI(f, sAI);
-        MeshData.LoadFromINI(Engine, f, sMesh);
+        MeshData.LoadFromINI(Engine, f, sMesh, ID);
         ExplodeSystemData.LoadFromINI(f, sExplode);
         WeapSystemData.LoadFromINI(f, sWeapon);
         DyingMoveData.LoadFromINI(Engine, f, sDyingMove);

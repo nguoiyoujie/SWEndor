@@ -33,6 +33,7 @@ namespace SWEndor.Models
       Rotation = acinfo.Rotation;
       PrevPosition = Position;
       PrevRotation = Rotation;
+      ZSqueeze = 1;
       Scale = scale * acinfo.InitialScale;
       math = engine.TrueVision.TVMathLibrary;
     }
@@ -43,6 +44,7 @@ namespace SWEndor.Models
       Rotation = acinfo.Rotation;
       PrevPosition = Position;
       PrevRotation = Rotation;
+      ZSqueeze = 1;
       Scale = scale * acinfo.InitialScale;
       math = engine.TrueVision.TVMathLibrary;
     }
@@ -53,6 +55,7 @@ namespace SWEndor.Models
       Rotation = acinfo.Rotation;
       PrevPosition = Position;
       PrevRotation = Rotation;
+      ZSqueeze = 1;
       Scale = scale * acinfo.InitialScale;
       math = engine.TrueVision.TVMathLibrary;
     }
@@ -63,6 +66,7 @@ namespace SWEndor.Models
       prevData = new TransformData();
       currTime = 0;
       prevTime = 0;
+      ZSqueeze = 1;
       currMat = default(TV_3DMATRIX);
       prevMat = default(TV_3DMATRIX);
     }
@@ -72,6 +76,8 @@ namespace SWEndor.Models
       get { return currData.Scale; }
       set { prevData.Scale = currData.Scale; currData.Scale = value; }
     }
+
+    public float ZSqueeze; // special for projectiles
 
     public TV_3DVECTOR Position
     {
@@ -132,7 +138,7 @@ namespace SWEndor.Models
     private TV_3DMATRIX GetMatS(ref TransformData data)
     {
       TV_3DMATRIX matrix = new TV_3DMATRIX();
-      math.TVMatrixScaling(ref matrix, data.Scale, data.Scale, data.Scale);
+      math.TVMatrixScaling(ref matrix, data.Scale, data.Scale, data.Scale * ZSqueeze);
       return matrix;
     }
 

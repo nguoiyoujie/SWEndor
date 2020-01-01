@@ -117,6 +117,14 @@ namespace SWEndor.Projectiles.Models
 
       return ret;
     }
+
+    public void SetColor(int color)
+    {
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
+          Mesh.SetColor(color);
+    }
+
     /*
     public void SetTexture(int iTexture)
     {
@@ -139,6 +147,7 @@ namespace SWEndor.Projectiles.Models
           Mesh.SetTextureModTranslationScale(u, v, su, sv);
     }
     */
+
     public TV_3DVECTOR GetVertex(int vertexID)
     {
       float x = 0;
@@ -208,6 +217,7 @@ namespace SWEndor.Projectiles
   {
     public Box GetBoundingBox(bool uselocal) { return Meshes.GetBoundingBox(uselocal); }
     public Sphere GetBoundingSphere(bool uselocal) { return Meshes.GetBoundingSphere(uselocal); }
+    public void SetColor(int iColor) { Meshes.SetColor(iColor); }
     //public void SetTexture(int iTexture) { Meshes.SetTexture(iTexture); }
     //public void EnableTexMod(bool enable) { Meshes.EnableTexMod(enable); }
     //public void SetTexMod(float u, float v, float su, float sv) { Meshes.SetTexMod(u, v, su, sv); }
