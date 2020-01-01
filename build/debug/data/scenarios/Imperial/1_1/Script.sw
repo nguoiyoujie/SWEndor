@@ -43,6 +43,9 @@ float3 faction_neutral_color = { 0.7, 0.7, 0.7 };
 float3 faction_neutral_rebel_color = { 0.8, 0.3, 0.3 };
 float3 faction_rebel_color = { 0.8, 0, 0 };
 
+float3 faction_empire_laser_color = { 0.1, 1, 0.12 };
+float3 faction_rebel_laser_color = { 1, 0, 0 };
+
 float3 _d = { 0, 0, 0 };
 int _a = -1;
 float _f = 0;
@@ -77,12 +80,12 @@ load:
 
 
 loadfaction:
-	Faction.Add("Empire", faction_empire_color);
-	Faction.Add("Empire_Trans", faction_empire_color);
+	Faction.Add("Empire", faction_empire_color, faction_empire_laser_color);
+	Faction.Add("Empire_Trans", faction_empire_color, faction_empire_laser_color);
 	Faction.Add("Neutral_Inspect", faction_neutral_color);
 	Faction.Add("Neutral_OK", faction_empire_trans_color);
 	Faction.Add("Neutral_Rebel", faction_neutral_rebel_color);
-	Faction.Add("Rebels", faction_rebel_color);
+	Faction.Add("Rebels", faction_rebel_color, faction_rebel_laser_color);
 	Faction.MakeAlly("Empire", "Neutral_Inspect");
 	Faction.MakeAlly("Empire", "Neutral_OK");
 	Faction.MakeAlly("Empire", "Neutral_Rebel");
@@ -903,7 +906,7 @@ spawn_onece:
 	spawn_faction = "Neutral_Inspect";
 	spawn_hyperspace = true;
 	spawn_wait = 3;
-	spawn_type = "CARGO_LG";
+	spawn_type = "FHT2";
 	spawn_name = "ONECE";
 	spawn_target = -1;
 	spawn_spacing = 350;
@@ -947,7 +950,7 @@ spawn_dayta:
 	spawn_faction = "Neutral_Inspect";
 	spawn_hyperspace = true;
 	spawn_wait = 3;
-	spawn_type = "CARGO_SM";
+	spawn_type = "TRN";
 	spawn_name = "DAYTA";
 	spawn_target = -1;
 	spawn_spacing = 600;
@@ -1033,7 +1036,7 @@ spawn_glich:
 	spawn_faction = "Neutral_Rebel";
 	spawn_hyperspace = true;
 	spawn_wait = 3;
-	spawn_type = "CARGO_LG";
+	spawn_type = "FHT2";
 	spawn_name = "GLICH 1";
 	spawn_target = -1;
 	spawn_pos = { 0, -200, 9000 };

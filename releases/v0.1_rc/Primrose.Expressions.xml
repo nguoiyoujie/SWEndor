@@ -226,6 +226,9 @@
             </summary>
             <returns>The array of all loaded scripts</returns>
         </member>
+        <member name="F:Primrose.Expressions.Script.Scope">
+            <summary>The base context scope of the script</summary>
+        </member>
         <member name="F:Primrose.Expressions.Script.Name">
             <summary>The name of the script</summary>
         </member>
@@ -247,7 +250,7 @@
         </member>
         <member name="T:Primrose.Expressions.ScriptExpression">
             <summary>
-            Represents a set of parsable statements
+            Represents a set of parsable expressions
             </summary>
         </member>
         <member name="M:Primrose.Expressions.ScriptExpression.#ctor(System.String)">
