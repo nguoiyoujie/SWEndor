@@ -1,4 +1,4 @@
-﻿//Source: https://www.c-sharpcorner.com/article/part-i-simple-color-syntax-code-editor-for-php-written-in-c/
+﻿//Reference Source: https://www.c-sharpcorner.com/article/part-i-simple-color-syntax-code-editor-for-php-written-in-c/
 
 using System;
 using System.Runtime.InteropServices;
@@ -18,18 +18,10 @@ namespace SWEndor.ScenarioEditor
     public bool _Paint = true;
     protected override void WndProc(ref System.Windows.Forms.Message m)
     {
-      // Code courtesy of Mark Mihevc  
-      // sometimes we want to eat the paint message so we don't have to see all the  
-      // flicker from when we select the text to change the color.  
-      if (m.Msg == WM_PAINT)
-      {
-        if (_Paint)
-          base.WndProc(ref m); // if we decided to paint this control, just call the RichTextBox WndProc  
-        else
-          m.Result = IntPtr.Zero; // not painting, must set this to IntPtr.Zero if not painting therwise serious problems.  
-      }
+      if (m.Msg == WM_PAINT && !_Paint)
+        m.Result = IntPtr.Zero;
       else
-        base.WndProc(ref m); // message other than WM_PAINT, jsut do what you normally do.  
+        base.WndProc(ref m);
     }
 
     [DllImport("user32.dll")]
