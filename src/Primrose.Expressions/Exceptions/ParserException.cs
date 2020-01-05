@@ -10,7 +10,7 @@ namespace Primrose.Expressions
                                                                             .F(lexer.TokenContents.Replace("\n", "")
                                                                             , lexer.SourceName
                                                                             , lexer.LineNumber
-                                                                            , lexer.Position
+                                                                            , lexer.TokenPosition
                                                                             , lexer.LineText))
     { }
 
@@ -18,7 +18,7 @@ namespace Primrose.Expressions
                                                                               .F(lexer.TokenContents.Replace("\n", "")
                                                                               , lexer.SourceName
                                                                               , lexer.LineNumber
-                                                                              , lexer.Position
+                                                                              , lexer.TokenPosition
                                                                               , expected.GetEnumName()
                                                                               , lexer.LineText))
     { }
@@ -27,7 +27,7 @@ namespace Primrose.Expressions
                                                                           .F(message
                                                                           , lexer.SourceName
                                                                           , lexer.LineNumber
-                                                                          , lexer.Position
+                                                                          , lexer.TokenPosition
                                                                           , lexer.LineText))
     { }
   }

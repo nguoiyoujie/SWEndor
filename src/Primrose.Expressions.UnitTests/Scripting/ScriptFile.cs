@@ -25,7 +25,7 @@ namespace Primrose.Expressions.UnitTests.Scripting
     {
       Script script = Script.Registry.Global;
       StringBuilder sb = new StringBuilder();
-      int linenumber = 1;
+      int linenumber = 0;
       using (StreamReader sr = new StreamReader(FilePath))
       {
         while (!sr.EndOfStream)

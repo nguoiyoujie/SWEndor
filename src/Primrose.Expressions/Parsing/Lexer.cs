@@ -11,8 +11,15 @@ namespace Primrose.Expressions
     private readonly TokenDefinition[] m_tokenDefinitions;
     public string SourceName { get; }
     public string LineText { get; private set; }
+    public string TokenContents { get; private set; }
+    public int TokenPosition { get; private set; }
+    public TokenEnum TokenType { get; private set; }
+
+    public int LineNumber { get; private set; }
+    public int Position { get; private set; }
 
     private string lineRemaining;
+    public bool EndOfStream { get { return lineRemaining == null; } }
 
     public Lexer(TextReader reader, TokenDefinition[] tokenDefinitions, string srcname, int linenumber)
     {
@@ -32,10 +39,9 @@ namespace Primrose.Expressions
         LineText = lineRemaining;
         ++LineNumber;
         Position = 0;
+        TokenPosition = 0;
       } while (lineRemaining != null && lineRemaining.Length == 0);
     }
-
-    public bool EndOfStream { get { return lineRemaining == null; } }
 
     public TokenEnum Peek()
     {
@@ -98,6 +104,7 @@ namespace Primrose.Expressions
     {
       TokenType = token;
       TokenContents = content;
+      TokenPosition = Position;
       Position = position;
 
       if (matched > 0)
@@ -109,11 +116,6 @@ namespace Primrose.Expressions
       }
       return false;
     }
-
-    public string TokenContents { get; private set; }
-    public TokenEnum TokenType { get; private set; }
-    public int LineNumber { get; private set; }
-    public int Position { get; private set; } = 1;
 
     public void Dispose() => m_reader.Dispose();
   }
