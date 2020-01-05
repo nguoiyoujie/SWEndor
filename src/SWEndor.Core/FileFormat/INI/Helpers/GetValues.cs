@@ -358,32 +358,66 @@ namespace SWEndor.FileFormat.INI
       return ret;
     }
 
-    public T GetEnum<T>(string section, string key, T defaultValue) where T : struct
+    public object GetEnum(Type t, string section, string key, object defaultValue)
     {
       string s = GetString(section, key, defaultValue.GetEnumName()).Replace("|", ","); ;
-      T ret = defaultValue;
-      Enum.TryParse<T>(s, out ret);
-      return ret;
+      try { return Enum.Parse(t, s); }
+      catch { return defaultValue; }
     }
 
-    public T[] GetEnumArray<T>(string section, string key, T[] defaultList) where T : struct
+    public T GetEnum<T>(string section, string key, T defaultValue)
     {
-      return GetEnumArray(section, key, defaultList, DefaultDelimiter);
+      string s = GetString(section, key, defaultValue.GetEnumName()).Replace("|", ","); ;
+      try { return (T)Enum.Parse(typeof(T), s); }
+      catch { return defaultValue; }
     }
 
-    public T[] GetEnumArray<T>(string section, string key, T[] defaultList, char[] delimiter) where T : struct
+    public object GetEnumArray(Type t, string section, string key, object defaultList)
+    {
+      return GetEnumArray(t, section, key, defaultList, DefaultDelimiter);
+    }
+
+    public object GetEnumArray(Type t, string section, string key, object defaultList, char[] delimiter)
     {
       string str = GetString(section, key, "");
       if (str == "")
         return defaultList;
 
       string[] tokens = str.Split(delimiter);
-      T[] ret = new T[tokens.Length];
+
+      Type et = t.GetElementType();
+      Array array = Array.CreateInstance(et, tokens.Length);
 
       for (int i = 0; i < tokens.Length; i++)
-        Enum.TryParse(tokens[i], out ret[i]);
+      {
+        try { array.SetValue(Enum.Parse(et, tokens[i]), i); }
+        catch { }
+      }
+      return array;
+    }
 
-      return ret;
+    public T GetEnumArray<T>(string section, string key, T defaultList)
+    {
+      return GetEnumArray(section, key, defaultList, DefaultDelimiter);
+    }
+
+    public T GetEnumArray<T>(string section, string key, T defaultList, char[] delimiter)
+    {
+      string str = GetString(section, key, "");
+      if (str == "")
+        return defaultList;
+
+      string[] tokens = str.Split(delimiter);
+
+      Type et = typeof(T).GetElementType();
+      Array array = Array.CreateInstance(et, tokens.Length);
+
+      for (int i = 0; i < tokens.Length; i++)
+      {
+        try { array.SetValue(Enum.Parse(et, tokens[i]), i); }
+        catch { }
+      }
+      return (T)(object)array;
     }
   }
 }

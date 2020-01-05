@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 
 namespace SWEndor.FileFormat.INI
 {
@@ -40,7 +41,7 @@ namespace SWEndor.FileFormat.INI
         throw new Exception("The section [{0}] does not exist in '{1}'!".F(key, FilePath));
     }
 
-    public void ReadFile()
+    public virtual void ReadFile()
     {
       if (!File.Exists(FilePath))
       {
@@ -74,10 +75,36 @@ namespace SWEndor.FileFormat.INI
           }
         }
       }
+
+      foreach (FieldInfo fi in GetType().GetFields())
+      {
+        foreach (Attribute a in fi.GetCustomAttributes(typeof(INIValueAttribute), false))
+          fi.SetValue(this, ((INIValueAttribute)a).Read(fi.FieldType, this, fi.GetValue(this)));
+
+        foreach (Attribute a in fi.GetCustomAttributes(typeof(INIKeyListAttribute), false))
+        {
+          if (fi.FieldType != typeof(string[]))
+            throw new InvalidOperationException("INIKeyList attribute can only be used with string[] data types! ({0} {1})".F(fi.FieldType.Name, fi.Name));
+          fi.SetValue(this, ((INIKeyListAttribute)a).Read(this));
+        }
+      }
     }
 
-    public void SaveFile(string filepath)
+    public virtual void SaveFile(string filepath)
     {
+      foreach (FieldInfo fi in GetType().GetFields())
+      {
+        foreach (Attribute a in fi.GetCustomAttributes(typeof(INIValueAttribute), false))
+          ((INIValueAttribute)a).Write(fi.FieldType, this, fi.GetValue(this));
+
+        foreach (Attribute a in fi.GetCustomAttributes(typeof(INIKeyListAttribute), false))
+        {
+          if (fi.FieldType != typeof(string[]))
+            throw new InvalidOperationException("INIKeyList attribute can only be used with string[] data types! ({0} {1})".F(fi.FieldType.Name, fi.Name));
+          ((INIKeyListAttribute)a).Write(this, (string[])fi.GetValue(this));
+        }
+      }
+
       Directory.CreateDirectory(Path.GetDirectoryName(filepath));
 
       using (StreamWriter sw = new StreamWriter(filepath, false))
@@ -91,9 +118,8 @@ namespace SWEndor.FileFormat.INI
 
             foreach (INISection.INILine line in section.Lines)
             {
-              string s = line.ToString();
-              if (s.Length != 1) // "="
-                sw.WriteLine(s);
+              if (line.HasKey)
+                sw.WriteLine(line.ToString());
             }
 
             sw.WriteLine();

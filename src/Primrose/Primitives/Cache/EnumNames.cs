@@ -8,7 +8,7 @@ namespace Primrose.Primitives
   /// Provides a cache for string names for enumerables. Improves runtime performance of name-based lookups.
   /// </summary>
   /// <typeparam name="T">The enumerable type</typeparam>
-  public static class EnumNames<T> where T : struct
+  public static class EnumNames<T>
   {
     private static Dictionary<T, string> _dict;
 
@@ -46,7 +46,7 @@ namespace Primrose.Primitives
     /// <typeparam name="T">The enumerable type</typeparam>
     /// <param name="key">The enum value</param>
     /// <returns></returns>
-    public static string GetEnumName<T>(this T key) where T : struct
+    public static string GetEnumName<T>(this T key)
     {
       if (!typeof(T).IsEnum)
         throw new InvalidOperationException("Attempted to use GetEnumName on an non Enum object! ({0})".F(typeof(T)));

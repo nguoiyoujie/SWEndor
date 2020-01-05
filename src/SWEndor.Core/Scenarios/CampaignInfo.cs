@@ -32,20 +32,13 @@ namespace SWEndor.Scenarios
       string dir = Path.GetDirectoryName(path);
       if (Directory.Exists(dir))
       {
-        INIFile f = new INIFile(path);
+        CampaignFile c = new CampaignFile(path);
 
-        // [General]
-        if (f.HasSection("General"))
-        {
-          Name = f.GetString("General", "Name", "");
-          Description = f.GetString("General", "Description", "").Replace('|', '\n');
-        }
+        Name = c.General_Name;
+        Description = c.General_Desc;
 
-        // [Scenarios]
-        if (f.HasSection("Scenarios"))
-          foreach (INIFile.INISection.INILine ln in f.GetSection("Scenarios").Lines)
-            if (ln.HasKey)
-              Scenarios.Add(new GSCustomScenario(Manager, Path.Combine(dir, ln.Key)));
+        foreach (string s in c.ScenarioPaths)
+          Scenarios.Add(new GSCustomScenario(Manager, Path.Combine(dir, s)));
       }
     }
   }

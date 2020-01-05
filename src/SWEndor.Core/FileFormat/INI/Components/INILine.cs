@@ -12,10 +12,11 @@ namespace SWEndor.FileFormat.INI
         public string Value;
 
         public bool HasKey { get { return Key != null && Key.Length > 0; } }
+        public bool HasValue { get { return Value != null && Value.Length > 0; } }
 
         public override string ToString()
         {
-          return "{0}={1}".F(Key, Value);
+          return Value == null ? (Key ?? "") : "{0}={1}".F(Key, Value);
         }
 
         public static INILine ReadLine(string line)

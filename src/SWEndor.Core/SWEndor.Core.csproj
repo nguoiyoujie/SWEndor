@@ -162,11 +162,15 @@
     <Compile Include="ExplosionTypes\General\ExplosionTypeInfo.cs" />
     <Compile Include="ExplosionTypes\General\Factory\Factory.cs" />
     <Compile Include="FactionInfo.cs" />
+    <Compile Include="FileFormat\INI\INIKeysAttribute.cs" />
+    <Compile Include="FileFormat\INI\INIValueAttribute.cs" />
     <Compile Include="FileFormat\INI\Components\INIHeaderLine.cs" />
     <Compile Include="FileFormat\INI\Components\INILine.cs" />
     <Compile Include="FileFormat\INI\Components\INISection.cs" />
     <Compile Include="FileFormat\INI\Helpers\GetValues.cs" />
     <Compile Include="FileFormat\INI\Helpers\SetValues.cs" />
+    <Compile Include="FileFormat\INI\CampaignFile.cs" />
+    <Compile Include="FileFormat\INI\ScenarioFile.cs" />
     <Compile Include="FileFormat\INI\INIFile.cs" />
     <Compile Include="FileFormat\Scripting\ScriptFile.cs" />
     <Compile Include="GameEvent\GameEvent.cs" />
