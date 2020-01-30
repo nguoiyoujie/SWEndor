@@ -222,9 +222,9 @@
         </member>
         <member name="M:Primrose.Expressions.Script.Registry.GetAll">
             <summary>
-            Retrieves all scripts from the registry
+            Retrieves all scripts from the registry, excluding the global script
             </summary>
-            <returns>The array of all loaded scripts</returns>
+            <returns>The array of all loaded scripts, excluding the global script</returns>
         </member>
         <member name="F:Primrose.Expressions.Script.Scope">
             <summary>The base context scope of the script</summary>
@@ -250,11 +250,11 @@
         </member>
         <member name="T:Primrose.Expressions.ScriptExpression">
             <summary>
-            Represents a set of parsable expressions
+            Represents a parsable expression
             </summary>
         </member>
         <member name="M:Primrose.Expressions.ScriptExpression.#ctor(System.String)">
-            <summary>Creates a script expression</summary>
+            <summary>Creates a script containing an expression</summary>
         </member>
         <member name="M:Primrose.Expressions.ScriptExpression.Evaluate(Primrose.Expressions.AContext)">
             <summary>Evaluates the script</summary>

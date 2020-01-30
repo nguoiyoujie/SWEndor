@@ -1173,14 +1173,6 @@
         <member name="P:Primrose.Primitives.IIdentity.ID">
             <summary>The instance ID</summary>
         </member>
-        <member name="T:Primrose.Primitives.INamedObject">
-            <summary>
-            Implements a named object
-            </summary>
-        </member>
-        <member name="P:Primrose.Primitives.INamedObject.Name">
-            <summary>The instance name</summary>
-        </member>
         <member name="T:Primrose.Primitives.Pipelines.Pipeline`1">
             <summary>
             Maintains and executes objects in an queue. Useful for FIFO procedures like UI modifications.
@@ -1907,6 +1899,270 @@
             </summary>
             <param name="t">The first value</param>
             <param name="u">The second value</param>
+        </member>
+        <member name="F:Primitives.FileFormat.INI.INIFile.DefaultDelimiter">
+            <summary>
+            The default delimiter referenced for use in the INIFile class
+            </summary>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.GetString(System.String,System.String,System.String)">
+            <summary>
+            Gets a string value from the INIFile 
+            </summary>
+            <param name="section">The section containing the key-value pair</param>
+            <param name="key">The key containing the value</param>
+            <param name="defaultValue">The default value</param>
+            <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.GetInt(System.String,System.String,System.Int32)">
+            <summary>
+            Gets an int value from the INIFile 
+            </summary>
+            <param name="section">The section containing the key-value pair</param>
+            <param name="key">The key containing the value</param>
+            <param name="defaultValue">The default value</param>
+            <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.GetUInt(System.String,System.String,System.UInt32)">
+            <summary>
+            Gets a uint value from the INIFile 
+            </summary>
+            <param name="section">The section containing the key-value pair</param>
+            <param name="key">The key containing the value</param>
+            <param name="defaultValue">The default value</param>
+            <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.GetFloat(System.String,System.String,System.Single)">
+            <summary>
+            Gets a float value from the INIFile 
+            </summary>
+            <param name="section">The section containing the key-value pair</param>
+            <param name="key">The key containing the value</param>
+            <param name="defaultValue">The default value</param>
+            <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.GetDouble(System.String,System.String,System.Double)">
+            <summary>
+            Gets a double value from the INIFile 
+            </summary>
+            <param name="section">The section containing the key-value pair</param>
+            <param name="key">The key containing the value</param>
+            <param name="defaultValue">The default value</param>
+            <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.GetFloat2(System.String,System.String,Primrose.Primitives.ValueTypes.float2)">
+            <summary>
+            Gets a float2 value from the INIFile 
+            </summary>
+            <param name="section">The section containing the key-value pair</param>
+            <param name="key">The key containing the value</param>
+            <param name="defaultValue">The default value</param>
+            <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.GetFloat3(System.String,System.String,Primrose.Primitives.ValueTypes.float3)">
+            <summary>
+            Gets a float3 value from the INIFile 
+            </summary>
+            <param name="section">The section containing the key-value pair</param>
+            <param name="key">The key containing the value</param>
+            <param name="defaultValue">The default value</param>
+            <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.GetFloat4(System.String,System.String,Primrose.Primitives.ValueTypes.float4)">
+            <summary>
+            Gets a float4 value from the INIFile 
+            </summary>
+            <param name="section">The section containing the key-value pair</param>
+            <param name="key">The key containing the value</param>
+            <param name="defaultValue">The default value</param>
+            <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.GetIntArray(System.String,System.String,System.Int32[])">
+            <summary>
+            Gets an int[] array from the INIFile 
+            </summary>
+            <param name="section">The section containing the key-value pair</param>
+            <param name="key">The key containing the value</param>
+            <param name="defaultList">The default array</param>
+            <returns>The value belong to the section and key in the INIFile. If any key does not exist, returns defaultValue</returns>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetEmptyKey(System.String,System.String)">
+            <summary>
+            Sets an empty value in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key</param>
+            <param name="key">The key that will be set</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetString(System.String,System.String,System.String)">
+            <summary>
+            Sets a string value in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="value">The value to be set</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetInt(System.String,System.String,System.Int32)">
+            <summary>
+            Sets an int value in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="value">The value to be set</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetUInt(System.String,System.String,System.UInt32)">
+            <summary>
+            Sets an uint value in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="value">The value to be set</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetFloat(System.String,System.String,System.Single)">
+            <summary>
+            Sets a float value in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="value">The value to be set</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetDouble(System.String,System.String,System.Double)">
+            <summary>
+            Sets a double value in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="value">The value to be set</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetBool(System.String,System.String,System.Boolean)">
+            <summary>
+            Sets a bool value in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="value">The value to be set</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetIntArray(System.String,System.String,System.Int32[],System.Char)">
+            <summary>
+            Sets an int[] array in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="list">The array of values to be set</param>
+            <param name="delimiter">The delimiter to be inserted between values</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetUIntArray(System.String,System.String,System.UInt32[],System.Char)">
+            <summary>
+            Sets an uint[] array in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="list">The array of values to be set</param>
+            <param name="delimiter">The delimiter to be inserted between values</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetFloatArray(System.String,System.String,System.Single[],System.Char)">
+            <summary>
+            Sets a float[] array in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="list">The array of values to be set</param>
+            <param name="delimiter">The delimiter to be inserted between values</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetFloat2(System.String,System.String,Primrose.Primitives.ValueTypes.float2,System.Char)">
+            <summary>
+            Sets a float2 value in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="value">The value to be set</param>
+            <param name="delimiter">The delimiter to be inserted between values</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetFloat3(System.String,System.String,Primrose.Primitives.ValueTypes.float3,System.Char)">
+            <summary>
+            Sets a float3 value in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="value">The value to be set</param>
+            <param name="delimiter">The delimiter to be inserted between values</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetFloat4(System.String,System.String,Primrose.Primitives.ValueTypes.float4,System.Char)">
+            <summary>
+            Sets a float4 value in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="value">The value to be set</param>
+            <param name="delimiter">The delimiter to be inserted between values</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetDoubleArray(System.String,System.String,System.Double[],System.Char)">
+            <summary>
+            Sets a double[] array in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="list">The array of values to be set</param>
+            <param name="delimiter">The delimiter to be inserted between values</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetBoolArray(System.String,System.String,System.Boolean[],System.Char)">
+            <summary>
+            Sets a bool[] array in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="list">The array of values to be set</param>
+            <param name="delimiter">The delimiter to be inserted between values</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetStringArray(System.String,System.String,System.String[],System.Char)">
+            <summary>
+            Sets a string[] array in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="list">The array of values to be set</param>
+            <param name="delimiter">The delimiter to be inserted between values</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetStringBuilderArray(System.String,System.String,System.Text.StringBuilder[],System.Char)">
+            <summary>
+            Sets a StringBuilder[] array in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="list">The array of values to be set</param>
+            <param name="delimiter">The delimiter to be inserted between values</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetEnum``1(System.String,System.String,``0)">
+            <summary>
+            Sets an enum value in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="value">The value to be set</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetEnumArray``1(System.String,System.String,``0,System.Char)">
+            <summary>
+            Sets an enum array in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="value">The value to be set</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetEnum(System.String,System.String,System.Object)">
+            <summary>
+            Sets an enum value in the INIFile 
+            </summary>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="value">The value to be set</param>
+        </member>
+        <member name="M:Primitives.FileFormat.INI.INIFile.SetEnumArray(System.String,System.String,System.Object,System.Char)">
+            <summary>
+            Sets an enum array in the INIFile 
+            </summary>
+            <param name="type">The type of the value</param>
+            <param name="section">The section that will contain the key-value pair</param>
+            <param name="key">The key that will contain the value</param>
+            <param name="value">The value to be set</param>
         </member>
     </members>
 </doc>

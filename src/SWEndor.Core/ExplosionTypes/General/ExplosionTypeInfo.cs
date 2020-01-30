@@ -104,8 +104,11 @@ namespace SWEndor.ExplosionTypes
         SoundData.Process(engine, ainfo);
 
       // billboard
-      TV_3DVECTOR pos = ainfo.Engine.PlayerCameraInfo.Camera.GetWorldPosition(new TV_3DVECTOR(0, 0, -1000));
-      ainfo.LookAt(pos);
+      if (MeshData.Mode == MeshMode.BILLBOARD_ANIM)
+      {
+        TV_3DVECTOR pos = ainfo.Engine.PlayerCameraInfo.Camera.GetWorldPosition(new TV_3DVECTOR(0, 0, -1000));
+        ainfo.LookAt(pos);
+      }
 
       // anim
       ExplRenderData.Process(engine, ainfo);
