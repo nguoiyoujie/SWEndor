@@ -12,7 +12,6 @@ namespace SWEndor.Explosions
   public partial class ExplosionInfo :
     IEngineObject,
     IIdentity,
-    INamedObject,
     ITyped<ExplosionTypeInfo>,
     ILinked<ExplosionInfo>,
     IScoped,

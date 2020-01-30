@@ -6,16 +6,18 @@ using Primrose.Primitives.ValueTypes;
 using System;
 using SWEndor.Primitives.Extensions;
 using Primrose.Expressions;
+using SWEndor.Core;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
   public static class AIFns
   {
-    public static Val QueueFirst(Context context, params Val[] ps)
+    public static Val QueueFirst(IContext context, params Val[] ps)
     {
       int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(id);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
       ActionInfo action = ParseAction(ps);
@@ -26,11 +28,12 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.TRUE;
     }
 
-    public static Val QueueNext(Context context, params Val[] ps)
+    public static Val QueueNext(IContext context, params Val[] ps)
     {
       int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(id);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
       ActionInfo action = ParseAction(ps);
@@ -41,11 +44,12 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.TRUE;
     }
 
-    public static Val QueueLast(Context context, params Val[] ps)
+    public static Val QueueLast(IContext context, params Val[] ps)
     {
       int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(id);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
       ActionInfo action = ParseAction(ps);
@@ -56,30 +60,33 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.TRUE;
     }
 
-    public static Val UnlockOne(Context context, int actorID)
+    public static Val UnlockOne(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
       actor.UnlockOne();
       return Val.TRUE;
     }
 
-    public static Val ClearQueue(Context context, int actorID)
+    public static Val ClearQueue(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
       actor.ClearQueue();
       return Val.TRUE;
     }
 
-    public static Val ForceClearQueue(Context context, int actorID)
+    public static Val ForceClearQueue(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
       actor.ForceClearQueue();

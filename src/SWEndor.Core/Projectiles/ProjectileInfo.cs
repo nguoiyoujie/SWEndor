@@ -11,7 +11,6 @@ namespace SWEndor.Projectiles
   public partial class ProjectileInfo :
     IEngineObject,
     IIdentity,
-    INamedObject,
     ITyped<ProjectileTypeInfo>,
     ILinked<ProjectileInfo>,
     IScoped,

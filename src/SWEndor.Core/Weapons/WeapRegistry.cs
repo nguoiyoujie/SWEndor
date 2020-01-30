@@ -1,7 +1,7 @@
 ﻿using Primrose.Primitives.Factories;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
-using SWEndor.FileFormat.INI;
+using Primitives.FileFormat.INI;
 using System.IO;
 using System.Threading.Tasks;
 

@@ -1,5 +1,5 @@
 ﻿using MTV3D65;
-using SWEndor.FileFormat.INI;
+using Primitives.FileFormat.INI;
 using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.ActorTypes.Components

@@ -4,7 +4,7 @@ using SWEndor.ActorTypes.Components;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Core;
-using SWEndor.FileFormat.INI;
+using Primitives.FileFormat.INI;
 using SWEndor.Models;
 using SWEndor.Player;
 using Primrose.Primitives.Extensions;
@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using SWEndor.Primitives.Extensions;
+using Primitives.FileFormat.INI;
 
 namespace SWEndor.ActorTypes
 {
@@ -125,7 +126,9 @@ namespace SWEndor.ActorTypes
       string filepath = Path.Combine(Globals.ActorTypeINIDirectory, id + ".ini");
 
       if (!File.Exists(filepath))
-        File.Create(filepath).Close(); INIFile f = new INIFile(filepath);
+        File.Create(filepath).Close();
+
+      INIFile f = new INIFile(filepath);
 
       f.SetString("General", "Name", Name);
       f.SetEnum("General", "Mask", Mask);

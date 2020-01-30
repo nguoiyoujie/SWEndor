@@ -17,7 +17,6 @@ namespace SWEndor.Actors
   public partial class ActorInfo :
     IEngineObject,
     IIdentity,
-    INamedObject,
     ITyped<ActorTypeInfo>,
     ILinked<ActorInfo>,
     IScoped,

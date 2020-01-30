@@ -1,4 +1,6 @@
-﻿namespace SWEndor.FileFormat.INI
+﻿using Primitives.FileFormat.INI;
+
+namespace SWEndor.FileFormat.INI
 {
   public class ScenarioFile : INIFile
   {
@@ -42,9 +44,8 @@
     [INIValue("Audio", "Lose")]
     public string Audio_Lose;
 
+    public ScenarioFile() { }
 
-    public ScenarioFile(string filepath) : base(filepath)
-    {
-    }
+    public ScenarioFile(string filepath) : base(filepath) { }
   }
 }

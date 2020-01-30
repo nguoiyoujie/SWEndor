@@ -15,7 +15,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     STRING script_name
     /// </param>
     /// <returns>TRUE if a script is found, FALSE otherwise</returns>
-    public static Val TryCall(Context context, string script_name)
+    public static Val TryCall(IContext context, string script_name)
     {
       Script scr = Script.Registry.Get(script_name);
       if (scr != null)
@@ -35,7 +35,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     STRING script_name
     /// </param>
     /// <returns>NULL. Throws an exception if no script is found.</returns>
-    public static Val Call(Context context, string script_name)
+    public static Val Call(IContext context, string script_name)
     {
       Script scr = Script.Registry.Get(script_name);
       if (scr == null)

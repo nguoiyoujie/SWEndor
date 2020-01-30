@@ -1,9 +1,4 @@
-﻿using SWEndor.Actors;
-using SWEndor.Core;
-using SWEndor.FileFormat.INI;
-using SWEndor.Primitives.Extensions;
-using SWEndor.UI.Menu.Pages;
-using System;
+﻿using SWEndor.FileFormat.INI;
 using System.Collections.Generic;
 using System.IO;
 

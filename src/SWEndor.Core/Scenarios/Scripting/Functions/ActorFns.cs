@@ -12,180 +12,198 @@ namespace SWEndor.Scenarios.Scripting.Functions
 {
   public static class ActorFns
   {
-    public static Val GetActorType(Context context, int actorID)
+    public static Val GetActorType(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val();
 
       return new Val(actor.TypeInfo.ID);
     }
 
-    public static Val IsFighter(Context context, int actorID)
+    public static Val IsFighter(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
       return new Val(actor.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER));
     }
 
-    public static Val IsLargeShip(Context context, int actorID)
+    public static Val IsLargeShip(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
       return new Val(actor.TypeInfo.AIData.TargetType.Has(TargetType.SHIP));
     }
 
-    public static Val IsAlive(Context context, int actorID)
+    public static Val IsAlive(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.FALSE;
 
       return new Val(!actor.IsDead);
     }
 
-    public static Val GetFaction(Context context, int actorID)
+    public static Val GetFaction(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val(FactionInfo.Neutral.Name);
 
       return new Val(actor.Faction.Name);
     }
 
-    public static Val SetFaction(Context context, int actorID, string name)
+    public static Val SetFaction(IContext context, int actorID, string name)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.NULL;
 
       actor.Faction = FactionInfo.Factory.Get(name);
       return Val.NULL;
     }
 
-    public static Val AddToRegister(Context context, int actorID, string register)
+    public static Val AddToRegister(IContext context, int actorID, string register)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.NULL;
 
-      HashSet<ActorInfo> reg = context.Engine.GameScenarioManager.Scenario.GetRegister(register);
+      HashSet<ActorInfo> reg = e.GameScenarioManager.Scenario.GetRegister(register);
       reg?.Add(actor);
 
       return Val.NULL;
     }
 
-    public static Val RemoveFromRegister(Context context, int actorID, string register)
+    public static Val RemoveFromRegister(IContext context, int actorID, string register)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.NULL;
 
-      HashSet<ActorInfo> reg = context.Engine.GameScenarioManager.Scenario.GetRegister(register);
+      HashSet<ActorInfo> reg = e.GameScenarioManager.Scenario.GetRegister(register);
       reg?.Remove(actor);
 
       return Val.NULL;
     }
 
 
-    public static Val GetLocalPosition(Context context, int actorID)
+    public static Val GetLocalPosition(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val(new float3(0, 0, 0));
 
       TV_3DVECTOR vec = actor.Position;
       return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
-    public static Val GetLocalRotation(Context context, int actorID)
+    public static Val GetLocalRotation(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val(new float3( 0, 0, 0 ));
 
       TV_3DVECTOR vec = actor.Rotation;
       return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
-    public static Val GetLocalDirection(Context context, int actorID)
+    public static Val GetLocalDirection(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val(new float3(0, 0, 0));
 
       TV_3DVECTOR vec = actor.Direction;
       return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
-    public static Val GetGlobalPosition(Context context, int actorID)
+    public static Val GetGlobalPosition(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val(new float3(0, 0, 0));
 
       TV_3DVECTOR vec = actor.GetGlobalPosition();
       return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
-    public static Val GetGlobalRotation(Context context, int actorID)
+    public static Val GetGlobalRotation(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val(new float3(0, 0, 0));
 
       TV_3DVECTOR vec = actor.GetGlobalRotation();
       return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
-    public static Val GetGlobalDirection(Context context, int actorID)
+    public static Val GetGlobalDirection(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val(new float3(0, 0, 0));
 
       TV_3DVECTOR vec = actor.GetGlobalDirection();
       return new Val(new float3(vec.x, vec.y, vec.z));
     }
 
-    public static Val SetLocalPosition(Context context, int actorID, float3 point)
+    public static Val SetLocalPosition(IContext context, int actorID, float3 point)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.NULL;
 
       actor.Position = point.ToVec3();
       return Val.NULL;
     }
 
-    public static Val SetLocalRotation(Context context, int actorID, float3 point)
+    public static Val SetLocalRotation(IContext context, int actorID, float3 point)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.NULL;
 
       actor.Rotation = point.ToVec3();
       return Val.NULL;
     }
 
-    public static Val SetLocalDirection(Context context, int actorID, float3 point)
+    public static Val SetLocalDirection(IContext context, int actorID, float3 point)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.NULL;
 
       actor.Direction = point.ToVec3();
       return Val.NULL;
     }
     
-    public static Val LookAtPoint(Context context, int actorID, float3 point)
+    public static Val LookAtPoint(IContext context, int actorID, float3 point)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.NULL;
 
       TV_3DVECTOR vec = point.ToVec3();
@@ -194,10 +212,11 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.NULL;
     }
 
-    public static Val GetChildren(Context context, int actorID)
+    public static Val GetChildren(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val(new int[0]);
 
       List<int> ret = new List<int>();
@@ -207,10 +226,11 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(ret.ToArray());
     }
 
-    public static Val GetChildrenByType(Context context, int actorID, string actorType)
+    public static Val GetChildrenByType(IContext context, int actorID, string actorType)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val(new int[0]);
 
       List<int> ret = new List<int>();
@@ -221,180 +241,198 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(ret.ToArray());
     }
 
-    public static Val GetHP(Context context, int actorID)
+    public static Val GetHP(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val(0);
 
       return new Val(actor.HP);
     }
 
-    public static Val GetShd(Context context, int actorID)
+    public static Val GetShd(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val(0);
 
       return new Val(actor.Shd);
     }
 
-    public static Val GetHull(Context context, int actorID)
+    public static Val GetHull(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val(0);
 
       return new Val(actor.Hull);
     }
 
-    public static Val GetMaxHP(Context context, int actorID)
+    public static Val GetMaxHP(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val(0);
 
       return new Val(actor.MaxHP);
     }
 
-    public static Val GetMaxShd(Context context, int actorID)
+    public static Val GetMaxShd(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val(0);
 
       return new Val(actor.MaxShd);
     }
 
-    public static Val GetMaxHull(Context context, int actorID)
+    public static Val GetMaxHull(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val(0);
 
       return new Val(actor.MaxHull);
     }
 
-    public static Val SetHP(Context context, int actorID, float value)
+    public static Val SetHP(IContext context, int actorID, float value)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.NULL;
 
       actor.HP = value;
       return Val.NULL;
     }
 
-    public static Val SetShd(Context context, int actorID, float value)
+    public static Val SetShd(IContext context, int actorID, float value)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.NULL;
 
       actor.Shd = value;
       return Val.NULL;
     }
 
-    public static Val SetHull(Context context, int actorID, float value)
+    public static Val SetHull(IContext context, int actorID, float value)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.NULL;
 
       actor.Hull = value;
       return Val.NULL;
     }
 
-    public static Val SetMaxHP(Context context, int actorID, float value)
+    public static Val SetMaxHP(IContext context, int actorID, float value)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.NULL;
 
       actor.MaxHP = value;
       return Val.NULL;
     }
 
-    public static Val SetMaxShd(Context context, int actorID, float value)
+    public static Val SetMaxShd(IContext context, int actorID, float value)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.NULL;
 
       actor.MaxShd = value;
       return Val.NULL;
     }
 
-    public static Val SetMaxHull(Context context, int actorID, float value)
+    public static Val SetMaxHull(IContext context, int actorID, float value)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.NULL;
 
       actor.MaxHull = value;
       return Val.NULL;
     }
 
-    public static Val GetProperty(Context context, int actorID, string property)
+    public static Val GetProperty(IContext context, int actorID, string property)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val();
 
       Val result = new Val();
-      ConfigureActorProperty(context.Engine, actor, property, false, ref result);
+      ConfigureActorProperty(e, actor, property, false, ref result);
       return result;
     }
 
-    public static Val GetArmor(Context context, int actorID, string sdmgtype)
+    public static Val GetArmor(IContext context, int actorID, string sdmgtype)
     {
+      Engine e = ((Context)context).Engine;
       DamageType dmgtype = (DamageType)Enum.Parse(typeof(DamageType), sdmgtype);
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val(0);
 
       return new Val(actor.GetArmor(dmgtype));
     }
 
-    public static Val SetArmor(Context context, int actorID, string sdmgtype, float value)
+    public static Val SetArmor(IContext context, int actorID, string sdmgtype, float value)
     {
+      Engine e = ((Context)context).Engine;
       DamageType dmgtype = (DamageType)Enum.Parse(typeof(DamageType), sdmgtype);
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.NULL;
 
       actor.SetArmor(dmgtype, value);
       return Val.NULL;
     }
 
-    public static Val SetArmorAll(Context context, int actorID, float value)
+    public static Val SetArmorAll(IContext context, int actorID, float value)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.NULL;
 
       actor.SetArmorAll(value);
       return Val.NULL;
     }
 
-    public static Val RestoreArmor(Context context, int actorID)
+    public static Val RestoreArmor(IContext context, int actorID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return Val.NULL;
 
       actor.RestoreArmor();
       return Val.NULL;
     }
 
-    public static Val SetProperty(Context context, params Val[] ps)
+    public static Val SetProperty(IContext context, params Val[] ps)
     {
       int id = (int)ps[0];
-      ActorInfo actor = context.Engine.ActorFactory.Get(id);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(id);
+      if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val();
 
-      ConfigureActorProperty(context.Engine, actor, (string)ps[1], true, ref ps[2]);
+      ConfigureActorProperty(e, actor, (string)ps[1], true, ref ps[2]);
       return ps[2];
     }
 

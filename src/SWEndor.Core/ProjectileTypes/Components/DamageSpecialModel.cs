@@ -2,7 +2,7 @@
 using SWEndor.Core;
 using SWEndor.Explosions;
 using SWEndor.ExplosionTypes;
-using SWEndor.FileFormat.INI;
+using Primitives.FileFormat.INI;
 using SWEndor.Models;
 using System.Collections.Generic;
 

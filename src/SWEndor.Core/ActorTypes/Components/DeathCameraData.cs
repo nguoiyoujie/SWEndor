@@ -1,5 +1,5 @@
 ﻿using Primrose.Primitives.ValueTypes;
-using SWEndor.FileFormat.INI;
+using Primitives.FileFormat.INI;
 
 namespace SWEndor.ActorTypes.Components
 {

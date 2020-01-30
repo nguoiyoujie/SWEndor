@@ -6,6 +6,7 @@ using SWEndor.Projectiles;
 using System;
 using System.Collections.Generic;
 using Primrose.Primitives.ValueTypes;
+using Primrose.Expressions;
 
 namespace SWEndor.Models
 {
@@ -57,6 +58,11 @@ namespace SWEndor.Models
       }
 
       public bool Passed { get { return Engine == null || Time < Engine.Game.GameTime; } }
+    }
+
+    internal static ValType GetDistance(object e, ActorInfo a1, ActorInfo a2)
+    {
+      throw new NotImplementedException();
     }
 
     private static Cache<int, EngineTime, float, Trip<TVMathLibrary, ITransformable, ITransformable>> cache = new Cache<int, EngineTime, float, Trip<TVMathLibrary, ITransformable, ITransformable>>(8192); 

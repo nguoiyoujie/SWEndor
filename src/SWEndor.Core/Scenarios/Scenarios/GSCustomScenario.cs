@@ -2,8 +2,7 @@
 using Primrose.Primitives.Extensions;
 using SWEndor.ActorTypes;
 using SWEndor.FileFormat.INI;
-using SWEndor.FileFormat.Scripting;
-using System.Collections.Generic;
+using SWEndor.Sound;
 using System.IO;
 
 namespace SWEndor.Scenarios
@@ -36,8 +35,8 @@ namespace SWEndor.Scenarios
       Fn_makeplayer = s.Bindings_MakePlayer;
       Fns_gametick = s.Bindings_Tick;
 
-      Info.Music_Lose = s.Audio_Lose;
-      Info.Music_Win = s.Audio_Win;
+      Info.Music_Lose = s.Audio_Lose ?? MusicGlobals.DefaultLose;
+      Info.Music_Win = s.Audio_Win ?? MusicGlobals.DefaultWin;
     }
 
     public readonly string PlayerName = "Pilot";
@@ -58,7 +57,7 @@ namespace SWEndor.Scenarios
       foreach (string scrfile in ScriptPaths)
       {
         ScriptFile f = new ScriptFile(Path.Combine(Globals.CustomScenarioPath, scrfile.Trim()));
-        f.ScriptReadDelegate = ReadScript;
+        f.NewScriptEvent = ReadScript;
         f.ReadFile();
       }
       Script.Registry.Global.Run(Engine.ScriptContext);

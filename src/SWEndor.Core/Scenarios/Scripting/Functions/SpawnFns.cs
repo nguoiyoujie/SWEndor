@@ -6,6 +6,7 @@ using Primrose.Primitives.ValueTypes;
 using System;
 using SWEndor.Primitives.Extensions;
 using Primrose.Expressions;
+using SWEndor.Core;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
@@ -32,9 +33,10 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     12 STRING[] registries // TO-DO: Remove, replace registries
     /// </param>
     /// <returns>INT[] containing the IDs of the spawned actors</returns>
-    public static Val Squadron_Spawn(Context context, params Val[] ps)
+    public static Val Squadron_Spawn(IContext context, params Val[] ps)
     {
-      ScenarioBase gscenario = context.Engine.GameScenarioManager.Scenario;
+      Engine e = ((Context)context).Engine;
+      ScenarioBase gscenario = e.GameScenarioManager.Scenario;
 
       string actorType = (string)ps[0];
       string squadName = (string)ps[1];
@@ -58,7 +60,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
 
       SquadSpawnInfo sinfo = new SquadSpawnInfo(
         squadName,
-        context.Engine.ActorTypeFactory.Get(actorType),
+        e.ActorTypeFactory.Get(actorType),
         FactionInfo.Factory.Get(faction),
         squadCount,
         waitDelay,
@@ -70,7 +72,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
         registries
         );
 
-      ActorInfo[] squad = GSFunctions.Squadron_Spawn(context.Engine, gscenario, position, spawntime, sinfo);
+      ActorInfo[] squad = GSFunctions.Squadron_Spawn(e, gscenario, position, spawntime, sinfo);
       int[] ret = new int[squad.Length];
       for (int i = 0; i < squad.Length; i++)
         ret[i] = squad[i].ID;
@@ -94,13 +96,14 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     7 STRING[] registries // TO-DO: Remove, replace registries
     /// </param>
     /// <returns>INT: the ID of the spawned actor. If the spawn failed, returns -1</returns>
-    public static Val Spawn(Context context, params Val[] ps)
+    public static Val Spawn(IContext context, params Val[] ps)
     {
-      ScenarioBase gscenario = context.Engine.GameScenarioManager.Scenario;
+      Engine e = ((Context)context).Engine;
+      ScenarioBase gscenario = e.GameScenarioManager.Scenario;
       if (gscenario == null)
         return new Val("-1");
 
-      ActorTypeInfo atype = context.Engine.ActorTypeFactory.Get((string)ps[0]);
+      ActorTypeInfo atype = e.ActorTypeFactory.Get((string)ps[0]);
       string unitname = (string)ps[1];
       FactionInfo faction = FactionInfo.Factory.Get((string)ps[2]);
       string sidebarname = (string)ps[3];
@@ -132,11 +135,12 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(res.ID);
     }
 
-    public static Val QueueAtSpawner(Context context, int actorID, int spawnerID)
+    public static Val QueueAtSpawner(IContext context, int actorID, int spawnerID)
     {
-      ActorInfo actor = context.Engine.ActorFactory.Get(actorID);
-      ActorInfo spawner = context.Engine.ActorFactory.Get(spawnerID);
-      if (context.Engine.GameScenarioManager.Scenario == null || actor == null || spawner == null)
+      Engine e = ((Context)context).Engine;
+      ActorInfo actor = e.ActorFactory.Get(actorID);
+      ActorInfo spawner = e.ActorFactory.Get(spawnerID);
+      if (e.GameScenarioManager.Scenario == null || actor == null || spawner == null)
         return new Val();
 
       spawner.SpawnerInfo.QueueFighter(actor, spawner);

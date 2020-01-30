@@ -7,15 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWEndor", "SWEndor\SWEndor.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWEndorTest", "SWEndorTest\SWEndorTest.csproj", "{1ED14DC7-63A2-492F-8153-B5600B751AE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Primrose", "Primrose\Primrose.csproj", "{6127267C-E6D9-4B1A-A22A-0F3AE7FF3EEE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fmod.Wrapper", "Fmod.Wrapper\Fmod.Wrapper.csproj", "{805428FF-A413-48DA-993C-99D9083B9A45}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Primrose.Expressions", "Primrose.Expressions\Primrose.Expressions.csproj", "{4E45E1AD-89DE-404A-B867-1FB251EEE1A4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Primrose.UnitTests", "Primrose.UnitTests\Primrose.UnitTests.csproj", "{C1AF0BD6-EE78-4BD2-B6BD-98DEE7C8D463}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Primrose.Expressions.UnitTests", "Primrose.Expressions.UnitTests\Primrose.Expressions.UnitTests.csproj", "{AAEFFDBE-80DC-4BFD-8F86-343A3672E329}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWEndor.ScenarioEditor", "SWEndor.ScenarioEditor\SWEndor.ScenarioEditor.csproj", "{CB3C11DA-081A-4BA5-9A37-30732BAD99C5}"
 EndProject
@@ -34,26 +26,10 @@ Global
 		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Debug|x86.ActiveCfg = Debug|x86
 		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Debug|x86.Build.0 = Debug|x86
 		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Release|x86.ActiveCfg = Release|x86
-		{6127267C-E6D9-4B1A-A22A-0F3AE7FF3EEE}.Debug|x86.ActiveCfg = Debug|x86
-		{6127267C-E6D9-4B1A-A22A-0F3AE7FF3EEE}.Debug|x86.Build.0 = Debug|x86
-		{6127267C-E6D9-4B1A-A22A-0F3AE7FF3EEE}.Release|x86.ActiveCfg = Release|x86
-		{6127267C-E6D9-4B1A-A22A-0F3AE7FF3EEE}.Release|x86.Build.0 = Release|x86
 		{805428FF-A413-48DA-993C-99D9083B9A45}.Debug|x86.ActiveCfg = Debug|x86
 		{805428FF-A413-48DA-993C-99D9083B9A45}.Debug|x86.Build.0 = Debug|x86
 		{805428FF-A413-48DA-993C-99D9083B9A45}.Release|x86.ActiveCfg = Release|x86
 		{805428FF-A413-48DA-993C-99D9083B9A45}.Release|x86.Build.0 = Release|x86
-		{4E45E1AD-89DE-404A-B867-1FB251EEE1A4}.Debug|x86.ActiveCfg = Debug|x86
-		{4E45E1AD-89DE-404A-B867-1FB251EEE1A4}.Debug|x86.Build.0 = Debug|x86
-		{4E45E1AD-89DE-404A-B867-1FB251EEE1A4}.Release|x86.ActiveCfg = Release|x86
-		{4E45E1AD-89DE-404A-B867-1FB251EEE1A4}.Release|x86.Build.0 = Release|x86
-		{C1AF0BD6-EE78-4BD2-B6BD-98DEE7C8D463}.Debug|x86.ActiveCfg = Debug|x86
-		{C1AF0BD6-EE78-4BD2-B6BD-98DEE7C8D463}.Debug|x86.Build.0 = Debug|x86
-		{C1AF0BD6-EE78-4BD2-B6BD-98DEE7C8D463}.Release|x86.ActiveCfg = Release|x86
-		{C1AF0BD6-EE78-4BD2-B6BD-98DEE7C8D463}.Release|x86.Build.0 = Release|x86
-		{AAEFFDBE-80DC-4BFD-8F86-343A3672E329}.Debug|x86.ActiveCfg = Debug|x86
-		{AAEFFDBE-80DC-4BFD-8F86-343A3672E329}.Debug|x86.Build.0 = Debug|x86
-		{AAEFFDBE-80DC-4BFD-8F86-343A3672E329}.Release|x86.ActiveCfg = Release|x86
-		{AAEFFDBE-80DC-4BFD-8F86-343A3672E329}.Release|x86.Build.0 = Release|x86
 		{CB3C11DA-081A-4BA5-9A37-30732BAD99C5}.Debug|x86.ActiveCfg = Debug|x86
 		{CB3C11DA-081A-4BA5-9A37-30732BAD99C5}.Debug|x86.Build.0 = Debug|x86
 		{CB3C11DA-081A-4BA5-9A37-30732BAD99C5}.Release|x86.ActiveCfg = Release|x86

@@ -13,9 +13,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <param name="context">The game context</param>
     /// <param name="value">The bound value</param>
     /// <returns>NULL</returns>
-    public static Val SetMaxBounds(Context context, float3 value)
+    public static Val SetMaxBounds(IContext context, float3 value)
     {
-      context.Engine.GameScenarioManager.Scenario.State.MaxBounds = value.ToVec3();
+      ((Context)context).Engine.GameScenarioManager.Scenario.State.MaxBounds = value.ToVec3();
       return Val.NULL;
     }
 
@@ -25,9 +25,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <param name="context">The game context</param>
     /// <param name="value">The bound value</param>
     /// <returns>NULL</returns>    
-    public static Val SetMinBounds(Context context, float3 value)
+    public static Val SetMinBounds(IContext context, float3 value)
     {
-      context.Engine.GameScenarioManager.Scenario.State.MinBounds = value.ToVec3();
+      ((Context)context).Engine.GameScenarioManager.Scenario.State.MinBounds = value.ToVec3();
       return Val.NULL;
     }
 
@@ -37,9 +37,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <param name="context">The game context</param>
     /// <param name="value">The bound value</param>
     /// <returns>NULL</returns>
-    public static Val SetMaxAIBounds(Context context, float3 value)
+    public static Val SetMaxAIBounds(IContext context, float3 value)
     {
-      context.Engine.GameScenarioManager.Scenario.State.MaxAIBounds = value.ToVec3();
+      ((Context)context).Engine.GameScenarioManager.Scenario.State.MaxAIBounds = value.ToVec3();
       return Val.NULL;
     }
 
@@ -49,9 +49,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <param name="context">The game context</param>
     /// <param name="value">The bound value</param>
     /// <returns>NULL</returns>
-    public static Val SetMinAIBounds(Context context, float3 value)
+    public static Val SetMinAIBounds(IContext context, float3 value)
     {
-      context.Engine.GameScenarioManager.Scenario.State.MinAIBounds = value.ToVec3();
+      ((Context)context).Engine.GameScenarioManager.Scenario.State.MinAIBounds = value.ToVec3();
       return Val.NULL;
     }
 
@@ -61,14 +61,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <param name="context">The game context</param>
     /// <param name="enable">The enable flag</param>
     /// <returns>NULL</returns>
-    public static Val EnableInformLostWing(Context context, bool enable)
+    public static Val EnableInformLostWing(IContext context, bool enable)
     {
-#if DEBUG
-      if (context.Engine.GameScenarioManager.Scenario == null)
-        throw new InvalidOperationException("Attempted script function with null Scenario");
-#endif
-
-      context.Engine.GameScenarioManager.Scenario.State.InformLostWing = enable;
+      ((Context)context).Engine.GameScenarioManager.Scenario.State.InformLostWing = enable;
       return Val.NULL;
     }
 
@@ -78,14 +73,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <param name="context">The game context</param>
     /// <param name="enable">The enable flag</param>
     /// <returns>NULL</returns>
-    public static Val EnableInformLostShip(Context context, bool enable)
+    public static Val EnableInformLostShip(IContext context, bool enable)
     {
-#if DEBUG
-      if (context.Engine.GameScenarioManager.Scenario == null)
-        throw new InvalidOperationException("Attempted script function with null Scenario");
-#endif
-
-      context.Engine.GameScenarioManager.Scenario.State.InformLostShip = enable;
+      ((Context)context).Engine.GameScenarioManager.Scenario.State.InformLostShip = enable;
       return Val.NULL;
     }
 
@@ -95,14 +85,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <param name="context">The game context</param>
     /// <param name="enable">The enable flag</param>
     /// <returns>NULL</returns>
-    public static Val EnableInformLostStructure(Context context, bool enable)
+    public static Val EnableInformLostStructure(IContext context, bool enable)
     {
-#if DEBUG
-      if (context.Engine.GameScenarioManager.Scenario == null)
-        throw new InvalidOperationException("Attempted script function with null Scenario");
-#endif
-
-      context.Engine.GameScenarioManager.Scenario.State.InformLostStructure = enable;
+      ((Context)context).Engine.GameScenarioManager.Scenario.State.InformLostStructure = enable;
       return Val.NULL;
     }
 
@@ -111,14 +96,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </summary>
     /// <param name="context">The game context</param>
     /// <returns>NULL</returns>
-    public static Val FadeOut(Context context)
+    public static Val FadeOut(IContext context)
     {
-#if DEBUG
-      if (context.Engine.GameScenarioManager.Scenario == null)
-        throw new InvalidOperationException("Attempted script function with null Scenario");
-#endif
-
-      context.Engine.GameScenarioManager.Scenario.FadeOut();
+      ((Context)context).Engine.GameScenarioManager.Scenario.FadeOut();
       return Val.NULL;
     }
   }

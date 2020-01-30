@@ -1,5 +1,5 @@
 ﻿using SWEndor.ActorTypes;
-using SWEndor.FileFormat.INI;
+using Primitives.FileFormat.INI;
 using SWEndor.Models;
 using SWEndor.ProjectileTypes;
 

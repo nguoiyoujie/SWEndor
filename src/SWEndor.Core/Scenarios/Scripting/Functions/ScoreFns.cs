@@ -13,9 +13,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     FLOAT score
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetScorePerLife(Context context, float score)
+    public static Val SetScorePerLife(IContext context, float score)
     {
-      context.Engine.PlayerInfo.ScorePerLife = score;
+      ((Context)context).Engine.PlayerInfo.ScorePerLife = score;
       return Val.NULL;
     }
 
@@ -28,9 +28,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     FLOAT score
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetScoreForNextLife(Context context, float score)
+    public static Val SetScoreForNextLife(IContext context, float score)
     {
-      context.Engine.PlayerInfo.ScoreForNextLife = score;
+      ((Context)context).Engine.PlayerInfo.ScoreForNextLife = score;
       return Val.NULL;
     }
 
@@ -43,9 +43,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     NONE
     /// </param>
     /// <returns>NULL</returns>
-    public static Val ResetScore(Context context)
+    public static Val ResetScore(IContext context)
     {
-      context.Engine.PlayerInfo.Score.Reset();
+      ((Context)context).Engine.PlayerInfo.Score.Reset();
       return Val.NULL;
     }
   }

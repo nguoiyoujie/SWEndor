@@ -3,7 +3,7 @@ using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
 using SWEndor.Explosions;
-using SWEndor.FileFormat.INI;
+using Primitives.FileFormat.INI;
 using SWEndor.Models;
 using System.IO;
 

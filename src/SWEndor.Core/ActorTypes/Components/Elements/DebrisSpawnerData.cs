@@ -1,7 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Core;
-using SWEndor.FileFormat.INI;
+using Primitives.FileFormat.INI;
 using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.ActorTypes.Components
@@ -50,6 +50,7 @@ namespace SWEndor.ActorTypes.Components
         acinfo.Rotation = actor.Rotation + new TV_3DVECTOR(x, y, z);
         acinfo.InitialSpeed = actor.MoveData.Speed;
         ActorInfo a = actor.ActorFactory.Create(acinfo);
+        a.SetState_Dying();
       }
     }
 

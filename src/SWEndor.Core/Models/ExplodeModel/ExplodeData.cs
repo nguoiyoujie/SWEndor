@@ -1,4 +1,4 @@
-﻿using SWEndor.FileFormat.INI;
+﻿using Primitives.FileFormat.INI;
 
 namespace SWEndor.Models
 {

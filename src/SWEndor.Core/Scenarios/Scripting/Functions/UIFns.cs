@@ -15,10 +15,10 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     FLOAT3 color
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetUILine1Color(Context context, float3 c)
+    public static Val SetUILine1Color(IContext context, float3 c)
     {
       COLOR color = new COLOR(c);
-      context.Engine.Screen2D.Line1.Color = color;
+      ((Context)context).Engine.Screen2D.Line1.Color = color;
       return Val.NULL;
     }
 
@@ -31,10 +31,10 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     FLOAT3 color
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetUILine2Color(Context context, float3 c)
+    public static Val SetUILine2Color(IContext context, float3 c)
     {
       COLOR color = new COLOR(c);
-      context.Engine.Screen2D.Line2.Color = color;
+      ((Context)context).Engine.Screen2D.Line2.Color = color;
       return Val.NULL;
     }
 
@@ -47,10 +47,10 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     FLOAT3 color
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetUILine3Color(Context context, float3 c)
+    public static Val SetUILine3Color(IContext context, float3 c)
     {
       COLOR color = new COLOR(c);
-      context.Engine.Screen2D.Line3.Color = color;
+      ((Context)context).Engine.Screen2D.Line3.Color = color;
       return Val.NULL;
     }
 
@@ -63,9 +63,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     STRING text
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetUILine1Text(Context context, string text)
+    public static Val SetUILine1Text(IContext context, string text)
     {
-      context.Engine.Screen2D.Line1.Text = text;
+      ((Context)context).Engine.Screen2D.Line1.Text = text;
       return Val.TRUE;
     }
 
@@ -78,9 +78,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     STRING text
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetUILine2Text(Context context, string text)
+    public static Val SetUILine2Text(IContext context, string text)
     {
-      context.Engine.Screen2D.Line2.Text = text;
+      ((Context)context).Engine.Screen2D.Line2.Text = text;
       return Val.TRUE;
     }
 
@@ -93,9 +93,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     STRING text
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetUILine3Text(Context context, string text)
+    public static Val SetUILine3Text(IContext context, string text)
     {
-      context.Engine.Screen2D.Line3.Text = text;
+      ((Context)context).Engine.Screen2D.Line3.Text = text;
       return Val.TRUE;
     }
   }

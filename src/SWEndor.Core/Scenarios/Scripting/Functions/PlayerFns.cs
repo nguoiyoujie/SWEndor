@@ -1,4 +1,5 @@
 ﻿using Primrose.Expressions;
+using SWEndor.Core;
 
 namespace SWEndor.Scenarios.Scripting.Functions
 {
@@ -13,18 +14,19 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     INT actorID
     /// </param>
     /// <returns>TRUE if the assignment is successful, otherwise (i.e. there is no actor having this ID) returns FALSE. If the actorID is negative, always returns TRUE.</returns>
-    public static Val AssignActor(Context context, int actorID)
+    public static Val AssignActor(IContext context, int actorID)
     {
+      Engine e = ((Context)context).Engine;
       if (actorID < 0)
       {
-        context.Engine.PlayerInfo.ActorID = -1;
+        e.PlayerInfo.ActorID = -1;
         return Val.TRUE;
       }
 
-      if (context.Engine.ActorFactory.Get(actorID) == null)
+      if (e.ActorFactory.Get(actorID) == null)
         return Val.FALSE;
 
-      context.Engine.PlayerInfo.ActorID = actorID;
+      e.PlayerInfo.ActorID = actorID;
       return Val.TRUE;
     }
 
@@ -33,9 +35,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </summary>
     /// <param name="context">The game context</param>
     /// <returns>INT representing the actor's ID if an actor is found, otherwise returns -1</returns>
-    public static Val GetActor(Context context)
+    public static Val GetActor(IContext context)
     {
-      return new Val(context.Engine.PlayerInfo.Actor?.ID ?? -1);
+      return new Val(((Context)context).Engine.PlayerInfo.Actor?.ID ?? -1);
     }
 
     /// <summary>
@@ -43,9 +45,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </summary>
     /// <param name="context">The game context</param>
     /// <returns>NULL</returns>
-    public static Val RequestSpawn(Context context)
+    public static Val RequestSpawn(IContext context)
     {
-      context.Engine.PlayerInfo.RequestSpawn = true;
+      ((Context)context).Engine.PlayerInfo.RequestSpawn = true;
       return Val.NULL;
     }
 
@@ -58,9 +60,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     BOOL enabled
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetMovementEnabled(Context context, bool enabled)
+    public static Val SetMovementEnabled(IContext context, bool enabled)
     {
-      context.Engine.PlayerInfo.SystemLockMovement = !enabled;
+      ((Context)context).Engine.PlayerInfo.SystemLockMovement = !enabled;
       return Val.NULL;
     }
 
@@ -73,9 +75,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     BOOL enabled
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetAI(Context context, bool enabled)
+    public static Val SetAI(IContext context, bool enabled)
     {
-      context.Engine.PlayerInfo.PlayerAIEnabled = enabled;
+      ((Context)context).Engine.PlayerInfo.PlayerAIEnabled = enabled;
       return Val.NULL;
     }
 
@@ -88,9 +90,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     INT lives
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetLives(Context context, int lives)
+    public static Val SetLives(IContext context, int lives)
     {
-      context.Engine.PlayerInfo.Lives = lives;
+      ((Context)context).Engine.PlayerInfo.Lives = lives;
       return Val.NULL;
     }
 
@@ -99,9 +101,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </summary>
     /// <param name="context">The game context</param>
     /// <returns>NULL</returns>
-    public static Val DecreaseLives(Context context)
+    public static Val DecreaseLives(IContext context)
     {
-      context.Engine.PlayerInfo.Lives--;
+      ((Context)context).Engine.PlayerInfo.Lives--;
       return Val.NULL;
     }
   }

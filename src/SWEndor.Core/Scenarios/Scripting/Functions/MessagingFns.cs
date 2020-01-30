@@ -13,10 +13,10 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <param name="expireTime"></param>
     /// <param name="vec_color"></param>
     /// <returns>NULL</returns>
-    public static Val MessageText(Context context, string text, float expireTime, float3 vec_color)
+    public static Val MessageText(IContext context, string text, float expireTime, float3 vec_color)
     {
       COLOR color = new COLOR(vec_color);
-      context.Engine.Screen2D.MessageText(text, expireTime, color);
+      ((Context)context).Engine.Screen2D.MessageText(text, expireTime, color);
       return Val.NULL;
     }
 
@@ -28,10 +28,10 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <param name="expireTime"></param>
     /// <param name="vec_color"></param>
     /// <returns>NULL</returns>
-    public static Val MessageText(Context context, string text, float expireTime, float3 vec_color, int priority)
+    public static Val MessageText(IContext context, string text, float expireTime, float3 vec_color, int priority)
     {
       COLOR color = new COLOR(vec_color);
-      context.Engine.Screen2D.MessageText(text, expireTime, color, priority);
+      ((Context)context).Engine.Screen2D.MessageText(text, expireTime, color, priority);
       return Val.NULL;
     }
   }

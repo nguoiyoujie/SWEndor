@@ -1,4 +1,6 @@
-﻿namespace SWEndor.FileFormat.INI
+﻿using Primitives.FileFormat.INI;
+
+namespace SWEndor.FileFormat.INI
 {
   public class CampaignFile : INIFile
   {
@@ -12,8 +14,8 @@
     [INIKeyList("Scenarios")]
     public string[] ScenarioPaths;
 
-    public CampaignFile(string filepath) : base(filepath)
-    {
-    }
+    public CampaignFile() { }
+
+    public CampaignFile(string filepath) : base(filepath) { }
   }
 }

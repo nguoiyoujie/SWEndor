@@ -10,9 +10,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </summary>
     /// <param name="context">The game context</param>
     /// <returns>The current mood</returns>
-    public static Val GetMood(Context context)
+    public static Val GetMood(IContext context)
     {
-      return new Val(context.Engine.SoundManager.GetMood());
+      return new Val(((Context)context).Engine.SoundManager.GetMood());
     }
 
     /// <summary>
@@ -24,119 +24,119 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     INT mood
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetMood(Context context, int state)
+    public static Val SetMood(IContext context, int state)
     {
-      context.Engine.SoundManager.SetMood(state);
+      ((Context)context).Engine.SoundManager.SetMood(state);
       return Val.NULL;
     }
 
-    public static Val SetMusic(Context context, string piece_name)
+    public static Val SetMusic(IContext context, string piece_name)
     {
-      return new Val(context.Engine.SoundManager.SetMusic(piece_name));
+      return new Val(((Context)context).Engine.SoundManager.SetMusic(piece_name));
     }
 
-    public static Val SetMusic(Context context, string piece_name, bool loop)
+    public static Val SetMusic(IContext context, string piece_name, bool loop)
     {
-      return new Val(context.Engine.SoundManager.SetMusic(piece_name, loop));
+      return new Val(((Context)context).Engine.SoundManager.SetMusic(piece_name, loop));
     }
 
-    public static Val SetMusic(Context context, string piece_name, bool loop, int position_ms)
+    public static Val SetMusic(IContext context, string piece_name, bool loop, int position_ms)
     {
-      return new Val(context.Engine.SoundManager.SetMusic(piece_name, loop, (uint)position_ms));
+      return new Val(((Context)context).Engine.SoundManager.SetMusic(piece_name, loop, (uint)position_ms));
     }
 
-    public static Val SetMusic(Context context, string piece_name, bool loop, int position_ms, int end_ms)
+    public static Val SetMusic(IContext context, string piece_name, bool loop, int position_ms, int end_ms)
     {
-      return new Val(context.Engine.SoundManager.SetMusic(piece_name, loop, (uint)position_ms, (uint)end_ms));
+      return new Val(((Context)context).Engine.SoundManager.SetMusic(piece_name, loop, (uint)position_ms, (uint)end_ms));
     }
 
-    public static Val SetMusicLoop(Context context, string piece_name)
+    public static Val SetMusicLoop(IContext context, string piece_name)
     {
-      context.Engine.SoundManager.SetMusicLoop(piece_name);
+      ((Context)context).Engine.SoundManager.SetMusicLoop(piece_name);
       return Val.NULL;
     }
 
-    public static Val SetMusicLoop(Context context, string piece_name, int position_ms)
+    public static Val SetMusicLoop(IContext context, string piece_name, int position_ms)
     {
-      context.Engine.SoundManager.SetMusicLoop(piece_name, (uint)position_ms);
+      ((Context)context).Engine.SoundManager.SetMusicLoop(piece_name, (uint)position_ms);
       return Val.NULL;
     }
 
-    public static Val SetMusicDyn(Context context, string piece_name)
+    public static Val SetMusicDyn(IContext context, string piece_name)
     {
-      context.Engine.SoundManager.SetMusicDyn(piece_name);
+      ((Context)context).Engine.SoundManager.SetMusicDyn(piece_name);
       return Val.NULL;
     }
 
-    public static Val StopMusic(Context context)
+    public static Val StopMusic(IContext context)
     {
-      context.Engine.SoundManager.StopMusic();
+      ((Context)context).Engine.SoundManager.StopMusic();
       return Val.NULL;
     }
 
-    public static Val PauseMusic(Context context)
+    public static Val PauseMusic(IContext context)
     {
-      context.Engine.SoundManager.PauseMusic();
+      ((Context)context).Engine.SoundManager.PauseMusic();
       return Val.NULL;
     }
 
-    public static Val ResumeMusic(Context context)
+    public static Val ResumeMusic(IContext context)
     {
-      context.Engine.SoundManager.ResumeMusic();
+      ((Context)context).Engine.SoundManager.ResumeMusic();
       return Val.NULL;
     }
 
-    public static Val SetSound(Context context, string sound_name)
+    public static Val SetSound(IContext context, string sound_name)
     {
-      context.Engine.SoundManager.SetSound(sound_name);
+      ((Context)context).Engine.SoundManager.SetSound(sound_name);
       return Val.NULL;
     }
 
-    public static Val SetSound(Context context, string sound_name, float volume)
+    public static Val SetSound(IContext context, string sound_name, float volume)
     {
-      context.Engine.SoundManager.SetSound(sound_name, volume);
+      ((Context)context).Engine.SoundManager.SetSound(sound_name, volume);
       return Val.NULL;
     }
 
-    public static Val SetSound(Context context, string sound_name, float volume, bool loop)
+    public static Val SetSound(IContext context, string sound_name, float volume, bool loop)
     {
-      context.Engine.SoundManager.SetSound(sound_name, volume, loop);
+      ((Context)context).Engine.SoundManager.SetSound(sound_name, volume, loop);
       return Val.NULL;
     }
 
-    public static Val SetSoundSingle(Context context, string sound_name)
+    public static Val SetSoundSingle(IContext context, string sound_name)
     {
-      context.Engine.SoundManager.SetSoundSingle(sound_name);
+      ((Context)context).Engine.SoundManager.SetSoundSingle(sound_name);
       return Val.NULL;
     }
 
-    public static Val SetSoundSingle(Context context, string sound_name, bool interrupt)
+    public static Val SetSoundSingle(IContext context, string sound_name, bool interrupt)
     {
-      context.Engine.SoundManager.SetSoundSingle(sound_name, interrupt);
+      ((Context)context).Engine.SoundManager.SetSoundSingle(sound_name, interrupt);
       return Val.NULL;
     }
 
-    public static Val SetSoundSingle(Context context, string sound_name, bool interrupt, float volume)
+    public static Val SetSoundSingle(IContext context, string sound_name, bool interrupt, float volume)
     {
-      context.Engine.SoundManager.SetSoundSingle(sound_name, interrupt, volume);
+      ((Context)context).Engine.SoundManager.SetSoundSingle(sound_name, interrupt, volume);
       return Val.NULL;
     }
 
-    public static Val SetSoundSingle(Context context, string sound_name, bool interrupt, float volume, bool loop)
+    public static Val SetSoundSingle(IContext context, string sound_name, bool interrupt, float volume, bool loop)
     {
-      context.Engine.SoundManager.SetSoundSingle(sound_name, interrupt, volume, loop);
+      ((Context)context).Engine.SoundManager.SetSoundSingle(sound_name, interrupt, volume, loop);
       return Val.NULL;
     }
 
-    public static Val StopSound(Context context, string sound_name)
+    public static Val StopSound(IContext context, string sound_name)
     {
-      context.Engine.SoundManager.StopSound(sound_name);
+      ((Context)context).Engine.SoundManager.StopSound(sound_name);
       return Val.NULL;
     }
 
-    public static Val StopAllSounds(Context context)
+    public static Val StopAllSounds(IContext context)
     {
-      context.Engine.SoundManager.StopAllSounds();
+      ((Context)context).Engine.SoundManager.StopAllSounds();
       return Val.NULL;
     }
   }

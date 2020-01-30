@@ -9,7 +9,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// Gets the element of an array. This is functionally equivalent to the indexer 'array[i]', except that this function cannot be used on float2/float3/float4
     /// </summary>
     /// <param name="context">The game context</param>
-    public static Val IsNull(AContext context, Val value)
+    public static Val IsNull(IContext context, Val value)
     {
       return new Val(value.IsNull);
     }
@@ -18,9 +18,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// Generates a random float value between 0 and 1.
     /// </summary>
     /// <param name="context">The game context</param>
-    public static Val Random(Context context)
+    public static Val Random(IContext context)
     {
-      return new Val((float)context.Engine.Random.NextDouble());
+      return new Val((float)((Context)context).Engine.Random.NextDouble());
     }
 
     /// <summary>
@@ -28,9 +28,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </summary>
     /// <param name="context">The game context</param>
     /// <param name="max">The exclusive upper bound</param>
-    public static Val Random(Context context, int max)
+    public static Val Random(IContext context, int max)
     {
-      return new Val((float)context.Engine.Random.Next(0, max));
+      return new Val((float)((Context)context).Engine.Random.Next(0, max));
     }
 
     /// <summary>
@@ -39,9 +39,9 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <param name="context">The game context</param>
     /// <param name="min">The inclusive lower bound</param>
     /// <param name="max">The exclusive upper bound</param>
-    public static Val Random(Context context, int min, int max)
+    public static Val Random(IContext context, int min, int max)
     {
-      return new Val((float)context.Engine.Random.Next(min, max));
+      return new Val((float)((Context)context).Engine.Random.Next(min, max));
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     BOOL[]/INT[]/FLOAT[] array
     /// </param>
     /// <returns>BOOL/INT/FLOAT, depending on the input</returns>
-    public static Val GetArrayElement(Context context, Val array, int index)
+    public static Val GetArrayElement(IContext context, Val array, int index)
     {
       if (array.Type == ValType.BOOL_ARRAY)
         return new Val(((bool[])array)[index]);

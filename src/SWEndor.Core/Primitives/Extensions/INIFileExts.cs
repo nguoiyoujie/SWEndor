@@ -1,5 +1,5 @@
 ﻿using MTV3D65;
-using SWEndor.FileFormat.INI;
+using Primitives.FileFormat.INI;
 
 namespace SWEndor.Primitives.Extensions
 {

@@ -2,14 +2,13 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs
-**/SWEndor.vshost.exe
-**/SWEndor.vshost.exe.config
-**/SWEndor.vshost.exe.manifest
+**/.vs
+**/*.vshost.exe
+**/*.vshost.exe.config
+**/*.vshost.exe.manifest
 
 /doc/editable
 
-/src/.vs
 /src/prebuild
 
 /src/*/bin

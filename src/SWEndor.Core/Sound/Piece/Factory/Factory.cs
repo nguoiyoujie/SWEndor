@@ -1,4 +1,4 @@
-﻿using SWEndor.FileFormat.INI;
+﻿using Primitives.FileFormat.INI;
 using System.Collections.Generic;
 using System.IO;
 

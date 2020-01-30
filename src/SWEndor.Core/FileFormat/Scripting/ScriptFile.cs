@@ -3,7 +3,7 @@ using Primrose.Primitives.Extensions;
 using System;
 using System.IO;
 using System.Text;
-
+/*
 namespace SWEndor.FileFormat.Scripting
 {
   public delegate void ScriptReadDelegate(string name);
@@ -68,3 +68,4 @@ namespace SWEndor.FileFormat.Scripting
     }
   }
 }
+*/

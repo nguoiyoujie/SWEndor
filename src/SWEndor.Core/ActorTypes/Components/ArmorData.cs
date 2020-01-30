@@ -1,6 +1,6 @@
 ﻿using Primrose.Primitives.Factories;
 using SWEndor.Actors;
-using SWEndor.FileFormat.INI;
+using Primitives.FileFormat.INI;
 using System;
 using System.Collections.Generic;
 

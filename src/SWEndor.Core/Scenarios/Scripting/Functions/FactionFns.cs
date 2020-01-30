@@ -15,14 +15,14 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </summary>
     /// <param name="context">The game context</param>
     /// <returns>NULL</returns>
-    public static Val AddFaction(Context context, string name, float3 vec_color)
+    public static Val AddFaction(IContext context, string name, float3 vec_color)
     {
       COLOR color = new COLOR(vec_color);
       FactionInfo.Factory.Add(name, color);
       return Val.NULL;
     }
 
-    public static Val AddFaction(Context context, string name, float3 vec_color, float3 laser_color)
+    public static Val AddFaction(IContext context, string name, float3 vec_color, float3 laser_color)
     {
       COLOR color = new COLOR(vec_color);
       COLOR lasercolor = new COLOR(laser_color);
@@ -30,7 +30,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.NULL;
     }
 
-    public static Val GetColor(Context context, string faction)
+    public static Val GetColor(IContext context, string faction)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -39,7 +39,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(f.Color.ToFloat3());
     }
 
-    public static Val SetColor(Context context, string faction, float3 vec_color)
+    public static Val SetColor(IContext context, string faction, float3 vec_color)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -50,7 +50,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.NULL;
     }
 
-    public static Val GetLaserColor(Context context, string faction)
+    public static Val GetLaserColor(IContext context, string faction)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -59,7 +59,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return new Val(f.LaserColor.ToFloat3());
     }
 
-    public static Val SetLaserColor(Context context, string faction, float3 vec_color)
+    public static Val SetLaserColor(IContext context, string faction, float3 vec_color)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -76,7 +76,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <param name="context">The game context</param>
     /// <returns>NULL</returns>
     /// <exception cref="InvalidOperationException">At least one of the factions are invalid</exception>
-    public static Val MakeAlly(Context context, string faction1, string faction2)
+    public static Val MakeAlly(IContext context, string faction1, string faction2)
     {
       FactionInfo f1 = FactionInfo.Factory.Get(faction1);
       FactionInfo f2 = FactionInfo.Factory.Get(faction2);
@@ -97,7 +97,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// <param name="context">The game context</param>
     /// <returns>NULL</returns>
     /// <exception cref="InvalidOperationException">At least one of the factions are invalid</exception>
-    public static Val MakeEnemy(Context context, string faction1, string faction2)
+    public static Val MakeEnemy(IContext context, string faction1, string faction2)
     {
       FactionInfo f1 = FactionInfo.Factory.Get(faction1);
       FactionInfo f2 = FactionInfo.Factory.Get(faction2);
@@ -123,7 +123,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </param>
     /// <returns>INT count</returns>
     /// <exception cref="InvalidOperationException">The faction is not defined</exception>
-    public static Val GetWingCount(Context context, string faction)
+    public static Val GetWingCount(IContext context, string faction)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -142,7 +142,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </param>
     /// <returns>INT count</returns>
     /// <exception cref="InvalidOperationException">The faction is not defined</exception>
-    public static Val GetShipCount(Context context, string faction)
+    public static Val GetShipCount(IContext context, string faction)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -161,7 +161,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </param>
     /// <returns>INT count</returns>
     /// <exception cref="InvalidOperationException">The faction is not defined</exception>
-    public static Val GetStructureCount(Context context, string faction)
+    public static Val GetStructureCount(IContext context, string faction)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -180,7 +180,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </param>
     /// <returns>INT limit</returns>
     /// <exception cref="InvalidOperationException">The faction is not defined</exception>
-    public static Val GetWingLimit(Context context, string faction)
+    public static Val GetWingLimit(IContext context, string faction)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -199,7 +199,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </param>
     /// <returns>INT limit</returns>
     /// <exception cref="InvalidOperationException">The faction is not defined</exception>
-    public static Val GetShipLimit(Context context, string faction)
+    public static Val GetShipLimit(IContext context, string faction)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -218,7 +218,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </param>
     /// <returns>INT limit</returns>
     /// <exception cref="InvalidOperationException">The faction is not defined</exception>
-    public static Val GetStructureLimit(Context context, string faction)
+    public static Val GetStructureLimit(IContext context, string faction)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -238,7 +238,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </param>
     /// <returns>NULL</returns>
     /// <exception cref="InvalidOperationException">The faction is not defined</exception>
-    public static Val SetWingLimit(Context context, string faction, int limit)
+    public static Val SetWingLimit(IContext context, string faction, int limit)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -258,7 +258,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </param>
     /// <returns>NULL</returns>
     /// <exception cref="InvalidOperationException">The faction is not defined</exception>
-    public static Val SetShipLimit(Context context, string faction, int limit)
+    public static Val SetShipLimit(IContext context, string faction, int limit)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -278,7 +278,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </param>
     /// <returns>NULL</returns>
     /// <exception cref="InvalidOperationException">The faction is not defined</exception>
-    public static Val SetStructureLimit(Context context, string faction, int limit)
+    public static Val SetStructureLimit(IContext context, string faction, int limit)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -297,7 +297,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </param>
     /// <returns>INT count</returns>
     /// <exception cref="InvalidOperationException">The faction is not defined</exception>
-    public static Val GetWingSpawnLimit(Context context, string faction)
+    public static Val GetWingSpawnLimit(IContext context, string faction)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -315,7 +315,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </param>
     /// <returns>INT count</returns>
     /// <exception cref="InvalidOperationException">The faction is not defined</exception>
-    public static Val GetShipSpawnLimit(Context context, string faction)
+    public static Val GetShipSpawnLimit(IContext context, string faction)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -333,7 +333,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </param>
     /// <returns>INT count</returns>
     /// <exception cref="InvalidOperationException">The faction is not defined</exception>
-    public static Val GetStructureSpawnLimit(Context context, string faction)
+    public static Val GetStructureSpawnLimit(IContext context, string faction)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -352,7 +352,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </param>
     /// <returns>NULL</returns>
     /// <exception cref="InvalidOperationException">The faction is not defined</exception>
-    public static Val SetWingSpawnLimit(Context context, string faction, int limit)
+    public static Val SetWingSpawnLimit(IContext context, string faction, int limit)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -372,7 +372,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </param>
     /// <returns>NULL</returns>
     /// <exception cref="InvalidOperationException">The faction is not defined</exception>
-    public static Val SetShipSpawnLimit(Context context, string faction, int limit)
+    public static Val SetShipSpawnLimit(IContext context, string faction, int limit)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)
@@ -392,7 +392,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     /// </param>
     /// <returns>NULL</returns>
     /// <exception cref="InvalidOperationException">The faction is not defined</exception>
-    public static Val SetStructureSpawnLimit(Context context, string faction, int limit)
+    public static Val SetStructureSpawnLimit(IContext context, string faction, int limit)
     {
       FactionInfo f = FactionInfo.Factory.Get(faction);
       if (f == null)

@@ -31,6 +31,14 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Primrose, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dll\Primrose.dll</HintPath>
+    </Reference>
+    <Reference Include="Primrose.Expressions, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dll\Primrose.Expressions.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
@@ -40,32 +48,60 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Checker\ScriptChecker.cs" />
+    <Compile Include="Controls\Forms\AddItemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Forms\AddItemForm.Designer.cs">
+      <DependentUpon>AddItemForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FlickerFreeRichEditTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="FlickerFreeRichEditTextBox.Designer.cs">
       <DependentUpon>FlickerFreeRichEditTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Globals.cs" />
     <Compile Include="Highlighter\AHighlighter.cs" />
     <Compile Include="Highlighter\IHighlighter.cs" />
     <Compile Include="Highlighter\INIHighlighter.cs" />
     <Compile Include="Highlighter\NoHighlighter.cs" />
     <Compile Include="Highlighter\ScriptHighlighter.cs" />
-    <Compile Include="ScriptEditForm.cs">
+    <Compile Include="Controls\Forms\ScriptEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ScriptEditForm.Designer.cs">
+    <Compile Include="Controls\Forms\ScriptEditForm.Designer.cs">
       <DependentUpon>ScriptEditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="tpEditor.cs">
+    <Compile Include="Controls\TabControls\tcEditor.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="tpEditor.Designer.cs">
+    <Compile Include="Controls\TabControls\tcEditor.Designer.cs">
+      <DependentUpon>tcEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TabPages\tpScenEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TabPages\tpScenEditor.Designer.cs">
+      <DependentUpon>tpScenEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TabPages\tpEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TabPages\tpEditor.Designer.cs">
       <DependentUpon>tpEditor.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ScriptEditForm.resx">
+    <Compile Include="Controls\UserControls\ucMultipleItemBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\UserControls\ucMultipleItemBox.Designer.cs">
+      <DependentUpon>ucMultipleItemBox.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Controls\Forms\AddItemForm.resx">
+      <DependentUpon>AddItemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Forms\ScriptEditForm.resx">
       <DependentUpon>ScriptEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -76,9 +112,19 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="tpEditor.resx">
+    <EmbeddedResource Include="Controls\TabControls\tcEditor.resx">
+      <DependentUpon>tcEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TabPages\tpScenEditor.resx">
+      <DependentUpon>tpScenEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TabPages\tpEditor.resx">
       <DependentUpon>tpEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\UserControls\ucMultipleItemBox.resx">
+      <DependentUpon>ucMultipleItemBox.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -91,19 +137,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Primrose.Expressions\Primrose.Expressions.csproj">
-      <Project>{4e45e1ad-89de-404a-b867-1fb251eee1a4}</Project>
-      <Name>Primrose.Expressions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Primrose\Primrose.csproj">
-      <Project>{6127267c-e6d9-4b1a-a22a-0f3ae7ff3eee}</Project>
-      <Name>Primrose</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SWEndor.Core\SWEndor.Core.csproj">
       <Project>{55637145-bfe1-46e7-9396-06890213192f}</Project>
       <Name>SWEndor.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\16x16button.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
