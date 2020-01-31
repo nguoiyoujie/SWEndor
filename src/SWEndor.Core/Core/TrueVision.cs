@@ -76,7 +76,7 @@ namespace SWEndor.Core
     {
       TVEngine.AllowMultithreading(true);
       //TVEngine.SetDebugMode(true, true);
-      TVEngine.SetDebugFile(Path.Combine(Globals.LogPath, @"truevision_debug.txt"));
+      TVEngine.SetDebugFile(Path.Combine(Globals.LogPath, @"truevision_debug.log"));
 
       TVEngine.SetAntialiasing(true, CONST_TV_MULTISAMPLE_TYPE.TV_MULTISAMPLE_16_SAMPLES);
       TVEngine.DisplayFPS(true);
