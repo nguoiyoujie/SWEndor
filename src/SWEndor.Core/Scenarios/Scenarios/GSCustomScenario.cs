@@ -52,15 +52,14 @@ namespace SWEndor.Scenarios
 
     internal void LoadScripts()
     {
-      Script.Registry.Clear();
       Engine.ScriptContext.Reset();
       foreach (string scrfile in ScriptPaths)
       {
-        ScriptFile f = new ScriptFile(Path.Combine(Globals.CustomScenarioPath, scrfile.Trim()));
+        ScriptFile f = new ScriptFile(Path.Combine(Globals.CustomScenarioPath, scrfile.Trim()), Engine.ScriptContext);
         f.NewScriptEvent = ReadScript;
         f.ReadFile();
       }
-      Script.Registry.Global.Run(Engine.ScriptContext);
+      Engine.ScriptContext.RunGlobalScript();
     }
 
     public void ReadScript(string name)
@@ -82,7 +81,6 @@ namespace SWEndor.Scenarios
     public override void Unload()
     {
       base.Unload();
-      Script.Registry.Clear();
       Engine.ScriptContext.Reset();
     }
 
@@ -91,28 +89,28 @@ namespace SWEndor.Scenarios
       // after scripts
       base.Launch();
       MakePlayer = fn_MakePlayer;
-      Script.Registry.Get(Fn_load)?.Run(Engine.ScriptContext);
+      Engine.ScriptContext.RunScript(Fn_load);
     }
 
-    private void fn_MakePlayer() { Script.Registry.Get(Fn_makeplayer)?.Run(Engine.ScriptContext); }
+    private void fn_MakePlayer() { Engine.ScriptContext.RunScript(Fn_makeplayer); }
 
     internal override void LoadFactions()
     {
       base.LoadFactions();
-      Script.Registry.Get(Fn_loadfaction)?.Run(Engine.ScriptContext);
+      Engine.ScriptContext.RunScript(Fn_loadfaction);
     }
 
     internal override void LoadScene()
     {
       base.LoadScene();
-      Script.Registry.Get(Fn_loadscene)?.Run(Engine.ScriptContext);
+      Engine.ScriptContext.RunScript(Fn_loadscene);
     }
 
     public override void GameTick()
     {
       base.GameTick();
       foreach (string s in Fns_gametick)
-        Script.Registry.Get(s)?.Run(Engine.ScriptContext);
+        Engine.ScriptContext.RunScript(s);
     }
   }
 }

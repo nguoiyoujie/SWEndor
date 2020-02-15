@@ -1,5 +1,6 @@
 ﻿using Primitives.FileFormat.INI;
 using Primrose.Expressions;
+using SWEndor.Scenarios.Scripting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,8 +23,7 @@ namespace SWEndor.ScenarioEditor.Checker
     {
       try
       {
-        Script.Registry.Clear();
-        ScriptFile f = new ScriptFile(Path);
+        ScriptFile f = new ScriptFile(Path, new Context(null));
         if (Log != null)
           f.NewScriptEvent = (s) => { Log(s); };
         f.ReadFile();

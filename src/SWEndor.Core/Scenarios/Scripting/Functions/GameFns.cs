@@ -46,7 +46,7 @@ namespace SWEndor.Scenarios.Scripting.Functions
     public static Val AddEvent(IContext context, float time, string eventName)
     {
       Engine e = ((Context)context).Engine;
-      Script script = Script.Registry.Get(eventName);
+      Script script = e.ScriptContext.Scripts.Get(eventName);
       if (script != null)
         e.GameScenarioManager.Scenario.EventQueue.Add(e.Game.GameTime + time
         , (a, s) => s.Run(a), context, script);

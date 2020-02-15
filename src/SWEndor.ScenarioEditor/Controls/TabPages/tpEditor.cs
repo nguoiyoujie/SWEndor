@@ -236,10 +236,9 @@ namespace SWEndor.ScenarioEditor
     public void DoCheck()
     {
       // dump to file
-      string path = CurrPath; // @"./temp/check.txt";
+      string path = @"./temp/check.txt";
       Directory.CreateDirectory(Path.GetDirectoryName(path));
-      //File.WriteAllText(path, Cache);//rtb.Text);
-      //File.Copy(CurrPath, path, true);
+      File.WriteAllText(path, rtb.Text);
 
       ScriptChecker checker = new ScriptChecker(path, Output);
       rtb_output.Clear();

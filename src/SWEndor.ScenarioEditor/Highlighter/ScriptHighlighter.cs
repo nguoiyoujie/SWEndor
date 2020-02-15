@@ -23,7 +23,8 @@ namespace SWEndor.ScenarioEditor
       string reg = null;
       foreach (string s in c.ValFuncRef)
         reg = string.Concat("(", string.Join("|", c.ValFuncRef), @")(?=\s*\()");
-      Regexes.Add(new Pair<Regex, Color>(new Regex(reg, ropt), Color.MidnightBlue));
+      if (reg != null)
+        Regexes.Add(new Pair<Regex, Color>(new Regex(reg, ropt), Color.MidnightBlue));
     }
   }
 }
