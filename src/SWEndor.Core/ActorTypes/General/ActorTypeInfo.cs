@@ -16,7 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using SWEndor.Primitives.Extensions;
-using Primitives.FileFormat.INI;
 
 namespace SWEndor.ActorTypes
 {

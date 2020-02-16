@@ -17,7 +17,7 @@ namespace SWEndor.Scenarios
 
       Info.Name = s.General_Name;
       PlayerName = s.General_PlayerName;
-      Info.Description = s.General_Desc;
+      Info.Description = s.General_Desc.Replace('|', '\n');
 
       Info.AllowedWings = new ActorTypeInfo[s.General_Wings.Length];
       for (int i = 0; i < Info.AllowedWings.Length; i++)

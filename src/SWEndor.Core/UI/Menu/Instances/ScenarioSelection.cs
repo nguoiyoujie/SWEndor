@@ -92,7 +92,7 @@ namespace SWEndor.UI.Menu.Pages
       DescText.HighlightBoxPosition = DescText.TextPosition - new TV_2DVECTOR(5, 5);
       DescText.HighlightBoxWidth = 650;
       DescText.HighlightBoxHeight = 150;
-      DescText.Text = SelectedScenario.Info.Description.Multiline(((int)DescText.HighlightBoxWidth - 10) / 9); // font 12 width = 9
+      DescText.Text = FormatDesc();
 
       ButtonPlay.Text = "Launch!";
       ButtonPlay.TextPosition = new TV_2DVECTOR(x, y);
@@ -119,6 +119,11 @@ namespace SWEndor.UI.Menu.Pages
       Elements.Add(ButtonPlay);
       Elements.Add(ButtonBack);
       SelectedElementID = Elements.IndexOf(ButtonScenario);
+    }
+
+    private string FormatDesc()
+    {
+      return SelectedScenario.Info.Description.Multiline(((int)DescText.HighlightBoxWidth - 10) / 9); // font 12 width = 9
     }
 
     private bool SelectScenario(CONST_TV_KEY key)
@@ -149,7 +154,7 @@ namespace SWEndor.UI.Menu.Pages
           SelectedDifficultyID = 1;
           SelectDifficulty(CONST_TV_KEY.TV_KEY_LEFT);
 
-          DescText.Text = SelectedScenario.Info.Description.Multiline(((int)DescText.HighlightBoxWidth - 10) / 9);
+          DescText.Text = FormatDesc();
 
           return true;
         }
@@ -171,7 +176,7 @@ namespace SWEndor.UI.Menu.Pages
           SelectedDifficultyID = 1;
           SelectDifficulty(CONST_TV_KEY.TV_KEY_LEFT);
 
-          DescText.Text = SelectedScenario.Info.Description.Multiline(((int)DescText.HighlightBoxWidth - 10) / 9);
+          DescText.Text = FormatDesc();
 
           return true;
         }
