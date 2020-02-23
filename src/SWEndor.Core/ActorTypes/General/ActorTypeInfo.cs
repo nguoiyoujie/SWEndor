@@ -21,25 +21,7 @@ namespace SWEndor.ActorTypes
 {
   public partial class ActorTypeInfo : ITypeInfo<ActorInfo>
   {
-    private const string sSystem = "System";
-    private const string sCombat = "Combat";
-    private const string sRegen = "Regen";
-    private const string sTimedLife = "TimedLife";
-    private const string sArmor = "Armor";
-    private const string sMoveLimit = "MoveLimit";
-    private const string sDyingMove = "DyingMove";
-    private const string sRender = "Render";
-    private const string sAI = "AI";
     private const string sMesh = "Mesh";
-    private const string sExplode = "Explode";
-    private const string sWeapon = "Weapon";
-    private const string sScore = "Score";
-    private const string sSound = "Sound";
-    private const string sAddOn = "AddOn";
-    private const string sDebris = "Debris";
-    private const string sCamera = "Camera";
-    private const string sSpawner = "Spawner";
-
 
     public static ActorTypeInfo Null = new ActorTypeInfo(Globals.Engine.ActorTypeFactory, "$NULL", "Null");
 
@@ -60,29 +42,67 @@ namespace SWEndor.ActorTypes
 
     // Basic Info
     public string ID;
+
+    [INIValue("General", "Name")]
     public string Name;
 
     // Data
+    [INIValue("General", "Mask")]
     public ComponentMask Mask { get; set; } = ComponentMask.NONE;
 
     // Data (structs)
+    [INIEmbedObject]
     internal SystemData SystemData;
+
+    [INIEmbedObject]
     internal CombatData CombatData;
+
+    [INIEmbedObject]
     internal RegenData RegenData;
+
+    [INIEmbedObject]
     internal TimedLifeData TimedLifeData;
+
+    [INIEmbedObject]
     internal ArmorData ArmorData = ArmorData.Default;
+
+    [INIEmbedObject]
     internal MoveLimitData MoveLimitData = MoveLimitData.Default;
+
+    [INIEmbedObject]
     internal RenderData RenderData = RenderData.Default;
+
+    [INIEmbedObject]
     internal AIData AIData = AIData.Default;
+
+    [INIEmbedObject]
     internal MeshData MeshData = MeshData.Default;
+
+    [INIEmbedObject]
     internal ExplodeSystemData ExplodeSystemData = ExplodeSystemData.Default;
+
+    [INIEmbedObject]
     internal WeapSystemData WeapSystemData = WeapSystemData.Default;
+
+    [INIEmbedObject]
     internal DyingMoveData DyingMoveData;
+
+    [INIEmbedObject]
     internal ScoreData ScoreData;
+
+    [INIEmbedObject]
     internal SoundData SoundData = SoundData.Default;
+
+    [INIEmbedObject]
     internal AddOnSystemData AddOnData = AddOnSystemData.Default;
+
+    [INIEmbedObject]
     internal DebrisSystemData DebrisData = DebrisSystemData.Default;
+
+    [INIEmbedObject]
     internal CameraSystemData CameraData = CameraSystemData.Default;
+
+    [INIEmbedObject]
     internal SpawnerData SpawnerData = SpawnerData.Default;
 
     // derived
@@ -95,27 +115,10 @@ namespace SWEndor.ActorTypes
       if (File.Exists(filepath))
       {
         INIFile f = new INIFile(filepath);
-        Name = f.GetString("General", "Name", Name);
-        Mask = f.GetEnum("General", "Mask", Mask);
+        var self = this;
+        f.LoadByAttribute(ref self);
 
-        SystemData.LoadFromINI(f, sSystem);
-        CombatData.LoadFromINI(f, sCombat);
-        RegenData.LoadFromINI(f, sRegen);
-        TimedLifeData.LoadFromINI(f, sTimedLife);
-        ArmorData.LoadFromINI(f, sArmor);
-        MoveLimitData.LoadFromINI(f, sMoveLimit);
-        RenderData.LoadFromINI(f, sRender);
-        AIData.LoadFromINI(f, sAI);
         MeshData.LoadFromINI(Engine, f, sMesh, ID);
-        ExplodeSystemData.LoadFromINI(f, sExplode);
-        WeapSystemData.LoadFromINI(f, sWeapon);
-        DyingMoveData.LoadFromINI(Engine, f, sDyingMove);
-        ScoreData.LoadFromINI(f, sScore);
-        SoundData.LoadFromINI(f, sSound);
-        AddOnData.LoadFromINI(f, sAddOn);
-        DebrisData.LoadFromINI(f, sDebris);
-        CameraData.LoadFromINI(f, sCamera);
-        SpawnerData.LoadFromINI(f, sSpawner);
       }
     }
 
@@ -128,28 +131,10 @@ namespace SWEndor.ActorTypes
         File.Create(filepath).Close();
 
       INIFile f = new INIFile(filepath);
+      var self = this;
+      f.UpdateByAttribute(ref self);
 
-      f.SetString("General", "Name", Name);
-      f.SetEnum("General", "Mask", Mask);
-
-      SystemData.SaveToINI(f, sSystem);
-      CombatData.SaveToINI(f, sCombat);
-      RegenData.SaveToINI(f, sRegen);
-      TimedLifeData.SaveToINI(f, sTimedLife);
-      ArmorData.SaveToINI(f, sArmor);
-      MoveLimitData.SaveToINI(f, sMoveLimit);
-      RenderData.SaveToINI(f, sRender);
-      AIData.SaveToINI(f, sAI);
       MeshData.SaveToINI(f, sMesh);
-      ExplodeSystemData.SaveToINI(f, sExplode);
-      WeapSystemData.SaveToINI(f, sWeapon);
-      DyingMoveData.SaveToINI(f, sDyingMove);
-      ScoreData.SaveToINI(f, sScore);
-      SoundData.SaveToINI(f, sSound);
-      AddOnData.SaveToINI(f, sAddOn);
-      DebrisData.SaveToINI(f, sDebris);
-      CameraData.SaveToINI(f, sCamera);
-      SpawnerData.SaveToINI(f, sSpawner); 
 
       f.SaveFile(filepath);
     }
@@ -473,7 +458,7 @@ namespace SWEndor.ActorTypes
       if (ainfo == null)
         throw new ArgumentNullException("ainfo");
 
-      DyingMoveData.Initialize(ainfo);
+      DyingMoveData.Initialize(engine, ainfo);
       ainfo.DyingTimerStart();
 
       if (ainfo.IsPlayer)

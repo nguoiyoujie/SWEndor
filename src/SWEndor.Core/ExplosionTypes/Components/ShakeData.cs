@@ -7,14 +7,13 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct ShakeData
   {
-    public readonly float Intensity;
-    public readonly float ProximityDistance;
+    private const string sShake = "Shake";
 
-    public ShakeData(float intensity, float dist)
-    {
-      Intensity = intensity;
-      ProximityDistance = dist;
-    }
+    [INIValue(sShake, "Intensity")]
+    public float Intensity;
+
+    [INIValue(sShake, "ProximityDistance")]
+    public float ProximityDistance;
 
     public void Process(Engine engine, TV_3DVECTOR position)
     {
@@ -29,19 +28,6 @@ namespace SWEndor.ActorTypes.Components
         else
           engine.PlayerCameraInfo.Shake(Intensity);
       }
-    }
-
-    public void LoadFromINI(INIFile f, string sectionname)
-    {
-      float intensity = f.GetFloat(sectionname, "Intensity", Intensity);
-      float dist = f.GetFloat(sectionname, "ProximityDistance", ProximityDistance);
-      this = new ShakeData(intensity, dist);
-    }
-
-    public void SaveToINI(INIFile f, string sectionname)
-    {
-      f.SetFloat(sectionname, "Intensity", Intensity);
-      f.SetFloat(sectionname, "ProximityDistance", ProximityDistance);
     }
   }
 }

@@ -7,32 +7,26 @@ namespace SWEndor.Weapons
 {
   internal struct WeapPortInfo
   {
+    private const string sNone = "";
+
+    [INIValue(sNone, "FirePositions")]
     public float3[] FirePos;
-    public float2[] UIPos;
-    public int Index;
+
+    [INIValue(sNone, "CooldownRate")]
     public float2 CooldownRate; // rate, random
 
+    public float2[] UIPos;
+    public int Index;
     public float Cooldown;
 
     public static WeapPortInfo Default = new WeapPortInfo
     {
-      FirePos = null,
+      FirePos = new float3[0],
       UIPos = null,
       Index = 0,
       CooldownRate = new float2(1, 0),
       Cooldown = 0
     };
-
-    public void LoadFromINI(INIFile f, string sectionname)
-    {
-      this = Default;
-      float[] fpos = f.GetFloatArray(sectionname, "FirePositions", new float[0]);
-      FirePos = new float3[fpos.Length / 3];
-      for (int p = 0; p + 2 < fpos.Length; p += 3)
-        FirePos[p / 3] = new float3(fpos[p], fpos[p + 1], fpos[p + 2]);
-      CooldownRate = f.GetFloat2(sectionname, "CooldownRate", CooldownRate);
-      Init();
-    }
 
     public void Init()
     {

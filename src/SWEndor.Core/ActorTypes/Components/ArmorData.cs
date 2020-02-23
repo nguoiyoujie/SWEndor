@@ -11,6 +11,7 @@ namespace SWEndor.ActorTypes.Components
   /// </summary>
   internal struct ArmorData
   {
+    private const string sArmor = "Armor";
     private static DamageType[] _dmgs;
 
     static ArmorData()
@@ -26,7 +27,9 @@ namespace SWEndor.ActorTypes.Components
       _dmgs = ls.ToArray();
     }
 
+    [INIRegistry(sArmor)]
     internal readonly Registry<DamageType, float> Data;
+
     internal readonly float DefaultMult;
 
     public ArmorData(float def)
@@ -37,24 +40,5 @@ namespace SWEndor.ActorTypes.Components
 
     public static ArmorData Immune { get { return new ArmorData(0); } }
     public static ArmorData Default { get { return new ArmorData(1); } }
-
-    public void LoadFromINI(INIFile f, string sectionname)
-    {
-      this = Default;
-      if (f.HasSection(sectionname))
-        foreach (INIFile.INISection.INILine ln in f.GetSection(sectionname).Lines)
-          if (ln.HasKey)
-          {
-            DamageType d;
-            Enum.TryParse(ln.Key, out d);
-            Data.Put(d, f.GetFloat(sectionname, ln.Key));
-          }
-    }
-
-    public void SaveToINI(INIFile f, string sectionname)
-    {
-      foreach (DamageType d in Data.GetKeys())
-        f.SetFloat(sectionname, d.ToString(), Data[d]);
-    }
   }
 }

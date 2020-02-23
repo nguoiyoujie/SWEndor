@@ -9,6 +9,8 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct SystemData
   {
+    private const string sSystem = "System";
+
     static SystemData()
     {
       Array a = Enum.GetValues(typeof(SystemPart));
@@ -17,18 +19,38 @@ namespace SWEndor.ActorTypes.Components
         AllParts[i] = (SystemPart)a.GetValue(i);
     }
 
-    public SystemPart[] Parts;
-
+    [INIValue(sSystem, "MaxShield")]
     public float MaxShield;
+
+    [INIValue(sSystem, "MaxHull")]
     public float MaxHull;
+
+    [INIValue(sSystem, "Energy_Income")]
     public float Energy_Income;
+
+    [INIValue(sSystem, "Energy_NoChargerIncome")]
     public float Energy_NoChargerIncome;
+
+    [INIValue(sSystem, "MaxEnergy_inStore")]
     public float MaxEnergy_inStore;
+
+    [INIValue(sSystem, "MaxEnergy_inEngine")]
     public float MaxEnergy_inEngine;
+
+    [INIValue(sSystem, "MaxEnergy_inLasers")]
     public float MaxEnergy_inLasers;
+
+    [INIValue(sSystem, "MaxEnergy_inShields")]
     public float MaxEnergy_inShields;
+
+    [INIValue(sSystem, "Energy_TransferRate")]
     public float Energy_TransferRate;
+
+    [INIValue(sSystem, "AllowSystemDamage")]
     public bool AllowSystemDamage;
+
+    [INIValue(sSystem, "Parts")]
+    public SystemPart[] Parts;
 
     private static SystemPart[] AllParts;
     private static SystemPart[] NoParts = new SystemPart[0];
@@ -100,36 +122,6 @@ namespace SWEndor.ActorTypes.Components
       // parts.Add(SystemPart.HYPERDRIVE);
 
       Parts = parts.ToArray();
-    }
-
-    public void LoadFromINI(INIFile f, string sectionname)
-    {
-      MaxShield = f.GetFloat(sectionname, "MaxShield", MaxShield);
-      MaxHull = f.GetFloat(sectionname, "MaxHull", MaxHull);
-      Energy_Income = f.GetFloat(sectionname, "Energy_Income", Energy_Income);
-      Energy_NoChargerIncome = f.GetFloat(sectionname, "Energy_NoChargerIncome", Energy_NoChargerIncome);
-      MaxEnergy_inStore = f.GetFloat(sectionname, "MaxEnergy_inStore", MaxEnergy_inStore);
-      MaxEnergy_inEngine = f.GetFloat(sectionname, "MaxEnergy_inEngine", MaxEnergy_inEngine);
-      MaxEnergy_inLasers = f.GetFloat(sectionname, "MaxEnergy_inLasers", MaxEnergy_inLasers);
-      MaxEnergy_inShields = f.GetFloat(sectionname, "MaxEnergy_inShields", MaxEnergy_inShields);
-      Energy_TransferRate = f.GetFloat(sectionname, "Energy_TransferRate", Energy_TransferRate);
-      AllowSystemDamage = f.GetBool(sectionname, "AllowSystemDamage", AllowSystemDamage);
-      Parts = f.GetEnumArray(sectionname, "Parts", new SystemPart[0]);
-    }
-
-    public void SaveToINI(INIFile f, string sectionname)
-    {
-      f.SetFloat(sectionname, "MaxShield", MaxShield);
-      f.SetFloat(sectionname, "MaxHull", MaxHull);
-      f.SetFloat(sectionname, "Energy_Income", Energy_Income);
-      f.SetFloat(sectionname, "Energy_NoChargerIncome", Energy_NoChargerIncome);
-      f.SetFloat(sectionname, "MaxEnergy_inStore", MaxEnergy_inStore);
-      f.SetFloat(sectionname, "MaxEnergy_inEngine", MaxEnergy_inEngine);
-      f.SetFloat(sectionname, "MaxEnergy_inLasers", MaxEnergy_inLasers);
-      f.SetFloat(sectionname, "MaxEnergy_inShields", MaxEnergy_inShields);
-      f.SetFloat(sectionname, "Energy_TransferRate", Energy_TransferRate);
-      f.SetBool(sectionname, "AllowSystemDamage", AllowSystemDamage);
-      f.SetEnumArray(sectionname, "Parts", new SystemPart[0]);
     }
   }
 }

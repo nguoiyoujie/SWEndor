@@ -62,7 +62,7 @@ namespace SWEndor.AI.Actions
       });
     }
 
-    Func<Engine, ActorInfo, ActorInfo, ActorWeight[], TargetType, bool> getTargetsStationary = new Func<Engine, ActorInfo, ActorInfo, ActorWeight[], TargetType, bool>(
+    private static Func<Engine, ActorInfo, ActorInfo, ActorWeight[], TargetType, bool> getTargetsStationary = new Func<Engine, ActorInfo, ActorInfo, ActorWeight[], TargetType, bool>(
        (e, a, c, t, mt) =>
        {
          if (t[0].ID >= t.Length - 1)
@@ -95,7 +95,7 @@ namespace SWEndor.AI.Actions
        }
      );
 
-    Func<Engine, ActorInfo, ActorInfo, ActorWeight[], TargetType, bool> getTargets = new Func<Engine, ActorInfo, ActorInfo, ActorWeight[], TargetType, bool>(
+    private static Func<Engine, ActorInfo, ActorInfo, ActorWeight[], TargetType, bool> getTargets = new Func<Engine, ActorInfo, ActorInfo, ActorWeight[], TargetType, bool>(
        (e, a, c, t, mt) =>
        {
          if (t[0].ID >= t.Length - 1)

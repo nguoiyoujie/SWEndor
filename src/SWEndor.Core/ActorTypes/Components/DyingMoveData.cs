@@ -4,19 +4,29 @@ using SWEndor.Core;
 using Primitives.FileFormat.INI;
 using SWEndor.Primitives.Extensions;
 using System;
+using Primrose.Primitives.ValueTypes;
+using Primrose.Primitives.Factories;
 
 namespace SWEndor.ActorTypes.Components
 {
   internal static class DyingMoveMethod
   {
-    internal static Action<ActorInfo> _killInit = (a) => a.SetState_Dead();
-    internal static Action<ActorInfo> _spinInit = (a) => a.ApplyZBalance = false;
-    internal static Action<ActorInfo, TV_3DVECTOR, float> _spinUpdt = (a, d, t) =>
+    internal delegate void DyingMoveInitDelegate(Engine e, ActorInfo a, ref float3 f);
+
+    internal static DyingMoveInitDelegate _killInit = delegate (Engine e, ActorInfo a, ref float3 d) { a.SetState_Dead(); };
+    internal static DyingMoveInitDelegate _spinInit = delegate (Engine e, ActorInfo a, ref float3 d)
+    {
+      a.ApplyZBalance = false;
+      d.x = d.y + (float)e.Random.NextDouble() * (d.z - d.y);
+      if (e.Random.NextDouble() > 0.5)
+        d.x = -d.x;
+    };
+    internal static Action<ActorInfo, float3, float> _spinUpdt = (a, d, t) =>
     {
       a.Rotate(0, 0, d.x * t);
       a.MoveData.ResetTurn();
     };
-    internal static Action<ActorInfo, TV_3DVECTOR, float> _sinkUpdt = (a, d, t) =>
+    internal static Action<ActorInfo, float3, float> _sinkUpdt = (a, d, t) =>
     {
       a.XTurnAngle += d.x * t;
       a.MoveAbsolute(d.y * t, -d.z * t, 0);
@@ -25,63 +35,34 @@ namespace SWEndor.ActorTypes.Components
 
   internal struct DyingMoveData
   {
-    Action<ActorInfo> _init;
-    Action<ActorInfo, TV_3DVECTOR, float> _update;
-    TV_3DVECTOR _data;
+    private const string sDyingMove = "DyingMove";
+    private const string sSpin = "spin";
+    private const string sSink = "sink";
 
-    public void Kill()
+    private static Registry<string, DyingMoveMethod.DyingMoveInitDelegate> r_init;
+    private static Registry<string, Action<ActorInfo, float3, float>> r_updt;
+
+    static DyingMoveData()
     {
-      _init = DyingMoveMethod._killInit;
-      _update = null;
+      r_init = new Registry<string, DyingMoveMethod.DyingMoveInitDelegate>();
+      r_init.Add(sSpin, DyingMoveMethod._spinInit);
+      r_init.Add(sSink, null);
+      r_init.Default = DyingMoveMethod._killInit;
+
+      r_updt = new Registry<string, Action<ActorInfo, float3, float>>();
+      r_updt.Add(sSpin, DyingMoveMethod._spinUpdt);
+      r_updt.Add(sSink, DyingMoveMethod._sinkUpdt);
+      r_updt.Default = null;
     }
 
-    public void Spin(Random r, float minRate, float maxRate)
-    {
-      _data.y = minRate;
-      _data.z = maxRate;
-      _data.x = minRate + (float)r.NextDouble() * (maxRate - minRate);
-      if (r.NextDouble() > 0.5)
-        _data.x = -_data.x;
+    [INIValue(sDyingMove, "Data")]
+    internal float3 _data;
 
-      _init = DyingMoveMethod._spinInit;
-      _update = DyingMoveMethod._spinUpdt;
-    }
+    [INIValue(sDyingMove, "Type")]
+    internal string _type;
 
-    public void Sink(float pitchRate, float forwardRate, float sinkRate)
-    {
-      _data.x = pitchRate;
-      _data.y = forwardRate;
-      _data.z = sinkRate;
+    public void Initialize(Engine engine, ActorInfo actor) { r_init.Get(_type ?? "")?.Invoke(engine, actor, ref _data); }
 
-      _init = null;
-      _update = DyingMoveMethod._sinkUpdt;
-    }
-
-    public void Initialize(ActorInfo actor) { _init?.Invoke(actor); }
-    public void Update(ActorInfo actor, float time) { _update?.Invoke(actor, _data, time); }
-
-    public void LoadFromINI(Engine engine, INIFile f, string sectionname)
-    {
-      TV_3DVECTOR d = f.GetTV_3DVECTOR(sectionname, "Data", _data);
-      string t = f.GetString(sectionname, "Type", "");
-      if (t == "spin")
-        Spin(engine.Random, d.y, d.z);
-      else if (t == "sink")
-        Sink(d.x, d.y, d.z);
-      else
-        Kill();
-    }
-
-    public void SaveToINI(INIFile f, string sectionname)
-    {
-      string t = "";
-      if (_update == DyingMoveMethod._spinUpdt)
-        t = "spin";
-      else if (_update == DyingMoveMethod._sinkUpdt)
-        t = "sink";
-
-      f.SetString(sectionname, "Type", t);
-      f.SetTV_3DVECTOR(sectionname, "Data", _data);
-    }
+    public void Update(ActorInfo actor, float time) { r_updt.Get(_type ?? "")?.Invoke(actor, _data, time); }
   }
 }

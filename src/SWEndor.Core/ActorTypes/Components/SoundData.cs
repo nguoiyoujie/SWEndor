@@ -8,8 +8,13 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct SoundData
   {
+    private const string sSound = "Sound";
     private static SoundSourceData[] NullSound = new SoundSourceData[0];
+
+    [INISubSectionList(sSound, "ISN", "InitialSoundSources")]
     internal SoundSourceData[] InitialSoundSources;
+
+    [INISubSectionList(sSound, "SND", "SoundSources")]
     internal SoundSourceData[] SoundSources;
 
     public static SoundData Default { get { return new SoundData(NullSound, NullSound); } }
@@ -54,18 +59,6 @@ namespace SWEndor.ActorTypes.Components
     {
       foreach (SoundSourceData assi in SoundSources)
         assi.Process(engine, a);
-    }
-
-    public void LoadFromINI(INIFile f, string sectionname)
-    {
-      SoundSourceData.LoadFromINI(f, sectionname, "InitialSoundSources", out InitialSoundSources);
-      SoundSourceData.LoadFromINI(f, sectionname, "SoundSources", out SoundSources);
-    }
-
-    public void SaveToINI(INIFile f, string sectionname)
-    {
-      SoundSourceData.SaveToINI(f, sectionname, "InitialSoundSources", "ISN", InitialSoundSources);
-      SoundSourceData.SaveToINI(f, sectionname, "SoundSources", "SND", SoundSources);
     }
   }
 }

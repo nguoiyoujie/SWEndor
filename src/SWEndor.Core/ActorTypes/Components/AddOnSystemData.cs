@@ -6,7 +6,10 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct AddOnSystemData
   {
+    private const string sAddOn = "AddOn";
     private static AddOnData[] NullAddon = new AddOnData[0];
+
+    [INISubSectionList(sAddOn, "ADD", "AddOns")]
     internal AddOnData[] AddOns;
 
     public static AddOnSystemData Default { get { return new AddOnSystemData(NullAddon); } }
@@ -20,16 +23,6 @@ namespace SWEndor.ActorTypes.Components
     {
       foreach (AddOnData addon in AddOns)
         addon.Create(e, a);
-    }
-
-    public void LoadFromINI(INIFile f, string sectionname)
-    {
-      AddOnData.LoadFromINI(f, sectionname, "AddOns", out AddOns);
-    }
-
-    public void SaveToINI(INIFile f, string sectionname)
-    {
-      AddOnData.SaveToINI(f, sectionname, "AddOns", "ADD", AddOns);
     }
   }
 }

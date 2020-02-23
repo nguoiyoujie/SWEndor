@@ -7,6 +7,7 @@ using SWEndor.AI.Actions;
 using SWEndor.AI.Squads;
 using SWEndor.Core;
 using SWEndor.Models;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor
 {
@@ -51,13 +52,13 @@ namespace SWEndor
       SpawnPlayerDelay = data.SpawnPlayerDelay;
       SpawnsRemaining = data.SpawnsRemaining;
 
-      SpawnLocations = data.SpawnLocations;
-      PlayerSpawnLocation = data.PlayerSpawnLocation;
+      SpawnLocations = data.SpawnLocations.ToVec3Array();
+      PlayerSpawnLocation = data.PlayerSpawnLocation.ToVec3();
 
       SpawnSpeed = data.SpawnSpeed;
-      SpawnRotation = data.SpawnRotation;
-      SpawnManualPositioningMult = data.SpawnManualPositioningMult;
-      SpawnSpeedPositioningMult = data.SpawnSpeedPositioningMult;
+      SpawnRotation = data.SpawnRotation.ToVec3();
+      SpawnManualPositioningMult = data.SpawnManualPositioningMult.ToVec3();
+      SpawnSpeedPositioningMult = data.SpawnSpeedPositioningMult.ToVec3();
     }
 
     internal void Process(Engine engine, ActorInfo ainfo, ActorInfo p)

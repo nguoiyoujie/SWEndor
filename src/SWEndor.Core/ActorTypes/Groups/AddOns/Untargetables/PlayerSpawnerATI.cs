@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using Primrose.Primitives.ValueTypes;
 using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Models;
@@ -19,7 +20,7 @@ namespace SWEndor.ActorTypes.Instances
       SpawnerData.SpawnMoveDelay = 3;
       SpawnerData.SpawnInterval = 5;
       SpawnerData.SpawnsRemaining = 0;
-      SpawnerData.SpawnLocations = new TV_3DVECTOR[] { new TV_3DVECTOR(0, 0, 0) };
+      SpawnerData.SpawnLocations = new float3[] { new float3(0, 0, 0) };
     }
 
     public override void ProcessState(Engine engine, ActorInfo ainfo)

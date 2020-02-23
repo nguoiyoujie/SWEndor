@@ -6,7 +6,10 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct DebrisSystemData
   {
+    private const string sDebris = "Debris";
     private static DebrisSpawnerData[] NullDebris = new DebrisSpawnerData[0];
+
+    [INISubSectionList(sDebris, "DEBR", "Debris")]
     internal DebrisSpawnerData[] Debris;
 
     public static DebrisSystemData Default { get { return new DebrisSystemData(NullDebris); } }
@@ -20,16 +23,6 @@ namespace SWEndor.ActorTypes.Components
     {
       foreach (DebrisSpawnerData ds in Debris)
         ds.Process(e, a);
-    }
-
-    public void LoadFromINI(INIFile f, string sectionname)
-    {
-      DebrisSpawnerData.LoadFromINI(f, sectionname, "Debris", out Debris);
-    }
-
-    public void SaveToINI(INIFile f, string sectionname)
-    {
-      DebrisSpawnerData.SaveToINI(f, sectionname, "Debris", Debris);
     }
   }
 }

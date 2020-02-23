@@ -30,7 +30,7 @@ namespace SWEndor.Sound
           {
             if (line.Key == "AddMood")
             {
-              string[] v = line.Value.Split(INIFile.DefaultDelimiter);
+              string[] v = line.Value.Split(INIFile.ListDelimiter);
               if (v.Length > 1)
               {
                 int m = 0;
@@ -46,7 +46,7 @@ namespace SWEndor.Sound
             }
             else if (line.Key == "ChangeMood")
             {
-              string[] v = line.Value.Split(INIFile.DefaultDelimiter);
+              string[] v = line.Value.Split(INIFile.ListDelimiter);
               if (v.Length == 2)
               {
                 int m = 0;

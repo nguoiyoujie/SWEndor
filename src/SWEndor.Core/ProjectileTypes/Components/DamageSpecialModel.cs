@@ -10,13 +10,30 @@ namespace SWEndor.Projectiles.Components
 {
   internal struct DamageSpecialData
   {
+    private const string sDamageSpecial = "DamageSpecial";
+
+    [INIValue(sDamageSpecial, "NeverDisappear")]
     public bool NeverDisappear;
+
+    [INIValue(sDamageSpecial, "EMPDuration")]
     public float EMPDuration;
+
+    [INIValue(sDamageSpecial, "EMPDamage")]
     public float EMPDamage;
+
+    [INIValue(sDamageSpecial, "EMPDamageRandom")]
     public float EMPDamageRandom;
+
+    [INIValue(sDamageSpecial, "EMPPercentDamage")]
     public float EMPPercentDamage;
+
+    [INIValue(sDamageSpecial, "EMPPercentDamageRandom")]
     public float EMPPercentDamageRandom;
+
+    [INIValue(sDamageSpecial, "EMPAffectsChildren")]
     public int EMPAffectsChildren;
+
+    [INIValue(sDamageSpecial, "ReduceDyingTimerTo")]
     public float ReduceDyingTimerTo;
 
     public void ProcessHit(Engine engine, ActorInfo target)
@@ -77,31 +94,6 @@ namespace SWEndor.Projectiles.Components
           }
         }
       }
-    }
-
-    public void LoadFromINI(INIFile f, string sectionname)
-    {
-      this = new DamageSpecialData();
-      NeverDisappear = f.GetBool(sectionname, "NeverDisappear", NeverDisappear);
-      EMPDuration = f.GetFloat(sectionname, "EMPDuration", EMPDuration);
-      EMPDamage = f.GetFloat(sectionname, "EMPDamage", EMPDamage);
-      EMPDamageRandom = f.GetFloat(sectionname, "EMPDamageRandom", EMPDamageRandom);
-      EMPPercentDamage = f.GetFloat(sectionname, "EMPPercentDamage", EMPPercentDamage);
-      EMPPercentDamageRandom = f.GetFloat(sectionname, "EMPPercentDamageRandom", EMPPercentDamageRandom);
-      EMPAffectsChildren = f.GetInt(sectionname, "EMPAffectsChildren", EMPAffectsChildren);
-      ReduceDyingTimerTo = f.GetFloat(sectionname, "ReduceDyingTimerTo", ReduceDyingTimerTo);
-    }
-
-    public void SaveToINI(INIFile f, string sectionname)
-    {
-      f.SetBool(sectionname, "NeverDisappear", NeverDisappear);
-      f.SetFloat(sectionname, "EMPDuration", EMPDuration);
-      f.SetFloat(sectionname, "EMPDamage", EMPDamage);
-      f.SetFloat(sectionname, "EMPDamageRandom", EMPDamageRandom);
-      f.SetFloat(sectionname, "EMPPercentDamage", EMPPercentDamage);
-      f.SetFloat(sectionname, "EMPPercentDamageRandom", EMPPercentDamageRandom);
-      f.SetInt(sectionname, "EMPAffectsChildren", EMPAffectsChildren);
-      f.SetFloat(sectionname, "ReduceDyingTimerTo", ReduceDyingTimerTo);
     }
   }
 }

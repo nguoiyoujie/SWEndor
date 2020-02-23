@@ -6,18 +6,19 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct ExplRenderData
   {
-    public readonly int AtlasX;
-    public readonly int AtlasY;
-    public readonly float AnimDuration;
-    public readonly float ExpandSize;
+    private const string sExplRender = "ExplRender";
 
-    public ExplRenderData(int atlasX, int atlasY, float animDuration, float expandSize)
-    {
-      AtlasX = atlasX;
-      AtlasY = atlasY;
-      AnimDuration = animDuration;
-      ExpandSize = expandSize;
-    }
+    [INIValue(sExplRender, "AtlasX")]
+    public readonly int AtlasX;
+
+    [INIValue(sExplRender, "AtlasY")]
+    public readonly int AtlasY;
+
+    [INIValue(sExplRender, "AnimDuration")]
+    public readonly float AnimDuration;
+
+    [INIValue(sExplRender, "ExpandSize")]
+    public readonly float ExpandSize;
 
     public void Process(Engine engine, ExplosionInfo ainfo)
     {
@@ -32,23 +33,6 @@ namespace SWEndor.ActorTypes.Components
         ainfo.SetTexMod(u, v, su, sv);
       }
       ainfo.Scale += ExpandSize * engine.Game.TimeSinceRender;
-    }
-
-    public void LoadFromINI(INIFile f, string sectionname)
-    {
-      int atlasX = f.GetInt(sectionname, "AtlasX", AtlasX);
-      int atlasY = f.GetInt(sectionname, "AtlasY", AtlasY);
-      float animDuration = f.GetFloat(sectionname, "AnimDuration", AnimDuration);
-      float expandSize = f.GetFloat(sectionname, "ExpandSize", ExpandSize);
-      this = new ExplRenderData(atlasX, atlasY, animDuration, expandSize);
-    }
-
-    public void SaveToINI(INIFile f, string sectionname)
-    {
-      f.SetInt(sectionname, "AtlasX", AtlasX);
-      f.SetInt(sectionname, "AtlasY", AtlasY);
-      f.SetFloat(sectionname, "AnimDuration", AnimDuration);
-      f.SetFloat(sectionname, "ExpandSize", ExpandSize);
     }
   }
 }

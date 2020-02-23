@@ -15,27 +15,39 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWEndor.Core", "SWEndor.Cor
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38B23038-2CB8-4D0B-B97F-BD9AF261DC02}.Debug|x64.ActiveCfg = Debug|x86
 		{38B23038-2CB8-4D0B-B97F-BD9AF261DC02}.Debug|x86.ActiveCfg = Debug|x86
 		{38B23038-2CB8-4D0B-B97F-BD9AF261DC02}.Debug|x86.Build.0 = Debug|x86
+		{38B23038-2CB8-4D0B-B97F-BD9AF261DC02}.Release|x64.ActiveCfg = Release|x86
 		{38B23038-2CB8-4D0B-B97F-BD9AF261DC02}.Release|x86.ActiveCfg = Release|x86
 		{38B23038-2CB8-4D0B-B97F-BD9AF261DC02}.Release|x86.Build.0 = Release|x86
+		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Debug|x64.ActiveCfg = Debug|x86
 		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Debug|x86.ActiveCfg = Debug|x86
 		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Debug|x86.Build.0 = Debug|x86
+		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Release|x64.ActiveCfg = Release|x86
 		{1ED14DC7-63A2-492F-8153-B5600B751AE3}.Release|x86.ActiveCfg = Release|x86
+		{805428FF-A413-48DA-993C-99D9083B9A45}.Debug|x64.ActiveCfg = Debug|x86
 		{805428FF-A413-48DA-993C-99D9083B9A45}.Debug|x86.ActiveCfg = Debug|x86
 		{805428FF-A413-48DA-993C-99D9083B9A45}.Debug|x86.Build.0 = Debug|x86
+		{805428FF-A413-48DA-993C-99D9083B9A45}.Release|x64.ActiveCfg = Release|x86
 		{805428FF-A413-48DA-993C-99D9083B9A45}.Release|x86.ActiveCfg = Release|x86
 		{805428FF-A413-48DA-993C-99D9083B9A45}.Release|x86.Build.0 = Release|x86
+		{CB3C11DA-081A-4BA5-9A37-30732BAD99C5}.Debug|x64.ActiveCfg = Debug|x86
 		{CB3C11DA-081A-4BA5-9A37-30732BAD99C5}.Debug|x86.ActiveCfg = Debug|x86
 		{CB3C11DA-081A-4BA5-9A37-30732BAD99C5}.Debug|x86.Build.0 = Debug|x86
+		{CB3C11DA-081A-4BA5-9A37-30732BAD99C5}.Release|x64.ActiveCfg = Release|x86
 		{CB3C11DA-081A-4BA5-9A37-30732BAD99C5}.Release|x86.ActiveCfg = Release|x86
 		{CB3C11DA-081A-4BA5-9A37-30732BAD99C5}.Release|x86.Build.0 = Release|x86
+		{55637145-BFE1-46E7-9396-06890213192F}.Debug|x64.ActiveCfg = Debug|x86
 		{55637145-BFE1-46E7-9396-06890213192F}.Debug|x86.ActiveCfg = Debug|x86
 		{55637145-BFE1-46E7-9396-06890213192F}.Debug|x86.Build.0 = Debug|x86
+		{55637145-BFE1-46E7-9396-06890213192F}.Release|x64.ActiveCfg = Release|x86
 		{55637145-BFE1-46E7-9396-06890213192F}.Release|x86.ActiveCfg = Release|x86
 		{55637145-BFE1-46E7-9396-06890213192F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection

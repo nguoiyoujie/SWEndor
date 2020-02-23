@@ -16,14 +16,7 @@ namespace SWEndor.ProjectileTypes
   /// </summary>
   public partial class ProjectileTypeInfo : ITypeInfo<ProjectileInfo>
   {
-    private const string sCombat = "Combat";
-    private const string sTimedLife = "TimedLife";
-    private const string sMoveLimit = "MoveLimit";
-    private const string sRender = "Render";
     private const string sMesh = "Mesh";
-    private const string sExplode = "Explode";
-    private const string sDamageSpecial = "DamageSpecial";
-    private const string sSound = "Sound";
 
     internal static readonly ProjectileTypeInfo Null = new ProjectileTypeInfo(Globals.Engine.ProjectileTypeFactory, "$NULL", "Null");
 
@@ -45,19 +38,36 @@ namespace SWEndor.ProjectileTypes
     public string ID;
 
     /// <summary>The given name of this object</summary>
+    [INIValue("General", "Name")]
     public string Name;
 
     // Data
+    [INIValue("General", "Mask")]
     public ComponentMask Mask { get; set; } = ComponentMask.NONE;
 
     // Data (structs)
+    [INIEmbedObject]
     internal CombatData CombatData;
+
+    [INIEmbedObject]
     internal TimedLifeData TimedLifeData;
+
+    [INIEmbedObject]
     internal MoveLimitData MoveLimitData = MoveLimitData.Default;
+
+    [INIEmbedObject]
     internal RenderData RenderData = RenderData.Default;
+
+    //[INIEmbedObject]
     internal MeshData MeshData = MeshData.Default;
+
+    [INIEmbedObject]
     internal ExplodeSystemData ExplodeSystemData = ExplodeSystemData.Default;
+
+    [INIEmbedObject]
     internal DamageSpecialData DamageSpecialData;
+
+    [INIEmbedObject]
     internal SoundData SoundData = SoundData.Default;
 
     // Derived (derived)
@@ -69,17 +79,10 @@ namespace SWEndor.ProjectileTypes
       if (File.Exists(filepath))
       {
         INIFile f = new INIFile(filepath);
-        Name = f.GetString("General", "Name", Name);
-        Mask = f.GetEnum("General", "Mask", Mask);
+        var self = this;
+        f.LoadByAttribute(ref self);
 
-        CombatData.LoadFromINI(f, sCombat);
-        TimedLifeData.LoadFromINI(f, sTimedLife);
-        MoveLimitData.LoadFromINI(f, sMoveLimit);
-        RenderData.LoadFromINI(f, sRender);
         MeshData.LoadFromINI(Engine, f, sMesh, ID);
-        ExplodeSystemData.LoadFromINI(f, sExplode);
-        DamageSpecialData.LoadFromINI(f, sDamageSpecial);
-        SoundData.LoadFromINI(f, sSound);
       }
     }
 
@@ -92,18 +95,10 @@ namespace SWEndor.ProjectileTypes
         File.Create(filepath).Close();
 
       INIFile f = new INIFile(filepath);
+      var self = this;
+      f.UpdateByAttribute(ref self);
 
-      f.SetString("General", "Name", Name);
-      f.SetEnum("General", "Mask", Mask);
-
-      CombatData.SaveToINI(f, sCombat);
-      TimedLifeData.SaveToINI(f, sTimedLife);
-      MoveLimitData.SaveToINI(f, sMoveLimit);
-      RenderData.SaveToINI(f, sRender);
       MeshData.SaveToINI(f, sMesh);
-      ExplodeSystemData.SaveToINI(f, sExplode);
-      DamageSpecialData.SaveToINI(f, sDamageSpecial);
-      SoundData.SaveToINI(f, sSound);
 
       f.SaveFile(filepath);
     }

@@ -1,50 +1,16 @@
-﻿using MTV3D65;
-using Primitives.FileFormat.INI;
-using SWEndor.Primitives.Extensions;
+﻿using Primitives.FileFormat.INI;
+using Primrose.Primitives.ValueTypes;
 
 namespace SWEndor.ActorTypes.Components
 {
   internal struct LookData
   {
-    public TV_3DVECTOR LookFrom;
-    public TV_3DVECTOR LookAt;
+    private const string sNone = "";
 
-    public LookData(TV_3DVECTOR from, TV_3DVECTOR to)
-    {
-      LookFrom = from;
-      LookAt = to;
-    }
+    [INIValue(sNone, "LookFrom")]
+    public float3 LookFrom;
 
-    public static void LoadFromINI(INIFile f, string sectionname, string key, out LookData[] dest)
-    {
-      string[] src = f.GetStringArray(sectionname, key, new string[0]);
-      dest = new LookData[src.Length];
-      for (int i = 0; i < src.Length; i++)
-        dest[i].LoadFromINI(f, src[i]);
-    }
-
-    public static void SaveToINI(INIFile f, string sectionname, string key, string membername, LookData[] src)
-    {
-      string[] ss = new string[src.Length];
-      for (int i = 0; i < src.Length; i++)
-      {
-        string s = membername + i.ToString();
-        ss[i] = s;
-        src[i].SaveToINI(f, s);
-      }
-      f.SetStringArray(sectionname, key, ss);
-    }
-
-    private void LoadFromINI(INIFile f, string sectionname)
-    {
-      LookFrom = f.GetTV_3DVECTOR(sectionname, "LookFrom", LookFrom);
-      LookAt = f.GetTV_3DVECTOR(sectionname, "LookAt", LookAt);
-    }
-
-    private void SaveToINI(INIFile f, string sectionname)
-    {
-      f.SetTV_3DVECTOR(sectionname, "LookFrom", LookFrom);
-      f.SetTV_3DVECTOR(sectionname, "LookAt", LookAt);
-    }
+    [INIValue(sNone, "LookAt")]
+    public float3 LookAt;
   }
 }

@@ -4,8 +4,13 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct WeapSystemData
   {
+    private const string sWeapon = "Weapon";
     private static WeapData[] NullWeap = new WeapData[0];
+
+    [INISubSectionList(sWeapon, "WEAP", "Weapon")]
     internal WeapData[] Loadouts;
+
+    [INIValue(sWeapon, "TrackerDummyWeapon")]
     internal bool TrackerDummyWeapon;
 
     public static WeapSystemData Default { get { return new WeapSystemData(NullWeap, false); } }
@@ -14,18 +19,6 @@ namespace SWEndor.ActorTypes.Components
     {
       Loadouts = loadouts;
       TrackerDummyWeapon = track;
-    }
-
-    public void LoadFromINI(INIFile f, string sectionname)
-    {
-      f.GetBool(sectionname, "TrackerDummyWeapon", TrackerDummyWeapon);
-      WeapData.LoadFromINI(f, sectionname, "Weapon", out Loadouts);
-    }
-
-    public void SaveToINI(INIFile f, string sectionname)
-    {
-      f.SetBool(sectionname, "TrackerDummyWeapon", TrackerDummyWeapon);
-      WeapData.SaveToINI(f, sectionname, "Weapon", "WEAP", Loadouts);
     }
   }
 }

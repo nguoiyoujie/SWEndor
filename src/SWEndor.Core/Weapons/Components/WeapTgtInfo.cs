@@ -7,18 +7,35 @@ namespace SWEndor.Weapons
 {
   internal struct WeapTgtInfo
   {
+    private const string sNone = "";
+
     // Targeter
+    [INIValue(sNone, "RequirePlayerTargetLock")]
     public bool RequirePlayerTargetLock;
+
+    [INIValue(sNone, "RequireAITargetLock")]
     public bool RequireAITargetLock; // TO-DO: Implement logic
+
+    [INIValue(sNone, "TargetLock_TimeRequired")]
     public float TargetLock_TimeRequired; // TO-DO: Implement logic
 
+    [INIValue(sNone, "PlayerTargetAcqType")]
     public TargetAcqType PlayerTargetAcqType; // TO-DO: Implement logic
+
+    [INIValue(sNone, "AITargetAcqType")]
     public TargetAcqType AITargetAcqType; // TO-DO: Implement logic
 
     // AI Config
+    [INIValue(sNone, "AIAttackTargets")]
     public TargetType AIAttackTargets;
+
+    [INIValue(sNone, "AIAttackNull")]
     public bool AIAttackNull;
+
+    [INIValue(sNone, "AngularRange")]
     public float AngularRange;
+
+    [INIValue(sNone, "Range")]
     public float Range;
 
     public static WeapTgtInfo Default = new WeapTgtInfo
@@ -47,22 +64,6 @@ namespace SWEndor.Weapons
     {
       if (Range == 0)
         Range = actt.MoveLimitData.MaxSpeed * actt.TimedLifeData.TimedLife;
-    }
-
-
-    public void LoadFromINI(INIFile f, string sectionname)
-    {
-      this = Default;
-
-      RequirePlayerTargetLock = f.GetBool(sectionname, "RequirePlayerTargetLock", RequirePlayerTargetLock);
-      RequireAITargetLock = f.GetBool(sectionname, "RequireAITargetLock", RequireAITargetLock);
-      TargetLock_TimeRequired = f.GetFloat(sectionname, "TargetLock_TimeRequired", TargetLock_TimeRequired);
-      PlayerTargetAcqType = f.GetEnum(sectionname, "PlayerTargetAcqType", PlayerTargetAcqType);
-      AITargetAcqType = f.GetEnum(sectionname, "AITargetAcqType", AITargetAcqType);
-      AIAttackTargets = f.GetEnum(sectionname, "AIAttackTargets", AIAttackTargets);
-      AIAttackNull = f.GetBool(sectionname, "AIAttackNull", AIAttackNull);
-      AngularRange = f.GetFloat(sectionname, "AngularRange", AngularRange);
-      Range = f.GetFloat(sectionname, "Range", Range);
     }
   }
 }

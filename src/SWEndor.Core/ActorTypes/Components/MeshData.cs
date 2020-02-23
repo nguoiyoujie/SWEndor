@@ -209,23 +209,8 @@ namespace SWEndor.ActorTypes.Components
           break;
 
         case MeshMode.HORIZON:
-          {
-            f.SetString(sectionname, "Data", SourceMeshPath);
-          }
-          break;
-
         case MeshMode.TEX_MOD:
-          {
-            f.SetString(sectionname, "Data", SourceMeshPath);
-          }
-          break;
-
         case MeshMode.ALPHATEX_WALL:
-          {
-            f.SetString(sectionname, "Data", SourceMeshPath);
-          }
-          break;
-
         case MeshMode.BILLBOARD_ANIM:
           {
             f.SetString(sectionname, "Data", SourceMeshPath);

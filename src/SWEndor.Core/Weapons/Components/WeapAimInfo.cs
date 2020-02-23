@@ -4,10 +4,19 @@ namespace SWEndor.Weapons
 {
   internal struct WeapAimInfo
   {
+    private const string sNone = "";
+
     // Auto Aim Bot
+    [INIValue(sNone, "EnablePlayerAutoAim")]
     public bool EnablePlayerAutoAim;
+
+    [INIValue(sNone, "EnableAIAutoAim")]
     public bool EnableAIAutoAim;
+
+    [INIValue(sNone, "AutoAimMinDeviation")]
     public float AutoAimMinDeviation;
+
+    [INIValue(sNone, "AutoAimMaxDeviation")]
     public float AutoAimMaxDeviation;
 
     public static WeapAimInfo Default = new WeapAimInfo
@@ -17,14 +26,5 @@ namespace SWEndor.Weapons
       AutoAimMinDeviation = 1,
       AutoAimMaxDeviation = 1
     };
-
-    public void LoadFromINI(INIFile f, string sectionname)
-    {
-      this = Default;
-      EnablePlayerAutoAim = f.GetBool(sectionname, "EnablePlayerAutoAim", EnablePlayerAutoAim);
-      EnableAIAutoAim = f.GetBool(sectionname, "EnableAIAutoAim", EnableAIAutoAim);
-      AutoAimMinDeviation = f.GetFloat(sectionname, "AutoAimMinDeviation", AutoAimMinDeviation);
-      AutoAimMaxDeviation = f.GetFloat(sectionname, "AutoAimMaxDeviation", AutoAimMaxDeviation);
-    }
   }
 }

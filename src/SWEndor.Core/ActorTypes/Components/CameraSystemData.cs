@@ -1,31 +1,26 @@
 ﻿using Primitives.FileFormat.INI;
+using Primrose.Primitives.ValueTypes;
 
 namespace SWEndor.ActorTypes.Components
 {
   internal struct CameraSystemData
   {
+    private const string sCamera = "Camera";
     private static LookData[] NullCam = new LookData[0];
+
+    [INISubSectionList(sCamera, "CAM", "Cameras")]
     internal LookData[] Cameras;
-    internal DeathCameraData DeathCamera;
 
-    public static CameraSystemData Default { get { return new CameraSystemData(NullCam, new DeathCameraData(350, 25, 15)); } }
+    [INIValue(sCamera, "DeathCam")]
+    private float3 DeathCam;
+    internal DeathCameraData DeathCamera { get { return new DeathCameraData(DeathCam); } }
 
-    public CameraSystemData(LookData[] initsrc, DeathCameraData deathCam)
+    public static CameraSystemData Default { get { return new CameraSystemData(NullCam, new float3(350, 25, 15)); } }
+
+    public CameraSystemData(LookData[] initsrc, float3 deathCam)
     {
       Cameras = initsrc;
-      DeathCamera = deathCam;
-    }
-
-    public void LoadFromINI(INIFile f, string sectionname)
-    {
-      LookData.LoadFromINI(f, sectionname, "Cameras", out Cameras);
-      DeathCamera.LoadFromINI(f, sectionname);
-    }
-
-    public void SaveToINI(INIFile f, string sectionname)
-    {
-      LookData.SaveToINI(f, sectionname, "Cameras", "CAM", Cameras);
-      DeathCamera.SaveToINI(f, sectionname);
+      DeathCam = deathCam;
     }
   }
 }

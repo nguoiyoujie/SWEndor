@@ -4,7 +4,10 @@ namespace SWEndor.Models
 {
   internal struct ExplodeSystemData
   {
+    private const string sExplode = "Explode";
     private static ExplodeData[] NullExpl = new ExplodeData[0];
+
+    [INISubSectionList(sExplode, "EXP", "Explodes")]
     internal ExplodeData[] Explodes;
 
     public static ExplodeSystemData Default { get { return new ExplodeSystemData(NullExpl); } }
@@ -12,16 +15,6 @@ namespace SWEndor.Models
     public ExplodeSystemData(ExplodeData[] expl)
     {
       Explodes = expl;
-    }
-
-    public void LoadFromINI(INIFile f, string sectionname)
-    {
-      ExplodeData.LoadFromINI(f, sectionname, "Explodes", out Explodes);
-    }
-
-    public void SaveToINI(INIFile f, string sectionname)
-    {
-      ExplodeData.SaveToINI(f, sectionname, "Explodes", "EXP", Explodes);
     }
   }
 }

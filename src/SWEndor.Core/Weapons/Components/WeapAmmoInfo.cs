@@ -6,12 +6,21 @@ namespace SWEndor.Weapons
 {
   internal struct WeapAmmoInfo
   {
+    private const string sNone = "";
+
+    [INIValue(sNone, "Max")] // initialize Count = Max
     public int Count;
+
+    [INIValue(sNone, "Max")]
     public int Max;
+
+    [INIValue(sNone, "ReloadRate")]
     public float2 ReloadRate; // rate, random
+
+    [INIValue(sNone, "ReloadAmount")]
     public int ReloadAmount;
 
-    public float ReloadCooldown;
+    private float ReloadCooldown;
 
     public static WeapAmmoInfo Default = new WeapAmmoInfo
     {
@@ -35,17 +44,6 @@ namespace SWEndor.Weapons
         if (Count > Max)
           Count = Max;
       }
-    }
-
-    public void LoadFromINI(INIFile f, string sectionname)
-    {
-      this = Default;
-      //Burst = f.GetInt(sectionname, "Burst", Burst);
-      //Count = f.GetInt(sectionname, "Count", Count);
-      Max = f.GetInt(sectionname, "Max", Max);
-      Count = Max;
-      ReloadRate = f.GetFloat2(sectionname, "ReloadRate", ReloadRate);
-      ReloadAmount = f.GetInt(sectionname, "ReloadAmount", ReloadAmount);
     }
   }
 }

@@ -11,12 +11,7 @@ namespace SWEndor.ExplosionTypes
 {
   public partial class ExplosionTypeInfo : ITypeInfo<ExplosionInfo>
   {
-    private const string sTimedLife = "TimedLife";
-    private const string sShake = "Shake";
-    private const string sRender = "Render";
-    private const string sExplRender = "ExplRender";
     private const string sMesh = "Mesh";
-    private const string sSound = "Sound";
 
     public ExplosionTypeInfo(Factory owner, string id, string name)
     {
@@ -30,14 +25,27 @@ namespace SWEndor.ExplosionTypes
 
     // Basic Info
     public string ID;
+
+    [INIValue("General", "Name")]
     public string Name;
 
     // Data
+    [INIEmbedObject]
     internal TimedLifeData TimedLifeData;
+
+    [INIEmbedObject]
     internal ShakeData ShakeData;
+
+    [INIEmbedObject]
     internal RenderData RenderData = RenderData.Default;
+
+    [INIEmbedObject]
     internal ExplRenderData ExplRenderData;
+
+    //[INIEmbedObject]
     internal MeshData MeshData = MeshData.Default;
+
+    [INIEmbedObject]
     internal SoundData SoundData = SoundData.Default;
 
     public ComponentMask Mask { get; } = ComponentMask.EXPLOSION;
@@ -48,14 +56,10 @@ namespace SWEndor.ExplosionTypes
       if (File.Exists(filepath))
       {
         INIFile f = new INIFile(filepath);
-        Name = f.GetString("General", "Name", Name);
+        var self = this;
+        f.LoadByAttribute(ref self);
 
-        TimedLifeData.LoadFromINI(f, sTimedLife);
-        ShakeData.LoadFromINI(f, sShake);
-        RenderData.LoadFromINI(f, sRender);
-        ExplRenderData.LoadFromINI(f, sExplRender);
         MeshData.LoadFromINI(Engine, f, sMesh, ID);
-        SoundData.LoadFromINI(f, sSound);
       }
     }
 
@@ -68,15 +72,10 @@ namespace SWEndor.ExplosionTypes
         File.Create(filepath).Close();
 
       INIFile f = new INIFile(filepath);
+      var self = this;
+      f.UpdateByAttribute(ref self);
 
-      f.SetString("General", "Name", Name);
-
-      TimedLifeData.SaveToINI(f, sTimedLife);
-      ShakeData.SaveToINI(f, sShake);
-      RenderData.SaveToINI(f, sRender);
-      ExplRenderData.SaveToINI(f, sExplRender);
       MeshData.SaveToINI(f, sMesh);
-      SoundData.SaveToINI(f, sSound);
 
       f.SaveFile(filepath);
     }

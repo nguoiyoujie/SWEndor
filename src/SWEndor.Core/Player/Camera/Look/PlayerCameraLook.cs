@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Core;
+using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Player
 {
@@ -46,8 +47,8 @@ namespace SWEndor.Player
 
       if (cammode < actor.TypeInfo.CameraData.Cameras.Length)
       {
-        location = actor.TypeInfo.CameraData.Cameras[cammode].LookFrom * actor.Scale;
-        target = actor.TypeInfo.CameraData.Cameras[cammode].LookAt * actor.Scale;
+        location = actor.TypeInfo.CameraData.Cameras[cammode].LookFrom.ToVec3() * actor.Scale;
+        target = actor.TypeInfo.CameraData.Cameras[cammode].LookAt.ToVec3() * actor.Scale;
       }
       LookFrom.TargetActorID = actor.ID;
       LookFrom.PositionRelative = location;
