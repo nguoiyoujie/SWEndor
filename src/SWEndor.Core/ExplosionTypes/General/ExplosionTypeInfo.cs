@@ -42,7 +42,7 @@ namespace SWEndor.ExplosionTypes
     [INIEmbedObject]
     internal ExplRenderData ExplRenderData;
 
-    //[INIEmbedObject]
+    [INIEmbedObject]
     internal MeshData MeshData = MeshData.Default;
 
     [INIEmbedObject]
@@ -59,7 +59,7 @@ namespace SWEndor.ExplosionTypes
         var self = this;
         f.LoadByAttribute(ref self);
 
-        MeshData.LoadFromINI(Engine, f, sMesh, ID);
+        MeshData.Load(Engine, ID);
       }
     }
 
@@ -74,9 +74,6 @@ namespace SWEndor.ExplosionTypes
       INIFile f = new INIFile(filepath);
       var self = this;
       f.UpdateByAttribute(ref self);
-
-      MeshData.SaveToINI(f, sMesh);
-
       f.SaveFile(filepath);
     }
 

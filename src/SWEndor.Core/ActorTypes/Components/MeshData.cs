@@ -19,18 +19,39 @@ namespace SWEndor.ActorTypes.Components
     BILLBOARD_ANIM
   }
 
+
   internal struct MeshData
   {
+    private const string sMesh = "Mesh";
+
+    [INIValue(sMesh, "Mode")]
+    public readonly MeshMode Mode;
+
+    [INIValue(sMesh, "Scale")]
+    public readonly float Scale;
+
+    [INIValue(sMesh, "SourceMeshPath")]
     public readonly string SourceMeshPath;
+
+    [INIValue(sMesh, "SourceFarMeshPath")]
     public readonly string SourceFarMeshPath;
+
+    [INIValue(sMesh, "Shader")]
+    public readonly string Shader;
+
+    [INIValue(sMesh, "BlendMode")]
+    public readonly CONST_TV_BLENDINGMODE BlendMode;
+
+    [INIValue(sMesh, "Data")]
+    public readonly string[] Data;
+
+
+    // Derived values
     public readonly TVMesh SourceMesh;
     public readonly TVMesh SourceFarMesh;
     public readonly TV_3DVECTOR MaxDimensions;
     public readonly TV_3DVECTOR MinDimensions;
-    public readonly float Scale;
-    public readonly MeshMode Mode;
-    public readonly string Shader;
-    public readonly CONST_TV_BLENDINGMODE BlendMode;
+
 
     public readonly static MeshData Default = new MeshData(Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(), 1, MeshMode.NONE, CONST_TV_BLENDINGMODE.TV_BLEND_NO, null, null);
 
@@ -55,6 +76,7 @@ namespace SWEndor.ActorTypes.Components
       Mode = MeshMode.NORMAL;
       Shader = shader;
       BlendMode = blendmode;
+      Data = null;
 
       // create SourceMesh and SourceFarMesh
       SourceMesh = engine.TrueVision.TVGlobals.GetMesh(id);
@@ -109,6 +131,7 @@ namespace SWEndor.ActorTypes.Components
       Mode = mode;
       Shader = shader;
       BlendMode = blendmode;
+      Data = null;
 
       SourceMesh = mesh;
       SourceFarMesh = mesh;
@@ -119,6 +142,97 @@ namespace SWEndor.ActorTypes.Components
       SourceMesh.GetBoundingBox(ref MinDimensions, ref MaxDimensions);
     }
 
+    public void Load(Engine engine, string id)
+    {
+      switch (Mode)
+      {
+        case MeshMode.NONE:
+          this = Default;
+          break;
+
+        case MeshMode.NORMAL:
+          this = new MeshData(engine, id, SourceMeshPath, SourceFarMeshPath, Scale, BlendMode, Shader);
+          break;
+
+        case MeshMode.HORIZON:
+          {
+            if (Data == null)
+              break;
+
+            if (Data.Length < 2)
+              break;
+
+            float size = 1;
+            if (!float.TryParse(Data[0], out size))
+              break;
+
+            string texname = Data[1];
+            this = MeshDataDecorator.CreateHorizon(engine, id, size, texname, BlendMode, Shader);
+          }
+          break;
+
+        case MeshMode.TEX_MOD:
+          {
+            if (Data == null)
+              break;
+
+            if (Data.Length < 2)
+              break;
+
+            string modelpath = Data[0];
+            string texname = Data[1];
+
+            this = MeshDataDecorator.CreateTexturedModel(engine, id, modelpath, texname, BlendMode, Shader);
+          }
+          break;
+
+        case MeshMode.ALPHATEX_WALL:
+          {
+            if (Data == null)
+              break;
+
+            if (Data.Length < 3)
+              break;
+
+            float size = 1;
+            if (!float.TryParse(Data[0], out size))
+              break;
+
+            string texname = Data[1];
+            string alphatexname = Data[2];
+
+            this = MeshDataDecorator.CreateAlphaTexturedWall(engine, id, size, texname, alphatexname, BlendMode, Shader);
+          }
+          break;
+
+        case MeshMode.BILLBOARD_ANIM:
+          {
+            if (Data == null)
+              break;
+
+            if (Data.Length < 4)
+              break;
+
+            float size = 1;
+            if (!float.TryParse(Data[0], out size))
+              break;
+
+            int columns = 1;
+            if (!int.TryParse(Data[2], out columns))
+              break;
+
+            int rows = 1;
+            if (!int.TryParse(Data[3], out rows))
+              break;
+
+            string texname = Data[1];
+            this = MeshDataDecorator.CreateBillboardAtlasAnimation(engine, id, size, texname, BlendMode, columns, rows, Shader);
+          }
+          break;
+      }
+    }
+
+/*
     public void LoadFromINI(Engine engine, INIFile f, string sectionname, string id)
     {
       MeshMode mode = f.GetEnum(sectionname, "Mode", Mode);
@@ -188,7 +302,7 @@ namespace SWEndor.ActorTypes.Components
           break;
       }
     }
-
+    
     public void SaveToINI(INIFile f, string sectionname)
     {
       f.SetEnum(sectionname, "Mode", Mode);
@@ -218,7 +332,9 @@ namespace SWEndor.ActorTypes.Components
           break;
       }
     }
+    */
   }
+  
 
   internal static class MeshDataDecorator
   {

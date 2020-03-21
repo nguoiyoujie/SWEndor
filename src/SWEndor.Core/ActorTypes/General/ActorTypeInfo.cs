@@ -118,7 +118,7 @@ namespace SWEndor.ActorTypes
         var self = this;
         f.LoadByAttribute(ref self);
 
-        MeshData.LoadFromINI(Engine, f, sMesh, ID);
+        MeshData.Load(Engine, ID);
       }
     }
 
@@ -133,9 +133,6 @@ namespace SWEndor.ActorTypes
       INIFile f = new INIFile(filepath);
       var self = this;
       f.UpdateByAttribute(ref self);
-
-      MeshData.SaveToINI(f, sMesh);
-
       f.SaveFile(filepath);
     }
 

@@ -58,7 +58,7 @@ namespace SWEndor.ProjectileTypes
     [INIEmbedObject]
     internal RenderData RenderData = RenderData.Default;
 
-    //[INIEmbedObject]
+    [INIEmbedObject]
     internal MeshData MeshData = MeshData.Default;
 
     [INIEmbedObject]
@@ -82,7 +82,7 @@ namespace SWEndor.ProjectileTypes
         var self = this;
         f.LoadByAttribute(ref self);
 
-        MeshData.LoadFromINI(Engine, f, sMesh, ID);
+        MeshData.Load(Engine, ID);
       }
     }
 
@@ -97,9 +97,6 @@ namespace SWEndor.ProjectileTypes
       INIFile f = new INIFile(filepath);
       var self = this;
       f.UpdateByAttribute(ref self);
-
-      MeshData.SaveToINI(f, sMesh);
-
       f.SaveFile(filepath);
     }
 
