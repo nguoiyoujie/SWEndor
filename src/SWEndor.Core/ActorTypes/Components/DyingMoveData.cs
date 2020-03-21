@@ -1,8 +1,6 @@
-﻿using MTV3D65;
-using SWEndor.Actors;
+﻿using SWEndor.Actors;
 using SWEndor.Core;
 using Primitives.FileFormat.INI;
-using SWEndor.Primitives.Extensions;
 using System;
 using Primrose.Primitives.ValueTypes;
 using Primrose.Primitives.Factories;
@@ -17,13 +15,14 @@ namespace SWEndor.ActorTypes.Components
     internal static DyingMoveInitDelegate _spinInit = delegate (Engine e, ActorInfo a, ref float3 d)
     {
       a.ApplyZBalance = false;
-      d.x = d.y + (float)e.Random.NextDouble() * (d.z - d.y);
+      a.MoveData.ResetTurn();
+      a.MoveData.MaxTurnRate = d.y + (float)e.Random.NextDouble() * (d.z - d.y);
       if (e.Random.NextDouble() > 0.5)
-        d.x = -d.x;
+        a.MoveData.MaxTurnRate = -a.MoveData.MaxTurnRate;
     };
     internal static Action<ActorInfo, float3, float> _spinUpdt = (a, d, t) =>
     {
-      a.Rotate(0, 0, d.x * t);
+      a.Rotate(0, 0, a.MoveData.MaxTurnRate * t);
       a.MoveData.ResetTurn();
     };
     internal static Action<ActorInfo, float3, float> _sinkUpdt = (a, d, t) =>
