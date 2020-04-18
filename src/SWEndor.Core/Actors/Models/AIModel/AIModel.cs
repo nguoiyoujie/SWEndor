@@ -16,7 +16,7 @@ namespace SWEndor.Actors.Models
     internal int HuntWeight;
 
     // CombatZone // TO-DO: Change this to int when multiple Combat Zones is possible
-    public bool EnteredCombatZone;
+    public int CombatZone;
 
     // Targeting
     private TargetMode targetMode;
@@ -33,7 +33,7 @@ namespace SWEndor.Actors.Models
       CanEvade = true;
       CanRetaliate = true;
       HuntWeight = 1;
-      EnteredCombatZone = false;
+      CombatZone = -1;
       targetMode = TargetMode.POINT;
       targetActorID = -1;
     }

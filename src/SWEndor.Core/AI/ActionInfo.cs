@@ -39,7 +39,7 @@ namespace SWEndor.AI.Actions
 
       float boundmult = 0.99f;
       bool outofbounds = owner.IsOutOfBounds(owner.Engine.GameScenarioManager.Scenario.State.MinAIBounds * boundmult, owner.Engine.GameScenarioManager.Scenario.State.MaxAIBounds * boundmult);
-      if (outofbounds && owner.AI.EnteredCombatZone)
+      if (outofbounds && owner.AI.CombatZone >= 0)
       {
         float x = owner.Engine.Random.Next((int)(owner.Engine.GameScenarioManager.Scenario.State.MinAIBounds.x * 0.65f), (int)(owner.Engine.GameScenarioManager.Scenario.State.MaxAIBounds.x * 0.65f));
         float y = owner.Engine.Random.Next(-200, 200);
@@ -51,8 +51,8 @@ namespace SWEndor.AI.Actions
         return false;
       }
       else
-        if (!owner.AI.EnteredCombatZone && !outofbounds)
-          owner.AI.EnteredCombatZone = true;
+        if (owner.AI.CombatZone < 0 && !outofbounds)
+          owner.AI.CombatZone = 0;
 
       return true;
     }

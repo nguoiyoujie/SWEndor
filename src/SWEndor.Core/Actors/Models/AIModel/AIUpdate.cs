@@ -49,19 +49,6 @@ namespace SWEndor.Actors.Models
       float chg = owner.MoveData.MaxSpeedChangeRate * engine.Game.TimeSinceRender;
       owner.MoveData.Speed = owner.MoveData.Speed.Creep(tSpd, chg);
 
-      //if (owner.MoveData.Speed > tSpd)
-      //{
-      //  owner.MoveData.Speed -= chg;
-      //  if (owner.MoveData.Speed < tSpd)
-      //    owner.MoveData.Speed = tSpd;
-      //}
-      //else
-      //{
-      //  owner.MoveData.Speed += chg;
-      //  if (owner.MoveData.Speed > tSpd)
-      //    owner.MoveData.Speed = tSpd;
-      //}
-
       return owner.MoveData.Speed - tSpd;
     }
   }
