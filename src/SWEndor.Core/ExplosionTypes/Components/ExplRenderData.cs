@@ -8,6 +8,7 @@ namespace SWEndor.ActorTypes.Components
   {
     private const string sExplRender = "ExplRender";
 
+#pragma warning disable 0649 // values are filled by the attribute
     [INIValue(sExplRender, "AtlasX")]
     public readonly int AtlasX;
 
@@ -19,6 +20,7 @@ namespace SWEndor.ActorTypes.Components
 
     [INIValue(sExplRender, "ExpandSize")]
     public readonly float ExpandSize;
+#pragma warning restore 0649 
 
     public void Process(Engine engine, ExplosionInfo ainfo)
     {

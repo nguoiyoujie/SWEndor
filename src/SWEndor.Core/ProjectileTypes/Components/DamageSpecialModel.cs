@@ -12,6 +12,7 @@ namespace SWEndor.Projectiles.Components
   {
     private const string sDamageSpecial = "DamageSpecial";
 
+#pragma warning disable 0649 // values are filled by the attribute
     [INIValue(sDamageSpecial, "NeverDisappear")]
     public bool NeverDisappear;
 
@@ -35,7 +36,8 @@ namespace SWEndor.Projectiles.Components
 
     [INIValue(sDamageSpecial, "ReduceDyingTimerTo")]
     public float ReduceDyingTimerTo;
-
+#pragma warning restore 0649
+    
     public void ProcessHit(Engine engine, ActorInfo target)
     {
       if (ReduceDyingTimerTo > 0)

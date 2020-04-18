@@ -9,11 +9,13 @@ namespace SWEndor.ActorTypes.Components
   {
     private const string sShake = "Shake";
 
+#pragma warning disable 0649 // values are filled by the attribute
     [INIValue(sShake, "Intensity")]
     public float Intensity;
 
     [INIValue(sShake, "ProximityDistance")]
     public float ProximityDistance;
+#pragma warning restore 0649
 
     public void Process(Engine engine, TV_3DVECTOR position)
     {
