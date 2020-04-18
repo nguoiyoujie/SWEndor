@@ -8,13 +8,12 @@ namespace SWEndor
     SYS_INIT,
     SYS_CLOSE,
 
+    // Generic
+    INFO,
+
     // Asset
-    ASSET_TEX_LOAD,
-    ASSET_TEX_LOADED,
-    ASSET_MODEL_LOAD,
-    ASSET_MODEL_LOADED,
-    ASSET_SOUND_LOAD,
-    ASSET_SOUND_LOADED,
+    ASSET_LOADING,
+    ASSET_LOADED,
 
     // Engine
     ENGINE_STARTED,
@@ -54,12 +53,10 @@ namespace SWEndor
         { LogType.SYS_INIT, "{0} initalizing, version {1}." },
         { LogType.SYS_CLOSE, "{0} exiting." },
 
-        { LogType.ASSET_TEX_LOAD, "{0} loading..." },
-        { LogType.ASSET_TEX_LOADED, "{0} loaded." },
-        { LogType.ASSET_MODEL_LOAD, "{0} loading..." },
-        { LogType.ASSET_MODEL_LOADED, "{0} loaded." },
-        { LogType.ASSET_SOUND_LOAD, "{0} loading..." },
-        { LogType.ASSET_SOUND_LOADED, "{0} loaded." },
+        { LogType.INFO, "{0}" },
+
+        { LogType.ASSET_LOADING, "{0} {1} loading..." },
+        { LogType.ASSET_LOADED, "{0} {1} loaded." },
 
 #if DEBUG
         { LogType.ACTOR_CREATED, "{0} was created." },
