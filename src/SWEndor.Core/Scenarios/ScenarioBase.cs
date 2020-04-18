@@ -337,7 +337,7 @@ namespace SWEndor.Scenarios
 
     public virtual void ProcessPlayerKilled(ActorInfo a)
     {
-      State.IsCutsceneMode = true;
+      State.IsCutsceneMode = false;
       EventQueue.Add(Game.GameTime + 3f, FadeOut);
       if (PlayerInfo.Lives == 0)
         State.SetGameStateB("GameOver", true);
