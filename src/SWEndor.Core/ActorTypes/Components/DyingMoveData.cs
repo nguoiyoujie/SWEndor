@@ -16,7 +16,7 @@ namespace SWEndor.ActorTypes.Components
     {
       a.ApplyZBalance = false;
       a.MoveData.ResetTurn();
-      a.MoveData.MaxTurnRate = d.y + (float)e.Random.NextDouble() * (d.z - d.y);
+      a.MoveData.MaxTurnRate = d.x + (float)e.Random.NextDouble() * (d.y - d.x);
       if (e.Random.NextDouble() > 0.5)
         a.MoveData.MaxTurnRate = -a.MoveData.MaxTurnRate;
     };
