@@ -6,6 +6,7 @@ namespace SWEndor.ActorTypes.Components
   {
     private const string sRegen = "Regen";
 
+#pragma warning disable 0649 // values are filled by the attribute
     [INIValue(sRegen, "NoRegen")]
     public bool NoRegen;
 
@@ -20,5 +21,6 @@ namespace SWEndor.ActorTypes.Components
 
     [INIValue(sRegen, "SiblingRegenRate")]
     public float SiblingRegenRate;
+#pragma warning restore 0649
   }
 }

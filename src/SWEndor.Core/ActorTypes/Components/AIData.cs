@@ -8,6 +8,7 @@ namespace SWEndor.ActorTypes.Components
     private const string sAI = "AI";
 
     // AI
+#pragma warning disable 0649 // values are filled by the attribute
     [INIValue(sAI, "Attack_AngularDelta")]
     public float Attack_AngularDelta;
 
@@ -31,6 +32,7 @@ namespace SWEndor.ActorTypes.Components
 
     [INIValue(sAI, "CanCheckCollisionAhead")]
     public bool CanCheckCollisionAhead;
+#pragma warning restore 0649
 
     // Targeting
     [INIValue(sAI, "TargetType")]

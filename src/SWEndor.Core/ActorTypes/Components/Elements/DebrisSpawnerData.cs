@@ -10,10 +10,11 @@ namespace SWEndor.ActorTypes.Components
   {
     private const string sNone = "";
 
+    private ActorTypeInfo _cache;
+
+#pragma warning disable 0649 // values are filled by the attribute
     [INIValue(sNone, "Type")]
     public string Type;
-
-    private ActorTypeInfo _cache;
 
     [INIValue(sNone, "SpawnPosition")]
     public float3 SpawnPosition;
@@ -38,6 +39,7 @@ namespace SWEndor.ActorTypes.Components
 
     [INIValue(sNone, "Chance")]
     public float Chance;
+#pragma warning restore 0649
 
     public void Process(Engine engine, ActorInfo actor)
     {

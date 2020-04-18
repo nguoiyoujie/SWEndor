@@ -54,11 +54,13 @@ namespace SWEndor.ActorTypes.Components
       r_updt.Default = null;
     }
 
+#pragma warning disable 0649 // values are filled by the attribute
     [INIValue(sDyingMove, "Data")]
     internal float3 _data;
 
     [INIValue(sDyingMove, "Type")]
     internal string _type;
+#pragma warning restore 0649
 
     public void Initialize(Engine engine, ActorInfo actor) { r_init.Get(_type ?? "")?.Invoke(engine, actor, ref _data); }
 

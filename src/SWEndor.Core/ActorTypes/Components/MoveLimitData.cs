@@ -6,6 +6,7 @@ namespace SWEndor.ActorTypes.Components
   {
     private const string sMoveLimit = "MoveLimit";
 
+#pragma warning disable 0649 // values are filled by the attribute
     [INIValue(sMoveLimit, "MaxSpeed")]
     public float MaxSpeed;
 
@@ -29,6 +30,7 @@ namespace SWEndor.ActorTypes.Components
 
     [INIValue(sMoveLimit, "ZNormFrac")]
     public float ZNormFrac;
+#pragma warning restore 0649
 
     public readonly static MoveLimitData Default =
         new MoveLimitData

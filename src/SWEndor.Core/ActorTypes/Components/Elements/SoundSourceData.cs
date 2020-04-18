@@ -13,6 +13,7 @@ namespace SWEndor.ActorTypes.Components
   {
     private const string sNone = "";
 
+#pragma warning disable 0649 // values are filled by the attribute
     [INIValue(sNone, "Sound")]
     public string[] Sound;
 
@@ -30,6 +31,7 @@ namespace SWEndor.ActorTypes.Components
 
     [INIValue(sNone, "PlayInCutscene")]
     public bool PlayInCutscene;
+#pragma warning restore 0649
 
     public void Process(Engine engine, ActorInfo actor)
     {

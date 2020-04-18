@@ -12,10 +12,11 @@ namespace SWEndor.ActorTypes.Components
   {
     private const string sNone = "";
 
+    private ActorTypeInfo _cache;
+
+#pragma warning disable 0649 // values are filled by the attribute
     [INIValue(sNone, "Type")]
     public readonly string Type;
-
-    private ActorTypeInfo _cache;
 
     [INIValue(sNone, "Position")]
     public readonly float3 Position;
@@ -25,6 +26,7 @@ namespace SWEndor.ActorTypes.Components
 
     [INIValue(sNone, "AttachToParent")]
     public readonly bool AttachToParent;
+#pragma warning restore 0649
 
     public void Create(Engine engine, ActorInfo actor)
     {

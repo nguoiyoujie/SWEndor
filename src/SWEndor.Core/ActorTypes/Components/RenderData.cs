@@ -9,6 +9,7 @@ namespace SWEndor.ActorTypes.Components
 
     public bool EnableDistanceCull { get { return CullDistance > 0; } }
 
+#pragma warning disable 0649 // values are filled by the attribute
     [INIValue(sRender, "CullDistance")]
     public float CullDistance;
 
@@ -29,6 +30,7 @@ namespace SWEndor.ActorTypes.Components
 
     [INIValue(sRender, "RemapLaserColor")]
     public bool RemapLaserColor;
+#pragma warning restore 0649 
 
     public readonly static RenderData Default =
         new RenderData

@@ -7,6 +7,7 @@ namespace SWEndor.ActorTypes.Components
   {
     private const string sSpawner = "Spawner";
 
+#pragma warning disable 0649 // values are filled by the attribute
     [INIValue(sSpawner, "SpawnTypes")]
     public string[] SpawnTypes;
 
@@ -39,6 +40,7 @@ namespace SWEndor.ActorTypes.Components
 
     [INIValue(sSpawner, "SpawnSpeedPositioningMult")]
     public float3 SpawnSpeedPositioningMult;
+#pragma warning restore 0649
 
     public static SpawnerData Default = new SpawnerData
     {
