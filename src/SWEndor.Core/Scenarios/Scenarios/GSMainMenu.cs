@@ -7,6 +7,7 @@ using SWEndor.Models;
 using SWEndor.Player;
 using Primrose.Primitives.Geometry;
 using System.Collections.Generic;
+using SWEndor.Sound;
 
 namespace SWEndor.Scenarios
 {
@@ -69,7 +70,7 @@ namespace SWEndor.Scenarios
       PlayerInfo.ScorePerLife = 9999999;
       PlayerInfo.ScoreForNextLife = 9999999;
 
-      SoundManager.SetMood(MoodStates.AMBIENT);
+      SoundManager.SetMood(MoodState.AMBIENT);
       SoundManager.SetMusicDyn("TRO-IN");
       State.IsCutsceneMode = true;
     }
@@ -423,7 +424,7 @@ namespace SWEndor.Scenarios
 
       EventQueue.Add(Game.GameTime + 25, Empire_StarDestroyer_02);
       EventQueue.Add(Game.GameTime + 50, Rebel_HyperspaceIn3);
-      SoundManager.SetMood(MoodStates.ENEMY_SHIP_ARRIVED);
+      SoundManager.SetMood(MoodState.ENEMY_SHIP_ARRIVED);
     }
 
     public void Rebel_HyperspaceIn3()
@@ -489,7 +490,7 @@ namespace SWEndor.Scenarios
       spawninfo.TypeInfo = ActorTypeFactory.Get("YWING");
       spawninfo.HuntTargetType = TargetType.SHIELDGENERATOR | TargetType.SHIP;
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
-      SoundManager.SetMood(MoodStates.ENEMY_SHIP_ARRIVED);
+      SoundManager.SetMood(MoodState.ENEMY_SHIP_ARRIVED);
     }
 
 
@@ -517,7 +518,7 @@ namespace SWEndor.Scenarios
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
       spawninfo.TypeInfo = ActorTypeFactory.Get("YWING");
       GSFunctions.MultipleSquadron_Spawn(Engine, this, 1, box, 1.5f, spawninfo);
-      SoundManager.SetMood(MoodStates.ENEMY_FIGHTER_ARRIVED);
+      SoundManager.SetMood(MoodState.ENEMY_FIGHTER_ARRIVED);
     }
 
     public void Rebel_BeginBattle()
@@ -573,14 +574,14 @@ namespace SWEndor.Scenarios
           Rotation = new TV_3DVECTOR(),
           Actions = new ActionInfo[] { Wait.GetOrCreate(7.5f)
                                      , Rotate.GetOrCreate(v, 0, 0.5f)
-                                     , SetMood.GetOrCreate(MoodStates.AMBIENT_2, true)
+                                     , SetMood.GetOrCreate(MoodState.AMBIENT_2, true)
                                      , Wait.GetOrCreate(2.5f)
                                      , HyperspaceOut.GetOrCreate()
                                      , HyperspaceIn.GetOrCreate(v)
-                                     , SetMood.GetOrCreate(MoodStates.NEUTRAL_SHIP_ARRIVED, true)
+                                     , SetMood.GetOrCreate(MoodState.NEUTRAL_SHIP_ARRIVED, true)
                                      , Rotate.GetOrCreate(new TV_3DVECTOR(0, 0, 0), 1)
                                      , Wait.GetOrCreate(3f+10f)
-                                     , SetMood.GetOrCreate(MoodStates.AMBIENT_4, true)
+                                     , SetMood.GetOrCreate(MoodState.AMBIENT_4, true)
                                      }
         }.Spawn(this);
 
@@ -620,8 +621,8 @@ namespace SWEndor.Scenarios
                                      , Wait.GetOrCreate(12.5f)
                                      , HyperspaceOut.GetOrCreate()
                                      , HyperspaceIn.GetOrCreate(v)
-                                     , SetMood.GetOrCreate(MoodStates.ALLY_FIGHTER_ARRIVED, true)
-                                     , SetMood.GetOrCreate(MoodStates.AMBIENT_3, true)
+                                     , SetMood.GetOrCreate(MoodState.ALLY_FIGHTER_ARRIVED, true)
+                                     , SetMood.GetOrCreate(MoodState.AMBIENT_3, true)
                                      , Rotate.GetOrCreate(new TV_3DVECTOR(0, 0, 0), 40)
                                      , Wait.GetOrCreate(3f)
                                      }
@@ -706,8 +707,8 @@ namespace SWEndor.Scenarios
                                      //, HyperspaceIn.GetOrCreate(v + hyperspaceInOffset)
                                      , HyperspaceOut.GetOrCreate()
                                      , HyperspaceIn.GetOrCreate(v)
-                                     , SetMood.GetOrCreate(MoodStates.ALLY_SHIP_ARRIVED, true)
-                                     , SetMood.GetOrCreate(MoodStates.ENGAGEMENT, true)
+                                     , SetMood.GetOrCreate(MoodState.ALLY_SHIP_ARRIVED, true)
+                                     , SetMood.GetOrCreate(MoodState.ENGAGEMENT, true)
                                      , EnableSpawn.GetOrCreate(true)
                                      , Move.GetOrCreate(new TV_3DVECTOR(v.x * 0.2f, v.y, -1000), ActorTypeFactory.Get("ISD").MoveLimitData.MaxSpeed / 2)
                                      , Rotate.GetOrCreate(new TV_3DVECTOR(-1600, -120, 6300), 0)

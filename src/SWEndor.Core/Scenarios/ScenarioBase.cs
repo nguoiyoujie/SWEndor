@@ -196,7 +196,7 @@ namespace SWEndor.Scenarios
 
       Engine.LandInfo.Enabled = false;
 
-      SoundManager.SetMood(MoodStates.AMBIENT);
+      SoundManager.SetMood(MoodState.AMBIENT);
       Engine.SoundManager.Clear();
       DistanceModel.Reset();
       PlayerCameraInfo.Shake(0);

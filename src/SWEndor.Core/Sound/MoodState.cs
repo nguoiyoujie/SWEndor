@@ -1,6 +1,6 @@
-﻿namespace SWEndor.Scenarios
+﻿namespace SWEndor.Sound
 {
-  public enum MoodStates //: byte
+  public enum MoodState //: byte
   {
     AMBIENT = 0,
     AMBIENT_2 = 1,

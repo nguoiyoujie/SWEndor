@@ -10,12 +10,12 @@ using SWEndor.Player;
 using Primrose.Primitives.Extensions;
 using SWEndor.Projectiles;
 using SWEndor.ProjectileTypes;
-using SWEndor.Scenarios;
 using SWEndor.Weapons;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using SWEndor.Primitives.Extensions;
+using SWEndor.Sound;
 
 namespace SWEndor.ActorTypes
 {
@@ -504,7 +504,7 @@ namespace SWEndor.ActorTypes
             engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.SQUAD_MEMBER_LOST).F(ainfo.Name)
                                              , 3
                                              , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_WARNING));
-            engine.SoundManager.SetMood(MoodStates.ALLY_FIGHTER_LOST);
+            engine.SoundManager.SetMood(MoodState.ALLY_FIGHTER_LOST);
           }
         }
       }

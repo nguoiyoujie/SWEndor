@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Primrose.Primitives.ValueTypes;
 using Primrose.Primitives.Extensions;
 using MTV3D65;
+using SWEndor.Sound;
 
 namespace SWEndor.UI.Forms.UIControls
 {
@@ -38,7 +39,7 @@ namespace SWEndor.UI.Forms.UIControls
       Rotate.GetOrCreate(default(TV_3DVECTOR), 0).Return();
       SelfDestruct.GetOrCreate().Return();
       SetGameStateB.GetOrCreate(null, Enabled).Return();
-      SetMood.GetOrCreate(default(Scenarios.MoodStates), false).Return();
+      SetMood.GetOrCreate(default(MoodState), false).Return();
       Wait.GetOrCreate().Return();
 
       IPool[] pools = new IPool[]

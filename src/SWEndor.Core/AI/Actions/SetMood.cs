@@ -1,8 +1,8 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Core;
 using Primrose.Primitives;
-using SWEndor.Scenarios;
 using Primrose.Primitives.Factories;
+using SWEndor.Sound;
 
 namespace SWEndor.AI.Actions
 {
@@ -13,7 +13,7 @@ namespace SWEndor.AI.Actions
 
     private SetMood() : base("SetMood") { CanInterrupt = false; }
 
-    public static SetMood GetOrCreate(MoodStates mood, bool squadLeaderOnly)
+    public static SetMood GetOrCreate(MoodState mood, bool squadLeaderOnly)
     {
       SetMood h = _pool.GetNew();
 
@@ -36,7 +36,7 @@ namespace SWEndor.AI.Actions
     }
 
     // parameters
-    public MoodStates Mood = 0;
+    public MoodState Mood = 0;
     public bool SquadLeaderOnly = false;
 
     public override string ToString()

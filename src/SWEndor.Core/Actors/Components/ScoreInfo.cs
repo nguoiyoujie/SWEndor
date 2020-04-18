@@ -2,8 +2,8 @@
 using SWEndor.Core;
 using SWEndor.Models;
 using Primrose.Primitives.Extensions;
-using SWEndor.Scenarios;
 using Primrose.Primitives.Factories;
+using SWEndor.Sound;
 
 namespace SWEndor
 {
@@ -90,9 +90,9 @@ namespace SWEndor
       Kills++;
 
       if (victim.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
-        engine.SoundManager.SetMood(MoodStates.DESTROY_FIGHTER);
+        engine.SoundManager.SetMood(MoodState.DESTROY_FIGHTER);
       else if (victim.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
-        engine.SoundManager.SetMood(MoodStates.DESTROY_SHIP);
+        engine.SoundManager.SetMood(MoodState.DESTROY_SHIP);
 
       if (engine.PlayerInfo.Actor != null)
         engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.ENEMY_DESTROYED).F(victim.Name)

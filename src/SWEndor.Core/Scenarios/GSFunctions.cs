@@ -7,6 +7,7 @@ using SWEndor.Models;
 using Primrose.Primitives.Geometry;
 using System.Collections.Generic;
 using SWEndor.Primitives.Extensions;
+using SWEndor.Sound;
 
 namespace SWEndor.Scenarios
 {
@@ -221,7 +222,7 @@ namespace SWEndor.Scenarios
       string name = spawninfo.ShipName ?? "";
 
       List<ActionInfo> actionlist = new List<ActionInfo>();
-      if (spawninfo.IntermissionMood != 0) actionlist.Add(SetMood.GetOrCreate((MoodStates)spawninfo.IntermissionMood, true));
+      if (spawninfo.IntermissionMood != 0) actionlist.Add(SetMood.GetOrCreate((MoodState)spawninfo.IntermissionMood, true));
       if (spawninfo.HyperspaceIn) actionlist.Add(HyperspaceIn.GetOrCreate(position));
       if (spawninfo.EnableSpawn) actionlist.Add(EnableSpawn.GetOrCreate(true));
       actionlist.Add(Move.GetOrCreate(targetposition, spawninfo.TypeInfo.MoveLimitData.MaxSpeed));
