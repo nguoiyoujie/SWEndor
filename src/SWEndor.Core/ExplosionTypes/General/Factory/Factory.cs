@@ -16,14 +16,7 @@ namespace SWEndor.ExplosionTypes
 
       public void Register(ExplosionTypeInfo atype)
       {
-        if (Contains(atype.ID))
-        {
-          atype = GetX(atype.ID);
-        }
-        else
-        {
-          Add(atype.ID, atype);
-        }
+        Put(atype.ID, atype);
         Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
       }
 
@@ -32,6 +25,7 @@ namespace SWEndor.ExplosionTypes
         foreach (string fp in Directory.GetFiles(Globals.ExplosionTypeINIDirectory, Globals.INIExt, SearchOption.AllDirectories))
         {
           string f = Path.GetFileNameWithoutExtension(fp);
+          Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "ExplosionType", f);
           if (Contains(f))
             throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.EXPLTYPE_INITWICE_ERROR).F(f));
           ExplosionTypeInfo t = new ExplosionTypeInfo(this, f, f);
@@ -54,21 +48,6 @@ namespace SWEndor.ExplosionTypes
 
         return ret;
       }
-
-      /*
-      public void LoadFromINI(string filepath)
-      {
-        if (File.Exists(filepath))
-        {
-          INIFile f = new INIFile(filepath);
-          foreach (string s in f.Sections)
-          {
-            if (s != INIFile.PreHeaderSectionName)
-              Register(Parser.Parse(this, f, s));
-          }
-        }
-      }
-      */
     }
   }
 }

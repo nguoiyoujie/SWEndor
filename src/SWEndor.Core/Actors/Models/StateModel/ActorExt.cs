@@ -46,7 +46,7 @@ namespace SWEndor.Actors
       State.SetUnreserved();
 #if DEBUG
       if (Logged)
-        Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
+        Logger.Log(Logger.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
 #endif
     }
 
@@ -56,7 +56,7 @@ namespace SWEndor.Actors
       State.SetReserved();
 #if DEBUG
       if (Logged)
-        Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
+        Logger.Log(Logger.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
 #endif
     }
 
@@ -64,7 +64,7 @@ namespace SWEndor.Actors
     public void SetGenerated() { State.SetGenerated();
 #if DEBUG
       if (Logged)
-        Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
+        Logger.Log(Logger.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
 #endif
     }
 
@@ -72,7 +72,7 @@ namespace SWEndor.Actors
     public void SetActivated() { State.SetActivated();
 #if DEBUG
       if (Logged)
-        Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
+        Logger.Log(Logger.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
 #endif
     }
 
@@ -80,7 +80,7 @@ namespace SWEndor.Actors
     public void SetPreDispose() { State.SetPreDispose();
 #if DEBUG
       if (Logged)
-        Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
+        Logger.Log(Logger.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
 #endif
     }
 
@@ -88,7 +88,7 @@ namespace SWEndor.Actors
     public void SetDisposing() { State.SetDisposing();
 #if DEBUG
       if (Logged)
-        Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
+        Logger.Log(Logger.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
 #endif
     }
 
@@ -96,7 +96,7 @@ namespace SWEndor.Actors
     public void SetDisposed() { State.SetDisposed();
 #if DEBUG
       if (Logged)
-        Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
+        Logger.Log(Logger.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
 #endif
     }
 
@@ -104,7 +104,7 @@ namespace SWEndor.Actors
     public void ResetPlanned() { State.ResetPlanned();
 #if DEBUG
       if (Logged)
-        Log.Write(Log.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
+        Logger.Log(Logger.DEBUG, LogType.ACTOR_CREATIONSTATECHANGED, this, State.CreationState);
 #endif
     }
 
@@ -124,7 +124,7 @@ namespace SWEndor.Actors
     public void AdvanceDeathOneLevel() { State.AdvanceDeathOneLevel(this);
 #if DEBUG
       if (Logged)
-        Log.Write(Log.DEBUG, LogType.ACTOR_ACTORSTATECHANGED, this, State.ActorState);
+        Logger.Log(Logger.DEBUG, LogType.ACTOR_ACTORSTATECHANGED, this, State.ActorState);
 #endif
     }
 
@@ -132,7 +132,7 @@ namespace SWEndor.Actors
     public void SetState_Dead() { State.MakeDead(this);
 #if DEBUG
       if (Logged)
-        Log.Write(Log.DEBUG, LogType.ACTOR_ACTORSTATECHANGED, this, State.ActorState);
+        Logger.Log(Logger.DEBUG, LogType.ACTOR_ACTORSTATECHANGED, this, State.ActorState);
 #endif
     }
 
@@ -140,7 +140,7 @@ namespace SWEndor.Actors
     public void SetState_Dying() { State.MakeDying(this);
 #if DEBUG
       if (Logged)
-        Log.Write(Log.DEBUG, LogType.ACTOR_ACTORSTATECHANGED, this, State.ActorState);
+        Logger.Log(Logger.DEBUG, LogType.ACTOR_ACTORSTATECHANGED, this, State.ActorState);
 #endif
     }
 
@@ -148,7 +148,7 @@ namespace SWEndor.Actors
     public void SetState_Normal() { State.MakeNormal(this);
 #if DEBUG
       if (Logged)
-        Log.Write(Log.DEBUG, LogType.ACTOR_ACTORSTATECHANGED, this, State.ActorState);
+        Logger.Log(Logger.DEBUG, LogType.ACTOR_ACTORSTATECHANGED, this, State.ActorState);
 #endif
     }
   }

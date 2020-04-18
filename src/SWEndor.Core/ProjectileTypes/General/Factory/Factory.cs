@@ -16,14 +16,7 @@ namespace SWEndor.ProjectileTypes
 
       public void Register(ProjectileTypeInfo atype)
       {
-        if (Contains(atype.ID))
-        {
-          atype = GetX(atype.ID);
-        }
-        else
-        {
-          Add(atype.ID, atype);
-        }
+        Put(atype.ID, atype);
         Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
       }
       
@@ -32,6 +25,7 @@ namespace SWEndor.ProjectileTypes
         foreach (string fp in Directory.GetFiles(Globals.ProjectileTypeINIDirectory, Globals.INIExt, SearchOption.AllDirectories))
         {
           string f = Path.GetFileNameWithoutExtension(fp);
+          Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "ProjectileType", f);
           if (Contains(f))
             throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.ACTORTYPE_INITWICE_ERROR).F(f));
           ProjectileTypeInfo t = new ProjectileTypeInfo(this, f, f);
@@ -40,7 +34,6 @@ namespace SWEndor.ProjectileTypes
         }
       }
       
-
       public void Initialise()
       {
         foreach (ProjectileTypeInfo atype in list.Values)

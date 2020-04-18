@@ -13,7 +13,6 @@ namespace SWEndor
 
     // Asset
     ASSET_LOADING,
-    ASSET_LOADED,
 
     // Engine
     ENGINE_STARTED,
@@ -55,8 +54,7 @@ namespace SWEndor
 
         { LogType.INFO, "{0}" },
 
-        { LogType.ASSET_LOADING, "{0} {1} loading..." },
-        { LogType.ASSET_LOADED, "{0} {1} loaded." },
+        { LogType.ASSET_LOADING, "Loading {0} {1}" },
 
 #if DEBUG
         { LogType.ACTOR_CREATED, "{0} was created." },

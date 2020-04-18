@@ -10,15 +10,10 @@ namespace SWEndor.Sound
 
       public void Process(SoundManager s)
       {
-        if (Name == s.CurrMusic)
-        {
-          Name += "%";
-        }
-
         if (s.music.Contains(Name))
         {
           Channel dummy = null;
-          s.fmodsystem.playSound(s.music[Name], s.musicgrp, true, out dummy);
+          s.fmodsystem.playSound(s.music[Name].GetSound(false), s.musicgrp, true, out dummy);
         }
       }
     }

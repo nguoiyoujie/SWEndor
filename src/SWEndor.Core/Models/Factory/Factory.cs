@@ -306,24 +306,12 @@ namespace SWEndor
       }
     }
 
-    Action<Engine, T> destroy = (e, a) => { a?.Delete(); }; //ScopeCounterManager.Reset(a.Scope); a?.Delete(); };
+    Action<Engine, T> destroy = (e, a) => { a?.Delete(); };
     public void Reset()
     {
       DisposePlanned();
       DoEach(destroy);
       DestroyDead();
-
-      // Do not purge items this way, let the engine collect them back to pool for reuse
-      //list.Clear();
-      //planned = new ConcurrentQueue<T>();
-      //dead = new ConcurrentQueue<T>();
-      //prepool = new ConcurrentQueue<T>();
-      //pool = new ConcurrentQueue<T>();
-      //First = null;
-      //Last = null;
-
-      //lastdataid = 0;
-      //counter = 0;
     }
   }
 }

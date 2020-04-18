@@ -16,9 +16,9 @@ namespace SWEndor.Sound
         if (s.music.Contains(Name) && Position_ms > 0)
         {
           IntPtr ptr;
-          s.music[Name].addSyncPoint(Position_ms, TIMEUNIT.MS, Label, out ptr);
-          if (!Name.EndsWith("%"))
-            new InstAddSyncPoint { Name = this.Name + "%", Label = this.Label, Position_ms = this.Position_ms }.Process(s);
+
+          foreach (FMOD.Sound snd in s.music[Name].GetSounds())
+            snd.addSyncPoint(Position_ms, TIMEUNIT.MS, Label, out ptr);
         }
       }
     }

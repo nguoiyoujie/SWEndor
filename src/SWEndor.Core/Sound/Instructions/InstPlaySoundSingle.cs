@@ -25,7 +25,7 @@ namespace SWEndor.Sound
         if (!bp || Interrupt)
         {
           fmodchannel.stop();
-          s.fmodsystem.playSound(s.sounds[Name], soundgrp, false, out fmodchannel);
+          s.fmodsystem.playSound(s.sounds[Name].GetSound(true), soundgrp, false, out fmodchannel);
         }
       }
     }

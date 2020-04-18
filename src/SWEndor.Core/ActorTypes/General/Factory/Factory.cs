@@ -30,16 +30,7 @@ namespace SWEndor.ActorTypes
 
       public void Register(ActorTypeInfo atype)
       {
-        if (Contains(atype.ID))
-        {
-          atype = GetX(atype.ID);
-        }
-        else
-        {
-          Add(atype.ID, atype);
-        }
-        //atype.SaveToINI(atype.ID);
-
+        Put(atype.ID, atype);
         Engine?.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
       }
 
@@ -48,6 +39,7 @@ namespace SWEndor.ActorTypes
         foreach (string fp in Directory.GetFiles(Globals.ActorTypeINIDirectory, Globals.INIExt, SearchOption.AllDirectories))
         {
           string f = Path.GetFileNameWithoutExtension(fp);
+          Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "ActorType", f);
           if (Contains(f))
             throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.ACTORTYPE_INITWICE_ERROR).F(f));
           ActorTypeInfo t = new ActorTypeInfo(this, f, f);

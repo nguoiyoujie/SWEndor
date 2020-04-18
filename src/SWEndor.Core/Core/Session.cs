@@ -206,8 +206,8 @@ namespace SWEndor.Core
       }
       catch (Exception ex)
       {
-        Log.WriteErr(Log.ERROR, ex);
-        MessageBox.Show("Fatal Error occurred during runtime. Please see {0} in the /Log folder for the error message.".F(Log.ERROR)
+        Logger.WriteErr(Logger.ERROR, ex);
+        MessageBox.Show("Fatal Error occurred during runtime. Please see {0} in the /Log folder for the error message.".F(Logger.ERROR)
                       , Application.ProductName + " - Error Encountered!"
                       , MessageBoxButtons.OK);
         return;
@@ -432,6 +432,8 @@ namespace SWEndor.Core
         isProcessingPerf = true;
         using (Engine.PerfManager.Create("tick_perf"))
           Engine.PerfManager.PrintPerf();
+        using (Engine.PerfManager.Create("tick_log"))
+          Logger.DoWrite();
         Thread.Sleep(1000);
         isProcessingPerf = false;
       }

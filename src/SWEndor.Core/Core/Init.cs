@@ -11,7 +11,7 @@ namespace SWEndor.Core
     {
       try
       {
-        Log.Write(Log.DEBUG, LogType.SYS_INIT, Application.ProductName, Globals.Version);
+        Logger.Log(Logger.DEBUG, LogType.SYS_INIT, Application.ProductName, Globals.Version);
 
         Globals.PreInit();
         Engine engine = Globals.InitEngine();
@@ -26,14 +26,14 @@ namespace SWEndor.Core
       }
       catch (Exception ex)
       {
-        Log.WriteErr(Log.INITERROR, ex);
-        MessageBox.Show(TextLocalization.Get(TextLocalKeys.SYSTEM_INIT_ERROR).F(Log.INITERROR)
+        Logger.WriteErr(Logger.INITERROR, ex);
+        MessageBox.Show(TextLocalization.Get(TextLocalKeys.SYSTEM_INIT_ERROR).F(Logger.INITERROR)
                       , TextLocalization.Get(TextLocalKeys.SYSTEM_TITLE_ERROR).F(Application.ProductName)
                       , MessageBoxButtons.OK);
       }
       finally
       {
-        Log.Write(Log.DEBUG, LogType.SYS_CLOSE, Application.ProductName);
+        Logger.Log(Logger.DEBUG, LogType.SYS_CLOSE, Application.ProductName);
       }
     }
   }

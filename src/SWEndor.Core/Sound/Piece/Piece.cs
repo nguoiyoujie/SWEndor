@@ -23,13 +23,16 @@ namespace SWEndor.Sound
           return;
 
         UpdateSound(manager, SoundName);
-        UpdateSound(manager, SoundName + "%");
       }
 
       private void UpdateSound(SoundManager manager, string soundname)
       {
-        FMOD.Sound sound = manager.music[soundname];
+        foreach (FMOD.Sound s in manager.music[soundname].GetSounds())
+          UpdateSound(s);
+      }
 
+      private void UpdateSound(FMOD.Sound sound)
+      {
         if (sound == null)
           return;
 

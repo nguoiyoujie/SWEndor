@@ -16,12 +16,55 @@ namespace SWEndor.Weapons
     private Registry<WeapProjInfo> _proj = new Registry<WeapProjInfo>(256);
     private Registry<WeapTgtInfo> _tgt = new Registry<WeapTgtInfo>(256);
 
-    public void Register(INIFile f, string key, out WeapAimInfo info) { info = WeapAimInfo.Default; f.LoadByAttribute(ref info, key); _aim.Add(key, info); }
-    public void Register(INIFile f, string key, out WeapAmmoInfo info) { info = WeapAmmoInfo.Default; f.LoadByAttribute(ref info, key); _ammo.Add(key, info); }
-    public void Register(INIFile f, string key, out WeapLoadInfo info) { info = WeapLoadInfo.Default; f.LoadByAttribute(ref info, key); _load.Add(key, info); }
-    public void Register(INIFile f, string key, out WeapPortInfo info) { info = WeapPortInfo.Default; f.LoadByAttribute(ref info, key); info.Init(); _port.Add(key, info); }
-    public void Register(Engine e, INIFile f, string key, out WeapProjInfo info) { info = WeapProjInfo.Default; f.LoadByAttribute(ref info, key); info.Load(e); _proj.Add(key, info); }
-    public void Register(INIFile f, string key, out WeapTgtInfo info) { info = WeapTgtInfo.Default; f.LoadByAttribute(ref info, key); _tgt.Add(key, info); }
+    public void Register(INIFile f, string key, out WeapAimInfo info)
+    {
+      Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "Weapon.Aim", key);
+      info = WeapAimInfo.Default;
+      f.LoadByAttribute(ref info, key);
+      _aim.Add(key, info);
+    }
+
+    public void Register(INIFile f, string key, out WeapAmmoInfo info)
+    {
+      Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "Weapon.Ammo", key);
+      info = WeapAmmoInfo.Default;
+      f.LoadByAttribute(ref info, key);
+      _ammo.Add(key, info);
+    }
+
+    public void Register(INIFile f, string key, out WeapLoadInfo info)
+    {
+      Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "Weapon.Loader", key);
+      info = WeapLoadInfo.Default;
+      f.LoadByAttribute(ref info, key);
+      _load.Add(key, info);
+    }
+
+    public void Register(INIFile f, string key, out WeapPortInfo info)
+    {
+      Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "Weapon.Port", key);
+      info = WeapPortInfo.Default;
+      f.LoadByAttribute(ref info, key);
+      info.Init();
+      _port.Add(key, info);
+    }
+
+    public void Register(Engine e, INIFile f, string key, out WeapProjInfo info)
+    {
+      Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "Weapon.Projectile", key);
+      info = WeapProjInfo.Default;
+      f.LoadByAttribute(ref info, key);
+      info.Load(e);
+      _proj.Add(key, info);
+    }
+
+    public void Register(INIFile f, string key, out WeapTgtInfo info)
+    {
+      Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "Weapon.Target", key);
+      info = WeapTgtInfo.Default;
+      f.LoadByAttribute(ref info, key);
+      _tgt.Add(key, info);
+    }
 
     public void Get(string key, out WeapAimInfo info) { info = _aim.Get(key); }
     public void Get(string key, out WeapAmmoInfo info) { info = _ammo.Get(key); }
@@ -125,7 +168,7 @@ namespace SWEndor.Weapons
       Get(proj, out ret.Proj);
       Get(tgt, out ret.Targeter);
 
-      return ret; 
-   }
+      return ret;
+    }
   }
 }

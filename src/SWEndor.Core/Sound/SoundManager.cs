@@ -4,9 +4,7 @@ using FMOD;
 using System.Collections.Concurrent;
 using System.Text;
 using System.Collections.Generic;
-using SWEndor.Core;
 using Primrose.Primitives.Extensions;
-using SWEndor.Scenarios;
 using Primrose.Primitives.Factories;
 
 namespace SWEndor.Sound
@@ -20,22 +18,16 @@ namespace SWEndor.Sound
       public bool IsInterrupt;
     }
 
-    public readonly Engine Engine;
-    internal SoundManager(Engine engine)
-    {
-      Engine = engine;
-    }
-
+    internal SoundManager() { }
     public void Dispose() { }
-
 
     private FMOD.System fmodsystem = null;
     private int channels = 64; // 0 = music. 1-63s = sounds. ?
     private ChannelGroup musicgrp;
     private Registry<ChannelGroup> soundgrps = new Registry<ChannelGroup>();
 
-    private Registry<FMOD.Sound> music = new Registry<FMOD.Sound>();
-    private Registry<FMOD.Sound> sounds = new Registry<FMOD.Sound>();
+    private Registry<DoubleBufferedSound> music = new Registry<DoubleBufferedSound>();
+    private Registry<DoubleBufferedSound> sounds = new Registry<DoubleBufferedSound>();
     private Channel current_channel;
 
     // keep callback references alive
@@ -48,10 +40,13 @@ namespace SWEndor.Sound
     internal string CurrMusic { get; private set; }
     internal string IntrMusic { get; private set; }
     internal string PrevDynMusic { get; private set; }
+    internal bool EndSyncPointReached;
 
     private float m_MasterMusicVolume = 1;
     private float m_MasterSFXVolume = 1;
     private float m_MasterSFXVolumeScenario = 1;
+
+    internal Random Random = new Random(); // sound engine uses its own randomizer
 
     private ConcurrentQueue<InstBase> m_queuedInstructions = new ConcurrentQueue<InstBase>();
 
@@ -82,7 +77,7 @@ namespace SWEndor.Sound
 
     private int m_mood = 0;
     public int GetMood() { return m_mood; }
-    public void SetMood(MoodStates value)
+    public void SetMood(MoodState value)
     {
       SetMood((int)value);
     }
@@ -95,6 +90,52 @@ namespace SWEndor.Sound
           TriggerInterruptMood(value);
         else
           m_mood = value;
+      }
+    }
+
+    public struct SingleBufferedSound
+    {
+      private FMOD.Sound _s1;
+      public SingleBufferedSound(FMOD.System fmodsystem, string soundfile)
+      {
+        fmodsystem.createStream(soundfile, FMOD.MODE.LOWMEM | FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out _s1);
+      }
+
+      public FMOD.Sound GetSound(bool toggleSwitch)
+      {
+        return _s1;
+      }
+
+      public IEnumerable<FMOD.Sound> GetSounds()
+      {
+        yield return _s1;
+      }
+    }
+
+    public struct DoubleBufferedSound
+    {
+      private FMOD.Sound _s1;
+      private FMOD.Sound _s2;
+      private bool _switch;
+      public DoubleBufferedSound(FMOD.System fmodsystem, string soundfile)
+      {
+        fmodsystem.createStream(soundfile, FMOD.MODE.LOWMEM | FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out _s1);
+        fmodsystem.createStream(soundfile, FMOD.MODE.LOWMEM | FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out _s2);
+        _switch = false;
+      }
+
+      public FMOD.Sound GetSound(bool toggleSwitch)
+      {
+        FMOD.Sound s = _switch ? _s2 : _s1;
+        if (toggleSwitch)
+          _switch = !_switch;
+        return s;
+      }
+
+      public IEnumerable<FMOD.Sound> GetSounds()
+      {
+        yield return _s1;
+        yield return _s2;
       }
     }
 
@@ -130,21 +171,12 @@ namespace SWEndor.Sound
     {
       string[] soundfiles = Directory.GetFiles(Globals.SoundPath, Globals.SoundExt, SearchOption.AllDirectories);
       int i = 0;
-      //bool rpt = false;
       foreach (string sdfl in soundfiles)
       {
         string sdname = Path.Combine(Path.GetDirectoryName(sdfl), Path.GetFileNameWithoutExtension(sdfl)).Replace(Globals.SoundPath, "");
-        Log.Write(Log.DEBUG, LogType.ASSET_LOADING, "Sound", sdname);
+        Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "Sound", sdname);
 
-        if (i >= soundgrps.Count)
-        {
-          i = 0;
-          //rpt = true;
-        }
-        FMOD.Sound sd = null;
-        fmodsystem.createSound(sdfl, FMOD.MODE.LOWMEM | FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out sd);
-        //fmodsystem.createSound(sdfl, FMOD.MODE.LOWMEM | FMOD.MODE.CREATECOMPRESSEDSAMPLE | FMOD.MODE.ACCURATETIME, out sd);
-        sounds.Add(sdname, sd);
+        sounds.Add(sdname, new DoubleBufferedSound(fmodsystem, sdfl));
 
         Channel ch;
         fmodsystem.getChannel(i, out ch);
@@ -154,26 +186,15 @@ namespace SWEndor.Sound
         soundgrps.Add(sdname, grp);
 
         i++;
-        Log.Write(Log.DEBUG, LogType.ASSET_LOADED, "Sound", sdname);
+        i %= soundgrps.Count;
       }
 
       string[] musicfiles = Directory.GetFiles(Globals.MusicPath, Globals.MusicExt, SearchOption.AllDirectories);
       foreach (string mufl in musicfiles)
       {
         string muname = Path.Combine(Path.GetDirectoryName(mufl), Path.GetFileNameWithoutExtension(mufl)).Replace(Globals.MusicPath, "");
-        Log.Write(Log.DEBUG, LogType.ASSET_LOADING, "Music", muname);
-
-        FMOD.Sound mu = null;
-        fmodsystem.createStream(mufl, FMOD.MODE.LOWMEM | FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out mu);
-        //fmodsystem.createSound(mufl, FMOD.MODE.LOWMEM | FMOD.MODE.CREATECOMPRESSEDSAMPLE | FMOD.MODE.ACCURATETIME, out mu);
-        music.Add(muname, mu);
-
-        // second one for fadepoint to self
-        FMOD.Sound mu2 = null;
-        fmodsystem.createStream(mufl, FMOD.MODE.LOWMEM | FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out mu2);
-        music.Add(muname + "%", mu2);
-
-        Log.Write(Log.DEBUG, LogType.ASSET_LOADING, "Music", muname);
+        Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "Music", muname);
+        music.Add(muname, new DoubleBufferedSound(fmodsystem, mufl));
       }
     }
     
@@ -212,8 +233,8 @@ namespace SWEndor.Sound
       List<Piece> plist = new List<Piece>(Piece.Factory.GetPieces(mood));
       if (plist.Count > 0)
       {
-        Piece p = plist.Random(Engine.Random);
-        Engine.SoundManager.QueueInterruptMusic(p);
+        Piece p = plist.Random(Random);
+        QueueInterruptMusic(p);
       }
     }
 
@@ -228,7 +249,10 @@ namespace SWEndor.Sound
               SetMusic(m_musicLoop.Name, false, m_musicLoop.Position);
             else
             {
-              PopDynamicQueue(false);
+              if (!EndSyncPointReached)
+                PopDynamicQueue(true);
+              else
+                PopDynamicQueue(false);
             }
           }
           break;
@@ -236,10 +260,10 @@ namespace SWEndor.Sound
           if (IntrMusic == null)
           {
             IntPtr syncp;
-            music[CurrMusic].getSyncPoint((int)commanddata1, out syncp);
+            music[CurrMusic].GetSound(false).getSyncPoint((int)commanddata1, out syncp);
             StringBuilder name = new StringBuilder(5);
             uint offset;
-            music[CurrMusic].getSyncPointInfo(syncp, name, 5, out offset, TIMEUNIT.MS);
+            music[CurrMusic].GetSound(false).getSyncPointInfo(syncp, name, 5, out offset, TIMEUNIT.MS);
 
             switch (name.ToString())
             {
@@ -248,6 +272,7 @@ namespace SWEndor.Sound
                 break;
               case "end":
                 PopDynamicQueue(true);
+                EndSyncPointReached = true;
                 break;
             }
           }
@@ -261,9 +286,12 @@ namespace SWEndor.Sound
       switch (type)
       {
         case FMOD.CHANNELCONTROL_CALLBACK_TYPE.END:
+          if (!EndSyncPointReached)
+            PopDynamicQueue(true);
           break;
         case FMOD.CHANNELCONTROL_CALLBACK_TYPE.SYNCPOINT:
           PopDynamicQueue(true);
+          EndSyncPointReached = true;
           break;
       }
 

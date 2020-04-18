@@ -37,13 +37,13 @@ namespace SWEndor.Sound
 
       if (p.MoodTransitions.Contains(mood))
       {
-        string nextSound = p.MoodTransitions[mood].Random(mgr.Engine.Random);
+        string nextSound = p.MoodTransitions[mood].Random(mgr.Random);
         Piece pn = Piece.Factory.Get(nextSound);
         return pn;
       }
       else if (p.MoodTransitions.Contains(-1))
       {
-        string nextSound = p.MoodTransitions[-1].Random(mgr.Engine.Random);
+        string nextSound = p.MoodTransitions[-1].Random(mgr.Random);
         Piece pn = Piece.Factory.Get(nextSound);
         return pn;
       }

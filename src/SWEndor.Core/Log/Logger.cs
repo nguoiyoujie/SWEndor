@@ -1,11 +1,12 @@
 ﻿using Primrose.Primitives.Extensions;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 
 namespace SWEndor
 {
-  public static class Log
+  public static class Logger
   {
     public const string INITERROR = "initerror";
     public const string ERROR = "error";
@@ -13,6 +14,7 @@ namespace SWEndor
 
     private const string ext = "log";
     private static readonly Dictionary<string, TextWriter> Loggers = new Dictionary<string, TextWriter>();
+    private static ConcurrentQueue<LogItem> Queue = new ConcurrentQueue<LogItem>();
 
     private static IEnumerable<string> GetFilename(string baseFilename)
     {
@@ -22,18 +24,19 @@ namespace SWEndor
         yield return Path.Combine(Globals.LogPath, i > 0 ? "{0}.{1}".F(baseFilename, i) : baseFilename);
     }
 
-    public static TextWriter AddLogger(string channel)
+    public static TextWriter Add(string channel)
     {
-      return AddLogger(channel, "{0}.{1}".F(channel, ext));
+      return Add(channel, "{0}.{1}".F(channel, ext));
     }
 
-    public static TextWriter AddLogger(string channel, string baseFilename)
+    public static TextWriter Add(string channel, string baseFilename)
     {
       TextWriter info;
       if (Loggers.TryGetValue(channel, out info))
         return info;
 
       foreach (string filename in GetFilename(baseFilename))
+      {
         try
         {
           StreamWriter writer = File.CreateText(filename);
@@ -43,6 +46,7 @@ namespace SWEndor
           return info;
         }
         catch (IOException) { } // if error, continue and attempt generating the next filename
+      }
 
       return info;
     }
@@ -52,76 +56,60 @@ namespace SWEndor
       TextWriter info;
       lock (Loggers)
         if (!Loggers.TryGetValue(channel, out info))
-          info = AddLogger(channel);
+          info = Add(channel);
 
       return info;
     }
 
-    public static void Write(string channel, string value)
+    internal static void Log<T>(string channel, LogType type, T arg)
     {
-      GetWriter(channel)?.WriteLine(value);
-    }
-
-    public static void Write(string channel, string formatvalue, params object[] args) { GetWriter(channel)?.WriteLine(formatvalue, args); }
-
-    internal static void Write<T>(string channel, LogType type, T arg)
-    {
-      TextWriter tw = GetWriter(channel);
-      if (tw == null)
-        return;
-
-      InnerPreWrite(tw, type);
       string s = string.Empty;
       if (LogDecorator.Decorator.TryGetValue(type, out s))
-        tw.Write(s, arg);
-      tw.WriteLine();
+        Queue.Enqueue(new LogItem(channel, type, s.F(arg)));
     }
 
-    internal static void Write<T1, T2>(string channel, LogType type, T1 a1, T2 a2)
+    internal static void Log<T1, T2>(string channel, LogType type, T1 a1, T2 a2)
     {
-      TextWriter tw = GetWriter(channel);
-      if (tw == null)
-        return;
-
-      InnerPreWrite(tw, type);
       string s = string.Empty;
       if (LogDecorator.Decorator.TryGetValue(type, out s))
-        tw.Write(s, a1, a2);
-      tw.WriteLine();
+        Queue.Enqueue(new LogItem(channel, type, s.F(a1, a2)));
     }
 
-    internal static void Write<T1, T2, T3>(string channel, LogType type, T1 a1, T2 a2, T3 a3)
+    internal static void Log<T1, T2, T3>(string channel, LogType type, T1 a1, T2 a2, T3 a3)
     {
-      TextWriter tw = GetWriter(channel);
-      if (tw == null)
-        return;
-
-      InnerPreWrite(tw, type);
       string s = string.Empty;
       if (LogDecorator.Decorator.TryGetValue(type, out s))
-        tw.Write(s, a1, a2, a3);
-      tw.WriteLine();
+        Queue.Enqueue(new LogItem(channel, type, s.F(a1, a2, a3)));
     }
 
-    internal static void Write(string channel, LogType type, params object[] args)
+    internal static void Log(string channel, LogType type, params object[] args)
     {
-      TextWriter tw = GetWriter(channel);
-      if (tw == null)
-        return;
-
-      InnerPreWrite(tw, type);
       string s = string.Empty;
       if (LogDecorator.Decorator.TryGetValue(type, out s))
-        tw.Write(s, args);
-      tw.WriteLine();
+        Queue.Enqueue(new LogItem(channel, type, s.F(args)));
     }
 
-    private static void InnerPreWrite(TextWriter tw, LogType type)
+    internal static void DoWrite()
+    {
+      LogItem item;
+      while (Queue.TryDequeue(out item))
+      {
+        TextWriter tw = GetWriter(item.Channel);
+        if (tw != null)
+        {
+          DoWrite(tw, item.Type, item.Message);
+        }
+      }
+    }
+
+    private static void DoWrite(TextWriter tw, LogType type, string message)
     {
       tw.Write(DateTime.Now.ToString("s"));
       tw.Write("\t");
-      tw.Write(((int)type).ToString("x"));
+      tw.Write("{0,-30}".F(type));
       tw.Write("\t");
+      tw.Write(message);
+      tw.WriteLine();
     }
 
     public static void WriteErr(string channel, Exception ex)

@@ -18,7 +18,7 @@ namespace SWEndor.UI.Menu.Pages
     {
       exitGame = GameScenarioManager.IsMainMenu;
 
-      Log.WriteErr(Log.ERROR, exception);
+      Logger.WriteErr(Logger.ERROR, exception);
 
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
       Cover.HighlightBoxWidth = owner.ScreenSize.x;

@@ -68,7 +68,7 @@ namespace SWEndor.Core
     public void Init()
     {
       Game = new Session(this);
-      SoundManager = new SoundManager(this);
+      SoundManager = new SoundManager();
       PerfManager = new PerfManager(this);
       ActorFactory = new Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>(this, (e, f, n, i) => { return new ActorInfo(e, f, n, i); }, Globals.ActorLimit);
       ExplosionFactory = new Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> (this, (e, f, n, i) => { return new ExplosionInfo(e, f, n, i); }, Globals.ActorLimit);

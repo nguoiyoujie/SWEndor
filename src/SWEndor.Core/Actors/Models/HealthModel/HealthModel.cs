@@ -85,7 +85,7 @@ namespace SWEndor.Actors.Models
 
 #if DEBUG
             if (self.Logged)
-              Log.Write(Log.DEBUG, LogType.ACTOR_KILLED, self);
+              Logger.Log(Logger.DEBUG, LogType.ACTOR_KILLED, self);
 #endif
           }
           if (!self.IsDyingOrDead && self.TypeInfo.SystemData.AllowSystemDamage)
@@ -112,7 +112,7 @@ namespace SWEndor.Actors.Models
 
 #if DEBUG
         if (self.Logged)
-          Log.Write(Log.DEBUG, LogType.ACTOR_KILLED_BY, self, "setting HP to 0");
+          Logger.Log(Logger.DEBUG, LogType.ACTOR_KILLED_BY, self, "setting HP to 0");
 #endif
       }
     }
