@@ -7,7 +7,7 @@ namespace SWEndor.Input.Functions.Gameplay.Special
   public class TimeReset : InputFunction
   {
     private int _key = (int)CONST_TV_KEY.TV_KEY_BACKSPACE;
-    public static string InternalName = "d_timespeed=";
+    public static string InternalName = "d_timespeed#";
     public override int Key { get { return _key; } set { _key = value; } }
     public override string Name { get { return InternalName; } }
     public override InputOptions Options { get { return InputOptions.WHILEPRESSED; } }
