@@ -26,24 +26,15 @@ namespace SWEndor.AI
     /// <summary>Clears the actor's action queue, until an uninterruptible action is found</summary>
     public static void ClearQueue(this ActorInfo actor)
     {
-      if (actor.CurrentAction != null)
+      
+      ActionInfo action = actor.CurrentAction;
+      while (action != null && action.CanInterrupt)
       {
-        ActionInfo aend = actor.CurrentAction;
-        int limit = 99;
-        while (aend?.NextAction != null && limit > 0)
-        {
-          if (aend.CanInterrupt)
-          {
-            aend.Complete = true;
-            aend = aend.NextAction;
-            limit--;
-          }
-          else
-          {
-            limit = 0;
-          }
-        }
+        ActionInfo next = action.NextAction;
+        action.Dispose();
+        action = next;
       }
+      actor.CurrentAction = action;
     }
 
     /// <summary>Clears the actor's action queue regardless of whether the action is uninterruptible</summary>
@@ -52,8 +43,9 @@ namespace SWEndor.AI
       ActionInfo action = actor.CurrentAction;
       while (action != null)
       {
+        ActionInfo next = action.NextAction;
         action.Dispose();
-        action = action.NextAction;
+        action = next;
       }
       actor.CurrentAction = null;
     }
@@ -68,11 +60,9 @@ namespace SWEndor.AI
         ActionInfo aend = actor.CurrentAction;
         ActionInfo amid = action;
         actor.CurrentAction = action;
-        int limit = 99;
-        while (amid.NextAction != null && limit > 0)
+        while (amid.NextAction != null)
         {
           amid = amid.NextAction;
-          limit--;
         }
         amid.NextAction = aend;
       }
@@ -88,11 +78,9 @@ namespace SWEndor.AI
         ActionInfo aend = actor.CurrentAction.NextAction;
         ActionInfo amid = action;
         actor.CurrentAction.NextAction = action;
-        int limit = 99;
-        while (amid?.NextAction != null && limit > 0)
+        while (amid.NextAction != null)
         {
           amid = amid.NextAction;
-          limit--;
         }
         amid.NextAction = aend;
       }
@@ -106,19 +94,18 @@ namespace SWEndor.AI
       else
       {
         ActionInfo aend = actor.CurrentAction;
-        int limit = 99;
-        while (aend?.NextAction != null && limit > 0)
+        while (aend.NextAction != null)
         {
           aend = aend.NextAction;
-          limit--;
         }
         aend.NextAction = action;
       }
     }
 
     /// <summary>Processes the current action, moving to the next if the current action is complete</summary>
-    public static void Run(this ActorInfo actor, ActionInfo action)
+    public static void Run(this ActorInfo actor)
     {
+      ActionInfo action = actor.CurrentAction;
       if (action == null)
       {
         actor.CurrentAction = actor.Squad.GetNewAction(actor.Engine) ?? Idle.GetOrCreate();

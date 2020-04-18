@@ -10,7 +10,6 @@ namespace SWEndor.AI.Actions
 {
   internal class Hunt : ActionInfo
   {
-
     private static ObjectPool<Hunt> _pool;
     static Hunt() { _pool = ObjectPool<Hunt>.CreateStaticPool(() => { return new Hunt(); }, (a) => { a.Reset(); }); }
 
@@ -49,7 +48,6 @@ namespace SWEndor.AI.Actions
     {
       base.Return();
       _pool.Return(this);
-
     }
 
     public override string ToString()
@@ -68,16 +66,7 @@ namespace SWEndor.AI.Actions
          if (t[0].ID >= t.Length - 1)
            return false;
 
-         if (a != null
-           && a.AI.HuntWeight > 0
-           && c.ID != a.ID
-           && a.Active
-           && !a.IsDyingOrDead
-           && a.InCombat
-           && a.TypeInfo.AIData.TargetType.Intersects(mt)
-           && !a.IsOutOfBounds(e.GameScenarioManager.Scenario.State.MinAIBounds, e.GameScenarioManager.Scenario.State.MaxAIBounds)
-           && !c.IsAlliedWith(a) // enemy
-           )
+         if (isValidTarget(e, a, c, mt))
          {
            // stationary, can only target those in range
            WeaponShotInfo w;
@@ -101,16 +90,7 @@ namespace SWEndor.AI.Actions
          if (t[0].ID >= t.Length - 1)
            return false;
 
-         if (a != null
-           && a.AI.HuntWeight > 0
-           && c.ID != a.ID
-           && a.Active
-           && !a.IsDyingOrDead
-           && a.InCombat
-           && a.TypeInfo.AIData.TargetType.Intersects(mt)
-           && !a.IsOutOfBounds(e.GameScenarioManager.Scenario.State.MinAIBounds, e.GameScenarioManager.Scenario.State.MaxAIBounds)
-           && !c.IsAlliedWith(a) // enemy
-           )
+         if (isValidTarget(e, a, c, mt))
          {
            t[0].ID++;
            t[0].Weight += a.AI.HuntWeight;
@@ -119,6 +99,19 @@ namespace SWEndor.AI.Actions
          return true;
        }
      );
+
+    private static bool isValidTarget(Engine e, ActorInfo a, ActorInfo c, TargetType mt)
+    {
+      return a != null
+           && a.AI.HuntWeight > 0
+           && c.ID != a.ID
+           && a.Active
+           && !a.IsDyingOrDead
+           && a.InCombat
+           && a.TypeInfo.AIData.TargetType.Intersects(mt)
+           && !a.IsOutOfBounds(e.GameScenarioManager.Scenario.State.MinAIBounds, e.GameScenarioManager.Scenario.State.MaxAIBounds)
+           && !c.IsAlliedWith(a);
+    }
 
     public override void Process(Engine engine, ActorInfo actor)
     {

@@ -46,7 +46,7 @@ namespace SWEndor.Actors
           return;
 
         actor.Squad.Process(engine);
-        actor.Run(actor.CurrentAction);
+        actor.Run();
       }
     }
 

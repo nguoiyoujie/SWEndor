@@ -37,12 +37,8 @@ namespace SWEndor.AI.Actions
     {
       if (CheckBounds(actor))
       {
-        //AdjustRotation(engine, actor, actor.GetGlobalPosition());
         actor.AI.SetTargetSpeed(actor.MoveData.MinSpeed);
         actor.AI.AdjustSpeed(actor);
-
-        if (NextAction == null)
-          actor.QueueLast(Hunt.GetOrCreate());
 
         Complete = true;
 
@@ -51,6 +47,11 @@ namespace SWEndor.AI.Actions
         if (CheckImminentCollision(actor))
         {
           CreateAvoidAction(actor);
+        }
+        else
+        {
+          if (NextAction == null)
+            actor.QueueLast(Hunt.GetOrCreate());
         }
       }
     }
