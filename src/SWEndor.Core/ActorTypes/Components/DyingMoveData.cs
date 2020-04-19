@@ -37,6 +37,7 @@ namespace SWEndor.ActorTypes.Components
     private const string sDyingMove = "DyingMove";
     private const string sSpin = "spin";
     private const string sSink = "sink";
+    private const string sKill = "kill";
 
     private static Registry<string, DyingMoveMethod.DyingMoveInitDelegate> r_init;
     private static Registry<string, Action<ActorInfo, float3, float>> r_updt;
@@ -45,8 +46,8 @@ namespace SWEndor.ActorTypes.Components
     {
       r_init = new Registry<string, DyingMoveMethod.DyingMoveInitDelegate>();
       r_init.Add(sSpin, DyingMoveMethod._spinInit);
-      r_init.Add(sSink, null);
-      r_init.Default = DyingMoveMethod._killInit;
+      r_init.Add(sKill, DyingMoveMethod._killInit);
+      r_init.Default = null;
 
       r_updt = new Registry<string, Action<ActorInfo, float3, float>>();
       r_updt.Add(sSpin, DyingMoveMethod._spinUpdt);
