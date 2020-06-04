@@ -41,13 +41,7 @@ namespace SWEndor.AI.Actions
       bool outofbounds = owner.IsOutOfBounds(owner.Engine.GameScenarioManager.Scenario.State.MinAIBounds * boundmult, owner.Engine.GameScenarioManager.Scenario.State.MaxAIBounds * boundmult);
       if (outofbounds && owner.AI.CombatZone >= 0)
       {
-        float x = owner.Engine.Random.Next((int)(owner.Engine.GameScenarioManager.Scenario.State.MinAIBounds.x * 0.65f), (int)(owner.Engine.GameScenarioManager.Scenario.State.MaxAIBounds.x * 0.65f));
-        float y = owner.Engine.Random.Next(-200, 200);
-        float z = owner.Engine.Random.Next((int)(owner.Engine.GameScenarioManager.Scenario.State.MinAIBounds.z * 0.65f), (int)(owner.Engine.GameScenarioManager.Scenario.State.MaxAIBounds.z * 0.65f));
-
-        if (owner.CurrentAction is Move)
-          owner.CurrentAction.Complete = true;
-        owner.QueueFirst(ForcedMove.GetOrCreate(new TV_3DVECTOR(x, y, z), owner.MoveData.MaxSpeed, -1, 360 / (owner.MoveData.MaxTurnRate + 72)));
+        owner.AIDecision.OnOutOfBounds?.Invoke(owner);
         return false;
       }
       else
@@ -77,16 +71,7 @@ namespace SWEndor.AI.Actions
 
     protected static void CreateAvoidAction(ActorInfo actor)
     {
-      if (actor.CurrentAction is AvoidCollisionWait)
-      {
-        actor.QueueNext(AvoidCollisionWait.GetOrCreate(0.5f)); // 2nd action
-        actor.QueueNext(AvoidCollisionRotate.GetOrCreate(actor.CollisionData.ProspectiveCollision.Impact, actor.CollisionData.ProspectiveCollision.Normal));
-      }
-      else
-      {
-        actor.QueueFirst(AvoidCollisionWait.GetOrCreate(0.5f)); // 2nd action
-        actor.QueueFirst(AvoidCollisionRotate.GetOrCreate(actor.CollisionData.ProspectiveCollision.Impact, actor.CollisionData.ProspectiveCollision.Normal));
-      }
+      actor.AIDecision.OnImmenientCollision?.Invoke(actor);
     }
 
     public virtual void Return() { }

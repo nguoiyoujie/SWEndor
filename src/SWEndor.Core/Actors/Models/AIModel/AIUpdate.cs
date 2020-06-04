@@ -41,10 +41,10 @@ namespace SWEndor.Actors.Models
       return engine.TrueVision.TVMathLibrary.ACos(engine.TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
     }
 
-    internal static float AdjustSpeed(Engine engine, ActorInfo owner, ref float tSpd)
+    internal static float AdjustSpeed(Engine engine, ActorInfo owner, bool useAILimit, ref float tSpd)
     {
       if (!owner.MoveData.FreeSpeed)
-        tSpd = tSpd.Clamp(owner.MoveData.MinSpeed, owner.MoveData.MaxSpeed);
+          tSpd = (useAILimit) ? tSpd.Clamp(owner.AI.AIMinSpeed, owner.AI.AIMaxSpeed) : tSpd.Clamp(owner.MoveData.MinSpeed, owner.MoveData.MaxSpeed);
 
       float chg = owner.MoveData.MaxSpeedChangeRate * engine.Game.TimeSinceRender;
       owner.MoveData.Speed = owner.MoveData.Speed.Creep(tSpd, chg);

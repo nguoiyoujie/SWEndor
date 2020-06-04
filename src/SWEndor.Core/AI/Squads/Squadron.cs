@@ -63,7 +63,7 @@ namespace SWEndor.AI.Squads
       return null;
     }
 
-    public ActorInfo GetThreatAny(Engine engine)
+    public ActorInfo GetThreatRandom(Engine engine)
     {
       if (IsNull)
         return null;
@@ -71,6 +71,18 @@ namespace SWEndor.AI.Squads
       lock (lockthreat)
         if (_threats.Count > 0)
           return _threats.Random(engine.Random);
+
+      return null;
+    }
+
+    public ActorInfo GetMemberRandom(Engine engine)
+    {
+      if (IsNull)
+        return null;
+
+      lock (lockmember)
+        if (_members.Count > 0)
+          return _members.Random(engine.Random);
 
       return null;
     }
@@ -103,7 +115,7 @@ namespace SWEndor.AI.Squads
 
     public void Join(Squadron destination)
     {
-      foreach (ActorInfo a in MembersCopy)
+      foreach (ActorInfo a in Members) //MembersCopy
         a.Squad = destination;
     }
 

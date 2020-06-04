@@ -38,7 +38,7 @@ namespace SWEndor.AI.Actions
       if (CheckBounds(actor))
       {
         actor.AI.SetTargetSpeed(actor.MoveData.MinSpeed);
-        actor.AI.AdjustSpeed(actor);
+        actor.AI.AdjustSpeed(actor, false);
 
         Complete = true;
 
@@ -51,7 +51,7 @@ namespace SWEndor.AI.Actions
         else
         {
           if (NextAction == null)
-            actor.QueueLast(Hunt.GetOrCreate());
+            actor.AIDecision.OnIdleAction?.Invoke(actor);
         }
       }
     }

@@ -26,7 +26,6 @@ namespace SWEndor.AI
     /// <summary>Clears the actor's action queue, until an uninterruptible action is found</summary>
     public static void ClearQueue(this ActorInfo actor)
     {
-      
       ActionInfo action = actor.CurrentAction;
       while (action != null && action.CanInterrupt)
       {

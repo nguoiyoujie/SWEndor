@@ -329,59 +329,8 @@ namespace SWEndor.ActorTypes
 
         if (attacker != null && !attacker.IsAlliedWith(owner))
         {
-          // Fighter AI
-          if ((owner.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER)))
-          {
-            if (owner.AI.CanRetaliate && (owner.CurrentAction == null || owner.CurrentAction.CanInterrupt))
-            {
-              if (!owner.Squad.IsNull && owner.Squad.Mission == null)
-              {
-                if (!attacker.Squad.IsNull)
-                {
-                  foreach (ActorInfo a in owner.Squad.Members)
-                  {
-                    if (a.AI.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
-                    {
-                      ActorInfo b = attacker.Squad.MembersCopy.Random(engine.Random);
-                      if (b != null)
-                      {
-                        a.ClearQueue();
-                        a.QueueLast(AttackActor.GetOrCreate(b.ID));
-                      }
-                    }
-                  }
-                }
-                else
-                {
-                  foreach (ActorInfo a in owner.Squad.Members)
-                  {
-                    if (a.AI.CanRetaliate && (a.CurrentAction == null || a.CurrentAction.CanInterrupt))
-                    {
-                      a.ClearQueue();
-                      a.QueueLast(AttackActor.GetOrCreate(attacker.ID));
-                    }
-                  }
-                }
-              }
-              else
-              {
-                owner.ClearQueue();
-                owner.QueueLast(AttackActor.GetOrCreate(attacker.ID));
-              }
-            }
-            else if (owner.AI.CanEvade && !(owner.CurrentAction is Evade))
-            {
-              owner.QueueFirst(Evade.GetOrCreate());
-            }
-
-            if (!owner.Squad.IsNull)
-            {
-              if (owner.Squad.Leader == owner)
-                owner.Squad.AddThreat(attacker, true);
-              else
-                owner.Squad.AddThreat(attacker);
-            }
-          }
+          // AI
+          owner.AIDecision.OnAttacked?.Invoke(owner, attacker);
         }
       }
     }

@@ -89,7 +89,7 @@ namespace SWEndor.AI.Actions
 
         actor.AI.SetTargetSpeed(actor.MoveData.MinSpeed);
         float delta_angle = actor.AI.AdjustRotation(engine, actor, 9999);
-        float delta_speed = actor.AI.AdjustSpeed(actor);
+        float delta_speed = actor.AI.AdjustSpeed(actor, false);
 
         ActorInfo target = actor.ActorFactory.Get(data.ProspectiveCollision.ActorID);
         if (target != null && !actor.IsAlliedWith(target))

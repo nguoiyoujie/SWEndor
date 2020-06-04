@@ -70,7 +70,7 @@ namespace SWEndor.AI.Actions
         float delta_angle = actor.AI.AdjustRotation(engine, actor);
 
         actor.AI.SetTargetSpeed(Target_Speed);
-        float delta_speed = actor.AI.AdjustSpeed(actor);
+        float delta_speed = actor.AI.AdjustSpeed(actor, false);
 
         Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle && delta_speed == 0);
       }

@@ -98,7 +98,7 @@ namespace SWEndor
     internal static string INIExt = "*.ini";
     internal static string ShaderFxExt = "*.fx";
     internal static string SoundExt = "*.wav";
-    internal static string MusicExt = "*.mp3";
+    internal static string MusicExt = "*.*";
 
     // Game Engine
     internal static Engine Engine;

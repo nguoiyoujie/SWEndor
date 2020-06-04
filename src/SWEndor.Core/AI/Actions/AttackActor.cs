@@ -78,7 +78,7 @@ namespace SWEndor.AI.Actions
       if (dist > TooCloseDistance)
       {
         float delta_angle = actor.AI.AdjustRotation(engine, actor);
-        actor.AI.AdjustSpeed(actor);
+        actor.AI.AdjustSpeed(actor, true);
 
         WeaponShotInfo w;
         actor.WeaponDefinitions.SelectWeapon(engine, actor, target, delta_angle, dist, out w);
@@ -147,7 +147,7 @@ namespace SWEndor.AI.Actions
       {
         Sphere sph = target.GetBoundingSphere(true);
         center = sph.Position;
-        radius = sph.R + engine.Random.Next((int)(-4 * actor.TypeInfo.MoveLimitData.MaxSpeed), (int)(4 * actor.TypeInfo.MoveLimitData.MaxSpeed));
+        radius = sph.R + engine.Random.Next((int)(-4 * actor.MoveData.MaxSpeed), (int)(4 * actor.MoveData.MaxSpeed));
 
         float xzAngle = engine.Random.Next(0, 360);
 

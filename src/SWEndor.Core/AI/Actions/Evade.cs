@@ -88,7 +88,7 @@ namespace SWEndor.AI.Actions
 
         actor.AI.SetTargetSpeed(actor.MoveData.MaxSpeed);
         float delta_angle = actor.AI.AdjustRotation(engine, actor, 20);
-        float delta_speed = actor.AI.AdjustSpeed(actor);
+        float delta_speed = actor.AI.AdjustSpeed(actor, true);
 
         Complete |= (delta_angle <= CloseEnoughAngle && delta_angle >= -CloseEnoughAngle && delta_speed == 0);
         Complete |= (ResumeTime < engine.Game.GameTime);

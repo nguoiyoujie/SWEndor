@@ -116,6 +116,7 @@ namespace SWEndor.Actors
     internal WeaponData WeaponDefinitions;
     internal MoveData MoveData;
     internal AIModel AI;
+    internal AIDecision AIDecision;
 
     // Traits/Model (structs)
     private SystemModel Systems;
@@ -178,7 +179,8 @@ namespace SWEndor.Actors
       Armor.Init(ref TypeInfo.ArmorData);
       Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, acinfo.CreationTime);
       Regen.Init(ref TypeInfo.RegenData);
-      AI.Init(ref TypeInfo.AIData);
+      AI.Init(ref TypeInfo.AIData, ref TypeInfo.MoveLimitData);
+      AIDecision.Init(ref TypeInfo.AIData);
       MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
       CollisionData.Init();
       SpawnerInfo.Init(ref TypeInfo.SpawnerData);
@@ -216,7 +218,8 @@ namespace SWEndor.Actors
       Armor.Init(ref TypeInfo.ArmorData);
       Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, acinfo.CreationTime);
       Regen.Init(ref TypeInfo.RegenData);
-      AI.Init(ref TypeInfo.AIData);
+      AI.Init(ref TypeInfo.AIData, ref TypeInfo.MoveLimitData);
+      AIDecision.Init(ref TypeInfo.AIData);
       MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
       CollisionData.Init();
       SpawnerInfo.Init(ref TypeInfo.SpawnerData);
@@ -301,6 +304,16 @@ namespace SWEndor.Actors
     /// <summary>Checks if the object is allied with another object</summary>
     public bool IsAlliedWith(ActorInfo actor) { return Faction.IsAlliedWith(actor.Faction); }
 
+    /// <summary>Queries if the actor's current action can be interrupted</summary>
+    public bool CanInterruptCurrentAction
+    {
+      get
+      {
+        ActionInfo action = CurrentAction;
+        return action == null || action.CanInterrupt;
+      }
+    }
+
     /// <summary>Mark the object for disposal</summary>
     public void Delete()
     {
@@ -350,6 +363,7 @@ namespace SWEndor.Actors
       SpawnerInfo.DiscardQueuedFighters(this);
       Transform.Reset();
       AI.Reset();
+      AIDecision.Reset();
 
       // Actions
       this.ForceClearQueue();

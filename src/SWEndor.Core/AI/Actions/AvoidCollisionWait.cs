@@ -56,7 +56,7 @@ namespace SWEndor.AI.Actions
       actor.AI.AdjustRotation(engine, actor, 0.5f);
 
       actor.AI.SetTargetSpeed(actor.MoveData.MaxSpeed);
-      actor.AI.AdjustSpeed(actor);
+      actor.AI.AdjustSpeed(actor, false);
 
       if (CheckImminentCollision(actor))
       {

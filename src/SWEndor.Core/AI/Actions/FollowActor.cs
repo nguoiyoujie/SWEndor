@@ -71,7 +71,7 @@ namespace SWEndor.AI.Actions
         actor.AI.AdjustRotation(engine, actor);
         float dist = DistanceModel.GetDistance(engine, actor, target, FollowDistance + 1);
 
-        actor.AI.AdjustSpeed(actor);
+        actor.AI.AdjustSpeed(actor, false);
         Complete |= (!target.Active);
       }
 

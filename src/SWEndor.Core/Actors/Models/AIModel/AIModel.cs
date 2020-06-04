@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using Primrose.Primitives.ValueTypes;
 using SWEndor.Core;
 using SWEndor.Models;
 
@@ -9,11 +10,15 @@ namespace SWEndor.Actors.Models
   /// </summary>
   internal struct AIModel
   {
-    internal enum TargetMode { POINT, ACTOR, ACTOR_SMARTPREDICTION }
+    private enum TargetMode { POINT, ACTOR, ACTOR_SMARTPREDICTION }
 
     internal bool CanEvade;
     internal bool CanRetaliate;
     internal int HuntWeight;
+
+    internal float AIMinSpeed;
+    internal float AIMaxSpeed;
+
 
     // CombatZone // TO-DO: Change this to int when multiple Combat Zones is possible
     public int CombatZone;
@@ -36,13 +41,20 @@ namespace SWEndor.Actors.Models
       CombatZone = -1;
       targetMode = TargetMode.POINT;
       targetActorID = -1;
+      AIMinSpeed = -1;
+      AIMaxSpeed = -1;
     }
 
-    public void Init(ref ActorTypes.Components.AIData data)
+    public void Init(ref ActorTypes.Components.AIData data, ref ActorTypes.Components.MoveLimitData mdata)
     {
       CanEvade = data.CanEvade;
       CanRetaliate = data.CanRetaliate;
       HuntWeight = data.HuntWeight;
+      CombatZone = -1;
+      targetMode = TargetMode.POINT;
+      targetActorID = -1;
+      AIMinSpeed = data.AIMinSpeed == -1 ? mdata.MinSpeed : data.AIMinSpeed;
+      AIMaxSpeed = data.AIMaxSpeed == -1 ? mdata.MaxSpeed : data.AIMaxSpeed;
     }
 
     public TV_3DVECTOR GetTargetPos(Engine e, ActorInfo owner)
@@ -113,9 +125,9 @@ namespace SWEndor.Actors.Models
       return AIUpdate.AdjustRotation(owner.Engine, owner, ref targetPos, responsiveness);
     }
 
-    internal float AdjustSpeed(ActorInfo owner)
+    internal float AdjustSpeed(ActorInfo owner, bool useAILimit)
     {
-      return AIUpdate.AdjustSpeed(owner.Engine, owner, ref targetSpeed);
+      return AIUpdate.AdjustSpeed(owner.Engine, owner, useAILimit, ref targetSpeed);
     }
   }
 }
