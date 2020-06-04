@@ -69,8 +69,8 @@ namespace SWEndor.UI.Widgets
       burst = PlayerInfo.SecondaryWeapon.Burst;
       if (weap != null)
       {
-        if (weap.Proj.Type == WeaponType.TORPEDO
-          || weap.Proj.Type == WeaponType.MISSILE)
+        if (weap.Proj.WeaponType == WeaponType.TORPEDO
+          || weap.Proj.WeaponType == WeaponType.MISSILE)
         {
           COLOR disabled_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DISABLED);
           COLOR destroyed_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DESTROYED);
@@ -81,7 +81,7 @@ namespace SWEndor.UI.Widgets
           else if (p.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) == SystemState.DISABLED)
             DrawMissile(weap, false, 0, disabled_color);
         }
-        else if (weap.Proj.Type == WeaponType.ION)
+        else if (weap.Proj.WeaponType == WeaponType.ION)
         {
           COLOR ion_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_ION);
           COLOR disabled_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DISABLED);
@@ -105,7 +105,7 @@ namespace SWEndor.UI.Widgets
         {
           int wpi = i - weap.Port.Index;
           if (wpi < 0)
-            wpi += weap.Port.FirePos.Length;
+            wpi += weap.Port.FirePositions.Length;
           bool highlighted = (wpi >= 0 && wpi < burst);
 
           float x = weap.Port.UIPos[i].x;
@@ -139,7 +139,7 @@ namespace SWEndor.UI.Widgets
         {
           int wpi = i - weap.Port.Index;
           if (wpi < 0)
-            wpi += weap.Port.FirePos.Length;
+            wpi += weap.Port.FirePositions.Length;
           bool highlighted = (wpi >= 0 && wpi < burst);
 
           float x = weap.Port.UIPos[i].x;

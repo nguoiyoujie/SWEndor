@@ -642,7 +642,7 @@ namespace SWEndor.Scenarios
         {
           foreach (WeaponInfo w in actor.WeaponDefinitions.Weapons)
           {
-            if (w.Proj.Type == WeaponType.TORPEDO)
+            if (w.Proj.WeaponType == WeaponType.TORPEDO)
             {
               w.Ammo.Count = 1;
               w.Ammo.Max = 1;
@@ -658,7 +658,7 @@ namespace SWEndor.Scenarios
         {
           foreach (WeaponInfo w in actor.WeaponDefinitions.Weapons)
           {
-            if (w.Proj.Type == WeaponType.TORPEDO || w.Proj.Type == WeaponType.ION)
+            if (w.Proj.WeaponType == WeaponType.TORPEDO || w.Proj.WeaponType == WeaponType.ION)
             {
               w.Ammo.Count = 0;
               w.Ammo.Max = 0;

@@ -70,15 +70,15 @@ namespace SWEndor
       if (File.Exists(path))
       {
         INIFile f = new INIFile(path);
-        ResolutionMode = f.GetEnum("General", "Resolution", ResolutionMode);
-        GameDebug = f.GetBool("General", "Debug", GameDebug);
-        FullScreenMode = f.GetBool("General", "FullScreen", FullScreenMode);
-        ShowPerformance = f.GetBool("General", "ShowPerformance", ShowPerformance);
+        ResolutionMode = f.GetValue("General", "Resolution", ResolutionMode);
+        GameDebug = f.GetValue("General", "Debug", GameDebug);
+        FullScreenMode = f.GetValue("General", "FullScreen", FullScreenMode);
+        ShowPerformance = f.GetValue("General", "ShowPerformance", ShowPerformance);
 
-        engine.SoundManager.MasterMusicVolume = f.GetFloat("Audio", "MusicVol", 1);
-        engine.SoundManager.MasterSFXVolume = f.GetFloat("Audio", "SFXVol", 1);
+        engine.SoundManager.MasterMusicVolume = f.GetValue("Audio", "MusicVol", 1f);
+        engine.SoundManager.MasterSFXVolume = f.GetValue("Audio", "SFXVol", 1f);
 
-        SteeringSensitivity = f.GetFloat("Controls", "SteeringSensitivity", SteeringSensitivity);
+        SteeringSensitivity = f.GetValue("Controls", "SteeringSensitivity", SteeringSensitivity);
 
         if (f.HasSection("Keyboard"))
         {
@@ -89,7 +89,7 @@ namespace SWEndor
               InputFunction fn = InputFunction.Registry.Get(ln.Key);
               if (fn != null)
               {
-                int fkey = f.GetInt("Keyboard", ln.Key, -2);
+                int fkey = f.GetValue("Keyboard", ln.Key, -2);
                 if (fkey != -2)
                   fn.Key = fkey;
               }
@@ -111,21 +111,21 @@ namespace SWEndor
 
       INIFile f = new INIFile(filepath);
       f.Reset();
-      f.SetEnum("General", "Resolution", ResolutionMode);
-      f.SetBool("General", "Debug", GameDebug);
-      f.SetBool("General", "FullScreen", FullScreenMode);
-      f.SetBool("General", "ShowPerformance", ShowPerformance);
+      f.SetValue("General", "Resolution", ResolutionMode);
+      f.SetValue("General", "Debug", GameDebug);
+      f.SetValue("General", "FullScreen", FullScreenMode);
+      f.SetValue("General", "ShowPerformance", ShowPerformance);
 
-      f.SetFloat("Audio", "MusicVol", engine.SoundManager.MasterMusicVolume);
-      f.SetFloat("Audio", "SFXVol", engine.SoundManager.MasterSFXVolume);
+      f.SetValue("Audio", "MusicVol", engine.SoundManager.MasterMusicVolume);
+      f.SetValue("Audio", "SFXVol", engine.SoundManager.MasterSFXVolume);
 
-      f.SetFloat("Controls", "SteeringSensitivity", SteeringSensitivity);
+      f.SetValue("Controls", "SteeringSensitivity", SteeringSensitivity);
 
       foreach (InputFunction fn in InputFunction.Registry.Functions)
         if (fn.Name != null && fn.Name.Length > 0)
-          f.SetInt("Keyboard", fn.Name, fn.Key);
+          f.SetValue("Keyboard", fn.Name, fn.Key);
 
-      f.SaveFile(filepath);
+      f.WriteToFile(filepath);
     }
   }
 }

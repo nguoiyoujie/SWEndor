@@ -7,13 +7,11 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct ShakeData
   {
-    private const string sShake = "Shake";
-
 #pragma warning disable 0649 // values are filled by the attribute
-    [INIValue(sShake, "Intensity")]
+    [INIValue]
     public float Intensity;
 
-    [INIValue(sShake, "ProximityDistance")]
+    [INIValue]
     public float ProximityDistance;
 #pragma warning restore 0649
 

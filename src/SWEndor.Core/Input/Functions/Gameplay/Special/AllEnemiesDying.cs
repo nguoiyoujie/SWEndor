@@ -17,7 +17,7 @@ namespace SWEndor.Input.Functions.Gameplay.Special
       ActorInfo p = engine.PlayerInfo.Actor;
       if (p != null)
       {
-        foreach (ActorInfo actor in engine.ActorFactory.GetAll())
+        foreach (ActorInfo actor in engine.ActorFactory.GetValues())
         {
           if (actor != null
             && !actor.IsDyingOrDead

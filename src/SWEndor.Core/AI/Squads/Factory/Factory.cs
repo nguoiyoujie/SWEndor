@@ -47,7 +47,7 @@ namespace SWEndor.AI.Squads
 
       public Squadron GetByName(string name)
       {
-        foreach (Squadron s in GetAll())
+        foreach (Squadron s in GetValues())
           if (s.Name == name)
             return s;
         return Neutral;

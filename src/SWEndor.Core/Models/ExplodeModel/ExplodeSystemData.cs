@@ -4,10 +4,9 @@ namespace SWEndor.Models
 {
   internal struct ExplodeSystemData
   {
-    private const string sExplode = "Explode";
     private static ExplodeData[] NullExpl = new ExplodeData[0];
 
-    [INISubSectionList(sExplode, "EXP", "Explodes")]
+    [INISubSectionList("EXP")]
     internal ExplodeData[] Explodes;
 
     public static ExplodeSystemData Default { get { return new ExplodeSystemData(NullExpl); } }

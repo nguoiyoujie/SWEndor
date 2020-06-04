@@ -6,18 +6,16 @@ namespace SWEndor.Weapons
 {
   internal struct WeapAmmoInfo
   {
-    private const string sNone = "";
-
-    [INIValue(sNone, "Max")] // initialize Count = Max
+    [INIValue("Max")] // initialize Count = Max
     public int Count;
 
-    [INIValue(sNone, "Max")]
+    [INIValue]
     public int Max;
 
-    [INIValue(sNone, "ReloadRate")]
+    [INIValue]
     public float2 ReloadRate; // rate, random
 
-    [INIValue(sNone, "ReloadAmount")]
+    [INIValue]
     public int ReloadAmount;
 
     private float ReloadCooldown;

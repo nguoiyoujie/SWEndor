@@ -5,13 +5,12 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct CameraSystemData
   {
-    private const string sCamera = "Camera";
     private static LookData[] NullCam = new LookData[0];
 
-    [INISubSectionList(sCamera, "CAM", "Cameras")]
+    [INISubSectionList("CAM")]
     internal LookData[] Cameras;
 
-    [INIValue(sCamera, "DeathCam")]
+    [INIValue]
     private float3 DeathCam;
     internal DeathCameraData DeathCamera { get { return new DeathCameraData(DeathCam); } }
 

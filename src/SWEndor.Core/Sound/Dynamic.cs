@@ -14,7 +14,7 @@ namespace SWEndor.Sound
       if (p == null)
         return;
 
-      foreach (string[] m in p.MoodTransitions.GetAll())
+      foreach (string[] m in p.MoodTransitions.GetValues())
         foreach (string s in m)
           mgr.PreloadMusic(s);
     }

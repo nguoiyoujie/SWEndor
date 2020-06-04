@@ -7,35 +7,33 @@ namespace SWEndor.Weapons
 {
   internal struct WeapTgtInfo
   {
-    private const string sNone = "";
-
     // Targeter
-    [INIValue(sNone, "RequirePlayerTargetLock")]
+    [INIValue]
     public bool RequirePlayerTargetLock;
 
-    [INIValue(sNone, "RequireAITargetLock")]
+    [INIValue]
     public bool RequireAITargetLock; // TO-DO: Implement logic
 
-    [INIValue(sNone, "TargetLock_TimeRequired")]
+    [INIValue]
     public float TargetLock_TimeRequired; // TO-DO: Implement logic
 
-    [INIValue(sNone, "PlayerTargetAcqType")]
+    [INIValue]
     public TargetAcqType PlayerTargetAcqType; // TO-DO: Implement logic
 
-    [INIValue(sNone, "AITargetAcqType")]
+    [INIValue]
     public TargetAcqType AITargetAcqType; // TO-DO: Implement logic
 
     // AI Config
-    [INIValue(sNone, "AIAttackTargets")]
+    [INIValue]
     public TargetType AIAttackTargets;
 
-    [INIValue(sNone, "AIAttackNull")]
+    [INIValue]
     public bool AIAttackNull;
 
-    [INIValue(sNone, "AngularRange")]
+    [INIValue]
     public float AngularRange;
 
-    [INIValue(sNone, "Range")]
+    [INIValue]
     public float Range;
 
     public static WeapTgtInfo Default = new WeapTgtInfo

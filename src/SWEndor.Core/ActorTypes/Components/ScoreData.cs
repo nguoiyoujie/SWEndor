@@ -4,12 +4,10 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct ScoreData
   {
-    private const string sScore = "Score";
-
-    [INIValue(sScore, "PerStrength")]
+    [INIValue]
     public int PerStrength;
 
-    [INIValue(sScore, "DestroyBonus")]
+    [INIValue]
     public int DestroyBonus;
 
     public ScoreData(int perStrength, int destroyBonus)

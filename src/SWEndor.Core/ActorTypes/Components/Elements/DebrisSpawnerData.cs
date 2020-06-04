@@ -8,36 +8,34 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct DebrisSpawnerData
   {
-    private const string sNone = "";
-
     private ActorTypeInfo _cache;
 
 #pragma warning disable 0649 // values are filled by the attribute
-    [INIValue(sNone, "Type")]
+    [INIValue]
     public string Type;
 
-    [INIValue(sNone, "SpawnPosition")]
+    [INIValue]
     public float3 SpawnPosition;
 
-    [INIValue(sNone, "RotationXMax")]
+    [INIValue]
     public float RotationXMax;
 
-    [INIValue(sNone, "RotationXMin")]
+    [INIValue]
     public float RotationXMin;
 
-    [INIValue(sNone, "RotationYMax")]
+    [INIValue]
     public float RotationYMax;
 
-    [INIValue(sNone, "RotationYMin")]
+    [INIValue]
     public float RotationYMin;
 
-    [INIValue(sNone, "RotationZMax")]
+    [INIValue]
     public float RotationZMax;
 
-    [INIValue(sNone, "RotationZMin")]
+    [INIValue]
     public float RotationZMin;
 
-    [INIValue(sNone, "Chance")]
+    [INIValue]
     public float Chance;
 #pragma warning restore 0649
 

@@ -10,31 +10,29 @@ namespace SWEndor.Projectiles.Components
 {
   internal struct DamageSpecialData
   {
-    private const string sDamageSpecial = "DamageSpecial";
-
 #pragma warning disable 0649 // values are filled by the attribute
-    [INIValue(sDamageSpecial, "NeverDisappear")]
+    [INIValue]
     public bool NeverDisappear;
 
-    [INIValue(sDamageSpecial, "EMPDuration")]
+    [INIValue]
     public float EMPDuration;
 
-    [INIValue(sDamageSpecial, "EMPDamage")]
+    [INIValue]
     public float EMPDamage;
 
-    [INIValue(sDamageSpecial, "EMPDamageRandom")]
+    [INIValue]
     public float EMPDamageRandom;
 
-    [INIValue(sDamageSpecial, "EMPPercentDamage")]
+    [INIValue]
     public float EMPPercentDamage;
 
-    [INIValue(sDamageSpecial, "EMPPercentDamageRandom")]
+    [INIValue]
     public float EMPPercentDamageRandom;
 
-    [INIValue(sDamageSpecial, "EMPAffectsChildren")]
+    [INIValue]
     public int EMPAffectsChildren;
 
-    [INIValue(sDamageSpecial, "ReduceDyingTimerTo")]
+    [INIValue]
     public float ReduceDyingTimerTo;
 #pragma warning restore 0649
     

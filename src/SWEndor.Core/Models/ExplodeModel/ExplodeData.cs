@@ -4,18 +4,16 @@ namespace SWEndor.Models
 {
   internal struct ExplodeData
   {
-    private const string sNone = "";
-
-    [INIValue(sNone, "Type")]
+    [INIValue]
     public string Type;
 
-    [INIValue(sNone, "Rate")]
+    [INIValue]
     public float Rate;
 
-    [INIValue(sNone, "Size")]
+    [INIValue]
     public float Size;
 
-    [INIValue(sNone, "Trigger")]
+    [INIValue]
     public ExplodeTrigger Trigger;
 
     public ExplodeData(string type, float rate, float size, ExplodeTrigger trigger)

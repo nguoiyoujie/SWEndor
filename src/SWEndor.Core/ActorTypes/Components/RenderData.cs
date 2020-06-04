@@ -5,30 +5,28 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct RenderData
   {
-    private const string sRender = "Render";
-
     public bool EnableDistanceCull { get { return CullDistance > 0; } }
 
 #pragma warning disable 0649 // values are filled by the attribute
-    [INIValue(sRender, "CullDistance")]
+    [INIValue]
     public float CullDistance;
 
-    [INIValue(sRender, "RadarSize")]
+    [INIValue]
     public float RadarSize;
 
-    [INIValue(sRender, "RadarType")]
+    [INIValue]
     public RadarType RadarType;
 
-    [INIValue(sRender, "AlwaysShowInRadar")]
+    [INIValue]
     public bool AlwaysShowInRadar;
 
-    [INIValue(sRender, "ZEaseInTime")]
+    [INIValue]
     public float ZEaseInTime;
 
-    [INIValue(sRender, "ZEaseInDelay")]
+    [INIValue]
     public float ZEaseInDelay;
 
-    [INIValue(sRender, "RemapLaserColor")]
+    [INIValue]
     public bool RemapLaserColor;
 #pragma warning restore 0649 
 

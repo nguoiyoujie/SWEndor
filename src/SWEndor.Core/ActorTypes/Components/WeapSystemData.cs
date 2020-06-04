@@ -4,13 +4,12 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct WeapSystemData
   {
-    private const string sWeapon = "Weapon";
     private static WeapData[] NullWeap = new WeapData[0];
 
-    [INISubSectionList(sWeapon, "WEAP", "Weapon")]
+    [INISubSectionList("WEAP", "Weapon")]
     internal WeapData[] Loadouts;
 
-    [INIValue(sWeapon, "TrackerDummyWeapon")]
+    [INIValue]
     internal bool TrackerDummyWeapon;
 
     public static WeapSystemData Default { get { return new WeapSystemData(NullWeap, false); } }

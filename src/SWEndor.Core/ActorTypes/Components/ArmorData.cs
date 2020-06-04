@@ -11,7 +11,6 @@ namespace SWEndor.ActorTypes.Components
   /// </summary>
   internal struct ArmorData
   {
-    private const string sArmor = "Armor";
     private static DamageType[] _dmgs;
 
     static ArmorData()
@@ -27,7 +26,7 @@ namespace SWEndor.ActorTypes.Components
       _dmgs = ls.ToArray();
     }
 
-    [INIRegistry(sArmor)]
+    [INIRegistry]
     internal readonly Registry<DamageType, float> Data;
 
     internal readonly float DefaultMult;

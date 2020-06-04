@@ -4,22 +4,20 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct RegenData
   {
-    private const string sRegen = "Regen";
-
 #pragma warning disable 0649 // values are filled by the attribute
-    [INIValue(sRegen, "NoRegen")]
+    [INIValue]
     public bool NoRegen;
 
-    [INIValue(sRegen, "SelfRegenRate")]
+    [INIValue]
     public float SelfRegenRate;
 
-    [INIValue(sRegen, "ParentRegenRate")]
+    [INIValue]
     public float ParentRegenRate;
 
-    [INIValue(sRegen, "ChildRegenRate")]
+    [INIValue]
     public float ChildRegenRate;
 
-    [INIValue(sRegen, "SiblingRegenRate")]
+    [INIValue]
     public float SiblingRegenRate;
 #pragma warning restore 0649
   }

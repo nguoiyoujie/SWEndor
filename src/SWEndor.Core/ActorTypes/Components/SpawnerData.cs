@@ -5,40 +5,38 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct SpawnerData
   {
-    private const string sSpawner = "Spawner";
-
 #pragma warning disable 0649 // values are filled by the attribute
-    [INIValue(sSpawner, "SpawnTypes")]
+    [INIValue]
     public string[] SpawnTypes;
 
-    [INIValue(sSpawner, "SpawnMoveDelay")]
+    [INIValue]
     public float SpawnMoveDelay;
 
-    [INIValue(sSpawner, "SpawnInterval")]
+    [INIValue]
     public float SpawnInterval;
 
-    [INIValue(sSpawner, "SpawnPlayerDelay")]
+    [INIValue]
     public float SpawnPlayerDelay;
 
-    [INIValue(sSpawner, "SpawnsRemaining")]
+    [INIValue]
     public int SpawnsRemaining;
 
-    [INIValue(sSpawner, "SpawnLocations")]
+    [INIValue]
     public float3[] SpawnLocations;
 
-    [INIValue(sSpawner, "PlayerSpawnLocation")]
+    [INIValue]
     public float3 PlayerSpawnLocation;
 
-    [INIValue(sSpawner, "SpawnSpeed")]
+    [INIValue]
     public float SpawnSpeed; // -1 means follow spawner, -2 means maxSpeed of spawned
 
-    [INIValue(sSpawner, "SpawnRotation")]
+    [INIValue]
     public float3 SpawnRotation;
 
-    [INIValue(sSpawner, "SpawnManualPositioningMult")]
+    [INIValue]
     public float3 SpawnManualPositioningMult;
 
-    [INIValue(sSpawner, "SpawnSpeedPositioningMult")]
+    [INIValue]
     public float3 SpawnSpeedPositioningMult;
 #pragma warning restore 0649
 

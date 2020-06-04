@@ -6,10 +6,9 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct DebrisSystemData
   {
-    private const string sDebris = "Debris";
     private static DebrisSpawnerData[] NullDebris = new DebrisSpawnerData[0];
 
-    [INISubSectionList(sDebris, "DEBR", "Debris")]
+    [INISubSectionList("DEBR")]
     internal DebrisSpawnerData[] Debris;
 
     public static DebrisSystemData Default { get { return new DebrisSystemData(NullDebris); } }

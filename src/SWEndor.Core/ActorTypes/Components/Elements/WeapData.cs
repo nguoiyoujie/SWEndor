@@ -4,27 +4,25 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct WeapData
   {
-    private const string sNone = "";
-
-    [INIValue(sNone, "Name")]
+    [INIValue]
     public string Name;
 
-    [INIValue(sNone, "Load")]
+    [INIValue]
     public string Load;
 
-    [INIValue(sNone, "Aim")]
+    [INIValue]
     public string Aim;
 
-    [INIValue(sNone, "Ammo")]
+    [INIValue]
     public string Ammo;
 
-    [INIValue(sNone, "Port")]
+    [INIValue]
     public string Port;
 
-    [INIValue(sNone, "Proj")]
+    [INIValue]
     public string Proj;
 
-    [INIValue(sNone, "Tgt")]
+    [INIValue]
     public string Tgt;
 
     public WeapData(string name, string load, string aim, string ammo, string port, string proj, string tgt)

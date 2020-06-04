@@ -34,7 +34,6 @@ namespace SWEndor.ActorTypes.Components
 
   internal struct DyingMoveData
   {
-    private const string sDyingMove = "DyingMove";
     private const string sSpin = "spin";
     private const string sSink = "sink";
     private const string sKill = "kill";
@@ -56,15 +55,15 @@ namespace SWEndor.ActorTypes.Components
     }
 
 #pragma warning disable 0649 // values are filled by the attribute
-    [INIValue(sDyingMove, "Data")]
-    internal float3 _data;
+    [INIValue]
+    internal float3 Data;
 
-    [INIValue(sDyingMove, "Type")]
-    internal string _type;
+    [INIValue]
+    internal string Type;
 #pragma warning restore 0649
 
-    public void Initialize(Engine engine, ActorInfo actor) { r_init.Get(_type ?? "")?.Invoke(engine, actor, ref _data); }
+    public void Initialize(Engine engine, ActorInfo actor) { r_init.Get(Type ?? "")?.Invoke(engine, actor, ref Data); }
 
-    public void Update(ActorInfo actor, float time) { r_updt.Get(_type ?? "")?.Invoke(actor, _data, time); }
+    public void Update(ActorInfo actor, float time) { r_updt.Get(Type ?? "")?.Invoke(actor, Data, time); }
   }
 }

@@ -9,8 +9,6 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct SystemData
   {
-    private const string sSystem = "System";
-
     static SystemData()
     {
       Array a = Enum.GetValues(typeof(SystemPart));
@@ -19,37 +17,37 @@ namespace SWEndor.ActorTypes.Components
         AllParts[i] = (SystemPart)a.GetValue(i);
     }
 
-    [INIValue(sSystem, "MaxShield")]
+    [INIValue]
     public float MaxShield;
 
-    [INIValue(sSystem, "MaxHull")]
+    [INIValue]
     public float MaxHull;
 
-    [INIValue(sSystem, "Energy_Income")]
+    [INIValue]
     public float Energy_Income;
 
-    [INIValue(sSystem, "Energy_NoChargerIncome")]
+    [INIValue]
     public float Energy_NoChargerIncome;
 
-    [INIValue(sSystem, "MaxEnergy_inStore")]
+    [INIValue]
     public float MaxEnergy_inStore;
 
-    [INIValue(sSystem, "MaxEnergy_inEngine")]
+    [INIValue]
     public float MaxEnergy_inEngine;
 
-    [INIValue(sSystem, "MaxEnergy_inLasers")]
+    [INIValue]
     public float MaxEnergy_inLasers;
 
-    [INIValue(sSystem, "MaxEnergy_inShields")]
+    [INIValue]
     public float MaxEnergy_inShields;
 
-    [INIValue(sSystem, "Energy_TransferRate")]
+    [INIValue]
     public float Energy_TransferRate;
 
-    [INIValue(sSystem, "AllowSystemDamage")]
+    [INIValue]
     public bool AllowSystemDamage;
 
-    [INIValue(sSystem, "Parts")]
+    [INIValue]
     public SystemPart[] Parts;
 
     private static SystemPart[] AllParts;
@@ -99,8 +97,8 @@ namespace SWEndor.ActorTypes.Components
       bool hasProj = false;
       foreach (WeaponInfo wi in w.Weapons)
       {
-        hasLaser |= (wi.Proj.Type == WeaponType.LASER || wi.Proj.Type == WeaponType.ION);
-        hasProj |= (wi.Proj.Type == WeaponType.MISSILE || wi.Proj.Type == WeaponType.TORPEDO);
+        hasLaser |= (wi.Proj.WeaponType == WeaponType.LASER || wi.Proj.WeaponType == WeaponType.ION);
+        hasProj |= (wi.Proj.WeaponType == WeaponType.MISSILE || wi.Proj.WeaponType == WeaponType.TORPEDO);
       }
 
       if (hasLaser)

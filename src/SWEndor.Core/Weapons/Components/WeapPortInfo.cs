@@ -7,12 +7,10 @@ namespace SWEndor.Weapons
 {
   internal struct WeapPortInfo
   {
-    private const string sNone = "";
+    [INIValue]
+    public float3[] FirePositions;
 
-    [INIValue(sNone, "FirePositions")]
-    public float3[] FirePos;
-
-    [INIValue(sNone, "CooldownRate")]
+    [INIValue]
     public float2 CooldownRate; // rate, random
 
     public float2[] UIPos;
@@ -21,7 +19,7 @@ namespace SWEndor.Weapons
 
     public static WeapPortInfo Default = new WeapPortInfo
     {
-      FirePos = new float3[0],
+      FirePositions = new float3[0],
       UIPos = null,
       Index = 0,
       CooldownRate = new float2(1, 0),
@@ -30,12 +28,12 @@ namespace SWEndor.Weapons
 
     public void Init()
     {
-      UIPos = new float2[FirePos.Length];
+      UIPos = new float2[FirePositions.Length];
 
       for (int i = 0; i < UIPos.Length; i++)
       {
-        float x = FirePos[i].x;
-        float y = FirePos[i].y;
+        float x = FirePositions[i].x;
+        float y = FirePositions[i].y;
 
         if (x != 0 || y != 0)
         {
@@ -60,13 +58,13 @@ namespace SWEndor.Weapons
 
     public TV_3DVECTOR GetFirePos()
     {
-      if (FirePos.Length == 0)
+      if (FirePositions.Length == 0)
         return new TV_3DVECTOR(0, 0, 0);
 
-      if (Index >= FirePos.Length)
+      if (Index >= FirePositions.Length)
         Index = 0;
 
-      return FirePos[Index].ToVec3();
+      return FirePositions[Index].ToVec3();
     }
 
     public void Next()

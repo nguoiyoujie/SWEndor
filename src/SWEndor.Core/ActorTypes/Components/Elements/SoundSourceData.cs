@@ -11,25 +11,23 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct SoundSourceData
   {
-    private const string sNone = "";
-
 #pragma warning disable 0649 // values are filled by the attribute
-    [INIValue(sNone, "Sound")]
+    [INIValue]
     public string[] Sound;
 
-    [INIValue(sNone, "RelativeLocation")]
+    [INIValue]
     public float3 RelativeLocation;
 
-    [INIValue(sNone, "Distance")]
+    [INIValue]
     public float Distance;
 
-    [INIValue(sNone, "Loop")]
+    [INIValue]
     public bool Loop;
 
-    [INIValue(sNone, "IsEngineSound")]
+    [INIValue]
     public bool IsEngineSound;
 
-    [INIValue(sNone, "PlayInCutscene")]
+    [INIValue]
     public bool PlayInCutscene;
 #pragma warning restore 0649
 

@@ -4,12 +4,10 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct TimedLifeData
   {
-    private const string sTimedLife = "TimedLife";
-
-    [INIValue(sTimedLife, "OnTimedLife")]
+    [INIValue]
     public bool OnTimedLife;
 
-    [INIValue(sTimedLife, "TimedLife")]
+    [INIValue]
     public float TimedLife;
 
     public TimedLifeData(bool enabled, float time)

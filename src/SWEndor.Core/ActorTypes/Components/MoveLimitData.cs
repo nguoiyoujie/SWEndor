@@ -4,31 +4,29 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct MoveLimitData
   {
-    private const string sMoveLimit = "MoveLimit";
-
 #pragma warning disable 0649 // values are filled by the attribute
-    [INIValue(sMoveLimit, "MaxSpeed")]
+    [INIValue]
     public float MaxSpeed;
 
-    [INIValue(sMoveLimit, "MinSpeed")]
+    [INIValue]
     public float MinSpeed;
 
-    [INIValue(sMoveLimit, "MaxSpeedChangeRate")]
+    [INIValue]
     public float MaxSpeedChangeRate;
 
-    [INIValue(sMoveLimit, "MaxTurnRate")]
+    [INIValue]
     public float MaxTurnRate;
 
-    [INIValue(sMoveLimit, "MaxSecondOrderTurnRateFrac")]
+    [INIValue]
     public float MaxSecondOrderTurnRateFrac;
 
-    [INIValue(sMoveLimit, "XLimit")]
+    [INIValue]
     public float XLimit;
 
-    [INIValue(sMoveLimit, "ZTilt")]
+    [INIValue]
     public float ZTilt;
 
-    [INIValue(sMoveLimit, "ZNormFrac")]
+    [INIValue]
     public float ZNormFrac;
 #pragma warning restore 0649
 

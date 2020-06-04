@@ -51,58 +51,58 @@ namespace SWEndor.ActorTypes
     public ComponentMask Mask { get; set; } = ComponentMask.NONE;
 
     // Data (structs)
-    [INIEmbedObject]
+    [INIEmbedObject("System")]
     internal SystemData SystemData;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Combat")]
     internal CombatData CombatData;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Regen")]
     internal RegenData RegenData;
 
-    [INIEmbedObject]
+    [INIEmbedObject("TimedLife")]
     internal TimedLifeData TimedLifeData;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Armor")]
     internal ArmorData ArmorData = ArmorData.Default;
 
-    [INIEmbedObject]
+    [INIEmbedObject("MoveLimit")]
     internal MoveLimitData MoveLimitData = MoveLimitData.Default;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Render")]
     internal RenderData RenderData = RenderData.Default;
 
-    [INIEmbedObject]
+    [INIEmbedObject("AI")]
     internal AIData AIData = AIData.Default;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Mesh")]
     internal MeshData MeshData = MeshData.Default;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Explode")]
     internal ExplodeSystemData ExplodeSystemData = ExplodeSystemData.Default;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Weapon")]
     internal WeapSystemData WeapSystemData = WeapSystemData.Default;
 
-    [INIEmbedObject]
+    [INIEmbedObject("DyingMove")]
     internal DyingMoveData DyingMoveData;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Score")]
     internal ScoreData ScoreData;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Sound")]
     internal SoundData SoundData = SoundData.Default;
 
-    [INIEmbedObject]
+    [INIEmbedObject("AddOn")]
     internal AddOnSystemData AddOnData = AddOnSystemData.Default;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Debris")]
     internal DebrisSystemData DebrisData = DebrisSystemData.Default;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Camera")]
     internal CameraSystemData CameraData = CameraSystemData.Default;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Spawner")]
     internal SpawnerData SpawnerData = SpawnerData.Default;
 
     // derived
@@ -133,7 +133,7 @@ namespace SWEndor.ActorTypes
       INIFile f = new INIFile(filepath);
       var self = this;
       f.UpdateByAttribute(ref self);
-      f.SaveFile(filepath);
+      f.WriteToFile(filepath);
     }
 
     public void Init()

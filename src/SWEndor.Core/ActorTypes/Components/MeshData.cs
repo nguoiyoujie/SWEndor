@@ -22,27 +22,25 @@ namespace SWEndor.ActorTypes.Components
 
   internal struct MeshData
   {
-    private const string sMesh = "Mesh";
-
-    [INIValue(sMesh, "Mode")]
+    [INIValue]
     public readonly MeshMode Mode;
 
-    [INIValue(sMesh, "Scale")]
+    [INIValue]
     public readonly float Scale;
 
-    [INIValue(sMesh, "SourceMeshPath")]
+    [INIValue]
     public readonly string SourceMeshPath;
 
-    [INIValue(sMesh, "SourceFarMeshPath")]
+    [INIValue]
     public readonly string SourceFarMeshPath;
 
-    [INIValue(sMesh, "Shader")]
+    [INIValue]
     public readonly string Shader;
 
-    [INIValue(sMesh, "BlendMode")]
+    [INIValue]
     public readonly CONST_TV_BLENDINGMODE BlendMode;
 
-    [INIValue(sMesh, "Data")]
+    [INIValue]
     public readonly string[] Data;
 
 

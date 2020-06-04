@@ -14,7 +14,7 @@ namespace SWEndor.Weapons.Types
       Ammo.ReloadRate = new float2 (1000, 0);
       Ammo.ReloadAmount = 1;
 
-      Port.FirePos = new float3[] { new float3(0, 0, 0) };
+      Port.FirePositions = new float3[] { new float3(0, 0, 0) };
 
       // Auto Aim Bot
       Aim.EnablePlayerAutoAim = true;

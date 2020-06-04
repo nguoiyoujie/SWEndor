@@ -42,7 +42,7 @@ namespace SWEndor.UI.Widgets
           break;
 
         case Screen2D.ShowSquadMode.ALL:
-          foreach (ActorInfo s in p.ActorFactory.GetAll())
+          foreach (ActorInfo s in p.ActorFactory.GetValues())
             Draw(p, s);
           break;
       }

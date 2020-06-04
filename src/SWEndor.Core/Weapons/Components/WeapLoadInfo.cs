@@ -4,15 +4,13 @@ namespace SWEndor.Weapons
 {
   internal struct WeapLoadInfo
   {
-    private const string sNone = "";
-
-    [INIValue(sNone, "Primary")]
+    [INIValue]
     public int[] Primary;
 
-    [INIValue(sNone, "Secondary")]
+    [INIValue]
     public int[] Secondary;
 
-    [INIValue(sNone, "AI")]
+    [INIValue]
     public int[] AI;
 
     public static WeapLoadInfo Default = new WeapLoadInfo

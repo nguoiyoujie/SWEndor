@@ -170,11 +170,9 @@ namespace SWEndor.Core
             using (Engine.PerfManager.Create("tick_loop"))
             {
               TimeControl.Update();
-              //TimeSinceRender = (1f / TimeControl.TargetFPS) * TimeControl.SpeedModifier; 
-              TimeSinceRender = TimeControl.WorldInterval;
               TimeControl.AddTime(AddTime);
-              TimeSinceRender += AddTime;
               AddTime = 0;
+              TimeSinceRender = TimeControl.WorldInterval;
 
               if (!septhread_collision)
                 TickCollision();

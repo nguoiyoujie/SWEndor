@@ -154,10 +154,10 @@ namespace SWEndor.Weapons
       if (owner == null)
         return false;
 
-      if ((Proj.Type == WeaponType.LASER || Proj.Type == WeaponType.ION)
+      if ((Proj.WeaponType == WeaponType.LASER || Proj.WeaponType == WeaponType.ION)
         && owner.TypeInfo.SystemData.AllowSystemDamage && owner.GetStatus(SystemPart.LASER_WEAPONS) != SystemState.ACTIVE)
         return false;
-      else if ((Proj.Type == WeaponType.MISSILE || Proj.Type == WeaponType.TORPEDO)
+      else if ((Proj.WeaponType == WeaponType.MISSILE || Proj.WeaponType == WeaponType.TORPEDO)
         && owner.TypeInfo.SystemData.AllowSystemDamage && owner.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) != SystemState.ACTIVE)
         return false;
 

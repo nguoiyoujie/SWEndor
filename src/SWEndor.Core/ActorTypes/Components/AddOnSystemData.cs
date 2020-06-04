@@ -6,10 +6,9 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct AddOnSystemData
   {
-    private const string sAddOn = "AddOn";
     private static AddOnData[] NullAddon = new AddOnData[0];
 
-    [INISubSectionList(sAddOn, "ADD", "AddOns")]
+    [INISubSectionList("ADD")]
     internal AddOnData[] AddOns;
 
     public static AddOnSystemData Default { get { return new AddOnSystemData(NullAddon); } }

@@ -7,24 +7,22 @@ namespace SWEndor.Weapons
 {
   internal struct WeapProjInfo
   {
-    private const string sNone = "";
-
-    [INIValue(sNone, "Projectile")]
+    [INIValue("Projectile")]
     private string sProj;
 
-    [INIValue(sNone, "IsActor")]
+    [INIValue]
     public bool IsActor;
 
-    [INIValue(sNone, "HomingDelay")]
+    [INIValue]
     public float HomingDelay;
 
-    [INIValue(sNone, "LifeTime")]
+    [INIValue]
     public float LifeTime;
 
-    [INIValue(sNone, "WeaponType")]
-    public WeaponType Type;
+    [INIValue]
+    public WeaponType WeaponType;
 
-    [INIValue(sNone, "FireSound")]
+    [INIValue]
     public string[] FireSound;
 
     internal ProjectileTypeInfo Projectile; // cache
@@ -38,7 +36,7 @@ namespace SWEndor.Weapons
       IsActor = false,
       HomingDelay = 0,
       LifeTime = -1,
-      Type = WeaponType.NONE,
+      WeaponType = WeaponType.NONE,
       FireSound = null
     };
 

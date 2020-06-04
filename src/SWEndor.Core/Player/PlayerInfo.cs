@@ -335,8 +335,8 @@ namespace SWEndor.Player
     {
       get
       {
-        return (PrimaryWeapon.Weapon.Proj.Type == WeaponType.TORPEDO)
-          || (SecondaryWeapon.Weapon.Proj.Type == WeaponType.TORPEDO);
+        return (PrimaryWeapon.Weapon.Proj.WeaponType == WeaponType.TORPEDO)
+          || (SecondaryWeapon.Weapon.Proj.WeaponType == WeaponType.TORPEDO);
       }
     }
     public int TargetActorID = -1;

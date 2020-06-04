@@ -46,28 +46,28 @@ namespace SWEndor.ProjectileTypes
     public ComponentMask Mask { get; set; } = ComponentMask.NONE;
 
     // Data (structs)
-    [INIEmbedObject]
+    [INIEmbedObject("Combat")]
     internal CombatData CombatData;
 
-    [INIEmbedObject]
+    [INIEmbedObject("TimedLife")]
     internal TimedLifeData TimedLifeData;
 
-    [INIEmbedObject]
+    [INIEmbedObject("MoveLimit")]
     internal MoveLimitData MoveLimitData = MoveLimitData.Default;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Render")]
     internal RenderData RenderData = RenderData.Default;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Mesh")]
     internal MeshData MeshData = MeshData.Default;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Explode")]
     internal ExplodeSystemData ExplodeSystemData = ExplodeSystemData.Default;
 
-    [INIEmbedObject]
+    [INIEmbedObject("DamageSpecial")]
     internal DamageSpecialData DamageSpecialData;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Sound")]
     internal SoundData SoundData = SoundData.Default;
 
     // Derived (derived)
@@ -97,7 +97,7 @@ namespace SWEndor.ProjectileTypes
       INIFile f = new INIFile(filepath);
       var self = this;
       f.UpdateByAttribute(ref self);
-      f.SaveFile(filepath);
+      f.WriteToFile(filepath);
     }
 
     internal void Init()

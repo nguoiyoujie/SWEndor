@@ -3,6 +3,7 @@ using SWEndor.Core;
 using Primitives.FileFormat.INI;
 using SWEndor.Primitives.Extensions;
 using System.IO;
+using Primrose.Primitives.ValueTypes;
 
 namespace SWEndor.Shaders
 {
@@ -21,7 +22,7 @@ namespace SWEndor.Shaders
               string key = ln.Key;
               if (!s.ConstBool.ContainsKey(key))
               {
-                bool val = f.GetBool(head, ln.Key);
+                bool val = f.GetValue<bool>(head, ln.Key);
                 s.ConstBool.Add(key, val);
               }
             }
@@ -36,7 +37,7 @@ namespace SWEndor.Shaders
               string key = ln.Key;
               if (!s.ConstFloat.ContainsKey(key))
               {
-                float val = f.GetFloat(head, ln.Key);
+                float val = f.GetValue<float>(head, ln.Key);
                 s.ConstFloat.Add(key, val);
               }
             }
@@ -51,7 +52,7 @@ namespace SWEndor.Shaders
               string key = ln.Key;
               if (!s.ConstVec2.ContainsKey(key))
               {
-                TV_2DVECTOR val = f.GetFloat2(head, ln.Key).ToVec2();
+                TV_2DVECTOR val = f.GetValue<float2>(head, ln.Key).ToVec2();
                 s.ConstVec2.Add(key, val);
               }
             }
@@ -66,7 +67,7 @@ namespace SWEndor.Shaders
               string key = ln.Key;
               if (!s.ConstVec3.ContainsKey(key))
               {
-                TV_3DVECTOR val = f.GetFloat3(head, ln.Key).ToVec3();
+                TV_3DVECTOR val = f.GetValue<float3>(head, ln.Key).ToVec3();
                 s.ConstVec3.Add(key, val);
               }
             }
@@ -97,7 +98,7 @@ namespace SWEndor.Shaders
               string key = ln.Key;
               if (!s.RandTex.ContainsKey(key))
               {
-                string[] stexs = f.GetStringArray(head, ln.Key, new string[0]);
+                string[] stexs = f.GetValue(head, ln.Key, new string[0]);
                 if (stexs.Length >= 0)
                 {
                   int[] ts = new int[stexs.Length];
@@ -121,13 +122,13 @@ namespace SWEndor.Shaders
               string key = ln.Key;
               if (!s.DynamicParam.ContainsKey(key))
               {
-                DynamicShaderDataSource val = f.GetEnum(head, ln.Key, DynamicShaderDataSource.GAME_TIME);
+                DynamicShaderDataSource val = f.GetValue(head, ln.Key, DynamicShaderDataSource.GAME_TIME);
                 s.DynamicParam.Add(key, val);
               }
             }
           }
 
-        s._count = f.GetInt("General", "InitialCount", 0);
+        s._count = f.GetValue("General", "InitialCount", 0);
       }
 
     }

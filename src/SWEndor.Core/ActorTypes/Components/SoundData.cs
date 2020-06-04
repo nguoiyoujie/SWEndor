@@ -8,13 +8,12 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct SoundData
   {
-    private const string sSound = "Sound";
     private static SoundSourceData[] NullSound = new SoundSourceData[0];
 
-    [INISubSectionList(sSound, "ISN", "InitialSoundSources")]
+    [INISubSectionList("ISN")]
     internal SoundSourceData[] InitialSoundSources;
 
-    [INISubSectionList(sSound, "SND", "SoundSources")]
+    [INISubSectionList("SND")]
     internal SoundSourceData[] SoundSources;
 
     public static SoundData Default { get { return new SoundData(NullSound, NullSound); } }

@@ -30,22 +30,22 @@ namespace SWEndor.ExplosionTypes
     public string Name;
 
     // Data
-    [INIEmbedObject]
+    [INIEmbedObject("TimedLife")]
     internal TimedLifeData TimedLifeData;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Shake")]
     internal ShakeData ShakeData;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Render")]
     internal RenderData RenderData = RenderData.Default;
 
-    [INIEmbedObject]
+    [INIEmbedObject("ExplRender")]
     internal ExplRenderData ExplRenderData;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Mesh")]
     internal MeshData MeshData = MeshData.Default;
 
-    [INIEmbedObject]
+    [INIEmbedObject("Sound")]
     internal SoundData SoundData = SoundData.Default;
 
     public ComponentMask Mask { get; } = ComponentMask.EXPLOSION;
@@ -74,7 +74,7 @@ namespace SWEndor.ExplosionTypes
       INIFile f = new INIFile(filepath);
       var self = this;
       f.UpdateByAttribute(ref self);
-      f.SaveFile(filepath);
+      f.WriteToFile(filepath);
     }
 
     public void Init()

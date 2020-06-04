@@ -4,19 +4,17 @@ namespace SWEndor.Weapons
 {
   internal struct WeapAimInfo
   {
-    private const string sNone = "";
-
     // Auto Aim Bot
-    [INIValue(sNone, "EnablePlayerAutoAim")]
+    [INIValue]
     public bool EnablePlayerAutoAim;
 
-    [INIValue(sNone, "EnableAIAutoAim")]
+    [INIValue]
     public bool EnableAIAutoAim;
 
-    [INIValue(sNone, "AutoAimMinDeviation")]
+    [INIValue]
     public float AutoAimMinDeviation;
 
-    [INIValue(sNone, "AutoAimMaxDeviation")]
+    [INIValue]
     public float AutoAimMaxDeviation;
 
     public static WeapAimInfo Default = new WeapAimInfo

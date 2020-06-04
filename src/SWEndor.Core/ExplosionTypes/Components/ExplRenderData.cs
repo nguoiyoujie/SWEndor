@@ -6,19 +6,17 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct ExplRenderData
   {
-    private const string sExplRender = "ExplRender";
-
 #pragma warning disable 0649 // values are filled by the attribute
-    [INIValue(sExplRender, "AtlasX")]
+    [INIValue]
     public readonly int AtlasX;
 
-    [INIValue(sExplRender, "AtlasY")]
+    [INIValue]
     public readonly int AtlasY;
 
-    [INIValue(sExplRender, "AnimDuration")]
+    [INIValue]
     public readonly float AnimDuration;
 
-    [INIValue(sExplRender, "ExpandSize")]
+    [INIValue]
     public readonly float ExpandSize;
 #pragma warning restore 0649 
 

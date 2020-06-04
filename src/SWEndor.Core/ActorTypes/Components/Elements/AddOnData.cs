@@ -10,21 +10,19 @@ namespace SWEndor.ActorTypes.Components
 {
   internal struct AddOnData
   {
-    private const string sNone = "";
-
     private ActorTypeInfo _cache;
 
 #pragma warning disable 0649 // values are filled by the attribute
-    [INIValue(sNone, "Type")]
+    [INIValue]
     public readonly string Type;
 
-    [INIValue(sNone, "Position")]
+    [INIValue]
     public readonly float3 Position;
 
-    [INIValue(sNone, "Rotation")]
+    [INIValue]
     public readonly float3 Rotation;
 
-    [INIValue(sNone, "AttachToParent")]
+    [INIValue]
     public readonly bool AttachToParent;
 #pragma warning restore 0649
 
