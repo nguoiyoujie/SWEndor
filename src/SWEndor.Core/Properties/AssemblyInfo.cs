@@ -13,7 +13,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: ComVisible(false)] 
 [assembly: AssemblyVersion("0.0.*")] 
-[assembly: AssemblyFileVersion("0.0.02006.1004")] 
+[assembly: AssemblyFileVersion("0.0.02006.1005")] 
 
 //Debug 
 #if DEBUG 
