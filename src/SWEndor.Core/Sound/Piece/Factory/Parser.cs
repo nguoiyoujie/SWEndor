@@ -14,11 +14,11 @@ namespace SWEndor.Sound
         {
           p.Name = sectionname;
           p.SoundName = file.GetString(sectionname, "Sound", "");
-          p.EntryPosition = file.GetValue(sectionname, "Entry", 0u);
-          p.ExitPositions = file.GetValue(sectionname, "Exit", new uint[0]);
-          p.EndPosition = file.GetValue(sectionname, "End", 0u);
-          p.IntermissionTransitions = file.GetValue(sectionname, "Intermission", new int[0]);
-          p.IsInterrupt = file.GetValue(sectionname, "IsInterrupt", p.IntermissionTransitions.Length > 0);
+          p.EntryPosition = file.GetValue(sectionname, "Entry", null, 0u);
+          p.ExitPositions = file.GetValue(sectionname, "Exit", null, new uint[0]);
+          p.EndPosition = file.GetValue(sectionname, "End", null, 0u);
+          p.IntermissionTransitions = file.GetValue(sectionname, "Intermission", null, new int[0]);
+          p.IsInterrupt = file.GetValue(sectionname, "IsInterrupt", null, p.IntermissionTransitions.Length > 0);
 
           //p.ChangeMood = file.GetInt(sectionname, "SwitchMood", -1);
 

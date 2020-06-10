@@ -7,7 +7,7 @@ namespace SWEndor.ActorTypes.Components
   {
     private static LookData[] NullCam = new LookData[0];
 
-    [INISubSectionList("CAM")]
+    [INISubSectionList(SubsectionPrefix = "CAM")]
     internal LookData[] Cameras;
 
     [INIValue]

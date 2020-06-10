@@ -36,7 +36,7 @@ namespace SWEndor.Actors.Models
     internal void Fighter_OnAttacked(ActorInfo owner, ActorInfo attacker)
     {
       if (
-        (owner.AI.GetTargetActor(owner.Engine, owner)?.TopParent == attacker.TopParent)   // if the attacker is the same, stay on target and attempt evade instead
+        (owner.AI.Target.GetTargetActor(owner.Engine)?.TopParent == attacker.TopParent)   // if the attacker is the same, stay on target and attempt evade instead
         || (!owner.AI.CanRetaliate)                                                       // if retaliation is not allowed, attempt evade instead
         || (!owner.CanInterruptCurrentAction)                                             // if current action cannot be interrupted, attempt evade instead
         ) 

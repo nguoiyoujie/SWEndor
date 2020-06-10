@@ -45,6 +45,7 @@
       this.sfd = new System.Windows.Forms.SaveFileDialog();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+      this.tcEditor = new SWEndor.ScenarioEditor.tcEditor();
       this.tabControl1 = new System.Windows.Forms.TabControl();
       this.tpFunctions = new System.Windows.Forms.TabPage();
       this.lboxSig = new System.Windows.Forms.ListBox();
@@ -53,7 +54,6 @@
       this.label1 = new System.Windows.Forms.Label();
       this.mainStatusStrip = new System.Windows.Forms.StatusStrip();
       this.rtfSelStatLabel = new System.Windows.Forms.ToolStripStatusLabel();
-      this.tcEditor = new SWEndor.ScenarioEditor.tcEditor();
       this.mainMenuStrip.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel2.SuspendLayout();
@@ -179,7 +179,7 @@
       this.checkToolStripMenuItem.Name = "checkToolStripMenuItem";
       this.checkToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + T";
       this.checkToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-      this.checkToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+      this.checkToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
       this.checkToolStripMenuItem.Text = "Check";
       this.checkToolStripMenuItem.Click += new System.EventHandler(this.checkToolStripMenuItem_Click);
       // 
@@ -217,6 +217,18 @@
       this.splitContainer2.Size = new System.Drawing.Size(1184, 611);
       this.splitContainer2.SplitterDistance = 900;
       this.splitContainer2.TabIndex = 3;
+      // 
+      // tcEditor
+      // 
+      this.tcEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tcEditor.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+      this.tcEditor.Location = new System.Drawing.Point(0, 0);
+      this.tcEditor.Name = "tcEditor";
+      this.tcEditor.Padding = new System.Drawing.Point(10, 3);
+      this.tcEditor.SelectedIndex = 0;
+      this.tcEditor.Size = new System.Drawing.Size(900, 611);
+      this.tcEditor.TabIndex = 0;
+      this.tcEditor.SelectedIndexChanged += new System.EventHandler(this.tcEditor_SelectedIndexChanged);
       // 
       // tabControl1
       // 
@@ -298,18 +310,6 @@
       this.rtfSelStatLabel.Name = "rtfSelStatLabel";
       this.rtfSelStatLabel.Size = new System.Drawing.Size(16, 17);
       this.rtfSelStatLabel.Text = "   ";
-      // 
-      // tcEditor
-      // 
-      this.tcEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tcEditor.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-      this.tcEditor.Location = new System.Drawing.Point(0, 0);
-      this.tcEditor.Name = "tcEditor";
-      this.tcEditor.Padding = new System.Drawing.Point(10, 3);
-      this.tcEditor.SelectedIndex = 0;
-      this.tcEditor.Size = new System.Drawing.Size(900, 611);
-      this.tcEditor.TabIndex = 0;
-      this.tcEditor.SelectedIndexChanged += new System.EventHandler(this.tcEditor_SelectedIndexChanged);
       // 
       // ScriptEditForm
       // 

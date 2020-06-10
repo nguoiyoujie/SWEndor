@@ -82,9 +82,9 @@ namespace SWEndor.AI.Actions
       if (CheckBounds(actor))
       {
         if (data.ProspectiveCollisionLevel > 0 && data.ProspectiveCollisionLevel < 5)
-          actor.AI.SetTarget(data.ProspectiveCollisionSafe);
+          actor.AI.Target.Set(data.ProspectiveCollisionSafe);
         else
-          actor.AI.SetTarget(Impact_Position + Normal * 10000);
+          actor.AI.Target.Set(Impact_Position + Normal * 10000);
         float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(actor.GetGlobalPosition(), Impact_Position);
 
         actor.AI.SetTargetSpeed(actor.MoveData.MinSpeed);

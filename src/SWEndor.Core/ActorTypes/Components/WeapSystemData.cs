@@ -6,7 +6,7 @@ namespace SWEndor.ActorTypes.Components
   {
     private static WeapData[] NullWeap = new WeapData[0];
 
-    [INISubSectionList("WEAP", "Weapon")]
+    [INISubSectionList(Key = "Weapon", SubsectionPrefix = "WEAP")]
     internal WeapData[] Loadouts;
 
     [INIValue]

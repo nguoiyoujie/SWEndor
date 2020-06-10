@@ -32,6 +32,7 @@ namespace SWEndor.Core
     public Random Random { get; } = new Random();
 
     // Engine parts
+    internal Settings Settings { get; private set; }
     internal Session Game { get; private set; }
     internal SoundManager SoundManager { get; private set; }
     internal PerfManager PerfManager { get; private set; }
@@ -67,6 +68,7 @@ namespace SWEndor.Core
 
     public void Init()
     {
+      Settings = new Settings();
       Game = new Session(this);
       SoundManager = new SoundManager();
       PerfManager = new PerfManager(this);

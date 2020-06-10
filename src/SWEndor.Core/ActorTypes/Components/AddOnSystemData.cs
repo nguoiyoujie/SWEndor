@@ -8,7 +8,7 @@ namespace SWEndor.ActorTypes.Components
   {
     private static AddOnData[] NullAddon = new AddOnData[0];
 
-    [INISubSectionList("ADD")]
+    [INISubSectionList(SubsectionPrefix = "ADD")]
     internal AddOnData[] AddOns;
 
     public static AddOnSystemData Default { get { return new AddOnSystemData(NullAddon); } }

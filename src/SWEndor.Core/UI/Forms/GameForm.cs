@@ -17,8 +17,8 @@ namespace SWEndor.UI.Forms
 
     private void GameForm_Load(object sender, EventArgs e)
     {
-      Width = Settings.ResolutionX;
-      Height = Settings.ResolutionY;
+      Width = Engine.Settings.ResolutionX;
+      Height = Engine.Settings.ResolutionY;
       CenterToScreen();
 
       // game

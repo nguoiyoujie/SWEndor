@@ -55,8 +55,10 @@
     <Compile Include="Actors\Components\CycleInfo.cs" />
     <Compile Include="Actors\Components\ScoreInfo.cs" />
     <Compile Include="Actors\Components\WeaponData.cs" />
+    <Compile Include="Actors\Models\AIModel\AIDecision.cs" />
     <Compile Include="Actors\Models\AIModel\AIModel.cs" />
     <Compile Include="Actors\Models\AIModel\AIUpdate.cs" />
+    <Compile Include="Actors\Models\AIModel\TargetInfo.cs" />
     <Compile Include="Actors\Models\ArmorModel\ActorExt.cs" />
     <Compile Include="Actors\Models\ArmorModel\ArmorModel.cs" />
     <Compile Include="Actors\Models\Collision\ActorExt.cs" />
@@ -172,7 +174,6 @@
     <Compile Include="FactionInfo.cs" />
     <Compile Include="FileFormat\INI\CampaignFile.cs" />
     <Compile Include="FileFormat\INI\ScenarioFile.cs" />
-    <Compile Include="FileFormat\Scripting\ScriptFile.cs" />
     <Compile Include="GameEvent\GameEvent.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -221,7 +222,8 @@
     <Compile Include="Input\Functions\Utility\Screen\SaveScreenshot.cs" />
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="LandInfo.cs" />
-    <Compile Include="Log\Log.cs" />
+    <Compile Include="Log\Logger.cs" />
+    <Compile Include="Log\LogItem.cs" />
     <Compile Include="Log\LogType.cs" />
     <Compile Include="Models\CollisionModel\CollisionModel.cs" />
     <Compile Include="Models\CollisionModel\CollisionResultData.cs" />
@@ -276,7 +278,6 @@
     <Compile Include="Projectiles\Models\Collision\ProjExt.cs" />
     <Compile Include="Projectiles\Models\Explosion\ProjExt.cs" />
     <Compile Include="Projectiles\Models\Mesh\MeshModel.cs" />
-    <Compile Include="Projectiles\Models\Move\MoveData.cs" />
     <Compile Include="Projectiles\Models\StateModel\ProjExt.cs" />
     <Compile Include="Projectiles\Models\TimedLife\ProjExt.cs" />
     <Compile Include="Projectiles\Models\Transform\ProjExt.cs" />
@@ -296,7 +297,7 @@
     <Compile Include="Scenarios\ActorSpawnInfo.cs" />
     <Compile Include="Scenarios\CampaignInfo.cs" />
     <Compile Include="Scenarios\GSFunctions.cs" />
-    <Compile Include="Scenarios\MoodStates.cs" />
+    <Compile Include="Sound\MoodState.cs" />
     <Compile Include="Scenarios\ScenarioBase.cs" />
     <Compile Include="Scenarios\ScenarioManager.cs" />
     <Compile Include="Scenarios\Scenarios\GSCustomScenario.cs" />

@@ -89,8 +89,8 @@ namespace SWEndor.Core
 
     private void InitWindow()
     {
-      if (Settings.FullScreenMode)
-        TVEngine.Init3DFullscreen(Settings.ResolutionX, Settings.ResolutionY, 32, true, true, CONST_TV_DEPTHBUFFERFORMAT.TV_DEPTHBUFFER_BESTBUFFER, 1.0f, Handle);
+      if (Engine.Settings.FullScreenMode)
+        TVEngine.Init3DFullscreen(Engine.Settings.ResolutionX, Engine.Settings.ResolutionY, 32, true, true, CONST_TV_DEPTHBUFFERFORMAT.TV_DEPTHBUFFER_BESTBUFFER, 1.0f, Handle);
       else
         TVEngine.Init3DWindowed(Handle, true);
 

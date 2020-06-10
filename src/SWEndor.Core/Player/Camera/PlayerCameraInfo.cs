@@ -245,9 +245,9 @@ namespace SWEndor.Player
     internal void RotateCam(float aX, float aY, int aZ)
     {
       PlayerInfo pl = Engine.PlayerInfo;
-      float angleX = aY * Settings.SteeringSensitivity;
-      float angleY = aX * Settings.SteeringSensitivity;
-      float angleZ = aZ * Settings.SteeringSensitivity / 20;
+      float angleX = aY * Engine.Settings.SteeringSensitivity;
+      float angleY = aX * Engine.Settings.SteeringSensitivity;
+      float angleZ = aZ * Engine.Settings.SteeringSensitivity / 20;
 
       if (IsFreeLook)
       {

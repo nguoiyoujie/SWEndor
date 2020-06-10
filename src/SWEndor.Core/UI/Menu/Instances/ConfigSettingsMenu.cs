@@ -38,7 +38,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonScreenResolution.HighlightBoxPosition = ButtonScreenResolution.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonScreenResolution.HighlightBoxWidth = 600;
       ButtonScreenResolution.HighlightBoxHeight = 30;
-      ButtonScreenResolution.SecondaryText = Settings.ResolutionMode.GetEnumName().TrimStart(ResDelimiter);
+      ButtonScreenResolution.SecondaryText = Engine.Settings.ResolutionMode.GetEnumName().TrimStart(ResDelimiter);
       ButtonScreenResolution.SecondaryTextPosition = ButtonScreenResolution.TextPosition + new TV_2DVECTOR(400, 0);
       ButtonScreenResolution.Selectable = true;
       ButtonScreenResolution.OnKeyPress += SelectScreenResolution;
@@ -49,7 +49,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonFullScreen.HighlightBoxPosition = ButtonFullScreen.TextPosition - new TV_2DVECTOR(5, 5);
       ButtonFullScreen.HighlightBoxWidth = 600;
       ButtonFullScreen.HighlightBoxHeight = 30;
-      ButtonFullScreen.SecondaryText = Settings.FullScreenMode.ToString();
+      ButtonFullScreen.SecondaryText = Engine.Settings.FullScreenMode.ToString();
       ButtonFullScreen.SecondaryTextPosition = ButtonFullScreen.TextPosition + new TV_2DVECTOR(400, 0);
       ButtonFullScreen.Selectable = true;
       ButtonFullScreen.OnKeyPress += SelectFullScreen;
@@ -107,7 +107,7 @@ namespace SWEndor.UI.Menu.Pages
       if (key == CONST_TV_KEY.TV_KEY_LEFT || key == CONST_TV_KEY.TV_KEY_RIGHT)
       {
         int max = Enum.GetValues(typeof(ResolutionSettings)).Length;
-        int mode = (int)Settings.ResolutionMode;
+        int mode = (int)Engine.Settings.ResolutionMode;
         if (key == CONST_TV_KEY.TV_KEY_LEFT && mode > 0)
         {
           mode--;
@@ -116,8 +116,8 @@ namespace SWEndor.UI.Menu.Pages
         {
           mode++;
         }
-        Settings.ResolutionMode = (ResolutionSettings)mode;
-        ButtonScreenResolution.SecondaryText = Settings.ResolutionMode.GetEnumName().TrimStart(ResDelimiter);
+        Engine.Settings.ResolutionMode = (ResolutionSettings)mode;
+        ButtonScreenResolution.SecondaryText = Engine.Settings.ResolutionMode.GetEnumName().TrimStart(ResDelimiter);
         ButtonChangesComment.Text = "Changes to screen mode will be applied after restarting the application";
         return true;
       }
@@ -128,8 +128,8 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_LEFT || key == CONST_TV_KEY.TV_KEY_RIGHT)
       {
-        Settings.FullScreenMode = !Settings.FullScreenMode;
-        ButtonFullScreen.SecondaryText = Settings.FullScreenMode.ToString();
+        Engine.Settings.FullScreenMode = !Engine.Settings.FullScreenMode;
+        ButtonFullScreen.SecondaryText = Engine.Settings.FullScreenMode.ToString();
         ButtonChangesComment.Text = "Changes to screen mode will be applied after restarting the application";
         return true;
       }
@@ -150,7 +150,7 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_RETURN)
       {
-        Settings.SaveSettings(Engine);
+        Engine.Settings.SaveSettings(Engine);
         Back();
         return true;
       }

@@ -6,7 +6,7 @@ namespace SWEndor.Models
   {
     private static ExplodeData[] NullExpl = new ExplodeData[0];
 
-    [INISubSectionList("EXP")]
+    [INISubSectionList(SubsectionPrefix = "EXP")]
     internal ExplodeData[] Explodes;
 
     public static ExplodeSystemData Default { get { return new ExplodeSystemData(NullExpl); } }

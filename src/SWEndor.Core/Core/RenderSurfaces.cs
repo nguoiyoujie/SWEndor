@@ -31,7 +31,7 @@ namespace SWEndor.Core
 
     private void Init()
     {
-      if (Settings.IsSmallResolution)
+      if (Engine.Settings.IsSmallResolution)
       {
         Target_width = 200;
         Target_height = 200;

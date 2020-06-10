@@ -7,7 +7,7 @@ namespace SWEndor.Actors.Models
 {
   internal static class AIUpdate
   {
-    internal static float AdjustRotation(Engine engine, ActorInfo owner, ref TV_3DVECTOR tPos, float responsiveness = 10)
+    internal static float AdjustRotation(Engine engine, ActorInfo owner, TV_3DVECTOR tPos, float responsiveness = 10)
     {
       if (owner.TypeInfo.MoveLimitData.MaxTurnRate == 0)
         return 0;

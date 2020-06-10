@@ -64,7 +64,8 @@ namespace SWEndor.AI.Actions
         return;
       }
 
-      actor.AI.SetTarget(engine, actor, target, false);
+      actor.AI.Target.Set(target.ID, false);
+      actor.AI.SetTargetSpeed(actor.AI.Target.GetDistanceFromTarget(engine, actor) - FollowDistance);
 
       if (CheckBounds(actor))
       {

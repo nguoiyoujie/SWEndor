@@ -98,7 +98,7 @@ namespace SWEndor.Shaders
               string key = ln.Key;
               if (!s.RandTex.ContainsKey(key))
               {
-                string[] stexs = f.GetValue(head, ln.Key, new string[0]);
+                string[] stexs = f.GetValue(head, ln.Key, null, new string[0]);
                 if (stexs.Length >= 0)
                 {
                   int[] ts = new int[stexs.Length];
@@ -122,13 +122,13 @@ namespace SWEndor.Shaders
               string key = ln.Key;
               if (!s.DynamicParam.ContainsKey(key))
               {
-                DynamicShaderDataSource val = f.GetValue(head, ln.Key, DynamicShaderDataSource.GAME_TIME);
+                DynamicShaderDataSource val = f.GetValue(head, ln.Key, null, DynamicShaderDataSource.GAME_TIME);
                 s.DynamicParam.Add(key, val);
               }
             }
           }
 
-        s._count = f.GetValue("General", "InitialCount", 0);
+        s._count = f.GetValue("General", "InitialCount", null, 0);
       }
 
     }

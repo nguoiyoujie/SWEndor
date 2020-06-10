@@ -52,7 +52,7 @@ namespace SWEndor.AI.Actions
       if (ResumeTime == 0)
         ResumeTime = engine.Game.GameTime + WaitTime;
 
-      actor.AI.SetTarget(actor.GetRelativePositionXYZ(0, 0, 1000));
+      actor.AI.Target.Set(actor.GetRelativePositionXYZ(0, 0, 1000));
       actor.AI.AdjustRotation(engine, actor, 0.5f);
 
       actor.AI.SetTargetSpeed(actor.MoveData.MaxSpeed);

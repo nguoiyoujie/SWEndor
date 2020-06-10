@@ -70,7 +70,7 @@ namespace SWEndor.AI.Actions
         if (CloseEnoughDistance < 0)
           CloseEnoughDistance = actor.TypeInfo.AIData.Move_CloseEnough;
 
-        actor.AI.SetTarget(Target_Position);
+        actor.AI.Target.Set(Target_Position);
         actor.AI.AdjustRotation(engine, actor);
 
         actor.AI.SetTargetSpeed(Target_Speed);

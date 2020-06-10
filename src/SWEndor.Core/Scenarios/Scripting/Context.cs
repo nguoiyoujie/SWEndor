@@ -25,214 +25,211 @@ namespace SWEndor.Scenarios.Scripting
     /// <summary>The game engine</summary>
     public readonly Engine Engine;
 
-    public Context(Engine engine)
+    public Context() { }
+
+    public Context(Engine engine) : base()
     {
       Engine = engine;
-      DefineFunc();
     }
 
-    public override void DefineFunc()
+    protected override void DefineFunctions()
     {
-      ValFuncs.Clear();
-      Functions.Clear();
-      ValFuncRef.Clear();
-
       // Scene Management
-      AddFunc("Scene.SetMaxBounds", new ValFunc<float3>(SceneFns.SetMaxBounds));
-      AddFunc("Scene.SetMinBounds", new ValFunc<float3>(SceneFns.SetMinBounds));
-      AddFunc("Scene.SetMaxAIBounds", new ValFunc<float3>(SceneFns.SetMaxAIBounds));
-      AddFunc("Scene.SetMinAIBounds", new ValFunc<float3>(SceneFns.SetMinAIBounds));
-      AddFunc("Scene.FadeOut", new ValFunc(SceneFns.FadeOut));
+      AddFunc<float3>("Scene.SetMaxBounds", SceneFns.SetMaxBounds);
+      AddFunc<float3>("Scene.SetMinBounds", SceneFns.SetMinBounds);
+      AddFunc<float3>("Scene.SetMaxAIBounds", SceneFns.SetMaxAIBounds);
+      AddFunc<float3>("Scene.SetMinAIBounds", SceneFns.SetMinAIBounds);
+      AddFunc("Scene.FadeOut", SceneFns.FadeOut);
 
       // Camera Management
-      AddFunc("Camera.SetPlayerLook", new ValFunc(PlayerCameraFns.SetPlayerLook));
-      AddFunc("Camera.SetSceneLook", new ValFunc(PlayerCameraFns.SetSceneLook));
-      AddFunc("Camera.SetDeathLook", new ValFunc(PlayerCameraFns.SetDeathLook));
-      AddFunc("Camera.EnableFreeLook", new ValFunc<bool>(PlayerCameraFns.EnableFreeLook));
-      AddFunc("Camera.SetSceneLook_LookAtActor", new ValFunc<int>(PlayerCameraFns.SetSceneLook_LookAtActor));
-      AddFunc("Camera.SetSceneLook_LookAtActor", new ValFunc<int, float3>(PlayerCameraFns.SetSceneLook_LookAtActor));
-      AddFunc("Camera.SetSceneLook_LookAtActor", new ValFunc<int, float3, float3>(PlayerCameraFns.SetSceneLook_LookAtActor));
-      AddFunc("Camera.SetSceneLook_LookAtPoint", new ValFunc<float3>(PlayerCameraFns.SetSceneLook_LookAtPoint));
-      AddFunc("Camera.SetSceneLook_LookFromActor", new ValFunc<int>(PlayerCameraFns.SetSceneLook_LookFromActor));
-      AddFunc("Camera.SetSceneLook_LookFromActor", new ValFunc<int, float3>(PlayerCameraFns.SetSceneLook_LookFromActor));
-      AddFunc("Camera.SetSceneLook_LookFromActor", new ValFunc<int, float3, float3>(PlayerCameraFns.SetSceneLook_LookFromActor));
-      AddFunc("Camera.SetSceneLook_LookFromPoint", new ValFunc<float3>(PlayerCameraFns.SetSceneLook_LookFromPoint));
+      AddFunc("Camera.SetPlayerLook", PlayerCameraFns.SetPlayerLook);
+      AddFunc("Camera.SetSceneLook", PlayerCameraFns.SetSceneLook);
+      AddFunc("Camera.SetDeathLook", PlayerCameraFns.SetDeathLook);
+      AddFunc<bool>("Camera.EnableFreeLook", PlayerCameraFns.EnableFreeLook);
+      AddFunc<int>("Camera.SetSceneLook_LookAtActor", PlayerCameraFns.SetSceneLook_LookAtActor);
+      AddFunc<int, float3>("Camera.SetSceneLook_LookAtActor", PlayerCameraFns.SetSceneLook_LookAtActor);
+      AddFunc<int, float3, float3>("Camera.SetSceneLook_LookAtActor", PlayerCameraFns.SetSceneLook_LookAtActor);
+      AddFunc<float3>("Camera.SetSceneLook_LookAtPoint", PlayerCameraFns.SetSceneLook_LookAtPoint);
+      AddFunc<int>("Camera.SetSceneLook_LookFromActor", PlayerCameraFns.SetSceneLook_LookFromActor);
+      AddFunc<int, float3>("Camera.SetSceneLook_LookFromActor", PlayerCameraFns.SetSceneLook_LookFromActor);
+      AddFunc<int, float3, float3>("Camera.SetSceneLook_LookFromActor", PlayerCameraFns.SetSceneLook_LookFromActor);
+      AddFunc<float3>("Camera.SetSceneLook_LookFromPoint", PlayerCameraFns.SetSceneLook_LookFromPoint);
 
       // Spawn Management
       Functions.Add("Squad.Spawn", SpawnFns.Squadron_Spawn);
       Functions.Add("Actor.Spawn", SpawnFns.Spawn);
-      AddFunc("Actor.QueueAtSpawner", new ValFunc<int, int>(SpawnFns.QueueAtSpawner));
+      AddFunc<int, int>("Actor.QueueAtSpawner", SpawnFns.QueueAtSpawner);
 
       // Squad Management
-      AddFunc("Squad.JoinSquad", new ValFunc<int, int>(SquadFns.JoinSquad));
-      AddFunc("Squad.RemoveFromSquad", new ValFunc<int>(SquadFns.RemoveFromSquad));
-      AddFunc("Squad.MakeSquadLeader", new ValFunc<int>(SquadFns.MakeSquadLeader));
+      AddFunc<int, int>("Squad.JoinSquad", SquadFns.JoinSquad);
+      AddFunc<int>("Squad.RemoveFromSquad", SquadFns.RemoveFromSquad);
+      AddFunc<int>("Squad.MakeSquadLeader", SquadFns.MakeSquadLeader);
 
       // Actor Management
-      AddFunc("Actor.GetActorType", new ValFunc<int>(ActorFns.GetActorType));
-      AddFunc("Actor.IsFighter", new ValFunc<int>(ActorFns.IsFighter));
-      AddFunc("Actor.IsLargeShip", new ValFunc<int>(ActorFns.IsLargeShip));
-      AddFunc("Actor.IsAlive", new ValFunc<int>(ActorFns.IsAlive));
-      AddFunc("Actor.GetFaction", new ValFunc<int>(ActorFns.GetFaction));
-      AddFunc("Actor.SetFaction", new ValFunc<int, string>(ActorFns.SetFaction));
-      AddFunc("Actor.AddToRegister", new ValFunc<int, string>(ActorFns.AddToRegister));
-      AddFunc("Actor.RemoveFromRegister", new ValFunc<int, string>(ActorFns.RemoveFromRegister));
-      AddFunc("Actor.GetLocalPosition", new ValFunc<int>(ActorFns.GetLocalPosition));
-      AddFunc("Actor.GetLocalRotation", new ValFunc<int>(ActorFns.GetLocalRotation));
-      AddFunc("Actor.GetLocalDirection", new ValFunc<int>(ActorFns.GetLocalDirection));
-      AddFunc("Actor.GetGlobalPosition", new ValFunc<int>(ActorFns.GetGlobalPosition));
-      AddFunc("Actor.GetGlobalRotation", new ValFunc<int>(ActorFns.GetGlobalRotation));
-      AddFunc("Actor.GetGlobalDirection", new ValFunc<int>(ActorFns.GetGlobalDirection));
-      AddFunc("Actor.SetLocalPosition", new ValFunc<int, float3>(ActorFns.SetLocalPosition));
-      AddFunc("Actor.SetLocalRotation", new ValFunc<int, float3>(ActorFns.SetLocalRotation));
-      AddFunc("Actor.SetLocalDirection", new ValFunc<int, float3>(ActorFns.SetLocalDirection));
+      AddFunc<int>("Actor.GetActorType", ActorFns.GetActorType);
+      AddFunc<int>("Actor.IsFighter", ActorFns.IsFighter);
+      AddFunc<int>("Actor.IsLargeShip", ActorFns.IsLargeShip);
+      AddFunc<int>("Actor.IsAlive", ActorFns.IsAlive);
+      AddFunc<int>("Actor.GetFaction", ActorFns.GetFaction);
+      AddFunc<int, string>("Actor.SetFaction", ActorFns.SetFaction);
+      AddFunc<int, string>("Actor.AddToRegister", ActorFns.AddToRegister);
+      AddFunc<int, string>("Actor.RemoveFromRegister", ActorFns.RemoveFromRegister);
+      AddFunc<int>("Actor.GetLocalPosition", ActorFns.GetLocalPosition);
+      AddFunc<int>("Actor.GetLocalRotation", ActorFns.GetLocalRotation);
+      AddFunc<int>("Actor.GetLocalDirection", ActorFns.GetLocalDirection);
+      AddFunc<int>("Actor.GetGlobalPosition", ActorFns.GetGlobalPosition);
+      AddFunc<int>("Actor.GetGlobalRotation", ActorFns.GetGlobalRotation);
+      AddFunc<int>("Actor.GetGlobalDirection", ActorFns.GetGlobalDirection);
+      AddFunc<int, float3>("Actor.SetLocalPosition", ActorFns.SetLocalPosition);
+      AddFunc<int, float3>("Actor.SetLocalRotation", ActorFns.SetLocalRotation);
+      AddFunc<int, float3>("Actor.SetLocalDirection", ActorFns.SetLocalDirection);
 
-      AddFunc("Actor.LookAtPoint", new ValFunc<int, float3>(ActorFns.LookAtPoint));
-      AddFunc("Actor.GetChildren", new ValFunc<int>(ActorFns.GetChildren));
-      AddFunc("Actor.GetChildrenByType", new ValFunc<int, string>(ActorFns.GetChildrenByType));
-      AddFunc("Actor.GetProperty", new ValFunc<int, string>(ActorFns.GetProperty));
+      AddFunc<int, float3>("Actor.LookAtPoint", ActorFns.LookAtPoint);
+      AddFunc<int>("Actor.GetChildren", ActorFns.GetChildren);
+      AddFunc<int, string>("Actor.GetChildrenByType", ActorFns.GetChildrenByType);
+      AddFunc<int, string>("Actor.GetProperty", ActorFns.GetProperty);
       Functions.Add("Actor.SetProperty", ActorFns.SetProperty);
-      AddFunc("Actor.GetArmor", new ValFunc<int, string>(ActorFns.GetArmor));
-      AddFunc("Actor.SetArmor", new ValFunc<int, string, float>(ActorFns.SetArmor));
-      AddFunc("Actor.SetArmorAll", new ValFunc<int, float>(ActorFns.SetArmorAll));
-      AddFunc("Actor.RestoreArmor", new ValFunc<int>(ActorFns.RestoreArmor));
+      AddFunc<int, string>("Actor.GetArmor", ActorFns.GetArmor);
+      AddFunc<int, string, float>("Actor.SetArmor", ActorFns.SetArmor);
+      AddFunc<int, float>("Actor.SetArmorAll", ActorFns.SetArmorAll);
+      AddFunc<int>("Actor.RestoreArmor", ActorFns.RestoreArmor);
 
-      AddFunc("Actor.GetHP", new ValFunc<int>(ActorFns.GetHP));
-      AddFunc("Actor.GetMaxHP", new ValFunc<int>(ActorFns.GetMaxHP));
-      AddFunc("Actor.SetHP", new ValFunc<int, float>(ActorFns.SetHP));
-      AddFunc("Actor.SetMaxHP", new ValFunc<int, float>(ActorFns.SetMaxHP));
+      AddFunc<int>("Actor.GetHP", ActorFns.GetHP);
+      AddFunc<int>("Actor.GetMaxHP", ActorFns.GetMaxHP);
+      AddFunc<int, float>("Actor.SetHP", ActorFns.SetHP);
+      AddFunc<int, float>("Actor.SetMaxHP", ActorFns.SetMaxHP);
 
-      AddFunc("Actor.GetHull", new ValFunc<int>(ActorFns.GetHull));
-      AddFunc("Actor.GetMaxHull", new ValFunc<int>(ActorFns.GetMaxHull));
-      AddFunc("Actor.SetHull", new ValFunc<int, float>(ActorFns.SetHull));
-      AddFunc("Actor.SetMaxHull", new ValFunc<int, float>(ActorFns.SetMaxHull));
+      AddFunc<int>("Actor.GetHull", ActorFns.GetHull);
+      AddFunc<int>("Actor.GetMaxHull", ActorFns.GetMaxHull);
+      AddFunc<int, float>("Actor.SetHull", ActorFns.SetHull);
+      AddFunc<int, float>("Actor.SetMaxHull", ActorFns.SetMaxHull);
 
-      AddFunc("Actor.GetShd", new ValFunc<int>(ActorFns.GetShd));
-      AddFunc("Actor.GetMaxShd", new ValFunc<int>(ActorFns.GetMaxShd));
-      AddFunc("Actor.SetShd", new ValFunc<int, float>(ActorFns.SetShd));
-      AddFunc("Actor.SetMaxShd", new ValFunc<int, float>(ActorFns.SetMaxShd));
+      AddFunc<int>("Actor.GetShd", ActorFns.GetShd);
+      AddFunc<int>("Actor.GetMaxShd", ActorFns.GetMaxShd);
+      AddFunc<int, float>("Actor.SetShd", ActorFns.SetShd);
+      AddFunc<int, float>("Actor.SetMaxShd", ActorFns.SetMaxShd);
 
 
       // Message Box
-      AddFunc("Message", new ValFunc<string, float, float3>(MessagingFns.MessageText));
-      AddFunc("Message", new ValFunc<string, float, float3, int>(MessagingFns.MessageText));
+      AddFunc<string, float, float3>("Message", MessagingFns.MessageText);
+      AddFunc<string, float, float3, int>("Message", MessagingFns.MessageText);
 
       // Action Management
       Functions.Add("AI.QueueFirst", AIFns.QueueFirst);
       Functions.Add("AI.QueueNext", AIFns.QueueNext);
       Functions.Add("AI.QueueLast", AIFns.QueueLast);
-      AddFunc("AI.UnlockOne", new ValFunc<int>(AIFns.UnlockOne));
-      AddFunc("AI.ClearQueue", new ValFunc<int>(AIFns.ClearQueue));
-      AddFunc("AI.ForceClearQueue", new ValFunc<int>(AIFns.ForceClearQueue));
+      AddFunc<int>("AI.UnlockOne", AIFns.UnlockOne);
+      AddFunc<int>("AI.ClearQueue", AIFns.ClearQueue);
+      AddFunc<int>("AI.ForceClearQueue", AIFns.ForceClearQueue);
 
       // Game states
-      AddFunc("GetGameTime", new ValFunc(GameFns.GetGameTime));
-      AddFunc("GetLastFrameTime", new ValFunc(GameFns.GetLastFrameTime));
-      AddFunc("GetDifficulty", new ValFunc(GameFns.GetDifficulty));
-      AddFunc("GetPlayerActorType", new ValFunc(GameFns.GetPlayerActorType));
-      AddFunc("GetPlayerName", new ValFunc(GameFns.GetPlayerName));
-      AddFunc("GetStageNumber", new ValFunc(GameFns.GetStageNumber));
-      AddFunc("SetStageNumber", new ValFunc<int>(GameFns.SetStageNumber));
-      AddFunc("GetGameStateB", new ValFunc<string>(GameFns.GetGameStateB));
-      AddFunc("GetGameStateB", new ValFunc<string, bool>(GameFns.GetGameStateB));
-      AddFunc("SetGameStateB", new ValFunc<string, bool>(GameFns.SetGameStateB));
-      AddFunc("GetGameStateF", new ValFunc<string>(GameFns.GetGameStateF));
-      AddFunc("GetGameStateF", new ValFunc<string, float>(GameFns.GetGameStateF));
-      AddFunc("SetGameStateF", new ValFunc<string, float>(GameFns.SetGameStateF));
-      AddFunc("GetGameStateS", new ValFunc<string>(GameFns.GetGameStateS));
-      AddFunc("GetGameStateS", new ValFunc<string, string>(GameFns.GetGameStateS));
-      AddFunc("SetGameStateS", new ValFunc<string, string>(GameFns.SetGameStateS));
-      AddFunc("GetRegisterCount", new ValFunc<string>(GameFns.GetRegisterCount));
-      AddFunc("GetTimeSinceLostWing", new ValFunc(GameFns.GetTimeSinceLostWing));
-      AddFunc("GetTimeSinceLostShip", new ValFunc(GameFns.GetTimeSinceLostShip));
-      AddFunc("GetTimeSinceLostStructure", new ValFunc(GameFns.GetTimeSinceLostStructure));
-      AddFunc("AddEvent", new ValFunc<float, string>(GameFns.AddEvent));
+      AddFunc("GetGameTime", GameFns.GetGameTime);
+      AddFunc("GetLastFrameTime", GameFns.GetLastFrameTime);
+      AddFunc("GetDifficulty", GameFns.GetDifficulty);
+      AddFunc("GetPlayerActorType", GameFns.GetPlayerActorType);
+      AddFunc("GetPlayerName", GameFns.GetPlayerName);
+      AddFunc("GetStageNumber", GameFns.GetStageNumber);
+      AddFunc<int>("SetStageNumber", GameFns.SetStageNumber);
+      AddFunc<string>("GetGameStateB", GameFns.GetGameStateB);
+      AddFunc<string, bool>("GetGameStateB", GameFns.GetGameStateB);
+      AddFunc<string, bool>("SetGameStateB", GameFns.SetGameStateB);
+      AddFunc<string>("GetGameStateF", GameFns.GetGameStateF);
+      AddFunc<string, float>("GetGameStateF", GameFns.GetGameStateF);
+      AddFunc<string, float>("SetGameStateF", GameFns.SetGameStateF);
+      AddFunc<string>("GetGameStateS", GameFns.GetGameStateS);
+      AddFunc<string, string>("GetGameStateS", GameFns.GetGameStateS);
+      AddFunc<string, string>("SetGameStateS", GameFns.SetGameStateS);
+      AddFunc<string>("GetRegisterCount", GameFns.GetRegisterCount);
+      AddFunc("GetTimeSinceLostWing", GameFns.GetTimeSinceLostWing);
+      AddFunc("GetTimeSinceLostShip", GameFns.GetTimeSinceLostShip);
+      AddFunc("GetTimeSinceLostStructure", GameFns.GetTimeSinceLostStructure);
+      AddFunc<float, string>("AddEvent", GameFns.AddEvent);
 
       // Player Management
-      AddFunc("Player.AssignActor", new ValFunc<int>(PlayerFns.AssignActor));
-      AddFunc("Player.GetActor", new ValFunc(PlayerFns.GetActor));
-      AddFunc("Player.RequestSpawn", new ValFunc(PlayerFns.RequestSpawn));
-      AddFunc("Player.SetMovementEnabled", new ValFunc<bool>(PlayerFns.SetMovementEnabled));
-      AddFunc("Player.SetAI", new ValFunc<bool>(PlayerFns.SetAI));
-      AddFunc("Player.SetLives", new ValFunc<int>(PlayerFns.SetLives));
-      AddFunc("Player.DecreaseLives", new ValFunc(PlayerFns.DecreaseLives));
+      AddFunc<int>("Player.AssignActor", PlayerFns.AssignActor);
+      AddFunc("Player.GetActor", PlayerFns.GetActor);
+      AddFunc("Player.RequestSpawn", PlayerFns.RequestSpawn);
+      AddFunc<bool>("Player.SetMovementEnabled", PlayerFns.SetMovementEnabled);
+      AddFunc<bool>("Player.SetAI", PlayerFns.SetAI);
+      AddFunc<int>("Player.SetLives", PlayerFns.SetLives);
+      AddFunc("Player.DecreaseLives", PlayerFns.DecreaseLives);
 
       // Score Management
-      AddFunc("Score.SetScorePerLife", new ValFunc<float>(ScoreFns.SetScorePerLife));
-      AddFunc("Score.SetScoreForNextLife", new ValFunc<float>(ScoreFns.SetScoreForNextLife));
-      AddFunc("Score.Reset", new ValFunc(ScoreFns.ResetScore));
+      AddFunc<float>("Score.SetScorePerLife", ScoreFns.SetScorePerLife);
+      AddFunc<float>("Score.SetScoreForNextLife", ScoreFns.SetScoreForNextLife);
+      AddFunc("Score.Reset", ScoreFns.ResetScore);
 
       // Faction
-      AddFunc("Faction.Add", new ValFunc<string, float3>(FactionFns.AddFaction));
-      AddFunc("Faction.Add", new ValFunc<string, float3, float3>(FactionFns.AddFaction));
-      AddFunc("Faction.GetColor", new ValFunc<string>(FactionFns.GetColor));
-      AddFunc("Faction.SetColor", new ValFunc<string, float3>(FactionFns.SetColor));
-      AddFunc("Faction.GetLaserColor", new ValFunc<string>(FactionFns.GetLaserColor));
-      AddFunc("Faction.SetLaserColor", new ValFunc<string, float3>(FactionFns.SetLaserColor));
-      AddFunc("Faction.MakeAlly", new ValFunc<string, string>(FactionFns.MakeAlly));
-      AddFunc("Faction.MakeEnemy", new ValFunc<string, string>(FactionFns.MakeEnemy));
-      AddFunc("Faction.GetWingCount", new ValFunc<string>(FactionFns.GetWingCount));
-      AddFunc("Faction.GetShipCount", new ValFunc<string>(FactionFns.GetShipCount));
-      AddFunc("Faction.GetStructureCount", new ValFunc<string>(FactionFns.GetStructureCount));
-      AddFunc("Faction.GetWingLimit", new ValFunc<string>(FactionFns.GetWingLimit));
-      AddFunc("Faction.GetShipLimit", new ValFunc<string>(FactionFns.GetShipLimit));
-      AddFunc("Faction.GetStructureLimit", new ValFunc<string>(FactionFns.GetStructureLimit));
-      AddFunc("Faction.SetWingLimit", new ValFunc<string, int>(FactionFns.SetWingLimit));
-      AddFunc("Faction.SetShipLimit", new ValFunc<string, int>(FactionFns.SetShipLimit));
-      AddFunc("Faction.SetStructureLimit", new ValFunc<string, int>(FactionFns.SetStructureLimit));
-      AddFunc("Faction.GetWingSpawnLimit", new ValFunc<string>(FactionFns.GetWingSpawnLimit));
-      AddFunc("Faction.GetShipSpawnLimit", new ValFunc<string>(FactionFns.GetShipSpawnLimit));
-      AddFunc("Faction.GetStructureSpawnLimit", new ValFunc<string>(FactionFns.GetStructureSpawnLimit));
-      AddFunc("Faction.SetWingSpawnLimit", new ValFunc<string, int>(FactionFns.SetWingSpawnLimit));
-      AddFunc("Faction.SetShipSpawnLimit", new ValFunc<string, int>(FactionFns.SetShipSpawnLimit));
-      AddFunc("Faction.SetStructureSpawnLimit", new ValFunc<string, int>(FactionFns.SetStructureSpawnLimit));
+      AddFunc<string, float3>("Faction.Add", FactionFns.AddFaction);
+      AddFunc<string, float3, float3>("Faction.Add", FactionFns.AddFaction);
+      AddFunc<string>("Faction.GetColor", FactionFns.GetColor);
+      AddFunc<string, float3>("Faction.SetColor", FactionFns.SetColor);
+      AddFunc<string>("Faction.GetLaserColor", FactionFns.GetLaserColor);
+      AddFunc<string, float3>("Faction.SetLaserColor", FactionFns.SetLaserColor);
+      AddFunc<string, string>("Faction.MakeAlly", FactionFns.MakeAlly);
+      AddFunc<string, string>("Faction.MakeEnemy", FactionFns.MakeEnemy);
+      AddFunc<string>("Faction.GetWingCount", FactionFns.GetWingCount);
+      AddFunc<string>("Faction.GetShipCount", FactionFns.GetShipCount);
+      AddFunc<string>("Faction.GetStructureCount", FactionFns.GetStructureCount);
+      AddFunc<string>("Faction.GetWingLimit", FactionFns.GetWingLimit);
+      AddFunc<string>("Faction.GetShipLimit", FactionFns.GetShipLimit);
+      AddFunc<string>("Faction.GetStructureLimit", FactionFns.GetStructureLimit);
+      AddFunc<string, int>("Faction.SetWingLimit", FactionFns.SetWingLimit);
+      AddFunc<string, int>("Faction.SetShipLimit", FactionFns.SetShipLimit);
+      AddFunc<string, int>("Faction.SetStructureLimit", FactionFns.SetStructureLimit);
+      AddFunc<string>("Faction.GetWingSpawnLimit", FactionFns.GetWingSpawnLimit);
+      AddFunc<string>("Faction.GetShipSpawnLimit", FactionFns.GetShipSpawnLimit);
+      AddFunc<string>("Faction.GetStructureSpawnLimit", FactionFns.GetStructureSpawnLimit);
+      AddFunc<string, int>("Faction.SetWingSpawnLimit", FactionFns.SetWingSpawnLimit);
+      AddFunc<string, int>("Faction.SetShipSpawnLimit", FactionFns.SetShipSpawnLimit);
+      AddFunc<string, int>("Faction.SetStructureSpawnLimit", FactionFns.SetStructureSpawnLimit);
 
       // Sounds and Music
-      AddFunc("Audio.GetMood", new ValFunc(AudioFns.GetMood));
-      AddFunc("Audio.SetMood", new ValFunc<int>(AudioFns.SetMood));
-      AddFunc("Audio.SetMusic", new ValFunc<string>(AudioFns.SetMusic));
-      AddFunc("Audio.SetMusicDyn", new ValFunc<string>(AudioFns.SetMusicDyn));
-      AddFunc("Audio.SetMusicLoop", new ValFunc<string>(AudioFns.SetMusicLoop));
-      AddFunc("Audio.PauseMusic", new ValFunc(AudioFns.PauseMusic));
-      AddFunc("Audio.ResumeMusic", new ValFunc(AudioFns.ResumeMusic));
-      AddFunc("Audio.StopMusic", new ValFunc(AudioFns.StopMusic));
-      AddFunc("Audio.SetSound", new ValFunc<string>(AudioFns.SetSound));
-      AddFunc("Audio.SetSound", new ValFunc<string, float>(AudioFns.SetSound));
-      AddFunc("Audio.SetSound", new ValFunc<string, float, bool>(AudioFns.SetSound));
-      AddFunc("Audio.SetSoundSingle", new ValFunc<string>(AudioFns.SetSoundSingle));
-      AddFunc("Audio.SetSoundSingle", new ValFunc<string, bool>(AudioFns.SetSoundSingle));
-      AddFunc("Audio.SetSoundSingle", new ValFunc<string, bool, float>(AudioFns.SetSoundSingle));
-      AddFunc("Audio.SetSoundSingle", new ValFunc<string, bool, float, bool>(AudioFns.SetSoundSingle));
-      AddFunc("Audio.StopSound", new ValFunc<string>(AudioFns.StopSound));
-      AddFunc("Audio.StopAllSound", new ValFunc(AudioFns.StopAllSounds));
+      AddFunc("Audio.GetMood", AudioFns.GetMood);
+      AddFunc<int>("Audio.SetMood", AudioFns.SetMood);
+      AddFunc<string>("Audio.SetMusic", AudioFns.SetMusic);
+      AddFunc<string>("Audio.SetMusicDyn", AudioFns.SetMusicDyn);
+      AddFunc<string>("Audio.SetMusicLoop", AudioFns.SetMusicLoop);
+      AddFunc("Audio.PauseMusic", AudioFns.PauseMusic);
+      AddFunc("Audio.ResumeMusic", AudioFns.ResumeMusic);
+      AddFunc("Audio.StopMusic", AudioFns.StopMusic);
+      AddFunc<string>("Audio.SetSound", AudioFns.SetSound);
+      AddFunc<string, float>("Audio.SetSound", AudioFns.SetSound);
+      AddFunc<string, float, bool>("Audio.SetSound", AudioFns.SetSound);
+      AddFunc<string>("Audio.SetSoundSingle", AudioFns.SetSoundSingle);
+      AddFunc<string, bool>("Audio.SetSoundSingle", AudioFns.SetSoundSingle);
+      AddFunc<string, bool, float>("Audio.SetSoundSingle", AudioFns.SetSoundSingle);
+      AddFunc<string, bool, float, bool>("Audio.SetSoundSingle", AudioFns.SetSoundSingle);
+      AddFunc<string>("Audio.StopSound", AudioFns.StopSound);
+      AddFunc("Audio.StopAllSound", AudioFns.StopAllSounds);
 
       // UI
-      AddFunc("UI.SetLine1Color", new ValFunc<float3>(UIFns.SetUILine1Color));
-      AddFunc("UI.SetLine2Color", new ValFunc<float3>(UIFns.SetUILine2Color));
-      AddFunc("UI.SetLine3Color", new ValFunc<float3>(UIFns.SetUILine3Color));
-      AddFunc("UI.SetLine1Text", new ValFunc<string>(UIFns.SetUILine1Text));
-      AddFunc("UI.SetLine2Text", new ValFunc<string>(UIFns.SetUILine2Text));
-      AddFunc("UI.SetLine3Text", new ValFunc<string>(UIFns.SetUILine3Text));
+      AddFunc<float3>("UI.SetLine1Color", UIFns.SetUILine1Color);
+      AddFunc<float3>("UI.SetLine2Color", UIFns.SetUILine2Color);
+      AddFunc<float3>("UI.SetLine3Color", UIFns.SetUILine3Color);
+      AddFunc<string>("UI.SetLine1Text", UIFns.SetUILine1Text);
+      AddFunc<string>("UI.SetLine2Text", UIFns.SetUILine2Text);
+      AddFunc<string>("UI.SetLine3Text", UIFns.SetUILine3Text);
 
       // Script flow
-      AddFunc("Script.TryCall", new ValFunc<string>(ScriptingFns.TryCall));
-      AddFunc("Script.Call", new ValFunc<string>(ScriptingFns.Call));
+      AddFunc<string>("Script.TryCall", ScriptingFns.TryCall);
+      AddFunc<string>("Script.Call", ScriptingFns.Call);
 
       // Math
-      AddFunc("Math.GetDistance", new ValFunc<float3, float3>(MathFns.GetDistance));
-      AddFunc("Math.GetActorDistance", new ValFunc<int, int>(MathFns.GetActorDistance));
-      AddFunc("Math.GetActorDistance", new ValFunc<int, int, float>(MathFns.GetActorDistance));
-      AddFunc("Math.Int", new ValFunc<float>(MathFns.Int));
-      AddFunc("Math.Max", new ValFunc<float, float>(MathFns.Max));
-      AddFunc("Math.Min", new ValFunc<float, float>(MathFns.Min));
-      AddFunc("Math.FormatAsTime", new ValFunc<float>(MathFns.FormatAsTime));
+      AddFunc<float3, float3>("Math.GetDistance", MathFns.GetDistance);
+      AddFunc<int, int>("Math.GetActorDistance", MathFns.GetActorDistance);
+      AddFunc<int, int, float>("Math.GetActorDistance", MathFns.GetActorDistance);
+      AddFunc<float>("Math.Int", MathFns.Int);
+      AddFunc<float, float>("Math.Max", MathFns.Max);
+      AddFunc<float, float>("Math.Min", MathFns.Min);
+      AddFunc<float>("Math.FormatAsTime", MathFns.FormatAsTime);
 
       // Misc
-      AddFunc("IsNull", new ValFunc<Val>(MiscFns.IsNull));
-      AddFunc("Random", new ValFunc(MiscFns.Random));
-      AddFunc("Random", new ValFunc<int>(MiscFns.Random));
-      AddFunc("Random", new ValFunc<int, int>(MiscFns.Random));
-      AddFunc("GetArrayElement", new ValFunc<Val, int>(MiscFns.GetArrayElement));
+      AddFunc<Val>("IsNull", MiscFns.IsNull);
+      AddFunc("Random", MiscFns.Random);
+      AddFunc<int>("Random", MiscFns.Random);
+      AddFunc<int, int>("Random", MiscFns.Random);
+      AddFunc<Val, int>("GetArrayElement", MiscFns.GetArrayElement);
     }
   }
 }

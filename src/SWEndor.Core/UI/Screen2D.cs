@@ -78,7 +78,7 @@ namespace SWEndor
           new Steering(this),
           new CrossHair(this),
           new Target(this),
-          new TargetInfo(this),
+          new UI.Widgets.TargetInfo(this),
           new Squad(this),
           new SystemIndicator(this),
 

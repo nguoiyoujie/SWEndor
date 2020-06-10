@@ -63,7 +63,7 @@ namespace SWEndor.AI.Actions
         return;
       }
 
-      actor.AI.SetTarget(engine, actor, target, true);
+      actor.AI.Target.Set(target.ID, true);
       actor.AI.AdjustRotation(engine, actor);
       actor.AI.SetTargetSpeed(actor.MoveData.MaxSpeed);
       actor.AI.AdjustSpeed(actor, true);

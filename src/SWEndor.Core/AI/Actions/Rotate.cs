@@ -66,7 +66,7 @@ namespace SWEndor.AI.Actions
 
       if (CheckBounds(actor))
       {
-        actor.AI.SetTarget(Target_Position);
+        actor.AI.Target.Set(Target_Position);
         float delta_angle = actor.AI.AdjustRotation(engine, actor);
 
         actor.AI.SetTargetSpeed(Target_Speed);

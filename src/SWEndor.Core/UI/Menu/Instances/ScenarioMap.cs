@@ -210,7 +210,7 @@ namespace SWEndor.UI.Menu.Pages
            || ai is HyperspaceIn
            )
           {
-            TV_3DVECTOR vec = a.AI.GetTargetPos(engine, a) * zoom_ratio;
+            TV_3DVECTOR vec = a.AI.Target.Position * zoom_ratio;
             XYCoord aiposvec = new XYCoord { X = ppos.x - vec.x, Y = ppos.z - vec.z };
             PolarCoord aipolar = aiposvec.ToPolarCoord;
             aipolar.Angle -= proty;

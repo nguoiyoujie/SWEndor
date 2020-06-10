@@ -8,7 +8,7 @@ namespace SWEndor.ActorTypes.Components
   {
     private static DebrisSpawnerData[] NullDebris = new DebrisSpawnerData[0];
 
-    [INISubSectionList("DEBR")]
+    [INISubSectionList(SubsectionPrefix = "DEBR")]
     internal DebrisSpawnerData[] Debris;
 
     public static DebrisSystemData Default { get { return new DebrisSystemData(NullDebris); } }

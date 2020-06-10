@@ -89,7 +89,7 @@ namespace SWEndor.Input
       }
       else
       { // Handling Game
-        Context = Settings.GameDebug ? DebugGameInputContext : GameInputContext;
+        Context = Engine.Settings.GameDebug ? DebugGameInputContext : GameInputContext;
       }
 
       INPUT_ENGINE.GetKeyBuffer(KEY_BUFFER, ref numkeybuffer);

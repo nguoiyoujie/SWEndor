@@ -24,7 +24,7 @@ namespace SWEndor.UI.Widgets
       y0_t3 = -120;
       y1_t3 = -100;
 
-      if (Settings.IsSmallResolution)
+      if (Engine.Settings.IsSmallResolution)
         fnt = FontFactory.Get(Font.T10);
       else
         fnt = FontFactory.Get(Font.T12);

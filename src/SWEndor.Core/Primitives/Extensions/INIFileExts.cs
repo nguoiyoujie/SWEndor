@@ -7,7 +7,7 @@ namespace SWEndor.Primitives.Extensions
   {
     public static TV_2DVECTOR GetTV_2DVECTOR(this INIFile f, string section, string key, TV_2DVECTOR defaultValue = default(TV_2DVECTOR))
     {
-      float[] list = f.GetValue(section, key, new float[0]);
+      float[] list = f.GetValue(section, key, null, new float[0]);
       if (list.Length >= 2)
         return new TV_2DVECTOR(list[0], list[1]);
       return defaultValue;
@@ -15,7 +15,7 @@ namespace SWEndor.Primitives.Extensions
 
     public static TV_3DVECTOR GetTV_3DVECTOR(this INIFile f, string section, string key, TV_3DVECTOR defaultValue = default(TV_3DVECTOR))
     {
-      float[] list = f.GetValue(section, key, new float[0]);
+      float[] list = f.GetValue(section, key, null, new float[0]);
       if (list.Length >= 2)
         return new TV_3DVECTOR(list[0], list[1], list[2]);
       return defaultValue;

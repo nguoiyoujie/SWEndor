@@ -13,7 +13,7 @@ namespace SWEndor.UI.Widgets
 
     public TargetInfo(Screen2D owner) : base(owner, "targetinfo")
     {
-      if (Settings.IsSmallResolution)
+      if (Engine.Settings.IsSmallResolution)
         tgt_center = new TV_2DVECTOR(Engine.ScreenWidth * 0.5f, Engine.ScreenHeight - Engine.Surfaces.Target_height * 0.5f - 20);
       else
         tgt_center = new TV_2DVECTOR(Engine.ScreenWidth * 0.5f, Engine.ScreenHeight - Engine.Surfaces.Target_height * 0.5f - 50);

@@ -81,9 +81,9 @@ namespace SWEndor.AI.Actions
 
           if (actor.IsOutOfBounds(minb, maxb))
             // TO-DO: use the center of the Bound volume or a designated center point instead of origin.
-            actor.AI.SetTarget(new TV_3DVECTOR());
+            actor.AI.Target.Set(new TV_3DVECTOR());
           else
-            actor.AI.SetTarget(actor.GetRelativePositionXYZ(1000, engine.Random.Next(-500, 500), engine.Random.Next(-500, 500)));
+            actor.AI.Target.Set(actor.GetRelativePositionXYZ(1000, engine.Random.Next(-500, 500), engine.Random.Next(-500, 500)));
         }
 
         actor.AI.SetTargetSpeed(actor.MoveData.MaxSpeed);

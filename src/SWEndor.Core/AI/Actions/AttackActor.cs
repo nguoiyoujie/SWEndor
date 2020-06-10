@@ -67,13 +67,14 @@ namespace SWEndor.AI.Actions
       if (!CheckBounds(actor))
         return;
 
-      actor.AI.SetTarget(engine, actor, target, true);
+      actor.AI.Target.Set(target.ID, true);
       actor.AI.SetFollowDistance(actor, FollowDistance);
+      actor.AI.SetTargetSpeed(actor.AI.Target.GetDistanceFromTarget(engine, actor) - FollowDistance);
 
       if (TooCloseDistance < 0)
         TooCloseDistance = actor.MoveData.Speed * 0.75f;
 
-      float dist = actor.AI.GetDistanceToTargetActor(engine, actor);
+      float dist = actor.AI.Target.GetDistanceFromTarget(engine, actor);
 
       if (dist > TooCloseDistance)
       {

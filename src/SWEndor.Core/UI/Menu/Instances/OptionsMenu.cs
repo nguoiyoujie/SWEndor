@@ -78,7 +78,7 @@ namespace SWEndor.UI.Menu.Pages
       ButtonSteeringSensitivity.ToggleButtonsValues = new List<string> { "0.25", "0.33", "0.5", "0.75", "1", "1.25", "1.5", "2", "2.5", "3", "4" };
       ButtonSteeringSensitivity.ToggleButtonsCurrentNumber = 0;
       while (ButtonSteeringSensitivity.ToggleButtonsCurrentNumber < ButtonSteeringSensitivity.ToggleButtonsValues.Count
-        && float.Parse(ButtonSteeringSensitivity.ToggleButtonsValues[ButtonSteeringSensitivity.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture) < Settings.SteeringSensitivity)
+        && float.Parse(ButtonSteeringSensitivity.ToggleButtonsValues[ButtonSteeringSensitivity.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture) < Engine.Settings.SteeringSensitivity)
       {
         ButtonSteeringSensitivity.ToggleButtonsCurrentNumber++;
       }
@@ -127,7 +127,7 @@ namespace SWEndor.UI.Menu.Pages
       {
         //ButtonMusicVol.SecondaryText = ButtonMusicVol.ToggleButtonsCurrentNumber.ToString();
         Engine.SoundManager.MasterMusicVolume = float.Parse(ButtonMusicVol.ToggleButtonsValues[ButtonMusicVol.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
-        Settings.SaveSettings(Engine);
+        Engine.Settings.SaveSettings(Engine);
       }
       return false;
     }
@@ -138,7 +138,7 @@ namespace SWEndor.UI.Menu.Pages
       {
         Engine.SoundManager.MasterSFXVolume = float.Parse(ButtonSFXVol.ToggleButtonsValues[ButtonSFXVol.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
         Engine.SoundManager.SetSound(SoundGlobals.LostShip);
-        Settings.SaveSettings(Engine);
+        Engine.Settings.SaveSettings(Engine);
       }
       return false;
     }
@@ -147,8 +147,8 @@ namespace SWEndor.UI.Menu.Pages
     {
       if (key == CONST_TV_KEY.TV_KEY_LEFT || key == CONST_TV_KEY.TV_KEY_RIGHT)
       {
-        Settings.SteeringSensitivity = float.Parse(ButtonSteeringSensitivity.ToggleButtonsValues[ButtonSteeringSensitivity.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
-        Settings.SaveSettings(Engine);
+        Engine.Settings.SteeringSensitivity = float.Parse(ButtonSteeringSensitivity.ToggleButtonsValues[ButtonSteeringSensitivity.ToggleButtonsCurrentNumber], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
+        Engine.Settings.SaveSettings(Engine);
       }
       return false;
     }

@@ -12,19 +12,29 @@ namespace SWEndor
     FillScreen, R_800x600, R_1024x768, R_1152x864, R_1280x800, R_1360x768, R_1280x1024, R_1600x900, R_1600x1200, R_1920x1080
   }
 
-  public static class Settings
+  public class Settings
   {
-    public static ResolutionSettings ResolutionMode = ResolutionSettings.FillScreen;
-    public static int ResolutionX { get; private set; }
-    public static int ResolutionY { get; private set; }
-    public static bool GameDebug = false;
-    public static bool FullScreenMode = false;
-    public static bool ShowPerformance = false;
-    public static float SteeringSensitivity = 1.5f;
+    [INIValue("General", "Resolution")]
+    public ResolutionSettings ResolutionMode = ResolutionSettings.FillScreen;
 
-    public static bool IsSmallResolution { get { return ResolutionMode == ResolutionSettings.R_800x600; } }
+    public int ResolutionX { get; private set; }
+    public int ResolutionY { get; private set; }
 
-    public static TV_2DVECTOR GetResolution
+    [INIValue("General", "Debug")]
+    public bool GameDebug = false;
+
+    [INIValue("General", "FullScreen")]
+    public bool FullScreenMode = false;
+
+    [INIValue("General", "ShowPerformance")]
+    public bool ShowPerformance = false;
+
+    [INIValue("General", "SteeringSensitivity")]
+    public float SteeringSensitivity = 1.5f;
+
+    public bool IsSmallResolution { get { return ResolutionMode == ResolutionSettings.R_800x600; } }
+
+    public TV_2DVECTOR GetResolution
     {
       get
       {
@@ -64,21 +74,17 @@ namespace SWEndor
       }
     }
 
-    public static void LoadSettings(Engine engine)
+    public void LoadSettings(Engine engine)
     {
       string path = Path.Combine(Globals.DataPath, "settings.ini");
       if (File.Exists(path))
       {
         INIFile f = new INIFile(path);
-        ResolutionMode = f.GetValue("General", "Resolution", ResolutionMode);
-        GameDebug = f.GetValue("General", "Debug", GameDebug);
-        FullScreenMode = f.GetValue("General", "FullScreen", FullScreenMode);
-        ShowPerformance = f.GetValue("General", "ShowPerformance", ShowPerformance);
+        var self = this;
+        f.LoadByAttribute(ref self);
 
-        engine.SoundManager.MasterMusicVolume = f.GetValue("Audio", "MusicVol", 1f);
-        engine.SoundManager.MasterSFXVolume = f.GetValue("Audio", "SFXVol", 1f);
-
-        SteeringSensitivity = f.GetValue("Controls", "SteeringSensitivity", SteeringSensitivity);
+        engine.SoundManager.MasterMusicVolume = f.GetValue("Audio", "MusicVol", null, 1f);
+        engine.SoundManager.MasterSFXVolume = f.GetValue("Audio", "SFXVol", null, 1f);
 
         if (f.HasSection("Keyboard"))
         {
@@ -89,7 +95,7 @@ namespace SWEndor
               InputFunction fn = InputFunction.Registry.Get(ln.Key);
               if (fn != null)
               {
-                int fkey = f.GetValue("Keyboard", ln.Key, -2);
+                int fkey = f.GetValue("Keyboard", ln.Key, null, -2);
                 if (fkey != -2)
                   fn.Key = fkey;
               }
@@ -102,7 +108,7 @@ namespace SWEndor
       ResolutionY = (int)GetResolution.y;
     }
 
-    public static void SaveSettings(Engine engine)
+    public void SaveSettings(Engine engine)
     {
       string filepath = Path.Combine(Globals.DataPath, "settings.ini");
 

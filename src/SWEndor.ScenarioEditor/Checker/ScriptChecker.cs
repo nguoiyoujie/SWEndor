@@ -25,7 +25,7 @@ namespace SWEndor.ScenarioEditor.Checker
       {
         ScriptFile f = new ScriptFile(Path, new Context(null));
         if (Log != null)
-          f.NewScriptEvent = (s) => { Log(s); };
+          f.ScriptReadBegin = (s) => { Log(s); };
         f.ReadFile();
         return true;
       }

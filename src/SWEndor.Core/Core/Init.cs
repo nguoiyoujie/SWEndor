@@ -17,8 +17,8 @@ namespace SWEndor.Core
         Engine engine = Globals.InitEngine();
 
         InputFunction.Registry.GenerateDefault();
-        Settings.LoadSettings(engine);
-        Settings.SaveSettings(engine);
+        engine.Settings.LoadSettings(engine);
+        engine.Settings.SaveSettings(engine);
 
         Application.Run(new UI.Forms.BackgroundForm(engine));
 

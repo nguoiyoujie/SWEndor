@@ -10,10 +10,10 @@ namespace SWEndor.ActorTypes.Components
   {
     private static SoundSourceData[] NullSound = new SoundSourceData[0];
 
-    [INISubSectionList("ISN")]
+    [INISubSectionList(SubsectionPrefix = "ISN")]
     internal SoundSourceData[] InitialSoundSources;
 
-    [INISubSectionList("SND")]
+    [INISubSectionList(SubsectionPrefix = "SND")]
     internal SoundSourceData[] SoundSources;
 
     public static SoundData Default { get { return new SoundData(NullSound, NullSound); } }
