@@ -1,4 +1,4 @@
-﻿@echo off
+@echo off
 set TITLE=SWEndor.Core
 set MAJORVERSION=0
 set MINORVERSION=0
@@ -71,7 +71,7 @@ echo [assembly: AssemblyTitle("%TITLE%")] >> %ASMYINFO_CS%
 echo [assembly: AssemblyConfiguration("")] >> %ASMYINFO_CS%
 echo [assembly: AssemblyCompany("")] >> %ASMYINFO_CS%
 echo [assembly: AssemblyProduct("%TITLE%")] >> %ASMYINFO_CS%
-echo [assembly: AssemblyCopyright("Copyright © 2017-%YYYY%. All rights reserved.")] >> %ASMYINFO_CS%
+echo [assembly: AssemblyCopyright("Copyright ? 2017-%YYYY%. All rights reserved.")] >> %ASMYINFO_CS%
 echo [assembly: AssemblyTrademark("")] >> %ASMYINFO_CS%
 echo [assembly: AssemblyCulture("")] >> %ASMYINFO_CS%
 echo.>> %ASMYINFO_CS%

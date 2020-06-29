@@ -2,7 +2,7 @@
 using SWEndor.Actors;
 using SWEndor.ActorTypes.Components;
 using SWEndor.Core;
-using Primitives.FileFormat.INI;
+using Primrose.FileFormat.INI;
 using SWEndor.Models;
 using SWEndor.Projectiles;
 using SWEndor.Projectiles.Components;

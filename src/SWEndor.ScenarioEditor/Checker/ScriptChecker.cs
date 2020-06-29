@@ -1,4 +1,4 @@
-﻿using Primitives.FileFormat.INI;
+﻿using Primrose.FileFormat.INI;
 using Primrose.Expressions;
 using SWEndor.Scenarios.Scripting;
 using System;

@@ -1,6 +1,6 @@
 ﻿using SWEndor.ActorTypes;
 using SWEndor.Core;
-using Primitives.FileFormat.INI;
+using Primrose.FileFormat.INI;
 using SWEndor.ProjectileTypes;
 
 namespace SWEndor.Weapons

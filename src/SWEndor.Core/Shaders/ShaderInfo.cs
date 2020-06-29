@@ -1,7 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Actors;
 using SWEndor.Core;
-using Primitives.FileFormat.INI;
+using Primrose.FileFormat.INI;
 using SWEndor.Models;
 using Primrose.Primitives.Factories;
 using System.Collections.Generic;

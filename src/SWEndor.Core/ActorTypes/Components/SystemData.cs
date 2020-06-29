@@ -1,6 +1,6 @@
 ﻿using SWEndor.Actors.Components;
 using SWEndor.Actors.Models;
-using Primitives.FileFormat.INI;
+using Primrose.FileFormat.INI;
 using SWEndor.Weapons;
 using System;
 using System.Collections.Generic;

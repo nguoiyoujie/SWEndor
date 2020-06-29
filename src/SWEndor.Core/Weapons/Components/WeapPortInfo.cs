@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 using Primrose.Primitives.ValueTypes;
-using Primitives.FileFormat.INI;
+using Primrose.FileFormat.INI;
 using SWEndor.Primitives.Extensions;
 
 namespace SWEndor.Weapons

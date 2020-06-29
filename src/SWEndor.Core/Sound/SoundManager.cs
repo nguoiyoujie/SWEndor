@@ -48,6 +48,17 @@ namespace SWEndor.Sound
 
     internal Random Random = new Random(); // sound engine uses its own randomizer
 
+    public string Version 
+    { 
+      get
+      { 
+        if (fmodsystem == null) { return null; }
+        uint v = 0;
+        fmodsystem.getVersion(out v);
+        return  "fmod.{0:x8}".F(VERSION.dll, v); 
+      }
+    }
+
     private ConcurrentQueue<InstBase> m_queuedInstructions = new ConcurrentQueue<InstBase>();
 
     public float MasterMusicVolume

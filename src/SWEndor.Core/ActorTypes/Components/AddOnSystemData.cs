@@ -1,6 +1,6 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Core;
-using Primitives.FileFormat.INI;
+using Primrose.FileFormat.INI;
 
 namespace SWEndor.ActorTypes.Components
 {

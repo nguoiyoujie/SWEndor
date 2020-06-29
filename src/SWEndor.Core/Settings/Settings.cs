@@ -1,6 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Core;
-using Primitives.FileFormat.INI;
+using Primrose.FileFormat.INI;
 using SWEndor.Input.Functions;
 using System.IO;
 using System.Windows.Forms;

@@ -1,5 +1,5 @@
 ﻿using Primrose.Primitives.Factories;
-using Primitives.FileFormat.INI;
+using Primrose.FileFormat.INI;
 using System.Collections.Generic;
 
 namespace SWEndor.Sound

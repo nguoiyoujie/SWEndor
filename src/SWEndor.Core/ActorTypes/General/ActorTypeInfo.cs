@@ -4,7 +4,7 @@ using SWEndor.ActorTypes.Components;
 using SWEndor.AI;
 using SWEndor.AI.Actions;
 using SWEndor.Core;
-using Primitives.FileFormat.INI;
+using Primrose.FileFormat.INI;
 using SWEndor.Models;
 using SWEndor.Player;
 using Primrose.Primitives.Extensions;

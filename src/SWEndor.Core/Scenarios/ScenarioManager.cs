@@ -1,7 +1,7 @@
 ﻿using Primrose.Primitives.Factories;
 using SWEndor.Actors;
 using SWEndor.Core;
-using Primitives.FileFormat.INI;
+using Primrose.FileFormat.INI;
 using SWEndor.Primitives.Extensions;
 using SWEndor.UI.Menu.Pages;
 using System;

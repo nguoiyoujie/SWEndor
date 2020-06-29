@@ -1,4 +1,4 @@
-﻿using Primitives.FileFormat.INI;
+﻿using Primrose.FileFormat.INI;
 using System.Collections.Generic;
 using System.IO;
 

@@ -1,7 +1,7 @@
 ﻿using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Explosions;
-using Primitives.FileFormat.INI;
+using Primrose.FileFormat.INI;
 using SWEndor.Projectiles;
 
 namespace SWEndor.ActorTypes.Components

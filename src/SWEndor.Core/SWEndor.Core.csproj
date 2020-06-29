@@ -381,6 +381,12 @@
     <Compile Include="UI\Forms\UIControls\ucPoolCache.Designer.cs">
       <DependentUpon>ucPoolCache.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\UIControls\ucInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\UIControls\ucInfo.Designer.cs">
+      <DependentUpon>ucInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\UIControls\ucSound.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -471,6 +477,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\UIControls\ucPoolCache.resx">
       <DependentUpon>ucPoolCache.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\UIControls\ucInfo.resx">
+      <DependentUpon>ucInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\UIControls\ucSound.resx">
       <DependentUpon>ucSound.cs</DependentUpon>
