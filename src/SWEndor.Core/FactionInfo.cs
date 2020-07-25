@@ -72,17 +72,17 @@ namespace SWEndor
     public int WingLimit = -1;
     public int WingSpawnLimit = -1;
     public bool WingLimitIncludesAllies = true;
-    private List<int> _wings = new List<int>();
+    private readonly List<int> _wings = new List<int>();
 
     public int ShipLimit = -1;
     public int ShipSpawnLimit = -1;
     public bool ShipLimitIncludesAllies = true;
-    private List<int> _ships = new List<int>();
+    private readonly List<int> _ships = new List<int>();
 
     public int StructureLimit = -1;
     public int StructureSpawnLimit = -1;
     public bool StructureLimitIncludesAllies = true;
-    private List<int> _structures = new List<int>();
+    private readonly List<int> _structures = new List<int>();
 
     public List<FactionInfo> Allies = new List<FactionInfo>();
 

@@ -4,6 +4,7 @@ using SWEndor.Core;
 using Primrose.FileFormat.INI;
 using System.IO;
 using System.Threading.Tasks;
+using Primrose;
 
 namespace SWEndor.Weapons
 {
@@ -18,7 +19,7 @@ namespace SWEndor.Weapons
 
     public void Register(INIFile f, string key, out WeapAimInfo info)
     {
-      Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "Weapon.Aim", key);
+      Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "Weapon.Aim", key);
       info = WeapAimInfo.Default;
       f.LoadByAttribute(ref info, key);
       _aim.Add(key, info);
@@ -26,7 +27,7 @@ namespace SWEndor.Weapons
 
     public void Register(INIFile f, string key, out WeapAmmoInfo info)
     {
-      Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "Weapon.Ammo", key);
+      Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "Weapon.Ammo", key);
       info = WeapAmmoInfo.Default;
       f.LoadByAttribute(ref info, key);
       _ammo.Add(key, info);
@@ -34,7 +35,7 @@ namespace SWEndor.Weapons
 
     public void Register(INIFile f, string key, out WeapLoadInfo info)
     {
-      Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "Weapon.Loader", key);
+      Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "Weapon.Loader", key);
       info = WeapLoadInfo.Default;
       f.LoadByAttribute(ref info, key);
       _load.Add(key, info);
@@ -42,7 +43,7 @@ namespace SWEndor.Weapons
 
     public void Register(INIFile f, string key, out WeapPortInfo info)
     {
-      Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "Weapon.Port", key);
+      Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "Weapon.Port", key);
       info = WeapPortInfo.Default;
       f.LoadByAttribute(ref info, key);
       info.Init();
@@ -51,7 +52,7 @@ namespace SWEndor.Weapons
 
     public void Register(Engine e, INIFile f, string key, out WeapProjInfo info)
     {
-      Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "Weapon.Projectile", key);
+      Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "Weapon.Projectile", key);
       info = WeapProjInfo.Default;
       f.LoadByAttribute(ref info, key);
       info.Load(e);
@@ -60,7 +61,7 @@ namespace SWEndor.Weapons
 
     public void Register(INIFile f, string key, out WeapTgtInfo info)
     {
-      Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "Weapon.Target", key);
+      Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "Weapon.Target", key);
       info = WeapTgtInfo.Default;
       f.LoadByAttribute(ref info, key);
       _tgt.Add(key, info);

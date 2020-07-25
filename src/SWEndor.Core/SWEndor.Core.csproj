@@ -222,8 +222,7 @@
     <Compile Include="Input\Functions\Utility\Screen\SaveScreenshot.cs" />
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="LandInfo.cs" />
-    <Compile Include="Log\Logger.cs" />
-    <Compile Include="Log\LogItem.cs" />
+    <Compile Include="Log\LogDecorator.cs" />
     <Compile Include="Log\LogType.cs" />
     <Compile Include="Models\CollisionModel\CollisionModel.cs" />
     <Compile Include="Models\CollisionModel\CollisionResultData.cs" />

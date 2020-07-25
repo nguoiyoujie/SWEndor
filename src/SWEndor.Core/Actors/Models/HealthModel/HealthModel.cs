@@ -4,6 +4,7 @@ using SWEndor.ActorTypes.Components;
 using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using System;
+using Primrose;
 
 namespace SWEndor.Actors.Models
 {
@@ -85,7 +86,7 @@ namespace SWEndor.Actors.Models
 
 #if DEBUG
             if (self.Logged)
-              Logger.Log(Logger.DEBUG, LogType.ACTOR_KILLED, self);
+              Log.Debug(Globals.LogChannel, LogDecorator.GetFormat(LogType.ACTOR_KILLED), self);
 #endif
           }
           if (!self.IsDyingOrDead && self.TypeInfo.SystemData.AllowSystemDamage)
@@ -112,7 +113,7 @@ namespace SWEndor.Actors.Models
 
 #if DEBUG
         if (self.Logged)
-          Logger.Log(Logger.DEBUG, LogType.ACTOR_KILLED_BY, self, "setting HP to 0");
+          Log.Debug(Globals.LogChannel, LogDecorator.GetFormat(LogType.ACTOR_KILLED_BY), self, "setting HP to 0");
 #endif
       }
     }

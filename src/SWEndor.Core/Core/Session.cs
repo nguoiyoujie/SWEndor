@@ -1,4 +1,5 @@
-﻿using Primrose.Primitives;
+﻿using Primrose;
+using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using SWEndor.UI.Menu.Pages;
 using System;
@@ -204,8 +205,8 @@ namespace SWEndor.Core
       }
       catch (Exception ex)
       {
-        Logger.WriteErr(Logger.ERROR, ex);
-        MessageBox.Show("Fatal Error occurred during runtime. Please see {0} in the /Log folder for the error message.".F(Logger.ERROR)
+        Log.Fatal(Globals.LogChannel, ex);
+        MessageBox.Show("Fatal Error occurred during runtime. Please see {0} in the /Log folder for the error message.".F(Globals.LogChannel)
                       , Application.ProductName + " - Error Encountered!"
                       , MessageBoxButtons.OK);
         return;
@@ -430,8 +431,6 @@ namespace SWEndor.Core
         isProcessingPerf = true;
         using (Engine.PerfManager.Create("tick_perf"))
           Engine.PerfManager.PrintPerf();
-        using (Engine.PerfManager.Create("tick_log"))
-          Logger.DoWrite();
         Thread.Sleep(1000);
         isProcessingPerf = false;
       }

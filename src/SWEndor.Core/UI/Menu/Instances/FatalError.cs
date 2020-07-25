@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using Primrose;
 using Primrose.Primitives.Extensions;
 using SWEndor.Sound;
 using System;
@@ -18,7 +19,7 @@ namespace SWEndor.UI.Menu.Pages
     {
       exitGame = GameScenarioManager.IsMainMenu;
 
-      Logger.WriteErr(Logger.ERROR, exception);
+      Log.Fatal(Globals.LogChannel, exception);
 
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
       Cover.HighlightBoxWidth = owner.ScreenSize.x;

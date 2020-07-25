@@ -1,4 +1,5 @@
-﻿using Primrose.Primitives.Extensions;
+﻿using Primrose;
+using Primrose.Primitives.Extensions;
 using SWEndor.Input.Functions;
 using System;
 using System.Windows.Forms;
@@ -11,9 +12,9 @@ namespace SWEndor.Core
     {
       try
       {
-        Logger.Log(Logger.DEBUG, LogType.SYS_INIT, Application.ProductName, Globals.Version);
-
         Globals.PreInit();
+
+        Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.SYS_INIT), Application.ProductName, Globals.Version);
         Engine engine = Globals.InitEngine();
 
         InputFunction.Registry.GenerateDefault();
@@ -26,14 +27,14 @@ namespace SWEndor.Core
       }
       catch (Exception ex)
       {
-        Logger.WriteErr(Logger.INITERROR, ex);
-        MessageBox.Show(TextLocalization.Get(TextLocalKeys.SYSTEM_INIT_ERROR).F(Logger.INITERROR)
+        Log.Fatal(Globals.LogChannel, ex);
+        MessageBox.Show(TextLocalization.Get(TextLocalKeys.SYSTEM_INIT_ERROR).F(Globals.LogChannel)
                       , TextLocalization.Get(TextLocalKeys.SYSTEM_TITLE_ERROR).F(Application.ProductName)
                       , MessageBoxButtons.OK);
       }
       finally
       {
-        Logger.Log(Logger.DEBUG, LogType.SYS_CLOSE, Application.ProductName);
+        Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.SYS_CLOSE), Application.ProductName);
       }
     }
   }

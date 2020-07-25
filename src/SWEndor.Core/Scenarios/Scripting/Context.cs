@@ -1,11 +1,7 @@
 ﻿using Primrose.Expressions;
-using Primrose.Primitives.Extensions;
-using Primrose.Primitives.Factories;
 using Primrose.Primitives.ValueTypes;
-using SWEndor.Actors;
 using SWEndor.Core;
 using SWEndor.Scenarios.Scripting.Functions;
-using System.Collections.Generic;
 
 namespace SWEndor.Scenarios.Scripting
 {
@@ -56,8 +52,10 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc<float3>("Camera.SetSceneLook_LookFromPoint", PlayerCameraFns.SetSceneLook_LookFromPoint);
 
       // Spawn Management
-      Functions.Add("Squad.Spawn", SpawnFns.Squadron_Spawn);
-      Functions.Add("Actor.Spawn", SpawnFns.Spawn);
+      AddFunc<string, string, string, int, float, bool, float3, float3, string, float, float, string>("Squad.Spawn", SpawnFns.Squadron_Spawn);
+      AddFunc<string, string, string, int, float, bool, float3, float3, string, float, float, string, string[]>("Squad.Spawn", SpawnFns.Squadron_Spawn);
+      AddFunc<string, string, string, string, float, float3, float3>("Actor.Spawn", SpawnFns.Spawn);
+      AddFunc<string, string, string, string, float, float3, float3, string[]>("Actor.Spawn", SpawnFns.Spawn);
       AddFunc<int, int>("Actor.QueueAtSpawner", SpawnFns.QueueAtSpawner);
 
       // Squad Management
@@ -88,7 +86,7 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc<int>("Actor.GetChildren", ActorFns.GetChildren);
       AddFunc<int, string>("Actor.GetChildrenByType", ActorFns.GetChildrenByType);
       AddFunc<int, string>("Actor.GetProperty", ActorFns.GetProperty);
-      Functions.Add("Actor.SetProperty", ActorFns.SetProperty);
+      AddFunc<int, string, Val>("Actor.SetProperty", ActorFns.SetProperty);
       AddFunc<int, string>("Actor.GetArmor", ActorFns.GetArmor);
       AddFunc<int, string, float>("Actor.SetArmor", ActorFns.SetArmor);
       AddFunc<int, float>("Actor.SetArmorAll", ActorFns.SetArmorAll);
@@ -115,9 +113,9 @@ namespace SWEndor.Scenarios.Scripting
       AddFunc<string, float, float3, int>("Message", MessagingFns.MessageText);
 
       // Action Management
-      Functions.Add("AI.QueueFirst", AIFns.QueueFirst);
-      Functions.Add("AI.QueueNext", AIFns.QueueNext);
-      Functions.Add("AI.QueueLast", AIFns.QueueLast);
+      AddDynamicFunc("AI.QueueFirst", AIFns.QueueFirst);
+      AddDynamicFunc("AI.QueueNext", AIFns.QueueNext);
+      AddDynamicFunc("AI.QueueLast", AIFns.QueueLast);
       AddFunc<int>("AI.UnlockOne", AIFns.UnlockOne);
       AddFunc<int>("AI.ClearQueue", AIFns.ClearQueue);
       AddFunc<int>("AI.ForceClearQueue", AIFns.ForceClearQueue);

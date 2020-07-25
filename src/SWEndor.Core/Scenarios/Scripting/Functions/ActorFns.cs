@@ -424,16 +424,15 @@ namespace SWEndor.Scenarios.Scripting.Functions
       return Val.NULL;
     }
 
-    public static Val SetProperty(IContext context, params Val[] ps)
+    public static Val SetProperty(IContext context, int actorID, string propertyName, Val propertyValue)
     {
-      int id = (int)ps[0];
       Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(id);
+      ActorInfo actor = e.ActorFactory.Get(actorID);
       if (e.GameScenarioManager.Scenario == null || actor == null)
         return new Val();
 
-      ConfigureActorProperty(e, actor, (string)ps[1], true, ref ps[2]);
-      return ps[2];
+      ConfigureActorProperty(e, actor, propertyName, true, ref propertyValue);
+      return propertyValue;
     }
 
     private static void ConfigureActorProperty(Engine engine, ActorInfo actor, string key, bool setValue, ref Val newValue)

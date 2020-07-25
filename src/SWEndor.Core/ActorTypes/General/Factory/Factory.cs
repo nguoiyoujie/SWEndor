@@ -4,6 +4,7 @@ using Primrose.Primitives.Extensions;
 using Primrose.Primitives.Factories;
 using System;
 using System.IO;
+using Primrose;
 
 namespace SWEndor.ActorTypes
 {
@@ -39,7 +40,7 @@ namespace SWEndor.ActorTypes
         foreach (string fp in Directory.GetFiles(Globals.ActorTypeINIDirectory, Globals.INIExt, SearchOption.AllDirectories))
         {
           string f = Path.GetFileNameWithoutExtension(fp);
-          Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "ActorType", f);
+          Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "ActorType", f);
           if (Contains(f))
             throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.ACTORTYPE_INITWICE_ERROR).F(f));
           ActorTypeInfo t = new ActorTypeInfo(this, f, f);

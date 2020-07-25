@@ -23,10 +23,10 @@ namespace SWEndor.ScenarioEditor.Checker
     {
       try
       {
-        ScriptFile f = new ScriptFile(Path, new Context(null));
+        ScriptFile f = new ScriptFile(new Context(null));
         if (Log != null)
           f.ScriptReadBegin = (s) => { Log(s); };
-        f.ReadFile();
+        f.ReadFromFile(Path);
         return true;
       }
       catch (Exception ex)

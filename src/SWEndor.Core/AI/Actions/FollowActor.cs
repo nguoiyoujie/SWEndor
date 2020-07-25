@@ -76,8 +76,6 @@ namespace SWEndor.AI.Actions
         Complete |= (!target.Active);
       }
 
-      TV_3DVECTOR vNormal = new TV_3DVECTOR();
-      TV_3DVECTOR vImpact = new TV_3DVECTOR();
       if (CheckImminentCollision(actor))
       {
         CreateAvoidAction(actor);

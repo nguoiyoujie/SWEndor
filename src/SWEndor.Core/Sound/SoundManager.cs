@@ -6,6 +6,7 @@ using System.Text;
 using System.Collections.Generic;
 using Primrose.Primitives.Extensions;
 using Primrose.Primitives.Factories;
+using Primrose;
 
 namespace SWEndor.Sound
 {
@@ -185,8 +186,7 @@ namespace SWEndor.Sound
       foreach (string sdfl in soundfiles)
       {
         string sdname = Path.Combine(Path.GetDirectoryName(sdfl), Path.GetFileNameWithoutExtension(sdfl)).Replace(Globals.SoundPath, "");
-        Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "Sound", sdname);
-
+        Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "Sound", sdname);
         sounds.Add(sdname, new DoubleBufferedSound(fmodsystem, sdfl));
 
         Channel ch;
@@ -204,7 +204,7 @@ namespace SWEndor.Sound
       foreach (string mufl in musicfiles)
       {
         string muname = Path.Combine(Path.GetDirectoryName(mufl), Path.GetFileNameWithoutExtension(mufl)).Replace(Globals.MusicPath, "");
-        Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "Music", muname);
+        Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "Music", muname);
         music.Add(muname, new DoubleBufferedSound(fmodsystem, mufl));
       }
     }

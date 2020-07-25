@@ -55,9 +55,11 @@ namespace SWEndor.Scenarios
       Engine.ScriptContext.Reset();
       foreach (string scrfile in ScriptPaths)
       {
-        ScriptFile f = new ScriptFile(Path.Combine(Globals.CustomScenarioPath, scrfile.Trim()), Engine.ScriptContext);
-        f.ScriptReadBegin = ReadScript;
-        f.ReadFile();
+        ScriptFile f = new ScriptFile(Engine.ScriptContext)
+        {
+          ScriptReadBegin = ReadScript
+        };
+        f.ReadFromFile(Path.Combine(Globals.CustomScenarioPath, scrfile.Trim()));
       }
       Engine.ScriptContext.RunGlobalScript();
     }

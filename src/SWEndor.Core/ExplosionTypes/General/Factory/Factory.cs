@@ -3,6 +3,7 @@ using Primrose.Primitives.Extensions;
 using Primrose.Primitives.Factories;
 using System;
 using System.IO;
+using Primrose;
 
 namespace SWEndor.ExplosionTypes
 {
@@ -25,7 +26,7 @@ namespace SWEndor.ExplosionTypes
         foreach (string fp in Directory.GetFiles(Globals.ExplosionTypeINIDirectory, Globals.INIExt, SearchOption.AllDirectories))
         {
           string f = Path.GetFileNameWithoutExtension(fp);
-          Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "ExplosionType", f);
+          Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "ExplosionType", f);
           if (Contains(f))
             throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.EXPLTYPE_INITWICE_ERROR).F(f));
           ExplosionTypeInfo t = new ExplosionTypeInfo(this, f, f);

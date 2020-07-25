@@ -1,7 +1,9 @@
-﻿using SWEndor.Core;
+﻿using Primrose;
+using SWEndor.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Forms;
 
 namespace SWEndor
 {
@@ -29,8 +31,8 @@ namespace SWEndor
         string.Format("v{0}.{1}.{2}.{3}-{4}"
         , MajorVersion
         , MinorVersion
-        , Build.BuildDate
-        , Build.Revision
+        , Core.Build.BuildDate
+        , Core.Build.Revision
 #if DEBUG
         , "Debug"
 #else
@@ -93,6 +95,9 @@ namespace SWEndor
     internal static string WeapProjINIPath = Path.Combine(WeaponINIDirectory, @"proj.ini");
     internal static string WeapTgtINIPath = Path.Combine(WeaponINIDirectory, @"tgt.ini");
 
+    internal static string LogChannel = Application.ProductName;
+
+
     // Extensions
     //internal static string CustomScenarioExt = "*.scen";
     internal static string INIExt = "*.ini";
@@ -106,6 +111,7 @@ namespace SWEndor
     internal static void PreInit()
     {
       CreateDirectories();
+      Log.DirectoryPath = LogPath;
     }
 
     internal static Engine InitEngine()

@@ -12,6 +12,38 @@ namespace SWEndor.Scenarios.Scripting.Functions
 {
   public static class SpawnFns
   {
+    public static Val Squadron_Spawn(IContext context
+                               , string actorType
+                               , string squadName
+                               , string faction
+                               , int squadCount
+                               , float spawntime
+                               , bool hyperspaceIn
+                               , float3 position
+                               , float3 rotation
+                               , string squadFormation
+                               , float squadDistance
+                               , float waitDelay
+                               , string targetType
+                               )
+    {
+      return Squadron_Spawn(context
+                               , actorType
+                               , squadName
+                               , faction
+                               , squadCount
+                               , spawntime
+                               , hyperspaceIn
+                               , position
+                               , rotation
+                               , squadFormation
+                               , squadDistance
+                               , waitDelay
+                               , targetType
+                               , null 
+                               );
+    }
+
     /// <summary>
     /// Spawns a group of actors and assigns them to a single squadron
     /// </summary>
@@ -33,30 +65,33 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     12 STRING[] registries // TO-DO: Remove, replace registries
     /// </param>
     /// <returns>INT[] containing the IDs of the spawned actors</returns>
-    public static Val Squadron_Spawn(IContext context, params Val[] ps)
+    public static Val Squadron_Spawn(IContext context
+                                   , string actorType
+                                   , string squadName
+                                   , string faction
+                                   , int squadCount
+                                   , float spawntime
+                                   , bool hyperspaceIn
+                                   , float3 position
+                                   , float3 rotation
+                                   , string squadFormation
+                                   , float squadDistance
+                                   , float waitDelay
+                                   , string targetType
+                                   , string[] registries
+                                   )
     {
       Engine e = ((Context)context).Engine;
       ScenarioBase gscenario = e.GameScenarioManager.Scenario;
 
-      string actorType = (string)ps[0];
-      string squadName = (string)ps[1];
-      string faction = (string)ps[2];
-      int squadCount = (int)ps[3];
-      float spawntime = (float)ps[4];
+      TV_3DVECTOR pos = position.ToVec3();
+      TV_3DVECTOR rot = rotation.ToVec3();
 
-      // positioning
-      bool hyperspaceIn = (bool)ps[5];
-      TV_3DVECTOR position = ((float3)ps[6]).ToVec3();
-      TV_3DVECTOR rotation = ((float3)ps[7]).ToVec3();
-      SquadFormation squadFormation = (SquadFormation)Enum.Parse(typeof(SquadFormation), (string)ps[8], true);
-      float squadDistance = (float)ps[9]; // formation distance
-
-      // ai
-      float waitDelay = (float)ps[10];
-      TargetType targetType = (TargetType)Enum.Parse(typeof(TargetType), (string)ps[11], true);
+      SquadFormation sqdFmn = (SquadFormation)Enum.Parse(typeof(SquadFormation), squadFormation, true);
+      TargetType tgtType = (TargetType)Enum.Parse(typeof(TargetType), targetType, true);
 
       // registries // TO-DO: Remove, replace registries
-      string[] registries = (ps.Length > 12) ? (string[])ps[12] : null;
+      //string[] registries = (ps.Length > 12) ? (string[])ps[12] : null;
 
       SquadSpawnInfo sinfo = new SquadSpawnInfo(
         squadName,
@@ -64,20 +99,42 @@ namespace SWEndor.Scenarios.Scripting.Functions
         FactionInfo.Factory.Get(faction),
         squadCount,
         waitDelay,
-        targetType,
+        tgtType,
         hyperspaceIn,
-        squadFormation,
-        rotation,
+        sqdFmn,
+        rot,
         squadDistance,
         registries
         );
 
-      ActorInfo[] squad = GSFunctions.Squadron_Spawn(e, gscenario, position, spawntime, sinfo);
+      ActorInfo[] squad = GSFunctions.Squadron_Spawn(e, gscenario, pos, spawntime, sinfo);
       int[] ret = new int[squad.Length];
       for (int i = 0; i < squad.Length; i++)
         ret[i] = squad[i].ID;
 
       return new Val(ret);
+    }
+
+    public static Val Spawn(IContext context
+                      , string actorType
+                      , string actorName
+                      , string faction
+                      , string sidebarName
+                      , float spawntime
+                      , float3 position
+                      , float3 rotation
+                      )
+    {
+      return Spawn(context
+                      , actorType
+                      , actorName
+                      , faction
+                      , sidebarName
+                      , spawntime
+                      , position
+                      , rotation
+                      , null
+                      );
     }
 
     /// <summary>
@@ -96,35 +153,36 @@ namespace SWEndor.Scenarios.Scripting.Functions
     ///     7 STRING[] registries // TO-DO: Remove, replace registries
     /// </param>
     /// <returns>INT: the ID of the spawned actor. If the spawn failed, returns -1</returns>
-    public static Val Spawn(IContext context, params Val[] ps)
+    public static Val Spawn(IContext context
+                          , string actorType
+                          , string actorName
+                          , string faction
+                          , string sidebarName
+                          , float spawntime
+                          , float3 position
+                          , float3 rotation
+                          , string[] registries
+                          )
     {
       Engine e = ((Context)context).Engine;
       ScenarioBase gscenario = e.GameScenarioManager.Scenario;
       if (gscenario == null)
         return new Val("-1");
 
-      ActorTypeInfo atype = e.ActorTypeFactory.Get((string)ps[0]);
-      string unitname = (string)ps[1];
-      FactionInfo faction = FactionInfo.Factory.Get((string)ps[2]);
-      string sidebarname = (string)ps[3];
-      float spawntime = (float)ps[4];
-
-      // positioning
-      TV_3DVECTOR position = ((float3)ps[5]).ToVec3();
-      TV_3DVECTOR rotation = ((float3)ps[6]).ToVec3();
+      TV_3DVECTOR pos = position.ToVec3();
+      TV_3DVECTOR rot = rotation.ToVec3();
 
       // TO-DO: Remove, replace registries
-      string[] registries = (ps.Length > 7) ? (string[])ps[7] : null;
 
       ActorSpawnInfo asi = new ActorSpawnInfo
       {
-        Type = atype,
-        Name = unitname,
-        SidebarName = sidebarname,
+        Type = e.ActorTypeFactory.Get(actorType),
+        Name = actorName,
+        SidebarName = sidebarName,
         SpawnTime = spawntime,
-        Faction = faction,
-        Position = position,
-        Rotation = rotation,
+        Faction = FactionInfo.Factory.Get(faction),
+        Position = pos,
+        Rotation = rot,
         Actions = null,
         Registries = registries
       };

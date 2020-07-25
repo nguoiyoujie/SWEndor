@@ -3,6 +3,7 @@ using Primrose.Primitives.Extensions;
 using Primrose.Primitives.Factories;
 using System;
 using System.IO;
+using Primrose;
 
 namespace SWEndor.ProjectileTypes
 {
@@ -25,7 +26,7 @@ namespace SWEndor.ProjectileTypes
         foreach (string fp in Directory.GetFiles(Globals.ProjectileTypeINIDirectory, Globals.INIExt, SearchOption.AllDirectories))
         {
           string f = Path.GetFileNameWithoutExtension(fp);
-          Logger.Log(Logger.DEBUG, LogType.ASSET_LOADING, "ProjectileType", f);
+          Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "ProjectileType", f);
           if (Contains(f))
             throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.ACTORTYPE_INITWICE_ERROR).F(f));
           ProjectileTypeInfo t = new ProjectileTypeInfo(this, f, f);
