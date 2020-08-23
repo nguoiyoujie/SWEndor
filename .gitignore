@@ -15,6 +15,7 @@
 /src/*/obj
 
 /unittest
+/unused
 
 **/*.log
 **/screenshots

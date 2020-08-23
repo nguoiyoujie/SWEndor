@@ -2868,6 +2868,10 @@
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.sbyte2.Equals(Primrose.Primitives.ValueTypes.sbyte2)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
         <member name="M:Primrose.Primitives.ValueTypes.sbyte2.GetHashCode">
             <summary>Generates the hash code for this object</summary>
         </member>
@@ -2947,6 +2951,10 @@
         <member name="M:Primrose.Primitives.ValueTypes.sbyte3.Equals(System.Object)">
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.sbyte3.Equals(Primrose.Primitives.ValueTypes.sbyte3)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.sbyte3.GetHashCode">
             <summary>Generates the hash code for this object</summary>
@@ -3108,6 +3116,10 @@
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.ushort2.Equals(Primrose.Primitives.ValueTypes.ushort2)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
         <member name="M:Primrose.Primitives.ValueTypes.ushort2.GetHashCode">
             <summary>Generates the hash code for this object</summary>
         </member>
@@ -3187,6 +3199,10 @@
         <member name="M:Primrose.Primitives.ValueTypes.ushort3.Equals(System.Object)">
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.ushort3.Equals(Primrose.Primitives.ValueTypes.ushort3)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.ushort3.GetHashCode">
             <summary>Generates the hash code for this object</summary>
@@ -3271,6 +3287,10 @@
         <member name="M:Primrose.Primitives.ValueTypes.ushort4.Equals(System.Object)">
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.ushort4.Equals(Primrose.Primitives.ValueTypes.ushort4)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.ushort4.GetHashCode">
             <summary>Generates the hash code for this object</summary>
@@ -3375,6 +3395,10 @@
         <member name="M:Primrose.Primitives.ValueTypes.uint2.Equals(System.Object)">
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.uint2.Equals(Primrose.Primitives.ValueTypes.uint2)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.uint2.GetHashCode">
             <summary>Generates the hash code for this object</summary>
@@ -3483,6 +3507,10 @@
         <member name="M:Primrose.Primitives.ValueTypes.uint3.Equals(System.Object)">
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.uint3.Equals(Primrose.Primitives.ValueTypes.uint3)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.uint3.GetHashCode">
             <summary>Generates the hash code for this object</summary>
@@ -3596,6 +3624,10 @@
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.uint4.Equals(Primrose.Primitives.ValueTypes.uint4)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
         <member name="M:Primrose.Primitives.ValueTypes.uint4.GetHashCode">
             <summary>Generates the hash code for this object</summary>
         </member>
@@ -3672,6 +3704,10 @@
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.short2.Equals(Primrose.Primitives.ValueTypes.short2)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
         <member name="M:Primrose.Primitives.ValueTypes.short2.GetHashCode">
             <summary>Generates the hash code for this object</summary>
         </member>
@@ -3747,6 +3783,10 @@
         <member name="M:Primrose.Primitives.ValueTypes.byte2.Equals(System.Object)">
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.byte2.Equals(Primrose.Primitives.ValueTypes.byte2)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.byte2.GetHashCode">
             <summary>Generates the hash code for this object</summary>
@@ -3827,6 +3867,10 @@
         <member name="M:Primrose.Primitives.ValueTypes.short3.Equals(System.Object)">
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.short3.Equals(Primrose.Primitives.ValueTypes.short3)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.short3.GetHashCode">
             <summary>Generates the hash code for this object</summary>
@@ -3911,6 +3955,10 @@
         <member name="M:Primrose.Primitives.ValueTypes.short4.Equals(System.Object)">
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.short4.Equals(Primrose.Primitives.ValueTypes.short4)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.short4.GetHashCode">
             <summary>Generates the hash code for this object</summary>
@@ -4019,6 +4067,10 @@
         <member name="M:Primrose.Primitives.ValueTypes.int2.Equals(System.Object)">
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int2.Equals(Primrose.Primitives.ValueTypes.int2)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.int2.GetHashCode">
             <summary>Generates the hash code for this object</summary>
@@ -4139,6 +4191,10 @@
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Equals(Primrose.Primitives.ValueTypes.float2)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
         <member name="M:Primrose.Primitives.ValueTypes.float2.GetHashCode">
             <summary>Generates the hash code for this object</summary>
         </member>
@@ -4218,6 +4274,10 @@
         <member name="M:Primrose.Primitives.ValueTypes.byte3.Equals(System.Object)">
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.byte3.Equals(Primrose.Primitives.ValueTypes.byte3)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.byte3.GetHashCode">
             <summary>Generates the hash code for this object</summary>
@@ -4330,6 +4390,10 @@
         <member name="M:Primrose.Primitives.ValueTypes.int3.Equals(System.Object)">
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int3.Equals(Primrose.Primitives.ValueTypes.int3)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.int3.GetHashCode">
             <summary>Generates the hash code for this object</summary>
@@ -4454,6 +4518,10 @@
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Equals(Primrose.Primitives.ValueTypes.float3)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
         <member name="M:Primrose.Primitives.ValueTypes.float3.GetHashCode">
             <summary>Generates the hash code for this object</summary>
         </member>
@@ -4537,6 +4605,10 @@
         <member name="M:Primrose.Primitives.ValueTypes.byte4.Equals(System.Object)">
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.byte4.Equals(Primrose.Primitives.ValueTypes.byte4)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.byte4.GetHashCode">
             <summary>Generates the hash code for this object</summary>
@@ -4653,6 +4725,10 @@
         <member name="M:Primrose.Primitives.ValueTypes.int4.Equals(System.Object)">
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int4.Equals(Primrose.Primitives.ValueTypes.int4)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.int4.GetHashCode">
             <summary>Generates the hash code for this object</summary>
@@ -4781,6 +4857,10 @@
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Equals(Primrose.Primitives.ValueTypes.float4)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
         <member name="M:Primrose.Primitives.ValueTypes.float4.GetHashCode">
             <summary>Generates the hash code for this object</summary>
         </member>
@@ -4818,6 +4898,23 @@
             <param name="u">The second value</param>
             <param name="v">The third value</param>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Trip`3.Equals(System.Object)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Trip`3.Equals(Primrose.Primitives.ValueTypes.Trip{`0,`1,`2})">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Trip`3.GetHashCode">
+            <summary>Generates the hash code for this object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Trip`3.op_Equality(Primrose.Primitives.ValueTypes.Trip{`0,`1,`2},Primrose.Primitives.ValueTypes.Trip{`0,`1,`2})">
+            <summary>Determines if two short3 values are equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Trip`3.op_Inequality(Primrose.Primitives.ValueTypes.Trip{`0,`1,`2},Primrose.Primitives.ValueTypes.Trip{`0,`1,`2})">
+            <summary>Determines if two short3 values are not equal</summary>
+        </member>
         <member name="T:Primrose.Primitives.ValueTypes.Quad`4">
             <summary>
             A value quad
@@ -4848,6 +4945,23 @@
             <param name="v">The third value</param>
             <param name="w">The fourth value</param>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Quad`4.Equals(System.Object)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Quad`4.Equals(Primrose.Primitives.ValueTypes.Quad{`0,`1,`2,`3})">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Quad`4.GetHashCode">
+            <summary>Generates the hash code for this object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Quad`4.op_Equality(Primrose.Primitives.ValueTypes.Quad{`0,`1,`2,`3},Primrose.Primitives.ValueTypes.Quad{`0,`1,`2,`3})">
+            <summary>Determines if two short3 values are equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Quad`4.op_Inequality(Primrose.Primitives.ValueTypes.Quad{`0,`1,`2,`3},Primrose.Primitives.ValueTypes.Quad{`0,`1,`2,`3})">
+            <summary>Determines if two short3 values are not equal</summary>
+        </member>
         <member name="T:Primrose.Primitives.ValueTypes.Pair`2">
             <summary>
             A value pair
@@ -4867,6 +4981,23 @@
             </summary>
             <param name="t">The first value</param>
             <param name="u">The second value</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Pair`2.Equals(System.Object)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Pair`2.Equals(Primrose.Primitives.ValueTypes.Pair{`0,`1})">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Pair`2.GetHashCode">
+            <summary>Generates the hash code for this object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Pair`2.op_Equality(Primrose.Primitives.ValueTypes.Pair{`0,`1},Primrose.Primitives.ValueTypes.Pair{`0,`1})">
+            <summary>Determines if two short3 values are equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Pair`2.op_Inequality(Primrose.Primitives.ValueTypes.Pair{`0,`1},Primrose.Primitives.ValueTypes.Pair{`0,`1})">
+            <summary>Determines if two short3 values are not equal</summary>
         </member>
         <member name="T:Primrose.Log">
             <summary>Handles logging behaviour for the program</summary>

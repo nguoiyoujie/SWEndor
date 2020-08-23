@@ -534,6 +534,57 @@
         <member name="P:Primrose.Expressions.ITracker.Position">
             <summary>The character position in the line</summary>
         </member>
+        <member name="T:Primrose.Expressions.LintElement">
+            <summary>Specifies a linter element at a specific line and position</summary>
+        </member>
+        <member name="F:Primrose.Expressions.LintElement.Line">
+            <summary>The line where the lint is applied</summary>
+        </member>
+        <member name="F:Primrose.Expressions.LintElement.Position">
+            <summary>The start position where the lint is applied</summary>
+        </member>
+        <member name="F:Primrose.Expressions.LintElement.Lint">
+            <summary>The lint applied</summary>
+        </member>
+        <member name="M:Primrose.Expressions.LintElement.#ctor(System.Int32,System.Int32,Primrose.Expressions.LintType)">
+            <summary>Specifies a linter element at a specific line and position</summary>
+        </member>
+        <member name="M:Primrose.Expressions.LintElement.ToString">
+            <summary>Provides a string representation of the linter element</summary>
+        </member>
+        <member name="T:Primrose.Expressions.LintType">
+            <summary>Defines the types for linting purposes</summary>
+        </member>
+        <member name="F:Primrose.Expressions.LintType.NONE">
+            <summary>Indicates no special linting</summary>
+        </member>
+        <member name="F:Primrose.Expressions.LintType.HEADER">
+            <summary>Indicates linting for headers</summary>
+        </member>
+        <member name="F:Primrose.Expressions.LintType.COMMENT">
+            <summary>Indicates linting for comments</summary>
+        </member>
+        <member name="F:Primrose.Expressions.LintType.TYPE">
+            <summary>Indicates linting for object types</summary>
+        </member>
+        <member name="F:Primrose.Expressions.LintType.KEYWORD">
+            <summary>Indicates linting for reserved keywords</summary>
+        </member>
+        <member name="F:Primrose.Expressions.LintType.SPECIALLITERAL">
+            <summary>Indicates linting for special literals</summary>
+        </member>
+        <member name="F:Primrose.Expressions.LintType.NUMERICLITERAL">
+            <summary>Indicates linting for numeric literals</summary>
+        </member>
+        <member name="F:Primrose.Expressions.LintType.STRINGLITERAL">
+            <summary>Indicates linting for string literals</summary>
+        </member>
+        <member name="F:Primrose.Expressions.LintType.FUNCTION">
+            <summary>Indicates linting for function types</summary>
+        </member>
+        <member name="F:Primrose.Expressions.LintType.VARIABLE">
+            <summary>Indicates linting for variables</summary>
+        </member>
         <member name="T:Primrose.Expressions.Resource.Strings">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -794,10 +845,16 @@
         <member name="P:Primrose.Expressions.Script.Statements">
             <summary>Lists the statements contained in the script</summary>
         </member>
-        <member name="M:Primrose.Expressions.Script.AddStatements(System.String,System.Int32@,System.Collections.Generic.List{Primrose.Expressions.LinterStep}@)">
-            <summary>Adds one or more statements to the script.</summary>
+        <member name="M:Primrose.Expressions.Script.AddStatements(System.String,System.Int32@)">
+            <summary>Adds one or more statements to the script</summary>
             <param name="text">The string text to be parsed</param>
             <param name="linenumber">The current line number</param>
+        </member>
+        <member name="M:Primrose.Expressions.Script.AddStatements(System.String,System.Int32@,System.Collections.Generic.List{Primrose.Expressions.LintElement}@)">
+            <summary>Adds one or more statements to the script, and produces a set of linting hints for a linter</summary>
+            <param name="text">The string text to be parsed</param>
+            <param name="linenumber">The current line number</param>
+            <param name="linter">The set of linting hints describing the statements added</param>
         </member>
         <member name="M:Primrose.Expressions.Script.Clear">
             <summary>Clears the script of information</summary>
