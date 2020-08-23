@@ -168,7 +168,7 @@ namespace SWEndor.Scenarios
 
     internal virtual void LoadScene()
     {
-      Engine.TrueVision.TVGraphicEffect.FadeIn();
+      FadeIn();
     }
 
     public virtual void GameTick()
@@ -215,13 +215,13 @@ namespace SWEndor.Scenarios
 
     public void FadeOut()
     {
-      Engine.TrueVision.TVGraphicEffect.FadeOut();
+      Engine.PlayerCameraInfo.FadeOut();
       EventQueue.Add(Game.GameTime + 0.01f, FadeInterim);
     }
 
     public void FadeInterim()
     {
-      if (Engine.TrueVision.TVGraphicEffect.IsFadeFinished())
+      if (!Engine.PlayerCameraInfo.IsFadingOut)
       {
         Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
         Engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(0, 0, Engine.ScreenWidth, Engine.ScreenHeight, new TV_COLOR(0, 0, 0, 1).GetIntColor());
@@ -257,12 +257,12 @@ namespace SWEndor.Scenarios
 
     public void FadeIn()
     {
-      Engine.TrueVision.TVGraphicEffect.FadeIn();
+      Engine.PlayerCameraInfo.FadeIn();
     }
 
     public void GameOver()
     {
-      Engine.TrueVision.TVGraphicEffect.FadeIn(2.5f);
+      Engine.PlayerCameraInfo.FadeIn(2.5f);
 
       SoundManager.Clear();
 
@@ -345,7 +345,7 @@ namespace SWEndor.Scenarios
 
     public virtual void GameWonSequence()
     {
-      Engine.TrueVision.TVGraphicEffect.FadeIn(2.5f);
+      Engine.PlayerCameraInfo.FadeIn(2.5f);
 
       SoundManager.Clear();
 

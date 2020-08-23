@@ -94,7 +94,8 @@ namespace SWEndor
           new PerfText(this),
           new WidgetTerminal(this),
 
-          new MouseLocation(this)
+          new MouseLocation(this),
+          new FadeRectangle(this)
         };
     }
 

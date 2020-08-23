@@ -67,6 +67,9 @@ namespace SWEndor.Player
     /// </summary>
     public TV_3DVECTOR Rotation { get; private set; }
 
+    internal float Fade = 0;
+    internal float FadeRate = 0.03f;
+
     private float shake = 0;
     private float prev_shake_displacement_x = 0;
     private float prev_shake_displacement_y = 0;
@@ -101,8 +104,12 @@ namespace SWEndor.Player
 
     internal void Update()
     {
-      Update(Engine);
-      ApplyShake();
+      if (!Engine.Game.IsPaused)
+      {
+        Update(Engine);
+        ApplyShake();
+      }
+      ApplyFade();
     }
 
     private void Update(Engine engine)
@@ -134,60 +141,6 @@ namespace SWEndor.Player
       }
     }
 
-    private void UpdateFromActor(Engine engine, ActorInfo actor)
-    {
-      //if (CameraMode == CameraMode.CUSTOM)
-      //  return;
-
-      /*
-      TV_3DVECTOR location = new TV_3DVECTOR();
-      TV_3DVECTOR target = new TV_3DVECTOR();
-
-      switch (CameraMode) // should replace
-      {
-        case CameraMode.FREEROTATION:
-        case CameraMode.FREEMODE:
-        case CameraMode.FIRSTPERSON:
-          location = new TV_3DVECTOR(0, 0, actor.MaxDimensions.z + 10);
-          target = new TV_3DVECTOR(0, 0, 20000);
-          break;
-        case CameraMode.THIRDPERSON:
-          location = new TV_3DVECTOR(0, actor.MaxDimensions.y * 3, -actor.MaxDimensions.z * 8);
-          target = new TV_3DVECTOR(0, 0, 20000);
-          break;
-        case CameraMode.THIRDREAR:
-          location = new TV_3DVECTOR(0, actor.MaxDimensions.y * 3, actor.MaxDimensions.z * 8);
-          target = new TV_3DVECTOR(0, 0, -20000);
-          break;
-      }
-
-      int cammode = (engine.GameScenarioIsCutsceneMode) ? 0 : (int)CameraMode;
-
-      if (cammode < actor.TypeInfo.Cameras.Length)
-      {
-        location = actor.TypeInfo.Cameras[cammode].LookFrom;
-        target = actor.TypeInfo.Cameras[cammode].LookAt;
-      }
-
-      if (!actor.IsDyingOrDead)
-      {
-        if (actor.IsPlayer) // active view
-        {
-          Look.SetPosition_Actor(actor.ID, displacementRelative: location);
-          Look.SetTarget_LookAtActor(actor.ID, displacementRelative: target);
-          Look.SetRotationMult(1);
-        }
-        else // same as active view
-        {
-          Look.SetPosition_Actor(actor.ID, displacementRelative: location);
-          Look.SetTarget_LookAtActor(actor.ID, displacementRelative: target);
-        }
-      }
-      */
-
-      //UpdateViewFrustum(actor);
-    }
-
     public void Shake(float value)
     {
       shake = value;
@@ -211,6 +164,39 @@ namespace SWEndor.Player
         prev_shake_displacement_y = dispy;
         ShakeDecay();
       }
+    }
+
+    public void FadeIn(float speed = 0.75f, bool setFade = true)
+    {
+      if (setFade) { Fade = 1; }
+      FadeRate = (speed > 0) ? -speed : speed;
+    }
+
+    public void FadeOut(float speed = 0.75f, bool setFade = true)
+    {
+      if (setFade) { Fade = 0; }
+      FadeRate = (speed > 0) ? speed : -speed;
+    }
+
+    public bool IsFadingIn
+    {
+      get
+      {
+        return FadeRate < 0 && Fade > 0;
+      }
+    }
+
+    public bool IsFadingOut
+    {
+      get
+      {
+        return FadeRate > 0 && Fade < 1;
+      }
+    }
+
+    private void ApplyFade()
+    {
+      Fade = (Fade + FadeRate * Engine.Game.TimeControl.UpdateInterval).Clamp(0,1);
     }
 
     private void ShakeDecay()
