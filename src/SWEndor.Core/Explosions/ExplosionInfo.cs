@@ -87,11 +87,11 @@ namespace SWEndor.Explosions
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
       Key = "{0} {1}".F(_name, ID);
 
-      Meshes.Init(Engine, ID, ref TypeInfo.MeshData);
+      Meshes.Init(engine, ID, ref TypeInfo.MeshData);
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
-      Transform.Init(Engine, TypeInfo.MeshData.Scale, acinfo);
+      Transform.Init(engine, TypeInfo.MeshData.Scale, acinfo);
 
-      State.Init(Engine, TypeInfo, acinfo);
+      State.Init(engine, TypeInfo, acinfo);
 
       AttachedActorID = -1;
 

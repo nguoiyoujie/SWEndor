@@ -60,7 +60,7 @@ namespace SWEndor.AI.Actions
         }
       }
 
-      owner.MoveData.Speed += Incre_Speed * owner.Game.TimeSinceRender;
+      owner.MoveData.Speed += Incre_Speed * engine.Game.TimeSinceRender;
 
       float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetGlobalPosition(), Origin_Position);
       if (dist >= FarEnoughDistance)

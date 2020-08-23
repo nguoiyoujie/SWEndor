@@ -110,7 +110,7 @@ namespace SWEndor.Core
     {
       State = RunState.RUNNING;
       tm_perf.Start();
-      Task.Factory.StartNew(new Action(Tick)).ContinueWith(new Action<Task>(t => GenerateFatalError(t.Exception.InnerException)), TaskContinuationOptions.OnlyOnFaulted);
+      Task.Factory.StartNew(Tick).ContinueWith(GenerateFatalError, TaskContinuationOptions.OnlyOnFaulted);
     }
 
     public void Stop()
@@ -217,6 +217,11 @@ namespace SWEndor.Core
       }
     }
 
+    private void GenerateFatalError(Task t)
+    {
+      GenerateFatalError(t.Exception.InnerException);
+    }
+
     private void GenerateFatalError(Exception ex)
     {
       // Replace this block to print this on file!
@@ -284,7 +289,7 @@ namespace SWEndor.Core
             using (Engine.PerfManager.Create("render_main"))
               Engine.Render();
 
-            if (!IsPaused)
+            //if (!IsPaused)
               using (Engine.PerfManager.Create("render_camera"))
                 Engine.PlayerCameraInfo.Update();
 

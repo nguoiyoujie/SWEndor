@@ -39,10 +39,6 @@ namespace SWEndor.Actors
     /// <summary>The game engine</summary>
     public Engine Engine { get { return ActorFactory.Engine; } }
 
-    internal Session Game { get { return Engine.Game; } }
-    internal PlayerInfo PlayerInfo { get { return Engine.PlayerInfo; } }
-    internal PlayerCameraInfo PlayerCameraInfo { get { return Engine.PlayerCameraInfo; } }
-
     // Identifiers
     private string _name = "New Actor";
     private string sidebar_name = "";
@@ -171,11 +167,11 @@ namespace SWEndor.Actors
       Key = "{0} {1}".F(_name, ID);
 
       Systems.Init(ref TypeInfo.SystemData);
-      Meshes.Init(Engine, ID, ref TypeInfo.MeshData);
+      Meshes.Init(engine, ID, ref TypeInfo.MeshData);
       Relation.Init();
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
       Health.Init(ref TypeInfo.CombatData, ref TypeInfo.SystemData, acinfo);
-      Transform.Init(Engine, TypeInfo.MeshData.Scale, acinfo);
+      Transform.Init(engine, TypeInfo.MeshData.Scale, acinfo);
       Armor.Init(ref TypeInfo.ArmorData);
       Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, acinfo.CreationTime);
       Regen.Init(ref TypeInfo.RegenData);
@@ -184,11 +180,11 @@ namespace SWEndor.Actors
       MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
       CollisionData.Init();
       SpawnerInfo.Init(ref TypeInfo.SpawnerData);
-      WeaponDefinitions.Init(Engine.WeaponRegistry, ref TypeInfo.cachedWeaponData);
+      WeaponDefinitions.Init(engine.WeaponRegistry, ref TypeInfo.cachedWeaponData);
 
       InCombat = TypeInfo.CombatData.IsCombatObject;
 
-      State.Init(Engine, TypeInfo, acinfo);
+      State.Init(engine, TypeInfo, acinfo);
 
       Faction = acinfo.Faction;
 
@@ -269,11 +265,11 @@ namespace SWEndor.Actors
     {
       get
       {
-        float distcheck = TypeInfo.RenderData.CullDistance * Game.PerfCullModifier;
+        float distcheck = TypeInfo.RenderData.CullDistance * Engine.Game.PerfCullModifier;
 
         return (!IsPlayer
           && TypeInfo.RenderData.EnableDistanceCull
-          && DistanceModel.GetRoughDistance(GetGlobalPosition(), PlayerCameraInfo.Camera.GetPosition()) > distcheck);
+          && DistanceModel.GetRoughDistance(GetGlobalPosition(), Engine.PlayerCameraInfo.Camera.GetPosition()) > distcheck);
       }
     }
 
@@ -281,22 +277,22 @@ namespace SWEndor.Actors
     {
       get
       {
-        float distcheck = TypeInfo.RenderData.CullDistance * 0.25f * Game.PerfCullModifier;
+        float distcheck = TypeInfo.RenderData.CullDistance * 0.25f * Engine.Game.PerfCullModifier;
 
         return (!IsPlayer
           && TypeInfo.RenderData.EnableDistanceCull
-          && DistanceModel.GetRoughDistance(GetGlobalPosition(), PlayerCameraInfo.Camera.GetPosition()) > distcheck);
+          && DistanceModel.GetRoughDistance(GetGlobalPosition(), Engine.PlayerCameraInfo.Camera.GetPosition()) > distcheck);
       }
     }
 
     /// <summary>Checks if the object is the player</summary>
-    public bool IsPlayer { get { return PlayerInfo.ActorID == ID; } }
+    public bool IsPlayer { get { return Engine.PlayerInfo.ActorID == ID; } }
 
     /// <summary>Sets the object as the player</summary>
-    public void SetPlayer() { PlayerInfo.ActorID = ID; }
+    public void SetPlayer() { Engine.PlayerInfo.ActorID = ID; }
 
     /// <summary>Checks if the object is the player or the designated camera target</summary>
-    public bool IsScenePlayer { get { return IsPlayer || PlayerInfo.TempActorID == ID; } }
+    public bool IsScenePlayer { get { return IsPlayer || Engine.PlayerInfo.TempActorID == ID; } }
 
     /// <summary>Checks if the object is allied with a faction</summary>
     public bool IsAlliedWith(FactionInfo faction) { return Faction.IsAlliedWith(faction); }
@@ -412,7 +408,7 @@ namespace SWEndor.Actors
         if (CanCollide)
           CollisionData.CheckCollision(engine, this);
 
-        TypeInfo.MoveBehavior.Move(engine, this, ref MoveData, Game.TimeSinceRender);
+        TypeInfo.MoveBehavior.Move(engine, this, ref MoveData, Engine.Game.TimeSinceRender);
       }
       else
         Delete();

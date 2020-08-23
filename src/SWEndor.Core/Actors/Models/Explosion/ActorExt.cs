@@ -8,7 +8,7 @@ namespace SWEndor.Actors
     public void TickExplosions()
     {
       using (ScopeCounters.Acquire(Scope))
-        Explosions.Tick(this, Game.GameTime);
+        Explosions.Tick(this, Engine.Game.GameTime);
     }
   }
 }

@@ -2,6 +2,10 @@
 using SWEndor.Actors;
 using Primrose.Primitives;
 using System.IO;
+using SWEndor.Actors.Models;
+using SWEndor.UI;
+using Primrose.Primitives.Geometry;
+using Primrose.Primitives.Extensions;
 
 namespace SWEndor.Core
 {
@@ -110,8 +114,101 @@ namespace SWEndor.Core
         ActorInfo t = Engine.PlayerInfo.TargetActor;
         t = t?.ParentForCoords ?? t;
         if (t != null)
-          t.UpdateRenderLine();
+          UpdateRenderLine(t);
       }
+    }
+
+    private void UpdateRenderLine(ActorInfo actor)
+    {
+      TV_3DVECTOR r = Engine.PlayerCameraInfo.Camera.GetRotation();
+      Sphere sph = actor.GetBoundingSphere(false);
+      TVCamera c = Engine.Surfaces.RS_PreTarget.GetCamera();
+      c.SetRotation(r.x, r.y, r.z);
+      c.SetPosition(sph.X, sph.Y, sph.Z);
+      TV_3DVECTOR d2 = c.GetFrontPosition(-sph.R * 2.5f);
+      c.SetPosition(d2.x, d2.y, d2.z);
+
+      Engine.Surfaces.RS_PreTarget.StartRender(false);
+      using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        actor.Render(true);
+      Engine.Surfaces.RS_PreTarget.EndRender();
+
+      // post process:
+      Engine.Surfaces.RS_Target.StartRender(false);
+      int tex = Engine.Surfaces.RS_PreTarget.GetTexture();
+      int icolor = actor.Faction.Color.Value;
+      int w = Engine.Surfaces.Target_width;
+      int h = Engine.Surfaces.Target_height;
+      Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
+      Engine.TrueVision.TVScreen2DImmediate.Draw_Texture(tex
+                                , 0
+                                , 0
+                                , w
+                                , h
+                                , icolor);
+
+      Engine.TrueVision.TVScreen2DImmediate.Draw_Box(2, 2, w - 2, h - 2, icolor);
+      Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
+
+      ActorInfo tp = actor.ParentForCoords ?? actor;
+      int fntID = Engine.FontFactory.Get(Font.T12).ID;
+      Engine.TrueVision.TVScreen2DText.Action_BeginText();
+      // Name
+      Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(tp.Name
+                                        , 10
+                                        , 10
+                                        , icolor
+                                        , fntID);
+
+      // Shields
+      Engine.TrueVision.TVScreen2DText.TextureFont_DrawText("SHD"
+                                              , 15
+                                              , h - 45
+                                              , icolor
+                                              , fntID);
+
+      Engine.TrueVision.TVScreen2DText.TextureFont_DrawText((tp.MaxShd == 0) ? "----" : "{0:0}%".F(tp.Shd_Perc)
+                                              , 15 + 40
+                                              , h - 45
+                                              , ((tp.MaxShd == 0) ? new COLOR(1, 1, 1, 0.4f) : tp.Shd_Color).Value
+                                              , fntID);
+
+      // Hull
+      Engine.TrueVision.TVScreen2DText.TextureFont_DrawText("HULL"
+                                              , 15
+                                              , h - 25
+                                              , icolor
+                                              , fntID);
+
+      Engine.TrueVision.TVScreen2DText.TextureFont_DrawText((tp.MaxHull == 0) ? "100%" : "{0:0}%".F(tp.Hull_Perc)
+                                              , 15 + 40
+                                              , h - 25
+                                              , ((tp.MaxHull == 0) ? new COLOR(0, 1, 0, 1) : tp.Hull_Color).Value
+                                              , fntID);
+
+      // Systems
+      int i = 0;
+      int maxpart = tp.TypeInfo.SystemData.Parts.Length;
+      fntID = Engine.FontFactory.Get(Font.T08).ID;
+      foreach (SystemPart part in tp.TypeInfo.SystemData.Parts)
+      {
+        SystemState s = tp.GetStatus(part);
+        ColorLocalKeys k = s == SystemState.ACTIVE ? ColorLocalKeys.GAME_SYSTEMSTATE_ACTIVE :
+                           s == SystemState.DISABLED ? ColorLocalKeys.GAME_SYSTEMSTATE_DISABLED :
+                           s == SystemState.DESTROYED ? ColorLocalKeys.GAME_SYSTEMSTATE_DESTROYED :
+                                                        ColorLocalKeys.GAME_SYSTEMSTATE_NULL;
+        int scolor = ColorLocalization.Get(k).Value;
+
+        Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(part.GetShortName()
+                                                      , w - 5 - 25 * (1 + i % 4)
+                                                      , h - 5 - 12 * (1 + maxpart / 4 - i / 4)
+                                                      , scolor
+                                                      , fntID);
+        i++;
+      }
+
+      Engine.TrueVision.TVScreen2DText.Action_EndText();
+      Engine.Surfaces.RS_Target.EndRender();
     }
   }
 }

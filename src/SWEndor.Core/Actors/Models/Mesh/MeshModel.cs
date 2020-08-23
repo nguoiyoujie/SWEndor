@@ -168,14 +168,13 @@ namespace SWEndor.Actors.Models
       return new TV_3DVECTOR(x, y, z);
     }
 
-    //public void Render(bool renderfar) { Render(renderfar ? FarMesh : Mesh); }
+    public void Render(bool renderfar) { Render(renderfar ? FarMesh : Mesh); }
 
     private void Render(TVMesh mesh)
     {
       using (ScopeCounters.Acquire(meshScope))
         if (ScopeCounters.IsZero(disposeScope))
-          if (mesh.IsVisible())
-            mesh.Render();
+          mesh.Render();
     }
 
     bool prev_collide;
@@ -231,116 +230,19 @@ namespace SWEndor.Actors.Models
         }
     }
 
-    public void UpdateRenderLine(Engine engine, ActorInfo actor)
-    {
-      if (Mesh == null)
-        return;
-
-      TV_3DVECTOR p = engine.PlayerCameraInfo.Camera.GetPosition();
-      TV_3DVECTOR r = engine.PlayerCameraInfo.Camera.GetRotation();
-      Sphere sph = GetBoundingSphere(false);
-      TVCamera c = engine.Surfaces.RS_PreTarget.GetCamera();
-      c.SetRotation(r.x, r.y, r.z);
-      c.SetPosition(sph.X, sph.Y, sph.Z);
-      TV_3DVECTOR d2 = c.GetFrontPosition(-sph.R * 2.5f);
-      c.SetPosition(d2.x, d2.y, d2.z);
-
-      engine.Surfaces.RS_PreTarget.StartRender(false);
-      using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
-        FarMesh?.Render();
-      engine.Surfaces.RS_PreTarget.EndRender();
-
-      // post process:
-      engine.Surfaces.RS_Target.StartRender(false);
-      int tex = engine.Surfaces.RS_PreTarget.GetTexture();
-      int icolor = actor.Faction.Color.Value;
-      int w = engine.Surfaces.Target_width;
-      int h = engine.Surfaces.Target_height;
-      engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
-      engine.TrueVision.TVScreen2DImmediate.Draw_Texture(tex
-                                , 0
-                                , 0
-                                , w
-                                , h
-                                , icolor);
-
-      engine.TrueVision.TVScreen2DImmediate.Draw_Box(2, 2, w - 2, h - 2, icolor);
-      engine.TrueVision.TVScreen2DImmediate.Action_End2D();
-
-      ActorInfo tp = actor.ParentForCoords ?? actor;
-      int fntID = engine.FontFactory.Get(Font.T12).ID;
-      engine.TrueVision.TVScreen2DText.Action_BeginText();
-      // Name
-      engine.TrueVision.TVScreen2DText.TextureFont_DrawText(tp.Name
-                                        , 10
-                                        , 10
-                                        , icolor
-                                        , fntID);
-
-      // Shields
-      engine.TrueVision.TVScreen2DText.TextureFont_DrawText("SHD"
-                                              , 15
-                                              , h - 45
-                                              , icolor
-                                              , fntID);
-
-      engine.TrueVision.TVScreen2DText.TextureFont_DrawText((tp.MaxShd == 0) ? "----" : "{0:0}%".F(tp.Shd_Perc)
-                                              , 15 + 40
-                                              , h - 45
-                                              , ((tp.MaxShd == 0) ? new COLOR(1, 1, 1, 0.4f) : tp.Shd_Color).Value
-                                              , fntID);
-
-      // Hull
-      engine.TrueVision.TVScreen2DText.TextureFont_DrawText("HULL"
-                                              , 15
-                                              , h - 25
-                                              , icolor
-                                              , fntID);
-
-      engine.TrueVision.TVScreen2DText.TextureFont_DrawText((tp.MaxHull == 0) ? "100%" : "{0:0}%".F(tp.Hull_Perc)
-                                              , 15 + 40
-                                              , h - 25
-                                              , ((tp.MaxHull == 0) ? new COLOR(0, 1, 0, 1) : tp.Hull_Color).Value
-                                              , fntID);
-
-      // Systems
-      int i = 0;
-      int maxpart = tp.TypeInfo.SystemData.Parts.Length;
-      fntID = engine.FontFactory.Get(Font.T08).ID;
-      foreach (SystemPart part in tp.TypeInfo.SystemData.Parts)
-      {
-        SystemState s = tp.GetStatus(part);
-        ColorLocalKeys k = s == SystemState.ACTIVE ? ColorLocalKeys.GAME_SYSTEMSTATE_ACTIVE :
-                           s == SystemState.DISABLED ? ColorLocalKeys.GAME_SYSTEMSTATE_DISABLED :
-                           s == SystemState.DESTROYED ? ColorLocalKeys.GAME_SYSTEMSTATE_DESTROYED :
-                                                        ColorLocalKeys.GAME_SYSTEMSTATE_NULL;
-        int scolor = ColorLocalization.Get(k).Value;
-
-        engine.TrueVision.TVScreen2DText.TextureFont_DrawText(part.GetShortName()
-                                                      , w - 5 - 25 * (1 + i % 4)
-                                                      , h - 5 - 12 * (1 + maxpart / 4 - i / 4)
-                                                      , scolor
-                                                      , fntID);
-        i++;
-      }
-
-      engine.TrueVision.TVScreen2DText.Action_EndText();
-      engine.Surfaces.RS_Target.EndRender();
-    }
-
     public void EnableCollision(bool enable)
     {
       Mesh?.SetCollisionEnable(enable);
       FarMesh?.SetCollisionEnable(enable);
     }
 
-    public bool Collision(Engine engine, ActorInfo actor, TV_3DVECTOR start, TV_3DVECTOR end)
+    public bool Collision(ActorInfo actor, TV_3DVECTOR start, TV_3DVECTOR end)
     {
       TVMesh m = actor.IsFarMode ? FarMesh : Mesh;
       return m.Collision(start, end);
     }
 
-    public bool AdvancedCollision(Engine engine, ActorInfo actor, TV_3DVECTOR start, TV_3DVECTOR end, ref TV_COLLISIONRESULT result)
+    public bool AdvancedCollision(ActorInfo actor, TV_3DVECTOR start, TV_3DVECTOR end, ref TV_COLLISIONRESULT result)
     {
       TVMesh m = actor.IsFarMode ? FarMesh : Mesh;
       return m.AdvancedCollision(start, end, ref result);
@@ -359,10 +261,9 @@ namespace SWEndor.Actors
     //public void SetTexMod(float u, float v, float su, float sv) { Meshes.SetTexMod(u, v, su, sv); }
     public TV_3DVECTOR GetVertex(int vertexID) { return Meshes.GetVertex(vertexID); }
     public int GetVertexCount() { return Meshes.GetVertexCount(); }
-    //public void Render(bool renderfar) { Meshes.Render(renderfar); }
-    public void UpdateRenderLine() { Meshes.UpdateRenderLine(Engine, this); }
+    public void Render(bool renderfar) { Meshes.Render(renderfar); }
     public void EnableCollision(bool enable) { Meshes.EnableCollision(enable); }
-    public bool AdvancedCollision(TV_3DVECTOR start, TV_3DVECTOR end, ref TV_COLLISIONRESULT result) { return Meshes.AdvancedCollision(Engine, this, start, end, ref result); }
+    public bool AdvancedCollision(TV_3DVECTOR start, TV_3DVECTOR end, ref TV_COLLISIONRESULT result) { return Meshes.AdvancedCollision(this, start, end, ref result); }
 
     public TV_3DVECTOR MaxDimensions { get { return TypeInfo.MeshData.MaxDimensions; } }
     public TV_3DVECTOR MinDimensions { get { return TypeInfo.MeshData.MinDimensions; } }

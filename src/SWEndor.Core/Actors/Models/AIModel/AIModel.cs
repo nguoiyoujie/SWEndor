@@ -56,7 +56,7 @@ namespace SWEndor.Actors.Models
     internal float AdjustRotation(Engine engine, ActorInfo owner, float responsiveness = 10)
     {
       Target.Update(engine, owner);
-      return AIUpdate.AdjustRotation(owner.Engine, owner, Target.Position, responsiveness);
+      return AIUpdate.AdjustRotation(engine, owner, Target.Position, responsiveness);
     }
 
     internal float AdjustSpeed(ActorInfo owner, bool useAILimit)

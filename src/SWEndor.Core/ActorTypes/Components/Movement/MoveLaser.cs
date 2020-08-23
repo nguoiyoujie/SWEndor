@@ -11,7 +11,7 @@ namespace SWEndor.ActorTypes.Components
   {
     internal static void Move(Engine engine, ActorInfo actor, ref MoveData data, float time)
     {
-      actor.MoveRelative(Globals.LaserSpeed * actor.Game.TimeSinceRender, 0, 0);
+      actor.MoveRelative(Globals.LaserSpeed * engine.Game.TimeSinceRender, 0, 0);
     }
   }
 }

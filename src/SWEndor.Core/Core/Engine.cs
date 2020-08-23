@@ -154,12 +154,12 @@ namespace SWEndor.Core
       GameScenarioManager.LoadMainMenu();
     }
 
-    Action<Engine, ActorInfo> process = ActorInfo.Process;
-    Action<Engine, ExplosionInfo> processExpl = ExplosionInfo.ProcessExp;
-    Action<Engine, ProjectileInfo> processProj = ProjectileInfo.Process;
-    Action<Engine, ActorInfo> processAI = ActorInfo.ProcessAI;
-    Action<Engine, ActorInfo> processCollision = ActorInfo.ProcessCollision;
-    Action<Engine, ProjectileInfo> processProjCollision = ProjectileInfo.ProcessCollision;
+    private readonly Action<Engine, ActorInfo> process = ActorInfo.Process;
+    private readonly Action<Engine, ExplosionInfo> processExpl = ExplosionInfo.ProcessExp;
+    private readonly Action<Engine, ProjectileInfo> processProj = ProjectileInfo.Process;
+    private readonly Action<Engine, ActorInfo> processAI = ActorInfo.ProcessAI;
+    private readonly Action<Engine, ActorInfo> processCollision = ActorInfo.ProcessCollision;
+    private readonly Action<Engine, ProjectileInfo> processProjCollision = ProjectileInfo.ProcessCollision;
 
     public void Process() { ActorFactory.DoEach(process); }
     public void ProcessExpl() { ExplosionFactory.DoEach(processExpl); }
@@ -167,6 +167,8 @@ namespace SWEndor.Core
     public void ProcessAI() { ActorFactory.StaggeredDoEach(2, ref Game.AITickCount, processAI); }
     public void ProcessCollision() { ActorFactory.StaggeredDoEach(5, ref Game.CollisionTickCount, processCollision); }
     public void ProcessProjCollision() { ProjectileFactory.StaggeredDoEach(5, ref Game.CollisionTickCount, processProjCollision); }
+
+    private readonly StringBuilder loadingText = new StringBuilder(1000);
 
     public void PreRender()
     {
@@ -180,15 +182,14 @@ namespace SWEndor.Core
         Screen2D.LoadingTextLines.RemoveAt(0);
       }
 
-      StringBuilder text = new StringBuilder();
+      loadingText.Clear();
       while (i < Screen2D.LoadingTextLines.Count)
       {
-        text.Append(Screen2D.LoadingTextLines[i]);
-        text.Append("\n");
+        loadingText.AppendLine(Screen2D.LoadingTextLines[i]);
         i++;
       }
 
-      TrueVision.TVScreen2DText.TextureFont_DrawText(text.ToString(), 40, 40, new TV_COLOR(1,1,1,1).GetIntColor(), FontFactory.Get(Font.T12).ID);
+      TrueVision.TVScreen2DText.TextureFont_DrawText(loadingText.ToString(), 40, 40, new TV_COLOR(1,1,1,1).GetIntColor(), FontFactory.Get(Font.T12).ID);
       TrueVision.TVScreen2DText.Action_EndText();
 
       Screen2D.Draw();
