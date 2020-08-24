@@ -1,5 +1,5 @@
 ﻿using Primrose.Primitives.ValueTypes;
-using SWEndor.Scenarios.Scripting;
+using SWEndor.Game.Scenarios.Scripting;
 using System.Drawing;
 using System.Text.RegularExpressions;
 

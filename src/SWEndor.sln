@@ -11,7 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fmod.Wrapper", "Fmod.Wrappe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWEndor.ScenarioEditor", "SWEndor.ScenarioEditor\SWEndor.ScenarioEditor.csproj", "{CB3C11DA-081A-4BA5-9A37-30732BAD99C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWEndor.Core", "SWEndor.Core\SWEndor.Core.csproj", "{55637145-BFE1-46E7-9396-06890213192F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWEndor.Game", "SWEndor.Game\SWEndor.Game.csproj", "{55637145-BFE1-46E7-9396-06890213192F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{126D9070-0222-4873-AFE6-5D818F947084}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

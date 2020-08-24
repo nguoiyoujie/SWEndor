@@ -1,10 +1,6 @@
-﻿using Primrose.FileFormat.INI;
-using Primrose.Expressions;
-using SWEndor.Scenarios.Scripting;
+﻿using Primrose.Expressions;
+using SWEndor.Game.Scenarios.Scripting;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace SWEndor.ScenarioEditor.Checker
 {

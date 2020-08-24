@@ -1,7 +1,5 @@
 ﻿using SWEndor.FileFormat.INI;
-using SWEndor.ScenarioEditor.Checker;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 

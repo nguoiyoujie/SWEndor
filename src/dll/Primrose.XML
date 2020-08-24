@@ -1761,6 +1761,14 @@
         <member name="P:Primrose.Primitives.IIdentity.ID">
             <summary>The instance ID</summary>
         </member>
+        <member name="T:Primrose.Primitives.IIdentity`1">
+            <summary>
+            Implements an ID object
+            </summary>
+        </member>
+        <member name="P:Primrose.Primitives.IIdentity`1.ID">
+            <summary>The instance ID</summary>
+        </member>
         <member name="T:Primrose.Primitives.Parsers.UnsupportedWriteException`1">
             <summary>Defines an exception for errors encountered by an attempt to write from an unsupported type</summary>
             <typeparam name="T">The unsupported type</typeparam>

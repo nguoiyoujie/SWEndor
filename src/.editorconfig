@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# HeapAnalyzerExplicitNewObjectRule: Explicit new reference type allocation
+dotnet_diagnostic.HeapAnalyzerExplicitNewObjectRule.severity = none

@@ -1,9 +1,7 @@
 ﻿using Primrose.Primitives.ValueTypes;
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 

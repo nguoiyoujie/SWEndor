@@ -1,8 +1,6 @@
-﻿using Primrose.Expressions;
-using Primrose.Primitives.Extensions;
+﻿using Primrose.Primitives.Extensions;
 using Primrose.Primitives.Factories;
-using Primrose.Primitives.ValueTypes;
-using SWEndor.Scenarios.Scripting;
+using SWEndor.Game.Scenarios.Scripting;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -11,9 +9,9 @@ namespace SWEndor.ScenarioEditor
 {
   public partial class ScriptEditForm : Form
   {
-    private Context Context;
+    private readonly Context Context;
 
-    private Registry<IHighlighter, ToolStripMenuItem> HighlightAssoc = new Registry<IHighlighter, ToolStripMenuItem>();
+    private readonly Registry<IHighlighter, ToolStripMenuItem> HighlightAssoc = new Registry<IHighlighter, ToolStripMenuItem>();
 
     public ScriptEditForm()
     {
@@ -40,11 +38,10 @@ namespace SWEndor.ScenarioEditor
 
     private void UpdateTitle()
     {
-      bool chg = false;
       tpEditor tp = GetCurrentEditor();
       if (tp != null)
       {
-        chg = tp.IsChanged;
+        bool chg = tp.IsChanged;
         if (tp.CurrPath != null)
           Text = "{0} [{1}]".F(Globals.Title, tp.CurrPath + (chg ? "*" : ""));
         else
@@ -129,8 +126,7 @@ namespace SWEndor.ScenarioEditor
     {
       foreach (TabPage p in tcEditor.TabPages)
       {
-        tpEditor tp = p as tpEditor;
-        if (tp != null)
+        if (p is tpEditor tp)
           if (!tp.FileClose())
             e.Cancel = true;
       }

@@ -178,9 +178,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SWEndor.Core\SWEndor.Core.csproj">
+    <ProjectReference Include="..\SWEndor.Game\SWEndor.Game.csproj">
       <Project>{55637145-bfe1-46e7-9396-06890213192f}</Project>
-      <Name>SWEndor.Core</Name>
+      <Name>SWEndor.Game</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

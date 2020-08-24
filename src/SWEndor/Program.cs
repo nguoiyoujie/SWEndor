@@ -1,4 +1,4 @@
-﻿using SWEndor.Core;
+﻿using SWEndor.Game.Core;
 using System;
 using System.Windows.Forms;
 
