@@ -22,6 +22,7 @@ namespace SWEndor
     public readonly Engine Engine;
     public readonly TV_2DVECTOR ScreenSize;
     public readonly TV_2DVECTOR ScreenCenter;
+    public readonly Textures Textures;
 
     // Show toggles
     public bool ShowUI = true;
@@ -64,6 +65,8 @@ namespace SWEndor
       Engine = engine;
       ScreenSize = new TV_2DVECTOR(Engine.ScreenWidth, Engine.ScreenHeight);
       ScreenCenter = ScreenSize / 2;
+      Textures = new Textures(this);
+
       m_Widgets = new Widget[]
         {
           new SideBarsWidget (this),

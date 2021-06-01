@@ -16,6 +16,48 @@
         <member name="F:Primrose.Build.Revision">
             <summary>The daily revision number of the build</summary> 
         </member>
+        <member name="T:Primrose.MessageDelegate">
+            <summary>A delegate representing a receipt of a string message</summary>
+            <param name="message">Represents message received</param>
+        </member>
+        <member name="T:Primrose.MessageDelegate`1">
+            <summary>A delegate representing a receipt of a typed message</summary>
+            <typeparam name="T">The type of the message</typeparam>
+            <param name="message">Represents message received</param>
+        </member>
+        <member name="T:Primrose.Diagnostics.PerformanceMonitor">
+            <summary>Sets up runtime monitoring of functions</summary>
+        </member>
+        <member name="M:Primrose.Diagnostics.PerformanceMonitor.#ctor">
+            <summary>Sets up runtime monitoring of functions</summary>
+        </member>
+        <member name="F:Primrose.Diagnostics.PerformanceMonitor.LogPath">
+            <summary>Determines the file path where monitoring report will be written to</summary>
+        </member>
+        <member name="F:Primrose.Diagnostics.PerformanceMonitor.Report">
+            <summary>Retrieves the most recent report</summary>
+        </member>
+        <member name="F:Primrose.Diagnostics.PerformanceMonitor.Properties">
+            <summary>Allows user applications to register their own values in properties</summary>
+        </member>
+        <member name="F:Primrose.Diagnostics.PerformanceMonitor.ShowProperties">
+            <summary>Determines which user properties would be included in the report</summary>
+        </member>
+        <member name="P:Primrose.Diagnostics.PerformanceMonitor.Enabled">
+            <summary>Determines whether monitoring functions are enabled</summary>
+        </member>
+        <member name="M:Primrose.Diagnostics.PerformanceMonitor.Create(System.String)">
+            <summary>Creates a Performance countering element. The monitor will be notified on disposal</summary>
+        </member>
+        <member name="M:Primrose.Diagnostics.PerformanceMonitor.Clear">
+            <summary>Clears existing data and logged reports</summary>
+        </member>
+        <member name="M:Primrose.Diagnostics.PerformanceMonitor.Print">
+            <summary>Writes the Report to the file indicated by LogPath</summary>
+        </member>
+        <member name="M:Primrose.Diagnostics.PerformanceMonitor.UpdateReport">
+            <summary>Updates the Report</summary>
+        </member>
         <member name="T:Primrose.FileFormats.Common.IFile">
             <summary>Defines an interface for reading and writing to a file</summary>
         </member>
@@ -336,6 +378,13 @@
             <param name="defaultValue">The default value</param>
             <returns>The value belonging to the section and key in the INIFile. If the key does not exist, returns defaultValue</returns>
         </member>
+        <member name="M:Primrose.FileFormat.INI.INIFile.GetValueX``1(System.String,System.String,Primrose.Primitives.Parsers.IResolver)">
+            <summary>Gets a value from the INIFile</summary>
+            <param name="section">The section containing the key-value pair</param>
+            <param name="key">The key containing the value</param>
+            <param name="resolver">A string resolver function</param>
+            <returns>The value belonging to the section and key in the INIFile. If the key does not exist, returns defaultValue</returns>
+        </member>
         <member name="M:Primrose.FileFormat.INI.INIFile.GetString(System.String,System.String,System.String)">
             <summary>
             Gets a string value from the INIFile 
@@ -570,6 +619,334 @@
         <member name="M:Primrose.Primitives.Collections.CircularQueue`1.Dequeue">
             <summary>Dequeues an item from the queue</summary>
             <returns></returns>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.SortedRegistry`2">
+            <summary>
+            Maintains a typed registry of objects.
+            </summary>
+            <typeparam name="K">The type of the key</typeparam>
+            <typeparam name="T">The type of the registered object</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.#ctor">
+            <summary>Creates an object registry</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.#ctor(System.Collections.Generic.IComparer{`0})">
+            <summary>Creates an object registry with a sorting comparer</summary>
+            <param name="comparer">The sorting comparer for the registry</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.#ctor(System.Collections.Generic.IDictionary{`0,`1})">
+            <summary>Creates an object registry that contains elements copied from another registry</summary>
+            <param name="dictionary">The other dictionary whose elements are copied to this registry</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.#ctor(System.Collections.Generic.IDictionary{`0,`1},System.Collections.Generic.IComparer{`0})">
+            <summary>Creates an object registry that contains elements copied from another registry</summary>
+            <param name="dictionary">The other dictionary whose elements are copied to this registry</param>
+            <param name="comparer">The sorting comparer for the registry</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.#ctor(Primrose.Primitives.Factories.IRegistry{`0,`1})">
+            <summary>Creates an object registry that contains elements copied from another registry</summary>
+            <param name="other">The other registry whose elements are copied to this registry</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.#ctor(Primrose.Primitives.Factories.IRegistry{`0,`1},System.Collections.Generic.IComparer{`0})">
+            <summary>Creates an object registry that contains elements copied from another registry</summary>
+            <param name="other">The other registry whose elements are copied to this registry</param>
+            <param name="comparer">The sorting comparer for the registry</param>
+        </member>
+        <member name="F:Primrose.Primitives.Factories.SortedRegistry`2.list">
+            <summary>The container data source</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Factories.SortedRegistry`2.Default">
+            <summary>The default value returned</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.GetUnderlyingDictionary">
+            <summary>Retrieves the underlying dictionary</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.Contains(`0)">
+            <summary>Determines whether the registry contains a key</summary>
+            <param name="key">The identifier key to check</param>
+            <returns>True if the registry contains this key, False if otherwise</returns>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.SortedRegistry`2.Item(`0)">
+            <summary>Retrieves the value associated with a key index</summary>
+            <param name="id">The identifier key to check</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.Get(`0)">
+            <summary>Retrieves the value associated with a key</summary>
+            <param name="key">The identifier key to check</param>
+            <returns>The value associated with the key. If the registry does not contain this key or the key is null, returns Default</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.GetX(`0)">
+            <summary>Strictly retrieves the value associated with a key</summary>
+            <param name="key">The identifier key to check</param>
+            <returns>The value associated with the key</returns>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">The registry does not contain this key.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.GetKeys">
+            <summary>Retrives an array of all the keys in the registry</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.EnumerateKeys">
+            <summary>Enumerates through the keys in the registry</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.GetValues">
+            <summary>Retrives an array of all the values in the registry</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.EnumerateValues">
+            <summary>Enumerates through the values in the registry</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.Add(`0,`1)">
+            <summary>Adds an object into the registry</summary>
+            <param name="key">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.Put(`0,`1)">
+            <summary>Updates or adds an object into the registry</summary>
+            <param name="key">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.Remove(`0)">
+            <summary>Removes an object from the registry</summary>
+            <param name="key">The identifier key to remove</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.Clear">
+            <summary>Purges all data from the registry</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.SortedRegistry`2.Count">
+            <summary>The number of elements in this registry</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.Factory`2">
+            <summary>
+            Allows creation of objects and stores them automatically. Limited to objects with parameterless constructors; for others, use Registry
+            </summary>
+            <typeparam name="K">The key type to be stored</typeparam>
+            <typeparam name="T">The object type to be stored</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Factory`2.Create(`0)">
+            <summary>
+            Creates a new object and stores its reference in its internal registry
+            </summary>
+            <param name="id">The identifier for the object</param>
+            <returns></returns>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.IFactory`2">
+            <summary>
+            Allows creation of objects and stores them automatically. Limited to objects with parameterless constructors; for others, use Registry
+            </summary>
+            <typeparam name="K">The key type to be stored</typeparam>
+            <typeparam name="T">The object type to be stored</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IFactory`2.Create(`0)">
+            <summary>
+            Creates a new object and stores its reference in its internal registry
+            </summary>
+            <param name="id">The identifier for the object</param>
+            <returns></returns>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.IRegistry`2">
+            <summary>
+            Maintains a typed registry of objects.
+            </summary>
+            <typeparam name="K">The type of the key</typeparam>
+            <typeparam name="T">The type of the registered object</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`2.Get(`0)">
+            <summary>Retrieves the value associated with a key</summary>
+            <param name="key">The identifier key to check</param>
+            <returns>The value associated with the key. If the registry does not contain this key, returns Default</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`2.GetUnderlyingDictionary">
+            <summary>Retrieves the underlying dictionary</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`2.Add(`0,`1)">
+            <summary>Adds an object into the registry</summary>
+            <param name="key">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`2.Put(`0,`1)">
+            <summary>Updates or adds an object into the registry</summary>
+            <param name="key">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`2.Remove(`0)">
+            <summary>Removes an object from the registry</summary>
+            <param name="key">The identifier key to remove</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.IRegistry`2.Clear">
+            <summary>Purges all data from the registry</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.AFactoryObject`1">
+            <summary>
+            Defines a Factory object>
+            </summary>
+            <typeparam name="K">The type of the associated key</typeparam>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.AFactoryObject`1.ID">
+            <summary>The unique identifier of the object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.AFactoryObject`1.#ctor">
+            <summary>Creates an instance of the object</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.IPool">
+            <summary>
+            Provides a basic object pool for pooling objects for further use  
+            </summary>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.IPool.Count">
+            <summary>Retrieves the number of elements in the pool</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.IPool.UncollectedCount">
+            <summary>Retrieves the number of generated elements in the pool that were not yet collected</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.ObjectPool`1">
+            <summary>
+            Provides a basic object pool for pooling objects for further use  
+            </summary>
+            <typeparam name="T">The item type to be pooled</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.CreateStaticPool(System.Func{`0},System.Action{`0})">
+            <summary>
+            Creates a static version of the object pool for global use
+            </summary>
+            <param name="createFn">The function for creating new instances</param>
+            <param name="resetFn">The function for reseting instances that are returned to the pool</param>
+            <returns></returns>
+            <exception cref="T:System.InvalidOperationException">The background object pool has already been created.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.GetStaticPool">
+            <summary>
+            Retrieves the static version of the pool if created
+            </summary>
+            <returns></returns>
+            <exception cref="T:System.InvalidOperationException">The background object pool has not been created.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.#ctor(System.Func{`0},System.Action{`0})">
+            <summary>
+            Creates an object pool
+            </summary>
+            <param name="createFn">The function for creating new instances</param>
+            <param name="resetFn">The function for reseting instances that are returned to the pool</param>
+            <exception cref="T:System.ArgumentNullException">createFn cannot be null</exception>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.ObjectPool`1.Count">
+            <summary>Retrieves the number of elements in the pool</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.ObjectPool`1.UncollectedCount">
+            <summary>Retrieves the number of generated elements in the pool that were not yet collected</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.GetNew">
+            <summary>Returns an instance of <typeparamref name="T"/> from the pool, or creates a new instance if the pool is empty</summary>
+            <returns>An instance of <typeparamref name="T"/> from the pool, or created from the creator function if the pool is empty</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.Return(`0)">
+            <summary>Returns an instance of <typeparamref name="T"/> to the pool.</summary>
+            <param name="item">The object to be returnedto the pool</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.Clear">
+            <summary>Removes all instances from the pool</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.Registry`2">
+            <summary>
+            Maintains a typed registry of objects.
+            </summary>
+            <typeparam name="K">The type of the key</typeparam>
+            <typeparam name="T">The type of the registered object</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.#ctor">
+            <summary>Creates an object registry</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.#ctor(System.Int32)">
+            <summary>Creates an object registry with an initial capacity</summary>
+            <param name="capacity">The initial capacity of the registry</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.#ctor(Primrose.Primitives.Factories.IRegistry{`0,`1})">
+            <summary>Creates an object registry that contains elements copied from another registry</summary>
+            <param name="other">The other registry whose elements are copied to this registry</param>
+        </member>
+        <member name="F:Primrose.Primitives.Factories.Registry`2.list">
+            <summary>The container data source</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Factories.Registry`2.Default">
+            <summary>The default value returned</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.GetUnderlyingDictionary">
+            <summary>Retrieves the underlying dictionary</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.Contains(`0)">
+            <summary>Determines whether the registry contains a key</summary>
+            <param name="key">The identifier key to check</param>
+            <returns>True if the registry contains this key, False if otherwise</returns>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.Registry`2.Item(`0)">
+            <summary>Retrieves the value associated with a key index</summary>
+            <param name="id">The identifier key to check</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.Get(`0)">
+            <summary>Retrieves the value associated with a key</summary>
+            <param name="key">The identifier key to check</param>
+            <returns>The value associated with the key. If the registry does not contain this key or the key is null, returns Default</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.GetD(`0,`1)">
+            <summary>Retrieves the value associated with a key or a default value if the key is not present</summary>
+            <param name="key">The identifier key to check</param>
+            <param name="defaultValue">The default value</param>
+            <returns>The value associated with the key. If the registry does not contain this key or the key is null, returns defaultValue</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.GetX(`0)">
+            <summary>Strictly retrieves the value associated with a key</summary>
+            <param name="key">The identifier key to check</param>
+            <returns>The value associated with the key</returns>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">The registry does not contain this key.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.GetKeys">
+            <summary>Retrives an array of all the keys in the registry</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.EnumerateKeys">
+            <summary>Enumerates through the keys in the registry</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.GetValues">
+            <summary>Retrives an array of all the values in the registry</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.EnumerateValues">
+            <summary>Enumerates through the values in the registry</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.Add(`0,`1)">
+            <summary>Adds an object into the registry</summary>
+            <param name="key">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.Put(`0,`1)">
+            <summary>Updates or adds an object into the registry</summary>
+            <param name="key">The identifier key to add</param>
+            <param name="item">The object to be associated with this key</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.Remove(`0)">
+            <summary>Removes an object from the registry</summary>
+            <param name="key">The identifier key to remove</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.Clear">
+            <summary>Purges all data from the registry</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.GetEnumerator">
+            <summary>Retrieves the enumerator for the registry</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.System#Collections#IEnumerable#GetEnumerator">
+            <summary>Retrieves the enumerator for the registry</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.Registry`2.Count">
+            <summary>The number of elements in this registry</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.Registry`1">
+            <summary>
+            Maintains a typed registry of objects.
+            </summary>
+            <typeparam name="T">The type of the registered object</typeparam>
         </member>
         <member name="T:Primrose.Primitives.ThreadSafeDictionary`2">
             <summary>
@@ -882,6 +1259,9 @@
             The encapsulated registry. Direct method calls to the encapsulated object will not trigger any events.
             </summary>
         </member>
+        <member name="M:Primrose.Primitives.Observables.ObservableRegistry`2.GetUnderlyingDictionary">
+            <summary>Retrieves the underlying dictionary</summary>
+        </member>
         <member name="P:Primrose.Primitives.Observables.ObservableRegistry`2.Item(`0)">
             <summary>Gets or sets an element in the list, accessed by an index</summary>
         </member>
@@ -1038,6 +1418,14 @@
             <returns>True if the array contains at least one member equal to value, false otherwise</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
         </member>
+        <member name="M:Primrose.Primitives.Extensions.ArrayExts.ContainsSameElements``1(``0[],``0[])">
+            <summary>Determines if two arrays contains the same elements, not necessarily in order</summary>
+            <typeparam name="T">The member type</typeparam>
+            <param name="array">The array</param>
+            <param name="other">The second array to compare</param>
+            <returns>True if the two arrays contains the same elements, false otherwise</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
+        </member>
         <member name="M:Primrose.Primitives.Extensions.ArrayExts.Convert``2(``0[],System.Func{``0,``1})">
             <summary>Performs an element-wise conversion of an array to an array of another type</summary>
             <typeparam name="T">The member type of the input array</typeparam>
@@ -1051,6 +1439,17 @@
             <summary>
             Provides extension methods for bit manipulation functions
             </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.BitExts.IsBitSet(System.Int32,System.Int32)">
+            <summary>Determines if a value as a bit set at a given bit position</summary>
+            <param name="value"></param>
+            <param name="bit_position"></param>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.BitExts.SetBit(System.Int32@,System.Int32,System.Boolean)">
+            <summary>Sets or resets a given bit position</summary>
+            <param name="value"></param>
+            <param name="bit_position"></param>
+            <param name="bit_value"></param>
         </member>
         <member name="M:Primrose.Primitives.Extensions.BitExts.GetMostSignificantBit(System.UInt32)">
             <summary>Retrieves the most significant bit of a value</summary>
@@ -1088,7 +1487,7 @@
             Provides extension methods for Dictionaries
             </summary>
         </member>
-        <member name="M:Primrose.Primitives.Extensions.DictionaryExts.Put``2(System.Collections.Generic.Dictionary{``0,``1},``0,``1)">
+        <member name="M:Primrose.Primitives.Extensions.DictionaryExts.Put``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)">
             <summary>
             Adds or updates a key-value pair in a dictionary.
             </summary>
@@ -1098,7 +1497,7 @@
             <param name="k"></param>
             <param name="v"></param>
         </member>
-        <member name="M:Primrose.Primitives.Extensions.DictionaryExts.GetOrDefault``2(System.Collections.Generic.Dictionary{``0,``1},``0)">
+        <member name="M:Primrose.Primitives.Extensions.DictionaryExts.GetOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0)">
             <summary>
             Retrieves a value from a dictionary, or a default(<typeparamref name="V"/>) if the key is not in the dictionary.
             </summary>
@@ -1108,7 +1507,7 @@
             <param name="k"></param>
             <returns></returns>
         </member>
-        <member name="M:Primrose.Primitives.Extensions.DictionaryExts.GetOrAdd``2(System.Collections.Generic.Dictionary{``0,``1},``0)">
+        <member name="M:Primrose.Primitives.Extensions.DictionaryExts.GetOrAdd``2(System.Collections.Generic.IDictionary{``0,``1},``0)">
             <summary>
             Retrieves a value from a dictionary, or adds a new instance of <typeparamref name="V"/> if the key is not in the dictionary.
             </summary>
@@ -1118,7 +1517,7 @@
             <param name="k"></param>
             <returns></returns>
         </member>
-        <member name="M:Primrose.Primitives.Extensions.DictionaryExts.GetOrAdd``2(System.Collections.Generic.Dictionary{``0,``1},``0,System.Func{``0,``1})">
+        <member name="M:Primrose.Primitives.Extensions.DictionaryExts.GetOrAdd``2(System.Collections.Generic.IDictionary{``0,``1},``0,System.Func{``0,``1})">
             <summary>
             Retrieves a value from a dictionary, or adds a new instance of <typeparamref name="V"/> if the key is not in the dictionary.
             </summary>
@@ -1194,6 +1593,25 @@
             <param name="comparer">The comparer object used to compare the two values</param>
             <returns>The smaller of the two values</returns>
         </member>
+        <member name="M:Primrose.Primitives.Extensions.ComparableExts.Within``1(``0,``0,``0)">
+            <summary>
+            Determines if a value is between two values
+            </summary>
+            <param name="value">The value to check</param>
+            <param name="min">The inclusive lower bound</param>
+            <param name="max">The inclusive upper bound</param>
+            <returns>True if the value is within the bounds of the two values, False otherwise</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.ComparableExts.Within``1(``0,``0,``0,System.Collections.Generic.IComparer{``0})">
+            <summary>
+            Determines if a value is between two values, as determined by a comparer
+            </summary>
+            <param name="value">The value to check</param>
+            <param name="min">The inclusive lower bound</param>
+            <param name="max">The inclusive upper bound</param>
+            <param name="comparer">The comparer object used to compare the values</param>
+            <returns>True if the value is within the bounds of the two values, False otherwise</returns>
+        </member>
         <member name="T:Primrose.Primitives.Extensions.NumericExts">
             <summary>
             Provides extension methods for float values
@@ -1206,6 +1624,15 @@
             <param name="value">The starting value</param>
             <param name="target">The target value</param>
             <param name="max_delta">The max_delta</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.NumericExts.Lerp(System.Single,System.Single,System.Single)">
+            <summary>
+            Returns a value linearly interpolated towards a target
+            </summary>
+            <param name="value">The starting value</param>
+            <param name="target">The target value</param>
+            <param name="frac">The fraction to be interpolated towards the target point</param>
             <returns></returns>
         </member>
         <member name="M:Primrose.Primitives.Extensions.NumericExts.Modulus(System.Single,System.Single,System.Single)">
@@ -1238,6 +1665,17 @@
             <typeparam name="T"></typeparam>
             <param name="list"></param>
             <param name="searchFor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.ListExts.BinarySearch``2(System.Collections.Generic.List{``0},``1,System.Func{``0,``1,System.Int32})">
+            <summary>
+            Performs a binary search 
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="U"></typeparam>
+            <param name="list"></param>
+            <param name="target"></param>
+            <param name="comparer"></param>
             <returns></returns>
         </member>
         <member name="M:Primrose.Primitives.Extensions.ListExts.Random``1(System.Collections.Generic.List{``0},System.Random)">
@@ -1485,274 +1923,6 @@
             <param name="t">The type to be enumerated</param>
             <returns>A enumeration of types that is inherited by <paramref name="t"/></returns>
         </member>
-        <member name="T:Primrose.Primitives.Factories.Factory`2">
-            <summary>
-            Allows creation of objects and stores them automatically. Limited to objects with parameterless constructors; for others, use Registry
-            </summary>
-            <typeparam name="K">The key type to be stored</typeparam>
-            <typeparam name="T">The object type to be stored</typeparam>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Factory`2.Create(`0)">
-            <summary>
-            Creates a new object and stores its reference in its internal registry
-            </summary>
-            <param name="id">The identifier for the object</param>
-            <returns></returns>
-        </member>
-        <member name="T:Primrose.Primitives.Factories.IFactory`2">
-            <summary>
-            Allows creation of objects and stores them automatically. Limited to objects with parameterless constructors; for others, use Registry
-            </summary>
-            <typeparam name="K">The key type to be stored</typeparam>
-            <typeparam name="T">The object type to be stored</typeparam>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.IFactory`2.Create(`0)">
-            <summary>
-            Creates a new object and stores its reference in its internal registry
-            </summary>
-            <param name="id">The identifier for the object</param>
-            <returns></returns>
-        </member>
-        <member name="T:Primrose.Primitives.Factories.IRegistry`2">
-            <summary>
-            Maintains a typed registry of objects.
-            </summary>
-            <typeparam name="K">The type of the key</typeparam>
-            <typeparam name="T">The type of the registered object</typeparam>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.IRegistry`2.Get(`0)">
-            <summary>Retrieves the value associated with a key</summary>
-            <param name="key">The identifier key to check</param>
-            <returns>The value associated with the key. If the registry does not contain this key, returns Default</returns>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.IRegistry`2.Add(`0,`1)">
-            <summary>Adds an object into the registry</summary>
-            <param name="key">The identifier key to add</param>
-            <param name="item">The object to be associated with this key</param>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.IRegistry`2.Put(`0,`1)">
-            <summary>Updates or adds an object into the registry</summary>
-            <param name="key">The identifier key to add</param>
-            <param name="item">The object to be associated with this key</param>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.IRegistry`2.Remove(`0)">
-            <summary>Removes an object from the registry</summary>
-            <param name="key">The identifier key to remove</param>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.IRegistry`2.Clear">
-            <summary>Purges all data from the registry</summary>
-        </member>
-        <member name="T:Primrose.Primitives.Factories.AFactoryObject`1">
-            <summary>
-            Defines a Factory object>
-            </summary>
-            <typeparam name="K">The type of the associated key</typeparam>
-        </member>
-        <member name="P:Primrose.Primitives.Factories.AFactoryObject`1.ID">
-            <summary>The unique identifier of the object</summary>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.AFactoryObject`1.#ctor">
-            <summary>Creates an instance of the object</summary>
-        </member>
-        <member name="T:Primrose.Primitives.Factories.IPool">
-            <summary>
-            Provides a basic object pool for pooling objects for further use  
-            </summary>
-        </member>
-        <member name="P:Primrose.Primitives.Factories.IPool.Count">
-            <summary>Retrieves the number of elements in the pool</summary>
-        </member>
-        <member name="P:Primrose.Primitives.Factories.IPool.UncollectedCount">
-            <summary>Retrieves the number of generated elements in the pool that were not yet collected</summary>
-        </member>
-        <member name="T:Primrose.Primitives.Factories.ObjectPool`1">
-            <summary>
-            Provides a basic object pool for pooling objects for further use  
-            </summary>
-            <typeparam name="T">The item type to be pooled</typeparam>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.CreateStaticPool(System.Func{`0},System.Action{`0})">
-            <summary>
-            Creates a static version of the object pool for global use
-            </summary>
-            <param name="createFn">The function for creating new instances</param>
-            <param name="resetFn">The function for reseting instances that are returned to the pool</param>
-            <returns></returns>
-            <exception cref="T:System.InvalidOperationException">The background object pool has already been created.</exception>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.GetStaticPool">
-            <summary>
-            Retrieves the static version of the pool if created
-            </summary>
-            <returns></returns>
-            <exception cref="T:System.InvalidOperationException">The background object pool has not been created.</exception>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.#ctor(System.Func{`0},System.Action{`0})">
-            <summary>
-            Creates an object pool
-            </summary>
-            <param name="createFn">The function for creating new instances</param>
-            <param name="resetFn">The function for reseting instances that are returned to the pool</param>
-            <exception cref="T:System.ArgumentNullException">createFn cannot be null</exception>
-        </member>
-        <member name="P:Primrose.Primitives.Factories.ObjectPool`1.Count">
-            <summary>Retrieves the number of elements in the pool</summary>
-        </member>
-        <member name="P:Primrose.Primitives.Factories.ObjectPool`1.UncollectedCount">
-            <summary>Retrieves the number of generated elements in the pool that were not yet collected</summary>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.GetNew">
-            <summary>Returns an instance of <typeparamref name="T"/> from the pool, or creates a new instance if the pool is empty</summary>
-            <returns>An instance of <typeparamref name="T"/> from the pool, or created from the creator function if the pool is empty</returns>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.Return(`0)">
-            <summary>Returns an instance of <typeparamref name="T"/> to the pool.</summary>
-            <param name="item">The object to be returnedto the pool</param>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.Clear">
-            <summary>Removes all instances from the pool</summary>
-        </member>
-        <member name="T:Primrose.Primitives.Factories.Registry`2">
-            <summary>
-            Maintains a typed registry of objects.
-            </summary>
-            <typeparam name="K">The type of the key</typeparam>
-            <typeparam name="T">The type of the registered object</typeparam>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`2.#ctor">
-            <summary>Creates an object registry</summary>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`2.#ctor(System.Int32)">
-            <summary>Creates an object registry with an initial capacity</summary>
-            <param name="capacity">The initial capacity of the registry</param>
-        </member>
-        <member name="F:Primrose.Primitives.Factories.Registry`2.list">
-            <summary>The container data source</summary>
-        </member>
-        <member name="F:Primrose.Primitives.Factories.Registry`2.Default">
-            <summary>The default value returned</summary>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`2.Contains(`0)">
-            <summary>Determines whether the registry contains a key</summary>
-            <param name="key">The identifier key to check</param>
-            <returns>True if the registry contains this key, False if otherwise</returns>
-        </member>
-        <member name="P:Primrose.Primitives.Factories.Registry`2.Item(`0)">
-            <summary>Retrieves the value associated with a key index</summary>
-            <param name="id">The identifier key to check</param>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`2.Get(`0)">
-            <summary>Retrieves the value associated with a key</summary>
-            <param name="key">The identifier key to check</param>
-            <returns>The value associated with the key. If the registry does not contain this key or the key is null, returns Default</returns>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`2.GetX(`0)">
-            <summary>Strictly retrieves the value associated with a key</summary>
-            <param name="key">The identifier key to check</param>
-            <returns>The value associated with the key</returns>
-            <exception cref="T:System.Collections.Generic.KeyNotFoundException">The registry does not contain this key.</exception>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`2.GetKeys">
-            <summary>Retrives an array of all the keys in the registry</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`2.GetValues">
-            <summary>Retrives an array of all the values in the registry</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`2.Add(`0,`1)">
-            <summary>Adds an object into the registry</summary>
-            <param name="key">The identifier key to add</param>
-            <param name="item">The object to be associated with this key</param>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`2.Put(`0,`1)">
-            <summary>Updates or adds an object into the registry</summary>
-            <param name="key">The identifier key to add</param>
-            <param name="item">The object to be associated with this key</param>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`2.Remove(`0)">
-            <summary>Removes an object from the registry</summary>
-            <param name="key">The identifier key to remove</param>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`2.Clear">
-            <summary>Purges all data from the registry</summary>
-        </member>
-        <member name="P:Primrose.Primitives.Factories.Registry`2.Count">
-            <summary>The number of elements in this registry</summary>
-        </member>
-        <member name="T:Primrose.Primitives.Factories.Registry`1">
-            <summary>
-            Maintains a typed registry of objects.
-            </summary>
-            <typeparam name="T">The type of the registered object</typeparam>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`1.#ctor">
-            <summary>Creates an object registry</summary>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`1.#ctor(System.Int32)">
-            <summary>Creates an object registry with an initial capacity</summary>
-            <param name="capacity">The initial capacity of the registry</param>
-        </member>
-        <member name="F:Primrose.Primitives.Factories.Registry`1.list">
-            <summary>The container data source</summary>
-        </member>
-        <member name="F:Primrose.Primitives.Factories.Registry`1.Default">
-            <summary>The default value returned</summary>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`1.Contains(System.String)">
-            <summary>Determines whether the registry contains a key</summary>
-            <param name="id">The identifier key to check</param>
-            <returns>True if the registry contains this key, False if otherwise</returns>
-        </member>
-        <member name="P:Primrose.Primitives.Factories.Registry`1.Item(System.String)">
-            <summary>Retrieves the value associated with a key index</summary>
-            <param name="id">The identifier key to check</param>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`1.Get(System.String)">
-            <summary>Retrieves the value associated with a key</summary>
-            <param name="id">The identifier key to check</param>
-            <returns>The value associated with the key. If the registry does not contain this key or the key is null, returns Default</returns>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`1.Get(System.String,`0)">
-            <summary>Retrieves the value associated with a key</summary>
-            <param name="id">The identifier key to check</param>
-            <param name="defaultValue">The default value to return if the key is not found in the registry</param>
-            <returns>The value associated with the key. If the registry does not contain this key or the key is null, returns Default</returns>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`1.GetX(System.String)">
-            <summary>Strictly retrieves the value associated with a key</summary>
-            <param name="id">The identifier key to check</param>
-            <returns>The value associated with the key</returns>
-            <exception cref="T:System.Collections.Generic.KeyNotFoundException">The registry does not contain this key.</exception>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`1.GetKeys">
-            <summary>Retrives an array of all the keys in the registry</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`1.GetValues">
-            <summary>Retrives an array of all the values in the registry</summary>
-            <returns></returns>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`1.Add(System.String,`0)">
-            <summary>Adds an object into the registry</summary>
-            <param name="id">The identifier key to add</param>
-            <param name="item">The object to be associated with this key</param>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`1.Put(System.String,`0)">
-            <summary>Updates or adds an object into the registry</summary>
-            <param name="id">The identifier key to add</param>
-            <param name="item">The object to be associated with this key</param>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`1.Remove(System.String)">
-            <summary>Removes an object from the registry</summary>
-            <param name="id">The identifier key to remove</param>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.Registry`1.Clear">
-            <summary>Purges all data from the registry</summary>
-        </member>
-        <member name="P:Primrose.Primitives.Factories.Registry`1.Count">
-            <summary>The number of elements in this registry</summary>
-        </member>
         <member name="T:Primrose.Primitives.IIdentity">
             <summary>
             Implements an ID object
@@ -1803,6 +1973,11 @@
         </member>
         <member name="T:Primrose.Primitives.Parsers.Parser.Rules">
             <summary>Defines parsing rules for interpreting strings into values</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Parsers.Parser.Rules.ToString(System.String,Primrose.Primitives.Parsers.IResolver)">
+            <summary>Resolves a string value</summary>
+            <param name="value">The string to be parsed</param>
+            <param name="resolver">A string resolver function</param>
         </member>
         <member name="M:Primrose.Primitives.Parsers.Parser.Rules.ToBool(System.String,Primrose.Primitives.Parsers.IResolver)">
             <summary>Parses a string to a bool value</summary>
@@ -1906,6 +2081,11 @@
         </member>
         <member name="M:Primrose.Primitives.Parsers.Parser.Rules.ToInt4(System.String,Primrose.Primitives.Parsers.IResolver)">
             <summary>Parses a string to an int4 value</summary>
+            <param name="value">The string to be parsed</param>
+            <param name="resolver">A string resolver function</param>
+        </member>
+        <member name="M:Primrose.Primitives.Parsers.Parser.Rules.ToIntRect(System.String,Primrose.Primitives.Parsers.IResolver)">
+            <summary>Parses a string to an intRect value</summary>
             <param name="value">The string to be parsed</param>
             <param name="resolver">A string resolver function</param>
         </member>
@@ -2073,6 +2253,12 @@
         </member>
         <member name="M:Primrose.Primitives.Pipelines.Pipeline`1.Run">
             <summary>Runs the execution of queued objects, up to a limit defined by MaxExecutionsPerRun. Returns the number of queued objects run</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Pipelines.Pipeline`1.OnStartCycle">
+            <summary>The method executed just before the start of each execution cycle</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Pipelines.Pipeline`1.OnEndCycle">
+            <summary>The method executed just after the end of each execution cycle</summary>
         </member>
         <member name="M:Primrose.Primitives.Pipelines.Pipeline`1.Clear">
             <summary>Clears the queue without execution</summary>
@@ -2404,6 +2590,13 @@
             <param name="command">The command</param>
             <param name="state">The state</param>
         </member>
+        <member name="M:Primrose.Primitives.StateMachines.StateMachine`3.IsValid(`2,`1)">
+            <summary>
+            Determines if a command is valid at this state
+            </summary>
+            <param name="command">The command</param>
+            <param name="state">The state</param>
+        </member>
         <member name="T:Primrose.Primitives.LinkedListEnumerable`1">
             <summary>Represents an enumeration of items in a linked list</summary>
             <typeparam name="T"></typeparam>
@@ -2460,6 +2653,15 @@
             <param name="completion_handler">The action to be performed on successful completion of the main action</param>
             <returns></returns>
         </member>
+        <member name="M:Primrose.Primitives.Tasks.TaskHandler.StartNew``1(System.Action{``0},``0,System.Action{System.Threading.Tasks.Task,``0},System.Action{System.Threading.Tasks.Task,``0})">
+            <summary>Creates and starts a task with a parameterized state</summary>
+            <typeparam name="T">The type of the parameterized state</typeparam>
+            <param name="action">The main action</param>
+            <param name="state">The parameterized state for the action</param>
+            <param name="exception_handler">The action to be performed on encountered exception during execution of the main action</param>
+            <param name="completion_handler">The action to be performed on successful completion of the main action</param>
+            <returns></returns>
+        </member>
         <member name="M:Primrose.Primitives.Tasks.TaskHandler.StartNew(System.Action,System.Threading.CancellationToken,System.Action{System.Threading.Tasks.Task},System.Action{System.Threading.Tasks.Task})">
             <summary>Creates and starts a task</summary>
             <param name="action">The main action</param>
@@ -2493,6 +2695,9 @@
         <member name="M:Primrose.Primitives.Tasks.TaskSet`1.#ctor(System.Action{`0},System.Action{System.Threading.Tasks.Task},System.Action{System.Threading.Tasks.Task})">
             <summary>Creates a container for handled tasks</summary>
         </member>
+        <member name="M:Primrose.Primitives.Tasks.TaskSet`1.#ctor(System.Action{`0},System.Action{System.Threading.Tasks.Task,`0},System.Action{System.Threading.Tasks.Task,`0})">
+            <summary>Creates a container for handled tasks</summary>
+        </member>
         <member name="T:Primrose.Primitives.Tasks.TaskSet">
             <summary>Defines a container for handled tasks</summary>
         </member>
@@ -2514,6 +2719,11 @@
             </summary>
         </member>
         <member name="M:Primrose.Primitives.TimeControl.#ctor">
+            <summary>
+            Initializes a time control
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.TimeControl.#ctor(System.UInt32)">
             <summary>
             Initializes a time control
             </summary>
@@ -2812,6 +3022,263 @@
         <member name="M:Primrose.Primitives.Triggers.Trigger.ActionCollection.Clear">
             <summary>Clears all actions from the trigger</summary>
         </member>
+        <member name="T:Primrose.Primitives.ValueTypes.floatRect">
+            <summary>A float rectangle value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.floatRect.x">
+            <summary>The x or [0] value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.floatRect.y">
+            <summary>The y or [1] value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.floatRect.w">
+            <summary>The w or [2] value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.floatRect.h">
+            <summary>The h or [3] value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Creates a floatRect value
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="w"></param>
+            <param name="h"></param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.#ctor(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>
+            Creates a floatRect value
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.floatRect.Item(System.Single)">
+            <summary>The value indexer</summary>
+            <exception cref="T:System.IndexOutOfRangeException">The array is accessed with an invalid index</exception>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.floatRect.Position">
+            <summary>The position of the rectangle</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.floatRect.Size">
+            <summary>The position of the rectangle</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.ToString">
+            <summary>Returns the string representation of this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.ToArray">
+            <summary>Creates a float[] array from this value</summary>
+            <returns>An array of length 4 with identical indexed values</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.FromArray(System.Single[])">
+            <summary>Creates a floatRect from an array</summary>
+            <param name="array">The array</param>
+            <returns>A floatRect value</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
+            <exception cref="T:Primrose.Primitives.ArrayMismatchException">Only an array of length 4 can be converted to a floatRect</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.FromArray(System.Int32[])">
+            <summary>Creates a floatRect from an array</summary>
+            <param name="array">The array</param>
+            <returns>A floatRect value</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
+            <exception cref="T:Primrose.Primitives.ArrayMismatchException">Only an array of length 4 can be converted to a floatRect</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.Parse(System.String)">
+            <summary>Parses a floatRect from a string</summary>
+            <param name="s">The string value</param>
+            <returns>A floatRect value</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.Parse(System.String,Primrose.Primitives.Parsers.IResolver,Primrose.Primitives.ValueTypes.floatRect)">
+            <summary>Parses a floatRect from a string</summary>
+            <param name="s">The string value</param>
+            <param name="resolver">A string resolver function</param>
+            <param name="defaultValue">The default value</param>
+            <returns>A floatRect value, or the default value if the parsing fails</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.TryParse(System.String,Primrose.Primitives.ValueTypes.floatRect@)">
+            <summary>Parses a floatRect from a string</summary>
+            <param name="s">The string value</param>
+            <param name="result">The parsed value</param>
+            <returns>True if the parse is successful</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.TryParse(System.String,Primrose.Primitives.ValueTypes.floatRect@,Primrose.Primitives.Parsers.IResolver,Primrose.Primitives.ValueTypes.floatRect)">
+            <summary>Parses a floatRect from a string</summary>
+            <param name="s">The string value</param>
+            <param name="resolver">A string resolver function</param>
+            <param name="defaultValue">The default value</param>
+            <param name="result">The parsed value</param>
+            <returns>True if the parse is successful</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.Equals(System.Object)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.Equals(Primrose.Primitives.ValueTypes.floatRect)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.GetHashCode">
+            <summary>Generates the hash code for this object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.op_Equality(Primrose.Primitives.ValueTypes.floatRect,Primrose.Primitives.ValueTypes.floatRect)">
+            <summary>Determines if two floatRect values are equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.op_Inequality(Primrose.Primitives.ValueTypes.floatRect,Primrose.Primitives.ValueTypes.floatRect)">
+            <summary>Determines if two floatRect values are not equal</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.floatRect.Empty">
+            <summary>Returns a floatRect value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.ContainsPofloat(Primrose.Primitives.ValueTypes.float2)">
+            <summary>Determines if a pofloat is inside the rectangle represented</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.floatersectsRectangle(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>Determines if at least part of a rectangle floatersects with the rectangle represented</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.floatersectsRectangle(Primrose.Primitives.ValueTypes.floatRect)">
+            <summary>Determines if at least part of a rectangle floatersects with the rectangle represented</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.Union(Primrose.Primitives.ValueTypes.floatRect)">
+            <summary>Returns the bounding rectangle of the union of two rectangles</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.floatersect(Primrose.Primitives.ValueTypes.floatRect)">
+            <summary>Returns the bounding rectangle of the floatersection of two rectangles</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.op_Explicit(Primrose.Primitives.ValueTypes.floatRect)~System.Single[]">
+            <summary>Creates a float[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.op_Explicit(System.Single[])~Primrose.Primitives.ValueTypes.floatRect">
+            <summary>Creates a floatRect value from this array</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.op_Explicit(System.Int32[])~Primrose.Primitives.ValueTypes.floatRect">
+            <summary>Creates a floatRect value from this array</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.op_Implicit(Primrose.Primitives.ValueTypes.intRect)~Primrose.Primitives.ValueTypes.floatRect">
+            <summary>Converts a intRect value to a floatRect value</summary>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.intRect">
+            <summary>A int rectangle value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.intRect.x">
+            <summary>The x or [0] value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.intRect.y">
+            <summary>The y or [1] value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.intRect.w">
+            <summary>The w or [2] value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.intRect.h">
+            <summary>The h or [3] value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a intRect value
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="w"></param>
+            <param name="h"></param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.#ctor(Primrose.Primitives.ValueTypes.int2,Primrose.Primitives.ValueTypes.int2)">
+            <summary>
+            Creates a intRect value
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.intRect.Item(System.Int32)">
+            <summary>The value indexer</summary>
+            <exception cref="T:System.IndexOutOfRangeException">The array is accessed with an invalid index</exception>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.intRect.Position">
+            <summary>The position of the rectangle</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.intRect.Size">
+            <summary>The position of the rectangle</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.ToString">
+            <summary>Returns the string representation of this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.ToArray">
+            <summary>Creates a int[] array from this value</summary>
+            <returns>An array of length 4 with identical indexed values</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.FromArray(System.Int32[])">
+            <summary>Creates a intRect from an array</summary>
+            <param name="array">The array</param>
+            <returns>A intRect value</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
+            <exception cref="T:Primrose.Primitives.ArrayMismatchException">Only an array of length 4 can be converted to a intRect</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.Parse(System.String)">
+            <summary>Parses a intRect from a string</summary>
+            <param name="s">The string value</param>
+            <returns>A intRect value</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.Parse(System.String,Primrose.Primitives.Parsers.IResolver,Primrose.Primitives.ValueTypes.intRect)">
+            <summary>Parses a intRect from a string</summary>
+            <param name="s">The string value</param>
+            <param name="resolver">A string resolver function</param>
+            <param name="defaultValue">The default value</param>
+            <returns>A intRect value, or the default value if the parsing fails</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.TryParse(System.String,Primrose.Primitives.ValueTypes.intRect@)">
+            <summary>Parses a intRect from a string</summary>
+            <param name="s">The string value</param>
+            <param name="result">The parsed value</param>
+            <returns>True if the parse is successful</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.TryParse(System.String,Primrose.Primitives.ValueTypes.intRect@,Primrose.Primitives.Parsers.IResolver,Primrose.Primitives.ValueTypes.intRect)">
+            <summary>Parses a intRect from a string</summary>
+            <param name="s">The string value</param>
+            <param name="resolver">A string resolver function</param>
+            <param name="defaultValue">The default value</param>
+            <param name="result">The parsed value</param>
+            <returns>True if the parse is successful</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.Equals(System.Object)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.Equals(Primrose.Primitives.ValueTypes.intRect)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.GetHashCode">
+            <summary>Generates the hash code for this object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.op_Equality(Primrose.Primitives.ValueTypes.intRect,Primrose.Primitives.ValueTypes.intRect)">
+            <summary>Determines if two intRect values are equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.op_Inequality(Primrose.Primitives.ValueTypes.intRect,Primrose.Primitives.ValueTypes.intRect)">
+            <summary>Determines if two intRect values are not equal</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.intRect.Empty">
+            <summary>Returns a intRect value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.ContainsPoint(Primrose.Primitives.ValueTypes.int2)">
+            <summary>Determines if a point is inside the rectangle represented</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.IntersectsRectangle(Primrose.Primitives.ValueTypes.int2,Primrose.Primitives.ValueTypes.int2)">
+            <summary>Determines if at least part of a rectangle intersects with the rectangle represented</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.IntersectsRectangle(Primrose.Primitives.ValueTypes.intRect)">
+            <summary>Determines if at least part of a rectangle intersects with the rectangle represented</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.Union(Primrose.Primitives.ValueTypes.intRect)">
+            <summary>Returns the bounding rectangle of the union of two rectangles</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.Intersect(Primrose.Primitives.ValueTypes.intRect)">
+            <summary>Returns the bounding rectangle of the intersection of two rectangles</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.op_Explicit(Primrose.Primitives.ValueTypes.intRect)~System.Int32[]">
+            <summary>Creates a int[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.intRect.op_Explicit(System.Int32[])~Primrose.Primitives.ValueTypes.intRect">
+            <summary>Creates a intRect value from this array</summary>
+        </member>
         <member name="T:Primrose.Primitives.ValueTypes.sbyte2">
             <summary>A sbyte2 pair value</summary>
         </member>
@@ -2891,6 +3358,12 @@
         </member>
         <member name="P:Primrose.Primitives.ValueTypes.sbyte2.Empty">
             <summary>Returns a sbyte2 value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.sbyte2.op_Explicit(Primrose.Primitives.ValueTypes.sbyte2)~System.SByte[]">
+            <summary>Creates a sbyte[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.sbyte2.op_Explicit(System.SByte[])~Primrose.Primitives.ValueTypes.sbyte2">
+            <summary>Creates a sbyte2 value from this array</summary>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.sbyte3">
             <summary>A sbyte3 triple value</summary>
@@ -2976,6 +3449,12 @@
         <member name="P:Primrose.Primitives.ValueTypes.sbyte3.Empty">
             <summary>Returns a sbyte3 value with all elements set to their default value</summary>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.sbyte3.op_Explicit(Primrose.Primitives.ValueTypes.sbyte3)~System.SByte[]">
+            <summary>Creates a sbyte[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.sbyte3.op_Explicit(System.SByte[])~Primrose.Primitives.ValueTypes.sbyte3">
+            <summary>Creates a sbyte3 value from this array</summary>
+        </member>
         <member name="T:Primrose.Primitives.ValueTypes.sbyte4">
             <summary>A sbyte4 quad value</summary>
         </member>
@@ -3060,6 +3539,12 @@
         <member name="P:Primrose.Primitives.ValueTypes.sbyte4.Empty">
             <summary>Returns a sbyte4 value with all elements set to their default value</summary>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.sbyte4.op_Explicit(Primrose.Primitives.ValueTypes.sbyte4)~System.SByte[]">
+            <summary>Creates a sbyte[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.sbyte4.op_Explicit(System.SByte[])~Primrose.Primitives.ValueTypes.sbyte4">
+            <summary>Creates a sbyte4 value from this array</summary>
+        </member>
         <member name="T:Primrose.Primitives.ValueTypes.ushort2">
             <summary>A ushort2 pair value</summary>
         </member>
@@ -3139,6 +3624,12 @@
         </member>
         <member name="P:Primrose.Primitives.ValueTypes.ushort2.Empty">
             <summary>Returns a ushort2 value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.ushort2.op_Explicit(Primrose.Primitives.ValueTypes.ushort2)~System.UInt16[]">
+            <summary>Creates a ushort[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.ushort2.op_Explicit(System.UInt16[])~Primrose.Primitives.ValueTypes.ushort2">
+            <summary>Creates a ushort2 value from this array</summary>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.ushort3">
             <summary>A ushort3 triple value</summary>
@@ -3223,6 +3714,12 @@
         </member>
         <member name="P:Primrose.Primitives.ValueTypes.ushort3.Empty">
             <summary>Returns a ushort3 value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.ushort3.op_Explicit(Primrose.Primitives.ValueTypes.ushort3)~System.UInt16[]">
+            <summary>Creates a ushort[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.ushort3.op_Explicit(System.UInt16[])~Primrose.Primitives.ValueTypes.ushort3">
+            <summary>Creates a ushort3 value from this array</summary>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.ushort4">
             <summary>A ushort4 quad value</summary>
@@ -3311,6 +3808,12 @@
         </member>
         <member name="P:Primrose.Primitives.ValueTypes.ushort4.Empty">
             <summary>Returns a ushort4 value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.ushort4.op_Explicit(Primrose.Primitives.ValueTypes.ushort4)~System.UInt16[]">
+            <summary>Creates a ushort[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.ushort4.op_Explicit(System.UInt16[])~Primrose.Primitives.ValueTypes.ushort4">
+            <summary>Creates a ushort4 value from this array</summary>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.uint2">
             <summary>A uint2 pair value</summary>
@@ -3419,6 +3922,12 @@
         </member>
         <member name="P:Primrose.Primitives.ValueTypes.uint2.Empty">
             <summary>Returns a uint2 value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.uint2.op_Explicit(Primrose.Primitives.ValueTypes.uint2)~System.UInt32[]">
+            <summary>Creates a uint[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.uint2.op_Explicit(System.UInt32[])~Primrose.Primitives.ValueTypes.uint2">
+            <summary>Creates a uint2 value from this array</summary>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.uint3">
             <summary>A uint3 triple value</summary>
@@ -3531,6 +4040,12 @@
         </member>
         <member name="P:Primrose.Primitives.ValueTypes.uint3.Empty">
             <summary>Returns a uint3 value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.uint3.op_Explicit(Primrose.Primitives.ValueTypes.uint3)~System.UInt32[]">
+            <summary>Creates a uint[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.uint3.op_Explicit(System.UInt32[])~Primrose.Primitives.ValueTypes.uint3">
+            <summary>Creates a uint3 value from this array</summary>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.uint4">
             <summary>A uint4 quad value</summary>
@@ -3648,6 +4163,12 @@
         <member name="P:Primrose.Primitives.ValueTypes.uint4.Empty">
             <summary>Returns a uint4 value with all elements set to their default value</summary>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.uint4.op_Explicit(Primrose.Primitives.ValueTypes.uint4)~System.UInt32[]">
+            <summary>Creates a uint[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.uint4.op_Explicit(System.UInt32[])~Primrose.Primitives.ValueTypes.uint4">
+            <summary>Creates a uint4 value from this array</summary>
+        </member>
         <member name="T:Primrose.Primitives.ValueTypes.short2">
             <summary>A short2 pair value</summary>
         </member>
@@ -3728,6 +4249,12 @@
         <member name="P:Primrose.Primitives.ValueTypes.short2.Empty">
             <summary>Returns a short2 value with all elements set to their default value</summary>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.short2.op_Explicit(Primrose.Primitives.ValueTypes.short2)~System.Int16[]">
+            <summary>Creates a short[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.short2.op_Explicit(System.Int16[])~Primrose.Primitives.ValueTypes.short2">
+            <summary>Creates a short2 value from this array</summary>
+        </member>
         <member name="T:Primrose.Primitives.ValueTypes.byte2">
             <summary>A byte2 pair value</summary>
         </member>
@@ -3807,6 +4334,12 @@
         </member>
         <member name="P:Primrose.Primitives.ValueTypes.byte2.Empty">
             <summary>Returns a byte2 value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.byte2.op_Explicit(Primrose.Primitives.ValueTypes.byte2)~System.Byte[]">
+            <summary>Creates a byte[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.byte2.op_Explicit(System.Byte[])~Primrose.Primitives.ValueTypes.byte2">
+            <summary>Creates a byte2 value from this array</summary>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.short3">
             <summary>A short3 triple value</summary>
@@ -3891,6 +4424,12 @@
         </member>
         <member name="P:Primrose.Primitives.ValueTypes.short3.Empty">
             <summary>Returns a short3 value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.short3.op_Explicit(Primrose.Primitives.ValueTypes.short3)~System.Int16[]">
+            <summary>Creates a short[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.short3.op_Explicit(System.Int16[])~Primrose.Primitives.ValueTypes.short3">
+            <summary>Creates a short3 value from this array</summary>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.short4">
             <summary>A short4 quad value</summary>
@@ -3980,6 +4519,12 @@
         <member name="P:Primrose.Primitives.ValueTypes.short4.Empty">
             <summary>Returns a short4 value with all elements set to their default value</summary>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.short4.op_Explicit(Primrose.Primitives.ValueTypes.short4)~System.Int16[]">
+            <summary>Creates a short[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.short4.op_Explicit(System.Int16[])~Primrose.Primitives.ValueTypes.short4">
+            <summary>Creates a short4 value from this array</summary>
+        </member>
         <member name="T:Primrose.Primitives.ValueTypes.int2">
             <summary>A int2 pair value</summary>
         </member>
@@ -4060,6 +4605,10 @@
             <summary>Performs a memberwise division between two int2 values</summary>
             <param name="a"></param><param name="b"></param><returns></returns>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int2.op_Multiply(System.Int32,Primrose.Primitives.ValueTypes.int2)">
+            <summary>Performs a multiplication operation between a int2 value and a int multiplier</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
         <member name="M:Primrose.Primitives.ValueTypes.int2.op_Multiply(Primrose.Primitives.ValueTypes.int2,System.Int32)">
             <summary>Performs a multiplication operation between a int2 value and a int multiplier</summary>
             <param name="a"></param><param name="m"></param><returns></returns>
@@ -4091,6 +4640,15 @@
         </member>
         <member name="P:Primrose.Primitives.ValueTypes.int2.Empty">
             <summary>Returns a int2 value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int2.op_Explicit(Primrose.Primitives.ValueTypes.int2)~System.Array">
+            <summary>Creates an array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int2.op_Explicit(Primrose.Primitives.ValueTypes.int2)~System.Int32[]">
+            <summary>Creates a int[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int2.op_Implicit(System.Int32[])~Primrose.Primitives.ValueTypes.int2">
+            <summary>Creates a int2 value from this array</summary>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.float2">
             <summary>A float2 pair value</summary>
@@ -4215,6 +4773,21 @@
         <member name="P:Primrose.Primitives.ValueTypes.float2.Empty">
             <summary>Returns a float2 value with all elements set to their default value</summary>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.op_Explicit(Primrose.Primitives.ValueTypes.float2)~System.Array">
+            <summary>Creates an array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.op_Explicit(Primrose.Primitives.ValueTypes.float2)~System.Single[]">
+            <summary>Creates a float[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.op_Implicit(System.Single[])~Primrose.Primitives.ValueTypes.float2">
+            <summary>Creates a float2 value from this array</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.op_Implicit(System.Int32[])~Primrose.Primitives.ValueTypes.float2">
+            <summary>Creates a float2 value from this array</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.op_Implicit(Primrose.Primitives.ValueTypes.int2)~Primrose.Primitives.ValueTypes.float2">
+            <summary>Converts a int2 value to a float2 value</summary>
+        </member>
         <member name="T:Primrose.Primitives.ValueTypes.byte3">
             <summary>A byte3 triple value</summary>
         </member>
@@ -4298,6 +4871,12 @@
         </member>
         <member name="P:Primrose.Primitives.ValueTypes.byte3.Empty">
             <summary>Returns a byte3 value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.byte3.op_Explicit(Primrose.Primitives.ValueTypes.byte3)~System.Byte[]">
+            <summary>Creates a byte[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.byte3.op_Explicit(System.Byte[])~Primrose.Primitives.ValueTypes.byte3">
+            <summary>Creates a byte3 value from this array</summary>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.int3">
             <summary>A int3 triple value</summary>
@@ -4383,6 +4962,10 @@
             <summary>Performs a memberwise division between two int3 values</summary>
             <param name="a"></param><param name="b"></param><returns></returns>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int3.op_Multiply(System.Int32,Primrose.Primitives.ValueTypes.int3)">
+            <summary>Performs a multiplication operation between a int2 value and a int multiplier</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
         <member name="M:Primrose.Primitives.ValueTypes.int3.op_Multiply(Primrose.Primitives.ValueTypes.int3,System.Int32)">
             <summary>Performs a multiplication operation between a int3 value and a int multiplier</summary>
             <param name="a"></param><param name="m"></param><returns></returns>
@@ -4414,6 +4997,15 @@
         </member>
         <member name="P:Primrose.Primitives.ValueTypes.int3.Empty">
             <summary>Returns a int3 value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int3.op_Explicit(Primrose.Primitives.ValueTypes.int3)~System.Array">
+            <summary>Creates an array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int3.op_Explicit(Primrose.Primitives.ValueTypes.int3)~System.Int32[]">
+            <summary>Creates a int[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int3.op_Implicit(System.Int32[])~Primrose.Primitives.ValueTypes.int3">
+            <summary>Creates a int3 value from this array</summary>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.float3">
             <summary>A float3 triple value</summary>
@@ -4542,6 +5134,21 @@
         <member name="P:Primrose.Primitives.ValueTypes.float3.Empty">
             <summary>Returns a float3 value with all elements set to their default value</summary>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.op_Explicit(Primrose.Primitives.ValueTypes.float3)~System.Array">
+            <summary>Creates an array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.op_Explicit(Primrose.Primitives.ValueTypes.float3)~System.Single[]">
+            <summary>Creates a float[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.op_Implicit(System.Single[])~Primrose.Primitives.ValueTypes.float3">
+            <summary>Creates a float3 value from this array</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.op_Implicit(System.Int32[])~Primrose.Primitives.ValueTypes.float3">
+            <summary>Creates a float3 value from this array</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.op_Implicit(Primrose.Primitives.ValueTypes.int3)~Primrose.Primitives.ValueTypes.float3">
+            <summary>Converts a int3 value to a float3 value</summary>
+        </member>
         <member name="T:Primrose.Primitives.ValueTypes.byte4">
             <summary>A byte4 quad value</summary>
         </member>
@@ -4629,6 +5236,12 @@
         </member>
         <member name="P:Primrose.Primitives.ValueTypes.byte4.Empty">
             <summary>Returns a byte4 value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.byte4.op_Explicit(Primrose.Primitives.ValueTypes.byte4)~System.Byte[]">
+            <summary>Creates a byte[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.byte4.op_Explicit(System.Byte[])~Primrose.Primitives.ValueTypes.byte4">
+            <summary>Creates a byte4 value from this array</summary>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.int4">
             <summary>A int4 quad value</summary>
@@ -4718,6 +5331,10 @@
             <summary>Performs a memberwise division between two int4 values</summary>
             <param name="a"></param><param name="b"></param><returns></returns>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int4.op_Multiply(System.Int32,Primrose.Primitives.ValueTypes.int4)">
+            <summary>Performs a multiplication operation between a int2 value and a int multiplier</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
         <member name="M:Primrose.Primitives.ValueTypes.int4.op_Multiply(Primrose.Primitives.ValueTypes.int4,System.Int32)">
             <summary>Performs a multiplication operation between a int4 value and a int multiplier</summary>
             <param name="a"></param><param name="m"></param><returns></returns>
@@ -4749,6 +5366,15 @@
         </member>
         <member name="P:Primrose.Primitives.ValueTypes.int4.Empty">
             <summary>Returns a int4 value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int4.op_Explicit(Primrose.Primitives.ValueTypes.int4)~System.Array">
+            <summary>Creates an array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int4.op_Explicit(Primrose.Primitives.ValueTypes.int4)~System.Int32[]">
+            <summary>Creates a int[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int4.op_Implicit(System.Int32[])~Primrose.Primitives.ValueTypes.int4">
+            <summary>Creates a int4 value from this array</summary>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.float4">
             <summary>A float4 quad value</summary>
@@ -4881,6 +5507,21 @@
         <member name="P:Primrose.Primitives.ValueTypes.float4.Empty">
             <summary>Returns a float4 value with all elements set to their default value</summary>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.op_Explicit(Primrose.Primitives.ValueTypes.float4)~System.Array">
+            <summary>Creates an array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.op_Explicit(Primrose.Primitives.ValueTypes.float4)~System.Single[]">
+            <summary>Creates a float[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.op_Implicit(System.Single[])~Primrose.Primitives.ValueTypes.float4">
+            <summary>Creates a float4 value from this array</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.op_Implicit(System.Int32[])~Primrose.Primitives.ValueTypes.float4">
+            <summary>Creates a float4 value from this array</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.op_Implicit(Primrose.Primitives.ValueTypes.int4)~Primrose.Primitives.ValueTypes.float4">
+            <summary>Converts a int4 value to a float4 value</summary>
+        </member>
         <member name="T:Primrose.Primitives.ValueTypes.Trip`3">
             <summary>
             A value triple
@@ -4922,6 +5563,9 @@
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.Trip`3.op_Inequality(Primrose.Primitives.ValueTypes.Trip{`0,`1,`2},Primrose.Primitives.ValueTypes.Trip{`0,`1,`2})">
             <summary>Determines if two short3 values are not equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Trip`3.ToString">
+            <summary>Provides a string representation of this value</summary>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.Quad`4">
             <summary>
@@ -4970,6 +5614,9 @@
         <member name="M:Primrose.Primitives.ValueTypes.Quad`4.op_Inequality(Primrose.Primitives.ValueTypes.Quad{`0,`1,`2,`3},Primrose.Primitives.ValueTypes.Quad{`0,`1,`2,`3})">
             <summary>Determines if two short3 values are not equal</summary>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Quad`4.ToString">
+            <summary>Provides a string representation of this value</summary>
+        </member>
         <member name="T:Primrose.Primitives.ValueTypes.Pair`2">
             <summary>
             A value pair
@@ -5007,6 +5654,9 @@
         <member name="M:Primrose.Primitives.ValueTypes.Pair`2.op_Inequality(Primrose.Primitives.ValueTypes.Pair{`0,`1},Primrose.Primitives.ValueTypes.Pair{`0,`1})">
             <summary>Determines if two short3 values are not equal</summary>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.Pair`2.ToString">
+            <summary>Provides a string representation of this value</summary>
+        </member>
         <member name="T:Primrose.Log">
             <summary>Handles logging behaviour for the program</summary>
         </member>
@@ -5043,6 +5693,11 @@
         </member>
         <member name="M:Primrose.Log.GetOrCreateDefault(System.String)">
             <summary>Gets or creates a logging handle</summary>
+            <param name="channel">The name used to identify the logging channel</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Log.Close(System.String)">
+            <summary>Closes a logging handle</summary>
             <param name="channel">The name used to identify the logging channel</param>
             <returns></returns>
         </member>
@@ -5284,6 +5939,22 @@
             <param name="channel">The log channel to write to</param>
             <param name="ex">The exception to log</param>
         </member>
+        <member name="M:Primrose.Log.RegisterCallback(System.String,Primrose.MessageDelegate,Primrose.LogLevel)">
+            <summary>Registers a callback function to a log channel</summary>
+            <param name="channel">The log channel to handle the callback</param>
+            <param name="callback">The callback function to register</param>
+            <param name="level">The logging levels were the callback will be triggered</param>
+        </member>
+        <member name="M:Primrose.Log.RemoveCallback(System.String,Primrose.MessageDelegate)">
+            <summary>Removes a callback function from a log channel registry list</summary>
+            <param name="channel">The log channel to handle the callback</param>
+            <param name="callback">The callback function to register</param>
+        </member>
+        <member name="M:Primrose.Log.SetTimeFormat(System.String,System.String)">
+            <summary>Sets the time format for a log channel</summary>
+            <param name="channel">The log channel to handle the callback</param>
+            <param name="format">The new time format to use</param>
+        </member>
         <member name="T:Primrose.Properties.Resources">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -5323,17 +5994,17 @@
         </member>
         <member name="P:Primrose.Resource.Strings.Error_ArrayMismatchException">
             <summary>
-              Looks up a localized string similar to Attempted operation between two arrays of different length.
+              Looks up a localized string similar to Attempted operation between two arrays of different length..
             </summary>
         </member>
         <member name="P:Primrose.Resource.Strings.Error_ArrayMismatchException_length_length">
             <summary>
-              Looks up a localized string similar to Attempted operation between two arrays of different lengths &apos;{0}&apos; and &apos;{1}&apos;.
+              Looks up a localized string similar to Attempted operation between two arrays of different lengths &apos;{0}&apos; and &apos;{1}&apos;..
             </summary>
         </member>
         <member name="P:Primrose.Resource.Strings.Error_ArrayMismatchException_length_type">
             <summary>
-              Looks up a localized string similar to Attempted assignment of an array of length {0} to {1}.
+              Looks up a localized string similar to Attempted assignment of an array of length {0} to {1}..
             </summary>
         </member>
         <member name="P:Primrose.Resource.Strings.Error_CacheKeyNotFound">
@@ -5343,32 +6014,32 @@
         </member>
         <member name="P:Primrose.Resource.Strings.Error_CapacityExceededException">
             <summary>
-              Looks up a localized string similar to Attempted to push an item into {0} that has reached capacity limit of {1}.
+              Looks up a localized string similar to Attempted to push an item into {0} that has reached capacity limit of {1}..
             </summary>
         </member>
         <member name="P:Primrose.Resource.Strings.Error_CollectionAddDuplicateKey">
             <summary>
-              Looks up a localized string similar to Attempted to add an existing key &apos;{0}&apos; to a {1}.
+              Looks up a localized string similar to Attempted to add an existing key &apos;{0}&apos; to a {1}..
             </summary>
         </member>
         <member name="P:Primrose.Resource.Strings.Error_CollectionAddNullKey">
             <summary>
-              Looks up a localized string similar to Attempted to add a null key to a {0}.
+              Looks up a localized string similar to Attempted to add a null key to a {0}..
             </summary>
         </member>
         <member name="P:Primrose.Resource.Strings.Error_CollectionPutNullKey">
             <summary>
-              Looks up a localized string similar to Attempted to put value of a null key in a {0}.
+              Looks up a localized string similar to Attempted to put value of a null key in a {0}..
             </summary>
         </member>
         <member name="P:Primrose.Resource.Strings.Error_CollectionSetKeyNotFound">
             <summary>
-              Looks up a localized string similar to Attempted to set value to an non-existent key &apos;{0}&apos; in a {1}.
+              Looks up a localized string similar to Attempted to set value to an non-existent key &apos;{0}&apos; in a {1}..
             </summary>
         </member>
         <member name="P:Primrose.Resource.Strings.Error_CollectionSetNullKey">
             <summary>
-              Looks up a localized string similar to Attempted to set value of a null key to a {0}.
+              Looks up a localized string similar to Attempted to set value of a null key to a {0}..
             </summary>
         </member>
         <member name="P:Primrose.Resource.Strings.Error_DuplicateINISection">
@@ -5378,7 +6049,7 @@
         </member>
         <member name="P:Primrose.Resource.Strings.Error_ExpectedEnumException">
             <summary>
-              Looks up a localized string similar to Type &apos;{0}&apos; is not an enum.
+              Looks up a localized string similar to Type &apos;{0}&apos; is not an enum..
             </summary>
         </member>
         <member name="P:Primrose.Resource.Strings.Error_FileNotFound">
@@ -5423,7 +6094,7 @@
         </member>
         <member name="P:Primrose.Resource.Strings.Error_InvalidIndex">
             <summary>
-              Looks up a localized string similar to Attempted to access invalid index &apos;{0}&apos; of {1}.
+              Looks up a localized string similar to Attempted to access invalid index &apos;{0}&apos; of {1}..
             </summary>
         </member>
         <member name="P:Primrose.Resource.Strings.Error_InvalidStateCommandException">
@@ -5443,17 +6114,17 @@
         </member>
         <member name="P:Primrose.Resource.Strings.Error_RuleConversionException">
             <summary>
-              Looks up a localized string similar to Attempted to parse invalid value &apos;{0}&apos; as {1}.
+              Looks up a localized string similar to Attempted to parse invalid value &apos;{0}&apos; as {1}..
             </summary>
         </member>
         <member name="P:Primrose.Resource.Strings.Error_UnsupportedParseException">
             <summary>
-              Looks up a localized string similar to Attempted to parse a string from an unsupported type &apos;{0}&apos;.
+              Looks up a localized string similar to Attempted to parse a string from an unsupported type &apos;{0}&apos;..
             </summary>
         </member>
         <member name="P:Primrose.Resource.Strings.Error_UnsupportedWriteException">
             <summary>
-              Looks up a localized string similar to Attempted to write a string from an unsupported type &apos;{0}&apos;.
+              Looks up a localized string similar to Attempted to write a string from an unsupported type &apos;{0}&apos;..
             </summary>
         </member>
     </members>

@@ -8,6 +8,7 @@ using Primrose.Primitives.Extensions;
 using SWEndor.Game.Sound;
 using SWEndor.Game.Weapons;
 using System;
+using SWEndor.Game.UI.Helpers;
 
 namespace SWEndor.Game.UI.Widgets
 {
@@ -121,6 +122,9 @@ namespace SWEndor.Game.UI.Widgets
       int icolor = target.Faction.Color.Value;
       string name = target.Name;
       TVScreen2DImmediate.Action_Begin2D();
+
+      DrawIcons.DrawActiveTarget(TVScreen2DImmediate, Owner, target.GetBoundingBox(false), target.Faction.Color);
+
       if (PlayerInfo.IsTorpedoMode)
       {
         if (!PlayerInfo.Actor.IsAlliedWith(target) && prev_target != target)

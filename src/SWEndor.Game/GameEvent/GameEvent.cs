@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System;
 using SWEndor.Game.Core;
 using SWEndor.Game.Models;
+using Primrose.Primitives.Factories;
 
 namespace SWEndor
 {
@@ -108,19 +109,23 @@ namespace SWEndor
         list.Clear();
     }
 
-    private static readonly Predicate<GameEventObject> _expire = (a) => { return a.Time < a.Engine.Game.GameTime; };
+    private bool Expire(GameEventObject a) 
+    { 
+      return a.Time < _engine.Game.GameTime; 
+    }
+
     public void Process()
     {
       using (ScopeCounters.AcquireWhenZero(_scope))
       {
         foreach (var l in list)
         {
-          if (_expire(l))
+          if (Expire(l))
             queue.Enqueue(l);
           else
             break;
         }
-        list.RemoveWhere(_expire);
+        list.RemoveWhere(Expire);
       }
 
       foreach (var l in queue)

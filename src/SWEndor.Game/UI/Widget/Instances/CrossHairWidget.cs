@@ -196,26 +196,6 @@ namespace SWEndor.Game.UI.Widgets
 
       TVScreen2DText.Action_EndText();
       TVScreen2DImmediate.Action_Begin2D();
-
-      /*
-      float p1_x = -25;
-      float p1_y = 28;
-      float p2_x = 25;
-      float p2_y = 33;
-      float tremain = (float)weap.Ammo / weap.MaxAmmo;
-
-      TVScreen2DImmediate.Draw_FilledBox(p1_x + Owner.ScreenCenter.x
-                                                , p1_y + Owner.ScreenCenter.y
-                                                , p1_x + (p2_x - p1_x) * tremain + Owner.ScreenCenter.x
-                                                , p2_y + Owner.ScreenCenter.y
-                                                , new TV_COLOR(0.6f, 0.6f, 1, 1).GetIntColor());
-
-      TVScreen2DImmediate.Draw_Box(p1_x + Owner.ScreenCenter.x
-                                                , p1_y + Owner.ScreenCenter.y
-                                                , p2_x + Owner.ScreenCenter.x
-                                                , p2_y + Owner.ScreenCenter.y
-                                                , new TV_COLOR(1, 0.5f, 0, 1).GetIntColor());
-                                                */
     }
 
     private void DrawMissile(Weapons.WeaponInfo weap, bool enabled, int ammo, COLOR pcolor)
@@ -248,86 +228,6 @@ namespace SWEndor.Game.UI.Widgets
 
       TVScreen2DText.Action_EndText();
       TVScreen2DImmediate.Action_Begin2D();
-
-      /*
-      float p1_x = -40;
-      float p1_y = 28;
-      float p2_x = -38;
-      float p2_y = 36;
-      float p3_x = 4;
-      float p3_y = 10;
-      float tremain = weap.Ammo;
-      float tmax = weap.MaxAmmo;
-      int t = 0;
-
-      while (t < tremain)
-      {
-        TVScreen2DImmediate.Draw_FilledBox(p1_x + Owner.ScreenCenter.x
-                                              , p1_y + Owner.ScreenCenter.y
-                                              , p2_x + Owner.ScreenCenter.x
-                                              , p2_y + Owner.ScreenCenter.y
-                                              , pcolor);
-
-        p1_x += p3_x;
-        p2_x += p3_x;
-
-        t++;
-        if (t % 20 == 0)
-        {
-          p1_x = -40;
-          p2_x = -38;
-          p1_y += p3_y;
-          p2_y += p3_y;
-        }
-      }
-      */
     }
-
-    /*
-    private void DrawTorp(WeaponInfo weap, int burst, int pcolor)
-    {
-      float p1_x = -40;
-      float p1_y = 28;
-      float p2_x = -36;
-      float p2_y = 36;
-      float p3_x = 6;
-      float p3_y = 10;
-      float tremain = weap.Ammo;
-      float tmax = weap.MaxAmmo;
-      int t = 0;
-
-      while (t < tremain || t < tmax)
-      {
-        if (t < tremain)
-        {
-          TVScreen2DImmediate.Draw_FilledBox(p1_x + Owner.ScreenCenter.x
-                                                , p1_y + Owner.ScreenCenter.y
-                                                , p2_x + Owner.ScreenCenter.x
-                                                , p2_y + Owner.ScreenCenter.y
-                                                , pcolor);
-        }
-        else
-        {
-          TVScreen2DImmediate.Draw_Box(p1_x + Owner.ScreenCenter.x
-                                , p1_y + Owner.ScreenCenter.y
-                                , p2_x + Owner.ScreenCenter.x
-                                , p2_y + Owner.ScreenCenter.y
-                                , pcolor);
-        }
-
-        p1_x += p3_x;
-        p2_x += p3_x;
-
-        t++;
-        if (t % 10 == 0)
-        {
-          p1_x = -40;
-          p2_x = -36;
-          p1_y += p3_y;
-          p2_y += p3_y;
-        }
-      }
-    }
-    */
   }
 }

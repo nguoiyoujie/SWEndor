@@ -23,13 +23,19 @@ namespace SWEndor.Game.Primitives.Extensions
       return new TV_3DVECTOR(x, y, 0);
     }
 
-    public static TV_3DVECTOR ConvertRotToDir(this TV_3DVECTOR rotation)
+    public static TV_3DVECTOR ConvertRotToDir(this TV_3DVECTOR rotation, TVMathLibrary math)
     {
-      float x = (float)(Math.Cos(rotation.x * Globals.Deg2Rad) * Math.Sin(rotation.y * Globals.Deg2Rad));
-      float y = -(float)Math.Sin(rotation.x * Globals.Deg2Rad);
-      float z = (float)(Math.Cos(rotation.x * Globals.Deg2Rad) * Math.Cos(rotation.y * Globals.Deg2Rad));
+      TV_3DVECTOR result = new TV_3DVECTOR();
+      math.TVVec3Rotate(ref result, new TV_3DVECTOR(0, 0, 1), rotation.y, rotation.x, 0);
+      return result;
 
-      return new TV_3DVECTOR(x, y, z);
+      // Less performant alternative
+      //float x = (float)(Math.Cos(rotation.x * Globals.Deg2Rad) * Math.Sin(rotation.y * Globals.Deg2Rad));
+      //float y = -(float)Math.Sin(rotation.x * Globals.Deg2Rad);
+      //float z = (float)(Math.Cos(rotation.x * Globals.Deg2Rad) * Math.Cos(rotation.y * Globals.Deg2Rad));
+
+      //new TV_3DVECTOR((float)(Math.Cos(rotation.x * Globals.Deg2Rad) * Math.Sin(rotation.y * Globals.Deg2Rad)), -(float)Math.Sin(rotation.x * Globals.Deg2Rad), (float)(Math.Cos(rotation.x * Globals.Deg2Rad) * Math.Cos(rotation.y * Globals.Deg2Rad)));
+      //return new TV_3DVECTOR(x, y, z);
     }
 
     public static void Clamp(ref TV_3DVECTOR point, TV_3DVECTOR minBound, TV_3DVECTOR maxBound)

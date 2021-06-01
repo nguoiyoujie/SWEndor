@@ -48,9 +48,9 @@ namespace SWEndor.Game.Actors.Models
 
     private COLOR Color(float frac)
     {
-        double quad = 1.6708;
-        float r = (float)Math.Cos(frac * quad);
-        float g = (float)Math.Sin(frac * quad);
+        float quad = 1.6708f;
+        float r = LookUp.Cos(frac * quad);
+        float g = LookUp.Sin(frac * quad);
         float b = 0;
         if (r < 0) r = 0;
         if (g < 0) g = 0;

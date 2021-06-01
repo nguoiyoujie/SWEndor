@@ -1,6 +1,10 @@
 ﻿using MTV3D65;
+using Primrose.Primitives.Extensions;
+using Primrose.Primitives.Geometry;
 using SWEndor.Game.Actors;
+using SWEndor.Game.Models;
 using SWEndor.Game.Player;
+using SWEndor.Game.UI.Helpers;
 
 namespace SWEndor.Game.UI.Widgets
 {
@@ -88,21 +92,16 @@ namespace SWEndor.Game.UI.Widgets
       float sy = 0;
       TVScreen2DImmediate.Math_3DPointTo2D(s.GetGlobalPosition(), ref sx, ref sy);
 
+      if (s.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
+        DrawIcons.DrawShip(TVScreen2DImmediate, Owner, s.GetBoundingBox(false), scolor);
       if (s == s.Squad.Leader)
-        DrawSquadLeader(sx, sy, m_targetSize, scolor);
+        DrawIcons.DrawSquadLeader(TVScreen2DImmediate, Owner, s);
+      else if (s.TypeInfo.AIData.TargetType.Has(TargetType.ADDON))
+        DrawIcons.DrawAddon(TVScreen2DImmediate, Owner, s);
+      else if (s.TypeInfo.AIData.TargetType.Has(TargetType.MUNITION))
+        DrawIcons.DrawProjectile(TVScreen2DImmediate, Owner, s);
       else
-        DrawSquadMember(sx, sy, m_targetSize, scolor);
-    }
-
-    private void DrawSquadLeader(float x, float y, float iconsize, COLOR color)
-    {
-      TVScreen2DImmediate.Draw_Circle(x, y, iconsize + 5, 6, color.Value);
-      TVScreen2DImmediate.Draw_Circle(x, y, iconsize, 6, color.Value);
-    }
-
-    public void DrawSquadMember(float x, float y, float iconsize, COLOR color)
-    {
-      TVScreen2DImmediate.Draw_Circle(x, y, iconsize, 6, color.Value);
+        DrawIcons.DrawSquadMember(TVScreen2DImmediate, Owner, s);
     }
 
     public void DrawSquadMissionAttackTarget(float x, float y, float iconsize, COLOR color)
@@ -116,5 +115,6 @@ namespace SWEndor.Game.UI.Widgets
     {
       TVScreen2DImmediate.Draw_Triangle(x, y + iconsize, x + iconsize / 2, y, x - iconsize / 2, y, color.Value);
     }
+
   }
 }

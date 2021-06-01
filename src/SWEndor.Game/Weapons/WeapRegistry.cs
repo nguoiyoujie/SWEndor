@@ -10,12 +10,12 @@ namespace SWEndor.Game.Weapons
 {
   internal class WeapRegistry
   {
-    private Registry<WeapAimInfo> _aim = new Registry<WeapAimInfo>(256);
-    private Registry<WeapAmmoInfo> _ammo = new Registry<WeapAmmoInfo>(256);
-    private Registry<WeapLoadInfo> _load = new Registry<WeapLoadInfo>(256);
-    private Registry<WeapPortInfo> _port = new Registry<WeapPortInfo>(256);
-    private Registry<WeapProjInfo> _proj = new Registry<WeapProjInfo>(256);
-    private Registry<WeapTgtInfo> _tgt = new Registry<WeapTgtInfo>(256);
+    private readonly Registry<string, WeapAimInfo> _aim = new Registry<string, WeapAimInfo>(256);
+    private readonly Registry<string, WeapAmmoInfo> _ammo = new Registry<string, WeapAmmoInfo>(256);
+    private readonly Registry<string, WeapLoadInfo> _load = new Registry<string, WeapLoadInfo>(256);
+    private readonly Registry<string, WeapPortInfo> _port = new Registry<string, WeapPortInfo>(256);
+    private readonly Registry<string, WeapProjInfo> _proj = new Registry<string, WeapProjInfo>(256);
+    private readonly Registry<string, WeapTgtInfo> _tgt = new Registry<string, WeapTgtInfo>(256);
 
     public void Register(INIFile f, string key, out WeapAimInfo info)
     {
@@ -83,9 +83,8 @@ namespace SWEndor.Game.Weapons
         Parallel.ForEach(f.Sections,
           (s) =>
           {
-            WeapAimInfo w;
             if (s != INIFile.PreHeaderSectionName)
-              Register(f, s, out w);
+              Register(f, s, out WeapAimInfo w);
           });
       }
 
@@ -96,9 +95,8 @@ namespace SWEndor.Game.Weapons
         Parallel.ForEach(f.Sections,
           (s) =>
           {
-            WeapAmmoInfo w;
             if (s != INIFile.PreHeaderSectionName)
-              Register(f, s, out w);
+              Register(f, s, out WeapAmmoInfo w);
           });
       }
 
@@ -109,9 +107,8 @@ namespace SWEndor.Game.Weapons
         Parallel.ForEach(f.Sections,
           (s) =>
           {
-            WeapLoadInfo w;
             if (s != INIFile.PreHeaderSectionName)
-              Register(f, s, out w);
+              Register(f, s, out WeapLoadInfo w);
           });
       }
 
@@ -122,9 +119,8 @@ namespace SWEndor.Game.Weapons
         Parallel.ForEach(f.Sections,
           (s) =>
           {
-            WeapPortInfo w;
             if (s != INIFile.PreHeaderSectionName)
-              Register(f, s, out w);
+              Register(f, s, out WeapPortInfo w);
           });
       }
 
@@ -135,9 +131,8 @@ namespace SWEndor.Game.Weapons
         Parallel.ForEach(f.Sections,
           (s) =>
           {
-            WeapProjInfo w;
             if (s != INIFile.PreHeaderSectionName)
-              Register(e, f, s, out w);
+              Register(e, f, s, out WeapProjInfo w);
           });
       }
 
@@ -148,9 +143,8 @@ namespace SWEndor.Game.Weapons
         Parallel.ForEach(f.Sections,
           (s) =>
           {
-            WeapTgtInfo w;
             if (s != INIFile.PreHeaderSectionName)
-              Register(f, s, out w);
+              Register(f, s, out WeapTgtInfo w);
           });
       }
     }

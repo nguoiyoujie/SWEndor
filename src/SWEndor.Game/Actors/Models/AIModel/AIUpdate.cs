@@ -24,7 +24,6 @@ namespace SWEndor.Game.Actors.Models
       chgrot.x = chgrot.x.Modulus(-180, 180);
       chgrot.y = chgrot.y.Modulus(-180, 180);
 
-      TV_3DVECTOR truechg = new TV_3DVECTOR(chgrot.x, chgrot.y, chgrot.z);
       float maxturn = owner.TypeInfo.MoveLimitData.MaxTurnRate;
       chgrot *= responsiveness;
       chgrot.x = chgrot.x.Clamp(-maxturn, maxturn);

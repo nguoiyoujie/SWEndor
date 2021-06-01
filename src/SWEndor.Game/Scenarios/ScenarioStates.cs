@@ -28,9 +28,9 @@ namespace SWEndor.Game.Scenarios
     public float TimeSinceLostStructure = -100;
     internal float LastLostSoundTime = 0;
 
-    public Registry<float> GameStatesF = new Registry<float>();
-    public Registry<string> GameStatesS = new Registry<string>();
-    public Registry<bool> GameStatesB = new Registry<bool>();
+    public Registry<string, float> GameStatesF = new Registry<string, float>();
+    public Registry<string, string> GameStatesS = new Registry<string, string>();
+    public Registry<string, bool> GameStatesB = new Registry<string, bool>();
     public HashSet<ActorInfo> CriticalAllies = new HashSet<ActorInfo>();
     public HashSet<ActorInfo> CriticalEnemies = new HashSet<ActorInfo>();
 
@@ -41,9 +41,9 @@ namespace SWEndor.Game.Scenarios
     public bool GetGameStateB(string key) { return GameStatesB.Get(key); }
     public float GetGameStateF(string key) { return GameStatesF.Get(key); }
     public string GetGameStateS(string key) { return GameStatesS.Get(key); }
-    public bool GetGameStateB(string key, bool defaultValue) { return GameStatesB.Get(key, defaultValue); }
-    public float GetGameStateF(string key, float defaultValue) { return GameStatesF.Get(key, defaultValue); }
-    public string GetGameStateS(string key, string defaultValue) { return GameStatesS.Get(key, defaultValue); }
+    public bool GetGameStateB(string key, bool defaultValue) { return GameStatesB.GetD(key, defaultValue); }
+    public float GetGameStateF(string key, float defaultValue) { return GameStatesF.GetD(key, defaultValue); }
+    public string GetGameStateS(string key, string defaultValue) { return GameStatesS.GetD(key, defaultValue); }
     public void SetGameStateB(string key, bool value) { GameStatesB.Put(key, value); }
     public void SetGameStateF(string key, float value) { GameStatesF.Put(key, value); }
     public void SetGameStateS(string key, string value) { GameStatesS.Put(key, value); }

@@ -4,12 +4,63 @@
         <name>Primrose.Expressions</name>
     </assembly>
     <members>
+        <member name="T:Primrose.Expressions.FunctionDelegateParam">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`1">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`2">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`3">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`4">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`5">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`6">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`7">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`8">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`9">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`10">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`11">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`12">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`13">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`14">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`15">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
         <member name="T:Primrose.Expressions.InvalidValCastException">
             <summary>Represents an exception as a result of performing an invalid cast with a ValType</summary>
         </member>
-        <member name="M:Primrose.Expressions.InvalidValCastException.#ctor(System.Type,Primrose.Expressions.ValType)">
+        <member name="M:Primrose.Expressions.InvalidValCastException.#ctor(System.Type,System.Type)">
             <summary>
-            Represents an exception when performing an invalid cast with a ValType
+            Represents an exception when performing an invalid cast to another Type/>
             </summary>
         </member>
         <member name="T:Primrose.Expressions.BOp">
@@ -68,14 +119,6 @@
         <member name="F:Primrose.Expressions.Build.Revision">
             <summary>The daily revision number of the build</summary> 
         </member>
-        <member name="T:Primrose.Expressions.FunctionDelegate">
-            <summary>
-            Defines a delegate representing a function expression
-            </summary>
-            <param name="context">The script context</param>
-            <param name="param">The input parameters to the function</param>
-            <returns>The result of the function</returns>
-        </member>
         <member name="T:Primrose.Expressions.ContextBase">
             <summary>Defines a context for evaluating scripts</summary>
         </member>
@@ -114,30 +157,30 @@
         <member name="M:Primrose.Expressions.ContextBase.Reset">
             <summary>Resets the context and clears the script</summary>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.AddDynamicFunc(System.String,System.Func{Primrose.Expressions.IContext,Primrose.Expressions.Val[],Primrose.Expressions.Val})">
+        <member name="M:Primrose.Expressions.ContextBase.AddDynamicFunc(System.String,Primrose.Expressions.FunctionDelegateParam)">
             <summary>Adds a function that accepts a dynamic number of parameters to the context</summary>
             <param name="name">The function name</param>
             <param name="fn">The function delegate</param>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.AddFunc(System.String,System.Func{Primrose.Expressions.IContext,Primrose.Expressions.Val})">
+        <member name="M:Primrose.Expressions.ContextBase.AddFunc(System.String,Primrose.Expressions.FunctionDelegate)">
             <summary>Adds a function to the context</summary>
             <param name="name">The function name</param>
             <param name="fn">The function delegate</param>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.AddFunc``1(System.String,System.Func{Primrose.Expressions.IContext,``0,Primrose.Expressions.Val})">
+        <member name="M:Primrose.Expressions.ContextBase.AddFunc``1(System.String,Primrose.Expressions.FunctionDelegate{``0})">
             <summary>Adds a parameterized function to the context</summary>
             <typeparam name="T1">The type of the first argument</typeparam>
             <param name="name">The function name</param>
             <param name="fn">The function delegate</param>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.AddFunc``2(System.String,System.Func{Primrose.Expressions.IContext,``0,``1,Primrose.Expressions.Val})">
+        <member name="M:Primrose.Expressions.ContextBase.AddFunc``2(System.String,Primrose.Expressions.FunctionDelegate{``0,``1})">
             <summary>Adds a parameterized function to the context</summary>
             <typeparam name="T1">The type of the first argument</typeparam>
             <typeparam name="T2">The type of the second argument</typeparam>
             <param name="name">The function name</param>
             <param name="fn">The function delegate</param>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.AddFunc``3(System.String,System.Func{Primrose.Expressions.IContext,``0,``1,``2,Primrose.Expressions.Val})">
+        <member name="M:Primrose.Expressions.ContextBase.AddFunc``3(System.String,Primrose.Expressions.FunctionDelegate{``0,``1,``2})">
             <summary>Adds a parameterized function to the context</summary>
             <typeparam name="T1">The type of the first argument</typeparam>
             <typeparam name="T2">The type of the second argument</typeparam>
@@ -145,7 +188,7 @@
             <param name="name">The function name</param>
             <param name="fn">The function delegate</param>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.AddFunc``4(System.String,System.Func{Primrose.Expressions.IContext,``0,``1,``2,``3,Primrose.Expressions.Val})">
+        <member name="M:Primrose.Expressions.ContextBase.AddFunc``4(System.String,Primrose.Expressions.FunctionDelegate{``0,``1,``2,``3})">
             <summary>Adds a parameterized function to the context</summary>
             <typeparam name="T1">The type of the first argument</typeparam>
             <typeparam name="T2">The type of the second argument</typeparam>
@@ -154,7 +197,7 @@
             <param name="name">The function name</param>
             <param name="fn">The function delegate</param>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.AddFunc``5(System.String,System.Func{Primrose.Expressions.IContext,``0,``1,``2,``3,``4,Primrose.Expressions.Val})">
+        <member name="M:Primrose.Expressions.ContextBase.AddFunc``5(System.String,Primrose.Expressions.FunctionDelegate{``0,``1,``2,``3,``4})">
             <summary>Adds a parameterized function to the context</summary>
             <typeparam name="T1">The type of the first argument</typeparam>
             <typeparam name="T2">The type of the second argument</typeparam>
@@ -164,7 +207,7 @@
             <param name="name">The function name</param>
             <param name="fn">The function delegate</param>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.AddFunc``6(System.String,System.Func{Primrose.Expressions.IContext,``0,``1,``2,``3,``4,``5,Primrose.Expressions.Val})">
+        <member name="M:Primrose.Expressions.ContextBase.AddFunc``6(System.String,Primrose.Expressions.FunctionDelegate{``0,``1,``2,``3,``4,``5})">
             <summary>Adds a parameterized function to the context</summary>
             <typeparam name="T1">The type of the first argument</typeparam>
             <typeparam name="T2">The type of the second argument</typeparam>
@@ -175,7 +218,7 @@
             <param name="name">The function name</param>
             <param name="fn">The function delegate</param>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.AddFunc``7(System.String,System.Func{Primrose.Expressions.IContext,``0,``1,``2,``3,``4,``5,``6,Primrose.Expressions.Val})">
+        <member name="M:Primrose.Expressions.ContextBase.AddFunc``7(System.String,Primrose.Expressions.FunctionDelegate{``0,``1,``2,``3,``4,``5,``6})">
             <summary>Adds a parameterized function to the context</summary>
             <typeparam name="T1">The type of the first argument</typeparam>
             <typeparam name="T2">The type of the second argument</typeparam>
@@ -187,7 +230,7 @@
             <param name="name">The function name</param>
             <param name="fn">The function delegate</param>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.AddFunc``8(System.String,System.Func{Primrose.Expressions.IContext,``0,``1,``2,``3,``4,``5,``6,``7,Primrose.Expressions.Val})">
+        <member name="M:Primrose.Expressions.ContextBase.AddFunc``8(System.String,Primrose.Expressions.FunctionDelegate{``0,``1,``2,``3,``4,``5,``6,``7})">
             <summary>Adds a parameterized function to the context</summary>
             <typeparam name="T1">The type of the first argument</typeparam>
             <typeparam name="T2">The type of the second argument</typeparam>
@@ -200,7 +243,7 @@
             <param name="name">The function name</param>
             <param name="fn">The function delegate</param>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.AddFunc``9(System.String,System.Func{Primrose.Expressions.IContext,``0,``1,``2,``3,``4,``5,``6,``7,``8,Primrose.Expressions.Val})">
+        <member name="M:Primrose.Expressions.ContextBase.AddFunc``9(System.String,Primrose.Expressions.FunctionDelegate{``0,``1,``2,``3,``4,``5,``6,``7,``8})">
             <summary>Adds a parameterized function to the context</summary>
             <typeparam name="T1">The type of the first argument</typeparam>
             <typeparam name="T2">The type of the second argument</typeparam>
@@ -214,7 +257,7 @@
             <param name="name">The function name</param>
             <param name="fn">The function delegate</param>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.AddFunc``10(System.String,System.Func{Primrose.Expressions.IContext,``0,``1,``2,``3,``4,``5,``6,``7,``8,``9,Primrose.Expressions.Val})">
+        <member name="M:Primrose.Expressions.ContextBase.AddFunc``10(System.String,Primrose.Expressions.FunctionDelegate{``0,``1,``2,``3,``4,``5,``6,``7,``8,``9})">
             <summary>Adds a parameterized function to the context</summary>
             <typeparam name="T1">The type of the first argument</typeparam>
             <typeparam name="T2">The type of the second argument</typeparam>
@@ -229,7 +272,7 @@
             /// <param name="name">The function name</param>
             <param name="fn">The function delegate</param>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.AddFunc``11(System.String,System.Func{Primrose.Expressions.IContext,``0,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,Primrose.Expressions.Val})">
+        <member name="M:Primrose.Expressions.ContextBase.AddFunc``11(System.String,Primrose.Expressions.FunctionDelegate{``0,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10})">
             <summary>Adds a parameterized function to the context</summary>
             <typeparam name="T1">The type of the first argument</typeparam>
             <typeparam name="T2">The type of the second argument</typeparam>
@@ -245,7 +288,7 @@
             /// <param name="name">The function name</param>
             <param name="fn">The function delegate</param>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.AddFunc``12(System.String,System.Func{Primrose.Expressions.IContext,``0,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,Primrose.Expressions.Val})">
+        <member name="M:Primrose.Expressions.ContextBase.AddFunc``12(System.String,Primrose.Expressions.FunctionDelegate{``0,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11})">
             <summary>Adds a parameterized function to the context</summary>
             <typeparam name="T1">The type of the first argument</typeparam>
             <typeparam name="T2">The type of the second argument</typeparam>
@@ -262,7 +305,7 @@
             <param name="name">The function name</param>
             <param name="fn">The function delegate</param>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.AddFunc``13(System.String,System.Func{Primrose.Expressions.IContext,``0,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,Primrose.Expressions.Val})">
+        <member name="M:Primrose.Expressions.ContextBase.AddFunc``13(System.String,Primrose.Expressions.FunctionDelegate{``0,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12})">
             <summary>Adds a parameterized function to the context</summary>
             <typeparam name="T1">The type of the first argument</typeparam>
             <typeparam name="T2">The type of the second argument</typeparam>
@@ -280,7 +323,7 @@
             <param name="name">The function name</param>
             <param name="fn">The function delegate</param>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.AddFunc``14(System.String,System.Func{Primrose.Expressions.IContext,``0,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``13,Primrose.Expressions.Val})">
+        <member name="M:Primrose.Expressions.ContextBase.AddFunc``14(System.String,Primrose.Expressions.FunctionDelegate{``0,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``13})">
             <summary>Adds a parameterized function to the context</summary>
             <typeparam name="T1">The type of the first argument</typeparam>
             <typeparam name="T2">The type of the second argument</typeparam>
@@ -299,7 +342,7 @@
             <param name="name">The function name</param>
             <param name="fn">The function delegate</param>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.AddFunc``15(System.String,System.Func{Primrose.Expressions.IContext,``0,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``13,``14,Primrose.Expressions.Val})">
+        <member name="M:Primrose.Expressions.ContextBase.AddFunc``15(System.String,Primrose.Expressions.FunctionDelegate{``0,``1,``2,``3,``4,``5,``6,``7,``8,``9,``10,``11,``12,``13,``14})">
             <summary>Adds a parameterized function to the context</summary>
             <typeparam name="T1">The type of the first argument</typeparam>
             <typeparam name="T2">The type of the second argument</typeparam>
@@ -342,7 +385,7 @@
         <member name="M:Primrose.Expressions.ContextScope.Clear">
             <summary>Clears the context of information</summary>
         </member>
-        <member name="M:Primrose.Expressions.ContextScope.DeclVar(System.String,Primrose.Expressions.ValType,Primrose.Expressions.Lexer)">
+        <member name="M:Primrose.Expressions.ContextScope.DeclVar(System.String,System.Type,Primrose.Expressions.Lexer)">
             <summary>Declares a variable</summary>
             <param name="name">The variable name</param>
             <param name="type">The variable type</param>
@@ -357,10 +400,18 @@
             <exception cref="T:System.InvalidOperationException">Attempted to get the value from an undeclared variable</exception>
         </member>
         <member name="M:Primrose.Expressions.ContextScope.SetVar(Primrose.Expressions.ITracker,System.String,Primrose.Expressions.Val)">
-            <summary>Set the value of a variable</summary>
+            <summary>Sets the value of a variable</summary>
             <param name="eval">The expression object being evaluated</param>
             <param name="name">The variable name</param>
             <param name="val">The Val object containing the value of the variable</param>
+            <exception cref="T:System.InvalidOperationException">Attempted to set the value of an undeclared variable</exception>
+        </member>
+        <member name="M:Primrose.Expressions.ContextScope.SetVar(Primrose.Expressions.ITracker,System.String,Primrose.Expressions.Val,System.Int32[][])">
+            <summary>Sets the value of an indexed variable</summary>
+            <param name="eval">The expression object being evaluated</param>
+            <param name="name">The variable name</param>
+            <param name="val">The Val object containing the value of the variable</param>
+            <param name="indices">The indices to set</param>
             <exception cref="T:System.InvalidOperationException">Attempted to set the value of an undeclared variable</exception>
         </member>
         <member name="T:Primrose.Expressions.IContext">
@@ -401,14 +452,14 @@
         <member name="T:Primrose.Expressions.ValTypeMismatchException">
             <summary>Represents an exception as a result of processing an array with an unexpected format</summary>
         </member>
-        <member name="M:Primrose.Expressions.ValTypeMismatchException.#ctor(System.Int32,Primrose.Expressions.ValType)">
+        <member name="M:Primrose.Expressions.ValTypeMismatchException.#ctor(System.Int32,System.Type)">
             <summary>
-            Represents an exception when attempting to assign an array to a ValType
+            Represents an exception when attempting to assign an array to another Type
             </summary>
         </member>
-        <member name="M:Primrose.Expressions.ValTypeMismatchException.#ctor(Primrose.Expressions.ValType,Primrose.Expressions.ValType)">
+        <member name="M:Primrose.Expressions.ValTypeMismatchException.#ctor(System.Type,System.Type)">
             <summary>
-            Represents an exception when attempting to assign an array to a ValType
+            Represents an exception when attempting to assign a Type to another Type
             </summary>
         </member>
         <member name="T:Primrose.Expressions.EvalException">
@@ -512,6 +563,12 @@
             <param name="v2">The second value</param>
             <returns></returns>
         </member>
+        <member name="M:Primrose.Expressions.Ops.ImplicitCast(System.Type,Primrose.Expressions.Val)">
+            <summary>Perform implicit casting</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Ops.ImplicitCast(Primrose.Expressions.Val@,Primrose.Expressions.Val@)">
+            <summary>Perform implicit casting towards a common type</summary>
+        </member>
         <member name="M:Primrose.Expressions.IMatcher.Match(System.String)">
             <summary>
             Return the number of characters that this "regex" or equivalent
@@ -584,6 +641,9 @@
         </member>
         <member name="F:Primrose.Expressions.LintType.VARIABLE">
             <summary>Indicates linting for variables</summary>
+        </member>
+        <member name="F:Primrose.Expressions.LintType.VARIABLE_OR_TYPE">
+            <summary>Inconclusive linting for variables or type</summary>
         </member>
         <member name="T:Primrose.Expressions.Resource.Strings">
             <summary>
@@ -892,6 +952,28 @@
         <member name="F:Primrose.Expressions.UOp.NEGATION">
             <summary>The numerical negation operator (-a)</summary>
         </member>
+        <member name="T:Primrose.Expressions.UnaryOp`1">
+            <summary>
+            Performs and caches functions for basic operations
+            </summary>
+            <typeparam name="TIn">Input type</typeparam>
+        </member>
+        <member name="M:Primrose.Expressions.UnaryOp`1.Cast``1(`0)">
+            <summary>
+            Casts <typeparamref name="TIn"/> to <typeparamref name="TOut"/>.
+            This does not cause boxing for value types.
+            Useful in generic methods.
+            </summary>
+            <typeparam name="TOut">Target type to cast to. Usually a generic type.</typeparam>
+        </member>
+        <member name="M:Primrose.Expressions.UnaryOp`1.CastIntermediate``1(`0,System.Type)">
+            <summary>
+            Casts <typeparamref name="TIn"/> to <typeparamref name="TOut"/>.
+            This does not cause boxing for value types.
+            Useful in generic methods.
+            </summary>
+            <typeparam name="TOut">Target type to cast to. Usually a generic type.</typeparam>
+        </member>
         <member name="T:Primrose.Expressions.ValObj">
             <summary>
             A value holder for reference types.
@@ -902,36 +984,42 @@
             swtiching to a single 'object' field
             </comment>
         </member>
+        <member name="T:Primrose.Expressions.ValPrim">
+            <summary>
+            A value holder for 32-bit primitive types.
+            </summary>
+        </member>
         <member name="T:Primrose.Expressions.Val">
             <summary>
             Represents a script value
             </summary>
         </member>
-        <member name="F:Primrose.Expressions.Val.Type">
-            <summary>
-            The type of the value
-            </summary>
+        <member name="P:Primrose.Expressions.Val.Type">
+            <summary>Retrieves the type of the value</summary>
+        </member>
+        <member name="M:Primrose.Expressions.Val.Cast``1">
+            <summary>Retrieves the value and casts it as a <typeparamref name="T"/></summary>
         </member>
         <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~System.Boolean">
-            <summary>Retrieves the boolean value</summary>
+            <summary>Retrieves the value as a bool</summary>
         </member>
         <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~System.Int32">
-            <summary>Retrieves the integer value</summary>
+            <summary>Retrieves the value as a 32-bit integer</summary>
         </member>
         <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~System.Single">
-            <summary>Retrieves the floating point value</summary>
+            <summary>Retrieves the value as a floating point</summary>
         </member>
         <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~System.String">
-            <summary>Retrieves the string value</summary>
+            <summary>Retrieves the value as a string</summary>
         </member>
         <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~Primrose.Primitives.ValueTypes.float2">
-            <summary>Retrieves a float2 value</summary>
+            <summary>Retrieves the value as float2</summary>
         </member>
         <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~Primrose.Primitives.ValueTypes.float3">
-            <summary>Retrieves a float3 value</summary>
+            <summary>Retrieves the value as float3</summary>
         </member>
         <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~Primrose.Primitives.ValueTypes.float4">
-            <summary>Retrieves a float4 value</summary>
+            <summary>Retrieves the value as float2</summary>
         </member>
         <member name="M:Primrose.Expressions.Val.op_Explicit(Primrose.Expressions.Val)~System.Boolean[]">
             <summary>Retrieves a boolean array</summary>
@@ -948,7 +1036,7 @@
         <member name="P:Primrose.Expressions.Val.Value">
             <summary>Retrieves the value as an object</summary>
         </member>
-        <member name="M:Primrose.Expressions.Val.#ctor(Primrose.Expressions.ValType)">
+        <member name="M:Primrose.Expressions.Val.#ctor(System.Type)">
             <summary>Defines a value</summary>
         </member>
         <member name="M:Primrose.Expressions.Val.#ctor(System.Boolean)">
@@ -984,6 +1072,9 @@
         <member name="M:Primrose.Expressions.Val.#ctor(System.String[])">
             <summary>Defines a value</summary>
         </member>
+        <member name="M:Primrose.Expressions.Val.#ctor(System.Object)">
+            <summary>Defines a value</summary>
+        </member>
         <member name="F:Primrose.Expressions.Val.NULL">
             <summary>Represents a null value</summary>
         </member>
@@ -1005,44 +1096,8 @@
         <member name="P:Primrose.Expressions.Val.IsArray">
             <summary>Determines if a value is an array</summary>
         </member>
-        <member name="T:Primrose.Expressions.ValType">
-            <summary>Represents a value type</summary>
-        </member>
-        <member name="F:Primrose.Expressions.ValType.NULL">
-            <summary>Represents a null value</summary>
-        </member>
-        <member name="F:Primrose.Expressions.ValType.BOOL">
-            <summary>Represents a boolean value</summary>
-        </member>
-        <member name="F:Primrose.Expressions.ValType.INT">
-            <summary>Represents a 32-bit integer value</summary>
-        </member>
-        <member name="F:Primrose.Expressions.ValType.FLOAT">
-            <summary>Represents a 32-bit floating point value</summary>
-        </member>
-        <member name="F:Primrose.Expressions.ValType.STRING">
-            <summary>Represents a string value</summary>
-        </member>
-        <member name="F:Primrose.Expressions.ValType.FLOAT2">
-            <summary>Represents two floating point values</summary>
-        </member>
-        <member name="F:Primrose.Expressions.ValType.FLOAT3">
-            <summary>Represents three floating point values</summary>
-        </member>
-        <member name="F:Primrose.Expressions.ValType.FLOAT4">
-            <summary>Represents four floating point values</summary>
-        </member>
-        <member name="F:Primrose.Expressions.ValType.BOOL_ARRAY">
-            <summary>Represents an array of boolean values</summary>
-        </member>
-        <member name="F:Primrose.Expressions.ValType.INT_ARRAY">
-            <summary>Represents an array of integer values</summary>
-        </member>
-        <member name="F:Primrose.Expressions.ValType.FLOAT_ARRAY">
-            <summary>Represents an array of floating point values</summary>
-        </member>
-        <member name="F:Primrose.Expressions.ValType.STRING_ARRAY">
-            <summary>Represents an array of strings</summary>
+        <member name="M:Primrose.Expressions.Val.ToString">
+            <summary>Gets the string representation of the value</summary>
         </member>
     </members>
 </doc>

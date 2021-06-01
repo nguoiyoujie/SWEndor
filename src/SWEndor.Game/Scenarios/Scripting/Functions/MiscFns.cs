@@ -55,19 +55,16 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
     /// <returns>BOOL/INT/FLOAT, depending on the input</returns>
     public static Val GetArrayElement(IContext context, Val array, int index)
     {
-      if (array.Type == ValType.BOOL_ARRAY)
-        return new Val(((bool[])array)[index]);
-      else if (array.Type == ValType.INT_ARRAY)
-        return new Val(((int[])array)[index]);
-      else if (array.Type == ValType.FLOAT_ARRAY)
-        return new Val(((float[])array)[index]);
-      else if (array.Type == ValType.STRING_ARRAY)
-        return new Val(((string[])array)[index]);
-      else if (array.Type == ValType.STRING)
-        return new Val(((string)array)[index].ToString());
-
-      else
+      Array a;
+      try
+      {
+        a = array.Cast<Array>();
+      }
+      catch
+      {
         throw new Exception("Attempted to apply GetArrayElement on a non-array object.");
+      }
+      return new Val(a.GetValue(index));
     }
   }
 }

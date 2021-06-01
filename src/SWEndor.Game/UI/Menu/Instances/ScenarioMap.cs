@@ -253,8 +253,8 @@ namespace SWEndor.Game.UI.Menu.Pages
       float bz2 = box.Z.Max * scale;
       float ang = rot_y - proty;
 
-      float cos = (float)Math.Cos(ang * Globals.Deg2Rad);
-      float sin = -(float)Math.Sin(ang * Globals.Deg2Rad);
+      float cos = LookUp.Cos(ang, LookUp.Measure.DEGREES);
+      float sin = LookUp.Sin(ang, LookUp.Measure.DEGREES);
 
       TV_2DVECTOR pt1 = new TV_2DVECTOR(x, y) - new TV_2DVECTOR(bx * cos + bz * sin,
                                                                 bz * cos - bx * sin);
@@ -285,8 +285,8 @@ namespace SWEndor.Game.UI.Menu.Pages
       float bz2 = box.Z.Max * scale;
       float ang = rot_y - proty;
 
-      float cos = (float)Math.Cos(ang * Globals.Deg2Rad);
-      float sin = -(float)Math.Sin(ang * Globals.Deg2Rad);
+      float cos = LookUp.Cos(ang, LookUp.Measure.DEGREES);
+      float sin = -LookUp.Sin(ang, LookUp.Measure.DEGREES);
 
       TV_2DVECTOR pt1 = new TV_2DVECTOR(x, y) - new TV_2DVECTOR(bx * cos + bz * sin,
                                                                 bz * cos - bx * sin);

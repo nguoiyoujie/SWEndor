@@ -85,14 +85,6 @@
       <HintPath>..\dll\MTV3D65.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Primrose, Version=0.0.7520.29091, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dll\Primrose.dll</HintPath>
-    </Reference>
-    <Reference Include="Primrose.Expressions, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dll\Primrose.Expressions.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Drawing" />
@@ -349,6 +341,7 @@
     <Compile Include="Scenarios\MessageLog.cs" />
     <Compile Include="Scenarios\ScenarioStates.cs" />
     <Compile Include="Scenarios\ScenarioInfo.cs" />
+    <Compile Include="Scenarios\Scripting\InsufficientParametersException.cs" />
     <Compile Include="Sound\MoodState.cs" />
     <Compile Include="Scenarios\ScenarioBase.cs" />
     <Compile Include="Scenarios\ScenarioManager.cs" />
@@ -451,6 +444,7 @@
     <Compile Include="UI\Forms\UIControls\ucStatObjects.Designer.cs">
       <DependentUpon>ucStatObjects.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Helpers\DrawIcons.cs" />
     <Compile Include="UI\Menu\Instances\CampaignSelection.cs" />
     <Compile Include="UI\Menu\Instances\ConfigSettingsMenu.cs" />
     <Compile Include="UI\Menu\Instances\ConfirmExit.cs" />
@@ -472,6 +466,7 @@
     <Compile Include="UI\Menu\Page.cs" />
     <Compile Include="UI\Menu\SelectionElement.cs" />
     <Compile Include="UI\Screen2D.cs" />
+    <Compile Include="UI\Textures\Textures.cs" />
     <Compile Include="UI\Widget\Instances\AIWidget.cs" />
     <Compile Include="UI\Widget\Instances\Box3DWidget.cs" />
     <Compile Include="UI\Widget\Instances\CrossHairWidget.cs" />
@@ -495,6 +490,7 @@
     <Compile Include="UI\Widget\Instances\WeaponInfoWidget.cs" />
     <Compile Include="UI\Widget\TextInfo.cs" />
     <Compile Include="UI\Widget\Widget.cs" />
+    <Compile Include="Utilities\LookUp.cs" />
     <Compile Include="Utilities\Utilities.cs" />
     <Compile Include="Weapons\Components\WeapAimInfo.cs" />
     <Compile Include="Weapons\Components\WeapAmmoInfo.cs" />
@@ -511,6 +507,14 @@
     <Compile Include="Weapons\WeapRegistry.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Primrose\src\Primrose.Expressions\Primrose.Expressions.csproj">
+      <Project>{4e45e1ad-89de-404a-b867-1fb251eee1a4}</Project>
+      <Name>Primrose.Expressions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Primrose\src\Primrose\Primrose.csproj">
+      <Project>{6127267c-e6d9-4b1a-a22a-0f3ae7ff3eee}</Project>
+      <Name>Primrose</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fmod.Wrapper\Fmod.Wrapper.csproj">
       <Project>{805428ff-a413-48da-993c-99d9083b9a45}</Project>
       <Name>Fmod.Wrapper</Name>

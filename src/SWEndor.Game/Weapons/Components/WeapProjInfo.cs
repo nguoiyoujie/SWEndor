@@ -37,7 +37,7 @@ namespace SWEndor.Game.Weapons
       HomingDelay = 0,
       LifeTime = -1,
       WeaponType = WeaponType.NONE,
-      FireSound = null
+      FireSound = new string[0]
     };
 
     public void Load(Engine e)

@@ -84,7 +84,7 @@ namespace SWEndor.Game.Scenarios
     {
       ActorInfo[] ret = new ActorInfo[spawninfo.MemberCount];
       TV_3DVECTOR[] spawnpos;
-      TV_3DVECTOR[] poss = GetMemberPositions(position, spawninfo, out spawnpos);
+      TV_3DVECTOR[] poss = GetMemberPositions(position, spawninfo, out spawnpos, engine.TrueVision.TVMathLibrary);
       AI.Squads.Squadron squad = engine.SquadronFactory.Create(spawninfo.SquadName);
       for (int i = 0; i < poss.Length; i++)
       {
@@ -117,12 +117,12 @@ namespace SWEndor.Game.Scenarios
       return ret;
     }
 
-    public static TV_3DVECTOR[] GetMemberPositions(TV_3DVECTOR position, SquadSpawnInfo spawninfo, out TV_3DVECTOR[] spawnpos)
+    public static TV_3DVECTOR[] GetMemberPositions(TV_3DVECTOR position, SquadSpawnInfo spawninfo, out TV_3DVECTOR[] spawnpos, TVMathLibrary math)
     {
       TV_3DVECTOR[] ret = new TV_3DVECTOR[spawninfo.MemberCount];
       spawnpos = new TV_3DVECTOR[spawninfo.MemberCount];
-      TV_3DVECTOR dirs = new TV_3DVECTOR(spawninfo.Rotation.x, spawninfo.Rotation.y + 90, spawninfo.Rotation.z).ConvertRotToDir();
-      TV_3DVECTOR dirf = new TV_3DVECTOR(spawninfo.Rotation.x, spawninfo.Rotation.y, spawninfo.Rotation.z).ConvertRotToDir();
+      TV_3DVECTOR dirs = new TV_3DVECTOR(spawninfo.Rotation.x, spawninfo.Rotation.y + 90, spawninfo.Rotation.z).ConvertRotToDir(math);
+      TV_3DVECTOR dirf = new TV_3DVECTOR(spawninfo.Rotation.x, spawninfo.Rotation.y, spawninfo.Rotation.z).ConvertRotToDir(math);
 
       for (int m = 0; m < spawninfo.MemberCount; m++)
       {
@@ -235,7 +235,7 @@ namespace SWEndor.Game.Scenarios
         SidebarName = name,
         SpawnTime = engine.Game.GameTime + spawndelay,
         Faction = spawninfo.Faction,
-        Position = GetSpawnPosition(position, spawninfo),
+        Position = GetSpawnPosition(position, spawninfo, engine.TrueVision.TVMathLibrary),
         Rotation = new TV_3DVECTOR(),
         Actions = actionlist.ToArray(),
         Registries = spawninfo.Registries
@@ -246,11 +246,11 @@ namespace SWEndor.Game.Scenarios
       return a;
     }
 
-    public static TV_3DVECTOR GetSpawnPosition(TV_3DVECTOR position, ShipSpawnInfo spawninfo)
+    public static TV_3DVECTOR GetSpawnPosition(TV_3DVECTOR position, ShipSpawnInfo spawninfo, TVMathLibrary math)
     {
       if (spawninfo.HyperspaceIn)
       {
-        TV_3DVECTOR dirf = new TV_3DVECTOR(spawninfo.Rotation.x, spawninfo.Rotation.y, spawninfo.Rotation.z).ConvertRotToDir();
+        TV_3DVECTOR dirf = new TV_3DVECTOR(spawninfo.Rotation.x, spawninfo.Rotation.y, spawninfo.Rotation.z).ConvertRotToDir(math);
         return position - dirf * 50000;
       }
       else

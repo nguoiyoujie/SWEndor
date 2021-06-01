@@ -93,13 +93,13 @@ namespace SWEndor.Game.Models
 
     public TV_3DVECTOR Direction
     {
-      get { return currData.Rotation.ConvertRotToDir(); }
+      get { return currData.Rotation.ConvertRotToDir(math); }
       set { prevData.Rotation = currData.Rotation; currData.Rotation = value.ConvertDirToRot(math); }
     }
 
     public TV_3DVECTOR PrevDirection
     {
-      get { return prevData.Rotation.ConvertRotToDir(); }
+      get { return prevData.Rotation.ConvertRotToDir(math); }
       private set { prevData.Rotation = value.ConvertDirToRot(math); }
     }
 
@@ -262,13 +262,13 @@ namespace SWEndor.Game.Models
     // ?
     public TV_3DVECTOR GetGlobalDirection(T self, float time)
     {
-      TV_3DVECTOR dir = GetGlobalRotation(self, time).ConvertRotToDir();
+      TV_3DVECTOR dir = GetGlobalRotation(self, time).ConvertRotToDir(math);
       return dir;
     }
 
     public TV_3DVECTOR GetPrevGlobalDirection(T self, float time)
     {
-      TV_3DVECTOR dir = GetPrevGlobalRotation(self, time).ConvertRotToDir();
+      TV_3DVECTOR dir = GetPrevGlobalRotation(self, time).ConvertRotToDir(math);
       return dir;
     }
 

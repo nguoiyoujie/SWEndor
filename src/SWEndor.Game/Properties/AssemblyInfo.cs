@@ -7,13 +7,13 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")] 
 [assembly: AssemblyCompany("")] 
 [assembly: AssemblyProduct("SWEndor.Core")] 
-[assembly: AssemblyCopyright("Copyright ? 2017-2020. All rights reserved.")] 
+[assembly: AssemblyCopyright("Copyright ? 2017-2021. All rights reserved.")] 
 [assembly: AssemblyTrademark("")] 
 [assembly: AssemblyCulture("")] 
 
 [assembly: ComVisible(false)] 
 [assembly: AssemblyVersion("0.0.*")] 
-[assembly: AssemblyFileVersion("0.0.02008.2500")] 
+[assembly: AssemblyFileVersion("0.0.02101.0600")] 
 
 //Debug 
 #if DEBUG 

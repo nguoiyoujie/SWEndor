@@ -159,8 +159,7 @@ namespace SWEndor.Game.ActorTypes.Components
             if (Data.Length < 2)
               break;
 
-            float size = 1;
-            if (!float.TryParse(Data[0], out size))
+            if (!float.TryParse(Data[0], out float size))
               break;
 
             string texname = Data[1];
@@ -191,8 +190,7 @@ namespace SWEndor.Game.ActorTypes.Components
             if (Data.Length < 3)
               break;
 
-            float size = 1;
-            if (!float.TryParse(Data[0], out size))
+            if (!float.TryParse(Data[0], out float size))
               break;
 
             string texname = Data[1];
@@ -210,16 +208,13 @@ namespace SWEndor.Game.ActorTypes.Components
             if (Data.Length < 4)
               break;
 
-            float size = 1;
-            if (!float.TryParse(Data[0], out size))
+            if (!float.TryParse(Data[0], out float size))
               break;
 
-            int columns = 1;
-            if (!int.TryParse(Data[2], out columns))
+            if (!int.TryParse(Data[2], out int columns))
               break;
 
-            int rows = 1;
-            if (!int.TryParse(Data[3], out rows))
+            if (!int.TryParse(Data[3], out int rows))
               break;
 
             string texname = Data[1];

@@ -183,7 +183,7 @@ make_ships:
 	Script.Call("actorp_multShd");
 	actorp_multiplier = 1.5;
 	Script.Call("actorp_multHull");
-	AI.QueueLast(ebolo, "move", {200, 450, -3500}, 12);
+	AI.QueueLast(ebolo, "move", {200, 450, -3500}, 6);
 	AI.QueueLast(ebolo, "move", {-2470, 500, -7350}, 6);
 	AI.QueueLast(ebolo, "move", {3100, 500, -11350}, 4);
 	AI.QueueLast(ebolo, "rotate", {-2000, 210, -20000}, 0);
@@ -844,7 +844,7 @@ spawn_traitorMines_corv2:
 	}
 
 
-	spawn_traitorMines_corv3:
+spawn_traitorMines_corv3:
 	if (Actor.IsAlive(corv3) && corv3_mines > 0)
 	{
 		float3 pos = Actor.GetGlobalPosition(corv3);
@@ -860,7 +860,7 @@ spawn_traitorMines_corv2:
 	}
 
 
-	spawn_traitorMines_corv4:
+spawn_traitorMines_corv4:
 	if (Actor.IsAlive(corv4) && corv4_mines > 0)
 	{
 		float3 pos = Actor.GetGlobalPosition(corv4);

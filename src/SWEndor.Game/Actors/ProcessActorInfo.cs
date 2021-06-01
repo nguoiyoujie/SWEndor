@@ -60,7 +60,7 @@ namespace SWEndor.Game.Actors
       using (ScopeCounters.Acquire(actor.Scope))
       {
         actor.CollisionData.TestCollision(engine, actor);
-        actor.CollisionData.TestProspectiveCollision(engine, actor, ref actor.AI);
+        actor.CollisionData.TestProspectiveCollision(engine, actor);
       }
     }
 

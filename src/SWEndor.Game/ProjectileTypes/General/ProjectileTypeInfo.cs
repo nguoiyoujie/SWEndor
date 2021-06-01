@@ -185,7 +185,18 @@ namespace SWEndor.Game.ProjectileTypes
       ainfo.TickExplosions();
     }
 
-    private void NearEnoughImpact(Engine engine, ProjectileInfo proj, ActorInfo target)
+    private void NearEnoughImpact(Engine engine, ProjectileInfo proj)
+    {
+      foreach (ActorInfo a in engine.ActorFactory.Actors)
+      {
+        if (a.Active && proj.CanCollideWith(a))
+        {
+          if (NearEnoughImpact(engine, proj, a)) { break; }
+        }
+      }
+    }
+
+    private bool NearEnoughImpact(Engine engine, ProjectileInfo proj, ActorInfo target)
     {
       // projectile
       float impdist = CombatData.ImpactCloseEnoughDistance;
@@ -203,8 +214,10 @@ namespace SWEndor.Game.ProjectileTypes
           proj.TypeInfo.ProcessHit(engine, proj, target, target.GetGlobalPosition());
 
           target.OnHitEvent();
+          return true;
         }
       }
+      return false;
     }
 
     private void AddScore(Engine engine, ScoreInfo score, ProjectileInfo proj, ActorInfo victim)

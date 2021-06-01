@@ -150,9 +150,9 @@ namespace SWEndor.Game.AI.Actions
 
         float xzAngle = engine.Random.Next(0, 360);
 
-        center.x += (float)Math.Cos(xzAngle * Globals.Deg2Rad) * radius;
+        center.x += LookUp.Cos(xzAngle, LookUp.Measure.DEGREES) * radius;
         center.y += engine.Random.Next(-200, 200);
-        center.z += (float)Math.Sin(xzAngle * Globals.Deg2Rad) * radius;
+        center.z += LookUp.Sin(xzAngle, LookUp.Measure.DEGREES) * radius;
 
         TV3DVecExts.Clamp(ref center, engine.GameScenarioManager.Scenario.State.MinAIBounds * 0.75f, engine.GameScenarioManager.Scenario.State.MaxAIBounds * 0.75f);
       }

@@ -35,9 +35,9 @@ namespace SWEndor.Game.Player
       TV_3DVECTOR pos = LookFrom.GetGlobalPosition(engine);
 
       float angle = (engine.Game.GameTime % DeathCamera.Period) * (2 * Globals.PI / DeathCamera.Period);
-      cam.SetPosition(pos.x + DeathCamera.Radius * (float)Math.Cos(angle)
+      cam.SetPosition(pos.x + DeathCamera.Radius * LookUp.Cos(angle)
                     , pos.y + DeathCamera.Height
-                    , pos.z + DeathCamera.Radius * (float)Math.Sin(angle));
+                    , pos.z + DeathCamera.Radius * LookUp.Sin(angle));
 
       cam.SetLookAt(pos.x, pos.y, pos.z);
     }

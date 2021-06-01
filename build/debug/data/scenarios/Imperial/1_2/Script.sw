@@ -330,7 +330,7 @@ gametick:
 	}
 
 
-inspection:	
+inspection:
 	if (!GetGameStateB("ScutzInspected"))
 	{
 		if (Math.GetActorDistance(Player.GetActor(), scutz) < 200)
