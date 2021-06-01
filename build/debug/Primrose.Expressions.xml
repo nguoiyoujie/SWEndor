@@ -4,109 +4,6 @@
         <name>Primrose.Expressions</name>
     </assembly>
     <members>
-        <member name="T:Primrose.Expressions.FunctionDelegateParam">
-            <summary>Defines a delegate representing a function expression</summary>
-        </member>
-        <member name="T:Primrose.Expressions.FunctionDelegate">
-            <summary>Defines a delegate representing a function expression</summary>
-        </member>
-        <member name="T:Primrose.Expressions.FunctionDelegate`1">
-            <summary>Defines a delegate representing a function expression</summary>
-        </member>
-        <member name="T:Primrose.Expressions.FunctionDelegate`2">
-            <summary>Defines a delegate representing a function expression</summary>
-        </member>
-        <member name="T:Primrose.Expressions.FunctionDelegate`3">
-            <summary>Defines a delegate representing a function expression</summary>
-        </member>
-        <member name="T:Primrose.Expressions.FunctionDelegate`4">
-            <summary>Defines a delegate representing a function expression</summary>
-        </member>
-        <member name="T:Primrose.Expressions.FunctionDelegate`5">
-            <summary>Defines a delegate representing a function expression</summary>
-        </member>
-        <member name="T:Primrose.Expressions.FunctionDelegate`6">
-            <summary>Defines a delegate representing a function expression</summary>
-        </member>
-        <member name="T:Primrose.Expressions.FunctionDelegate`7">
-            <summary>Defines a delegate representing a function expression</summary>
-        </member>
-        <member name="T:Primrose.Expressions.FunctionDelegate`8">
-            <summary>Defines a delegate representing a function expression</summary>
-        </member>
-        <member name="T:Primrose.Expressions.FunctionDelegate`9">
-            <summary>Defines a delegate representing a function expression</summary>
-        </member>
-        <member name="T:Primrose.Expressions.FunctionDelegate`10">
-            <summary>Defines a delegate representing a function expression</summary>
-        </member>
-        <member name="T:Primrose.Expressions.FunctionDelegate`11">
-            <summary>Defines a delegate representing a function expression</summary>
-        </member>
-        <member name="T:Primrose.Expressions.FunctionDelegate`12">
-            <summary>Defines a delegate representing a function expression</summary>
-        </member>
-        <member name="T:Primrose.Expressions.FunctionDelegate`13">
-            <summary>Defines a delegate representing a function expression</summary>
-        </member>
-        <member name="T:Primrose.Expressions.FunctionDelegate`14">
-            <summary>Defines a delegate representing a function expression</summary>
-        </member>
-        <member name="T:Primrose.Expressions.FunctionDelegate`15">
-            <summary>Defines a delegate representing a function expression</summary>
-        </member>
-        <member name="T:Primrose.Expressions.InvalidValCastException">
-            <summary>Represents an exception as a result of performing an invalid cast with a ValType</summary>
-        </member>
-        <member name="M:Primrose.Expressions.InvalidValCastException.#ctor(System.Type,System.Type)">
-            <summary>
-            Represents an exception when performing an invalid cast to another Type/>
-            </summary>
-        </member>
-        <member name="T:Primrose.Expressions.BOp">
-            <summary>
-            An enumeration of binary operators
-            </summary>
-        </member>
-        <member name="F:Primrose.Expressions.BOp.LOGICAL_OR">
-            <summary>The logical OR operator (a || b)</summary>
-        </member>
-        <member name="F:Primrose.Expressions.BOp.LOGICAL_AND">
-            <summary>The logical AND operator (a &amp;&amp; b)</summary>
-        </member>
-        <member name="F:Primrose.Expressions.BOp.ADD">
-            <summary>The numerical addition or string concatenation operator (a + b)</summary>
-        </member>
-        <member name="F:Primrose.Expressions.BOp.SUBTRACT">
-            <summary>The numerical subtraction operator (a - b)</summary>
-        </member>
-        <member name="F:Primrose.Expressions.BOp.MULTIPLY">
-            <summary>The numerical multiplication operator (a * b)</summary>
-        </member>
-        <member name="F:Primrose.Expressions.BOp.MODULUS">
-            <summary>The numerical modulus operator (a % b)</summary>
-        </member>
-        <member name="F:Primrose.Expressions.BOp.DIVIDE">
-            <summary>The numerical division operator (a / b)</summary>
-        </member>
-        <member name="F:Primrose.Expressions.BOp.EQUAL_TO">
-            <summary>The equality comparer (a == b)</summary>
-        </member>
-        <member name="F:Primrose.Expressions.BOp.NOT_EQUAL_TO">
-            <summary>The inequality comparer (a != b)</summary>
-        </member>
-        <member name="F:Primrose.Expressions.BOp.MORE_THAN">
-            <summary>The numerical greater than comparer (a &gt; b)</summary>
-        </member>
-        <member name="F:Primrose.Expressions.BOp.MORE_THAN_OR_EQUAL_TO">
-            <summary>The numerical greater than and equality comparer (a &gt;= b)</summary>
-        </member>
-        <member name="F:Primrose.Expressions.BOp.LESS_THAN">
-            <summary>The numerical less than comparer (a &lt; b)</summary>
-        </member>
-        <member name="F:Primrose.Expressions.BOp.LESS_THAN_OR_EQUAL_TO">
-            <summary>The numerical less than and equality comparer (a &lt;= b)</summary>
-        </member>
         <member name="T:Primrose.Expressions.Build">
             <summary>Provides internal build information for this project</summary> 
         </member>
@@ -414,6 +311,57 @@
             <param name="indices">The indices to set</param>
             <exception cref="T:System.InvalidOperationException">Attempted to set the value of an undeclared variable</exception>
         </member>
+        <member name="T:Primrose.Expressions.FunctionDelegateParam">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`1">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`2">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`3">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`4">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`5">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`6">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`7">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`8">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`9">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`10">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`11">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`12">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`13">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`14">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
+        <member name="T:Primrose.Expressions.FunctionDelegate`15">
+            <summary>Defines a delegate representing a function expression</summary>
+        </member>
         <member name="T:Primrose.Expressions.IContext">
             <summary>
             Provides a context for the script
@@ -449,19 +397,6 @@
             <param name="v">The Val object to be converted</param>
             <returns></returns>
         </member>
-        <member name="T:Primrose.Expressions.ValTypeMismatchException">
-            <summary>Represents an exception as a result of processing an array with an unexpected format</summary>
-        </member>
-        <member name="M:Primrose.Expressions.ValTypeMismatchException.#ctor(System.Int32,System.Type)">
-            <summary>
-            Represents an exception when attempting to assign an array to another Type
-            </summary>
-        </member>
-        <member name="M:Primrose.Expressions.ValTypeMismatchException.#ctor(System.Type,System.Type)">
-            <summary>
-            Represents an exception when attempting to assign a Type to another Type
-            </summary>
-        </member>
         <member name="T:Primrose.Expressions.EvalException">
             <summary>
             Provides script evaluation exceptions
@@ -492,6 +427,27 @@
             <param name="v1">The first value in the operation</param>
             <param name="v2">The second value in the operation</param>
             <param name="ex">The inner exception message</param>
+        </member>
+        <member name="T:Primrose.Expressions.InvalidValCastException">
+            <summary>Represents an exception as a result of performing an invalid cast with a ValType</summary>
+        </member>
+        <member name="M:Primrose.Expressions.InvalidValCastException.#ctor(System.Type,System.Type)">
+            <summary>
+            Represents an exception when performing an invalid cast to another Type/>
+            </summary>
+        </member>
+        <member name="T:Primrose.Expressions.ValTypeMismatchException">
+            <summary>Represents an exception as a result of processing an array with an unexpected format</summary>
+        </member>
+        <member name="M:Primrose.Expressions.ValTypeMismatchException.#ctor(System.Int32,System.Type)">
+            <summary>
+            Represents an exception when attempting to assign an array to another Type
+            </summary>
+        </member>
+        <member name="M:Primrose.Expressions.ValTypeMismatchException.#ctor(System.Type,System.Type)">
+            <summary>
+            Represents an exception when attempting to assign a Type to another Type
+            </summary>
         </member>
         <member name="T:Primrose.Expressions.ScriptReadDelegate">
             <summary>Represents a delegate for script reading events</summary>
@@ -524,6 +480,50 @@
         </member>
         <member name="M:Primrose.Expressions.ScriptFile.ReadFromStream(System.IO.StreamReader)">
             <summary>Opens and reads information from a source stream</summary>
+        </member>
+        <member name="T:Primrose.Expressions.BOp">
+            <summary>
+            An enumeration of binary operators
+            </summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.LOGICAL_OR">
+            <summary>The logical OR operator (a || b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.LOGICAL_AND">
+            <summary>The logical AND operator (a &amp;&amp; b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.ADD">
+            <summary>The numerical addition or string concatenation operator (a + b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.SUBTRACT">
+            <summary>The numerical subtraction operator (a - b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.MULTIPLY">
+            <summary>The numerical multiplication operator (a * b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.MODULUS">
+            <summary>The numerical modulus operator (a % b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.DIVIDE">
+            <summary>The numerical division operator (a / b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.EQUAL_TO">
+            <summary>The equality comparer (a == b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.NOT_EQUAL_TO">
+            <summary>The inequality comparer (a != b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.MORE_THAN">
+            <summary>The numerical greater than comparer (a &gt; b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.MORE_THAN_OR_EQUAL_TO">
+            <summary>The numerical greater than and equality comparer (a &gt;= b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.LESS_THAN">
+            <summary>The numerical less than comparer (a &lt; b)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.BOp.LESS_THAN_OR_EQUAL_TO">
+            <summary>The numerical less than and equality comparer (a &lt;= b)</summary>
         </member>
         <member name="T:Primrose.Expressions.Ops">
             <summary>
@@ -576,6 +576,42 @@
         </member>
         <member name="M:Primrose.Expressions.Ops.ImplicitCast(Primrose.Expressions.Val@,Primrose.Expressions.Val@)">
             <summary>Perform implicit casting towards a common type</summary>
+        </member>
+        <member name="T:Primrose.Expressions.UnaryOp`1">
+            <summary>
+            Performs and caches functions for basic operations
+            </summary>
+            <typeparam name="TIn">Input type</typeparam>
+        </member>
+        <member name="M:Primrose.Expressions.UnaryOp`1.Cast``1(`0)">
+            <summary>
+            Casts <typeparamref name="TIn"/> to <typeparamref name="TOut"/>.
+            This does not cause boxing for value types.
+            Useful in generic methods.
+            </summary>
+            <typeparam name="TOut">Target type to cast to. Usually a generic type.</typeparam>
+        </member>
+        <member name="M:Primrose.Expressions.UnaryOp`1.CastIntermediate``1(`0,System.Type)">
+            <summary>
+            Casts <typeparamref name="TIn"/> to <typeparamref name="TOut"/>.
+            This does not cause boxing for value types.
+            Useful in generic methods.
+            </summary>
+            <typeparam name="TOut">Target type to cast to. Usually a generic type.</typeparam>
+        </member>
+        <member name="T:Primrose.Expressions.UOp">
+            <summary>
+            An enumeration of unary operators
+            </summary>
+        </member>
+        <member name="F:Primrose.Expressions.UOp.IDENTITY">
+            <summary>The identiy operator. Does nothing</summary>
+        </member>
+        <member name="F:Primrose.Expressions.UOp.LOGICAL_NOT">
+            <summary>The logical not operator (!a)</summary>
+        </member>
+        <member name="F:Primrose.Expressions.UOp.NEGATION">
+            <summary>The numerical negation operator (-a)</summary>
         </member>
         <member name="M:Primrose.Expressions.IMatcher.Match(System.String)">
             <summary>
@@ -950,42 +986,6 @@
         <member name="M:Primrose.Expressions.ScriptExpression.Evaluate(Primrose.Expressions.IContext)">
             <summary>Evaluates the script</summary>
             <param name="context">The script context</param>
-        </member>
-        <member name="T:Primrose.Expressions.UOp">
-            <summary>
-            An enumeration of unary operators
-            </summary>
-        </member>
-        <member name="F:Primrose.Expressions.UOp.IDENTITY">
-            <summary>The identiy operator. Does nothing</summary>
-        </member>
-        <member name="F:Primrose.Expressions.UOp.LOGICAL_NOT">
-            <summary>The logical not operator (!a)</summary>
-        </member>
-        <member name="F:Primrose.Expressions.UOp.NEGATION">
-            <summary>The numerical negation operator (-a)</summary>
-        </member>
-        <member name="T:Primrose.Expressions.UnaryOp`1">
-            <summary>
-            Performs and caches functions for basic operations
-            </summary>
-            <typeparam name="TIn">Input type</typeparam>
-        </member>
-        <member name="M:Primrose.Expressions.UnaryOp`1.Cast``1(`0)">
-            <summary>
-            Casts <typeparamref name="TIn"/> to <typeparamref name="TOut"/>.
-            This does not cause boxing for value types.
-            Useful in generic methods.
-            </summary>
-            <typeparam name="TOut">Target type to cast to. Usually a generic type.</typeparam>
-        </member>
-        <member name="M:Primrose.Expressions.UnaryOp`1.CastIntermediate``1(`0,System.Type)">
-            <summary>
-            Casts <typeparamref name="TIn"/> to <typeparamref name="TOut"/>.
-            This does not cause boxing for value types.
-            Useful in generic methods.
-            </summary>
-            <typeparam name="TOut">Target type to cast to. Usually a generic type.</typeparam>
         </member>
         <member name="T:Primrose.Expressions.ValObj">
             <summary>

@@ -244,8 +244,10 @@ namespace SWEndor.Game.Sound
       List<Piece> plist = new List<Piece>(Piece.Factory.GetPieces(mood));
       if (plist.Count > 0)
       {
-        Piece p = plist.Random(Random);
-        QueueInterruptMusic(p);
+        if (plist.SelectRandom(Random, out Piece p))
+        {
+          QueueInterruptMusic(p);
+        }
       }
     }
 

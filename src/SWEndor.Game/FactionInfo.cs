@@ -249,9 +249,9 @@ namespace SWEndor.Game
     }
     */
 
-    public int GetRandomWing(Engine engine) { return _wings.Count > 0 ? _wings.Random(engine.Random) : -1; }
-    public int GetRandomShip(Engine engine) { return _ships.Count > 0 ? _ships.Random(engine.Random) : -1; }
-    public int GetRandomStructure(Engine engine) { return _structures.Count > 0 ? _structures.Random(engine.Random) : -1; }
+    public int GetRandomWing(Engine engine) { if (_wings.SelectRandom(engine.Random, out int i)) return i; else return -1; }
+    public int GetRandomShip(Engine engine) { if (_ships.SelectRandom(engine.Random, out int i)) return i; else return -1;  }
+    public int GetRandomStructure(Engine engine) { if (_structures.SelectRandom(engine.Random, out int i)) return i; else return -1; }
 
     public int GetFirst(TargetType type)
     {
