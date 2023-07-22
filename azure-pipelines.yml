@@ -22,10 +22,8 @@ variables:
 
 steps:
 - checkout: Primrose
-  path: '$(Pipeline.Workspace)/Primrose'
 
 - checkout: self
-  path: '$(Pipeline.Workspace)/SWEndor'
 
 - task: NuGetToolInstaller@1
 
