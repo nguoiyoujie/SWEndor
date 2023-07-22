@@ -23,7 +23,7 @@ variables:
 steps:
 - checkout: self
 
-- checkout: Primrose
+- checkout: git://yjnguoi/Primrose
 
 - task: NuGetToolInstaller@1
 
