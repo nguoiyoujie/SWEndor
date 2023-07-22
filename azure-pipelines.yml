@@ -3,6 +3,12 @@
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
+resources:
+   repositories:
+   - repository: Primrose
+     type: git
+     name: Primrose/Primrose
+
 trigger:
 - master
 
@@ -17,7 +23,7 @@ variables:
 steps:
 - checkout: self
 
-- checkout: git://yjnguoi/Primrose
+- checkout: Primrose
 
 - task: NuGetToolInstaller@1
 
