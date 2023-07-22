@@ -13,7 +13,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'windows-latest'
+  name: selfhost
 
 variables:
   solution: 'SWEndor/src/SWEndor.sln'
