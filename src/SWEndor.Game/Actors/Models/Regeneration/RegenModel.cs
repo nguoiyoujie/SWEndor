@@ -5,10 +5,29 @@ namespace SWEndor.Game.Actors.Models
 {
   internal struct RegenModel
   {
+    /// <summary>
+    /// This actor does not regenerate shields at any point
+    /// </summary>
     public bool NoRegen;
+
+    /// <summary>
+    /// The rate (per second) of regeneration of its own shields
+    /// </summary>
     public float SelfRegenRate;
+
+    /// <summary>
+    /// The rate (per second) of regeneration of its own shields
+    /// </summary>
     public float ParentRegenRate;
+
+    /// <summary>
+    /// The rate (per second) of regeneration of its own shields
+    /// </summary>
     public float ChildRegenRate;
+
+    /// <summary>
+    /// The rate (per second) of regeneration of its own shields
+    /// </summary>
     public float SiblingRegenRate;
 
     public void Reset()
@@ -31,7 +50,7 @@ namespace SWEndor.Game.Actors.Models
 
     public void Process(ActorInfo a, float time)
     {
-      if (a.TypeInfo.SystemData.AllowSystemDamage && a.GetStatus(SystemPart.SHIELD_GENERATOR) != SystemState.ACTIVE)
+      if (!a.IsSystemOperational(SystemPart.SHIELD_GENERATOR))
         return;
 
       if (SelfRegenRate != 0)
@@ -53,7 +72,7 @@ namespace SWEndor.Game.Actors.Models
 
     private void Regenerate(ActorInfo a, float amount)
     {
-      if (!a.NoRegen && !a.IsDyingOrDead)
+      if (a != null && !a.NoRegen && !a.IsDyingOrDead)
         a.InflictDamage(-amount, DamageType.ALWAYS_100PERCENT);
     }
   }

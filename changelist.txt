@@ -1,0 +1,63 @@
+Changelist
+----------------------------------------------------------------
+2023-07-22
+ - Optimization: Working octrees without much performance loss, allowing the following:
+   - Projectiles will impact any object within its <ImpactCloseEnoughDistance>. Before, only the explicit target was targeted.
+   - Due to the above, craft and missiles may take fire more easily even if not explicitly targeted by the player targering computer.
+   - Optimizations: Static turrets will only consider targets that are within the octree range.
+ - AI: Actors will not acquire targets that its weapons are not targeted against.
+ - Font: Font has been changed to Pixel Operator Mono, credits to dafont.com and Jayvee Enaguas for the wonderful pixel font!
+ - Music: Added MAINMEN.mp3 and PHEW.mp3, renditions of the soundtrack in TIE Fighter
+ - Scenarios/Tie Fighter: Voice packs for implemented missions have been added.
+ - Images: Clean existing explosion and electro images
+ - Images: Rename explosion images
+ - Images: Add new explosion EXPL01, from https://www.citypng.com/photo/15221/hd-fire-explosion-effect-animation-png
+ - Images: Changed the artwork for damaged scanner, from https://www.pngwing.com/en/free-png-dhlcf/download
+ - Shaders: Shaders will now only be read if there is a corresponding ini file
+ - Shaders: Optimized reading of shader info ini files
+ - Shaders: Revised LASER and HYPER shaders
+ - Models: Revised star destroyer models so differences between ISD, VSD and INT are more obvious
+ - Damage Model: Implemented Shield Damage. Shield damage damages only shields
+ - Damage Model: Re-implemented System Damage and system failures and effects, based on the following:
+    - Each system has a integrity rating, and a chance of damage when its craft is struck on the hull (shields depleted)
+    - When the chance of damage is fulfilled, the system takes one hit. If the system goes to zero, it is considered damaged.
+       - ENGINES: Speed is reduced to zero.
+       - SIDE THRUSTERS: Steering is reduced to a fraction (~5% of its normal value)
+       - SHIELD GENERATOR: Stops internal shield regen (regen from other external sources will still continue)
+       - RADAR: Remove radar view (player only). No effect yet on AI.
+       - SCANNER: Remove scanner view (player only). No effect yet on AI.
+       - TARGETING_SYTEM: Remove targetting (player only). No effect yet on AI.
+       - COMLINK: Scrambles incoming text (including critical text!). No effect yet on AI.
+       - LASER WEAPONS: Disables firing of all weapons with LASER
+       - ION WEAPONS: Disables firing of all weapons with ION
+       - PROJECTILE LAUNCHERS: Disables firing of all weapons with PROJECTILE
+       - (other systems have no effect on combat)
+    - Each projectile has a base one attempt to roll this chance. Ion lasers are modified to increase the number of rolls.
+    - Any unlisted system is treated as invulnerable in the eyes of system checks.
+ - Projectiles: Revised damage values 
+    - Ion lasers deal less normal damage, but more shield damage and more 
+    - Missiles deal less normal damage, but armor values make missile impacts more effective.
+ - Projectiles: Added mini lasers, designed to deal 0.5 damage. Used by corvettes and shuttle turrets
+ - Damage Model: Implemented auto-recovery of system failures.
+ - Craft: Shields, shield regen and hull of almost all units are revised.
+ - Craft: Armor values have been revised
+ - Craft: Scales now take float3 for x, y and z components instead of a single float. A single float implies subsequent components are the same.
+ - Craft: Imperial Star Destroyer - increased scale, 2nd hangar added
+ - Craft: Imperial Star Destroyer - remove anti-ship missile launchers. Add ion cannons, heavy turbolasers 
+ - Craft: Imperial Star Destroyer - add a 3rd shield generator on the ship underside, weaken original two generators.
+ - Craft: Interdictor Star Destroyer - add Gravity Well projectors that use a jammer wave weapon to disable missiles.
+ - Particle systems have been implemented, two types SMOKE00 and FIRE00 has been implemented with TV3D's tutorial images
+ - Updated Primrose and Primrose.Expressions, allowing the following:
+   - Script system: The script system now supports return values and function parameters.
+ - Script system: You can register functions to run when a unit is hit, hits something, kills something, or is killed.
+ - Moved some pools from local pool to global pool where applicable (e.g. Squadron)
+ - Delay disposing of actor data until projectiles fired by projectile have been fired. This allows score to be collected from the data when the projectile strikes true.
+ - Missiles have special erratic behavior when its engines are damaged (Interdictor's special weapon)
+ - XQ1 platform and Imperial Star Destroyer have polygonal shapes on the radar. 
+ - Score system is revamped
+ - The gameover and gamewon screen is replaced with an after-action report, which details the acculmulated score and statistics, and log of your play.
+ - Particle system implemented. Types are defined in assets/data/particles/
+ - Menu: A Model Viewer can be played by accessing Options from the Main Menu.
+
+2020-06-10
+ - last untracked build

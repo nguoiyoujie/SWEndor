@@ -4,22 +4,19 @@ namespace SWEndor.Game.AI.Squads
 {
   public partial class Squadron
   {
+    static Squadron()
+    {
+      ObjectPool<Squadron>.CreateStaticPool(() => new Squadron(), (p) => p.Reset());
+    }
+
     public class Factory : Registry<int, Squadron>
     {
       private int counter = 0;
       private object creationLock = new object();
-      private ObjectPool<Squadron> pool;
-
-      public Factory()
-      {
-        pool = new ObjectPool<Squadron>(() => new Squadron(), (p) => p.Reset());
-      }
-
-      internal int PoolCount { get { return pool.Count; } }
 
       public Squadron Create()
       {
-        Squadron squad = pool.GetNew();
+        Squadron squad = ObjectPool<Squadron>.GetStaticPool().GetNew();
 
         lock (creationLock)
         {
@@ -42,7 +39,7 @@ namespace SWEndor.Game.AI.Squads
         lock (creationLock)
           Remove(s.ID);
 
-        pool.Return(s);
+        ObjectPool<Squadron>.GetStaticPool().Return(s);
       }
 
       public Squadron GetByName(string name)

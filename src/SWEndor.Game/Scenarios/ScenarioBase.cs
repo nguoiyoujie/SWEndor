@@ -77,6 +77,7 @@ namespace SWEndor.Game.Scenarios
       Engine.PlayerInfo.RequestSpawn = false;
 
       // Full reset
+      Engine.ParticleFactory.Reset();
       Engine.ProjectileFactory.Reset();
       Engine.ExplosionFactory.Reset();
       Engine.ActorFactory.Reset();
@@ -160,7 +161,7 @@ namespace SWEndor.Game.Scenarios
 
       SoundManager.Clear();
 
-      Engine.Screen2D.CurrentPage = new GameOver(Engine.Screen2D);
+      Engine.Screen2D.CurrentPage = new GameReport(Engine.Screen2D);
       Engine.Screen2D.ShowPage = true;
       Game.IsPaused = true;
       SoundManager.SetMusic(Info.Music_Lose);
@@ -216,9 +217,9 @@ namespace SWEndor.Game.Scenarios
       switch (key.ToLower())
       {
         case "criticalallies":
-          return State.CriticalAllies;
+          return State.MonitorAllies;
         case "criticalenemies":
-          return State.CriticalEnemies;
+          return State.MonitorEnemies;
         default:
           return null;
       }
@@ -243,7 +244,7 @@ namespace SWEndor.Game.Scenarios
 
       SoundManager.Clear();
 
-      Engine.Screen2D.CurrentPage = new GameWon(Engine.Screen2D);
+      Engine.Screen2D.CurrentPage = new GameReport(Engine.Screen2D);
       Engine.Screen2D.ShowPage = true;
       Game.IsPaused = true;
       SoundManager.SetMusic(Info.Music_Win);

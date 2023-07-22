@@ -25,7 +25,7 @@ namespace SWEndor.Game.Input.Context
             break;
           case CONST_TV_KEY.TV_KEY_DELETE:
           case CONST_TV_KEY.TV_KEY_BACKSPACE:
-            TConsole.InputLine = TConsole.InputLine.Substring(0, TConsole.InputLine.Length - 1);
+            if (TConsole.InputLine.Length > 0) { TConsole.InputLine = TConsole.InputLine.Substring(0, TConsole.InputLine.Length - 1); }
             break;
           default:
             char chr = ((CONST_TV_KEY)keydata.Key).TVKeyToChar(Manager.SHIFT);

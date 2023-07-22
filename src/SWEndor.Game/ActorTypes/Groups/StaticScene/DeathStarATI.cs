@@ -10,8 +10,8 @@ namespace SWEndor.Game.ActorTypes.Instances
     {
       ExplodeSystemData.Explodes = new ExplodeData[]
       {
-        new ExplodeData("EXPL02", 1, 1, ExplodeTrigger.ON_DEATH),
-        new ExplodeData("EXPW02", 1, 1, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("EXPL02", default, 1, 1, ExplodeTrigger.ON_DEATH),
+        new ExplodeData("EXPW02", default, 1, 1, ExplodeTrigger.ON_DEATH),
       };
 
       MeshData = MeshDataDecorator.CreateAlphaTexturedWall(Engine, Name, 20000, "deathstar/deathstar.bmp", "deathstar/deathstaralpha.bmp", CONST_TV_BLENDINGMODE.TV_BLEND_ADD);

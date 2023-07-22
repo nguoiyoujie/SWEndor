@@ -23,24 +23,24 @@ namespace SWEndor.Game.UI
       {
         Default = new Font(engine, 0, Consolas, 10);
 
-        Create(engine, T08, "Consolas_8");
-        Create(engine, T10, "Consolas_10");
-        Create(engine, T12, "Consolas_12");
-        Create(engine, T14, "Consolas_14");
-        Create(engine, T16, "Consolas_16");
-        Create(engine, T24, "Consolas_24");
-        Create(engine, T36, "StdBitmap_36");
-        Create(engine, T48, "StdBitmap_48");
+        Create(engine, T08, "Pixel_Operator_Mono_10");
+        Create(engine, T10, "Pixel_Operator_Mono_12");
+        Create(engine, T12, "Pixel_Operator_Mono_14");
+        Create(engine, T14, "Pixel_Operator_Mono_16");
+        Create(engine, T16, "Pixel_Operator_Mono_18");
+        Create(engine, T24, "Pixel_Operator_Mono_24");
+        Create(engine, T36, "Pixel_Operator_Mono_36");
+        Create(engine, T48, "Pixel_Operator_Mono_48");
         
         /*
-        Create(engine, T08, Consolas, 8, FontMode.NONE);
-        Create(engine, T10, Consolas, 10, FontMode.BOLD);
-        Create(engine, T12, Consolas, 12, FontMode.BOLD);
-        Create(engine, T14, Consolas, 14, FontMode.BOLD);
-        Create(engine, T16, Consolas, 16, FontMode.BOLD);
-        Create(engine, T24, Consolas, 24, FontMode.BOLD);
-        Create(engine, T36, Impact, 36, FontMode.NONE);
-        Create(engine, T48, Impact, 48, FontMode.NONE);
+        Create(engine, T08, "Pixel Operator Mono", 10, FontMode.NONE); // 8
+        Create(engine, T10, "Pixel Operator Mono", 12, FontMode.NONE); // 10
+        Create(engine, T12, "Pixel Operator Mono", 14, FontMode.NONE); // 12
+        Create(engine, T14, "Pixel Operator Mono", 16, FontMode.NONE); // 14
+        Create(engine, T16, "Pixel Operator Mono", 18, FontMode.NONE); // 16
+        Create(engine, T24, "Pixel Operator Mono", 24, FontMode.NONE);
+        Create(engine, T36, "Pixel Operator Mono", 36, FontMode.BOLD);
+        Create(engine, T48, "Pixel Operator Mono", 48, FontMode.BOLD);
         */
       }
 

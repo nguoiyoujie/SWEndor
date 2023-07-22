@@ -8,7 +8,7 @@
       return true;
     }
 
-    public bool SetSound(string name, float volume = 1.0f, bool loop = true)//, uint position = 0)
+    public bool SetSound(string name, float volume = 1.0f, bool loop = true)
     {
       m_queuedInstructions.Enqueue(new InstPlaySound { Name = name, Loop = loop, Volume = volume });
       return true;

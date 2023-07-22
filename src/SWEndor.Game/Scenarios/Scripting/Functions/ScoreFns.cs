@@ -13,7 +13,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
     ///     FLOAT score
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetScorePerLife(IContext context, float score)
+    public static Val SetScorePerLife(IContext context, int score)
     {
       ((Context)context).Engine.PlayerInfo.ScorePerLife = score;
       return Val.NULL;
@@ -28,7 +28,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
     ///     FLOAT score
     /// </param>
     /// <returns>NULL</returns>
-    public static Val SetScoreForNextLife(IContext context, float score)
+    public static Val SetScoreForNextLife(IContext context, int score)
     {
       ((Context)context).Engine.PlayerInfo.ScoreForNextLife = score;
       return Val.NULL;

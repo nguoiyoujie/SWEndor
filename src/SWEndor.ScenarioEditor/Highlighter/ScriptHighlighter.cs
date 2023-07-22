@@ -17,7 +17,7 @@ namespace SWEndor.ScenarioEditor
       //Regexes.Add(new Pair<Regex, Color>(new Regex(@"[a-zA-Z_][a-zA-Z0-9_\.]*", ropt), Color.));
       Regexes.Add(new Pair<Regex, Color>(new Regex(@"\""(\""\""|[^\""])*\""", ropt), Color.Brown));
       Regexes.Add(new Pair<Regex, Color>(new Regex(@"\b(bool|float|float2|float3|float4|int|string)\b", ropt), Color.DodgerBlue));
-      Regexes.Add(new Pair<Regex, Color>(new Regex(@"\b(true|false|null|if|then|else|while|foreach|in|for)\b", ropt), Color.Blue));
+      Regexes.Add(new Pair<Regex, Color>(new Regex(@"\b(return|new|true|false|null|if|else|while|foreach|in|for)\b", ropt), Color.Blue));
 
       Context c = new Context(null);
       string reg = null;

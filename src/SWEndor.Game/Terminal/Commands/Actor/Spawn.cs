@@ -66,7 +66,7 @@ namespace SWEndor.Game.Terminal.Commands.Actor
       if (res == null)
         return new TCommandFeedback(TCommandFeedbackType.ERROR, "SpawnActor failed!");
 
-      return new TCommandFeedback(TCommandFeedbackType.NORMAL, res.ID);
+      return new TCommandFeedback(TCommandFeedbackType.NORMAL, res.ID.ToString());
     }
   }
 }

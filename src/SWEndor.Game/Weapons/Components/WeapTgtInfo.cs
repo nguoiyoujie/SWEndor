@@ -28,6 +28,9 @@ namespace SWEndor.Game.Weapons
     public TargetType AIAttackTargets;
 
     [INIValue]
+    public TargetExclusionState AIExcludeTargets;
+
+    [INIValue]
     public bool AIAttackNull;
 
     [INIValue]
@@ -47,6 +50,7 @@ namespace SWEndor.Game.Weapons
 
       // AI Config
       AIAttackTargets = TargetType.ANY,
+      AIExcludeTargets = TargetExclusionState.NONE,
       AIAttackNull = true,
       AngularRange = 10,
       Range = 4500

@@ -38,7 +38,7 @@
             <summary>Performs evaluation of a script</summary>
             <param name="name">The name of the script to run</param>
         </member>
-        <member name="M:Primrose.Expressions.ContextBase.RunFunction(Primrose.Expressions.ITracker,System.String,Primrose.Expressions.Val[])">
+        <member name="M:Primrose.Expressions.ContextBase.RunFunction(Primrose.Expressions.ITracker,System.String,System.Collections.Generic.IList{Primrose.Expressions.Val})">
             <summary>Performs evaluation of a function</summary>
             <param name="caller">The tracking object calling the function</param>
             <param name="name">The function name</param>
@@ -58,6 +58,10 @@
             <summary>Adds a function that accepts a dynamic number of parameters to the context</summary>
             <param name="name">The function name</param>
             <param name="fn">The function delegate</param>
+        </member>
+        <member name="M:Primrose.Expressions.ContextBase.AddScriptFunc(Primrose.Expressions.Script)">
+            <summary>Adds a script as a function to the context</summary>
+            <param name="script">The script</param>
         </member>
         <member name="M:Primrose.Expressions.ContextBase.AddFunc(System.String,Primrose.Expressions.FunctionDelegate)">
             <summary>Adds a function to the context</summary>
@@ -279,14 +283,18 @@
         <member name="P:Primrose.Expressions.ContextScope.Next">
             <summary>Returns a child of this scope.</summary>
         </member>
+        <member name="P:Primrose.Expressions.ContextScope.ParameterCount">
+            <summary>The number of parameterized variables at this scope</summary>
+        </member>
         <member name="M:Primrose.Expressions.ContextScope.Clear">
             <summary>Clears the context of information</summary>
         </member>
-        <member name="M:Primrose.Expressions.ContextScope.DeclVar(System.String,System.Type,Primrose.Expressions.Lexer)">
+        <member name="M:Primrose.Expressions.ContextScope.DeclVar(System.String,System.Type,Primrose.Expressions.Lexer,System.Boolean)">
             <summary>Declares a variable</summary>
             <param name="name">The variable name</param>
             <param name="type">The variable type</param>
             <param name="lexer">The lexer</param>
+            <param name="isParameter">Denotes if the variable is a function parameter</param>
             <exception cref="T:System.InvalidOperationException">Duplicate declaration of a variable in the same scope</exception>
         </member>
         <member name="M:Primrose.Expressions.ContextScope.GetVar(Primrose.Expressions.ITracker,System.String)">
@@ -302,6 +310,15 @@
             <param name="name">The variable name</param>
             <param name="val">The Val object containing the value of the variable</param>
             <exception cref="T:System.InvalidOperationException">Attempted to set the value of an undeclared variable</exception>
+        </member>
+        <member name="M:Primrose.Expressions.ContextScope.SetParameters(System.Collections.Generic.IList{Primrose.Expressions.Val})">
+            <summary>Sets the values of a function parameters</summary>
+            <param name="ps">The list of parameter values</param>
+        </member>
+        <member name="M:Primrose.Expressions.ContextScope.SetParameter(System.Int32,Primrose.Expressions.Val)">
+            <summary>Sets the value of a function parameter</summary>
+            <param name="index">The parameter index</param>
+            <param name="val">The Val object containing the value of the variable</param>
         </member>
         <member name="M:Primrose.Expressions.ContextScope.SetVar(Primrose.Expressions.ITracker,System.String,Primrose.Expressions.Val,System.Int32[][])">
             <summary>Sets the value of an indexed variable</summary>
@@ -367,7 +384,7 @@
             Provides a context for the script
             </summary>
         </member>
-        <member name="M:Primrose.Expressions.IContext.RunFunction(Primrose.Expressions.ITracker,System.String,Primrose.Expressions.Val[])">
+        <member name="M:Primrose.Expressions.IContext.RunFunction(Primrose.Expressions.ITracker,System.String,System.Collections.Generic.IList{Primrose.Expressions.Val})">
             <summary>
             Runs a user defined function. An EvalException should be thrown if errors arise from the function.
             </summary>
@@ -453,12 +470,16 @@
             <summary>Represents a delegate for script reading events</summary>
             <param name="name">The name of the script being read</param>
         </member>
+        <member name="T:Primrose.Expressions.ScriptReadDelegate2">
+            <summary>Represents a delegate for script reading events</summary>
+            <param name="script">The script being read</param>
+        </member>
         <member name="T:Primrose.Expressions.ScriptFile">
             <summary>
             Performs reading and creation of scripts into a context from a source file
             </summary>
         </member>
-        <member name="M:Primrose.Expressions.ScriptFile.#ctor(Primrose.Expressions.IContext)">
+        <member name="M:Primrose.Expressions.ScriptFile.#ctor(Primrose.Expressions.ContextBase)">
             <summary>Creates a new script file from a source file</summary>
             <param name="context">The context where the scripts are loaded into</param>
         </member>
@@ -472,6 +493,9 @@
             <summary>Invokes when a new script is being loaded</summary>
         </member>
         <member name="F:Primrose.Expressions.ScriptFile.ScriptReadEnd">
+            <summary>Invokes when a new script has finished loading</summary>
+        </member>
+        <member name="F:Primrose.Expressions.ScriptFile.ScriptReadEnd2">
             <summary>Invokes when a new script has finished loading</summary>
         </member>
         <member name="M:Primrose.Expressions.ScriptFile.ReadFromFile(System.String)">
@@ -591,13 +615,14 @@
             </summary>
             <typeparam name="TOut">Target type to cast to. Usually a generic type.</typeparam>
         </member>
-        <member name="M:Primrose.Expressions.UnaryOp`1.CastIntermediate``1(`0,System.Type)">
+        <member name="M:Primrose.Expressions.UnaryOp`1.CastIntermediate``2(`0)">
             <summary>
             Casts <typeparamref name="TIn"/> to <typeparamref name="TOut"/>.
             This does not cause boxing for value types.
             Useful in generic methods.
             </summary>
             <typeparam name="TOut">Target type to cast to. Usually a generic type.</typeparam>
+            <typeparam name="TMid">Intermediate type to cast to. Usually a generic type.</typeparam>
         </member>
         <member name="T:Primrose.Expressions.UOp">
             <summary>
@@ -613,12 +638,13 @@
         <member name="F:Primrose.Expressions.UOp.NEGATION">
             <summary>The numerical negation operator (-a)</summary>
         </member>
-        <member name="M:Primrose.Expressions.IMatcher.Match(System.String)">
+        <member name="M:Primrose.Expressions.IMatcher.Match(System.String,System.Int32)">
             <summary>
             Return the number of characters that this "regex" or equivalent
             matches.
             </summary>
             <param name="text">The text to be matched</param>
+            <param name="startposition">The start position to begin the match</param>
             <returns>The number of characters that matched</returns>
         </member>
         <member name="T:Primrose.Expressions.ITracker">
@@ -685,9 +711,6 @@
         </member>
         <member name="F:Primrose.Expressions.LintType.VARIABLE">
             <summary>Indicates linting for variables</summary>
-        </member>
-        <member name="F:Primrose.Expressions.LintType.VARIABLE_OR_TYPE">
-            <summary>Inconclusive linting for variables or type</summary>
         </member>
         <member name="T:Primrose.Expressions.Resource.Strings">
             <summary>
@@ -842,6 +865,11 @@
               Looks up a localized string similar to Duplicate declaration of variable &apos;{0}&apos; in the same scope.
             </summary>
         </member>
+        <member name="P:Primrose.Expressions.Resource.Strings.Error_ParseException_Type">
+            <summary>
+              Looks up a localized string similar to Type identifier expected, read &apos;{0}&apos; instead..
+            </summary>
+        </member>
         <member name="P:Primrose.Expressions.Resource.Strings.Error_ScriptFileNotFound">
             <summary>
               Looks up a localized string similar to Script file &apos;{0}&apos; is not found!.
@@ -890,6 +918,11 @@
         <member name="P:Primrose.Expressions.Resource.Strings.String">
             <summary>
               Looks up a localized string similar to &lt;string&gt;.
+            </summary>
+        </member>
+        <member name="P:Primrose.Expressions.Resource.Strings.Type">
+            <summary>
+              Looks up a localized string similar to &lt;type&gt;.
             </summary>
         </member>
         <member name="P:Primrose.Expressions.Resource.Strings.Unknown">
@@ -951,6 +984,12 @@
             <param name="scriptname">The name of the script</param>
             <param name="registry">The script registry to reference for global scope</param>
         </member>
+        <member name="M:Primrose.Expressions.Script.#ctor(System.String,Primrose.Expressions.Script.Registry,Primrose.Expressions.ContextScope)">
+            <summary>Creates a script</summary>
+            <param name="scriptname">The name of the script</param>
+            <param name="registry">The script registry to reference for global scope</param>
+            <param name="scope">The scope to be used</param>
+        </member>
         <member name="P:Primrose.Expressions.Script.Statements">
             <summary>Lists the statements contained in the script</summary>
         </member>
@@ -960,6 +999,12 @@
             <param name="linenumber">The current line number</param>
         </member>
         <member name="M:Primrose.Expressions.Script.AddStatements(System.String,System.Int32@,System.Collections.Generic.List{Primrose.Expressions.LintElement}@)">
+            <summary>Adds one or more statements to the script, and produces a set of linting hints for a linter</summary>
+            <param name="text">The string text to be parsed</param>
+            <param name="linenumber">The current line number</param>
+            <param name="linter">The set of linting hints describing the statements added</param>
+        </member>
+        <member name="M:Primrose.Expressions.Script.ReadHeader(System.String,System.Int32@,System.Collections.Generic.List{Primrose.Expressions.LintElement}@)">
             <summary>Adds one or more statements to the script, and produces a set of linting hints for a linter</summary>
             <param name="text">The string text to be parsed</param>
             <param name="linenumber">The current line number</param>

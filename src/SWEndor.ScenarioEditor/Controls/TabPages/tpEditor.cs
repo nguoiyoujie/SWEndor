@@ -28,11 +28,26 @@ namespace SWEndor.ScenarioEditor
 
     public Action Editor_SelectionChanged;
 
+    private static int[] _selectionTabs;
+
+    static tpEditor()
+    {
+      _selectionTabs = new int[20];
+      for (int i = 0; i < _selectionTabs.Length; i++)
+      {
+        _selectionTabs[i] = 24 * i;
+      }
+    }
+
     public tpEditor()
     {
       InitializeComponent();
       Text = _new;
       rtb.MouseWheel += rtb_MouseWheel;
+      rtb.SelectAll();
+      rtb.SelectionTabs = _selectionTabs;
+      rtb_output.SelectAll();
+      rtb_output.SelectionTabs = _selectionTabs;
       _f = rtb.Font;
       _z = rtb.Font.Size * rtb.ZoomFactor;
     }
@@ -240,7 +255,7 @@ namespace SWEndor.ScenarioEditor
       Directory.CreateDirectory(Path.GetDirectoryName(path));
       File.WriteAllText(path, rtb.Text);
 
-      ScriptChecker checker = new ScriptChecker(path, Output);
+      ScriptChecker checker = new ScriptChecker(path, Output, rtb_output);
       rtb_output.Clear();
       rtb_output.SelectionColor = Color.DodgerBlue;
       rtb_output.AppendText("Checking contents..." + Environment.NewLine);
@@ -266,7 +281,7 @@ namespace SWEndor.ScenarioEditor
 
     private void Output(string message)
     {
-      rtb_output.SelectionColor = Color.Navy;
+      //rtb_output.SelectionColor = Color.Navy;
       rtb_output.AppendText(message + Environment.NewLine);
     }
   }

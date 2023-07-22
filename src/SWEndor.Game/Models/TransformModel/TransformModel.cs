@@ -5,6 +5,7 @@ using Primrose.Primitives;
 using SWEndor.Game.ProjectileTypes;
 using SWEndor.Game.Primitives.Extensions;
 using SWEndor.Game.Core;
+using Primrose.Primitives.ValueTypes;
 
 namespace SWEndor.Game.Models
 {
@@ -27,7 +28,7 @@ namespace SWEndor.Game.Models
     TV_3DMATRIX currMat;
     TV_3DMATRIX prevMat;
 
-    public void Init(Engine engine, float scale, ActorCreationInfo acinfo)
+    public void Init(Engine engine, float3 scale, ActorCreationInfo acinfo)
     {
       Position = acinfo.Position;
       Rotation = acinfo.Rotation;
@@ -38,7 +39,7 @@ namespace SWEndor.Game.Models
       math = engine.TrueVision.TVMathLibrary;
     }
 
-    public void Init(Engine engine, float scale, ExplosionCreationInfo acinfo)
+    public void Init(Engine engine, float3 scale, ExplosionCreationInfo acinfo)
     {
       Position = acinfo.Position;
       Rotation = acinfo.Rotation;
@@ -49,7 +50,18 @@ namespace SWEndor.Game.Models
       math = engine.TrueVision.TVMathLibrary;
     }
 
-    public void Init(Engine engine, float scale, ProjectileCreationInfo acinfo)
+    public void Init(Engine engine, float3 scale, ProjectileCreationInfo acinfo)
+    {
+      Position = acinfo.Position;
+      Rotation = acinfo.Rotation;
+      PrevPosition = Position;
+      PrevRotation = Rotation;
+      ZSqueeze = 1;
+      Scale = scale * acinfo.InitialScale;
+      math = engine.TrueVision.TVMathLibrary;
+    }
+
+    public void Init(Engine engine, float3 scale, ParticleCreationInfo acinfo)
     {
       Position = acinfo.Position;
       Rotation = acinfo.Rotation;
@@ -71,7 +83,7 @@ namespace SWEndor.Game.Models
       prevMat = default(TV_3DMATRIX);
     }
 
-    public float Scale
+    public float3 Scale
     {
       get { return currData.Scale; }
       set { prevData.Scale = currData.Scale; currData.Scale = value; }
@@ -138,7 +150,7 @@ namespace SWEndor.Game.Models
     private TV_3DMATRIX GetMatS(ref TransformData data)
     {
       TV_3DMATRIX matrix = new TV_3DMATRIX();
-      math.TVMatrixScaling(ref matrix, data.Scale, data.Scale, data.Scale * ZSqueeze);
+      math.TVMatrixScaling(ref matrix, data.Scale.x, data.Scale.y, data.Scale.z * ZSqueeze);
       return matrix;
     }
 

@@ -2,6 +2,7 @@
 using SWEndor.Game.Actors;
 using Primrose.Primitives.Extensions;
 using System;
+using SWEndor.Game.Actors.Models;
 
 namespace SWEndor.Game.UI.Widgets
 {
@@ -41,10 +42,11 @@ namespace SWEndor.Game.UI.Widgets
         return;
 
       //Health Bar
-      DrawSingleBar(0
-                    , "HP [{0}%]".F(Math.Ceiling(PlayerInfo.StrengthFrac * 100))
-                    , PlayerInfo.StrengthFrac
+      DrawHullAndShdBar(0
+                    , LookUpString.GetHPPercent(Math.Ceiling(PlayerInfo.StrengthFrac * 100))
+                    , p.Health
                     , PlayerInfo.StrengthColor.Value
+                    , ColorLocalization.Get(ColorLocalKeys.GAME_STAT_SHIELD).Value
                     );
 
       //Speed Bar
@@ -57,23 +59,25 @@ namespace SWEndor.Game.UI.Widgets
       int barnumber = 2;
 
       //Allies
-      foreach (ActorInfo a in GameScenarioManager.Scenario.State.CriticalAllies)
+      foreach (ActorInfo a in GameScenarioManager.Scenario.State.MonitorAllies)
       {
-        DrawSingleBar(barnumber
+        DrawHullAndShdBar(barnumber
             , a.SideBarName.PadRight(12).Remove(11)
-            , a.DisplayHP_Frac
+            , a.Health
             , ColorLocalization.Get(ColorLocalKeys.GAME_STAT_CRITICAL_ALLY).Value
+            , ColorLocalization.Get(ColorLocalKeys.GAME_STAT_SHIELD).Value
             );
         barnumber++;
       }
 
       //Enemies
-      foreach (ActorInfo a in GameScenarioManager.Scenario.State.CriticalEnemies)
+      foreach (ActorInfo a in GameScenarioManager.Scenario.State.MonitorEnemies)
       {
-        DrawSingleBar(barnumber
+        DrawHullAndShdBar(barnumber
             , a.SideBarName.PadRight(12).Remove(11)
-            , a.DisplayHP_Frac
+            , a.Health
             , ColorLocalization.Get(ColorLocalKeys.GAME_STAT_CRITICAL_ENEMY).Value
+            , ColorLocalization.Get(ColorLocalKeys.GAME_STAT_SHIELD).Value
             );
         barnumber++;
       }
@@ -95,10 +99,7 @@ namespace SWEndor.Game.UI.Widgets
     private void DrawSingleBar(int barnumber, string text, float barlengthfrac, int color)
     {
       float h = barnumber * 1.2f;
-      if (barlengthfrac < 0)
-        barlengthfrac = 0;
-      else if (barlengthfrac > 1)
-        barlengthfrac = 1;
+      barlengthfrac = barlengthfrac.Clamp(0, 1);
 
       TVScreen2DImmediate.Action_Begin2D();
 
@@ -123,6 +124,64 @@ namespace SWEndor.Game.UI.Widgets
                                                   , bar_topleft.x + bar_length * barlengthfrac
                                                   , bar_topleft.y + bar_height * (h + 0.6f) + bar_barheight / 2
                                                   , color);
+
+      TVScreen2DImmediate.Action_End2D();
+
+
+      TVScreen2DText.Action_BeginText();
+
+      TVScreen2DText.TextureFont_DrawText(text
+        , bar_topleft.x - 115
+        , bar_topleft.y + bar_height * h
+        , color
+        , FontFactory.Get(Font.T12).ID
+        );
+
+      TVScreen2DText.Action_EndText();
+    }
+
+    private void DrawHullAndShdBar(int barnumber, string text, HealthModel healthModel, int color, int shdcolor)
+    {
+      float h = barnumber * 1.2f;
+      if (healthModel.MaxShd == 0)
+      {
+        DrawSingleBar(barnumber, text, healthModel.HP_Frac, color);
+        return;
+      }
+
+      float maxhullfrac = healthModel.MaxHull / healthModel.MaxHP;
+      float hullfrac = healthModel.Hull_Frac.Clamp(0, 1) * maxhullfrac;
+      float shdfrac = maxhullfrac + healthModel.Shd_Frac.Clamp(0, 1) * (1 - maxhullfrac);
+
+      TVScreen2DImmediate.Action_Begin2D();
+
+      int bgcolor = ColorLocalization.Get(ColorLocalKeys.UI_BACKGROUND_DARK).Value;
+      // Background
+      TVScreen2DImmediate.Draw_FilledBox(bar_topleft.x - 120
+                                    , bar_topleft.y + bar_height * (h - 0.1f)
+                                    , bar_topleft.x + bar_length + 5
+                                    , bar_topleft.y + bar_height * (h + 1.1f)
+                                    , bgcolor);
+      TVScreen2DImmediate.Action_End2D();
+
+      // Bar Background
+      TVScreen2DImmediate.Draw_FilledBox(bar_topleft.x
+                                          , bar_topleft.y + bar_height * (h + 0.6f) - bar_barheight / 2
+                                          , bar_topleft.x + bar_length
+                                          , bar_topleft.y + bar_height * (h + 0.6f) + bar_barheight / 2
+                                          , bgcolor);
+
+      TVScreen2DImmediate.Draw_FilledBox(bar_topleft.x
+                                                  , bar_topleft.y + bar_height * (h + 0.6f) - bar_barheight / 2
+                                                  , bar_topleft.x + bar_length * hullfrac
+                                                  , bar_topleft.y + bar_height * (h + 0.6f) + bar_barheight / 2
+                                                  , color);
+
+      TVScreen2DImmediate.Draw_FilledBox(bar_topleft.x + bar_length * maxhullfrac
+                                            , bar_topleft.y + bar_height * (h + 0.6f) - bar_barheight / 2
+                                            , bar_topleft.x + bar_length * shdfrac
+                                            , bar_topleft.y + bar_height * (h + 0.6f) + bar_barheight / 2
+                                            , shdcolor);
 
       TVScreen2DImmediate.Action_End2D();
 

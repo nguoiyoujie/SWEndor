@@ -27,7 +27,8 @@ namespace SWEndor.Game.Actors
     IDyingTime,
     IParent<ActorInfo>, 
     ITransformable,
-    ICollidable
+    ICollidable,
+    IStunnable
   {
     /// <summary>The instance type of this instance</summary>
     public ActorTypeInfo TypeInfo { get; private set; }
@@ -101,7 +102,10 @@ namespace SWEndor.Game.Actors
     internal ActorEvent CreatedEvents;
     internal ActorEvent DestroyedEvents;
     internal ActorStateChangeEvent ActorStateChangeEvents;
-    internal ActorEvent HitEvents;
+    internal ActorAttackedEvent HitEvents; // I was hit
+    internal ActorAttackEvent DeathEvents; // I was killed
+    internal ActorAttackEvent RegisterHitEvents; // I hit someone (friendly + enemy)
+    internal ActorAttackEvent RegisterKillEvents; // I killed someone (friendly + enemy)
 
     // AI
     internal ActionInfo CurrentAction = null;
@@ -112,6 +116,7 @@ namespace SWEndor.Game.Actors
     internal MoveData MoveData;
     internal AIModel AI;
     internal AIDecision AIDecision;
+    internal SpecialData SpecialData;
 
     // Traits/Model (structs)
     private SystemModel Systems;
@@ -119,10 +124,10 @@ namespace SWEndor.Game.Actors
     private RelationModel Relation;
     private TimerModel<ActorInfo> DyingTimer;
     private StateModel<ActorInfo> State;
-    private HealthModel Health;
+    internal HealthModel Health;
     private TransformModel<ActorInfo, ActorInfo> Transform;
     private ArmorModel Armor;
-    private ExplodeModel<ActorInfo> Explosions;
+    private ExplodeModel<ActorInfo, ActorInfo> Explosions;
     private RegenModel Regen;
 
     internal SpawnerInfo SpawnerInfo = SpawnerInfo.Default;
@@ -144,7 +149,7 @@ namespace SWEndor.Game.Actors
     {
       get
       {
-        return !(TypeInfo.AIData.TargetType.Intersects(TargetType.MUNITION | TargetType.FLOATING));
+        return !(TargetType.Intersects(TargetType.MUNITION | TargetType.FLOATING));
       }
     }
 #endif
@@ -162,7 +167,17 @@ namespace SWEndor.Game.Actors
       ID = id;
 
       TypeInfo = acinfo.TypeInfo;
-      if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
+      if (acinfo.Name?.Length > 0) 
+      {
+        if (!string.IsNullOrEmpty(TypeInfo.Designation) && acinfo.Name != TypeInfo.Name)
+        {
+          _name = "{0} {1}".F(TypeInfo.Designation, acinfo.Name);
+        }
+        else
+        {
+          _name = acinfo.Name;
+        }
+      }
       Key = "{0} {1}".F(_name, ID);
 
       Systems.Init(ref TypeInfo.SystemData);
@@ -172,12 +187,13 @@ namespace SWEndor.Game.Actors
       Health.Init(ref TypeInfo.CombatData, ref TypeInfo.SystemData, acinfo);
       Transform.Init(engine, TypeInfo.MeshData.Scale, acinfo);
       Armor.Init(ref TypeInfo.ArmorData);
-      Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, acinfo.CreationTime);
+      Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, TypeInfo.ExplodeSystemData.Particles, acinfo.CreationTime);
       Regen.Init(ref TypeInfo.RegenData);
       AI.Init(ref TypeInfo.AIData, ref TypeInfo.MoveLimitData);
       AIDecision.Init(ref TypeInfo.AIData);
       MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
       CollisionData.Init();
+      SpecialData.Init();
       SpawnerInfo.Init(ref TypeInfo.SpawnerData);
       WeaponDefinitions.Init(engine.WeaponRegistry, ref TypeInfo.cachedWeaponData);
 
@@ -201,7 +217,17 @@ namespace SWEndor.Game.Actors
       // Clear past resources
       ID = id;
       TypeInfo = acinfo.TypeInfo;
-      if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
+      if (acinfo.Name?.Length > 0)
+      {
+        if (!string.IsNullOrEmpty(TypeInfo.Designation) && acinfo.Name != TypeInfo.Name)
+        {
+          _name = "{0} {1}".F(TypeInfo.Designation, acinfo.Name);
+        }
+        else
+        {
+          _name = acinfo.Name;
+        }
+      }
       Key = "{0} {1}".F(_name, ID);
 
       Systems.Init(ref TypeInfo.SystemData);
@@ -211,12 +237,13 @@ namespace SWEndor.Game.Actors
       Health.Init(ref TypeInfo.CombatData, ref TypeInfo.SystemData, acinfo);
       Transform.Init(engine, TypeInfo.MeshData.Scale, acinfo);
       Armor.Init(ref TypeInfo.ArmorData);
-      Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, acinfo.CreationTime);
+      Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, TypeInfo.ExplodeSystemData.Particles, acinfo.CreationTime);
       Regen.Init(ref TypeInfo.RegenData);
       AI.Init(ref TypeInfo.AIData, ref TypeInfo.MoveLimitData);
       AIDecision.Init(ref TypeInfo.AIData);
       MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
       CollisionData.Init();
+      SpecialData.Init();
       SpawnerInfo.Init(ref TypeInfo.SpawnerData);
       WeaponDefinitions.Init(engine.WeaponRegistry, ref TypeInfo.cachedWeaponData);
 
@@ -233,7 +260,7 @@ namespace SWEndor.Game.Actors
     /// Initializes the game object instance
     /// </summary>
     /// <param name="engine">The game engine</param>
-    public void Initialize(Engine engine)
+    public void Initialize(Engine engine, bool includeAddOns)
     {
       SetGenerated();
       Update();
@@ -245,7 +272,8 @@ namespace SWEndor.Game.Actors
 
     #region Event Methods
     public void OnTickEvent() { TickEvents?.Invoke(this); }
-    public void OnHitEvent() { HitEvents?.Invoke(this); }
+    public void OnHitEvent(ActorInfo attacker) { HitEvents?.Invoke(this, attacker); }
+    public void OnDeathEvent(ActorInfo attacker) { DeathEvents?.Invoke(this, attacker); }
     public void OnStateChangeEvent()
     {
       if (ActorState == ActorState.DYING)
@@ -257,6 +285,8 @@ namespace SWEndor.Game.Actors
     }
     public void OnCreatedEvent() { CreatedEvents?.Invoke(this); }
     public void OnDestroyedEvent() { DestroyedEvents?.Invoke(this); }
+    public void OnRegisterHitEvent(ActorInfo victim) { RegisterHitEvents?.Invoke(this, victim); }
+    public void OnRegisterKillEvent(ActorInfo victim) { RegisterKillEvents?.Invoke(this, victim); }
     #endregion
 
 
@@ -345,6 +375,37 @@ namespace SWEndor.Game.Actors
       Squad.MakeLeader(this);
     }
 
+    /// <summary>The effective target type, after instance states are applied</summary>
+    public TargetType TargetType { get { return TypeInfo.AIData.TargetType; } }
+
+    /// <summary>The effective target type, after instance states are applied</summary>
+    public TargetExclusionState TargetState
+    {
+      get
+      {
+        TargetExclusionState state = TargetExclusionState.NONE;
+        if (IsStunned)
+          state |= TargetExclusionState.STUNNED;
+
+        if (!Engine.ActorFactory.DoUntil(MissileCheck, this))
+          if (TypeInfo.AIData.TargetType == TargetType.FIGHTER)
+            state |= TargetExclusionState.FIGHTER_MISSILE_LOCKED;
+          else if (TypeInfo.AIData.TargetType == TargetType.SHIP)
+            state |= TargetExclusionState.SHIP_MISSILE_LOCKED;
+        return state;
+      }
+    }
+
+    public static bool MissileCheck(Engine engine, ActorInfo a, ActorInfo actor)
+    {
+      if (a.TypeInfo.Mask == ComponentMask.GUIDED_PROJECTILE)
+        if (a.CurrentAction is AI.Actions.ProjectileAttackActor attack)
+          if (attack.Target_Actor != null && attack.Target_Actor.TopParent == actor)
+            return false;
+      return true; // continue the function
+    }
+
+
     /// <summary>Disposes the object</summary>
     public void Destroy()
     {
@@ -375,6 +436,9 @@ namespace SWEndor.Game.Actors
       DestroyedEvents = null;
       TickEvents = null;
       HitEvents = null;
+      DeathEvents = null;
+      RegisterHitEvents = null;
+      RegisterKillEvents = null;
       ActorStateChangeEvents = null;
 
       // Final dispose
@@ -385,6 +449,7 @@ namespace SWEndor.Game.Actors
       // Kill data
       MoveData.Reset();
       CollisionData.Reset();
+      SpecialData.Reset();
       Meshes.Dispose(Engine.ActorMeshTable);
 
       InCombat = false;
@@ -414,6 +479,7 @@ namespace SWEndor.Game.Actors
 
       DyingTimer.Tick(time);
       Health.Tick(time);
+      Systems.Tick(engine, this, time);
 
       OnTickEvent();
     }

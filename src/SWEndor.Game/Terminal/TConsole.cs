@@ -19,9 +19,9 @@ namespace SWEndor.Game.Terminal
     //public static bool LogCommands = true;
     //public static bool LogReplies = true;
 
-    public static int MaxLineCount = 100;
-    public static int DisplayLineCount = 30;
-    private static List<string> m_Lines = new List<string>();
+    public static int MaxLineCount = 32;
+    //public static int DisplayLineCount = 30;
+    private static List<string> m_Lines = new List<string>(32);
     public static string InputLine = "";
 
     public static string[] GetLines()
@@ -59,7 +59,7 @@ namespace SWEndor.Game.Terminal
         TCommandFeedback feedback = TCommandParser.Execute(input);
         if (feedback.Content != null)
         {
-          string[] feedbacklines = feedback.Content.ToString().Split(NewLine);
+          string[] feedbacklines = feedback.Content.Split(NewLine);
           foreach (string f in feedbacklines)
           {
             Print("  ~  " + f);

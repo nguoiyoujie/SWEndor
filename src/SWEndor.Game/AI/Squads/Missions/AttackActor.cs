@@ -25,7 +25,7 @@ namespace SWEndor.Game.AI.Squads.Missions
     public override void Process(Engine engine, Squadron squad)
     {
       ActorInfo target = engine.ActorFactory.Get(Target_ActorID);
-      if (target == null || target.IsDyingOrDead)
+      if (target == null || !target.Active || target.IsDyingOrDead)
         Complete = true;
     }
   }

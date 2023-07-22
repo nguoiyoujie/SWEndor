@@ -7,46 +7,47 @@ using System.Collections.Generic;
 using SWEndor.Game.Primitives.Extensions;
 using Primrose.Expressions;
 using System;
+using Primrose.Primitives.Factories;
+using SWEndor.Game.Actors.Models;
 
 namespace SWEndor.Game.Scenarios.Scripting.Functions
 {
   public static class ActorFns
   {
+    private static bool GetActor(IContext context, int actorID, out Engine engine, out ActorInfo actor)
+    {
+      engine = ((Context)context).Engine;
+      actor = engine.ActorFactory.Get(actorID);
+      return engine.GameScenarioManager.Scenario != null && actor != null;
+    }
+
     public static Val GetActorType(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
-        return new Val();
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return Val.NULL;
 
       return new Val(actor.TypeInfo.ID);
     }
 
     public static Val IsFighter(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.FALSE;
 
-      return new Val(actor.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER));
+      return new Val(actor.TargetType.Has(TargetType.FIGHTER));
     }
 
     public static Val IsLargeShip(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.FALSE;
 
-      return new Val(actor.TypeInfo.AIData.TargetType.Has(TargetType.SHIP));
+      return new Val(actor.TargetType.Has(TargetType.SHIP));
     }
 
     public static Val IsAlive(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.FALSE;
 
       return new Val(!actor.IsDead);
@@ -54,9 +55,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val GetFaction(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return new Val(FactionInfo.Neutral.Name);
 
       return new Val(actor.Faction.Name);
@@ -64,9 +63,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val SetFaction(IContext context, int actorID, string name)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
       actor.Faction = FactionInfo.Factory.Get(name);
@@ -75,9 +72,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val AddToRegister(IContext context, int actorID, string register)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out Engine e, out ActorInfo actor))
         return Val.NULL;
 
       HashSet<ActorInfo> reg = e.GameScenarioManager.Scenario.GetRegister(register);
@@ -88,9 +83,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val RemoveFromRegister(IContext context, int actorID, string register)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out Engine e, out ActorInfo actor))
         return Val.NULL;
 
       HashSet<ActorInfo> reg = e.GameScenarioManager.Scenario.GetRegister(register);
@@ -102,9 +95,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val GetLocalPosition(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return new Val(new float3(0, 0, 0));
 
       TV_3DVECTOR vec = actor.Position;
@@ -113,10 +104,8 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val GetLocalRotation(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
-        return new Val(new float3( 0, 0, 0 ));
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return new Val(new float3(0, 0, 0));
 
       TV_3DVECTOR vec = actor.Rotation;
       return new Val(new float3(vec.x, vec.y, vec.z));
@@ -124,9 +113,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val GetLocalDirection(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return new Val(new float3(0, 0, 0));
 
       TV_3DVECTOR vec = actor.Direction;
@@ -135,9 +122,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val GetGlobalPosition(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return new Val(new float3(0, 0, 0));
 
       TV_3DVECTOR vec = actor.GetGlobalPosition();
@@ -146,9 +131,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val GetGlobalRotation(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return new Val(new float3(0, 0, 0));
 
       TV_3DVECTOR vec = actor.GetGlobalRotation();
@@ -157,9 +140,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val GetGlobalDirection(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return new Val(new float3(0, 0, 0));
 
       TV_3DVECTOR vec = actor.GetGlobalDirection();
@@ -168,9 +149,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val SetLocalPosition(IContext context, int actorID, float3 point)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
       actor.Position = point.ToVec3();
@@ -179,9 +158,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val SetLocalRotation(IContext context, int actorID, float3 point)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
       actor.Rotation = point.ToVec3();
@@ -190,20 +167,16 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val SetLocalDirection(IContext context, int actorID, float3 point)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
       actor.Direction = point.ToVec3();
       return Val.NULL;
     }
-    
+
     public static Val LookAtPoint(IContext context, int actorID, float3 point)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
       TV_3DVECTOR vec = point.ToVec3();
@@ -214,9 +187,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val GetChildren(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return new Val(new int[0]);
 
       List<int> ret = new List<int>();
@@ -228,9 +199,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val GetChildrenByType(IContext context, int actorID, string actorType)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return new Val(new int[0]);
 
       List<int> ret = new List<int>();
@@ -243,9 +212,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val GetHP(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return new Val(0);
 
       return new Val(actor.HP);
@@ -253,9 +220,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val GetShd(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return new Val(0);
 
       return new Val(actor.Shd);
@@ -263,9 +228,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val GetHull(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return new Val(0);
 
       return new Val(actor.Hull);
@@ -273,9 +236,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val GetMaxHP(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return new Val(0);
 
       return new Val(actor.MaxHP);
@@ -283,9 +244,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val GetMaxShd(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return new Val(0);
 
       return new Val(actor.MaxShd);
@@ -293,19 +252,39 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val GetMaxHull(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return new Val(0);
 
       return new Val(actor.MaxHull);
     }
 
+    public static Val GetHPFrac(IContext context, int actorID)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return new Val(0);
+
+      return new Val(actor.HP_Frac);
+    }
+
+    public static Val GetShdFrac(IContext context, int actorID)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return new Val(0);
+
+      return new Val(actor.Shd_Frac);
+    }
+
+    public static Val GetHullFrac(IContext context, int actorID)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return new Val(0);
+
+      return new Val(actor.Hull_Frac);
+    }
+
     public static Val SetHP(IContext context, int actorID, float value)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
       actor.HP = value;
@@ -314,9 +293,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val SetShd(IContext context, int actorID, float value)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
       actor.Shd = value;
@@ -325,9 +302,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val SetHull(IContext context, int actorID, float value)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
       actor.Hull = value;
@@ -336,9 +311,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val SetMaxHP(IContext context, int actorID, float value)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
       actor.MaxHP = value;
@@ -347,9 +320,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val SetMaxShd(IContext context, int actorID, float value)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
       actor.MaxShd = value;
@@ -358,20 +329,43 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val SetMaxHull(IContext context, int actorID, float value)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
       actor.MaxHull = value;
       return Val.NULL;
     }
 
+    public static Val SetHPFrac(IContext context, int actorID, float value)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return Val.NULL;
+
+      actor.HP = value * actor.MaxHP;
+      return Val.NULL;
+    }
+
+    public static Val SetShdFrac(IContext context, int actorID, float value)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return Val.NULL;
+
+      actor.Shd = value * actor.MaxShd;
+      return Val.NULL;
+    }
+
+    public static Val SetHullFrac(IContext context, int actorID, float value)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return Val.NULL;
+
+      actor.Hull = value * actor.MaxHull;
+      return Val.NULL;
+    }
+
     public static Val GetProperty(IContext context, int actorID, string property)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out Engine e, out ActorInfo actor))
         return new Val();
 
       Val result = new Val();
@@ -381,10 +375,10 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val GetArmor(IContext context, int actorID, string sdmgtype)
     {
-      Engine e = ((Context)context).Engine;
-      DamageType dmgtype = (DamageType)Enum.Parse(typeof(DamageType), sdmgtype);
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return new Val(0);
+
+      if (!Enum.TryParse(sdmgtype, out DamageType dmgtype))
         return new Val(0);
 
       return new Val(actor.GetArmor(dmgtype));
@@ -392,21 +386,18 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val SetArmor(IContext context, int actorID, string sdmgtype, float value)
     {
-      Engine e = ((Context)context).Engine;
-      DamageType dmgtype = (DamageType)Enum.Parse(typeof(DamageType), sdmgtype);
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
-      actor.SetArmor(dmgtype, value);
+      if (Enum.TryParse(sdmgtype, out DamageType dmgtype))
+        actor.SetArmor(dmgtype, value);
+
       return Val.NULL;
     }
 
     public static Val SetArmorAll(IContext context, int actorID, float value)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
       actor.SetArmorAll(value);
@@ -415,9 +406,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val RestoreArmor(IContext context, int actorID)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
       actor.RestoreArmor();
@@ -426,9 +415,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
 
     public static Val SetProperty(IContext context, int actorID, string propertyName, Val propertyValue)
     {
-      Engine e = ((Context)context).Engine;
-      ActorInfo actor = e.ActorFactory.Get(actorID);
-      if (e.GameScenarioManager.Scenario == null || actor == null)
+      if (!GetActor(context, actorID, out Engine e, out ActorInfo actor))
         return new Val();
 
       ConfigureActorProperty(e, actor, propertyName, true, ref propertyValue);
@@ -586,12 +573,12 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
           else
             newValue = new Val(actor.SpawnerInfo.SpawnsRemaining);
           return;
-          
+
 
         // Transform
         case "Transform.Scale":
           if (setValue)
-            actor.Scale = (float)newValue;
+            actor.Scale = (float3)newValue;
           else
             newValue = new Val(actor.Scale);
           return;
@@ -636,5 +623,168 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
       }
     }
 
+    public static Val DisableSubsystem(IContext context, int actorID, string type)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return Val.NULL;
+
+      if (!Enum.TryParse(type, out SystemPart part))
+        return Val.NULL;
+
+      actor.SetStatus(part, SystemState.DISABLED);
+      return Val.NULL;
+    }
+
+    public static Val EnableSubsystem(IContext context, int actorID, string type)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return Val.NULL;
+
+      if (!Enum.TryParse(type, out SystemPart part))
+        return Val.NULL;
+      
+      actor.SetStatus(part, SystemState.ACTIVE); // this does bypass damaged states
+      return Val.NULL;
+    }
+
+
+    /// <summary>
+    /// Queues another script for execution when the actor is dying.
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <param name="actorID">The actor to trigger</param>
+    /// <param name="script_name">
+    ///   Parameters: 
+    ///     STRING script_name
+    /// </param>
+    /// <returns>NULL. Throws an exception if no script is found.</returns>
+    public static Val CallOnDying(IContext context, int actorID, string script_name)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return Val.NULL;
+
+      actor.ActorStateChangeEvents += (a, state) =>
+      {
+        if (state == ActorState.DYING)
+        {
+          List<Val> v = ObjectPool<List<Val>>.GetStaticPool().GetNew();
+          v.Add(new Val(script_name));
+          v.Add(new Val(a.ID));
+          ScriptingFns.Call(context, v);
+          ObjectPool<List<Val>>.GetStaticPool().Return(v);
+        }
+      };
+      return Val.NULL;
+    }
+
+    /// <summary>
+    /// Queues another script for execution when the actor is dead.
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <param name="actorID">The actor to trigger</param>
+    /// <param name="script_name">
+    ///   Parameters: 
+    ///     STRING script_name
+    /// </param>
+    /// <returns>NULL. Throws an exception if no script is found.</returns>
+    public static Val CallOnDead(IContext context, int actorID, string script_name)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return Val.NULL;
+
+      actor.ActorStateChangeEvents += (a, state) =>
+      {
+        if (state == ActorState.DEAD)
+        {
+          List<Val> v = ObjectPool<List<Val>>.GetStaticPool().GetNew();
+          v.Add(new Val(script_name));
+          v.Add(new Val(a.ID));
+          ScriptingFns.Call(context, v);
+          ObjectPool<List<Val>>.GetStaticPool().Return(v);
+        }
+      };
+      return Val.NULL;
+    }
+
+    /// <summary>
+    /// Queues another script for execution when the actor has been hit.
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <param name="actorID">The actor to trigger</param>
+    /// <param name="script_name">
+    ///   Parameters: 
+    ///     STRING script_name
+    /// </param>
+    /// <returns>NULL. Throws an exception if no script is found.</returns>
+    public static Val CallOnHit(IContext context, int actorID, string script_name)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return Val.NULL;
+
+      actor.HitEvents += (a, victim) =>
+      {
+        List<Val> v = ObjectPool<List<Val>>.GetStaticPool().GetNew();
+        v.Add(new Val(script_name));
+        v.Add(new Val(a.ID));
+        v.Add(new Val(victim?.ID ?? -1));
+        ScriptingFns.Call(context, v);
+        ObjectPool<List<Val>>.GetStaticPool().Return(v);
+      };
+      return Val.NULL;
+    }
+
+    /// <summary>
+    /// Queues another script for execution when the actor has been killed.
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <param name="actorID">The actor to trigger</param>
+    /// <param name="script_name">
+    ///   Parameters: 
+    ///     STRING script_name
+    /// </param>
+    /// <returns>NULL. Throws an exception if no script is found.</returns>
+    public static Val CallOnKilled(IContext context, int actorID, string script_name)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return Val.NULL;
+
+      actor.DeathEvents += (a, attacker) =>
+      {
+        List<Val> v = ObjectPool<List<Val>>.GetStaticPool().GetNew();
+        v.Add(new Val(script_name));
+        v.Add(new Val(a.ID));
+        v.Add(new Val(attacker?.ID ?? -1));
+        ScriptingFns.Call(context, v);
+        ObjectPool<List<Val>>.GetStaticPool().Return(v);
+      };
+      return Val.NULL;
+    }
+
+    /// <summary>
+    /// Queues another script for execution when the actor has registered a kill.
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <param name="actorID">The actor to trigger</param>
+    /// <param name="script_name">
+    ///   Parameters: 
+    ///     STRING script_name
+    /// </param>
+    /// <returns>NULL. Throws an exception if no script is found.</returns>
+    public static Val CallOnRegisterKill(IContext context, int actorID, string script_name)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return Val.NULL;
+
+      actor.RegisterKillEvents += (a, victim) =>
+      {
+        List<Val> v = ObjectPool<List<Val>>.GetStaticPool().GetNew();
+        v.Add(new Val(script_name));
+        v.Add(new Val(a.ID));
+        v.Add(new Val(victim?.ID ?? -1));
+        ScriptingFns.Call(context, v);
+        ObjectPool<List<Val>>.GetStaticPool().Return(v);
+      };
+      return Val.NULL;
+    }
   }
 }

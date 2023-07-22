@@ -34,7 +34,7 @@ namespace SWEndor.Game.ActorTypes.Components
       float dy = data.YTurnAngle;
 
       // Steering destroyed
-      if (actor.TypeInfo.SystemData.AllowSystemDamage && actor.GetStatus(SystemPart.SIDE_THRUSTERS) != SystemState.ACTIVE)
+      if (!actor.IsSystemOperational(SystemPart.SIDE_THRUSTERS))
       {
         dx /= 5;
         dy /= 5;
@@ -42,15 +42,18 @@ namespace SWEndor.Game.ActorTypes.Components
       }
 
       // Engine destroyed
-      if (actor.TypeInfo.SystemData.AllowSystemDamage && actor.GetStatus(SystemPart.ENGINE) != SystemState.ACTIVE)
+      if (!actor.IsSystemOperational(SystemPart.ENGINE))
       {
         // speed decay
-        data.Speed -= (data.MaxSpeed - data.MinSpeed) / 0.5f * time;
+        data.Speed -= (data.MaxSpeed - data.MinSpeed) * time;
+        data.Speed = data.Speed.Clamp(0, data.MaxSpeed);
       }
-
-      // Control speed
-      if (!data.FreeSpeed)
-        data.Speed = data.Speed.Clamp(data.MinSpeed, data.MaxSpeed);
+      else
+      {
+        // Control speed
+        if (!data.FreeSpeed)
+          data.Speed = data.Speed.Clamp(data.MinSpeed, data.MaxSpeed);
+      }
 
       // move
       actor.MoveRelative(data.Speed * time, 0, 0);

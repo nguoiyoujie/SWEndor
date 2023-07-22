@@ -56,6 +56,11 @@
     FILLED_CIRCLE_L,
 
     /// <summary>
+    /// Draw a polygon based on RadarPolygonPoints (capital ships)
+    /// </summary>
+    POLYGON,
+
+    /// <summary>
     /// Draw a large rectangle that obeys xz-rotation (capital ships)
     /// </summary>
     RECTANGLE_GIANT,

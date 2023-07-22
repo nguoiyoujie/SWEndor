@@ -1,10 +1,11 @@
 ﻿using MTV3D65;
+using Primrose.Primitives.ValueTypes;
 
 namespace SWEndor.Game.Models
 {
   public struct TransformData
   {
-    public float Scale;
+    public float3 Scale;
     public float Pitch;
     public float Yaw;
     public float Roll;

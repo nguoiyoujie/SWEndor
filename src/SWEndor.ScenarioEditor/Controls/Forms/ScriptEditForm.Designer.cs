@@ -179,7 +179,7 @@
       this.checkToolStripMenuItem.Name = "checkToolStripMenuItem";
       this.checkToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl + T";
       this.checkToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-      this.checkToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+      this.checkToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
       this.checkToolStripMenuItem.Text = "Check";
       this.checkToolStripMenuItem.Click += new System.EventHandler(this.checkToolStripMenuItem_Click);
       // 

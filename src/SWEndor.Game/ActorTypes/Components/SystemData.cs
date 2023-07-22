@@ -2,20 +2,19 @@
 using SWEndor.Game.Actors.Models;
 using Primrose.FileFormat.INI;
 using SWEndor.Game.Weapons;
-using System;
 using System.Collections.Generic;
 
 namespace SWEndor.Game.ActorTypes.Components
 {
   internal struct SystemData
   {
-    static SystemData()
-    {
-      Array a = Enum.GetValues(typeof(SystemPart));
-      AllParts = new SystemPart[a.Length];
-      for (int i = 0; i < a.Length; i++)
-        AllParts[i] = (SystemPart)a.GetValue(i);
-    }
+    //static SystemData()
+    //{
+    //  Array a = Enum.GetValues(typeof(SystemPart));
+    //  AllParts = new SystemPart[a.Length];
+    //  for (int i = 0; i < a.Length; i++)
+    //    AllParts[i] = (SystemPart)a.GetValue(i);
+    //}
 
     [INIValue]
     public float MaxShield;
@@ -47,14 +46,21 @@ namespace SWEndor.Game.ActorTypes.Components
     [INIValue]
     public bool AllowSystemDamage;
 
-    [INIValue]
-    public SystemPart[] Parts;
+    [INISubSectionList(SubsectionPrefix = "PART")]
+    internal SystemInstrumentData[] Parts;
 
-    private static readonly SystemPart[] AllParts;
-    private static readonly SystemPart[] NoParts = new SystemPart[0];
+    //[INIValue]
+    //public float CriticalFailureChance;
+
+    //[INIValue]
+    //public float RecoveryTime;
+
+
+    //private static readonly SystemPart[] AllParts;
+    //private static readonly SystemPart[] NoParts = new SystemPart[0];
     public void Reset()
     {
-      Parts = NoParts;
+      //Parts = NoParts;
       MaxShield = 0;
       MaxHull = 1;
       Energy_Income = 0;
@@ -69,7 +75,7 @@ namespace SWEndor.Game.ActorTypes.Components
 
     public void GetAllParts()
     {
-      Parts = AllParts;
+      //Parts = AllParts;
     }
 
     /// <summary>
@@ -119,7 +125,7 @@ namespace SWEndor.Game.ActorTypes.Components
       // TO-DO: Hyperdrive system
       // parts.Add(SystemPart.HYPERDRIVE);
 
-      Parts = parts.ToArray();
+      //Parts = parts.ToArray();
     }
   }
 }

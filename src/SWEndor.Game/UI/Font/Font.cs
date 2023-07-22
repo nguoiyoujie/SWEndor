@@ -25,7 +25,7 @@ namespace SWEndor.Game.UI
                                                             , true);
 
       generateWidth(engine);
-      //SaveToFiles(engine, fontname + "_" + size.ToString(), CONST_TV_IMAGEFORMAT.TV_IMAGE_DDS);
+      SaveToFiles(engine, fontname.Replace(' ', '_') + "_" + size.ToString(), CONST_TV_IMAGEFORMAT.TV_IMAGE_DDS);
     }
 
     private Font(Engine engine

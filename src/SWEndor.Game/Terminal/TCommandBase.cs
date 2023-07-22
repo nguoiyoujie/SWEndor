@@ -36,11 +36,13 @@ namespace SWEndor.Game.Terminal
 
     public TCommandFeedback Execute(string[] param)
     {
+      if (param.Length == 1 && param[0].ToLower().Equals("help"))
+        return GetHelp();
+
       TCommandFeedback ret = CheckParamCount(param.Length);
       if (ret.IsError())
         return ret;
-      if (param.Length == 1 && param[0].ToLower().Equals("help"))
-        return GetHelp();
+
       return Evaluate(param);
     }
 

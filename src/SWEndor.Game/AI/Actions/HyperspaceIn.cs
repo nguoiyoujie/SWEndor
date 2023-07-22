@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using Primrose.Primitives.Extensions;
 using Primrose.Primitives.Factories;
 using SWEndor.Game.Actors;
 using SWEndor.Game.Core;
@@ -31,7 +32,7 @@ namespace SWEndor.Game.AI.Actions
       prevdist = 9999999;
     }
 
-  public override void Return()
+    public override void Return()
     {
       base.Return();
       _pool.Return(this);
@@ -66,6 +67,7 @@ namespace SWEndor.Game.AI.Actions
       if (distance <= CloseEnoughDistance || prevdist < distance)
       {
         owner.MoveData.Speed = owner.MoveData.MaxSpeed;
+        owner.HyperspaceFactor = 0;
         Complete = true;
       }
       else
@@ -76,6 +78,7 @@ namespace SWEndor.Game.AI.Actions
           owner.LookAt(Target_Position);
         }
 
+        owner.HyperspaceFactor = (distance / Max_Speed).Clamp(0, 1);
         owner.MoveData.Speed = owner.MoveData.MaxSpeed + distance * SpeedDistanceFactor;
         if (owner.MoveData.Speed > Max_Speed)
           owner.MoveData.Speed = Max_Speed;

@@ -19,6 +19,17 @@ int[] spawn_ids;
 
 float spawn_dmgmod;
 
+
+Common.Spawn(string actortype, string squadname, string faction, int squadnumber, string formation, float3 position, float3 rotation, bool hyperspacein, float spacing, float wait):
+    actortype = (actortype == NULL) ? "TIE" : actortype;
+    squadname = (squadname == NULL) ?  "" : squadname;       
+	formation = (formation == "" || formation == NULL) ? "VSHAPE" : formation;
+    spacing = (spacing == NULL) ? 300 : squadname;
+
+	int[] spawnsquad = Squad.Spawn(actortype, squadname, faction, squadnumber, 0, hyperspacein, position, rotation, formation, spacing, wait, "ANY");
+	return spawnsquad;
+
+
 spawn_reset:
 	spawn_name = "";
 	spawn_type = "";

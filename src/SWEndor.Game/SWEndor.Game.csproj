@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SWEndor.Game</RootNamespace>
     <AssemblyName>SWEndor.Game</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -112,6 +112,7 @@
     <Compile Include="Actors\Models\Regeneration\RegenModel.cs" />
     <Compile Include="Actors\Models\Relation\ActorExt.cs" />
     <Compile Include="Actors\Models\Relation\RelationModel.cs" />
+    <Compile Include="Actors\Models\Special\SpecialData.cs" />
     <Compile Include="Actors\Models\StateModel\ActorExt.cs" />
     <Compile Include="Actors\Models\SystemModel\ActorExt.cs" />
     <Compile Include="Actors\Models\SystemModel\SystemModel.cs" />
@@ -140,6 +141,8 @@
     <Compile Include="ActorTypes\Components\Movement\MoveBehavior.cs" />
     <Compile Include="ActorTypes\Components\Movement\MoveForwardOnly.cs" />
     <Compile Include="ActorTypes\Components\Movement\MoveLaser.cs" />
+    <Compile Include="ActorTypes\Components\Movement\MoveMissile.cs" />
+    <Compile Include="ActorTypes\Components\Movement\MoveTeleport.cs" />
     <Compile Include="ActorTypes\Components\Movement\MoveNormal.cs" />
     <Compile Include="ActorTypes\Components\Movement\NoMove.cs" />
     <Compile Include="ActorTypes\Components\Movement\RotateOnly.cs" />
@@ -148,6 +151,7 @@
     <Compile Include="ActorTypes\Components\ScoreData.cs" />
     <Compile Include="ActorTypes\Components\SoundData.cs" />
     <Compile Include="ActorTypes\Components\SpawnerData.cs" />
+    <Compile Include="ActorTypes\Components\SystemInstrumentData.cs" />
     <Compile Include="ActorTypes\Components\SystemData.cs" />
     <Compile Include="ActorTypes\Components\TimedLifeData.cs" />
     <Compile Include="ActorTypes\Components\UnfixedWeaponData.cs" />
@@ -213,8 +217,24 @@
     <Compile Include="ExplosionTypes\General\Factory\Factory.cs" />
     <Compile Include="FactionInfo.cs" />
     <Compile Include="FileFormat\INI\CampaignFile.cs" />
+    <Compile Include="Models\ExplodeModel\ParticleData.cs" />
+    <Compile Include="Models\ParticleSystem\ParticleSystemData.cs" />
+    <Compile Include="Models\ParticleSystem\ParticleSystemModel.cs" />
+    <Compile Include="Particles\Models\StateModel\PartExt.cs" />
+    <Compile Include="Particles\Models\TimedLife\PartExt.cs" />
+    <Compile Include="Particles\Models\Transform\ProjExt.cs" />
+    <Compile Include="Particles\ParticleInfo.cs" />
+    <Compile Include="Particles\ProcessParticleInfo.cs" />
+    <Compile Include="ParticleTypes\Factory\Factory.cs" />
+    <Compile Include="ParticleTypes\General\ParticleCreationInfo.cs" />
+    <Compile Include="ParticleTypes\General\ParticleTypeInfo.cs" />
+    <Compile Include="Scenarios\Scenarios\GSModelView.cs" />
+    <Compile Include="Shaders\ShaderData.cs" />
     <Compile Include="FileFormat\INI\ScenarioFile.cs" />
-    <Compile Include="GameEvent\GameEvent.cs" />
+    <Compile Include="FlareInfo.cs" />
+    <Compile Include="GameEvent\Delegates.cs" />
+    <Compile Include="GameEvent\GameEventQueue.cs" />
+    <Compile Include="GameEvent\ShipSpawnEventArg.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Core\Init.cs" />
@@ -259,6 +279,8 @@
     <Compile Include="Input\Functions\Gameplay\Weapon\SquadFree.cs" />
     <Compile Include="Input\Functions\Gameplay\Weapon\ToggleLockOn.cs" />
     <Compile Include="Input\Functions\InputFunction.cs" />
+    <Compile Include="Input\Functions\Utility\OpenTerminal.cs" />
+    <Compile Include="Input\Functions\Utility\Game\SaveSnapshot.cs" />
     <Compile Include="Input\Functions\Utility\Screen\SaveScreenshot.cs" />
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="LandInfo.cs" />
@@ -271,11 +293,13 @@
     <Compile Include="Models\Enums\ComponentMask.cs" />
     <Compile Include="Models\Enums\CreationState.cs" />
     <Compile Include="Models\Enums\RadarType.cs" />
+    <Compile Include="Models\Enums\TargetState.cs" />
     <Compile Include="Models\Enums\TargetType.cs" />
     <Compile Include="Models\ExplodeModel\ExplodeData.cs" />
     <Compile Include="Models\ExplodeModel\ExplodeModel.cs" />
     <Compile Include="Models\ExplodeModel\ExplodeSystemData.cs" />
     <Compile Include="Models\ExplodeModel\ExplodeTrigger.cs" />
+    <Compile Include="Models\Interfaces\IStunnable.cs" />
     <Compile Include="Models\Mesh\MeshEntityTable.cs" />
     <Compile Include="Models\Factory\Factory.cs" />
     <Compile Include="Models\Interfaces\IActorCreateable.cs" />
@@ -308,26 +332,31 @@
     <Compile Include="Player\Camera\TargetPosition.cs" />
     <Compile Include="Player\PlayerInfo.cs" />
     <Compile Include="Player\TargetPicker.cs" />
-    <Compile Include="Primitives\Extensions\float_mExts.cs" />
+    <Compile Include="Primitives\Extensions\floatExts.cs" />
     <Compile Include="Primitives\Extensions\HashSetExts.cs" />
     <Compile Include="Primitives\Extensions\INIFileExts.cs" />
     <Compile Include="Primitives\Extensions\TV3DVecExts.cs" />
     <Compile Include="Primitives\Extensions\TVKeyExts.cs" />
     <Compile Include="Primitives\Geometry\BoundFloat.cs" />
     <Compile Include="Primitives\Geometry\Box.cs" />
+    <Compile Include="Primitives\Geometry\Circle.cs" />
     <Compile Include="Primitives\Geometry\Sphere.cs" />
     <Compile Include="Projectiles\Models\Collision\ProjExt.cs" />
     <Compile Include="Projectiles\Models\Explosion\ProjExt.cs" />
+    <Compile Include="Projectiles\Models\JammingModel\JammingModel.cs" />
     <Compile Include="Projectiles\Models\Mesh\MeshModel.cs" />
+    <Compile Include="Projectiles\Models\JammingModel\ProjExt.cs" />
     <Compile Include="Projectiles\Models\StateModel\ProjExt.cs" />
     <Compile Include="Projectiles\Models\TimedLife\ProjExt.cs" />
     <Compile Include="Projectiles\Models\Transform\ProjExt.cs" />
     <Compile Include="Projectiles\ProcessProjectileInfo.cs" />
     <Compile Include="Projectiles\ProjectileInfo.cs" />
-    <Compile Include="ProjectileTypes\Components\DamageSpecialModel.cs" />
+    <Compile Include="Models\DamageSpecialModel\DamageSpecialModel.cs" />
     <Compile Include="ProjectileTypes\General\Components\Movement\MoveBehavior.cs" />
     <Compile Include="ProjectileTypes\General\Components\Movement\MoveForwardOnly.cs" />
     <Compile Include="ProjectileTypes\General\Components\Movement\MoveLaser.cs" />
+    <Compile Include="ProjectileTypes\General\Components\Movement\MoveMissile.cs" />
+    <Compile Include="ProjectileTypes\General\Components\Movement\MoveTeleport.cs" />
     <Compile Include="ProjectileTypes\General\Components\Movement\MoveNormal.cs" />
     <Compile Include="ProjectileTypes\General\Components\Movement\NoMove.cs" />
     <Compile Include="ProjectileTypes\General\Components\Movement\RotateOnly.cs" />
@@ -335,6 +364,7 @@
     <Compile Include="ProjectileTypes\General\ProjectileCreationInfo.cs" />
     <Compile Include="ProjectileTypes\General\ProjectileTypeInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scenarios\ProjectileSpawnInfo.cs" />
     <Compile Include="Scenarios\ActorSpawnInfo.cs" />
     <Compile Include="Scenarios\CampaignInfo.cs" />
     <Compile Include="Scenarios\GSFunctions.cs" />
@@ -342,6 +372,12 @@
     <Compile Include="Scenarios\ScenarioStates.cs" />
     <Compile Include="Scenarios\ScenarioInfo.cs" />
     <Compile Include="Scenarios\Scripting\InsufficientParametersException.cs" />
+    <Compile Include="Settings\COLOR.cs" />
+    <Compile Include="Settings\ColorLocalKeys.cs" />
+    <Compile Include="Shaders\DynamicShaderDataSource.cs" />
+    <Compile Include="Sound\DoubleBufferedSound.cs" />
+    <Compile Include="Sound\Instructions\InstPlaySpeech.cs" />
+    <Compile Include="Sound\Instructions\InstStopSpeech.cs" />
     <Compile Include="Sound\MoodState.cs" />
     <Compile Include="Scenarios\ScenarioBase.cs" />
     <Compile Include="Scenarios\ScenarioManager.cs" />
@@ -373,7 +409,6 @@
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Settings\TextLocalization.cs" />
     <Compile Include="Shaders\Factory\Factory.cs" />
-    <Compile Include="Shaders\Factory\Parser.cs" />
     <Compile Include="Shaders\ShaderInfo.cs" />
     <Compile Include="Sound\Dynamic.cs" />
     <Compile Include="Sound\Instructions\InstAddSyncPoint.cs" />
@@ -392,11 +427,17 @@
     <Compile Include="Sound\Piece\Factory\Factory.cs" />
     <Compile Include="Sound\Piece\Factory\Parser.cs" />
     <Compile Include="Sound\Piece\Piece.cs" />
+    <Compile Include="Sound\SingleBufferedSound.cs" />
+    <Compile Include="Sound\SpeechCommands.cs" />
     <Compile Include="Sound\SoundCommands.cs" />
     <Compile Include="Sound\SoundGlobals.cs" />
     <Compile Include="Sound\SoundManager.cs" />
     <Compile Include="Terminal\Commands\Actor\Spawn.cs" />
+    <Compile Include="Terminal\Commands\General\Version.cs" />
+    <Compile Include="Terminal\Commands\General\Help.cs" />
+    <Compile Include="Terminal\Commands\General\ListCommands.cs" />
     <Compile Include="Terminal\TCommandBase.cs" />
+    <Compile Include="Terminal\TCommandFunctions.cs" />
     <Compile Include="Terminal\TCommandFeedback.cs" />
     <Compile Include="Terminal\TCommandParser.cs" />
     <Compile Include="Terminal\TConsole.cs" />
@@ -445,26 +486,28 @@
       <DependentUpon>ucStatObjects.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Helpers\DrawIcons.cs" />
-    <Compile Include="UI\Menu\Instances\CampaignSelection.cs" />
-    <Compile Include="UI\Menu\Instances\ConfigSettingsMenu.cs" />
-    <Compile Include="UI\Menu\Instances\ConfirmExit.cs" />
-    <Compile Include="UI\Menu\Instances\ConfirmExitScenario.cs" />
-    <Compile Include="UI\Menu\Instances\LoadingGame.cs" />
-    <Compile Include="UI\Menu\Instances\Credits.cs" />
-    <Compile Include="UI\Menu\Instances\FatalError.cs" />
-    <Compile Include="UI\Menu\Instances\GameOver.cs" />
-    <Compile Include="UI\Menu\Instances\GameWon.cs" />
-    <Compile Include="UI\Menu\Instances\KeyboardControls.cs" />
-    <Compile Include="UI\Menu\Instances\LoadingScenario.cs" />
-    <Compile Include="UI\Menu\Instances\MainMenu.cs" />
-    <Compile Include="UI\Menu\Instances\OptionsMenu.cs" />
-    <Compile Include="UI\Menu\Instances\PauseMenu.cs" />
-    <Compile Include="UI\Menu\Instances\ProfileSettingsMenu.cs" />
-    <Compile Include="UI\Menu\Instances\ScenarioMap.cs" />
-    <Compile Include="UI\Menu\Instances\ScenarioMessageLog.cs" />
-    <Compile Include="UI\Menu\Instances\ScenarioSelection.cs" />
-    <Compile Include="UI\Menu\Page.cs" />
-    <Compile Include="UI\Menu\SelectionElement.cs" />
+    <Compile Include="UI\Pages\Instances\CampaignSelection.cs" />
+    <Compile Include="UI\Pages\Instances\ConfigSettingsMenu.cs" />
+    <Compile Include="UI\Pages\Instances\ConfirmExit.cs" />
+    <Compile Include="UI\Pages\Instances\ConfirmExitScenario.cs" />
+    <Compile Include="UI\Pages\Instances\GameReport.cs" />
+    <Compile Include="UI\Pages\Instances\LoadingGame.cs" />
+    <Compile Include="UI\Pages\Instances\Credits.cs" />
+    <Compile Include="UI\Pages\Instances\FatalError.cs" />
+    <Compile Include="UI\Pages\Instances\GameOver.cs" />
+    <Compile Include="UI\Pages\Instances\GameWon.cs" />
+    <Compile Include="UI\Pages\Instances\KeyboardControls.cs" />
+    <Compile Include="UI\Pages\Instances\LoadingScenario.cs" />
+    <Compile Include="UI\Pages\Instances\MainMenu.cs" />
+    <Compile Include="UI\Pages\Instances\OptionsMenu.cs" />
+    <Compile Include="UI\Pages\Instances\PauseMenu.cs" />
+    <Compile Include="UI\Pages\Instances\ProfileSettingsMenu.cs" />
+    <Compile Include="UI\Pages\Instances\ScenarioMap.cs" />
+    <Compile Include="UI\Pages\Instances\ScenarioMessageLog.cs" />
+    <Compile Include="UI\Pages\Instances\ModelSelection.cs" />
+    <Compile Include="UI\Pages\Instances\ScenarioSelection.cs" />
+    <Compile Include="UI\Pages\Page.cs" />
+    <Compile Include="UI\Pages\SelectionElement.cs" />
     <Compile Include="UI\Screen2D.cs" />
     <Compile Include="UI\Textures\Textures.cs" />
     <Compile Include="UI\Widget\Instances\AIWidget.cs" />
@@ -476,6 +519,7 @@
     <Compile Include="UI\Widget\Instances\FadeRectangleWidget.cs" />
     <Compile Include="UI\Widget\Instances\PageWidget.cs" />
     <Compile Include="UI\Widget\Instances\PerfTextWidget.cs" />
+    <Compile Include="UI\Widget\PolarCoord.cs" />
     <Compile Include="UI\Widget\Instances\RadarWidget.cs" />
     <Compile Include="UI\Widget\Instances\ScenarioInfoWidget.cs" />
     <Compile Include="UI\Widget\Instances\SideBarsWidget .cs" />
@@ -488,9 +532,13 @@
     <Compile Include="UI\Widget\Instances\TerminalWidget.cs" />
     <Compile Include="UI\Widget\Instances\WarningTextWidget.cs" />
     <Compile Include="UI\Widget\Instances\WeaponInfoWidget.cs" />
+    <Compile Include="UI\Widget\XYCoord.cs" />
     <Compile Include="UI\Widget\TextInfo.cs" />
     <Compile Include="UI\Widget\Widget.cs" />
+    <Compile Include="Utilities\GameSaver.cs" />
+    <Compile Include="Utilities\LockStringBuilder.cs" />
     <Compile Include="Utilities\LookUp.cs" />
+    <Compile Include="Utilities\LookUpString.cs" />
     <Compile Include="Utilities\Utilities.cs" />
     <Compile Include="Weapons\Components\WeapAimInfo.cs" />
     <Compile Include="Weapons\Components\WeapAmmoInfo.cs" />
@@ -550,6 +598,10 @@
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\ClrHeapAllocationAnalyzer.1.0.0.8\analyzers\dotnet\cs\ClrHeapAllocationAnalyzer.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Projectiles\Models\Move\" />
+    <Folder Include="ProjectileTypes\Components\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

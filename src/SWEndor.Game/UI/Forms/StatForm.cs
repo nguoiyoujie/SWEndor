@@ -42,7 +42,7 @@ namespace SWEndor.Game.UI.Forms
 
     private void StatForm_Load(object sender, EventArgs e)
     {
-      ucPoolCache1.Init();
+      ucPoolCache1.Init(Engine);
     }
   }
 }

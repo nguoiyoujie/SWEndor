@@ -4,6 +4,8 @@ using Primrose.Primitives.Factories;
 using System;
 using System.IO;
 using Primrose;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SWEndor.Game.ExplosionTypes
 {
@@ -18,21 +20,32 @@ namespace SWEndor.Game.ExplosionTypes
       public void Register(ExplosionTypeInfo atype)
       {
         Put(atype.ID, atype);
-        Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
+        Engine.Screen2D.AppendLoadingText(string.Format("Explosion: {0} loaded!", atype.Name));
+        Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADED), "ExplosionType", atype.Name);
       }
 
       public void Load()
       {
+        Registry<string> paths = new Registry<string>();
         foreach (string fp in Directory.GetFiles(Globals.ExplosionTypeINIDirectory, Globals.INIExt, SearchOption.AllDirectories))
         {
           string f = Path.GetFileNameWithoutExtension(fp);
-          Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "ExplosionType", f);
           if (Contains(f))
             throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.EXPLTYPE_INITWICE_ERROR).F(f));
-          ExplosionTypeInfo t = new ExplosionTypeInfo(this, f, f);
-          t.LoadFromINI(f, fp);
-          Register(t);
+          paths.Add(f, fp);
         }
+
+        Parallel.ForEach(paths, new ParallelOptions { MaxDegreeOfParallelism = 32 }, LoadOne);
+      }
+
+      private void LoadOne(KeyValuePair<string, string> kvp)
+      {
+        string id = kvp.Key;
+        string source = kvp.Value;
+        Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "ExplosionType", id);
+        ExplosionTypeInfo t = new ExplosionTypeInfo(this, id, id);
+        t.LoadFromINI(id, source);
+        Register(t);
       }
 
       public void Initialise()

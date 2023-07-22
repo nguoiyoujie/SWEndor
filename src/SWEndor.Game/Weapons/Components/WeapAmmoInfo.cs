@@ -1,5 +1,4 @@
-﻿using Primrose.Primitives.ValueTypes;
-using SWEndor.Game.Core;
+﻿using SWEndor.Game.Core;
 using Primrose.FileFormat.INI;
 
 namespace SWEndor.Game.Weapons
@@ -13,7 +12,10 @@ namespace SWEndor.Game.Weapons
     public int Max;
 
     [INIValue]
-    public float2 ReloadRate; // rate, random
+    public float ReloadRate;
+
+    [INIValue]
+    public float ReloadRateRandom;
 
     [INIValue]
     public int ReloadAmount;
@@ -24,19 +26,20 @@ namespace SWEndor.Game.Weapons
     {
       Count = -1,
       Max = -1,
-      ReloadRate = new float2(1, 0),
+      ReloadRate = 1,
+      ReloadRateRandom = 0,
       ReloadAmount = 1
     };
 
     public void Reload(Engine engine)
     {
       if (Count == Max)
-        ReloadCooldown = engine.Game.GameTime + ReloadRate.x;
+        ReloadCooldown = engine.Game.GameTime + ReloadRate;
       else if (Max > 0 && ReloadCooldown < engine.Game.GameTime && Count < Max)
       {
-        ReloadCooldown = engine.Game.GameTime + ReloadRate.x;
-        if (ReloadRate.y != 0)
-          ReloadCooldown += (float)engine.Random.NextDouble() * ReloadRate.y;
+        ReloadCooldown = engine.Game.GameTime + ReloadRate;
+        if (ReloadRateRandom != 0)
+          ReloadCooldown += (float)engine.Random.NextDouble() * ReloadRateRandom;
 
         Count += ReloadAmount;
         if (Count > Max)

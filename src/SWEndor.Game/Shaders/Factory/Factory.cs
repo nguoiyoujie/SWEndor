@@ -14,7 +14,7 @@ namespace SWEndor.Game.Shaders
 
       public void Load()
       {
-        foreach (string fp in Directory.GetFiles(Globals.DataShadersPath, Globals.ShaderFxExt, SearchOption.AllDirectories))
+        foreach (string fp in Directory.GetFiles(Globals.DataShadersPath, Globals.ShaderIniExt, SearchOption.AllDirectories))
         {
           string f = Path.GetFileNameWithoutExtension(fp);
           ShaderInfo t = new ShaderInfo(Engine, f);

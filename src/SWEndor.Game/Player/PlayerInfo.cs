@@ -52,8 +52,8 @@ namespace SWEndor.Game.Player
     public COLOR FactionColor { get { return Actor?.Faction?.Color ?? ColorLocalization.Get(ColorLocalKeys.WHITE); } }
 
     public int Lives = 3;
-    public float ScorePerLife = 50000;
-    public float ScoreForNextLife = 50000;
+    public int ScorePerLife = 50000;
+    public int ScoreForNextLife = 50000;
 
     public string[] DamagedReportSound = SoundGlobals.DmgSounds;
 
@@ -309,7 +309,7 @@ namespace SWEndor.Game.Player
 
     public void FlashHit(COLOR color)
     {
-      if (Actor.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
+      if (Actor.TargetType.Has(TargetType.FIGHTER))
       {
         Engine.SoundManager.SetSound(SoundGlobals.ExpHit);
         Engine.TrueVision.TVGraphicEffect.Flash(color.fR, color.fG, color.fB, 200);

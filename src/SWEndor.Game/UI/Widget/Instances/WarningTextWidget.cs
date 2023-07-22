@@ -25,14 +25,14 @@ namespace SWEndor.Game.UI.Widgets
     public bool Check(Engine engine, ActorInfo a)
     {
       if (a.TypeInfo.Mask == ComponentMask.GUIDED_PROJECTILE)
-        if (a.CurrentAction is AI.Actions.ProjectileAttackActor actor)
-          if (actor.Target_Actor != null && actor.Target_Actor.TopParent == PlayerInfo.Actor)
+        if (a.CurrentAction is AI.Actions.ProjectileAttackActor attack)
+          if (attack.Target_Actor != null && attack.Target_Actor.TopParent == PlayerInfo.Actor)
           {
             warn++;
             float d = DistanceModel.GetDistance(engine, PlayerInfo.Actor, a);
             if (dist < 0 || dist > d)
               dist = d;
-            //return false;
+            //return true;
           }
 
       return true;

@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using Primrose.Primitives.ValueTypes;
 using SWEndor.Game.Actors;
 using SWEndor.Game.ActorTypes;
 using SWEndor.Game.ActorTypes.Components;
@@ -83,8 +84,8 @@ namespace SWEndor
 
       ActorCreationInfo acinfo = new ActorCreationInfo(engine.PlayerInfo.ActorType);
 
-      float scale = ainfo.Scale;
-      acinfo.Position = ainfo.GetRelativePositionXYZ(PlayerSpawnLocation.x * scale, PlayerSpawnLocation.y * scale, PlayerSpawnLocation.z * scale);
+      float3 scale = ainfo.Scale;
+      acinfo.Position = ainfo.GetRelativePositionXYZ(PlayerSpawnLocation.x * scale.x, PlayerSpawnLocation.y * scale.y, PlayerSpawnLocation.z * scale.z);
       acinfo.Rotation = ainfo.GetGlobalRotation();
       acinfo.Rotation += SpawnRotation;
 
@@ -98,10 +99,10 @@ namespace SWEndor
       a.SetPlayer();
       engine.PlayerCameraInfo.SetPlayerLook();
 
-      if (a.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER) && a.Faction.WingLimit >= 0)
+      if (a.TargetType.Has(TargetType.FIGHTER) && a.Faction.WingLimit >= 0)
         a.Faction.WingLimit++;
 
-      if (a.TypeInfo.AIData.TargetType.Has(TargetType.SHIP) && a.Faction.ShipLimit >= 0)
+      if (a.TargetType.Has(TargetType.SHIP) && a.Faction.ShipLimit >= 0)
         a.Faction.ShipLimit++;
 
       engine.PlayerInfo.RequestSpawn = false;
@@ -142,8 +143,8 @@ namespace SWEndor
             ActorInfo a;
             if (p.SpawnQueue.TryDequeue(out a))
             {
-              float scale = ainfo.Scale;
-              a.Position = ainfo.GetRelativePositionXYZ(sv.x * scale, sv.y * scale, sv.z * scale);
+              float3 scale = ainfo.Scale;
+              a.Position = ainfo.GetRelativePositionXYZ(sv.x * scale.x, sv.y * scale.y, sv.z * scale.z);
               a.Rotation = ainfo.GetGlobalRotation();
               a.Rotation += SpawnRotation;
               a.MoveData.FreeSpeed = true;
@@ -181,8 +182,8 @@ namespace SWEndor
             ActorInfo a;
             ActorCreationInfo acinfo = new ActorCreationInfo(spawntype);
 
-            float scale = ainfo.Scale;
-            acinfo.Position = ainfo.GetRelativePositionXYZ(sv.x * scale, sv.y * scale, sv.z * scale);
+            float3 scale = ainfo.Scale;
+            acinfo.Position = ainfo.GetRelativePositionXYZ(sv.x * scale.x, sv.y * scale.y, sv.z * scale.z);
             acinfo.Rotation = ainfo.GetGlobalRotation();
             acinfo.Rotation += SpawnRotation;
 
@@ -221,15 +222,15 @@ namespace SWEndor
       a.Rotation += p.Rotation - p.PrevRotation;
       a.Position += p.Position - p.PrevPosition;
 
-      float m1 = p.MoveData.Speed * engine.Game.TimeSinceRender * p.Scale;
-      float m2 = engine.Game.TimeSinceRender * p.Scale;
-      a.MoveRelative(SpawnSpeedPositioningMult.x * m1
-                   , SpawnSpeedPositioningMult.y * m1
-                   , SpawnSpeedPositioningMult.z * m1);
+      float m1 = p.MoveData.Speed * engine.Game.TimeSinceRender;
+      float m2 = engine.Game.TimeSinceRender;
+      a.MoveRelative(SpawnSpeedPositioningMult.x * m1 * p.Scale.x
+                   , SpawnSpeedPositioningMult.y * m1 * p.Scale.y
+                   , SpawnSpeedPositioningMult.z * m1 * p.Scale.z);
 
-      a.MoveRelative(SpawnManualPositioningMult.x * m2
-                   , SpawnManualPositioningMult.y * m2
-                   , SpawnManualPositioningMult.z * m2);
+      a.MoveRelative(SpawnManualPositioningMult.x * m2 * p.Scale.x
+                   , SpawnManualPositioningMult.y * m2 * p.Scale.y
+                   , SpawnManualPositioningMult.z * m2 * p.Scale.z);
 
       if (a.IsPlayer)
         engine.PlayerInfo.SystemLockMovement = true;

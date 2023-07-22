@@ -6,7 +6,7 @@ namespace SWEndor.Game.Models
   /// Explode trigger conditions and actions
   /// </summary>
   [Flags]
-  public enum ExplodeTrigger : byte
+  public enum ExplodeTrigger : ushort
   {
     /// <summary>The trigger has no effect</summary>
     NONE = 0,
@@ -23,14 +23,20 @@ namespace SWEndor.Game.Models
     /// <summary>Attaches the explosion instance to the source object</summary>
     ATTACH_TO_ACTOR = 0x8,
 
+    /// <summary>Attaches the explosion instance to the parent of the source object</summary>
+    ATTACH_TO_PARENT = 0x10,
+
     /// <summary>Creates the explosion while the source object is normal</summary>
-    ON_NORMAL = 0x10,
+    WHILE_NORMAL = 0x100,
 
     /// <summary>Creates the explosion while the source object is dying</summary>
-    ON_DYING = 0x20,
+    WHILE_DYING = 0x200,
 
-    /// <summary>Creates the explosion on the source object's death</summary>
-    ON_DEATH = 0x40,
+    /// <summary>Creates the explosion on the source object's death. This is usually triggered once</summary>
+    ON_DEATH = 0x400,
+
+    /// <summary>Creates the explosion while the source object is stunned</summary>
+    WHILE_STUNNED = 0x800,
   }
 
   /// <summary>

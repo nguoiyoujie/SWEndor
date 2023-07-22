@@ -11,8 +11,12 @@ namespace SWEndor.Game.Weapons
     public float3[] FirePositions;
 
     [INIValue]
-    public float2 CooldownRate; // rate, random
+    public float CooldownRate;
 
+    [INIValue]
+    public float CooldownRateRandom;
+
+    // cache
     public float2[] UIPos;
     public int Index;
     public float Cooldown;
@@ -22,7 +26,8 @@ namespace SWEndor.Game.Weapons
       FirePositions = new float3[0],
       UIPos = null,
       Index = 0,
-      CooldownRate = new float2(1, 0),
+      CooldownRate = 1,
+      CooldownRateRandom = 0,
       Cooldown = 0
     };
 

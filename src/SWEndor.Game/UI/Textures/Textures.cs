@@ -1,8 +1,5 @@
 ﻿using MTV3D65;
 using Primrose.Primitives.ValueTypes;
-using SWEndor.Game.Core;
-using SWEndor.Game.Player;
-using SWEndor.Game.Scenarios;
 using System.IO;
 
 namespace SWEndor.Game.UI

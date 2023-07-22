@@ -366,17 +366,16 @@ namespace SWEndor.Game.Scenarios
       }
 
       // need to switch to ProjectileType
-      new ActorSpawnInfo
+      new ProjectileSpawnInfo
       {
-        Type = ActorTypeFactory.Get("LSR_IONBIG"),
+        Type = Engine.ProjectileTypeFactory.Get("LSR_IONBIG"),
         Name = "",
         SidebarName = "",
         SpawnTime = Game.GameTime,
+        LifeTime = 30f,
         Faction = FactionInfo.Factory.Get("Rebels"),
         Position = position,
         Rotation = rotation,
-        Actions = new ActionInfo[] { Lock.GetOrCreate() },
-        Registries = null
       }.Spawn(this);
     }
 
@@ -394,9 +393,9 @@ namespace SWEndor.Game.Scenarios
           TV_3DVECTOR position = new TV_3DVECTOR();
           if (State.StageNumber == 1)
           {
-            if (State.CriticalAllies.Count > 0)
+            if (State.MonitorAllies.Count > 0)
             {
-              ActorInfo crit = State.CriticalAllies.ToArray()[0];
+              ActorInfo crit = State.MonitorAllies.ToArray()[0];
               position = crit.GetRelativePositionXYZ(0, -100, -1750);
             }
             else
@@ -478,7 +477,7 @@ namespace SWEndor.Game.Scenarios
       }
     }
 
-    public void Rebel_PlayerHit(ActorInfo player)
+    public void Rebel_PlayerHit(ActorInfo player, ActorInfo attacker)
     {
 
       /* DISABLED until new Shield implementation is found

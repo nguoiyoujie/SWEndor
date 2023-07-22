@@ -1,5 +1,4 @@
 ﻿using System;
-using MTV3D65;
 using SWEndor.Game.Actors;
 using SWEndor.Game.Scenarios;
 using SWEndor.Game.Input;
@@ -9,7 +8,6 @@ using SWEndor.Game.Weapons;
 using SWEndor.Game.ActorTypes;
 using SWEndor.Game.Player;
 using SWEndor.Game.UI.Forms;
-using System.Text;
 using SWEndor.Game.AI.Squads;
 using Primrose.Primitives;
 using System.Threading;
@@ -19,6 +17,14 @@ using SWEndor.Game.Shaders;
 using SWEndor.Game.Projectiles;
 using SWEndor.Game.ProjectileTypes;
 using SWEndor.Game.UI.Menu.Pages;
+using System.Threading.Tasks;
+using Primrose.Primitives.Factories;
+using MTV3D65;
+using Primrose.Primitives.Geometry;
+using SWEndor.Game.Models;
+using System.Collections.Generic;
+using SWEndor.Game.Particles;
+using SWEndor.Game.ParticleTypes;
 
 namespace SWEndor.Game.Core
 {
@@ -55,15 +61,20 @@ namespace SWEndor.Game.Core
     internal Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo> ActorFactory { get; private set; }
     internal Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> ExplosionFactory { get; private set; }
     internal Factory<ProjectileInfo, ProjectileCreationInfo, ProjectileTypeInfo> ProjectileFactory { get; private set; }
+    internal Factory<ParticleInfo, ParticleCreationInfo, ParticleTypeInfo> ParticleFactory { get; private set; }
     internal ActorTypeInfo.Factory ActorTypeFactory { get; private set; }
     internal ExplosionTypeInfo.Factory ExplosionTypeFactory { get; private set; }
     internal ProjectileTypeInfo.Factory ProjectileTypeFactory { get; private set; }
+    internal ParticleTypeInfo.Factory ParticleTypeFactory { get; private set; }
     internal WeapRegistry WeaponRegistry { get; private set; }    
     internal Squadron.Factory SquadronFactory { get; private set; }
     internal ShaderInfo.Factory ShaderFactory { get; private set; }
     internal MeshEntityTable ActorMeshTable { get; private set; }
     internal MeshEntityTable ExplosionMeshTable { get; private set; }
     internal MeshEntityTable ProjectileMeshTable { get; private set; }
+    internal Registry<TVMesh> MeshRegistry { get; private set; }
+    internal Registry<int> TextureRegistry { get; private set; }
+
 
     // Engine parts to be loaded late
     // Requires ActorInfoType initialization
@@ -79,16 +90,19 @@ namespace SWEndor.Game.Core
       ActorFactory = new Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>(this, (e, f, n, i) => { return new ActorInfo(e, f, n, i); }, Globals.ActorLimit);
       ExplosionFactory = new Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> (this, (e, f, n, i) => { return new ExplosionInfo(e, f, n, i); }, Globals.ActorLimit);
       ProjectileFactory = new Factory<ProjectileInfo, ProjectileCreationInfo, ProjectileTypeInfo>(this, (e, f, n, i) => { return new ProjectileInfo(e, f, n, i); }, Globals.ActorLimit);
+      ParticleFactory = new Factory<ParticleInfo, ParticleCreationInfo, ParticleTypeInfo>(this, (e, f, n, i) => { return new ParticleInfo(e, f, n, i); }, Globals.ActorLimit);
       ActorTypeFactory = new ActorTypeInfo.Factory(this);
       ExplosionTypeFactory = new ExplosionTypeInfo.Factory(this);
       ProjectileTypeFactory = new ProjectileTypeInfo.Factory(this);
+      ParticleTypeFactory = new ParticleTypeInfo.Factory(this);
       WeaponRegistry = new WeapRegistry();
       SquadronFactory = new Squadron.Factory();
       ShaderFactory = new ShaderInfo.Factory(this);
       ActorMeshTable = new MeshEntityTable();
       ProjectileMeshTable = new MeshEntityTable();
       ExplosionMeshTable = new MeshEntityTable();
-
+      MeshRegistry = new Registry<TVMesh>();
+      TextureRegistry = new Registry<int>();
       PlayerInfo = new PlayerInfo(this);
 
       FontFactory = new Font.Factory();
@@ -127,21 +141,24 @@ namespace SWEndor.Game.Core
       Screen2D.CurrentPage = new LoadingGame(Screen2D);
       Screen2D.ShowPage = true;
 
-      Screen2D.LoadingTextLines.Add(Globals.LoadingFlavourTexts[Random.Next(0, Globals.LoadingFlavourTexts.Count)]);
+      Screen2D.AppendLoadingText(Globals.LoadingFlavourTexts[Random.Next(0, Globals.LoadingFlavourTexts.Count)]);
       ActorTypeFactory.RegisterBase();
 
-      ProjectileTypeFactory.Load();
-      ActorTypeFactory.Load();
-      ExplosionTypeFactory.Load();
+      Task pload = Task.Factory.StartNew(ProjectileTypeFactory.Load);
+      Task aload = Task.Factory.StartNew(ActorTypeFactory.Load);
+      Task eload = Task.Factory.StartNew(ExplosionTypeFactory.Load);
+      Task rload = Task.Factory.StartNew(ParticleTypeFactory.Load);
 
-      Screen2D.LoadingTextLines.Add("Loading weapons...");
+      Task.WaitAll(new Task[] { pload, aload, eload, rload });
+
+      Screen2D.AppendLoadingText("Loading weapons...");
       WeaponRegistry.LoadFromINI(this);
 
-      Screen2D.LoadingTextLines.Add("Loading sounds...");
+      Screen2D.AppendLoadingText("Loading sounds...");
       SoundManager.Initialize();
       SoundManager.Load();
 
-      Screen2D.LoadingTextLines.Add("Loading dynamic music info...");
+      Screen2D.AppendLoadingText("Loading dynamic music info...");
       SoundManager.Piece.Factory.LoadFromINI(SoundManager, Globals.DynamicMusicINIPath);
 
       AtmosphereInfo.LoadDefaults(true, true);
@@ -153,65 +170,139 @@ namespace SWEndor.Game.Core
       ProjectileTypeFactory.Initialise();
       ActorTypeFactory.Initialise();
       ExplosionTypeFactory.Initialise();
+      ParticleTypeFactory.Initialise();
 
-      Screen2D.LoadingTextLines.Add("Loading scenario engine...");
+      Screen2D.AppendLoadingText("Loading scenario engine...");
       GameScenarioManager = new ScenarioManager(this);
 
-      Screen2D.LoadingTextLines.Add("Loading main menu...");
+      // Preload copies of Actors (beware arbitary numbers)
+      TV_3DVECTOR pos = new TV_3DVECTOR(10000, 100, 10000);
+      foreach (KeyValuePair<string, ActorTypeInfo> atinfo in ActorTypeFactory)
+      {
+        for (int i = 0; i < 3; i++)
+          ActorFactory.Create(new ActorCreationInfo(atinfo.Value)).Position = pos;
+      }
+      foreach (KeyValuePair<string, ExplosionTypeInfo> etinfo in ExplosionTypeFactory)
+      {
+        for (int i = 0; i < 5; i++)
+          ExplosionFactory.Create(new ExplosionCreationInfo(etinfo.Value)).Position = pos;
+      }
+      foreach (KeyValuePair<string, ProjectileTypeInfo> ptinfo in ProjectileTypeFactory)
+      {
+        for (int i = 0; i < 10; i++)
+          ProjectileFactory.Create(new ProjectileCreationInfo(ptinfo.Value)).Position = pos;
+      }
+      foreach (KeyValuePair<string, ParticleTypeInfo> ptinfo in ParticleTypeFactory)
+      {
+        for (int i = 0; i < 10; i++)
+          ParticleFactory.Create(new ParticleCreationInfo(ptinfo.Value)).Position = pos;
+      }
+      ActorFactory.Reset();
+      ExplosionFactory.Reset();
+      ProjectileFactory.Reset();
+      ParticleFactory.Reset();
+
+      SoundManager.Clear();
+      Screen2D.AppendLoadingText("Loading main menu...");
       GameScenarioManager.LoadMainMenu();
     }
 
-    public void Process() { ActorFactory.DoEach(ActorInfo.Process); }
-    public void ProcessExpl() { ExplosionFactory.DoEach(ExplosionInfo.ProcessExp); }
-    public void ProcessProj() { ProjectileFactory.DoEach(ProjectileInfo.Process); }
-    public void ProcessAI() { ActorFactory.StaggeredDoEach(2, ref Game.AITickCount, ActorInfo.ProcessAI); }
-    public void ProcessCollision() { ActorFactory.StaggeredDoEach(5, ref Game.CollisionTickCount, ActorInfo.ProcessCollision); }
-    public void ProcessProjCollision() { ProjectileFactory.StaggeredDoEach(5, ref Game.CollisionTickCount, ProjectileInfo.ProcessCollision); }
+    private readonly Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>.EngineActionDelegate _process = ActorInfo.Process;
+    private readonly Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo>.EngineActionDelegate _processExp = ExplosionInfo.ProcessExp;
+    private readonly Factory<ProjectileInfo, ProjectileCreationInfo, ProjectileTypeInfo>.EngineActionDelegate _processProj = ProjectileInfo.Process;
+    private readonly Factory<ParticleInfo, ParticleCreationInfo, ParticleTypeInfo>.EngineActionDelegate _processPart = ParticleInfo.Process;
+    private readonly Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>.EngineActionDelegate _processAI = ActorInfo.ProcessAI;
+    private readonly Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>.EngineActionDelegate _processCollision = ActorInfo.ProcessCollision;
+    private readonly Factory<ProjectileInfo, ProjectileCreationInfo, ProjectileTypeInfo>.EngineActionDelegate _processProjCollision = ProjectileInfo.ProcessCollision;
 
-    //private readonly StringBuilder loadingText = new StringBuilder(1000);
+    // explicit delegate conversion and cache it on the class to avoid hidden allocations
+    public void Process() { ActorFactory.DoEach(_process); }
+    public void ProcessExpl() { ExplosionFactory.DoEach(_processExp); }
+    public void ProcessProj() { ProjectileFactory.DoEach(_processProj); }
+    public void ProcessPart() { ParticleFactory.DoEach(_processPart); }
+    public void ProcessAI() { ActorFactory.StaggeredDoEach(2, ref Game.AITickCount, _processAI); }
+    public void ProcessCollision() { ActorFactory.StaggeredDoEach(5, ref Game.CollisionTickCount, _processCollision); }
+    public void ProcessProjCollision() { ProjectileFactory.StaggeredDoEach(5, ref Game.CollisionTickCount, _processProjCollision); }
 
+    private int _actorTypes;
+    private ActorTypeInfo _loadingType;
+    private TVMesh _loadingMesh;
     public void PreRender()
     {
-      TrueVision.TVEngine.Clear();
-      TrueVision.TVScene.FinalizeShadows();
-      /*
-      TrueVision.TVScreen2DText.Action_BeginText();
-      int i = 0;
-      while (Screen2D.LoadingTextLines.Count > 20)
+      using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
-        Screen2D.LoadingTextLines.RemoveAt(0);
+        TrueVision.TVEngine.Clear();
+        TrueVision.TVScene.FinalizeShadows();
       }
 
-      loadingText.Clear();
-      while (i < Screen2D.LoadingTextLines.Count)
+      // render wireframe
+      if (_actorTypes != ActorTypeFactory.Count)
       {
-        loadingText.AppendLine(Screen2D.LoadingTextLines[i]);
-        i++;
+        _actorTypes = ActorTypeFactory.Count;
+        foreach (ActorTypeInfo atype in ActorTypeFactory.GetValues()) // allocation!
+        {
+          if ((_loadingType == null || _loadingType.AIData.TargetType.Has(TargetType.FIGHTER)) && atype.AIData.TargetType.Has(TargetType.FIGHTER))
+          {
+            _loadingType = atype;
+          }
+          else if (atype.AIData.TargetType.Has(TargetType.SHIP))
+          {
+            _loadingType = atype;
+          }
+        }
+        if (_loadingType != null)
+        {
+          _loadingMesh = _loadingType.MeshData.SourceMesh;
+        }
       }
 
-      TrueVision.TVScreen2DText.TextureFont_DrawText(loadingText.ToString(), 40, 40, new TV_COLOR(1,1,1,1).GetIntColor(), FontFactory.Get(Font.T12).ID);
-      TrueVision.TVScreen2DText.Action_EndText();
-      */
+      if (_loadingMesh != null)
+      {
+        TV_3DVECTOR r = new TV_3DVECTOR(15, 120, 0);
+        TV_3DVECTOR spos = new TV_3DVECTOR();
+        TV_3DVECTOR smin = new TV_3DVECTOR();
+        TV_3DVECTOR smax = new TV_3DVECTOR();
+        float srad = 0;
+        _loadingMesh.GetBoundingSphere(ref spos, ref srad);
+        _loadingMesh.GetBoundingBox(ref smax, ref smax);
+        TV_3DVECTOR scenter = (smin + smax) / 2;
+        Sphere sph = new Sphere(spos, srad);
+        TVCamera c = TrueVision.TVScene.GetCamera();
+        c.SetRotation(r.x, r.y, r.z);
+        c.SetPosition(scenter.x, scenter.y, scenter.z);
+        TV_3DVECTOR d2 = c.GetFrontPosition(-sph.R * (_loadingType.AIData.TargetType.Has(TargetType.SHIP) ? 1.5f : 4f));
+        c.SetPosition(d2.x, d2.y, d2.z);
+
+        TrueVision.TVScene.SetRenderMode(CONST_TV_RENDERMODE.TV_LINE);
+        _loadingMesh.Render();
+        TrueVision.TVScene.SetRenderMode(CONST_TV_RENDERMODE.TV_SOLID);
+      }
+
       Screen2D.Draw();
       Screen2D.CurrentPage?.RenderTick();
 
-      TrueVision.TVEngine.RenderToScreen();
+      //using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        TrueVision.TVEngine.RenderToScreen();
     }
 
     public void Render()
     {
       Surfaces.Render();
 
-      TrueVision.TVEngine.Clear();
-
-      AtmosphereInfo.Render();
+      //using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+      //{
+        TrueVision.TVEngine.Clear();
+        AtmosphereInfo.Render();
+      //}
       //LandInfo.Render();
 
       using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
         TrueVision.TVScene.FinalizeShadows();
         TrueVision.TVScene.RenderAllMeshes(true);
+        TrueVision.TVScene.RenderAllParticleSystems();
       }
+
 
       // test
       //foreach (ActorInfo a in ActorFactory.GetAll())
@@ -228,7 +319,8 @@ namespace SWEndor.Game.Core
       Screen2D.Draw();
       Screen2D.CurrentPage?.RenderTick();
 
-      TrueVision.TVEngine.RenderToScreen();
+      //using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        TrueVision.TVEngine.RenderToScreen();
     }
 
     public void LinkForm(GameForm form)
@@ -249,7 +341,7 @@ namespace SWEndor.Game.Core
     public void Exit()
     {
       Thread.Sleep(1500);
-      GameScenarioManager.Scenario.Unload();
+      GameScenarioManager?.Scenario.Unload();
       Game.PrepExit();
       Form.Exit();
     }

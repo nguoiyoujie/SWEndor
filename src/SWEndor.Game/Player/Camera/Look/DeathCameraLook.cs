@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Game.ActorTypes.Components;
 using SWEndor.Game.Core;
-using System;
 
 namespace SWEndor.Game.Player
 {

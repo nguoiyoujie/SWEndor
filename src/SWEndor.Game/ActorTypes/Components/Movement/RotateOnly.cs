@@ -18,7 +18,7 @@ namespace SWEndor.Game.ActorTypes.Components
       float dy = data.YTurnAngle;
 
       // Steering destroyed
-      if (actor.TypeInfo.SystemData.AllowSystemDamage && actor.GetStatus(SystemPart.SIDE_THRUSTERS) != SystemState.ACTIVE)
+      if (!actor.IsSystemOperational(SystemPart.SIDE_THRUSTERS))
       {
         dx /= 5;
         dy /= 5;

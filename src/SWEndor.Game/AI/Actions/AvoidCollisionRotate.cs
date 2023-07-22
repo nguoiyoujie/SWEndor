@@ -92,10 +92,10 @@ namespace SWEndor.Game.AI.Actions
         float delta_speed = actor.AI.AdjustSpeed(actor, false);
 
         ActorInfo target = actor.ActorFactory.Get(data.ProspectiveCollision.ActorID);
-        if (target != null && !actor.IsAlliedWith(target))
+        if (target != null && target.Active && !actor.IsAlliedWith(target))
         {
           WeaponShotInfo w;
-          actor.WeaponDefinitions.SelectWeapon(engine, actor, target, 0, dist, out w);
+          actor.WeaponDefinitions.AISelectWeapon(engine, actor, target, 0, dist, out w);
           if (!w.IsNull)
             w.Fire(engine, actor, target);
         }

@@ -1,4 +1,5 @@
 ﻿using Primrose.FileFormat.INI;
+using Primrose.Primitives.ValueTypes;
 using SWEndor.Game.Models;
 
 namespace SWEndor.Game.ActorTypes.Components
@@ -16,6 +17,9 @@ namespace SWEndor.Game.ActorTypes.Components
 
     [INIValue]
     public RadarType RadarType;
+
+    [INIValue]
+    public float3[] RadarPolygonPoints;
 
     [INIValue]
     public bool AlwaysShowInRadar;

@@ -5,6 +5,7 @@ using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using System;
 using System.Collections.Generic;
+using SWEndor.Game.Models;
 
 namespace SWEndor.Game.AI.Squads
 {
@@ -32,7 +33,7 @@ namespace SWEndor.Game.AI.Squads
         _threats.RemoveAll(rm_func);
     }
 
-    public ActionInfo GetNewAction(Engine engine)
+    public ActionInfo GetNewAction(ActorInfo actor, Engine engine)
     {
       if (IsNull)
         return Idle.GetOrCreate();
@@ -45,9 +46,22 @@ namespace SWEndor.Game.AI.Squads
       }
 
       lock (lockthreat)
-        if (_threats.Count > 0)
-          return AttackActor.GetOrCreate(_threats.First.Value.ID);
+      {
+        ActorInfo threat = GetThreatFirst(engine);
+        for (int t = 0; t < 16; t++)
+        {
+          if (threat == null)
+            break;
 
+          // verify that you can shoot this threat
+          foreach (Weapons.WeaponShotInfo weapon in actor.WeaponDefinitions.AIWeapons)
+          {
+            if (weapon.Weapon.CanTarget(threat))
+              return AttackActor.GetOrCreate(_threats.First.Value.ID);
+          }
+          threat = threat.Next;
+        }
+      }
       return Idle.GetOrCreate();
     }
 

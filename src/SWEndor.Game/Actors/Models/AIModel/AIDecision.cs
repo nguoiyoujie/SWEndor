@@ -7,7 +7,7 @@ namespace SWEndor.Game.Actors.Models
 {
   internal struct AIDecision
   {
-    public HitEvent OnAttacked;
+    public ActorAttackedEvent OnAttacked;
     public ActorEvent OnOutOfBounds;
     public ActorEvent OnImmenientCollision;
     public ActorEvent OnIdleAction;
@@ -125,6 +125,7 @@ namespace SWEndor.Game.Actors.Models
 
     internal void Default_OnIdleAction(ActorInfo owner)
     {
+      TargetType targettype = TargetType.NULL;
       owner.QueueLast(Hunt.GetOrCreate());
     }
   }

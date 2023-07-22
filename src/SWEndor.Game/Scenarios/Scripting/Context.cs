@@ -2,6 +2,7 @@
 using Primrose.Primitives.ValueTypes;
 using SWEndor.Game.Core;
 using SWEndor.Game.Scenarios.Scripting.Functions;
+using System.Collections.Generic;
 
 namespace SWEndor.Game.Scenarios.Scripting
 {
@@ -11,7 +12,7 @@ namespace SWEndor.Game.Scenarios.Scripting
   /// <param name="context">The game context</param>
   /// <param name="param">The list of parameters entering this function</param>
   /// <returns>A Val value for further processing</returns>
-  public delegate Val FunctionDelegate(Context context, Val[] param);
+  public delegate Val FunctionDelegate(Context context, IList<Val> param);
 
   /// <summary>
   /// Provides the game context for the script
@@ -35,6 +36,9 @@ namespace SWEndor.Game.Scenarios.Scripting
       AddFunc<float3>("Scene.SetMinBounds", SceneFns.SetMinBounds);
       AddFunc<float3>("Scene.SetMaxAIBounds", SceneFns.SetMaxAIBounds);
       AddFunc<float3>("Scene.SetMinAIBounds", SceneFns.SetMinAIBounds);
+      AddFunc<bool>("Scene.EnableInformLostWing", SceneFns.EnableInformLostWing);
+      AddFunc<bool>("Scene.EnableInformLostShip", SceneFns.EnableInformLostShip);
+      AddFunc<bool>("Scene.EnableInformLostStructure", SceneFns.EnableInformLostStructure);
       AddFunc("Scene.FadeOut", SceneFns.FadeOut);
 
       // Camera Management
@@ -94,23 +98,38 @@ namespace SWEndor.Game.Scenarios.Scripting
 
       AddFunc<int>("Actor.GetHP", ActorFns.GetHP);
       AddFunc<int>("Actor.GetMaxHP", ActorFns.GetMaxHP);
+      AddFunc<int>("Actor.GetHPFrac", ActorFns.GetMaxHP);
       AddFunc<int, float>("Actor.SetHP", ActorFns.SetHP);
       AddFunc<int, float>("Actor.SetMaxHP", ActorFns.SetMaxHP);
+      AddFunc<int, float>("Actor.SetHPFrac", ActorFns.SetHPFrac);
 
       AddFunc<int>("Actor.GetHull", ActorFns.GetHull);
       AddFunc<int>("Actor.GetMaxHull", ActorFns.GetMaxHull);
+      AddFunc<int>("Actor.GetHullFrac", ActorFns.GetHullFrac);
       AddFunc<int, float>("Actor.SetHull", ActorFns.SetHull);
       AddFunc<int, float>("Actor.SetMaxHull", ActorFns.SetMaxHull);
+      AddFunc<int, float>("Actor.SetHullFrac", ActorFns.SetHullFrac);
 
       AddFunc<int>("Actor.GetShd", ActorFns.GetShd);
       AddFunc<int>("Actor.GetMaxShd", ActorFns.GetMaxShd);
+      AddFunc<int>("Actor.GetShdFrac", ActorFns.GetShdFrac);
       AddFunc<int, float>("Actor.SetShd", ActorFns.SetShd);
       AddFunc<int, float>("Actor.SetMaxShd", ActorFns.SetMaxShd);
+      AddFunc<int, float>("Actor.SetShdFrac", ActorFns.SetShdFrac);
+
+      AddFunc<int, string>("Actor.DisableSubsystem", ActorFns.DisableSubsystem);
+      AddFunc<int, string>("Actor.EnableSubsystem", ActorFns.EnableSubsystem);
+
+      AddFunc<int, string>("Actor.CallOnDying", ActorFns.CallOnDying);
+      AddFunc<int, string>("Actor.CallOnDead", ActorFns.CallOnDead);
+      AddFunc<int, string>("Actor.CallOnHit", ActorFns.CallOnHit);
+      AddFunc<int, string>("Actor.CallOnRegisterKill", ActorFns.CallOnRegisterKill);
 
 
       // Message Box
       AddFunc<string, float, float3>("Message", MessagingFns.MessageText);
       AddFunc<string, float, float3, int>("Message", MessagingFns.MessageText);
+      AddFunc<string, float, float3, int, bool>("Message", MessagingFns.MessageText);
 
       // Action Management
       AddDynamicFunc("AI.QueueFirst", AIFns.QueueFirst);
@@ -142,6 +161,7 @@ namespace SWEndor.Game.Scenarios.Scripting
       AddFunc("GetTimeSinceLostShip", GameFns.GetTimeSinceLostShip);
       AddFunc("GetTimeSinceLostStructure", GameFns.GetTimeSinceLostStructure);
       AddFunc<float, string>("AddEvent", GameFns.AddEvent);
+      AddDynamicFunc("AddEvent", GameFns.AddEvent);
 
       // Player Management
       AddFunc<int>("Player.AssignActor", PlayerFns.AssignActor);
@@ -153,8 +173,8 @@ namespace SWEndor.Game.Scenarios.Scripting
       AddFunc("Player.DecreaseLives", PlayerFns.DecreaseLives);
 
       // Score Management
-      AddFunc<float>("Score.SetScorePerLife", ScoreFns.SetScorePerLife);
-      AddFunc<float>("Score.SetScoreForNextLife", ScoreFns.SetScoreForNextLife);
+      AddFunc<int>("Score.SetScorePerLife", ScoreFns.SetScorePerLife);
+      AddFunc<int>("Score.SetScoreForNextLife", ScoreFns.SetScoreForNextLife);
       AddFunc("Score.Reset", ScoreFns.ResetScore);
 
       // Faction
@@ -164,8 +184,12 @@ namespace SWEndor.Game.Scenarios.Scripting
       AddFunc<string, float3>("Faction.SetColor", FactionFns.SetColor);
       AddFunc<string>("Faction.GetLaserColor", FactionFns.GetLaserColor);
       AddFunc<string, float3>("Faction.SetLaserColor", FactionFns.SetLaserColor);
+      AddFunc<string, string>("Faction.IsAlly", FactionFns.IsAlly);
       AddFunc<string, string>("Faction.MakeAlly", FactionFns.MakeAlly);
       AddFunc<string, string>("Faction.MakeEnemy", FactionFns.MakeEnemy);
+      AddFunc<string>("Faction.GetWings", FactionFns.GetWings);
+      AddFunc<string>("Faction.GetShips", FactionFns.GetShips);
+      AddFunc<string>("Faction.GetStructures", FactionFns.GetStructures);
       AddFunc<string>("Faction.GetWingCount", FactionFns.GetWingCount);
       AddFunc<string>("Faction.GetShipCount", FactionFns.GetShipCount);
       AddFunc<string>("Faction.GetStructureCount", FactionFns.GetStructureCount);
@@ -200,6 +224,13 @@ namespace SWEndor.Game.Scenarios.Scripting
       AddFunc<string, bool, float, bool>("Audio.SetSoundSingle", AudioFns.SetSoundSingle);
       AddFunc<string>("Audio.StopSound", AudioFns.StopSound);
       AddFunc("Audio.StopAllSound", AudioFns.StopAllSounds);
+      AddFunc<string>("Audio.QueueSpeech", AudioFns.QueueSpeech);
+      AddFunc<string, string>("Audio.QueueSpeech", AudioFns.QueueSpeech);
+      AddFunc<string, string, string>("Audio.QueueSpeech", AudioFns.QueueSpeech);
+      AddFunc<string, string, string, string>("Audio.QueueSpeech", AudioFns.QueueSpeech);
+      AddFunc<string, string, string, string, string>("Audio.QueueSpeech", AudioFns.QueueSpeech);
+      AddFunc<string, string, string, string, string, string>("Audio.QueueSpeech", AudioFns.QueueSpeech);
+      AddFunc("Audio.StopSpeech", AudioFns.StopSpeech);
 
       // UI
       AddFunc<float3>("UI.SetLine1Color", UIFns.SetUILine1Color);
@@ -212,6 +243,8 @@ namespace SWEndor.Game.Scenarios.Scripting
       // Script flow
       AddFunc<string>("Script.TryCall", ScriptingFns.TryCall);
       AddFunc<string>("Script.Call", ScriptingFns.Call);
+      AddDynamicFunc("Script.TryCall", ScriptingFns.TryCall);
+      AddDynamicFunc("Script.Call", ScriptingFns.Call);
 
       // Math
       AddFunc<float3, float3>("Math.GetDistance", MathFns.GetDistance);

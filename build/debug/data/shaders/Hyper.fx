@@ -15,10 +15,9 @@ float din = 1;
 float tin = 0.5;
 float tout = 0.5;
 float creep = 0.25;
-float ctime;
-float gtime;
+float factor;
 float dmaxtime = 0.5;
-float dtime;
+float gtime;
 float maxdist = 1600;
 float spinperiod = 2.5;
 
@@ -49,21 +48,18 @@ VS_OUTPUT VS(VS_INPUT IN) {
 float4 PS(PS_INPUT IN) : COLOR {
 	float2 texCoord = IN.texCoord;
 	float dist = distance(IN.worldPos.xyz, viewPosition);
-	float df = saturate(dist / maxdist);
-	float dy = saturate(dtime / dmaxtime);
+	//float df = saturate(dist / maxdist);
 
 	// spin
 	texCoord.x = frac(texCoord.x + gtime / spinperiod);
 	texCoord.y = frac(texCoord.y - gtime / creep);
 
-	float cin = -din + df + (gtime - ctime) / tin;
-	float cout = (1 - df) * dy / tout;
+    float crgb = factor / tin;
+    float cout = factor / tout;
 	float4 texColor = tex2D(sampTexture, texCoord);
-	texColor.rgb += (saturate(1 - cout)).rrr;
+	texColor.rgb += (saturate(1 - crgb)).rrr;
 
-	float t1 = min(1, cin);
-	float t2 = min(t1, cout);
-	texColor.a = t2;
+	texColor.a = cout;
 
 	return texColor;
 }

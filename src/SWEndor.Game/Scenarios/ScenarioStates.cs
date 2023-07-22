@@ -31,10 +31,12 @@ namespace SWEndor.Game.Scenarios
     public Registry<string, float> GameStatesF = new Registry<string, float>();
     public Registry<string, string> GameStatesS = new Registry<string, string>();
     public Registry<string, bool> GameStatesB = new Registry<string, bool>();
-    public HashSet<ActorInfo> CriticalAllies = new HashSet<ActorInfo>();
-    public HashSet<ActorInfo> CriticalEnemies = new HashSet<ActorInfo>();
 
-    public Octree_String Octree = new Octree_String(new TV_3DVECTOR(), 100000, 10);
+    // Registries for showing on the sidebar
+    public HashSet<ActorInfo> MonitorAllies = new HashSet<ActorInfo>();
+    public HashSet<ActorInfo> MonitorEnemies = new HashSet<ActorInfo>();
+
+    public Octree Octree = new Octree(new TV_3DVECTOR(), 100000, 10);
 
     public List<MessageLog> MessageLogs = new List<MessageLog>();
 
@@ -67,8 +69,8 @@ namespace SWEndor.Game.Scenarios
       GameStatesF.Clear();
       GameStatesB.Clear();
       GameStatesS.Clear();
-      CriticalAllies.Clear();
-      CriticalEnemies.Clear();
+      MonitorAllies.Clear();
+      MonitorEnemies.Clear();
     }
   }
 }

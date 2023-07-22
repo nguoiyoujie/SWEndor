@@ -1,4 +1,4 @@
-﻿using Primrose.Primitives;
+﻿using Primrose.Primitives.Cache;
 using System.Collections.Generic;
 
 namespace SWEndor.Game.Actors.Models
@@ -38,6 +38,9 @@ namespace SWEndor.Game.Actors.Models
     /// <summary>Fires laser projectiles</summary>
     LASER_WEAPONS,
 
+    /// <summary>Fires ion projectiles</summary>
+    ION_WEAPONS,
+
     /// <summary>Launches ordinance projectiles</summary>
     PROJECTILE_LAUNCHERS,
 
@@ -52,6 +55,7 @@ namespace SWEndor.Game.Actors.Models
   {
     private static Dictionary<SystemPart, string> _shorthand = new Dictionary<SystemPart, string>
     {
+      // Try to limit to 3 characters
       { SystemPart.ENGINE, "ENG"},
       { SystemPart.SIDE_THRUSTERS, "THT"},
       { SystemPart.SHIELD_GENERATOR, "SHD"},
@@ -62,8 +66,27 @@ namespace SWEndor.Game.Actors.Models
       { SystemPart.ENERGY_STORE, "STO"},
       { SystemPart.ENERGY_CHARGER, "CHG"},
       { SystemPart.LASER_WEAPONS, "LSR"},
+      { SystemPart.ION_WEAPONS, "ION"},
       { SystemPart.PROJECTILE_LAUNCHERS, "PRJ"},
       { SystemPart.HYPERDRIVE, "HYP"}
+    };
+
+    private static Dictionary<SystemPart, string> _displayName = new Dictionary<SystemPart, string>
+    {
+      // Try to limit to 16 characters
+      { SystemPart.ENGINE, "ENGINE"},
+      { SystemPart.SIDE_THRUSTERS, "SIDE THRUSTERS"},
+      { SystemPart.SHIELD_GENERATOR, "SHIELD GENERATOR"},
+      { SystemPart.RADAR, "RADAR"},
+      { SystemPart.SCANNER, "SCANNER"},
+      { SystemPart.TARGETING_SYSTEM, "TARGETING SYSTEM"},
+      { SystemPart.COMLINK, "COMLINK"},
+      { SystemPart.ENERGY_STORE, "ENERGY STORE"},
+      { SystemPart.ENERGY_CHARGER, "ENERGY CHARGER"},
+      { SystemPart.LASER_WEAPONS, "LASER WEAPONS"},
+      { SystemPart.ION_WEAPONS, "ION_WEAPONS"},
+      { SystemPart.PROJECTILE_LAUNCHERS, "WEAPON LAUNCHERS"},
+      { SystemPart.HYPERDRIVE, "HYPERDRIVE"}
     };
 
     /// <summary>
@@ -76,9 +99,24 @@ namespace SWEndor.Game.Actors.Models
       string s;
       if (!_shorthand.TryGetValue(part, out s))
       {
-        s = part.GetEnumName();
+        s = Enum<SystemPart>.GetName(part);
         if (s.Length > 3)
           s = s.Substring(0, 3);
+      }
+      return s;
+    }
+
+    /// <summary>
+    /// Retrieves the short name for a system part
+    /// </summary>
+    /// <param name="part">The system part</param>
+    /// <returns>The cached short name of this part</returns>
+    public static string GetDisplayName(this SystemPart part)
+    {
+      string s;
+      if (!_displayName.TryGetValue(part, out s))
+      {
+        s = Enum<SystemPart>.GetName(part).Replace('_', ' ');
       }
       return s;
     }

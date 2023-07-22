@@ -7,6 +7,8 @@ using SWEndor.Game.UI;
 using SWEndor.Game.UI.Menu;
 using SWEndor.Game.UI.Widgets;
 using SWEndor.Game.Scenarios;
+using SWEndor.Game.Actors.Components;
+using SWEndor.Game;
 
 namespace SWEndor
 {
@@ -32,7 +34,7 @@ namespace SWEndor
     public bool ShowScore = true;
 
     // PreRender Text
-    public System.Collections.Generic.List<string> LoadingTextLines = new System.Collections.Generic.List<string>();
+    public readonly LockStringBuilder LoadingText = new LockStringBuilder();
 
     // Page
     public bool ShowPage = false;
@@ -111,29 +113,44 @@ namespace SWEndor
       }
     }
 
-    public void MessageText(string text, float expiretime, COLOR color, int priority = 0)
+    public void AppendLoadingText(string text)
     {
-      MessageText(ref PrimaryText, text, expiretime, color, priority);
-      Engine.GameScenarioManager.Scenario.State.MessageLogs.Add(new MessageLog(Engine.Game.GameTime + expiretime, text, color));
+      LoadingText.AppendLine(text);
+    }
+
+    public void ReplaceLoadingText(string text)
+    {
+      LoadingText.Clear();
+      LoadingText.AppendLine(text);
+    }
+
+    public void MessageText(string text, float expiretime, COLOR color, int priority = 0, bool includeInLogs = true)
+    {
+      MessageText(ref PrimaryText, ref text, expiretime, color, priority);
+      if (includeInLogs)
+      {
+        Engine.GameScenarioManager.Scenario.State.MessageLogs.Add(new MessageLog(Engine.Game.GameTime + expiretime, text, color));
+        Engine.PlayerInfo.Score.AddEntry(new ScoreInfo.Entry(Engine.Game.GameTime, ScoreInfo.EntryType.MESSAGE_LOG, text, null, 0, color.Value));
+      }
     }
 
     public void MessageSecondaryText(string text, float expiretime, COLOR color, int priority = 0)
     {
-      MessageText(ref SecondaryText, text, expiretime, color, priority);
+      MessageText(ref SecondaryText, ref text, expiretime, color, priority);
     }
 
     public void MessageSystemsText(string text, float expiretime, COLOR color, int priority = 0)
     {
-      MessageText(ref SystemsText, text, expiretime, color, priority);
+      MessageText(ref SystemsText, ref text, expiretime, color, priority);
     }
 
-    private void MessageText(ref TextInfo tinfo, string text, float expiretime, COLOR color, int priority)
+    private void MessageText(ref TextInfo tinfo, ref string text, float expiretime, COLOR color, int priority)
     {
       if (tinfo.Priority <= priority || tinfo.ExpireTime < Engine.Game.GameTime)
       {
         tinfo.Priority = priority;
         ActorInfo p = Engine.PlayerInfo.Actor;
-        if (p != null && (p.GetStatus(SystemPart.COMLINK) == SystemState.DISABLED || p.GetStatus(SystemPart.COMLINK) == SystemState.DESTROYED))
+        if (p != null && !p.IsSystemOperational(SystemPart.COMLINK))
           text = text.Scramble(Engine.Random);
 
         tinfo.Text = text;

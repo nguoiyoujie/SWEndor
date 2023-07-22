@@ -71,6 +71,22 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
     }
 
     /// <summary>
+    /// Returns if two factions are allies.
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <returns>TRUE if the factions are allies, FALSE if not</returns>
+    /// <exception cref="InvalidOperationException">At least one of the factions are invalid</exception>
+    public static Val IsAlly(IContext context, string faction1, string faction2)
+    {
+      FactionInfo f1 = FactionInfo.Factory.Get(faction1);
+      FactionInfo f2 = FactionInfo.Factory.Get(faction2);
+      if (f1 == null || f2 == null)
+        return Val.FALSE;
+
+      return new Val(f1.Allies.Contains(f2) || f2.Allies.Contains(f1));
+    }
+
+    /// <summary>
     /// Makes two factions to be allies. Does nothing if the factions are already allies.
     /// </summary>
     /// <param name="context">The game context</param>
@@ -111,6 +127,63 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
         f2.Allies.Remove(f1);
 
       return Val.NULL;
+    }
+
+    /// <summary>
+    /// Gets the faction's Wings 
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <param name="ps">
+    ///   Parameters: 
+    ///     0 STRING faction_name
+    /// </param>
+    /// <returns>INT count</returns>
+    /// <exception cref="InvalidOperationException">The faction is not defined</exception>
+    public static Val GetWings(IContext context, string faction)
+    {
+      FactionInfo f = FactionInfo.Factory.Get(faction);
+      if (f == null)
+        throw new InvalidOperationException("The faction is not defined.");
+
+      return new Val(f.GetWings().ToArray());
+    }
+
+    /// <summary>
+    /// Gets the faction's Ships 
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <param name="ps">
+    ///   Parameters: 
+    ///     0 STRING faction_name
+    /// </param>
+    /// <returns>INT count</returns>
+    /// <exception cref="InvalidOperationException">The faction is not defined</exception>
+    public static Val GetShips(IContext context, string faction)
+    {
+      FactionInfo f = FactionInfo.Factory.Get(faction);
+      if (f == null)
+        throw new InvalidOperationException("The faction is not defined.");
+
+      return new Val(f.GetShips().ToArray());
+    }
+
+    /// <summary>
+    /// Gets the faction's Structures 
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <param name="ps">
+    ///   Parameters: 
+    ///     0 STRING faction_name
+    /// </param>
+    /// <returns>INT count</returns>
+    /// <exception cref="InvalidOperationException">The faction is not defined</exception>
+    public static Val GetStructures(IContext context, string faction)
+    {
+      FactionInfo f = FactionInfo.Factory.Get(faction);
+      if (f == null)
+        throw new InvalidOperationException("The faction is not defined.");
+
+      return new Val(f.GetStructures().ToArray());
     }
 
     /// <summary>

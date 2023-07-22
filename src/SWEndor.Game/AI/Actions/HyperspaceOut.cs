@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using Primrose.Primitives.Extensions;
 using Primrose.Primitives.Factories;
 using SWEndor.Game.Actors;
 using SWEndor.Game.ActorTypes;
@@ -38,7 +39,7 @@ namespace SWEndor.Game.AI.Actions
 
     // parameters
     private TV_3DVECTOR Origin_Position = new TV_3DVECTOR();
-    private static float Incre_Speed = 125000; //2500;
+    private static float Incre_Speed = 75000; //125000; //2500;
     private static float FarEnoughDistance = 250000;
     private bool hyperspace = false;
 
@@ -64,7 +65,14 @@ namespace SWEndor.Game.AI.Actions
 
       float dist = engine.TrueVision.TVMathLibrary.GetDistanceVec3D(owner.GetGlobalPosition(), Origin_Position);
       if (dist >= FarEnoughDistance)
+      {
+        owner.HyperspaceFactor = 1;
         Complete = true;
+      }
+      else
+      {
+        owner.HyperspaceFactor = (dist / Incre_Speed).Clamp(0, 1);
+      }
     }
   }
 }

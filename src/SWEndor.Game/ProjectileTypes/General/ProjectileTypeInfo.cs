@@ -5,10 +5,8 @@ using SWEndor.Game.Core;
 using Primrose.FileFormat.INI;
 using SWEndor.Game.Models;
 using SWEndor.Game.Projectiles;
-using SWEndor.Game.Projectiles.Components;
 using System;
 using System.IO;
-using SWEndor.Game.Actors.Components;
 
 namespace SWEndor.Game.ProjectileTypes
 {
@@ -66,7 +64,7 @@ namespace SWEndor.Game.ProjectileTypes
     internal ExplodeSystemData ExplodeSystemData = ExplodeSystemData.Default;
 
     [INIEmbedObject("DamageSpecial")]
-    internal DamageSpecialData DamageSpecialData;
+    internal DamageSpecialData DamageSpecialData = DamageSpecialData.Default;
 
     [INIEmbedObject("Sound")]
     internal SoundData SoundData = SoundData.Default;
@@ -138,7 +136,22 @@ namespace SWEndor.Game.ProjectileTypes
 
       // projectile
       if (!ainfo.IsDyingOrDead)
-        NearEnoughImpact(engine, ainfo, ainfo.Target);
+      {
+        if (!NearEnoughImpact(engine, ainfo, ainfo.Target))
+        {
+          ulong oid = engine.GameScenarioManager.Scenario.State.Octree.GetId(ainfo.GetGlobalPosition(), CombatData.ImpactCloseEnoughDistance);
+          //if (oid != null)
+          {
+            foreach (ActorInfo a in engine.GameScenarioManager.Scenario.State.Octree.Search(oid))
+            {
+              if (a.Active && ainfo.CanCollideWith(a))
+              {
+                if (NearEnoughImpact(engine, ainfo, a)) { break; }
+              }
+            }
+          }
+        }
+      }
     }
 
     /// <summary>
@@ -202,8 +215,8 @@ namespace SWEndor.Game.ProjectileTypes
       float impdist = CombatData.ImpactCloseEnoughDistance;
       if (target != null)
       {
-        if (target.TypeInfo.AIData.TargetType.Intersects(TargetType.MUNITION))
-          impdist += target.TypeInfo.CombatData.ImpactCloseEnoughDistance;
+        //if (target.TargetType.Intersects(TargetType.MUNITION))
+        //  impdist += target.TypeInfo.CombatData.ImpactCloseEnoughDistance;
 
         // Anticipate
         float dist = DistanceModel.GetDistance(engine, proj, target);
@@ -212,22 +225,10 @@ namespace SWEndor.Game.ProjectileTypes
         {
           target.TypeInfo.ProcessHit(engine, target, proj, target.GetGlobalPosition());
           proj.TypeInfo.ProcessHit(engine, proj, target, target.GetGlobalPosition());
-
-          target.OnHitEvent();
           return true;
         }
       }
       return false;
     }
-
-    private void AddScore(Engine engine, ScoreInfo score, ProjectileInfo proj, ActorInfo victim)
-    {
-      if (!victim.IsDyingOrDead)
-        score.AddHit(engine, victim, proj.TypeInfo.CombatData.ImpactDamage * victim.GetArmor(proj.TypeInfo.CombatData.DamageType));
-
-      if (victim.IsDyingOrDead)
-        score.AddKill(engine, victim);
-    }
-
   }
 }

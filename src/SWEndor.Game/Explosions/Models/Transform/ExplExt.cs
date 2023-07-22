@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using Primrose.Primitives;
+using Primrose.Primitives.ValueTypes;
 
 namespace SWEndor.Game.Explosions
 {
@@ -21,7 +22,7 @@ namespace SWEndor.Game.Explosions
     public TV_3DVECTOR Direction { get { return Transform.Direction; } set { Transform.Direction = value; } }
 
     /// <summary>The scale of the object</summary>
-    public float Scale { get { return Transform.Scale; } set { Transform.Scale = value; } }
+    public float3 Scale { get { return Transform.Scale; } set { Transform.Scale = value; } }
 
     /// <summary>Gets the world transformation matrix of the object</summary>
     public TV_3DMATRIX GetWorldMatrix()

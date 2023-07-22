@@ -45,6 +45,7 @@ namespace SWEndor.Game.Actors
         )
           return;
 
+
         actor.Squad.Process(engine);
         actor.Run();
       }
@@ -83,7 +84,7 @@ namespace SWEndor.Game.Actors
       if (Generated || Reserved_Generated)
         SetActivated();
 
-      //Engine.GameScenarioManager.Scenario.State.Octree.Update(this);
+      Engine.GameScenarioManager.Scenario.State.Octree.Update(this);
     }
   }
 }

@@ -5,11 +5,11 @@
   /// </summary>
   public enum SystemState : byte // 4 values 
   {
-    /// <summary>The subsystem is not present</summary>
-    ABSENT = 0,
+    /// <summary>The subsystem is not part of the active instruments</summary>
+    PASSIVE = 0,
 
     /// <summary>The subsystem is present but destroyed</summary>
-    DESTROYED = 1,
+    DAMAGED = 1,
 
     /// <summary>The subsystem is present but disabled</summary>
     DISABLED = 2,

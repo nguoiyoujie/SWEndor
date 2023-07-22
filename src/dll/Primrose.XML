@@ -4641,7 +4641,10 @@
         <member name="P:Primrose.Primitives.ValueTypes.int2.Empty">
             <summary>Returns a int2 value with all elements set to their default value</summary>
         </member>
-        <member name="M:Primrose.Primitives.ValueTypes.int2.op_Implicit(Primrose.Primitives.ValueTypes.int2)~System.Int32[]">
+        <member name="M:Primrose.Primitives.ValueTypes.int2.op_Explicit(Primrose.Primitives.ValueTypes.int2)~System.Array">
+            <summary>Creates an array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int2.op_Explicit(Primrose.Primitives.ValueTypes.int2)~System.Int32[]">
             <summary>Creates a int[] array from this value</summary>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.int2.op_Implicit(System.Int32[])~Primrose.Primitives.ValueTypes.int2">
@@ -4770,7 +4773,10 @@
         <member name="P:Primrose.Primitives.ValueTypes.float2.Empty">
             <summary>Returns a float2 value with all elements set to their default value</summary>
         </member>
-        <member name="M:Primrose.Primitives.ValueTypes.float2.op_Implicit(Primrose.Primitives.ValueTypes.float2)~System.Single[]">
+        <member name="M:Primrose.Primitives.ValueTypes.float2.op_Explicit(Primrose.Primitives.ValueTypes.float2)~System.Array">
+            <summary>Creates an array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.op_Explicit(Primrose.Primitives.ValueTypes.float2)~System.Single[]">
             <summary>Creates a float[] array from this value</summary>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.float2.op_Implicit(System.Single[])~Primrose.Primitives.ValueTypes.float2">
@@ -4992,7 +4998,10 @@
         <member name="P:Primrose.Primitives.ValueTypes.int3.Empty">
             <summary>Returns a int3 value with all elements set to their default value</summary>
         </member>
-        <member name="M:Primrose.Primitives.ValueTypes.int3.op_Implicit(Primrose.Primitives.ValueTypes.int3)~System.Int32[]">
+        <member name="M:Primrose.Primitives.ValueTypes.int3.op_Explicit(Primrose.Primitives.ValueTypes.int3)~System.Array">
+            <summary>Creates an array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int3.op_Explicit(Primrose.Primitives.ValueTypes.int3)~System.Int32[]">
             <summary>Creates a int[] array from this value</summary>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.int3.op_Implicit(System.Int32[])~Primrose.Primitives.ValueTypes.int3">
@@ -5125,7 +5134,10 @@
         <member name="P:Primrose.Primitives.ValueTypes.float3.Empty">
             <summary>Returns a float3 value with all elements set to their default value</summary>
         </member>
-        <member name="M:Primrose.Primitives.ValueTypes.float3.op_Implicit(Primrose.Primitives.ValueTypes.float3)~System.Single[]">
+        <member name="M:Primrose.Primitives.ValueTypes.float3.op_Explicit(Primrose.Primitives.ValueTypes.float3)~System.Array">
+            <summary>Creates an array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.op_Explicit(Primrose.Primitives.ValueTypes.float3)~System.Single[]">
             <summary>Creates a float[] array from this value</summary>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.float3.op_Implicit(System.Single[])~Primrose.Primitives.ValueTypes.float3">
@@ -5355,7 +5367,10 @@
         <member name="P:Primrose.Primitives.ValueTypes.int4.Empty">
             <summary>Returns a int4 value with all elements set to their default value</summary>
         </member>
-        <member name="M:Primrose.Primitives.ValueTypes.int4.op_Implicit(Primrose.Primitives.ValueTypes.int4)~System.Int32[]">
+        <member name="M:Primrose.Primitives.ValueTypes.int4.op_Explicit(Primrose.Primitives.ValueTypes.int4)~System.Array">
+            <summary>Creates an array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int4.op_Explicit(Primrose.Primitives.ValueTypes.int4)~System.Int32[]">
             <summary>Creates a int[] array from this value</summary>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.int4.op_Implicit(System.Int32[])~Primrose.Primitives.ValueTypes.int4">
@@ -5492,7 +5507,10 @@
         <member name="P:Primrose.Primitives.ValueTypes.float4.Empty">
             <summary>Returns a float4 value with all elements set to their default value</summary>
         </member>
-        <member name="M:Primrose.Primitives.ValueTypes.float4.op_Implicit(Primrose.Primitives.ValueTypes.float4)~System.Single[]">
+        <member name="M:Primrose.Primitives.ValueTypes.float4.op_Explicit(Primrose.Primitives.ValueTypes.float4)~System.Array">
+            <summary>Creates an array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.op_Explicit(Primrose.Primitives.ValueTypes.float4)~System.Single[]">
             <summary>Creates a float[] array from this value</summary>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.float4.op_Implicit(System.Single[])~Primrose.Primitives.ValueTypes.float4">

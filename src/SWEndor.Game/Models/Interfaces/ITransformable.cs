@@ -23,6 +23,9 @@ namespace SWEndor.Game.Models
     TV_3DVECTOR GetPrevGlobalPosition();
 
     /// <summary>Gets the relative offset from an object</summary>
+    TV_3DVECTOR GetRelativePositionFUR(float front, float up, float right, bool uselocal = false);
+
+    /// <summary>Gets the relative offset from an object</summary>
     TV_3DVECTOR GetRelativePositionXYZ(float x, float y, float z, bool local = false);
   }
 }

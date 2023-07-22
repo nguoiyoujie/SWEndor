@@ -46,7 +46,7 @@ namespace SWEndor.Game.Models
     LASER_PROJECTILE = CAN_RENDER | CAN_MOVE,
 
     /// <summary>Represents a guided, homing projectile</summary>
-    GUIDED_PROJECTILE = CAN_RENDER | CAN_MOVE | CAN_ROTATE | CAN_BETARGETED | HAS_AI,
+    GUIDED_PROJECTILE = CAN_RENDER | CAN_MOVE | CAN_ROTATE | CAN_BETARGETED | CAN_BECOLLIDED | HAS_AI,
 
     /// <summary>Represents a debris object</summary>
     DEBRIS = CAN_RENDER | CAN_MOVE | CAN_ROTATE,

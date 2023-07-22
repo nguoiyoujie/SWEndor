@@ -11,6 +11,7 @@
 
     // laser
     LASER,
+    TURBOLASER, // heavy laser
 
     // proj
     MISSILE,

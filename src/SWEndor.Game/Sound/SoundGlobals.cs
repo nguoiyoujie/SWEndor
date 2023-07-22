@@ -15,6 +15,8 @@
     public static string[] DmgSounds = new string[] { @"dmg\d1", @"dmg\d2", @"dmg\d3", @"dmg\d4" };
     public static string MissileAlert = @"warn\mislalert";
     public static string LostShip = @"warn\shiplost";
+    public static string[] TestSpeech = new string[] { "e-ack", "c-order", "c-radio", "c-trans" };
+
 
     // tied to units only, can be eliminated after units are moved to placeholder
     public static string[] ExpSm = new string[] { @"exp\sm1", @"exp\sm2", @"exp\sm3", @"exp\sm4" };

@@ -28,17 +28,13 @@ namespace SWEndor.Game
 
     /// <summary>The application version</summary>
     public static string Version = 
-        string.Format("v{0}.{1}.{2}.{3}-{4}"
-        , MajorVersion
-        , MinorVersion
-        , Build.BuildDate
-        , Build.Revision
+        "v" + MajorVersion.ToString() + "." + MinorVersion.ToString() + "." + SWEndor.Core.Build.BuildDate + "." + SWEndor.Core.Build.Revision + "-" +
 #if DEBUG
-        , "Debug"
+        "Debug"
 #else
-        , "Release"
+        "Release"
 #endif
-        );
+        ;
 
     /// <summary>The value of PI</summary>
     public const float PI = 3.1415f;
@@ -61,16 +57,22 @@ namespace SWEndor.Game
     /// <summary>The targeter acquisition range</summary>
     public const float AcquisitionRange = 7500;
 
+    // Background form
+    public static Form BackgroundForm;
 
     // Directories
     internal static string BasePath = AppDomain.CurrentDomain.BaseDirectory;
     internal static string LogPath = Path.Combine(BasePath, @"log\");
     internal static string ScreenshotsPath = Path.Combine(BasePath, @"screenshots\");
+    internal static string GameSnapshotPath = Path.Combine(BasePath, @"gamesnapshots\");
+
+    
 
     internal static string FontPath = Path.Combine(BasePath, @"assets\fonts\");
     internal static string ImagePath = Path.Combine(BasePath, @"assets\images\");
     internal static string ModelPath = Path.Combine(BasePath, @"assets\models\");
     internal static string MusicPath = Path.Combine(BasePath, @"assets\music\");
+    internal static string SpeechPath = Path.Combine(BasePath, @"assets\speech\");
     internal static string SoundPath = Path.Combine(BasePath, @"assets\sounds\");
     internal static string AtmospherePath = Path.Combine(BasePath, @"assets\atmosphere\");
     internal static string LandscapePath = Path.Combine(BasePath, @"assets\landscape\");
@@ -82,6 +84,7 @@ namespace SWEndor.Game
     internal static string ActorTypeINIDirectory = Path.Combine(DataPath, @"actors\");
     internal static string ExplosionTypeINIDirectory = Path.Combine(DataPath, @"explosions\");
     internal static string ProjectileTypeINIDirectory = Path.Combine(DataPath, @"projectiles\");
+    internal static string ParticleTypeINIDirectory = Path.Combine(DataPath, @"particles\");
     internal static string WeaponINIDirectory = Path.Combine(DataPath, @"weapons\");
 
 
@@ -101,8 +104,9 @@ namespace SWEndor.Game
     // Extensions
     //internal static string CustomScenarioExt = "*.scen";
     internal static string INIExt = "*.ini";
-    internal static string ShaderFxExt = "*.fx";
+    internal static string ShaderIniExt = "*.ini";
     internal static string SoundExt = "*.wav";
+    internal static string SpeechExt = "*.wav";
     internal static string MusicExt = "*.*";
 
     // Game Engine

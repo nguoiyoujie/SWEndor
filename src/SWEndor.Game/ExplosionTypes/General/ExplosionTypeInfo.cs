@@ -113,7 +113,7 @@ namespace SWEndor.Game.ExplosionTypes
       if (ainfo.AttachedActorID > -1)
       {
         ActorInfo p = engine.ActorFactory.Get(ainfo.AttachedActorID);
-        if (p == null)
+        if (p == null || !p.Active)
           ainfo.SetState_Dead();
       }
     }

@@ -58,12 +58,17 @@ namespace SWEndor.Game.UI.Widgets
       {
         COLOR disabled_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DISABLED);
         COLOR destroyed_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DESTROYED);
-        if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.LASER_WEAPONS) == SystemState.ACTIVE)
+        if (p.IsSystemOperational(SystemPart.LASER_WEAPONS))
           DrawLaser(weap, burst, pcolor, disabled_color);
-        else if (p.GetStatus(SystemPart.LASER_WEAPONS) == SystemState.DESTROYED)
-          DrawLaser(weap, 0, destroyed_color, destroyed_color);
-        else if (p.GetStatus(SystemPart.LASER_WEAPONS) == SystemState.DISABLED)
-          DrawLaser(weap, 0, disabled_color, disabled_color);
+        else
+        {
+          SystemState status = p.GetStatus(SystemPart.LASER_WEAPONS);
+          if (status == SystemState.DAMAGED)
+            DrawLaser(weap, 0, destroyed_color, destroyed_color);
+          else if (status == SystemState.DISABLED)
+            DrawLaser(weap, 0, disabled_color, disabled_color);
+        }
+
       }
 
       weap = PlayerInfo.SecondaryWeapon.Weapon;
@@ -75,24 +80,30 @@ namespace SWEndor.Game.UI.Widgets
         {
           COLOR disabled_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DISABLED);
           COLOR destroyed_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DESTROYED);
-          if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) == SystemState.ACTIVE)
+          if (p.IsSystemOperational(SystemPart.PROJECTILE_LAUNCHERS))
             DrawMissile(weap, true, weap.Ammo.Count, pcolor);
-          else if (p.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) == SystemState.DESTROYED)
-            DrawMissile(weap, false, 0, destroyed_color);
-          else if (p.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) == SystemState.DISABLED)
-            DrawMissile(weap, false, 0, disabled_color);
+          {
+            SystemState status = p.GetStatus(SystemPart.PROJECTILE_LAUNCHERS);
+            if (status == SystemState.DAMAGED)
+              DrawMissile(weap, false, 0, destroyed_color);
+            else if (status == SystemState.DISABLED)
+              DrawMissile(weap, false, 0, disabled_color);
+          }
         }
         else if (weap.Proj.WeaponType == WeaponType.ION)
         {
           COLOR ion_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_ION);
           COLOR disabled_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DISABLED);
           COLOR destroyed_color = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_DESTROYED);
-          if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.LASER_WEAPONS) == SystemState.ACTIVE)
+          if (p.IsSystemOperational(SystemPart.ION_WEAPONS))
             DrawIon(weap, true, burst, ion_color, ion_color);
-          else if (p.GetStatus(SystemPart.LASER_WEAPONS) == SystemState.DESTROYED)
-            DrawIon(weap, false, 0, destroyed_color, destroyed_color);
-          else if (p.GetStatus(SystemPart.LASER_WEAPONS) == SystemState.DISABLED)
-            DrawIon(weap, false, 0, disabled_color, disabled_color);
+          {
+            SystemState status = p.GetStatus(SystemPart.ION_WEAPONS);
+            if (status == SystemState.DAMAGED)
+              DrawIon(weap, false, 0, destroyed_color, destroyed_color);
+            else if (status == SystemState.DISABLED)
+              DrawIon(weap, false, 0, disabled_color, disabled_color);
+          }
         }
         TVScreen2DImmediate.Action_End2D();
       }

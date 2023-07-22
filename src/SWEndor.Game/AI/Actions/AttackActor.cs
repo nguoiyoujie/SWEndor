@@ -5,7 +5,6 @@ using SWEndor.Game.Models;
 using Primrose.Primitives.Factories;
 using Primrose.Primitives.Geometry;
 using SWEndor.Game.Weapons;
-using System;
 using SWEndor.Game.Primitives.Extensions;
 
 namespace SWEndor.Game.AI.Actions
@@ -58,7 +57,7 @@ namespace SWEndor.Game.AI.Actions
     public override void Process(Engine engine, ActorInfo actor)
     {
       ActorInfo target = engine.ActorFactory.Get(Target_ActorID);
-      if (target == null || target.IsAlliedWith(actor))
+      if (target == null || !target.Active || target.IsAlliedWith(actor) || !actor.WeaponDefinitions.CanAITarget(target))
       {
         Complete = true;
         return;
@@ -81,7 +80,7 @@ namespace SWEndor.Game.AI.Actions
         float delta_angle = actor.AI.AdjustRotation(engine, actor);
         actor.AI.AdjustSpeed(actor, true);
 
-        actor.WeaponDefinitions.SelectWeapon(engine, actor, target, delta_angle, dist, out WeaponShotInfo w);
+        actor.WeaponDefinitions.AISelectWeapon(engine, actor, target, delta_angle, dist, out WeaponShotInfo w);
         if (!w.IsNull)
         {
           w.Fire(engine, actor, target);
@@ -108,12 +107,12 @@ namespace SWEndor.Game.AI.Actions
       }
       else
       {
-        if (target.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
+        if (target.TargetType.Has(TargetType.FIGHTER))
         {
           float evadeduration = 2000 / (target.MoveData.Speed + 500);
           actor.QueueFirst(Evade.GetOrCreate(evadeduration));
         }
-        else if (!(target.TypeInfo.AIData.TargetType.Intersects(TargetType.MUNITION)))
+        else if (!(target.TargetType.Has(TargetType.MUNITION)))
         {
           actor.QueueFirst(Move.GetOrCreate(MakeAltPosition(engine, actor, target.Parent), actor.MoveData.MaxSpeed));
         }
@@ -175,7 +174,7 @@ namespace SWEndor.Game.AI.Actions
         e.TrueVision.TVMathLibrary.TVVec3Normalize(ref vec, a.GetGlobalPosition() - c.GetGlobalPosition());
         float delta_angle = e.TrueVision.TVMathLibrary.ACos(e.TrueVision.TVMathLibrary.TVVec3Dot(dir, vec));
 
-        c.WeaponDefinitions.SelectWeapon(e, c, a, delta_angle, dist, out WeaponShotInfo w);
+        c.WeaponDefinitions.AISelectWeapon(e, c, a, delta_angle, dist, out WeaponShotInfo w);
         if (!w.IsNull)
         {
           w.Fire(e, c, a);

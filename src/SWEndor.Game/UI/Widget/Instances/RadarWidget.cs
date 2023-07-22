@@ -6,8 +6,9 @@ using SWEndor.Game.Explosions;
 using SWEndor.Game.Models;
 using Primrose.Primitives.Geometry;
 using SWEndor.Game.Projectiles;
-using System;
-using System.Collections.Generic;
+using Primrose.Primitives.ValueTypes;
+using SWEndor.Game.Primitives.Geometry;
+using SWEndor.Game.Primitives.Extensions;
 
 namespace SWEndor.Game.UI.Widgets
 {
@@ -17,7 +18,14 @@ namespace SWEndor.Game.UI.Widgets
     private readonly float radar_radius;
     private readonly float radar_range;
     private readonly float radar_blinkfreq;
-    private readonly float radar_bigshiprenderunit;
+    //private readonly float radar_bigshiprenderunit;
+
+    private TV_3DVECTOR radar_origin;
+    private TV_3DVECTOR radar_direction;
+
+    private static COLOR explColor = new COLOR(0.75f, 0.75f, 0, 0.75f);
+    private static COLOR projColor = new COLOR(0.8f, 0.5f, 0, 0.6f);
+    private static COLOR whitColor = new COLOR(1, 1, 1, 1);
 
     public RadarWidget(Screen2D owner) : base(owner, "radar")
     {
@@ -25,10 +33,10 @@ namespace SWEndor.Game.UI.Widgets
       radar_radius = Engine.ScreenHeight * 0.16f;
       radar_range = 4000;
       radar_blinkfreq = 2.5f;
-      radar_bigshiprenderunit = 50;
+      //radar_bigshiprenderunit = 50;
     }
 
-  public override bool Visible
+    public override bool Visible
     {
       get
       {
@@ -51,15 +59,19 @@ namespace SWEndor.Game.UI.Widgets
       COLOR c = pcolor;
       bool active = false;
       bool showcircle = true;
-      if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.RADAR) == SystemState.ACTIVE)
+      if (p.IsSystemOperational(SystemPart.RADAR))
         active = true;
-      else if (p.GetStatus(SystemPart.RADAR) == SystemState.DISABLED)
-        c = new COLOR(0.6f, 0.6f, 0.6f, 0.6f);
-      else if (p.GetStatus(SystemPart.RADAR) == SystemState.DESTROYED)
       {
-        c = new COLOR(1, 0, 0, 1);
-        showcircle = Engine.Game.GameTime % 2 > 1;
+        SystemState status = p.GetStatus(SystemPart.RADAR);
+        if (status == SystemState.DAMAGED)
+        {
+          c = new COLOR(1, 0, 0, 1);
+          showcircle = Engine.Game.GameTime % 2 > 1;
+        }
+        else if (status == SystemState.DISABLED)
+          c = new COLOR(0.6f, 0.6f, 0.6f, 0.6f);
       }
+
       TVScreen2DImmediate.Action_Begin2D();
       TVScreen2DImmediate.Draw_FilledCircle(radar_center.x, radar_center.y, radar_radius + 2, 300, new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
       if (showcircle)
@@ -69,6 +81,9 @@ namespace SWEndor.Game.UI.Widgets
       }
       if (active)
       {
+        radar_origin = p.GetGlobalPosition();
+        radar_direction = p.GetGlobalDirection();
+
         Engine.ActorFactory.DoEach(DrawElement);
         Engine.ExplosionFactory.DoEach(DrawElement);
         Engine.ProjectileFactory.DoEach(DrawElement);
@@ -76,13 +91,9 @@ namespace SWEndor.Game.UI.Widgets
       TVScreen2DImmediate.Action_End2D();
     }
 
-    private static COLOR explColor = new COLOR(0.75f, 0.75f, 0, 0.75f);
-    private static COLOR projColor = new COLOR(0.8f, 0.5f, 0, 0.6f);
-    private static COLOR whitColor = new COLOR(1, 1, 1, 1);
-
     private COLOR GetColor(ActorInfo actor)
     {
-      if (actor.TypeInfo.AIData.TargetType.Intersects(TargetType.MUNITION))
+      if (actor.TargetType.Intersects(TargetType.MUNITION | TargetType.MINE))
         return projColor;
 
       else if (actor.Faction != null)
@@ -92,40 +103,35 @@ namespace SWEndor.Game.UI.Widgets
         return whitColor;
     }
 
-    public struct PolarCoord
+    private void GetLocationOnRadar(Engine engine, TV_3DVECTOR ppos, TV_3DVECTOR pup, TV_3DVECTOR pright, TV_3DVECTOR apos, bool snapToRadar, out float x, out float y, out float dist)
     {
-      public float Dist;
-      public float Angle;
+      // Standard Top-Down
 
-      public XYCoord ToXYCoord
-      {
-        get
-        {
-          return new XYCoord
-          {
-            X = -Dist * LookUp.Sin(Angle, LookUp.Measure.DEGREES),
-            Y = Dist * LookUp.Cos(Angle, LookUp.Measure.DEGREES)
-          };
-        }
-      }
-    }
+      //XYCoord posvec = new XYCoord { X = ppos.x - apos.x, Y = ppos.z - apos.z };
+      //PolarCoord polar = posvec.ToPolarCoord;
+      //polar.Angle -= proty;
+      //if (polar.Dist > radar_range)
+      //  polar.Dist = radar_range;
+      //
+      //XYCoord xy = polar.ToXYCoord;
+      //x = radar_center.x - radar_radius * xy.X / radar_range;
+      //y = radar_center.y - radar_radius * xy.Y / radar_range;
+      //dist = polar.Dist
 
-    public struct XYCoord
-    {
-      public float X;
-      public float Y;
+      TV_3DVECTOR diff = apos - ppos;
+      TV_3DVECTOR pright_n = pright;
+      TV_3DVECTOR pup_n = pup;
+      engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref pright_n, pright);
+      engine.TrueVision.TVMathLibrary.TVVec3Normalize(ref pup_n, pup_n);
+      XYCoord pxy =  new XYCoord { X = engine.TrueVision.TVMathLibrary.TVVec3Dot(diff, pright_n), Y = engine.TrueVision.TVMathLibrary.TVVec3Dot(diff, pup_n) };
+      PolarCoord polar = pxy.ToPolarCoord;
+      if (snapToRadar && polar.Dist > radar_range)
+        polar.Dist = radar_range;
 
-      public PolarCoord ToPolarCoord
-      {
-        get
-        {
-          return new PolarCoord
-          {
-            Angle = (float)Math.Atan2(X, Y) * Globals.Rad2Deg + 180,
-            Dist = (float)Math.Sqrt(X * X + Y * Y)
-          };
-        }
-      }
+      XYCoord xy = polar.ToXYCoord;
+      x = radar_center.x - radar_radius * xy.X / radar_range;
+      y = radar_center.y - radar_radius * xy.Y / radar_range;
+      dist = engine.TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(0, 0), new TV_2DVECTOR(x, y));
     }
 
     private void DrawElement(Engine engine, ActorInfo a)
@@ -133,7 +139,7 @@ namespace SWEndor.Game.UI.Widgets
       ActorInfo p = PlayerInfo.Actor;
       if (a != null)
       {
-        TV_3DVECTOR ppos = p.GetGlobalPosition();
+        TV_3DVECTOR ppos = p.GetGlobalPosition();//radar_origin;
         TV_3DVECTOR apos = a.GetGlobalPosition();
 
         if (a.Active
@@ -141,30 +147,22 @@ namespace SWEndor.Game.UI.Widgets
           && (a.TypeInfo.RenderData.AlwaysShowInRadar || DistanceModel.GetRoughDistance(new TV_3DVECTOR(ppos.x, 0, ppos.z), new TV_3DVECTOR(apos.x, 0, apos.z)) < radar_range * 2))
         {
           int icolor = GetColor(a).Value;
-          
-          float proty = p.GetGlobalRotation().y;
 
-          XYCoord posvec = new XYCoord { X = ppos.x - apos.x, Y = ppos.z - apos.z };
-          PolarCoord polar = posvec.ToPolarCoord;
-          polar.Angle -= proty;
-          if (polar.Dist > radar_range)
-            polar.Dist = radar_range;
-
-          XYCoord xy = polar.ToXYCoord;
-          float x = radar_center.x - radar_radius * xy.X / radar_range;
-          float y = radar_center.y - radar_radius * xy.Y / radar_range;
+          TV_3DVECTOR prot = p.GetGlobalRotation();
+          TV_3DVECTOR arot = a.GetGlobalRotation();
+          float proty = prot.y;
+          TV_3DVECTOR pright = new TV_3DVECTOR();
+          TV_3DVECTOR pup = new TV_3DVECTOR();
+          engine.TrueVision.TVMathLibrary.TVVec3Rotate(ref pright, new TV_3DVECTOR(0, 0, -1), prot.y, prot.x, prot.z);
+          engine.TrueVision.TVMathLibrary.TVVec3Rotate(ref pup, new TV_3DVECTOR(-1, 0, 0), prot.y, prot.x, prot.z);
+          GetLocationOnRadar(engine, ppos, pright, pup, apos, true, out float x, out float y, out float dist);
 
           switch (a.TypeInfo.RenderData.RadarType)
           {
             case RadarType.TRAILLINE:
-              TV_2DVECTOR prevtemp = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(a.PrevPosition.x, a.PrevPosition.z);
-              float prevdist = Engine.TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), prevtemp);
-              float prevangl = Engine.TrueVision.TVMathLibrary.Direction2Ang(prevtemp.x, prevtemp.y) - proty;
-              if (polar.Dist < radar_range && prevdist < radar_range)
+              GetLocationOnRadar(engine, ppos, pright, pup, a.GetPrevGlobalPosition(), true, out float px, out float py, out float prevdist);
+              if (dist < radar_range && prevdist < radar_range)
               {
-                float px = radar_center.x - radar_radius * prevdist / radar_range * LookUp.Sin(prevangl, LookUp.Measure.DEGREES);
-                float py = radar_center.y + radar_radius * prevdist / radar_range * LookUp.Cos(prevangl, LookUp.Measure.DEGREES);
-
                 DrawLine(x, y, px, py, icolor);
               }
               break;
@@ -197,7 +195,12 @@ namespace SWEndor.Game.UI.Widgets
                 float gt = Engine.Game.GameTime * radar_blinkfreq;
                 if (a.HP_Frac > 0.1f || (gt - (int)gt > 0.5f))
                 {
-                  DrawRectGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, posvec.X, posvec.Y, proty, icolor);
+                  Box box = a.GetBoundingBox(true);
+                  _f4[0] = new float3(box.X.Min, 0, box.Z.Min);
+                  _f4[1] = new float3(box.X.Max, 0, box.Z.Min);
+                  _f4[2] = new float3(box.X.Max, 0, box.Z.Max);
+                  _f4[3] = new float3(box.X.Min, 0, box.Z.Max);
+                  DrawPolygon(_f4, a.Scale, ppos, apos, prot, arot, icolor);
                 }
               }
               break;
@@ -206,7 +209,22 @@ namespace SWEndor.Game.UI.Widgets
                 float gt = Engine.Game.GameTime * radar_blinkfreq;
                 if (a.HP_Frac > 0.1f || (gt - (int)gt > 0.5f))
                 {
-                  DrawTriangleGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, posvec.X, posvec.Y, proty, icolor);
+                  Box box = a.GetBoundingBox(true);
+                  float xm = (box.X.Min + box.X.Max) / 2;
+                  _f4[0] = new float3(box.X.Min, 0, box.Z.Min);
+                  _f4[1] = new float3(box.X.Max, 0, box.Z.Min);
+                  _f4[2] = new float3(xm, 0, box.Z.Max);
+                  _f4[3] = new float3(xm, 0, box.Z.Max);
+                  DrawPolygon(_f4, a.Scale, ppos, apos, prot, arot, icolor);
+                }
+              }
+              break;
+            case RadarType.POLYGON:
+              {
+                float gt = Engine.Game.GameTime * radar_blinkfreq;
+                if (a.HP_Frac > 0.1f || (gt - (int)gt > 0.5f))
+                {
+                  DrawPolygon(a.TypeInfo.RenderData.RadarPolygonPoints, a.Scale, ppos, apos, prot, arot, icolor);
                 }
               }
               break;
@@ -229,29 +247,19 @@ namespace SWEndor.Game.UI.Widgets
         {
           int icolor = explColor.Value;
 
-          float proty = p.GetGlobalRotation().y;
-
-          XYCoord posvec = new XYCoord { X = ppos.x - apos.x, Y = ppos.z - apos.z };
-          PolarCoord polar = posvec.ToPolarCoord;
-          polar.Angle -= proty;
-          if (polar.Dist > radar_range)
-            polar.Dist = radar_range;
-
-          XYCoord xy = polar.ToXYCoord;
-          float x = radar_center.x - radar_radius * xy.X / radar_range;
-          float y = radar_center.y - radar_radius * xy.Y / radar_range;
-
+          TV_3DVECTOR prot = p.GetGlobalRotation();
+          TV_3DVECTOR pright = new TV_3DVECTOR();
+          TV_3DVECTOR pup = new TV_3DVECTOR();
+          engine.TrueVision.TVMathLibrary.TVVec3Rotate(ref pright, new TV_3DVECTOR(0, 0, -1), prot.y, prot.x, prot.z);
+          engine.TrueVision.TVMathLibrary.TVVec3Rotate(ref pup, new TV_3DVECTOR(-1, 0, 0), prot.y, prot.x, prot.z);
+          GetLocationOnRadar(engine, ppos, pright, pup, apos, true, out float x, out float y, out float dist);
+          
           switch (a.TypeInfo.RenderData.RadarType)
           {
             case RadarType.TRAILLINE:
-              TV_2DVECTOR prevtemp = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(a.PrevPosition.x, a.PrevPosition.z);
-              float prevdist = Engine.TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), prevtemp);
-              float prevangl = Engine.TrueVision.TVMathLibrary.Direction2Ang(prevtemp.x, prevtemp.y) - proty;
-              if (polar.Dist < radar_range && prevdist < radar_range)
+              GetLocationOnRadar(engine, ppos, pright, pup, a.GetPrevGlobalPosition(), true, out float px, out float py, out float prevdist);
+              if (dist < radar_range && prevdist < radar_range)
               {
-                float px = radar_center.x - radar_radius * prevdist / radar_range * LookUp.Sin(prevangl, LookUp.Measure.DEGREES);
-                float py = radar_center.y + radar_radius * prevdist / radar_range * LookUp.Cos(prevangl, LookUp.Measure.DEGREES);
-
                 DrawLine(x, y, px, py, icolor);
               }
               break;
@@ -284,6 +292,7 @@ namespace SWEndor.Game.UI.Widgets
       }
     }
 
+    private float3[] _f4 = new float3[4];
     private void DrawElement(Engine engine, ProjectileInfo a)
     {
       ActorInfo p = PlayerInfo.Actor;
@@ -298,29 +307,21 @@ namespace SWEndor.Game.UI.Widgets
         {
           int icolor = projColor.Value;
 
-          float proty = p.GetGlobalRotation().y;
 
-          XYCoord posvec = new XYCoord { X = ppos.x - apos.x, Y = ppos.z - apos.z };
-          PolarCoord polar = posvec.ToPolarCoord;
-          polar.Angle -= proty;
-          if (polar.Dist > radar_range)
-            polar.Dist = radar_range;
-
-          XYCoord xy = polar.ToXYCoord;
-          float x = radar_center.x - radar_radius * xy.X / radar_range;
-          float y = radar_center.y - radar_radius * xy.Y / radar_range;
+          TV_3DVECTOR prot = p.GetGlobalRotation();
+          TV_3DVECTOR arot = a.GetGlobalRotation();
+          TV_3DVECTOR pright = new TV_3DVECTOR();
+          TV_3DVECTOR pup = new TV_3DVECTOR();
+          engine.TrueVision.TVMathLibrary.TVVec3Rotate(ref pright, new TV_3DVECTOR(0, 0, -1), prot.y, prot.x, prot.z);
+          engine.TrueVision.TVMathLibrary.TVVec3Rotate(ref pup, new TV_3DVECTOR(-1, 0, 0), prot.y, prot.x, prot.z);
+          GetLocationOnRadar(engine, ppos, pright, pup, apos, true, out float x, out float y, out float dist);
 
           switch (a.TypeInfo.RenderData.RadarType)
           {
             case RadarType.TRAILLINE:
-              TV_2DVECTOR prevtemp = new TV_2DVECTOR(ppos.x, ppos.z) - new TV_2DVECTOR(a.PrevPosition.x, a.PrevPosition.z);
-              float prevdist = Engine.TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), prevtemp);
-              float prevangl = Engine.TrueVision.TVMathLibrary.Direction2Ang(prevtemp.x, prevtemp.y) - proty;
-              if (polar.Dist < radar_range && prevdist < radar_range)
+              GetLocationOnRadar(engine, ppos, pright, pup, a.GetPrevGlobalPosition(), true, out float px, out float py, out float prevdist);
+              if (dist < radar_range && prevdist < radar_range)
               {
-                float px = radar_center.x - radar_radius * prevdist / radar_range * LookUp.Sin(prevangl, LookUp.Measure.DEGREES);
-                float py = radar_center.y + radar_radius * prevdist / radar_range * LookUp.Cos(prevangl, LookUp.Measure.DEGREES);
-
                 DrawLine(x, y, px, py, icolor);
               }
               break;
@@ -349,10 +350,28 @@ namespace SWEndor.Game.UI.Widgets
               DrawFilledCircle(x, y, a.TypeInfo.RenderData.RadarSize, 36, icolor);
               break;
             case RadarType.RECTANGLE_GIANT:
-              DrawRectGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, posvec.X, posvec.Y, proty, icolor);
+              {
+                Box box = a.GetBoundingBox(true);
+                _f4[0] = new float3(box.X.Min, 0, box.Z.Min);
+                _f4[1] = new float3(box.X.Max, 0, box.Z.Min);
+                _f4[2] = new float3(box.X.Max, 0, box.Z.Max);
+                _f4[3] = new float3(box.X.Min, 0, box.Z.Max);
+                DrawPolygon(_f4, a.Scale, ppos, apos, prot, arot, icolor);
+              }
               break;
             case RadarType.TRIANGLE_GIANT:
-              DrawTriangleGiant(a.GetBoundingBox(true), a.Scale, a.GetGlobalRotation().y, posvec.X, posvec.Y, proty, icolor);
+              {
+                Box box = a.GetBoundingBox(true);
+                float xm = (box.X.Min + box.X.Max) / 2;
+                _f4[0] = new float3(box.X.Min, 0, box.Z.Min);
+                _f4[1] = new float3(box.X.Max, 0, box.Z.Min);
+                _f4[2] = new float3(xm, 0, box.Z.Max);
+                _f4[3] = new float3(xm, 0, box.Z.Max);
+                DrawPolygon(_f4, a.Scale, ppos, apos, prot, arot, icolor);
+              }
+              break;
+            case RadarType.POLYGON:
+              DrawPolygon(a.TypeInfo.RenderData.RadarPolygonPoints, a.Scale, ppos, apos, prot, arot, icolor);
               break;
           }
         }
@@ -362,6 +381,37 @@ namespace SWEndor.Game.UI.Widgets
     private void DrawLine(float x0, float y0, float x1, float y1, int color)
     {
       TVScreen2DImmediate.Draw_Line(x0, y0, x1, y1, color);
+    }
+
+    private void DrawLineWithinCircle(float x0, float y0, float x1, float y1, int color)
+    {
+      float2 start = new float2(x0, y0);
+      float2 end = new float2(x1, y1);
+      if (start == end) { return; }
+      Circle circle = new Circle(radar_center.ToFloat2(), radar_radius);
+      if (!circle.Contains(start) && !circle.Contains(end))
+      {
+        return;
+      }
+      else if (circle.Contains(start) && circle.Contains(end))
+      {
+        TVScreen2DImmediate.Draw_Line(x0, y0, x1, y1, color);
+      }
+      else
+      {
+        float2 pt1 = start;
+        if (!circle.Contains(start))
+        {
+          circle.IntersectRayCircle(start, end, out pt1);
+          start = pt1;
+        }
+        if (!circle.Contains(end))
+        {
+          circle.IntersectRayCircle(end, start, out pt1);
+          end = pt1;
+        }
+        TVScreen2DImmediate.Draw_Line(start.x, start.y, end.x, end.y, color);
+      }
     }
 
     private void DrawHollowSquare(float x, float y, float size, int color)
@@ -384,147 +434,37 @@ namespace SWEndor.Game.UI.Widgets
       TVScreen2DImmediate.Draw_FilledCircle(x, y, size, points, color);
     }
 
-    private void DrawRectGiant(Box box, float scale, float rot_y, float x, float y, float proty, int color)
+    private TV_3DVECTOR GetPointOnRadar(float3 p, float3 scale, TV_3DVECTOR ppos, TV_3DVECTOR apos, TV_3DVECTOR prot, TV_3DVECTOR arot, bool snapToRadar, out float x, out float y, out float dist)
     {
-      List<TV_2DVECTOR?> ts = new List<TV_2DVECTOR?>();
-      float bx = box.X.Min * scale;
-      float bz = box.Z.Min * scale;
-      int i = 0;
-      float ang = rot_y;
-      while (i < 4)
-      {
-        TV_2DVECTOR temp = new TV_2DVECTOR(x, y);
-        temp -= new TV_2DVECTOR(bx * LookUp.Cos(ang, LookUp.Measure.DEGREES) + bz * LookUp.Sin(ang, LookUp.Measure.DEGREES),
-                                bz * LookUp.Cos(ang, LookUp.Measure.DEGREES) - bx * LookUp.Sin(ang, LookUp.Measure.DEGREES));
-        float tdist = Engine.TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), temp);
-        float tangl = Engine.TrueVision.TVMathLibrary.Direction2Ang(temp.x, temp.y) - proty;
-        if (tdist > radar_range)
-        {
-          tdist = radar_range;
-          ts.Add(null);
-        }
-        float tx = radar_center.x - radar_radius * tdist / radar_range * LookUp.Sin(tangl, LookUp.Measure.DEGREES);
-        float ty = radar_center.y + radar_radius * tdist / radar_range * LookUp.Cos(tangl, LookUp.Measure.DEGREES);
-        if (ts.Count > 1 && ts[ts.Count - 1] != null && ts[ts.Count - 2] != null)
-          ts[ts.Count - 1] = new TV_2DVECTOR(tx, ty);
-        else
-          ts.Add(new TV_2DVECTOR(tx, ty));
-
-        switch (i)
-        {
-          case 3:
-            bz -= radar_bigshiprenderunit;
-            if (bz < box.Z.Min * scale)
-            {
-              bz = box.Z.Min * scale;
-              i++;
-              ts.Add(null);
-            }
-            break;
-          case 2:
-            bx -= radar_bigshiprenderunit;
-            if (bx < box.X.Min * scale)
-            {
-              bx = box.X.Min * scale;
-              i++;
-              ts.Add(null);
-            }
-            break;
-          case 1:
-            bz += radar_bigshiprenderunit;
-            if (bz > box.Z.Max * scale)
-            {
-              bz = box.Z.Max * scale;
-              i++;
-              ts.Add(null);
-            }
-            break;
-          case 0:
-            bx += radar_bigshiprenderunit;
-            if (bx > box.X.Max * scale)
-            {
-              bx = box.X.Max * scale;
-              i++;
-              ts.Add(null);
-            }
-            break;
-        }
-      }
-
-      for (int t = 0; t < ts.Count; t++)
-      {
-        int u = (t == ts.Count - 1) ? 0 : t + 1;
-        if (ts[t] != null && ts[u] != null)
-          DrawLine(((TV_2DVECTOR)ts[t]).x, ((TV_2DVECTOR)ts[t]).y, ((TV_2DVECTOR)ts[u]).x, ((TV_2DVECTOR)ts[u]).y, color);
-      }
+      TV_3DVECTOR point = new TV_3DVECTOR();
+      TV_3DVECTOR pright = new TV_3DVECTOR();
+      TV_3DVECTOR pup = new TV_3DVECTOR();
+      Engine.TrueVision.TVMathLibrary.TVVec3Rotate(ref pright, new TV_3DVECTOR(0, 0, -1), prot.y, prot.x, prot.z);
+      Engine.TrueVision.TVMathLibrary.TVVec3Rotate(ref pup, new TV_3DVECTOR(-1, 0, 0), prot.y, prot.x, prot.z);
+      Engine.TrueVision.TVMathLibrary.TVVec3Rotate(ref point, (p * scale).ToVec3(), arot.y, arot.x, arot.z);
+      point += apos;
+      GetLocationOnRadar(Engine, ppos, pright, pup, point, snapToRadar, out x, out y, out dist);
+      return point;
     }
 
-    private void DrawTriangleGiant(Box box, float scale, float rot_y, float x, float y, float proty, int color)
+    private void DrawPolygon(float3[] points, float3 scale, TV_3DVECTOR ppos, TV_3DVECTOR apos, TV_3DVECTOR prot, TV_3DVECTOR arot, int color)
     {
-      List<TV_2DVECTOR?> ts = new List<TV_2DVECTOR?>();
-      float bx = box.X.Min * scale;
-      float bz = box.Z.Min * scale;
-      int i = 0;
-      float ang = rot_y;
-      while (i < 3)
+      if (points == null || points.Length < 2) return;
+
+      GetPointOnRadar(points[0], scale, ppos, apos, prot, arot, false, out float x0, out float y0, out _);
+      float prevx = x0;
+      float prevy = y0;
+
+      for (int i = 1; i < points.Length; i++)
       {
-        TV_2DVECTOR temp = new TV_2DVECTOR(x, y);
-        temp -= new TV_2DVECTOR(bx * LookUp.Cos(ang, LookUp.Measure.DEGREES) + bz * LookUp.Sin(ang, LookUp.Measure.DEGREES),
-                                bz * LookUp.Cos(ang, LookUp.Measure.DEGREES) - bx * LookUp.Sin(ang, LookUp.Measure.DEGREES));
-        float tdist = Engine.TrueVision.TVMathLibrary.GetDistanceVec2D(new TV_2DVECTOR(), temp);
-        float tangl = Engine.TrueVision.TVMathLibrary.Direction2Ang(temp.x, temp.y) - proty;
-        if (tdist > radar_range)
+        GetPointOnRadar(points[i], scale, ppos, apos, prot, arot, false, out float xn, out float yn, out _);
+        DrawLineWithinCircle(prevx, prevy, xn, yn, color);
+        if (i == points.Length - 1)
         {
-          tdist = radar_range;
-          ts.Add(null);
+          DrawLineWithinCircle(xn, yn, x0, y0, color);
         }
-        float tx = radar_center.x - radar_radius * tdist / radar_range * LookUp.Sin(tangl, LookUp.Measure.DEGREES);
-        float ty = radar_center.y + radar_radius * tdist / radar_range * LookUp.Cos(tangl, LookUp.Measure.DEGREES);
-        if (ts.Count > 1 && ts[ts.Count - 1] != null && ts[ts.Count - 2] != null)
-          ts[ts.Count - 1] = new TV_2DVECTOR(tx, ty);
-        else
-          ts.Add(new TV_2DVECTOR(tx, ty));
-
-        switch (i)
-        {
-          case 2:
-            bx -= radar_bigshiprenderunit;
-            if (bx <= box.X.Min * scale)
-            {
-              bx = box.X.Min * scale;
-              i++;
-              ts.Add(null);
-            }
-            break;
-          case 1:
-            bz -= radar_bigshiprenderunit;
-            bx += radar_bigshiprenderunit * (box.X.Max * scale - box.X.Min * scale) / (box.Z.Max * scale - box.Z.Min * scale) / 2;
-            if (bz <= box.Z.Min * scale)
-            {
-              bz = box.Z.Min * scale;
-              i++;
-              ts.Add(null);
-            }
-            break;
-          case 0:
-            bz += radar_bigshiprenderunit;
-            bx += radar_bigshiprenderunit * (box.X.Max * scale - box.X.Min * scale) / (box.Z.Max * scale - box.Z.Min * scale) / 2;
-            if (bz >= box.Z.Max * scale)
-            {
-              bz = box.Z.Max * scale;
-              i++;
-              ts.Add(null);
-            }
-            break;
-
-        }
-      }
-
-      for (int t = 0; t < ts.Count; t++)
-      {
-        int u = (t == ts.Count - 1) ? 0 : t + 1;
-        if (ts[t] != null && ts[u] != null)
-          DrawLine(((TV_2DVECTOR)ts[t]).x, ((TV_2DVECTOR)ts[t]).y, ((TV_2DVECTOR)ts[u]).x, ((TV_2DVECTOR)ts[u]).y, color);
+        prevx = xn;
+        prevy = yn;
       }
     }
   }

@@ -37,6 +37,11 @@ namespace SWEndor.Game.UI.Forms
 
     private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
     {
+      if (Engine.Game.IsRunning)
+      {
+        Engine.Game.Stop();
+        e.Cancel = true;
+      }
     }
 
     private void pbGame_MouseLeave(object sender, EventArgs e)

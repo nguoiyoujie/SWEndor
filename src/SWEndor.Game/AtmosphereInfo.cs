@@ -5,19 +5,6 @@ using System.IO;
 
 namespace SWEndor.Game
 {
-  public class FlareInfo
-  {
-    public FlareInfo(TVTextureFactory texturefactory, string texpath)
-    {
-      TexID = texturefactory.LoadTexture(texpath, Path.GetFileNameWithoutExtension(texpath), -1, -1, CONST_TV_COLORKEY.TV_COLORKEY_NO, true);
-    }
-
-    public int TexID = -1;
-    public float Size = 10;
-    public float LinePosition = 40;
-    public TV_COLOR NormalColor = new TV_COLOR(1, 1, 1, 0.5f);
-    public TV_COLOR SpecularColor = new TV_COLOR(1, 1, 1, 0.5f);
-  }
 
   public class AtmosphereInfo
   {
@@ -154,6 +141,17 @@ namespace SWEndor.Game
         m_atmosphere.Sun_Enable(false);
       else
       {
+        // Seems to apply only to the skysphere...
+        //m_atmosphere.Fog_SetType(CONST_TV_FOG.TV_FOG_LINEAR, CONST_TV_FOGTYPE.TV_FOGTYPE_PIXEL);
+        //m_atmosphere.Fog_SetColor(0.1f, 0.1f, 0.1f);
+        //m_atmosphere.Fog_SetParameters(0.001f, 1, 0.001f);
+        //m_atmosphere.Fog_Enable(true);
+
+        // Crashes
+        //m_atmosphere.Rain_Init(1, m_Sun);
+        //var partsys = m_atmosphere.Rain_GetParticleSystem();
+        //m_atmosphere.Rain_Enable(true);
+
         m_atmosphere.Sun_SetTexture(m_Sun);
         m_atmosphere.Sun_SetBillboardSize(1);
         m_atmosphere.Sun_SetPosition(m_SunPosition.x, m_SunPosition.y, m_SunPosition.z);

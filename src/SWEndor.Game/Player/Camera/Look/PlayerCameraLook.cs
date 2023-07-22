@@ -1,4 +1,5 @@
 ﻿using MTV3D65;
+using Primrose.Primitives.ValueTypes;
 using SWEndor.Game.Actors;
 using SWEndor.Game.Core;
 using SWEndor.Game.Primitives.Extensions;
@@ -22,24 +23,24 @@ namespace SWEndor.Game.Player
       if (actor == null || cmode == CameraMode.CUSTOM)
         return;
 
-      TV_3DVECTOR location = new TV_3DVECTOR();
-      TV_3DVECTOR target = new TV_3DVECTOR();
+      float3 location = float3.One;
+      float3 target = float3.One;
 
       switch (cmode) // should replace
       {
         //case CameraMode.FREEROTATION:
         //case CameraMode.FREEMODE:
         case CameraMode.FIRSTPERSON:
-          location = new TV_3DVECTOR(0, 0, actor.MaxDimensions.z + 10) * actor.Scale;
-          target = new TV_3DVECTOR(0, 0, 20000);
+          location = new float3(0, 0, actor.MaxDimensions.z + 10) * actor.Scale;
+          target = new float3(0, 0, 20000);
           break;
         case CameraMode.THIRDPERSON:
-          location = new TV_3DVECTOR(0, actor.MaxDimensions.y * 3, -actor.MaxDimensions.z * 8) * actor.Scale;
-          target = new TV_3DVECTOR(0, 0, 20000);
+          location = new float3(0, actor.MaxDimensions.y * 3, -actor.MaxDimensions.z * 8) * actor.Scale;
+          target = new float3(0, 0, 20000);
           break;
         case CameraMode.THIRDREAR:
-          location = new TV_3DVECTOR(0, actor.MaxDimensions.y * 3, actor.MaxDimensions.z * 8) * actor.Scale;
-          target = new TV_3DVECTOR(0, 0, -20000);
+          location = new float3(0, actor.MaxDimensions.y * 3, actor.MaxDimensions.z * 8) * actor.Scale;
+          target = new float3(0, 0, -20000);
           break;
       }
 
@@ -47,13 +48,13 @@ namespace SWEndor.Game.Player
 
       if (cammode < actor.TypeInfo.CameraData.Cameras.Length)
       {
-        location = actor.TypeInfo.CameraData.Cameras[cammode].LookFrom.ToVec3() * actor.Scale;
-        target = actor.TypeInfo.CameraData.Cameras[cammode].LookAt.ToVec3() * actor.Scale;
+        location = actor.TypeInfo.CameraData.Cameras[cammode].LookFrom * actor.Scale;
+        target = actor.TypeInfo.CameraData.Cameras[cammode].LookAt * actor.Scale;
       }
       LookFrom.TargetActorID = actor.ID;
-      LookFrom.PositionRelative = location;
+      LookFrom.PositionRelative = location.ToVec3();
       LookTo.TargetActorID = actor.ID;
-      LookTo.PositionRelative = target;
+      LookTo.PositionRelative = target.ToVec3();
     }
 
     public void Update(Engine engine, TVCamera cam, float rotz)

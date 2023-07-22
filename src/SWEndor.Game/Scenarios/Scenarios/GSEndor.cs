@@ -576,7 +576,7 @@ namespace SWEndor.Game.Scenarios
           foreach (int enemyshipID in MainEnemyFaction.GetShips())
           {
             ActorInfo enemyship = Engine.ActorFactory.Get(enemyshipID);
-            if (enemyship != null)
+            if (enemyship != null && enemyship.Active)
               enemyship.MoveAbsolute(0, 0, Game.TimeSinceRender * m_Enemy_pullrate);
           }
         }
@@ -922,7 +922,7 @@ namespace SWEndor.Game.Scenarios
       foreach (int id in m_rebelPosition.Keys)
       {
         ActorInfo actor = Engine.ActorFactory.Get(id);
-        if (actor != null)
+        if (actor != null && actor.Active)
         {
           actor.Position = m_rebelPosition[id] + new TV_3DVECTOR(0, 0, actor.TypeInfo.MoveLimitData.MaxSpeed * 8f);
           actor.MoveData.Speed = actor.TypeInfo.MoveLimitData.MaxSpeed;
@@ -945,7 +945,7 @@ namespace SWEndor.Game.Scenarios
     private void Rebel_HyperspaceOut(int aID)
     {
       ActorInfo a = Engine.ActorFactory.Get(aID);
-      if (a != null)
+      if (a != null && a.Active)
       {
         a.ForceClearQueue();
         a.QueueLast(Rotate.GetOrCreate(a.GetGlobalPosition() + new TV_3DVECTOR(500, 0, -20000)
@@ -991,7 +991,7 @@ namespace SWEndor.Game.Scenarios
     private void Rebel_FreeSpeed(int aID, float speed)
     {
       ActorInfo a = Engine.ActorFactory.Get(aID);
-      if (a != null)
+      if (a != null && a.Active)
       {
         a.MoveData.FreeSpeed = true;
         if (a.MoveData.Speed < speed)
@@ -1004,7 +1004,7 @@ namespace SWEndor.Game.Scenarios
       foreach (int actorID in MainAllyFaction.GetShips())
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
-        if (actor != null)
+        if (actor != null && actor.Active)
         {
           actor.ForceClearQueue();
           actor.QueueLast(Rotate.GetOrCreate(actor.GetGlobalPosition() - new TV_3DVECTOR(actor.GetGlobalPosition().x * 0.35f, 0, Math.Abs(actor.GetGlobalPosition().x) + 1500)
@@ -1019,7 +1019,7 @@ namespace SWEndor.Game.Scenarios
       foreach (int actorID in MainAllyFaction.GetShips())
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
-        if (actor != null)
+        if (actor != null && actor.Active)
         {
           actor.ForceClearQueue();
           actor.QueueLast(Move.GetOrCreate(actor.GetGlobalPosition() - new TV_3DVECTOR(actor.GetGlobalPosition().x * 0.35f, 0, Math.Abs(actor.GetGlobalPosition().x) + 1500)
@@ -1047,7 +1047,7 @@ namespace SWEndor.Game.Scenarios
               {
                 foreach (ActorInfo c in rs.Children)
                 {
-                  if (c.TypeInfo.AIData.TargetType.Intersects(TargetType.SHIELDGENERATOR))
+                  if (c.TargetType.Has(TargetType.SHIELDGENERATOR))
                     if (Engine.Random.NextDouble() > 0.4f)
                       rsID = c.ID;
                 }
@@ -1066,7 +1066,7 @@ namespace SWEndor.Game.Scenarios
     public void Rebel_DeathStarGo()
     {
       ActorInfo falcon = Engine.ActorFactory.Get(m_FalconID);
-      if (falcon != null)
+      if (falcon != null && falcon.Active)
       {
         falcon.SetArmorAll(0);
         falcon.ForceClearQueue();
@@ -1077,7 +1077,7 @@ namespace SWEndor.Game.Scenarios
       }
 
       ActorInfo wedge = Engine.ActorFactory.Get(m_WedgeID);
-      if (wedge != null)
+      if (wedge != null && wedge.Active)
       {
         wedge.SetArmorAll(0);
         wedge.ForceClearQueue();
@@ -1138,7 +1138,7 @@ namespace SWEndor.Game.Scenarios
       foreach (int actorID in MainAllyFaction.GetWings())
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
-        if (actor != null)
+        if (actor != null && actor.Active)
         {
           double d = Engine.Random.NextDouble();
           if (d < chance)
@@ -1158,7 +1158,7 @@ namespace SWEndor.Game.Scenarios
       foreach (int actorID in MainAllyFaction.GetWings())
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
-        if (actor != null)
+        if (actor != null && actor.Active)
         {
           if (!actor.IsPlayer)
           {
@@ -1175,7 +1175,7 @@ namespace SWEndor.Game.Scenarios
       }
     }
 
-    public void Rebel_CriticalUnitHit(ActorInfo actor)
+    public void Rebel_CriticalUnitHit(ActorInfo actor, ActorInfo attacker)
     {
       if (actor != null
         && actor.HP_Frac < 0.8f
@@ -1191,7 +1191,7 @@ namespace SWEndor.Game.Scenarios
       }
     }
 
-    public void Rebel_CriticalUnitDanger(ActorInfo actor)
+    public void Rebel_CriticalUnitDanger(ActorInfo actor, ActorInfo attacker)
     {
       float f = actor.HP_Frac;
       if (f < 0.67f && f >= 0.33f)
@@ -1199,14 +1199,16 @@ namespace SWEndor.Game.Scenarios
         Screen2D.MessageText(string.Format("{0}: {1}, I need cover!", actor.Name, PlayerInfo.Name)
                                             , 5
                                             , actor.Faction.Color
-                                            , 100);
+                                            , 100
+                                            , false);
       }
       else if (f < 0.33f)
       {
         Screen2D.MessageText(string.Format("{0}: {1}, Get those TIEs off me!", actor.Name, PlayerInfo.Name)
                                             , 5
                                             , actor.Faction.Color
-                                            , 100);
+                                            , 100
+                                            , false);
       }
     }
 
@@ -2117,7 +2119,7 @@ namespace SWEndor.Game.Scenarios
         actor.DyingTimerSet(2000, true);
 
         ActorInfo homeone = Engine.ActorFactory.Get(m_HomeOneID);
-        if (homeone != null)
+        if (homeone != null && homeone.Active)
           homeone.SetArmorAll(0);
         EventQueue.Add(Game.GameTime + 55, FadeOut);
       }
@@ -2147,6 +2149,7 @@ namespace SWEndor.Game.Scenarios
         {
           ActorInfo t = Engine.ActorFactory.Get(tid);
           if (t != null
+            && t.Active
             && t.TypeInfo == type
             && tid != m_HomeOneID)
           {

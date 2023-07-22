@@ -23,7 +23,7 @@ namespace SWEndor.Game.Core
     internal TVGraphicEffect TVGraphicEffect { get; private set; }
     internal TVScreen2DText TVScreen2DText { get; private set; }
     internal TVScreen2DImmediate TVScreen2DImmediate { get; private set; }
-    internal TVParticleSystem TVParticleSystem { get; private set; }
+    //internal TVParticleSystem TVParticleSystem { get; private set; }
     internal TVGlobals TVGlobals { get; private set; }
 
     public void Init(IntPtr handle)
@@ -42,20 +42,20 @@ namespace SWEndor.Game.Core
       TVLightEngine = new TVLightEngine();
       TVTextureFactory = new TVTextureFactory();
       TVMaterialFactory = new TVMaterialFactory();
-      TVParticleSystem = new TVParticleSystem();
+      //TVParticleSystem = new TVParticleSystem();
       TVGraphicEffect = new TVGraphicEffect();
 
-      InitEngine();
+      InitEngine(Engine.Settings);
       InitWindow();
       InitFonts();
       InitScene();
       InitShaders();
-      InitLights();
+      InitLights(Engine.Settings);
     }
 
     public void Dispose()
     {
-      TVParticleSystem = null;
+      //TVParticleSystem = null;
       TVGraphicEffect = null;
       TVMaterialFactory = null;
       TVTextureFactory = null;
@@ -66,24 +66,24 @@ namespace SWEndor.Game.Core
       TVScene = null;
       TVMathLibrary = null;
       TVGlobals = null;
-      TVEngine.ReleaseAll();
+      using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        TVEngine.ReleaseAll();
       TVEngine = null;
 
       GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
     }
 
-    private void InitEngine()
+    private void InitEngine(Settings settings)
     {
       TVEngine.AllowMultithreading(true);
       //TVEngine.SetDebugMode(true, true);
       TVEngine.SetDebugFile(Path.Combine(Globals.LogPath, @"truevision_debug.log"));
 
       TVEngine.SetAntialiasing(true, CONST_TV_MULTISAMPLE_TYPE.TV_MULTISAMPLE_16_SAMPLES);
-      TVEngine.DisplayFPS(true);
+      TVEngine.DisplayFPS(settings.ShowFPS);
       //TVEngine.EnableProfiler(true);
       TVEngine.EnableSmoothTime(true);
-      TVEngine.SetVSync(true);
-
+      TVEngine.SetVSync(settings.VSync);
       TVEngine.SetAngleSystem(CONST_TV_ANGLE.TV_ANGLE_DEGREE);
     }
 
@@ -113,17 +113,16 @@ namespace SWEndor.Game.Core
         TVScene.SetTextureFilter(CONST_TV_TEXTUREFILTER.TV_FILTER_ANISOTROPIC);
         TVScene.SetBackgroundColor(0f, 0f, 0f);
       }
-
     }
 
     private void InitShaders()
     {
     }
 
-    private void InitLights()
+    private void InitLights(Settings settings)
     {
       // TO-DO: Shift this to 'Globals', then make this configuable
-      TVLightEngine.SetGlobalAmbient(0.75f, 0.75f, 0.75f);
+      TVLightEngine.SetGlobalAmbient(settings.AmbientLight.x, settings.AmbientLight.y, settings.AmbientLight.z);
 
       int tv_light0 = TVLightEngine.CreateDirectionalLight(new TV_3DVECTOR(-1.0f, -0.5f, 0.2f), 1f, 1f, 1f, "GlobalLight0", 0.9f);
       int tv_light1 = TVLightEngine.CreateDirectionalLight(new TV_3DVECTOR(1.0f, 0.2f, 0f), 0.5f, 0.5f, 0.5f, "GlobalLight1", 0.9f);

@@ -10,20 +10,20 @@ namespace SWEndor.Game.Sound
 
       public void Process(SoundManager s)
       {
-        if (s.current_channel == null)
+        if (s.current_music_channel == null)
           return;
         //Channel fmodchannel;
         //s.musicgrp.getChannel(0, out fmodchannel);
         //s.musicgrp.getChannel(s.m_currMusicCh, out fmodchannel);
-        s.current_channel.setCallback(null);
+        s.current_music_channel.setCallback(null);
 
         if (FadeTime <= 0)
         {
-          s.current_channel.stop();
+          s.current_music_channel.stop();
         }
         else
         {
-          DoFadeOut(s.current_channel);
+          DoFadeOut(s.current_music_channel);
         }
       }
 

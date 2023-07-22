@@ -5,6 +5,8 @@ using SWEndor.Game.Input.Functions.Gameplay.Special;
 using SWEndor.Game.Input.Functions.Gameplay.Speed;
 using SWEndor.Game.Input.Functions.Gameplay.UI;
 using SWEndor.Game.Input.Functions.Gameplay.Weapon;
+using SWEndor.Game.Input.Functions.Utility;
+using SWEndor.Game.Input.Functions.Utility.Game;
 using SWEndor.Game.Input.Functions.Utility.Screen;
 using System;
 using System.Collections.Generic;
@@ -24,7 +26,16 @@ namespace SWEndor.Game.Input.Functions
     ONPRESS = 0x01,
 
     /// <summary>Triggers every tick while the key remains in the pressed state</summary>
-    WHILEPRESSED = 0x02
+    WHILEPRESSED = 0x02,
+
+    /// <summary>Is valid only when CTRL state is also active</summary>
+    CTRL = 0x04,
+
+    /// <summary>Is valid only when SHIFT state is also active</summary>
+    SHIFT = 0x08,
+
+    /// <summary>Is valid only when ALT state is also active</summary>
+    ALT = 0x10,
   }
 
   /// <summary>
@@ -49,35 +60,46 @@ namespace SWEndor.Game.Input.Functions
 
     public static class Registry
     {
-      private static InputFunction[] fns = new InputFunction[0];
+      private readonly static List<InputFunction> fns = new List<InputFunction>();
 
       public static void ProcessOnPress(Engine engine, int key)
       {
-        InputFunction fn = Get(key);
-        if (fn != null
-          && fn.Enabled
-          && fn.Options.Has(InputOptions.ONPRESS))
-          fn.Process(engine);
+        int index = -1;
+        while ((index = GetNext(key, ++index, out InputFunction fn)) != -1)
+        {
+          if (fn != null
+            && fn.Enabled
+            && fn.Options.Has(InputOptions.ONPRESS)
+            && (engine.InputManager.CTRL || !fn.Options.Has(InputOptions.CTRL))
+            && (engine.InputManager.SHIFT || !fn.Options.Has(InputOptions.SHIFT))
+            && (engine.InputManager.ALT || !fn.Options.Has(InputOptions.ALT))
+            )
+            fn.Process(engine);
+        }
       }
 
       public static void ProcessWhilePressed(Engine engine, byte[] keyPressedStates)
       {
         int i = 0;
-        while (i < fns.Length)
+        while (i < fns.Count)
         {
           InputFunction fn = fns[i];
           if (fn != null
             && fn.Enabled
             && fn.Options.Has(InputOptions.WHILEPRESSED)
+            && (engine.InputManager.CTRL || !fn.Options.Has(InputOptions.CTRL))
+            && (engine.InputManager.SHIFT || !fn.Options.Has(InputOptions.SHIFT))
+            && (engine.InputManager.ALT || !fn.Options.Has(InputOptions.ALT))
             && fn.Key >= byte.MinValue 
             && fn.Key < byte.MaxValue 
-            && keyPressedStates[fn.Key] != 0)
+            && keyPressedStates[fn.Key] != 0
+            )
             fn.Process(engine);
           i++;
         }
       }
 
-      public static InputFunction[] Functions
+      public static List<InputFunction> Functions
       {
         get
         {
@@ -85,88 +107,90 @@ namespace SWEndor.Game.Input.Functions
         }
       }
 
-      public static InputFunction Get(string name)
+      public static int GetNext(string name, int index, out InputFunction fn)
       {
-        int i = 0;
-        while (i < fns.Length)
+        while (index < fns.Count)
         {
-          InputFunction fn = fns[i];
+          fn = fns[index];
           if (fn != null
             && fn.Name == name)
-            return fn;
-          i++;
+            return index;
+          index++;
         }
-        return null;
+        fn = null;
+        return -1;
       }
 
-      public static InputFunction Get(int key)
+      public static int GetNext(int key, int index, out InputFunction fn)
       {
-        int i = 0;
-        while (i < fns.Length)
+        while (index < fns.Count)
         {
-          InputFunction fn = fns[i];
+          fn = fns[index];
           if (fn != null
             && fn.Key == key)
-            return fn;
-          i++;
+            return index;
+          index++;
         }
-        return null;
+        fn = null;
+        return -1;
       }
 
       public static void GenerateDefault()
       {
         // hardcoded...
-        List<InputFunction> f = new List<InputFunction>(100);
+        fns.AddRange(new List<InputFunction>(100)
+        {
+          new PauseToMenu(),
+          new ShowMap(),
 
-        f.Add(new PauseToMenu());
-        f.Add(new ShowMap());
+          // gameplay
+          new Up(),
+          new Down(),
+          new NextPrimary(),
+          new PrevPrimary(),
+          new NextSecondary(),
+          new PrevSecondary(),
+          new ToggleLockOn(),
+          new SquadCommand(),
+          new SquadCancelCommand(),
 
-        // gameplay
-        f.Add(new Up());
-        f.Add(new Down());
-        f.Add(new NextPrimary());
-        f.Add(new PrevPrimary());
-        f.Add(new NextSecondary());
-        f.Add(new PrevSecondary());
-        f.Add(new ToggleLockOn());
-        f.Add(new SquadCommand());
-        f.Add(new SquadCancelCommand());
+          // gameplay: camera
+          new NextCameraMode(),
+          new PrevCameraMode(),
+          new ToggleFreeMode(),
+          new MoveCameraForward(),
+          new MoveCameraBackward(),
+          new MoveCameraUpward(),
+          new MoveCameraDownward(),
+          new MoveCameraLeftward(),
+          new MoveCameraRightward(),
 
-        // gameplay: camera
-        f.Add(new NextCameraMode());
-        f.Add(new PrevCameraMode());
-        f.Add(new ToggleFreeMode());
-        f.Add(new MoveCameraForward());
-        f.Add(new MoveCameraBackward());
-        f.Add(new MoveCameraUpward());
-        f.Add(new MoveCameraDownward());
-        f.Add(new MoveCameraLeftward());
-        f.Add(new MoveCameraRightward());
+          // gameplay: UI toggles
+          new ToggleUIVisibility(),
+          new ToggleSquadVisibility(),
+          new ToggleStatusVisibility(),
+          new ToggleRadarVisibility(),
+          new ToggleScoreVisibility(),
 
-        // gameplay: UI toggles
-        f.Add(new ToggleUIVisibility());
-        f.Add(new ToggleSquadVisibility());
-        f.Add(new ToggleStatusVisibility());
-        f.Add(new ToggleRadarVisibility());
-        f.Add(new ToggleScoreVisibility());
+          // gameply: debug
+          new AddLife(),
+          new AllEnemiesDead(),
+          new AllEnemiesDying(),
+          new TimeFast(),
+          new TimeSlow(),
+          new TimeReset(),
+          new TimeJump(),
+          new ToggleCameraStates(),
+          new ToggleMovementLock(),
+          new TogglePlayerAI(),
 
-        // gameply: debug
-        f.Add(new AddLife());
-        f.Add(new AllEnemiesDead());
-        f.Add(new AllEnemiesDying());
-        f.Add(new TimeFast());
-        f.Add(new TimeSlow());
-        f.Add(new TimeReset());
-        f.Add(new TimeJump());
-        f.Add(new ToggleCameraStates());
-        f.Add(new ToggleMovementLock());
-        f.Add(new TogglePlayerAI());
+          // utility: screenshot
+          new SaveScreenshot(),
+          new SaveSnapshot(),
 
-        // utility: screenshot
-        f.Add(new SaveScreenshot());
-
-        fns = f.ToArray();
-        
+          // terminal
+          new OpenTerminal(),
+        });
       }
     }
   }

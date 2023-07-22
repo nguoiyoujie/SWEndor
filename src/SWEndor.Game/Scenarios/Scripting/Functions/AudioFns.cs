@@ -138,5 +138,67 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
       ((Context)context).Engine.SoundManager.StopAllSounds();
       return Val.NULL;
     }
+
+    public static Val QueueSpeech(IContext context, string speech_name)
+    {
+      ((Context)context).Engine.SoundManager.QueueSpeech(speech_name);
+      return Val.NULL;
+    }
+
+    public static Val QueueSpeech(IContext context, string sp1, string sp2)
+    {
+      var sndmgr = ((Context)context).Engine.SoundManager;
+      sndmgr.QueueSpeech(sp1);
+      sndmgr.QueueSpeech(sp2);
+      return Val.NULL;
+    }
+
+    public static Val QueueSpeech(IContext context, string sp1, string sp2, string sp3)
+    {
+      var sndmgr = ((Context)context).Engine.SoundManager;
+      sndmgr.QueueSpeech(sp1);
+      sndmgr.QueueSpeech(sp2);
+      sndmgr.QueueSpeech(sp3);
+      return Val.NULL;
+    }
+
+    public static Val QueueSpeech(IContext context, string sp1, string sp2, string sp3, string sp4)
+    {
+      var sndmgr = ((Context)context).Engine.SoundManager;
+      sndmgr.QueueSpeech(sp1);
+      sndmgr.QueueSpeech(sp2);
+      sndmgr.QueueSpeech(sp3);
+      sndmgr.QueueSpeech(sp4);
+      return Val.NULL;
+    }
+
+    public static Val QueueSpeech(IContext context, string sp1, string sp2, string sp3, string sp4, string sp5)
+    {
+      var sndmgr = ((Context)context).Engine.SoundManager;
+      sndmgr.QueueSpeech(sp1);
+      sndmgr.QueueSpeech(sp2);
+      sndmgr.QueueSpeech(sp3);
+      sndmgr.QueueSpeech(sp4);
+      sndmgr.QueueSpeech(sp5);
+      return Val.NULL;
+    }
+
+    public static Val QueueSpeech(IContext context, string sp1, string sp2, string sp3, string sp4, string sp5, string sp6)
+    {
+      var sndmgr = ((Context)context).Engine.SoundManager;
+      sndmgr.QueueSpeech(sp1);
+      sndmgr.QueueSpeech(sp2);
+      sndmgr.QueueSpeech(sp3);
+      sndmgr.QueueSpeech(sp4);
+      sndmgr.QueueSpeech(sp5);
+      sndmgr.QueueSpeech(sp6);
+      return Val.NULL;
+    }
+
+    public static Val StopSpeech(IContext context)
+    {
+      ((Context)context).Engine.SoundManager.StopSpeech();
+      return Val.NULL;
+    }
   }
 }

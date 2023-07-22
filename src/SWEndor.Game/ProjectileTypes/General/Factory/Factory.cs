@@ -4,6 +4,8 @@ using Primrose.Primitives.Factories;
 using System;
 using System.IO;
 using Primrose;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SWEndor.Game.ProjectileTypes
 {
@@ -18,23 +20,34 @@ namespace SWEndor.Game.ProjectileTypes
       public void Register(ProjectileTypeInfo atype)
       {
         Put(atype.ID, atype);
-        Engine.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
+        Engine.Screen2D.AppendLoadingText(string.Format("Projectile: {0} loaded!", atype.Name));
+        Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADED), "ProjectileType", atype.Name);
       }
-      
+
       public void Load()
       {
+        Registry<string> paths = new Registry<string>();
         foreach (string fp in Directory.GetFiles(Globals.ProjectileTypeINIDirectory, Globals.INIExt, SearchOption.AllDirectories))
         {
           string f = Path.GetFileNameWithoutExtension(fp);
-          Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "ProjectileType", f);
           if (Contains(f))
-            throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.ACTORTYPE_INITWICE_ERROR).F(f));
-          ProjectileTypeInfo t = new ProjectileTypeInfo(this, f, f);
-          t.LoadFromINI(f, fp);
-          Register(t);
+            throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.PROJTYPE_INITWICE_ERROR).F(f));
+          paths.Add(f, fp);
         }
+
+        Parallel.ForEach(paths, new ParallelOptions { MaxDegreeOfParallelism = 32 }, LoadOne);
       }
-      
+
+      private void LoadOne(KeyValuePair<string, string> kvp)
+      {
+        string id = kvp.Key;
+        string source = kvp.Value;
+        Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "ProjectileType", id);
+        ProjectileTypeInfo t = new ProjectileTypeInfo(this, id, id);
+        t.LoadFromINI(id, source);
+        Register(t);
+      }
+
       public void Initialise()
       {
         foreach (ProjectileTypeInfo atype in list.Values)

@@ -563,6 +563,14 @@
             <param name="v2">The second value</param>
             <returns></returns>
         </member>
+        <member name="M:Primrose.Expressions.Ops.GetIndex(Primrose.Expressions.Val,System.Int32[])">
+            <summary>
+            Performs an index operation 
+            </summary>
+            <param name="v">The value</param>
+            <param name="indices">The indices</param>
+            <returns></returns>
+        </member>
         <member name="M:Primrose.Expressions.Ops.ImplicitCast(System.Type,Primrose.Expressions.Val)">
             <summary>Perform implicit casting</summary>
         </member>
@@ -752,6 +760,11 @@
         <member name="P:Primrose.Expressions.Resource.Strings.Error_IncompatibleBOp">
             <summary>
               Looks up a localized string similar to Operation &apos;{0}&apos; incompatible between {1} and {2}.
+            </summary>
+        </member>
+        <member name="P:Primrose.Expressions.Resource.Strings.Error_IncompatibleIndexOp">
+            <summary>
+              Looks up a localized string similar to Operation &apos;{0}&apos; incompatible with an indexed operation.
             </summary>
         </member>
         <member name="P:Primrose.Expressions.Resource.Strings.Error_IncompatibleUOp">

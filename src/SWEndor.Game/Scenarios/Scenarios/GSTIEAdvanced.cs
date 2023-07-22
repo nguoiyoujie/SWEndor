@@ -161,7 +161,7 @@ namespace SWEndor.Game.Scenarios
       creationTime += 0.025f;
       ainfo = new ActorSpawnInfo
       {
-        Type = Engine.ActorTypeFactory.Get("TIEX"),
+        Type = PlayerInfo.ActorType,
         Name = "(Player)",
 
         SidebarName = "",
@@ -362,20 +362,20 @@ namespace SWEndor.Game.Scenarios
       switch (State.Difficulty.ToLower())
       {
         case "mental":
-          EventQueue.Add(0, Empire_TIEDefender_Wave, 10);
+          EventQueue.Add(0, Empire_TIEDefender_Wave, 5);
           EventQueue.Add(0, Empire_TIEBombers, 4);
           break;
         case "hard":
-          EventQueue.Add(0, Empire_TIEDefender_Wave, 7);
+          EventQueue.Add(0, Empire_TIEDefender_Wave, 4);
           EventQueue.Add(0, Empire_TIEBombers, 2);
           break;
         case "normal":
-          EventQueue.Add(0, Empire_TIEDefender_Wave, 5);
+          EventQueue.Add(0, Empire_TIEDefender_Wave, 3);
           EventQueue.Add(0, Empire_TIEBombers, 1);
           break;
         case "easy":
         default:
-          EventQueue.Add(0, Empire_TIEDefender_Wave, 8);
+          EventQueue.Add(0, Empire_TIEDefender_Wave, 2);
           break;
       }
       EventQueue.Add(Game.GameTime + 5f, Empire_TIEAdv_Control_TargetFighter);

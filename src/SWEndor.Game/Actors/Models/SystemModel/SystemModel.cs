@@ -1,13 +1,45 @@
 ﻿using SWEndor.Game.ActorTypes.Components;
 using SWEndor.Game.Core;
-using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
+using Primrose.Primitives.Factories;
+using System.Collections.Generic;
 
 namespace SWEndor.Game.Actors.Models
 {
+  internal class SystemInstrument
+  {
+    public SystemPart PartType;
+    public SystemState Status = SystemState.ACTIVE;
+    //public float EnergyRequirement;
+    //public float EnergyAllocated;
+    public int Endurance;
+    public int MaxEndurance;
+    public float DamageChance;
+    public float RecoveryTime;
+    public float RecoveryTimeRandom;
+
+    // live data
+    public float RecoveryCooldownTime;
+    public int RecoveryEndurance;
+
+
+    public void Init(SystemInstrumentData data)
+    {
+      PartType = data.PartType;
+      Status = SystemState.ACTIVE;
+      Endurance = data.Endurance;
+      MaxEndurance = data.Endurance;
+      DamageChance = data.DamageChance;
+      RecoveryTime = data.RecoveryTime;
+      RecoveryTimeRandom = data.RecoveryTimeRandom;
+      RecoveryEndurance = data.RecoveryEndurance;
+    }
+  }
+
   internal struct SystemModel
   {
-    private ulong State;
+    public List<SystemInstrument> Instruments;
+
     public float Energy_inStore;
     public float Energy_inEngine; // 100% for full engine
     public float Energy_inShields; // 100% for full regen
@@ -17,12 +49,30 @@ namespace SWEndor.Game.Actors.Models
     public float SetPoint_Shields;
     public float SetPoint_Lasers;
 
-    //public int Projectiles;
+    // live data
+    public float StunRecoverTime;
+
+    static SystemModel()
+    {
+      ObjectPool<List<SystemInstrument>>.CreateStaticPool(() => new List<SystemInstrument>(16), (a) => a.Clear());
+      ObjectPool<SystemInstrument>.CreateStaticPool(() => new SystemInstrument());
+    }
 
     public void Init(ref SystemData data)
     {
-      foreach (SystemPart p in data.Parts)
-        SetStatus(p, SystemState.ACTIVE);
+      if (Instruments == null)
+      {
+        Instruments = ObjectPool<List<SystemInstrument>>.GetStaticPool().GetNew();
+      }
+      if (data.Parts != null)
+      {
+        foreach (SystemInstrumentData instrdata in data.Parts)
+        {
+          SystemInstrument instrument = ObjectPool<SystemInstrument>.GetStaticPool().GetNew();
+          instrument.Init(instrdata);
+          Instruments.Add(instrument);
+        }
+      }
 
       Energy_inStore = 0; //data.MaxEnergy_inStore;
       Energy_inEngine = data.MaxEnergy_inEngine;
@@ -35,7 +85,11 @@ namespace SWEndor.Game.Actors.Models
 
     public void Reset()
     {
-      State = 0;
+      foreach (SystemInstrument instrument in Instruments)
+      {
+        ObjectPool<SystemInstrument>.GetStaticPool().Return(instrument);
+      }
+      Instruments.Clear();
       Energy_inStore = 0;
       Energy_inEngine = 0;
       SetPoint_Engine = 0;
@@ -43,55 +97,126 @@ namespace SWEndor.Game.Actors.Models
       SetPoint_Shields = 0;
       Energy_inLasers = 0;
       SetPoint_Lasers = 0;
+      StunRecoverTime = 0;
     }
 
-    public SystemState GetStatus(SystemPart part)
+    public SystemState GetStatus(Engine engine, SystemPart part)
     {
-      ulong s = (State >> 2 * (byte)part) & 0x3; // 0-3
-      return (SystemState)s;
+      SystemState state = SystemState.PASSIVE;
+      foreach (SystemInstrument instrument in Instruments)
+      {
+        // get best status of all relevant parts
+        if (instrument.PartType == part)
+        {
+          if ((int)state < (int)instrument.Status)
+          {
+            state = instrument.Status;
+            if (state == SystemState.ACTIVE)
+              break;
+          }
+        }
+      }
+      if (state == SystemState.ACTIVE && IsStunned(engine)) { state = SystemState.DISABLED; }
+      return state;
     }
 
     public void SetStatus(SystemPart part, SystemState newstate)
     {
-      State = (State & ~(0x3U << (2 * (byte)part))) | ((ulong)newstate << (2 * (byte)part));
+      // set all relevant parts
+      foreach (SystemInstrument instrument in Instruments)
+      {
+        if (instrument.PartType == part && instrument.Status != newstate)
+        {
+          instrument.Status = newstate;
+        }
+      }
     }
 
-    public void DamageRandom(Engine engine, ActorInfo actor, ref SystemData data)
+    public bool IsStunned(Engine engine)
     {
-      if (data.Parts.Length == 0)
+      return StunRecoverTime > engine.Game.GameTime;
+    }
+
+    public void InflictStun(Engine engine, float duration)
+    {
+      StunRecoverTime = engine.Game.GameTime + duration;
+    }
+
+    public void DamageRandom(Engine engine, ActorInfo actor, float chanceModifier, ref SystemData data)
+    {
+      if (Instruments.Count == 0 || chanceModifier == 0)
         return;
 
-      SystemPart p = data.Parts[engine.Random.Next(0, data.Parts.Length)];
-      if (GetStatus(p) > SystemState.DESTROYED)
+      foreach (SystemInstrument instrument in Instruments)
       {
-        SetStatus(p, SystemState.DESTROYED);
-        //if (p == SystemPart.COCKPIT) //critical
-        //  actor.SetState_Dying();
+        if (instrument.Status == SystemState.DISABLED || instrument.Status == SystemState.ACTIVE)
+        {
+          if (engine.Random.NextDouble() < instrument.DamageChance * chanceModifier)
+          {
+            if (instrument.Endurance > 0)
+              instrument.Endurance--;
 
-        if (actor.IsPlayer)
-          engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.SUBSYSTEM_LOST).F(p.GetEnumName().Replace('_', ' '))
-                                           , 3
-                                           , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_WARNING));
+            if (instrument.Endurance <= 0)
+            {
+              instrument.Status = SystemState.DAMAGED;
+              instrument.RecoveryCooldownTime = engine.Game.GameTime + instrument.RecoveryTime + (float)(engine.Random.NextDouble() * instrument.RecoveryTimeRandom);
+              if (actor.IsPlayer && !actor.IsSystemOperational(instrument.PartType)) // check IsSystemOperational... in case the unit sports more than one instrument
+                engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.SUBSYSTEM_LOST).F(instrument.PartType.GetDisplayName())
+                                                 , 3
+                                                 , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_WARNING));
+            }
+          }
+        }
+      }
+    }
+
+    public void Tick(Engine engine, ActorInfo actor, float time)
+    {
+      foreach (SystemInstrument instrument in Instruments)
+      {
+        // repair attempt
+        if (instrument.Status == SystemState.DAMAGED && instrument.RecoveryEndurance > 0)
+        {
+          if (instrument.RecoveryCooldownTime < engine.Game.GameTime)
+          {
+            bool functionalbeforerepair = actor.IsSystemOperational(instrument.PartType);
+            instrument.RecoveryCooldownTime = 0;
+            instrument.Status = SystemState.ACTIVE;
+            instrument.Endurance = instrument.RecoveryEndurance;
+
+            if (actor.IsPlayer && !functionalbeforerepair)
+              engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.SUBSYSTEM_RECOVERED).F(instrument.PartType.GetDisplayName())
+                                               , 3
+                                               , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_NORMAL));
+          }
+        }
       }
     }
 
     public void DisableRandom(Engine engine, ActorInfo actor, ref SystemData data)
     {
-      if (data.Parts.Length == 0)
+      if (Instruments.Count == 0)
         return;
 
-      SystemPart p = data.Parts[engine.Random.Next(0, data.Parts.Length)];
-      if (GetStatus(p) > SystemState.DISABLED)
-        SetStatus(p, SystemState.DISABLED);
+      SystemInstrument instrument = Instruments[engine.Random.Next(0, Instruments.Count)];
+      if (instrument.Status == SystemState.ACTIVE)
+      {
+        instrument.Status = SystemState.DISABLED;
+        instrument.RecoveryCooldownTime = engine.Game.GameTime + instrument.RecoveryTime + (float)(engine.Random.NextDouble() * instrument.RecoveryTimeRandom);
+        if (actor.IsPlayer && !actor.IsSystemOperational(instrument.PartType)) // check IsSystemOperational... in case the unit sports more than one instrument
+          engine.Screen2D.MessageSystemsText(TextLocalization.Get(TextLocalKeys.SUBSYSTEM_DISABLED).F(instrument.PartType.GetDisplayName())
+                                           , 3
+                                           , ColorLocalization.Get(ColorLocalKeys.GAME_MESSAGE_WARNING));
+      }
     }
 
-    public void Distribute(ref SystemData data, float time)
+    public void Distribute(Engine engine, ref SystemData data, float time)
     {
-      bool chargeActive = GetStatus(SystemPart.ENERGY_CHARGER) == SystemState.ACTIVE;
-      bool engineActive = GetStatus(SystemPart.ENGINE) == SystemState.ACTIVE;
-      bool shieldActive = GetStatus(SystemPart.SHIELD_GENERATOR) == SystemState.ACTIVE;
-      bool laserActive = GetStatus(SystemPart.LASER_WEAPONS) == SystemState.ACTIVE;
-      bool storeActive = GetStatus(SystemPart.ENERGY_STORE) == SystemState.ACTIVE;
+      bool chargeActive = GetStatus(engine, SystemPart.ENERGY_CHARGER) == SystemState.ACTIVE;
+      bool engineActive = GetStatus(engine, SystemPart.ENGINE) == SystemState.ACTIVE;
+      bool shieldActive = GetStatus(engine, SystemPart.SHIELD_GENERATOR) == SystemState.ACTIVE;
+      bool laserActive = GetStatus(engine, SystemPart.LASER_WEAPONS) == SystemState.ACTIVE;
+      bool storeActive = GetStatus(engine, SystemPart.ENERGY_STORE) == SystemState.ACTIVE;
 
       float engineDemand = engineActive ? (SetPoint_Engine - Energy_inEngine).Clamp(-data.Energy_TransferRate, data.Energy_TransferRate) : 0;
       float shieldDemand = shieldActive ? (SetPoint_Shields - Energy_inShields).Clamp(-data.Energy_TransferRate, data.Energy_TransferRate) : 0;

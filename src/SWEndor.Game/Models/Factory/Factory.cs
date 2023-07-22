@@ -30,6 +30,7 @@ namespace SWEndor
     public delegate bool EnginePredicateDelegate<P>(Engine e, T obj, P p);
     public delegate bool EnginePredicateDelegate<P1, P2>(Engine e, T obj, P1 p1, P2 p2);
     public delegate bool EnginePredicateDelegate<P1, P2, P3>(Engine e, T obj, P1 p1, P2 p2, P3 p3);
+    public delegate bool EnginePredicateDelegate<P1, P2, P3, P4>(Engine e, T obj, P1 p1, P2 p2, P3 p3, P4 p4);
 
     public delegate void EngineActionDelegate(Engine e, T obj);
     public delegate void EngineActionDelegate<P>(Engine e, T obj, P p);
@@ -122,7 +123,7 @@ namespace SWEndor
         {
           if (!actor.DisposingOrDisposed)
             if (actor.CreationTime < Engine.Game.GameTime)
-              actor.Initialize(Engine);
+              actor.Initialize(Engine, true);
             else
               nextplan.Enqueue(actor);
         }
@@ -147,10 +148,7 @@ namespace SWEndor
     {
       T a;
       while (dead.TryDequeue(out a))
-        if (a.Scope.Count == 0)
           a.Destroy();
-        else
-          nextdead.Enqueue(a);
 
       while (nextdead.TryDequeue(out a))
         dead.Enqueue(a);
@@ -162,7 +160,10 @@ namespace SWEndor
 
       while (prepool.TryDequeue(out a))
         if (a.Scope.Count == 0)
+        {
+          RemoveInPrepool(a.ID);
           pool.Enqueue(a);
+        }
         else
           redo.Enqueue(a);
 
@@ -175,32 +176,44 @@ namespace SWEndor
       return list.Count;
     }
 
-    public void DoUntil(EnginePredicateDelegate action)
+    public bool DoUntil(EnginePredicateDelegate action)
     {
       foreach (T a in Actors)
         if (!action.Invoke(a.Engine, a))
-          break;
+          return false;
+      return true;
     }
 
-    public void DoUntil<P>(EnginePredicateDelegate<P> action, P cmp)
+    public bool DoUntil<P>(EnginePredicateDelegate<P> action, P cmp)
     {
       foreach (T a in Actors)
         if (!action.Invoke(a.Engine, a, cmp))
-          break;
+          return false;
+      return true;
     }
 
-    public void DoUntil<P1, P2>(EnginePredicateDelegate<P1, P2> action, P1 p1, P2 p2)
+    public bool DoUntil<P1, P2>(EnginePredicateDelegate<P1, P2> action, P1 p1, P2 p2)
     {
       foreach (T a in Actors)
         if (!action.Invoke(a.Engine, a, p1, p2))
-          break;
+          return false;
+      return true;
     }
 
-    public void DoUntil<P1, P2, P3>(EnginePredicateDelegate<P1, P2, P3> action, P1 p1, P2 p2, P3 p3)
+    public bool DoUntil<P1, P2, P3>(EnginePredicateDelegate<P1, P2, P3> action, P1 p1, P2 p2, P3 p3)
     {
       foreach (T a in Actors)
         if (!action.Invoke(a.Engine, a, p1, p2, p3))
-          break;
+          return false;
+      return true;
+    }
+
+    public bool DoUntil<P1, P2, P3, P4>(EnginePredicateDelegate<P1, P2, P3, P4> action, P1 p1, P2 p2, P3 p3, P4 p4)
+    {
+      foreach (T a in Actors)
+        if (!action.Invoke(a.Engine, a, p1, p2, p3, p4))
+          return false;
+      return true;
     }
 
     public void DoEach(EngineActionDelegate action)
@@ -327,10 +340,16 @@ namespace SWEndor
           actor.Next = null;
           actor.Prev = null;
 
-          base.Remove(id);
+          // Allow Factory.Get(int) to still access destroyed actor until it is cleaned from prepool (when scope is 0)
+          //base.Remove(id);
         }
         prepool.Enqueue(actor);
       }
+    }
+
+    private void RemoveInPrepool(int id)
+    {
+       base.Remove(id);
     }
 
     public void Reset()
@@ -338,6 +357,11 @@ namespace SWEndor
       DisposePlanned();
       DoEach((e, a) => { a?.Delete(); });
       DestroyDead();
+    }
+
+    public override T Get(int key)
+    {
+      return base.Get(key);
     }
   }
 }

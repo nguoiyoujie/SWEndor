@@ -21,7 +21,7 @@ namespace SWEndor.Game.Weapons
       Name = name;
       DisplayName = name;
 
-      Proj.Projectile = ProjectileTypeInfo.Null;
+      //Proj.Projectile = ProjectileTypeInfo.Null;
       //ActorProj = ActorTypeInfo.Null;
     }
 
@@ -67,10 +67,10 @@ namespace SWEndor.Game.Weapons
         {
           if (CreateProjectile(engine, owner, target))
           {
-            Port.Cooldown += Port.CooldownRate.x * burstremaining;
-            if (Port.CooldownRate.y != 0)
+            Port.Cooldown += Port.CooldownRate * burstremaining;
+            if (Port.CooldownRateRandom != 0)
             {
-              Port.Cooldown += (float)engine.Random.NextDouble() * Port.CooldownRate.y * 4;
+              Port.Cooldown += (float)engine.Random.NextDouble() * Port.CooldownRateRandom;
             }
             fired = true;
             Port.Next();
@@ -96,9 +96,13 @@ namespace SWEndor.Game.Weapons
       return fired;
     }
 
-    public bool CanTarget(ActorInfo owner, ActorInfo target)
+    public bool CanTarget(ActorInfo target)
     {
-      return (target == null) ? Targeter.AIAttackNull : (target.TypeInfo.AIData.TargetType & Targeter.AIAttackTargets) != 0;
+      if (target == null)
+        return Targeter.AIAttackNull;
+      else
+        return Targeter.AIAttackTargets.Has(target.TargetType)
+            && ((Targeter.AIExcludeTargets == TargetExclusionState.NONE) || (!target.TargetState.Intersects(Targeter.AIExcludeTargets)));
     }
 
     private bool CreateProjectile(Engine engine, ActorInfo owner, ActorInfo target, bool IsPlayer)
@@ -154,11 +158,11 @@ namespace SWEndor.Game.Weapons
       if (owner == null)
         return false;
 
-      if ((Proj.WeaponType == WeaponType.LASER || Proj.WeaponType == WeaponType.ION)
-        && owner.TypeInfo.SystemData.AllowSystemDamage && owner.GetStatus(SystemPart.LASER_WEAPONS) != SystemState.ACTIVE)
+      if (Proj.WeaponType == WeaponType.LASER && !owner.IsSystemOperational(SystemPart.LASER_WEAPONS))
         return false;
-      else if ((Proj.WeaponType == WeaponType.MISSILE || Proj.WeaponType == WeaponType.TORPEDO)
-        && owner.TypeInfo.SystemData.AllowSystemDamage && owner.GetStatus(SystemPart.PROJECTILE_LAUNCHERS) != SystemState.ACTIVE)
+      if (Proj.WeaponType == WeaponType.ION && !owner.IsSystemOperational(SystemPart.ION_WEAPONS))
+        return false;
+      else if ((Proj.WeaponType == WeaponType.MISSILE || Proj.WeaponType == WeaponType.TORPEDO) && !owner.IsSystemOperational(SystemPart.PROJECTILE_LAUNCHERS))
         return false;
 
 
@@ -173,8 +177,8 @@ namespace SWEndor.Game.Weapons
       }
 
       if ((target == null && Targeter.AIAttackNull)
-          || (target != null && (target.TypeInfo.AIData.TargetType & Targeter.AIAttackTargets) != 0)
-          )
+          || (target != null && target.TargetType.Intersects(Targeter.AIAttackTargets)
+          ))
       { // AI 
         if (Proj.IsActor)
           return CreateActor(engine, owner, target, false);

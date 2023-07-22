@@ -28,47 +28,34 @@
     /// </summary>
     private void InitializeComponent()
     {
-      this.label36 = new System.Windows.Forms.Label();
-      this.lblSquadPool = new System.Windows.Forms.Label();
-      this.label16 = new System.Windows.Forms.Label();
-      this.label17 = new System.Windows.Forms.Label();
+      this.lblInUse = new System.Windows.Forms.Label();
+      this.lblPool = new System.Windows.Forms.Label();
       this.label15 = new System.Windows.Forms.Label();
       this.label12 = new System.Windows.Forms.Label();
       this.lblActorDistanceCache = new System.Windows.Forms.Label();
       this.label5 = new System.Windows.Forms.Label();
+      this.label1 = new System.Windows.Forms.Label();
+      this.label2 = new System.Windows.Forms.Label();
+      this.label3 = new System.Windows.Forms.Label();
+      this.lblActorDistancePool = new System.Windows.Forms.Label();
+      this.lblActorDistanceInUse = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
-      // label36
+      // lblInUse
       // 
-      this.label36.Location = new System.Drawing.Point(276, 55);
-      this.label36.Name = "label36";
-      this.label36.Size = new System.Drawing.Size(40, 15);
-      this.label36.TabIndex = 105;
-      this.label36.Text = "In Use";
+      this.lblInUse.Location = new System.Drawing.Point(296, 55);
+      this.lblInUse.Name = "lblInUse";
+      this.lblInUse.Size = new System.Drawing.Size(60, 15);
+      this.lblInUse.TabIndex = 105;
+      this.lblInUse.Text = "In Use";
       // 
-      // lblSquadPool
+      // lblPool
       // 
-      this.lblSquadPool.Location = new System.Drawing.Point(230, 85);
-      this.lblSquadPool.Name = "lblSquadPool";
-      this.lblSquadPool.Size = new System.Drawing.Size(40, 15);
-      this.lblSquadPool.TabIndex = 98;
-      this.lblSquadPool.Text = "0";
-      // 
-      // label16
-      // 
-      this.label16.Location = new System.Drawing.Point(230, 55);
-      this.label16.Name = "label16";
-      this.label16.Size = new System.Drawing.Size(40, 15);
-      this.label16.TabIndex = 97;
-      this.label16.Text = "Pool";
-      // 
-      // label17
-      // 
-      this.label17.Location = new System.Drawing.Point(44, 85);
-      this.label17.Name = "label17";
-      this.label17.Size = new System.Drawing.Size(180, 15);
-      this.label17.TabIndex = 73;
-      this.label17.Text = "Squadron";
+      this.lblPool.Location = new System.Drawing.Point(230, 55);
+      this.lblPool.Name = "lblPool";
+      this.lblPool.Size = new System.Drawing.Size(60, 15);
+      this.lblPool.TabIndex = 97;
+      this.lblPool.Text = "Pool";
       // 
       // label15
       // 
@@ -88,9 +75,9 @@
       // 
       // lblActorDistanceCache
       // 
-      this.lblActorDistanceCache.Location = new System.Drawing.Point(226, 25);
+      this.lblActorDistanceCache.Location = new System.Drawing.Point(230, 25);
       this.lblActorDistanceCache.Name = "lblActorDistanceCache";
-      this.lblActorDistanceCache.Size = new System.Drawing.Size(50, 15);
+      this.lblActorDistanceCache.Size = new System.Drawing.Size(60, 15);
       this.lblActorDistanceCache.TabIndex = 68;
       this.lblActorDistanceCache.Text = "0";
       // 
@@ -102,14 +89,57 @@
       this.label5.TabIndex = 67;
       this.label5.Text = "ActorDistanceInfo.Cache";
       // 
+      // label1
+      // 
+      this.label1.Location = new System.Drawing.Point(362, 10);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(60, 15);
+      this.label1.TabIndex = 107;
+      this.label1.Text = "In Use";
+      // 
+      // label2
+      // 
+      this.label2.Location = new System.Drawing.Point(296, 10);
+      this.label2.Name = "label2";
+      this.label2.Size = new System.Drawing.Size(60, 15);
+      this.label2.TabIndex = 106;
+      this.label2.Text = "Pool";
+      // 
+      // label3
+      // 
+      this.label3.Location = new System.Drawing.Point(230, 10);
+      this.label3.Name = "label3";
+      this.label3.Size = new System.Drawing.Size(60, 15);
+      this.label3.TabIndex = 108;
+      this.label3.Text = "Cache";
+      // 
+      // lblActorDistancePool
+      // 
+      this.lblActorDistancePool.Location = new System.Drawing.Point(296, 25);
+      this.lblActorDistancePool.Name = "lblActorDistancePool";
+      this.lblActorDistancePool.Size = new System.Drawing.Size(60, 15);
+      this.lblActorDistancePool.TabIndex = 109;
+      this.lblActorDistancePool.Text = "0";
+      // 
+      // lblActorDistanceInUse
+      // 
+      this.lblActorDistanceInUse.Location = new System.Drawing.Point(362, 25);
+      this.lblActorDistanceInUse.Name = "lblActorDistanceInUse";
+      this.lblActorDistanceInUse.Size = new System.Drawing.Size(60, 15);
+      this.lblActorDistanceInUse.TabIndex = 110;
+      this.lblActorDistanceInUse.Text = "0";
+      // 
       // ucPoolCache
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.label36);
-      this.Controls.Add(this.lblSquadPool);
-      this.Controls.Add(this.label16);
-      this.Controls.Add(this.label17);
+      this.Controls.Add(this.lblActorDistanceInUse);
+      this.Controls.Add(this.lblActorDistancePool);
+      this.Controls.Add(this.label3);
+      this.Controls.Add(this.label1);
+      this.Controls.Add(this.label2);
+      this.Controls.Add(this.lblInUse);
+      this.Controls.Add(this.lblPool);
       this.Controls.Add(this.label15);
       this.Controls.Add(this.label12);
       this.Controls.Add(this.lblActorDistanceCache);
@@ -122,13 +152,16 @@
 
     #endregion
 
-    private System.Windows.Forms.Label label36;
-    private System.Windows.Forms.Label lblSquadPool;
-    private System.Windows.Forms.Label label16;
-    private System.Windows.Forms.Label label17;
+    private System.Windows.Forms.Label lblInUse;
+    private System.Windows.Forms.Label lblPool;
     private System.Windows.Forms.Label label15;
     private System.Windows.Forms.Label label12;
     private System.Windows.Forms.Label lblActorDistanceCache;
     private System.Windows.Forms.Label label5;
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.Label lblActorDistancePool;
+    private System.Windows.Forms.Label lblActorDistanceInUse;
   }
 }

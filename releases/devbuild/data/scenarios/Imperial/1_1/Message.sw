@@ -8,15 +8,20 @@ float3 msg_warning_orange = { 1, 0.5, 0 };
 float3 msg_fail_red = { 0.8, 0, 0 };
 
 message_group1:
+    Audio.QueueSpeech("1M1\1m1r1");
+    Audio.QueueSpeech("1M1\1m1r2");
 	Message("OUTPOST D-34: ALPHA 1, we have freighters to be inspected.", 5, msg_outpost);
 
 message_group1_2:
+    Audio.QueueSpeech("1M1\1m1r3");
 	Message("OUTPOST D-34: Fly close to the freighters to inspect them.", 5, msg_outpost);
 
 message_group1_3:
+    Audio.QueueSpeech("1M1\1m1r4");
 	Message("OUTPOST D-34: The inspection should be automatic. If there are any Rebels hiding in the ships, we will find them.", 5, msg_outpost);
 
 message_group2:
+    Audio.QueueSpeech("1M1\1m1r13");
 	Message("OUTPOST D-34: ALPHA 1, additional freighters have arrived for inspection.", 5, msg_outpost);
 
 messagewarn_outpost_y:
@@ -42,21 +47,24 @@ messagewin:
 	Message("Docking...", 10, faction_empire_color, 99);
 	
 messagelose_outpostlost:
+    Audio.QueueSpeech("1M1\1m1r12");
 	Message("MISSION FAILED: Somehow, the unthinkable happened - Outpost D-34 is lost.", 5, msg_fail_red, 99);
 	
 messagelose_onece3lost:
-	Message("MISSION FAILED: We sought the capture of escaping rebels, but the freighter has been lost.", 5, msg_fail_red, 99);
+	Message("OBJECTIVE FAILED: We sought the capture of escaping rebels, but the freighter has been lost.", 5, msg_warning_orange, 99);
 
 messagelose_sigmalost:
-	Message("MISSION FAILED: We sought the capture of escaping rebels, but transport shuttle SIGMA has been lost.", 5, msg_fail_red, 99);
+	Message("OBJECTIVE FAILED: We sought the capture of escaping rebels, but transport shuttle SIGMA has been lost.", 5, msg_warning_orange, 99);
 	
 messagelose_onece3escaped:
-	Message("MISSION FAILED: We sought the capture of escaping rebels, but the freighter has escaped.", 5, msg_fail_red, 99);
+	Message("MISSION FAILED: We have failed to inspect all craft in this sector.", 5, msg_fail_red, 99);
 
 message_primaryobj_completed:
+    Audio.QueueSpeech("1M1\1m1w1");
 	Message("OUTPOST D-34: Good work, Alpha 1. You have completed your primary objectives.", 5, msg_outpost);
 
 message_secondaryobj_completed:
+    Audio.QueueSpeech("1M1\1m1w2");
 	Message("OUTPOST D-34: Outstanding work, ALPHA 1! You have taken the extra steps to ensure the security of this region.", 5, msg_outpost);
 
 message_returntobase:
@@ -70,6 +78,7 @@ message_inspected_onece2:
 	Message("Freighter ONECE 2 has been identified to be carrying foodstuff.", 5, msg_outpost);
 	
 message_inspected_onece3:
+    Audio.QueueSpeech("1M1\1m1r9");
 	Message("Freighter ONECE 3 has been identified to be carrying Rebels.", 5, msg_warning_yellow);
 	
 message_inspected_onece4:
@@ -99,16 +108,17 @@ message_inspected_taloos1:
 message_inspected_taloos2:
 	Message("Freighter TALOOS 2 has been identified to be carrying no cargo.", 5, msg_outpost);
 	
-message_inspected_onece100%:
+message_inspected_onece100pc:
 	Message("All freighters from ONECE group has been inspected.", 5, msg_outpost);
 
-message_inspected_dayta100%:
+message_inspected_dayta100pc:
+    Audio.QueueSpeech("1M1\1m1r8");
 	Message("All transports from DAYTA group has been inspected.", 5, msg_outpost);
 
-message_inspected_yander100%:
+message_inspected_yander100pc:
 	Message("All transports from YANDER group has been inspected.", 5, msg_outpost);
 
-message_inspected_taloos100%:
+message_inspected_taloos100pc:
 	Message("All freighters from TALOOS group has been inspected.", 5, msg_outpost);
 
 message_inspected_all:
@@ -137,9 +147,11 @@ message_onece:
 	Message("New craft alert: Freighters ONECE has entered the area, ready for inspection.", 5, faction_neutral_color);
 
 message_onece3_2:
+    Audio.QueueSpeech("1M1\1m1r10");
 	Message("OUTPOST D-34: A transport is being dispatched to disable the craft.", 5, msg_outpost);
 
 message_onece3_3:
+    Audio.QueueSpeech("1M1\1m1r11");
 	Message("OUTPOST D-34: Assist our transport by lowering the rebel freighter's shields.", 5, msg_outpost);
 
 message_onece3_disabled:
@@ -164,18 +176,21 @@ message_glich_2:
 	
 	
 message_enemySHU:
+    Audio.QueueSpeech("1M1\1m1r5");
 	Message("New craft alert: We have unidentifed shuttles entering the area.", 5, faction_rebel_color);
 
 message_rebels:
 	Message("DELTA 1: The shuttles are operated by rebels!", 5, msg_delta);
 
 message_rebels_2:
+    Audio.QueueSpeech("1M1\1m1r6");
 	Message("OUTPOST D-34: All craft, engage the enemy shuttles.", 5, msg_outpost);
 	
 message_enemyES:
 	Message("New craft alert: Rebel escort shuttles entering the area. Proceed with caution.", 5, faction_rebel_color);
 
 message_protect:
+    Audio.QueueSpeech("1M1\1m1r7");
 	Message("OUTPOST D-34: Protect shuttle SIGMA and freighter ONECE 3. We want the rebels alive.", 5, msg_outpost);
 
 	

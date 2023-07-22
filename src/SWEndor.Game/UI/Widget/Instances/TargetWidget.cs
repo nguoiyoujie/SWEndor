@@ -6,7 +6,6 @@ using SWEndor.Game.Models;
 using SWEndor.Game.Player;
 using Primrose.Primitives.Extensions;
 using SWEndor.Game.Sound;
-using SWEndor.Game.Weapons;
 using System;
 using SWEndor.Game.UI.Helpers;
 
@@ -41,7 +40,7 @@ namespace SWEndor.Game.UI.Widgets
 
       ActorInfo prev_target = Engine.ActorFactory.Get(m_targetID);
 
-      if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.TARGETING_SYSTEM) == SystemState.ACTIVE)
+      if (p.IsSystemOperational(SystemPart.TARGETING_SYSTEM))
       { 
         if (PlayerInfo.PlayerAIEnabled)
         {
@@ -53,7 +52,7 @@ namespace SWEndor.Game.UI.Widgets
         {
           if (!PlayerInfo.LockTarget)
           {
-            if (p.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
+            if (p.TargetType.Has(TargetType.SHIP))
               TargetPicker.PickTargetLargeShip(Engine, ref m_targetID);
             else
               TargetPicker.PickTargetFighter(Engine, !PlayerInfo.IsTorpedoMode, ref m_targetID);
@@ -66,7 +65,7 @@ namespace SWEndor.Game.UI.Widgets
       }
 
       ActorInfo m_target = Engine.ActorFactory.Get(m_targetID);
-      if (m_target == null)
+      if (m_target == null || !m_target.Active)
       {
         PlayerInfo.TargetActorID = -1;
         PlayerInfo.LockTarget = false;
@@ -96,7 +95,7 @@ namespace SWEndor.Game.UI.Widgets
 
     private static bool Check(Engine e, ActorInfo p, float x, float y, float limit, float dist, ActorInfo target)
     {
-      if (p.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
+      if (p.TargetType.Has(TargetType.SHIP))
       {
         return !target.Active
         || target.IsDyingOrDead
@@ -156,7 +155,7 @@ namespace SWEndor.Game.UI.Widgets
 
       TVScreen2DText.Action_BeginText();
       string msg;
-      if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.SCANNER) == SystemState.ACTIVE)
+      if (p.IsSystemOperational(SystemPart.SCANNER))
         msg = "{0}\nDamage: {1}%".F(name, (100 - target.HP_Perc).ToString("0"));
       else
         msg = name;

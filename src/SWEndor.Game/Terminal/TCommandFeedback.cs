@@ -9,12 +9,12 @@
   public struct TCommandFeedback
   {
     public readonly TCommandFeedbackType ContentType;
-    public readonly object Content;
+    public readonly string Content;
 
-    public TCommandFeedback(TCommandFeedbackType type, object obj)
+    public TCommandFeedback(TCommandFeedbackType type, string response)
     {
       ContentType = type;
-      Content = obj;
+      Content = response;
     }
 
     public bool IsError() { return ContentType == TCommandFeedbackType.ERROR; }

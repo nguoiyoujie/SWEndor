@@ -23,6 +23,7 @@ namespace SWEndor.Game.Models
     /// Initializes the game object instance
     /// </summary>
     /// <param name="engine">The game engine</param>
-    void Initialize(Engine engine);
+    /// <param name="includeAddOns">Should the addon attachments to the actor be included?e</param>
+    void Initialize(Engine engine, bool includeAddOns);
   }
 }

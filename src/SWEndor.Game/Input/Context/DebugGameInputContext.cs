@@ -1,6 +1,8 @@
 ﻿using SWEndor.Game.Input.Functions;
 using SWEndor.Game.Input.Functions.Gameplay;
 using SWEndor.Game.Input.Functions.Gameplay.Special;
+using SWEndor.Game.Input.Functions.Utility.Game;
+using SWEndor.Game.Input.Functions.Utility.Screen;
 
 namespace SWEndor.Game.Input.Context
 {
@@ -21,7 +23,9 @@ namespace SWEndor.Game.Input.Context
       ToggleCameraStates.InternalName,
       ToggleMovementLock.InternalName,
       TogglePlayerAI.InternalName,
-      ToggleFreeMode.InternalName
+      ToggleFreeMode.InternalName,
+
+      SaveSnapshot.InternalName
     };
 
     public override void Set()
@@ -29,9 +33,12 @@ namespace SWEndor.Game.Input.Context
       base.Set();
       foreach (string s in _dbg_functions)
       {
-        InputFunction fn = InputFunction.Registry.Get(s);
-        if (fn != null)
-          fn.Enabled = true;
+        int index = -1;
+        while ((index = InputFunction.Registry.GetNext(s, ++index, out InputFunction fn)) != -1)
+        {
+          if (fn != null)
+            fn.Enabled = true;
+        }
       }
     }
 
@@ -48,7 +55,7 @@ namespace SWEndor.Game.Input.Context
             Globals.Engine.Game.EnableAI = !Globals.Engine.Game.EnableAI;
             break;
 
-          case (int)CONST_TV_KEY.TV_KEY_8: // Toggle Collisioj
+          case (int)CONST_TV_KEY.TV_KEY_8: // Toggle Collision
             Globals.Engine.Game.EnableCollision = !Globals.Engine.Game.EnableCollision;
             break;
 

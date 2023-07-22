@@ -57,7 +57,7 @@ namespace SWEndor.Game.AI.Actions
     public override void Process(Engine engine, ActorInfo actor)
     {
       ActorInfo target = engine.ActorFactory.Get(Target_ActorID);
-      if (target == null || actor.MoveData.MaxSpeed == 0)
+      if (target == null || !target.Active || actor.MoveData.MaxSpeed == 0)
       {
         Complete = true;
         return;

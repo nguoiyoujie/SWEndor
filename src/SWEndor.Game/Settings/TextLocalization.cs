@@ -58,6 +58,8 @@ namespace SWEndor
     ENEMY_HIT,
     ENEMY_DESTROYED,
     SUBSYSTEM_LOST,
+    SUBSYSTEM_DISABLED,
+    SUBSYSTEM_RECOVERED,
     SQUAD_MEMBER_LOST,
 
     SQUAD_INDICATOR,
@@ -130,7 +132,9 @@ namespace SWEndor
 
       { TextLocalKeys.ENEMY_HIT, "[HIT]" },
       { TextLocalKeys.ENEMY_DESTROYED, "[{0}] destroyed." },
-      { TextLocalKeys.SUBSYSTEM_LOST, "WARNING: Subsystem [{0}] lost." },
+      { TextLocalKeys.SUBSYSTEM_LOST, "WARNING: Subsystem [{0}] damaged." },
+      { TextLocalKeys.SUBSYSTEM_DISABLED, "WARNING: Subsystem [{0}] disabled." },
+      { TextLocalKeys.SUBSYSTEM_RECOVERED, "Subsystem [{0}] is back online." },
       { TextLocalKeys.SQUAD_MEMBER_LOST, "WARNING: [{0}] lost." },
 
       { TextLocalKeys.SQUAD_INDICATOR, "Squad Indicator: {0}" },

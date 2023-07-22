@@ -1,8 +1,6 @@
 ﻿using MTV3D65;
 using Primrose.Primitives;
-using System.Collections.Generic;
 using SWEndor.Game.ExplosionTypes;
-using SWEndor.Game.Core;
 using SWEndor.Game.Shaders;
 using SWEndor.Game.ActorTypes.Components;
 
@@ -48,7 +46,7 @@ namespace SWEndor.Game.Explosions.Models
           }
         }
 
-        Mesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 8);
+        Mesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 3);
       }
     }
 

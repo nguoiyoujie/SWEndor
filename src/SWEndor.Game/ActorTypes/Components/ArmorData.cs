@@ -1,8 +1,6 @@
 ﻿using Primrose.Primitives.Factories;
 using SWEndor.Game.Actors;
 using Primrose.FileFormat.INI;
-using System;
-using System.Collections.Generic;
 
 namespace SWEndor.Game.ActorTypes.Components
 {

@@ -4,6 +4,7 @@ using Primrose.FileFormat.INI;
 using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using System.IO;
+using Primrose.Primitives.ValueTypes;
 
 namespace SWEndor.Game.ActorTypes.Components
 {
@@ -25,7 +26,7 @@ namespace SWEndor.Game.ActorTypes.Components
     public MeshMode Mode;
 
     [INIValue]
-    public float Scale;
+    public float3 Scale;
 
     [INIValue]
     public string SourceMeshPath;
@@ -50,19 +51,19 @@ namespace SWEndor.Game.ActorTypes.Components
     public TV_3DVECTOR MinDimensions;
 
 
-    public static MeshData Default = new MeshData(Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(), 1, MeshMode.NONE, CONST_TV_BLENDINGMODE.TV_BLEND_NO, null, null);
+    public static MeshData Default = new MeshData(Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(), float3.One, MeshMode.NONE, CONST_TV_BLENDINGMODE.TV_BLEND_NO, null, null);
 
-    public MeshData(Engine engine, string id, string srcMesh) : this(engine, id, srcMesh, null, 1, CONST_TV_BLENDINGMODE.TV_BLEND_NO, null) { }
+    public MeshData(Engine engine, string id, string srcMesh) : this(engine, id, srcMesh, null, float3.One, CONST_TV_BLENDINGMODE.TV_BLEND_NO, null) { }
 
-    public MeshData(Engine engine, string id, string srcMesh, float scale) : this(engine, id, srcMesh, null, scale, CONST_TV_BLENDINGMODE.TV_BLEND_NO, null) { }
+    public MeshData(Engine engine, string id, string srcMesh, float3 scale) : this(engine, id, srcMesh, null, scale, CONST_TV_BLENDINGMODE.TV_BLEND_NO, null) { }
 
-    public MeshData(Engine engine, string id, string srcMesh, float scale, CONST_TV_BLENDINGMODE blendmode) : this(engine, id, srcMesh, null, scale, blendmode, null) { }
+    public MeshData(Engine engine, string id, string srcMesh, float3 scale, CONST_TV_BLENDINGMODE blendmode) : this(engine, id, srcMesh, null, scale, blendmode, null) { }
 
-    public MeshData(Engine engine, string id, string srcMesh, float scale, CONST_TV_BLENDINGMODE blendmode, string shader) : this(engine, id, srcMesh, null, scale, blendmode, shader) { }
+    public MeshData(Engine engine, string id, string srcMesh, float3 scale, CONST_TV_BLENDINGMODE blendmode, string shader) : this(engine, id, srcMesh, null, scale, blendmode, shader) { }
 
-    public MeshData(Engine engine, string id, string srcMesh, float scale, string shader) : this(engine, id, srcMesh, null, scale, CONST_TV_BLENDINGMODE.TV_BLEND_NO, shader) { }
+    public MeshData(Engine engine, string id, string srcMesh, float3 scale, string shader) : this(engine, id, srcMesh, null, scale, CONST_TV_BLENDINGMODE.TV_BLEND_NO, shader) { }
 
-    public MeshData(Engine engine, string id, string srcMesh, string srcFarMesh, float scale, CONST_TV_BLENDINGMODE blendmode, string shader)
+    public MeshData(Engine engine, string id, string srcMesh, string srcFarMesh, float3 scale, CONST_TV_BLENDINGMODE blendmode, string shader)
     {
       string farname = id + "_far";
       SourceMeshPath = srcMesh;
@@ -76,39 +77,43 @@ namespace SWEndor.Game.ActorTypes.Components
       Data = null;
 
       // create SourceMesh and SourceFarMesh
-      SourceMesh = engine.TrueVision.TVGlobals.GetMesh(id);
+      SourceMesh = engine.MeshRegistry.Get(id); //engine.TrueVision.TVGlobals.GetMesh(id);
       if (SourceMesh == null)
       {
-        using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE)) // allow meshes to be loaded concurrently
         {
           SourceMesh = engine.TrueVision.TVScene.CreateMeshBuilder(id);
-
+          engine.MeshRegistry.Put(id, SourceMesh);
           if (srcMesh != null)
+          {
             SourceMesh.LoadXFile(Path.Combine(Globals.ModelPath, srcMesh), true);
-          SourceMesh.Enable(false);
-          SourceMesh.SetCollisionEnable(false);
-          SourceMesh.WeldVertices(0.001f, 0.001f);
-          SourceMesh.ComputeBoundings();
-          SourceMesh.GetBoundingBox(ref MinDimensions, ref MaxDimensions);
-          SourceMesh.SetBlendingMode(blendmode);
+            SourceMesh.Enable(false);
+            SourceMesh.SetCollisionEnable(false);
+            SourceMesh.WeldVertices(0.001f, 0.001f);
+            SourceMesh.ComputeBoundings();
+            SourceMesh.GetBoundingBox(ref MinDimensions, ref MaxDimensions);
+            //SourceMesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_BUMPMAPPING_TANGENTSPACE, 0, 1);
+            //SourceMesh.SetShadowCast(true, true);
+            SourceMesh.SetBlendingMode(blendmode);
+          }
         }
       }
 
-      SourceFarMesh = engine.TrueVision.TVGlobals.GetMesh(farname);
+      SourceFarMesh = engine.MeshRegistry.Get(farname); //engine.TrueVision.TVGlobals.GetMesh(farname);
       if (SourceFarMesh == null)
       {
         if (srcFarMesh != null)
         {
-          using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+          using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE)) // allow meshes to be loaded concurrently
           {
             SourceFarMesh = engine.TrueVision.TVScene.CreateMeshBuilder(farname);
-
+            engine.MeshRegistry.Put(farname, SourceFarMesh);
             SourceFarMesh.LoadXFile(Path.Combine(Globals.ModelPath, srcFarMesh), true);
             SourceFarMesh.Enable(false);
             SourceFarMesh.SetCollisionEnable(false);
             SourceFarMesh.WeldVertices(0.01f, 0.01f);
             SourceFarMesh.ComputeBoundings();
-            SourceMesh.SetBlendingMode(blendmode);
+            SourceFarMesh.SetBlendingMode(blendmode);
           }
         }
         else
@@ -116,7 +121,7 @@ namespace SWEndor.Game.ActorTypes.Components
       }
     }
 
-    public MeshData(TVMesh mesh, float scale, MeshMode mode, CONST_TV_BLENDINGMODE blendmode, string data, string shader)
+    public MeshData(TVMesh mesh, float3 scale, MeshMode mode, CONST_TV_BLENDINGMODE blendmode, string data, string shader)
     {
       SourceMeshPath = data;
       SourceFarMeshPath = null;
@@ -230,88 +235,102 @@ namespace SWEndor.Game.ActorTypes.Components
   {
     public static MeshData CreateHorizon(Engine engine, string id, float size, string texname, CONST_TV_BLENDINGMODE blendmode, string shader = null)
     {
-      TVMesh m = engine.TrueVision.TVGlobals.GetMesh(id);
+      TVMesh m = engine.MeshRegistry.Get(id); //engine.TrueVision.TVGlobals.GetMesh(id);
       if (m == null)
       {
         m = engine.TrueVision.TVScene.CreateMeshBuilder(id);
-
+        engine.MeshRegistry.Put(id, m);
         string texpath = Path.Combine(Globals.ImagePath, texname);
         int tex = LoadAlphaTexture(engine, texname, texpath);
-
         m.AddFloor(tex, -size, -size, size, size);
         m.SetTexture(tex);
         m.SetCullMode(CONST_TV_CULLING.TV_DOUBLESIDED);
       }
-      return new MeshData(m, 1, MeshMode.HORIZON, blendmode, "{0},{1}".F(size, texname), shader);
+      return new MeshData(m, float3.One, MeshMode.HORIZON, blendmode, "{0},{1}".F(size, texname), shader);
     }
 
     public static MeshData CreateTexturedModel(Engine engine, string id, string modelpath, string texname, CONST_TV_BLENDINGMODE blendmode, string shader = null)
     {
-      TVMesh m = engine.TrueVision.TVGlobals.GetMesh(id);
+      TVMesh m = engine.MeshRegistry.Get(id); //engine.TrueVision.TVGlobals.GetMesh(id);
       if (m == null)
       {
         m = engine.TrueVision.TVScene.CreateMeshBuilder(id);
+        engine.MeshRegistry.Put(id, m);
         string texpath = Path.Combine(Globals.ImagePath, texname);
         int itex = LoadTexture(engine, texname, texpath);
-
         m.LoadXFile(Path.Combine(Globals.ModelPath, modelpath), true);
         m.SetTexture(itex);
       }
-      return new MeshData(m, 1, MeshMode.TEX_MOD, blendmode, "{0},{1}".F(modelpath, texname), shader);
+      return new MeshData(m, float3.One, MeshMode.TEX_MOD, blendmode, "{0},{1}".F(modelpath, texname), shader);
     }
 
     public static MeshData CreateAlphaTexturedWall(Engine engine, string id, float size, string texname, string alphatexname, CONST_TV_BLENDINGMODE blendmode, string shader = null)
     {
-      TVMesh m = engine.TrueVision.TVGlobals.GetMesh(id);
+      TVMesh m = engine.MeshRegistry.Get(id); //engine.TrueVision.TVGlobals.GetMesh(id);
       if (m == null)
       {
         using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
-          m = engine.TrueVision.TVScene.CreateMeshBuilder(id);
-
-        // 1 texture
-        int tex = 0;
-
-        string texpath = Path.Combine(Globals.ImagePath, texname);
-        string alphatexpath = Path.Combine(Globals.ImagePath, alphatexname);
-        if (engine.TrueVision.TVGlobals.GetTex(texname) == 0)
         {
-          int texS = engine.TrueVision.TVTextureFactory.LoadTexture(texpath);
-          int texA = engine.TrueVision.TVTextureFactory.LoadTexture(alphatexpath);
-          tex = engine.TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texname);
+          m = engine.TrueVision.TVScene.CreateMeshBuilder(id);
+          engine.MeshRegistry.Put(id, m);
+        }
+        // 1 texture
+        int tex = engine.TextureRegistry.Get(texname);
+        if (tex == 0)
+        {
+          string texpath = Path.Combine(Globals.ImagePath, texname);
+          string alphatexpath = Path.Combine(Globals.ImagePath, alphatexname);
+          using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+          {
+            int texS = engine.TrueVision.TVTextureFactory.LoadTexture(texpath);
+            int texA = engine.TrueVision.TVTextureFactory.LoadTexture(alphatexpath);
+            tex = engine.TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texname);
+          }
+          engine.TextureRegistry.Put(texname, tex);
         }
 
         m.AddWall(tex, -size / 2, 0, size / 2, 0, size, -size / 2);
         m.SetTexture(tex);
       }
-      return new MeshData(m, 1, MeshMode.ALPHATEX_WALL, blendmode, "{0},{1},{2}".F(size, texname, alphatexname), shader);
+      return new MeshData(m, float3.One, MeshMode.ALPHATEX_WALL, blendmode, "{0},{1},{2}".F(size, texname, alphatexname), shader);
     }
 
     public static MeshData CreateAlphaTexturedFlickerWall(Engine engine, string id, float size, string texname, string texdname, string alphatexname, CONST_TV_BLENDINGMODE blendmode, int frames, int[] flickerframes, ref int[] texanimframes)
     {
-      TVMesh m = engine.TrueVision.TVGlobals.GetMesh(id);
+      TVMesh m = engine.MeshRegistry.Get(id); //engine.TrueVision.TVGlobals.GetMesh(id);
       if (m == null)
       {
         using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        {
           m = engine.TrueVision.TVScene.CreateMeshBuilder(id);
-
-        string texpath = Path.Combine(Globals.ImagePath, texname);
-        string texdpath = Path.Combine(Globals.ImagePath, texdname);
+          engine.MeshRegistry.Put(id, m);
+        }
         string alphatexpath = Path.Combine(Globals.ImagePath, alphatexname);
 
-        int dstartex = 0;
-        int dstardtex = 0;
-        if (engine.TrueVision.TVGlobals.GetTex(texname) == 0)
+        int dstartex = engine.TextureRegistry.Get(texname); //engine.TrueVision.TVGlobals.GetTex(id);
+        if (dstartex == 0)
         {
-          int texS = engine.TrueVision.TVTextureFactory.LoadTexture(texpath);
-          int texA = engine.TrueVision.TVTextureFactory.LoadTexture(alphatexpath); // note we are loading alpha map as texture
-          dstartex = engine.TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texname);
+          string texpath = Path.Combine(Globals.ImagePath, texname);
+          using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+          {
+            int texS = engine.TrueVision.TVTextureFactory.LoadTexture(texpath);
+            int texA = engine.TrueVision.TVTextureFactory.LoadTexture(alphatexpath); // note we are loading alpha map as texture
+            dstartex = engine.TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texname);
+          }
+          engine.TextureRegistry.Put(texname, dstartex);
         }
 
-        if (engine.TrueVision.TVGlobals.GetTex(texdname) == 0)
+        int dstardtex = engine.TextureRegistry.Get(texdname); //engine.TrueVision.TVGlobals.GetTex(id);
+        if (dstardtex == 0)
         {
-          int texS = engine.TrueVision.TVTextureFactory.LoadTexture(texdpath);
-          int texA = engine.TrueVision.TVTextureFactory.LoadTexture(alphatexpath);
-          dstardtex = engine.TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texdname);
+          string texdpath = Path.Combine(Globals.ImagePath, texdname);
+          using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+          {
+            int texS = engine.TrueVision.TVTextureFactory.LoadTexture(texdpath);
+            int texA = engine.TrueVision.TVTextureFactory.LoadTexture(alphatexpath);
+            dstardtex = engine.TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texdname);
+          }
+          engine.TextureRegistry.Put(texdname, dstardtex);
         }
 
         texanimframes = new int[frames];
@@ -325,35 +344,39 @@ namespace SWEndor.Game.ActorTypes.Components
         m.AddWall(texanimframes[0], -size / 2, 0, size / 2, 0, size, -size / 2);
         m.SetTexture(texanimframes[0]);
       }
-      return new MeshData(m, 1, MeshMode.ALPHATEX_FLICKERWALL, blendmode, null, null);
+      return new MeshData(m, float3.One, MeshMode.ALPHATEX_FLICKERWALL, blendmode, null, null);
     }
 
     public static MeshData CreateBillboardAtlasAnimation(Engine engine, string id, float size, string texname, CONST_TV_BLENDINGMODE blendmode, int columns, int rows, string shader = null)
     {
-      TVMesh m = engine.TrueVision.TVGlobals.GetMesh(id);
+      TVMesh m = engine.MeshRegistry.Get(id); //engine.TrueVision.TVGlobals.GetMesh(id);
       if (m == null)
       {
         string texpath = Path.Combine(Globals.ImagePath, texname);
-        int i = LoadAlphaTexture(engine, texname, texpath);
+        int i = LoadTexture(engine, texname, texpath); // LoadAlphaTexture
         using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        {
           m = engine.TrueVision.TVScene.CreateBillboard(i, 0, 0, 0, size, size, id, true);
+          engine.MeshRegistry.Put(id, m);
+        }
         m.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
         m.SetTextureModEnable(true);
         m.SetTextureModTranslationScale(1f / columns, 1f / rows);
       }
-      return new MeshData(m, 1, MeshMode.BILLBOARD_ANIM, blendmode, string.Join(",", size, texname, columns, rows), shader);
+      return new MeshData(m, float3.One, MeshMode.BILLBOARD_ANIM, blendmode, string.Join(",", size, texname, columns, rows), shader);
     }
 
     private static int LoadAlphaTexture(Engine engine, string id, string texpath, string alphatexpath = null)
     {
       using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
-        int tex = engine.TrueVision.TVGlobals.GetTex(id);
+        int tex = engine.TextureRegistry.Get(id); //engine.TrueVision.TVGlobals.GetTex(id);
         if (tex == 0)
         {
           int texS = engine.TrueVision.TVTextureFactory.LoadTexture(texpath);
           int texA = engine.TrueVision.TVTextureFactory.LoadTexture(alphatexpath ?? texpath); //LoadAlphaTexture
           tex = engine.TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, id);
+          engine.TextureRegistry.Put(id, tex);
         }
         return tex;
       }
@@ -363,9 +386,12 @@ namespace SWEndor.Game.ActorTypes.Components
     {
       using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
-        int tex = engine.TrueVision.TVGlobals.GetTex(id);
+        int tex = engine.TextureRegistry.Get(id); //engine.TrueVision.TVGlobals.GetTex(id);
         if (tex == 0)
+        {
           tex = engine.TrueVision.TVTextureFactory.LoadTexture(texpath, id);
+          engine.TextureRegistry.Put(id, tex);
+        }
         return tex;
       }
     }

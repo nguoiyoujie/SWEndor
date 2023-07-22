@@ -18,7 +18,7 @@ namespace SWEndor.Game.AI.Squads.Missions
       ActorInfo target = engine.ActorFactory.Get(Target_ActorID);
 
       // eliminate threats
-      if (target != null)
+      if (target != null && target.Active)
       {
         if (target.Squad.IsNull)
           return Actions.AttackActor.GetOrCreate(target.Squad.GetThreatFirst(engine)?.ID ?? -1);

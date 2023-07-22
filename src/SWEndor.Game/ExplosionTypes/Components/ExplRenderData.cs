@@ -1,6 +1,7 @@
 ﻿using SWEndor.Game.Core;
 using SWEndor.Game.Explosions;
 using Primrose.FileFormat.INI;
+using Primrose.Primitives.ValueTypes;
 
 namespace SWEndor.Game.ActorTypes.Components
 {
@@ -32,7 +33,8 @@ namespace SWEndor.Game.ActorTypes.Components
         float v = (k / AtlasX) * sv;
         ainfo.SetTexMod(u, v, su, sv);
       }
-      ainfo.Scale += ExpandSize * engine.Game.TimeSinceRender;
+      float expand = ExpandSize * engine.Game.TimeSinceRender;
+      ainfo.Scale += new float3(expand, expand, expand);
     }
   }
 }

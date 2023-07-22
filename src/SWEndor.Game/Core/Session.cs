@@ -36,14 +36,23 @@ namespace SWEndor.Game.Core
       tm_process.Elapsed += TimerProcess;
       tm_perf.Elapsed += TimerPerf;
 
+#if DEBUG
+      tm_tracker = new System.Timers.Timer(20);
+      tm_tracker.Elapsed += TimerTrack;
+#endif
       // time control
-      TimeControl = new TimeControl();
+      TimeControl = new TimeControl(60, TimeControl.TimePrecision.HIGH_PRECISION);
+      // if VSync is used, we don't use TimeControl's wait
+      if (engine.Settings.VSync)
+      {
+        TimeControl.Precision = TimeControl.TimePrecision.NONE;
+      }
     }
 
     public TimeControl TimeControl;
 
     public float GameTime { get; internal set; }
-    public float GameFrame { get; internal set; }
+    public int GameFrame { get; internal set; }
 
     private enum RunState { STOPPED, LOADING, RUNNING }
     private RunState State { get; set; } = RunState.STOPPED;
@@ -51,6 +60,9 @@ namespace SWEndor.Game.Core
     public float TimeSinceRender { get; set; }
     public float AddTime { get; set; }
     public bool IsPaused { get; set; }
+
+    public bool IsRunning { get { return State == RunState.RUNNING; } }
+
 
     private Thread th_load { get; set; }
 
@@ -60,6 +72,10 @@ namespace SWEndor.Game.Core
     private readonly System.Timers.Timer tm_render;
     private readonly System.Timers.Timer tm_process;
     private readonly System.Timers.Timer tm_perf;
+
+#if DEBUG
+    private readonly System.Timers.Timer tm_tracker;
+#endif
 
     public float CurrentFPS { get { return TimeControl.FPS; } }
 
@@ -125,6 +141,9 @@ namespace SWEndor.Game.Core
       tm_process.Stop();
       tm_perf.Stop();
       tm_sound.Stop();
+#if DEBUG
+      tm_tracker.Stop();
+#endif
     }
 
     private void Tick()
@@ -136,84 +155,93 @@ namespace SWEndor.Game.Core
 
       // Pre-load
       th_load.Start();
-      while (th_load.ThreadState != ThreadState.Stopped)
+      while (th_load.ThreadState != ThreadState.Stopped && th_load.ThreadState != ThreadState.Aborted)
       {
         Engine.PreRender();
         TimeControl.Update();
         TimeControl.Wait();
-      }
 
-      Engine.InputManager.ClearInput();
-
-      // Initialize other threads/timers
-      if (septhread_sound)
-        tm_sound.Start();
-
-      if (septhread_ai)
-        tm_ai.Start();
-
-      if (septhread_collision)
-        tm_collision.Start();
-
-      if (septhread_process)
-        tm_process.Start();
-
-      if (septhread_render)
-        tm_render.Start();
-
-      try
-      {
-        while (State == RunState.RUNNING)
+        if (State != RunState.RUNNING)
         {
-          try
-          {
-            using (Engine.PerfManager.Create("tick_loop"))
-            {
-              TimeControl.Update();
-              TimeControl.AddTime(AddTime);
-              AddTime = 0;
-              TimeSinceRender = TimeControl.WorldInterval;
-
-              if (!septhread_collision)
-                TickCollision();
-
-              if (!septhread_process)
-                TickProcess();
-
-              if (!septhread_ai)
-                TickAI();
-
-              if (!septhread_sound)
-                TickSound();
-
-              if (!septhread_render)
-                TickRender();
-
-              if (!IsPaused)
-              {
-                GameTime += TimeSinceRender;
-                GameFrame++;
-              }
-            }
-          }
-          catch (Exception ex)
-          {
-            GenerateFatalError(ex);
-          }
+          th_load.Abort();
         }
       }
-      catch (Exception ex)
+
+      if (State == RunState.RUNNING)
       {
-        Log.Fatal(Globals.LogChannel, ex);
-        MessageBox.Show("Fatal Error occurred during runtime. Please see {0} in the /Log folder for the error message.".F(Globals.LogChannel)
-                      , Application.ProductName + " - Error Encountered!"
-                      , MessageBoxButtons.OK);
-        return;
+        Engine.InputManager.ClearInput();
+
+        // Initialize other threads/timers
+        if (septhread_sound)
+          tm_sound.Start();
+
+        if (septhread_ai)
+          tm_ai.Start();
+
+        if (septhread_collision)
+          tm_collision.Start();
+
+        if (septhread_process)
+          tm_process.Start();
+
+        if (septhread_render)
+          tm_render.Start();
+
+#if DEBUG
+        tm_tracker.Start();
+#endif
+        try
+        {
+          while (State == RunState.RUNNING)
+          {
+            try
+            {
+              TimeControl.Wait();
+              using (Engine.PerfManager.Create("tick_loop"))
+              {
+                TimeControl.Update();
+                TimeControl.AddTime(AddTime);
+                AddTime = 0;
+                TimeSinceRender = TimeControl.WorldInterval;
+
+                if (!septhread_collision)
+                  TickCollision();
+
+                if (!septhread_process)
+                  TickProcess();
+
+                if (!septhread_ai)
+                  TickAI();
+
+                if (!septhread_sound)
+                  TickSound();
+
+                if (!septhread_render)
+                  TickRender();
+
+                if (!IsPaused)
+                {
+                  GameTime += TimeSinceRender;
+                  GameFrame++;
+                }
+              }
+            }
+            catch (Exception ex)
+            {
+              GenerateFatalError(ex);
+            }
+          }
+        }
+        catch (Exception ex)
+        {
+          Log.Fatal(Globals.LogChannel, ex);
+          MessageBox.Show(TextLocalization.Get(TextLocalKeys.SYSTEM_RUN_ERROR).F(Globals.LogChannel)
+                        , Application.ProductName + " - Error Encountered!"
+                        , MessageBoxButtons.OK);
+          return;
+        }
       }
-      finally
-      {
-        Engine.Exit();
-      }
+      Engine.Exit();
     }
 
     private void GenerateFatalError(Task t)
@@ -226,7 +254,7 @@ namespace SWEndor.Game.Core
       // Replace this block to print this on file!
       if (State == RunState.RUNNING)
       {
-        Engine.Screen2D.CurrentPage = new FatalError(Engine.Screen2D, ex);
+        Engine.Screen2D.CurrentPage = new FatalError(Engine.Screen2D, ex, Engine.GameScenarioManager.IsMainMenu);
         Engine.Screen2D.ShowPage = true;
         IsPaused = true;
       }
@@ -267,6 +295,29 @@ namespace SWEndor.Game.Core
         tm_process.Stop();
     }
 
+#if DEBUG
+    private int track_tick = 0;
+    private int track_count = 0;
+    private void TimerTrack(object sender, ElapsedEventArgs e)
+    {
+      // use this to track lag spikes
+      if (Engine.Game.GameFrame != track_tick)
+      {
+        track_tick = Engine.Game.GameFrame;
+        track_count = 0;
+      }
+      else
+      {
+        track_count++;
+        if (track_count >= 4)
+        {
+
+        }
+      }
+      if (State != RunState.RUNNING)
+        tm_tracker.Stop();
+    }
+#endif
     private void TimerPerf(object sender, ElapsedEventArgs e)
     {
       TickPerf();
@@ -285,12 +336,13 @@ namespace SWEndor.Game.Core
           isProcessingRender = true;
           using (Engine.PerfManager.Create("render"))
           {
+            //if (!IsPaused)
+
             using (Engine.PerfManager.Create("render_main"))
               Engine.Render();
 
-            //if (!IsPaused)
-              using (Engine.PerfManager.Create("render_camera"))
-                Engine.PlayerCameraInfo.Update();
+            using (Engine.PerfManager.Create("render_camera"))
+              Engine.PlayerCameraInfo.Update();
 
             // unused
             //using (Engine.PerfManager.Create("render_occ"))
@@ -329,6 +381,9 @@ namespace SWEndor.Game.Core
               using (Engine.PerfManager.Create("process_proj"))
                 Engine.ProcessProj();
 
+              using (Engine.PerfManager.Create("process_part"))
+                Engine.ProcessPart();
+              
               using (Engine.PerfManager.Create("process_player"))
                 Engine.PlayerInfo.Update();
             }
@@ -357,6 +412,13 @@ namespace SWEndor.Game.Core
                 Engine.ProjectileFactory.ReturnToPool();
                 Engine.ProjectileFactory.ActivatePlanned();
                 Engine.ProjectileFactory.DestroyDead();
+              }
+
+              using (Engine.PerfManager.Create("process_partpool"))
+              {
+                Engine.ParticleFactory.ReturnToPool();
+                Engine.ParticleFactory.ActivatePlanned();
+                Engine.ParticleFactory.DestroyDead();
               }
 
               using (Engine.PerfManager.Create("process_scenario"))

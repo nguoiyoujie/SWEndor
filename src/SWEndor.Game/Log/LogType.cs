@@ -11,6 +11,12 @@
 
     // Asset
     ASSET_LOADING,
+    ASSET_LOADED,
+
+    // Shader
+    SHADER_LOADED,
+    SHADER_LOAD_ERROR,
+    MISSING_SHADER_VALUE_SOURCE, 
 
     // Engine
     ENGINE_STARTED,
@@ -20,6 +26,9 @@
     SCENARIO_STARTED,
     SCENARIO_ENDED,
     SCENARIO_STATE_CHANGE,
+
+    // Caches
+    GETDISTANCE_CACHECLEAR,
 
     // Actor
 #if DEBUG

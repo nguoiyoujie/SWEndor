@@ -7,12 +7,13 @@ using System;
 using SWEndor.Game.Primitives.Extensions;
 using Primrose.Expressions;
 using SWEndor.Game.Core;
+using System.Collections.Generic;
 
 namespace SWEndor.Game.Scenarios.Scripting.Functions
 {
   public static class AIFns
   {
-    public static Val QueueFirst(IContext context, params Val[] ps)
+    public static Val QueueFirst(IContext context, IList<Val> ps)
     {
       int id = (int)ps[0];
       Engine e = ((Context)context).Engine;
@@ -28,7 +29,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
       return Val.TRUE;
     }
 
-    public static Val QueueNext(IContext context, params Val[] ps)
+    public static Val QueueNext(IContext context, IList<Val> ps)
     {
       int id = (int)ps[0];
       Engine e = ((Context)context).Engine;
@@ -44,7 +45,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
       return Val.TRUE;
     }
 
-    public static Val QueueLast(IContext context, params Val[] ps)
+    public static Val QueueLast(IContext context, IList<Val> ps)
     {
       int id = (int)ps[0];
       Engine e = ((Context)context).Engine;
@@ -93,7 +94,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
       return Val.TRUE;
     }
 
-    private static ActionInfo ParseAction(Val[] ps)
+    private static ActionInfo ParseAction(IList<Val> ps)
     {
       //ActorInfo tgt = null;
       ActionInfo action = null;
@@ -106,7 +107,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
           break;
 
         case "hunt":
-          if (ps.Length <= 2)
+          if (ps.Count <= 2)
             action = Hunt.GetOrCreate();
           else
           {
@@ -128,26 +129,26 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
           break;
 
         case "wait":
-          if (ps.Length <= 2)
+          if (ps.Count <= 2)
             action = Wait.GetOrCreate();
           else
             action = Wait.GetOrCreate((float)ps[2]);
           break;
 
         case "evade":
-          if (ps.Length <= 2)
+          if (ps.Count <= 2)
             action = Evade.GetOrCreate();
           else
             action = Evade.GetOrCreate((float)ps[2]);
           break;
 
         case "move":
-          if (ps.Length >= 4)
+          if (ps.Count >= 4)
           {
             TV_3DVECTOR dest = ((float3)ps[2]).ToVec3();
             float speed = (float)ps[3];
 
-            switch (ps.Length)
+            switch (ps.Count)
             {
               case 4:
                 action = Move.GetOrCreate(dest, speed);
@@ -162,16 +163,16 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
             }
           }
           else
-            throw new InsufficientParametersException(action_str, 4, ps.Length);
+            throw new InsufficientParametersException(action_str, 4, ps.Count);
           break;
 
         case "forcedmove":
-          if (ps.Length >= 4)
+          if (ps.Count >= 4)
           {
             TV_3DVECTOR dest = ((float3)ps[2]).ToVec3();
             float speed = (float)ps[3];
 
-            switch (ps.Length)
+            switch (ps.Count)
             {
               case 4:
                 action = ForcedMove.GetOrCreate(dest, speed);
@@ -186,16 +187,16 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
             }
           }
           else
-            throw new InsufficientParametersException(action_str, 4, ps.Length);
+            throw new InsufficientParametersException(action_str, 4, ps.Count);
           break;
 
         case "rotate":
-          if (ps.Length >= 4)
+          if (ps.Count >= 4)
           {
             TV_3DVECTOR dest = ((float3)ps[2]).ToVec3();
             float speed = (float)ps[3];
 
-            switch (ps.Length)
+            switch (ps.Count)
             {
               case 4:
                 action = Rotate.GetOrCreate(dest, speed);
@@ -210,17 +211,17 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
             }
           }
           else
-            throw new InsufficientParametersException(action_str, 4, ps.Length);
+            throw new InsufficientParametersException(action_str, 4, ps.Count);
           break;
 
         case "hyperspacein":
-          if (ps.Length >= 3)
+          if (ps.Count >= 3)
           {
             TV_3DVECTOR dest = ((float3)ps[2]).ToVec3();
             action = HyperspaceIn.GetOrCreate(dest);
           }
           else
-            throw new InsufficientParametersException(action_str, 3, ps.Length);
+            throw new InsufficientParametersException(action_str, 3, ps.Count);
           break;
 
         case "hyperspaceout":
@@ -228,14 +229,14 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
           break;
 
         case "attackactor":
-          if (ps.Length >= 3)
+          if (ps.Count >= 3)
           {
             tgtid = (int)ps[2];
             //tgt = ActorFactory.Get(tgtid);
             //if (tgt == null)
             //  throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[1].ValueS.ToLower(), ps[2].ToString().ToLower()));
 
-            switch (ps.Length)
+            switch (ps.Count)
             {
               case 3:
                 action = AttackActor.GetOrCreate(tgtid);
@@ -256,18 +257,18 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
             }
           }
           else
-            throw new InsufficientParametersException(action_str, 3, ps.Length);
+            throw new InsufficientParametersException(action_str, 3, ps.Count);
           break;
 
         case "followactor":
-          if (ps.Length >= 3)
+          if (ps.Count >= 3)
           {
             tgtid = (int)ps[2];
             //tgt = ActorFactory.Get(tgtid);
             //if (tgt == null)
             //  throw new Exception(string.Format("Target Actor (ID {1}) for action '{0}' not found!", ps[1].ValueS.ToLower(), ps[2].ToString().ToLower()));
 
-            switch (ps.Length)
+            switch (ps.Count)
             {
               case 3:
                 action = FollowActor.GetOrCreate(tgtid);
@@ -282,17 +283,17 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
             }
           }
           else
-            throw new InsufficientParametersException(action_str, 3, ps.Length);
+            throw new InsufficientParametersException(action_str, 3, ps.Count);
           break;
 
         /*
       case "avoidcollisionrotate":
-        if (ps.Length >= 4)
+        if (ps.Count >= 4)
         {
           TV_3DVECTOR pos = ((float3)ps[2]).ToVec3();
           TV_3DVECTOR rot = ((float3)ps[3]).ToVec3();
 
-          switch (ps.Length)
+          switch (ps.Count)
           {
             case 4:
               action = AvoidCollisionRotate.GetOrCreate(pos, rot);
@@ -304,17 +305,17 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
           }
         }
         else
-          throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ((string)ps[0]).ToLower(), "4", ps.Length.ToString()));
+          throw new Exception(string.Format("Insufficient parameters for action '{0}': required {1}, has {2}", ((string)ps[0]).ToLower(), "4", ps.Count.ToString()));
         break;
         */
 
         case "setgamestateb":
-          if (ps.Length >= 4)
+          if (ps.Count >= 4)
           {
             action = SetGameStateB.GetOrCreate((string)ps[2], (bool)ps[3]);
           }
           else
-            throw new InsufficientParametersException(action_str, 4, ps.Length);
+            throw new InsufficientParametersException(action_str, 4, ps.Count);
           break;
 
       }

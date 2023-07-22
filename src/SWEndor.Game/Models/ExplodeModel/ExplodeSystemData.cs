@@ -5,15 +5,26 @@ namespace SWEndor.Game.Models
   internal struct ExplodeSystemData
   {
     private static ExplodeData[] NullExpl = new ExplodeData[0];
+    private static ParticleData[] NullPart = new ParticleData[0];
 
     [INISubSectionList(SubsectionPrefix = "EXP")]
     internal ExplodeData[] Explodes;
 
-    public static ExplodeSystemData Default { get { return new ExplodeSystemData(NullExpl); } }
+    [INISubSectionList(SubsectionPrefix = "PRT")]
+    internal ParticleData[] Particles;
 
-    public ExplodeSystemData(ExplodeData[] expl)
+    public static ExplodeSystemData Default
+    { 
+      get 
+      { 
+        return new ExplodeSystemData(NullExpl, NullPart); 
+      } 
+    }
+
+    public ExplodeSystemData(ExplodeData[] expl, ParticleData[] part)
     {
       Explodes = expl;
+      Particles = part;
     }
   }
 }

@@ -1,21 +1,21 @@
 ﻿using MTV3D65;
-using Primrose.Primitives.Factories;
 using Primrose.Primitives.Geometry;
-using SWEndor.Game.Scenarios;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 
 namespace SWEndor.Game.Actors
 {
-  //public partial class ActorInfo
-  //{
-    //public ulong OctID = 0;
-  //}
+  public partial class ActorInfo
+  {
+    public ulong OctID = 0;
 
-  //public class Octree 
-  //{
-    // Unused in favor of the simpler Octree_String, in future 64-bit Octree may be more performant
+    public string OctString { get { return Convert.ToString((long)OctID, 8); } }
+  }
+
+  public class Octree
+  {
+    //Unused in favor of the simpler Octree_String, in future 64-bit Octree may be more performant
 
     /*
      * OctID is encoded as 63 bits representing octree-space followed by 1 bit buffer
@@ -26,27 +26,28 @@ namespace SWEndor.Game.Actors
      * up to 21 full xyz divisions are supported.
     */
 
-      /*
     public TV_3DVECTOR Center;
     public float Radius;
     public float TrueMinimum;
-    private List<ActorInfo> list = new List<ActorInfo>(Globals.ActorLimit);
-    private List<ulong> slist = new List<ulong>(Globals.ActorLimit);
+    private List<ActorInfo> list;
+    private List<ulong> slist;
     private object locker = new object();
 
-    public Octree(TV_3DVECTOR center, float radius, float minimum)
+    public Octree(TV_3DVECTOR center, float radius, float minimum, int initialCapacity = Globals.ActorLimit)
     {
       Center = center;
       Radius = radius;
       TrueMinimum = minimum;
+      list = new List<ActorInfo>(initialCapacity);
+      slist = new List<ulong>(initialCapacity);
     }
 
-    public Octree(GameScenarioManager mgr)
-    {
-      Center = (mgr.MaxBounds + mgr.MinBounds) * 0.5f;
-      TV_3DVECTOR v = (mgr.MaxBounds - mgr.MinBounds) * 0.5f;
-      Radius = Math.Max(Math.Max(v.x, v.y), v.z);
-    }
+    //public Octree(GameScenarioManager mgr)
+    //{
+    //  Center = (mgr.MaxBounds + mgr.MinBounds) * 0.5f;
+    //  TV_3DVECTOR v = (mgr.MaxBounds - mgr.MinBounds) * 0.5f;
+    //  Radius = Math.Max(Math.Max(v.x, v.y), v.z);
+    //}
 
     public ulong GetId(TV_3DVECTOR pos, float minSize)
     {
@@ -172,10 +173,15 @@ namespace SWEndor.Game.Actors
       lock (locker)
       {
         ulong k = sub & 0xE000000000000000;
-        int i = k == 0 ? 0 : slist.BinarySearch(k - 1);
+        int i = k == 0 ? 0 : (slist.BinarySearch(k - 1));
         if (i < 0)
           i = ~i;
-        int j = slist.BinarySearch(sub + 1);
+        ulong u = 1;
+        while ((sub & u) == 0)
+        {
+          u <<= 1;
+        }
+        int j = (slist.BinarySearch((sub / u * u) + u));
         if (j < 0)
           j = ~j;
         return new ActorEnumerable(list, i, j, locker);
@@ -250,7 +256,7 @@ namespace SWEndor.Game.Actors
     public void Update(ActorInfo a)
     {
       var prev = a.OctID;
-      a.OctID = GetId(a.GetBoundingBox(false));//a.GetGlobalPosition(), a.GetBoundingSphere(true).R);
+      a.OctID = GetId(a.GetBoundingBox(false));
       if (prev != a.OctID)
       {
         lock (locker)
@@ -267,7 +273,6 @@ namespace SWEndor.Game.Actors
           slist.Insert(i, a.OctID);
         }
       }
-    }
-    */
-  //}
+    } 
+  }
 }

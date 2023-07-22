@@ -51,12 +51,7 @@ namespace SWEndor.Game.UI.Widgets
       int icolor = pcolor.Value;
 
       TVScreen2DText.Action_BeginText();
-      TVScreen2DText.TextureFont_DrawText(string.Format("LIVES: {0,8:0}\nSCORE: {1,8:00000000}\nKILLS: {2,8:0}\nHITS:  {3,8:0}"
-      , PlayerInfo.Lives
-      , PlayerInfo.Score.Score
-      , PlayerInfo.Score.Kills
-      , PlayerInfo.Score.Hits
-      )
+      TVScreen2DText.TextureFont_DrawText(LookUpString.GetMetricDisplay(PlayerInfo.Lives, PlayerInfo.Score.Score, PlayerInfo.Score.Kills, PlayerInfo.Score.Hits)
       , Engine.ScreenWidth / 2 - infomiddlegap - infowidth_left
       , infotop
       , icolor
@@ -83,7 +78,7 @@ namespace SWEndor.Game.UI.Widgets
 
         TVScreen2DText.Action_BeginText();
         // Scenario Title, Difficulty
-        TVScreen2DText.TextureFont_DrawText("{0:mm\\:ss}".F(TimeSpan.FromSeconds(Engine.Game.GameTime))
+        TVScreen2DText.TextureFont_DrawText(LookUpString.GetTimeDisplay(Engine.Game.GameTime)
           , leftinfo_left
           , leftinfo_stagetop
           , icolor
@@ -91,9 +86,7 @@ namespace SWEndor.Game.UI.Widgets
           );
 
         // StageNumber
-        TVScreen2DText.TextureFont_DrawText(string.Format("STAGE: {0}"
-          , GameScenarioManager.Scenario.State.StageNumber.ToString()
-          )
+        TVScreen2DText.TextureFont_DrawText(LookUpString.GetStageDisplay(GameScenarioManager.Scenario.State.StageNumber)
           , Engine.ScreenWidth / 2 + infomiddlegap
           , infotop
           , icolor

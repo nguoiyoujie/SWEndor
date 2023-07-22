@@ -6,7 +6,7 @@
     {
       public void Process(SoundManager s)
       {
-        s.current_channel.setPaused(true);
+        s.current_music_channel.setPaused(true);
         //Channel fmodchannel;
         //s.musicgrp.getChannel(0, out fmodchannel);
         //fmodchannel.setPaused(true);

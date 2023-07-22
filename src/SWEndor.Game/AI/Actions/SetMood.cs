@@ -1,8 +1,8 @@
 ﻿using SWEndor.Game.Actors;
 using SWEndor.Game.Core;
-using Primrose.Primitives;
 using Primrose.Primitives.Factories;
 using SWEndor.Game.Sound;
+using Primrose.Primitives.Cache;
 
 namespace SWEndor.Game.AI.Actions
 {
@@ -44,7 +44,7 @@ namespace SWEndor.Game.AI.Actions
       return string.Join(",", new string[]
       {
           Name
-        , Mood.GetEnumName()
+        , Enum<MoodState>.GetName(Mood)
         , SquadLeaderOnly.ToString()
         , Complete.ToString()
       });

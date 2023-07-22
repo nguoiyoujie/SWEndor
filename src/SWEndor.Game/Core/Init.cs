@@ -21,7 +21,8 @@ namespace SWEndor.Game.Core
         engine.Settings.LoadSettings(engine);
         engine.Settings.SaveSettings(engine);
 
-        Application.Run(new UI.Forms.BackgroundForm(engine));
+        Globals.BackgroundForm = new UI.Forms.BackgroundForm(engine);
+        Application.Run(Globals.BackgroundForm);
 
         engine.Dispose();
       }

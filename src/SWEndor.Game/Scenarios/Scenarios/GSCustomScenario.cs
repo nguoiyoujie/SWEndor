@@ -1,5 +1,4 @@
 ﻿using Primrose.Expressions;
-using Primrose.Primitives.Extensions;
 using SWEndor.Game.ActorTypes;
 using SWEndor.FileFormat.INI;
 using SWEndor.Game.Sound;
@@ -66,8 +65,7 @@ namespace SWEndor.Game.Scenarios
 
     public void ReadScript(string name)
     {
-      Engine.Screen2D.LoadingTextLines.Add("loading script:".C(name));
-      Engine.Screen2D.LoadingTextLines.RemoveAt(0);
+      //Engine.Screen2D.ReplaceLoadingText("loading script:".C(name));
     }
     
     public override void Load(ActorTypeInfo wing, string difficulty)
@@ -76,8 +74,7 @@ namespace SWEndor.Game.Scenarios
       base.Load(wing, difficulty);
 
       PlayerInfo.Name = PlayerName;
-      Engine.Screen2D.LoadingTextLines.Add("starting game");
-      Engine.Screen2D.LoadingTextLines.RemoveAt(0);
+      //Engine.Screen2D.ReplaceLoadingText("starting combat sequence");
     }
 
     public override void Unload()

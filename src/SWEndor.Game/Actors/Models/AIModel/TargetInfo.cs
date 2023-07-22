@@ -50,7 +50,7 @@ namespace SWEndor.Game.Actors.Models
     private TV_3DVECTOR GetTargetPosFromActor_SmartPrediction(Engine e, ActorInfo a)
     {
       ActorInfo tgt = e.ActorFactory.Get(_actorID);
-      if (tgt != null)
+      if (tgt != null && tgt.Active)
       {
         float dist = DistanceModel.GetDistance(e, a, tgt);
         float d = dist / Globals.LaserSpeed + e.Game.TimeSinceRender;
@@ -82,7 +82,7 @@ namespace SWEndor.Game.Actors.Models
     public float GetDistanceFromTarget(Engine e, ActorInfo owner)
     {
       ActorInfo a = GetTargetActor(e);
-      if (a != null)
+      if (a != null && a.Active)
         return DistanceModel.GetDistance(e, owner, a);
       return DistanceModel.GetDistance(e.TrueVision.TVMathLibrary, owner.GetGlobalPosition(), _pos);
     }

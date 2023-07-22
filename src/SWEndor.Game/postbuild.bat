@@ -1,4 +1,5 @@
 @echo off
+echo Run postbuild...
 set VERSIONBAT=version
 set TEMPBAT=temp
 
@@ -7,3 +8,4 @@ if exist %TEMPBAT% (
   ren %TEMPBAT% %VERSIONBAT%
 )
 
+echo Build complete!

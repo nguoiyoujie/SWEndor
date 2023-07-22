@@ -4,6 +4,39 @@
         <name>Primrose</name>
     </assembly>
     <members>
+        <member name="T:Primrose.ArrayConstants">
+            <summary>Fixed arrays intended for reuse where an array would otherwise be allocated. Modify at your own risk!</summary>
+        </member>
+        <member name="F:Primrose.ArrayConstants.Null">
+            <summary>An array with a single null character</summary>
+        </member>
+        <member name="F:Primrose.ArrayConstants.Comma">
+            <summary>An array with a single comma character</summary>
+        </member>
+        <member name="F:Primrose.ArrayConstants.Period">
+            <summary>An array with a single period character</summary>
+        </member>
+        <member name="F:Primrose.ArrayConstants.Braces">
+            <summary>An array with the brace characters</summary>
+        </member>
+        <member name="F:Primrose.ArrayConstants.Space">
+            <summary>An array with a single space character</summary>
+        </member>
+        <member name="F:Primrose.ArrayConstants.Quotes">
+            <summary>An array with a list quote characters</summary>
+        </member>
+        <member name="F:Primrose.ArrayConstants.NewLineChar">
+            <summary>An array with a list of newline characters</summary>
+        </member>
+        <member name="F:Primrose.ArrayConstants.NewLines">
+            <summary>An array with a list of newline character combinations</summary>
+        </member>
+        <member name="F:Primrose.ArrayConstants.DecimalDigits">
+            <summary>An array with a list of decimal characters in order of value</summary>
+        </member>
+        <member name="F:Primrose.ArrayConstants.HexadecimalDigits">
+            <summary>An array with a list of hexadecimal characters in order of value</summary>
+        </member>
         <member name="T:Primrose.Build">
             <summary>Provides internal build information for this project</summary> 
         </member>
@@ -15,6 +48,18 @@
         </member>
         <member name="F:Primrose.Build.Revision">
             <summary>The daily revision number of the build</summary> 
+        </member>
+        <member name="T:Primrose.VoidDelegate">
+            <summary>A delegate with no parameters</summary>
+        </member>
+        <member name="T:Primrose.ActionDelegate`1">
+            <summary>A delegate with one parameter</summary>
+        </member>
+        <member name="T:Primrose.FuncDelegate`1">
+            <summary>A function delegate with no parameters</summary>
+        </member>
+        <member name="T:Primrose.FuncDelegate`2">
+            <summary>A function delegate with one parameter</summary>
         </member>
         <member name="T:Primrose.MessageDelegate">
             <summary>A delegate representing a receipt of a string message</summary>
@@ -339,6 +384,13 @@
             <param name="key">The key name</param>
             <param name="value">The new value to be assigned to the key</param>
         </member>
+        <member name="M:Primrose.FileFormat.INI.INIFile.INISection.RemoveKey(System.String)">
+            <summary>Removes the key from the section</summary>
+            <param name="key">The key name</param>
+        </member>
+        <member name="M:Primrose.FileFormat.INI.INIFile.INISection.Clear">
+            <summary>Clears all keys from the section</summary>
+        </member>
         <member name="M:Primrose.FileFormat.INI.INIFile.INISection.Merge(Primrose.FileFormat.INI.INIFile.INISection)">
             <summary>Merges the content of this section with another section</summary>
             <param name="section">The name of the other section</param>
@@ -485,6 +537,63 @@
             <summary>Represents an exception as a result of a missing section key</summary>
             <param name="section">The section where the key is missing</param>
             <param name="key">The missing key</param>
+        </member>
+        <member name="T:Primrose.FileFormat.JSON.JSONValueType">
+            <summary>Denotes the type of a JSON object</summary>
+        </member>
+        <member name="F:Primrose.FileFormat.JSON.JSONValueType.NULL">
+            <summary>Denotes a null value</summary>
+        </member>
+        <member name="F:Primrose.FileFormat.JSON.JSONValueType.BOOLEAN">
+            <summary>Denotes a boolean value</summary>
+        </member>
+        <member name="F:Primrose.FileFormat.JSON.JSONValueType.NUMERIC">
+            <summary>Denotes a numeric value. Typically this is compatible with double</summary>
+        </member>
+        <member name="F:Primrose.FileFormat.JSON.JSONValueType.STRING">
+            <summary>Denotes a string object</summary>
+        </member>
+        <member name="F:Primrose.FileFormat.JSON.JSONValueType.ARRAY">
+            <summary>Denotes an array of JSON-compatible values</summary>
+        </member>
+        <member name="F:Primrose.FileFormat.JSON.JSONValueType.OBJECT">
+            <summary>Denotes a JSON object, with unordered pairs of string keys and JSON-compatible values</summary>
+        </member>
+        <member name="T:Primrose.FileFormat.JSON.JSONValue">
+            <summary>Holds a JSON-compatible value or object</summary>
+        </member>
+        <member name="M:Primrose.FileFormat.JSON.JSONValue.#ctor(System.Boolean)">
+            <summary>Creates a JSON-compatible boolean value</summary>
+        </member>
+        <member name="M:Primrose.FileFormat.JSON.JSONValue.#ctor(System.Single)">
+            <summary>Creates a JSON-compatible float value</summary>
+        </member>
+        <member name="M:Primrose.FileFormat.JSON.JSONValue.#ctor(System.Double)">
+            <summary>Creates a JSON-compatible double value</summary>
+        </member>
+        <member name="M:Primrose.FileFormat.JSON.JSONValue.#ctor(System.Int32)">
+            <summary>Creates a JSON-compatible int value</summary>
+        </member>
+        <member name="M:Primrose.FileFormat.JSON.JSONValue.#ctor(System.UInt32)">
+            <summary>Creates a JSON-compatible uint value</summary>
+        </member>
+        <member name="M:Primrose.FileFormat.JSON.JSONValue.#ctor(System.Int64)">
+            <summary>Creates a JSON-compatible long value</summary>
+        </member>
+        <member name="M:Primrose.FileFormat.JSON.JSONValue.#ctor(System.UInt64)">
+            <summary>Creates a JSON-compatible ulong value</summary>
+        </member>
+        <member name="M:Primrose.FileFormat.JSON.JSONValue.#ctor(System.String)">
+            <summary>Creates a JSON-compatible string object</summary>
+        </member>
+        <member name="M:Primrose.FileFormat.JSON.JSONValue.#ctor(System.Collections.Generic.IEnumerable{Primrose.FileFormat.JSON.JSONValue})">
+            <summary>Creates a JSON-compatible array object, copying the array elements</summary>
+        </member>
+        <member name="M:Primrose.FileFormat.JSON.JSONValue.#ctor(System.Collections.Generic.IEnumerable{Primrose.Primitives.ValueTypes.Pair{System.String,Primrose.FileFormat.JSON.JSONValue}})">
+            <summary>Creates a JSON-compatible string object, copying the object elements</summary>
+        </member>
+        <member name="M:Primrose.FileFormat.JSON.JSONValue.Get">
+            <summary>Retrieves the value as an object</summary>
         </member>
         <member name="T:Primrose.Log">
             <summary>Handles logging behaviour for the program</summary>
@@ -779,6 +888,10 @@
             <param name="channel">The log channel to handle the callback</param>
             <param name="callback">The callback function to register</param>
         </member>
+        <member name="M:Primrose.Log.RemoveCallbacks(System.String)">
+            <summary>Removes all callback functions from a log channel registry list</summary>
+            <param name="channel">The log channel to handle the callback</param>
+        </member>
         <member name="M:Primrose.Log.SetTimeFormat(System.String,System.String)">
             <summary>Sets the time format for a log channel</summary>
             <param name="channel">The log channel to handle the callback</param>
@@ -830,6 +943,12 @@
         <member name="P:Primrose.Primitives.Cache`4.Count">
             <summary>Retrieves the number of elements in the cache</summary>
         </member>
+        <member name="P:Primrose.Primitives.Cache`4.PoolCount">
+            <summary>Retrieves the number of elements in the pool</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Cache`4.PoolUncollectedCount">
+            <summary>Retrieves the number of elements outside the pool. Ideally this should be equal to Count, otherwise garbage leak is suspected</summary>
+        </member>
         <member name="M:Primrose.Primitives.Cache`4.Define(`0,`1)">
             <summary>
             Defines a cache key if the key does not exist, otherwise flushes the key.
@@ -863,32 +982,64 @@
         <member name="M:Primrose.Primitives.Cache`4.Clear(System.Func{`1,System.Boolean})">
             <summary>Clears the cache of entries depending on a conditional function.</summary>
             <param name="func">The function that determines whether the entry should be cleared. Use null to clear the entire cache.</param>
+            <returns>The number of items cleared</returns>
         </member>
-        <member name="T:Primrose.Primitives.EnumNames`1">
-            <summary>
-            Provides a cache for string names for enumerables. Improves runtime performance of name-based lookups.
-            </summary>
-            <typeparam name="T">The enumerable type</typeparam>
+        <member name="M:Primrose.Primitives.Cache`4.ClearAndPoolInBackgound(System.Func{`1,System.Boolean})">
+            <summary>Clears the cache of entries depending on a conditional function.</summary>
+            <param name="func">The function that determines whether the entry should be cleared. Use null to clear the entire cache.</param>
+            <returns>The number of items cleared</returns>
         </member>
-        <member name="M:Primrose.Primitives.EnumNames`1.Get(`0)">
-            <summary>
-            Retrieves the name of an string enum value from the cached list.
-            </summary>
-            <param name="key">The enum value</param>
-            <returns>The cached ToString() result</returns>
+        <member name="T:Primrose.Primitives.Cache.Enum`1">
+            <summary>Helper class to support caching of widely used functions for the Enum class</summary>
+            <typeparam name="TEnum">The underlying enum class</typeparam>
         </member>
-        <member name="T:Primrose.Primitives.EnumNamesExt">
+        <member name="M:Primrose.Primitives.Cache.Enum`1.GetValues">
             <summary>
-            Provides extension methods for enumerable value types
+            Retrieves the array of the values of the constants in enumeration <typeparamref name="TEnum"/>.
+            </summary>
+            <returns>An array of the values of the constants in <typeparamref name="TEnum"/>.
+            The elements of the array are sorted by the binary values of the enumeration constants.</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Cache.Enum`1.GetNames">
+            <summary>
+            Retrieves the array of the values of the constants in enumeration <typeparamref name="TEnum"/>.
+            </summary>
+            <returns>An array of the values of the constants in <typeparamref name="TEnum"/>.
+            The elements of the array are in the same order as in case of the result of the <see cref="M:Primrose.Primitives.Cache.Enum`1.GetValues">GetValues</see> method.</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Cache.Enum`1.GetName(`0)">
+            <summary>
+            Retrieves the name of the constant in the specified enumeration that has the specified <paramref name="value"/>.
+            </summary>
+            <param name="value">The <see langword="enum"/> value whose name is required.</param>
+            <returns>A string containing the name of the enumerated <paramref name="value"/>, or <see langword="null"/> if no such constant is found.</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Cache.Enum`1.Parse(System.String)">
+            <summary>
+            Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object.
             </summary>
         </member>
-        <member name="M:Primrose.Primitives.EnumNamesExt.GetEnumName``1(``0)">
+        <member name="M:Primrose.Primitives.Cache.Enum`1.TryParse(System.String,`0@)">
             <summary>
-            Retrieves the name of an string enum value from a cached list.
+            Converts the string representation of the name or numeric value of one or more enumerated constants to an equivalent enumerated object.
             </summary>
-            <typeparam name="T">The enumerable type</typeparam>
-            <param name="key">The enum value</param>
-            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Cache.Enum`1.Clear">
+            <summary>Clears the cache for the class</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Cache.ToStringCache`1">
+            <summary>Helper class to cache ToString invocations of a generic type</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Cache.ToStringCache`1.MaxEntries">
+            <summary>The maximum number of entries stored in the cache before automatically generating Clear()</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Cache.ToStringCache`1.Get(`0)">
+            <summary>
+            Retrieves the string associated with the value.
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Cache.ToStringCache`1.Clear">
+            <summary>Clears the cache for the class</summary>
         </member>
         <member name="T:Primrose.Primitives.Cache.WeakReference`1">
             <summary>
@@ -970,12 +1121,19 @@
             <param name="elements">The range of elements to be added</param>
         </member>
         <member name="M:Primrose.Primitives.Collections.ResizableArray`1.Resize(System.Int32)">
-            <summary>Resets the elements</summary>
-            <param name="count">The initial size of the array</param>
+            <summary>Resizes the array to contain the specified number of elements. This resizing will double the size of the current array to accommodate this count.</summary>
+            <param name="count">The desired size of the array</param>
+        </member>
+        <member name="M:Primrose.Primitives.Collections.ResizableArray`1.ResizeExact(System.Int32)">
+            <summary>Resizes the array to contain the specified number of elements. This resizing is exact.</summary>
+            <param name="count">The desired size of the array</param>
         </member>
         <member name="M:Primrose.Primitives.Collections.ResizableArray`1.Clear(System.Boolean)">
             <summary>Resets the count to 0, and optionally clears elements to default</summary>
             <param name="clearElements">Determines if the members of the array should be zeroed</param>
+        </member>
+        <member name="M:Primrose.Primitives.Collections.ResizableArray`1.ClearElements(System.Int32,System.Int32)">
+            <summary>Clears elements within the array to default values</summary>
         </member>
         <member name="P:Primrose.Primitives.Collections.ResizableArray`1.Item(System.Int32)">
             <summary>Retrieves the element at an index of the array</summary>
@@ -999,6 +1157,11 @@
         <member name="M:Primrose.Primitives.Collections.ThreadSafeEnumerable`1.#ctor(System.Collections.Generic.IEnumerable{`0},System.Object)">
             <summary>Creates a thread-safe wrapper over an enumerable collection</summary>
             <param name="inner">The (thread-unsafe) enumerator</param>
+            <param name="lock">The locking object</param>
+        </member>
+        <member name="M:Primrose.Primitives.Collections.ThreadSafeEnumerable`1.#ctor(System.Func{System.Collections.Generic.IEnumerator{`0}},System.Object)">
+            <summary>Creates a thread-safe wrapper over an enumerable collection</summary>
+            <param name="func">A function that creates and returns the (thread-unsafe) enumerator</param>
             <param name="lock">The locking object</param>
         </member>
         <member name="M:Primrose.Primitives.Collections.ThreadSafeEnumerable`1.GetEnumerator">
@@ -1055,11 +1218,61 @@
             <typeparam name="K">The key type to be stored</typeparam>
             <typeparam name="T">The object type to be stored</typeparam>
         </member>
+        <member name="T:Primrose.Primitives.Factories.Factory`2.InitDelegate">
+            <summary>Represents a delegate for object modification operations</summary>
+        </member>
         <member name="M:Primrose.Primitives.Factories.Factory`2.Create(`0)">
             <summary>
             Creates a new object and stores its reference in its internal registry
             </summary>
             <param name="id">The identifier for the object</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Factory`2.Create(`0,Primrose.Primitives.Factories.Factory{`0,`1}.InitDelegate)">
+            <summary>
+            Creates a new object and stores its reference in its internal registry
+            </summary>
+            <param name="id">The identifier for the object</param>
+            <param name="initFn">The initializer function</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Factory`2.Add(`1)">
+            <summary>
+            Adds an existing object and stores its reference in its internal registry
+            </summary>
+            <param name="item">The object to be stored</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Factory`2.Put(`1)">
+            <summary>
+            Puts an existing object and stores its reference in its internal registry
+            </summary>
+            <param name="item">The object to be stored</param>
+            <returns></returns>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.StructFactory`2">
+            <summary>
+            Allows creation of objects and stores them automatically. Limited to objects with parameterless constructors; for others, use Registry
+            </summary>
+            <typeparam name="K">The key type to be stored</typeparam>
+            <typeparam name="T">The object type to be stored</typeparam>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.StructFactory`2.InitDelegate">
+            <summary>Represents a delegate for object modification operations</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.StructFactory`2.Create(`0)">
+            <summary>
+            Creates a new object and stores its reference in its internal registry
+            </summary>
+            <param name="id">The identifier for the object</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.StructFactory`2.Create(`0,Primrose.Primitives.Factories.StructFactory{`0,`1}.InitDelegate)">
+            <summary>
+            Creates a new object and stores its reference in its internal registry
+            </summary>
+            <param name="id">The identifier for the object</param>
+            <param name="initFn">The initializer function</param>
             <returns></returns>
         </member>
         <member name="T:Primrose.Primitives.Factories.IFactory`2">
@@ -1126,10 +1339,11 @@
             </summary>
             <typeparam name="T">The item type to be pooled</typeparam>
         </member>
-        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.#ctor(System.Func{`0},System.Action{`0})">
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.#ctor(System.Boolean,System.Func{`0},System.Action{`0})">
             <summary>
             Creates an object pool
             </summary>
+            <param name="useLocalPool">Defines whether objects shall be retrieved from the global pool or a local pool tied to this pool object</param>
             <param name="createFn">The function for creating new instances</param>
             <param name="resetFn">The function for reseting instances that are returned to the pool</param>
             <exception cref="T:System.ArgumentNullException">createFn cannot be null</exception>
@@ -1140,23 +1354,30 @@
         <member name="P:Primrose.Primitives.Factories.ObjectPool`1.UncollectedCount">
             <summary>Retrieves the number of generated elements in the pool that were not yet collected</summary>
         </member>
+        <member name="P:Primrose.Primitives.Factories.ObjectPool`1.UseLocalPool">
+            <summary>Defines whether objects shall be retrieved from the global pool or a local pool tied to this pool object</summary>
+        </member>
         <member name="M:Primrose.Primitives.Factories.ObjectPool`1.GetNew">
             <summary>Returns an instance of <typeparamref name="T"/> from the pool, or creates a new instance if the pool is empty</summary>
             <returns>An instance of <typeparamref name="T"/> from the pool, or created from the creator function if the pool is empty</returns>
         </member>
         <member name="M:Primrose.Primitives.Factories.ObjectPool`1.Return(`0)">
             <summary>Returns an instance of <typeparamref name="T"/> to the pool.</summary>
-            <param name="item">The object to be returnedto the pool</param>
+            <param name="item">The object to be returned to the pool</param>
         </member>
         <member name="M:Primrose.Primitives.Factories.ObjectPool`1.Clear">
             <summary>Removes all instances from the pool</summary>
         </member>
-        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.CreateStaticPool(System.Func{`0},System.Action{`0})">
+        <member name="P:Primrose.Primitives.Factories.ObjectPool`1.HasStaticPool">
+            <summary>Returns whether a static instance exists for this object pool</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`1.CreateStaticPool(System.Func{`0},System.Action{`0},System.Boolean)">
             <summary>
             Creates a static version of the object pool for global use
             </summary>
             <param name="createFn">The function for creating new instances</param>
             <param name="resetFn">The function for reseting instances that are returned to the pool</param>
+            <param name="replaceExisting">Denotes whether this method should replace the existing static pool</param>
             <returns></returns>
             <exception cref="T:System.InvalidOperationException">The background object pool has already been created.</exception>
         </member>
@@ -1177,6 +1398,54 @@
         </member>
         <member name="P:Primrose.Primitives.Factories.IPool.UncollectedCount">
             <summary>Retrieves the number of generated elements in the pool that were not yet collected</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Factories.ObjectPool`2">
+            <summary>
+            Provides a basic object pool for pooling objects for further use  
+            </summary>
+            <typeparam name="T">The item type to be pooled</typeparam>
+            <typeparam name="TParam">The type of the parameter for creation of new objects</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`2.CreateStaticPool(System.Func{`1,`0},System.Action{`0})">
+            <summary>
+            Creates a static version of the object pool for global use
+            </summary>
+            <param name="createFn">The function for creating new instances</param>
+            <param name="resetFn">The function for reseting instances that are returned to the pool</param>
+            <returns></returns>
+            <exception cref="T:System.InvalidOperationException">The background object pool has already been created.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`2.GetStaticPool">
+            <summary>
+            Retrieves the static version of the pool if created
+            </summary>
+            <returns></returns>
+            <exception cref="T:System.InvalidOperationException">The background object pool has not been created.</exception>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`2.#ctor(System.Func{`1,`0},System.Action{`0})">
+            <summary>
+            Creates an object pool
+            </summary>
+            <param name="createFn">The function for creating new instances</param>
+            <param name="resetFn">The function for reseting instances that are returned to the pool</param>
+            <exception cref="T:System.ArgumentNullException">createFn cannot be null</exception>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.ObjectPool`2.Count">
+            <summary>Retrieves the number of elements in the pool</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.ObjectPool`2.UncollectedCount">
+            <summary>Retrieves the number of generated elements in the pool that were not yet collected</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`2.GetNew(`1)">
+            <summary>Returns an instance of <typeparamref name="T"/> from the pool, or creates a new instance if the pool is empty</summary>
+            <returns>An instance of <typeparamref name="T"/> from the pool, or created from the creator function if the pool is empty</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`2.Return(`0)">
+            <summary>Returns an instance of <typeparamref name="T"/> to the pool.</summary>
+            <param name="item">The object to be returnedto the pool</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.ObjectPool`2.Clear">
+            <summary>Removes all instances from the pool</summary>
         </member>
         <member name="T:Primrose.Primitives.Factories.Registry`2">
             <summary>
@@ -1210,11 +1479,18 @@
             <param name="other">The other registry whose elements are copied to this registry</param>
             <param name="comparer">The equality comparer for the registry</param>
         </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.#ctor(System.Collections.Generic.Dictionary{`0,`1})">
+            <summary>Creates an object registry that uses the given backing dictionary</summary>
+            <param name="dictionary">The backing dictionary for this registry</param>
+        </member>
         <member name="F:Primrose.Primitives.Factories.Registry`2.list">
             <summary>The container data source</summary>
         </member>
         <member name="F:Primrose.Primitives.Factories.Registry`2.Default">
             <summary>The default value returned</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.GetUnderlyingConcreteDictionary">
+            <summary>Retrieves the underlying dictionary in its concrete form. Useful if avoiding allocations due to IDictionary cast is needed. Use it only when you know what you are doing</summary>
         </member>
         <member name="M:Primrose.Primitives.Factories.Registry`2.GetUnderlyingDictionary">
             <summary>Retrieves the underlying dictionary</summary>
@@ -1281,11 +1557,34 @@
         <member name="M:Primrose.Primitives.Factories.Registry`2.GetEnumerator">
             <summary>Retrieves the enumerator for the registry</summary>
         </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.GetEnumeratorDirect">
+            <summary>Retrieves the enumerator for the registry. This thread-unsafe way allows for the enumerator to be retrieved without allocation</summary>
+        </member>
         <member name="M:Primrose.Primitives.Factories.Registry`2.System#Collections#IEnumerable#GetEnumerator">
             <summary>Retrieves the enumerator for the registry</summary>
         </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.Add(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>Updates or adds an object into the registry</summary>
+            <param name="item">The key-value pair to be added</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.Contains(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>Determines whether the registry contains the key and value pair</summary>
+            <param name="item">The key-value pair to be compared to</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.CopyTo(System.Collections.Generic.KeyValuePair{`0,`1}[],System.Int32)">
+            <summary>Copies an array of objects into the registry</summary>
+            <param name="array">The array of objects to be copied</param>
+            <param name="arrayIndex">The index to copy to</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.Registry`2.Remove(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>Removes an object from the registry</summary>
+            <param name="item">The key-value pair to be removed</param>
+        </member>
         <member name="P:Primrose.Primitives.Factories.Registry`2.Count">
             <summary>The number of elements in this registry</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Factories.Registry`2.IsReadOnly">
+            <summary>Determines if this collection is read-only</summary>
         </member>
         <member name="T:Primrose.Primitives.Factories.Registry`1">
             <summary>
@@ -1304,32 +1603,39 @@
             <summary>Creates an object registry</summary>
         </member>
         <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.#ctor(System.Collections.Generic.IComparer{`0})">
-            <summary>Creates an object registry with a sorting comparer</summary>
-            <param name="comparer">The sorting comparer for the registry</param>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.#ctor(System.Collections.Generic.IDictionary{`0,`1})">
-            <summary>Creates an object registry that contains elements copied from another registry</summary>
-            <param name="dictionary">The other dictionary whose elements are copied to this registry</param>
-        </member>
-        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.#ctor(System.Collections.Generic.IDictionary{`0,`1},System.Collections.Generic.IComparer{`0})">
-            <summary>Creates an object registry that contains elements copied from another registry</summary>
-            <param name="dictionary">The other dictionary whose elements are copied to this registry</param>
+            <summary>Creates an object registry with a comparer</summary>
             <param name="comparer">The sorting comparer for the registry</param>
         </member>
         <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.#ctor(Primrose.Primitives.Factories.IRegistry{`0,`1})">
             <summary>Creates an object registry that contains elements copied from another registry</summary>
             <param name="other">The other registry whose elements are copied to this registry</param>
         </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.#ctor(System.Collections.Generic.IDictionary{`0,`1})">
+            <summary>Creates an object registry that uses the given backing dictionary</summary>
+            <param name="dictionary">The other dictionary whose elements are copied to this registry</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.#ctor(System.Collections.Generic.IDictionary{`0,`1},System.Collections.Generic.IComparer{`0})">
+            <summary>Creates an object registry that uses the given backing dictionary</summary>
+            <param name="dictionary">The other dictionary whose elements are copied to this registry</param>
+            <param name="comparer">The sorting comparer for the registry</param>
+        </member>
         <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.#ctor(Primrose.Primitives.Factories.IRegistry{`0,`1},System.Collections.Generic.IComparer{`0})">
             <summary>Creates an object registry that contains elements copied from another registry</summary>
             <param name="other">The other registry whose elements are copied to this registry</param>
             <param name="comparer">The sorting comparer for the registry</param>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.#ctor(System.Collections.Generic.SortedDictionary{`0,`1})">
+            <summary>Creates an object registry that uses the given backing dictionary</summary>
+            <param name="dictionary">The backing dictionary for this registry</param>
         </member>
         <member name="F:Primrose.Primitives.Factories.SortedRegistry`2.list">
             <summary>The container data source</summary>
         </member>
         <member name="F:Primrose.Primitives.Factories.SortedRegistry`2.Default">
             <summary>The default value returned</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.GetUnderlyingConcreteDictionary">
+            <summary>Retrieves the underlying dictionary in its concrete form. Useful if avoiding allocations due to IDictionary cast is needed. Use it only when you know what you are doing</summary>
         </member>
         <member name="M:Primrose.Primitives.Factories.SortedRegistry`2.GetUnderlyingDictionary">
             <summary>Retrieves the underlying dictionary</summary>
@@ -1791,7 +2097,7 @@
         </member>
         <member name="M:Primrose.Primitives.Extensions.ComparableExts.Max``1(``0,``0)">
             <summary>
-            Returns the maximum of two values
+            Returns the greater of two values
             </summary>
             <param name="value1">The first value</param>
             <param name="value2">The second value</param>
@@ -1799,7 +2105,7 @@
         </member>
         <member name="M:Primrose.Primitives.Extensions.ComparableExts.Min``1(``0,``0)">
             <summary>
-            Returns the minimum of two values
+            Returns the lesser of two values
             </summary>
             <param name="value1">The first value</param>
             <param name="value2">The second value</param>
@@ -1807,7 +2113,7 @@
         </member>
         <member name="M:Primrose.Primitives.Extensions.ComparableExts.Max``1(``0,``0,System.Collections.Generic.IComparer{``0})">
             <summary>
-            Returns the maximum of two values, as determined by a comparer
+            Returns the greater of two values, as determined by a comparer
             </summary>
             <param name="value1">The first value</param>
             <param name="value2">The second value</param>
@@ -1816,7 +2122,7 @@
         </member>
         <member name="M:Primrose.Primitives.Extensions.ComparableExts.Min``1(``0,``0,System.Collections.Generic.IComparer{``0})">
             <summary>
-            Returns the minimum of two values, as determined by a comparer
+            Returns the lesser of two values, as determined by a comparer
             </summary>
             <param name="value1">The first value</param>
             <param name="value2">The second value</param>
@@ -1828,9 +2134,9 @@
             Determines if a value is within the exclusive range of two values
             </summary>
             <param name="value">The value to check</param>
-            <param name="min">The inclusive lower bound</param>
-            <param name="max">The inclusive upper bound</param>
-            <returns>True if the value is within the inclusive bounds of the two values, False otherwise</returns>
+            <param name="min">The exclusive lower bound</param>
+            <param name="max">The exclusive upper bound</param>
+            <returns>True if the value is within the exclusive bounds of the two values, False otherwise</returns>
         </member>
         <member name="M:Primrose.Primitives.Extensions.ComparableExts.WithinRangeInclusive``1(``0,``0,``0)">
             <summary>
@@ -1860,12 +2166,12 @@
             <param name="comparer">The comparer object used to compare the values</param>
             <returns>True if the value is within the bounds of the two values, False otherwise</returns>
         </member>
-        <member name="T:Primrose.Primitives.Extensions.DictionaryExts">
+        <member name="T:Primrose.Primitives.Extensions.Dictionary">
             <summary>
             Provides extension methods for Dictionaries
             </summary>
         </member>
-        <member name="M:Primrose.Primitives.Extensions.DictionaryExts.Put``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)">
+        <member name="M:Primrose.Primitives.Extensions.Dictionary.Put``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)">
             <summary>
             Adds or updates a key-value pair in a dictionary.
             </summary>
@@ -1875,7 +2181,7 @@
             <param name="k"></param>
             <param name="v"></param>
         </member>
-        <member name="M:Primrose.Primitives.Extensions.DictionaryExts.GetOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0)">
+        <member name="M:Primrose.Primitives.Extensions.Dictionary.GetOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0)">
             <summary>
             Retrieves a value from a dictionary, or a default(<typeparamref name="V"/>) if the key is not in the dictionary.
             </summary>
@@ -1885,7 +2191,7 @@
             <param name="k"></param>
             <returns></returns>
         </member>
-        <member name="M:Primrose.Primitives.Extensions.DictionaryExts.GetOrAdd``2(System.Collections.Generic.IDictionary{``0,``1},``0)">
+        <member name="M:Primrose.Primitives.Extensions.Dictionary.GetOrAdd``2(System.Collections.Generic.IDictionary{``0,``1},``0)">
             <summary>
             Retrieves a value from a dictionary, or adds a new instance of <typeparamref name="V"/> if the key is not in the dictionary.
             </summary>
@@ -1895,7 +2201,7 @@
             <param name="k"></param>
             <returns></returns>
         </member>
-        <member name="M:Primrose.Primitives.Extensions.DictionaryExts.GetOrAdd``2(System.Collections.Generic.IDictionary{``0,``1},``0,System.Func{``0,``1})">
+        <member name="M:Primrose.Primitives.Extensions.Dictionary.GetOrAdd``2(System.Collections.Generic.IDictionary{``0,``1},``0,System.Func{``0,``1})">
             <summary>
             Retrieves a value from a dictionary, or adds a new instance of <typeparamref name="V"/> if the key is not in the dictionary.
             </summary>
@@ -2027,6 +2333,63 @@
             <param name="value">The object</param>
             <returns>A boolean value</returns>
         </member>
+        <member name="T:Primrose.Primitives.Extensions.StringBuilderExts">
+            <summary>Extension methods for the 'StringBuilder' standard .NET class, to allow garbage-free concatenation of formatted strings with a variable set of arguments.</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.Concat(System.Text.StringBuilder,System.DateTime,System.String,System.Int32,System.Int32)">
+            <summary>Convert a given datetime value to a string and concatenate onto the stringbuilder. Only certain codes are supported</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.Concat(System.Text.StringBuilder,System.UInt32,System.UInt32,System.Char,System.UInt32)">
+            <summary>Convert a given unsigned integer value to a string and concatenate onto the stringbuilder. Any base value allowed.</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.Concat(System.Text.StringBuilder,System.UInt32)">
+            <summary>Convert a given unsigned integer value to a string and concatenate onto the stringbuilder. Assume no padding and base ten.</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.Concat(System.Text.StringBuilder,System.UInt32,System.UInt32)">
+            <summary>Convert a given unsigned integer value to a string and concatenate onto the stringbuilder. Assume base ten.</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.Concat(System.Text.StringBuilder,System.UInt32,System.UInt32,System.Char)">
+            <summary>Convert a given unsigned integer value to a string and concatenate onto the stringbuilder. Assume base ten.</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.Concat(System.Text.StringBuilder,System.Int32,System.UInt32,System.Char,System.UInt32)">
+            <summary>Convert a given signed integer value to a string and concatenate onto the stringbuilder. Any base value allowed.</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.Concat(System.Text.StringBuilder,System.Int32)">
+            <summary>Convert a given signed integer value to a string and concatenate onto the stringbuilder. Assume no padding and base ten.</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.Concat(System.Text.StringBuilder,System.Int32,System.UInt32)">
+            <summary>Convert a given signed integer value to a string and concatenate onto the stringbuilder. Assume base ten.</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.Concat(System.Text.StringBuilder,System.Int32,System.UInt32,System.Char)">
+            <summary>Convert a given signed integer value to a string and concatenate onto the stringbuilder. Assume base ten.</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.Concat(System.Text.StringBuilder,System.Single,System.UInt32,System.UInt32,System.Char)">
+            <summary>Convert a given float value to a string and concatenate onto the stringbuilder</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.Concat(System.Text.StringBuilder,System.Single)">
+            <summary>Convert a given float value to a string and concatenate onto the stringbuilder. Assumes five decimal places, and no padding.</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.Concat(System.Text.StringBuilder,System.Single,System.UInt32)">
+            <summary>Convert a given float value to a string and concatenate onto the stringbuilder. Assumes no padding.</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.Concat(System.Text.StringBuilder,System.Single,System.UInt32,System.UInt32)">
+            <summary>Convert a given float value to a string and concatenate onto the stringbuilder.</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.ConcatFormat``1(System.Text.StringBuilder,System.String,``0)">
+            <summary>Concatenate a formatted string with arguments</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.ConcatFormat``2(System.Text.StringBuilder,System.String,``0,``1)">
+            <summary>Concatenate a formatted string with arguments</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.ConcatFormat``3(System.Text.StringBuilder,System.String,``0,``1,``2)">
+            <summary>Concatenate a formatted string with arguments</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.ConcatFormat``4(System.Text.StringBuilder,System.String,``0,``1,``2,``3)">
+            <summary>Concatenate a formatted string with arguments</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringBuilderExts.ConcatFormatValue``1(System.Text.StringBuilder,``0,System.String,System.Int32,System.Int32,System.UInt32,System.UInt32,System.UInt32)">
+            <summary>The worker method. This does a garbage-free conversion of a generic type, and uses the garbage-free Concat() to add to the stringbuilder</summary>
+        </member>
         <member name="T:Primrose.Primitives.Extensions.StringExts">
             <summary>
             Provides extension methods for string values
@@ -2046,6 +2409,12 @@
             <param name="input">The input string</param>
             <param name="separator">The character seperator to split</param>
             <param name="n">The number of split parts in each element</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.Extensions.StringExts.SplitToLines(System.String,System.Int32)">
+            <summary>Splits a string by words, keeping each line within a maximum number of characters</summary>
+            <param name="stringToSplit">The input string</param>
+            <param name="maxLineLength">The maximum number of characters in a line</param>
             <returns></returns>
         </member>
         <member name="M:Primrose.Primitives.Extensions.StringExts.Scramble(System.String,System.Random)">
@@ -2227,6 +2596,13 @@
             <param name="t">The type to be enumerated</param>
             <returns>A enumeration of types that is inherited by <paramref name="t"/></returns>
         </member>
+        <member name="M:Primrose.Primitives.Extensions.TypeExts.GetSizeInBytes(System.Type)">
+            <summary>
+            Determines the size, in bytes, of a type, usually a struct
+            </summary>
+            <param name="t">The type to inspect</param>
+            <returns>The size, in bytes, of one instance of the given type</returns>
+        </member>
         <member name="T:Primrose.Primitives.IIdentity">
             <summary>
             Implements an ID object
@@ -2241,6 +2617,22 @@
             </summary>
         </member>
         <member name="P:Primrose.Primitives.IIdentity`1.ID">
+            <summary>The instance ID</summary>
+        </member>
+        <member name="T:Primrose.Primitives.ISetIdentity">
+            <summary>
+            Implements an ID object
+            </summary>
+        </member>
+        <member name="P:Primrose.Primitives.ISetIdentity.ID">
+            <summary>The instance ID</summary>
+        </member>
+        <member name="T:Primrose.Primitives.ISetIdentity`1">
+            <summary>
+            Implements an ID object
+            </summary>
+        </member>
+        <member name="P:Primrose.Primitives.ISetIdentity`1.ID">
             <summary>The instance ID</summary>
         </member>
         <member name="T:Primrose.Primitives.Observables.ChangeEventDelegate`1">
@@ -2350,6 +2742,9 @@
             The encapsulated registry. Direct method calls to the encapsulated object will not trigger any events.
             </summary>
         </member>
+        <member name="M:Primrose.Primitives.Observables.ObservableRegistry`2.GetUnderlyingConcreteDictionary">
+            <summary>Retrieves the underlying dictionary in its concrete form. Useful if avoiding allocations due to IDictionary cast is needed. Use it only when you know what you are doing</summary>
+        </member>
         <member name="M:Primrose.Primitives.Observables.ObservableRegistry`2.GetUnderlyingDictionary">
             <summary>Retrieves the underlying dictionary</summary>
         </member>
@@ -2448,9 +2843,6 @@
         </member>
         <member name="T:Primrose.Primitives.Parsers.Parser">
             <summary>Handles the parsing of primitive values to strings and vice versa</summary>
-        </member>
-        <member name="F:Primrose.Primitives.Parsers.Parser.ListDelimiter">
-            <summary>The default list delimiter</summary>
         </member>
         <member name="M:Primrose.Primitives.Parsers.Parser.Parse``1(System.String,``0)">
             <summary>Parses a value from its string representation</summary>
@@ -2679,6 +3071,11 @@
             <param name="value">The string to be parsed</param>
             <param name="resolver">A string resolver function</param>
         </member>
+        <member name="M:Primrose.Primitives.Parsers.Parser.Rules.ToArrayAsElement``1(System.String,Primrose.Primitives.Parsers.IResolver)">
+            <summary>Parses a string to an array of values</summary>
+            <param name="value">The string to be parsed</param>
+            <param name="resolver">A string resolver function</param>
+        </member>
         <member name="M:Primrose.Primitives.Parsers.Parser.Rules.ToEnum``1(System.String)">
             <summary>Parses a string to a enumerated value</summary>
             <param name="value">The string to be parsed</param>
@@ -2692,6 +3089,10 @@
             <param name="value">The value to be converted</param>
         </member>
         <member name="M:Primrose.Primitives.Parsers.Parser.Rules.ArrayToStr``1(``0)">
+            <summary>Converts an array of values to a string</summary>
+            <param name="list">The value to be converted</param>
+        </member>
+        <member name="M:Primrose.Primitives.Parsers.Parser.Rules.ArrayToStrByElement``1(``0[])">
             <summary>Converts an array of values to a string</summary>
             <param name="list">The value to be converted</param>
         </member>
@@ -3101,6 +3502,406 @@
         <member name="P:Primrose.Primitives.LinkedListEnumerator`1.Current">
             <summary>Retrieves the current item</summary>
         </member>
+        <member name="T:Primrose.Primitives.Stocks.FlowResultType">
+            <summary>The result types of a flow check against the stock</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Stocks.FlowResultType.NORMAL">
+            <summary>The result is normal</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Stocks.FlowResultType.INVALID">
+            <summary>The result is abnormal and should not be applied</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Stocks.FlowResultType.LOWERBOUNDREACHED">
+            <summary>The result is normal and the lower bound of the stock value is reached</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Stocks.FlowResultType.UPPERBOUNDREACHED">
+            <summary>The result is normal and the upper bound of the stock value is reached</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Stocks.FlowResult`1">
+            <summary>The result of a flow check against the stock</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Stocks.FlowResult`1.Result">
+            <summary>The result type that determines further operations</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Stocks.FlowResult`1.Normal">
+            <summary>The value of the flow that can be admitted into the stock</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Stocks.FlowResult`1.Discrepancy">
+            <summary>The value of the flow that cannot be admitted into the stock, either limited by lower bound or upper bonds on the stock</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Stocks.FlowResult`1.#ctor(Primrose.Primitives.Stocks.FlowResultType,`0,`0)">
+            <summary>The result of a flow check against the stock</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Stocks.Flow`1">
+            <summary>Defines an input or output flow relative to a stock container.</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Stocks.Flow`1.FlowValueFunction">
+            <summary>Defines the function that determines the flow value</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Stocks.Flow`1.CheckFunction">
+            <summary>Defines the function that checks the application of the flow to the stock</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Stocks.Flow`1.FlowAction">
+            <summary>Defines the action to take when applying the flow to the stock</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Stocks.Flow`1.UpperBoundReachedAction">
+            <summary>Defines the action to take for any flow value beyond the upper bound</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Stocks.Flow`1.LowerBoundReachedAction">
+            <summary>Defines the action to take for any flow value beyond the lower bound</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Stocks.Flow`1.Execute(Primrose.Primitives.Stocks.Stock{`0})">
+            <summary>Performs one round of execution for the flow</summary>
+            <param name="stock">The stock affected by the flow</param>
+            <returns>The result of evaluating the flow</returns>
+        </member>
+        <member name="T:Primrose.Primitives.Stocks.FlowFunctionHelper">
+            <summary>This class contains prebuilt functions to assist in the default creation of flows.</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Stocks.FlowFunctionHelper.CheckFunction_Integer">
+            <summary>This function mimics the check functions for a numeric flow by addition</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Stocks.FlowFunctionHelper.CheckFunction_Float">
+            <summary>This function mimics the check functions for a numeric flow by addition</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Stocks.FlowFunctionHelper.FlowAction_Integer">
+            <summary>This action mimics the application a numeric flow by addition</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Stocks.FlowFunctionHelper.FlowAction_Float">
+            <summary>This action mimics the application a numeric flow by addition</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Stocks.FlowFunctionHelper.GetDefaultFlow_Integer">
+            <summary>Creates a new flow with default checks for numeric values</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Stocks.FlowFunctionHelper.GetDefaultFlow_Float">
+            <summary>Creates a new flow with default checks for numeric values</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Stocks.Stock`1">
+            <summary>Defines a container for holding a value.</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Stocks.Stock`1.HasMinimum">
+            <summary>Defines whether this stock container has a lower bound for the value</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Stocks.Stock`1.HasMaximum">
+            <summary>Defines whether this stock container has a upper bound for the value</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Stocks.Stock`1.Value">
+            <summary>The value expressed in the stock</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Stocks.Stock`1.Minimum">
+            <summary>The lower bound value of the stock, used only if HasMinimum is true</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Stocks.Stock`1.Maximum">
+            <summary>The upper bound value of the stock, used only if HasMaximum is true</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Stocks.Stock`1.IsAtMinimum">
+            <summary>Returns true if the HasMinimum is enabled and the value is at the lower bound value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Stocks.Stock`1.IsAtMaximum">
+            <summary>Returns true if the HasMaximum is enabled and the value is at the upper bound value</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Streams.VirtualStream">
+            <summary>Defines a virtualized stream residing in another stream</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Streams.VirtualStream.BaseStream">
+            <summary>The underlying stream</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.#ctor(System.IO.Stream,System.Int64,System.Int64,System.Boolean)">
+            <summary>Defines a virtualized stream residing in another stream</summary>
+            <param name="baseStream">The underlying stream content</param>
+            <param name="baseOffset">The offset position in the underlying stream</param>
+            <param name="streamLength">The length of the virtual snapshot</param>
+            <param name="isBuffered">Denotes whether the virtual stream maintains its own content buffer instead of manipulating the base stream directly</param>
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.#ctor(System.IO.Stream,System.Boolean)">
+            <summary>Defines a virtualized stream residing in another stream</summary>
+            <param name="baseStream">The underlying stream content</param>
+            <param name="isBuffered">Denotes whether the virtual stream maintains its own content buffer instead of manipulating the base stream directly</param>
+        </member>
+        <member name="P:Primrose.Primitives.Streams.VirtualStream.CanRead">
+            <inheritdoc />
+        </member>
+        <member name="P:Primrose.Primitives.Streams.VirtualStream.CanWrite">
+            <inheritdoc />
+        </member>
+        <member name="P:Primrose.Primitives.Streams.VirtualStream.Length">
+            <inheritdoc />
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.Flush">
+            <inheritdoc />
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.Read(System.Byte[],System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.ReadCString(System.Int32)">
+            <summary>Reads a sequence of bytes as a null-terminated string</summary>
+            <param name="count">The number of characters</param>
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.Read(System.Int32)">
+            <summary>Reads a sequence of bytes of a specific length</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.ReadSigned(System.Int32)">
+            <summary>Reads a sequence of signed bytes of a specific length</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.ReadByte">
+            <summary>Reads a single byte</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.ReadSByte">
+            <summary>Reads a single signed byte</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.ReadUInt8">
+            <summary>Reads a single byte</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.ReadInt32">
+            <summary>Reads a single 32-bit integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.ReadUInt32">
+            <summary>Reads a single 32-bit signed integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.ReadInt16">
+            <summary>Reads a single 16-bit integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.ReadUInt16">
+            <summary>Reads a single 16-bit signed integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.ReadFloat">
+            <summary>Reads a single 16-bit floating-point value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.ReadDouble">
+            <summary>Reads a single 32-bit floating-point value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.Write(System.Byte[],System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.Close">
+            <inheritdoc />
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.SetLength(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="P:Primrose.Primitives.Streams.VirtualStream.Position">
+            <inheritdoc />
+        </member>
+        <member name="P:Primrose.Primitives.Streams.VirtualStream.Remaining">
+            <summary>Indicates the remaining length of the stream</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Streams.VirtualStream.Eof">
+            <summary>Indicates whether the stream is at end-of-file</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Streams.VirtualStream.CanSeek">
+            <inheritdoc />
+        </member>
+        <member name="M:Primrose.Primitives.Streams.VirtualStream.Seek(System.Int64,System.IO.SeekOrigin)">
+            <inheritdoc />
+        </member>
+        <member name="T:Primrose.Primitives.Strings.FormatInstruction">
+            <summary>Represents a format instruction for generating a string</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Strings.FormatInstruction.StoredSize">
+            <summary>Describe the memory size of the value, only if the value is a valuetype</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.FormatInstruction.StoredSize._8BIT">
+            <summary>Denotes an 8-bit value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.FormatInstruction.StoredSize._16BIT">
+            <summary>Denotes a 16-bit value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.FormatInstruction.StoredSize._32BIT">
+            <summary>Denotes a 32-bit value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.FormatInstruction.StoredSize._64BIT">
+            <summary>Denotes a 64-bit value</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Strings.FormatInstruction.StoredType">
+            <summary>Describe the the type of the value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.FormatInstruction.StoredType.UNSIGNED_INTEGER">
+            <summary>Denotes an unsigned integer</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.FormatInstruction.StoredType.SIGNED_INTEGER">
+            <summary>Denotes an unsigned integer</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.FormatInstruction.StoredType.FLOATING_POINT">
+            <summary>Denotes an unsigned integer</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.FormatInstruction.StoredType.DATE_TIME">
+            <summary>Denotes a datetime, represented by a 64-bit integer</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.FormatInstruction.StoredType.REFERENCE_TYPE">
+            <summary>Denotes an unsigned integer</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Strings.FormatInstruction.NumericBase">
+            <summary>Describe the the base of the numeric value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.FormatInstruction.NumericBase.DECIMAL">
+            <summary>Denotes base-10, or decimal representation</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.FormatInstruction.NumericBase.HEXADECIMAL">
+            <summary>Denotes base-16, or hexadecimal representation</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.FormatInstruction.NumericBase.OCTAL">
+            <summary>Denotes base-8, or octal representation</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.FormatInstruction.NumericBase.BINARY">
+            <summary>Denotes base-2, or binary representation</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.FormatInstruction.Size">
+            <summary>Returns the memory size of the value. This is ignored if the type is a reference type</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.FormatInstruction.Type">
+            <summary>Returns the the type of the value</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.FormatInstruction.PadAlignment">
+            <summary>Returns whether the padding characters are to be inserted to the left or to the right</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.FormatInstruction.PadCharacter">
+            <summary>Returns the padding character</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.FormatInstruction.PadLength">
+            <summary>Returns the padding length</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.FormatInstruction.NegativeFormat">
+            <summary>Returns the format behavior for negative signed integers</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.FormatInstruction.IntegerBase">
+            <summary>Returns the format behavior for integers</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.FormatInstruction.DataFormat">
+            <summary>Returns the format string for datetime representation</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.FormatInstruction.ExpectedLength">
+            <summary>Returns the expected length without padding</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.FormatInstruction.DecimalPlaces">
+            <summary>Returns the number of decimal places for floating-point numerics</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.FormatInstruction.IntegerPlaces">
+            <summary>Returns the number of integer places for floating-point numerics</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.FormatInstruction.#ctor(System.SByte,Primrose.Primitives.Strings.FormatInstruction.NumericBase,System.UInt16,Primrose.Primitives.Strings.PadAlignmentType,System.Char,Primrose.Primitives.Strings.NegativeFormatType)">
+            <summary>Creates a format instruction for generating a string from an unsigned 8-bit integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.FormatInstruction.#ctor(System.Byte,Primrose.Primitives.Strings.FormatInstruction.NumericBase,System.UInt16,Primrose.Primitives.Strings.PadAlignmentType,System.Char,Primrose.Primitives.Strings.NegativeFormatType)">
+            <summary>Creates a format instruction for generating a string from an signed 8-bit integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.FormatInstruction.#ctor(System.UInt16,Primrose.Primitives.Strings.FormatInstruction.NumericBase,System.UInt16,Primrose.Primitives.Strings.PadAlignmentType,System.Char,Primrose.Primitives.Strings.NegativeFormatType)">
+            <summary>Creates a format instruction for generating a string from an unsigned 16-bit integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.FormatInstruction.#ctor(System.Int16,Primrose.Primitives.Strings.FormatInstruction.NumericBase,System.UInt16,Primrose.Primitives.Strings.PadAlignmentType,System.Char,Primrose.Primitives.Strings.NegativeFormatType)">
+            <summary>Creates a format instruction for generating a string from an signed 16-bit integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.FormatInstruction.#ctor(System.UInt32,Primrose.Primitives.Strings.FormatInstruction.NumericBase,System.UInt16,Primrose.Primitives.Strings.PadAlignmentType,System.Char,Primrose.Primitives.Strings.NegativeFormatType)">
+            <summary>Creates a format instruction for generating a string from an unsigned 32-bit integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.FormatInstruction.#ctor(System.Int32,Primrose.Primitives.Strings.FormatInstruction.NumericBase,System.UInt16,Primrose.Primitives.Strings.PadAlignmentType,System.Char,Primrose.Primitives.Strings.NegativeFormatType)">
+            <summary>Creates a format instruction for generating a string from an signed 32-bit integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.FormatInstruction.#ctor(System.UInt64,Primrose.Primitives.Strings.FormatInstruction.NumericBase,System.UInt16,Primrose.Primitives.Strings.PadAlignmentType,System.Char,Primrose.Primitives.Strings.NegativeFormatType)">
+            <summary>Creates a format instruction for generating a string from an unsigned 64-bit integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.FormatInstruction.#ctor(System.Int64,Primrose.Primitives.Strings.FormatInstruction.NumericBase,System.UInt16,Primrose.Primitives.Strings.PadAlignmentType,System.Char,Primrose.Primitives.Strings.NegativeFormatType)">
+            <summary>Creates a format instruction for generating a string from an signed 64-bit integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.FormatInstruction.#ctor(System.Single,Primrose.Primitives.Strings.FormatInstruction.NumericBase,System.UInt16,Primrose.Primitives.Strings.PadAlignmentType,System.Char,System.Byte,Primrose.Primitives.Strings.NegativeFormatType)">
+            <summary>Creates a format instruction for generating a string from a 32-bit floating-point value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.FormatInstruction.#ctor(System.Double,Primrose.Primitives.Strings.FormatInstruction.NumericBase,System.UInt16,Primrose.Primitives.Strings.PadAlignmentType,System.Char,System.Byte,Primrose.Primitives.Strings.NegativeFormatType)">
+            <summary>Creates a format instruction for generating a string from a 64-bit floating-point value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.FormatInstruction.Format">
+            <summary>Returns the string representing the value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.FormatInstruction.Format(System.Text.StringBuilder)">
+            <summary>Appends the string representing the value to a StringBuilder</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Strings.IFormatter">
+            <summary>Represents a format instruction for generating a string from a value and parameters</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.IFormatter.ExpectedLength">
+            <summary>Returns the expected length of the string produced by the value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.IFormatter.Format">
+            <summary>Returns the string representing the value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.IFormatter.Format(System.Text.StringBuilder)">
+            <summary>Appends the string representing the value to a StringBuilder</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Strings.PadAlignmentType">
+            <summary>Signals whether the padding characters are to be inserted to the left or to the right</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.PadAlignmentType.LEFT">
+            <summary>Signals that the padding characters are to be inserted to the left</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.PadAlignmentType.RIGHT">
+            <summary>Signals that the padding characters are to be inserted to the right</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Strings.NegativeFormatType">
+            <summary>Signals handling behavior of negative numbers (for numerics)</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.NegativeFormatType.AFTER_PADDING">
+            <summary>Signals that the padding characters are to be inserted before the sign character</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.NegativeFormatType.BEFORE_PADDING">
+            <summary>Signals that the padding characters are to be inserted after the sign character</summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.NegativeFormatType.OVERFLOW">
+            <summary>Signals that the negative sign be not rendered. Instead, the number will be wrapped around its maximum</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Strings.SignedIntegerFormatter">
+            <summary>Represents a format instruction for generating a string from an unsigned integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.SignedIntegerFormatter.#ctor(System.SByte,System.Int32,System.Int32,Primrose.Primitives.Strings.PadAlignmentType,System.Char,Primrose.Primitives.Strings.NegativeFormatType)">
+            <summary>Creates a format instruction for generating a string from an unsigned 8-bit integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.SignedIntegerFormatter.#ctor(System.Int16,System.Int32,System.Int32,Primrose.Primitives.Strings.PadAlignmentType,System.Char,Primrose.Primitives.Strings.NegativeFormatType)">
+            <summary>Creates a format instruction for generating a string from an unsigned 16-bit integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.SignedIntegerFormatter.#ctor(System.Int32,System.Int32,System.Int32,Primrose.Primitives.Strings.PadAlignmentType,System.Char,Primrose.Primitives.Strings.NegativeFormatType)">
+            <summary>Creates a format instruction for generating a string from an unsigned 32-bit integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.SignedIntegerFormatter.#ctor(System.Int64,System.Int32,System.Int32,Primrose.Primitives.Strings.PadAlignmentType,System.Char,Primrose.Primitives.Strings.NegativeFormatType)">
+            <summary>Creates a format instruction for generating a string from an unsigned 64-bit integer value</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.SignedIntegerFormatter.Value">
+            <summary>The numeric value</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.SignedIntegerFormatter.Base">
+            <summary>The base power. Only values from 2 to 16 are accepted</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.SignedIntegerFormatter.Padding">
+            <summary>The length of the string to pad to</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.SignedIntegerFormatter.PadDirection">
+            <summary>The padding character</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.SignedIntegerFormatter.PadCharacter">
+            <summary>The padding character</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.SignedIntegerFormatter.ExpectedLength">
+            <inheritdoc/>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.SignedIntegerFormatter.Format">
+            <inheritdoc/>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.SignedIntegerFormatter.Format(System.Text.StringBuilder)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Primrose.Primitives.Strings.StringCompiler">
+            <summary>
+            A class for storing format instructions, for the generation of strings
+            </summary>
+        </member>
+        <member name="F:Primrose.Primitives.Strings.StringCompiler.Items">
+            <summary>
+            The items to be formatted
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.StringCompiler.CreateString">
+            <summary>
+            Creates a string from the list of format definitions
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Primrose.Primitives.Strings.StringSource`1">
             <summary>Defines a data resource that maps a token code to a string resource</summary>
         </member>
@@ -3124,6 +3925,45 @@
         </member>
         <member name="M:Primrose.Primitives.Strings.StringSource`1.Clear">
             <summary>Clears the source of all tokens</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Strings.UnsignedIntegerFormatter">
+            <summary>Represents a format instruction for generating a string from an unsigned integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.UnsignedIntegerFormatter.#ctor(System.Byte,System.Int32,System.Int32,Primrose.Primitives.Strings.PadAlignmentType,System.Char)">
+            <summary>Creates a format instruction for generating a string from an 8-bit unsigned integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.UnsignedIntegerFormatter.#ctor(System.UInt16,System.Int32,System.Int32,Primrose.Primitives.Strings.PadAlignmentType,System.Char)">
+            <summary>Creates a format instruction for generating a string from an 16-bit unsigned integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.UnsignedIntegerFormatter.#ctor(System.UInt32,System.Int32,System.Int32,Primrose.Primitives.Strings.PadAlignmentType,System.Char)">
+            <summary>Creates a format instruction for generating a string from an 32-bit unsigned integer value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.UnsignedIntegerFormatter.#ctor(System.UInt64,System.Int32,System.Int32,Primrose.Primitives.Strings.PadAlignmentType,System.Char)">
+            <summary>Creates a format instruction for generating a string from an 64-bit unsigned integer value</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.UnsignedIntegerFormatter.Value">
+            <summary>The numeric value</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.UnsignedIntegerFormatter.Base">
+            <summary>The base power. Only values from 2 to 16 are accepted</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.UnsignedIntegerFormatter.Padding">
+            <summary>The length of the string to pad to</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.UnsignedIntegerFormatter.PadDirection">
+            <summary>The padding character</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.UnsignedIntegerFormatter.PadCharacter">
+            <summary>The padding character</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Strings.UnsignedIntegerFormatter.ExpectedLength">
+            <inheritdoc/>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.UnsignedIntegerFormatter.Format">
+            <inheritdoc/>
+        </member>
+        <member name="M:Primrose.Primitives.Strings.UnsignedIntegerFormatter.Format(System.Text.StringBuilder)">
+            <inheritdoc/>
         </member>
         <member name="T:Primrose.Primitives.Tasks.TaskHandler">
             <summary>Methods for starting and handling tasks</summary>
@@ -3209,6 +4049,9 @@
         <member name="F:Primrose.Primitives.Tasks.TaskSet`1.ActionPass">
             <summary>The action to be performed on successful completion of the main action</summary>
         </member>
+        <member name="M:Primrose.Primitives.Tasks.TaskSet`1.#ctor(System.Action{`0})">
+            <summary>Creates a container for handled tasks</summary>
+        </member>
         <member name="M:Primrose.Primitives.Tasks.TaskSet`1.#ctor(System.Action{`0},System.Action{System.Threading.Tasks.Task},System.Action{System.Threading.Tasks.Task})">
             <summary>Creates a container for handled tasks</summary>
         </member>
@@ -3271,6 +4114,15 @@
         <member name="P:Primrose.Primitives.TimeControl.SpinsPerFrame">
             <summary>The current number of spin cycles per second</summary>
         </member>
+        <member name="P:Primrose.Primitives.TimeControl.PercentWait">
+            <summary>The fraction of time spent in Wait()</summary>
+        </member>
+        <member name="P:Primrose.Primitives.TimeControl.PercentMarked">
+            <summary>The fraction of time spent between Mark() and Unmark()</summary>
+        </member>
+        <member name="P:Primrose.Primitives.TimeControl.PercentProcess">
+            <summary>The fraction of time spent outside of Wait()</summary>
+        </member>
         <member name="P:Primrose.Primitives.TimeControl.Precision">
             <summary>The precision mode of the timer</summary>
         </member>
@@ -3298,6 +4150,12 @@
         </member>
         <member name="M:Primrose.Primitives.TimeControl.Wait">
             <summary>Performs a wait to suspend process until the target FPS is reached</summary>
+        </member>
+        <member name="M:Primrose.Primitives.TimeControl.Mark">
+            <summary>Begins measurement of two points of time</summary>
+        </member>
+        <member name="M:Primrose.Primitives.TimeControl.Unmark">
+            <summary>Ends measurement of two points of time</summary>
         </member>
         <member name="T:Primrose.Primitives.Triggers.ACondition">
             <summary>Represents a condition to be fulfilled</summary>
@@ -3552,6 +4410,376 @@
         </member>
         <member name="M:Primrose.Primitives.Triggers.Trigger.ActionCollection.Clear">
             <summary>Clears all actions from the trigger</summary>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.float2box">
+            <summary>Represents an axis-aligned bounding box on two float dimensions</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float2box.LowerBound">
+            <summary>The coordinates of the lower bound</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float2box.UpperBound">
+            <summary>The coordinates of the upper bound</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2box.#ctor(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>
+            Creates a float2box value
+            </summary>
+            <param name="lowerBound"></param>
+            <param name="upperBound"></param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2box.ToString">
+            <summary>Returns the string representation of this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2box.Equals(System.Object)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2box.Equals(Primrose.Primitives.ValueTypes.float2box)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2box.GetHashCode">
+            <summary>Generates the hash code for this object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2box.op_Equality(Primrose.Primitives.ValueTypes.float2box,Primrose.Primitives.ValueTypes.float2box)">
+            <summary>Determines if two float2box values are equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2box.op_Inequality(Primrose.Primitives.ValueTypes.float2box,Primrose.Primitives.ValueTypes.float2box)">
+            <summary>Determines if two float2box values are not equal</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float2box.Size">
+            <summary>Returns the size of the bounding box</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float2box.Center">
+            <summary>Returns the center coordinate of the bounding box</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float2box.Radius">
+            <summary>Returns the equivalent bounding radius</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2box.AddPoint(Primrose.Primitives.ValueTypes.float2)">
+            <summary>Returns a new bounding box that includes the given point</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2box.AddBox(Primrose.Primitives.ValueTypes.float2box)">
+            <summary>Returns a new bounding box that includes the given box</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2box.ClampPoint(Primrose.Primitives.ValueTypes.float2)">
+            <summary>Returns a point clamped within the bounding box</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2box.Transform(Primrose.Primitives.ValueTypes.float3x3)">
+            <summary>Performs a transfromation on the bounding box</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2box.Translate(Primrose.Primitives.ValueTypes.float2)">
+            <summary>Performs a translation transfromation on the bounding box</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2box.ContainsPoint(Primrose.Primitives.ValueTypes.float2)">
+            <summary>Determines if a point is inside the rectangle represented</summary>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.float2obox">
+            <summary>Represents a transformed bounding box on two float dimensions</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float2obox.Box">
+            <summary>The axis-aligned bounding box prior to transformation</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float2obox.Transform">
+            <summary>The transformation matrix applied to the box</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2obox.#ctor(Primrose.Primitives.ValueTypes.float2box,Primrose.Primitives.ValueTypes.float3x3)">
+            <summary>
+            Creates a float2obox value
+            </summary>
+            <param name="box"></param>
+            <param name="transform"></param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2obox.ToString">
+            <summary>Returns the string representation of this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2obox.Equals(System.Object)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2obox.Equals(Primrose.Primitives.ValueTypes.float2obox)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2obox.GetHashCode">
+            <summary>Generates the hash code for this object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2obox.op_Equality(Primrose.Primitives.ValueTypes.float2obox,Primrose.Primitives.ValueTypes.float2obox)">
+            <summary>Determines if two float2obox values are equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2obox.op_Inequality(Primrose.Primitives.ValueTypes.float2obox,Primrose.Primitives.ValueTypes.float2obox)">
+            <summary>Determines if two float2obox values are not equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2obox.ContainsPoint(Primrose.Primitives.ValueTypes.float2)">
+            <summary>Determines if a point is inside the rectangle represented</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2obox.Intersects(Primrose.Primitives.ValueTypes.float2ray)">
+            <summary>Determines if a point is inside the rectangle represented</summary>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.float2ray">
+            <summary>Represents a ray on two float dimensions</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float2ray.Origin">
+            <summary>The coordinates of the origin</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float2ray.Direction">
+            <summary>The coordinates of the Direction</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2ray.#ctor(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>
+            Creates a float2ray value
+            </summary>
+            <param name="origin"></param>
+            <param name="direction"></param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2ray.ToString">
+            <summary>Returns the string representation of this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2ray.Equals(System.Object)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2ray.Equals(Primrose.Primitives.ValueTypes.float2ray)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2ray.GetHashCode">
+            <summary>Generates the hash code for this object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2ray.op_Equality(Primrose.Primitives.ValueTypes.float2ray,Primrose.Primitives.ValueTypes.float2ray)">
+            <summary>Determines if two float2ray values are equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2ray.op_Inequality(Primrose.Primitives.ValueTypes.float2ray,Primrose.Primitives.ValueTypes.float2ray)">
+            <summary>Determines if two float2ray values are not equal</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float2ray.Vector">
+            <summary>Returns the vector of the ray</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float2ray.Length">
+            <summary>Returns the length of the ray</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2ray.Intersects(Primrose.Primitives.ValueTypes.float2box)">
+            <summary>Returns whether the ray intersects with a bounding box</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2ray.Intersects(Primrose.Primitives.ValueTypes.float2obox)">
+            <summary>Returns whether the ray intersects with a bounding box</summary>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.float3box">
+            <summary>Represents an axis-aligned bounding box on three float dimensions</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float3box.LowerBound">
+            <summary>The coordinates of the lower bound</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float3box.UpperBound">
+            <summary>The coordinates of the upper bound</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3box.#ctor(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>
+            Creates a float3box value
+            </summary>
+            <param name="lowerBound"></param>
+            <param name="upperBound"></param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3box.ToString">
+            <summary>Returns the string representation of this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3box.Equals(System.Object)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3box.Equals(Primrose.Primitives.ValueTypes.float3box)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3box.GetHashCode">
+            <summary>Generates the hash code for this object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3box.op_Equality(Primrose.Primitives.ValueTypes.float3box,Primrose.Primitives.ValueTypes.float3box)">
+            <summary>Determines if two float3box values are equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3box.op_Inequality(Primrose.Primitives.ValueTypes.float3box,Primrose.Primitives.ValueTypes.float3box)">
+            <summary>Determines if two float3box values are not equal</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float3box.Size">
+            <summary>Returns the size of the bounding box</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float3box.Center">
+            <summary>Returns the center coordinate of the bounding box</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float3box.Radius">
+            <summary>Returns the equivalent bounding radius</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3box.AddPoint(Primrose.Primitives.ValueTypes.float3)">
+            <summary>Returns a new bounding box that includes the given point</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3box.AddBox(Primrose.Primitives.ValueTypes.float3box)">
+            <summary>Returns a new bounding box that includes the given box</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3box.ClampPoint(Primrose.Primitives.ValueTypes.float3)">
+            <summary>Returns a point clamped within the bounding box</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3box.Transform(Primrose.Primitives.ValueTypes.float4x4)">
+            <summary>Performs a transfromation on the bounding box</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3box.Translate(Primrose.Primitives.ValueTypes.float3)">
+            <summary>Performs a translation transfromation on the bounding box</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3box.ContainsPoint(Primrose.Primitives.ValueTypes.float3)">
+            <summary>Determines if a point is inside the rectangle represented</summary>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.float3obox">
+            <summary>Represents a transformed bounding box on three float dimensions</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float3obox.Box">
+            <summary>The axis-aligned bounding box prior to transformation</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float3obox.Transform">
+            <summary>The transformation matrix applied to the box</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3obox.#ctor(Primrose.Primitives.ValueTypes.float3box,Primrose.Primitives.ValueTypes.float4x4)">
+            <summary>
+            Creates a float3obox value
+            </summary>
+            <param name="box"></param>
+            <param name="transform"></param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3obox.ToString">
+            <summary>Returns the string representation of this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3obox.Equals(System.Object)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3obox.Equals(Primrose.Primitives.ValueTypes.float3obox)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3obox.GetHashCode">
+            <summary>Generates the hash code for this object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3obox.op_Equality(Primrose.Primitives.ValueTypes.float3obox,Primrose.Primitives.ValueTypes.float3obox)">
+            <summary>Determines if two float3obox values are equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3obox.op_Inequality(Primrose.Primitives.ValueTypes.float3obox,Primrose.Primitives.ValueTypes.float3obox)">
+            <summary>Determines if two float3obox values are not equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3obox.ContainsPoint(Primrose.Primitives.ValueTypes.float3)">
+            <summary>Determines if a point is inside the rectangle represented</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3obox.Intersects(Primrose.Primitives.ValueTypes.float3ray)">
+            <summary>Determines if a point is inside the rectangle represented</summary>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.float3plane">
+            <summary>Represents a plane surface on three float dimensions</summary>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.float3plane.PlaneSide">
+            <summary>Denotes the side of a plane, used as a return value for intersection evaluations</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float3plane.PlaneSide.Negative">
+            <summary>Represents the back side of a plane</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float3plane.PlaneSide.Positive">
+            <summary>Represents the front side of a plane</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float3plane.PlaneSide.Both">
+            <summary>Represents both sides of a plane</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float3plane.D">
+            <summary>The distance of the plane from the origin</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float3plane.Normal">
+            <summary>The normal vector of the plane</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3plane.#ctor(System.Single,Primrose.Primitives.ValueTypes.float3)">
+            <summary>
+            Creates a float3plane value
+            </summary>
+            <param name="d"></param>
+            <param name="normal"></param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3plane.#ctor(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>
+            Creates a float3plane value
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3plane.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Creates a float3plane value
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3plane.ToString">
+            <summary>Returns the string representation of this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3plane.Equals(System.Object)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3plane.Equals(Primrose.Primitives.ValueTypes.float3plane)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3plane.GetHashCode">
+            <summary>Generates the hash code for this object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3plane.op_Equality(Primrose.Primitives.ValueTypes.float3plane,Primrose.Primitives.ValueTypes.float3plane)">
+            <summary>Determines if two float3plane values are equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3plane.op_Inequality(Primrose.Primitives.ValueTypes.float3plane,Primrose.Primitives.ValueTypes.float3plane)">
+            <summary>Determines if two float3plane values are not equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3plane.Intersects(Primrose.Primitives.ValueTypes.float3box)">
+            <summary>Determines if the plane intersects an axis-aligned bounding box</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3plane.DistanceFromPoint(Primrose.Primitives.ValueTypes.float3)">
+            <summary>Determines the normal distance of a point from the plane</summary>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.float3ray">
+            <summary>Represents a ray on three float dimensions</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float3ray.Origin">
+            <summary>The coordinates of the origin</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float3ray.Direction">
+            <summary>The direction vector</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3ray.#ctor(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>
+            Creates a float3ray value
+            </summary>
+            <param name="origin"></param>
+            <param name="direction"></param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3ray.ToString">
+            <summary>Returns the string representation of this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3ray.Equals(System.Object)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3ray.Equals(Primrose.Primitives.ValueTypes.float3ray)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3ray.GetHashCode">
+            <summary>Generates the hash code for this object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3ray.op_Equality(Primrose.Primitives.ValueTypes.float3ray,Primrose.Primitives.ValueTypes.float3ray)">
+            <summary>Determines if two float3ray values are equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3ray.op_Inequality(Primrose.Primitives.ValueTypes.float3ray,Primrose.Primitives.ValueTypes.float3ray)">
+            <summary>Determines if two float3ray values are not equal</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float3ray.Vector">
+            <summary>Returns the vector of the ray</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float3ray.Length">
+            <summary>Returns the length of the ray</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3ray.Intersects(Primrose.Primitives.ValueTypes.float3box)">
+            <summary>Returns whether the ray intersects with a bounding box</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3ray.Intersects(Primrose.Primitives.ValueTypes.float3obox)">
+            <summary>Returns whether the ray intersects with a bounding box</summary>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.Pair`2">
             <summary>
@@ -4104,6 +5332,159 @@
         <member name="M:Primrose.Primitives.ValueTypes.float2.op_Implicit(Primrose.Primitives.ValueTypes.int2)~Primrose.Primitives.ValueTypes.float2">
             <summary>Converts a int2 value to a float2 value</summary>
         </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float2.One">
+            <summary>Returns a float2 value with all elements set to 1</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float2.UnitX">
+            <summary>Returns a float2 value representing a unit vector in the x direction</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float2.UnitY">
+            <summary>Returns a float2 value representing a unit vector in the y direction</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float2.Length">
+            <summary>Calculates the length, or Euclidean distance, of the vector</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float2.LengthSquared">
+            <summary>Calculates the length, or Euclidean distance, of the vector squared</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Distance(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>Calculates the Euclidean distance, between two vectors</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.DistanceSquared(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>Calculates the Euclidean distance, between two vectors squared</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Normalize">
+            <summary>Returns a float2 value of the same direction, normalized to unit length</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Dot(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>Calculates the dot product between to float2 vectors</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Dot(Primrose.Primitives.ValueTypes.float2)">
+            <summary>Calculates the dot product between to float2 vectors</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Cross(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>Calculates the cross product between to float2 vectors</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Cross(Primrose.Primitives.ValueTypes.float2)">
+            <summary>Calculates the cross product between to float2 vectors</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Swap(Primrose.Primitives.ValueTypes.float2@,Primrose.Primitives.ValueTypes.float2@)">
+            <summary>Swaps two float2 values</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Swap(Primrose.Primitives.ValueTypes.float2@)">
+            <summary>Swaps two float2 values</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Reflect(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>Determines the reflect vector of the given vector and normal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Reflect(Primrose.Primitives.ValueTypes.float2)">
+            <summary>Determines the reflect vector of the given vector and normal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Lerp(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2,System.Single)">
+            <summary>
+            Returns a value linearly interpolated towards a target
+            </summary>
+            <param name="value">The starting value</param>
+            <param name="target">The target value</param>
+            <param name="frac">The fraction to be interpolated towards the target point</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Lerp(Primrose.Primitives.ValueTypes.float2,System.Single)">
+            <summary>
+            Returns a value linearly interpolated towards a target
+            </summary>
+            <param name="target">The target value</param>
+            <param name="frac">The fraction to be interpolated towards the target point</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Lerp(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>
+            Returns a value linearly interpolated towards a target
+            </summary>
+            <param name="value">The starting value</param>
+            <param name="target">The target value</param>
+            <param name="frac">The fraction to be interpolated towards the target point</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Lerp(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>
+            Returns a value linearly interpolated towards a target
+            </summary>
+            <param name="target">The target value</param>
+            <param name="frac">The fraction to be interpolated towards the target point</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Max(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>
+            Returns a float2 value with each component being the greater of two float2 values
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Max(Primrose.Primitives.ValueTypes.float2)">
+            <summary>
+            Returns a float2 value with each component being the greater of two float2 values
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Min(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>
+            Returns a float2 value with each component being the lesser of two float2 values
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Min(Primrose.Primitives.ValueTypes.float2)">
+            <summary>
+            Returns a float2 value with each component being the lesser of two float2 values
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Creep(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2,System.Single)">
+            <summary>
+            Returns a value at most max_delta value closer to a target
+            </summary>
+            <param name="value">The starting value</param>
+            <param name="target">The target value</param>
+            <param name="max_delta">The max_delta for each dimension</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Creep(Primrose.Primitives.ValueTypes.float2,System.Single)">
+            <summary>
+            Returns a value at most max_delta value closer to a target
+            </summary>
+            <param name="target">The target value</param>
+            <param name="max_delta">The max_delta for each dimension</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Creep(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>
+            Returns a value at most max_delta value closer to a target
+            </summary>
+            <param name="value">The starting value</param>
+            <param name="target">The target value</param>
+            <param name="max_delta">The max_delta per dimension</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Creep(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>
+            Returns a value at most max_delta value closer to a target
+            </summary>
+            <param name="target">The target value</param>
+            <param name="max_delta">The max_delta per dimension</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Modulus(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>
+            Returns the result of (value % (max - min)), scaled so that lies between min and max
+            </summary>
+            <param name="value">The input value</param>
+            <param name="min">The minimum value</param>
+            <param name="max">The maximum value</param>
+            <returns>(value % (max - min)), scaled so that lies between min and max</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float2.Modulus(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>
+            Returns the result of (value % (max - min)), scaled so that lies between min and max
+            </summary>
+            <param name="min">The minimum value</param>
+            <param name="max">The maximum value</param>
+            <returns>(value % (max - min)), scaled so that lies between min and max</returns>
+        </member>
         <member name="T:Primrose.Primitives.ValueTypes.float3">
             <summary>A float3 triple value</summary>
         </member>
@@ -4168,7 +5549,7 @@
             <returns>True if the parse is successful</returns>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.float3.TryParse(System.String,Primrose.Primitives.ValueTypes.float3@,Primrose.Primitives.Parsers.IResolver,Primrose.Primitives.ValueTypes.float3)">
-            <summary>Parses a float4 from a string</summary>
+            <summary>Parses a float3 from a string</summary>
             <param name="s">The string value</param>
             <param name="resolver">A string resolver function</param>
             <param name="defaultValue">The default value</param>
@@ -4253,6 +5634,333 @@
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.float3.op_Implicit(Primrose.Primitives.ValueTypes.int3)~Primrose.Primitives.ValueTypes.float3">
             <summary>Converts a int3 value to a float3 value</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float3.One">
+            <summary>Returns a float3 value with all elements set to 1</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float3.UnitX">
+            <summary>Returns a float3 value representing a unit vector in the x direction</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float3.UnitY">
+            <summary>Returns a float3 value representing a unit vector in the y direction</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float3.UnitZ">
+            <summary>Returns a float3 value representing a unit vector in the y direction</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float3.Length">
+            <summary>Calculates the length, or Euclidean distance, of the vector</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float3.LengthSquared">
+            <summary>Calculates the length, or Euclidean distance, of the vector squared</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Distance(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>Calculates the Euclidean distance, between two vectors</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.DistanceSquared(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>Calculates the Euclidean distance, between two vectors squared</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Normalize">
+            <summary>Returns a float3 value of the same direction, normalized to unit length</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Dot(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>Calculates the dot product between to float3 vectors</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Dot(Primrose.Primitives.ValueTypes.float3)">
+            <summary>Calculates the dot product between to float3 vectors</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Cross(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>Calculates the cross product between to float3 vectors</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Cross(Primrose.Primitives.ValueTypes.float3)">
+            <summary>Calculates the cross product between to float3 vectors</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Swap(Primrose.Primitives.ValueTypes.float3@,Primrose.Primitives.ValueTypes.float3@)">
+            <summary>Swaps two float3 values</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Swap(Primrose.Primitives.ValueTypes.float3@)">
+            <summary>Swaps two float3 values</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Reflect(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>Determines the reflect vector of the given vector and normal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Reflect(Primrose.Primitives.ValueTypes.float3)">
+            <summary>Determines the reflect vector of the given vector and normal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Lerp(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3,System.Single)">
+            <summary>
+            Returns a value linearly interpolated towards a target
+            </summary>
+            <param name="value">The starting value</param>
+            <param name="target">The target value</param>
+            <param name="frac">The fraction to be interpolated towards the target point</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Lerp(Primrose.Primitives.ValueTypes.float3,System.Single)">
+            <summary>
+            Returns a value linearly interpolated towards a target
+            </summary>
+            <param name="target">The target value</param>
+            <param name="frac">The fraction to be interpolated towards the target point</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Lerp(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>
+            Returns a value linearly interpolated towards a target
+            </summary>
+            <param name="value">The starting value</param>
+            <param name="target">The target value</param>
+            <param name="frac">The fraction to be interpolated towards the target point</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Lerp(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>
+            Returns a value linearly interpolated towards a target
+            </summary>
+            <param name="target">The target value</param>
+            <param name="frac">The fraction to be interpolated towards the target point</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Max(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>
+            Returns a float3 value with each component being the greater of two float3 values
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Max(Primrose.Primitives.ValueTypes.float3)">
+            <summary>
+            Returns a float3 value with each component being the greater of two float3 values
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Min(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>
+            Returns a float3 value with each component being the lesser of two float3 values
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Min(Primrose.Primitives.ValueTypes.float3)">
+            <summary>
+            Returns a float3 value with each component being the lesser of two float3 values
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Creep(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3,System.Single)">
+            <summary>
+            Returns a value at most max_delta value closer to a target
+            </summary>
+            <param name="value">The starting value</param>
+            <param name="target">The target value</param>
+            <param name="max_delta">The max_delta for each dimension</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Creep(Primrose.Primitives.ValueTypes.float3,System.Single)">
+            <summary>
+            Returns a value at most max_delta value closer to a target
+            </summary>
+            <param name="target">The target value</param>
+            <param name="max_delta">The max_delta for each dimension</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Creep(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>
+            Returns a value at most max_delta value closer to a target
+            </summary>
+            <param name="value">The starting value</param>
+            <param name="target">The target value</param>
+            <param name="max_delta">The max_delta per dimension</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Creep(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>
+            Returns a value at most max_delta value closer to a target
+            </summary>
+            <param name="target">The target value</param>
+            <param name="max_delta">The max_delta per dimension</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Modulus(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>
+            Returns the result of (value % (max - min)), scaled so that lies between min and max
+            </summary>
+            <param name="value">The input value</param>
+            <param name="min">The minimum value</param>
+            <param name="max">The maximum value</param>
+            <returns>(value % (max - min)), scaled so that lies between min and max</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3.Modulus(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>
+            Returns the result of (value % (max - min)), scaled so that lies between min and max
+            </summary>
+            <param name="min">The minimum value</param>
+            <param name="max">The maximum value</param>
+            <returns>(value % (max - min)), scaled so that lies between min and max</returns>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.float3x3">
+            <summary>A float3x3 quad value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float3x3.row0">
+            <summary>The value of the first row, as a float3</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float3x3.row1">
+            <summary>The value of the second row, as a float3</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float3x3.row2">
+            <summary>The value of the third row, as a float3</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.#ctor(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>
+            Creates a float3x3 value
+            </summary>
+            <param name="r1"></param>
+            <param name="r2"></param>
+            <param name="r3"></param>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float3x3.Item(System.Int32)">
+            <summary>The value indexer</summary>
+            <exception cref="T:System.IndexOutOfRangeException">The array is accessed with an invalid index</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.ToString">
+            <summary>Returns the string representation of this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.ToArray">
+            <summary>Creates a float3[] array from this value</summary>
+            <returns>An array of length 4 with identical indexed values</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.FromArray(Primrose.Primitives.ValueTypes.float3[])">
+            <summary>Creates a float3x3 from an array</summary>
+            <param name="array">The array</param>
+            <returns>A float3x3 value</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
+            <exception cref="T:Primrose.Primitives.ArrayMismatchException">Only an array of length 4 can be converted to a float3x3</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.Parse(System.String)">
+            <summary>Parses a float3x3 from a string</summary>
+            <param name="s">The string value</param>
+            <returns>A float3x3 value</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.Parse(System.String,Primrose.Primitives.Parsers.IResolver,Primrose.Primitives.ValueTypes.float3x3)">
+            <summary>Parses a float3x3 from a string</summary>
+            <param name="s">The string value</param>
+            <param name="resolver">A string resolver function</param>
+            <param name="defaultValue">The default value</param>
+            <returns>A float3x3 value, or the default value if the parsing fails</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.TryParse(System.String,Primrose.Primitives.ValueTypes.float3x3@)">
+            <summary>Parses a float3x3 from a string</summary>
+            <param name="s">The string value</param>
+            <param name="result">The parsed value</param>
+            <returns>True if the parse is successful</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.TryParse(System.String,Primrose.Primitives.ValueTypes.float3x3@,Primrose.Primitives.Parsers.IResolver,Primrose.Primitives.ValueTypes.float3x3)">
+            <summary>Parses a float3x3 from a string</summary>
+            <param name="s">The string value</param>
+            <param name="resolver">A string resolver function</param>
+            <param name="defaultValue">The default value</param>
+            <param name="result">The parsed value</param>
+            <returns>True if the parse is successful</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.op_UnaryNegation(Primrose.Primitives.ValueTypes.float3x3)">
+            <summary>Performs a memberwise negation of a float3x3 value</summary>
+            <param name="a"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.op_Addition(Primrose.Primitives.ValueTypes.float3x3,Primrose.Primitives.ValueTypes.float3x3)">
+            <summary>Performs an addition operation between two float3x3 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.op_Subtraction(Primrose.Primitives.ValueTypes.float3x3,Primrose.Primitives.ValueTypes.float3x3)">
+            <summary>Performs a subtraction operation between two float3x3 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.op_Multiply(Primrose.Primitives.ValueTypes.float3x3,Primrose.Primitives.ValueTypes.float3x3)">
+            <summary>Performs a product operation between two float3x3 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.op_Multiply(System.Single,Primrose.Primitives.ValueTypes.float3x3)">
+            <summary>Performs a multiplication operation between a float3x3 value and a float multiplier</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.op_Multiply(Primrose.Primitives.ValueTypes.float3x3,System.Single)">
+            <summary>Performs a multiplication operation between a float3x3 value and a float multiplier</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.op_Division(Primrose.Primitives.ValueTypes.float3x3,System.Single)">
+            <summary>Performs a division operation between a float3x3 value and a float divisor</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.op_Modulus(Primrose.Primitives.ValueTypes.float3x3,System.Single)">
+            <summary>Performs a modulus operation between a float3x3 value and a float divisor</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.op_Multiply(Primrose.Primitives.ValueTypes.float3x3,Primrose.Primitives.ValueTypes.float2)">
+            <summary>Performs a transformation of a float2 vector</summary>
+            <param name="a">The transformation matrix</param>
+            <param name="v">The vector</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.op_Multiply(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float3x3)">
+            <summary>Performs a transformation of a float2 vector</summary>
+            <param name="a">The transformation matrix</param>
+            <param name="v">The vector</param>
+            <returns></returns>  
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.op_Multiply(Primrose.Primitives.ValueTypes.float3x3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>Performs a transformation of a float3 vector</summary>
+            <param name="a">The transformation matrix</param>
+            <param name="v">The vector</param>
+            <returns></returns>  
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.op_Multiply(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3x3)">
+            <summary>Performs a transformation of a float3 vector</summary>
+            <param name="a">The transformation matrix</param>
+            <param name="v">The vector</param>
+            <returns></returns>  
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.Diff(Primrose.Primitives.ValueTypes.float3x3,Primrose.Primitives.ValueTypes.float3x3)">
+            <summary>Returns the absolute difference between two float3x3 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.Equals(System.Object)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.Equals(Primrose.Primitives.ValueTypes.float3x3)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.GetHashCode">
+            <summary>Generates the hash code for this object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.op_Equality(Primrose.Primitives.ValueTypes.float3x3,Primrose.Primitives.ValueTypes.float3x3)">
+            <summary>Determines if two float3x3 values are equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.op_Inequality(Primrose.Primitives.ValueTypes.float3x3,Primrose.Primitives.ValueTypes.float3x3)">
+            <summary>Determines if two float3x3 values are not equal</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float3x3.Empty">
+            <summary>Returns a float3x3 value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.op_Explicit(Primrose.Primitives.ValueTypes.float3x3)~System.Array">
+            <summary>Creates an array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.op_Explicit(Primrose.Primitives.ValueTypes.float3x3)~Primrose.Primitives.ValueTypes.float3[]">
+            <summary>Creates a float[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.op_Implicit(Primrose.Primitives.ValueTypes.float3[])~Primrose.Primitives.ValueTypes.float3x3">
+            <summary>Creates a float3x3 value from this array</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float3x3.Identity">
+            <summary>Returns a float3x3 value representing the identity transformation matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.CreateTranslation(Primrose.Primitives.ValueTypes.float2)">
+            <summary>Returns a float3x3 value representing a translation transformation matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.CreateRotation(System.Single)">
+            <summary>Returns a float3x3 value representing a rotation transformation matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.CreateScaling(Primrose.Primitives.ValueTypes.float2)">
+            <summary>Returns a float3x3 value representing a scale transformation matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.Transpose">
+            <summary>Returns a float3x3 value representing a transposition of a matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float3x3.Inverse">
+            <summary>Returns a float3x3 value representing a inverse transformation of a matrix</summary>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.float4">
             <summary>A float4 quad value</summary>
@@ -4408,6 +6116,364 @@
         <member name="M:Primrose.Primitives.ValueTypes.float4.op_Implicit(Primrose.Primitives.ValueTypes.int4)~Primrose.Primitives.ValueTypes.float4">
             <summary>Converts a int4 value to a float4 value</summary>
         </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float4.One">
+            <summary>Returns a float4 value with all elements set to 1</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float4.UnitX">
+            <summary>Returns a float4 value representing a unit vector in the x direction</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float4.UnitY">
+            <summary>Returns a float4 value representing a unit vector in the y direction</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float4.UnitZ">
+            <summary>Returns a float4 value representing a unit vector in the y direction</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float4.UnitW">
+            <summary>Returns a float4 value representing a unit vector in the y direction</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float4.Length">
+            <summary>Calculates the length, or Euclidean distance, of the vector</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float4.LengthSquared">
+            <summary>Calculates the length, or Euclidean distance, of the vector squared</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Distance(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>Calculates the Euclidean distance, between two vectors</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.DistanceSquared(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>Calculates the Euclidean distance, between two vectors squared</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Normalize">
+            <summary>Returns a float4 value of the same direction, normalized to unit length</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Dot(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>Calculates the dot product between to float4 vectors</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Dot(Primrose.Primitives.ValueTypes.float4)">
+            <summary>Calculates the dot product between to float4 vectors</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Swap(Primrose.Primitives.ValueTypes.float4@,Primrose.Primitives.ValueTypes.float4@)">
+            <summary>Swaps two float4 values</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Swap(Primrose.Primitives.ValueTypes.float4@)">
+            <summary>Swaps two float4 values</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Reflect(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>Determines the reflect vector of the given vector and normal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Reflect(Primrose.Primitives.ValueTypes.float4)">
+            <summary>Determines the reflect vector of the given vector and normal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Lerp(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4,System.Single)">
+            <summary>
+            Returns a value linearly interpolated towards a target
+            </summary>
+            <param name="value">The starting value</param>
+            <param name="target">The target value</param>
+            <param name="frac">The fraction to be interpolated towards the target point</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Lerp(Primrose.Primitives.ValueTypes.float4,System.Single)">
+            <summary>
+            Returns a value linearly interpolated towards a target
+            </summary>
+            <param name="target">The target value</param>
+            <param name="frac">The fraction to be interpolated towards the target point</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Lerp(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>
+            Returns a value linearly interpolated towards a target
+            </summary>
+            <param name="value">The starting value</param>
+            <param name="target">The target value</param>
+            <param name="frac">The fraction to be interpolated towards the target point</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Lerp(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>
+            Returns a value linearly interpolated towards a target
+            </summary>
+            <param name="target">The target value</param>
+            <param name="frac">The fraction to be interpolated towards the target point</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Max(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>
+            Returns a float4 value with each component being the greater of two float4 values
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Max(Primrose.Primitives.ValueTypes.float4)">
+            <summary>
+            Returns a float4 value with each component being the greater of two float4 values
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Min(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>
+            Returns a float4 value with each component being the lesser of two float4 values
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Min(Primrose.Primitives.ValueTypes.float4)">
+            <summary>
+            Returns a float4 value with each component being the lesser of two float4 values
+            </summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Creep(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4,System.Single)">
+            <summary>
+            Returns a value at most max_delta value closer to a target
+            </summary>
+            <param name="value">The starting value</param>
+            <param name="target">The target value</param>
+            <param name="max_delta">The max_delta for each dimension</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Creep(Primrose.Primitives.ValueTypes.float4,System.Single)">
+            <summary>
+            Returns a value at most max_delta value closer to a target
+            </summary>
+            <param name="target">The target value</param>
+            <param name="max_delta">The max_delta for each dimension</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Creep(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>
+            Returns a value at most max_delta value closer to a target
+            </summary>
+            <param name="value">The starting value</param>
+            <param name="target">The target value</param>
+            <param name="max_delta">The max_delta per dimension</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Creep(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>
+            Returns a value at most max_delta value closer to a target
+            </summary>
+            <param name="target">The target value</param>
+            <param name="max_delta">The max_delta per dimension</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Modulus(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>
+            Returns the result of (value % (max - min)), scaled so that lies between min and max
+            </summary>
+            <param name="value">The input value</param>
+            <param name="min">The minimum value</param>
+            <param name="max">The maximum value</param>
+            <returns>(value % (max - min)), scaled so that lies between min and max</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4.Modulus(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>
+            Returns the result of (value % (max - min)), scaled so that lies between min and max
+            </summary>
+            <param name="min">The minimum value</param>
+            <param name="max">The maximum value</param>
+            <returns>(value % (max - min)), scaled so that lies between min and max</returns>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.float4x4">
+            <summary>A float4x4 quad value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float4x4.row0">
+            <summary>The value of the first row, as a float4</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float4x4.row1">
+            <summary>The value of the second row, as a float4</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float4x4.row2">
+            <summary>The value of the third row, as a float4</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.float4x4.row3">
+            <summary>The value of the last row, as a float4</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.#ctor(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>
+            Creates a float4x4 value
+            </summary>
+            <param name="r1"></param>
+            <param name="r2"></param>
+            <param name="r3"></param>
+            <param name="r4"></param>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float4x4.Item(System.Int32)">
+            <summary>The value indexer</summary>
+            <exception cref="T:System.IndexOutOfRangeException">The array is accessed with an invalid index</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.ToString">
+            <summary>Returns the string representation of this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.ToArray">
+            <summary>Creates a float4[] array from this value</summary>
+            <returns>An array of length 4 with identical indexed values</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.FromArray(Primrose.Primitives.ValueTypes.float4[])">
+            <summary>Creates a float4x4 from an array</summary>
+            <param name="array">The array</param>
+            <returns>A float4x4 value</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
+            <exception cref="T:Primrose.Primitives.ArrayMismatchException">Only an array of length 4 can be converted to a float4x4</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.Parse(System.String)">
+            <summary>Parses a float4x4 from a string</summary>
+            <param name="s">The string value</param>
+            <returns>A float4x4 value</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.Parse(System.String,Primrose.Primitives.Parsers.IResolver,Primrose.Primitives.ValueTypes.float4x4)">
+            <summary>Parses a float4x4 from a string</summary>
+            <param name="s">The string value</param>
+            <param name="resolver">A string resolver function</param>
+            <param name="defaultValue">The default value</param>
+            <returns>A float4x4 value, or the default value if the parsing fails</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.TryParse(System.String,Primrose.Primitives.ValueTypes.float4x4@)">
+            <summary>Parses a float4x4 from a string</summary>
+            <param name="s">The string value</param>
+            <param name="result">The parsed value</param>
+            <returns>True if the parse is successful</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.TryParse(System.String,Primrose.Primitives.ValueTypes.float4x4@,Primrose.Primitives.Parsers.IResolver,Primrose.Primitives.ValueTypes.float4x4)">
+            <summary>Parses a float4x4 from a string</summary>
+            <param name="s">The string value</param>
+            <param name="resolver">A string resolver function</param>
+            <param name="defaultValue">The default value</param>
+            <param name="result">The parsed value</param>
+            <returns>True if the parse is successful</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.op_UnaryNegation(Primrose.Primitives.ValueTypes.float4x4)">
+            <summary>Performs a memberwise negation of a float4x4 value</summary>
+            <param name="a"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.op_Addition(Primrose.Primitives.ValueTypes.float4x4,Primrose.Primitives.ValueTypes.float4x4)">
+            <summary>Performs an addition operation between two float4x4 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.op_Subtraction(Primrose.Primitives.ValueTypes.float4x4,Primrose.Primitives.ValueTypes.float4x4)">
+            <summary>Performs a subtraction operation between two float4x4 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.op_Multiply(Primrose.Primitives.ValueTypes.float4x4,Primrose.Primitives.ValueTypes.float4x4)">
+            <summary>Performs a product operation between two float4x4 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.op_Multiply(System.Single,Primrose.Primitives.ValueTypes.float4x4)">
+            <summary>Performs a multiplication operation between a float4x4 value and a float multiplier</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.op_Multiply(Primrose.Primitives.ValueTypes.float4x4,System.Single)">
+            <summary>Performs a multiplication operation between a float4x4 value and a float multiplier</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.op_Division(Primrose.Primitives.ValueTypes.float4x4,System.Single)">
+            <summary>Performs a division operation between a float4x4 value and a float divisor</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.op_Modulus(Primrose.Primitives.ValueTypes.float4x4,System.Single)">
+            <summary>Performs a modulus operation between a float4x4 value and a float divisor</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.op_Multiply(Primrose.Primitives.ValueTypes.float4x4,Primrose.Primitives.ValueTypes.float3)">
+            <summary>Performs a transformation of a float3 vector</summary>
+            <param name="a">The transformation matrix</param>
+            <param name="v">The vector</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.op_Multiply(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float4x4)">
+            <summary>Performs a transformation of a float3 vector</summary>
+            <param name="a">The transformation matrix</param>
+            <param name="v">The vector</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.op_Multiply(Primrose.Primitives.ValueTypes.float4x4,Primrose.Primitives.ValueTypes.float4)">
+            <summary>Performs a transformation of a float4 vector</summary>
+            <param name="a">The transformation matrix</param>
+            <param name="v">The vector</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.op_Multiply(Primrose.Primitives.ValueTypes.float4,Primrose.Primitives.ValueTypes.float4x4)">
+            <summary>Performs a transformation of a float4 vector</summary>
+            <param name="a">The transformation matrix</param>
+            <param name="v">The vector</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.Diff(Primrose.Primitives.ValueTypes.float4x4,Primrose.Primitives.ValueTypes.float4x4)">
+            <summary>Returns the absolute difference between two float4x4 values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.Equals(System.Object)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.Equals(Primrose.Primitives.ValueTypes.float4x4)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.GetHashCode">
+            <summary>Generates the hash code for this object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.op_Equality(Primrose.Primitives.ValueTypes.float4x4,Primrose.Primitives.ValueTypes.float4x4)">
+            <summary>Determines if two float4x4 values are equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.op_Inequality(Primrose.Primitives.ValueTypes.float4x4,Primrose.Primitives.ValueTypes.float4x4)">
+            <summary>Determines if two float4x4 values are not equal</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float4x4.Empty">
+            <summary>Returns a float4x4 value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.op_Explicit(Primrose.Primitives.ValueTypes.float4x4)~System.Array">
+            <summary>Creates an array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.op_Explicit(Primrose.Primitives.ValueTypes.float4x4)~Primrose.Primitives.ValueTypes.float4[]">
+            <summary>Creates a float[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.op_Implicit(Primrose.Primitives.ValueTypes.float4[])~Primrose.Primitives.ValueTypes.float4x4">
+            <summary>Creates a float4x4 value from this array</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.float4x4.Identity">
+            <summary>Returns a float4x4 value representing the identity transformation matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.CreateTranslation(Primrose.Primitives.ValueTypes.float3)">
+            <summary>Returns a float4x4 value representing a translation transformation matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.CreateRotationX(System.Single)">
+            <summary>Returns a float4x4 value representing a rotation transformation matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.CreateRotationY(System.Single)">
+            <summary>Returns a float4x4 value representing a rotation transformation matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.CreateRotationZ(System.Single)">
+            <summary>Returns a float4x4 value representing a rotation transformation matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.CreateRotation(Primrose.Primitives.ValueTypes.float3,System.Single)">
+            <summary>Returns a float4x4 value representing a rotation transformation matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.CreateFromAxisAngle(Primrose.Primitives.ValueTypes.float3,System.Single)">
+            <summary>Returns a float4x4 value representing a rotation transformation matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.CreateScaling(Primrose.Primitives.ValueTypes.float3)">
+            <summary>Returns a float4x4 value representing a scale transformation matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.CreateOrthographic(System.Single,System.Single,System.Single,System.Single)">
+            <summary>Returns a float4x4 value representing a orthographic projection matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.CreateOrthographicOffCenter(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>Returns a float4x4 value representing a orthographic projection matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.CreatePerspectiveFieldOfView(System.Single,System.Single,System.Single,System.Single)">
+            <summary>Returns a float4x4 value representing a perspective projection matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.CreatePerspectiveOffCenter(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>Returns a float4x4 value representing a perspective projection matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.LookAt(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>Returns a float4x4 value representing a transformation from a current view point to a specified point</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.Transpose">
+            <summary>Returns a float4x4 value representing a transposition of a matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.Inverse">
+            <summary>Returns a float4x4 value representing a inverse transformation of a matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.float4x4.CreateRotationFromQuaternion(Primrose.Primitives.ValueTypes.quaternion)">
+            <summary>Returns a float4x4 value representing a rotation transformation matrix</summary>
+        </member>
         <member name="T:Primrose.Primitives.ValueTypes.floatRect">
             <summary>A float rectangle value</summary>
         </member>
@@ -4439,7 +6505,7 @@
             <param name="position"></param>
             <param name="size"></param>
         </member>
-        <member name="P:Primrose.Primitives.ValueTypes.floatRect.Item(System.Single)">
+        <member name="P:Primrose.Primitives.ValueTypes.floatRect.Item(System.Int32)">
             <summary>The value indexer</summary>
             <exception cref="T:System.IndexOutOfRangeException">The array is accessed with an invalid index</exception>
         </member>
@@ -4516,19 +6582,19 @@
         <member name="P:Primrose.Primitives.ValueTypes.floatRect.Empty">
             <summary>Returns a floatRect value with all elements set to their default value</summary>
         </member>
-        <member name="M:Primrose.Primitives.ValueTypes.floatRect.ContainsPofloat(Primrose.Primitives.ValueTypes.float2)">
-            <summary>Determines if a pofloat is inside the rectangle represented</summary>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.ContainsPoint(Primrose.Primitives.ValueTypes.float2)">
+            <summary>Determines if a point is inside the rectangle represented</summary>
         </member>
-        <member name="M:Primrose.Primitives.ValueTypes.floatRect.floatersectsRectangle(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
-            <summary>Determines if at least part of a rectangle floatersects with the rectangle represented</summary>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.IntersectsRectangle(Primrose.Primitives.ValueTypes.float2,Primrose.Primitives.ValueTypes.float2)">
+            <summary>Determines if at least part of a rectangle intersects with the rectangle represented</summary>
         </member>
-        <member name="M:Primrose.Primitives.ValueTypes.floatRect.floatersectsRectangle(Primrose.Primitives.ValueTypes.floatRect)">
-            <summary>Determines if at least part of a rectangle floatersects with the rectangle represented</summary>
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.IntersectsRectangle(Primrose.Primitives.ValueTypes.floatRect)">
+            <summary>Determines if at least part of a rectangle intersects with the rectangle represented</summary>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.floatRect.Union(Primrose.Primitives.ValueTypes.floatRect)">
             <summary>Returns the bounding rectangle of the union of two rectangles</summary>
         </member>
-        <member name="M:Primrose.Primitives.ValueTypes.floatRect.floatersect(Primrose.Primitives.ValueTypes.floatRect)">
+        <member name="M:Primrose.Primitives.ValueTypes.floatRect.Interesect(Primrose.Primitives.ValueTypes.floatRect)">
             <summary>Returns the bounding rectangle of the floatersection of two rectangles</summary>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.floatRect.op_Explicit(Primrose.Primitives.ValueTypes.floatRect)~System.Single[]">
@@ -4649,6 +6715,9 @@
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.int2.GetHashCode">
             <summary>Generates the hash code for this object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int2.CompareTo(Primrose.Primitives.ValueTypes.int2)">
+            <summary>Compares one int2 value to the other</summary>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.int2.op_Equality(Primrose.Primitives.ValueTypes.int2,Primrose.Primitives.ValueTypes.int2)">
             <summary>Determines if two int2 values are equal</summary>
@@ -4779,6 +6848,9 @@
         <member name="M:Primrose.Primitives.ValueTypes.int3.GetHashCode">
             <summary>Generates the hash code for this object</summary>
         </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int3.CompareTo(Primrose.Primitives.ValueTypes.int3)">
+            <summary>Compares one int3 value to the other</summary>
+        </member>
         <member name="M:Primrose.Primitives.ValueTypes.int3.op_Equality(Primrose.Primitives.ValueTypes.int3,Primrose.Primitives.ValueTypes.int3)">
             <summary>Determines if two int3 values are equal</summary>
         </member>
@@ -4798,7 +6870,7 @@
             <summary>Creates a int3 value from this array</summary>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.int4">
-            <summary>A int4 quad value</summary>
+            <summary>Defines a container containing four <see cref="T:System.Int32"/> values</summary>
         </member>
         <member name="F:Primrose.Primitives.ValueTypes.int4.x">
             <summary>The x or [0] value</summary>
@@ -4814,7 +6886,7 @@
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.int4.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
-            Creates a int4 value
+            Creates a <see cref="T:Primrose.Primitives.ValueTypes.int4"/> value
             </summary>
             <param name="x"></param>
             <param name="y"></param>
@@ -4911,6 +6983,9 @@
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.int4.GetHashCode">
             <summary>Generates the hash code for this object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.int4.CompareTo(Primrose.Primitives.ValueTypes.int4)">
+            <summary>Compares one int3 value to the other</summary>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.int4.op_Equality(Primrose.Primitives.ValueTypes.int4,Primrose.Primitives.ValueTypes.int4)">
             <summary>Determines if two int4 values are equal</summary>
@@ -5051,6 +7126,258 @@
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.intRect.op_Explicit(System.Int32[])~Primrose.Primitives.ValueTypes.intRect">
             <summary>Creates a intRect value from this array</summary>
+        </member>
+        <member name="T:Primrose.Primitives.ValueTypes.quaternion">
+            <summary>A quaternion value, essentially a float4 with special operation behavior</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.quaternion.x">
+            <summary>The x or [0] value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.quaternion.y">
+            <summary>The y or [1] value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.quaternion.z">
+            <summary>The z or [2] value</summary>
+        </member>
+        <member name="F:Primrose.Primitives.ValueTypes.quaternion.w">
+            <summary>The w or [3] value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Creates a quaternion value
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+            <param name="w"></param>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.quaternion.Item(System.Int32)">
+            <summary>The value indexer</summary>
+            <exception cref="T:System.IndexOutOfRangeException">The array is accessed with an invalid index</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.ToString">
+            <summary>Returns the string representation of this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.ToArray">
+            <summary>Creates a float[] array from this value</summary>
+            <returns>An array of length 4 with identical indexed values</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.FromArray(System.Single[])">
+            <summary>Creates a quaternion from an array</summary>
+            <param name="array">The array</param>
+            <returns>A quaternion value</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
+            <exception cref="T:Primrose.Primitives.ArrayMismatchException">Only an array of length 4 can be converted to a quaternion</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.FromArray(System.Int32[])">
+            <summary>Creates a quaternion from an array</summary>
+            <param name="array">The array</param>
+            <returns>A quaternion value</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="array"/> cannot be null</exception>
+            <exception cref="T:Primrose.Primitives.ArrayMismatchException">Only an array of length 4 can be converted to a quaternion</exception>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.Parse(System.String)">
+            <summary>Parses a quaternion from a string</summary>
+            <param name="s">The string value</param>
+            <returns>A quaternion value</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.Parse(System.String,Primrose.Primitives.Parsers.IResolver,Primrose.Primitives.ValueTypes.quaternion)">
+            <summary>Parses a quaternion from a string</summary>
+            <param name="s">The string value</param>
+            <param name="resolver">A string resolver function</param>
+            <param name="defaultValue">The default value</param>
+            <returns>A quaternion value, or the default value if the parsing fails</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.TryParse(System.String,Primrose.Primitives.ValueTypes.quaternion@)">
+            <summary>Parses a quaternion from a string</summary>
+            <param name="s">The string value</param>
+            <param name="result">The parsed value</param>
+            <returns>True if the parse is successful</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.TryParse(System.String,Primrose.Primitives.ValueTypes.quaternion@,Primrose.Primitives.Parsers.IResolver,Primrose.Primitives.ValueTypes.quaternion)">
+            <summary>Parses a quaternion from a string</summary>
+            <param name="s">The string value</param>
+            <param name="resolver">A string resolver function</param>
+            <param name="defaultValue">The default value</param>
+            <param name="result">The parsed value</param>
+            <returns>True if the parse is successful</returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_UnaryNegation(Primrose.Primitives.ValueTypes.quaternion)">
+            <summary>Performs a memberwise negation of a quaternion value</summary>
+            <param name="a"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_Addition(Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion)">
+            <summary>Performs an addition operation between two quaternion values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_Subtraction(Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion)">
+            <summary>Performs a subtraction operation between two quaternion values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_Multiply(Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion)">
+            <summary>Performs a memberwise multiplication operation between two quaternion values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_Division(Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion)">
+            <summary>Performs a memberwise division between two quaternion values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_Multiply(System.Single,Primrose.Primitives.ValueTypes.quaternion)">
+            <summary>Performs a multiplication operation between a quaternion value and a float multiplier</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_Multiply(Primrose.Primitives.ValueTypes.quaternion,System.Single)">
+            <summary>Performs a multiplication operation between a quaternion value and a float multiplier</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_Multiply(Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.float3)">
+            <summary>Performs a multiplication operation between a quaternion value and a float3 vector</summary>
+            <param name="a"></param><param name="v"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_Division(Primrose.Primitives.ValueTypes.quaternion,System.Single)">
+            <summary>Performs a division operation between a quaternion value and a float divisor</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_Modulus(Primrose.Primitives.ValueTypes.quaternion,System.Single)">
+            <summary>Performs a modulus operation between a quaternion value and a float divisor</summary>
+            <param name="a"></param><param name="m"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.Diff(Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion)">
+            <summary>Returns the absolute difference between two quaternion values</summary>
+            <param name="a"></param><param name="b"></param><returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.Equals(System.Object)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.Equals(Primrose.Primitives.ValueTypes.quaternion)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_Explicit(Primrose.Primitives.ValueTypes.quaternion)~Primrose.Primitives.ValueTypes.float4">
+            <summary>Casts a quaternion to float4</summary>
+            <param name="o">The object to cast</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.GetHashCode">
+            <summary>Generates the hash code for this object</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_Equality(Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion)">
+            <summary>Determines if two quaternion values are equal</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_Inequality(Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion)">
+            <summary>Determines if two quaternion values are not equal</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.quaternion.Empty">
+            <summary>Returns a quaternion value with all elements set to their default value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_Explicit(Primrose.Primitives.ValueTypes.quaternion)~System.Array">
+            <summary>Creates an array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_Explicit(Primrose.Primitives.ValueTypes.quaternion)~System.Single[]">
+            <summary>Creates a float[] array from this value</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_Implicit(System.Single[])~Primrose.Primitives.ValueTypes.quaternion">
+            <summary>Creates a quaternion value from this array</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_Implicit(System.Int32[])~Primrose.Primitives.ValueTypes.quaternion">
+            <summary>Creates a quaternion value from this array</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.op_Implicit(Primrose.Primitives.ValueTypes.float4)~Primrose.Primitives.ValueTypes.quaternion">
+            <summary>Converts a float4 value to a quaternion value</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.quaternion.Identity">
+            <summary>Returns the identity quaternion value</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.quaternion.Length">
+            <summary>Calculates the length, or Euclidean distance, of the vector</summary>
+        </member>
+        <member name="P:Primrose.Primitives.ValueTypes.quaternion.LengthSquared">
+            <summary>Calculates the length, or Euclidean distance, of the vector squared</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.Normalize">
+            <summary>Returns a quaternion value of the same direction, normalized to unit length</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.Conjugate">
+            <summary>Returns a quaternion value of the same direction, normalized to unit length</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.Inverse">
+            <summary>Calculates the inverse of a quaternion</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.ToAxisAngle">
+            <summary>Converts a rotation to angle-axis representation</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.FromAxis(Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3,Primrose.Primitives.ValueTypes.float3)">
+            <summary>Returns a quaternion value derived from rotations along the three axes</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.FromRotationMatrix(Primrose.Primitives.ValueTypes.float4x4)">
+            <summary>Returns a quaternion value derived from a rotation transformation matrix</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.Dot(Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion)">
+            <summary>Calculates the dot product between to quaternion vectors</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.Dot(Primrose.Primitives.ValueTypes.quaternion)">
+            <summary>Calculates the dot product between to quaternion vectors</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.Swap(Primrose.Primitives.ValueTypes.quaternion@,Primrose.Primitives.ValueTypes.quaternion@)">
+            <summary>Swaps two quaternion values</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.Swap(Primrose.Primitives.ValueTypes.quaternion@)">
+            <summary>Swaps two quaternion values</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.Log">
+            <summary>Calculates the log of a quaternion</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.Exp">
+            <summary>Calculates the exponent of a quaternion</summary>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.Lerp(Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion,System.Single)">
+            <summary>
+            Returns a value linearly interpolated towards a target
+            </summary>
+            <param name="value">The starting value</param>
+            <param name="target">The target value</param>
+            <param name="frac">The fraction to be interpolated towards the target point</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.SLerp(Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion,System.Single)">
+            <summary>
+            Returns a value spherically interpolated towards a target
+            </summary>
+            <param name="value">The starting value</param>
+            <param name="target">The target value</param>
+            <param name="frac">The fraction to be interpolated towards the target point</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.Squad(Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion,System.Single)">
+            <summary>
+            Returns a value quadractically interpolated towards a target
+            </summary>
+            <param name="q1">The previous quaterion value</param>
+            <param name="q2">The next quaterion value</param>
+            <param name="ta">The start of the target segment</param>
+            <param name="tb">The start of the target segment</param>
+            <param name="t">The interpolation factor</param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.SimpleSquad(Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion,System.Single)">
+            <summary>
+            Returns a value quadractically interpolated towards a target
+            </summary>
+            <param name="prev"></param>
+            <param name="q1"></param>
+            <param name="q2"></param>
+            <param name="post"></param>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.quaternion.Spline(Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion,Primrose.Primitives.ValueTypes.quaternion)">
+            <summary>
+            Returns a value polynomially interpolated towards a target (cubic interpolation)
+            </summary>
+            <param name="pre">The previous quaterion value</param>
+            <param name="q">The target value</param>
+            <param name="post">The next quaterion value</param>
+            <returns></returns>
         </member>
         <member name="T:Primrose.Primitives.ValueTypes.sbyte2">
             <summary>A sbyte2 pair value</summary>
@@ -5299,6 +7626,10 @@
         <member name="M:Primrose.Primitives.ValueTypes.sbyte4.Equals(System.Object)">
             <summary>Returns true if the value of another object is equal to this object</summary>
             <param name="obj">The object to compare for equality</param>
+        </member>
+        <member name="M:Primrose.Primitives.ValueTypes.sbyte4.Equals(Primrose.Primitives.ValueTypes.sbyte4)">
+            <summary>Returns true if the value of another object is equal to this object</summary>
+            <param name="other">The object to compare for equality</param>
         </member>
         <member name="M:Primrose.Primitives.ValueTypes.sbyte4.GetHashCode">
             <summary>Generates the hash code for this object</summary>
@@ -6367,6 +8698,11 @@
         <member name="P:Primrose.Resource.Strings.Error_ObjectPoolDuplicateBackgroundPool">
             <summary>
               Looks up a localized string similar to There is already a background object pool for &apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:Primrose.Resource.Strings.Error_ObjectPoolDuplicateItem">
+            <summary>
+              Looks up a localized string similar to The object to be admitted into the pool &apos;{0}&apos; already exists in the pool!.
             </summary>
         </member>
         <member name="P:Primrose.Resource.Strings.Error_RuleConversionException">

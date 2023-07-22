@@ -52,9 +52,12 @@ namespace SWEndor.Game.Input.Context
       base.Set();
       foreach (string s in _functions)
       {
-        InputFunction fn = InputFunction.Registry.Get(s);
-        if (fn != null)
-          fn.Enabled = true;
+        int index = -1;
+        while ((index = InputFunction.Registry.GetNext(s, ++index, out InputFunction fn)) != -1)
+        {
+          if (fn != null)
+            fn.Enabled = true;
+        }
       }
     }
 
@@ -62,6 +65,7 @@ namespace SWEndor.Game.Input.Context
     {
       base.HandleMouse(mouseX, mouseY, button1, button2, button3, button4, mouseScroll);
 
+      // might be a good idea to move this to PlayerInfo??
       if (button1)
         Engine.PlayerInfo.FirePrimaryWeapon();
 

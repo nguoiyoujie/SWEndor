@@ -77,7 +77,7 @@ namespace SWEndor.Game.Actors.Models
         return self;
     }
 
-    internal ChildEnumerable Siblings { get { return Parent.Children; } }
+    internal ChildEnumerable Siblings { get { return Parent == null ? default : Parent.Children; } }
 
     public struct ChildEnumerable
     {
@@ -93,7 +93,7 @@ namespace SWEndor.Game.Actors.Models
       public ChildEnumerator(List<ActorInfo> list) { L = list; current = -1; }
 
       public void Reset() { current = -1; }
-      public bool MoveNext() { return ++current < L.Count; }
+      public bool MoveNext() { return ++current < (L?.Count ?? 0); }
       public ActorInfo Current { get { return L[current]; } }
       public void Dispose() { }
     }

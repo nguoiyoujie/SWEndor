@@ -12,6 +12,12 @@ namespace SWEndor
       Decorator.Add(LogType.SYS_CLOSE, "{0} exiting.");
       Decorator.Add(LogType.INFO, "{0}");
       Decorator.Add(LogType.ASSET_LOADING, "Loading {0} {1}");
+      Decorator.Add(LogType.ASSET_LOADED, "Load OK {0} {1}");
+      Decorator.Add(LogType.SHADER_LOADED, "Shader '{0}' was created.");
+      Decorator.Add(LogType.SHADER_LOAD_ERROR, "Shader '{0}' error: {1}");
+      Decorator.Add(LogType.MISSING_SHADER_VALUE_SOURCE, "Missing function for DynamicShaderDataSource '{0}'!");
+
+      Decorator.Add(LogType.GETDISTANCE_CACHECLEAR, "GetDistance cache clear: {0} / {1}, taking {2} ms");
 
 #if DEBUG
       Decorator.Add(LogType.ACTOR_CREATED, "{0} was created.");

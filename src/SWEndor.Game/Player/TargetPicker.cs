@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using Primrose.Primitives;
 using SWEndor.Game.Actors;
-using SWEndor.Game.Actors.Models;
 using SWEndor.Game.Core;
 using SWEndor.Game.Models;
 using System;

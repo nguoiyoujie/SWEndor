@@ -1,6 +1,4 @@
 ﻿using MTV3D65;
-using Primrose.Primitives.Extensions;
-using Primrose.Primitives.Geometry;
 using SWEndor.Game.Actors;
 using SWEndor.Game.Models;
 using SWEndor.Game.Player;
@@ -20,13 +18,11 @@ namespace SWEndor.Game.UI.Widgets
       get
       {
         ActorInfo p = PlayerInfo.Actor;
-        bool ret = (!Owner.ShowPage
+        return !Owner.ShowPage
           && p != null
           && !p.IsDyingOrDead
           && Owner.ShowUI
-          && Owner.ShowSquad != 0);
-
-        return ret;
+          && Owner.ShowSquad != 0;
       }
     }
 
@@ -55,7 +51,7 @@ namespace SWEndor.Game.UI.Widgets
       if (p.Squad.Mission is AI.Squads.Missions.AttackActor actor)
       {
         ActorInfo tgt = p.ActorFactory.Get(actor.Target_ActorID);
-        if (tgt != null)
+        if (tgt != null && tgt.Active)
         {
           COLOR tcolor = tgt.Faction.Color;
           float tx = 0;
@@ -67,7 +63,7 @@ namespace SWEndor.Game.UI.Widgets
       else if (p.Squad.Mission is AI.Squads.Missions.AssistActor actor1)
       {
         ActorInfo tgt = p.ActorFactory.Get(actor1.Target_ActorID);
-        if (tgt != null)
+        if (tgt != null && tgt.Active)
         {
           COLOR tcolor = tgt.Faction.Color;
           float tx = 0;
@@ -92,13 +88,13 @@ namespace SWEndor.Game.UI.Widgets
       float sy = 0;
       TVScreen2DImmediate.Math_3DPointTo2D(s.GetGlobalPosition(), ref sx, ref sy);
 
-      if (s.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
+      if (s.TargetType.Has(TargetType.SHIP))
         DrawIcons.DrawShip(TVScreen2DImmediate, Owner, s.GetBoundingBox(false), scolor);
       if (s == s.Squad.Leader)
         DrawIcons.DrawSquadLeader(TVScreen2DImmediate, Owner, s);
-      else if (s.TypeInfo.AIData.TargetType.Has(TargetType.ADDON))
+      else if (s.TargetType.Has(TargetType.ADDON))
         DrawIcons.DrawAddon(TVScreen2DImmediate, Owner, s);
-      else if (s.TypeInfo.AIData.TargetType.Has(TargetType.MUNITION))
+      else if (s.TargetType.Has(TargetType.MUNITION))
         DrawIcons.DrawProjectile(TVScreen2DImmediate, Owner, s);
       else
         DrawIcons.DrawSquadMember(TVScreen2DImmediate, Owner, s);

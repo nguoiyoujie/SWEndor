@@ -1,13 +1,17 @@
-﻿namespace SWEndor.Game.Terminal
+﻿using Primrose.Primitives.Extensions;
+using System;
+
+namespace SWEndor.Game.Terminal
 {
   public static class TCommandParser
   {
     public static TCommandFeedback Execute(string input)
     {
       // Command syntax:
-      // <command>:<param1>`<param2>`<param3>`...
+      // <command>
+      // <command>:<param1>,<param2>,<param3>,...
 
-      string cmd = "";
+      string cmd;
       string prms = "";
 
       int index = input.IndexOf(':');
@@ -17,24 +21,19 @@
           prms = input.Substring(index + 1);
 
         cmd = input.Substring(0, index);
+        return Execute(cmd, prms.Split(','));
       }
       else
       {
         cmd = input;
+        return Execute(cmd, Array<string>.Empty);
       }
-
-      return Execute(cmd, prms.Split('`'));
     }
 
     public static TCommandFeedback Execute(string cmd, string[] param)
     {
-      switch (cmd.ToLower())
-      {
-        case "actor.spawn":
-          return new Commands.Actor.Spawn().Execute(param);
-        default:
-          return TCommandFeedback.NULL;
-      }
+      TCommandBase command = TCommandFunctions.Get(cmd.ToLower());
+      return command?.Execute(param) ?? TCommandFeedback.NULL;
     }
   }
 }

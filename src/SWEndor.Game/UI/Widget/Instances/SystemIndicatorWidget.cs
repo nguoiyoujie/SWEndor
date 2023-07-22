@@ -1,8 +1,10 @@
 ﻿using MTV3D65;
 using SWEndor.Game.Actors;
 using SWEndor.Game.Actors.Models;
-using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
+using System;
+using Primrose.Primitives;
+using System.Collections.Generic;
 
 namespace SWEndor.Game.UI.Widgets
 {
@@ -12,6 +14,10 @@ namespace SWEndor.Game.UI.Widgets
     private readonly float dx;
     private readonly float dx2;
     private readonly float dy;
+
+    // this widget is run almost every frame, but the strings involved don't change that much.
+    // cache values and strings
+
 
     public SystemIndicatorWidget(Screen2D owner) : base(owner, "systemstatus")
     {
@@ -48,7 +54,7 @@ namespace SWEndor.Game.UI.Widgets
       TVScreen2DImmediate.Draw_FilledBox(top_left.x - 2
                                        , y - 2
                                        , x2 + dx2 + 2
-                                       , y + dy * (p.TypeInfo.SystemData.Parts.Length + 2) + 2
+                                       , y + dy * (p.TypeInfo.SystemData.Parts.Length + 3) + 2
                                        , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
       TVScreen2DImmediate.Action_End2D();
 
@@ -60,7 +66,8 @@ namespace SWEndor.Game.UI.Widgets
                                               , icolor
                                               , fntID);
 
-      TVScreen2DText.TextureFont_DrawText((p.MaxShd == 0) ? "----" : "{0:0}%".F(p.Shd_Perc)
+
+      TVScreen2DText.TextureFont_DrawText((p.MaxShd == 0) ? "----" : LookUpString.GetIntegerPercent(p.Shd_Perc)
                                               , x2
                                               , y
                                               , ((p.MaxShd == 0) ? new COLOR(1, 1, 1, 0.4f) : p.Shd_Color).Value
@@ -74,33 +81,48 @@ namespace SWEndor.Game.UI.Widgets
                                         , icolor
                                         , fntID);
 
-      TVScreen2DText.TextureFont_DrawText((p.MaxHull == 0) ? "100%" : "{0:0}%".F(p.Hull_Perc)
+      TVScreen2DText.TextureFont_DrawText((p.MaxHull == 0) ? "100%" : LookUpString.GetIntegerPercent(p.Hull_Perc)
                                               , x2
                                               , y
                                               , ((p.MaxHull == 0) ? new COLOR(0, 1, 0, 1) : p.Hull_Color).Value
                                               , fntID);
       y += dy;
+      y += dy;
 
-      foreach (SystemPart part in p.TypeInfo.SystemData.Parts)
+      foreach (SystemInstrument instrument in p.GetInstruments())
       {
-        TVScreen2DText.TextureFont_DrawText(part.GetEnumName().Replace('_', ' ')
+        TVScreen2DText.TextureFont_DrawText(instrument.PartType.GetDisplayName()
                                                       , top_left.x
                                                       , y
                                                       , icolor
                                                       , fntID);
 
-        SystemState s = p.GetStatus(part);
-        int scolor = s == SystemState.ACTIVE ? new TV_COLOR(0.3f, 1f, 0.3f, 1).GetIntColor() :
-                       s == SystemState.DISABLED ? new TV_COLOR(0.2f, 0.2f, 0.6f, 1).GetIntColor() :
-                       s == SystemState.DESTROYED ? new TV_COLOR(0.7f, 0.2f, 0.2f, 1).GetIntColor() :
-                       new TV_COLOR(0.4f, 0.4f, 0.4f, 1).GetIntColor();
-
-        TVScreen2DText.TextureFont_DrawText(s.GetEnumName()
-                                              , x2
-                                              , y
-                                              , scolor
-                                              , fntID);
-
+        ColorLocalKeys k = ColorLocalKeys.GAME_SYSTEMSTATE_NULL;
+        string text = null;
+        switch (instrument.Status)
+        {
+          case SystemState.DAMAGED:
+            k = ColorLocalKeys.GAME_SYSTEMSTATE_DAMAGED;
+            text = LookUpString.GetTimeDisplay(instrument.RecoveryCooldownTime - Engine.Game.GameTime);
+            break;
+          case SystemState.DISABLED:
+            k = ColorLocalKeys.GAME_SYSTEMSTATE_DISABLED;
+            text = "DISABLED";
+            break;
+          case SystemState.ACTIVE:
+            k = (instrument.Endurance < instrument.MaxEndurance) ? ColorLocalKeys.GAME_SYSTEMSTATE_ACTIVE_DAMAGED : ColorLocalKeys.GAME_SYSTEMSTATE_ACTIVE;
+            text = LookUpString.GetRatioDisplay(instrument.Endurance, instrument.MaxEndurance);
+            break;
+        }
+        int scolor = ColorLocalization.Get(k).Value;
+        if (text != null)
+        {
+          TVScreen2DText.TextureFont_DrawText(text
+                                                , x2
+                                                , y
+                                                , scolor
+                                                , fntID);
+        }
         y += dy;
       }
       TVScreen2DText.Action_EndText();

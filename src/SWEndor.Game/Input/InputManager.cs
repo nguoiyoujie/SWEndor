@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Game.Core;
 using SWEndor.Game.Input.Context;
+using System.Windows.Forms;
 
 namespace SWEndor.Game.Input
 {
@@ -79,11 +80,18 @@ namespace SWEndor.Game.Input
 
     public void ProcessInput()
     {
+      if (Form.ActiveForm != Engine.Form && Form.ActiveForm != Globals.BackgroundForm)
+      {
+        // the form is not in focus, ignore
+        ClearInput();
+        return;
+      }
+
       if (Terminal.TConsole.Visible)
       { // Handling Terminal
           Context = TerminalGameInputContext;
       }
-      else if (Engine.Screen2D.ShowPage && Engine.Screen2D.CurrentPage != null)
+      else if (Engine.Screen2D.ShowPage && Engine.Screen2D.CurrentPage != null) 
       { // Handling Menu
           Context = MenuInputContext;
       }

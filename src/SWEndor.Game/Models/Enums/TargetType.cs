@@ -10,17 +10,24 @@ namespace SWEndor.Game.Models
   {
     NULL = 0,
 
-    // Projectiles
+    // Projectile
 
     /// <summary>
     /// Actor is a laser
     /// </summary>
     LASER = 0x0001,
 
+    // Projectile-like
+
     /// <summary>
     /// Actor is a munition
     /// </summary>
     MUNITION = 0x0002,
+
+    /// <summary>
+    /// Actor is a space mine
+    /// </summary>
+    MINE = 0x0004,
 
     // Crafts
 
@@ -56,10 +63,11 @@ namespace SWEndor.Game.Models
     /// </summary>
     SHIELDGENERATOR = 0x0200,
 
+
     /// <summary>
     /// Actor is considered a member of all targetable types.
     /// </summary>
-    ANY = 0xFFFF
+    ANY = 0xFFFFFFF
   }
 
   /// <summary>

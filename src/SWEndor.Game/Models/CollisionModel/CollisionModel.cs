@@ -1,7 +1,6 @@
 ﻿using MTV3D65;
 using SWEndor.Game.Core;
 using Primrose.Primitives;
-using SWEndor.Game.Actors.Models;
 using SWEndor.Game.Actors;
 
 namespace SWEndor.Game.Models
@@ -54,7 +53,7 @@ namespace SWEndor.Game.Models
       if (Collision.ActorID >= 0)
       {
         ActorInfo a = engine.ActorFactory.Get(Collision.ActorID);
-        if (a != null)
+        if (a != null && a.Active)
           actor.DoCollide(a, ref Collision);
         Collision.ActorID = -1;
       }
@@ -203,10 +202,9 @@ namespace SWEndor.Game.Models
             }
             else
             {
-
               ActorInfo checkActor = engine.ActorFactory.Get(checkID);
-              if (checkActor != null)
-                if (!(checkActor.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER)))
+              if (checkActor != null && checkActor.Active)
+                if (!(checkActor.TargetType.Has(TargetType.FIGHTER)))
                   vData.ActorID = checkID;
             }
           }

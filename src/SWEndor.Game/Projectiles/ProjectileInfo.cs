@@ -22,7 +22,8 @@ namespace SWEndor.Game.Projectiles
     IDyingTime,
     IParent<ActorInfo>, 
     ITransformable,
-    ICollidable
+    ICollidable,
+    IStunnable
   {
     /// <summary>The instance type of this instance</summary>
     public ProjectileTypeInfo TypeInfo { get; private set; }
@@ -60,11 +61,12 @@ namespace SWEndor.Game.Projectiles
     internal MoveData MoveData;
 
     // Traits/Model (structs)
-    private Projectiles.Models.MeshModel Meshes;
+    private Models.MeshModel Meshes;
     private TimerModel<ProjectileInfo> DyingTimer;
     private StateModel<ProjectileInfo> State;
     private TransformModel<ProjectileInfo, ActorInfo> Transform;
-    private ExplodeModel<ProjectileInfo> Explosions;
+    private ExplodeModel<ProjectileInfo, ActorInfo> Explosions;
+    private Models.JammingModel Jamming;
 
     // Traits (classes)
 
@@ -97,7 +99,8 @@ namespace SWEndor.Game.Projectiles
       Meshes.Init(engine.ShaderFactory, engine.ProjectileMeshTable, ID, ref TypeInfo.MeshData);
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
       Transform.Init(engine, TypeInfo.MeshData.Scale, acinfo);
-      Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, acinfo.CreationTime);
+      Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, TypeInfo.ExplodeSystemData.Particles, acinfo.CreationTime);
+      Jamming.Reset();
 
       MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
       CollisionData.Init();
@@ -105,6 +108,7 @@ namespace SWEndor.Game.Projectiles
       InCombat = TypeInfo.CombatData.IsCombatObject;
 
       State.Init(Engine, TypeInfo, acinfo);
+      OwnerID = acinfo.OwnerID;
 
       TypeInfo.Initialize(engine, this);
     }
@@ -126,7 +130,8 @@ namespace SWEndor.Game.Projectiles
       Meshes.Init(engine.ShaderFactory, engine.ProjectileMeshTable, ID, ref TypeInfo.MeshData);
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
       Transform.Init(engine, TypeInfo.MeshData.Scale, acinfo);
-      Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, acinfo.CreationTime);
+      Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, TypeInfo.ExplodeSystemData.Particles, acinfo.CreationTime);
+      Jamming.Reset();
 
       MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
       CollisionData.Init();
@@ -137,6 +142,10 @@ namespace SWEndor.Game.Projectiles
       State.Init(Engine, TypeInfo, acinfo);
 
       OwnerID = acinfo.OwnerID;
+      // hold on to the owner's scope to prevent erasure of owner data
+      if (Owner != null)
+        ScopeCounters.Acquire(Owner.Scope);
+
       TargetID = acinfo.TargetID;
       if (acinfo.LifeTime > 0)
         DyingTimerSet(acinfo.LifeTime, true);
@@ -148,7 +157,7 @@ namespace SWEndor.Game.Projectiles
     /// Initializes the game object instance
     /// </summary>
     /// <param name="engine">The game engine</param>
-    public void Initialize(Engine engine)
+    public void Initialize(Engine engine, bool includeAddOns)
     {
       SetGenerated();
       Update();
@@ -199,6 +208,9 @@ namespace SWEndor.Game.Projectiles
       Delete();
       SetDisposing();
 
+      // release scope
+      if (Owner != null)
+        ScopeCounters.ReleaseOne(Owner.Scope);
       OwnerID = -1;
       TargetID = -1;
       Transform.Reset();
@@ -210,6 +222,7 @@ namespace SWEndor.Game.Projectiles
       MoveData.Reset();
       CollisionData.Reset();
       Meshes.Dispose(Engine.ProjectileMeshTable);
+      Jamming.Reset();
 
       InCombat = false;
 
@@ -227,10 +240,16 @@ namespace SWEndor.Game.Projectiles
       TypeInfo.ProcessState(engine, this);
       if (!IsDead)
       {
-        if (CanCollide)
-          CollisionData.CheckCollision(engine, this);
-
         TypeInfo.MoveBehavior.Move(engine, this, ref MoveData, engine.Game.TimeSinceRender);
+
+        ActorInfo target = Target;
+        if (target != null && TypeInfo.CombatData.IsTeleport)
+        {
+          CollisionResultData data = new CollisionResultData() { Impact = target.GetGlobalPosition() };
+          DoCollide(target, ref data);
+        }
+        else if (CanCollide)
+          CollisionData.CheckCollision(engine, this);
       }
       else
         Delete();

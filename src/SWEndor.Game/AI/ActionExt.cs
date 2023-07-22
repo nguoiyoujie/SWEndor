@@ -105,9 +105,10 @@ namespace SWEndor.Game.AI
     public static void Run(this ActorInfo actor)
     {
       ActionInfo action = actor.CurrentAction;
+
       if (action == null)
       {
-        actor.CurrentAction = actor.Squad.GetNewAction(actor.Engine) ?? Idle.GetOrCreate();
+        actor.CurrentAction = actor.Squad.GetNewAction(actor, actor.Engine) ?? Idle.GetOrCreate();
       }
       else
       {
@@ -115,7 +116,7 @@ namespace SWEndor.Game.AI
         {
           if (action.NextAction == null)
           {
-            actor.CurrentAction = actor.Squad.GetNewAction(actor.Engine) ?? Idle.GetOrCreate();
+            actor.CurrentAction = actor.Squad.GetNewAction(actor, actor.Engine) ?? Idle.GetOrCreate();
             action.Dispose();
           }
           else

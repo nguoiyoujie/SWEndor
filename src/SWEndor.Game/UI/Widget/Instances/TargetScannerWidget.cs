@@ -41,12 +41,15 @@ namespace SWEndor.Game.UI.Widgets
       int h = Engine.Surfaces.Target_height;
       int tex = -1;
 
-      if (!p.TypeInfo.SystemData.AllowSystemDamage || p.GetStatus(SystemPart.SCANNER) == SystemState.ACTIVE)
+      if (p.IsSystemOperational(SystemPart.SCANNER))
           tex = (PlayerInfo.TargetActor != null) ? Engine.Surfaces.RS_Target.GetTexture() : Engine.Surfaces.RS_Target_Null.GetTexture();
-      else if (p.GetStatus(SystemPart.SCANNER) == SystemState.DISABLED)
-        tex = Engine.Surfaces.RS_Target_Disabled.GetTexture();
-      else if (p.GetStatus(SystemPart.SCANNER) == SystemState.DESTROYED)
+      {
+        SystemState status = p.GetStatus(SystemPart.SCANNER);
+        if (status == SystemState.DAMAGED)
           tex = (Engine.Game.GameTime % 2 > 1) ? Engine.Surfaces.RS_Target_Destroyed.GetTexture() : Engine.Surfaces.Tex_Target_Destroyed;
+        else if (status == SystemState.DISABLED)
+          tex = Engine.Surfaces.RS_Target_Disabled.GetTexture();
+      }
 
       TVScreen2DImmediate.Action_Begin2D();
 

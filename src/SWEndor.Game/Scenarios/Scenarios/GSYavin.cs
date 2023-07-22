@@ -402,7 +402,7 @@ namespace SWEndor.Game.Scenarios
             {
               if (last_target_distX < player.GetGlobalPosition().x)
               {
-                PlayerInfo.Score.AddDirect((player.GetGlobalPosition().x - last_target_distX) * 10);
+                PlayerInfo.Score.AddDirect((int)((player.GetGlobalPosition().x - last_target_distX) * 10));
                 last_target_distX = player.GetGlobalPosition().x;
               }
               if (last_sound_distX < player.GetGlobalPosition().x && !State.IsCutsceneMode)
@@ -440,7 +440,7 @@ namespace SWEndor.Game.Scenarios
             {
               if (last_target_distX < player.GetGlobalPosition().x)
               {
-                PlayerInfo.Score.AddDirect((player.GetGlobalPosition().x - last_target_distX) * 10);
+                PlayerInfo.Score.AddDirect((int)((player.GetGlobalPosition().x - last_target_distX) * 10));
                 last_target_distX = player.GetGlobalPosition().x;
               }
 
@@ -714,7 +714,7 @@ namespace SWEndor.Game.Scenarios
               {
                 foreach (ActorInfo c in rs.Children)
                 {
-                  if (c.TypeInfo.AIData.TargetType.Intersects(TargetType.SHIELDGENERATOR))
+                  if (c.TargetType.Has(TargetType.SHIELDGENERATOR))
                     if (Engine.Random.NextDouble() > 0.4f)
                       rsID = c.ID;
                 }
@@ -1519,7 +1519,8 @@ namespace SWEndor.Game.Scenarios
       State.MaxAIBounds = new TV_3DVECTOR(5000000, 300, 2000);
       State.MinAIBounds = new TV_3DVECTOR(0, -400, -2000);
 
-      foreach (int actorID in AllyXWingFaction.GetWings())
+
+      foreach (int actorID in AllyXWingFaction.GetWings().ToArray())
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
@@ -1532,7 +1533,7 @@ namespace SWEndor.Game.Scenarios
         }
       }
 
-      foreach (int actorID in AllyXWingFaction.GetWings())
+      foreach (int actorID in AllyYWingFaction.GetWings().ToArray())
       {
         ActorInfo actor = Engine.ActorFactory.Get(actorID);
         if (actor != null)
@@ -2056,7 +2057,7 @@ namespace SWEndor.Game.Scenarios
       PlayerCameraInfo.SetSceneLook();
     }
 
-    public void Scene_Stage06_VaderFlee(ActorInfo actor)
+    public void Scene_Stage06_VaderFlee(ActorInfo actor, ActorInfo attacker)
     {
       if (Stage6VaderAttacking)
       {

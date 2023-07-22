@@ -84,7 +84,7 @@ namespace SWEndor.Game
     public bool StructureLimitIncludesAllies = true;
     private readonly List<int> _structures = new List<int>();
 
-    public List<FactionInfo> Allies = new List<FactionInfo>();
+    public readonly List<FactionInfo> Allies = new List<FactionInfo>();
 
     public int WingCount { get { return _wings.Count; } }
     public int ShipCount { get { return _ships.Count; } }
@@ -128,7 +128,7 @@ namespace SWEndor.Game
       if (this == Neutral)
         return;
 
-      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER))
+      if (ainfo.TargetType.Has(TargetType.FIGHTER))
       {
         _wings.Add(ainfo.ID);
         int wc = WingCount;
@@ -136,7 +136,7 @@ namespace SWEndor.Game
           WingLimit = wc;
       }
 
-      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.SHIP))
+      if (ainfo.TargetType.Has(TargetType.SHIP))
       {
         _ships.Add(ainfo.ID);
         int wc = ShipCount;
@@ -144,7 +144,7 @@ namespace SWEndor.Game
           ShipLimit = wc;
       }
 
-      if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.STRUCTURE))
+      if (ainfo.TargetType.Has(TargetType.STRUCTURE))
       {
         _structures.Add(ainfo.ID);
         int wc = StructureCount;
@@ -184,19 +184,19 @@ namespace SWEndor.Game
           ScenarioBase b = ainfo.Engine.GameScenarioManager.Scenario;
           if (p != Neutral)
           {
-            if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER)
+            if (ainfo.TargetType.Has(TargetType.FIGHTER)
               && b.State.InformLostWing
               && (p == this || p.WingLimitIncludesAllies && p.IsAlliedWith(this))
               )
               b.LostWing();
 
-            if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.SHIP)
+            if (ainfo.TargetType.Has(TargetType.SHIP)
               && b.State.InformLostShip
               && (p == this || p.ShipLimitIncludesAllies && p.IsAlliedWith(this))
               )
               b.LostShip();
 
-            if (ainfo.TypeInfo.AIData.TargetType.Has(TargetType.STRUCTURE)
+            if (ainfo.TargetType.Has(TargetType.STRUCTURE)
               && b.State.InformLostStructure
               && (p == this || p.StructureLimitIncludesAllies && p.IsAlliedWith(this))
               )

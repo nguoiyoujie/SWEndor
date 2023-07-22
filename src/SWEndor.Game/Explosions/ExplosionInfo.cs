@@ -128,7 +128,7 @@ namespace SWEndor.Game.Explosions
     /// Initializes the game object instance
     /// </summary>
     /// <param name="engine">The game engine</param>
-    public void Initialize(Engine engine)
+    public void Initialize(Engine engine, bool includeAddOns)
     {
       State.SetGenerated();
       Update();
@@ -144,17 +144,6 @@ namespace SWEndor.Game.Explosions
       get
       {
         float distcheck = TypeInfo.RenderData.CullDistance * Game.PerfCullModifier;
-
-        return (TypeInfo.RenderData.EnableDistanceCull
-          && DistanceModel.GetRoughDistance(GetGlobalPosition(), Engine.PlayerCameraInfo.Camera.GetPosition()) > distcheck);
-      }
-    }
-
-    public bool IsFarMode
-    {
-      get
-      {
-        float distcheck = TypeInfo.RenderData.CullDistance * 0.25f * Game.PerfCullModifier;
 
         return (TypeInfo.RenderData.EnableDistanceCull
           && DistanceModel.GetRoughDistance(GetGlobalPosition(), Engine.PlayerCameraInfo.Camera.GetPosition()) > distcheck);

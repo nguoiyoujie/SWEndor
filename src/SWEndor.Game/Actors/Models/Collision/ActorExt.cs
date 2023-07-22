@@ -9,8 +9,8 @@ namespace SWEndor.Game.Actors
       get
       {
         return (IsPlayer && !Engine.PlayerInfo.PlayerAIEnabled)
-            || TypeInfo.AIData.TargetType.Intersects(TargetType.MUNITION)
-            || (IsDying && TypeInfo.AIData.TargetType.Has(TargetType.FIGHTER));
+            || TargetType.Has(TargetType.MUNITION)
+            || (IsDying && TargetType.Has(TargetType.FIGHTER));
       }
     }
 

@@ -4,6 +4,7 @@ using Primrose.FileFormat.INI;
 using SWEndor.Game.Input.Functions;
 using System.IO;
 using System.Windows.Forms;
+using Primrose.Primitives.ValueTypes;
 
 namespace SWEndor.Game
 {
@@ -31,6 +32,15 @@ namespace SWEndor.Game
 
     [INIValue("General", "SteeringSensitivity")]
     public float SteeringSensitivity = 1.5f;
+
+    [INIValue("TrueVision", "ShowFPS")]
+    public bool ShowFPS = true;
+
+    [INIValue("TrueVision", "VSync")]
+    public bool VSync = true;
+
+    [INIValue("TrueVision", "AmbientLight")]
+    public float3 AmbientLight = new float3(0.75f, 0.75f, 0.75f);
 
     public bool IsSmallResolution { get { return ResolutionMode == ResolutionSettings.R_800x600; } }
 
@@ -85,6 +95,7 @@ namespace SWEndor.Game
 
         engine.SoundManager.MasterMusicVolume = f.GetValue("Audio", "MusicVol", null, 1f);
         engine.SoundManager.MasterSFXVolume = f.GetValue("Audio", "SFXVol", null, 1f);
+        engine.SoundManager.MasterSpeechVolume = f.GetValue("Audio", "SpeechVol", null, 1f);
 
         if (f.HasSection("Keyboard"))
         {
@@ -92,12 +103,15 @@ namespace SWEndor.Game
           {
             if (ln.HasKey)
             {
-              InputFunction fn = InputFunction.Registry.Get(ln.Key);
-              if (fn != null)
+              int index = -1;
+              while ((index = InputFunction.Registry.GetNext(ln.Key, ++index, out InputFunction fn)) != -1)
               {
-                int fkey = f.GetValue("Keyboard", ln.Key, null, -2);
-                if (fkey != -2)
-                  fn.Key = fkey;
+                if (fn != null)
+                {
+                  int fkey = f.GetValue("Keyboard", ln.Key, null, -2);
+                  if (fkey != -2)
+                    fn.Key = fkey;
+                }
               }
             }
           }
@@ -124,6 +138,7 @@ namespace SWEndor.Game
 
       f.SetValue("Audio", "MusicVol", engine.SoundManager.MasterMusicVolume);
       f.SetValue("Audio", "SFXVol", engine.SoundManager.MasterSFXVolume);
+      f.SetValue("Audio", "SpeechVol", engine.SoundManager.MasterSpeechVolume);
 
       f.SetValue("Controls", "SteeringSensitivity", SteeringSensitivity);
 

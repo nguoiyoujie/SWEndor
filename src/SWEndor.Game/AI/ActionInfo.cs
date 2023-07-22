@@ -33,7 +33,7 @@ namespace SWEndor.Game.AI.Actions
 
     protected static bool CheckBounds(ActorInfo owner)
     {
-      if (owner.TypeInfo.AIData.TargetType.Intersects(TargetType.MUNITION))
+      if (owner.TargetType.Has(TargetType.MUNITION))
         return true;
 
       float boundmult = 0.99f;

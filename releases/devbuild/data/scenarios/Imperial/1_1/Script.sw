@@ -85,6 +85,7 @@ loadfaction:
 	Faction.Add("Neutral_Inspect", faction_neutral_color);
 	Faction.Add("Neutral_OK", faction_empire_trans_color);
 	Faction.Add("Neutral_Rebel", faction_neutral_rebel_color);
+	Faction.Add("Secret_Rebel", faction_neutral_rebel_color);
 	Faction.Add("Rebels", faction_rebel_color, faction_rebel_laser_color);
 	Faction.MakeAlly("Empire", "Neutral_Inspect");
 	Faction.MakeAlly("Empire", "Neutral_OK");
@@ -93,12 +94,17 @@ loadfaction:
 	Faction.MakeAlly("Rebels", "Neutral_Inspect");
 	Faction.MakeAlly("Rebels", "Neutral_OK");
 	Faction.MakeAlly("Rebels", "Neutral_Rebel");
+	Faction.MakeAlly("Rebels", "Secret_Rebel");
 	Faction.MakeAlly("Rebels", "Empire_Trans");
 	Faction.MakeAlly("Empire_Trans", "Neutral_Inspect");
 	Faction.MakeAlly("Empire_Trans", "Neutral_OK");
+	Faction.MakeAlly("Empire_Trans", "Neutral_Rebel");
+	Faction.MakeAlly("Empire_Trans", "Secret_Rebel");
 	Faction.MakeAlly("Neutral_Rebel", "Neutral_Inspect");
 	Faction.MakeAlly("Neutral_Rebel", "Neutral_OK");
-	Faction.MakeAlly("Empire_Trans", "Neutral_Rebel");
+	Faction.MakeAlly("Neutral_Rebel", "Secret_Rebel");
+	Faction.MakeAlly("Secret_Rebel", "Neutral_Inspect");
+	Faction.MakeAlly("Secret_Rebel", "Neutral_OK");
 
 	Faction.SetWingSpawnLimit("Empire", 0);
 
@@ -130,7 +136,7 @@ make_ships:
 
 	// Empire
 	
-	outpost = Actor.Spawn("XQ1", "OUTPOST D-34", "Empire", "OUTP D-34", 0, { 0, 0, 0 }, { 0, -20, 0 }, { "CriticalAllies" });
+	outpost = Actor.Spawn("XQ1", "D-34", "Empire", "", 0, { 0, 0, 0 }, { 0, -110, 0 }, { "CriticalAllies" }); // was rotation { 0, -20, 0 }
 	Actor.SetProperty(outpost, "Spawner.Enabled", true);
 	Actor.SetProperty(outpost, "Spawner.SpawnTypes", {"TIE"});
 	Actor.SetProperty(outpost, "AI.HuntWeight", 0);
@@ -184,7 +190,7 @@ setup_outpost:
 gametick:
 	UI.SetLine1Text("WINGS: " + Faction.GetWingCount("Empire"));
 	
-	int neut = Faction.GetWingCount("Neutral_Inspect");
+	int neut = Faction.GetWingCount("Neutral_Inspect") + Faction.GetShipCount("Neutral_Inspect");
 	int rebel = Faction.GetWingCount("Rebels");
 
 	if (neut == 0)
@@ -209,7 +215,7 @@ gametick:
 			if (hp <= 0) 
 			{
 				SetGameStateB("OutpostDestroyed", true);
-				Script.Call("lose_outpostlost");
+				lose_outpostlost();
 			}
 			
 			if (!GetGameStateB("OutpostDanger"))
@@ -492,7 +498,7 @@ inspection:
 		if (insp_onece >= 5)
 		{
 			SetGameStateB("AllOneceInspected", true);
-			AddEvent(3, "message_inspected_onece100%");
+			AddEvent(3, "message_inspected_onece100pc");
 		}
 	}
 	
@@ -501,7 +507,7 @@ inspection:
 		if (insp_taloos >= 2)
 		{
 			SetGameStateB("AllDaytaInspected", true);
-			AddEvent(3, "message_inspected_dayta100%");
+			AddEvent(3, "message_inspected_dayta100pc");
 		}
 	}
 	
@@ -510,7 +516,7 @@ inspection:
 		if (insp_yander >= 3)
 		{
 			SetGameStateB("AllYanderInspected", true);
-			AddEvent(3, "message_inspected_yander100%");
+			AddEvent(3, "message_inspected_yander100pc");
 		}
 	}
 
@@ -519,7 +525,7 @@ inspection:
 		if (insp_taloos >= 2)
 		{
 			SetGameStateB("AllTaloosInspected", true);
-			AddEvent(3, "message_inspected_taloos100%");
+			AddEvent(3, "message_inspected_taloos100pc");
 		}
 	}
 	
@@ -545,7 +551,7 @@ inspection:
 	{
 		if (GetGameStateB("AllInspected") && GetGameStateB("GlichDestroyed") && glich_arrived && Faction.GetWingCount("Rebels") == 0)
 		{
-			Script.Call("announce_allComplete");
+			announce_allComplete();
 			SetGameStateB("AllComplete", true);
 			Audio.SetMood(-6);
 		}
@@ -553,9 +559,9 @@ inspection:
 	
 	if (!GetGameStateB("PriComplete") && !(GetGameStateB("AllComplete")))
 	{
-		if (GetGameStateB("RebelsCaptured") && glich_arrived && Faction.GetWingCount("Rebels") == 0)
+		if (GetGameStateB("AllInspected"))
 		{
-			Script.Call("announce_primaryComplete");
+			announce_primaryComplete();
 			SetGameStateB("PriComplete", true);
 			Audio.SetMood(-4);
 		}
@@ -703,15 +709,12 @@ win:
 
 
 slow:
-	if (Actor.IsAlive(Player.GetActor()))
+    int pactor = Player.GetActor();
+	if (Actor.IsAlive(pactor))
 	{
-		float minspd = Actor.GetProperty(Player.GetActor(), "Movement.MinSpeed") - 75 * GetLastFrameTime();
-		if (minspd <= 0)
-			minspd = 0;
-		float spd = Actor.GetProperty(Player.GetActor(), "Movement.Speed") - 200 * GetLastFrameTime();
-		Actor.SetProperty(Player.GetActor(), "Movement.MinSpeed", minspd);
-		Actor.SetProperty(Player.GetActor(), "Movement.Speed", (minspd > spd) ? minspd : spd);
-		AddEvent(0.001, "slow");
+        Actor.DisableSubsystem(pactor, "ENGINE");
+        Actor.SetProperty(pactor, "Movement.Speed", Actor.GetProperty(pactor, "Movement.Speed") - GetLastFrameTime() * 100);
+        AddEvent(0.01, "slow");
 	}
 
 	
@@ -726,12 +729,13 @@ lose_outpostlost:
 lose_onece3lost:
 	triggerwinlose = true;
 	Script.Call("messagelose_onece3lost");
-	SetGameStateB("GameOver",true);
-	AddEvent(3, "fadeout");
-	Audio.SetMood(-7);
+	//SetGameStateB("GameOver",true);
+	//AddEvent(3, "fadeout");
+	//Audio.SetMood(-7);
 
 
 lose_onece3escaped:
+    Audio.QueueSpeech("1M1\1m1l1");
 	triggerwinlose = true;
 	Script.Call("messagelose_onece3escaped");
 	SetGameStateB("GameOver",true);
@@ -742,9 +746,9 @@ lose_onece3escaped:
 lose_sigmalost:
 	triggerwinlose = true;
 	Script.Call("messagelose_sigmalost");
-	SetGameStateB("GameOver",true);
-	AddEvent(3, "fadeout");
-	Audio.SetMood(-7);
+	//SetGameStateB("GameOver",true);
+	//AddEvent(3, "fadeout");
+	//Audio.SetMood(-7);
 
 
 fadeout:
@@ -906,7 +910,7 @@ spawn_onece:
 	spawn_faction = "Neutral_Inspect";
 	spawn_hyperspace = true;
 	spawn_wait = 3;
-	spawn_type = "FHT2";
+	spawn_type = "FHT";
 	spawn_name = "ONECE";
 	spawn_target = -1;
 	spawn_spacing = 350;
@@ -987,7 +991,6 @@ spawn_yander:
 	Script.Call("spawn3");
 	Audio.SetMood(-31);
 	Script.Call("message_yander");
-	AddEvent(10, "message_group2");
 
 	AddEvent(0.5, "spawn_removechildren");
 	foreach (int a in spawn_ids)
@@ -1033,7 +1036,7 @@ spawn_taloos:
 
 
 spawn_glich:
-	spawn_faction = "Neutral_Rebel";
+	spawn_faction = "Secret_Rebel";
 	spawn_hyperspace = true;
 	spawn_wait = 3;
 	spawn_type = "FHT2";
@@ -1051,6 +1054,7 @@ spawn_glich:
 	foreach (int a in spawn_ids)
 	{
 		Actor.SetProperty(a, "Movement.MinSpeed", 0);
+        Actor.SetProperty(a, "AI.HuntWeight", 0);
 		AI.QueueLast(a, "move", { 9000, -200, 3000 }, 75, 500, false);
 		AI.QueueLast(a, "move", { 6000, -200, -8000 }, 75, 500, false);
 		AI.QueueLast(a, "hyperspaceout");

@@ -6,7 +6,8 @@ using SWEndor.Game.Projectiles;
 using System;
 using System.Collections.Generic;
 using Primrose.Primitives.ValueTypes;
-using Primrose.Expressions;
+using Primrose;
+using System.Diagnostics;
 
 namespace SWEndor.Game.Models
 {
@@ -39,21 +40,34 @@ namespace SWEndor.Game.Models
       public bool Equals(EngineTime time) { return Time == time.Time; }
       public override int GetHashCode() { return Time.GetHashCode(); }
 
-      public bool Passed { get { return Engine == null || Time < Engine.Game.GameTime; } }
+      //public bool Passed { get { return Engine == null || Time < Engine.Game.GameTime; } } // this will always be true after the current tick
     }
 
-    private static readonly Cache<int, EngineTime, float, Trip<TVMathLibrary, ITransformable, ITransformable>> cache = new Cache<int, EngineTime, float, Trip<TVMathLibrary, ITransformable, ITransformable>>(8192); 
+    private static readonly Cache<int, EngineTime, float, Trip<TVMathLibrary, ITransformable, ITransformable>> cache = new Cache<int, EngineTime, float, Trip<TVMathLibrary, ITransformable, ITransformable>>(16384); 
     private static float Cleartime = 0;
-    private static readonly Func<EngineTime, bool> clearfunc = (f) => { return f.Passed; };
+    //private static readonly Func<EngineTime, bool> clearfunc = (f) => { return f.Passed; };
     private static readonly Func<Trip<TVMathLibrary, ITransformable, ITransformable>, float> dofunc = (o) => { return CalculateDistance(o.t, o.u, o.v); };
 
     private static readonly object locker = new object();
 
     /// <summary>Marks the cache to allow clearing</summary>
-    public static void Reset() { Cleartime = 0; }
+    public static void Reset()
+    { 
+      Cleartime = 0;
+      lock (locker)
+      {
+        cache.Clear();
+      }
+    }
 
     /// <summary>Returns the number of cached results</summary>
     public static int CacheCount { get { return cache.Count; } }
+
+    /// <summary>Returns the number of cache items in pool</summary>
+    public static int PoolCount { get { return cache.PoolCount; } }
+
+    /// <summary>Returns the number of cache items outside the pool. Ideally this should be equal to CacheCount, otherwise garbage leak is suspected</summary>
+    public static int PoolUncollectedCount { get { return cache.PoolUncollectedCount; } }
 
     /// <summary>
     /// Gets a higher bound on the distance between Actors by taking the Manhattan distance.
@@ -124,6 +138,8 @@ namespace SWEndor.Game.Models
         return GetDistance(e, a1, a2);
     }
 
+    private static Stopwatch _getDistanceMonitor = new Stopwatch();
+
     /// <summary>
     /// Gets the distance between two objects, up to a limit. Returns the distance or limit
     /// </summary>
@@ -147,8 +163,14 @@ namespace SWEndor.Game.Models
       {
         if (Cleartime < e.Game.GameTime)
         {
-          cache.Clear(clearfunc);
-          Cleartime = e.Game.GameTime + 5;
+          int count = cache.Count;
+          if (count > 15000) // arbitary number slightly smaller than the capacity
+          {
+            _getDistanceMonitor.Restart();
+            int cleared = cache.Clear();
+            Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.GETDISTANCE_CACHECLEAR), cleared, count, _getDistanceMonitor.ElapsedMilliseconds);
+          }
+          Cleartime = e.Game.GameTime + 1;
         }
 
         int hash;

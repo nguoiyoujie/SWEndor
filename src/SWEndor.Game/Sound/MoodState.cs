@@ -7,6 +7,8 @@
     AMBIENT_3 = 2,
     AMBIENT_4 = 3,
     ENGAGEMENT = 4,
+    FAILURE = 5,
+    SUCCESS = 6,
 
     // Negative numbers represent interrupting states for intermittent tracks
     DESTROY_FIGHTER = -1,

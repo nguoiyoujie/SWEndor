@@ -5,6 +5,8 @@ using Primrose.Primitives.Factories;
 using System;
 using System.IO;
 using Primrose;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace SWEndor.Game.ActorTypes
 {
@@ -32,21 +34,32 @@ namespace SWEndor.Game.ActorTypes
       public void Register(ActorTypeInfo atype)
       {
         Put(atype.ID, atype);
-        Engine?.Screen2D.LoadingTextLines.Add(string.Format("{0} loaded!", atype.Name));
+        Engine?.Screen2D.AppendLoadingText(string.Format("Actor: {0} loaded!", atype.Name));
+        Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADED), "ActorType", atype.Name);
       }
 
       public void Load()
       {
+        Registry<string> paths = new Registry<string>();
         foreach (string fp in Directory.GetFiles(Globals.ActorTypeINIDirectory, Globals.INIExt, SearchOption.AllDirectories))
         {
           string f = Path.GetFileNameWithoutExtension(fp);
-          Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "ActorType", f);
           if (Contains(f))
             throw new InvalidOperationException(TextLocalization.Get(TextLocalKeys.ACTORTYPE_INITWICE_ERROR).F(f));
-          ActorTypeInfo t = new ActorTypeInfo(this, f, f);
-          t.LoadFromINI(f, fp);
-          Register(t);
+          paths.Add(f, fp);
         }
+
+        Parallel.ForEach(paths, new ParallelOptions { MaxDegreeOfParallelism = 32 }, LoadOne);
+      }
+
+      private void LoadOne(KeyValuePair<string, string> kvp)
+      {
+        string id = kvp.Key;
+        string source = kvp.Value;
+        Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "ActorType", id);
+        ActorTypeInfo t = new ActorTypeInfo(this, id, id);
+        t.LoadFromINI(id, source);
+        Register(t);
       }
 
       public void Initialise()

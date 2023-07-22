@@ -17,6 +17,7 @@ namespace SWEndor.Game.Scenarios
     {
       Engine = engine;
       DesignatedMainMenuScenario = new GSMainMenu(this);
+      DesignatedModelViewScenario = new GSModelView(this);
 
       CreateMainCampaign();
       LoadCampaigns();
@@ -27,6 +28,7 @@ namespace SWEndor.Game.Scenarios
 
     public ScenarioBase Scenario = null;
     public ScenarioBase DesignatedMainMenuScenario;
+    public ScenarioBase DesignatedModelViewScenario;
 
     public void CreateMainCampaign()
     {
@@ -37,10 +39,10 @@ namespace SWEndor.Game.Scenarios
       };
 
       c.Scenarios.Add(new GSEndor(this));
-      //c.Scenarios.Add(new GSYavin(this));
-      //c.Scenarios.Add(new GSHoth(this));
-      //c.Scenarios.Add(new GSTIEAdvanced(this));
-      //c.Scenarios.Add(new GSTestZone(this));
+      c.Scenarios.Add(new GSYavin(this));
+      c.Scenarios.Add(new GSHoth(this));
+      c.Scenarios.Add(new GSTIEAdvanced(this));
+      c.Scenarios.Add(new GSTestZone(this));
 
       CampaignList.Add(c);
     }
@@ -73,7 +75,18 @@ namespace SWEndor.Game.Scenarios
       Scenario.Launch();
     }
 
+    public void LoadModelViewer()
+    {
+      Engine.Game.IsPaused = false;
+      Engine.Screen2D.ShowPage = true;
+      Engine.Screen2D.CurrentPage = new ModelSelection(Engine.Screen2D);
+      Scenario = DesignatedModelViewScenario;
+      Scenario.Load(null, "");
+      Scenario.Launch();
+    }
+
     public bool IsMainMenu { get { return Scenario == DesignatedMainMenuScenario; } }
+    public bool IsModelViewer { get { return Scenario == DesignatedModelViewScenario; } }
 
     public void UpdateActorLists(HashSet<ActorInfo> list)
     {
@@ -92,8 +105,8 @@ namespace SWEndor.Game.Scenarios
       if (Scenario.State.Launched)
         Scenario.GameTick();
 
-      Scenario.State.CriticalAllies.RemoveDisposed();
-      Scenario.State.CriticalEnemies.RemoveDisposed();
+      Scenario.State.MonitorAllies.RemoveDisposed();
+      Scenario.State.MonitorEnemies.RemoveDisposed();
 
       Scenario.EventQueue.Process();
     }

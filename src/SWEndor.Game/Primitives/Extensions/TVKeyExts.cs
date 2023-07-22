@@ -106,8 +106,9 @@ namespace SWEndor.Game.Primitives.Extensions
           return '/';
         case CONST_TV_KEY.TV_KEY_BACKSLASH:
           return '\\';
+        case CONST_TV_KEY.TV_KEY_SEMICOLON:
         case CONST_TV_KEY.TV_KEY_COLON:
-          return ':';
+          return shift ? ':' : ';';
         case CONST_TV_KEY.TV_KEY_NUMPADCOMMA:
         case CONST_TV_KEY.TV_KEY_COMMA:
           return ',';

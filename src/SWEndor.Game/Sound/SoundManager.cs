@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Primrose.Primitives.Extensions;
 using Primrose.Primitives.Factories;
 using Primrose;
+using SWEndor.Game.Models;
 
 namespace SWEndor.Game.Sound
 {
@@ -25,25 +26,33 @@ namespace SWEndor.Game.Sound
     private FMOD.System fmodsystem = null;
     private int channels = 64; // 0 = music. 1-63s = sounds. ?
     private ChannelGroup musicgrp;
+    private ChannelGroup speechgrp;
     private Registry<ChannelGroup> soundgrps = new Registry<ChannelGroup>();
 
     private Registry<DoubleBufferedSound> music = new Registry<DoubleBufferedSound>();
+    private Registry<DoubleBufferedSound> speech = new Registry<DoubleBufferedSound>();
     private Registry<DoubleBufferedSound> sounds = new Registry<DoubleBufferedSound>();
-    private Channel current_channel;
+    private Channel current_music_channel;
+    private Channel current_speech_channel;
 
     // keep callback references alive
     private CHANNEL_CALLBACK m_cb;
     private CHANNEL_CALLBACK m_icb;
+    private CHANNEL_CALLBACK m_scb;
 
     private SoundStartInfo m_musicLoop = new SoundStartInfo();
     private ConcurrentQueue<SoundStartInfo> m_musicQueue = new ConcurrentQueue<SoundStartInfo>();
+    private ConcurrentQueue<string> m_speechQueue = new ConcurrentQueue<string>();
 
     internal string CurrMusic { get; private set; }
     internal string IntrMusic { get; private set; }
     internal string PrevDynMusic { get; private set; }
+    internal string CurrSpeech { get; private set; }
+
     internal bool EndSyncPointReached;
 
     private float m_MasterMusicVolume = 1;
+    private float m_MasterSpeechVolume = 1;
     private float m_MasterSFXVolume = 1;
     private float m_MasterSFXVolumeScenario = 1;
 
@@ -86,6 +95,11 @@ namespace SWEndor.Game.Sound
       get { return m_MasterSFXVolumeScenario; }
       set { m_MasterSFXVolumeScenario = value; }
     }
+    public float MasterSpeechVolume
+    {
+      get { return m_MasterSpeechVolume; }
+      set { m_MasterSpeechVolume = value; }
+    }
 
     private int m_mood = 0;
     public int GetMood() { return m_mood; }
@@ -105,50 +119,12 @@ namespace SWEndor.Game.Sound
       }
     }
 
-    public struct SingleBufferedSound
+    public void SetMoodFromKill(TargetType type)
     {
-      private FMOD.Sound _s1;
-      public SingleBufferedSound(FMOD.System fmodsystem, string soundfile)
-      {
-        fmodsystem.createStream(soundfile, FMOD.MODE.LOWMEM | FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out _s1);
-      }
-
-      public FMOD.Sound GetSound(bool toggleSwitch)
-      {
-        return _s1;
-      }
-
-      public IEnumerable<FMOD.Sound> GetSounds()
-      {
-        yield return _s1;
-      }
-    }
-
-    public struct DoubleBufferedSound
-    {
-      private FMOD.Sound _s1;
-      private FMOD.Sound _s2;
-      private bool _switch;
-      public DoubleBufferedSound(FMOD.System fmodsystem, string soundfile)
-      {
-        fmodsystem.createStream(soundfile, FMOD.MODE.LOWMEM | FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out _s1);
-        fmodsystem.createStream(soundfile, FMOD.MODE.LOWMEM | FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out _s2);
-        _switch = false;
-      }
-
-      public FMOD.Sound GetSound(bool toggleSwitch)
-      {
-        FMOD.Sound s = _switch ? _s2 : _s1;
-        if (toggleSwitch)
-          _switch = !_switch;
-        return s;
-      }
-
-      public IEnumerable<FMOD.Sound> GetSounds()
-      {
-        yield return _s1;
-        yield return _s2;
-      }
+      if (type.Has(TargetType.FIGHTER))
+        SetMood(MoodState.DESTROY_FIGHTER);
+      else if (type.Has(TargetType.SHIP))
+        SetMood(MoodState.DESTROY_SHIP);
     }
 
     public void Initialize()
@@ -162,6 +138,9 @@ namespace SWEndor.Game.Sound
       //Initialise FMOD
       fmodsystem.init(channels, INITFLAGS.NORMAL, (IntPtr)null);
       fmodsystem.createChannelGroup("music", out musicgrp);
+      fmodsystem.createChannelGroup("speech", out speechgrp);
+      musicgrp?.setVolume(MasterMusicVolume);
+      speechgrp?.setVolume(MasterSpeechVolume);
 
       for (int i = 0; i < channels; i++)
       {
@@ -170,13 +149,18 @@ namespace SWEndor.Game.Sound
         {
           if (i <= 1)
           {
-            ch.setChannelGroup(musicgrp);
+            ch.setChannelGroup(musicgrp); // ch 0,1
+          }
+          else if (i == 2)
+          {
+            ch.setChannelGroup(speechgrp); // ch 2
           }
         }
       }
 
       m_cb = new CHANNEL_CALLBACK(MusicCallback);
       m_icb = new CHANNEL_CALLBACK(InterruptMusiCallback);
+      m_scb = new CHANNEL_CALLBACK(SpeechCallback);
     }
 
     public void Load()
@@ -200,6 +184,14 @@ namespace SWEndor.Game.Sound
         i %= soundgrps.Count;
       }
 
+      string[] speechfiles = Directory.GetFiles(Globals.SpeechPath, Globals.SpeechExt, SearchOption.AllDirectories);
+      foreach (string spfl in speechfiles)
+      {
+        string spname = Path.Combine(Path.GetDirectoryName(spfl), Path.GetFileNameWithoutExtension(spfl)).Replace(Globals.SpeechPath, "");
+        Log.Info(Globals.LogChannel, LogDecorator.GetFormat(LogType.ASSET_LOADING), "Speech", spname);
+        speech.Add(spname, new DoubleBufferedSound(fmodsystem, spfl));
+      }
+
       string[] musicfiles = Directory.GetFiles(Globals.MusicPath, Globals.MusicExt, SearchOption.AllDirectories);
       foreach (string mufl in musicfiles)
       {
@@ -214,15 +206,22 @@ namespace SWEndor.Game.Sound
       InstBase instr;
       while (m_queuedInstructions.TryDequeue(out instr))
         instr.Process(this);
+
+      //bool isPlayingSpeech = false;
+      //current_speech_channel?.isPlaying(out isPlayingSpeech);
+      //if (!isPlayingSpeech && m_speechQueue.Count > 0)
+      //{
+      //  PopSpeech();
+      //}
     }
 
     public void Clear()
     {
-      InstBase i;
-      while (m_queuedInstructions.TryDequeue(out i)) { }
+      while (m_queuedInstructions.TryDequeue(out _)) { }
 
-      SoundStartInfo s;
-      while (m_musicQueue.TryDequeue(out s)) { }
+      while (m_musicQueue.TryDequeue(out _)) { }
+
+      while (m_speechQueue.TryDequeue(out _)) { }
 
       StopAllSounds();
       StopMusic();
@@ -294,6 +293,17 @@ namespace SWEndor.Game.Sound
       return FMOD.RESULT.OK;
     }
 
+    private RESULT SpeechCallback(IntPtr channelraw, CHANNELCONTROL_TYPE controltype, CHANNELCONTROL_CALLBACK_TYPE type, IntPtr commanddata1, IntPtr commanddata2)
+    {
+      switch (type)
+      {
+        case FMOD.CHANNELCONTROL_CALLBACK_TYPE.END:
+          PopSpeech();
+          break;
+      }
+      return FMOD.RESULT.OK;
+    }
+
     private RESULT InterruptMusiCallback(IntPtr channelraw, CHANNELCONTROL_TYPE controltype, CHANNELCONTROL_CALLBACK_TYPE type, IntPtr commanddata1, IntPtr commanddata2)
     {
       switch (type)
@@ -349,6 +359,19 @@ namespace SWEndor.Game.Sound
           }
           Dynamic.PrepDynNext(this, next.SoundName);
         }
+      }
+    }
+
+    private void PopSpeech()
+    {
+      string sname;
+      if (m_speechQueue.TryDequeue(out sname))
+      {
+        PlaySpeech(sname);
+      }
+      else
+      {
+        CurrSpeech = null;
       }
     }
 

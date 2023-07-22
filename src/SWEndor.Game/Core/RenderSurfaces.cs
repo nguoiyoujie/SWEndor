@@ -6,6 +6,7 @@ using SWEndor.Game.Actors.Models;
 using SWEndor.Game.UI;
 using Primrose.Primitives.Geometry;
 using Primrose.Primitives.Extensions;
+using SWEndor.Game.Models;
 
 namespace SWEndor.Game.Core
 {
@@ -111,14 +112,15 @@ namespace SWEndor.Game.Core
           && !Engine.PlayerInfo.Actor.IsDyingOrDead
           && Engine.Screen2D.ShowUI)
       {
+        ActorInfo p = Engine.PlayerInfo.Actor;
         ActorInfo t = Engine.PlayerInfo.TargetActor;
         t = t?.ParentForCoords ?? t;
         if (t != null)
-          UpdateRenderLine(t);
+          UpdateRenderLine(p, t);
       }
     }
 
-    private void UpdateRenderLine(ActorInfo actor)
+    private void UpdateRenderLine(ActorInfo player, ActorInfo actor)
     {
       TV_3DVECTOR r = Engine.PlayerCameraInfo.Camera.GetRotation();
       Sphere sph = actor.GetBoundingSphere(false);
@@ -167,7 +169,7 @@ namespace SWEndor.Game.Core
                                               , icolor
                                               , fntID);
 
-      Engine.TrueVision.TVScreen2DText.TextureFont_DrawText((tp.MaxShd == 0) ? "----" : "{0:0}%".F(tp.Shd_Perc)
+      Engine.TrueVision.TVScreen2DText.TextureFont_DrawText((tp.MaxShd == 0) ? "----" : LookUpString.GetIntegerPercent(tp.Shd_Perc)
                                               , 15 + 40
                                               , h - 45
                                               , ((tp.MaxShd == 0) ? new COLOR(1, 1, 1, 0.4f) : tp.Shd_Color).Value
@@ -180,26 +182,43 @@ namespace SWEndor.Game.Core
                                               , icolor
                                               , fntID);
 
-      Engine.TrueVision.TVScreen2DText.TextureFont_DrawText((tp.MaxHull == 0) ? "100%" : "{0:0}%".F(tp.Hull_Perc)
+      Engine.TrueVision.TVScreen2DText.TextureFont_DrawText((tp.MaxHull == 0) ? "100%" : LookUpString.GetIntegerPercent(tp.Hull_Perc)
                                               , 15 + 40
                                               , h - 25
                                               , ((tp.MaxHull == 0) ? new COLOR(0, 1, 0, 1) : tp.Hull_Color).Value
+                                              , fntID);
+
+      // Distance
+      fntID = Engine.FontFactory.Get(Font.T10).ID;
+      float dist = DistanceModel.GetDistance(Engine, tp, player, 9999999);
+      Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(LookUpString.GetDistanceDisplay(dist)
+                                              , 160 // 178 for T08
+                                              , h - 56
+                                              , icolor
                                               , fntID);
 
       // Systems
       int i = 0;
       int maxpart = tp.TypeInfo.SystemData.Parts.Length;
       fntID = Engine.FontFactory.Get(Font.T08).ID;
-      foreach (SystemPart part in tp.TypeInfo.SystemData.Parts)
+      foreach (SystemInstrument instrument in tp.GetInstruments())
       {
-        SystemState s = tp.GetStatus(part);
-        ColorLocalKeys k = s == SystemState.ACTIVE ? ColorLocalKeys.GAME_SYSTEMSTATE_ACTIVE :
-                           s == SystemState.DISABLED ? ColorLocalKeys.GAME_SYSTEMSTATE_DISABLED :
-                           s == SystemState.DESTROYED ? ColorLocalKeys.GAME_SYSTEMSTATE_DESTROYED :
-                                                        ColorLocalKeys.GAME_SYSTEMSTATE_NULL;
+        ColorLocalKeys k = ColorLocalKeys.GAME_SYSTEMSTATE_NULL;
+        switch (instrument.Status)
+        {
+          case SystemState.DAMAGED:
+            k = ColorLocalKeys.GAME_SYSTEMSTATE_DAMAGED;
+            break;
+          case SystemState.DISABLED:
+            k = ColorLocalKeys.GAME_SYSTEMSTATE_DISABLED;
+            break;
+          case SystemState.ACTIVE:
+            k = (instrument.Endurance < instrument.MaxEndurance) ? ColorLocalKeys.GAME_SYSTEMSTATE_ACTIVE_DAMAGED : ColorLocalKeys.GAME_SYSTEMSTATE_ACTIVE;
+            break;
+        } 
         int scolor = ColorLocalization.Get(k).Value;
 
-        Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(part.GetShortName()
+        Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(instrument.PartType.GetShortName()
                                                       , w - 5 - 25 * (1 + i % 4)
                                                       , h - 5 - 12 * (1 + maxpart / 4 - i / 4)
                                                       , scolor

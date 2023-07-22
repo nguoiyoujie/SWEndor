@@ -8,10 +8,12 @@ namespace SWEndor.Game.Weapons.Types
 
     private TrackerDummyWeapon() : base("Tracker")
     {
-      Port.CooldownRate = new float2(999999999, 0);
+      Port.CooldownRate = 999999999;
+      Port.CooldownRateRandom = 0;
 
       Ammo.Max = 1;
-      Ammo.ReloadRate = new float2 (1000, 0);
+      Ammo.ReloadRate = 1000;
+      Ammo.ReloadRateRandom = 0;
       Ammo.ReloadAmount = 1;
 
       Port.FirePositions = new float3[] { new float3(0, 0, 0) };

@@ -18,19 +18,19 @@ namespace SWEndor.Game.Sound
         if (s.music.Contains(Name))
         {
           new InstStopMusic() { FadeTime = 0.5f }.Process(s);
-          s.fmodsystem.playSound(s.music[Name].GetSound(true), s.musicgrp, true, out s.current_channel);
+          s.fmodsystem.playSound(s.music[Name].GetSound(true), s.musicgrp, true, out s.current_music_channel);
 
           if (FadeTime > 0)
-            DoFadeIn(s.current_channel);
+            DoFadeIn(s.current_music_channel);
 
           if (Position_ms > 0)
-            s.current_channel.setPosition(Position_ms, TIMEUNIT.MS);
+            s.current_music_channel.setPosition(Position_ms, TIMEUNIT.MS);
 
           if (End_ms > 0)
-            DoFadeOut(s.current_channel, End_ms / 1000f);
+            DoFadeOut(s.current_music_channel, End_ms / 1000f);
 
-          s.current_channel.setCallback(isInterruptMusic ? s.m_icb : s.m_cb);
-          s.current_channel.setPaused(false);
+          s.current_music_channel.setCallback(isInterruptMusic ? s.m_icb : s.m_cb);
+          s.current_music_channel.setPaused(false);
           s.EndSyncPointReached = false;
 
           if (!isInterruptMusic)

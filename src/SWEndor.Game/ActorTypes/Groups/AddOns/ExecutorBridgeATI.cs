@@ -16,8 +16,8 @@ namespace SWEndor.Game.ActorTypes.Instances
 
       ExplodeSystemData.Explodes = new ExplodeData[]
       {
-        new ExplodeData("EXPL00", 1.5f, 1, ExplodeTrigger.ON_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
-        new ExplodeData("EXPL00", 1, 1, ExplodeTrigger.ON_DEATH)
+        new ExplodeData("EXPL00", default, 1.5f, 1, ExplodeTrigger.WHILE_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeData("EXPL00", default, 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
       SystemData.MaxShield = 300;
@@ -46,7 +46,7 @@ namespace SWEndor.Game.ActorTypes.Instances
         {
           foreach (ActorInfo pn in parent.Children)
           {
-            if (pn?.TypeInfo.AIData.TargetType.Has(TargetType.SHIELDGENERATOR) ?? false)
+            if (pn?.TargetType.Has(TargetType.SHIELDGENERATOR) ?? false)
               ainfo.InflictDamage(-ainfo.MaxHP, DamageType.ALWAYS_100PERCENT);
           }
         }
@@ -65,7 +65,7 @@ namespace SWEndor.Game.ActorTypes.Instances
       if (owner == null || hitby == null)
         return;
 
-      if (!hitby.TypeInfo.AIData.TargetType.Has(TargetType.MUNITION) && owner.HP_Frac < 0.5f)
+      if (!hitby.TargetType.Has(TargetType.MUNITION) && owner.HP_Frac < 0.5f)
       {
         owner.SetState_Dying();
         hitby.DestroyedEvents = null;

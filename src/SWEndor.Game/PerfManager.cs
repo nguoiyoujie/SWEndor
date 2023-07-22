@@ -33,8 +33,8 @@ namespace SWEndor.Game
     internal PerfManager(Engine engine)
     {
       Engine = engine;
-      pool = new ObjectPool<PerfElement>(() => new PerfElement(this, "<undefined>"), (p) => p.Reset());
-      sbpool = new ObjectPool<StringBuilder>(() => new StringBuilder(128), (p) => p.Clear());
+      pool = new ObjectPool<PerfElement>(false, () => new PerfElement(this, "<undefined>"), (p) => p.Reset());
+      sbpool = new ObjectPool<StringBuilder>(false, () => new StringBuilder(128), (p) => p.Clear());
     }
 
     public static string PerfLogPath = Path.Combine(Globals.LogPath, @"perf.log");

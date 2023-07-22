@@ -1,12 +1,12 @@
 ﻿using MTV3D65;
 using SWEndor.Game.ActorTypes;
 using Primrose.Primitives;
-using System.Collections.Generic;
 using SWEndor.Game.Models;
 using SWEndor.Game.ActorTypes.Components;
 using SWEndor.Game.Shaders;
 using SWEndor.Game.UI;
 using Primrose.Primitives.Geometry;
+using SWEndor.Game.Core;
 
 namespace SWEndor.Game.Actors.Models
 {
@@ -56,8 +56,8 @@ namespace SWEndor.Game.Actors.Models
           }
         }
 
-        Mesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 8);
-        FarMesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 8);
+        Mesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 3);
+        FarMesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_MANAGED, 3);
       }
     }
 
@@ -237,6 +237,25 @@ namespace SWEndor.Game.Actors.Models
       TVMesh m = actor.IsFarMode ? FarMesh : Mesh;
       return m.AdvancedCollision(start, end, ref result);
     }
+
+    public int GetMaterial(int group)
+    {
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
+          return Mesh.GetMaterial(group);
+      return 0;
+    }
+
+    public void SetColorEmissive(Engine engine, int group, COLOR color)
+    {
+      using (ScopeCounters.Acquire(meshScope))
+        if (ScopeCounters.IsZero(disposeScope))
+        {
+          int matid = Mesh.GetMaterial(group);
+          TV_COLOR cprev = engine.TrueVision.TVMaterialFactory.GetEmissive(matid);
+          engine.TrueVision.TVMaterialFactory.SetEmissive(matid, color.bR, color.bG, color.bB, color.bA);
+        }
+    }
   }
 }
 
@@ -254,6 +273,8 @@ namespace SWEndor.Game.Actors
     public void Render(bool renderfar) { Meshes.Render(renderfar); }
     public void EnableCollision(bool enable) { Meshes.EnableCollision(enable); }
     public bool AdvancedCollision(TV_3DVECTOR start, TV_3DVECTOR end, ref TV_COLLISIONRESULT result) { return Meshes.AdvancedCollision(this, start, end, ref result); }
+    public int GetMaterial(int iGroup) { return Meshes.GetMaterial(iGroup); }
+    public void SetColorEmissive(int iGroup, COLOR color) { Meshes.SetColorEmissive(Engine, iGroup, color); }
 
     public TV_3DVECTOR MaxDimensions { get { return TypeInfo.MeshData.MaxDimensions; } }
     public TV_3DVECTOR MinDimensions { get { return TypeInfo.MeshData.MinDimensions; } }

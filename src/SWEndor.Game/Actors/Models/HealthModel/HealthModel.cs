@@ -3,8 +3,8 @@ using SWEndor.Game.ActorTypes;
 using SWEndor.Game.ActorTypes.Components;
 using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
-using System;
 using Primrose;
+using SWEndor.Game.Models;
 
 namespace SWEndor.Game.Actors.Models
 {
@@ -59,27 +59,34 @@ namespace SWEndor.Game.Actors.Models
     }
 
 
-    public void InflictDamage(ActorInfo self, DamageInfo dmg)
+    public float InflictDamage(ActorInfo self, DamageInfo dmg)
     {
       if (self.IsDyingOrDead)
-        return;
+        return 0;
 
       float prevHP = HP;
 
+      // direct shield damage
+      float prev = Shd;
+      Shd = (Shd - dmg.SpecialShieldDamage).Clamp(0, MaxShd);
+
       float mod = self.GetArmor(dmg.Type);
       float d = dmg.Value * mod;
-      float d2 = d - Shd;
+      float ds = d - Shd;
       Shd = (Shd - d).Clamp(0, MaxShd);
+      float actual = prev - Shd;
 
       if (d > 0) // damage only
       {
         if (self.IsPlayer)
-          if (HP < (int)prevHP)
+          if (HP < (int)prevHP) // integer decrement
             self.Engine.PlayerInfo.FlashHit(self.Engine.PlayerInfo.StrengthColor);
 
         if (Shd <= 0 && !self.IsDyingOrDead) // TO-DO: improve atomicity of ActorState, still may have threading issues
         {
-          Hull = (Hull - d2).Clamp(0, MaxHull);
+          prev = Hull;
+          Hull = (Hull - ds).Clamp(0, MaxHull);
+          actual += prev - Hull;
           if (Hull <= 0 && !self.IsDyingOrDead)
           {
              self.SetState_Dying();
@@ -89,15 +96,24 @@ namespace SWEndor.Game.Actors.Models
               Log.Debug(Globals.LogChannel, LogDecorator.GetFormat(LogType.ACTOR_KILLED), self);
 #endif
           }
-          if (!self.IsDyingOrDead && self.TypeInfo.SystemData.AllowSystemDamage)
-            self.DamageRandom();
+
+          if (!self.IsDyingOrDead)
+          {
+            if (self.TypeInfo.SystemData.AllowSystemDamage)
+              for (int i = 0; i < dmg.SpecialSystemDamage; i++)
+                self.DamageRandom(dmg.SpecialSystemDamageChanceModifier);
+
+            if (dmg.StunDuration > 0)
+              self.InflictStun(dmg.StunDuration);
+          }
         }
       }
+      return actual;
     }
 
     public void Kill(ActorInfo self)
     {
-      InflictDamage(self, new DamageInfo(MaxShd, DamageType.ALWAYS_100PERCENT));
+      InflictDamage(self, new DamageInfo(MaxHP, DamageType.ALWAYS_100PERCENT));
     }
 
     public void SetHP(ActorInfo self, float value)
@@ -143,22 +159,28 @@ namespace SWEndor.Game.Actors
 {
   public partial class ActorInfo
   {
-    public void InflictDamage(float value, DamageType type, TV_3DVECTOR position)
+    internal float InflictDamage(float value, DamageType type, TV_3DVECTOR position, DamageSpecialData specialData)
     {
       using (ScopeCounters.Acquire(Scope))
-        Health.InflictDamage(this, new DamageInfo(value, type, position));
+        return Health.InflictDamage(this, new DamageInfo(value, type, position, specialData));
     }
 
-    public void InflictDamage(float value, DamageType type)
+    public float InflictDamage(float value, DamageType type, TV_3DVECTOR position)
     {
       using (ScopeCounters.Acquire(Scope))
-        Health.InflictDamage(this, new DamageInfo(value, type));
+        return Health.InflictDamage(this, new DamageInfo(value, type, position));
     }
 
-    public void InflictDamage(float value)
+    public float InflictDamage(float value, DamageType type)
     {
       using (ScopeCounters.Acquire(Scope))
-        Health.InflictDamage(this, new DamageInfo(value, DamageType.ALWAYS_100PERCENT));
+        return Health.InflictDamage(this, new DamageInfo(value, type));
+    }
+
+    public float InflictDamage(float value)
+    {
+      using (ScopeCounters.Acquire(Scope))
+        return Health.InflictDamage(this, new DamageInfo(value, DamageType.ALWAYS_100PERCENT));
     }
 
     public float HP { get { return Health.HP; } set { using (ScopeCounters.Acquire(Scope)) Health.SetHP(this, value); } }
