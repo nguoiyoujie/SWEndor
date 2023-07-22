@@ -16,7 +16,7 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: 'src/SWEndor.sln'
+  solution: 'SWEndor/src/SWEndor.sln'
   buildPlatform: 'x86'
   buildConfiguration: 'Release'
 
