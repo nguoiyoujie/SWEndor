@@ -83,6 +83,9 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
       if (f1 == null || f2 == null)
         return Val.FALSE;
 
+      if (f1 == f2)
+        return Val.TRUE;
+
       return new Val(f1.Allies.Contains(f2) || f2.Allies.Contains(f1));
     }
 
