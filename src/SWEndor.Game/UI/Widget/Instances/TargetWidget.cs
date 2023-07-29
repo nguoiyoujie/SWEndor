@@ -181,6 +181,30 @@ namespace SWEndor.Game.UI.Widgets
         TVScreen2DImmediate.Draw_Line(x - m_targetSize, y, x + m_targetSize, y, icolor);
         TVScreen2DImmediate.Draw_Line(x, y - m_targetSize, x, y + m_targetSize, icolor);
         TVScreen2DImmediate.Action_End2D();
+
+        if (PlayerInfo.SecondaryWeapon.Weapon.Proj.WeaponType == Weapons.WeaponType.ION || PlayerInfo.SecondaryWeapon.Weapon.Proj.WeaponType == Weapons.WeaponType.LASER)
+        {
+          float spd2 = PlayerInfo.SecondaryWeapon.Weapon.Proj.ProjSpeed;
+          if (spd2 != spd)
+          {
+            d = dist / spd2; // Laser Speed
+            t = target.GetRelativePositionXYZ(0, 0, target.MoveData.Speed * d);
+            int scolor = icolor;
+            if (PlayerInfo.SecondaryWeapon.Weapon.Proj.WeaponType == Weapons.WeaponType.ION)
+            {
+              scolor = ColorLocalization.Get(ColorLocalKeys.GAME_SYSTEM_ION).Value;
+            }
+            TVScreen2DImmediate.Math_3DPointTo2D(t, ref x, ref y);
+
+            TVScreen2DImmediate.Action_Begin2D();
+            // draw a smaller 'I'
+            float ionsize = (m_targetSize - 2).Max(2);
+            TVScreen2DImmediate.Draw_Line(x - ionsize, y - ionsize, x + ionsize, y - ionsize, scolor);
+            TVScreen2DImmediate.Draw_Line(x, y - ionsize, x, y + ionsize, scolor);
+            TVScreen2DImmediate.Draw_Line(x - ionsize, y + ionsize, x + ionsize, y + ionsize, scolor);
+            TVScreen2DImmediate.Action_End2D();
+          }
+        }
       }
 
       // Squad diamond
