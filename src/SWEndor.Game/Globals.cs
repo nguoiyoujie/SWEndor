@@ -45,9 +45,6 @@ namespace SWEndor.Game
     /// <summary>The conversion ratio from degree measure to radian measure</summary>
     public const float Deg2Rad = PI / 180;
 
-    /// <summary>The laser speed</summary>
-    public const float LaserSpeed = 3000f;
-
     /// <summary>The factory object limit</summary>
     public const int ActorLimit = 1000;
 

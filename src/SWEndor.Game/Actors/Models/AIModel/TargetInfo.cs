@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using SWEndor.Game.Core;
 using SWEndor.Game.Models;
+using SWEndor.Game.Weapons;
 
 namespace SWEndor.Game.Actors.Models
 {
@@ -53,7 +54,14 @@ namespace SWEndor.Game.Actors.Models
       if (tgt != null && tgt.Active)
       {
         float dist = DistanceModel.GetDistance(e, a, tgt);
-        float d = dist / Globals.LaserSpeed + e.Game.TimeSinceRender;
+        a.WeaponDefinitions.AISelectWeapon(e, a, tgt, 0, 0, out WeaponShotInfo weap);
+        if (weap.Weapon.Proj.ProjSpeed <= 0 || weap.Weapon.Proj.IsHoming)
+        {
+          return GetTargetPosFromActor(e, a);
+        }
+
+        float spd = weap.Weapon.Proj.ProjSpeed; //Globals.LaserSpeed;
+        float d = dist / spd + e.Game.TimeSinceRender;
         ActorInfo tgtp = tgt.ParentForCoords;
         if (tgtp == null)
           return tgt.GetRelativePositionXYZ(0, 0, tgt.MoveData.Speed * d);

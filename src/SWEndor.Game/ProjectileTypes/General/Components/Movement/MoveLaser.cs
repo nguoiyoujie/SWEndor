@@ -11,7 +11,7 @@ namespace SWEndor.Game.ProjectileTypes.Components
   {
     internal static void Move(Engine engine, ProjectileInfo actor, ref MoveData data, float time)
     {
-      actor.MoveRelative(Globals.LaserSpeed * time, 0, 0);
+      actor.MoveRelative(data.Speed * time, 0, 0);
     }
   }
 }

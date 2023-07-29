@@ -9,9 +9,9 @@ namespace SWEndor.Game.ActorTypes.Components
   /// </summary>
   internal static class MoveLaser
   {
-    internal static void Move(Engine engine, ActorInfo actor, ref MoveData data, float time)
+    internal static void Move(Engine _, ActorInfo actor, ref MoveData data, float time)
     {
-      actor.MoveRelative(Globals.LaserSpeed * engine.Game.TimeSinceRender, 0, 0);
+      actor.MoveRelative(data.Speed * time, 0, 0);
     }
   }
 }

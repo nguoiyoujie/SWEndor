@@ -31,7 +31,7 @@ namespace SWEndor.Game.ActorTypes.Components
       if (!data.FreeSpeed)
         data.Speed = data.Speed.Clamp(data.MinSpeed, data.MaxSpeed);
 
-      actor.MoveRelative(Globals.LaserSpeed * time, 0, 0);
+      actor.MoveRelative(data.Speed * time, 0, 0);
     }
   }
 }
