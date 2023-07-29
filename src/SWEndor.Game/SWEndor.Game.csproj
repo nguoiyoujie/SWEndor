@@ -230,6 +230,7 @@
     <Compile Include="ParticleTypes\General\ParticleCreationInfo.cs" />
     <Compile Include="ParticleTypes\General\ParticleTypeInfo.cs" />
     <Compile Include="Scenarios\Scenarios\GSModelView.cs" />
+    <Compile Include="Scenarios\Scripting\ScriptCallRegister.cs" />
     <Compile Include="Shaders\ShaderData.cs" />
     <Compile Include="FileFormat\INI\ScenarioFile.cs" />
     <Compile Include="FlareInfo.cs" />

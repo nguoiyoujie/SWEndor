@@ -729,17 +729,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
       if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
-      actor.ActorStateChangeEvents += (a, state) =>
-      {
-        if (state == ActorState.DYING)
-        {
-          List<Val> v = ObjectPool<List<Val>>.GetStaticPool().GetNew();
-          v.Add(new Val(script_name));
-          v.Add(new Val(a.ID));
-          ScriptingFns.Call(context, v);
-          ObjectPool<List<Val>>.GetStaticPool().Return(v);
-        }
-      };
+      actor.DyingCalls.Add(script_name);
       return Val.NULL;
     }
 
@@ -758,17 +748,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
       if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
-      actor.ActorStateChangeEvents += (a, state) =>
-      {
-        if (state == ActorState.DEAD)
-        {
-          List<Val> v = ObjectPool<List<Val>>.GetStaticPool().GetNew();
-          v.Add(new Val(script_name));
-          v.Add(new Val(a.ID));
-          ScriptingFns.Call(context, v);
-          ObjectPool<List<Val>>.GetStaticPool().Return(v);
-        }
-      };
+      actor.DeadCalls.Add(script_name);
       return Val.NULL;
     }
 
@@ -787,15 +767,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
       if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
-      actor.HitEvents += (a, victim) =>
-      {
-        List<Val> v = ObjectPool<List<Val>>.GetStaticPool().GetNew();
-        v.Add(new Val(script_name));
-        v.Add(new Val(a.ID));
-        v.Add(new Val(victim?.ID ?? -1));
-        ScriptingFns.Call(context, v);
-        ObjectPool<List<Val>>.GetStaticPool().Return(v);
-      };
+      actor.HitCalls.Add(script_name);
       return Val.NULL;
     }
 
@@ -814,15 +786,7 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
       if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
-      actor.DeathEvents += (a, attacker) =>
-      {
-        List<Val> v = ObjectPool<List<Val>>.GetStaticPool().GetNew();
-        v.Add(new Val(script_name));
-        v.Add(new Val(a.ID));
-        v.Add(new Val(attacker?.ID ?? -1));
-        ScriptingFns.Call(context, v);
-        ObjectPool<List<Val>>.GetStaticPool().Return(v);
-      };
+      actor.DeathCalls.Add(script_name);
       return Val.NULL;
     }
 
@@ -841,15 +805,26 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
       if (!GetActor(context, actorID, out _, out ActorInfo actor))
         return Val.NULL;
 
-      actor.RegisterKillEvents += (a, victim) =>
-      {
-        List<Val> v = ObjectPool<List<Val>>.GetStaticPool().GetNew();
-        v.Add(new Val(script_name));
-        v.Add(new Val(a.ID));
-        v.Add(new Val(victim?.ID ?? -1));
-        ScriptingFns.Call(context, v);
-        ObjectPool<List<Val>>.GetStaticPool().Return(v);
-      };
+      actor.RegisterKillCalls.Add(script_name);
+      return Val.NULL;
+    }
+
+    /// <summary>
+    /// Queues another script for execution when the actor has been scanned by the player.
+    /// </summary>
+    /// <param name="context">The game context</param>
+    /// <param name="actorID">The actor to trigger</param>
+    /// <param name="script_name">
+    ///   Parameters: 
+    ///     STRING script_name
+    /// </param>
+    /// <returns>NULL. Throws an exception if no script is found.</returns>
+    public static Val CallOnCargoScanned(IContext context, int actorID, string script_name)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return Val.NULL;
+
+      actor.CargoScannedCalls.Add(script_name);
       return Val.NULL;
     }
   }

@@ -10,6 +10,11 @@ using SWEndor.Game.Models;
 using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using SWEndor.Game.Scenarios.Scripting.Functions;
+using Primrose.Primitives.Factories;
+using Primrose.Expressions;
+using SWEndor.Game.Scenarios.Scripting;
 
 namespace SWEndor.Game.Actors
 {
@@ -107,6 +112,15 @@ namespace SWEndor.Game.Actors
     internal ActorAttackEvent DeathEvents; // I was killed
     internal ActorAttackEvent RegisterHitEvents; // I hit someone (friendly + enemy)
     internal ActorAttackEvent RegisterKillEvents; // I killed someone (friendly + enemy)
+
+    // Delegate Events (Script calls)
+    internal readonly ScriptCallRegister DyingCalls = new ScriptCallRegister();
+    internal readonly ScriptCallRegister DeadCalls = new ScriptCallRegister();
+    internal readonly ScriptCallRegister CargoScannedCalls = new ScriptCallRegister();
+    internal readonly ScriptCallRegister HitCalls = new ScriptCallRegister();
+    internal readonly ScriptCallRegister DeathCalls = new ScriptCallRegister();
+    internal readonly ScriptCallRegister RegisterHitCalls = new ScriptCallRegister();
+    internal readonly ScriptCallRegister RegisterKillCalls = new ScriptCallRegister();
 
     // AI
     internal ActionInfo CurrentAction = null;
@@ -272,22 +286,27 @@ namespace SWEndor.Game.Actors
 
     #region Event Methods
     public void OnTickEvent() { TickEvents?.Invoke(this); }
-    public void OnHitEvent(ActorInfo attacker) { HitEvents?.Invoke(this, attacker); }
-    public void OnDeathEvent(ActorInfo attacker) { DeathEvents?.Invoke(this, attacker); }
+    public void OnHitEvent(ActorInfo attacker) { HitEvents?.Invoke(this, attacker); HitCalls.Call(this, attacker); }
+    public void OnDeathEvent(ActorInfo attacker) { DeathEvents?.Invoke(this, attacker); DeathCalls.Call(this, attacker); }
     public void OnStateChangeEvent()
     {
       if (ActorState == ActorState.DYING)
+      {
         TypeInfo.Dying(Engine, this);
+        DyingCalls.Call(this);
+      }
       else if (ActorState == ActorState.DEAD)
+      {
         TypeInfo.Dead(Engine, this);
-
+        DeadCalls.Call(this);
+      }
       ActorStateChangeEvents?.Invoke(this, ActorState);
     }
     public void OnCreatedEvent() { CreatedEvents?.Invoke(this); }
     public void OnDestroyedEvent() { DestroyedEvents?.Invoke(this); }
-    public void OnCargoScannedEvent() { CargoScannedEvents?.Invoke(this);  }
-    public void OnRegisterHitEvent(ActorInfo victim) { RegisterHitEvents?.Invoke(this, victim); }
-    public void OnRegisterKillEvent(ActorInfo victim) { RegisterKillEvents?.Invoke(this, victim); }
+    public void OnCargoScannedEvent() { CargoScannedEvents?.Invoke(this); CargoScannedCalls.Call(this); }
+    public void OnRegisterHitEvent(ActorInfo victim) { RegisterHitEvents?.Invoke(this, victim); RegisterHitCalls.Call(this, victim); }
+    public void OnRegisterKillEvent(ActorInfo victim) { RegisterKillEvents?.Invoke(this, victim); RegisterKillCalls.Call(this, victim); }
     #endregion
 
 
@@ -442,6 +461,14 @@ namespace SWEndor.Game.Actors
       RegisterKillEvents = null;
       CargoScannedEvents = null;
       ActorStateChangeEvents = null;
+
+      DyingCalls.Clear();
+      DeadCalls.Clear();
+      CargoScannedCalls.Clear();
+      HitCalls.Clear();
+      DeathCalls.Clear();
+      RegisterHitCalls.Clear();
+      RegisterKillCalls.Clear();
 
       // Final dispose
       Faction.UnregisterActor(this);
