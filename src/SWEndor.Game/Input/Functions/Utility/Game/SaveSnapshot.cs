@@ -13,7 +13,7 @@ namespace SWEndor.Game.Input.Functions.Utility.Game
 
     public override void Process(Engine engine)
     {
-      GameSaver.Save(@"save.txt");
+      GameSaver.Save(engine, @"save.txt");
     }
   }
 }

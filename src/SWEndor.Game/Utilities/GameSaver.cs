@@ -6,12 +6,13 @@ using SWEndor.Game.UI;
 using SWEndor.Game.AI.Actions;
 using System.Collections.Generic;
 using SWEndor.Game.Primitives.Extensions;
+using SWEndor.Game.Core;
 
 namespace SWEndor.Game
 {
   public static class GameSaver
   {
-    public static bool Save(string filename)
+    public static bool Save(Engine engine, string filename)
     {
       // UI
       //UpdateUI(); // crashes (old code)
@@ -19,17 +20,17 @@ namespace SWEndor.Game
       if (!Directory.Exists(Globals.GameSnapshotPath))
         Directory.CreateDirectory(Globals.GameSnapshotPath);
 
-      Globals.Engine.Game.IsPaused = true;
+      engine.Game.IsPaused = true;
       try
       {
         StringBuilder sb = new StringBuilder();
 
-        foreach (ActorInfo ainfo in Globals.Engine.ActorFactory.Actors)
+        foreach (ActorInfo ainfo in engine.ActorFactory.Actors)
         {
           new ActorParser(ainfo).Generate(sb);
         }
 
-        foreach (KeyValuePair<string, ActorTypes.ActorTypeInfo> kvp in Globals.Engine.ActorTypeFactory)
+        foreach (KeyValuePair<string, ActorTypes.ActorTypeInfo> kvp in engine.ActorTypeFactory)
         {
           string path = Path.Combine(Globals.GameSnapshotPath, "actortypes", kvp.Value.ID + ".ini");
           kvp.Value.SaveToINI(path);
@@ -40,46 +41,46 @@ namespace SWEndor.Game
           File.Delete(filepath);
 
         File.AppendAllText(filepath, sb.ToString());
-        Globals.Engine.Game.IsPaused = false;
+        engine.Game.IsPaused = false;
         return true;
       }
       catch
       {
-        Globals.Engine.Game.IsPaused = false;
+        engine.Game.IsPaused = false;
         return false;
       }
     }
 
-    private static void UpdateUI()
+    private static void UpdateUI(Engine engine)
     {
-      Globals.Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
-      Globals.Engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(Globals.Engine.ScreenWidth / 2 - 80
-                                                          , Globals.Engine.ScreenWidth / 2 - 20
-                                                          , Globals.Engine.ScreenWidth / 2 + 80
-                                                          , Globals.Engine.ScreenWidth / 2 + 20
+      engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
+      engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(engine.ScreenWidth / 2 - 80
+                                                          , engine.ScreenWidth / 2 - 20
+                                                          , engine.ScreenWidth / 2 + 80
+                                                          , engine.ScreenWidth / 2 + 20
                                                           , new TV_COLOR(0, 0, 0, 0.5f).GetIntColor());
 
-      Globals.Engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(Globals.Engine.ScreenWidth / 2 - 80
-                                                          , Globals.Engine.ScreenWidth / 2 - 20
-                                                          , Globals.Engine.ScreenWidth / 2 + 80
-                                                          , Globals.Engine.ScreenWidth / 2 + 20
+      engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(engine.ScreenWidth / 2 - 80
+                                                          , engine.ScreenWidth / 2 - 20
+                                                          , engine.ScreenWidth / 2 + 80
+                                                          , engine.ScreenWidth / 2 + 20
                                                           , new TV_COLOR(0.5f, 0.5f, 0.5f, 1f).GetIntColor());
 
-      Globals.Engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(Globals.Engine.ScreenWidth / 2 - 75
-                                                          , Globals.Engine.ScreenWidth / 2 - 15
-                                                          , Globals.Engine.ScreenWidth / 2 + 75
-                                                          , Globals.Engine.ScreenWidth / 2 + 15
+      engine.TrueVision.TVScreen2DImmediate.Draw_FilledBox(engine.ScreenWidth / 2 - 75
+                                                          , engine.ScreenWidth / 2 - 15
+                                                          , engine.ScreenWidth / 2 + 75
+                                                          , engine.ScreenWidth / 2 + 15
                                                           , new TV_COLOR(0.5f, 0.5f, 0.5f, 1f).GetIntColor());
-      Globals.Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
+      engine.TrueVision.TVScreen2DImmediate.Action_End2D();
 
-      Globals.Engine.TrueVision.TVScreen2DText.Action_BeginText();
-      Globals.Engine.TrueVision.TVScreen2DText.TextureFont_DrawText("Creating Game Snapshot..."
-                                                          , Globals.Engine.ScreenWidth / 2 - 60
-                                                          , Globals.Engine.ScreenWidth / 2 - 10
+      engine.TrueVision.TVScreen2DText.Action_BeginText();
+      engine.TrueVision.TVScreen2DText.TextureFont_DrawText("Creating Game Snapshot..."
+                                                          , engine.ScreenWidth / 2 - 60
+                                                          , engine.ScreenWidth / 2 - 10
                                                           , new TV_COLOR(0.5f, 0.5f, 0.5f, 1f).GetIntColor()
                                                           , Font.T14
       );
-      Globals.Engine.TrueVision.TVScreen2DText.Action_EndText();
+      engine.TrueVision.TVScreen2DText.Action_EndText();
     }
   }
 
