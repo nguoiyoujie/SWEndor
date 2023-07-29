@@ -159,7 +159,7 @@ namespace SWEndor.Game.ActorTypes
     {
       // weapons
       foreach (WeaponInfo w in ainfo.WeaponDefinitions.Weapons)
-        w.Reload(engine);
+        w.Ammo.Reload(engine);
 
       // regeneration
       ainfo.Regenerate(engine.Game.TimeSinceRender);
