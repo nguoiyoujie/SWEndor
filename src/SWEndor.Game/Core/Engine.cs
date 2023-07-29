@@ -25,6 +25,7 @@ using SWEndor.Game.Models;
 using System.Collections.Generic;
 using SWEndor.Game.Particles;
 using SWEndor.Game.ParticleTypes;
+using SWEndor.Game.ActorTypes.Components;
 
 namespace SWEndor.Game.Core
 {
@@ -142,6 +143,9 @@ namespace SWEndor.Game.Core
       Screen2D.ShowPage = true;
 
       Screen2D.AppendLoadingText(Globals.LoadingFlavourTexts[Random.Next(0, Globals.LoadingFlavourTexts.Count)]);
+
+      // Init MeshData before models
+      MeshData.Init(this);
       ActorTypeFactory.RegisterBase();
 
       Task pload = Task.Factory.StartNew(ProjectileTypeFactory.Load);

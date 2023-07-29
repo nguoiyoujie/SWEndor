@@ -51,7 +51,12 @@ namespace SWEndor.Game.ActorTypes.Components
     public TV_3DVECTOR MinDimensions;
 
 
-    public static MeshData Default = new MeshData(Globals.Engine.TrueVision.TVScene.CreateMeshBuilder(), float3.One, MeshMode.NONE, CONST_TV_BLENDINGMODE.TV_BLEND_NO, null, null);
+    public static MeshData Default;
+
+    public static void Init(Engine engine)
+    {
+      Default = MeshDataDecorator.CreateDefault(engine);
+    }
 
     public MeshData(Engine engine, string id, string srcMesh) : this(engine, id, srcMesh, null, float3.One, CONST_TV_BLENDINGMODE.TV_BLEND_NO, null) { }
 
@@ -233,6 +238,13 @@ namespace SWEndor.Game.ActorTypes.Components
 
   internal static class MeshDataDecorator
   {
+    public static MeshData CreateDefault(Engine engine)
+    {
+      return new MeshData(engine.TrueVision.TVScene.CreateMeshBuilder(), float3.One, MeshMode.NONE, CONST_TV_BLENDINGMODE.TV_BLEND_NO, null, null);
+    }
+
+
+
     public static MeshData CreateHorizon(Engine engine, string id, float size, string texname, CONST_TV_BLENDINGMODE blendmode, string shader = null)
     {
       TVMesh m = engine.MeshRegistry.Get(id); //engine.TrueVision.TVGlobals.GetMesh(id);
