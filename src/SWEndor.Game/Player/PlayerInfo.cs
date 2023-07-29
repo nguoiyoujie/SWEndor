@@ -14,18 +14,16 @@ namespace SWEndor.Game.Player
 {
   public class PlayerInfo
   {
+    // Globals
     public readonly Engine Engine;
-    internal PlayerInfo(Engine engine)
-    {
-      Engine = engine;
-      Name = "Luke";
-      Score = ScoreInfo.Player;
-    }
 
     public string Name;
+
+    // Spawn
     public ActorTypeInfo ActorType;
     public bool RequestSpawn;
 
+    // Actor
     private int _actorID = -1;
     public int ActorID
     {
@@ -47,17 +45,43 @@ namespace SWEndor.Game.Player
     public ActorInfo TempActor { get { return Engine.ActorFactory.Get(TempActorID); } }
 
     private float m_LowAlarmSoundTime = 0;
+    public float Strength { get { return Actor?.HP ?? 0; } }
     public float StrengthFrac { get { return Actor?.HP_Frac ?? 0; } }
     public COLOR StrengthColor { get { return Actor?.HP_Color ?? ColorLocalization.Get(ColorLocalKeys.WHITE); } }
     public COLOR FactionColor { get { return Actor?.Faction?.Color ?? ColorLocalization.Get(ColorLocalKeys.WHITE); } }
 
+    // Scenario
     public int Lives = 3;
     public int ScorePerLife = 50000;
     public int ScoreForNextLife = 50000;
 
     public string[] DamagedReportSound = SoundGlobals.DmgSounds;
 
-    // weapons
+    // Score
+    internal ScoreInfo Score;
+
+    // Movement
+    public bool PlayerLockMovement = false;
+    public bool SystemLockMovement = false;
+    public bool IsMovementControlsEnabled { get { return !SystemLockMovement && !PlayerLockMovement; } }
+    public bool IsTorpedoMode
+    {
+      get
+      {
+        return (PrimaryWeapon.Weapon.Proj.WeaponType == WeaponType.TORPEDO)
+          || (SecondaryWeapon.Weapon.Proj.WeaponType == WeaponType.TORPEDO);
+      }
+    }
+
+    // Targeting
+    public int TargetActorID = -1;
+    public ActorInfo TargetActor { get { return Engine.ActorFactory.Get(TargetActorID); } }
+    public bool LockTarget = false;
+
+    // AI
+    public bool PlayerAIEnabled = false;
+
+    // Weapons
     public WeaponShotInfo PrimaryWeapon
     {
       get
@@ -89,10 +113,18 @@ namespace SWEndor.Game.Player
     public int PrimaryWeaponN = 0;
     public int SecondaryWeaponN = 0;
 
+
+    internal PlayerInfo(Engine engine)
+    {
+      Engine = engine;
+      Name = "Luke";
+      Score = ScoreInfo.Player;
+    }
+
     public void Update()
     {
       UpdateStats();
-      UpdateBounds();
+      ClampBounds();
       ScanCargo();
     }
 
@@ -108,7 +140,7 @@ namespace SWEndor.Game.Player
       }
 
       // TO-DO: this should be moved elsewhere
-      if (StrengthFrac > 0 && StrengthFrac < 0.1f)
+      if (StrengthFrac > 0 && (Strength <= 1 || StrengthFrac < 0.1f))
       {
         if (m_LowAlarmSoundTime < Engine.Game.GameTime)
         {
@@ -116,42 +148,29 @@ namespace SWEndor.Game.Player
           m_LowAlarmSoundTime = Engine.Game.GameTime + 0.5f;
         }
       }
+      else
+      {
+        m_LowAlarmSoundTime = 0;
+      }
     }
 
-    private void UpdateBounds()
+    private void ClampBounds()
     {
       bool announceOutOfBounds = false;
-      if (Actor != null)
+      ActorInfo player = Actor;
+      if (player != null)
       {
-        TV_3DVECTOR pos = Actor.GetGlobalPosition();
-        if (pos.x < Engine.GameScenarioManager.Scenario.State.MinBounds.x)
+        TV_3DVECTOR pos = player.Position;
+        TV_3DVECTOR orig = pos;
+        pos.x = pos.x.Clamp(Engine.GameScenarioManager.Scenario.State.MinBounds.x, Engine.GameScenarioManager.Scenario.State.MaxBounds.x);
+        pos.y = pos.y.Clamp(Engine.GameScenarioManager.Scenario.State.MinBounds.y, Engine.GameScenarioManager.Scenario.State.MaxBounds.y);
+        pos.z = pos.z.Clamp(Engine.GameScenarioManager.Scenario.State.MinBounds.z, Engine.GameScenarioManager.Scenario.State.MaxBounds.z);
+        if (pos.x != orig.x || pos.z != orig.z)
         {
-          Actor.Position = new TV_3DVECTOR(Engine.GameScenarioManager.Scenario.State.MinBounds.x, pos.y, pos.z);
-          announceOutOfBounds = true;
-        }
-        else if (pos.x > Engine.GameScenarioManager.Scenario.State.MaxBounds.x)
-        {
-          Actor.Position = new TV_3DVECTOR(Engine.GameScenarioManager.Scenario.State.MaxBounds.x, pos.y, pos.z);
-          announceOutOfBounds = true;
-        }
-
-        if (pos.y < Engine.GameScenarioManager.Scenario.State.MinBounds.y)
-          Actor.Position = new TV_3DVECTOR(pos.x, Engine.GameScenarioManager.Scenario.State.MinBounds.y, pos.z);
-        else if (pos.y > Engine.GameScenarioManager.Scenario.State.MaxBounds.y)
-          Actor.Position = new TV_3DVECTOR(pos.x, Engine.GameScenarioManager.Scenario.State.MaxBounds.y, pos.z);
-
-
-        if (pos.z < Engine.GameScenarioManager.Scenario.State.MinBounds.z)
-        {
-          Actor.Position = new TV_3DVECTOR(pos.x, pos.y, Engine.GameScenarioManager.Scenario.State.MinBounds.z);
-          announceOutOfBounds = true;
-        }
-        else if (pos.z > Engine.GameScenarioManager.Scenario.State.MaxBounds.z)
-        {
-          Actor.Position = new TV_3DVECTOR(pos.x, pos.y, Engine.GameScenarioManager.Scenario.State.MaxBounds.z);
           announceOutOfBounds = true;
         }
 
+        player.Position = pos;
         if (announceOutOfBounds)
           Engine.Screen2D.MessageSecondaryText("You are going out of bounds! Return to the battle!"
                                      , 5
@@ -339,24 +358,5 @@ namespace SWEndor.Game.Player
         }
       }
     }
-
-    internal ScoreInfo Score;
-
-    public bool PlayerLockMovement = false;
-    public bool SystemLockMovement = false;
-    public bool IsMovementControlsEnabled { get { return !SystemLockMovement && !PlayerLockMovement; } }
-    public bool IsTorpedoMode
-    {
-      get
-      {
-        return (PrimaryWeapon.Weapon.Proj.WeaponType == WeaponType.TORPEDO)
-          || (SecondaryWeapon.Weapon.Proj.WeaponType == WeaponType.TORPEDO);
-      }
-    }
-    public int TargetActorID = -1;
-    public ActorInfo TargetActor { get { return Engine.ActorFactory.Get(TargetActorID); } }
-    public bool LockTarget = false;
-
-    public bool PlayerAIEnabled = false;
   }
 }
