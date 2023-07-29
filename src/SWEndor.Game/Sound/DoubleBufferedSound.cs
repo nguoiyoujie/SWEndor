@@ -6,11 +6,13 @@ namespace SWEndor.Game.Sound
   {
     private FMOD.Sound _s1;
     private FMOD.Sound _s2;
+    private FMOD.Sound[] _s;
     private bool _switch;
     public DoubleBufferedSound(FMOD.System fmodsystem, string soundfile)
     {
       fmodsystem.createStream(soundfile, FMOD.MODE.LOWMEM | FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out _s1);
       fmodsystem.createStream(soundfile, FMOD.MODE.LOWMEM | FMOD.MODE.CREATESTREAM | FMOD.MODE.ACCURATETIME, out _s2);
+      _s = new FMOD.Sound[] { _s1, _s2 };
       _switch = false;
     }
 
@@ -22,10 +24,9 @@ namespace SWEndor.Game.Sound
       return s;
     }
 
-    public IEnumerable<FMOD.Sound> GetSounds()
+    public FMOD.Sound[] GetSounds()
     {
-      yield return _s1;
-      yield return _s2;
+      return _s;
     }
   }
 }
