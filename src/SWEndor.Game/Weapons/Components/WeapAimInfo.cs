@@ -1,4 +1,6 @@
 ﻿using Primrose.FileFormat.INI;
+using SWEndor.Game.Core;
+using SWEndor.Game.Models;
 
 namespace SWEndor.Game.Weapons
 {
@@ -24,5 +26,21 @@ namespace SWEndor.Game.Weapons
       AutoAimMinDeviation = 1,
       AutoAimMaxDeviation = 1
     };
+
+    public bool IsAutoAim(bool isPlayer)
+    {
+      return isPlayer ? EnablePlayerAutoAim : EnableAIAutoAim;
+    }
+
+    public float ApplyDeviation(Engine engine, float speed, float distance)
+    {
+      if (speed == 0)
+        return distance;
+
+      if (AutoAimMaxDeviation == AutoAimMinDeviation)
+        return distance / speed * AutoAimMinDeviation;
+
+      return distance / speed * (AutoAimMinDeviation + (AutoAimMaxDeviation - AutoAimMinDeviation) * (float)engine.Random.NextDouble());
+    }
   }
 }
