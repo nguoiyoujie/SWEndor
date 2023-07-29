@@ -413,6 +413,46 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
       return Val.NULL;
     }
 
+    public static Val SetCargo(IContext context, int actorID, string value)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return Val.NULL;
+
+      if (actor.Cargo != value)
+      {
+        actor.Cargo = value;
+        actor.CargoScanned = false; // cargo has changed, need to rescan
+      }
+      return Val.NULL;
+    }
+
+    public static Val SetCargoKnown(IContext context, int actorID, bool value)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return Val.NULL;
+
+      actor.CargoScanned = value;
+      return Val.NULL;
+    }
+
+    public static Val SetCargoScanDistance(IContext context, int actorID, float value)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return Val.NULL;
+
+      actor.CargoScanDistance = value;
+      return Val.NULL;
+    }
+
+    public static Val SetCargoVisibleDistance(IContext context, int actorID, float value)
+    {
+      if (!GetActor(context, actorID, out _, out ActorInfo actor))
+        return Val.NULL;
+
+      actor.CargoVisibleDistance = value;
+      return Val.NULL;
+    }
+
     public static Val SetProperty(IContext context, int actorID, string propertyName, Val propertyValue)
     {
       if (!GetActor(context, actorID, out Engine e, out ActorInfo actor))
@@ -599,6 +639,32 @@ namespace SWEndor.Game.Scenarios.Scripting.Functions
             actor.Direction = ((float3)newValue).ToVec3();
           else
             newValue = new Val(actor.Direction.ToFloat3());
+          return;
+
+        // Cargo
+        case "Cargo":
+          if (setValue)
+            actor.Cargo = (string)newValue;
+          else
+            newValue = new Val(actor.Cargo);
+          return;
+        case "CargoScanned":
+          if (setValue)
+            actor.CargoScanned = (bool)newValue;
+          else
+            newValue = new Val(actor.CargoScanned);
+          return;
+        case "CargoScanDistance":
+          if (setValue)
+            actor.CargoScanDistance = (float)newValue;
+          else
+            newValue = new Val(actor.CargoScanDistance);
+          return;
+        case "CargoVisibleDistance":
+          if (setValue)
+            actor.CargoVisibleDistance = (float)newValue;
+          else
+            newValue = new Val(actor.CargoVisibleDistance);
           return;
 
         // Misc

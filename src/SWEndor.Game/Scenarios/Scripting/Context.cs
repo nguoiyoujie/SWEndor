@@ -96,6 +96,11 @@ namespace SWEndor.Game.Scenarios.Scripting
       AddFunc<int, float>("Actor.SetArmorAll", ActorFns.SetArmorAll);
       AddFunc<int>("Actor.RestoreArmor", ActorFns.RestoreArmor);
 
+      AddFunc<int, string>("Actor.SetCargo", ActorFns.SetCargo);
+      AddFunc<int, bool>("Actor.SetCargoKnown", ActorFns.SetCargoKnown);
+      AddFunc<int, float>("Actor.SetCargoScanDistance", ActorFns.SetCargoScanDistance);
+      AddFunc<int, float>("Actor.SetCargoVisibleDistance", ActorFns.SetCargoVisibleDistance);
+
       AddFunc<int>("Actor.GetHP", ActorFns.GetHP);
       AddFunc<int>("Actor.GetMaxHP", ActorFns.GetMaxHP);
       AddFunc<int>("Actor.GetHPFrac", ActorFns.GetMaxHP);
@@ -124,6 +129,7 @@ namespace SWEndor.Game.Scenarios.Scripting
       AddFunc<int, string>("Actor.CallOnDead", ActorFns.CallOnDead);
       AddFunc<int, string>("Actor.CallOnHit", ActorFns.CallOnHit);
       AddFunc<int, string>("Actor.CallOnRegisterKill", ActorFns.CallOnRegisterKill);
+      AddFunc<int, string>("Actor.CallOnCargoScanned", ActorFns.CallOnCargoScanned);
 
 
       // Message Box

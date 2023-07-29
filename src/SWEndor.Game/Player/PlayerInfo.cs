@@ -93,6 +93,7 @@ namespace SWEndor.Game.Player
     {
       UpdateStats();
       UpdateBounds();
+      ScanCargo();
     }
 
 
@@ -156,6 +157,18 @@ namespace SWEndor.Game.Player
                                      , 5
                                      , ColorLocalization.Get(ColorLocalKeys.WHITE)
                                      , 99);
+      }
+    }
+
+    private void ScanCargo()
+    {
+      ActorInfo player = Actor;
+      ActorInfo target = TargetActor;
+      if (CargoFunctions.ScanCargo(Engine, player, target) == CargoFunctions.CargoScanResult.NEW_SCAN)
+      {
+        // scan cargo
+        target.CargoScanned = true;
+        target.OnCargoScannedEvent();
       }
     }
 

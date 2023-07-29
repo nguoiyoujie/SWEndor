@@ -101,6 +101,7 @@ namespace SWEndor.Game.Actors
     internal ActorEvent TickEvents;
     internal ActorEvent CreatedEvents;
     internal ActorEvent DestroyedEvents;
+    internal ActorEvent CargoScannedEvents;
     internal ActorStateChangeEvent ActorStateChangeEvents;
     internal ActorAttackedEvent HitEvents; // I was hit
     internal ActorAttackEvent DeathEvents; // I was killed
@@ -109,6 +110,12 @@ namespace SWEndor.Game.Actors
 
     // AI
     internal ActionInfo CurrentAction = null;
+
+    // Cargo
+    internal bool CargoScanned = false; // Whether the cargo has been scanned by the player
+    internal string Cargo = null;
+    internal float CargoScanDistance = 0;
+    internal float CargoVisibleDistance = 200;
 
     // Data (structs)
     internal CollisionModel<ActorInfo> CollisionData;
@@ -278,6 +285,7 @@ namespace SWEndor.Game.Actors
     }
     public void OnCreatedEvent() { CreatedEvents?.Invoke(this); }
     public void OnDestroyedEvent() { DestroyedEvents?.Invoke(this); }
+    public void OnCargoScannedEvent() { CargoScannedEvents?.Invoke(this);  }
     public void OnRegisterHitEvent(ActorInfo victim) { RegisterHitEvents?.Invoke(this, victim); }
     public void OnRegisterKillEvent(ActorInfo victim) { RegisterKillEvents?.Invoke(this, victim); }
     #endregion
@@ -432,6 +440,7 @@ namespace SWEndor.Game.Actors
       DeathEvents = null;
       RegisterHitEvents = null;
       RegisterKillEvents = null;
+      CargoScannedEvents = null;
       ActorStateChangeEvents = null;
 
       // Final dispose

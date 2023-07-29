@@ -217,6 +217,7 @@
     <Compile Include="ExplosionTypes\General\Factory\Factory.cs" />
     <Compile Include="FactionInfo.cs" />
     <Compile Include="FileFormat\INI\CampaignFile.cs" />
+    <Compile Include="Models\Cargo\CargoFunctions.cs" />
     <Compile Include="Models\ExplodeModel\ParticleData.cs" />
     <Compile Include="Models\ParticleSystem\ParticleSystemData.cs" />
     <Compile Include="Models\ParticleSystem\ParticleSystemModel.cs" />

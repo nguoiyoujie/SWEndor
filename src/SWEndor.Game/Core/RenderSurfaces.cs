@@ -188,8 +188,15 @@ namespace SWEndor.Game.Core
                                               , ((tp.MaxHull == 0) ? new COLOR(0, 1, 0, 1) : tp.Hull_Color).Value
                                               , fntID);
 
-      // Distance
+      // Cargo (font 10)
       fntID = Engine.FontFactory.Get(Font.T10).ID;
+      Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(tp.CargoScanned ? (tp.Cargo ?? "NOTHING") : "UNKNOWN"
+                                        , 15
+                                        , 25
+                                        , icolor
+                                        , fntID);
+
+      // Distance (font 10)
       float dist = DistanceModel.GetDistance(Engine, tp, player, 9999999);
       Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(LookUpString.GetDistanceDisplay(dist)
                                               , 160 // 178 for T08
@@ -197,7 +204,7 @@ namespace SWEndor.Game.Core
                                               , icolor
                                               , fntID);
 
-      // Systems
+      // Systems (font 8)
       int i = 0;
       int maxpart = tp.TypeInfo.SystemData.Parts.Length;
       fntID = Engine.FontFactory.Get(Font.T08).ID;
