@@ -219,16 +219,9 @@ namespace SWEndor.Game.Actors
       TypeInfo = acinfo.TypeInfo;
       if (acinfo.Name?.Length > 0)
       {
-        if (!string.IsNullOrEmpty(TypeInfo.Designation) && acinfo.Name != TypeInfo.Name)
-        {
-          _name = "{0} {1}".F(TypeInfo.Designation, acinfo.Name);
-        }
-        else
-        {
-          _name = acinfo.Name;
-        }
+        _name = LookUpString.GetActorName(TypeInfo, acinfo.Name);
       }
-      Key = "{0} {1}".F(_name, ID);
+      //Key = "{0} {1}".F(_name, ID);
 
       Systems.Init(ref TypeInfo.SystemData);
       Meshes.Init(engine.ShaderFactory, engine.ActorMeshTable, ID, ref TypeInfo.MeshData);

@@ -1,6 +1,9 @@
 ﻿using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using Primrose.Primitives.ValueTypes;
+using SWEndor.Game.Actors;
+using SWEndor.Game.ActorTypes;
+using SWEndor.Game.UI.Forms.UIControls;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +12,10 @@ namespace SWEndor.Game
 {
   public static class LookUpString
   {
+    private static Cache<int, int, string, ActorInfo> _displayTargetNoDamage = new Cache<int, int, string, ActorInfo>(128);
+    private static Cache<Pair<int, float>, int, string, ActorInfo> _displayTarget = new Cache<Pair<int, float>, int, string, ActorInfo>(1024);
+    private static Cache<string, int, string, ActorTypeInfo> _displayActorTypeDesignation = new Cache<string, int, string, ActorTypeInfo>(256);
+    private static Cache<Pair<string, string>, int, string, Pair<ActorTypeInfo, string>> _displayActorName = new Cache<Pair<string, string>, int, string, Pair<ActorTypeInfo, string>>(256);
     private static Cache<int, int, string, int> _displayPercent = new Cache<int, int, string, int>(128);
     private static Cache<int, int, string, int> _displayHP = new Cache<int, int, string, int>(128);
     private static Cache<int, int, string, int> _displayDistance = new Cache<int, int, string, int>(2048);
@@ -16,6 +23,8 @@ namespace SWEndor.Game
     private static Cache<Pair<int, int>, int, string, Pair<int, int>> _displayRatio = new Cache<Pair<int, int>, int, string, Pair<int, int>>(1028);
     private static Cache<int, int, string, int> _displayStage = new Cache<int, int, string, int>(16);
     private static Cache<Quad<int, int, int, int>, int, string, Pair<Quad<int, int, int, int>, StringBuilder>> _displayMetric = new Cache<Quad<int, int, int, int>, int, string, Pair<Quad<int, int, int, int>, StringBuilder>>(2048);
+
+    private static StringBuilder _sbMetric = new StringBuilder(64);
 
 
     public static string GetIntegerPercent(float value)
@@ -45,6 +54,24 @@ namespace SWEndor.Game
       return _displayDistance.GetOrDefine(ival, 1, (i) => "DIST {0:000000}".F(i), ival, EqualityComparer<int>.Default);
     }
 
+    public static string GetTargetDisplay(ActorInfo target, bool hideDamage)
+    {
+      if (hideDamage)
+      {
+        // Name
+        if (_displayTargetNoDamage.Count > 1000)
+          _displayTargetNoDamage.Clear();
+        return _displayTargetNoDamage.GetOrDefine(target.ID, 1, (t) => "{0}".F(t.Name), target, EqualityComparer<int>.Default);
+      }
+      else
+      {
+        // Name Damage:X%
+        if (_displayTarget.Count > 1000)
+          _displayPercent.Clear();
+        return _displayTarget.GetOrDefine(new Pair<int, float>(target.ID, target.HP_Perc), 1, (t) => "{0}\nDamage: {1:0}%".F(t.Name, (100 - t.HP_Perc)), target, EqualityComparer<int>.Default);
+      }
+    }
+
     public static string GetTimeDisplay(float timeInSeconds)
     {
       // mm:ss
@@ -71,7 +98,27 @@ namespace SWEndor.Game
       return _displayStage.GetOrDefine(stagenumber, 1, (i) => "STAGE: {0}".F(i), stagenumber, EqualityComparer<int>.Default);
     }
 
-    private static StringBuilder _sbMetric = new StringBuilder(64);
+    public static string GetActorTypeWithDesignation(ActorTypeInfo type)
+    {
+      // Name
+      // Name [Designation]
+      if (_displayActorTypeDesignation.Count > 250)
+        _displayActorTypeDesignation.Clear();
+      return _displayActorTypeDesignation.GetOrDefine(type.ID, 1, (i) => string.IsNullOrWhiteSpace(i.Designation) ? i.Name : "{0} [{1}]".F(i.Name, i.Designation), type, EqualityComparer<int>.Default);
+    }
+
+    public static string GetActorName(ActorTypeInfo type, string name)
+    {
+      // TypeName
+      // Designation Name
+      if (_displayActorName.Count > 250)
+        _displayActorName.Clear();
+
+      Pair<string, string> pair = new Pair<string, string>(type.Designation, name);
+      Pair<ActorTypeInfo, string> value = new Pair<ActorTypeInfo, string>(type, name);
+      return _displayActorName.GetOrDefine(pair, 1, (i) => (!string.IsNullOrWhiteSpace(i.t.Designation) && i.u != i.t.Name) ? "{0} {1}".F(i.t.Designation, i.u) : i.u, value, EqualityComparer<int>.Default);
+    }
+
     public static string GetMetricDisplay(int lives, int score, int kills, int hits)
     {
       // LIVES:        X

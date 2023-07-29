@@ -155,12 +155,9 @@ namespace SWEndor.Game.UI.Widgets
 
       TVScreen2DText.Action_BeginText();
       string msg;
-      if (p.IsSystemOperational(SystemPart.SCANNER))
-        msg = "{0}\nDamage: {1}%".F(name, (100 - target.HP_Perc).ToString("0"));
-      else
-        msg = name;
+      msg = LookUpString.GetTargetDisplay(target, !p.IsSystemOperational(SystemPart.SCANNER));
 
-        TVScreen2DText.TextureFont_DrawText(msg
+      TVScreen2DText.TextureFont_DrawText(msg
           , x, y + m_targetSize + 10, icolor
           , FontFactory.Get(Font.T10).ID
           );

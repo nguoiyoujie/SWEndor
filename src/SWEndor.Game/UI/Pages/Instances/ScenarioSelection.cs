@@ -65,7 +65,7 @@ namespace SWEndor.Game.UI.Menu.Pages
       if (SelectedScenario.Info.AllowedWings.Length > 0)
       {
         ActorTypeInfo act = SelectedScenario.Info.AllowedWings[0];
-        string name = act.Designation == null ? act.Name : (act.Name + " [" + act.Designation + "]");
+        string name = LookUpString.GetActorTypeWithDesignation(act);
         ButtonWing.SecondaryText = name.ToUpper();
         SelectedActorTypeInfo = act;
         SelectedActorTypeInfoID = 0;
@@ -205,7 +205,7 @@ namespace SWEndor.Game.UI.Menu.Pages
             newSelectedWing = SelectedScenario.Info.AllowedWings.Length - 1;
 
           ActorTypeInfo act = SelectedScenario.Info.AllowedWings[newSelectedWing];
-          string name = act.Designation == null ? act.Name : (act.Name + " [" + act.Designation + "]");
+          string name = LookUpString.GetActorTypeWithDesignation(act);
           ButtonWing.SecondaryText = name.ToUpper();
           SelectedActorTypeInfo = act;
           SelectedActorTypeInfoID = newSelectedWing;
@@ -221,7 +221,7 @@ namespace SWEndor.Game.UI.Menu.Pages
             newSelectedWing = 0;
 
           ActorTypeInfo act = SelectedScenario.Info.AllowedWings[newSelectedWing];
-          string name = act.Designation == null ? act.Name : (act.Name + " [" + act.Designation + "]");
+          string name = LookUpString.GetActorTypeWithDesignation(act);
           ButtonWing.SecondaryText = name.ToUpper();
           SelectedActorTypeInfo = act;
           SelectedActorTypeInfoID = newSelectedWing;

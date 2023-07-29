@@ -108,7 +108,7 @@ namespace SWEndor.Game.UI.Menu.Pages
           break;
 
         default: // Actors
-          ButtonModel.SecondaryText = SelectedActorTypeIndex >= 0 && SelectedActorTypeIndex < ActorTypes.Length ? ActorTypes[SelectedActorTypeIndex].Designation == null ? ActorTypes[SelectedActorTypeIndex].Name : (ActorTypes[SelectedActorTypeIndex].Name + " [" + ActorTypes[SelectedActorTypeIndex].Designation + "]") : string.Empty;
+          ButtonModel.SecondaryText = SelectedActorTypeIndex >= 0 && SelectedActorTypeIndex < ActorTypes.Length ? LookUpString.GetActorTypeWithDesignation(ActorTypes[SelectedActorTypeIndex]) : string.Empty;
           break;
       }
       MainText.SecondaryText = Navigating ? "Use the arrow, PageUp and PageDown keys to move around the area.\nEscape or Enter to leave navigation" : "Press Enter on 'Navigation' to activate free camera";
