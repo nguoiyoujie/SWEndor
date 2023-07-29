@@ -44,9 +44,6 @@ namespace SWEndor.Game.Explosions
     /// <summary>The instance ID</summary>
     public int ID { get; private set; }
 
-    /// <summary>The instance unique identifier</summary>
-    public string Key { get; private set; }
-
     /// <summary>The instance unique string representation</summary>
     public override string ToString()
     {
@@ -81,21 +78,7 @@ namespace SWEndor.Game.Explosions
     internal ExplosionInfo(Engine engine, Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> owner, short id, ExplosionCreationInfo acinfo)
     {
       ExplosionFactory = owner;
-      ID = id;
-
-      TypeInfo = acinfo.TypeInfo;
-      if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
-      Key = "{0} {1}".F(_name, ID);
-
-      Meshes.Init(engine.ShaderFactory, engine.ExplosionMeshTable, ID, ref TypeInfo.MeshData);
-      DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
-      Transform.Init(engine, TypeInfo.MeshData.Scale, acinfo);
-
-      State.Init(engine, TypeInfo, acinfo);
-
-      AttachedActorID = -1;
-
-      TypeInfo.Initialize(engine, this);
+      Rebuild(engine, id, acinfo);     
     }
 
     /// <summary>
@@ -110,7 +93,6 @@ namespace SWEndor.Game.Explosions
       ID = id;
       TypeInfo = acinfo.TypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
-      Key = "{0} {1}".F(_name, ID);
 
       Meshes.Init(engine.ShaderFactory, engine.ExplosionMeshTable, ID, ref TypeInfo.MeshData);
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);

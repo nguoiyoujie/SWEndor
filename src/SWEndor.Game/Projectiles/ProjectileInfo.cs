@@ -47,9 +47,6 @@ namespace SWEndor.Game.Projectiles
     /// <summary>The instance ID</summary>
     public int ID { get; private set; }
 
-    /// <summary>The instance unique identifier</summary>
-    public string Key { get; private set; }
-
     /// <summary>The instance unique string representation</summary>
     public override string ToString()
     {
@@ -90,27 +87,7 @@ namespace SWEndor.Game.Projectiles
     internal ProjectileInfo(Engine engine, Factory<ProjectileInfo, ProjectileCreationInfo, ProjectileTypeInfo> owner, short id, ProjectileCreationInfo acinfo)
     {
       ProjectileFactory = owner;
-      ID = id;
-
-      TypeInfo = acinfo.TypeInfo;
-      if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
-      Key = "{0} {1}".F(_name, ID);
-
-      Meshes.Init(engine.ShaderFactory, engine.ProjectileMeshTable, ID, ref TypeInfo.MeshData);
-      DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
-      Transform.Init(engine, TypeInfo.MeshData.Scale, acinfo);
-      Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, TypeInfo.ExplodeSystemData.Particles, acinfo.CreationTime);
-      Jamming.Reset();
-
-      MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
-      CollisionData.Init();
-
-      InCombat = TypeInfo.CombatData.IsCombatObject;
-
-      State.Init(Engine, TypeInfo, acinfo);
-      OwnerID = acinfo.OwnerID;
-
-      TypeInfo.Initialize(engine, this);
+      Rebuild(engine, id, acinfo);
     }
 
     /// <summary>
@@ -125,7 +102,6 @@ namespace SWEndor.Game.Projectiles
       ID = id;
       TypeInfo = acinfo.TypeInfo;
       if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
-      Key = "{0} {1}".F(_name, ID);
 
       Meshes.Init(engine.ShaderFactory, engine.ProjectileMeshTable, ID, ref TypeInfo.MeshData);
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
@@ -140,7 +116,6 @@ namespace SWEndor.Game.Projectiles
 
       // Creation
       State.Init(Engine, TypeInfo, acinfo);
-
       OwnerID = acinfo.OwnerID;
       // hold on to the owner's scope to prevent erasure of owner data
       if (Owner != null)

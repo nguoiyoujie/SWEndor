@@ -15,10 +15,6 @@ namespace SWEndor.Game.ProjectileTypes
   /// </summary>
   public partial class ProjectileTypeInfo : ITypeInfo<ProjectileInfo>
   {
-    private const string sMesh = "Mesh";
-
-    internal static readonly ProjectileTypeInfo Null = new ProjectileTypeInfo(Globals.Engine.ProjectileTypeFactory, "$NULL", "Null");
-
     internal ProjectileTypeInfo(Factory owner, string id, string name)
     {
       ActorTypeFactory = owner;

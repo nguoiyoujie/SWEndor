@@ -57,9 +57,6 @@ namespace SWEndor.Game.Actors
     /// <summary>The instance ID</summary>
     public int ID { get; private set; }
 
-    /// <summary>The instance unique identifier</summary>
-    public string Key { get; private set; }
-
     /// <summary>The instance unique string representation</summary>
     public override string ToString()
     {
@@ -185,46 +182,7 @@ namespace SWEndor.Game.Actors
     internal ActorInfo(Engine engine, Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo> owner, short id, ActorCreationInfo acinfo)
     {
       ActorFactory = owner;
-      ID = id;
-
-      TypeInfo = acinfo.TypeInfo;
-      if (acinfo.Name?.Length > 0) 
-      {
-        if (!string.IsNullOrEmpty(TypeInfo.Designation) && acinfo.Name != TypeInfo.Name)
-        {
-          _name = "{0} {1}".F(TypeInfo.Designation, acinfo.Name);
-        }
-        else
-        {
-          _name = acinfo.Name;
-        }
-      }
-      Key = "{0} {1}".F(_name, ID);
-
-      Systems.Init(ref TypeInfo.SystemData);
-      Meshes.Init(engine.ShaderFactory, engine.ActorMeshTable, ID, ref TypeInfo.MeshData);
-      Relation.Init();
-      DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
-      Health.Init(ref TypeInfo.CombatData, ref TypeInfo.SystemData, acinfo);
-      Transform.Init(engine, TypeInfo.MeshData.Scale, acinfo);
-      Armor.Init(ref TypeInfo.ArmorData);
-      Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, TypeInfo.ExplodeSystemData.Particles, acinfo.CreationTime);
-      Regen.Init(ref TypeInfo.RegenData);
-      AI.Init(ref TypeInfo.AIData, ref TypeInfo.MoveLimitData);
-      AIDecision.Init(ref TypeInfo.AIData);
-      MoveData.Init(ref TypeInfo.MoveLimitData, acinfo.FreeSpeed, acinfo.InitialSpeed);
-      CollisionData.Init();
-      SpecialData.Init();
-      SpawnerInfo.Init(ref TypeInfo.SpawnerData);
-      WeaponDefinitions.Init(engine.WeaponRegistry, ref TypeInfo.cachedWeaponData);
-
-      InCombat = TypeInfo.CombatData.IsCombatObject;
-
-      State.Init(engine, TypeInfo, acinfo);
-
-      Faction = acinfo.Faction;
-
-      TypeInfo.Initialize(this);
+      Rebuild(engine, id, acinfo);
     }
 
     /// <summary>
