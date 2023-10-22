@@ -20,6 +20,9 @@ namespace SWEndor.Game.Core
 
       // setup threads
       th_load = new Thread(new ThreadStart(Engine.Load));
+      th_sound = new Thread(new ThreadStart(ParallelSound));
+      th_ai = new Thread(new ThreadStart(ParallelAI));
+      th_collision = new Thread(new ThreadStart(ParallelCollision));
 
       // setup process timers
       tm_sound = new System.Timers.Timer(30);
@@ -65,6 +68,9 @@ namespace SWEndor.Game.Core
 
 
     private Thread th_load { get; set; }
+    private Thread th_sound;
+    private Thread th_ai;
+    private Thread th_collision;
 
     private readonly System.Timers.Timer tm_sound;
     private readonly System.Timers.Timer tm_ai;
@@ -72,6 +78,11 @@ namespace SWEndor.Game.Core
     private readonly System.Timers.Timer tm_render;
     private readonly System.Timers.Timer tm_process;
     private readonly System.Timers.Timer tm_perf;
+
+    private readonly AutoResetEvent ar_sound = new AutoResetEvent(false);
+    private readonly AutoResetEvent ar_ai = new AutoResetEvent(false);
+    private readonly AutoResetEvent ar_collision = new AutoResetEvent(false);
+
 
 #if DEBUG
     private readonly System.Timers.Timer tm_tracker;
@@ -144,6 +155,9 @@ namespace SWEndor.Game.Core
 #if DEBUG
       tm_tracker.Stop();
 #endif
+      ar_sound.Set();
+      ar_ai.Set();
+      ar_collision.Set();
     }
 
     private void Tick()
@@ -173,13 +187,16 @@ namespace SWEndor.Game.Core
 
         // Initialize other threads/timers
         if (septhread_sound)
-          tm_sound.Start();
+          th_sound.Start();
+        //  tm_sound.Start();
 
         if (septhread_ai)
-          tm_ai.Start();
+          th_ai.Start();
+        //  tm_ai.Start();
 
         if (septhread_collision)
-          tm_collision.Start();
+          th_collision.Start();
+        //  tm_collision.Start();
 
         if (septhread_process)
           tm_process.Start();
@@ -225,6 +242,11 @@ namespace SWEndor.Game.Core
                   GameFrame++;
                 }
               }
+
+              // set
+              ar_sound.Set();
+              ar_ai.Set();
+              ar_collision.Set();
             }
             catch (Exception ex)
             {
@@ -257,6 +279,36 @@ namespace SWEndor.Game.Core
         Engine.Screen2D.CurrentPage = new FatalError(Engine.Screen2D, ex, Engine.GameScenarioManager.IsMainMenu);
         Engine.Screen2D.ShowPage = true;
         IsPaused = true;
+      }
+    }
+
+    private void ParallelSound()
+    {
+      while (ar_sound.WaitOne())
+      {
+        TickSound();
+        if (State != RunState.RUNNING)
+          break;
+      }
+    }
+
+    private void ParallelAI()
+    {
+      while (ar_ai.WaitOne())
+      {
+        TickAI();
+        if (State != RunState.RUNNING)
+          break;
+      }
+    }
+
+    private void ParallelCollision()
+    {
+      while (ar_collision.WaitOne())
+      {
+        TickCollision();
+        if (State != RunState.RUNNING)
+          break;
       }
     }
 
