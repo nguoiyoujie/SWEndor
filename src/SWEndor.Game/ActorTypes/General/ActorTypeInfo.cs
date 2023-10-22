@@ -108,7 +108,10 @@ namespace SWEndor.Game.ActorTypes
 
     [INIEmbedObject("DamageSpecial")]
     internal DamageSpecialData DamageSpecialData = DamageSpecialData.Default;
-    
+
+    [INIEmbedObject("Cargo")]
+    internal CargoData CargoData = CargoData.Default;
+
 
     // derived
     internal MoveBehavior MoveBehavior;

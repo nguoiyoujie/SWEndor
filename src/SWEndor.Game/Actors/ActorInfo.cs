@@ -123,10 +123,10 @@ namespace SWEndor.Game.Actors
     internal ActionInfo CurrentAction = null;
 
     // Cargo
-    internal bool CargoScanned = false; // Whether the cargo has been scanned by the player
-    internal string Cargo = null;
-    internal float CargoScanDistance = 0;
-    internal float CargoVisibleDistance = 200;
+    //internal bool CargoScanned = false; // Whether the cargo has been scanned by the player
+    //internal string Cargo = null;
+    //internal float CargoScanDistance = 0;
+    //internal float CargoVisibleDistance = 200;
 
     // Data (structs)
     internal CollisionModel<ActorInfo> CollisionData;
@@ -143,6 +143,7 @@ namespace SWEndor.Game.Actors
     private TimerModel<ActorInfo> DyingTimer;
     private StateModel<ActorInfo> State;
     internal HealthModel Health;
+    internal CargoModel Cargo;
     private TransformModel<ActorInfo, ActorInfo> Transform;
     private ArmorModel Armor;
     private ExplodeModel<ActorInfo, ActorInfo> Explosions;
@@ -207,6 +208,7 @@ namespace SWEndor.Game.Actors
       Relation.Init();
       DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
       Health.Init(ref TypeInfo.CombatData, ref TypeInfo.SystemData, acinfo);
+      Cargo.Init(ref TypeInfo.CargoData);
       Transform.Init(engine, TypeInfo.MeshData.Scale, acinfo);
       Armor.Init(ref TypeInfo.ArmorData);
       Explosions.Init(TypeInfo.ExplodeSystemData.Explodes, TypeInfo.ExplodeSystemData.Particles, acinfo.CreationTime);
