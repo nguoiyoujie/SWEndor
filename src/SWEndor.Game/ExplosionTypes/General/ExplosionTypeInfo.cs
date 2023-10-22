@@ -6,6 +6,7 @@ using SWEndor.Game.Explosions;
 using Primrose.FileFormat.INI;
 using SWEndor.Game.Models;
 using System.IO;
+using Primrose.Primitives.Factories;
 
 namespace SWEndor.Game.ExplosionTypes
 {
@@ -88,6 +89,7 @@ namespace SWEndor.Game.ExplosionTypes
 
       // Anim
       ainfo.AnimInfo.CyclePeriod = (ExplRenderData.AnimDuration == 0) ? TimedLifeData.TimedLife : ExplRenderData.AnimDuration;
+      ExplRenderData.Process(engine, ainfo);
 
       // Shake
       ShakeData.Process(engine, ainfo.Position);
