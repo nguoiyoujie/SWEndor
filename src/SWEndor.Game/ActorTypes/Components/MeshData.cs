@@ -5,6 +5,7 @@ using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using System.IO;
 using Primrose.Primitives.ValueTypes;
+using Primrose.Primitives.Factories;
 
 namespace SWEndor.Game.ActorTypes.Components
 {
@@ -47,6 +48,8 @@ namespace SWEndor.Game.ActorTypes.Components
     // Derived values
     public TVMesh SourceMesh;
     public TVMesh SourceFarMesh;
+    private ObjectPool<TVMesh, MeshData> _meshPool;
+    private ObjectPool<TVMesh, MeshData> _farmeshPool;
     public TV_3DVECTOR MaxDimensions;
     public TV_3DVECTOR MinDimensions;
 
@@ -87,19 +90,22 @@ namespace SWEndor.Game.ActorTypes.Components
       {
         using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE)) // allow meshes to be loaded concurrently
         {
-          SourceMesh = engine.TrueVision.TVScene.CreateMeshBuilder(id);
-          engine.MeshRegistry.Put(id, SourceMesh);
-          if (srcMesh != null)
+          if (engine.Game.IsRunning) // Handle load interrupts in case game is closed during loading stage
           {
-            SourceMesh.LoadXFile(Path.Combine(Globals.ModelPath, srcMesh), true);
-            SourceMesh.Enable(false);
-            SourceMesh.SetCollisionEnable(false);
-            SourceMesh.WeldVertices(0.001f, 0.001f);
-            SourceMesh.ComputeBoundings();
-            SourceMesh.GetBoundingBox(ref MinDimensions, ref MaxDimensions);
-            //SourceMesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_BUMPMAPPING_TANGENTSPACE, 0, 1);
-            //SourceMesh.SetShadowCast(true, true);
-            SourceMesh.SetBlendingMode(blendmode);
+            SourceMesh = engine.TrueVision.TVScene.CreateMeshBuilder(id);
+            engine.MeshRegistry.Put(id, SourceMesh);
+            if (srcMesh != null)
+            {
+              SourceMesh.LoadXFile(Path.Combine(Globals.ModelPath, srcMesh), true);
+              SourceMesh.Enable(false);
+              SourceMesh.SetCollisionEnable(false);
+              SourceMesh.WeldVertices(0.001f, 0.001f);
+              SourceMesh.ComputeBoundings();
+              SourceMesh.GetBoundingBox(ref MinDimensions, ref MaxDimensions);
+              //SourceMesh.SetLightingMode(CONST_TV_LIGHTINGMODE.TV_LIGHTING_BUMPMAPPING_TANGENTSPACE, 0, 1);
+              //SourceMesh.SetShadowCast(true, true);
+              SourceMesh.SetBlendingMode(blendmode);
+            }
           }
         }
       }
@@ -111,19 +117,25 @@ namespace SWEndor.Game.ActorTypes.Components
         {
           using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE)) // allow meshes to be loaded concurrently
           {
-            SourceFarMesh = engine.TrueVision.TVScene.CreateMeshBuilder(farname);
-            engine.MeshRegistry.Put(farname, SourceFarMesh);
-            SourceFarMesh.LoadXFile(Path.Combine(Globals.ModelPath, srcFarMesh), true);
-            SourceFarMesh.Enable(false);
-            SourceFarMesh.SetCollisionEnable(false);
-            SourceFarMesh.WeldVertices(0.01f, 0.01f);
-            SourceFarMesh.ComputeBoundings();
-            SourceFarMesh.SetBlendingMode(blendmode);
+            if (engine.Game.IsRunning) // Handle load interrupts in case game is closed during loading stage
+            {
+              SourceFarMesh = engine.TrueVision.TVScene.CreateMeshBuilder(farname);
+              engine.MeshRegistry.Put(farname, SourceFarMesh);
+              SourceFarMesh.LoadXFile(Path.Combine(Globals.ModelPath, srcFarMesh), true);
+              SourceFarMesh.Enable(false);
+              SourceFarMesh.SetCollisionEnable(false);
+              SourceFarMesh.WeldVertices(0.01f, 0.01f);
+              SourceFarMesh.ComputeBoundings();
+              SourceFarMesh.SetBlendingMode(blendmode);
+            }
           }
         }
         else
           SourceFarMesh = SourceMesh; //.Duplicate();
       }
+
+      _meshPool = new ObjectPool<TVMesh, MeshData>((m) => { return m.SourceMesh?.Duplicate(); });
+      _farmeshPool = new ObjectPool<TVMesh, MeshData>((m) => { return (m.SourceFarMesh ?? m.SourceMesh)?.Duplicate(); });
     }
 
     public MeshData(TVMesh mesh, float3 scale, MeshMode mode, CONST_TV_BLENDINGMODE blendmode, string data, string shader)
@@ -147,6 +159,29 @@ namespace SWEndor.Game.ActorTypes.Components
       SourceMesh.WeldVertices();
       SourceMesh.ComputeBoundings();
       SourceMesh.GetBoundingBox(ref MinDimensions, ref MaxDimensions);
+
+      _meshPool = new ObjectPool<TVMesh, MeshData>((m) => { return m.SourceMesh?.Duplicate(); });
+      _farmeshPool = new ObjectPool<TVMesh, MeshData>((m) => { return (m.SourceFarMesh ?? m.SourceMesh)?.Duplicate(); });
+    }
+
+    public TVMesh GetNewMesh()
+    {
+      return _meshPool.GetNew(this);
+    }
+
+    public TVMesh GetNewFarMesh()
+    {
+      return _farmeshPool.GetNew(this);
+    }
+
+    public void ReturnMesh(TVMesh mesh)
+    {
+      _meshPool.Return(mesh);
+    }
+
+    public void ReturnFarMesh(TVMesh mesh)
+    {
+      _farmeshPool.Return(mesh);
     }
 
     public void Load(Engine engine, string id)

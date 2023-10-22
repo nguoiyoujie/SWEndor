@@ -37,8 +37,12 @@ namespace SWEndor.Game.Actors.Models
     {
       using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
-        Mesh = data.SourceMesh.Duplicate();
-        FarMesh = data.SourceFarMesh == null ? data.SourceMesh.Duplicate() : data.SourceFarMesh.Duplicate();
+        Mesh = data.GetNewMesh();
+        FarMesh = data.GetNewFarMesh();
+        Mesh.Enable(false);
+        prev_render = false;
+        FarMesh.Enable(false);
+        prev_renderfar = false;
 
         table.Put(Mesh.GetIndex(), id);
         table.Put(FarMesh.GetIndex(), id);
@@ -61,7 +65,7 @@ namespace SWEndor.Game.Actors.Models
       }
     }
 
-    public void Dispose(MeshEntityTable table)
+    public void Dispose(MeshEntityTable table, ref MeshData data)
     {
       if (ScopeCounters.AcquireIfZero(disposeScope))
       {
@@ -69,12 +73,19 @@ namespace SWEndor.Game.Actors.Models
         using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
         {
           Mesh.SetShader(null);
-          Mesh?.Destroy();
+          Mesh.Enable(false);
+          prev_render = false;
+          data.ReturnMesh(Mesh);
+
+          //Mesh?.Destroy();
           table.Remove(Mesh.GetIndex());
           Mesh = null;
 
           FarMesh.SetShader(null);
-          FarMesh?.Destroy();
+          FarMesh.Enable(false);
+          prev_renderfar = false;
+          data.ReturnFarMesh(FarMesh);
+          //FarMesh?.Destroy();
           table.Remove(FarMesh.GetIndex());
           FarMesh = null;
 

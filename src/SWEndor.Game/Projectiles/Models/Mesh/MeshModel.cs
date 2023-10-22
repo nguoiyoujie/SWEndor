@@ -34,7 +34,9 @@ namespace SWEndor.Game.Projectiles.Models
     {
       using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
-        Mesh = data.SourceMesh.Duplicate();
+        Mesh = data.GetNewMesh();
+        Mesh.Enable(false);
+        prev_render = false;
         table.Put(Mesh.GetIndex(), id);
 
         //Mesh.ShowBoundingBox(true);
@@ -53,7 +55,7 @@ namespace SWEndor.Game.Projectiles.Models
       }
     }
 
-    public void Dispose(MeshEntityTable table)
+    public void Dispose(MeshEntityTable table, ref MeshData data)
     {
       if (ScopeCounters.AcquireIfZero(disposeScope))
       {
@@ -61,7 +63,10 @@ namespace SWEndor.Game.Projectiles.Models
         using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
         {
           Mesh.SetShader(null);
-          Mesh.Destroy();
+          Mesh.Enable(false);
+          prev_render = false;
+          data.ReturnMesh(Mesh);
+          //Mesh.Destroy();
           table.Remove(Mesh.GetIndex());
           Mesh = null;
 

@@ -170,7 +170,8 @@ namespace SWEndor.Game.Projectiles
     public ActorInfo ParentForCoords { get { return null; } }
 
     /// <summary>Mark the object for disposal</summary>
-    public void Delete() {
+    public void Delete()
+    {
       if (!MarkedDisposing) { SetPreDispose(); ProjectileFactory.MakeDead(this); }
     }
 
@@ -196,7 +197,7 @@ namespace SWEndor.Game.Projectiles
       // Kill data
       MoveData.Reset();
       CollisionData.Reset();
-      Meshes.Dispose(Engine.ProjectileMeshTable);
+      Meshes.Dispose(Engine.ProjectileMeshTable, ref TypeInfo.MeshData);
       Jamming.Reset();
 
       InCombat = false;
