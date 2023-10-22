@@ -14,9 +14,9 @@ namespace SWEndor.Game.UI.Widgets
     public TargetScannerWidget(Screen2D owner) : base(owner, "targetinfo")
     {
       if (Engine.Settings.IsSmallResolution)
-        tgt_center = new TV_2DVECTOR(Engine.ScreenWidth * 0.5f, Engine.ScreenHeight - Engine.Surfaces.Target_height * 0.5f - 20);
+        tgt_center = new TV_2DVECTOR(Engine.ScreenWidth * 0.5f, Engine.ScreenHeight - Engine.Surfaces.Scanner_height * 0.5f - 20);
       else
-        tgt_center = new TV_2DVECTOR(Engine.ScreenWidth * 0.5f, Engine.ScreenHeight - Engine.Surfaces.Target_height * 0.5f - 50);
+        tgt_center = new TV_2DVECTOR(Engine.ScreenWidth * 0.5f, Engine.ScreenHeight - Engine.Surfaces.Scanner_height * 0.5f - 50);
     }
 
     public override bool Visible
@@ -37,18 +37,18 @@ namespace SWEndor.Game.UI.Widgets
       if (p == null || !p.Active)
         return;
 
-      int w = Engine.Surfaces.Target_width;
-      int h = Engine.Surfaces.Target_height;
+      int w = Engine.Surfaces.Scanner_width;
+      int h = Engine.Surfaces.Scanner_height;
       int tex = -1;
 
       if (p.IsSystemOperational(SystemPart.SCANNER))
-          tex = (PlayerInfo.TargetActor != null) ? Engine.Surfaces.RS_Target.GetTexture() : Engine.Surfaces.RS_Target_Null.GetTexture();
+          tex = (PlayerInfo.TargetActor != null) ? Engine.Surfaces.RS_Scanner.GetTexture() : Engine.Surfaces.RS_Scanner_Null.GetTexture();
       {
         SystemState status = p.GetStatus(SystemPart.SCANNER);
         if (status == SystemState.DAMAGED)
-          tex = (Engine.Game.GameTime % 2 > 1) ? Engine.Surfaces.RS_Target_Destroyed.GetTexture() : Engine.Surfaces.Tex_Target_Destroyed;
+          tex = (Engine.Game.GameTime % 2 > 1) ? Engine.Surfaces.RS_Scanner_Destroyed.GetTexture() : Engine.Surfaces.RS_Scanner_Destroyed_2.GetTexture();
         else if (status == SystemState.DISABLED)
-          tex = Engine.Surfaces.RS_Target_Disabled.GetTexture();
+          tex = Engine.Surfaces.RS_Scanner_Null.GetTexture();
       }
 
       TVScreen2DImmediate.Action_Begin2D();

@@ -125,6 +125,7 @@ namespace SWEndor.Game.Core
       Surfaces = new RenderSurfaces(this);
       Screen2D = new Screen2D(this);
 
+      Surfaces.RenderOnce();
       ShaderFactory.Load();
     }
 

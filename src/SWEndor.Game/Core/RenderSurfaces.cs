@@ -1,11 +1,9 @@
 ﻿using MTV3D65;
 using SWEndor.Game.Actors;
 using Primrose.Primitives;
-using System.IO;
 using SWEndor.Game.Actors.Models;
 using SWEndor.Game.UI;
 using Primrose.Primitives.Geometry;
-using Primrose.Primitives.Extensions;
 using SWEndor.Game.Models;
 
 namespace SWEndor.Game.Core
@@ -14,16 +12,14 @@ namespace SWEndor.Game.Core
   {
     public readonly Engine Engine;
 
-    internal int Target_width;
-    internal int Target_height;
+    internal int Scanner_width;
+    internal int Scanner_height;
 
-    internal TVRenderSurface RS_PreTarget;
-    internal TVRenderSurface RS_Target;
-    internal TVRenderSurface RS_Target_Destroyed;
-    internal int Tex_Target_Destroyed;
-    internal TVRenderSurface RS_Target_Disabled;
-    internal int Tex_Target_Disabled;
-    internal TVRenderSurface RS_Target_Null;
+    internal TVRenderSurface RS_PreScanner;
+    internal TVRenderSurface RS_Scanner;
+    internal TVRenderSurface RS_Scanner_Destroyed;
+    internal TVRenderSurface RS_Scanner_Destroyed_2;
+    internal TVRenderSurface RS_Scanner_Null;
 
     //private ActorTypeInfo _playerType;
 
@@ -31,82 +27,80 @@ namespace SWEndor.Game.Core
     {
       Engine = engine;
       Init();
-      RenderOnce();
     }
 
     private void Init()
     {
       if (Engine.Settings.IsSmallResolution)
       {
-        Target_width = 200;
-        Target_height = 200;
+        Scanner_width = 200;
+        Scanner_height = 200;
       }
       else
       {
-        Target_width = 256;
-        Target_height = 256;
+        Scanner_width = 256;
+        Scanner_height = 256;
       }
 
 
       using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
-        RS_PreTarget = Engine.TrueVision.TVScene.CreateAlphaRenderSurface(Target_width, Target_height);
-        RS_PreTarget.SetBackgroundColor(new TV_COLOR(0, 0, 0, 0).GetIntColor());
-        RS_PreTarget.SetCamera(0, 0, 0, 0, 0, 100);
-        RS_PreTarget.GetCamera().SetViewFrustum(60, 650000);
+        RS_PreScanner = Engine.TrueVision.TVScene.CreateAlphaRenderSurface(Scanner_width, Scanner_height);
+        RS_PreScanner.SetBackgroundColor(new TV_COLOR(0, 0, 0, 0).GetIntColor());
+        RS_PreScanner.SetCamera(0, 0, 0, 0, 0, 100);
+        RS_PreScanner.GetCamera().SetViewFrustum(60, 650000);
 
-        RS_Target = Engine.TrueVision.TVScene.CreateAlphaRenderSurface(Target_width, Target_height);
-        RS_Target.SetBackgroundColor(new TV_COLOR(0, 0, 0, 0.4f).GetIntColor());
+        RS_Scanner = Engine.TrueVision.TVScene.CreateAlphaRenderSurface(Scanner_width, Scanner_height);
+        RS_Scanner.SetBackgroundColor(new TV_COLOR(0, 0, 0, 0.4f).GetIntColor());
 
-        RS_Target_Destroyed = Engine.TrueVision.TVScene.CreateRenderSurface(Target_width, Target_height);
-        RS_Target_Destroyed.SetBackgroundColor(new TV_COLOR(0, 0, 0, 0.8f).GetIntColor());
+        RS_Scanner_Destroyed = Engine.TrueVision.TVScene.CreateRenderSurface(Scanner_width, Scanner_height);
+        RS_Scanner_Destroyed.SetBackgroundColor(new TV_COLOR(0, 0, 0, 0.8f).GetIntColor());
 
-        RS_Target_Disabled = Engine.TrueVision.TVScene.CreateAlphaRenderSurface(Target_width, Target_height);
-        RS_Target_Disabled.SetBackgroundColor(new TV_COLOR(0, 0, 0, 0.8f).GetIntColor());
+        RS_Scanner_Destroyed_2 = Engine.TrueVision.TVScene.CreateRenderSurface(Scanner_width, Scanner_height);
+        RS_Scanner_Destroyed_2.SetBackgroundColor(new TV_COLOR(0, 0, 0, 0.8f).GetIntColor());
 
-        RS_Target_Null = Engine.TrueVision.TVScene.CreateAlphaRenderSurface(Target_width, Target_height);
-        RS_Target_Null.SetBackgroundColor(new TV_COLOR(0, 0, 0, 0.8f).GetIntColor());
+        RS_Scanner_Null = Engine.TrueVision.TVScene.CreateAlphaRenderSurface(Scanner_width, Scanner_height);
+        RS_Scanner_Null.SetBackgroundColor(new TV_COLOR(0, 0, 0, 0.8f).GetIntColor());
       }
     }
 
     internal void RenderOnce()
     {
-      // RS_Target_Destroyed
-      Tex_Target_Destroyed = Engine.TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, @"panel\broken.png"), "texTARGETER_DESTROYED");
-      int w = Target_width;
-      int h = Target_height;
+      int w = Scanner_width;
+      int h = Scanner_height;
       int warn_color = new TV_COLOR(1, 0, 0, 1).GetIntColor();
       int neu_color = new TV_COLOR(0.6f, 0.6f, 0.6f, 0.6f).GetIntColor();
-      RS_Target_Destroyed.StartRender(false);
+
+      // RS_Scanner_Destroyed
+      RS_Scanner_Destroyed.StartRender(false);
       Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
-      Engine.TrueVision.TVScreen2DImmediate.Draw_Texture(Tex_Target_Destroyed, 0, 0, w, h);
+      Engine.TrueVision.TVScreen2DImmediate.Draw_Texture(Engine.Screen2D.Textures.Texture_Scanner_Destroyed, 0, 0, w, h);
       Engine.TrueVision.TVScreen2DImmediate.Draw_Box(2, 2, w - 2, h - 2, warn_color);
       Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
-      RS_Target_Destroyed.EndRender();
+      RS_Scanner_Destroyed.EndRender();
 
-      // RS_Target_Disabled
-      Tex_Target_Disabled = Engine.TrueVision.TVTextureFactory.LoadTexture(Path.Combine(Globals.ImagePath, @"panel\disabled.png"), "texTARGETER_DISABLED");
-      RS_Target_Disabled.StartRender(false);
+      // RS_Scanner_Destroyed2
+      RS_Scanner_Destroyed_2.StartRender(false);
       Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
-      Engine.TrueVision.TVScreen2DImmediate.Draw_Texture(Tex_Target_Disabled, 0, 0, w, h);
+      Engine.TrueVision.TVScreen2DImmediate.Draw_Texture(Engine.Screen2D.Textures.Texture_Scanner_Destroyed, 0, 0, w, h);
       Engine.TrueVision.TVScreen2DImmediate.Draw_Box(2, 2, w - 2, h - 2, neu_color);
       Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
-      RS_Target_Disabled.EndRender();
+      RS_Scanner_Destroyed_2.EndRender();
 
-      // RS_Target_Null
-      RS_Target_Null.StartRender(false);
+      // RS_Scanner_Null
+      RS_Scanner_Null.StartRender(false);
       Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
       Engine.TrueVision.TVScreen2DImmediate.Draw_Box(2, 2, w - 2, h - 2, neu_color);
       Engine.TrueVision.TVScreen2DImmediate.Action_End2D();
-      RS_Target_Null.EndRender();
+      RS_Scanner_Null.EndRender();
     }
 
     internal void Render()
     {
-      // RS_PreTarget
-      // RS_Target
+      // RS_PreScanner
+      // RS_Scanner
       if (Engine.PlayerInfo.TargetActor != null 
-        // TO-DO: Link the condition directly to Screen2D.TargetWidget
+        // TO-DO: Link the condition directly to Screen2D.ScannerWidget
           && !Engine.Screen2D.ShowPage
           && Engine.PlayerInfo.Actor != null
           && !Engine.PlayerInfo.Actor.IsDyingOrDead
@@ -124,23 +118,23 @@ namespace SWEndor.Game.Core
     {
       TV_3DVECTOR r = Engine.PlayerCameraInfo.Camera.GetRotation();
       Sphere sph = actor.GetBoundingSphere(false);
-      TVCamera c = Engine.Surfaces.RS_PreTarget.GetCamera();
+      TVCamera c = Engine.Surfaces.RS_PreScanner.GetCamera();
       c.SetRotation(r.x, r.y, r.z);
       c.SetPosition(sph.X, sph.Y, sph.Z);
       TV_3DVECTOR d2 = c.GetFrontPosition(-sph.R * 2.5f);
       c.SetPosition(d2.x, d2.y, d2.z);
 
-      Engine.Surfaces.RS_PreTarget.StartRender(false);
+      Engine.Surfaces.RS_PreScanner.StartRender(false);
       using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
         actor.Render(true);
-      Engine.Surfaces.RS_PreTarget.EndRender();
+      Engine.Surfaces.RS_PreScanner.EndRender();
 
       // post process:
-      Engine.Surfaces.RS_Target.StartRender(false);
-      int tex = Engine.Surfaces.RS_PreTarget.GetTexture();
+      Engine.Surfaces.RS_Scanner.StartRender(false);
+      int tex = Engine.Surfaces.RS_PreScanner.GetTexture();
       int icolor = actor.Faction.Color.Value;
-      int w = Engine.Surfaces.Target_width;
-      int h = Engine.Surfaces.Target_height;
+      int w = Engine.Surfaces.Scanner_width;
+      int h = Engine.Surfaces.Scanner_height;
       Engine.TrueVision.TVScreen2DImmediate.Action_Begin2D();
       Engine.TrueVision.TVScreen2DImmediate.Draw_Texture(tex
                                 , 0
@@ -190,7 +184,7 @@ namespace SWEndor.Game.Core
 
       // Cargo (font 10)
       fntID = Engine.FontFactory.Get(Font.T10).ID;
-      Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(tp.CargoScanned ? (tp.Cargo ?? "NOTHING") : "UNKNOWN"
+      Engine.TrueVision.TVScreen2DText.TextureFont_DrawText(tp.Cargo.Scanned ? (tp.Cargo.Cargo ?? "NOTHING") : "UNKNOWN"
                                         , 15
                                         , 25
                                         , icolor
@@ -234,7 +228,7 @@ namespace SWEndor.Game.Core
       }
 
       Engine.TrueVision.TVScreen2DText.Action_EndText();
-      Engine.Surfaces.RS_Target.EndRender();
+      Engine.Surfaces.RS_Scanner.EndRender();
     }
   }
 }
