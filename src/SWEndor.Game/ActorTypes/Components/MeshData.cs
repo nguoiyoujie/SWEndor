@@ -186,6 +186,10 @@ namespace SWEndor.Game.ActorTypes.Components
 
     public void Load(Engine engine, string id)
     {
+      if (!engine.Game.IsRunning) // Handle load interrupts in case game is closed during loading stage
+      {
+        return;
+      }
       switch (Mode)
       {
         case MeshMode.NONE:
