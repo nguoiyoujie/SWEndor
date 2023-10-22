@@ -37,8 +37,9 @@ namespace SWEndor.Game.Models
   {
     private ExplodeData[] _data;
     private ParticleData[] _pdata;
-    private ExplosionTypeInfo[][] _typecache;
-    private ParticleTypeInfo[] _typepcache;
+    // TO-DO: Remove the caches. ExplodeModel is bound to instance and this means repeated allocations, offsetting the performance boost done by preloading Get
+    //private ExplosionTypeInfo[][] _typecache;
+    //private ParticleTypeInfo[] _typepcache;
     private float[] _time;
     private int[] _pinstance;
 
@@ -46,8 +47,8 @@ namespace SWEndor.Game.Models
     {
       _data = data;
       _pdata = pdata;
-      _typecache = new ExplosionTypeInfo[data.Length][];
-      _typepcache = new ParticleTypeInfo[pdata.Length];
+      //_typecache = new ExplosionTypeInfo[data.Length][];
+      //_typepcache = new ParticleTypeInfo[pdata.Length];
       _time = new float[data.Length];
       _pinstance = new int[pdata.Length];
 
@@ -139,12 +140,12 @@ namespace SWEndor.Game.Models
             float3 offset = exp.PositionOffset;
             if (size == 0)
               size = 1;
-            if (_typecache[i] == null)
-            {
-              _typecache[i] = new ExplosionTypeInfo[_data[i].Type.Length];
-              for (int j = 0; j < _data[i].Type.Length; j++)
-                _typecache[i][j] = engine.ExplosionTypeFactory.Get(exp.Type[j]);
-            }
+            //if (_typecache[i] == null)
+            //{
+            //  _typecache[i] = new ExplosionTypeInfo[_data[i].Type.Length];
+            //  for (int j = 0; j < _data[i].Type.Length; j++)
+            //    _typecache[i][j] = engine.ExplosionTypeFactory.Get(exp.Type[j]);
+            //}
 
             if (exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_PARENT) && a.ParentForCoords != null)
             {
@@ -177,8 +178,8 @@ namespace SWEndor.Game.Models
             float3 offset = prt.PositionOffset;
             if (size == 0)
               size = 1;
-            if (_typepcache[i] == null)
-              _typepcache[i] = engine.ParticleTypeFactory.Get(prt.Type);
+            //if (_typepcache[i] == null)
+            //  _typepcache[i] = engine.ParticleTypeFactory.Get(prt.Type);
 
             if (prt.Trigger.Has(ExplodeTrigger.ATTACH_TO_PARENT) && a.ParentForCoords != null)
             {
@@ -215,8 +216,8 @@ namespace SWEndor.Game.Models
         float3 vert = a.GetVertex(vertID).ToFloat3();
         TV_3DVECTOR final = (vert * a.Scale).ToVec3();
 
-        ExplosionTypeInfo expl = _typecache[i].Random(engine.Random);
-
+        //ExplosionTypeInfo expl = _typecache[i].Random(engine.Random);
+        ExplosionTypeInfo expl = engine.ExplosionTypeFactory.Get(_data[i].Type[engine.Random.Next(0, _data[i].Type.Length)]);
         if (attach)
         {
           ExplosionInfo e = MakeExplosion(engine, expl, final, size);
@@ -238,7 +239,8 @@ namespace SWEndor.Game.Models
         ITransformable
     {
       _time[i] = engine.Game.GameTime + rate;
-      ExplosionTypeInfo expl = _typecache[i].Random(engine.Random);
+      //ExplosionTypeInfo expl = _typecache[i].Random(engine.Random);
+      ExplosionTypeInfo expl = engine.ExplosionTypeFactory.Get(_data[i].Type[engine.Random.Next(0, _data[i].Type.Length)]);
       if (attach)
       {
         ExplosionInfo e = MakeExplosion(engine, expl, relativepos, size);
@@ -265,15 +267,16 @@ namespace SWEndor.Game.Models
       TV_3DVECTOR final = (vert * a.Scale).ToVec3();
 
       ParticleInfo p;
+      ParticleTypeInfo part = engine.ParticleTypeFactory.Get(_pdata[i].Type); // _typepcache[i];
       if (attach)
       {
-        p = MakeParticleEffect(engine, _typepcache[i], final, size);
+        p = MakeParticleEffect(engine, part, final, size);
         p.AttachedActorID = a.ID;
       }
       else
       {
         TV_3DVECTOR v = a.GetRelativePositionXYZ(final.x, final.y, final.z);
-        p = MakeParticleEffect(engine, _typepcache[i], v, size);
+        p = MakeParticleEffect(engine, part, v, size);
       }
 
       _pinstance[i] = p.ID;
@@ -288,15 +291,16 @@ namespace SWEndor.Game.Models
     {
       //_ptime[i] = engine.Game.GameTime + rate;
       ParticleInfo p;
+      ParticleTypeInfo part = engine.ParticleTypeFactory.Get(_pdata[i].Type); // _typepcache[i];
       if (attach)
       {
-        p = MakeParticleEffect(engine, _typepcache[i], relativepos, size);
+        p = MakeParticleEffect(engine, part, relativepos, size);
         p.AttachedActorID = a.ID;
       }
       else
       {
         TV_3DVECTOR offset = a.GetRelativePositionXYZ(relativepos.x, relativepos.y, relativepos.z) - a.GetGlobalPosition();
-        p = MakeParticleEffect(engine, _typepcache[i], a.GetPrevGlobalPosition() + offset, size);
+        p = MakeParticleEffect(engine, part, a.GetPrevGlobalPosition() + offset, size);
       }
       _pinstance[i] = p.ID;
     }
