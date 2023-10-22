@@ -49,7 +49,7 @@ namespace SWEndor.Game.ActorTypes
           paths.Add(f, fp);
         }
 
-        Parallel.ForEach(paths, new ParallelOptions { MaxDegreeOfParallelism = 32 }, LoadOne);
+        Parallel.ForEach(paths, new ParallelOptions { MaxDegreeOfParallelism = 8 }, LoadOne);
       }
 
       private void LoadOne(KeyValuePair<string, string> kvp)
