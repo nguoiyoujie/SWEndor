@@ -14,8 +14,8 @@ namespace SWEndor.Game.ActorTypes.Instances
     {
       ExplodeSystemData.Explodes = new ExplodeData[]
       {
-        new ExplodeData("EXPL02", default, 1, 1, ExplodeTrigger.ON_DEATH),
-        new ExplodeData("EXPW02", default, 1, 1, ExplodeTrigger.ON_DEATH),
+        new ExplodeData(new string[] { "EXPL02" }, default, 1, 1, ExplodeTrigger.ON_DEATH),
+        new ExplodeData(new string[] { "EXPW02" }, default, 1, 1, ExplodeTrigger.ON_DEATH),
       };
 
       int[] death = new int[] { 1, 10, 15, 16, 20, 21, 22, 23, 27, 28, 30, 31, 34, 35, 36 };

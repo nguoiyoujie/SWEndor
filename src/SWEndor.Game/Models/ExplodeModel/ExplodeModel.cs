@@ -1,5 +1,6 @@
 ﻿using MTV3D65;
 using Primrose.Primitives;
+using Primrose.Primitives.Extensions;
 using Primrose.Primitives.ValueTypes;
 using SWEndor.Game.ActorTypes.Components;
 using SWEndor.Game.Core;
@@ -36,7 +37,7 @@ namespace SWEndor.Game.Models
   {
     private ExplodeData[] _data;
     private ParticleData[] _pdata;
-    private ExplosionTypeInfo[] _typecache;
+    private ExplosionTypeInfo[][] _typecache;
     private ParticleTypeInfo[] _typepcache;
     private float[] _time;
     private int[] _pinstance;
@@ -45,7 +46,7 @@ namespace SWEndor.Game.Models
     {
       _data = data;
       _pdata = pdata;
-      _typecache = new ExplosionTypeInfo[data.Length];
+      _typecache = new ExplosionTypeInfo[data.Length][];
       _typepcache = new ParticleTypeInfo[pdata.Length];
       _time = new float[data.Length];
       _pinstance = new int[pdata.Length];
@@ -139,22 +140,26 @@ namespace SWEndor.Game.Models
             if (size == 0)
               size = 1;
             if (_typecache[i] == null)
-              _typecache[i] = engine.ExplosionTypeFactory.Get(exp.Type);
+            {
+              _typecache[i] = new ExplosionTypeInfo[_data[i].Type.Length];
+              for (int j = 0; j < _data[i].Type.Length; j++)
+                _typecache[i][j] = engine.ExplosionTypeFactory.Get(exp.Type[j]);
+            }
 
             if (exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_PARENT) && a.ParentForCoords != null)
             {
               U parent = a.ParentForCoords;
               if (exp.Trigger.Has(ExplodeTrigger.CREATE_ON_MESHVERTICES))
-                CreateExplosionOnMeshVertices(engine, parent, i, rate, size, exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_ACTOR));
+                  CreateExplosionOnMeshVertices(engine, parent, i, rate, size, exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_ACTOR));
               else
-                CreateExplosionOnMesh(engine, parent, a.GetRelativePositionXYZ(offset.x, offset.y, offset.z, true), i, rate, size, exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_ACTOR));
+                  CreateExplosionOnMesh(engine, parent, a.GetRelativePositionXYZ(offset.x, offset.y, offset.z, true), i, rate, size, exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_ACTOR));
             }
             else
             {
               if (exp.Trigger.Has(ExplodeTrigger.CREATE_ON_MESHVERTICES))
-                CreateExplosionOnMeshVertices(engine, a, i, rate, size, exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_ACTOR));
+                  CreateExplosionOnMeshVertices(engine, a, i, rate, size, exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_ACTOR));
               else
-                CreateExplosionOnMesh(engine, a, offset.ToVec3(), i, rate, size, exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_ACTOR));
+                  CreateExplosionOnMesh(engine, a, offset.ToVec3(), i, rate, size, exp.Trigger.Has(ExplodeTrigger.ATTACH_TO_ACTOR));
             }
           }
         }
@@ -210,15 +215,17 @@ namespace SWEndor.Game.Models
         float3 vert = a.GetVertex(vertID).ToFloat3();
         TV_3DVECTOR final = (vert * a.Scale).ToVec3();
 
+        ExplosionTypeInfo expl = _typecache[i].Random(engine.Random);
+
         if (attach)
         {
-          ExplosionInfo e = MakeExplosion(engine, _typecache[i], final, size);
+          ExplosionInfo e = MakeExplosion(engine, expl, final, size);
           e.AttachedActorID = a.ID;
         }
         else
         {
           TV_3DVECTOR v = a.GetRelativePositionXYZ(final.x, final.y, final.z);
-          MakeExplosion(engine, _typecache[i], v, size);
+          MakeExplosion(engine, expl, v, size);
         }
       }
     }
@@ -231,15 +238,16 @@ namespace SWEndor.Game.Models
         ITransformable
     {
       _time[i] = engine.Game.GameTime + rate;
+      ExplosionTypeInfo expl = _typecache[i].Random(engine.Random);
       if (attach)
       {
-        ExplosionInfo e = MakeExplosion(engine, _typecache[i], relativepos, size);
+        ExplosionInfo e = MakeExplosion(engine, expl, relativepos, size);
         e.AttachedActorID = a.ID;
       }
       else
       {
         TV_3DVECTOR offset = a.GetRelativePositionXYZ(relativepos.x, relativepos.y, relativepos.z) - a.GetGlobalPosition();
-        MakeExplosion(engine, _typecache[i], a.GetPrevGlobalPosition() + offset, size);
+        MakeExplosion(engine, expl, a.GetPrevGlobalPosition() + offset, size);
       }
     }
 

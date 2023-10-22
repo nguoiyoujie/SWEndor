@@ -16,8 +16,8 @@ namespace SWEndor.Game.ActorTypes.Instances
 
       ExplodeSystemData.Explodes = new ExplodeData[]
       {
-        new ExplodeData("EXPL00", default, 1.5f, 1, ExplodeTrigger.WHILE_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
-        new ExplodeData("EXPL00", default, 1, 1, ExplodeTrigger.ON_DEATH)
+        new ExplodeData(new string[] { "EXPL00" }, default, 1.5f, 1, ExplodeTrigger.WHILE_DYING | ExplodeTrigger.CREATE_ON_MESHVERTICES),
+        new ExplodeData(new string[] { "EXPL00" }, default, 1, 1, ExplodeTrigger.ON_DEATH)
       };
 
       SystemData.MaxShield = 300;

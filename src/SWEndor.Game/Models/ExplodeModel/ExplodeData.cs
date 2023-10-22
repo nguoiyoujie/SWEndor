@@ -6,7 +6,7 @@ namespace SWEndor.Game.Models
   internal struct ExplodeData
   {
     [INIValue]
-    public string Type;
+    public string[] Type;
 
     [INIValue]
     public float3 PositionOffset;
@@ -20,7 +20,7 @@ namespace SWEndor.Game.Models
     [INIValue]
     public ExplodeTrigger Trigger;
 
-    public ExplodeData(string type, float3 offset, float rate, float size, ExplodeTrigger trigger)
+    public ExplodeData(string[] type, float3 offset, float rate, float size, ExplodeTrigger trigger)
     {
       Type = type;
       PositionOffset = offset;
