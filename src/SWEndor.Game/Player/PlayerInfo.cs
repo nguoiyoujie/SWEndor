@@ -183,10 +183,10 @@ namespace SWEndor.Game.Player
     {
       ActorInfo player = Actor;
       ActorInfo target = TargetActor;
-      if (CargoFunctions.ScanCargo(Engine, player, target) == CargoFunctions.CargoScanResult.NEW_SCAN)
+      if (CargoModel.ScanCargo(Engine, player, target) == CargoModel.CargoScanResult.NEW_SCAN)
       {
         // scan cargo
-        target.CargoScanned = true;
+        target.Cargo.Scanned = true;
         target.OnCargoScannedEvent();
       }
     }
