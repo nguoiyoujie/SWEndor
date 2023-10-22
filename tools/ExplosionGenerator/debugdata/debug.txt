@@ -1,0 +1,6 @@
+----DEBUG FILE----
+Deactivate app message
+active app message
+Deactivate app message
+active app message
+END DEBUG---

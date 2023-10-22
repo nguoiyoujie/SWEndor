@@ -1,0 +1,16 @@
+Initialising Direct Draw
+Attempting windowed mode
+Creating Context at 384 512 32
+context created
+Device obtained
+backbuffer obtained
+Video Modes Enumerated
+Setting Screen mode
+viewport is 0 0 384 512
+Screen Mode set ok
+Texture created : particles.dds
+particles
+VB created ok
+Release D3DEngine
+released particles
+Engine already released
