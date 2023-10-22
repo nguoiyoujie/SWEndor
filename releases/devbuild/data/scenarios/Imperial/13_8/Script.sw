@@ -667,6 +667,7 @@ Spawn.vorknkx:
 	Common.MultiplyShields(vorknkx, 2);
 	AI.QueueLast(vorknkx, "wait", 1.5);
 	AI.QueueLast(vorknkx, "move", vorknkx_escape, 250);
+	AI.QueueLast(vorknkx, "wait", 2.5);
 	AI.QueueLast(vorknkx, "hyperspaceout");
 	AI.QueueLast(vorknkx, "setgamestateb", "Escaped", true);
 	AI.QueueLast(vorknkx, "delete");
@@ -950,7 +951,7 @@ Spawn.TraitorZTheta:
 	}
 	Audio.Mood.EnemyReinforce();
     Audio.QueueSpeech("13M8\13m8r15");
-	Common.MessageStandard("New craft alert: T/D Z-DELTA squadron has been launched from ISD GLORY.", faction_traitor_color);
+	Common.MessageStandard("New craft alert: T/D Z-THETA squadron has been launched from ISD GLORY.", faction_traitor_color);
 
 
 

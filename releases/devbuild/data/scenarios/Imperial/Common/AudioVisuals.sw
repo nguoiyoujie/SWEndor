@@ -1,6 +1,9 @@
 // Global controls
 float Speech_message_critical_next = 0;
 float Speech_message_critical_delay = 60;
+string Speech_player_group = "a-alpha";
+string Speech_player_index = "a-one";
+
 
 
 Audio.Mood.Ambient0:
@@ -221,4 +224,65 @@ Speech.CriticalCraftHullCritical(int actorid):
             SetGameStateB("Actor" + actorid + "_HullCritical", true);
             Audio.QueueSpeech("a-critic", "a-craft", "a-hull");
         }
+    }
+    
+    
+Speech.SetPlayerDesignation(string group_or_null, string index_or_null):
+    Speech_player_group = (group_or_null == NULL) ? "a-alpha" : group_or_null;
+    Speech_player_index = (index_or_null == NULL) ? "a-one" : index_or_null;       
+
+    
+Speech.ScoreKillStandardLeader(int player, int victim, string group_or_null, string index_or_null):
+    if (!Faction.IsAlly(Actor.GetFaction(player) , Actor.GetFaction(victim)) && (Actor.IsFighter(victim) || Actor.IsLargeShip(victim)))
+    {
+        if (Random() < 0.4) 
+        {
+            Audio.QueueSpeech("a-target", "a-destr");
+        }
+        string group = (group_or_null == NULL) ? "a-alpha" : Speech_player_group;
+        string index = (index_or_null == NULL) ? "a-one" : Speech_player_index;       
+        
+        float rnd = Random();
+        if (rnd < 0.15) 
+        {
+            Audio.QueueSpeech("a-good", "a-shoot", group, index);
+        }
+        else if (rnd < 0.3) 
+        {
+            Audio.QueueSpeech("a-good", "a-hunt", group, index);
+        }
+        else if (rnd < 0.45) 
+        {
+            Audio.QueueSpeech("a-excel", "a-shoot", group, index);
+        }
+        else if (rnd < 0.6) 
+        {
+            Audio.QueueSpeech("a-super", "a-shoot", group, index);
+        }
+    }
+
+
+Speech.ScoreKillStandardLeaderOther(int leader, int victim, string group_or_null, string index_or_null):
+    if (!Faction.IsAlly(Actor.GetFaction(leader) , Actor.GetFaction(victim)) && (Actor.IsFighter(victim) || Actor.IsLargeShip(victim)))
+    {
+        string group = (group_or_null == NULL) ? "a-alpha" : Speech_player_group;
+        string index = (index_or_null == NULL) ? "a-one" : Speech_player_index;    
+        if (Random() < 0.3) 
+        {
+            Audio.QueueSpeech("a-this", group, index);
+        }
+        Audio.QueueSpeech("a-target", "a-destr");
+    }
+    
+
+Speech.ScoreKillStandardSquadmate(int mate, int victim, string group_or_null, string index_or_null):
+    if (!Faction.IsAlly(Actor.GetFaction(mate) , Actor.GetFaction(victim)) && (Actor.IsFighter(victim) || Actor.IsLargeShip(victim)))
+    {
+        string group = (group_or_null == NULL) ? "a-alpha" : Speech_player_group;
+        string index = (index_or_null == NULL) ? "a-one" : Speech_player_index;    
+        if (Random() < 0.3) 
+        {
+            Audio.QueueSpeech(group, index);
+        }
+        Audio.QueueSpeech("a-target", "a-destr");
     }

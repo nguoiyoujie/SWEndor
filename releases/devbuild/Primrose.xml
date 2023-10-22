@@ -1168,6 +1168,18 @@
             <summary>Returns an enumerator that iterates through the collection</summary>
             <returns>A System.Collections.Generic.IEnumerator`1 that can be used to iterate through the collection</returns>
         </member>
+        <member name="T:Primrose.Primitives.Collections.ThreadSafeEnumerable`2">
+            <summary>Represents a thread-safe wrapper over an enumerable collection</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Collections.ThreadSafeEnumerable`2.#ctor(System.Func{`0},System.Object)">
+            <summary>Creates a thread-safe wrapper over an enumerable collection</summary>
+            <param name="func">A function that creates and returns the (thread-unsafe) enumerator</param>
+            <param name="lock">The locking object</param>
+        </member>
+        <member name="M:Primrose.Primitives.Collections.ThreadSafeEnumerable`2.GetEnumerator">
+            <summary>Returns an enumerator that iterates through the collection</summary>
+            <returns>The enumerator that can be used to iterate through the collection</returns>
+        </member>
         <member name="T:Primrose.Primitives.Collections.ThreadSafeEnumerator">
             <summary>Represents a thread-safe wrapper over an enumerator</summary>
         </member>
@@ -1209,6 +1221,29 @@
             <summary>Sets the enumerator to its initial position, which is before the first element in the collection</summary>
         </member>
         <member name="P:Primrose.Primitives.Collections.ThreadSafeEnumerator`1.Current">
+            <summary>Gets the current element in the collection</summary>
+        </member>
+        <member name="T:Primrose.Primitives.Collections.ThreadSafeEnumerator`2">
+            <summary>Represents a thread-safe wrapper over an enumerator</summary>
+            <typeparam name="TEnumerator">The enumerator type</typeparam>
+            <typeparam name="T">The enumerated type</typeparam>
+        </member>
+        <member name="M:Primrose.Primitives.Collections.ThreadSafeEnumerator`2.#ctor(System.Func{`0},System.Object)">
+            <summary>Creates a thread-safe wrapper over an enumerator</summary>
+            <param name="inner">The (thread-unsafe) enumerator</param>
+            <param name="lock">The locking object</param>
+        </member>
+        <member name="M:Primrose.Primitives.Collections.ThreadSafeEnumerator`2.Dispose">
+            <summary>Disposes the wrapper and releases the lock</summary>
+        </member>
+        <member name="M:Primrose.Primitives.Collections.ThreadSafeEnumerator`2.MoveNext">
+            <summary>Advances the enumerator to the next element of the collection</summary>
+            <returns>true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection</returns>
+        </member>
+        <member name="M:Primrose.Primitives.Collections.ThreadSafeEnumerator`2.Reset">
+            <summary>Sets the enumerator to its initial position, which is before the first element in the collection</summary>
+        </member>
+        <member name="P:Primrose.Primitives.Collections.ThreadSafeEnumerator`2.Current">
             <summary>Gets the current element in the collection</summary>
         </member>
         <member name="T:Primrose.Primitives.Factories.Factory`2">
@@ -3183,6 +3218,9 @@
             <summary>
             Provides implementation for maintaining a reference counter for explicit management
             </summary>
+        </member>
+        <member name="F:Primrose.Primitives.ScopeCounters.SpinMaximum_milliseconds">
+            <summary>The maximum time for a spinning wait. If this duration is exceeded, thread sleeping will be used</summary>
         </member>
         <member name="M:Primrose.Primitives.ScopeCounters.Get(System.Byte)">
             <summary>Gets the reference count of a global scope</summary>

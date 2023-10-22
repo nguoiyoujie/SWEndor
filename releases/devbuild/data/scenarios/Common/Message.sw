@@ -44,3 +44,13 @@ Common.MessageImportant(string message, float3 color):
 Common.MessageCritical(string message, float3 color):
     // Use priority 99
 	Message(message, _commonMessage_standard_duration, color, 99);
+    
+   
+Common.MessageNewCraftAlert(string faction, string type, string group, float3 color):
+	Common.MessageStandard("New craft alert: " + faction + " " + type + " " + group + " group entering the area.", color);
+
+
+Common.MessageNewCraftAlertTarget(string faction, string type, string group, string target, float3 color):
+	Common.MessageStandard("New craft alert: " + faction + " " + type + " " + group + " group entering the area, targeting " + target + ".", color);
+
+    

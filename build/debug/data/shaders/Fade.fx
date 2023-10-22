@@ -3,17 +3,22 @@ float4x4 matWorldViewProj : WORLDVIEWPROJECTION;
 float4x4 matWorld : WORLD;
 float3 viewPosition : VIEWPOSITION;
 
-float period = 1;
+float period = 1.5;
 float time;
+
+texture texTexture : TEXTURE0;
+sampler sampTexture = sampler_state {
+	Texture = (texTexture);
+};
 
 struct VS_INPUT {
 	float4 position : POSITION;
-	float4 color : COLOR;
+	float2 texCoord : TEXCOORD;
 };
 
 struct VS_OUTPUT {
 	float4 position : POSITION;
-	float4 color : TEXCOORD3;
+	float2 texCoord : TEXCOORD0;
 };
 #define	PS_INPUT VS_OUTPUT
 
@@ -22,15 +27,18 @@ VS_OUTPUT VS(VS_INPUT IN) {
 	VS_OUTPUT OUT;
 
 	OUT.position = mul(IN.position, matWorldViewProj);
-	OUT.color = IN.color;
-   	OUT.color.a = time / period - 1;
+	OUT.texCoord = IN.texCoord;
+
 	return OUT;
 }
 
 // Pixel Shader Function
 float4 PS(PS_INPUT IN) : COLOR {
-	clip(IN.color.a);
-	return IN.color;
+	float2 texCoord = IN.texCoord;
+	float4 texColor = tex2D(sampTexture, texCoord);
+	float opacity = time / period;
+    texColor.a = texColor.a * opacity;
+	return texColor;
 }
 
 technique TSM3 {

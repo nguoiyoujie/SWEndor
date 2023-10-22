@@ -127,6 +127,7 @@
     <Compile Include="ActorTypes\Components\AIData.cs" />
     <Compile Include="ActorTypes\Components\ArmorData.cs" />
     <Compile Include="ActorTypes\Components\CameraSystemData.cs" />
+    <Compile Include="ActorTypes\Components\CargoData.cs" />
     <Compile Include="ActorTypes\Components\CombatData.cs" />
     <Compile Include="ActorTypes\Components\DeathCameraData.cs" />
     <Compile Include="ActorTypes\Components\DebrisSystemData.cs" />
@@ -217,7 +218,7 @@
     <Compile Include="ExplosionTypes\General\Factory\Factory.cs" />
     <Compile Include="FactionInfo.cs" />
     <Compile Include="FileFormat\INI\CampaignFile.cs" />
-    <Compile Include="Models\Cargo\CargoFunctions.cs" />
+    <Compile Include="Models\Cargo\CargoModel.cs" />
     <Compile Include="Models\ExplodeModel\ParticleData.cs" />
     <Compile Include="Models\ParticleSystem\ParticleSystemData.cs" />
     <Compile Include="Models\ParticleSystem\ParticleSystemModel.cs" />
@@ -463,6 +464,12 @@
     <Compile Include="UI\Forms\StatForm.Designer.cs">
       <DependentUpon>StatForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\UIControls\ucShaderCache.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\UIControls\ucShaderCache.Designer.cs">
+      <DependentUpon>ucShaderCache.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\UIControls\ucPoolCache.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -581,6 +588,9 @@
     <EmbeddedResource Include="UI\Forms\StatForm.resx">
       <DependentUpon>StatForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\UIControls\ucShaderCache.resx">
+      <DependentUpon>ucShaderCache.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\UIControls\ucPoolCache.resx">
       <DependentUpon>ucPoolCache.cs</DependentUpon>

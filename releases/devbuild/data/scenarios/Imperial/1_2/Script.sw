@@ -10,11 +10,13 @@ bool hammer_arrived;
 float msg_time = 32;
 float hammer_time = 240;
 
+int alpha1;
 int outpost;
+string outpost_sidebarname;
 int hammer;
 int hammer_hangar;
-int tie_alpha2;
-int tie_alpha3;
+int alpha2;
+int alpha3;
 int ubote1;
 int ubote2;
 int ubote3;
@@ -35,15 +37,26 @@ float3 faction_mugaari_color = { 0.8, 0.1, 0.6 };
 float3 faction_empire_laser_color = { 0.1, 1, 0.12 };
 float3 faction_rebel_laser_color = { 1, 0, 0 };
 
+int wing_reb;
+int wing_emp;
+
 float3 _d = { 0, 0, 0 };
 int _a = -1;
 float _f = 0;
 
-load:
-    Scene.SetMaxBounds({15000, 1500, 20000});
-    Scene.SetMinBounds({-15000, -1500, -15000});
-    Scene.SetMaxAIBounds({15000, 1500, 20000});
-    Scene.SetMinAIBounds({-15000, -1500, -15000});
+// message colors
+float3 msg_outpost = { 0.6, 0.8, 1 };
+float3 msg_delta = { 0.2, 0.6, 0.1 };
+float3 msg_warn = { 0.8, 0.8, 0 };
+float3 msg_bad = { 1, 0.3, 0.2 };
+float3 msg_fail = { 0.8, 0, 0 };
+
+
+Load:
+    Scene.SetMaxBounds({15000, 4500, 20000});
+    Scene.SetMinBounds({-15000, -4500, -15000});
+    Scene.SetMaxAIBounds({15000, 4500, 20000});
+    Scene.SetMinAIBounds({-15000, -4500, -15000});
 
     Player.SetLives(5);
     Score.SetScorePerLife(1000000);
@@ -57,36 +70,36 @@ load:
     Script.Call("spawn_reset");
     Script.Call("actorp_reset");
     
-    Script.Call("engagemusic"); 
-    Script.Call("make_ships");
-    Script.Call("make_fighters");
-    Script.Call("makeplayer");
-    AddEvent(1.5, "start");
-    
-    AddEvent(3, "spawn_ywing1");
-    AddEvent(7, "message1");
-    AddEvent(10, "message2");
-    AddEvent(14, "message3");
-    AddEvent(17.5, "message2r");
-    AddEvent(20, "spawn_ywing2");
-    AddEvent(28, "message4");
-    AddEvent(31, "message4r");
-    AddEvent(msg_time, "message_protect");
-    AddEvent(50, "spawn_xwing1");
-    AddEvent(67, "spawn_xwing2");
-    AddEvent(71, "spawn_ally_eta");
-    AddEvent(115, "spawn_scutz");
-    AddEvent(90, "spawn_ywing3");
-    AddEvent(130, "spawn_ywing4");
-    AddEvent(180, "spawn_ubote");
+    InitMusic(); 
+    InitShips();
+    InitFighters();
+    MakePlayer();
+    AddEvent(1.5, "GivePlayerControl"); 
+
+    AddEvent(3, "Spawn.EnemyYWing1");
+    AddEvent(7, "Message.SectorAlert");
+    AddEvent(10, "Message.AddressBetaGamma");
+    AddEvent(14, "Message.AddressAlpha");
+    AddEvent(17.5, "Message.BetaRespond");
+    AddEvent(20, "Spawn.EnemyYWing2");
+    AddEvent(28, "Message.AttackYWings");
+    AddEvent(31, "Message.GammaRespond");
+    AddEvent(msg_time, "Message.PriObj");
+    AddEvent(50, "Spawn.EnemyXWing1");
+    AddEvent(67, "Spawn.EnemyXWing2");
+    AddEvent(71, "Spawn.AllyEta");
+    AddEvent(115, "Spawn.Scutz");
+    AddEvent(90, "Spawn.EnemyYWing3");
+    AddEvent(130, "Spawn.EnemyYWing4");
+    AddEvent(180, "Spawn.EnemyUbote");
 
     if (GetDifficulty() == "hard")
-        AddEvent(195, "spawn_xwing3");
+        AddEvent(195, "Spawn.EnemyXWing3");
 
-    AddEvent(hammer_time, "spawn_hammer");
+    AddEvent(hammer_time, "Spawn.AllyHammer");
 
 
-loadfaction:
+LoadFaction:
     Faction.Add("Empire", faction_empire_color, faction_empire_laser_color);
     Faction.Add("Empire_Hammer", faction_empire_hammer_color, faction_empire_laser_color);
     Faction.Add("Empire_Mu", faction_empire_hammer_color, faction_empire_laser_color);
@@ -114,43 +127,53 @@ loadfaction:
     Faction.SetWingSpawnLimit("Empire_Hammer", 6);
 
 
-loadscene:
-
-
-engagemusic:
-    Audio.SetMood(2);
+InitMusic:
+    Audio.Mood.Ambient2();
     Audio.SetMusicDyn("TRO-IN");
 
     
-makeplayer:
+MakePlayer:
     Player.DecreaseLives();
     if (respawn) 
+    {
         Player.RequestSpawn(); 
+        AddEvent(0.5, "PrepPlayer");
+    }
     else 
-        Script.Call("firstspawn");
-    AddEvent(0.5, "squadform");
+    {
+        Player.AssignActor(Actor.Spawn(GetPlayerActorType(), GetPlayerName(), "Empire", "", 0, { 1200, 500, -3800 }, { 0, 0, 0 }));
+        Player.SetMovementEnabled(false);
+        Actor.SetProperty(Player.GetActor(), "Movement.Speed", 250);
+        PrepPlayer();
+        respawn = true;
+    }
 
 
-firstspawn:
-    Player.AssignActor(Actor.Spawn(GetPlayerActorType(), GetPlayerName(), "Empire", "", 0, { 1200, 500, -3800 }, { 0, 0, 0 }));
-    Player.SetMovementEnabled(false);
-    Actor.SetProperty(Player.GetActor(), "Movement.Speed", 30);
-    respawn = true;
+PrepPlayer:
+    alpha1 = Player.GetActor();
+    if (alpha1 != -1)
+    {
+        Actor.CallOnRegisterKill(alpha1, "Speech.ScoreKillStandardLeader");
+        ReformPlayerSquad();
+    }
+
+
+GivePlayerControl:
+	Player.SetMovementEnabled(true);
 
     
-squadform:
-    Squad.JoinSquad(Player.GetActor(), tie_alpha2);
-    Squad.JoinSquad(Player.GetActor(), tie_alpha3);
-    Actor.CallOnRegisterKill(Player.GetActor(), "voic_message_playerkill");
+ReformPlayerSquad:
+    Squad.JoinSquad(alpha1, alpha2);
+    Squad.JoinSquad(alpha1, alpha3);
 
 
-make_ships:
-
+InitShips:
     // Empire
-    outpost = Actor.Spawn("XQ1", "D-34", "Empire", "", 0, { 0, 0, 0 }, { 0, -20, 0 }, { "CriticalAllies" });
+    outpost = Actor.Spawn("XQ1", "D-34", "Empire", "PLT/1 D-34", 0, { 0, 0, 0 }, { 0, -20, 0 }, { "CriticalAllies" });
+    outpost_sidebarname = "PLT/1 D-34";
     Actor.SetProperty(outpost, "Spawner.Enabled", true);
     Actor.SetProperty(outpost, "Spawner.SpawnTypes", {"TIE"});
-    Actor.CallOnHit(outpost, "voic_message_critical_installation_under_attack");
+    Speech.RegisterCriticalInstallation(outpost);
     AI.QueueLast(outpost, "lock");
 
     Actor.Spawn("MINE1", "", "Empire", "", 0, { 2200, 150, 2600 }, { Random(360), Random(360), Random(360) });
@@ -160,19 +183,14 @@ make_ships:
     Actor.Spawn("MINE3", "", "Empire", "", 0, { -400, 850, -1400 }, { Random(360), Random(360), Random(360) });
 
     
-    
-make_fighters:
+InitFighters:
+    // Empire
+    alpha2 = Actor.Spawn("TIE", "ALPHA 2", "Empire", "", 0, { 600, 400, -4100 }, { 0, 5, 0 });
+    Actor.CallOnRegisterKill(alpha2, "Speech.ScoreKillStandardSquadmate");
 
-    tie_alpha2 = Actor.Spawn("TIE", "ALPHA 2", "Empire", "", 0, { 600, 400, -4100 }, { 0, 5, 0 });
-    Actor.CallOnRegisterKill(tie_alpha2, "voic_message_alpha2_scorekill");
-
-    tie_alpha3 = Actor.Spawn("TIE", "ALPHA 3", "Empire", "", 0, { 1800, 350, -4000 }, { 0, -5, 0 });
-    Actor.CallOnRegisterKill(tie_alpha3, "voic_message_scorekill");
-    
-    Squad.JoinSquad(Player.GetActor(), tie_alpha2);
-    Squad.JoinSquad(Player.GetActor(), tie_alpha3);
-
-    
+    alpha3 = Actor.Spawn("TIE", "ALPHA 3", "Empire", "", 0, { 1800, 350, -4000 }, { 0, -5, 0 });
+    Actor.CallOnRegisterKill(alpha3, "Speech.ScoreKillStandardSquadmate");
+        
     spawn_faction = "Empire";
     spawn_hyperspace = true;
     spawn_wait = 5;
@@ -183,9 +201,9 @@ make_fighters:
     spawn_rot = { 20, -120 ,0 };
     Script.Call("spawn3");
     tie_beta_group = spawn_ids;
-    Actor.CallOnRegisterKill(tie_beta_group[0], "voic_message_beta1_scorekill");
-    Actor.CallOnRegisterKill(tie_beta_group[1], "voic_message_beta2_scorekill");
-    Actor.CallOnRegisterKill(tie_beta_group[2], "voic_message_beta_scorekill");
+    Actor.CallOnRegisterKill(tie_beta_group[0], "ScoreKill.beta1");
+    Actor.CallOnRegisterKill(tie_beta_group[1], "ScoreKill.beta");
+    Actor.CallOnRegisterKill(tie_beta_group[2], "ScoreKill.beta");
     
     spawn_wait = 8;
     spawn_name = "GAMMA";
@@ -194,16 +212,15 @@ make_fighters:
     spawn_rot = { -40, 120 ,0 };
     Script.Call("spawn3");
     tie_gamma_group = spawn_ids;
-    Actor.CallOnRegisterKill(tie_gamma_group[0], "voic_message_gamma1_scorekill");
-    Actor.CallOnRegisterKill(tie_gamma_group[1], "voic_message_gamma2_scorekill");
-    Actor.CallOnRegisterKill(tie_gamma_group[2], "voic_message_gamma_scorekill");
+    Actor.CallOnRegisterKill(tie_gamma_group[0], "ScoreKill.gamma1");
+    Actor.CallOnRegisterKill(tie_gamma_group[1], "ScoreKill.gamma");
+    Actor.CallOnRegisterKill(tie_gamma_group[2], "ScoreKill.gamma");
 
 
-gametick:
-    int wing_reb = Faction.GetWingCount("Rebels") + Faction.GetShipCount("Rebels");
-    int wing_mug = Faction.GetWingCount("Mugaari");
-    int wing_emp = Faction.GetWingCount("Empire");
-    int wing_ham = Faction.GetWingCount("Empire_Hammer");
+Tick:
+    // Set UI
+    wing_reb = Faction.GetWingCount("Rebels") + Faction.GetShipCount("Rebels") + Faction.GetWingCount("Mugaari");
+    wing_emp = Faction.GetWingCount("Empire") + Faction.GetWingCount("Empire_Hammer");
     float tm = hammer_time - GetGameTime();
     
     if (tm >= 0 && GetGameTime() > msg_time)
@@ -212,268 +229,278 @@ gametick:
         UI.SetLine2Color(faction_empire_color);
         UI.SetLine3Color(faction_rebel_color);
         UI.SetLine1Text("HAMMER: " + Math.FormatAsTime(tm));
-        UI.SetLine2Text("WINGS: " + (wing_emp + wing_ham));
-        UI.SetLine3Text((wing_reb + wing_mug == 0) ? "" : "ENEMY: " + (wing_reb + wing_mug));   
+        UI.SetLine2Text("WINGS: " + wing_emp);
+        UI.SetLine3Text((wing_reb == 0) ? "" : "ENEMY: " + wing_reb);   
     }
     else
     {
         UI.SetLine1Color(faction_empire_color);
         UI.SetLine2Color(faction_rebel_color);
-        UI.SetLine1Text("WINGS: " + (wing_emp + wing_ham));
-        UI.SetLine2Text((wing_reb + wing_mug == 0) ? "" : "ENEMY: " + (wing_reb + wing_mug));
+        UI.SetLine1Text("WINGS: " + wing_emp);
+        UI.SetLine2Text((wing_reb == 0) ? "" : "ENEMY: " + wing_reb);
         UI.SetLine3Text("");
     }
     
     if (!triggerwinlose)
     {
-        if (combat && (wing_reb + wing_mug > 0) && Audio.GetMood() != 4)
-            Audio.SetMood(4);
-        else if (combat && (wing_reb + wing_mug == 0) && Audio.GetMood() != 0 && Audio.GetMood() != 5)
-            Audio.SetMood(0);
+        // Music Ambience
+        if (combat && (wing_reb > 0) && Audio.GetMood() != 4)
+            Audio.Mood.Combat();
+        else if (combat && (wing_reb == 0) && Audio.GetMood() != 0 && Audio.GetMood() != 5)
+            Audio.Mood.Ambient0();
     
-        if (!GetGameStateB("OutpostDestroyed"))
-        {
-            float hp = Actor.GetHP(outpost);
-            float shd = Actor.GetShd(outpost);
-            if (hp <= 0) 
-            {
-                SetGameStateB("OutpostDestroyed", true);
-                Script.Call("lose_outpostlost");
-            }
-            
-            if (!GetGameStateB("OutpostWeakened"))
-            {
-                if (hp <= 750) 
-                {
-                    SetGameStateB("OutpostWeakened", true);
-                    Script.Call("messagewarn_outpost_1");
-                }
-            }
-            
-            if (!GetGameStateB("OutpostShieldsDown"))
-            {
-                if (shd <= 0) 
-                {
-                    SetGameStateB("OutpostShieldsDown", true);
-                    Script.Call("messagewarn_outpost_2");
-                }
-            }
-            
-            if (!GetGameStateB("OutpostDanger"))
-            {
-                if (hp <= 300) 
-                    {
-                    SetGameStateB("OutpostDanger", true);
-                    Script.Call("messagewarn_outpost_3");
-                    for (float time = 0; time < 3; time += 0.4)
-                    {
-                        AddEvent(time, "messagewarn_outpost_o");
-                        AddEvent(time + 0.2, "messagewarn_outpost_y");
-                    }
-                }
-            }
-        }
-        
-        if (GetGameStateB("ScutzDiscovered"))
-        {
-            if (!GetGameStateB("ScutzDisabled"))
-            {
-                float shd = Actor.GetShd(scutz);
-                if (shd <= 0) 
-                {
-                    float3 pos = Actor.GetGlobalPosition(scutz);
-                    float3 fac = Actor.GetGlobalDirection(scutz);
-                    pos += fac * 5000;
-                    AI.ForceClearQueue(scutz);
-                    AI.QueueLast(scutz, "rotate", pos, 0, 1, false);
-                    AI.QueueLast(scutz, "lock");
-                    Actor.SetFaction(scutz, "Neutral_Inspect");
-                    Actor.SetProperty(scutz, "Regen.Self", 0);
-                    Script.Call("message_scutz_disabled");
-                    SetGameStateB("ScutzDisabled", true);
-                }
-            }
-        }
-        
-        if (hammer_arrived && !GetGameStateB("HammerWarn"))
-        {
-            float maxshd = Actor.GetMaxShd(hammer);
-            float shd = Actor.GetShd(hammer);
-            if (shd <= maxshd * 0.75) 
-            {
-                Actor.SetFaction(Player.GetActor(), "Traitor");
-                SetGameStateB("HammerWarn", true);
-                Script.Call("lose_hammerwarn");
-            }
-        }
-        
-        if (hammer_arrived && !GetGameStateB("HammerAngry"))
-        {
-            float maxshd = Actor.GetMaxShd(hammer);
-            float shd = Actor.GetShd(hammer);
-            if (shd <= maxshd * 0.5) 
-            {
-                Actor.SetFaction(Player.GetActor(), "Traitor");
-                SetGameStateB("HammerAngry", true);
-                Script.Call("lose_hammerangry");
-            }
-        }
-        
-        if (GetGameStateB("MuDispatched"))
-        {
-            if (!GetGameStateB("MuBoarding"))
-            {
-                if (Math.GetActorDistance(mu, scutz) < 600)
-                {
-                    SetGameStateB("MuBoarding", true);
-                    Script.Call("mu_boarding");
-                }
-            }
-        }
-        
-        if (!GetGameStateB("ZetaSpawned"))
-        {
-            if (wing_emp + wing_ham < 5)
-            {
-                SetGameStateB("ZetaSpawned", true);
-                Script.Call("spawn_ally_zeta");
-            }
-        }
-
-        if (!GetGameStateB("LambdaSpawned") && GetGameStateB("ZetaSpawned"))
-        {
-            if (wing_emp + wing_ham < 6)
-            {
-                SetGameStateB("LambdaSpawned", true);
-                Script.Call("spawn_ally_lambda");
-            }
-        }
-        
-        if (GetGameStateB("RebelsCaptured") && !GetGameStateB("RebelsCaptureAnnounced"))
-        {
-            SetGameStateB("RebelsCaptureAnnounced", true);
-            Script.Call("message_rebelscaptured");
-            AddEvent(4, "message_rebelscaptured_2");
-        }
-        
-        if (primary_completed)
-        {
-            if (Math.GetActorDistance(Player.GetActor(), hammer_hangar) < 400)
-            {
-                Script.Call("win");
-            }
-        }
-
-        Script.Call("inspection");
+        Check.d34();
+        Check.hammer();
+        Check.scutz();
+        Check.ties();
     }
 
 
-inspection:
-    if (!GetGameStateB("ScutzInspected"))
+ScoreKill.beta1(int actor, int victim):
+    Speech.ScoreKillStandardLeaderOther(actor, victim, "a-beta", "a-one");
+    
+    
+ScoreKill.beta(int actor, int victim):
+    Speech.ScoreKillStandardSquadmate(actor, victim, "a-beta", "a-one");
+
+
+ScoreKill.gamma1(int actor, int victim):
+    Speech.ScoreKillStandardLeaderOther(actor, victim, "a-gamma", "a-one");
+
+
+ScoreKill.gamma(int actor, int victim):
+    Speech.ScoreKillStandardSquadmate(actor, victim, "a-gamma", "a-one");
+    
+
+Check.d34:
+    if (!GetGameStateB("OutpostDestroyed"))
     {
-        if (Math.GetActorDistance(Player.GetActor(), scutz) < 200)
+        float hpfrac = Actor.GetHPFrac(outpost);
+        float hullfrac = Actor.GetHullFrac(outpost);
+        float shdfrac = Actor.GetShdFrac(outpost);
+        if (hpfrac <= 0) 
         {
-            SetGameStateB("ScutzInspected", true);
-            Script.Call("message_inspected_scutz");
-            
-            Actor.SetFaction(scutz, "Neutral_Rebel");
-            AddEvent(0.2, "scutz_discovered");
-            AddEvent(6, "message_located");
-            AddEvent(9, "spawn_mu");
-            AddEvent(10, "message_muapproach");
-            Audio.SetMood(-5);
+            SetGameStateB("OutpostDestroyed", true);
+            Lose.d34();
+        }
+        
+        if (!GetGameStateB("OutpostWeakened"))
+        {
+            if (shdfrac <= 0.5) 
+            {
+                SetGameStateB("OutpostWeakened", true);
+                Warn.d34();
+            }
+        }
+        
+        if (!GetGameStateB("OutpostShieldsDown"))
+        {
+            if (shdfrac <= 0) 
+            {
+                SetGameStateB("OutpostShieldsDown", true);
+                Warn.d34_shd();
+            }
+        }
+        
+        if (!GetGameStateB("OutpostDanger"))
+        {
+            if (hullfrac <= 0.5) 
+            {
+                SetGameStateB("OutpostDanger", true);
+                Warn.d34_critical();
+            }
         }
     }
 
+
+Warn.d34:
+    Common.MessageCritical("WARNING: PLT/1 D-34 is under attack!", msg_warn);
+    Audio.QueueSpeech("1M2\1m2r5");
+
+
+Warn.d34_shd:
+    Audio.QueueSpeech("a-critic", "a-instal", "a-shield");
+
+
+Warn.d34_critical:
+    Audio.QueueSpeech("a-critic", "a-instal", "a-hull");
+    Common.MessageFlashDanger("WARNING: PLT/1 D-34 is under heavy fire!");
+
+
+Lose.d34:
+    triggerwinlose = true;
+	Common.MessageCritical("MISSION FAILED: PLT/1 D-34 has been lost.", msg_fail);
+    SetGameStateB("GameOver",true);
+    AddEvent(3, "CurtainCall");
+    Audio.StopSpeech();
+    Audio.QueueSpeech("1M2\1m2r6");
+	Audio.Mood.PriObjFail();
+
+
+Check.hammer:
+    if (hammer_arrived && !GetGameStateB("HammerWarn"))
+    {
+        float shdfrac = Actor.GetShdFrac(hammer);
+        if (shdfrac <= 0.75) 
+        {
+            SetGameStateB("HammerWarn", true);
+            Warn.hammer();
+        }
+    }
+    
+    if (hammer_arrived && !GetGameStateB("HammerAngry"))
+    {
+        float shdfrac = Actor.GetShdFrac(hammer);
+        if (shdfrac <= 0.5) 
+        {
+            SetGameStateB("HammerAngry", true);
+            Lose.hammer();
+        }
+    }
+    
     if (!GetGameStateB("PriComplete"))
     {
         if (hammer_arrived)
         {
-            AddEvent(10, "announce_primaryComplete");
+            AddEvent(10, "Sequence.primaryComplete");
             SetGameStateB("PriComplete", true);
-            Audio.SetMood(-4);
+            Audio.Mood.PriObjComplete();
         }
     }
 
+    if (primary_completed)
+    {
+        if (Math.GetActorDistance(alpha1, hammer_hangar) < 400)
+        {
+            Commit.win();
+        }
+    }
+
+
+Prep.hammer:
+    int[] list = Actor.GetChildrenByType(hammer, "HANGAR");
+    hammer_hangar = list[0];
+
+
+Message1.hammer:
+	Common.MessageImportant("ISD HAMMER: The ISD HAMMER has arrived to take command of the battle.", msg_outpost);
+    Audio.QueueSpeech("1M2\1m2w1");
+
     
-scutz_discovered:
-    SetGameStateB("ScutzDiscovered", true);
+Message2.hammer:
+	Common.MessageImportant("ISD HAMMER: Good work. You have fought well in defending D-34 Outpost.", msg_outpost);
 
 
-setmood4:
-    Audio.SetMood(4);
+Warn.hammer:
+    Actor.SetFaction(alpha1, "Traitor");
+	Common.MessageCritical("ISD HAMMER: What are you doing, pilot?", msg_warn);
 
 
-setmood0:
-    Audio.SetMood(0);
-
-    
-win:
+Lose.hammer:
     triggerwinlose = true;
-    SetGameStateB("GameWon",true);
-    Script.Call("messagewin");
-    AddEvent(1, "fadeout");
-    AddEvent(0.001, "slow");
+	Common.MessageCritical("MISSION FAILED: The ISD HAMMER had enough of your antics. You will be dealt with switfly.", msg_fail);
+    Actor.SetFaction(alpha1, "Traitor");
+    SetGameStateB("GameOver", true);
+    AddEvent(3, "CurtainCall");
+	Audio.Mood.PriObjFail();
 
 
-slow:
-    int pactor = Player.GetActor();
-	if (Actor.IsAlive(pactor))
-	{
-        Actor.DisableSubsystem(pactor, "ENGINE");
-        Actor.SetProperty(pactor, "Movement.Speed", Actor.GetProperty(pactor, "Movement.Speed") - GetLastFrameTime() * 100);
-        AddEvent(0.01, "slow");
-	}
+Check.scutz:
+    if (!GetGameStateB("ScutzInspected"))
+    {
 
+    }
+    else
+    {
+        if (!GetGameStateB("ScutzDisabled"))
+        {
+            float shd = Actor.GetShd(scutz);
+            if (shd <= 0) 
+            {
+                //float3 pos = Actor.GetGlobalPosition(scutz);
+                //float3 fac = Actor.GetGlobalDirection(scutz);
+                //pos += fac * 5000;
+                AI.ForceClearQueue(scutz);
+                //AI.QueueLast(scutz, "rotate", pos, 0, 1, false);
+                AI.QueueLast(scutz, "lock");
+                Actor.DisableSubsystem(scutz, "ENGINE");
+                Actor.DisableSubsystem(scutz, "SIDE_THRUSTERS");
+                Actor.DisableSubsystem(scutz, "SHIELD_GENERATOR");
+
+                Actor.SetFaction(scutz, "Neutral_Inspect");
+                //Actor.SetProperty(scutz, "Regen.Self", 0);
+	            Common.MessageStandard("MU 1: This is MU 1. Target disabled.", faction_empire_hammer_color);
+                Audio.QueueSpeech("a-this", "a-mu", "a-one", "a-target", "a-disabl");
+                SetGameStateB("ScutzDisabled", true);
+            }
+        }
+    }
     
-lose_outpostlost:
-    triggerwinlose = true;
-    Script.Call("messagelose_outpostlost");
-    SetGameStateB("GameOver",true);
-    AddEvent(3, "fadeout");
-    Audio.SetMood(-7);
-
+    if (GetGameStateB("MuDispatched") && GetGameStateB("ScutzDisabled"))
+    {
+        if (!GetGameStateB("MuBoarding"))
+        {
+            if (Math.GetActorDistance(mu, scutz) < 400)
+            {
+                SetGameStateB("MuBoarding", true);
+                Boarding.mu();
+            }
+        }
+    }
     
-lose_hammerangry:
-    triggerwinlose = true;
-    Script.Call("messagelose_hammerlost");
-    SetGameStateB("GameOver",true);
-    AddEvent(3, "fadeout");
-    Audio.SetMood(-7);
-
-
-lose_hammerwarn:
-    Script.Call("messagewarn_hammer");
-    
-    
-fadeout:
-    Scene.FadeOut();
-    
-    
-start:
-    Player.SetMovementEnabled(true);
+    if (GetGameStateB("RebelsCaptured") && !GetGameStateB("RebelsCaptureAnnounced"))
+    {
+        SetGameStateB("RebelsCaptureAnnounced", true);
+        Message1.rebelscaptured();
+        AddEvent(4, "Message2.rebelscaptured");
+    }
 
 
-mu_boarding:
-    Script.Call("message_muboarding");
-    AddEvent(60, "mu_boardingcomplete");
+Inspected.scutz:
+    //if (Math.GetActorDistance(alpha1, scutz) < 200)
+    //{
+        SetGameStateB("ScutzInspected", true);
+        Common.MessageStandard("Shuttle SHUTZ 1 has been identified to be carrying Rebel officers.", msg_warn);
+        
+        Actor.SetFaction(scutz, "Neutral_Rebel");
+        AddEvent(6, "Message1.scutz");
+        AddEvent(9, "Spawn.AllyMu");
+        AddEvent(10, "Message2.scutz");
+        Audio.Mood.SecObjComplete();
+    //}
+
+Message1.scutz:
+	Common.MessageStandard("PLT/1 D-34: We have located the shuttle with the rebel officers fleeing from Hoth.", faction_empire_hammer_color);
+    Audio.QueueSpeech("1M2\1m2w2");
+
+
+Message2.scutz:
+	Common.MessageStandard("PLT/1 D-34: Reinforcements will arrive shortly to disable and capture the shuttle.", faction_empire_hammer_color);
+
+
+Boarding.mu:
+	Common.MessageStandard("MU 1: Beginning boarding operation.", faction_empire_hammer_color);
+    Audio.QueueSpeech("a-this", "a-mu", "a-one", "a-commen", "a-board", "a-missio");
+    AddEvent(60, "BoardingComplete.mu");
     float3 pos = Actor.GetGlobalPosition(scutz);
     float3 fac = Actor.GetGlobalDirection(scutz);
     float3 pos1 = pos + fac * 1000;
     AI.ForceClearQueue(mu);
-    AI.QueueLast(mu, "move", Actor.GetGlobalPosition(scutz), 25, 500, false);
+    AI.QueueLast(mu, "move", pos, 100, 600, false);
+    AI.QueueLast(mu, "move", pos, 25, 200, false);
     AI.QueueLast(mu, "rotate", pos1, 0, 1, false);
     AI.QueueLast(mu, "lock");
 
 
-mu_boardingcomplete:
+BoardingComplete.mu:
     if (!triggerwinlose && Actor.IsAlive(scutz))
     {
         SetGameStateB("MuBoardingComplete", true);
-        Script.Call("message_muboardingcomplete");
+        Common.MessageStandard("MU 1: Boarding operation complete. Proceeding to enter hyperspace.", faction_empire_hammer_color);
+        Audio.QueueSpeech("a-this", "a-mu", "a-one", "a-board", "a-compl");
         AI.ForceClearQueue(mu);
         AI.QueueLast(mu, "rotate", {2300, 100, 5000}, 200, 1, false);
-        AI.QueueLast(mu, "wait", 10);
+        AI.QueueLast(mu, "wait", 3);
         AI.QueueLast(mu, "hyperspaceout");
         AI.QueueLast(mu, "setgamestateb", "MuDispatched", false);
         AI.QueueLast(mu, "setgamestateb", "RebelsCaptured", true);
@@ -481,51 +508,94 @@ mu_boardingcomplete:
     }
 
 
-spawn_ally_eta:
+Message1.rebelscaptured:
+	Common.MessageStandard("PLT/1 D-34: The rebel offices have been taken into Empire custody.", msg_outpost);
+
+
+Message2.rebelscaptured:
+	Common.MessageStandard("PLT/1 D-34: The shuttle SCUTZ may now be destroyed.", msg_outpost);
+
+
+Check.ties:
+    if (!GetGameStateB("ZetaSpawned"))
+    {
+        if (wing_emp < 5)
+        {
+            SetGameStateB("ZetaSpawned", true);
+            Spawn.AllyZeta();
+        }
+    }
+    else
+    {
+        if (!GetGameStateB("LambdaSpawned"))
+        {
+            if (wing_emp < 6)
+            {
+                SetGameStateB("LambdaSpawned", true);
+                Spawn.AllyLambda();
+            }
+        }
+    }
+
+
+
+// Congrats
+Commit.win:
+    triggerwinlose = true;
+    SetGameStateB("GameWon",true);
+    Message.Docking();
+    AddEvent(1, "CurtainCall");
+    AddEvent(0.001, "Player.slow");
+
+
+Player.slow:
+	if (Actor.IsAlive(alpha1))
+	{
+        Actor.DisableSubsystem(alpha1, "ENGINE");
+        Actor.SetProperty(alpha1, "Movement.Speed", Actor.GetProperty(alpha1, "Movement.Speed") - GetLastFrameTime() * 100);
+        AddEvent(0.01, "Player.slow");
+	}    
+
+
+Spawn.AllyEta:
     for (int i = 0; i < 4; i += 1)
     {   
         _a = Actor.Spawn("TIE", "ETA " + (i + 1), "Empire", "", 0, _d, _d);
-        Actor.CallOnRegisterKill(_a, "voic_message_scorekill");
         Actor.QueueAtSpawner(_a, outpost);
     }
 
-    Audio.SetMood(-11);
-    Script.Call("message_reinf");
+    Audio.Mood.AllyReinforce();
+	Common.MessageStandard("PLT/1 D-34: We are dispatching additional TIEs to engage the threats.", msg_outpost);
     
     
-spawn_ally_zeta:
+Spawn.AllyZeta:
     for (int i = 0; i < 4; i += 1)
     {   
         _a = Actor.Spawn("TIE", "ZETA " + (i + 1), "Empire", "", 0, _d, _d);
         Actor.QueueAtSpawner(_a, outpost);
     }
 
-    Audio.SetMood(-11);
-    Script.Call("message_reinf");
+    Audio.Mood.AllyReinforce();
+	Common.MessageStandard("PLT/1 D-34: We are dispatching additional TIEs to engage the threats.", msg_outpost);
 
 
-spawn_ally_lambda:
+Spawn.AllyLambda:
     for (int i = 0; i < 4; i += 1)
     {   
         _a = Actor.Spawn("TIE", "LAMBDA " + (i + 1), "Empire", "", 0, _d, _d);
         Actor.QueueAtSpawner(_a, outpost);
     }
 
-    Audio.SetMood(-11);
-    Script.Call("message_reinf");
+    Audio.Mood.AllyReinforce();
+	Common.MessageStandard("PLT/1 D-34: We are dispatching additional TIEs to engage the threats.", msg_outpost);
 
 
-spawn_mu:
+Spawn.AllyMu:
     mu = Actor.Spawn("GUN", "MU 1", "Empire_Mu", "", 0, {15000,0,-100000}, {0,0,0});
 
     Actor.SetProperty(mu, "Movement.MinSpeed", 0);
     Actor.SetProperty(mu, "AI.CanEvade", false);
     Actor.SetProperty(mu, "AI.CanRetaliate", false);
-    actorp_id = mu;
-    actorp_value = 40;
-    Script.Call("actorp_setShd");
-    actorp_value = 30;
-    Script.Call("actorp_setHull");
 
     AI.QueueLast(mu, "hyperspacein", { 3600, 500, 7600 });
     AI.QueueLast(mu, "setgamestateb", "MuDispatched", true);
@@ -539,7 +609,7 @@ spawn_mu:
     AI.QueueLast(scutz, "delete");
 
 
-spawn_ywing1:
+Spawn.EnemyYWing1:
     spawn_faction = "Mugaari";
     spawn_hyperspace = true;
     spawn_wait = 3;
@@ -551,15 +621,15 @@ spawn_ywing1:
     spawn_rot = { 0, 180 ,0 };
     Script.Call("spawn2");
     Actor.SetProperty(spawn_ids[0], "AI.CanEvade", false);
-    Actor.SetProperty(spawn_ids[0], "AI.CanRetaliate", false);
+    Actor.SetProperty(spawn_ids[0], "AI.CanRetaliate", false);   
     
-    Audio.SetMood(-31);
-    Script.Call("message_enemyYWING1");
-    Script.Call("setmood4");
+    Audio.Mood.NeutralReinforce();
+    Common.MessageNewCraftAlertTarget(spawn_faction, "Y-WING", spawn_name, outpost_sidebarname, faction_mugaari_color);
+    Audio.Mood.Combat();
     combat = true;
 
 
-spawn_ywing2:
+Spawn.EnemyYWing2:
     spawn_faction = "Rebels";
     spawn_hyperspace = true;
     spawn_wait = 3;
@@ -573,12 +643,11 @@ spawn_ywing2:
     AddEvent(10, "clear3");
     AddEvent(15, "clear4");
 
-    Audio.SetMood(-21);
-    Script.Call("message_enemyYWING2");
-    Script.Call("setmood4");
+    Audio.Mood.EnemyReinforce();
+    Common.MessageNewCraftAlertTarget(spawn_faction, "Y-WING", spawn_name, outpost_sidebarname, faction_rebel_color);
 
 
-spawn_ywing3:
+Spawn.EnemyYWing3:
     spawn_faction = "Mugaari";
     spawn_hyperspace = true;
     spawn_wait = 3;
@@ -592,16 +661,15 @@ spawn_ywing3:
     Actor.SetProperty(spawn_ids[0], "AI.CanEvade", false);
     Actor.SetProperty(spawn_ids[0], "AI.CanRetaliate", false);
     
-    Audio.SetMood(-31);
-    Script.Call("message_enemyYWING3");
-    Script.Call("setmood4");
+    Audio.Mood.NeutralReinforce();
+    Common.MessageNewCraftAlertTarget(spawn_faction, "Y-WING", spawn_name, outpost_sidebarname, faction_mugaari_color);
     
     
-spawn_xwing1:
+Spawn.EnemyXWing1:
     spawn_faction = "Mugaari";
     spawn_hyperspace = true;
     spawn_wait = 6;
-    spawn_type = (GetDifficulty() == "hard") ? "XWING" : "Z95";
+    spawn_type = "Z95";
     spawn_name = "DERK";
     spawn_target = outpost;
     spawn_spacing = 500;
@@ -614,12 +682,11 @@ spawn_xwing1:
         AddEvent(8, "clear1");
     }
     
-    Audio.SetMood(-31);
-    Script.Call("message_enemy" + spawn_type + "1");
-    Script.Call("setmood4");
+    Audio.Mood.NeutralReinforce();
+    Common.MessageNewCraftAlertTarget(spawn_faction, "Z-95", spawn_name, outpost_sidebarname, faction_mugaari_color);
     
     
-spawn_xwing2:
+Spawn.EnemyXWing2:
     spawn_faction = "Rebels";
     spawn_hyperspace = true;
     spawn_wait = 2;
@@ -631,12 +698,11 @@ spawn_xwing2:
     spawn_rot = { 0, 180 ,0 };
     Script.Call("spawn3");
     
-    Audio.SetMood(-21);
-    Script.Call("message_enemy" + spawn_type + "2");
-    Script.Call("setmood4");
+    Audio.Mood.EnemyReinforce();
+    Common.MessageNewCraftAlertTarget(spawn_faction, (GetDifficulty() != "easy") ? "X-WING" : "Z-95", spawn_name, "TIE-Fighters", faction_rebel_color);
 
 
-spawn_xwing3:
+Spawn.EnemyXWing3:
     spawn_faction = "Rebels";
     spawn_hyperspace = true;
     spawn_wait = 2;
@@ -648,12 +714,11 @@ spawn_xwing3:
     spawn_rot = { 0, 180 ,0 };
     Script.Call("spawn4");
     
-    Audio.SetMood(-21);
-    Script.Call("message_enemyXWING3");
-    Script.Call("setmood4");
+    Audio.Mood.EnemyReinforce();
+    Common.MessageNewCraftAlertTarget(spawn_faction, "X-WING", spawn_name, "TIE-Fighters", faction_rebel_color);
 
 
-spawn_ywing4:
+Spawn.EnemyYWing4:
     spawn_faction = "Rebels";
     spawn_hyperspace = true;
     spawn_wait = 3;
@@ -671,12 +736,11 @@ spawn_ywing4:
     Actor.SetProperty(spawn_ids[4], "AI.CanEvade", false);
     Actor.SetProperty(spawn_ids[4], "AI.CanRetaliate", false);
     
-    Audio.SetMood(-21);
-    Script.Call("message_enemyYWING4");
-    Script.Call("setmood4");
+    Audio.Mood.EnemyReinforce();
+    Common.MessageNewCraftAlertTarget(spawn_faction, "Y-WING", spawn_name, outpost_sidebarname, faction_rebel_color);
 
 
-spawn_scutz:
+Spawn.Scutz:
     spawn_faction = "Neutral_Inspect";
     spawn_hyperspace = true;
     spawn_wait = 3;
@@ -686,31 +750,30 @@ spawn_scutz:
     spawn_pos = { 0, -200, 19000 };
     spawn_rot = { 0, 180 ,0 };
     Script.Call("spawn1");
-    Audio.SetMood(-31);
-    Script.Call("message_scutz");
+    Audio.Mood.NeutralReinforce();
+	Common.MessageStandard("New craft alert: An unidentified shuttle has entered the area.", faction_neutral_rebel_color);
 
     AddEvent(0.5, "spawn_removechildren");
     foreach (int a in spawn_ids)
     {
         Actor.SetProperty(a, "Movement.MinSpeed", 0);
         Actor.SetArmor(a, "MISSILE", 0.1);
-        actorp_id = a;
-        actorp_value = 10;
-        Script.Call("actorp_setShd");
-        actorp_value = 40;
-        Script.Call("actorp_setHull");
+        Common.SetHull(a, 40);
         
         AI.QueueLast(a, "move", { -9000, -200, 3000 }, 250, 500, false);
         AI.QueueLast(a, "move", { -6000, -200, -8000 }, 250, 500, false);
         AI.QueueLast(a, "hyperspaceout");
         AI.QueueLast(a, "setgamestateb", "ScutzEscaped", true);
         AI.QueueLast(a, "delete");
+
+        Actor.CallOnCargoScanned(a, "Inspected.scutz");
+        Actor.SetProperty(a, "Cargo", "OFFICERS");
     }
     scutz = spawn_ids[0];
     scutz_arrived = true;
 
 
-spawn_ubote:
+Spawn.EnemyUbote:
     ubote1 = Actor.Spawn("CORV", "UBOTE 1", "Rebels", "", 0, {10000,0,100000}, {0,0,0}, {"CriticalEnemies"});
     AI.QueueLast(ubote1, "hyperspacein", { -2600, 200, 8600 });
     AI.QueueLast(ubote1, "move", {-2600, 200, 3600}, 100);
@@ -729,11 +792,11 @@ spawn_ubote:
     AI.QueueLast(ubote3, "rotate", {-1600, -150, -10000}, 0);
     AI.QueueLast(ubote3, "lock");
     
-    Audio.SetMood(-22);
-    Script.Call("message_enemyUbote");
+    Audio.Mood.EnemyBigReinforce();
+	Common.MessageStandard("New craft alert: Rebel CORVETTE UBOTE group entering the area. Proceed with caution!", faction_rebel_color);
 
 
-spawn_hammer:
+Spawn.AllyHammer:
     hammer_arrived = true;
     hammer = Actor.Spawn("ISD", "HAMMER", "Empire_Hammer", "", 0, {10000,0,-100000}, {0,0,0}, {"CriticalAllies"});
     
@@ -742,12 +805,12 @@ spawn_hammer:
     AI.QueueLast(hammer, "hyperspacein", { 5600, 700, 4600 });
     AI.QueueLast(hammer, "rotate", {0, 600, 13000}, 0);
     AI.QueueLast(hammer, "lock");
-    Audio.SetMood(-12);
-    Script.Call("message_hammer");
-    AddEvent(0.1, "gethangar");
-    AddEvent(4, "message_hammer_2");
-    AddEvent(15, "ubote_retreat");
-    AddEvent(18, "rebels_retreat");
+    Audio.Mood.AllyBigReinforce();
+    Message1.hammer();
+    AddEvent(0.1, "Prep.hammer");
+    AddEvent(4, "Message2.hammer");
+    AddEvent(15, "Retreat.rebelShips");
+    AddEvent(18, "Retreat.rebelWings");
 
 
 spawn_removechildren:
@@ -775,11 +838,8 @@ clear3:
 clear4:
     AI.ForceClearQueue(spawn_ids[4]);
 
-gethangar:
-    int[] list = Actor.GetChildrenByType(hammer, "HANGAR");
-    hammer_hangar = list[0];
 
-ubote_retreat:
+Retreat.rebelShips:
     AI.ForceClearQueue(ubote1);
     AI.QueueLast(ubote1, "move", { -2600, 200, 10600 }, 500, 500, false);
     AI.QueueLast(ubote1, "hyperspaceout");
@@ -796,22 +856,75 @@ ubote_retreat:
     AI.QueueLast(ubote3, "delete");
 
 
-rebels_retreat:
+Retreat.rebelWings:
     int[] rebelwings = Faction.GetWings("Rebels");
     foreach (int a in rebelwings)
     {
+        Actor.SetProperty(a, "AI.CanEvade", false);
+        Actor.SetProperty(a, "AI.CanRetaliate", false);
         AI.ForceClearQueue(a);
         AI.QueueLast(a, "rotate", { -1600, 0, 13600 }, 50, false);
         AI.QueueLast(a, "hyperspaceout");
         AI.QueueLast(a, "delete");
     }
 
-    
-announce_primaryComplete:
-    AddEvent(3, "message_primaryobj_completed");
-    AddEvent(7, "message_returntobase");
-    AddEvent(7.1, "setComplete");
+
+Message.SectorAlert:
+	Common.MessageStandard("PLT\1 D-34: Sector alert! There are unknown craft entering our area.", msg_outpost);
+    Audio.StopSpeech();
+    Audio.QueueSpeech("1M2\1m2r1");
 
 
-setComplete:
+Message.AddressBetaGamma:
+	Common.MessageStandard("PLT\1 D-34: BETA and GAMMA squadrons, engage enemy forces.", msg_outpost);
+    Audio.QueueSpeech("1M2\1m2r2");
+
+
+Message.BetaRespond:
+    Audio.QueueSpeech("a-this", "a-beta", "a-one", "a-onway");
+
+
+Message.AddressAlpha:
+	Common.MessageStandard("PLT\1 D-34: ALPHA squadron, join the attack and engage the enemy.", msg_outpost);
+    Audio.StopSpeech();
+    Audio.QueueSpeech("1M2\1m2r3");
+
+
+Message.AttackYWings:
+	Common.MessageStandard("PLT\1 D-34: Stop all Y-WINGs from making torpedo runs on D-34.", msg_outpost);
+    Audio.QueueSpeech("1M2\1m2r4");
+
+
+Message.GammaRespond:
+    Audio.QueueSpeech("a-this", "a-gamma", "a-one", "a-proc");
+
+
+Message.PriObj:
+	Common.MessageStandard("PLT/1 D-34: Hold all attacks until reinforcements arrive to relieve defenses.", msg_outpost);
+
+
+
+Sequence.primaryComplete:
+    AddEvent(3, "Message.PriObjCompleted");
+    AddEvent(7, "Message.GotoHangar");
+
+
+Message.PriObjCompleted:
+	Common.MessageStandard("ISD HAMMER: The ISD HAMMER has arrived to recover station defense forces.", msg_outpost);
+    Audio.StopSpeech();
+    Audio.QueueSpeech("1M2\1m2r7");
+
+
+Message.GotoHangar:
     primary_completed = true;
+	Common.MessageStandard("ISD HAMMER: ALPHA 1, return to the HAMMER's hangar immediately.", faction_empire_hammer_color);
+    Audio.QueueSpeech("1M2\1m2r8");
+
+
+Message.Docking:
+	Common.MessageStandard("Docking...", faction_empire_color);
+
+
+// End the mission
+CurtainCall:
+	Scene.FadeOut();
