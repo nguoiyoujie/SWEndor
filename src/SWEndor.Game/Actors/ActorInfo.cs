@@ -449,7 +449,7 @@ namespace SWEndor.Game.Actors
       MoveData.Reset();
       CollisionData.Reset();
       SpecialData.Reset();
-      Meshes.Dispose(Engine.ActorMeshTable, ref TypeInfo.MeshData);
+      Meshes.Dispose(ref TypeInfo.MeshData);
 
       InCombat = false;
 

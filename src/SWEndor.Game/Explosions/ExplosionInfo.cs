@@ -157,7 +157,7 @@ namespace SWEndor.Game.Explosions
 
       // Final dispose
       ExplosionFactory.Remove(ID);
-      Meshes.Dispose(Engine.ExplosionMeshTable, ref TypeInfo.MeshData);
+      Meshes.Dispose(ref TypeInfo.MeshData);
 
       // Finally
       SetDisposed();

@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using SWEndor.Game.Particles;
 using SWEndor.Game.ParticleTypes;
 using SWEndor.Game.ActorTypes.Components;
+using Primrose.Primitives.Extensions;
 
 namespace SWEndor.Game.Core
 {
@@ -73,8 +74,12 @@ namespace SWEndor.Game.Core
     internal MeshEntityTable ActorMeshTable { get; private set; }
     internal MeshEntityTable ExplosionMeshTable { get; private set; }
     internal MeshEntityTable ProjectileMeshTable { get; private set; }
+    internal List<MeshEntityTable> MeshTables { get; private set; }
     internal Registry<TVMesh> MeshRegistry { get; private set; }
     internal Registry<int> TextureRegistry { get; private set; }
+    internal List<TVMesh> DisabledMeshes { get; private set; }
+    private int[] RenderMeshList { get; set; }
+    private int[] RenderSortedMeshList { get; set; }
 
 
     // Engine parts to be loaded late
@@ -105,6 +110,10 @@ namespace SWEndor.Game.Core
       MeshRegistry = new Registry<TVMesh>();
       TextureRegistry = new Registry<int>();
       PlayerInfo = new PlayerInfo(this);
+      DisabledMeshes = new List<TVMesh>(1028);
+      MeshTables = new List<MeshEntityTable> { ActorMeshTable, ProjectileMeshTable, ExplosionMeshTable };
+      RenderMeshList = new int[1028];
+      RenderSortedMeshList = new int[1028];
 
       FontFactory = new Font.Factory();
     }
@@ -294,38 +303,82 @@ namespace SWEndor.Game.Core
     {
       Surfaces.Render();
 
-      //using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
-      //{
-        TrueVision.TVEngine.Clear();
-        AtmosphereInfo.Render();
-      //}
+      TrueVision.TVEngine.Clear();
+      AtmosphereInfo.Render();
       //LandInfo.Render();
 
-      using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+      int maxRenderOrder = GetMaxRenderOrder();
+      if (maxRenderOrder > 0)
       {
-        TrueVision.TVScene.FinalizeShadows();
-        TrueVision.TVScene.RenderAllMeshes(true);
-        TrueVision.TVScene.RenderAllParticleSystems();
+        using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        {
+          TrueVision.TVScene.FinalizeShadows();
+          RenderMeshes(0);
+          TrueVision.TVScene.RenderAllParticleSystems();
+          for (int i = 1; i <= maxRenderOrder; i++)
+          {
+            RenderMeshes(i);
+          }
+        }
       }
-
-
-      // test
-      //foreach (ActorInfo a in ActorFactory.GetAll())
-      //{
-      //ActorInfo a = PlayerInfo.TargetActor;
-      //  if (a != null)
-      //{
-      //  GameScenarioManager.Octree.GetId(a.GetBoundingBox(false), ref a.OctID);
-      //  Box b = GameScenarioManager.Octree.GetBox(a.OctID);
-      //  TrueVision.TVScreen2DImmediate.Draw_Box3D(new TV_3DVECTOR(b.X.Min, b.Y.Min, b.Z.Min), new TV_3DVECTOR(b.X.Max, b.Y.Max, b.Z.Max), new TV_COLOR(1, 1, 0, 1).GetIntColor());
-      //}
-      //}
+      else
+      {
+        // ok to render all
+        using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
+        {
+          TrueVision.TVScene.FinalizeShadows();
+          TrueVision.TVScene.RenderAllMeshes(true);
+          TrueVision.TVScene.RenderAllParticleSystems();
+        }
+      }
 
       Screen2D.Draw();
       Screen2D.CurrentPage?.RenderTick();
 
-      //using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
-        TrueVision.TVEngine.RenderToScreen();
+      TrueVision.TVEngine.RenderToScreen();
+    }
+
+    private int GetMaxRenderOrder()
+    {
+      int count = 0;
+      foreach (MeshEntityTable table in MeshTables)
+      {
+        count = count.Max(table.GetMaxRenderOrder());
+      }
+      return count;
+    }
+
+    private int RenderMeshes(int meshRenderOrder)
+    {
+      //Array.Clear(RenderMeshList, 0, RenderMeshList.Length);
+      int index = 0;
+      foreach (MeshEntityTable table in MeshTables)
+      {
+        if (table.GetMaxRenderOrder() < meshRenderOrder)
+          continue;
+
+        foreach (var meshID in table.EnumerateKeys())
+        {
+          if (table[meshID].RenderOrder == meshRenderOrder && table.IsVisible(meshID))
+          {
+            if (index > RenderMeshList.Length)
+            {
+              // replace list
+              var oldlist = RenderMeshList;
+              RenderMeshList = new int[oldlist.Length * 2];
+              RenderSortedMeshList = new int[RenderMeshList.Length];
+              Array.Copy(oldlist, RenderMeshList, RenderMeshList.Length);
+            }
+            RenderMeshList[index++] = meshID;
+          }
+        }
+      }
+      if (index > 0)
+      {
+        TrueVision.TVScene.SortMeshList(index, RenderMeshList, RenderSortedMeshList);
+        TrueVision.TVScene.RenderMeshList(index, RenderSortedMeshList);
+      }
+      return index;
     }
 
     public void LinkForm(GameForm form)

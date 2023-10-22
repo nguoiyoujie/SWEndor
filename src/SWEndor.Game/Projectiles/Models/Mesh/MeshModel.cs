@@ -5,12 +5,15 @@ using SWEndor.Game.ActorTypes.Components;
 using SWEndor.Game.Shaders;
 using SWEndor.Game.ProjectileTypes;
 using Primrose.Primitives.Geometry;
+using System.Collections;
 
 namespace SWEndor.Game.Projectiles.Models
 {
   internal struct MeshModel
   {
     private TVMesh Mesh;
+    private int MeshID;
+    private MeshEntityTable MeshTable;
     private ShaderInfo ShaderInfo;
     private TVShader Shader;
 
@@ -25,19 +28,24 @@ namespace SWEndor.Game.Projectiles.Models
       if (disposeScope == null)
         disposeScope = new ScopeCounters.ScopeCounter();
 
-      GenerateMeshes(shaderFactory, table, id, ref data);
+      MeshTable = table;
+      GenerateMeshes(shaderFactory, id, ref data);
 
       ScopeCounters.Reset(disposeScope);
     }
 
-    private void GenerateMeshes(ShaderInfo.Factory shaderFactory, MeshEntityTable table, int id, ref MeshData data)
+    private void GenerateMeshes(ShaderInfo.Factory shaderFactory, int id, ref MeshData data)
     {
       using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
         Mesh = data.GetNewMesh();
+        MeshID = Mesh.GetIndex();
         Mesh.Enable(false);
+        MeshTable.MarkVisible(MeshID, false);
         prev_render = false;
-        table.Put(Mesh.GetIndex(), id);
+
+        MeshInfo info = new MeshInfo() { ActorID = id, RenderOrder = data.RenderOrder };
+        MeshTable.Put(MeshID, info);
 
         //Mesh.ShowBoundingBox(true);
         string shdr = data.Shader;
@@ -55,7 +63,7 @@ namespace SWEndor.Game.Projectiles.Models
       }
     }
 
-    public void Dispose(MeshEntityTable table, ref MeshData data)
+    public void Dispose(ref MeshData data)
     {
       if (ScopeCounters.AcquireIfZero(disposeScope))
       {
@@ -65,9 +73,9 @@ namespace SWEndor.Game.Projectiles.Models
           Mesh.SetShader(null);
           Mesh.Enable(false);
           prev_render = false;
+          MeshTable.MarkVisible(MeshID, false);
           data.ReturnMesh(Mesh);
-          //Mesh.Destroy();
-          table.Remove(Mesh.GetIndex());
+          MeshTable.Remove(MeshID);
           Mesh = null;
 
           ShaderInfo?.ReturnShader(Shader);
@@ -187,6 +195,7 @@ namespace SWEndor.Game.Projectiles.Models
             prev_render = render;
             using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
               Mesh.Enable(render);
+            MeshTable.MarkVisible(MeshID, render);
           }
 
           if (prev_collide != collide)
@@ -218,8 +227,6 @@ namespace SWEndor.Game.Projectiles
     public TV_3DVECTOR GetVertex(int vertexID) { return Meshes.GetVertex(vertexID); }
     public int GetVertexCount() { return Meshes.GetVertexCount(); }
     public void EnableCollision(bool enable) { Meshes.EnableCollision(enable); }
-
-    //public void Render() { Meshes.Render(); }
 
     public TV_3DVECTOR MaxDimensions { get { return TypeInfo.MeshData.MaxDimensions; } }
     public TV_3DVECTOR MinDimensions { get { return TypeInfo.MeshData.MinDimensions; } }

@@ -192,8 +192,9 @@ namespace SWEndor.Game.Models
           vData.Impact = tvcres.vCollisionImpact;
           vData.Normal = tvcres.vCollisionNormal;
 
-          if (engine.ActorMeshTable.TryGet(tvcres.iMeshID, out int checkID))
+          if (engine.ActorMeshTable.TryGet(tvcres.iMeshID, out MeshInfo info))
           {
+            int checkID = info.ActorID;
             if (!isProspective)
             {
               ActorInfo checkActor = engine.ActorFactory.Get(checkID);

@@ -56,9 +56,9 @@ namespace SWEndor.Game.Player
         TVMesh mesh = tvcres.GetCollisionMesh();
         if (mesh != null)
         {
-          if (engine.ActorMeshTable.TryGet(mesh.GetIndex(), out int n))
+          if (engine.ActorMeshTable.TryGet(mesh.GetIndex(), out MeshInfo info))
           {
-            ActorInfo a = engine.ActorFactory.Get(n);
+            ActorInfo a = engine.ActorFactory.Get(info.ActorID);
 
             if (a != null)
             {

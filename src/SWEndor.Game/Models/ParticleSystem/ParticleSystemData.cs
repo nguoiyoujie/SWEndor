@@ -63,10 +63,5 @@ namespace SWEndor.Game.Models
     {
       ParticleSystem.Update();
     }
-
-    //public void Render()
-    //{
-    //  ParticleSystem.Render();
-    //}
   }
 }

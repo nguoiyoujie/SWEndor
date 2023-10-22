@@ -7,6 +7,7 @@ using SWEndor.Game.Shaders;
 using SWEndor.Game.UI;
 using Primrose.Primitives.Geometry;
 using SWEndor.Game.Core;
+using System.Collections;
 
 namespace SWEndor.Game.Actors.Models
 {
@@ -14,6 +15,9 @@ namespace SWEndor.Game.Actors.Models
   {
     private TVMesh Mesh;
     private TVMesh FarMesh;
+    private int MeshID;
+    private int FarMeshID;
+    private MeshEntityTable MeshTable;
     private ShaderInfo ShaderInfo;
     private TVShader Shader;
 
@@ -28,24 +32,30 @@ namespace SWEndor.Game.Actors.Models
       if (disposeScope == null)
         disposeScope = new ScopeCounters.ScopeCounter();
 
-      GenerateMeshes(shaderFactory, table, id, ref data);
+      MeshTable = table;
+      GenerateMeshes(shaderFactory, id, ref data);
 
       ScopeCounters.Reset(disposeScope);
     }
 
-    private void GenerateMeshes(ShaderInfo.Factory shaderFactory, MeshEntityTable table, int id, ref MeshData data)
+    private void GenerateMeshes(ShaderInfo.Factory shaderFactory, int id, ref MeshData data)
     {
       using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
       {
         Mesh = data.GetNewMesh();
         FarMesh = data.GetNewFarMesh();
+        MeshID = Mesh.GetIndex();
+        FarMeshID = FarMesh.GetIndex();
         Mesh.Enable(false);
         prev_render = false;
+        MeshTable.MarkVisible(MeshID, false);
         FarMesh.Enable(false);
         prev_renderfar = false;
+        MeshTable.MarkVisible(FarMeshID, false);
 
-        table.Put(Mesh.GetIndex(), id);
-        table.Put(FarMesh.GetIndex(), id);
+        MeshInfo info = new MeshInfo() { ActorID = id, RenderOrder = data.RenderOrder };
+        MeshTable.Put(MeshID, info);
+        MeshTable.Put(FarMeshID, info);
 
         //Mesh.ShowBoundingBox(true);
         string shdr = data.Shader;
@@ -65,7 +75,7 @@ namespace SWEndor.Game.Actors.Models
       }
     }
 
-    public void Dispose(MeshEntityTable table, ref MeshData data)
+    public void Dispose(ref MeshData data)
     {
       if (ScopeCounters.AcquireIfZero(disposeScope))
       {
@@ -76,17 +86,16 @@ namespace SWEndor.Game.Actors.Models
           Mesh.Enable(false);
           prev_render = false;
           data.ReturnMesh(Mesh);
-
-          //Mesh?.Destroy();
-          table.Remove(Mesh.GetIndex());
+          MeshTable.MarkVisible(MeshID, false);
+          MeshTable.Remove(MeshID);
           Mesh = null;
 
           FarMesh.SetShader(null);
           FarMesh.Enable(false);
           prev_renderfar = false;
           data.ReturnFarMesh(FarMesh);
-          //FarMesh?.Destroy();
-          table.Remove(FarMesh.GetIndex());
+          MeshTable.MarkVisible(FarMeshID, false);
+          MeshTable.Remove(FarMeshID);
           FarMesh = null;
 
           ShaderInfo?.ReturnShader(Shader);
@@ -206,6 +215,7 @@ namespace SWEndor.Game.Actors.Models
             prev_render = render;
             using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
               Mesh.Enable(render);
+            MeshTable.MarkVisible(MeshID, render);
           }
 
           if (prev_renderfar != renderfar)
@@ -213,6 +223,7 @@ namespace SWEndor.Game.Actors.Models
             prev_renderfar = renderfar;
             using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
               FarMesh.Enable(renderfar);
+            MeshTable.MarkVisible(FarMeshID, renderfar);
           }
 
           if (prev_collide != collide)
@@ -286,7 +297,6 @@ namespace SWEndor.Game.Actors
     public bool AdvancedCollision(TV_3DVECTOR start, TV_3DVECTOR end, ref TV_COLLISIONRESULT result) { return Meshes.AdvancedCollision(this, start, end, ref result); }
     public int GetMaterial(int iGroup) { return Meshes.GetMaterial(iGroup); }
     public void SetColorEmissive(int iGroup, COLOR color) { Meshes.SetColorEmissive(Engine, iGroup, color); }
-
     public TV_3DVECTOR MaxDimensions { get { return TypeInfo.MeshData.MaxDimensions; } }
     public TV_3DVECTOR MinDimensions { get { return TypeInfo.MeshData.MinDimensions; } }
   }

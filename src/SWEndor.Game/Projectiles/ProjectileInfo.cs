@@ -196,7 +196,7 @@ namespace SWEndor.Game.Projectiles
       // Kill data
       MoveData.Reset();
       CollisionData.Reset();
-      Meshes.Dispose(Engine.ProjectileMeshTable, ref TypeInfo.MeshData);
+      Meshes.Dispose(ref TypeInfo.MeshData);
       Jamming.Reset();
 
       InCombat = false;

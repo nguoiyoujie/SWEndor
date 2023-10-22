@@ -1,10 +1,8 @@
 ﻿using MTV3D65;
 using Primrose.Primitives;
 using SWEndor.Game.Particles;
-using SWEndor.Game.ParticleTypes;
 using SWEndor.Game.Primitives.Extensions;
 using SWEndor.Game.Shaders;
-using System.Reflection;
 
 namespace SWEndor.Game.Models
 {
