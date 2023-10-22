@@ -32,7 +32,8 @@ namespace SWEndor.Game.UI.Forms
         ucSound1.Update(Engine);
       else if(tabControl1.SelectedTab == tpPool)
         ucPoolCache1.Update(Engine);
-
+      else if (tabControl1.SelectedTab == tpShaders)
+        ucShaderCache1.Update(Engine);
     }
 
     private void StatForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -43,6 +44,7 @@ namespace SWEndor.Game.UI.Forms
     private void StatForm_Load(object sender, EventArgs e)
     {
       ucPoolCache1.Init(Engine);
+      ucShaderCache1.Init(Engine);
     }
   }
 }

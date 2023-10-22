@@ -54,11 +54,17 @@
       this.label9 = new System.Windows.Forms.Label();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.ucInfo1 = new SWEndor.Game.UI.Forms.UIControls.ucInfo();
+      this.tpShaders = new System.Windows.Forms.TabPage();
+      this.ucShaderCache1 = new SWEndor.Game.UI.Forms.UIControls.ucShaderCache();
+
+
+      
       this.tabControl1.SuspendLayout();
       this.tpObjects.SuspendLayout();
       this.tpSound.SuspendLayout();
       this.tpPool.SuspendLayout();
       this.tpInfo.SuspendLayout();
+      this.tpShaders.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
@@ -133,6 +139,7 @@
       this.tabControl1.Controls.Add(this.tpSound);
       this.tabControl1.Controls.Add(this.tpPool);
       this.tabControl1.Controls.Add(this.tpInfo);
+      this.tabControl1.Controls.Add(this.tpShaders);
       this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tabControl1.Location = new System.Drawing.Point(0, 0);
       this.tabControl1.Name = "tabControl1";
@@ -190,6 +197,26 @@
       this.tpPool.TabIndex = 2;
       this.tpPool.Text = "Pool / Cache";
       this.tpPool.UseVisualStyleBackColor = true;
+      // 
+      // tpShaders
+      // 
+      this.tpShaders.Controls.Add(this.ucShaderCache1);
+      this.tpShaders.Location = new System.Drawing.Point(4, 22);
+      this.tpShaders.Name = "tpShaders";
+      this.tpShaders.Padding = new System.Windows.Forms.Padding(3);
+      this.tpShaders.Size = new System.Drawing.Size(620, 400);
+      this.tpShaders.TabIndex = 2;
+      this.tpShaders.Text = "Shaders";
+      this.tpShaders.UseVisualStyleBackColor = true;
+      // 
+      // ucShaderCache1
+      // 
+      this.ucShaderCache1.AutoScroll = true;
+      this.ucShaderCache1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.ucShaderCache1.Location = new System.Drawing.Point(3, 3);
+      this.ucShaderCache1.Name = "ucShaderCache1";
+      this.ucShaderCache1.Size = new System.Drawing.Size(614, 394);
+      this.ucShaderCache1.TabIndex = 0;
       // 
       // ucPoolCache1
       // 
@@ -313,6 +340,7 @@
       this.tabControl1.ResumeLayout(false);
       this.tpObjects.ResumeLayout(false);
       this.tpSound.ResumeLayout(false);
+      this.tpShaders.ResumeLayout(false);
       this.tpPool.ResumeLayout(false);
       this.tpInfo.ResumeLayout(false);
       this.splitContainer1.Panel1.ResumeLayout(false);
@@ -336,9 +364,10 @@
     private System.Windows.Forms.TabPage tpObjects;
     private System.Windows.Forms.TabPage tpSound;
     private System.Windows.Forms.TabPage tpPool;
-    private UIControls.ucStatObjects ucStatObjects1;
-    private UIControls.ucSound ucSound1;
-    private UIControls.ucPoolCache ucPoolCache1;
+    private System.Windows.Forms.TabPage tpShaders;
+    private SWEndor.Game.UI.Forms.UIControls.ucStatObjects ucStatObjects1;
+    private SWEndor.Game.UI.Forms.UIControls.ucSound ucSound1;
+    private SWEndor.Game.UI.Forms.UIControls.ucPoolCache ucPoolCache1;
     private System.Windows.Forms.Label lblAIFrame;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.Label lblCollisionFrame;
@@ -347,7 +376,8 @@
     private System.Windows.Forms.Label label9;
     private System.Windows.Forms.SplitContainer splitContainer1;
     private System.Windows.Forms.TabPage tpInfo;
-    private UIControls.ucInfo ucInfo1;
+    private SWEndor.Game.UI.Forms.UIControls.ucInfo ucInfo1;
+    private SWEndor.Game.UI.Forms.UIControls.ucShaderCache ucShaderCache1;
   }
 }
 
