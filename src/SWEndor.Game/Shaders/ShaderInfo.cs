@@ -3,13 +3,13 @@ using SWEndor.Game.Actors;
 using SWEndor.Game.Core;
 using SWEndor.Game.Models;
 using Primrose.Primitives.Factories;
-using System.Collections.Generic;
 using System.IO;
 using SWEndor.FileFormat.INI;
 using Primrose;
 using Primrose.Primitives.Extensions;
 using Primrose.FileFormat.INI;
 using SWEndor.Game.Primitives.Extensions;
+using System.Collections.Generic;
 
 namespace SWEndor.Game.Shaders
 {
@@ -21,10 +21,13 @@ namespace SWEndor.Game.Shaders
     public TVShader TVShader;
     public TVScene TVScene;
     internal ShaderData Data;
+    internal string ShaderText;
     private Registry<string, int> ConstTex = new Registry<string, int>();
     private Registry<string, int[]> RandTex = new Registry<string, int[]>();
     private ObjectPool<TVShader> _pool;
     private int _count;
+
+    internal ObjectPool<TVShader> Pool { get { return _pool; } }
 
     private ShaderInfo(Engine engine, string name)
     {
@@ -41,10 +44,18 @@ namespace SWEndor.Game.Shaders
       if (Data.DynamicValues == null || Data.DynamicValues.Count > 0)
       {
         _pool = new ObjectPool<TVShader>(true, GenerateShader, null);
-        int temp = _count;
+        int temp = Data.InitialCount;
         _count = 0;
+        List<TVShader> templist = new List<TVShader>();
         for (int i = 0; i < temp; i++)
-          _pool.Return(GenerateShader());
+        {
+          templist.Add(_pool.GetNew());
+        }
+
+        foreach (TVShader s in templist)
+        {
+          _pool.Return(s);
+        }
       }
       else
       {
@@ -95,9 +106,12 @@ namespace SWEndor.Game.Shaders
 
     private TVShader GenerateShader()
     {
-      string shaderText = File.ReadAllText(Path.Combine(Globals.DataShadersPath, Data.ShaderFile));
+      if (string.IsNullOrEmpty(ShaderText))
+      {
+        ShaderText = File.ReadAllText(Path.Combine(Globals.DataShadersPath, Data.ShaderFile));
+      }
       TVShader shader = TVScene.CreateShader(Name + (++_count).ToString());
-      shader.CreateFromEffectString(shaderText);
+      shader.CreateFromEffectString(ShaderText);
       string err = shader.GetLastError();
       if (err != null && err.Length != 0)
       {
@@ -146,9 +160,9 @@ namespace SWEndor.Game.Shaders
       if (shader == null || Data.DynamicValues == null)
         return;
 
-      foreach (var kvp in Data.DynamicValues)
+      foreach (string key in Data.DynamicValues.EnumerateKeys())
       {
-        DynamicShaderDataSetters<T, TType, TCreate>.Set(shader, kvp.Key, kvp.Value, obj);
+        DynamicShaderDataSetters<T, TType, TCreate>.Set(shader, key, Data.DynamicValues[key], obj);
       }
     }
   }

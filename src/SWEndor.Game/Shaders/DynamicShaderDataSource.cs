@@ -50,8 +50,7 @@ namespace SWEndor.Game.Shaders
       { DynamicShaderDataSource.SPEED, (tv, s, t) => {if (t is ActorInfo a) {tv.SetEffectParamFloat(s, a.MoveData.Speed); } } },
       { DynamicShaderDataSource.SPEED_FRAC, (tv, s, t) => {if (t is ActorInfo a) {tv.SetEffectParamFloat(s, a.MoveData.MaxSpeed == 0 ? 1 : a.MoveData.Speed / a.MoveData.MaxSpeed); } } },
       { DynamicShaderDataSource.HYPERSPACE_FACTOR, (tv, s, t) => {if (t is ActorInfo a) {tv.SetEffectParamFloat(s, a.HyperspaceFactor); } } },
-      { DynamicShaderDataSource.PLAYER_HYPERSPACE_FACTOR, (tv, s, t) => {if (t.Engine.PlayerInfo.TempActor is ActorInfo a) 
-        {tv.SetEffectParamFloat(s, a.HyperspaceFactor); } } },
+      { DynamicShaderDataSource.PLAYER_HYPERSPACE_FACTOR, (tv, s, t) => { if (t.Engine.PlayerInfo.TempActor is ActorInfo a) {tv.SetEffectParamFloat(s, a.HyperspaceFactor); } else { tv.SetEffectParamFloat(s, 0); } } },
     };
 
     public static void Set(TVShader shader, string varname, DynamicShaderDataSource valuesource, T obj)
