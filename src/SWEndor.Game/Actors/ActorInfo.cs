@@ -10,10 +10,6 @@ using SWEndor.Game.Models;
 using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using SWEndor.Game.Scenarios.Scripting.Functions;
-using Primrose.Primitives.Factories;
-using Primrose.Expressions;
 using SWEndor.Game.Scenarios.Scripting;
 
 namespace SWEndor.Game.Actors
@@ -378,9 +374,16 @@ namespace SWEndor.Game.Actors
     public static bool MissileCheck(Engine engine, ActorInfo a, ActorInfo actor)
     {
       if (a.TypeInfo.Mask == ComponentMask.GUIDED_PROJECTILE)
-        if (a.CurrentAction is AI.Actions.ProjectileAttackActor attack)
-          if (attack.Target_Actor != null && attack.Target_Actor.TopParent == actor)
-            return false;
+      {
+        ActionInfo action = a.CurrentAction;
+        while (action != null)
+        {
+          if (action is ProjectileAttackActor attack)
+            if (attack.Target_Actor != null && attack.Target_Actor.TopParent == actor)
+              return false;
+          action = action.NextAction;
+        }
+      }
       return true; // continue the function
     }
 
