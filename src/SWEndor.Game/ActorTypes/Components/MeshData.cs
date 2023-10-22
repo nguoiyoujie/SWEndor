@@ -292,9 +292,10 @@ namespace SWEndor.Game.ActorTypes.Components
         m = engine.TrueVision.TVScene.CreateMeshBuilder(id);
         engine.MeshRegistry.Put(id, m);
         string texpath = Path.Combine(Globals.ImagePath, texname);
-        int tex = LoadAlphaTexture(engine, texname, texpath);
+        int tex = LoadTexture(engine, texname, texpath);
         m.AddFloor(tex, -size, -size, size, size);
         m.SetTexture(tex);
+        m.SetAlphaTest(true);
         m.SetCullMode(CONST_TV_CULLING.TV_DOUBLESIDED);
       }
       return new MeshData(m, float3.One, MeshMode.HORIZON, blendmode, "{0},{1}".F(size, texname), shader);
@@ -331,13 +332,7 @@ namespace SWEndor.Game.ActorTypes.Components
         {
           string texpath = Path.Combine(Globals.ImagePath, texname);
           string alphatexpath = Path.Combine(Globals.ImagePath, alphatexname);
-          using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
-          {
-            int texS = engine.TrueVision.TVTextureFactory.LoadTexture(texpath);
-            int texA = engine.TrueVision.TVTextureFactory.LoadTexture(alphatexpath);
-            tex = engine.TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texname);
-          }
-          engine.TextureRegistry.Put(texname, tex);
+          tex = LoadAlphaTexture(engine, texname, texpath, alphatexpath);
         }
 
         m.AddWall(tex, -size / 2, 0, size / 2, 0, size, -size / 2);
@@ -362,26 +357,14 @@ namespace SWEndor.Game.ActorTypes.Components
         if (dstartex == 0)
         {
           string texpath = Path.Combine(Globals.ImagePath, texname);
-          using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
-          {
-            int texS = engine.TrueVision.TVTextureFactory.LoadTexture(texpath);
-            int texA = engine.TrueVision.TVTextureFactory.LoadTexture(alphatexpath); // note we are loading alpha map as texture
-            dstartex = engine.TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texname);
-          }
-          engine.TextureRegistry.Put(texname, dstartex);
+          dstartex = LoadAlphaTexture(engine, texname, texpath, alphatexpath);
         }
 
         int dstardtex = engine.TextureRegistry.Get(texdname); //engine.TrueVision.TVGlobals.GetTex(id);
         if (dstardtex == 0)
         {
           string texdpath = Path.Combine(Globals.ImagePath, texdname);
-          using (ScopeCounters.AcquireWhenZero(ScopeGlobals.GLOBAL_TVSCENE))
-          {
-            int texS = engine.TrueVision.TVTextureFactory.LoadTexture(texdpath);
-            int texA = engine.TrueVision.TVTextureFactory.LoadTexture(alphatexpath);
-            dstardtex = engine.TrueVision.TVTextureFactory.AddAlphaChannel(texS, texA, texdname);
-          }
-          engine.TextureRegistry.Put(texdname, dstardtex);
+          dstardtex = LoadAlphaTexture(engine, texdname, texdpath, alphatexpath);
         }
 
         texanimframes = new int[frames];
@@ -413,6 +396,7 @@ namespace SWEndor.Game.ActorTypes.Components
         m.SetBillboardType(CONST_TV_BILLBOARDTYPE.TV_BILLBOARD_FREEROTATION);
         m.SetTextureModEnable(true);
         m.SetTextureModTranslationScale(1f / columns, 1f / rows);
+        m.SetAlphaTest(true);
       }
       return new MeshData(m, float3.One, MeshMode.BILLBOARD_ANIM, blendmode, string.Join(",", size, texname, columns, rows), shader);
     }
@@ -440,7 +424,7 @@ namespace SWEndor.Game.ActorTypes.Components
         int tex = engine.TextureRegistry.Get(id); //engine.TrueVision.TVGlobals.GetTex(id);
         if (tex == 0)
         {
-          tex = engine.TrueVision.TVTextureFactory.LoadTexture(texpath, id);
+          tex = engine.TrueVision.TVTextureFactory.LoadTexture(texpath, id, -1, -1, CONST_TV_COLORKEY.TV_COLORKEY_USE_ALPHA_CHANNEL, true);
           engine.TextureRegistry.Put(id, tex);
         }
         return tex;
