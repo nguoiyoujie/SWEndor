@@ -5,8 +5,8 @@ float3 viewPosition : VIEWPOSITION;
 float3 emissive : EMISSIVE;
 
 float non_decay_dist = 3000;
-float decay_dist = 500;
-float period = 1;
+float decay_dist = 2000;
+float period = 0.2;
 float time = 1;
 
 struct VS_INPUT {
@@ -29,6 +29,7 @@ VS_OUTPUT VS(VS_INPUT IN) {
 	float dist = distance(wPos, viewPosition);
 	OUT.color.rgb = emissive;
 	OUT.color.a = 1.0 - max((dist - non_decay_dist) / decay_dist, (period - time) / period);
+	//OUT.color.a = 1.0 - (dist - non_decay_dist) / decay_dist;
 	return OUT;
 }
 
