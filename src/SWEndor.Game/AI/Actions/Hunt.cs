@@ -4,13 +4,22 @@ using SWEndor.Game.Models;
 using Primrose.Primitives.Factories;
 using SWEndor.Game.Weapons;
 using Primrose.Primitives.Cache;
+using SWEndor.Game.ActorTypes;
 
 namespace SWEndor.Game.AI.Actions
 {
   internal class Hunt : ActionInfo
   {
     private static readonly ObjectPool<Hunt> _pool;
-    static Hunt() { _pool = ObjectPool<Hunt>.CreateStaticPool(() => { return new Hunt(); }, (a) => { a.Reset(); }); }
+    private static Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>.EnginePredicateDelegate<ActorInfo, ActorWeight[], TargetType, TargetExclusionState> _getTargetsStationary;
+    private static Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>.EnginePredicateDelegate<ActorInfo, ActorWeight[], TargetType, TargetExclusionState> _getTargetsMobile;
+
+    static Hunt() 
+    { 
+      _pool = ObjectPool<Hunt>.CreateStaticPool(() => { return new Hunt(); }, (a) => { a.Reset(); });
+      _getTargetsStationary = GetTargetsStationary;
+      _getTargetsMobile = GetTargetsMobile;
+    }
 
     private Hunt() : base("Hunt") { }
 
@@ -125,11 +134,11 @@ namespace SWEndor.Game.AI.Actions
 
       if (actor.MoveData.MaxSpeed == 0)
       {
-        engine.ActorFactory.DoUntil(GetTargetsStationary, actor, targets, m_TargetType, m_ExcludeTargets);
+        engine.ActorFactory.DoUntil(_getTargetsStationary, actor, targets, m_TargetType, m_ExcludeTargets);
       }
       else
       {
-        engine.ActorFactory.DoUntil(GetTargetsMobile, actor, targets, m_TargetType, m_ExcludeTargets);
+        engine.ActorFactory.DoUntil(_getTargetsMobile, actor, targets, m_TargetType, m_ExcludeTargets);
       }
 
 

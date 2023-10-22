@@ -4,12 +4,18 @@ using SWEndor.Game.Core;
 using SWEndor.Game.Models;
 using Primrose.Primitives.Extensions;
 using SWEndor.Game.Sound;
+using SWEndor.Game.ActorTypes;
 
 namespace SWEndor.Game.UI.Widgets
 {
   public class WarningTextWidget : Widget
   {
-    public WarningTextWidget(Screen2D owner) : base(owner, "warning") { }
+    private Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>.EnginePredicateDelegate _missileCheck;
+
+    public WarningTextWidget(Screen2D owner) : base(owner, "warning") 
+    {
+      _missileCheck = MissileCheck;
+    }
 
     public override bool Visible
     {
@@ -22,7 +28,7 @@ namespace SWEndor.Game.UI.Widgets
       }
     }
 
-    public bool Check(Engine engine, ActorInfo a)
+    public bool MissileCheck(Engine engine, ActorInfo a)
     {
       if (a.TypeInfo.Mask == ComponentMask.GUIDED_PROJECTILE)
         if (a.CurrentAction is AI.Actions.ProjectileAttackActor attack)
@@ -47,7 +53,7 @@ namespace SWEndor.Game.UI.Widgets
       // missile warning?
       warn = 0;
       dist = -1;
-      Engine.ActorFactory.DoUntil(Check);
+      Engine.ActorFactory.DoUntil(_missileCheck);
 
       if (warn == 0)
       {

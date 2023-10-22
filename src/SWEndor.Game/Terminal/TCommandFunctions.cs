@@ -1,4 +1,6 @@
-﻿using Primrose.Primitives.Factories;
+﻿using Primrose.Primitives.Collections;
+using Primrose.Primitives.Factories;
+using System.Collections.Generic;
 
 namespace SWEndor.Game.Terminal
 {
@@ -18,7 +20,7 @@ namespace SWEndor.Game.Terminal
       return _reg.Get(command);
     }
 
-    public static Primrose.Primitives.Collections.ThreadSafeEnumerable<string> List()
+    public static ThreadSafeEnumerable<Dictionary<string, TCommandBase>.KeyCollection.Enumerator, string> List()
     {
       return _reg.EnumerateKeys();
     }

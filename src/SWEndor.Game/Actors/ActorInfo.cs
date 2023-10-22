@@ -152,6 +152,9 @@ namespace SWEndor.Game.Actors
     // Standalone
     internal bool InCombat = false;
 
+    // delegate cache
+    private static Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo> .EnginePredicateDelegate<ActorInfo> _missileCheck;
+
     // ILinked
     /// <summary>The previous linked instance</summary>
     public ActorInfo Prev { get; set; }
@@ -175,6 +178,11 @@ namespace SWEndor.Game.Actors
 
 
     #region Creation Methods
+
+    static ActorInfo()
+    {
+      _missileCheck = MissileCheck;
+    }
 
     internal ActorInfo(Engine engine, Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo> owner, short id, ActorCreationInfo acinfo)
     {
@@ -362,7 +370,7 @@ namespace SWEndor.Game.Actors
         if (IsStunned)
           state |= TargetExclusionState.STUNNED;
 
-        if (!Engine.ActorFactory.DoUntil(MissileCheck, this))
+        if (!Engine.ActorFactory.DoUntil(_missileCheck, this))
           if (TypeInfo.AIData.TargetType == TargetType.FIGHTER)
             state |= TargetExclusionState.FIGHTER_MISSILE_LOCKED;
           else if (TypeInfo.AIData.TargetType == TargetType.SHIP)

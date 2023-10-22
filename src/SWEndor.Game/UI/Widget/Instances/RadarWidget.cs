@@ -9,6 +9,9 @@ using SWEndor.Game.Projectiles;
 using Primrose.Primitives.ValueTypes;
 using SWEndor.Game.Primitives.Geometry;
 using SWEndor.Game.Primitives.Extensions;
+using SWEndor.Game.ActorTypes;
+using SWEndor.Game.ProjectileTypes;
+using SWEndor.Game.ExplosionTypes;
 
 namespace SWEndor.Game.UI.Widgets
 {
@@ -27,6 +30,11 @@ namespace SWEndor.Game.UI.Widgets
     private static COLOR projColor = new COLOR(0.8f, 0.5f, 0, 0.6f);
     private static COLOR whitColor = new COLOR(1, 1, 1, 1);
 
+    private Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>.EngineActionDelegate _drawElementActor;
+    private Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo>.EngineActionDelegate _drawElementExplosion;
+    private Factory<ProjectileInfo, ProjectileCreationInfo, ProjectileTypeInfo>.EngineActionDelegate _drawElementProjectile;
+
+
     public RadarWidget(Screen2D owner) : base(owner, "radar")
     {
       radar_center = new TV_2DVECTOR(Engine.ScreenWidth - Engine.ScreenHeight * 0.18f - 25, Engine.ScreenHeight * 0.82f - 60);
@@ -34,6 +42,10 @@ namespace SWEndor.Game.UI.Widgets
       radar_range = 4000;
       radar_blinkfreq = 2.5f;
       //radar_bigshiprenderunit = 50;
+
+      _drawElementActor = DrawElement;
+      _drawElementExplosion = DrawElement;
+      _drawElementProjectile = DrawElement;
     }
 
     public override bool Visible
@@ -84,9 +96,9 @@ namespace SWEndor.Game.UI.Widgets
         radar_origin = p.GetGlobalPosition();
         radar_direction = p.GetGlobalDirection();
 
-        Engine.ActorFactory.DoEach(DrawElement);
-        Engine.ExplosionFactory.DoEach(DrawElement);
-        Engine.ProjectileFactory.DoEach(DrawElement);
+        Engine.ActorFactory.DoEach(_drawElementActor);
+        Engine.ExplosionFactory.DoEach(_drawElementExplosion);
+        Engine.ProjectileFactory.DoEach(_drawElementProjectile);
       }
       TVScreen2DImmediate.Action_End2D();
     }

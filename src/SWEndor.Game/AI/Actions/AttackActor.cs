@@ -6,6 +6,7 @@ using Primrose.Primitives.Factories;
 using Primrose.Primitives.Geometry;
 using SWEndor.Game.Weapons;
 using SWEndor.Game.Primitives.Extensions;
+using SWEndor.Game.ActorTypes;
 
 namespace SWEndor.Game.AI.Actions
 {
@@ -13,7 +14,12 @@ namespace SWEndor.Game.AI.Actions
   {
 
     private static readonly ObjectPool<AttackActor> _pool;
-    static AttackActor() { _pool = ObjectPool<AttackActor>.CreateStaticPool(() => { return new AttackActor(); }, (a) => { a.Reset(); }); }
+    private static Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>.EnginePredicateDelegate<ActorInfo> _aggressiveTracking;
+    static AttackActor() 
+    {
+      _pool = ObjectPool<AttackActor>.CreateStaticPool(() => { return new AttackActor(); }, (a) => { a.Reset(); });
+      _aggressiveTracking = AggressiveTrackingInner;
+    }
 
     private AttackActor() : base("AttackActor") { }
 
@@ -186,7 +192,7 @@ namespace SWEndor.Game.AI.Actions
 
     private static void AggressiveTracking(Engine engine, ActorInfo actor)
     {
-      engine.ActorFactory.DoUntil(AggressiveTrackingInner, actor);
+      engine.ActorFactory.DoUntil(_aggressiveTracking, actor);
     }
 
     public override void Reset()

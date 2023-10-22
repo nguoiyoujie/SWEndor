@@ -1,6 +1,7 @@
 ﻿using MTV3D65;
 using Primrose.Primitives;
 using SWEndor.Game.Actors;
+using SWEndor.Game.ActorTypes;
 using SWEndor.Game.Core;
 using SWEndor.Game.Models;
 using System;
@@ -22,13 +23,21 @@ namespace SWEndor.Game.Player
       }
     }
 
+    private static Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>.EngineFunctionDelegate<bool, TargetScore> _pickTargetFighterInner;
+
+    static TargetPicker()
+    {
+      _pickTargetFighterInner = PickTargetFighterInner;
+    }
+
+
     public static bool PickTargetFighter(Engine engine, bool pick_allies, ref int targetID)
     {
       ActorInfo p = engine.PlayerInfo.Actor;
       TargetScore t = new TargetScore(9999 , targetID);
 
       if (p != null || p.Active)
-        engine.ActorFactory.DoEach(PickTargetFighterInner, pick_allies, ref t);
+        engine.ActorFactory.DoEach(_pickTargetFighterInner, pick_allies, ref t);
 
       targetID = t.ID;
       return t.Score < 9999;

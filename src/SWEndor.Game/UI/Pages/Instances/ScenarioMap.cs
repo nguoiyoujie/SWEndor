@@ -6,6 +6,7 @@ using SWEndor.Game.Models;
 using Primrose.Primitives.Geometry;
 using SWEndor.Game.AI.Actions;
 using Primrose.Primitives.ValueTypes;
+using SWEndor.Game.ActorTypes;
 
 namespace SWEndor.Game.UI.Menu.Pages
 {
@@ -13,6 +14,8 @@ namespace SWEndor.Game.UI.Menu.Pages
   {
     readonly SelectionElement Cover = new SelectionElement();
     readonly SelectionElement BackText = new SelectionElement();
+    private Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo>.EngineActionDelegate _drawElement;
+
     private static readonly COLOR GridColorMajor = ColorLocalization.Get(ColorLocalKeys.GAME_MAP_GRID_MAJOR);
     private static readonly COLOR GridColorMinor = ColorLocalization.Get(ColorLocalKeys.GAME_MAP_GRID_MINOR);
     private static readonly COLOR MapTargetLine = new COLOR(1, 0.8f, 0.6f, 0.2f);
@@ -26,6 +29,8 @@ namespace SWEndor.Game.UI.Menu.Pages
 
     public ScenarioMap(Screen2D owner) : base(owner)
     {
+      _drawElement = DrawElement;
+
       Cover.HighlightBoxPosition = new TV_2DVECTOR();
       Cover.HighlightBoxWidth = owner.ScreenSize.x;
       Cover.HighlightBoxHeight = owner.ScreenSize.y;
@@ -113,7 +118,7 @@ namespace SWEndor.Game.UI.Menu.Pages
       if (p != null && p.Active)
       {
         if (p.IsSystemOperational(SystemPart.RADAR))
-          Engine.ActorFactory.DoEach(DrawElement);
+          Engine.ActorFactory.DoEach(_drawElement);
         else
           DrawElement(Engine, p);
       }

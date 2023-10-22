@@ -60,6 +60,7 @@ namespace SWEndor
     private T First;
     private T Last;
     private readonly object creationLock = new object();
+    private static EngineActionDelegate _delete = (e, a) => { a?.Delete(); };
 
     private readonly Func<Engine, Factory<T, TCreate, TType>, short, TCreate, T> create;
 
@@ -174,6 +175,8 @@ namespace SWEndor
       return list.Count;
     }
 
+    // HINT: converting from method to delegate is an avoidable allocation.
+    //       Try to convert and cache it beforehand.
     public bool DoUntil(EnginePredicateDelegate action)
     {
       foreach (T a in Actors)
@@ -353,7 +356,7 @@ namespace SWEndor
     public void Reset()
     {
       DisposePlanned();
-      DoEach((e, a) => { a?.Delete(); });
+      DoEach(_delete);
       DestroyDead();
     }
 
