@@ -15,16 +15,30 @@ namespace SWEndor.Game
   {
     int IComparer<PerfToken>.Compare(PerfToken x, PerfToken y)
     {
-      return x.Name.CompareTo(y.Name);
+      int result = x.Key.ThreadId.CompareTo(y.Key.ThreadId);
+      if (result == 0) { result = x.Key.Name.CompareTo(y.Key.Name); }
+      return result;
     }
   }
 
   public struct PerfToken
   {
-    public string Name;
+    public PerfKey Key;
     public int Count;
     public double Seconds;
     public double Peak;
+  }
+
+  public struct PerfKey
+  {
+    public string Name;
+    public int ThreadId;
+
+    public PerfKey(string name, int threadId)
+    {
+      Name = name;
+      ThreadId = threadId;
+    }
   }
 
   public class PerfManager
@@ -33,7 +47,7 @@ namespace SWEndor.Game
     internal PerfManager(Engine engine)
     {
       Engine = engine;
-      pool = new ObjectPool<PerfElement>(false, () => new PerfElement(this, "<undefined>"), (p) => p.Reset());
+      pool = new ObjectPool<PerfElement>(false, () => new PerfElement(this, "<undefined>", -1), (p) => p.Reset());
       sbpool = new ObjectPool<StringBuilder>(false, () => new StringBuilder(128), (p) => p.Clear());
     }
 
@@ -41,7 +55,7 @@ namespace SWEndor.Game
     public string Report = string.Empty;
     private DateTime m_last_refresh_time = DateTime.Now;
     private CircularQueue<PerfToken> Queue;
-    private Dictionary<string, PerfToken> Elements;
+    private Dictionary<PerfKey, PerfToken> Elements;
     private Dictionary<int, double> ThreadTimes;
 
     private Dictionary<int, List<PerfElement>> pt_current = new Dictionary<int, List<PerfElement>>();
@@ -71,7 +85,7 @@ namespace SWEndor.Game
     {
       m_last_refresh_time = DateTime.Now;
       Queue = new CircularQueue<PerfToken>(100000, false);
-      Elements = new Dictionary<string, PerfToken>();
+      Elements = new Dictionary<PerfKey, PerfToken>();
       ThreadTimes = new Dictionary<int, double>();
       pt_current = new Dictionary<int, List<PerfElement>>();
     }
@@ -98,6 +112,7 @@ namespace SWEndor.Game
           sb.Append(delimiter);
           sb.Append(name);
           e.Name = sb.ToString();
+          e.ThreadId = id;
           sbpool.Return(sb);
         }
 
@@ -114,7 +129,7 @@ namespace SWEndor.Game
     public void UpdatePerfElement(PerfElement element, double value)
     {
       if (Queue.Count < 100000)
-        Queue.Enqueue(new PerfToken { Name = element.Name, Seconds = value });
+        Queue.Enqueue(new PerfToken { Key = new PerfKey(element.Name, element.ThreadId), Seconds = value });
 
       int id = Thread.CurrentThread.ManagedThreadId;
       if (pt_current.ContainsKey(id))
@@ -130,14 +145,14 @@ namespace SWEndor.Game
       while (Queue.Count > 0 && limit >= 0) //Queue.TryDequeue(out p) || limit < 0)
       {
         p = Queue.Dequeue();
-        if (p.Name == null)
+        if (p.Key.Name == null)
           break;
 
         limit--;
-        PerfToken pt = Elements.GetOrDefault(p.Name);
-        if (pt.Name == null)
+        PerfToken pt = Elements.GetOrDefault(p.Key);
+        if (pt.Key.Name == null)
         {
-          Elements.Put(p.Name, new PerfToken { Name = p.Name, Count = 1, Seconds = p.Seconds, Peak = p.Seconds });
+          Elements.Put(p.Key, new PerfToken { Key = p.Key, Count = 1, Seconds = p.Seconds, Peak = p.Seconds });
         }
         else
         {
@@ -145,7 +160,7 @@ namespace SWEndor.Game
           double seconds = pt.Seconds + p.Seconds;
           int count = ++pt.Count;
 
-          Elements.Put(p.Name, new PerfToken { Name = p.Name, Count = count, Seconds = seconds, Peak = peak });
+          Elements.Put(p.Key, new PerfToken { Key = p.Key, Count = count, Seconds = seconds, Peak = peak });
         }
       }
     }
@@ -180,9 +195,9 @@ namespace SWEndor.Game
         m_last_refresh_time = DateTime.Now;
         StringBuilder sb = sbpool.GetNew();
         sb.AppendLine();
-        sb.AppendLine("{0,30} : [{1,4:0}ms] {2:s}".F("Sampling Time", refresh_ms, m_last_refresh_time));
-        sb.AppendLine("{0,30} : {1}".F("FPS", Engine.Game.CurrentFPS));
-        sb.AppendLine("{0,30} : {1}".F("Actors", Engine.ActorFactory.GetActorCount()));
+        sb.AppendLine("{0,35} : [{1,4:0}ms] {2:s}".F("Sampling Time", refresh_ms, m_last_refresh_time));
+        sb.AppendLine("{0,35} : {1}".F("FPS", Engine.Game.CurrentFPS));
+        sb.AppendLine("{0,35} : {1}".F("Actors", Engine.ActorFactory.GetActorCount()));
 
         List<PerfToken> newElements = new List<PerfToken>(Elements.Values);
 
@@ -192,20 +207,21 @@ namespace SWEndor.Game
           if (pt.ThreadState != System.Diagnostics.ThreadState.Terminated && pt.ThreadState != System.Diagnostics.ThreadState.Wait)
           {
             double d = pt.TotalProcessorTime.TotalMilliseconds - ThreadTimes.GetOrDefault(pt.Id);
-            sb.AppendLine("Thread {0:00000} {1,17} : {2:0.00}%".F(pt.Id, pt.ThreadState, d / refresh_ms * 100));
+            sb.AppendLine("Thread {0:00000} {1,22} : {2:0.00}%".F(pt.Id, pt.ThreadState, d / refresh_ms * 100));
             ThreadTimes.Put(pt.Id, pt.TotalProcessorTime.TotalMilliseconds);
           }
         }
 
-        sb.AppendLine("                                 [ Count] Total|s   Avg|ms  Peak|ms");
+        sb.AppendLine("                                      [ Count] Total|s   Avg|ms  Peak|ms");
         newElements.Sort(new PerfComparer());
         foreach (PerfToken e in newElements)
         {
-          string[] div = e.Name.Split(delimiter);
+          string[] div = e.Key.Name.Split(delimiter);
           string name = (div.Length > 0) ? new string('-', div.Length - 1) + div[div.Length - 1] : div[div.Length - 1];
           name = (name.Length > 30) ? name.Remove(27) + "..." : name;
-          sb.AppendLine("{0,-30} : [{1,6}] {2,7:0.000}  {3,7:0.00}  {4,7:0.00}".F(
-                          name
+          sb.AppendLine("[{0,3}] {1,-29} : [{2,6}] {3,7:0.000}  {4,7:0.00}  {5,7:0.00}".F(
+                        e.Key.ThreadId
+                        , name
                         , e.Count
                         , e.Seconds
                         , e.Seconds / e.Count * 1000
@@ -227,12 +243,14 @@ namespace SWEndor.Game
   public class PerfElement : IDisposable
   {
     public string Name;
+    public int ThreadId;
     private readonly PerfManager mgr;
     private long m_timestamp;
 
-    public PerfElement(PerfManager manager, string name)
+    public PerfElement(PerfManager manager, string name, int threadId)
     {
       Name = name;
+      ThreadId = threadId;
       mgr = manager;
       m_timestamp = Stopwatch.GetTimestamp();
     }
@@ -240,6 +258,7 @@ namespace SWEndor.Game
     public void Reset()
     {
       Name = "<undefined>";
+      ThreadId = -1;
       m_timestamp = Stopwatch.GetTimestamp();
     }
 

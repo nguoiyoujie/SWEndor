@@ -19,7 +19,7 @@ namespace SWEndor.Game.UI.Widgets
     {
       string perftext = Engine.PerfManager.Report;
 
-      TV_2DVECTOR loc = new TV_2DVECTOR(10, 215);
+      TV_2DVECTOR loc = new TV_2DVECTOR(10, 300);
       int lines = perftext.Split(Lines).Length;
 
       TVScreen2DImmediate.Action_Begin2D();
