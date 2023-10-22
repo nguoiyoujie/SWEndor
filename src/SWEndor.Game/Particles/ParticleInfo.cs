@@ -6,7 +6,6 @@ using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using SWEndor.Game.ProjectileTypes;
 using SWEndor.Game.ParticleTypes;
-using SWEndor.Game.Models;
 using Primrose.Primitives.ValueTypes;
 
 namespace SWEndor.Game.Particles
@@ -78,20 +77,6 @@ namespace SWEndor.Game.Particles
     internal ParticleInfo(Engine engine, Factory<ParticleInfo, ParticleCreationInfo, ParticleTypeInfo> owner, short id, ParticleCreationInfo acinfo)
     {
       ParticleFactory = owner;
-      ID = id;
-
-      TypeInfo = acinfo.TypeInfo;
-      if (acinfo.Name?.Length > 0) { _name = acinfo.Name; }
-      Key = "{0} {1}".F(_name, ID);
-
-      DyingTimer.InitAsDyingTimer(this, ref TypeInfo.TimedLifeData);
-      DyingTimerSet(TypeInfo.TimedLifeData.TimedLife + TypeInfo.ParticleSystemData.ParticleLifeTime, true);
-      Transform.Init(engine, new float3(1,1,1), acinfo);
-
-      State.Init(Engine, TypeInfo, acinfo);
-      AttachedActorID = -1;
-
-      TypeInfo.Initialize(engine, this);
     }
 
     /// <summary>
@@ -113,6 +98,7 @@ namespace SWEndor.Game.Particles
       Transform.Init(engine, new float3(1, 1, 1), acinfo);
 
       State.Init(Engine, TypeInfo, acinfo);
+      AttachedActorID = -1;
 
       TypeInfo.Initialize(engine, this);
     }

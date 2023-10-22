@@ -77,14 +77,11 @@ namespace SWEndor
       if (acinfo.TypeInfo == null)
         throw new Exception(TextLocalization.Get(TextLocalKeys.ACTOR_INVALID_ERROR));
 
+      short id;
       lock (creationLock)
       {
-        short id = counter++;
-        if (pool.TryDequeue(out actor))
-        {
-          actor.Rebuild(Engine, id, acinfo);
-        }
-        else
+        id = counter++;
+        if (!pool.TryDequeue(out actor))
         {
           actor = create(Engine, this, id, acinfo);
         }
@@ -112,6 +109,7 @@ namespace SWEndor
         }
       }
 
+      actor.Rebuild(Engine, id, acinfo);
       return actor;
     }
 

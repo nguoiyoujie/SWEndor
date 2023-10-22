@@ -78,7 +78,6 @@ namespace SWEndor.Game.Explosions
     internal ExplosionInfo(Engine engine, Factory<ExplosionInfo, ExplosionCreationInfo, ExplosionTypeInfo> owner, short id, ExplosionCreationInfo acinfo)
     {
       ExplosionFactory = owner;
-      Rebuild(engine, id, acinfo);     
     }
 
     /// <summary>

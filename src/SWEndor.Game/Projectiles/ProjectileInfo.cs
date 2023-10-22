@@ -17,10 +17,10 @@ namespace SWEndor.Game.Projectiles
     IActorState,
     IActorCreateable<ProjectileCreationInfo>,
     IActorDisposable,
-    INotify, 
+    INotify,
     IMeshObject,
     IDyingTime,
-    IParent<ActorInfo>, 
+    IParent<ActorInfo>,
     ITransformable,
     ICollidable,
     IStunnable
@@ -87,7 +87,6 @@ namespace SWEndor.Game.Projectiles
     internal ProjectileInfo(Engine engine, Factory<ProjectileInfo, ProjectileCreationInfo, ProjectileTypeInfo> owner, short id, ProjectileCreationInfo acinfo)
     {
       ProjectileFactory = owner;
-      Rebuild(engine, id, acinfo);
     }
 
     /// <summary>
@@ -217,7 +216,6 @@ namespace SWEndor.Game.Projectiles
       if (!IsDead)
       {
         TypeInfo.MoveBehavior.Move(engine, this, ref MoveData, engine.Game.TimeSinceRender);
-
         ActorInfo target = Target;
         if (target != null && TypeInfo.CombatData.IsTeleport)
         {
@@ -225,7 +223,9 @@ namespace SWEndor.Game.Projectiles
           DoCollide(target, ref data);
         }
         else if (CanCollide)
+        {
           CollisionData.CheckCollision(engine, this);
+        }
       }
       else
         Delete();

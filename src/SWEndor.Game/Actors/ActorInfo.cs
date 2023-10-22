@@ -183,7 +183,6 @@ namespace SWEndor.Game.Actors
     internal ActorInfo(Engine engine, Factory<ActorInfo, ActorCreationInfo, ActorTypeInfo> owner, short id, ActorCreationInfo acinfo)
     {
       ActorFactory = owner;
-      Rebuild(engine, id, acinfo);
     }
 
     /// <summary>
