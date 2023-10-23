@@ -353,6 +353,9 @@ namespace SWEndor.Game.UI.Menu.Pages
         sb.AppendLine();
 
         sb.AppendLine();
+        sb.Append("The mission was a ");
+        sb.AppendLine(GameScenarioManager.Scenario.State.GetGameStateB("GameWon") ? "SUCCESS" : "FAILURE");
+        sb.AppendLine();
       }
       else if (Page >= killsPageStart && Page < killsPageStart + killsPage)
       {
