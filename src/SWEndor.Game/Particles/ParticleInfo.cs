@@ -1,5 +1,4 @@
 ﻿using SWEndor.Game.Actors;
-using SWEndor.Game.Actors.Data;
 using SWEndor.Game.Core;
 using SWEndor.Game.Models;
 using Primrose.Primitives;

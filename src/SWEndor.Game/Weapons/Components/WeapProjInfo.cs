@@ -9,7 +9,6 @@ using SWEndor.Game.AI;
 using SWEndor.Game.Models;
 using SWEndor.Game.Primitives.Extensions;
 using SWEndor.Game.Projectiles;
-using SWEndor.Game.UI.Forms.UIControls;
 
 namespace SWEndor.Game.Weapons
 {

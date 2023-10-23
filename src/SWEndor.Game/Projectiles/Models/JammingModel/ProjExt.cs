@@ -1,7 +1,4 @@
-﻿using FMOD;
-using SWEndor.Game.Models;
-
-namespace SWEndor.Game.Projectiles
+﻿namespace SWEndor.Game.Projectiles
 {
   public partial class ProjectileInfo
   {

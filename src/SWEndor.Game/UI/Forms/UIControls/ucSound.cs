@@ -2,7 +2,6 @@
 using System.Text;
 using System.Windows.Forms;
 using SWEndor.Game.Core;
-using static System.Net.Mime.MediaTypeNames;
 using static SWEndor.Game.Sound.SoundManager;
 
 namespace SWEndor.Game.UI.Forms.UIControls

@@ -77,7 +77,6 @@ namespace SWEndor.Game.Core
     internal List<MeshEntityTable> MeshTables { get; private set; }
     internal Registry<TVMesh> MeshRegistry { get; private set; }
     internal Registry<int> TextureRegistry { get; private set; }
-    internal List<TVMesh> DisabledMeshes { get; private set; }
     private int[] RenderMeshList { get; set; }
     private int[] RenderSortedMeshList { get; set; }
 
@@ -110,7 +109,6 @@ namespace SWEndor.Game.Core
       MeshRegistry = new Registry<TVMesh>();
       TextureRegistry = new Registry<int>();
       PlayerInfo = new PlayerInfo(this);
-      DisabledMeshes = new List<TVMesh>(1028);
       MeshTables = new List<MeshEntityTable> { ActorMeshTable, ProjectileMeshTable, ExplosionMeshTable };
       RenderMeshList = new int[1028];
       RenderSortedMeshList = new int[1028];

@@ -1,8 +1,6 @@
 ﻿using MTV3D65;
 using Primrose.Primitives;
-using Primrose.Primitives.Extensions;
 using Primrose.Primitives.ValueTypes;
-using SWEndor.Game.ActorTypes.Components;
 using SWEndor.Game.Core;
 using SWEndor.Game.Explosions;
 using SWEndor.Game.ExplosionTypes;

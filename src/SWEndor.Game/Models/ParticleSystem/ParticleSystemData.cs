@@ -2,7 +2,6 @@
 using Primrose.FileFormat.INI;
 using Primrose.Primitives.ValueTypes;
 using SWEndor.Game.Core;
-using static System.Net.Mime.MediaTypeNames;
 using System.IO;
 
 namespace SWEndor.Game.Models

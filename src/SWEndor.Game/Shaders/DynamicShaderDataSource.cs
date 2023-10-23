@@ -3,7 +3,6 @@ using Primrose;
 using Primrose.Primitives.Extensions;
 using Primrose.Primitives.Factories;
 using SWEndor.Game.Actors;
-using SWEndor.Game.Core;
 using SWEndor.Game.Models;
 using System;
 

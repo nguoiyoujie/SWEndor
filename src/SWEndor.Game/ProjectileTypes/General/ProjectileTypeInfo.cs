@@ -5,7 +5,6 @@ using SWEndor.Game.Core;
 using Primrose.FileFormat.INI;
 using SWEndor.Game.Models;
 using SWEndor.Game.Projectiles;
-using System;
 using System.IO;
 
 namespace SWEndor.Game.ProjectileTypes

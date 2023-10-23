@@ -2,7 +2,6 @@
 using SWEndor.Game.Input.Functions.Gameplay;
 using SWEndor.Game.Input.Functions.Gameplay.Special;
 using SWEndor.Game.Input.Functions.Utility.Game;
-using SWEndor.Game.Input.Functions.Utility.Screen;
 
 namespace SWEndor.Game.Input.Context
 {

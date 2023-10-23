@@ -3,7 +3,6 @@ using SWEndor.Game.ActorTypes;
 using SWEndor.Game.ActorTypes.Components;
 using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
-using Primrose;
 using SWEndor.Game.Models;
 
 namespace SWEndor.Game.Actors.Models

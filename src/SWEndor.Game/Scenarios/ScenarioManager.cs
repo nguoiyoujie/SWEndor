@@ -3,7 +3,6 @@ using SWEndor.Game.Core;
 using Primrose.FileFormat.INI;
 using SWEndor.Game.Primitives.Extensions;
 using SWEndor.Game.UI.Menu.Pages;
-using System;
 using System.Collections.Generic;
 using System.IO;
 

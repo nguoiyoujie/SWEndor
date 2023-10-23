@@ -1,8 +1,6 @@
 ﻿using SWEndor.Game.Core;
 using Primrose.Primitives;
-using System;
 using Primrose.Primitives.Extensions;
-using System.Collections.Generic;
 
 namespace SWEndor.Game.Projectiles
 {

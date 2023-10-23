@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace SWEndor.Game.Sound
+﻿namespace SWEndor.Game.Sound
 {
   public struct DoubleBufferedSound
   {

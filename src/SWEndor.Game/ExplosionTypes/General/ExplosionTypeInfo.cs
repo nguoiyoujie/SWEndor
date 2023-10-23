@@ -6,7 +6,6 @@ using SWEndor.Game.Explosions;
 using Primrose.FileFormat.INI;
 using SWEndor.Game.Models;
 using System.IO;
-using Primrose.Primitives.Factories;
 
 namespace SWEndor.Game.ExplosionTypes
 {

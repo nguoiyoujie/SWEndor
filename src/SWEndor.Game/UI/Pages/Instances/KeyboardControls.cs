@@ -6,7 +6,6 @@ using SWEndor.Game.Input.Functions.Gameplay.UI;
 using SWEndor.Game.Input.Functions.Gameplay.Weapon;
 using System.Collections.Generic;
 using Primrose.Primitives.Cache;
-using System.Reflection;
 
 namespace SWEndor.Game.UI.Menu.Pages
 {

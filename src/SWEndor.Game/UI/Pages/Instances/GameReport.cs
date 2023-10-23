@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using Primrose.Primitives.Factories;
 using SWEndor.Game.Actors.Components;
-using System;
 using static SWEndor.Game.Actors.Components.ScoreInfo;
 
 namespace SWEndor.Game.UI.Menu.Pages

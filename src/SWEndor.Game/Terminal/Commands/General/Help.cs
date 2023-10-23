@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace SWEndor.Game.Terminal.Commands.General
+﻿namespace SWEndor.Game.Terminal.Commands.General
 {
   public class Help : TCommandBase
   {

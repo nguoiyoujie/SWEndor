@@ -1,6 +1,5 @@
 ﻿using Primrose.FileFormat.INI;
 using SWEndor.Game.Core;
-using SWEndor.Game.Models;
 
 namespace SWEndor.Game.Weapons
 {

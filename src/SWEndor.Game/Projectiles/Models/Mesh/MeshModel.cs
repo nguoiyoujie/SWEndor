@@ -5,7 +5,6 @@ using SWEndor.Game.ActorTypes.Components;
 using SWEndor.Game.Shaders;
 using SWEndor.Game.ProjectileTypes;
 using Primrose.Primitives.Geometry;
-using System.Collections;
 
 namespace SWEndor.Game.Projectiles.Models
 {

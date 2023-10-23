@@ -1,5 +1,4 @@
 ﻿using SWEndor.Game.Actors.Data;
-using SWEndor.Game.ActorTypes.Components;
 
 namespace SWEndor.Game.Actors.Data
 {

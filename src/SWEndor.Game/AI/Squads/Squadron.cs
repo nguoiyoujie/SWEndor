@@ -5,7 +5,6 @@ using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using System;
 using System.Collections.Generic;
-using SWEndor.Game.Models;
 
 namespace SWEndor.Game.AI.Squads
 {

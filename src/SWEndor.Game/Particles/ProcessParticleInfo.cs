@@ -1,7 +1,6 @@
 ﻿using Primrose.Primitives;
 using Primrose.Primitives.Extensions;
 using SWEndor.Game.Core;
-using System;
 
 namespace SWEndor.Game.Particles
 {

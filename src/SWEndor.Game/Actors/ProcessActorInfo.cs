@@ -3,7 +3,6 @@ using SWEndor.Game.Core;
 using SWEndor.Game.Models;
 using Primrose.Primitives;
 using SWEndor.Game.Weapons;
-using System;
 using Primrose.Primitives.Extensions;
 
 namespace SWEndor.Game.Actors

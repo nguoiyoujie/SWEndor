@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using SWEndor.Game.Primitives.Extensions;
 using Primrose.Expressions;
 using System;
-using Primrose.Primitives.Factories;
 using SWEndor.Game.Actors.Models;
 
 namespace SWEndor.Game.Scenarios.Scripting.Functions

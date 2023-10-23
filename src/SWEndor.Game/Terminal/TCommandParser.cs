@@ -1,5 +1,4 @@
 ﻿using Primrose.Primitives.Extensions;
-using System;
 
 namespace SWEndor.Game.Terminal
 {

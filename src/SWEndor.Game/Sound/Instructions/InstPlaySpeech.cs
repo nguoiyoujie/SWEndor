@@ -1,6 +1,4 @@
-﻿using FMOD;
-
-namespace SWEndor.Game.Sound
+﻿namespace SWEndor.Game.Sound
 {
   public partial class SoundManager
   {

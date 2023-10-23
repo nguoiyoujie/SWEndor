@@ -3,7 +3,6 @@ using SWEndor.Game.Actors;
 using SWEndor.Game.Actors.Models;
 using SWEndor.Game.Core;
 using SWEndor.Game.Player;
-using System;
 
 namespace SWEndor.Game.UI.Widgets
 {

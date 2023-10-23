@@ -1,6 +1,5 @@
 ﻿using SWEndor.Game.Core;
 using Primrose.Primitives;
-using System;
 
 namespace SWEndor.Game.Explosions
 {

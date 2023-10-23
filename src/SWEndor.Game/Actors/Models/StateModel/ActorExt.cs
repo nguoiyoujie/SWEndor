@@ -1,5 +1,4 @@
-﻿using Primrose;
-using SWEndor.Game.Models;
+﻿using SWEndor.Game.Models;
 
 namespace SWEndor.Game.Actors
 {

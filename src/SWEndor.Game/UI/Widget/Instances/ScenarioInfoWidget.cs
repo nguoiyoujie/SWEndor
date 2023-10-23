@@ -1,7 +1,5 @@
 ﻿using MTV3D65;
-using Primrose.Primitives.Extensions;
 using SWEndor.Game.Actors;
-using System;
 
 namespace SWEndor.Game.UI.Widgets
 {

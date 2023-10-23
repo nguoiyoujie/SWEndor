@@ -7,7 +7,6 @@ using SWEndor.Game.Shaders;
 using SWEndor.Game.UI;
 using Primrose.Primitives.Geometry;
 using SWEndor.Game.Core;
-using System.Collections;
 
 namespace SWEndor.Game.Actors.Models
 {
