@@ -1,6 +1,7 @@
 ﻿using Primrose.Primitives;
 using System.Collections.Generic;
 using SWEndor.Game.Core;
+using System;
 
 namespace SWEndor
 {
@@ -10,10 +11,12 @@ namespace SWEndor
     private readonly SortedSet<GameEventObject> list = new SortedSet<GameEventObject>(new GameEventObject.Comparer());
     private readonly Queue<GameEventObject> queue = new Queue<GameEventObject>();
     private readonly ScopeCounters.ScopeCounter _scope = new ScopeCounters.ScopeCounter();
+    private readonly Predicate<GameEventObject> _expire;
 
     public GameEventQueue(Engine engine)
     {
       _engine = engine;
+      _expire = Expire;
     }
 
     internal struct GameEventObject
@@ -96,7 +99,7 @@ namespace SWEndor
           else
             break;
         }
-        list.RemoveWhere(Expire);
+        list.RemoveWhere(_expire);
       }
 
       foreach (var l in queue)
