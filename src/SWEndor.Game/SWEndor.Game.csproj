@@ -199,7 +199,7 @@
     <Compile Include="AI\Squads\Missions\AttackActor.cs" />
     <Compile Include="AI\Squads\Missions\MoveToPoint.cs" />
     <Compile Include="AI\Squads\Squadron.cs" />
-    <Compile Include="AtmosphereInfo.cs" />
+    <Compile Include="Scene\AtmosphereInfo.cs" />
     <Compile Include="Build.cs" />
     <Compile Include="Core\Engine.cs" />
     <Compile Include="Core\RenderSurfaces.cs" />
@@ -234,7 +234,7 @@
     <Compile Include="Scenarios\Scripting\ScriptCallRegister.cs" />
     <Compile Include="Shaders\ShaderData.cs" />
     <Compile Include="FileFormat\INI\ScenarioFile.cs" />
-    <Compile Include="FlareInfo.cs" />
+    <Compile Include="Scene\FlareInfo.cs" />
     <Compile Include="GameEvent\Delegates.cs" />
     <Compile Include="GameEvent\GameEventQueue.cs" />
     <Compile Include="GameEvent\ShipSpawnEventArg.cs" />
@@ -286,7 +286,7 @@
     <Compile Include="Input\Functions\Utility\Game\SaveSnapshot.cs" />
     <Compile Include="Input\Functions\Utility\Screen\SaveScreenshot.cs" />
     <Compile Include="Input\InputManager.cs" />
-    <Compile Include="LandInfo.cs" />
+    <Compile Include="Scene\LandInfo.cs" />
     <Compile Include="Log\LogDecorator.cs" />
     <Compile Include="Log\LogType.cs" />
     <Compile Include="Models\CollisionModel\CollisionModel.cs" />

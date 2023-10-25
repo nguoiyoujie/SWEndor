@@ -1,7 +1,7 @@
 ﻿using MTV3D65;
 using System.IO;
 
-namespace SWEndor.Game
+namespace SWEndor.Game.Scene
 {
   public class FlareInfo
   {

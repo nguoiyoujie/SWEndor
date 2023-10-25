@@ -3,9 +3,8 @@ using SWEndor.Game.Core;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SWEndor.Game
+namespace SWEndor.Game.Scene
 {
-
   public class AtmosphereInfo
   {
     public readonly Engine Engine;

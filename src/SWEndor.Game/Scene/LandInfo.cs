@@ -3,7 +3,7 @@ using SWEndor.Game.Core;
 using Primrose.Primitives;
 using System.IO;
 
-namespace SWEndor.Game
+namespace SWEndor.Game.Scene
 {
   public class LandInfo
   {

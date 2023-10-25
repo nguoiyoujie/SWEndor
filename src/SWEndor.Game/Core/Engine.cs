@@ -27,6 +27,7 @@ using SWEndor.Game.Particles;
 using SWEndor.Game.ParticleTypes;
 using SWEndor.Game.ActorTypes.Components;
 using Primrose.Primitives.Extensions;
+using SWEndor.Game.Scene;
 
 namespace SWEndor.Game.Core
 {
