@@ -17,6 +17,9 @@ namespace SWEndor.Game.ActorTypes.Components
     public readonly string Type;
 
     [INIValue]
+    public readonly float? Scale;
+
+    [INIValue]
     public readonly float3 Position;
 
     [INIValue]
@@ -35,6 +38,11 @@ namespace SWEndor.Game.ActorTypes.Components
       ActorCreationInfo acinfo = new ActorCreationInfo(_cache);
       acinfo.InitialState = ActorState.NORMAL;
       acinfo.Faction = actor.Faction;
+
+      if (Scale.HasValue)
+      {
+        acinfo.InitialScale = Scale.Value;
+      }
 
       if (AttachToParent)
         acinfo.Position = Position.ToVec3();
