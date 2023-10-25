@@ -249,8 +249,8 @@ InitShips:
 	AI.QueueLast(corv4, "lock");
     
     corv5 = Actor.Spawn("CORV", "Z-FLAME", "Traitors", "", 0, { -7250, 310, -32500 }, { 0, 30, 0 });
-	AI.QueueLast(corv5, "move", {-400, 280, -2000}, 35);
-	AI.QueueLast(corv5, "move", {5500, 250, -4000}, 10);
+	AI.QueueLast(corv5, "move", {-400, 380, -2000}, 35);
+	AI.QueueLast(corv5, "move", {5500, 450, -4000}, 10);
 	AI.QueueLast(corv5, "rotate", {0, 200, 4000}, 0);
 	AI.QueueLast(corv5, "lock");
 	
