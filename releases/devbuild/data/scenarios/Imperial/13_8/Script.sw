@@ -22,6 +22,7 @@ int corv1;
 int corv2;
 int corv3;
 int corv4;
+int corv5;
 int vorknkx;
 
 // important subactors
@@ -34,6 +35,7 @@ int corv1_mines = 12;
 int corv2_mines = 12;
 int corv3_mines = 12;
 int corv4_mines = 12;
+int corv5_mines = 12;
 int vork_mines = 16;
 
 float playerkillcount = 0;
@@ -193,7 +195,7 @@ InitShips:
 	greywolf = Actor.Spawn("ISD", "GREY WOLF (Thrawn)", "Empire", "GREY WOLF", 0, { 1000, 400, 12000 }, { 0, -180, 0 }, { "CriticalAllies" });
 	Actor.SetProperty(greywolf, "Spawner.Enabled", true);
 	Actor.SetProperty(greywolf, "Spawner.SpawnTypes", {"TIE","TIE","TIE","TIEI"});
-	AI.QueueLast(greywolf, "move", {-1000, 400, -3000}, 15);
+	AI.QueueLast(greywolf, "move", {-1000, 400, 0}, 15);
 	AI.QueueLast(greywolf, "rotate", {-2000, 210, -20000}, 0);
 	AI.QueueLast(greywolf, "lock");
 
@@ -245,15 +247,22 @@ InitShips:
 	AI.QueueLast(corv4, "move", {-750, 100, -1400}, 100);
 	AI.QueueLast(corv4, "rotate", {0, 500, 4000}, 0);
 	AI.QueueLast(corv4, "lock");
+    
+    corv5 = Actor.Spawn("CORV", "Z-FLAME", "Traitors", "", 0, { -7250, 310, -32500 }, { 0, 30, 0 });
+	AI.QueueLast(corv5, "move", {-400, 380, -2000}, 35);
+	AI.QueueLast(corv5, "move", {5500, 450, -4000}, 10);
+	AI.QueueLast(corv5, "rotate", {0, 200, 4000}, 0);
+	AI.QueueLast(corv5, "lock");
 	
 	nebu = Actor.Spawn("NEB2", "Z-EBONY", "Traitors", "", 0, { -6750, -450, -21000 }, { 0, 30, 0 });
-	AI.QueueLast(nebu, "move", {6250, -450, -3200}, 50);
+	AI.QueueLast(nebu, "move", {1750, -450, -3200}, 50);
 	AI.QueueLast(nebu, "lock");
 	
 	AddEvent(65, "Minelayer.corv1");
 	AddEvent(3, "Minelayer.corv2");
 	AddEvent(4, "Minelayer.corv3");
 	AddEvent(5, "Minelayer.corv4");
+	AddEvent(95, "Minelayer.corv5");
 
 	
 InitFighters:
@@ -856,7 +865,7 @@ Spawn.AllyUpsilon:
 	spawn_dmgmod = 1;
 	spawn_wait = 0;
 	spawn_type = "GUN";
-	spawn_name = "Upsilon";
+	spawn_name = "UPSILON";
   	spawn_formation = "VSHAPE";
 	spawn_target = corv2;
 	spawn_pos = { 2400,500,8000 };
@@ -872,7 +881,7 @@ Spawn.AllyIota:
 	spawn_dmgmod = 1;
 	spawn_wait = 0;
 	spawn_type = "TIEA";
-	spawn_name = "Iota";
+	spawn_name = "IOTA";
   	spawn_formation = "VSHAPE";
 	spawn_target = corv4;
 	spawn_pos = { 2400,500,8000 };
@@ -966,7 +975,7 @@ Minelayer.corv1:
 		
 		Actor.Spawn("MINE2", "", "Traitors", "", 0, pos, rot);
 		corv1_mines -= 1;
-		AddEvent(5 + 10 * Random(), "Minelayer.corv1");
+		AddEvent(5 + 25 * Random(), "Minelayer.corv1");
 	}
 
 
@@ -1017,6 +1026,20 @@ Minelayer.corv4:
 		AddEvent(5 + 10 * Random(), "Minelayer.corv4");
 	}
 
+Minelayer.corv5:
+	if (Actor.IsAlive(corv5) && corv5_mines > 0)
+	{
+		float3 pos = Actor.GetGlobalPosition(corv5);
+		float3 fac = Actor.GetGlobalDirection(corv5);
+		pos -= fac * 57;
+		pos -= {Random(-20, 20), 55, Random(-20, 20)};
+		float3 rot = { Random(360), Random(360), Random(360)};
+		
+		string type = (corv5_mines == 2 || corv5_mines == 6) ? "MINE3" : "MINE2";
+		Actor.Spawn(type, "", "Traitors", "", 0, pos, rot);
+		corv5_mines -= 1;
+		AddEvent(5 + 25 * Random(), "Minelayer.corv5");
+	}
 
 Minelayer.vorknkx:
 	if (Actor.IsAlive(vorknkx) && vork_mines > 0)

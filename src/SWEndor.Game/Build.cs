@@ -5,9 +5,9 @@ namespace SWEndor.Core
   public static class Build 
   { 
    /// <summary>The time of build</summary> 
-   public const string Time = "Mon 23/10/2023  2:09:47.98"; 
+   public const string Time = "Tue 24/10/2023 21:23:41.45"; 
    /// <summary>The date of build in YYYYMMDD format</summary> 
-   public const string BuildDate = "20232302"; 
+   public const string BuildDate = "20232421"; 
    /// <summary>The daily revision number of the build</summary> 
    public const string Revision = "00"; 
   } 

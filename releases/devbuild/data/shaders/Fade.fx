@@ -37,7 +37,7 @@ float4 PS(PS_INPUT IN) : COLOR {
 	float2 texCoord = IN.texCoord;
 	float4 texColor = tex2D(sampTexture, texCoord);
 	float opacity = time / period;
-    texColor.a = texColor.a * opacity;
+    texColor = texColor * opacity;
 	return texColor;
 }
 
