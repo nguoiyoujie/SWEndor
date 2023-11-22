@@ -182,7 +182,8 @@
     ----------------
     Modelling
     ----------------
-    Milkshape 3D 1.8.5              Processing, conversion to .x format used by TrueVision 3D engine
+    Milkshape 3D 1.8.5              Processing, converting and editing of .x format used by TrueVision 3D engine
+    FragMOTION                      Processing, editing of .x format used by TrueVision 3D engine
     http://www.meshconvert.com/             Conversion to .obj format (can be imported by Milkshape 3D) 
     http://www.greentoken.de/onlineconv/        Conversion to .x format 
 
